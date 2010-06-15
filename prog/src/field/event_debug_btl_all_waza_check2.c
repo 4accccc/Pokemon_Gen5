@@ -35,6 +35,7 @@
 #include "field/field_encount.h" // for BTL_FIELD_SITUATION_SetFromFieldStatus
 #include "gamesystem/btl_setup.h" // for BATTLE_PARAM_Create
 #include "waza_tool/wazano_def.h" // for WAZANO_
+#include "waza_tool/wazadata.h" // for WAZADATA_GetCategory
 
 //=============================================================================
 /**
@@ -201,9 +202,10 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
       // 次の技へ
       wk->count++;
 
-      // スキップ じばく、だいばくはつ 
+      // スキップ じばく、だいばくはつ、一撃必殺技
       if( wk->count == WAZANO_ZIBAKU ||
-          wk->count == WAZANO_DAIBAKUHATU )
+          wk->count == WAZANO_DAIBAKUHATU ||
+          WAZADATA_GetCategory( wk->count ) == WAZADATA_CATEGORY_ICHIGEKI )
       {
         wk->count++;
       }
