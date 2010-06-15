@@ -109,7 +109,8 @@ struct _BTLV_EFFECT_WORK
   u32                     tcb_henge_flag  :BTLV_MCSS_POS_MAX;
   u32                     tcb_rotate_flag :2;
   u32                     bagMode         :8;
-  u32                                     :6;
+  u32                     se_mode         :1;
+  u32                                     :5;
   HEAPID                  heapID;
 
   BOOL                    trainer_bgm_change_flag;
@@ -1721,6 +1722,26 @@ BtlBagMode  BTLV_EFFECT_GetBagMode( void )
 
 //============================================================================================
 /**
+ * @brief  SEモードをセット
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE mode )
+{ 
+  bew->se_mode = mode;
+}
+
+//============================================================================================
+/**
+ * @brief  SEモードをゲット
+ */
+//============================================================================================
+BTLV_EFFECT_SE_MODE  BTLV_EFFECT_GetSEMode( void )
+{ 
+  return bew->se_mode;
+}
+
+//============================================================================================
+/**
  * @brief シューターが使用できるかチェック
  *
  * @retval  TRUE:使用可
@@ -1880,6 +1901,31 @@ void  BTLV_EFFECT_SetCameraWorkStop( void )
   BTLV_EFFECT_Stop();
   BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
   bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  カメラワークエフェクトを止めて実行タイプを変化
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type )
+{ 
+  BTLV_EFFECT_Stop();
+  bew->camera_work_execute = type;
+  bew->camera_work_seq  = 0;
+  bew->camera_work_wait = 0;
+
+  //ものによってはカメラ初期位置を呼ぶ
+  /*
+  if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
+  { 
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+  }
+  else
+  { 
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_INIT );
+  }
+  */
 }
 
 //----------------------------------------------------------------------------
@@ -2149,25 +2195,6 @@ static  void  camera_work_check( void )
 
   if( bew->camera_work_execute == BTLV_EFFECT_CWE_NONE ) return;
 
-  if( bew->camera_work_execute >= BTLV_EFFECT_CWE_SHIFT_NONE )
-  {
-    BTLV_EFFECT_Stop();
-    if( bew->camera_work_execute != BTLV_EFFECT_CWE_SHIFT_NO_STOP )
-    { 
-      if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
-      { 
-        BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
-      }
-      else
-      { 
-        BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_INIT );
-      }
-    }
-    bew->camera_work_seq  = 0;
-    bew->camera_work_wait = 0;
-    bew->camera_work_execute -= BTLV_EFFECT_CWE_SHIFT_NONE;
-  }
-
   if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
   { 
     if( ( trg ) || ( tp ) )
@@ -2243,7 +2270,6 @@ static  void  camera_work_check( void )
     break;
   }
 }
-
 
 #ifdef PM_DEBUG
 //============================================================================================

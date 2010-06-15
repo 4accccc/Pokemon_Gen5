@@ -162,10 +162,12 @@ typedef enum{
   BTLV_EFFECT_CWE_NONE = 0,
   BTLV_EFFECT_CWE_NORMAL,         //通常動作
   BTLV_EFFECT_CWE_NO_STOP,        //入力があってもCAMERA_INITを呼ばない
-  BTLV_EFFECT_CWE_SHIFT_NONE,     //強制的にCAMERA_INITを呼んでNONEに移行
-  BTLV_EFFECT_CWE_SHIFT_NORMAL,   //強制的にCAMERA_INITを呼んでNORMALに移行
-  BTLV_EFFECT_CWE_SHIFT_NO_STOP,  //強制的にCAMERA_INITを呼んでNO_STOPに移行
 }BTLV_EFFECT_CWE;
+
+typedef enum{ 
+  BTLV_EFFECT_SE_MODE_PLAY = 0, //SE再生する
+  BTLV_EFFECT_SE_MODE_MUTE,     //SE再生しない
+}BTLV_EFFECT_SE_MODE;
 
 //--------------------------------------------
 /**
@@ -325,6 +327,8 @@ extern  BOOL              BTLV_EFFECT_GetTrainerBGMChangeFlag( void );
 extern  void              BTLV_EFFECT_SetBGMNoCheckPush( int bgm_no );
 extern  void              BTLV_EFFECT_SetBagMode( BtlBagMode bagMode );
 extern  BtlBagMode        BTLV_EFFECT_GetBagMode( void );
+extern  void              BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE mode );
+extern  BTLV_EFFECT_SE_MODE  BTLV_EFFECT_GetSEMode( void );
 extern  BOOL              BTLV_EFFECT_CheckShooterEnable( void );
 extern  BOOL              BTLV_EFFECT_CheckItemEnable( void );
 extern  void              BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func,
@@ -334,6 +338,7 @@ extern  void              BTLV_EFFECT_FreeTCB( GFL_TCB* tcb );
 extern  void              BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group );
 extern  void              BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe );
 extern  void              BTLV_EFFECT_SetCameraWorkStop( void );
+extern  void              BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

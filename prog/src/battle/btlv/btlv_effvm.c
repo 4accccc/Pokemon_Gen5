@@ -930,6 +930,10 @@ void  BTLV_EFFVM_ClearParam( BTLV_EFFVM_PARAM* param )
 void  BTLV_EFFVM_SePlay( VMHANDLE* vmh, int se_no, int player, int pan, int pitch, int vol, int mod_depth, int mod_speed, int wait )
 { 
   BTLV_EFFVM_WORK*  bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+  //SEモードがMUTEならなにもせずにリターン
+  if( BTLV_EFFECT_GetSEMode() == BTLV_EFFECT_SE_MODE_MUTE ) { return; }
+
   //SE再生フラグをセット
   bevw->se_play_flag = 1;
 
