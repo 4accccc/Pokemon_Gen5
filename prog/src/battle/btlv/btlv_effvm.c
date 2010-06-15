@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -1170,6 +1170,17 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     { 
       //1vs1‚È‚çƒJƒƒ‰ˆÚ“®‚È‚µ
       return bevw->control_mode;
+    }
+    break;
+  case BTLEFF_CAMERA_POS_ZOOM_OUT_PERS:
+    if( BTLV_EFFECT_GetBtlRule() == BTL_RULE_SINGLE )
+    { 
+      //1vs1‚È‚çƒJƒƒ‰ˆÚ“®‚È‚µ
+      return bevw->control_mode;
+    }
+    else
+    { 
+      cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT;
     }
     break;
   case BTLEFF_CAMERA_POS_INIT_ORTHO:
