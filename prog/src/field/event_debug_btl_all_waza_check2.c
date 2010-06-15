@@ -131,7 +131,7 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
   switch( *seq )
   {
     case SEQ_INIT:
-      wk->count = 1; //18;
+      wk->count = 1;//35;
       OS_TPrintf("トリプル全方向全技チェック開始！\n");
       *seq = SEQ_SETUP;
       break;
@@ -198,6 +198,14 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
     case SEQ_RET:
       // 次の技へ
       wk->count++;
+
+      // スキップ じばく、だいばくはつ 
+      if( wk->count == WAZANO_ZIBAKU ||
+          wk->count == WAZANO_DAIBAKUHATU )
+      {
+        wk->count++;
+      }
+
       if( wk->count < WAZANO_MAX )
       {
         *seq = SEQ_SETUP;
