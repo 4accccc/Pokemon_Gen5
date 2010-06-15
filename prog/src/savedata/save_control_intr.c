@@ -117,6 +117,7 @@ void IntrSave_Start(INTR_SAVE_CONTROL *isc)
     isc->outside_exists = SaveData_GetOutsideExistFlag(isc->ctrl);
     isc->outside_break = SaveData_GetOutsideBreakFlag(isc->ctrl);
     SaveData_SetOutsideExistFlag(isc->ctrl, FALSE);
+    SaveData_SetOutsideBreakFlag(isc->ctrl, FALSE);
   }
   isc->status = INTR_SAVE_STATUS_MAIN;
 }
