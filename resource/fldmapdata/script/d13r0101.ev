@@ -165,11 +165,10 @@ doc_battle:
     //戦闘
    _TRAINER_BTL_SET( TRID_SCIENTISTM_12, 0 )
 
-   _CALL set_btl_after_pos
-
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+      _CALL set_btl_after_pos
 			_TRAINER_WIN()
 		ELSE
 			_TRAINER_LOSE()   //スクリプト終わり
