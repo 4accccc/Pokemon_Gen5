@@ -310,6 +310,7 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 	if(ctrl->outside_data_exists == TRUE || ctrl->outside_data_break == TRUE){
     _OutsideSave_SaveErase();
     ctrl->outside_data_exists = FALSE;
+    ctrl->outside_data_break = FALSE;
     return SAVE_RESULT_CONTINUE;
   }
   
