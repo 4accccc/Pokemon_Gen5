@@ -671,7 +671,8 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   }
   
   if(bActive == FALSE){
-    if(_CheckPalFlash_DecideTown(intsub) == TRUE){  //決定アニメしている時は暗くしない
+    if(_CheckPalFlash_DecideTown(intsub) == TRUE
+        || intsub->decide_pal_button_occ == TRUE){  //決定アニメしている時は暗くしない
     	G2S_BlendNone();
     }
     else{
