@@ -142,7 +142,7 @@ static const fx32 RETURN_LIST_ITEM_DEPTH = FX32_CONST(30.0f);
 //‘•”õƒAƒCƒeƒ€Œn
 static const u16 HOLD_ITEM_SNAP_LENGTH = 12;
 static const fx32 EQUIP_ITEM_DEPTH = FX32_CONST(50.5f);
-static const fx32 EQUIP_ITEM_DEPTH_BACK  = FX32_CONST(20.5f);
+static const fx32 EQUIP_ITEM_DEPTH_BACK  = FX32_CONST(25.5f);
 static const fx32 EQUIP_ITEM_DEPTH_FRONT = FX32_CONST(55.5f);
 
 
