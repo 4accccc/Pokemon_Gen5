@@ -3376,10 +3376,12 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 counter = BPP_GetWazaContCounter( bpp );
     TAYA_Printf("ƒƒgƒƒm[ƒ€ %d count\n", counter );
-    if( counter )
+    if( counter > 1)
     {
       fx32 ratio;
       u16  pow, damage;
+
+      --counter;
       pow = 100 + (common_GetItemParam(myHandle, ITEM_PRM_ATTACK) * (counter));
       TAYA_Printf("ƒƒgƒƒm[ƒ€ %d pow\n", pow );
       if( pow > 200 ){ pow = 200; }
