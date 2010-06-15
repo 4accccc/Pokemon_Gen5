@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-15T15:13:16"/>
+	<create user="matsushima" host="W00181" date="2010-06-15T15:22:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -542,7 +542,8 @@ msg_c03r0401_girl1_04</comment>
 
 	<row id="msg_c03r0401_girl1_10_1" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
-※主人公が男</comment>
+※主人公が男
+※姿がゾロアに戻っているときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
 すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
@@ -562,7 +563,8 @@ msg_c03r0401_girl1_04</comment>
 
 	<row id="msg_c03r0401_girl1_10_2" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
-※主人公が女</comment>
+※主人公が女
+※姿がゾロアに戻っているときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
 すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
@@ -660,7 +662,7 @@ msg_c03r0401_girl1_04</comment>
 	<row id="msg_c03r0401_girl1_15_1" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
 ※主人公が男
-※姿がゾロアに戻っているときのセリフ。</comment>
+※姿が少年のままのときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
 すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
@@ -681,7 +683,7 @@ msg_c03r0401_girl1_04</comment>
 	<row id="msg_c03r0401_girl1_15_2" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
 ※主人公が女
-※姿がゾロアに戻っているときのセリフ。</comment>
+※姿が少年のままのときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
 すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
