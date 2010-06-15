@@ -620,7 +620,7 @@ static BOOL encpoke_CheckEncountAvoid( const ENCPOKE_FLD_PARAM *efp, u8 level )
   }
   if( efp->fishing_f == FALSE ){
     //スプレーチェック　WBの釣りではスプレーチェックしない
-    if(efp->spray_f && (level <= efp->spray_lv)){
+    if(efp->spray_f && (level < efp->spray_lv)){
       return TRUE;
     }
   }
