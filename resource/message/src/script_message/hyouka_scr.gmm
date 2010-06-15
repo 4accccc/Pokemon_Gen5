@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:55:48"/>
+	<create user="matsumiya" host="W00224" date="2010-06-15T14:26:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -388,14 +388,12 @@
 		<comment>アララギ博士：娘
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">あら？　どうしたの？▼
-もしかして　わたしに　みせるほど
-ポケモンと　であったり▽
-つかまえて　いないとか？</language>
-		<language name="JPN_KANJI" width="256">あら？　どうしたの？▼
-もしかして　わたしに　みせるほど
-ポケモンと　出会ったり▽
-捕まえていない　とか？</language>
+		<language name="JPN" width="256">きみの　たびの　おもいでが　つまった
+その　ポケモンずかん……▽
+いっしょうの　たからものに　してね！</language>
+		<language name="JPN_KANJI" width="256">きみの　旅の　思い出が　つまった
+その　ポケモン図鑑……▽
+一生の　宝物に　してね！</language>
 	</row>
 
 	<row id="msg_hyouka_i00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
