@@ -56,9 +56,7 @@
 #define MYSTERYGIFT_TYPE_POKEMON	(1)	// ポケモン
 #define MYSTERYGIFT_TYPE_ITEM		(2)	// どうぐ
 #define MYSTERYGIFT_TYPE_POWER		(3)	// パワー
-#define MYSTERYGIFT_TYPE_RULE  (4)   //削除予定
-#define MYSTERYGIFT_TYPE_NUTSET  (5) //削除予定
-#define MYSTERYGIFT_TYPE_MAX	(6)	// 総数
+#define MYSTERYGIFT_TYPE_MAX	(4)	// 総数
 
 #define MYSTERYGIFT_TYPE_CLEAR		(255)	// ふしぎ領域の強制クリア
 

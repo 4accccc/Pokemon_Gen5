@@ -2,7 +2,6 @@
 /**
  * @file    mystery_createdata.c
  * @brief   不思議通信データからゲーム用データを作る関数
-             @todo RC4複合化が
 
              この関数はNOTWIFIにおいてありますが、
              通信中でも使いたいためmystery_inline.hへ移しました。nagihashi

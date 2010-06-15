@@ -1677,7 +1677,7 @@ int mydwc_HandleError(void)
     case DWC_ETYPE_SHUTDOWN_FM:
       // DWC_ShutdownFriendsMatch()を呼び出して、FriendsMatch処理を終了する必要がある。
       // エラーコードの表示が必要。
-      // この場合、とりあえずDWC_ETYPE_DISCONNECTと同じ処理をしておく。
+      // この場合、DWC_ETYPE_DISCONNECTと同じ処理をしておく。
     case DWC_ETYPE_DISCONNECT:
       //FriendsMatch処理中ならDWC_ShutdownFriendsMatch()を呼び出し、
       //更にDWC_CleanupInet()で通信の切断も行う必要がある。
