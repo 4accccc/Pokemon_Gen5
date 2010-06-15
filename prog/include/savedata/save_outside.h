@@ -41,3 +41,9 @@ extern BOOL OutsideSave_GetBreakFlag(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern OUTSIDE_MYSTERY * OutsideSave_GetMysterPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl, SAVE_CONTROL_WORK *normal_ctrl);
 
+//--------------------------------------------------------------
+//  デバッグ用
+//--------------------------------------------------------------
+#ifdef PM_DEBUG
+extern BOOL DEBUG_OutsideSave_GetBreak(OUTSIDE_SAVE_CONTROL *outsv_ctrl, BOOL *ret_a, BOOL *ret_b);
+#endif  //PM_DEBUG

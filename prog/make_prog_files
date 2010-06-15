@@ -1542,6 +1542,7 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
         test/matsuda/d_matsu_huge_beacon.c \
         test/matsuda/huge_beacon.c \
         test/matsuda/d_save.c \
+        test/matsuda/d_save_extra.c \
         test/matsuda/palace_block.c \
         test/matsuda/palace_block2.c
 

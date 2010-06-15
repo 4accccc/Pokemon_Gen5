@@ -275,7 +275,7 @@ BOOL OutsideSave_GetExistFlag(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
 //==================================================================
 BOOL OutsideSave_GetBreakFlag(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
 {
-  if(outsv_ctrl->data_exists == FALSE || outsv_ctrl->break_flag != OUTSIDE_BREAK_ALL){
+  if(outsv_ctrl->break_flag != OUTSIDE_BREAK_ALL){
     return FALSE;
   }
   return TRUE;
@@ -343,3 +343,42 @@ void OutsideSave_FlashAllErase(HEAPID heap_id)
   
   GFL_HEAP_FreeMemory(erase_buffer);
 }
+
+//==============================================================================
+//  デバッグ用
+//==============================================================================
+#ifdef PM_DEBUG
+//==================================================================
+/**
+ * デバッグ用：セーブデータの破壊フラグの取得
+ *
+ * @param   outsv_ctrl		
+ * @param   ret_a		      A面結果代入先(TRUE:データ破壊)
+ * @param   ret_b		      B面結果代入先(TRUE:データ破壊)
+ *
+ * @retval  BOOL		TRUE:データあり　FALSE:データ無し
+ */
+//==================================================================
+BOOL DEBUG_OutsideSave_GetBreak(OUTSIDE_SAVE_CONTROL *outsv_ctrl, BOOL *ret_a, BOOL *ret_b)
+{
+  *ret_a = FALSE;
+  *ret_b = FALSE;
+  switch(outsv_ctrl->break_flag){
+  case OUTSIDE_BREAK_OK:     //両面正常
+    return outsv_ctrl->data_exists;
+  case OUTSIDE_BREAK_A:      //A面破壊
+    *ret_a = TRUE;
+    break;
+  case OUTSIDE_BREAK_B:      //B面破壊
+    *ret_b = TRUE;
+    break;
+  case OUTSIDE_BREAK_ALL:    //両面破壊
+    *ret_a = TRUE;
+    *ret_b = TRUE;
+    break;
+  }
+  
+  return TRUE;
+}
+#endif  //PM_DEBUG
+

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-02-09T12:17:23"/>
+	<create user="matsuda" host="W00142" date="2010-06-15T16:01:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="150"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -260,9 +260,9 @@
 		</language>
 	</columns>
 
-	<dialog left="152" top="221" right="857" bottom="841" maximized="no" rayout="Vertical2">
+	<dialog left="1779" top="180" right="2484" bottom="800" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="792" top="128" right="1211" bottom="526" visible="yes"/>
+		<tag-palette left="1316" top="314" right="1735" bottom="712" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -566,6 +566,68 @@ B面はかい</language>
 	<row id="DM_MSG_POWER_RESET">
 		<language name="JPN" font=" 2:lcfont12" width="256">パワーを全てリセット</language>
 		<language name="JPN_KANJI" width="80">パワーを全てリセット</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_000">
+		<language name="JPN" font=" 2:lcfont12" width="256">ビデオ自分(ミラー有)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">ビデオ自分(ミラー有)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_001">
+		<language name="JPN" font=" 2:lcfont12" width="256">ビデオＤＬ０(ミラー無)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">ビデオＤＬ０(ミラー無)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_002">
+		<language name="JPN" font=" 2:lcfont12" width="256">ビデオＤＬ１(ミラー無)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">ビデオＤＬ１(ミラー無)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_003">
+		<language name="JPN" font=" 2:lcfont12" width="256">ビデオＤＬ２(ミラー無)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">ビデオＤＬ２(ミラー無)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_004">
+		<language name="JPN" font=" 2:lcfont12" width="256">CGEARの絵(ミラー無)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">CGEARの絵(ミラー無)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_005">
+		<language name="JPN" font=" 2:lcfont12" width="256">バトル検定(ミラー無)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">バトル検定(ミラー無)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_006">
+		<language name="JPN" font=" 2:lcfont12" width="256">ストリーミング(ミラー無)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">ストリーミング(ミラー無)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_007">
+		<language name="JPN" font=" 2:lcfont12" width="256">図鑑壁紙(ミラー無)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">図鑑壁紙(ミラー無)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_008">
+		<language name="JPN" font=" 2:lcfont12" width="256">殿堂入り(ミラー有)　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">殿堂入り(ミラー有)　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_009">
+		<language name="JPN" font=" 2:lcfont12" width="256">Aボタンで　Aめん　はかい
+R＋Aで　Bめんはかい　ミラー有のみ有効</language>
+		<language name="JPN_KANJI" width="80">Aボタンで　Aめん　はかい
+R＋Aで　Bめんはかい　ミラー有のみ有効</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_010">
+		<language name="JPN" font=" 2:lcfont12" width="256">データ無し</language>
+		<language name="JPN_KANJI" width="80">データ無し</language>
+	</row>
+
+	<row id="DM_MSG_EXSAVE_011">
+		<language name="JPN" font=" 2:lcfont12" width="256">管理外セーブ（ミラー有）　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="80">管理外セーブ（ミラー有）　[1:00:トレーナー名:0]</language>
 	</row>
 
 	<flowchart-group-list>

@@ -116,6 +116,8 @@ extern void SaveControl_Extra_Erase(
 
 #ifdef PM_DEBUG
 extern GFL_SAVEDATA * DEBUG_SaveData_PtrGet(void);
+extern GFL_SAVEDATA * DEBUG_SaveDataExtra_PtrGet(SAVE_EXTRA_ID extra_id);
+extern void DEBUG_OutsideSave_Brea(int mirror);
 #endif
 
 

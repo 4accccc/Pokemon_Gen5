@@ -32,6 +32,7 @@ struct _SAVE_CONTROL_WORK{
 	u8 total_save_flag;		///<TRUE:全体セーブ
 	u8 backup_now_save_mode_setup;    ///<TRUE:初回セットアップのフラグバックアップ
 	u8 outside_data_exists;   ///<TRUE:管理外セーブが存在する
+	u8 outside_data_break;    ///<TRUE:管理外セーブ破損
 	u8 padding[3];
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
@@ -90,6 +91,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 	ctrl->total_save_flag = TRUE;		//全体セーブ
 	ctrl->data_exists = FALSE;			//データは存在しない
 	ctrl->outside_data_exists = outside_exists;
+	ctrl->outside_data_break = outside_break;
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
 
 #if DEBUG_ONLY_FOR_ohno
@@ -114,7 +116,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
     }
   }
 	ctrl->first_status = 0;
-	if(outside_exists == TRUE && outside_break == TRUE){
+	if(outside_break == TRUE){
     ctrl->first_status |= FST_OUTSIDE_MYSTERY_BREAK_BIT;
   }
 	switch(load_ret){
@@ -305,7 +307,7 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 {
 	SAVE_RESULT result;
 	
-	if(ctrl->outside_data_exists == TRUE){
+	if(ctrl->outside_data_exists == TRUE || ctrl->outside_data_break == TRUE){
     _OutsideSave_SaveErase();
     ctrl->outside_data_exists = FALSE;
     return SAVE_RESULT_CONTINUE;
@@ -778,6 +780,25 @@ GFL_SAVEDATA * DEBUG_SaveData_PtrGet(void)
 {
 	SAVE_CONTROL_WORK *ctrl = SaveControl_GetPointer();
 	return ctrl->sv_normal;
+}
+
+GFL_SAVEDATA * DEBUG_SaveDataExtra_PtrGet(SAVE_EXTRA_ID extra_id)
+{
+	SAVE_CONTROL_WORK *ctrl = SaveControl_GetPointer();
+	return ctrl->sv_extra[extra_id];
+}
+
+///管理外セーブを破壊する
+void DEBUG_OutsideSave_Brea(int mirror)
+{
+  u64 break_data = 0x401a9f4a;
+  
+  if(mirror == 0){
+    GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY + 12, &break_data, sizeof(break_data));
+  }
+  else{
+    GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY_MIRROR + 12, &break_data, sizeof(break_data));
+  }
 }
 #endif
 

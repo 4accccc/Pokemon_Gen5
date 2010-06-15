@@ -161,6 +161,7 @@ static BOOL TESTMODE_ITEM_SelectFuncTaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSample1( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncMatsuda( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncSaveExtra( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SaveClear( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_BattleVideoSaveClear( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx );
@@ -242,6 +243,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"名前を選んで開始(処理負荷：サーチ)"    ,TESTMODE_ITEM_SelectFuncChangeSelectName },
   {L"RTC調整"             ,TESTMODE_ITEM_SelectFuncRTCEdit },
   {L"セーブ破かい"        ,TESTMODE_ITEM_SelectFuncSave },
+  {L"外部と管理外セーブ破かい"        ,TESTMODE_ITEM_SelectFuncSaveExtra },
   {L"セーブを工場出荷状態にする"        ,TESTMODE_ITEM_SaveClear },
   {L"バトルビデオをクリア"        ,TESTMODE_ITEM_BattleVideoSaveClear },
   {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
@@ -987,6 +989,14 @@ extern const GFL_PROC_DATA DebugSaveProcData;
 static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(matsuda_debug), &DebugSaveProcData, NULL);
+  return TRUE;
+}
+
+//外部セーブ破壊
+extern const GFL_PROC_DATA DebugSaveExtraProcData;
+static BOOL TESTMODE_ITEM_SelectFuncSaveExtra( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(matsuda_debug), &DebugSaveExtraProcData, NULL);
   return TRUE;
 }
 
