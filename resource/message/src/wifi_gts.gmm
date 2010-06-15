@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-08T17:26:33"/>
+	<create user="ohmori" host="W00223" date="2010-06-15T13:22:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="132" top="323" right="837" bottom="951" maximized="no" rayout="Vertical2">
+	<dialog left="447" top="251" right="1152" bottom="879" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -598,12 +598,10 @@
 		<comment>てもちがいっぱいで、メールつきの
 ポケモンを受け取ることができない
 警告メッセージその２</comment>
-		<language name="JPN" width="216">てもちが　いっぱいで
-メールを　もっている　ポケモンを[BE:00:ページ切り替え（行送り）]
-うけとることが　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">手持ちが　一杯で
-メールを　持っている　ポケモンを[BE:00:ページ切り替え（行送り）]
-受け取ることが　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="216">てもちがいっぱいで　メールをもってる
+ポケモンを　うけとれません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">手持ちが一杯で　メールを　持ってる
+ポケモンを　受け取れません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_037" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,,,,,,">
