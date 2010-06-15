@@ -458,6 +458,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_s
   }
   Util_MatchInfo_Delete( p_wk );
   Util_PlayerInfo_Delete( p_wk );
+  Util_List_Delete( p_wk );
 
 	//‹¤’Êƒ‚ƒWƒ…[ƒ‹‚Ì”jŠü
 	WORDSET_Delete( p_wk->p_word );
