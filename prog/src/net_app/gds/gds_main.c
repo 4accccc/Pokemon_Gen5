@@ -154,6 +154,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
       gmw->login_param.bg       = WIFILOGIN_BG_NORMAL;
       gmw->login_param.display  = WIFILOGIN_DISPLAY_UP;
       gmw->login_param.pSvl = &gmw->aSvl;
+      gmw->login_param.nsid = WB_NET_GDS;
 
 
       if( gmw->br_param.result == BR_RESULT_NET_ERROR )

@@ -231,7 +231,7 @@ typedef enum
 #define MYSTERY_MENU_ALPHA_EV2  (3)
 
 
-#define MYSTERY_RECV_TIMEOUT    (60*60)
+#define MYSTERY_RECV_TIMEOUT    (120*60)
 
 #define MYSTERY_RECV_CARD_END_BTN (4*60)
 
@@ -2715,6 +2715,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->p_wifilogin_param->display      = WIFILOGIN_DISPLAY_UP;
     p_wk->p_wifilogin_param->pSvl         = NULL;
     p_wk->p_wifilogin_param->bgm          = WIFILOGIN_BGM_NORMAL;
+    p_wk->p_wifilogin_param->nsid         = WB_NET_MYSTERY;
     if( MYSTERY_DATA_TYPE_OUTSIDE == MYSTERY_DATA_GetDataType( p_wk->p_sv ) )
     { 
       //管理外セーブならば、WIFILOGINはセーブへ行かない

@@ -133,7 +133,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   FALSE,     // MP通信＝親子型通信モードかどうか
   GFL_NET_TYPE_WIFI,  //wifi通信を行うかどうか
   TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
-  WB_NET_COMPATI_CHECK,  //GameServiceID
+  WB_NET_NOP_SERVICEID,  //GameServiceID
   0xfffe,	// 赤外線タイムアウト時間
   0,//MP通信親機送信バイト数
   0,//dummy
@@ -286,7 +286,7 @@ typedef struct{
   int gameNo;   ///< ゲーム種類
 } _testBeaconStruct;
 
-static _testBeaconStruct _testBeacon = { WB_NET_COMPATI_CHECK };
+static _testBeaconStruct _testBeacon = { 0 };
 
 
 //--------------------------------------------------------------
@@ -596,6 +596,9 @@ static void _connectionStart(WIFILOGIN_WORK* pWork)
     aGFLNetInit.keyList=NULL;
   }
   
+  aGFLNetInit.gsid  = pWork->dbw->nsid;
+  _testBeacon.gameNo = pWork->dbw->nsid;
+
   GFL_NET_Init(&aGFLNetInit, NULL, pWork);	//通信初期化
   GFL_NET_StateWifiEnterLogin();
 
@@ -1172,6 +1175,9 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
   WIFILOGIN_PARAM* pEv=pwk;
   WIFILOGIN_WORK *pWork;
 	
+
+  GF_ASSERT_MSG( pEv->nsid != 0, "ゲームサービスIDを入れてください\n" );
+
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFILOGIN, 0x18000 );
 
   {
