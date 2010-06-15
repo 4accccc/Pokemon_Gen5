@@ -92,6 +92,7 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
     pWork->login.gamedata = pWork->gameData;
     pWork->login.bg       = WIFILOGIN_BG_NORMAL;
     pWork->login.display  = WIFILOGIN_DISPLAY_UP;
+    pWork->login.nsid = WB_NET_PDW_ACC;
     pWork->login.pSvl = &pWork->aSVL;
 
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &pWork->login);

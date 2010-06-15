@@ -347,6 +347,8 @@ static GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   dbw->aLoginWork.gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->aLoginWork.bg = WIFILOGIN_BG_DREAM_WORLD;
   dbw->aLoginWork.display = WIFILOGIN_DISPLAY_DOWN;
+  dbw->aLoginWork.nsid = WB_NET_GAMESYNC;
+
   return event;
 }
 

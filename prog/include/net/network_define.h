@@ -217,6 +217,9 @@ typedef enum  {
   WB_NET_BATTLE_EXAMINATION,  ///<バトル検定配信
   WB_NET_WIFIP2P_SUB,  ///< WIFIバトルの中間
   WB_NET_IRC_REGULATION,  ///<ライブ大会レギュレーション配信
+  WB_NET_GAMESYNC,  ///<GAMESYNC
+  WB_NET_PDW_ACC,  ///<GAMESYNCアカウント
+  WB_NET_GTS_NEGO,  ///<GTSネゴシエーション
   
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;

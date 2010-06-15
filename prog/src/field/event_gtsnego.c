@@ -116,6 +116,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     break;
   case _CALL_WIFILOGIN:
     dbw->login.pSvl = &dbw->aSVL;
+    dbw->login.nsid = WB_NET_GTS_NEGO;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->login);
     (*seq)++;
     break;
