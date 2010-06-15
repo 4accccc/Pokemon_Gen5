@@ -2705,10 +2705,11 @@ static void DEBUGWIN_Init( LIVEBATTLEMATCH_FLOW_WORK *p_wk, HEAPID heapID )
 
   DEBUGWIN_REG_Init( p_wk->p_regulation, heapID );
   DEBUGWIN_LIVESCORE_Init( heapID );
-
+  DEBUGWIN_BTLBOX_Init( heapID );
 }
 static void DEBUGWIN_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
 { 
+  DEBUGWIN_BTLBOX_Exit();
   DEBUGWIN_LIVESCORE_Exit();
   DEBUGWIN_REG_Exit();
 

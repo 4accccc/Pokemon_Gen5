@@ -4962,10 +4962,11 @@ static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID )
   DEBUGWIN_WIFISCORE_Init( heapID );
   DEBUGWIN_SAKERECORD_Init( p_wk->p_param->p_record_data, heapID );
   DEBUGWIN_REPORT_Init( heapID );
+  DEBUGWIN_BTLBOX_Init( heapID );
 }
 static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 { 
-
+  DEBUGWIN_BTLBOX_Exit();
   DEBUGWIN_REPORT_Exit();
   DEBUGWIN_SAKERECORD_Exit();
   DEBUGWIN_WIFISCORE_Exit();

@@ -1171,6 +1171,7 @@ static void DEBUGWIN_WIFI_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heap
     DEBUGWIN_ChangeLetterColor( 0,31,0 );
     DEBUGWIN_REG_Init( p_reg, heapID );
     DEBUGWIN_WIFISCORE_Init( heapID );
+    DEBUGWIN_BTLBOX_Init( heapID );
     
     s_wifi_init = TRUE;
   }
@@ -1179,6 +1180,7 @@ static void DEBUGWIN_WIFI_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
 { 
   if( s_wifi_init == TRUE )
   {
+    DEBUGWIN_BTLBOX_Exit();
     DEBUGWIN_WIFISCORE_Exit();
     DEBUGWIN_REG_Exit();
     DEBUGWIN_ExitProc();
@@ -1199,6 +1201,7 @@ static void DEBUGWIN_LIVE_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heap
     DEBUGWIN_ChangeLetterColor( 0,31,0 );
     DEBUGWIN_REG_Init( p_reg, heapID );
     DEBUGWIN_LIVESCORE_Init( heapID );
+    DEBUGWIN_BTLBOX_Init( heapID );
 
     s_live_init = TRUE;
   }
@@ -1207,6 +1210,7 @@ static void DEBUGWIN_LIVE_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
 { 
   if( s_live_init == TRUE )
   {
+    DEBUGWIN_BTLBOX_Exit();
     DEBUGWIN_LIVESCORE_Exit();
     DEBUGWIN_REG_Exit();
     DEBUGWIN_ExitProc();

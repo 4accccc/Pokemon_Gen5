@@ -12,6 +12,7 @@
 #ifdef PM_DEBUG
 
 #include "debug/debugwin_sys.h"
+#include "savedata/battle_box_save.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -23,6 +24,7 @@
 #define DEBUGWIN_WIFISCORE_USE
 #define DEBUGWIN_LIVESCORE_USE
 #define DEBUGWIN_REPORT_USE
+#define DEBUGWIN_BTLBOX_USE
 
 
 #define DEBUGWIN_GROUP_REG (41)
@@ -41,6 +43,8 @@
 #define DEBUGWIN_GROUP_LIVESCORE_FOE  (67)
 
 #define DEBUGWIN_GROUP_REPORT (70)
+
+#define DEBUGWIN_GROUP_BTLBOX (80)
 
 //=============================================================================
 /**
@@ -1240,6 +1244,159 @@ static inline void DEBUGWIN_REPORT_SetData( BOOL is_my, int win, int lose, int d
 }
 
 #endif  //DEBUGWIN_REPORT_USE
+
+#ifdef DEBUGWIN_BTLBOX_USE
+
+typedef struct
+{
+  BATTLE_BOX_SAVE *p_sv;
+  BATTLE_BOX_LOCK_BIT lock_bit;
+} DEBUGWIN_BTLBOX_DATA;
+
+static DEBUGWIN_BTLBOX_DATA s_btlbox_data = {0};
+
+static inline void DEBUGWIN_BTLBOX_GetData( void )
+{
+  DEBUGWIN_BTLBOX_DATA  *p_wk = &s_btlbox_data;
+  p_wk->lock_bit  = 0;
+  if( BATTLE_BOX_SAVE_GetLockType( p_wk->p_sv, BATTLE_BOX_LOCK_BIT_WIFI ) )
+  {
+    p_wk->lock_bit  |= BATTLE_BOX_LOCK_BIT_WIFI;
+  }
+  if( BATTLE_BOX_SAVE_GetLockType( p_wk->p_sv, BATTLE_BOX_LOCK_BIT_LIVE ) )
+  {
+    p_wk->lock_bit  |= BATTLE_BOX_LOCK_BIT_LIVE;
+  }
+}
+
+static inline void DEBUGWIN_BTLBOX_SetData( void )
+{
+  DEBUGWIN_BTLBOX_DATA  *p_wk = &s_btlbox_data;
+  if( p_wk->lock_bit & BATTLE_BOX_LOCK_BIT_WIFI )
+  {
+    BATTLE_BOX_SAVE_OnLockFlg( p_wk->p_sv,BATTLE_BOX_LOCK_BIT_WIFI );
+  }
+  else
+  {
+    BATTLE_BOX_SAVE_OffLockFlg( p_wk->p_sv,BATTLE_BOX_LOCK_BIT_WIFI );
+  }
+  if( p_wk->lock_bit & BATTLE_BOX_LOCK_BIT_LIVE )
+  {
+    BATTLE_BOX_SAVE_OnLockFlg( p_wk->p_sv,BATTLE_BOX_LOCK_BIT_LIVE );
+  }
+  else
+  {
+    BATTLE_BOX_SAVE_OffLockFlg( p_wk->p_sv,BATTLE_BOX_LOCK_BIT_LIVE );
+  }
+}
+
+static inline void DebugWin_BtlBox_U_Get( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBOX_DATA  *p_wk = &s_btlbox_data;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  { 
+    DEBUGWIN_BTLBOX_GetData();
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static inline void DebugWin_BtlBox_U_Set( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_BTLBOX_DATA  *p_wk = &s_btlbox_data;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  { 
+    DEBUGWIN_BTLBOX_SetData();
+  }
+}
+
+static inline void DebugWin_BtlBox_U_ChangeWifi( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBOX_DATA  *p_wk = userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    if( p_wk->lock_bit & BATTLE_BOX_LOCK_BIT_WIFI )
+    {
+      //存在しているなら消す
+      p_wk->lock_bit  &= ~BATTLE_BOX_LOCK_BIT_WIFI;
+    }
+    else
+    {
+      //ないならつける
+      p_wk->lock_bit |= BATTLE_BOX_LOCK_BIT_WIFI;
+    }
+
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_BtlBox_D_ChangeWifi( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+
+  DEBUGWIN_BTLBOX_DATA  *p_wk = userWork;
+
+  BOOL is_on  = ((p_wk->lock_bit  & BATTLE_BOX_LOCK_BIT_WIFI ) != 0 );
+  DEBUGWIN_ITEM_SetNameV( item , "WIFIロック[%s]", sc_tbl[ is_on ] );
+}
+
+static inline void DebugWin_BtlBox_U_ChangeLive( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBOX_DATA  *p_wk = userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    if( p_wk->lock_bit & BATTLE_BOX_LOCK_BIT_LIVE )
+    {
+      //存在しているなら消す
+      p_wk->lock_bit  &= ~BATTLE_BOX_LOCK_BIT_LIVE;
+    }
+    else
+    {
+      //ないならつける
+      p_wk->lock_bit |= BATTLE_BOX_LOCK_BIT_LIVE;
+    }
+
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_BtlBox_D_ChangeLive( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+
+  DEBUGWIN_BTLBOX_DATA  *p_wk = userWork;
+
+  BOOL is_on  = ((p_wk->lock_bit  & BATTLE_BOX_LOCK_BIT_LIVE ) != 0 );
+  DEBUGWIN_ITEM_SetNameV( item , "LIVEロック[%s]", sc_tbl[ is_on ] );
+}
+static inline void DEBUGWIN_BTLBOX_Init( HEAPID heapID )
+{
+  DEBUGWIN_BTLBOX_DATA  *p_wk = &s_btlbox_data;
+  GFL_STD_MemClear( &s_btlbox_data, sizeof( DEBUGWIN_BTLBOX_DATA ) );
+  p_wk->p_sv  = BATTLE_BOX_SAVE_GetBattleBoxSave(SaveControl_GetPointer());
+  DEBUGWIN_BTLBOX_GetData();
+
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_BTLBOX, "バトルボックス", heapID );
+  DEBUGWIN_AddItemToGroup( "しゅとく", DebugWin_BtlBox_U_Get, p_wk, DEBUGWIN_GROUP_BTLBOX, heapID ); 
+  DEBUGWIN_AddItemToGroup( "せってい", DebugWin_BtlBox_U_Set, p_wk, DEBUGWIN_GROUP_BTLBOX, heapID ); 
+
+  DEBUGWIN_AddItemToGroupEx( DebugWin_BtlBox_U_ChangeWifi, DebugWin_BtlBox_D_ChangeWifi,
+      p_wk, DEBUGWIN_GROUP_BTLBOX, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_BtlBox_U_ChangeLive, DebugWin_BtlBox_D_ChangeLive,
+      p_wk, DEBUGWIN_GROUP_BTLBOX, heapID );
+}
+static inline void DEBUGWIN_BTLBOX_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_BTLBOX );
+}
+#endif//DEBUGWIN_BTLBOX_USE
+
+
 #endif  //PM_DEBUG
 
 
@@ -1269,4 +1426,10 @@ static inline void DEBUGWIN_REPORT_SetData( BOOL is_my, int win, int lose, int d
 #define DEBUGWIN_REPORT_Exit( ... ) /* */
 #define DEBUGWIN_REPORT_SetData( ... ) /* */
 #endif
+
+#ifndef DEBUGWIN_BTLBOX_USE
+#define DEBUGWIN_BTLBOX_Init( ... ) /* */
+#define DEBUGWIN_BTLBOX_Exit( ... ) /* */
+#endif//DEBUGWIN_BTLBOX_USE
+
 
