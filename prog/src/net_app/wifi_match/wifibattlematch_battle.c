@@ -303,6 +303,16 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
         p_param->p_demo_param->result = COMM_BTL_DEMO_RESULT_DRAW;
       }
 
+      //É{Å[ÉãîªíË
+      {
+        int j;
+        for( j = 0; j < DEMO_POKEPARTY_MAX; j++ )
+        {
+          p_param->p_demo_param->trainer_data[COMM_BTL_DEMO_TRDATA_A].party_state[j] = p_param->p_btl_setup_param->party_state[BTL_CLIENT_PLAYER][j];
+          p_param->p_demo_param->trainer_data[COMM_BTL_DEMO_TRDATA_B].party_state[j] = p_param->p_btl_setup_param->party_state[BTL_CLIENT_ENEMY1][j];
+        }
+      }
+
       if( is_next )
       {
         GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, p_param->p_demo_param);
