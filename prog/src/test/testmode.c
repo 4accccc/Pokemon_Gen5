@@ -356,7 +356,7 @@ static void TESTMODE_CreateMenu( TESTMODE_WORK *work , TESTMODE_MENU_LIST *menuL
   { //menu create
     u32 i;
     BMPMENULIST_HEADER head;
-    STRCODE workStr[128]; //‰¼•¶š—ñ
+    STRCODE workStr[128]; //•¶š—ñ
 
     work->menuList_ = BmpMenuWork_ListCreate( itemNum , work->heapId_ );
     //ƒŠƒXƒgì¬
