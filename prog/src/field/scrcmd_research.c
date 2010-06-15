@@ -604,7 +604,9 @@ static u32 GetCurrentCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 QID )
   u32 today = QuestionnaireWork_GetTodayCount( QSave, QID );
   u32 total = QuestionnaireWork_GetTotalCount( QSave, QID );
   u32 current = today + total;
-  if( 99999 < current ) { current = 99999; }
+  if( QUESTIONNAIRE_TOTAL_COUNT_MAX < current ) { 
+    current = QUESTIONNAIRE_TOTAL_COUNT_MAX; 
+  }
   return current;
 }
 
@@ -742,7 +744,7 @@ static BOOL CheckMaxCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID )
     u32 count = GetCurrentCount( QSave, QID[i] );
 
     // MAXカウントに達していない
-    if( count < 99999 ) {
+    if( count < QUESTIONNAIRE_TOTAL_COUNT_MAX ) {
       return FALSE;
     }
   } 
@@ -777,7 +779,7 @@ static u16 GetLackCount( SAVE_CONTROL_WORK* save )
   RESEARCH_TEAM_GetQuestionID( RID, QID );
 
   // 一番少ない調査人数を取得
-  minCount = 99999;
+  minCount = QUESTIONNAIRE_TOTAL_COUNT_MAX + QUESTIONNAIRE_TODAY_COUNT_MAX;
   for( i=0; i<QNum; i++ )
   {
     u32 count = GetCurrentCount( QSave, QID[i] );
@@ -868,30 +870,3 @@ static u16 GetPassedTime( SAVE_CONTROL_WORK* save )
 
   return passedHour;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
