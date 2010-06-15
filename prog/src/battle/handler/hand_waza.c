@@ -10576,8 +10576,9 @@ static void handler_FreeFall_TameFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, targetPokeID) )
-    {
+    if( (targetPokeID != BTL_POKEID_NULL)
+    &&  (BTL_MAINUTIL_IsFriendPokeID(pokeID, targetPokeID))
+    ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
   }

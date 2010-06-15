@@ -10508,12 +10508,15 @@ static BOOL scEvent_CheckMamoruBreak( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
  * @retval  BOOL    Ž¸”s‚È‚çTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_CheckTameFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* target )
+static BOOL scEvent_CheckTameFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec )
 {
   BOOL fFail = FALSE;
+  const BTL_POKEPARAM* target = BTL_POKESET_Get( targetRec, 0 );
+
+
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(BTL_POKESET_Get(target,0)) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, (target!=NULL)? BPP_GetID(target) : BTL_POKEID_NULL );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_TAMETURN_FAIL );
     fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
