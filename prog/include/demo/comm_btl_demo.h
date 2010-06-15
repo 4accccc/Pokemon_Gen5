@@ -55,13 +55,13 @@ enum
 };
 
 //--------------------------------------------------------------
-/// 戦闘結果のID
+/// 戦闘結果のID ※enum BtlPokeStatCode_tagと同じ順番にすること
 //==============================================================
 typedef enum {
-  COMM_BTL_DEMO_POKE_NONE=0,   ///< ポケモン無し
-  COMM_BTL_DEMO_POKE_LIVE,     ///< 状態異常無しで生きてる
-  COMM_BTL_DEMO_POKE_SICK,     ///< 状態異常
-  COMM_BTL_DEMO_POKE_HINSHI,   ///< 瀕死
+  COMM_BTL_DEMO_POKE_LIVE=0,  ///< 状態異常無しで生きてる
+  COMM_BTL_DEMO_POKE_SICK,    ///< 状態異常
+  COMM_BTL_DEMO_POKE_HINSHI,  ///< 瀕死
+  COMM_BTL_DEMO_POKE_NONE,    ///< ポケモン無し
 } COMM_BTL_POKE_RESULT_tag;
 
 typedef u8 COMM_BTL_POKE_RESULT;
@@ -83,7 +83,7 @@ typedef struct {
   const MYSTATUS* mystatus; ///< トレーナー名、性別を取得する
   u8    trsex;              ///< トレーナーの性別:PM_MALE or PM_FEMALE(MYSTATUSから取得してワークとして利用)
   u8    server_version;     ///< ROMのサーババージョン
-  COMM_BTL_POKE_RESULT  party_state[DEMO_POKEPARTY_MAX]; ///< ポケモンの戦闘結果状態をもらうための配列
+  COMM_BTL_POKE_RESULT  party_state[DEMO_POKEPARTY_MAX]; ///< ポケモンの戦闘結果状態をもらうための配列( enum BtlPokeStatCode_tag )
 } COMM_BTL_DEMO_TRAINER_DATA;
 
 //--------------------------------------------------------------

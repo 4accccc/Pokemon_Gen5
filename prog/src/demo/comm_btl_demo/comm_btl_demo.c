@@ -1589,6 +1589,11 @@ BOOL type_is_start( u8 type )
 //-----------------------------------------------------------------------------
 static u32 PokeParaToBallAnim( POKEMON_PARAM* pp, const COMM_BTL_POKE_RESULT poke )
 {
+  if( pp == NULL )
+  {
+    return OBJ_ANM_ID_BALL_NULL; // ボールなし
+  }
+
   // バトル結果情報を元にボールアイコンの形状を返す
   switch(poke){
   case COMM_BTL_DEMO_POKE_NONE:     ///< いない
@@ -1602,10 +1607,6 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp, const COMM_BTL_POKE_RESULT pok
   }
 
 #if 0
-  if( pp == NULL )
-  {
-    return OBJ_ANM_ID_BALL_NULL; // ボールなし
-  }
 
   if( PP_Get( pp, ID_PARA_hp, NULL ) == 0 )
   {
