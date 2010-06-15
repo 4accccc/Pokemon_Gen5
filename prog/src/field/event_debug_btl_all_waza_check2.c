@@ -163,17 +163,10 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
     {
       FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
       HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
-      POKEPARTY* pe = PokeParty_AllocPartyWork( heapID );
-      POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
       BTL_FIELD_SITUATION sit;
       BATTLE_SETUP_PARAM* bp;
       GMEVENT * new_event;
 
-      PokeParty_Init( pe, 1 );
-      PP_Clear( pp );
-      PP_Setup( pp, 1, 5, 0 );
-      PokeParty_Add( pe, pp );
-      
       bp = BATTLE_PARAM_Create( HEAPID_PROC );
 
       BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
@@ -185,9 +178,6 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_HIT100PER );
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_SKIP_BTLIN ); // ìoèÍÉAÉjÉÅîÚÇŒÇ∑
       
-      GFL_HEAP_FreeMemory( pp );
-      GFL_HEAP_FreeMemory( pe );
-
       new_event = EVENT_WildPokeBattle( gsys, fieldmap, bp, FALSE, ENC_TYPE_NORMAL );
     
       GMEVENT_CallEvent( event, new_event );

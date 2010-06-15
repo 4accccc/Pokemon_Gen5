@@ -199,13 +199,12 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     {
       GMEVENT * new_event;
 
-#if 1      
+#if 0      
       {
         // 技エフェクトOFF
         GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
         SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
         CONFIG* cfg = SaveData_GetConfig( sv ); 
-
         CONFIG_SetWazaEffectMode( cfg, WAZAEFF_MODE_OFF );
       }
 #endif

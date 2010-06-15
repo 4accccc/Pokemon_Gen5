@@ -163,6 +163,10 @@ static GMEVENT_RESULT BtlAllWazaCheck( GMEVENT* event, int* seq, void* wk_adrs )
       PokeParty_Init( pe, 1 );
       PP_Clear( pp );
       PP_Setup( pp, 1, 5, 0 );
+      PP_SetWazaPos( pp, wk->count, 0 );
+      PP_SetWazaPos( pp, WAZANO_NULL, 1 );
+      PP_SetWazaPos( pp, WAZANO_NULL, 2 );
+      PP_SetWazaPos( pp, WAZANO_NULL, 3 );
       PokeParty_Add( pe, pp );
       
       bp = BATTLE_PARAM_Create( HEAPID_PROC );
