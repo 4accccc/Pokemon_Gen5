@@ -3328,7 +3328,7 @@ static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレイナーデータから戦えるポケモンの残り数を取得
+ *	@brief  トレーナーデータから戦えるポケモンの残り数を取得
  *
  *	@param	const COMM_BTL_DEMO_TRAINER_DATA* trdata 
  *
