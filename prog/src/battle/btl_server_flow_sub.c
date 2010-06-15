@@ -1015,7 +1015,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         targetArea = AREA_BACK;
       }
     }
-    BTL_N_Printf( DBGSTR_SVFL_TrainerItemTarget, targetIdx, targetPokeID );
+    BTL_N_Printf( DBGSTR_SVFL_TrainerItemTarget, targetIdx, targetPokeID, targetPos );
   }
 
   // ○○は××を使った！  メッセージ
@@ -1051,7 +1051,8 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
 
   // その場に効く道具か判定
   {
-    BOOL fEffective = (targetArea == AREA_FRONT);
+    // 前衛にあたるIndexで生きてるなら何でも効く
+    BOOL fEffective = ((targetArea == AREA_FRONT) && (targetPos!=BTL_POS_NULL));
 
     if( fEffective == FALSE )
     {
@@ -1062,13 +1063,20 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         ){
           u8 range = ItemEffectTable[i].range;
 
+          // アイテム自体が何処でもOK型 -> 効く
           if( range == RANGE_FULL ){
             fEffective = TRUE;
             break;
           }
-          if( (range == RANGE_VIEW) && (targetArea < AREA_RESERVE) ){
-            fEffective = TRUE;
-            break;
+          // アイテムが可視範囲のみOK型 -> 控えでなく生きてるなら効く
+          if( range == RANGE_VIEW )
+          {
+            if( (targetArea < AREA_RESERVE)
+            &&  (targetPos != BTL_POS_NULL)
+            ){
+              fEffective = TRUE;
+              break;
+            }
           }
         }
       }
@@ -1076,6 +1084,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
 
     // 効かないよ
     if( !fEffective ){
+      TAYA_Printf("アイテムの効果がある範囲に居ない、あるいは生存してない targetIdx=%d\n", targetIdx);
       SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_ItemNoEffPos );
       return TRITEM_RESULT_NORMAL;
     }
@@ -1085,6 +1094,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   {
     // シューターのかっこいい演出
     if( targetPos != BTL_POS_NULL ){
+      TAYA_Printf("この時点でpos=%d\n", targetPos);
       SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_SHOOTER_EFFECT );
     }
 
