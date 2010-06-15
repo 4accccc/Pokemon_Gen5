@@ -1008,7 +1008,7 @@ $levelwaza_learninglevel_hash = {
 		1,
 		1,
 		1,
-		7,
+		1,
 		1,
 		7,
 		10,
@@ -5893,8 +5893,8 @@ $levelwaza_learninglevel_hash = {
 		1,
 		1,
 		1,
-		8,
 		5,
+		8,
 		13,
 		16,
 		20,
@@ -8692,7 +8692,7 @@ $levelwaza_learninglevel_hash = {
 		31,
 		36,
 		39,
-		77,
+		44,
 		47,
 		52,
 	],
@@ -8923,7 +8923,7 @@ $levelwaza_learninglevel_hash = {
 		40,
 		43,
 	],
-	"ブロッコル" => [
+	"ヤナッキー" => [
 		1,
 		1,
 		1,
@@ -8946,7 +8946,7 @@ $levelwaza_learninglevel_hash = {
 		40,
 		43,
 	],
-	"スチームル" => [
+	"バオッキー" => [
 		1,
 		1,
 		1,
@@ -8969,7 +8969,7 @@ $levelwaza_learninglevel_hash = {
 		40,
 		43,
 	],
-	"ファウント" => [
+	"ヒヤッキー" => [
 		1,
 		1,
 		1,
@@ -9231,7 +9231,7 @@ $levelwaza_learninglevel_hash = {
 		50,
 		55,
 	],
-	"ニューモン" => [
+	"ドッコラー" => [
 		1,
 		1,
 		4,
@@ -9249,7 +9249,7 @@ $levelwaza_learninglevel_hash = {
 		46,
 		49,
 	],
-	"ユーダーン" => [
+	"ドテッコツ" => [
 		1,
 		1,
 		1,
@@ -9269,7 +9269,7 @@ $levelwaza_learninglevel_hash = {
 		53,
 		57,
 	],
-	"シハンドン" => [
+	"ローブシン" => [
 		1,
 		1,
 		1,
@@ -10174,7 +10174,7 @@ $levelwaza_learninglevel_hash = {
 		47,
 		55,
 	],
-	"ツルリ" => [
+	"バニプッチ" => [
 		1,
 		4,
 		7,
@@ -10191,7 +10191,7 @@ $levelwaza_learninglevel_hash = {
 		49,
 		53,
 	],
-	"ツルット" => [
+	"バニリッチ" => [
 		1,
 		1,
 		1,
@@ -10211,7 +10211,7 @@ $levelwaza_learninglevel_hash = {
 		53,
 		58,
 	],
-	"ツルツルダ" => [
+	"バイバニラ" => [
 		1,
 		1,
 		1,
@@ -11442,7 +11442,7 @@ $levelwaza_learninglevel_hash = {
 		79,
 		85,
 	],
-	"ライa" => [
+	"キュレムa" => [
 		1,
 		1,
 		8,
@@ -11459,7 +11459,7 @@ $levelwaza_learninglevel_hash = {
 		85,
 		92,
 	],
-	"ダルタニス" => [
+	"ケルディオ" => [
 		1,
 		1,
 		7,
@@ -11475,7 +11475,7 @@ $levelwaza_learninglevel_hash = {
 		67,
 		73,
 	],
-	"メロディアvoice" => [
+	"メロイアvoice" => [
 		1,
 		6,
 		11,
@@ -11492,7 +11492,7 @@ $levelwaza_learninglevel_hash = {
 		78,
 		85,
 	],
-	"メロディアstep" => [
+	"メロイアstep" => [
 		1,
 		6,
 		11,

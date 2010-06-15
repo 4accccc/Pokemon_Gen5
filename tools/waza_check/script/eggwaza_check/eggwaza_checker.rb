@@ -95,7 +95,6 @@ class EggWazaChecker
     @father_list.uniq! # èdï°Çîrèú
   end
 
-
   def check_eggwaza_all
     @eggwaza_list.each do |waza_name|
       check_eggwaza( waza_name )

@@ -37,9 +37,7 @@ def OutputTeachWazaHash_from_PersonalData( personal_filename, output_path )
   # èoóÕ
   output_filename = output_path + "teachwaza_hash.rb"
   output_file = File::open( output_filename, "w" )
-  out_data.each do |data|
-    output_file.puts( out_data )
-  end
+  output_file.puts( out_data )
   output_file.close
 
 end

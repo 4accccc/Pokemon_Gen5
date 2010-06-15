@@ -5,7 +5,7 @@
 
 # 列番号
 COLUMN_ITEM_NAME = 2
-COLUMN_WAZA_NAME = 21
+COLUMN_WAZA_NAME = 22
 
 
 def OutputMachineWazaNameHash( item_filename, output_path )
@@ -23,6 +23,9 @@ def OutputMachineWazaNameHash( item_filename, output_path )
     items = line.split( /\s/ )
     item_name = items[ COLUMN_ITEM_NAME ]
     waza_name = items[ COLUMN_WAZA_NAME ]
+    if item_name == nil then
+      next
+    end
     if item_name.include?( "わざマシン" ) || item_name.include?( "ひでんマシン" ) then
       machine_name_list << item_name
       waza_name_list << waza_name

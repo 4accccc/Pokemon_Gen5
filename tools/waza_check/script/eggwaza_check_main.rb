@@ -58,3 +58,23 @@ $mons_fullname_list.each do |mons_name|
   output_file.puts( result )
 end
 output_file.close
+
+
+# テスト用
+=begin
+route = GetRouteOf( "ベトベター", "こわいかお" )
+puts route
+=end
+
+=begin
+checker = EggWazaChecker.new
+result = checker.partial_analyze( "マッギョ", "こわいかお" )
+puts result.get( "こわいかお" )
+=end
+
+=begin
+personal = PersonalAccessor.new
+if personal.check_waza_learning_except_eggwaza( "ベトベター", 100, "こわいかお" ) then
+  puts "!!!"
+end
+=end

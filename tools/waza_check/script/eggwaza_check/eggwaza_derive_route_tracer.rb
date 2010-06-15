@@ -12,6 +12,7 @@ class EggWazaDeriveRouteTracer
     @next_route = Array.new
     @route_found_flag = false
     @vaild_route = nil
+    @checked_mons_list = Array.new
   end
 
   def init_trace( mons_name, waza_name )
@@ -46,16 +47,45 @@ class EggWazaDeriveRouteTracer
     mons_name = route.last
     waza_checker = EggWazaChecker.new
     result = waza_checker.partial_analyze( mons_name, [@target_waza_name] )
+    @checked_mons_list << mons_name # チェック済みリストに登録
     if result.is_valid( @target_waza_name ) then
       @route_found_flag = true
       @valid_route = route
       @valid_route.add( result.get( @target_waza_name ) )
     else
       father_list = waza_checker.get_father_list
+      father_list = self.delete_checked_monsters_from_father_list( father_list ) # 再帰的に出現するチェック済みのルートを枝刈り
+      father_list = self.delete_invalid_monsters_from_father_list( father_list ) # 覚える見込みのない父候補を除外
+
       if father_list != nil then
         self.add_next_route( route, father_list )
       end
     end
+  end
+
+  def delete_checked_monsters_from_father_list( father_list )
+    new_father_list = Array.new
+    if father_list != nil then
+      father_list.each do |father|
+        if @checked_mons_list.include?( father ) == false then
+          new_father_list << father
+        end
+      end
+    end
+    return new_father_list
+  end
+
+  def delete_invalid_monsters_from_father_list( father_list )
+    new_father_list = Array.new
+    personal_accessor = PersonalAccessor.new
+    if father_list != nil then
+      father_list.each do |father|
+        if personal_accessor.check_waza_learning( father, 100, @target_waza_name ) then
+          new_father_list << father
+        end
+      end
+    end
+    return new_father_list
   end
 
   def add_next_route( route, father_list )
