@@ -9850,43 +9850,46 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     u8 msgFlag = FALSE;
 
-    if( (BTL_SVFTOOL_IsFloatingPoke(flowWk, targetPokeID))
-    &&  (!BPP_CheckSick(bppTarget, WAZASICK_FREEFALL))
-    &&  (!BTL_SVFTOOL_IsFreeFallUserPoke(flowWk, targetPokeID))
-    ){
+    // なんにせよフリーフォール実行状態のポケモンには効かない
+    if( !BTL_SVFTOOL_IsFreeFallUserPoke(flowWk, targetPokeID) )
+    {
+      // ふゆう状態でフリーフォールされてる状態じゃないポケ対象
+      if( (BTL_SVFTOOL_IsFloatingPoke(flowWk, targetPokeID))
+      &&  (!BPP_CheckSick(bppTarget, WAZASICK_FREEFALL))
+      ){
+        // うちおとす状態にする
+        BTL_HANDEX_PARAM_ADD_SICK* param;
 
-      // うちおとす状態にする
-      BTL_HANDEX_PARAM_ADD_SICK* param;
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+          param->pokeID = targetPokeID;
+          param->sickID = WAZASICK_FLYING_CANCEL;
+          param->sickCont = BPP_SICKCONT_MakePermanent();
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
+          HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
+        msgFlag = TRUE;
 
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-        param->pokeID = targetPokeID;
-        param->sickID = WAZASICK_FLYING_CANCEL;
-        param->sickCont = BPP_SICKCONT_MakePermanent();
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
-        HANDEX_STR_AddArg( &param->exStr, targetPokeID );
-      BTL_SVF_HANDEX_Pop( flowWk, param );
-      msgFlag = TRUE;
+        // でんじふゆう状態を消す
+        if( BPP_CheckSick(bppTarget, WAZASICK_FLYING) )
+        {
+          BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+            cure_param->poke_cnt = 1;
+            cure_param->pokeID[0] = targetPokeID;
+            cure_param->fStdMsgDisable = TRUE;
+            cure_param->sickCode = WAZASICK_FLYING;
+          BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+        }
 
-      // でんじふゆう状態を消す
-      if( BPP_CheckSick(bppTarget, WAZASICK_FLYING) )
-      {
-        BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-          cure_param->poke_cnt = 1;
-          cure_param->pokeID[0] = targetPokeID;
-          cure_param->fStdMsgDisable = TRUE;
-          cure_param->sickCode = WAZASICK_FLYING;
-        BTL_SVF_HANDEX_Pop( flowWk, cure_param );
-      }
-
-      // テレキネシス状態を消す
-      if( BPP_CheckSick(bppTarget, WAZASICK_TELEKINESIS) )
-      {
-        BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-          cure_param->poke_cnt = 1;
-          cure_param->pokeID[0] = targetPokeID;
-          cure_param->fStdMsgDisable = TRUE;
-          cure_param->sickCode = WAZASICK_TELEKINESIS;
-        BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+        // テレキネシス状態を消す
+        if( BPP_CheckSick(bppTarget, WAZASICK_TELEKINESIS) )
+        {
+          BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+            cure_param->poke_cnt = 1;
+            cure_param->pokeID[0] = targetPokeID;
+            cure_param->fStdMsgDisable = TRUE;
+            cure_param->sickCode = WAZASICK_TELEKINESIS;
+          BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+        }
       }
 
       // そらを飛んでたらキャンセルさせる
