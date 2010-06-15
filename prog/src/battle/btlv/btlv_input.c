@@ -1288,6 +1288,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   case BTLV_INPUT_SCRTYPE_STANDBY:
     biw->hit = GFL_UI_TP_HIT_NONE;
 
+    if( biw->main_loop_tcb_flag == TRUE )
+    { 
+      BTLV_EFFECT_SetCameraWorkStop();
+    }
+
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
       MtxFx22 mtx;
@@ -1306,11 +1311,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
-
-      if( biw->main_loop_tcb_flag == TRUE )
-      { 
-        BTLV_EFFECT_SetCameraWorkStop();
-      }
 
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
