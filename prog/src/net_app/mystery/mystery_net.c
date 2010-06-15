@@ -1173,6 +1173,11 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           OS_TPrintf( "受信できないバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
           }
         }
+        else
+        {
+          p_nd_data->recvflag[i]  = FALSE;
+          OS_TPrintf( "空なので受信できない\n" );
+        }
       }
 
       //ROMバージョンがあっている本当に受信可能なものの数を取得
@@ -1238,9 +1243,10 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     else
     { 
-      //ありえないが念のため。ファイルがないときは終了
+      //ファイルがないときは終了
       p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
-      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_NOT_FOUND_FILES, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_COMPLETE, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
+      break;
     }
 
     *p_seq  = SEQ_GET_FILE;
