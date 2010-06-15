@@ -68,6 +68,7 @@ def CreateSeedPokeHash_from_PersonalData( personal_parser )
   seed_poke_hash[ "ニドラン♂" ] << "ニドラン♀"
   seed_poke_hash[ "ニドリーノ" ] << "ニドラン♀"
   seed_poke_hash[ "ニドキング" ] << "ニドラン♀"
+  seed_poke_hash[ "マナフィ" ] << "フィオネ"
 
   return seed_poke_hash
 end
