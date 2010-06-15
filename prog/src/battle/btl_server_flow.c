@@ -161,7 +161,7 @@ static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, 
 static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam );
 static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos );
-static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza, u8* fTameResult );
+static TameWazaResult scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza );
 static BOOL scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_POKESET* targetRec, WazaID waza );
 static void scproc_TameLockClear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scproc_FreeFall_Start( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL* fFailMsgDisped );
@@ -422,7 +422,7 @@ static BOOL scEvent_CheckTameFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scEvent_TameStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza, u8* hideTargetPokeID, BOOL* fFailMsgDisped );
 static void scEvent_TameSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec, WazaID waza );
+static BOOL scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec, WazaID waza );
 static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_IsCalcHitCancel( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static u32 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
@@ -3606,10 +3606,19 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   scproc_WazaExeRecordUpdate( wk, waza );
 
   // １ターン溜めワザの発動チェック
+  if( WAZADATA_GetFlag(waza, WAZAFLAG_Tame) )
   {
-    u8 fTameResult = FALSE;
-    if( scproc_Fight_TameWazaExe(wk, attacker, targetRec, waza, &fTameResult) ){
-      return fTameResult;
+    TameWazaResult tameResult = scproc_Fight_TameWazaExe( wk, attacker, targetRec, waza );
+    switch( tameResult ){
+    case TAMEWAZA_START_FAIL:    ///< 溜め開始ターン：失敗
+      return FALSE;
+    case TAMEWAZA_START_OK:      ///< 溜め開始ターン：成功
+      return TRUE;
+    case TAMEWAZA_RELEASE_FAIL:  ///< 溜め解放ターン：失敗
+      return FALSE;
+    case TAMEWAZA_RELEASE_OK:    ///< 溜め解放ターン：成功
+    default:
+      break;
     }
   }
 
@@ -3729,7 +3738,6 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
         scput_Fight_Uncategory( wk, wk->wazaParam, attacker, targetRec );
         break;
       default:
-        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
         break;
       }
     }
@@ -4332,57 +4340,54 @@ static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, WAZAEFF_CTRL* ef
  * @retval  BOOL      溜めターン処理を行った場合TRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza, u8* fTameResult )
+static TameWazaResult scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza )
 {
-  if( WAZADATA_GetFlag(waza, WAZAFLAG_Tame) )
+  if( !BPP_CheckSick(attacker, WAZASICK_TAMELOCK) )
   {
-    if( !BPP_CheckSick(attacker, WAZASICK_TAMELOCK) )
+    BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+
+    // 溜めターン失敗判定
+    if( scEvent_CheckTameFail(wk, attacker, targetRec) )
     {
-      BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
-
-      // 溜めターン失敗判定
-      if( scEvent_CheckTameFail(wk, attacker, targetRec) )
-      {
-        *fTameResult = FALSE;
-        scPut_WazaFail( wk, attacker, waza );
-        return TRUE;
-      }
-
-      *fTameResult = TRUE;
-
-      // 溜めターンスキップ判定
-      if( !scEvent_CheckTameTurnSkip(wk, attacker, waza) )
-      {
-        if( scproc_TameStartTurn(wk, attacker, atPos, targetRec, waza) )
-        {
-          BPP_SICK_CONT  sickCont = BPP_SICKCONT_MakeTurnParam( 2, waza );
-          scPut_AddSick( wk, attacker, WAZASICK_TAMELOCK, sickCont );
-        }
-        // スキップできない時はここでreturn
-        return TRUE;
-      }
-
-      if( !scproc_TameStartTurn(wk, attacker, atPos, targetRec, waza) ){
-        return FALSE;
-      }
-      {
-        u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-        scEvent_TameSkip( wk, attacker, waza );
-        BTL_Hem_PopState( &wk->HEManager, hem_state );
-      }
+      scPut_WazaFail( wk, attacker, waza );
+      return TAMEWAZA_START_FAIL;
     }
 
+    // 溜めターンスキップ判定
+    if( !scEvent_CheckTameTurnSkip(wk, attacker, waza) )
+    {
+      if( scproc_TameStartTurn(wk, attacker, atPos, targetRec, waza) )
+      {
+        BPP_SICK_CONT  sickCont = BPP_SICKCONT_MakeTurnParam( 2, waza );
+        scPut_AddSick( wk, attacker, WAZASICK_TAMELOCK, sickCont );
+      }
+      // スキップしない時はここでreturn
+      return TAMEWAZA_START_OK;
+    }
+
+    if( !scproc_TameStartTurn(wk, attacker, atPos, targetRec, waza) ){
+      return TAMEWAZA_START_FAIL;
+    }
+    {
+      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+      scEvent_TameSkip( wk, attacker, waza );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
+    }
+  }
+
+  {
+    BOOL fSucceed;
     wazaEffCtrl_SetEffectIndex( wk->wazaEffCtrl, BTLV_WAZAEFF_TAME_RELEASE );
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-      scEvent_TameRelease( wk, attacker, targetRec, waza );
-//      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      fSucceed = scEvent_TameRelease( wk, attacker, targetRec, waza );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
     }
     BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_TAMEHIDE_OFF );
     scproc_TameLockClear( wk, attacker );
+
+    return (fSucceed)? TAMEWAZA_RELEASE_OK : TAMEWAZA_RELEASE_FAIL;
   }
-  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -8600,9 +8605,9 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     wk->simulationCounter = 0;
 
 #ifdef PM_DEBUG
-    OS_SetPrintOutput_Arm9( 1 );
+//    OS_SetPrintOutput_Arm9( 1 );
 //    TAYA_Printf( " ============= turn END =============\n" );
-    OS_SetPrintOutput_Arm9( 0 );
+//    OS_SetPrintOutput_Arm9( 0 );
 #endif
     return FALSE;
   }
@@ -8720,7 +8725,6 @@ static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, Btl
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_TurnCheck( wk, BPP_GetID(bpp), event_type );
-//      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
 
       scproc_CheckDeadCmd( wk, bpp );
@@ -10623,15 +10627,17 @@ static void scEvent_TameSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec, WazaID waza )
+static BOOL scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec, WazaID waza )
 {
   const BTL_POKEPARAM* target;
   u32 targetCnt, i;
+  u8 fFail = FALSE;
 
   targetCnt = BTL_POKESET_GetCount( rec );
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, targetCnt );
     for(i=0; i<targetCnt; ++i)
     {
@@ -10639,7 +10645,10 @@ static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(target) );
     }
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_TAME_RELEASE );
+    fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
   BTL_EVENTVAR_Pop();
+
+  return (!fFail);
 }
 //----------------------------------------------------------------------------------
 /**

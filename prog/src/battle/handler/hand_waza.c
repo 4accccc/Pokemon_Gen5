@@ -10617,6 +10617,14 @@ static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8 targetPokeID = BPP_FreeFallCounterToPokeID( BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) );
+    if( (targetPokeID == BTL_POKEID_NULL)
+    ||  (BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) == BTL_POS_NULL)
+    ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    }
+
     BTL_SVFRET_FreeFallRelease( flowWk, pokeID );
   }
 }

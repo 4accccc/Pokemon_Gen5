@@ -63,11 +63,13 @@ typedef enum {
  */
 typedef enum {
 
-  TAMEWAZA_NONE = 0,    ///< 溜めワザではない
-  TAMEWAZA_START,       ///< 溜めワザ：発動ターン
-  TAMEWAZA_RELEASE,     ///< 溜めワザ：リリースターン
+  TAMEWAZA_NONE = 0,      ///< 溜めワザではない
+  TAMEWAZA_START_FAIL,    ///< 溜め開始ターン：失敗
+  TAMEWAZA_START_OK,      ///< 溜め開始ターン：成功
+  TAMEWAZA_RELEASE_FAIL,  ///< 溜め解放ターン：失敗
+  TAMEWAZA_RELEASE_OK,    ///< 溜め解放ターン：成功
 
-}TameWazaSeq;
+}TameWazaResult;
 
 /**
  *  ふきとばし系のワザ処理パターン
@@ -91,7 +93,6 @@ typedef struct {
 /**
  * ヒットチェックパラメータ
  */
-
 typedef struct {
 
   u8    countMax;         ///< 最大ヒット回数
@@ -101,7 +102,6 @@ typedef struct {
   u8    fPluralHitWaza;   ///< 複数回ヒットするワザか
   u8    fPutEffectCmd;    ///< ワザエフェクト生成済み
   u8    pluralHitAffinity;
-
 
 }HITCHECK_PARAM;
 
