@@ -1213,6 +1213,9 @@ _RET
 //--------------------------------------------------------------
 sub_battle_comm_multi:
 {
+  DEFINE_LOCAL result
+  DEFINE_LOCAL recv_result
+
   //対戦前台詞(見栄えの為、上のOBJから
   _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_UR, 1, BSW_TRAIN_OBJID_TRAINER_1, BSW_NULL )
   
@@ -1255,14 +1258,53 @@ sub_battle_comm_multi:
   
   //戦闘録画データを格納
   _BSUBWAY_TOOL( BSWSUB_STORE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
-    
+  
   //バトル録画呼び出し うざいとの事で無効
 //_TIME_WAIT( 15 ) //間を入れる
 //_BSUBWAY_TOOL( BSWSUB_CALL_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  //戦闘結果取得
+  _BSUBWAY_TOOL( BSWSUB_GET_BATTLE_RESULT, BSW_NULL, BSW_NULL, result )
+  
+  //BTS要望422 どちらかがデバッグ操作で強制勝利したら勝ちにして欲しい
+  _BSUBWAY_TOOL( BSWTOOL_DEBUG_CHK_DEBUG_ROM, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == TRUE THEN //DEBUG ROM
+    //受信バッファクリア
+    _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_DEBUG_BATTLE_RESULT , BSW_NULL, comm_ret )
+   
+    IF $comm_ret == FALSE THEN
+      $SCWK_ANSWER = BSW_BTL_RESULT_COMM_ERROR
+      _RET
+    ENDIF
+    
+    _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_BATTLE_RESULT, result, BSW_NULL )
+    
+    _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+    
+    IF $comm_ret == TRUE THEN
+      $SCWK_ANSWER = BSW_BTL_RESULT_COMM_ERROR
+      _RET
+    ENDIF
+    
+    _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_BATTLE_RESULT, BSW_NULL, recv_result )
+    
+    _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+    
+    IF $comm_ret == TRUE THEN
+      $SCWK_ANSWER = BSW_BTL_RESULT_COMM_ERROR
+      _RET
+    ENDIF
+    
+    IF $result == BSW_BTL_RESULT_WIN || $recv_result == BSW_BTL_RESULT_WIN THEN
+      $result = BSW_BTL_RESULT_WIN
+    ENDIF
+  ENDIF
+  
   //結果をSCWK_ANSWERへ
-  _BSUBWAY_TOOL( BSWSUB_GET_BATTLE_RESULT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-//  $SCWK_ANSWER = SCR_BATTLE_RESULT_LOSE kaga
+  $SCWK_ANSWER = $result
 }
 _RET
 

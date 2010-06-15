@@ -41,6 +41,7 @@ enum
   FC_BSUBWAY_PLAY_MODE,
   FC_BSUBWAY_HOME_SELECT_BOX_TEMOTI,
   FC_BSUBWAY_HOME_SELECT_POKEMON,
+  FC_BSUBWAY_BATTLE_RESULT,
   FC_BSUBWAY_MAX,
 };
 
@@ -80,6 +81,9 @@ static void commCmd_RecvBufHomeSelectBoxTemoti(
 static void commCmd_RecvBufHomeSelectPokemon(
     int netID, const int size, const void *pData,
     void *pWork, GFL_NETHANDLE *pNetHandle );
+static void commCmd_RecvBufBattleResult(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle );
 
 //======================================================================
 //  通信データ
@@ -96,6 +100,7 @@ static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_CMD_MAX] =
   {commCmd_RecvBufPlayMode,NULL},
   {commCmd_RecvBufHomeSelectBoxTemoti,NULL},
   {commCmd_RecvBufHomeSelectPokemon,NULL},
+  {commCmd_RecvBufBattleResult,NULL},
 };
 
 /*
@@ -495,6 +500,19 @@ static void commSendHomeSelectPokemon(
 
 //--------------------------------------------------------------
 /**
+ * @brief  バトルサブウェイ　通信マルチ　戦闘結果を送信
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void commSendBattleResult( BSUBWAY_SCRWORK *bsw_scr, u16 result )
+{
+  u32 *pSendBuf = (u32*)bsw_scr->send_buf;
+  *pSendBuf = result;
+}
+
+//--------------------------------------------------------------
+/**
  * バトルサブウェイ　データ送信
  * @param bsw_scr BSUBWAY_SCRWORK
  * @retval BOOL TRUE=送信成功
@@ -538,11 +556,15 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
     command = FC_BSUBWAY_HOME_SELECT_POKEMON;
     commSendHomeSelectPokemon( bsw_scr, param );
     break;
+  case BSWAY_COMM_BATTLE_RESULT:
+    command = FC_BSUBWAY_BATTLE_RESULT;
+    commSendBattleResult( bsw_scr, param );
+    break;
   default:
     GF_ASSERT( 0 );
     return( FALSE );
   }
-
+  
 #ifdef DEBUG_BSW_PRINT  
   KAGAYA_Printf( "bsubway comn send : cmdNo(%d) buf 0:%d, 1:%d, 2:%d\n",
       command-GFL_NET_CMD_BSUBWAY,
@@ -1072,6 +1094,46 @@ static void commCmd_RecvBufHomeSelectPokemon(
   KAGAYA_Printf( "netID = %d\n", netID );
 #endif
   
+  ret = 0;
+  num = 0;
+  bsw_scr->comm_receive_count++;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
+#endif
+  
+  //自分のデータは受け取らない
+  if( GFL_NET_SystemGetCurrentID() != netID ){
+    u32 result = (u32)recv_buf[0];
+    bsw_scr->comm_check_work = result;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  recv_bufのバトルサブウェイ戦闘結果を取得
+ * @param   id_no    送信者のネットID
+ * @param   size    受信データサイズ
+ * @param   pData    受信データ
+ * @param   work    FRONTIER_SYSTEMへのポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void commCmd_RecvBufBattleResult(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle )
+{
+  int num;
+  u16 ret;
+  BSUBWAY_SCRWORK *bsw_scr = pWork;
+  const u16 *recv_buf = pData;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "バトルサブウェイ　戦闘結果を受信\n" );
+  KAGAYA_Printf( "netID = %d\n", netID );
+#endif
+   
   ret = 0;
   num = 0;
   bsw_scr->comm_receive_count++;

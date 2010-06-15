@@ -916,6 +916,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     #endif
     break;
+  //デバッグROMか
+  case BSWTOOL_DEBUG_CHK_DEBUG_ROM:
+    #ifdef PM_DEBUG
+    *ret_wk = TRUE;
+    #else
+    *ret_wk = FALSE;
+    #endif
+    break;
   //----ワーク依存
   //プレイモード別復帰位置セット
   case BSWSUB_SET_PLAY_MODE_LOCATION:
@@ -1103,11 +1111,23 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       GF_ASSERT( 0 );
       *ret_wk = BSW_BTL_RESULT_LOSE;
     }else{
-//    BtlResult res = GAMEDATA_GetLastBattleResult( gdata );
       BtlResult res = bsw_scr->btl_setup_param->result;
       BtlCompetitor cp = BTL_COMPETITOR_SUBWAY;
       
       KAGAYA_Printf( "BSW 戦闘結果 %d\n", res );
+      
+      #ifdef PM_DEBUG
+      //BTS 要望422 バトルサブウェイでも強制勝利入れてほしい
+      // デバッグ都合上、特定キー押しながら逃げた時に結果コード書き換え
+      if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L|PAD_BUTTON_R) )
+      {
+        res = BTL_RESULT_WIN;
+        
+        if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){   // X押し = 負け
+          res = BTL_RESULT_LOSE;
+        }
+      }
+      #endif
       
       if( res == BTL_RESULT_WIN ){
         *ret_wk = BSW_BTL_RESULT_WIN;
@@ -2737,7 +2757,10 @@ void BSUBWAY_SCRWORK_DebugCreateWorkTrNo(
     BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr, sex );
   }
   
-  //対戦トレーナーセット
+  //対戦トレーナー抽選
+  BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
+  
+  //対戦トレーナー　指定番号セット
   {
     int i = 0;
     u16 stage = 0;
