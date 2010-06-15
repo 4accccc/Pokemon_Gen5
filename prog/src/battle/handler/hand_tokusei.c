@@ -3406,13 +3406,20 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   else if( (!BTL_MAINUTIL_IsFriendPokeID(inPokeID, pokeID))
   &&        (work[0] == 1)
   ){
-    const BTL_POKEPARAM* inPoke = BTL_SVFTOOL_GetPokeParam( flowWk, inPokeID );
-    PokeTokusei tok = BPP_GetValue( inPoke, BPP_TOKUSEI );
+    BtlPokePos inPokePos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, inPokeID );
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
 
-    if( !BTL_TABLES_CheckTraceFailTokusei(tok) )
-    {
-      nextTok = tok;
-      targetPokeID = inPokeID;
+    if( (inPokePos != BTL_POS_NULL)
+    &&  BTL_MAINUTIL_CheckTripleHitArea(myPos, inPokePos)
+    ){
+      const BTL_POKEPARAM* inPoke = BTL_SVFTOOL_GetPokeParam( flowWk, inPokeID );
+      PokeTokusei tok = BPP_GetValue( inPoke, BPP_TOKUSEI );
+
+      if( !BTL_TABLES_CheckTraceFailTokusei(tok) )
+      {
+        nextTok = tok;
+        targetPokeID = inPokeID;
+      }
     }
   }
 
@@ -6547,14 +6554,37 @@ static void handler_DarumaMode( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+// いえき確定
+static void handler_DarumaMode_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_GetMonsNo(bpp) == MONSNO_HIHIDARUMA )
+    {
+      BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+        param->pokeID = pokeID;
+        param->formNo = FORMNO_HIHIDARUMA_ACTION;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, BTL_STRID_STD_DarumaOff );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, param );
+    }
+  }
+}
+
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_DarumaMode( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END, handler_DarumaMode   },    // ターンチェック終了ハンドラ
+    { BTL_EVENT_TURNCHECK_END,            handler_DarumaMode            },    // ターンチェック終了ハンドラ
+    { BTL_EVENT_IEKI_FIXED,               handler_DarumaMode_IekiFixed  },
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,    handler_DarumaMode_IekiFixed  },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
+
+
 
 
 //------------------------------------------------------------------------------
