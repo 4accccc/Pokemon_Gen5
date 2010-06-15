@@ -1010,7 +1010,7 @@ static BOOL TESTMODE_ITEM_BattleVideoSaveClear( TESTMODE_WORK *work , const int 
 {
   int i;
   
-	for( i=0; i<SAVE_EXTRA_ID_MAX; i++ ){
+	for( i=SAVE_EXTRA_ID_REC_MINE; i<=SAVE_EXTRA_ID_REC_DL_2; i++ ){
 		if( SaveControl_Extra_Load( work->saveControl_, i, GFL_HEAPID_APP ) == LOAD_RESULT_OK ){
 			SaveControl_Extra_Erase( work->saveControl_, i, GFL_HEAPID_APP );
 		}
