@@ -340,7 +340,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk );
 static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk );
 static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, BtlEventType event_type );
-static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlEventType event_type );
+static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlEventType event_type );
 static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet );
 static u32 scEvent_SickDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, u32 damage );
 static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk );
@@ -8713,11 +8713,13 @@ static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, Btl
   BTL_POKEPARAM* bpp;
   BTL_POKESET_SeekStart( pokeSet );
 
+  scEvent_TurnCheck( wk, BTL_POKEID_NULL, event_type );
+
   while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
   {
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-      scEvent_TurnCheck( wk, bpp, event_type );
+      scEvent_TurnCheck( wk, BPP_GetID(bpp), event_type );
 //      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
 
@@ -8730,10 +8732,10 @@ static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, Btl
 
   return scproc_CheckExpGet( wk );
 }
-static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlEventType event_type )
+static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlEventType event_type )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, pokeID );
     BTL_EVENT_CallHandlers( wk, event_type );
   BTL_EVENTVAR_Pop();
 }

@@ -163,38 +163,41 @@ static const BtlEventHandlerTable* ADD_POS_Negaigoto( u32* numElems )
 // ターンチェック開始ハンドラ
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
-  // 初ターン呼び出し時、これまでの経過ターン数を work[1] に保存
-  if( work[0] == 0 ){
-    work[1] = BTL_SVFTOOL_GetTurnCount( flowWk );
-    work[0] = 1;
-    return;
-  }
-  else
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == BTL_POKEID_NULL )
   {
-    u32 turnCnt = BTL_SVFTOOL_GetTurnCount( flowWk );
-    if( turnCnt > work[1] )
+    // 初ターン呼び出し時、これまでの経過ターン数を work[1] に保存
+    if( work[0] == 0 ){
+      work[1] = BTL_SVFTOOL_GetTurnCount( flowWk );
+      work[0] = 1;
+      return;
+    }
+    else
     {
-      u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
-
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == targetPokeID )
+      u32 turnCnt = BTL_SVFTOOL_GetTurnCount( flowWk );
+      if( turnCnt > work[1] )
       {
-        const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+        u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
 
-        if( !BPP_IsHPFull(target) )
+        if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == targetPokeID )
         {
-          u8 userPokeID = work[ WORKIDX_USER_POKEID ];
-          const BTL_POKEPARAM* user = BTL_SVFTOOL_GetPokeParam( flowWk, userPokeID );
+          const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
-          BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
-          hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, userPokeID );
-            hp_param->pokeID = targetPokeID;
-            hp_param->recoverHP = BTL_CALC_QuotMaxHP( user, 2 );
-            HANDEX_STR_Setup( &hp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Negaigoto );
-            HANDEX_STR_AddArg( &hp_param->exStr, userPokeID );
-          BTL_SVF_HANDEX_Pop( flowWk, hp_param );
+          if( !BPP_IsHPFull(target) )
+          {
+            u8 userPokeID = work[ WORKIDX_USER_POKEID ];
+            const BTL_POKEPARAM* user = BTL_SVFTOOL_GetPokeParam( flowWk, userPokeID );
 
+            BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
+            hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, userPokeID );
+              hp_param->pokeID = targetPokeID;
+              hp_param->recoverHP = BTL_CALC_QuotMaxHP( user, 2 );
+              HANDEX_STR_Setup( &hp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Negaigoto );
+              HANDEX_STR_AddArg( &hp_param->exStr, userPokeID );
+            BTL_SVF_HANDEX_Pop( flowWk, hp_param );
+
+          }
+          BTL_EVENT_FACTOR_Remove( myHandle );
         }
-        BTL_EVENT_FACTOR_Remove( myHandle );
       }
     }
   }
@@ -372,28 +375,33 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     WORKIDX_WAZAID,
   };
 
-  u8 turnCnt = BTL_SVFTOOL_GetTurnCount( flowWk );
-  if( turnCnt >= work[WORKIDX_TURN] )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == BTL_POKEID_NULL )
   {
-    BTL_HANDEX_PARAM_DELAY_WAZADMG* param;
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    u8 turnCnt = BTL_SVFTOOL_GetTurnCount( flowWk );
+    if( turnCnt >= work[WORKIDX_TURN] )
+    {
+      u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
+      if( targetPokeID != BTL_POKEID_NULL )
+      {
+        BTL_HANDEX_PARAM_DELAY_WAZADMG* param;
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-    u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
-
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, work[WORKIDX_USER_POKEID] );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
-      HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
-      HANDEX_STR_AddArg( &msg_param->str, work[ WORKIDX_WAZAID ] );
-    BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, work[WORKIDX_USER_POKEID] );
+          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
+          HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
+          HANDEX_STR_AddArg( &msg_param->str, work[ WORKIDX_WAZAID ] );
+        BTL_SVF_HANDEX_Pop( flowWk, msg_param );
 
 
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
-      param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
-      param->targetPokeID = targetPokeID;
-      param->wazaID = work[ WORKIDX_WAZAID ];
-    BTL_SVF_HANDEX_Pop( flowWk, param );
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
+          param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
+          param->targetPokeID = targetPokeID;
+          param->wazaID = work[ WORKIDX_WAZAID ];
+        BTL_SVF_HANDEX_Pop( flowWk, param );
+      }
 
-    BTL_EVENT_FACTOR_Remove( myHandle );
+      BTL_EVENT_FACTOR_Remove( myHandle );
+    }
   }
 }
 //--------------------------------------------------------------------------------------
