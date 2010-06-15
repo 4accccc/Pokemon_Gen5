@@ -646,7 +646,8 @@ static void PLIST_MSGCB_LvUp( PLIST_WORK *work )
   work->plData->lv_cnt = 0;
   //ウィンドウ閉じない！
   //PLIST_MSG_CloseWindow( work , work->msgWork );
-
+  //キー送りだけ消す
+  PLIST_MSG_ClearKeyCursor( work , work->msgWork );
 }
 void PLIST_MSGCB_LvUp_EvoCheck( PLIST_WORK *work )
 {
@@ -736,8 +737,10 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
 
   case PIPS_WAIT_KEY_1:
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+        GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ||
         GFL_UI_TP_GetTrg() == TRUE )
     {
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       work->subSeq = PIPS_CREATE_WIN_2;
     }
     break;
@@ -784,9 +787,11 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
 
   case PIPS_WAIT_KEY_2:
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+        GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ||
         GFL_UI_TP_GetTrg() == TRUE )
     {
       work->subSeq = PIPS_CHECK_LEARN_WAZA;
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       
     	GFL_BMPWIN_ClearScreen( work->paramWin );
       BmpWinFrame_Clear( work->paramWin , WINDOW_TRANS_ON_V );

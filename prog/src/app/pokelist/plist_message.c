@@ -522,3 +522,13 @@ void PLIST_MSG_DispTimerIcon( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
   msgWork->reqDispTimerIcon = TRUE;
 }
+
+//--------------------------------------------------------------
+//	キー送りクリア
+//--------------------------------------------------------------
+void PLIST_MSG_ClearKeyCursor( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
+{
+  APP_KEYCURSOR_Clear( msgWork->cursorWork , GFL_BMPWIN_GetBmp( msgWork->bmpWin ) , 0xF );
+  GFL_BMPWIN_TransVramCharacter( msgWork->bmpWin );
+}
+
