@@ -24,23 +24,45 @@ DEFINE_LOCAL exit
 DEFINE_LOCAL btl_count    //戦闘回数
 DEFINE_LOCAL download_flg
 
+
+DEFINE_LOCAL dl_data_valid
+DEFINE_LOCAL first_list_ret
+DEFINE_LOCAL rank
+  
 //----------------------------------------------------------------------
 //               受付
 //----------------------------------------------------------------------
 EVENT_START ev_tri_house_reception
 
-  DEFINE_LOCAL dl_data_valid
-  DEFINE_LOCAL first_list_ret
-  DEFINE_LOCAL rank
-  
+  _TALK_OBJ_START()
 
-  //大事なイベントでの通信遮断を開始＝侵入されなくなる
-  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+  //通信切断確認フローを呼び出し
+  _FIELD_COMM_EXIT_EVENT_CALL( SCWK_ANSWER )
 
+  IF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_CANCEL || $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_ERROR THEN
+    //キャンセルまたは通信エラー　→　「またこんど」
+
+    _BALLOONWIN_OBJMSG_POS( msg_trialhouse_005, SCWK_TARGET_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ELSE
+    //切断もしくはそもそもつながっていない　→　トライアルハウス開始
+
+    _CALL sub_tri_house_main
+
+  ENDIF
+
+  //すれちがい常時通信を再開
+  //  ※通信許可判定、多重起動防止などはコマンド内で行われている
+  _REBOOT_BEACON_SEARCH()
+
+EVENT_END
+
+
+sub_tri_house_main:
   //トライアルハウススタート
   _TH_START()
-
-  _TALK_OBJ_START()
 
   {
     DEFINE_LOCAL download_data
@@ -135,10 +157,8 @@ EVENT_START ev_tri_house_reception
 
   //トライアルハウス終了
   _TH_END()
+_RET
 
-  //大事なイベントでの通信遮断を解除
-  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
-EVENT_END
 
 //説明
 explanation:
