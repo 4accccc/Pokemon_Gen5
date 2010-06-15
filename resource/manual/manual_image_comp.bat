@@ -3,6 +3,7 @@ ntrcomp -l -o 002_01_title_lz77.nbfs 002_01_title.nbfs
 ntrcomp -l -o 003_01_titlemenu_lz77.nbfs 003_01_titlemenu.nbfs
 ntrcomp -l -o 003_02_haitatuin_lz77.nbfs 003_02_haitatuin.nbfs
 ntrcomp -l -o 003_03_hushigina_card_lz77.nbfs 003_03_hushigina_card.nbfs
+ntrcomp -l -o 000_01_url_lz77.nbfs 000_01_url.nbfs
 ntrcomp -l -o 004_01_mictest_lz77.nbfs 004_01_mictest.nbfs
 ntrcomp -l -o 006_01_pokecenter_lz77.nbfs 006_01_pokecenter.nbfs
 ntrcomp -l -o 007_01_pasocom_lz77.nbfs 007_01_pasocom.nbfs
@@ -47,6 +48,7 @@ ntrcomp -l -o 020_03_badge_lz77.nbfs 020_03_badge.nbfs
 ntrcomp -l -o 021_01_zukan_lz77.nbfs 021_01_zukan.nbfs
 ntrcomp -l -o 005_01_battle_lz77.nbfs 005_01_battle.nbfs
 ntrcomp -l -o 022_01_aishou_lz77.nbfs 022_01_aishou.nbfs
+ntrcomp -l -o 000_01_wazabunrui_lz77.nbfs 000_01_wazabunrui.nbfs
 ntrcomp -l -o 024_01_oya_lz77.nbfs 024_01_oya.nbfs
 ntrcomp -l -o 024_02_are_lz77.nbfs 024_02_are.nbfs
 ntrcomp -l -o 023_01_status_lz77.nbfs 023_01_status.nbfs

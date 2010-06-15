@@ -3,6 +3,7 @@ ntexconv 002_01_title.bmp -no -bg -bgb -bgf direct
 ntexconv 003_01_titlemenu.bmp -no -bg -bgb -bgf direct
 ntexconv 003_02_haitatuin.bmp -no -bg -bgb -bgf direct
 ntexconv 003_03_hushigina_card.bmp -no -bg -bgb -bgf direct
+ntexconv 000_01_url.bmp -no -bg -bgb -bgf direct
 ntexconv 004_01_mictest.bmp -no -bg -bgb -bgf direct
 ntexconv 006_01_pokecenter.bmp -no -bg -bgb -bgf direct
 ntexconv 007_01_pasocom.bmp -no -bg -bgb -bgf direct
@@ -47,6 +48,7 @@ ntexconv 020_03_badge.bmp -no -bg -bgb -bgf direct
 ntexconv 021_01_zukan.bmp -no -bg -bgb -bgf direct
 ntexconv 005_01_battle.bmp -no -bg -bgb -bgf direct
 ntexconv 022_01_aishou.bmp -no -bg -bgb -bgf direct
+ntexconv 000_01_wazabunrui.bmp -no -bg -bgb -bgf direct
 ntexconv 024_01_oya.bmp -no -bg -bgb -bgf direct
 ntexconv 024_02_are.bmp -no -bg -bgb -bgf direct
 ntexconv 023_01_status.bmp -no -bg -bgb -bgf direct
