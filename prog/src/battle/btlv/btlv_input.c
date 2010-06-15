@@ -2932,7 +2932,7 @@ static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DI
   tsa->dir    = dir;
   tsa->wait   = TSA_WAIT;
 
-  //indexから表示するスクリーンを読み替える予定
+  //indexから表示するスクリーンを読み替える
 
   BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_ScreenAnime, tsa, 0 ), TCB_ScreenAnime_CB );
 
