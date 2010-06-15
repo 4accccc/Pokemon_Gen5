@@ -2674,7 +2674,7 @@ static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys )
 	pRect->sizeView.x = FX32_ONE * SCREEN_WIDTH;
 	pRect->sizeView.y = FX32_ONE * SCREEN_HEIGHT;
 
-	//とりあえずOAM描画はしないので、コメントアウト
+	//OAM描画はしないので、コメントアウト
 //	pSurface->pFuncOamRegister       = CallBackAddOam;
 //	pSurface->pFuncOamAffineRegister = CallBackAddAffine;
 
