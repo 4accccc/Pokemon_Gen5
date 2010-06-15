@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-06-12T17:00:13"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-06-15T16:22:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2141,6 +2141,23 @@ LR→補完&quot;</language>
 上下±1・左右±10</language>
 		<language name="JPN_KANJI" width="240">追加ポケモン数入力 [2:02:３桁:0]
 上下±1・左右±10</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_45">
+		<language name="JPN" width="240">トレーナー選択</language>
+		<language name="JPN_KANJI" width="240">トレーナー選択</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_46">
+		<language name="JPN" width="240">戦うトレーナーを選択：[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="240">戦うトレーナーを選択：[2:02:３桁:0]</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_47">
+		<language name="JPN" width="240">戦うトレーナーを選択
+１人目：[2:02:３桁:0]　２人目：[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="240">戦うトレーナーを選択
+１人目：[2:02:３桁:0]　２人目：[2:02:３桁:1]</language>
 	</row>
 
 	<flowchart-group-list>
