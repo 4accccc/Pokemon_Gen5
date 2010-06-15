@@ -612,7 +612,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
 
   hed.font_handle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
   hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
-  hed.font_size_x = hed.font_size_y;
+  hed.font_size_x = 10; //hed.font_size_y; この値だと文字左端がカーソル移動で消えてしまう
   PRINT_UTIL_Setup(hed.print_util, hed.win);
   hed.print_que = PRINTSYS_QUE_Create( heap );
   
