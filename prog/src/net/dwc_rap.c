@@ -14,6 +14,7 @@
 #include "sc/dwc_sc.h"
 #include "gdb/dwc_gdb.h"
 #include "net/network_define.h"
+#include "net/nhttp_rap.h"
 #include "savedata/wifilist.h"
 
 #if GFL_NET_WIFI
@@ -1618,6 +1619,7 @@ int mydwc_HandleError(void)
     // 何らかのエラーが発生。
     MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
 
+    NHTTP_RAP_DisconnectCallbackCall(errorCode, myErrorType, ret);
     // DWC_GetLastErrorExの説明にのっとる  2008.5.23 -> 2010.1.5 nagihashi update
     // 返すものは基本的にerrorCodeであるが
     // エラーコードが 0 の場合やエラー処理タイプが DWC_ETYPE_LIGHT の場合は、ゲーム固有の表示のみなので retを返す

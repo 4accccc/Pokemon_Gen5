@@ -37,6 +37,8 @@ typedef enum{
 } NHTTPRAP_URL_ENUM;
 
 
+typedef void (Callback_NHTTPError)(void* pUserWork, int code, int type, int ret );
+
 
 extern BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork);
 extern NHTTPConnectionHandle NHTTP_RAP_GetHandle(NHTTP_RAP_WORK* pWork);
@@ -113,6 +115,9 @@ extern void NHTTP_RAP_RESPONSE_PokemonEvilCheck(NHTTP_RAP_WORK* pWork);
 extern void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM type);
 
 
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   受信処理パーセントを返す
@@ -124,6 +129,30 @@ extern int NHTTP_RAP_ProcessPercent(NHTTP_RAP_WORK* pWork);
 
 //エラーが起きた時の回復処理
 extern void NHTTP_RAP_ErrorClean(NHTTP_RAP_WORK* pWork);
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   切断時にはNHTTP開放を先に呼びたいのでコールバックを呼ぶ関数を外部に設けた
+ * @param   errorCode  コード　表示される番号
+ * @param   type  DWCErrorType  エラー検出時に必要な処理を示すエラータイプ
+ * @param   DWCError  DWC_GetLastErrorExの戻り値  
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+extern void NHTTP_RAP_DisconnectCallbackCall( int code, int type, int ret );
+//------------------------------------------------------------------------------
+/**
+ * @brief   切断時のコールバックを設定する
+            切断時にはこのコールバックが呼ばれますので、速やかにワークを開放して
+            NHTTPRAP関数へのアクセスを行わないようにしてください
+ * @param   NHTTP_RAP_WORK* pWork,  ワーク
+ * @param   Callback_NHTTPError* pFunc,  NHTTPErrorコールバック関数
+ * @param   void* pUserWork,  ユーザーワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+extern void NHTTP_RAP_SetDisconnectCallback(NHTTP_RAP_WORK* pWork,Callback_NHTTPError* pFunc,void* pUserWork );
 
 
 #if PM_DEBUG

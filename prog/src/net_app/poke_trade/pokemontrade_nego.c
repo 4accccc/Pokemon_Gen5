@@ -1715,6 +1715,20 @@ static void _PokeEvilChkEnd(POKEMON_TRADE_WORK* pWork)
 }
 
 
+//ポケモン不正切断コールバック
+static void _PokeEvilChk_DisconnectCallback(void* pUserwork, int code, int type, int ret)
+{
+  POKEMON_TRADE_WORK* pWork = pUserwork;
+
+  if(pWork->pNHTTP){
+    NHTTP_RAP_End(pWork->pNHTTP);  //この関数を呼ぶ事
+    pWork->pNHTTP  = NULL;
+    DWC_RAPCOMMON_ResetSubHeapID();
+  }
+}
+
+
+
 //ポケモン不正検査
 static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
 {
@@ -1737,13 +1751,13 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
     else{
       return;
     }
-    NHTTP_RAP_PokemonEvilCheckDelete(pWork->pNHTTP);
     if(pWork->pNHTTP)
     {
+      NHTTP_RAP_PokemonEvilCheckDelete(pWork->pNHTTP);
       NHTTP_RAP_End(pWork->pNHTTP);
       pWork->pNHTTP  = NULL;
+      DWC_RAPCOMMON_ResetSubHeapID();
     }
-    DWC_RAPCOMMON_ResetSubHeapID();
     
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
                                  POKETRADE_FACTOR_TIMING_G ,WB_NET_TRADE_SERVICEID);
@@ -1763,6 +1777,9 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
   pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
                                  MyStatus_GetProfileID(pWork->pMy), pWork->pParentWork->pSvl);
 
+  NHTTP_RAP_SetDisconnectCallback(pWork->pNHTTP, _PokeEvilChk_DisconnectCallback, pWork );
+
+  
   for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
     if(pWork->GTSSelectPP[1][i]){
       num++;

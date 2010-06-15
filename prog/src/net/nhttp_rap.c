@@ -118,6 +118,8 @@ static CPSCaInfo* cainfos[] = {
 
 
 struct _NHTTP_RAP_WORK {
+  Callback_NHTTPError* pCallback;
+  void* pUserWork;
   u8* pData;
   int length;
   DWCSvlResult* pSvl;
@@ -128,6 +130,7 @@ struct _NHTTP_RAP_WORK {
   u32 profileid;
 };
 
+static NHTTP_RAP_WORK* pNHTTPWork;  //この変数はエラーの際に使用される
 
 
 static void* AllocForNhttp(u32 size, int alignment)
@@ -177,8 +180,9 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
     GF_ASSERT(0);
     return FALSE;
   }
-
-
+  if(pWork==NULL){
+    return FALSE;
+  }
 
   GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
 
@@ -224,20 +228,26 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
 
 NHTTPConnectionHandle NHTTP_RAP_GetHandle(NHTTP_RAP_WORK* pWork)
 {
-  return pWork->handle;
+  if(pWork){
+    return pWork->handle;
+  }
+  return NULL;
 }
 
 
 BOOL NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork)
 {
-  if ( NHTTP_ERROR_NONE !=  NHTTPStartConnection(pWork->handle))
-  {
-    GF_ASSERT(0);
-    return FALSE;
+  if(pWork){
+    if ( NHTTP_ERROR_NONE !=  NHTTPStartConnection(pWork->handle))
+    {
+      GF_ASSERT(0);
+      return FALSE;
+    }
+    return TRUE;
   }
-
-  return TRUE;
+  return FALSE;
 }
+  
 
 
 void NHTTP_RAP_ErrorClean(NHTTP_RAP_WORK* pWork)
@@ -302,6 +312,9 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
   int     result;
   NHTTPError              err;
 
+  if(pWork==NULL){
+    return NHTTP_ERROR_SYSTEM;
+  }
   if(pWork->handle==NULL){
     return NHTTP_ERROR_NONE;
   }
@@ -322,13 +335,13 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
     NHTTPError  error;
     error = NHTTP_GetConnectionError( pWork->handle );
 
-    OS_TPrintf("err = %d  response %d status %d connect_err%d\n", err,NHTTP_GetResultCode( pWork->handle ),NHTTPGetConnectionStatus(pWork->handle), error);
+    NET_PRINT("err = %d  response %d status %d connect_err%d\n", err,NHTTP_GetResultCode( pWork->handle ),NHTTPGetConnectionStatus(pWork->handle), error);
 
     if( error == NHTTP_ERROR_NONE )
     {
       char *res;
       BOOL ret = NHTTP_GetHeaderAll( pWork->handle, &res );
-      OS_TPrintf( "%s\nok? %d\n", res, ret);
+      NET_PRINT( "%s\nok? %d\n", res, ret);
     }
     else{
 //      int errorCode;
@@ -354,6 +367,10 @@ int NHTTP_RAP_ProcessPercent(NHTTP_RAP_WORK* pWork)
   u32 receivedCurrent;
   u32 contentLength;
 
+  if(pWork==NULL){
+    return 0;
+  }
+
   if(pWork->handle){
     if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(pWork->handle, &receivedCurrent, &contentLength))
     {
@@ -368,6 +385,9 @@ int NHTTP_RAP_ProcessPercent(NHTTP_RAP_WORK* pWork)
 
 void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork)
 {
+  if(pWork==NULL){
+    return NULL;
+  }
   return pWork->getbuffer;
 }
 
@@ -376,6 +396,7 @@ void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork)
 NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid, DWCSvlResult* pSvl)
 {
   NHTTP_RAP_WORK* pWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(NHTTP_RAP_WORK) );
+  pNHTTPWork = pWork;
   pWork->profileid=profileid;
   pWork->pSvl = pSvl;
   return pWork;
@@ -423,6 +444,9 @@ void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM ty
 {
   u16 typeu16 = type;
 
+  if(pWork==NULL){
+    return;
+  }
   pWork->length = 0;
   while( pWork->pSvl->svltoken[pWork->length] != 0 )
   { 
@@ -443,6 +467,9 @@ void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM ty
 
 void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int size, NHTTP_POKECHK_ENUM type)
 {
+  if(pWork==NULL){
+    return;
+  }
   pWork->pData = GFL_NET_Align32Alloc(heapID, size + DWC_SVL_TOKEN_LENGTH + 4);
   GFL_STD_MemClear( pWork->pData, size + DWC_SVL_TOKEN_LENGTH + 4 );
 
@@ -453,6 +480,9 @@ void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int 
 
 void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int size)
 {
+  if(pWork==NULL){
+    return;
+  }
   GFL_STD_MemCopy(pData, &pWork->pData[pWork->length], size);
   pWork->length += size;
   NET_PRINT("[%d] \n", size);
@@ -472,6 +502,10 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
   u32                     contentLength;
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
 
+  if(pWork==NULL){
+    return FALSE;
+  }
+  
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
     GF_ASSERT(0);
     return FALSE;
@@ -503,21 +537,6 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
     GF_ASSERT_MSG(0," NHTTP_SetRootCA(%d)\n",err);
     return FALSE;
   }
-#if 0
-  if(0!=NHTTP_AddHeaderField(handle, "Accept", "*/*" )){
-    GF_ASSERT(0);
-    return FALSE;
-  }
-  if(0!=NHTTP_AddHeaderField(handle, "User-Agent", "Test"  )){
-    GF_ASSERT(0);
-    return FALSE;
-  }
-
-  if(0!=NHTTP_SetBasicAuthorization( handle, "pokemon", "2Phfv9MY")){
-    GF_ASSERT(0);
-    return FALSE;
-  }
-#endif
 
   NHTTP_AddPostDataRaw( handle, &(pWork->pData[0]), pWork->length );
   NET_PRINT("data svltoken = %s\n", pWork->pData);
@@ -539,10 +558,54 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 
 void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork)
 {
-  if(pWork->pData){
-    GFL_NET_Align32Free(pWork->pData);
+  if(pWork){
+    if(pWork->pData){
+      GFL_NET_Align32Free(pWork->pData);
+    }
+    pWork->pData = NULL;
+    pWork->length = 0;
   }
-  pWork->pData = NULL;
-  pWork->length = 0;
+  pNHTTPWork = NULL;
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   切断時のコールバックを設定する
+            切断時にはこのコールバックが呼ばれますので、速やかにワークを開放して
+            NHTTPRAP関数へのアクセスを行わないようにしてください
+ * @param   NHTTP_RAP_WORK* pWork,  ワーク
+ * @param   Callback_NHTTPError* pFunc,  NHTTPErrorコールバック関数
+ * @param   void* pUserWork,  ユーザーワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void NHTTP_RAP_SetDisconnectCallback(NHTTP_RAP_WORK* pWork,Callback_NHTTPError* pFunc,void* pUserWork )
+{
+  pWork->pCallback = pFunc;
+  pWork->pUserWork = pUserWork;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   切断時にはNHTTP開放を先に呼びたいのでコールバックを呼ぶ関数を外部に設けた
+ * @param   errorCode  コード　表示される番号
+ * @param   type  DWCErrorType  エラー検出時に必要な処理を示すエラータイプ
+ * @param   DWCError  DWC_GetLastErrorExの戻り値  
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void NHTTP_RAP_DisconnectCallbackCall( int code, int type, int ret )
+{
+  if(pNHTTPWork){
+    NHTTP_RAP_ErrorClean(pNHTTPWork);
+    if(pNHTTPWork->pCallback){
+      pNHTTPWork->pCallback(pNHTTPWork->pUserWork, code, type, ret);
+    }
+  }
 }
 
