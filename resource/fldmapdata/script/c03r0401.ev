@@ -236,6 +236,7 @@ add_zoroa:
   //空きがないか？
   IF $add_ok == FALSE THEN
     _CALL add_ng
+    _RET
   ENDIF
 
   /*＝＝以降は仲間にできる場合の処理＝＝*/
@@ -363,16 +364,28 @@ add_ng:
   DEFINE_LOCAL msg
   //自分の性別取得
   _GET_MY_SEX( sex )
-  //自分の性別で分岐
-  IF $sex == PM_MALE THEN   //男
-    $msg = msg_c03r0401_girl1_10_1
-  ELSE                      //女
-    $msg = msg_c03r0401_girl1_10_2
-  ENDIF
+
+  IF $is_first == FALSE THEN        //2回目以降(このまま終わるので▼なし)
+    //自分の性別で分岐
+    IF $sex == PM_MALE THEN   //男
+      $msg = msg_c03r0401_girl1_10_1
+    ELSE                      //女
+      $msg = msg_c03r0401_girl1_10_2
+    ENDIF
+  ELSE                              //初回セレビィ格納するので、▼あり
+    //自分の性別で分岐
+    IF $sex == PM_MALE THEN   //男
+      $msg = msg_c03r0401_girl1_15_1
+    ELSE                      //女
+      $msg = msg_c03r0401_girl1_15_2
+    ENDIF
+  ENDIF 
   
   //「しんぱい」
   _BALLOONWIN_OBJMSG( msg ,C03R0401_GIRL1_01  )
-  _LAST_KEYWAIT()
+  IF $is_first == FALSE THEN
+    _LAST_KEYWAIT()
+  ENDIF
   _BALLOONWIN_CLOSE()
 
 }
