@@ -247,3 +247,9 @@ extern void NUMFONT_Main( NUMFONT *wk );
 extern void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *bmpwin, int x, int y );
 extern void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y );
 
+//=============================================================================
+/**
+ *          ‚»‚Ì‘¼
+*/
+//=============================================================================
+extern void WorldTrade_DispCallFatal( void );

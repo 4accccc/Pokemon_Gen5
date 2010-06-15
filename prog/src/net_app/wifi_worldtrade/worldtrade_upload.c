@@ -880,7 +880,7 @@ static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 		}
 		
@@ -888,7 +888,7 @@ static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -968,11 +968,11 @@ static int Subseq_UploadFinishResult( WORLDTRADE_WORK *wk )
 //			wk->ConnectErrorNo = result;
 //			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
 			// ここはうけつけに戻ってはいけない。無理矢理通信エラー
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
-			NetErr_DispCallFatal();
+			WorldTrade_DispCallFatal();
 			break;
 		}
 
@@ -980,7 +980,7 @@ static int Subseq_UploadFinishResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -1091,7 +1091,7 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 		}
@@ -1100,7 +1100,7 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -1160,7 +1160,7 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 		// 最後のつめを行おうとしたら交換が成立してしまった。
 		// エラーが起きた事にして外にだしてしまう→もどってくれば交換が成立してます。
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-			NetErr_DispCallFatal();
+			WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -1176,11 +1176,11 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 
 			// セーブがほとんど書き込まれている状況ではデータを元に戻せない
 			// 無理矢理通信エラーへ
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 
@@ -1190,7 +1190,7 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -1312,7 +1312,7 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 		}
@@ -1321,7 +1321,7 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -1372,7 +1372,7 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 
 		// 引き取られてしまった
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -1388,13 +1388,13 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 	
 			// ９９％までセーブが書き込まれた状況では元に戻せないので
 			// 無理矢理通信エラーへ
-			NetErr_DispCallFatal();
+			WorldTrade_DispCallFatal();
 			break;
 
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 		}
@@ -1403,7 +1403,7 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -1575,7 +1575,7 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-			NetErr_DispCallFatal();
+			WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 		}
@@ -1584,7 +1584,7 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -1707,7 +1707,7 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
 			return SEQ_MAIN;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			return SEQ_MAIN;
 	// -----------------------------------------
 
@@ -1720,7 +1720,7 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
   else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
   }
 	return SEQ_MAIN;
@@ -1886,7 +1886,7 @@ static int Subseq_WaitCancelAsync( WORLDTRADE_WORK *wk )
       break;
 
     case DPW_TR_ERROR_FATAL:
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
       break;
     }
 
@@ -2045,12 +2045,12 @@ static int Subseq_DownloadExFinishResult( WORLDTRADE_WORK *wk)
 
 			// ９９％までセーブが書き込まれた状況では元に戻せないので
 			// 無理矢理通信エラーへ
-			NetErr_DispCallFatal();
+			WorldTrade_DispCallFatal();
 
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 		}
@@ -2059,7 +2059,7 @@ static int Subseq_DownloadExFinishResult( WORLDTRADE_WORK *wk)
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -2263,11 +2263,11 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 
 			// セーブがほとんど書き込まれている状況ではデータを元に戻せない
 			// 無理矢理通信エラーへ
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 	// -----------------------------------------
 
@@ -2277,7 +2277,7 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;

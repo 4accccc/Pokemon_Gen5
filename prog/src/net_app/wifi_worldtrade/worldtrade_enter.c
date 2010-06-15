@@ -440,7 +440,7 @@ static ENTER_RESULT Enter_ServerResult( WORLDTRADE_WORK *wk )
 		default:
 			// ‘¦‚Ó‚Á‚Æ‚Î‚µ
 			WorldTrade_TimeIconDel(wk);
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 
 		}
@@ -449,7 +449,7 @@ static ENTER_RESULT Enter_ServerResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
 	return ENTER_RESULT_CONTINUE;
@@ -526,7 +526,7 @@ static ENTER_RESULT Enter_ProfileResult( WORLDTRADE_WORK *wk )
           return ENTER_RESULT_ERROR;
 					break;
 				default:	//‚ ‚è‚¦‚È‚¢‚¯‚Çˆê‰žB‹­§‚Ó‚Á‚Æ‚Î‚µ
-          NetErr_DispCallFatal();
+          WorldTrade_DispCallFatal();
 					break;
 				}
 				break;
@@ -544,7 +544,7 @@ static ENTER_RESULT Enter_ProfileResult( WORLDTRADE_WORK *wk )
 				// ‘¦‚Ó‚Á‚Æ‚Î‚µ
 				OS_TPrintf("default error !\n");
 				WorldTrade_TimeIconDel(wk);
-        NetErr_DispCallFatal();
+        WorldTrade_DispCallFatal();
 				break;
 			}
 			break;
@@ -582,7 +582,7 @@ static ENTER_RESULT Enter_ProfileResult( WORLDTRADE_WORK *wk )
 		default:
 			// ‘¦‚Ó‚Á‚Æ‚Î‚µ
 			WorldTrade_TimeIconDel(wk);
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 			break;
 		}
 		
@@ -590,7 +590,7 @@ static ENTER_RESULT Enter_ProfileResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+      WorldTrade_DispCallFatal();
 		}
 	}
   return ENTER_RESULT_CONTINUE;
