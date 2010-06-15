@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-15T16:20:15"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-15T17:16:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4805,10 +4805,10 @@
 
 	<row id="mes_tower_tr_174_03">
 		<comment>ドンコ</comment>
-		<language name="JPN">もう　アナタには　ついていけないよ！
-じっかに　かえらせて　もらいます</language>
-		<language name="JPN_KANJI">もう　アナタには　ついていけないよ！
-実家に　帰らせて　もらいます</language>
+		<language name="JPN">もう　アナタには　ついていけません！
+じっかに　かえらせて　もらいます！</language>
+		<language name="JPN_KANJI">もう　アナタには　ついていけません！
+実家に　帰らせて　もらいます！</language>
 	</row>
 
 	<row id="mes_tower_tr_175_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -6324,9 +6324,9 @@
 
 ドンタ</comment>
 		<language name="JPN">なあ　そこの　チビっこ　トレーナー
-オレって　じつに　ダンディだろう？　</language>
+オレって　たまんなく　ダンディだろ？　</language>
 		<language name="JPN_KANJI">なあ　そこの　チビっ子　トレーナー
-オレって　実に　ダンディだろう？　</language>
+オレって　たまんなく　ダンディだろ？　</language>
 	</row>
 
 	<row id="mes_tower_tr_234_02">
@@ -6340,9 +6340,9 @@
 	<row id="mes_tower_tr_234_03">
 		<comment>ドンタ</comment>
 		<language name="JPN">よこがおに　にじむ　あいしゅう……
-ダンディすぎるのも　こまりモンさ</language>
+ダンディすぎんのも　こまりモンさ</language>
 		<language name="JPN_KANJI">横顔に　にじむ　哀愁……
-ダンディ過ぎるのも　困りモンさ</language>
+ダンディ過ぎんのも　困りモンさ</language>
 	</row>
 
 	<row id="mes_tower_tr_235_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -7500,10 +7500,10 @@
 
 	<row id="mes_tower_tr_279_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>ボブノリ</comment>
-		<language name="JPN">おじさんのポケモン　めと　こころに
-しっかり　きざみつけたかい？</language>
-		<language name="JPN_KANJI">おじさんのポケモン　目と　心に
-しっかり　刻みつけたかい？</language>
+		<language name="JPN">おじさんの　ポケモンを　めと　こころに
+しっかり　きざみつけて　くれたかい？</language>
+		<language name="JPN_KANJI">おじさんの　ポケモンを　目と　心に
+しっかり　刻みつけて　くれたかい？</language>
 	</row>
 
 	<row id="mes_tower_tr_280_01">
