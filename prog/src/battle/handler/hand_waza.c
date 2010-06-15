@@ -7515,14 +7515,19 @@ static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
   {
     BTL_HANDEX_PARAM_ADD_SICK       *sick_param;
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    const BTL_POKEPARAM* target;
 
-    sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      sick_param->pokeID = target_pokeID;
-      sick_param->sickID = WAZASICK_IEKI;
-      sick_param->sickCont = BPP_SICKCONT_MakePermanent();
-      HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Ieki );
-      HANDEX_STR_AddArg( &sick_param->exStr, target_pokeID );
-    BTL_SVF_HANDEX_Pop( flowWk, sick_param );
+    target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
+    if( BPP_GetValue(target, BPP_TOKUSEI) != POKETOKUSEI_NAMAKE )
+    {
+      sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+        sick_param->pokeID = target_pokeID;
+        sick_param->sickID = WAZASICK_IEKI;
+        sick_param->sickCont = BPP_SICKCONT_MakePermanent();
+        HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Ieki );
+        HANDEX_STR_AddArg( &sick_param->exStr, target_pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, sick_param );
+    }
   }
 }
 //----------------------------------------------------------------------------------
@@ -9687,18 +9692,24 @@ static void handler_SimpleBeem( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     u32 targetCnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
     BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
-    u32 i;
+    const BTL_POKEPARAM* target;
+    u32 i, targetPokeID;
 
     // 対象ポケモンのとくせいを「たんじゅん」に書き換え
     for(i=0; i<targetCnt; ++i)
     {
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
-        param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
-        param->tokuseiID = POKETOKUSEI_TANJUN;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_TokuseiChange );
-        HANDEX_STR_AddArg( &param->exStr, param->pokeID );
-        HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
-      BTL_SVF_HANDEX_Pop( flowWk, param );
+      targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
+      target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+      if( BPP_GetValue(target, BPP_TOKUSEI) == POKETOKUSEI_NAMAKE )
+      {
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
+          param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
+          param->tokuseiID = POKETOKUSEI_TANJUN;
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_TokuseiChange );
+          HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+          HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
+      }
     }
   }
 }

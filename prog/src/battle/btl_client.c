@@ -6391,7 +6391,6 @@ static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  // @@@ 今は単純なHP減エフェクトで代用
   u8 pokeID = args[0];
   u8 effType = args[1];
 
@@ -6522,6 +6521,11 @@ static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args
   case 0:
     {
       BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+
+      if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+        BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_MUTE );
+      }
+
       BTLV_EFFECT_CreateMigawari( vpos );
       (*seq)++;
     }
@@ -6529,6 +6533,9 @@ static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
+      if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+        BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_PLAY );
+      }
       return TRUE;
     }
   }
@@ -6546,6 +6553,11 @@ static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args
   case 0:
     {
       BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+
+      if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+        BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_MUTE );
+      }
+
       BTLV_EFFECT_DeleteMigawari( vpos );
       (*seq)++;
     }
@@ -6553,6 +6565,9 @@ static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
+      if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+        BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_PLAY );
+      }
       return TRUE;
     }
   }
@@ -6604,12 +6619,16 @@ static BOOL scProc_ACT_MigawariDamage( BTL_CLIENT* wk, int* seq, const int* args
 {
   switch( *seq ){
   case 0:
+    if( !BTL_CLIENT_IsChapterSkipMode(wk) )
     {
       BtlPokePos  tgtPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
       BtlTypeAffAbout  affAbout = BTL_CALC_TypeAffAbout( args[1] );
 
       BTLV_ACT_MigawariDamageEffect_Start( wk->viewCore, args[2], tgtPos, affAbout );
       (*seq)++;
+    }
+    else{
+      return TRUE;
     }
     break;
 
