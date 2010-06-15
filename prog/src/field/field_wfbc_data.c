@@ -377,6 +377,41 @@ void FIELD_WFBC_EVENT_Clear( FIELD_WFBC_EVENT* p_wk )
   p_wk->bc_npc_win_target = FIELD_WFBC_EVENT_NPC_WIN_TARGET_INIT;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCイベントワーク　ゲーム開始時　初期化
+ *
+ *	@param	p_wk        ワーク
+ *	@param	cp_core     コア
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_EVENT_Init( FIELD_WFBC_EVENT* p_wk, const FIELD_WFBC_CORE* cp_core, HEAPID heapID )
+{
+  if( cp_core->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST ){
+    FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
+    const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+
+    // 必ず人がいるはず
+    GF_ASSERT( cp_core->people[0].data_in );
+    GF_ASSERT( cp_core->people[0].npc_id < FIELD_WFBC_NPCID_MAX );
+    
+    // 登録
+    p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( cp_core->people[0].npc_id, GFL_HEAP_LOWID( heapID ) );
+    cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+
+    p_wk->wf_poke_catch_item = cp_people_data->goods_wf;
+    p_wk->wf_poke_catch_monsno = cp_people_data->enc_monsno[0];
+
+    FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
+
+    
+  }else{
+    p_wk->bc_npc_win_count = 0;
+    p_wk->bc_npc_win_target = FIELD_WFBC_EVENT_NPC_WIN_TARGET_INIT;
+  }
+}
+
 
 
 

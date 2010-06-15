@@ -515,6 +515,7 @@ extern FIELD_WFBC_EVENT* GAMEDATA_GetWFBCEventData( GAMEDATA * gamedata );
 //  èÌíì
 //=====================================
 extern void FIELD_WFBC_EVENT_Clear( FIELD_WFBC_EVENT* p_wk );
+extern void FIELD_WFBC_EVENT_Init( FIELD_WFBC_EVENT* p_wk, const FIELD_WFBC_CORE* cp_core, HEAPID heapID );
 
 // BC
 extern u16 FIELD_WFBC_EVENT_GetBCNpcWinCount( const FIELD_WFBC_EVENT* cp_wk );

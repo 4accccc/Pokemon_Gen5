@@ -304,6 +304,8 @@ static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
   // WFBC街自分の場所初期化
   FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GFL_HEAPID_APP ); //heap はテンポラリ用
   FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
+  //WFBCイベント情報の初期化
+  FIELD_WFBC_EVENT_Init( GAMEDATA_GetWFBCEventData( gamedata ), GAMEDATA_GetMyWFBCCoreData(gamedata), GFL_HEAPID_APP );
 }
 
 //------------------------------------------------------------------
