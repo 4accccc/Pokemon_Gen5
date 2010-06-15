@@ -2192,6 +2192,7 @@ static int _playerDirectVCTChange4( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode)){
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5);
+    WIFI_STATUS_SetUseVChat(wk->pMatch, gamemode[1]);
   }
   return seq;
 }

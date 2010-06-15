@@ -71,7 +71,8 @@ struct _WIFI_STATUS{
   u8 shooter:1;    //シューター有り無し             28
   u8 VChatStatus:1;       // VChatの状態 
   u8 sex:2;      //性別
-  u8 dummybit:4;
+  u8 useVChat:1;  //実際のVChat使用状態(ステートが違う同士が対戦・交換すると変わる)
+  u8 dummybit:3;
   u8 callcounter;      //呼びかける際のインクリメント数 29
   u8 dummy3;   //上位バージョン用              30
   u8 dummy4;   //上位バージョン用              31
@@ -101,6 +102,8 @@ extern BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pMyStatus, const WIFI_STAT
 extern void WIFI_STATUS_SetVChatMac(WIFI_STATUS* pStatus, const WIFI_STATUS* pFriendStatus);
 extern void WIFI_STATUS_ResetVChatMac(WIFI_STATUS* pStatus);
 extern void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus);
+extern u8 WIFI_STATUS_GetUseVChat(const WIFI_STATUS* pStatus);
+extern void WIFI_STATUS_SetUseVChat(WIFI_STATUS* pStatus, u8 vct);
 
 
 static inline void WIFI_STATUS_SetTrainerView(WIFI_STATUS* pStatus,u8 trainer_view){ pStatus->trainer_view = trainer_view; }

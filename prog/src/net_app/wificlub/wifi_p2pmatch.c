@@ -1955,6 +1955,7 @@ static int WifiP2PMatchFriendListStart( WIFIP2PMATCH_WORK *wk,BOOL bWipe )
 
   // •”‰®‚ÌBGMÝ’è
   WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
+  WIFI_STATUS_SetUseVChat(wk->pMatch, wk->pParentWork->vchatMain);
   WifiP2P_SetLobbyBgm();
 
   return WIFIP2PMATCH_FRIENDLIST_INIT;
@@ -2286,6 +2287,7 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
   WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
   WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
   WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
+  WIFI_STATUS_SetUseVChat(wk->pMatch, wk->pParentWork->vchatMain);
   WIFI_STATUS_SetPlayerID(wk->pMatch, MyStatus_GetID(pMyStatus));
   WIFI_STATUS_SetGameSyncID(wk->pMatch, MyStatus_GetProfileID(pMyStatus));
   
@@ -6250,6 +6252,7 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
     // Ú‘±ŠJŽn
     //VCT”½“]
     WIFI_STATUS_SetVChatStatus(wk->pMatch, 1-WIFI_STATUS_GetVChatStatus(wk->pMatch));
+    WIFI_STATUS_SetUseVChat(wk->pMatch, WIFI_STATUS_GetVChatStatus(wk->pMatch));
     wk->vchatrev = (1 - wk->pParentWork->vchatMain) + 1;  //”½“]ƒtƒ‰ƒO‚ðŠi”[
     _CHANGESTATE(wk, WIFIP2PMATCH_MODE_CHILD_CONNECT);
   }
@@ -6370,6 +6373,7 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status,int gamem
 static BOOL _myVChatStatusToggle(WIFIP2PMATCH_WORK *wk)
 {
   WIFI_STATUS_SetVChatStatus(wk->pMatch, 1 - WIFI_STATUS_GetVChatStatus( wk->pMatch ));
+  WIFI_STATUS_SetUseVChat(wk->pMatch, WIFI_STATUS_GetVChatStatus(wk->pMatch));
   _sendMatchStatus(wk);
   return WIFI_STATUS_GetVChatStatus( wk->pMatch );
 }
@@ -6387,6 +6391,7 @@ static BOOL _myVChatStatusToggleOrg(WIFIP2PMATCH_WORK *wk)
   //–{•¨‚ð‚Ð‚Á‚­‚è•Ô‚·
   wk->pParentWork->vchatMain = 1 - wk->pParentWork->vchatMain;
   WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
+  WIFI_STATUS_SetUseVChat(wk->pMatch, wk->pParentWork->vchatMain);
   _sendMatchStatus(wk);
   return WIFI_STATUS_GetVChatStatus( wk->pMatch );
 }
@@ -6404,6 +6409,7 @@ static BOOL _myVChatStatusOrgSet(WIFIP2PMATCH_WORK *wk)
   _changeBGMVol( wk, _VOL_DEFAULT );
 
   WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
+  WIFI_STATUS_SetUseVChat(wk->pMatch, wk->pParentWork->vchatMain);
   _sendMatchStatus(wk);
 
   return WIFI_STATUS_GetVChatStatus( wk->pMatch );
@@ -7158,7 +7164,6 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
     write_change_masterflag = FALSE;
   }
 
-
   for( i=0; i<WCR_MAPDATA_1BLOCKOBJNUM; i++ ){
 
     friend_no = (wk->view.frame_no*WCR_MAPDATA_1BLOCKOBJNUM) + i + 1;
@@ -7428,7 +7433,7 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
                                      x+2, y+2,
                                      status,gamemode, mode);
 
-  if( WIFI_STATUS_GetVChatStatus(p_status) ){
+  if( WIFI_STATUS_GetUseVChat(p_status) ){
     vct_icon = PLAYER_DISP_ICON_IDX_NONE;
   }else{
     vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;

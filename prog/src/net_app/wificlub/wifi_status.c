@@ -171,6 +171,30 @@ void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus)
   OS_GetMacAddress(pStatus->MyMac);  
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	  実際にボイスチャット使用中か？
+ * @return	,,
+ */
+//----------------------------------------------------------
+
+u8 WIFI_STATUS_GetUseVChat(const WIFI_STATUS* pStatus)
+{
+	return pStatus->useVChat;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	  実際にボイスチャット使用中かを設定
+ * @return	,,
+ */
+//----------------------------------------------------------
+
+void WIFI_STATUS_SetUseVChat(WIFI_STATUS* pStatus, u8 vct)
+{
+	pStatus->useVChat= vct;
+}
+
 
 
 
