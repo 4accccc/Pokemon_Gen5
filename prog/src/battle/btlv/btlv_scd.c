@@ -685,7 +685,7 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     {
       // 一定ターンで逃げる
       if( ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) && wkHudson.TrunCnt >= 2 ) ||
-          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 3*5+1 ) )
+          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 6*5+1 ) )
       {
         hit = 3; 
       }
@@ -1214,18 +1214,21 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 
 #ifdef DEBUG_ONLY_FOR_hudson
       //攻撃対象をスイッチ
-      if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt < 16 )
+      if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt < 6*5+1 )
       {
-        static const u8 tbl[3][5] =
+        static const u8 tbl[6][5] =
         {
           { 5, 3, 2, 3, 5 },
           { 5, 3, 1, 4, 0 },
           { 3, 1, 2, 1, 3 },
+          { 4, 2, 3, 2, 4 },
+          { 0, 2, 4, 5, 1 },
+          { 0, 2, 3, 2, 0 },
         };
         int id = wkHudson.TrunCnt-1;
 
-        hit = tbl[ id%3 ][ id/3 ];
-        OS_TPrintf("TAGET [%d]体目の[%d]番目 hit=%d\n",id%3, id/3, hit);
+        hit = tbl[ id%6 ][ id/6 ];
+        OS_TPrintf("TAGET [%d]体目の[%d]番目 hit=%d\n",id%6, id/6, hit);
       }
 #endif // DEBUG_ONLY_FOR_hudson
 

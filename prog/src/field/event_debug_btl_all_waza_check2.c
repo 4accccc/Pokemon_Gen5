@@ -147,7 +147,7 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
       STATUS_RCV_PokeParty_RecoverAll( mp );
 
       // 自分のポケモンを強制上書き
-      for( i=0; i<3; i++ )
+      for( i=0; i<PokeParty_GetPokeCount( mp ); i++ )
       {
         POKEMON_PARAM* pp;
         pp = PokeParty_GetMemberPointer( mp, i );
@@ -172,10 +172,22 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
       BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
       BTL_SETUP_Triple_Trainer( bp, gdata, &sit, TRID_BIGFOUR3_01, HEAPID_PROC );
 
+      // 敵の技を上書き
+      {
+        POKEPARTY* ep = bp->party[ BTL_CLIENT_ENEMY1 ];
+        for( i=0; i<PokeParty_GetPokeCount( ep ); i++ )
+        {
+          POKEMON_PARAM* pp;
+          pp = PokeParty_GetMemberPointer( ep, i );
+          PP_SetWazaPos( pp, wk->count, 0 );
+        }
+      }
+
       // HP/PP無限 絶対当たる
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_HP_CONST );
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_PP_CONST );
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_HIT100PER );
+      BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_AI_CTRL );
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_SKIP_BTLIN ); // 登場アニメ飛ばす
       
       new_event = EVENT_WildPokeBattle( gsys, fieldmap, bp, FALSE, ENC_TYPE_NORMAL );
