@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-11T21:51:01"/>
+	<create user="mori" host="W00155" date="2010-06-15T19:24:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,7 +372,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -583,6 +583,13 @@
 	<row id="dni_palace_level_black" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="240">くろレベル</language>
 		<language name="JPN_KANJI" width="240">黒レベル</language>
+	</row>
+
+	<row id="dni_perap_level" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>ペラップを録音した時の混乱確率
+を見せる</comment>
+		<language name="JPN" width="240">おしゃべりつよさ（％）</language>
+		<language name="JPN_KANJI" width="240">おしゃべりつよさ（％）</language>
 	</row>
 
 	<row id="dni_mus_01" back-color="#ffffff,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">

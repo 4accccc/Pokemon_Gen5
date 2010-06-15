@@ -51,6 +51,7 @@
 #include "savedata/playtime.h"
 #include "savedata/bsubway_savedata.h"
 #include "savedata/save_tbl.h"
+#include "savedata/perapvoice.h"
 
 //======================================================================
 //======================================================================
@@ -119,6 +120,8 @@ static u32 DebugGetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 static u32 DebugGetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
@@ -431,7 +434,7 @@ typedef struct {
   HEAPID heapID;
   GFL_FONT * fontHandle;
 
-	GFL_MSGDATA* msgman;						//メッセージマネージャー
+  GFL_MSGDATA* msgman;            //メッセージマネージャー
   WORDSET * wordset;
   GFL_BMPWIN * bmpwin;
 
@@ -443,24 +446,24 @@ typedef struct {
 //--------------------------------------------------------------
 static void createNumWin( DEBUG_NUMINPUT_WORK * wk )
 {
-	GFL_BMP_DATA *bmp;
-	GFL_BMPWIN *bmpwin;
+  GFL_BMP_DATA *bmp;
+  GFL_BMPWIN *bmpwin;
   
   wk->wordset = WORDSET_Create( wk->heapID );
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_DEBUG_MESSAGE, NARC_debug_message_d_numinput_dat, wk->heapID);
 
-	bmpwin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG,
-		_DISP_INITX, _DISP_INITY, _DISP_SIZEX, _DISP_SIZEY,
-		PANO_FONT, GFL_BMP_CHRAREA_GET_B );
+  bmpwin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG,
+    _DISP_INITX, _DISP_INITY, _DISP_SIZEX, _DISP_SIZEY,
+    PANO_FONT, GFL_BMP_CHRAREA_GET_B );
   wk->bmpwin = bmpwin;
   
-	bmp = GFL_BMPWIN_GetBmp( bmpwin );
-	
-	GFL_BMP_Clear( bmp, WINCLR_COL(FBMP_COL_WHITE) );
-	GFL_BMPWIN_MakeScreen( bmpwin );
-	GFL_BMPWIN_TransVramCharacter( bmpwin );
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );
+  bmp = GFL_BMPWIN_GetBmp( bmpwin );
+  
+  GFL_BMP_Clear( bmp, WINCLR_COL(FBMP_COL_WHITE) );
+  GFL_BMPWIN_MakeScreen( bmpwin );
+  GFL_BMPWIN_TransVramCharacter( bmpwin );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );
 }
 
 //--------------------------------------------------------------
@@ -470,8 +473,8 @@ static void deleteNumWin( DEBUG_NUMINPUT_WORK * wk )
 {
   GFL_BMPWIN * bmpwin = wk->bmpwin;
 
-	GFL_BMPWIN_ClearScreen( bmpwin );
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );
+  GFL_BMPWIN_ClearScreen( bmpwin );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );
 
   GFL_BMPWIN_Delete( bmpwin );
 
@@ -502,10 +505,10 @@ static void printNumWin( DEBUG_NUMINPUT_WORK * wk, u32 num )
   }else{
     GFL_FONTSYS_SetColor( 1, 2, 15 );
   }
-	PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), 1, 10, expandBuf, wk->fontHandle );		
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), 1, 10, expandBuf, wk->fontHandle );    
 
   GFL_BMPWIN_TransVramCharacter( bmpwin );  //transfer characters
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );  //transfer screen
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );  //transfer screen
 
   GFL_STR_DeleteBuffer( strbuf );
   GFL_STR_DeleteBuffer( expandBuf );
@@ -824,7 +827,7 @@ static const DEBUG_MENU_INITIALIZER DebugFlagSelectData = {
 static GMEVENT_RESULT debugFlagWorkSelectMenuEvent(
     GMEVENT *event, int *seq, void *wk )
 {
-	DEBUG_FLAGMENU_EVENT_WORK * new_wk = wk;
+  DEBUG_FLAGMENU_EVENT_WORK * new_wk = wk;
   EVENTWORK *evwork = GAMEDATA_GetEventWork( new_wk->gamedata );
   const DEBUG_NUMINPUT_INITIALIZER * init = new_wk->init;
   GMEVENT * input_ev;
@@ -887,11 +890,11 @@ static GMEVENT_RESULT debugFlagWorkSelectMenuEvent(
 static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
     GAMESYS_WORK * gsys, const DEBUG_NUMINPUT_INITIALIZER * init )
 {
-	GMEVENT * new_event = GMEVENT_Create( gsys, NULL,
+  GMEVENT * new_event = GMEVENT_Create( gsys, NULL,
       debugFlagWorkSelectMenuEvent, sizeof(DEBUG_FLAGMENU_EVENT_WORK) );
-	DEBUG_FLAGMENU_EVENT_WORK * new_wk = GMEVENT_GetEventWork( new_event );
+  DEBUG_FLAGMENU_EVENT_WORK * new_wk = GMEVENT_GetEventWork( new_event );
 
-	GFL_STD_MemClear( new_wk, sizeof(DEBUG_FLAGMENU_EVENT_WORK) );
+  GFL_STD_MemClear( new_wk, sizeof(DEBUG_FLAGMENU_EVENT_WORK) );
   new_wk->heapID = HEAPID_PROC;
   new_wk->gmSys = gsys;
   new_wk->gamedata = GAMESYSTEM_GetGameData( gsys );
@@ -994,6 +997,19 @@ static u32 DebugGetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
 static void DebugSetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
 {
   DebugTvNo = value;
+}
+
+
+static u32 dni_perap_tbl[]={0,10,30};
+static u32 DebugGetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  PERAPVOICE * sv = SaveData_GetPerapVoice( GAMEDATA_GetSaveControlWork(gamedata) );
+  return dni_perap_tbl[PERAPVOICE_GetWazaParam(sv)];
+}
+static void DebugSetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  // 何も反映させない
+  return;
 }
 
 
