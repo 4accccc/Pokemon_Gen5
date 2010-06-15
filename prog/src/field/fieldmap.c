@@ -464,6 +464,8 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
 
 static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 
+static BOOL zonedata_GetShadowUse( u16 zone_id );
+
 
 //data
 static const GFL_DISP_VRAM fldmapdata_dispVram;
@@ -2689,7 +2691,8 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	//動作モデル　復帰
 	MMDLSYS_Pop( fieldWork->fldMMdlSys );
   
-  MMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
+  //影の生成制御フラグ
+  MMDLSYS_SetJoinShadow( fmmdlsys, zonedata_GetShadowUse( fieldWork->map_id ) );
 }
 
 //--------------------------------------------------------------
@@ -3947,6 +3950,21 @@ static fx32 fldmap_getProjMatZOffsValue( u16 zone_id )
   { //指定したゾーンによっては以前の射影オフセット
     return PROJ_MAT_Z_OFS_DESERT;
   }
+}
+
+//==================================================================
+/**
+ * @brief 影をだすかどうかの判定処理
+ * @date  2010.06.15
+ * @author  tamada
+ * 本来はzonedata.cに外部化した値を取得する仕組みを作るべきだが、
+ * 時期が時期であること、常駐メモリをなるべく消費したくないこと、
+ * の２点を考慮して直接ここに作成する。
+ */
+//==================================================================
+static BOOL zonedata_GetShadowUse( u16 zone_id )
+{
+  return ( zone_id != ZONE_ID_C04GYM0101 );
 }
 
 
