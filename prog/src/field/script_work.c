@@ -199,8 +199,13 @@ SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
   //フィールドパラメータ生成
 	initFldParam( &sc->fld_param, gsys );
 
-  //チェックビット処理化
-  SCREND_CHK_ClearBits();
+#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto) || defined(DEBUG_ONLY_FOR_nozomu_saitou)
+  if ( sc->is_sp_flag == FALSE )
+#endif
+  {
+    //チェックビット処理化
+    SCREND_CHK_ClearBits();
+  }
 
   return sc;
 }
