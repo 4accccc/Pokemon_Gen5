@@ -73,7 +73,7 @@
 #define DEG_TO_U16(val) ((val)*0x10000/360)
 #define U16_TO_DEG(val) ((val)*360/0x10000)
 
-#define FIT_CHECK_BUTTON_TOP    (192-24)
+#define FIT_CHECK_BUTTON_TOP    (192-32)
 #define FIT_CHECK_BUTTON_BOTTOM (192)
 #define FIT_CHECK_BUTTON_LEFT   (128-32)
 #define FIT_CHECK_BUTTON_RIGHT  (128+32)
