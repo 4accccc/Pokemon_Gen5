@@ -33,6 +33,11 @@
 //	mine
 #include "net_app/irc_compatible.h"
 
+
+//  debug
+#include "arc_def.h"
+#include "font/font.naix"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -45,7 +50,19 @@
 #if defined( DEBUG_ONLY_FOR_toru_nagihashi)
 //#define DEBUG_RETURN_TO_PROG	//戻るボタンを押すと次へ進む
 #endif	//DEBUG_ONLY_FOR_toru_nagihashi
+
+#define DEBUGWIN_USE
 #endif	//PM_DEBUG
+
+#ifdef DEBUGWIN_USE
+#include "debug/debugwin_sys.h"
+static int s_debug_score  = 0;
+static BOOL s_debug_score_use = FALSE;
+static GFL_FONT *p_debug_font = NULL;
+#else
+#define s_debug_score (0)
+#define s_debug_score_use (0)
+#endif //DEBUGWIN_USE
 
 //=============================================================================
 /**
@@ -142,6 +159,15 @@ static u32 RULE_CalcNameScore( const STRCODE	*cp_player1_name, const STRCODE	*cp
 static u32 MATH_GetMostOnebit( u32 x, u8 bit );
 static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status, GFDATE gfdate );
 static u32 RULE_CalcRhythmMinus( u32 cnt_diff );
+
+#ifdef DEBUGWIN_USE
+static void DEBUGWIN_Init( HEAPID heapID );
+static void DEBUGWIN_Exit( void );
+#else
+#define DEBUGWIN_Init
+#define DEBUGWIN_Exit
+#endif //DEBUGWIN_USE
+
 //=============================================================================
 /**
  *					データ
@@ -290,6 +316,8 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
   PMSND_PauseBGM( TRUE );
   PMSND_PushBGM( );
 
+  DEBUGWIN_Init( GFL_HEAPID_APP );
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -309,7 +337,7 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	IRC_COMPATIBLE_MAIN_WORK	*p_wk;
 
 	p_wk	= p_work;
-
+  DEBUGWIN_Exit();
 
   PMSND_PopBGM( );
   PMSND_PauseBGM( FALSE );
@@ -1095,6 +1123,13 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score,
           rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status, is_init,
           gfdate, HEAPID_IRCCOMPATIBLE_SYSTEM );
+
+#ifdef PM_DEBUG
+      if( s_debug_score_use )
+      {
+        p_param->score  = s_debug_score;
+      }
+#endif
 		}
 	}
 
@@ -1409,3 +1444,84 @@ static u32 RULE_CalcRhythmMinus( u32 cnt_diff )
 
   return sc_minus_tbl[ cnt_diff ];
 }
+
+
+#ifdef DEBUGWIN_USE
+#define DEBUGWIN_GROUP_FLEELINGCHECK  8
+static inline void DebugWin_Feel_U_ChangeScore( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  BOOL is_update  = FALSE;
+
+  if( GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT )
+  { 
+    if( s_debug_score > 0 )
+    { 
+      s_debug_score--;
+      is_update = TRUE;
+    }
+  }
+  if( GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT )
+  { 
+    if( s_debug_score < 100 )
+    { 
+      s_debug_score++;
+      is_update = TRUE;
+    }
+  }
+
+  if( is_update )
+  { 
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Feel_D_ChangeScore( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_ITEM_SetNameV( item , "てんすう[%d]", s_debug_score );
+
+}
+static inline void DebugWin_Feel_U_UseScore( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  BOOL is_update  = FALSE;
+
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT
+      || GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  { 
+    s_debug_score_use ^=  1;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Feel_D_UseScore( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+
+  DEBUGWIN_ITEM_SetNameV( item , "こてい[%s]", sc_tbl[s_debug_score_use] );
+
+}
+
+static void DEBUGWIN_Init( HEAPID heapID )
+{
+  //初期化
+  s_debug_score  = 0;
+  s_debug_score_use = FALSE;
+  p_debug_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
+  DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_debug_font );
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_FLEELINGCHECK, "FleelingCheck", heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Feel_U_ChangeScore, DebugWin_Feel_D_ChangeScore,
+      NULL, DEBUGWIN_GROUP_FLEELINGCHECK, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Feel_U_UseScore, DebugWin_Feel_D_UseScore,
+      NULL, DEBUGWIN_GROUP_FLEELINGCHECK, heapID );
+}
+static void DEBUGWIN_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_FLEELINGCHECK );
+  DEBUGWIN_ExitProc();
+  GFL_FONT_Delete( p_debug_font );
+  p_debug_font  = NULL;
+}
+#endif //DEBUGWIN_USE
