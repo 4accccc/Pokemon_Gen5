@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-11T12:45:19"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-15T15:33:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="311" right="1024" bottom="710" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -967,7 +967,7 @@
 
 	<row id="POKETRADE_STR_202">
 		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0]しゅうりょうまち</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0]終了まち</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0]終了待ち</language>
 	</row>
 
 	<row id="POKETRADE_STR2_16">
