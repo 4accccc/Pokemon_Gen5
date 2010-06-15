@@ -5,6 +5,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_171_nightmare.NSCR
 #001
 %00
+カメラ移動	追従	3vs3防御	CM	0	CB
+エフェクト終了待ち	すべて
 制御モード変更	継続
 SE再生	SEQ_SE_W379_POWER	SYSTEM	真ん中	0:-200:60	0:0:0
 SE再生	SEQ_SE_DUMMY5	SYSTEM	真ん中	220:0:0	0:0:0
@@ -44,7 +46,7 @@ BGの表示/非表示	お盆	表示
 BGの表示/非表示	エフェクト	非表示
 ポケモンアニメ	攻撃側	アニメスタート
 ポケモンアニメ	防御側	アニメスタート
-カメラ移動	追従	初期位置	16	0	12
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了待ち	すべて
 エフェクト終了
 &
