@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-14T21:35:43"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-15T16:07:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -356,11 +356,11 @@
 		<language name="JPN" width="208">ただしい　ソフトが　ささっていません
 でんげんをきり　ただしい　ソフトを
 さしてから　ポケシフターを
-きどうしなおして　ください</language>
+きどうしなおして　ください▼</language>
 		<language name="JPN_KANJI" width="208">正しい　ソフトが　ささっていません
 電源を切り　正しい　ソフトを
 さしてから　ポケシフターを
-起動し直してください</language>
+起動し直してください▼</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_03">
