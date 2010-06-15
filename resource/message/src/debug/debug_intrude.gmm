@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-06-06T18:52:53"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-06-14T19:38:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -249,7 +249,7 @@
 
 	<dialog left="573" top="268" right="1219" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="810" top="201" right="1157" bottom="353" visible="no"/>
-		<tag-palette left="677" top="25" right="1024" bottom="423" visible="no"/>
+		<tag-palette left="677" top="25" right="1237" bottom="529" visible="no"/>
 		<band id="0" index="0" style="0000" width="471"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="638"/>
@@ -293,6 +293,46 @@
 	<row id="STR_INTRUDE_TIME_UNLIMITED">
 		<language name="JPN" font=" 1:font_system" width="240">じかんむせいげん</language>
 		<language name="JPN_KANJI">時間無制限</language>
+	</row>
+
+	<row id="STR_INTRUDE_NUMBER" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">[1:34:数字３桁:0]</language>
+		<language name="JPN_KANJI">[1:34:数字３桁:0]</language>
+	</row>
+
+	<row id="STR_INTRUDE_MISSION_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">ミッションせんたく</language>
+		<language name="JPN_KANJI">ミッション選択</language>
+	</row>
+
+	<row id="STR_INTRUDE_MISSION_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">サポートミッション０</language>
+		<language name="JPN_KANJI">サポートミッション０</language>
+	</row>
+
+	<row id="STR_INTRUDE_MISSION_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">サポートミッション１</language>
+		<language name="JPN_KANJI">サポートミッション１</language>
+	</row>
+
+	<row id="STR_INTRUDE_MISSION_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">バトルミッション</language>
+		<language name="JPN_KANJI">バトルミッション</language>
+	</row>
+
+	<row id="STR_INTRUDE_MISSION_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">レスキューミッション</language>
+		<language name="JPN_KANJI">レスキューミッション</language>
+	</row>
+
+	<row id="STR_INTRUDE_MISSION_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">アイテムミッション０</language>
+		<language name="JPN_KANJI">アイテムミッション０</language>
+	</row>
+
+	<row id="STR_INTRUDE_MISSION_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,#ff8080,">
+		<language name="JPN" font=" 1:font_system" width="240">アイテムミッション１</language>
+		<language name="JPN_KANJI">アイテムミッション１</language>
 	</row>
 
 	<flowchart-group-list>

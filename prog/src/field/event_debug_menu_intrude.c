@@ -18,6 +18,7 @@
 #include "arc/debug_message.naix"
 #include "msg/debug/msg_debug_intrude.h"
 
+#include "event_debug_numinput_mission.h"
 #include "event_debug_menu_intrude.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -33,6 +34,7 @@ static void clearTutorial( FIELDMAP_WORK * fieldmap );
 static void dumpPlayerInfo( FIELDMAP_WORK * fieldmap );
 static void resetMissionList( FIELDMAP_WORK * fieldmap );
 static void timeUnlimited( FIELDMAP_WORK * fieldmap );
+static void selectMission( FIELDMAP_WORK * fieldmap );
 
 //======================================================================
 //======================================================================
@@ -70,6 +72,7 @@ static const FLDMENUFUNC_LIST menuList[] =
   {STR_INTRUDE_DUMP_PLAYER,       (void*)dumpPlayerInfo},      // プレイヤー情報
   {STR_INTRUDE_MISSION_RESET,     (void*)resetMissionList},      // ミッションリスト再作成
   {STR_INTRUDE_TIME_UNLIMITED,     (void*)timeUnlimited},      // ミッションリスト再作成
+  {STR_INTRUDE_MISSION_00,         (void*)selectMission},      // ミッション選択
 };
 
 //--------------------------------------------------------------
@@ -134,8 +137,13 @@ static GMEVENT_RESULT debugMenuIntrudeEvent( GMEVENT *event, int *seq, void *wk 
     // ハイリンクデバッグ
     if ( work->select && work->select != FLDMENUFUNC_CANCEL )
     {
-      CALL_FUNC func = (CALL_FUNC)work->select;
-      func( work->fieldmap );
+      if( work->select == (u32)selectMission ) {
+        GMEVENT_CallEvent( event, DEBUG_NUM_INPUT_EVENT_MissionTypeSelect( work->gameSystem ) );
+      }
+      else {
+        CALL_FUNC func = (CALL_FUNC)work->select;
+        func( work->fieldmap );
+      }
 
 #if 0
       // 作成
@@ -152,6 +160,8 @@ static GMEVENT_RESULT debugMenuIntrudeEvent( GMEVENT *event, int *seq, void *wk 
 #endif
     }
     (*seq)++;
+    break;
+
   case 3:
     return GMEVENT_RES_FINISH;
   } 
@@ -234,6 +244,12 @@ static void resetMissionList( FIELDMAP_WORK * fieldmap )
 static void timeUnlimited( FIELDMAP_WORK * fieldmap )
 {
   DEBUG_IntrudeComm_SetTimeUnlimited( FIELDMAP_GetGameSysWork( fieldmap ) );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void selectMission( FIELDMAP_WORK * fieldmap )
+{
 }
 
 #endif //PM_DEBUG
