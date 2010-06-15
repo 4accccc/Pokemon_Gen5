@@ -2675,6 +2675,94 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
 
 //--------------------------------------------------------------
 /**
+ * バトルサブウェイ　ワーク作成、データセット
+ * トレーナーNo指定あり。
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugCreateWorkTrNo(
+    GAMESYS_WORK *gsys, u16 mode, const u16 *tr_no )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  
+  //ワーク作成
+  BSUBWAY_SCRWORK *bsw_scr = BSUBWAY_SCRWORK_CreateWork(
+      gsys, BSWAY_PLAY_NEW, mode );
+  
+  { //手持ち使用
+    u8 buf = FALSE;
+     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+          BSWAY_PLAYDATA_ID_use_battle_box, &buf );
+  }
+  
+  //フラグ初期化
+  {
+    EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+    u16 *work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_RECEIPT );
+    *work = BSWAY_SCENE_RECEIPT_ERROR;
+    work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_TRAIN );
+    *work = BSWAY_SCENE_TRAIN_CONTINUE;
+    
+    EVENTWORK_SetEventFlag( ev, FV_BSUBWAY_RECEIPT_PARTNER );
+    EVENTWORK_SetEventFlag( ev, FV_C04R0111_PARTNER );
+    EVENTWORK_SetEventFlag( ev, FV_C04R0111_NPC );
+  }
+  
+  //ポケモン選択
+  {
+    int i;
+    
+    for( i = 0;  i < bsw_scr->member_num; i++ ){
+      bsw_scr->pokelist_select_num[i] = i + 1;
+    }
+    
+    bsw_scr->pokelist_return_mode = PL_RET_NORMAL;
+    bsw_scr->pokelist_result_select = PL_SEL_POS_POKE1;
+    
+    //メンバーロード
+    BSUBWAY_SCRWORK_GetEntryPoke( bsw_scr, gsys );
+  }
+  
+  //aiマルチ
+  if( mode == BSWAY_MODE_MULTI || mode == BSWAY_MODE_S_MULTI ){
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+    u32 sex = MyStatus_GetMySex( &player->mystatus );
+    
+    if( sex == PM_MALE ){
+      sex = PM_FEMALE;
+    }else{
+      sex = PM_MALE;
+    }
+    
+    bsw_scr->partner = 0;
+    BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr, sex );
+  }
+  
+  //対戦トレーナーセット
+  {
+    int i = 0;
+    u16 stage = 0;
+    
+    if( mode == BSWAY_MODE_MULTI || mode == BSWAY_MODE_COMM_MULTI ||
+        mode == BSWAY_MODE_S_MULTI || mode == BSWAY_MODE_S_COMM_MULTI )
+    {
+      bsw_scr->trainer[i] = tr_no[i];
+      bsw_scr->trainer[i*2+1] = tr_no[i*2+1];
+    }
+    else
+    {
+      bsw_scr->trainer[i] = tr_no[i];
+    }
+  }
+  
+  //デバッグフラグ初期化
+  {
+    u8 flag = BSUBWAY_SCOREDATA_DEBUG_GetFlag( bsw_scr->scoreData );
+    flag &= ~BSW_DEBUG_FLAG_AUTO; //オートは切っておく
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * バトルサブウェイ　ワーク　任意のラウンド数に変更
  * @param game_round_now 何戦目にするか
  */

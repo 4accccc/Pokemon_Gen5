@@ -42,6 +42,8 @@ extern VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk );
 
 #ifdef PM_DEBUG
 extern void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode );
+extern void BSUBWAY_SCRWORK_DebugCreateWorkTrNo(
+    GAMESYS_WORK *gsys, u16 mode, const u16 *tr_no );
 extern void BSUBWAY_SCRWORK_DebugFightAnyRound(
     GAMESYS_WORK *gsys, u16 game_round_now );
 extern u8 BSUBWAY_SCRWORK_DebugGetFlag( GAMESYS_WORK *gsys );
