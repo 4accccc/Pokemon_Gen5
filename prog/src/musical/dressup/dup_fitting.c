@@ -562,6 +562,8 @@ void  DUP_FIT_TermFitting( FITTING_WORK *work )
 #if USE_DEBUGWIN_SYSTEM
   DEBUGWIN_ExitProc();
 #endif  //USE_DEBUGWIN_SYSTEM
+
+  GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
   
   //New‚ğ‘S•”Á‚·
   MUSICAL_SAVE_ResetNewItem(work->initWork->mus_save);

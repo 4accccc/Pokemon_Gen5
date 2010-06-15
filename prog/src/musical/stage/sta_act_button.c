@@ -182,6 +182,7 @@ void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
           GFL_CLACT_WK_SetDrawEnable( work->clwkTouchEffect, TRUE );
           GFL_CLACT_WK_SetPos( work->clwkTouchEffect , &pos , CLSYS_DEFREND_SUB );
         }
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
       }
     }
   }
