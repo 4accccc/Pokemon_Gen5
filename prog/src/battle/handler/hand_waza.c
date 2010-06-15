@@ -5125,11 +5125,15 @@ static void handler_Yokodori_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 
     if( WAZADATA_GetFlag(waza, WAZAFLAG_Yokodori) )
     {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) )
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( !BPP_CheckSick(bpp, WAZASICK_FREEFALL) )
       {
-        BTL_N_Printf( DBGSTR_HANDWAZA_YokorodiDecide, pokeID );
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, pokeID );
-        work[ 0 ] = 1;
+        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) )
+        {
+          BTL_N_Printf( DBGSTR_HANDWAZA_YokorodiDecide, pokeID );
+          BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, pokeID );
+          work[ 0 ] = 1;
+        }
       }
     }
   }
