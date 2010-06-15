@@ -853,8 +853,8 @@ static void DebugFieldMemPrint_Proc( FIELD_DEBUG_WORK *work )
 
   {
     DebugFont_ClearLine( work, 1 );
-    sprintf( str, " FREE  ALLOCATABLE" );
-    DebugFont_Print( work, 12, 0, str );
+    sprintf( str, "ALLOCATABLE   FREE" );
+    DebugFont_Print( work, 7, 0, str );
 
     DebugFont_ClearLine( work, 1 );
     sprintf( str, "HEAP_FIELD  %6x(%6x)", GFI_HEAP_GetHeapAllocatableSize( HEAPID_FIELDMAP ),
