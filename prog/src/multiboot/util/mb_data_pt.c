@@ -677,7 +677,7 @@ static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_
       continue;
     }
     else if( pFooterArr[i]->magic_number != MAGIC_NUMBER_PT ){
-      MB_DATA_TPrintf("Data[%d] is invalid MAGIC_NUMBER[%x]\n",pFooterArr[i]->magic_number);
+      MB_DATA_TPrintf("Data[%d] is invalid MAGIC_NUMBER[%x]\n",i,pFooterArr[i]->magic_number);
       isCorrect[i] = FALSE;
       continue;
     }

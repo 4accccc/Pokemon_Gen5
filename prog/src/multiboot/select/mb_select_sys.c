@@ -1927,10 +1927,12 @@ static GFL_PROC_RESULT MB_SELECT_ProcMain( GFL_PROC * proc, int * seq , void *pw
   if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
       work->isNetErr == FALSE )
   {
-    work->isNetErr = TRUE;
-    work->state = MSS_FADEOUT;
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->isNetErr = TRUE;
+      work->state = MSS_FADEOUT;
+    }
   }
-  
   if( ret == TRUE )
   {
     return GFL_PROC_RES_FINISH;

@@ -558,6 +558,12 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       //転送も終わってキャンセルじゃないのでいきなりゲーム
       work->state = MCS_CAPTURE_INIT;
       MB_COMM_SetChildState( work->commWork , MCCS_CAP_GAME );
+      if( MB_CHILD_ErrCheck( work , TRUE ) == TRUE )
+      {
+        //開放が入るから初期化
+        MB_CHILD_InitGraphic( work );
+        MB_CHILD_LoadResource( work );
+      }
     }
     else
     {
@@ -576,8 +582,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       {
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
       }
-      MB_CHILD_ErrCheck( work , TRUE );
       GFUser_SetVIntrFunc( MB_CHILD_VSync );
+      MB_CHILD_ErrCheck( work , TRUE );
     }
     break;
     
