@@ -135,6 +135,7 @@ static GMEVENT_RESULT fieldBattleEvent(
 static void BeaconReq_BtlTrainer( u16 tr_id, BTL_BEACON_ST state );
 static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state );
 static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew );
+static void ReflectRecord( BATTLE_EVENT_WORK* bew );
 
 static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew);
 static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata);
@@ -819,6 +820,25 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
   }
 }
 
+//--------------------------------------------------------------
+/*
+ *  @brief  バトル終了時レコードインクリメント
+ */
+//--------------------------------------------------------------
+static void ReflectRecord( BATTLE_EVENT_WORK* bew )
+{
+  BATTLE_SETUP_PARAM* bp = bew->battle_param;
+  RECORD* record = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(bew->gsys));
+  
+  if( bp->competitor == BTL_COMPETITOR_WILD ){
+    switch( bp->result ){
+    case BTL_RESULT_RUN_ENEMY:
+      RECORD_Inc( record, RECID_NIGERARETA );
+      break;
+    }
+  }
+}
+
 //======================================================================
 //
 //
@@ -938,6 +958,9 @@ static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 
   //ビーコンリクエスト
   BeaconReq_BattleEnd( bew );
+
+  //レコードデータインクリメント
+  ReflectRecord( bew );
 
   //諸々の戦闘結果を反映して、天候を再設定する
   PM_WEATHER_UpdateZoneChangeWeatherNo( bew->gsys, PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork( gamedata )) );
