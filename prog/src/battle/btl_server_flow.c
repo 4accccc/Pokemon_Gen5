@@ -255,7 +255,6 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scEvent_ConsumeItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 nextItemID );
 static void scproc_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
@@ -6557,9 +6556,10 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       {
         SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_KINOMI, BPP_GetID(bpp) );
 
-        if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
-          scproc_ConsumeItem( wk, bpp );
+        if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) )
+        {
           scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA );
+          scproc_ConsumeItem( wk, bpp );
         }
       }
     }
@@ -6605,43 +6605,10 @@ static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   u16 itemID = BPP_GetItem( bpp );
 
-  scPut_ConsumeItem( wk, bpp );
-  scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
-
-  /*  かるわざだけで利用していた。必要なくなったはず。
-  {
-    u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-    scEvent_ConsumeItem( wk, bpp, itemID );
-    BTL_Hem_PopState( &wk->HEManager, hem_state );
-  }
-  */
-}
-//----------------------------------------------------------------------------------
-/**
- * [Put] 所持アイテムを消費した情報を記録
- */
-//----------------------------------------------------------------------------------
-static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
-{
   BPP_ConsumeItem( bpp );
   SCQUE_PUT_OP_ConsumeItem( wk->que, BPP_GetID(bpp) );
-}
-//----------------------------------------------------------------------------------
-/**
- * [Event] 装備アイテム消費後
- *
- * @param   wk
- * @param   bpp
- * @param   itemID
- */
-//----------------------------------------------------------------------------------
-static void scEvent_ConsumeItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ITEM, itemID );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ITEM_CONSUMED );
-  BTL_EVENTVAR_Pop();
+
+  scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
 }
 //----------------------------------------------------------------------------------
 // アイテム書き換え共通処理
