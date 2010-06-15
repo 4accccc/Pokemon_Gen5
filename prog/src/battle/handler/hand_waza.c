@@ -3181,7 +3181,11 @@ static void handler_Fuiuti_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
       if( (waza == WAZANO_NULL)
       ||  (!WAZADATA_IsDamage(waza))
       ){
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+        {
+          BTL_HANDEX_STR_PARAMS* str = (BTL_HANDEX_STR_PARAMS*)(BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS ));
+          HANDEX_STR_Setup( str, BTL_STRTYPE_STD, BTL_STRID_STD_WazaFail );
+        }
       }
     }
   }
