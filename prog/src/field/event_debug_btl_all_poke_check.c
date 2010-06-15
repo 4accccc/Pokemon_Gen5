@@ -162,6 +162,7 @@ static GMEVENT_RESULT BtlAllPokeCheck( GMEVENT* event, int* seq, void* wk_adrs )
           POKEMON_PARAM* pp;
 
           pp = PokeParty_GetMemberPointer( mp, i );
+          PP_Clear( pp );
           PP_Setup( pp, wk->count, 1, PTL_SETUP_ID_AUTO );
           pp = PokeParty_GetMemberPointer( ep, i );
           PP_ChangeMonsNo( pp, wk->count );
@@ -180,8 +181,7 @@ static GMEVENT_RESULT BtlAllPokeCheck( GMEVENT* event, int* seq, void* wk_adrs )
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_PP_CONST );
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_SKIP_BTLIN ); // ìoèÍÉAÉjÉÅîÚÇŒÇ∑
       
-//      new_event = EVENT_WildPokeBattle( gsys, fieldmap, bp, FALSE, ENC_TYPE_NORMAL );
-      new_event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
+      new_event = EVENT_WildPokeBattle( gsys, fieldmap, bp, FALSE, ENC_TYPE_NORMAL );
     
       GMEVENT_CallEvent( event, new_event );
     }
