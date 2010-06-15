@@ -66,6 +66,7 @@ typedef enum {
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 #define MAGIC_NUMBER_PT (0x20060623)
+#define MAGIC_NUMBER_KR (0x20070903)  //äÿçëåÍî≈ÇæÇØà·Ç§ÅEÅEÅE
 #define PT_SECTOR_SIZE   (PT_SAVE_SECTOR_SIZE)
 #define PT_SECTOR_MAX    (PT_SAVE_PAGE_MAX)
 
