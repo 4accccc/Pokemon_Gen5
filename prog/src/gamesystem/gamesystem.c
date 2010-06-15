@@ -149,10 +149,11 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 #ifdef DEBUG_ONLY_FOR_hudson
 
 #include "debug/debug_hudson.h"
+#include "field/event_debug_menu.h" // for EVENT_DEBUG_AllMapCheck
+#include "field/event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
 #include "field/event_debug_btl_all_waza_check.h" // for EVENT_DEBUG_BtlAllWazaCheck
 #include "field/event_debug_btl_all_waza_check2.h" // for EVENT_DEBUG_BtlAllWazaCheck2
-#include "field/event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
-#include "field/event_debug_menu.h" // for EVENT_DEBUG_AllMapCheck
+#include "field/event_debug_btl_all_poke_check.h" // for EVENT_DEBUG_BtlAllPokeCheck
 
 #include "savedata/config.h"
 
@@ -220,6 +221,15 @@ static void HudsonMain( GAMESYS_WORK* gsys )
 
       new_event = GMEVENT_CreateOverlayEventCall( gsys, 
           FS_OVERLAY_ID( debug_all_waza_check2 ), EVENT_DEBUG_BtlAllWazaCheck2, NULL );
+      GAMESYSTEM_SetEvent( gsys, new_event );
+    }
+    // 全ポケモンチェック
+    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
+    {
+      GMEVENT * new_event;
+
+      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+          FS_OVERLAY_ID( debug_all_poke_check ), EVENT_DEBUG_BtlAllPokeCheck, NULL );
       GAMESYSTEM_SetEvent( gsys, new_event );
     }
 

@@ -221,7 +221,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   
 #ifdef DEBUG_ONLY_FOR_hudson 
   // Aボタン連打
-  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
+      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
   {
     GFL_UI_DEBUG_OVERWRITE_SetCallBack( UIFuncButtonA );
   }
@@ -326,7 +327,8 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
   //GFL_BMPWIN_Delete( wk->win );
       
 #ifdef DEBUG_ONLY_FOR_hudson
-  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
+      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
   {
     GFL_UI_DEBUG_OVERWRITE_SetCallBack( NULL );
   }
@@ -685,7 +687,8 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     {
       // 一定ターンで逃げる
       if( ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) && wkHudson.TrunCnt >= 2 ) ||
-          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 6*5+1 ) )
+          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 6*5+1 ) ||
+          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) && wkHudson.TrunCnt >= 0 ) )
       {
         hit = 3; 
       }

@@ -2,7 +2,7 @@
 /**
  *
  *	@file		event_debug_btl_all_waza_check2.h
- *	@brief
+ *	@brief  バトルで全技チェック(トリプル)
  *	@author hosaka genya
  *	@data		2010.06.10
  *

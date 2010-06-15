@@ -2543,7 +2543,9 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
     #endif
     #ifdef DEBUG_ONLY_FOR_hudson
     // “¦‚°‚ê‚é‚æ‚¤‚É‚·‚é
-    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ){
+    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) || 
+        HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
+    {
       return BTL_ESCAPE_MODE_WILD;
     }
     #endif //DEBUG_ONLY_FOR_hudson

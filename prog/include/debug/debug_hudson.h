@@ -34,6 +34,7 @@
 #define HUDSON_TESTCODE_ALL_CONNECT ("2")
 #define HUDSON_TESTCODE_ALL_WAZA ("3")
 #define HUDSON_TESTCODE_ALL_WAZA2 ("4")
+#define HUDSON_TESTCODE_ALL_POKE ("5")
 
 extern BOOL HUDSON_IsSkipTitle( void );
 extern BOOL HUDSON_IsTestCode( const char* str );
