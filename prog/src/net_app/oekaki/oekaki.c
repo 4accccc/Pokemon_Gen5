@@ -158,32 +158,32 @@ typedef struct{
 }OEKAKI_FUNC_TABLE;
 
 static OEKAKI_FUNC_TABLE FuncTable[]={
-  {NULL,                      1,},  // OEKAKI_MODE_INIT  = 0, 
+  {NULL,                      1,},  // OEKAKI_MODE_INIT                       = 0,
   {Oekaki_NewMember,          0,},  // OEKAKI_MODE_NEWMEMBER,
   {Oekaki_NewMemberWait,      0,},  // OEKAKI_MODE_NEWMEMBER_WAIT,
   {Oekaki_NewMemberEnd,       0,},  // OEKAKI_MODE_NEWMEMBER_END,
   {Oekaki_MainNormal,         0,},  // OEKAKI_MODE,
-  {Oekaki_EndSelectPutString, 1,},  // OEKAKI_MODE_END_SELECT,
+  {Oekaki_EndSelectPutString, 1,},  // OEKAKI_MODE_END_SELECT,                5
   {Oekaki_EndSelectWait,      1,},  // OEKAKI_MODE_END_SELECT_WAIT,
   {Oekaki_EndSelectAnswerWait,1,},  // OEKAKI_MODE_END_SELECT_ANSWER_WAIT
   {Oekaki_EndSelectParentCall,1,},  // OEKAKI_MODE_END_SELECT_PARENT_CALL
   {Oekaki_EndSelectAnswerOK,  1,},  // OEKAKI_MODE_END_SELECT_ANSWER_OK
-  {Oekaki_EndSelectSendOK,    1,},  // OEKAKI_MODE_END_SELECT_SEND_OK
+  {Oekaki_EndSelectSendOK,    1,},  // OEKAKI_MODE_END_SELECT_SEND_OK         10
   {Oekaki_EndSelectAnswerNG,  1,},  // OEKAKI_MODE_END_SELECT_ANSWER_NG
   {Oekaki_EndChild,           1,},  // OEKAKI_MODE_END_CHILD
   {Oekaki_EndChildWait,       1,},  // OEKAKI_MODE_END_CHILD_WAIT
   {Oekaki_EndChildWait2,      1,},  // OEKAKI_MODE_END_CHILD_WAIT2
-  {Oekaki_EndSelectParent,    1,},  // OEKAKI_MODE_END_SELECT_PARENT
+  {Oekaki_EndSelectParent,    1,},  // OEKAKI_MODE_END_SELECT_PARENT          15
   {Oekaki_EndSelectParentWait,1,},  // OEKAKI_MODE_END_SELECT_PARENT_WAIT
   {Oekaki_EndSelectParentSendEnd,1,},  // OEKAKI_MODE_END_SELECT_PARENT_SEND_END
   {Oekaki_ForceEnd,           1,},  // OEKAKI_MODE_FORCE_END
   {Oekaki_ForceEndWait,       1,},  // OEKAKI_MODE_FORCE_END_WAIT
-  {Oekaki_ForceEndSynchronize,1,},  // OEKAKI_MODE_FORCE_END_SYNCHRONIZE
+  {Oekaki_ForceEndSynchronize,1,},  // OEKAKI_MODE_FORCE_END_SYNCHRONIZE      20
   {Oekaki_ForceEndWaitNop,    1,},  // OEKAKI_MODE_FORCE_END_WAIT_NOP
   {Oekaki_EndParentOnly,      1,},  // OEKAKI_MODE_END_PARENT_ONLY
   {Oekaki_EndParentOnlyWait,  1,},  // OEKAKI_MODE_END_PARENT_ONLY_WAIT
   {Oekaki_LogoutChildMes,     1,},  // OEKAKI_MODE_LOGOUT_CHILD
-  {Oekaki_LogoutChildMesWait, 1,},  // OEKAKI_MODE_LOGOUT_CHILD_WAIT
+  {Oekaki_LogoutChildMesWait, 1,},  // OEKAKI_MODE_LOGOUT_CHILD_WAIT          25
   {Oekaki_LogoutChildClose,   1,},  // OEKAKI_MODE_LOGOUT_CHILD_CLOSE
 };
 
@@ -326,6 +326,7 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
 
 
 
+static int debugseq,debugsubseq;
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -416,7 +417,13 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
   // データ送信リクエスト処理
   Oekaki_SendFunc( wk );
 
-
+#ifdef PM_DEBUG
+  if(debugseq!=*seq || debugsubseq!=wk->seq){
+    OS_Printf("seq=%d, subseq=%d\n", *seq, wk->seq);
+    debugseq = *seq;
+    debugsubseq = wk->seq;
+  }
+#endif
   GFL_CLACT_SYS_Main();             // セルアクター常駐関数
   GFL_TCBL_Main( wk->pMsgTcblSys );
   Oekaki_PrintFunc(wk);
@@ -1778,6 +1785,7 @@ static int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq )
     wk->ridatu_wait = 0;
     SetNextSequence( wk, OEKAKI_MODE_END_SELECT_ANSWER_NG );
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
+      OS_Printf("wk->status_endを立てた\n");
     return seq;
   }
   
@@ -2099,7 +2107,6 @@ static int Oekaki_ForceEndSynchronize( OEKAKI_WORK *wk, int seq )
   || _get_connect_num(wk) == 1 || now_bit != wk->shareBit){
     OS_Printf("終了時同期成功  seq = %d\n", seq);
     OS_Printf("コネクト人数%d\n",_get_connect_num(wk));
-//    wk->seq = OEKAKI_MODE_FORCE_END_WAIT_NOP;
     WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, 
                     WIPE_FADE_BLACK, 16, 1, HEAPID_OEKAKI );
     seq = SEQ_OUT;            //終了シーケンスへ
@@ -2252,6 +2259,8 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
     wk->shareBit = Union_App_GetMemberNetBit(wk->param->uniapp);
 
   }
+
+//  OS_Printf("err_num=%d, connect_num=%d wait=%d \n ", wk->err_num, _get_connect_num(wk), wk->wait);
 
   EndSequenceCommonFunc( wk );      //終了選択時の共通処理
   return seq;

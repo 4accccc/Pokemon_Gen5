@@ -301,17 +301,25 @@ static void CommOekakiBoardEndChild(
       if(recieve_work->ridatu_id == GFL_NET_SystemGetCurrentID()){
         if(recieve_work->ridatu_kyoka == FALSE){
           OekakiBoard_MainSeqForceChange( wk, OEKAKI_MODE_END_SELECT_ANSWER_NG, recieve_work->ridatu_id );
+          OS_Printf("—£’ENG‚ğóM\n");
         }
         else{
           wk->oya_share_num = recieve_work->oya_share_num;
           OekakiBoard_MainSeqForceChange( wk, OEKAKI_MODE_END_SELECT_ANSWER_OK, recieve_work->ridatu_id );
+          wk->status_end = TRUE;
+          OS_Printf("—£’EOK‚ğóM\n");
         }
       }
       break;
     case COEC_REQ_RIDATU_EXE:
       OS_TPrintf("e‹@‚ªq‹@%d‚Ì—£’E’Ê’m‚µ‚½\n", recieve_work->ridatu_id);
-    //  OekakiBoard_MainSeqCheckChange( wk, OEKAKI_MODE_LOGOUT_CHILD, id );
-      OekakiBoard_MainSeqForceChange( wk, OEKAKI_MODE_LOGOUT_CHILD, recieve_work->ridatu_id );
+      // ©•ª‚à—£’E‚µ‚Ä‚¢‚é‚È‚çØ‚è‘Ö‚¦‚éq‹@‚Ì—£’E‘Ò‚¿‚ÉØ‚è‘Ö‚¦‚é•K—v‚Í–³‚¢
+      OS_Printf("wk->status_end=%d\n",wk->status_end);
+      if(wk->status_end){
+        OS_Printf("Šù‚É—£’E‘Ò‚¿‚È‚Ì‚Ål‚Ì—£’Eˆ—‚ğ‘Ò‚Â•K—v‚ª–³‚¢\n");
+      }else{
+        OekakiBoard_MainSeqForceChange( wk, OEKAKI_MODE_LOGOUT_CHILD, recieve_work->ridatu_id );
+      }
       break;
     }
   }
