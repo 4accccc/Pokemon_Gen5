@@ -241,6 +241,16 @@ LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl)
         }
       }
     }
+    
+    //破壊されている外部セーブがあるならリンク情報を初期化する
+    if(ctrl->first_status > 0){
+      SAVE_EXTRA_ID extra_id;
+      for(extra_id = 0; extra_id < SAVE_EXTRA_ID_MAX; extra_id++){
+        if(ctrl->first_status & (1 << (FST_EXTRA_START + extra_id))){
+          SaveData_ClearExtraMagicKey(ctrl, extra_id);
+        }
+      }
+    }
 		break;
 	}
 	return result;

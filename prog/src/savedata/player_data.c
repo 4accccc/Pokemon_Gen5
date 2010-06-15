@@ -186,7 +186,7 @@ BOOL SaveData_CheckExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id)
 
 //==================================================================
 /**
- * 指定した外部セーブの存在チェック
+ * 指定した外部セーブを存在有り状態にする
  *
  * @param   sv		
  * @param   extra_id		外部セーブID
@@ -199,6 +199,20 @@ void SaveData_SetExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id)
 {
 	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
 	pd->extra_magic_key[extra_id] = EXTRA_SAVE_MAGIC_KEY;
+}
+
+//==================================================================
+/**
+ * 指定した外部セーブを存在無し状態にする
+ *
+ * @param   sv		
+ * @param   extra_id		外部セーブID
+ */
+//==================================================================
+void SaveData_ClearExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+	pd->extra_magic_key[extra_id] = 0;
 }
 
 //==================================================================
