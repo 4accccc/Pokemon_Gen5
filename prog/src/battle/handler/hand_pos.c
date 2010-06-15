@@ -177,11 +177,9 @@ static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       if( turnCnt > work[1] )
       {
         u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
-
-        if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == targetPokeID )
+        if( targetPokeID != BTL_POKEID_NULL )
         {
           const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
-
           if( !BPP_IsHPFull(target) )
           {
             u8 userPokeID = work[ WORKIDX_USER_POKEID ];
@@ -194,10 +192,9 @@ static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
               HANDEX_STR_Setup( &hp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Negaigoto );
               HANDEX_STR_AddArg( &hp_param->exStr, userPokeID );
             BTL_SVF_HANDEX_Pop( flowWk, hp_param );
-
           }
-          BTL_EVENT_FACTOR_Remove( myHandle );
         }
+        BTL_EVENT_FACTOR_Remove( myHandle );
       }
     }
   }
