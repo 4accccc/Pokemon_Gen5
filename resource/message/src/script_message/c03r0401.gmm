@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-08T21:43:27"/>
+	<create user="matsushima" host="W00181" date="2010-06-15T15:13:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="33" top="102" right="738" bottom="722" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="796" top="425" right="1269" bottom="823" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -648,13 +648,55 @@ msg_c03r0401_girl1_04</comment>
 つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0401_statue_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0401_statue_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">なんだか　ふしぎな　かんじの
 ポケモンの　どうぞうが　おいてある</language>
 		<language name="JPN_KANJI" width="256">なんだか　不思議な　感じの
 ポケモンの　銅像が　置いてある</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_15_1" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
+※主人公が男
+※姿がゾロアに戻っているときのセリフ。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　おにいちゃん
+ゾロアを　なかまに　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　しんぱいに　なっちゃった[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
+すごく　仲良しみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　一緒に
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　お兄ちゃん
+ゾロアを　仲間に　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　心配に　なっちゃった[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_15_2" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
+※主人公が女
+※姿がゾロアに戻っているときのセリフ。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　おねえちゃん
+ゾロアを　なかまに　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　しんぱいに　なっちゃった[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
+すごく　仲良しみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　一緒に
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　お姉ちゃん
+ゾロアを　仲間に　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　心配に　なっちゃった[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
