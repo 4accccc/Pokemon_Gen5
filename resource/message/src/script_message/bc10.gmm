@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-16T18:26:26"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-16T20:19:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -829,7 +829,7 @@
 		<language name="JPN" width="256">かんがえすぎて　まけちゃった……
 ときには　からっぽも　いいかもね</language>
 		<language name="JPN_KANJI" width="256">考えすぎて　負けちゃった……
-時には　からっぽも　いいかもね</language>
+ときには　からっぽも　いいかもね</language>
 	</row>
 
 	<row id="bc10_11_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1188,7 +1188,7 @@
 つかれてきちゃった……</language>
 		<language name="JPN_KANJI" width="256">なんだか　効率ばかり
 追い求める　生活にも▽
-疲れてきちゃった……</language>
+つかれてきちゃった……</language>
 	</row>
 
 	<row id="bc10_19_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1272,7 +1272,7 @@
 		<language name="JPN" width="256">ひとから　どう　みられているか
 きにして　くらす　せいかつに▽
 ちょっと　くたびれちゃったよ</language>
-		<language name="JPN_KANJI" width="256">人から　どう見られているか
+		<language name="JPN_KANJI" width="256">人から　どう　みられているか
 気にして　暮らす　生活に▽
 ちょっと　くたびれちゃったよ</language>
 	</row>
