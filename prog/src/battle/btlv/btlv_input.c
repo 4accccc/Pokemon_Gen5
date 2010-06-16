@@ -1288,11 +1288,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   case BTLV_INPUT_SCRTYPE_STANDBY:
     biw->hit = GFL_UI_TP_HIT_NONE;
 
-    if( biw->main_loop_tcb_flag == TRUE )
-    { 
-      BTLV_EFFECT_SetCameraWorkStop();
-    }
-
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
       MtxFx22 mtx;
@@ -1311,6 +1306,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
+
+      if( biw->main_loop_tcb_flag == TRUE )
+      { 
+        BTLV_EFFECT_SetCameraWorkStop();
+      }
 
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
@@ -1775,14 +1775,8 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     int cont = GFL_UI_KEY_GetCont();
-    if( ( biw->button_exist[ hit ] == FALSE ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_WAZA ) )
+    if( biw->button_exist[ hit ] == FALSE )
     {
-      hit = GFL_UI_TP_HIT_NONE;
-    }
-    else if( ( biw->button_exist[ hit ] == FALSE ) &&
-             ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) &&
-             ( ( cont & PAD_BUTTON_L ) == 0 ) )
-    { 
       hit = GFL_UI_TP_HIT_NONE;
     }
     else if( ( hit < 4 ) &&
@@ -1956,7 +1950,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     int cont = GFL_UI_KEY_GetCont();
-    if( ( biw->button_exist[ hit ] == FALSE ) && ( ( cont & PAD_BUTTON_L ) == 0 ) )
+    if( biw->button_exist[ hit ] == FALSE )
     { 
       hit = GFL_UI_TP_HIT_NONE;
     }
