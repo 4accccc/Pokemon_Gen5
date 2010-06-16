@@ -32,6 +32,17 @@ extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 extern BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza );
 
 /**
+ *  「ネコのて」で出ないワザ判定
+ */
+extern BOOL BTL_TABLES_IsNekoNoteOmmit( WazaID waza );
+
+/**
+ *  「まねっこ」で出ないワザ判定
+ */
+extern BOOL BTL_TABLES_IsManekkoOmmit( WazaID waza );
+
+
+/**
  *  時間差攻撃ワザ判定
  */
 extern BOOL BTL_TABLES_IsDelayAttackWaza( WazaID waza );

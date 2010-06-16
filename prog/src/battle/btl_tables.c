@@ -409,7 +409,37 @@ WazaSick  BTL_TABLES_GetTurnCheckWazaSickByOrder( u32 idx )
   return WAZASICK_NULL;
 }
 
+/**
+ *  「ネコのて」で出ないワザ判定
+ */
+BOOL BTL_TABLES_IsNekoNoteOmmit( WazaID waza )
+{
+  static const u16 table[] = {
+      WAZANO_KAUNTAA,       WAZANO_MIRAAKOOTO,  WAZANO_MAMORU,      WAZANO_MIKIRI,
+      WAZANO_KORAERU,       WAZANO_MITIDURE,    WAZANO_KONOYUBITOMARE,
+      WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
+      WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
+      WAZANO_FEINTO,        WAZANO_KIAIPANTI,
+  };
 
+  return checkTableElems( waza, table, NELEMS(table) );
+}
+
+/**
+ *  「まねっこ」で出ないワザ判定
+ */
+BOOL BTL_TABLES_IsManekkoOmmit( WazaID waza )
+{
+  static const u16 table[] = {
+      WAZANO_KAUNTAA,       WAZANO_MIRAAKOOTO,  WAZANO_MAMORU,      WAZANO_MIKIRI,
+      WAZANO_KORAERU,       WAZANO_MITIDURE,    WAZANO_KONOYUBITOMARE,
+      WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
+      WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
+      WAZANO_FEINTO,        WAZANO_KIAIPANTI,
+  };
+
+  return checkTableElems( waza, table, NELEMS(table) );
+}
 
 
 //--------------------------------------------------------------------------
@@ -426,8 +456,8 @@ static const WazaID YubiFuruOmmit[] = {
   WAZANO_MIRAAKOOTO,    WAZANO_MAMORU,      WAZANO_MIKIRI,
   WAZANO_KORAERU,       WAZANO_MITIDURE,    WAZANO_KONOYUBITOMARE,
   WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
-  WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_KIAIPANTI,
-  WAZANO_FEINTO,
+  WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
+  WAZANO_FEINTO,        WAZANO_KIAIPANTI,
 };
 
 //=============================================================================================
