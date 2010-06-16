@@ -4096,8 +4096,13 @@ static void handler_HakkinDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetMonsNo(bpp) == MONSNO_GIRATHINA ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
+    if( BPP_GetMonsNo(bpp) == MONSNO_GIRATHINA )
+    {
+      PokeType wazaType = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+      if( (wazaType == POKETYPE_DRAGON) || (wazaType == POKETYPE_GHOST) )
+      {
+        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.2) );
+      }
     }
   }
 }
