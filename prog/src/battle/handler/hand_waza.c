@@ -727,6 +727,7 @@ static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static void handler_CombiWaza_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_TypeMatch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_CombiWaza_ChangeEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
@@ -10909,6 +10910,7 @@ static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems )
 //    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
     { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
     { BTL_EVENT_WAZA_POWER_BASE,     handler_CombiWaza_Pow       }, // 威力計算
+    { BTL_EVENT_WAZA_EXE_START,      handler_CombiWaza_ChangeEff },
     { BTL_EVENT_DAMAGEPROC_END_HIT,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
@@ -10934,6 +10936,7 @@ static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
         work[ 0 ] = 1;  // 合体発動フラグ
         work[ 1 ] = effectType;
         work[ 2 ] = combiPokeID;
+
 
         switch( effectType ){
         case COMBI_EFFECT_RAINBOW:   wazaType = POKETYPE_MIZU;  break;
@@ -10981,6 +10984,21 @@ static void handler_CombiWaza_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, 150 );
     }
+  }
+}
+//
+static void handler_CombiWaza_ChangeEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (work[0])
+  ){
+    WazaID  effWazaID = WAZANO_NULL;
+    switch( work[1] ){
+    case COMBI_EFFECT_RAINBOW:   effWazaID = WAZANO_KARI_MIZUNOTIKAI;  break;
+    case COMBI_EFFECT_BURNING:   effWazaID = WAZANO_KARI_HONOONOTIKAI; break;
+    case COMBI_EFFECT_MOOR:      effWazaID = WAZANO_KARI_KUSANOTIKAI;  break;
+    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_EFFECT_WAZAID, effWazaID );
   }
 }
 // ダメージ処理終了後ハンドラ

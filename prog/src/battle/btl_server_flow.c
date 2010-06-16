@@ -2119,6 +2119,7 @@ static inline void FlowFlg_ClearAll( BTL_SVFLOW_WORK* wk )
  */
 static void wazaEffCtrl_Init( WAZAEFF_CTRL* ctrl )
 {
+  ctrl->effectWazaID = WAZANO_NULL;
   ctrl->attackerPos = BTL_POS_NULL;
   ctrl->targetPos = BTL_POS_NULL;
   ctrl->effectIndex = 0;
@@ -2146,6 +2147,20 @@ static void wazaEffCtrl_Setup( WAZAEFF_CTRL* ctrl, BTL_SVFLOW_WORK* wk, const BT
       ctrl->targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(bpp) );
     }
   }
+}
+/**
+ *  ワザエフェクト発動管理：エフェクトに使うワザナンバーの差し替え（合体ワザ用）
+ */
+static inline void wazaEffCtrl_ChangeEffectWazaID( WAZAEFF_CTRL* ctrl, WazaID waza )
+{
+  ctrl->effectWazaID = waza;
+}
+/**
+ *  ワザエフェクト発動管理：エフェクトに使うワザナンバーの取得（合体ワザ用）
+ */
+static inline WazaID wazaEffCtrl_GetEffectWazaID( const WAZAEFF_CTRL* ctrl )
+{
+  return ctrl->effectWazaID;
 }
 
 /**
@@ -4358,8 +4373,12 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
 //----------------------------------------------------------------------------------
 static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos )
 {
+  WazaID  effWazaID = wazaEffCtrl_GetEffectWazaID( effCtrl );
+  if( effWazaID == WAZANO_NULL ){
+    effWazaID = waza;
+  }
   SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT,
-          effCtrl->attackerPos, effCtrl->targetPos, waza, effCtrl->effectIndex );
+          effCtrl->attackerPos, effCtrl->targetPos, effWazaID, effCtrl->effectIndex );
 
   BTL_N_Printf( DBGSTR_SVFL_PutWazaEffect, que_reserve_pos, waza, effCtrl->attackerPos, effCtrl->targetPos, effCtrl->effectIndex );
 
@@ -6395,6 +6414,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
   BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
   BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+  BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
   BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, dmgType );
   BTL_EVENTVAR_SetValue( BTL_EVAR_FIX_DAMAGE, 0 );
 
@@ -10514,6 +10534,7 @@ static BtlWazaForceEnableMode scEvent_WazaExecuteStart( BTL_SVFLOW_WORK* wk, con
   BOOL fQuit = FALSE;
   u32 targetCnt = BTL_POKESET_GetCount( rec );
   BtlWazaForceEnableMode  enableMode;
+  WazaID effectWazaID;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
@@ -10528,9 +10549,16 @@ static BtlWazaForceEnableMode scEvent_WazaExecuteStart( BTL_SVFLOW_WORK* wk, con
       }
     }
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_ENABLE_MODE, BTL_WAZAENABLE_NONE );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_EFFECT_WAZAID, WAZANO_NULL );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXE_START );
     enableMode = BTL_EVENTVAR_GetValue( BTL_EVAR_ENABLE_MODE );
+    effectWazaID = BTL_EVENTVAR_GetValue( BTL_EVAR_EFFECT_WAZAID );
   BTL_EVENTVAR_Pop();
+
+
+  if( effectWazaID != WAZANO_NULL ){
+    wazaEffCtrl_ChangeEffectWazaID( wk->wazaEffCtrl, effectWazaID );
+  }
 
   return enableMode;
 }

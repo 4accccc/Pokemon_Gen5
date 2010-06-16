@@ -3432,18 +3432,25 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 counter = BPP_GetWazaContCounter( bpp );
-    TAYA_Printf("ƒƒgƒƒm[ƒ€ %d count\n", counter );
-    if( counter > 1)
+    if( counter >= 1)
     {
-      fx32 ratio;
-      u16  pow, damage;
+      WazaID  currentWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      WazaID  prevWaza = BPP_GetPrevWazaID( bpp );
 
-      --counter;
-      pow = 100 + (common_GetItemParam(myHandle, ITEM_PRM_ATTACK) * (counter));
-      TAYA_Printf("ƒƒgƒƒm[ƒ€ %d pow\n", pow );
-      if( pow > 200 ){ pow = 200; }
-      ratio = (FX32_CONST(pow) / 100);
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
+      TAYA_Printf("ƒƒgƒƒm[ƒ€ count=%d, waza=%d, prevWaza=%d\n", counter, currentWaza, prevWaza );
+
+      if( currentWaza == prevWaza )
+      {
+        fx32 ratio;
+        u16  pow, damage;
+
+        --counter;
+        pow = 100 + (common_GetItemParam(myHandle, ITEM_PRM_ATTACK) * (counter));
+        TAYA_Printf("ƒƒgƒƒm[ƒ€ %d pow\n", pow );
+        if( pow > 200 ){ pow = 200; }
+        ratio = (FX32_CONST(pow) / 100);
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
+      }
     }
   }
 }

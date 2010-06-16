@@ -109,6 +109,7 @@ typedef struct {
  *  ワザエフェクト発動管理
  */
 typedef struct {
+  u16 effectWazaID;   ///<
   u8  attackerPos;    ///< 発動開始位置
   u8  targetPos;      ///< 対象位置（位置が明確でないワザは BTL_POS_NULL ）
   u8  effectIndex;    ///< エフェクトIndex
