@@ -36,9 +36,11 @@ class EggWazaChecker
       self.listup_eggwaza
       self.listup_mothers
       self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
-      self.delete_mothers_only_male
+      #self.delete_mothers_only_male
       self.listup_mothers_egg_group
       self.listup_fathers
+      self.delete_fathers_unknown_gender
+      self.delete_fathers_only_female
       self.check_eggwaza_all
     end
     return @result
@@ -50,9 +52,11 @@ class EggWazaChecker
       @eggwaza_list = egg_waza_list
       self.listup_mothers
       self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
-      self.delete_mothers_only_male
+      #self.delete_mothers_only_male
       self.listup_mothers_egg_group
       self.listup_fathers
+      self.delete_fathers_unknown_gender
+      self.delete_fathers_only_female
       self.check_eggwaza_all
     end
     return @result
@@ -107,6 +111,28 @@ class EggWazaChecker
       @father_list += $egg_group_poke_list_hash[ egg_group ]
     end
     @father_list.uniq! # èdï°Çîrèú
+  end
+
+  def delete_fathers_unknown_gender
+    new_father_list = Array.new
+    @father_list.each do |father|
+      gender_type = @personal_accessor.get_gender_type( father )
+      if gender_type != "GENDER_TYPE_UNKNOWN" then 
+        new_father_list << father
+      end
+    end
+    @father_list = new_father_list
+  end
+
+  def delete_fathers_only_female
+    new_father_list = Array.new
+    @father_list.each do |father|
+      gender_type = @personal_accessor.get_gender_type( father )
+      if gender_type != "GENDER_TYPE_FEMALE_ONLY" then 
+        new_father_list << father
+      end
+    end
+    @father_list = new_father_list
   end
 
   def check_eggwaza_all
