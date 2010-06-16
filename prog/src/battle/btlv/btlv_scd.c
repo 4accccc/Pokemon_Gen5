@@ -313,6 +313,7 @@ void BTLV_SCD_RestartUI( BTLV_SCD* wk )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
   BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
+  BTLV_EFFECT_SetCameraWorkStop();
 }
 /**
  *  UIÄ‹N“®‚ÌŠ®—¹‘Ò‚¿

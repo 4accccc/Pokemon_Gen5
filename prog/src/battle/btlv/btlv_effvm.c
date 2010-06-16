@@ -1166,21 +1166,27 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     }
     break;
   case BTLEFF_CAMERA_POS_ZOOM_OUT:
-    if( BTLV_EFFECT_GetBtlRule() == BTL_RULE_SINGLE )
     { 
-      //1vs1ならカメラ移動なし
-      return bevw->control_mode;
+      BtlRule rule = BTLV_EFFECT_GetBtlRule();
+      if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
+      { 
+        //1vs1orRotationならカメラ移動なし
+        return bevw->control_mode;
+      }
     }
     break;
   case BTLEFF_CAMERA_POS_ZOOM_OUT_PERS:
-    if( BTLV_EFFECT_GetBtlRule() == BTL_RULE_SINGLE )
     { 
-      //1vs1ならカメラ移動なし
-      return bevw->control_mode;
-    }
-    else
-    { 
-      cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT;
+      BtlRule rule = BTLV_EFFECT_GetBtlRule();
+      if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
+      { 
+        //1vs1orRotationならカメラ移動なし
+        return bevw->control_mode;
+      }
+      else
+      { 
+        cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT;
+      }
     }
     break;
   case BTLEFF_CAMERA_POS_INIT_ORTHO:
