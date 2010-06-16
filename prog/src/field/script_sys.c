@@ -97,6 +97,9 @@ static void SCRIPTSYS_EntryNextFunc( SCRIPTSYS *scrsys, GMEVENT * next_event );
 static void SCRIPTSYS_CallNextFunc( SCRIPTSYS *scrsys, GMEVENT * event );
 static BOOL SCRIPTSYS_HasNextFunc( const SCRIPTSYS *scrsys );
 
+#ifdef  PM_DEBUG
+static void SCRIPTSYS_SetCodeChecker( VMHANDLE * core );
+#endif
 //イベント
 static GMEVENT * createScriptEvent(
     GAMESYS_WORK * gsys, u16 temp_heapID, u16 scr_id, MMDL * obj, void * ret_script_wk );
@@ -872,6 +875,9 @@ static VMHANDLE * SCRVM_Create(
     core->adrs += (local_scr_id * sizeof(u32));			//ID分進める(adrsがlongなので*4)
     core->adrs += VMGetU32( core );		//ラベルオフセット分進める
   }
+#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto) || defined(DEBUG_ONLY_FOR_nozomu_saitou)
+  SCRIPTSYS_SetCodeChecker( core );
+#endif
 	return core;
 }
 //--------------------------------------------------------------
@@ -1012,4 +1018,44 @@ BOOL SCRIPT_IsValidScriptID( u16 script_id )
 
   return TRUE;
 }
+
+//============================================================================================
+//============================================================================================
+#ifdef  PM_DEBUG
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL checkScrCmd( VMHANDLE * core, void * context, void * check_work, u16 code )
+{
+  GAMESYS_WORK * gsys = (GAMESYS_WORK*)check_work;
+  // fieldmap == NULLのとき、フィールドマップオーバーレイが存在しない
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  // is_sp_flag == TRUEのとき、特殊スクリプト
+  BOOL is_sp_flag = SCRCMD_WORK_GetSpScriptFlag( context );
+#if 0
+  if ( 0x002e <= code && code <= 0x004b )
+  {
+    if ( fieldmap == NULL)
+    {
+      return FALSE;
+    }
+  }
+  else if ( 0x004c <= code && code <= 0x005f )
+  {
+    if ( fieldmap == NULL || is_sp_flag )
+    {
+      return FALSE;
+    }
+  }
+#endif
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void SCRIPTSYS_SetCodeChecker( VMHANDLE * core )
+{
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( VM_GetContext( core ) );
+  VM_SetCheckFunc( core, checkScrCmd, gsys );
+}
+#endif
 
