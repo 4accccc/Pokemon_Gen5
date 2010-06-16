@@ -1808,6 +1808,7 @@ static int  Record_EndChild( GURU2RC_WORK *wk, int seq )
   
   // ぐるぐる交換受付をぬけました
   RecordMessagePrint( wk, msg_guru2_receipt_01_04, 0 ); 
+  OS_Printf("------------------「それでは～」表示\n");
 
   // 終了通達
   temp = 0;
@@ -1937,8 +1938,9 @@ static int Record_EndSelectParentWait( GURU2RC_WORK *wk, int seq )
 static int Record_ForceEnd( GURU2RC_WORK *wk, int seq )
 {
   if(GFL_NET_SystemGetCurrentID()==0){
-    // それでは　レコード通信をちゅうし　します
+    // それでは　ぐるぐる交換を中止　します
     RecordMessagePrint( wk, msg_guru2_receipt_01_04, 0 );
+    OS_Printf("------------------「それでは～」表示\n");
   }else{
     // つごうがわるくなったメンバーがいるのでかいさんします
     WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(_get_unionwork(wk),0) ); // 親機（自分）の名前をWORDSET
@@ -2715,21 +2717,15 @@ static void RecordMessagePrint( GURU2RC_WORK *wk, int msgno, int all_put )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f0f );
   BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, 1, MESFRAME_PAL_INDEX );
 
-  // 文字列描画開始
-  if(all_put == 0){
-    // 既に文字列描画が走っていても強制的に終了させて上書きする
-    if(wk->printStream!=NULL){
-      PRINTSYS_PrintStreamDelete( wk->printStream );
-    }
-    wk->printStream = PRINTSYS_PrintStream( wk->MsgWin, 0,0, wk->TalkString,
-                                            wk->font, MSGSPEED_GetWait(), wk->pMsgTcblSys,
-                                            0,HEAPID_GURU2, 15 );
+  // 既に文字列描画が走っていても強制的に終了させて上書きする
+  if(wk->printStream!=NULL){
+    PRINTSYS_PrintStreamDelete( wk->printStream );
+    OS_Printf("PrintStreamが衝突した\n");
   }
-  else{
-    //一括表示の場合はMsgIndexが0xffになるので注意！
-    PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 0,0, wk->TalkString, 
-                           wk->font, PRINTSYS_LSB_Make(2,3,0) );
-  }
+  wk->printStream = PRINTSYS_PrintStream( wk->MsgWin, 0,0, wk->TalkString,
+                                          wk->font, MSGSPEED_GetWait(), wk->pMsgTcblSys,
+                                          0,HEAPID_GURU2, 15 );
+  OS_Printf("msgno:%d 表示開始\n", msgno);
 
   GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 }
@@ -2751,7 +2747,11 @@ static int EndMessageWait( GURU2RC_WORK *wk )
   }
 
   state = PRINTSYS_PrintStreamGetState( wk->printStream );
-  if(state==PRINTSTREAM_STATE_PAUSE){
+  if(state == PRINTSTREAM_STATE_RUNNING){
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE){
+      PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+    }
+  }else if(state==PRINTSTREAM_STATE_PAUSE){
     if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
       PRINTSYS_PrintStreamReleasePause( wk->printStream );
     }
