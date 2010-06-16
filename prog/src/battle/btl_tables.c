@@ -410,6 +410,40 @@ WazaSick  BTL_TABLES_GetTurnCheckWazaSickByOrder( u32 idx )
 }
 
 /**
+ *  派生ワザ失敗共通
+ */
+static BOOL checkHaseiOmmitCommon( WazaID waza )
+{
+  static const u16 table[] = {
+    WAZANO_YUBIWOHURU,    WAZANO_NEGOTO,      WAZANO_NEKONOTE,
+    WAZANO_MANEKKO,       WAZANO_SAKIDORI,    WAZANO_OUMUGAESI,
+    WAZANO_SIZENNOTIKARA, WAZANO_OSYABERI,    WAZANO_WARUAGAKI,
+    WAZANO_SUKETTI,       WAZANO_MONOMANE,
+  };
+
+  return checkTableElems( waza, table, NELEMS(table) );
+}
+
+/**
+ *  「ねごと」で出ないワザ判定
+ */
+BOOL BTL_TABLES_IsNegotoOmmit( WazaID waza )
+{
+  static const u16 table[] = {
+    WAZANO_SAWAGU,      WAZANO_ROKETTOZUTUKI, WAZANO_GODDOBAADO,
+    WAZANO_SOORAABIIMU, WAZANO_GAMAN,         WAZANO_KAMAITATI,
+    WAZANO_SORAWOTOBU,  WAZANO_TOBIHANERU,    WAZANO_SYADOODAIBU,
+    WAZANO_KIAIPANTI,
+  };
+
+  if( checkHaseiOmmitCommon(waza) ){
+    return TRUE;
+  }
+
+  return checkTableElems( waza, table, NELEMS(table) );
+}
+
+/**
  *  「ネコのて」で出ないワザ判定
  */
 BOOL BTL_TABLES_IsNekoNoteOmmit( WazaID waza )
@@ -421,6 +455,10 @@ BOOL BTL_TABLES_IsNekoNoteOmmit( WazaID waza )
       WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
       WAZANO_FEINTO,        WAZANO_KIAIPANTI,
   };
+
+  if( checkHaseiOmmitCommon(waza) ){
+    return TRUE;
+  }
 
   return checkTableElems( waza, table, NELEMS(table) );
 }
@@ -437,6 +475,10 @@ BOOL BTL_TABLES_IsManekkoOmmit( WazaID waza )
       WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
       WAZANO_FEINTO,        WAZANO_KIAIPANTI,
   };
+
+  if( checkHaseiOmmitCommon(waza) ){
+    return TRUE;
+  }
 
   return checkTableElems( waza, table, NELEMS(table) );
 }

@@ -611,8 +611,6 @@ static const BtlEventHandlerTable*  ADD_Haneyasume( u32* numElems );
 static void handler_Haneyasume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_KiaiPunch( u32* numElems );
 static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static BOOL isWazaExclude( const u16* wazaTbl, u32 tblElems, WazaID waza );
-static BOOL isReqWazaForbid( WazaID waza, const u16* exTbl, u32 exTblElems );
 static const BtlEventHandlerTable*  ADD_YubiWoFuru( u32* numElems );
 static void handler_YubiWoFuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_YubiWoFuru_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -8863,49 +8861,6 @@ static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   }
 }
 
-
-//------------------------------------------------------------------------------------------------------
-/**
- *  派生ワザ（他のワザを呼び出すワザ）関連
- */
-//------------------------------------------------------------------------------------------------------
-
-// u16 配列に 指定IDのワザが含まれているかチェック
-static BOOL isWazaExclude( const u16* wazaTbl, u32 tblElems, WazaID waza )
-{
-  u32 i;
-  for(i=0; i<tblElems; ++i)
-  {
-    if( wazaTbl[i] == waza ){
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-// 指定されたIDのワザが、派生ワザから呼び出してはいけないワザかどうか判定
-static BOOL isReqWazaForbid( WazaID waza, const u16* exTbl, u32 exTblElems )
-{
-  // 派生ワザから絶対に呼び出せないワザリスト
-  static const u16 ReqWazaExcludeTbl[] = {
-    WAZANO_YUBIWOHURU,    WAZANO_NEGOTO,      WAZANO_NEKONOTE,
-    WAZANO_MANEKKO,       WAZANO_SAKIDORI,    WAZANO_OUMUGAESI,
-    WAZANO_SIZENNOTIKARA, WAZANO_OSYABERI,    WAZANO_WARUAGAKI,
-    WAZANO_SUKETTI,       WAZANO_MONOMANE,
-  };
-
-  if( isWazaExclude( ReqWazaExcludeTbl, NELEMS(ReqWazaExcludeTbl), waza ) ){
-    return TRUE;
-  }
-
-  if( exTbl != NULL ){
-    if( isWazaExclude( exTbl, exTblElems, waza ) ){
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-}
-
 //----------------------------------------------------------------------------------
 /**
  * ゆびをふる
@@ -9126,12 +9081,6 @@ static const BtlEventHandlerTable*  ADD_Negoto( u32* numElems )
 }
 static void handler_Negoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  static const u16 forbidWazaTbl[] = {
-    WAZANO_SAWAGU,      WAZANO_ROKETTOZUTUKI, WAZANO_GODDOBAADO,
-    WAZANO_SOORAABIIMU, WAZANO_GAMAN,         WAZANO_KAMAITATI,
-    WAZANO_SORAWOTOBU,  WAZANO_TOBIHANERU,    WAZANO_SYADOODAIBU,
-  };
-
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
@@ -9143,9 +9092,9 @@ static void handler_Negoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       for(i=0, cnt=0; i<wazaMax; ++i)
       {
         waza = BPP_WAZA_GetID( bpp, i );
-        if( (isReqWazaForbid(waza, forbidWazaTbl, NELEMS(forbidWazaTbl)) == FALSE)
+        TAYA_Printf("waza Idx=%d, NO=%d\n", i, waza);
+        if( (!BTL_TABLES_IsNegotoOmmit(waza))
         &&  (WAZADATA_GetFlag(waza, WAZAFLAG_Tame) == FALSE)
-        &&  (waza != WAZANO_KIAIPANTI)
         ){
           work[cnt++] = waza;
         }

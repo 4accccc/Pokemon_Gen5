@@ -2707,7 +2707,8 @@ void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL
   }
 
   BTL_N_Printf( DBGSTR_BPP_WazaRecord, bpp->coreParam.myID,
-    bpp->prevSelectWazaID, bpp->prevActWazaID, bpp->prevTargetPos, bpp->prevWazaType, prevActWaza, bpp->wazaContCounter );
+    bpp->prevSelectWazaID, bpp->prevActWazaID, bpp->prevTargetPos, bpp->prevWazaType, prevActWaza,
+      fActEnable, bpp->wazaContCounter );
 
 }
 

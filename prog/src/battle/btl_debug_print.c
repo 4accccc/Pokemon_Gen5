@@ -175,7 +175,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_BPP_NemuriWakeCheck:   return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
   case DBGSTR_BPP_WazaLinkOff:       return "ワザ書き換え、リンク切れます（新ワザナンバー=%d）\n";
-  case DBGSTR_BPP_WazaRecord:        return "ワザ記録(PokeID=%d)：選んだワザ=%d, 派生したワザ=%d, 狙った位置=%d, ワザタイプ=%d, 前のワザ=%d, counter=%d\n";
+  case DBGSTR_BPP_WazaRecord:        return "ワザ記録(PokeID=%d)：選んだワザ=%d, 派生したワザ=%d, 狙った位置=%d,\n  ワザタイプ=%d, 前のワザ=%d, 今回成功flg=%d, counter=%d\n";
 
   case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面 モード=%d すでに%d体選択, 今回選択=%d\n";
   case DBGSTR_VCORE_SelPokeEnd:         return "ポケ選択おわった\n";

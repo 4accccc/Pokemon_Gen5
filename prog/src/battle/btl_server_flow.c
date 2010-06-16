@@ -324,7 +324,7 @@ static void scEvent_FieldEffectCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_KintyoukanMoved( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bppMoved );
-static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static u16 scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 damage,
   BtlTypeAff aff, u8 fCritical, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -2159,7 +2159,7 @@ static inline void wazaEffCtrl_SetEnable( WAZAEFF_CTRL* ctrl )
 /**
  *  ワザエフェクト発動管理：有効で、既に発動したことを通知（複数回ヒット）
  */
-static inline void wazaEffCtrl_SetEnablePluralCount( WAZAEFF_CTRL* ctrl )
+static inline void wazaEffCtrl_SetEnableDummy( WAZAEFF_CTRL* ctrl )
 {
   if( ctrl->fEnable == FALSE )
   {
@@ -5471,7 +5471,7 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     pokeSick = BPP_GetPokeSick( attacker );
 
     // ワザエフェクトコマンド生成
-    wazaEffCtrl_SetEnablePluralCount( wk->wazaEffCtrl );
+    wazaEffCtrl_SetEnableDummy( wk->wazaEffCtrl );
     SCQUE_PUT_ACT_WazaEffect( wk->que,
           wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
 
@@ -8199,7 +8199,10 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     scput_Fight_Uncategory_SkillSwap( wk, attacker, targets );
     break;
   case WAZANO_MIGAWARI:
-    scproc_Migawari_Create( wk, attacker );
+    if( scproc_Migawari_Create(wk, attacker) )
+    {
+      wazaEffCtrl_SetEnableDummy( wk->wazaEffCtrl );
+    }
     break;
   default:
     {
@@ -8325,7 +8328,7 @@ static void scproc_KintyoukanMoved( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
  * @param   bpp
  */
 //----------------------------------------------------------------------------------
-static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static BOOL scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   if( !BPP_MIGAWARI_IsExist(bpp) )
   {
