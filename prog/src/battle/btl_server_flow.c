@@ -137,6 +137,8 @@ static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
 static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, BtlPokePos targetPos );
 static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza );
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
+static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
     const BTL_POKEPARAM* attacker, BTL_POKESET* target, BOOL fDamage );
 static BOOL scEvent_CheckMigawariExclude( BTL_SVFLOW_WORK* wk,
@@ -3670,6 +3672,9 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       fDamage = TRUE;
     }
 
+    // トリプル遠隔位置によるハズレ
+    scproc_CheckTripleFarPokeAvoid( wk, wk->wazaParam, attacker, targetRec );
+
     // タイプによる無効化チェック
     if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) ){
       flowsub_checkWazaAffineNoEffect( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
@@ -3696,7 +3701,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     }
     else
     {
-      // みがわり除外チェック
+      // ダメージワザ以外のみがわり除外チェック
       scproc_MigawariExclude( wk, wk->wazaParam, attacker, targetRec, fMigawariHit );
       // ターゲットが残っていない -> 無効イベント呼び出し後終了
       if( BTL_POKESET_IsRemovedAll(targetRec) )
@@ -3785,6 +3790,31 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   return fEnable;
 }
+//----------------------------------------------------------------------------------
+/**
+ * トリプル遠隔位置によるハズレチェック
+ *
+ * @param   wk
+ * @param   wazaParam
+ * @param   attacker
+ * @param   targetRec
+ */
+//----------------------------------------------------------------------------------
+static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec )
+{
+  BTL_POKEPARAM* bpp;
+
+  BTL_POKESET_SeekStart( targetRec );
+  while( (bpp = BTL_POKESET_SeekNext(targetRec) ) != NULL )
+  {
+    if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID) ){
+      BTL_POKESET_Remove( targetRec, bpp );
+      scPut_WazaAvoid( wk, bpp, wazaParam->wazaID );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * みがわり中のポケモンをターゲットから除外
