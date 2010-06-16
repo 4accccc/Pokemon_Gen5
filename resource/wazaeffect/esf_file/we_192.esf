@@ -4,6 +4,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_192.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_192_lightning.NSCR
 #001
 %00
+カメラ移動	追従	3vs3攻撃	CM	0	CB
+エフェクト終了待ち	すべて
 パーティクルデータロード	w_192
 BGのパレットフェード	お盆＋フィールド	0	13	2	0:0:0
 制御モード変更	継続

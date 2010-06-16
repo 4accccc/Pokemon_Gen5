@@ -5,6 +5,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_462_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_462_2.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT（透視）	CM	0	0
+エフェクト終了待ち	すべて
 パーティクルデータロード	w_462_1
 パーティクルデータロード	w_462_2
 制御モード変更	継続

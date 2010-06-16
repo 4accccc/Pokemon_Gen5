@@ -6,6 +6,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_380.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_491.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT（透視）	CM	0	0
+エフェクト終了待ち	すべて
 パーティクルデータロード	w_491
 エミッタ移動	w_491	W_491_491_SCID_BEAM	放物線	攻撃側	防御側	2:40:3	1:1:0
 制御モード変更	継続
@@ -19,7 +21,7 @@ SE再生	SEQ_SE_NAGERU	SE1	防御側	0:-200:127	0:0:0
 SEパン	SE1	追従	攻撃側	防御側	0	60:0:0
 制御モード変更	逐次
 タイマーによるウエイト	1
-カメラ移動	追従	防御側	16	0	8
+カメラ移動	追従	防御側	24	0	8
 エミッタ移動	w_491	W_491_491_SCID_BEAM	放物線	攻撃側	防御側	2:40:3	1:1:0
 タイマーによるウエイト	1
 エミッタ移動	w_491	W_491_491_SCID_BEAM	放物線	攻撃側	防御側	2:40:3	1:1:0

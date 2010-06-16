@@ -5,7 +5,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_479.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_069_earth.NSCR
 #001
 %00
-カメラ移動	追従	防御側	16	0	8
+カメラ移動	追従	ZOOM_OUT（透視）	CM	0	0
+エフェクト終了待ち	すべて
+カメラ移動	追従	防御側	24	0	8
 パーティクルデータロード	w_479
 制御モード変更	継続
 SE再生	SEQ_SE_W088_01	SE1	防御側	0:0:127	0:0:0
