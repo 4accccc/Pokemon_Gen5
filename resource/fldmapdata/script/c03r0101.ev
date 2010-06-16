@@ -1515,17 +1515,17 @@ RES_REQ_MENU:
       _FLAG_CHECK( FE_RES_REQ_MOVIE_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03p, RESEARCH_REQ_ID_MOVIE_time )    
-    ENDIF
       ENDIF
+    ENDIF
     // 隊員ランク S 以上
     IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_4 THEN
       //「いちばんすきな　がっこうのじかんは？」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_SCHOOL_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03q, RESEARCH_REQ_ID_SCHOOL_time )  
+      ENDIF
       //「べんきょうに　ついて」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_STUDY_TIME, SCWK_ANSWER )
-      ENDIF
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03r, RESEARCH_REQ_ID_STUDY_time )   
       ENDIF
