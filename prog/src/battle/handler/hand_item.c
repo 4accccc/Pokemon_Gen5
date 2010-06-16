@@ -2143,10 +2143,14 @@ static void common_DamageReact( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 //--------------------------------------------------------------
 static BOOL common_DamageReactCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ITEM_REACTION) == BTL_ITEMREACTION_HP)
-  ){
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    u8 reactionType = BTL_EVENTVAR_GetValue( BTL_EVAR_ITEM_REACTION );
+    if( (reactionType == BTL_ITEMREACTION_HP)
+    ||  (reactionType == BTL_ITEMREACTION_GEN)
+    ){
     return common_DamageReactCheckCore( flowWk, pokeID, n );
+    }
   }
   return FALSE;
 }
