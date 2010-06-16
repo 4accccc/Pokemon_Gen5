@@ -151,6 +151,7 @@ $(IMAGEDIR)/$(target_image_lst_w): $(target_image_lst_w)
 
 
 $(GMMDIR)/$(target_gmm_b): $(target_gmm_b)
+	rm -f $(GMMDIR)/manual_text.gmm
 	$(COPY) $(target_gmm_b) $(GMMDIR)
 
 $(IMAGEDIR)/$(target_image_comp_bat_b): $(target_image_comp_bat_b)
