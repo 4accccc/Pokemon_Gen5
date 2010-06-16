@@ -98,7 +98,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         NetErr_App_ReqErrorDisp();
         //下記はDWCのエラーにならないときに呼ぶ。
         //上記関数を受け付けていれば下記は呼ばれない。
-        NetErr_App_ReqErrorDispForce( dwc_message_0014 );
+        NetErr_App_ReqErrorDispForce( dwc_error_0014 );
         return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
 
       case DWC_ETYPE_DISCONNECT:
@@ -145,7 +145,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
       else
       {
         NetErr_App_ReqErrorDisp();
-        NetErr_App_ReqErrorDispForce( dwc_message_0014 );
+        NetErr_App_ReqErrorDispForce( dwc_error_0014 );
 
         DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
         return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
@@ -156,7 +156,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
     else  if( .. )
     {
       NetErr_App_ReqErrorDisp();
-      NetErr_App_ReqErrorDispForce( dwc_message_0014 );
+      NetErr_App_ReqErrorDispForce( dwc_error_0014 );
       DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
       return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
     }
