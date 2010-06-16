@@ -5092,10 +5092,10 @@ static int MainSeq_ItemKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 	// 取得したアイテムを元のポケモンに持たせる
 	syswk->app->get_item = item;
 	BOX2MAIN_PokeParaPut( syswk, syswk->app->get_item_init_pos, syswk->get_tray, ID_PARA_item, syswk->app->get_item );
-	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
-		ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->app->get_item_init_pos );
-		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
-			BOX2MAIN_FormChangeRenew( syswk, syswk->app->get_item_init_pos );
+	ppp = BOX2MAIN_PPPGet( syswk, syswk->get_tray, syswk->app->get_item_init_pos );
+	if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+		BOX2MAIN_FormChangeRenew( syswk, syswk->app->get_item_init_pos );
+		if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->app->get_item_init_pos,
 				syswk->app->pokeicon_id[syswk->app->get_item_init_pos] );
