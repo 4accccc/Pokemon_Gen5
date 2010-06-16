@@ -327,7 +327,7 @@ void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame )
   }
 
   // 0フレーム開始なら, 最初のニュースを表示する
-  if( set_frame == 0 ) {
+  if( (0 < elboard->newsNum) && (set_frame == 0) ) {
     NEWS* news = elboard->news[0];
     news->dispFlag = TRUE;
     GFL_G3D_OBJECT_EnableAnime( news->g3dObj, news->animeIndex );
