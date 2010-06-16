@@ -119,6 +119,10 @@ end
         buf = "%c" % 0xc3 + "%c" % 0xa9
         str.sub!( "~", buf )
       end
+      if str.index("^") != nil
+        buf = "%c" % 0xc3 + "%c" % 0xa0
+        str.sub!( "^", buf )
+      end
       fp_w.printf( "%s", str )
     end
   }
