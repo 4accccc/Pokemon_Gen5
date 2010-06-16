@@ -721,8 +721,12 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   if( bevw->waza < BTLEFF_SINGLE_ENCOUNT_1 )
   {
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, GFL_HEAP_LOWID( bevw->heapID ) );
-    //HPゲージ非表示
-    BTLV_EFFECT_SetGaugeDrawEnable( FALSE, BTLEFF_GAUGE_ALL );
+    //へんしんとオウムがえしとしぜんのちからは、単体のエフェクトはないので、HPゲージ非表示をしない
+    if( ( bevw->waza != WAZANO_HENSIN ) && ( bevw->waza != WAZANO_OUMUGAESI ) && ( bevw->waza != WAZANO_SIZENNOTIKARA ) )
+    { 
+      //HPゲージ非表示
+      BTLV_EFFECT_SetGaugeDrawEnable( FALSE, BTLEFF_GAUGE_ALL );
+    }
     
     //BG非表示
     GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
