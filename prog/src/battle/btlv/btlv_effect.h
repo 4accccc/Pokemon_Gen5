@@ -235,6 +235,7 @@ typedef struct {
   BtlvMcssPos  to;              ///< ワザを受けるポケ位置（不要の場合 BTLV_MCSS_POS_ERROR を指定）
   u8           turn_count;      ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
   u8           continue_count;  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+  WazaTarget   waza_range;
 }BTLV_WAZAEFFECT_PARAM;
 
 

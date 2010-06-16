@@ -542,7 +542,7 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 
     BTLV_EFFVM_ClearParam( &effvm_param );
 
-    effvm_param.waza_range = WAZADATA_GetParam( param->waza, WAZAPARAM_TARGET );
+    effvm_param.waza_range = param->waza_range;
     effvm_param.turn_count = param->turn_count;
     effvm_param.continue_count = param->continue_count;
 
@@ -558,7 +558,7 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
     tes->to     = param->to;
     tes->eff_no = param->waza;
 
-    tes->param->waza_range      = WAZADATA_GetParam( param->waza, WAZAPARAM_TARGET );
+    tes->param->waza_range      = param->waza_range;
     tes->param->turn_count      = param->turn_count;
     tes->param->continue_count  = param->continue_count;
 

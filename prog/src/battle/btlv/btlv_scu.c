@@ -2705,12 +2705,19 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
 {
 //  BTLV_WAZAEFFECT_PARAM param;
   BTLV_WAZAEFFECT_PARAM* param = Scu_GetProcWork( wk, sizeof(BTLV_WAZAEFFECT_PARAM) );
-
   param->waza = waza;
   param->from = atPos;
   param->to = defPos;
   param->turn_count = turnType;
   param->continue_count = continueCount;
+  if( waza == WAZANO_NOROI )
+  { 
+    param->waza_range = BTL_CALC_GetNoroiTargetType( BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPos ) );
+  }
+  else
+  { 
+    param->waza_range = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  }
 
   BTL_UTIL_SetupProc( &wk->proc, wk, NULL, subproc_WazaEffect );
 }
