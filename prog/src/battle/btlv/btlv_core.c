@@ -118,6 +118,8 @@ static void PutMsgToSCUatOnce( BTLV_CORE* wk, const STRBUF* buf );
 static BOOL subprocMoveMember( int* seq, void* wk_adrs );
 static BOOL subprocRotateMember( int* seq, void* wk_adrs );
 static void PlaySELocal( BTLV_CORE* wk, u32 SENo );
+static void PlaySELocalByPlayerID( BTLV_CORE* wk, u32 SENo, SEPLAYER_ID playerID );
+static void StopSELocalByPlayerID( BTLV_CORE* wk, SEPLAYER_ID playerID );
 
 static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos );
 
@@ -2637,12 +2639,14 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs )
   switch( *seq ){
   case 0:
     BTLV_EFFECT_SetRotateEffect( subwk->dir, subwk->vpos1 & 1 );
-    PlaySELocal( wk, SEQ_SE_ROTATION_B ); //GFBTS1369‘Îˆ by iwasawa 10.06.14
+    PlaySELocalByPlayerID( wk, SEQ_SE_FLD_59, PLAYER_SE_1 ); //GFBTS1369‘Îˆ by iwasawa 10.06.14
     (*seq)++;
     break;
 
   case 1:
     if( !BTLV_EFFECT_CheckExecute() ){
+      StopSELocalByPlayerID( wk, PLAYER_SE_1 );
+      PlaySELocal( wk, SEQ_SE_ROTATION_B ); //GFBTS1369‘Îˆ by iwasawa 10.06.14
       BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos1 );
       BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos2 );
       BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos3 );
@@ -2902,6 +2906,19 @@ static void PlaySELocal( BTLV_CORE* wk, u32 SENo )
     PMSND_PlaySE( SENo );
   }
 }
+static void PlaySELocalByPlayerID( BTLV_CORE* wk, u32 SENo, SEPLAYER_ID playerID )
+{
+  if( !BTL_CLIENT_IsChapterSkipMode(wk->myClient) ){
+    PMSND_PlaySE_byPlayerID( SENo, playerID );
+  }
+}
+static void StopSELocalByPlayerID( BTLV_CORE* wk, SEPLAYER_ID playerID )
+{
+  if( !BTL_CLIENT_IsChapterSkipMode(wk->myClient) ){
+    PMSND_StopSE_byPlayerID( playerID );
+  }
+}
+
 
 /*--------------------------------------------------------------------------------------------------*/
 /* •¶š—ñƒpƒ‰ƒ[ƒ^İ’è                                                                             */
