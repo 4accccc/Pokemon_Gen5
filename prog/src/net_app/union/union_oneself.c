@@ -4643,7 +4643,9 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
       }
     }
 
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_id);
+    UnionMsg_TalkStream_WindowSetup(unisys, fieldWork);
+    WORDSET_RegisterPlayerName(unisys->wordset, 0, &clsys->basic_status[clsys->talk_obj_id].myst);
+    UnionMsg_TalkStream_Print(unisys, msg_id);
     (*seq)++;
     break;
   case 1:
