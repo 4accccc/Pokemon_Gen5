@@ -261,11 +261,10 @@ EVENT_END
 /*  C01R0501 RIVALの会話用イベントスクリプト				  */
 /**************************************************************/
 EVENT_START   ev_c01r0501_rival_01
-_TALK_START_TURN_NOT()
+
 	//ライバルと既に戦っている場合
 	IF FLAG_ON( FE_C01R0501_RIVALBATTLE ) THEN
-
-		_CALL dir
+		_TALK_OBJ_START()
 
 		//ポケモンに　きのみを
 		_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_06,C01R0501_RIVAL_01 , POS_UP )
@@ -279,7 +278,7 @@ _TALK_START_TURN_NOT()
 		
 		//ライバルと初めて話した場合
 		IF FLAG_OFF( FE_C01R0501_RIVALTALK ) THEN
-	
+			_TALK_START_TURN_NOT()
 			//ポケモンが　どくを　うけると
 			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_01,C01R0501_RIVAL_01 , POS_UP )
 		
@@ -310,8 +309,7 @@ _TALK_START_TURN_NOT()
 		
 		//ライバルと戦わず話しただけの場合
 		ELSE
-			
-			_CALL dir
+			_TALK_OBJ_START()
 			
 			//チェレン「ぼくと　しょうぶ　しないか？」
 			_PLAYER_NAME( 0 )
