@@ -75,6 +75,14 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
     sprintf(str,"Start load data. size:[%d]", saveSize );
     //DLPlayFunc_PutString(str,dataWork->msgSys );
 #endif
+    {
+      s32 lockID = OS_GetLockID();
+      GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+      CARD_LockRom( (u16)lockID );
+      CARD_CheckPulledOut();  //抜き検出
+      CARD_UnlockRom( (u16)lockID );
+      OS_ReleaseLockID( (u16)lockID );
+    }
     dataWork->pData    = GFL_HEAP_AllocClearMemory(  dataWork->heapId, saveSize );
     dataWork->pDataMirror= GFL_HEAP_AllocClearMemory(  dataWork->heapId, saveSize );
   
@@ -329,6 +337,14 @@ BOOL  MB_DATA_GS_SaveData( MB_DATA_WORK *dataWork )
     {
       u8 i,bi;
       GS_BOX_DATA *pBox = (GS_BOX_DATA*)dataWork->pBoxData;
+      {
+        s32 lockID = OS_GetLockID();
+        GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+        CARD_LockRom( (u16)lockID );
+        CARD_CheckPulledOut();  //抜き検出
+        CARD_UnlockRom( (u16)lockID );
+        OS_ReleaseLockID( (u16)lockID );
+      }
       //ボックス使用ビットを立てる
       pBox->UseBoxBits = GS_BOX_TRAY_ALL_USE_BIT;
 #if 0      

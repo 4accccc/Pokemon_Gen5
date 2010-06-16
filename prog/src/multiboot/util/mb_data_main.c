@@ -85,6 +85,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
 
     GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
     CARD_LockRom( (u16)lockID );
+    CARD_CheckPulledOut();  //”²‚«ŒŸo
     headerData = (CARDRomHeader*)CARD_GetRomHeader();
     CARD_UnlockRom( (u16)lockID );
     OS_ReleaseLockID( (u16)lockID );
@@ -500,6 +501,7 @@ static FSResult MyRom_ArchiveProc(FSFile *file, FSCommandType cmd)
     {
     case FS_COMMAND_ACTIVATE:
         CARD_LockRom((u16)p_rom->card_lock_id);
+        CARD_CheckPulledOut();  //”²‚«ŒŸo
         return FS_RESULT_SUCCESS;
     case FS_COMMAND_IDLE:
         CARD_UnlockRom((u16)p_rom->card_lock_id);

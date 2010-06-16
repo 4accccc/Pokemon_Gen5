@@ -74,6 +74,14 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
     sprintf(str,"Start load data. size:[%d]", saveSize );
     //DLPlayFunc_PutString(str,dataWork->msgSys );
 #endif
+    {
+      s32 lockID = OS_GetLockID();
+      GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+      CARD_LockRom( (u16)lockID );
+      CARD_CheckPulledOut();  //抜き検出
+      CARD_UnlockRom( (u16)lockID );
+      OS_ReleaseLockID( (u16)lockID );
+    }
     dataWork->pData    = GFL_HEAP_AllocClearMemory(  dataWork->heapId, saveSize );
     dataWork->pDataMirror= GFL_HEAP_AllocClearMemory(  dataWork->heapId, saveSize );
   
@@ -298,6 +306,14 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
     {
       u8 i,bi;
       PT_BOX_DATA *pBox = (PT_BOX_DATA*)dataWork->pBoxData;
+      {
+        s32 lockID = OS_GetLockID();
+        GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+        CARD_LockRom( (u16)lockID );
+        CARD_CheckPulledOut();  //抜き検出
+        CARD_UnlockRom( (u16)lockID );
+        OS_ReleaseLockID( (u16)lockID );
+      }
 #if 0      
       //ポケモンデータの暗号化
       for( bi=0;bi<BOX_MAX_TRAY;bi++)
