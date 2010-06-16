@@ -419,6 +419,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			else{
       	MtxFx44	mtx;
 	      fx32	w;
+        fx32  scale_x, scale_y;
+
+        scale_x = FX_Mul( mcss->scale.x, mcss->ofs_scale.x );
+        scale_y = FX_Mul( mcss->scale.y, mcss->ofs_scale.y );
 
 	      MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
 	      MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
@@ -431,8 +435,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 				anim_pos.x = FX32_CONST( anim_SRT_mc.px );
 				anim_pos.y = FX32_CONST( -anim_SRT_mc.py );
-				anim_pos.x = FX_Mul( anim_pos.x, mcss->scale.x / 16 );
-				anim_pos.y = FX_Mul( anim_pos.y, mcss->scale.y / 16 );
+				anim_pos.x = FX_Mul( anim_pos.x, scale_x / 16 );
+				anim_pos.y = FX_Mul( anim_pos.y, scale_y / 16 );
 			}
 
 			//前もって、不変なマルチセルデータをカレント行列にかけておく
