@@ -48,6 +48,7 @@ extern void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork);
 
 extern NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid, DWCSvlResult* pSvl);
 extern void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork);
+extern int NHTTP_RAP_GetGetResultCode(NHTTP_RAP_WORK* pWork);
 
 //------------------------------------------------------------------------------
 /**

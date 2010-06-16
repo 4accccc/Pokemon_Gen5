@@ -78,7 +78,9 @@ SEQ_SE_SYS_26			ポケモン眠る
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
-#define _DOWNLOAD_ERROR  (GSYNC_ERR010)
+#define _DOWNLOAD_ERROR  (0xfff0)
+#define _SERVERDOWN_ERROR  (0xfff1)
+#define ERROR503  (503)
 
 //
 // PHP とのインターフェース構造体
@@ -355,8 +357,15 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
 {
   int gmm = GSYNC_ERR001 + pWork->ErrorNo - 1;
 
+  if(pWork->pNHTTPRap){
+    NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+  }
+  
   if(_DOWNLOAD_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR010;
+  }
+  else if(_SERVERDOWN_ERROR == pWork->ErrorNo){
+    gmm = GSYNC_ERR011;
   }
   else if((pWork->ErrorNo <= 0) || (pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX)){
     gmm = GSYNC_ERR009;
@@ -586,8 +595,18 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
 static void _wakeupAction71(G_SYNC_WORK* pWork)
 {
+  int response;
 
   if(GFL_NET_IsInit()){
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(response == ERROR503){
+        pWork->ErrorNo = _SERVERDOWN_ERROR;
+        _CHANGE_STATE(_ErrorDisp);
+        return;
+      }
+    }
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
@@ -1198,7 +1217,15 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
       pWork->percent++;
     }
     GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
-
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(response == ERROR503){
+        pWork->ErrorNo = _SERVERDOWN_ERROR;
+        _CHANGE_STATE(_ErrorDisp);
+        return;
+      }
+    }
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
@@ -1209,6 +1236,7 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
 
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
 
+        
         _datacheck(pWork, pDreamSave, pDream, pRep);
       }
     }
@@ -1537,10 +1565,20 @@ static void _accountCreateMessage(G_SYNC_WORK* pWork)
 static void _createAccount2(G_SYNC_WORK* pWork)
 {
   if(GFL_NET_IsInit()){
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(response == ERROR503){
+        pWork->ErrorNo = _SERVERDOWN_ERROR;
+        _CHANGE_STATE(_ErrorDisp);
+        return;
+      }
+    }
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       {
         gs_response* pEvent = (gs_response*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+
         if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
            _CHANGE_STATE(_ghttpPokemonListDownload);
         }
@@ -1753,7 +1791,17 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
 
 static void _ghttpInfoWait1(G_SYNC_WORK* pWork)
 {
+  int response;
   if(GFL_NET_IsInit()){
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(response == ERROR503){
+        pWork->ErrorNo = _SERVERDOWN_ERROR;
+        _CHANGE_STATE(_ErrorDisp);
+        return;
+      }
+    }
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
@@ -1848,7 +1896,17 @@ static void _BoxNullMsg(G_SYNC_WORK* pWork)
 
 static void _ghttpPokemonListDownload1(G_SYNC_WORK* pWork)
 {
+  int response;
   if(GFL_NET_IsInit()){
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(response == ERROR503){
+        pWork->ErrorNo = _SERVERDOWN_ERROR;
+        _CHANGE_STATE(_ErrorDisp);
+        return;
+      }
+    }
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       {
         u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
@@ -2108,6 +2166,15 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
     }
 
     GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(response == ERROR503){
+        pWork->ErrorNo = _SERVERDOWN_ERROR;
+        _CHANGE_STATE(_ErrorDisp);
+        return;
+      }
+    }
 
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
@@ -2121,7 +2188,6 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
         if(_IsLv1Message(pWork)){
           GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
         }
-
         if(pRep->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE){  //成功
           _CHANGE_STATE(_updateSave);
         }
@@ -2498,8 +2564,9 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
     GFL_HEAP_FreeMemory(pWork->pTopAddr);
   }
 
-  NHTTP_RAP_End(pWork->pNHTTPRap);
-
+  if(pWork->pNHTTPRap){
+    NHTTP_RAP_End(pWork->pNHTTPRap);
+  }
   
   GFL_PROC_FreeWork(proc);
  

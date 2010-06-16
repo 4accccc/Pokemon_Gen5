@@ -574,4 +574,10 @@ void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork)
 }
 
 
+int NHTTP_RAP_GetGetResultCode(NHTTP_RAP_WORK* pWork)
+{
+  if(pWork){
+    return NHTTP_GetResultCode( pWork->handle );
+  }
+}
 
