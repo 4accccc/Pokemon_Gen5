@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-15T16:33:53"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-16T15:19:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,10 +334,10 @@
 
 
 	<row id="RHYTHM_STR_000">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さんとの　リズムチェック！
-すきなリズムで　１０かい　タッチ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんとの　リズムチェック！
-好きなリズムで　１０回　タッチ！</language>
+		<language name="JPN" width="256">すきなリズムで　１０かい
+したがめんを　タッチしてください</language>
+		<language name="JPN_KANJI" width="256">好きなリズムで　１０回
+下画面を　タッチしてください</language>
 	</row>
 
 	<row id="RHYTHM_STR_001">
@@ -384,22 +384,20 @@
 
 	<row id="RHYTHM_DEBUG_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
-		<language name="JPN" width="256">あいての　ばん　です</language>
-		<language name="JPN_KANJI" width="256">相手の番です</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="RHYTHM_DEBUG_002" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
-		<language name="JPN" width="256">チェックを　おわります。</language>
-		<language name="JPN_KANJI" width="256">チェックを　終わります。</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="RHYTHM_DEBUG_003" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
-		<language name="JPN" width="256">シーンが　ずれました
-さきへ　すすみます</language>
-		<language name="JPN_KANJI" width="256">シーンが　ずれました
-先へ　進みます</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
