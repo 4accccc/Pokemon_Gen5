@@ -2346,13 +2346,17 @@ void Guru2Rc_MainSeqForceChange( GURU2RC_WORK *wk, int seq, u8 id  )
 //==============================================================================
 void Guru2Rc_MainSeqCheckChange( GURU2RC_WORK *wk, int seq, u8 id  )
 {
+  const MYSTATUS *mystatus=NULL;
   // ’Êíó‘Ô‚È‚ç
   if(wk->seq == RECORD_MODE){
     OS_Printf("Žq‹@%d‚Ì–¼‘O‚ð“o˜^\n",id);
     switch(seq){
     case RECORD_MODE_NEWMEMBER: 
       // Žw’è‚ÌŽq‹@‚Ì–¼‘O‚ðWORDSET‚É“o˜^i—£’EE—“üŽž)
-      WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(_get_unionwork(wk),id) );  
+      mystatus = Union_App_GetMystatus(_get_unionwork(wk),id);
+      if(mystatus!=NULL){
+        WORDSET_RegisterPlayerName( wk->WordSet, 0, mystatus );  
+      }
       //ChangeConnectMax( wk, 1 );
       wk->seq      = seq;
       wk->g2c->shareNum = Union_App_GetMemberNum(_get_unionwork(wk));
