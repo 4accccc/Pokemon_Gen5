@@ -2283,6 +2283,7 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
 //==============================================================================
 void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
 {
+  const MYSTATUS *mystatus=NULL;
   switch(seq){
   case OEKAKI_MODE_NEWMEMBER: 
     if(wk->seq==OEKAKI_MODE_END_SELECT_WAIT || wk->seq==OEKAKI_MODE_END_SELECT_PARENT_WAIT){
@@ -2290,7 +2291,10 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     }
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
     // 指定の子機の名前をWORDSETに登録（離脱・乱入時)
-    WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, id) );  
+    mystatus = Union_App_GetMystatus(wk->param->uniapp, id);
+    if(mystatus!=NULL){
+      WORDSET_RegisterPlayerName( wk->WordSet, 0, mystatus );  
+    }
     wk->newMemberId = id;
     wk->ridatu_bit = 0;
     OS_Printf("新しい人のID %d\n",id);
