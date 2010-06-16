@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-11T20:53:48"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-06-16T16:02:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="280" top="128" right="985" bottom="756" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -572,8 +572,8 @@
 
 	<row id="GSYNC_ERR007" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバとせつぞくできませんでした</language>
-		<language name="JPN_KANJI" width="256">サーバと接続できませんでした</language>
+		<language name="JPN" width="256">サーバーとせつぞくできませんでした</language>
+		<language name="JPN_KANJI" width="256">サーバーと接続できませんでした</language>
 	</row>
 
 	<row id="GSYNC_ERR008" back-color=",,,#ffff00,,,,,,,,,,,,,,">
@@ -590,10 +590,23 @@
 
 	<row id="GSYNC_ERR010" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバに　していされた
+		<language name="JPN" width="256">サーバーに　していされた
 ダウンロードデータ　が　ありません</language>
-		<language name="JPN_KANJI" width="256">サーバに　指定された
+		<language name="JPN_KANJI" width="256">サーバーに　指定された
 ダウンロードデータ　が　ありません</language>
+	</row>
+
+	<row id="GSYNC_ERR011" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>HTTPエラーコード
+503</comment>
+		<language name="JPN" width="256">サーバーが　こんざつ　しています
+せつぞくに　しっぱいしました
+じかんを　おいて　さいど
+ゲームシンクを　おためしください</language>
+		<language name="JPN_KANJI" width="256">サーバーが　混雑　しています
+接続に　失敗しました
+時間を　おいて　再度
+ゲームシンクを　おためしください</language>
 	</row>
 
 	<row id="GSYNC_023">
