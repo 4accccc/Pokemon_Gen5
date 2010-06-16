@@ -3,6 +3,8 @@ $0001
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_046.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT（透視）	CM	0	CB
+エフェクト終了待ち	すべて
 ポケモンアニメ	防御側	アニメストップ
 ポケモン拡縮	攻撃側	往復	0	0.2	3	0	6
 ポケモン鳴き声	攻撃側	-128	127	0	0	正再生	0

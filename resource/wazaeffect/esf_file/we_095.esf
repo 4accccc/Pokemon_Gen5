@@ -3,6 +3,8 @@ $0001
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_095.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT（透視）	CM	0	CB
+エフェクト終了待ち	すべて
 パーティクルデータロード	w_095
 エミッタ移動	w_095	W_095_095_SLEEP_BEAM1	直線	攻撃側	防御側	2:0:0	1:1:0
 制御モード変更	継続

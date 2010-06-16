@@ -4,6 +4,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_056.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_056_juzu.NSCR
 #001
 %00
+カメラ移動	追従	ZOOM_OUT（透視）	CM	0	CB
+エフェクト終了待ち	すべて
 BGのロード	bg_056_juzu
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	14	0	0:0:0
@@ -34,7 +36,7 @@ SE再生	SEQ_SE_W121_01	SE2	防御側	90:100:120	0:0:0
 エミッタ移動	w_056	W_056_056_WATER_BEAM	直線	攻撃側	防御側	2:20:0	1:1:0
 タイマーによるウエイト	6
 パーティクル再生	w_056	W_056_056_BALL_BURN	防御側	方向無し	2:0:0	1:1:1	1
-カメラ移動	追従	防御側	10	0	8
+カメラ移動	追従	防御側	16	0	12
 エミッタ移動	w_056	W_056_056_WATER_BEAM	直線	攻撃側	防御側	2:20:0	1:1:0
 パーティクル再生	w_056	W_056_056_BALL_BURN	防御側	方向無し	2:0:0	1:1:1	1
 タイマーによるウエイト	6

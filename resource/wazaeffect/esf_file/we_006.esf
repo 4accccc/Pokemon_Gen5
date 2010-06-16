@@ -3,6 +3,8 @@ $0001
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_006.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT（透視）	CM	0	CB
+エフェクト終了待ち	すべて
 パーティクルデータロード	w_006
 制御モード変更	継続
 SE再生	SEQ_SE_W006_03	SE1	防御側	10:0:0	0:0:0
