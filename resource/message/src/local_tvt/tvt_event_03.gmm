@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T22:17:55"/>
+	<create user="matsumiya" host="W00224" date="2010-06-16T12:02:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1509" top="335" right="2214" bottom="963" maximized="no" rayout="Vertical2">
+	<dialog left="1322" top="208" right="2027" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -363,7 +363,8 @@
 		<comment>■　c03p07：ヒウンシティイベント用メッセージ
 ・サポートの口ぱくアニメーション再生
 ・続けて</comment>
-		<attribute name="キャラ指定">サポート</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ねえねえ　いま　どこお？▼
 おねがいが　あるんだけど
 ポケモンしょうぶ　しようよ！▼
