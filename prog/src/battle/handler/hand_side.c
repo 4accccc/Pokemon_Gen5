@@ -721,28 +721,31 @@ static const BtlEventHandlerTable* ADD_SIDE_Burning( u32* numElems )
 static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
+  if( pokeID != BTL_POKEID_NULL )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( !BPP_IsMatchType(bpp, POKETYPE_HONOO) )
+    if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
     {
-      BTL_HANDEX_PARAM_DAMAGE* param;
-
-      // エフェクト発動させる
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( !BPP_IsMatchType(bpp, POKETYPE_HONOO) )
       {
-        BTL_HANDEX_PARAM_ADD_EFFECT*  viewEff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
-          viewEff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-          viewEff_param->pos_to   = BTL_POS_NULL;
-          viewEff_param->effectNo = BTLEFF_BURNING;
-        BTL_SVF_HANDEX_Pop( flowWk, viewEff_param );
-      }
+        BTL_HANDEX_PARAM_DAMAGE* param;
 
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
-        param->pokeID = pokeID;
-        param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_BurningDamage );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-      BTL_SVF_HANDEX_Pop( flowWk, param );
+        // エフェクト発動させる
+        {
+          BTL_HANDEX_PARAM_ADD_EFFECT*  viewEff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
+            viewEff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+            viewEff_param->pos_to   = BTL_POS_NULL;
+            viewEff_param->effectNo = BTLEFF_BURNING;
+          BTL_SVF_HANDEX_Pop( flowWk, viewEff_param );
+        }
+
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+          param->pokeID = pokeID;
+          param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_BurningDamage );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
+      }
     }
   }
 }
