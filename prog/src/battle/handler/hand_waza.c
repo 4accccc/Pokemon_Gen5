@@ -470,6 +470,7 @@ static void handler_Alomatherapy( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable*  ADD_IyasiNoSuzu( u32* numElems );
 static void handler_IyasiNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID );
+static u8 add_pokesick_members( const BTL_PARTY* party, u8 dstIdx, u8 arySize, u8* dst );
 static const BtlEventHandlerTable*  ADD_Okimiyage( u32* numElems );
 static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Urami( u32* numElems );
@@ -6603,34 +6604,74 @@ static void handler_IyasiNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 
 static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID )
 {
+  enum {
+    NUM_TARGET_MAX = BTL_PARTY_MEMBER_MAX * 2,
+  };
+
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_HANDEX_PARAM_MESSAGE   *msg_param;
-    BTL_HANDEX_PARAM_CURE_SICK *cure_param;
+
     const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
-    u8 i;
+    const BTL_PARTY* friendParty = BTL_SVFTOOL_GetFriendPartyData( flowWk, pokeID );
+
+    u8*  pokeIDAry = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(u8)*NUM_TARGET_MAX );
+
+    const BTL_POKEPARAM* bpp;
+
+    u8 i, pokeCnt;
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, strID );
     BTL_SVF_HANDEX_Pop( flowWk, msg_param );
 
-    cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-      // 場所数最大（6）を格納できる配列にパーティメンバー（最大6）を格納するので大丈夫なハズだが、
-      // 念のため、オーバーした分は格納しないような処理をしておく
-      cure_param->poke_cnt = BTL_PARTY_GetMemberCount( party );
-      if( cure_param->poke_cnt > NELEMS(cure_param->pokeID) ){
-        cure_param->poke_cnt = NELEMS(cure_param->pokeID);
+    pokeCnt = add_pokesick_members( party, 0, NUM_TARGET_MAX, pokeIDAry );
+    if( friendParty ){
+      pokeCnt += add_pokesick_members( friendParty, pokeCnt, NUM_TARGET_MAX, pokeIDAry );
+    }
+
+    if( pokeCnt )
+    {
+      BTL_HANDEX_PARAM_CURE_SICK *cure_param;
+
+      if( pokeCnt > (NELEMS(cure_param->pokeID)) ){
+        pokeCnt = NELEMS(cure_param->pokeID);
       }
-      cure_param->sickCode = WAZASICK_EX_POKEFULL;
-      for(i=0; i<cure_param->poke_cnt; ++i){
-        {
-          const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, i );
-          cure_param->pokeID[ i ] = BPP_GetID( bpp );
+
+      cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+        cure_param->poke_cnt = pokeCnt;
+        for(i=0; i<pokeCnt; ++i){
+          cure_param->pokeID[ i ] = pokeIDAry[ i ];
         }
-      }
-    BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+        cure_param->sickCode = WAZASICK_EX_POKEFULL;
+      BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+    }
   }
 }
+// パーティから基本状態異常のポケモンIDを配列コピー
+static u8 add_pokesick_members( const BTL_PARTY* party, u8 dstIdx, u8 arySize, u8* dst )
+{
+  u8 memberCnt = BTL_PARTY_GetMemberCount( party );
+  u8 copiedCnt = 0;
+  u8 i;
+  const BTL_POKEPARAM* bpp;
+
+  for(i=0; i<memberCnt; ++i)
+  {
+    if( dstIdx >= arySize ){ break; }
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
+    {
+      dst[ dstIdx ] = BPP_GetID( bpp );
+      ++dstIdx;
+      ++copiedCnt;
+    }
+  }
+
+  return copiedCnt;
+
+}
+
 //----------------------------------------------------------------------------------
 /**
  * おきみやげ
@@ -10301,8 +10342,7 @@ static const BtlEventHandlerTable*  ADD_Inotigake( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC1,       handler_Inotigake_CalcDamage      },  // ダメージ計算
     { BTL_EVENT_WAZA_DMG_DETERMINE,   handler_Daibakuhatsu_DmgDetermine },  // ダメージ確定ハンドラ
-    { BTL_EVENT_WAZA_EXECUTE_DONE,    handler_Daibakuhatsu_ExeFix       },  // ワザ処理終了ハンドラ
-//    { BTL_EVENT_WAZADMG_SIDE_AFTER,    handler_Inotigake_AfterDamage     },
+//    { BTL_EVENT_WAZA_EXECUTE_DONE,    handler_Daibakuhatsu_ExeFix       },  // ワザ処理終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

@@ -8375,7 +8375,7 @@ static BOOL scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
         SCQUE_PUT_OP_MigawariCreate( wk->que, BPP_GetID(bpp), migawariHP );
         SCQUE_PUT_ACT_MigawariCreate( wk->que, pos );
         SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_MigawariAppear, BPP_GetID(bpp) );
-        return;
+        return TRUE;
       }
     }
     // 失敗メッセージ
@@ -8385,6 +8385,7 @@ static BOOL scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     // すでに出ていたメッセージ
     scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariExist );
   }
+  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -12500,6 +12501,26 @@ const BTL_PARTY* BTL_SVFTOOL_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
   return BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] マルチ時、味方クライアントのパーティデータ取得
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  const BTL_PARTY*  味方クライアントのパーティデータ（非マルチ時はNULL）
+ */
+//--------------------------------------------------------------------------------------
+const BTL_PARTY* BTL_SVFTOOL_GetFriendPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+  u8 friendClientID = BTL_MAIN_GetFriendCleintID( wk->mainModule, clientID );
+  if( BTL_MAIN_IsExistClient(wk->mainModule, friendClientID) )
+  {
+    return BTL_POKECON_GetPartyDataConst( wk->pokeCon, friendClientID );
+  }
+  return NULL;
 }
 //--------------------------------------------------------------------------------------
 /**

@@ -5574,6 +5574,8 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
         wk->setupParam->party_state[ clientID ][ p ] = BTL_POKESTATE_NORMAL;
       }
 
+//      TAYA_Printf("myClientID=%d, idx=%d , clientID=%d ... \n", wk->myClientID, id, clientID );
+
       if( BTL_MAIN_IsExistClient(wk, clientID) )
       {
         BTL_PARTY* party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
@@ -5588,11 +5590,11 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
 
           if( BPP_IsDead(bpp) ){
             wk->setupParam->party_state[ clientID ][ idx ] = BTL_POKESTATE_DEAD;
-            OS_TPrintf("Client_%d, Idx=%d, ‚µ‚ñ‚Å‚é\n", clientID, idx);
+  //          OS_TPrintf("Client_%d, Idx=%d, ‚µ‚ñ‚Å‚é\n", clientID, idx);
           }
           else if( BPP_GetPokeSick(bpp) != POKESICK_NULL ){
             wk->setupParam->party_state[ clientID ][ idx ] = BTL_POKESTATE_SICK;
-            OS_TPrintf("Client_%d, Idx=%d, ‚Ñ‚å‚¤‚«\n", clientID, idx);
+  //          OS_TPrintf("Client_%d, Idx=%d, ‚Ñ‚å‚¤‚«\n", clientID, idx);
           }
         }
       }

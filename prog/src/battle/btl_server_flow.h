@@ -170,6 +170,7 @@ extern u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, 
 extern BtlBgAttr BTL_SVFTOOL_GetLandForm( BTL_SVFLOW_WORK* wk );
 extern u32 BTL_SVFTOOL_GetFrontPosNum( BTL_SVFLOW_WORK* wk );
 extern const BTL_PARTY* BTL_SVFTOOL_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern const BTL_PARTY* BTL_SVFTOOL_GetFriendPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_SVFTOOL_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_SVFTOOL_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 extern u8 BTL_SVFTOOL_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos );
@@ -488,12 +489,12 @@ typedef struct {
  * 対象の状態異常を回復
  */
 typedef struct {
- BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- BtlWazaSickEx   sickCode;           ///< 対応する状態異常コード（拡張可）
- u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
- u8   poke_cnt;                      ///< 対象ポケモン数
- u8   fStdMsgDisable;                ///< 成功時、標準メッセージを出力しない
- BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時特殊メッセージ
+ BTL_HANDEX_PARAM_HEADER   header;      ///< 共有ヘッダ
+ BtlWazaSickEx   sickCode;              ///< 対応する状態異常コード（拡張可）
+ u8   pokeID[ BTL_PARTY_MEMBER_MAX*2 ]; ///< 対象ポケモンID
+ u8   poke_cnt;                         ///< 対象ポケモン数
+ u8   fStdMsgDisable;                   ///< 成功時、標準メッセージを出力しない
+ BTL_HANDEX_STR_PARAMS     exStr;       ///< 成功時特殊メッセージ
 }BTL_HANDEX_PARAM_CURE_SICK;
 
 /**
