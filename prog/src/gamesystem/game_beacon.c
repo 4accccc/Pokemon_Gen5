@@ -607,6 +607,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->version_bit = 0xffff; //全バージョン指定
   info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
+  OS_TPrintf("aaa zone_id = %d\n", info->zone_id);
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(gamedata, info->zone_id);
   info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID_Low(myst);
@@ -1306,6 +1307,7 @@ void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no)
 void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
   BEACONINFO_Set_ZoneChange(&GameBeaconSys->send.info, zone_id, cp_gamedata);
+  GameBeaconSys->send.beacon_update = TRUE;
 }
 
 //==================================================================
@@ -1317,6 +1319,7 @@ void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata)
 //==================================================================
 void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
+  OS_TPrintf("bbb zone_id = %d\n", zone_id);
   info->zone_id = zone_id;
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
   info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
