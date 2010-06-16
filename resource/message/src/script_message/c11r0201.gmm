@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-15T22:24:51"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-16T19:38:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2156,7 +2156,7 @@
 自分の　ポケモンも　可愛いけど▽
 人からもらった　ポケモンにも　また▽
 特別な　可愛さが　あるよねえ▼
-あたしね　[2:02:３桁:8]ヶ所の　人達と▽
+あたしね　[2:02:３桁:8]ヶ所の　人達と
 ポケモンを　交換したんだけれど▼
 もっと　たくさんの　人と
 交換したくなって　きたわ▼
