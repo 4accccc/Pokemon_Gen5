@@ -254,7 +254,7 @@
 #define WK_OTHER_SPORTS_RND_TR3          16674 /* 0x4122 リトルコートのランダム配置トレーナー１人目 */
 #define WK_OTHER_SPORTS_RND_TR4          16675 /* 0x4123 リトルコートのランダム配置トレーナー２人目 */
 #define WK_OTHER_SPORTS_RND_TR5          16676 /* 0x4124 リトルコートのランダム配置トレーナー３人目 */
-		/* not used 16677(0x4125) */
+#define WK_OTHER_WHEEL_SEASON            16677 /* 0x4125 観覧車イベント：季節を保存しておくワーク。 C04P01のゾーンチェンジで季節を取得し、前回から季節が変化していたら、観覧車トレーナー用のタイムフラグをリセットする */
 		/* not used 16678(0x4126) */
 		/* not used 16679(0x4127) */
 		/* not used 16680(0x4128) */
