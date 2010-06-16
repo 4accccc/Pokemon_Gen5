@@ -1384,7 +1384,6 @@ void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
   p_wk->is_sc_error = is_error;
   p_wk->is_session  = FALSE;
   p_wk->is_sc_you_recv  = FALSE;
-  p_wk->is_sc_start = TRUE;
 
   if( type == WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER )
   { 
@@ -1464,7 +1463,6 @@ void WIFIBATTLEMATCH_SC_StartDebug( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMA
   p_wk->is_debug      = TRUE;
   p_wk->is_auth = is_auth;
   p_wk->p_debug_data  = p_data;
-  p_wk->is_sc_start = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1585,7 +1583,8 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
     //初期化
     case WIFIBATTLEMATCH_SC_SEQ_INIT:
       p_wk->wait_cnt  = 0;
-
+      p_wk->is_sc_start = TRUE;
+      DEBUG_NET_Printf( "sc is_sc_start == true\n" );
       DEBUG_NET_Printf( "SC:sc Init\n" );
       ret = DWC_ScInitialize( GAME_ID,DWC_SSL_TYPE_SERVER_AUTH );
       if( ret != DWC_SC_RESULT_NO_ERROR )
@@ -2058,7 +2057,9 @@ static void DwcRap_Sc_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk )
     }
 
     p_wk->is_sc_start = FALSE;
+    DEBUG_NET_Printf( "sc is_sc_start == false\n" );
   }
+  DEBUG_NET_Printf( "sc end shutdown\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -4787,17 +4788,9 @@ static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int
 {
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
 
+  DEBUG_NET_Printf( "Call ErrDisconnectCallback code=%d type=%d ret=%d\n", code, type, ret );
   switch( type )
   {
-    //レポートエラー
-  case DWC_ETYPE_SHOW_ERROR:
-  case DWC_ETYPE_SHUTDOWN_GHTTP:
-    if( -43000 >= code && code >= -44999 )
-    {
-      DwcRap_Sc_Finalize( p_wk );
-    }
-    break;
-
     //切断エラー
   case DWC_ETYPE_SHUTDOWN_FM:
   case DWC_ETYPE_DISCONNECT:
@@ -4808,6 +4801,9 @@ static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int
       NHTTP_RAP_End(p_wk->p_nhttp);
       p_wk->p_nhttp  = NULL;
     }
+
+    //SCが使われているならば呼ぶ
+    DwcRap_Sc_Finalize( p_wk );
   }
 }
 
