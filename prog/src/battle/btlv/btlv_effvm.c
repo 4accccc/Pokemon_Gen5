@@ -7065,5 +7065,17 @@ void  BTLV_EFFVM_ClearUnpackInfo( VMHANDLE *vmh )
   }
 }
 
+//============================================================================================
+/**
+ * @brief 技エフェクトの発動者を取得
+ *
+ * @param[in] bevw  エフェクト管理構造体へのポインタ
+ */
+//============================================================================================
+BtlvMcssPos BTLV_EFFVM_GetAttackPos( BTLV_EFFVM_WORK *bevw )
+{ 
+  return bevw->attack_pos;
+}
+
 #endif PM_DEBUG
 
