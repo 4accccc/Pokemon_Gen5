@@ -1051,6 +1051,10 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 
 
   bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  if(waza == WAZANO_NOROI){// BTS:2957 ‚Ì‚ë‚¢‘Îˆ
+    bisp.waza_target = BTL_CALC_GetNoroiTargetType( wk->bpp );
+  }
+
   if( ( bisp.waza_target == WAZA_TARGET_OTHER_SELECT ) && ( WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar ) ) )
   {
     bisp.waza_target = WAZA_TARGET_MAX;
@@ -1174,6 +1178,9 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
   stw_draw( &wk->selTargetWork, wk );
   wk->selTargetDone = FALSE;
   wk->selTargetType = WAZADATA_GetParam( wk->destActionParam->fight.waza, WAZAPARAM_TARGET );
+  if(wk->destActionParam->fight.waza == WAZANO_NOROI){  // BTS:2957 ‚Ì‚ë‚¢‘Îˆ
+    wk->selTargetType = BTL_CALC_GetNoroiTargetType( wk->bpp );
+  }
   return TRUE;
 }
 static BOOL selectTarget_loop( int* seq, void* wk_adrs )
