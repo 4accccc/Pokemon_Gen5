@@ -64,6 +64,6 @@ extern	void		BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int i
 extern  void    BTLV_EFFVM_DebugSeEffect( VMHANDLE *vmh, int player, int type, int param, int start, int end, 
                                           int start_wait, int frame, int wait, int count );
 extern  void    BTLV_EFFVM_ClearUnpackInfo( VMHANDLE *vmh );
-extern  BtlvMcssPos BTLV_EFFVM_GetAttackPos( BTLV_EFFVM_WORK *bevw );
+extern  BtlvMcssPos BTLV_EFFVM_GetAttackPos( VMHANDLE* vmh );
 #endif
 

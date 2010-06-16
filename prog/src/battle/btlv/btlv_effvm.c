@@ -7072,8 +7072,9 @@ void  BTLV_EFFVM_ClearUnpackInfo( VMHANDLE *vmh )
  * @param[in] bevw  エフェクト管理構造体へのポインタ
  */
 //============================================================================================
-BtlvMcssPos BTLV_EFFVM_GetAttackPos( BTLV_EFFVM_WORK *bevw )
+BtlvMcssPos BTLV_EFFVM_GetAttackPos( VMHANDLE* vmh )
 { 
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   return bevw->attack_pos;
 }
 
