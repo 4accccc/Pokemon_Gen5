@@ -188,8 +188,10 @@ void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info)
 void GAMEBEACON_SendBeaconUpdate(void)
 {
   if(GameBeaconSys->send.beacon_update == TRUE){
-    NET_WHPIPE_BeaconSetInfo();
-    GameBeaconSys->send.beacon_update = FALSE;
+    if(GFL_NET_IsInit() == TRUE){
+      NET_WHPIPE_BeaconSetInfo();
+      GameBeaconSys->send.beacon_update = FALSE;
+    }
   }
 }
 
