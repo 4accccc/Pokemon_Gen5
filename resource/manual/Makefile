@@ -137,6 +137,7 @@ $(TARGETDIR)/$(targetname_b).narc: $(targetname_b).narc
 
 # gmmやバッチファイル、リストのコピーだけ実行する
 $(GMMDIR)/$(target_gmm_w): $(target_gmm_w)
+	rm -f $(GMMDIR)/manual_text.gmm
 	$(COPY) $(target_gmm_w) $(GMMDIR)
 
 $(IMAGEDIR)/$(target_image_comp_bat_w): $(target_image_comp_bat_w)
