@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -6377,6 +6377,11 @@ static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
     { 
       //捕獲用ボールは、プレシャスボールまでなのでドリームボールはスピードボールのIDに変換
       ofs = BALLID_SUPIIDOBOORU - 1;
+    }
+    else if( ( ofs + 1 ) >= BALLID_PURESYASUBOORU )
+    { 
+      //捕獲用ボールは、プレシャスボールまでなのでそれ以降はモンスターボールのIDに変換
+      ofs = BALLID_MONSUTAABOORU - 1;
     }
     datID += ofs;
     break;
