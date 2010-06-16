@@ -13,6 +13,9 @@
 //#define NOT_USE_STATUS_BATTLE  // これが定義されているとき、バトルステータスを使わない
 
 
+#define DEF_CANCEL_NO_BGM  // これが定義されているとき、進化キャンセルした場合はBGMを再生しない
+
+
 // インクルード
 #include <gflib.h>
 #include <procsys.h>
@@ -439,6 +442,9 @@ static BOOL ShinkaDemo_SoundCheckFadeOutShinka( SHINKA_DEMO_PARAM* param, SHINKA
 static void ShinkaDemo_SoundPlayCongratulate( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static BOOL ShinkaDemo_SoundCheckPlayCongratulate( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static void ShinkaDemo_SoundPlayWazaoboe( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+#ifdef DEF_CANCEL_NO_BGM
+static void ShinkaDemo_SoundPopStopShinka( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+#endif
 
 // BG
 static void ShinkaDemo_BgInit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
@@ -1015,8 +1021,13 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   // 進化キャンセルした場合 
   case STEP_BGM_CANCEL_SHINKA_POP:
     {
+#ifdef DEF_CANCEL_NO_BGM
+      if( work->evo_cancel )
+        ShinkaDemo_SoundPopStopShinka( param, work );
+      else
+#endif 
       ShinkaDemo_SoundPopShinka( param, work );
-    
+
       if( work->text_bg_frame_show_state )
       {
         // 次へ
@@ -1623,6 +1634,17 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   //---------------------------
   case STEP_FADE_OUT_START:
     {
+#ifdef DEF_CANCEL_NO_BGM
+      if( work->evo_cancel )
+      {
+        // フェードアウト(見える→黒)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT );
+
+        // 次へ
+        work->step = STEP_FADE_OUT_WAIT;
+      }
+      else
+#endif
       if( ShinkaDemo_SoundCheckPlayShinka( param, work ) )
       {
         ShinkaDemo_SoundFadeOutShinka( param, work );
@@ -2109,6 +2131,19 @@ static void ShinkaDemo_SoundPlayWazaoboe( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_
     work->sound_step = SOUND_STEP_WAZAOBOE;
   }
 }
+
+#ifdef DEF_CANCEL_NO_BGM
+static void ShinkaDemo_SoundPopStopShinka( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  if( work->sound_step == SOUND_STEP_SHINKA_PUSH )
+  {
+    PMSND_PopBGM();
+    PMSND_StopBGM();
+    work->sound_step = SOUND_STEP_WAIT;
+  }
+}
+#endif
+
 
 //-------------------------------------
 /// BG

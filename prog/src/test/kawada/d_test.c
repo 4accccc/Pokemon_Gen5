@@ -1874,9 +1874,14 @@ static void D_Test_ShinkaMcssSetOfsPositionFunc(void* d_test_cmn_wk)
     //offset_y *= 16.0f / 16.0f;  // 意味ないのでコメントアウトした
     //offset_x *= 16.0f / 16.0f;  // 意味ないのでコメントアウトした
 
+#if 1  // もしかして何倍不要か？
     ofs_position_y = ( ( 96.0f - size_y ) / 2.0f + offset_y ) * (0.33f);
     ofs_position_x = - offset_x * (0.33f);
-      
+#else
+    ofs_position_y = ( ( 96.0f - size_y ) / 2.0f + offset_y );
+    ofs_position_x = - offset_x;
+#endif
+
     ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = FX_F32_TO_FX32(ofs_position_y);  ofs_position.z = 0;
     MCSS_SetOfsPosition( cmn_wk->mcss_wk, &ofs_position );
   }
@@ -2417,7 +2422,11 @@ static void D_Test_ZukanFormMcssSetOfsPositionFunc(void* d_test_cmn_wk)
     f32      ofs_position_x;
     VecFx32  ofs_position;
 
+#if 1  // もしかして何倍不要か？
     ofs_position_x = - offset_x * (0.25f);
+#else 
+    ofs_position_x = - offset_x * (0.25f);
+#endif
 
     ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = 0;  ofs_position.z = 0;
     MCSS_SetOfsPosition( cmn_wk->mcss_wk, &ofs_position );
