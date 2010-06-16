@@ -384,6 +384,9 @@ void NetErr_DispCallFatal(void)
 	
 //		OS_SpinWait(10000);
 	
+	//通信切断
+	NetErr_ExitNetSystem();
+
   //無限ループ
   do{
     OS_Halt();
@@ -619,6 +622,8 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
   if(fatal_error == TRUE){
 		//エラー画面描画
   	Local_ErrDispInit(fatal_error);
+  	//通信切断
+  	NetErr_ExitNetSystem();
     //無限ループ
     do{
       OS_Halt();
