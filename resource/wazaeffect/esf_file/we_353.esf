@@ -6,6 +6,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_353_2.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_353_2.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT	CM	0	0
+エフェクト終了待ち	すべて
 BGのパレットフェード	すべて	0	13	0	0:0:0
 ポケモン拡縮	攻撃側	往復	0.3	0.3	6	2	2
 制御モード変更	継続
@@ -23,6 +25,7 @@ SE再生	SEQ_SE_W464_01	SE2	攻撃側	40:0:120	0:0:0
 ポケモンパレットフェード	防御側	10	0	2	0:0:0
 エフェクト終了待ち	すべて
 BGのパレットフェード	すべて	13	0	0	0:0:0
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了待ち	すべて
 エフェクト終了
 &
