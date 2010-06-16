@@ -87,6 +87,12 @@ extern BOOL BTL_TABLES_IsTypeChangeForbidPoke( u16 monsno );
 
 
 /**
+ *  ユーザコンフィグ「わざエフェクト：みない」でスキップするエフェクト指定
+ */
+extern BOOL BTL_TABLES_IsEffectDisableType( u16 effectNo );
+
+
+/**
  *  BGタイプから屋外かどうか判定（ダークボール用）
  */
 extern BOOL BTL_TABLES_IsOutdoorBGType( u16 bgType );

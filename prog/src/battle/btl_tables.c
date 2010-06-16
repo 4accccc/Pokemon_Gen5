@@ -16,6 +16,7 @@
 #include "battle\battle_bg_def.h"
 
 #include "btl_common.h"
+#include "btlv\btlv_effect.h"
 #include "btl_tables.h"
 
 //----------------------------------------------------------------------------------
@@ -299,6 +300,20 @@ BOOL BTL_TABLES_IsMatchKatayaburiTarget( u16 tokuseiID )
 BOOL BTL_TABLES_IsTypeChangeForbidPoke( u16 monsno )
 {
   return monsno == MONSNO_ARUSEUSU;
+}
+
+/**
+ *  ユーザコンフィグ「わざエフェクト：みない」でスキップするエフェクト指定
+ */
+BOOL BTL_TABLES_IsEffectDisableType( u16 effectNo )
+{
+  static const u16 table[] = {
+    BTLEFF_NEMURI, BTLEFF_MAHI, BTLEFF_DOKU, BTLEFF_YAKEDO, BTLEFF_KOORI,
+    BTLEFF_KONRAN, BTLEFF_MEROMERO, BTLEFF_NOROI, BTLEFF_AKUMU,
+    BTLEFF_SHOOTER_EFFECT, BTLEFF_USE_ITEM, BTLEFF_HP_RECOVER,
+  };
+
+  return checkTableElems( effectNo, table, NELEMS(table) );
 }
 
 

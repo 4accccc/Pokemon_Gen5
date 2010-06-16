@@ -6162,6 +6162,10 @@ static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTL_CLIENT_IsChapterSkipMode(wk) ){
       return TRUE;
     }
+    if( !BTL_MAIN_IsWazaEffectEnable(wk->mainModule) ){
+      return TRUE;
+    }
+
 
     BTLV_StartRankDownEffect( wk->viewCore, vpos );
     (*seq)++;
@@ -6184,6 +6188,9 @@ static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+    if( !BTL_MAIN_IsWazaEffectEnable(wk->mainModule) ){
       return TRUE;
     }
 
@@ -6367,12 +6374,14 @@ static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTL_CLIENT_IsChapterSkipMode(wk) ){
       return TRUE;
     }
-    else
-    {
-      BTLV_KinomiAct_Start( wk->viewCore, pos );
-      (*seq)++;
+    if( !BTL_MAIN_IsWazaEffectEnable(wk->mainModule) ){
+      return TRUE;
     }
+
+    BTLV_KinomiAct_Start( wk->viewCore, pos );
+    (*seq)++;
     break;
+
   case 1:
     if( BTLV_KinomiAct_Wait( wk->viewCore, pos ) )
     {
@@ -7505,6 +7514,12 @@ static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     if( BTL_CLIENT_IsChapterSkipMode(wk) ){
       return TRUE;
+    }
+    if( !BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
+    {
+      if( BTL_TABLES_IsEffectDisableType(args[1]) ){
+        return TRUE;
+      }
     }
 
     BTLV_AddEffectByPos( wk->viewCore, vpos, args[1] );
