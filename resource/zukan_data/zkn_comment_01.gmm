@@ -5061,7 +5061,7 @@
 		<language name="JPN">６かくけいの　みみを　もつ。
 ちていで　あっしゅくされた　からだは
 てつに　まけないくらい　かたい。</language>
-		<language name="JPN_KANJI">６角形の　耳を　もつ。
+		<language name="JPN_KANJI">６角形の　耳を　持つ。
 地底で　圧縮された　体は
 鉄に　負けないくらい　硬い。</language>
 	</row>
@@ -5548,7 +5548,7 @@
 もっているため　いきなり　ちがう
 こうどうを　とることが　あるのだ。</language>
 		<language name="JPN_KANJI">２つに　分裂した　脳みそを
-もっているため　いきなり　違う
+持っているため　いきなり　違う
 行動を　とることが　あるのだ。</language>
 	</row>
 
@@ -5760,7 +5760,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_602">
-		<language name="JPN">１ひきの　でんりょくは　ちいさいが
+		<language name="JPN">１ぴきの　でんりょくは　ちいさいが
 たくさんの　シビシラスが　つながると
 カミナリと　おなじ　いりょくになる。</language>
 		<language name="JPN_KANJI">１匹の　電力は　小さいが
@@ -5886,10 +5886,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_616">
-		<language name="JPN">てきに　おそわれると　からの　ふたを
+		<language name="JPN">てきに　おそわれると　カラの　ふたを
 とじて　ぼうぎょ。ふたの　すきまから
 ベトベトした　どくえきを　とばす。</language>
-		<language name="JPN_KANJI">敵に　襲われると　からの　ふたを
+		<language name="JPN_KANJI">敵に　襲われると　殻の　ふたを
 閉じて　防御。ふたの　すきまから
 ベトベトした　毒液を　飛ばす。</language>
 	</row>

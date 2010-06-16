@@ -5765,7 +5765,7 @@
 でんきを　つくる　きかんを　もち
 ピンチになると　はつでんさせる。</language>
 		<language name="JPN_KANJI">群れで　行動する　ポケモン。
-電気を　作る　器官を　もち
+電気を　作る　器官を　持ち
 ピンチになると　発電する。</language>
 	</row>
 
@@ -5896,10 +5896,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_617">
-		<language name="JPN">おもい　からを　ぬいだために
+		<language name="JPN">おもい　カラを　ぬいだために
 みがるになった。まるで　にんじゃの
 ような　みのこなしで　たたかう。</language>
-		<language name="JPN_KANJI">重い　からを　脱いだために
+		<language name="JPN_KANJI">重い　殻を　脱いだために
 身軽になった。まるで　忍者のような
 身のこなしで　戦う。</language>
 	</row>
