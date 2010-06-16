@@ -1395,7 +1395,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   WifiP2PMatchFriendListStIconWrite(  &wk->icon, GFL_BG_FRAME2_S,
                                       MCV_USERD_ICON_X, MCV_USERD_ICON_Y,
                                       status, gamemode , PLAYER_DISP_ICON_CARDMODE);
-  if( WIFI_STATUS_GetVChatStatus(p_status) ){
+  if( WIFI_STATUS_GetUseVChat(p_status) ){
     vct_icon = PLAYER_DISP_ICON_IDX_NONE + PLAYER_DISP_ICON_CARDMODE;
   }else{
     vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT + PLAYER_DISP_ICON_CARDMODE;
