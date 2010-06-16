@@ -17,6 +17,10 @@
 
 #define LV_WAZA_OBOE_MAX  ( POKEPER_WAZAOBOE_TABLE_ELEMS )  // レベルアップで覚える技数 + 終端コード
 
+
+// １にすると覚える技リストを出力する
+#define DEBUT_PRINT_WAZALIST  ( 0 )
+
 //--------------------------------------------------------------------------------------------
 /**
  * 技教えデータ領域取得
@@ -110,6 +114,14 @@ u16 * WAZAOSHIE_GetRemaindWaza( POKEMON_PARAM * pp, HEAPID heap )
       }
     }
   }
+
+#ifdef PM_DEBUG
+#if DEBUT_PRINT_WAZALIST
+  for(i=0;i<LV_WAZA_OBOE_MAX;i++){
+    OS_Printf("%02d:wazano=%d\n",i,ret[i]);
+  }
+#endif
+#endif
 
   GFL_HEAP_FreeMemory( get );
 
