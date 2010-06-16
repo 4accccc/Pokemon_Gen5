@@ -66,7 +66,6 @@ STA_SCRIPT_SYS* STA_SCRIPT_InitSystem( HEAPID heapId ,ACTING_WORK *actWork)
   work->actWork = actWork;
   work->tcbWork = GFL_HEAP_AllocMemory( work->heapId , GFL_TCB_CalcSystemWorkSize(SCRIPT_TCB_TASK_NUM) );
   work->tcbSys = GFL_TCB_Init( SCRIPT_TCB_TASK_NUM , work->tcbWork );
-  work->befVCount = OS_GetVBlankCount();
   
   NNS_FND_INIT_LIST( &work->tcbList , STA_SCRIPT_TCB_OBJECT , linkObj );
   
@@ -119,8 +118,7 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
 {
   u8 i;
   BOOL isFinishSync = TRUE;
-  const u32 nowVCount = OS_GetVBlankCount();
-  u32 subVCount = nowVCount - work->befVCount;
+  u32 subVCount = STA_ACT_GetDelayVCnt( work->actWork );
   
   if( subVCount > 1 )
   {
@@ -180,7 +178,6 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
     }
     GFL_TCB_Main( work->tcbSys );
   }
-  work->befVCount = nowVCount;
 }
 
 void* STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData , const BOOL isTrgSync )

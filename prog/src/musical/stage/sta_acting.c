@@ -203,6 +203,11 @@ struct _ACTING_WORK
   void* bgmSeqData;
   void* bgmBankData;
   void* bgmWaveData;
+  
+  //処理落ち対策
+  u32   delayVCnt;
+  u32   befVCnt;
+
 };
 
 //======================================================================
@@ -377,6 +382,9 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->bgmBankData = work->initWork->distData->midiBnkData;
   work->bgmWaveData = work->initWork->distData->midiWaveData;
   
+  work->befVCnt = OS_GetVBlankCount();
+
+  
   return work;
 }
 
@@ -497,6 +505,14 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     */
   }
 #endif
+
+  //処理落ち対策
+  {
+    const u32 nowVCount = OS_GetVBlankCount();
+    work->delayVCnt = nowVCount - work->befVCnt;
+    work->befVCnt = nowVCount;
+    
+  }
 
   switch( work->mainSeq )
   {
@@ -2090,6 +2106,11 @@ void STA_ACT_SetForceScroll( ACTING_WORK *work , const BOOL flg )
 {
   work->forceScroll = flg;
 }
+const u32 STA_ACT_GetDelayVCnt( ACTING_WORK *work )
+{
+  return work->delayVCnt;
+}
+
 #pragma mark [> editor func
 //--------------------------------------------------------------
 //エディタ用

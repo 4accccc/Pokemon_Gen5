@@ -194,17 +194,23 @@ void  STA_POKE_UpdateSystem( STA_POKE_SYS *work )
 
 void  STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
 {
-  int idx;
+  int idx,i;
   for( idx=0 ; idx<MUSICAL_POKE_MAX ; idx++ )
   {
     if( work->pokeWork[idx].isEnable == TRUE )
     {
       STA_POKE_UpdateItemFunc( work , &work->pokeWork[idx] );
-
-      if( work->pokeWork[idx].updateItemUseFunc != NULL )
+      if( work->actWork != NULL )
       {
-        work->pokeWork[idx].updateItemUseFunc( work , &work->pokeWork[idx] );
+        for( i=0 ; i<STA_ACT_GetDelayVCnt(work->actWork) ; i++ )
+        {
+          if( work->pokeWork[idx].updateItemUseFunc != NULL )
+          {
+            work->pokeWork[idx].updateItemUseFunc( work , &work->pokeWork[idx] );
+          }
+        }
       }
+
     }
   }
   MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
@@ -915,21 +921,19 @@ void STA_POKE_UpdateItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
   const u16 rad = (0x800*itemUseWork->cnt)%0x10000;
   fx16 sizeX,sizeY;
 
-  MUS_ITEM_DRAW_GetSize( work->itemDrawSys , 
-                pokeWork->itemWork[itemUseWork->equipPos] ,
-                &sizeX , &sizeY );
-  sizeX += FX_SinIdx(rad)/8;
-  sizeY += FX_CosIdx(rad)/8;
-  //OS_Printf("[%.3f][%.3f]\n",FX_FX32_TO_F32(sizeX),FX_FX32_TO_F32(sizeY));
-  MUS_ITEM_DRAW_SetSize( work->itemDrawSys , 
-                pokeWork->itemWork[itemUseWork->equipPos] ,
-                sizeX , sizeY );
-
-
   itemUseWork->cnt++;
   if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME )
   {
     pokeWork->updateItemUseFunc = NULL;
+  }
+  else
+  {
+    sizeX = FX16_CONST(0.25f) + FX_SinIdx(rad)/8;
+    sizeY = FX16_CONST(0.25f) + FX_CosIdx(rad)/8;
+    //OS_Printf("[%.3f][%.3f]\n",FX_FX32_TO_F32(sizeX),FX_FX32_TO_F32(sizeY));
+    MUS_ITEM_DRAW_SetSize( work->itemDrawSys , 
+                  pokeWork->itemWork[itemUseWork->equipPos] ,
+                  sizeX , sizeY );
   }
 }
 

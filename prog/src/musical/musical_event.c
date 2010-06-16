@@ -500,6 +500,11 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
     {
       evWork->state = MES_ENTER_WAITROOM_THIRD;
+      if( evWork->isNetErr == TRUE )
+      {
+        //フィールド開くため
+        evWork->state = MES_ERROR_INIT_OPEN_FIELD;
+      }
     }
     break;
     
