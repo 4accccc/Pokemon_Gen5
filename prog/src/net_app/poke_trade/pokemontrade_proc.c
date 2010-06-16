@@ -1847,6 +1847,7 @@ static BOOL checkTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
 
         //おなじポケモンを選択したらキャンセル
         if( _IsBothPokemonSelect(pWork, pWork->workBoxno, pWork->workPokeIndex) ){
+          PMSND_PlaySE(SEQ_SE_MSCL_05);
           if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
             _CHANGE_STATE(pWork,_DeletePokemonState);
             return 3;

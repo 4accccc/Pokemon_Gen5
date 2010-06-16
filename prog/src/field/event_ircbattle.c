@@ -466,7 +466,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     else{
       PMSND_PlayBGM( SEQ_BGM_VS_TRAINER_S );
     }
-    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     (*seq) ++;
     break;
     
