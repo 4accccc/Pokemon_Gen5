@@ -159,8 +159,9 @@ static void handler_HozuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BOOL common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type, BOOL fIgnoreAffine );
 static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n );
+static void common_DamageReact( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n );
 static BOOL common_DamageReactCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n );
+static BOOL common_DamageReactCheckCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_IbanNomi( u32* numElems );
 static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_IbanNomi_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1287,7 +1288,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_OrenNomi( u32* numElems )
 }
 static void handler_OrenNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_DamageReactCore( myHandle, flowWk, pokeID, 2 );
+  common_DamageReact( myHandle, flowWk, pokeID, 2 );
 }
 static void handler_OrenNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -1455,7 +1456,7 @@ static void handler_common_KaifukuKonran_Reaction( BTL_EVENT_FACTOR* myHandle, B
 {
   if( work[0] == 0 )
   {
-    common_DamageReactCore( myHandle, flowWk, pokeID, 2 );
+    common_DamageReact( myHandle, flowWk, pokeID, 2 );
   }
 }
 /**
@@ -2112,7 +2113,7 @@ static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     s32 item_pow = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-    common_DamageReactCore( myHandle, flowWk, pokeID, item_pow );
+    common_DamageReact( myHandle, flowWk, pokeID, item_pow );
   }
 }
 //----------------------------------------------------------------------------------
@@ -2124,7 +2125,7 @@ static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
  * @param   n
  */
 //----------------------------------------------------------------------------------
-static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n )
+static void common_DamageReact( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
@@ -2145,32 +2146,38 @@ static BOOL common_DamageReactCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ITEM_REACTION) == BTL_ITEMREACTION_HP)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 maxHP;
+    return common_DamageReactCheckCore( flowWk, pokeID, n );
+  }
+  return FALSE;
+}
+static BOOL common_DamageReactCheckCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u32 maxHP;
 
-    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU )
-    {
-      if( n > 2 ){
-        n /= 2;
-      }
+  if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU )
+  {
+    if( n > 2 ){
+      n /= 2;
     }
-    if( n == 0 ){
-      GF_ASSERT(0);
-      n = 1;
-    }
+  }
+  if( n == 0 ){
+    GF_ASSERT(0);
+    n = 1;
+  }
 
-    maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
-    if( maxHP > 1 )
+  maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
+  if( maxHP > 1 )
+  {
+    u32 hp = BPP_GetValue( bpp, BPP_HP );
+    if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, n) )
     {
-      u32 hp = BPP_GetValue( bpp, BPP_HP );
-      if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, n) )
-      {
-        return TRUE;
-      }
+      return TRUE;
     }
   }
   return FALSE;
 }
+
 //------------------------------------------------------------------------------
 /**
  *  ƒCƒoƒ“‚Ì‚Ý
@@ -2192,7 +2199,7 @@ static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SV
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( common_DamageReactCheck(myHandle, flowWk, pokeID, 4) )
+    if( common_DamageReactCheckCore(flowWk, pokeID, 4) )
     {
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH) )
       {
