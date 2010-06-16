@@ -159,7 +159,7 @@ EVENT_START	ev_r15r0201_trainerw_01
 	ENDIF
 	}
 	
-INIT_EVENT_END
+EVENT_END
 
 /**************************************************************/
 /*  veteranw_01*/
