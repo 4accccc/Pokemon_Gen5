@@ -924,6 +924,27 @@ static const struct
   }
 };
 
+static const sc_version_tbl[] =
+{
+  VERSION_BLACK,VERSION_WHITE,
+  VERSION_GOLD,VERSION_SILVER,
+  VERSION_DIAMOND,VERSION_PEARL,VERSION_PLATINUM,
+  VERSION_RUBY,VERSION_SAPPHIRE,VERSION_EMERALD,
+  VERSION_RED,VERSION_GREEN,
+  VERSION_COLOSSEUM,
+};
+
+static const sc_lang_tbl[]  =
+{
+  LANG_JAPAN	,
+  LANG_ENGLISH,
+  LANG_FRANCE	,
+  LANG_ITALY	,
+  LANG_GERMANY,
+  LANG_SPAIN	,
+  LANG_KOREA	,
+};
+
 static GFL_PROC_RESULT PROC_MAKE_WifiBattleMatch_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT PROC_MAKE_WifiBattleMatch_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT PROC_MAKE_WifiBattleMatch_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
@@ -2347,8 +2368,29 @@ static void StoreData( MAKE_WORK *p_wk, const WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA 
   p_wk->BoxValue[EDITBOX_ID_MY_PID] = MyStatus_GetProfileID( cp_mystatus );
   p_wk->BoxValue[EDITBOX_ID_MY_CONTRY] = MyStatus_GetMyNation( cp_mystatus );
   p_wk->BoxValue[EDITBOX_ID_MY_AREA] = MyStatus_GetMyArea( cp_mystatus );
-  p_wk->BoxValue[EDITBOX_ID_MY_LANG] = MyStatus_GetRegionCode( cp_mystatus );
-  p_wk->BoxValue[EDITBOX_ID_MY_VER] = MyStatus_GetRomCode( cp_mystatus );
+
+  {
+    int i;
+    p_wk->BoxValue[EDITBOX_ID_MY_LANG]  = 0;
+    for( i = 0; i < NELEMS( sc_lang_tbl ); i++ )
+    {
+      if( sc_lang_tbl[i]  == MyStatus_GetRegionCode( cp_mystatus ) )
+      {
+        p_wk->BoxValue[EDITBOX_ID_MY_LANG] = i;
+      }
+    }
+  }
+  {
+    int i;
+    p_wk->BoxValue[EDITBOX_ID_MY_VER] = 0;
+    for( i = 0; i < NELEMS( sc_version_tbl ); i++ )
+    {
+      if( sc_version_tbl[i] == MyStatus_GetRomCode( cp_mystatus ) )
+      {
+        p_wk->BoxValue[EDITBOX_ID_MY_VER] = i;
+      }
+    }
+  }
   p_wk->BoxValue[EDITBOX_ID_MY_VIEW] = MyStatus_GetTrainerView( cp_mystatus );
   p_wk->BoxValue[EDITBOX_ID_MY_SEX] = MyStatus_GetMySex( cp_mystatus );
   p_wk->BoxValue[EDITBOX_ID_MY_YEAR] = cp_datetime->year;
@@ -2499,9 +2541,9 @@ static void ReStoreData( WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *p_data, const MAKE_W
   MyStatus_SetID( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_TRAINERID] );
   MyStatus_SetProfileID( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_PID] );
   MyStatus_SetMyNationArea( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_CONTRY], cp_wk->BoxValue[EDITBOX_ID_MY_AREA] );
-  MyStatus_SetRegionCode( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_LANG] );
-  MyStatus_SetRomCode( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_VER] );
-  MyStatus_SetTrainerView( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_VER] );
+  MyStatus_SetRegionCode( p_mystatus, sc_lang_tbl[ cp_wk->BoxValue[EDITBOX_ID_MY_LANG] ] );
+  MyStatus_SetRomCode( p_mystatus, sc_version_tbl[ cp_wk->BoxValue[EDITBOX_ID_MY_VER]] );
+  MyStatus_SetTrainerView( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_VIEW] );
   MyStatus_SetMySex( p_mystatus, cp_wk->BoxValue[EDITBOX_ID_MY_SEX] );
   p_datetime->year  = cp_wk->BoxValue[EDITBOX_ID_MY_YEAR];
   p_datetime->month  = cp_wk->BoxValue[EDITBOX_ID_MY_MONTH];
