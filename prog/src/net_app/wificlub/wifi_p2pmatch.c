@@ -4431,7 +4431,8 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
     FriendRequestWaitOff( wk );
     FriendRequestWaitOn( wk, TRUE );
   }
-  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+  //_CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
 
   return seq;
 }

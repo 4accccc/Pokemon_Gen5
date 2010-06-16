@@ -657,7 +657,8 @@ u8* _setChangePokemonBuffer(int netID, void* pWk, int size)
 {
   POKEMON_TRADE_WORK *pWork = pWk;
   if((netID >= 0) && (netID < 2)){
-    return (u8*)pWork->recvPoke[netID];
+//    return (u8*)pWork->recvPoke[netID];
+    return (u8*)pWork->TempBuffer[netID];
   }
   return NULL;
 }
@@ -793,12 +794,15 @@ static void _recvSelectPokemon(const int netID, const int size, const void* pDat
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
+  GFL_STD_MemCopy(pWork->TempBuffer[netID], pWork->recvPoke[netID], POKETOOL_GetWorkSize());
+
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;//自分のは今は受け取らない
   }
 
   //ポケモンセットをコール  処理が重いためここではやらない
   pWork->pokemonsetCall = netID+1;
+  pWork->pokemonEnableSendFlg=TRUE;//ポケモンを受け取ったという事を相手に送信する
 
 }
 
@@ -814,15 +818,6 @@ static void _recvThreePokemon(const int netID, const int size, const void* pData
     return;//自分のは今は受け取らない
   }
   GF_ASSERT(netID==0 || netID==1);
-
-  {
-    int i=0;
-    u8* pChar = (u8*)pWork->TempBuffer[netID];
-    for(i=0;i<POKETOOL_GetWorkSize();i++){
-      OS_TPrintf("%2x ",pChar[i]);
-    }
-    OS_TPrintf("\n");
-  }
 
   if(PP_Get( pWork->TempBuffer[netID], ID_PARA_poke_exist, NULL  )){
     POKE_GTS_DirectAddPokemon(pWork, num, pWork->TempBuffer[netID]);
@@ -4450,7 +4445,6 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     if(!pWork->statusModeOn){
       POKE_MAIN_Pokemonset(pWork, 1, pWork->recvPoke[pWork->pokemonsetCall-1] );
       pWork->pokemonsetCall=0;
-      pWork->pokemonEnableSendFlg = TRUE;//ポケモンを受け取ったという事を相手に送信する
     }
     //読み込む事ができない場合は書かない
   }
