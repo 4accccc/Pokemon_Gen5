@@ -220,6 +220,7 @@ typedef enum  {
   WB_NET_GAMESYNC,  ///<GAMESYNC
   WB_NET_PDW_ACC,  ///<GAMESYNCアカウント
   WB_NET_GTS_NEGO,  ///<GTSネゴシエーション
+  WB_NET_WIFIRNDMATCH,  ///<WIFIランダムマッチ（ゲームサービスIDをレコードカウントのためWIFIMATCHとわけることになった）
   
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;

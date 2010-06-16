@@ -1404,7 +1404,15 @@ static void *LOGIN_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, vo
   p_param->bg       = WIFILOGIN_BG_NORMAL;
   p_param->display  = WIFILOGIN_DISPLAY_UP;
   p_param->pSvl     = &p_wk->svl_result;
-  p_param->nsid     = WB_NET_WIFIMATCH;
+
+  if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU )
+  {
+    p_param->nsid     = WB_NET_WIFIMATCH;
+  }
+  else
+  {
+    p_param->nsid     = WB_NET_WIFIRNDMATCH;
+  }
 
   if( p_wk->is_err_return_login )
   { 

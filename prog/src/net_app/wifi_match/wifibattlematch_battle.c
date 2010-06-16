@@ -314,13 +314,37 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
 
       //ボール判定
       {
-        int j;
-        for( j = 0; j < DEMO_POKEPARTY_MAX; j++ )
-        {
-          p_param->p_demo_param->trainer_data[COMM_BTL_DEMO_TRDATA_A].party_state[j] = p_param->p_btl_setup_param->party_state[BTL_CLIENT_PLAYER][j];
-          p_param->p_demo_param->trainer_data[COMM_BTL_DEMO_TRDATA_B].party_state[j] = p_param->p_btl_setup_param->party_state[BTL_CLIENT_ENEMY1][j];
+        int max, tr_no, my_pos, my_party_start_id, enemy_party_start_id, client_no, party_no;
+        
+        if(p_param->p_btl_setup_param->multiMode == 0){
+          max = COMM_BTL_DEMO_TRDATA_B;
+          my_party_start_id = COMM_BTL_DEMO_TRDATA_A;
+          enemy_party_start_id = COMM_BTL_DEMO_TRDATA_B;
+        }
+        else{
+          max = COMM_BTL_DEMO_TRDATA_D;
+          my_party_start_id = COMM_BTL_DEMO_TRDATA_A;
+          enemy_party_start_id = COMM_BTL_DEMO_TRDATA_C;
+        }
+        
+        my_pos = p_param->p_btl_setup_param->commPos;
+        for(tr_no = 0; tr_no <= max; tr_no++){
+          if((tr_no & 1) == (my_pos & 1)){  //自分パーティ
+            client_no = BTL_CLIENT_PLAYER + (tr_no & 2);
+            for(party_no = 0; party_no < DEMO_POKEPARTY_MAX; party_no++){
+              p_param->p_demo_param->trainer_data[my_party_start_id + (tr_no >> 1)].party_state[party_no] = p_param->p_btl_setup_param->party_state[client_no][party_no];
+            }
+          }
+          else{ //敵パーティ
+            client_no = BTL_CLIENT_ENEMY1 + (tr_no & 2);
+            for(party_no = 0; party_no < DEMO_POKEPARTY_MAX; party_no++){
+              p_param->p_demo_param->trainer_data[enemy_party_start_id + (tr_no >> 1)].party_state[party_no] = p_param->p_btl_setup_param->party_state[client_no][party_no];
+            }
+          }
         }
       }
+
+
 
       if( is_next )
       {
