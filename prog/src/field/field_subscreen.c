@@ -514,12 +514,14 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIE
 {
   if(FIELD_SUBSCREEN_NORMAL==new_mode){
     GAMEDATA* pGame = GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap));
-    if(!CGEAR_SV_GetCGearONOFF(CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(pGame)))){
+    u16 zone_id = FIELDMAP_GetZoneID(pWork->fieldmap);
+    //遊覧船内 or バトルサブウェイ中では標準==NOGEARとなる
+    if(ZONEDATA_IsPlBoat(zone_id) || ZONEDATA_IsSubway(zone_id))
+    {
       return FIELD_SUBSCREEN_NOGEAR;
     }
-    //遊覧船内では標準はNOGEARとなる
-    if(ZONEDATA_IsPlBoat(FIELDMAP_GetZoneID(pWork->fieldmap)))
-    {
+    //CギアOFFの場合はNOGEARになる
+    if(!CGEAR_SV_GetCGearONOFF(CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(pGame)))){
       return FIELD_SUBSCREEN_NOGEAR;
     }
   }
