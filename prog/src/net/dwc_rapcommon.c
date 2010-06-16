@@ -129,10 +129,12 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
   //サブヒープが登録されていてかつ、指定したアロケートタイプだったら
   if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
   { 
+    {
     OSIntrMode  enable = OS_DisableInterrupts();
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandleSub, size, align );
     (void)OS_RestoreInterrupts(enable);
     NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandleSub),name );
+    }
     DEBUG_ALLOC_Increment
   }
   else
@@ -188,7 +190,6 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
     return;  //NULL開放を認める
   }
   NET_MEMORY_PRINT( "free memory size=%d\n", size );
-
 
   //サブヒープが登録されていてかつ、指定したアロケートタイプだったら
 //  if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
@@ -315,6 +316,4 @@ BOOL mydwc_checkMyGSID(void)
   return FALSE;
 }
 
-
-
-#endif GFL_NET_WIFI
+#endif //GFL_NET_WIFI

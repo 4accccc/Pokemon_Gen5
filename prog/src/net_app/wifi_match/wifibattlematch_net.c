@@ -19,6 +19,7 @@
 //  ネットワーク
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
+#include "net/dwc_rapcommon.h"
 #include "system/net_err.h"
 #include "net/dwc_error.h"
 #include "net/nhttp_rap.h"
@@ -304,6 +305,9 @@ typedef struct
   WIFIBATTLEMATCH_NET_ERRORTYPE type;
 } WIFIBATTLEMATCH_NETERR_WORK;
 
+
+typedef void (*DWCGdbGetRecordsCallbackEx)(int record_num, DWCGdbField** records, void* user_param, int field_num);
+
 //-------------------------------------
 ///	ネットモジュール
 //=====================================
@@ -350,7 +354,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
 
   //gdb
   void *p_get_wk;
-  DWCGdbGetRecordsCallback  gdb_get_record_callback;
+  DWCGdbGetRecordsCallbackEx  gdb_get_record_callback;
   DWC_SC_WRITE_DATA report;
   DWCGdbField *p_field_buff;
   const char **pp_table_name;
@@ -456,12 +460,12 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCoreBtlError( DWC_SC_PLAYERDATA *p_
 //=====================================
 static void DwcRap_Gdb_GetCallback(int record_num, DWCGdbField** records, void* user_param);
 
-static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
-static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
-static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
-static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
-static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
-static void DwcRap_Gdb_SakeAll_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
+static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num );
+static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num );
+static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num);
+static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num);
+static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num );
+static void DwcRap_Gdb_SakeAll_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num);
 static void DwcRap_Gdb_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk );
 static void DwcRap_Gdb_SetMyInfo( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
@@ -3398,7 +3402,7 @@ static void DwcRap_Gdb_GetCallback(int record_num, DWCGdbField** records, void* 
   WIFIBATTLEMATCH_NET_WORK *p_wk  = user_param;
 
   //設定したコールバックを呼ぶ
-  p_wk->gdb_get_record_callback( record_num, records, p_wk->p_get_wk );
+  p_wk->gdb_get_record_callback( record_num, records, p_wk->p_get_wk, p_wk->table_name_num );
 
   //自分のレコードからの取得の場合で、レコードIDの受信があれば、
   //格納
@@ -3431,7 +3435,7 @@ static void DwcRap_Gdb_GetCallback(int record_num, DWCGdbField** records, void* 
  *	@param	user_param  自分で設定したワーク
  */
 //-----------------------------------------------------------------------------
-static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num )
 {
     int i,j;
     WIFIBATTLEMATCH_GDB_RND_SCORE_DATA *p_data = user_param;
@@ -3440,7 +3444,7 @@ static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** reco
     for (i = 0; i < record_num; i++)
     {
       DEBUG_NET_Printf("!!!=====gdb_Print:======\n");
-      for (j = 0; j < ATLAS_RND_GetFieldNameNum(); j++)   // user_param -> field_num
+      for (j = 0; j < field_num; j++)   // user_param -> field_num
       {
         DWCGdbField* field  = &records[i][j];
 
@@ -3544,7 +3548,7 @@ static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** reco
  *	@param	user_param  自分で設定したワーク
  */
 //-----------------------------------------------------------------------------
-static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num )
 {
     int i,j;
     WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *p_data = user_param;
@@ -3554,7 +3558,7 @@ static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** rec
     for (i = 0; i < record_num; i++)
     {
   
-      for (j = 0; j < ATLAS_WIFI_GetFieldNameNum(); j++)   // user_param -> field_num
+      for (j = 0; j < field_num; j++)   // user_param -> field_num
       {
         DWCGdbField* field  = &records[i][j];
 
@@ -3603,7 +3607,7 @@ static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** rec
  *	@param	user_param  自分で設定したワーク
  */
 //-----------------------------------------------------------------------------
-static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num)
 { 
     int i,j;
     int *p_data = user_param;
@@ -3611,7 +3615,7 @@ static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField**
       DEBUG_NET_Printf("!!!=====gdb_Print[%d]:======\n", record_num );
     for (i = 0; i < record_num; i++)
     {
-      for (j = 0; j < 1; j++)   // user_param -> field_num
+      for (j = 0; j < field_num; j++)   // user_param -> field_num
       {
         DWCGdbField* field  = &records[i][j];
 
@@ -3634,7 +3638,7 @@ static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField**
  *	@param	user_param  自分で設定したワーク
  */
 //-----------------------------------------------------------------------------
-static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num )
 { 
     int i,j;
     void *p_data = user_param;
@@ -3642,7 +3646,7 @@ static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField*
     for (i = 0; i < record_num; i++)
     {
       DEBUG_NET_Printf("!!!=====gdb_Print:======\n" );
-      for (j = 0; j < 1; j++)   // user_param -> field_num
+      for (j = 0; j < field_num; j++)   // user_param -> field_num
       {
         DWCGdbField* field  = &records[i][j];
 
@@ -3665,7 +3669,7 @@ static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField*
  *	@param	user_param  自分で設定したワーク
  */
 //-----------------------------------------------------------------------------
-static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num)
 { 
     int i,j;
     WBM_NET_DATETIME *p_data = user_param;
@@ -3673,7 +3677,7 @@ static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField*
     for (i = 0; i < record_num; i++)
     {
       DEBUG_NET_Printf("!!!=====gdb_Print:======\n" );
-      for (j = 0; j < 1; j++)   // user_param -> field_num
+      for (j = 0; j < field_num; j++)   // user_param -> field_num
       {
         DWCGdbField* field  = &records[i][j];
 
@@ -3698,24 +3702,28 @@ static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField*
  *	@param	user_param
  */
 //-----------------------------------------------------------------------------
-static void DwcRap_Gdb_SakeAll_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+static void DwcRap_Gdb_SakeAll_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param, int field_num)
 {
     int i,j;
     WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *p_data = user_param;
     GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA) );
 
-    DwcRap_Gdb_LoginDate_GetRecordsCallback( record_num, records, &p_data->datetime );
-    DwcRap_Gdb_Wifi_GetRecordsCallback( record_num, records, &p_data->wifi );
-    DwcRap_Gdb_Rnd_GetRecordsCallback( record_num, records, &p_data->rnd );
+    DwcRap_Gdb_LoginDate_GetRecordsCallback( record_num, records, &p_data->datetime, field_num );
+    DwcRap_Gdb_Wifi_GetRecordsCallback( record_num, records, &p_data->wifi, field_num );
+    DwcRap_Gdb_Rnd_GetRecordsCallback( record_num, records, &p_data->rnd, field_num );
 
     //大会履歴取得
     for (i = 0; i < record_num; i++)
     {
       DEBUG_NET_Printf("!!!=====gdb_Print:======\n" );
-      for (j = 0; j < 1; j++)   // user_param -> field_num
+      for (j = 0; j < field_num; j++)   // user_param -> field_num
       {
         DWCGdbField* field  = &records[i][j];
-
+        
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_MYSTATUS ) )
+        {
+          GFL_STD_MemCopy( field->value.binary_data.data, &p_data->mystatus, field->value.binary_data.size );
+        }
         if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_DATA_01 ) )
         { 
           GFL_STD_MemCopy( field->value.binary_data.data, &p_data->record_data[0], field->value.binary_data.size );

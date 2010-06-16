@@ -2550,10 +2550,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
         break;
       }
@@ -2667,10 +2669,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
+          WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
+          WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           break;
         }
@@ -2703,10 +2707,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
       break;
 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       break;
     }
@@ -2794,10 +2800,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
+          WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
+          WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           break;
         }
@@ -2913,6 +2921,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
           WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, FALSE );
+          WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           break;
         }
@@ -2945,8 +2954,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_ERROR_END:
     WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_EndBattle );
+    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupEnd );
     break;
 
     //-------------------------------------
@@ -3104,10 +3114,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
         break;
       }

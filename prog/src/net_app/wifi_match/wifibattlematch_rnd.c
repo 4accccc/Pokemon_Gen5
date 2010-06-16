@@ -549,6 +549,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Main( GFL_PROC *p_proc, int *p_s
     { 
       *p_seq  = SEQ_FADEOUT_START;
     }
+
+
+    if( p_wk->p_net )
+    { 
+      WIFIBATTLEMATCH_NET_Main( p_wk->p_net );
+    }
     break;
 
   case SEQ_FADEOUT_START:
@@ -1476,7 +1482,8 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       
       if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
-        //エラー
+        //ここでエラーが起こった場合、切断カウンターをあげなかったと判断して、
+        //戻り先を変えます
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
@@ -1527,11 +1534,10 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
     //エラー
-    //戦闘がエラーにしたことにして、戦闘終了にいく
   case SEQ_ERROR_END:
     WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndBattle );
+    WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndRec );
     break;
 
     //-------------------------------------
@@ -1680,8 +1686,6 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_START_SAVE_MSG,
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
-
-
 
     SEQ_WAIT_MSG,
   };
