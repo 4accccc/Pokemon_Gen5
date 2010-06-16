@@ -786,10 +786,10 @@ static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 )
  * @brief 指定したポケモンの相性を求める (同じタマゴグループの場合)
  *
  * [ルール]
- *  同種 and 同ID then ◎
- *  同種 and 異ID then ○
- *  異種 and 同ID then △
+ *  同種 and 異ID then ◎
+ *  同種 and 同ID then ○
  *  異種 and 異ID then ○
+ *  異種 and 同ID then △
  *
  * @param poke1 ポケモン1
  * @param poke2 ポケモン2
