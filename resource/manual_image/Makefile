@@ -12,7 +12,8 @@ USERS	= kawada_koji
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = manual_image
+targetname_w = manual_image_w
+targetname_b = manual_image_b
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -31,9 +32,13 @@ include	$(PROJECT_RSCDIR)\macro_define
 bmp_sources:=$(wildcard *.bmp)
 
 # 入力ファイル、バッチファイル
-manual_image_list     = manual_image.lst
-manual_image_conv_bat = manual_image_conv.bat
-manual_image_comp_bat = manual_image_comp.bat
+manual_image_list_w     = manual_image_w.lst
+manual_image_conv_bat_w = manual_image_conv_w.bat
+manual_image_comp_bat_w = manual_image_comp_w.bat
+
+manual_image_list_b     = manual_image_b.lst
+manual_image_conv_bat_b = manual_image_conv_b.bat
+manual_image_comp_bat_b = manual_image_comp_b.bat
 
 
 .PHONY:	do-build clean subdir
@@ -41,24 +46,35 @@ manual_image_comp_bat = manual_image_comp.bat
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname_w).narc \
+          $(TARGETDIR)/$(targetname_b).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
-	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR)
+$(TARGETDIR)/$(targetname_w).narc: $(targetname_w).narc
+	$(COPY) $(targetname_w).narc $(TARGETDIR)
+	$(COPY) $(targetname_w).naix $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname_b).narc: $(targetname_b).narc
+	$(COPY) $(targetname_b).narc $(TARGETDIR)
+	$(COPY) $(targetname_b).naix $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 
-$(targetname).narc: $(bmp_sources) $(manual_image_list) $(manual_image_conv_bat) $(manual_image_comp_bat)
-	$(manual_image_conv_bat)
-	$(manual_image_comp_bat)
-	nnsarc -r -l -n -i $(targetname) -S $(manual_image_list)
-	$(NAIXCUT) $(targetname).naix
+$(targetname_w).narc: $(bmp_sources) $(manual_image_list_w) $(manual_image_conv_bat_w) $(manual_image_comp_bat_w)
+	$(manual_image_conv_bat_w)
+	$(manual_image_comp_bat_w)
+	nnsarc -r -l -n -i $(targetname_w) -S $(manual_image_list_w)
+	$(NAIXCUT) $(targetname_w).naix
+
+$(targetname_b).narc: $(bmp_sources) $(manual_image_list_b) $(manual_image_conv_bat_b) $(manual_image_comp_bat_b)
+	$(manual_image_conv_bat_b)
+	$(manual_image_comp_bat_b)
+	nnsarc -r -l -n -i $(targetname_b) -S $(manual_image_list_b)
+	$(NAIXCUT) $(targetname_b).naix
 
 endif
 
@@ -77,11 +93,15 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCER
 	rm -f *.narc
 	rm -f *.naix
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
+	rm -f $(targetname_w).narc
+	rm -f $(targetname_w).naix
+	rm -f $(targetname_b).narc
+	rm -f $(targetname_b).naix
 	rm -f *_lz77.nbfs
 	rm -f *.nbfs
 endif
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)/$(targetname_w).narc
+	rm -f $(TARGETDIR)/$(targetname_w).naix
+	rm -f $(TARGETDIR)/$(targetname_b).narc
+	rm -f $(TARGETDIR)/$(targetname_b).naix
 

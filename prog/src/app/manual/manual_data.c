@@ -43,13 +43,9 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_manual.h"
-#include "msg/msg_manual_text.h"
-#include "manual.naix"
-#include "manual_image.naix"
 
 
 // リソースで生成したヘッダ
-#include "../../../../resource/manual/manual_data_def.h"
 #include "../../../../resource/manual/manual_open_flag.h"
 
 

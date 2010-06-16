@@ -18,6 +18,8 @@
 #include "ui/touchbar.h"
 #include "sound/pm_sndsys.h"
 
+#include "message.naix"
+
 
 //=============================================================================
 /**
@@ -103,4 +105,96 @@ enum
 
 // 上画面のダイレクトカラー画像なしのとき
 #define MANUAL_BG_M_DCBMP_NO_IMAGE  (0xFFFF)    // 画像ファイルなしのとき
+
+
+//=============================================================================
+/**
+*  バージョン違いを吸収する
+*/
+//=============================================================================
+#if PM_VERSION == VERSION_BLACK
+  #include "msg/msg_manual_text_b.h"
+#else
+  #include "msg/msg_manual_text_w.h"
+#endif
+
+#if PM_VERSION == VERSION_BLACK
+  #include "manual_b.naix"
+#else
+  #include "manual_w.naix"
+#endif
+
+#if PM_VERSION == VERSION_BLACK
+  #include "manual_image_b.naix"
+#else
+  #include "manual_image_w.naix"
+#endif
+
+// リソースで生成したヘッダ
+#if PM_VERSION == VERSION_BLACK
+  #include "../../../../resource/manual/manual_data_def_b.h"
+#else
+  #include "../../../../resource/manual/manual_data_def_w.h"
+#endif
+
+
+#if PM_VERSION == VERSION_BLACK
+
+// manual_b.naix
+enum
+{
+  NARC_manual_bg_NCLR                   = NARC_manual_b_bg_NCLR,
+  NARC_manual_obj_NCLR                  = NARC_manual_b_obj_NCLR,
+  NARC_manual_bg_NCGR                   = NARC_manual_b_bg_NCGR,
+  NARC_manual_obj_NCGR                  = NARC_manual_b_obj_NCGR,
+  NARC_manual_bg1_NSCR                  = NARC_manual_b_bg1_NSCR,
+  NARC_manual_bg2_NSCR                  = NARC_manual_b_bg2_NSCR,
+  NARC_manual_bg3_NSCR                  = NARC_manual_b_bg3_NSCR,
+  NARC_manual_obj_NCER                  = NARC_manual_b_obj_NCER,
+  NARC_manual_obj_NANR                  = NARC_manual_b_obj_NANR,
+  NARC_manual_manual_data_cate_dat      = NARC_manual_b_manual_data_cate_b_dat,
+  NARC_manual_manual_data_cate_ref_dat  = NARC_manual_b_manual_data_cate_ref_b_dat,
+  NARC_manual_manual_data_title_dat     = NARC_manual_b_manual_data_title_b_dat,
+  NARC_manual_manual_data_title_ref_dat = NARC_manual_b_manual_data_title_ref_b_dat,
+};
+
+// msg_manual_text_b.hとmanual_image_b.naixは
+// 定義名を使わずに直接番号を使っている。
+
+// message.naix
+enum
+{
+  NARC_message_manual_text_dat          = NARC_message_manual_text_b_dat,
+};
+
+#else
+
+// manual_w.naix
+enum
+{
+  NARC_manual_bg_NCLR                   = NARC_manual_w_bg_NCLR,
+  NARC_manual_obj_NCLR                  = NARC_manual_w_obj_NCLR,
+  NARC_manual_bg_NCGR                   = NARC_manual_w_bg_NCGR,
+  NARC_manual_obj_NCGR                  = NARC_manual_w_obj_NCGR,
+  NARC_manual_bg1_NSCR                  = NARC_manual_w_bg1_NSCR,
+  NARC_manual_bg2_NSCR                  = NARC_manual_w_bg2_NSCR,
+  NARC_manual_bg3_NSCR                  = NARC_manual_w_bg3_NSCR,
+  NARC_manual_obj_NCER                  = NARC_manual_w_obj_NCER,
+  NARC_manual_obj_NANR                  = NARC_manual_w_obj_NANR,
+  NARC_manual_manual_data_cate_dat      = NARC_manual_w_manual_data_cate_w_dat,
+  NARC_manual_manual_data_cate_ref_dat  = NARC_manual_w_manual_data_cate_ref_w_dat,
+  NARC_manual_manual_data_title_dat     = NARC_manual_w_manual_data_title_w_dat,
+  NARC_manual_manual_data_title_ref_dat = NARC_manual_w_manual_data_title_ref_w_dat,
+};
+
+// msg_manual_text_w.hとmanual_image_w.naixは
+// 定義名を使わずに直接番号を使っている。
+
+// message.naix
+enum
+{
+  NARC_message_manual_text_dat          = NARC_message_manual_text_w_dat,
+};
+
+#endif
 

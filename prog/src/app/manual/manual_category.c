@@ -30,9 +30,6 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_manual.h"
-#include "msg/msg_manual_text.h"
-#include "manual.naix"
-#include "manual_image.naix"
 
 
 // ƒTƒEƒ“ƒh

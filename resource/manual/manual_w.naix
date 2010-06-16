@@ -1,0 +1,30 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: manual_w.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MANUAL_W_NAIX_
+#define NARC_MANUAL_W_NAIX_
+
+enum {
+	NARC_manual_w_bg_NCLR = 0,
+	NARC_manual_w_obj_NCLR = 1,
+	NARC_manual_w_bg_NCGR = 2,
+	NARC_manual_w_obj_NCGR = 3,
+	NARC_manual_w_bg1_NSCR = 4,
+	NARC_manual_w_bg2_NSCR = 5,
+	NARC_manual_w_bg3_NSCR = 6,
+	NARC_manual_w_obj_NCER = 7,
+	NARC_manual_w_obj_NANR = 8,
+	NARC_manual_w_manual_data_cate_w_dat = 9,
+	NARC_manual_w_manual_data_cate_ref_w_dat = 10,
+	NARC_manual_w_manual_data_title_w_dat = 11,
+	NARC_manual_w_manual_data_title_ref_w_dat = 12
+};
+
+/* NARC_MANUAL_W_NAIX_ */
+#endif

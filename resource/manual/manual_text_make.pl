@@ -5,7 +5,8 @@
             他にもいろいろ生成する
      author Koji Kawada
      date   2010.05.12
-     note   perl manual_text_make.pl manual.xls
+     note   perl manual_text_make.pl manual.xls w
+     note   perl manual_text_make.pl manual.xls b 
 
      モジュール名：
 =cut 
@@ -151,6 +152,7 @@ use Encode;
 ##=============================================================================
 # 引数
 $manual_xls_file_name   = $ARGV[0];  # ????.xls  # shiftjis
+$manual_make_version    = $ARGV[1];  # w or b
 
 # ツール
 $excel_converter_file_name      = $ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";            # Excelコンバータ
@@ -170,18 +172,27 @@ $gmm_header_file_name   = "header.file";  # utf8
 $gmm_footer_file_name   = "footer.file";  # utf8
 
 # 出力ファイル
+# バージョン
+$manual_version_w  = "w";
+$manual_version_b  = "b";
+
 # gmm
-$manual_text_gmm_file_name   = "manual_text.gmm";    # utf8
+$manual_text_gmm_file_name       = "manual_text_";    # utf8
+$manual_text_gmm_file_name_ext   = ".gmm";            # manual_text_w.gmm or manual_text_b.gmm
 
 $manual_text_gmm_row_id_name_cate     = "man_txt_cate_no_";   # 例：man_txt_cate_no_002
 $manual_text_gmm_row_id_name_title    = "man_txt_title_no_";  # 例：man_txt_title_no_001_002
 $manual_text_gmm_row_id_name_explain  = "man_txt_page_no_";   # 例：man_txt_page_no_001_001_002
 
 # 画像ファイルのリスト
-$manual_image_src_list_file_name         = "manual_image_src.lst";   # 画像ファイルのリスト      # shiftjisでもutf8でも同じ
-$manual_image_conv_bat_file_name         = "manual_image_conv.bat";  # コンバートバッチファイル  # shiftjisでもutf8でも同じ
-$manual_image_comp_bat_file_name         = "manual_image_comp.bat";  # 圧縮バッチファイル        # shiftjisでもutf8でも同じ
-$manual_image_lz77_nbfs_list_file_name   = "manual_image.lst";       # 圧縮後のファイルのリスト  # shiftjisでもutf8でも同じ
+$manual_image_src_list_file_name             = "manual_image_src_";   # 画像ファイルのリスト      # shiftjisでもutf8でも同じ
+$manual_image_src_list_file_name_ext         = ".lst";                # manual_image_src_w.lst or manual_image_src_b.lst
+$manual_image_conv_bat_file_name             = "manual_image_conv_";  # コンバートバッチファイル  # shiftjisでもutf8でも同じ
+$manual_image_conv_bat_file_name_ext         = ".bat";                # manual_image_conv_w.bat or manual_image_conv_b.bat
+$manual_image_comp_bat_file_name             = "manual_image_comp_";  # 圧縮バッチファイル        # shiftjisでもutf8でも同じ
+$manual_image_comp_bat_file_name_ext         = ".bat";                # manual_image_comp_w.bat or manual_image_comp_b.bat
+$manual_image_lz77_nbfs_list_file_name       = "manual_image_";       # 圧縮後のファイルのリスト  # shiftjisでもutf8でも同じ
+$manual_image_lz77_nbfs_list_file_name_ext   = ".lst";                # manual_image_w.lst or manual_image_b.lst
 
 $manual_image_src_suffix            = ".bmp";
 $manual_image_nbfs_suffix           = ".nbfs";
@@ -217,6 +228,9 @@ $manual_reserve_open_flag_col_open_flag_enum   = 2;
 $manual_reserve_open_flag_enum_prefix       = "MANUAL_OPEN_FLAG_";
 $manual_reserve_open_flag_enum_file_name    = "manual_open_flag.h";  # shiftjisでもutf8でも同じ
 
+$manual_csv_reserve_version_w = "ホワイト";
+$manual_csv_reserve_version_b = "ブラック";
+
 
 # 限界値
 $manual_page_max_limit = 9;  # 9ページ(含む)までならOK
@@ -241,6 +255,7 @@ $manual_csv_image_label_name            = "image";
 $manual_csv_open_flag_label_name        = "open_flag";
 $manual_csv_read_flag_name_label_name   = "read_flag_name";
 $manual_csv_serial_no_label_name        = "serial_no";
+$manual_csv_version_label_name          = "version";
 
 $manual_csv_cate_no_col;
 $manual_csv_cate_name_hira_col;
@@ -256,6 +271,7 @@ $manual_csv_image_col;
 $manual_csv_open_flag_col;
 $manual_csv_read_flag_name_col;
 $manual_csv_serial_no_col;
+$manual_csv_version_col;
 
 # manual_cate
 $manual_cate_num;
@@ -310,17 +326,17 @@ $manual_explain_hash_cate_no_times       = 1000*1000;
 $manual_explain_hash_title_no_times      = 1000;
 %manual_explain_image_arc_id_hash_from_image = ();  # 同じ名前の画像ファイルは同じarc_idになるようにしておく
 
-# manual_invalid  # 初期化用の不正な値    # 正しい値
-$manual_invalid_cate_no           = 0;    # 1<=
-$manual_invalid_cate_name_hira    = "";   # 空でない
-$manual_invalid_cate_name_kanji   = "";   # 空でない
-$manual_invalid_title_no          = 0;    # 1<=
-$manual_invalid_title_name_hira   = "";   # 空でない
-$manual_invalid_title_name_kanji  = "";   # 空でない
-$manual_invalid_page_max          = 0;    # 1<=
-$manual_invalid_open_flag         = 256;  # <=255
-$manual_invalid_read_flag_name    = "";   # 空でない
-$manual_invalid_serial_no         = 0;    # 1<=
+# manual_invalid  # 初期化用の不正な値         # 正しい値
+$manual_invalid_cate_no           = 0;         # 1<=
+$manual_invalid_cate_name_hira    = "";        # 空でない
+$manual_invalid_cate_name_kanji   = "";        # 空でない
+$manual_invalid_title_no          = 0;         # 1<=
+$manual_invalid_title_name_hira   = "";        # 空でない
+$manual_invalid_title_name_kanji  = "";        # 空でない
+$manual_invalid_page_max          = 0;         # 1<=
+$manual_invalid_open_flag         = 256;       # <=255
+$manual_invalid_read_flag_name    = "";        # 空でない
+$manual_invalid_serial_no         = 0;         # 1<=
 
 # read_flag_csv_file_nameのラベル名と列番号(column)(0スタート)
 $read_flag_csv_read_flag_name_label_name   = "read_flag_name";
@@ -345,7 +361,8 @@ $read_flag_col_max              = 2;
 
 # 最終データ
 # 定義ファイル
-$manual_data_define_file_name  = "manual_data_def.h";       # shiftjisでもutf8でも同じ
+$manual_data_define_file_name      = "manual_data_def_";  # shiftjisでもutf8でも同じ
+$manual_data_define_file_name_ext  = ".h";                # manual_data_def_w.h or manual_data_def_b.h
 
 # 定数
 $manual_data_gmm_none_no       = 0xFFFF;                    # テキストなしなのでgmmファイル中のIDなし
@@ -354,29 +371,37 @@ $manual_data_image_none_no     = 0xFFFF;                    # 画像ファイル
 $manual_data_image_none_name   = "MANUAL_DATA_IMAGE_NONE";
 
 # 画像がないときに使用する画像のID
-$manual_no_image_arc_id; # 画像の1番最後に追加する(即ち画像の総数をIDとする)
+$manual_no_image_arc_id;  # 画像の1番最後に追加する(即ち画像の総数をIDとする)
 $manual_no_image_name          = "MANUAL_DATA_NO_IMAGE_ID";
 $manual_no_image_file_name     = "bg.bmp";
 
 # タイトルファイル
-$manual_data_title_file_name       = "manual_data_title.dat";        # リトルエンディアンのバイナリ
+$manual_data_title_file_name           = "manual_data_title_";        # リトルエンディアンのバイナリ
+$manual_data_title_file_name_ext       = ".dat";                      # manual_data_title_w.dat or manual_data_title_b.dat
 # タイトル開始場所ファイル
-$manual_data_title_ref_file_name   = "manual_data_title_ref.dat";    # リトルエンディアンのバイナリ
+$manual_data_title_ref_file_name       = "manual_data_title_ref_";    # リトルエンディアンのバイナリ
+$manual_data_title_ref_file_name_ext   = ".dat";                      # manual_data_title_ref_w.dat or manual_data_title_ref_b.dat
 # カテゴリファイル
-$manual_data_cate_file_name        = "manual_data_cate.dat";         # リトルエンディアンのバイナリ
+$manual_data_cate_file_name            = "manual_data_cate_";         # リトルエンディアンのバイナリ
+$manual_data_cate_file_name_ext        = ".dat";                      # manual_data_cate_w.dat or manual_data_cate_b.dat
 # カテゴリ開始場所ファイル
-$manual_data_cate_ref_file_name    = "manual_data_cate_ref.dat";     # リトルエンディアンのバイナリ
+$manual_data_cate_ref_file_name        = "manual_data_cate_ref_";     # リトルエンディアンのバイナリ
+$manual_data_cate_ref_file_name_ext    = ".dat";                      # manual_data_cate_ref_w.dat or manual_data_cate_ref_b.dat
 
 
 #if( $debug_out == 1 ) ↓
 # タイトルファイル
-$debug_manual_data_title_file_name       = "debug_manual_data_title.csv";      # shiftjisでもutf8でも同じ
+$debug_manual_data_title_file_name           = "debug_manual_data_title_";      # shiftjisでもutf8でも同じ
+$debug_manual_data_title_file_name_ext       = ".csv";                          # debug_manual_data_title_w.csv or debug_manual_data_title_b.csv
 # タイトル開始場所ファイル
-$debug_manual_data_title_ref_file_name   = "debug_manual_data_title_ref.csv";  # shiftjisでもutf8でも同じ
+$debug_manual_data_title_ref_file_name       = "debug_manual_data_title_ref_";  # shiftjisでもutf8でも同じ
+$debug_manual_data_title_ref_file_name_ext   = ".csv";                          # debug_manual_data_title_ref_w.csv or debug_manual_data_title_ref_b.csv
 # カテゴリファイル
-$debug_manual_data_cate_file_name        = "debug_manual_data_cate.csv";       # shiftjisでもutf8でも同じ
+$debug_manual_data_cate_file_name            = "debug_manual_data_cate_";       # shiftjisでもutf8でも同じ
+$debug_manual_data_cate_file_name_ext        = ".csv";                          # debug_manual_data_cate_w.csv or debug_manual_data_cate_b.csv
 # カテゴリ開始場所ファイル
-$debug_manual_data_cate_ref_file_name    = "debug_manual_data_cate_ref.csv";   # shiftjisでもutf8でも同じ
+$debug_manual_data_cate_ref_file_name        = "debug_manual_data_cate_ref_";   # shiftjisでもutf8でも同じ
+$debug_manual_data_cate_ref_file_name_ext    = ".csv";                          # debug_manual_data_cate_ref_w.csv or debug_manual_data_cate_ref_b.csv
 #if( $debug_out == 1 ) ↑
 
 
@@ -620,6 +645,7 @@ sub ReadManualCsvFile
   my $curr_open_flag         = $manual_invalid_open_flag;
   my $curr_read_flag_name    = $manual_invalid_read_flag_name;
   my $curr_serial_no         = $manual_invalid_serial_no;
+  # versionに関しては最後に書かれていた値は採用されず、毎行の値を確認する
 
 
   # 値に改行コードを含む CSV形式を扱う
@@ -713,6 +739,10 @@ sub ReadManualCsvFile
           {
             $manual_csv_serial_no_col = $col_no; 
           }
+          elsif( $word eq $manual_csv_version_label_name        )
+          {
+            $manual_csv_version_col = $col_no; 
+          }
         }
         $col_no++;
       }
@@ -727,6 +757,27 @@ sub ReadManualCsvFile
       }
       else
       {
+        # version
+        if( $manual_make_version eq $manual_version_w )  # ホワイト
+        {
+          if( $values[$manual_csv_version_col] ne "" && $values[$manual_csv_version_col] ne $manual_csv_reserve_version_w )
+          {
+            next;  # バージョン違いなので、この行は飛ばす
+          }
+        }
+        elsif( $manual_make_version eq $manual_version_b )  # ブラック
+        {
+          if( $values[$manual_csv_version_col] ne "" && $values[$manual_csv_version_col] ne $manual_csv_reserve_version_b )
+          {
+            next;  # バージョン違いなので、この行は飛ばす
+          }
+        }
+        else  # バージョン不明
+        {
+          die "manual_make_version \"$manual_make_version\" error, stopped";
+          next;
+        }
+
         # manual_cate
         if( $values[$manual_csv_cate_no_col] eq "" )
         {
@@ -1009,11 +1060,14 @@ sub CheckManualTbl
 ##=====================================
 sub WriteManualTextGmmFile
 {
+  my $manual_text_gmm_file_name_complete = &MakeFileNameWithVersion( $manual_text_gmm_file_name, $manual_text_gmm_file_name_ext );
+
+
   my $number_row_id = 0;
 
 
   # 出力ファイルをオープン
-  open( FH, ">:encoding(utf8)", $manual_text_gmm_file_name );
+  open( FH, ">:encoding(utf8)", $manual_text_gmm_file_name_complete );
 
 
   # header
@@ -1100,13 +1154,19 @@ sub WriteManualTextGmmRow
 ##=====================================
 sub WriteManualImageListFile
 {
+  my $manual_image_src_list_file_name_complete       = &MakeFileNameWithVersion( $manual_image_src_list_file_name,       $manual_image_src_list_file_name_ext );
+  my $manual_image_conv_bat_file_name_complete       = &MakeFileNameWithVersion( $manual_image_conv_bat_file_name,       $manual_image_conv_bat_file_name_ext );
+  my $manual_image_comp_bat_file_name_complete       = &MakeFileNameWithVersion( $manual_image_comp_bat_file_name,       $manual_image_comp_bat_file_name_ext );
+  my $manual_image_lz77_nbfs_list_file_name_complete = &MakeFileNameWithVersion( $manual_image_lz77_nbfs_list_file_name, $manual_image_lz77_nbfs_list_file_name_ext );
+
+
   my $number_image_id = 0;
 
   # 出力ファイルをオープン
-  open( FH_SRC,  ">:encoding(utf8)", $manual_image_src_list_file_name );
-  open( FH_CONV, ">:encoding(utf8)", $manual_image_conv_bat_file_name );
-  open( FH_COMP, ">:encoding(utf8)", $manual_image_comp_bat_file_name );
-  open( FH_LZ77, ">:encoding(utf8)", $manual_image_lz77_nbfs_list_file_name );
+  open( FH_SRC,  ">:encoding(utf8)", $manual_image_src_list_file_name_complete );
+  open( FH_CONV, ">:encoding(utf8)", $manual_image_conv_bat_file_name_complete );
+  open( FH_COMP, ">:encoding(utf8)", $manual_image_comp_bat_file_name_complete );
+  open( FH_LZ77, ">:encoding(utf8)", $manual_image_lz77_nbfs_list_file_name_complete );
 
   # manual_explain
   for( my $i=0; $i<$manual_explain_num; $i++ )
@@ -1241,8 +1301,11 @@ sub WriteDataFile
 
 sub WriteDataDefineFile
 {
+  my $manual_data_define_file_name_complete = &MakeFileNameWithVersion( $manual_data_define_file_name, $manual_data_define_file_name_ext );
+
+
   # 出力ファイルをオープン
-  open( FH,  ">:encoding(utf8)", $manual_data_define_file_name );
+  open( FH,  ">:encoding(utf8)", $manual_data_define_file_name_complete );
 
   printf FH "#define %s (%d)\r\n", $manual_data_gmm_none_name, $manual_data_gmm_none_no;
   printf FH "#define %s (%d)\r\n", $manual_data_image_none_name, $manual_data_image_none_no;
@@ -1254,21 +1317,33 @@ sub WriteDataDefineFile
 
 sub WriteDataTitleFile
 {
+  my $manual_data_title_file_name_complete     = &MakeFileNameWithVersion( $manual_data_title_file_name,     $manual_data_title_file_name_ext );
+  my $manual_data_title_ref_file_name_complete = &MakeFileNameWithVersion( $manual_data_title_ref_file_name, $manual_data_title_ref_file_name_ext );
+
+  my $debug_manual_data_title_file_name_complete;
+  my $debug_manual_data_title_ref_file_name_complete;
+  if( $debug_out == 1 )
+  {
+    $debug_manual_data_title_file_name_complete     = &MakeFileNameWithVersion( $debug_manual_data_title_file_name,     $debug_manual_data_title_file_name_ext );
+    $debug_manual_data_title_ref_file_name_complete = &MakeFileNameWithVersion( $debug_manual_data_title_ref_file_name, $debug_manual_data_title_ref_file_name_ext );
+  }
+
+
   my $title_byte = 0;
   my $title_data_idx = 0;
   my $buf;
 
   # 出力ファイルをオープン
-  open( FH_MAIN,  ">", $manual_data_title_file_name );  # タイトルファイル
-  open( FH_REF,  ">", $manual_data_title_ref_file_name );  # タイトル開始場所ファイル
+  open( FH_MAIN,  ">", $manual_data_title_file_name_complete );  # タイトルファイル
+  open( FH_REF,  ">", $manual_data_title_ref_file_name_complete );  # タイトル開始場所ファイル
 
   binmode FH_MAIN;
   binmode FH_REF;
 
   if( $debug_out == 1 )
   {
-    open( D_FH_MAIN,  ">:encoding(utf8)", $debug_manual_data_title_file_name );  # タイトルファイル
-    open( D_FH_REF,  ">:encoding(utf8)", $debug_manual_data_title_ref_file_name );  # タイトル開始場所ファイル
+    open( D_FH_MAIN,  ">:encoding(utf8)", $debug_manual_data_title_file_name_complete );  # タイトルファイル
+    open( D_FH_REF,  ">:encoding(utf8)", $debug_manual_data_title_ref_file_name_complete );  # タイトル開始場所ファイル
   }
 
   # タイトル開始場所ファイル
@@ -1433,20 +1508,32 @@ sub WriteDataTitleFile
 
 sub WriteDataCateFile
 {
+  my $manual_data_cate_file_name_complete     = &MakeFileNameWithVersion( $manual_data_cate_file_name,     $manual_data_cate_file_name_ext );
+  my $manual_data_cate_ref_file_name_complete = &MakeFileNameWithVersion( $manual_data_cate_ref_file_name, $manual_data_cate_ref_file_name_ext );
+
+  my $debug_manual_data_cate_file_name_complete;
+  my $debug_manual_data_cate_ref_file_name_complete;
+  if( $debug_out == 1 )
+  {
+    $debug_manual_data_cate_file_name_complete     = &MakeFileNameWithVersion( $debug_manual_data_cate_file_name,     $debug_manual_data_cate_file_name_ext );
+    $debug_manual_data_cate_ref_file_name_complete = &MakeFileNameWithVersion( $debug_manual_data_cate_ref_file_name, $debug_manual_data_cate_ref_file_name_ext );
+  }
+
+
   my $cate_byte = 0;
   my $buf;
 
   # 出力ファイルをオープン
-  open( FH_MAIN,  ">", $manual_data_cate_file_name );  # カテゴリファイル
-  open( FH_REF,  ">", $manual_data_cate_ref_file_name );  # カテゴリ開始場所ファイル
+  open( FH_MAIN,  ">", $manual_data_cate_file_name_complete );  # カテゴリファイル
+  open( FH_REF,  ">", $manual_data_cate_ref_file_name_complete );  # カテゴリ開始場所ファイル
 
   binmode FH_MAIN;
   binmode FH_REF;
 
   if( $debug_out == 1 )
   {
-    open( D_FH_MAIN,  ">:encoding(utf8)", $debug_manual_data_cate_file_name );  # カテゴリファイル
-    open( D_FH_REF,  ">:encoding(utf8)", $debug_manual_data_cate_ref_file_name );  # カテゴリ開始場所ファイル
+    open( D_FH_MAIN,  ">:encoding(utf8)", $debug_manual_data_cate_file_name_complete );  # カテゴリファイル
+    open( D_FH_REF,  ">:encoding(utf8)", $debug_manual_data_cate_ref_file_name_complete );  # カテゴリ開始場所ファイル
   }
 
   # カテゴリ開始場所ファイル
@@ -1548,5 +1635,26 @@ sub WriteDataCateFile
     close( D_FH_MAIN );
     close( D_FH_REF );
   }
+}
+
+##-------------------------------------
+### バージョン名付きの名前を得る
+##=====================================
+sub MakeFileNameWithVersion
+{
+  local( $file_name, $file_name_ext ) = @_;
+
+  my $file_name_complete;
+
+  if( $manual_make_version eq $manual_version_w )  # ホワイト
+  {
+    $file_name_complete = sprintf( "%s%s%s", $file_name, $manual_version_w, $file_name_ext );
+  }
+  else  # elsif( $manual_make_version eq $manual_version_b )  # ブラック
+  {
+    $file_name_complete = sprintf( "%s%s%s", $file_name, $manual_version_b, $file_name_ext );
+  }
+
+  return $file_name_complete;
 }
 

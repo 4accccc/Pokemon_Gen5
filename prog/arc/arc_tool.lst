@@ -285,7 +285,8 @@
   $DEBUG_YES ARCID_DEBUG_REGCARD  "debug_regulation_card.narc" # ポケモンバトルレギュレーションデータデジタル選手証
   ARCID_PROF_WORD  "prof_word.narc"   # 不正文字列アーカイブ
   ARCID_R04D03_GMK "fieldmap/r04d03_gmk.narc" # R04D03ギミックアーカイブ
-  ARCID_MANUAL "manual.narc" # ゲーム内マニュアルのグラフィックデータ
+  $VERSION_WHITE  ARCID_MANUAL "manual_w.narc" # ゲーム内マニュアルのグラフィックデータ
+  $VERSION_BLACK  ARCID_MANUAL "manual_b.narc" # ゲーム内マニュアルのグラフィックデータ
   ARCID_PALACE_PALETTE "palace_palette.narc" # パレスのグレースケール用テーブル
   ARCID_GF_LOGO_MOVIE   "gf_logo_movie.narc" # ゲームフリークロゴムービー
   ARCID_OP_DEMO2_MOVIE  "op_demo2.narc" # オープニングムービー２
@@ -293,6 +294,7 @@
   ARCID_T01_GMK "fieldmap/t01_gmk.narc" # T01ギミックアーカイブ
   ARCID_BMODEL_OUTDOOR_AREA  "fieldmap/buildmodel_outdoor_area.narc"  #配置モデルエリアデータ（屋外）
   ARCID_BMODEL_INDOOR_AREA   "fieldmap/buildmodel_indoor_area.narc" #配置モデルエリアデータ（屋内）
-  ARCID_MANUAL_IMAGE "manual_image.narc" # ゲーム内マニュアルの説明画像データ
+  $VERSION_WHITE  ARCID_MANUAL_IMAGE "manual_image_w.narc" # ゲーム内マニュアルの説明画像データ
+  $VERSION_BLACK  ARCID_MANUAL_IMAGE "manual_image_b.narc" # ゲーム内マニュアルの説明画像データ
   $DEBUG_YES ARCID_DEBUG_HITCH_CHECK "debug/hitch_check.narc"  #当たり判定チェック（デバッグ用）
   $DEBUG_YES ARCID_DEBUG_MESSAGE  "debug_message.narc"  #デバッグ用メッセージデータ

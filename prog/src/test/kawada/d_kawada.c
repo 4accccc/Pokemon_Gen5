@@ -1258,8 +1258,11 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
     //monsno_before = MONSNO_PIZYON;//MONSNO_KAMEERU;
     //monsno_after  = MONSNO_PIZYOTTO;//MONSNO_RIZAADON;
     
-    monsno_before = MONSNO_IIBUI;
-    monsno_after  = MONSNO_BURAKKII;
+    //monsno_before = MONSNO_IIBUI;
+    //monsno_after  = MONSNO_BURAKKII;
+    
+    monsno_before = MONSNO_ZUBATTO;
+    monsno_after  = MONSNO_PIZYON;
   }
 
   ZONEDATA_Open( wk->heapID );
