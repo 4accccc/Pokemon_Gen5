@@ -188,7 +188,6 @@ _RET
 //----------------------------------------------------------------------
 // ■シーケンス
 // RES_REQ_REPORT ◆調査結果を報告シーケンス
-// RES_REQ_CANCEL ◆依頼キャンセルシーケンス
 //----------------------------------------------------------------------
 // layer 4
 //----------------------------------------------------------------------
@@ -353,13 +352,12 @@ RECEIVE_REQUEST:
   // 依頼を受けている
   IF $SCWK_ANSWER == TRUE THEN
     _CALL LEADER_SAY_Do_you_cancel_request // 隊長「キャンセルするか？」⇒『はい』or『いいえ』
-    //『いいえ』
-    IF $SCWK_ANSWER == SCR_NO THEN 
+    IF $SCWK_ANSWER == SCR_NO THEN //『いいえ』
       _CALL LEADER_SAY_Continue_research // 隊長「では引き続き, 調査を続けてくれ」
-      _RET
+    ELSE //『はい』
+      _CALL LEADER_SAY_Come_again_if_you_want_2 // 隊長「依頼を受けたくなったら, また来てくれ！」
+      _FINISH_RESEARCH()                        // 調査終了
     ENDIF
-
-    _CALL RES_REQ_CANCEL // キャンセル処理
 
   // 依頼を受けていない
   ELSE
@@ -398,13 +396,13 @@ REPORT_REQUEST:
       $SCWK_TEMP0 = $v7_2                // 隊長「まだ調査が終わっていないぞ？」⇒『はい』or『いいえ』
       _CALL LEADER_SAY_You_dont_archieve //
 
-      //『いいえ』
-      IF $SCWK_ANSWER == SCR_NO THEN 
+      IF $SCWK_ANSWER == SCR_NO THEN //『いいえ』
         _CALL LEADER_SAY_Continue_research // 隊長「では引き続き, 調査を続けてくれ」
-        _RET
+      ELSE //『はい』
+        _CALL LEADER_SAY_Come_again_if_you_want_2 // 隊長「依頼を受けたくなったら, また来てくれ！」
+        _FINISH_RESEARCH()                        // 調査終了
       ENDIF
 
-      _CALL RES_REQ_CANCEL // キャンセル処理
     ENDIF
   ENDIF
 }
@@ -547,32 +545,6 @@ RES_REQ_REPORT:
     // 隊長「次の調査も期待しているぞ！」
     _CALL LEADER_SAY_Lets_next_research
   ENDIF
-}
-_RET
-
-//----------------------------------------------------------------------
-// ◆受けている依頼をキャンセルする
-//----------------------------------------------------------------------
-RES_REQ_CANCEL:
-{
-  //「キャンセルして　いいのか？」
-  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_10, SCWK_TARGET_OBJID, POS_DOWN ) 
-
-  //『はい』『いいえ』選択
-  $SCWK_TEMP0 = SCR_NO
-  _CALL YES_NO_WIN_EX
-
-  // 吹出しを閉じる
-  //_BALLOONWIN_CLOSE()        
-
-  //『はい』を選択
-  IF $SCWK_ANSWER == SCR_YES THEN 
-    _CALL LEADER_SAY_Come_again_if_you_want_2 // 隊長「依頼を受けたくなったら, また来てくれ！」
-    _FINISH_RESEARCH()                        // 調査終了
-    _RET
-  ENDIF
-
-  _CALL LEADER_SAY_Continue_research // 隊長「では引き続き, 調査を続けてくれ」
 }
 _RET
 
