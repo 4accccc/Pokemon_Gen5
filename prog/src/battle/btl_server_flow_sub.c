@@ -1094,7 +1094,6 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   {
     // シューターのかっこいい演出
     if( targetPos != BTL_POS_NULL ){
-      TAYA_Printf("この時点でpos=%d\n", targetPos);
       SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_SHOOTER_EFFECT );
     }
 

@@ -386,8 +386,8 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_BallThrowTrainer( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACTOP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACTOP_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectSimple( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
@@ -5373,97 +5373,97 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     u32       cmd;
     ServerCmdProc proc;
   }scprocTbl[] = {
-    { SC_MSG_STD,               scProc_MSG_Std            },
-    { SC_MSG_STD_SE,            scProc_MSG_StdSE          },
-    { SC_MSG_SET,               scProc_MSG_Set            },
-    { SC_MSG_WAZA,              scProc_MSG_Waza           },
-    { SC_ACT_WAZA_EFFECT,       scProc_ACT_WazaEffect     },
-    { SC_ACT_TAMEWAZA_HIDE,     scProc_ACT_TameWazaHide   },
-    { SC_ACT_WAZA_DMG,          scProc_ACT_WazaDmg        },
-    { SC_ACT_WAZA_DMG_PLURAL,   scProc_ACT_WazaDmg_Plural },
-    { SC_ACT_WAZA_ICHIGEKI,     scProc_ACT_WazaIchigeki   },
-    { SC_ACT_SICK_ICON,         scProc_ACT_SickIcon       },
-    { SC_ACT_CONF_DMG,          scProc_ACT_ConfDamage     },
-    { SC_ACT_DEAD,              scProc_ACT_Dead           },
-    { SC_ACT_RELIVE,            scProc_ACT_Relive         },
-    { SC_ACT_MEMBER_OUT_MSG,    scProc_ACT_MemberOutMsg   },
-    { SC_ACT_MEMBER_OUT,        scProc_ACT_MemberOut      },
-    { SC_ACT_MEMBER_IN,         scProc_ACT_MemberIn       },
-    { SC_ACT_RANKUP,            scProc_ACT_RankUp         },
-    { SC_ACT_RANKDOWN,          scProc_ACT_RankDown       },
-    { SC_ACT_WEATHER_DMG,       scProc_ACT_WeatherDmg     },
-    { SC_ACT_WEATHER_START,     scProc_ACT_WeatherStart   },
-    { SC_ACT_WEATHER_END,       scProc_ACT_WeatherEnd     },
-    { SC_ACT_SIMPLE_HP,         scProc_ACT_SimpleHP       },
-    { SC_ACT_KINOMI,            scProc_ACT_Kinomi         },
-    { SC_TOKWIN_IN,             scProc_TOKWIN_In          },
-    { SC_TOKWIN_OUT,            scProc_TOKWIN_Out         },
-    { SC_OP_HP_MINUS,           scProc_OP_HpMinus         },
-    { SC_OP_HP_PLUS,            scProc_OP_HpPlus          },
-    { SC_OP_HP_ZERO,            scProc_OP_HpZero          },
-    { SC_OP_PP_MINUS,           scProc_OP_PPMinus         },
-    { SC_OP_PP_MINUS_ORG,       scProc_OP_PPMinus_Org     },
-    { SC_OP_WAZA_USED,          scProc_OP_WazaUsed        },
-    { SC_OP_PP_PLUS,            scProc_OP_PPPlus          },
-    { SC_OP_PP_PLUS_ORG,        scProc_OP_PPPlus_Org      },
-    { SC_OP_RANK_UP,            scProc_OP_RankUp          },
-    { SC_OP_RANK_DOWN,          scProc_OP_RankDown        },
-    { SC_OP_RANK_SET7,          scProc_OP_RankSet7        },
-    { SC_OP_RANK_RECOVER,       scProc_OP_RankRecover     },
-    { SC_OP_RANK_RESET,         scProc_OP_RankReset       },
-    { SC_OP_ADD_CRITICAL,       scProc_OP_AddCritical     },
-    { SC_OP_SICK_SET,           scProc_OP_SickSet         },
-    { SC_OP_CURE_POKESICK,      scProc_OP_CurePokeSick    },
-    { SC_OP_CURE_WAZASICK,      scProc_OP_CureWazaSick    },
-    { SC_OP_MEMBER_IN,          scProc_OP_MemberIn        },
-    { SC_OP_SET_STATUS,         scProc_OP_SetStatus       },
-    { SC_OP_SET_WEIGHT,         scProc_OP_SetWeight       },
-    { SC_OP_CHANGE_POKETYPE,    scProc_OP_ChangePokeType  },
-    { SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck     },
-    { SC_OP_CONSUME_ITEM,       scProc_OP_ConsumeItem     },
-    { SC_OP_UPDATE_USE_WAZA,    scProc_OP_UpdateUseWaza   },
-    { SC_OP_SET_CONTFLAG,       scProc_OP_SetContFlag     },
-    { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
-    { SC_OP_SET_TURNFLAG,       scProc_OP_SetTurnFlag     },
-    { SC_OP_RESET_TURNFLAG,     scProc_OP_ResetTurnFlag   },
-    { SC_OP_CHANGE_TOKUSEI,     scProc_OP_ChangeTokusei   },
-    { SC_OP_SET_ITEM,           scProc_OP_SetItem         },
-    { SC_OP_UPDATE_WAZANUMBER,  scProc_OP_UpdateWazaNumber},
-    { SC_OP_OUTCLEAR,           scProc_OP_OutClear        },
-    { SC_OP_ADD_FLDEFF,         scProc_OP_AddFldEff       },
-    { SC_OP_ADD_FLDEFF_DEPEND,  scProc_OP_AddFldEffDepend },
-    { SC_OP_DEL_FLDEFF_DEPEND,  scProc_OP_DelFldEffDepend },
-    { SC_OP_REMOVE_FLDEFF,      scProc_OP_RemoveFldEff    },
-    { SC_OP_SET_POKE_COUNTER,   scProc_OP_SetPokeCounter  },
-    { SC_OP_BATONTOUCH,         scProc_OP_BatonTouch      },
-    { SC_OP_MIGAWARI_CREATE,    scProc_OP_MigawariCreate  },
-    { SC_OP_MIGAWARI_DELETE,    scProc_OP_MigawariDelete  },
-    { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
-    { SC_OP_SET_ILLUSION,       scProc_OP_SetFakeSrc      },
-    { SC_OP_CLEAR_CONSUMED_ITEM,scProc_OP_ClearConsumedItem },
-    { SC_OP_CURESICK_DEPEND_POKE,scProc_OP_CureSickDependPoke},
-    { SC_OP_WAZADMG_REC,        scProc_OP_AddWazaDamage   },
-    { SC_OP_TURN_CHECK,         scProc_OP_TurnCheck       },
-    { SC_ACT_KILL,              scProc_ACT_Kill           },
-    { SC_ACT_MOVE,              scProc_ACT_Move           },
-    { SC_ACT_EXP,               scProc_ACT_Exp            },
-    { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow      },
-    { SC_ACT_BALL_THROW_TR,     scProc_ACT_BallThrowTrainer },
-    { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
-    { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
-    { SC_ACT_SWAP_TOKUSEI,      scProc_ACT_SwapTokusei    },
-    { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
-    { SC_ACT_EFFECT_SIMPLE,     scProc_ACT_EffectSimple   },
-    { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos    },
-    { SC_ACT_EFFECT_BYVECTOR,   scProc_ACT_EffectByVector },
-    { SC_ACT_CHANGE_FORM,       scProc_ACT_ChangeForm     },
-    { SC_ACT_RESET_MOVE,        scProc_ACT_ResetMove      },
-    { SC_ACT_MIGAWARI_CREATE,   scProc_ACT_MigawariCreate },
-    { SC_ACT_MIGAWARI_DELETE,   scProc_ACT_MigawariDelete },
-    { SC_ACT_HENSIN,            scProc_ACT_Hensin         },
-    { SC_ACT_MIGAWARI_DAMAGE,   scProc_ACT_MigawariDamage },
-    { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM        },
-    { SC_ACT_MSGWIN_HIDE,       scProc_ACT_MsgWinHide     },
+    { SC_MSG_STD,               scProc_MSG_Std                 },
+    { SC_MSG_STD_SE,            scProc_MSG_StdSE               },
+    { SC_MSG_SET,               scProc_MSG_Set                 },
+    { SC_MSG_WAZA,              scProc_MSG_Waza                },
+    { SC_ACT_WAZA_EFFECT,       scProc_ACT_WazaEffect          },
+    { SC_ACT_TAMEWAZA_HIDE,     scProc_ACT_TameWazaHide        },
+    { SC_ACT_WAZA_DMG,          scProc_ACT_WazaDmg             },
+    { SC_ACT_WAZA_DMG_PLURAL,   scProc_ACT_WazaDmg_Plural      },
+    { SC_ACT_WAZA_ICHIGEKI,     scProc_ACT_WazaIchigeki        },
+    { SC_ACT_SICK_ICON,         scProc_ACT_SickIcon            },
+    { SC_ACT_CONF_DMG,          scProc_ACT_ConfDamage          },
+    { SC_ACT_DEAD,              scProc_ACT_Dead                },
+    { SC_ACT_RELIVE,            scProc_ACT_Relive              },
+    { SC_ACT_MEMBER_OUT_MSG,    scProc_ACT_MemberOutMsg        },
+    { SC_ACT_MEMBER_OUT,        scProc_ACT_MemberOut           },
+    { SC_ACT_MEMBER_IN,         scProc_ACT_MemberIn            },
+    { SC_ACT_RANKUP,            scProc_ACT_RankUp              },
+    { SC_ACT_RANKDOWN,          scProc_ACT_RankDown            },
+    { SC_ACT_WEATHER_DMG,       scProc_ACT_WeatherDmg          },
+    { SC_ACT_WEATHER_START,     scProc_ACT_WeatherStart        },
+    { SC_ACT_WEATHER_END,       scProc_ACT_WeatherEnd          },
+    { SC_ACT_SIMPLE_HP,         scProc_ACT_SimpleHP            },
+    { SC_ACT_KINOMI,            scProc_ACT_Kinomi              },
+    { SC_TOKWIN_IN,             scProc_TOKWIN_In               },
+    { SC_TOKWIN_OUT,            scProc_TOKWIN_Out              },
+    { SC_OP_HP_MINUS,           scProc_OP_HpMinus              },
+    { SC_OP_HP_PLUS,            scProc_OP_HpPlus               },
+    { SC_OP_HP_ZERO,            scProc_OP_HpZero               },
+    { SC_OP_PP_MINUS,           scProc_OP_PPMinus              },
+    { SC_OP_PP_MINUS_ORG,       scProc_OP_PPMinus_Org          },
+    { SC_OP_WAZA_USED,          scProc_OP_WazaUsed             },
+    { SC_OP_PP_PLUS,            scProc_OP_PPPlus               },
+    { SC_OP_PP_PLUS_ORG,        scProc_OP_PPPlus_Org           },
+    { SC_OP_RANK_UP,            scProc_OP_RankUp               },
+    { SC_OP_RANK_DOWN,          scProc_OP_RankDown             },
+    { SC_OP_RANK_SET7,          scProc_OP_RankSet7             },
+    { SC_OP_RANK_RECOVER,       scProc_OP_RankRecover          },
+    { SC_OP_RANK_RESET,         scProc_OP_RankReset            },
+    { SC_OP_ADD_CRITICAL,       scProc_OP_AddCritical          },
+    { SC_OP_SICK_SET,           scProc_OP_SickSet              },
+    { SC_OP_CURE_POKESICK,      scProc_OP_CurePokeSick         },
+    { SC_OP_CURE_WAZASICK,      scProc_OP_CureWazaSick         },
+    { SC_OP_MEMBER_IN,          scProc_OP_MemberIn             },
+    { SC_OP_SET_STATUS,         scProc_OP_SetStatus            },
+    { SC_OP_SET_WEIGHT,         scProc_OP_SetWeight            },
+    { SC_OP_CHANGE_POKETYPE,    scProc_OP_ChangePokeType       },
+    { SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck          },
+    { SC_OP_CONSUME_ITEM,       scProc_OP_ConsumeItem          },
+    { SC_OP_UPDATE_USE_WAZA,    scProc_OP_UpdateUseWaza        },
+    { SC_OP_SET_CONTFLAG,       scProc_OP_SetContFlag          },
+    { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag        },
+    { SC_OP_SET_TURNFLAG,       scProc_OP_SetTurnFlag          },
+    { SC_OP_RESET_TURNFLAG,     scProc_OP_ResetTurnFlag        },
+    { SC_OP_CHANGE_TOKUSEI,     scProc_OP_ChangeTokusei        },
+    { SC_OP_SET_ITEM,           scProc_OP_SetItem              },
+    { SC_OP_UPDATE_WAZANUMBER,  scProc_OP_UpdateWazaNumber     },
+    { SC_OP_OUTCLEAR,           scProc_OP_OutClear             },
+    { SC_OP_ADD_FLDEFF,         scProc_OP_AddFldEff            },
+    { SC_OP_ADD_FLDEFF_DEPEND,  scProc_OP_AddFldEffDepend      },
+    { SC_OP_DEL_FLDEFF_DEPEND,  scProc_OP_DelFldEffDepend      },
+    { SC_OP_REMOVE_FLDEFF,      scProc_OP_RemoveFldEff         },
+    { SC_OP_SET_POKE_COUNTER,   scProc_OP_SetPokeCounter       },
+    { SC_OP_BATONTOUCH,         scProc_OP_BatonTouch           },
+    { SC_OP_MIGAWARI_CREATE,    scProc_OP_MigawariCreate       },
+    { SC_OP_MIGAWARI_DELETE,    scProc_OP_MigawariDelete       },
+    { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge        },
+    { SC_OP_SET_ILLUSION,       scProc_OP_SetFakeSrc           },
+    { SC_OP_CLEAR_CONSUMED_ITEM,scProc_OP_ClearConsumedItem    },
+    { SC_OP_CURESICK_DEPEND_POKE,scProc_OP_CureSickDependPoke  },
+    { SC_OP_WAZADMG_REC,        scProc_OP_AddWazaDamage        },
+    { SC_OP_TURN_CHECK,         scProc_OP_TurnCheck            },
+    { SC_ACT_KILL,              scProc_ACT_Kill                },
+    { SC_ACT_MOVE,              scProc_ACT_Move                },
+    { SC_ACT_EXP,               scProc_ACT_Exp                 },
+    { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow           },
+    { SC_ACT_BALL_THROW_TR,     scProc_ACT_BallThrowTrainer    },
+    { SC_ACT_ROTATION,          scProc_ACT_Rotation            },
+    { SC_ACTOP_CHANGE_TOKUSEI,  scProc_ACTOP_ChangeTokusei     },
+    { SC_ACTOP_SWAP_TOKUSEI,    scProc_ACTOP_SwapTokusei       },
+    { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable         },
+    { SC_ACT_EFFECT_SIMPLE,     scProc_ACT_EffectSimple        },
+    { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos         },
+    { SC_ACT_EFFECT_BYVECTOR,   scProc_ACT_EffectByVector      },
+    { SC_ACT_CHANGE_FORM,       scProc_ACT_ChangeForm          },
+    { SC_ACT_RESET_MOVE,        scProc_ACT_ResetMove           },
+    { SC_ACT_MIGAWARI_CREATE,   scProc_ACT_MigawariCreate      },
+    { SC_ACT_MIGAWARI_DELETE,   scProc_ACT_MigawariDelete      },
+    { SC_ACT_HENSIN,            scProc_ACT_Hensin              },
+    { SC_ACT_MIGAWARI_DAMAGE,   scProc_ACT_MigawariDamage      },
+    { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM             },
+    { SC_ACT_MSGWIN_HIDE,       scProc_ACT_MsgWinHide          },
   };
 
 restart:
@@ -6021,8 +6021,6 @@ static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args )
   {
     BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
 
-//    BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos), wazaID );
-
     BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
     (*seq)++;
   }
@@ -6212,15 +6210,18 @@ static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args )
       u16 msgID;
       u8 pokeID, pokePos, i;
 
-      switch( weather ){
-      case BTL_WEATHER_SAND:
-        BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_SandAttack, NULL );
-        break;
-      case BTL_WEATHER_SNOW:
-        BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_SnowAttack, NULL );
-        break;
-      default:
-        break;
+      if( !BTL_CLIENT_IsChapterSkipMode(wk) )
+      {
+        switch( weather ){
+        case BTL_WEATHER_SAND:
+          BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_SandAttack, NULL );
+          break;
+        case BTL_WEATHER_SNOW:
+          BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_SnowAttack, NULL );
+          break;
+        default:
+          break;
+        }
       }
 
       for(i=0; i<pokeCnt; ++i)
@@ -6337,7 +6338,6 @@ static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      TAYA_Printf("PokeID=%d, Pos=%d\n", args[0], pos);
       BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
       (*seq)++;
     }
@@ -7292,13 +7292,19 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
  *  args .. [0]:対象のポケモンID [1]:書き換え後のとくせい
  */
 //---------------------------------------------------------------------------------------
-static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACTOP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 {
   u8 pokeID = args[0];
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
 
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+      BPP_ChangeTokusei( bpp, args[1] );
+      return TRUE;
+    }
+    else
     {
       BTLV_TokWin_DispStart( wk->viewCore, pos, FALSE );
       (*seq)++;
@@ -7329,7 +7335,7 @@ static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args 
  *  とくせい入れ替え演出  args [0]:pokeID_1, [1]:pokeID_2 [2]:tokID_1, [3]:tokID_2
  */
 //---------------------------------------------------------------------------------------
-static BOOL scProc_ACT_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACTOP_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 {
   // 現状、描画側未実装、未使用。
   // 本来はbpp書き換え処理もここで行わないと難しい。
@@ -7343,12 +7349,23 @@ static BOOL scProc_ACT_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args )
   BtlPokePos pos1 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, poke1_ID );
   BtlPokePos pos2 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, poke2_ID );
 
+  BTL_POKEPARAM* bpp1 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke1_ID );
+  BTL_POKEPARAM* bpp2 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke2_ID );
+
+
   switch( (*seq) ){
   case 0:
+    // チャプタスキップ時はデータ書き換えのみ
+    if( BTL_CLIENT_IsChapterSkipMode(wk) )
+    {
+      BPP_ChangeTokusei( bpp1, poke1_nextTokID );
+      BPP_ChangeTokusei( bpp2, poke2_nextTokID );
+      return TRUE;
+    }
+
+    // 味方同士なら演出なし
     if( BTL_MAINUTIL_IsFriendPokeID(poke1_ID, poke2_ID) )
     {
-      BTL_POKEPARAM* bpp1 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke1_ID );
-      BTL_POKEPARAM* bpp2 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke2_ID );
       BPP_ChangeTokusei( bpp1, poke1_nextTokID );
       BPP_ChangeTokusei( bpp2, poke2_nextTokID );
       return TRUE;
@@ -7383,8 +7400,6 @@ static BOOL scProc_ACT_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 
   case 3:
     {
-      BTL_POKEPARAM* bpp1 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke1_ID );
-      BTL_POKEPARAM* bpp2 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke2_ID );
       BPP_ChangeTokusei( bpp1, poke1_nextTokID );
       BPP_ChangeTokusei( bpp2, poke2_nextTokID );
       timer = 0;

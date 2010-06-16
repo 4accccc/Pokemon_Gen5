@@ -290,7 +290,6 @@ typedef enum {
   BTL_HANDEX_USE_ITEM_EFFECT,     ///< アイテム使用エフェクトのみ実行
   BTL_HANDEX_TOKWIN_IN,           ///< とくせいウィンドウイン
   BTL_HANDEX_TOKWIN_OUT,          ///< とくせいウィンドウアウト
-  BTL_HANDEX_ITEM_EFFECT,         ///< アイテム発動エフェクト
   BTL_HANDEX_MESSAGE,             ///< メッセージ表示
   BTL_HANDEX_RECOVER_HP,          ///< HP回復
   BTL_HANDEX_DRAIN,               ///< HP回復（ドレイン系）

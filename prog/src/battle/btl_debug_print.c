@@ -500,8 +500,8 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_EXP:  return "SC_ACT_EXP";               ///< 経験値取得
   case SC_ACT_BALL_THROW:  return "SC_ACT_BALL_THROW";        ///< ボール投げ
   case SC_ACT_ROTATION:  return "SC_ACT_ROTATION";          ///< ローテーション
-  case SC_ACT_CHANGE_TOKUSEI:  return "SC_ACT_CHANGE_TOKUSEI";    ///< とくせい変更
-  case SC_ACT_SWAP_TOKUSEI:  return "SC_ACT_SWAP_TOKUSEI";            ///< とくせいスワップ
+  case SC_ACTOP_CHANGE_TOKUSEI:  return "SC_ACTOP_CHANGE_TOKUSEI";    ///< とくせい変更
+  case SC_ACTOP_SWAP_TOKUSEI:  return "SC_ACTOP_SWAP_TOKUSEI";            ///< とくせいスワップ
   case SC_ACT_FAKE_DISABLE:  return "SC_ACT_FAKE_DISABLE";      ///< イリュージョン解除
   case SC_ACT_EFFECT_BYPOS:  return "SC_ACT_EFFECT_BYPOS";      ///< 指定位置にエフェクト発動
   case SC_ACT_EFFECT_BYVECTOR:  return "SC_ACT_EFFECT_BYVECTOR";   ///< 指定発動位置＆終点位置でエフェクト発動

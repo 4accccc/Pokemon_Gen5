@@ -99,8 +99,8 @@ typedef enum {
   SC_ACT_BALL_THROW,        ///< ボール投げ
   SC_ACT_BALL_THROW_TR,     ///< ボール投げ（トレーナー戦）
   SC_ACT_ROTATION,          ///< ローテーション
-  SC_ACT_CHANGE_TOKUSEI,    ///< とくせい変更
-  SC_ACT_SWAP_TOKUSEI,      ///< とくせいスワップ
+  SC_ACTOP_CHANGE_TOKUSEI,  ///< とくせい変更
+  SC_ACTOP_SWAP_TOKUSEI,    ///< とくせいスワップ
   SC_ACT_FAKE_DISABLE,      ///< イリュージョン解除
   SC_ACT_EFFECT_SIMPLE,     ///< エフェクト発動（パラメータ指定なし）
   SC_ACT_EFFECT_BYPOS,      ///< 指定位置にエフェクト発動
@@ -520,13 +520,13 @@ static inline void SCQUE_PUT_ACT_Rotation( BTL_SERVER_CMD_QUE* que, u8 clientID,
 {
   SCQUE_PUT_Common( que, SC_ACT_ROTATION, clientID, dir );
 }
-static inline void SCQUE_PUT_ACT_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 tokuseiID )
+static inline void SCQUE_PUT_ACTOP_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 tokuseiID )
 {
-  SCQUE_PUT_Common( que, SC_ACT_CHANGE_TOKUSEI, pokeID, tokuseiID );
+  SCQUE_PUT_Common( que, SC_ACTOP_CHANGE_TOKUSEI, pokeID, tokuseiID );
 }
-static inline void SCQUE_PUT_ACT_SwapTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID_1, u8 pokeID_2, u16 tokID_1, u16 tokID_2 )
+static inline void SCQUE_PUT_ACTOP_SwapTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID_1, u8 pokeID_2, u16 tokID_1, u16 tokID_2 )
 {
-  SCQUE_PUT_Common( que, SC_ACT_SWAP_TOKUSEI, pokeID_1, pokeID_2, tokID_1, tokID_2 );
+  SCQUE_PUT_Common( que, SC_ACTOP_SWAP_TOKUSEI, pokeID_1, pokeID_2, tokID_1, tokID_2 );
 }
 static inline void SCQUE_PUT_ACT_FakeDisable( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {

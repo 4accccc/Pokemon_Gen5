@@ -8245,7 +8245,7 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
 
     wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
 
-    SCQUE_PUT_ACT_SwapTokusei( wk->que, atkPokeID, tgtPokeID, tgt_tok, atk_tok );
+    SCQUE_PUT_ACTOP_SwapTokusei( wk->que, atkPokeID, tgtPokeID, tgt_tok, atk_tok );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_SkillSwap, atkPokeID );
 
     {
@@ -13441,7 +13441,6 @@ static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_hea
   case BTL_HANDEX_USE_ITEM_EFFECT:    fPrevSucceed = scproc_HandEx_UseItemAct( wk, handEx_header ); break;
   case BTL_HANDEX_TOKWIN_IN:          fPrevSucceed = scproc_HandEx_TokWinIn( wk, handEx_header ); break;
   case BTL_HANDEX_TOKWIN_OUT:         fPrevSucceed = scproc_HandEx_TokWinOut( wk, handEx_header ); break;
-  case BTL_HANDEX_ITEM_EFFECT:        fPrevSucceed = scproc_HandEx_ItemEffect( wk, handEx_header ); break;
   case BTL_HANDEX_USE_ITEM:           fPrevSucceed = scproc_HandEx_useItem( wk, handEx_header ); break;
   case BTL_HANDEX_RECOVER_HP:         fPrevSucceed = scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
   case BTL_HANDEX_DRAIN:              fPrevSucceed = scproc_HandEx_drain( wk, handEx_header, useItemID ); break;
@@ -13544,20 +13543,6 @@ static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   {
     BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
     scPut_TokWin_Out( wk, pp_user );
-    return 1;
-  }
-  return 0;
-}
-/**
- * 装備アイテム使用エフェクト
- * @return 成功時 1 / 失敗時 0
- */
-static u8 scproc_HandEx_ItemEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  BtlPokePos  pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param_header->userPokeID );
-  if( pos != BTL_POS_NULL )
-  {
-    SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_USE_ITEM );
     return 1;
   }
   return 0;
@@ -14312,7 +14297,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
       SCQUE_PUT_TOKWIN_IN( wk->que, param_header->userPokeID );
     }
 
-    SCQUE_PUT_ACT_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+    SCQUE_PUT_ACTOP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
     handexSub_putString( wk, &param->exStr );
 
     // とくせい書き換え直前イベント
