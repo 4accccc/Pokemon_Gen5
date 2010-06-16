@@ -11451,7 +11451,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		camera_area_dummy, // camera_area
+		MATRIX_ID_H01, // camera_area
 		0, // padding
 		5,
 		0,
