@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-14T19:40:51"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-16T16:18:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1209,10 +1209,10 @@
 ミホ</attribute>
 		<language name="JPN" width="256">ミホ『かわいい　ワタシと
 かわいい　ポケモン▽
-わたしたちに　かてるかしら？▼</language>
+ワタシたちに　かてるかしら？▼</language>
 		<language name="JPN_KANJI" width="256">ミホ『かわいい　ワタシと
 かわいい　ポケモン▽
-わたしたちに　勝てるかしら？▼</language>
+ワタシたちに　勝てるかしら？▼</language>
 	</row>
 
 	<row id="bc10_20_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
