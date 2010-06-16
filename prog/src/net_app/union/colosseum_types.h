@@ -86,7 +86,9 @@ typedef struct _COLOSSEUM_SYSTEM{
   COMM_PLAYER_PACKAGE send_mine_package;    ///<自分座標送信バッファ
 
   COLOSSEUM_BASIC_STATUS basic_status[COLOSSEUM_MEMBER_MAX];  ///<各プレイヤーの基本情報
-  u8 comm_ready;                            ///<TRUE:基本情報の交換が済んだので自由に通信してOK
+  u8 comm_ready:1;                          ///<TRUE:基本情報の交換が済んだので自由に通信してOK
+  u8 parent_force_exit:1;                   ///<TRUE:親機によるフリームーブ中の強制切断
+  u8          :6;
   u8 colosseum_leave;                       ///<TRUE:退出処理に入っている
   u8 entry_all_ready;                       ///<TRUE:全員のエントリーが完了
   u8 all_battle_ready;                      ///<TRUE:全員の戦闘準備完了

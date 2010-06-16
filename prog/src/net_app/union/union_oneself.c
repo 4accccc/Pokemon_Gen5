@@ -3620,6 +3620,8 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     return TRUE;
   }
 
+  OS_TPrintf("aaa NetConnect=%d, System=%d\n", GFL_NET_GetConnectNum(), GFL_NET_SystemGetConnectNum());
+  
   switch(*seq){
   case 0:
     {
@@ -4543,6 +4545,11 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     }
     break;
   case LEAVE_SEQ_SHUTDOWN:
+    if(clsys->parent_force_exit == TRUE && UnionComm_Check_ShutdownRestarts(unisys) == TRUE){
+      //union_comm.cでの親機によるフリームーブ中の強制切断がある為、ここで処理待ちを入れておく
+      return FALSE;
+    }
+    
     if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
       UnionMsg_AllDel(unisys);
       GAMESYSTEM_SetFieldCommErrorReq(unisys->uniparent->gsys, TRUE);

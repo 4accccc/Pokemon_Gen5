@@ -475,6 +475,17 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
   UnionComm_MinigameUpdate(unisys); //ミニゲーム更新
 
   UnionComm_TalkShutdownUpdate(unisys);
+
+  //コロシアムでフリームーブ中、エラーが発生している場合はネット切断する
+  //(他の子機がエラーを検出できるように)
+  if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE && GFL_NET_IsParentMachine() == TRUE 
+      && unisys->colosseum_sys != NULL && unisys->colosseum_sys->comm_ready == TRUE 
+      && unisys->my_situation.union_status == UNION_STATUS_COLOSSEUM_NORMAL
+      && unisys->colosseum_sys->parent_force_exit == FALSE){
+    OS_TPrintf("parent force exit!\n");
+    UnionComm_Req_Shutdown(unisys);
+    unisys->colosseum_sys->parent_force_exit = TRUE;
+  }
 }
 
 //==================================================================
