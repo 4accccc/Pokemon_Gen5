@@ -27,6 +27,17 @@
  *					定数宣言
 */
 //=============================================================================
+#ifdef PM_DEBUG
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#define DEBUG_DWC_ERROR_PRINT
+#endif //DEBUG_ONLY_FOR_
+#endif //PM_DEBUG
+
+#ifdef DEBUG_DWC_ERROR_PRINT
+#define DEBUG_DWC_ERROR_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
+#else //DEBUG_DWC_ERROR_PRINT
+#define DEBUG_DWC_ERROR_Printf(...) /*  */
+#endif //DEBUG_DWC_ERROR_PRINT
 
 //=============================================================================
 /**
@@ -61,6 +72,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
 
     if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
     { 
+      DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp code=%d line=%d\n", cp_error->errorType, __LINE__ );
       switch( cp_error->errorType )
       { 
       case DWC_ETYPE_LIGHT:
@@ -107,12 +119,14 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
 
       GFL_NET_StateWifiMatchEnd(TRUE);  //エラーをクリアしてもずっとタイムアウト中になってしまうので
                                         //解消する
+      DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
       return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
     }
     //システムエラー（ライト）系
     else if( cp_error->errorUser == ERRORCODE_CRC
         || cp_error->errorUser == ERRORCODE_SYSTEM 
-        || cp_error->errorUser == ERRORCODE_SENDQUEUE)
+        || cp_error->errorUser == ERRORCODE_SENDQUEUE
+        || cp_error->errorUser == ERRORCODE_NHTTP )
     {
       if( !is_heavy )
       { 
@@ -120,20 +134,26 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         GFL_NET_StateClearWifiError();
         NetErr_ErrWorkInit();
         GFL_NET_StateResetError();
+        DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
         return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
       }
       else
       {
         NetErr_App_ReqErrorDisp();
+
+        DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
         return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
       }
     }
-    //システムエラー（ヘビー）系
-    else if( cp_error->errorUser == ERRORCODE_NHTTP )
+    //システムエラー（ヘビー）系  ヘビー系ができたらifの中に書いてください
+#if 0
+    else  if( .. )
     {
       NetErr_App_ReqErrorDisp();
+      DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
       return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
     }
+#endif
   }
 
   return GFL_NET_DWC_ERROR_RESULT_NONE;

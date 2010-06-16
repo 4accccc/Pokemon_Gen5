@@ -73,6 +73,11 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 #define DEBUG_FLAG_GPF_PASS_ON    //GPFをスルーするフラグの使用
 
+
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+//#define DEBUG_NONE_MATCHING
+#endif 
+
 #endif //PM_DEBUG
 
 //SCヒープ開放を監視
@@ -901,17 +906,20 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       {   
         *p_seq       = SEQ_START_DIRTY_MSG;
       }
+      
+      if( ret != WBM_RND_SUBSEQ_RET_NONE )
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+          break;
 
-      //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
-      { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
-        break;
-
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-        break;
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+          break;
+        }
       }
     }
     break;
@@ -1394,6 +1402,14 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_OK_TIMING:
+#ifdef DEBUG_NONE_MATCHING
+    {
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+      WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+      *p_seq  = SEQ_START_MATCHING_MSG;
+    }
+    break;
+#endif 
     WIFIBATTLEMATCH_NET_StartTiming( p_wk->p_net, WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_OK );
     *p_seq  = SEQ_WAIT_OK_TIMING;
     break;
@@ -2232,16 +2248,19 @@ static void WbmRndSeq_Free_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         *p_seq       = SEQ_START_DIRTY_MSG;
       }
 
-      //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
-      { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
-        break;
+      if( ret != WBM_RND_SUBSEQ_RET_NONE )
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+          break;
 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-        break;
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+          break;
+        }
       }
     }
     break;

@@ -1201,6 +1201,8 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
       GF_ASSERT(0);
 
       //»•i”Å‚Å‚±‚±‚É—ˆ‚½‚Ì‚½‚ßˆ—‚ğ“ü‚ê‚Ä‚¨‚­
+      GFL_NET_StateClearWifiError();
+      GFL_NET_StateResetError();
       NetErr_ExitNetSystem();
       NetErr_ErrWorkInit();
     }

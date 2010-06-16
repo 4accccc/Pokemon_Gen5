@@ -616,6 +616,9 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p
 
   p_wk->magic_num = 0x573;
 
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+  GFL_NET_DebugGetPrintOn();
+#endif
 
   p_wk->p_field_buff  = GFL_HEAP_AllocMemory( heapID, WBM_GDB_FIELD_TABLE_MAX * sizeof(DWCGdbField) );
   GFL_STD_MemClear(p_wk->p_field_buff, WBM_GDB_FIELD_TABLE_MAX * sizeof(DWCGdbField) );
@@ -729,6 +732,10 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       repair  = WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT;
       break;
     }
+    if( repair != GFL_NET_DWC_ERROR_RESULT_NONE )
+    {
+      DEBUG_NET_Printf( "DWCのエラー検知 %d\n",repair );
+    }
   }
 
   //個別のエラー
@@ -754,7 +761,8 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       break;
 
     case WIFIBATTLEMATCH_NET_ERRORTYPE_NHTTP:
-      repair  = WIFIBATTLEMATCH_ND_GetErrorRepairType( p_error->nd_err );
+      //シーケンスの戻り値でエラーを返すのでここでは行わない
+      repair  = WIFIBATTLEMATCH_NET_ERROR_NONE;//WIFIBATTLEMATCH_ND_GetErrorRepairType( p_error->nd_err );
       break;
 
     case WIFIBATTLEMATCH_NET_ERRORTYPE_SYS:
@@ -764,6 +772,11 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
     default:
       repair  =  WIFIBATTLEMATCH_NET_ERROR_NONE;
       break;
+    }
+
+    if( repair != GFL_NET_DWC_ERROR_RESULT_NONE )
+    {
+      DEBUG_NET_Printf( "ライブラリ個別のエラー検知 %d\n",repair );
     }
 
     switch( repair )
@@ -4898,7 +4911,7 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
 
   if( p_wk->p_nhttp == NULL )
   { 
-    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS;
+    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
   }
 
   switch( p_wk->seq )
@@ -5030,7 +5043,7 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
 
   if( p_wk->p_nhttp == NULL )
   { 
-    return TRUE;
+    return WIFIBATTLEMATCH_SEND_GPFDATA_RET_ERROR;
   }
 
   switch( p_wk->seq )
