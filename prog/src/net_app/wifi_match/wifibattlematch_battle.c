@@ -64,6 +64,7 @@ typedef struct
 {
   GFL_PROCSYS *p_procsys;
   u32         cnt;
+  BOOL        is_battle_overlay;
 } WIFIBATTLEMATCH_BATTLELINK_WORK;
 
 //=============================================================================
@@ -150,6 +151,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Exit( GFL_PROC *p_proc, i
   WIFIBATTLEMATCH_BATTLELINK_WORK  *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_BATTLELINK_PARAM *p_param  = p_param_adrs;
 
+  if( p_wk->is_battle_overlay )
+  {
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+    p_wk->is_battle_overlay = FALSE;
+  }
+
   //モジュール破棄
   GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
 
@@ -220,6 +227,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   case SEQ_BATTLE_TIMING_INIT:
     {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+      p_wk->is_battle_overlay = TRUE;
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), 200, WB_NET_WIFIMATCH );
       WBM_BTL_Printf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
@@ -255,6 +263,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   case SEQ_BATTLE_END:
     WBM_BTL_Printf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+    p_wk->is_battle_overlay = FALSE;
 
     (*p_seq) = SEQ_CALL_END_DEMO;
     break;
