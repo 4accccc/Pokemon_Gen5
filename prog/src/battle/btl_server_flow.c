@@ -14511,9 +14511,8 @@ static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
     handexSub_putString( wk, &param->exStr );
   }
 
-  scproc_ConsumeItem( wk, bpp );
   scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA );
-
+  scproc_ConsumeItem( wk, bpp );
 
   return 1;
 }
