@@ -922,7 +922,7 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
 {
   int i;
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
-  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work ); // コマンド第1引数
   SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
@@ -938,11 +938,10 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
     POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
     u32     tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
     u32     fusei_tamago_flag = PP_Get( param, ID_PARA_fusei_tamago_flag, NULL );
+    u32     friend = PP_Get( param, ID_PARA_friend, NULL );
 
-    if( tamago_flag && !fusei_tamago_flag )
-    {
-      // 孵化イベント
-      SCRIPT_CallEvent( scw, EVENT_EggBirth( gsys, fieldmap, param ) );
+    if( tamago_flag && (fusei_tamago_flag == FALSE) && (friend == 0) ) {
+      SCRIPT_CallEvent( scw, EVENT_EggBirth( gsys, fieldmap, param ) ); // 孵化イベント
       *ret_wk = i;
       return VMCMD_RESULT_SUSPEND;
     }
