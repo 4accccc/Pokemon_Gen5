@@ -1650,6 +1650,7 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
       if(ZONEDATA_IsPalace(ist->zone_id) == TRUE){
         pos.x = PALACE_CURSOR_POS_X + WearOffset[net_id][0];
         pos.y = PALACE_CURSOR_POS_Y + WearOffset[net_id][1];
+        GFL_CLACT_WK_SetDrawEnable(act_hate, FALSE);
       }
       else{
         if(ist->zone_id != before_zone_id){
