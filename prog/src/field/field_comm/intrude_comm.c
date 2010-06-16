@@ -569,6 +569,10 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       GAMEDATA_SetIntrudePalaceArea(gamedata, 0);
       GAMEDATA_SetIntrudeNum(gamedata, 1);
     }
+    else{
+      //このままパレスを出ずに継続プレイする事が可能なので接続人数だけはクリア
+      GAMEDATA_SetIntrudeNum(gamedata, 1);
+    }
     
     for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
       GFL_STR_DeleteBuffer(intcomm->search_child[i]);

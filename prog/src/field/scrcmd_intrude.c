@@ -106,11 +106,7 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
     IntrudeField_ConnectMap(fieldWork, gsys, intcomm);
   }
   else{
-    int connect_num = GAMEDATA_GetIntrudeNum(gamedata) - 1; //-1=Ž©•ª‚Ì•ª
-    if(connect_num < 1){
-      connect_num = 1;    //Å’áˆê‚Â‚Í˜AŒ‹‚·‚é
-    }
-    IntrudeField_ConnectMapNum(fieldWork, connect_num);
+    IntrudeField_ConnectMapNum(fieldWork, 1); //”ñ’ÊMŽž‚Í1‚Â
   }
   
   MONOLITH_AddConnectAllMap(fieldWork);

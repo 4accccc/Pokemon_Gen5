@@ -780,6 +780,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   switch( *seq )
   {
   case SEQ_WARP_MY_PALACE:  //自分のパレスへワープ
+    Intrude_SetPalaceMapNotConnect(game_comm);
     GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_Mine(gsys) );
     (*seq)++;
     break;

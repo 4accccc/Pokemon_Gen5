@@ -1476,15 +1476,14 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
     return;
   }
   
-#if 0 //ループマップなのに1つも連結されていないのはチラつきの原因っぽいので
-      //最低でも一つは連結しておく 2010.01.23(土)
-  use_num = intcomm->member_num - 1;  // -1 = 自分の分は引く
-#else
   use_num = intcomm->member_num - 1;
   if(use_num <= 0){
+    use_num = 1;  //白黒マップを見せる為、最低1つは連結する
+  }
+  if(intcomm->palace_map_not_connect == TRUE){  //ロックがかかっている場合は強制的に1個
     use_num = 1;
   }
-#endif
+  
   if(intcomm->connect_map_count < use_num){
     MAP_MATRIX *mmatrix;
     

@@ -294,7 +294,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 recv_symbol_change_flag:1;     ///<TRUE:シンボルデータの変更通知を受け取った
   u8 huge_send_bufside_profile:1;   ///<INTSEND_BUFF_SIDE
   u8 talked_event_reserve:1;        ///<TRUE:話しかけられたイベント予約
-  u8        :3;
+  u8 palace_map_not_connect:1;      ///<TRUE:パレスマップ連結をしない
+  u8        :2;
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id
