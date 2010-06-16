@@ -164,8 +164,8 @@ static u32 RULE_CalcRhythmMinus( u32 cnt_diff );
 static void DEBUGWIN_Init( HEAPID heapID );
 static void DEBUGWIN_Exit( void );
 #else
-#define DEBUGWIN_Init
-#define DEBUGWIN_Exit
+#define DEBUGWIN_Init(...) /*  none  */
+#define DEBUGWIN_Exit(...) /*  none */
 #endif //DEBUGWIN_USE
 
 //=============================================================================
