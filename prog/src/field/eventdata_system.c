@@ -40,6 +40,7 @@
 #ifdef PM_DEBUG
 
 //#define DEBUG_EVENTDATA_PRINT // 読み込んだイベントデータを出力
+const POS_EVENT_DATA * D_EVENTDATA_GetPosEventData( const EVENTDATA_SYSTEM *evdata );
 
 #endif  // PM_DEBUG
 

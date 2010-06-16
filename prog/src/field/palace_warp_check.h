@@ -13,3 +13,7 @@
 
 extern BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys);
 
+#ifdef PM_DEBUG
+extern void PLC_WP_CHK_CheckDebugPrint(GAMESYS_WORK * gsys);
+#endif
+

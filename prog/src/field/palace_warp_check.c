@@ -18,6 +18,11 @@
 #include "system/main.h"      //for HEAPID_
 #include "arc/fieldmap/zone_id.h" //for WC10 BC10
 
+#ifdef PM_DEBUG
+#include "eventdata_local.h"
+extern const POS_EVENT_DATA * D_EVENTDATA_GetPosEventData( const EVENTDATA_SYSTEM *evdata );
+#endif
+
 //------------------------------------------------------------------
 /**
  * @brief パレスへのワープ可否チェック
@@ -170,11 +175,6 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
 }
 
 #ifdef PM_DEBUG
-
-#include "eventdata_local.h"
-
-extern const POS_EVENT_DATA * D_EVENTDATA_GetPosEventData( const EVENTDATA_SYSTEM *evdata );
-
 
 void PLC_WP_CHK_CheckDebugPrint(GAMESYS_WORK * gsys)
 {

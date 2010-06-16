@@ -142,6 +142,8 @@
 
 #include "savedata/irc_compatible_savedata.h"
 
+#include "palace_warp_check.h"
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
@@ -6011,7 +6013,6 @@ static int getNextZoneID( ALL_MAP_CHECK_WORK* amcw )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-extern PLC_WP_CHK_CheckDebugPrint(GAMESYS_WORK * gsys);
 static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
 {
   ALL_MAP_CHECK_WORK * amcw = wk;
