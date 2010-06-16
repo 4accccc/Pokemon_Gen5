@@ -853,6 +853,7 @@ static int _modeTVT3Wait( WIFIP2PMATCH_WORK* wk, int seq );
 static int _modeFriendList_MW0( WIFIP2PMATCH_WORK* wk, int seq );
 static int _playerDirectConnectWaitMsg( WIFIP2PMATCH_WORK *wk, int seq  );
 static int _childModeMatchMenuLoopMsg( WIFIP2PMATCH_WORK *wk, int seq );
+static int _playerDirectInit0Next( WIFIP2PMATCH_WORK *wk, int seq );
 
 
 #include "wifi_p2pmatch_message.c"
@@ -1059,9 +1060,9 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _modeFriendList_MW0,//WIFIP2PMATCH_MODE_FRIENDLIST_MW0
   _playerDirectConnectWaitMsg, //WIFIP2PMATCH_MODE_CONNECTWAIT_MSG
   _childModeMatchMenuLoopMsg, //WIFIP2PMATCH_MODE_MATCH_LOOP_MSG
+  _playerDirectInit0Next, //WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT0
 
 };
-
 
 
 
@@ -2193,7 +2194,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
       wk->friendNo = wk->pParentWork->friendNo;
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB);
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT0);
     }
     else{  //‘ŠŽè‚ÆØ’f
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_VCTEND, WB_NET_WIFICLUB);
@@ -4047,7 +4048,7 @@ static int WifiP2PMatch_VCTDisconnectSendEnd(WIFIP2PMATCH_WORK *wk, int seq)
 {
   if(DWCRAP_IsVChat()==FALSE){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT0);
   }
   return seq;
 }
@@ -5572,6 +5573,9 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   if(PMSND_CheckPlaySE_byPlayerID( SE_CALL_SIGN_PLAYER )){
     return seq;
   }
+
+ // GFL_NET_SetAutoErrorCheck(TRUE);  //@todo
+//  GFL_NET_SetNoChildErrorCheck(TRUE);
   
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
   mySt = _WifiMyStatusGet( wk, wk->pMatch );

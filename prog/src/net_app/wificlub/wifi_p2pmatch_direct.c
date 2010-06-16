@@ -2307,10 +2307,6 @@ static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_npc;
   u32 way;
 
-
-  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB)){
-    return seq;
-  }
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //Ú‘±‹ÖŽ~
   if(!GFL_NET_IsParentMachine()){
     _friendNameExpand(wk,  wk->friendNo - 1);
@@ -2377,4 +2373,19 @@ static int _playerDirectInit3Next( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   ‚Q‰ñ–Ú‚Í‘äŽŒ‚ªˆá‚¤ WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT0
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int _playerDirectInit0Next( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB)){
+    return seq;
+  }
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+  return seq;
+}
 
