@@ -179,6 +179,9 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
     // ワーク初期化
     InitWork( wk, param );
 
+    //VRAMクリアー
+    GFL_DISP_ClearVRAM( 0 );
+
     WorldTrade_InitSystem( wk );
 
     //WirelessIconEasy();

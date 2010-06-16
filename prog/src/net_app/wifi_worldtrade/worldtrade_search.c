@@ -1435,6 +1435,8 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 
 		case DPW_TR_ERROR_SERVER_TIMEOUT :
 		case DPW_TR_ERROR_DISCONNECTED:	
+      PMSND_StopSE();
+
 			// サーバーと通信できません→終了
 			wk->subprocess_seq = SUBSEQ_SEARCH_ERROR_DICONNECT_MES1;
 
@@ -1444,6 +1446,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
       GFL_NET_StateResetError();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
+      PMSND_StopSE();
 			// 即ふっとばし
       WorldTrade_DispCallFatal();
 			break;
@@ -1452,6 +1455,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 		// 検索結果取得失敗（「いなかった」ではない）リトライする
 		case DPW_TR_ERROR_FAILURE:
 		case DPW_TR_ERROR_CANCEL :
+      PMSND_StopSE();
 			wk->subprocess_seq = SUBSEQ_SERVER_QUERY_FAILURE;
 			break;
 		default:
@@ -1463,6 +1467,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
+      PMSND_StopSE();
       WorldTrade_DispCallFatal();
 		}
 	}
