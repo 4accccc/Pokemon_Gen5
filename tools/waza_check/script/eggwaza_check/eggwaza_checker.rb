@@ -20,45 +20,39 @@ class EggWazaChecker
     @mother_list = nil
     @mothers_egg_group_list = nil
     @father_list = nil
-    @eggwaza_exist_flag = false
   end
 
   def setup( mons_name )
     @result = EggWazaCheckResult.new
     @mons_name = mons_name
-    @eggwaza_exist_flag = @personal_accessor.check_eggwaza_exist( @mons_name )
   end
 
 
   def analyze( mons_name )
     self.setup( mons_name )
-    if @eggwaza_exist_flag then
-      self.listup_eggwaza
-      self.listup_mothers
-      self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
-      #self.delete_mothers_only_male
-      self.listup_mothers_egg_group
-      self.listup_fathers
-      self.delete_fathers_unknown_gender
-      self.delete_fathers_only_female
-      self.check_eggwaza_all
-    end
+    self.listup_eggwaza
+    self.listup_mothers
+    self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
+    #self.delete_mothers_only_male
+    self.listup_mothers_egg_group
+    self.listup_fathers
+    self.delete_fathers_unknown_gender
+    self.delete_fathers_only_female
+    self.check_eggwaza_all
     return @result
   end 
 
   def partial_analyze( mons_name, egg_waza_list )
     self.setup( mons_name )
-    if @eggwaza_exist_flag then
-      @eggwaza_list = egg_waza_list
-      self.listup_mothers
-      self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
-      #self.delete_mothers_only_male
-      self.listup_mothers_egg_group
-      self.listup_fathers
-      self.delete_fathers_unknown_gender
-      self.delete_fathers_only_female
-      self.check_eggwaza_all
-    end
+    @eggwaza_list = egg_waza_list
+    self.listup_mothers
+    self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
+    #self.delete_mothers_only_male
+    self.listup_mothers_egg_group
+    self.listup_fathers
+    self.delete_fathers_unknown_gender
+    self.delete_fathers_only_female
+    self.check_eggwaza_all
     return @result
   end
 
@@ -69,7 +63,14 @@ class EggWazaChecker
   end
 
   def listup_mothers
-    @mother_list = $reverse_seed_poke_hash[ @mons_name ]
+    @mother_list = Array.new
+    seed_mons_list = $seed_poke_hash[ @mons_name ]
+    seed_mons_list.each do |seed_mons_name|
+      mothers = $reverse_seed_poke_hash[ seed_mons_name ]
+      if 0 < mothers.size then
+        @mother_list += mothers
+      end
+    end
   end
 
   def delete_mothers_belong_to_egg_group( group_name )
