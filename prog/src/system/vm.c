@@ -70,6 +70,9 @@ static void clear(VMHANDLE * core)
 	GFL_STD_MemFill(core->stack, 0, sizeof(VM_VALUE) * core->init_value.stack_size);
 	//レジスタクリア
 	GFL_STD_MemFill(core->vm_register, 0, sizeof(VM_VALUE) * core->init_value.reg_size);
+
+  core->check_func = NULL;
+  core->check_work = NULL;
 }
 
 //============================================================================================
@@ -210,6 +213,14 @@ BOOL VM_Control( VMHANDLE * core )
 				core->status = VMSTAT_HALT;
 				return FALSE;
 			}
+      if( core->check_func ) {
+        if ( core->check_func( core, core->context, core->check_work, code ) == FALSE )
+        {
+          VM_ERROR("vm command error %04x:%08x\n",code, core->adrs - 2);
+          core->status = VMSTAT_HALT;
+          return FALSE;
+        }
+      }
 			if( core->init_value.command_table[code]( core, core->context )
 					== VMCMD_RESULT_SUSPEND ){
 				break;
@@ -238,6 +249,20 @@ BOOL VM_Control( VMHANDLE * core )
 void * VM_GetContext( VMHANDLE * core)
 {
 	return core->context;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   仮想マシンコマンドチェック関数登録
+ * @param core      仮想マシン制御構造体へのポインタ
+ * @param callback  チェック関数
+ * @param work      チェック関数が利用するワークへのポインタ
+ */
+//------------------------------------------------------------------
+void VM_SetCheckFunc( VMHANDLE * core, VM_CHECK_FUNC callback, void * work )
+{
+  core->check_func = callback;
+  core->check_work = work;
 }
 
 //============================================================================================

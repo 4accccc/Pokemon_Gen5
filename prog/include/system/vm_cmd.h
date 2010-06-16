@@ -33,6 +33,8 @@ struct VM_HANDLE_STRUCT{
 	VM_VALUE * stack;				///< スタック
 	VM_VALUE * vm_register;			///< 汎用レジスタ
 	void * context;					///< コマンドなどで参照するワークのポインタ
+  VM_CHECK_FUNC check_func;   ///<動作チェック用コールバック
+  void * check_work;          ///<動作チェック用コールバックに引き渡す引数
 
 	VM_CODE * pScript;				///< ロードしたスクリプト
 };
