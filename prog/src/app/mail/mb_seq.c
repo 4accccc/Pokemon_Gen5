@@ -1189,7 +1189,7 @@ static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u1
   pld->mode      = mode;
   pld->item      = item;
   pld->mail_pos  = pos;
-  pld->zkn       = GAMEDATA_GetZukanSave(syswk->dat->gamedata);
+  pld->zkn       = GAMEDATA_GetZukanSave(syswk->dat->gamedata);   // はっきんだまギラティナ用
 
   syswk->subProcWork = pld;
 }
