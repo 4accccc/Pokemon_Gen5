@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-03T14:45:20"/>
+	<create user="matsushima" host="W00181" date="2010-06-16T12:09:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1483" top="216" right="2188" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="50" top="115" right="755" bottom="735" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -603,7 +603,6 @@
 	</row>
 
 	<row id="msg_d12_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
 		<language name="JPN" width="256">ビクティニは
@@ -657,12 +656,11 @@
 	</row>
 
 	<row id="msg_d12_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
 		<language name="JPN" width="256">でね……▼
-ビクティニの　ずかんばんごうが
-「０」なのは▼
+ビクティニの　イッシュずかんの
+ばんごうが　「０」なのは▼
 この　ポケモンずかんを　もって
 たびを　する　ポケモントレーナーに▼
 ビクティニの　しょうりを　もたらす
@@ -670,8 +668,8 @@
 そんな　ねがいが　こめられていると
 わたしは　きいたことが　あるわ▼</language>
 		<language name="JPN_KANJI" width="256">でね……▼
-ビクティニの　図鑑番号が
-「０」なのは▼
+ビクティニの　イッシュ図鑑の
+番号が　「０」なのは▼
 この　ポケモン図鑑を　所持して
 旅をする　ポケモントレーナーに▼
 ビクティニの　勝利を　もたらす
@@ -727,7 +725,8 @@
 未来は　明るく　なるのにね！▼</language>
 	</row>
 
-	<row id="msg_d12_hakase2_06" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d12_hakase2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">ビクティニは
 その　からだから　あふれる▽
 エネルギーを　はっさんさせる　という▽
