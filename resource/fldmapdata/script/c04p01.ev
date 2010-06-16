@@ -36,9 +36,20 @@ INIT_EVENT_START	ev_zone_c04p01
   {
     //観覧車トレーナーの見た目を決定
     DEFINE_LOCAL  i_wheel_trainer
+    DEFINE_LOCAL  i_season
+
+    _GET_SEASON_ID( i_season )
+    IF $WK_OTHER_WHEEL_SEASON != i_season THEN
+      //もし季節が異なっていたら、タイムフラグをリセット
+      _FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
+    ENDIF
+
     _GET_WHEEL_TRAINER_ENTRY_ID( i_wheel_trainer )
     _GET_WHEEL_TRAINER_OBJ_ID( i_wheel_trainer, SCWK_ANSWER )
     $OBJCHRWORK0 = $SCWK_ANSWER
+    
+    //今の季節を憶えておく
+    $WK_OTHER_WHEEL_SEASON = $i_season
   }
 }
 INIT_EVENT_END
