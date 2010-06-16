@@ -133,7 +133,9 @@ static int _playerMachineBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
     };
     gamemode = modetbl[wk->battleMode*2+wk->battleRule];
     _myStatusChange(wk, WIFI_STATUS_RECRUIT ,gamemode);
-    _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST_MW0);
+    WifiP2PMatch_CommWifiBattleStart( wk, -1 );
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+//    _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST_MW0);
   //  WifiP2PMatch_CommWifiBattleStart( wk, -1 );
     FriendRequestWaitOn( wk, TRUE );
   }
