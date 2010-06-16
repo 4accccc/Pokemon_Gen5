@@ -104,7 +104,7 @@ MANUAL_COMMON_WORK*  MANUAL_COMMON_Init(
     work->msgdata_main   = GFL_MSG_Create(
                                GFL_MSG_LOAD_NORMAL,
                                ARCID_MESSAGE,
-                               NARC_message_manual_text_dat,
+                               NARC_message_manual_text_dat1,
                                work->heap_id );
   }
 

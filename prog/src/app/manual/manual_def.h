@@ -164,7 +164,7 @@ enum
 // message.naix
 enum
 {
-  NARC_message_manual_text_dat          = NARC_message_manual_text_b_dat,
+  NARC_message_manual_text_dat1          = NARC_message_manual_text_b_dat,
 };
 
 #else
@@ -193,7 +193,7 @@ enum
 // message.naix
 enum
 {
-  NARC_message_manual_text_dat          = NARC_message_manual_text_w_dat,
+  NARC_message_manual_text_dat1          = NARC_message_manual_text_w_dat,
 };
 
 #endif
