@@ -79,9 +79,9 @@ static void EggCordinate_Form_basurao( const PARENT* parent, EGG_PARAM* egg );
 static const POKEMON_PARAM* GetBasePokemon_for_form( const PARENT* parent );
 static void EggCordinate_Seikaku_basic( const PARENT* parent, EGG_PARAM* egg ); // 性格
 static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM* egg );
-static void EggCordinate_Tokusei_index( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ); // 特性
+static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ); // 特性
+static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_Tokusei( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id );
-static const POKEMON_PARAM* GetBasePokemon_for_Tokusei( const PARENT* parent );
 static void EggCordinate_Friend( EGG_PARAM* egg, HEAPID heap_id ); // なつき度 ( 孵化カウント )
 static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ); // 個体乱数
 static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg );
@@ -149,7 +149,8 @@ void POKEMON_EGG_Create(
   EggCordinate_Form_basurao( &parent, &egg_param );
   EggCordinate_Seikaku_basic( &parent, &egg_param ); // 性格
   EggCordinate_Seikaku_kawarazunoisi( &parent, &egg_param ); 
-  EggCordinate_Tokusei_index( &parent, &egg_param, heap_id ); // 特性
+  EggCordinate_TokuseiIndex_basic( &parent, &egg_param, heap_id ); // 特性
+  EggCordinate_TokuseiIndex_metamon( &parent, &egg_param );
   EggCordinate_Tokusei( &parent, &egg_param, heap_id );
   EggCordinate_Friend( &egg_param, heap_id ); // なつき度 ( 孵化カウント )
   EggCordinate_AbilityRnd_select_by_item( &parent, &egg_param ); // 個体乱数
@@ -549,27 +550,28 @@ static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM*
 
 //---------------------------------------------------------------------------------------- 
 /**
- * @brief タマゴが何番目の特性かを決定する
+ * @brief タマゴが何番目の特性かを決定する ( 基本ルール )
+ *
+ * 母親の特性番号を継承しようとする
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_Tokusei_index( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id )
+static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id )
 {
   u32 rnd;
-  u32 base_tokusei_idx;
+  u32 mother_tokusei_idx;
 
-  // ベースポケモンの特性インデックスを取得
+  // 母ポケモンの特性インデックスを取得
   {
-    const POKEMON_PARAM* base_poke = GetBasePokemon_for_Tokusei( parent );
-    u32 base_monsno  = PP_Get( base_poke, ID_PARA_monsno, NULL );
-    u32 base_formno  = PP_Get( base_poke, ID_PARA_form_no, NULL );
-    u32 base_tokusei = PP_Get( base_poke, ID_PARA_speabino, NULL );
-    base_tokusei_idx = GetTokuseiIndex( base_monsno, base_formno, base_tokusei, heap_id );
+    u32 mother_monsno  = PP_Get( parent->mother, ID_PARA_monsno, NULL );
+    u32 mother_formno  = PP_Get( parent->mother, ID_PARA_form_no, NULL );
+    u32 mother_tokusei = PP_Get( parent->mother, ID_PARA_speabino, NULL );
+    mother_tokusei_idx = GetTokuseiIndex( mother_monsno, mother_formno, mother_tokusei, heap_id );
   }
 
   rnd = GFUser_GetPublicRand0(100);  // 乱数取得[0, 99]
 
   // 特性番号を決定
-  switch( base_tokusei_idx ) {
+  switch( mother_tokusei_idx ) {
   default:
   // 母が特性1
   case 0:
@@ -590,6 +592,32 @@ static void EggCordinate_Tokusei_index( const PARENT* parent, EGG_PARAM* egg, HE
     else                { egg->tokusei_idx = 2; } // 60% ==> 子の特性3
     break;
   } 
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief タマゴが何番目の特性かを決定する ( 例外ルール：メタモン )
+ *
+ * 両親のどちらかがメタモンの場合, タマゴの特性は
+ * 50% ==> 特性1
+ * 50% ==> 特性2 
+ * になる
+ */
+//---------------------------------------------------------------------------------------- 
+static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* egg )
+{
+  u32 father_monsno = PP_Get( parent->father, ID_PARA_monsno, NULL );
+  u32 mother_monsno = PP_Get( parent->mother, ID_PARA_monsno, NULL );
+
+  if( (father_monsno == MONSNO_METAMON) || (mother_monsno == MONSNO_METAMON) ) {
+    u32 rnd = GFUser_GetPublicRand0(2); // 乱数取得
+    if( rnd == 0 ) {
+      egg->tokusei_idx = 0;
+    }
+    else {
+      egg->tokusei_idx = 1;
+    }
+  }
 }
 
 //---------------------------------------------------------------------------------------- 
@@ -619,23 +647,6 @@ static void EggCordinate_Tokusei( const PARENT* parent, EGG_PARAM* egg, HEAPID h
     if( egg->tokusei == TOKUSYU_NULL ) {
       egg->tokusei = tokusei_list[0];
     } 
-  }
-}
-
-/**
- * @brief 子ポケモンの特性決定のベースとなるポケモンを取得する
- */
-static const POKEMON_PARAM* GetBasePokemon_for_Tokusei( const PARENT* parent )
-{
-  u32 mother_monsno = PP_Get( parent->mother, ID_PARA_monsno, NULL );
-
-  // 母親がメタモン ==> 父親
-  if( mother_monsno == MONSNO_METAMON ) {
-    return parent->father;
-  }
-  // 通常 ==> 母親
-  else {
-    return parent->mother;
   }
 }
 
