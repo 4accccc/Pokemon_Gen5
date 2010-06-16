@@ -1160,17 +1160,17 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         if( !UTIL_IsClear( &p_nd_data->fileInfo[i], sizeof(DWCNdFileInfo) ) )
         {
           rom_version  = UTIL_StringToHex( p_nd_data->fileInfo[ i ].param2 );
-          OS_TPrintf( "[%d}=rom_version%d\n", i, rom_version );
+          OS_TPrintf( "[%d}=rom_version%x\n", i, rom_version );
 
           if( rom_version & 1<<GET_VERSION() )
           { 
             p_nd_data->recvflag[i]  = TRUE;
-            OS_TPrintf( "受信できるバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
+            OS_TPrintf( "受信できるバージョン%x %x\n",rom_version, 1<<GET_VERSION() );
           }
           else
           { 
             p_nd_data->recvflag[i]  = FALSE;
-          OS_TPrintf( "受信できないバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
+          OS_TPrintf( "受信できないバージョン%x %x\n",rom_version, 1<<GET_VERSION() );
           }
         }
         else
