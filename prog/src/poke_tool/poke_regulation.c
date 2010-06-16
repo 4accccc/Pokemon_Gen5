@@ -199,9 +199,9 @@ int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, 
         }
       }
     }
-  }
-  if(i==6){
-    return POKE_REG_NO_MASTPOKE;
+    if(i==6){
+      return POKE_REG_NO_MASTPOKE;
+    }
   }
 
   return POKE_REG_OK;
