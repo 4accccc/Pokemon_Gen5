@@ -1030,6 +1030,7 @@ static BOOL ev_Takinobori_5( TAKINOBORI_WORK *work )
       FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
       FLDEFF_TASK_CallDelete( work->eff_task );
       FLDEFF_CTRL_DeleteEffect( fectrl, FLDEFF_PROCID_NAMIPOKE_EFFECT );
+      FIELD_PLAYER_SetNaminoriEventEnd( work->fld_player, TRUE );
       work->eff_task = NULL;
       work->end_flag = TRUE;
     }
@@ -1215,6 +1216,7 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
       MMDL_InitPosition( mmdl, &work->target_pos, work->dir );
       FLDEFF_TASK_CallDelete( work->eff_task );
       FLDEFF_CTRL_DeleteEffect( fectrl, FLDEFF_PROCID_NAMIPOKE_EFFECT );
+      FIELD_PLAYER_SetNaminoriEventEnd( work->fld_player, TRUE );
       work->eff_task = NULL;
       work->end_flag = TRUE;
       PMSND_PlaySE( SEQ_SE_FLD_83 );
