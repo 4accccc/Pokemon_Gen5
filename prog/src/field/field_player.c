@@ -1294,6 +1294,21 @@ BOOL FIELD_PLAYER_CheckPossibleDash( FIELD_PLAYER *fld_player )
   return( FALSE );
 }
 
+//BTS5723 100616 進入中、画面上部にちらつきが生じるを対処
+#ifdef BUGFIX_BTS5723
+//--------------------------------------------------------------
+/**
+ * 自機の描画が完了するまでVBlank待ち。
+ * MMDLSYS_ForceWaitVBlankProc()を呼ぶので注意。
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ForceWaitVBlank( FIELD_PLAYER *fld_player )
+{
+  MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fld_player->fieldWork );
+  MMDLSYS_ForceWaitVBlankProc( mmdlsys );
+}
+#endif
+
 //======================================================================
 //	Grid 専用処理
 //======================================================================

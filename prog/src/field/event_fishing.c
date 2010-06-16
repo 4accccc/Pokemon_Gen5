@@ -212,9 +212,11 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       *seq = SEQ_END;
       break;
     }
-
+    
     //フォルムチェンジ
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
+    FIELD_PLAYER_ForceWaitVBlank( wk->fplayer );
+    
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
     PMSND_PlaySE( SEQ_SE_FLD_19 );
 
@@ -292,7 +294,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 
 	case SEQ_END:
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, wk->player_form );
-    MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
+    FIELD_PLAYER_ForceWaitVBlank( wk->fplayer ); //BTS5723 100616
 		return GMEVENT_RES_FINISH;
 
   //エンカウントイベントへ移行

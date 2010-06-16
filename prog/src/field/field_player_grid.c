@@ -2185,7 +2185,7 @@ static void gjikiOze_SetMove_FallOut(
   
   if( pos.y > height ){
     pos.y += NUM_FX32( -8 );
-  
+    
     if( pos.y < height ){
       pos.y = height;
       MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
@@ -3335,6 +3335,7 @@ static void oze_StartYureJiki( FIELD_PLAYER_GRID *gjiki )
   gjiki_SetMoveBitOzeYure( gjiki, TRUE );
   FIELD_PLAYER_CORE_ChangeDrawForm(
     gjiki->player_core, PLAYER_DRAW_FORM_YURE );
+//  FIELD_PLAYER_ForceWaitVBlank( FIELDMAP_GetFieldPlayer(gjiki->fieldWork) );
 }
 
 //--------------------------------------------------------------
@@ -3349,9 +3350,10 @@ static void oze_EndYureJiki( FIELD_PLAYER_GRID *gjiki )
   gjiki->oze_yure_frame = 0;
   gjiki->oze_anime_reset_flag = FALSE;
   gjiki_SetMoveBitOzeFallOut( gjiki, FALSE );
-      
+  
   gjiki_SetMoveBitOzeYure( gjiki, FALSE );
   FIELD_PLAYER_CORE_ResetMoveForm( gjiki->player_core );
+//  FIELD_PLAYER_ForceWaitVBlank( FIELDMAP_GetFieldPlayer(gjiki->fieldWork) );
 }
 
 //======================================================================

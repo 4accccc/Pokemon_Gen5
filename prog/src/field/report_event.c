@@ -745,6 +745,8 @@ static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
     MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
     FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_REPORT );
     FIELD_PLAYER_UpdateRequest( fld_player );
+    FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
+    
     //ポーズを解除しアニメするように
     MMDL_OffMoveBitMoveProcPause( mmdl );
     MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
@@ -766,6 +768,7 @@ static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
   if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
     FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
     FIELD_PLAYER_UpdateRequest( fld_player );
+    FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
   }
 }
 

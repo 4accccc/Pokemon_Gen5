@@ -23,6 +23,11 @@
 //	define
 //======================================================================
 //--------------------------------------------------------------
+//  BUGFIX
+//--------------------------------------------------------------
+#define BUGFIX_BTS5723 //BTS5723 進入中、画面上部にちらつきが生じるを対処
+
+//--------------------------------------------------------------
 /// PLAYER_MOVE_VALUE
 //--------------------------------------------------------------
 typedef enum
@@ -225,6 +230,11 @@ extern BOOL FIELD_PLAYER_CheckAnimeEnd( const FIELD_PLAYER *fld_player );
 extern MMDL * FIELD_PLAYER_GetFrontMMdl( const FIELD_PLAYER *fld_player );
 extern MMDL * FIELD_PLAYER_GetFrontMMdlEx( const FIELD_PLAYER *fld_player, fx32 y_diff ); // 高さチェックあり
 
+#ifdef BUGFIX_BTS5723
+extern void FIELD_PLAYER_ForceWaitVBlank( FIELD_PLAYER *fld_player );
+#else
+#define FIELD_PLAYER_ForceWaitVBlank( a ) ((void)0)
+#endif
 
 //======================================================================
 //	Grid 専用処理

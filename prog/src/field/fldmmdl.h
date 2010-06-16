@@ -47,8 +47,8 @@
 #define DEBUG_OBJCODE_STR_LENGTH (16) //動作モデルOBJコード文字列長さ
 
 #ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_MMDL_DEVELOP
-//#define DEBUG_MMDL_DEVELOP_PRINT
+#define DEBUG_MMDL_DEVELOP //開発者用処理有効
+//#define DEBUG_MMDL_DEVELOP_PRINT //開発者用出力有効
 #endif
 
 //#define MMDL_BBD_DRAW_OFFS_Z_USE //有効でビルボード表示位置Z補正有り
@@ -739,6 +739,7 @@ extern void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
 extern void MMDLSYS_DeleteProc( MMDLSYS *fos );
 extern void MMDLSYS_UpdateProc( MMDLSYS *fos );
 extern void MMDLSYS_VBlankProc( MMDLSYS *fos );
+extern void MMDLSYS_ForceWaitVBlankProc( MMDLSYS *mmdlsys );
 
 extern void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw );
 

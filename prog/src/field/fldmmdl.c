@@ -335,6 +335,26 @@ void MMDLSYS_VBlankProc( MMDLSYS *mmdlsys )
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * MMDLSYS 強制VBlank処理
+ * @param  mmdlsys  MMDLSYS
+ * @retval  nothing
+ * @attention 内部でVブランク待ちを行います。
+ * MMDL_BLACTCONT_IsThereReserve()で追加要素が無くなるまで戻りません。
+ * その間、メイン処理が止まりますので呼ぶ際は注意して下さい。
+ */
+//--------------------------------------------------------------
+void MMDLSYS_ForceWaitVBlankProc( MMDLSYS *mmdlsys )
+{
+  while( MMDL_BLACTCONT_IsThereReserve(mmdlsys) == TRUE ){
+    MMDLSYS_UpdateProc( mmdlsys );
+    OS_WaitInterrupt( TRUE, OS_IE_V_BLANK );
+    MMDLSYS_VBlankProc( mmdlsys );
+    D_MMDL_DPrintf( "MMDLSYS_ForceVBlankProc()\n" );
+  }
+}
+
 //======================================================================
 //  フィールド動作モデル　システム　描画プロセス
 //======================================================================

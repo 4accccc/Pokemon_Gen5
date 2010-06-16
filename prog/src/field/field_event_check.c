@@ -2868,6 +2868,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
   case 2:
     if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
       FIELD_PLAYER_SetNaminoriEnd( fld_player );
+      FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
       FIELD_PLAYER_SetNaminoriEventEnd( fld_player, TRUE );
       (*seq)++;
     }

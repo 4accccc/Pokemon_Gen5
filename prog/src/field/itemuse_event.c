@@ -291,7 +291,37 @@ typedef struct{
  * @retval  none
  */
 //------------------------------------------------------------------------------
+static GMEVENT_RESULT CycleEvent(GMEVENT * event, int * seq, void *work)
+{
+  CYCLEUSE_STRUCT* pCy = work;
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( pCy->gameSys );
+  MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+  
+  switch( (*seq) ){
+  case 0:
+    FIELDMAP_SetPlayerItemCycle( fieldmap );
+    (*seq)++;
+  case 1:
+    {
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      FIELD_PLAYER_ForceWaitVBlank( fld_player );
+    }
+    (*seq)++;
+    break;
+  case 2:
+    {
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      
+      if( FIELD_PLAYER_CheckDrawFormWait(fld_player) == TRUE ){
+        return( GMEVENT_RES_FINISH );
+      }
+    }
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
 
+#if 0
 static GMEVENT_RESULT CycleEvent(GMEVENT * event, int * seq, void *work)
 {
   CYCLEUSE_STRUCT* pCy = work;
@@ -314,6 +344,7 @@ static GMEVENT_RESULT CycleEvent(GMEVENT * event, int * seq, void *work)
   
   return GMEVENT_RES_CONTINUE;
 }
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

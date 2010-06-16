@@ -861,7 +861,8 @@ VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk )
   
   FIELD_PLAYER_SetRequest( fld_player, req );
   FIELD_PLAYER_UpdateRequest( fld_player );
-
+  FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
+  
   return VMCMD_RESULT_CONTINUE;
 }
 
