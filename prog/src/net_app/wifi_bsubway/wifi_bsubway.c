@@ -1330,7 +1330,7 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
   result = NHTTP_RAP_PokemonEvilCheckConectionCreate( p_wk->p_nhttp );
   GF_ASSERT( result );
 
-  result = NHTTP_RAP_StartConnect( p_wk->p_nhttp );  
+  result = NHTTP_RAP_StartConnect( p_wk->p_nhttp )==NHTTP_ERROR_NONE;
   GF_ASSERT( result );
 
 

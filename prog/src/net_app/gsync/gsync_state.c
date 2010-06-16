@@ -631,7 +631,7 @@ static void _wakeupAction_save2(G_SYNC_WORK* pWork)
       pWork->aDownFinish.bGet=TRUE;
       pWork->aDownFinish.dummy=0;
       NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), &pWork->aDownFinish, sizeof(NHTTPRAP_URL_DOWNLOAD_FINISH) );
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_wakeupAction71);
       }
     }
@@ -1247,7 +1247,7 @@ static void _wakeupAction5(G_SYNC_WORK* pWork)
 {
   if(_IsNetworkMode(pWork) && !_IsLv1Mode(pWork)){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD, pWork->pNHTTPRap)){
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_wakeupAction6);
       }
     }
@@ -1583,7 +1583,7 @@ static void _createAccount(G_SYNC_WORK* pWork)
       NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap),
                             pWork->tempbuffer, 12 );
 
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_createAccount2);
       }
     }
@@ -1790,7 +1790,7 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
   
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNTINFO, pWork->pNHTTPRap)){
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_ghttpInfoWait1);
       }
     }
@@ -1917,7 +1917,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
 #endif
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_POKEMONLIST, pWork->pNHTTPRap)){
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_ghttpPokemonListDownload1);
       }
     }
@@ -2171,7 +2171,7 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
       NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
       GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
       pWork->percent=0;
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_upeffectLoop5);
       }
     }

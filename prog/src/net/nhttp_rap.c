@@ -233,17 +233,23 @@ NHTTPConnectionHandle NHTTP_RAP_GetHandle(NHTTP_RAP_WORK* pWork)
 }
 
 
-BOOL NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork)
+NHTTPError NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork)
 {
   if(pWork){
-    if ( NHTTP_ERROR_NONE !=  NHTTPStartConnection(pWork->handle))
+    NHTTPError error  = NHTTPStartConnection(pWork->handle);
+    if ( NHTTP_ERROR_NONE != error )
     {
-      GF_ASSERT(0);
-      return FALSE;
+      GFL_NET_StateSetWifiError( 
+                error,
+                DWC_ETYPE_SHOW_ERROR,
+                error,             ERRORCODE_NHTTP );
+      GFL_NET_StateSetError(error);
+      NAGI_Printf( "NHTTP_RAP_StartConnect Error %d\n", error );
+      return error;
     }
-    return TRUE;
+    return NHTTP_ERROR_NONE;
   }
-  return FALSE;
+  return NHTTP_ERROR_ALLOC;
 }
   
 
@@ -351,6 +357,7 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
                 DWC_ETYPE_SHOW_ERROR,
                 error,             ERRORCODE_NHTTP );
       GFL_NET_StateSetError(error);
+      NAGI_Printf( "NHTTP Error %d\n", error );
     }
 
     NHTTP_RAP_ErrorClean(pWork);

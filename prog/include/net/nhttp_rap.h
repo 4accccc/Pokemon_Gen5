@@ -42,7 +42,7 @@ typedef enum{
 
 extern BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork);
 extern NHTTPConnectionHandle NHTTP_RAP_GetHandle(NHTTP_RAP_WORK* pWork);
-extern BOOL NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork);
+extern NHTTPError NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork);
 extern NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork);
 extern void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork);
 

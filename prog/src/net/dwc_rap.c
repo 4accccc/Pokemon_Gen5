@@ -1651,8 +1651,7 @@ int mydwc_HandleError(void)
       }
       if( -43000 >= errorCode && errorCode >= -44999 )
       {
-        DWC_ScShutdown();     //SCライブラリの終了
-        DWC_GdbShutdown();
+        //DWC_ScShutdown(); //じまえで呼ぶので呼ばない
       }
 
       //DWC_ClearError();
@@ -1669,8 +1668,7 @@ int mydwc_HandleError(void)
       }
       if( -43000 >= errorCode && errorCode >= -44999 )
       {
-        DWC_ScShutdown();
-        DWC_GdbShutdown();           // 簡易データベースライブラリの終了
+        //DWC_ScShutdown(); //じまえで呼ぶので呼ばない
       }
 
       //DWC_ClearError();

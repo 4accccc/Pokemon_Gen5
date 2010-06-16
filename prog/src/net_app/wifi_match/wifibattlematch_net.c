@@ -343,10 +343,10 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL is_sc_error;
   BOOL is_session;
   BOOL is_sc_you_recv;
+  BOOL is_sc_start;
 
   //ポケモン不正検査で使う
   u32             poke_max;
-  NHTTP_RAP_WORK  *nhttp;
 
   //gdb
   void *p_get_wk;
@@ -503,6 +503,8 @@ static void WIFIBATTLEMATCH_NETERR_ClearError( WIFIBATTLEMATCH_NETERR_WORK *p_wk
 //=====================================
 static BOOL UTIL_IsClear( void *p_adrs, u32 size );
 
+static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int type, int ret );
+
 //=============================================================================
 /**
  *					データ
@@ -635,6 +637,8 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p
   GFL_NET_AddCommandTable( GFL_NET_CMD_WIFIMATCH, sc_net_recv_tbl, NELEMS(sc_net_recv_tbl), p_wk );
   GFL_NET_SetWifiBothNet(FALSE);
 
+  GFL_NET_DWC_SetErrDisconnectCallback( WifiBattleMatch_ErrDisconnectCallback, p_wk );
+
   return p_wk;
 }
 
@@ -647,6 +651,8 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
+  GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
+
   GFL_NET_DelCommandTable( GFL_NET_CMD_WIFIMATCH );
 
   GFL_HEAP_FreeMemory( p_wk->p_field_buff );
@@ -749,7 +755,7 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       break;
 
     case WIFIBATTLEMATCH_NET_ERRORTYPE_SC:
-      repair  = WIFIBATTLEMATCH_SC_GetErrorRepairType( p_error->sc_err );
+      repair  = WIFIBATTLEMATCH_NET_ERROR_NONE;//WIFIBATTLEMATCH_SC_GetErrorRepairType( p_error->sc_err );
       break;
 
     case WIFIBATTLEMATCH_NET_ERRORTYPE_GDB:
@@ -1160,6 +1166,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
 BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_force )
 {
   GFL_NET_StateWifiMatchEnd(!is_force);
+  WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk, FALSE );
   return TRUE;
 }
 
@@ -1377,6 +1384,7 @@ void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
   p_wk->is_sc_error = is_error;
   p_wk->is_session  = FALSE;
   p_wk->is_sc_you_recv  = FALSE;
+  p_wk->is_sc_start = TRUE;
 
   if( type == WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER )
   { 
@@ -1456,6 +1464,7 @@ void WIFIBATTLEMATCH_SC_StartDebug( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMA
   p_wk->is_debug      = TRUE;
   p_wk->is_auth = is_auth;
   p_wk->p_debug_data  = p_data;
+  p_wk->is_sc_start = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1486,7 +1495,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       if( cp_error->errorType == DWC_ETYPE_DISCONNECT
           || cp_error->errorType == DWC_ETYPE_SHUTDOWN_FM )
       {
-        //DwcRap_Sc_Finalize( p_wk );
+        DwcRap_Sc_Finalize( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
  
@@ -1582,6 +1591,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       if( ret != DWC_SC_RESULT_NO_ERROR )
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
+        DwcRap_Sc_Finalize( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
       DEBUG_NET_Printf( "SC:Init end\n" );
@@ -2033,16 +2043,21 @@ static void DwcRap_Sc_SubmitReportCallback(DWCScResult theResult, void* theUserD
 //-----------------------------------------------------------------------------
 static void DwcRap_Sc_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk )
 {
-  if( p_wk->seq > WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT )
+  if( p_wk->is_sc_start == TRUE )
   {
-    DEBUG_NET_Printf( "destroy report\n" );
-    DWC_ScDestroyReport( p_wk->p_data->sc_player[0].mReport );
-  }
+    if( p_wk->seq > WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT )
+    {
+      DEBUG_NET_Printf( "destroy report\n" );
+      DWC_ScDestroyReport( p_wk->p_data->sc_player[0].mReport );
+    }
 
-  if( p_wk->seq >= WIFIBATTLEMATCH_SC_SEQ_INIT )
-  {
-    DEBUG_NET_Printf( "sc shutdown\n" );
-    DWC_ScShutdown();
+    if( p_wk->seq >= WIFIBATTLEMATCH_SC_SEQ_INIT )
+    {
+      DEBUG_NET_Printf( "sc shutdown\n" );
+      DWC_ScShutdown();
+    }
+
+    p_wk->is_sc_start = FALSE;
   }
 }
 
@@ -4757,6 +4772,45 @@ static BOOL UTIL_IsClear( void *p_adrs, u32 size )
   return TRUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラー時に切断の前に呼ばれるコールバック
+ *
+ *	@param	p_wk_adrs ワークアドレス
+ *	@param	code      エラーコード
+ *	@param	type      エラータイプ
+ *	@param	ret       エラーリターン
+ */
+//-----------------------------------------------------------------------------
+static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int type, int ret )
+{
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
+
+  switch( type )
+  {
+    //レポートエラー
+  case DWC_ETYPE_SHOW_ERROR:
+  case DWC_ETYPE_SHUTDOWN_GHTTP:
+    if( -43000 >= code && code >= -44999 )
+    {
+      DwcRap_Sc_Finalize( p_wk );
+    }
+    break;
+
+    //切断エラー
+  case DWC_ETYPE_SHUTDOWN_FM:
+  case DWC_ETYPE_DISCONNECT:
+    //NHTTPが解放していないならば先に呼ぶ
+
+    if(p_wk->p_nhttp)
+    {
+      NHTTP_RAP_End(p_wk->p_nhttp);
+      p_wk->p_nhttp  = NULL;
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  受信したデジタル選手証を取得
@@ -4924,9 +4978,18 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
     break;
 
   case SEQ_START_CONNECT:
-    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp))
+    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp)==NHTTP_ERROR_NONE)
     {
       p_wk->seq  = SEQ_WAIT_CONNECT;
+    }
+    else
+    {
+      if(p_wk->p_nhttp)
+      {
+        NHTTP_RAP_End(p_wk->p_nhttp);
+        p_wk->p_nhttp  = NULL;
+      }
+      return WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR;
     }
     break;
 
@@ -5057,9 +5120,18 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
     break;
 
   case SEQ_START_CONNECT:
-    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp))
+    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp)==NHTTP_ERROR_NONE)
     {
       p_wk->seq  = SEQ_WAIT_CONNECT;
+    }
+    else
+    {
+      if(p_wk->p_nhttp)
+      {
+        NHTTP_RAP_End(p_wk->p_nhttp);
+        p_wk->p_nhttp  = NULL;
+      }
+      return WIFIBATTLEMATCH_SEND_GPFDATA_RET_ERROR;
     }
     break;
 
@@ -5076,6 +5148,13 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
     else if( NHTTP_ERROR_BUSY != error )
     { 
       WIFIBATTLEMATCH_NETERR_SetNhttpError( &p_wk->error, error, __LINE__ );
+
+      if(p_wk->p_nhttp)
+      {
+        NHTTP_RAP_End(p_wk->p_nhttp);
+        p_wk->p_nhttp  = NULL;
+      }
+
       return WIFIBATTLEMATCH_SEND_GPFDATA_RET_ERROR;
     }
     break;
@@ -5221,12 +5300,23 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
       ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( p_wk->p_nhttp );
       GF_ASSERT( ret );
 
-      ret = NHTTP_RAP_StartConnect( p_wk->p_nhttp );  
-      GF_ASSERT( ret );
+      if( NHTTP_RAP_StartConnect( p_wk->p_nhttp ) == NHTTP_ERROR_NONE )
+      {
+        p_wk->seq++;
+      }
+      else
+      {
+        if(p_wk->p_nhttp)
+        {
+          NHTTP_RAP_End(p_wk->p_nhttp);
+          p_wk->p_nhttp  = NULL;
+          p_wk->seq = 0;
+          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR;
+        }
+      }
 
       DEBUG_NET_Printf( "不正チェック開始\n" );
     }
-    p_wk->seq++;
     break;
 
   case SEQ_EVILCHECL_WAIT:

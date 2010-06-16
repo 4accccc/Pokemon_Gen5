@@ -285,7 +285,7 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
     ret = NHTTP_RAP_PokemonEvilCheckConectionCreate(gdsrap->p_nhttp);
     GF_ASSERT(ret);
 
-    ret = NHTTP_RAP_StartConnect( gdsrap->p_nhttp );  
+    ret = NHTTP_RAP_StartConnect( gdsrap->p_nhttp ) == NHTTP_ERROR_NONE;
     GF_ASSERT( ret );
   }
   

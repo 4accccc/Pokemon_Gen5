@@ -552,6 +552,27 @@ void NetErr_App_ReqErrorDisp(void)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制エラー画面表示リクエスト  
+ *	        WIFIではDWC経由でエラーを引き出していますが、
+ *	        ライブラリのなかにはDWCのエラーにならず、ライブラリの固有のエラーを
+ *	        履く場合があり、そのときに上記NetErr_App_ReqErrorDispを読んでも
+ *	        抜けてきてしまうので、エラー状態でなくともリクエストできる関数を用意しました。
+ *
+ *	@param	msg メッセージ番号
+ */
+//-----------------------------------------------------------------------------
+void NetErr_App_ReqErrorDispForce(int message )
+{
+  if( NetErrSystem.status != NET_ERR_STATUS_REQ )
+  { 
+    NetErrSystem.wifi_msg = message;
+    NetErrSystem.status = NET_ERR_STATUS_REQ;
+    OS_TPrintf("NetErr App ReqErrDisp Force\n");
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   外に退避用アドレスを渡す

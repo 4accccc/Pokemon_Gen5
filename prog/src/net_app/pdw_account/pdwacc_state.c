@@ -448,7 +448,7 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
       NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap),
                             pWork->tempbuffer, 12 );
 
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_ghttpInfoWait1);
       }
     }

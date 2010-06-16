@@ -85,8 +85,10 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
           GFL_NET_StateClearWifiError();
           NetErr_ErrWorkInit();
           GFL_NET_StateResetError();
+          DWC_ClearError(); //表示後クリアする決まり
           return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
         }
+        DWC_ClearError(); //表示後クリアする決まりだが無理やりシャットダウンにしたい場合はその前にクリアする
         /* fallthru */
 
       case DWC_ETYPE_SHUTDOWN_FM:
@@ -94,6 +96,9 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
       case DWC_ETYPE_SHUTDOWN_ND:
         //シャットダウン
         NetErr_App_ReqErrorDisp();
+        //下記はDWCのエラーにならないときに呼ぶ。
+        //上記関数を受け付けていれば下記は呼ばれない。
+        NetErr_App_ReqErrorDispForce( dwc_message_0014 );
         return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
 
       case DWC_ETYPE_DISCONNECT:
@@ -140,6 +145,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
       else
       {
         NetErr_App_ReqErrorDisp();
+        NetErr_App_ReqErrorDispForce( dwc_message_0014 );
 
         DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
         return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
@@ -150,6 +156,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
     else  if( .. )
     {
       NetErr_App_ReqErrorDisp();
+      NetErr_App_ReqErrorDispForce( dwc_message_0014 );
       DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
       return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
     }
