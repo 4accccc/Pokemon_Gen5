@@ -2075,12 +2075,13 @@ static int _playerDirectEnd2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectEnd3( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(!WifiP2PMatchMessageEndCheck(wk)){
-    return seq;
-  }
-  if(GFL_UI_KEY_GetTrg()){
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT2);
-  }
+//  if(!WifiP2PMatchMessageEndCheck(wk)){
+ //   return seq;
+//  }
+//  if(GFL_UI_KEY_GetTrg()){
+//  if(wk->)
+  wk->timer = 0;   //Ø’f‚ð‚»‚ë‚¦‚½‚¢‚Ì‚ÅƒL[‘—‚è‚Í‚µ‚È‚¢ 
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT2);
   return seq;
 }
 

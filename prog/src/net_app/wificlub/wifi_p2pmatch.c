@@ -4187,6 +4187,10 @@ static int WifiP2PMatch_BattleDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
 //WIFIP2PMATCH_MODE_DISCONNECT2
 static int WifiP2PMatch_Disconnect2(WIFIP2PMATCH_WORK *wk, int seq)
 {
+  wk->timer++;
+  if(wk->timer <= (60*4)){
+    return seq;
+  }
 
   // 話しかけている友達ナンバー取得
   WIFI_MCR_NpcPauseOff( &wk->matchroom, MCRSYS_GetMoveObjWork( wk, WIFI_MCR_PlayerSelect( &wk->matchroom ) ) );
@@ -5549,8 +5553,8 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
 
- // GFL_NET_SetAutoErrorCheck(TRUE);  //@todo
-//  GFL_NET_SetNoChildErrorCheck(TRUE);
+  GFL_NET_SetAutoErrorCheck(TRUE);
+  GFL_NET_SetNoChildErrorCheck(TRUE);
   
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
   mySt = _WifiMyStatusGet( wk, wk->pMatch );
