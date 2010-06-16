@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-27T19:53:58"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-15T21:15:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -884,7 +884,7 @@
 		<language name="JPN" width="256">きみたち　それでも
 ブルジョワールけの　にんげん　かい？▼</language>
 		<language name="JPN_KANJI" width="256">きみたち　それでも
-ブルジョワール家の　一員かい？▼</language>
+ブルジョワール家の　人間かい？▼</language>
 	</row>
 
 	<row id="msg_t04r0101_boy4_02">
@@ -910,11 +910,11 @@
 		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">なんど　きても　おなじこと！　この
-ジリオンを　たおすことなど　できない！▼
+マイルを　たおすことなど　できない！▼
 ブルジョワールけの　めいよは
 この　ボクが　まもる！▼</language>
 		<language name="JPN_KANJI" width="256">何度　来ても　同じこと！　この
-ジリオンを　倒すことなど　できない！▼
+マイルを　倒すことなど　できない！▼
 ブルジョワール家の　名誉は
 この　ボクが　護る！▼</language>
 	</row>
