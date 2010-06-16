@@ -96,7 +96,7 @@ EVENT_START   ev_d01r0201_poke16_01
 	SWITCH $SCWK_ANSWER
 	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
 		//èüóòÇµÇΩèÍçáÅAÇ†ÇÈÇ¢ÇÕì¶Ç∞ÇΩèÍçá
-		_SYSWIN_MSG( msg_d01r0201_pokemon_02 , POS_DEFAULT )
+		_SYSWIN_MSG( msg_d01r0201_pokemon_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_SYSWIN_CLOSE()
 		
