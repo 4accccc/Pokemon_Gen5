@@ -1517,7 +1517,7 @@
 どんなものでも　やきつくしてしまう。</language>
 		<language name="JPN_KANJI">一度　暴れだした　ギャラドスは
 あらしが　吹きすさんでいようとも
-どんなものでも　焼き尽くしてしまう。</language>
+どんなものでも　焼きつくしてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_131">
@@ -3423,7 +3423,7 @@
 		<language name="JPN">いけに　すむ　ほかの　ポケモンを
 ハサミで　つまみあげ　いけの　そとへ
 ほうりだしてしまう　あばれんぼう。</language>
-		<language name="JPN_KANJI">池に　住む　他の　ポケモンを
+		<language name="JPN_KANJI">池に　住む　ほかの　ポケモンを
 ハサミで　つまみ上げ　池の　外へ
 放り出してしまう　暴れん坊。</language>
 	</row>
@@ -5907,7 +5907,7 @@
 		<language name="JPN">ひふが　かたいので　すもうとりに
 ふまれても　へいき。でんきを
 ながすとき　わらいがおに　なる。</language>
-		<language name="JPN_KANJI">ひふが　硬いので
+		<language name="JPN_KANJI">皮膚が　硬いので
 相撲取りに　踏まれても　平気。
 電気を　流すとき　笑い顔に　なる。</language>
 	</row>
@@ -6051,7 +6051,7 @@
 		<language name="JPN">なわばりの　エサを　たべつくすと
 ほかの　とちへ　いどうする。
 ２つの　あたまは　なかが　わるい。</language>
-		<language name="JPN_KANJI">縄張りの　エサを　食べ尽くすと
+		<language name="JPN_KANJI">縄張りの　エサを　食べつくすと
 ほかの　土地へ　移動する。
 ２つの　頭は　仲が　悪い。</language>
 	</row>
