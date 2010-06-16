@@ -196,25 +196,36 @@ void NitroMain(void)
 
     // VBLANK待ち
     GFL_G3D_SwapBuffers();
-    if(isARM9preference() == FALSE){
-      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 
-      GameVBlankFunc();
-    }
-    else{
-      MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+    {
+      //2010.06.16  tamada
+      //Vblank待ち状態のときに通信時・非通信時問わず
+      //サウンド分割ロードスレッドは停止するようにした
+      BOOL isARM9pref = isARM9preference();
+      if( isARM9pref )
+      { //非通信時はARM9優先にする
+        MI_SetMainMemoryPriority( MI_PROCESSOR_ARM9 );
+      }
+
       if( OS_IsThreadTerminated( &soundLoadThread ) == FALSE )
       { // サウンド読み込みスレッド休止
         OS_SleepThreadDirect( &soundLoadThread, NULL );
       }
+
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
       GameVBlankFunc();
+
       if( OS_IsThreadTerminated( &soundLoadThread ) == FALSE )
       { // サウンド読み込みスレッド起動
         OS_WakeupThreadDirect( &soundLoadThread );
       }
-      MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+
+      if( isARM9pref )
+      { //非通信時のARM9優先をARM7優先に戻す
+        MI_SetMainMemoryPriority( MI_PROCESSOR_ARM7 );
+      }
     }
+
     
   }//while
 
