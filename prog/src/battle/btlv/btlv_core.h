@@ -354,7 +354,8 @@ extern void BTLV_ACT_MoveMember_Start( BTLV_CORE* wk, u8 clientID, u8 vpos1, u8 
 extern BOOL BTLV_ACT_MoveMember_Wait( BTLV_CORE* wk );
 
 
-extern void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy, u8 fFirstPokemon );
+extern void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy,
+        u8 fFirstPokemon, u8 fBallTargetHide );
 extern BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk );
 extern void BTLV_ITEMSELECT_ForceQuit( BTLV_CORE* wk );
 

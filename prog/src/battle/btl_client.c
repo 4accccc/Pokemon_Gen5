@@ -274,6 +274,7 @@ static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* pa
 static BOOL selact_WazaInfoView( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Item( BTL_CLIENT* wk, int* seq );
+static BOOL checkBallTargetHide( BTL_CLIENT* wk );
 static BOOL selact_Escape( BTL_CLIENT* wk, int* seq );
 static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Finish( BTL_CLIENT* wk, int* seq );
@@ -2381,7 +2382,8 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
     {
       u8 cost_sum = shooterCost_GetSum( wk );
       u8 fFirstPokemon = (wk->procPokeIdx == wk->firstPokeIdx );
-      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, cost_sum, fFirstPokemon );
+      u8 fBallTargetHide = checkBallTargetHide( wk );
+      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, cost_sum, fFirstPokemon, fBallTargetHide );
       (*seq)++;
     }
     break;
@@ -2438,6 +2440,38 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
   }
   return FALSE;
 }
+//------------------------------------------------------
+/**
+ * ボールを投げる対象が「そらをとぶ」など場から消えている判定
+ */
+//------------------------------------------------------
+static BOOL checkBallTargetHide( BTL_CLIENT* wk )
+{
+  const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, BTL_CLIENT_ENEMY1 );
+  u32 frontPosNum = BTL_MAIN_GetFrontPosNum( wk->mainModule );
+  const BTL_POKEPARAM* bpp;
+  u32 i, aliveCnt, fHide;
+
+  fHide = FALSE;
+  aliveCnt = 0;
+  for(i=0; i<frontPosNum; ++i)
+  {
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    if( !BPP_IsDead(bpp) )
+    {
+      ++aliveCnt;
+      if( BPP_CONTFLAG_CheckWazaHide(bpp) ){
+        fHide = TRUE;
+      }
+    }
+  }
+
+  if( (aliveCnt == 1) && (fHide) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------
 /**
  *  「にげる」選択

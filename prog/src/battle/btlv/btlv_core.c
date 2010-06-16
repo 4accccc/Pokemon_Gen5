@@ -680,7 +680,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     //下画面演出終了待ち
     if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
     {
-      BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0, TRUE );
+      BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0, TRUE, FALSE );
       (*seq)++;
     }
     break;
@@ -1230,7 +1230,7 @@ void BTLV_StartWazaInfoView( BTLV_CORE* wk, u8 pokeIdx, u8 wazaIdx )
  * @param   energy
  */
 //=============================================================================================
-void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy, u8 fFirstPokemon )
+void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy, u8 fFirstPokemon, u8 fBallTargetHide )
 {
   if( wk->selectItemSeq == 0 )
   {
@@ -1250,27 +1250,43 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.wild_flg = (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD);
     wk->bagData.end_flg = FALSE;
 
-
-    /* ボール投げ禁止条件チェック */
-    // 先頭のポケモン行動時しか投げられない
-    if( !fFirstPokemon ){
-      wk->bagData.ball_use = BBAG_BALLUSE_NOT_FIRST;
-    }
-    // 手持ち・ボックスが満杯なら投げられない
-    else if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_BOXFULL) )
     {
-      wk->bagData.ball_use = BBAG_BALLUSE_POKEMAX;
-    // ２体以上居て野生戦なら投げられない
-    }else if(
-        (BTL_POKECON_GetClientAlivePokeCount(wk->pokeCon, BTL_CLIENT_ENEMY1) > 1)
-    &&  (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
-    ){
-      wk->bagData.ball_use = BBAG_BALLUSE_DOUBLE;
-    // それ以外は投げる
-    }else{
-      wk->bagData.ball_use = BBAG_BALLUSE_TRUE;
+      u8 ballUseMode = BBAG_BALLUSE_TRUE; // ボール投げ禁止モード（デフォルトは禁止しない）
+
+      do{
+        // 先頭のポケモン行動時しか投げられない
+        if( !fFirstPokemon ){
+          ballUseMode = BBAG_BALLUSE_NOT_FIRST;
+          break;
+        }
+        // 手持ち・ボックスが満杯で投げられない
+        if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_BOXFULL) ){
+          ballUseMode = BBAG_BALLUSE_POKEMAX;
+          break;
+        }
+        // 野生戦の場合…
+        if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD )
+        {
+          // 場に２体以上いるなら投げられない
+          if( BTL_POKECON_GetClientAlivePokeCount(wk->pokeCon, BTL_CLIENT_ENEMY1) > 1 ){
+            ballUseMode = BBAG_BALLUSE_DOUBLE;
+            break;
+          }
+          // 場のポケモンが（そらをとぶなどで）消えてるなら投げられない
+          if( fBallTargetHide ){
+            ballUseMode = BBAG_BALLUSE_POKE_NONE;
+            break;
+          }
+        }
+
+        // 上記条件に合致しなければ投げる（ただしトレーナー戦ならボールをはじかれて終わり）
+
+      }while(0);
+
+      wk->bagData.ball_use = ballUseMode;
     }
 
+  // ポケモンリストパラメータ初期化
     SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_ITEMUSE, 0, 0 );
 
   //「さしおさえ」で道具を使用できないポケモンを指定
