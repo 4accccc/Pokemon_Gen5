@@ -1533,12 +1533,12 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
     if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){ 
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_TEMOTI);
-
-      _pokeIconResourceDelete(wk);
-      _DeletePokeStatus(wk);
-      wk->SubListWin = _BmpWinDel(wk->SubListWin);
-      BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
-      BmpMenuWork_ListDelete( wk->submenulist );
+      WIFIP2PMatch_pokePartyMenuDelete(wk);
+//      _pokeIconResourceDelete(wk);
+ //     _DeletePokeStatus(wk);
+ //     wk->SubListWin = _BmpWinDel(wk->SubListWin);
+  //    BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
+  //    BmpMenuWork_ListDelete( wk->submenulist );
       return seq;
     }
     else{
@@ -1551,11 +1551,12 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_BBOX);
 
-      _pokeIconResourceDelete(wk);
-      _DeletePokeStatus(wk);
-      wk->SubListWin = _BmpWinDel(wk->SubListWin);
-      BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
-      BmpMenuWork_ListDelete( wk->submenulist );
+      WIFIP2PMatch_pokePartyMenuDelete(wk);
+      //_pokeIconResourceDelete(wk);
+      //_DeletePokeStatus(wk);
+      //wk->SubListWin = _BmpWinDel(wk->SubListWin);
+     // BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
+     // BmpMenuWork_ListDelete( wk->submenulist );
       return seq;
     }
     else {
@@ -1564,12 +1565,13 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
     }
     break;
   }
-  _pokeIconResourceDelete(wk);
-  _DeletePokeStatus(wk);
+  WIFIP2PMatch_pokePartyMenuDelete(wk);
+//  _pokeIconResourceDelete(wk);
+//  _DeletePokeStatus(wk);
+//  wk->SubListWin = _BmpWinDel(wk->SubListWin);
+//  BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
+//  BmpMenuWork_ListDelete( wk->submenulist );
   EndMessageWindowOff(wk);
-  wk->SubListWin = _BmpWinDel(wk->SubListWin);
-  BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
-  BmpMenuWork_ListDelete( wk->submenulist );
   return seq;
 }
 

@@ -586,6 +586,7 @@ extern void WifiP2PMatchRecvVctOff(const int netID, const int size, const void* 
 
 extern u8* WifiP2PMatchGetPokePartyWork(int netID, void* pWk, int size);
 extern void WifiP2PMatchMessage_TimeIconStart(WIFIP2PMATCH_WORK* wk);
+extern void WIFIP2PMatch_pokePartyMenuDelete( WIFIP2PMATCH_WORK* wk );
 
 
 

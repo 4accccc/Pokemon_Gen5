@@ -5775,6 +5775,7 @@ void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pDa
   }
 
   if(wk->seq == WIFIP2PMATCH_PLAYERDIRECT_WAIT){
+    NET_PRINT("_CHANGESTATE %d\n",pChangeStateNo[0]);
     _CHANGESTATE(wk, pChangeStateNo[0]);
   }
   else{
@@ -7797,6 +7798,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   if(GFL_NET_IsInit()){
     switch(GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE)){
     case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
+      WIFIP2PMatch_pokePartyMenuDelete(wk);
       BmpWinDelete(wk);
       GFL_NET_SetAutoErrorCheck(FALSE);
       GFL_NET_SetNoChildErrorCheck(FALSE);
@@ -7846,6 +7848,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
     wk->pRegulation=NULL;
   }
 
+  WIFIP2PMatch_pokePartyMenuDelete(wk);
   _graphicEnd(wk);
 
   pParentWork->friendNo = wk->friendNo;

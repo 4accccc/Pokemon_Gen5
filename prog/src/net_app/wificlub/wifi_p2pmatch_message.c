@@ -983,6 +983,12 @@ static void BmpWinDelete( WIFIP2PMATCH_WORK *wk )
   // メッセージ停止
   EndMessageWindowOff( wk );
 
+  if(wk->SubListWin){
+    GFL_BMPWIN_Delete(wk->SubListWin);
+    BmpMenuList_Exit(wk->sublw, NULL, NULL);
+    BmpMenuWork_ListDelete( wk->submenulist );
+    wk->submenulist = NULL;
+  }
   if(wk->MyInfoWinBack){
     GFL_BMPWIN_Delete(wk->MyInfoWinBack);
     wk->MyInfoWinBack = NULL;
@@ -1884,5 +1890,26 @@ void WifiP2PMatchMessage_TimeIconStart(WIFIP2PMATCH_WORK* wk)
   wk->pTimeIcon =
     TIMEICON_CreateTcbl(wk->pMsgTcblSys, wk->MsgWin,
                         15, TIMEICON_DEFAULT_WAIT, HEAPID_WIFIP2PMATCH);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケパーティメニューを消す
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void WIFIP2PMatch_pokePartyMenuDelete( WIFIP2PMATCH_WORK* wk )
+{
+  if(wk->SubListWin){
+    _pokeIconResourceDelete(wk);
+    _DeletePokeStatus(wk);
+    wk->SubListWin = _BmpWinDel(wk->SubListWin);
+    BmpMenuList_Exit(wk->sublw, NULL, NULL);
+    BmpMenuWork_ListDelete( wk->submenulist );
+    wk->submenulist=NULL;
+  }
 }
 
