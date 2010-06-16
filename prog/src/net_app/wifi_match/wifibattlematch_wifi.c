@@ -117,7 +117,7 @@ typedef enum
 #define MATCHING_MSG_WAIT_SYNC (120)
 #define SELECTPOKE_MSG_WAIT_SYNC (60)
 
-#define MATCHING_TIMEOUT_SYNC   (60*40)
+#define MATCHING_TIMEOUT_SYNC   (60*20)
 
 //=============================================================================
 /**
@@ -956,16 +956,6 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   const REGULATION_CARDDATA *cp_reg_card  = p_wk->p_reg;
 
-  //-------------------------------------
-  ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
-  //=====================================
-  switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
-  { 
-  case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-  case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
-    break;
-  }
 
   switch( *p_seq )
   { 
@@ -1006,6 +996,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
         *p_seq  = SEQ_START_MSG_CUPDATA;
+      }
+
+      if( ret != WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE )
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
       }
     }
     break;
@@ -1095,6 +1097,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         *p_seq  = SEQ_START_WRITE_SAKE_DELETE_POKE;
       }
+
+      if( ret != WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE )
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
+      }
     }
     break;
     
@@ -1116,7 +1130,17 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         *p_seq  = SEQ_START_GIVEUP_MSG;
       }
 
-      //エラー処理は共通
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
+      }
     }
     break;
 
@@ -1161,6 +1185,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         DEBUG_WIFICUP_Printf( "レギュレーションがなかったよ！\n" );
         *p_seq  =  SEQ_WAIT_DOWNLOAD_REG_FAILURE;
       }
+
+      if( ret != WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_DOWNLOADING )
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
+      }
     }
     break;
 
@@ -1186,9 +1222,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( ret != WBM_WIFI_SUBSEQ_RET_NONE )
       { 
         *p_seq  = SEQ_START_RECV_SAKE_MSG;
-      }
 
-      //エラー処理は共通
+        {
+          ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+          switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+          { 
+          case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+            WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+            return;
+          }
+        }
+      }
     }
     break;
 
@@ -1419,6 +1464,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_SEND_GPF_CUPSTATUS;
       }
+
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
+      }
     }
     break;
 
@@ -1443,6 +1500,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
         *p_seq  = SEQ_START_SAVE_MSG;
+      }
+
+      if( ret != WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE )
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
       }
     }
     break;
@@ -1528,6 +1597,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_CHECK_RATING;
+      }
+
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
       }
     }
     break;

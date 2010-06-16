@@ -75,7 +75,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 
 #if defined(DEBUG_ONLY_FOR_toru_nagihashi)
-//#define DEBUG_NONE_MATCHING
+#define DEBUG_NONE_MATCHING
 #endif 
 
 #endif //PM_DEBUG
