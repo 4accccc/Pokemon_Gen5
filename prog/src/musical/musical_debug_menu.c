@@ -72,6 +72,8 @@ static void MD_U_EnableMax( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_D_EnableMax( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_U_EnableDupDebug( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_D_EnableDupDebug( void* userWork , DEBUGWIN_ITEM* item );
+static void MD_U_NpcNoEquip( void* userWork , DEBUGWIN_ITEM* item );
+static void MD_D_NpcNoEquip( void* userWork , DEBUGWIN_ITEM* item );
 
 static const char StrArrOnOff[2][4] = {"OFF","ON"};
 
@@ -91,6 +93,7 @@ static void MUSICAL_DEBUG_InitMenu( MUSICAL_DEBUG_MENU_WORK *work )
   DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)2 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MD_U_EnableMax ,MD_D_EnableMax , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MD_U_EnableDupDebug ,MD_D_EnableDupDebug , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_NpcNoEquip ,MD_D_NpcNoEquip , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
 }
 
 
@@ -227,4 +230,20 @@ static void MD_D_EnableDupDebug( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_ITEM_SetNameV( item , "DressUpDebug[%s]",StrArrOnOff[work->dupDebug] );
 }
 
+static void MD_U_NpcNoEquip( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUSICAL_DEBUG_MENU_WORK *work = userWork;
+  if( MUSICAL_DEBUG_UpdateValue_BOOL(&work->npcNoEquip) )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MD_D_NpcNoEquip( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUSICAL_DEBUG_MENU_WORK *work = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "NpcNoEquip[%s]",StrArrOnOff[work->npcNoEquip] );
+}
+
 #endif
+

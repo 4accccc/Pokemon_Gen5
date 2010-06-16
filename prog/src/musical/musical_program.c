@@ -350,6 +350,17 @@ void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WO
   //“K“–‚È”’l‚ð‚Å‚Á‚¿ã‚°‚é
   u32 perRand = pokeData->trainerType + (pokeData->trainerName<<8) + (pokeData->trainerSex<<16)  + (pokeData->pokeSex<<24);
   MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , pokeData->monsno , pokeData->pokeSex , perRand , pokeData->appealTime , heapId );
+#if PM_DEBUG
+  {
+    MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+    if( debWork != NULL && 
+        (debWork->memMaxMode == TRUE ||
+         debWork->npcNoEquip == TRUE ))
+    {
+      return;
+    }
+  }
+#endif
   
   for( i=0;i<MUS_PROG_DATA_EQUIP_NUM;i++ )
   {

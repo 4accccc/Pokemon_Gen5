@@ -24,6 +24,7 @@ typedef struct
   BOOL forceNpc;
   BOOL memMaxMode;
   BOOL dupDebug;
+  BOOL npcNoEquip;
   u16 arr[4];
   u16 npc[3];
 }MUSICAL_DEBUG_MENU_WORK;

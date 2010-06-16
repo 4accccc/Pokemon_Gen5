@@ -1331,7 +1331,14 @@ STRBUF* MUSICAL_EVENT_CreateStr_ProgramTitle( MUSICAL_EVENT_WORK *evWork , HEAPI
 const u8 MUSICAL_EVENT_GetPoint( MUSICAL_EVENT_WORK *evWork , const u8 idx )
 {
   const MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[idx];
-  return musPoke->point;
+  if( musPoke->point < 256 )
+  {
+    return musPoke->point;
+  }
+  else
+  {
+    return 255;
+  }
 }
 
 const u8 MUSICAL_EVENT_GetMaxPoint( MUSICAL_EVENT_WORK *evWork )
