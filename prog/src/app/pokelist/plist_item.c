@@ -548,7 +548,8 @@ const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
     break;
   case ITEM_TYPE_PP_UP:      // ppUpån
   case ITEM_TYPE_PP_3UP:     // pp3Upån
-    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_22 );
+    //äOÇ≈WORDSETÇê›íËÇ∑ÇÈ
+    PLIST_MessageWaitInit( work , mes_pokelist_04_22 , TRUE , PLIST_MSGCB_CheckItemUseContinue );
     break;
   case ITEM_TYPE_PP_RCV:     // ppâÒïúån
     PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_19 );

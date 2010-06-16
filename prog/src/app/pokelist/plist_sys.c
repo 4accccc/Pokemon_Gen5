@@ -43,6 +43,7 @@
 #include "plist_snd_def.h"
 #include "poke_tool/status_rcv.h"
 #include "poke_tool/item_rcv.h"
+#include "poke_tool/poke_regulation.h"
 
 #include "app/p_status.h" //Proc切り替え用
 #include "app/app_menu_common.h"
@@ -1553,6 +1554,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 static void PLIST_InitMode_Select( PLIST_WORK *work )
 {
+  GFL_BG_LoadScreenReq( PLIST_BG_MENU );  //ちらつきぼうし！
   switch( work->plData->mode )
   {
   case PL_MODE_FIELD:
@@ -1692,7 +1694,16 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           }
           else
           {
-            PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+            if( useType == ITEM_TYPE_HP_DOWN ||
+                useType == ITEM_TYPE_HP_UP )
+            {
+              //HPの努力値も変わる・・・
+              PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] , work->selectPokePara , 0 );
+            }
+            else
+            {
+              PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+            }
             PMSND_PlaySystemSE( PLIST_SND_RECOVER );
           }
           PLIST_SubBagItem( work , work->plData->item );
@@ -2398,6 +2409,7 @@ static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work )
 static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
 {
   REGULATION *reg = (REGULATION*)work->plData->reg;
+  int regRet;
   if( work->pokeCursor != PL_SEL_POS_ENTER )
   {
     //アクティブだったところを戻す
@@ -2412,7 +2424,23 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
   }
 
   work->plData->ret_sel = PL_SEL_POS_ENTER;
+  
+  {
+    u8 i;
+    u8 arr[6]={0,0,0,0,0,0};
 
+    for(i=0;i<PLIST_LIST_MAX;i++ )
+    {
+      const PLIST_PLATE_BATTLE_ORDER order = PLIST_PLATE_GetBattleOrder( work->plateWork[i] );
+      if( order <= PPBO_JOIN_6 )
+      {
+        arr[order] = i+1;
+      }
+    }
+
+    regRet = PokeRegulationMatchFullPokeParty( reg , work->plData->pp , arr );
+  }
+  
   if( reg->NUM_LO > work->btlJoinNum )
   {
     PLIST_MessageWaitInit( work , mes_pokelist_04_60_1 + (reg->NUM_LO-1) , TRUE , PLIST_MSGCB_ReturnSelectCommon );
@@ -2422,6 +2450,21 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
   if( reg->NUM_HI < work->btlJoinNum )
   {
     PLIST_MessageWaitInit( work , mes_pokelist_04_62_1 + (reg->NUM_HI-1) , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+    PMSND_PlaySystemSE( PLIST_SND_ERROR );
+  }
+  else
+  if( regRet == POKE_REG_TOTAL_LV_FAILED )
+  {
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_Value( work , work->msgWork , 0 , reg->LEVEL_TOTAL , 3 );
+    PLIST_MessageWaitInit( work , mes_pokelist_07_03 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+    PMSND_PlaySystemSE( PLIST_SND_ERROR );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+  }
+  else
+  if( regRet == POKE_REG_NO_MASTPOKE )
+  {
+    PLIST_MessageWaitInit( work , mes_pokelist_07_05 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
     PMSND_PlaySystemSE( PLIST_SND_ERROR );
   }
   else
@@ -3276,8 +3319,13 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       const BOOL canUse = STATUS_RCV_RecoverCheck( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->heapId );
       if( canUse == TRUE )
       {
+        const u32 wazaNo = PP_Get(work->selectPokePara , ID_PARA_waza1+(work->menuRet-PMIT_WAZA_1) , NULL);
         GFL_BG_LoadScreenReq( PLIST_BG_MENU );  //ちらつきぼうし！
+        //中に技IDを渡せないので外でWORDSET作成
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 0 , wazaNo );
         PLIST_ITEM_MSG_UseItemFunc( work );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
         
         //実際に消費と適用
         STATUS_RCV_Recover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->zone_id , work->heapId );
