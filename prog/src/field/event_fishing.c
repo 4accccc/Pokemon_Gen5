@@ -262,6 +262,8 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_SUCCESS, NULL, NULL, HEAPID_FIELDMAP );
       *seq = SEQ_HIT_SUCCESS;
     }else if( ret == CODE_END){
+      //‚Â‚è‚»‚±‚È‚Á‚½‰ñ”  
+      RECORD_Inc( wk->record, RECID_FISHING_FAILURE );
       *seq = SEQ_TOO_SLOW;
     }
     break;
@@ -284,8 +286,6 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       }
       BATTLE_PARAM_Delete(wk->bsp);
     }
-    //‚Â‚è‚»‚±‚È‚Á‚½‰ñ”  
-    RECORD_Inc( wk->record, RECID_FISHING_FAILURE );
 
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_END );
     SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_FAILED_ENCOUNT+(*seq-SEQ_ENCOUNT_FAILED), NULL, NULL, HEAPID_FIELDMAP );
