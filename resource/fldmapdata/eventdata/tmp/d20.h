@@ -23,5 +23,6 @@
 #define D20_HIDE_ITEM_01                  0
 #define D20_HIDE_ITEM_02                  1
 #define D20_HIDE_ITEM_03                  2
+#define D20_HIDE_ITEM_02_COPY             3
 
 #endif //ZONE_D20_EVB_H

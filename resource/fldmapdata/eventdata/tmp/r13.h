@@ -57,5 +57,6 @@
 #define R13_HIDE_ITEM_05                  7
 #define R13_HIDE_ITEM_06                  8
 #define R13_HIDE_ITEM_08                  9
+#define R13_HIDE_ITEM_01_COPY            10
 
 #endif //ZONE_R13_EVB_H
