@@ -7752,20 +7752,20 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
 {
   WIFIP2PMATCH_WORK * wk  = mywk;
 
-  if(FuncTable[wk->seq]!=NULL){
-    *seq = (*FuncTable[wk->seq])( wk, *seq );
-    if(*seq == SEQ_OUT){
-      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
-                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
-      return GFL_PROC_RES_FINISH;
+
+  if( NetErr_App_CheckError() == NET_ERR_CHECK_NONE ){
+    if(FuncTable[wk->seq]!=NULL){
+      *seq = (*FuncTable[wk->seq])( wk, *seq );
+      if(*seq == SEQ_OUT){
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                        WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+        return GFL_PROC_RES_FINISH;
+      }
     }
   }
   if(wk->clactSet){
     GFL_CLACT_SYS_Main();
   }
-  //  if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
-  //    WIFI_MCR_Draw( &wk->matchroom );
-  //  }
 
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
   {

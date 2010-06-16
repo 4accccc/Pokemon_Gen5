@@ -118,8 +118,6 @@ static CPSCaInfo* cainfos[] = {
 
 
 struct _NHTTP_RAP_WORK {
-  Callback_NHTTPError* pCallback;
-  void* pUserWork;
   u8* pData;
   int length;
   DWCSvlResult* pSvl;
@@ -569,43 +567,4 @@ void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork)
 }
 
 
-
-//------------------------------------------------------------------------------
-/**
- * @brief   切断時のコールバックを設定する
-            切断時にはこのコールバックが呼ばれますので、速やかにワークを開放して
-            NHTTPRAP関数へのアクセスを行わないようにしてください
- * @param   NHTTP_RAP_WORK* pWork,  ワーク
- * @param   Callback_NHTTPError* pFunc,  NHTTPErrorコールバック関数
- * @param   void* pUserWork,  ユーザーワーク
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-void NHTTP_RAP_SetDisconnectCallback(NHTTP_RAP_WORK* pWork,Callback_NHTTPError* pFunc,void* pUserWork )
-{
-  pWork->pCallback = pFunc;
-  pWork->pUserWork = pUserWork;
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   切断時にはNHTTP開放を先に呼びたいのでコールバックを呼ぶ関数を外部に設けた
- * @param   errorCode  コード　表示される番号
- * @param   type  DWCErrorType  エラー検出時に必要な処理を示すエラータイプ
- * @param   DWCError  DWC_GetLastErrorExの戻り値  
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-void NHTTP_RAP_DisconnectCallbackCall( int code, int type, int ret )
-{
-  if(pNHTTPWork){
-    NHTTP_RAP_ErrorClean(pNHTTPWork);
-    if(pNHTTPWork->pCallback){
-      pNHTTPWork->pCallback(pNHTTPWork->pUserWork, code, type, ret);
-    }
-  }
-}
 

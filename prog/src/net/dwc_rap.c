@@ -74,6 +74,8 @@ typedef struct
   GFL_NET_MYDWCReceiverFunc clientCallback;
   MYDWCDisconnectFunc disconnectCallback;
   void* pDisconnectWork;
+  Callback_DisconnectError* pDisconnectErrorCallback;  //CleanUpを先に呼びたい場合つかう
+  void* pDisconnectErrorUserWork;
   MYDWCConnectFunc connectCallback;
   void* pConnectWork;
   GFL_NET_MYDWCConnectModeCheckFunc connectModeCheck;
@@ -1619,6 +1621,11 @@ int mydwc_HandleError(void)
     // 何らかのエラーが発生。
     MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
 
+    if(_dWork->pDisconnectErrorCallback){
+      _dWork->pDisconnectErrorCallback(_dWork->pDisconnectErrorUserWork, errorCode, myErrorType, ret);
+    }
+
+    
 //    NHTTP_RAP_DisconnectCallbackCall(errorCode, myErrorType, ret);
     // DWC_GetLastErrorExの説明にのっとる  2008.5.23 -> 2010.1.5 nagihashi update
     // 返すものは基本的にerrorCodeであるが
@@ -3129,6 +3136,25 @@ BOOL GFL_NET_DWC_IsDisconnect(void)
 void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn)
 {
   _dWork->bAutoDisconnect = bOn;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   切断時のコールバックを設定する
+            切断時にはこのコールバックが呼ばれますので、速やかにワークを開放して下さい
+
+            この関数は
+ * @param   Callback_NHTTPError* pFunc,  NHTTPErrorコールバック関数
+ * @param   void* pUserWork,  ユーザーワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GFL_NET_DWC_SetErrDisconnectCallback(Callback_DisconnectError* pFunc,void* pUserWork )
+{
+  _dWork->pDisconnectErrorCallback = pFunc;
+  _dWork->pDisconnectErrorUserWork = pUserWork;
 }
 
 

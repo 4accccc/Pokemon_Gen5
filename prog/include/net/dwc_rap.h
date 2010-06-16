@@ -17,6 +17,8 @@
 #define MYDWC_STATUS_DATA_SIZE_MAX (32)
 
 
+typedef void (Callback_DisconnectError)(void* pUserWork, int code, int type, int ret );
+
 //==============================================================================
 /**
  * ボイスチャットのコーデックを指定します。
@@ -495,6 +497,19 @@ extern void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn);
  */ 
 //------------------------------------------------------------------
 extern void GFL_NET_DWC_PMSND_ChangeBGMVolume( u16 trackBit, int volume );
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   切断時のコールバックを設定する
+            切断時にはこのコールバックが呼ばれますので、速やかにワークを開放して下さい
+
+            この関数は
+ * @param   Callback_NHTTPError* pFunc,  NHTTPErrorコールバック関数
+ * @param   void* pUserWork,  ユーザーワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+extern void GFL_NET_DWC_SetErrDisconnectCallback(Callback_DisconnectError* pFunc,void* pUserWork );
 
 //#include <ppwlobby/ppw_lobby.h>
 

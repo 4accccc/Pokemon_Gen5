@@ -46,6 +46,7 @@
 #include "p_st_obj_d_NANR_LBLDEFS.h"
 #include "wb_trade_obj01_NANR_LBLDEFS.h"
 #include "net/dwc_rapcommon.h"
+#include "net/dwc_rap.h"
 
 #include "net_app/pokemontrade.h"
 #include "net_app/connect_anm.h"
@@ -4508,6 +4509,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
         NHTTP_RAP_ErrorClean(pWork->pNHTTP);
         NHTTP_RAP_End(pWork->pNHTTP);
         pWork->pNHTTP  = NULL;
+        GFL_NET_DWC_SetErrDisconnectCallback(NULL,NULL);
         DWC_RAPCOMMON_ResetSubHeapID();
       }
       if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能

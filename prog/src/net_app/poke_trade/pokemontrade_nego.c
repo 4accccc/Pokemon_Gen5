@@ -19,6 +19,7 @@
 #include "net/network_define.h"
 #include "net/nhttp_rap_evilcheck.h"
 #include "net/dwc_rapcommon.h"
+#include "net/dwc_rap.h"
 
 #include "net_app/pokemontrade.h"
 #include "system/main.h"
@@ -1721,6 +1722,7 @@ static void _PokeEvilChk_DisconnectCallback(void* pUserwork, int code, int type,
   POKEMON_TRADE_WORK* pWork = pUserwork;
 
   if(pWork->pNHTTP){
+    NHTTP_RAP_ErrorClean(pWork->pNHTTP);
     NHTTP_RAP_End(pWork->pNHTTP);  //‚±‚ÌŠÖ”‚ðŒÄ‚ÔŽ–
     pWork->pNHTTP  = NULL;
     DWC_RAPCOMMON_ResetSubHeapID();
@@ -1757,6 +1759,7 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
       NHTTP_RAP_End(pWork->pNHTTP);
       pWork->pNHTTP  = NULL;
       DWC_RAPCOMMON_ResetSubHeapID();
+      GFL_NET_DWC_SetErrDisconnectCallback(NULL,NULL);
     }
     
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
@@ -1777,7 +1780,7 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
   pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
                                  MyStatus_GetProfileID(pWork->pMy), pWork->pParentWork->pSvl);
 
-  NHTTP_RAP_SetDisconnectCallback(pWork->pNHTTP, _PokeEvilChk_DisconnectCallback, pWork );
+  GFL_NET_DWC_SetErrDisconnectCallback(_PokeEvilChk_DisconnectCallback, pWork );
 
   
   for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
