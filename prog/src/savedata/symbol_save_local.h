@@ -53,4 +53,5 @@ enum{
 //--------------------------------------------------------------
 extern void SymbolSave_Local_Encode(SYMBOL_SAVE_WORK *pSymbol);
 extern void SymbolSave_Local_Decode(SYMBOL_SAVE_WORK *pSymbol);
+extern void SymbolSave_Local_CalcSmallLevel( SYMBOL_SAVE_WORK * symbol_save, u16 new_no );
 

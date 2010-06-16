@@ -355,6 +355,8 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save,
   }
   else if(zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL)
   {
+    SymbolSave_Local_CalcSmallLevel( symbol_save, no );
+#if 0
     if (no != SYMBOL_SPACE_NONE && no >= SYMBOL_NO_START_FREE_SMALL + SMALL_MAP_EXPAND_NUM * 2)
     {
       symbol_save->map_level_small = (no - SYMBOL_NO_START_FREE_SMALL) / SMALL_MAP_EXPAND_NUM - 1;
@@ -364,8 +366,36 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save,
         GF_ASSERT_MSG(0, "no=%d", no - SYMBOL_NO_START_FREE_SMALL);
       }
     }
+#endif
   }
   SymbolSave_Local_Encode(symbol_save);
+}
+
+//==================================================================
+/**
+ * @brief フリーゾーン小マップレベルの再計算処理
+ * @param symbol_save
+ * @param new_no
+ */
+//==================================================================
+void SymbolSave_Local_CalcSmallLevel( SYMBOL_SAVE_WORK * symbol_save, u16 new_no )
+{
+  u8 now_level = symbol_save->map_level_small;
+  u8 new_level = (new_no - SYMBOL_NO_START_FREE_SMALL) / SMALL_MAP_EXPAND_NUM - 1;
+
+  if (new_no == SYMBOL_SPACE_NONE
+      || new_no < SYMBOL_NO_START_FREE_SMALL + SMALL_MAP_EXPAND_NUM * 2
+      || new_no > SYMBOL_NO_END_FREE_SMALL)
+  {
+    return;
+  }
+
+  if (new_level > SYMBOL_MAP_LEVEL_SMALL_MAX)
+  {
+    new_level = SYMBOL_MAP_LEVEL_SMALL_MAX;  //一応
+    GF_ASSERT_MSG(0, "no=%d", new_no - SYMBOL_NO_START_FREE_SMALL);
+  }
+  symbol_save->map_level_small = new_level;
 }
 
 //==================================================================

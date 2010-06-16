@@ -111,6 +111,10 @@ BOOL SymbolSave_Field_MoveAuto( SYMBOL_SAVE_WORK *symbol_save, u32 now_no )
     SymbolSave_Local_Decode(symbol_save);  //暗号化解除
     //新しい場所に代入する
     symbol_save->symbol_poke[new_no] = symbol_save->symbol_poke[now_no];
+    if ( new_type == SYMBOL_ZONE_TYPE_FREE_SMALL )
+    { //マップが拡張するか再計算
+      SymbolSave_Local_CalcSmallLevel( symbol_save, new_no );
+    }
     SymbolSave_Local_Encode(symbol_save);  //再び暗号化
     //元のゾーンを前詰め
     SymbolSave_DataShift(symbol_save, now_no);
