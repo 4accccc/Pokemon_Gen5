@@ -2524,11 +2524,17 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
     if( equItem != NULL )
     {
       GFL_POINT movePos;
+      GFL_POINT dispOfs;
       GFL_POINT *dispPos;
       VecFx32 pos = {0,0,ITEM_RETURN_DEPTH};
       MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( equItem );
 
+
+      MUS_ITEM_DRAW_GetOffsetPos( itemDrawWork , &dispOfs );
       DUP_FIT_GetRandomItemPos( work , &movePos );
+      //表示オフセット分ずらす
+      movePos.x += dispOfs.x;
+      movePos.y += dispOfs.y;
       //リストを付け替えて座標を再設定
       DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , equItem );
       DUP_FIT_ITEMGROUP_AddItemTop( work->itemGroupField , equItem );
