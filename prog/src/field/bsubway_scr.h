@@ -59,7 +59,13 @@ extern void BSUBWAY_SCRWORK_PreparBattleBox( BSUBWAY_SCRWORK *bsw_scr );
 extern const POKEPARTY * BSUBWAY_SCRWORK_GetPokePartyUse(
     const BSUBWAY_SCRWORK *bsw_scr );
 
+extern u16 BSUBWAY_SCRWORK_GetNowRenshou( const BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_SCRWORK_SetNowRenshou( BSUBWAY_SCRWORK *bsw_scr, u16 renshou );
+extern void BSUBWAY_SCRWORK_IncNowRenshou( BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_SCRWORK_ResetNowRenshou( BSUBWAY_SCRWORK *bsw_scr );
+
 extern u32 BSUBWAY_SCRWORK_GetPlayModeMemberNum( u16 mode );
+extern u16 BSUBWAY_SCRWORK_RenshouToStageNo( u16 renshou );
 
 //bsubway_tr.h
 extern COMM_BTL_DEMO_PARAM * BSUBWAY_SCRWORK_CreateBattleDemoParam(

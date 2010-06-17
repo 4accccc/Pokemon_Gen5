@@ -77,8 +77,11 @@ struct _TAG_BSUBWAY_SCRWORK
   u16  btlrec_exist_f:2; ///<戦闘録画存在フラグ
   u16 btlrec_finish_f:1; ///<戦闘録画済みフラグ
   u16     padding_bit:3; ///<余り
-  u8 padding[2]; //余り
+  u16 now_renshou; ///<連勝数
   
+  u16 btlrec_btlnum; ///<戦闘録画に設定する戦闘数
+  u8 padding[2]; //余り
+
   BtlResult comm_btl_result; ///< 勝敗結果
   u16 pare_stage_no; ///<通信マルチパートナーの周回数
   

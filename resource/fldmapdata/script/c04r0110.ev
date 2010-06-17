@@ -486,11 +486,9 @@ sub_train_battle_win:
   
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
-  //連勝数取得
-//  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
-//  連勝数ではなくラウンド数になった
+  //ビーコン送信の為、現在のラウンド数取得
   _BSUBWAY_TOOL( BSWTOOL_GET_NOW_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  
+   
   //送信ビーコンセット：バトルサブウェイ連勝中
   //挑戦中に一勝するごとに呼んでください
   IF $SCWK_ANSWER > 1 THEN
@@ -498,7 +496,7 @@ sub_train_battle_win:
   ENDIF
   
   //ラウンド更新
-  _BSUBWAY_TOOL( BSWTOOL_INC_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_INC_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
   //クリアしてるかチェック
   _BSUBWAY_TOOL( BSWSUB_IS_CLEAR, BSW_NULL, BSW_NULL, SCWK_ANSWER )
@@ -533,7 +531,7 @@ sub_train_battle_win_clear:
     _SYSWIN_CLOSE()
   
     IF $SCWK_ANSWER == SCR_YES THEN
-      _CALL sub_common_btlrec
+      _CALL sub_common_btlrec_win
     ENDIF
   ENDIF
   
@@ -792,7 +790,7 @@ sub_train_battle_win_next_menu:
   
   WHILE $loop == 1
     //ただいま？連勝…次は？両目　対戦を続けますか
-    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+    _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     
     IF $SCWK_ANSWER > 9999 THEN
       $SCWK_ANSWER = 9999
@@ -853,7 +851,7 @@ sub_train_battle_win_next_menu:
       _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
       $loop = 0
     CASE 1 THEN //記録する
-      _CALL sub_common_btlrec
+      _CALL sub_common_btlrec_win
     CASE 2 THEN //休む
       //休むか
       _SYSWIN_MSG( msg_c04r0110_07 , POS_DOWN )
@@ -929,7 +927,7 @@ sub_train_battle_win_next_menu_comm_multi:
   
   WHILE $loop == 1
     //ただいま？連勝…次は？両目　対戦を続けますか
-    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+    _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 0, SCWK_ANSWER, 4 )
     _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 1, SCWK_ANSWER, 1 )
@@ -1033,7 +1031,7 @@ sub_train_battle_win_next_menu_comm_multi:
       
       $loop = 0
     CASE 1 THEN //記録する
-      _CALL sub_common_btlrec
+      _CALL sub_common_btlrec_win
     DEFAULT //リタイア
       //リタイアするか
       _SYSWIN_MSG( msg_c04r0110_06 , POS_DOWN )
@@ -1364,9 +1362,9 @@ sub_common_retmap_lose_retire:
     _SYSWIN_MSG( msg_c04r0110_15, POS_DOWN )
     _YES_NO_WIN( ret )
     _SYSWIN_CLOSE()
-  
+    
     IF $ret == SCR_YES THEN
-      _CALL sub_common_btlrec
+      _CALL sub_common_btlrec_lose
     ENDIF
   ENDIF
   
@@ -1491,15 +1489,18 @@ sub_common_retmap_comm_error:
 _RET
 
 //--------------------------------------------------------------
-//  戦闘録画
+//  戦闘録画　コア部分
+//  @param SCWK_ANSWER 何戦目か(1origin)
 //  @retval SCWK_ANSWER TRUE=録画した FALSE=録画していない
 //--------------------------------------------------------------
 sub_common_btlrec:
 {
   DEFINE_LOCAL ret
   DEFINE_LOCAL flag
+  DEFINE_LOCAL btl_no
   
   $flag = TRUE
+  $btl_no = $SCWK_ANSWER
   
   _BSUBWAY_TOOL( BSWSUB_CHK_BTLREC_EXIST, BSW_NULL, BSW_NULL, ret )
   
@@ -1518,7 +1519,7 @@ sub_common_btlrec:
     _TIME_WAIT( 1 ) //画面に反映
     _SYSWIN_TIMEICON( SCR_SYSWIN_TIMEICON_ON )  // タイムアイコンON
     
-    _BSUBWAY_TOOL( BSWSUB_SAVE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_SAVE_BTLREC, btl_no, BSW_NULL, BSW_NULL )
     _SYSWIN_CLOSE()
     
     _PLAYER_NAME( 0 )
@@ -1530,6 +1531,31 @@ sub_common_btlrec:
   ENDIF
   
   $SCWK_ANSWER = $flag
+}
+_RET
+
+//--------------------------------------------------------------
+//  戦闘録画　勝ち
+//  @retval SCWK_ANSWER TRUE=録画した FALSE=録画していない
+//--------------------------------------------------------------
+sub_common_btlrec_win:
+{
+  //勝利後、ラウンド更新された連勝数(0origin)を戦闘番号に
+  _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  _CALL sub_common_btlrec
+}
+_RET
+
+//--------------------------------------------------------------
+//  戦闘録画　負け
+//  @retval SCWK_ANSWER TRUE=録画した FALSE=録画していない
+//--------------------------------------------------------------
+sub_common_btlrec_lose:
+{
+  //負けている事により連勝数(0origin)は増加してないので自前で+1
+  _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  $SCWK_ANSWER += 1
+  _CALL sub_common_btlrec
 }
 _RET
 

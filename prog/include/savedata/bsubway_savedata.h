@@ -243,8 +243,6 @@ extern void BSUBWAY_SCOREDATA_SetBattlePoint(
     BSUBWAY_SCOREDATA *bsw_score, u16 num );
 extern u16 BSUBWAY_SCOREDATA_GetBattlePoint(
     const BSUBWAY_SCOREDATA *bsw_score );
-extern void BSUBWAY_SCOREDATA_IncRenshou(
-    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
 extern void BSUBWAY_SCOREDATA_ResetRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
 extern u16 BSUBWAY_SCOREDATA_GetRenshou(

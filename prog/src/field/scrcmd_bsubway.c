@@ -386,11 +386,20 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_POP_NOW_LOCATION:
     EVENTWORK_ResetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
     break;
+  //セーブされている連勝数を取得
+  case BSWTOOL_GET_SAVE_RENSHOU:
+    *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, param0 );
+    
+    if( *ret_wk > BSW_RENSHOU_MAX ){
+      *ret_wk = BSW_RENSHOU_MAX;
+    }
+    break;
   //エラー時のスコアセット
   case BSWTOOL_SET_NG_SCORE:
     *ret_wk = BSUBWAY_SCRWORK_SetNGScore( gsys );
     break;
   //連勝数取得
+#if 0
   case BSWTOOL_GET_RENSHOU_CNT:
     *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, param0 );
     
@@ -398,6 +407,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       *ret_wk = BSW_RENSHOU_MAX;
     }
     break;
+#endif
   //自機OBJコード取得
   case BSWTOOL_GET_MINE_OBJ:
     {
@@ -426,14 +436,16 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( playData ) + 1;
     break;
   //ラウンド数増加
+  #if 0
   case BSWTOOL_INC_ROUND:
     BSUBWAY_PLAYDATA_IncRoundNo( playData );
-    BSUBWAY_SCOREDATA_IncRenshou( scoreData, play_mode );
+    BSUBWAY_SCRWORK_IncNowRenshou( bsw_scr );
     *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, play_mode );
     if( (*ret_wk) > BSW_RENSHOU_MAX ){
       *ret_wk = BSW_RENSHOU_MAX;
     }
     break;
+  #endif
   //次のラウンド数取得
   case BSWTOOL_GET_NEXT_ROUND:
     *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
@@ -1294,6 +1306,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     {
       bsw_scr->btlrec_save_work[0] = 0;
       bsw_scr->btlrec_save_work[1] = 0;
+      bsw_scr->btlrec_btlnum = param0;
       VMCMD_SetWait( core, evBtlRecSave );
       bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_EXIST;
     }
@@ -1307,7 +1320,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btl_setup_param = NULL;
     }
     break;
-  //戦闘録画処理呼び出し
+  //戦闘録画処理呼び出し -> 現状未使用となっている
   case BSWSUB_CALL_BTLREC:
     {
       GMEVENT *event;
@@ -1317,8 +1330,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btl_rec_sel_param.b_rec = TRUE;
       bsw_scr->btl_rec_sel_param.b_sync = FALSE;
       bsw_scr->btl_rec_sel_param.battle_mode = data_ModeBattleMode[play_mode];
-      bsw_scr->btl_rec_sel_param.fight_count = BSUBWAY_SCOREDATA_GetRenshou(
-          scoreData, play_mode );
+      bsw_scr->btl_rec_sel_param.fight_count =
+        BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
       
       if( bsw_scr->btl_rec_sel_param.fight_count > BSW_RENSHOU_MAX ){
         bsw_scr->btl_rec_sel_param.fight_count = BSW_RENSHOU_MAX;
@@ -1428,6 +1441,39 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_GET_USE_BTL_BOX_FLAG:
     *ret_wk = BSUBWAY_PLAYDATA_GetData(
         playData, BSWAY_PLAYDATA_ID_use_battle_box, NULL );
+    break;
+  //ラウンド数増加
+  case BSWSUB_INC_ROUND:
+    BSUBWAY_PLAYDATA_IncRoundNo( playData );
+    BSUBWAY_SCRWORK_IncNowRenshou( bsw_scr );
+    *ret_wk = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
+    
+    if( (*ret_wk) > BSW_RENSHOU_MAX ){
+      *ret_wk = BSW_RENSHOU_MAX;
+    }
+    break;
+  //現在の連勝数取得
+  case BSWSUB_GET_NOW_RENSHOU:
+    *ret_wk = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
+    
+    if( *ret_wk > BSW_RENSHOU_MAX ){
+      *ret_wk = BSW_RENSHOU_MAX;
+    }
+    break;
+  //ゲーム開始時のスコア設定
+  case BSWSUB_GAME_START_SCORE:
+    {
+      BOOL exist;
+      exist = BSUBWAY_SCOREDATA_CheckExistStageNo( scoreData, play_mode );
+      
+      if( exist == FALSE ){ //存在しない
+        BSUBWAY_SCOREDATA_InitStageNo( scoreData, play_mode );
+        BSUBWAY_PLAYDATA_ResetRoundNo( playData );
+        BSUBWAY_SCRWORK_ResetNowRenshou( bsw_scr );
+      }else{ //存在する
+        //特になし(連勝数復元はワーク作成時に行っている)
+      }
+    }
     break;
   //----ワーク依存　通信関連
   //通信開始
@@ -2111,8 +2157,7 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
-  int renshou = BSUBWAY_SCOREDATA_GetRenshou(
-      bsw_scr->scoreData, bsw_scr->play_mode );
+  int btl_number = bsw_scr->btlrec_btlnum;
   BATTLE_MODE mode = BATTLE_MODE_SUBWAY_SINGLE;
   
   switch( bsw_scr->play_mode ){
@@ -2128,12 +2173,12 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
     break;
   }
   
-  if( renshou > BSW_RENSHOU_MAX ){
-    renshou = BSW_RENSHOU_MAX;
+  if( btl_number > BSW_RENSHOU_MAX ){
+    btl_number = BSW_RENSHOU_MAX;
   }
   
   res = BattleRec_Save(
-      gdata, HEAPID_PROC, mode, renshou, LOADDATA_MYREC,
+      gdata, HEAPID_PROC, mode, btl_number, LOADDATA_MYREC,
       &bsw_scr->btlrec_save_work[0], &bsw_scr->btlrec_save_work[1] );
   
   if( res == SAVE_RESULT_OK || res == SAVE_RESULT_NG ){
@@ -2634,6 +2679,11 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
   BSUBWAY_SCRWORK *bsw_scr = BSUBWAY_SCRWORK_CreateWork(
       gsys, BSWAY_PLAY_NEW, mode );
   
+  //ステージ数リセット
+  BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, mode );
+  BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
+  BSUBWAY_SCRWORK_ResetNowRenshou( bsw_scr );
+  
   { //手持ち使用
     u8 buf = FALSE;
      BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
@@ -2707,6 +2757,11 @@ void BSUBWAY_SCRWORK_DebugCreateWorkTrNo(
   //ワーク作成
   BSUBWAY_SCRWORK *bsw_scr = BSUBWAY_SCRWORK_CreateWork(
       gsys, BSWAY_PLAY_NEW, mode );
+  
+  //ステージ数リセット
+  BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, mode );
+  BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
+  BSUBWAY_SCRWORK_ResetNowRenshou( bsw_scr );
   
   { //手持ち使用
     u8 buf = FALSE;
@@ -2828,6 +2883,7 @@ void BSUBWAY_SCRWORK_DebugFightAnyRound(
       bsw_scr->scoreData, bsw_scr->play_mode, stage );
   BSUBWAY_SCOREDATA_SetRenshou(
       bsw_scr->scoreData, bsw_scr->play_mode, renshou );
+  BSUBWAY_SCRWORK_SetNowRenshou( bsw_scr, renshou );
   
   //対戦トレーナー抽選
   BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );

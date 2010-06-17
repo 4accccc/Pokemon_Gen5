@@ -454,6 +454,7 @@ static BSWAY_PLAYMODE scoreData_ChgMultiMode( BSWAY_PLAYMODE mode )
  * @retval nothing
  */
 //--------------------------------------------------------------
+#if 0
 void BSUBWAY_SCOREDATA_IncRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
@@ -463,6 +464,7 @@ void BSUBWAY_SCOREDATA_IncRenshou(
     bsw_score->renshou[mode]++;
   }
 }
+#endif
 
 //--------------------------------------------------------------
 /**

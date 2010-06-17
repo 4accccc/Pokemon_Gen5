@@ -424,8 +424,22 @@ static void commSendPlayerData(
   KAGAYA_Printf( "bsw_scr->play_mode = %d\n", bsw_scr->play_mode );
 #endif
   
+#if 0 
+  //ステージ数がまだ存在していない場合も考慮し、連勝数からステージ数を出す
   bsw_scr->send_buf[3] = BSUBWAY_SCOREDATA_GetStageNo_Org0(
       bsw_scr->scoreData, bsw_scr->play_mode );
+#else
+  {
+    u16 renshou = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
+    u16 stage = BSUBWAY_SCRWORK_RenshouToStageNo( renshou );
+    bsw_scr->send_buf[3] = stage;
+    
+    #ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf( "BSW SEND PLAYER DATA STAGE=%d,連勝数%d\n",
+          stage, renshou );
+    #endif
+  }
+#endif
 }
 
 //--------------------------------------------------------------

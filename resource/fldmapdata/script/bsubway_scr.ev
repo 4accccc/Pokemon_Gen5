@@ -564,6 +564,9 @@ sub_receipt_challenge_single_double:
     _RET
   ENDIF
   
+  //ゲーム開始スコア設定
+  _BSUBWAY_TOOL( BSWSUB_GAME_START_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
   
@@ -719,6 +722,9 @@ sub_receipt_challenge_multi_ai:
   
   //セットされたパートナーナンバーからパートナーロード
   _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_SEVEN, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //ゲーム開始スコア設定
+  _BSUBWAY_TOOL( BSWSUB_GAME_START_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -1114,10 +1120,13 @@ sub_receipt_challenge_multi_comm:
     _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
- 
+  
+  //ゲーム開始スコア設定
+  _BSUBWAY_TOOL( BSWSUB_GAME_START_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
-
+  
   //デモ　出発
   _CALL sub_receipt_demo_start_train
   
@@ -1210,6 +1219,9 @@ sub_receipt_challenge_wifi:
   ENDIF
   
   IF $dl_play == FALSE THEN //既存データプレイ
+    //ゲーム開始スコア設定
+    _BSUBWAY_TOOL( BSWSUB_GAME_START_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+
     //フラグ初期化
     _CALL sub_receipt_flag_set_geton_first
     
@@ -1240,6 +1252,9 @@ sub_receipt_challenge_wifi:
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
+    
+    //ゲーム開始スコア設定
+    _BSUBWAY_TOOL( BSWSUB_GAME_START_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
     
     //フラグ初期化
     _CALL sub_receipt_flag_set_geton_first
@@ -2587,8 +2602,8 @@ sub_bsw_common_renshou_msg:
     _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, comm_mode, BSW_NULL, comm_ret )
     
     //連勝数取得
-    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
-    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, comm_mode, BSW_NULL, comm_count )
+    _BSUBWAY_TOOL( BSWTOOL_GET_SAVE_RENSHOU, play_mode, BSW_NULL, count )
+    _BSUBWAY_TOOL( BSWTOOL_GET_SAVE_RENSHOU, comm_mode, BSW_NULL, comm_count )
     
     IF $count > 9999 THEN
       $count = 9999
@@ -2642,7 +2657,7 @@ sub_bsw_common_renshou_msg:
     _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, play_mode, BSW_NULL, ret )
     
     IF $ret == TRUE THEN
-      _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
+      _BSUBWAY_TOOL( BSWTOOL_GET_SAVE_RENSHOU, play_mode, BSW_NULL, count )
       
       IF $count != 0 THEN
         _PLAYER_NAME( 0 )
@@ -3184,15 +3199,15 @@ ev_bsw_select_ai_multi_pokemon:
   SWITCH $SCWK_ANSWER
   CASE 0 THEN //攻撃
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
-    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_66, msg_bsw_scr_69, obj_id, POS_DOWN )
+    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_69, msg_bsw_scr_66, obj_id, POS_DOWN )
     $SCWK_ANSWER = TRUE
   CASE 1 THEN //防御
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 1, BSW_NULL, BSW_NULL )
-    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_67, msg_bsw_scr_70, obj_id, POS_DOWN )
+    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_70, msg_bsw_scr_67, obj_id, POS_DOWN )
     $SCWK_ANSWER = TRUE
   DEFAULT //バランス
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 2, BSW_NULL, BSW_NULL )
-    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_68, msg_bsw_scr_71, obj_id, POS_DOWN )
+    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_71, msg_bsw_scr_68, obj_id, POS_DOWN )
     $SCWK_ANSWER = TRUE
   /*
   DEFAULT //やめる

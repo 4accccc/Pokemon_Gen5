@@ -794,7 +794,7 @@ EVENT_START ev_c04r0111_partner_talk
   DEFINE_LOCAL renshou
   
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, renshou )
+  _BSUBWAY_TOOL( BSWTOOL_GET_SAVE_RENSHOU, play_mode, BSW_NULL, renshou )
   _GET_MY_SEX( sex )
   
   IF $sex == PM_FEMALE THEN //自機女 パートナー男
