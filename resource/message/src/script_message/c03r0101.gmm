@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-05-25T21:23:48"/>
+	<create user="nakamura_akira" host="W00161" date="2010-06-17T14:28:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1330" top="170" right="2035" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1195,7 +1195,7 @@ assistantm_01_15へ続く
 ４じかん　いじょう　ちょうさして
 いちばん　おおい　しごとを▽
 しらべてくる　ちょうさだ▼
-ちょうさけっかを
+ちょうさの　けっかを
 とくしゅうきじに　したいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　雑誌記者　からの　依頼だな▼
@@ -1352,7 +1352,7 @@ assistantm_01_15へ続く
 とかいと　いなか▽
 どっちに　すみたいかを▽
 しらべてくる　ちょうさだ▼
-ちょうさけっかを
+ちょうさの　けっかを
 しごとに　やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　不動産屋　からの　依頼だな▼
@@ -1982,7 +1982,7 @@ assistantm_01_23○へ続く
 １０にん　いじょうと　すれちがって
 いちばん　おおい　しごとを▽
 しらべてくる　ちょうさだ▼
-ちょうさけっかを
+ちょうさの　けっかを
 とくしゅうきじに　したいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　雑誌記者　からの　依頼だな▼
@@ -2144,7 +2144,7 @@ assistantm_01_23○へ続く
 とかいと　いなか▽
 どっちに　すみたいかを▽
 しらべてくる　ちょうさだ▼
-ちょうさけっかを
+ちょうさの　けっかを
 しごとに　やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　不動産屋からの　依頼だな▼
