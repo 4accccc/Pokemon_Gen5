@@ -154,15 +154,12 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
         intcomm = GameCommSys_GetAppWork(game_comm);
       }
       
-      if(intcomm == NULL){
-        return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
-      }
-      else if(talk->recv_achieve == FALSE){  //受信確認していない場合は即終了
+      if(talk->recv_achieve == FALSE){  //受信確認していない場合は即終了
         //ここの処理は結果を受け取った直後にエラーが発生するときに
         //会話もせずに結果シーケンスに来る為、その時用には即終了、とする
         return GMEVENT_RES_FINISH;
       }
-      else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE
+      else if(intcomm != NULL && MISSION_CheckRecvResult(&intcomm->mission) == TRUE
           && Intrude_CheckRecvOccupyResult(intcomm) == TRUE){
         if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == FALSE){
           return GMEVENT_RES_FINISH;  //達成者でない場合はここで終了
@@ -190,6 +187,9 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
           OccupyInfo_LevelUpWhite(my_occupy, talk->add_white);
         }
         (*seq)++;
+      }
+      else if(intcomm == NULL || NetErr_App_CheckError()){
+        return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
       }
     }
     break;
