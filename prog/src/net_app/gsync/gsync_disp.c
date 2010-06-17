@@ -950,7 +950,12 @@ static void GSYNC_DISP_FriendPokeIconCreate(GSYNC_DISP_WORK* pWork, u32 index)
       pWork->aIconParam[index].pIcon=pIcon;
     }
   }
-//  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
+                   GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
+                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+                   8,8);
+
+  //  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
   //                 GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
     ///              GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
      ///            8,8);
@@ -1229,6 +1234,7 @@ static void _pokeResChange(GSYNC_DISP_WORK* pWork,int no,  GFL_CLWK* pIcon)
                     (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN],
                     4*8*4*4);
   }
+  NET_PRINT("%d \n",pWork->aIconRes[no].palno);
   GFL_CLACT_WK_SetPlttOffs( pIcon , pWork->aIconRes[no].palno , CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
