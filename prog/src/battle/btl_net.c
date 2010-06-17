@@ -850,7 +850,7 @@ static BTL_TRAINER_SEND_DATA* create_SendTrainerData( const BSP_TRAINER_DATA* tr
   if( tr_data->name ){
     send_tr_data->trainer_name_length = GFL_STR_GetBufferLength( tr_data->name );
     GF_ASSERT( send_tr_data->trainer_name_length < BTL_COMM_TRAINERNAME_MAX );
-    STRTOOL_Copy( GFL_STR_GetStringCodePointer( tr_data->name ), send_tr_data->trainer_name, send_tr_data->trainer_name_length );
+    STRTOOL_Copy( GFL_STR_GetStringCodePointer( tr_data->name ), send_tr_data->trainer_name, BTL_COMM_TRAINERNAME_MAX );
   }
 
   return send_tr_data;
