@@ -90,6 +90,7 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
     FSND_PauseEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE );
+    SCREND_CHK_SetBitOn( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );
   }
   
   
@@ -124,6 +125,7 @@ VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk )
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
     FSND_PauseEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE );
+    SCREND_CHK_SetBitOn( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );
   }
   
   return VMCMD_RESULT_SUSPEND;
@@ -156,6 +158,7 @@ VMCMD_RESULT EvCmdBgmPlaySilent( VMHANDLE *core, void *wk )
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
     FSND_PauseEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE );
+    SCREND_CHK_SetBitOn( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );
   }
   
   return VMCMD_RESULT_SUSPEND;
@@ -317,6 +320,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 
     SCRIPT_CallEvent( sc, event );
     FSND_RePlayEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
+    SCREND_CHK_SetBitOff( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );//チェックマスクOFF
   }
   return VMCMD_RESULT_SUSPEND;
 }
@@ -351,6 +355,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlayEx( VMHANDLE *core, void *wk )
     event    = EVENT_FSND_ChangeBGM( gsys, soundIdx, frame, FSND_FADE_NORMAL );
     SCRIPT_CallEvent( script, event );
     FSND_RePlayEnvSE( fsnd, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
+    SCREND_CHK_SetBitOff( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );//チェックマスクOFF
   }
   return VMCMD_RESULT_SUSPEND;
 }
@@ -477,9 +482,34 @@ VMCMD_RESULT EvCmdEnvSeBGMPlayClear( VMHANDLE *core, void *wk )
   FIELD_SOUND*   fsnd     = GAMEDATA_GetFieldSound( gdata );
 
   FSND_RePlayEnvSE( fsnd, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
+  SCREND_CHK_SetBitOff( SCREND_CHK_ENVSE_BGMPLAY_PAUSE ); //チェックマスクOFF
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント内での環境SEのポーズが解除されるかチェック
+ *
+ *	@param	end_check   
+ *	@param	seq 
+ *
+ *	@retval TRUE    完了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+BOOL SCREND_CheckEndEnvSEBGMPlayPause( SCREND_CHECK *end_check, int *seq )
+{
+  GAMESYS_WORK*  gsys     = end_check->gsys;
+  GAMEDATA*      gdata    = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND*   fsnd     = GAMEDATA_GetFieldSound( gdata );
+
+  FSND_RePlayEnvSE( fsnd, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
+
+  TOMOYA_Printf( "Event ENDCheck EnvSE Pause\n" );
+  return TRUE;
+}
+
 
 
 
@@ -712,6 +742,7 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
     FSND_PauseEnvSE( fsound );
+    SCREND_CHK_SetBitOn( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );
   }
   */
   return VMCMD_RESULT_SUSPEND;
@@ -747,6 +778,7 @@ static BOOL EvWaitMe( VMHANDLE *core, void *wk )
       GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
       FSND_RePlayEnvSE( fsound );
+      SCREND_CHK_SetBitOff( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );
     }
     */
 

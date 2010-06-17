@@ -32,6 +32,7 @@ extern BOOL SCREND_CheckEndBGMVolumeDown( SCREND_CHECK *end_check, int *seq );
 
 //EnvSe
 extern VMCMD_RESULT EvCmdEnvSeBGMPlayClear( VMHANDLE *core, void *wk );
+extern BOOL SCREND_CheckEndEnvSEBGMPlayPause( SCREND_CHECK *end_check, int *seq ); 
 
 //SE
 extern VMCMD_RESULT EvCmdSePlay( VMHANDLE *core, void *wk );
