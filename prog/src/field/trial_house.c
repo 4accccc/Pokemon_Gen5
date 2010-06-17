@@ -576,7 +576,7 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
   val -= (point->VoidAtcNum * 10);          //効果がない技を出した回数 x 10
   val -= (point->ResistAtcNum * 2);         //いまひとつの技を出した回数 x 2
   val -= (point->LosePokeNum * 80);        //倒されたポケモン数 x 80
-  val -= ( ((500 - point->RestHpPer) * 100) / 500 );     //残りＨＰ割合(最大-100)
+  val -= (500 - point->RestHpPer);     //残りＨＰ割合(最大-500)
 
   if (val < 0) val = 0;
   else if (val > TH_SCORE_MAX) val = TH_SCORE_MAX;
