@@ -61,7 +61,9 @@
  * プロトタイプ宣言
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
+static	void	MCSS_DrawAct(
+                MCSS_SYS_WORK* mcss_sys,
+                MCSS_WORK *mcss, 
 							  fx32 pos_x,
 							  fx32 pos_y,
 							  fx32 scale_x,
@@ -551,7 +553,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				if( ( ncec->mepachi_size_x ) && ( mcss->reverse_draw == 0 ) )
         { 
 					if( mcss->mepachi_flag ){
-						MCSS_DrawAct( mcss,
+						MCSS_DrawAct(
+                    mcss_sys,
+                    mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -564,7 +568,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  mcss_sys->projection_revise_off );
 					}
 					else{
-						MCSS_DrawAct( mcss,
+						MCSS_DrawAct(
+                    mcss_sys,
+                    mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -577,7 +583,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  mcss_sys->projection_revise_off );
 					}
 				}
-				MCSS_DrawAct( mcss,
+				MCSS_DrawAct(
+                mcss_sys,
+                mcss,
 							  ncec->pos_x,
 							  ncec->pos_y,
 							  ncec->size_x,
@@ -592,7 +600,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				if( ( ncec->mepachi_size_x ) && ( mcss->reverse_draw == 1 ) )
         { 
 					if( mcss->mepachi_flag ){
-						MCSS_DrawAct( mcss,
+						MCSS_DrawAct(
+                    mcss_sys,
+                    mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -605,7 +615,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							      mcss_sys->projection_revise_off );
 					}
 					else{
-						MCSS_DrawAct( mcss,
+						MCSS_DrawAct(
+                    mcss_sys,
+                    mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -683,7 +695,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
  * @param[in]  pos_z_default    セルを描画する度にずらずZ方向のオフセット値
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_DrawAct( MCSS_WORK *mcss,
+static	void	MCSS_DrawAct(
+                MCSS_SYS_WORK* mcss_sys,
+                MCSS_WORK *mcss,
 							  fx32 pos_x,
 							  fx32 pos_y,
 							  fx32 size_x,
@@ -722,7 +736,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   FX32_CONST( 128 ),
 				   FX32_ONE * 1,
 				   //FX32_ONE * 1024,
-				   FX32_ONE * 512,
+				   FX32_ONE * ( ( mcss_sys->ortho_far_flag ) ? 512 : 1024 ),
 				   FX32_ONE,
 				   NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
@@ -833,7 +847,14 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
     *scale_offset_work += MCSS_SCALE_OFFSET;
 	}
 	else{
-		*pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z_ORTHO : MCSS_DEFAULT_Z_ORTHO;
+    if( mcss_sys->ortho_far_flag )
+    { 
+		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z_ORTHO_512 : MCSS_DEFAULT_Z_ORTHO_512;
+    }
+    else
+    { 
+		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z_ORTHO : MCSS_DEFAULT_Z_ORTHO;
+    }
 	}
 }
 
@@ -1891,6 +1912,20 @@ void	MCSS_SetReverseDraw( MCSS_WORK* mcss, MCSS_REVERSE_DRAW flag )
 { 
   mcss->reverse_draw = flag;
 }
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 正射影FARの値を切り替え
+ *
+ * @param[in] mcss_sys  MCSSシステム管理構造体のポインタ
+ * @param[in] flag      FALSE:1024  TRUE:512
+ */
+//--------------------------------------------------------------------------
+void   MCSS_SetOrthoFarFlag( MCSS_SYS_WORK *mcss_sys , const BOOL flg )
+{ 
+  mcss_sys->ortho_far_flag = flg;
+}
+
 
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
