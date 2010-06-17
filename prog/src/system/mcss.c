@@ -357,9 +357,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 		if( ( mcss_sys->mcss[index] != NULL ) && 
 		    ( mcss_sys->mcss[index]->vanish_flag == 0 ) &&
 		    ( mcss_sys->mcss[index]->is_load_resource == 1 ) ){
-	    fx32  pos_z_default = 0;
-      fx32  scale_offset_work = FX32_ONE;
-	    int   ortho_mode = ( mcss_sys->mcss_ortho_mode == 0 ) ? 0 : mcss_sys->mcss[ index ]->ortho_mode;
+	    fx32    pos_z_default = 0;
+      fx32    scale_offset_work = FX32_ONE;
+	    int     ortho_mode = ( mcss_sys->mcss_ortho_mode == 0 ) ? 0 : mcss_sys->mcss[ index ]->ortho_mode;
 
 			mcss		= mcss_sys->mcss[index];
 			image_p		= &mcss->mcss_image_proxy;
@@ -410,13 +410,15 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			pos.y = mcss->pos.y + mcss->ofs_pos.y;
 			pos.z = mcss->pos.z + mcss->ofs_pos.z;
 
-	    if( ortho_mode == 0 ){ 
+	    if( ortho_mode == 0 )
+      {
 				anim_pos.x = MCSS_CONST( anim_SRT_mc.px );
 				anim_pos.y = MCSS_CONST( -anim_SRT_mc.py );
 				anim_pos.x = FX_Mul( anim_pos.x,mcss_sys->mcAnimRate );
 				anim_pos.y = FX_Mul( anim_pos.y,mcss_sys->mcAnimRate );
 			}
-			else{
+			else
+      {
       	MtxFx44	mtx;
 	      fx32	w;
         fx32  scale_x, scale_y;
@@ -559,7 +561,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
 									  &pos_z_default, flipFlg, &scale_offset_work ,
-									  mcss_sys->projection_revise_off);
+									  mcss_sys->projection_revise_off );
 					}
 					else{
 						MCSS_DrawAct( mcss,
@@ -572,7 +574,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
 									  &pos_z_default, flipFlg, &scale_offset_work ,
-									  mcss_sys->projection_revise_off);
+									  mcss_sys->projection_revise_off );
 					}
 				}
 				MCSS_DrawAct( mcss,
@@ -600,7 +602,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
 									  &pos_z_default, flipFlg, &scale_offset_work ,
-									  mcss_sys->projection_revise_off);
+							      mcss_sys->projection_revise_off );
 					}
 					else{
 						MCSS_DrawAct( mcss,
@@ -613,7 +615,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
 									  &pos_z_default, flipFlg, &scale_offset_work ,
-									  mcss_sys->projection_revise_off);
+							      mcss_sys->projection_revise_off );
 					}
 				}
 			}
@@ -719,7 +721,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   -FX32_CONST( 128 ),
 				   FX32_CONST( 128 ),
 				   FX32_ONE * 1,
-				   FX32_ONE * 1024,
+				   //FX32_ONE * 1024,
+				   FX32_ONE * 512,
 				   FX32_ONE,
 				   NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
@@ -748,7 +751,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posX ) + MCSS_CONST( anim_SRT_c->px );
 	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posY ) + MCSS_CONST( -anim_SRT_c->py );
 
-	G3_Translate( pos.x, pos.y, *pos_z_default );
+  G3_Translate( pos.x, pos.y, *pos_z_default );
 
 	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
