@@ -646,7 +646,7 @@ EVENT_START   ev_h04_girl2_01
 					_ITEM_NAME( 0, ITEM_KAGONOMI )//ÉJÉSÇÃé¿
 				ENDIF
 				
-				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_SYSWIN_MSG( msg_h04_system_01, POS_DEFAULT )
 				_YES_NO_WIN(SCWK_ANSWER)
 
 				IF $SCWK_ANSWER == SCR_YES THEN
@@ -811,7 +811,7 @@ EVENT_START   ev_h04_man1_01
 					_ITEM_NAME( 0, ITEM_KAGONOMI )//ÉJÉSÇÃé¿
 				ENDIF
 				
-				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_SYSWIN_MSG( msg_h04_system_01, POS_DEFAULT )
 				_YES_NO_WIN(SCWK_ANSWER)
 				
 				IF $SCWK_ANSWER == SCR_YES THEN
@@ -971,7 +971,7 @@ EVENT_START   ev_h04_man3_01
 					_ITEM_NAME( 0, ITEM_KAGONOMI )//ÉJÉSÇÃé¿
 				ENDIF
 				
-				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_SYSWIN_MSG( msg_h04_system_01, POS_DEFAULT )
 				_YES_NO_WIN(SCWK_ANSWER)
 
 				IF $SCWK_ANSWER == SCR_YES THEN
@@ -1135,7 +1135,7 @@ EVENT_START   ev_h04_woman1_01
 					_ITEM_NAME( 0, ITEM_KAGONOMI )//ÉJÉSÇÃé¿
 				ENDIF
 				
-				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_SYSWIN_MSG( msg_h04_system_01, POS_DEFAULT )
 				_YES_NO_WIN(SCWK_ANSWER)
 
 				IF $SCWK_ANSWER == SCR_YES THEN
