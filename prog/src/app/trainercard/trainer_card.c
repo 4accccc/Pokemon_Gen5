@@ -2733,6 +2733,9 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
 
 }
 
+#define SIGN_COLOR_ERASE  ( 0 )
+#define SIGN_COLOR_PEN    ( 7 )
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 256色のBMPWINに直接点を書き込むルーチン
@@ -2781,9 +2784,9 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh, int sca
       offset = (by*OEKAKI_BOARD_W+bx)*64 + py*8+px;
 //      HOSAKA_Printf("w=%d h=%d bx=%d by=%d px=%d py=%d wx=%d wy=%d offset=%d\n", w,h,bx,by,px,py,wx,wy,offset );
       if(brush[count]==1){
-        sign[offset] = 1;
+        sign[offset] = SIGN_COLOR_PEN;
       }else if(brush[count]==2){
-        sign[offset] = 0;
+        sign[offset] = SIGN_COLOR_ERASE;
       }
 #if 0
       else if( ( bx == 0 && px == 0 ) || ( by == 0 && py == 0 ) ){
