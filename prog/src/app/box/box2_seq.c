@@ -6930,6 +6930,7 @@ static int MainSeq_BoxThemaWallPaperChange( BOX2_SYS_WORK * syswk )
 	case 1:
 		BOX2MAIN_WallPaperChange( syswk, syswk->app->wallpaper_pos );
 		BOXDAT_SetWallPaperNumber( syswk->dat->sv_box, syswk->tray, syswk->app->wallpaper_pos );
+		BOX2OBJ_TrayIconCgxMake( syswk, syswk->tray );
 		syswk->app->sub_seq++;
 		break;
 
