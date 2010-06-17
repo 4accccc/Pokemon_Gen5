@@ -1254,7 +1254,7 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
   //name
   GFL_STD_MemCopy( MyStatus_GetMyName( p_mystatus ), p_player->playerName, 8*2 );
   //playerid
-  *((u32*)p_player->playerId) = BSP_TRAINERID_SUBWAY;
+  *((u32*)p_player->playerId) = MyStatus_GetID( p_mystatus );
   //version
   p_player->versionCode = CasetteVersion;
   //language
