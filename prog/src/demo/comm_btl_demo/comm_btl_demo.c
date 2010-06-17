@@ -81,7 +81,7 @@ static BOOL g_debug_loop = FALSE;
 //=============================================================================
 enum
 { 
-  COMM_BTL_DEMO_HEAP_SIZE = 0x70000,  ///< ヒープサイズ
+  COMM_BTL_DEMO_HEAP_SIZE = 0x80000,  ///< ヒープサイズ
 
   TRAINER_CNT_NORMAL = 2,
   TRAINER_CNT_MULTI = 4,
@@ -301,6 +301,17 @@ typedef struct {
   UI_EASY_CLWK_RES clres_common;
 } COMM_BTL_DEMO_OBJ_WORK;
 
+
+//--------------------------------------------------------------
+/// パーティクルワーク
+//==============================================================
+#define COMM_BTL_DEMO_PARTICLE_MAX  ( 2 )
+typedef struct{
+  GFL_PTC_PTR ptc;
+  u8          spa_work[ PARTICLE_LIB_HEAP_SIZE ];
+  u8          spa_num;
+}COMM_BTL_DEMO_PARTICLE;
+
 //--------------------------------------------------------------
 /// G3D管理ワーク
 //==============================================================
@@ -313,7 +324,8 @@ typedef struct {
   u16 anm_unit_idx;   ///< アニメーションさせるUNITのIDX
   u8 is_end;
   u8 is_add;
-  
+ 
+//  COMM_BTL_DEMO_PARTICLE particle[ COMM_BTL_DEMO_PARTICLE_MAX ];
   GFL_PTC_PTR ptc;
   u8          spa_work[ PARTICLE_LIB_HEAP_SIZE ];
   u8          spa_num;
@@ -957,6 +969,13 @@ static void _SceneEndDemoEnd( UI_SCENE_CNT_PTR cnt, COMM_BTL_DEMO_MAIN_WORK* wk 
     if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE ) // スタート押しながらで終了
     {
       wk->result = GFUser_GetPublicRand(3); // 勝敗を変更
+      if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+        wk->result = 0;
+      }else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
+        wk->result = 1;
+      }else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
+        wk->result = 2;
+      }
       UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO );
     }
   }
@@ -1376,11 +1395,12 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
         }
 
         //「WIN」パーティクル表示
-        G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){px,py,-100} );
-        G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){px,py,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){px,py,-300} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){px,py,-300} );
         G3D_PTC_CreateEmitter( &wk->wk_g3d, 2, &(VecFx32){px,py,-100} );
         G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){px,py,-100} );
         G3D_PTC_CreateEmitter( &wk->wk_g3d, 4, &(VecFx32){px,py,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 5, &(VecFx32){px,py,-100} );
       }
     
       wk->timer++;
@@ -3333,11 +3353,11 @@ static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーデータから戦えるポケモンの残り数を取得
+ *  @brief  トレーナーデータから戦えるポケモンの残り数を取得
  *
- *	@param	const COMM_BTL_DEMO_TRAINER_DATA* trdata 
+ *  @param  const COMM_BTL_DEMO_TRAINER_DATA* trdata 
  *
- *	@retval 戦えるポケモンの残り数
+ *  @retval 戦えるポケモンの残り数
  */
 //-----------------------------------------------------------------------------
 static int TrainerData_GetBattleEnable( const COMM_BTL_DEMO_TRAINER_DATA* trdata )
