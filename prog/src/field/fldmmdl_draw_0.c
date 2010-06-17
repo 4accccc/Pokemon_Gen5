@@ -54,16 +54,13 @@
 
 /*
  * ハイリンクの森で、自機とポケモンがフリップを起こさないよう
- * 64x64ポケモンに一律かけているz軸描画オフセット。
- *
- * 32x32ポケモンは、そのままのオフセットで自機とフリップしないので
- * 64x64サイズのみに絞っている。
+ * ポケモンに一律かけているz軸描画オフセット。
  *
  * カメラが変わるとオフセットの見え方も変化するので注意。
  * 10.06.14現在 MMDL_POKE_OFS_SYMBOL_ALL_Z と同じ値だが、同じ数値であることに意味はない。
  * ALL_Zとは目的が異なるので、別定義にしている。
  */
-#define MMDL_POKE_OFS_SYMBOL_64x64_Z		(-FX32_CONST(2.1))
+#define MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z		(-FX32_CONST(2.0))
 
 /*
  * 32x32ポケモンが左右向きの際にかけている描画オフセット値。
@@ -1443,8 +1440,8 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   s16 gx;
   const OBJCODE_PARAM* obj_prm;
 #ifdef DEBUG_ONLY_FOR_iwasawa
-#if 0
-  static float test_z = 2.1, test_diff = 0.1;
+#if 1
+  static float test_z = -2.1, test_diff = 0.1;
   static BOOL updown_f = 0;
   static BOOL cont_f = 0;
 #endif
@@ -1460,7 +1457,7 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   zone_id = MMDL_GetZoneID( mmdl );
 
 #ifdef DEBUG_ONLY_FOR_iwasawa
-#if 0
+#if 1
   if(work->actID == 1){
     int key = GFL_UI_KEY_GetTrg();
     int cont = GFL_UI_KEY_GetCont();
@@ -1480,7 +1477,7 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
       test_z = 0;
       flag = 1;
     }else if( key & PAD_BUTTON_SELECT){
-      test_z = 2.0;
+      test_z = -2.1;
       flag = 1;
     }
     if( cont & PAD_BUTTON_B ){
@@ -1534,9 +1531,15 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
     }
   
     //自機とのフリップ対策。でっかいポケモンはさらに一律オフセットをかける
+#if 0
 	  if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
-      vec.z += MMDL_POKE_OFS_SYMBOL_64x64_Z;
-	  }
+      vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;
+    }else if(idx != 2 ){
+      vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;
+    }
+#else
+    vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;//FX32_CONST(test_z);
+#endif
   }
   //向きからX/Z描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
