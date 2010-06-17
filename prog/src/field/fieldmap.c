@@ -2915,6 +2915,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   SET_CHECK("zonechange: script");
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
+	GAMEBEACON_Set_ZoneChange(new_zone_id, gdata);
 	
   //マップ到着フラグセット
   ARRIVEDATA_SetArriveFlag( gdata, new_zone_id );
