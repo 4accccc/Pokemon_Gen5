@@ -373,7 +373,6 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
           factor->prev, factor->next );
   printLinkDebug();
   popFactor( factor );
-  TAYA_Printf("Factor[%p]'s existFlag=%d\n", factor, factor->existFlag );
 }
 //=============================================================================================
 /**

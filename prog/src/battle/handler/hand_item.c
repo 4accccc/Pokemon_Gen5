@@ -2401,7 +2401,6 @@ static void common_JapoRenbu_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     ){
       BTL_HANDEX_PARAM_USE_ITEM* param;
 
-      BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
       BTL_EVENT_FACTOR_SetRecallEnable( myHandle );
       work[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK ) + 1;
 
