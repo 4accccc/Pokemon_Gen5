@@ -1445,8 +1445,7 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_SVF_HANDEX_Pop( flowWk, remove_param );
     }
 
-
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
+//    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
   }
 }
 //----------------------------------------------------------------------------------

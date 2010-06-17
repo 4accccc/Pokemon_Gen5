@@ -250,6 +250,7 @@ typedef struct {
   BTL_CALC_DAMAGE_REC   calcDmgEnemy;
   BtlPokePos      defaultTargetPos;
   u8              fMemberChangeReserve;
+  u8              fWazaFailMsgDisped;
 
 }POKESET_STACK_UNIT;
 
@@ -373,6 +374,7 @@ struct _BTL_SVFLOW_WORK {
   u8      fWinBGMPlayWild    : 1;
   u8      fEscMsgDisped      : 1;
   u8      fMemberChangeReserve : 1;
+  u8      fWazaFailMsgDisped   : 1;
 
   u8      MemberOutIntrPokeID[ BTL_POS_MAX ];
   u8      relivedPokeID[ BTL_POKEID_MAX ];

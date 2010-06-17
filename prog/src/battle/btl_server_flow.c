@@ -7513,6 +7513,7 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
   if( !BPP_IsRankEffectValid(target, effect, volume) ){
     if( fAlmost ){
       scPut_RankEffectLimit( wk, target, effect, volume );
+      wk->fWazaFailMsgDisped = TRUE;
     }
     return FALSE;
   }
@@ -8274,7 +8275,8 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 
       if( (result == HandExResult_NULL) || (result == HandExResult_Fail) )
       {
-        if( fFailMsgEnable ){
+        if( fFailMsgEnable && (!(wk->fWazaFailMsgDisped)) )
+        {
           SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
         }
       }
@@ -13430,6 +13432,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
   wk->calcDmgEnemy   = &unit->calcDmgEnemy;
   wk->defaultTargetPos = unit->defaultTargetPos;
   wk->fMemberChangeReserve = unit->fMemberChangeReserve;
+  wk->fWazaFailMsgDisped   = unit->fWazaFailMsgDisped;
 
   if( fClear ){
     BTL_POKESET_Clear( wk->psetTargetOrg );
@@ -13450,6 +13453,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
 
     wk->defaultTargetPos = BTL_POS_NULL;
     wk->fMemberChangeReserve = 0;
+    wk->fWazaFailMsgDisped = 0;
   }
 }
 
