@@ -1143,12 +1143,6 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
                              pDream->poke[i].findPokemonSex);
     }
 
-#if DEBUG_ONLY_FOR_ohno
-    for(i=0;i<DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
-      GSYNC_DISP_MoveIconPokeAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX+i,
-                             12+i, 0, 0);
-    }
-#endif
     //ƒTƒCƒ“ƒCƒ“
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
     // ‰Æ‹ï

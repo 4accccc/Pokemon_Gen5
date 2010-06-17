@@ -2809,7 +2809,12 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
 static int _firstConnectEndMsg( WIFIP2PMATCH_WORK *wk, int seq )
 {
   EndMessageWindowOff(wk);
-  _systemMessagePrint(wk, dwc_message_0004);
+  if(DS_SYSTEM_IsRunOnTwl()){
+    _systemMessagePrint(wk, dwctwl_message_0004);
+  }
+  else{
+    _systemMessagePrint(wk, dwc_message_0004);
+  }
   _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_ENDMSG_WAIT);
   //#if AFTER_MASTER_070410_WIFIAPP_N22_EUR_FIX
   wk->bInitMessage = FALSE;

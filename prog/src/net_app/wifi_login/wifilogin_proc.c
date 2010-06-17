@@ -484,7 +484,12 @@ static void _connectingCommonWait(WIFILOGIN_WORK* pWork)
 
       WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
       WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0004);
+      if(DS_SYSTEM_IsRunOnTwl()){
+        WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwctwl_message_0004);
+      }
+      else{
+        WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0004);
+      }
       _CHANGE_STATE(pWork, _saveEndWait);
     }
     else{
@@ -902,7 +907,12 @@ static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
   }
   if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0006);
+    if(DS_SYSTEM_IsRunOnTwl()){
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwctwl_message_0006);
+    }
+    else{
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0006);
+    }
     _CHANGE_STATE(pWork,_modeDifferDSWait2);
   }
 }
@@ -939,13 +949,23 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
     // 初めての場合
     pWork->bInitMessage=TRUE;
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
+    if(DS_SYSTEM_IsRunOnTwl()){
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
+    }
+    else{
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwctwl_message_0003);
+    }
     _CHANGE_STATE(pWork,_modeProfileWait);
   }
   else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) )
   {  //別DSの場合
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
+    if(DS_SYSTEM_IsRunOnTwl()){
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
+    }
+    else{
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwctwl_message_0005);
+    }
     _CHANGE_STATE(pWork,_modeDifferDSWait);
   }
   else if( pWork->dbw->mode == WIFILOGIN_MODE_ERROR ) //エラーで再びログインへ
