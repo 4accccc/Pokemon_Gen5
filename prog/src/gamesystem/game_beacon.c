@@ -290,7 +290,16 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
       for(j = 0; j < QUESTION_NUM_PER_TOPIC; j++) { 
         radar_q_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, j);
         if(team_q_id == radar_q_id) {
-          answer = QuestionnaireAnswer_ReadBit(&info->question_answer, team_q_id);
+          if(team_q_id == QUESTION_ID_PLAY_TIME){
+            answer = info->play_hour / 10;
+            answer++; //0‚Í–³‰ñ“š‚È‚Ì‚Å1ƒCƒ“ƒNƒŠƒƒ“ƒg
+            if(answer > GetAnswerNum_byQuestionID(team_q_id)){
+              answer = GetAnswerNum_byQuestionID(team_q_id);
+            }
+          }
+          else {
+            answer = QuestionnaireAnswer_ReadBit(&info->question_answer, team_q_id);
+          }
           if(answer != 0){  //0‚Í–³‰ñ“š
             MISC_AddResearchCount(misc, i, 1);
           }
