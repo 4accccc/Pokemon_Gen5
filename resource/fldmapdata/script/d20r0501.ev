@@ -221,7 +221,7 @@ EVENT_START		ev_bg_d20r0501_bg19_01
 	
 	ELSE
 		_TALK_START_SE_PLAY()
-		_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_01, TYPE_INFO )
+		_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_02, TYPE_INFO )
 		_BGWIN_CLOSE()
 	
 	ENDIF
@@ -233,7 +233,7 @@ ev_stone:
 	//ï‡êîÇ™190ï‡à»ì‡ÇÃèÍçá
 	IF $LWK_STEP <= 190 THEN
 		_TALK_START_SE_PLAY()
-		_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_01, TYPE_INFO )
+		_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_02, TYPE_INFO )
 		_BGWIN_CLOSE()
 
 		//âÊñ ÇóhÇÁÇ∑ÉfÉÇÇì¸ÇÍÇÈ
@@ -260,7 +260,7 @@ ev_stone:
 	
 	//ï‡êîÇ™ÇªÇÍà»è„ÇÃèÍçá
 	ELSE
-		_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_02, TYPE_INFO )
+		_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_01, TYPE_INFO )
 	ENDIF
 
 _RET
