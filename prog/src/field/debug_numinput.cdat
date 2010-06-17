@@ -220,12 +220,20 @@ static const DEBUG_NUMINPUT_LIST DNI_WifiFriendList[] = {
 
 //////////////////////////////////////////////////////
 ///å©ÇΩñ⁄í≤êÆ
-static const DEBUG_NUMINPUT_PARAM DNP_ViewOffset_DeepSand = {
-  0, FX32_MAX, DebugGetDeepSandOffs, DebugSetDeepSandOffs,
+static const DEBUG_NUMINPUT_PARAM DNP_ViewOffset_01 = {
+  0, FX32_MAX, DebugGetViewOffs01, DebugSetViewOffs01,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_ViewOffset_02 = {
+  0, FX32_MAX, DebugGetViewOffs02, DebugSetViewOffs02,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_ViewOffset_03 = {
+  0, 1, DebugGetViewOffs03, DebugSetViewOffs03,
 };
 static const DEBUG_NUMINPUT_LIST DNI_ViewOffsets[] = {
   //gmm_id, param, dni_param
-  { dni_view_offset_01, 0, &DNP_ViewOffset_DeepSand },
+  { dni_view_offset_01, 0, &DNP_ViewOffset_01 },
+  { dni_view_offset_02, 0, &DNP_ViewOffset_02 },
+  { dni_view_offset_03, 0, &DNP_ViewOffset_03 },
 };
 
 #endif  //PM_DEBUG

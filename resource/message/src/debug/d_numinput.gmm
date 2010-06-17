@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-06-15T19:24:19"/>
+	<create user="tamada" host="W00139" date="2010-06-17T13:38:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -703,13 +703,18 @@
 	</row>
 
 	<row id="dni_view_offset_01">
-		<language name="JPN" width="240">深い砂ＯＦＦＳ</language>
-		<language name="JPN_KANJI" width="240">深い砂ＯＦＦＳ</language>
+		<language name="JPN" width="240">ＯＦＦＳその１</language>
+		<language name="JPN_KANJI" width="240">ＯＦＦＳその１</language>
 	</row>
 
 	<row id="dni_view_offset_02">
-		<language name="JPN" width="240">射影ＺＯＦＦＳ</language>
-		<language name="JPN_KANJI" width="240">射影ＺＯＦＦＳ</language>
+		<language name="JPN" width="240">ＯＦＦＳその２</language>
+		<language name="JPN_KANJI" width="240">ＯＦＦＳその２</language>
+	</row>
+
+	<row id="dni_view_offset_03">
+		<language name="JPN" width="240">ＯＦＦＳその３</language>
+		<language name="JPN_KANJI" width="240">ＯＦＦＳその３</language>
 	</row>
 
 	<row id="dni_place_name_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">

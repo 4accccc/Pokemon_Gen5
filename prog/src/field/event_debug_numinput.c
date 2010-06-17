@@ -165,8 +165,12 @@ static u32 DebugGetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 pa
 static void DebugSetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
-static u32 DebugGetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
-static void DebugSetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetViewOffs01(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetViewOffs01(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetViewOffs02(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetViewOffs02(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -1323,6 +1327,7 @@ static void DebugSetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32
 //    ï\é¶í≤êÆÅ@ä÷òA
 //
 //--------------------------------------------------------------
+#if 0
 #include "fldeff_footmark.h"
 static u32 DebugGetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
 {
@@ -1341,6 +1346,28 @@ static void DebugSetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 p
   FLDEFF_CTRL * fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
   DEBUG_SetDeepsandYoffs( fectrl, value );
 #endif
+}
+#endif
+static u32 DebugGetViewOffs01(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return 0;
+}
+static void DebugSetViewOffs01(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+}
+static u32 DebugGetViewOffs02(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return 0;
+}
+static void DebugSetViewOffs02(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+}
+static u32 DebugGetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return 0;
+}
+static void DebugSetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
 }
 
 #endif  //PM_DEBUG
