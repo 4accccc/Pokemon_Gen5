@@ -73,4 +73,5 @@ extern void Intrude_SetLiveCommStatus_IntrudeOut(GAME_COMM_SYS_PTR game_comm);
 extern INTRUDE_CONNECT Intrude_GetIntrudeStatus(GAME_COMM_SYS_PTR game_comm);
 extern int Intrude_GetMissionEntryNum(GAME_COMM_SYS_PTR game_comm);
 extern BOOL Intrude_GetTargetName(GAME_COMM_SYS_PTR game_comm, STRBUF *dest_buf);
+extern BOOL Intrude_CheckNetIsExit(GAME_COMM_SYS_PTR game_comm);
 

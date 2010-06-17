@@ -427,6 +427,7 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
   }
 
   if(intcomm->error == TRUE || NetErr_App_CheckError()){
+    intcomm->comm_exit_exe = TRUE;
     GFL_NET_Exit( IntrudeComm_FinishTermCallback );
     return TRUE;
   }
@@ -480,6 +481,7 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
     }
     break;
   case SEQ_FINISH:
+    intcomm->comm_exit_exe = TRUE;
     GFL_NET_Exit( IntrudeComm_FinishTermCallback );
     return TRUE;
   }

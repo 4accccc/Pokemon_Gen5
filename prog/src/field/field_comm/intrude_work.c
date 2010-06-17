@@ -687,3 +687,37 @@ BOOL Intrude_GetTargetName(GAME_COMM_SYS_PTR game_comm, STRBUF *dest_buf)
   MyStatus_CopyNameString( target_myst, dest_buf );
   return TRUE;
 }
+
+//==================================================================
+/**
+ * 侵入の通信を終了しようとしている状態かを調べる
+ *
+ * @param   game_comm		
+ *
+ * @retval  BOOL		TRUE:終了処理実行中
+ * @retval  BOOL		FALSE:終了処理は実行していない
+ */
+//==================================================================
+BOOL Intrude_CheckNetIsExit(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm;
+  
+  if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){
+    return FALSE; //侵入通信が起動していない
+  }
+  
+  intcomm = GameCommSys_GetAppWork(game_comm);
+  if(intcomm == NULL){
+    return FALSE; //intcommがNULLはありえないが一応チェック
+  }
+  
+  if(intcomm->comm_exit_exe == FALSE){
+    return FALSE; //通信終了を実行しているタイミングではない
+  }
+  
+  if(GFL_NET_IsExit() == TRUE){
+    return FALSE;  //終了処理は既に完了している
+  }
+  return TRUE;  //終了処理実行中
+}
+
