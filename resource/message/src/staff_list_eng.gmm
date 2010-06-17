@@ -1259,8 +1259,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_173">
-		<language name="JPN" width="256">Chosa  Radar  and Surechigai  Design</language>
-		<language name="JPN_KANJI" width="256">Chosa  Radar  and Surechigai  Design</language>
+		<language name="JPN" width="256">Chosa  Radar  &amp;  Surechigai  Design</language>
+		<language name="JPN_KANJI" width="256">Chosa  Radar  &amp;  Surechigai  Design</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_174">
