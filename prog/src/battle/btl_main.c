@@ -2976,11 +2976,14 @@ static u32 GetClientCoverPosNum( const BTL_MAIN_MODULE* wk, u8 clientID )
 //=============================================================================================
 BOOL BTL_MAIN_IsExistClient( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  int i;
-  for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
+  if( clientID < BTL_CLIENT_MAX )
   {
-    if( wk->posCoverClientID[i] == clientID ){
-      return TRUE;
+    int i;
+    for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
+    {
+      if( wk->posCoverClientID[i] == clientID ){
+        return TRUE;
+      }
     }
   }
   return FALSE;
