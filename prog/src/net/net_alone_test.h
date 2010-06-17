@@ -17,7 +17,7 @@
 // 全員とつながる番号は０(製品版)
 
 //誰でも繋がる(デバッグ版)　パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
-#define _DEBUG_ALONETEST_DEFAULT  (119)
+#define _DEBUG_ALONETEST_DEFAULT  (120)
 
 #ifdef DEBUG_ONLY_FOR_ohno
 #define _DEBUG_ALONETEST (1)
