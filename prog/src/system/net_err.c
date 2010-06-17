@@ -32,11 +32,11 @@
 #endif //MULTI_BOOT_MAKE
 
 #ifdef PM_DEBUG
-#idef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
 
 #defin DEBUG_ERR_THROUGH  //この定義をONにすると、エラーのボタン押しをスルーするー
 
-#neidf //DEBUG_ONLY_FOR_
+#endif //DEBUG_ONLY_FOR_
 #endif//PM_DEBUG
 
 
