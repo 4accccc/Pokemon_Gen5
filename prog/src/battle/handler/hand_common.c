@@ -128,9 +128,11 @@ BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8
 void HandCommon_MagicCoat_CheckSideEffWaza( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   u8 wazaUserPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  if( !BTL_MAINUTIL_IsFriendClientID(wazaUserPokeID, pokeID) )
+
+  if( !BTL_MAINUTIL_IsFriendPokeID(wazaUserPokeID, pokeID) )
   {
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+
     if( (WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_SIDE_EFFECT)
     &&  (WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat))
     ){
