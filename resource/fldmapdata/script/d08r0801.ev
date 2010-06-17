@@ -75,18 +75,17 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	
 	//ROMによって、ポケモンの鳴き声が違う
 	IF $LCWK_VERSION == VERSION_WHITE THEN
-		_GIZAPLAINWIN_MSG_POS( msg_d08r0801_demo_01w, POS_UP )
 		_VOICE_PLAY(MONSNO_650,0)
+		_GIZAPLAINWIN_MSG_POS( msg_d08r0801_demo_01w, POS_UP )
 	ELSE
+		_VOICE_PLAY(MONSNO_651,0)	
 		_GIZAPLAINWIN_MSG_POS( msg_d08r0801_demo_01b, POS_UP )
-		_VOICE_PLAY(MONSNO_651,0)		
 	ENDIF
 	
 	_VOICE_WAIT()
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
-	_TIME_WAIT(8)
 	_SYSWIN_MSG(msg_d08r0801_demo_02, POS_UP )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
@@ -147,13 +146,15 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 		_TIME_WAIT(10)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01_c)
 		_OBJ_ANIME_WAIT()
-		
+	
+	//プラズマ団が進入不可を通るが、仕様とする
 	ELSIF $LWK_HERO_POSZ == 13	THEN
 		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_d)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01_d)
 		_TIME_WAIT(10)
 		_OBJ_ANIME_WAIT()
-		
+	
+	//アトリビュートが進入不可になっているので、ここのPOSを踏むことはない
 	ELSIF $LWK_HERO_POSZ == 14	THEN
 		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_e1)
 		_OBJ_ANIME_WAIT()
