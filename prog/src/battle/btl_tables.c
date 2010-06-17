@@ -55,19 +55,6 @@ BOOL BTL_TABLES_IsMatchEncoreFail( WazaID waza )
   return checkTableElems( waza, table, NELEMS(table) );
 }
 /**
- *  Ç‡ÇÃÇ‹ÇÀé∏îsëŒè€ÇÃÉèÉUîªíË
- */
-BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
-{
-  static const u16 table[] = {
-    WAZANO_NULL,    WAZANO_SUKETTI,   WAZANO_MONOMANE,
-    WAZANO_HENSIN,  WAZANO_WARUAGAKI, WAZANO_YUBIWOHURU,
-    WAZANO_OSYABERI
-  };
-
-  return checkTableElems( waza, table, NELEMS(table) );
-}
-/**
  *  Ç≥Ç´Ç«ÇËé∏îsÉèÉUîªíË
  */
 BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza )
@@ -434,7 +421,7 @@ BOOL BTL_TABLES_IsNegotoOmmit( WazaID waza )
     WAZANO_SAWAGU,      WAZANO_ROKETTOZUTUKI, WAZANO_GODDOBAADO,
     WAZANO_SOORAABIIMU, WAZANO_GAMAN,         WAZANO_KAMAITATI,
     WAZANO_SORAWOTOBU,  WAZANO_TOBIHANERU,    WAZANO_SYADOODAIBU,
-    WAZANO_KIAIPANTI,
+    WAZANO_KIAIPANTI,   WAZANO_HURIIFOORU,
   };
 
   if( checkHaseiOmmitCommon(waza) ){
@@ -454,7 +441,7 @@ BOOL BTL_TABLES_IsNekoNoteOmmit( WazaID waza )
       WAZANO_KORAERU,       WAZANO_MITIDURE,    WAZANO_KONOYUBITOMARE,
       WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
       WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
-      WAZANO_FEINTO,        WAZANO_KIAIPANTI,
+      WAZANO_FEINTO,        WAZANO_KIAIPANTI,   WAZANO_HENSIN,
   };
 
   if( checkHaseiOmmitCommon(waza) ){
@@ -474,12 +461,26 @@ BOOL BTL_TABLES_IsManekkoOmmit( WazaID waza )
       WAZANO_KORAERU,       WAZANO_MITIDURE,    WAZANO_KONOYUBITOMARE,
       WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
       WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
-      WAZANO_FEINTO,        WAZANO_KIAIPANTI,
+      WAZANO_FEINTO,        WAZANO_KIAIPANTI,   WAZANO_HENSIN,
   };
 
   if( checkHaseiOmmitCommon(waza) ){
     return TRUE;
   }
+
+  return checkTableElems( waza, table, NELEMS(table) );
+}
+
+/**
+ *  Ç‡ÇÃÇ‹ÇÀé∏îsëŒè€ÇÃÉèÉUîªíË
+ */
+BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
+{
+  static const u16 table[] = {
+    WAZANO_NULL,    WAZANO_SUKETTI,   WAZANO_MONOMANE,
+    WAZANO_HENSIN,  WAZANO_WARUAGAKI, WAZANO_YUBIWOHURU,
+    WAZANO_OSYABERI
+  };
 
   return checkTableElems( waza, table, NELEMS(table) );
 }
@@ -500,7 +501,7 @@ static const WazaID YubiFuruOmmit[] = {
   WAZANO_KORAERU,       WAZANO_MITIDURE,    WAZANO_KONOYUBITOMARE,
   WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
   WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
-  WAZANO_FEINTO,        WAZANO_KIAIPANTI,
+  WAZANO_FEINTO,        WAZANO_KIAIPANTI,   WAZANO_HENSIN,
 };
 
 //=============================================================================================
