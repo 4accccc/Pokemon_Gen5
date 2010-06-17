@@ -17,6 +17,8 @@
 //#include "net_wireless.h"
 #include "net/dwc_rapcommon.h"
 #include "dwc_rapinitialize.h"
+#include "system/net_err.h"
+#include "msg\msg_wifi_system.h"
 
 
 
@@ -30,9 +32,12 @@
 //==============================================================================
 void GFL_NET_WifiStart( int heapID , NetErrorFunc errorFunc)
 {
-    if( DWC_INIT_RESULT_DESTROY_OTHER_SETTING == mydwc_init(heapID) ){ //dwc初期化
-        errorFunc(NULL, 0, NULL);
-    }
+  if( DWC_INIT_RESULT_DESTROY_OTHER_SETTING == mydwc_init(heapID) ) //dwc初期化
+  {
+    NetErr_SystemInit();
+    NetErr_SystemCreate(heapID);
+    NetErr_App_FatalDispCallWifiMessage(dwc_message_0001);
+  }
 }
 
 
@@ -48,13 +53,7 @@ void GFL_NET_WifiUtility( int heapID )
 	OSIntrMode old;
 	void *work;
 
-//	GFL_NET_InitIchneumon(); // 
 	// アラームシステムを初期化しておかないとDWC_StartUtility呼出し後にPanicが発生する
-
-  //  while(GFL_NET_IsInitIchneumon()){
-    //    ;
-//    }
-
 	OS_InitTick();
 	OS_InitAlarm();
 

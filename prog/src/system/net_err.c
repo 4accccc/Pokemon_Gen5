@@ -272,6 +272,7 @@ BOOL NetErr_DispCall(BOOL fatal_error)
 BOOL NetErr_App_FatalDispCallWifiMessage(int message)
 {
   NetErrSystem.wifi_msg = message;
+  NetErrSystem.net_type = GFL_NET_TYPE_WIFI;
   return NetErr_DispCall(TRUE);
 }
 

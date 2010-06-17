@@ -316,8 +316,12 @@ static  void  GameInit(void)
   GFL_NET_DebugPrintOn();
 #endif
 #endif  //PM_DEBUG
+
+  /* 文字描画システム初期化 */
+  PRINTSYS_Init( GFL_HEAPID_SYSTEM );
+
   // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
-  GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
+  GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);  //ここでエラー表示する事があるので文字描画システムは手前
   // AP情報の取得
   WIH_DWC_CreateCFG(HEAPID_NETWORK_FIX);
   WIH_DWC_ReloadCFG();
@@ -330,8 +334,6 @@ static  void  GameInit(void)
 //  GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &CorpProcData, NULL);
 #endif
 
-  /* 文字描画システム初期化 */
-  PRINTSYS_Init( GFL_HEAPID_SYSTEM );
   
   //セーブ関連初期化(フラッシュを認識しない場合、警告画面を出す為、文字描画システムが出来てから)
   SaveControl_SystemInit(HEAPID_SAVE);
