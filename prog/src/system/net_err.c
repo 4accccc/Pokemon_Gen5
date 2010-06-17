@@ -891,6 +891,47 @@ static void Local_ErrDispDraw(void)
 	GFL_HEAP_FreeMemory( arcData );
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @brief   WIFIエラーメッセージ取得
+ * @param   fatal_error   TRUE:リセットを促すエラー(Aで抜けられない) 
+ * 
+ */
+//--------------------------------------------------------------
+
+static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr)
+{
+  u32 msgno;
+  switch(pErr->errorUser){
+  case ERRORCODE_HEAP:
+    return dwc_error_0014;
+  case ERRORCODE_DISCONNECT:
+    return dwc_message_0022;
+  case ERRORCODE_CRC:
+  case ERRORCODE_SYSTEM:
+  case ERRORCODE_SENDQUEUE:
+  case ERRORCODE_USER_TIMEOUT:
+  case ERRORCODE_NHTTP:
+    return dwc_error_0015;
+  case ERRORCODE_TIMEOUT:
+    return dwc_message_0022;
+  }
+  if(11 == NetErrSystem.wifi_msg){
+    return dwc_error_0015;
+  }
+  if( NetErrSystem.wifi_msg >= 0 )
+  {
+    msgno = dwc_error_0001 + NetErrSystem.wifi_msg;
+  }
+  else
+  {
+    msgno = dwc_error_0012;
+  }
+  return msgno;
+}
+
+
 //--------------------------------------------------------------
 /**
  * @brief   エラーメッセージ表示
@@ -955,33 +996,7 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
       mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
 			ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_NET_TEMP);
 
-      //WIFIで表示するメッセージを取得
-      type    = NetErrSystem.wifi_msg;
-      if(type == 11){
-        msgno = dwc_error_0015;
-        type = 11;
-      }
-      else if(nes->wifi_error.errorCode == ERRORCODE_HEAP)
-      {
-        msgno = dwc_error_0014;
-        type = 12;
-      }
-      else
-      {
-        if( type >= 0 )
-        {
-          msgno = dwc_error_0001 + type;
-        }
-        else
-        {
-          msgno = dwc_error_0012;
-        }
-      }
-//      if( fatal_error == TRUE )
-//      {
-//        msgno = dwc_error_0016;
-//      }
-
+      msgno = _wifierrMessage(&nes->wifi_error);      //WIFIで表示するメッセージを取得
 
       OS_TPrintf("エラーメッセージ %d \n",msgno);
     }

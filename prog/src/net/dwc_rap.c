@@ -1744,7 +1744,7 @@ int mydwc_HandleError(void)
     GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, returnNo );
   }
   else if(_dWork->state==MDSTATE_TIMEOUT){
-    MYDWC_DEBUGPRINT("TimeOut Error!!\n");
+    MYDWC_DEBUGPRINT("TimeOut Error!! %d %d %d\n",errorCode,myErrorType,ret);
     returnNo = ERRORCODE_TIMEOUT;
     GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, returnNo );
   }

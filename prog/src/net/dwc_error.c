@@ -88,8 +88,8 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
           DWC_ClearError(); //表示後クリアする決まり
           return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
         }
-        DWC_ClearError(); //表示後クリアする決まりだが無理やりシャットダウンにしたい場合はその前にクリアする
         /* fallthru */
+        DWC_ClearError(); //表示後クリアする決まりだが無理やりシャットダウンにしたい場合はその前にクリアする
 
       case DWC_ETYPE_SHUTDOWN_FM:
       case DWC_ETYPE_SHUTDOWN_GHTTP:
@@ -116,7 +116,8 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
     if( (cp_error->errorUser == ERRORCODE_TIMEOUT 
         || cp_error->errorUser == ERRORCODE_DISCONNECT )
         && is_timeout )
-    { 
+    {
+      NetErr_ErrorSet();    //エラーをセット
       NetErr_DispCallPushPop();       //エラーメッセージ表示
       GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
       NetErr_ErrWorkInit();           //エラーシステム情報クリア
