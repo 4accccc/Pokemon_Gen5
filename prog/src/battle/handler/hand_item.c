@@ -3671,7 +3671,11 @@ static void handler_KuroiHedoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     }
     else
     {
-      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+      BTL_HANDEX_PARAM_DAMAGE* param;
+
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM_EFFECT, pokeID );
+
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
         param->pokeID = pokeID;
         param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Damage );
@@ -3758,7 +3762,11 @@ static void handler_KuttukiBari_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+    BTL_HANDEX_PARAM_DAMAGE* param;
+
+    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM_EFFECT, pokeID );
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
       param->pokeID = pokeID;
       param->damage = BTL_CALC_QuotMaxHP( bpp, common_GetItemParam(myHandle, ITEM_PRM_ATTACK) );
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Damage );
