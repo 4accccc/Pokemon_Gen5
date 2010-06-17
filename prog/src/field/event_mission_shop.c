@@ -338,6 +338,11 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
         event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_SHOP_NG));
       return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
     }
+    else{
+      GMEVENT_ChangeEvent(
+        event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_NULL));
+      return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
+    }
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
@@ -398,7 +403,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
     if(IntrudeEventPrint_WaitStream(&shop->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
-    if((*seq) < SEQ_LAST_MSG_WAIT){
+    if((*seq) < SEQ_LAST_MSG_WAIT && (*seq) != SEQ_MSG_SECOND && (*seq) != SEQ_BATTLE_YESNO_SELECT){
       IntrudeEventPrint_StartStream(&shop->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       shop->error = TRUE;

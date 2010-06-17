@@ -387,12 +387,13 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     if(talk->success == TRUE){
       GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, talk->success));
     }
-    else if(talk->cancel == TRUE){
-      return GMEVENT_RES_FINISH;    //キャンセルで終了
+    else if(talk->cancel == FALSE){
+      GMEVENT_ChangeEvent(
+        event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_BATTLE_NG));
     }
     else{
       GMEVENT_ChangeEvent(
-        event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_BATTLE_NG));
+        event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_NULL));
     }
     return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
   }
@@ -467,7 +468,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
-    if((*seq) < SEQ_LAST_MSG_WAIT){
+    if((*seq) < SEQ_LAST_MSG_WAIT && (*seq) != SEQ_MSG_WAIT && (*seq) != SEQ_BATTLE_YESNO_SELECT){
       IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys); //途中のシーケンスで解放しているので
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
