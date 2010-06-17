@@ -147,8 +147,8 @@ EVENT_START    ev_pos_d06r0101_n_01
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
     
 	_START_EVENT_BGM( SEQ_BGM_E_N )
-	//Nが振り向く
-	_OBJ_ANIME( D06R0101_BOSS_01, anm_common_turn_down )
+	//Nが振り向いて、両手を広げる
+	_OBJ_ANIME( D06R0101_BOSS_01, anm_n_turn_down )
 	_OBJ_ANIME_WAIT()
 
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_10, D06R0101_BOSS_01, POS_UR )
@@ -224,6 +224,14 @@ _ANIME_LABEL	anm_player_idou_01_c
 	_ANIME_DATA AC_WALK_R_4F,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//N:両手アニメ                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_turn_down
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_N_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 //N: 立ち去る1                   
 //--------------------------------------------------------------------
