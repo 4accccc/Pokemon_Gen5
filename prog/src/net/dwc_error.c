@@ -72,7 +72,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
 
     if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
     { 
-      DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp code=%d line=%d\n", cp_error->errorType, __LINE__ );
+      DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp code=%d type=%d line=%d\n", cp_error->errorType, cp_error->errorUser, __LINE__ );
       switch( cp_error->errorType )
       { 
       case DWC_ETYPE_LIGHT:
@@ -114,19 +114,31 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
     }
     //マッチング系
     if( (cp_error->errorUser == ERRORCODE_TIMEOUT 
-        || cp_error->errorUser == ERRORCODE_DISCONNECT )
-        && is_timeout )
+        || cp_error->errorUser == ERRORCODE_DISCONNECT ) )
     {
-      NetErr_ErrorSet();    //エラーをセット
-      NetErr_DispCallPushPop();       //エラーメッセージ表示
-      GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
-      NetErr_ErrWorkInit();           //エラーシステム情報クリア
-      GFL_NET_StateResetError();      //NET内エラー情報クリア
+      if( is_timeout )
+      {
+        //マッチングタイムアウトをエラーにする場合
+        NetErr_ErrorSet();    //エラーをセット
+        NetErr_DispCallPushPop();       //エラーメッセージ表示
+        GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
+        NetErr_ErrWorkInit();           //エラーシステム情報クリア
+        GFL_NET_StateResetError();      //NET内エラー情報クリア
 
-      GFL_NET_StateWifiMatchEnd(TRUE);  //エラーをクリアしてもずっとタイムアウト中になってしまうので
-                                        //解消する
-      DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
-      return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
+        GFL_NET_StateWifiMatchEnd(TRUE);  //エラーをクリアしてもずっとタイムアウト中になってしまうので
+        //解消する
+        DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
+        return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
+      }
+      else
+      {
+        //マッチングタイムアウトをエラーにしない場合
+        GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
+        NetErr_ErrWorkInit();           //エラーシステム情報クリア
+        GFL_NET_StateResetError();      //NET内エラー情報クリア
+        GFL_NET_StateWifiMatchEnd(TRUE);  //エラーをクリアしてもずっとタイムアウト中になってしまうので
+        return GFL_NET_DWC_ERROR_RESULT_NONE;
+      }
     }
     //システムエラー（ライト）系
     else if( cp_error->errorUser == ERRORCODE_CRC

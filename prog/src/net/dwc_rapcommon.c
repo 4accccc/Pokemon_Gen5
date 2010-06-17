@@ -148,6 +148,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 
   //écÇËÉqÅ[Éví≤ç∏
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
+  /*
   { 
     static u32 s_wifi_buff  = 0xFFFFFFFF;
     u32 free_area;
@@ -158,6 +159,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     }
     NET_MEMORY_PRINT( "HEAP[WIFI] most low free area rest=0x%x\n", s_wifi_buff );
   }
+  */
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
 
 
