@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-11T12:25:27"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-18T00:41:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,7 +462,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1025" top="408" right="1730" bottom="1036" maximized="no" rayout="Vertical2">
+	<dialog left="1030" top="368" right="1735" bottom="996" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="no"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1395,7 +1395,7 @@
 	<row id="syachi_mystery_01_019" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード削除成功</comment>
 		<language name="JPN" width="216">カードを　すてました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">カードを　すてました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">カードを　捨てました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_020" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
