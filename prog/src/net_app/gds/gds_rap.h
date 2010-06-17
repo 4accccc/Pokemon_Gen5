@@ -37,10 +37,6 @@
 #include <poke_net_gds.h>
 
 
-// サーバのURLまたはIPアドレスとポート番号を定義
-#define SYACHI_SERVER_URL	("pkgdstest.nintendo.co.jp")
-#define SYACHI_SERVER_PORT	(12401)
-
 
 //==============================================================================
 //	定数定義

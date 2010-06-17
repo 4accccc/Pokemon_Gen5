@@ -139,7 +139,7 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	gdsrap->pokenet_auth.PID = init_data->gs_profile_id;
 	gdsrap->pokenet_auth.ROMCode = PM_VERSION;
 	gdsrap->pokenet_auth.LangCode = PM_LANG;
-	ret = POKE_NET_GDS_Initialize(&gdsrap->pokenet_auth, SYACHI_SERVER_URL, SYACHI_SERVER_PORT);
+	ret = POKE_NET_GDS_Initialize(&gdsrap->pokenet_auth, GF_GDS_SERVER_URL, GF_GDS_SERVER_PORT);
 	GF_ASSERT(ret == TRUE);		//‰Šú‰»‚ÉŽ¸”s‚·‚éŽ–‚Í‚ ‚è‚¦‚È‚¢‚Í‚¸
 	gdsrap->gdslib_initialize = TRUE;
 

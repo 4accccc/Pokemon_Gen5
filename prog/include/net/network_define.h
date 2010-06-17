@@ -122,6 +122,10 @@ IRAJ
 
 #define MATCHINGKEY (0)
 
+///GDSサーバー(デバッグ版)
+#define GF_GDS_SERVER_URL     "pkgdstest.nintendo.co.jp"
+#define GF_GDS_SERVER_PORT    (12401)
+
 #else //---------- DEBUG_SERVER
 
 //製品版用サーバー
@@ -137,6 +141,10 @@ IRAJ
 #define GF_DWC_GDB_AUTH_TYPE          (DWC_GDB_SSL_TYPE_SERVER_AUTH)
 
 #define MATCHINGKEY (1)
+
+///GDSサーバー(製品版)
+#define GF_GDS_SERVER_URL     ("pkgdsprod.nintendo.co.jp")
+#define GF_GDS_SERVER_PORT    (12401)
 
 #endif  //---------- DEBUG_SERVER
 
