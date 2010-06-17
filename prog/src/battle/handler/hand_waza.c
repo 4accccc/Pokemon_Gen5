@@ -2824,7 +2824,7 @@ static void handler_Nomikomu_Ratio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     case 3:   ratio = FX32_CONST( 1 ); break;
     }
 
-    TAYA_Printf("takuwae cnt=%d, ratio=%08x\n", cnt, ratio);
+//    TAYA_Printf("takuwae cnt=%d, ratio=%08x\n", cnt, ratio);
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, ratio );
   }
 }
@@ -9253,6 +9253,7 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       BtlPokePos  myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
       BtlRule  rule = BTL_SVFTOOL_GetRule( flowWk );
       targetPos = BTL_MAINUTIL_GetOpponentPokePos( rule, myPos, 0 );
+      TAYA_Printf("myPos=%d, targetPos=%d\n", myPos, targetPos);
     }
 
     if( BTL_SVFTOOL_ExpandPokeID(flowWk, targetPos, targetPokeIDAry) )

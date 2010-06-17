@@ -5941,6 +5941,7 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
         waza       = args[2];
         turnType   = args[3];
 
+        BTL_N_Printf( DBGSTR_CLIENT_StartWazaEffect, waza, turnType, atPokePos, defPokePos );
         BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
         (*seq)++;
       }

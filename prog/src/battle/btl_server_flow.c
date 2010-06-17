@@ -7469,7 +7469,6 @@ static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u3
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaRankEffect* effect, int* volume )
 {
   *effect = WAZADATA_GetRankEffect( waza, idx, volume );
-  BTL_Printf("ワザ[%d]のランク効果[%d] type=%d, volume=%d\n", waza, idx, *effect, *volume);
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
@@ -7551,7 +7550,6 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
     }
     else
     {
-      BTL_Printf("ランク効果失敗\n");
       if( fAlmost )
       {
         u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -9957,6 +9955,7 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
     volume = BPP_RankUp( target, effect, volume );
     SCQUE_PUT_OP_RankUp( wk->que, pokeID, effect, volume );
     SCQUE_PUT_ACT_RankUp( wk->que, pokeID, effect, volume );
+    TAYA_Printf("ランクアップボリューム=%d\n", volume);
     if( fStdMsg )
     {
       if( itemID == ITEM_DUMMY_DATA ){
@@ -12643,9 +12642,14 @@ BOOL BTL_SVFTOOL_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_P
   u32 i;
   for(i=0; i<wk->numActOrder; ++i)
   {
-    if( BPP_GetID(wk->actOrder[i].bpp) == pokeID ){
-      *dst = wk->actOrder[i].action;
-      return TRUE;
+    if( BPP_GetID(wk->actOrder[i].bpp) == pokeID )
+    {
+      // ローテーションは返さない
+      if( wk->actOrder[i].action.gen.cmd != BTL_ACTION_ROTATION )
+      {
+        *dst = wk->actOrder[i].action;
+        return TRUE;
+      }
     }
   }
   return FALSE;
