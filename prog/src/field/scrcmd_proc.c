@@ -37,7 +37,6 @@
 #include "event_fieldmap_control.h"
 
 #include "scrcmd_proc.h"
-#include "../../../resource/fldmapdata/script/usescript.h"
 
 #include "app/bag.h"
 

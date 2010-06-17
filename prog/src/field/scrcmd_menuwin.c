@@ -25,9 +25,9 @@
 
 #include "fieldmap.h"
 
-#include "arc/script_message.naix"
-#include "msg/script/msg_common_scr.h"
-#include "../../../resource/fldmapdata/script/usescript.h"
+#include "arc/script_message.naix"    //NARC_script_message_common_scr_dat
+#include "msg/script/msg_common_scr.h"  // msg_yen_01
+
 #include "font/font.naix"
 
 #include "sound/pm_sndsys.h"

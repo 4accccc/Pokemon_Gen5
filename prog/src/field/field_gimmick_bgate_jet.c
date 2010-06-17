@@ -22,8 +22,6 @@
 #include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
 #include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
 #include "field_gimmick_bgate_jet.h"  //
-#include "field/eventwork.h"  // for EVENTWORK_
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
 
 #include "map_attr.h"
 
