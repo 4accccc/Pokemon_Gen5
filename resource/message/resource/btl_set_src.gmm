@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-06-16T00:20:21"/>
+	<create user="taya" host="W00146" date="2010-06-17T14:55:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2289,6 +2289,13 @@
 さわいでいて　ねむれない！</language>
 		<language name="JPN_KANJI" width="216">しかし　[1:02:ポケモンニックネーム:0]は
 騒いでいて　眠れない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SawaguCont">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+さわいでいる！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+騒いでいる！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SawaguCure">

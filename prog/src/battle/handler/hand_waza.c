@@ -3707,8 +3707,8 @@ static void handler_Abareru_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_Sawagu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_START,       handler_Sawagu },               // ワザ出し確定ハンドラ
-    { BTL_EVENT_TURNCHECK_END,        handler_Sawagu_turnCheck },     // ターンチェック終了ハンドラ
+    { BTL_EVENT_WAZA_DMG_DETERMINE,   handler_Sawagu               }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_TURNCHECK_END,        handler_Sawagu_turnCheck     }, // ターンチェック終了ハンドラ
     { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Sawagu_CheckSickFail }, // 状態異常失敗チェック
   };
   *numElems = NELEMS( HandlerTable );
@@ -3717,7 +3717,7 @@ static const BtlEventHandlerTable*  ADD_Sawagu( u32* numElems )
 
 static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // 自分がワザロック状態になっていないなら、ワザロック状態にする
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
@@ -3773,15 +3773,26 @@ static void handler_Sawagu_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     if( work[WORKIDX_STICK] )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK)
-      &&  !BPP_IsDead(bpp)
-      ){
-        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-          HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguCure );
-          HANDEX_STR_AddArg( &param->str, pokeID );
-        BTL_SVF_HANDEX_Pop( flowWk, param );
 
-        BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      if( !BPP_IsDead(bpp) )
+      {
+        // ロック切れてたら「おとなしくなった」表示
+        if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK) )
+        {
+          BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+            HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguCure );
+            HANDEX_STR_AddArg( &param->str, pokeID );
+          BTL_SVF_HANDEX_Pop( flowWk, param );
+          BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+        }
+        // ロック中なら「さわいでいる」表示
+        else
+        {
+          BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+            HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguCont );
+            HANDEX_STR_AddArg( &param->str, pokeID );
+          BTL_SVF_HANDEX_Pop( flowWk, param );
+        }
       }
     }
   }
