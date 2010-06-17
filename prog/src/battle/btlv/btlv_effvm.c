@@ -428,6 +428,7 @@ static  void          EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw );
 
 static  void          set_mcss_scale_move( fx32 mul_value_m, fx32 mul_value_e, int frame, int wait, int count );
 //static  void          check_linesover( GFL_EMIT_PTR emit, u32 flag );
+static  BOOL          check_camera_work_effect( int eff_no );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
@@ -720,7 +721,11 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   bevw->waza = waza;
 
   //リバース描画OFF
-  BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_OFF );
+  //カメラワークではOFFらない
+  if( check_camera_work_effect( bevw->waza ) == FALSE )
+  { 
+    BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_OFF );
+  }
 
   if( bevw->waza < BTLEFF_SINGLE_ENCOUNT_1 )
   {
@@ -6843,6 +6848,38 @@ static  void  set_mcss_scale_move( fx32 mul_value_m, fx32 mul_value_e, int frame
       BTLV_MCSS_MoveDefaultScale( BTLV_EFFECT_GetMcssWork(), pos, EFFTOOL_CALCTYPE_INTERPOLATION, &scale, frame, wait, count );
     }
   }
+}
+
+//============================================================================================
+/**
+ * @brief カメラワークエフェクトかチェック
+ */
+//============================================================================================
+static  BOOL  check_camera_work_effect( int eff_no )
+{ 
+  static  const int camera_work_eff_table[] = { 
+    BTLEFF_CAMERA_WORK,
+    BTLEFF_CAMERA_INIT,
+    BTLEFF_WCS_CAMERA_WORK_E_M,
+    BTLEFF_WCS_CAMERA_WORK_M_E,
+    BTLEFF_CAMERA_WORK_ROTATE_R_L,
+    BTLEFF_CAMERA_WORK_ROTATE_L_R,
+    BTLEFF_CAMERA_WORK_UPDOWN_E_M,
+    BTLEFF_CAMERA_WORK_UPDOWN_M_E,
+    BTLEFF_CAMERA_WORK_TRIANGLE,
+    BTLEFF_CAMERA_WORK_WCS_INIT,
+    BTLEFF_CAMERA_WORK_INIT,
+  };
+  int i;
+
+  for( i = 0 ; i < NELEMS( camera_work_eff_table ) ; i++ )
+  { 
+    if( camera_work_eff_table[ i ] == eff_no )
+    { 
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 #ifdef PM_DEBUG
