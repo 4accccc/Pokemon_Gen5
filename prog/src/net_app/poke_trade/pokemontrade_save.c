@@ -797,6 +797,7 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 
   if(
     (pWork->type == POKEMONTRADE_TYPE_GTSNEGO)||
+    (pWork->type == POKEMONTRADE_TYPE_WIFICLUB)||
     (pWork->type == POKEMONTRADE_TYPE_UNION)
     )
   {
