@@ -64,6 +64,8 @@ ntrcomp -l -o 027_01_benrimenu_lz77.nbfs 027_01_benrimenu.nbfs
 ntrcomp -l -o 027_02_checkbox_lz77.nbfs 027_02_checkbox.nbfs
 ntrcomp -l -o 027_03_checkbox2_lz77.nbfs 027_03_checkbox2.nbfs
 ntrcomp -l -o 027_04_select_lz77.nbfs 027_04_select.nbfs
+ntrcomp -l -o 016_01_dsimenu_lz77.nbfs 016_01_dsimenu.nbfs
+ntrcomp -l -o 016_02_erabu_lz77.nbfs 016_02_erabu.nbfs
 ntrcomp -l -o 017_01_sitagamen_lz77.nbfs 017_01_sitagamen.nbfs
 ntrcomp -l -o 017_02_uegamen_lz77.nbfs 017_02_uegamen.nbfs
 ntrcomp -l -o 017_03_kemuri_lz77.nbfs 017_03_kemuri.nbfs

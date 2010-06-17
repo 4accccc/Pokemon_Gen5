@@ -64,6 +64,8 @@ ntexconv 027_01_benrimenu.bmp -no -bg -bgb -bgf direct
 ntexconv 027_02_checkbox.bmp -no -bg -bgb -bgf direct
 ntexconv 027_03_checkbox2.bmp -no -bg -bgb -bgf direct
 ntexconv 027_04_select.bmp -no -bg -bgb -bgf direct
+ntexconv 016_01_dsimenu.bmp -no -bg -bgb -bgf direct
+ntexconv 016_02_erabu.bmp -no -bg -bgb -bgf direct
 ntexconv 017_01_sitagamen.bmp -no -bg -bgb -bgf direct
 ntexconv 017_02_uegamen.bmp -no -bg -bgb -bgf direct
 ntexconv 017_03_kemuri.bmp -no -bg -bgb -bgf direct

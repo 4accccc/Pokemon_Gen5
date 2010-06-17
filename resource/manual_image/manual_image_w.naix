@@ -77,10 +77,12 @@ enum {
 	NARC_manual_image_w_027_02_checkbox_lz77_nbfs = 63,
 	NARC_manual_image_w_027_03_checkbox2_lz77_nbfs = 64,
 	NARC_manual_image_w_027_04_select_lz77_nbfs = 65,
-	NARC_manual_image_w_017_01_sitagamen_lz77_nbfs = 66,
-	NARC_manual_image_w_017_02_uegamen_lz77_nbfs = 67,
-	NARC_manual_image_w_017_03_kemuri_lz77_nbfs = 68,
-	NARC_manual_image_w_bg_lz77_nbfs = 69
+	NARC_manual_image_w_016_01_dsimenu_lz77_nbfs = 66,
+	NARC_manual_image_w_016_02_erabu_lz77_nbfs = 67,
+	NARC_manual_image_w_017_01_sitagamen_lz77_nbfs = 68,
+	NARC_manual_image_w_017_02_uegamen_lz77_nbfs = 69,
+	NARC_manual_image_w_017_03_kemuri_lz77_nbfs = 70,
+	NARC_manual_image_w_bg_lz77_nbfs = 71
 };
 
 /* NARC_MANUAL_IMAGE_W_NAIX_ */
