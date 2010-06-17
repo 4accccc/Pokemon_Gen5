@@ -302,15 +302,6 @@ typedef struct {
 } COMM_BTL_DEMO_OBJ_WORK;
 
 
-//--------------------------------------------------------------
-/// パーティクルワーク
-//==============================================================
-#define COMM_BTL_DEMO_PARTICLE_MAX  ( 2 )
-typedef struct{
-  GFL_PTC_PTR ptc;
-  u8          spa_work[ PARTICLE_LIB_HEAP_SIZE ];
-  u8          spa_num;
-}COMM_BTL_DEMO_PARTICLE;
 
 //--------------------------------------------------------------
 /// G3D管理ワーク
@@ -325,7 +316,6 @@ typedef struct {
   u8 is_end;
   u8 is_add;
  
-//  COMM_BTL_DEMO_PARTICLE particle[ COMM_BTL_DEMO_PARTICLE_MAX ];
   GFL_PTC_PTR ptc;
   u8          spa_work[ PARTICLE_LIB_HEAP_SIZE ];
   u8          spa_num;
