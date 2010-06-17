@@ -959,13 +959,14 @@ extern BOOL BOX2MAIN_PokeItemFormChange( BOX2_SYS_WORK * syswk, POKEMON_PASO_PAR
  * @param		syswk		ボックス画面システムワーク
  * @param		b_pos		移動前の位置
  * @param		a_pos		移動後の位置
+ * @param		tray		トレイ番号
  *
  * @return  none
  *
  *  データは入れ替えたあとに呼ぶ
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos );
+extern void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos, u32 tray );
 
 //--------------------------------------------------------------------------------------------
 /**

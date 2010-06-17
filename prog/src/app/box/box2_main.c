@@ -1404,11 +1404,11 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
       if( ( work->put_pos - BOX2OBJ_POKEICON_TRAY_MAX ) < ppcnt ){
         // ボックス・手持ち間の入れ替え
         PokeDataChangeBoxParty( syswk, &dat[0], &dat[1] );
-				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray );
       }else{
         // ボックスから手持ちへ移動
         PokeDataMoveBOXtoPARTY( syswk, &dat[0] );
-				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray );
       }
     }
   }else{
@@ -1417,11 +1417,11 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
       if( BOX2MAIN_PokeParaGet( syswk, work->put_pos, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
         // 手持ち・ボックス間の入れ替え
         PokeDataChangeBoxParty( syswk, &dat[1], &dat[0] );
-				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->tray );
       }else{
         // 手持ちからボックスへ移動
         PokeDataMovePARTYtoBOX( syswk, &dat[work->get_pos-BOX2OBJ_POKEICON_TRAY_MAX] );
-				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->tray );
       }
     }else{
       if( ( work->put_pos - BOX2OBJ_POKEICON_TRAY_MAX ) < ppcnt ){
@@ -1567,13 +1567,14 @@ BOOL BOX2MAIN_PokeItemFormChange( BOX2_SYS_WORK * syswk, POKEMON_PASO_PARAM * pp
  * @param		syswk		ボックス画面システムワーク
  * @param		b_pos		移動前の位置
  * @param		a_pos		移動後の位置
+ * @param		tray		トレイ番号
  *
  * @return  none
  *
  *  データは入れ替えたあとに呼ぶ
  */
 //--------------------------------------------------------------------------------------------
-void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos )
+void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos, u32 tray )
 {
   POKEMON_PASO_PARAM * ppp;
   u32 pos;
@@ -1592,21 +1593,23 @@ void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos )
   }
 
   // シェイミ以外
-  if( BOX2MAIN_PokeParaGet( syswk, pos, syswk->tray, ID_PARA_monsno, NULL ) != MONSNO_SHEIMI ){
+  if( BOX2MAIN_PokeParaGet( syswk, pos, tray, ID_PARA_monsno, NULL ) != MONSNO_SHEIMI ){
     return;
   }
   // ランドフォルム
-  if( BOX2MAIN_PokeParaGet( syswk, pos, syswk->tray, ID_PARA_form_no, NULL ) == FORMNO_SHEIMI_LAND ){
+  if( BOX2MAIN_PokeParaGet( syswk, pos, tray, ID_PARA_form_no, NULL ) == FORMNO_SHEIMI_LAND ){
     return;
   }
 
-  ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, pos );
+  ppp = BOX2MAIN_PPPGet( syswk, tray, pos );
 
   ChangePokeForm( syswk, ppp, FORMNO_SHEIMI_LAND );
 	BOX2MAIN_FormChangeRenew( syswk, pos );
 
   // ポケモンアイコン切り替え
-  BOX2OBJ_PokeIconChange( syswk, syswk->tray, pos, syswk->app->pokeicon_id[pos] );
+	if( tray == syswk->tray ){
+		BOX2OBJ_PokeIconChange( syswk, tray, pos, syswk->app->pokeicon_id[pos] );
+	}
 
   // 上画面表示切替
   if( syswk->get_pos == pos ){
