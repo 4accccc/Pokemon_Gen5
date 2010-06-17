@@ -23,7 +23,7 @@
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define DEBUGPRINT_ON (0)
 #elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#define DEBUGPRINT_ON (0)
+#define DEBUGPRINT_ON (1)
 #else
 #define DEBUGPRINT_ON (0)
 #endif

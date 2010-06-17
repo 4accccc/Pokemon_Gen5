@@ -62,7 +62,7 @@
 #endif
 
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
-#define WBM_SYS_BATTLE_VSTIME_60
+#define WBM_SYS_BATTLE_VSTIME_1
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
 
 #endif //PM_DEBUG
@@ -1240,8 +1240,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     p_param->p_btl_setup_param->WifiBadNameFlag = 1;
   }
 
-#ifdef WBM_SYS_BATTLE_VSTIME_60
-  p_param->p_btl_setup_param->LimitTimeGame = 60;
+#ifdef WBM_SYS_BATTLE_VSTIME_1
+  p_param->p_btl_setup_param->LimitTimeGame = 1;
 #endif
 
   WBM_SYS_Printf( "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );

@@ -25,6 +25,12 @@
 //======================================================================
 #pragma mark [> define
 
+#ifdef PM_DEBUG
+#idef DEBUG_ONLY_FOR_toru_nagihashi
+#define DEBUG_SELECT_TIME_NONE
+#endif //DEBUG_ONLY_FOR_
+#endif //PM_DEBUG
+
 //======================================================================
 //	enum
 //======================================================================
@@ -351,6 +357,10 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
   {
     plData->use_tile_limit = TRUE;
     plData->time_limit = reg->SHOW_POKE_TIME;
+
+#ifdef DEBUG_SELECT_TIME_NONE
+    plData->time_limit = 1;
+#endif 
   }
   else
   {

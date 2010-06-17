@@ -1016,13 +1016,14 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
     WIFIBATTLEMATCH_NET_SEQ_MATCH_END,
   };
 
- // DEBUG_NET_Printf( "WiFiState %d \n", GFL_NET_StateGetWifiStatus() );
+  //DEBUG_NET_Printf( "WiFiState %d \n", GFL_NET_StateGetWifiStatus() );
   switch( p_wk->seq_matchmake )
   { 
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_START:
     {
       if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2, p_wk->matchmake_eval_callback, p_wk ) != 0 )
       {
+        GFL_NET_StateStartWifiRandomMatch_RateMode();
         GFL_NET_DWC_SetVChat( FALSE );
         p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START2;
       }
@@ -1030,7 +1031,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
     break;
 
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_START2:
-    if( GFL_NET_StateStartWifiRandomMatch_RateMode() )
+    if( 1 )
     { 
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_WAIT;
     }
@@ -1039,11 +1040,13 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_WAIT:
     {
       int ret;
-#if 0
+#if 1
       if(GFL_NET_STATE_MATCHED == GFL_NET_StateGetWifiStatus())
       {
         p_wk->cancel_select_timeout = 0;
         p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CONNECT_START;
+        GFL_NET_SetAutoErrorCheck(TRUE);
+        GFL_NET_SetNoChildErrorCheck(TRUE);
       }
 #else
       ret = GFL_NET_DWC_GetStepMatchResult();
@@ -1129,9 +1132,6 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
     }
     else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT,WB_NET_WIFIMATCH))
     {
-
-      GFL_NET_SetAutoErrorCheck(TRUE);
-      GFL_NET_SetNoChildErrorCheck(TRUE);
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_END;
     }
     break;
@@ -1183,7 +1183,7 @@ void WIFIBATTLEMATCH_NET_SetDisConnectForce( WIFIBATTLEMATCH_NET_WORK *p_wk )
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
 
-  GFL_NET_StateWifiMatchEnd(FALSE);
+  GFL_NET_StateWifiMatchEnd(TRUE);
 }
 
 

@@ -31,6 +31,15 @@
 #include "sound\pm_voice.h"
 #endif //MULTI_BOOT_MAKE
 
+#ifdef PM_DEBUG
+#idef DEBUG_ONLY_FOR_toru_nagihashi
+
+#defin DEBUG_ERR_THROUGH  //この定義をONにすると、エラーのボタン押しをスルーするー
+
+#neidf //DEBUG_ONLY_FOR_
+#endif//PM_DEBUG
+
+
 //==============================================================================
 //	定数定義
 //==============================================================================
@@ -350,6 +359,7 @@ void NetErr_DispCallPushPop(void)
 	
 //		OS_SpinWait(10000);
 	
+#ifndef DEBUG_ERR_THROUGH
 	while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
 		Local_ErrUpdate();	//ボタンを一度離すまで待つ
 	}
@@ -357,6 +367,7 @@ void NetErr_DispCallPushPop(void)
 	while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
 		Local_ErrUpdate();	//エラー画面終了ボタンが押されるまで待つ
 	}
+#endif //DEBUG_ERR_THROUGH
 	
 	//エラー画面終了
 
@@ -668,6 +679,9 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
     }
 
 #endif
+
+
+#ifndef DEBUG_ERR_THROUGH
 		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
 			Local_ErrUpdate();	//ボタンを一度離すまで待つ
 		}
@@ -675,6 +689,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
       Local_ErrUpdate();	//エラー画面終了ボタンが押されるまで待つ
 		}
+#endif //DEBUG_ERR_THROUGH
 		
 		//エラー画面終了
 		Local_ErrDispExit(FALSE);
