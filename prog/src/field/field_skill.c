@@ -133,8 +133,13 @@ void FLDSKILL_InitCheckWork(
   
   if( mmdl != NULL ){
     u16 obj_code = MMDL_GetOBJCode( mmdl );
+    VecFx32 mmdl_pos;
+    const MMDLSYS* mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
 
-    if( MMDL_CheckOBJCodeKairiki( obj_code ) ) {
+    MMDL_GetVectorPos( mmdl, &mmdl_pos );
+
+    if( MMDL_CheckOBJCodeKairiki( obj_code ) && 
+        (MMDLSYS_ROCKPOS_CheckRockFalled( mmdlsys, &mmdl_pos ) == FALSE) ) {
       scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_KAIRIKI );
     } 
     if( obj_code == TREE ) {
