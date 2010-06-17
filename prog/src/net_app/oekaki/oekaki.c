@@ -1629,7 +1629,9 @@ static int Oekaki_EndSelectPutString( OEKAKI_WORK *wk, int seq )
   if( EndMessageWait( wk ) ){
 
     // はい・いいえ開始
-    wk->app_menuwork = YesNoMenuInit( wk );
+    if(wk->app_menuwork==NULL){
+      wk->app_menuwork = YesNoMenuInit( wk );
+    }
 
     SetNextSequence( wk, OEKAKI_MODE_END_SELECT_WAIT );
   }
@@ -1940,8 +1942,10 @@ static int Oekaki_EndSelectParent( OEKAKI_WORK *wk, int seq )
   if( EndMessageWait( wk ) ){
 
     // はい・いいえ開始
-    wk->app_menuwork = YesNoMenuInit( wk );
-
+    if(wk->app_menuwork==NULL){
+      wk->app_menuwork = YesNoMenuInit( wk );
+    }
+    
     SetNextSequence( wk, OEKAKI_MODE_END_SELECT_PARENT_WAIT );
 
   }
