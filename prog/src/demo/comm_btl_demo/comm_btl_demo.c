@@ -60,6 +60,8 @@ FS_EXTERN_OVERLAY(ui_common);
 
 #ifdef PM_DEBUG
 
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+
 #define DEBUG_LOOP
 static BOOL g_debug_loop = FALSE;
 
@@ -67,6 +69,8 @@ static BOOL g_debug_loop = FALSE;
 //#define DEBUG_SET_PARAM
 
 //#define DEBUG_CNT_PARTICLE
+
+#endif // DEBUG_ONLY_FOR_genya_hosaka
 
 #endif // PM_DEBUG
 
