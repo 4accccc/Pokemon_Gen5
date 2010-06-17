@@ -69,6 +69,14 @@
 
 #define UNION_TR_MAX  (16)
 
+
+// ペンで書いたときのパレット番号
+#define SIGN_COLOR_PEN    ( 7 )
+// ペンで消すときのパレット番号
+#define SIGN_COLOR_ERASE  ( 0 )
+
+
+
 enum {
   SEQ_IN,
   SEQ_MAIN,
@@ -2418,7 +2426,9 @@ static void DecodeSignData( const u8 *inRawData, u8 *outData )
     raw_dot = dot/64;
     raw_line = (dot/8)%8;
     shift = (dot%8);
-    outData[dot] = ( 0x01 & (inRawData[(raw_dot*8)+raw_line]>>shift) );
+    if(0x01 & (inRawData[(raw_dot*8)+raw_line]>>shift)){
+      outData[dot] = SIGN_COLOR_PEN;
+    }
   }
 }
 
@@ -2439,7 +2449,7 @@ static void EncodeSignData( const u8 *inBmpData, u8 *outData )
   for(i=0;i<SIGN_SIZE_X*SIGN_SIZE_Y*8;i++){
     tmp = 0;
     for(r=0;r<8;r++){
-      tmp |= (inBmpData[i*8+r]<<r);
+      tmp |= ((inBmpData[i*8+r]&1)<<r);   // SIGN_COLOR_PENが7番だからできる計算(最下位bitが立つので）
     }
     outData[i] = tmp;
   }
@@ -2733,8 +2743,6 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
 
 }
 
-#define SIGN_COLOR_ERASE  ( 0 )
-#define SIGN_COLOR_PEN    ( 7 )
 
 //----------------------------------------------------------------------------------
 /**
