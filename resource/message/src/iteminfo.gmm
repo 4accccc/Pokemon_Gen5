@@ -5455,173 +5455,173 @@
 	</row>
 
 	<row id="ITEMINFO_592">
-		<language name="JPN" width="256">こうげきが　きゅうしょに　あたる
-かくりつが　すこし　あがる。
+		<language name="JPN" width="256">せんとうちゅう　きゅうしょに
+それなりに　あたりやすくなる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">攻撃が　急所に　当たる
-確率が　少し　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中　急所に
+それなりに　当たりやすくなる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_593">
-		<language name="JPN" width="256">ポケモンの　すばやさが
-すこし　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+すばやさを　それなりに　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　素早さが
-少し　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+素早さを　それなりに　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_594">
-		<language name="JPN" width="256">ポケモンの　とくこうが
-すこし　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+とくこうを　それなりに　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　特攻が
-少し　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特攻を　それなりに　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_595">
-		<language name="JPN" width="256">ポケモンの　とくぼうが
-すこし　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+とくぼうを　それなりに　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　特防が
-少し　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特防を　それなりに　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_596">
-		<language name="JPN" width="256">ポケモンの　ぼうぎょが
-すこし　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+ぼうぎょを　それなりに　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　防御が
-少し　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+防御を　それなりに　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_597">
-		<language name="JPN" width="256">ポケモンの　こうげきが
-すこし　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+こうげきを　それなりに　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　攻撃が
-少し　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+攻撃を　それなりに　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_598">
-		<language name="JPN" width="256">ポケモンの　こうげきの
-めいちゅうりつが　すこし　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+めいちゅうを　それなりに　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　攻撃の
-命中率が　少し　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+命中を　それなりに　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_599">
-		<language name="JPN" width="256">ポケモンの　すばやさが
-かなり　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+すばやさを　かなり　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　素早さが
-かなり　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+素早さを　かなり　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_600">
-		<language name="JPN" width="256">ポケモンの　とくこうが
-かなり　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+とくこうを　かなり　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　特攻が
-かなり　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特攻を　かなり　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_601">
-		<language name="JPN" width="256">ポケモンの　とくぼうが
-かなり　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+とくぼうを　かなり　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　特防が
-かなり　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特防を　かなり　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_602">
-		<language name="JPN" width="256">ポケモンの　ぼうぎょが
-かなり　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+ぼうぎょを　かなり　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　防御が
-かなり　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+防御を　かなり　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_603">
-		<language name="JPN" width="256">ポケモンの　こうげきが
-かなり　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+こうげきを　かなり　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　攻撃が
-かなり　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+攻撃を　かなり　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_604">
-		<language name="JPN" width="256">ポケモンの　こうげきの
-めいちゅうりつが　かなり　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+めいちゅうを　かなり　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　攻撃の
-命中率が　かなり　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+命中を　かなり　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_605">
-		<language name="JPN" width="256">ポケモンの　すばやさが
-ものすごく　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+すばやさを　ものすごく　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　素早さが
-ものすごく　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+素早さを　ものすごく　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_606">
-		<language name="JPN" width="256">ポケモンの　とくこうが
-ものすごく　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+とくこうを　ものすごく　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　特攻が
-ものすごく　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特攻を　ものすごく　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_607">
-		<language name="JPN" width="256">ポケモンの　とくぼうが
-ものすごく　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+とくぼうを　ものすごく　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　特防が
-ものすごく　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特防を　ものすごく　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_608">
-		<language name="JPN" width="256">ポケモンの　ぼうぎょが
-ものすごく　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+ぼうぎょを　ものすごく　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　防御が
-ものすごく　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+防御を　ものすごく　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_609">
-		<language name="JPN" width="256">ポケモンの　こうげきが
-ものすごく　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+こうげきを　ものすごく　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　攻撃が
-ものすごく　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+攻撃を　ものすごく　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
 	<row id="ITEMINFO_610">
-		<language name="JPN" width="256">みかたポケモンの　めいちゅうりつが
-ものすごく　あがる。
+		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
+めいちゅうを　ものすごく　あげる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">味方ポケモンの　命中率が
-ものすごく　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+命中を　ものすごく　あげる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
@@ -5662,11 +5662,11 @@
 	</row>
 
 	<row id="ITEMINFO_615">
-		<language name="JPN" width="256">こうげきが　きゅうしょに　あたる
-かくりつが　かなり　あがる。
+		<language name="JPN" width="256">せんとうちゅう　きゅうしょに
+ものすごく　あたりやすくなる。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">攻撃が　急所に　あたる
-確率が　かなり　あがる。
+		<language name="JPN_KANJI" width="256">戦闘中　急所に
+ものすごく　当たりやすくなる。
 ひっこめると　元に　戻る。</language>
 	</row>
 
