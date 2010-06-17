@@ -279,7 +279,6 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
     break;
 
   case SEQ_SHOP_OK:
-    shop->success = TRUE;
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
       MissionShopMsgID.mission_concluded[shop->ccew.disguise_talk_type]);
 		(*seq)++;
@@ -291,6 +290,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
     break;
   case SEQ_RECV_WAIT:
 		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
+      shop->success = TRUE;
       (*seq) = SEQ_LAST_MSG_WAIT;
     }
     break;
@@ -330,7 +330,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
   	EVENT_CommCommon_Finish(intcomm, &shop->ccew);
 
     if(shop->success == TRUE){
-      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, shop->success));
       return GMEVENT_RES_CONTINUE;  //ChangeEvent‚ÅI—¹‚·‚é‚½‚ßFINISH‚µ‚È‚¢
     }
     else if(shop->cancel == FALSE){

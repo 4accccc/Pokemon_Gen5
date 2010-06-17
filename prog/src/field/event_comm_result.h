@@ -12,4 +12,4 @@
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys);
+extern GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys, BOOL recv_achieve);

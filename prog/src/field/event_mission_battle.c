@@ -385,7 +385,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     }
 
     if(talk->success == TRUE){
-      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, talk->success));
     }
     else if(talk->cancel == TRUE){
       return GMEVENT_RES_FINISH;    //ƒLƒƒƒ“ƒZƒ‹‚ÅI—¹

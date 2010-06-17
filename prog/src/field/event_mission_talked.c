@@ -50,6 +50,7 @@ typedef struct
 {
   COMMTALK_COMMON_EVENT_WORK ccew;
 	BOOL error;
+	BOOL recv_achieve;
 }EVENT_MISSION_TALKED;
 
 
@@ -369,6 +370,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
     break;
   case SEQ_RECV_WAIT:
 		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
+      talk->recv_achieve = TRUE;
       (*seq)++;
     }
     break;
@@ -407,7 +409,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
   	//ã§í Finishèàóù
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
 
-    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, talk->recv_achieve));
     return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
   }
 	return GMEVENT_RES_CONTINUE;

@@ -671,8 +671,7 @@ GMEVENT * EVENT_IntrudeWarpPalace_Mine(GAMESYS_WORK *gsys)
   
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm != NULL){
-    intcomm->intrude_status_mine.palace_area = GAMEDATA_GetIntrudeMyID(gamedata);
-    GAMEDATA_SetIntrudePalaceArea(gamedata, intcomm->intrude_status_mine.palace_area);
+    Intrude_SetMinePalaceArea(intcomm, GAMEDATA_GetIntrudeMyID(gamedata));
   }
   else{
     GAMEDATA_SetIntrudePalaceArea(gamedata, GAMEDATA_GetIntrudeMyID(gamedata));
@@ -699,8 +698,7 @@ GMEVENT * EVENT_IntrudeWarpPalace_NetID(GAMESYS_WORK *gsys, int net_id)
   
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm != NULL){
-    intcomm->intrude_status_mine.palace_area = net_id;
-    GAMEDATA_SetIntrudePalaceArea(GAMESYSTEM_GetGameData(gsys), intcomm->intrude_status_mine.palace_area);
+    Intrude_SetMinePalaceArea(intcomm, net_id);
   }
   else{
     GAMEDATA_SetIntrudePalaceArea(GAMESYSTEM_GetGameData(gsys), net_id);

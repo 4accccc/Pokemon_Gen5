@@ -3318,8 +3318,7 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
     {
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
       if(intcomm != NULL){
-        intcomm->intrude_status_mine.palace_area = work->palace_area;
-        GAMEDATA_SetIntrudePalaceArea(work->gameData, work->palace_area);
+        Intrude_SetMinePalaceArea(intcomm, work->palace_area);
       }
     }
 

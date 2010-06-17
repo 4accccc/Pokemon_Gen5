@@ -57,6 +57,7 @@ typedef struct
 	HEAPID heapID;
   
 	INTRUDE_EVENT_MSGWORK iem;
+	BOOL recv_achieve;
 	BOOL error;
 	
 	INTRUDE_EVENT_DISGUISE_WORK iedw;
@@ -86,11 +87,12 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
  *
  * @param   gsys		
  * @param   heap_id		      ヒープID
+ * @param   BOOL            TRUE:達成結果を受信ているのを呼び出し元で確認している
  *
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys)
+GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys, BOOL recv_achieve)
 {
 	COMMTALK_EVENT_WORK *talk;
 	GMEVENT *event;
@@ -103,6 +105,7 @@ GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys)
 	GFL_STD_MemClear( talk, sizeof(COMMTALK_EVENT_WORK) );
 	
 	talk->heapID = FIELDMAP_GetHeapID(fieldWork);
+	talk->recv_achieve = recv_achieve;
 
 	return( event );
 }
@@ -153,6 +156,11 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
       
       if(intcomm == NULL){
         return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
+      }
+      else if(talk->recv_achieve == FALSE){  //受信確認していない場合は即終了
+        //ここの処理は結果を受け取った直後にエラーが発生するときに
+        //会話もせずに結果シーケンスに来る為、その時用には即終了、とする
+        return GMEVENT_RES_FINISH;
       }
       else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE
           && Intrude_CheckRecvOccupyResult(intcomm) == TRUE){
