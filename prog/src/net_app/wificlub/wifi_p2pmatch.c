@@ -4506,6 +4506,9 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
     _windelandSEcall(wk);
+    wk->battleMode = wk->pParentWork->battleBoard.battleModeSelect;
+    wk->battleRule = wk->pParentWork->battleBoard.battleRuleSelect;
+    wk->pParentWork->shooter = wk->pParentWork->battleBoard.shooterSelect;
     _battleCustomSelectMenu(wk,TRUE);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
     return seq;

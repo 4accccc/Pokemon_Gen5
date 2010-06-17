@@ -1047,7 +1047,7 @@ static u32 _createRegulationType(WIFIP2PMATCH_WORK *wk, REG_CREATE_TYPE type )
    // NET_PRINT("決定しているルールから作る\n");
     battleMode  = wk->battleMode;
     battleRule  = wk->battleRule;
-    shooter     = wk->shooter;
+    shooter     = wk->pParentWork->shooter;
     break;
   case REG_CREATE_TYPE_SELECT: ///<選んでいるルールから作る
  //   NET_PRINT("選んでいるルールから作る\n");
@@ -1080,10 +1080,10 @@ static void _convertRegulation(WIFIP2PMATCH_WORK *wk,u32 regulation)
 {
   int i;
   if(regulation & 0x80000000){
-    wk->shooter = 1;
+    wk->pParentWork->shooter = 1;
   }
   else{
-    wk->shooter = 0;
+    wk->pParentWork->shooter = 0;
   }
   regulation = (regulation & 0xfffffff);
   for(i=0;i<elementof(_regtable);i++){
@@ -1157,7 +1157,7 @@ static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
 
     _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
-    _Menu_RegulationSetup(wk, fail_bit, wk->shooter , REGWIN_TYPE_NG_TEMOTI);
+    _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_TEMOTI);
 
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1);
   }
@@ -1172,7 +1172,7 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
     _Menu_RegulationDelete(wk);
     if( wk->bb_party){
       _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
-      _Menu_RegulationSetup(wk, fail_bit, wk->shooter , REGWIN_TYPE_NG_BBOX);
+      _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_BBOX);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
     }
     else{
@@ -1262,7 +1262,7 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_NET_IsParentMachine()){
     u32 regulation = _createRegulation(wk);
 
-    _Menu_RegulationSetup(wk,0,wk->shooter ,REGWIN_TYPE_RULE_SHORT);
+    _Menu_RegulationSetup(wk,0,wk->pParentWork->shooter ,REGWIN_TYPE_RULE_SHORT);
 
     _friendNameExpand(wk,  wk->friendNo - 1);
 //    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1032, FALSE);
@@ -1731,7 +1731,7 @@ static int _playerDirectBattleNoregSelectTemoti( WIFIP2PMATCH_WORK *wk, int seq 
     EndMessageWindowOff(wk);
     
     _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
-    _Menu_RegulationSetup(wk, fail_bit, wk->shooter , REGWIN_TYPE_NG_TEMOTI);
+    _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_TEMOTI);
 
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_WAIT);
   }
@@ -1757,7 +1757,7 @@ static int _playerDirectBattleNoregSelectBBox( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
 
     _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
-    _Menu_RegulationSetup(wk, fail_bit, wk->shooter , REGWIN_TYPE_NG_BBOX);
+    _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_BBOX);
 
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_WAIT);
   }
