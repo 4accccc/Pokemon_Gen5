@@ -3009,7 +3009,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZAPROC_DONE );
 
   // PP消費したらワザ使用記録を更新
-  if( fPPDecrement )
+  if( fPPDecrement || (actWaza == WAZANO_WARUAGAKI) )
   {
     BPP_UpdateWazaProcResult( attacker, actTargetPos, fWazaEnable, wk->wazaParam->wazaType, actWaza, orgWaza );
     SCQUE_PUT_OP_UpdateWazaProcResult( wk->que, BPP_GetID(attacker), actTargetPos, fWazaEnable,
