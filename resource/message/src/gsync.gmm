@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-06-16T16:02:19"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-06-17T21:57:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -585,7 +585,7 @@
 	<row id="GSYNC_ERR009" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
 		<language name="JPN" width="256">ゲームシンクに　しっぱいしました</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクに失敗しました</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクに　失敗しました</language>
 	</row>
 
 	<row id="GSYNC_ERR010" back-color=",,,#ffff00,,,,,,,,,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-06-08T15:06:15"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-06-17T21:57:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="684" top="153" right="1389" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="102" top="339" right="807" bottom="967" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -443,44 +443,87 @@ http://www.pokemon-gl.com/</language>
 
 	<row id="GSYNC_ERR001" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバーのようりょうオーバーです</language>
-		<language name="JPN_KANJI" width="256">サーバーの容量オーバーです</language>
+		<language name="JPN" width="256">サーバーの
+ようりょうオーバー　です</language>
+		<language name="JPN_KANJI" width="256">サーバーの
+容量オーバーです</language>
 	</row>
 
 	<row id="GSYNC_ERR002" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバーにすでにデータがあります</language>
-		<language name="JPN_KANJI" width="256">サーバーに既にデータがあります</language>
+		<language name="JPN" width="256">サーバーに
+すでに　データが　あります</language>
+		<language name="JPN_KANJI" width="256">サーバーに
+既に　データが　あります</language>
 	</row>
 
 	<row id="GSYNC_ERR003" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">アップロードされたデータがこわれています</language>
-		<language name="JPN_KANJI" width="256">アップロードされたデータが壊れています</language>
+		<language name="JPN" width="256">アップロードされたデータが
+こわれて　います</language>
+		<language name="JPN_KANJI" width="256">アップロードされた
+データが　壊れています</language>
 	</row>
 
 	<row id="GSYNC_ERR004" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">アップロードされたデータがふせいです</language>
-		<language name="JPN_KANJI" width="256">アップロードされたデータが不正です</language>
+		<language name="JPN" width="256">アップロードされた
+データが　ふせいです</language>
+		<language name="JPN_KANJI" width="256">アップロードされた
+データが　不正です</language>
 	</row>
 
 	<row id="GSYNC_ERR005" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバにデータがありません</language>
-		<language name="JPN_KANJI" width="256">サーバにデータがありません</language>
+		<language name="JPN" width="256">サーバーに　データがありません</language>
+		<language name="JPN_KANJI" width="256">サーバーに　データがありません</language>
 	</row>
 
 	<row id="GSYNC_ERR006" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サービスがしゅりょうしています</language>
-		<language name="JPN_KANJI" width="256">サービスが終了しています</language>
+		<language name="JPN" width="256">Ｗｉ－Ｆｉのサービスは
+しゅうりょう　いたしました</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉの　サービスは
+終了いたしました</language>
 	</row>
 
 	<row id="GSYNC_ERR007" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバとせつぞくできませんでした</language>
-		<language name="JPN_KANJI" width="256">サーバと接続できませんでした</language>
+		<language name="JPN" width="256">サーバーとせつぞくできませんでした</language>
+		<language name="JPN_KANJI" width="256">サーバーと接続できませんでした</language>
+	</row>
+
+	<row id="GSYNC_ERR008" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">アカウントがありません</language>
+		<language name="JPN_KANJI" width="256">アカウントがありません</language>
+	</row>
+
+	<row id="GSYNC_ERR009" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">ゲームシンクに　しっぱいしました</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクに　失敗しました</language>
+	</row>
+
+	<row id="GSYNC_ERR010" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">サーバーに　していされた
+ダウンロードデータ　が　ありません</language>
+		<language name="JPN_KANJI" width="256">サーバーに　指定された
+ダウンロードデータ　が　ありません</language>
+	</row>
+
+	<row id="GSYNC_ERR011" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>HTTPエラーコード
+503</comment>
+		<language name="JPN" width="256">サーバーが　こんざつ　しています
+せつぞくに　しっぱいしました
+じかんを　おいて　さいど
+ゲームシンクを　おためしください</language>
+		<language name="JPN_KANJI" width="256">サーバーが　混雑　しています
+接続に　失敗しました
+時間を　おいて　再度
+ゲームシンクを　おためしください</language>
 	</row>
 
 	<row id="PDWACC_DEBUG001">
