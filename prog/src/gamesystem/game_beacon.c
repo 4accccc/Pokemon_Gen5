@@ -1321,7 +1321,6 @@ void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata)
 //==================================================================
 void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
-  OS_TPrintf("bbb zone_id = %d\n", zone_id);
   info->zone_id = zone_id;
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
   info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
