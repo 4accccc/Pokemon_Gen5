@@ -5069,8 +5069,8 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
           pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
 
           mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
           work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
@@ -5079,8 +5079,8 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
           pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_COMP_B;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
 #else
           // 位置入れ替え
           {
@@ -5112,8 +5112,8 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
           pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-          if(work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          if(work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          if(work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
 
           mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
           work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
@@ -5122,8 +5122,8 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
           pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_COMP_B;
-          if(work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          if(work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          if(work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
 #endif
 
           // ポケアイコン変更
@@ -5474,8 +5474,8 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
           pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
 
           mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
           work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
@@ -5484,8 +5484,8 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
           pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_COMP_B;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
 #else
           // NULLならNULLが入れ替わるだけなので、work->is_poke_frontを気にせず入れ替えていい
           mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
@@ -5495,8 +5495,8 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
           pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-          if(work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          if(work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+          if(work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
 
           mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
           work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
@@ -5505,8 +5505,8 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
           pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
           work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_COMP_B;
-          if(work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          if(work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+          if(work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
 #endif
 
 #ifdef DEF_MINIMUM_LOAD
