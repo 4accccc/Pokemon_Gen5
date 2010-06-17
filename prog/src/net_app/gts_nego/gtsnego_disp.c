@@ -1819,16 +1819,26 @@ void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork,int index)
   int i;
   ARCHANDLE* p_handle;
   int unionno[]=
-  {0,9,
-15,5,
-6,11,
-1,12,
-2,13,
-7,8,
-3,10,
-4,14};
+  {0,6,8,12,14,3,4,10,
+   11,1,13,5,7,9,15,2 };
+//たんパンこぞう
+//エリートトレーナー♂
+//ポケモンレンジャー♂
+//ポケモンブリーダー♂
+//けんきゅういん♂
+//やまおとこ
+//スキンヘッズ
+//ようちえん♂
+//ミニスカート
+//エリートトレーナー♀
+//ポケモンレンジャー♀
+//ポケモンブリーダー♀
+//けんきゅういん♀
+//パラソルおねえさん
+//ナース
+//ようちえん♀
 
-  
+//  NET_PRINT("ユニオン %d >> %d\n",index,unionno[index] );
 	{
     p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
