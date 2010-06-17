@@ -377,6 +377,8 @@ BTLV_MCSS_WORK  *BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapI
   bmw->tcb_sys  = tcb_sys;
   bmw->heapID   = heapID;
 
+  MCSS_SetOrthoFarFlag( bmw->mcss_sys, TRUE );
+
   bmw->proj = BTLV_MCSS_PROJ_ORTHO;
 
   bmw->scale_ofs_m = FX32_ONE;          //デフォルトスケールに対するオフセット
