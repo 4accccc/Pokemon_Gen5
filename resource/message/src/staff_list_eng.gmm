@@ -1699,8 +1699,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_261">
-		<language name="JPN" width="256">GLOBALIZER</language>
-		<language name="JPN_KANJI" width="256">GLOBALIZER</language>
+		<language name="JPN" width="256">GLOBALIZERS</language>
+		<language name="JPN_KANJI" width="256">GLOBALIZERS</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_262">
