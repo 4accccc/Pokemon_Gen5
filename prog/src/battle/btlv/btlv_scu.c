@@ -4122,6 +4122,10 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, B
       {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NG;
       }
+      else if( BPP_IsFightEnable( bpp ) == FALSE )
+			{
+        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
+			}
       else
       {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;

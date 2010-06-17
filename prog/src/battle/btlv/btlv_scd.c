@@ -655,7 +655,11 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
         {
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NG;
         }
-        else
+        else if( BPP_IsFightEnable( bpp ) == FALSE )
+				{
+          bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NONE;
+        }
+				else
         {
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_ALIVE;
         }
