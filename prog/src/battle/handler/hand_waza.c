@@ -2719,7 +2719,7 @@ static const BtlEventHandlerTable*  ADD_Hakidasu( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-// 成否チェック（カウンタが０だったら失敗する）
+// 成否チェック（たくわえカウンタが０だったら失敗する）
 static void handler_Hakidasu_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -2728,8 +2728,6 @@ static void handler_Hakidasu_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     if( BPP_COUNTER_Get(bpp, BPP_COUNTER_TAKUWAERU) == 0 ){
       BTL_Printf("たくわえてないから失敗します\n");
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-    }else{
-      BTL_Printf("たくわえてるから成功します\n");
     }
   }
 }
@@ -2747,31 +2745,28 @@ static void handler_Hakidasu_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BTL_HANDEX_PARAM_SET_RANK* rank_param;
+    BTL_HANDEX_PARAM_RANK_EFFECT* rank_param;
     BTL_HANDEX_PARAM_COUNTER*  counter_param;
     BTL_HANDEX_PARAM_MESSAGE*  msg_param;
 
-    int def_rank   = BPP_GetValue( bpp, BPP_DEFENCE_RANK );
-    int spdef_rank = BPP_GetValue( bpp, BPP_SP_DEFENCE_RANK );
+    int def_rank;
+    int spdef_rank;
 
-    def_rank -= BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_DEF );
-    if( def_rank < 0 ){
-      def_rank = 0;
-    }
-    spdef_rank -= BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_SPDEF );
-    if( spdef_rank < 0 ){
-      spdef_rank = 0;
-    }
+    def_rank = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_DEF );
+    spdef_rank = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_SPDEF );
 
-    rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-      rank_param->pokeID      = pokeID;
-      rank_param->attack      = BPP_GetValue( bpp, BPP_ATTACK_RANK );
-      rank_param->defence     = def_rank;
-      rank_param->sp_attack   = BPP_GetValue( bpp, BPP_SP_ATTACK_RANK );
-      rank_param->sp_defence  = spdef_rank;
-      rank_param->agility     = BPP_GetValue( bpp, BPP_AGILITY_RANK );
-      rank_param->hit_ratio   = BPP_GetValue( bpp, BPP_HIT_RATIO );
-      rank_param->avoid_ratio = BPP_GetValue( bpp, BPP_AVOID_RATIO );
+    rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+      rank_param->poke_cnt = 1;
+      rank_param->pokeID[0] = pokeID;
+      rank_param->rankType = BPP_DEFENCE_RANK;
+      rank_param->rankVolume = -def_rank;
+    BTL_SVF_HANDEX_Pop( flowWk, rank_param );
+
+    rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+      rank_param->poke_cnt = 1;
+      rank_param->pokeID[0] = pokeID;
+      rank_param->rankType = BPP_SP_DEFENCE_RANK;
+      rank_param->rankVolume = -spdef_rank;
     BTL_SVF_HANDEX_Pop( flowWk, rank_param );
 
     counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
@@ -8516,7 +8511,8 @@ static void handler_GodBird_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_RocketZutuki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TAME_START,       handler_RocketZutuki_TameStart },     // 溜め開始
+//    { BTL_EVENT_TAME_START,        handler_RocketZutuki_TameStart      }, // 溜め開始チェック
+    { BTL_EVENT_TAME_START_FIXED,  handler_RocketZutuki_TameStart }, // 溜め開始確定
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -8542,6 +8538,7 @@ static void handler_RocketZutuki_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
     BTL_SVF_HANDEX_Pop( flowWk, rank_param );
   }
 }
+
 //------------------------------------------------------------------------------
 /**
  *  ついばむ・むしくい

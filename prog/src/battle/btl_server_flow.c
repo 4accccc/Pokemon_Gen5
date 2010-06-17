@@ -423,6 +423,7 @@ static BOOL scEvent_CheckMamoruBreak( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 static BOOL scEvent_CheckTameFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* target );
 static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scEvent_TameStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza, u8* hideTargetPokeID, BOOL* fFailMsgDisped );
+static void scEvent_TameStartFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scEvent_TameSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec, WazaID waza );
 static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
@@ -4472,12 +4473,15 @@ static BOOL scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(target) );
     }
     SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza, BTLV_WAZAEFF_TAME_START );
-//    scEvent_TameStartEffect( wk, atPos, waza );
   }
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
   if( fSuccess )
   {
+    hem_state = BTL_Hem_PushState( &wk->HEManager );
+    scEvent_TameStartFixed( wk, attacker );
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
+
     if( BPP_CONTFLAG_CheckWazaHide(attacker) != BPP_CONTFLG_NULL ){
       SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(attacker), TRUE );
     }
@@ -10636,7 +10640,7 @@ static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] 溜めターン発動確定
+ * [Event] 溜めターン発動チェック
  *
  * @param   wk
  * @param   attacker
@@ -10684,6 +10688,23 @@ static BOOL scEvent_TameStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
 
   return !fFail;
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 溜めターン発動確定
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_TameStartFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_TAME_START_FIXED );
+  BTL_EVENTVAR_Pop();
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] 溜めターンスキップ確定
