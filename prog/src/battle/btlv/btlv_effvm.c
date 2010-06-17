@@ -4764,7 +4764,7 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
     {
       BtlRule rule = BTLV_EFFECT_GetBtlRule();
       pos_cnt = 0;
-      if( rule == BTL_RULE_SINGLE )
+      if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
       {
         switch( bevw->param.waza_range ){
         case WAZA_TARGET_ALL:                 ///< 場に出ている全ポケ
