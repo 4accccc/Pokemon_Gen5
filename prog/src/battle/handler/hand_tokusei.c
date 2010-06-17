@@ -1597,7 +1597,9 @@ static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
     for(i=0; i<cnt; ++i)
     {
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeIDAry[i] );
-      if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokuseiID ){
+      if( (BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokuseiID)
+      &&  (!BPP_GetID(bpp) != pokeID)
+      ){
         return TRUE;
       }
     }
