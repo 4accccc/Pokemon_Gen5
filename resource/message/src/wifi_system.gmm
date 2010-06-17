@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-06-13T19:51:58"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-17T18:23:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="157"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -289,7 +289,7 @@
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="6" width="70"/>
+			<width position="6" width="33"/>
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
@@ -300,18 +300,18 @@
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="7" width="75"/>
+			<width position="7" width="35"/>
 			<line position="-1" width="100"/>
 		</language>
 	</columns>
 
-	<dialog left="413" top="354" right="1006" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="585"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="418"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -590,6 +590,23 @@
 ご確認ください</language>
 	</row>
 
+	<row id="dwc_message_0001_twl" back-color="#ff8080,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>専用ウインドウ</comment>
+		<language name="JPN" width="192">ほんたいの
+Ｗｉ－Ｆｉユーザーじょうほう　が
+きえた　かのうせい　が　あります
+
+ほんたい　せっていの
+インターネットの　せってい　で
+せつぞくさきの　せってい　を
+ごかくにん　ください</language>
+		<language name="JPN_KANJI" width="192">本体のＷｉ－Ｆｉユーザー情報が
+消えた可能性があります
+
+本体設定のインターネットの設定で
+接続先の設定をご確認ください</language>
+	</row>
+
 	<row id="dwc_message_0002">
 		<comment>進行ウインドウ</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションに
@@ -610,10 +627,28 @@
 せつぞく　しますか？</language>
 		<language name="JPN_KANJI" width="192">Ｗｉ－Ｆｉコネクションでは
 ＤＳカードと　ＤＳ本体を
-セットで　あつかいます
+セットで　扱います
 ＤＳカードに　ＤＳ本体の
-Ｗｉ－Ｆｉユーザー情報を
-保存して
+Ｗｉ－Ｆｉユーザー情報を　保存して
+Ｗｉ－Ｆｉコネクションに
+接続しますか？</language>
+	</row>
+
+	<row id="dwc_message_0003_twl" back-color="#ff8080,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>専用ウインドウ</comment>
+		<language name="JPN" width="192">Ｗｉ－Ｆｉコネクションでは
+セーブデータと　ほんたいを
+セットで　あつかいます
+セーブデータに　ほんたいの
+Ｗｉ－Ｆｉユーザーじょうほう　を
+ほぞん　して
+Ｗｉ－Ｆｉコネクションに
+せつぞく　しますか？</language>
+		<language name="JPN_KANJI" width="192">Ｗｉ－Ｆｉコネクションでは
+セーブデータと
+本体をセットで扱います
+セーブデータに　本体の
+Ｗｉ－Ｆｉユーザー情報を　保存して
 Ｗｉ－Ｆｉコネクションに
 接続しますか？</language>
 	</row>
@@ -634,8 +669,26 @@
 
 今後の　Ｗｉ－Ｆｉコネクションへの
 接続は
-この　ＤＳ本体を
-お使いください</language>
+この　ＤＳ本体を　お使いください</language>
+	</row>
+
+	<row id="dwc_message_0004_twl" back-color="#ff8080,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>専用ウインドウ</comment>
+		<language name="JPN" width="192">この　ほんたいの
+Ｗｉ－Ｆｉユーザーじょうほう　を
+セーブデータに
+ほぞん　しました
+こんごの　Ｗｉ－Ｆｉコネクションへの
+せつぞくは
+この　ほんたいを
+おつかい　ください</language>
+		<language name="JPN_KANJI" width="192">この　本体の
+Ｗｉ－Ｆｉユーザー情報を
+セーブデータに　保存しました
+
+今後の　Ｗｉ－Ｆｉコネクションへの
+接続は
+この　本体を　お使いください</language>
 	</row>
 
 	<row id="dwc_message_0005">
@@ -646,6 +699,20 @@
 Ｗｉ－Ｆｉコネクションに
 せつぞく　できません</language>
 		<language name="JPN_KANJI" width="192">ＤＳ本体と　ＤＳカードの
+Ｗｉ－Ｆｉユーザー情報が
+違うため
+Ｗｉ－Ｆｉコネクションに
+接続できません</language>
+	</row>
+
+	<row id="dwc_message_0005_twl" back-color="#ff8080,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>専用ウインドウ</comment>
+		<language name="JPN" width="192">ほんたいと　セーブデータの
+Ｗｉ－Ｆｉユーザーじょうほう　が
+ちがうため
+Ｗｉ－Ｆｉコネクションに
+せつぞく　できません</language>
+		<language name="JPN_KANJI" width="192">本体と　セーブデータの
 Ｗｉ－Ｆｉユーザー情報が
 違うため
 Ｗｉ－Ｆｉコネクションに
@@ -672,7 +739,27 @@
 データは　失われてしまいます</language>
 	</row>
 
-	<row id="dwc_message_0007" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="dwc_message_0006_twl" back-color="#ff8080,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>専用ウインドウ</comment>
+		<language name="JPN" width="192">セーブデータに　ほぞん　されている
+Ｗｉ－Ｆｉユーザーじょうほう　を
+こうしん　しますか？
+Ｗｉ－Ｆｉユーザーじょうほう　を
+こうしん　すると
+Ｗｉ－Ｆｉコネクションで
+これまで　おつかいに　なっていた
+データは　うしなわれてしまいます</language>
+		<language name="JPN_KANJI" width="192">セーブデータに　保存されている
+Ｗｉ－Ｆｉユーザー情報を
+更新しますか？
+Ｗｉ－Ｆｉユーザー情報を
+更新すると
+Ｗｉ－Ｆｉコネクションで
+これまで　お使いに　なっていた
+データは　失われてしまいます</language>
+	</row>
+
+	<row id="dwc_message_0007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">ほんとうに　こうしん　しても
 よろしいですか？
@@ -766,7 +853,7 @@
 しばらく　お待ちください</language>
 	</row>
 
-	<row id="dwc_message_0017" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="dwc_message_0017" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>DSiはWiFi設定を
 本体でしか行えない</comment>
 		<language name="JPN" font=" 1:small" width="216">Ｗｉ－Ｆｉコネクションの
@@ -825,11 +912,11 @@
 せつぞく　しますか？</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラー　に　よって
 Ｗｉ－Ｆｉコネクション　から
-切断　されました
+切断されました
 
 もう一度
 Ｗｉ－Ｆｉコネクションに
-接続　しますか？</language>
+接続しますか？</language>
 	</row>
 
 	<row id="dwc_message_0020">
@@ -862,7 +949,7 @@
 ＯＮに　してください</language>
 	</row>
 
-	<row id="dwc_message_0022" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,#ffff80,,,,,,">
+	<row id="dwc_message_0022" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>専用ウインドウ
 相手とのタイムアウト時のメッセージ
 ・ＧＴＳネゴ
@@ -875,7 +962,7 @@
 切断されました</language>
 	</row>
 
-	<row id="dwc_message_0023" back-color="#ffff80,,,,,,#ffff80,,,,,,,,,,,">
+	<row id="dwc_message_0023" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>交換中にエラーになった場合</comment>
 		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
 でんげんを　きってください</language>
