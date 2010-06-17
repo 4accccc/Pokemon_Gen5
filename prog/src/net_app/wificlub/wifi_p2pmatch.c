@@ -5771,7 +5771,7 @@ void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pDa
 
 //------------------------------------------------------------------
 /**
- * $brief   レギュレーションを受信 CNM_WFP2PMF_DIRECT_COMMAND
+ * $brief   レギュレーションを受信 CNM_WFP2PMF_DIRECT_COMMAND CNM_WFP2PMF_REGLATION
  * @param   wk
  * @retval  none
  */
@@ -5793,6 +5793,13 @@ void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, const voi
 
 }
 
+typedef struct{
+  u16 gamemode;
+  u16 vct;
+  u32 regcode;
+} _WFP2PMF_STATUS;
+
+
 
 //------------------------------------------------------------------
 /**
@@ -5805,10 +5812,11 @@ void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, const voi
 void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   WIFIP2PMATCH_WORK *wk = pWork;
-  const u16 *pRecvData = pData;
+  const _WFP2PMF_STATUS *pRecvData = pData;
 
-  wk->matchGameMode[netID] = pRecvData[0];
-  wk->pParentWork->VCTOn[netID] = pRecvData[1];
+  wk->matchGameMode[netID] = pRecvData->gamemode;
+  wk->pParentWork->VCTOn[netID] = pRecvData->vct;
+  _convertRegulation(wk,pRecvData->regcode);
 }
 
 //
@@ -5843,18 +5851,21 @@ static int _parentModeCallMenuSend( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _parentModeCallMenuSendD( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  u16 gamemode[2];
+  _WFP2PMF_STATUS regStatus;
   u16 status = _WifiMyStatusGet( wk, wk->pMatch );
-  gamemode[0] = _WifiMyGameModeGet( wk, wk->pMatch );
+  u32* pData;
 
+  regStatus.gamemode = _WifiMyGameModeGet( wk, wk->pMatch );
+  
   if(wk->vchatrev){  //マシンでの暫定VCTフラグ
-    gamemode[1] = wk->vchatrev-1;
+    regStatus.vct = wk->vchatrev-1;
     wk->vchatrev=0;
   }
   else{
-    gamemode[1] = wk->pParentWork->vchatMain;
+    regStatus.vct = wk->pParentWork->vchatMain;
   }
-  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode)){
+  regStatus.regcode = _createRegulationType(wk,REG_CREATE_TYPE_SELECT);
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(regStatus), &regStatus)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK);
   }
   return seq;

@@ -566,7 +566,7 @@ struct _WIFIP2PMATCH_WORK{
   u8 backupCursor;
   u8 VChatModeOff;  //VCTOFF‚ªŒÄ‚Î‚ê‚½
   u8 vchatrev;
-  u8 dummy2;
+  u8 shooter;
 
   WIFIP2PMATCH_STATE state; //ƒvƒŒƒCƒ„[‚Ìó‹µ
 };
