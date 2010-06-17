@@ -2460,7 +2460,7 @@ static BOOL checkBallTargetHide( BTL_CLIENT* wk )
     if( !BPP_IsDead(bpp) )
     {
       ++aliveCnt;
-      if( BPP_CONTFLAG_CheckWazaHide(bpp) ){
+      if( BPP_CONTFLAG_CheckWazaHide(bpp) != BPP_CONTFLG_NULL ){
         fHide = TRUE;
       }
     }
