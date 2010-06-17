@@ -11994,39 +11994,37 @@ plein de choses à ma famille!</language>
 	</row>
 
 	<row id="TRID_BREEDERM_03_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">きみ！　たのむから
-きみの　あしを　みせてくれ！▼
-じゃなかった
-ポケモンの　あしを　みせてくれ！▼</language>
-		<language name="JPN_KANJI" width="216">きみ！　頼むから
-きみの　足を　みせてくれ！▼
-じゃなかった
-ポケモンの　足を　みせてくれ！▼</language>
+		<language name="JPN" width="216">きみ！
+ポケモンは　じぶんで　そだてる？▽
+それとも　そだてやさんに　まかせる？▼</language>
+		<language name="JPN_KANJI" width="216">きみ！
+ポケモンは　自分で　育てる？▽
+それとも　育て屋さんに　まかせる？▼</language>
 	</row>
 
 	<row id="TRID_BREEDERM_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">あしの　ことばかり
+		<language name="JPN" width="216">タマゴの　ことばかり
 かんがえていたよ……</language>
-		<language name="JPN_KANJI" width="216">足の　ことばかり
+		<language name="JPN_KANJI" width="216">タマゴの　ことばかり
 考えていたよ……</language>
 	</row>
 
 	<row id="TRID_BREEDERM_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
-		<language name="JPN" width="216">きみの　ポケモンにも
+		<language name="JPN" width="216">きみの　だいじな　ポケモンに
 きのみを　わけてあげなよ！▼</language>
-		<language name="JPN_KANJI" width="216">きみの　ポケモンにも
+		<language name="JPN_KANJI" width="216">きみの　大事な　ポケモンに
 きのみを　わけてあげなよ！▼</language>
 	</row>
 
 	<row id="TRID_BREEDERM_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
-		<language name="JPN" width="216">デコボコした　みちを　あるけば
-きんにくが　きたえられる！▼
-きたえられた　あしの　きんにくは
-きれいな　かたちに　なるんだよ！</language>
-		<language name="JPN_KANJI" width="216">デコボコした　道を　歩けば
-自然と　足の　筋肉が　鍛えられる！▼
-鍛えられた　足の　筋肉は
-きれいな　形に　なるんだよ！</language>
+		<language name="JPN" width="216">３ばんどうろの　そだてやさん！▼
+ポケモンを　２ひき　あずけると▼
+なんと！　タマゴが！
+みつかるかも　しれないんだぜ！</language>
+		<language name="JPN_KANJI" width="216">３番道路の　育て屋さん！▼
+ポケモンを　２匹　預けると▼
+なんと！　タマゴが！
+みつかるかも　しれないんだぜ！</language>
 	</row>
 
 	<row id="TRID_BREEDERW_03_TRMSG_FIGHT_START">
