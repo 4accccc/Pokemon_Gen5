@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-15T20:26:43"/>
+	<create user="matsumiya" host="W00224" date="2010-06-17T21:14:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="318" right="506" bottom="946" maximized="no" rayout="Vertical2">
+	<dialog left="1440" top="212" right="1940" bottom="840" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="279" right="1280" bottom="677" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -743,7 +743,7 @@ SUNGLASSES</attribute>
 あいつら　体を　岩に
 隠してるだけ　じゃなく▽
 いかしたブツも　一緒に▽
-隠しもってるんだなー　これが！▼
+隠し持ってるんだなー　これが！▼
 そこでだ……▼
 もし　君が　その　いかしたブツを
 手に入れたら　私の　ところへ▽
