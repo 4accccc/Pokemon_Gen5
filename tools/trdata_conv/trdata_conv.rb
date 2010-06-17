@@ -368,12 +368,12 @@ end
         end
       end
 
-      if split_data[ PARA::POKE1_SPEABI + poke_count * 4 ] != "" && split_data[ PARA::POKE1_SPEABI + poke_count * 4 ] != nil
-        if split_data[ PARA::POKE1_SPEABI + poke_count * 4 ].to_i > 3
+      if split_data[ PARA::POKE1_SPEABI + poke_count ] != "" && split_data[ PARA::POKE1_SPEABI + poke_count ] != nil
+        if split_data[ PARA::POKE1_SPEABI + poke_count ].to_i > 3
 				  printf( "TrainerName:%s No:%d\nUNKOWN TOKUSEI!!\n", split_data[ PARA::TR_NAME ], poke_count + 1 )
           exit( 1 )
         end
-        para |= ( split_data[ PARA::POKE1_SPEABI + poke_count * 4 ].to_i ) << 4
+        para |= ( split_data[ PARA::POKE1_SPEABI + poke_count ].to_i ) << 4
       end
 
       form = split_data[ PARA::POKE1_FORM + poke_count * 4 ].to_i
