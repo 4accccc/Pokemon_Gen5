@@ -26,7 +26,7 @@
 #pragma mark [> define
 
 #ifdef PM_DEBUG
-#idef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
 #define DEBUG_SELECT_TIME_NONE
 #endif //DEBUG_ONLY_FOR_
 #endif //PM_DEBUG
