@@ -2279,6 +2279,7 @@ SRCS_OVERLAY_MANUAL = app/manual/manual.c \
 #===> SRCS_OVERLAY_ZUKAN_DETAIL
 #===> SRCS_OVERLAY_BATTLE_VIEW
 #===> SRCS_OVERLAY_MANUAL
+#===> SRCS_OVERLAY_SHINKA_DEMO
 SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c \
                             test/kawada/d_test.c \
                             test/kawada/d_test_graphic.c
