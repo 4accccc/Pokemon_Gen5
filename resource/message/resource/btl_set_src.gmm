@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-06-17T14:55:26"/>
+	<create user="taya" host="W00146" date="2010-06-17T17:43:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2897,6 +2897,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_ATK">
+		<comment>道具の効果で能力ランクアップ（１段階）</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげきが　あがった！</language>
@@ -2960,6 +2961,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK">
+		<comment>道具の効果で能力ランクアップ（２段階）</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 こうげきが　ぐーんと　あがった！</language>
@@ -3022,7 +3024,72 @@
 回避率が　ぐーんと　上がった！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_UseItem_RankupEx2_ATK">
+		<comment>道具の効果で能力ランクアップ（３段階以上）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+こうげきが　ぐぐーんと　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+攻撃が　ぐぐーんと　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_RankupEx2_DEF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+ぼうぎょが　ぐぐーんと　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+防御が　ぐぐーんと　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_RankupEx2_SPATK">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+とくこうが　ぐぐーんと　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+特攻が　ぐぐーんと　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_RankupEx2_SPDEF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+とくぼうが　ぐぐーんと　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+特防が　ぐぐーんと　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_RankupEx2_AGI">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+すばやさが　ぐぐーんと　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+素早さが　ぐぐーんと　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_RankupEx2_HIT">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+めいちゅうりつが　ぐぐーんと　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+命中率が　ぐぐーんと　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_UseItem_RankupEx2_AVOID">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+かいひりつが　ぐぐーんと　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+回避率が　ぐぐーんと　上がった！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical">
+		<comment>道具を使ってクリティカル率上昇</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　つかって▽
 はりきりだした！</language>

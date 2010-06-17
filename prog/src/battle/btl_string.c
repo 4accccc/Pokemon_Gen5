@@ -735,11 +735,14 @@ static void ms_set_poke2( STRBUF* dst, u16 strID, const int* args )
 static void ms_set_rankup_item( STRBUF* dst, u16 strID, const int* args )
 {
   u8 statusType = args[2] - WAZA_RANKEFF_ORIGIN;
-  if( args[3] > 1 )
-  {
-    strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
-  }
+
+  u16 leap = 0;
+  if( args[3] >= 3 ){ leap = 2; }
+  if( args[3] == 2 ){ leap = 1; }
+
+  strID += (leap * SETTYPE_MAX * WAZA_RANKEFF_NUMS);
   strID = get_setPtnStrID( args[0], strID, statusType );
+
   register_PokeNickname( args[0], BUFIDX_POKE_1ST );
   WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
 
