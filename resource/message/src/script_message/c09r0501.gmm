@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T20:45:01"/>
+	<create user="matsumiya" host="W00224" date="2010-06-17T11:46:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -775,7 +775,7 @@
 胸を　貸してもらうと　するか！▼</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_11" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0501_champion_11" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・クリア後
 ・2回目以降
@@ -785,13 +785,13 @@
 		<language name="JPN" width="256">アデク『さて　どちらが
 イッシュちほうで　さいきょうの▽
 ポケモントレーナーで　あるか▽
-きめるのが　たのしみで　たらまんよ！▼
+きめるのが　たのしみで　たまらんよ！▼
 ポケモントレーナーの
 アデク　まいるぞ！▼</language>
 		<language name="JPN_KANJI" width="256">アデク『さて　どちらが
 イッシュ地方で　最強の▽
 ポケモントレーナーで　あるか▽
-決めるのが　楽しみで　たらまんよ！▼
+決めるのが　楽しみで　たまらんよ！▼
 ポケモントレーナーの
 アデク　まいるぞ！▼</language>
 	</row>
