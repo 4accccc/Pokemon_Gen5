@@ -137,7 +137,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   // 通信終了リクエスト発行
   case GMCLEAR_SEQ_COMM_END_REQ:
     //通信が動いている場合は終了させる
-  if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
+	  if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
       GameCommSys_ExitReq(gameComm);
     }
     NowSeqFinish( work, seq );
@@ -210,6 +210,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   case GMCLEAR_SEQ_THE_END:
     GMEVENT_CallProc( event, 
         FS_OVERLAY_ID(the_end), &THE_END_ProcData, &work->theEndDemoParam );
+		GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
     NowSeqFinish( work, seq );
     break;
 
