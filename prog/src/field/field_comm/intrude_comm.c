@@ -289,10 +289,9 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
           MYSTATUS *net_myst = GAMEDATA_GetMyStatusPlayer(gamedata, GFL_NET_SystemGetCurrentID());
           MyStatus_Copy(GAMEDATA_GetMyStatus(gamedata), net_myst);
         }
-        intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
+        Intrude_SetMinePalaceArea(intcomm, GFL_NET_SystemGetCurrentID());
         intcomm->intrude_status_mine.pm_version = GET_VERSION();
         intcomm->intrude_status_mine.season = GAMEDATA_GetSeasonID(gamedata);
-        GAMEDATA_SetIntrudePalaceArea(gamedata, intcomm->intrude_status_mine.palace_area);
         if(Intrude_CheckTutorialComplete(gamedata) == FALSE){
           intcomm->intrude_status_mine.tutorial = TRUE;
         }

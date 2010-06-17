@@ -477,8 +477,7 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
   Intrude_SetSendStatus(intcomm);
   //プロフィール送信時でも自分のパレス番号が入っていない場合はセット
   if(intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
-    intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
-    GAMEDATA_SetIntrudePalaceArea(gamedata, intcomm->intrude_status_mine.palace_area);
+    Intrude_SetMinePalaceArea(intcomm, GFL_NET_SystemGetCurrentID());
   }
   intcomm->my_profile.status = intcomm->intrude_status_mine;
 }
@@ -1286,4 +1285,20 @@ void Intrude_SetTimeOutStopFlag(INTRUDE_COMM_SYS_PTR intcomm, BOOL stop)
 {
   intcomm->timeout_stop = stop;
   OS_TPrintf("timeout stop = %d\n", stop);
+}
+
+//==================================================================
+/**
+ * 自分が今いるパレスエリアをセットする時に行う処理をまとめたもの
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_SetMinePalaceArea(INTRUDE_COMM_SYS_PTR intcomm, int palace_area)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intcomm->gsys);
+  
+  intcomm->intrude_status_mine.palace_area = palace_area;
+  GAMEDATA_SetIntrudePalaceArea(gamedata, palace_area);
+  FIELD_WFBC_COMM_DATA_SetIntrudeNetID(&intcomm->wfbc_comm_data, palace_area);
 }

@@ -1410,8 +1410,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   }
   if(now_area != new_area){
     OS_TPrintf("new_palace_area = %d new_pos_x = %x\n", new_area, new_pos.x);
-    intcomm->intrude_status_mine.palace_area = new_area;
-    GAMEDATA_SetIntrudePalaceArea(gamedata, intcomm->intrude_status_mine.palace_area);
+    Intrude_SetMinePalaceArea(intcomm, new_area);
     intcomm->send_status = TRUE;
   #if 0 //パレス島に来ただけでフラグONにするようにした 2010.03.10(水)
     if(GAMEDATA_GetIntrudeMyID(gamedata) == new_area){

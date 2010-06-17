@@ -100,6 +100,7 @@ extern BOOL Intrude_OtherPlayerExistence(void);
 extern void Intrude_MyMonolithStatusSet(GAMEDATA *gamedata, MONOLITH_STATUS *monost);
 extern BOOL Intrude_CheckRecvOccupyResult(INTRUDE_COMM_SYS_PTR intcomm);
 extern void Intrude_SetTimeOutStopFlag(INTRUDE_COMM_SYS_PTR intcomm, BOOL stop);
+extern void Intrude_SetMinePalaceArea(INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 
 //--------------------------------------------------------------
 //  不正チェック
