@@ -1038,6 +1038,13 @@ static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
+  {   //20100615 add Satio
+    if(pWork->bgchar){
+      GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+                               GFL_ARCUTIL_TRANSINFO_GetSize( pWork->bgchar ));
+    }
+    pWork->bgchar = 0;
+  }
 
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );
