@@ -204,6 +204,7 @@ typedef enum
 #define TEAM_NUM              0          // チーム数
 #define CANCELSELECT_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
 #define ASYNC_TIMEOUT (120*60)     //非同期用タイムアウト
+#define DISCONNECTS_WAIT_SYNC      (30)  //切断同期用
 
 #define RECV_BUFFER_SIZE  (0x1000)
 
@@ -246,6 +247,7 @@ typedef enum
   WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY,
   WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT,
   WIFIBATTLEMATCH_NET_RECVFLAG_FLAG,
+
   WIFIBATTLEMATCH_NET_RECVFLAG_MAX
 } WIFIBATTLEMATCH_NET_RECVFLAG;
 
@@ -339,6 +341,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   u32   wait_cnt;
   BOOL  is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_MAX];
   u32   recv_flag;
+  u32   disconnect_seq;
   
   //SC
 //  DWC_SC_PLAYERDATA player[2];  //自分は０ 相手は１
@@ -821,6 +824,11 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
     }
   }
 
+  if( repair != WIFIBATTLEMATCH_NET_ERROR_NONE )
+  {
+    WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
+  }
+
   return repair;
 }
 
@@ -940,8 +948,6 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   p_wk->seq_matchmake = 0;
   p_wk->async_timeout = 0;
   p_wk->cancel_select_timeout = 0;
-
-  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST] = FALSE;
 
   //接続評価コールバック指定
   switch( mode )
@@ -1076,6 +1082,8 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
         if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
         { 
           DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
+
+          WIFIBATTLEMATCH_NET_StartDisConnect( p_wk );
           p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
         }
       }
@@ -1098,6 +1106,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
     if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
     { 
       DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
+      WIFIBATTLEMATCH_NET_StartDisConnect( p_wk );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
     }
     else if( GFL_NET_HANDLE_GetNumNegotiation() != 0 )
@@ -1115,16 +1124,20 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
     if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
     { 
       DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
+      WIFIBATTLEMATCH_NET_StartDisConnect( p_wk );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
     }
     else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT,WB_NET_WIFIMATCH))
     {
+
+      GFL_NET_SetAutoErrorCheck(TRUE);
+      GFL_NET_SetNoChildErrorCheck(TRUE);
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_END;
     }
     break;
 
   case WIFIBATTLEMATCH_NET_SEQ_CANCEL:
-    if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk, TRUE ) )
+    if( WIFIBATTLEMATCH_NET_WaitDisConnect( p_wk ) )
     {
       //マッチングタイムアウトのときがあるので
 
@@ -1160,32 +1173,88 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  マッチメイクを切断する
+ *	@brief  マッチメイクを強制切断する  （エラーが起きたときなどに使う）
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
- *	@param	is_force  強制切断のときはTRUE　状況に合わせるときはFALSE
- *
- *	@return TRUEで処理終了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_force )
+void WIFIBATTLEMATCH_NET_SetDisConnectForce( WIFIBATTLEMATCH_NET_WORK *p_wk )
 {
-  GFL_NET_StateWifiMatchEnd(!is_force);
-  WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk, FALSE );
-  return TRUE;
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
+
+  GFL_NET_StateWifiMatchEnd(FALSE);
 }
+
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  子機がいなくなるとエラーになるチェック
+ *	@brief  マッチング同期切断開始
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_on )
+void WIFIBATTLEMATCH_NET_StartDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk )
 {
-  GFL_NET_DWC_SetNoChildErrorCheck( is_on );
+  p_wk->disconnect_seq  = 0;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マッチング同期切断処理中
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで切断終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_WaitDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{ 
+  enum
+  {
+    SEQ_START_INIT_TIMEING,
+    SEQ_WAIT_INIT_TIMEING,
+    SEQ_SET_DISCONNECT_FLAG,
+    SEQ_WAIT_CNT,
+    SEQ_DISCONNECT,
+    SEQ_END,
+  };
+
+  switch( p_wk->disconnect_seq )
+  {
+  case SEQ_START_INIT_TIMEING:
+    WIFIBATTLEMATCH_NET_StartTiming( p_wk, WIFIBATTLEMATCH_NET_TIMINGSYNC_DISCONNECT_INIT );
+    p_wk->disconnect_seq++;
+    break;
+  case SEQ_WAIT_INIT_TIMEING:
+    if( WIFIBATTLEMATCH_NET_WaitTiming( p_wk ) )
+    {
+      p_wk->disconnect_seq++;
+    }
+    break;
+  case SEQ_SET_DISCONNECT_FLAG:
+    GFL_NET_SetAutoErrorCheck(FALSE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    p_wk->wait_cnt  = 0;
+    p_wk->disconnect_seq++;
+    break;
+  case SEQ_WAIT_CNT:
+    if( p_wk->wait_cnt++> DISCONNECTS_WAIT_SYNC )
+    {
+      p_wk->disconnect_seq++;
+    }
+    break;
+  case SEQ_DISCONNECT:
+    GFL_NET_StateWifiMatchEnd(TRUE);
+    p_wk->disconnect_seq++;
+    break;
+  case SEQ_END:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  自分がキャンセルしたことを相手へ通知する
@@ -1202,7 +1271,6 @@ BOOL WIFIBATTLEMATCH_NET_SendMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk )
   {
     if( GFL_NET_DWC_IsMatched() )
     {
-      p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST] = FALSE;
       return GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), 
           WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH, sizeof(int), &sc_temp );
     }
@@ -1219,9 +1287,17 @@ BOOL WIFIBATTLEMATCH_NET_SendMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk )
  *	@return TRUEで相手がキャンセルした  FALSEでしていない
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
+BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk )
 {
-  return cp_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST];
+  BOOL  ret;
+  ret = p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST];
+
+  if( ret )
+  {
+    p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST] = FALSE;
+  }
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -1383,6 +1459,8 @@ void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
   p_wk->is_debug  = FALSE;
   p_wk->seq = 0;
   p_wk->is_auth   = TRUE;//GFL_NET_IsParentMachine();
+
+  //タイミングシンクをするのでここでのフラグ消去はOK
   p_wk->is_recv[ WIFIBATTLEMATCH_NET_RECVFLAG_FLAG ]  = FALSE;
   p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_PLAYER] = FALSE;
   p_wk->report_type = type;
@@ -4412,7 +4490,6 @@ u32 WIFIBATTLEMATCH_GDB_GetRecordID( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
 BOOL WIFIBATTLEMATCH_NET_StartEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, const void *cp_buff )
 { 
   NetID netID;
-  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA]  = FALSE;
 
   //相手にのみ送信
   netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
@@ -4435,6 +4512,8 @@ BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATT
 
   if( ret )
   { 
+
+    p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA]  = FALSE;
     *pp_data  = (WIFIBATTLEMATCH_ENEMYDATA *)p_wk->recv_buffer;
   }
 
@@ -4454,7 +4533,6 @@ BOOL WIFIBATTLEMATCH_NET_SendPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, const PO
 { 
   NetID netID;
 
-  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY] = FALSE;
 
   //相手にのみ送信
   netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
@@ -4478,6 +4556,7 @@ BOOL WIFIBATTLEMATCH_NET_RecvPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, POKEPART
 
   if( ret )
   { 
+    p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY] = FALSE;
     GFL_STD_MemCopy( p_wk->recv_buffer, p_party, PokeParty_GetWorkSize() );
   }
   return ret;
@@ -4496,7 +4575,6 @@ BOOL WIFIBATTLEMATCH_NET_SendDirtyCnt( WIFIBATTLEMATCH_NET_WORK *p_wk, const u32
 { 
   NetID netID;
 
-  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT]  = FALSE;
 
   //相手にのみ送信
   netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
@@ -4520,6 +4598,7 @@ BOOL WIFIBATTLEMATCH_NET_RecvDirtyCnt( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 *p_di
 
   if( ret )
   { 
+    p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT]  = FALSE;
     GFL_STD_MemCopy( p_wk->recv_buffer, p_dirty_cnt, sizeof(u32) );
   }
   return ret;

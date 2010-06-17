@@ -607,7 +607,7 @@ static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
 
   case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR:
-    WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+    WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
     /* fallthrough */
 
   case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
@@ -2406,6 +2406,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     SEQ_START_CANCEL,
     SEQ_END_CANCEL,
 
+    SEQ_START_DISCONNECT,
+    SEQ_WAIT_DISCONNECT,
+
     SEQ_WAIT_MSG,
   };
 
@@ -2426,7 +2429,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         && (*p_seq != SEQ_START_BADWORD && *p_seq != SEQ_WAIT_BADWORD ) )
     {
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-      WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+      WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
       *p_seq  = SEQ_START_SELECT_END_MSG;
       return ;
     }
@@ -2701,11 +2704,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     else
     {
       //大会番号がことなっていたらマッチングに戻る
-      if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
-      { 
-        DEBUG_WIFICUP_Printf( "大会番号が違うのでマッチングに戻る\n" );
-        *p_seq  = SEQ_START_MATCH;
-      }
+      DEBUG_WIFICUP_Printf( "大会番号が違うのでマッチングに戻る\n" );
+      *p_seq  = SEQ_START_DISCONNECT;
     }
     break;
   case SEQ_CHECK_YOU_REGULATION:
@@ -2854,10 +2854,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     else
     { 
       //不正だったらマッチングに戻る
-      if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
-      { 
-        *p_seq  = SEQ_START_MATCH;
-      }
+      *p_seq  = SEQ_START_DISCONNECT;
     }
     break;
 
@@ -2934,7 +2931,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
     PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
 
-    WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_32, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_DRAW_MATCHINFO ); 
@@ -2990,7 +2986,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
-          WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, FALSE );
           GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
           Util_Matchinfo_Clear( p_wk );
 
@@ -3001,7 +2996,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
-          WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, FALSE );
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           break;
@@ -3025,8 +3019,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_END_MATCHING:
     if( p_wk->cnt++ > SELECTPOKE_MSG_WAIT_SYNC )
     { 
-      WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, FALSE );
-
       p_wk->cnt = 0;
       p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
       WBM_SEQ_End( p_seqwk );
@@ -3034,7 +3026,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_ERROR_END:
-    WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+    WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
     WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupEnd );
@@ -3146,10 +3138,21 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_END_CANCEL:
-    WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+    WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
     *p_seq  = SEQ_START_MATCH_MSG;
     break;
 
+  case SEQ_START_DISCONNECT:
+    WIFIBATTLEMATCH_NET_StartDisConnect( p_wk->p_net );
+    *p_seq  = SEQ_WAIT_DISCONNECT;
+    break;
+
+  case SEQ_WAIT_DISCONNECT:
+    if( WIFIBATTLEMATCH_NET_WaitDisConnect( p_wk->p_net ) )
+    {
+      *p_seq = SEQ_START_MATCH;
+    }
+    break;
 
     //-------------------------------------
     ///	共通
@@ -3323,11 +3326,12 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
       EtcSave_SetAcquaintance( p_etc, MyStatus_GetID( (MYSTATUS*)p_enemy_data->mystatus ) );
     }
+    WIFIBATTLEMATCH_NET_StartDisConnect( p_wk->p_net );
     *p_seq = SEQ_WAIT_DISCONNECT;
     break;
 
   case SEQ_WAIT_DISCONNECT:
-    if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+    if( WIFIBATTLEMATCH_NET_WaitDisConnect( p_wk->p_net ) )
     { 
       *p_seq = SEQ_START_SAKE_RECORD;
     }

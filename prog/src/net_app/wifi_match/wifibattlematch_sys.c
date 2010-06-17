@@ -190,6 +190,8 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 //その他
 static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEPARTY *cp_my_poke, const POKEPARTY *cp_you_poke, const WIFIBATTLEMATCH_ENEMYDATA *cp_you_data, const REGULATION *cp_reg, u32 cupNO, const BATTLE_SETUP_PARAM *cp_btl_param, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score, WIFIBATTLEMATCH_TYPE type );
 
+static void Util_GetRestPoke( const BATTLE_SETUP_PARAM *cp_btl_param, u8 *p_my_poke, u8 *p_you_poke );
+
 //=============================================================================
 /**
  *				  サブプロセス
@@ -1284,9 +1286,11 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
     int i;
     u32 now_hp_all;
     u32 max_hp_all;
+    u8 you_rest_poke;
+    u8 my_rest_poke;
     POKEPARTY *p_party  = p_param->p_btl_setup_param->party[ BTL_CLIENT_ENEMY1 ];
-
-    p_wk->btl_score.enemy_rest_poke = PokeParty_GetPokeCountBattleEnable( p_party );
+    Util_GetRestPoke( p_param->p_btl_setup_param, &my_rest_poke, &you_rest_poke );
+    p_wk->btl_score.enemy_rest_poke = you_rest_poke;
     
     now_hp_all  = 0;
     max_hp_all  = 0;
@@ -1300,6 +1304,7 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
       }
     }
 
+    //@todo battleから値をもらう
     p_wk->btl_score.enemy_rest_hp   = 100 * now_hp_all / max_hp_all;
   }
 
@@ -1887,9 +1892,67 @@ static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEP
   }
   p_data->cupNO   = cupNO;
   p_data->result  = cp_btl_param->result;
-  p_data->rest_my_poke    = PokeParty_GetPokeCountBattleEnable( cp_my_poke );
-  p_data->rest_you_poke   = cp_btl_score->enemy_rest_poke;
+  {
+    u8 you_rest_poke;
+    u8 my_rest_poke;
+    Util_GetRestPoke( cp_btl_param, &my_rest_poke, &you_rest_poke );
+    p_data->rest_my_poke    = my_rest_poke;
+    p_data->rest_you_poke   = you_rest_poke;
+  }
   p_data->btl_type= Regulation_GetParam( cp_reg, REGULATION_BATTLETYPE );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  残りポケモンを取得
+ *
+ *	@param	const BATTLE_SETUP_PARAM *cp_btl_param  引数
+ *	@param	*p_my_poke  自分の残りポケモン
+ *	@param	*p_you_poke 相手の残りポケモン
+ */
+//-----------------------------------------------------------------------------
+static void Util_GetRestPoke( const BATTLE_SETUP_PARAM *cp_btl_param, u8 *p_my_poke, u8 *p_you_poke )
+{
+  int tr_no;
+  int party_no;
+  int my_pos;
+  int client_no;
+
+  *p_my_poke  = 0;
+  *p_you_poke = 0;
+
+  my_pos = cp_btl_param->commPos;
+  for(tr_no = 0; tr_no <= COMM_BTL_DEMO_TRDATA_B; tr_no++){
+    if((tr_no & 1) == (my_pos & 1)){  //自分パーティ
+      if(my_pos & 1){
+        client_no = BTL_CLIENT_ENEMY1 + (tr_no & 2);
+      }
+      else{
+        client_no = BTL_CLIENT_PLAYER + (tr_no & 2);
+      }
+      for(party_no = 0; party_no < TEMOTI_POKEMAX; party_no++){
+        if( cp_btl_param->party_state[client_no][party_no] != BTL_POKESTATE_DEAD )
+        {
+          (*p_my_poke)++;
+        }
+      }
+    }
+    else{ //敵パーティ
+      if(my_pos & 1){
+        client_no = BTL_CLIENT_PLAYER + (tr_no & 2);
+      }
+      else{
+        client_no = BTL_CLIENT_ENEMY1 + (tr_no & 2);
+      }
+      for(party_no = 0; party_no < TEMOTI_POKEMAX; party_no++){
+        if( cp_btl_param->party_state[client_no][party_no] != BTL_POKESTATE_DEAD )
+        {
+          (*p_you_poke)++;
+        }
+      }
+    }
+  }
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
