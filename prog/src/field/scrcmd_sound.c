@@ -89,7 +89,7 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
   {
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
-    FSND_PauseEnvSE( fsound );
+    FSND_PauseEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE );
   }
   
   
@@ -123,7 +123,7 @@ VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk )
   {
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
-    FSND_PauseEnvSE( fsound );
+    FSND_PauseEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE );
   }
   
   return VMCMD_RESULT_SUSPEND;
@@ -155,7 +155,7 @@ VMCMD_RESULT EvCmdBgmPlaySilent( VMHANDLE *core, void *wk )
   {
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
-    FSND_PauseEnvSE( fsound );
+    FSND_PauseEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE );
   }
   
   return VMCMD_RESULT_SUSPEND;
@@ -316,7 +316,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
     event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_LONG, FSND_FADE_NORMAL );
 
     SCRIPT_CallEvent( sc, event );
-    FSND_RePlayEnvSE( fsound ); // 環境音復帰
+    FSND_RePlayEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
   }
   return VMCMD_RESULT_SUSPEND;
 }
@@ -350,7 +350,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlayEx( VMHANDLE *core, void *wk )
     soundIdx = FSND_GetFieldBGM( gdata, zoneID, seasonID );
     event    = EVENT_FSND_ChangeBGM( gsys, soundIdx, frame, FSND_FADE_NORMAL );
     SCRIPT_CallEvent( script, event );
-    FSND_RePlayEnvSE( fsnd ); // 環境音復帰
+    FSND_RePlayEnvSE( fsnd, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
   }
   return VMCMD_RESULT_SUSPEND;
 }
@@ -457,6 +457,31 @@ BOOL SCREND_CheckEndBGMPushPop( SCREND_CHECK *end_check, int *seq )
   }
   return FALSE;
 }
+
+
+
+
+//======================================================================
+//  コマンド　EnvSE
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境SEの停止状況クリア
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdEnvSeBGMPlayClear( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*   work     = wk;
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gdata    = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND*   fsnd     = GAMEDATA_GetFieldSound( gdata );
+
+  FSND_RePlayEnvSE( fsnd, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 
 
 //======================================================================
@@ -679,6 +704,8 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
     SCRIPT_CallEvent( sc, event );
   }
 
+  /* BTS:5951 対処時に、BGMPushしているので、ここはいらないことが発覚
+     * tomoya
   // フィールドサウンド。
   // 環境SE停止。
   {
@@ -686,6 +713,7 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
     FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
     FSND_PauseEnvSE( fsound );
   }
+  */
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -711,6 +739,8 @@ static BOOL EvWaitMe( VMHANDLE *core, void *wk )
     event = EVENT_FSND_PopBGM( gsys, FSND_FADE_NONE, FSND_FADE_FAST );
     SCRIPT_CallEvent( sc, event );
 
+    /* BTS:5951 対処時に、BGMPushしているので、ここはいらないことが発覚
+     * tomoya
     // フィールドサウンド。
     // 環境SE再始動。
     {
@@ -718,6 +748,7 @@ static BOOL EvWaitMe( VMHANDLE *core, void *wk )
       FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
       FSND_RePlayEnvSE( fsound );
     }
+    */
 
     return TRUE;
   }

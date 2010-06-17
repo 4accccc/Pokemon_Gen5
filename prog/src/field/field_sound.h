@@ -138,14 +138,14 @@ inline void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
   FIELD_SOUND_StopEnvSE( fieldSound, soundIdx );
 }
 // ä¬ã´âπÇÃàÍéûí‚é~
-inline void FSND_PauseEnvSE( FIELD_SOUND* fieldSound )
+inline void FSND_PauseEnvSE( FIELD_SOUND* fieldSound, FSND_ENVSE_PAUSE_TYPE type  )
 {
-  FIELD_SOUND_PauseEnvSE( fieldSound );
+  FIELD_SOUND_PauseEnvSE( fieldSound, type );
 }
 // ä¬ã´âπÇÃçƒénìÆ
-inline void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound )
+inline void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound, FSND_ENVSE_PAUSE_TYPE type )
 {
-  FIELD_SOUND_RePlayEnvSE( fieldSound );
+  FIELD_SOUND_RePlayEnvSE( fieldSound, type );
 }
 
 //=================================================================================

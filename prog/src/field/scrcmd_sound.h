@@ -30,6 +30,9 @@ extern VMCMD_RESULT EvCmdBgmVolumeDown( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmVolumeRecover( VMHANDLE *core, void *wk );
 extern BOOL SCREND_CheckEndBGMVolumeDown( SCREND_CHECK *end_check, int *seq ); 
 
+//EnvSe
+extern VMCMD_RESULT EvCmdEnvSeBGMPlayClear( VMHANDLE *core, void *wk );
+
 //SE
 extern VMCMD_RESULT EvCmdSePlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdSeStop( VMHANDLE *core, void *wk );

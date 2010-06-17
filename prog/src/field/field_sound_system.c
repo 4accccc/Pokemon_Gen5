@@ -126,7 +126,7 @@ typedef struct {
 typedef struct {
   u16 envse_tbl[ FSND_ENVSE_PLAYER_MAX ];
   u16 envse_vol_tbl[ FSND_ENVSE_PLAYER_MAX ];
-  BOOL pause;
+  u32  pause; //FSND_ENVSE_PAUSE_TYPE
 } FSND_ENVSE_DATA;
 
 
@@ -706,7 +706,7 @@ void FIELD_SOUND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
     }
 
     // Pauseではないときにだけ鳴らす
-    if( fieldSound->envse.pause == FALSE ){
+    if( fieldSound->envse.pause == FSND_ENVSE_PAUSE_NONE ){
       PMSND_PlaySE( soundIdx );
     }
   }
@@ -739,7 +739,7 @@ void FIELD_SOUND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
     }
 
     // Pauseではないときにだけ鳴らす
-    if( fieldSound->envse.pause == FALSE ){
+    if( fieldSound->envse.pause == FSND_ENVSE_PAUSE_NONE ){
       PMSND_PlaySEVolume( soundIdx, vol );
     }
   }
@@ -818,21 +818,25 @@ void FIELD_SOUND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
  *	@param	fieldSound  フィールドサウンド
  */
 //-----------------------------------------------------------------------------
-void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound )
+void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound, FSND_ENVSE_PAUSE_TYPE type )
 {
   int i;
-  
-  fieldSound->envse.pause = TRUE;
-  
-  // 停止
-  for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
-    if( fieldSound->envse.envse_tbl[ i ] != FSND_ENVSE_NONE ){
-      // SE停止
-      PMSND_StopSE_byPlayerID( i+SEPLAYER_SE1 );
+
+  if(fieldSound->envse.pause == FSND_ENVSE_PAUSE_NONE)
+  {
+    // 停止
+    for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
+      if( fieldSound->envse.envse_tbl[ i ] != FSND_ENVSE_NONE ){
+        // SE停止
+        PMSND_StopSE_byPlayerID( i+SEPLAYER_SE1 );
+      }
     }
   }
+  
+  fieldSound->envse.pause |= type;
+  
 
-  TOMOYA_Printf( "EnvSe Stop\n" );
+  TOMOYA_Printf( "EnvSe Stop msk0x%x\n", type );
 }
 
 //----------------------------------------------------------------------------
@@ -842,26 +846,29 @@ void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound )
  *	@param	fieldSound  フィールドサウンド
  */
 //-----------------------------------------------------------------------------
-void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound )
+void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound, FSND_ENVSE_PAUSE_TYPE type )
 {
   int i;
   
-  if( fieldSound->envse.pause == TRUE ){
+  if( fieldSound->envse.pause & type ){
 
-    fieldSound->envse.pause= FALSE;
+    // typeでのpause状態をCLEAR
+    fieldSound->envse.pause &= ~type;
 
-    for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
-      if( fieldSound->envse.envse_tbl[ i ] != FSND_ENVSE_NONE ){
-        if( fieldSound->envse.envse_vol_tbl[ i ] == FSND_ENVSE_VOL_NONE ){
-          PMSND_PlaySE( fieldSound->envse.envse_tbl[ i ] );
-        }else{
-          PMSND_PlaySEVolume( fieldSound->envse.envse_tbl[ i ], 
-              fieldSound->envse.envse_vol_tbl[ i ] );
+    if( fieldSound->envse.pause == FSND_ENVSE_PAUSE_NONE ){
+      for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
+        if( fieldSound->envse.envse_tbl[ i ] != FSND_ENVSE_NONE ){
+          if( fieldSound->envse.envse_vol_tbl[ i ] == FSND_ENVSE_VOL_NONE ){
+            PMSND_PlaySE( fieldSound->envse.envse_tbl[ i ] );
+          }else{
+            PMSND_PlaySEVolume( fieldSound->envse.envse_tbl[ i ], 
+                fieldSound->envse.envse_vol_tbl[ i ] );
+          }
         }
       }
     }
 
-    TOMOYA_Printf( "EnvSe Replay\n" );
+    TOMOYA_Printf( "EnvSe Replay type=0x%x msk=0x%x\n", type, fieldSound->envse.pause );
   }
 }
 
@@ -1006,7 +1013,7 @@ static void InitFieldSoundSystem( FIELD_SOUND* fieldSound, GAMEDATA* gameData )
   for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ) {
     fieldSound->envse.envse_tbl[i] = FSND_ENVSE_NONE;
   }
-  fieldSound->envse.pause = FALSE;
+  fieldSound->envse.pause = FSND_ENVSE_PAUSE_NONE;
 }
 
 //---------------------------------------------------------------------------------
@@ -2353,7 +2360,7 @@ static void PushBGM( FIELD_SOUND* fieldSound )
 
   // 0->1ならば、環境音を停止
   if( fieldSound->pushCount == FSND_PUSHCOUNT_NONE ){
-    FIELD_SOUND_PauseEnvSE( fieldSound );
+    FIELD_SOUND_PauseEnvSE( fieldSound, FSND_ENVSE_PAUSE_BGM_PUSH );
   }
 
   // 退避
@@ -2401,7 +2408,7 @@ static void PopBGM( FIELD_SOUND* fieldSound )
 
   // 1->0ならば、環境音を停止
   if( fieldSound->pushCount == FSND_PUSHCOUNT_NONE ){
-    FIELD_SOUND_RePlayEnvSE( fieldSound );
+    FIELD_SOUND_RePlayEnvSE( fieldSound, FSND_ENVSE_PAUSE_BGM_PUSH );
   }
 
 #ifdef DEBUG_PRINT_ON

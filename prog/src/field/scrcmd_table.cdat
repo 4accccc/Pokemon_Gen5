@@ -907,6 +907,11 @@
   //遊覧船受付でのCギア制御用
   DEF_CMD( EvCmdGetCGearStatus, EV_SEQ_GET_CGEAR_STATUS )
   DEF_CMD( EvCmdSetCGearOff,    EV_SEQ_SET_CGEAR_OFF )
+
+  //環境音SE　イベントBGMでのPause状態を解除
+  DEF_CMD( EvCmdEnvSeBGMPlayClear, EV_SEQ_CLEAR_ENVSE_BGMPLAY_PAUSE )
+  
+  
   END_CMD
   //スクリプトコマンドテーブル終了
   

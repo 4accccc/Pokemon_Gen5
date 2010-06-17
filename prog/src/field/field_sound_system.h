@@ -35,6 +35,14 @@ typedef enum {
   FSND_BGM_REQUEST_NUM          // 総数
 } FSND_BGM_REQUEST;
 
+// 環境音SE　停止タイプ
+typedef enum {
+  FSND_ENVSE_PAUSE_NONE,        // 停止なし
+  FSND_ENVSE_PAUSE_BGM_PUSH = 1<<0,    // BGMプッシュによる停止
+  FSND_ENVSE_PAUSE_BGM_CHANGE = 1<<1,  // BGM変更による停止
+} FSND_ENVSE_PAUSE_TYPE;
+
+
 
 //=================================================================================
 // ■取得
@@ -128,6 +136,6 @@ extern void FIELD_SOUND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 
 // 環境音の停止
 extern void FIELD_SOUND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
 // 環境音の一時停止
-extern void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound );
+extern void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound, FSND_ENVSE_PAUSE_TYPE type );
 // 環境音の再始動
-extern void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound );
+extern void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound, FSND_ENVSE_PAUSE_TYPE type );
