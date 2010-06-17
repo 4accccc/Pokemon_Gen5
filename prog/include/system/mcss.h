@@ -38,7 +38,7 @@
 #define MCSS_CELL_ANIM_NONSTOP ( 0xff )    //マルチセルアニメが1周しても止める動作をしない
 
 #define	MCSS_DEFAULT_Z			  ( 1 << 8 )
-#define	MCSS_DEFAULT_Z_ORTHO	( 1 << 10 )
+#define	MCSS_DEFAULT_Z_ORTHO	( 1 << 8 )
 
 #ifndef __ASM_NO_DEF_
 //--------------------------------------------------------------------------
