@@ -519,10 +519,17 @@ _ANIME_LABEL	anm_player_dir_l
 	_ANIME_DATA	ACMD_END,0
 
 
+
+//サポートミュージカル誘導イベントの起動方法チェック用ワークを定義
+//値が１ならPOSイベント起動
+DEFINE_LOCAL	LWK_GUIDE_POS
 /************************************************************/
 /*			サポートのミュージカル案内 posイベント			*/
 /************************************************************/
 EVENT_START	ev_pos_c04_musicalguide_01
+	
+	//誘導イベントをPOS起動したことを保存
+	$LWK_GUIDE_POS = 1
 	
 	{
 	
@@ -738,6 +745,11 @@ ev_map_change_musical:
 	
 	//ミュージカル内部へマップ遷移
 	_MAP_CHANGE( ZONE_ID_C04R0201, 14, 20, DIR_UP )
+
+	//イベントをPOS起動ならBGMチェンジでの環境SEポーズ状態をCLEAR
+	IF $LWK_GUIDE_POS == 1 THEN
+		_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
+	ENDIF
 
 	_RET
 

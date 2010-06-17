@@ -233,7 +233,7 @@ EVENT_START   ev_r01_poke_getdemo_01
 	//自機にカメラを戻す
 	_CAMERA_DEF_MOVE (64) 
 
-//ライバル、サポート退場アニメ
+	//ライバル、サポート退場アニメ
 	_OBJ_ANIME( T01_R01_RIVAL,anm_R01_pokeget6 )
 	_OBJ_ANIME( T01_R01_SUPPORT,anm_R01_pokeget7 )
 	_OBJ_ANIME_WAIT()
@@ -256,6 +256,9 @@ EVENT_START   ev_r01_poke_getdemo_01
 
 	//捕獲回数対決イベントのpos有効
 	$WK_SCENE_R01 = 1
+
+	//BGMチェンジでの環境SEポーズ状態をCLEAR（T01の最初の一歩イベントでイベント曲を再生しているため）
+	_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
 
 //==================================//
 

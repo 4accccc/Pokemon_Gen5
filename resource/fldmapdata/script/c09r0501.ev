@@ -231,6 +231,9 @@ EVENT_START	ev_pos_c09r0501_n_01
 	//イベントPOS無効
 	$WK_SCENE_C09R0501 = 1
 	
+	//BGMチェンジでの環境SEポーズ状態をCLEAR
+	_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
+	
 	//========================================//
 	
 EVENT_END

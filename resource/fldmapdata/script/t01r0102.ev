@@ -156,6 +156,9 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	//シーンチェンジラベル無効
 	$WK_SCENE_T01R0102 = 1
 
+	//BGMチェンジでの環境SEポーズ状態をCLEAR
+	_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
+
 //============================================//
 
 EVENT_END
