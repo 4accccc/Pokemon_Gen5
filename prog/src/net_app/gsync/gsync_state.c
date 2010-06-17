@@ -926,7 +926,7 @@ static void _downloadcgear2(G_SYNC_WORK* pWork)
 
   switch(pWork->downloadType){
   case _DOWNLOAD_CGEAR:
-    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, "CGEAR_J", pWork->cgearNo)){
+    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, GAMESYNC_CGEAR_DOWNLOAD, pWork->cgearNo)){
       _CHANGE_STATE(_downloadcgear3);
     }
     else{
@@ -935,7 +935,7 @@ static void _downloadcgear2(G_SYNC_WORK* pWork)
     }
     break;
   case _DOWNLOAD_MUSICAL:
-    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, "MUSICAL_J", pWork->musicalNo)){
+    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, GAMESYNC_MUS_DOWNLOAD, pWork->musicalNo)){
       _CHANGE_STATE(_downloadcgear3);
     }
     else{
@@ -944,7 +944,7 @@ static void _downloadcgear2(G_SYNC_WORK* pWork)
     }
     break;
   case _DOWNLOAD_ZUKAN:
-    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, "ZUKAN_J", pWork->zukanNo)){
+    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, GAMESYNC_ZUK_DOWNLOAD, pWork->zukanNo)){
       _CHANGE_STATE(_downloadcgear3);
     }
     else{

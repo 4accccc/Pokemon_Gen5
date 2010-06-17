@@ -313,3 +313,7 @@ typedef enum{
 #define GFL_NET_DWC_RNDMATCH_HEAPSIZE (0x55000)                       //ランダムマッチングのHEAP量
 
 
+#define GAMESYNC_CGEAR_DOWNLOAD "CGEAR_J"
+#define GAMESYNC_MUS_DOWNLOAD "MUSICAL_J"
+#define GAMESYNC_ZUK_DOWNLOAD "ZUKAN_J"
+
