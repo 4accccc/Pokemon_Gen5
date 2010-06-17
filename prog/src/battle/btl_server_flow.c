@@ -104,7 +104,7 @@ static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fPutMsg );
-static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
+static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx );
 static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, BOOL fIntrDisable );
@@ -458,6 +458,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   const SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag );
 static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, PokeType waza_type );
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk );
 static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, u32 per );
 static void scEvent_FailShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
@@ -2673,16 +2674,15 @@ static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posId
  *
  * @param   wk
  *
- * @retval  BOOL    とくせい・アイテムなど、何らかの効果が発生したらTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
+static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 {
   FRONT_POKE_SEEK_WORK fps;
   BTL_POKESET* pokeSet;
   BTL_POKEPARAM* bpp;
   u32 hem_state;
-  u8  pokeID, fMemberInEffect = FALSE;
+  u8  pokeID;
 
   pokeSet = &wk->pokesetMemberInProc;
   BTL_POKESET_Clear( pokeSet );
@@ -2703,19 +2703,48 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   BTL_POKESET_SeekStart( pokeSet );
   while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
   {
-    {
-      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+    hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_AfterMemberIn( wk, bpp );
-      BTL_Hem_PopState( &wk->HEManager, hem_state );
-      if( scproc_HandEx_Result(wk) != HandExResult_NULL ){
-        fMemberInEffect = TRUE;
-      }
-    }
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 
-
-  return fMemberInEffect;
+  hem_state = BTL_Hem_PushState( &wk->HEManager );
+    scEvent_AfterMemberInComp( wk );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
+//--------------------------------------------------------------------------
+/**
+ * [Event] メンバー入場イベント
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventBegin, BPP_GetID(bpp) );
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
+  BTL_EVENTVAR_Pop();
+  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventEnd, BPP_GetID(bpp) );
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] メンバー入場イベント全員分終了
+ *
+ * @param   wk
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN_COMP );
+  BTL_EVENTVAR_Pop();
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Put] メンバー交替時の「○○ もどれ！」などのメッセージ表示コマンド
@@ -6231,7 +6260,6 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
     // 確率100％なのに失敗したら原因表示へ
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
     scEvent_FailShrink( wk, target );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
   return FALSE;
@@ -6267,6 +6295,7 @@ static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
         }
       }
     }
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 }
 
@@ -9032,7 +9061,8 @@ static BOOL scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
         u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
         int  damage = BTL_CALC_RecvWeatherDamage( bpp, weather );
         damage = scEvent_CheckWeatherReaction( wk, bpp, weather, damage );
-        if( !scproc_HandEx_Result(wk) )
+
+//        if( !scproc_HandEx_Result(wk) )
         {
           if( damage ){
             scPut_WeatherDamage( wk, bpp, weather, damage );
@@ -11689,25 +11719,6 @@ static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   }
   BTL_EVENTVAR_Pop();
   return ratio;
-}
-//--------------------------------------------------------------------------
-/**
- * [Event] メンバーを場に登場させた直後
- *
- * @param   wk
- * @param   bpp
- * @param   fAllIn  全員一斉入場処理フラグ（バトル開幕１回のみ）
- *
- */
-//--------------------------------------------------------------------------
-static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
-{
-  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventBegin, BPP_GetID(bpp) );
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
-  BTL_EVENTVAR_Pop();
-  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventEnd, BPP_GetID(bpp) );
 }
 //----------------------------------------------------------------------------------
 /**

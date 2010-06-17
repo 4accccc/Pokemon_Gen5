@@ -27,8 +27,6 @@ enum {
 /*--------------------------------------------------------------------------*/
 
 
-
-
 void BTL_Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
 {
   wk->state = 0;
@@ -43,6 +41,7 @@ u32 BTL_Hem_PushState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 line )
   wk->read_ptr = wk->stack_ptr;
   wk->fSucceed = 0;
   wk->fPrevSucceed = 0;
+  wk->fUsed = 0;
 
   BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
 
@@ -57,6 +56,8 @@ u32 BTL_Hem_PushStateUseItem_Impl( HANDLER_EXHIBISION_MANAGER* wk, u16 itemNo, u
   wk->read_ptr = wk->stack_ptr;
   wk->fSucceed = 0;
   wk->fPrevSucceed = 0;
+  wk->fUsed = 0;
+
 
   BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
   return state;
@@ -260,7 +261,7 @@ void BTL_Hem_PopWork( HANDLER_EXHIBISION_MANAGER* wk, void* exWork )
       wk->stack_ptr -= header->size;
 
       BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_PophWork,
-          header->equip, header->userPokeID, header->size, wk->stack_ptr, basePos );
+         header->equip, header->userPokeID, header->size, wk->stack_ptr, basePos );
     }
     else
     {
@@ -270,5 +271,6 @@ void BTL_Hem_PopWork( HANDLER_EXHIBISION_MANAGER* wk, void* exWork )
   else
   {
     GF_ASSERT_MSG(0, "exWork pop over! workSize=%d, sp=%d\n", header->size, wk->stack_ptr );
+    TAYA_Printf("for BreakPoint\n");
   }
 }

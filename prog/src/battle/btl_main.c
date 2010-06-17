@@ -477,11 +477,23 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
       PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
     }
     wk->subSeq = 0;
-    (*seq)++;
+
+    // Main側マスター輝度デフォルト以外であれば通信エラー等の可能性->フェードを開始せず即ブラックアウト
+    if( (GX_GetMasterBrightness() != 0) )
+    {
+      wk->subSeq = -16;
+      GX_SetMasterBrightness( -16 );
+      GXS_SetMasterBrightness( -16 );
+      (*seq) += 2;
+    }
+    else{
+      (*seq)++;
+    }
     break;
-    /* fallthru */
+
   case 1:
-    if( wk->subSeq > -16 ){
+    if( wk->subSeq > -16 )
+    {
       wk->subSeq--;
       //BTS2631対処 by iwasawa 10.06.08
       if( GX_GetMasterBrightness() > wk->subSeq ){
@@ -5174,7 +5186,7 @@ static void trainerParam_StoreCommNPCTrainer( BTL_TRAINER_DATA* dst, const BTL_T
 
     dst->trainerID = trData->tr_id;
     dst->trainerType = trData->tr_type;
-    dst->name = GFL_STR_CreateBuffer( trSendData->trainer_name_length, HEAPID_BTL_SYSTEM );
+    dst->name = GFL_STR_CreateBuffer( BTL_COMM_TRAINERNAME_MAX, HEAPID_BTL_SYSTEM );
     GFL_STR_SetEncodedString( dst->name, trSendData->trainer_name, trSendData->trainer_name_length );
     dst->ai_bit = trData->ai_bit;
     GFL_STD_MemCopy( trData->use_item, dst->useItem, sizeof(trData->use_item) );

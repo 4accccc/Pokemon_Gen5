@@ -1646,6 +1646,17 @@ static void handler_Sketch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
     WazaID waza = BPP_GetPrevWazaID( target );
+
+    /*
+    if( waza == WAZANO_NULL )
+    {
+      WazaID  prevSelectedWaza = BPP_GetPrevOrgWazaID( target );
+      if( BTL_TABLES_CheckSketchExWaza(prevSelectedWaza) ){
+        waza = prevSelectedWaza;
+      }
+    }
+    */
+
     if( (waza != WAZANO_NULL)
     &&  (waza != WAZANO_SUKETTI)
     &&  (waza != WAZANO_WARUAGAKI)
@@ -8211,14 +8222,6 @@ static void handler_SoraWoTobu_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static void handler_SoraWoTobu_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // システム側で対処
-  /*
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
-  }
-  */
 }
 //----------------------------------------------------------------------------------
 /**
@@ -8256,14 +8259,6 @@ static void handler_ShadowDive_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static void handler_ShadowDive_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // システム側で対処
-  /*
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_SHADOWDIVE;
-  }
-  */
 }
 static void handler_ShadowDive_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -8324,14 +8319,6 @@ static void handler_Tobihaneru_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static void handler_Tobihaneru_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // システム側で対処
-  /*
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
-  }
-  */
 }
 //----------------------------------------------------------------------------------
 /**
@@ -8367,14 +8354,6 @@ static void handler_Diving_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_Diving_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // システム側で対処
-  /*
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_DIVING;
-  }
-  */
 }
 //----------------------------------------------------------------------------------
 /**
@@ -8410,14 +8389,6 @@ static void handler_AnaWoHoru_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static void handler_AnaWoHoru_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // システム側で対処
-  /*
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_ANAWOHORU;
-  }
-  */
 }
 //----------------------------------------------------------------------------------
 /**

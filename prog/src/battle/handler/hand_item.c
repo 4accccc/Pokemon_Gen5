@@ -184,6 +184,7 @@ static void common_JapoRenbu_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_JapoNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SiroiHerb( u32* numElems );
 static void handler_SiroiHerb_ActCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SiroiHerb_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SiroiHerb_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SiroiHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SiroiHerb_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2447,10 +2448,13 @@ static void handler_JapoNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SiroiHerb( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_ITEM_REACTION, handler_SiroiHerb_TurnCheck },
-    { BTL_EVENT_RANKEFF_FIXED,       handler_SiroiHerb_TurnCheck },
-    { BTL_EVENT_USE_ITEM,            handler_SiroiHerb_Use   },
-    { BTL_EVENT_USE_ITEM_TMP,        handler_SiroiHerb_UseTmp},
+//    { BTL_EVENT_CHECK_ITEM_REACTION, handler_SiroiHerb_TurnCheck },
+//    { BTL_EVENT_RANKEFF_FIXED,       handler_SiroiHerb_TurnCheck },
+    { BTL_EVENT_MEMBER_IN_COMP,      handler_SiroiHerb_MemberIn  },
+    { BTL_EVENT_ACTPROC_END,         handler_SiroiHerb_MemberIn  },
+    { BTL_EVENT_TURNCHECK_END,       handler_SiroiHerb_TurnCheck },
+    { BTL_EVENT_USE_ITEM,            handler_SiroiHerb_Use       },
+    { BTL_EVENT_USE_ITEM_TMP,        handler_SiroiHerb_UseTmp    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2460,7 +2464,16 @@ static void handler_SiroiHerb_ActCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
   if( BPP_IsRankEffectDowned(bpp) )
   {
-      ItemPushRun( myHandle, flowWk, pokeID );
+    ItemPushRun( myHandle, flowWk, pokeID );
+  }
+}
+static void handler_SiroiHerb_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  if( BPP_IsRankEffectDowned(bpp) )
+  {
+    TAYA_Printf("pokeID=%d, しろいハーブ持ち\n", pokeID);
+    ItemPushRun( myHandle, flowWk, pokeID );
   }
 }
 static void handler_SiroiHerb_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -2482,9 +2495,12 @@ static void handler_SiroiHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     BTL_HANDEX_PARAM_RECOVER_RANK* recover_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
+    TAYA_Printf("pokeID=%d, しろいハーブで回復するよ\n", pokeID);
     recover_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_RANK, pokeID );
       recover_param->pokeID = pokeID;
     BTL_SVF_HANDEX_Pop( flowWk, recover_param );
+
+    TAYA_Printf("pokeID=%d, しろいハーブメッセージ出すよ\n", pokeID);
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_RankRecoverItem );
@@ -2521,7 +2537,6 @@ static void handler_MentalHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BTL_CALC_CheckMentalSick(bpp) != WAZASICK_NULL )
     {
-//      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
       ItemPushRun( myHandle, flowWk, pokeID );
     }
   }

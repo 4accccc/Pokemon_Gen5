@@ -1216,17 +1216,24 @@ void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP )
 {
   bpp->coreParam.ppFake =  fakePP;
   bpp->coreParam.fFakeEnable = TRUE;
+//  TAYA_Printf("PokeID(%d)‚ÉppFake(%p = %d‚ðÝ’è\n",
+//              bpp->coreParam.myID, bpp->coreParam.ppFake, PP_Get(bpp->coreParam.ppFake, ID_PARA_monsno, 0));
 }
 void BPP_ClearViewSrcData( BTL_POKEPARAM* bpp )
 {
   bpp->coreParam.ppFake = NULL;
   bpp->coreParam.fFakeEnable = FALSE;
+
 }
 const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp )
 {
   if( (bpp->coreParam.ppFake != NULL)
   &&  (bpp->coreParam.fFakeEnable)
   ){
+
+//    TAYA_Printf("PokeID(%d)‚ÌppFake(%p = %d‚ðŽæ“¾\n",
+//              bpp->coreParam.myID, bpp->coreParam.ppFake, PP_Get(bpp->coreParam.ppFake, ID_PARA_monsno, 0));
+
     return bpp->coreParam.ppFake;
   }
   return bpp->coreParam.ppSrc;
