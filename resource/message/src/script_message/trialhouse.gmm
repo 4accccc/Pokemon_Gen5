@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-06-15T17:00:44"/>
+	<create user="morimoto" host="W00220" date="2010-06-17T14:56:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1796" top="123" right="2501" bottom="751" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="125" right="1985" bottom="753" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="261" top="246" right="734" bottom="644" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -440,12 +440,12 @@
 	<row id="msg_trialhouse_014">
 		<language name="JPN" width="256">おつかれさま！▼
 では　さっそく　バトルけんていの
-しんだんけっかを　おつたえしますよ▼
-あなたの　しんだんけっかは……▼</language>
+けっかを　おつたえしますよ▼
+あなたの　けんていけっかは……▼</language>
 		<language name="JPN_KANJI" width="256">おつかれさま！▼
 では　さっそく　バトル検定の
-診断結果を　お伝えしますよ▼
-あなたの　診断結果は……▼</language>
+結果を　お伝えしますよ▼
+あなたの　検定結果は……▼</language>
 	</row>
 
 	<row id="msg_trialhouse_015">
