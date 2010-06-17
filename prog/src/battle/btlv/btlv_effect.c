@@ -1778,6 +1778,26 @@ BOOL  BTLV_EFFECT_CheckItemEnable( void )
   return ret;
 }
 
+//============================================================================================
+/**
+ * @brief MCSSにReverseDrawFlagをセット
+ *
+ * @param[in] draw_flag セットするフラグ
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW draw_flag )
+{ 
+  BtlvMcssPos pos;
+
+  for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+  {
+    if( BTLV_MCSS_CheckExist( bew->bmw, pos ) )
+    { 
+      BTLV_MCSS_SetReverseDrawFlag( bew->bmw, pos, draw_flag );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  空いているTCBIndexを取得してGFL_TCBをセット

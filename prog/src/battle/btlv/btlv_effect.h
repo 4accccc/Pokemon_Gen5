@@ -169,6 +169,11 @@ typedef enum{
   BTLV_EFFECT_SE_MODE_MUTE,     //SEçƒê∂ÇµÇ»Ç¢
 }BTLV_EFFECT_SE_MODE;
 
+typedef enum{ 
+  BTLV_EFFECT_REVERSE_DRAW_OFF  = BTLV_MCSS_REVERSE_DRAW_OFF,
+  BTLV_EFFECT_REVERSE_DRAW_ON   = BTLV_MCSS_REVERSE_DRAW_ON,
+}BTLV_EFFECT_REVERSE_DRAW;
+
 //--------------------------------------------
 /**
  *  É^Å[ÉìéÌóﬁéwíË
@@ -332,6 +337,8 @@ extern  void              BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE mode );
 extern  BTLV_EFFECT_SE_MODE  BTLV_EFFECT_GetSEMode( void );
 extern  BOOL              BTLV_EFFECT_CheckShooterEnable( void );
 extern  BOOL              BTLV_EFFECT_CheckItemEnable( void );
+extern  void              BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW draw_flag );
+
 extern  void              BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func,
                                               BTLV_EFFECT_TCB_GROUP group );
 extern  int               BTLV_EFFECT_SearchTCBIndex( GFL_TCB* tcb );

@@ -718,6 +718,10 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   bevw->defence_pos = to;
   bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
   bevw->waza = waza;
+
+  //リバース描画OFF
+  BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_OFF );
+
   if( bevw->waza < BTLEFF_SINGLE_ENCOUNT_1 )
   {
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, GFL_HEAP_LOWID( bevw->heapID ) );
@@ -4243,6 +4247,9 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //初期位置にいないポケモンをチェック
   EFFVM_CheckPokePosition( bevw );
 
+  //リバース描画ON
+  BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_ON );
+
   //仮想マシン停止
   VM_End( vmh );
 
@@ -5353,6 +5360,8 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     //まずは一律でMCSS_DEFAULT_Z分手前に
     src.z += MCSS_DEFAULT_Z * 5;
     dst.z += MCSS_DEFAULT_Z * 5;
+    //立ち位置による補正はなし
+#if 0
     //戦闘ルールと立ち位置によって手前に描画しているので、その分オフセットを取る
     switch( rule ){ 
     //補正はいらない
@@ -5398,10 +5407,10 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
       }
       break;
     }
-    
-    src.x += MCSS_DEFAULT_Z	* ( cells_src / 2 );
+#endif
+    //src.x += MCSS_DEFAULT_Z	* ( cells_src / 2 );
     src.z += MCSS_DEFAULT_Z	* cells_src;
-    dst.x += MCSS_DEFAULT_Z	* ( cells_dst / 2 );
+    //dst.x += MCSS_DEFAULT_Z	* ( cells_dst / 2 );
     dst.z += MCSS_DEFAULT_Z	* cells_dst;
   }
 
@@ -6854,6 +6863,9 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
   int i;
 
   BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
+  
+  //リバース描画OFF
+  BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_OFF );
 
   if( bevw->pause_flag )
   {

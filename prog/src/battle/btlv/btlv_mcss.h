@@ -97,6 +97,11 @@ typedef enum{
   BTLV_MCSS_STATUS_FLAG_RARE_OFF      = ( BTLV_MCSS_STATUS_FLAG_RARE      ^ 0xffffffff ),    //ƒŒƒAƒtƒ‰ƒO
 }BTLV_MCSS_STATUS_FLAG;
 
+typedef enum{
+  BTLV_MCSS_REVERSE_DRAW_OFF = 0,
+  BTLV_MCSS_REVERSE_DRAW_ON,
+}BTLV_MCSS_REVERSE_DRAW;
+
 typedef struct _BTLV_MCSS BTLV_MCSS;
 typedef struct _BTLV_MCSS_WORK BTLV_MCSS_WORK;
 
@@ -204,6 +209,8 @@ extern  BOOL            BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, i
 extern  void            BTLV_MCSS_SetAnimeEndCheck( BTLV_MCSS_WORK* bmw, int position );
 extern  BOOL            BTLV_MCSS_CheckAnimeExecute( BTLV_MCSS_WORK* bmw, int position );
 extern  void            BTLV_MCSS_CheckPositionSetInitPos( BTLV_MCSS_WORK* bmw, int position );
+extern  void            BTLV_MCSS_SetReverseDrawFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position,
+                                                      BTLV_MCSS_REVERSE_DRAW draw_flag );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
