@@ -902,6 +902,7 @@ static void Local_ErrDispDraw(void)
 
 static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr)
 {
+#ifndef MULTI_BOOT_MAKE  //’ÊíŽžˆ—
   u32 msgno;
   switch(pErr->errorUser){
   case ERRORCODE_HEAP:
@@ -929,6 +930,9 @@ static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr)
     msgno = dwc_error_0012;
   }
   return msgno;
+#else
+  return 0;
+#endif
 }
 
 
