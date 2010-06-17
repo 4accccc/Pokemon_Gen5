@@ -14,6 +14,7 @@
 #include "pokeicon/pokeicon.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "debug/debug_flg.h"
 
 #include "arc_def.h"
 #include "pokelist_gra.naix"
@@ -200,6 +201,13 @@ void PLIST_BATTLE_UpdateBattle( PLIST_WORK *work )
   {
     PLIST_ForceExit_Timeup( work );
   }
+
+#if PM_DEBUG
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_ListTimeUp ) == TRUE )
+  {
+    PLIST_ForceExit_Timeup( work );
+  }
+#endif
 }
 
 #pragma mark graphic

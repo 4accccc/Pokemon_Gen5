@@ -16,7 +16,7 @@
 DEBUG_FLG_DEF( DisableEncount , "EncountOff" )
 DEBUG_FLG_DEF( DisableTrainerEye , "TrainerEyeOff")
 DEBUG_FLG_DEF( DisableEvents , "Pos & Scene Off")
-DEBUG_FLG_DEF( MusicalEventSkip , "MusEveSkip")     //ミュージカル控え室演出スキップ
+DEBUG_FLG_DEF( ListTimeUp , "ListTimeUp")     //ポケモンリスト強制タイムアップ
 DEBUG_FLG_DEF( DisableReport , "Report Off")
 DEBUG_FLG_DEF( ReverseVersion , "Reverse Version")
 DEBUG_FLG_DEF( RestricPhoto , "Restric Photo")      //DSi設定ペアレンタルコントロール、写真の送受信不可
