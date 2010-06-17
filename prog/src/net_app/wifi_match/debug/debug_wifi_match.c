@@ -206,7 +206,6 @@ typedef enum {
   EDITBOX_ID_BTL_MONTH,
   EDITBOX_ID_BTL_DAY,
   EDITBOX_ID_BTL_HOUR,
-  EDITBOX_ID_BTL_SECOND,
   EDITBOX_ID_BTL_MINITS,
   EDITBOX_ID_REC_NEXT,
 
@@ -809,10 +808,6 @@ static const STR_PARAM StrParamsRecord2[] = {
   {STR_TYPE_NUM, SAKE_DATA_38,  6*8, STR_LINE12_POS_Y,
     8*8,STR_LINE12_POS_Y,3*8,TOUCH_H,
     59,0,EDITBOX_ID_BTL_MINITS },
-  //•b
-  {STR_TYPE_NUM, SAKE_DATA_49,  12*8, STR_LINE12_POS_Y,
-    14*8,STR_LINE12_POS_Y,3*8,TOUCH_H,
-    59,0,EDITBOX_ID_BTL_SECOND },
 
   //‚Â‚¬‚Ì‚©‚«‚±‚Ý
   {STR_TYPE_NUM, SAKE_DATA_51,  STR_POS_X, STR_LINE14_POS_Y,
@@ -926,6 +921,7 @@ static const struct
 
 static const sc_version_tbl[] =
 {
+  0,  //‚È‚µ
   VERSION_BLACK,VERSION_WHITE,
   VERSION_GOLD,VERSION_SILVER,
   VERSION_DIAMOND,VERSION_PEARL,VERSION_PLATINUM,
@@ -936,6 +932,7 @@ static const sc_version_tbl[] =
 
 static const sc_lang_tbl[]  =
 {
+  0,  //‚È‚µ
   LANG_JAPAN	,
   LANG_ENGLISH,
   LANG_FRANCE	,
@@ -2468,8 +2465,7 @@ static void StoreRecodeData( MAKE_WORK *p_wk, const WIFIBATTLEMATCH_GDB_SAKE_ALL
   p_wk->BoxValue[EDITBOX_ID_BTL_MONTH] = cp_record->month;
   p_wk->BoxValue[EDITBOX_ID_BTL_DAY] = cp_record->day;
   p_wk->BoxValue[EDITBOX_ID_BTL_HOUR] = cp_record->hour;
-  p_wk->BoxValue[EDITBOX_ID_BTL_SECOND] = cp_record->minute;
-  p_wk->BoxValue[EDITBOX_ID_BTL_MINITS] = 0;
+  p_wk->BoxValue[EDITBOX_ID_BTL_MINITS] = cp_record->minute;
   p_wk->BoxValue[EDITBOX_ID_REC_NEXT] = cp_data->record_save_idx;
 }
 static void ReStoreData( WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *p_data, const MAKE_WORK *cp_wk, u32 idx )
@@ -2580,7 +2576,7 @@ static void ReStoreData( WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *p_data, const MAKE_W
   p_record->month  = cp_wk->BoxValue[EDITBOX_ID_BTL_MONTH];
   p_record->day  = cp_wk->BoxValue[EDITBOX_ID_BTL_DAY];
   p_record->hour  = cp_wk->BoxValue[EDITBOX_ID_BTL_HOUR];
-  p_record->minute  = cp_wk->BoxValue[EDITBOX_ID_BTL_SECOND];
+  p_record->minute  = cp_wk->BoxValue[EDITBOX_ID_BTL_MINITS];
 
 }
 

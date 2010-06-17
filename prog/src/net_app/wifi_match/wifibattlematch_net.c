@@ -589,6 +589,7 @@ static const char *sc_get_debugall_tbl[]  =
   "RECORD_DATA_05",
   "RECORD_DATA_06",
   "RECORD_SAVE_IDX",
+  "recordid",
 };
 //=============================================================================
 /**
