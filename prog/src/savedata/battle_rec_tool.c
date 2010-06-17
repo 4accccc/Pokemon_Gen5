@@ -431,7 +431,8 @@ static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WOR
   setup->commPos = rec->setupSubset.myCommPos;
   setup->shooterBitWork.shooter_use = rec->setupSubset.shooterBit;
 
-  CONFIG_Copy( &rec->setupSubset.config, (CONFIG*)(setup->configData) );
+// コンフィグは録画データに含めず、再生するユーザのローカル設定に準じる (2010.06.17）
+//  CONFIG_Copy( &rec->setupSubset.config, (CONFIG*)(setup->configData) );
 
   return TRUE;
 }

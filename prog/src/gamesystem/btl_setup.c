@@ -853,9 +853,21 @@ void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, H
       dst->tr_data[i] = BSP_TRAINER_DATA_Create( heapID );
     }
   }
-  // configデータをallocしているので別途解放が必要になる
   dst->gameData   = gameData;
-  dst->configData = CONFIG_AllocWork( heapID );
+
+  // configデータをallocしているので別途解放が必要になる
+
+  // 2010.06.17 追記（田谷）
+  // configデータは録画データに含まれているものを復元していたが、
+  // 再生するユーザのローカル設定に準じるのが正しい仕様ということで、
+  // 単に丸ごとコピーする方式に変更する。
+  //（本来は構造を修正すべきだが、時期を考え、影響の少ない方法をとりました）
+  {
+    CONFIG* userConfig = SaveData_GetConfig( GAMEDATA_GetSaveControlWork(gameData) );
+    dst->configData = CONFIG_AllocWork( heapID );
+    CONFIG_Copy( userConfig, (CONFIG*)(dst->configData) );
+  }
+
   dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
   dst->fRecordPlay = TRUE;
   BTL_SETUP_AllocRecBuffer( dst, heapID );
