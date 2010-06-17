@@ -255,7 +255,10 @@ typedef struct
   u16 bg_ofs;  //BGƒpƒŒƒbƒg
 
   s16 chr_y_ofs;
+  s16 chr_x_ofs_str;
+
   u16 anm_seq;
+  u16 padding_16;
 
   MYSTERY_MENU_CURSOR_CALLBACK callback;
   void *p_wk_adrs;

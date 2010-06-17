@@ -1283,15 +1283,15 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
     { 
       //一番上
       { 
-        5,2,22,2, 0, NULL, MYSTERY_MSGWIN_POS_H_CENTER, 0, 0, PRINTSYS_MACRO_LSB( 0xf, 2, 0 )
+        5,2,27,2, 0, NULL, MYSTERY_MSGWIN_POS_H_CENTER, 0, 0, PRINTSYS_MACRO_LSB( 0xf, 2, 0 )
       },
       //二番目
       {
-        5,5,22,3, 0, NULL, MYSTERY_MSGWIN_POS_H_CENTER, 0, 0,PRINTSYS_MACRO_LSB( 0xf, 2, 0 )
+        5,5,27,3, 0, NULL, MYSTERY_MSGWIN_POS_H_CENTER, 0, 0,PRINTSYS_MACRO_LSB( 0xf, 2, 0 )
       },
       //三番目
       {
-        5,9,22,2, 0, NULL, MYSTERY_MSGWIN_POS_H_CENTER, 0, 0,PRINTSYS_MACRO_LSB( 0xf, 2, 0 )
+        5,9,27,2, 0, NULL, MYSTERY_MSGWIN_POS_H_CENTER, 0, 0,PRINTSYS_MACRO_LSB( 0xf, 2, 0 )
       },
       //下
       {
@@ -1303,6 +1303,8 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
     {
       //Yオフセット
       tbl[i].y  += cp_setup->chr_y_ofs;
+      //文字列Xオフセット
+      tbl[i].x  += cp_setup->chr_x_ofs_str;
 
       //文字設定
       if( cp_setup->p_msg )

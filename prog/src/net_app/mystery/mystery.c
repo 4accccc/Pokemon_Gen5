@@ -3054,6 +3054,7 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
     setup.callback  = Util_MenuCallback;
     setup.p_wk_adrs = p_wk;
     setup.chr_y_ofs = 0;
+    setup.chr_x_ofs_str = 0;
     setup.anm_seq = 0;
     setup.p_data  = &p_wk->menu_data[ type ];
 
@@ -3084,6 +3085,7 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
       GFL_STR_SetStringCodeOrderLength( setup.p_strbuf[0], p_wk->data.data.event_name, GIFT_DATA_CARD_TITLE_MAX );
       setup.list_max  = 1;
       setup.chr_y_ofs = -1;
+      setup.chr_x_ofs_str = -2;
       setup.anm_seq = 10;
       break;
 
