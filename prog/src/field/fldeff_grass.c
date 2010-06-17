@@ -466,7 +466,7 @@ static BOOL check_MMdlPos( TASKWORK_GRASS *work )
         gx = MMDL_GetOldGridPosX( mmdl );
         gz = MMDL_GetOldGridPosZ( mmdl );
         
-        if( work->head.init_gx == gx || work->head.init_gz == gz ){
+        if( work->head.init_gx == gx && work->head.init_gz == gz ){
           return( TRUE );
         }
       }

@@ -19,7 +19,7 @@
 //  define
 //======================================================================
 #ifdef DEBUG_ONLY_FOR_kagaya
-//#define DEBUG_REFLECT_CHECK
+#define DEBUG_REFLECT_CHECK
 #endif
 
 #define REF_SCALE_X_UP (FX16_ONE/4)
@@ -350,6 +350,219 @@ static void reflectTask_Draw( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static const fx32 data_TypeOffsetY[REFLECT_TYPE_MAX] =
 {
+  -(NUM_FX32(12*2)+NUM_FX32(1)),
+  -(NUM_FX32(16*2)+NUM_FX32(1)),
+  -(NUM_FX32(12*2)+NUM_FX32(1)),
+};
+
+//-0xe800, 0
+
+#define Y_OFFS_64x64_GROUND (-(0x10000-0x8000)) //64x64 地上用
+#define Y_OFFS_64x64_REFLECT (-(0x10000-0xc800)) //64x64 水面用
+
+static const fx32 data_MdlOffsetY[MMDL_BLACT_MDLSIZE_MAX] =
+{
+  0x0000, //32x32
+  0x0000, //16x16
+  0x0000, //64x64
+};
+
+//#define REF_OFFS_Z (FX32_ONE*12)
+#define REF_OFFS_Z (FX32_ONE*12)
+
+static const fx32 data_MdlOffsetZ[MMDL_BLACT_MDLSIZE_MAX] =
+{
+  REF_OFFS_Z, //32x32
+  REF_OFFS_Z/2, //16x32
+  REF_OFFS_Z*2+FX32_ONE*1, //64x64
+};
+
+static void reflectTask_UpdateBlAct( u16 actID, void *wk )
+{
+  u16 ret;
+  TASKWORK_REFLECT *work = wk;
+  GFL_BBDACT_SYS *bbdactsys = work->head.bbdactsys;
+  GFL_BBD_SYS *bbdsys = GFL_BBDACT_GetBBDSystem( bbdactsys );
+  u32 m_actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
+  
+  if( actID == MMDL_BLACTID_NULL ){ //親モデルビルボード無し。
+    GF_ASSERT( 0 );
+    return;
+  }
+  
+  ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
+  GFL_BBDACT_SetDrawEnable( bbdactsys, actID, ret );
+  GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, FALSE );
+  
+  {
+    fx32 y;
+    VecFx32 pos,offs0,offs1;
+    const MMDL *mmdl;
+    const OBJCODE_PARAM *param;
+    
+    mmdl = work->head.mmdl;
+    param = MMDL_GetOBJCodeParam( mmdl );
+    
+    MMDL_GetVectorPos( mmdl, &pos );
+    pos.z += data_MdlOffsetZ[param->mdl_size];
+    
+    MMDL_GetVectorDrawOffsetPos( mmdl, &offs0 );
+    pos.x += offs0.x;
+    pos.z -= offs0.z;
+    
+	  if( MMDL_GetMapPosHeight(mmdl,&pos,&y) == TRUE ){  //高さ取得
+      pos.y = y;
+    }
+    
+    pos.y += data_TypeOffsetY[work->head.type];
+     
+    MMDL_GetVectorOuterDrawOffsetPos( mmdl, &offs0 );
+    pos.x += offs0.x;
+    pos.y -= offs0.y;
+    pos.z -= offs0.z;
+
+    pos.y += data_MdlOffsetY[param->mdl_size];
+
+#if 1
+    if( param->mdl_size == MMDL_BLACT_MDLSIZE_64x64 )
+    {
+      MAPATTR attr = MMDL_GetMapAttr( mmdl );
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+      
+      if( (flag & MAPATTR_FLAGBIT_REFLECT) )
+      {
+        pos.y += Y_OFFS_64x64_REFLECT;
+      }
+      else
+      {
+        pos.y += Y_OFFS_64x64_GROUND;
+      }
+    }
+#endif
+
+#ifdef DEBUG_REFLECT_CHECK
+    if( MMDL_GetOBJID(work->head.mmdl) == MMDL_ID_PLAYER ){
+      int select;
+      int printf = 0;
+      int repeat = GFL_UI_KEY_GetRepeat();
+      int cont = GFL_UI_KEY_GetCont();
+      int trg = GFL_UI_KEY_GetTrg();
+      VecFx32 *d_offs;
+      
+      if( trg & PAD_BUTTON_START ){
+        int *pFlag = &work->head.eff_reflect->d_select;
+        
+        (*pFlag)++;
+        if( (*pFlag) > MMDL_BLACT_MDLSIZE_MAX ){
+          (*pFlag) = 0;
+        }
+        
+        KAGAYA_Printf( "reflect操作 " );
+        
+        switch( (*pFlag) ){
+        case MMDL_BLACT_MDLSIZE_32x32:
+          KAGAYA_Printf( "32x32\n" );
+          break;
+        case MMDL_BLACT_MDLSIZE_16x16:
+          KAGAYA_Printf( "16x16\n" );
+          break;
+        case MMDL_BLACT_MDLSIZE_64x64:
+          KAGAYA_Printf( "64x64\n" );
+          break;
+        default:
+          KAGAYA_Printf( "OFF\n" );
+        }
+      }
+      
+      if( work->head.eff_reflect->d_select < MMDL_BLACT_MDLSIZE_MAX ){
+        d_offs =
+          &work->head.eff_reflect->d_offs[work->head.eff_reflect->d_select];
+        
+        if( repeat & PAD_BUTTON_L ){
+          if( cont & PAD_BUTTON_B ){
+            d_offs->z -= 0x800;
+            printf = TRUE;
+          }else{
+            d_offs->y -= 0x800;
+            printf = TRUE;
+          }
+        }else if( repeat & PAD_BUTTON_R ){
+          if( cont & PAD_BUTTON_B ){
+            d_offs->z += 0x800;
+            printf = TRUE;
+          }else{
+            d_offs->y += 0x800;
+            printf = TRUE;
+          }
+        }
+      }
+      
+      if( (trg & PAD_BUTTON_A) || printf ){
+        int i;
+        d_offs = work->head.eff_reflect->d_offs;
+
+        for( i = 0; i < MMDL_BLACT_MDLSIZE_MAX; i++, d_offs++ ){
+          KAGAYA_Printf( "reflect " );
+          
+          switch( i ){
+          case MMDL_BLACT_MDLSIZE_32x32:
+            KAGAYA_Printf( "32x32 " );
+            break;
+          case MMDL_BLACT_MDLSIZE_16x16:
+            KAGAYA_Printf( "16x16 " );
+            break;
+          case MMDL_BLACT_MDLSIZE_64x64:
+            KAGAYA_Printf( "64x64 " );
+            break;
+          }
+
+          KAGAYA_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
+              d_offs->x, d_offs->y, d_offs->z );
+        }
+      }
+    }
+    
+    {
+      VecFx32 d_offs = work->head.eff_reflect->d_offs[param->mdl_size];
+      VEC_Add( &pos, &d_offs, &pos );
+    }
+#endif
+    
+    GFL_BBD_SetObjectTrans( bbdsys, actID, &pos );
+  }
+  
+  {
+    BOOL flip = TRUE;
+    int m_idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, m_actID );
+    int idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, actID );
+    fx16 sx = work->scale_x;
+    fx16 sy = work->scale_y_org;
+    
+    {
+      u16 res_idx = 0;
+      u16 cell_idx = 0;
+      GFL_BBD_GetObjectResIdx( bbdsys, m_idx, &res_idx );
+      GFL_BBD_SetObjectResIdx( bbdsys, idx, &res_idx );
+      
+			GFL_BBD_GetObjectCelIdx( bbdsys, m_idx, &cell_idx );
+			GFL_BBD_SetObjectCelIdx( bbdsys, idx, &cell_idx );
+    }
+    
+    GFL_BBD_SetObjectSiz( bbdsys, idx, &sx, &sy );
+    GFL_BBD_SetObjectFlipT( bbdsys, idx, &flip );
+    
+    flip = GFL_BBD_GetObjectFlipS( bbdsys, m_idx ); //横Flip受け継ぐ
+    GFL_BBD_SetObjectFlipS( bbdsys, idx, &flip );
+  }
+}
+
+/**
+ * オフセット見直し版
+ * 地面めり込み、見栄え等からやめる
+ */
+#if 0
+static const fx32 data_TypeOffsetY[REFLECT_TYPE_MAX] =
+{
   -(FX32_ONE*24+FX32_ONE),
   -(FX32_ONE*32+FX32_ONE),
   -(FX32_ONE*24+FX32_ONE),
@@ -560,6 +773,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     GFL_BBD_SetObjectFlipS( bbdsys, idx, &flip );
   }
 }
+#endif
 
 /*
  * y軸補正だけですむならばズレない版

@@ -94,7 +94,7 @@ typedef struct
 typedef struct
 {
   u16 actID;
-  u8 padding0;
+  u8 fishing_hero_offs_type; //釣り自機専用
   u8 padding1;
   COMMAN_ANMCTRL_WORK anmcnt;
 }DRAW_BLACT_WORK;
@@ -952,6 +952,25 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_PCAzukeHero =
 //  釣り自機
 //======================================================================
 //--------------------------------------------------------------
+/**
+ * 釣り自機のオフセットタイプを指定
+ * @param mmdl MMDL*
+ * @param flag TRUE=従来の定数オフセット　FALSE=カメラから補正
+ * @retval nothing
+ *
+ * BTS 社内バグNo.1568
+ * なみのり中にNPCの１つ上で釣りをすると、
+ * 自機の足がNPCの頭よりも上に表示されます。
+ * 対処の為の処理。
+ */
+//--------------------------------------------------------------
+void MMDL_DrawFishingHero_SetOffsetType( MMDL *mmdl, BOOL flag )
+{
+  DRAW_BLACT_WORK *work = MMDL_GetDrawProcWork( mmdl );
+  work->fishing_hero_offs_type = flag;
+}
+
+//--------------------------------------------------------------
 //動作モデル位置からのオフセットベクトルに、
 //カメラの逆行列をかけて、ビルボードに対して正確な位置オフセットを算出する
 //--------------------------------------------------------------
@@ -973,6 +992,7 @@ static void getBillboardOffset(
   //カメラ逆行列で回転させる＝＝カメラ行列で回転させても正位置になるはずのベクトル
   MTX_MultVec33( org_ofs, &mtx33, bbd_ofs );
 }
+
 //--------------------------------------------------------------
 /**
  * 釣りアニメ　表示別にオフセットセット
@@ -1022,6 +1042,7 @@ static void drawFishingHero_SetOffset(
 //--------------------------------------------------------------
 static void DrawFishingHero_Draw( MMDL *mmdl )
 {
+  BOOL init_flag = FALSE;
   u16 dir,status,anm_id;
   VecFx32 pos;
   DRAW_BLACT_WORK *work;
@@ -1041,17 +1062,18 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
   
   if( dir != work->anmcnt.set_anm_dir ||
     work->anmcnt.set_anm_status != status ){
+    init_flag = TRUE;
     work->anmcnt.set_anm_dir = dir;
     work->anmcnt.set_anm_status = status;
     GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, TRUE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( mmdl, &pos );
-
+  
   {
     VecFx32 offs;
     drawFishingHero_SetOffset( mmdl,
@@ -1061,8 +1083,15 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
     pos.y += offs.y;
     pos.z += offs.z;
   }
-  
-  { //64x64補正：カメラ位置からオフセットを計算する
+
+  /* BTS 社内バグNo.1568
+   * なみのり中にNPCの１つ上で釣りをすると、
+   * 自機の足がNPCの頭よりも上に表示されます。
+   * 対処の為の処理。
+   */
+  //64x64補正：カメラ位置からオフセットを計算する
+  if( work->fishing_hero_offs_type == FALSE )
+  {
     VecFx32 offs = { 0, -FX32_CONST(13), 0 };
     MMDLSYS * mmdlsys = MMDL_GetMMdlSys( mmdl );
     FIELDMAP_WORK * fieldmap = MMDLSYS_GetFieldMapWork( mmdlsys );
@@ -1071,7 +1100,12 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
     getBillboardOffset( g3Dcamera, &offs, &offs );
     VEC_Add( &pos, &offs, &pos );
   }
-
+  else //従来補正
+  {
+    pos.y += NUM_FX32( -12 );
+    pos.z += NUM_FX32( 8 );
+  }
+  
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }

@@ -213,8 +213,25 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       break;
     }
     
+    /*
+     * add 100617 BUGFIX BTS 社内バグNo.1568
+     * 波乗り中で下にOBJが居るならばオフセットを変える
+     */
+    ret = FALSE;
+    
+    if( FIELD_PLAYER_GetMoveForm(wk->fplayer) == PLAYER_MOVE_FORM_SWIM ){
+      s16 gx = MMDL_GetGridPosX( wk->player_mmdl );
+      s16 gz = MMDL_GetGridPosZ( wk->player_mmdl );
+      MMDL_TOOL_AddDirGrid( DIR_DOWN, &gx, &gz, 1 );
+
+      if( MMDLSYS_SearchGridPos(wk->mmdl_sys,gx,gz,TRUE) != NULL ){
+        ret = TRUE; //従来の表示に
+      }
+    }
+    
     //フォルムチェンジ
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
+    MMDL_DrawFishingHero_SetOffsetType( wk->player_mmdl, ret );
     FIELD_PLAYER_ForceWaitVBlank( wk->fplayer );
     
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
