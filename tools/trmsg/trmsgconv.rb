@@ -108,20 +108,26 @@ end
 
   fp_w = open( "trmsg.gmm", "w" )
 
-  #‚…‚Ì•¶š‚ğL‚Â‚«‚É•ÏŠ·‚·‚é
   open( "temp.gmm" ) {|fp_r|
     while str = fp_r.gets
       if str.index("Pok?mon") != nil
         buf = "Pok" + "%c" % 0xc3 + "%c" % 0xa9 + "mon"
         str.sub!( "Pok?mon", buf )
       end
+      #‚…‚Ì•¶š‚ğL‚Â‚«‚É•ÏŠ·‚·‚é
       if str.index("~") != nil
         buf = "%c" % 0xc3 + "%c" % 0xa9
         str.sub!( "~", buf )
       end
+      #a‚Ì•¶š‚ğL‚Â‚«‚É•ÏŠ·‚·‚é
       if str.index("^") != nil
         buf = "%c" % 0xc3 + "%c" % 0xa0
         str.sub!( "^", buf )
+      end
+      #o‚Ì•¶š‚ğL‚Â‚«‚É•ÏŠ·‚·‚é
+      if str.index(";") != nil
+        buf = "%c" % 0xc3 + "%c" % 0xb2
+        str.sub!( ";", buf )
       end
       fp_w.printf( "%s", str )
     end
