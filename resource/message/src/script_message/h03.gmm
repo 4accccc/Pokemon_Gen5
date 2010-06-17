@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-14T14:55:11"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-17T18:23:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -557,7 +557,7 @@
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">テメー　どこの　だれに　きょかで
+		<language name="JPN" width="256">テメー　どこの　だれの　きょかで
 ここ　とおるつもりだァ　コラ！？▼
 はなの　きんようびの　ミッドナイトは
 ここは　オイラたち　ばくそうチーム▽
