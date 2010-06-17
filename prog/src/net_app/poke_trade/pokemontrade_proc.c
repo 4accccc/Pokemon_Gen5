@@ -2853,10 +2853,10 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
   {
     int ans = GFL_UI_TP_HitTrg(tp_mojidata);
     if(ans != GFL_UI_TP_HIT_NONE){
-      PMSND_PlaySystemSE(POKETRADESE_LANG_SEARCH);
       pWork->selectMoji = ans + 1;
       POKEMONTRADE_StartMojiSelect(pWork,tp_mojidata[ans].rect.left,tp_mojidata[ans].rect.top);
       if(_MoveSearchPoke(pWork,ans)){
+        PMSND_PlaySystemSE(POKETRADESE_LANG_SEARCH);
         GXS_SetVisibleWnd( GX_WNDMASK_NONE );
         _CHANGE_STATE(pWork, _mojiSelectEnd);
         return;
