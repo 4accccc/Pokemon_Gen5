@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-05-10T17:02:27" source="n_legend_born_w_flip_03.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-17T14:08:45" source="n_legend_born_w_reduced.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-05-10T17:02:27" source="n_legend_born_w_flip_03.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-17T14:08:45" source="n_legend_born_w_reduced.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="0"
+	tool_start_frame="-1"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="34 17"
 	compress_material="on" material_size="20 20"
@@ -27,14 +27,14 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-1.580811 -1.509277 -0.434082" whd="3.161133 4.807129 3.196777"/>
+<box_test pos_scale="7" xyz="-2.548584 -0.754639 -0.796387" whd="5.178711 3.493652 1.821777"/>
 
 <tex_image_array size="11">
 	<tex_image index="0" name="fx_f_ring"
 		width="32" height="64" original_width="32" original_height="64"
 		format="a5i3"
 		palette_name="fx_f_ring_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_f_ring.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_f_ring.tga"
 	>
 		<bitmap size="1024">
 			e8d8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8
@@ -171,7 +171,7 @@
 		width="32" height="64" original_width="32" original_height="64"
 		format="a5i3"
 		palette_name="fx_fball1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_fball1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_fball1.tga"
 	>
 		<bitmap size="1024">
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
@@ -308,7 +308,7 @@
 		width="64" height="64" original_width="64" original_height="64"
 		format="a5i3"
 		palette_name="fx_flare1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/fx_flare1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_flare1.tga"
 	>
 		<bitmap size="2048">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -573,7 +573,7 @@
 		width="128" height="256" original_width="128" original_height="256"
 		format="a5i3"
 		palette_name="fx_l_bolt1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/fx_l_bolt1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_l_bolt1.tga"
 	>
 		<bitmap size="16384">
 			0000 0000 0000 0000 0000 0808 0808 0808
@@ -2630,7 +2630,7 @@
 		width="32" height="64" original_width="32" original_height="64"
 		format="a5i3"
 		palette_name="fx_s_bub1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_s_bub1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_s_bub1.tga"
 	>
 		<bitmap size="1024">
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
@@ -2768,7 +2768,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="fx_s_bub2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_s_bub2.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_s_bub2.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -2778,7 +2778,7 @@
 		width="64" height="128" original_width="64" original_height="128"
 		format="a5i3"
 		palette_name="fx_shad2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/fx_shad2.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_shad2.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -3299,7 +3299,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="fx_spkb.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_spkb.1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_spkb.1.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0008 0808 0808 0808 0808 0808
@@ -3820,7 +3820,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="fx_spkb.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_spkb.2.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_spkb.2.tga"
 	>
 		<bitmap size="4096">
 			0800 0800 0808 0808 0800 0808 0808 0808
@@ -4341,7 +4341,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="fx_wav_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_wav.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/fx_wav.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -4863,7 +4863,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="stone_b_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/stone_b.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_w/tex/stone_b.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -5021,10 +5021,10 @@
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="7" name="fx_spkb.1_pl" color_size="8">
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7fbe 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="8" name="fx_spkb.2_pl" color_size="8">
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7fbe 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="9" name="fx_wav_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
@@ -5177,7 +5177,7 @@
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.000000 0.504395"
+		tex_translate="0.000000 0.448242"
 		tex_gen_mode="tex"
 	/>
 	<material index="6" name="fx_s_bub"
@@ -11675,9 +11675,9 @@
 		brother_prev="1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -19.702637"
+		translate="0.000000 0.000000 -23.996338"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="8"
@@ -11695,9 +11695,9 @@
 		brother_prev="3"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -19.702637"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="30" polygon_size="10"
@@ -11743,9 +11743,9 @@
 		brother_prev="5"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
-		rotate="17.000000 34.199951 0.000000"
-		translate="69.894775 76.383789 0.046387"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -15.630859"
 		visibility="on"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -11763,7 +11763,7 @@
 		brother_prev="7"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
@@ -11824,9 +11824,9 @@
 		brother_prev="10"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.774414 0.774414 0.774414"
-		rotate="0.000000 145.439941 0.000000"
-		translate="2.173340 169.990479 100.032227"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11845,9 +11845,9 @@
 		brother_prev="11"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.649658 0.946533 0.649658"
-		rotate="0.000000 145.439941 0.000000"
-		translate="2.173340 167.556396 100.032227"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11866,9 +11866,9 @@
 		brother_prev="12"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.447266 2.320313 1.447266"
-		rotate="0.000000 145.439941 0.000000"
-		translate="2.173340 167.408447 100.032227"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11887,9 +11887,9 @@
 		brother_prev="13"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.447266 1.585449 1.447266"
-		rotate="0.000000 145.439941 0.000000"
-		translate="2.173340 195.604248 100.032227"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11909,8 +11909,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="6.239014 6.065918 6.239014"
-		rotate="0.000000 145.439941 0.000000"
-		translate="2.173340 169.990479 100.032227"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="246" polygon_size="116"
@@ -11928,9 +11928,9 @@
 		brother_prev="15"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
-		rotate="17.000000 34.199951 0.000000"
-		translate="76.264648 72.919189 -9.326660"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -3.780273"
 		visibility="on"
 		display_size="1"
 		vertex_size="84" polygon_size="40"

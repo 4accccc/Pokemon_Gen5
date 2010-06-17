@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-05-13T11:32:22" source="n_legend_born_b_flip_08.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-17T11:19:57" source="n_legend_born_b_reduced03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-05-13T11:32:22" source="n_legend_born_b_flip_08.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-17T11:19:57" source="n_legend_born_b_reduced03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="32" height="64" original_width="32" original_height="64"
 		format="a5i3"
 		palette_name="fx_f_ring_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_f_ring.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_f_ring.tga"
 	>
 		<bitmap size="1024">
 			e8d8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8
@@ -171,7 +171,7 @@
 		width="32" height="64" original_width="32" original_height="64"
 		format="a3i5"
 		palette_name="fx_f_tong1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_f_tong1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_f_tong1.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 4b00 e8e9 e5e6 e3e2
@@ -308,7 +308,7 @@
 		width="32" height="64" original_width="32" original_height="64"
 		format="a5i3"
 		palette_name="fx_fball1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_fball1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_fball1.tga"
 	>
 		<bitmap size="1024">
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
@@ -445,7 +445,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="fx_fire1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_fire1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_fire1.tga"
 	>
 		<bitmap size="4096">
 			9890 a8a0 b0b0 a8b0 a8a8 a8a8 b8b0 c8c0
@@ -966,7 +966,7 @@
 		width="64" height="64" original_width="64" original_height="64"
 		format="a5i3"
 		palette_name="fx_flare1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/fx_flare1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_flare1.tga"
 	>
 		<bitmap size="2048">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1231,7 +1231,7 @@
 		width="32" height="64" original_width="32" original_height="64"
 		format="a5i3"
 		palette_name="fx_s_bub1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_s_bub1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_s_bub1.tga"
 	>
 		<bitmap size="1024">
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
@@ -1369,7 +1369,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="fx_s_bub2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_s_bub2.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_s_bub2.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1379,7 +1379,7 @@
 		width="64" height="128" original_width="64" original_height="128"
 		format="a5i3"
 		palette_name="fx_shad4_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/fx_shad4.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_shad4.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1900,7 +1900,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="fx_spkb.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_spkb.1.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_spkb.1.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0008 0808 0808 0808 0808 0808
@@ -2421,7 +2421,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="fx_spkb.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_spkb.2.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_spkb.2.tga"
 	>
 		<bitmap size="4096">
 			0800 0800 0808 0808 0800 0808 0808 0808
@@ -2942,7 +2942,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="fx_wav_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/fx_wav.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/fx_wav.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -3464,7 +3464,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="stone_w_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_born_w/tex/stone_w.tga"
+		path="C:/home/wb_data3d/demo/n_legend_born_b/tex/stone_w.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -3617,19 +3617,19 @@
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="5" name="fx_s_bub1_pl" color_size="8">
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7bdd 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="fx_s_bub2_pl" color_size="4">
-		7fff 7fff 7fff 7fff
+		7bdd 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="7" name="fx_shad4_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="8" name="fx_spkb.1_pl" color_size="8">
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7bdd 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="9" name="fx_spkb.2_pl" color_size="8">
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7bdd 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="10" name="fx_wav_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff

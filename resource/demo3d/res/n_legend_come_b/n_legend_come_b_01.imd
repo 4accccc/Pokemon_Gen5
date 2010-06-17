@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-05-14T15:25:04" source="n_legend_come_b_05.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-16T19:48:32" source="n_legend_come_b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-05-14T15:25:04" source="n_legend_come_b_05.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-16T19:48:32" source="n_legend_come_b.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="128" height="128" original_width="128" original_height="128"
 		format="a5i3"
 		palette_name="fx_rays2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/fx_rays2.tga"
+		path="C:/home/wb_data3d/demo/n_legend_come_b/tex/fx_rays2.tga"
 	>
 		<bitmap size="8192">
 			0800 0800 0000 0008 0000 0800 0808 0008
@@ -1068,7 +1068,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="in39_white_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/in39_white.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/in39_white.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1079,7 +1079,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_bann_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_bann.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_bann.tga"
 	>
 		<bitmap size="128">
 			1000 4001 4444 4444 3222 6223 6666 6666
@@ -1105,7 +1105,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="n_door_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_door.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_door.tga"
 	>
 		<bitmap size="64">
 			5555 5555 aaa5 6aa9 aa99 6aa9 5569 5555
@@ -1123,7 +1123,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_fuch2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_fuch2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_fuch2.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 1210 3400 0043 0251
@@ -1164,7 +1164,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="n_hikari2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_hikari2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_hikari2.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1238,7 +1238,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_jyu_fuch_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_jyu_fuch.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_jyu_fuch.tga"
 	>
 		<bitmap size="1024">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -1376,7 +1376,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_kaidan2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_kaidan2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_kaidan2.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 1110 0111 1111 0111
@@ -1402,7 +1402,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="n_logo_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_logo.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_logo.tga"
 	>
 		<bitmap size="256">
 			aa00 aaaa aaaa 9aaa 9999 9999 9999 0099
@@ -1444,7 +1444,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_pole_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_pole.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_pole.tga"
 	>
 		<bitmap size="128">
 			2220 2202 2222 2222 2222 2222 2222 2222
@@ -1469,7 +1469,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="n_pudd_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_pudd.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_pudd.tga"
 	>
 		<bitmap size="512">
 			0707 0707 0707 0707 0707 0707 0707 0707
@@ -1542,7 +1542,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="n_shad1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_shad1.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_shad1.tga"
 	>
 		<bitmap size="512">
 			0800 3018 6050 7068 7070 7070 7070 7070
@@ -1616,7 +1616,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="stair"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_stair.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_stair.tga"
 	>
 		<bitmap size="128">
 			1111 1111 1111 1111 1111 1111 1111 0111
@@ -1642,7 +1642,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_back.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_back.1.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_back.1.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1716,7 +1716,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_back.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_back.2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_back.2.tga"
 	>
 		<bitmap size="512">
 			ee33 eeee eeee eeee eeee eeee eeee eeee
@@ -1790,7 +1790,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_col.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_col.1.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_col.1.tga"
 	>
 		<bitmap size="256">
 			2222 3333 4443 4444 4444 4444 4444 0044
@@ -1832,7 +1832,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_col.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_col.2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_col.2.tga"
 	>
 		<bitmap size="256">
 			2222 3333 3333 3333 3333 3333 3333 0033
@@ -1874,7 +1874,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_grid.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_grid.1.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_grid.1.tga"
 	>
 		<bitmap size="256">
 			ffff ffff ffff ffff ffff ffff ffff ffff
@@ -1916,7 +1916,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_grid.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_grid.2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_grid.2.tga"
 	>
 		<bitmap size="256">
 			ffff ffff ffff ffff ffff ffff ffff ffff
@@ -1958,7 +1958,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_roof.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_roof.1.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_roof.1.tga"
 	>
 		<bitmap size="256">
 			0600 0000 0000 0000 0000 0000 0000 0060
@@ -2000,7 +2000,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_roof.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_roof.2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_roof.2.tga"
 	>
 		<bitmap size="256">
 			1611 1111 1111 1111 1111 1111 1111 1161
@@ -2042,7 +2042,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_stone.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_stone.1.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_stone.1.tga"
 	>
 		<bitmap size="256">
 			3100 4333 4444 1344 5531 4445 4444 0034
@@ -2084,7 +2084,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_stone.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_stone.2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_stone.2.tga"
 	>
 		<bitmap size="256">
 			3110 4333 4444 1344 5531 4445 4444 0034
@@ -2126,7 +2126,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_stone.3_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_stone.3.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_stone.3.tga"
 	>
 		<bitmap size="256">
 			3000 5333 5555 0355 6630 5556 5555 0035
@@ -2168,7 +2168,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_tp_wall.1_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_wall.1.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_wall.1.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee dddd dddd dddd dddd
@@ -2210,7 +2210,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="n_tp_wall.2_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_tp_wall.2.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_tp_wall.2.tga"
 	>
 		<bitmap size="512">
 			0e0e 0e0e 0e0e 0e0e 0e0e 0e0e 0e0e 0e0e
@@ -2283,7 +2283,7 @@
 		width="64" height="64" original_width="64" original_height="64"
 		format="a3i5"
 		palette_name="n_water_a_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_water_a.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_water_a.tga"
 	>
 		<bitmap size="2048">
 			292c 2c2c 2c29 2c2c 2c2c 292c 2c2c 292c
@@ -2549,7 +2549,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="n_yuka5_pl"
-		path="C:/pokemon_projects/WB/demo/n_legend_come_b/tex/n/n_yuka5.tga"
+		path="C:/home/wb_data3d/demo/n_room/tex/n_yuka5.tga"
 	>
 		<bitmap size="256">
 			0222 0000 0000 0000 0000 0000 0000 2220
@@ -5219,9 +5219,9 @@
 					<pos_xz xz="0.279297 2.095215"/>
 					<tex st="63.812500 -305.500000"/>
 					<pos_xz xz="0.279297 -0.325928"/>
-					<tex st="32.000000 -305.500000"/>
+					<tex st="33.375000 -305.437500"/>
 					<pos_xy xy="0.093018 0.465576"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.062500"/>
 					<pos_xz xz="0.093018 2.095215"/>
 					<pos_xz xz="0.093018 -0.325928"/>
 					<tex st="63.812500 0.000000"/>
@@ -5229,9 +5229,9 @@
 					<tex st="63.812500 -45.875000"/>
 					<clr rgb="31 31 31"/>
 					<pos_yz yz="0.654297 -0.512207"/>
-					<tex st="32.000000 -45.875000"/>
+					<tex st="33.375000 -45.812500"/>
 					<pos_xy xy="0.093018 0.654297"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.062500"/>
 					<clr rgb="21 21 21"/>
 					<pos_xz xz="0.093018 -1.250244"/>
 					<tex st="63.812500 0.000000"/>
@@ -5239,7 +5239,7 @@
 					<tex st="63.812500 -58.625000"/>
 					<clr rgb="31 31 31"/>
 					<pos_yz yz="0.838135 -1.443359"/>
-					<tex st="32.000000 -58.625000"/>
+					<tex st="33.375000 -58.562500"/>
 					<pos_xy xy="0.093018 0.838135"/>
 					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="0.093018 -2.281494"/>
@@ -5261,9 +5261,9 @@
 					<pos_xz xz="0.465576 -1.629639"/>
 					<tex st="63.812500 -64.000000"/>
 					<pos_xz xz="0.465576 -2.095215"/>
-					<tex st="32.000000 -64.000000"/>
+					<tex st="33.375000 -64.000000"/>
 					<pos_xy xy="0.279297 0.838135"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.000000"/>
 					<pos_xz xz="0.279297 -1.629639"/>
 					<tex st="0.000000 64.000000"/>
 					<pos_xy xy="0.465576 0.838135"/>
@@ -5279,7 +5279,7 @@
 					<pos_xz xz="0.093018 -1.443359"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="0.279297 0.838135"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.062500"/>
 					<pos_xz xz="0.279297 -1.629639"/>
 					<tex st="32.000000 64.000000"/>
 					<pos_xz xz="0.279297 -2.467773"/>
@@ -5289,9 +5289,9 @@
 					<pos_xz xz="0.093018 -2.281494"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="0.279297 0.838135"/>
-					<tex st="32.000000 6.937500"/>
+					<tex st="33.375000 7.000000"/>
 					<pos_xyz xyz="-0.093018 0.654297 -0.512207"/>
-					<tex st="32.000000 -90.562500"/>
+					<tex st="33.375000 -90.500000"/>
 					<clr rgb="21 21 21"/>
 					<pos_xz xz="-0.093018 -1.250244"/>
 					<tex st="63.812500 -90.562500"/>
@@ -5321,15 +5321,15 @@
 					<pos_xy xy="-0.093018 0.465576"/>
 					<tex st="63.812500 0.000000"/>
 					<pos_xy xy="-0.279297 0.465576"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.062500"/>
 					<pos_xy xy="-0.093018 0.465576"/>
-					<tex st="32.000000 -305.500000"/>
+					<tex st="33.375000 -305.437500"/>
 					<pos_xz xz="-0.093018 -0.325928"/>
 					<tex st="63.812500 -305.500000"/>
 					<pos_xy xy="-0.279297 0.465576"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.062500"/>
 					<pos_xy xy="-0.093018 0.465576"/>
-					<tex st="32.000000 -45.875000"/>
+					<tex st="33.375000 -45.812500"/>
 					<clr rgb="31 31 31"/>
 					<pos_yz yz="0.654297 -0.512207"/>
 					<tex st="63.812500 -45.875000"/>
@@ -5337,7 +5337,7 @@
 					<tex st="63.812500 0.000000"/>
 					<clr rgb="21 24 25"/>
 					<pos_yz yz="0.465576 -0.325928"/>
-					<tex st="32.000000 6.937500"/>
+					<tex st="33.375000 7.000000"/>
 					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="0.093018 0.654297 -0.512207"/>
 					<tex st="63.812500 -17.562500"/>
@@ -5346,11 +5346,11 @@
 					<tex st="63.812500 -90.562500"/>
 					<clr rgb="21 21 21"/>
 					<pos_xz xz="0.279297 -1.250244"/>
-					<tex st="32.000000 -90.562500"/>
+					<tex st="33.375000 -90.500000"/>
 					<pos_xy xy="0.093018 0.654297"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.062500"/>
 					<pos_xy xy="-0.093018 0.654297"/>
-					<tex st="32.000000 -58.625000"/>
+					<tex st="33.375000 -58.562500"/>
 					<clr rgb="31 31 31"/>
 					<pos_yz yz="0.838135 -1.443359"/>
 					<tex st="63.812500 -58.625000"/>
@@ -5382,9 +5382,9 @@
 					<pos_xz xz="-0.279297 -2.281494"/>
 					<tex st="63.812500 0.000000"/>
 					<pos_xz xz="-0.465576 -1.629639"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.000000"/>
 					<pos_xy xy="-0.279297 0.838135"/>
-					<tex st="32.000000 -64.000000"/>
+					<tex st="33.375000 -64.000000"/>
 					<pos_xz xz="-0.279297 -2.095215"/>
 					<tex st="63.812500 -64.000000"/>
 					<pos_xy xy="-0.465576 0.838135"/>
@@ -5398,7 +5398,7 @@
 					<pos_xz xz="-0.279297 -1.629639"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-0.093018 0.838135"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="33.375000 0.062500"/>
 					<pos_xy xy="-0.279297 0.838135"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xz xz="-0.279297 -1.443359"/>
@@ -5422,14 +5422,14 @@
 					<pos_xy xy="0.093018 0.838135"/>
 				</primitive>
 				<primitive index="3" type="triangles" vertex_size="6">
-					<tex st="32.000000 6.937500"/>
+					<tex st="33.375000 7.000000"/>
 					<pos_yz yz="0.654297 -0.512207"/>
 					<tex st="63.812500 6.937500"/>
 					<pos_xy xy="0.279297 0.654297"/>
 					<tex st="63.812500 -17.562500"/>
 					<clr rgb="31 31 30"/>
 					<pos_xz xz="0.279297 -0.698486"/>
-					<tex st="32.000000 6.937500"/>
+					<tex st="33.375000 7.000000"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="-0.093018 -0.512207"/>
 					<tex st="63.812500 -17.562500"/>

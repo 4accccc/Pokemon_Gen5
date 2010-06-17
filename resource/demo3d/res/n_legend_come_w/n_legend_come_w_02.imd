@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-05-18T20:02:53" source="n_legend_come_w_06.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-17T11:56:37" source="n_legend_come_w_reduced.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-05-18T20:02:53" source="n_legend_come_w_06.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-17T11:56:37" source="n_legend_come_w_reduced.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="glow_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/glow.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/glow.tga"
 	>
 		<bitmap size="512">
 			f0f0 f0f0 f0f0 f0f0 f0f0 f0f0 f0f0 f0f0
@@ -108,7 +108,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="shin_bod_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/shin_bod.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/shin_bod.tga"
 	>
 		<bitmap size="32768">
 			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
@@ -4214,7 +4214,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="shin_eye.4_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/shin_eye.4.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/shin_eye.4.tga"
 	>
 		<bitmap size="2048">
 			eeee eeee eeee eeee eeee eefe feef efee
@@ -4480,7 +4480,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="shin_head_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/shin_head.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/shin_head.tga"
 	>
 		<bitmap size="8192">
 			0202 0b02 010b 0c0c 0c0c 0f0c 0000 0000
@@ -5514,7 +5514,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="shin_mouth_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/shin_mouth.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/shin_mouth.tga"
 	>
 		<bitmap size="64">
 			2222 2222 a875 8aff 2222 2222 a865 8aff
@@ -5532,7 +5532,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="shin_tail_r_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/shin_tail_r.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/shin_tail_r.tga"
 	>
 		<bitmap size="4096">
 			0b0c 090a 0909 0909 0909 0909 0909 0909
@@ -6054,7 +6054,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="shin_tail_w_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/shin_tail_w.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/shin_tail_w.tga"
 	>
 		<bitmap size="4096">
 			0905 0200 0202 0202 0202 0202 0202 0202
@@ -6576,7 +6576,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="shin_teeth_pl"
-		path="C:/pokemon_projects/WB/demo/Shin/tex/shin_teeth.tga"
+		path="C:/home/wb_data3d/demo/shin/tex/shin_teeth.tga"
 	>
 		<bitmap size="16">
 			1111 1111 2222 2222 3333 3333 0000 0000
