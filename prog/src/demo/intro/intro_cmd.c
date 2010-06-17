@@ -946,13 +946,14 @@ static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, in
  *
  *  @param  param[0]  MCSS_ID
  *  @param  param[1]  アニメーションID
+ *	@param	param[2]	アニメリセットフラグ
  *
  *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  INTRO_MCSS_SetAnimeIndex( wk->mcss, param[0], param[1] );
+  INTRO_MCSS_SetAnimeIndex( wk->mcss, param[0], param[1], param[2] );
   return TRUE;
 }
 
@@ -1286,7 +1287,7 @@ static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 
 	case 2:
 		if( PMSND_CheckPlaySE() == FALSE ){
-			INTRO_MCSS_SetAnimeIndex( wk->mcss, 1, 0 );
+			INTRO_MCSS_SetAnimeIndex( wk->mcss, 1, 0, TRUE );
 		  // ロードしておいた鳴き声を再生
 		  PMVOICE_PlayOnly( wk->init_param->voice_load_id );
 			sdat->seq++;

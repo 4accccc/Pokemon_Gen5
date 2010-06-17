@@ -48,7 +48,7 @@ extern void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, 
 
 extern void INTRO_MCSS_SetVisible( INTRO_MCSS_WORK* wk, BOOL is_visible, u8 id );
 
-extern void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx );
+extern void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx, BOOL anm_reset );
 
 extern BOOL INTRO_MCSS_CheckAnime( INTRO_MCSS_WORK * wk, u8 id );
 

@@ -43,12 +43,19 @@ enum
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
+typedef struct {
+  MCSS_WORK * mcss_work;
+	BOOL	animeFlag;
+	BOOL	resetFlag;
+}MCSS_OBJ;
+
 struct _INTRO_MCSS_WORK
 {
   HEAPID          heap_id;
   MCSS_SYS_WORK*  mcss;
-  MCSS_WORK*      mcss_work[ MCSS_ID_MAX ];
-	BOOL	animeFlag[ MCSS_ID_MAX ];
+//  MCSS_WORK*      mcss_work[ MCSS_ID_MAX ];
+//	BOOL	animeFlag[ MCSS_ID_MAX ];
+	MCSS_OBJ	obj[MCSS_ID_MAX];
 	u32	pokeAnimeWait;
 };
 
@@ -118,9 +125,9 @@ void INTRO_MCSS_Exit( INTRO_MCSS_WORK* wk )
 
   for( i=0; i<MCSS_ID_MAX; i++ )
   {
-    if( wk->mcss_work[i] )
+    if( wk->obj[i].mcss_work )
     {
-      MCSS_Del( wk->mcss, wk->mcss_work[i] );
+      MCSS_Del( wk->mcss, wk->obj[i].mcss_work );
     }
   }
 
@@ -164,14 +171,15 @@ void INTRO_MCSS_Add( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, const MCSS_
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] == NULL );
+  GF_ASSERT( wk->obj[id].mcss_work == NULL );
 
-  wk->mcss_work[id] = MCSS_Add( wk->mcss, px, py, pz, add );
+  wk->obj[id].mcss_work = MCSS_Add( wk->mcss, px, py, pz, add );
 
-  MCSS_SetScale( wk->mcss_work[id], &scale );
+  MCSS_SetScale( wk->obj[id].mcss_work, &scale );
 
-	wk->animeFlag[id] = FALSE;
-	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
+	wk->obj[id].animeFlag = FALSE;
+	wk->obj[id].resetFlag = TRUE;
+	MCSS_SetAnimCtrlCallBack( wk->obj[id].mcss_work, (u32)&wk->obj[id], McssCallBackFrame, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -197,7 +205,7 @@ void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int mon
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] == NULL );
+  GF_ASSERT( wk->obj[id].mcss_work == NULL );
 
   pp = PP_Create( monsno, 0, 0, wk->heap_id );
       
@@ -205,13 +213,14 @@ void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int mon
 
   GFL_HEAP_FreeMemory( pp );
 
-  wk->mcss_work[id] = MCSS_Add( wk->mcss, px, py, pz, &add );
-  MCSS_SetScale( wk->mcss_work[id], &scale );
-	MCSS_SetAnmStopFlag( wk->mcss_work[id] );
+  wk->obj[id].mcss_work = MCSS_Add( wk->mcss, px, py, pz, &add );
+  MCSS_SetScale( wk->obj[id].mcss_work, &scale );
+	MCSS_SetAnmStopFlag( wk->obj[id].mcss_work );
 
-	wk->animeFlag[id] = FALSE;
+	wk->obj[id].animeFlag = FALSE;
+	wk->obj[id].resetFlag = TRUE;
 	wk->pokeAnimeWait = POKE_ANIME_WAIT_MIN + POKE_ANIME_WAIT_VAL * GFL_STD_MtRand( 5 );
-	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
+	MCSS_SetAnimCtrlCallBack( wk->obj[id].mcss_work, (u32)&wk->obj[id], McssCallBackFrame, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -230,15 +239,15 @@ void INTRO_MCSS_SetVisible( INTRO_MCSS_WORK* wk, BOOL is_visible, u8 id )
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] );
+  GF_ASSERT( wk->obj[id].mcss_work );
 
   if( is_visible == TRUE )
   {
-    MCSS_ResetVanishFlag( wk->mcss_work[id] );
+    MCSS_ResetVanishFlag( wk->obj[id].mcss_work );
   }
   else
   {
-    MCSS_SetVanishFlag( wk->mcss_work[id] );
+    MCSS_SetVanishFlag( wk->obj[id].mcss_work );
   }
 }
 
@@ -253,18 +262,19 @@ void INTRO_MCSS_SetVisible( INTRO_MCSS_WORK* wk, BOOL is_visible, u8 id )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx )
+void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx, BOOL anm_reset )
 {
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] );
+  GF_ASSERT( wk->obj[id].mcss_work );
 
-  MCSS_SetAnimeIndex( wk->mcss_work[id], anm_idx );
-	MCSS_ResetAnmStopFlag( wk->mcss_work[id] );
+  MCSS_SetAnimeIndex( wk->obj[id].mcss_work, anm_idx );
+	MCSS_ResetAnmStopFlag( wk->obj[id].mcss_work );
 
-	wk->animeFlag[id] = FALSE;
-	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
+	wk->obj[id].animeFlag = FALSE;
+	wk->obj[id].resetFlag = anm_reset;
+	MCSS_SetAnimCtrlCallBack( wk->obj[id].mcss_work, (u32)&wk->obj[id], McssCallBackFrame, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -279,7 +289,7 @@ void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx )
 //-----------------------------------------------------------------------------
 BOOL INTRO_MCSS_CheckAnime( INTRO_MCSS_WORK * wk, u8 id )
 {
-	return wk->animeFlag[id];
+	return wk->obj[id].animeFlag;
 }
 
 //-----------------------------------------------------------------------------
@@ -294,7 +304,7 @@ BOOL INTRO_MCSS_CheckAnime( INTRO_MCSS_WORK * wk, u8 id )
 //-----------------------------------------------------------------------------
 void INTRO_MCSS_ResetAnimeFlag( INTRO_MCSS_WORK * wk, u8 id )
 {
-	wk->animeFlag[id] = FALSE;
+	wk->obj[id].animeFlag = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -313,9 +323,9 @@ void INTRO_MCSS_SetScale( INTRO_MCSS_WORK* wk, u8 id, VecFx32* scale )
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] );
+  GF_ASSERT( wk->obj[id].mcss_work );
 
-  MCSS_SetScale( wk->mcss_work[id], scale );
+  MCSS_SetScale( wk->obj[id].mcss_work, scale );
 }
 
 //-----------------------------------------------------------------------------
@@ -334,7 +344,7 @@ void INTRO_MCSS_SetAlpha( INTRO_MCSS_WORK* wk, u8 id, u8 alpha )
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] );
+  GF_ASSERT( wk->obj[id].mcss_work );
     
   // ブレンドモード、対象面指定
   G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
@@ -344,7 +354,7 @@ void INTRO_MCSS_SetAlpha( INTRO_MCSS_WORK* wk, u8 id, u8 alpha )
 
   HOSAKA_Printf("alpha=%d \n", alpha );
 
-  MCSS_SetAlpha( wk->mcss_work[id], alpha );
+  MCSS_SetAlpha( wk->obj[id].mcss_work, alpha );
 }
 
 //-----------------------------------------------------------------------------
@@ -362,15 +372,15 @@ void INTRO_MCSS_SetMepachi( INTRO_MCSS_WORK* wk, u8 id, BOOL is_mepachi_flag )
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] );
+  GF_ASSERT( wk->obj[id].mcss_work );
 
   if( is_mepachi_flag )
   {
-    MCSS_SetMepachiFlag( wk->mcss_work[id] );
+    MCSS_SetMepachiFlag( wk->obj[id].mcss_work );
   }
   else
   {
-    MCSS_ResetMepachiFlag( wk->mcss_work[id] );
+    MCSS_ResetMepachiFlag( wk->obj[id].mcss_work );
   }
 }
 
@@ -392,9 +402,9 @@ void INTRO_MCSS_SetPaletteFade( INTRO_MCSS_WORK* wk, u8 id, u8 start_evy, u8 end
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );
   GF_ASSERT( id < MCSS_ID_MAX );
-  GF_ASSERT( wk->mcss_work[id] );
+  GF_ASSERT( wk->obj[id].mcss_work );
 
-  MCSS_SetPaletteFade( wk->mcss_work[id], start_evy, end_evy, wait, rgb );
+  MCSS_SetPaletteFade( wk->obj[id].mcss_work, start_evy, end_evy, wait, rgb );
 }
 
 
@@ -406,8 +416,13 @@ void INTRO_MCSS_SetPaletteFade( INTRO_MCSS_WORK* wk, u8 id, u8 start_evy, u8 end
 //-----------------------------------------------------------------------------
 static void McssCallBackFrame( u32 data, fx32 currentFrame )
 {
-	BOOL * animeFlag = (BOOL *)data;
-	*animeFlag = TRUE;
+	MCSS_OBJ * obj = (MCSS_OBJ *)data;
+
+	obj->animeFlag = TRUE;
+
+	if( obj->resetFlag == TRUE ){
+		MCSS_RestartAnime( obj->mcss_work );
+	}
 }
 
 // 博士専用...
@@ -416,7 +431,7 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 	BOOL	flg;
 	VecFx32	pos;
 
-	MCSS_GetPosition( wk->mcss_work[id], &pos );
+	MCSS_GetPosition( wk->obj[id].mcss_work, &pos );
 
 	flg = TRUE;
 	pos.x += mx;
@@ -429,14 +444,14 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 		}
 	}
 
-	MCSS_SetPosition( wk->mcss_work[id], &pos );
+	MCSS_SetPosition( wk->obj[id].mcss_work, &pos );
 
-	if( wk->animeFlag[id] == TRUE ){
+	if( wk->obj[id].animeFlag == TRUE ){
 		// 止めちゃうと目パチが動かなくなるので、停止アニメに切り替える
 		// アニメは強制的に停止状態にしておく
-//		INTRO_MCSS_SetAnimeIndex( wk, id, 1 );
-//		wk->animeFlag[id] = TRUE;
-		MCSS_SetAnmStopFlag( wk->mcss_work[id] );
+//		INTRO_MCSS_SetAnimeIndex( wk, id, 1, FALSE );
+//		wk->obj[id].animeFlag = TRUE;
+		MCSS_SetAnmStopFlag( wk->obj[id].mcss_work );
 	}
 
 	return flg;
@@ -447,7 +462,7 @@ BOOL INTRO_MCSS_PokeFall( INTRO_MCSS_WORK * wk, fx32 my, fx32 end )
 	BOOL	flg;
 	VecFx32	pos;
 
-	MCSS_GetPosition( wk->mcss_work[1], &pos );
+	MCSS_GetPosition( wk->obj[1].mcss_work, &pos );
 	pos.y -= my;
 	if( pos.y <= end ){
 		pos.y = end;
@@ -455,7 +470,7 @@ BOOL INTRO_MCSS_PokeFall( INTRO_MCSS_WORK * wk, fx32 my, fx32 end )
 	}else{
 		flg = FALSE;
 	}
-	MCSS_SetPosition( wk->mcss_work[1], &pos );
+	MCSS_SetPosition( wk->obj[1].mcss_work, &pos );
 
 	return flg;
 }
@@ -463,16 +478,16 @@ BOOL INTRO_MCSS_PokeFall( INTRO_MCSS_WORK * wk, fx32 my, fx32 end )
 // ポケモンアニメ監視
 void INTRO_MCSS_PokeAnime( INTRO_MCSS_WORK * wk )
 {
-	if( wk->animeFlag[1] == FALSE ){
+	if( wk->obj[1].animeFlag == FALSE ){
 		return;
 	}
 
 	if( wk->pokeAnimeWait == 0 ){
 		wk->pokeAnimeWait = POKE_ANIME_WAIT_MIN + POKE_ANIME_WAIT_VAL * GFL_STD_MtRand( 5 );
-		INTRO_MCSS_SetAnimeIndex( wk, 1, 0 );
+		INTRO_MCSS_SetAnimeIndex( wk, 1, 0, TRUE );
 		return;
 	}
 
-	MCSS_SetAnmStopFlag( wk->mcss_work[1] );
+	MCSS_SetAnmStopFlag( wk->obj[1].mcss_work );
 	wk->pokeAnimeWait--;
 }
