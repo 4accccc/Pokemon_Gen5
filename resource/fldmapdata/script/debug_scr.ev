@@ -9,7 +9,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "msg_debug_scr.h"
+  .include  "../../message/dst/debug/msg_debug_scr.h"
   //.include  "debug_scr.h"
 
   .include  "pokecen_scr_def.h"
@@ -85,36 +85,14 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_debug_tamada
 {
-  _START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
-  _TIME_WAIT( 60 )
-  _LAST_KEYWAIT()
-  _END_EVENT_BGM()
-  //_SET_TEMOTI_WAZA( 0, 0, WAZANO_DAIBINGU )
-  //_CHG_COMMON_SCR SCRID_HIDEN_DIVING
-  //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
-  //_TRAINER_BTL_SET( TRID_VETERANW_03, 0 )
-  //_TRAINER_MULTI_BTL_SET( TRID_SUPPORT_01, TRID_RIVAL_01, TRID_MINI_01 )
-  //_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  //IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-    //_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-  //ELSE
-    //_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-  //ENDIF
-  //_SET_GYM_VICTORY_INFO( BADGE_ID_01 )
-  //_SET_FAVORITE_POKEMON( 0 )
-  //DEFINE_LOCAL  LWK_X
-  //DEFINE_LOCAL  LWK_Z
-
-  //_PLAYER_POS_GET( LWK_X, LWK_Z )
-  //$LWK_X -= 5
-  //_DEBUG_PRINT_WK( LWK_X )
-  //_DEBUG_PRINT_WK( LWK_Z )
-  //_BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, LWK_X, LWK_Z, FALSE )
+  _SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
+  //_GET_CGEAR_STATUS( SCWK_ANSWER )
+  //_DEBUG_PRINT_WK( SCWK_ANSWER )
+  //_AB_KEYWAIT()
+  //_SET_CGEAR_OFF()
+  _MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
+  //_AB_KEYWAIT()
 }
-  //_GET_ROM_VERSION( SCWK_ANSWER )
-  //_DEBUG_PRINT_WK ( SCWK_ANSWER )
-  //_GOTO_GAMECLEAR_DEMO( 0 )
-
   //_BGM_FADEOUT( 0, 30 )
   //_BGM_STOP()
   //_BGM_NOW_MAP_RECOVER()
