@@ -5535,10 +5535,15 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
                     wk->hitCheckParam, BTL_CALC_DMG_TARGET_RATIO_NONE, flagSet );
     ++hitCount;
 
+//    scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlItemReaction reactionType )
+
     if( BPP_IsDead(bpp) ){ break; }
     if( BPP_IsDead(attacker) ){ break; }
 
-    // 攻撃したことにより眠ってしまったらブレイク
+    //
+    scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
+
+    // 攻撃したことにより攻撃側が眠ってしまったらブレイク
     if( (BPP_GetPokeSick(attacker) == POKESICK_NEMURI)
     &&  (pokeSick != POKESICK_NEMURI)
     ){
@@ -9164,18 +9169,6 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       scproc_ClearPokeDependEffect( wk, poke );
       BPP_Clear_ForDead( poke );
 
-      // 野生戦でプレイヤー勝利ならこの時点でBGM再生コマンド
-      if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
-      &&  (wk->fWinBGMPlayWild == FALSE)
-      &&  scproc_CheckShowdown(wk)
-      &&  checkPokeDeadFlagAllOn(wk, pokeID)
-      &&  CheckPlayerSideAlive(wk)
-      ){
-        u16 WinBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
-        SCQUE_PUT_ACT_PlayWinBGM( wk->que, WinBGM );
-        wk->fWinBGMPlayWild = TRUE;
-      }
-
       // プレイヤーのポケモンが死んだ時になつき度計算
       if( BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
       {
@@ -9326,6 +9319,18 @@ static BOOL scproc_CheckExpGet( BTL_SVFLOW_WORK* wk )
       {
         u8 pokeID = BTL_DEADREC_GetPokeID( &wk->deadRec, 0, i );
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+
+        // 野生戦でプレイヤー勝利ならこの時点でBGM再生コマンド
+        if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
+        &&  (wk->fWinBGMPlayWild == FALSE)
+        &&  scproc_CheckShowdown(wk)
+//        &&  checkPokeDeadFlagAllOn(wk, pokeID)
+        &&  CheckPlayerSideAlive(wk)
+        ){
+          u16 WinBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
+          SCQUE_PUT_ACT_PlayWinBGM( wk->que, WinBGM );
+          wk->fWinBGMPlayWild = TRUE;
+        }
 
         if( scproc_GetExp(wk, bpp) ){
           result = TRUE;
@@ -15081,8 +15086,9 @@ static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   const BTL_HANDEX_PARAM_CHANGE_FORM* param = (const BTL_HANDEX_PARAM_CHANGE_FORM*)param_header;
 
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  if( !BPP_IsDead(bpp) )
-  {
+  if( (!BPP_IsDead(bpp))
+  &&  (!BPP_HENSIN_Check(bpp))
+  ){
     u8 currentForm = BPP_GetValue( bpp, BPP_FORM );
     if( currentForm != param->formNo )
     {
