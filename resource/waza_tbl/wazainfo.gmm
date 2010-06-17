@@ -610,7 +610,7 @@
 こうげきする。２かい　れんぞくで
 ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">２本の　足で　相手を　けとばして
-攻撃する。２回　連続で
+攻撃する。２回連続で
 ダメージを　与える。</language>
 	</row>
 
@@ -763,7 +763,7 @@
 こうげきする。２かい　れんぞくで
 ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">２本の　ハリを　相手に　突き刺して
-攻撃する。２回　連続で
+攻撃する。２回連続で
 ダメージを　与える。</language>
 	</row>
 
@@ -1789,7 +1789,7 @@
 いきと　かえりで　２かい　れんぞくで
 ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">手に　持った　ホネを　相手に　投げつけ
-行きと　帰りの　２回　連続で
+行きと　帰りの　２回連続で
 ダメージを　与える。</language>
 	</row>
 
@@ -1896,7 +1896,7 @@
 		<language name="JPN" width="216">３かい　れんぞくで　キックを　くりだして
 こうげきする。わざが　あたる　たびに
 いりょくは　あがる。</language>
-		<language name="JPN_KANJI" width="216">３回　連続で　キックを　くりだして
+		<language name="JPN_KANJI" width="216">３回連続で　キックを　くりだして
 攻撃する。技が　当たるたびに
 威力は　あがる。</language>
 	</row>
@@ -2112,8 +2112,8 @@
 		<language name="JPN" width="216">あいての　あしもとに　まきびしを
 しかける。こうたいで　でてきた　あいての
 ポケモンに　ダメージを　あたえる。</language>
-		<language name="JPN_KANJI" width="216">相手の　足下に　まきびしを　しかける。
-交代で　でてきた　相手の
+		<language name="JPN_KANJI" width="216">相手の　足下に　まきびしを
+しかける。交代で　出てきた　相手の
 ポケモンに　ダメージを　与える。</language>
 	</row>
 
@@ -2725,7 +2725,7 @@
 おなじ　わざを　２かい　れんぞくで
 だせなくする。</language>
 		<language name="JPN_KANJI" width="216">相手に　いちゃもんを　つけて　
-同じ　技を　２回　連続で
+同じ　技を　２回連続で
 だせなくする。</language>
 	</row>
 
@@ -2921,10 +2921,10 @@
 	<row id="WAZAINFO_281">
 		<language name="JPN" width="216">おおきな　あくびで　ねむけを　さそう。
 つぎの　ターンに
-あいてを　ねむりの　じょうたいに　する。</language>
+あいてを　ねむり　じょうたいに　する。</language>
 		<language name="JPN_KANJI" width="216">大きな　あくびで　眠気を　誘う。
 次の　ターンに
-相手を　眠りの　状態に　する。</language>
+相手を　眠り状態に　する。</language>
 	</row>
 
 	<row id="WAZAINFO_282">
@@ -3900,12 +3900,12 @@
 	</row>
 
 	<row id="WAZAINFO_390">
-		<language name="JPN" width="216">あいての　あしもとに
-どくびしを　しかける。こうたいで
-でてきた　ポケモンに　どくを　おわせる。</language>
-		<language name="JPN_KANJI" width="216">相手の　足下に
-どくびしを　しかける。交代で
-でてきた　ポケモンに　毒を　おわせる。</language>
+		<language name="JPN" width="216">あいての　あしもとに　どくびしを
+しかける。こうたいで　でてきた　あいての
+ポケモンに　どくを　おわせる。</language>
+		<language name="JPN_KANJI" width="216">相手の　足下に　どくびしを
+しかける。交代で　出てきた　相手の
+ポケモンに　毒を　おわせる。</language>
 	</row>
 
 	<row id="WAZAINFO_391">
@@ -4405,10 +4405,10 @@
 
 	<row id="WAZAINFO_446">
 		<language name="JPN" width="216">あいての　まわりに　むすうの　いわを
-うかべて　こうたいで　でてきた
+うかべて　こうたいで　でてきた　あいての
 ポケモンに　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">相手の　周りに　無数の　岩を
-浮かべて　交代で　でてきた
+浮かべて　交代で　でてきた　相手の
 ポケモンに　ダメージを　与える。</language>
 	</row>
 
@@ -4567,10 +4567,10 @@
 
 	<row id="WAZAINFO_464">
 		<language name="JPN" width="216">あんこくの　せかいに　ひきずり　おとして
-あいてを　ねむりの　じょうたいに　する。
+あいてを　ねむり　じょうたいに　する。
 </language>
 		<language name="JPN_KANJI" width="216">暗黒の　世界に　ひきずり　落として
-相手を　眠りの　状態に　する。
+相手を　眠り状態に　する。
 </language>
 	</row>
 
@@ -4611,12 +4611,12 @@
 	</row>
 
 	<row id="WAZAINFO_469">
-		<language name="JPN" width="216">すばやい　うごきで　こうげきを　はじいて
-みかた　ぜんいんに　あたる　こうげきを
-１ターンの　あいだ　ふせぐ。</language>
-		<language name="JPN_KANJI" width="216">素早い　動きで　攻撃を　はじいて
-味方全員に　当たる　攻撃を
-１ターンの　あいだ　防ぐ。</language>
+		<language name="JPN" width="216">みかた　ぜんいんに　あたる　こうげきを
+１ターンの　あいだ　ふせぐ。
+れんぞくで　だすと　しっぱい　しやすい。</language>
+		<language name="JPN_KANJI" width="216">味方全員に　当たる　攻撃を
+１ターンの　あいだ　防ぐ。
+連続で　だすと　失敗しやすい。</language>
 	</row>
 
 	<row id="WAZAINFO_470">
@@ -4899,12 +4899,12 @@
 	</row>
 
 	<row id="WAZAINFO_501">
-		<language name="JPN" width="216">あいての　でかたを　よそくして　うごく。
-じぶんと　みかたを　あいての
-せんせい　こうげきから　まもる。</language>
-		<language name="JPN_KANJI" width="216">相手の　でかたを　予測して　動く。
-自分と　味方を　相手の
-先制攻撃から　守る。</language>
+		<language name="JPN" width="216">じぶんと　みかたを　あいての
+せんせい　こうげきから　まもる。
+れんぞくで　だすと　しっぱい　しやすい。</language>
+		<language name="JPN_KANJI" width="216">自分と　味方を　相手の
+先制攻撃から　守る。
+連続で　だすと　失敗しやすい。</language>
 	</row>
 
 	<row id="WAZAINFO_502">
@@ -5165,7 +5165,7 @@
 れんぞくで　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">体の　硬い部分で　相手を
 たたいて　攻撃する。
-２回　連続で　ダメージを　与える。</language>
+２回連続で　ダメージを　与える。</language>
 	</row>
 
 	<row id="WAZAINFO_531">
@@ -5291,7 +5291,7 @@
 れんぞくで　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">鋼鉄の　ギアを　相手に
 投げつけて　攻撃する。
-２回　連続で　ダメージを　与える。</language>
+２回連続で　ダメージを　与える。</language>
 	</row>
 
 	<row id="WAZAINFO_545">

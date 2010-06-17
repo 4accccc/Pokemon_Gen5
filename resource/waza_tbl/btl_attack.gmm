@@ -10909,24 +10909,24 @@
 	</row>
 
 	<row id="ATKMSG_M_501">
-		<language name="JPN" width="216">[1:01:ニックネーム:0]は
-ファストガードした！</language>
-		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]は
-ファストガードした！</language>
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ファストガード！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]の
+ファストガード！</language>
 	</row>
 
 	<row id="ATKMSG_Y_501">
-		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]は
-ファストガードした！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]は
-ファストガードした！</language>
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ファストガード！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]の
+ファストガード！</language>
 	</row>
 
 	<row id="ATKMSG_E_501">
-		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]は
-ファストガードした！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]は
-ファストガードした！</language>
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ファストガード！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]の
+ファストガード！</language>
 	</row>
 
 	<row id="ATKMSG_M_502">
