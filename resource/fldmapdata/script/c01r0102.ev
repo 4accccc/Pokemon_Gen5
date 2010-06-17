@@ -270,7 +270,7 @@ ev_cgear_get:
 	//ÇbÉMÉAÇéËÇ…ì¸ÇÍÇΩÅI
 	_ME_PLAY( SEQ_ME_KEYITEM )
 	_PLAYER_NAME( 0 )
-	_SYSWIN_MSG( msg_c01r0102_cgear_01, POS_DEFAULT )
+	_SYSWIN_MSG( msg_c01r0102_cgear_01, POS_DOWN )
 	_ME_WAIT()
 	_AB_KEYWAIT_MARK()
 
