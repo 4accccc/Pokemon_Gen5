@@ -34,7 +34,7 @@
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
 
-#defin DEBUG_ERR_THROUGH  //この定義をONにすると、エラーのボタン押しをスルーするー
+#define DEBUG_ERR_THROUGH  //この定義をONにすると、エラーのボタン押しをスルーするー
 
 #endif //DEBUG_ONLY_FOR_
 #endif//PM_DEBUG
