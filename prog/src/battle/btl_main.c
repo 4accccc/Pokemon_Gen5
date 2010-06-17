@@ -4202,8 +4202,9 @@ static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODUL
   POKEPARTY* srcParty = PokeCon_GetSrcParty( pokecon, clientID );
   BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( pokecon, clientID );
   u32 memberCount = PokeParty_GetPokeCount( srcParty );
-  POKEMON_PARAM* pp;
+  POKEMON_PARAM *pp;
   BTL_POKEPARAM* bpp;
+  u8  illusionTargetIdx[ BTL_PARTY_MEMBER_MAX ];
   u32 i;
 
   PokeParty_InitWork( wk->tmpParty );
@@ -4214,6 +4215,28 @@ static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODUL
     BPP_ReflectToPP( bpp, fDefaultForm );
     pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
     PokeParty_Add( wk->tmpParty, pp );
+
+    // イリュージョン中の場合、自分のイリュージョン対象ポケIndexを記録する
+    if( BPP_IsFakeEnable(bpp) )
+    {
+      const POKEMON_PARAM* ppFake = BPP_GetViewSrcData( bpp );
+      u32 j;
+      for(j=0; j<memberCount; ++j)
+      {
+        BTL_POKEPARAM* bppSeek = BTL_PARTY_GetMemberData( btlParty, j );
+        if( ppFake == BPP_GetSrcData(bppSeek) )
+        {
+//          TAYA_Printf("%d番目のポケモンはイリュージョン。対象は%d番目(monsno=%d)\n",
+//                      i, j, PP_Get(ppFake, ID_PARA_monsno, 0)  );
+          illusionTargetIdx[i] = j;
+          break;
+        }
+      }
+    }
+    else{
+      // イリュージョン中でなければ無効値
+      illusionTargetIdx[i] = BTL_PARTY_MEMBER_MAX;
+    }
   }
 
   PokeParty_Copy( wk->tmpParty, srcParty );
@@ -4224,8 +4247,17 @@ static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODUL
     pp = PokeParty_GetMemberPointer( srcParty, i );
     bpp = BTL_PARTY_GetMemberData( btlParty, i );
     BPP_SetSrcPP( bpp,  pp );
+
+    if( illusionTargetIdx[i] != BTL_PARTY_MEMBER_MAX )
+    {
+      pp = PokeParty_GetMemberPointer( srcParty, illusionTargetIdx[i] );
+      BPP_SetViewSrcData( bpp, pp );
+//      TAYA_Printf("%d番目のポケモンはイリュージョン。対象は%d番目(monsno=%d)\n",
+//                  i, illusionTargetIdx[i], PP_Get(pp, ID_PARA_monsno, 0)  );
+    }
   }
 }
+
 static void PokeCon_RefrectBtlPartyStartOrder( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID )
 {
   POKEPARTY* srcParty = PokeCon_GetSrcParty( pokecon, clientID );
