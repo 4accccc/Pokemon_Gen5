@@ -410,6 +410,7 @@ typedef struct {
 	// 表示ビットマップ面
 	GFL_BMPWIN*	  nameWin[ WCR_MAPDATA_1BLOCKOBJNUM ];
 	GFL_BMPWIN*	  statusWin[ WCR_MAPDATA_1BLOCKOBJNUM ][ WF_VIEW_STATUS_NUM ];
+	GFL_BMPWIN*	  userWinStatus;
 	GFL_BMPWIN*	  userWin;
 
 	// ボタン

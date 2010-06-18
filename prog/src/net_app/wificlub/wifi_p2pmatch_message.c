@@ -1103,6 +1103,41 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
  *  @param  wk  システムワーク
  */
 //-----------------------------------------------------------------------------
+static void MCVSys_UserDispDraw_Renew( WIFIP2PMATCH_WORK *wk, u32 heapID )
+{
+  int sex;
+  int pal;
+
+  sex = WifiList_GetFriendInfo( wk->pList,
+                                wk->view.touch_friendNo - 1, WIFILIST_FRIEND_SEX );
+
+ // GFL_BG_LoadScreenBufferOfs( GFL_BG_FRAME2_S, wk->view.p_userscrn[0]->rawData,
+   //                           wk->view.p_userscrn[0]->szByte,0 );
+
+  // BG３面のスクリーンをクリア
+  //GFL_BG_ClearFrame( GFL_BG_FRAME3_S);
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWinStatus), 0x0 );
+  // 描画
+  MCVSys_UserDispDrawType00( wk, heapID );
+
+  //  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+ // GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
+
+//  GFL_BMPWIN_TransVramCharacter(wk->view.userWinStatus);
+
+  // メッセージ面の表示設定
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ユーザーデータ表示
+ *
+ *  @param  wk  システムワーク
+ */
+//-----------------------------------------------------------------------------
 static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
 {
   int sex;
@@ -1119,6 +1154,7 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
   // その人のことを描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWin), 0x0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWinStatus), 0x0 );
 
   // 描画
   MCVSys_UserDispDrawType00( wk, heapID );
@@ -1127,6 +1163,7 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
 
   GFL_BMPWIN_TransVramCharacter(wk->view.userWin);
+  GFL_BMPWIN_TransVramCharacter(wk->view.userWinStatus);
 
   // メッセージ面の表示設定
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
@@ -1270,16 +1307,16 @@ static void _UnderScreenReload( WIFIP2PMATCH_WORK *wk )
 #define MCV_USERD_GR_X  ( 8-8 )
 #define MCV_USERD_GR_Y  ( 32 )
 #define MCV_USERD_VS_X  ( 88+16 )
-#define MCV_USERD_VS_Y  ( 56-24 )
+#define MCV_USERD_VS_Y  ( 56-24-32 )
 #define MCV_USERD_VS_WIN_X  ( 192-8-8 )
-#define MCV_USERD_VS_WIN_Y  ( 56 )
+#define MCV_USERD_VS_WIN_Y  ( 56-32 )
 #define MCV_USERD_VS_LOS_X  ( 192-8-8 )
-#define MCV_USERD_VS_LOS_Y  ( 56+16 )
+#define MCV_USERD_VS_LOS_Y  ( 56+16-32 )
 #define MCV_USERD_TR_X    ( 88+16 )
-#define MCV_USERD_TR_Y    ( 144-16*3 )
+#define MCV_USERD_TR_Y    ( 144-16*3-32 )
 #define MCV_USERD_TRNUM_X ( 180+8 )
 #define MCV_USERD_DAY_X   ( 8 )
-#define MCV_USERD_DAY_Y   ( 128 )
+#define MCV_USERD_DAY_Y   ( 128-32 )
 #define MCV_USERD_DAYNUM_X  ( 152 )
 #define MCV_USERD_ICON_X  ( 2 )
 #define MCV_USERD_VCTICON_X ( 28 )
@@ -1315,7 +1352,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_033, wk->pExpStrBuf );
   WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_NAME_X, MCV_USERD_NAME_Y,
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWinStatus), MCV_USERD_NAME_X, MCV_USERD_NAME_Y,
                   wk->TitleString, wk->fontHandle);
 
   p_status = WifiFriendMatchStatusGet( friendNo );
@@ -1328,7 +1365,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
     msg_id = msg_id - msg_wifilobby_1034 + msg_wifilobby_0571;
   }
   GFL_MSG_GetString(wk->MsgManager, msg_id, wk->pExpStrBuf);
-  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_ST_X, MCV_USERD_ST_Y,
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWinStatus), MCV_USERD_ST_X, MCV_USERD_ST_Y,
                   wk->pExpStrBuf, wk->fontHandle,MSG_WHITE_COLOR);
 
 
@@ -1389,6 +1426,8 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   }
   GFL_BMPWIN_MakeScreen(wk->view.userWin);
   GFL_BMPWIN_TransVramCharacter(wk->view.userWin);
+  GFL_BMPWIN_MakeScreen(wk->view.userWinStatus);
+  GFL_BMPWIN_TransVramCharacter(wk->view.userWinStatus);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
   // アイコン

@@ -466,9 +466,15 @@ enum{
 
 #define MCV_USERWIN_CGX   ( 1 )
 #define MCV_USERWIN_X   ( 1 )
-#define MCV_USERWIN_Y   ( 1 )
+#define MCV_USERWIN_Y   ( 5 )
 #define MCV_USERWIN_SIZX  ( 30 )
-#define MCV_USERWIN_SIZY  ( 21 )
+#define MCV_USERWIN_SIZY  ( 21-4 )
+
+#define MCV_USERWIN_STA_X   ( 1 )
+#define MCV_USERWIN_STA_Y   ( 1 )
+#define MCV_USERWIN_STA_SIZX  ( 30 )
+#define MCV_USERWIN_STA_SIZY  ( 2 )
+
 
 
 #define MCV_BUTTON_SIZX ( 16 )
@@ -676,6 +682,7 @@ static int WifiP2PMatchFriendListStart( WIFIP2PMATCH_WORK* wk,BOOL bWipe );
 static void WifiP2PMatch_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID );
 static void WifiP2PMatch_UserDispOff( WIFIP2PMATCH_WORK *wk, u32 heapID );
 static void WifiP2PMatch_UserDispOff_Target( WIFIP2PMATCH_WORK *wk, u32 target_friend, u32 heapID );
+static void WifiP2PMatch_UserDispOff_Any( WIFIP2PMATCH_WORK *wk, u32 heapID );
 
 static void WifiP2PMatch_UserDispOn_MyAcces( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID );
 static void WifiP2PMatch_UserDispOff_MyAcces( WIFIP2PMATCH_WORK *wk, u32 heapID );
@@ -704,6 +711,7 @@ static void MCVSys_GraphicDel( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_GraphicScrnCGOfsChange( NNSG2dScreenData* p_scrn, u8 cgofs );
 static void MCVSys_BackDraw( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk );
+static void MCVSys_UserDispDraw_Renew( WIFIP2PMATCH_WORK *wk, u32 heapID );
 static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID );
 static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID );
 static void MCVSys_UserDispFrontiorNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u32 factoryid, u32 friendno, u32 x, u32 y );
@@ -3295,7 +3303,12 @@ static void MCRSYS_ContFriendStatus( WIFIP2PMATCH_WORK* wk, u32 heapID )
 
   // 皆の状態変化を登録する
   if( change_num > 0 ){
-    MCVSys_ReWrite( wk, heapID );
+    if( wk->view.user_disp != MCV_USERDISP_OFF ){
+      MCVSys_UserDispDraw_Renew( wk, heapID );
+    }else{
+      wk->view.bttn_allchg = TRUE;
+      MCVSys_BttnDraw( wk );
+    }
   }
 }
 
@@ -3402,7 +3415,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         _userDataInfoDisp(wk);
         _CHANGESTATE(wk,WIFIP2PMATCH_VCHATWIN_WAIT);
-        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
         return seq;
       }
 #if PM_DEBUG
@@ -3418,7 +3431,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         _userDataInfoDisp(wk);
         _CHANGESTATE(wk,WIFIP2PMATCH_VCHATWIN_WAIT);
-        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
         return seq;
       }
 #endif
@@ -3540,7 +3553,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
       //        wk->localTime=0;
       ret = BMPMENULIST_CANCEL;
     }
-    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+    WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
     return seq;
 
   case MCR_RET_MYSELECT:   //パソコンに話しかける
@@ -3550,7 +3563,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
-        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
         wk->DirectMacSet=0;
         return seq;
       }
@@ -3563,7 +3576,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
       PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       GFL_STD_MemCopy(WifiFriendMatchStatusGet( friendNo - 1 ), &wk->targetStatus, sizeof(WIFI_STATUS));
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT);
-      WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+      WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
       return seq;
     }
     break;
@@ -3640,7 +3653,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
       if(_modeWait(status)){  // 待ち状態のとき
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
-        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
         return seq;
       }
     }
@@ -3662,7 +3675,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
       //        wk->localTime=0;
       ret = BMPMENULIST_CANCEL;
     }
-    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+    WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
     return seq;
 
   case MCR_RET_MYSELECT:   //パソコンに話しかける
@@ -3672,7 +3685,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
-        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
         return seq;
       }
     }
@@ -3684,7 +3697,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
       PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       GFL_STD_MemCopy(WifiFriendMatchStatusGet( friendNo - 1 ), &wk->targetStatus, sizeof(WIFI_STATUS));
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT);
-      WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+      WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
       return seq;
     }
     break;
@@ -6502,6 +6515,22 @@ static void WifiP2PMatch_UserDispOff_Target( WIFIP2PMATCH_WORK *wk, u32 target_f
 
 //----------------------------------------------------------------------------
 /**
+ *  @brief  誰かを表示しているならば強制的に表示終了
+ *
+ *  @param  wk        システムワーク
+ *  @param  heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void WifiP2PMatch_UserDispOff_Any( WIFIP2PMATCH_WORK *wk, u32 heapID )
+{
+  if( wk->view.user_disp != MCV_USERDISP_OFF ){
+    WifiP2PMatch_UserDispOff( wk, heapID );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  自分でアクセスしたときのユーザーデータ強制表示処理
  */
 //-----------------------------------------------------------------------------
@@ -6703,7 +6732,11 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       wk->view.touch_frame = 0;
       wk->view.button_on = TRUE;
       wk->view.bttn_allchg = TRUE;
+
+      WifiP2PMatch_UserDispOff( wk, heapID );
       wk->view.user_disp = MCV_USERDISP_OFF;
+      wk->view.bttn_allchg = TRUE;
+      
     }
   }
 
@@ -6974,6 +7007,17 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
     }
 
   }
+
+  wk->view.userWinStatus = GFL_BMPWIN_Create(
+    GFL_BG_FRAME3_S,
+    MCV_USERWIN_STA_X, MCV_USERWIN_STA_Y,
+    MCV_USERWIN_STA_SIZX, MCV_USERWIN_STA_SIZY,
+    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
+  // 透明にして展開
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWinStatus), 0 );
+  GFL_BMPWIN_MakeScreen(wk->view.userWinStatus);
+  GFL_BMPWIN_TransVramCharacter( wk->view.userWinStatus );
+
   wk->view.userWin = GFL_BMPWIN_Create(
     GFL_BG_FRAME3_S,
     MCV_USERWIN_X, MCV_USERWIN_Y,
@@ -7008,6 +7052,7 @@ static void MCVSys_GraphicDel( WIFIP2PMATCH_WORK *wk )
       GFL_BMPWIN_Delete( wk->view.statusWin[i][j] );
     }
   }
+  GFL_BMPWIN_Delete( wk->view.userWinStatus );
   GFL_BMPWIN_Delete( wk->view.userWin );
 
   // ボタンスクリーン破棄
