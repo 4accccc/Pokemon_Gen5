@@ -5923,6 +5923,25 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
 }
 
 /**
+ *  ワザ効果範囲取得（のろい用）
+ */
+static WazaTarget checkWazaRange( BTL_CLIENT* wk, WazaID waza, BtlPokePos atPokePos )
+{
+  if( waza != WAZANO_NOROI )
+  {
+    return WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  }
+  else
+  {
+    const BTL_POKEPARAM* poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
+    if( poke ){
+      return BTL_CALC_GetNoroiTargetType( poke );
+    }
+    return WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  }
+}
+
+/**
  *  ワザエフェクト
  *  args  [0]:攻撃ポケ位置  [1]:防御ポケ位置  [2]:ワザID
  */
@@ -5938,17 +5957,18 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
       if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
       {
         WazaID waza;
+        WazaTarget wazaRange;
         u8 atPokePos, defPokePos, turnType;
-        const BTL_PARTY* party;
-        const BTL_POKEPARAM* poke;
 
         atPokePos  = args[0];
         defPokePos = args[1];
         waza       = args[2];
         turnType   = args[3];
 
+        wazaRange = checkWazaRange( wk, waza, atPokePos );
+
         BTL_N_Printf( DBGSTR_CLIENT_StartWazaEffect, waza, turnType, atPokePos, defPokePos );
-        BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
+        BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, wazaRange, turnType, 0 );
         (*seq)++;
       }
       else{
@@ -6115,7 +6135,9 @@ static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args )
     if( !BTL_CLIENT_IsChapterSkipMode(wk) )
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      BTLV_ACT_WazaEffect_Start( wk->viewCore, pos, pos, WAZANO_HATAKU, BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
+      WazaTarget  range = WAZADATA_GetParam( WAZANO_HATAKU, WAZAPARAM_TARGET );
+      BTLV_ACT_WazaEffect_Start( wk->viewCore, pos, pos,
+                WAZANO_HATAKU, range, BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
     }
     (*seq)++;
     break;

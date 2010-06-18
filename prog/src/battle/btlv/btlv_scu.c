@@ -2701,7 +2701,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
  */
 //=============================================================================================
 void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defPos,
-  WazaID waza, BtlvWazaEffect_TurnType turnType, u8 continueCount )
+  WazaID waza, WazaTarget wazaRange, BtlvWazaEffect_TurnType turnType, u8 continueCount )
 {
 //  BTLV_WAZAEFFECT_PARAM param;
   BTLV_WAZAEFFECT_PARAM* param = Scu_GetProcWork( wk, sizeof(BTLV_WAZAEFFECT_PARAM) );
@@ -2710,14 +2710,19 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
   param->to = defPos;
   param->turn_count = turnType;
   param->continue_count = continueCount;
+  param->waza_range = wazaRange;
+
+  /*  range は client レベルで判定
   if( waza == WAZANO_NOROI )
-  { 
-    param->waza_range = BTL_CALC_GetNoroiTargetType( BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPos ) );
+  {
+    TAYA_Printf("のろい打つポケ位置=%d\n", atPos);
+    param->waza_range = BTL_CALC_GetNoroiTargetType( BTL_POKECON_GetFrontPokeDataConst(wk->pokeCon, atPos) );
   }
   else
-  { 
+  {
     param->waza_range = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
   }
+  */
 
   BTL_UTIL_SetupProc( &wk->proc, wk, NULL, subproc_WazaEffect );
 }
@@ -4123,9 +4128,9 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, B
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NG;
       }
       else if( BPP_IsFightEnable( bpp ) == FALSE )
-			{
+      {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
-			}
+      }
       else
       {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;

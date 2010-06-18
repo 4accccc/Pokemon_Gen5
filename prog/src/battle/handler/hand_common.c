@@ -62,7 +62,7 @@ BOOL HandCommon_CheckForbitItemPokeCombination( u16 monsno, u16 itemID )
       return TRUE;
     }
     break;
-  case MONSNO_INSEKUTA:
+  case MONSNO_CN_INSEKUTA:
     if( BTL_TABLES_IsMatchInsectaCasette(itemID) ){  // インセクタのカセットはNG
       return TRUE;
     }

@@ -98,4 +98,13 @@ enum {
   // フィールド・進化画面等への連絡関連
   BTL_STANDALONE_PLAYER_CLIENT_ID = 0,
   BTL_BONUS_MONEY_MAX = 99999,
+
+
+  // 仮モンスターナンバー
+  MONSNO_CN_MERODHIA = 648,
+  MONSNO_CN_INSEKUTA = 649,
+
+  FORMNO_CN_MERODHIA_VOICE = 0,
+  FORMNO_CN_MERODHIA_STEP = 1,
+
 };

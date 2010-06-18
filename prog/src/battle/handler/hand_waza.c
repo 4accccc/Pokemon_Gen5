@@ -34,10 +34,6 @@
 /*--------------------------------------------------------------------------*/
 enum {
   WORKIDX_STICK = EVENT_HANDLER_WORK_ELEMS - 1,
-
-  MONSNO_CODENAME_MERODHIA = 648,
-  FORMNO_CODENAME_MERODHIA_VOICE = 0,
-  FORMNO_CODENAME_MERODHIA_STEP  = 1,
 };
 
 /**
@@ -10695,14 +10691,14 @@ static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-  if( BPP_GetMonsNo(bpp) == MONSNO_CODENAME_MERODHIA )
+  if( BPP_GetMonsNo(bpp) == MONSNO_CN_MERODHIA )
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK)==pokeID )
     {
       BTL_HANDEX_PARAM_CHANGE_FORM* param;
 
-      u8 nextForm = (BPP_GetValue(bpp, BPP_FORM) == FORMNO_CODENAME_MERODHIA_VOICE)?
-              FORMNO_CODENAME_MERODHIA_STEP : FORMNO_CODENAME_MERODHIA_VOICE;
+      u8 nextForm = (BPP_GetValue(bpp, BPP_FORM) == FORMNO_CN_MERODHIA_VOICE)?
+              FORMNO_CN_MERODHIA_STEP : FORMNO_CN_MERODHIA_VOICE;
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
         param->pokeID = pokeID;
         param->formNo = nextForm;

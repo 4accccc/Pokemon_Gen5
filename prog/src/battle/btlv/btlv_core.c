@@ -605,8 +605,11 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     {
       if( BTLV_SCD_WaitRestartUI(core->scrnD) )
       {
-        BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, WAZANO_HATAKU,
-            BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
+        WazaID  waza = WAZANO_HATAKU;
+        WazaTarget range = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+
+        BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB,
+            waza, range,  BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
         (*seq)++;
       }
     }
@@ -634,8 +637,11 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   case 9:
     if( BTLV_WaitMsg( core ) )
     {
-      BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, WAZANO_NIRAMITUKERU,
-                                BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
+      WazaID  waza = WAZANO_NIRAMITUKERU;
+      WazaTarget range = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+
+      BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA,
+                                  waza, range,  BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
       (*seq)++;
     }
     break;
@@ -1500,8 +1506,8 @@ void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk )
  *
  */
 //=============================================================================================
-void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza,
-  BtlvWazaEffect_TurnType turnType, u8 continueCount )
+void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos,
+  WazaID waza, WazaTarget wazaRange, BtlvWazaEffect_TurnType turnType, u8 continueCount )
 {
   BtlvMcssPos  at_pos, def_pos;
 
@@ -1510,8 +1516,7 @@ void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos 
   def_pos = (defPokePos != BTL_POS_NULL)?
       BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPokePos ) : BTLV_MCSS_POS_ERROR;
 
-
-  BTLV_SCU_StartWazaEffect( wk->scrnU, at_pos, def_pos, waza, turnType, continueCount );
+  BTLV_SCU_StartWazaEffect( wk->scrnU, at_pos, def_pos, waza, wazaRange, turnType, continueCount );
 }
 //=============================================================================================
 /**

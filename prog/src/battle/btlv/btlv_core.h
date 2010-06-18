@@ -279,7 +279,7 @@ extern BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk );
 
 
 extern void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza,
-  BtlvWazaEffect_TurnType turnType, u8 continueCount );
+  WazaTarget wazaRange, BtlvWazaEffect_TurnType turnType, u8 continueCount );
 
 extern BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk );
 
