@@ -43,6 +43,7 @@ struct _TAG_FLDEFF_REFLECT
 
 #ifdef DEBUG_REFLECT_CHECK
   int d_select;
+  int d_ctrl_pos;
   VecFx32 d_offs[MMDL_BLACT_MDLSIZE_MAX];
 #endif
 };
@@ -326,10 +327,8 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void reflectTask_Draw( FLDEFF_TASK *task, void *wk )
 {
-#if 1
   TASKWORK_REFLECT *work = wk;
   
-  //ここでアップデートすればいけると思う。
   if( MMDL_CheckSameData(work->head.mmdl,&work->samedata) == TRUE ){
     if( work->flag_initact ){ //初期化済み
       if( work->actWork.actID != MMDL_BLACTID_NULL ){ //アクターあり
@@ -337,7 +336,6 @@ static void reflectTask_Draw( FLDEFF_TASK *task, void *wk )
       }
     }
   }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -423,7 +421,9 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
 
     pos.y += data_MdlOffsetY[param->mdl_size];
 
-#if 1
+    #if 1
+    //64x64ならば映りこみ対象のアトリビュートをチェックし
+    //表示座標を調整。
     if( param->mdl_size == MMDL_BLACT_MDLSIZE_64x64 )
     {
       MAPATTR attr = MMDL_GetMapAttr( mmdl );
@@ -438,19 +438,20 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
         pos.y += Y_OFFS_64x64_GROUND;
       }
     }
-#endif
+    #endif
 
 #ifdef DEBUG_REFLECT_CHECK
     if( MMDL_GetOBJID(work->head.mmdl) == MMDL_ID_PLAYER ){
       int select;
       int printf = 0;
+      FLDEFF_REFLECT *eff_reflect = work->head.eff_reflect;
       int repeat = GFL_UI_KEY_GetRepeat();
       int cont = GFL_UI_KEY_GetCont();
       int trg = GFL_UI_KEY_GetTrg();
       VecFx32 *d_offs;
       
       if( trg & PAD_BUTTON_START ){
-        int *pFlag = &work->head.eff_reflect->d_select;
+        int *pFlag = &eff_reflect->d_select;
         
         (*pFlag)++;
         if( (*pFlag) > MMDL_BLACT_MDLSIZE_MAX ){
@@ -474,33 +475,52 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
         }
       }
       
-      if( work->head.eff_reflect->d_select < MMDL_BLACT_MDLSIZE_MAX ){
-        d_offs =
-          &work->head.eff_reflect->d_offs[work->head.eff_reflect->d_select];
+      if( eff_reflect->d_select < MMDL_BLACT_MDLSIZE_MAX ){
+        if( trg & PAD_BUTTON_SELECT ){
+          int *pFlag = &eff_reflect->d_ctrl_pos;
+          
+          (*pFlag)++;
+          if( (*pFlag) >= 3 ){
+            (*pFlag) = 0;
+          }
+          
+          switch( (*pFlag) ){
+          case 0:
+            KAGAYA_Printf( "REFLECT CTRL X\n" );
+            break;
+          case 1:
+            KAGAYA_Printf( "REFLECT CTRL Y\n" );
+            break;
+          case 2:
+            KAGAYA_Printf( "REFLECT CTRL Z\n" );
+            break;
+          }
+        }
+      }
+      
+      if( eff_reflect->d_select < MMDL_BLACT_MDLSIZE_MAX ){
+        fx32 *pOffs;
+        d_offs = &eff_reflect->d_offs[eff_reflect->d_select];
+        
+        switch( eff_reflect->d_ctrl_pos ){
+        case 0: pOffs = &d_offs->x; break;
+        case 1: pOffs = &d_offs->y; break;
+        default: pOffs = &d_offs->z; break;
+        }
         
         if( repeat & PAD_BUTTON_L ){
-          if( cont & PAD_BUTTON_B ){
-            d_offs->z -= 0x800;
-            printf = TRUE;
-          }else{
-            d_offs->y -= 0x800;
-            printf = TRUE;
-          }
+          (*pOffs) -= 0x800;
+          printf = TRUE;
         }else if( repeat & PAD_BUTTON_R ){
-          if( cont & PAD_BUTTON_B ){
-            d_offs->z += 0x800;
-            printf = TRUE;
-          }else{
-            d_offs->y += 0x800;
-            printf = TRUE;
-          }
+          (*pOffs) += 0x800;
+          printf = TRUE;
         }
       }
       
       if( (trg & PAD_BUTTON_A) || printf ){
         int i;
-        d_offs = work->head.eff_reflect->d_offs;
-
+        d_offs = eff_reflect->d_offs;
+        
         for( i = 0; i < MMDL_BLACT_MDLSIZE_MAX; i++, d_offs++ ){
           KAGAYA_Printf( "reflect " );
           
@@ -515,7 +535,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
             KAGAYA_Printf( "64x64 " );
             break;
           }
-
+          
           KAGAYA_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
               d_offs->x, d_offs->y, d_offs->z );
         }
@@ -527,6 +547,32 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       VEC_Add( &pos, &d_offs, &pos );
     }
 #endif
+    
+    #if 1  //カメラターゲットからの距離によりズレを補正
+    {
+      #define REF_OFFS_TX_UNIT_ONE ((0x7000)/(16*6))
+      
+      fx32 ox;
+      int tx,mx;
+      VecFx32 t_pos;
+      FIELD_CAMERA *fld_cam;
+      FIELDMAP_WORK *fieldmap;
+      const GFL_G3D_CAMERA * g3Dcamera;
+      
+      fieldmap = FLDEFF_CTRL_GetFieldMapWork(
+          work->head.eff_reflect->fectrl );
+      fld_cam = FIELDMAP_GetFieldCamera( fieldmap );
+      g3Dcamera = FIELD_CAMERA_GetCameraPtr( fld_cam );
+      
+      GFL_G3D_CAMERA_GetTarget( g3Dcamera, &t_pos );
+      tx = FX32_NUM( t_pos.x );
+      mx = FX32_NUM( pos.x );
+      
+      ox = REF_OFFS_TX_UNIT_ONE * (mx-tx);
+      pos.x += ox;
+    }
+    #endif
+
     
     GFL_BBD_SetObjectTrans( bbdsys, actID, &pos );
   }
