@@ -9237,6 +9237,7 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeIDAry[0] );
       BTL_ACTION_PARAM action;
       WazaID waza;
+      u8 targetPokeID = targetPokeIDAry[0];
       u8 fSucceess = FALSE;
 
       do{
@@ -9245,7 +9246,10 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
         if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_WAZAPROC_DONE) ){ break; }
 
         // 現ターンのアクションが取得できなかったら失敗
-        if( !BTL_SVFTOOL_GetThisTurnAction( flowWk, targetPokeIDAry[0], &action ) ){ break; }
+        if( !BTL_SVFTOOL_GetThisTurnAction( flowWk, targetPokeID, &action ) ){ break; }
+
+        // 対象が場にいなければ失敗
+        if( !BTL_SVFTOOL_IsExistPokemon(flowWk, targetPokeID) ){ break; }
 
         // 相手がダメージワザを選択していない場合も失敗
         waza = BTL_ACTION_GetWazaID( &action );
