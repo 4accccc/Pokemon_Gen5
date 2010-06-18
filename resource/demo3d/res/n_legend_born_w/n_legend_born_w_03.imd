@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-06-17T14:08:45" source="n_legend_born_w_reduced.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-17T16:42:15" source="n_legend_born_w_reduced.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-06-17T14:08:45" source="n_legend_born_w_reduced.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-17T16:42:15" source="n_legend_born_w_reduced.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="-1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="34 17"
 	compress_material="on" material_size="20 20"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.548584 -0.754639 -0.796387" whd="5.178711 3.493652 1.821777"/>
+<box_test pos_scale="6" xyz="-1.580811 -1.509277 -0.434082" whd="3.161133 4.807129 3.196777"/>
 
 <tex_image_array size="11">
 	<tex_image index="0" name="fx_f_ring"
@@ -5177,7 +5177,7 @@
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.000000 0.448242"
+		tex_translate="0.000000 0.504395"
 		tex_gen_mode="tex"
 	/>
 	<material index="6" name="fx_s_bub"
@@ -11675,9 +11675,9 @@
 		brother_prev="1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -23.996338"
+		translate="0.000000 0.000000 -19.702637"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="8"
@@ -11695,9 +11695,9 @@
 		brother_prev="3"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -19.702637"
 		visibility="on"
 		display_size="1"
 		vertex_size="30" polygon_size="10"
@@ -11743,9 +11743,9 @@
 		brother_prev="5"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -15.630859"
+		scale="0.000000 0.000000 0.000000"
+		rotate="17.000000 34.199951 0.000000"
+		translate="69.894775 76.383789 0.046387"
 		visibility="on"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -11763,7 +11763,7 @@
 		brother_prev="7"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
@@ -11824,9 +11824,9 @@
 		brother_prev="10"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		scale="0.774414 0.774414 0.774414"
+		rotate="0.000000 145.439941 0.000000"
+		translate="2.173340 169.990479 100.032227"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11845,9 +11845,9 @@
 		brother_prev="11"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		scale="0.649658 0.946533 0.649658"
+		rotate="0.000000 145.439941 0.000000"
+		translate="2.173340 167.556396 100.032227"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11866,9 +11866,9 @@
 		brother_prev="12"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		scale="1.447266 2.320313 1.447266"
+		rotate="0.000000 145.439941 0.000000"
+		translate="2.173340 167.408447 100.032227"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11887,9 +11887,9 @@
 		brother_prev="13"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		scale="1.447266 1.585449 1.447266"
+		rotate="0.000000 145.439941 0.000000"
+		translate="2.173340 195.604248 100.032227"
 		visibility="on"
 		display_size="2"
 		vertex_size="168" polygon_size="80"
@@ -11909,8 +11909,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="6.239014 6.065918 6.239014"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		rotate="0.000000 145.439941 0.000000"
+		translate="2.173340 169.990479 100.032227"
 		visibility="on"
 		display_size="1"
 		vertex_size="246" polygon_size="116"
@@ -11928,9 +11928,9 @@
 		brother_prev="15"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -3.780273"
+		scale="0.000000 0.000000 0.000000"
+		rotate="17.000000 34.199951 0.000000"
+		translate="76.264648 72.919189 -9.326660"
 		visibility="on"
 		display_size="1"
 		vertex_size="84" polygon_size="40"
