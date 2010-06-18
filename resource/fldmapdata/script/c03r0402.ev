@@ -186,14 +186,16 @@ EVENT_START		ev_c03r0402_man1_01
 				//じゃあ　はじめるよー！
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_03 )
 				_MSGWIN_CLOSE()
-			
-				_TRAINER_BTL_SP_SET( TRID_VETERANM_1_08, 0, SCR_BATTLE_MODE_NOLOSE )
 				
-				_TRAINER_WIN()
+				_TRAINER_BTL_SET( TRID_VETERANM_1_08, 0 )
 				
-				//回復処理
-				_TEMOTI_POKEMON_KAIFUKU()
-			
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+					_TRAINER_WIN()
+				ELSE
+					_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+				ENDIF
+				
 				//いろいろ　かんがえてるよね！
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
 				_LAST_KEYWAIT()
