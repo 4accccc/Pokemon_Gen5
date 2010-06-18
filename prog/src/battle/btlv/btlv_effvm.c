@@ -1194,6 +1194,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
       if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
       { 
         //1vs1orRotation‚È‚çƒJƒƒ‰ˆÚ“®‚È‚µ
+        BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
         return bevw->control_mode;
       }
       else
