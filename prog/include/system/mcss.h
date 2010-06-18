@@ -38,6 +38,7 @@
 #define MCSS_CELL_ANIM_NONSTOP ( 0xff )    //マルチセルアニメが1周しても止める動作をしない
 
 #define	MCSS_DEFAULT_Z			      ( 1 << 8 )
+#define	MCSS_DEFAULT_Z_PERSP      ( 1 << 4 ) 
 #define	MCSS_DEFAULT_Z_ORTHO	    ( 1 << 10 )
 #define	MCSS_DEFAULT_Z_ORTHO_512	( 1 << 8 )
 
@@ -177,7 +178,7 @@ extern  void	          MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, 
 extern  void	          MCSS_SetReverseDraw( MCSS_WORK* mcss, MCSS_REVERSE_DRAW flag );
 extern  int	            MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss );
 extern  void            MCSS_RestartAnime( MCSS_WORK *mcss );
-extern  void            MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg );
+extern  void            MCSS_SetPerspectiveFarFlag( MCSS_SYS_WORK *mcss_sys , const BOOL flg );
 extern  void            MCSS_SetOrthoFarFlag( MCSS_SYS_WORK *mcss_sys , const BOOL flg );
 
 #ifdef PM_DEBUG

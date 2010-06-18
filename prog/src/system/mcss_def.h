@@ -135,7 +135,7 @@ struct _MCSS_SYS_WORK
 #endif //USE_RENDER
 	NNSG2dImagePaletteProxy	shadow_palette_proxy;   	  //パレットプロキシ（影用）
   u32                     mcss_ortho_mode       :1;   //正射影描画モードフラグ
-	u32                     projection_revise_off :1;   //透視射影補正無効フラグ
+	u32                     perspective_far_flag  :1;   //透視射影FARフラグ
 	u32                     ortho_far_flag        :1;   //正射影FARフラグ
   u32                                           :29;
 	u32											texAdrs;							//テクスチャ転送開始アドレス

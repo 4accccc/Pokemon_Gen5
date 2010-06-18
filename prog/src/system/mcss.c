@@ -25,7 +25,7 @@
 
 #define	MCSS_DEFAULT_SHIFT		( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
 #define	MCSS_DEFAULT_LINE		( 1 << MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
-#define MCSS_SCALE_OFFSET   ( 0x1c )
+#define MCSS_SCALE_OFFSET   ( 0 ) //0x1c )
 
 #define	MCSS_CONST(x)	( x << MCSS_DEFAULT_SHIFT )
 
@@ -75,8 +75,7 @@ static	void	MCSS_DrawAct(
 							  NNSG2dImagePaletteProxy *shadow_palette,
 							  int node,
 							  u32 mcss_ortho_mode,
-							  fx32 *pos_z_default,const u8 isFlip, fx32* scale_offset_work ,
-							  const u8 projection_revise_off );
+							  fx32 *pos_z_default,const u8 isFlip );
 
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
 static	void	MCSS_LoadResourceByHandle( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
@@ -360,7 +359,6 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 		    ( mcss_sys->mcss[index]->vanish_flag == 0 ) &&
 		    ( mcss_sys->mcss[index]->is_load_resource == 1 ) ){
 	    fx32    pos_z_default = 0;
-      fx32    scale_offset_work = FX32_ONE;
 	    int     ortho_mode = ( mcss_sys->mcss_ortho_mode == 0 ) ? 0 : mcss_sys->mcss[ index ]->ortho_mode;
 
 			mcss		= mcss_sys->mcss[index];
@@ -564,8 +562,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
-									  &pos_z_default, flipFlg, &scale_offset_work ,
-									  mcss_sys->projection_revise_off );
+									  &pos_z_default, flipFlg );
 					}
 					else{
 						MCSS_DrawAct(
@@ -579,8 +576,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
-									  &pos_z_default, flipFlg, &scale_offset_work ,
-									  mcss_sys->projection_revise_off );
+									  &pos_z_default, flipFlg );
 					}
 				}
 				MCSS_DrawAct(
@@ -594,8 +590,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							  ncec->tex_t,
 							  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	              ortho_mode,
-							  &pos_z_default, flipFlg, &scale_offset_work , 
-							  mcss_sys->projection_revise_off );
+							  &pos_z_default, flipFlg );
 				//メパチ処理
 				if( ( ncec->mepachi_size_x ) && ( mcss->reverse_draw == 1 ) )
         { 
@@ -611,8 +606,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
-									  &pos_z_default, flipFlg, &scale_offset_work ,
-							      mcss_sys->projection_revise_off );
+									  &pos_z_default, flipFlg );
 					}
 					else{
 						MCSS_DrawAct(
@@ -626,8 +620,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
-									  &pos_z_default, flipFlg, &scale_offset_work ,
-							      mcss_sys->projection_revise_off );
+									  &pos_z_default, flipFlg );
 					}
 				}
 			}
@@ -710,15 +703,12 @@ static	void	MCSS_DrawAct(
 							  int node,
 							  u32 mcss_ortho_mode,
 							  fx32 *pos_z_default,
-                const u8 isFlip,
-							  fx32* scale_offset_work ,
-							  const u8 projection_revise_off )
+                const u8 isFlip )
 {
 	VecFx32	pos;
   int polyID;
 	//影のアルファ値計算
   const u8 shadow_alpha = (mcss->shadow_alpha == MCSS_SHADOW_ALPHA_AUTO ?(mcss->alpha/2):mcss->shadow_alpha); 
-  fx32  scale_x, scale_y;
 
   if( mcss->alpha == 31 )
   { 
@@ -740,14 +730,7 @@ static	void	MCSS_DrawAct(
 				   FX32_ONE,
 				   NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
-    scale_x = size_x;
-    scale_y = size_y;
 	}
-  else
-  { 
-    scale_x = FX_Mul( size_x, *scale_offset_work );
-    scale_y = FX_Mul( size_y, *scale_offset_work );
-  }
 
 	G3_RestoreMtx( MCSS_NORMAL_MTX );
 
@@ -775,7 +758,7 @@ static	void	MCSS_DrawAct(
 
 		G3_Translate( pos_x, pos_y, 0 );
 
-		G3_Scale( scale_x, scale_y, FX32_ONE );
+		G3_Scale( size_x, size_y, FX32_ONE );
 	}
 	else
 	if( isFlip & MCSS_FLIP_X )
@@ -785,7 +768,7 @@ static	void	MCSS_DrawAct(
 
 		G3_Translate( -pos_x, pos_y, 0 );
 
-		G3_Scale( scale_x, scale_y, FX32_ONE );
+		G3_Scale( size_x, size_y, FX32_ONE );
 		G3_Translate( -MCSS_DEFAULT_LINE, 0, 0 );
 		//テクスチャのリピートでフリップした所を使う
 		tex_s = FX32_CONST(256.0f) + FX32_CONST(256.0f) - tex_s - size_x;
@@ -827,7 +810,7 @@ static	void	MCSS_DrawAct(
 
   	G3_Translate( pos_x, pos_y, 0 );
 
-  	G3_Scale( scale_x, scale_y, FX32_ONE );
+  	G3_Scale( size_x, size_y, FX32_ONE );
 
   	G3_Begin(GX_BEGIN_QUADS);
   	G3_TexCoord( tex_s,				tex_t );
@@ -841,10 +824,16 @@ static	void	MCSS_DrawAct(
   	G3_End();
   }
 
-	if( mcss_ortho_mode == 0 &&
-	    projection_revise_off == 0 ){
-		*pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z : MCSS_DEFAULT_Z;
-    *scale_offset_work += MCSS_SCALE_OFFSET;
+	if( mcss_ortho_mode == 0 )
+  { 
+    if( mcss_sys->perspective_far_flag == 0 )
+    {
+		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z : MCSS_DEFAULT_Z;
+    }
+    else
+    { 
+		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z_PERSP : MCSS_DEFAULT_Z_PERSP;
+    }
 	}
 	else{
     if( mcss_sys->ortho_far_flag )
@@ -1890,18 +1879,6 @@ void   MCSS_RestartAnime( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * @brief 透視射影時の補正を無効化する
- *
- * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
- */
-//--------------------------------------------------------------------------
-void   MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg )
-{ 
-  mcss_sys->projection_revise_off = flg;
-}
-
-//--------------------------------------------------------------------------
-/**
  * @brief MCSSのセル描画を逆から描画フラグのセット
  *
  * @param[in] mcss      MCSSワーク構造体のポインタ
@@ -1911,6 +1888,18 @@ void   MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg
 void	MCSS_SetReverseDraw( MCSS_WORK* mcss, MCSS_REVERSE_DRAW flag )
 { 
   mcss->reverse_draw = flag;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 透視射影FARの値を切り替え
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void   MCSS_SetPerspectiveFarFlag( MCSS_SYS_WORK *mcss_sys , const BOOL flg )
+{ 
+  mcss_sys->perspective_far_flag = flg;
 }
 
 //--------------------------------------------------------------------------
