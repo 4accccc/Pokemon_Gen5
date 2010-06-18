@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-06-12T17:15:55" source="title_w10.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-17T19:04:41" source="title_w.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-06-12T17:15:55" source="title_w10.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-17T19:04:41" source="title_w.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="black_pl"
-		path="C:/pokemon_projects/WB/demo/title_w/tex/black.tga"
+		path="C:/home/wb_data3d/demo/title_w/tex/black.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -46,7 +46,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="check_w.1_pl"
-		path="C:/pokemon_projects/WB/demo/title_w/tex/check_w.1.tga"
+		path="C:/home/wb_data3d/demo/title_w/tex/check_w.1.tga"
 	>
 		<bitmap size="128">
 			cccc cccc cccc cccc cccc cccc cccc cccc
@@ -72,7 +72,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="check_w.2_pl"
-		path="C:/pokemon_projects/WB/demo/title_w/tex/check_w.2.tga"
+		path="C:/home/wb_data3d/demo/title_w/tex/check_w.2.tga"
 	>
 		<bitmap size="256">
 			0606 0606 0606 0606 0606 0606 0606 0606
@@ -113,7 +113,7 @@
 		width="64" height="128" original_width="64" original_height="128"
 		format="a5i3"
 		palette_name="glow1_pl"
-		path="C:/pokemon_projects/WB/demo/title_w/tex/glow1.tga"
+		path="C:/home/wb_data3d/demo/title_w/tex/glow1.tga"
 	>
 		<bitmap size="4096">
 			8888 8888 8888 8888 8888 8888 8888 8888
@@ -634,7 +634,7 @@
 		width="128" height="128" original_width="128" original_height="128"
 		format="a5i3"
 		palette_name="rays_b_pl"
-		path="C:/pokemon_projects/WB/demo/title_b/tex/rays_b.tga"
+		path="C:/home/wb_data3d/demo/title_w/tex/rays_b.tga"
 	>
 		<bitmap size="8192">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -2762,7 +2762,7 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="3.669434 3.669434 3.669434"
-		rotate="-0.164307 -24.999512 0.388672"
+		rotate="-0.164551 -24.999512 0.389404"
 		translate="115.280762 30.939209 -247.220703"
 		visibility="on"
 		display_size="1"
