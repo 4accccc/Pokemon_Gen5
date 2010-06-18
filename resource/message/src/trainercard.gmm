@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-06-13T17:31:51"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-06-18T15:34:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -262,12 +262,12 @@
 
 	<dialog left="84" top="138" right="789" bottom="758" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="80" right="1280" bottom="478" visible="yes"/>
+		<tag-palette left="850" top="531" right="1323" bottom="929" visible="yes"/>
 		<band id="0" index="0" style="0000" width="524"/>
 		<band id="1" index="1" style="0000" width="171"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -404,18 +404,20 @@
 		<language name="JPN_KANJI" width="256">トレーナーと　目が合った　回数</language>
 	</row>
 
-	<row id="MSG_TCARD_17" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。すれ違い通信した回数。
-単位はなし。</comment>
-		<language name="JPN" width="256">すれちがい　つうしん</language>
-		<language name="JPN_KANJI" width="256">すれ違い通信</language>
+	<row id="MSG_TCARD_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>カード裏面項目。ライブ通信
+（すれ違い通信）した回数。単位なし。
+100618：名称変更しました（岩尾）</comment>
+		<language name="JPN" width="256">すれちがった　にんずう</language>
+		<language name="JPN_KANJI" width="256">すれ違った　人数</language>
 	</row>
 
 	<row id="MSG_TCARD_18" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>カード裏面項目。相性チェックを最後までやった回数。
-単位はなし。</comment>
-		<language name="JPN" width="256">フィーリング　チェック</language>
-		<language name="JPN_KANJI" width="256">フィーリング　チェック</language>
+単位はなし。
+GFBTS1607：不要なスペース削除</comment>
+		<language name="JPN" width="256">フィーリングチェック</language>
+		<language name="JPN_KANJI" width="256">フィーリングチェック</language>
 	</row>
 
 	<row id="MSG_TCARD_19" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
