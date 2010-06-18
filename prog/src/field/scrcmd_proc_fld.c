@@ -37,7 +37,6 @@
 
 #include "scrcmd_proc.h"
 #include "scrcmd_proc_fld.h"
-#include "../../../resource/fldmapdata/script/usescript.h"
 
 #include "event_gameclear.h"  //EVENT_GameClear
 #include "app/box2.h"
