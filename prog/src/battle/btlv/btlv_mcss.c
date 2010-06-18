@@ -377,7 +377,7 @@ BTLV_MCSS_WORK  *BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapI
   bmw->tcb_sys  = tcb_sys;
   bmw->heapID   = heapID;
 
-  MCSS_SetPerspectiveFarFlag( bmw->mcss_sys, TRUE );
+  MCSS_SetPerspectiveZOffset( bmw->mcss_sys, MCSS_DEFAULT_Z_PERSP );
   MCSS_SetOrthoFarFlag( bmw->mcss_sys, TRUE );
 
   bmw->proj = BTLV_MCSS_PROJ_ORTHO;

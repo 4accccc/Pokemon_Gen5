@@ -135,9 +135,8 @@ struct _MCSS_SYS_WORK
 #endif //USE_RENDER
 	NNSG2dImagePaletteProxy	shadow_palette_proxy;   	  //パレットプロキシ（影用）
   u32                     mcss_ortho_mode       :1;   //正射影描画モードフラグ
-	u32                     perspective_far_flag  :1;   //透視射影FARフラグ
 	u32                     ortho_far_flag        :1;   //正射影FARフラグ
-  u32                                           :29;
+  u32                                           :30;
 	u32											texAdrs;							//テクスチャ転送開始アドレス
 	u32											palAdrs;							//テクスチャパレット転送開始アドレス
   MCSS_CALLBACK_FUNC*     load_resource_callback;   //LoadResourceの前に呼ばれるコールバック（キャラデータ操作に使用）
@@ -145,7 +144,6 @@ struct _MCSS_SYS_WORK
 	int											heapID;								//使用するヒープID
 	
 	fx32                    mcAnimRate; //マルチセルアニメ倍率
-  fx32                    scale_offset;
-  fx32                    scale_offset_work;
+	fx32                    perspective_z_offset; //透視射影ZOFFSET
 };
 

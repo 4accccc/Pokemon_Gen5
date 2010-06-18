@@ -826,13 +826,14 @@ static	void	MCSS_DrawAct(
 
 	if( mcss_ortho_mode == 0 )
   { 
-    if( mcss_sys->perspective_far_flag == 0 )
+    if( mcss_sys->perspective_z_offset == 0 )
     {
 		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z : MCSS_DEFAULT_Z;
     }
     else
     { 
-		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z_PERSP : MCSS_DEFAULT_Z_PERSP;
+		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -mcss_sys->perspective_z_offset :
+                                                                          mcss_sys->perspective_z_offset;
     }
 	}
 	else{
@@ -1892,14 +1893,14 @@ void	MCSS_SetReverseDraw( MCSS_WORK* mcss, MCSS_REVERSE_DRAW flag )
 
 //--------------------------------------------------------------------------
 /**
- * @brief 透視射影FARの値を切り替え
+ * @brief 透視射影時のZOffset値をセット
  *
  * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
  */
 //--------------------------------------------------------------------------
-void   MCSS_SetPerspectiveFarFlag( MCSS_SYS_WORK *mcss_sys , const BOOL flg )
+void   MCSS_SetPerspectiveZOffset( MCSS_SYS_WORK *mcss_sys , fx32 z_offset )
 { 
-  mcss_sys->perspective_far_flag = flg;
+  mcss_sys->perspective_z_offset = z_offset;
 }
 
 //--------------------------------------------------------------------------
