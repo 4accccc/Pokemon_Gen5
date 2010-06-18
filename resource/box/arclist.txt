@@ -12,7 +12,6 @@
 "box_poke_bg2_lz.NSCR"
 "box_mark_bg_lz.NSCR"
 "box_move_bg_lz.NSCR"
-"box_partyout_bg_lz.NSCR"
 "box_m_bg1_lz.NCGR"
 
 "box_wp01_lz.NSCR"
@@ -89,7 +88,3 @@
 "box_itemicon_lz.NCGR"
 "box_itemicon.NCER"
 "box_itemicon.NANR"
-
-"box_typeicon_lz.NCGR"
-"box_typeicon.NCER"
-"box_typeicon.NANR"

@@ -47,7 +47,6 @@
 
 #define	PALNUM_OUTLINE		( 1 )											// パレット番号：アウトラインカーソル（リソースのオフセット）
 #define	PALNUM_TB_STATUS	( 3 )											// パレット番号：タッチバーステータス（リソースのオフセット）
-#define	PLANUM_TRAYPOKE		( PALNUM_TRAYICON + 2 )		// パレット番号：トレイアイコンに表示するドット
 
 // サブパレット
 #define	PALNUM_TYPEICON_S	( 0 )																			// パレット番号：タイプアイコン
@@ -353,7 +352,7 @@ static const BOX_CLWK_DATA ClaTypeIconParam = {
 // 追加壁紙と共用です
 static const u8 TrayPokeDotColorPos[] = {
 //  赤    青    黄    緑    黒    茶    紫    灰    白    桃
-	0x0e, 0x0f, 0x05, 0x02, 0x0d, 0x0c, 0x06, 0x0b, 0x0a, 0x09,
+	0x1e, 0x2a, 0x2b, 0x29, 0x2c, 0x2d, 0x2e, 0x11, 0x20, 0x2f,
 };
 
 static const s8	PokeCursorXTbl[] = { 1, -1, 0, 0, 1, 1, -1, -1 };	// アウトラインＸ座標オフセットテーブル
@@ -3019,7 +3018,7 @@ static void TrayPokeDotPut( BOX2_SYS_WORK * syswk, u32 tray, u8 * buf )
 						color = POKEPER_COLOR_WHITE;
 					}
 				}
-				color = ( PLANUM_TRAYPOKE << 4 ) + TrayPokeDotColorPos[color];
+				color = TrayPokeDotColorPos[color];
 				color = ( color << 8 ) | color;
 				for( y=py; y<py+TRAY_POKEDOT_SY; y++ ){
 					GFL_STD_MemFill16( &buf[ ((((y>>3)<<2)+(px>>3))<<6) + ((y&7)<<3)+(px&7) ], color, 2 );
