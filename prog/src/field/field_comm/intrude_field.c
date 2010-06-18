@@ -747,7 +747,7 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
   }
   
   if(event_dir != DIR_NOT){
-    if(intcomm == NULL && (NetErr_App_CheckError() || GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL)){
+    if(intcomm == NULL && NetErr_App_CheckError()){
       return NULL;  //強制ワープイベントが発動するようにここではNULLを返す
     }
     if(intcomm == NULL || GFL_NET_GetConnectNum() <= 1 || intcomm->member_num < 2){
