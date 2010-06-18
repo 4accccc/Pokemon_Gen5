@@ -231,6 +231,7 @@ static BOOL _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG
 
 static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color);
+static void _UniSub_ChatPlate_AllNormal(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int plate_no);
 static void _UniSub_CheckPageSkip(UNION_SUBDISP_PTR unisub, UNION_SYSTEM_PTR unisys);
 
 
@@ -1404,6 +1405,7 @@ static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_
         GFL_STD_MemCopy(chat->mac_address, unisys->my_situation.focus_mac_address, 6);
       }
     }
+    _UniSub_ChatPlate_AllNormal(unisub, log, view_no);  //タッチしたプレート以外の色を元に戻す
     PMSND_PlaySE( UNION_SE_PANEL_TOUCH );
     return TRUE;
   }
@@ -1498,6 +1500,28 @@ static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *l
         if(write_pos >= 0 && write_pos < UNION_CHAT_VIEW_LOG_NUM){
           _UniSub_ChatPlate_ChangeColor(unisub, write_pos, PLATE_COLOR_NORMAL);
         }
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定したプレート以外の色を元に戻す
+ *
+ * @param   unisub		
+ * @param   log		
+ * @param   plate_no		元に戻さないプレート番号
+ */
+//--------------------------------------------------------------
+static void _UniSub_ChatPlate_AllNormal(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no)
+{
+  int i;
+  
+  for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
+    if(unisub->plate_touch[i].life > 0){
+      if(view_no != unisub->plate_touch[i].view_no){
+        unisub->plate_touch[i].life = 1;
       }
     }
   }
