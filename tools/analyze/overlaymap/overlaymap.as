@@ -79,7 +79,7 @@
 
 	OVERLAY_NAME_SIZE = 40
 	IMG_WIDTH         = 7000
-	IMG_HEIGHT        = 1300
+	IMG_HEIGHT        = 1400
 
 	screen 2,IMG_WIDTH,IMG_HEIGHT,2,,,1024,900
 	font "Arial",10
@@ -373,14 +373,14 @@
 
 			}
 			count = count + 1
-			if count=500{
+			if count=1000{
 				break
 			}
 		}
 	loop
 	if hitflag=0{
 		title ""+temp
-		dialog "下から500行探したけどみつからなかったよ",0
+		dialog "下から1000行探したけどみつからなかったよ",0
 		goto *main
 	}
 
@@ -427,7 +427,7 @@
 	gWidth  = IMG_WIDTH
 	gHeight = IMG_HEIGHT
 ;	DIV_RATE = 540704	; fieldmapが一番大きくみえる
-	DIV_RATE = 900000
+	DIV_RATE = 1000000
 ;	DIV_RATE = 2040704	; mainが入る
 
 ;	DIV_RATE  = 3040704	; プログラムの最後まではいる
