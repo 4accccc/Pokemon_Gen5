@@ -347,7 +347,7 @@ VMCMD_RESULT EvCmdPlaceName( VMHANDLE *core, void *wk )
   SCRCMD_WORK* work = wk;
   SCRIPT_WORK*   sc = SCRCMD_WORK_GetScriptWork( work );
 	WORDSET*  wordset = SCRIPT_GetWordSet( sc );
-	u16           idx = SCRCMD_GetVMWorkValue( core, work );  // ‘æˆêˆø”
+	u8            idx = VMGetU8( core );  // ‘æˆêˆø”
 	u16       zone_id = SCRCMD_GetVMWorkValue( core, work );  // ‘æ“ñˆø”
 
   WORDSET_RegisterPlaceName( wordset, idx, ZONEDATA_GetPlaceNameID(zone_id) );
