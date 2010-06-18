@@ -913,6 +913,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
 
   BTL_N_Printf( DBGSTR_SVFL_ActOrderMainStart, startOrderIdx );
 
+
   for(i=startOrderIdx; i<wk->numActOrder; i++)
   {
     ActOrder_Proc( wk, &wk->actOrder[i] );
@@ -9056,6 +9057,7 @@ static BOOL scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
   else
   {
     BTL_POKEPARAM* bpp;
+    BOOL fCameraReset = FALSE;
 
     weather = scEvent_GetWeather( wk );
     BTL_POKESET_SeekStart( pokeSet );
@@ -9073,11 +9075,17 @@ static BOOL scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
         {
           if( damage ){
             scPut_WeatherDamage( wk, bpp, weather, damage );
+            fCameraReset = TRUE;
           }
         }
+        
         BTL_Hem_PopState( &wk->HEManager, hem_state );
         scproc_CheckDeadCmd( wk, bpp );
       }
+    }
+    // 出口で確実にカメラを元に戻す。
+    if(fCameraReset){
+      scproc_ViewEffect( wk, BTLEFF_CAMERA_INIT_ORTHO_NO_WAIT, BTL_POS_NULL, BTL_POS_NULL, FALSE, 0 );
     }
     return scproc_CheckExpGet( wk );
   }
@@ -9142,6 +9150,13 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
     if( scproc_SimpleDamage_CheckEnable(wk, bpp, damage) )
     {
       handexSub_putString( wk, &wk->strParam );
+
+      scproc_ViewEffect( wk, BTLEFF_WEATHER_DAMAGE, BTL_SVFTOOL_PokeIDtoPokePos(wk, pokeID), BTL_POS_NULL, FALSE, 0 );
+      // このダメージでひんしになるのであれば、カメラを元に戻す。
+      if( BPP_GetValue(bpp, BPP_HP) <= damage ){
+        scproc_ViewEffect( wk, BTLEFF_CAMERA_INIT_ORTHO_NO_WAIT, BTL_POS_NULL, BTL_POS_NULL, FALSE, 0 );
+      }
+
       scproc_SimpleDamage_Core( wk, bpp, damage, NULL );
     }
   }
