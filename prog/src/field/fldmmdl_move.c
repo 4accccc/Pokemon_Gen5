@@ -872,6 +872,48 @@ static void MMdl_MapAttrSplashProc_Jump1( MMDL *mmdl, ATTRDATA *data )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * ‰e@•\Ž¦‹–‰Â”»’è
+ * @param mmdl  MMDL *
+ * @param data  ATTRDATA
+ * @retval BOOL TRUE=‰e‚ð•\Ž¦
+ */
+//--------------------------------------------------------------
+static BOOL mmdl_CheckShadowUse( const MMDL *mmdl, const ATTRDATA *data )
+{
+  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
+  
+  if( MMDLSYS_CheckJoinShadow(fos) == FALSE ||
+      data->objcode_prm->shadow_type == MMDL_SHADOW_NON )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+//--------------------------------------------------------------
+/**
+ * ‰e@•\Ž¦‹–‰ÂAttr”»’è
+ * @param mmdl  MMDL *
+ * @param data  ATTRDATA
+ * @retval BOOL TRUE=‰e‚ð•\Ž¦
+ */
+//--------------------------------------------------------------
+static BOOL mmdl_CheckShadowAttr( const ATTRDATA *data )
+{
+  if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) == 0 )
+  {
+    return FALSE;
+  }
+  //‹Gß•Ï‰»’n–Ê•“~
+  if( data->season == PMSEASON_WINTER &&
+        MAPATTR_VALUE_CheckSeasonGround1(data->attr_val_now) )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
  * ‰e@“®ìŠJŽn 0,1
  * @param  mmdl  MMDL *
  * @param  now    Œ»Ý‚ÌƒAƒgƒŠƒrƒ…[ƒg
@@ -882,17 +924,12 @@ static void MMdl_MapAttrSplashProc_Jump1( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrShadowProc_01( MMDL *mmdl, ATTRDATA *data )
 {
-  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
-  
-  if( MMDLSYS_CheckJoinShadow(fos) == TRUE &&
-      data->objcode_prm->shadow_type != MMDL_SHADOW_NON &&
+  if( mmdl_CheckShadowUse( mmdl, data ) == TRUE &&
+      mmdl_CheckShadowAttr( data ) == TRUE &&
       MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_SHADOW_SET) == 0 )
   {
-    if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) )
-    {
-        FLDEFF_SHADOW_SetMMdl( mmdl, data->fectrl );
-        MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_SET );
-    }
+    FLDEFF_SHADOW_SetMMdl( mmdl, data->fectrl );
+    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_SET );
   }
 }
 
@@ -908,14 +945,9 @@ static void MMdl_MapAttrShadowProc_01( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data )
 {
-  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
-    
-  if( MMDLSYS_CheckJoinShadow(fos) == TRUE &&
-      data->objcode_prm->shadow_type != MMDL_SHADOW_NON )
+  if( mmdl_CheckShadowUse( mmdl, data ) == TRUE )
   {
-    if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) == 0 ||
-        data->season == PMSEASON_WINTER && //‹Gß•Ï‰»’n–Ê•“~
-        MAPATTR_VALUE_CheckSeasonGround1(data->attr_val_now) )
+    if( mmdl_CheckShadowAttr( data ) == FALSE )
     {
       MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
     }
