@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-17T19:05:08"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-18T12:09:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -917,7 +917,7 @@
 つかれちゃった　かも……</language>
 		<language name="JPN_KANJI" width="256">カレン『修行　修行で
 わたしも　わたしの　ポケモンも▽
-疲れちゃった　かも……</language>
+つかれちゃった　かも……</language>
 	</row>
 
 	<row id="plwc10_08_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -3039,7 +3039,7 @@
 		<language name="JPN_KANJI" width="256">タクロウ『お　わりーな　オレはさ
 ホワイトフォレストに　引っ越すわ▼
 ツッパリでも　ツッパリ過ぎると
-疲れるんだな　発見だぜ</language>
+つかれるんだな　発見だぜ</language>
 	</row>
 
 	<row id="plbc10_03_02" back-color="#ff8080,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4249,7 +4249,7 @@
 せかせかして　つかれるなぁ</language>
 		<language name="JPN_KANJI" width="256">ヒトシ『あーあ▼
 文明的な　暮らしも
-せかせかして　疲れるなぁ</language>
+せかせかして　つかれるなぁ</language>
 	</row>
 
 	<row id="plbc10_17_03" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4266,14 +4266,14 @@
 ヒトシ</attribute>
 		<language name="JPN" width="256">ヒトシ『ぼかぁ
 もう　せかせかした　せいかつに▽
-つかれちゃったん　だよね▼
+つかれちゃったんだよね▼
 ちょっと　ゆっくりした
 せいかつ　したいし▼
 きみの　ホワイトフォレストに
 つれていって　くれない？</language>
 		<language name="JPN_KANJI" width="256">ヒトシ『ぼかぁ
 もう　せかせかした　生活に▽
-疲れちゃったん　だよね▼
+つかれちゃったんだよね▼
 ちょっと　ゆっくりした
 生活　したいし▼
 きみの　ホワイトフォレストに
@@ -4441,7 +4441,7 @@
 のんびりしたいわ</language>
 		<language name="JPN_KANJI" width="256">ユミコ『なんだか
 効率を　追い求める▽
-生活に　疲れてきちゃった▼
+生活に　つかれてきちゃった▼
 ホワイトフォレストで
 のんびりしたいわ</language>
 	</row>
@@ -5281,7 +5281,7 @@
 		<language name="JPN_KANJI" width="256">ヒロアキ『あーあ
 ホワイトフォレストに　行きたいよ▼
 渡り歩く　生活も
-疲れてきちゃった</language>
+つかれてきちゃった</language>
 	</row>
 
 	<row id="plbc10_28_03" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
