@@ -5646,8 +5646,9 @@ static void common_Juel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == type)
   ){
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_IsDamage(waza) )
-    {
+    if( (WAZADATA_IsDamage(waza))
+    &&  (!BTL_TABLES_IsJuelOmmitWaza(waza) )
+    ){
       if( !BTL_SVFTOOL_IsSimulationMode(flowWk) )
       {
         BTL_HANDEX_PARAM_CONSUME_ITEM* param;

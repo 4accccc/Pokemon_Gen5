@@ -27,6 +27,12 @@ extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 
 
 /**
+ *  ジュエル系が反応しないワザ判定
+ */
+extern BOOL BTL_TABLES_IsJuelOmmitWaza( WazaID waza );
+
+
+/**
  *  さきどり失敗対象ワザ判定
  */
 extern BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza );

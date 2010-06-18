@@ -94,6 +94,21 @@ BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
   return checkTableElems( waza, table, NELEMS(table) );
 }
 
+
+/**
+ *  ジュエル系が反応しないワザ判定
+ */
+BOOL BTL_TABLES_IsJuelOmmitWaza( WazaID waza )
+{
+  static const u16 table[] = {
+    WAZANO_HONOONOTIKAI, WAZANO_KUSANOTIKAI, WAZANO_MIZUNOTIKAI,
+  };
+
+  return checkTableElems( waza, table, NELEMS(table) );
+}
+
+
+
 /**
  *  アイテムコールで発動してはいけないアイテムか判定
  */

@@ -283,7 +283,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ReqWazaCallActOrder: return "他ワザ呼び出し [%d] --> [%d], target=%d\n";
   case DBGSTR_SVFL_WazaExeFail_1:       return "ワザ出し失敗（１）  ポケID=%d, 失敗コード=%d\n";
   case DBGSTR_SVFL_WazaExeFail_2:       return "ワザ出し失敗（２）  ポケID=%d, 失敗コード=%d\n";
-  case DBGSTR_SVFL_HandEx_AddSick:      return "状態異常 poke=%d, code=%d, AlmostFlag=%d\n";
+  case DBGSTR_SVFL_HandEx_AddSick:      return "状態異常 poke=%d, code=%d, cont=%08x, AlmostFlag=%d\n";
   case DBGSTR_SVFL_CombiWazaCheck:      return "ワザ[%d]は合体ワザのひとつです\n";
   case DBGSTR_SVFL_CombiWazaFound:      return "  自分より後に、同じ位置(%d）にワザ(%d)を打つ味方（%d）が見つかった\n";
   case DBGSTR_SVFL_CombiDecide:         return "  ポケ(%d）が先発。ポケ(%d)と合体ワザ予約！\n";

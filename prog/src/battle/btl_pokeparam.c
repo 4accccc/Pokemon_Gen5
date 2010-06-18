@@ -2240,11 +2240,11 @@ void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID )
     {
       if( !BPP_SICKCONT_IsNull(bpp->coreParam.sickCont[i]) )
       {
-        TAYA_Printf("状態異常[%d]をチェック。依存ポケ=%d\n", i, BPP_SICKCONT_GetPokeID(bpp->coreParam.sickCont[i]));
+//        TAYA_Printf("状態異常[%d]をチェック。依存ポケ=%d\n", i, BPP_SICKCONT_GetPokeID(bpp->coreParam.sickCont[i]));
 
         if( BPP_SICKCONT_GetPokeID(bpp->coreParam.sickCont[i]) == depend_pokeID )
         {
-         TAYA_Printf("治します\n");
+//         TAYA_Printf("治します\n");
           bpp->coreParam.sickCont[i] = BPP_SICKCONT_MakeNull();
           cureDependSick( bpp, i );
         }

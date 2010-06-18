@@ -10074,6 +10074,7 @@ static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick 
 {
   u8 pokeID = BPP_GetID( target );
 
+//  TAYA_Printf("SickContRaw=%d, type=%d\n", sickCont.raw, sickCont.type);
   BPP_SetWazaSick( target, sick, sickCont );
   SCQUE_PUT_OP_SetSick( wk->que, pokeID, sick, sickCont.raw );
 
@@ -13950,7 +13951,7 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
     target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
     if( !BPP_IsDead(target) )
     {
-      BTL_N_Printf( DBGSTR_SVFL_HandEx_AddSick, param->pokeID, param->sickID, param->fAlmost );
+      BTL_N_Printf( DBGSTR_SVFL_HandEx_AddSick, param->pokeID, param->sickID, param->sickCont.raw, param->fAlmost );
 
       if( !scproc_AddSickCheckFail(wk, target, pp_user, param->sickID, param->sickCont,
         param->overWriteMode, param->fAlmost) )
