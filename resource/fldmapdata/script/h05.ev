@@ -29,6 +29,7 @@ _EVENT_DATA		ev_h05_minezumi_01
 _EVENT_DATA		ev_h05_minezumi_02
 _EVENT_DATA		ev_h05_minezumi_03
 _EVENT_DATA		ev_h05_minezumi_04
+_EVENT_DATA    ev_init_h05
 _EVENT_DATA_END
 
 /************************************************************/
@@ -48,8 +49,56 @@ INIT_EVENT_START	ev_zone_h05
 		_FLAG_RESET( FV_H05_WANDERGIRL )
 		//POSイベントを有効
 		$WK_SCENE_H05_GIRL = 1
+		
 	ENDIF
+	
+	_DEBUG_PRINT_WK( WK_SCENE_H05_GIRL )	//確認用
+	
 INIT_EVENT_END
+
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_h05
+	//少女出現位置の隣からハイリンクに行き来したとき、少女に話しかけられてしまう問題の対処
+	
+	//少女が表示されているなら、チェック処理へ
+	IF FLAG_OFF( FV_H05_WANDERGIRL ) THEN
+		_CALL	ev_wandergirl_pos_chk
+	ENDIF
+	
+INIT_EVENT_END
+
+ev_wandergirl_pos_chk:
+	{
+	DEFINE_LOCAL	lwk_pos_x
+	DEFINE_LOCAL	lwk_pos_z
+	
+	_PLAYER_POS_GET( lwk_pos_x, lwk_pos_z )	//自機の位置取得
+	
+	//自機の位置が少女出現位置と隣接しているなら、イベントを無効にする処理へ
+	IF $lwk_pos_x == 147 && $lwk_pos_z == 36 THEN
+		//少女の左隣り
+		_CALL	ev_wandergirl_off
+	ELSIF $lwk_pos_x == 148 && $lwk_pos_z == 35 THEN
+		//少女の上隣り
+		_CALL	ev_wandergirl_off
+	ELSIF $lwk_pos_x == 149 && $lwk_pos_z == 36 THEN
+		//少女の右隣り
+		_CALL	ev_wandergirl_off
+	ENDIF
+	
+	}
+_RET
+
+ev_wandergirl_off:
+	//消える少女を削除し、イベントを無効にします
+	_OBJ_DEL( H05_GIRL2_01 )
+	_FLAG_SET( FV_H05_WANDERGIRL )
+	$WK_SCENE_H05_GIRL = 0
+_RET
+
 
 /************************************************************/
 /*					ワンダーブリッジ						*/

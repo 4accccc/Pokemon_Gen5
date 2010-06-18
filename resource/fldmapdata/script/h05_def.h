@@ -15,5 +15,6 @@
 #define SCRID_H05_MINEZUMI_02 (8)
 #define SCRID_H05_MINEZUMI_03 (9)
 #define SCRID_H05_MINEZUMI_04 (10)
+#define SCRID_INIT_H05 (11)
 
 #endif //_H05_DEF_H_
