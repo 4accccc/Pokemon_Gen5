@@ -184,6 +184,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         plData->use_tile_limit = TRUE;
         plData->time_limit = 30;
         plData->comm_selected_num = 0;
+        
+        PokeRegulationCheckPokeParty_Func( reg , plData->pp , NULL );
       }
       else
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )

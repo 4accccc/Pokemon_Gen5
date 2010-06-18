@@ -334,6 +334,9 @@ int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type)
   case REGULATION_MUST_POKE:   //    #必須ポケモン
     ret = pReg->MUST_POKE;
     break;
+  case REGULATION_MUST_POKE_FORM:    //    #必須フォルム
+    ret = pReg->MUST_POKE_FORM;
+    break;
   case REGULATION_SHOOTER:    //    #シューター
     ret = pReg->SHOOTER;
     break;

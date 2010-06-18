@@ -619,7 +619,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   //PLIST_COMM_UpdateComm( work );
 
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
   {
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
     {
@@ -1905,6 +1905,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
 static void PLIST_InitMode_Menu( PLIST_WORK *work )
 {
   PLIST_MENU_ITEM_TYPE itemArr[8];
+  GFL_BG_LoadScreenReq( PLIST_BG_MENU );  //ちらつきぼうし！
   switch( work->plData->mode )
   {
   case PL_MODE_FIELD:
@@ -1980,7 +1981,7 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
     {
       u32 msgId = PLIST_ITEM_GetWazaListMessage( work , work->plData->item );
-      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_05 );
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , msgId );
     }
     
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
@@ -4247,59 +4248,20 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
     //強制選択
     if( work->isDecideParty == FALSE )
     {
-      u8 i;
-      u8 ofs = 0;
-      BOOL isFinish = FALSE;
       REGULATION *reg = (REGULATION*)work->plData->reg;
-      
-      ARI_TPrintf("AutoSelect Start!!\n");
-      ARI_TPrintf("Min[%d]Max[%d]\n",reg->NUM_LO,reg->NUM_HI);
-      while( isFinish == FALSE )
+      const BOOL ret = PokeRegulationCheckPokeParty_Func( reg , work->plData->pp , work->plData->in_num );
+      GF_ASSERT_MSG( ret ,"PLIST can't select battle order!!\n" );
+      if( ret == FALSE )
       {
-        //現在の選択を初期化
-        work->btlJoinNum = 0;
+        u8 i;
+        //止まらないために・・・
         for( i=0;i<PLIST_LIST_MAX;i++ )
         {
           work->plData->in_num[i] = 0;
-          if( PLIST_PLATE_CanSelect( work , work->plateWork[i] ) == TRUE )
-          {
-            PLIST_PLATE_SetBattleOrder( work , work->plateWork[i] , PPBO_JOIN_OK );
-          }
         }
-        //探す
-        for( i=0;i<PLIST_LIST_MAX;i++ )
+        for( i=0;i<reg->NUM_LO;i++ )
         {
-          const u8 idx = (i+ofs < PLIST_LIST_MAX ? i+ofs:i+ofs-PLIST_LIST_MAX );
-          if( PLIST_PLATE_CanSelect( work , work->plateWork[idx] ) == TRUE )
-          {
-            const PLIST_PLATE_CAN_BATTLE ret = PLIST_PLATE_CanJoinBattle( work , work->plateWork[idx] );
-            if( ret == PPCB_OK )
-            {
-              ARI_TPrintf("[%d]",idx);
-              work->plData->in_num[work->btlJoinNum] = idx+1;
-              work->btlJoinNum++;
-            }
-            if( work->btlJoinNum == reg->NUM_HI )
-            {
-              break;
-            }
-          }
-        }
-        if( work->btlJoinNum >= reg->NUM_LO )
-        {
-          isFinish = TRUE;
-          ARI_TPrintf("[OK!]\n");
-        }
-        else
-        {
-          //開始位置をずらして探す
-          ofs++;
-          ARI_TPrintf("[NG!]\n");
-          if( ofs >= PLIST_LIST_MAX )
-          {
-            GF_ASSERT_MSG( ofs < PLIST_LIST_MAX ,"PLIST can't select battle order!!\n" );
-            isFinish = TRUE;
-          }
+          work->plData->in_num[i] = i+1;
         }
       }
     }
@@ -4381,202 +4343,6 @@ static void PLIST_AddBagItem( PLIST_WORK *work , u16 itemNo )
 #pragma mark [>debug
 #if USE_DEBUGWIN_SYSTEM
 
-struct _PLIST_DEBUG_WORK
-{
-  u8 alpha1;
-  u8 alpha2;
-  u8 blend1;
-};
+#include "plist_debug_menu.c"
 
-#define PLIST_DEBUG_GROUP_NUMBER (50)
-static void PLIST_DEB_Update_Alpha1( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Draw_Alpha1( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Update_Alpha2( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Draw_Alpha2( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Update_Blend1( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Draw_Blend1( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Update_WaitMember( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Draw_WaitMember( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Update_TimeLimit( void* userWork , DEBUGWIN_ITEM* item );
-static void PLIST_DEB_Draw_TimeLimit( void* userWork , DEBUGWIN_ITEM* item );
-
-
-static void PLIST_InitDebug( PLIST_WORK *work )
-{
-  work->debWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_DEBUG_WORK) );
-  work->debWork->alpha1 = 12;
-  work->debWork->alpha2 = 16;
-  work->debWork->blend1 = 0;
-  DEBUGWIN_InitProc( PLIST_BG_MENU , work->fontHandle );
-  DEBUGWIN_ChangeLetterColor( 31,31,31 );
-  
-  DEBUGWIN_AddGroupToTop( PLIST_DEBUG_GROUP_NUMBER , "PokeList" , work->heapId );
-  
-  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Alpha1   ,PLIST_DEB_Draw_Alpha1   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Alpha2   ,PLIST_DEB_Draw_Alpha2   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Blend1   ,PLIST_DEB_Draw_Blend1   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_WaitMember   ,PLIST_DEB_Draw_WaitMember   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_TimeLimit    ,PLIST_DEB_Draw_TimeLimit    , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
-  
-}
-
-static void PLIST_TermDebug( PLIST_WORK *work )
-{
-  DEBUGWIN_RemoveGroup( PLIST_DEBUG_GROUP_NUMBER );
-  DEBUGWIN_ExitProc();
-  GFL_HEAP_FreeMemory( work->debWork );
-}
-
-//アルファ第1面光度
-static void PLIST_DEB_Update_Alpha1( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT && 
-      work->debWork->alpha1 > 0 )
-  {
-    work->debWork->alpha1--;
-    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
-    DEBUGWIN_RefreshScreen();
-  }
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT && 
-      work->debWork->alpha1 < 16 )
-  {
-    work->debWork->alpha1++;
-    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-
-static void PLIST_DEB_Draw_Alpha1( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "アルファ１[%2d]",work->debWork->alpha1 );
-}
-
-//アルファ第2面光度
-static void PLIST_DEB_Update_Alpha2( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT && 
-      work->debWork->alpha2 > 0 )
-  {
-    work->debWork->alpha2--;
-    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
-    DEBUGWIN_RefreshScreen();
-  }
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT && 
-      work->debWork->alpha2 < 16 )
-  {
-    work->debWork->alpha2++;
-    G2_ChangeBlendAlpha( work->debWork->alpha1 , work->debWork->alpha2 );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-
-static void PLIST_DEB_Draw_Alpha2( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "アルファ２[%2d]",work->debWork->alpha2 );
-}
-
-//ブレンド1面
-static void PLIST_DEB_Update_Blend1( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT || 
-      GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
-  {
-    if( work->debWork->blend1 == 0 )
-    {
-      work->debWork->blend1 = 1;
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , 
-                        GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
-                        work->debWork->alpha1 , work->debWork->alpha2 );
-    }
-    else
-    {
-      work->debWork->blend1 = 0;
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
-                        GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ ,
-                        work->debWork->alpha1 , work->debWork->alpha2 );
-    }
-    DEBUGWIN_RefreshScreen();
-  }
-}
-
-static void PLIST_DEB_Draw_Blend1( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-  if( work->debWork->blend1 == 0 )
-  {
-    DEBUGWIN_ITEM_SetNameV( item , "ブレンド[BG2+OBJ]");
-  }
-  else
-  {
-    DEBUGWIN_ITEM_SetNameV( item , "ブレンド[BG2]");
-  }
-}
-
-static void PLIST_DEB_Update_WaitMember( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-  {
-    if( work->plData->comm_selected_num > 0 )
-    {
-      work->plData->comm_selected_num--;
-      DEBUGWIN_RefreshScreen();
-    }
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-  {
-    if( work->plData->comm_selected_num < 3 )
-    {
-      work->plData->comm_selected_num++;
-      DEBUGWIN_RefreshScreen();
-    }
-  }
-}
-
-static void PLIST_DEB_Draw_WaitMember( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "待機人数[%d]",work->plData->comm_selected_num);
-}
-
-static void PLIST_DEB_Update_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
-  {
-    if( work->plData->time_limit > 0 )
-    {
-      work->plData->time_limit--;
-      DEBUGWIN_RefreshScreen();
-    }
-  }
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
-  {
-    if( work->plData->time_limit < 600 )
-    {
-      work->plData->time_limit++;
-      DEBUGWIN_RefreshScreen();
-    }
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-      work->plData->time_limit = 3;
-  }
-}
-
-static void PLIST_DEB_Draw_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
-{
-  PLIST_WORK *work = (PLIST_WORK*)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "残り時間[%d]",work->plData->time_limit);
-}
-#endif //USE_DEBUGWIN_SYSTEM
+#endif

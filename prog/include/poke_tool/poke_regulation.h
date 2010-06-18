@@ -33,8 +33,8 @@ typedef enum{
 //伝説ポケモンかどうか
 extern BOOL PokeRegulationCheckLegend(u16 monsno);
 
-// ポケモンがレギュレーションに適合しているかどうか調べる  
-extern BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp);
+// ポケモンがレギュレーションに適合しているかどうか調べる(return POKEFAILEDBIT)
+extern const int PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp);
 // ポケパーティがレギュレーションに完全適合しているかどうか調べる バトル最終チェック用
 extern int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, u8* sel);
 // ポケパーティ中にレギュレーションに適合している
@@ -48,6 +48,7 @@ extern void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg);
 
 
 //禁止フラグのビット
+#define POKEFAILEDBIT_NONE        (0x00)     ///< エラー無し
 #define POKEFAILEDBIT_NUM         (0x01)     ///< 数が足りてない
 #define POKEFAILEDBIT_LEVEL       (0x02)     ///< レベル違反のポケモンがいる
 #define POKEFAILEDBIT_VETO_POKE     (0x04)   ///< 禁止ポケモン
@@ -56,6 +57,8 @@ extern void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg);
 #define POKEFAILEDBIT_EGG         (0x20)    ///< たまご
 #define POKEFAILEDBIT_VETO_ITEM         (0x40)   ///< 禁止アイテム
 #define POKEFAILEDBIT_MAST_POKE (0x80)   ///< 必要ポケモンがいない
+#define POKEFAILEDBIT_SUM_LEVEL (0x100)   ///< 合計レベル
+
 
 // ポケモンがレギュレーションに適合しているかどうか調べる  何処が悪かったかBITで返します
 extern BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp,u32* FailedBit);
@@ -96,4 +99,5 @@ extern REGULATION_PRINT_MSG * PokeRegulation_CreatePrintMsg(
   const REGULATION* pReg, WORDSET *wordset, HEAPID heap_id, int shooter_type);
 extern void PokeRegulation_DeletePrintMsg(REGULATION_PRINT_MSG *rpm);
 
+extern const BOOL PokeRegulationCheckPokeParty_Func( const REGULATION* reg , POKEPARTY *party , u8 *arr );
 

@@ -26,6 +26,7 @@
 
 #define _POKENO_NONE  (0)          // ポケモン番号でない番号
 
+static const int PokeRegulationCheckPokeParty_Func2( const REGULATION* reg , POKEPARTY *party , const u8 *checkArr ,  u8 *retArr , int *errBit );
 
 //------------------------------------------------------------------
 /**
@@ -71,7 +72,7 @@ BOOL PokeRegulationCheckLegend(u16 monsno)
  */
 //------------------------------------------------------------------
 
-BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
+const int PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
 {
   u16 mons = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
   u16 item = (u16)PP_Get( pp, ID_PARA_item, NULL );
@@ -88,28 +89,28 @@ BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
   switch(range){
   case REGULATION_LEVEL_RANGE_OVER:
     if(ans > level){
-      return FALSE;
+      return POKEFAILEDBIT_LEVEL;
     }
     break;
   case REGULATION_LEVEL_RANGE_LESS:
     if(ans < level){
-      return FALSE;
+      return POKEFAILEDBIT_LEVEL;
     }
     break;
   }
   //たまご参戦不可
   if( PP_Get(pp, ID_PARA_tamago_flag, NULL ) != 0 ){
-    return FALSE;
+    return POKEFAILEDBIT_EGG;
   }
   // 参加禁止ポケかどうか
   if(Regulation_CheckParamBit(pReg, REGULATION_VETO_POKE_BIT, mons)){
-    return FALSE;
+    return POKEFAILEDBIT_VETO_POKE;
   }
   //持ち込み不可アイテムかどうか
   if(Regulation_CheckParamBit(pReg, REGULATION_VETO_ITEM, item)){
-    return FALSE;
+    return POKEFAILEDBIT_VETO_ITEM;
   }
-  return TRUE;
+  return POKEFAILEDBIT_NONE;
 }
 
 //------------------------------------------------------------------
@@ -124,86 +125,56 @@ BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
 
 int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, u8* sel)
 {
-  POKEMON_PARAM* pp;
-  int ans,cnt = 0,j,i,level = 0,form=0;
-  u16 monsTbl[6],itemTbl[6],formTbl[6];
-
-  if(pReg==NULL){
+  if(pReg==NULL)
+  {
     return POKE_REG_OK;
   }
-  for(i = 0; i < 6 ;i++){
-    monsTbl[i] = _POKENO_NONE;
-    formTbl[i] = _POKENO_NONE;
-    itemTbl[i] = ITEM_DUMMY_DATA;
-    if(sel[i]){
-      cnt++;
+  {
+    u8 retArr[6];
+    int errBit;
+    
+    const BOOL ret = PokeRegulationCheckPokeParty_Func2( pReg , party , sel , retArr , &errBit );
+    if( errBit == POKEFAILEDBIT_NONE )
+    {
+      return POKE_REG_OK;
     }
-  }
-
-  //全体数
-  ans = Regulation_GetParam(pReg, REGULATION_NUM_LO);
-  if(cnt < ans){
-    return POKE_REG_NUM_FAILED;  // 数があってない
-  }
-  ans = Regulation_GetParam(pReg, REGULATION_NUM_HI);
-  if(cnt > ans){
-    return POKE_REG_NUM_FAILED;  // 数があってない
-  }
-  for(i = 0; i < PokeParty_GetPokeCount(party) ;i++){
-    if(sel[i]){
-      int pid = sel[i] - 1;
-      pp = PokeParty_GetMemberPointer(party, pid);
-      if(PokeRegulationCheckPokePara(pReg, pp) == FALSE){
-        return POKE_REG_ILLEGAL_POKE; // 個体が引っかかった
+    else
+    {
+      if( (errBit & POKEFAILEDBIT_LEVEL)     ||
+          (errBit & POKEFAILEDBIT_VETO_POKE) ||
+          (errBit & POKEFAILEDBIT_EGG)       ||
+          (errBit & POKEFAILEDBIT_VETO_ITEM) )
+      {
+        return POKE_REG_ILLEGAL_POKE;
       }
-      monsTbl[i] = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
-      itemTbl[i] = (u16)PP_Get( pp, ID_PARA_item, NULL );
-      formTbl[i] = (u16)PP_Get( pp, ID_PARA_form_no, NULL );
-      level += PP_Get(pp,ID_PARA_level,NULL);
-    }
-  }
-  //合計LV
-  ans = Regulation_GetParam(pReg, REGULATION_LEVEL_TOTAL);
-  if((level > ans) && (ans != 0)){
-    return POKE_REG_TOTAL_LV_FAILED;
-  }
-  // 同じポケモン
-  ans = Regulation_GetParam(pReg, REGULATION_BOTH_POKE);
-  if((ans == FALSE) && (cnt > 1)){  // 同じポケモンはだめで 一体以上の場合
-    for(i = 0; i < (6-1); i++){
-      for(j = i + 1;j < 6; j++){
-        if((monsTbl[i] == monsTbl[j]) && (monsTbl[i] != _POKENO_NONE)){
-          return POKE_REG_BOTH_POKE;
-        }
+      else
+      if( errBit & POKEFAILEDBIT_BOTHPOKE )
+      {
+        return POKE_REG_BOTH_POKE;
+      }
+      else
+      if( errBit & POKEFAILEDBIT_BOTHITEM )
+      {
+        return POKE_REG_BOTH_ITEM;
+      }
+      else
+      if( errBit & POKEFAILEDBIT_SUM_LEVEL )
+      {
+        return POKE_REG_TOTAL_LV_FAILED;
+      }
+      else
+      if( errBit & POKEFAILEDBIT_MAST_POKE )
+      {
+        return POKE_REG_NO_MASTPOKE;
+      }
+      else
+      if( errBit & POKEFAILEDBIT_NUM )
+      {
+        return POKE_REG_NUM_FAILED;
       }
     }
+    GF_ASSERT_MSG( 0 , "Check failue[%d]\n",errBit );
   }
-  // 同じアイテム
-  ans = Regulation_GetParam(pReg, REGULATION_BOTH_ITEM);
-  if((ans == FALSE) && (cnt > 1)){  // 同じアイテムはだめで 一体以上の場合
-    for(i = 0; i < (6-1); i++){
-      for(j = i + 1;j < 6; j++){
-        if((itemTbl[i] == itemTbl[j]) && (monsTbl[i] != _POKENO_NONE) && (ITEM_DUMMY_DATA != itemTbl[i])){
-          return POKE_REG_BOTH_ITEM;
-        }
-      }
-    }
-  }
-  ans = Regulation_GetParam(pReg, REGULATION_MUST_POKE);
-  form = Regulation_GetParam(pReg, REGULATION_MUST_POKE_FORM);
-  if((ans) && (cnt > 1)){ //必須ポケモンがいる
-    for(i = 0; i < 6; i++){
-      if(monsTbl[i] == ans){
-        if(formTbl[i] == form){
-          break;
-        }
-      }
-    }
-    if(i==6){
-      return POKE_REG_NO_MASTPOKE;
-    }
-  }
-
   return POKE_REG_OK;
 }
 
@@ -275,7 +246,7 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
     pp = PokeParty_GetMemberPointer(party, i);
     monsTbl[i] = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
     levelTbl[i] = PP_Get(pp,ID_PARA_level,NULL);
-    if(PokeRegulationCheckPokePara(pReg, pp ) == FALSE){
+    if(PokeRegulationCheckPokePara(pReg, pp ) != POKEFAILEDBIT_NONE){
       monsTbl[i] = _POKENO_NONE; // 固体が引っかかったので消す
       partyNum--;
     }
@@ -311,12 +282,23 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
   //partyNum = ans;
 
   //残ったポケモンの合計LV組み合わせ検査
-  ans = Regulation_GetParam(pReg, REGULATION_LEVEL_TOTAL);
-  if(ans == 0){
-    return POKE_REG_OK;  // LV制限なし
-  }
-  for(i = 0;i < cnt;i++){
-    if(_totalLevelCheck(monsTbl,levelTbl,markTbl, ans, i, partyNum, cnt)){
+  /*
+    ans = Regulation_GetParam(pReg, REGULATION_LEVEL_TOTAL);
+    if(ans == 0){
+      return POKE_REG_OK;  // LV制限なし
+    }
+    for(i = 0;i < cnt;i++){
+      if(_totalLevelCheck(monsTbl,levelTbl,markTbl, ans, i, partyNum, cnt)){
+        return POKE_REG_OK;
+      }
+    }
+  */
+  {
+    //総当りチェック
+    //必須ポケ等を含めた合計レベルなどのチェック
+    const BOOL ret = PokeRegulationCheckPokeParty_Func( pReg,party,NULL );
+    if( ret == TRUE )
+    {
       return POKE_REG_OK;
     }
   }
@@ -472,7 +454,62 @@ int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party
     *FailedBit |= POKEFAILEDBIT_MAST_POKE;
     ret = POKE_REG_NO_MASTPOKE;
   }
+
+  if( ret == POKE_REG_OK )
+  {
+    //総当りチェック
+    //必須ポケ等を含めた合計レベルなどのチェック
+    const BOOL checkRet = PokeRegulationCheckPokeParty_Func( pReg,party,NULL );
+    if( checkRet == FALSE )
+    {
+      ret = POKE_REG_TOTAL_LV_FAILED;
+    }
+  }
   return ret;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レベルにレギュレーションにそったレベル補正をかける
+ *
+ *	@param	const REGULATION* pReg  レギュレーション
+ *	@param	int               lv    レベル
+ *	@return	int               補正後レベル
+ */
+//-----------------------------------------------------------------------------
+static const u32 PokeRegulation_ModifyLevelCalc( const REGULATION* pReg, const int level )
+{
+  const u32 modfity_level = Regulation_GetParam(pReg, REGULATION_LEVEL);
+  //レギュレーションごとにレベル補正をかけるポケモンが違う
+  switch( Regulation_GetParam(pReg, REGULATION_LEVEL_RANGE) )
+  { 
+  case REGULATION_LEVEL_RANGE_DRAG_DOWN:  
+    //以上補正なので、補正レベル以上ならば補正レベルにする
+    if( level > modfity_level )
+    {
+      return modfity_level;
+    }
+    break;
+
+  case REGULATION_LEVEL_RANGE_SAME:
+    //全補正なので、全員行う
+    return modfity_level;
+    break;
+
+  case REGULATION_LEVEL_RANGE_PULL_UP:
+    //以下補正なので補正レベル以下ならば補正レベルにする
+    if( level < modfity_level )
+    {
+      return modfity_level;
+    }
+    break;
+
+  default:
+    //それ以外は行わない
+    break;
+  }
+  return level;
 }
 
 //----------------------------------------------------------------------------
@@ -496,31 +533,11 @@ void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *par
 
     if( PP_Get( pp, ID_PARA_poke_exist, NULL ) )
     { 
-      //レギュレーションごとにレベル補正をかけるポケモンが違う
-      switch( Regulation_GetParam(pReg, REGULATION_LEVEL_RANGE) )
-      { 
-      case REGULATION_LEVEL_RANGE_DRAG_DOWN:  
-        //以上補正なので、補正レベル以上ならば補正レベルにする
-        is_modify = ( PP_Get( pp, ID_PARA_level, NULL) >= modfity_level );
-        break;
-
-      case REGULATION_LEVEL_RANGE_SAME:
-        //全補正なので、全員行う
-        is_modify = TRUE; 
-        break;
-
-      case REGULATION_LEVEL_RANGE_PULL_UP:
-        //以下補正なので補正レベル以下ならば補正レベルにする
-        is_modify = ( PP_Get( pp, ID_PARA_level, NULL) <= modfity_level );
-        break;
-
-      default:
-        //それ以外は行わない
-        is_modify = FALSE;
-      }
+      const u32 level = PP_Get( pp , ID_PARA_level , NULL );
+      const u32 modLv = PokeRegulation_ModifyLevelCalc( pReg , level );
 
       //補正をかける
-      if( is_modify )
+      if( level != modLv )
       { 
         POKETOOL_MakeLevelRevise(pp, modfity_level);
       }
@@ -823,4 +840,235 @@ void PokeRegulation_DeletePrintMsg(REGULATION_PRINT_MSG *rpm)
   }
   GFL_MSG_Delete(rpm->msgdata);
   GFL_HEAP_FreeMemory(rpm);
+}
+
+//==================================================================
+/**
+ * レギュレーションパーティー作成チェック
+ *
+ * @param   reg   レギュレーション
+ * @param   party パーティー
+ * @param   arr   結果格納(NULL可)
+ *
+ * @return  BOOL  パーティ作成可否フラグ
+ */
+//==================================================================
+static const BOOL PokeRegCheckParty_CalcIdx( u8 *arr );
+
+const BOOL PokeRegulationCheckPokeParty_Func( const REGULATION* reg , POKEPARTY *party , u8 *arr )
+{
+  //合計レベルと必須ポケを考慮したチェック
+  u8 checkWork[6]={1,2,3,4,5,5};  //ループの初期値(最後の値は関数の中で増えるので5
+
+  while( PokeRegCheckParty_CalcIdx( checkWork ) )
+  {
+    if( PokeRegulationCheckPokeParty_Func2( reg , party , checkWork , arr , NULL ) == TRUE )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+static const int PokeRegulationCheckPokeParty_Func2( const REGULATION* reg , POKEPARTY *party , const u8 *checkArr , u8 *retArr , int *errBit )
+{
+  u8 i,j;
+  u8 okNum = 0;
+  BOOL isOk = TRUE;
+  u32 monsNoArr[6] = {0,0,0,0,0,0};
+  u32 formNoArr[6] = {0,0,0,0,0,0};
+  u32 itemNoArr[6]   = {0,0,0,0,0,0};
+  u16 sumLv = 0;
+  const int limitLv = Regulation_GetParam(reg, REGULATION_LEVEL_TOTAL);
+  //OS_TFPrintf( 3 , "%d,%d,%d,%d,%d,%d\n",checkArr[0],checkArr[1],checkArr[2],checkArr[3],checkArr[4],checkArr[5]);
+  if( retArr != NULL )
+  {
+    for( i=0;i<6;i++ )
+    {
+      retArr[okNum] = 0;
+    }
+  }
+  if( errBit != NULL )
+  {
+    *errBit = 0;
+  }
+  for( i=0;i<6;i++ )
+  {
+    if( checkArr[i] != 0 )
+    {
+      const u8 idx = checkArr[i] - 1;
+      if( idx < PokeParty_GetPokeCount( party ) )
+      {
+        POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party,idx);
+        const u32 monsNo = PP_Get( pp, ID_PARA_monsno, NULL );
+        const u32 itemNo = PP_Get( pp, ID_PARA_item, NULL );
+        const u32 lv = PokeRegulation_ModifyLevelCalc( reg , PP_Get( pp, ID_PARA_level, NULL ) );
+        //個体チェック
+        const int pokeRet = PokeRegulationCheckPokePara(reg, pp);
+        if( pokeRet != POKEFAILEDBIT_NONE)
+        {
+          if( errBit != NULL )
+          {
+            *errBit |= pokeRet;
+          }
+          continue;
+        }
+        //同じポケ・道具チェック
+        isOk = TRUE;
+        for( j=0;j<okNum;j++ )
+        {
+          if( Regulation_GetParam(reg, REGULATION_BOTH_POKE) == FALSE )
+          {
+            //ポケモン被った
+            if( monsNoArr[j] == monsNo )
+            {
+              isOk = FALSE;
+              if( errBit != NULL )
+              {
+                *errBit |= POKEFAILEDBIT_BOTHPOKE;
+              }
+              break;
+            }
+          }
+          if( Regulation_GetParam(reg, REGULATION_BOTH_ITEM) == FALSE )
+          {
+            if( itemNo != 0 &&
+                itemNoArr[j] == itemNo )
+            {
+              isOk = FALSE;
+              //アイテム被った
+              if( errBit != NULL )
+              {
+                *errBit |= POKEFAILEDBIT_BOTHITEM;
+              }
+              break;
+            }
+          }
+        }
+        if( isOk == FALSE )
+        {
+          continue;
+        }
+        //合計レベルチェック
+        if( limitLv != 0 &&
+            sumLv + lv > limitLv )
+        {
+          if( errBit != NULL )
+          {
+            *errBit |= POKEFAILEDBIT_SUM_LEVEL;
+          }
+          continue;
+        }
+        
+        //個体OK！
+        if( retArr != NULL )
+        {
+          retArr[okNum] = idx+1;
+        }
+        monsNoArr[okNum] = monsNo;
+        formNoArr[okNum] = PP_Get( pp, ID_PARA_form_no, NULL );
+        itemNoArr[okNum] = itemNo;
+        sumLv += lv;
+        okNum++;
+        if( okNum >= Regulation_GetParam(reg, REGULATION_NUM_HI ) )
+        {
+          //規定人数到達！
+          if( errBit != NULL )
+          {
+            if( okNum < 6 &&
+                checkArr[okNum] != 0 )
+            {
+              //まだ要る→一応人数オーバー
+              *errBit |= POKEFAILEDBIT_NUM;
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
+  
+  //最終チェック
+  if( okNum >= Regulation_GetParam(reg, REGULATION_NUM_LO ) )
+  {
+    //必須チェック
+    const int mustPoke = Regulation_GetParam(reg, REGULATION_MUST_POKE);
+    isOk = TRUE;
+    if( mustPoke != 0 )
+    {
+      u8 j;
+      const int mustForm = Regulation_GetParam(reg, REGULATION_MUST_POKE_FORM);
+      isOk = FALSE;
+      for( j=0;j<okNum;j++ )
+      {
+        if( mustPoke == monsNoArr[j] &&
+            mustForm == formNoArr[j] )
+        {
+          isOk = TRUE;
+          break;
+        }
+      }
+    }
+    if( isOk == TRUE )
+    {
+      return TRUE;
+    }
+    else
+    {
+      //必須ポケ居ない
+      if( errBit != NULL )
+      {
+        *errBit |= POKEFAILEDBIT_MAST_POKE;
+      }
+    }
+  }
+  else
+  {
+    //人数不足
+    if( errBit != NULL )
+    {
+      *errBit |= POKEFAILEDBIT_NUM;
+    }
+  }
+  
+  return FALSE;
+}
+
+
+static const BOOL PokeRegCheckParty_CalcIdx( u8 *arr )
+{
+  //forの処理を抜けてくるのでここで増やす
+  arr[5]++;
+  for( /*none*/ ; arr[0]<=6 ; arr[0]++ )
+  {
+    for( /*none*/ ; arr[1]<=6 ; arr[1]++ )
+    {
+      for( /*none*/ ; arr[2]<=6 ; arr[2]++ )
+      {
+        for( /*none*/ ; arr[3]<=6 ; arr[3]++ )
+        {
+          for( /*none*/ ; arr[4]<=6 ; arr[4]++ )
+          {
+            for( /*none*/ ; arr[5]<=6 ; arr[5]++ )
+            {
+              if( arr[0] != arr[1] && arr[0] != arr[2] && arr[0] != arr[3] &&
+                  arr[0] != arr[4] && arr[0] != arr[5] && arr[1] != arr[2] &&
+                  arr[1] != arr[3] && arr[1] != arr[4] && arr[1] != arr[5] &&
+                  arr[2] != arr[3] && arr[2] != arr[4] && arr[2] != arr[5] &&
+                  arr[3] != arr[4] && arr[3] != arr[5] && arr[4] != arr[5] )
+              {
+                return TRUE;
+              }
+            }
+            arr[5] = 1;
+          }
+          arr[4] = 1;
+        }
+        arr[3] = 1;
+      }
+      arr[2] = 1;
+    }
+    arr[1] = 1;
+  }
+  return FALSE;
 }
