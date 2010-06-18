@@ -418,7 +418,14 @@ static void PFuncAddPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_
 static u16 PFuncGetTypePokemon(SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
 {
   POKEMON_PARAM * pp = createPokemon( work, gpd );
-  BOOL tamago_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+  BOOL tamago_flag;
+
+  if ( pp == NULL )
+  { //万が一のエラー処理
+    return SCR_POSTMAN_TYPE_POKEMON;
+  }
+
+  tamago_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
 
   GFL_HEAP_FreeMemory( pp );
   if ( tamago_flag == TRUE ) {
@@ -429,6 +436,10 @@ static u16 PFuncGetTypePokemon(SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PAC
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief ポケモン受け取り成功メッセージの生成
+ * @attention 万が一の場合MONSNO=0の名前を表示するようにしている
+ */
 //--------------------------------------------------------------
 static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work )
 {
@@ -439,13 +450,16 @@ static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd
   WORDSET_RegisterPlayerName( wordset, 0, mystatus );
   if ( pp == NULL ) {
     GF_ASSERT( 0 );
-  } else if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == TRUE ) {
-    TAMADA_Printf("Mystery Present TAMAGO!");
-    msg_id = msg_postman_12;
+    WORDSET_RegisterPokeMonsNameNo( wordset, 1, 0 );
   } else {
-    WORDSET_RegisterPokeMonsName( wordset, 1, pp );
+    if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == TRUE ) {
+      TAMADA_Printf("Mystery Present TAMAGO!");
+      msg_id = msg_postman_12;
+    } else {
+      WORDSET_RegisterPokeMonsName( wordset, 1, pp );
+    }
+    GFL_HEAP_FreeMemory( pp );
   }
-  GFL_HEAP_FreeMemory( pp );
   return msg_id;
 }
 
@@ -487,6 +501,11 @@ static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DAT
   u16 item_no = gpd->data.item.itemNo;
   BOOL result;
 
+  if ( item_no == ITEM_DUMMY_DATA || item_no > ITEM_DATA_MAX )
+  {
+    GF_ASSERT( 0 );
+    return;
+  }
   result = MYITEM_AddItem( myitem, item_no, 1, heapID );
   //2010.06.04  tamada  不正贈り物対策：手持ちに加えられなくてもAssertにしない
   //GF_ASSERT( result );
