@@ -3010,13 +3010,16 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
        break;
     }
 
+    // ここまで来たらワザが出ることは確定
+    wk->prevExeWaza = actWaza;
+
     // 遅延発動ワザの準備処理
     if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){ break; }
 
     // 合体ワザ（先発）の準備処理
     if( scproc_Fight_CheckCombiWazaReady(wk, attacker, actWaza, actTargetPos) ){ break; }
 
-    // ここまで来たらワザが出ることは確定
+    // ワザ出し記録
     BTL_WAZAREC_Add( &wk->wazaRec, actWaza, wk->turnCount, BPP_GetID(attacker) );
     scproc_WazaExe_Decide( wk, attacker, wk->wazaParam, BTL_EVENT_WAZA_EXE_DECIDE );
 
@@ -3031,8 +3034,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     {
       fWazaEnable = scproc_Fight_WazaExe( wk, attacker, actWaza, wk->psetTarget );
     }
-
-    wk->prevExeWaza = actWaza;
 
   }while(0);
 
@@ -4747,11 +4748,15 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
     if( waza != WAZANO_WARUAGAKI )
     {
       // アンコールによる失敗チェック
-      if( (BPP_CheckSick(attacker, WAZASICK_ENCORE))
-      &&  (BPP_GetPrevOrgWazaID(attacker) != waza)
-      ){
-        cause = SV_WAZAFAIL_WAZALOCK;
-        break;
+      if( BPP_CheckSick(attacker, WAZASICK_ENCORE) )
+      {
+        WazaID prevWaza = BPP_GetPrevOrgWazaID( attacker );
+        if( (prevWaza != WAZANO_WARUAGAKI)
+        &&  (prevWaza != waza )
+        ){
+          cause = SV_WAZAFAIL_WAZALOCK;
+          break;
+        }
       }
       // ワザロック（こだわり）による失敗チェック
       if( (BPP_CheckSick(attacker, WAZASICK_WAZALOCK))
