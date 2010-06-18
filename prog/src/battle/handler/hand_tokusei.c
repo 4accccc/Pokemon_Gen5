@@ -1592,15 +1592,16 @@ static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
     BtlExPos  exPos = EXPOS_MAKE( BTL_EXPOS_FULL_FRIENDS, pos );
     u8* pokeIDAry = (u8*)work;
     u8  cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, pokeIDAry );
-    const BTL_POKEPARAM* bpp;
     u8 i;
     for(i=0; i<cnt; ++i)
     {
-      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeIDAry[i] );
-      if( (BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokuseiID)
-      &&  (!BPP_GetID(bpp) != pokeID)
-      ){
-        return TRUE;
+      if( pokeIDAry[i] != pokeID )
+      {
+        const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeIDAry[i] );
+        if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokuseiID )
+        {
+          return TRUE;
+        }
       }
     }
   }
