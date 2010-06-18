@@ -391,13 +391,13 @@ void NetErr_DispCallFatal(void)
 		return;
 	}
 
+	//通信切断
+	NetErr_ExitNetSystem();
+
 	//エラー画面描画
 	Local_ErrDispInit(TRUE);
 	
 //		OS_SpinWait(10000);
-	
-	//通信切断
-	NetErr_ExitNetSystem();
 
   //無限ループ
   do{
