@@ -412,8 +412,7 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
       GFL_STR_DeleteBuffer(str_expand);
     }
     else{
-      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-      const OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+      const OCCUPY_INFO *occupy = MonolithTool_GetOccupyInfo(appwk);
       int num, msg_id;
       STRBUF *str_msg, *str_expand;
       
