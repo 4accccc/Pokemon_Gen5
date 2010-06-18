@@ -2812,7 +2812,7 @@ static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end
   tsu->scale_speed  = scale_speed;
   tsu->pos_y        = pos_y;
 
-  BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_ScaleChange, tsu, 0 ), TCB_ScaleChange_CB );
+  BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_ScaleChange, tsu, 0 ), TCB_ScaleChange_CB );
 
   biw->tcb_execute_count++;
 }
@@ -2876,7 +2876,7 @@ static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, i
   tsu->scroll_speed = scroll_speed;
   tsu->scroll_count = scroll_count;
 
-  BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_ScrollUp, tsu, 0 ), TCB_ScrollUp_CB );
+  BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_ScrollUp, tsu, 0 ), TCB_ScrollUp_CB );
 
   biw->tcb_execute_count++;
 }
@@ -2927,7 +2927,7 @@ static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DI
 
   //indexから表示するスクリーンを読み替える
 
-  BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_ScreenAnime, tsa, 0 ), TCB_ScreenAnime_CB );
+  BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_ScreenAnime, tsa, 0 ), TCB_ScreenAnime_CB );
 
   biw->tcb_execute_count++;
 }
