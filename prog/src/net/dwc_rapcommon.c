@@ -163,10 +163,11 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
 
 
-  if(ptr == NULL){
-    GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
-    // ヒープが無い場合の修正
-    GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+  if(ptr == NULL){  // ヒープが無い場合
+//    GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
+//    GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+//    returnNo = ERRORCODE_HEAP;
+    GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );  //エラーになる
     return NULL;
   }
   return ptr;
