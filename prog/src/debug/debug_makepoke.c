@@ -1408,7 +1408,7 @@ static void box_setup_form_change( DMP_MAINWORK* wk )
   case MONSNO_ARUSEUSU:
     form = POKETOOL_GetPokeTypeFromItem( item );
     break;
-  case MONSNO_INSEKUTA:
+  case MONSNO_656:
     form = POKETOOL_GetPokeInsekutaFromItem( item );
     break;
   default:
