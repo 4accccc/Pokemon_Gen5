@@ -3,6 +3,7 @@ $0001
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_005.spa
 #001
 %00
+指定されたワークに値をセット	WCS_CAMERA_WORK	1
 制御モード変更	継続
 カメラ移動	追従	初期位置	10	0	8
 射影モード	正射影	すべて
