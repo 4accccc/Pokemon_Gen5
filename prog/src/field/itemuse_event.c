@@ -16,6 +16,8 @@
 #include "field/zonedata.h"
 #include "app/itemuse.h"
 
+#include "field_comm/intrude_work.h"  //Intrude_CheckNetIsExit
+
 #define ITEMCHECK_NONE  (0xFF)
 
 typedef struct _FLD_ITEM_FUNCTION{
@@ -283,6 +285,7 @@ static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, 
 //=============================================================================
 typedef struct{
   GAMESYS_WORK *gameSys;
+  u32 watchDogTimer;      ///<監視用タイマー
 } CYCLEUSE_STRUCT;
 
 //------------------------------------------------------------------------------
@@ -299,6 +302,15 @@ static GMEVENT_RESULT CycleEvent(GMEVENT * event, int * seq, void *work)
   
   switch( (*seq) ){
   case 0:
+    { //通信切断中の場合、終了するか指定フレーム経過しないと先にすすめない
+      GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( pCy->gameSys );
+      pCy->watchDogTimer ++;
+      if ( Intrude_CheckNetIsExit( game_comm ) == TRUE && pCy->watchDogTimer < 30 )
+      {
+        OS_Printf("Waiting Intrude Exit...\n");
+        break;
+      }
+    }
     FIELDMAP_SetPlayerItemCycle( fieldmap );
     (*seq)++;
   case 1:
@@ -353,6 +365,7 @@ GMEVENT * EVENT_CycleUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
   GMEVENT * event = GMEVENT_Create(gsys, NULL, CycleEvent, sizeof(CYCLEUSE_STRUCT));
   CYCLEUSE_STRUCT * pCy = GMEVENT_GetEventWork(event);
   pCy->gameSys = gsys;
+  pCy->watchDogTimer = 0;
   return event;
 }
 
