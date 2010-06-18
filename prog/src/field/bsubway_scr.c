@@ -347,11 +347,13 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_trainer, bsw_scr->trainer );
   
-  //現在の連勝数を反映
+#if 0
+  //現在の連勝数を反映 -> しません
   renshou = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
   BSUBWAY_SCOREDATA_SetRenshou(
       bsw_scr->scoreData, bsw_scr->play_mode, renshou );
-  
+#endif
+
   //セーブフラグを有効状態にセット
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, TRUE );
   
@@ -483,16 +485,18 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
   //どのモードをプレイしていたか？
   play_mode = BSUBWAY_PLAYDATA_GetData(
       playData, BSWAY_PLAYDATA_ID_playmode, NULL );
-  
-  //現在の周回数リセット
+
+  //現在の周回数リセット -> しません
   BSUBWAY_PLAYDATA_ResetRoundNo( playData );
   
   //ステージ数をエラーに
   BSUBWAY_SCOREDATA_ErrorStageNo( scoreData, play_mode );
   
-  //連勝記録クリア
+  //連勝記録クリア -> しません
+#if 0  
   BSUBWAY_SCOREDATA_ResetRenshou( scoreData, play_mode );
-  
+#endif
+
   //レコード挑戦中フラグを落とす
   #if 0 //wb null
   BSUBWAY_SCOREDATA_SetFlag( scoreData,
