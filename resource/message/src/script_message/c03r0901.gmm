@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-10T17:11:30"/>
+	<create user="matsumiya" host="W00224" date="2010-06-18T15:01:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,7 +293,7 @@
 
 
 	<row id="msg_c03r0901_musician_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
-		<comment>●メロイアが手持ちにいない場合
+		<comment>●メロエッタが手持ちにいない場合
 ・繰り返しのセリフ。</comment>
 		<attribute name="キャラ指定">MUSICIAN</attribute>
 		<language name="JPN" width="256">うつくしい　せんりつは
@@ -309,12 +309,11 @@
 	</row>
 
 	<row id="msg_c03r0901_musician_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
-		<comment>●メロイアが手持ちにいて
+		<comment>●メロエッタが手持ちにいて
 ●「いにしえのうた」を覚えていない場合
 
-・メロイアのイベントが起動
-
-・メロイアの曲がスタート。</comment>
+・メロエッタのイベントが起動
+・メロエッタの曲がスタート。</comment>
 		<attribute name="キャラ指定">MUSICIAN</attribute>
 		<language name="JPN" width="256">キミの　はこんだ　かぜの　においが
 セピアいろの　きおくの　ふちから[BE:00:ページ切り替え（行送り）]
@@ -384,7 +383,7 @@
 	</row>
 
 	<row id="msg_c03r0901_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,#ffffff,,#ffffff,,,,#ffffff,,">
-		<comment>0:メロディアのニックネーム</comment>
+		<comment>0＝メロエッタのニックネーム</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 いにしえのうた　を　おもいだした！[BE:01:ページ切り替え（クリア）]</language>
@@ -393,7 +392,7 @@
 	</row>
 
 	<row id="msg_c03r0901_narrator_02" back-color="#ffffff,,,,,,,,,,#ffffff,,,,,,#ffffff,,">
-		<comment>0:メロディアのニックネーム
+		<comment>0＝メロエッタのニックネーム
 
 ●技スロットに空きがない場合
 ・「はい／いいえ」選択肢
@@ -412,7 +411,7 @@
 	</row>
 
 	<row id="msg_c03r0901_narrator_03" back-color="#ffffff,,,,,,,,,,#ffffff,,,,,,#ffffff,,">
-		<comment>0:メロディアのニックネーム
+		<comment>0＝メロエッタのニックネーム
 
 ●「いにしえのうた」を覚えない場合</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
