@@ -373,7 +373,7 @@ static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACTOP_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
@@ -5489,7 +5489,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_WAZADMG_REC,        scProc_OP_AddWazaDamage        },
     { SC_OP_TURN_CHECK,         scProc_OP_TurnCheck            },
     { SC_ACT_KILL,              scProc_ACT_Kill                },
-    { SC_ACT_MOVE,              scProc_ACT_Move                },
+    { SC_ACTOP_MOVE,            scProc_ACTOP_Move              },
     { SC_ACT_EXP,               scProc_ACT_Exp                 },
     { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow           },
     { SC_ACT_BALL_THROW_TR,     scProc_ACT_BallThrowTrainer    },
@@ -6493,7 +6493,7 @@ static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args )
  *  args .. [0]:対象クライアントID  [1]:対象ポケモン位置1  [2]:対象ポケモン位置2
  */
 //---------------------------------------------------------------------------------------
-static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACTOP_Move( BTL_CLIENT* wk, int* seq, const int* args )
 {
 
   switch( *seq ){

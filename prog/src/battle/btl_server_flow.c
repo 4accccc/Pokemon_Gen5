@@ -139,6 +139,7 @@ static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza );
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
 static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
+static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
     const BTL_POKEPARAM* attacker, BTL_POKESET* target, BOOL fDamage );
 static BOOL scEvent_CheckMigawariExclude( BTL_SVFLOW_WORK* wk,
@@ -2324,7 +2325,7 @@ static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   posIdx = BTL_PARTY_FindMember( party, bpp );
   if( (posIdx == 0) || (posIdx == 2) )
   {
-    scproc_MoveCore( wk, clientID, posIdx, 1, TRUE );
+    scproc_MoveCore( wk, clientID, posIdx, 1, FALSE );
     scPut_Message_Set( wk, bpp, BTL_STRID_SET_TripleMove );
   }
   else
@@ -2335,21 +2336,42 @@ static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 /**
  *
  */
-static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2, BOOL fActCmd )
+//----------------------------------------------------------------------------------
+/**
+ * ムーブ動作コア
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   posIdx1
+ * @param   posIdx2
+ * @param   fActCmd
+ */
+//----------------------------------------------------------------------------------
+static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2, BOOL fResetMove )
 {
+  BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
   BtlPokePos pos1, pos2;
 
   pos1 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx1 );
   pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx2 );
 
   BTL_POSPOKE_Swap( &wk->pospokeWork, pos1, pos2 );
-  {
-    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-    BTL_PARTY_SwapMembers( party, posIdx1, posIdx2 );
-  }
+  BTL_PARTY_SwapMembers( party, posIdx1, posIdx2 );
 
-  if( fActCmd ){
-    SCQUE_PUT_ACT_MemberMove( wk->que, clientID, pos1, pos2 );
+  if( !fResetMove )
+  {
+    SCQUE_PUT_ACTOP_MemberMove( wk->que, clientID, pos1, pos2 );
+
+    {
+      BTL_POKEPARAM* bpp1 = BTL_PARTY_GetMemberData( party, posIdx1 );
+      BTL_POKEPARAM* bpp2 = BTL_PARTY_GetMemberData( party, posIdx2 );
+      if( !BPP_IsDead(bpp1) ){
+        BPP_TURNFLAG_Set( bpp1, BPP_TURNFLG_MOVED );
+      }
+      if( !BPP_IsDead(bpp2) ){
+        BPP_TURNFLAG_Set( bpp2, BPP_TURNFLG_MOVED );
+      }
+    }
   }
 }
 
@@ -2977,7 +2999,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       BTL_POKESET_RemoveDeadPoke( wk->psetTargetOrg );
       BTL_POKESET_CopyAlive( wk->psetTargetOrg, wk->psetTarget );
       BTL_POKESET_SetDefaultTargetCount( wk->psetTarget, defTargetCnt );
-      TAYA_Printf("TargetCntMax=%d\n", BTL_POKESET_GetCount(wk->psetTarget) );
+//      TAYA_Printf("TargetCntMax=%d\n", BTL_POKESET_GetCount(wk->psetTarget) );
     }
 
     // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
@@ -3705,6 +3727,13 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   // 死んでるポケモンは除外
   BTL_POKESET_RemoveDeadPoke( targetRec );
+
+  // トリプル遠隔位置によるハズレ
+  scproc_CheckTripleFarPokeAvoid( wk, wk->wazaParam, attacker, targetRec );
+
+  // ムーブ直後に自分単体がターゲットならハズレ
+  scproc_CheckMovedPokeAvoid( wk, attacker, targetRec );
+
   // 最初は居たターゲットが残っていない->うまく決まらなかった、終了
   if( BTL_POKESET_IsRemovedAll(targetRec) ){
     scPut_WazaFail( wk, attacker, waza );
@@ -3724,8 +3753,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       fDamage = TRUE;
     }
 
-    // トリプル遠隔位置によるハズレ
-    scproc_CheckTripleFarPokeAvoid( wk, wk->wazaParam, attacker, targetRec );
+    // ここから先、ハズレ・無効の原因表示はその先に任せる
 
     // タイプによる無効化チェック
     if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) ){
@@ -3733,12 +3761,12 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       fMigawariHit = TRUE;
     }
 
-    // 対象ごとの無効チェック->回避チェック（原因表示はその先に任せる）
-
+    // そらをとぶなど、画面に見えていない状態のハズレチェック
     if( category != WAZADATA_CATEGORY_ICHIGEKI ){  // 一撃ワザは独自の回避判定を行うので
       flowsub_CheckPokeHideAvoid( wk, wk->wazaParam, attacker, targetRec );
     }
 
+    // まもる・とくせいなど無効チェック
     flowsub_checkNotEffect( wk, wk->wazaParam, attacker, targetRec );
 
     if( category != WAZADATA_CATEGORY_ICHIGEKI ){  // 一撃ワザは独自の回避判定を行うので
@@ -3863,6 +3891,30 @@ static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID) ){
       BTL_POKESET_Remove( targetRec, bpp );
       scPut_WazaAvoid( wk, bpp, wazaParam->wazaID );
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ムーブ後に自分単体に当たってしまうワザはハズレるチェック
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   targetRec
+ */
+//----------------------------------------------------------------------------------
+static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec )
+{
+  if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_MOVED) )
+  {
+    if( BTL_POKESET_GetCountMax(targetRec) == 1 )
+    {
+      BTL_POKEPARAM* bppTarget = BTL_POKESET_Get( targetRec, 0 );
+      if( (bppTarget != NULL)
+      &&  (BPP_GetID(bppTarget) == BPP_GetID(attacker))
+      ){
+        BTL_POKESET_Remove( targetRec, bppTarget );
+      }
     }
   }
 }
@@ -4021,7 +4073,6 @@ static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* targe
   if( BPP_CheckSick(attacker, WAZASICK_MUSTHIT_TARGET) )
   {
     u8 targetPokeID = BPP_GetSickParam( attacker, WAZASICK_MUSTHIT_TARGET );
-    TAYA_Printf("pokeID=%d は、%d をロックオンしてる\n", BPP_GetID(attacker), targetPokeID );
     if( targetPokeID == BPP_GetID(target) ){
       return TRUE;
     }
@@ -4601,7 +4652,7 @@ static inline BOOL checkFreeFallUsing( const BTL_POKEPARAM* bpp )
 {
   u8 capturedPokeID = BPP_FreeFallCounterToPokeID( BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) );
 //  if( BPP_FreeFallCounterToPokeID( BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) != BTL_POKEID_NULL ) ){
-  TAYA_Printf("pokeID-%d, captureCheck ... %d\n", BPP_GetID(bpp), capturedPokeID);
+//  TAYA_Printf("pokeID-%d, captureCheck ... %d\n", BPP_GetID(bpp), capturedPokeID);
   if( capturedPokeID != BTL_POKEID_NULL ){
     return TRUE;
   }
@@ -8760,8 +8811,8 @@ static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk )
         if( (posIdx1 == posIdx2) && (!BTL_MAINUTIL_IsTripleCenterPos(pos1) ) )
         {
           SCQUE_PUT_ACT_TripleResetMove( wk->que, clientID_1, posIdx1, clientID_2, posIdx2 );
-          scproc_MoveCore( wk, clientID_1, posIdx1, 1, FALSE );
-          scproc_MoveCore( wk, clientID_2, posIdx2, 1, FALSE );
+          scproc_MoveCore( wk, clientID_1, posIdx1, 1, TRUE );
+          scproc_MoveCore( wk, clientID_2, posIdx2, 1, TRUE );
         }
       }
     }
@@ -10002,7 +10053,6 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
     volume = BPP_RankUp( target, effect, volume );
     SCQUE_PUT_OP_RankUp( wk->que, pokeID, effect, volume );
     SCQUE_PUT_ACT_RankUp( wk->que, pokeID, effect, volume );
-    TAYA_Printf("ランクアップボリューム=%d\n", volume);
     if( fStdMsg )
     {
       if( itemID == ITEM_DUMMY_DATA ){
@@ -14953,7 +15003,7 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
         s16 posIdx2 = BTL_PARTY_FindMember( party, bpp2 );
         if( (posIdx1 >= 0) && (posIdx2 >= 0) )
         {
-          scproc_MoveCore( wk, clientID, posIdx1, posIdx2, TRUE );
+          scproc_MoveCore( wk, clientID, posIdx1, posIdx2, FALSE );
           handexSub_putString( wk, &param->exStr );
           return 1;
         }

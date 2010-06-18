@@ -497,7 +497,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_SIMPLE_HP:  return "SC_ACT_SIMPLE_HP";         ///< シンプルなHPゲージ増減処理
   case SC_ACT_KINOMI:  return "SC_ACT_KINOMI";            ///< きのみを食べる
   case SC_ACT_KILL:  return "SC_ACT_KILL";              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
-  case SC_ACT_MOVE:  return "SC_ACT_MOVE";              ///< ムーブ
+  case SC_ACTOP_MOVE:  return "SC_ACTOP_MOVE";              ///< ムーブ
   case SC_ACT_EXP:  return "SC_ACT_EXP";               ///< 経験値取得
   case SC_ACT_BALL_THROW:  return "SC_ACT_BALL_THROW";        ///< ボール投げ
   case SC_ACT_ROTATION:  return "SC_ACT_ROTATION";          ///< ローテーション

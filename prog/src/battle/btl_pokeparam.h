@@ -95,6 +95,7 @@ typedef enum {
   BPP_TURNFLG_ITEM_CANT_USE,    ///< 装備アイテム使えない
   BPP_TURNFLG_COMBIWAZA_READY,  ///< 合体ワザ準備中
   BPP_TURNFLG_TAMEHIDE_OFF,     ///< 溜めワザによる非表示状態を解除する必要あり
+  BPP_TURNFLG_MOVED,            ///< サイドチェンジ・ムーブを行った
 
   BPP_TURNFLG_MAX,
 

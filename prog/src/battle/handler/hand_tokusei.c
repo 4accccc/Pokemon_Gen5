@@ -1625,6 +1625,30 @@ static BOOL checkFlowerGiftEnablePokemon( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
   }
   return FALSE;
 }
+// ポケ入場・とくせい取得後ハンドラ
+static void handler_FlowerGift_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
+  {
+    u8 nextForm = (BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE)?  FORMNO_THERIMU_POSI : FORMNO_THERIMU_NEGA;
+    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, nextForm, TRUE );
+    work[0] = 1;
+  }
+}
+// ポケ入場・とくせい取得後ハンドラ
+static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[0] )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+    {
+      handler_FlowerGift_MemberInComp( myHandle, flowWk, pokeID, work );
+    }
+  }
+}
+/**
+ *  フラワーギフト共通：フォルムチェンジ処理
+ */
 static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 nextForm, u8 fTokWin )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
@@ -1640,10 +1664,10 @@ static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
-// ポケ入場・とくせい取得後ハンドラ
-static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// 天候変化ハンドラ
+static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  if( work[0] )
   {
     if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
     {
@@ -1652,19 +1676,24 @@ static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     }
   }
 }
-// 天候変化ハンドラ
-static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
-  {
-    u8 nextForm = (BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE)?  FORMNO_THERIMU_POSI : FORMNO_THERIMU_NEGA;
-    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, nextForm, TRUE );
-  }
-}
 // いえきハンドラ
 static void handler_FlowerGift_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  if( work[0] )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+    {
+      if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
+      {
+        common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA, FALSE );
+      }
+    }
+  }
+}
+// エアロック通知ハンドラ
+static void handler_FlowerGift_AirLock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[0] )
   {
     if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
     {
@@ -1672,24 +1701,19 @@ static void handler_FlowerGift_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     }
   }
 }
-// エアロック通知ハンドラ
-static void handler_FlowerGift_AirLock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
-  {
-    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA, FALSE );
-  }
-}
 
 // とくせい書き換え直前ハンドラ
 static void handler_FlowerGift_TokChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
+  if( work[0] )
   {
-    if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-    &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI_NEXT) != BTL_EVENT_FACTOR_GetSubID(myHandle))
-    ){
-      common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA, FALSE );
+    if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
+    {
+      if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+      &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI_NEXT) != BTL_EVENT_FACTOR_GetSubID(myHandle))
+      ){
+        common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA, FALSE );
+      }
     }
   }
 }
@@ -1739,6 +1763,7 @@ static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN_COMP,       handler_FlowerGift_MemberInComp }, // ポケ入場ハンドラ
     { BTL_EVENT_MEMBER_IN,            handler_FlowerGift_MemberIn }, // ポケ入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_FlowerGift_MemberIn }, // とくせい書き換えハンドラ
     { BTL_EVENT_WEATHER_CHANGE_AFTER, handler_FlowerGift_Weather  }, // 天候変化後ハンドラ
@@ -4397,7 +4422,6 @@ static void handler_Nameke_EndAct( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     // （アイテムターンも残ってるハズだが、シューターとの組み合わせが強いので何もしない）
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_ACTION) == BTL_ACTION_SKIP )
     {
-      TAYA_Printf("反動なまけ解除\n");
       work[0] = 0;
     }
   }
@@ -4806,42 +4830,40 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Katayaburi( u32* numElems )
  *  とくせい「てんきや」
  */
 //------------------------------------------------------------------------------
+// ポケ入場完了ハンドラ
+static void handler_Tenkiya_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
+  common_TenkiFormChange( flowWk, pokeID, weather );
+  work[0] = 1;
+}
 // ポケ入場ハンドラ
 static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  /*
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  if( work[0] )
   {
-    BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
-    common_TenkiFormChange( flowWk, pokeID, weather );
-  }
-  */
-
-  /*
-   * エアロック対応として、自分以外が出たタイミングでもフォルムが変わる可能性がある
-   */
-//  BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
-//  common_TenkiFormChange( flowWk, pokeID, weather );
-
-  /**
-   *  やはりエアロック開始は天候変化ハンドラで処理するので入場時は自分だけ処理
-   */
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
-    common_TenkiFormChange( flowWk, pokeID, weather );
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+    {
+      handler_Tenkiya_MemberInComp( myHandle, flowWk, pokeID, work );
+    }
   }
 }
 // 天候変化ハンドラ
 static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
-  common_TenkiFormChange( flowWk, pokeID, weather );
+  if( work[0] )
+  {
+    BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
+    common_TenkiFormChange( flowWk, pokeID, weather );
+  }
 }
 // エアロック通知ハンドラ
 static void handler_Tenkiya_AirLock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_Tenkiya_Off( myHandle, flowWk, pokeID );
+  if( work[0] )
+  {
+    common_Tenkiya_Off( myHandle, flowWk, pokeID );
+  }
 }
 
 // とくせい書き換え直前ハンドラ
@@ -4913,7 +4935,7 @@ static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,             handler_Tenkiya_MemberIn  },  // ポケ入場ハンドラ
+    { BTL_EVENT_MEMBER_IN_COMP,        handler_Tenkiya_MemberInComp  },  // ポケ入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_MemberIn  },  // とくせい書き換え直後ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Tenkiya_ChangeTok },  // とくせい書き換え直前ハンドラ
     { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_TokOff    },  // いえき確定ハンドラ

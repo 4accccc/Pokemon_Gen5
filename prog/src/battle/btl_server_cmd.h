@@ -94,7 +94,7 @@ typedef enum {
   SC_ACT_SIMPLE_HP,         ///< シンプルなHPゲージ増減処理
   SC_ACT_KINOMI,            ///< きのみを食べる
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
-  SC_ACT_MOVE,              ///< ムーブ
+  SC_ACTOP_MOVE,            ///< ムーブ
   SC_ACT_EXP,               ///< 経験値取得
   SC_ACT_BALL_THROW,        ///< ボール投げ
   SC_ACT_BALL_THROW_TR,     ///< ボール投げ（トレーナー戦）
@@ -499,9 +499,9 @@ static inline void SCQUE_PUT_ACT_Kill( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 ef
 {
   SCQUE_PUT_Common( que, SC_ACT_KILL, pokeID, effectType );
 }
-static inline void SCQUE_PUT_ACT_MemberMove( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlPokePos pos1, BtlPokePos pos2 )
+static inline void SCQUE_PUT_ACTOP_MemberMove( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlPokePos pos1, BtlPokePos pos2 )
 {
-  SCQUE_PUT_Common( que, SC_ACT_MOVE, clientID, pos1, pos2 );
+  SCQUE_PUT_Common( que, SC_ACTOP_MOVE, clientID, pos1, pos2 );
 }
 static inline void SCQUE_PUT_ACT_AddExp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u32 exp )
 {
