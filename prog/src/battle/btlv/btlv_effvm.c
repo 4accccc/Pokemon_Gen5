@@ -4350,6 +4350,8 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
     else if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
             //へんしんは技エフェクトではなくなったので除外
             ( bevw->waza != WAZANO_HENSIN ) &&
+            //バトンタッチは戻すエフェクトにつながるので除外
+            ( bevw->waza != WAZANO_BATONTATTI ) &&
             ( migawari_flag ) )
     {
       int* start_ofs;
