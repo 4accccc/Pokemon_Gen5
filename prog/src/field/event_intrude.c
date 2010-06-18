@@ -731,6 +731,13 @@ GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys, MISSION_FORCEWARP_M
   evf = GMEVENT_GetEventWork(event);
   evf->warp_talk = warp_talk;
   
+  {//intcomm‚ª¶‚«‚Ä‚¢‚éê‡‚Í‰º‰æ–Ê‚ÌXV’âŽ~
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    if(intcomm != NULL){
+      intcomm->subdisp_update_stop = TRUE;
+    }
+  }
+  
   if(GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE && GameCommSys_GetLastCommNo(game_comm) == GAME_COMM_NO_FIELD_BEACON_SEARCH){
     evf->search_sleep_warp = TRUE;
   }

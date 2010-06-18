@@ -296,7 +296,7 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 talked_event_reserve:1;        ///<TRUE:話しかけられたイベント予約
   u8 palace_map_not_connect:1;      ///<TRUE:パレスマップ連結をしない
   u8 comm_exit_exe:1;               ///<TRUE:通信終了処理を実行中
-  u8        :1;
+  u8 subdisp_update_stop:1;         ///<TRUE:侵入用下画面の更新を停止する
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id

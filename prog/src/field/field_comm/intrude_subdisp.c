@@ -39,6 +39,7 @@
 #include "net/net_whpipe.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "field/field_palace_sys.h"
+#include "net/wih_dwc.h"  //WIH_DWC_GetAllBeaconTypeBit
 
 
 //==============================================================================
@@ -560,7 +561,14 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
     intsub->player_param[i].zone_id = ZONE_ID_MAX;
   }
   
-  _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
+  {
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    
+    if(intcomm != NULL && intcomm->subdisp_update_stop == TRUE){
+      intcomm = NULL;
+    }
+    _IntSub_CommParamInit(intsub, intcomm);
+  }
   intsub->add_player_count = intsub->comm.recv_num;
   
   handle = GFL_ARC_OpenDataHandle(ARCID_PALACE, HEAPID_FIELDMAP);
@@ -650,7 +658,9 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   PLAYER_WORK *player_work = GAMESYSTEM_GetMyPlayerWork(intsub->gsys);
   ZONEID my_zone_id = PLAYERWORK_getZoneID(player_work);
   int i;
-
+  
+  WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(gamedata) );  //ビーコンの電波強度アイコン反映
+  
   _IntSub_CommParamUpdate(intsub, intcomm);
   if(intsub->add_player_count < intsub->comm.recv_num){
     //誰かのパレスと接続した音
@@ -751,7 +761,14 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
     update = TRUE;
   }
   else if(intcomm == NULL && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE && GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION && GameCommSys_GetLastStatus(game_comm) == GAME_COMM_LAST_STATUS_NULL){
-    update = TRUE;  //侵入としての通信が完全に終了している状態なら更新してOK
+    //侵入としての通信が完全に終了している場合はハイリンク島にいる時のみ更新してOK
+    if(ZONEDATA_IsPalace(my_zone_id) == TRUE){
+      update = TRUE;
+    }
+  }
+  
+  if(intcomm != NULL && intcomm->subdisp_update_stop == TRUE){
+    update = FALSE;
   }
   
   if(update == TRUE){
