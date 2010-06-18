@@ -7654,11 +7654,12 @@
  *  @brief メールボックスプロセスを呼び出す
  */
 //--------------------------------------------------------------
-#define _CALL_MAILBOX_PROC() \
-    _ASM_CALL_MAILBOX_PROC
+#define _CALL_MAILBOX_PROC( ret_end_mode ) \
+    _ASM_CALL_MAILBOX_PROC ret_end_mode 
 
-  .macro  _ASM_CALL_MAILBOX_PROC
+  .macro  _ASM_CALL_MAILBOX_PROC ret_end_mode
   .short  EV_SEQ_CALL_MAILBOX_PROC
+  .short  \ret_end_mode
   .endm
 
 //--------------------------------------------------------------

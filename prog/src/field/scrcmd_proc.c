@@ -296,12 +296,21 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
 typedef struct
 {
   MAILBOX_PARAM* mailbox_param;
+  u16* ret_work;
 
 } MAILBOX_CALLBACK_WORK;
 
 static void EvCmdCallMailBoxProc_CallBack( void* work )
 {
   MAILBOX_CALLBACK_WORK* cbw = work;
+
+  if( cbw->mailbox_param->retMode == TRUE ) {
+    *(cbw->ret_work) = SCR_MAILBOX_END_MODE_C_GEAR;
+  }
+  else {
+    *(cbw->ret_work) = SCR_MAILBOX_END_MODE_MENU;
+  }
+
   GFL_HEAP_FreeMemory( cbw->mailbox_param );
 }
 
@@ -327,6 +336,7 @@ VMCMD_RESULT EvCmdCallMailBoxProc( VMHANDLE *core, void *wk )
   cbw   = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MAILBOX_CALLBACK_WORK) );
   param->gamedata    = gdata;
   cbw->mailbox_param = param;
+  cbw->ret_work      = SCRCMD_GetVMWork( core, work ); // ‘æˆêˆø”
 
   event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap, 
                                        FS_OVERLAY_ID(app_mail), &MailBoxProcData, param,

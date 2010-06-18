@@ -205,6 +205,7 @@ pc_mail_box:
 {
   DEFINE_LOCAL exit
   DEFINE_LOCAL select_pos 
+  DEFINE_LOCAL mailbox_end_mode
 
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
@@ -231,13 +232,20 @@ pc_mail_box:
                                     _RET
     ENDSWITCH
     // メールボックス呼び出し
-    _MAP_FADE_BLACK_OUT()        // フェードアウト
-    _MAP_FADE_END_CHECK()        //
-    _CALL_MAILBOX_PROC()         // メールボックス画面へ
-    _POKECEN_PC_RUN()            // パソコンアニメ再生
-    _MAP_FADE_BLACK_IN()         // フェードイン
-    _MAP_FADE_END_CHECK()        //
-    _SE_PLAY( SEQ_SE_PC_LOGIN )  // SE
+    _MAP_FADE_BLACK_OUT()                  // フェードアウト
+    _MAP_FADE_END_CHECK()                  //
+    _CALL_MAILBOX_PROC( mailbox_end_mode ) // メールボックス画面へ
+    _POKECEN_PC_RUN()                      // パソコンアニメ再生
+    _MAP_FADE_BLACK_IN()                   // フェードイン
+    _MAP_FADE_END_CHECK()                  //
+    // 終了モードをチェック
+    IF $mailbox_end_mode == SCR_MAILBOX_END_MODE_MENU THEN
+      _SE_PLAY( SEQ_SE_PC_LOGIN ) // SE
+    ELSE
+      $exit    = TRUE             // パソコンを切る
+      $log_out = TRUE             //
+      $pc_off_mode = SCR_PASOKON_OFF_QUICK //
+    ENDIF
   ENDWHILE
 }
 _RET
