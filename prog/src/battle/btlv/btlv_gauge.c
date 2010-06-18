@@ -2310,15 +2310,14 @@ static  void  TCB_BTLV_GAUGE_Move( GFL_TCB* tcb, void* work )
     cl_pos.x += move_value;
     GFL_CLACT_WK_SetPos( bgcl->hpnum_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
   }
-
-
+  
   if( bgcl->exp_clwk )
   {
     GFL_CLACT_WK_GetPos( bgcl->exp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
     cl_pos.x += move_value;
     GFL_CLACT_WK_SetPos( bgcl->exp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
   }
-
+  
   if( --bgcl->move_cnt == 0 )
   { 
     GFL_TCB_DeleteTask( tcb );
