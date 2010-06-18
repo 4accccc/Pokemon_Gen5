@@ -477,6 +477,7 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     src_seq = appwk->parent->monolith_status.palace_sojourn_time;
     hour = src_seq / 60 / 60;
     if(hour > 999){
+      hour = 999;
       minute = 59;
     }
     else{
