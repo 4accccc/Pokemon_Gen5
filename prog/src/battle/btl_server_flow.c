@@ -2437,7 +2437,7 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL f
   // “¦‚°‚ê‚é‚æ‚¤‚É‚·‚é
   if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) ||
       HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
-      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) || 
+      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) ||
       HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
   {
     fSkipNigeruCalc = TRUE;
@@ -8833,21 +8833,23 @@ static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
 static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, BtlEventType event_type )
 {
   BTL_POKEPARAM* bpp;
+  u32 hem_state;
+
   BTL_POKESET_SeekStart( pokeSet );
 
-  scEvent_TurnCheck( wk, BTL_POKEID_NULL, event_type );
+  hem_state = BTL_Hem_PushState( &wk->HEManager );
+    scEvent_TurnCheck( wk, BTL_POKEID_NULL, event_type );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
 
   while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
   {
-    {
-      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+    hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_TurnCheck( wk, BPP_GetID(bpp), event_type );
-      BTL_Hem_PopState( &wk->HEManager, hem_state );
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-      scproc_CheckDeadCmd( wk, bpp );
-      if( scproc_CheckShowdown(wk) ){
-        break;
-      }
+    scproc_CheckDeadCmd( wk, bpp );
+    if( scproc_CheckShowdown(wk) ){
+      break;
     }
   }
 
