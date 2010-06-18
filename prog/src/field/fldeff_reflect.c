@@ -550,7 +550,8 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     
     #if 1  //カメラターゲットからの距離によりズレを補正
     {
-      #define REF_OFFS_TX_UNIT_ONE ((0x7000)/(16*6))
+      //通常のフィールドマップを参考
+      #define REF_OFFS_TX_UNIT_ONE (0x7000/96)
       
       fx32 ox;
       int tx,mx;
