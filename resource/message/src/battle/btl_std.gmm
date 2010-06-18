@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2010-06-15T16:12:44"/>
+	<create user="nishino" host="W00221" date="2010-06-18T15:17:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,9 +337,9 @@
 		</language>
 	</columns>
 
-	<dialog left="141" top="287" right="925" bottom="898" maximized="no" rayout="Vertical2">
+	<dialog left="74" top="146" right="858" bottom="757" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="593" top="529" right="1024" bottom="927" visible="no"/>
+		<tag-palette left="593" top="588" right="1024" bottom="986" visible="no"/>
 		<band id="0" index="0" style="0001" width="609"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="776"/>
@@ -670,33 +670,33 @@
 
 	<row id="BTL_STRID_STD_RotateL_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション左 NPCトレーナー</comment>
-		<language name="JPN" width="216">あいての　ポケモンが
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　ポケモンが
 ひだりへ　ローテーション！</language>
-		<language name="JPN_KANJI" width="216">相手の　ポケモンが
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　ポケモンが
 左へ　ローテーション！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_RotateL_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション左 通信対戦プレイヤー</comment>
-		<language name="JPN" width="216">みかたの　ポケモンが
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　ポケモンが
 ひだりへ　ローテーション！</language>
-		<language name="JPN_KANJI" width="216">味方の　ポケモンが
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　ポケモンが
 左へ　ローテーション！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_RotateR_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション右 NPCトレーナー</comment>
-		<language name="JPN" width="216">あいての　ポケモンが
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　ポケモンが
 みぎへ　ローテーション！</language>
-		<language name="JPN_KANJI" width="216">相手の　ポケモンが
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　ポケモンが
 右へ　ローテーション！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_RotateR_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション右 通信対戦プレイヤー</comment>
-		<language name="JPN" width="216">みかたの　ポケモンが
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　ポケモンが
 みぎへ　ローテーション！</language>
-		<language name="JPN_KANJI" width="216">味方の　ポケモンが
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　ポケモンが
 右へ　ローテーション！</language>
 	</row>
 
@@ -1737,10 +1737,10 @@
 
 	<row id="BTL_STRID_STD_ItemNoEffPos">
 		<comment>効果の無い位置にいるポケモンに道具使用</comment>
-		<language name="JPN" width="216">しかし　この　どうぐは　まえにいる
-ポケモンにしか　こうかがない！</language>
-		<language name="JPN_KANJI" width="216">しかし　この道具は　前にいる
-ポケモンにしか　効果がない！</language>
+		<language name="JPN" width="216">しかし　この　どうぐを
+つかえる　ばしょに　いなかった！</language>
+		<language name="JPN_KANJI" width="216">しかし　この　道具を
+使える　場所に　いなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_YubiFuruDebug">
