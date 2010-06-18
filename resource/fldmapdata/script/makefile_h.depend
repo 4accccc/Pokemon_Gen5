@@ -1419,6 +1419,8 @@ wc10pcr0101_def.h: wc10pcr0101.ev
 wc10r0101_def.h: wc10r0101.ev
 	$(EV_DEF) wc10r0101.ev $(SCR_OFFS_ID_H)
 
+ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
+endif

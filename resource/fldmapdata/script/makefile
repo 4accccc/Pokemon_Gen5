@@ -21,9 +21,8 @@ include uniq_script.list
 
 #
 HEADER_TARGETS	= $(UNIQ_SCRIPTFILES) $(SCRIPTFILES)
-ifeq ($(PM_DEBUG),yes)
+#	デバッグスクリプトの扱いはmake_depend.rbの中などで制御している
 HEADER_TARGETS += $(UNIQ_DEBUG_EVENT_SCRFILES)
-endif
 
 do-build:
 		@ruby scr_tools/make_depend.rb $(HEADER_TARGETS) > makefile_h.depend

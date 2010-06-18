@@ -19,7 +19,13 @@ HEADER_STRING
 
 ARGV.each{|filename|
   if filename =~ /^sp_/ then next end
-  output += putDependRule( filename )
+  if filename =~ /debug/ then
+    output += "ifeq ($(PM_DEBUG),yes)\n"
+    output += putDependRule( filename )
+    output += "endif"
+  else
+    output += putDependRule( filename )
+  end
 }
 
 puts output
