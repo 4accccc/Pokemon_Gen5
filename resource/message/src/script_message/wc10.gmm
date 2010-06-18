@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-18T11:26:57"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-18T22:31:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -272,7 +272,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -672,7 +672,7 @@
 アロマテラピーって　あるそうね▽
 ここにも　そんな　こうかが　あるかも▼</language>
 		<language name="JPN_KANJI" width="256">ミキ『うぅーん　ここは　落ち着くね
-本で　見たのだけど▼
+本で　みたのだけど▼
 草木の　香りで　落ち着ける
 アロマテラピーって　あるそうね▽
 ここにも　そんな　効果が　あるかも▼</language>
@@ -1668,7 +1668,7 @@
 自分と　ポケモン▽
 色んなことに　気付かされるよ▼
 さっき　そこで　ニドラン♂を
-見たとき　そう思ったんだ</language>
+みたとき　そう思ったんだ</language>
 	</row>
 
 	<row id="wc10_26_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -1728,7 +1728,7 @@
 様々な　答え▽
 その　いずれも　正しいんだよ▼
 さっき　そこで　ニドラン♀を
-見たとき　そう思ったね</language>
+みたとき　そう思ったね</language>
 	</row>
 
 	<row id="wc10_27_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1786,7 +1786,7 @@
 少しずつ　変化が　あって▽
 意味の　あることなのね▼
 さっき　ゴニョニョを
-見たとき　そう　思った</language>
+みたとき　そう　思った</language>
 	</row>
 
 	<row id="wc10_28_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -1916,22 +1916,22 @@
 		<language name="JPN" width="256">グレース『だいしぜんが
 うみだす　うつくしさ▼
 その　ゆうだいさは
-ひとの　そうぞうを　こえているわ▼</language>
+ひとの　そうぞうを　こえているわね▼</language>
 		<language name="JPN_KANJI" width="256">グレース『大自然が
 うみだす　美しさ▼
 その　雄大さは
-人の　想像を　超えているわ▼</language>
+人の　想像を　超えているわね▼</language>
 	</row>
 
 	<row id="wc10_30_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">LADY
 グレース</attribute>
-		<language name="JPN" width="256">……でも　さいきんは
-ひとの　てによる　げいじゅつも▽
-みたくなって　きたわ</language>
-		<language name="JPN_KANJI" width="256">……でも　最近は
-人の手による　芸術も▽
-最近は　見たくなってきたわ</language>
+		<language name="JPN" width="256">いま　わたしが　みたいのは
+ひとの　てによる　げいじゅつ▽
+……ここじゃ　みたされないわね</language>
+		<language name="JPN_KANJI" width="256">今　わたしが　みたいのは
+人の　手による　芸術▽
+……ここじゃ　満たされないわね</language>
 	</row>
 
 	<row id="wc10_30_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -1940,7 +1940,7 @@
 		<language name="JPN" width="256">さっき　そこで　みかけた
 タツベイの　うつくしさも▽
 しぜんなのが　いいのよね……</language>
-		<language name="JPN_KANJI" width="256">さっき　そこで　見かけた
+		<language name="JPN_KANJI" width="256">さっき　そこで　みかけた
 タツベイの　美しさも▽
 自然なのが　いいのよね……</language>
 	</row>
