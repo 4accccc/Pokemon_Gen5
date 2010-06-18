@@ -69,6 +69,7 @@ enum{
   BTLEFF_CAMERA_WORK_INIT,
   BTLEFF_ZOOM_IN_ORTHO, 
   BTLEFF_CAMERA_INIT_ORTHO, 
+  BTLEFF_CAMERA_INIT_ORTHO_NO_WAIT,
 
   //ステータスエフェクト
   BTLEFF_STATUS_EFFECT_START,
@@ -130,7 +131,8 @@ enum{
   BTLEFF_RAINBOW,                             //虹エフェクト
   BTLEFF_BURNING,                             //火の海エフェクト
   BTLEFF_MOOR,                                //湿地エフェクト
-  BTLEFF_DAMAGE,                              //ダメージエフェクト
+  BTLEFF_WEATHER_DAMAGE,                      //天候ダメージエフェクト
+                                              //（終わりにカメラ初期位置に戻す命令がないので、使いどころに注意）
 
   BTLEFF_STATUS_EFFECT_END,
 };
@@ -163,6 +165,7 @@ typedef enum{
   BTLV_EFFECT_CWE_NONE = 0,
   BTLV_EFFECT_CWE_NORMAL,         //通常動作
   BTLV_EFFECT_CWE_NO_STOP,        //入力があってもCAMERA_INITを呼ばない
+  BTLV_EFFECT_CWE_COMM_WAIT,      //通信待機中カメラワーク
 }BTLV_EFFECT_CWE;
 
 typedef enum{ 
