@@ -11019,7 +11019,7 @@
 	</row>
 
 	<row id="TRID_BACKPACKERM_15_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">きょうは　ウンが　つきまくり　だぜ！</language>
+		<language name="JPN" width="216">きょうは　うんが　つきまくり　だぜ！</language>
 		<language name="JPN_KANJI" width="216">今日は　運が　つきまくり　だぜ！</language>
 	</row>
 
@@ -11032,7 +11032,7 @@
 
 	<row id="TRID_BACKPACKERM_15_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ふん！　きょうは
-運が　なかっただけなのさ</language>
+うんが　なかっただけなのさ</language>
 		<language name="JPN_KANJI" width="216">ふん！　今日は
 運が　なかっただけなのさ</language>
 	</row>
