@@ -3103,11 +3103,15 @@ static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza )
       wk->wazaParam->fMagicCoat = TRUE;
       BTL_SVFSUB_RegisterTargets( wk, robPoke, wk->magicCoatParam->targetPos[i], wk->wazaParam, wk->psetRobTarget );
 
-      BTL_HANDLER_Waza_Add( robPoke, actWaza );
-      scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
-//      scproc_EndWazaSeq( wk, robPoke, actWaza );
+      BTL_EVENT_SleepFactorMagicMirrorUser( BPP_GetID(robPoke) );
 
-      BTL_HANDLER_Waza_RemoveForce( robPoke, actWaza );
+        BTL_HANDLER_Waza_Add( robPoke, actWaza );
+        scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
+//      scproc_EndWazaSeq( wk, robPoke, actWaza );
+        BTL_HANDLER_Waza_RemoveForce( robPoke, actWaza );
+
+      BTL_EVENT_WakeFactorMagicMirrorUser( BPP_GetID(robPoke) );
+
     }
   }
 }

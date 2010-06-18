@@ -15,8 +15,11 @@
 #include "btl_sideeff.h"
 #include "btl_field.h"
 
+#include "handler\hand_waza.h"
+
 #include "btl_event.h"
 #include "btl_event_factor.h"
+
 
 
 /*--------------------------------------------------------------------------*/
@@ -708,22 +711,36 @@ BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor )
 
 //=============================================================================================
 /**
- * 特定タイプ＆サブIDのファクターを１ターン休止させる
+ * 指定ポケモンの貼り付き状態ワザハンドラを休止させる（マジックミラー対処として）
  *
- * @param   type
- * @param   subID
+ * @param   pokeID
  *
  */
 //=============================================================================================
-void BTL_EVENT_SleepFactor( BtlEventFactorType type, u16 subID )
+void BTL_EVENT_SleepFactorMagicMirrorUser( u16 pokeID )
 {
   BTL_EVENT_FACTOR* factor;
 
   for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
   {
-    if( (factor->factorType == type) && (factor->subID == subID) )
+    if( (factor->factorType == BTL_EVENT_FACTOR_WAZA) && (factor->pokeID == pokeID) )
     {
-      factor->sleepFlag = TRUE;
+      if( BTL_HANDLER_Waza_IsStick(factor, factor->work) )
+      {
+        factor->sleepFlag = TRUE;
+      }
+    }
+  }
+}
+void BTL_EVENT_WakeFactorMagicMirrorUser( u16 pokeID )
+{
+  BTL_EVENT_FACTOR* factor;
+
+  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+  {
+    if( (factor->factorType == BTL_EVENT_FACTOR_WAZA) && (factor->pokeID == pokeID) )
+    {
+      factor->sleepFlag = FALSE;
     }
   }
 }

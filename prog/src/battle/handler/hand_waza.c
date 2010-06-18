@@ -397,6 +397,7 @@ static void handler_Yokodori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static void handler_Yokodori_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Yokodori_Rob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Yokodori_MagicMirror( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Dorobou( u32* numElems );
 static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Trick( u32* numElems );
@@ -1114,6 +1115,21 @@ void BTL_HANDLER_Waza_RemoveForce( const BTL_POKEPARAM* pp, WazaID waza )
 {
   u8 pokeID = BPP_GetID( pp );
   removeHandlerForce( pokeID, waza );
+}
+
+//=============================================================================================
+/**
+ * 貼り付き状態にあるハンドラかどうかを判定
+ *
+ * @param   myHandle
+ * @param   work
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_HANDLER_Waza_IsStick( BTL_EVENT_FACTOR* myHandle, const int* work )
+{
+  return work[ WORKIDX_STICK ] != 0;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -3554,7 +3570,6 @@ static const BtlEventHandlerTable*  ADD_AquaRing( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_UNCATEGORIZE_WAZA, handler_AquaRing },            // 未分類ワザハンドラ
-//    { BTL_EVENT_TURNCHECK_BEGIN,   handler_AquaRing_turnCheck },  // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3574,31 +3589,6 @@ static void handler_AquaRing( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRing );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
       BTL_SVF_HANDEX_Pop( flowWk, param );
-    }
-  }
-}
-// ターンチェック開始ハンドラ
-static void handler_AquaRing_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    if( work[WORKIDX_STICK] != 0 )
-    {
-      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( !BPP_IsHPFull(bpp)
-      &&  !BPP_IsDead(bpp)
-      ){
-        BTL_HANDEX_PARAM_RECOVER_HP* param;
-        const BTL_POKEPARAM* bpp;
-
-        bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-          param->pokeID = pokeID;
-          param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
-          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
-          HANDEX_STR_AddArg( &param->exStr, pokeID );
-        BTL_SVF_HANDEX_Pop( flowWk, param );
-      }
     }
   }
 }
@@ -5153,10 +5143,13 @@ static const BtlEventHandlerTable*  ADD_Yokodori( u32* numElems )
     { BTL_EVENT_CHECK_WAZA_ROB,      handler_Yokodori_CheckRob  }, // 乗っ取り判定
     { BTL_EVENT_WAZASEQ_ROB,         handler_Yokodori_Rob       }, // 乗っ取り確定
     { BTL_EVENT_TURNCHECK_BEGIN,     handler_Yokodori_TurnCheck }, // ターンチェック
+
+//    { BTL_EVENT_WAZASEQ_REFRECT,     handler_Yokodori_MagicMirror },  // （マジックミラーによる）跳ね返し確定
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 未分類ワザ処理
 static void handler_Yokodori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -5166,6 +5159,18 @@ static void handler_Yokodori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       HANDEX_STR_AddArg( &param->str, pokeID );
     BTL_SVF_HANDEX_Pop( flowWk, param );
     work[ WORKIDX_STICK ] = 1;
+  }
+}
+// （マジックミラーによる）跳ね返し確定
+static void handler_Yokodori_MagicMirror( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    // よこどり待機中にマジックミラーで跳ね返した場合、待機を解除
+    if( work[WORKIDX_STICK] )
+    {
+      BTL_EVENT_FACTOR_Remove( myHandle );
+    }
   }
 }
 static void handler_Yokodori_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
