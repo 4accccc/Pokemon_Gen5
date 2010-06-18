@@ -14,9 +14,6 @@
 #define DEF_MCSS_TCBSYS  // これが定義されているとき、MCSSのTCBSYS外部指定を利用する
 #define DEF_MINIMUM_LOAD  // これが定義されているとき、ポケモン変更やフォルム変更でそのとき見えている最小限必要なものしか読み込まない
 
-#define DEF_POKE_POS_INDIVIDUAL  // これが定義されているとき、mons_no, form_no, sex, rare, egg, dir, personal_rnd
-                                 // (rare, egg, dir, personal_rndは現在未使用)ごとにポケモンの位置を微調整できる
-
 
 //#define DEBUG_KAWADA
 //#define DEBUG_POKE_POS_SET
@@ -536,11 +533,6 @@ typedef struct
   u16                        diff_no;              // 今のpoke_wkはdiff_info_list[diff_no]である
                                                    // poke_wkと対応しており、poke_wkがNULLのときこれはDIFF_NULL
 #endif
-
-#ifdef DEF_POKE_POS_INDIVIDUAL
-  VecFx32                    pos;                  // 本来の位置(MCSS_GetPositionで取得する値はrelative_posだけずれているので、本来の位置を覚えておく)
-  VecFx32                    relative_pos;         // MCSS_SetPositionで位置を設定するとき、pos + relative_posを設定する
-#endif
 }
 POKE_MCSS_WORK;
 
@@ -815,13 +807,6 @@ static void Zukan_Detail_Form_KaisouChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* 
 // アルファ設定
 static void Zukan_Detail_Form_AlphaInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_AlphaExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-
-#ifdef DEF_POKE_POS_INDIVIDUAL
-// 位置の微調整の値を得る
-static void PokeGetRelativePos( VecFx32* relative_pos,
-                      int mons_no, int form_no, int sex, int rare, BOOL egg, int dir,
-                      u32 personal_rnd );  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
-#endif
 
 
 //=============================================================================
@@ -1505,10 +1490,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
 
 
 
-#ifdef DEBUG_POS_SET
+#ifdef DEBUG_POKE_POS_SET
   ////////////////////////////////////////////////////////////////
   {
-    const f32 add = 0.1f;
+    const f32 add = 0.01f;
     f32 add_x = 0.0f;
     f32 add_y = 0.0f;
     u32 x, y;
@@ -4914,14 +4899,17 @@ static BOOL Zukan_Detail_Form_ObjBarMainTouch( ZUKAN_DETAIL_FORM_PARAM* param, Z
   // 新たにスクロールバーをタッチしたか検出する
   else
   {
-    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+    if( work->diff_num >= 3 )  // スクロールバーが表示されていなければタッチできない
     {
-      if(    BAR_RANGE_TOUCH_X_MIN<=x&&x<=BAR_RANGE_TOUCH_X_MAX
-          && BAR_RANGE_TOUCH_Y_MIN<=y&&y<=BAR_RANGE_TOUCH_Y_MAX )
+      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       {
-        work->bar_cursor_move_by_touch = TRUE;
-        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );
-        b_se = TRUE;
+        if(    BAR_RANGE_TOUCH_X_MIN<=x&&x<=BAR_RANGE_TOUCH_X_MAX
+            && BAR_RANGE_TOUCH_Y_MIN<=y&&y<=BAR_RANGE_TOUCH_Y_MAX )
+        {
+          work->bar_cursor_move_by_touch = TRUE;
+          ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );
+          b_se = TRUE;
+        }
       }
     }
   }
@@ -5935,60 +5923,6 @@ static void Zukan_Detail_Form_AlphaExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_D
   // 一部分フェードの設定を元に戻す
   ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_s );
 }
-
-
-#ifdef DEF_POKE_POS_INDIVIDUAL
-//-------------------------------------
-/// 位置の微調整の値を得る
-//=====================================
-typedef struct
-{
-  int  mons_no;         // 1スタート  // MONSNO_ANNOON
-  int  form_no;         // 0スタート  // FORMNO_ANNOON_UNR
-  int  sex;             // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN  // prog/include/poke_tool/poke_tool.h
-  int  rare;            // TRUE, FALSE
-  BOOL egg;             // TRUE, FALSE
-  int  dir;             // MCSS_DIR_FRONT, MCSS_DIR_BACK
-  u32  personal_rnd;    // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
-  
-  f32  relative_pos_x;
-  f32  relative_pos_y;
-  f32  relative_pos_z;  // 0.0f固定
-}
-POKE_RELATIVE_POS;
-#define MALE_FEMALE_UNKNOWN (3)  // オスメス性別なしどれでも構わない  // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWNと被らない値
-#define POKE_RELATIVE_POS_TBL_NUM (3)
-static const POKE_RELATIVE_POS poke_relative_pos_tbl[POKE_RELATIVE_POS_TBL_NUM] =
-{
-  // (rare, egg, dir, personal_rndは現在未使用)
-  { MONSNO_ANNOON,     FORMNO_ANNOON_UNO, MALE_FEMALE_UNKNOWN, 0, 0, 0, 0,    0.0f, -13.7f, 0.0f },
-  { MONSNO_ANNOON,     FORMNO_ANNOON_UNR, MALE_FEMALE_UNKNOWN, 0, 0, 0, 0,    0.2f, 0.1f, 0.0f },
-  { MONSNO_MIROKAROSU, 0,                 MALE_FEMALE_UNKNOWN, 0, 0, 0, 0,    0.0f, 0.0f, 0.0f },
-};
-
-static void PokeGetRelativePos( VecFx32* relative_pos,
-                      int mons_no, int form_no, int sex, int rare, BOOL egg, int dir,
-                      u32 personal_rnd )  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
-{
-  // (rare, egg, dir, personal_rndは現在未使用)
-  u16 i;
-  for( i=0; i<POKE_RELATIVE_POS_TBL_NUM; i++ )
-  {
-    if(    poke_relative_pos_tbl[i].mons_no == mons_no
-        && poke_relative_pos_tbl[i].form_no == form_no )
-    {
-      if(    poke_relative_pos_tbl[i].sex == MALE_FEMALE_UNKNOWN
-          || poke_relative_pos_tbl[i].sex == sex )
-      {
-        relative_pos->x = FX_F32_TO_FX32(poke_relative_pos_tbl[i].relative_pos_x);
-        relative_pos->y = FX_F32_TO_FX32(poke_relative_pos_tbl[i].relative_pos_y);
-        relative_pos->z = FX_F32_TO_FX32(poke_relative_pos_tbl[i].relative_pos_z);
-        break;
-      }
-    }
-  }
-}
-#endif
 
 
 //=============================================================================
