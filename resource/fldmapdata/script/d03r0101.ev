@@ -590,6 +590,8 @@ EVENT_START		ev_pos_d03r0101_hakase2_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_gyoe )
 	_OBJ_ANIME_WAIT()
 
+	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )	//博士イベントBGM開始
+
 	//博士：一歩前へ
 	//自機：一歩下がる
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_come )
@@ -651,6 +653,8 @@ EVENT_START		ev_pos_d03r0101_hakase2_01
 
 	//博士OBJDEL
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	_END_EVENT_BGM()	//博士イベントBGM終了
 	
 	//========================================/
 	//ワーク操作
