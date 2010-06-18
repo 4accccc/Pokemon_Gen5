@@ -569,8 +569,6 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
     break;
   default: 
     shop_item_set( wk, type, id, 0 );
-//    shop_item_set( wk, 21, 21, 0 );
-//    blackcity_shop_item_set( wk, SCR_SHOPID_BLACK_CITY0 );
     break;
   }
 
@@ -579,7 +577,6 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
   bmpwin_init( wk );  // BMPWIN初期化
   obj_init( wk );     // OAM初期化
   print_mygold(wk);   // 所持金表示
-  print_iteminfo( wk, 1 );
 
   bmpwin_list_init( wk ); // 商品リスト表示
  
@@ -1040,25 +1037,19 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
 
   for(i=0;i<itemnum;i++)
   {
-      int id = shop_data_table[offset][i];
-      OS_Printf("strId=%d\n", id);
+    int id = shop_data_table[offset][i];
+    OS_Printf("strId=%d\n", id);
 
-      // 技マシンかどうぐ名かで文字列登録方法が違う
-      _add_menuitem( wk, i, wk->type, id, itemMsgData );
+    // 技マシンかどうぐ名かで文字列登録方法が違う
+    _add_menuitem( wk, i, wk->type, id, itemMsgData );
 
-      // メニュー用に文字列登録
-//      BmpMenuWork_ListAddArchiveString( &wk->list[i], itemMsgData, 
-//                                        id,   // アイテムNO=GMMNO
-//                                        i,    // 商品テーブルのインデックス
-//                                        wk->heapId );
-      // 商品ラインナップテーブルにIDと値段を登録
-      wk->lineup[i].id    = id;
+    // 商品ラインナップテーブルにIDと値段を登録
+    wk->lineup[i].id    = id;
 
-      // Gパワー係数を掛けてから値段を代入する
-      wk->lineup[i].price =  GPOWER_Calc_Sale(ITEM_GetParam( id, ITEM_PRM_PRICE, wk->heapId ));
+    // Gパワー係数を掛けてから値段を代入する
+    wk->lineup[i].price =  GPOWER_Calc_Sale(ITEM_GetParam( id, ITEM_PRM_PRICE, wk->heapId ));
   }
   wk->lineup_num = i;
-  
   
   // どうぐか？技マシンか？（混在は×）
   _lineup_check( wk->lineup, wk->lineup_num );
@@ -1068,8 +1059,6 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
                                     mes_shop_02_06, 
                                     BMPMENULIST_CANCEL, 
                                     wk->heapId );
-
-
   GFL_MSG_Delete( itemMsgData );
 }
 
@@ -1140,7 +1129,7 @@ static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
              "BLACKCITYショップ指定0-4(0xf7-0xfb)の値になっていません\n");
 
   // BLACKCITY用の商品ラインナップをセット
-  //BLACKCITY_SetShopItem( wk->lineup, &wk->lineup_num );
+  // BLACKCITY_SetShopItem( wk->lineup, &wk->lineup_num );
   FIELD_WFBC_CORE_SetShopData( wk->wfbc, wk->lineup, &wk->lineup_num, 
                                type-SCR_SHOPID_BLACK_CITY0, wk->heapId );
 
@@ -2282,15 +2271,3 @@ static void submenu_screen_clear( int type )
 }
 
 
-/*
-
-  BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_PRICE], WINDOW_TRANS_ON, 
-                      1, MENU_WINDOW_PAL_OFFSET );
-
-
-field/scrcmd_menuwin.c
-
-252行目あたり
-
-EvCmdTalkMsg()とTalkMsgWait
-*/
