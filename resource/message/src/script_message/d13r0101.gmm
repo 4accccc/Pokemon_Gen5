@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-05-14T15:04:12"/>
+	<create user="matsumiya" host="W00224" date="2010-06-18T15:03:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -308,22 +308,22 @@
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">まさか　おまえ……[BE:01:ページ切り替え（クリア）]
 ここに　きたと　いうことは
-インセクタの　ひみつを[BE:00:ページ切り替え（行送り）]
+ゲノセクトの　ひみつを[BE:00:ページ切り替え（行送り）]
 さぐりにきた　という　ことか！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">まさか　おまえ……[BE:01:ページ切り替え（クリア）]
 ここに　来たと　いうことは
-インセクタの　秘密を[BE:00:ページ切り替え（行送り）]
+ゲノセクトの　秘密を[BE:00:ページ切り替え（行送り）]
 探りに来た　という　ことか！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d13r0101_assistm_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>●（GRIDX=6/GRIDZ=4）でセリフ。</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">インセクタは　わが　プラズマだんが
+		<language name="JPN" width="256">ゲノセクトは　わが　プラズマだんが
 かせきから　ふっかつさせて[BE:00:ページ切り替え（行送り）]
 かがくの　ちからに　よって[BE:00:ページ切り替え（行送り）]
 パワーアップさせた　ポケモン！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">インセクタは　わが　プラズマ団が
+		<language name="JPN_KANJI" width="256">ゲノセクトは　わが　プラズマ団が
 カセキから　復活させて[BE:00:ページ切り替え（行送り）]
 科学の　力に　よって[BE:00:ページ切り替え（行送り）]
 パワーアップさせた　ポケモン！[BE:01:ページ切り替え（クリア）]</language>
@@ -344,10 +344,10 @@
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">しかし…　Ｎさまは
 かがくりょくによって　かいぞうされた[BE:00:ページ切り替え（行送り）]
-インセクタを　きにいらなかった…！[BE:01:ページ切り替え（クリア）]</language>
+ゲノセクトを　きにいらなかった…！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">しかし…　Ｎさまは
 科学力によって　改造された[BE:00:ページ切り替え（行送り）]
-インセクタを　気に入らなかった…！[BE:01:ページ切り替え（クリア）]</language>
+ゲノセクトを　気に入らなかった…！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d13r0101_assistm_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -374,14 +374,14 @@
 		<comment>●ギザギザフキダシで表示。</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">しかし！！[BE:01:ページ切り替え（クリア）]
-インセクタの　けんきゅうは
+ゲノセクトの　けんきゅうは
 すべて　わたしのものだ！！[BE:01:ページ切り替え（クリア）]
-インセクタの　ひみつを　しりたければ
+ゲノセクトの　ひみつを　しりたければ
 わたしと　たたかい　かつことだっ！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">しかし！！[BE:01:ページ切り替え（クリア）]
-インセクタの　研究は
+ゲノセクトの　研究は
 すべて　わたしのものだ！！[BE:01:ページ切り替え（クリア）]
-インセクタの　秘密を　知りたければ
+ゲノセクトの　秘密を　知りたければ
 わたしと　戦い　勝つことだっ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -420,11 +420,11 @@
 ●振り向いて
 （GRIDX=6/GRIDZ=5）に移動してから次のセリフ。。</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">わたしは　インセクタから
+		<language name="JPN" width="256">わたしは　ゲノセクトから
 きっぱりと　てをひく　ことにする…[BE:01:ページ切り替え（クリア）]
 これは　もう　ひつようない…
 おまえに　ゆずろう……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">わたしは　インセクタから
+		<language name="JPN_KANJI" width="256">わたしは　ゲノセクトから
 きっぱりと　手を引く　ことにする…[BE:01:ページ切り替え（クリア）]
 これは　もう　必要ない…
 おまえに　ゆずろう……[BE:01:ページ切り替え（クリア）]</language>
@@ -448,11 +448,11 @@
 移動して、イベント終了。</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">いま　わたした　どうぐは
-インセクタの　ために　つくったもの[BE:01:ページ切り替え（クリア）]
+ゲノセクトの　ために　つくったもの[BE:01:ページ切り替え（クリア）]
 そうびさせると　テクノバスターという
 わざの　タイプが　かわるのだ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">今　渡した　道具は
-インセクタの　ために　つくったもの[BE:01:ページ切り替え（クリア）]
+ゲノセクトの　ために　つくったもの[BE:01:ページ切り替え（クリア）]
 装備させると　テクノバスターという
 技の　タイプが　変わるのだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
