@@ -32,8 +32,8 @@
 
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
-#define POINT_VIEW
-#define AI_SEQ_PRINT
+//#define POINT_VIEW
+//#define AI_SEQ_PRINT
 #endif
 #endif
 
@@ -528,6 +528,12 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
     }
     taw->def_btl_poke_pos = def[ GFL_STD_MtRand( def_cnt ) ];
     ret = waza_ai_single( vmh, taw );
+    //def_btl_poke_pos‚É‘ã“ü‚³‚ê‚Ä‚¢‚é‘ŠŽè‚ð‘_‚Á‚Ä‚µ‚Ü‚¤‚Ì‚ÅA
+    //í‚Éæ“ª‚É‚¢‚él‚ð‘_‚¤‚æ‚¤‚É‚·‚é
+    if( ret == FALSE )
+    { 
+      taw->select_waza_dir = BTL_POS_1ST_0;
+    }
   }
 
   return ret;
