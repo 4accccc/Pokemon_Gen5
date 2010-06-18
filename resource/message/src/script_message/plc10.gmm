@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-18T12:09:23"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-18T17:16:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2818,7 +2818,7 @@
 あなた……
 わたしを　つれていって　くれない？</language>
 		<language name="JPN_KANJI" width="256">グレース『ブラックシティ……
-まさに　人の造る　芸術▽
+まさに　人のつくる　芸術▽
 この目で　みてみたいの▼
 あなた……
 わたしを　連れていって　くれない？</language>
@@ -5433,13 +5433,13 @@
 	<row id="plbc10_30_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">LADY
 グレース</attribute>
-		<language name="JPN" width="256">グレース『ひとがつくった
+		<language name="JPN" width="256">グレース『ひとが　つくった
 うつくしさ　だけでは▼
-ものたりないと　おもうとき
+ものたりないと　おもうこと……
 あなたにはない？</language>
-		<language name="JPN_KANJI" width="256">グレース『人が造った
+		<language name="JPN_KANJI" width="256">グレース『人が　つくった
 美しさ　だけでは▼
-物足りないと　思うとき
+物足りないと　思うこと……
 あなたにはない？</language>
 	</row>
 
