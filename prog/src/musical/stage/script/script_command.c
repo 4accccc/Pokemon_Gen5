@@ -1122,6 +1122,8 @@ static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work )
   const REPEAT_MNG_RETURN ret = SCRIPT_TCB_UpdateRepeat( &jumpWork->repeatWork );
   if( ret == RMR_END )
   {
+    VecFx32 ofs = {0,0,0};
+    STA_POKE_SetPositionOffset( pokeSys , jumpWork->pokeWork , &ofs );
     STA_SCRIPT_DeleteTcbTask( jumpWork->scriptSys , jumpWork->tcbObj );
     return;
   }
