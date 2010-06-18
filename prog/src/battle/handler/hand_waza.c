@@ -1605,8 +1605,6 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       WazaID waza = BPP_GetPrevWazaID( target );
       u16 counter = BPP_GetWazaContCounter( target );
 
-      TAYA_Printf("prvWazaID=%d, counter=%d\n", waza, counter);
-
       if( (counter > 0)
       &&  (waza != WAZANO_NULL)
       &&  (!BTL_TABLES_IsMatchMonomaneFail(waza))
@@ -2773,9 +2771,11 @@ static void handler_Hakidasu_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
     int def_rank;
     int spdef_rank;
+    int takuwae_count;
 
     def_rank = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_DEF );
     spdef_rank = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_SPDEF );
+    takuwae_count = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU );
 
     if( def_rank )
     {
@@ -2809,16 +2809,20 @@ static void handler_Hakidasu_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       BTL_SVF_HANDEX_Pop( flowWk, counter_param );
     }
 
-    counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
-      counter_param->pokeID = pokeID;
-      counter_param->counterID = BPP_COUNTER_TAKUWAERU;
-      counter_param->value = 0;
-    BTL_SVF_HANDEX_Pop( flowWk, counter_param );
+    // 「よこどり」を使うと「たくわえる」カウンタが０でも出せる…
+    if( takuwae_count )
+    {
+      counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
+        counter_param->pokeID = pokeID;
+        counter_param->counterID = BPP_COUNTER_TAKUWAERU;
+        counter_param->value = 0;
+      BTL_SVF_HANDEX_Pop( flowWk, counter_param );
 
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_TakuwaeOff );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-    BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_TakuwaeOff );
+        HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+    }
   }
 }
 //----------------------------------------------------------------------------------
