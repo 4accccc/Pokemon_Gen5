@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-05-14T17:48:22" source="n_legend_come_b_07.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-17T17:46:28" source="n_legend_come_b_reduced.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -15,7 +15,7 @@
 	tool_start_frame="0"
 	tool_end_frame="1260"
 	interpolation="frame"
-	compress_material="on" material_size="9 9"
+	compress_material="on" material_size="10 10"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
@@ -654,7 +654,7 @@
 	25 25 25 25 25 25 25
 </mat_color_data>
 
-<mat_color_anm_array size="5">
+<mat_color_anm_array size="6">
 	<mat_color_anm index="0" material_name="mu_body">
 		<diffuse_r frame_step="1" data_size="1261" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1261" data_head="0"/>
@@ -729,6 +729,21 @@
 		<emission_g frame_step="1" data_size="1" data_head="1261"/>
 		<emission_b frame_step="1" data_size="1" data_head="1261"/>
 		<polygon_alpha frame_step="1" data_size="1" data_head="303"/>
+	</mat_color_anm>
+	<mat_color_anm index="5" material_name="mu_wingweb">
+		<diffuse_r frame_step="1" data_size="1261" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1261" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1261" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="313"/>
+		<ambient_g frame_step="1" data_size="1" data_head="313"/>
+		<ambient_b frame_step="1" data_size="1" data_head="313"/>
+		<specular_r frame_step="1" data_size="1" data_head="1261"/>
+		<specular_g frame_step="1" data_size="1" data_head="1261"/>
+		<specular_b frame_step="1" data_size="1" data_head="1261"/>
+		<emission_r frame_step="1" data_size="1" data_head="1261"/>
+		<emission_g frame_step="1" data_size="1" data_head="1261"/>
+		<emission_b frame_step="1" data_size="1" data_head="1261"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="1262"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
