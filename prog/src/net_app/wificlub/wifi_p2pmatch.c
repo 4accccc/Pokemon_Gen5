@@ -2188,6 +2188,8 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(wk->pParentWork->seq != WIFI_GAME_NONE){
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
+
+    WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());  //もどってきたら日付更新
     if(((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_RECV))
        && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
       //ここでVCT切断
