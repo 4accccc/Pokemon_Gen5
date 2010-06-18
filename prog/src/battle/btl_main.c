@@ -5187,7 +5187,7 @@ static void trainerParam_StoreCommNPCTrainer( BTL_TRAINER_DATA* dst, const BTL_T
     dst->trainerID = trData->tr_id;
     dst->trainerType = trData->tr_type;
     dst->name = GFL_STR_CreateBuffer( BTL_COMM_TRAINERNAME_MAX, HEAPID_BTL_SYSTEM );
-    GFL_STR_SetEncodedString( dst->name, trSendData->trainer_name, trSendData->trainer_name_length );
+    GFL_STR_SetEncodedString( dst->name, trSendData->trainer_name, trSendData->trainer_name_length+1 );
     dst->ai_bit = trData->ai_bit;
     GFL_STD_MemCopy( trData->use_item, dst->useItem, sizeof(trData->use_item) );
 
