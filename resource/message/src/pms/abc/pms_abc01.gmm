@@ -619,11 +619,6 @@
 	</row>
 
 	<row id="search_abc_45">
-		<language name="JPN" width="216">いんせくた</language>
-		<language name="JPN_KANJI" width="216">いんせくた</language>
-	</row>
-
-	<row id="search_abc_46">
 		<language name="JPN" width="216">いんふあいと</language>
 		<language name="JPN_KANJI" width="216">いんふあいと</language>
 	</row>
