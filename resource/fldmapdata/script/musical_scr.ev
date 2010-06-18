@@ -157,6 +157,9 @@ EVENT_START ev_musical_return_hall
   _MAP_FADE_BLACK_IN( )
   _MAP_FADE_END_CHECK()
   _MSGWIN_SET_AUTOPRINT( FALSE )
+  
+  //ç≈å„ÇÃèuä‘Ç…ÉGÉâÅ[Ç™èoÇƒÇ¢ÇΩèÍçá
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_CALL_ERROR, 0, 0, SCWK_ANSWER )
 EVENT_END
 
 /*************************************************************/
