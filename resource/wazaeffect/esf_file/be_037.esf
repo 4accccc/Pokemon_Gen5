@@ -1,0 +1,10 @@
+EFFSEQ
+$0001
+c:\home\pokemon_wb\resource\particle\wazaeffect\w_005.spa
+#001
+%00
+制御モード変更	継続
+カメラ移動	追従	初期位置（正射影）	CM	0	0
+エフェクト終了待ち	すべて
+エフェクト終了
+&
