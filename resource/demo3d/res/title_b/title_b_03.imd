@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-06-12T16:29:05" source="title_b_01.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-18T16:18:33" source="title_b01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-06-12T16:29:05" source="title_b_01.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-18T16:18:33" source="title_b01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="check_b_pl"
-		path="C:/pokemon_projects/WB/demo/title_b/tex/check_b.tga"
+		path="C:/home/wb_data3d/demo/title_b/tex/check_b.tga"
 	>
 		<bitmap size="256">
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
@@ -76,7 +76,7 @@
 		width="64" height="128" original_width="64" original_height="128"
 		format="a5i3"
 		palette_name="glow1_pl"
-		path="C:/pokemon_projects/WB/demo/title_w/tex/glow1.tga"
+		path="C:/home/wb_data3d/demo/title_b/tex/glow1.tga"
 	>
 		<bitmap size="4096">
 			8888 8888 8888 8888 8888 8888 8888 8888
@@ -597,7 +597,7 @@
 		width="128" height="128" original_width="128" original_height="128"
 		format="a5i3"
 		palette_name="rays_b_pl"
-		path="C:/pokemon_projects/WB/demo/title_b/tex/rays_b.tga"
+		path="C:/home/wb_data3d/demo/title_b/tex/rays_b.tga"
 	>
 		<bitmap size="8192">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -2226,7 +2226,7 @@
 				<primitive index="0" type="triangle_strip" vertex_size="12">
 					<mtx idx="0"/>
 					<tex st="60.812500 126.625000"/>
-					<clr rgb="23 28 31"/>
+					<clr rgb="15 24 31"/>
 					<pos_xyz xyz="0.051758 -0.027588 -0.003906"/>
 					<tex st="60.812500 0.000000"/>
 					<pos_diff xyz="-0.018311 0.020752 -0.002441"/>
@@ -2458,9 +2458,9 @@
 		brother_prev="2"
 		draw_mtx="on"
 		billboard="off"
-		scale="2.438721 2.438721 2.438721"
-		rotate="0.282227 38.689453 0.451172"
-		translate="-170.516357 30.939209 -212.912842"
+		scale="2.722656 2.722656 2.722656"
+		rotate="-9.875977 38.751709 0.445557"
+		translate="-171.255127 -17.637939 -213.835205"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="12"
