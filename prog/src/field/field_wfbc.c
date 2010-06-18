@@ -1796,17 +1796,26 @@ static void DEBWIN_Update_BCWinNumAdd10( void* userWork , DEBUGWIN_ITEM* item )
   FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
   FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
   int i;
+  int add = 10;
 
   if( p_core->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
   {
-    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT) )
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+      add = 100;
+    }
+    
+    if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_RIGHT) )
     {
-      p_wk->bc_npc_win_count += 10;
+      p_wk->bc_npc_win_count += add;
       DEBUGWIN_RefreshScreen();
     }
-    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT) )
+    if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT) )
     {
-      p_wk->bc_npc_win_count -= 10;
+      if(p_wk->bc_npc_win_count>=add){
+        p_wk->bc_npc_win_count -= add;
+      }else{
+        p_wk->bc_npc_win_count = 0;
+      }
       DEBUGWIN_RefreshScreen();
     }
   }
@@ -2102,17 +2111,26 @@ static void DEBWIN_Update_BCWinTargetAdd10( void* userWork , DEBUGWIN_ITEM* item
   FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
   FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
   int i;
+  int add = 10;
 
   if( p_core->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
   {
-    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT) )
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+      add = 100;
+    }
+    
+    if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_RIGHT) )
     {
-      p_wk->bc_npc_win_target += 10;
+      p_wk->bc_npc_win_target += add;
       DEBUGWIN_RefreshScreen();
     }
-    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT) )
+    if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT) )
     {
-      p_wk->bc_npc_win_target -= 10;
+      if( p_wk->bc_npc_win_target >= add ){
+        p_wk->bc_npc_win_target -= add;
+      }else{
+        p_wk->bc_npc_win_target = 0;
+      }
       DEBUGWIN_RefreshScreen();
     }
   }
