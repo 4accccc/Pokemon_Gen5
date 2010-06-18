@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-14T19:18:50"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-19T00:36:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -992,16 +992,18 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいせんの　けっかを
 サーバーに　おくりました[BE:01:ページ切り替え（クリア）]
-せいせきが　はんえいされるまで
+せいせきへの　はんえいは
 すこし　じかんが　かかります[BE:01:ページ切り替え（クリア）]
-たいせんを　つづけながら
-はんえいを　おまちください[BE:01:ページ切り替え（クリア）]</language>
+はんえいが　かんりょう　すると
+たいせん　あいてを　さがすときに[BE:00:ページ切り替え（行送り）]
+せいせいは　こうしん　されます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">対戦の　結果を
 サーバーに　送りました[BE:01:ページ切り替え（クリア）]
-成績が　反映されるまで
+成績への　反映は
 少し　時間が　かかります[BE:01:ページ切り替え（クリア）]
-対戦を　続けながら
-反映を　お待ちください[BE:01:ページ切り替え（クリア）]</language>
+反映が　完了　すると
+対戦相手を　探すときに[BE:00:ページ切り替え（行送り）]
+成績は　更新されます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_34">
