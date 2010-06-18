@@ -231,6 +231,7 @@ struct _BTLV_SCU {
   PRINTSTREAM_STATE  printState;
   u16           printWait;
   u16           printWaitOrg;
+  u16           printWaitEOM;
   u8            msgwinVisibleFlag;
   u8            btlinSeq;
   u8            btlinSkipFlag;
@@ -2492,6 +2493,7 @@ void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str )
   wk->printSeq = 0;
   wk->printWait = 0;
   wk->printWaitOrg = 0;
+  wk->printWaitEOM = 0;
   wk->printAtOnceFlag = TRUE;
   wk->printJustDoneFlag = FALSE;
 }
@@ -2521,8 +2523,17 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait, pPrintCallBac
 
   wk->printSeq = 0;
   wk->printAtOnceFlag = FALSE;
-  wk->printWait = wait;
-  wk->printWaitOrg = wait;
+  if( wait == BTLV_MSGWAIT_QUICK )
+  {
+    wk->printWait = BTLV_MSGWAIT_STD;
+    wk->printWaitEOM = 0;
+  }
+  else{
+    wk->printWait = wait;
+    wk->printWaitEOM = wait;
+  }
+
+  wk->printWaitOrg = wk->printWait;
   wk->printJustDoneFlag = FALSE;
 }
 //=============================================================================================
@@ -2617,7 +2628,9 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
         } else {
           wk->printSeq = SEQ_WAIT_USERCTRL_COMM;
         }
-        if( wk->printState == PRINTSTREAM_STATE_DONE ){
+        if( wk->printState == PRINTSTREAM_STATE_DONE )
+        {
+          wk->printWait = wk->printWaitEOM;
           wk->printJustDoneFlag = TRUE;
         }
       }
