@@ -698,6 +698,7 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
     MBBMP_ClosePut( syswk->app );
     MBOBJ_MailReadCurMove( syswk->app );
     SubDispMailWrite( syswk );
+    MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_END_BTN, 14 ); //ENDボタンを暗く
     return MBSEQ_MAINSEQ_MAIL_READ_MAIN;
 
   case MBMAIN_MENU_DELETE:  // メールを消す
@@ -903,6 +904,7 @@ static int MainSeq_MailboxRetAnimeWait( MAILBOX_SYS_WORK *syswk )
 {
   if(GFL_CLACT_WK_CheckAnmActive(syswk->app->clwk[MBMAIN_OBJ_RET_BTN])==FALSE ){
     syswk->dat->retMode = FALSE;
+    MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_END_BTN, 0 ); //ENDボタンを明るく
     return syswk->next_seq;
   }
   return MBSEQ_MAINSEQ_MAILBOX_RET_ANIME_WAIT;

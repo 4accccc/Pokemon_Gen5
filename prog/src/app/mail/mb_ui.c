@@ -68,7 +68,7 @@ static const GFL_UI_TP_HITTBL TouchButtonHitTbl[] =
 //ÅuÉÅÅ[ÉãÇÇÊÇﬁÅv
 static const GFL_UI_TP_HITTBL MailReadHitTbl[] =
 {
-  { 160, 191, 192, 255 },   // 0: Ç‚ÇﬂÇÈ
+  { 160, 191, 230, 255 },    // 0: Ç‚ÇﬂÇÈ
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
