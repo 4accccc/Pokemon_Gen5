@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-18T11:54:33"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-18T15:03:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1598,7 +1598,7 @@
 という　とき　ございますでしょう？▽
 そういった　場合ですね▼
 すかさず　この技を　使いますと
-お料理の　味に　大変な▽
+お料理の　味に　大変▽
 危険な　アクセントを▽
 加えることが　できますね▼
 アナウンサー『なるほど……
@@ -6737,7 +6737,7 @@ SQUIRTというんですよ▼
 ハイッ　そこの　えいごが
 すきそうな　きみたち！▼
 クルル『ハイッ　ISHITSUBUTEです！』▼
-イルル『ハイッ　ISHITSUBUTSUBUです！』▼
+イルル『ハイッ　METSUBUTTEです！』▼
 ズルル『ホイッ　METSUBUSHIです！』▼
 しかい　『せいかいは　GEODUDE！
 ジオドゥード　です！▼
@@ -6756,8 +6756,8 @@ DUDEは　やつ　って　いみなんですよ▼
 さあ　これを　英語で　なんという？▼
 ハイッ　そこの　英語が
 好きそうな　きみたち！▼
-クルル『ハイッ　ISHITUBUTEです！』▼
-イルル『ハイッ　METUBUTTEです！』▼
+クルル『ハイッ　ISHITSUBUTEです！』▼
+イルル『ハイッ　METSUBUTTEです！』▼
 ズルル『ホイッ　METSUBUSHIです！』▼
 司会『正解は　GEODUDE！
 ジオドゥード　です！▼
