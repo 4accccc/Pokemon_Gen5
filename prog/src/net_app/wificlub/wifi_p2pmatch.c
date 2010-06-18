@@ -5400,7 +5400,7 @@ static int _childModeConnect( WIFIP2PMATCH_WORK *wk, int seq )
       _commStateChange(wk,WIFI_STATUS_CALL, gamemode);
       _myStatusChange(wk, WIFI_STATUS_CALL, gamemode);  // Ú‘±‘Ò‹@’†‚É‚È‚é
       _friendNameExpand(wk, friendNo - 1);
-      WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
+      WifiP2PMatchMessagePrintDirect(wk,msg_wifilobby_014, FALSE);
       WifiP2PMatchMessage_TimeIconStart(wk);
       wk->friendNo = friendNo;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_LOOP);
