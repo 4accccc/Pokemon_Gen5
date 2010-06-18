@@ -11639,7 +11639,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_D_05,
 		SEQ_BGM_D_05,
 		SEQ_BGM_D_05,
-		enc_dummy,
+		NARC_encount_data_w_r07r0105_bin,
 		NARC_eventdata_r07r0105_bin,
     ZONE_ID_R07R0101,
 		MAPNAME_R07R01,
