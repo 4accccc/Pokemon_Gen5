@@ -3586,13 +3586,13 @@
 	</row>
 
 	<row id="ZKN_TYPE_648">
-		<language name="JPN">ポケモン</language>
-		<language name="JPN_KANJI">ポケモン</language>
+		<language name="JPN">せんりつポケモン</language>
+		<language name="JPN_KANJI">せんりつポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_649">
-		<language name="JPN">ポケモン</language>
-		<language name="JPN_KANJI">ポケモン</language>
+		<language name="JPN">こせいだいポケモン</language>
+		<language name="JPN_KANJI">こせいだいポケモン</language>
 	</row>
 
 	<flowchart-group-list>

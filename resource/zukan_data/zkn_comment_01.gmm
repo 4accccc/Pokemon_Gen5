@@ -6174,13 +6174,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_648">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">とくしゅな　はっせいほうで　うたう
+メロディは　きいた　ものの
+かんじょうを　じざいに　あやつる。</language>
+		<language name="JPN_KANJI">特殊な　発声法で　歌う　メロディは
+聞いた　者の　感情を
+自在に　操る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_649">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">３おくねんまえに　さいきょうの
+ハンターとして　おそれられていた。
+プラズマだんに　かいぞうされた。</language>
+		<language name="JPN_KANJI">３億年前に　最強の　ハンターとして
+恐れられていた。
+プラズマ団に　改造された。</language>
 	</row>
 
 	<flowchart-group-list>
