@@ -2489,7 +2489,7 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
     break;
 
   case 2:
-    if( BTLV_SCU_MoveGauge_Wait(wk->scrnU) ){
+    if( BTLV_SCU_MoveGauge_Wait( wk->scrnU, subwk->pos1, subwk->pos2 ) ){
       return TRUE;
     }
     break;

@@ -3132,8 +3132,6 @@ void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
 {
   statwin_hide( &wk->statusWin[ pos1 ] );
   statwin_hide( &wk->statusWin[ pos2 ] );
-  statwin_disp_start( &wk->statusWin[ pos1 ] );
-  statwin_disp_start( &wk->statusWin[ pos2 ] );
 }
 
 //=============================================================================================
@@ -3145,8 +3143,10 @@ void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk )
+BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
 {
+  statwin_disp_start( &wk->statusWin[ pos1 ] );
+  statwin_disp_start( &wk->statusWin[ pos2 ] );
   return TRUE;
 }
 

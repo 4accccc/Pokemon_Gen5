@@ -67,7 +67,7 @@ extern BOOL BTLV_SCU_TokWin_Swap_Wait( BTLV_SCU* wk );
 
 
 extern void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 );
-extern BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk );
+extern BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 );
 
 extern void BTLV_SCU_KinomiAct_Start( BTLV_SCU* wk, BtlvMcssPos pos );
 extern BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlvMcssPos pos );
