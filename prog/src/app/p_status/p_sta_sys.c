@@ -619,7 +619,6 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     work->mcssSys = MCSS_Init( 2 , work->heapId );
     MCSS_SetTextureTransAdrs( work->mcssSys , 0 );
     MCSS_ResetOrthoMode( work->mcssSys );
-    MCSS_DisableProjectionReviseFlg( work->mcssSys , 1 );
     MCSS_SetMultiCellAnimeRate( work->mcssSys , FX32_ONE*16 );
   }
   //Vram“]‘—ƒAƒjƒ
