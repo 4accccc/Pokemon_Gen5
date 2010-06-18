@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-06-09T12:58:48" source="m_gym0501_00_00c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-06-18T19:56:49" source="m_gym0501_00_00c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-06-09T12:58:48" source="m_gym0501_00_00c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-06-18T19:56:49" source="m_gym0501_00_00c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2824,9 +2824,9 @@
 				</primitive>
 				<primitive index="4" type="quad_strip" vertex_size="6">
 					<tex st="26.562500 61.312500"/>
-					<pos_s xyz="0.906250 6.250000 0.281250"/>
+					<pos_xyz xyz="0.906250 6.250000 0.257324"/>
 					<tex st="26.562500 2.687500"/>
-					<pos_xy xy="0.906250 6.750000"/>
+					<pos_yz yz="6.750000 0.281250"/>
 					<tex st="-66.687500 61.312500"/>
 					<pos_xyz xyz="-0.072510 6.250000 0.250000"/>
 					<tex st="-66.687500 2.687500"/>
@@ -2850,9 +2850,9 @@
 					<pos_yz yz="6.750000 0.562500"/>
 					<tex st="0.000000 64.000000"/>
 					<clr rgb="27 21 14"/>
-					<pos_s xyz="0.906250 6.250000 0.281250"/>
+					<pos_xyz xyz="0.906250 6.250000 0.257324"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="0.906250 6.750000"/>
+					<pos_yz yz="6.750000 0.281250"/>
 				</primitive>
 				<primitive index="6" type="quad_strip" vertex_size="6">
 					<tex st="-96.000000 64.000000"/>
@@ -3103,7 +3103,7 @@
 					<tex st="26.562500 61.312500"/>
 					<pos_xy xy="0.875000 5.875000"/>
 					<tex st="26.562500 2.687500"/>
-					<pos_s xyz="0.906250 6.250000 0.281250"/>
+					<pos_xyz xyz="0.906250 6.250000 0.257324"/>
 					<tex st="-66.687500 61.312500"/>
 					<pos_xyz xyz="-0.072510 5.875000 0.250000"/>
 					<tex st="-66.687500 2.687500"/>
@@ -3128,7 +3128,7 @@
 					<clr rgb="27 21 14"/>
 					<pos_s xyz="0.875000 5.875000 0.250000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_s xyz="0.906250 6.250000 0.281250"/>
+					<pos_xyz xyz="0.906250 6.250000 0.257324"/>
 				</primitive>
 				<primitive index="6" type="quad_strip" vertex_size="6">
 					<tex st="-96.000000 64.000000"/>
