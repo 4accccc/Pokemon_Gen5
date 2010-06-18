@@ -130,6 +130,7 @@ enum{
   BTLEFF_RAINBOW,                             //虹エフェクト
   BTLEFF_BURNING,                             //火の海エフェクト
   BTLEFF_MOOR,                                //湿地エフェクト
+  BTLEFF_DAMAGE,                              //ダメージエフェクト
 
   BTLEFF_STATUS_EFFECT_END,
 };
