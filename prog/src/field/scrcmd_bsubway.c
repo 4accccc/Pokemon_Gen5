@@ -2008,9 +2008,9 @@ static void bsway_SetHomeNPC(
         save, GMDATA_ID_BSUBWAY_WIFIDATA );
     BSUBWAY_LEADER_DATA *pLeader = BSUBWAY_WIFIDATA_GetLeaderDataAlloc(
         wifiData, HEAPID_PROC );
-    BSUBWAY_LEADER_DATA *leader = pLeader;
-    
-    for( ; i < HOME_NPC_WIFI_MAX; i++, leader++, obj_id++, pos_tbl++ ){
+    BSUBWAY_LEADER_DATA *leader = &pLeader[BSUBWAY_STOCK_WIFI_LEADER_MAX-1];
+
+    for( ; i < HOME_NPC_WIFI_MAX; i++, leader--, obj_id++, pos_tbl++ ){
       id = *(u32*)leader->id_no;
       id %= 10;
       
@@ -2505,8 +2505,8 @@ const u32 d_data_NpcHomeNoTbl[] =
 static const HOME_NPC_DATA data_HomeNpcTbl[] =
 {
   //たんぱんこぞう
-  {BOY1,1,71,0,17,msg_c04r0111_boy2_1,0,ITEM_DUMMY_DATA}, //0
-  {BOY1,4,62,0,14,msg_c04r0111_boy2_2,0,ITEM_DUMMY_DATA},
+  {BOY2,1,71,0,17,msg_c04r0111_boy2_1,0,ITEM_DUMMY_DATA}, //0
+  {BOY2,4,62,0,14,msg_c04r0111_boy2_2,0,ITEM_DUMMY_DATA},
   //ミニスカート
   {GIRL2,1,66,0,14,msg_c04r0111_girl2_1,0,ITEM_DUMMY_DATA},
   {GIRL2,4,50,0,16,msg_c04r0111_girl2_2,0,ITEM_DUMMY_DATA},
@@ -2616,6 +2616,7 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
 //--------------------------------------------------------------
 static const u16 data_HomeNpcTbl_WifiMan[10] =
 {
+  GENTLEMAN, //ジェントルマン //0
   BOY2, //たんぱんこぞう
   BOY1, //じゅくがえり
   BACKPACKERM, //バックパッカー
@@ -2624,8 +2625,7 @@ static const u16 data_HomeNpcTbl_WifiMan[10] =
   BOY4, //おぼっちゃま
   PILOT, //パイロット
   MAN3, //エリートトレーナー
-  OLDMAN1, //ベテラントレーナー
-  GENTLEMAN, //ジェントルマン
+  OLDMAN1, //ベテラントレーナー //9
 };
 
 //--------------------------------------------------------------
@@ -2633,6 +2633,7 @@ static const u16 data_HomeNpcTbl_WifiMan[10] =
 //--------------------------------------------------------------
 static const u16 data_HomeNpcTbl_WifiWoman[10] =
 {
+  OLDWOMAN1, //ベテラントレーナー //0
   GIRL1, //ミニスカート
   GIRL3, //じゅくがえり
   BACKPACKERW, //バックパッカー
@@ -2641,8 +2642,7 @@ static const u16 data_HomeNpcTbl_WifiWoman[10] =
   WOMAN3, //エリートトレーナー
   OLDWOMAN1, //ベテラントレーナー
   LADY, //マダム
-  WOMAN3, //エリートトレーナー
-  OLDWOMAN1, //ベテラントレーナー
+  WOMAN3, //エリートトレーナー //9
 };
 
 //--------------------------------------------------------------

@@ -386,8 +386,13 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
       GF_ASSERT( 0 && "ERROR BSW TRAINER MSG : INDEX OVER" );
       msg_no = 0;
     }
-    
+   
+#ifndef DEBUG_ROM_TR_NAME_CHECK    //正規
     GFL_MSG_GetString( msgdata, msg_no, work->strBuf );
+#else //名前チェック
+    GFL_STR_SetStringCode(
+        work->strBuf, bsw_scr->tr_data[tr_idx].bt_trd.name );
+#endif
     GFL_MSG_Delete( msgdata );
   }else{ //簡易会話
     PMS_DATA *pms = (PMS_DATA*)bsw_scr->tr_data[tr_idx].bt_trd.appear_word;
