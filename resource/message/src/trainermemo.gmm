@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-09T21:57:06"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-18T17:59:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="401"/>
+		<comment position="1" width="256"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1025" top="408" right="1730" bottom="1036" maximized="no" rayout="Vertical2">
+	<dialog left="1030" top="368" right="1735" bottom="996" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1063,7 +1063,7 @@
 連れて行ってみよう。</language>
 	</row>
 
-	<row id="trmemo_02_14_01">
+	<row id="trmemo_02_14_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>2010映画配信用
 
 セレビィのイベント発動後
@@ -1074,15 +1074,15 @@
 3：エンカウントしたレベル</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
 うんめいてきな
-であいをした
+であいをした。
 [FF:00:色:2]ヒウンシティ[FF:00:色:0]で
 ゾロアと　であい
 いっしょに　ぼうけんを
 することに　なった。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 運命的な
-出会いをした
-[FF:00:色:2]ヒウンシティ[FF:00:色:0]で
+出会いをした。[FF:00:色:2]
+ヒウンシティ[FF:00:色:0]で
 ゾロアと　出会い
 一緒に　冒険を
 することに　なった。</language>
@@ -1113,7 +1113,7 @@
 連れて行ってみよう。</language>
 	</row>
 
-	<row id="trmemo_02_16_01">
+	<row id="trmemo_02_16_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>2010映画配信用
 
 エンテイ・スイクン・ライコウのイベント発動後
@@ -1123,15 +1123,15 @@
 3：エンカウントしたレベル</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
 うんめいてきな
-であいをした
-[FF:00:色:2]まよいのもり[FF:00:色:0]で
+であいをした。[FF:00:色:2]
+まよいのもり[FF:00:色:0]で
 ゾロアークの
 イリュージョンを
 うちやぶった。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 運命的な
-出会いをした
-[FF:00:色:2]迷いの森[FF:00:色:0]で
+出会いをした。[FF:00:色:2]
+迷いの森[FF:00:色:0]で
 ゾロアークの
 イリュージョンを
 打ち破った。</language>
