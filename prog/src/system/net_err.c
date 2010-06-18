@@ -337,6 +337,19 @@ void NetErr_ResetPushPopBrightness( void )
   GXS_SetMasterBrightness(nes->master_brightness_sub);
 }
 
+//--------------------------------------------------------------
+/**
+ * PushPop用のNetMain
+ */
+//--------------------------------------------------------------
+static void _PushPopErrNetMain(void)
+{
+  if(GFL_NET_IsInit() == TRUE){
+    GFL_NET_Main();
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+}
+
 //==================================================================
 /**
  * Push,Pop有のエラー画面一発呼び出し　※軽度エラー専用。通信の終了処理は行いません
@@ -348,7 +361,12 @@ void NetErr_ResetPushPopBrightness( void )
 void NetErr_DispCallPushPop(void)
 {
   NET_ERR_SYSTEM *nes = &NetErrSystem;
-
+  GXSDispCnt sub_dispcnt = GXS_GetDispCnt();
+  GXWndPlane gx_outside = G2_GetWndOutsidePlane();
+  GXWndPlane gxs_outside = G2S_GetWndOutsidePlane();
+  GXWndPlane gx_inside = G2_GetWndOBJInsidePlane();
+  GXWndPlane gxs_inside = G2S_GetWndOBJInsidePlane();
+  
 	if(Local_SystemOccCheck() == FALSE){
 		GF_ASSERT(0); //システムが作られていない
 		return;
@@ -357,15 +375,34 @@ void NetErr_DispCallPushPop(void)
 	//エラー画面描画
 	Local_ErrDispInit(FALSE);
 	
+	GX_VBlankIntr(TRUE);  //Wi-Fiでは繋がっているままエラー画面を出すケースがある為VBlankを生かす
+	
+	//通信アイコンの表示(Wi-Fiでは繋がっているままエラー画面を出すケースがある為)
+	GFL_NET_WirelessIconOBJWinON();
+	if(GFL_NET_WirelessIconGetVramType() == NNS_G2D_VRAM_TYPE_2DMAIN){
+  	G2_SetWndOutsidePlane(GX_WND_PLANEMASK_BG1, FALSE);
+  	G2_SetWndOBJInsidePlane(GX_WND_PLANEMASK_OBJ, FALSE);
+  	GX_SetVisibleWnd(GX_WNDMASK_OW);
+  	GX_SetVisiblePlane(GX_PLANEMASK_OBJ | GX_PLANEMASK_BG1);
+  }
+  else{
+  	G2S_SetWndOutsidePlane(GX_WND_PLANEMASK_BG1, FALSE);
+  	G2S_SetWndOBJInsidePlane(GX_WND_PLANEMASK_OBJ, FALSE);
+    GXS_SetVisibleWnd(GX_WNDMASK_OW);
+  	GXS_SetVisiblePlane(GX_PLANEMASK_OBJ | GX_PLANEMASK_BG1);
+  }
+	
 //		OS_SpinWait(10000);
 	
 #ifndef DEBUG_ERR_THROUGH
 	while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
 		Local_ErrUpdate();	//ボタンを一度離すまで待つ
+		_PushPopErrNetMain();
 	}
 	
 	while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
 		Local_ErrUpdate();	//エラー画面終了ボタンが押されるまで待つ
+		_PushPopErrNetMain();
 	}
 #endif //DEBUG_ERR_THROUGH
 	
@@ -374,6 +411,18 @@ void NetErr_DispCallPushPop(void)
   {
     BOOL is_black_continue  = (nes->pushpop_mode == NET_ERR_PUSHPOP_MODE_BLACKOUT);
     Local_ErrDispExit( is_black_continue );
+  	
+  	GFL_NET_WirelessIconOBJWinOFF();
+  	if(GFL_NET_WirelessIconGetVramType() == NNS_G2D_VRAM_TYPE_2DSUB){
+      //メインはLocal_ErrDispExitで復帰している為、Subだけ復帰
+  	  GXS_SetVisibleWnd(sub_dispcnt.visibleWnd);
+    	G2S_SetWndOutsidePlane(gxs_outside.planeMask, FALSE);
+    	G2S_SetWndOBJInsidePlane(gxs_inside.planeMask, FALSE);
+  	}
+  	else{
+    	G2_SetWndOutsidePlane(gx_outside.planeMask, FALSE);
+    	G2_SetWndOBJInsidePlane(gx_inside.planeMask, FALSE);
+    }
   }
 }
 
@@ -787,7 +836,7 @@ static void Local_ErrDispExit(BOOL is_black_continue)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	int x, y;
-	
+
 	if(Local_SystemOccCheck() == FALSE){
 		return;
 	}
