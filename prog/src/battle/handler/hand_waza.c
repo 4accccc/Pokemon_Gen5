@@ -2777,35 +2777,41 @@ static void handler_Hakidasu_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     def_rank = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_DEF );
     spdef_rank = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU_SPDEF );
 
-    rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-      rank_param->poke_cnt = 1;
-      rank_param->pokeID[0] = pokeID;
-      rank_param->rankType = BPP_DEFENCE_RANK;
-      rank_param->rankVolume = -def_rank;
-    BTL_SVF_HANDEX_Pop( flowWk, rank_param );
+    if( def_rank )
+    {
+      rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+        rank_param->poke_cnt = 1;
+        rank_param->pokeID[0] = pokeID;
+        rank_param->rankType = BPP_DEFENCE_RANK;
+        rank_param->rankVolume = -def_rank;
+      BTL_SVF_HANDEX_Pop( flowWk, rank_param );
 
-    rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-      rank_param->poke_cnt = 1;
-      rank_param->pokeID[0] = pokeID;
-      rank_param->rankType = BPP_SP_DEFENCE_RANK;
-      rank_param->rankVolume = -spdef_rank;
-    BTL_SVF_HANDEX_Pop( flowWk, rank_param );
+      counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
+        counter_param->pokeID = pokeID;
+        counter_param->counterID = BPP_COUNTER_TAKUWAERU_DEF;
+        counter_param->value = 0;
+      BTL_SVF_HANDEX_Pop( flowWk, counter_param );
+    }
+
+    if( spdef_rank )
+    {
+      rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+        rank_param->poke_cnt = 1;
+        rank_param->pokeID[0] = pokeID;
+        rank_param->rankType = BPP_SP_DEFENCE_RANK;
+        rank_param->rankVolume = -spdef_rank;
+      BTL_SVF_HANDEX_Pop( flowWk, rank_param );
+
+      counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
+        counter_param->pokeID = pokeID;
+        counter_param->counterID = BPP_COUNTER_TAKUWAERU_SPDEF;
+        counter_param->value = 0;
+      BTL_SVF_HANDEX_Pop( flowWk, counter_param );
+    }
 
     counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
       counter_param->pokeID = pokeID;
       counter_param->counterID = BPP_COUNTER_TAKUWAERU;
-      counter_param->value = 0;
-    BTL_SVF_HANDEX_Pop( flowWk, counter_param );
-
-    counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
-      counter_param->pokeID = pokeID;
-      counter_param->counterID = BPP_COUNTER_TAKUWAERU_DEF;
-      counter_param->value = 0;
-    BTL_SVF_HANDEX_Pop( flowWk, counter_param );
-
-    counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
-      counter_param->pokeID = pokeID;
-      counter_param->counterID = BPP_COUNTER_TAKUWAERU_SPDEF;
       counter_param->value = 0;
     BTL_SVF_HANDEX_Pop( flowWk, counter_param );
 
