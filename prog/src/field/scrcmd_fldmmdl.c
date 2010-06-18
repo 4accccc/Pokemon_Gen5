@@ -1306,6 +1306,8 @@ VMCMD_RESULT EvCmdObjWarpOut( VMHANDLE *core, void *wk )
 
   GF_ASSERT( mmdl ); // 引数エラー: 指定されたOBJIDは存在しない
 
+  PMSND_PlaySE( SEQ_SE_FLD_05 ); // ワープ音
+
   // タスクを生成
   VEC_Set( &vec, 0, 150<<FX32_SHIFT, 0 );
   moveTask = FIELD_TASK_TransDrawOffsetEX( fieldmap, 24, &vec, mmdl );
