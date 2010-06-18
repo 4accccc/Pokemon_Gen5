@@ -1,0 +1,27 @@
+EFFSEQ
+$0005
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_390.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_052.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_196.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_057_fire_burn.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_058_marsh_ball.spa
+#001
+%00
+カメラ移動	追従	攻撃側	16	0	12
+エフェクト終了待ち	すべて
+SE再生	SEQ_SE_KOUKA_M	デフォルト	攻撃側	0:0:127	0:0:0
+ポケモンバニッシュ	攻撃側	バニッシュオン
+タイマーによるウエイト	3
+ポケモンバニッシュ	攻撃側	バニッシュオフ
+タイマーによるウエイト	3
+ポケモンバニッシュ	攻撃側	バニッシュオン
+タイマーによるウエイト	3
+ポケモンバニッシュ	攻撃側	バニッシュオフ
+タイマーによるウエイト	3
+ポケモンバニッシュ	攻撃側	バニッシュオン
+タイマーによるウエイト	3
+ポケモンバニッシュ	攻撃側	バニッシュオフ
+カメラ移動	追従	初期位置	16	0	12
+エフェクト終了待ち	すべて
+エフェクト終了
+&
