@@ -153,7 +153,7 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
     case MYSTERYGIFT_TYPE_ITEM:
       { 
         u16 itemNo  = Mystery_CreateItem( p_data );
-        if( !(ITEM_DUMMY_DATA < itemNo && itemNo <=ITEM_DATA_MAX) )
+        if( ITEM_DUMMY_DATA == itemNo  )
         {   
           dirty++;
           OS_TPrintf( "GIFT_PACK_DATA:アイテムNOが不正でした\n" );
@@ -163,7 +163,7 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
     case MYSTERYGIFT_TYPE_POWER:
       { 
         u16 gpower  = Mystery_CreateGPower( p_data );
-        if( !(GPOWER_ID_DISTRIBUTION_START <= gpower && gpower <= GPOWER_ID_DISTRIBUTION_END) )
+        if( gpower == GPOWER_ID_NULL )
         { 
           dirty++;
           OS_TPrintf( "GIFT_PACK_DATA:Gパワーが不正でした\n" ); 

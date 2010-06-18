@@ -352,7 +352,15 @@ static inline int Mystery_CreateItem(const GIFT_PACK_DATA* pPack)
     return ITEM_DUMMY_DATA;
   }
 
-  return pGift->itemNo;
+  //配布データ以外が来たら不正
+  if( ITEM_DUMMY_DATA < pGift->itemNo && pGift->itemNo <= ITEM_DATA_MAX )
+  {
+    return pGift->itemNo;
+  }
+  else
+  {
+    return ITEM_DUMMY_DATA;
+  }
 }
 
 //--------------------------------------------------------------
