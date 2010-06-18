@@ -702,7 +702,7 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( wk->nhttp );
   GF_ASSERT( ret );
 
-  ret = NHTTP_RAP_StartConnect( wk->nhttp );  
+  ret = NHTTP_RAP_StartConnect( wk->nhttp ) == NHTTP_ERROR_NONE; 
   GF_ASSERT( ret );
 
   OS_TPrintf( "ïsê≥åüç∏äJén\n" );
