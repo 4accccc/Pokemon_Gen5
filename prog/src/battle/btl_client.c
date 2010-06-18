@@ -1599,6 +1599,8 @@ static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam )
   BTLV_StartMsg( wk->viewCore, strParam );
   wk->fStdMsgChanged = TRUE; // 「○○はどうする？」メッセージを書き換えたフラグON
 }
+
+
 //----------------------------------------------------------------------
 /**
  *  アクション選択の強制終了
@@ -2533,6 +2535,7 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
 
     case BTL_ESCAPE_MODE_CONFIRM: // 逃げると負けになるのを確認させ、確実に逃げられる（通信対戦＆サブウェイ）
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeCheck );
+      BTLV_STRPARAM_SetWait( &wk->strParam, BTLV_MSGWAIT_QUICK );
       selact_startMsg( wk, &wk->strParam );
       (*seq) = SEQ_WAIT_MSG_CONFIRM;
     }
@@ -4697,6 +4700,7 @@ static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq )
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_IrekaeConfirm );
         BTLV_STRPARAM_AddArg( &wk->strParam, BTL_CLIENTID_SA_ENEMY1 );
         BTLV_STRPARAM_AddArg( &wk->strParam, *enemyPutPokeID );
+        BTLV_STRPARAM_SetWait( &wk->strParam, BTLV_MSGWAIT_QUICK );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
         (*seq) = SEQ_START_CONFIRM;
       }
@@ -7047,6 +7051,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
     BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_05 );
     BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
     BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
+    BTLV_STRPARAM_SetWait( &wk->strParam, BTLV_MSGWAIT_QUICK );
     BTLV_StartMsg( wk->viewCore, &wk->strParam );
     (*seq) = SEQ_WASURE_WAIT_MSG_1ST;
     /* fallthru */
@@ -7121,13 +7126,15 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
     BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_08 );
     BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
     BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
+    BTLV_STRPARAM_SetWait( &wk->strParam, BTLV_MSGWAIT_QUICK );
     BTLV_StartMsg( wk->viewCore, &wk->strParam );
     (*seq) = SEQ_AKIRAME_YESNO_START;
     break;
 
   case SEQ_AKIRAME_YESNO_START:
     //技忘れあきらめ確認処理「では○○を覚えるのをあきらめますか？」
-    if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+    if( BTLV_IsJustDoneMsg(wk->viewCore) )
+    {
       BTLV_STRPARAM   yesParam;
       BTLV_STRPARAM   noParam;
       BTLV_STRPARAM_Setup( &yesParam, BTL_STRTYPE_YESNO, msgid_yesno_wazaakirameru );
