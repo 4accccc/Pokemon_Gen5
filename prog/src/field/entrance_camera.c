@@ -54,12 +54,12 @@
 // 左ドアへの出入り
 #define L_DOOR_FRAME  (10)
 #define L_DOOR_PITCH  (0x1fa1)
-#define L_DOOR_YAW    (0x1089)
+#define L_DOOR_YAW    (0x0a09)//(0x1089)
 #define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
 #define R_DOOR_FRAME  (10)
 #define R_DOOR_PITCH  (0x1fa1)
-#define R_DOOR_YAW    (0xf047)
+#define R_DOOR_YAW    (0xf5f7)//(0xf047)
 #define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 #endif
 
