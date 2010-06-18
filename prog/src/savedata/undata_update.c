@@ -66,12 +66,12 @@ DAT_ADD_ST UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
   u32 same_idx;
 
   {
-    //自分の国コードを取得
-    int my_country_code = MyStatus_GetMyNation(&add_data->aMyStatus);
-    if ( my_country_code == 0 )
+    //相手の国コードを取得
+    int country_code = MyStatus_GetMyNation(&add_data->aMyStatus);
+    if ( country_code == 0 )
     {
       //登録指定無い場合は処理を行わない
-      NOZOMU_Printf("自分の国コードが設定されていないので、処理しない\n");
+      NOZOMU_Printf("相手が国コードが設定されていないので、処理しない\n");
       return DAT_ADD_ST_FAIL;
     }
   }
