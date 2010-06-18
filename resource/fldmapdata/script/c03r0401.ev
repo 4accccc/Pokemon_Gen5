@@ -75,6 +75,8 @@ EVENT_START	ev_c03r0401_boy1_01
       _BALLOONWIN_CLOSE()
 
       _CALL change_zoroa
+      //イベントセレビィお役御免(イベントアフターフラグを立てる)
+      _SET_EVT_POKE_AFT_FLG( MONSNO_SEREBHI, poke_pos )
 
       //ゾロア鳴き声
       _VOICE_PLAY( MONSNO_ZOROA, 0 )
@@ -241,12 +243,15 @@ add_zoroa:
 
   /*＝＝以降は仲間にできる場合の処理＝＝*/
   $loop = TRUE
-  //女の子下向く
-  _OBJ_ANIME( C03R0401_GIRL1_01, anm_down )
-  _OBJ_ANIME_WAIT()
-  //「ゾロアはつれていってほしい」
-  _BALLOONWIN_OBJMSG_POS( msg_c03r0401_girl1_08 ,C03R0401_GIRL1_01, POS_DR)
-  _BALLOONWIN_CLOSE()
+  
+  IF $is_first == TRUE THEN
+    //女の子下向く
+    _OBJ_ANIME( C03R0401_GIRL1_01, anm_down )
+    _OBJ_ANIME_WAIT()
+    //「ゾロアはつれていってほしい」
+    _BALLOONWIN_OBJMSG_POS( msg_c03r0401_girl1_08 ,C03R0401_GIRL1_01, POS_DR)
+    _BALLOONWIN_CLOSE()
+  ENDIF
 
   WHILE $loop == TRUE
   {
@@ -332,8 +337,6 @@ add_zoroa:
         $WK_SCENE_C03R0401_ZOROA = 3
         //ループ抜ける
         $loop = FALSE
-        //イベントセレビィお役御免(イベントアフターフラグを立てる)
-        _SET_EVT_POKE_AFT_FLG( MONSNO_SEREBHI, poke_pos )
       }  
       ELSE                                                  //ボールを選択しなかった
         //「つれていけないの？」
@@ -520,41 +523,29 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_c03r0401_poke22_01
   _TALK_OBJ_START()
-  //手持ちにイベントセレビィがいるか？
-  _GET_EVT_POKE_POS( MONSNO_SEREBHI, FALSE, poke_pos, SCWK_ANSWER )
   
-  IF $SCWK_ANSWER == TRUE THEN          //セレビィいる
-    //ゾロア鳴き声
-    _VOICE_PLAY( MONSNO_ZOROA, 0 )
-    //「きゅおー」
-    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_02 )
-    _VOICE_WAIT()
-    _AB_KEYWAIT_MARK()
-    _BALLOONWIN_CLOSE()
+  //ゾロア鳴き声
+  _VOICE_PLAY( MONSNO_ZOROA, 0 )
+  //「きゅおー」
+  _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_02 )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
 
-    //女の子左向く(次に控える足踏み下向きアニメコマンドでその場足踏みのみ再生されることを回避するため)
-    _OBJ_ANIME( C03R0401_GIRL1_01, anm_left )
-    _OBJ_ANIME_WAIT()
+  //自機定位置へ
+  _CALL move_player2
 
-    //自機定位置へ
-    _CALL move_player2
+  //ゾロア下向き
+  _OBJ_ANIME( C03R0401_POKE22_01, anm_dir_down )
+  _OBJ_ANIME_WAIT()
+  //女の子下向き
+  _OBJ_ANIME( C03R0401_GIRL1_01, anm_dir_down )
+  _OBJ_ANIME_WAIT()
 
-    //ゾロア下向き
-    _OBJ_ANIME( C03R0401_POKE22_01, anm_dir_down )
-    _OBJ_ANIME_WAIT()
 
-    //仲間にする処理
-    $is_first = FALSE
-    _CALL add_zoroa
-  ELSE                                //セレビィいない
-    //「・・・・・・・・」
-    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_03 )
-    _BALLOONWIN_CLOSE()
-    //「セレビィいない」
-    _SYSWIN_MSG( msg_c03r0401_narrator_04, POS_DOWN )
-    _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
-  ENDIF
+  //仲間にする処理
+  $is_first = FALSE
+  _CALL add_zoroa
 EVENT_END
 
 
