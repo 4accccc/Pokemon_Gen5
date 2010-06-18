@@ -174,7 +174,7 @@ typedef struct {
   int next_seq;     // 次のシーケンス
   int key_mode;
 
-  u8  sel_max;
+  u8  sel_max;      // 思い出しできる技の総数
 
   u8  midx;         // メッセージインデックス
   u8  ynidx;        // はい・いいえID
@@ -3197,13 +3197,18 @@ static void ScrollButtonAnmChange( WO_WORK * wk, s32 mv )
 //----------------------------------------------------------------------------------
 static void ScrollButtonInit( WO_WORK *wk )
 {
-  if(wk->dat->scr+4 < wk->sel_max){
-    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UF );
-    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DT );
-  }else if(wk->dat->scr==0){
-    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UT );
-    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DF );
-    
+  // 技の総数が４以下
+  if(wk->sel_max<=4){
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UF );  //上タッチできない
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DF );  //下タッチできない
+  }else{
+    if(wk->dat->scr+4 < wk->sel_max){
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UF );  //上タッチできない
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DT );  //下タッチできる
+    }else if(wk->dat->scr==0){
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UT );  // 上タッチできる
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DF );  // 下タッチできない
+    }
   }
 }
 
