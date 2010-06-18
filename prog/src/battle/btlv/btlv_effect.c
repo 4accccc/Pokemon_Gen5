@@ -1963,7 +1963,15 @@ void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
 void  BTLV_EFFECT_SetCameraWorkStop( void )
 { 
   BTLV_EFFECT_Stop();
-  BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+  if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_COMM_WAIT ) && 
+      ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) )
+  { 
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_WCS_INIT );
+  }
+  else
+  { 
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+  }
   bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
 }
 
@@ -2290,19 +2298,14 @@ static  void  camera_work_check( void )
         BTLEFF_CAMERA_WORK_UPDOWN_M_E,
         BTLEFF_CAMERA_WORK_TRIANGLE,
       };
-      static  int wcs_camera_work_num[ 6 ] = {
-        //BTLEFF_WCS_CAMERA_WORK_E_M,
-        //BTLEFF_WCS_CAMERA_WORK_M_E,
-        BTLEFF_CAMERA_WORK,
-        BTLEFF_CAMERA_WORK_ROTATE_R_L,
-        BTLEFF_CAMERA_WORK_ROTATE_L_R,
-        BTLEFF_CAMERA_WORK_UPDOWN_E_M,
-        BTLEFF_CAMERA_WORK_UPDOWN_M_E,
-        BTLEFF_CAMERA_WORK_TRIANGLE,
+      static  int wcs_camera_work_num[ 2 ] = {
+        BTLEFF_WCS_CAMERA_WORK_E_M,
+        BTLEFF_WCS_CAMERA_WORK_M_E,
       };
       int eff_no;
 
-      if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
+      if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_COMM_WAIT ) && 
+          ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) )
       {
         while( 1 )
         {

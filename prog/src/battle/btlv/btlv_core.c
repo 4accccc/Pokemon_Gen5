@@ -2272,7 +2272,7 @@ BOOL BTLV_WaitRankEffect( BTLV_CORE* wk, u8 vpos )
 void BTLV_StartCommWait( BTLV_CORE* wk )
 {
   //カメラワークチェック開始
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_NORMAL );
+  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_COMM_WAIT );
   BTLV_SCU_StartCommWaitInfo( wk->scrnU );
 }
 BOOL BTLV_WaitCommWait( BTLV_CORE* wk )

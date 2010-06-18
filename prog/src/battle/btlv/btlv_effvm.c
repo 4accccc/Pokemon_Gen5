@@ -156,6 +156,7 @@ typedef struct{
   BOOL              push_camera_flag;
   VecFx32           push_camera_pos;
   VecFx32           push_camera_target;
+  int               wcs_camera_work;
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
@@ -3763,6 +3764,9 @@ static VMCMD_RESULT VMEC_SET_PARAM( VMHANDLE *vmh, void *context_work )
   case BTLEFF_WORK_PUSH_CAMERA_POS:
     bevw->push_camera_flag = param;
     break;
+  case BTLEFF_WORK_WCS_CAMERA_WORK:
+    bevw->wcs_camera_work = param;
+    break;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
@@ -6099,6 +6103,9 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_PUSH_CAMERA_POS:
     ret = bevw->push_camera_flag;
+    break;
+  case BTLEFF_WORK_WCS_CAMERA_WORK:
+    ret = bevw->wcs_camera_work;
     break;
   default:
     //未知のパラメータです
