@@ -692,6 +692,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
       //ボールなげメッセージ
       GFL_MSG_GetString( cdw->msg, msg_cappture_demo_02, core->strBuf );
       PutMsgToSCU( core, core->strBuf, 0, NULL );
+      BTLV_SCD_RestartUI( core->scrnD );
       (*seq)++;
     }
     break;
