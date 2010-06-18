@@ -4350,15 +4350,6 @@ static void handler_Namake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    #if 0
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8 poke_turn = BPP_GetTurnCount( bpp );
-    u8 appear_turn = BPP_GetAppearTurn( bpp );
-
-    if( (poke_turn&1) != (appear_turn&1) ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_NAMAKE );
-    }
-    #else
     if( work[0] )
     {
       work[1] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_TOKUSEI );
@@ -4367,7 +4358,6 @@ static void handler_Namake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     else{
       work[0] = 1;
     }
-    #endif
   }
 }
 // とくせい書き換え直後ハンドラ
@@ -4381,7 +4371,7 @@ static void handler_Namake_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
-// とくせい書き換え直後ハンドラ
+// ワザだし失敗表示ハンドラ
 static void handler_Nameke_Failed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -4398,12 +4388,28 @@ static void handler_Nameke_Failed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     }
   }
 }
+// アクション終了ハンドラ
+static void handler_Nameke_EndAct( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    // 反動ターンになまけフラグが残っているのはクリア
+    // （アイテムターンも残ってるハズだが、シューターとの組み合わせが強いので何もしない）
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_ACTION) == BTL_ACTION_SKIP )
+    {
+      TAYA_Printf("反動なまけ解除\n");
+      work[0] = 0;
+    }
+  }
+}
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Namake( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_1ST,   handler_Namake        }, // ワザ出し成否チェックハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER,     handler_Namake_Get    }, // とくせい書き換え直後ハンドラ
     { BTL_EVENT_WAZA_EXECUTE_FAIL,        handler_Nameke_Failed }, // ワザ出し失敗表示ハンドラ
+    { BTL_EVENT_ACTPROC_END,              handler_Nameke_EndAct }, // アクション終了ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
