@@ -11347,10 +11347,10 @@
 	<row id="TRID_ELITEM_18_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">かんがえに　かんがえた
 ３びきの　くみあわせ！▽
-あっとうてきな　はかいりょくさ！</language>
+あっとうてきな　はかいりょくさ！▼</language>
 		<language name="JPN_KANJI" width="216">考えに　考えた
 ３匹の　組み合わせ！▽
-圧倒的な　破壊力さ！</language>
+圧倒的な　破壊力さ！▼</language>
 	</row>
 
 	<row id="TRID_ELITEM_18_TRMSG_FIGHT_LOSE">
