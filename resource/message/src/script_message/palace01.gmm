@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-09T13:11:32"/>
+	<create user="ohmori" host="W00223" date="2010-06-17T21:39:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="77" top="161" right="872" bottom="1079" maximized="no" rayout="Vertical2">
+	<dialog left="950" top="190" right="1745" bottom="1108" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="620"/>
@@ -769,14 +769,12 @@ plc_girl4_03_06,7,8</comment>
 	<row id="plc_girl4_04_01" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
 		<comment>双子娘4：一言メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">ハイリンクにある
-ここばしょから　もとのせかいに▽
+		<language name="JPN" width="256">このばしょから　もとのせかいに
 もどることが　できます▼
 もし　もとのせかいに
 もどりたく　なったら▽
 いつでも　ここにきてください</language>
-		<language name="JPN_KANJI" width="256">ハイリンクにある
-ここ場所から　もとの世界に▽
+		<language name="JPN_KANJI" width="256">この場所から　もとの世界に
 戻ることが　できます▼
 もし　もとの世界に
 戻りたく　なったら▽
