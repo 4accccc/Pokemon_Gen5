@@ -820,15 +820,16 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
     }
     va_end( list );
 
+    put_core( que, cmd, fmt, ArgBuffer );
+
+
     #if 1
-    BTL_N_Printf( DBGSTR_SC_PutCmd, cmd, fmt, arg_cnt);
+    BTL_N_Printf( DBGSTR_SC_PutCmd, cmd, que->writePtr, fmt, arg_cnt );
     for(i=0; i<arg_cnt; ++i){
       BTL_N_PrintfSimple( DBGSTR_csv, ArgBuffer[i]);
     }
     BTL_N_PrintfSimple(DBGSTR_LF);
     #endif
-
-    put_core( que, cmd, fmt, ArgBuffer );
   }
 }
 
@@ -869,7 +870,7 @@ u16 SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd )
 
     que->writePtr = pos + reserve_size;
 
-    BTL_N_Printf( DBGSTR_SC_ReservedPos, pos, que->writePtr);
+    BTL_N_Printf( DBGSTR_SC_ReservedPos, cmd, reserve_size,  pos, que->writePtr);
 
     return pos;
   }
@@ -928,20 +929,24 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
 ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 {
   enum {
-    PRINT_FLAG = FALSE,
+    PRINT_FLAG = TRUE,
   };
 
   ServerCmd cmd = scque_read2byte( que );
-
-  BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ReadCmd, cmd);
 
   // 予約領域に何も書き込まれなかった場合は単純にスキップする
   while( cmd == SCEX_RESERVE )
   {
     u8 reserve_size = scque_read1byte( que );
     que->readPtr += reserve_size;
+
+    // 予約領域が終端の場合ここで終了
+    if( que->readPtr >= que->writePtr )
+    {
+      return SC_MAX;
+    }
     cmd = scque_read2byte( que );
-    BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ReserveCmd, cmd);
+    BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ReserveCmd, cmd, reserve_size, que->readPtr);
   }
 
   GF_ASSERT_MSG( cmd < NELEMS(ServerCmdToFmtTbl), "cmd=%d\n", cmd );
@@ -970,6 +975,8 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
       read_core_msg( que, cmd, args );
     }
   }
+
+  BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ReadCmd, cmd, que->readPtr, SCEX_RESERVE);
   return cmd;
 }
 
@@ -1005,7 +1012,7 @@ u8 SCQUE_READ_ArgOnly( BTL_SERVER_CMD_QUE* que )
 void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
 {
   enum {
-    PRINT_FLAG = FALSE,
+    PRINT_FLAG = TRUE,
   };
 
   {
@@ -1035,6 +1042,7 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
       }
       scque_put4byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
+    BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_SC_WPEqual, que->writePtr );
     BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_LF );
 
     va_end( list );
@@ -1044,7 +1052,7 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
 static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
 {
   enum {
-    PRINT_FLAG = FALSE,
+    PRINT_FLAG = TRUE,
   };
 
   int idx_begin = 1;

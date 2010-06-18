@@ -363,15 +363,17 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SV_ExitBattle:                  return "ExitBattle .. competitor = %d\n";
   case DBGSTR_SV_CommError:                   return "通信エラーによる終了 line=%d\n";
 
-  case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=";
-  case DBGSTR_SC_ReservedPos:           return "[QUE]reserved pos=%d, wp=%d\n";
+  case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, WP=%d, Format=%02x, argCnt=%d, args=";
+  case DBGSTR_SC_ReservedPos:           return "[QUE]reserved cmd=%d, size=%d, pos=%d, wp=%d\n";
   case DBGSTR_SC_WriteReservedPos:      return "[QUE]Write Reserved Pos ... pos=%d, cmd=%d";
   case DBGSTR_SC_PutMsgParam:           return "[QUE] PUT  MSG SC=%d, StrID=%d";
   case DBGSTR_SC_ReadMsgParam:          return "[QUE] READ MSG SC=%d, StrID=%d";
   case DBGSTR_SC_PutMsg_SE:             return "  SE_ID=%d\n";
   case DBGSTR_SC_ArgsEqual:             return " args = ";
-  case DBGSTR_SC_ReadCmd:               return "Read cmd=%d\n";
-  case DBGSTR_SC_ReserveCmd:            return " -> reserved cmd=%d\n";
+  case DBGSTR_SC_WPEqual:               return " WP = ";
+  case DBGSTR_SC_RPEqual:               return " RP = ";
+  case DBGSTR_SC_ReadCmd:               return "Read cmd=%d, rp=%d, SCEX_RESERVE=%d\n";
+  case DBGSTR_SC_ReserveCmd:            return " -> reserved cmd=%d, size=%d, rp=%d\n";
 
 
   case DBGSTR_EVENT_AddFactorInfo:      return "AddNewFactor type=%x, dependID=%d, pri=%d, adrs=%p\n";

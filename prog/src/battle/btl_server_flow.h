@@ -343,6 +343,7 @@ typedef enum {
   BTL_HANDEX_JURYOKU_CHECK,       ///< じゅうりょく発動時のチェック処理
   BTL_HANDEX_TAMEHIDE_CANCEL,     ///< 特定の消え状態（そらをとぶなど）をキャンセル
   BTL_HANDEX_ADD_EFFECT,          ///< 位置指定してエフェクト発動
+  BTL_HANDEX_VANISH_MSGWIN,       ///< メッセージウィンドウフェードアウト
   BTL_HANDEX_CHANGE_FORM,         ///< フォルムナンバーチェンジ
   BTL_HANDEX_SET_EFFECT_IDX,      ///< ワザエフェクトインデックス変更
   BTL_HANDEX_WAZAEFFECT_ENABLE,   ///< 強制ワザエフェクト有効

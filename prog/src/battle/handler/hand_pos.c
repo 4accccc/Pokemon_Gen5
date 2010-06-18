@@ -218,14 +218,11 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   if( BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
-    u32 que_reserved_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYPOS );
     BOOL fEnable = FALSE;
+    u32 que_reserved_pos;
 
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MikadukiNoMai );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-    BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_VANISH_MSGWIN, BTL_POKEID_NULL );
+    que_reserved_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYPOS );
 
 
     // ‘Ì—Í‘S‰ñ•œ
@@ -277,8 +274,16 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
         eff_param->pos_to = BTL_POS_NULL;
         eff_param->reservedQuePos = que_reserved_pos;
         eff_param->fQueReserve = TRUE;
+        eff_param->fMsgWinVanish = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, eff_param );
 
+      {
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
+        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MikadukiNoMai );
+          HANDEX_STR_AddArg( &msg_param->str, pokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+      }
     }
 
     BTL_EVENT_FACTOR_Remove( myHandle );
@@ -303,14 +308,10 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
     u32 que_reserved_pos;
     BOOL fEnable = FALSE;
 
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_IyasiNoNegai );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-    BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_VANISH_MSGWIN, BTL_POKEID_NULL );
 
     que_reserved_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYPOS );
 
@@ -346,6 +347,13 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
         eff_param->fQueReserve = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, eff_param );
 
+      {
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
+        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_IyasiNoNegai );
+          HANDEX_STR_AddArg( &msg_param->str, pokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+      }
     }
 
 

@@ -5561,6 +5561,9 @@ restart:
       int i;
 
       wk->serverCmd = SCQUE_Read( wk->cmdQue, wk->cmdArgs );
+      if( wk->serverCmd == SC_MAX ){
+        return TRUE;
+      }
 
       for(i=0; i<NELEMS(scprocTbl); ++i)
       {

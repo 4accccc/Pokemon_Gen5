@@ -292,6 +292,8 @@ typedef enum {
   DBGSTR_SC_PutMsg_SE,
   DBGSTR_SC_ReadMsg_SE,
   DBGSTR_SC_ArgsEqual,
+  DBGSTR_SC_WPEqual,
+  DBGSTR_SC_RPEqual,
   DBGSTR_SC_ReadCmd,
   DBGSTR_SC_ReserveCmd,
 
