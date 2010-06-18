@@ -628,7 +628,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   cardData->TrainerEncountNum = RECORD_Get(rec, RECID_BTL_TRAINER);
 
   // すれ違い通信をした回数
-  cardData->SuretigaiNum      = RECORD_Get(rec, RECID_SURECHIGAI_NUM);      
+  cardData->SuretigaiNum      = MISC_CrossComm_GetSuretigaiCount(misc);
   // フィーリングチェックをした回数
   cardData->FeelingCheckNum = RECORD_Get(rec, RECID_AFFINITY_CHECK_NUM);   
   // モノリスレベル
