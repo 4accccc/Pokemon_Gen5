@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-15T15:22:06"/>
+	<create user="matsushima" host="W00181" date="2010-06-18T22:20:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -511,17 +511,19 @@ msg_c03r0401_girl1_04</comment>
 転送された！</language>
 	</row>
 
-	<row id="msg_c03r0401_boy1_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03r0401_boy1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>●ゾロアが仲間になるシークエンスを
 やり直したとき、
 セレビィが手持ちにいない場合のセリフ。
-→続けてmsg_c03r0401_narrator_04</comment>
+→続けてmsg_c03r0401_narrator_04
+※未使用データ（2010.06.18）</comment>
 		<attribute name="キャラ指定">ゾロア</attribute>
 		<language name="JPN" width="256">…………きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">…………きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0401_narrator_04">
+	<row id="msg_c03r0401_narrator_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>※未使用データ（2010.06.18）</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
 		<language name="JPN" width="256">セレビィが　いないことに
 きづいてる　みたいだ！</language>
