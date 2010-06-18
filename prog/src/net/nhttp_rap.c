@@ -554,9 +554,6 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
     }
       NET_PRINT( "\nend\n" );
   }
-
-
-  
   return TRUE;
 }
 
@@ -579,5 +576,6 @@ int NHTTP_RAP_GetGetResultCode(NHTTP_RAP_WORK* pWork)
   if(pWork){
     return NHTTP_GetResultCode( pWork->handle );
   }
+  return 0;
 }
 
