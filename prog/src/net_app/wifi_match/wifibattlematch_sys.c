@@ -61,9 +61,9 @@
 #define WBM_SYS_PRINT_ON
 #endif
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef WIFIMATCH_RATE_AUTO
 #define WBM_SYS_BATTLE_VSTIME_1
-#endif //DEBUG_ONLY_FOR_toru_nagihashi
+#endif //WIFIMATCH_RATE_AUTO
 
 #endif //PM_DEBUG
 

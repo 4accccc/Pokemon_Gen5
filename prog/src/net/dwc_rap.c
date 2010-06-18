@@ -28,6 +28,13 @@
 #define DEBUGPRINT_ON (0)
 #endif
 
+#ifdef PM_DEBUG
+#ifdef WIFIMATCH_RATE_AUTO
+#undef DEBUGPRINT_ON
+#define DEBUGPRINT_ON (1)
+#endif
+#endif
+
 #include "net/dwc_rap.h"
 #include "vchat.h"
 #include <vct.h>

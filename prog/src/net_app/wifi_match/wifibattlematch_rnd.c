@@ -3474,6 +3474,9 @@ static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE typ
       setup.list_max= 3;
       setup.is_cancel   = TRUE;
       setup.cancel_idx  = 2;
+#ifdef WIFIMATCH_RATE_AUTO
+      setup.default_idx = 1;
+#endif
       break;
     }
 

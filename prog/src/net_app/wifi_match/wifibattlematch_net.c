@@ -74,7 +74,13 @@
 #endif  //defined(DEBUG_ONLY_FOR_～
 
 #else //DEBUG_DEBUG_NET_Printf_ON
+
+#ifdef WIFIMATCH_RATE_AUTO
+#undef DEBUGPRINT_ON
+#define DEBUG_NET_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
+#else
 #define DEBUG_NET_Printf(...)  /*  */
+#endif
 #endif  //DEBUG_DEBUG_NET_Printf_ON
 
 //SCの開放チェックチェック

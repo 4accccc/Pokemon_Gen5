@@ -32,11 +32,11 @@
 #endif //MULTI_BOOT_MAKE
 
 #ifdef PM_DEBUG
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
 
+#ifdef WIFIMATCH_RATE_AUTO
+#undef DEBUG_ERR_THROUGH
 #define DEBUG_ERR_THROUGH  //この定義をONにすると、エラーのボタン押しをスルーするー
-
-#endif //DEBUG_ONLY_FOR_
+#endif
 #endif//PM_DEBUG
 
 

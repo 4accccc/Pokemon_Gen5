@@ -26,7 +26,7 @@
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi) || defined(WIFIMATCH_RATE_AUTO)
 #define SERVER_WAITTIME_OFF
 #endif
 #endif //PM_DEBUG

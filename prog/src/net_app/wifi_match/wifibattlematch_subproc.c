@@ -26,9 +26,9 @@
 #pragma mark [> define
 
 #ifdef PM_DEBUG
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef WIFIMATCH_RATE_AUTO
 #define DEBUG_SELECT_TIME_NONE
-#endif //DEBUG_ONLY_FOR_
+#endif //WIFIMATCH_RATE_AUTO
 #endif //PM_DEBUG
 
 //======================================================================
