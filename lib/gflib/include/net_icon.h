@@ -47,4 +47,5 @@ extern void GFL_NET_WirelessSetForceXYPos(u16 x,u16 y);
 
 
 extern void GFL_NET_WirelessSetReserveMode(MAIN_SUB_ICON_MODE mode);
+extern int GFL_NET_WirelessIconGetVramType(void);
 
