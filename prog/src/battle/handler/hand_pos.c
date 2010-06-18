@@ -303,15 +303,16 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 que_reserved_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYPOS );
-    BOOL fEnable = FALSE;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    u32 que_reserved_pos;
+    BOOL fEnable = FALSE;
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_IyasiNoNegai );
       HANDEX_STR_AddArg( &msg_param->str, pokeID );
     BTL_SVF_HANDEX_Pop( flowWk, msg_param );
 
+    que_reserved_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYPOS );
 
     // ‘Ì—Í‘S‰ñ•œ
     if( !BPP_IsHPFull(bpp) ){
