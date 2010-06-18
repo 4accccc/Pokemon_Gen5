@@ -2591,6 +2591,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MentalHerb( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,  handler_MentalHerb_React  }, // 状態異常チェックハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_MentalHerb_React  },
     { BTL_EVENT_USE_ITEM,             handler_MentalHerb_Use    },
     { BTL_EVENT_USE_ITEM_TMP,         handler_MentalHerb_UseTmp },
   };

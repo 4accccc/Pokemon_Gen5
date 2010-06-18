@@ -5294,9 +5294,8 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   {
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
-    if( (!HandCommon_CheckCantStealPoke(flowWk, pokeID, target_pokeID))
-    &&  (!HandCommon_CheckCantStealPoke(flowWk, target_pokeID, pokeID))
-    ){
+    if( !HandCommon_CheckCantStealWildPoke(flowWk, pokeID) )
+    {
       const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
 
@@ -5308,7 +5307,9 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         if( (!ITEM_CheckMail(selfItemID))
         &&  (!ITEM_CheckMail(targetItemID))
         &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, targetItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, selfItemID))
         &&  (!HandCommon_CheckForbitItemPokeCombination(target_pokeID, selfItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(target_pokeID, targetItemID))
         ){
           BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
 

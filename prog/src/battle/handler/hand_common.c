@@ -88,10 +88,11 @@ BOOL HandCommon_CheckCantChangeItemPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
   return FALSE;
 }
 
+
 /**
- *  ルール上、相手のどうぐを失わせる行為が禁止されているポケのチェック
+ *  ルール上、相手のどうぐを失わせる行為が禁止されているポケのチェック（野生戦で相手側チェック）
  */
-BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8 targetPokeID )
+BOOL HandCommon_CheckCantStealWildPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID )
 {
   // 野生戦で相手の場合をチェック
   if( BTL_SVFTOOL_GetCompetitor(flowWk) == BTL_COMPETITOR_WILD )
@@ -100,6 +101,19 @@ BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8
     if( (clientID == BTL_CLIENT_ENEMY1) || (clientID == BTL_CLIENT_ENEMY1) ){
       return TRUE;
     }
+  }
+  return FALSE;
+}
+
+/**
+ *  ルール上、相手のどうぐを失わせる行為が禁止されているポケのチェック
+ */
+BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8 targetPokeID )
+{
+  // 野生戦で相手の場合をチェック
+  if( HandCommon_CheckCantStealWildPoke(flowWk, attackPokeID) )
+  {
+    return TRUE;
   }
   // ギラティナ・アルセウス・インセクタのチェック
   if( HandCommon_CheckCantChangeItemPoke(flowWk, targetPokeID) )
@@ -117,7 +131,6 @@ BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8
       return TRUE;
     }
   }
-
   return FALSE;
 }
 
