@@ -54,6 +54,17 @@ typedef struct
   SCRIPTSYS * scrsys; //制御ワーク
 }EVENT_SCRIPT_WORK;
 
+//--------------------------------------------------------------
+/// スクリプト種別定義
+//--------------------------------------------------------------
+typedef enum {
+  SCRIPT_TYPE_NORMAL = 0, ///<通常スクリプト（イベントスクリプト）
+  SCRIPT_TYPE_FIELDINIT,  ///<フィールド初期化スクリプト（FIELD_INIT/FIELD_RECOVER)
+  SCRIPT_TYPE_NO_FIELD,   ///<フィールド非依存スクリプト（ZONE_CHANGE/GAMECLEAR/INITなど）
+
+  SCRIPT_TYPE_MAX
+}SCRIPT_TYPE;
+
 //======================================================================
 //	proto
 //======================================================================
@@ -141,7 +152,7 @@ extern BOOL SCRIPT_IsValidScriptID( u16 script_id );
  */
 //--------------------------------------------------------------
 extern void SCRIPT_CallSpecialScript(
-    GAMESYS_WORK *gsys, SCRIPT_WORK * sc, HEAPID heapID, u16 script_id );
+    GAMESYS_WORK *gsys, SCRIPT_WORK * sc, u16 script_id, SCRIPT_TYPE scr_type );
 
 //------------------------------------------------------------------
 /**

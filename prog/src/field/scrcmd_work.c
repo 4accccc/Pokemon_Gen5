@@ -210,6 +210,12 @@ BOOL SCRCMD_WORK_GetSpScriptFlag( const SCRCMD_WORK *work )
   return ( work->head.sp_flag );
 }
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+SCRIPT_TYPE SCRCMD_WORK_GetScriptType( const SCRCMD_WORK *work )
+{
+  return ( work->head.scr_type );
+}
+//--------------------------------------------------------------
 /**
  * SCRCMD_WORK GAMESYS_WORKŽæ“¾
  * @param	work	SCRCMD_WORK

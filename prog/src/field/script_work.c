@@ -89,6 +89,7 @@ struct _TAG_SCRIPT_WORK
 	u16 *ret_script_wk;			//スクリプト結果を代入するワークのポインタ
 
   BOOL is_sp_flag;    ///<特殊スクリプトかどうか？のフラグ　TRUE=特殊スクリプト
+  SCRIPT_TYPE scr_type;   ///<実行するスクリプトの種別
 
   //☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
   //script.c内で使用しない、外部公開用メンバ
@@ -156,16 +157,18 @@ static void initFldParam(SCRIPT_FLDPARAM * fparam, GAMESYS_WORK * gsys)
  * @param event
  * @param	scr_id		スクリプトID
  * @param	ret_wk		スクリプト結果を代入するワークのポインタ
- * @param is_sp_flag  特殊スクリプトの時、TRUE
+ * @param scr_type  スクリプトの種別指定
  * @return	SCRIPT_WORK			SCRIPT型のポインタ
  *
  * スクリプトコマンド全般からグローバルアクセス可能なデータを保持する
  */
 //--------------------------------------------------------------
 SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
-    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk, BOOL is_sp_flag )
+    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk, SCRIPT_TYPE scr_type )
 {
   SCRIPT_WORK * sc;
+
+  GF_ASSERT( scr_type < SCRIPT_TYPE_MAX );
 
 	sc = GFL_HEAP_AllocClearMemory( main_heapID, sizeof(SCRIPT_WORK) );
 	sc->magic_no = SCRIPT_MAGIC_NO;
@@ -176,7 +179,8 @@ SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
 	sc->start_scr_id  = scr_id;	//メインのスクリプトID
 	sc->target_obj = NULL;
 	sc->ret_script_wk = ret_wk;	//スクリプト結果を代入するワーク
-  sc->is_sp_flag = is_sp_flag;  //
+  sc->scr_type = scr_type;
+  sc->is_sp_flag = SCRIPT_IsSpecialScriptType( scr_type );
   
   //メッセージ関連
   if ( sc->is_sp_flag == FALSE )

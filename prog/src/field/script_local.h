@@ -59,14 +59,14 @@ typedef enum{
  * @param event
  * @param	scr_id		スクリプトID
  * @param	ret_wk		スクリプト結果を代入するワークのポインタ
- * @param is_sp_flag   TRUE=特殊スクリプトを指定する
+ * @param scr_type  スクリプトの種別指定
  * @return	SCRIPT_WORK			SCRIPT型のポインタ
  *
  * スクリプトコマンド全般からグローバルアクセス可能なデータを保持する
  */
 //--------------------------------------------------------------
 extern SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
-    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk, BOOL is_sp_flag );
+    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk, SCRIPT_TYPE scr_type );
 extern void SCRIPTWORK_Delete( SCRIPT_WORK * sc );
 
 //======================================================================
@@ -126,6 +126,15 @@ extern  VMHANDLE_ID SCRIPT_AddVMachine( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id
  */
 //--------------------------------------------------------------
 extern BOOL SCRIPT_GetVMExists( SCRIPT_WORK *sc, VMHANDLE_ID vm_id );
+
+//--------------------------------------------------------------
+/**
+ * @brief 特殊スクリプトかどうかの判定
+ * @param scr_type  スクリプト種別
+ * @return  BOOL  TRUEのとき特殊スクリプト
+ */
+//--------------------------------------------------------------
+extern BOOL SCRIPT_IsSpecialScriptType( SCRIPT_TYPE scr_type );
 
 //======================================================================
 //	スクリプト制御ワークのメンバーアクセス

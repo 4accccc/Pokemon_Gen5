@@ -915,7 +915,7 @@ static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
   else
   { //特殊スクリプト→その場呼び出し
     SCRCMD_WORK_BackupUserWork( wk );
-    SCRIPT_CallSpecialScript( gsys, sc, SCRCMD_WORK_GetHeapID(work), scr_id );
+    SCRIPT_CallSpecialScript( gsys, sc, scr_id, SCRCMD_WORK_GetScriptType( work ) );
     SCRCMD_WORK_RestoreUserWork( wk );
     return VMCMD_RESULT_CONTINUE;
   }

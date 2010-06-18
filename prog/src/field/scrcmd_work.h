@@ -51,12 +51,10 @@ typedef struct
 {
   u16 zone_id;
   u16 script_id;
+  SCRIPT_TYPE scr_type; ///<スクリプトの種別
   BOOL sp_flag;   ///<特殊スクリプトかどうかの判別ヘッダ
   
 	SCRIPT_WORK *script_work;
-	GAMESYS_WORK *gsys;
-	GAMEDATA *gdata;
-	MMDLSYS *mmdlsys;
 	
 }SCRCMD_WORK_HEADER;
 
@@ -97,6 +95,7 @@ extern HEAPID SCRCMD_WORK_GetHeapID( SCRCMD_WORK *work );
 
 extern u16 SCRCMD_WORK_GetZoneID( SCRCMD_WORK *work );
 extern u16 SCRCMD_WORK_GetScriptID( SCRCMD_WORK *work );
+extern SCRIPT_TYPE SCRCMD_WORK_GetScriptType( const SCRCMD_WORK *work );
 extern BOOL SCRCMD_WORK_GetSpScriptFlag( const SCRCMD_WORK *work );
 extern GAMESYS_WORK * SCRCMD_WORK_GetGameSysWork( SCRCMD_WORK *work );
 extern GAMEDATA *SCRCMD_WORK_GetGameData( SCRCMD_WORK *work );
