@@ -687,6 +687,8 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   switch( *p_seq )
   { 
   case SEQ_START_MSG_INIT:
+    //エラーで戻ってくる場合、アイコンを消す
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_WAIT );
     *p_seq = SEQ_START_RECV_GPF;
     break;
@@ -1368,10 +1370,10 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         *p_wk->p_param->p_is_dirty_name  = is_badword;
         *p_seq  = SEQ_START_CANCEL_TIMING;
       }
-      else
+
       { 
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
@@ -2510,7 +2512,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         *p_wk->p_param->p_is_dirty_name  = is_badword;
         *p_seq  = SEQ_START_CANCEL_TIMING;
       }
-      else
+
       { 
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )

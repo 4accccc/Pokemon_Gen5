@@ -280,7 +280,8 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
   { 
     GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE,TRUE );
     switch( result )
-    { 
+    {
+    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:
     case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
       OS_TPrintf( "‘ŠŽè‚ªØ’f\n" );
       p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_DISCONNECT_WIFI;

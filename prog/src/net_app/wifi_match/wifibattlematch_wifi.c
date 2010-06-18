@@ -2872,10 +2872,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
         *p_seq  = SEQ_START_CANCEL_TIMING;
       }
-      else
+
       { 
         //ƒGƒ‰[
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );

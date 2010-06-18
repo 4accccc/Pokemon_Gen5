@@ -65,6 +65,7 @@ typedef struct
   GFL_PROCSYS *p_procsys;
   u32         cnt;
   BOOL        is_battle_overlay;
+  BOOL        is_add_cmd_tbl;
 } WIFIBATTLEMATCH_BATTLELINK_WORK;
 
 //=============================================================================
@@ -157,6 +158,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Exit( GFL_PROC *p_proc, i
     p_wk->is_battle_overlay = FALSE;
   }
 
+  if( p_wk->is_add_cmd_tbl )
+  {
+    GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+    p_wk->is_add_cmd_tbl  = FALSE;
+  }
+
   //モジュール破棄
   GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
 
@@ -229,6 +236,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       p_wk->is_battle_overlay = TRUE;
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
+      p_wk->is_add_cmd_tbl  = TRUE;
       GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), 200, WB_NET_WIFIMATCH );
       WBM_BTL_Printf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*p_seq) = SEQ_BATTLE_TIMING_WAIT;
@@ -244,19 +252,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   case SEQ_BATTLE_INIT:
     GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, NO_OVERLAY_ID, &BtlProcData, p_param->p_btl_setup_param);
 
-    if( GFL_NET_GetNETInitStruct()->bNetType != GFL_NET_TYPE_IRC )
-    {
-      GFL_NET_DWC_SetNoChildErrorCheck( TRUE );
-    }
     (*p_seq) = SEQ_BATTLE_WAIT;
     break;
   case SEQ_BATTLE_WAIT:
     if ( status != GFL_PROC_MAIN_VALID )
     {
-      if( GFL_NET_GetNETInitStruct()->bNetType != GFL_NET_TYPE_IRC )
-      {
-        GFL_NET_DWC_SetNoChildErrorCheck( FALSE );
-      }
       (*p_seq) = SEQ_BATTLE_END;
     }
     break;
@@ -264,6 +264,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     WBM_BTL_Printf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     p_wk->is_battle_overlay = FALSE;
+    p_wk->is_add_cmd_tbl  = FALSE;
 
     (*p_seq) = SEQ_CALL_END_DEMO;
     break;

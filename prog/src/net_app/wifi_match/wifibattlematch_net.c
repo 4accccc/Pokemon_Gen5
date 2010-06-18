@@ -214,7 +214,7 @@ typedef enum
 
 #define RECV_BUFFER_SIZE  (0x1000)
 
-#define WBM_GDB_FIELD_TABLE_MAX (35)
+#define WBM_GDB_FIELD_TABLE_MAX (38)
 
 //-------------------------------------
 ///	マッチメイク
@@ -599,6 +599,9 @@ static const char *sc_get_debugall_tbl[]  =
   "RECORD_DATA_06",
   "RECORD_SAVE_IDX",
   "recordid",
+  "ownerid",
+  "INITIAL_PROFILE_ID",
+  "NOW_PROFILE_ID",
 };
 //=============================================================================
 /**
@@ -3903,7 +3906,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
     { 
       int i;
       const WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *cp_data  = cp_wk_adrs;
-      p_wk->table_name_num  = NELEMS(sc_get_debugall_tbl);
+      p_wk->table_name_num  = 33;
 
       //ダブルレート
       p_wk->p_field_buff[0].name          = (char*)sc_get_debugall_tbl[0];

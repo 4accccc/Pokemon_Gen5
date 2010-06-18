@@ -357,16 +357,18 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
   {
     plData->use_tile_limit = TRUE;
     plData->time_limit = reg->SHOW_POKE_TIME;
-
-#ifdef DEBUG_SELECT_TIME_NONE
-    plData->time_limit = 1;
-#endif 
   }
   else
   {
     plData->use_tile_limit = FALSE;
     plData->time_limit = 0;
   }
+
+#ifdef DEBUG_SELECT_TIME_NONE
+  plData->use_tile_limit = TRUE;
+  plData->time_limit = 1;
+#endif 
+
   GFL_OVERLAY_Load(FS_OVERLAY_ID(pokelist_comm));
   PLIST_COMM_InitComm( plData );
 }
