@@ -27,6 +27,8 @@
 #include "battle/batt_bg_tbl.h"
 #include "batt_bg_tbl.naix"
 
+#include "debug/debug_hudson.h"
+
 //============================================================================================
 /**
  *  定数宣言
@@ -406,6 +408,48 @@ void  BTLV_EFFECT_Main( void )
   if( bew == NULL ) return;
 
   bew->execute_flag = BTLV_EFFVM_Main( bew->vm_core );
+
+#ifdef DEBUG_ONLY_FOR_hudson
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
+  {
+    static int preflag = FALSE;
+    static int hitflag = FALSE;
+
+    if( BTLV_EFFVM_GetAttackPos( bew->vm_core ) == BTLV_MCSS_POS_A )
+    {
+      if( bew->execute_flag )
+      {
+        if( BTLV_EFFVM_GetExecuteEffectType( bew->vm_core ) == EXECUTE_EFF_TYPE_WAZA )
+        {
+          VecFx32 pos, target;
+
+          BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &target ); 
+          
+          // カメラが自分／ズームアウト
+          if( ( pos.x == 0x00000b33 && pos.y == 0x00005333 && pos.z == 0x000114cd ) ||
+              ( pos.x == 0x00008b33 && pos.y == 0x00007b33 && pos.x == 0x00017ccd )
+              )
+          {
+            hitflag = TRUE;
+          }
+        }
+      }
+      else
+      {
+        if( preflag == TRUE )
+        {
+          OS_FPrintf( 3 ,"hit=%d ",hitflag);
+        }
+        else
+        {
+          hitflag = FALSE;
+        }
+      }
+    }
+
+    preflag = bew->execute_flag && BTLV_EFFVM_GetExecuteEffectType( bew->vm_core ) == EXECUTE_EFF_TYPE_WAZA;
+  }
+#endif // DEBUG_ONLY_FOR_hudson
 
   camera_work_check();
 

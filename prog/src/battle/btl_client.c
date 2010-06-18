@@ -3167,11 +3167,11 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, u8* pokeID, u16* tokuse
 
   #ifdef DEBUG_ONLY_FOR_hudson
   if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
-      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
+      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
   {
     return BTL_CANTESC_NULL;
   }
-  #endif
+  #endif // DEBUG_ONLY_FOR_hudson
 
   for(i=0; i<wk->numCoverPos; ++i)
   {

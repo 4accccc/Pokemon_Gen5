@@ -35,6 +35,7 @@
 #define HUDSON_TESTCODE_ALL_WAZA ("3")
 #define HUDSON_TESTCODE_ALL_WAZA2 ("4")
 #define HUDSON_TESTCODE_ALL_POKE ("5")
+#define HUDSON_TESTCODE_ALL_WAZA_CAM ("6")  ///< 全技カメラチェック
 
 extern BOOL HUDSON_IsSkipTitle( void );
 extern BOOL HUDSON_IsTestCode( const char* str );
