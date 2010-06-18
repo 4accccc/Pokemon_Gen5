@@ -7912,7 +7912,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
 		TRUE,
 		FALSE,
-		FALSE,
+		TRUE,
     TRUE,
     FALSE,
 		MATRIX_ID_DUN1002, // camera_area
@@ -7946,7 +7946,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
 		TRUE,
 		FALSE,
-		FALSE,
+		TRUE,
     FALSE,
     FALSE,
 		MATRIX_ID_DUN1003, // camera_area
