@@ -332,7 +332,7 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
     for( ansIdx=0; ansIdx < ansNum; ansIdx++ )
     {
       int totalCount = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx+1 );
-      int todayCount = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx+1 );
+      int todayCount = QuestionnaireWork_GetTodayAnswerNum( qSave, qID, ansIdx+1 );
       int sumCount   = totalCount + todayCount;
       if( maxCount <= sumCount ) {
         maxCount = sumCount;
