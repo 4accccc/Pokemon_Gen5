@@ -100,6 +100,9 @@ POKE;
 #define POKE_X_CENTER  (FX_F32_TO_FX32(0.0f))//(FX_F32_TO_FX32(-1.0f))//(FX_F32_TO_FX32(-3.0f))
 #define POKE_Y         (FX_F32_TO_FX32(-18.0f))//(FX_F32_TO_FX32(-16.0f))
 
+#define POKE_Y_MONSNO_564 (FX_F32_TO_FX32(-27.0f))
+#define POKE_Y_MONSNO_565 (FX_F32_TO_FX32(-39.0f))
+
 // ポケモンのY座標調整
 #define POKE_Y_ADJUST (0.33f)  // この値を掛ける
 
@@ -1137,9 +1140,30 @@ static void ShinkaDemo_View_McssExit( SHINKADEMO_VIEW_WORK* work )
 //-------------------------------------
 /// MCSSポケモン初期化処理
 //=====================================
+static fx32 ShinkaDemo_View_PokeGetY( const POKEMON_PARAM* pp );
+static fx32 ShinkaDemo_View_PokeGetY( const POKEMON_PARAM* pp )
+{
+  u32  monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+  fx32 poke_y = POKE_Y;
+  switch( monsno )
+  {
+  case MONSNO_564:  //ランプラー
+    {
+      poke_y = POKE_Y_MONSNO_564;
+    }
+    break;
+  case MONSNO_565:  //シャンデラ
+    {
+      poke_y = POKE_Y_MONSNO_565;
+    }
+    break;
+  }
+  return poke_y;
+}
+
 static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
 {
-  VecFx32 scale;
+  VecFx32  scale;
 
   {
     u8 i;
@@ -1164,13 +1188,13 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
       {
         //MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
         work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
-                                                      POKE_X_CENTER, POKE_Y, 0 );
+                                                      POKE_X_CENTER, ShinkaDemo_View_PokeGetY( work->pp ), 0 );
       }
       else
       {
         //MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
         work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->after_pp, MCSS_DIR_FRONT,
-                                                      POKE_X_CENTER, POKE_Y, 0 );
+                                                      POKE_X_CENTER, ShinkaDemo_View_PokeGetY( work->after_pp ), 0 );
       }
       //work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
       MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
@@ -1202,7 +1226,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
     //MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
     //work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
     work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
-                                                  POKE_X_CENTER, POKE_Y, 0 );
+                                                  POKE_X_CENTER, ShinkaDemo_View_PokeGetY( work->pp ), 0 );
     MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
     MCSS_TOOL_SetAnmRestartCallback( work->poke_set[i].wk );  // 1ループしたらアニメーションリセットを呼ぶためのコールバックセット
     MCSS_SetScale( work->poke_set[i].wk, &scale );

@@ -1256,8 +1256,11 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
   }
   else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
-    monsno_before = MONSNO_557;
-    monsno_after  = MONSNO_558;
+    //monsno_before = MONSNO_557;
+    //monsno_after  = MONSNO_558;
+
+    monsno_before = MONSNO_563;
+    monsno_after  = MONSNO_564;
   }
   else
   {
