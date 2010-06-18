@@ -659,8 +659,8 @@
 #define		MONSNO_RANDOROSU		( 645 )
 #define		MONSNO_KYUREMU			( 646 )
 #define		MONSNO_KERUDHIO			( 647 )
-#define		MONSNO_MEROIA				( 648 )
-#define		MONSNO_INSEKUTA			( 649 )
+#define		MONSNO_MEROETTA			( 648 )
+#define		MONSNO_GENOSEKUTO		( 649 )
 #define		MONSNO_TAMAGO				( 650 )
 #define		MONSNO_DAMETAMAGO		( 651 )
 #define		MONSNO_END					( 649 )
@@ -806,18 +806,18 @@
 #define		FORMNO_KYUREMU_A				( 0 )
 #define		FORMNO_KYUREMU_MAX				( 1 )
 
-//メロイア
-#define		FORMNO_MEROIA_VOICE				( 0 )
-#define		FORMNO_MEROIA_STEP				( 1 )
-#define		FORMNO_MEROIA_MAX				( 2 )
+//メロエッタ
+#define		FORMNO_MEROETTA_VOICE				( 0 )
+#define		FORMNO_MEROETTA_STEP				( 1 )
+#define		FORMNO_MEROETTA_MAX				( 2 )
 
-//インセクタ
-#define		FORMNO_INSEKUTA_NORMAL				( 0 )
-#define		FORMNO_INSEKUTA_AQUA				( 1 )
-#define		FORMNO_INSEKUTA_INAZUMA				( 2 )
-#define		FORMNO_INSEKUTA_BLAZE				( 3 )
-#define		FORMNO_INSEKUTA_FREEZE				( 4 )
-#define		FORMNO_INSEKUTA_MAX				( 5 )
+//ゲノセクト
+#define		FORMNO_GENOSEKUTO_NORMAL				( 0 )
+#define		FORMNO_GENOSEKUTO_AQUA				( 1 )
+#define		FORMNO_GENOSEKUTO_INAZUMA				( 2 )
+#define		FORMNO_GENOSEKUTO_BLAZE				( 3 )
+#define		FORMNO_GENOSEKUTO_FREEZE				( 4 )
+#define		FORMNO_GENOSEKUTO_MAX				( 5 )
 
 //タマゴ
 #define		FORMNO_TAMAGO_NORMAL				( 0 )

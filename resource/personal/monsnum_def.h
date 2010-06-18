@@ -656,8 +656,8 @@
 #define		MONSNO_652		( 645 )		//ランドロス
 #define		MONSNO_653		( 646 )		//キュレム
 #define		MONSNO_654		( 647 )		//ケルディオ
-#define		MONSNO_655		( 648 )		//メロイア
-#define		MONSNO_656		( 649 )		//インセクタ
+#define		MONSNO_655		( 648 )		//メロエッタ
+#define		MONSNO_656		( 649 )		//ゲノセクト
 //別フォルム定義
 //アンノーン
 #define		FORMNO_201_UNA				( 0 )
@@ -798,12 +798,12 @@
 #define		FORMNO_653_A				( 0 )
 #define		FORMNO_653_MAX				( 1 )
 
-//メロイア
+//メロエッタ
 #define		FORMNO_655_VOICE				( 0 )
 #define		FORMNO_655_STEP				( 1 )
 #define		FORMNO_655_MAX				( 2 )
 
-//インセクタ
+//ゲノセクト
 #define		FORMNO_656_NORMAL				( 0 )
 #define		FORMNO_656_AQUA				( 1 )
 #define		FORMNO_656_INAZUMA				( 2 )

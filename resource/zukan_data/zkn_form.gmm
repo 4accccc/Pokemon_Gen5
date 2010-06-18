@@ -3586,13 +3586,13 @@
 	</row>
 
 	<row id="ZKN_FORM_648_000">
-		<language name="JPN">ボイスフォルム</language>
-		<language name="JPN_KANJI">ボイスフォルム</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_649_000">
-		<language name="JPN">インセクタのすがた</language>
-		<language name="JPN_KANJI">インセクタのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_650_000">
@@ -3956,28 +3956,28 @@
 	</row>
 
 	<row id="ZKN_FORM_648_001">
-		<language name="JPN">ステップフォルム</language>
-		<language name="JPN_KANJI">ステップフォルム</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_649_001">
-		<language name="JPN">インセクタのすがた</language>
-		<language name="JPN_KANJI">インセクタのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_649_002">
-		<language name="JPN">インセクタのすがた</language>
-		<language name="JPN_KANJI">インセクタのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_649_003">
-		<language name="JPN">インセクタのすがた</language>
-		<language name="JPN_KANJI">インセクタのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_649_004">
-		<language name="JPN">インセクタのすがた</language>
-		<language name="JPN_KANJI">インセクタのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<flowchart-group-list>
