@@ -638,7 +638,8 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->MonolithLevel = level;
   }
   // ミュージカルをした回数
-  cardData->MusicalNum        = RECORD_Get( rec, RECID_MUSICAL_PLAY_NUM );     
+  cardData->MusicalNum        = RECORD_Get( rec, RECID_MUSICAL_PLAY_NUM )     
+                               +RECORD_Get( rec, RECID_MUSICAL_COMM_NUM );     
   // ポケシフターのハイスコア
   {
     cardData->PokeshifterHigh = MISC_GetPalparkHighscore(misc);
