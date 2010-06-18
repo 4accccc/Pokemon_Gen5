@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-06-17T21:57:26"/>
+	<create user="ohno" host="W00141" date="2010-06-18T15:26:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="161"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -334,21 +334,25 @@
 
 
 	<row id="GAMESYNC_001">
+		<comment>CGEARの中のメニュー</comment>
 		<language name="JPN" width="256">ゲームシンク</language>
 		<language name="JPN_KANJI" width="256">ＧＡＭＥ　ＳＹＮＣ</language>
 	</row>
 
 	<row id="GAMESYNC_002" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>つかってない</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉせってい</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ設定</language>
 	</row>
 
-	<row id="GAMESYNC_003">
+	<row id="GAMESYNC_003" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>つかってない</comment>
 		<language name="JPN" width="256">もどる</language>
 		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
 	<row id="GAMESYNC_004">
+		<comment>CGEARの中のメニュー</comment>
 		<language name="JPN" width="256">ここまでの　かつやくを
 ポケモンレポートに　かきこみますか？</language>
 		<language name="JPN_KANJI" width="256">ここまでの　活躍を
@@ -356,16 +360,19 @@
 	</row>
 
 	<row id="GAMESYNC_005">
+		<comment>CGEARの中のメニュー</comment>
 		<language name="JPN" width="256">はい</language>
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
 	<row id="GAMESYNC_006">
+		<comment>CGEARの中のメニュー</comment>
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
 	<row id="GAMESYNC_007">
+		<comment>CGEARの中のメニュー</comment>
 		<language name="JPN" width="256">ポケモンレポートに　かきこんでいます
 でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" width="256">ポケモンレポートに　書き込んでいます
@@ -373,6 +380,7 @@
 	</row>
 
 	<row id="GAMESYNC_008">
+		<comment>CGEARの中のメニュー</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉつうしんを　オンにして
 Ｗｉ－Ｆｉせっていを　かいし　しますか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ通信を　ＯＮにして
@@ -386,7 +394,7 @@
 しばらく　お待ちください</language>
 	</row>
 
-	<row id="GSYNC_002">
+	<row id="GSYNC_002" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">ゲームシンクが　かんりょう　しました</language>
 		<language name="JPN_KANJI" width="256">ゲームシンクが　完了しました</language>
 	</row>
@@ -404,6 +412,7 @@
 	</row>
 
 	<row id="GSYNC_005">
+		<comment>BGETフラグが１</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　めをさました！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　目を覚ました！</language>
 	</row>
@@ -420,7 +429,7 @@
 スヤスヤ　眠りはじめた！</language>
 	</row>
 
-	<row id="GSYNC_008">
+	<row id="GSYNC_008" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　めをさました！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　目を覚ました！</language>
 	</row>
@@ -437,7 +446,7 @@
 		<language name="JPN_KANJI" width="256">まだ　夢を　みていないみたい</language>
 	</row>
 
-	<row id="GSYNC_011">
+	<row id="GSYNC_011" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">ポケモンを　おこしますか？</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　起こしますか？</language>
 	</row>
@@ -634,6 +643,7 @@
 	</row>
 
 	<row id="GSYNC_026">
+		<comment>BGETフラグが０</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　めをさました！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　目を覚ました！</language>
 	</row>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-14T12:43:55"/>
+	<create user="ohno" host="W00141" date="2010-06-18T15:32:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -635,7 +635,7 @@
 	<row id="msg_wifilobby_037">
 		<comment>記録を見るときの対戦成績（負け数）表示</comment>
 		<language name="JPN" width="216">まけ[BD:03:Ｘ右寄せ:1][2:03:４桁:0]</language>
-		<language name="JPN_KANJI" width="216">負け[BD:03:Ｘ右寄せ:0][2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="216">負け[BD:03:Ｘ右寄せ:1][2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_wifilobby_038">
