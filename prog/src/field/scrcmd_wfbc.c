@@ -1099,6 +1099,12 @@ static BOOL EVENT_WFBC_WFBC_TalkEnd( WFBC_PALACE_TALK_WK* p_wk )
     }
   }
 
+  // YESNOwindow”jŠü
+  if(p_wk->p_yesno){
+    FLDMENUFUNC_DeleteMenu( p_wk->p_yesno );
+    p_wk->p_yesno = NULL;
+  }
+
   return TRUE;
 }
 
