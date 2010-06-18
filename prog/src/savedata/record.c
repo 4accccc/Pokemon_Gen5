@@ -166,6 +166,8 @@ static u32 set_value(RECORD * rec, int id, u32 value)
   return get_value(rec, id);
 }
 
+
+#define RECODE_MAXTBL_MAX ( 5 )
 //----------------------------------------------------------
 /**
  * @brief レコード項目ごとの上限を取得する
@@ -176,38 +178,198 @@ static u32 set_value(RECORD * rec, int id, u32 value)
 static u32 get_limit(int id)
 {
   static u8 limit[SMALL_REC_MAX] = {
-    1,  //RECID_WALK_COUNT
-    //4byte
-    1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,  //1-16
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,  //17-32
-    1,1,1,1,1,1,1,1,0,0,0,  //33-43
-    0,0,0,0,0,0,0,0,0,0,0,0,0,  //44-56 RECID_GTS_PUT～
-    1,1,1,1,1,1,1,1,1,1,1,1,1,0,  //57-70 RECID_LEADERHOUSE_BATTLE～
-    
-    //2byte
-    1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,  //44-59
-    0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,  //60-75
-    0,0,0,0,0,0,0,0,0,1,  //76-85
-    0,0,0,0,0,0,0,      //RECID_GTS_SUCCESS～RECID_GURUGURU_COUNT
-  };
+    RECID_WALK_COUNT_FLAG,      
+    RECID_REPORT_COUNT_FLAG,    
+    RECID_CLEAR_TIME_FLAG,      
+    RECID_RIDE_CYCLE_FLAG,      
+    RECID_BATTLE_COUNT_FLAG,    
+    RECID_BTL_ENCOUNT_FLAG,     
+    RECID_BTL_TRAINER_FLAG,     
+    RECID_CAPTURE_POKE_FLAG,    
+    RECID_FISHING_SUCCESS_FLAG, 
+    RECID_TAMAGO_HATCHING_FLAG, 
+    RECID_POKE_EVOLUTION_FLAG,  
+    RECID_RECOVERY_PC_FLAG,     
+    RECID_COMM_TRADE_FLAG,      
+    RECID_COMM_BATTLE_FLAG,     
+    RECID_COMM_BTL_WIN_FLAG,    
+    RECID_COMM_BTL_LOSE_FLAG,   
+    RECID_WIFI_TRADE_FLAG,      
+    RECID_WIFI_BATTLE_FLAG,     
+    RECID_WIFI_BTL_WIN_FLAG,    
+    RECID_WIFI_BTL_LOSE_FLAG,   
+    RECID_WIFI_BTL_DRAW_FLAG,   
+    RECID_SHOPPING_CNT_FLAG,    
+    RECID_SHOPPING_MONEY_FLAG,  
+    RECID_WATCH_TV_FLAG,        
+    RECID_SODATEYA_CNT_FLAG,    
+    RECID_KILL_POKE_FLAG,       
+    RECID_DAYMAX_EXP_FLAG,      
+    RECID_DAYCNT_EXP_FLAG,      
+    RECID_GTS_PUT_FLAG,         
+    RECID_MAIL_WRITE_FLAG,      
+    RECID_NICKNAME_FLAG,        
+    RECID_PREMIUM_BALL_FLAG,    
+    RECID_LEADERHOUSE_BATTLE_FLAG,
+    RECID_WIN_BP_FLAG,          
+    RECID_USE_BP_FLAG,          
+    RECID_SURECHIGAI_NUM_FLAG,  
+    RECID_IRC_TRADE_FLAG,       
+    RECID_IRC_BATTLE_FLAG,      
+    RECID_IRC_BTL_WIN_FLAG,     
+    RECID_IRC_BTL_LOSE_FLAG,    
+    RECID_PALACE_TIME_FLAG,     
+    RECID_PALACE_MISSION_FLAG,  
 
-  if (id < LARGE_REC_MAX) {
-    if(limit[id]){
-//      GF_ASSERT_MSG( 0, "record: max over id %d 99999999\n", id );
-      return 999999999;
-    }else{
-//      GF_ASSERT_MSG( 0, "record: max over id %d 999999\n", id );
-      return 999999;
-    }
-  } else if (id < SMALL_REC_MAX) {
-    if(limit[id]){
-      return 0xffff;
-    }else{
-//      GF_ASSERT_MSG( 0, "record: max over id %d 9999\n", id );
-      return 9999;
-    }
+    RECID_LARGE_42_FLAG,  
+    RECID_LARGE_43_FLAG,  
+    RECID_LARGE_44_FLAG,  
+    RECID_LARGE_45_FLAG,  
+    RECID_LARGE_46_FLAG,  
+    RECID_LARGE_47_FLAG,  
+    RECID_LARGE_48_FLAG,  
+    RECID_LARGE_49_FLAG,  
+    RECID_LARGE_50_FLAG,  
+    RECID_LARGE_51_FLAG,  
+    RECID_LARGE_52_FLAG,  
+    RECID_LARGE_53_FLAG,  
+    RECID_LARGE_54_FLAG,  
+    RECID_LARGE_55_FLAG,  
+    RECID_LARGE_56_FLAG,  
+    RECID_LARGE_57_FLAG,  
+    RECID_LARGE_58_FLAG,  
+    RECID_LARGE_59_FLAG,  
+    RECID_LARGE_60_FLAG,  
+    RECID_LARGE_61_FLAG,  
+    RECID_LARGE_62_FLAG,  
+    RECID_LARGE_63_FLAG,  
+    RECID_LARGE_64_FLAG,  
+    RECID_LARGE_65_FLAG,  
+    RECID_LARGE_66_FLAG,  
+    RECID_LARGE_67_FLAG,  
+    RECID_LARGE_68_FLAG,  
+    RECID_LARGE_69_FLAG,  
+    RECID_LARGE_70_FLAG,  
+
+    RECID_DENDOU_CNT_FLAG,        
+    RECID_RECOVERY_HOME_FLAG,     
+    RECID_WAZA_HANERU_FLAG,       
+    RECID_WAZA_WARUAGAKI_FLAG,    
+    RECID_WAZA_MUKOU_FLAG,        
+    RECID_TEMOTI_KIZETU_FLAG,     
+    RECID_TEMOTI_MAKIZOE_FLAG,    
+    RECID_NIGERU_SIPPAI_FLAG,     
+    RECID_NIGERARETA_FLAG,        
+    RECID_FISHING_FAILURE_FLAG,   
+    RECID_DAYMAX_KILL_FLAG,       
+    RECID_DAYCNT_KILL_FLAG,       
+    RECID_DAYMAX_CAPTURE_FLAG,    
+    RECID_DAYCNT_CAPTURE_FLAG,    
+    RECID_DAYMAX_TRAINER_BATTLE_FLAG, 
+    RECID_DAYCNT_TRAINER_BATTLE_FLAG, 
+    RECID_DAYMAX_EVOLUTION_FLAG,  
+    RECID_DAYCNT_EVOLUTION_FLAG,  
+    RECID_FOSSIL_RESTORE_FLAG,    
+    RECID_GURUGURU_COUNT_FLAG,    
+    RECID_RANDOM_FREE_SINGLE_WIN_FLAG,  
+    RECID_RANDOM_FREE_SINGLE_LOSE_FLAG, 
+    RECID_RANDOM_FREE_DOUBLE_WIN_FLAG,  
+    RECID_RANDOM_FREE_DOUBLE_LOSE_FLAG, 
+    RECID_RANDOM_FREE_ROTATE_WIN_FLAG,  
+    RECID_RANDOM_FREE_ROTATE_LOSE_FLAG, 
+    RECID_RANDOM_FREE_TRIPLE_WIN_FLAG,  
+    RECID_RANDOM_FREE_TRIPLE_LOSE_FLAG, 
+    RECID_RANDOM_FREE_SHOOTER_WIN_FLAG, 
+    RECID_RANDOM_FREE_SHOOTER_LOSE_FLAG,
+    RECID_RANDOM_RATE_SINGLE_WIN_FLAG,  
+    RECID_RANDOM_RATE_SINGLE_LOSE_FLAG, 
+    RECID_RANDOM_RATE_DOUBLE_WIN_FLAG,  
+    RECID_RANDOM_RATE_DOUBLE_LOSE_FLAG, 
+    RECID_RANDOM_RATE_ROTATE_WIN_FLAG,  
+    RECID_RANDOM_RATE_ROTATE_LOSE_FLAG, 
+    RECID_RANDOM_RATE_TRIPLE_WIN_FLAG,  
+    RECID_RANDOM_RATE_TRIPLE_LOSE_FLAG, 
+    RECID_RANDOM_RATE_SHOOTER_WIN_FLAG, 
+    RECID_RANDOM_RATE_SHOOTER_LOSE_FLAG,
+    RECID_USE_SHOOTER_COUNT_FLAG,       
+    RECID_EFFECT_ENCOUNT_NUM_FLAG,      
+    RECID_AFFINITY_CHECK_NUM_FLAG,      
+    RECID_MUSICAL_PLAY_NUM_FLAG,        
+    RECID_MUSICAL_WINNER_NUM_FLAG,      
+    RECID_MUSICAL_COMM_NUM_FLAG,        
+    RECID_MUSICAL_COMM_WINNER_NUM_FLAG, 
+    RECID_MUSICAL_TOTAL_POINT_FLAG,     
+    RECID_PDW_SLEEP_POKEMON_FLAG,       
+    RECID_POKESHIFTER_COUNT_FLAG,       
+    RECID_TRIALHOUSE_COUNT_FLAG,        
+    RECID_SURECHIGAI_THANKS_FLAG,       
+    RECID_TRIALHOUSE_RANK_FLAG,         
+    RECID_TRIALHOUSE_SCORE_FLAG,        
+
+    RECID_SMALL_54_FLAG, 
+    RECID_SMALL_55_FLAG, 
+    RECID_SMALL_56_FLAG, 
+    RECID_SMALL_57_FLAG, 
+    RECID_SMALL_58_FLAG, 
+    RECID_SMALL_59_FLAG, 
+    RECID_SMALL_60_FLAG, 
+    RECID_SMALL_61_FLAG, 
+    RECID_SMALL_62_FLAG, 
+    RECID_SMALL_63_FLAG, 
+    RECID_SMALL_64_FLAG, 
+    RECID_SMALL_65_FLAG, 
+    RECID_SMALL_66_FLAG, 
+    RECID_SMALL_67_FLAG, 
+    RECID_SMALL_68_FLAG, 
+    RECID_SMALL_69_FLAG, 
+    RECID_SMALL_70_FLAG, 
+    RECID_SMALL_71_FLAG, 
+    RECID_SMALL_72_FLAG, 
+    RECID_SMALL_73_FLAG, 
+    RECID_SMALL_74_FLAG, 
+    RECID_SMALL_75_FLAG, 
+    RECID_SMALL_76_FLAG, 
+    RECID_SMALL_77_FLAG, 
+    RECID_SMALL_78_FLAG, 
+    RECID_SMALL_79_FLAG, 
+    RECID_SMALL_80_FLAG, 
+    RECID_SMALL_81_FLAG, 
+    RECID_SMALL_82_FLAG, 
+    RECID_SMALL_83_FLAG, 
+    RECID_SMALL_84_FLAG, 
+    RECID_SMALL_85_FLAG, 
+    RECID_SMALL_86_FLAG, 
+    RECID_SMALL_87_FLAG, 
+    RECID_SMALL_88_FLAG, 
+    RECID_SMALL_89_FLAG, 
+    RECID_SMALL_90_FLAG, 
+    RECID_SMALL_91_FLAG, 
+    RECID_SMALL_92_FLAG, 
+    RECID_SMALL_93_FLAG, 
+    RECID_SMALL_94_FLAG, 
+    RECID_SMALL_95_FLAG, 
+  };
+  static const u32 max_tbl[]={
+    999999999,
+    999999,
+    65535,
+    9999,
+    999,
+  };
+  int index = limit[id];
+
+  // idが定義範囲を超えている
+  if(index>=SMALL_REC_MAX){
+    return 0;
   }
-  return 0;
+  // max_tblで引っ張れる数値の範囲を超えている
+  if( index>= RECODE_MAXTBL_MAX){
+    return 0;
+  }
+
+  // そのRECORD定義で扱える最大値
+  return max_tbl[index];
+  
 }
 
 
@@ -281,34 +443,6 @@ u32 RECORD_SetIfLarge(RECORD * rec, int id, u32 value)
 
 //----------------------------------------------------------
 /**
- * @brief レコードをインクリメントする
- * @param rec   RECORDへのポインタ
- * @param id    項目を指定するID
- * @param value セットする値
- * @return  u32   その項目の値
- */
-//----------------------------------------------------------
-u32 RECORD_Inc(RECORD * rec, int id)
-{
-  u32 limit = get_limit(id);
-  u32 now;
-    u32 ret;
-    
-  Record_Decoded(rec, id);
-
-    now = get_value(rec, id);
-  if (now + 1 < limit) {
-    ret = set_value(rec, id, now + 1);
-  } else {
-    ret =  set_value(rec, id, limit);
-  }
-
-  Record_Coded(rec, id);
-    return ret;
-}
-
-//----------------------------------------------------------
-/**
  * @brief レコードに値を加える
  * @param rec   RECORDへのポインタ
  * @param id    項目を指定するID
@@ -320,11 +454,11 @@ u32 RECORD_Add(RECORD * rec, int id, u32 add_value)
 {
   u32 limit = get_limit(id);
   u32 now;
-    u32 ret;
+  u32 ret;
     
   Record_Decoded(rec, id);
 
-    now = get_value(rec, id);
+  now = get_value(rec, id);
   if (now + add_value < limit) {
     ret = set_value(rec, id, now + add_value);
   } else {
@@ -332,8 +466,23 @@ u32 RECORD_Add(RECORD * rec, int id, u32 add_value)
   }
 
   Record_Coded(rec, id);
-    return ret;
+  return ret;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief レコードをインクリメントする
+ * @param rec   RECORDへのポインタ
+ * @param id    項目を指定するID
+ * @param value セットする値
+ * @return  u32   その項目の値
+ */
+//----------------------------------------------------------
+u32 RECORD_Inc(RECORD * rec, int id)
+{
+  return RECORD_Add( rec, id, 1 );
+}
+
 
 //----------------------------------------------------------
 /**
@@ -364,11 +513,11 @@ u32 RECORD_Get(RECORD * rec, int id)
 
 // レコードデータ1日更新処理用テーブル
 static const u16 oneday_update_tbl[][2]={
-  { RECID_DAYMAX_EXP,     RECID_DAYCNT_EXP },    // 1日に稼いだ経験値の最大値
-  { RECID_DAYMAX_KILL,    RECID_DAYCNT_KILL},    // 1日に倒したポケモンの最大数
-  { RECID_DAYMAX_CAPTURE, RECID_DAYCNT_CAPTURE,},// 1日に捕獲したポケモンの最大数
+  { RECID_DAYMAX_EXP,            RECID_DAYCNT_EXP },    // 1日に稼いだ経験値の最大値
+  { RECID_DAYMAX_KILL,           RECID_DAYCNT_KILL},    // 1日に倒したポケモンの最大数
+  { RECID_DAYMAX_CAPTURE,        RECID_DAYCNT_CAPTURE,},// 1日に捕獲したポケモンの最大数
   { RECID_DAYMAX_TRAINER_BATTLE, RECID_DAYCNT_TRAINER_BATTLE }, // 1日にトレーナー戦をした最大回数
-  { RECID_DAYMAX_EVOLUTION, RECID_DAYCNT_EVOLUTION }, //1日にポケモン進化させた最大回数
+  { RECID_DAYMAX_EVOLUTION,      RECID_DAYCNT_EVOLUTION }, //1日にポケモン進化させた最大回数
 };
 
 //=============================================================================================
@@ -455,7 +604,6 @@ void RECORD_SetThScore(RECORD * rec, u32 inScore)
 u32 RECORD_GetThScore(RECORD * rec)
 {
   return RECORD_Get( rec, RECID_TRIALHOUSE_SCORE);
-//  return rec->TrialScore;
 }
 
 #ifdef PM_DEBUG
