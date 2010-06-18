@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-18T11:48:16"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-18T11:54:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -6654,8 +6654,7 @@ TOUNGEが　舌って　意味なんですね！▼
 しかい『せいかいは　TURTWIG！
 TWIGは　えだ　といういみですよ▽
 べんきょうに　なりましたか？▼
-それでは　みなさん
-また　らいしゅう！▽
+それでは　また　らいしゅう！
 ごきげんよう～</language>
 		<language name="JPN_KANJI" width="256">司会『英語は　苦手だけど
 ポケモンなら　好き▼
@@ -6671,8 +6670,7 @@ TWIGは　えだ　といういみですよ▽
 司会『正解は　TURTWIG！
 TWIGは　枝　という意味ですよ▽
 勉強に　なりましたか？▼
-それでは　みなさん
-また　らいしゅう！▽
+それでは　また　来週！
 ごきげんよう～</language>
 	</row>
 
