@@ -92,4 +92,6 @@ extern void MBUI_MailSelCurMove( MAILBOX_SYS_WORK * syswk, int pos );
 extern BOOL MBUI_MailReadCheck(void);
 
 
+extern BOOL MBUI_EndButtonCheck( void );
+
 #endif  // MB_UI_H

@@ -90,7 +90,8 @@ static int MainSeq_MailPokeSetMsg( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_MailPokeSetYesNoSet( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_MailDelEnd( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_MailWriteExit( MAILBOX_SYS_WORK * syswk );
-static int MainSeq_MilboxEndAnimeWait( MAILBOX_SYS_WORK *syswk );
+static int MainSeq_MailboxRetAnimeWait( MAILBOX_SYS_WORK *syswk );
+static int MainSeq_MailboxEndAnimeWait( MAILBOX_SYS_WORK *syswk );
 
 static int MainSeq_EraseMailPokeListExit( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_EraseMailPokeSetCancel( MAILBOX_SYS_WORK * syswk );
@@ -155,7 +156,8 @@ static const pMailBoxFunc MainSeq[] = {
   MainSeq_EraseMailPokeSetCancel,     // MBSEQ_MAINSEQ_ERASEMAIL_POKESET_CANCEL,   
   MainSeq_EraseMailPokeSetCancelEnd,  // MBSEQ_MAINSEQ_ERASEMAIL_POKESET_CANCEL_END
   MainSeq_MailWriteExit,              // MBSEQ_MAINSEQ_MAILWRITE_END,        // メー
-  MainSeq_MilboxEndAnimeWait,         // MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT
+  MainSeq_MailboxRetAnimeWait,         // MBSEQ_MAINSEQ_MAILBOX_RET_ANIME_WAIT
+  MainSeq_MailboxEndAnimeWait,         // MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT
   MainSeq_MailDelEnd,                 // MBSEQ_MAINSEQ_MAILDEL_END,        //「メー
 };                                    // MBSEQ_MAINSEQ_END         // 終了
                                       
@@ -518,7 +520,15 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
     break;
   case 2:   // やめる
     PMSND_PlaySE( SND_MB_CANCEL );
-    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAILBOX_END_SET );
+    MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_RET_BTN, 9 );
+    syswk->next_seq = MBSEQ_MAINSEQ_MAILBOX_END_SET;
+    return MBSEQ_MAINSEQ_MAILBOX_RET_ANIME_WAIT;
+    break;
+  case 3:   // 「×」
+    PMSND_PlaySE( SND_MB_END );
+    MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_END_BTN, 8 );
+    syswk->next_seq = MBSEQ_MAINSEQ_MAILBOX_END_SET;
+    return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
     break;
   }
 
@@ -547,8 +557,7 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
     PMSND_PlaySE( SND_MB_CANCEL );
     MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_RET_BTN, 9 );
     syswk->next_seq = MBSEQ_MAINSEQ_MAILBOX_END_SET;
-    return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
-//    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAILBOX_END_SET );
+    return MBSEQ_MAINSEQ_MAILBOX_RET_ANIME_WAIT;
 
   case CURSORMOVE_NO_MOVE_RIGHT:     // カーソルは動かず右が押された
     {
@@ -577,8 +586,17 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
   case CURSORMOVE_CURSOR_MOVE:  // 移動
     PMSND_PlaySE( SND_MB_SELECT );
     break;
+  default:
+    // Xボタンチェック
+    if(MBUI_EndButtonCheck()){
+      PMSND_PlaySE( SND_MB_END );
+      MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_END_BTN, 8 );
+      syswk->next_seq = MBSEQ_MAINSEQ_MAILBOX_END_SET;
+      return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
+    }
   }
 
+  
 
   return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
 }
@@ -730,8 +748,7 @@ static int MainSeq_MailReadMain( MAILBOX_SYS_WORK * syswk )
     PMSND_PlaySE( SND_MB_CANCEL );
     MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_RET_BTN, 9 );
     syswk->next_seq = MBSEQ_MAINSEQ_MAIL_READ_END;
-    return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
-//    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAIL_READ_END );
+    return MBSEQ_MAINSEQ_MAILBOX_RET_ANIME_WAIT;
 
   }
   return MBSEQ_MAINSEQ_MAIL_READ_MAIN;
@@ -875,6 +892,24 @@ static int MainSeq_MailWriteExit( MAILBOX_SYS_WORK * syswk )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief 戻るアイコンのアニメ待ち
+ *
+ * @param   syswk   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int MainSeq_MailboxRetAnimeWait( MAILBOX_SYS_WORK *syswk )
+{
+  if(GFL_CLACT_WK_CheckAnmActive(syswk->app->clwk[MBMAIN_OBJ_RET_BTN])==FALSE ){
+    syswk->dat->retMode = FALSE;
+    return syswk->next_seq;
+  }
+  return MBSEQ_MAINSEQ_MAILBOX_RET_ANIME_WAIT;
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief 終了アイコンのアニメ待ち
  *
  * @param   syswk   
@@ -882,12 +917,15 @@ static int MainSeq_MailWriteExit( MAILBOX_SYS_WORK * syswk )
  * @retval  int   
  */
 //----------------------------------------------------------------------------------
-static int MainSeq_MilboxEndAnimeWait( MAILBOX_SYS_WORK *syswk )
+static int MainSeq_MailboxEndAnimeWait( MAILBOX_SYS_WORK *syswk )
 {
-  if(GFL_CLACT_WK_CheckAnmActive(syswk->app->clwk[MBMAIN_OBJ_RET_BTN])==FALSE){
+  if(GFL_CLACT_WK_CheckAnmActive(syswk->app->clwk[MBMAIN_OBJ_END_BTN])==FALSE ){
+    // パソコンメニューには戻らず直接フィールドに戻る
+    syswk->dat->retMode = TRUE;
     return syswk->next_seq;
   }
   return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
+
 }
 
 //--------------------------------------------------------------------------------------------

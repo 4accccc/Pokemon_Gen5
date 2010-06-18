@@ -19,9 +19,8 @@
 
 // 外部設定データ
 typedef struct {
-  GAMEDATA * gamedata;      // セーブデータ
-//  void * fsys;          // ポケモンリストの呼び出しに必要
-//  KEYTOUCH_STATUS * kt_status;  // キータッチステータス
+  GAMEDATA * gamedata;  // セーブデータ
+  BOOL       retMode;  // TRUE:直接フィールドに戻る FALSE:パソコンメニューに戻る
 }MAILBOX_PARAM;
 
 #ifdef  PM_DEBUG

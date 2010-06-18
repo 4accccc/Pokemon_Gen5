@@ -47,7 +47,6 @@ static const CURSORMOVE_DATA MailSelTbl[] =
   { 192, 144, 0, 0, 7,  9, 8, 9, { 128, 159, 136, 244 },},    // 09: メール１０
   {   0,   0, 0, 0, 0,  0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 },},
 
-//  { 224, 176, 0, 0, CURSORMOVE_RETBIT|9, 10, 10, 10, { 160, 191, 192, 255 }, },   // 10: やめる
 };
 static const CURSORMOVE_CALLBACK MailSelCallBack = {
   CursorMoveCallBack_On,
@@ -59,9 +58,10 @@ static const CURSORMOVE_CALLBACK MailSelCallBack = {
 // メール選択ページ切り替え
 static const GFL_UI_TP_HITTBL TouchButtonHitTbl[] =
 {
-  { 168, 191,   8,  8+24 },   // 0: 左矢印
-  { 168, 191,  32,  32+24 },   // 1: 右矢印
-  { 168, 191, 232,  255 },   // 10: やめる
+  { 168, 191,   8,  8+24 },   //  左矢印
+  { 168, 191,  32,  32+24 },  //  右矢印
+  { 168, 191, 232,  255 },    //  やめる
+  { 168, 191, 194,  231 },    //  「×」
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
@@ -104,7 +104,6 @@ void MBUI_CursorMoveInit( MAILBOX_SYS_WORK * syswk )
     syswk->sel_page = syswk->app->page_max;
     pos = 0;
   }else{
-//    pos = syswk->sel_pos - syswk->sel_page * MBMAIN_MAILLIST_MAX;
     pos = syswk->sel_pos;
   }
 
@@ -207,7 +206,6 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
 //--------------------------------------------------------------------------------------------
 void MBUI_MailSelCurMove( MAILBOX_SYS_WORK * syswk, int pos )
 {
-//  const POINTSEL_WORK * pwk = CURSORMOVE_PointerWorkGet( syswk->app->cmwk, pos );
   const CURSORMOVE_DATA *cd = CURSORMOVE_GetMoveData( syswk->app->cmwk, pos );
 
   MBOBJ_PosSet( syswk->app, MBMAIN_OBJ_CURSOR, cd->px, cd->py );
@@ -240,6 +238,24 @@ BOOL MBUI_MailReadCheck(void)
     return TRUE;
   }
 
+  return FALSE;
+}
+
+//=============================================================================================
+/**
+ * @brief 直接終了ボタンチェック
+ *
+ * @param   none    
+ *
+ * @retval  BOOL    TRUE:X_BUTTONを押した FALSE:押してない
+ */
+//=============================================================================================
+BOOL MBUI_EndButtonCheck( void )
+{
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+    return TRUE;
+  }
+  
   return FALSE;
 }
 

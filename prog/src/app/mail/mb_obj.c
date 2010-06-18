@@ -174,6 +174,12 @@ static const CLACT_OBJECT_ADD_PARAM ClaAddPrm[] =
     { CHR_ID_POKEICON3, PAL_ID_POKEICON, CEL_ID_POKEICON, 0, 0, 0 },
     1, 0
   },
+  { // 「×」ボタン
+    188, 168, 0, 
+    APP_COMMON_BARICON_EXIT, 0, 0, CLSYS_DEFREND_MAIN,
+    { CHR_ID_APP_COMMON, PAL_ID_APP_COMMON, CEL_ID_APP_COMMON, 0, 0, 0 },    
+    3,0
+  },
 };
 
 
@@ -260,15 +266,6 @@ void MBOBJ_Main( MAILBOX_APP_WORK * appwk )
     GFL_CLACT_SYS_Main();
   }
 
-#if 0
-  u32 i;
-
-  for( i=0; i<MBMAIN_OBJ_MAX; i++ ){
-    if( appwk->clwk[i] != NULL ){
-      CATS_ObjectUpdateCap( appwk->clwk[i] );
-    }
-  }
-#endif
 }
 
 
