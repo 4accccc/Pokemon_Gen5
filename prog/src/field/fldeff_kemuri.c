@@ -193,9 +193,9 @@ void FLDEFF_KEMURI_SetRailMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
   camera_yaw = MMDLSYS_GetTargetCameraAngleYaw( mmdlSys );
   
   MMDL_GetVectorPos( fmmdl, &pos );
-  pos.y += FX32_ONE*1;
-  pos.z += FX_Mul( FX_CosIdx( camera_yaw ), FX32_ONE*12 );
-  pos.x += FX_Mul( FX_SinIdx( camera_yaw ), FX32_ONE*12 );
+  pos.y += FX32_ONE;
+  pos.z += FX_Mul( FX_CosIdx( camera_yaw ), FX32_ONE*6 );
+  pos.x += FX_Mul( FX_SinIdx( camera_yaw ), FX32_ONE*6 );
   
   kemu = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_KEMURI );
   head.eff_kemu = kemu;
