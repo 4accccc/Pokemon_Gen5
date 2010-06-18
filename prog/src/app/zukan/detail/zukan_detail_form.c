@@ -1442,17 +1442,26 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
   if( work->mcss_sys_wk )
   {
     u8 i;
-    for( i=0; i<POKE_MAX; i++ )
-    {
-      PokeMcssAnimeMain( &work->poke_mcss_wk[i] );  // この関数内でNULLチェックはしてくれている
-    }
-
+    
 #ifdef DEF_MCSS_TCBSYS
     GFL_TCB_Main( work->mcss_tcbsys );  // DEF_MCSS_TCBSYSが定義されておりDEF_MINIMUM_LOADが定義されていないとき、
                                         // GFL_TCB_Main, MCSS_Mainの順にしておかないと、メモリ解放忘れが出てしまう。
 #endif
-    
+
     MCSS_Main( work->mcss_sys_wk );
+    
+    for( i=0; i<POKE_MAX; i++ )  // MCSS_Main, PokeMcssAnimeMainの順じゃないと、アニメが1フレーム余計に進んでしまう。
+    {
+      PokeMcssAnimeMain( &work->poke_mcss_wk[i] );  // この関数内でNULLチェックはしてくれている
+    }
+
+//#ifdef DEF_MCSS_TCBSYS
+//    GFL_TCB_Main( work->mcss_tcbsys );  // DEF_MCSS_TCBSYSが定義されておりDEF_MINIMUM_LOADが定義されていないとき、
+//                                        // GFL_TCB_Main, MCSS_Mainの順にしておかないと、メモリ解放忘れが出てしまう。
+//#endif
+//    
+//    MCSS_Main( work->mcss_sys_wk );
+
   } 
 
   if( *seq >= SEQ_PREPARE )
