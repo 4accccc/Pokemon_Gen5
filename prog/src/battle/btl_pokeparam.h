@@ -385,7 +385,7 @@ extern void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
 
 extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern void BPP_RemoveItem( BTL_POKEPARAM* pp );
-extern void BPP_ConsumeItem( BTL_POKEPARAM* pp );
+extern void BPP_ConsumeItem( BTL_POKEPARAM* bpp, u16 itemID );
 extern void BPP_ClearConsumedItem( BTL_POKEPARAM* bpp );
 extern u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp );
 

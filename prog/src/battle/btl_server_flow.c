@@ -255,9 +255,8 @@ static BOOL scproc_SimpleDamage_CheckEnable( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM*
 static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str );
 static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
-static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 nextItemID );
+static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 nextItemID, BOOL fConsume );
 static void scproc_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
 static WazaSick scEvent_CheckWazaAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
@@ -6676,8 +6675,8 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
         if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) )
         {
-          scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA );
-          scproc_ConsumeItem( wk, bpp );
+          scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA, TRUE );
+//          scproc_ConsumeItem( wk, bpp );
         }
       }
     }
@@ -6710,28 +6709,11 @@ static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   BTL_EVENTVAR_Pop();
   return failFlag;
 }
-//----------------------------------------------------------------------------------
-/**
- * 装備アイテム消費処理
- *
- * @param   wk
- * @param   bpp
- * @param   itemID
- */
-//----------------------------------------------------------------------------------
-static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
-{
-  u16 itemID = BPP_GetItem( bpp );
 
-  BPP_ConsumeItem( bpp );
-  SCQUE_PUT_OP_ConsumeItem( wk->que, BPP_GetID(bpp) );
-
-  scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
-}
 //----------------------------------------------------------------------------------
 // アイテム書き換え共通処理
 //----------------------------------------------------------------------------------
-static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 nextItemID )
+static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 nextItemID, BOOL fConsume )
 {
   u8 pokeID = BPP_GetID( bpp );
   u16 prevItemID = BPP_GetItem( bpp );
@@ -6754,6 +6736,14 @@ static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 next
   hem_state = BTL_Hem_PushState( &wk->HEManager );
   scEvent_ItemSetFixed( wk, bpp );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
+
+  // 消費レコード
+  if( fConsume )
+  {
+    BPP_ConsumeItem( bpp, prevItemID );
+    SCQUE_PUT_OP_ConsumeItem( wk->que, pokeID, prevItemID );
+    scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
+  }
 }
 
 
@@ -14522,7 +14512,7 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   }
   handexSub_putString( wk, &param->exStr );
 
-  scproc_ItemChange( wk, bpp, param->itemID );
+  scproc_ItemChange( wk, bpp, param->itemID, FALSE );
 
   if( param_header->tokwin_flag ){
     SCQUE_PUT_TOKWIN_OUT( wk->que, param_header->userPokeID );
@@ -14579,8 +14569,8 @@ static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
   }
 
   {
-    scproc_ItemChange( wk, self, targetItem );
-    scproc_ItemChange( wk, target, selfItem );
+    scproc_ItemChange( wk, self, targetItem, FALSE );
+    scproc_ItemChange( wk, target, selfItem, FALSE );
   }
 
   scproc_CheckItemReaction( wk, self, BTL_ITEMREACTION_GEN );
@@ -14657,8 +14647,7 @@ static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
     handexSub_putString( wk, &param->exStr );
   }
 
-  scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA );
-  scproc_ConsumeItem( wk, bpp );
+  scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA, TRUE );
 
   return 1;
 }

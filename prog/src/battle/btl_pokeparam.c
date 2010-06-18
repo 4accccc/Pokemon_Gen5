@@ -2662,9 +2662,9 @@ void BPP_RemoveItem( BTL_POKEPARAM* bpp )
  * @param   bpp
  */
 //=============================================================================================
-void BPP_ConsumeItem( BTL_POKEPARAM* bpp )
+void BPP_ConsumeItem( BTL_POKEPARAM* bpp, u16 itemID )
 {
-  bpp->coreParam.usedItem = bpp->coreParam.item;
+  bpp->coreParam.usedItem = itemID;
   bpp->coreParam.item = ITEM_DUMMY_DATA;
 }
 //=============================================================================================

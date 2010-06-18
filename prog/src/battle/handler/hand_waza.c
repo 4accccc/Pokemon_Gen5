@@ -5910,6 +5910,7 @@ static void handler_Recycle( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     if( BPP_GetItem(bpp) == ITEM_DUMMY_DATA )
     {
       u16 itemID = BPP_GetConsumedItem( bpp );
+
       if( itemID != ITEM_DUMMY_DATA )
       {
         BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );

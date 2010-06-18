@@ -278,9 +278,9 @@ static inline void SCQUE_PUT_OP_ChangePokeType( BTL_SERVER_CMD_QUE* que, u8 poke
 {
   SCQUE_PUT_Common( que, SC_OP_CHANGE_POKETYPE, pokeID, typePair );
 }
-static inline void SCQUE_PUT_OP_ConsumeItem( BTL_SERVER_CMD_QUE* que, u8 pokeID  )
+static inline void SCQUE_PUT_OP_ConsumeItem( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 itemID  )
 {
-  SCQUE_PUT_Common( que, SC_OP_CONSUME_ITEM, pokeID );
+  SCQUE_PUT_Common( que, SC_OP_CONSUME_ITEM, pokeID, itemID );
 }
 
 static inline void SCQUE_PUT_OP_UpdateWazaProcResult( BTL_SERVER_CMD_QUE* que,

@@ -7892,8 +7892,8 @@ static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_OP_ConsumeItem( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_ConsumeItem( pp );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_ConsumeItem( bpp, args[1] );
   return TRUE;
 }
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args )
