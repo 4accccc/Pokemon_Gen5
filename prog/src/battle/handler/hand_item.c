@@ -3451,15 +3451,12 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       WazaID  currentWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       WazaID  prevWaza = BPP_GetPrevWazaID( bpp );
 
-      TAYA_Printf("ƒƒgƒƒm[ƒ€ count=%d, waza=%d, prevWaza=%d\n", counter, currentWaza, prevWaza );
-
       if( currentWaza == prevWaza )
       {
         fx32 ratio;
         u16  pow, damage;
 
         pow = 100 + (common_GetItemParam(myHandle, ITEM_PRM_ATTACK) * (counter));
-        TAYA_Printf("ƒƒgƒƒm[ƒ€ %d pow\n", pow );
         if( pow > 200 ){ pow = 200; }
         ratio = (FX32_CONST(pow) / 100);
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );

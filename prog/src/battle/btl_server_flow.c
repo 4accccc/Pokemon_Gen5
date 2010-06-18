@@ -4253,9 +4253,8 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     if( scEvent_SkipAvoidCheck(wk, attacker, bpp, wazaParam) ){
       continue;
     }
-    if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID)
-    ||  !scEvent_CheckHit(wk, attacker, bpp, wazaParam)
-    ){
+    if( !scEvent_CheckHit(wk, attacker, bpp, wazaParam))
+    {
       BTL_POKESET_Remove( targets, bpp );
       scPut_WazaAvoid( wk, bpp, wazaParam->wazaID );
     }
@@ -9078,7 +9077,7 @@ static BOOL scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
             fCameraReset = TRUE;
           }
         }
-        
+
         BTL_Hem_PopState( &wk->HEManager, hem_state );
         scproc_CheckDeadCmd( wk, bpp );
       }
