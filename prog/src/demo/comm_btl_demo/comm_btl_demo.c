@@ -2448,6 +2448,7 @@ static void _set_record_result( RECORD *record, int id, COMM_BTL_DEMO_RESULT res
       RECORD_Inc( record,RECID_IRC_BTL_LOSE );
     }
     break;
+
   // Wifi‚Ì‚ÝŸ”sEˆø•ª‚ð”‚¦‚é
   case RECID_WIFI_BATTLE:
     if(result==COMM_BTL_DEMO_RESULT_WIN){
@@ -2494,8 +2495,9 @@ static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk )
   case WB_NET_IRC_BATTLE:      //ÔŠOü‘å‰ï
     _set_record_result( wk->pwk->record, RECID_IRC_BATTLE, wk->result );
     break;
-  case WB_NET_WIFICLUB:        //wifiCLUB
-  case WB_NET_WIFIMATCH:       //wifi¢ŠE‘åí
+  case WB_NET_WIFICLUB:        // wifiCLUB
+  case WB_NET_WIFIMATCH:       // wifi¢ŠE‘åí
+  case WB_NET_WIFIRNDMATCH:    // wifiƒ‰ƒ“ƒ_ƒ€ƒ}ƒbƒ`
     _set_record_result( wk->pwk->record, RECID_WIFI_BATTLE, wk->result );
     break;
   case WB_NET_UNION:           //UNION
