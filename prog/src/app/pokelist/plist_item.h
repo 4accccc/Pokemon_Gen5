@@ -67,7 +67,7 @@ extern void PLIST_ITEM_CangeInsekutaForm( PLIST_WORK *work , POKEMON_PARAM *pp ,
 
 extern void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work );
 extern void PLIST_ITEM_MSG_CanNotUseItemContinue( PLIST_WORK *work );
-extern const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work );
+extern const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work , const u32 value );
 
 extern void PLIST_MSGCB_LvUp_EvoCheck( PLIST_WORK *work );
 extern void PLIST_MSGCB_LvUp_CheckLearnWaza( PLIST_WORK *work );

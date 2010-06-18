@@ -421,7 +421,7 @@ void PLIST_ITEM_MSG_CanNotUseItemContinue( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 //  ƒAƒCƒeƒ€Žg‚Á‚½Žž‚Ìˆ—
 //--------------------------------------------------------------------------
-const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
+const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work , const u32 value )
 {
   PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_RecoverCheck( work->plData->item );
   
@@ -548,8 +548,11 @@ const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
     break;
   case ITEM_TYPE_PP_UP:      // ppUpŒn
   case ITEM_TYPE_PP_3UP:     // pp3UpŒn
-    //ŠO‚ÅWORDSET‚ðÝ’è‚·‚é
+    //value‚ÉwazaNo
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 0 , value );
     PLIST_MessageWaitInit( work , mes_pokelist_04_22 , TRUE , PLIST_MSGCB_CheckItemUseContinue );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
     break;
   case ITEM_TYPE_PP_RCV:     // pp‰ñ•œŒn
     PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_19 );
@@ -610,7 +613,7 @@ void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
   work->pokeCursor = target;
   work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, target);
 
-  PLIST_ITEM_MSG_UseItemFunc( work );
+  PLIST_ITEM_MSG_UseItemFunc( work , 0 );
   STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
   PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
   PMSND_PlaySystemSE( PLIST_SND_RECOVER );
