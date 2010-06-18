@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-06-18T15:26:53"/>
+	<create user="matsumiya" host="W00224" date="2010-06-18T17:57:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,13 +340,13 @@
 	</row>
 
 	<row id="GAMESYNC_002" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>つかってない</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉせってい</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ設定</language>
 	</row>
 
 	<row id="GAMESYNC_003" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>つかってない</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">もどる</language>
 		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
@@ -395,6 +395,7 @@
 	</row>
 
 	<row id="GSYNC_002" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">ゲームシンクが　かんりょう　しました</language>
 		<language name="JPN_KANJI" width="256">ゲームシンクが　完了しました</language>
 	</row>
@@ -430,6 +431,7 @@
 	</row>
 
 	<row id="GSYNC_008" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　めをさました！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　目を覚ました！</language>
 	</row>
@@ -447,6 +449,7 @@
 	</row>
 
 	<row id="GSYNC_011" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">ポケモンを　おこしますか？</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　起こしますか？</language>
 	</row>
