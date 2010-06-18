@@ -651,14 +651,14 @@ static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key, SCR
 //------------------------------------------------------------------
 BOOL SCRIPT_CallFieldInitScript( GAMESYS_WORK * gsys, HEAPID heapID )
 {
-  return searchMapInitScript( gsys, heapID, SP_SCRID_FIELD_INIT, SCRIPT_TYPE_NO_FIELD );
+  return searchMapInitScript( gsys, heapID, SP_SCRID_FIELD_INIT, SCRIPT_TYPE_FIELDINIT );
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL SCRIPT_CallFieldRecoverScript( GAMESYS_WORK * gsys, HEAPID heapID )
 {
-  return searchMapInitScript( gsys, heapID, SP_SCRID_FIELD_RECOVER, SCRIPT_TYPE_NO_FIELD );
+  return searchMapInitScript( gsys, heapID, SP_SCRID_FIELD_RECOVER, SCRIPT_TYPE_FIELDINIT );
 }
 
 //------------------------------------------------------------------
@@ -881,7 +881,7 @@ static VMHANDLE * SCRVM_Create(
     core->adrs += (local_scr_id * sizeof(u32));			//ID分進める(adrsがlongなので*4)
     core->adrs += VMGetU32( core );		//ラベルオフセット分進める
   }
-#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto) || defined(DEBUG_ONLY_FOR_nozomu_saitou)
+#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto) || defined(DEBUG_ONLY_FOR_nozomu_saitou) || defined(DEBUG_ONLY_FOR_obata_toshihiro)
   SCRIPTSYS_SetCodeChecker( core );
 #endif
 	return core;
@@ -1039,32 +1039,28 @@ BOOL SCRIPT_IsSpecialScriptType( SCRIPT_TYPE scr_type )
 //============================================================================================
 //============================================================================================
 #ifdef  PM_DEBUG
+#include "../../../resource/fldmapdata/script/scrcmd_list/cmd_check_data.h"
+#include "../../../resource/fldmapdata/script/scrcmd_list/cmd_check_data.cdat"
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static BOOL checkScrCmd( VMHANDLE * core, void * context, void * check_work, u16 code )
 {
   GAMESYS_WORK * gsys = (GAMESYS_WORK*)check_work;
-  // fieldmap == NULLのとき、フィールドマップオーバーレイが存在しない
-  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  // is_sp_flag == TRUEのとき、特殊スクリプト
-  BOOL is_sp_flag = SCRCMD_WORK_GetSpScriptFlag( context );
-#if 0
-  if ( 0x002e <= code && code <= 0x004b )
-  {
-    if ( fieldmap == NULL)
-    {
-      return FALSE;
-    }
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys ); // fieldmap == NULLのとき、フィールドマップオーバーレイが存在しない
+  BOOL is_sp_flag = SCRCMD_WORK_GetSpScriptFlag( context ); // is_sp_flag == TRUEのとき、特殊スクリプト
+  SCRIPT_TYPE script_type = SCRCMD_WORK_GetScriptType( context );
+  BOOL code_enable = FALSE;
+
+  switch( script_type ) {
+  case SCRIPT_TYPE_NORMAL:    code_enable = cmd_check_data[code].normal_enable; break;
+  case SCRIPT_TYPE_FIELDINIT: code_enable = cmd_check_data[code].init_enable; break;
+  case SCRIPT_TYPE_NO_FIELD:  code_enable = cmd_check_data[code].no_field_enable; break;
   }
-  else if ( 0x004c <= code && code <= 0x005f )
-  {
-    if ( fieldmap == NULL || is_sp_flag )
-    {
-      return FALSE;
-    }
+
+  if( code_enable == FALSE ) {
+    OS_Printf( "不正なコマンド実行: scr_type=%d, code=%d\n", script_type, code );
   }
-#endif
-  return TRUE;
+  return code_enable;
 }
 
 //--------------------------------------------------------------
