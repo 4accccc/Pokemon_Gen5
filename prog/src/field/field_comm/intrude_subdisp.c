@@ -661,7 +661,9 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   
   WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(gamedata) );  //ビーコンの電波強度アイコン反映
   
-  _IntSub_CommParamUpdate(intsub, intcomm);
+  if(intcomm == NULL || (intcomm != NULL && intcomm->subdisp_update_stop == FALSE)){
+    _IntSub_CommParamUpdate(intsub, intcomm);
+  }
   if(intsub->add_player_count < intsub->comm.recv_num){
     //誰かのパレスと接続した音
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
