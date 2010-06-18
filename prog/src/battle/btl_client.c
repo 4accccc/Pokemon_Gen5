@@ -2713,7 +2713,6 @@ static void selItemWork_Reserve( BTL_CLIENT* wk, u8 pokeIdx, u16 itemID )
   {
     if( wk->myID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
     {
-      TAYA_Printf("ItemID=%dを使う予定\n", itemID);
       wk->selItemWork[ pokeIdx ] = itemID;
       BTL_MAIN_DecrementPlayerItem( wk->mainModule, wk->myID, itemID );
     }
@@ -2729,7 +2728,6 @@ static void selItemWork_Restore( BTL_CLIENT* wk, u8 pokeIdx )
       u16 itemID = wk->selItemWork[ pokeIdx ];
       if( itemID != ITEM_DUMMY_DATA )
       {
-        TAYA_Printf("ItemID=%dを戻す\n", itemID);
         wk->selItemWork[ pokeIdx ] = ITEM_DUMMY_DATA;
         BTL_MAIN_AddItem( wk->mainModule, wk->myID, itemID );
       }
@@ -2922,8 +2920,6 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
       BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_KODAWARI );
       WazaID  kodawariWaza = BPP_SICKCONT_GetParam( cont );
 
-      TAYA_Printf("こだわり状態です。waza=%d\n", kodawariWaza);
-
       // こだわり対象のワザを覚えていて、それ以外のワザを使おうとしたらダメ
       if( (BPP_WAZA_IsUsable(bpp, kodawariWaza))
       &&  (kodawariWaza != waza )
@@ -3021,7 +3017,6 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
 // ふういんチェック（ふういんをかけたポケが持ってるワザを出せない）
   if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
   {
-    TAYA_Printf("ふういんが効いてるからチェックします\n");
     if( BTL_FIELD_CheckFuin(wk->pokeCon, bpp, waza) )
     {
       if( strParam != NULL )
@@ -3392,7 +3387,6 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
 {
   BOOL fChange = FALSE;
   u8   changeIndex = BTL_PARTY_MEMBER_MAX;
-  BTL_POKEPARAM* targetPoke;
 
   // 逃げ・交換禁止状態のチェック
   {
@@ -3410,6 +3404,15 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
   }
 
   do {
+    BTL_POKEPARAM* targetEnemyPoke;
+
+    {
+      BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos(wk->mainModule, wk->pokeCon, BPP_GetID(procPoke) );
+      targetEnemyPoke = ChangeAI_DecideTarget( wk, basePos );
+      if( targetEnemyPoke == NULL ){
+        break;
+      }
+    }
 
     if( ChangeAI_CheckHorobi(wk, procPoke) ){  // ほろびのうたチェック
       BTL_N_Printf( DBGSTR_CLIENT_CHGAI_HOROBI );
@@ -3417,33 +3420,25 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
       break;
     }
 
-    {
-      BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos(wk->mainModule, wk->pokeCon, BPP_GetID(procPoke) );
-      targetPoke = ChangeAI_DecideTarget( wk, basePos );
-      if( targetPoke == NULL ){
-        break;
-      }
-    }
-
-    if( ChangeAI_CheckFusigiNaMamori(wk, procPoke, targetPoke) ){  // ふしぎなまもりチェック
+    if( ChangeAI_CheckFusigiNaMamori(wk, procPoke, targetEnemyPoke) ){  // ふしぎなまもりチェック
       BTL_N_Printf( DBGSTR_CLIENT_CHGAI_FusigiNaMamori );
       fChange = TRUE;
       break;
     }
 
-    if( ChangeAI_CheckNoEffectWaza(wk, procPoke, targetPoke) ){  // 相性無効ワザチェック
+    if( ChangeAI_CheckNoEffectWaza(wk, procPoke, targetEnemyPoke) ){  // 相性無効ワザチェック
       BTL_N_Printf( DBGSTR_CLIENT_CHGAI_NoEffWaza );
       fChange = TRUE;
       break;
     }
 
-    if( ChangeAI_CheckKodawari(wk, procPoke, targetPoke) ){  // こだわりワザチェック
+    if( ChangeAI_CheckKodawari(wk, procPoke, targetEnemyPoke) ){  // こだわりワザチェック
       BTL_N_Printf( DBGSTR_CLIENT_CHGAI_Kodawari );
       fChange = TRUE;
       break;
     }
 
-    if( ChangeAI_CheckUkeTokusei(wk, procPoke, targetPoke, &changeIndex) ){ // 受けとくせいチェック
+    if( ChangeAI_CheckUkeTokusei(wk, procPoke, targetEnemyPoke, &changeIndex) ){ // 受けとくせいチェック
       BTL_N_Printf( DBGSTR_CLIENT_CHGAI_UkeTok );
       fChange = TRUE;
       break;
@@ -3455,7 +3450,7 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
       break;
     }
 
-    if( AI_ChangeProcSub_WazaAff(wk, procPoke, targetPoke, &changeIndex) ){ // ワザ相性チェック
+    if( AI_ChangeProcSub_WazaAff(wk, procPoke, targetEnemyPoke, &changeIndex) ){ // ワザ相性チェック
       BTL_N_Printf( DBGSTR_CLIENT_CHGAI_WazaEff );
       fChange = TRUE;
       break;
@@ -3474,7 +3469,7 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
 
     cnt = calcPuttablePokemons( wk, puttableList );
 
-    sortPuttablePokemonList( wk, puttableList, cnt, targetPoke );
+    sortPuttablePokemonList( wk, puttableList, cnt, procPoke );
     for(i=0; i<cnt; ++i)
     {
       if( !ChangeAI_CheckReserve(wk, puttableList[i]) )
@@ -3495,7 +3490,7 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
 }
 
 /**
- *  交換チェック時に考慮する「相手」ポケモンの決定
+ *  交換チェック時に考慮する「敵」ポケモンの決定
  */
 static BTL_POKEPARAM* ChangeAI_DecideTarget( BTL_CLIENT* wk, BtlPokePos basePos )
 {
@@ -3522,7 +3517,8 @@ static BOOL ChangeAI_CheckHorobi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke 
     BPP_SICK_CONT  cont = BPP_GetSickCont( procPoke, WAZASICK_HOROBINOUTA );
     u8 turnMax = BPP_SICCONT_GetTurnMax( cont );
     u8 turnNow = BPP_GetSickTurnCount( procPoke, WAZASICK_HOROBINOUTA );
-    if( (turnNow+1) == turnMax ){
+    if( (turnNow+1) == turnMax )
+    {
       return TRUE;
     }
   }
@@ -4116,6 +4112,8 @@ static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
   numMembers = BTL_PARTY_GetMemberCount( wk->myParty );
   numFront = BTL_RULE_HandPokeIndex( BTL_MAIN_GetRule(wk->mainModule), wk->numCoverPos );
 
+  TAYA_Printf("メンバー%d体、前衛%d体, 戦える控えは ", numMembers, numFront );
+
   for(i=numFront, cnt=0; i<numMembers; i++)
   {
     bpp = BTL_PARTY_GetMemberDataConst(wk->myParty, i);
@@ -4124,9 +4122,14 @@ static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
       if( list ){
         list[cnt] = i;
       }
+      TAYA_Printf("%d, ", i);
+
       ++cnt;
     }
   }
+
+  TAYA_Printf(" の %d体\n", cnt );
+
   return cnt;
 }
 //----------------------------------------------------------------------------------
@@ -4146,6 +4149,9 @@ static void sortPuttablePokemonList( BTL_CLIENT* wk, u8* list, u8 numPoke, const
   const BTL_POKEPARAM* bpp;
   PokeTypePair targetType;
   u8  i, j;
+
+  TAYA_Printf("交換対象poke=%p, ID=\n", target);
+  TAYA_Printf("%d\n", BPP_GetID(target));
 
   targetType = BPP_GetPokeType( target );
 
