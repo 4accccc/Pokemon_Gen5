@@ -308,19 +308,19 @@ EVENT_START ev_union
   // C-gear持ってない場合
   IF $have_cgear != TRUE THEN 
     //「まだ入れません」
-    _BALLOONWIN_OBJMSG_POS( msg_pc_union_06, SCWK_TARGET_OBJID, POS_DOWN ) 
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_06, SCWK_TARGET_OBJID, POS_DL ) 
   ENDIF 
 
   // 駄目タマゴを持っている場合
   IF $dame_egg_count > 0 THEN
     //「つれていけない ポケモンがいます」
-    _BALLOONWIN_OBJMSG_POS( msg_pc_union_07, SCWK_TARGET_OBJID, POS_DOWN ) 
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_07, SCWK_TARGET_OBJID, POS_DL ) 
   ENDIF
 
   // C-gear持っいて, 駄目タマゴを持っていない場合
   IF ($have_cgear == TRUE) && ($dame_egg_count == 0) THEN 
     //「ユニオンルームにようこそ」
-    _BALLOONWIN_OBJMSG_POS( msg_pc_union_01, SCWK_TARGET_OBJID, POS_DOWN ) 
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_01, SCWK_TARGET_OBJID, POS_DL ) 
     // メニュー表示
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, ret )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_yes, msg_pc_union_menu_yes )
@@ -342,7 +342,7 @@ EVENT_START ev_union
   // 説明を聞く場合
   IF $explain == TRUE THEN
     //「へやにはいりますか？」
-    _BALLOONWIN_OBJMSG_POS( msg_pc_union_02, SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_02, SCWK_TARGET_OBJID, POS_DL )
     _YES_NO_WIN( ret )
     //『はい』
     IF $ret == SCR_YES THEN
@@ -368,14 +368,14 @@ EVENT_START ev_union
     IF $SCWK_TEMP0 == FALSE THEN
       //「そうだ！…なんていかがでしょうか？」
       _TRAINER_TYPE_NAME( 0, SCWK_TEMP1 )
-      _BALLOONWIN_OBJMSG_POS( msg_pc_union_08, SCWK_TARGET_OBJID, POS_DOWN )
+      _BALLOONWIN_OBJMSG_POS( msg_pc_union_08, SCWK_TARGET_OBJID, POS_DL )
     ENDIF
   ENDIF
 
   // ユニオンルームに入る場合
   IF $room_in == TRUE THEN
     //「ワイヤレスつうしんをかいしします」
-    _BALLOONWIN_OBJMSG_POS( msg_pc_union_03, SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_03, SCWK_TARGET_OBJID, POS_DL )
     _YES_NO_WIN( ret )
     //『いいえ』
     IF $ret == SCR_NO THEN
@@ -408,7 +408,7 @@ EVENT_START ev_union
   // 入場
   IF $room_in == TRUE THEN
     //「おたのしみ ください」
-    _BALLOONWIN_OBJMSG_POS( msg_pc_union_04, SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_04, SCWK_TARGET_OBJID, POS_DL )
     _BALLOONWIN_CLOSE()
     _CALL sub_pokecen_elevator_in
     // 手持ちポケモン回復
@@ -424,7 +424,7 @@ EVENT_START ev_union
   // キャンセルした場合
   IF $room_in != TRUE THEN
     //「また おこしください」
-    _BALLOONWIN_OBJMSG_POS( msg_pc_union_05, SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_OBJMSG_POS( msg_pc_union_05, SCWK_TARGET_OBJID, POS_DL )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
