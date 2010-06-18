@@ -76,6 +76,8 @@ typedef struct tag_EVENT_DATA
   EVENT_DATA;
 
 
+#define _SERVERDOWN_ERROR  (0xfff1)
+#define ERROR503  (503)
 
 static void _changeState(PDWACC_WORK* pWork,StateFunc* state);
 static void _changeStateDebug(PDWACC_WORK* pWork,StateFunc* state, int line);
@@ -117,7 +119,7 @@ struct _PDWACC_WORK {
   char tempbuffer[30];
   BOOL bEnd;
   BOOL saveFlg;
-  DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
+  u32 ErrorNo;   ///エラーがあった場合の番号
 };
 
 
@@ -188,21 +190,6 @@ static void _modeFadeStart(PDWACC_WORK* pWork)
   _CHANGE_STATE(_modeFadeout);        // 終わり
 }
 
-static void _networkClose1(PDWACC_WORK* pWork)
-{
-  if(!GFL_NET_IsInit()){
-    _CHANGE_STATE(_modeFadeStart);
-  }
-}
-
-
-static void _networkClose(PDWACC_WORK* pWork)
-{
-  GFL_NET_Exit(NULL);
-  _CHANGE_STATE(_networkClose1);
-}
-
-
 
 static void _saveStart4(PDWACC_WORK* pWork)
 {
@@ -210,7 +197,7 @@ static void _saveStart4(PDWACC_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg()){
-    _CHANGE_STATE(_networkClose);
+    _CHANGE_STATE(_modeFadeStart);
   }
 }
 
@@ -299,7 +286,7 @@ static void _ErrorDisp2(PDWACC_WORK* pWork)
 {
 
   if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
-    _CHANGE_STATE(_networkClose);
+    _CHANGE_STATE(_modeFadeStart);
   }
 }
 
@@ -308,8 +295,15 @@ static void _ErrorDisp(PDWACC_WORK* pWork)
 {
   int gmm = GSYNC_ERR001 + pWork->ErrorNo - 1;
 
-  if(pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX){
-    gmm = DREAM_WORLD_SERVER_ERROR_ETC + 1 + GSYNC_ERR001;
+
+  if(pWork->pNHTTPRap){
+    NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+  }
+  if(_SERVERDOWN_ERROR == pWork->ErrorNo){
+    gmm = GSYNC_ERR011;
+  }
+  else if(pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX){
+    gmm = GSYNC_ERR009;
   }
   PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,gmm);
   _CHANGE_STATE(_ErrorDisp2);
@@ -353,7 +347,7 @@ static void _createAccount3(PDWACC_WORK* pWork)
       _CHANGE_STATE(_createAccount4);
     }
     else{
-      _CHANGE_STATE(_networkClose);
+      _CHANGE_STATE(_modeFadeStart);
     }
     PDWACC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
@@ -405,6 +399,16 @@ static void _createAccount1(PDWACC_WORK* pWork)
 static void _ghttpInfoWait1(PDWACC_WORK* pWork)
 {
   if(GFL_NET_IsInit()){
+
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(response == ERROR503){
+        pWork->ErrorNo = _SERVERDOWN_ERROR;
+        _CHANGE_STATE(_ErrorDisp);
+        return;
+      }
+    }
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
       {
@@ -479,7 +483,7 @@ static void _dispAccCode2(PDWACC_WORK* pWork)
 
     PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
 
-    _CHANGE_STATE(_networkClose);
+    _CHANGE_STATE(_modeFadeStart);
   }
 }
 
@@ -526,13 +530,6 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
   pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, pParent->pSvl);
   OS_TPrintf("profileID %x\n",pWork->profileID);
-
-  OS_TPrintf("DREAM_WORLD_SERVER_STATUS_DATA %d\n", sizeof(DREAM_WORLD_SERVER_STATUS_DATA));
-  OS_TPrintf("DREAM_WORLD_SERVER_DOWNLOAD_DATA %d\n", sizeof(DREAM_WORLD_SERVER_DOWNLOAD_DATA));
-  OS_TPrintf("DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA %d\n", sizeof(DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA));
-  OS_TPrintf("DREAM_WORLD_SERVER_POKEMONLIST_DATA %d\n", sizeof(DREAM_WORLD_SERVER_POKEMONLIST_DATA));
-  OS_TPrintf("DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA %d\n", sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA));
-  OS_TPrintf("DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA %d\n", sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA));
 
   
   pWork->pDispWork = PDWACC_DISP_Init(pWork->heapID);

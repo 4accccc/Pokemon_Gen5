@@ -18,6 +18,7 @@
 
 #include "savedata/dreamworld_data.h"
 #include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
 #include "title/title.h"
 
@@ -26,6 +27,7 @@
 
 typedef struct {
   WIFILOGIN_PARAM     login;
+  WIFILOGOUT_PARAM   logout;
   GAMEDATA      *gameData;
   PDWACC_PROCWORK pwdaccWork;
   DWCSvlResult aSVL;
@@ -39,6 +41,8 @@ typedef struct {
 typedef enum{
   _WIFI_LOGIN,
   _WIFI_ACCOUNT,
+  _WIFI_LOGOUT,
+  _WIFI_END,
 } _WIFI_STATE_LABEL;
 
 
@@ -94,26 +98,36 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
     pWork->login.display  = WIFILOGIN_DISPLAY_UP;
     pWork->login.nsid = WB_NET_PDW_ACC;
     pWork->login.pSvl = &pWork->aSVL;
-
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &pWork->login);
-
     pWork->state++;
     break;
-
   case _WIFI_ACCOUNT:
-    if(pWork->login.result!=WIFILOGIN_RESULT_CANCEL){
+    if(pWork->login.result == WIFILOGIN_RESULT_CANCEL){
+      pWork->state = _WIFI_END;
+    }
+    else{
       pWork->pwdaccWork.gameData = pWork->gameData;
       pWork->pwdaccWork.heapID = pWork->heapID;
       pWork->pwdaccWork.pSvl = &pWork->aSVL;
       GFL_PROC_SysCallProc(FS_OVERLAY_ID(gamesync), &PDW_ACC_ProcData, &pWork->pwdaccWork);
+      pWork->state++;
     }
-    pWork->state++;
     break;
-
+  case _WIFI_LOGOUT:
+    if(!GFL_NET_IsInit()){
+      pWork->login.mode = WIFILOGIN_MODE_ERROR;
+      pWork->state = _WIFI_LOGIN;
+    }
+    else{
+      pWork->logout.gamedata = pWork->gameData;
+      pWork->logout.bg       = WIFILOGIN_BG_NORMAL;
+      pWork->logout.display  = WIFILOGIN_DISPLAY_UP;
+      //    pWork->logout.nsid = WB_NET_PDW_ACC;
+      GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &pWork->logout);
+      pWork->state++;
+    }
   default:
     return GFL_PROC_RES_FINISH;
-    break;
-    
   }
 
   return GFL_PROC_RES_CONTINUE;
