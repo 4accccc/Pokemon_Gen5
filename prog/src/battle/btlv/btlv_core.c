@@ -2558,7 +2558,7 @@ BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result )
   return FALSE;
   #else
   BTLV_INPUT_ROTATE_PARAM* rotateParam = getGenericWork( wk, sizeof(BTLV_INPUT_ROTATE_PARAM) );
-  u8 rnd = BTL_CALC_GetRand( 100 ); // @todo Client‚ª‚±‚Ì—”Œn‚ðŽg‚¤‚Ì‚Íƒ}ƒY‚¢
+  u8 rnd = GFL_STD_MtRand(( 100 );
   switch( rotateParam->before_select_dir ){
   case BTL_ROTATEDIR_STAY:
     *result = (rnd < 50)? BTL_ROTATEDIR_L : BTL_ROTATEDIR_R;

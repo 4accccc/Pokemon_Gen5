@@ -5401,7 +5401,7 @@ static void handler_Kagefumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( !BTL_MAINUTIL_IsFriendPokeID(escPokeID, pokeID) )
   {
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
-    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
     u8 pokeIDAry[ BTL_POSIDX_MAX ];
     u8 cnt, i;
 
@@ -5441,7 +5441,7 @@ static void handler_Arijigoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( !BTL_MAINUTIL_IsFriendPokeID(escPokeID, pokeID) )
   {
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
-    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
     u8 pokeIDAry[ BTL_POSIDX_MAX ];
     u8 cnt, i;
 
@@ -5480,7 +5480,7 @@ static void handler_Jiryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   if( !BTL_MAINUTIL_IsFriendPokeID(escPokeID, pokeID) )
   {
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
-    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
     u8 pokeIDAry[ BTL_POSIDX_MAX ];
     u8 cnt, i;
 

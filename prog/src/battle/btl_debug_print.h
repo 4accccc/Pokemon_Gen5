@@ -362,7 +362,7 @@ typedef enum {
   DBGSTR_Item_PinchReactOn,
   DBGSTR_HANDWAZA_CombiWazaExe,
   DBGSTR_HANDWAZA_AlreadyRegistered,
-  DBGSTR_HANDWAZA_YokorodiDecide,
+  DBGSTR_HANDWAZA_YokodoriDecide,
   DBGSTR_HANDITEM_OujaCheck,
   DBGSTR_HANDITEM_OujaEffective,
   DBGSTR_HANDTOK_TRACE_Add,

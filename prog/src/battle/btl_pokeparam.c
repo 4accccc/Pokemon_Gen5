@@ -1565,7 +1565,19 @@ BppContFlag  BPP_CONTFLAG_CheckWazaHide( const BTL_POKEPARAM* bpp )
   }
   return BPP_CONTFLG_NULL;
 }
-
+//=============================================================================================
+/**
+ * ワザ（そらをとぶ・あなをほる等）により画面から消えている状態チェック
+ *
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BPP_IsWazaHide( const BTL_POKEPARAM* bpp )
+{
+  return (BPP_CONTFLAG_CheckWazaHide(bpp) != BPP_CONTFLG_NULL);
+}
 
 //=============================================================================================
 /**

@@ -209,8 +209,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_PerappVoiceRecvedDisable: return "ペラップボイス受信完了（無効データ）netID=%d, empty=%d\n";
   case DBGSTR_NET_PerappVoiceCheckRaw:      return "ペラップボイス受信チェック: ClientID:%d = netID:%d\n";
 
-  case DBGSTR_HEM_Push:     return "[STATE PUSH -%5d] << sp=%d, rp=%d\n";
-  case DBGSTR_HEM_Pop:      return "[STATE POP  -%5d]    sp=%d, rp=%d >>\n";
+  case DBGSTR_HEM_Push:     return "[STATE PUSH -%5d] << sp=%d, rp=%d    \n";
+  case DBGSTR_HEM_Pop:      return "[STATE POP  -%5d]    sp=%d, rp=%d >> \n";
   case DBGSTR_HEM_PushWork: return "[work PUSH]: type=%d, pokeID=%d, size=%3d, sp=%d\n";
   case DBGSTR_HEM_PophWork: return "[work  POP]: type=%d, pokeID=%d, size=%3d, sp=%d, myPos=%d,\n";
 
@@ -406,7 +406,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_Item_PinchReactOn:        return "アイテム使います\n";
   case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
   case DBGSTR_HANDWAZA_AlreadyRegistered: return "ポケ[%d]のワザハンドラ[%d]はすでに登録済み\n";
-  case DBGSTR_HANDWAZA_YokorodiDecide:  return "ポケ(%d), よこどりします\n";
+  case DBGSTR_HANDWAZA_YokodoriDecide:  return "ポケ(%d), よこどりします\n";
   case DBGSTR_HANDITEM_OujaCheck:       return "おうじゃのしるしチェック：デフォルトひるみ率=%d\n";
   case DBGSTR_HANDITEM_OujaEffective:   return "おうじゃのしるし有効：ひるみ率=%d\n";
   case DBGSTR_HANDTOK_TRACE_Add:        return "トレース発動します pokeID=%d\n";

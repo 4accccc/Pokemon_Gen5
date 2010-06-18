@@ -4511,7 +4511,7 @@ static BOOL scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     scEvent_TameStartFixed( wk, attacker );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-    if( BPP_CONTFLAG_CheckWazaHide(attacker) != BPP_CONTFLG_NULL ){
+    if( BPP_IsWazaHide(attacker) ){
       SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(attacker), TRUE );
     }
     if( hideTargetPokeID != BTL_POKEID_NULL ){
@@ -4562,7 +4562,7 @@ static BOOL scproc_FreeFall_Start( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   // ‘ÎÛ‚ªŽ€‚ñ‚Å‚éE‚Ý‚ª‚í‚èEƒƒUŒø‰Ê‚Åê‚©‚çÁ‚¦‚Ä‚éê‡‚ÍŽ¸”s
   if( (!BPP_IsDead(target))
   &&  (!BPP_MIGAWARI_IsExist(target))
-  &&  (BPP_CONTFLAG_CheckWazaHide(target) == BPP_CONTFLG_NULL)
+  &&  (!BPP_IsWazaHide(target))
   ){
     // ‚³‚ç‚ÉŽç‚Á‚Ä‚È‚¯‚ê‚Î¬Œ÷
     if( !BPP_TURNFLAG_Get(target, BPP_TURNFLG_MAMORU) )
@@ -13123,7 +13123,7 @@ void BTL_SVFTOOL_AddMemberOutIntr( BTL_SVFLOW_WORK* wk, u8 pokeID )
 BOOL BTL_SVFTOOL_IsTameHidePoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-  return BPP_CONTFLAG_CheckWazaHide( bpp ) != BPP_CONTFLG_NULL;
+  return BPP_IsWazaHide( bpp );
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -13764,7 +13764,7 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
     if( !BPP_IsDead(pp_target) )
     {
       if( (!(param->fAvoidHidePoke))
-      ||  (BPP_CONTFLAG_CheckWazaHide(pp_target) == BPP_CONTFLG_NULL)
+      ||  (!BPP_IsWazaHide(pp_target))
       ){
         if( scproc_SimpleDamage_CheckEnable(wk, pp_target, param->damage) )
         {
@@ -14958,7 +14958,7 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 
   if( (!BPP_IsFakeEnable(user))
   &&  (!BPP_IsFakeEnable(target))
-  &&  (BPP_CONTFLAG_CheckWazaHide(user) == BPP_CONTFLG_NULL)
+  &&  (!BPP_IsWazaHide(user))
   ){
     u16 prevTokusei = BPP_GetValue( user, BPP_TOKUSEI );
 //    TAYA_Printf("PokeSick=%d, line=%d\n", BPP_GetPokeSick(user), __LINE__);

@@ -377,6 +377,7 @@ extern void BPP_TurnCheck( BTL_POKEPARAM* pp );
 extern void BPP_CONTFLAG_Set( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BPP_CONTFLAG_Clear( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern BppContFlag BPP_CONTFLAG_CheckWazaHide( const BTL_POKEPARAM* bpp );
+extern BOOL BPP_IsWazaHide( const BTL_POKEPARAM* bpp );
 extern void BPP_ChangePokeType( BTL_POKEPARAM* bpp, PokeTypePair type );
 extern void BPP_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
 extern void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );

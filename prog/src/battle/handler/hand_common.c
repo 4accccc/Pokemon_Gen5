@@ -150,18 +150,22 @@ void HandCommon_MagicCoat_Wait( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MAGICCOAT_FLAG) == FALSE)
   ){
-    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-
-    if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_IsWazaHide(bpp) )
     {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
-      {
-        // マジックコート反応呼び出し
-        u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-        BTL_SVFRET_AddMagicCoatAction( flowWk, pokeID, atkPokeID );
+      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
 
-        // この時点でリアクションなし
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+      if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
+      {
+        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+        {
+          // マジックコート反応呼び出し
+          u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+          BTL_SVFRET_AddMagicCoatAction( flowWk, pokeID, atkPokeID );
+
+          // この時点でリアクションなし
+          BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+        }
       }
     }
   }
@@ -174,7 +178,7 @@ void HandCommon_MagicCoat_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID) )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( !BPP_CONTFLAG_CheckWazaHide(bpp) )
+    if( !BPP_IsWazaHide(bpp) )
     {
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MagicCoatExe );
