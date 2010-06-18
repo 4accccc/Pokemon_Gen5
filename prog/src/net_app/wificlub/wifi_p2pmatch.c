@@ -4429,15 +4429,15 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
 
     // 主人公の動作を許可
     FriendRequestWaitOff( wk );
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
   }
   else{  // いいえを選択した場合
 
     // 主人公動作停止を再度表示
     FriendRequestWaitOff( wk );
     FriendRequestWaitOn( wk, TRUE );
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
   }
-  //_CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
 
   return seq;
 }
