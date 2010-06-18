@@ -1152,6 +1152,7 @@ static void MakeEgg(
 
   // édè„Ç∞
   PP_Put( egg, ID_PARA_tamago_flag, TRUE ); 
+  PP_RecoverWazaPPAll( egg );
   PP_Renew( egg );
   STATUS_RCV_PokeParam_RecoverAll( egg );
 }
