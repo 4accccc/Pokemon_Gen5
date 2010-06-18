@@ -771,7 +771,10 @@ static void BPL_PokeTypeIconPut( BPLIST_WORK * wk, BPL_POKEDATA * pd, const GFL_
 //--------------------------------------------------------------------------------------------
 static void BPL_ItemIconPut( u16 item, GFL_CLWK * clwk, const GFL_CLACTPOS * pos )
 {
-  if( item == ITEM_DUMMY_DATA ){ return; }
+  if( item == ITEM_DUMMY_DATA ){
+		GFL_CLACT_WK_SetPos( clwk, pos, CLSYS_DRAW_SUB );		// ç¿ïWÇæÇØê›íËÇµÇƒÇ®Ç≠
+		return;
+	}
 
   if( ITEM_CheckMail( item ) == TRUE ){
     GFL_CLACT_WK_SetAnmSeq( clwk, 1 );
