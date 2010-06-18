@@ -47,7 +47,7 @@ static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp);
 static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys);
 static void _Update_IntrudeUser(UNION_APP_PTR uniapp);
 static void _SendUpdate_AnswerIntrudeUser(UNION_APP_PTR uniapp);
-static void _Update_IntrudeUserShutdown(UNION_APP_PTR uniapp);
+static void _Update_IntrudeUserShutdown(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys);
 
 
 
@@ -181,7 +181,7 @@ void UnionAppSystem_Update(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
   
   
   if(GFL_NET_IsParentMachine() == TRUE){
-    _Update_IntrudeUserShutdown(uniapp);
+    _Update_IntrudeUserShutdown(uniapp, unisys);
     _SendUpdate_BasicStatus(uniapp);
     _SendUpdate_LeavePlayer(uniapp);
     _Update_IntrudeUser(uniapp);
@@ -362,6 +362,7 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
 {
   int net_id;
   
+#if 0 //“dŒ¹’f‚ÅØ’f‚ª‚ ‚é‚½‚ßArecv_leave_bit‚ÍŠÖŒW–³‚µ‚É‚µ‚½
   if(uniapp->recv_leave_bit > 0){
     for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
       if(uniapp->recv_leave_bit & (1 << net_id)){
@@ -381,6 +382,22 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
       }
     }
   }
+#else
+  for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
+    if((uniapp->recv_mystatus_bit & (1 << net_id)) && GFL_NET_IsConnectMember(net_id) == FALSE){
+      if(GFL_NET_IsParentMachine() == TRUE || (uniapp->basic_status.member_bit & (1 << net_id))){
+        if(uniapp->leave_callback != NULL){
+          OS_TPrintf("—£’ECallBack NetID=%d\n", net_id);
+          uniapp->leave_callback(net_id, &uniapp->appmy[net_id].myst, uniapp->userwork);
+        }
+        //³‹Kƒƒ“ƒo[‚Ìbit‚ğ—‚Æ‚·
+        uniapp->basic_status.member_bit &= 0xff ^ (1 << net_id);
+        uniapp->recv_mystatus_bit &= 0xff ^ (1 << net_id);
+      }
+      UnionMyComm_PartyDelParam(&unisys->my_situation.mycomm, uniapp->appmy[net_id].mac_address);
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -390,7 +407,7 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
  * @param   uniapp		
  */
 //--------------------------------------------------------------
-static void _Update_IntrudeUserShutdown(UNION_APP_PTR uniapp)
+static void _Update_IntrudeUserShutdown(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
 {
   NetID net_id;
   
@@ -398,6 +415,11 @@ static void _Update_IntrudeUserShutdown(UNION_APP_PTR uniapp)
     if(uniapp->entry_reserve_bit & (1 << net_id)){
       if(GFL_NET_IsConnectMember(net_id) == FALSE){
         uniapp->entry_reserve_bit ^= 1 << net_id;
+        if(uniapp->recv_mystatus_bit & (1 << net_id)){
+          uniapp->recv_mystatus_bit &= 0xff ^ (1 << net_id);
+          UnionMyComm_PartyDelParam(
+            &unisys->my_situation.mycomm, uniapp->appmy[net_id].mac_address);
+        }
         if(uniapp->entry_block == _ENTRY_TYPE_NUM && uniapp->intrude_capacity_count > 0){
           uniapp->intrude_capacity_count--;
         }
@@ -566,8 +588,8 @@ void UnionAppSystem_SetIntrudeReady(UNION_APP_PTR uniapp, NetID net_id)
       uniapp->recv_intrude_ready_bit |= 1 << net_id;
     }
     else{
-      GF_ASSERT_MSG(0, "recv_mystbit=%d, entry_reserve_bit=%d, net_id=%d\n", 
-        uniapp->recv_mystatus_bit, uniapp->entry_reserve_bit, net_id);
+//      GF_ASSERT_MSG(0, "recv_mystbit=%d, entry_reserve_bit=%d, net_id=%d\n", 
+//        uniapp->recv_mystatus_bit, uniapp->entry_reserve_bit, net_id);
     }
   }
   else{
@@ -586,6 +608,7 @@ void UnionAppSystem_SetIntrudeReady(UNION_APP_PTR uniapp, NetID net_id)
 //==================================================================
 void UnionAppSystem_SetLeaveChild(UNION_APP_PTR uniapp, NetID net_id)
 {
+#if 0 //î•ñ‚ª’x‚ê‚é‚½‚ßŠeX‚ÅGFL_NET_IsConnectMember‚Åƒ`ƒFƒbƒN‚·‚é‚æ‚¤‚É‚µ‚½
   if((uniapp->recv_mystatus_bit & (1 << net_id)) && (uniapp->basic_status.member_bit & (1 << net_id))){
     uniapp->recv_leave_bit |= 1 << net_id;
   }
@@ -593,6 +616,7 @@ void UnionAppSystem_SetLeaveChild(UNION_APP_PTR uniapp, NetID net_id)
     GF_ASSERT_MSG(0, "recv_mystbit=%d, member_bit=%d, net_id=%d\n", 
       uniapp->recv_mystatus_bit, uniapp->basic_status.member_bit, net_id);
   }
+#endif
 }
 
 //==================================================================
