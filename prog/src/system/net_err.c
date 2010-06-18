@@ -653,15 +653,10 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 	}
   
   if(fatal_error == TRUE){
-		//エラー画面描画
-  	Local_ErrDispInit(fatal_error);
-
-    //割り込み復帰
-    GX_HBlankIntr(nes->h_intr);
-    GX_VBlankIntr(nes->v_intr);
-
   	//通信切断
   	NetErr_ExitNetSystem();
+		//エラー画面描画
+  	Local_ErrDispInit(fatal_error);
     //無限ループ
     do{
       OS_Halt();
