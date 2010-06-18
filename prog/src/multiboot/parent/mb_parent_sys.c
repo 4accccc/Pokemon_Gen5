@@ -1487,7 +1487,11 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
 {
+#ifdef PM_DEBUG
   const char *srlPath[2] = {"/dl_rom/child.srl","/dl_rom/child2.srl"};
+#else
+  const char *srlPath[2] = {"/dl_rom/child_r.srl","/dl_rom/child2_r.srl"};
+#endif
   const char *charPath[2] = {"/dl_rom/icon_w.char","/dl_rom/icon_b.char"};
   const char *plttPath[2] = {"/dl_rom/icon_w.plt","/dl_rom/icon_b.plt"};
   

@@ -13,8 +13,7 @@
 # NITROSDK3.0付属ののプリコンパイルを読み込まない
 NITRO_NO_STD_PCHDR = True
 
-#マルチブートにDSIバージョンはない
-#TWLSDK_PLATFORM = NITRO
+include			../prog/version
 
 PARENT_SRC		=	../prog/src
 PARENT_INC		=	../prog/include
@@ -57,7 +56,7 @@ LLIBRARIES		=  	gflib.a
 #----------------------------------------------------------------------------
 #パーティクルのためのライブラリを追加
 #----------------------------------------------------------------------------
-LLIBRARY_DIRS	+= ./library/spl/$(TWL_BUILDTYPE)
+LLIBRARY_DIRS	+= ../prog/library/spl/$(TWL_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
 
 #----------------------------------------------------------------------------

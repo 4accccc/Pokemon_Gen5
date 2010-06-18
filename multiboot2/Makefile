@@ -13,17 +13,11 @@
 # NITROSDK3.0付属ののプリコンパイルを読み込まない
 NITRO_NO_STD_PCHDR = True
 
-#マルチブートにDSIバージョンはない
-#TWLSDK_PLATFORM = NITRO
-
 PARENT_SRC		=	../prog/src
 PARENT_INC		=	../prog/include
 PARENT_ARC		=	../prog/arc
 
-#----------------------------------------------------------------------------
-#	ロム作成用定義　（ＲＯＭ提出の際は有効にしてsrl作成）
-#----------------------------------------------------------------------------
-#NITRO_FINALROM = yes
+include			../prog/version
 
 .PHONY : gflib installsrl
 
@@ -57,7 +51,7 @@ LLIBRARIES		=  	gflib.a
 #----------------------------------------------------------------------------
 #パーティクルのためのライブラリを追加
 #----------------------------------------------------------------------------
-LLIBRARY_DIRS	+= ./library/spl/$(TWL_BUILDTYPE)
+LLIBRARY_DIRS	+= ../prog/library/spl/$(TWL_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
 
 #----------------------------------------------------------------------------

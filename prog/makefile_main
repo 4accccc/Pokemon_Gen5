@@ -246,8 +246,6 @@ GFL_FILE_TREE	=	titledemo.narc \
 					soundstatus.narc \
 					wb_sound_data.sdat \
 					gfl_font.dat \
-					dl_rom/child.srl \
-					dl_rom/child2.srl \
 					dl_rom/icon_b.char \
 					dl_rom/icon_b.plt  \
 					dl_rom/icon_w.char \
@@ -255,6 +253,12 @@ GFL_FILE_TREE	=	titledemo.narc \
 
 
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
+
+ifeq	($(PM_DEBUG),yes)
+GFL_MAKEROM_ROMFILES += dl_rom/child.srl dl_rom/child2.srl
+else
+GFL_MAKEROM_ROMFILES += dl_rom/child_r.srl dl_rom/child2_r.srl
+endif
 
 #ロムファイル指定(GAME)
 #GAME_FILE_TREE	= test_graphic/*.narc \
