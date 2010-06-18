@@ -68,6 +68,11 @@ extern u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp
 extern BOOL IRC_COMPATIBLE_SV_IsDayFlag( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 trainerID );
 
 extern BOOL IRC_COMPATIBLE_SV_IsPlayed( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 trainerID );
+
+#ifdef PM_DEBUG
+extern void IRC_COMPATIBLE_SV_SetCount( IRC_COMPATIBLE_SAVEDATA *p_sv, u32 rank, u32 play_cnt );
+#endif //PM_DEBUG
+
 //-------------------------------------
 ///	irc_compatible.cÇ≈ÇÃÇ›égÇ§privateä÷êî
 //=====================================

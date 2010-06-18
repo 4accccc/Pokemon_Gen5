@@ -58,10 +58,12 @@
 #include "debug/debugwin_sys.h"
 static int s_debug_score  = 0;
 static BOOL s_debug_score_use = FALSE;
+static BOOL s_debug_skip_use  = FALSE;
 static GFL_FONT *p_debug_font = NULL;
 #else
 #define s_debug_score (0)
 #define s_debug_score_use (0)
+#define s_debug_skip_use (0)
 #endif //DEBUGWIN_USE
 
 //=============================================================================
@@ -532,7 +534,16 @@ static void SEQFUNC_MenuProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		switch( p_wk->select )
 		{	
 		case IRCMENU_SELECT_COMPATIBLE:
-			SEQ_Change( p_wk, SEQFUNC_CompatibleProc );
+      if( s_debug_skip_use )
+      {
+
+        p_wk->seq_function	= SEQFUNC_CompatibleProc;
+        p_wk->seq	= 5;
+      }
+      else
+      {
+        SEQ_Change( p_wk, SEQFUNC_CompatibleProc );
+      }
 			break;
 		case IRCMENU_SELECT_RANKING:
 			SEQ_Change( p_wk, SEQFUNC_RankingProc );
@@ -1448,6 +1459,7 @@ static u32 RULE_CalcRhythmMinus( u32 cnt_diff )
 
 #ifdef DEBUGWIN_USE
 #define DEBUGWIN_GROUP_FLEELINGCHECK  8
+#define DEBUGWIN_GROUP_FLEELINGCHECK_SCORE  9
 static inline void DebugWin_Feel_U_ChangeScore( void* userWork , DEBUGWIN_ITEM* item )
 { 
   BOOL is_update  = FALSE;
@@ -1502,11 +1514,215 @@ static inline void DebugWin_Feel_D_UseScore( void* userWork , DEBUGWIN_ITEM* ite
 
 }
 
+static inline void DebugWin_Feel_U_Skip( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  BOOL is_update  = FALSE;
+
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT
+      || GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  { 
+    s_debug_skip_use ^=  1;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Feel_D_Skip( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+
+  DEBUGWIN_ITEM_SetNameV( item , "スキップ[%s]", sc_tbl[s_debug_skip_use] );
+
+}
+
+typedef struct
+{
+  u8  idx;
+  u16 play_cnt;
+
+  IRC_COMPATIBLE_SAVEDATA *p_sv;
+}DWBUGWIN_FEEL_SCORE_DATA;
+
+static DWBUGWIN_FEEL_SCORE_DATA s_score_data  = {0};
+
+static inline void Feel_GetData()
+{
+  DWBUGWIN_FEEL_SCORE_DATA  *p_wk = &s_score_data;
+  p_wk->play_cnt  = IRC_COMPATIBLE_SV_GetPlayCount( p_wk->p_sv, p_wk->idx );
+}
+
+static inline void DebugWin_Feel_U_Get( void* userWork , DEBUGWIN_ITEM* item )
+{
+  if( GFL_UI_KEY_GetRepeat() == PAD_BUTTON_A )
+  {
+    Feel_GetData();
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Feel_U_Set( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DWBUGWIN_FEEL_SCORE_DATA  *p_wk = &s_score_data;
+  if( GFL_UI_KEY_GetRepeat() == PAD_BUTTON_A )
+  {
+    IRC_COMPATIBLE_SV_SetCount( p_wk->p_sv, p_wk->idx, p_wk->play_cnt );
+  }
+}
+
+static inline void DebugWin_Feel_D_Score_Idx( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DWBUGWIN_FEEL_SCORE_DATA  *p_wk = &s_score_data;
+  DEBUGWIN_ITEM_SetNameV( item , "そうさするじゅんい[%d]", p_wk->idx+1 );
+}
+
+static inline void DebugWin_Feel_U_Score_Idx( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  BOOL is_update  = FALSE;
+  DWBUGWIN_FEEL_SCORE_DATA  *p_wk = &s_score_data;
+  const int max = IRC_COMPATIBLE_SV_GetRankNum( p_wk->p_sv );
+
+  if( GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT )
+  {
+    if( p_wk->idx == 0 )
+    {
+      p_wk->idx = max-1;
+    }
+    else
+    {
+      p_wk->idx--;
+    }
+
+    is_update = TRUE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT )
+  { 
+    if( p_wk->idx == max-1 )
+    {
+      p_wk->idx = 0;
+    }
+    else
+    {
+      p_wk->idx++;
+    }
+
+    is_update = TRUE;
+  }
+
+  if( is_update )
+  {
+    Feel_GetData();
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static inline void DebugWin_Feel_D_Score_Cnt( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DWBUGWIN_FEEL_SCORE_DATA  *p_wk = &s_score_data;
+  DEBUGWIN_ITEM_SetNameV( item , "かいすう[%d]", p_wk->play_cnt );
+}
+
+static inline void DebugWin_Feel_U_Score_Cnt( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  enum
+  {
+    MOVE_TYPE_NONE,
+    MOVE_TYPE_LEFT,
+    MOVE_TYPE_RIGHT,
+  } move_type = MOVE_TYPE_NONE;
+
+  BOOL is_update  = FALSE;
+  DWBUGWIN_FEEL_SCORE_DATA  *p_wk = &s_score_data;
+  const int max = IRC_COMPATIBLE_SV_DATA_PLAYCNT_MAX;
+  int value;
+
+  if( GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT )
+  {
+    move_type = MOVE_TYPE_LEFT;
+    value = 1;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
+  {
+
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+    {
+      move_type = MOVE_TYPE_LEFT;
+      value = 100;
+    }
+    else
+    {
+      move_type = MOVE_TYPE_LEFT;
+      value = 10;
+    }
+  }
+  else if( GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT )
+  {
+    move_type = MOVE_TYPE_RIGHT;
+    value = 1;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
+  {
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+
+    {
+      move_type = MOVE_TYPE_RIGHT;
+      value = 100;
+    }
+    else
+    {
+      move_type = MOVE_TYPE_RIGHT;
+      value = 10;
+    }
+  }
+  
+
+  if( move_type == MOVE_TYPE_LEFT )
+  {
+    if( p_wk->play_cnt - value <= 0 )
+    {
+      p_wk->play_cnt = max-1;
+    }
+    else
+    {
+      p_wk->play_cnt-=value;
+    }
+
+    is_update = TRUE;
+  }
+  else if( move_type == MOVE_TYPE_RIGHT )
+  { 
+    if( p_wk->play_cnt + value >= max-1 )
+    {
+      p_wk->play_cnt = 0;
+    }
+    else
+    {
+      p_wk->play_cnt+=value;
+    }
+
+    is_update = TRUE;
+  }
+
+  if( is_update )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+
+}
+
 static void DEBUGWIN_Init( HEAPID heapID )
 {
   //初期化
   s_debug_score  = 0;
   s_debug_score_use = FALSE;
+  s_debug_skip_use = FALSE;
+
+  GFL_STD_MemClear( &s_score_data, sizeof(DWBUGWIN_FEEL_SCORE_DATA) );
+  s_score_data.p_sv = IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
+
+  Feel_GetData();
+
+
   p_debug_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
@@ -1516,6 +1732,18 @@ static void DEBUGWIN_Init( HEAPID heapID )
       NULL, DEBUGWIN_GROUP_FLEELINGCHECK, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Feel_U_UseScore, DebugWin_Feel_D_UseScore,
       NULL, DEBUGWIN_GROUP_FLEELINGCHECK, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Feel_U_Skip, DebugWin_Feel_D_Skip,
+      NULL, DEBUGWIN_GROUP_FLEELINGCHECK, heapID );
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_FLEELINGCHECK_SCORE, "スコアそうさ", DEBUGWIN_GROUP_FLEELINGCHECK, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Feel_U_Score_Idx, DebugWin_Feel_D_Score_Idx,
+      NULL, DEBUGWIN_GROUP_FLEELINGCHECK_SCORE, heapID );
+  DEBUGWIN_AddItemToGroup( "しゅとく", DebugWin_Feel_U_Get, NULL, DEBUGWIN_GROUP_FLEELINGCHECK_SCORE, heapID );
+  DEBUGWIN_AddItemToGroup( "せってい", DebugWin_Feel_U_Set, NULL, DEBUGWIN_GROUP_FLEELINGCHECK_SCORE, heapID );
+
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Feel_U_Score_Cnt, DebugWin_Feel_D_Score_Cnt,
+      NULL, DEBUGWIN_GROUP_FLEELINGCHECK_SCORE, heapID );
+
 }
 static void DEBUGWIN_Exit( void )
 {

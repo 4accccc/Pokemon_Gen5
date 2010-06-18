@@ -362,6 +362,34 @@ BOOL IRC_COMPATIBLE_SV_IsPlayed( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 train
 	}
 	return FALSE;
 }
+
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  行った回数を増やす
+ *
+ *	@param	IRC_COMPATIBLE_SAVEDATA *p_sv セーブデータ
+ *	@param	rank  ランク数
+ */
+//-----------------------------------------------------------------------------
+void IRC_COMPATIBLE_SV_SetCount( IRC_COMPATIBLE_SAVEDATA *p_sv, u32 rank, u32 play_cnt )
+{
+	int i;
+
+	for( i = 0; i < IRC_COMPATIBLE_SV_RANKING_MAX; i++ )
+	{	
+    if( p_sv->rank[i].is_use && p_sv->rank[rank].is_use )
+    {
+      if( p_sv->rank[i].trainerID == p_sv->rank[rank].trainerID )
+      {
+        p_sv->rank[i].play_cnt  = MATH_CLAMP( play_cnt, 0, IRC_COMPATIBLE_SV_DATA_PLAYCNT_MAX );
+      }
+    }
+	}
+}
+#endif //PM_DEBUG
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  バイオリズムを計算
