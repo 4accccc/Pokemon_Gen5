@@ -336,7 +336,9 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
         obj_prm->draw_proc_no == MMDL_DRAWPROCNO_TPOKE_FLY ){
       //X,ZのDrawOffsetを引継ぎ、足元が影にめり込まないよう、ちょっと影の位置を通常より下げている
       MMDL_GetVectorDrawOffsetPos( work->fmmdl, &offs );
-      offs.y = FX32_CONST(-0.5);
+	    if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_32x32 ){
+        offs.y = FX32_CONST(-0.5);  //小さいやつは足元が気になるので、Yもちょっと調整
+      }
       VEC_Add( &pos, &offs, &pos );
     }
 
