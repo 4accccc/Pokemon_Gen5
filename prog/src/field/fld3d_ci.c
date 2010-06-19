@@ -856,13 +856,17 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     {
       FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( fieldmap );
       FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
-#ifdef  PM_DEBUG
-      FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
-#endif
+
       FLDMSGBG_RecoveryBG( fmb );
       FIELD_PLACE_NAME_RecoverBG( place_name_sys );
-#ifdef  PM_DEBUG
-      FIELD_DEBUG_RecoverBgCont( debug );
+
+#ifndef  PM_DEBUG
+      FLDMSGBG_ReqResetBG2( fmb );  //BG2復帰リクエスト（実際の復帰はFLDMSGBGのメインで実行）
+#else
+      { //実行内容は↑FLDMSGBG_ReqResetBG2＋デバッグ描画OFF
+        FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
+        FIELD_DEBUG_RecoverBgCont( debug );
+      }
 #endif
       {
         //ＢＧセットアップ

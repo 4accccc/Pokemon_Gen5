@@ -542,9 +542,6 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
 static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr)
 {
   FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
-#ifdef  PM_DEBUG
-  FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
-#endif
 
   GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
 
@@ -556,8 +553,16 @@ static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr)
       ptr->CntText.charBase);
   //復帰
   FIELD_PLACE_NAME_RecoverBG( place_name_sys );
-#ifdef  PM_DEBUG
-  FIELD_DEBUG_RecoverBgCont( debug );
+#ifndef  PM_DEBUG
+  {
+    FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( fieldmap );
+    FLDMSGBG_ReqResetBG2( fmb );  //BG2復帰リクエスト（実際の復帰はFLDMSGBGのメインで実行）
+  }
+#else
+  { //実行内容は↑FLDMSGBG_ReqResetBG2＋デバッグ描画OFF
+    FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
+    FIELD_DEBUG_RecoverBgCont( debug );
+  }
 #endif
 
   G2_BlendNone();
