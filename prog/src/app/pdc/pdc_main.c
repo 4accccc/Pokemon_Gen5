@@ -230,7 +230,7 @@ static  void  screen_init( HEAPID heapID )
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
     G3X_EdgeMarking( FALSE );
-    G3X_AntiAlias( FALSE );
+    G3X_AntiAlias( TRUE );
     G3X_SetFog( FALSE, 0, 0, 0 );
     G2_SetBG0Priority( 1 );
   }
