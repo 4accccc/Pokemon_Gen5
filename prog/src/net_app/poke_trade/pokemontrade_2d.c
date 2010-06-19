@@ -2673,8 +2673,8 @@ void POKETRADE_2D_GTSPokemonIconVisible(POKEMON_TRADE_WORK* pWork,int side, BOOL
  */
 //------------------------------------------------------------------------------
 
-const static GFL_POINT pokemonpos[]={{30,96},{64,96},{96,96} , {36+128+4,96},{68+128+4,96},{100+128+4,96}};
-const static GFL_POINT pokemonposl[]={{24,46},{24,94},{24,142}, {20+128,46},{20+128,94},{20+128,142} };
+const static GFL_POINT pokemonpos[]= {{32,96},{64,96},{96,96} , {36+128+4,96},{68+128+4,96},{100+128+4,96}};
+const static GFL_POINT pokemonposl[]={{24,46},{24,94},{24,142}, {24+128,46},{24+128,94},{24+128,142} };
 
 
 void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow, BOOL bDisp)
