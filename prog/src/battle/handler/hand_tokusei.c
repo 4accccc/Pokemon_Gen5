@@ -2762,6 +2762,16 @@ static void handler_Rinpun_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_RINPUNGUARD_FLG, TRUE );
   }
 }
+static void handler_Rinpun_GuardHitEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (HandCommon_CheckTargetPokeID(pokeID))
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_TARGET_POKECNT) == 1)
+  ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RINPUNGUARD_FLG, TRUE );
+  }
+}
+
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Rinpun( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -2769,6 +2779,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Rinpun( u32* numElems )
     { BTL_EVENT_ADD_RANK_TARGET,        handler_Rinpun_Rank   }, // 追加効果（ランク効果）チェックハンドラ
     { BTL_EVENT_SHRINK_CHECK,           handler_Rinpun_Shrink }, // ひるみチェックハンドラ
     { BTL_EVENT_WAZA_DMG_REACTION_PREV, handler_Rinpun_Guard  }, // ダメージ反応直前
+    { BTL_EVENT_DAMAGEPROC_END_HIT_PREV,handler_Rinpun_GuardHitEnd  }, // ダメージ反応直前
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

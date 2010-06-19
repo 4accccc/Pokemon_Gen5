@@ -153,6 +153,7 @@ typedef enum {
   BTL_EVENT_WEATHER_REACTION,       ///< 天候ダメージに対する反応
   BTL_EVENT_SIMPLE_DAMAGE_ENABLE,   ///< ワザ以外ダメージ有効判定
   BTL_EVENT_DAMAGEPROC_START,       ///< ダメージワザシーケンス開始
+  BTL_EVENT_DAMAGEPROC_END_HIT_PREV,///< ダメージワザシーケンス終了直前
   BTL_EVENT_DAMAGEPROC_END_HIT_REAL,///< ダメージワザシーケンス終了（ダメージを受けたポケモン（みがわり除く）が居る）
   BTL_EVENT_DAMAGEPROC_END_HIT,     ///< ダメージワザシーケンス終了（ダメージを受けたポケモン（みがわり含む）が居る）
   BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザシーケンス終了（常に呼び出し）

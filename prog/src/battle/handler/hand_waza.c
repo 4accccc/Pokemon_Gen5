@@ -1607,6 +1607,8 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       WazaID waza = BPP_GetPrevWazaID( target );
       u16 counter = BPP_GetWazaContCounter( target );
 
+      TAYA_Printf("wazaID=%d, counter=%d\n", waza, counter);
+
       if( (counter > 0)
       &&  (waza != WAZANO_NULL)
       &&  (!BTL_TABLES_IsMatchMonomaneFail(waza))
@@ -2227,8 +2229,9 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     WAZAEFF_IWAOTOSI,
     WAZAEFF_NEEDLEARM,
   };
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_RINPUNGUARD_FLG) == FALSE)
+  ){
     u32 rnd = BTL_CALC_GetRand( 100 );
 
     #ifdef PM_DEBUG

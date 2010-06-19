@@ -3048,7 +3048,10 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     wk->prevExeWaza = actWaza;
 
     // 遅延発動ワザの準備処理
-    if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){ break; }
+    if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){
+        fWazaEnable = TRUE;
+        break;
+    }
 
     // 合体ワザ（先発）の準備処理
     if( scproc_Fight_CheckCombiWazaReady(wk, attacker, actWaza, actTargetPos) ){ break; }
@@ -6536,7 +6539,9 @@ static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     if( hit_cnt )
     {
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, hit_cnt );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_RINPUNGUARD_FLG, FALSE );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT_PREV );
       BTL_EVENT_CallHandlers( wk, eventID );
     }
   BTL_EVENTVAR_Pop();
