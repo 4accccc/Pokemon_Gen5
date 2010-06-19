@@ -114,6 +114,7 @@ struct _STA_POKE_SYS
   u16   scrollOffset;
 
   int   shadowResIdx;
+  u8    useItemSeCnt;
 };
 
 //======================================================================
@@ -135,6 +136,7 @@ void STA_POKE_InitItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 void STA_POKE_UpdateItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 void STA_POKE_InitItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 void STA_POKE_UpdateItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
@@ -149,6 +151,7 @@ STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , ACTING_WORK *actWork , MUS_PO
   work->itemDrawSys = itemDrawSys;
   work->scrollOffset = 0;
   work->bbdSys = bbdSys;
+  work->useItemSeCnt = 0;
 
   for( i=0 ; i<MUSICAL_POKE_MAX ; i++ )
   {
@@ -651,7 +654,8 @@ void STA_POKE_UseItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , MUS_PO
     
     
     //SEÄ¶
-    PMSND_PlaySE( UseSeArr[useType] );
+    PMSND_PlaySE_byPlayerID( UseSeArr[useType] , SEPLAYER_SE2 );
+    work->useItemSeCnt++;
     
     //ŒÂ•Ê‰Šú‰»
     switch(useType)
@@ -704,6 +708,11 @@ void STA_POKE_UpdateItemUse_Spin( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
   if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME_SPIN )
   {
     pokeWork->updateItemUseFunc = NULL;
+    work->useItemSeCnt--;
+    if( work->useItemSeCnt == 0 )
+    {
+      PMSND_StopSE_byPlayerID(SEPLAYER_SE2);
+    }
   }
 }
 
@@ -777,6 +786,11 @@ void STA_POKE_UpdateItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork 
     STA_EFF_DeleteEmitter( itemUseWork->effWork , 0 );
     STA_EFF_DeleteEffect( effSys , itemUseWork->effWork );
     pokeWork->updateItemUseFunc = NULL;
+    work->useItemSeCnt--;
+    if( work->useItemSeCnt == 0 )
+    {
+      PMSND_StopSE_byPlayerID(SEPLAYER_SE2);
+    }
   }
   
 }
@@ -838,6 +852,11 @@ void STA_POKE_UpdateItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork
     MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
                     pokeWork->itemWork[itemUseWork->equipPos] , FALSE );
     pokeWork->updateItemUseFunc = NULL;
+    work->useItemSeCnt--;
+    if( work->useItemSeCnt == 0 )
+    {
+      PMSND_StopSE_byPlayerID(SEPLAYER_SE2);
+    }
   }
 }
 
@@ -907,6 +926,11 @@ void STA_POKE_UpdateItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork 
     MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
                     pokeWork->itemWork[itemUseWork->equipPos] , FALSE );
     pokeWork->updateItemUseFunc = NULL;
+    work->useItemSeCnt--;
+    if( work->useItemSeCnt == 0 )
+    {
+      PMSND_StopSE_byPlayerID(SEPLAYER_SE2);
+    }
   }
 }
 
@@ -925,6 +949,11 @@ void STA_POKE_UpdateItemUse_Use( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
   if( itemUseWork->cnt >= STA_POKE_ITEMUSE_TIME )
   {
     pokeWork->updateItemUseFunc = NULL;
+    work->useItemSeCnt--;
+    if( work->useItemSeCnt == 0 )
+    {
+      PMSND_StopSE_byPlayerID(SEPLAYER_SE2);
+    }
   }
   else
   {

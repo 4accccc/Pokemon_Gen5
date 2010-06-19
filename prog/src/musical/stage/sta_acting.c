@@ -1701,9 +1701,13 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
   //時間判定
   if( work->useItemCnt > 0 )
   {
-    work->useItemCnt--;
-    if( work->useItemCnt == 0 )
+    if( work->useItemCnt > work->delayVCnt )
     {
+      work->useItemCnt -= work->delayVCnt;
+    }
+    else
+    {
+      work->useItemCnt = 0;
       //単独アピールに成功！
       if( work->isUseItemSolo == TRUE )
       {
