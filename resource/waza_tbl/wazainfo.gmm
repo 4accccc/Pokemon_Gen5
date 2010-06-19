@@ -1921,11 +1921,11 @@
 
 	<row id="WAZAINFO_170">
 		<language name="JPN" width="216">あいての　うごきを　こころで　かんじて
-つぎの　こうげきが
-かならず　あたるように　する。</language>
+つぎの　こうげきが　かならず
+あいてに　あたるように　する。</language>
 		<language name="JPN_KANJI" width="216">相手の　動きを　心で　感じて
-次の　攻撃が
-必ず　当たるように　する。</language>
+次の　攻撃が　必ず
+相手に　当たるように　する。</language>
 	</row>
 
 	<row id="WAZAINFO_171">
@@ -4836,10 +4836,10 @@
 	</row>
 
 	<row id="WAZAINFO_494">
-		<language name="JPN" width="216">ふしぎな　リズムで　とびはねる。
+		<language name="JPN" width="216">ふしぎな　リズムで　おどる。
 うごきを　まねさせて　じぶんと　あいての
 とくせいを　おなじに　する。</language>
-		<language name="JPN_KANJI" width="216">不思議な　リズムで　飛びはねる。
+		<language name="JPN_KANJI" width="216">不思議な　リズムで　おどる。
 動きを　まねさせて　自分と　相手の
 特性を　同じに　する。</language>
 	</row>
