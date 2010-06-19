@@ -482,7 +482,7 @@ extern MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFB
 //=====================================
 #define FIELD_WFBC_EVENT_NPC_WIN_TARGET_INIT (10)
 #define FIELD_WFBC_EVENT_NPC_WIN_TARGET_ADD (10)
-#define FIELD_WFBC_EVENT_NPC_WIN_TARGET_MAX (1000)
+#define FIELD_WFBC_EVENT_NPC_WIN_TARGET_MAX (10000)
 
 //-------------------------------------
 ///	イベントワーク
