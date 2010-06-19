@@ -117,6 +117,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u16 effectNo );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
+static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza );
 static void wazaRobParam_Init( WAZA_ROB_PARAM* param );
 static void wazaRobParam_Add( WAZA_ROB_PARAM* param, u8 robberPokeID, u8 targetPokeID, BtlPokePos targetPos );
@@ -139,7 +140,6 @@ static BOOL scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
   BTL_POKESET* rec, WAZA_ROB_PARAM* robParam );
 static BOOL scEvent_CheckWazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
   BTL_POKESET* targetRec, u8* robberPokeID, u8* robTargetPokeID );
-static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID orgWazaID );
 static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, BtlPokePos targetPos );
 static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza );
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
@@ -2993,6 +2993,10 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       scEvent_GetWazaParam( wk, actWaza, attacker, wk->wazaParam );
       wk->wazaParam->fReqWaza = TRUE;
       wk->wazaParam->orgWazaID = orgWaza;
+      if( scproc_Fight_CheckReqWazaFail( wk, attacker, wk->wazaParam) ){
+        fPPDecrement = TRUE;
+        break;
+      }
     }
     else{
       *(wk->wazaParam) = *(wk->wazaParamOrg);
@@ -3097,6 +3101,50 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
   scproc_MagicCoat_Root( wk, actWaza );
 }
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   wazaParam
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
+{
+  WazaID waza = wazaParam->wazaID;
+  SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
+
+  do {
+
+    // かいふくふうじチェック
+    if( BPP_CheckSick(attacker, WAZASICK_KAIHUKUHUUJI)
+    &&  (WAZADATA_GetFlag(waza, WAZAFLAG_KaifukuHuuji))
+    ){
+      cause = SV_WAZAFAIL_KAIHUKUHUUJI;
+      break;
+    }
+
+    // じゅうりょくチェック
+    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU)
+    &&  (WAZADATA_GetFlag(waza, WAZAFLAG_Flying))
+    ){
+      cause = SV_WAZAFAIL_JURYOKU;
+      break;
+    }
+
+  }while (0);
+
+  if( cause != SV_WAZAFAIL_NULL )
+  {
+    scproc_WazaExecuteFailed( wk, attacker, waza, cause );
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * マジックコート処理ルート
@@ -3624,21 +3672,6 @@ static BOOL scEvent_CheckWazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
   BTL_EVENTVAR_Pop();
 
   return (*robberPokeID) != BTL_POKEID_NULL;
-}
-
-// 他ワザ呼び出しするワザで、かつ失敗する場合のみTRUE
-static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID orgWazaID )
-{
-  BOOL failFlag = FALSE;
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, orgWazaID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, failFlag );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_REQWAZA_CHECKFAIL );
-    failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
-  BTL_EVENTVAR_Pop();
-
-  return failFlag;
 }
 // 他ワザ呼び出しするワザのエフェクトを発動
 static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, BtlPokePos targetPos )
