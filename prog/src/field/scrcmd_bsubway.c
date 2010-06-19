@@ -1116,9 +1116,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //戦闘結果取得
   case BSWSUB_GET_BATTLE_RESULT:
-#ifdef DEBUG_BSW_FORCE_BTL_WIN
-    *ret_wk = BSW_BTL_RESULT_WIN;
-#else
     if( bsw_scr->btl_setup_param == NULL ){
       GF_ASSERT( 0 );
       *ret_wk = BSW_BTL_RESULT_LOSE;
@@ -1147,7 +1144,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         *ret_wk = BSW_BTL_RESULT_LOSE;
       }
     }
-#endif
     break;
   //ホームに着いた際に行うワークセット
   case BSWSUB_SET_HOME_WORK:
