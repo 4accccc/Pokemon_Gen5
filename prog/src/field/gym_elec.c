@@ -1009,7 +1009,6 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
 #endif  //PM_DEBUG
 #endif  
 
-#if 1
 #ifdef PM_DEBUG
   if (dbg_frame_slow){
     dbg_count++;
@@ -1031,11 +1030,10 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
     //アニメーション再生
     FLD_EXP_OBJ_PlayAnime( ptr );
   }
-#endif //PM_DEBUG
 #else
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
-#endif
+#endif //PM_DEBUG
 
   //アニメフレームをセーブデータに保存
   for (i=0;i<CAPSULE_NUM_MAX;i++){
