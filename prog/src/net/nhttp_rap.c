@@ -243,7 +243,6 @@ NHTTPError NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork)
                 error,
                 DWC_ETYPE_SHOW_ERROR,
                 error,             ERRORCODE_NHTTP );
-      GFL_NET_StateSetError(error);
       NAGI_Printf( "NHTTP_RAP_StartConnect Error %d\n", error );
       return error;
     }
@@ -356,7 +355,6 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
                 error,
                 DWC_ETYPE_SHOW_ERROR,
                 error,             ERRORCODE_NHTTP );
-      GFL_NET_StateSetError(error);
       NAGI_Printf( "NHTTP Error %d\n", error );
     }
 
