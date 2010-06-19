@@ -450,8 +450,8 @@ void NetErr_DispCallFatal(void)
 
   //無限ループ
   do{
-    OS_Halt();
-  }while(1);  //一応
+    MachineSystem_Main(); //ハードリセット用
+  }while(1);
 	
 	//エラー画面終了
 	Local_ErrDispExit(FALSE);
@@ -708,8 +708,8 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
   	Local_ErrDispInit(fatal_error);
     //無限ループ
     do{
-      OS_Halt();
-    }while(1);  //一応
+      MachineSystem_Main(); //ハードリセット用
+    }while(1);
 	}
   
 	if(nes->status == NET_ERR_STATUS_REQ){

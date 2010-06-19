@@ -21,6 +21,7 @@
 #include "message.naix"
 
 #include "system/save_error_warning.h"
+#include "system/machine_use.h"
 
 
 //==============================================================================
@@ -119,9 +120,10 @@ static void Local_WarningDispMain(u32 msg_id)
   }
   
   //無限ループ
+  GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);  //ハードリセットが効くようにフラグを落とす
   do{
-    OS_Halt();
-  }while(1);  //一応
+    MachineSystem_Main(); //ハードリセット用
+  }while(1);
 }
 
 //--------------------------------------------------------------
