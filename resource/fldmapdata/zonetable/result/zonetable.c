@@ -11077,7 +11077,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		camera_area_dummy, // camera_area
+		MATRIX_ID_DUN1402, // camera_area
 		0, // padding
 		5,
 		0,
@@ -11410,14 +11410,14 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_DUNGEON,  // map_chg_type
-		5,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN1503, // camera_area
+		camera_area_dummy, // camera_area
 		0, // padding
 		5,
 		0,
@@ -11723,7 +11723,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_H01, // camera_area
+		camera_area_dummy, // camera_area
 		0, // padding
 		5,
 		0,
