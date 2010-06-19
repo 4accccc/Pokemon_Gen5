@@ -103,14 +103,34 @@ EVENT_START   ev_bc10r0401_boss
 	DEFINE_LOCAL LWK_BATTLECOUNT
 	_WFBC_GET_DATA( WFBC_GET_PARAM_BC_NPC_WIN_NUM, LWK_BATTLECOUNT )
 	
+	//初回話しかけかチェック
+	IF FLAG_OFF( FE_BC10R0401_BOSS ) THEN
+	
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_01 , BC10R0401_BOSS )
+		
+		//==================================//
+		
+		//初回話しかけ完了
+		_FLAG_SET ( FE_BC10R0401_BOSS )
+		
+		//==================================//
+	ENDIF
+	
 	//10000人超えていたら
 	IF $LWK_BATTLECOUNT >= 10000 THEN
 		
 		IF FLAG_OFF( FE_BC10R0401_BTL_END ) THEN
 			
+			//目標数取得
+			DEFINE_LOCAL LWK_BATTLETARGET02
+			_WFBC_GET_DATA(  WFBC_GET_PARAM_BC_NPC_WIN_TARGET, LWK_BATTLETARGET02 )
+			//目標人数を格納
+			_NUMBER( 0 , LWK_BATTLETARGET02 , 5 )
+			//街には活きがいいのがそろってる
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_02 , BC10R0401_BOSS )
+			
 			//セリフ内に勝利数を格納
 			_NUMBER( 0 , LWK_BATTLECOUNT , 5 )
-			
 			//（勝利数）人倒したのか
 			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_04 , BC10R0401_BOSS )
 			_BALLOONWIN_CLOSE()
@@ -152,21 +172,6 @@ EVENT_START   ev_bc10r0401_boss
 		ENDIF
 		
 	ELSE
-		
-		//初回話しかけかチェック
-		IF FLAG_OFF( FE_BC10R0401_BOSS ) THEN
-		
-			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_01 , BC10R0401_BOSS )
-			
-			//==================================//
-			
-			//初回話しかけ完了
-			_FLAG_SET ( FE_BC10R0401_BOSS )
-			
-			//==================================//
-		ELSE
-		
-		ENDIF
 		
 		//勝利数取得
 		DEFINE_LOCAL LWK_BATTLEWIN
