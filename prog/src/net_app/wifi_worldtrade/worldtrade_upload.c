@@ -691,13 +691,13 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
 { 
   BOOL ret;
   
-  POKEMON_PASO_PARAM  *pp = PPPPointerGet( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
+  POKEMON_PARAM  *pp = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
 
   wk->nhttp = NHTTP_RAP_Init( HEAPID_WORLDTRADE, MyStatus_GetProfileID( wk->param->mystatus ), &wk->svl );
-  NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, POKETOOL_GetPPPWorkSize(), NHTTP_POKECHK_GTS);
+  NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, POKETOOL_GetWorkSize(), NHTTP_POKECHK_GTS);
 
-  OS_TPrintf( "PPPサイズ %d\n", POKETOOL_GetPPPWorkSize() );
-  NHTTP_RAP_PokemonEvilCheckAdd( wk->nhttp, pp, POKETOOL_GetPPPWorkSize() );
+  OS_TPrintf( "PPサイズ %d\n", POKETOOL_GetWorkSize() );
+  NHTTP_RAP_PokemonEvilCheckAdd( wk->nhttp, pp, POKETOOL_GetWorkSize() );
 
   ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( wk->nhttp );
   GF_ASSERT( ret );
