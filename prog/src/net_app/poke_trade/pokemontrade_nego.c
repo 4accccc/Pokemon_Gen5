@@ -1107,13 +1107,22 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
 // ポケモンのステータス表示待ち
 static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
 {
-  BOOL bReturn=FALSE;
   int tpno;
   
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
 
   if( WIPE_SYS_EndCheck() == FALSE ) return;    //20100603 add saito
 
+  TOUCHBAR_Main(pWork->pTouchWork);
+  switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
+  case TOUCHBAR_ICON_RETURN:
+    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork, _pokemonStatusWaitNw);
+    return;
+  }
+
+  
   tpno = GFL_UI_TP_HitTrg(_tp_data);
   if(-1!=tpno){   //タッチ処理
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
@@ -1139,22 +1148,7 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
   }
 
-  TOUCHBAR_Main(pWork->pTouchWork);
-  switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
-  case TOUCHBAR_ICON_RETURN:
-    bReturn=TRUE;
-    break;
-  default:
-    break;
-  }
 
-  if(bReturn){
-    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    _CHANGE_STATE(pWork, _pokemonStatusWaitNw);
-
-
-  }
 }
 
 
@@ -1170,9 +1164,10 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
       POKETRADE_2D_GTSPokemonIconChangePosUp( pWork,(trgno/GTS_NEGO_POKESLT_MAX), trgno%GTS_NEGO_POKESLT_MAX);
     }
     _select6PokeSubMask(pWork);
-    OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
     WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+    TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
     _CHANGE_STATE(pWork, _pokemonStatusWaitN);  //選択にループ
   }
 }
@@ -1194,6 +1189,7 @@ static void _menuMyPokemon(POKEMON_TRADE_WORK* pWork)
     case 1:  //つよさをみる
       WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                       WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+      TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
       _CHANGE_STATE(pWork, _pokemonStatusStart);
       break;
     case 2:  //もどる
