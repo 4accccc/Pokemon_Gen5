@@ -94,7 +94,7 @@ BTLV_CAMERA_WORK	*BTLV_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 										 FX_F32_TO_FX32( 1.35f ),
 										 NULL,
 										 FX32_ONE,
-										 FX32_ONE * 128,  //FX32_ONE * 512,
+										 FX32_ONE * 112,  //FX32_ONE * 512,
 										 NULL,
 										 &cam_pos,
 										 &cam_up,

@@ -49,6 +49,8 @@
 #define BTLV_MCSS_EVY_WAIT ( 24 )
 #define BTLV_MCSS_EVY_MAX  ( 12 )
 
+#define BTLV_MCSS_DEFAULT_Z ( 0x64 )    //“§Ž‹ŽË‰e‚ÅƒLƒŒƒC‚É‚Ý‚¦‚éZOFFSET’l
+
 enum{
   REVERSE_FLAG_OFF = 0,
   REVERSE_FLAG_ON,
@@ -377,7 +379,7 @@ BTLV_MCSS_WORK  *BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapI
   bmw->tcb_sys  = tcb_sys;
   bmw->heapID   = heapID;
 
-  MCSS_SetPerspectiveZOffset( bmw->mcss_sys, MCSS_DEFAULT_Z_PERSP );
+  MCSS_SetPerspectiveZOffset( bmw->mcss_sys, BTLV_MCSS_DEFAULT_Z );
   MCSS_SetOrthoFarFlag( bmw->mcss_sys, TRUE );
 
   bmw->proj = BTLV_MCSS_PROJ_ORTHO;
