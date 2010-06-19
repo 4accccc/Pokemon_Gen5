@@ -7725,6 +7725,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   }
 
   if(GFL_NET_IsInit()){
+    CommCommandWFP2PMF_MatchStartInitialize(wk);
     GFL_NET_ReloadIconTopOrBottom(TRUE, HEAPID_WIFIP2PMATCH);
   }
 
