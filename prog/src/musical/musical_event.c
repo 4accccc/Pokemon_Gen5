@@ -1343,10 +1343,10 @@ const u8 MUSICAL_EVENT_GetPoint( MUSICAL_EVENT_WORK *evWork , const u8 idx )
   }
 }
 
-const u8 MUSICAL_EVENT_GetMaxPoint( MUSICAL_EVENT_WORK *evWork )
+const u16 MUSICAL_EVENT_GetMaxPoint( MUSICAL_EVENT_WORK *evWork )
 {
   u8 i;
-  u8 maxPoint = 0;
+  u16 maxPoint = 0;
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     const MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
@@ -1358,10 +1358,10 @@ const u8 MUSICAL_EVENT_GetMaxPoint( MUSICAL_EVENT_WORK *evWork )
   return maxPoint;
 }
 
-const u8 MUSICAL_EVENT_GetMinPoint( MUSICAL_EVENT_WORK *evWork )
+const u16 MUSICAL_EVENT_GetMinPoint( MUSICAL_EVENT_WORK *evWork )
 {
   u8 i;
-  u8 minPoint = 0xFF;
+  u16 minPoint = 0xFF;
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     const MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];

@@ -1144,32 +1144,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     //GFL_BG_SetScroll( ACT_FRAME_MAIN_MASK , GFL_BG_SCROLL_X_SET , work->scrollOffset );
     */
   }
-  
-#if DEB_ARI
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
-  {
-    if( work->makuOffset + spd < ACT_CURTAIN_SCROLL_MAX )
-    {
-      work->makuOffset += spd;
-    }
-    else
-    {
-      work->makuOffset = ACT_CURTAIN_SCROLL_MAX;
-    }
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
-  {
-    if( work->makuOffset - spd > 0 )
-    {
-      work->makuOffset -= spd;
-    }
-    else
-    {
-      work->makuOffset = 0;
-    }
-    
-  }
-#endif
+
   if( work->makuOffset == ACT_CURTAIN_SCROLL_MAX )
   {
     work->scrollLockFirst = FALSE;
