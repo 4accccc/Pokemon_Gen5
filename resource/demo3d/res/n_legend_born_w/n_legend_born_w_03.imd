@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-06-17T16:42:15" source="n_legend_born_w_reduced.mb"/>
+	<create user="james_turner" host="W00212" date="2010-06-19T16:20:45" source="n_legend_born_w_reduced02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-06-17T16:42:15" source="n_legend_born_w_reduced.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-06-19T16:20:45" source="n_legend_born_w_reduced02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -5021,10 +5021,10 @@
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="7" name="fx_spkb.1_pl" color_size="8">
-		7fbe 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7f5b 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="8" name="fx_spkb.2_pl" color_size="8">
-		7fbe 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7f5b 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="9" name="fx_wav_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
@@ -5111,7 +5111,7 @@
 	<material index="3" name="fx_flare2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="22"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -11825,7 +11825,7 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="0.774414 0.774414 0.774414"
-		rotate="0.000000 145.439941 0.000000"
+		rotate="0.000000 145.415283 0.000000"
 		translate="2.173340 169.990479 100.032227"
 		visibility="on"
 		display_size="2"
@@ -11846,7 +11846,7 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="0.649658 0.946533 0.649658"
-		rotate="0.000000 145.439941 0.000000"
+		rotate="0.000000 145.422363 0.000000"
 		translate="2.173340 167.556396 100.032227"
 		visibility="on"
 		display_size="2"
