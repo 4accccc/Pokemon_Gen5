@@ -2531,6 +2531,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
   bpp->tokusei = bpp->coreParam.defaultTokusei;
 
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, bpp->formNo );
+  PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
 }
 //=============================================================================================
 /**
