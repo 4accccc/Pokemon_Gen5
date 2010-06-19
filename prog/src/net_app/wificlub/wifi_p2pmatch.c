@@ -949,7 +949,6 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   WifiP2PMatch_ReConnectingWait, //WIFIP2PMATCH_RECONECTING_WAIT
   WifiP2PMatch_BCancelYesNoVCT, //WIFIP2PMATCH_MODE_BCANCEL_YESNO_VCT
   WifiP2PMatch_BCancelWaitVCT,    //WIFIP2PMATCH_MODE_BCANCEL_WAIT_VCT
-  _parentRestart,  //WIFIP2PMATCH_PARENT_RESTART
   WifiP2PMatch_FirstSaving, //WIFIP2PMATCH_FIRST_SAVING
   WifiP2PMatch_CancelEnableWait, //WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT
   WifiP2PMatch_FirstSaving2, //WIFIP2PMATCH_FIRST_SAVING2
@@ -4769,60 +4768,6 @@ static int ReturnList( WIFIP2PMATCH_WORK *wk, int seq )
 
 //------------------------------------------------------------------
 /**
- * $brief   ゲームの内容が決まったので、親として再初期化  WIFIP2PMATCH_PARENT_RESTART
- * @param   wk
- * @retval  none
- */
-//------------------------------------------------------------------
-static int _parentRestart( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  u32 ret;
-
-  // エラーチェック
-  if( GFL_NET_StateIsWifiError() ){
-    _errorDisp(wk);
-    return seq;
-  }
-
-  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
-  if( 0 !=  _checkParentNewPlayer(wk)){ // 接続してきた
-
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-  }
-  if(GFL_NET_StateIsWifiLoginMatchState()){
-    GFL_NET_SetAutoErrorCheck(FALSE);
-    GFL_NET_SetNoChildErrorCheck(TRUE);
-
-    GFL_NET_SetWifiBothNet(FALSE);
-    //        WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
-    //                      COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
-    //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-    //                              0,16,COMM_BRIGHTNESS_SYNC);
-
-    wk->bRetryBattle = FALSE;
-
-    //        CommInfoInitialize( wk->pSaveData, NULL );   //@@OO
-    CommCommandWFP2PMF_MatchStartInitialize(wk);
-
-    // 自分を教える
-    //        CommInfoSendPokeData();  //@@OO
-
-    // 自分はエントリー
-    //        CommInfoSetEntry( GFL_NET_SystemGetCurrentID() );    //@@OO
-    seq = SEQ_OUT;            //終了シーケンスへ
-  }
-  return seq;
-
-}
-
-
-
-
-
-//------------------------------------------------------------------
-/**
  * $brief   待機状態になる為の選択メニュー WIFIP2PMATCH_MODE_SUBBATTLE_WAIT
  * @param   wk
  * @retval  none
@@ -7890,7 +7835,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   if( !WIPE_SYS_EndCheck() ){
     return GFL_PROC_RES_CONTINUE;
   }
-
+  if(GFL_NET_IsInit()){
+    CommCommandWFP2PMF_MatchStartFinalize(wk);
+  }
   pParentWork->bTalk =  wk->state;
 
   if(wk->pRegulation){

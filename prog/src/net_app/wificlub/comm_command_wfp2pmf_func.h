@@ -34,6 +34,7 @@
 // 通信初期化関数
 //extern void CommCommandWFP2PMFInitialize( WFP2P_WK* p_wk );
 extern void CommCommandWFP2PMF_MatchStartInitialize( WIFIP2PMATCH_WORK *wk );
+extern void CommCommandWFP2PMF_MatchStartFinalize( WIFIP2PMATCH_WORK *wk );
 //extern void CommCommandWFP2PMF_MatchStartInitialize( void );	// wifi_p2pmatch.c内でコマンドを設定するときの関数
 
 // 共通サイズ取得関数

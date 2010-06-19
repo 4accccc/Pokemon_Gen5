@@ -98,6 +98,18 @@ int CommWFP2PMFGetZeroSize( void )
 	return 0;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信コマンド解除	
+ */
+//-----------------------------------------------------------------------------
+void CommCommandWFP2PMF_MatchStartFinalize( WIFIP2PMATCH_WORK *wk )
+{
+	GFL_NET_DelCommandTable(GFL_NET_CMD_WIFICLUB);
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	結果データサイズ
