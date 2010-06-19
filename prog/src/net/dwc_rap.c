@@ -218,8 +218,6 @@ static void mydwc_allocRecvBuff(int i);
 static void mydwc_updateFriendInfo( void );
 static void _DWC_StartVChat(int heapID);
 
-static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
-static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
 static void _FuncNonSave(void);
 static void _sendAckMain(void);
 static int _SendToAck(void *data, int size);
@@ -388,8 +386,6 @@ int GFL_NET_DWC_connect()
     // 初期状態
     {
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-      // メモリ確保関数設定
-      //DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
       // ネット接続初期化
       DWC_InitInetEx(&_dWork->stConnCtrl, GFL_DMA_NET_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
 
@@ -475,7 +471,8 @@ int GFL_NET_DWC_connect()
          // 呼んでもいい状態（ログインが完了していない状態）で呼んだ時のみ
          // FALSEが返ってくるので、普通はTRUE
          MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
-         GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+//         GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+         GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );  //エラーになる
        }
        else{
          // GameSpyサーバ上バディ成立コールバックを登録する
@@ -954,9 +951,6 @@ int GFL_NET_DWC_sendToServer(void *data, int size)
     // 自分自身のサーバ受信コールバックを呼び出す。
     if( _dWork->serverCallback != NULL ) _dWork->serverCallback(0, data, size);
 
-    // コールバックを呼び出したらすぐに開放。
-    //		mydwc_FreeFunc( NULL, buf, size );
-
     return 1;
   }
   else
@@ -1044,8 +1038,6 @@ int GFL_NET_DWC_sendToClient(void *data, int size)
     // 自分自身のサーバ受信コールバックを呼び出す。
     if( _dWork->clientCallback != NULL ) _dWork->clientCallback(0, data, size);
 
-    // コールバックを呼び出したらすぐに開放。
-    //		mydwc_FreeFunc( NULL, buf, size );
   }
 
   return 1;
@@ -1523,7 +1515,7 @@ static void ConnectionClosedCallback(DWCError error,
                 cp_error->errorRet, 
                 ERRORCODE_DISCONNECT );
           }
-          GFL_NET_StateSetError(0);
+//          GFL_NET_StateSetError(0);
           MYDWC_DEBUGPRINT("bAutoDisconnectErr\n");
         }
         _CHANGE_STATE(MDSTATE_DISCONNECTTING);
@@ -1557,53 +1549,6 @@ static void ConnectionClosedCallback(DWCError error,
   {
     _dWork->disconnectCallback(aid, _dWork->pDisconnectWork);
   }
-}
-
-/*---------------------------------------------------------------------------*
-  メモリ確保関数
- *---------------------------------------------------------------------------*/
-#if 0
-void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
-{
-#pragma unused( name )
-  void * ptr;
-  OSIntrMode old;
-  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-
-#ifdef DEBUGPRINT_ON
-  NET_PRINT("HEAP取得(%d, %d) \n", size, align);
-#endif
-
-  GF_ASSERT(align <= 32);  // これをこえたら再対応
-  old = OS_DisableInterrupts();
-  ptr = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, size);
-  OS_RestoreInterrupts( old );
-
-  if(ptr == NULL){
-    GF_ASSERT(ptr);
-    // ヒープが無い場合の修正
-    GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
-    return NULL;
-  }
-  return ptr;
-}
-#endif
-
-/*---------------------------------------------------------------------------*
-  メモリ開放関数
- *---------------------------------------------------------------------------*/
-void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
-{
-#pragma unused( name, size )
-  OSIntrMode old;
-  u16 groupid;
-
-  if ( !ptr ){
-    return;  //NULL開放を認める
-  }
-  old = OS_DisableInterrupts();
-  GFL_NET_Align32Free(ptr);
-  OS_RestoreInterrupts( old );
 }
 
 //==============================================================================

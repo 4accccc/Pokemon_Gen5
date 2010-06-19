@@ -659,14 +659,6 @@ void GFL_NET_IRC_Move(void)
   }
 
   if(nis->retry_time == 0){
-#if 0
-    if(GFL_NET_IRC_IsConnect() == FALSE){
-      IRC_Shutdown();
-      //	GFL_NET_ErrorFunc(1);
-      GFL_NET_StateSetError(1);
-      IRC_PRINT("エラーセット\n");
-    }
-#endif
     IRC_Move();
   }
 
