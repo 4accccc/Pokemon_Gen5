@@ -368,15 +368,17 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
 {
   MMDL_UpdateCurrentMapAttr( mmdl );
   
-  if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-    ATTRDATA data;
-    mmdl_InitAttrData( mmdl, &data );
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) == 0 ){
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      ATTRDATA data;
+      mmdl_InitAttrData( mmdl, &data );
     
-    MMdl_MapAttrGrassProc_0( mmdl, &data );
-    MMdl_MapAttrSplashProc_0( mmdl, &data );
-    MMdl_MapAttrShadowProc_01( mmdl, &data );
-    MMdl_MapAttrHeight_02( mmdl, &data );
-    MMdl_MapAttrReflect_01( mmdl, &data );
+      MMdl_MapAttrGrassProc_0( mmdl, &data );
+      MMdl_MapAttrSplashProc_0( mmdl, &data );
+      MMdl_MapAttrShadowProc_01( mmdl, &data );
+      MMdl_MapAttrHeight_02( mmdl, &data );
+      MMdl_MapAttrReflect_01( mmdl, &data );
+    }
   }
 }
 
@@ -391,18 +393,20 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
 {
   MMDL_UpdateCurrentMapAttr( mmdl );
   
-  if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-    ATTRDATA data;
-    mmdl_InitAttrData( mmdl, &data );
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) == 0 ){
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      ATTRDATA data;
+      mmdl_InitAttrData( mmdl, &data );
     
-    MMdl_MapAttrGrassProc_1( mmdl, &data );
-    MMdl_MapAttrFootMarkProc_1( mmdl, &data );
-    MMdl_MapAttrSplashProc_12( mmdl, &data );
-    MMdl_MapAttrShadowProc_01( mmdl, &data );
-    MMdl_MapAttrPoolProc_1( mmdl, &data );
-    MMdl_MapAttrReflect_01( mmdl, &data );
+      MMdl_MapAttrGrassProc_1( mmdl, &data );
+      MMdl_MapAttrFootMarkProc_1( mmdl, &data );
+      MMdl_MapAttrSplashProc_12( mmdl, &data );
+      MMdl_MapAttrShadowProc_01( mmdl, &data );
+      MMdl_MapAttrPoolProc_1( mmdl, &data );
+      MMdl_MapAttrReflect_01( mmdl, &data );
     
-    MMdl_MapAttrSEProc_1( mmdl, &data ); //描画関係ない?
+      MMdl_MapAttrSEProc_1( mmdl, &data ); //描画関係ない?
+    }
   }
 }
 
@@ -417,15 +421,17 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
 {
   MMDL_UpdateCurrentMapAttr( mmdl );
   
-  if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-    ATTRDATA data;
-    mmdl_InitAttrData( mmdl, &data );
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) == 0 ){
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      ATTRDATA data;
+      mmdl_InitAttrData( mmdl, &data );
     
-    MMdl_MapAttrShadowProc_01( mmdl, &data );
-    MMdl_MapAttrReflect_01( mmdl, &data );
-    MMdl_MapAttrSplashProc_Jump1( mmdl, &data );
+      MMdl_MapAttrShadowProc_01( mmdl, &data );
+      MMdl_MapAttrReflect_01( mmdl, &data );
+      MMdl_MapAttrSplashProc_Jump1( mmdl, &data );
 
-    MMdl_MapAttrSEProc_1( mmdl, &data );//描画関係ない?
+      MMdl_MapAttrSEProc_1( mmdl, &data );//描画関係ない?
+    }
   }
 }
 
@@ -440,18 +446,20 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * mmdl )
 {
   MMDL_UpdateCurrentMapAttr( mmdl );
   
-  if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-    ATTRDATA data;
-    mmdl_InitAttrData( mmdl, &data );
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) == 0 ){
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      ATTRDATA data;
+      mmdl_InitAttrData( mmdl, &data );
     
-    //終了　アトリビュート処理
-    MMdl_MapAttrHeight_02( mmdl, &data );
-    MMdl_MapAttrGrassProc_2( mmdl, &data );
-    MMdl_MapAttrPoolProc_2( mmdl, &data );
-    MMdl_MapAttrSplashProc_12( mmdl, &data );
-    MMdl_MapAttrReflect_2( mmdl, &data );
-    MMdl_MapAttrShadowProc_2( mmdl, &data );
-    MMdl_MapAttrBiriBiri_2( mmdl, &data );
+      //終了　アトリビュート処理
+      MMdl_MapAttrHeight_02( mmdl, &data );
+      MMdl_MapAttrGrassProc_2( mmdl, &data );
+      MMdl_MapAttrPoolProc_2( mmdl, &data );
+      MMdl_MapAttrSplashProc_12( mmdl, &data );
+      MMdl_MapAttrReflect_2( mmdl, &data );
+      MMdl_MapAttrShadowProc_2( mmdl, &data );
+      MMdl_MapAttrBiriBiri_2( mmdl, &data );
+    }
   }
 }
 
@@ -466,19 +474,21 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * mmdl )
 {
   MMDL_UpdateCurrentMapAttr( mmdl );
   
-  if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-    ATTRDATA data;
-    mmdl_InitAttrData( mmdl, &data );
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ATTR_GET_ERROR) == 0 ){
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      ATTRDATA data;
+      mmdl_InitAttrData( mmdl, &data );
     
-    //終了　アトリビュート処理
-    MMdl_MapAttrHeight_02( mmdl, &data );
-    MMdl_MapAttrPoolProc_2( mmdl, &data );
-    MMdl_MapAttrSplashProc_12( mmdl, &data );
-    MMdl_MapAttrReflect_2( mmdl, &data );
-    MMdl_MapAttrShadowProc_2( mmdl, &data );
-    MMdl_MapAttrGrassProc_Jump2( mmdl, &data );
-    MMdl_MapAttrGroundSmokeProc_2( mmdl, &data );
-    MMdl_MapAttrBiriBiri_2( mmdl, &data );
+      //終了　アトリビュート処理
+      MMdl_MapAttrHeight_02( mmdl, &data );
+      MMdl_MapAttrPoolProc_2( mmdl, &data );
+      MMdl_MapAttrSplashProc_12( mmdl, &data );
+      MMdl_MapAttrReflect_2( mmdl, &data );
+      MMdl_MapAttrShadowProc_2( mmdl, &data );
+      MMdl_MapAttrGrassProc_Jump2( mmdl, &data );
+      MMdl_MapAttrGroundSmokeProc_2( mmdl, &data );
+      MMdl_MapAttrBiriBiri_2( mmdl, &data );
+    }
   }
 }
 
@@ -973,7 +983,9 @@ static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrGroundSmokeProc_2( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_now & MAPATTR_FLAGBIT_WATER) == 0 ){
-    FLDEFF_KEMURI_SetMMdl( mmdl, data->fectrl );
+    if( MMDL_CheckMoveBitNonCreateMoveEffect(mmdl) == FALSE ){
+      FLDEFF_KEMURI_SetMMdl( mmdl, data->fectrl );
+    }
   }
 }
 

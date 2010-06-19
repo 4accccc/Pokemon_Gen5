@@ -3708,6 +3708,45 @@ void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag )
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * MMDL 移動エフェクトを出さない
+ * @param mmdl MMDL*
+ * @param flag TRUE=出さない FALSE=出す
+ * @retval nothing
+ * 
+ * 社内BTS1625対処の為の追加処理。
+ * 他の影響を考え、現状は土煙エフェクトのみが対象
+ */
+//--------------------------------------------------------------
+void MMDL_SetMoveBitNonCreateMoveEffect( MMDL *mmdl, BOOL flag )
+{
+  if( flag == TRUE ){
+    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NON_CREATE_MOVE_EFFECT );
+  }else{
+    MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_NON_CREATE_MOVE_EFFECT );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL 移動エフェクトを出さない　チェック
+ * @param mmdl MMDL*
+ * @retval BNOOL TRUE=出さない FALSE=出す
+ * 
+ * 社内BTS1625対処の為の追加処理。
+ * 他の影響を考え、現状は土煙エフェクトのみが対象
+ */
+//--------------------------------------------------------------
+BOOL MMDL_CheckMoveBitNonCreateMoveEffect( const MMDL *mmdl )
+{
+  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_NON_CREATE_MOVE_EFFECT) ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
 //======================================================================
 //  MMDLSYS ツール
 //======================================================================

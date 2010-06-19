@@ -239,6 +239,7 @@ typedef enum
 	MMDL_MOVEBIT_EFFSET_SHOAL=(1<<18),///<浅瀬エフェクトをセット
   MMDL_MOVEBIT_REJECT_PAUSE_MOVE=(1<<19),///<動作ポーズを拒否する
   MMDL_MOVEBIT_NOT_SAVE=(1<<20),///<セーブ対象ではない
+  MMDL_MOVEBIT_NON_CREATE_MOVE_EFFECT=(1<<21),///<移動エフェクトを生成しない
 }MMDL_MOVEBIT;
 
 //--------------------------------------------------------------
@@ -974,10 +975,11 @@ extern BOOL MMDL_CheckMoveBitRejectPauseMove( const MMDL *mmdl );
 extern void MMDL_SetStatusBitHeightExpand( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl );
 #endif
-
 extern void MMDL_SetStatusBitAttrGetOFF( MMDL * mmdl, BOOL flag );
 extern int MMDL_CheckStatusBitAttrGetOFF( const MMDL * mmdl );
 extern void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag );
+extern void MMDL_SetMoveBitNonCreateMoveEffect( MMDL *mmdl, BOOL flag );
+extern BOOL MMDL_CheckMoveBitNonCreateMoveEffect( const MMDL *mmdl );
 
 extern BOOL MMDLSYS_SearchUseMMdl(
 	const MMDLSYS *fos, MMDL **mmdl, u32 *no );

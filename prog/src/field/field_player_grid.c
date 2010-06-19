@@ -159,7 +159,8 @@ struct _TAG_FIELD_PLAYER_GRID
   FIELDMAP_WORK *fieldWork;
   
   u16 oze_yure_frame;
-  u16 oze_anime_reset_flag;
+  u8 oze_anime_reset_flag;
+  u8 oze_jump_frame;
   
   u16 dash_play_se;
   u16 dash_play_se_count;
@@ -1269,6 +1270,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_FallOut(
     //ステータスを元に戻す
     //OBJコードも元に戻す必要アリ
     MMDL_SetStatusBitHeightGetOFF( mmdl, FALSE ); //高さ取得開始
+    MMDL_SetMoveBitNonCreateMoveEffect( mmdl, FALSE ); //移動エフェクトOFF解除
 	  MMDL_OnMoveBit( mmdl, //ジャンプ動作終了をセット
         MMDL_MOVEBIT_MOVE_END|MMDL_MOVEBIT_JUMP_END );
     MMDL_UpdateCurrentHeight( mmdl );
@@ -2132,7 +2134,7 @@ static void gjikiOze_SetMove_FallOutJumpStart(
 {
   u16 code;
   u16 dir = input->dir;
-
+  
   if( dir == DIR_NOT ){ //揺れ限界により落ちる
     dir = oze_CheckAttrOzeFallOut( gjiki );
   }
@@ -2140,8 +2142,9 @@ static void gjikiOze_SetMove_FallOutJumpStart(
   code = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_1G_8F );
   MMDL_SetAcmd( mmdl, code );
   MMDL_SetStatusBitHeightGetOFF( mmdl, TRUE ); //高さ取得を禁止に
+  MMDL_SetMoveBitNonCreateMoveEffect( mmdl, TRUE ); //移動エフェクトOFF
   MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
-
+  
   gjiki->move_action = JIKI_ACTION_OZE_FALLOUT_JUMP;
 }
 
@@ -2189,9 +2192,8 @@ static void gjikiOze_SetMove_FallOut(
     if( pos.y < height ){
       pos.y = height;
       MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
-      MMDL_SetStatusBitHeightGetOFF( mmdl, FALSE ); //高さ取得禁止解除
     }
-  
+    
     MMDL_SetVectorPos( mmdl, &pos );
     gjiki->move_action = JIKI_ACTION_OZE_FALLOUT;
   }
