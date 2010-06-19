@@ -638,13 +638,13 @@ void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volume )
 	if(volumeTmp < 0){ volumeTmp = 0; }
 	if(volumeTmp > 127){ volumeTmp = 127; }
 	voicePlayer->volume = volumeTmp;
-	NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume);
+	NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, getVolume(voicePlayer->volume));
 
 	if( voicePlayer->subWaveUse == TRUE ){
 		volumeTmp = voicePlayer->volume + voicePlayer->volumeSubDiff;
 		if(volumeTmp < 0){ volumeTmp = 0; }
 		if(volumeTmp > 127){ volumeTmp = 127; }
-		NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, (s8)volumeTmp);
+		NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, getVolume(volumeTmp));
 	}
 }
 
