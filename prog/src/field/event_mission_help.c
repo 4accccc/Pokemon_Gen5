@@ -55,6 +55,7 @@ typedef struct
   COMMTALK_COMMON_EVENT_WORK ccew;
 	BOOL error;
 	BOOL recv_achieve;
+	MISSION_ACHIEVE achieve_answer;
 }EVENT_MISSION_HELP;
 
 
@@ -82,6 +83,8 @@ static const struct{
   
   u16 battle_m_to_t[TALK_TYPE_MAX];     ///<自分がミッション実行者で戦闘中のターゲットに話しかけた
   u16 recover_m_to_t[TALK_TYPE_MAX];    ///<自分がミッション実行者でターゲット回復後
+  
+  u16 help_ng[TALK_TYPE_MAX];           ///<手助けで先を越されていた
 }MissionHelpMsgID = {
   { //自分がミッション実行者でターゲットに話しかけた
     mis_m04_04_m1,
@@ -126,6 +129,13 @@ static const struct{
     mis_m04_02_m3,
     mis_m04_02_m4,
     mis_m04_02_m5,
+  },
+  { //手助けで先を越されていた
+    mis_nom_01_t1,
+    mis_nom_01_t2,
+    mis_nom_01_t3,
+    mis_nom_01_t4,
+    mis_nom_01_t5,
   },
 };
 
@@ -499,18 +509,19 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
-    SEQ_INIT,
-    SEQ_SEND_PLAYER_SUPPORT,
     SEQ_SEND_ACHIEVE,
-    SEQ_RECV_WAIT,      //通信はここまで。ここから下は通信不要
+    SEQ_RECV_WAIT,
+    SEQ_SEND_PLAYER_SUPPORT,  ////通信はここまで。ここから下は通信不要
+    SEQ_MSG_OK,
     SEQ_MSG_WAIT,
+    SEQ_NG_MSG,
     SEQ_LAST_MSG_WAIT,
     SEQ_MSG_END_BUTTON_WAIT,
     SEQ_END,
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL && (*seq) <= SEQ_RECV_WAIT){
+  if(intcomm == NULL && (*seq) <= SEQ_SEND_PLAYER_SUPPORT){
     if((*seq) < SEQ_LAST_MSG_WAIT){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
@@ -520,38 +531,57 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
   }
 
 	switch( *seq ){
-  case SEQ_INIT:
-    MISSIONDATA_Wordset(&talk->ccew.mdata.cdata, &talk->ccew.mdata.target_info, 
-      talk->ccew.iem.wordset, talk->ccew.heapID);
-    IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionHelpMsgID.battle_m_to_t[talk->ccew.disguise_talk_type]);
-    (*seq)++;
-    break;
-	case SEQ_SEND_PLAYER_SUPPORT:
-	  if(IntrudeSend_PlayerSupport(
-	      intcomm, talk->ccew.talk_netid, SUPPORT_TYPE_RECOVER_FULL) == TRUE){
-      (*seq)++;
-    }
-    break;
 	case SEQ_SEND_ACHIEVE:
     if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
       (*seq)++;
     }
     break;
   case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
-      talk->recv_achieve = TRUE;
+    talk->achieve_answer = MISSION_GetAchieveAnswer(intcomm, &intcomm->mission);
+    switch(talk->achieve_answer){
+    case MISSION_ACHIEVE_OK:
+      *seq = SEQ_SEND_PLAYER_SUPPORT;
+      break;
+    case MISSION_ACHIEVE_NG:
+      *seq = SEQ_NG_MSG;
+      break;
+    default:
+      break;
+    }
+    break;
+    
+	case SEQ_SEND_PLAYER_SUPPORT:
+	  if(IntrudeSend_PlayerSupport(
+	      intcomm, talk->ccew.talk_netid, SUPPORT_TYPE_RECOVER_FULL) == TRUE){
       (*seq)++;
     }
+    break;
+  case SEQ_MSG_OK:
+    talk->recv_achieve = TRUE;
+    MISSIONDATA_Wordset(&talk->ccew.mdata.cdata, &talk->ccew.mdata.target_info, 
+      talk->ccew.iem.wordset, talk->ccew.heapID);
+    IntrudeEventPrint_StartStream(&talk->ccew.iem, 
+      MissionHelpMsgID.battle_m_to_t[talk->ccew.disguise_talk_type]);
+    (*seq)++;
     break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
         MissionHelpMsgID.recover_m_to_t[talk->ccew.disguise_talk_type]);
       PMSND_PlaySE( SE_POWER_USE );
-      (*seq)++;
+      (*seq) = SEQ_LAST_MSG_WAIT;
     }
     break;
+  
+  case SEQ_NG_MSG:
+    talk->recv_achieve = TRUE;
+    MISSIONDATA_Wordset(&talk->ccew.mdata.cdata, &talk->ccew.mdata.target_info, 
+      talk->ccew.iem.wordset, talk->ccew.heapID);
+    IntrudeEventPrint_StartStream(&talk->ccew.iem, 
+      MissionHelpMsgID.help_ng[talk->ccew.disguise_talk_type]);
+    (*seq) = SEQ_LAST_MSG_WAIT;
+    break;
+    
   case SEQ_LAST_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       *seq = SEQ_MSG_END_BUTTON_WAIT;
@@ -566,9 +596,11 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
   	
-    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, talk->recv_achieve));
-  
-    return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
+  	if(talk->achieve_answer == MISSION_ACHIEVE_OK){
+      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, talk->recv_achieve));
+      return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
+    }
+    return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
 }
