@@ -184,9 +184,9 @@ MAKELCF_FLAGS	+=	-DADDRESS_MAIN=0x02000000
 
 
 # 個人テスト用定義
-#ifeq	($(PM_DEBUG),yes)
+ifeq	($(PM_DEBUG),yes)
 MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
-#endif
+endif
 
 # 最終的に出力されるファイル(lib/ARM9-xx/xxx/gflib.a)
 #TARGET_BIN		=	main.bin
