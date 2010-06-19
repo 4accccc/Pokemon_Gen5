@@ -5019,7 +5019,12 @@ static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
   if(GFL_NET_DWC_IsNewPlayer()!=-1){
     _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST);
   }
-
+  if(DWC_STATUS_OFFLINE == WifiDwc_getFriendStatus(wk->friendNo-1)){  //BTS6212
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_012, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+    return seq;
+  }
+  
   wk->timer++;
 
   if( (wk->timer % (15*60))==0 ){  //カウントアップ
@@ -5036,7 +5041,7 @@ static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
   return seq;
 }
 
-
+//WIFIP2PMATCH_MODE_CONNECTWAIT2
 static int _DirectConnectWait2( WIFIP2PMATCH_WORK *wk, int seq  )
 {
   int ret;
