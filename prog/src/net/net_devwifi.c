@@ -425,6 +425,11 @@ static int _DevGetError(void)  ///< ƒGƒ‰[‚ð“¾‚é
 
   ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
 
+  if( ret != 0 )
+  {
+    GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, 0 );
+  }
+
   if(ret == DWC_ERROR_NONE){
     return 0;
   }
