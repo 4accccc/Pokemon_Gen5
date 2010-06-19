@@ -222,8 +222,8 @@ void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, 
  */
 //============================================================================================
 static  const VecFx32 poke_pos_single_table[]={
-  { 0x00000800, 0x00000a00, 0x00007000 }, //POS_AA
-  { 0x000004cd, 0x00000a00, 0xffff6000 }, //POS_BB
+  { 0x00000800, 0x00000666, 0x00007000 }, //POS_AA
+  { 0x000004cd, 0x00000666, 0xffff6000 }, //POS_BB
 };
 
 static  const VecFx32 poke_pos_double_table[]={
@@ -231,29 +231,29 @@ static  const VecFx32 poke_pos_double_table[]={
   //{ 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B
   //{ 0x00002800, 0x00000666, 0x00007000 }, //POS_C
   //{ 0xffffdccd, 0x00000666, 0xffff4700 }, //POS_D
-  { 0xffffe500, 0x00000a00, 0x00006600 }, //POS_A
-  { 0x000026cd, 0x00000a00, 0xffff5a00 }, //POS_B
-  { 0x00002800, 0x00000a00, 0x00007a00 }, //POS_C
-  { 0xffffdccd, 0x00000a00, 0xffff4700 }, //POS_D
+  { 0xffffe500, 0x00000666, 0x00006600 }, //POS_A
+  { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B
+  { 0x00002800, 0x00000666, 0x00007a00 }, //POS_C
+  { 0xffffdccd, 0x00000666, 0xffff4700 }, //POS_D
 };
 
 static  const VecFx32 poke_pos_triple_table[]={
-  { 0xffffc000, 0x00000a00, 0x00007000 }, //POS_A
-  { 0x00004800, 0x00000a00, 0xffff4000 }, //POS_B
-  { 0x00000c00, 0x00000a00, 0x00004c00 }, //POS_C
-  { 0x00000bcd, 0x00000a00, 0xffff7000 }, //POS_D
-  { 0x00005300, 0x00000a00, 0x00006300 }, //POS_E
-  { 0xffffb9cd, 0x00000a00, 0xffff4000 }, //POS_F
+  { 0xffffc000, 0x00000666, 0x00007000 }, //POS_A
+  { 0x00004800, 0x00000666, 0xffff4000 }, //POS_B
+  { 0x00000c00, 0x00000666, 0x00004c00 }, //POS_C
+  { 0x00000bcd, 0x00000666, 0xffff7000 }, //POS_D
+  { 0x00005300, 0x00000666, 0x00006300 }, //POS_E
+  { 0xffffb9cd, 0x00000666, 0xffff4000 }, //POS_F
 };
 
 static  const VecFx32 poke_pos_rotate_table[]={
 #ifdef ROTATION_NEW_SYSTEM
-  { 0x00000000, 0x00000a00, BTLV_MCSS_ROTATION_Z_M + 0xffffb000 }, //POS_A
-  { 0x00000000, 0x00000a00, BTLV_MCSS_ROTATION_Z_E + 0x00005000 }, //POS_B
-  { 0xffffbab4, 0x00000a00, BTLV_MCSS_ROTATION_Z_M + 0x00002801 }, //POS_C
-  { 0x0000454a, 0x00000a00, BTLV_MCSS_ROTATION_Z_E + 0xffffd7ff }, //POS_D
-  { 0x0000454a, 0x00000a00, BTLV_MCSS_ROTATION_Z_M + 0x00002801 }, //POS_E
-  { 0xffffbab4, 0x00000a00, BTLV_MCSS_ROTATION_Z_E + 0xffffd7ff }, //POS_F
+  { 0x00000000, 0x00000666, BTLV_MCSS_ROTATION_Z_M + 0xffffb000 }, //POS_A
+  { 0x00000000, 0x00000666, BTLV_MCSS_ROTATION_Z_E + 0x00005000 }, //POS_B
+  { 0xffffbab4, 0x00000666, BTLV_MCSS_ROTATION_Z_M + 0x00002801 }, //POS_C
+  { 0x0000454a, 0x00000666, BTLV_MCSS_ROTATION_Z_E + 0xffffd7ff }, //POS_D
+  { 0x0000454a, 0x00000666, BTLV_MCSS_ROTATION_Z_M + 0x00002801 }, //POS_E
+  { 0xffffbab4, 0x00000666, BTLV_MCSS_ROTATION_Z_E + 0xffffd7ff }, //POS_F
 #else
   { 0xffffe500, 0x00000666, 0x00007000 }, //POS_A
   { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B
