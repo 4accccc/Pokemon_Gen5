@@ -5346,11 +5346,20 @@ static void handler_DassyutuButton_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
         HANDEX_STR_AddArg( &param->exStr, pokeID );
       BTL_SVF_HANDEX_Pop( flowWk, param );
       #else
-      BTL_HANDEX_PARAM_CHANGE_MEMBER* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
-        param->pokeID = pokeID;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-      BTL_SVF_HANDEX_Pop( flowWk, param );
+      {
+        // おいうちを受けるタイミングを作るためにメッセージだけをまずは出す
+        BTL_HANDEX_PARAM_MESSAGE* msgParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          HANDEX_STR_Setup( &msgParam->str, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
+          HANDEX_STR_AddArg( &msgParam->str, pokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, msgParam );
+      }
+      {
+        BTL_HANDEX_PARAM_CHANGE_MEMBER* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
+          param->pokeID = pokeID;
+//        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
+//        HANDEX_STR_AddArg( &param->exStr, pokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
+      }
       #endif
     }
   }
