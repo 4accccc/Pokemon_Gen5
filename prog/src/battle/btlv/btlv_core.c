@@ -230,7 +230,7 @@ static void InitSystemCore( HEAPID heapID )
     G3X_AlphaBlend( TRUE );
 //    G3X_AlphaTest( TRUE, 31 );    //alpha0でワイヤーフレームにならないようにする
     G3X_EdgeMarking( FALSE );
-    G3X_AntiAlias( FALSE );
+    G3X_AntiAlias( TRUE );
     G3X_SetFog( FALSE, 0, 0, 0 );
     G2_SetBG0Priority( 1 );
   }
