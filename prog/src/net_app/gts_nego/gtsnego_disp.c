@@ -1459,6 +1459,8 @@ void GTSNEGO_DISP_ScrollReset(GTSNEGO_DISP_WORK* pWork)
 {
   GFL_BG_SetScroll(GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0);
   GFL_BG_SetScroll(GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 0);
+  GFL_BG_FillScreen( GFL_BG_FRAME1_M,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 }
 
 //----------------------------------------------------------------------------

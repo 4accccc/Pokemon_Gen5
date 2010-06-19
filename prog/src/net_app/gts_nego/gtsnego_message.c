@@ -44,7 +44,7 @@
 
 
 
-static void _PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork );
+//static void _PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork );
 
 //--------------------------------------------
 // ‰æ–Ê\¬’è‹`
@@ -231,7 +231,7 @@ void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
   GFL_STR_DeleteBuffer(pWork->pStrBufStream);
   GFL_STR_DeleteBuffer(pWork->pExStrBuf);
   
-  _PMSDrawExit( pWork );
+  GTSNEGO_MESSAGE_PMSDrawExit( pWork );
 
   if(pWork->pStream){
     PRINTSYS_PrintStreamDelete( pWork->pStream );
@@ -1175,7 +1175,7 @@ void GTSNEGO_MESSAGE_PMSDrawInit(GTSNEGO_MESSAGE_WORK* pWork, GTSNEGO_DISP_WORK*
  * @param   wk    
  */
 //----------------------------------------------------------------------------------
-static void _PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork )
+void GTSNEGO_MESSAGE_PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork )
 {
   if(pWork->pms_draw_work){
     PMS_DRAW_Exit( pWork->pms_draw_work );

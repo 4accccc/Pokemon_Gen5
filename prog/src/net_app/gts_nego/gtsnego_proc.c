@@ -2294,6 +2294,8 @@ static void _checkReturnState(GTSNEGO_WORK* pWork)
     GFL_NET_SetAutoErrorCheck(FALSE);
     GFL_NET_SetNoChildErrorCheck(FALSE);
 
+    GTSNEGO_MESSAGE_PMSDrawExit( pWork->pMessageWork );
+
     GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_NET_StateWifiMatchEnd(TRUE);
@@ -2427,6 +2429,10 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
 
   if(!WIPE_SYS_EndCheck()){
     return GFL_PROC_RES_CONTINUE;
+  }
+
+  if(GFL_NET_IsInit()){
+    GFL_NET_DelCommandTable(GFL_NET_CMD_GTSNEGO);
   }
   
   if(pWork->pAppWin){
