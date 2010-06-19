@@ -3149,6 +3149,11 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
  * @param bNetSend 通信位置を相手に送るかどうか
  */
 //--------------------------------------------------------------------------------------------
+//スクロール範囲
+#define _SCROLLBAR_X1 (64)
+#define _SCROLLBAR_X2 (192)
+#define _SCROLLBAR_Y1 (152+12+4)
+#define _SCROLLBAR_Y2 (176+12)
 
 static void _panelScroll(POKEMON_TRADE_WORK* pWork)
 {
@@ -3160,19 +3165,20 @@ static void _panelScroll(POKEMON_TRADE_WORK* pWork)
 
   if(GFL_UI_TP_GetPointCont(&x,&y)){     // パネルスクロール
     if(pWork->touchON){
-      if((x >=  64) && ((192) > x)){
-        if((y >=  152+12+4) && ((176+12) > y)){
-          GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_SCROLLBAR] , TRUE );
-          pWork->speed = (x - pWork->xspeed)*2;
-          pWork->xspeed = x;
-          pWork->BoxScrollNum -= pWork->speed;
-          if(pWork->speed > 12){
-            _scrollMainFunc(pWork,TRUE,TRUE);
-          }
-          else{
-            _scrollMainFunc(pWork,FALSE,TRUE);
-          }
+      if((x >=  _SCROLLBAR_X1) && (_SCROLLBAR_X2 > x) && (y >=  _SCROLLBAR_Y1) && (_SCROLLBAR_Y2 > y)){
+        GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_SCROLLBAR] , TRUE );
+        pWork->speed = (x - pWork->xspeed)*2;
+        pWork->xspeed = x;
+        pWork->BoxScrollNum -= pWork->speed;
+        if(pWork->speed > 12){
+          _scrollMainFunc(pWork,TRUE,TRUE);
         }
+        else{
+          _scrollMainFunc(pWork,FALSE,TRUE);
+        }
+      }
+      else{
+        pWork->speed=0;  // 範囲外に出た時は0 BTS5908
       }
     }
     pWork->xspeed = x;
@@ -3180,7 +3186,6 @@ static void _panelScroll(POKEMON_TRADE_WORK* pWork)
   else{
     pWork->xspeed=0;
   }
-
   if(GFL_UI_TP_GetCont()==FALSE){  //慣性
     if(pWork->speed!=0){
       int k=2;
@@ -3189,7 +3194,7 @@ static void _panelScroll(POKEMON_TRADE_WORK* pWork)
           pWork->speed++;
         }
         if(pWork->speed > 0){
-          pWork->speed--;
+            pWork->speed--;
         }
         k--;
       }
