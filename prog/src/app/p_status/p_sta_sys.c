@@ -175,6 +175,11 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
     u32 palAdr = (HW_OBJ_PLTT+PSTATUS_OBJPLT_SKILL_PLATE*32);
     GFL_STD_MemCopy16( (void*)(palAdr) , work->anmSkillPalBase , 32*2 );
   }
+  {
+    u32 palAdr = (HW_OBJ_PLTT+PSTATUS_OBJPLT_RIBBON_BAR*32);
+    GFL_STD_MemCopy16( (void*)(palAdr) , work->anmRibbonPal , 32 );
+    GFL_STD_MemCopy16( (void*)(palAdr) , work->anmRibbonPalBase , 32 );
+  }
   
   //最初の表示処理
   PSTATUS_RefreshData( work );
@@ -1451,10 +1456,41 @@ static void PSTATUS_PALANIM_UpdatePalletAnime( PSTATUS_WORK *work )
       
   //    OS_TPrintf("[%4x]",GX_RGB(r,g,b));
     }
-  //  OS_TPrintf("\n");
     NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN ,
                                         (PSTATUS_OBJPLT_SKILL_PLATE+1) * 32 ,
                                         work->anmSkillPal , 32 );
+    //リボンカーソル
+    //CDEだけ！
+    for( i=0xC;i<=0xE;i++ )
+    {
+      s8 r,b,g;
+      s8 sr = (work->anmRibbonPalBase[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      s8 sg = (work->anmRibbonPalBase[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      s8 sb = (work->anmRibbonPalBase[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+      s8 er = ((work->anmRibbonPalBase[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT) + 10;
+      s8 eg = ((work->anmRibbonPalBase[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT) + 10;
+      s8 eb = ((work->anmRibbonPalBase[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT) + 10;
+      if( er > 31 )er = 31;
+      if( eg > 31 )eg = 31;
+      if( eb > 31 )eb = 31;
+      r = sr + ((er-sr)*rate);
+      g = sg + ((eg-sg)*rate);
+      b = sb + ((eb-sb)*rate);
+
+      if( r < 0 ) r = 0;
+      if( g < 0 ) g = 0;
+      if( b < 0 ) b = 0;
+      if( r > 31 ) r = 31;
+      if( g > 31 ) g = 31;
+      if( b > 31 ) b = 31;
+      work->anmRibbonPal[i] = GX_RGB(r,g,b);
+      
+  //    OS_TPrintf("[%4x]",GX_RGB(r,g,b));
+    }
+    //  OS_TPrintf("\n");
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN ,
+                                        PSTATUS_OBJPLT_RIBBON_BAR * 32 ,
+                                        work->anmRibbonPal , 32 );
   }
 }
 

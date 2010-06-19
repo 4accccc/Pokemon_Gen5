@@ -290,6 +290,8 @@ typedef struct
 
   u16   anmSkillPalBase[2][16];
   u16   anmSkillPal[16];
+  u16   anmRibbonPal[16];
+  u16   anmRibbonPalBase[16];
 
   //ppp‚ÌŽžpp‚É•ÏŠ·‚·‚é‚æ‚¤
   //PSTATUS_UTIL_GetCurrentPP‚ÅŽæ“¾
