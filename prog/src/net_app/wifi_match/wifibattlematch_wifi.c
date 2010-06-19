@@ -2909,7 +2909,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         *p_seq  = SEQ_START_OK_TIMING;
       }
     }
-
     is_timeout_enable = TRUE;
     break;
 
