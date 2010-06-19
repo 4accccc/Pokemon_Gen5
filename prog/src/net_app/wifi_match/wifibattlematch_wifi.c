@@ -3144,9 +3144,11 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_START_DISCONNECT:
     WIFIBATTLEMATCH_NET_StartDisConnect( p_wk->p_net );
     *p_seq  = SEQ_WAIT_DISCONNECT;
+    p_wk->match_timeout = 0;
     break;
 
   case SEQ_WAIT_DISCONNECT:
+    is_timeout_enable = TRUE;
     if( WIFIBATTLEMATCH_NET_WaitDisConnect( p_wk->p_net ) )
     {
       *p_seq = SEQ_START_MATCH;
