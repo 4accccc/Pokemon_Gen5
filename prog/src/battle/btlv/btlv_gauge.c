@@ -403,6 +403,7 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   if( bgw->pinch_bgm_flag )
   {
     PMSND_PopBGM();
+    bgm_pause( FALSE );
   }
   { 
     int i;
