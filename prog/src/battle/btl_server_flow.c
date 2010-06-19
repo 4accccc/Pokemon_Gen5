@@ -3760,7 +3760,9 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     if( enableMode != BTL_WAZAENABLE_NONE )
     {
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-      if( enableMode == BTL_WAZAENABLE_QUIT ){
+      scPut_WazaEffect( wk, waza, wk->wazaEffCtrl, que_reserve_pos );
+      if( enableMode == BTL_WAZAENABLE_QUIT )
+      {
         return TRUE;
       }
     }

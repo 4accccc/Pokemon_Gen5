@@ -5754,6 +5754,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     case GAMAN_STATE_3RD:
     default:
       // ３ターン目：貼り付き＆ワザロック状態解除
+      BTL_SVFRET_SetWazaEffectIndex( flowWk, BTLV_WAZAEFF_GAMAN_ATTACK );
       gaman_ReleaseStick( flowWk, pokeID, work );
       break;
     }

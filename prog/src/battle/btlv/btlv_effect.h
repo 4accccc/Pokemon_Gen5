@@ -67,13 +67,13 @@ enum{
   BTLEFF_CAMERA_WORK_TRIANGLE,
   BTLEFF_CAMERA_WORK_WCS_INIT,
   BTLEFF_CAMERA_WORK_INIT,
-  BTLEFF_ZOOM_IN_ORTHO, 
-  BTLEFF_CAMERA_INIT_ORTHO, 
+  BTLEFF_ZOOM_IN_ORTHO,
+  BTLEFF_CAMERA_INIT_ORTHO,
   BTLEFF_CAMERA_INIT_ORTHO_NO_WAIT,
 
   //ステータスエフェクト
   BTLEFF_STATUS_EFFECT_START,
-  BTLEFF_NEMURI = BTLEFF_STATUS_EFFECT_START, //ねむり 
+  BTLEFF_NEMURI = BTLEFF_STATUS_EFFECT_START, //ねむり
   BTLEFF_DOKU,                                //どく
   BTLEFF_YAKEDO,                              //やけど
   BTLEFF_KOORI,                               //こおり  600
@@ -154,26 +154,26 @@ enum{
 };
 
 //BTLV_EFFECT_SetTCBで使用するグループ指定
-typedef enum{ 
+typedef enum{
   GROUP_DEFAULT = 0,
   GROUP_EFFVM,
   GROUP_MCSS,
   GROUP_CLACT,
 }BTLV_EFFECT_TCB_GROUP;
 
-typedef enum{ 
+typedef enum{
   BTLV_EFFECT_CWE_NONE = 0,
   BTLV_EFFECT_CWE_NORMAL,         //通常動作
   BTLV_EFFECT_CWE_NO_STOP,        //入力があってもCAMERA_INITを呼ばない
   BTLV_EFFECT_CWE_COMM_WAIT,      //通信待機中カメラワーク
 }BTLV_EFFECT_CWE;
 
-typedef enum{ 
+typedef enum{
   BTLV_EFFECT_SE_MODE_PLAY = 0, //SE再生する
   BTLV_EFFECT_SE_MODE_MUTE,     //SE再生しない
 }BTLV_EFFECT_SE_MODE;
 
-typedef enum{ 
+typedef enum{
   BTLV_EFFECT_REVERSE_DRAW_OFF  = BTLV_MCSS_REVERSE_DRAW_OFF,
   BTLV_EFFECT_REVERSE_DRAW_ON   = BTLV_MCSS_REVERSE_DRAW_ON,
 }BTLV_EFFECT_REVERSE_DRAW;
@@ -227,6 +227,10 @@ typedef enum {
   // フレイムソウル・サンダーソウル
   BTLV_WAZAEFF_LINKWAZA_NORMAL = 0,     ///< 通常
   BTLV_WAZAEFF_LINKWAZA_LINK,           ///< リンクした（続けて出した）
+
+  // がまん
+  BTLV_WAZAEFF_GAMAN_TAME = 0,          ///< がまん中
+  BTLV_WAZAEFF_GAMAN_ATTACK,            ///< 攻撃ターン
 
 }BtlvWazaEffect_TurnType;
 
