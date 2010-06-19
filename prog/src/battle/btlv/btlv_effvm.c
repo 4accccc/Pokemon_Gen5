@@ -2749,7 +2749,7 @@ static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
   type     = ( int )VMGetU32( vmh );
   move_pos.x = ( int )VMGetU32( vmh );
   move_pos.y = ( int )VMGetU32( vmh );
-  move_pos.z  = 0;
+  move_pos.z = ( int )VMGetU32( vmh );
   frame    = ( int )VMGetU32( vmh );
   wait     = ( int )VMGetU32( vmh );
   count    = ( int )VMGetU32( vmh );
