@@ -150,6 +150,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		
 	case SEQ_WIFI_CONNECT:	//WIFIÚ‘±
 	  {
+      GFL_STD_MemClear( &gmw->login_param, sizeof(WIFILOGIN_PARAM) );
       gmw->login_param.gamedata = gmw->proc_param->gamedata;
       gmw->login_param.bg       = WIFILOGIN_BG_NORMAL;
       gmw->login_param.display  = WIFILOGIN_DISPLAY_UP;
@@ -222,7 +223,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 	
 	case SEQ_WIFI_CLEANUP:		//WIFIØ’f
 	  {
-
+      GFL_STD_MemClear( &gmw->logout_param, sizeof(WIFILOGOUT_PARAM) );
       gmw->logout_param.gamedata = gmw->proc_param->gamedata;
       gmw->logout_param.bg = WIFILOGIN_BG_NORMAL;
       gmw->logout_param.display = WIFILOGIN_DISPLAY_UP;
