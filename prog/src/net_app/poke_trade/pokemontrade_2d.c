@@ -3030,7 +3030,7 @@ void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int ind
 {
   GFL_CLWK_DATA cellInitData;
  
-  cellInitData.pos_x = 8 + index*(216);
+  cellInitData.pos_x = 8 + index*(206);
   cellInitData.pos_y = 192-24-8;
   cellInitData.anmseq = 4;
   cellInitData.softpri = 1;
