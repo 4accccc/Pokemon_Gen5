@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-18T15:09:21"/>
+	<create user="matsumiya" host="W00224" date="2010-06-19T17:24:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="184" top="121" right="889" bottom="749" maximized="no" rayout="Vertical2">
+	<dialog left="1342" top="161" right="2047" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -3132,7 +3132,7 @@
 きょうは　どんな　ポケモンと
 であえますかねえ▼
 おやおや？
-とくせい「ちからづく」を　もつ▽
+とくせい「ちからずく」を　もつ▽
 ポケモンが　いますねえ▼
 そうなんです！
 ちからづく　という　とくせいは▼
@@ -3147,7 +3147,7 @@
 きょうは　どんな　ポケモンと
 であえますかねえ▼
 おやおや？
-特性「ちからづく」を　もつ▽
+特性「ちからずく」を　もつ▽
 ポケモンが　いますねえ▼
 そうなんです！
 ちからづく　という　特性は▼
