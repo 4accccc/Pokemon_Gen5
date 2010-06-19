@@ -2949,8 +2949,8 @@ void POKEMONTRADE_StartFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
     cellInitData.pos_x = GTSFACEICON_POSX+faceNo*GTSFACEICON_HEIGHT;
     cellInitData.pos_y = GTSFACEICON_POSY;
     cellInitData.anmseq = 11+faceNo;
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
+    cellInitData.softpri = _CLACT_SOFTPRI_MARK;
+    cellInitData.bgpri = 1;
     
     pWork->faceButtonGTS[faceNo] =
       GFL_CLACT_WK_Create( pWork->cellUnit ,
