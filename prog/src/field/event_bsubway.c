@@ -675,6 +675,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(
     }
     break;
   case SEQ_BATTLE_END:
+    GFL_NET_DelCommandTable( GFL_NET_CMD_BATTLE );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     
     #if 0 //•K—v‚È‚­‚È‚Á‚½

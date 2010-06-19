@@ -44,6 +44,10 @@ INIT_EVENT_START ev_init_c04r0110
     //自機非表示
     _BSUBWAY_TOOL( BSWTOOL_OBJ_VANISH, MMDL_ID_PLAYER, TRUE, BSW_NULL )
     
+    //ボス対戦フラグをクリア
+	  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_BTL_BOSS, 0, BSW_NULL, BSW_NULL )
+    
+    //プレイモードを取得
     _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
     
     IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
@@ -75,6 +79,8 @@ sub_init_add_trainer:
    
   IF $SCWK_ANSWER == TRUE && $round == BSWAY_CLEAR_WINCNT THEN
     //ボスラウンドである
+    _BSUBWAY_TOOL( BSWSUB_SET_PLAY_BTL_BOSS, 1, BSW_NULL, BSW_NULL )
+    
     _BSUBWAY_TOOL( BSWSUB_GET_TRAINER_NUM_ROUND_NOW, 0, BSW_NULL, SCWK_TEMP0 )
     _CALL sub_get_boss_obj_code 
     $OBJCHRWORK2 = $SCWK_ANSWER
@@ -103,6 +109,8 @@ sub_init_add_trainer_multi:
    
   IF $SCWK_ANSWER == TRUE && $round == BSWAY_CLEAR_WINCNT THEN
     //ボスラウンドである
+    _BSUBWAY_TOOL( BSWSUB_SET_PLAY_BTL_BOSS, 1, BSW_NULL, BSW_NULL )
+
     _BSUBWAY_TOOL( BSWSUB_GET_TRAINER_NUM_ROUND_NOW, 0, BSW_NULL, SCWK_TEMP0 )
     _CALL sub_get_boss_obj_code 
     $OBJCHRWORK2 = $SCWK_ANSWER
@@ -134,6 +142,8 @@ sub_init_add_trainer_comm_multi:
   
   IF $SCWK_ANSWER == BOY1 THEN //ボスではない
     _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, 0, BSW_NULL, SCWK_ANSWER )
+  ELSE //ボスである
+    _BSUBWAY_TOOL( BSWSUB_SET_PLAY_BTL_BOSS, 1, BSW_NULL, BSW_NULL )
   ENDIF
   
   $OBJCHRWORK2 = $SCWK_ANSWER
@@ -144,6 +154,8 @@ sub_init_add_trainer_comm_multi:
   
   IF $SCWK_ANSWER == BOY1 THEN //ボスではない
     _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, 1, BSW_NULL, SCWK_ANSWER )
+  ELSE //ボスである
+    _BSUBWAY_TOOL( BSWSUB_SET_PLAY_BTL_BOSS, 1, BSW_NULL, BSW_NULL )
   ENDIF
   
   $OBJCHRWORK3 = $SCWK_ANSWER
@@ -548,7 +560,6 @@ sub_train_battle_win_clear:
 {
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
-  DEFINE_LOCAL b_clear
   
   //一寸間
   _TIME_WAIT( 40 )
@@ -569,29 +580,6 @@ sub_train_battle_win_clear:
   
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  
-  //ボスクリアフラグOFF
-  $b_clear = FALSE
-  
-  //ボスステージチェック
-  IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
-    //ボスOBJであればボスクリア
-    _BSUBWAY_TOOL( BSWSUB_GET_TRAINER_NUM_ROUND_NOW, 0, BSW_NULL, SCWK_TEMP0 )
-    _CALL sub_get_boss_obj_code 
-    
-    IF $SCWK_ANSWER != BOY1 THEN
-      $b_clear = TRUE
-    ENDIF
-  ELSE //通信マルチ以外
-    _CALL sub_common_check_boss_stage
-    
-    IF $SCWK_ANSWER == TRUE THEN
-      $b_clear = TRUE
-    ENDIF
-  ENDIF
-  
-  //ボスクリアフラグセット
-	_BSUBWAY_TOOL( BSWSUB_SET_PLAY_BOSS_CLEAR, b_clear, BSW_NULL, BSW_NULL )
   
   //クリアした状況を反映
   _BSUBWAY_TOOL( BSWSUB_SET_CLEAR_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )

@@ -1024,12 +1024,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     *ret_wk = bsw_scr->play_mode;
     KAGAYA_Printf( "BSWSUB GET PLAY_MODE = %d\n", *ret_wk );
     break;
-  //ボスクリアフラグをセット
-  case BSWSUB_SET_PLAY_BOSS_CLEAR:
+  //ボス対戦フラグをセット
+  case BSWSUB_SET_PLAY_BTL_BOSS:
     bsw_scr->boss_f = param0;
     break;
-  //ボスクリアフラグを取得
-  case BSWSUB_GET_PLAY_BOSS_CLEAR:
+  //ボス対戦フラグを取得
+  case BSWSUB_GET_PLAY_BTL_BOSS:
     *ret_wk = bsw_scr->boss_f;
     break;
   //バトルポイント加算
@@ -3007,7 +3007,7 @@ void BSUBWAY_SCRWORK_DebugSetCommMultiStage(
   if( stage == 0 ){ //0
     BSUBWAY_SCOREDATA_ErrorStageNo( scoreData, play_mode );
   }else{
-    BSUBWAY_SCOREDATA_SetStageNo_Org1( scoreData, play_mode, stage );
+    BSUBWAY_SCOREDATA_SetStageNo_Org1( scoreData, play_mode, stage+1 );
     BSUBWAY_SCOREDATA_SetRenshou( scoreData, play_mode, stage*7 );
     BSUBWAY_PLAYDATA_ResetRoundNo( playData );
   }

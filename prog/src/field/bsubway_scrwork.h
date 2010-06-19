@@ -68,7 +68,7 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 pare_sex;    ///<自分とパートナーの性別
   
   u16         clear_f:1;  ///<クリアフラグ
-  u16          boss_f:2;  ///<ボスを倒したフラグ
+  u16          boss_f:2;  ///<ボスと対戦したフラグ
   u16        retire_f:1;  ///<リタイアフラグ
   u16         prize_f:1;  ///<ご褒美フラグ
   u16         partner:3;  ///<パートナーNo
