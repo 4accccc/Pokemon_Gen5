@@ -4153,6 +4153,9 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( biw->pokeicon_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 
+    G2S_SetWnd0Position( 1, 0, 0, 0 );
+    G2S_SetWnd1Position( 1, 0, 0, 0 );
+
     //ウインドウマスクでアイコンを暗くする実験
     if( max > 1 )
     {
