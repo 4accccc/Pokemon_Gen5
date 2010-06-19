@@ -83,19 +83,20 @@ enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BPP_TURNFLG_ACTION_START,     ///< 行動処理開始
-  BPP_TURNFLG_ACTION_DONE,      ///< 行動処理終了
-  BPP_TURNFLG_DAMAGED,          ///< ダメージ喰らった
-  BPP_TURNFLG_WAZAPROC_DONE,    ///< ワザ処理を修了した
-  BPP_TURNFLG_SHRINK,           ///< ひるまされた
-  BPP_TURNFLG_KIAI_READY,       ///< 気合いパンチ待機（ダメージで必ずひるむ）
-  BPP_TURNFLG_KIAI_SHRINK,      ///< 気合いパンチ待機中ダメージ
-  BPP_TURNFLG_MAMORU,           ///< “まもる”発動
-  BPP_TURNFLG_ITEM_CONSUMED,    ///< アイテムを使用して無くなった
-  BPP_TURNFLG_ITEM_CANT_USE,    ///< 装備アイテム使えない
-  BPP_TURNFLG_COMBIWAZA_READY,  ///< 合体ワザ準備中
-  BPP_TURNFLG_TAMEHIDE_OFF,     ///< 溜めワザによる非表示状態を解除する必要あり
-  BPP_TURNFLG_MOVED,            ///< サイドチェンジ・ムーブを行った
+  BPP_TURNFLG_ACTION_START,           ///< 行動処理開始
+  BPP_TURNFLG_ACTION_DONE,            ///< 行動処理終了
+  BPP_TURNFLG_DAMAGED,                ///< ダメージ喰らった
+  BPP_TURNFLG_WAZAPROC_DONE,          ///< ワザ処理を修了した
+  BPP_TURNFLG_SHRINK,                 ///< ひるまされた
+  BPP_TURNFLG_KIAI_READY,             ///< 気合いパンチ待機（ダメージで必ずひるむ）
+  BPP_TURNFLG_KIAI_SHRINK,            ///< 気合いパンチ待機中ダメージ
+  BPP_TURNFLG_MAMORU,                 ///< “まもる”発動
+  BPP_TURNFLG_ITEM_CONSUMED,          ///< アイテムを使用して無くなった
+  BPP_TURNFLG_ITEM_CANT_USE,          ///< 装備アイテム使えない
+  BPP_TURNFLG_COMBIWAZA_READY,        ///< 合体ワザ準備中
+  BPP_TURNFLG_TAMEHIDE_OFF,           ///< 溜めワザによる非表示状態を解除する必要あり
+  BPP_TURNFLG_MOVED,                  ///< サイドチェンジ・ムーブを行った
+  BPP_TURNFLG_TURNCHECK_SICK_PASSED,  ///< ターンチェック状態異常処理を経過した
 
   BPP_TURNFLG_MAX,
 
@@ -349,7 +350,7 @@ extern void BPP_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT con
 extern void BPP_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
 extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID );
-extern void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork );
+extern BOOL BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT* oldCont, BOOL* fCured );
 extern BOOL BPP_CheckNemuriWakeUp( BTL_POKEPARAM* bpp );
 extern BOOL BPP_CheckKonranWakeUp( BTL_POKEPARAM* bpp );
 

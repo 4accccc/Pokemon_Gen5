@@ -3759,15 +3759,16 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
     // ここから先、ハズレ・無効の原因表示はその先に任せる
 
-    // タイプによる無効化チェック
-    if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) ){
-      flowsub_checkWazaAffineNoEffect( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
-      fMigawariHit = TRUE;
-    }
-
     // そらをとぶなど、画面に見えていない状態のハズレチェック
     if( category != WAZADATA_CATEGORY_ICHIGEKI ){  // 一撃ワザは独自の回避判定を行うので
       flowsub_CheckPokeHideAvoid( wk, wk->wazaParam, attacker, targetRec );
+    }
+
+    // タイプによる無効化チェック
+    if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) )
+    {
+      flowsub_checkWazaAffineNoEffect( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
+      fMigawariHit = TRUE;
     }
 
     // まもる・とくせいなど無効チェック
@@ -8941,19 +8942,66 @@ static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlEventType even
 //------------------------------------------------------------------
 static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 {
+  u8 pokeIDList[ BTL_POS_MAX ];
+  u32 pokeCnt, i, p;
+  WazaSick sick;
   BTL_POKEPARAM* bpp;
-  u32 hem_state;
 
-  BTL_POKESET_SeekStart( pokeSet );
-  while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
+  pokeCnt = BTL_POKESET_GetCount( pokeSet );
+  TAYA_Printf("ポケ数=%d, ID= ", pokeCnt);
+  for(i=0; i<pokeCnt; ++i)
   {
-    hem_state = BTL_Hem_PushState( &wk->HEManager );
+    bpp = BTL_POKESET_Get( pokeSet, i );
+    pokeIDList[ i ] = BPP_GetID( bpp );
+    TAYA_Printf( "%d,", pokeIDList[i] );
+  }
+  TAYA_Printf( "\n" );
 
-    BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCallback, wk );
-    SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
 
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    BTL_Hem_PopState( &wk->HEManager, hem_state );
+  i = 0;
+  while( 1 )
+  {
+    sick = BTL_TABLES_GetTurnCheckWazaSickByOrder( i++ );
+    if( sick != WAZASICK_NULL )
+    {
+      BPP_SICK_CONT oldCont;
+      BOOL fCured;
+      u32 p;
+
+      if( sick == WAZASICK_KAIHUKUHUUJI ){
+        TAYA_Printf( "かいふくふうじチェック\n" );
+      }
+      if( sick == WAZASICK_YADORIGI ){
+        TAYA_Printf( "やどりぎチェック\n" );
+      }
+      for(p=0; p<pokeCnt; ++p)
+      {
+        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeIDList[p] );
+        if( !BPP_IsDead(bpp) )
+        {
+          BOOL fCured;
+
+          TAYA_Printf("ポケ(%d)の、状態異常[%d]をチェック...\n", BPP_GetID(bpp), sick);
+
+          if( BPP_WazaSick_TurnCheck(bpp, sick, &oldCont, &fCured) )
+          {
+            u32  hem_state = BTL_Hem_PushState( &wk->HEManager );
+              BTL_SICK_TurnCheckCallback( bpp, sick, oldCont, fCured, wk );
+            BTL_Hem_PopState( &wk->HEManager, hem_state );
+          }
+        }
+      }
+    }
+    else
+    {
+      break;
+    }
+  }
+
+//    BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCal  BTL_POKEPARAM* bpp;lback, wk );
+  {
+    u32 packID = BTL_CALC_PokeIDx6_Pack32bit( pokeIDList );
+    SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, pokeCnt, packID );
   }
 
   return scproc_CheckExpGet( wk );

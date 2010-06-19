@@ -599,12 +599,21 @@ void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARA
  *------------------------------------------------------------*/
 void BTL_SICKEVENT_CheckHitRatio( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
 {
-  if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) ){
+  if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) )
+  {
     fx32 ratio;
     BPP_SICK_CONT cont = BPP_GetSickCont( attacker, WAZASICK_HITRATIO_UP );
     u16 param = BPP_SICKCONT_GetParam( cont );
     ratio = FX32_CONST( param ) / 100;
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
+
+    {
+      BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, BPP_GetID(attacker) );
+        param->pokeID[0] = BPP_GetID( attacker );
+        param->poke_cnt = 1;
+        param->sickCode = WAZASICK_HITRATIO_UP;
+      BTL_SVF_HANDEX_Pop( flowWk, param );
+    }
   }
 }
 

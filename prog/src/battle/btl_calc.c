@@ -1208,6 +1208,54 @@ s32 BTL_CALC_ITEM_GetParam( u16 item, u16 paramID )
   return ITEM_GetParam( item, paramID, Heap_ItemParam );
 }
 
+//=============================================================================================
+/**
+ * ポケモンID（max=31）６個分の配列を 32bit にpackする
+ *
+ * @param   pokeIDList
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_PokeIDx6_Pack32bit( const u8* pokeIDList )
+{
+  u32 pack = 0;
+  u32 i;
+  TAYA_Printf(" pack ... ");
+  for(i=0; i<BTL_POS_MAX; ++i)
+  {
+    pack |= ((pokeIDList[i] & 0x1f) << (i*5));
+    TAYA_Printf("%d,", pokeIDList[i]);
+  }
+  TAYA_Printf("\n");
+
+  return pack;
+}
+//=============================================================================================
+/**
+ * 32bit にpackするしたポケモンID（max=31）６個分を配列に書き戻し
+ *
+ * @param   pokeIDList
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+void BTL_CALC_PokeIDx6_Unpack32bit( u32 pack, u8* pokeIDList )
+{
+  u32 i;
+  TAYA_Printf(" unpack ... ");
+
+  for(i=0; i<BTL_POS_MAX; ++i)
+  {
+    pokeIDList[ i ] = (pack & 0x1f);
+    pack >>= 5;
+    TAYA_Printf("%d,", pokeIDList[i]);
+
+  }
+  TAYA_Printf("\n");
+
+}
+
 
 
 //=============================================================================================

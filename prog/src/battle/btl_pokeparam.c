@@ -2028,73 +2028,78 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
  * 状態異常のターンチェック処理
  *
  * @param   bpp
- * @param   callbackFunc    かかっている状態異常ごとに呼び出されるコールバック関数
- * @param   callbackArg     コールバックに引き渡す任意引数
+ * @param   sick      チェックする状態異常コード
+ * @param   pOldContDest    [out]チェック前の継続パラメータ（不要ならNULL）
+ * @param   fCured          [out]このターンチェックで直った場合にTRUE（不要ならNULL）
+ *
+ * @retval  BOOL    チェックした状態異常がこのチェック前まで継続されていた場合TRUE
  */
 //=============================================================================================
-void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork )
+BOOL BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT* pOldContDest, BOOL* fCured )
 {
-  WazaSick  sick;
-  u32 i = 0;
-
-  while( 1 )
-  {
-    sick = BTL_TABLES_GetTurnCheckWazaSickByOrder(i++);
-    if( sick == WAZASICK_NULL ){
-      break;
-    }
-    // ねむり・こんらんはアクション開始のタイミングで独自のカウンタデクリメント処理
-    if( (sick == WAZASICK_NEMURI) || (sick == WAZASICK_KONRAN) ){
-      continue;
-    }
-    if( bpp->coreParam.sickCont[sick].type != WAZASICK_CONT_NONE )
-    {
-      u32 turnMax = BPP_SICCONT_GetTurnMax( bpp->coreParam.sickCont[sick] );
-      BOOL fCure = FALSE;
-      BPP_SICK_CONT oldCont;
-
-      oldCont = bpp->coreParam.sickCont[ sick ];
-
-      // こだわりロックは、該当するワザを持っていないなら直る
-      if( sick == WAZASICK_KODAWARI )
-      {
-        WazaID  waza = BPP_SICKCONT_GetParam( oldCont );
-        if( !BPP_WAZA_IsUsable(bpp, waza) )
-        {
-          bpp->coreParam.sickCont[sick] = BPP_SICKCONT_MakeNull();;
-          bpp->coreParam.wazaSickCounter[sick] = 0;
-          fCure = TRUE;
-        }
-      }
-
-      // 継続ターン経過チェック
-      if( turnMax )
-      {
-        bpp->coreParam.wazaSickCounter[sick] += 1;
-
-        if( bpp->coreParam.wazaSickCounter[sick] >= turnMax )
-        {
-          BTL_Printf("経過ターンが最大ターンを越えた\n");
-          bpp->coreParam.sickCont[sick] = BPP_SICKCONT_MakeNull();;
-          bpp->coreParam.wazaSickCounter[sick] = 0;
-          fCure = TRUE;
-        }
-      }
-      // 永続型で最大ターン数が指定されているものはカウンタをインクリメント
-      // （現状、この機構を利用しているのは「どくどく」のみ）
-      else if( bpp->coreParam.sickCont[sick].type == WAZASICK_CONT_PERMANENT )
-      {
-        if( (bpp->coreParam.sickCont[sick].permanent.count_max != 0 )
-        &&  (bpp->coreParam.wazaSickCounter[sick] < bpp->coreParam.sickCont[sick].permanent.count_max)
-        ){
-          bpp->coreParam.wazaSickCounter[sick]++;
-        }
-      }
-      if( callbackFunc != NULL ){
-        callbackFunc( bpp, sick, oldCont, fCure, callbackWork );
-      }
-    }
+  // ねむり・こんらんはアクション開始のタイミングで独自のカウンタデクリメント処理が入るので無視
+  if( (sick == WAZASICK_NEMURI) || (sick == WAZASICK_KONRAN) ){
+    return FALSE;
   }
+
+
+  if( bpp->coreParam.sickCont[sick].type != WAZASICK_CONT_NONE )
+  {
+    u32 turnMax = BPP_SICCONT_GetTurnMax( bpp->coreParam.sickCont[sick] );
+    BPP_SICK_CONT oldCont = bpp->coreParam.sickCont[ sick ];
+
+    if( pOldContDest != NULL ){
+      *pOldContDest = oldCont;
+    }
+    if( fCured != NULL ){
+      *fCured = FALSE;
+    }
+
+    // こだわりロックは、該当するワザを持っていないなら直る
+    if( sick == WAZASICK_KODAWARI )
+    {
+      WazaID  waza = BPP_SICKCONT_GetParam( oldCont );
+      if( !BPP_WAZA_IsUsable(bpp, waza) )
+      {
+        bpp->coreParam.sickCont[sick] = BPP_SICKCONT_MakeNull();;
+        bpp->coreParam.wazaSickCounter[sick] = 0;
+        if( fCured ){
+          *fCured = TRUE;
+        }
+      }
+    }
+
+    // 継続ターン経過チェック
+    if( turnMax )
+    {
+      bpp->coreParam.wazaSickCounter[sick] += 1;
+
+      if( bpp->coreParam.wazaSickCounter[sick] >= turnMax )
+      {
+        BTL_Printf("経過ターンが最大ターンを越えた\n");
+        bpp->coreParam.sickCont[sick] = BPP_SICKCONT_MakeNull();;
+        bpp->coreParam.wazaSickCounter[sick] = 0;
+        if( fCured ){
+          *fCured = TRUE;
+        }
+      }
+    }
+
+    // 永続型で最大ターン数が指定されているものはカウンタをインクリメント
+    // （現状、この機構を利用しているのは「もうどく」のみ）
+    else if( bpp->coreParam.sickCont[sick].type == WAZASICK_CONT_PERMANENT )
+    {
+      if( (bpp->coreParam.sickCont[sick].permanent.count_max != 0 )
+      &&  (bpp->coreParam.wazaSickCounter[sick] < bpp->coreParam.sickCont[sick].permanent.count_max)
+      ){
+        bpp->coreParam.wazaSickCounter[sick]++;
+      }
+    }
+
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 //=============================================================================================

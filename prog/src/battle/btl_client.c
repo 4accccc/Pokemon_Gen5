@@ -7890,8 +7890,36 @@ static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args 
 }
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_WazaSick_TurnCheck( bpp, NULL, NULL );
+  u8 pokeIDList[ BTL_POS_MAX ];
+  u32 pokeCnt = args[0];
+  WazaSick sick;
+  u32 i;
+  BTL_POKEPARAM* bpp;
+
+  BTL_CALC_PokeIDx6_Unpack32bit( (u32)(args[1]), pokeIDList );
+
+  i = 0;
+  while( 1 )
+  {
+    sick = BTL_TABLES_GetTurnCheckWazaSickByOrder( i++ );
+    if( sick != WAZASICK_NULL )
+    {
+      u32 p;
+      for(p=0; p<pokeCnt; ++p)
+      {
+        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeIDList[ p ] );
+        if( !BPP_IsDead(bpp) )
+        {
+          BPP_WazaSick_TurnCheck( bpp, sick, NULL, NULL );
+        }
+      }
+    }
+    else
+    {
+      break;
+    }
+  }
+
   return TRUE;
 }
 static BOOL scProc_OP_ConsumeItem( BTL_CLIENT* wk, int* seq, const int* args )
@@ -8506,8 +8534,8 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           ctrl->fFadeOutStart = TRUE;
           ctrl->seq = SEQ_FADEOUT;
           BTLV_RecPlayer_StartQuit( wk->viewCore, ctrl->turnCount, BTLV_INPUT_BR_STOP_KEY );
-          
-          //BGM、SE停止 
+
+          //BGM、SE停止
           //BTS:2360
           //このあとは、バトルをぬけるだけなのでBGMフェードアウト、SE停止。
           //SEは、btl_main QUITの流れで元に戻す。
@@ -8548,7 +8576,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
             ctrl->fFadeOutStart = TRUE;
             ctrl->seq = SEQ_FADEOUT;
 
-            //BGM、SE停止 
+            //BGM、SE停止
             //BTS:2360
             //チャンプタースキップ時のBGMFadeOut　SEStop
             //SEは、ClientMain_Normal  SEQ_RECPLAY_CTRL の流れで元に戻す。

@@ -88,6 +88,10 @@ extern BOOL BTL_CALC_IsTrtypeGymLeader( u16 trType );
 extern BOOL BTL_CALC_IsTrtypeBig4( u16 trType );
 extern BOOL BTL_CALC_IsTrTypeBoss( u16 trType );
 
+extern u32 BTL_CALC_PokeIDx6_Pack32bit( const u8* pokeIDList );
+extern void BTL_CALC_PokeIDx6_Unpack32bit( u32 pack, u8* pokeIDList );
+
+
 //=============================================================================================
 /**
  * ワザデータの状態異常継続パラメータ値から、バトルで使う状態異常継続パラメータ値へ変換
