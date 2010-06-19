@@ -4486,6 +4486,11 @@ static void SetupResearchData( RRG_WORK* work )
     work->researchData.questionData[ qIdx ].todayCount = todayCountOfQuestion[ qIdx ]; // 今日の回答人数
     work->researchData.questionData[ qIdx ].totalCount = todayCountOfQuestion[ qIdx ] + totalCountOfQuestion[ qIdx ]; // いままでの回答人数
 
+    // 表示する「いままでの回答人数」は 999,999 を最大とする
+    if( QUESTIONNAIRE_TOTAL_COUNT_MAX < work->researchData.questionData[ qIdx ].totalCount ) {
+      work->researchData.questionData[ qIdx ].totalCount = QUESTIONNAIRE_TOTAL_COUNT_MAX;
+    }
+
     for( aIdx=0; aIdx < MAX_ANSWER_NUM_PER_QUESTION; aIdx++ )
     {
       int aID = answerID[ qIdx ][ aIdx ];
