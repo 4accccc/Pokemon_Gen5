@@ -199,6 +199,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     SEQ_BATTLE_INIT,
     SEQ_BATTLE_WAIT,
     SEQ_BATTLE_END,
+    SEQ_BATTLE_ENDTIMING_INIT,
+    SEQ_BATTLE_ENDTIMING_WAIT,
+
     SEQ_CALL_END_DEMO,        ///< バトル後デモ呼び出し
     SEQ_WAIT_END_DEMO,
     SEQ_CALL_BTL_REC_SEL,     ///< 通信対戦後の録画選択画面
@@ -262,12 +265,30 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     break;
   case SEQ_BATTLE_END:
     WBM_BTL_Printf("バトル完了\n");
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-    p_wk->is_battle_overlay = FALSE;
-    p_wk->is_add_cmd_tbl  = FALSE;
-
-    (*p_seq) = SEQ_CALL_END_DEMO;
+    (*p_seq) = SEQ_BATTLE_ENDTIMING_INIT;
     break;
+
+  case SEQ_BATTLE_ENDTIMING_INIT:
+    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), 210, WB_NET_WIFIMATCH );
+    WBM_BTL_Printf("戦闘用通信コマンドテーブルをDelしたので同期取り\n");
+    (*p_seq) = SEQ_BATTLE_ENDTIMING_WAIT;
+    break;
+
+  case SEQ_BATTLE_ENDTIMING_WAIT:
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 210, WB_NET_WIFIMATCH ) )
+    {
+      GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+      p_wk->is_add_cmd_tbl  = FALSE;
+
+
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+      p_wk->is_battle_overlay  = FALSE;
+
+      WBM_BTL_Printf("戦闘用通信コマンドテーブルをDelしたので同期取り完了\n");
+      (*p_seq) = SEQ_CALL_END_DEMO;
+    }
+    break;
+
   case SEQ_CALL_END_DEMO:
     // 通信バトル後デモ呼び出し
     {
@@ -401,8 +422,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   }
 
   //エラー処理
-  //バトル中はバトルの自動終了を待つ
-  if( GFL_NET_IsInit() && !(SEQ_BATTLE_INIT<= *p_seq && *p_seq <= SEQ_CALL_END_DEMO ) )
+  //PROC中は勝手に抜けない
+  if( GFL_NET_IsInit() && (status != GFL_PROC_MAIN_VALID) )
   {
     if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
     { 

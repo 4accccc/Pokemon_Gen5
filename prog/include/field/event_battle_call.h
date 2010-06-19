@@ -33,6 +33,7 @@ enum
 { 
   EVENT_BATTLE_ADD_CMD_TBL_TIMING = 200, ///< 同期NO　戦闘開始
   EVENT_BATTLE_LIST_DEMO_TIMING,				 ///< 同期NO　マルチリスト呼び出し
+  EVENT_BATTLE_DEL_CMD_TBL_TIMING,      ///< 同期NO　戦闘終了
 };
 
 // PROC

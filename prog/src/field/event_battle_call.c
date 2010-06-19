@@ -64,6 +64,7 @@ typedef struct{
   GFL_PROCSYS* procsys_up; 
   VS_MULTI_LIST_PARAM listParam;
 	BOOL battle_overlay_load;
+  BOOL battle_command_add;
 	BOOL battle_rec_load;
 }COMM_BTL_DEMO_PROC_WORK;
 
@@ -158,6 +159,10 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     SEQ_BATTLE_INIT,
     SEQ_BATTLE_WAIT,
     SEQ_BATTLE_END,
+
+    SEQ_BATTLE_ENDTIMING_INIT,
+    SEQ_BATTLE_ENDTIMING_WAIT,
+
     SEQ_CALL_END_DEMO,        ///< バトル後デモ呼び出し
     SEQ_WAIT_END_DEMO,
     SEQ_CALL_BTL_REC_SEL,     ///< 通信対戦後の録画選択画面
@@ -177,6 +182,9 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   //エラー終了
   if(up_status != GFL_PROC_MAIN_VALID && NetErr_App_CheckError()){
     if((*seq) >= SEQ_CALL_START_DEMO && (*seq) < SEQ_CALL_END_DEMO){
+      if( work->battle_command_add == TRUE ){
+        GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+      }
       if(work->battle_overlay_load == TRUE){
         GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
       }
@@ -251,6 +259,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     {
       work->battle_overlay_load = TRUE;
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+      work->battle_command_add  = TRUE;
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
 //    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING, WB_NET_BATTLE_ADD_CMD );
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING);
@@ -280,15 +289,32 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     }
     break;
   case SEQ_BATTLE_END:
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-    work->battle_overlay_load = FALSE;
-
-    BattleRec_LoadToolModule();                       // 録画
-    BattleRec_StoreSetupParam( bcw->btl_setup_prm );  // 録画
-    BattleRec_UnloadToolModule();                     // 録画
-
-    (*seq) = SEQ_CALL_END_DEMO;
+    (*seq) = SEQ_BATTLE_ENDTIMING_INIT;
     break;
+
+  case SEQ_BATTLE_ENDTIMING_INIT:
+    GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_DEL_CMD_TBL_TIMING);
+    (*seq) = SEQ_BATTLE_ENDTIMING_WAIT;
+    break;
+
+  case SEQ_BATTLE_ENDTIMING_WAIT:
+
+    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_DEL_CMD_TBL_TIMING))
+    {
+      GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+      work->battle_command_add  = FALSE;
+
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+      work->battle_overlay_load = FALSE;
+
+      BattleRec_LoadToolModule();                       // 録画
+      BattleRec_StoreSetupParam( bcw->btl_setup_prm );  // 録画
+      BattleRec_UnloadToolModule();                     // 録画
+
+      (*seq) = SEQ_CALL_END_DEMO;
+    }
+    break;
+
   case SEQ_CALL_END_DEMO:
     // 通信バトル後デモ呼び出し
     {
