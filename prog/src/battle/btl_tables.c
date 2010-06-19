@@ -457,6 +457,7 @@ BOOL BTL_TABLES_IsNekoNoteOmmit( WazaID waza )
       WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
       WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_SURIKAE,
       WAZANO_FEINTO,        WAZANO_KIAIPANTI,   WAZANO_HENSIN,
+      WAZANO_DORAGONTEERU,  WAZANO_TOMOENAGE,   // この二つは「いたずらごころ」との組み合わせでヤバそうなので
   };
 
   if( checkHaseiOmmitCommon(waza) ){

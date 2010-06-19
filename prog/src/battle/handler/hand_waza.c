@@ -9238,7 +9238,8 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     u8  poke_cnt, i;
 
     // シングル戦の場合、相手選択の必要がないのでNULLが来る
-    if( targetPos == BTL_POS_NULL ){
+    if( targetPos == BTL_POS_NULL )
+    {
       BtlPokePos  myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
       BtlRule  rule = BTL_SVFTOOL_GetRule( flowWk );
       targetPos = BTL_MAINUTIL_GetOpponentPokePos( rule, myPos, 0 );
@@ -9252,6 +9253,8 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       WazaID waza;
       u8 targetPokeID = targetPokeIDAry[0];
       u8 fSucceess = FALSE;
+
+      TAYA_Printf("さきどり対象位置=%d, pokeID=%d\n", targetPos, targetPokeID );
 
       do{
 
@@ -9272,19 +9275,20 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
         // さきどり禁止ワザなら失敗
         if( BTL_TABLES_IsSakidoriFailWaza(waza) ){ break; }
 
-
         // ここまで来たら成功
         fSucceess = TRUE;
 
       }while(0);
 
-      if( fSucceess ){
+      if( fSucceess )
+      {
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID, waza );
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, targetPos );
-      }else{
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+        return;
       }
     }
+
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
 static void handler_Sakidori_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
