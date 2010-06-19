@@ -894,7 +894,8 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     else
     {
       if( wk->viewCore ){
-        PMSND_FadeOutBGM( 30 );
+        // BTS:2360 SEの再生を元に戻す。
+        PMSND_AllPlayerVolumeEnable(TRUE, PMSND_MASKPL_ALLSE);
       }
       wk->myState = SEQ_BGM_FADEOUT;
     }
@@ -8505,6 +8506,16 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           ctrl->fFadeOutStart = TRUE;
           ctrl->seq = SEQ_FADEOUT;
           BTLV_RecPlayer_StartQuit( wk->viewCore, ctrl->turnCount, BTLV_INPUT_BR_STOP_KEY );
+          
+          //BGM、SE停止 
+          //BTS:2360
+          //このあとは、バトルをぬけるだけなのでBGMフェードアウト、SE停止。
+          //SEは、btl_main QUITの流れで元に戻す。
+          {
+            PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
+            PMSND_AllPlayerVolumeEnable(FALSE, PMSND_MASKPL_ALLSE);
+            BTL_MAIN_BGMFadeOutDisable( wk->mainModule );
+          }
           break;
 
         case BTLV_INPUT_BR_SEL_REW:
@@ -8536,6 +8547,15 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
             BTLV_RecPlayFadeOut_Start( wk->viewCore );
             ctrl->fFadeOutStart = TRUE;
             ctrl->seq = SEQ_FADEOUT;
+
+            //BGM、SE停止 
+            //BTS:2360
+            //チャンプタースキップ時のBGMFadeOut　SEStop
+            //SEは、ClientMain_Normal  SEQ_RECPLAY_CTRL の流れで元に戻す。
+            {
+              PMSND_FadeOutBGM( 30 );
+              PMSND_AllPlayerVolumeEnable(FALSE, PMSND_MASKPL_ALLSE);
+            }
           }
           break;
         }

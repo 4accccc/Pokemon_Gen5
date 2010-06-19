@@ -552,6 +552,9 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     BTL_Printf("クリーンアッププロセス３\n");
     BTLV_QuitSystem();
 
+    // BTS:2360 BTL_Client、録画再生停止処理でのSE停止を元に戻す。
+    PMSND_AllPlayerVolumeEnable(TRUE, PMSND_MASKPL_ALLSE);
+
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_NET );
