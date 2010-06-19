@@ -417,11 +417,14 @@ static BOOL _checkMark(POKEMON_TRADE_WORK* pWork,int x,int y)
       if(pWork->pokeIconMarkFlg[line][pos]){
         ax = pWork->pokeIconMark[line][pos].x-5;
         ay = pWork->pokeIconMark[line][pos].y-8;
+        if(ax < 0){
+          ax = ax - 8; //BTS6154 マイナスは下の割り算で正しくなくなる
+        }
         sx = ax / 8;
         sy = ay / 8;
         if((sx <= x) && ((sx + 3) > x)){
           if((sy <= y) && ((sy + 3) > y)){
- //           OS_TPrintf("%d %d %d %d\n",x,y,ax,ay);
+//            OS_TPrintf("%d %d %d %d  %d %d\n",x,y,ax,ay,sx,sy);
             return TRUE;
           }
         }
