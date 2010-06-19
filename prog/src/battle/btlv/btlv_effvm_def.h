@@ -397,12 +397,18 @@
 #define BTLEFF_CAPTURE_BALL_ATTACK  ( 9 )
 
 //ゲージ表示／非表示
-#define BTLEFF_GAUGE_DRAW_OFF ( 0 )
-#define BTLEFF_GAUGE_DRAW_ON  ( 1 )
+#define BTLEFF_GAUGE_DRAW_OFF       ( 0 )
+#define BTLEFF_GAUGE_DRAW_ON        ( 1 )
+#define BTLEFF_GAUGE_MOVE_DRAW_OFF  ( 2 )
+#define BTLEFF_GAUGE_MOVE_DRAW_ON   ( 3 )
 
-#define BTLEFF_GAUGE_MINE   ( 0 )
-#define BTLEFF_GAUGE_ENEMY  ( 1 )
-#define BTLEFF_GAUGE_ALL    ( 2 )
+#define BTLEFF_GAUGE_MINE           ( 0 )
+#define BTLEFF_GAUGE_ENEMY          ( 1 )
+#define BTLEFF_GAUGE_ALL            ( 2 )
+#define BTLEFF_GAUGE_ATTACK         ( 3 )
+#define BTLEFF_GAUGE_DEFENCE        ( 4 )
+
+#define BTLEFF_GAUGE_MOVE_VALUE     ( 128 )
 
 #endif //__BTLV_EFFVM_DEF_H_
 
@@ -1965,10 +1971,10 @@ ex)
  * @param	flag		表示／非表示フラグ
  * @param	side		操作する側
  *
- * #param	COMBOBOX_TEXT 非表示  表示
- * #param	COMBOBOX_VALUE  BTLEFF_GAUGE_DRAW_OFF BTLEFF_GAUGE_DRAW_ON
- * #param	COMBOBOX_TEXT すべて  自分側  相手側
- * #param	COMBOBOX_VALUE  BTLEFF_GAUGE_ALL  BTLEFF_GAUGE_MINE BTLEFF_GAUGE_ENEMY
+ * #param	COMBOBOX_TEXT 非表示  表示  移動させて非表示  移動させて表示
+ * #param	COMBOBOX_VALUE  BTLEFF_GAUGE_DRAW_OFF BTLEFF_GAUGE_DRAW_ON  BTLEFF_GAUGE_MOVE_DRAW_OFF  BTLEFF_GAUGE_MOVE_DRAW_ON
+ * #param	COMBOBOX_TEXT すべて  自分側  相手側  攻撃側  防御側
+ * #param	COMBOBOX_VALUE  BTLEFF_GAUGE_ALL  BTLEFF_GAUGE_MINE BTLEFF_GAUGE_ENEMY  BTLEFF_GAUGE_ATTACK BTLEFF_GAUGE_DEFENCE
  */
 //======================================================================
 	.macro  GAUGE_VANISH flag, side

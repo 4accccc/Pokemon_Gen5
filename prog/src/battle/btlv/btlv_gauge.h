@@ -53,6 +53,7 @@ extern  void              BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos 
 extern  void              BTLV_GAUGE_CalcEXPLevelUp( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BtlvMcssPos pos );
 extern  BOOL              BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off, int side );
+extern  void              BTLV_GAUGE_SetDrawEnableByPos( BTLV_GAUGE_WORK* bgw, BOOL on_off, BtlvMcssPos pos );
 extern  BOOL              BTLV_GAUGE_CheckExist( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 extern  BOOL              BTLV_GAUGE_CheckAppearFlag( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos );

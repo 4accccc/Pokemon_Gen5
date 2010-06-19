@@ -1090,6 +1090,19 @@ void  BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off, int side )
 
 //============================================================================================
 /**
+ * @brief  ゲージ表示/非表示（場所指定）
+ *
+ * @param[in] on_off  表示／非表示フラグ
+ * @param[in] pos     操作する立ち位置
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetGaugeDrawEnableByPos( BOOL on_off, BtlvMcssPos pos )
+{
+  BTLV_GAUGE_SetDrawEnableByPos( bew->bgw, on_off, pos );
+}
+
+//============================================================================================
+/**
  * @brief  ゲージにステータスアイコンを表示
  *
  * @param[in] sick  セットする状態異常

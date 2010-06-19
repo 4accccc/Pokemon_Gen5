@@ -3358,14 +3358,101 @@ static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_GAUGE_VANISH( VMHANDLE *vmh, void *context_work )
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BOOL flag = ( BOOL )VMGetU32( vmh );
-  BOOL side = ( int )VMGetU32( vmh );
+  int flag = ( int )VMGetU32( vmh );
+  int side = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_GAUGE_VANISH\n");
 #endif DEBUG_OS_PRINT
 
-  BTLV_EFFECT_SetGaugeDrawEnable( flag, side );
+  if( ( flag == BTLEFF_GAUGE_DRAW_OFF ) ||
+      ( flag == BTLEFF_GAUGE_DRAW_ON ) )
+  { 
+    switch( side ){ 
+    case BTLEFF_GAUGE_ATTACK:
+      BTLV_EFFECT_SetGaugeDrawEnableByPos( flag, bevw->attack_pos );
+      break;
+    case BTLEFF_GAUGE_DEFENCE:
+      { 
+        BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+        int   pos_cnt = EFFVM_GetPokePosition( bevw, BTLEFF_POKEMON_SIDE_DEFENCE, pos );
+
+        //立ち位置情報がないときは、コマンド実行しない
+        if( pos_cnt )
+        {
+          int i;
+
+          for( i = 0 ; i < pos_cnt ; i++ )
+          {
+            BTLV_EFFECT_SetGaugeDrawEnableByPos( flag, pos[ pos_cnt ] );
+          }
+        }
+      }
+      break;
+    default:
+      BTLV_EFFECT_SetGaugeDrawEnable( flag, side );
+      break;
+    }
+  }
+  else
+  { 
+    BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+    int pos_cnt = 0;
+    int i;
+    switch( side ){ 
+    case BTLEFF_GAUGE_MINE:
+      for( i = BTLV_MCSS_POS_AA ; i < BTLV_MCSS_POS_MAX ; i += 2 )
+      { 
+        if( BTLV_EFFECT_CheckExist( i ) )
+        { 
+          pos[ pos_cnt ] = i;
+          pos_cnt++;
+        }
+      }
+      break;
+    case BTLEFF_GAUGE_ENEMY:
+      for( i = BTLV_MCSS_POS_BB ; i < BTLV_MCSS_POS_MAX ; i += 2 )
+      { 
+        if( BTLV_EFFECT_CheckExist( i ) )
+        { 
+          pos[ pos_cnt ] = i;
+          pos_cnt++;
+        }
+      }
+      break;
+    case BTLEFF_GAUGE_ALL:
+      for( i = BTLV_MCSS_POS_AA ; i < BTLV_MCSS_POS_MAX ; i++ )
+      { 
+        if( BTLV_EFFECT_CheckExist( i ) )
+        { 
+          pos[ pos_cnt ] = i;
+          pos_cnt++;
+        }
+      }
+      break;
+    case BTLEFF_GAUGE_ATTACK:
+      pos_cnt = 1;
+      pos[ 0 ] = bevw->attack_pos;
+      break;
+    case BTLEFF_GAUGE_DEFENCE:
+      pos_cnt = EFFVM_GetPokePosition( bevw, BTLEFF_POKEMON_SIDE_DEFENCE, pos );
+      break;
+    }
+    //立ち位置情報がないときは、コマンド実行しない
+    if( pos_cnt )
+    {
+      for( i = 0 ; i < pos_cnt ; i++ )
+      {
+        GFL_CLACTPOS  ofs = { 0, 0 };
+        ofs.x = ( flag == BTLEFF_GAUGE_MOVE_DRAW_OFF ) ? BTLEFF_GAUGE_MOVE_VALUE : -16;
+        if( pos[ i ] & 1 )
+        { 
+          ofs.x *= -1;
+        }
+        BTLV_GAUGE_SetPos( BTLV_EFFECT_GetGaugeWork(), pos[ i ], &ofs );
+      }
+    }
+  }
 
   return bevw->control_mode;
 }

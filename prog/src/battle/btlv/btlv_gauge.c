@@ -1085,24 +1085,38 @@ void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off, int side )
 
   for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
   { 
-    bgw->bgcl[ pos ].gauge_draw_enable = on_off;
     if( ( ( side == BTLEFF_GAUGE_ALL ) || ( bgw->bgcl[ pos ].gauge_dir == side ) ) &&
           ( bgw->bgcl[ pos ].gauge_enable ) )
     { 
-      GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].base_clwk, on_off );
-      set_hp_gauge_draw( bgw, pos, on_off );
-      if( bgw->bgcl[ pos ].exp_clwk )
-      { 
-        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].exp_clwk, on_off );
-      }
-      if( bgw->bgcl[ pos ].status_clwk )
-      { 
-        u16 sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
-        if( sick_anm != APP_COMMON_ST_ICON_POKERUS )
-        { 
-          GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, on_off );
-        }
-      }
+      BTLV_GAUGE_SetDrawEnableByPos( bgw, on_off, pos );
+    }
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  ゲージ表示/非表示
+ *
+ *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] on_off TRUE:表示 FALSE:非表示
+ *  @param[in] pos    操作する立ち位置
+ */
+//============================================================================================
+void  BTLV_GAUGE_SetDrawEnableByPos( BTLV_GAUGE_WORK* bgw, BOOL on_off, BtlvMcssPos pos )
+{
+  bgw->bgcl[ pos ].gauge_draw_enable = on_off;
+  GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].base_clwk, on_off );
+  set_hp_gauge_draw( bgw, pos, on_off );
+  if( bgw->bgcl[ pos ].exp_clwk )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].exp_clwk, on_off );
+  }
+  if( bgw->bgcl[ pos ].status_clwk )
+  { 
+    u16 sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
+    if( sick_anm != APP_COMMON_ST_ICON_POKERUS )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, on_off );
     }
   }
 }
