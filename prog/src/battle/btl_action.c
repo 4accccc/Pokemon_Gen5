@@ -18,6 +18,16 @@ void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos )
   p->fight.targetPos = targetPos;
   p->fight.waza = waza;
 }
+void BTL_ACTION_ChangeFightTargetPos( BTL_ACTION_PARAM* p, u8 nextTargetPos )
+{
+  if( p->gen.cmd == BTL_ACTION_FIGHT )
+  {
+    if( nextTargetPos != BTL_POS_NULL ){
+      p->fight.targetPos = nextTargetPos;
+    }
+  }
+}
+
 // たたかうアクション -> ワザ説明モードへ
 void BTL_ACTION_FightParamToWazaInfoMode( BTL_ACTION_PARAM* p )
 {

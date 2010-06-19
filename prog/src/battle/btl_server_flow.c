@@ -76,7 +76,7 @@ static void scproc_ActStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlA
 static void scEvent_ActProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
+static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID, u8 targetPokeID );
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza );
 static BOOL ActOrder_SendLast( BTL_SVFLOW_WORK* wk, u8 pokeID );
@@ -2018,11 +2018,15 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
  *  ※割り込んで即座に実行（現状は“おいうち”にのみ使用）
  */
 //--------------------------------------------------------------
-static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
+static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID, u8 targetPokeID )
 {
   ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, intrPokeID );
-  if( actOrder && (actOrder->fDone == FALSE) ){
+  if( actOrder && (actOrder->fDone == FALSE) )
+  {
+    BtlPokePos  targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
     BTL_N_Printf( DBGSTR_SVFL_ActIntr, actOrder, BPP_GetID(actOrder->bpp));
+
+    BTL_ACTION_ChangeFightTargetPos( &actOrder->action, targetPos );
     ActOrder_Proc( wk, actOrder );
     return TRUE;
   }
@@ -2834,7 +2838,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
       wk->fMemberOutIntr = TRUE;
       for(i=0; i<intrPokeCount; ++i)
       {
-        ActOrder_IntrProc( wk, wk->MemberOutIntrPokeID[i] );
+        ActOrder_IntrProc( wk, wk->MemberOutIntrPokeID[i], BPP_GetID(outPoke) );
         if( BPP_IsDead(outPoke) ){
           break;
         }
@@ -6948,9 +6952,11 @@ static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
       }
     }
 
-    if( !fSucceed ){
-      // 既にターゲットが無くなっている->しかしうまく決まらなかった
-      scPut_WazaFail( wk, attacker, waza );
+    if( !fSucceed )
+    {
+      if( wk->fWazaFailMsgDisped == FALSE ){
+        scPut_WazaFail( wk, attacker, waza );
+      }
     }
   }
   else{
@@ -6984,7 +6990,8 @@ static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
     BOOL fDefaultMsg = (HANDEX_STR_IsEnable(&wk->strParam) == FALSE );
     if( scproc_AddSickRoot(wk, target, attacker, sick, sickCont, fAlmost, fDefaultMsg) )
     {
-      if( !fDefaultMsg ){
+      if( !fDefaultMsg )
+      {
         handexSub_putString( wk, &wk->strParam );
         HANDEX_STR_Clear( &wk->strParam );
       }
@@ -10231,21 +10238,24 @@ static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
     case WAZASICK_NEMURI: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriAlready, pokeID ); break;
     case WAZASICK_KOORI:  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriAlready, pokeID ); break;
     case WAZASICK_KONRAN: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KonranAlready, pokeID ); break;
-    case WAZASICK_HOROBINOUTA: break; // ほろびのうたは何もしない
+    case WAZASICK_KAIHUKUHUUJI: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_WazaFailPoke, pokeID ); break;
+    case WAZASICK_HOROBINOUTA: return; // ほろびのうたは何もしない
     default:
       SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
     }
+    wk->fWazaFailMsgDisped = TRUE;
     return;
 
   case BTL_ADDSICK_FAIL_NO_EFFECT:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, pokeID );
+    wk->fWazaFailMsgDisped = TRUE;
     return;
 
   default:
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+    wk->fWazaFailMsgDisped = TRUE;
     break;
   }
-
-  SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
 }
 //--------------------------------------------------------------------------
 /**
@@ -10463,13 +10473,13 @@ static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* o
 {
   u32 i;
 
-  // １度、未処理ポケモンの全ワザハンドラを登録しておく
+  // １度、未処理ポケモンの「おいうち」ワザハンドラを登録しておく
   for(i=0; i<wk->numActOrder; ++i)
   {
     if( (wk->actOrder[i].bpp != outPoke) && (wk->actOrder[i].fDone == FALSE) )
     {
       WazaID waza = ActOrder_GetWazaID( &wk->actOrder[i] );
-      if( waza != WAZANO_NULL ){
+      if( waza == WAZANO_OIUTI ){
         if( BTL_HANDLER_Waza_Add( wk->actOrder[i].bpp, waza ) ){
           wk->actOrder[i].fIntrCheck = TRUE;
         }
@@ -10484,13 +10494,13 @@ static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* o
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MENBERCHANGE_INTR );
   BTL_EVENTVAR_Pop();
 
-  // 未処理ポケモンの全ワザハンドラを削除
+  // 未処理ポケモンの「おいうち」ワザハンドラを削除
   for(i=0; i<wk->numActOrder; ++i)
   {
     if( wk->actOrder[i].fIntrCheck)
     {
       WazaID waza = ActOrder_GetWazaID( &wk->actOrder[i] );
-      if( waza != WAZANO_NULL ){
+      if( waza == WAZANO_OIUTI ){
         BTL_HANDLER_Waza_RemoveForce( wk->actOrder[i].bpp, waza );
       }
       wk->actOrder[i].fIntrCheck = FALSE;

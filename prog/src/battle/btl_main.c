@@ -2559,7 +2559,7 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
     #ifdef DEBUG_ONLY_FOR_hudson
     // 逃げれるようにする
     if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
-        HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) || 
+        HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) ||
         HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
     {
       return BTL_ESCAPE_MODE_WILD;
@@ -3637,7 +3637,7 @@ u8 BTL_MAIN_GetPlayerFriendCleintID( const BTL_MAIN_MODULE* wk )
   return BTL_MAIN_GetFriendCleintID( wk, wk->myClientID );
 }
 /**
- *  存在するなら指定クライアントのの味方クライアントIDを返す（存在しない場合 BTL_CLIENTID_NULL ）
+ *  存在するなら指定クライアントの味方クライアントIDを返す（存在しない場合 BTL_CLIENTID_NULL ）
  */
 u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk, u8 clientID )
 {

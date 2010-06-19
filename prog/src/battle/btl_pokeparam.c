@@ -77,10 +77,11 @@ typedef struct {
   u16   defaultTokusei;
   u8    level;
   u8    myID;
-  u8    defaultFormNo;
-  u8    fHensin     : 1;
-  u8    fFakeEnable : 1;
-  u8    fBtlIn      : 1;
+  u8    mons_pow;     ///< 攻撃種族値
+  u8    defaultFormNo : 5;
+  u8    fHensin       : 1;
+  u8    fFakeEnable   : 1;
+  u8    fBtlIn        : 1;
 
   BPP_SICK_CONT   sickCont[ WAZASICK_MAX ];
   u8  wazaSickCounter[ WAZASICK_MAX ];
@@ -235,8 +236,11 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( POKEMON_PARAM* pp, u8 pokeID, HEAPID heapI
   bpp->coreParam.defaultFormNo = PP_Get( pp, ID_PARA_form_no, NULL );
   bpp->coreParam.defaultTokusei = PP_Get( pp, ID_PARA_speabino, 0 );
   bpp->coreParam.level = PP_Get( pp, ID_PARA_level, 0 );
+  bpp->coreParam.mons_pow = POKETOOL_GetPersonalParam( bpp->coreParam.monsno, bpp->coreParam.defaultFormNo, POKEPER_ID_basic_pow );
 
   setupBySrcData( bpp, pp, TRUE );
+
+
 
   // 所有ワザデータ初期化
   bpp->wazaCnt = WazaWorkSys_SetupBySrcPP( bpp, pp, TRUE );
@@ -1382,6 +1386,7 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
 
   case BPP_HP:              return bpp->coreParam.hp;
   case BPP_MAX_HP:          return bpp->coreParam.hpMax;
+  case BPP_MONS_POW:        return bpp->coreParam.mons_pow;
 
   case BPP_TOKUSEI_EFFECTIVE:
     if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){

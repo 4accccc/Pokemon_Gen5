@@ -555,6 +555,8 @@ static void handler_Tedasuke_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_Tedasuke_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_FukuroDataki( u32* numElems );
 static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FukuroDataki_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BTL_POKEPARAM* common_FukuroDataki_GetParam( BTL_SVFLOW_WORK* flowWk, u8 myPokeID, u8 idx );
 static const BtlEventHandlerTable*  ADD_Nekodamasi( u32* numElems );
 static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_AsaNoHizasi( u32* numElems );
@@ -3239,18 +3241,9 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
   if( BTL_SVFTOOL_GetThisTurnAction(flowWk, pokeID, &action) )
   {
-    BOOL fIntr = FALSE;
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
-    // シングル戦の場合、ターゲット位置がNULLになっているので必ず有効にしてしまう
-    if( BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_SINGLE ){
-      fIntr = TRUE;
-    }else{
-      u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, action.fight.targetPos );
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) == targetPokeID ){
-        fIntr = TRUE;
-      }
-    }
-    if( fIntr )
+    if( !BTL_MAINUTIL_IsFriendPokeID(targetPokeID, pokeID) )
     {
       BTL_SVFTOOL_AddMemberOutIntr( flowWk, pokeID );
     }
@@ -8109,41 +8102,102 @@ static void handler_Tedasuke_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_FukuroDataki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_HIT_COUNT,  handler_FukuroDataki },    // 未分類ワザハンドラ
+    { BTL_EVENT_WAZA_HIT_COUNT,  handler_FukuroDataki      },  // ワザヒット回数計算ハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE, handler_FukuroDataki_Pow  },  // ワザ威力チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ワザヒット回数計算ハンドラ
 static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
     const BTL_POKEPARAM* bpp;
     u32 cnt_max, cnt, i;
 
-    cnt_max = BTL_PARTY_GetMemberCount( party );
-    cnt = 0;
-    for(i=0; i<cnt_max; ++i)
+    for(i=cnt=0; i<BTL_PARTY_MEMBER_MAX; ++i)
     {
-      bpp = BTL_PARTY_GetMemberDataConst( party, i );
-      if( BPP_GetID(bpp) == pokeID )
-      {
-        ++cnt;
-      }
-      else if(  (BPP_IsFightEnable(bpp))
-      &&        (BPP_GetPokeSick(bpp) == POKESICK_NULL)
-      ){
+      if( common_FukuroDataki_GetParam(flowWk, pokeID, i) != NULL ){
         ++cnt;
       }
     }
+
+    // 0ということは無いハズだが念のため
     if( cnt == 0 ){
       cnt = 1;
     }
-    if( cnt ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, cnt );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, cnt );
+
+    // 威力計算用Indexとしてクリアしておく
+    work[0] = 0;
+  }
+}
+// ワザ威力チェックハンドラ
+static void handler_FukuroDataki_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = common_FukuroDataki_GetParam( flowWk, pokeID, work[0] );
+
+    // NULLということは無いハズだが念のため
+    if( bpp == NULL ){
+      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    }
+    ++(work[0]);
+    // 有り得ないハズだがねんのため
+    if( work[0] >= BTL_PARTY_MEMBER_MAX ){
+      work[0] = 0;
+    }
+
+    {
+      u32 pow = BPP_GetValue( bpp, BPP_MONS_POW );
+      pow = 5 + (pow / 10);
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
     }
   }
+}
+/**
+ *  回数増加＆威力計算に使えるメンバーのbppポインタ取得
+ */
+static const BTL_POKEPARAM* common_FukuroDataki_GetParam( BTL_SVFLOW_WORK* flowWk, u8 myPokeID, u8 idx )
+{
+  const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, myPokeID );
+  const BTL_POKEPARAM* bpp;
+
+  u32 memberCnt, cnt, i;
+  BOOL fEnable;
+
+  memberCnt = BTL_PARTY_GetMemberCount( party );
+  if( idx >= memberCnt ){
+    return NULL;
+  }
+
+  for(i=0; i<memberCnt; ++i)
+  {
+    fEnable = FALSE;
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+
+    // 自分は無条件に有効
+    if( BPP_GetID(bpp) == myPokeID )
+    {
+      fEnable = TRUE;
+    }
+    else if(  (BPP_IsFightEnable(bpp))
+    &&        (BPP_GetPokeSick(bpp) == POKESICK_NULL)
+    ){
+      fEnable = TRUE;
+    }
+
+    if( fEnable )
+    {
+      if( idx == 0 ){
+        return bpp;
+      }
+      --idx;
+    }
+  }
+  return NULL;
 }
 
 

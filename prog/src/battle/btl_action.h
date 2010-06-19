@@ -92,6 +92,8 @@ typedef union {
 // ‚½‚½‚©‚¤ƒAƒNƒVƒ‡ƒ“
 extern void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos );
 
+extern void BTL_ACTION_ChangeFightTargetPos( BTL_ACTION_PARAM* p, u8 nextTargetPos );
+
 extern void BTL_ACTION_FightParamToWazaInfoMode( BTL_ACTION_PARAM* p );
 
 extern BOOL BTL_ACTION_IsWazaInfoMode( const BTL_ACTION_PARAM* p );
