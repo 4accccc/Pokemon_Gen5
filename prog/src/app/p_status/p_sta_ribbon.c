@@ -74,7 +74,7 @@
 #define PSTATUS_RIBBON_INFO_STR_Y ( 0+ PSTATUS_STR_OFS_Y)
 
 #define PSTATUS_RIBBON_ICON_X ( 128 )
-#define PSTATUS_RIBBON_ICON_Y ( 88 )
+#define PSTATUS_RIBBON_ICON_Y ( 100 )
 
 //======================================================================
 //	enum
