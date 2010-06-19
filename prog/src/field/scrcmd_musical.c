@@ -639,7 +639,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
 
       STRBUF *tmpBuf = GFL_STR_CreateBuffer( MUSICAL_PROGRAM_NAME_MAX , heapId );
 
-      GFL_STR_SetStringCodeOrderLength( tmpBuf , MUSICAL_SAVE_GetDistributTitle(musSave) , MUSICAL_PROGRAM_NAME_MAX );
+      GFL_STR_SetStringCodeOrderLength( tmpBuf , MUSICAL_SAVE_GetDistributTitle(musSave) , MUSICAL_PROGRAM_NAME_MAX+EOM_SIZE );
 
       WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
 
