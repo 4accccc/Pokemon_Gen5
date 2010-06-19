@@ -1500,6 +1500,7 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcInit( GFL_PROC * proc, int * seq , void *p
   MB_CAPTURE_WORK *work;
   MB_CAPTURE_INIT_WORK *initWork;
   
+#if PM_DEBUG
   if( pwk == NULL )
   {
 //マルチブート用きり分け
@@ -1532,6 +1533,7 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcInit( GFL_PROC * proc, int * seq , void *p
     work->initWork = initWork;
   }
   else
+#endif //PM_DEBUG
   {
     initWork = pwk;
     GFL_HEAP_CreateHeap( initWork->parentHeap , HEAPID_MB_BOX, 0x60000 );

@@ -29,7 +29,9 @@ typedef enum {
   CARD_TYPE_DP,   //ダイアモンド＆パール
   CARD_TYPE_PT,   //プラチナ
   CARD_TYPE_GS,   //ゴールド＆シルバー
+#if PM_DEBUG
   CARD_TYPE_DUMMY,  //MBテストダミー
+#endif
   CARD_TYPE_INVALID,
 }DLPLAY_CARD_TYPE;
 

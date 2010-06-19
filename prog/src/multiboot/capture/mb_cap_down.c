@@ -198,6 +198,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
     const DLPLAY_CARD_TYPE cardType = MB_CAPTURE_GetCardType( capWork );
     ARCHANDLE* pokeArc = MB_CAPTURE_GetPokeArcHandle( capWork );
 
+#if PM_DEBUG
     if( cardType == CARD_TYPE_DUMMY )
     {
       downWork->cellResPokePlt = GFL_CLGRP_PLTT_RegisterComp( pokeArc , 
@@ -205,6 +206,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
             MB_CAPTURE_PAL_SUB_OBJ_POKE*32 , heapId  );
     }
     else
+#endif
     {
       downWork->cellResPokePlt = GFL_CLGRP_PLTT_RegisterEx( pokeArc , 
             MB_ICON_GetPltResId( cardType ) , CLSYS_DRAW_SUB , 

@@ -187,7 +187,9 @@ void MB_SEL_POKE_SetPPP( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , POKEM
     if( PPP_Get( pokeWork->ppp , ID_PARA_monsno , NULL ) == MONSNO_GIRATHINA && 
         PPP_Get( pokeWork->ppp , ID_PARA_item , NULL ) == 112 ) //”’‹à‹Ê
     {
+#if PM_DEBUG
       if( type != CARD_TYPE_DUMMY )
+#endif
       {
         resId = 540;  //NARC_poke_icon_poke_icon_509_01_NCGR
       }

@@ -735,6 +735,7 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
     const DLPLAY_CARD_TYPE type = work->initWork->cardType;
     work->iconArcHandle = MB_ICON_GetArcHandle( work->heapId , type );
     OS_TPrintf("[%d]\n",GFL_ARC_GetDataFileCntByHandle(work->iconArcHandle));
+#if PM_DEBUG
     if( type == CARD_TYPE_DUMMY )
     {
       work->cellResIdx[MSCR_PLT_POKEICON] = GFL_CLGRP_PLTT_RegisterComp( work->iconArcHandle , 
@@ -749,6 +750,7 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
                                   work->heapId  );
     }
     else
+#endif
     {
       
       work->cellResIdx[MSCR_PLT_POKEICON] = GFL_CLGRP_PLTT_Register( work->iconArcHandle , 
@@ -1795,6 +1797,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   MB_SELECT_WORK *work;
   MB_SELECT_INIT_WORK *initWork;
   
+#if PM_DEBUG
   if( pwk == NULL )
   {
 //マルチブート用きり分け
@@ -1872,6 +1875,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     work->initWork = initWork;
   }
   else
+#endif //PM_DEBUG
   {
     initWork = pwk;
     GFL_HEAP_CreateHeap( initWork->parentHeap , HEAPID_MB_BOX, 0x40000 );

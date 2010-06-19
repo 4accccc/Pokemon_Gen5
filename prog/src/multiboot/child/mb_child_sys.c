@@ -382,12 +382,14 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     work->dataWork = MB_DATA_InitSystem( work->heapId );
     work->cardType = MB_DATA_GetCardType( work->dataWork );
     MB_DATA_ResetSaveLoad( work->dataWork );
+#if PM_DEBUG
     if( work->cardType == CARD_TYPE_DUMMY )
     {
       MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_DEB_01 );
       work->state = MCS_SELECT_ROM;
     }
     else
+#endif
     if( work->cardType == CARD_TYPE_INVALID )
     {
       //ROMà·Ç§ÅI

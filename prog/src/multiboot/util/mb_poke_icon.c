@@ -71,9 +71,11 @@ ARCHANDLE* MB_ICON_GetArcHandle( HEAPID heapId , const DLPLAY_CARD_TYPE cardType
   case CARD_TYPE_GS:   //ゴールド＆シルバー
     arcHandle = GFL_ARC_OpenDataHandleByFilePath("child_rom:/a/0/2/0",heapId);
     break;
+#if PM_DEBUG
   case CARD_TYPE_DUMMY:  //MBテストダミー
     arcHandle = GFL_ARC_OpenDataHandle(ARCID_MB_SELECT,heapId);
     break;
+#endif
   }
 #endif  //USE_DUMMY_ICON
 #endif //MULTI_BOOT_MAKE
@@ -101,9 +103,11 @@ u32 MB_ICON_GetPltResId( const DLPLAY_CARD_TYPE cardType )
   	//NARC_poke_icon_poke_icon_NCLR = 0,
     return 0;
     break;
+#if PM_DEBUG
   case CARD_TYPE_DUMMY:  //MBテストダミー
     return NARC_mb_select_gra_icon_dummy_NCLR;
     break;
+#endif
   }
   return 0;
 #endif //MULTI_BOOT_MAKE
@@ -125,9 +129,11 @@ u32 MB_ICON_GetCharResId( POKEMON_PASO_PARAM *ppp , const DLPLAY_CARD_TYPE cardT
   case CARD_TYPE_GS:   //ゴールド＆シルバー
     return MB_ICON_GetCharRes_Func(ppp);
     break;
+#if PM_DEBUG
   case CARD_TYPE_DUMMY:  //MBテストダミー
     return NARC_mb_select_gra_icon_dummy_NCGR;
     break;
+#endif
   }
   return 0;
 
@@ -151,9 +157,11 @@ u32 MB_ICON_GetCellResId( const DLPLAY_CARD_TYPE cardType )
   	//NARC_poke_icon_poke_icon_anm_NCER = 4,
     return 4;
     break;
+#if PM_DEBUG
   case CARD_TYPE_DUMMY:  //MBテストダミー
     return NARC_mb_select_gra_icon_dummy_NCER;
     break;
+#endif
   }
   return 0;
 #endif //MULTI_BOOT_MAKE
@@ -177,9 +185,11 @@ u32 MB_ICON_GetAnmResId( const DLPLAY_CARD_TYPE cardType )
   	//NARC_poke_icon_poke_icon_anm_NANR = 3,
     return 3;
     break;
+#if PM_DEBUG
   case CARD_TYPE_DUMMY:  //MBテストダミー
     return NARC_mb_select_gra_icon_dummy_NANR;
     break;
+#endif
   }
   return 0;
 #endif //MULTI_BOOT_MAKE

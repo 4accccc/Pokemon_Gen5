@@ -106,6 +106,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     {
       dataWork->cardType = CARD_TYPE_GS;
     }
+#if PM_DEBUG
     else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
              STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
              STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
@@ -115,6 +116,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
       dataWork->isDummyCard = TRUE;
       dataWork->cardType = CARD_TYPE_DUMMY;
     }
+#endif
   }
   
   return dataWork;
