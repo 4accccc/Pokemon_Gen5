@@ -7,12 +7,14 @@ static void _vctcheckCommon( WIFIP2PMATCH_WORK *pWork)
     GFL_NET_DWC_StartVChat();
     DWCRAP_StartVChat();
     _changeBGMVol( pWork,_VOL_DEFAULT/3 );
+    WIFI_STATUS_SetUseVChat(pWork->pMatch, 1);
   }
-#if PM_DEBUG
   else{
+#if PM_DEBUG
     NET_PRINT("VCTOFF %d %d\n",pWork->pParentWork->VCTOn[0] ,pWork->pParentWork->VCTOn[1] );
-  }
 #endif
+    WIFI_STATUS_SetUseVChat(pWork->pMatch, 0);
+  }
 }
 
 
@@ -657,7 +659,7 @@ static int _playerDirectEndCall2( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32 status,gamemode;
-
+  int retSeq = seq;
 
   WIFI_STATUS_ResetVChatMac(wk->pMatch);
   wk->DirectMacSet = 0;
@@ -676,7 +678,6 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
     gamemode = WIFI_GAME_TRADE;
     break;
   }
-  _myStatusChange(wk, status,gamemode);  // 接続中になる
 
   switch(wk->directmode){
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
@@ -696,7 +697,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
 
       wk->endSeq = gamemode;
 
-      return SEQ_OUT;            //終了シーケンスへ
+      retSeq = SEQ_OUT;            //終了シーケンスへ
     }
     break;
   case WIFIP2PMATCH_PLAYERDIRECT_TRADE:
@@ -707,11 +708,12 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
 
       wk->endSeq = gamemode;
 
-      return SEQ_OUT;            //終了シーケンスへ
+      retSeq = SEQ_OUT;            //終了シーケンスへ
     }
     break;
   }
-  return seq;
+  _myStatusChange(wk, status,gamemode);  // 接続中になる
+  return retSeq;
 }
 
 

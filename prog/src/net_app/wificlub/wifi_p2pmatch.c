@@ -3507,6 +3507,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
 
     // ボイスチャット設定
     GFL_NET_DWC_SetVChat(FALSE);// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+    WIFI_STATUS_SetUseVChat(wk->pMatch, WIFI_STATUS_GetVChatStatus(wk->pMatch));
     _friendNameExpand(wk, wk->preConnect);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
     GFL_NET_StateWifiMatchEnd(TRUE);
@@ -3518,6 +3519,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   // 080615 tomoya
   if( (GFL_NET_DWC_IsVChat() == TRUE) && (GFL_NET_DWC_IsNewPlayer() == -1) ){
     GFL_NET_DWC_SetVChat(FALSE);// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+    WIFI_STATUS_SetUseVChat(wk->pMatch, WIFI_STATUS_GetVChatStatus(wk->pMatch));
   }
 
 
