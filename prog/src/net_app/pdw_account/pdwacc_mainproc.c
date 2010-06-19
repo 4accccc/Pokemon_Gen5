@@ -41,6 +41,7 @@ typedef struct {
 typedef enum{
   _WIFI_LOGIN,
   _WIFI_ACCOUNT,
+  _WIFI_ERROR,
   _WIFI_LOGOUT,
   _WIFI_END,
 } _WIFI_STATE_LABEL;
@@ -113,8 +114,12 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
       pWork->state++;
     }
     break;
+  case _WIFI_ERROR:
+    NetErr_DispCall(FALSE);
+    pWork->state++;
+    break;
   case _WIFI_LOGOUT:
-    if(!GFL_NET_IsInit()){
+    if(!GFL_NET_IsInit() || (pWork->pwdaccWork.returnCode == PDWACC_RETURNMODE_ERROR)){
       pWork->login.mode = WIFILOGIN_MODE_ERROR;
       pWork->state = _WIFI_LOGIN;
     }
@@ -126,6 +131,7 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
       GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &pWork->logout);
       pWork->state++;
     }
+    break;
   default:
     return GFL_PROC_RES_FINISH;
   }

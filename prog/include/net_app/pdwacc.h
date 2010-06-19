@@ -31,7 +31,14 @@ typedef struct {
   DWCSvlResult* pSvl;
   HEAPID heapID;
   int type;
+  int returnCode;
 } PDWACC_PROCWORK;
+
+
+typedef enum{
+  PDWACC_RETURNMODE_NONE,
+  PDWACC_RETURNMODE_ERROR,
+} PDWACC_RETURNMODE_ENUM;
 
 
 extern const GFL_PROC_DATA PDW_ACC_ProcData;

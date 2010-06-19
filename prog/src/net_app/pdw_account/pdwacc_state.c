@@ -29,6 +29,7 @@
 #include "savedata/system_data.h"
 #include "pdwacc_local.h"
 #include "net/nhttp_rap.h"
+#include "net/dwc_error.h"
 //#include "../../field/event_pdwacc.h"
 #include "savedata/dreamworld_data.h"
 //#include "pdwacc_obj_NANR_LBLDEFS.h"
@@ -119,6 +120,7 @@ struct _PDWACC_WORK {
   char tempbuffer[30];
   BOOL bEnd;
   BOOL saveFlg;
+  BOOL bSaveDataAsync;
   u32 ErrorNo;   ///ƒGƒ‰[‚ª‚ ‚Á‚½ê‡‚Ì”Ô†
 };
 
@@ -208,6 +210,7 @@ static void _saveStart3(PDWACC_WORK* pWork)
 
   sr = GAMEDATA_SaveAsyncMain(pWork->pGameData);
   if((sr==SAVE_RESULT_OK) || (sr==SAVE_RESULT_NG)){
+    pWork->bSaveDataAsync = FALSE;
     PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_010);
     _CHANGE_STATE(_saveStart4);
   }
@@ -217,8 +220,8 @@ static void _saveStart3(PDWACC_WORK* pWork)
 
 static void _saveStart2(PDWACC_WORK* pWork)
 {
-
   if( PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
+    pWork->bSaveDataAsync=TRUE;
     GAMEDATA_SaveAsyncStart(pWork->pGameData);
     _CHANGE_STATE(_saveStart3);
   }
@@ -549,6 +552,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
     _CHANGE_STATE(_dispAccCode);
     break;
   }
+  pParent->returnCode = PDWACC_RETURNMODE_NONE;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -556,6 +560,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
 
 static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  PDWACC_PROCWORK* pParent = pwk;
   PDWACC_WORK* pWork = mywk;
   StateFunc* state = pWork->state;
   GFL_PROC_RESULT ret = GFL_PROC_RES_FINISH;
@@ -572,6 +577,26 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
   PDWACC_DISP_Main(pWork->pDispWork);
   PDWACC_MESSAGE_Main(pWork->pMessageWork);
 
+
+  if(WIPE_SYS_EndCheck()){
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+      if(pWork->bSaveDataAsync){
+        GAMEDATA_SaveAsyncCancel( pWork->pGameData );
+        pWork->bSaveDataAsync = FALSE;
+      }
+//      if(pWork->errEnd){
+  //      NetErr_DispCall( TRUE );
+//      }
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
+      pParent->returnCode = PDWACC_RETURNMODE_ERROR;
+      ret = GFL_PROC_RES_FINISH;
+    }
+  }
+
+  
   return ret;
 }
 
