@@ -1332,7 +1332,7 @@ static void Rewrite_UpperInformation( LEADERBOARD_WORK *wk, BSUBWAY_LEADER_DATA 
   if( id<(wk->trainer_num)){
   
     // トレーナー名
-    GFL_STR_SetStringCodeOrderLength( strbuf, bData[id].name, PERSON_NAME_SIZE );
+    GFL_STR_SetStringCodeOrderLength( strbuf, bData[id].name, PERSON_NAME_SIZE+EOM_SIZE );
     PRINT_UTIL_PrintColor( &wk->printUtil[LB_BMPWIN_S_NAME], wk->printQue, 
                            0, 0, strbuf, wk->font, LB_COL_WHITE );
     // ランクNO
@@ -1589,7 +1589,7 @@ static void NamePlatePrint_1Page( LEADERBOARD_WORK *wk )
   // プレート描画
   for(i=0;i<num;i++){
     GFL_STR_SetStringCodeOrderLength( strbuf, wk->bSubwayData[i+wk->page*LB_1PAGE_NUM].name,
-                                      PERSON_NAME_SIZE );
+                                      PERSON_NAME_SIZE+EOM_SIZE );
     BgFramePrint( wk, i, strbuf, wk->bSubwayData[i+wk->page*LB_1PAGE_NUM].gender );
   }
   // 表示しなかった残りはプレートをOFFにする
