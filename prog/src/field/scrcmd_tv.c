@@ -294,6 +294,55 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
 
       OS_Printf("レコード1 %d\n",rec1);
       OS_Printf("レコード2 %d\n",rec2);
+
+      //男女別メッセージの場合
+      if (idx < RECORD_TV_SEX_MAX)
+      {
+        //2つのレコードが必要な場合
+        if ( (RecordTbl[idx][0] != NO_REC_ID)&&(RecordTbl[idx][1] != NO_REC_ID) )
+        {
+          //２つのレコードいずれかが０のときは、デフォルトメッセージに変える
+          if ( (rec1==0) || (rec2 == 0))
+          {
+            OS_Printf("両レコードが0なので、デフォルト番組に変更\n");
+            if (msg < RECORD_TV_SEX_MAX ) msg = msg_tv_01_01;
+            else msg = msg_tv_01_12;
+          }
+        }
+        //1つ目のレコードだけ必要な場合(2つ目がNO_REC_IDの場合)
+        else if( RecordTbl[idx][1] == NO_REC_ID )
+        {
+          //1つ目のレコードが０のときは、デフォルトメッセージに変える
+          if ( rec1==0 )
+          {
+            OS_Printf("レコードが0なので、デフォルト番組に変更\n");
+            if (msg < RECORD_TV_SEX_MAX ) msg = msg_tv_01_01;
+            else msg = msg_tv_01_12;
+          }
+        }
+      }
+    }
+    else if ((RECORD_TV_SEX_MAX*2 <= msg)&& (msg<RECORD_TV_SEX_MAX*2+18)){
+      u8 idx = msg - RECORD_TV_SEX_MAX;
+      //タグ展開
+      int rec1 = 0;
+      int rec2 = 0;
+      RECORD * rec = GAMEDATA_GetRecordPtr(gdata);
+      if ( RecordTbl[idx][0] != NO_REC_ID )
+      {
+        rec1 = RECORD_Get(rec, RecordTbl[idx][0]);
+        //タグ展開
+        WORDSET_RegisterNumber( wordset, 1, rec1, RecordTbl[idx][2], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      }
+      if ( RecordTbl[idx][1] != NO_REC_ID )
+      {
+        rec2 = RECORD_Get(rec, RecordTbl[idx][1]);
+        //タグ展開
+        WORDSET_RegisterNumber( wordset, 2, rec2, RecordTbl[idx][3], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      }
+
+      OS_Printf("レコード1 %d\n",rec1);
+      OS_Printf("レコード2 %d\n",rec2);
     }
   }
 #endif  //PM_DEBUG
