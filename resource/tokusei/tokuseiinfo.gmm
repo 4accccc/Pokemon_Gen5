@@ -399,10 +399,10 @@
 	</row>
 
 	<row id="TOKUSEIINFO_001">
-		<language name="JPN" width="216">やせいの　ポケモンが
-よりつき　にくくなる。</language>
-		<language name="JPN_KANJI" width="216">野生の　ポケモンが
-よりつき　にくくなる。</language>
+		<language name="JPN" width="216">くさくて　あいてが
+ひるむ　ことがある。</language>
+		<language name="JPN_KANJI" width="216">臭くて　相手が
+ひるむ　ことがある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_002">
@@ -427,16 +427,16 @@
 	</row>
 
 	<row id="TOKUSEIINFO_005">
-		<language name="JPN" width="216">いちげきひっさつが
-きかない。</language>
-		<language name="JPN_KANJI" width="216">一撃必殺が　効かない。
+		<language name="JPN" width="216">いちげきで
+たおされない</language>
+		<language name="JPN_KANJI" width="216">一撃で　倒されない。
 </language>
 	</row>
 
 	<row id="TOKUSEIINFO_006">
-		<language name="JPN" width="216">だれも　じばくが
+		<language name="JPN" width="216">だれも　ばくはつが
 できなくなる。</language>
-		<language name="JPN_KANJI" width="216">だれも　じばくが
+		<language name="JPN_KANJI" width="216">だれも　爆発が
 できなくなる。</language>
 	</row>
 
