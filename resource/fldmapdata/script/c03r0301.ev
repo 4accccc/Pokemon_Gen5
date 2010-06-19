@@ -22,6 +22,7 @@
 _EVENT_DATA		ev_c03r0301_infomationw_01
 _EVENT_DATA		ev_pos_c03r0301_cleaningm_01
 _EVENT_DATA		ev_bg_c03r0301_statue_01
+_EVENT_DATA		ev_bg_c03r0301_painting_01
 _EVENT_DATA		ev_c03r0301_businessman_01
 _EVENT_DATA_END
 
@@ -147,6 +148,15 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_bg_c03r0301_statue_01
 	_PLAINWIN_MSG_DOWN( msg_c03r0301_statue_01 )
+	_LAST_KEYWAIT()	
+	_PLAINWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* 			ŠG		C03R0301						  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0301_painting_01
+	_PLAINWIN_MSG_DOWN( msg_c03r0301_painting1_01 )
 	_LAST_KEYWAIT()	
 	_PLAINWIN_CLOSE()
 EVENT_END
