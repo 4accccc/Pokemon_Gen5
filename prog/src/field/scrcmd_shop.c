@@ -1765,7 +1765,7 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
   if(wk->payment==SHOP_PAYMENT_MONEY){
     PRINTSYS_PrintColor( bmp,  11*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
   }else{
-    PRINTSYS_PrintColor( bmp,  11*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
+    PRINTSYS_PrintColor( bmp,  9*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
   }
 
   GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_PRICE] );
