@@ -103,93 +103,136 @@ EVENT_START   ev_bc10r0401_boss
 	DEFINE_LOCAL LWK_BATTLECOUNT
 	_WFBC_GET_DATA( WFBC_GET_PARAM_BC_NPC_WIN_NUM, LWK_BATTLECOUNT )
 	
-	//1000人超えていたら
-	IF $LWK_BATTLECOUNT >= 1000 THEN
-	
-		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_07 , BC10R0401_BOSS )
+	//10000人超えていたら
+	IF $LWK_BATTLECOUNT >= 10000 THEN
+		
+		IF FLAG_OFF( FE_BC10R0401_BTL_END ) THEN
+			
+			//セリフ内に勝利数を格納
+			_NUMBER( 0 , LWK_BATTLECOUNT , 5 )
+			
+			//（勝利数）人倒したのか
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_04 , BC10R0401_BOSS )
+			_BALLOONWIN_CLOSE()
+			
+			//プレイヤーネームを格納
+			_PLAYER_NAME(2)
+			//金額を格納
+			DEFINE_LOCAL LWK_MONEY02
+			$LWK_MONEY02 += 10000
+			_NUMBER( 3 , LWK_MONEY02 , 5 )
+			
+			//入手SEプレイ
+			_SE_PLAY( SEQ_SE_SYS_22 )
+			
+			//10000円受け取った！
+			_SYSWIN_MSG( msg_bc10r0401_gentleman_05 , POS_DEFAULT )
+			_SE_WAIT()
+			_AB_KEYWAIT_MARK()
+			_SYSWIN_CLOSE()
+			
+			//終了メッセージ
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_07 , BC10R0401_BOSS )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			//==================================//
+			
+			//初回話しかけ完了
+			_FLAG_SET ( FE_BC10R0401_BTL_END )
+			
+			//==================================//
+		ELSE
+			
+			//終了メッセージ
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_07 , BC10R0401_BOSS )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
 		
 	ELSE
-	
-	ENDIF
-	
-	//初回話しかけかチェック
-	IF FLAG_OFF( FE_BC10R0401_BOSS ) THEN
-	
-		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_01 , BC10R0401_BOSS )
 		
-		//==================================//
+		//初回話しかけかチェック
+		IF FLAG_OFF( FE_BC10R0401_BOSS ) THEN
 		
-		//初回話しかけ完了
-		_FLAG_SET ( FE_BC10R0401_BOSS )
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_01 , BC10R0401_BOSS )
+			
+			//==================================//
+			
+			//初回話しかけ完了
+			_FLAG_SET ( FE_BC10R0401_BOSS )
+			
+			//==================================//
+		ELSE
 		
-		//==================================//
-	ELSE
-	
-	ENDIF
-	
-	//勝利数取得
-	DEFINE_LOCAL LWK_BATTLEWIN
-	_WFBC_GET_DATA( WFBC_GET_PARAM_BC_NPC_WIN_NUM , LWK_BATTLEWIN )
-	//目標数取得
-	DEFINE_LOCAL LWK_BATTLETARGET
-	_WFBC_GET_DATA(  WFBC_GET_PARAM_BC_NPC_WIN_TARGET, LWK_BATTLETARGET )
-	//目標人数を格納
-	_NUMBER( 0 , LWK_BATTLETARGET , 5 )
-	
-	//街には活きがいいのがそろってる
-	_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_02 , BC10R0401_BOSS )
-	
-	//目標数に勝利数が達しているか？チェック
-	
-	//達している
-	IF $LWK_BATTLEWIN >= $LWK_BATTLETARGET THEN
+		ENDIF
 		
-		//セリフ内に勝利数を格納
-		_NUMBER( 0 , LWK_BATTLEWIN , 5 )
-		
-		//（勝利数）人倒したのか
-		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_04 , BC10R0401_BOSS )
-		_BALLOONWIN_CLOSE()
-		
-		//プレイヤーネームを格納
-		_PLAYER_NAME(2)
-		//金額を格納
-		DEFINE_LOCAL LWK_MONEY
-		$LWK_MONEY += 10000
-		_NUMBER( 3 , LWK_MONEY , 5 )
-		
-		//入手SEプレイ
-		_SE_PLAY( SEQ_SE_SYS_22 )
-		
-		//10000円受け取った！
-		_SYSWIN_MSG( msg_bc10r0401_gentleman_05 , POS_DEFAULT )
-		_SE_WAIT()
-		_AB_KEYWAIT_MARK()
-		_SYSWIN_CLOSE()
-		
-		//お金を増やす
-		_ADD_GOLD ( LWK_MONEY )
-		
-		//目標人数を加算
-		_WFBC_ADD_BC_NPC_WIN_TARGET() 
-		//追加された目標人数を取得
+		//勝利数取得
+		DEFINE_LOCAL LWK_BATTLEWIN
+		_WFBC_GET_DATA( WFBC_GET_PARAM_BC_NPC_WIN_NUM , LWK_BATTLEWIN )
+		//目標数取得
+		DEFINE_LOCAL LWK_BATTLETARGET
 		_WFBC_GET_DATA(  WFBC_GET_PARAM_BC_NPC_WIN_TARGET, LWK_BATTLETARGET )
 		//目標人数を格納
-		_NUMBER( 4 , LWK_BATTLETARGET , 5 )
+		_NUMBER( 0 , LWK_BATTLETARGET , 5 )
 		
-		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_06 , BC10R0401_BOSS )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	
-	ELSE
+		//街には活きがいいのがそろってる
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_02 , BC10R0401_BOSS )
+		
+		//目標数に勝利数が達しているか？チェック
+		
+		//達している
+		IF $LWK_BATTLEWIN >= $LWK_BATTLETARGET THEN
+			
+			//セリフ内に勝利数を格納
+			_NUMBER( 0 , LWK_BATTLEWIN , 5 )
+			
+			//（勝利数）人倒したのか
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_04 , BC10R0401_BOSS )
+			_BALLOONWIN_CLOSE()
+			
+			//プレイヤーネームを格納
+			_PLAYER_NAME(2)
+			//金額を格納
+			DEFINE_LOCAL LWK_MONEY
+			$LWK_MONEY += 10000
+			_NUMBER( 3 , LWK_MONEY , 5 )
+			
+			//入手SEプレイ
+			_SE_PLAY( SEQ_SE_SYS_22 )
+			
+			//10000円受け取った！
+			_SYSWIN_MSG( msg_bc10r0401_gentleman_05 , POS_DEFAULT )
+			_SE_WAIT()
+			_AB_KEYWAIT_MARK()
+			_SYSWIN_CLOSE()
+			
+			//お金を増やす
+			_ADD_GOLD ( LWK_MONEY )
+			
+			//目標人数を加算
+			_WFBC_ADD_BC_NPC_WIN_TARGET() 
+			//追加された目標人数を取得
+			_WFBC_GET_DATA(  WFBC_GET_PARAM_BC_NPC_WIN_TARGET, LWK_BATTLETARGET )
+			//目標人数を格納
+			_NUMBER( 4 , LWK_BATTLETARGET , 5 )
+			
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_06 , BC10R0401_BOSS )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ELSE
 
-		//セリフ内に勝利数を格納
-		_NUMBER( 1 , LWK_BATTLEWIN , 5 )
+			//セリフ内に勝利数を格納
+			_NUMBER( 1 , LWK_BATTLEWIN , 5 )
+			
+			//今倒した人数は（勝利数）人か。がんばりな！
+			_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_03 , BC10R0401_BOSS )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 		
-		//今倒した人数は（勝利数）人か。がんばりな！
-		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_03 , BC10R0401_BOSS )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		ENDIF
 	
 	ENDIF
 	
