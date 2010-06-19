@@ -220,14 +220,27 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FI
 //============================================================================================
 BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, const BTLV_SCU* viewSCU, HEAPID heapID )
 {
-  int i;
   u16 tr_type[ 4 ];
+  int i;
+
+  for(i=0; i<NELEMS(tr_type); ++i){
+    tr_type[ i ] = 0;
+  }
 
   if( BTL_MAIN_IsMultiMode( mainModule ) == TRUE )
   {
-    tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
+    u8 myMultiPos = BTL_MAIN_GetPlayerMultiPos( mainModule );
+    u8 myClientID = BTL_MAIN_GetPlayerClientID( mainModule );
+    u8 friendClientID = BTL_MAIN_GetPlayerFriendCleintID( mainModule );
+
+    tr_type[ myMultiPos*2 ] = BTL_MAIN_GetClientTrainerType( mainModule, myClientID );
+    if( friendClientID != BTL_CLIENTID_NULL ){
+      tr_type[ (myMultiPos^1)*2 ] = BTL_MAIN_GetClientTrainerType( mainModule, friendClientID );
+    }
+    TAYA_Printf("@@@@@@myClientID=%d, type=%d, friendClientID=%d, type=%d\n",
+            myClientID, tr_type[myClientID], friendClientID, tr_type[friendClientID]);
+
     tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
-    tr_type[ 2 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerFriendCleintID( mainModule ) );
     tr_type[ 3 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 1 ) );
   }
   else
@@ -287,12 +300,12 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
     }
     bew->bsw  = BTLV_STAGE_Init( besp->rule, bbtzst[ besp->bfs.bgType ].stage_file[ besp->bfs.bgAttr ], season, heapID );
     if( bew->besp.mainModule )
-    { 
+    {
       bew->bfw  = BTLV_FIELD_Init( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ),
                                    bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID );
     }
     else
-    { 
+    {
       bew->bfw  = BTLV_FIELD_Init( FALSE, bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID );
     }
 
@@ -423,8 +436,8 @@ void  BTLV_EFFECT_Main( void )
         {
           VecFx32 pos, target;
 
-          BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &target ); 
-          
+          BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &target );
+
           // カメラが自分／ズームアウト
           if( ( pos.x == 0x00000b33 && pos.y == 0x00005333 && pos.z == 0x000114cd ) ||
               ( pos.x == 0x00008b33 && pos.y == 0x00007b33 && pos.x == 0x00017ccd )
@@ -758,7 +771,7 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
  */
 //=============================================================================================
 void BTLV_EFFECT_HengeShortCut( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
-{ 
+{
   MCSS_ADD_WORK maw;
   BTLV_MCSS_MakeMAW( pp, &maw, vpos );
   BTLV_MCSS_SetMonsNo( bew->bmw, vpos, PP_Get( pp, ID_PARA_monsno, NULL ) );
@@ -893,7 +906,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
     case TRTYPE_HERO:
     case TRTYPE_HEROINE:
       if( BTLV_EFFECT_CheckShooterEnable() )
-      { 
+      {
         trtype += 4;
       }
       break;
@@ -916,13 +929,13 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
     }
   }
   else
-  { 
+  {
     switch( trtype ){
     case TRTYPE_HERO:
     case TRTYPE_HEROINE:
       //シューターモードでは専用の絵に差し替え
       if( BTLV_EFFECT_CheckShooterEnable() )
-      { 
+      {
         trtype += TRTYPE_HERO_S;
       }
       break;
@@ -1324,7 +1337,7 @@ void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side )
  */
 //============================================================================================
 void  BTLV_EFFECT_SetSideChange( BtlvMcssPos pos1, BtlvMcssPos pos2 )
-{ 
+{
   BTLV_MCSS_SetSideChange( bew->bmw, pos1, pos2 );
 }
 
@@ -1749,7 +1762,7 @@ void  BTLV_EFFECT_SetBGMNoCheckPush( int bgm_no )
 {
   //ピンチSEがなっているなら、曲がプッシュされているので、Popする
   if( BTLV_GAUGE_GetPinchBGMFlag( bew->bgw ) == TRUE )
-  { 
+  {
     PMSND_PopBGM();
   }
   BTLV_GAUGE_SetPinchBGMNoCheck( bew->bgw, TRUE );
@@ -1763,7 +1776,7 @@ void  BTLV_EFFECT_SetBGMNoCheckPush( int bgm_no )
  */
 //============================================================================================
 void  BTLV_EFFECT_SetBagMode( BtlBagMode bagMode )
-{ 
+{
   bew->bagMode = bagMode;
 }
 
@@ -1773,7 +1786,7 @@ void  BTLV_EFFECT_SetBagMode( BtlBagMode bagMode )
  */
 //============================================================================================
 BtlBagMode  BTLV_EFFECT_GetBagMode( void )
-{ 
+{
   return bew->bagMode;
 }
 
@@ -1783,7 +1796,7 @@ BtlBagMode  BTLV_EFFECT_GetBagMode( void )
  */
 //============================================================================================
 void  BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE mode )
-{ 
+{
   bew->se_mode = mode;
 }
 
@@ -1793,7 +1806,7 @@ void  BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE mode )
  */
 //============================================================================================
 BTLV_EFFECT_SE_MODE  BTLV_EFFECT_GetSEMode( void )
-{ 
+{
   return bew->se_mode;
 }
 
@@ -1805,11 +1818,11 @@ BTLV_EFFECT_SE_MODE  BTLV_EFFECT_GetSEMode( void )
  */
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckShooterEnable( void )
-{ 
+{
   BOOL  ret = FALSE;
 
   if( bew->besp.mainModule )
-  { 
+  {
     ret = BTL_MAIN_IsShooterEnable( bew->besp.mainModule );
   }
 
@@ -1824,11 +1837,11 @@ BOOL  BTLV_EFFECT_CheckShooterEnable( void )
  */
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckItemEnable( void )
-{ 
+{
   BOOL  ret = FALSE;
 
   if( bew->besp.mainModule )
-  { 
+  {
     ret = BTL_MAIN_IsItemEnable( bew->besp.mainModule );
   }
 
@@ -1843,13 +1856,13 @@ BOOL  BTLV_EFFECT_CheckItemEnable( void )
  */
 //============================================================================================
 void  BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW draw_flag )
-{ 
+{
   BtlvMcssPos pos;
 
   for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
   {
     if( BTLV_MCSS_CheckExist( bew->bmw, pos ) )
-    { 
+    {
       BTLV_MCSS_SetReverseDrawFlag( bew->bmw, pos, draw_flag );
     }
   }
@@ -1962,8 +1975,8 @@ void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
 #endif
   bew->camera_work_execute = cwe;
   if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
-  { 
-    bew->camera_work_seq  = 0; 
+  {
+    bew->camera_work_seq  = 0;
     bew->camera_work_wait = 0;
   }
 }
@@ -1974,15 +1987,15 @@ void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
  */
 //-----------------------------------------------------------------------------
 void  BTLV_EFFECT_SetCameraWorkStop( void )
-{ 
+{
   BTLV_EFFECT_Stop();
-  if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_COMM_WAIT ) && 
+  if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_COMM_WAIT ) &&
       ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) )
-  { 
+  {
     BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_WCS_INIT );
   }
   else
-  { 
+  {
     BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
   }
   bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
@@ -1994,7 +2007,7 @@ void  BTLV_EFFECT_SetCameraWorkStop( void )
  */
 //-----------------------------------------------------------------------------
 void  BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type )
-{ 
+{
   BTLV_EFFECT_Stop();
   bew->camera_work_execute = type;
   bew->camera_work_seq  = 0;
@@ -2003,11 +2016,11 @@ void  BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type )
   //ものによってはカメラ初期位置を呼ぶ
   /*
   if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
-  { 
+  {
     BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
   }
   else
-  { 
+  {
     BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_INIT );
   }
   */
@@ -2153,9 +2166,9 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
     break;
   case 1:
     if( bew->execute_flag == FALSE )
-    { 
-      if( BTLV_MCSS_GetStatusFlag( bew->bmw, beht->vpos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) 
-      { 
+    {
+      if( BTLV_MCSS_GetStatusFlag( bew->bmw, beht->vpos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI )
+      {
         BTLV_EFFVM_Start( bew->vm_core, beht->vpos, BTLV_MCSS_POS_ERROR, BTLEFF_MIGAWARI_WAZA_BEFORE, NULL );
         bew->execute_flag = TRUE;
       }
@@ -2164,7 +2177,7 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
     break;
   case 2:
     if( bew->execute_flag == FALSE )
-    { 
+    {
       BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 16, 0, 0, 0 );
       BTLV_MCSS_MoveMosaic( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_INTERPOLATION, 8, 8, 1, 0 );
       BTLV_EFFVM_SePlay( bew->vm_core, SEQ_SE_W048_01, BTLEFF_SEPLAY_SE1, BTLEFF_SEPAN_ATTACK, -500, 127, 0, 0, 0 );
@@ -2189,8 +2202,8 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
     {
       BTLV_EFFVM_SePlay( bew->vm_core, SEQ_SE_DUMMY5, BTLEFF_SEPLAY_SE1, BTLEFF_SEPAN_ATTACK, 0, 0, 0, 0, 0 );
       BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 31, 0, 0, 0 );
-      if( BTLV_MCSS_GetStatusFlag( bew->bmw, beht->vpos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) 
-      { 
+      if( BTLV_MCSS_GetStatusFlag( bew->bmw, beht->vpos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI )
+      {
         BTLV_EFFVM_Start( bew->vm_core, beht->vpos, BTLV_MCSS_POS_ERROR, BTLEFF_MIGAWARI_WAZA_AFTER, NULL );
         bew->execute_flag = TRUE;
       }
@@ -2199,7 +2212,7 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
     break;
   case 6:
     if( bew->execute_flag == FALSE )
-    { 
+    {
       BTLV_EFFVM_Start( bew->vm_core, beht->vpos, BTLV_MCSS_POS_ERROR, BTLEFF_CAMERA_INIT_ORTHO, NULL );
       bew->execute_flag = TRUE;
       beht->seq_no++;
@@ -2207,7 +2220,7 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
     break;
   case 7:
     if( bew->execute_flag == FALSE )
-    { 
+    {
       BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
@@ -2292,9 +2305,9 @@ static  void  camera_work_check( void )
   if( bew->camera_work_execute == BTLV_EFFECT_CWE_NONE ) return;
 
   if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
-  { 
+  {
     if( ( trg ) || ( tp ) )
-    { 
+    {
       BTLV_EFFECT_Stop();
       BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_INIT );
       bew->camera_work_seq = 0;
@@ -2302,7 +2315,7 @@ static  void  camera_work_check( void )
     }
   }
 
-  switch( bew->camera_work_seq ){ 
+  switch( bew->camera_work_seq ){
   case 0:
     if( bew->camera_work_wait < bew->camera_work_wait_tmp )
     {
@@ -2328,7 +2341,7 @@ static  void  camera_work_check( void )
       };
       int eff_no;
 
-      if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_COMM_WAIT ) && 
+      if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_COMM_WAIT ) &&
           ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) )
       {
         while( 1 )
@@ -2384,7 +2397,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  */
 //============================================================================================
 void  BTLV_EFFECT_SetBtlRule( BtlRule rule )
-{ 
+{
   bew->besp.rule = rule;
 }
 
