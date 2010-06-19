@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-05-28T15:04:21"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-06-19T17:57:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,7 +300,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="280"/>
 			<font default=" 0:large" position="5" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -408,8 +408,8 @@
 	</row>
 
 	<row id="msg_12_2">
-		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ビデオナンバー：[2:01:２桁:0]－[2:04:５桁:1]－[2:04:５桁:2] ★</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ビデオナンバー：[2:01:２桁:0]－[2:04:５桁:1]－[2:04:５桁:2] ★</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ビデオナンバー：[2:01:２桁:0]－[2:04:５桁:1]－[2:04:５桁:2]★</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ビデオナンバー：[2:01:２桁:0]－[2:04:５桁:1]－[2:04:５桁:2]★</language>
 	</row>
 
 	<row id="msg_13">

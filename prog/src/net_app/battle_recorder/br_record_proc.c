@@ -1459,9 +1459,9 @@ static void Br_Record_CreateMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
       msg_rule_000,
     },
     {
-      3,
+      2,
       21,
-      26,
+      28,
       2,
       msg_12,
     },
@@ -1517,7 +1517,6 @@ static void Br_Record_CreateMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
     { 
       p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
 
-
       switch( i )
       { 
       case BR_RECORD_MSGWINID_M_BTL_NAME:  //●●●の記録
@@ -1546,28 +1545,35 @@ static void Br_Record_CreateMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
         { 
           u64 number  = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0);
           u32 dtmp2[3];
+          STRBUF  *p_src;
           
           //ナンバーを３ブロックに
           BR_TOOL_GetVideoNumberToBlock( number, dtmp2, 3 );
 
           { 
-            int check1 = ( dtmp2[ 2 ] / 10 ) % 10;
+            STRBUF  *p_intro;
+            PMS_DATA  pms_data;
 
-            if ( ( check1 == 0 ) && ( number != 0 ) ){
-              p_strbuf = GFL_MSG_CreateString( p_msg,  msg_12_2 );		///< ｘｘｘせんめ
+            p_intro  = GDS_Profile_GetSelfIntroduction( p_wk->p_profile, &pms_data, p_wk->heapID);
+
+            if( p_intro != NULL )
+            {
+              p_src = GFL_MSG_CreateString( p_msg,  msg_12_2 );  //★
               OS_Printf( "特殊なデータナンバー\n");
+
+              GFL_STR_DeleteBuffer( p_intro );
             }
             else
             { 
-              p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+              p_src  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
             }
           }
-          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf     = GFL_STR_CreateBuffer( 128, p_wk->heapID );
           WORDSET_RegisterNumber( p_word, 2, dtmp2[0], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
           WORDSET_RegisterNumber( p_word, 1, dtmp2[1], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
           WORDSET_RegisterNumber( p_word, 0, dtmp2[2], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
-          BR_MSGWIN_SetPos(p_wk->p_msgwin_m[i], 0, 0, BR_MSGWIN_POS_ABSOLUTE );
+          BR_MSGWIN_SetPos(p_wk->p_msgwin_m[i], 0, 0, BR_MSGWIN_POS_ABSOLUTE ); //GMMでセンタリングされている
           GFL_STR_DeleteBuffer( p_src );
           is_print  = TRUE;
         }
