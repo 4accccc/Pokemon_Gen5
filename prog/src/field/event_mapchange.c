@@ -593,6 +593,7 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
     SAVE_CONTROL_WORK * svdt = GAMEDATA_GetSaveControlWork(cmw->gamedata );
     SYSTEMDATA * sysdt = SaveData_GetSystemData( svdt );
     POKEPARTY *ppt = SaveData_GetTemotiPokemon(svdt);
+    MISC * misc = GAMEDATA_GetMiscWork( cmw->gamedata );
     //時間書き換えによるペナルティチェック
     if (!SYSTEMDATA_IdentifyMACAddress(sysdt) || !SYSTEMDATA_IdentifyRTCOffset(sysdt) )
     {
@@ -600,6 +601,8 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
       GMTIME_SetPenaltyTime( SaveData_GetGameTime(svdt) );
       //シェイミのフォルムを戻す
       SHEIMI_NFORM_ChangeNormalZukanEntry(cmw->gamedata, ppt);
+      //調査隊の調査開始時刻をリセットする
+      MISC_SetResearchStartTimeBySecond( misc, GFL_RTC_GetDateTimeBySecond() );
     }
     //現在のDS本体情報を今後の設定とする
     SYSTEMDATA_Update( sysdt );
