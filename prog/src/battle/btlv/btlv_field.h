@@ -27,4 +27,5 @@ extern	void              BTLV_FIELD_Draw( BTLV_FIELD_WORK *bsw );
 extern  void              BTLV_FIELD_SetPaletteFade( BTLV_FIELD_WORK *bfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
 extern  BOOL              BTLV_FIELD_CheckExecutePaletteFade( BTLV_FIELD_WORK* bfw );
 extern  void              BTLV_FIELD_SetVanishFlag( BTLV_FIELD_WORK* bfw, BTLV_FIELD_VANISH flag );
+extern  void              BTLV_FIELD_SetAnmStopOnce( BTLV_FIELD_WORK *bfw );
 

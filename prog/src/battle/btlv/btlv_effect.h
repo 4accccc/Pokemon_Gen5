@@ -352,6 +352,7 @@ extern  void              BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group 
 extern  void              BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe );
 extern  void              BTLV_EFFECT_SetCameraWorkStop( void );
 extern  void              BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type );
+extern  void              BTLV_EFFECT_SetFieldAnmStopOnce( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

@@ -49,8 +49,9 @@ struct _BTLV_FIELD_WORK
   GFL_G3D_OBJ*          field_obj;
   GFL_G3D_OBJSTATUS     field_status;
   EFFTOOL_PAL_FADE_WORK epfw;
-  u32                   vanish_flag :1;
-  u32                               :31;
+  u32                   vanish_flag   :1;
+  u32                   anm_stop_once :1;   //背景アニメを1フレーム停止
+  u32                                 :30;
   HEAPID                heapID;
 };
 
@@ -254,6 +255,12 @@ void  BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
 //============================================================================================
 void  BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw )
 {
+  //他でテクスチャ転送が行われている場合は、テクスチャアニメを止めるためになにもしないでリターン
+  if( bfw->anm_stop_once )
+  { 
+    bfw->anm_stop_once = 0;
+    return;
+  }
   //アニメーション
 	if(	bfw->anm_count ){
     int i;
@@ -352,5 +359,17 @@ BOOL  BTLV_FIELD_CheckExecutePaletteFade( BTLV_FIELD_WORK* bfw )
 void  BTLV_FIELD_SetVanishFlag( BTLV_FIELD_WORK* bfw, BTLV_FIELD_VANISH flag )
 {
   bfw->vanish_flag = flag;
+}
+
+//============================================================================================
+/**
+ *  背景アニメ1フレーム停止フラグセット
+ *
+ * @param[in] bfw BTLV_FIELD管理ワークへのポインタ
+ */
+//============================================================================================
+void  BTLV_FIELD_SetAnmStopOnce( BTLV_FIELD_WORK *bfw )
+{ 
+  bfw->anm_stop_once = 1;
 }
 

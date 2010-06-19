@@ -1641,6 +1641,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       resource = (void *)&bevw->dpd->adrs[ ofs ];
       GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
       EFFVM_RegistSprMax( bevw, ptc_no, resource );
+      BTLV_EFFECT_SetFieldAnmStopOnce();
       return bevw->control_mode;
     }
 #endif
@@ -1650,6 +1651,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
     resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, GFL_HEAP_LOWID( bevw->heapID ) );
     GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
     EFFVM_RegistSprMax( bevw, ptc_no, resource );
+    BTLV_EFFECT_SetFieldAnmStopOnce();
   }
 
   return bevw->control_mode;
