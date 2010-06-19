@@ -2300,6 +2300,11 @@ SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_DEBUG_NCL = test/ncl/d_font_view.c
 
+# マジコン対策ライブラリ
+#===>SRCS_OVERLAY_SHINKA_DEMO
+#LIB=>          AMProtectR2a.a
+SRCS_OVERLAY_AMPROTECT	= system/amprotect.c
+
 # DEBUG_ALL_WAZA_CHECK
 #===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_DEBUG_ALL_WAZA_CHECK = field/event_debug_btl_all_waza_check.c
