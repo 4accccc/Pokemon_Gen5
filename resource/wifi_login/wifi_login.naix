@@ -15,17 +15,10 @@ enum {
 	NARC_wifi_login_conect_anm_NCLR = 1,
 	NARC_wifi_login_connect_ani_NCLR = 2,
 	NARC_wifi_login_connect_win_NCLR = 3,
-	NARC_wifi_login_conect_NCGR = 4,
-	NARC_wifi_login_conect_sub_NCGR = 5,
-	NARC_wifi_login_connect_win_NCGR = 6,
-	NARC_wifi_login_conect_01_NSCR = 7,
-	NARC_wifi_login_conect_02_NSCR = 8,
-	NARC_wifi_login_conect_02a_NSCR = 9,
-	NARC_wifi_login_conect_03_NSCR = 10,
-	NARC_wifi_login_conect_sub_NSCR = 11,
-	NARC_wifi_login_connect_win1_u_NSCR = 12,
-	NARC_wifi_login_connect_win2_d_NSCR = 13,
-	NARC_wifi_login_connect_win2_u_NSCR = 14
+	NARC_wifi_login_connect_win_NCGR = 4,
+	NARC_wifi_login_connect_win1_u_NSCR = 5,
+	NARC_wifi_login_connect_win2_d_NSCR = 6,
+	NARC_wifi_login_connect_win2_u_NSCR = 7
 };
 
 /* NARC_WIFI_LOGIN_NAIX_ */
