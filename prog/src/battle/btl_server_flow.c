@@ -182,7 +182,8 @@ static BOOL scEvent_ExeFailThrew( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
 static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlEventType eventID );
 static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scproc_Fight_CheckMeroMero( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
-static BOOL scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
+static void scproc_CheckWazaExe_NemuriCure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
+static BOOL scproc_CheckWazaExe_KooriCure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, SV_WazaFailCause fail_cause );
 static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, SV_WazaFailCause cause );
 static void scPut_SetBppCounter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppCounter counterID, u8 value );
@@ -4715,6 +4716,9 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
 
   do {
 
+    // ねむりの解除チェック
+    scproc_CheckWazaExe_NemuriCure( wk, attacker, waza );
+
     // 命令無視判定
     if( wk->currentSabotageType == SABOTAGE_DONT_ANY ){
       cause = SV_WAZAFAIL_SABOTAGE;
@@ -4737,8 +4741,8 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
       }
     }
 
-    // ねむり・こおり等の解除チェック
-    fWazaMelt = scproc_PokeSickCure_WazaCheck( wk, attacker, waza );
+    // こおりの解除チェック
+    fWazaMelt = scproc_CheckWazaExe_KooriCure( wk, attacker, waza );
 
     // ポケモン系 状態異常による失敗チェック
     sick = BPP_GetPokeSick( attacker );
@@ -5010,28 +5014,48 @@ static BOOL scproc_Fight_CheckMeroMero( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
   }
   return FALSE;
 }
+
 //----------------------------------------------------------------------------------
 /**
- * ねむり・こおり等、アクション選択後に解除チェックを行う処理
+ * ワザ出し判定時のねむり解除チェック
  *
  * @param   wk
  * @param   attacker
  * @param   waza
+ *
+ * @retval  BOOL    解除されたらTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
+static void scproc_CheckWazaExe_NemuriCure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
+{
+  PokeSick sick = BPP_GetPokeSick( attacker );
+  if( sick == WAZASICK_NEMURI )
+  {
+    if( BPP_CheckNemuriWakeUp(attacker) )
+    {
+      scPut_CurePokeSick( wk, attacker, sick, TRUE );
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ワザ出し判定時のねむり解除チェック
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ *
+ * @retval  BOOL      ワザの効果で解除される時のみTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_CheckWazaExe_KooriCure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
 {
   PokeSick sick = BPP_GetPokeSick( attacker );
   BOOL f_cured = FALSE;
   BOOL f_wazaMelt = FALSE;
 
-  switch( sick ){
-  case POKESICK_NEMURI:
-    if( BPP_CheckNemuriWakeUp(attacker) ){
-      f_cured = TRUE;
-    }
-    break;
-  case POKESICK_KOORI:
+  if( sick == POKESICK_KOORI )
+  {
     if( WAZADATA_GetFlag(waza, WAZAFLAG_KooriMelt) ){
       f_wazaMelt = TRUE;
     }
@@ -5039,7 +5063,6 @@ static BOOL scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
     {
       f_cured = TRUE;
     }
-    break;
   }
 
   if( f_cured ){
