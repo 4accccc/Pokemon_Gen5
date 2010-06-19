@@ -437,15 +437,19 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 
   if( trg & PAD_BUTTON_START )
   { 
-    int pos;
-    bgw->gauge_num_mode ^= 1;
-    for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
-    { 
-      if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_draw_enable == TRUE ) && ( bgw->bgcl[ pos ].gauge_enable ) )
-      { 
-        set_hp_gauge_draw( bgw, pos, TRUE );
-      }
-    }
+		BtlRule	rule = BTLV_EFFECT_GetBtlRule();
+		if( rule != BTL_RULE_SINGLE && rule != BTL_RULE_DOUBLE )
+		{
+	    int pos;
+	    bgw->gauge_num_mode ^= 1;
+	    for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
+	    { 
+	      if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_draw_enable == TRUE ) && ( bgw->bgcl[ pos ].gauge_enable ) )
+	      { 
+	        set_hp_gauge_draw( bgw, pos, TRUE );
+	      }
+	    }
+		}
   }
 
   for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
