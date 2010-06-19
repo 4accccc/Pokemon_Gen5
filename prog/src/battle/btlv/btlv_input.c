@@ -1925,6 +1925,8 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       *select = biw->hit;
       *dir    = rotate_result[ biw->rotate_scr ];
       biw->hit = GFL_UI_TP_HIT_NONE;
+      PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 0, 0, 0, biw->tcbsys );
+      PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 0, 0, 0, biw->tcbsys );
       return TRUE;
     }
     else
@@ -4977,13 +4979,12 @@ static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMM
     int dot_len, char_len;
 
     GFL_FONTSYS_GetColor( &letter, &shadow, &back );
-
-    WORDSET_RegisterNumber( wordset, 0, bicp->shooterEnergy,  2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
-    WORDSET_ExpandStr( wordset, se_p, se_src);
-
     GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
                           PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
                           PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
+
+    WORDSET_RegisterNumber( wordset, 0, bicp->shooterEnergy,  2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
+    WORDSET_ExpandStr( wordset, se_p, se_src);
 
     FontLenGet( se_p, biw->font, &dot_len, &char_len );
     PRINTSYS_Print( biw->bmp_data_shooter, BTLV_INPUT_SHOOTER_ENERGY_X - ( dot_len / 2 ), BTLV_INPUT_SHOOTER_ENERGY_Y,
