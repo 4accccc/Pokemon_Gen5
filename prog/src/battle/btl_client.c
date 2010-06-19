@@ -6013,7 +6013,7 @@ static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args )
     break;
 
   case 1:
-    return TRUE;
+    return ( !BTLV_EFFECT_CheckExecute() );
   }
   return FALSE;
 }

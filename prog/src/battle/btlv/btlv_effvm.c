@@ -4436,7 +4436,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
     }
     //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
-    else if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+    else if( ( ( bevw->waza == BTLEFF_POKEMON_VANISH_OFF ) || ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) ) &&
             //へんしんは技エフェクトではなくなったので除外
             ( bevw->waza != WAZANO_HENSIN ) &&
             //バトンタッチは戻すエフェクトにつながるので除外
@@ -4451,8 +4451,8 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
         BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos, BTLV_MCSS_VANISH_OFF );
       }
       GFL_HEAP_FreeMemory( bevw->sequence );
-      bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_AFTER - BTLEFF_SINGLE_ENCOUNT_1,
-                                              GFL_HEAP_LOWID( bevw->heapID ) );
+      bevw->waza = BTLEFF_MIGAWARI_WAZA_AFTER - BTLEFF_SINGLE_ENCOUNT_1;
+      bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, bevw->waza, GFL_HEAP_LOWID( bevw->heapID ) );
       bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
   
       start_ofs = (int *)&bevw->sequence[ TBL_AA2BB ];

@@ -1764,7 +1764,14 @@ void BTLV_ACT_TameWazaHide( BTLV_CORE* wk, BtlvMcssPos vpos, BTLV_MCSS_VANISH_FL
   {
     if( vanishFlag != BTLV_EFFECT_GetMcssVanishFlag(vpos) )
     {
-      BTLV_EFFECT_SetMcssVanishFlag( vpos, vanishFlag );
+      if( vanishFlag == BTLV_MCSS_VANISH_ON )
+      { 
+        BTLV_EFFECT_PokemonVanishOn( vpos );
+      }
+      else
+      { 
+        BTLV_EFFECT_PokemonVanishOff( vpos );
+      }
     }
   }
 }
