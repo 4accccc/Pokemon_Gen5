@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-06-11T12:11:09"/>
+	<create user="murakami_naoto" host="W00228" date="2010-06-18T19:52:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1147,8 +1147,8 @@
 
 	<row id="msg_gate_bc_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報5</comment>
-		<language name="JPN" width="256">◇まちにおおきな　デパートをつくる　けいかくが　すすんでいます</language>
-		<language name="JPN_KANJI" width="256">◇街に大きな　デパートを作る　計画が　進んでいます</language>
+		<language name="JPN" width="256">◇まちにおおきな　マーケットをつくる　けいかくが　すすんでいます</language>
+		<language name="JPN_KANJI" width="256">◇街に大きな　マーケットを作る　計画が　進んでいます</language>
 	</row>
 
 	<row id="msg_gate_bc_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
