@@ -2857,7 +2857,11 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
   if(!WIPE_SYS_EndCheck()){
     return GFL_PROC_RES_CONTINUE;
   }
-  
+
+  if(GFL_NET_IsInit()){
+    GFL_NET_DelCommandTable(GFL_NET_CMD_IRCBATTLE);
+  }
+
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
   }
