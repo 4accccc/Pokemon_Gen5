@@ -210,11 +210,11 @@ DEFINE_LOCAL	lwk_msg_num
 	CASE T05_TRAIN_NONE THEN
 		_TIME_WAIT( 30 )	//車両なし
 	CASE T05_TRAIN_SINGLE THEN
-		_TIME_WAIT( 35 )	//シングル
+		_TIME_WAIT( 25 )	//シングル
 	CASE T05_TRAIN_S_SINGLE THEN
-		_TIME_WAIT( 30 )	//Sシングル
+		_TIME_WAIT( 25 )	//Sシングル
 	CASE T05_TRAIN_DOUBLE THEN
-		_TIME_WAIT( 30 )	//ダブル
+		_TIME_WAIT( 30 )	//ダブル		//平仮名のみ一瞬カメラが止まったのが見える（許容範囲）
 	CASE T05_TRAIN_S_DOUBLE THEN
 		_TIME_WAIT( 30 )	//Sダブル
 	CASE T05_TRAIN_MULTI THEN
@@ -222,13 +222,13 @@ DEFINE_LOCAL	lwk_msg_num
 	CASE T05_TRAIN_S_MULTI THEN
 		_TIME_WAIT( 30 )	//Sマルチ
 	CASE T05_TRAIN_WIFI THEN
-		_TIME_WAIT( 30 )	//Wi-Fi
+		_TIME_WAIT( 30 )	//Wi-Fi			//平仮名のみ一瞬カメラが止まったのが見える（許容範囲）
 	CASE T05_TRAIN_LOCAL THEN
 		_TIME_WAIT( 45 )	//カナワ行き
 	CASE T05_TRAIN_OLD THEN
-		_TIME_WAIT( 45 )	//古いレア
+		_TIME_WAIT( 55 )	//古いレア
 	DEFAULT
-		_TIME_WAIT( 15 )	//新しいレア
+		_TIME_WAIT( 55 )	//新しいレア
 	ENDSWITCH
 	
 	_BLACK_OUT_SLOW()
@@ -253,7 +253,7 @@ DEFINE_LOCAL	lwk_msg_num
 	CASE T05_TRAIN_NONE THEN
 		_TIME_WAIT( 30 )	//車両なし
 	CASE T05_TRAIN_SINGLE THEN
-		_TIME_WAIT( 60 )	//シングル
+		_TIME_WAIT( 80 )	//シングル
 	CASE T05_TRAIN_S_SINGLE THEN
 		_TIME_WAIT( 30 )	//Sシングル
 	CASE T05_TRAIN_DOUBLE THEN
@@ -269,9 +269,9 @@ DEFINE_LOCAL	lwk_msg_num
 	CASE T05_TRAIN_LOCAL THEN
 		_TIME_WAIT( 35 )	//カナワ行き
 	CASE T05_TRAIN_OLD THEN
-		_TIME_WAIT( 30 )	//古いレア
+		_TIME_WAIT( 35 )	//古いレア
 	DEFAULT
-		_TIME_WAIT( 15 )	//新しいレア
+		_TIME_WAIT( 45 )	//新しいレア
 	ENDSWITCH
 	
 	_BLACK_OUT_SLOW()
