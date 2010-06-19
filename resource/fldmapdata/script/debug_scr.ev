@@ -125,24 +125,31 @@ EVENT_START ev_debug_masafumi
 
 	ELSIF $SCWK_TEMP1 == 1 THEN
 		//テスト01
+//		_FLAG_RESET( FV_FLDMONS_06 )
+//		_MAP_CHANGE( ZONE_ID_R10, 431, 114, DIR_LEFT )
+
+		//R07カザカミ・ライカミイベント起動
+		$WK_SCENE_R07_MOVEPOKE = 1
+		//R07の天気を変更
+		_FLAG_SET( SYS_FLAG_WEATHER_R07 )
 
 		//最初の一歩イベント
-		$WK_SCENE_T01 = 2
-		_MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
+//		$WK_SCENE_T01 = 2
+//		_MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
 
 	ELSIF $SCWK_TEMP1 == 2 THEN
 		//テスト02
 
-//		_MAP_CHANGE( ZONE_ID_D04R0501, 11, 21, DIR_DOWN )
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
 
 		//ママ：タウンマップ入手
-		_FLAG_SET( FV_T01_RIVAL )
+/*		_FLAG_SET( FV_T01_RIVAL )
 		_FLAG_SET( FV_T01_SUPPORT )
 		_FLAG_RESET( FV_T01_MAMA_01 )
 		$WK_SCENE_T01 = 1
 		$WK_SCENE_T01R0401 = 1
 		_MAP_CHANGE( ZONE_ID_T01R0401, 4, 10, DIR_DOWN )
-
+*/
 
 	ELSIF $SCWK_TEMP1 == 3 THEN
 		//テスト03
@@ -1278,6 +1285,7 @@ EVENT_START ev_debug_common
 		_BMPMENU_MAKE_LIST( msg_debug_05, 80 )	//イベントＯＦＦ
 		_BMPMENU_MAKE_LIST( msg_debug_07, 90 )	//マップ差し替え
 		_BMPMENU_MAKE_LIST( msg_debug_common_03, 100 )	//育て屋オープン
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_15, 110 )	//初期３匹のタイプ変更
 		_BMPMENU_MAKE_LIST( msg_debug_00, 1000 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -1297,6 +1305,9 @@ EVENT_START ev_debug_common
 				_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
 			ENDIF
 			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
+			
+			//ボックス壁紙を追加
+			_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
 			
       //設定した特殊接続先からゲームを開始するリクエストをクリア＝＝コンティニュー時にその場から
       _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
@@ -1349,6 +1360,10 @@ EVENT_START ev_debug_common
 			//育て屋オープン
 			_FLAG_RESET( FV_R03_SODATEYA_01 )
 			_FLAG_SET( FE_SODATEYAOLDMAN_OPEN )
+			
+		ELSIF $SCWK_ANSWER == 110 THEN
+			//初期３匹のタイプ変更
+			_CALL	ev_firstpoke_type
 			
 		ELSE
 			//やめる
@@ -1603,6 +1618,30 @@ ev_event_jump:
 	ENDIF
 	}
 	
+_RET
+
+
+//初期３匹のタイプ変更-----------------------------------------------
+ev_firstpoke_type:
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_01, 0 )	//くさタイプ
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_03, 1 )	//ほのおタイプ
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_02, 2 )	//みずタイプ
+	_BMPMENU_MAKE_LIST( msg_debug_00, 3 )	//やめる
+	_BMPMENU_START()
+	
+	SWITCH $SCWK_ANSWER
+	CASE 0 THEN
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
+	CASE 1 THEN
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
+	CASE 2 THEN
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
+	DEFAULT
+		//やめる
+	ENDSWITCH
+
 _RET
 
 
