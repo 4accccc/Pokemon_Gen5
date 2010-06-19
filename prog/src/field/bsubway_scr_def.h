@@ -20,7 +20,7 @@
 //#define DEBUG_BSW_COMM_IGNORE_POKE_OVERLAP //定義で通信ポケモン被り無視
 //#define DEBUG_BSW_REGU_NONE //定義でレギュ無視
 #define DEBUG_BSW_PRINT //定義でデバッグ出力有効
-#define DEBUG_ROM_TR_NAME_CHECK //定義でトレーナー名表示
+//#define DEBUG_ROM_TR_NAME_CHECK //定義でトレーナー名表示
 #endif
 
 #define BSUBWAY_SCRWORK_MAGIC  (0x12345678) ///<マジックナンバー

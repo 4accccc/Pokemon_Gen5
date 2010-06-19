@@ -2989,6 +2989,29 @@ void BSUBWAY_SCRWORK_DebugClearWifiRoomData( GAMESYS_WORK *gsys )
   BSUBWAY_WIFIDATA_ClearRoomDataFlag( wifiData );
 }
 
+//--------------------------------------------------------------
+/**
+ *  バトルサブウェイ　通信マルチ周回数操作
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugSetCommMultiStage(
+    GAMESYS_WORK *gsys, u16 play_mode, u16 stage )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  BSUBWAY_PLAYDATA *playData =
+    SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_PLAYDATA );
+  
+  if( stage == 0 ){ //0
+    BSUBWAY_SCOREDATA_ErrorStageNo( scoreData, play_mode );
+  }else{
+    BSUBWAY_SCOREDATA_SetStageNo_Org1( scoreData, play_mode, stage );
+    BSUBWAY_SCOREDATA_SetRenshou( scoreData, play_mode, stage*7 );
+    BSUBWAY_PLAYDATA_ResetRoundNo( playData );
+  }
+}
 //----
-#endif
+#endif //PM_DEBUG
 //----

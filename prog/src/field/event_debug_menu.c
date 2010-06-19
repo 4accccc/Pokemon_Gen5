@@ -4549,12 +4549,12 @@ enum
 {
   DEBUG_BSWAY_ZONE_HOME,
   DEBUG_BSWAY_ZONE_TRAIN,
-
+  
   DEBUG_BSWAY_SCDATA_VIEW,
   DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD,
   DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD,
   DEBUG_BSWAY_WIFI_UPLOAD,
-
+  
   DEBUG_BSWAY_ZONE_SINGLE,
   DEBUG_BSWAY_ZONE_DOUBLE,
   DEBUG_BSWAY_ZONE_MULTI,
@@ -4577,13 +4577,16 @@ enum
   DEBUG_BSWAY_BTL_S_SINGLE_49,
   DEBUG_BSWAY_BTL_S_DOUBLE_49,
   DEBUG_BSWAY_BTL_S_MULTI_49,
-
+  
   DEBUG_BSWAY_SET_REGU_OFF,
   DEBUG_BSWAY_SET_BTL_SKIP,
   DEBUG_BSWAY_ANYSTAGE,
   DEBUG_BSWAY_CHANGE_WIFI_RANK,
   DEBUG_BSWAY_CLEAR_WIFI_ROOM,
   DEBUG_BSWAY_SELECT_TRAINER,
+  
+  DEBUG_BSWAY_COMM_MULTI_STAGE,
+  DEBUG_BSWAY_S_COMM_MULTI_STAGE,
 };
 
 static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
@@ -4626,6 +4629,8 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_41, (void*)DEBUG_BSWAY_CHANGE_WIFI_RANK },
   { DEBUG_FIELD_BSW_42, (void*)DEBUG_BSWAY_CLEAR_WIFI_ROOM },
   { DEBUG_FIELD_BSW_45, (void*)DEBUG_BSWAY_SELECT_TRAINER },
+  { DEBUG_FIELD_BSW_48, (void*)DEBUG_BSWAY_COMM_MULTI_STAGE },
+  { DEBUG_FIELD_BSW_49, (void*)DEBUG_BSWAY_S_COMM_MULTI_STAGE },
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -5348,6 +5353,144 @@ static void debugMenuCallProc_BSubwayChangeWifiRank(
   work->fldMsgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 }
 
+//バトルサブウェイデバッグメニュー派生　通信マルチ周回数変更
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  FLDMSGBG *fldMsgBG;
+  
+  int stage;
+  int before_stage;
+  u16 play_mode;
+
+  STRBUF *strBuf;
+  STRBUF *strTempBuf;
+  GFL_MSGDATA *msgData;
+  WORDSET *wordSet;
+  FLDMSGWIN *msgWin;
+  FLDSYSWIN *sysWin;
+  FLDMENUFUNC *menuFunc;
+}DEBUG_BSW_SELECT_COMM_MULTI_STAGE;
+
+static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_BSW_SELECT_COMM_MULTI_STAGE *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    {
+      FLDMSGBG * msgbg = FIELDMAP_GetFldMsgBG( work->fieldWork );
+      work->strBuf = GFL_STR_CreateBuffer( 128, work->heapID );
+      work->strTempBuf = GFL_STR_CreateBuffer( 128, work->heapID );
+      work->msgWin = FLDMSGWIN_Add( msgbg, NULL, 1, 1, 8, 2 );
+      work->stage = 0;
+      work->before_stage = -1;
+      
+      work->msgData = DEBUGFLDMENU_CreateMSGDATA( work->fieldWork,
+          NARC_debug_message_d_field_dat );
+      work->wordSet = WORDSET_Create( work->heapID );
+      work->sysWin = FLDSYSWIN_AddTalkWin( msgbg, NULL );
+    }
+    (*seq)++;
+    break;
+  case 1:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      int cont = GFL_UI_KEY_GetCont();
+      int repeat = GFL_UI_KEY_GetRepeat();
+      
+      if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+        FLDMSGWIN_Delete( work->msgWin );
+        FLDSYSWIN_Delete( work->sysWin );
+        WORDSET_Delete( work->wordSet );
+        GFL_MSG_Delete( work->msgData );
+        GFL_STR_DeleteBuffer( work->strBuf );
+        GFL_STR_DeleteBuffer( work->strTempBuf );
+        
+        if( trg & PAD_BUTTON_A ){
+          BSUBWAY_SCRWORK_DebugSetCommMultiStage(
+              work->gmSys, work->play_mode, work->stage );
+        }
+        
+        return( GMEVENT_RES_FINISH );
+      }
+      
+      if( repeat & PAD_KEY_UP ){
+        work->stage--;
+      }else if( repeat & PAD_KEY_DOWN ){
+        work->stage++;
+      }else if( repeat & PAD_KEY_LEFT ){
+        work->stage -= 10;
+      }else if( repeat & PAD_KEY_RIGHT ){
+        work->stage += 10;
+      }
+      
+      if( work->stage < 0 ){
+        work->stage = 0;
+      }
+
+      if( work->play_mode == BSWAY_MODE_COMM_MULTI ){
+        if( work->stage > 2 ){
+          work->stage = 2;
+        }
+      }else if( work->stage > 9999 ){ //super comm multi
+        work->stage = 9999;
+      }
+      
+      if( work->stage != work->before_stage ){
+        work->before_stage = work->stage;
+        STRTOOL_SetNumber( work->strBuf, work->stage+1, 5,
+            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
+        FLDMSGWIN_ClearWindow( work->msgWin );
+        FLDMSGWIN_PrintStrBuf( work->msgWin, 16, 1, work->strBuf );
+        
+        STRTOOL_SetNumber( work->strTempBuf, work->stage+1, 5,
+            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterWord(
+            work->wordSet, 0, work->strTempBuf, 0, TRUE, PM_LANG );
+        STRTOOL_SetNumber( work->strTempBuf, work->stage*7, 5,
+            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterWord(
+            work->wordSet, 1, work->strTempBuf, 0, TRUE, PM_LANG );
+        GFL_MSG_GetString(
+              work->msgData, DEBUG_FIELD_BSW_50, work->strTempBuf );
+        WORDSET_ExpandStr(
+              work->wordSet, work->strBuf, work->strTempBuf );
+        FLDSYSWIN_ClearWindow( work->sysWin );
+        FLDSYSWIN_PrintStrBuf( work->sysWin, 1, 0, work->strBuf );
+      }
+    }
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+static void debugMenuCallProc_BSubwaySelectCommMulti(
+    GMEVENT *event, DEBUG_BSUBWAY_EVENT_WORK *wk, u16 play_mode )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_BSW_SELECT_COMM_MULTI_STAGE *work;
+  
+  GMEVENT_Change( event, debugMenuBSubwaySelectCommMultiStage,
+      sizeof(DEBUG_BSW_SELECT_COMM_MULTI_STAGE) );
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_BSW_SELECT_COMM_MULTI_STAGE) );
+  
+  work->heapID = heapID;
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->fieldWork = fieldWork;
+  work->fldMsgBG = FIELDMAP_GetFldMsgBG( fieldWork );
+  work->play_mode = play_mode;
+}
+
 //イベント：バトルサブウェイデバッグメニュー
 static GMEVENT_RESULT debugMenuBSubwayEvent(
     GMEVENT *event, int *seq, void *wk )
@@ -5647,6 +5790,16 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           chg_event = TRUE;
           debugMenuCallProc_BSubwaySelectTrainer( event, work );
         }
+        break;
+      case DEBUG_BSWAY_COMM_MULTI_STAGE:
+        chg_event = TRUE;
+        debugMenuCallProc_BSubwaySelectCommMulti(
+            event, work, BSWAY_MODE_COMM_MULTI );
+        break;
+      case DEBUG_BSWAY_S_COMM_MULTI_STAGE:
+        chg_event = TRUE;
+        debugMenuCallProc_BSubwaySelectCommMulti(
+            event, work, BSWAY_MODE_S_COMM_MULTI );
         break;
       default:
         break;

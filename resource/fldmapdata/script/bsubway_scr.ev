@@ -1112,9 +1112,15 @@ sub_receipt_challenge_multi_comm:
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
   
+  //通信待機中…
+  _SYSWIN_MSG_ALLPUT( msg_bsw_scr_101, POS_DOWN )
+  _TIME_WAIT( 15 )
+  
   //通信同期待ち
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_AUTO_SAVE, BSW_NULL, comm_ret )
-   
+  
+  _MSGWIN_CLOSE()
+
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg

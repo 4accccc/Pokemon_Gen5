@@ -486,7 +486,7 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
   play_mode = BSUBWAY_PLAYDATA_GetData(
       playData, BSWAY_PLAYDATA_ID_playmode, NULL );
 
-  //現在の周回数リセット -> しません
+  //現在の周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( playData );
   
   //ステージ数をエラーに

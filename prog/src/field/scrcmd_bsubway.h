@@ -51,4 +51,6 @@ extern void BSUBWAY_SCRWORK_DebugSetFlag( GAMESYS_WORK *gsys, u8 flag );
 extern int BSUBWAY_SCRWORK_DebugGetWifiRank( GAMESYS_WORK *gsys );
 extern void BSUBWAY_SCRWORK_DebugSetWifiRank( GAMESYS_WORK *gsys, u8 rank );
 extern void BSUBWAY_SCRWORK_DebugClearWifiRoomData( GAMESYS_WORK *gsys );
+extern void BSUBWAY_SCRWORK_DebugSetCommMultiStage(
+    GAMESYS_WORK *gsys, u16 play_mode, u16 stage );
 #endif

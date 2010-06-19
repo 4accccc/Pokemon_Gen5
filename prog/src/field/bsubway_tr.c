@@ -153,8 +153,8 @@ static const u16 TrainerNoRangeTable_Normal1_6[3][2] =
 //--------------------------------------------------------------
 static const u16 TrainerNoRangeTable_Normal_Round7[2][2] =
 {
-  {  1-1,  50-1}, //stage 1 round 7
-  { 31-1,  70-1}, //stage 2 round 7
+  {  51-1,  70-1}, //stage 1 round 7
+  { 71-1,  90-1}, //stage 2 round 7
 };
 
 //--------------------------------------------------------------

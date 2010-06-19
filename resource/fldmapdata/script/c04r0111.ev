@@ -278,8 +278,8 @@ _RET
 //--------------------------------------------------------------
 sub_challenge_continue_comm_multi:
 {
-  //お友達の選択を待っています
-  _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
+  //通信待機中・・・
+  _SYSWIN_MSG( msg_c04r0111_32, POS_DOWN )
   
   //受信バッファクリア
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -287,9 +287,8 @@ sub_challenge_continue_comm_multi:
   //送信前同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, comm_ret )
   
-  _MSGWIN_CLOSE()
-  
   IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
     _RET
@@ -304,6 +303,7 @@ sub_challenge_continue_comm_multi:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
 
   IF $comm_ret == TRUE THEN
+    _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
     _RET
@@ -311,6 +311,8 @@ sub_challenge_continue_comm_multi:
   
   //選択結果を受信
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
+  
+  _MSGWIN_CLOSE()
   
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
@@ -904,7 +906,10 @@ EVENT_START ev_c04r0111_home
       $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
     ENDIF
   CASE BSWAY_MODE_COMM_MULTI THEN
-    IF $boss_f == TRUE THEN
+    //通信マルチは連勝数判断
+    _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER >= 21 THEN //21連勝
       $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
     ENDIF
   CASE BSWAY_MODE_WIFI THEN
@@ -976,26 +981,29 @@ EVENT_START ev_c04r0111_home
       _AB_KEYWAIT_MARK()
       _SYSWIN_CLOSE()
       
-      _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
-    
-      IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        //スーパーに挑戦出来ます
-        _PLAYER_NAME( 0 )
+      _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+      
+      IF $SCWK_ANSWER >= 21 THEN //21連勝
+        _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
         
-        SWITCH $play_mode
-        CASE BSWAY_MODE_SINGLE THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_05, obj_id, POS_DOWN )
-        CASE BSWAY_MODE_DOUBLE THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_06, obj_id, POS_DOWN )
-        CASE BSWAY_MODE_MULTI THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_07, obj_id, POS_DOWN )
-        CASE BSWAY_MODE_COMM_MULTI THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_DOWN )
-        ENDSWITCH
+        IF $SCWK_ANSWER == 0 THEN //初めて21連勝
+          //スーパーに挑戦出来ます
+          _PLAYER_NAME( 0 )
         
-        _MSGWIN_CLOSE()
+          SWITCH $play_mode
+          CASE BSWAY_MODE_SINGLE THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0111_05, obj_id, POS_DOWN )
+          CASE BSWAY_MODE_DOUBLE THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0111_06, obj_id, POS_DOWN )
+          CASE BSWAY_MODE_MULTI THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0111_07, obj_id, POS_DOWN )
+          CASE BSWAY_MODE_COMM_MULTI THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_DOWN )
+          ENDSWITCH
         
-        _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+          _MSGWIN_CLOSE()
+          _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+        ENDIF
       ENDIF
     ENDIF
   ELSE //ボス倒していない
@@ -1011,6 +1019,21 @@ EVENT_START ev_c04r0111_home
     _ME_WAIT()
     _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
+
+    //通信マルチは21連勝チェック
+    IF $play_mode == BSWAY_MODE_COMM_MULTI THEN
+      _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+      
+      IF $SCWK_ANSWER >= 21 THEN //21連勝
+        _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == 0 THEN //初めて21連勝
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_07, obj_id, POS_DOWN )
+          _MSGWIN_CLOSE()
+          _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+        ENDIF
+      ENDIF
+    ENDIF
   ENDIF
   
   //wifiランク処理
