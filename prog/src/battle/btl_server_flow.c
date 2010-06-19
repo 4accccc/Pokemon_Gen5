@@ -5173,7 +5173,7 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_FuuinWarn, pokeID, waza );
     break;
   case SV_WAZAFAIL_KAIHUKUHUUJI:
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFujiExe, pokeID, waza );
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFujiWarn, pokeID, waza );
     break;
   case SV_WAZAFAIL_HPFULL:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_HPFull, pokeID );
@@ -6946,6 +6946,11 @@ static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
         wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
         fSucceed = TRUE;  // ターゲットが居て、１体でも状態異常にかかれば成功
       }
+    }
+
+    if( !fSucceed ){
+      // 既にターゲットが無くなっている->しかしうまく決まらなかった
+      scPut_WazaFail( wk, attacker, waza );
     }
   }
   else{
@@ -10226,6 +10231,7 @@ static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
     case WAZASICK_NEMURI: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriAlready, pokeID ); break;
     case WAZASICK_KOORI:  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriAlready, pokeID ); break;
     case WAZASICK_KONRAN: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KonranAlready, pokeID ); break;
+    case WAZASICK_HOROBINOUTA: break; // ほろびのうたは何もしない
     default:
       SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
     }
