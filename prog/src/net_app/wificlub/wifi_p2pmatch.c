@@ -6565,7 +6565,7 @@ static void MCVSys_Init( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID 
   MCVSys_GraphicSet( wk, p_handle, heapID );
 
 
-  // とりあえず更新
+  // 更新
   wk->view.bttn_allchg = TRUE;
   MCVSys_BackDraw( wk );
   MCVSys_BttnDraw( wk );
