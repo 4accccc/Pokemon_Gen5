@@ -184,7 +184,7 @@ BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID )
 BOOL BTL_TABLES_CheckSkillSwapFailTokusei( u16 tokuseiID )
 {
   static const u16 table[] = {
-    POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
+    POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU, POKETOKUSEI_IRYUUJON,
   };
 
   if( BTL_TABLES_IsNeverChangeTokusei(tokuseiID) ){

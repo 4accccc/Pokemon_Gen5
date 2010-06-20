@@ -7927,12 +7927,14 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         BtlPokePos atkPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
         u16  damage = BPP_GetValue( target, BPP_HP );
         BtlTypeAffAbout  affAbout = BTL_CALC_TypeAffAbout( aff );
+        BOOL fMigawari = FALSE;
 
         wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
 
         if( BPP_MIGAWARI_IsExist(target) )
         {
           scproc_Ichigeki_Migawari( wk, target, wazaParam, affAbout );
+          fMigawari = TRUE;
         }
         else
         {
@@ -7948,7 +7950,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         wazaDmgRec_Add( wk, atkPos, attacker, target, wazaParam, damage );
 
         scproc_CheckDeadCmd( wk, target );
-        scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, FALSE, FALSE );
+        scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, FALSE, fMigawari );
       }
       else
       {
@@ -8687,6 +8689,7 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_TYPEAFF, aff );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, fCritical );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_MIGAWARI_FLAG, fMigawari );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_RINPUNGUARD_FLG, FALSE );
