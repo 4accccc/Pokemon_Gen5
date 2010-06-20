@@ -3075,6 +3075,7 @@ static void handler_MeromeroBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
   ){
     const BTL_POKEPARAM* myParam = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* targetParam = BTL_SVFTOOL_GetPokeParam( flowWk,
@@ -3260,8 +3261,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yuubaku( u32* numElems )
 // ダメージ直後ハンドラ
 static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( HandCommon_CheckTargetPokeID(pokeID) )
-  {
+  if( (HandCommon_CheckTargetPokeID(pokeID) )
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( !BPP_IsDead(bpp) )
     {
@@ -5728,6 +5730,7 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
   ){
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
@@ -6820,6 +6823,7 @@ static void handler_Miira( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   // 自分が防御側で
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
   ){
     // 食らったのが接触ワザで
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );

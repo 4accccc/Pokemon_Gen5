@@ -1052,11 +1052,7 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
       u8 aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
       if( aliveCnt )
       {
-        BTL_N_Printf( DBGSTR_SVFL_ClientPokeStillAlive, i, side, aliveCnt );
         pokeExist[ side ] = TRUE;
-      }
-      else{
-        BTL_N_Printf( DBGSTR_SVFL_ClientPokeDeadAll, i, side);
       }
     }
   }
@@ -13412,7 +13408,19 @@ u32 BTL_SVFTOOL_GetWeight( BTL_SVFLOW_WORK* wk, u8 pokeID )
   }
   return weight;
 }
-
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 決着判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_CheckShowDown( BTL_SVFLOW_WORK* wk )
+{
+  return scproc_CheckShowdown( wk );
+}
 
 //=============================================================================================
 /**
