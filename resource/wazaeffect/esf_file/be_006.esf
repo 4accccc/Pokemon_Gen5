@@ -8,5 +8,6 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_006.spa
 ポケモン拡縮	すべて	追従	1	1	16	0	0
 エフェクト終了待ち	すべて
 HPゲージ表示／非表示	表示	すべて
+指定されたワークに値をセット	PUSH_CAMERA_POS	0
 エフェクト終了
 &

@@ -9,5 +9,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_005.spa
 ポケモン拡縮	自分側	追従	0.65	0.65	16	0	0
 ポケモン拡縮	相手側	追従	0.725	0.725	16	0	0
 エフェクト終了待ち	すべて
+指定されたワークに値をセット	ZOOM_OUT	1
+指定されたワークに値をセット	PUSH_CAMERA_POS	0
 エフェクト終了
 &
