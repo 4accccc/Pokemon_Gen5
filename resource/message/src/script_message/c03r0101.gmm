@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-06-18T16:43:24"/>
+	<create user="nakamura_akira" host="W00161" date="2010-06-20T16:32:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1369" top="113" right="2074" bottom="741" maximized="no" rayout="Vertical2">
+	<dialog left="1393" top="309" right="2098" bottom="937" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -2018,7 +2018,7 @@ assistantm_01_23○へ続く
 とある　レジャー会社　からの
 依頼だな▼
 １０人　以上と　すれ違って
-１番多い　趣味を▽
+１番　多い　趣味を▽
 調べてくる　調査だ▼
 調査の　結果を
 企画の　参考に　したいそうだ▼</language>
@@ -2297,7 +2297,7 @@ assistantm_01_23○へ続く
 ちょうさの　けっかを
 さくひんに　やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　芸術家からの　依頼だな▼
+とある　芸術家　からの　依頼だな▼
 ３０人　以上と　すれ違って
 １番　好きな　色と▽
 １番　好きな　音楽を▽
@@ -2329,7 +2329,7 @@ assistantm_01_23○へ続く
 ちょうさの　けっかを
 しんきょくに　やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　アイドル歌手からの
+とある　アイドル歌手　からの
 依頼だな▼
 ４０人　以上と　すれ違って
 １番　好きな　音楽を▽
@@ -2394,7 +2394,7 @@ assistantm_01_23○へ続く
 ちょうさの　けっかを
 がっこうせいかつに　やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　学生からの　依頼だな▼
+とある　学生　からの　依頼だな▼
 ４０人　以上と　すれ違って
 １番　好きな　学校の　時間を▽
 調べてくる　調査だ▼
@@ -2426,7 +2426,7 @@ assistantm_01_23○へ続く
 ちょうさの　けっかを
 じゅぎょうに　やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　先生からの　依頼だな▼
+とある　先生　からの　依頼だな▼
 ４０人　以上と　すれ違って
 １番　好きな　勉強と▽
 １番　苦手な　勉強を▽
@@ -2458,7 +2458,7 @@ assistantm_01_23○へ続く
 ちょうさの　けっかを
 しあいに　やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　スポーツ選手からの
+とある　スポーツ選手　からの
 依頼だな▼
 ５０人　以上と　すれ違って
 １番　人気のある　スポーツを▽
@@ -2528,7 +2528,8 @@ assistantm_01_23○へ続く
 ポケモンの　せんでんに▽
 やくだてたいそうだ▼</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ポケモンファンからの　依頼だな▼
+とある　ポケモンファン　からの
+依頼だな▼
 ５０人　以上と　すれ違って
 １番　なりたいものを▽
 調べてくる　調査だ▼
