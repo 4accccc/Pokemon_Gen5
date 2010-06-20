@@ -5624,6 +5624,7 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   FLAG_SET flagSet;
   fx32 dmg_ratio = (BTL_POKESET_GetCountMax(targets) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
   u32 dmg_sum = 0;
+  u16 que_reserve_pos;
 
 
   // •¡”‘ÎÛ‚ÌƒƒU‚©”»’è
@@ -5639,6 +5640,8 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   BTL_CALCDAMAGE_Set( wk, attacker, wk->psetEnemy, wazaParam, affRec, dmg_ratio, wk->calcDmgEnemy );
 
 //  scproc_SingleCount_DamageDetermine( wk, attacker,
+  que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
+
 
   if( BTL_POKESET_GetCount( wk->psetFriend ) )
   {
@@ -5654,7 +5657,9 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
       wk->hitCheckParam, dmg_ratio, flagSet );
   }
 
-  wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
+//  wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
+  wazaEffCtrl_SetEnableDummy( wk->wazaEffCtrl );
+  scPut_WazaEffect( wk, wazaParam->wazaID, wk->wazaEffCtrl, que_reserve_pos );
 
   return dmg_sum;
 }
