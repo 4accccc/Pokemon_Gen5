@@ -1929,7 +1929,6 @@ static void WH_StateOutStartChild(void *arg)
 		WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
 		if (!WH_StateInStartChildMP())
 		{
-			/* FIXME : ‚±‚±‚Í BUSY ‚Ì‚Ü‚Ü’u‚¢‚Ä‚¨‚¢‚Ä—Ç‚¢‚Ì‚©? */
 			WH_TRACE("WH_StateInStartChildMP failed\n");
 			WH_ChangeSysState(WH_SYSSTATE_BUSY);
 			return;
