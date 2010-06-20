@@ -11074,7 +11074,9 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     if( work[0] )
     {
       BtlSideEffect eff = BTL_SIDEEFF_NULL;
-      BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+      BtlSide mySide = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+      BtlSide targetSide = BTL_MAINUTIL_PokeIDtoSide( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
+      BtlSide side;
       u32 viewEffectNo = 0;
       u16 strID = 0;
       u8  viewEffectTargetPokeID = BTL_POKEID_NULL;
@@ -11083,20 +11085,21 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
       case COMBI_EFFECT_RAINBOW:
         eff = BTL_SIDEEFF_RAINBOW;
         strID = BTL_STRID_STD_Rainbow;
+        side = mySide;
         viewEffectNo = BTLEFF_RAINBOW;
         viewEffectTargetPokeID = pokeID;
         break;
       case COMBI_EFFECT_BURNING:
         eff = BTL_SIDEEFF_BURNING;
         strID = BTL_STRID_STD_Burning;
-        side = BTL_MAINUTIL_GetOpponentSide( side );
+        side = targetSide;
         viewEffectNo = BTLEFF_BURNING;
         viewEffectTargetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
         break;
       case COMBI_EFFECT_MOOR:
         eff = BTL_SIDEEFF_MOOR;
         strID = BTL_STRID_STD_Moor;
-        side = BTL_MAINUTIL_GetOpponentSide( side );
+        side = targetSide;
         viewEffectNo = BTLEFF_MOOR;
         viewEffectTargetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
         break;
