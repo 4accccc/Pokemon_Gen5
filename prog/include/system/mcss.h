@@ -130,6 +130,7 @@ extern	void						MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
 extern	void						MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
 extern	void						MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void	          MCSS_SetShadowRotate( MCSS_WORK *mcss, const u16 rot );
+extern  void	          MCSS_SetShadowRotateZ( MCSS_WORK *mcss, const u16 rot );
 extern	void						MCSS_GetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs );
 extern	void						MCSS_SetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs );
 extern	void						MCSS_SetMepachiFlag( MCSS_WORK *mcss );
