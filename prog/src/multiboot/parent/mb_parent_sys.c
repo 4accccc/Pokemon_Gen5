@@ -113,6 +113,7 @@ typedef enum
   //終了時映画配信専用
   MPS_MOVIE_WAIT_SAVE_MSG,
   MPS_MOVIE_WAIT_LAST_MSG,
+  MPS_EXIT_COMM_MOVIE,
   //終了時映画配信専用ここまで
 
   MPS_EXIT_COMM,
@@ -768,7 +769,8 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_19 , MSGSPEED_GetWait() );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
-      work->state = MPS_MOVIE_WAIT_SAVE_MSG;
+      //先に通信を切る
+      work->state = MPS_EXIT_COMM_MOVIE;
     }
     break;
 
@@ -802,35 +804,18 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
         MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
       }
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
-      MB_COMM_ReqDisconnect( work->commWork );
-      work->state = MPS_EXIT_COMM;
+      work->state = MPS_EXIT_COMM_MOVIE;
     }
     break;
   //終了時ポケシフター専用ここまで
-
-  //終了時映画配信専用
-  case MPS_MOVIE_WAIT_SAVE_MSG:
-    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
-    {
-      if( MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_FINISH_MACHINE , 0 ) == TRUE )
-      {
-        MB_MSG_MessageHide( work->msgWork );
-        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_15 , MSGSPEED_GetWait() );
-        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
-        work->state = MPS_MOVIE_WAIT_LAST_MSG;
-      }
-    }
-    break;
   
-  case MPS_MOVIE_WAIT_LAST_MSG:
-    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+  case MPS_EXIT_COMM_MOVIE:
+    if( MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_FINISH_MACHINE , 0 ) == TRUE )
     {
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MPS_EXIT_COMM;
     }
     break;
-  //終了時映画配信専用ここまで
   
   case MPS_EXIT_COMM:
     if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
@@ -845,9 +830,40 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   case MPS_WAIT_EXIT_COMM:
     if( MB_COMM_IsFinishComm( work->commWork ) == TRUE )
     {
-      work->state = MPS_FADEOUT;
+      if( work->mode == MPM_POKE_SHIFTER )
+      {
+        work->state = MPS_FADEOUT;
+      }
+      else
+      {
+        //映画は先に通信切ってる
+        work->state = MPS_MOVIE_WAIT_SAVE_MSG;
+      }
     }
     break;
+
+  //終了時映画配信専用
+  case MPS_MOVIE_WAIT_SAVE_MSG:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_MessageHide( work->msgWork );
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_15 , MSGSPEED_GetWait() );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      work->state = MPS_MOVIE_WAIT_LAST_MSG;
+    }
+    break;
+  
+  case MPS_MOVIE_WAIT_LAST_MSG:
+    if( MB_COMM_IsFinishComm( work->commWork ) == TRUE )
+    {
+      if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+      {
+        work->state = MPS_FADEOUT;
+      }
+    }
+    break;
+  //終了時映画配信専用ここまで
     
   //初回接続失敗
   case MPS_FAIL_FIRST_CONNECT:
@@ -2077,7 +2093,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_21 , MSGSPEED_GetWait() );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       MB_COMM_ReqDisconnect( work->commWork );
-      work->state = MPS_MOVIE_WAIT_LAST_MSG;
+      work->state = MPS_EXIT_COMM_MOVIE;
     }
     if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR_BACKUP_LOAD )
     {
@@ -2085,7 +2101,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_24 , MSGSPEED_GetWait() );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       MB_COMM_ReqDisconnect( work->commWork );
-      work->state = MPS_MOVIE_WAIT_LAST_MSG;
+      work->state = MPS_EXIT_COMM_MOVIE;
     }
     if( MB_COMM_IsPostMoviePokeNum( work->commWork ) == TRUE )
     {
@@ -2518,7 +2534,8 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_20 , MSGSPEED_GetWait() );
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       }
-      work->state = MPS_MOVIE_WAIT_SAVE_MSG;
+      //先に通信を切る
+      work->state = MPS_EXIT_COMM_MOVIE;
     }
     break;
   }
