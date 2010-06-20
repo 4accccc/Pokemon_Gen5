@@ -551,6 +551,9 @@ ev_dendouiri:
   //サポート宅のサポートを非表示
   _FLAG_SET( FV_T01R0201_SUPPORT )
 
+  //壁紙を追加（２段階目）
+  _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
+
 _RET
 
 
