@@ -557,10 +557,6 @@ typedef struct
 {
   MCSS_WORK*                 poke_wk;              // NULLのときなし
   POKE_MCSS_CALL_BACK_DATA*  poke_call_back_data;  // poke_wkと対応しており、poke_wkがNULLのときこれもNULL
-#ifdef DEF_MINIMUM_LOAD 
-  u16                        diff_no;              // 今のpoke_wkはdiff_info_list[diff_no]である
-                                                   // poke_wkと対応しており、poke_wkがNULLのときこれはDIFF_NULL
-#endif
 
 #ifdef DEF_POKE_ARRANGE_INDIVIDUAL
   POKE_VEC_F32               pos[POKE_ARRANGE_MAX];  // ポケモンの配置
@@ -836,6 +832,9 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 static void Zukan_Detail_Form_KaisouChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 #endif
 
+// currとcompの番号、ポインタ入れ替え
+static void Zukan_Detail_Form_SwapCurrComp( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 // アルファ設定
 static void Zukan_Detail_Form_AlphaInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_AlphaExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -937,9 +936,6 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcInit( ZKNDTL_PROC* proc, int* se
     {
       work->poke_mcss_wk[i].poke_wk = NULL;
       work->poke_mcss_wk[i].poke_call_back_data = NULL;
-#ifdef DEF_MINIMUM_LOAD 
-      work->poke_mcss_wk[i].diff_no = DIFF_NULL;
-#endif
     }
 
     for( i=0; i<OBJ_SWAP_MAX; i++ )
@@ -2752,9 +2748,6 @@ static void PokeMcssWorkExit( POKE_MCSS_WORK* poke_mcss_wk, MCSS_SYS_WORK* mcss_
   BLOCK_POKE_EXIT( mcss_sys_wk, poke_mcss_wk->poke_wk )
   if( poke_mcss_wk->poke_call_back_data ) GFL_HEAP_FreeMemory( poke_mcss_wk->poke_call_back_data );
   poke_mcss_wk->poke_call_back_data = NULL;
-#ifdef DEF_MINIMUM_LOAD 
-  poke_mcss_wk->diff_no = DIFF_NULL;
-#endif
 }
 static void PokeMcssCallBackDataInit( POKE_MCSS_CALL_BACK_DATA* poke_mcss_call_back_data,
                                       POKE_INDEX poke_idx, ZUKAN_DETAIL_FORM_WORK* work )
@@ -5307,10 +5300,6 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 
         if( work->diff_num >= 2 )
         {
-          u16 no;
-          MCSS_WORK* mw;
-          POKE_MCSS_CALL_BACK_DATA* pmcbd;
-
 #ifndef DEF_MINIMUM_LOAD
           // 位置入れ替え
 #ifndef DEF_POKE_ARRANGE_INDIVIDUAL
@@ -5339,30 +5328,8 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
           }
 #endif  // DEF_POKE_ARRANGE_INDIVIDUAL
           
-          // 番号、ポインタ入れ替え
-          no = work->diff_curr_no;
-          work->diff_curr_no = work->diff_comp_no;
-          work->diff_comp_no = no;
-
-          mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-
-          mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
+          // currとcompの番号、ポインタ入れ替え
+          Zukan_Detail_Form_SwapCurrComp( param, work, cmn );
 #else
           // 位置入れ替え
           {
@@ -5408,32 +5375,9 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 #endif  // DEF_POKE_ARRANGE_INDIVIDUAL
             }
           }
-          
-          // 番号、ポインタ入れ替え
-          no = work->diff_curr_no;
-          work->diff_curr_no = work->diff_comp_no;
-          work->diff_comp_no = no;
 
-          // NULLならNULLが入れ替わるだけなので、work->is_poke_frontを気にせず入れ替えていい
-          mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
-          if(work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-
-          mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
-          if(work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
+          // currとcompの番号、ポインタ入れ替え
+          Zukan_Detail_Form_SwapCurrComp( param, work, cmn );
 #endif
 
           // ポケアイコン変更
@@ -6056,57 +6000,8 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
     Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
 
         {
-          u16 no;
-          MCSS_WORK* mw;
-          POKE_MCSS_CALL_BACK_DATA* pmcbd;
-
-          // 番号、ポインタ入れ替え
-          no = work->diff_curr_no;
-          work->diff_curr_no = work->diff_comp_no;
-          work->diff_comp_no = no;
-
-#ifndef DEF_MINIMUM_LOAD
-          mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-
-          mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
-#else
-          // NULLならNULLが入れ替わるだけなので、work->is_poke_frontを気にせず入れ替えていい
-          mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
-          if(work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-
-          mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          if(work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
-          if(work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
-#endif
+          // currとcompの番号、ポインタ入れ替え
+          Zukan_Detail_Form_SwapCurrComp( param, work, cmn );
 
 #ifdef DEF_MINIMUM_LOAD
           // 押し出されたフォルムのアニメは止めておく
@@ -6305,14 +6200,19 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
         MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &pos_fx32 );  // 後で位置を直すので、見えてないものはてきとーな位置に置いておく、見えているときは正しい位置に置かれる
       }
 
-      // 目的地に着いたので、見えないものを正しい位置に置く
+      // 目的地に着いたので、正しい位置に置く
       if( work->kaisou_curr_end )
       {
-        if( work->poke_mcss_wk[poke_curr_not].poke_wk )
+        VecFx32 curr_exchange_left_pos;
+        if( work->poke_mcss_wk[POKE_CURR_F].poke_wk )
         {
-          VecFx32 curr_exchange_left_pos;
-          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[poke_curr_not], POKE_ARRANGE_EXCHANGE_LEFT, &curr_exchange_left_pos );
-          MCSS_SetPosition( work->poke_mcss_wk[poke_curr_not].poke_wk, &curr_exchange_left_pos );
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_CURR_F], POKE_ARRANGE_EXCHANGE_LEFT, &curr_exchange_left_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &curr_exchange_left_pos );
+        }
+        if( work->poke_mcss_wk[POKE_CURR_B].poke_wk )
+        {
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_CURR_B], POKE_ARRANGE_EXCHANGE_LEFT, &curr_exchange_left_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &curr_exchange_left_pos );
         }
       }
 #endif  // DEF_POKE_ARRANGE_INDIVIDUAL
@@ -6378,14 +6278,19 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
         MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );  // 後で位置を直すので、見えてないものはてきとーな位置に置いておく、見えているときは正しい位置に置かれる
       }
 
-      // 目的地に着いたので、見えないものを正しい位置に置く
+      // 目的地に着いたので、正しい位置に置く
       if( work->kaisou_comp_end )
       {
-        if( work->poke_mcss_wk[poke_comp_not].poke_wk )
+        VecFx32 comp_exchange_right_pos;
+        if( work->poke_mcss_wk[POKE_COMP_F].poke_wk )
         {
-          VecFx32 comp_exchange_right_pos;
-          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[poke_comp_not], POKE_ARRANGE_EXCHANGE_RIGHT, &comp_exchange_right_pos );
-          MCSS_SetPosition( work->poke_mcss_wk[poke_comp_not].poke_wk, &comp_exchange_right_pos );
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_COMP_F], POKE_ARRANGE_EXCHANGE_RIGHT, &comp_exchange_right_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &comp_exchange_right_pos );
+        }
+        if( work->poke_mcss_wk[POKE_COMP_B].poke_wk )
+        {
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_COMP_B], POKE_ARRANGE_EXCHANGE_RIGHT, &comp_exchange_right_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &comp_exchange_right_pos );
         }
       }
 #endif  // DEF_POKE_ARRANGE_INDIVIDUAL
@@ -6465,14 +6370,19 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
         MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &pos_fx32 );  // 後で位置を直すので、見えてないものはてきとーな位置に置いておく、見えているときは正しい位置に置かれる
       }
 
-      // 目的地に着いたので、見えないものを正しい位置に置く
+      // 目的地に着いたので、正しい位置に置く
       if( work->kaisou_curr_end )
       {
-        if( work->poke_mcss_wk[poke_curr_not].poke_wk )
+        VecFx32 curr_top_center_pos;
+        if( work->poke_mcss_wk[POKE_CURR_F].poke_wk )
         {
-          VecFx32 curr_top_center_pos;
-          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[poke_curr_not], POKE_ARRANGE_TOP_CENTER, &curr_top_center_pos );
-          MCSS_SetPosition( work->poke_mcss_wk[poke_curr_not].poke_wk, &curr_top_center_pos );
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_CURR_F], POKE_ARRANGE_TOP_CENTER, &curr_top_center_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &curr_top_center_pos );
+        }
+        if( work->poke_mcss_wk[POKE_CURR_B].poke_wk )
+        {
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_CURR_B], POKE_ARRANGE_TOP_CENTER, &curr_top_center_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &curr_top_center_pos );
         }
       }
 #endif  // DEF_POKE_ARRANGE_INDIVIDUAL
@@ -6541,11 +6451,16 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
       // 目的地に着いたので、見えないものを正しい位置に置く
       if( work->kaisou_comp_end )
       {
-        if( work->poke_mcss_wk[poke_comp_not].poke_wk )
+        VecFx32 comp_top_right_pos;
+        if( work->poke_mcss_wk[POKE_COMP_F].poke_wk )
         {
-          VecFx32 comp_top_right_pos;
-          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[poke_comp_not], POKE_ARRANGE_TOP_RIGHT, &comp_top_right_pos );
-          MCSS_SetPosition( work->poke_mcss_wk[poke_comp_not].poke_wk, &comp_top_right_pos );
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_COMP_F], POKE_ARRANGE_TOP_RIGHT, &comp_top_right_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &comp_top_right_pos );
+        }
+        if( work->poke_mcss_wk[POKE_COMP_B].poke_wk )
+        {
+          PokeMcssGetArrangePosFx32FromPokeArrange( &work->poke_mcss_wk[POKE_COMP_B], POKE_ARRANGE_TOP_RIGHT, &comp_top_right_pos );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &comp_top_right_pos );
         }
       }
 #endif  // DEF_POKE_ARRANGE_INDIVIDUAL
@@ -6601,6 +6516,61 @@ static void Zukan_Detail_Form_KaisouChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* 
   }
 }
 #endif
+
+
+//-------------------------------------
+/// currとcompの番号、ポインタ入れ替え
+//=====================================
+static void Zukan_Detail_Form_SwapCurrComp( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u16 no;
+  MCSS_WORK* mw;
+  POKE_MCSS_CALL_BACK_DATA* pmcbd;
+
+  // 番号、ポインタ入れ替え
+  no = work->diff_curr_no;
+  work->diff_curr_no = work->diff_comp_no;
+  work->diff_comp_no = no;
+
+  // NULLならNULLが入れ替わるだけなので、work->is_poke_frontを気にせず入れ替えていい
+  mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
+  work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
+  work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
+
+  pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
+  work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
+  work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
+  if(work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+  if(work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_COMP_F;
+
+  mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
+  work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
+  work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
+
+  pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
+  work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
+  work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
+  if(work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data) work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+  if(work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data) work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_COMP_B;
+
+#ifdef DEF_POKE_ARRANGE_INDIVIDUAL
+  {
+    u8            j;
+    POKE_VEC_F32  p;
+    for( j=0; j<POKE_ARRANGE_MAX; j++ )
+    {
+      p                                      = work->poke_mcss_wk[POKE_CURR_F].pos[j];
+      work->poke_mcss_wk[POKE_CURR_F].pos[j] = work->poke_mcss_wk[POKE_COMP_F].pos[j];
+      work->poke_mcss_wk[POKE_COMP_F].pos[j] = p;
+
+      p                                      = work->poke_mcss_wk[POKE_CURR_B].pos[j];
+      work->poke_mcss_wk[POKE_CURR_B].pos[j] = work->poke_mcss_wk[POKE_COMP_B].pos[j];
+      work->poke_mcss_wk[POKE_COMP_B].pos[j] = p;
+    }
+  }
+#endif  // DEF_POKE_ARRANGE_INDIVIDUAL
+}
+
 
 //-------------------------------------
 /// アルファ設定
@@ -6703,10 +6673,10 @@ static const POKE_VEC_F32 poke_arrange_default_pos[POKE_ARRANGE_MAX] =
 
 static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] =
 {
-  // (rare, egg, personal_rndは現在未使用)  // 1列のデータのyは全て等しくしておくこと！
+  // (rare, egg, personal_rndは現在未使用)  // 1列のデータのyは全て等しくしておくこと! IrekaeMain,OshidashiMain,KaisouMainでの移動はそれを前提としてつくられており、どれかのyしか使用していなかったり、yを変更していなかったりしている。
   { MONSNO_ANNOON,     FORMNO_ANNOON_UNR, MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // アンノーン R
     { {-0.2f,-13.9f,0.0f},{-64.2f,-13.9f,0.0f},{63.8f,-13.9f,0.0f},{-16.2f,-13.9f,0.0f},{15.8f,-13.9f,0.0f} } },
-  
+
   { MONSNO_MIROKAROSU, 0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // ミロカロス 0
     { {-0.02f,-13.9f,0.0f},{-64.02f,-13.9f,0.0f},{63.98f,-13.9f,0.0f},{-16.11f,-13.9f,0.0f},{15.89f,-13.9f,0.0f} } },
 
