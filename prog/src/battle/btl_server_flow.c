@@ -12128,6 +12128,7 @@ static u16 scEvent_RecalcDrainVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 {
   fx32 ratio;
   u8   targetPokeID = (target!=NULL)? BPP_GetID(target) : BTL_POKEID_NULL;
+
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, targetPokeID );
@@ -12140,7 +12141,16 @@ static u16 scEvent_RecalcDrainVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     if( volume != 0 ){
       volume = BTL_CALC_MulRatio_OverZero( volume, ratio );
     }
+
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_DRAIN_END );
+    volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+
   BTL_EVENTVAR_Pop();
+
+  //-------
+
+
 
   return volume;
 }

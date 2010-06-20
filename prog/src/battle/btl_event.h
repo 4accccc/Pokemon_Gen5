@@ -161,6 +161,7 @@ typedef enum {
   BTL_EVENT_CHANGE_TOKUSEI_AFTER,   ///< とくせい書き換え後
   BTL_EVENT_CHECK_PUSHOUT,          ///< ふきとばし系ワザチェック
   BTL_EVENT_CALC_DRAIN,             ///< ドレイン系ワザ回復量計算
+  BTL_EVENT_CALC_DRAIN_END,         ///< ドレイン系ワザ回復量計算
   BTL_EVENT_CALC_SPECIAL_DRAIN,     ///< ドレイン系ワザ回復量計算
   BTL_EVENT_RECOVER_HP_RATIO,       ///< HP回復ワザの回復率計算
   BTL_EVENT_CHECK_ITEMEQUIP_FAIL,   ///< 装備アイテム使用可否チェック

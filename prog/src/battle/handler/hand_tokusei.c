@@ -5128,8 +5128,8 @@ static void handler_HedoroEki_Dead( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_HedoroEki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_DRAIN,    handler_HedoroEki      },  // ドレイン量計算ハンドラ
-    { BTL_EVENT_NOTIFY_DEAD,   handler_HedoroEki_Dead },  // 死亡通知ハンドラ
+    { BTL_EVENT_CALC_DRAIN_END,    handler_HedoroEki      },  // ドレイン量計算ハンドラ
+    { BTL_EVENT_NOTIFY_DEAD,       handler_HedoroEki_Dead },  // 死亡通知ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
