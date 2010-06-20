@@ -11,6 +11,7 @@
 
 #include <gflib.h>
 #include "player_volume_fader.h"
+#include "field/ringtone_sys_ext.h"
 
 typedef struct _RINGTONE_SYS RINGTONE_SYS;
 

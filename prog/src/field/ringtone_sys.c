@@ -115,11 +115,11 @@ RINGTONE_SYS * RINGTONE_SYS_Create( HEAPID heapID, PLAYER_VOLUME_FADER * fader )
   rtone->ringWait = 0;
   rtone->fader = fader;
 
-  //着信音制御対応のDS開閉時サウンドコールバックを登録
-  GFL_UI_SleepSoundGoSetFunc( ringTone_sleepSoundGoFunc, rtone );
-  GFL_UI_SleepSoundReleaseSetFunc( ringTone_sleepSoundReleaseFunc, rtone );
-
   ringToneSysPtr = rtone;
+
+  //着信音制御対応のDS開閉時サウンドコールバックを登録
+  RINGTONE_SYS_SetSleepSoundFunc();
+
   return rtone;
 }
 
@@ -165,6 +165,23 @@ void RINGTONE_SYS_Play( RINGTONE_SYS * rtone )
 void RINGTONE_SYS_Stop( RINGTONE_SYS * rtone )
 {
   changeStatus( rtone, REQ_STOP );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 着信音制御対応のDS開閉時サウンドコールバックを登録
+ */
+//------------------------------------------------------------------
+void RINGTONE_SYS_SetSleepSoundFunc( void )
+{
+  if ( ringToneSysPtr )
+  {
+    GFL_UI_SleepSoundGoSetFunc( ringTone_sleepSoundGoFunc, ringToneSysPtr );
+    GFL_UI_SleepSoundReleaseSetFunc( ringTone_sleepSoundReleaseFunc, ringToneSysPtr );
+  } else {
+    //着信音システムがないのに呼び出された場合
+    GF_ASSERT( 0 );
+  }
 }
 
 //============================================================================================
