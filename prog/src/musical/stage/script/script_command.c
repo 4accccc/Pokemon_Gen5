@@ -125,7 +125,6 @@ typedef enum
 //直線移動管理構造体(幕・舞台用)
 typedef struct
 {
-  //TODO 精度確保のためにfx32とかでやったほうが良いかも
   //    現状精度確保のために毎フレーム除算してる
   ACTING_WORK *actWork;
   s32 start;
@@ -1250,7 +1249,6 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
       }
     }
     //トップかのチェック
-    // todoトップが複数人いたらどうする？
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
       const u16 point = STA_ACT_GetPokeTempPoint( work->actWork , i ) + STA_ACT_GetPokeEquipPoint( work->actWork , i );
