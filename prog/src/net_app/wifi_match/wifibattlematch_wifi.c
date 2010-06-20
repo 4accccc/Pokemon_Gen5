@@ -204,8 +204,6 @@ typedef struct
   REGULATION_CARDDATA         *p_reg;
   REGULATION_CARDDATA         recv_card;
 
-  BOOL is_wificup_end;
-
 } WIFIBATTLEMATCH_WIFI_WORK;
 
 //=============================================================================
@@ -1055,7 +1053,6 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     { 
       //この大会にギブアップor本体替えしているので、
       //相応のメッセージをだして、大会見つからなかった、へ
-      p_wk->is_wificup_end  = TRUE;
       *p_seq  = SEQ_START_GIVEUP_MSG;
     }
     else
@@ -2247,7 +2244,6 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
       else if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE )
       { 
-        p_wk->is_wificup_end  = TRUE;
         *p_seq  = SEQ_NEXT_DISCONNECT;
       }
 
@@ -3519,7 +3515,6 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       WBM_WIFI_SUBSEQ_RET ret = Util_SubSeq_Main( p_wk );
       if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE )
       { 
-        p_wk->is_wificup_end  = TRUE;
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
       }
       else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER ||
@@ -3603,11 +3598,9 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         switch( select )
         { 
         case 0: //対戦する
-          p_wk->is_wificup_end  = FALSE;
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Matching );
           break;
         case 1://参加を解除する
-          p_wk->is_wificup_end  = FALSE;
           *p_seq  = SEQ_START_SUBSEQ_UNREGISTER;
           break;
         case 2://やめる
@@ -3632,7 +3625,6 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
       else if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE )
       { 
-        p_wk->is_wificup_end  = TRUE;
         *p_seq  = SEQ_NEXT_DISCONNECT;
       }
 
@@ -3903,10 +3895,8 @@ static void WbmWifiSeq_DisConnextEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   WIFIBATTLEMATCH_WIFI_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
 
-  if( p_wk->is_wificup_end )
-  { 
-    p_param->result = WIFIBATTLEMATCH_CORE_RESULT_END_WIFICUP;
-  }
+  //タイトルへ一気に戻る場合→なくなりました
+ //   p_param->result = WIFIBATTLEMATCH_CORE_RESULT_END_WIFICUP;
 
   WBM_SEQ_End( p_seqwk );
 }
