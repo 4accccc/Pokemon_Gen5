@@ -2301,7 +2301,7 @@ SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
 SRCS_OVERLAY_DEBUG_NCL = test/ncl/d_font_view.c
 
 # マジコン対策ライブラリ
-#===>SRCS_OVERLAY_SHINKA_DEMO
+#===>SRCS_OVERLAY_FIELD_INIT
 #LIB=>          AMProtectR2a.a
 SRCS_OVERLAY_AMPROTECT	= system/amprotect.c
 
