@@ -7616,12 +7616,12 @@ static BOOL _funcBGMVol(WIFIP2PMATCH_WORK* wk )
         sub = (sub / _VOL_TRACK_FRAME) * wk->aVol.bgmVolCount;
         wk->aVol.bgmVol = wk->aVol.bgmVolEnd - sub;
       }
-      //    OS_TPrintf("VOL変更 %d %d \n",wk->aVol.bgmVol, sub);
+      //OS_TPrintf("VOL変更 %d %d \n",wk->aVol.bgmVol, sub);
       PMSND_ChangeBGMVolume( _VOL_TRACK_ALL, wk->aVol.bgmVol );
       return FALSE;
     }
     else{
-      //  OS_TPrintf("VOLおわり %d\n",wk->aVol.bgmVolEnd);
+      //OS_TPrintf("VOLおわり %d\n",wk->aVol.bgmVolEnd);
       wk->aVol.bgmVol = wk->aVol.bgmVolEnd;
       PMSND_ChangeBGMVolume( _VOL_TRACK_ALL, wk->aVol.bgmVolEnd );
     }
@@ -7637,7 +7637,7 @@ static void _changeBGMVol( WIFIP2PMATCH_WORK* wk, u8 endVol)
     //OS_TPrintf("ボリュームそのまま %d %d\n",endVol);
     return;
   }
-  OS_TPrintf("ボリューム変更 %d %d \n",wk->aVol.bgmVolEnd, endVol);
+  //OS_TPrintf("ボリューム変更 %d %d \n",wk->aVol.bgmVolEnd, endVol);
   wk->aVol.bgmVolStart = wk->aVol.bgmVol;
   wk->aVol.bgmVolCount = _VOL_TRACK_FRAME;
   wk->aVol.bgmVolEnd = endVol;
@@ -7659,7 +7659,7 @@ static void _initBGMVol( WIFIP2PMATCH_WORK* wk, int status)
     wk->aVol.bgmVolEnd = _VOL_DEFAULT;
   }
   wk->aVol.bgmVolStart = wk->aVol.bgmVolEnd;
-  // OS_TPrintf("ボリューム初期化 %d\n",wk->aVol.bgmVolEnd);
+  //OS_TPrintf("ボリューム初期化 %d\n",wk->aVol.bgmVolEnd);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -7704,8 +7704,12 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   wk->initSeq = pParentWork->seq;    // P2PかDPWか
 
   wk->state = pParentWork->bTalk;
-  
-  if(pParentWork->seq != WIFI_GAME_NONE){
+
+  if(pParentWork->seq == WIFI_GAME_ERROR){
+    pParentWork->seq = WIFI_GAME_NONE;
+    _initBGMVol( wk, WIFI_STATUS_PLAYING);
+  }
+  else if(pParentWork->seq != WIFI_GAME_NONE){
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
   }
   else
@@ -7858,7 +7862,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   _graphicEnd(wk);
 
   pParentWork->friendNo = wk->friendNo;
-  OS_TPrintf("ともだちのばんごうは%d\n", wk->friendNo);
+  //OS_TPrintf("ともだちのばんごうは%d\n", wk->friendNo);
   pParentWork->seq = wk->endSeq;
 
   if(GFL_NET_IsInit()){

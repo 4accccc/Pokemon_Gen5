@@ -506,7 +506,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       (*seq)  = P2P_EVOLUTION;
       break;
     case POKEMONTRADE_MOVE_ERROR:
-      ep2p->pMatchParam->seq = WIFI_GAME_NONE;
+      ep2p->pMatchParam->seq = WIFI_GAME_ERROR;
       (*seq)  = P2P_MATCH_BOARD;
       break;
     default:
