@@ -3715,7 +3715,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
         //BTLV_MCSS_POS_A
         {
           NARC_battgra_wb_btl_sel3_normal_l_NSCR,     ///< 自分以外１体（選択）
-          NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel3_mine_sel_l_NSCR,   ///< 自分を含む味方１体（選択）
           NARC_battgra_wb_btl_sel3_pair_l_NSCR,       ///< 自分以外の味方１体（選択）
           NARC_battgra_wb_btl_sel3_enemy_sel_l_NSCR,  ///< 相手側１体（選択）
           NARC_battgra_wb_btl_sel3_nomine_l_NSCR,     ///< 自分以外全て
@@ -3733,7 +3733,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
         //BTLV_MCSS_POS_C
         {
           NARC_battgra_wb_btl_sel3_normal_c_NSCR,     ///< 自分以外１体（選択）
-          NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel3_mine_sel_c_NSCR,   ///< 自分を含む味方１体（選択）
           NARC_battgra_wb_btl_sel3_pair_c_NSCR,       ///< 自分以外の味方１体（選択）
           NARC_battgra_wb_btl_sel3_enemy_sel_c_NSCR,  ///< 相手側１体（選択）
           NARC_battgra_wb_btl_sel3_nomine_c_NSCR,     ///< 自分以外全て
@@ -3751,7 +3751,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
         //BTLV_MCSS_POS_E
         {
           NARC_battgra_wb_btl_sel3_normal_r_NSCR,     ///< 自分以外１体（選択）
-          NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel3_mine_sel_r_NSCR,   ///< 自分を含む味方１体（選択）
           NARC_battgra_wb_btl_sel3_pair_r_NSCR,       ///< 自分以外の味方１体（選択）
           NARC_battgra_wb_btl_sel3_enemy_sel_r_NSCR,  ///< 相手側１体（選択）
           NARC_battgra_wb_btl_sel3_nomine_r_NSCR,     ///< 自分以外全て
