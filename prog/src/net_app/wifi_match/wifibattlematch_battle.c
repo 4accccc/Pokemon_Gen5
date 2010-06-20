@@ -223,6 +223,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     {
       p_param->p_demo_param->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
       GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, p_param->p_demo_param);
+      status  = GFL_PROC_MAIN_CHANGE; //proc‚ğì¬‚µ‚½‚Ì‚Å‘‚«Š·‚¦
     }
     (*p_seq) = SEQ_WAIT_START_DEMO;
     break;
@@ -254,6 +255,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     break;
   case SEQ_BATTLE_INIT:
     GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, NO_OVERLAY_ID, &BtlProcData, p_param->p_btl_setup_param);
+    status  = GFL_PROC_MAIN_CHANGE; //proc‚ğì¬‚µ‚½‚Ì‚Å‘‚«Š·‚¦
 
     (*p_seq) = SEQ_BATTLE_WAIT;
     break;
@@ -391,6 +393,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
       if( is_next )
       {
         GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, p_param->p_demo_param);
+        status  = GFL_PROC_MAIN_CHANGE; //proc‚ğì¬‚µ‚½‚Ì‚Å‘‚«Š·‚¦
         (*p_seq) = SEQ_WAIT_END_DEMO;
       }
     }
