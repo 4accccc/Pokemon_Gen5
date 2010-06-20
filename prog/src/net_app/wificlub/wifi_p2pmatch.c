@@ -6681,7 +6681,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
     // なにかキーを押すか、「もどる」を押したら終了する
     if( userd_end == TRUE ){
-      wk->view.bttn_chg_friendNo = wk->view.touch_friendNo; // この友達のボタンを更新してもらう
+ //     wk->view.bttn_chg_friendNo = wk->view.touch_friendNo; // この友達のボタンを更新してもらう
       wk->view.touch_friendNo = 0;
       wk->view.touch_frame = 0;
       wk->view.button_on = TRUE;
@@ -7240,7 +7240,6 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
         // 名前の表示
         MCVSys_BttnWinDraw( wk, wk->view.nameWin[i], friend_no, frame, i );
         GFL_BMPWIN_MakeScreen(wk->view.nameWin[i]);
-        GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
         MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame,
                                   MCV_BUTTON_DEFX+(MCV_BUTTON_OFSX*x), MCV_BUTTON_DEFY+(MCV_BUTTON_OFSY*y) );
@@ -7257,6 +7256,7 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
     }
   }
 
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
   GFL_BG_LoadScreenV_Req(  GFL_BG_FRAME2_S );
 
   // メッセージ面の表示設定
