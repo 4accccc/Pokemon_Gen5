@@ -5277,14 +5277,11 @@ static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     ){
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
       {
-        BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-        {
-          BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-            HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
-            HANDEX_STR_AddArg( &param->str, pokeID );
-          BTL_SVF_HANDEX_Pop( flowWk, param );
-        }
-        BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          param->header.tokwin_flag = TRUE;
+          HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+          HANDEX_STR_AddArg( &param->str, pokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
       }
     }
   }
@@ -5305,6 +5302,7 @@ static void handler_Nenchaku_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   &&  (work[0])
   ){
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      param->header.tokwin_flag = TRUE;
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Nenchaku );
       HANDEX_STR_AddArg( &param->str, pokeID );
     BTL_SVF_HANDEX_Pop( flowWk, param );

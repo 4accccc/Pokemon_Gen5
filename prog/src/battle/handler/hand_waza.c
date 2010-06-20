@@ -5863,8 +5863,6 @@ static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   &&  (work[GAMAN_WORKIDX_STATE] >= GAMAN_STATE_3RD)
   ){
-    TAYA_Printf("DmgRec=%d\n", work[GAMAN_WORKIDX_DAMAGE]);
-
     if( work[GAMAN_WORKIDX_DAMAGE] == 0 )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
