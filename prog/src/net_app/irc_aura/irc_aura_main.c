@@ -221,7 +221,7 @@ enum{
 #define TOUCH_COUNTER_SHAKE_MAX (TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)  //ブレを取得する回数
 #define RESULT_SEND_CNT (COMPATIBLE_IRC_SENDATA_CNT)
 
-#define AURA_MSG_CHANGE_SYNC (3*60)
+#define AURA_MSG_CHANGE_SYNC (4*60)
 
 //-------------------------------------
 /// 個数
@@ -572,6 +572,7 @@ struct _AURA_MAIN_WORK
 
   u32       minus;
   u32       msg_cnt;
+  u32       flip_cnt;
   BOOL      msg_flip;
 
   MSGWND_WORK     msgtitle; //タイトルメッセージ
@@ -2546,6 +2547,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
     GUIDE_SetVisible( GUIDE_VISIBLE_LEFT, HEAPID_IRCAURA );
 
+    p_wk->flip_cnt = 0;
     *p_seq  = SEQ_MAIN;
     break;
 
@@ -2554,7 +2556,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       GUIDE_SetVisible( 0, HEAPID_IRCAURA );
 
-      p_wk->msg_cnt = 0;
+      p_wk->flip_cnt = 0;
       p_wk->msg_flip  =  0;
 
       //左タッチ演出ON
@@ -2592,18 +2594,18 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     else
     {
       //３秒ごとのメッセージかえ
-      if( p_wk->msg_cnt++ >= AURA_MSG_CHANGE_SYNC )
+      if( p_wk->flip_cnt++ >= AURA_MSG_CHANGE_SYNC )
       {
-        p_wk->msg_cnt = 0;
+        p_wk->flip_cnt = 0;
         p_wk->msg_flip  ^=  1;
 
         if( p_wk->msg_flip )
         {
-          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_STR_000 );
+          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_RES_000 );
         }
         else
         {
-          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_RES_000 );
+          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_STR_000 );
         }
       }
     }
