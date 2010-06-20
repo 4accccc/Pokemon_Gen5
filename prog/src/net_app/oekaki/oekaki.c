@@ -2966,15 +2966,18 @@ static void EndMessagePrint( OEKAKI_WORK *wk, int msgno, int wait )
   BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, 1, MESFRAME_PAL );
 
 
+  // printStreamする瞬間に他の描画を積んでいるようであればそのタスクを消す（後勝ち）
+  if(wk->printStream!=NULL){
+    PRINTSYS_PrintStreamDelete( wk->printStream );
+    wk->printStream=NULL;
+  }
+
   // メッセージスピードを指定
   if(wait==0){
+    // 一括描画
     PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->printQue, 
                            0, 0, wk->TalkString, wk->font, STRING_COL_MSG );
   }else{
-    // printStreamする瞬間に他の描画を積んでいるようであればそのタスクを消す（後勝ち）
-    if(wk->printStream!=NULL){
-      PRINTSYS_PrintStreamDelete( wk->printStream );
-    }
     // 文字列描画タスク登録
     wk->printStream = PRINTSYS_PrintStream( wk->MsgWin, 0, 0, wk->TalkString, wk->font,
                                             MSGSPEED_GetWait(), wk->pMsgTcblSys, 
