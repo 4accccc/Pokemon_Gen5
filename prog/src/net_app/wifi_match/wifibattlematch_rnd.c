@@ -3705,7 +3705,7 @@ static void Util_RenewalMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLE
 static void Util_SubSeq_Start( WIFIBATTLEMATCH_RND_WORK *p_wk, WBM_SEQ_FUNCTION seq_function )
 { 
   WBM_SEQ_SetNext( p_wk->p_subseq, seq_function );
-  p_wk->subseq_ret = WBM_WIFI_SUBSEQ_RET_NONE;
+  p_wk->subseq_ret = WBM_RND_SUBSEQ_RET_NONE;
 }
 //----------------------------------------------------------------------------
 /**

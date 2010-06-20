@@ -303,7 +303,7 @@ typedef enum
   UTIL_CANCEL_STATE_EXIT, //待機処理を抜けた
   UTIL_CANCEL_STATE_DECIDE, //キャンセルを確定
 }UTIL_CANCEL_STATE;
-static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL is_cancel_enable );
+static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL is_cancel_enable, BOOL can_disconnect );
 //スコアセーブ
 static BOOL Util_SaveScore( WIFIBATTLEMATCH_WIFI_WORK *p_wk, const WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *cp_data );
 
