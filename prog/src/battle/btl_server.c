@@ -428,9 +428,10 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
       // 入場演出処理後、捕獲デモ以外の処理
       if( BTL_MAIN_GetCompetitor(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
       {
-        BTL_SVFLOW_StartBtlIn( server->flowWork );
-        if( server->que->writePtr )
+        BOOL fAnyEvent = BTL_SVFLOW_StartBtlIn( server->flowWork );
+        if( fAnyEvent )
         {
+          TAYA_Printf("wp=%d\n", server->que->writePtr );
           SendBtlInChapterRecord( server );
           (*seq)++;
           break;

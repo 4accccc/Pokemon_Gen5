@@ -99,7 +99,7 @@ extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 extern void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
-extern SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk );
+extern BOOL BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk );
 
 extern void BTL_SVFLOW_StartTurn_Boot( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );

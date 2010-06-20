@@ -108,7 +108,7 @@ static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fPutMsg );
-static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
+static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -634,16 +634,16 @@ void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
 
 
 
-//--------------------------------------------------------------------------
+//=============================================================================================
 /**
  * サーバコマンド生成（バトル開始直後）
  *
  * @param   wk
  *
- * @retval  SvflowResult
+ * @retval  BOOL    とくせい発動などのイベントがあればTRUE（録画チャプタ用）
  */
-//--------------------------------------------------------------------------
-SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
+//=============================================================================================
+BOOL BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
 {
   SVCL_WORK* cw;
   u32 i, posIdx;
@@ -685,9 +685,7 @@ SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
     }
   }
 
-  scproc_AfterMemberIn( wk );
-
-  return SVFLOW_RESULT_DEFAULT;
+  return scproc_AfterMemberIn( wk );
 }
 
 void BTL_SVFLOW_StartTurn_Boot( BTL_SVFLOW_WORK* wk )
@@ -947,7 +945,6 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
       return i+1;
     }
 
-    // @todo 逃げる確定したら本来は「にげる」コマンドだけを処理すべき
     if( wk->flowResult == SVFLOW_RESULT_BTL_QUIT ){
       continue;
     }
@@ -2702,19 +2699,23 @@ static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posId
 
 //----------------------------------------------------------------------------------
 /**
- * サーバーフロー：新しく場に入場したポケモン処理
+ * サーバーフロー：ポケモン入場イベント処理
  *
  * @param   wk
  *
+ * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
+static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 {
   FRONT_POKE_SEEK_WORK fps;
   BTL_POKESET* pokeSet;
   BTL_POKEPARAM* bpp;
   u32 hem_state;
+  u8  fAnyEvent;
   u8  pokeID;
+
+  fAnyEvent = FALSE;
 
   pokeSet = &wk->pokesetMemberInProc;
   BTL_POKESET_Clear( pokeSet );
@@ -2737,12 +2738,22 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   {
     hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_AfterMemberIn( wk, bpp );
+      if( scproc_HandEx_Result(wk) != HandExResult_NULL )
+      {
+        fAnyEvent = TRUE;
+      }
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 
   hem_state = BTL_Hem_PushState( &wk->HEManager );
     scEvent_AfterMemberInComp( wk );
+    if( scproc_HandEx_Result(wk) != HandExResult_NULL )
+    {
+      fAnyEvent = TRUE;
+    }
   BTL_Hem_PopState( &wk->HEManager, hem_state );
+
+  return fAnyEvent;
 }
 //--------------------------------------------------------------------------
 /**
@@ -14976,6 +14987,11 @@ static u8 scproc_HandEx_batonTouch( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 
   BTL_POKEPARAM* user = BTL_POKECON_GetPokeParam( wk->pokeCon, param->userPokeID );
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->targetPokeID );
+
+  if( BPP_CheckSick(user, WAZASICK_IEKI) )
+  {
+    scEvent_IekiFixed( wk, target );
+  }
 
   BPP_BatonTouchParam( target, user );
   SCQUE_PUT_OP_BatonTouch( wk->que, param->userPokeID, param->targetPokeID );
