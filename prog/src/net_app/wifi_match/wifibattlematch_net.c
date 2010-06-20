@@ -4817,14 +4817,14 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
   case SEQ_WAIT_CALLBACK:
     //コールバック処理を待つ
     DWC_NdProcess();
+    if(s_callback_result != DWC_ND_ERROR_NONE)
+    {
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+    }
     if( s_callback_flag )
     { 
       s_callback_flag = FALSE;
-      if( s_callback_result != DWC_ND_ERROR_NONE)
-      { 
-        return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
-      }
-      else
+      if( s_callback_result == DWC_ND_ERROR_NONE)
       { 
         p_wk->seq  = p_wk->next_seq;
       }
@@ -4993,10 +4993,10 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
     DEBUG_NET_Printf("DWC_ND_HTTPERR\n");
     // ファイル数の取得でＨＴＴＰエラーが発生した場合はダウンロードサーバに繋がっていない可能性が高い
     if( reason == DWC_ND_CBREASON_GETFILELISTNUM )
-      {
-          DEBUG_NET_Printf( "It is not possible to connect download server.\n." );
-          ///	OS_Terminate();
-      }
+    {
+      DEBUG_NET_Printf( "It is not possible to connect download server.\n." );
+      ///	OS_Terminate();
+    }
     break;
   case DWC_ND_ERROR_BUFFULL:
     DEBUG_NET_Printf("DWC_ND_BUFFULLERR\n");

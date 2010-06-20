@@ -2061,7 +2061,8 @@ SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 #===> SRCS_OVERLAY_BATTLE_PLIST
 #===> SRCS_OVERLAY_VS_MULTI_LIST
 SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
-                                    net_app/wifi_match/wifibattlematch_battle.c
+                                    net_app/wifi_match/wifibattlematch_battle.c \
+                                    net_app/wifi_match/wifibattlematch_debugdata.c
 
 
 #中村デバッグ

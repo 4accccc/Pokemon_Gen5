@@ -35,7 +35,7 @@
 #define DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE (53)
 #define DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE (54)
 #define DEBUGWIN_GROUP_SAKE_RECORD_DATE  (55)
-#define DEBUGWIN_GROUP_SAKE_RECORD_RESULT  (55)
+#define DEBUGWIN_GROUP_SAKE_RECORD_RESULT  (56)
 
 #define DEBUGWIN_GROUP_WIFISCORE  (60)
 #define DEBUGWIN_GROUP_LIVESCORE  (65)
@@ -45,6 +45,9 @@
 #define DEBUGWIN_GROUP_REPORT (70)
 
 #define DEBUGWIN_GROUP_BTLBOX (80)
+
+
+#include "wifibattlematch_debugdata.h"
 
 //=============================================================================
 /**
@@ -795,15 +798,15 @@ static inline void DEBUGWIN_SAKERECORD_Init( WIFIBATTLEMATCH_RECORD_DATA *p_reco
 
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE, "あいてポケ", DEBUGWIN_GROUP_SAKE_RECORD, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_Page, DebugWin_SakeRec_D_YouPoke_page,
-       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_MonsNo, DebugWin_SakeRec_D_YouPoke_MonNo,
-       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_FormNo, DebugWin_SakeRec_D_YouPoke_FormNo,
-       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_Lv, DebugWin_SakeRec_D_YouPoke_Lv,
-       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_Sex, DebugWin_SakeRec_D_YouPoke_Sex,
-       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE, heapID );
 
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_SAKE_RECORD_DATE, "たいせんび", DEBUGWIN_GROUP_SAKE_RECORD, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Date_Y, DebugWin_SakeRec_D_Date_Y,
@@ -1134,28 +1137,6 @@ static inline void DEBUGWIN_LIVESCORE_Exit( void )
  *    レポートを送信した情報を表示
  */
 //=============================================================================
-enum
-{
-  DEBUGWIN_REPORT_WIN,
-  DEBUGWIN_REPORT_LOSE,
-  DEBUGWIN_REPORT_DIRTY,
-  DEBUGWIN_REPORT_DISCONNECT,
-
-  DEBUGWIN_REPORT_MAX,
-};
-enum
-{
-  DEBUGWIN_REPORT_WHO_MY,
-  DEBUGWIN_REPORT_WHO_YOU,
-
-  DEBUGWIN_REPORT_WHO_MAX,
-};
-typedef struct
-{
-  s32   param[DEBUGWIN_REPORT_WHO_MAX][DEBUGWIN_REPORT_MAX];
-} DEBUGWIN_REPORT_DATA;
-
-static DEBUGWIN_REPORT_DATA s_debug_report_data = {0};
 
 static inline void DebugWin_Report_U_None( void* userWork , DEBUGWIN_ITEM* item )
 {
@@ -1204,28 +1185,26 @@ static inline void DebugWin_Report_D_YouDisconnect( void* userWork , DEBUGWIN_IT
 }
 static inline void DEBUGWIN_REPORT_Init( HEAPID heapID )
 {
-  DEBUGWIN_REPORT_DATA  *p_wk = &s_debug_report_data;
-
-  GFL_STD_MemClear( p_wk, sizeof(DEBUGWIN_REPORT_DATA) );
+  DEBUGWIN_REPORT_DATA  *p_wk = DEBUGWIN_REPORT_DATA_GetInstance();
 
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_REPORT, "レポートけっか", heapID );
 
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_MyWin,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_MyLose,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_MyDirty,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_MyDisconnect,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_YouWin,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_YouLose,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_YouDirty,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Report_U_None, DebugWin_Report_D_YouDisconnect,
-       &s_debug_record_data, DEBUGWIN_GROUP_REPORT, heapID );
+       p_wk, DEBUGWIN_GROUP_REPORT, heapID );
 }
 
 static inline void DEBUGWIN_REPORT_Exit( void )
@@ -1235,7 +1214,7 @@ static inline void DEBUGWIN_REPORT_Exit( void )
 
 static inline void DEBUGWIN_REPORT_SetData( BOOL is_my, int win, int lose, int dirty, int disconnect )
 {
-  DEBUGWIN_REPORT_DATA  *p_wk = &s_debug_report_data;
+  DEBUGWIN_REPORT_DATA  *p_wk = DEBUGWIN_REPORT_DATA_GetInstance();
 
   p_wk->param[ !is_my ][ DEBUGWIN_REPORT_WIN ]  = win;
   p_wk->param[ !is_my ][ DEBUGWIN_REPORT_LOSE ]  = lose;

@@ -191,7 +191,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
       { 
         NetErr_App_ReqErrorDisp();
         p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE;
-        return GFL_PROC_RES_FINISH;
+        procWork->plData.isNetErr = TRUE;
+        procWork->psData.isExitRequest = TRUE;
+        break;
       }
     }
     else

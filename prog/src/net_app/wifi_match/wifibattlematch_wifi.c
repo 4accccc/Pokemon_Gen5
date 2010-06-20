@@ -1111,7 +1111,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       }
     }
     break;
-    
+
   case SEQ_START_WRITE_SAKE_DELETE_POKE:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
@@ -1163,7 +1163,6 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitDownloadDigCard( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS )
       { 
-        SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
         //取得成功
         WIFIBATTLEMATCH_NET_GetDownloadDigCard( p_wk->p_net, &p_wk->recv_card );
 
@@ -1212,8 +1211,21 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_SUBSEQ_CUPDATE:
-    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
-    *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+    {
+      ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+        return;
+
+      case WIFIBATTLEMATCH_NET_ERROR_NONE:
+        Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
+        *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+        break;
+      }
+    }
     break;
 
   case SEQ_WAIT_SUBSEQ_CUPDATE:
@@ -2422,14 +2434,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   //=====================================
   {
     BOOL is_cancel_enable = (SEQ_WAIT_MATCHING <= *p_seq && *p_seq < SEQ_START_CANCEL_TIMING);
-    cancel_state  = Util_Cancel_Seq( p_wk, is_cancel_enable );
+    BOOL can_disconnect = !(*p_seq <= SEQ_START_BADWORD && *p_seq <= SEQ_WAIT_BADWORD );
+    cancel_state  = Util_Cancel_Seq( p_wk, is_cancel_enable, can_disconnect );
 
     //自分が切断
-    if( cancel_state == UTIL_CANCEL_STATE_DECIDE 
-        && (*p_seq != SEQ_START_BADWORD && *p_seq != SEQ_WAIT_BADWORD ) )
+    if( cancel_state == UTIL_CANCEL_STATE_DECIDE )
     {
-      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-      WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
       *p_seq  = SEQ_START_SELECT_END_MSG;
       return ;
     }
@@ -2450,8 +2460,22 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_START_SUBSEQ_CUPDATE:
-    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
-    *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:  //正常
+      Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
+      *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+      break;
+    }
     break;
   case SEQ_WAIT_SUBSEQ_CUPDATE:
     { 
@@ -3099,8 +3123,21 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     *p_seq = SEQ_START_SUBSEQ_CUPDATE_RET;
     break;
   case SEQ_START_SUBSEQ_CUPDATE_RET:
-    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
-    *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE_RET;
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      break;
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:
+      Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
+      *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE_RET;
+      break;
+    }
     break;
   case SEQ_WAIT_SUBSEQ_CUPDATE_RET:
     { 
@@ -3459,8 +3496,22 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_START_SUBSEQ_CUPDATE:
-    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
-    *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:
+      Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
+      *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+      break;
+    }
     break;
   case SEQ_WAIT_SUBSEQ_CUPDATE:
     { 
@@ -3688,6 +3739,9 @@ static void WbmWifiSeq_DisConnextSendTime( WBM_SEQ_WORK *p_seqwk, int *p_seq, vo
 {
   enum
   { 
+    SEQ_START_SAVE_MSG,
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
     SEQ_START_LOGINTIME_MSG,
     SEQ_SEND_SAKE_LOGINTIME,
     SEQ_WAIT_SAKE_LOGINTIME,
@@ -3701,6 +3755,25 @@ static void WbmWifiSeq_DisConnextSendTime( WBM_SEQ_WORK *p_seqwk, int *p_seq, vo
 
   switch( *p_seq )
   { 
+  case SEQ_START_SAVE_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, WBM_TEXT_TYPE_WAIT );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
+    *p_seq  = SEQ_WAIT_MSG;
+    break;
+  case SEQ_START_SAVE:
+    GAMEDATA_SaveAsyncStart( p_param->p_param->p_game_data );
+    *p_seq  = SEQ_WAIT_SAVE;
+    break;
+  case SEQ_WAIT_SAVE:
+    {
+      SAVE_RESULT ret;
+      ret = GAMEDATA_SaveAsyncMain( p_param->p_param->p_game_data );
+      if( ret == SAVE_RESULT_OK )
+      {
+        *p_seq  = SEQ_START_LOGINTIME_MSG;
+      }
+    }
+    break;
   case SEQ_START_LOGINTIME_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_013, WBM_TEXT_TYPE_WAIT );
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SEND_SAKE_LOGINTIME );
@@ -3769,8 +3842,18 @@ static void WbmWifiSeq_DisConnextCheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, v
   switch( *p_seq )
   { 
   case SEQ_START_SUBSEQ_CUPDATE:
-    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
-    *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      break;
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:
+      Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
+      *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+      break;
+    }
     break;
 
   case SEQ_WAIT_SUBSEQ_CUPDATE:
@@ -4741,6 +4824,7 @@ static u32 Util_List_Main( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 static void Util_SubSeq_Start( WIFIBATTLEMATCH_WIFI_WORK *p_wk, WBM_SEQ_FUNCTION seq_function )
 { 
   WBM_SEQ_SetNext( p_wk->p_subseq, seq_function );
+  p_wk->subseq_ret = WBM_WIFI_SUBSEQ_RET_NONE;
 }
 
 //----------------------------------------------------------------------------
@@ -4926,11 +5010,12 @@ static BOOL Util_ComarepPokeParty( const POKEPARTY *cp_pokeparty_1, const POKEPA
  *
  *	@param	WIFIBATTLEMATCH_WIFI_WORK *p_wk ワーク
  *	@param	is_cancel_enable TRUEならばキャンセルをおこなってよい FALSEならばダメ
+ *	@param  can_disconnect  切断してよいのならばTRUE
  *
  *	@return キャンセル状態
  */
 //-----------------------------------------------------------------------------
-static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL is_cancel_enable )
+static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL is_cancel_enable, BOOL can_disconnect )
 {
   enum
   {
@@ -4991,9 +5076,14 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL 
     p_wk->cancel_seq++;
     break;
   case SEQ_SEND_CANCEL:
-    if( WIFIBATTLEMATCH_NET_SendMatchCancel( p_wk->p_net ) )
+    if( can_disconnect )
     {
-      p_wk->cancel_seq++;
+      if( WIFIBATTLEMATCH_NET_SendMatchCancel( p_wk->p_net ) )
+      {
+        p_wk->cancel_seq++;
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+        WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+      }
     }
     break;
   case SEQ_END:
