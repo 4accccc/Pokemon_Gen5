@@ -96,6 +96,25 @@ black_rom:
 	$(MAKE) -C $(PROG_DIR) 
 	cp ./prog/spec/version ./prog/version
 
+black_rom_protect:
+	cp ./prog/spec/version_brp ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/spec/version ./prog/version
+
+white_rom_protect:
+	cp ./prog/spec/version_wrp ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/spec/version ./prog/version
+
+
 master_rom:
 	$(MAKE) white_rom
 	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRAJ.srl
@@ -107,6 +126,13 @@ master:
 	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IRAJ_r.srl
 	$(MAKE) black
 	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IRBJ_r.srl
+
+master_rom_protect:
+	$(MAKE) white_rom_protect
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRAJ_p.srl
+	$(MAKE) black_rom_protect
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRBJ_p.srl
+
 
 # cleanÇµÇΩèÍçáÇ…Ç∑Ç◊Çƒè¡Ç¶ÇÈÇÊÇ§Ç…ãLèqÇµÇƒÇ≠ÇæÇ≥Ç¢
 #--------------------------------------------------------------------
