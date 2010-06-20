@@ -673,27 +673,17 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6MineSel[] = {
 };
 
 ///< 自分以外の味方１体（選択）
-static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair_L[] = {
-  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
-  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  2,  6 },                  //0
-  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
-  { { 4,  4,  4,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  4,  6 },                  //1
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
-  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair_C[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
   { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  0,  6 },                  //0
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
   { { 4,  4,  4,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  4,  6 },                  //1
-  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
-  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
-};
-static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair_R[] = {
-  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
-  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  0,  6 },                  //0
-  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
-  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  2,  6 },                  //1
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
 };
@@ -748,7 +738,7 @@ const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ WAZA_TARGET_MAX + 1 ] = {
   { 
     PokeSeleMenuKey6Normal_L,   ///< 自分以外１体（選択）
     PokeSeleMenuKey6MineSel,    ///< 自分を含む味方１体（選択）
-    PokeSeleMenuKey6Pair_L,     ///< 自分以外の味方１体（選択）
+    PokeSeleMenuKey6Pair,       ///< 自分以外の味方１体（選択）
     PokeSeleMenuKey6EnemySel_L, ///< 相手側１体（選択）
     PokeSeleMenuKey6NoMine_L,   ///< 自分以外全て
     PokeSeleMenuKey6Enemy_L,    ///< 相手側全て
@@ -782,7 +772,7 @@ const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ WAZA_TARGET_MAX + 1 ] = {
   { 
     PokeSeleMenuKey6Normal_R,   ///< 自分以外１体（選択）
     PokeSeleMenuKey6MineSel,    ///< 自分を含む味方１体（選択）
-    PokeSeleMenuKey6Pair_R,     ///< 自分以外の味方１体（選択）
+    PokeSeleMenuKey6Pair,       ///< 自分以外の味方１体（選択）
     PokeSeleMenuKey6EnemySel_R, ///< 相手側１体（選択）
     PokeSeleMenuKey6NoMine_R,   ///< 自分以外全て
     PokeSeleMenuKey6Enemy_R,    ///< 相手側全て
@@ -802,7 +792,7 @@ const u8 PokeSeleMenuKey6DataCount[ 3 ][ WAZA_TARGET_MAX + 1 ] = {
   { 
     NELEMS(PokeSeleMenuKey6Normal_L),   ///< 自分以外１体（選択）
     NELEMS(PokeSeleMenuKey6MineSel),    ///< 自分を含む味方１体（選択）
-    NELEMS(PokeSeleMenuKey6Pair_L),     ///< 自分以外の味方１体（選択）
+    NELEMS(PokeSeleMenuKey6Pair),       ///< 自分以外の味方１体（選択）
     NELEMS(PokeSeleMenuKey6EnemySel_L), ///< 相手側１体（選択）
     NELEMS(PokeSeleMenuKey6NoMine_L),   ///< 自分以外全て
     NELEMS(PokeSeleMenuKey6Enemy_L),    ///< 相手側全て
@@ -836,7 +826,7 @@ const u8 PokeSeleMenuKey6DataCount[ 3 ][ WAZA_TARGET_MAX + 1 ] = {
   { 
     NELEMS(PokeSeleMenuKey6Normal_R),   ///< 自分以外１体（選択）
     NELEMS(PokeSeleMenuKey6MineSel),    ///< 自分を含む味方１体（選択）
-    NELEMS(PokeSeleMenuKey6Pair_R),     ///< 自分以外の味方１体（選択）
+    NELEMS(PokeSeleMenuKey6Pair),       ///< 自分以外の味方１体（選択）
     NELEMS(PokeSeleMenuKey6EnemySel_R), ///< 相手側１体（選択）
     NELEMS(PokeSeleMenuKey6NoMine_R),   ///< 自分以外全て
     NELEMS(PokeSeleMenuKey6Enemy_R),    ///< 相手側全て
