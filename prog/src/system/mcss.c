@@ -37,7 +37,8 @@
 #define	MCSS_NORMAL_MTX	( 29 )
 #define	MCSS_SHADOW_MTX	( 30 )
 
-#define	MCSS_DEFAULT_SHADOW_ROTATE	( 0xC400 )
+#define	MCSS_DEFAULT_SHADOW_ROTATE_X	( 0xC400 )
+#define	MCSS_DEFAULT_SHADOW_ROTATE_Z	( 0 )
 
 #define	MCSS_DEFAULT_SHADOW_OFFSET	( -0x1000 )	//‰eˆÊ’u‚ÌZ•ûŒü‚ÌƒIƒtƒZƒbƒg’l
 
@@ -483,8 +484,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			              mcss->pos.z + mcss->ofs_pos.z + mcss->shadow_offset.z );
 
 			//‰e—p‚Ì‰ñ“]
-			G3_RotX( FX_SinIdx( mcss->shadow_rotate ), FX_CosIdx( mcss->shadow_rotate ) );
+			G3_RotX( FX_SinIdx( mcss->shadow_rotate_x ), FX_CosIdx( mcss->shadow_rotate_x ) );
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
+			G3_RotZ( -FX_SinIdx( mcss->shadow_rotate_z ), FX_CosIdx( mcss->shadow_rotate_z ) );
 			G3_RotZ( -FX_SinIdx( rotate ), FX_CosIdx( rotate ) );
 			{	
 				VecFx32	scale;
@@ -885,7 +887,8 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->alpha = 31;
 			mcss_sys->mcss[ count ]->shadow_alpha = MCSS_SHADOW_ALPHA_AUTO;
 			mcss_sys->mcss[ count ]->vanish_flag = MCSS_VANISH_OFF;
-			mcss_sys->mcss[ count ]->shadow_rotate = MCSS_DEFAULT_SHADOW_ROTATE;
+			mcss_sys->mcss[ count ]->shadow_rotate_x = MCSS_DEFAULT_SHADOW_ROTATE_X;
+			mcss_sys->mcss[ count ]->shadow_rotate_z = MCSS_DEFAULT_SHADOW_ROTATE_Z;
 			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
@@ -1159,7 +1162,19 @@ void	MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale )
 //--------------------------------------------------------------------------
 void	MCSS_SetShadowRotate( MCSS_WORK *mcss, const u16 rot )
 {
-  mcss->shadow_rotate = rot;
+  mcss->shadow_rotate_x = rot;
+}
+//--------------------------------------------------------------------------
+/**
+ * @brief ‰e•`‰æ—p‰ñ“]ŠpƒZƒbƒg
+ *
+ * @param[in]  mcss MCSSƒ[ƒN\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^
+ * @param[in]  rot  ‰ñ“]Šp
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetShadowRotateZ( MCSS_WORK *mcss, const u16 rot )
+{
+  mcss->shadow_rotate_z = rot;
 }
 
 //--------------------------------------------------------------------------
@@ -2744,7 +2759,8 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 			mcss_sys->mcss[ count ]->alpha = 31;
 			mcss_sys->mcss[ count ]->shadow_alpha = MCSS_SHADOW_ALPHA_AUTO;
 			mcss_sys->mcss[ count ]->vanish_flag = MCSS_VANISH_OFF;
-			mcss_sys->mcss[ count ]->shadow_rotate = MCSS_DEFAULT_SHADOW_ROTATE;
+			mcss_sys->mcss[ count ]->shadow_rotate_x = MCSS_DEFAULT_SHADOW_ROTATE_X;
+			mcss_sys->mcss[ count ]->shadow_rotate_z = MCSS_DEFAULT_SHADOW_ROTATE_Z;
 			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;

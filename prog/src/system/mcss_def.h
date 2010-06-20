@@ -117,7 +117,8 @@ struct _MCSS_WORK
 
   fx32                          mcss_anm_frame;       //アニメーションを進めるフレーム数
 
-  u16                           shadow_rotate;
+  u16                           shadow_rotate_x;
+  u16                           shadow_rotate_z;
   VecFx32                       shadow_offset;
 };
 
