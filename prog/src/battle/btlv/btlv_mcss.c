@@ -626,8 +626,9 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   { 
     VecFx32 ofs;
 
-    VEC_Set( &ofs, 0, 0, -1024 );
+    VEC_Set( &ofs, 0xfffffc00, 0, 0xfffffa00 );
     MCSS_SetShadowOffset( bmw->btlv_mcss[ index ].mcss, &ofs );
+    MCSS_SetShadowRotateZ( bmw->btlv_mcss[ index ].mcss, 0xf800 );
   }
 
   BTLV_MCSS_SetReverseDrawFlag( bmw, position, BTLV_MCSS_REVERSE_DRAW_ON );
@@ -2006,7 +2007,6 @@ void  BTLV_MCSS_OverwriteMAW( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos, MCSS_ADD_WOR
 {
   int index = BTLV_MCSS_GetIndex( bmw, pos );
   bmw->btlv_mcss[ index ].maw = *maw;
-  SOGABE_Printf("owmaw_rnd:0x%08x\n",bmw->btlv_mcss[ index ].param.personal_rnd );
   MCSS_TOOL_SetMakeBuchiCallback( bmw->mcss_sys, bmw->btlv_mcss[ index ].param.personal_rnd );
   MCSS_ReloadResource( bmw->mcss_sys, bmw->btlv_mcss[ index ].mcss, &bmw->btlv_mcss[ index ].maw );
 }
