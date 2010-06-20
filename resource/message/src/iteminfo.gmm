@@ -1171,37 +1171,37 @@
 	</row>
 
 	<row id="ITEMINFO_116">
-		<language name="JPN" width="256">インセクタに　もたせると
+		<language name="JPN" width="256">ゲノセクトに　もたせると
 テクノバスターという　わざが
 みずタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+		<language name="JPN_KANJI" width="256">ゲノセクトに　持たせると
 テクノバスターという　技が
 みずタイプになる　カセット。</language>
 	</row>
 
 	<row id="ITEMINFO_117">
-		<language name="JPN" width="256">インセクタに　もたせると
+		<language name="JPN" width="256">ゲノセクトに　もたせると
 テクノバスターという　わざが
 でんきタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+		<language name="JPN_KANJI" width="256">ゲノセクトに　持たせると
 テクノバスターという　技が
 でんきタイプになる　カセット。</language>
 	</row>
 
 	<row id="ITEMINFO_118">
-		<language name="JPN" width="256">インセクタに　もたせると
+		<language name="JPN" width="256">ゲノセクトに　もたせると
 テクノバスターという　わざが
 ほのおタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+		<language name="JPN_KANJI" width="256">ゲノセクトに　持たせると
 テクノバスターという　技が
 ほのおタイプになる　カセット。</language>
 	</row>
 
 	<row id="ITEMINFO_119">
-		<language name="JPN" width="256">インセクタに　もたせると
+		<language name="JPN" width="256">ゲノセクトに　もたせると
 テクノバスターという　わざが
 こおりタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+		<language name="JPN_KANJI" width="256">ゲノセクトに　持たせると
 テクノバスターという　技が
 こおりタイプになる　カセット。</language>
 	</row>
