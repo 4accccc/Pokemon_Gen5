@@ -879,9 +879,6 @@ sub_receipt_challenge_multi_comm:
     _RET
   ENDIF
   
-  //ÇøÇÂÇ¡Ç∆ë“Ç¬
-  _TIME_WAIT( 15 )
-  
   //í êMë“ã@íÜÅc
   _SYSWIN_MSG_ALLPUT( msg_bsw_scr_101, POS_DOWN )
   
