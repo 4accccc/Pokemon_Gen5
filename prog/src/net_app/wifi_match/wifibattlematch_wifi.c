@@ -1200,7 +1200,8 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_WAIT_DOWNLOAD_REG_FAILURE:
-    if(DREAM_WORLD_MATCHUP_NONE == p_wk->p_param->p_gpf_data->WifiMatchUpState )
+    //まったく大会がなかったら期間チェックを行わない
+    if(0 == Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO) )
     { 
       *p_seq = SEQ_START_NOTCUP_MSG;
     }
@@ -3979,14 +3980,7 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   switch( *p_seq )
   { 
   case SEQ_CHECK_CUP_STATUS:
-    if( p_wk->p_param->p_gpf_data->WifiMatchUpState == DREAM_WORLD_MATCHUP_NONE )
-    { 
-      *p_seq  = SEQ_END;
-    }
-    else
-    { 
-      *p_seq  = SEQ_CHECK_DATE;
-    }
+    *p_seq  = SEQ_CHECK_DATE;
     break;
 
   case SEQ_CHECK_DATE:
