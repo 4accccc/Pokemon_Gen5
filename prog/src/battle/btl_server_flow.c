@@ -11951,8 +11951,10 @@ static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL
   u32 per = WAZADATA_GetParam( waza, WAZAPARAM_SHRINK_PER );
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ADD_DEFAULT_PER, per );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
+
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_SHRINK_PER );
     fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );

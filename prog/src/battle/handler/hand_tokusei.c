@@ -363,6 +363,7 @@ static void handler_KudakeruYoroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_KudakeruYoroi( u32* numElems );
 static void handler_Tikarazuku_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tikarazuku_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tikarazuku_ShrinkCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikarazuku( u32* numElems );
 static BOOL IsTikarazukuEffecive( WazaID waza );
 static void handler_Makenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -5856,6 +5857,14 @@ static void handler_Tikarazuku_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     }
   }
 }
+// ひるみ追加チェックハンドラ
+static void handler_Tikarazuku_ShrinkCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikarazuku( u32* numElems )
 {
@@ -5863,6 +5872,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikarazuku( u32* numElems )
     { BTL_EVENT_WAZA_POWER,      handler_Tikarazuku_WazaPow   }, // ワザ威力計算ハンドラ
     { BTL_EVENT_ADD_SICK,        handler_Tikarazuku_CheckFail }, // 追加効果（状態異常）チェックハンドラ
     { BTL_EVENT_ADD_RANK_TARGET, handler_Tikarazuku_CheckFail }, // 追加効果（ランク効果）チェックハンドラ
+    { BTL_EVENT_WAZA_SHRINK_PER, handler_Tikarazuku_ShrinkCheck },  // 追加効果（ひるみ）チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -5876,11 +5886,9 @@ static BOOL IsTikarazukuEffecive( WazaID waza )
   WazaCategory category = WAZADATA_GetCategory( waza );
 
   // ひるみ確率のあるワザは
-/*
   if( WAZADATA_GetParam(waza, WAZAPARAM_SHRINK_PER) != 0 ){
     return TRUE;
   }
-*/
 
   switch( category ){
   // 殴った相手に効果が発動するタイプは基本的に有効
