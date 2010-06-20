@@ -9,4 +9,4 @@ ROM_SPEC= spec/pokemon_wb_black$(TWL_LIBSUFFIX).rsf
 #----------------------------------------------------------------------------
 NITRO_FINALROM = yes
 TWL_FINALROM = yes
-TWL_COMPRESS   = True
+#TWL_COMPRESS   = True
