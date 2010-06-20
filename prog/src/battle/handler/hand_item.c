@@ -4212,6 +4212,7 @@ static  const BtlEventHandlerTable*  HAND_ADD_ITEM_OmamoriKoban( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,       handler_OmamoriKoban },  // メンバー入場ハンドラ
+    { BTL_EVENT_ACTPROC_END,     handler_OmamoriKoban },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
