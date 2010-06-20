@@ -157,9 +157,9 @@ IRAJ
 
 
 #ifdef DEBUG_SERVER
-#define LIBDPW_SERVER_TYPE ( DPW_SERVER_RELEASE )   ///< PDW接続先 （リリース用）
-#else
 #define LIBDPW_SERVER_TYPE ( DPW_SERVER_DEBUG )   ///< PDW接続先(デバッグ版)
+#else
+#define LIBDPW_SERVER_TYPE ( DPW_SERVER_RELEASE )   ///< PDW接続先 （リリース用）
 #endif
 
 
