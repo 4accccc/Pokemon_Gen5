@@ -324,6 +324,8 @@ end
 #技エフェクトコンバート用処理ここから
   nakigoe_com_cnt = 0
   nakigoe_wait_cnt = 0
+  camera_move_com_cnt = 0
+  attack_cnt = 0
 #技エフェクトコンバート用処理ここまで
 
 	#シーケンス
@@ -334,6 +336,8 @@ end
 
 	EFFNO_POS = 0
 	ESF_COM_STR_POS = 0
+
+  camera_type = []
 
 	while data_pos < data.size
 		split_data = data[ data_pos ].split(/\s+/)
@@ -409,6 +413,43 @@ end
             nakigoe_wait_cnt += 1
           end
         end
+				if split_data[ ESF_COM_STR_POS ].index("カメラ移動") != nil
+          camera_move_com_cnt += 1
+				  camera_type << split_data[ ESF_COM_STR_POS + 2 ]
+        end
+#=begin
+				if split_data[ ESF_COM_STR_POS ].index("ポケモン") != nil
+				  if split_data[ ESF_COM_STR_POS + 1 ].index("攻撃") != nil
+            attack_cnt += 1
+          end
+        end
+#=end
+
+=begin
+				if split_data[ ESF_COM_STR_POS ].index("パーティクル再生（座") == nil
+				  if split_data[ ESF_COM_STR_POS ].index("パーティクル再生すべて") != nil
+				    if split_data[ ESF_COM_STR_POS + 2 ].index("攻撃") != nil
+              attack_cnt += 1
+            end
+				  elsif split_data[ ESF_COM_STR_POS ].index("パーティクル再生") != nil
+				    if split_data[ ESF_COM_STR_POS + 3 ].index("攻撃") != nil
+              attack_cnt += 1
+            end
+          end
+        end
+				if split_data[ ESF_COM_STR_POS ].index("エミッタ移動（座") == nil &&
+           split_data[ ESF_COM_STR_POS ].index("エミッタ移動（正") == nil
+          if split_data[ ESF_COM_STR_POS ].index("エミッタ移動") != nil
+				    if split_data[ ESF_COM_STR_POS + 4 ].index("攻撃") != nil
+              attack_cnt += 1
+            end
+          elsif split_data[ ESF_COM_STR_POS ].index("エミッタ円") != nil
+				    if split_data[ ESF_COM_STR_POS + 3 ].index("攻撃") != nil
+              attack_cnt += 1
+            end
+          end
+        end
+=end
 #技エフェクトコンバート用処理ここまで
 				str = ""
 				str += "\t" + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_com_label + "\t"
@@ -531,6 +572,19 @@ end
   if nakigoe_com_cnt != 0 && nakigoe_wait_cnt == 0
     printf( "%s:ポケモン鳴き声コマンドを使用しているのに、終了待ちをしていません\n", ARGV[ ARGV_ESF_FILE ] )
     exit( 1 )
+  end
+  if camera_move_com_cnt >= 2 && attack_cnt > 0
+    camera_type_cnt = 0
+    camera_type.size.times {|i|
+      if camera_type[ i ].index("攻撃") != nil || camera_type[ i ].index("ZOOM_OUT") != nil
+        camera_type_cnt += 1
+      end
+    }
+    if camera_type_cnt == 0
+      fp_w = open( "no_camera_move.txt", "a" )
+      fp_w.printf( "%s\n", ARGV[ ARGV_ESF_FILE ] )
+      fp_w.close
+    end
   end
 #技エフェクトコンバート用処理ここまで
 
