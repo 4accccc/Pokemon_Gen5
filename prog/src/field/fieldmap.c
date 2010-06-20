@@ -466,6 +466,8 @@ static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 
 static BOOL zonedata_GetShadowUse( u16 zone_id );
 
+static BOOL zonedata_IsEnvSE( u16 zone_id );
+
 
 //data
 static const GFL_DISP_VRAM fldmapdata_dispVram;
@@ -1009,10 +1011,13 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //その対処のため、ここで分割ロードの完了を待つ
     if ( FIELD_STATUS_GetContinueFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ) ) == TRUE )
     {
-      if ( PMSND_IsLoading() )
-      {
-        TAMADA_Printf( " BGM Load Wait!!\n" );
-        return MAINSEQ_RESULT_CONTINUE;
+      if (zonedata_IsEnvSE( fieldWork->map_id ) == TRUE )
+      { //環境音SEを必要とするマップだけ、ここで読み込み待ちを行う
+        if ( PMSND_IsLoading() )
+        {
+          TAMADA_Printf( " BGM Load Wait!!\n" );
+          return MAINSEQ_RESULT_CONTINUE;
+        }
       }
     }
     
@@ -3990,4 +3995,20 @@ static BOOL zonedata_GetShadowUse( u16 zone_id )
   return TRUE;
 }
 
+//==================================================================
+/**
+ * @brief 環境音SEを使用しているかどうかの判定処理
+ * @date  2010.06.20
+ * @author  tamada
+ * @return  BOOL FIELD_INITの中でループSEを鳴らしている箇所の場合、TRUEとなる
+ */
+//==================================================================
+static BOOL zonedata_IsEnvSE( u16 zone_id )
+{
+  if ( zone_id == ZONE_ID_C04GYM0101 ) return TRUE;
+  if ( zone_id == ZONE_ID_C09R0101 ) return TRUE;
+  if ( zone_id == ZONE_ID_C09R0201 ) return TRUE;
+  if ( zone_id == ZONE_ID_C09R0301 ) return TRUE;
+  return FALSE;
+}
 
