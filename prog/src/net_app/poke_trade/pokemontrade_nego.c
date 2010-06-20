@@ -669,6 +669,7 @@ static void _NEGO_BackSelect8(POKEMON_TRADE_WORK* pWork)
   POKETRADE_MESSAGE_WindowClear(pWork);
   POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
   TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
   _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
 }
 
@@ -1100,6 +1101,7 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
     _select6PokeSubMask(pWork);
     _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
     TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
     WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   }
@@ -1385,6 +1387,7 @@ static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
       break;
     default: //‚¢‚¢‚¦
       POKETRADE_MESSAGE_WindowClear(pWork);
+      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
       TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
       break;
@@ -1484,6 +1487,7 @@ static void POKETRADE_NEGO_Select6keywaitMsg2(POKEMON_TRADE_WORK* pWork)
   }
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
     POKETRADE_MESSAGE_WindowClear(pWork);
+    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
     TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
 
     _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywait);
