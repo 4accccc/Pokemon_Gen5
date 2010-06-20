@@ -308,7 +308,9 @@ static void BgInit( int sub_bg1_offset )
 		GFL_BG_SYS_HEADER BGsys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
+    int sub_visible = GFL_DISP_GetSubVisible(); //GFL_BG_SetBGMode
 		GFL_BG_SetBGMode( &BGsys_data );
+		GFL_DISP_GXS_SetVisibleControlDirect(sub_visible);
 
 	}
 
@@ -399,17 +401,21 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
     // -------------サブ画面---------------------
     // メイン画面BGsキャラ転送
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_traderoom_win_ncgr,  
-        GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
+    if(wk->is_partner_change == FALSE){
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_traderoom_win_ncgr,  
+          GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
 
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_worldtrade_traderoom_win2_nscr,  
-        GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
+      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_worldtrade_traderoom_win2_nscr,  
+          GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
+    }
 
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
 	// 会話フォントパレット転送
-	TalkFontPaletteLoad( PALTYPE_SUB_BG, WORLDTRADE_SUB_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
+  if(wk->is_partner_change == FALSE){
+  	TalkFontPaletteLoad( PALTYPE_SUB_BG, WORLDTRADE_SUB_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
+  }
 
 }
 
