@@ -1046,9 +1046,12 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
     _CHANGE_STATE(pWork,_matchingState);
   }
   else{
-    _CHANGE_STATE(pWork,NULL);  //ÉGÉâÅ[ï\é¶
+    GFL_NET_StateSetWifiError( 
+      0,
+      0,
+      0, 
+      ERRORCODE_DISCONNECT );
   }
-
 }
 
 //----------------------------------------------------------------------------
