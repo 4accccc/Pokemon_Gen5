@@ -1893,6 +1893,11 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
       //カーソル位置セット　20100614 add Saito
       GTSNEGO_DISP_FriendListSetCurPos(pWork->pDispWork, &pWork->scrollPanelCursor, trgindex);
+      //スクロールの位置セットBTS5781
+      GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,
+                                  pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
+                                  pWork->scrollPanelCursor.listmax );
+
       PMSND_PlaySystemSE(_SE_DECIDE);
       _pAppWinDel(pWork);
       _CHANGE_STATE(pWork,_friendSelectDecide);
