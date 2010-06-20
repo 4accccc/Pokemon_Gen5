@@ -211,6 +211,7 @@ extern  BOOL            BTLV_MCSS_CheckAnimeExecute( BTLV_MCSS_WORK* bmw, int po
 extern  void            BTLV_MCSS_CheckPositionSetInitPos( BTLV_MCSS_WORK* bmw, int position );
 extern  void            BTLV_MCSS_SetReverseDrawFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position,
                                                       BTLV_MCSS_REVERSE_DRAW draw_flag );
+extern  BOOL            BTLV_MCSS_CheckHengeFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );

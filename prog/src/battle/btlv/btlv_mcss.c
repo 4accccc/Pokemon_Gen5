@@ -98,7 +98,8 @@ struct  _BTLV_MCSS
   u32             set_init_pos        :1;     //技エフェクト後、初期位置からはずれていたチェックに引っかかった
   u32             check_effect_end    :1;     //エフェクトの終了を待つフラグ
   u32             set_pltt_fade_flag  :1;     //パレットフェードが呼ばれた
-  u32                                 :23;
+  u32             henge_flag          :1;     //変化した
+  u32                                 :22;
 };
 
 struct _BTLV_MCSS_WORK
@@ -1715,6 +1716,7 @@ void  BTLV_MCSS_SetMonsNo( BTLV_MCSS_WORK *bmw, int position, int mons_no )
   if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
 
   bmw->btlv_mcss[ index ].param.mons_no = mons_no;
+  bmw->btlv_mcss[ index ].henge_flag    = 1;
 }
 
 //============================================================================================
@@ -2309,6 +2311,29 @@ void  BTLV_MCSS_SetReverseDrawFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position, B
     }
   }
   MCSS_SetReverseDraw( bmw->btlv_mcss[ index ].mcss, flag );
+}
+
+//============================================================================================
+/**
+ *  @brief  henge_flagをチェック
+ *
+ * @param[in]   bmw       システム管理構造体
+ * @param[in]   position  立ち位置
+ */
+//============================================================================================
+BOOL  BTLV_MCSS_CheckHengeFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position )
+{ 
+  BOOL  ret = FALSE;
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { return ret; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return ret; }
+  
+  ret = ( bmw->btlv_mcss[ index ].henge_flag != 0 );
+  bmw->btlv_mcss[ index ].henge_flag = 0;
+
+  return ret;
 }
 
 //============================================================================================

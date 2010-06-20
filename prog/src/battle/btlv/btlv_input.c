@@ -595,6 +595,8 @@ struct _BTLV_INPUT_WORK
 
   u8                    decide_pos[ BTLV_INPUT_POKEMON_MAX ][ BTLV_INPUT_SCRTYPE_MAX ];   //Aボタンで決定したボタン位置を記憶
   u8                    button_exist[ BTLV_INPUT_BUTTON_MAX ];  //押せるボタンかどうかチェック
+  WazaID                decide_waza[ BTLV_INPUT_POKEMON_MAX ];
+  WazaID                waza[ PTL_WAZA_MAX ];
 
   u8                    *cursor_mode;
 
@@ -1459,6 +1461,13 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       ttw->biw = biw;
       ttw->pos = biwp->pos;
       biw->henshin_flag = biwp->henshin_flag;
+      { 
+        int i;
+        for( i = 0 ; i <PTL_WAZA_MAX ; i++ )
+        { 
+          biw->waza[ i ] = biwp->wazano[ i ];
+        }
+      }
 
       if( ( biw->main_loop_tcb_flag == TRUE ) &&
         ( ( biw->type == BTLV_INPUT_TYPE_DOUBLE ) || ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ) )
@@ -4752,8 +4761,13 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
   if( decide_flag == TRUE )
   {
     switch( biw->scr_type ){
-    case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
+      if( get_cancel_flag( biw, tp_tbl, biw->cursor_pos ) == FALSE )
+      { 
+        biw->decide_waza[ biw->active_index ] = biw->waza[ biw->cursor_pos ];
+      }
+      /*fallthru*/
+    case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_ROTATE:
       if( get_cancel_flag( biw, tp_tbl, biw->cursor_pos ) == FALSE )
       {
@@ -5011,7 +5025,12 @@ static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  check_init_decide_pos( BTLV_INPUT_WORK* biw )
 { 
-  if( BTLV_GAUGE_CheckAppearFlag( BTLV_EFFECT_GetGaugeWork(), biw->focus_pos ) )
+  BOOL  flag;
+
+  flag = BTLV_GAUGE_CheckAppearFlag( BTLV_EFFECT_GetGaugeWork(), biw->focus_pos ) | 
+         BTLV_MCSS_CheckHengeFlag( BTLV_EFFECT_GetMcssWork(), biw->focus_pos );
+
+  if( flag == TRUE )
   { 
     int i;
 
@@ -5177,8 +5196,13 @@ static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tb
 static  void  set_cursor_pos( BTLV_INPUT_WORK* biw )
 { 
   switch( biw->scr_type ){
-  case BTLV_INPUT_SCRTYPE_COMMAND:
   case BTLV_INPUT_SCRTYPE_WAZA:
+    if( biw->decide_waza[ biw->active_index ] != biw->waza[ biw->decide_pos[ biw->active_index ][ biw->scr_type ] ] )
+    { 
+      biw->decide_pos[ biw->active_index ][ BTLV_INPUT_SCRTYPE_DIR ] = 0;
+    }
+    /*fallthru*/
+  case BTLV_INPUT_SCRTYPE_COMMAND:
   case BTLV_INPUT_SCRTYPE_ROTATE:
     biw->cursor_pos = biw->decide_pos[ biw->active_index ][ biw->scr_type ];
     break;
