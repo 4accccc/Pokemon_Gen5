@@ -5287,19 +5287,34 @@ static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     }
   }
 }
+// アイテム書き換えチェックハンドラ
 static void handler_Nenchaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ITEM) == ITEM_DUMMY_DATA)
   ){
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+// アイテム書き換え失敗後反応ハンドラ
+static void handler_Nenchaku_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (work[0])
+  ){
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Nenchaku );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+    BTL_SVF_HANDEX_Pop( flowWk, param );
+    work[0] = 0;
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nenchaku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Nenchaku_NoEff },  // 無効化チェックLv2ハンドラ
-    { BTL_EVENT_ITEMSET_CHECK,        handler_Nenchaku   },
+    { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Nenchaku_NoEff    },  // 無効化チェックLv2ハンドラ
+    { BTL_EVENT_ITEMSET_CHECK,        handler_Nenchaku          },  // アイテム書き換えチェックハンドラ
+    { BTL_EVENT_ITEMSET_FAILED,       handler_Nenchaku_Reaction },  // アイテム書き換え失敗後反応ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-06-20T02:21:29"/>
+	<create user="taya" host="W00146" date="2010-06-20T20:01:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1648,6 +1648,14 @@
 [1:09:どうぐ名:1]を　ひろってきた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　ひろってきた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Nenchaku">
+		<comment>ねんちゃく</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+どうぐを　うばえない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+道具を　奪えない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SlowStartON">

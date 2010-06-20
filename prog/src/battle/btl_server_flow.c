@@ -12248,6 +12248,22 @@ static BOOL scEvent_CheckItemSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
 }
 //----------------------------------------------------------------------------------
 /**
+ * [Event] アイテムをセット（あるいは消去）されるのを失敗
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ItemSetFailed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BOOL failed = FALSE;
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ITEMSET_FAILED );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
  * [Event] アイテム書き換え決定
  *
  * @param   wk
@@ -14733,7 +14749,11 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
     u8  failed = scEvent_CheckItemSet( wk, bpp, param->itemID );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-    if( failed ){
+    if( failed )
+    {
+      hem_state = BTL_Hem_PushState( &wk->HEManager );
+      scEvent_ItemSetFailed( wk, bpp );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
       return 0;
     }
   }
