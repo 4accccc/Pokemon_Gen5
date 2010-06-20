@@ -181,7 +181,7 @@ static HUDSON_WORK wkHudson = {0};
 // A連打
 static BOOL UIFuncButtonA( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DEBUG_OVERWRITE* p_data30 )
 {
-  static const GFL_UI_DEBUG_OVERWRITE w = { 
+  static const GFL_UI_DEBUG_OVERWRITE w = {
     PAD_BUTTON_A,
     PAD_BUTTON_A,
   };
@@ -218,8 +218,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
   spstack_init( wk );
-  
-#ifdef DEBUG_ONLY_FOR_hudson 
+
+#ifdef DEBUG_ONLY_FOR_hudson
   // Aボタン連打
   if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
       HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
@@ -326,7 +326,7 @@ BOOL BTLV_SCD_WaitRestartUI( BTLV_SCD* wk )
 void BTLV_SCD_Delete( BTLV_SCD* wk )
 {
   //GFL_BMPWIN_Delete( wk->win );
-      
+
 #ifdef DEBUG_ONLY_FOR_hudson
   if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
       HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
@@ -665,10 +665,10 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NG;
         }
         else if( BPP_IsFightEnable( bpp ) == FALSE )
-				{
+        {
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NONE;
         }
-				else
+        else
         {
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_ALIVE;
         }
@@ -705,7 +705,7 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
           ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) && wkHudson.TrunCnt >= 0 ) ||
           ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) && wkHudson.TrunCnt >= 4 ) )
       {
-        hit = 3; 
+        hit = 3;
       }
     }
 #endif // DEBUG_ONLY_FOR_hudson
@@ -759,7 +759,7 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
   BTLV_INPUT_WAZA_PARAM biwp;
   u16 wazaCnt, wazaID, i;
   u8 PP, PPMax;
-        
+
   wazaCnt = BPP_WAZA_GetCount( wk->bpp );
   biwp.henshin_flag = BPP_HENSIN_Check( wk->bpp );
   BTL_Printf("ワザ数:%d, pokeID=%d\n", wazaCnt, BPP_GetID(wk->bpp));
@@ -898,7 +898,7 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
     //wk->destActionParam->gen.cmdがBTL_ACTION_NULLじゃないとアラートメッセージになるので、
     //初期化しておく
     else if( wazaIdx == BTLV_INPUT_CANCEL_BUTTON )
-    { 
+    {
       BTL_ACTION_SetNULL( wk->destActionParam );
     }
     return TRUE;
@@ -1176,7 +1176,7 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 
   seltgt_init_setup_work( &wk->selTargetWork, wk );
 
-  // @@@ トリプルはターゲット選択画面を新たに作る必要あるので、仮処理。
+  // トリプルはターゲット選択画面を新たに作る必要ある
   if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE )
   {
     BtlPokePos  targetPos = BTL_POS_NULL;
