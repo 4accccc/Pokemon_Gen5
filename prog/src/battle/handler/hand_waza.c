@@ -5722,13 +5722,13 @@ enum {
 static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_START,            handler_Gaman          }, //
-    { BTL_EVENT_REQWAZA_MSG,               handler_Gaman_WazaMsg  },
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,    handler_Gaman_ExeCheck },
-    { BTL_EVENT_DECIDE_TARGET,             handler_Gaman_Target   },
+    { BTL_EVENT_WAZA_EXE_START,            handler_Gaman           }, //
+    { BTL_EVENT_REQWAZA_MSG,               handler_Gaman_WazaMsg   },
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,    handler_Gaman_ExeCheck  },
+    { BTL_EVENT_DECIDE_TARGET,             handler_Gaman_Target    },
     { BTL_EVENT_WAZA_DMG_PROC1,            handler_Gaman_CalcDmg   },
-    { BTL_EVENT_WAZA_EXECUTE_FAIL,         handler_Gaman_Fail     },
-    { BTL_EVENT_WAZA_DMG_REACTION,         handler_Caman_DmgRec   },
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,         handler_Gaman_Fail      },
+    { BTL_EVENT_WAZA_DMG_REACTION,         handler_Caman_DmgRec    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5853,8 +5853,8 @@ static void handler_Gaman_CalcDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     u32 dmg_sum = work[ GAMAN_WORKIDX_DAMAGE ];
     if( dmg_sum ){
       dmg_sum *= 2;
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, dmg_sum );
     }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, dmg_sum );
     work[0] = GAMAN_STATE_END;
   }
 }
@@ -5863,8 +5863,9 @@ static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   &&  (work[GAMAN_WORKIDX_STATE] >= GAMAN_STATE_3RD)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( work[GAMAN_WORKIDX_DAMAGE] )
+    TAYA_Printf("DmgRec=%d\n", work[GAMAN_WORKIDX_DAMAGE]);
+
+    if( work[GAMAN_WORKIDX_DAMAGE] == 0 )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
