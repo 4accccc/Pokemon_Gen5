@@ -1654,8 +1654,9 @@ static ACTION_ORDER_WORK* ActOrderTool_SearchForCombiWaza( BTL_SVFLOW_WORK* wk, 
   ACTION_ORDER_WORK* p = ActOrderTool_SearchByWazaID( wk, waza, 0 );
   while( p != NULL )
   {
-    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, BPP_GetID(p->bpp)) )
-    {
+    if( (BTL_MAINUTIL_IsFriendPokeID(pokeID, BPP_GetID(p->bpp)))
+    &&  (!BPP_IsDead(p->bpp))
+    ){
       return p;
     }
 
@@ -3372,7 +3373,8 @@ static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       if( CombiWazaTbl[i] != waza )
       {
         orderWork[ orderCnt ] = ActOrderTool_SearchForCombiWaza( wk, CombiWazaTbl[i], pokeID, targetPos );
-        if( orderWork[ orderCnt ] != NULL ){
+        if( orderWork[ orderCnt ] != NULL )
+        {
           BTL_N_Printf( DBGSTR_SVFL_CombiWazaFound,
                     targetPos, CombiWazaTbl[i], BPP_GetID(orderWork[orderCnt]->bpp) );
           if( ++orderCnt >= COMBI_MAX ){ break; }
