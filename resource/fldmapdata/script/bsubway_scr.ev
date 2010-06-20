@@ -879,6 +879,12 @@ sub_receipt_challenge_multi_comm:
     _RET
   ENDIF
   
+  //ちょっと待つ
+  _TIME_WAIT( 15 )
+  
+  //通信待機中…
+  _SYSWIN_MSG_ALLPUT( msg_bsw_scr_101, POS_DOWN )
+  
   //通信中フラグON
   _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, TRUE, BSW_NULL, BSW_NULL )
   
@@ -889,6 +895,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_PLAY_MODE, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -900,6 +907,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
   IF $comm_ret == TRUE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -912,6 +920,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
   IF $comm_ret == TRUE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -919,6 +928,8 @@ sub_receipt_challenge_multi_comm:
   
   //プレイモードが違う
   IF $ret == FALSE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
+
     $SCWK_TEMP0 = msg_bsw_scr_56
     _CALL sub_bsw_common_bwin_receipt
     _MSGWIN_CLOSE()
@@ -947,6 +958,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_POKE_SELECT, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -958,6 +970,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
   IF $comm_ret == TRUE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -970,6 +983,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
   IF $comm_ret == TRUE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -977,6 +991,8 @@ sub_receipt_challenge_multi_comm:
   
   //ポケモン被りで終了
   IF $ret != 0 THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
+    
     IF $ret == 1 THEN //一体のみ
       _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
       _MONS_NAME( 0, ret )
@@ -1016,6 +1032,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_MYST, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -1027,6 +1044,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
   IF $comm_ret == TRUE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -1039,6 +1057,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
   IF $comm_ret == TRUE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -1051,6 +1070,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_BTL_TRAINER_SET, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -1070,6 +1090,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_TRDATA, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -1086,6 +1107,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
   IF $comm_ret == TRUE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
@@ -1095,11 +1117,15 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_TRDATA_END, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE() //通信待機中…消し
     _CALL sub_bsw_common_comm_error_end
     _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
  
+  _SYSWIN_CLOSE() //通信待機中…消し
+  _TIME_WAIT( 30 )
+  
   //現在位置セーブ
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
   
