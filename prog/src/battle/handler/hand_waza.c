@@ -423,7 +423,8 @@ static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems );
 static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Caman_DmgRec( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gaman_CalcDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -5714,7 +5715,10 @@ enum {
   GAMAN_STATE_3RD,
   GAMAN_STATE_END,
 };
-
+enum {
+  GAMAN_WORKIDX_STATE = 0,
+  GAMAN_WORKIDX_DAMAGE,
+};
 static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -5722,8 +5726,9 @@ static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
     { BTL_EVENT_REQWAZA_MSG,               handler_Gaman_WazaMsg  },
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,    handler_Gaman_ExeCheck },
     { BTL_EVENT_DECIDE_TARGET,             handler_Gaman_Target   },
-    { BTL_EVENT_WAZA_DMG_PROC1,            handler_Gaman_Damage   },
+    { BTL_EVENT_WAZA_DMG_PROC1,            handler_Gaman_CalcDmg   },
     { BTL_EVENT_WAZA_EXECUTE_FAIL,         handler_Gaman_Fail     },
+    { BTL_EVENT_WAZA_DMG_REACTION,         handler_Caman_DmgRec   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5732,7 +5737,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    switch( work[0] ){
+    switch( work[GAMAN_WORKIDX_STATE] ){
     case GAMAN_STATE_1ST:
       // １ターン目：自分をワザロック状態にして、処理を抜ける。
       {
@@ -5744,14 +5749,15 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_ENABLE_MODE, BTL_WAZAENABLE_QUIT );
         work[WORKIDX_STICK] = 1;
-        work[0] = GAMAN_STATE_2ND;
+        work[GAMAN_WORKIDX_STATE] = GAMAN_STATE_2ND;
+        work[ GAMAN_WORKIDX_DAMAGE ] = 0;
       }
       break;
     case GAMAN_STATE_2ND:
       // ２ターン目：何もせず処理を抜ける
       {
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_ENABLE_MODE, BTL_WAZAENABLE_QUIT );
-        work[0] = GAMAN_STATE_3RD;
+        work[GAMAN_WORKIDX_STATE] = GAMAN_STATE_3RD;
       }
       break;
     case GAMAN_STATE_3RD:
@@ -5769,7 +5775,7 @@ static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   {
     BTL_HANDEX_STR_PARAMS* param = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 
-    switch( work[0] ){
+    switch( work[GAMAN_WORKIDX_STATE] ){
     case GAMAN_STATE_2ND:
       HANDEX_STR_Setup( param, BTL_STRTYPE_SET, BTL_STRID_SET_Gaman );
       HANDEX_STR_AddArg( param, pokeID );
@@ -5827,13 +5833,24 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     }
   }
 }
-static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ反応ハンドラ（受けたダメージを記憶しておく）
+static void handler_Caman_DmgRec( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    if( work[WORKIDX_STICK] )
+    {
+      work[ GAMAN_WORKIDX_DAMAGE ] += BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
+    }
+  }
+}
+static void handler_Gaman_CalcDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  (work[0] >= GAMAN_STATE_3RD)
+  &&  (work[GAMAN_WORKIDX_STATE] >= GAMAN_STATE_3RD)
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 dmg_sum = gaman_getTotalDamage( bpp );
+    u32 dmg_sum = work[ GAMAN_WORKIDX_DAMAGE ];
     if( dmg_sum ){
       dmg_sum *= 2;
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, dmg_sum );
@@ -5844,16 +5861,17 @@ static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  &&  (work[0] >= GAMAN_STATE_3RD)
+  &&  (work[GAMAN_WORKIDX_STATE] >= GAMAN_STATE_3RD)
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 dmg_sum = gaman_getTotalDamage( bpp );
-    if( dmg_sum == 0 ){
+    if( work[GAMAN_WORKIDX_DAMAGE] )
+    {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
-    work[0] = GAMAN_STATE_END;
+    work[GAMAN_WORKIDX_STATE] = GAMAN_STATE_END;
   }
 }
+
 static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 失敗したらすぐに貼り付き＆ワザロック状態解除
@@ -5874,21 +5892,6 @@ static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 
     work[ WORKIDX_STICK ] = 0;
   }
-}
-static u32 gaman_getTotalDamage( const BTL_POKEPARAM* bpp )
-{
-  u32 t, i, cnt, dmg_sum = 0;
-  BPP_WAZADMG_REC  rec;
-  for(t=0; t<3; ++t)
-  {
-    cnt = BPP_WAZADMGREC_GetCount( bpp, t );
-    for(i=0; i<cnt; ++i)
-    {
-      BPP_WAZADMGREC_Get( bpp, t, i, &rec );
-      dmg_sum += rec.damage;
-    }
-  }
-  return dmg_sum;
 }
 
 //----------------------------------------------------------------------------------
@@ -10999,7 +11002,6 @@ static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
         work[ 0 ] = 1;  // 合体発動フラグ
         work[ 1 ] = effectType;
         work[ 2 ] = combiPokeID;
-
 
         switch( effectType ){
         case COMBI_EFFECT_RAINBOW:   wazaType = POKETYPE_MIZU;  break;
