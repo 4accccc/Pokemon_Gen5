@@ -773,6 +773,10 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
 
     GFL_CLACT_WK_SetBgPri(pWork->aBallIcon[side+UI_BALL_MYSTATUS].clwk_ball,1);
   }
+  else
+  {
+    _UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS] );
+  }
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin[side]);
   GFL_BMPWIN_MakeScreen(pWork->StatusWin[side]);
   GFL_BG_LoadScreenV_Req( frame );
@@ -935,6 +939,10 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
       _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                       xdotpos[leftright]+16, 16, CLSYS_DRAW_SUB, pWork->heapID,PLTID_OBJ_BALLICON_S );
     }
+    else
+    {
+      _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
+    }
   }
   else{
     _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
@@ -1079,6 +1087,9 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
 
     IRC_POKETRADE_ItemIconDisp(pWork, 2, pp);
 
+    _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
+                                    12, 7, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
+
   }
   else //100609 add saito
   {
@@ -1089,10 +1100,8 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
     }
     //タイプ表示リセット
     POKETRADE_MESSAGE_ResetTypeIcon(pWork);
+    POKETRADE_MESSAGE_ResetPokemonBallIcon(pWork);
   }
-
-  _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
-                                  12, 7, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
 
 
   IRC_POKETRADE_PokeStatusIconDisp(pWork,pp, bEgg);  //●▲■
@@ -1286,6 +1295,10 @@ void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMO
     _pokePocketItemMsgDisp(pp, pWork->StatusWin2[side], 16, 16*8, pWork);
     _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                     xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID,ballpal[side] );
+  }
+  else
+  {
+    POKETRADE_MESSAGE_ResetPokemonBallIcon(pWork);
   }
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin1[side]);
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin2[side]);
