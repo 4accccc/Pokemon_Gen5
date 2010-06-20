@@ -214,6 +214,7 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
     GAMESYSTEM_SetEvent(gsys, event);
   }
   
+#ifdef AMPROTECT_FUNC
   if(magicon%4783){
     int i;
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -223,7 +224,7 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
       magicon1_true_func();
     }
   }
-
+#endif
   return GFL_PROC_RES_FINISH;
 }
 
