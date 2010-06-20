@@ -366,6 +366,7 @@ void NetErr_DispCallPushPop(void)
   GXWndPlane gxs_outside = G2S_GetWndOutsidePlane();
   GXWndPlane gx_inside = G2_GetWndOBJInsidePlane();
   GXWndPlane gxs_inside = G2S_GetWndOBJInsidePlane();
+  GXWndPlane gx_wnd_inside = G2_GetWndOBJInsidePlane();
   
 	if(Local_SystemOccCheck() == FALSE){
 		GF_ASSERT(0); //システムが作られていない
@@ -415,13 +416,15 @@ void NetErr_DispCallPushPop(void)
   	GFL_NET_WirelessIconOBJWinOFF();
   	if(GFL_NET_WirelessIconGetVramType() == NNS_G2D_VRAM_TYPE_2DSUB){
       //メインはLocal_ErrDispExitで復帰している為、Subだけ復帰
-  	  GXS_SetVisibleWnd(sub_dispcnt.visibleWnd);
-    	G2S_SetWndOutsidePlane(gxs_outside.planeMask, FALSE);
-    	G2S_SetWndOBJInsidePlane(gxs_inside.planeMask, FALSE);
+    	GXS_SetGraphicsMode(sub_dispcnt.bgMode);
+    	GXS_SetVisiblePlane(sub_dispcnt.visiblePlane);
+    	GXS_SetVisibleWnd(sub_dispcnt.visibleWnd);
+    	G2S_SetWndOutsidePlane(gxs_outside.planeMask, gxs_outside.effect);
+    	G2S_SetWndOBJInsidePlane(gxs_inside.planeMask, gxs_inside.effect);
   	}
   	else{
-    	G2_SetWndOutsidePlane(gx_outside.planeMask, FALSE);
-    	G2_SetWndOBJInsidePlane(gx_inside.planeMask, FALSE);
+    	G2_SetWndOutsidePlane(gx_outside.planeMask, gx_outside.effect);
+    	G2_SetWndOBJInsidePlane(gx_inside.planeMask, gx_inside.effect);
     }
   }
 }
