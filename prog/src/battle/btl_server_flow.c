@@ -6549,9 +6549,13 @@ static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     {
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, hit_cnt );
       BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_RINPUNGUARD_FLG, FALSE );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_TIKARAZUKU_FLG, FALSE );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT_PREV );
-      BTL_EVENT_CallHandlers( wk, eventID );
+
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_TIKARAZUKU_FLG) == FALSE ){
+        BTL_EVENT_CallHandlers( wk, eventID );
+      }
     }
   BTL_EVENTVAR_Pop();
 }

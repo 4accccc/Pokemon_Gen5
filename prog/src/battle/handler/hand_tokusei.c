@@ -5868,6 +5868,17 @@ static void handler_Tikarazuku_ShrinkCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
+//
+static void handler_Tikarazuku_HitChk( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    if( IsTikarazukuEffecive(waza) ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_TIKARAZUKU_FLG, TRUE );
+    }
+  }
+}
 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikarazuku( u32* numElems )
 {
@@ -5876,6 +5887,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikarazuku( u32* numElems )
     { BTL_EVENT_ADD_SICK,        handler_Tikarazuku_CheckFail }, // 追加効果（状態異常）チェックハンドラ
     { BTL_EVENT_ADD_RANK_TARGET, handler_Tikarazuku_CheckFail }, // 追加効果（ランク効果）チェックハンドラ
     { BTL_EVENT_WAZA_SHRINK_PER, handler_Tikarazuku_ShrinkCheck },  // 追加効果（ひるみ）チェックハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_PREV,  handler_Tikarazuku_HitChk },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -5923,6 +5935,11 @@ static BOOL IsTikarazukuEffecive( WazaID waza )
       return TRUE;
     }
     break;
+  }
+
+  // ひみつのちからは特別に
+  if( waza == WAZANO_HIMITUNOTIKARA ){
+    return TRUE;
   }
 
   return FALSE;
