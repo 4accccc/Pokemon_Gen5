@@ -981,7 +981,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_NONE;
-      data.GPFEntryFlg      = DREAM_WORLD_ENTRYFLAG_DS_WRITE;
+      data.GPFEntryFlg      = p_wk->p_param->p_gpf_data->GPFEntryFlg;
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_NONE;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
     }
@@ -1496,8 +1496,8 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     { 
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
+      data.GPFEntryFlg      = DREAM_WORLD_ENTRYFLAG_DS_WRITE;
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_SIGNUP;
-
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_SIGNUP;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
       *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
