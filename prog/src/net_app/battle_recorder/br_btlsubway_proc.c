@@ -1021,6 +1021,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   STRBUF  *p_src;
 
   BSWAY_PLAYMODE  multi_mode;
+  BSWAY_PLAYMODE  comm_multi_mode;
 
 
   p_font  = BR_RES_GetFont( p_param->p_res );
@@ -1035,11 +1036,13 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   //マルチモード
   if( Br_BtlSubway_IsAppearMulti( p_param->p_subway, p_param->p_gamedata ) )
   {
-    multi_mode  = BSWAY_PLAYMODE_S_MULTI;
+    multi_mode      = BSWAY_PLAYMODE_S_MULTI;
+    comm_multi_mode = BSWAY_PLAYMODE_S_COMM_MULTI;
   }
   else
   {
-    multi_mode  = BSWAY_PLAYMODE_MULTI;
+    multi_mode      = BSWAY_PLAYMODE_MULTI;
+    comm_multi_mode = BSWAY_PLAYMODE_COMM_MULTI;
   }
 
 
@@ -1107,7 +1110,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_CAPTION:
         { 
           u16 msgID;
-          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ) )
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, comm_multi_mode ) )
           { 
             msgID = msg_817;
           }
@@ -1121,7 +1124,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_NUM:  //ぜんかいの数値
         { 
-          int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
+          int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, comm_multi_mode ); 
           number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
@@ -1133,7 +1136,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_NUM: //さいこうの数値
         { 
-          int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
+          int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, comm_multi_mode ); 
           number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
