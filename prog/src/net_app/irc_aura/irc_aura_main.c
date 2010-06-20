@@ -221,6 +221,8 @@ enum{
 #define TOUCH_COUNTER_SHAKE_MAX (TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)  //ブレを取得する回数
 #define RESULT_SEND_CNT (COMPATIBLE_IRC_SENDATA_CNT)
 
+#define AURA_MSG_CHANGE_SYNC (3*60)
+
 //-------------------------------------
 /// 個数
 //=====================================
@@ -570,6 +572,7 @@ struct _AURA_MAIN_WORK
 
   u32       minus;
   u32       msg_cnt;
+  BOOL      msg_flip;
 
   MSGWND_WORK     msgtitle; //タイトルメッセージ
 
@@ -657,6 +660,8 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
 static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_status, u16 x, u16 y, HEAPID heapID );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
+static void MSGWND_PrintPlayerNamePack( MSGWND_WORK* p_wk, AURA_MAIN_WORK *p_main_wk, u32 strID );
+
 static GFL_BMPWIN *MSGWND_GetBmpWin( const MSGWND_WORK* cp_wk );
 //ONLYRESULT
 #if 0
@@ -2387,6 +2392,27 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
     PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字描画パック（デバッグ版とリリース版を考慮したパック）
+ *
+ *	@param	MSGWND_WORK* p_wk   ワーク
+ *	@param	strID               文字列
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintPlayerNamePack( MSGWND_WORK* p_wk, AURA_MAIN_WORK *p_main_wk, u32 strID )
+{
+  if( p_main_wk->p_param->p_gamesys )
+  {
+    MSGWND_PrintPlayerName( p_wk, &p_main_wk->msg,
+        strID, p_main_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+  }
+  else
+  {
+    MSGWND_Print( p_wk, &p_main_wk->msg,
+        strID, 0, 0 );
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -2528,8 +2554,8 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       GUIDE_SetVisible( 0, HEAPID_IRCAURA );
 
-
-
+      p_wk->msg_cnt = 0;
+      p_wk->msg_flip  =  0;
 
       //左タッチ演出ON
       {
@@ -2563,7 +2589,24 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
         SEQ_Change( p_wk, SEQFUNC_TouchLeft );
       }
     }
+    else
+    {
+      //３秒ごとのメッセージかえ
+      if( p_wk->msg_cnt++ >= AURA_MSG_CHANGE_SYNC )
+      {
+        p_wk->msg_cnt = 0;
+        p_wk->msg_flip  ^=  1;
 
+        if( p_wk->msg_flip )
+        {
+          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_STR_000 );
+        }
+        else
+        {
+          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_RES_000 );
+        }
+      }
+    }
     break;
 
   }
@@ -2629,11 +2672,11 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
         TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
         TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, pos.x, pos.y );
       }
-
     }
     else
     {
-      //計測終了待ち
+      //もしも左手が終了している場合、おわったことにして次へ行く
+      //終わっていないならば、初期化しなおして最初から
       if( SHAKESEARCH_IsEnd( p_shake_left ) )
       {
         MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
@@ -2645,6 +2688,8 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
       { 
         SHAKESEARCH_Init( p_shake_left);
       }
+
+      //押し直すと失敗扱い
       *p_seq  = SEQ_RET;
     }
     break;
@@ -2872,6 +2917,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       PMSND_PlaySE( IRCMENU_SE_IRC_ON );
       MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_005, 0, 0 );
+      p_wk->msg_cnt = 0;
       *p_seq  = SEQ_CALC;
     }
     break;
