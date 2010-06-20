@@ -284,20 +284,20 @@ typedef struct
 //============================================================================================
 
 static  void  Gauge_InitCalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int value );
-static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
+static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, int pos );
 static  void  Gauge_InitCalcEXP( BTLV_GAUGE_CLWK* bgcl, int add_exp );
-static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
+static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, int pos );
 static  s32   GaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, u16 add_dec );
 static  u8    PutGaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 *gauge_chr, u8 GaugeMax );
 static  u32   DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax );
 static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POKEMON_PARAM* pp );
 static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
-static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAUGE_REQ req );
+static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, int pos, BTLV_GAUGE_REQ req );
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutGaugeDamageObj( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int put_dot );
-static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
+static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, int pos );
 static  void  Gauge_Yure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
@@ -441,13 +441,25 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 		BtlRule	rule = BTLV_EFFECT_GetBtlRule();
 		if( rule != BTL_RULE_SINGLE && rule != BTL_RULE_DOUBLE )
 		{
-	    int pos;
-	    bgw->gauge_num_mode ^= 1;
-	    for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
-	    { 
-	      if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_draw_enable == TRUE ) && ( bgw->bgcl[ pos ].gauge_enable ) )
-	      { 
-	        set_hp_gauge_draw( bgw, pos, TRUE );
+			BOOL	calc = FALSE;
+			for( i=0; i<BTLV_GAUGE_CLWK_MAX; i++ )
+			{
+				if( bgw->bgcl[i].hp_calc_req )
+				{
+					calc = TRUE;
+					break;
+				}
+			}
+			if( calc == FALSE ){
+		    bgw->gauge_num_mode ^= 1;
+				for( i=0; i<BTLV_GAUGE_CLWK_MAX; i++ )
+		    { 
+		      if( ( ( i & 1 ) == 0 ) && ( bgw->bgcl[i].gauge_draw_enable == TRUE ) && ( bgw->bgcl[i].gauge_enable ) )
+		      { 
+		        set_hp_gauge_draw( bgw, i, TRUE );
+					  GaugeProc( bgw->bgcl[i].hpmax, bgw->bgcl[i].hp, 0, &bgw->bgcl[i].hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
+						PutGaugeOBJ( bgw, i, BTLV_GAUGE_REQ_HP );
+					}
 	      }
 	    }
 		}
@@ -457,7 +469,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
   {
     if( bgw->bgcl[ i ].hp_calc_req )
     {
-      Gauge_CalcHP( bgw, &bgw->bgcl[ i ] );
+      Gauge_CalcHP( bgw, i );
     }
     if( bgw->bgcl[ i ].exp_calc_req )
     {
@@ -465,7 +477,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
       { 
         PMSND_PlaySE( SEQ_SE_EXP );
       }
-      Gauge_CalcEXP( bgw, &bgw->bgcl[ i ] );
+      Gauge_CalcEXP( bgw, i );
     }
     if( bgw->bgcl[ i ].se_wait < BTLV_GAUGE_EXP_SE_TIME )
     { 
@@ -479,7 +491,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     }
     if( bgw->bgcl[ i ].level_up_req )
     {
-      Gauge_LevelUp( bgw, &bgw->bgcl[ i ] );
+      Gauge_LevelUp( bgw, i );
     }
     if( bgw->bgcl[ i ].yure_req )
     { 
@@ -497,6 +509,12 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
         GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ i ].hp_damage_clwk, bgw->bgcl[ i ].damage_wait & 1 );
         bgw->bgcl[ i ].damage_wait--;
       }
+
+			// 数字モード時はダメージゲージを強制的にOFF
+	    if( bgw->gauge_num_mode && ( i & 1 ) == 0 )
+			{
+				GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ i ].hp_damage_clwk, FALSE );
+			}
     }
   }
   //ピンチBGM再生チェック
@@ -767,10 +785,10 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
 static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp )
 { 
   GaugeProc( bgw->bgcl[ pos ].hpmax, bgw->bgcl[ pos ].hp, 0, &bgw->bgcl[ pos ].hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
-  PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_HP );
+  PutGaugeOBJ( bgw, pos, BTLV_GAUGE_REQ_HP );
   if( bgw->bgcl[ pos ].exp_clwk ){
     GaugeProc( bgw->bgcl[ pos ].exp_max, bgw->bgcl[ pos ].exp, 0, &bgw->bgcl[ pos ].exp_work, BTLV_GAUGE_EXP_CHARMAX, 1 );
-    PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_EXP );
+    PutGaugeOBJ( bgw, pos, BTLV_GAUGE_REQ_EXP );
   }
   PutNameOBJ( bgw, &bgw->bgcl[ pos ], pp );
   PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
@@ -1209,12 +1227,15 @@ static  void  Gauge_InitCalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int
  * Gauge_InitCalcHPを先に呼んである必要があります。
  */
 //--------------------------------------------------------------
-static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
+static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, int pos )
 {
   s32 calc_hp;
+	BTLV_GAUGE_CLWK* bgcl;
+	
+	bgcl = &bgw->bgcl[ pos ];
 
   calc_hp = GaugeProc( bgcl->hpmax, bgcl->hp, bgcl->damage, &bgcl->hp_work, BTLV_GAUGE_HP_CHARMAX, bgcl->add_dec );
-  PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_HP );
+  PutGaugeOBJ( bgw, pos, BTLV_GAUGE_REQ_HP );
   if( calc_hp == -1 ){
     //計算終了時にゲージワークのhpパラメータを最新の値(ダメージ計算後)で更新しておく
     bgcl->hp -= bgcl->damage;
@@ -1282,10 +1303,13 @@ static  void  Gauge_InitCalcEXP( BTLV_GAUGE_CLWK* bgcl, int add_exp )
  * Gauge_InitCalcEXPを先に呼んである必要があります。
  */
 //--------------------------------------------------------------
-static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
+static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, int pos )
 {
   s32 calc_exp;
   s32 dotto_offset;
+	BTLV_GAUGE_CLWK* bgcl;
+
+	bgcl = &bgw->bgcl[ pos ];
 
   dotto_offset = DottoOffsetCalc( bgcl->exp, bgcl->exp_add, bgcl->exp_max, BTLV_GAUGE_EXP_CHARMAX );
   if( dotto_offset == 0 )
@@ -1298,7 +1322,7 @@ static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
     dotto_offset = 1;
   }
   calc_exp = GaugeProc( bgcl->exp_max, bgcl->exp, bgcl->exp_add, &bgcl->exp_work, BTLV_GAUGE_EXP_CHARMAX, dotto_offset );
-  PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_EXP );
+  PutGaugeOBJ( bgw, pos, BTLV_GAUGE_REQ_EXP );
   if(calc_exp == -1)
   {
     //計算終了時にゲージワークのexpパラメータを最新の値(ダメージ計算後)で更新しておく
@@ -1652,7 +1676,7 @@ static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
  * @param req   GAUGE_REQ_???
  */
 //--------------------------------------------------------------
-static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAUGE_REQ req )
+static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, int pos, BTLV_GAUGE_REQ req )
 {
   u8  i;
   u8  gauge_chr[ BTLV_GAUGE_EXP_CHARMAX ];
@@ -1662,13 +1686,16 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
   u8  level;
   void *obj_vram;
   NNSG2dImageProxy image;
+	BTLV_GAUGE_CLWK *bgcl;
+
+	bgcl = &bgw->bgcl[ pos ];
 
   obj_vram = G2_GetOBJCharPtr();
 
   switch(req){
   case BTLV_GAUGE_REQ_HP:
     //数字表示モードなら何もしない
-    if( bgw->gauge_num_mode )
+    if( bgw->gauge_num_mode && ( pos & 1 ) == 0 )
     { 
       break;
     }
@@ -1996,8 +2023,10 @@ static  void  PutGaugeDamageObj( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, in
  * @param bgcl  ゲージワークへのポインタ
  */
 //--------------------------------------------------------------
-static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
+static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, int pos )
 {
+	BTLV_GAUGE_CLWK* bgcl = &bgw->bgcl[ pos ];
+
   if( bgcl->exp_calc_req )
   {
     return;
@@ -2017,8 +2046,8 @@ static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
     bgcl->exp_add   = 0;
     GaugeProc( bgcl->hpmax, bgcl->hp, 0, &bgcl->hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
     GaugeProc( bgcl->exp_max, bgcl->exp, 0, &bgcl->exp_work, BTLV_GAUGE_EXP_CHARMAX, 1 );
-    PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_HP );
-    PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_EXP );
+    PutGaugeOBJ( bgw, pos, BTLV_GAUGE_REQ_HP );
+    PutGaugeOBJ( bgw, pos, BTLV_GAUGE_REQ_EXP );
     PutHPNumOBJ( bgw, bgcl, bgcl->hp );
     PutLVNumOBJ( bgw, bgcl );
     bgcl->level_up_req = 0;
