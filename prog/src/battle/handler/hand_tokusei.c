@@ -3996,6 +3996,8 @@ static void common_TypeRecoverHP( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 denomHP
       msg_param->header.tokwin_flag = TRUE;
     BTL_SVF_HANDEX_Pop( flowWk, msg_param );
   }
+
+  BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
 }
 /**
  *  特定タイプワザを無効化->ランクアップ効果の共通処理
