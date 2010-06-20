@@ -618,8 +618,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
     bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_RARE;
   }
 
-  BTLV_MCSS_MakeMAW( pp, &bmw->btlv_mcss[ index ].maw, position );
-  MCSS_TOOL_SetMakeBuchiCallback( bmw->mcss_sys, bmw->btlv_mcss[ index ].param.personal_rnd );
+  BTLV_MCSS_MakeMAW( bmw, pp, &bmw->btlv_mcss[ index ].maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->btlv_mcss[ index ].maw );
 
@@ -1699,7 +1698,7 @@ int  BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- * @brief 指定された立ち位置のMCSSにポケモンNoデータをセット
+ * @brief 指定された立ち位置のMCSSに変化によるパラメータ変化をセット
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  MCSSの立ち位置
@@ -1707,7 +1706,7 @@ int  BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position )
  *
  */
 //============================================================================================
-void  BTLV_MCSS_SetMonsNo( BTLV_MCSS_WORK *bmw, int position, int mons_no )
+void  BTLV_MCSS_SetHengeParam( BTLV_MCSS_WORK *bmw, int position, const POKEMON_PARAM* pp )
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
@@ -1715,7 +1714,27 @@ void  BTLV_MCSS_SetMonsNo( BTLV_MCSS_WORK *bmw, int position, int mons_no )
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
   if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
 
-  bmw->btlv_mcss[ index ].param.mons_no = mons_no;
+  bmw->btlv_mcss[ index ].param.mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+  bmw->btlv_mcss[ index ].param.form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+  bmw->btlv_mcss[ index ].param.weight  = POKETOOL_GetPersonalParam( bmw->btlv_mcss[ index ].param.mons_no,
+                                                                     bmw->btlv_mcss[ index ].param.form_no,
+                                                                     POKEPER_ID_weight );
+  bmw->btlv_mcss[ index ].param.personal_rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+
+  //捕獲ボールを取得しておく
+  bmw->btlv_mcss[ index ].capture_ball = PP_Get( pp, ID_PARA_get_ball, NULL );
+
+  //レアかどうか？
+  if( PP_CheckRare( pp ) == TRUE )
+  {
+    bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_RARE;
+  }
+  //登場時のHPバーカラーを取得
+  { 
+    int hp    = PP_Get( pp, ID_PARA_hp, NULL );
+    int hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
+    bmw->btlv_mcss[ index ].param.appear_hp_color = GAUGETOOL_GetGaugeDottoColor( hp, hpmax );
+  }
   bmw->btlv_mcss[ index ].henge_flag    = 1;
 }
 
@@ -1757,6 +1776,26 @@ u16  BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position )
   if( bmw->btlv_mcss[ index ].mcss == NULL ) { return 0; }
 
   return bmw->btlv_mcss[ index ].param.weight;
+}
+
+//============================================================================================
+/**
+ * @brief 指定された立ち位置のMCSSのpersonal_rndデータを取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ *
+ */
+//============================================================================================
+u32  BTLV_MCSS_GetPersonalRnd( BTLV_MCSS_WORK *bmw, int position )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { return 0; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return 0; }
+
+  return bmw->btlv_mcss[ index ].param.personal_rnd;
 }
 
 //============================================================================================
@@ -1911,6 +1950,7 @@ void  BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, int mosaic )
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
   if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
 
+  MCSS_TOOL_SetMakeBuchiCallback( bmw->mcss_sys, bmw->btlv_mcss[ index ].param.personal_rnd );
   MCSS_SetMosaic( bmw->mcss_sys, bmw->btlv_mcss[ index ].mcss, mosaic );
 }
 
@@ -1966,6 +2006,8 @@ void  BTLV_MCSS_OverwriteMAW( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos, MCSS_ADD_WOR
 {
   int index = BTLV_MCSS_GetIndex( bmw, pos );
   bmw->btlv_mcss[ index ].maw = *maw;
+  SOGABE_Printf("owmaw_rnd:0x%08x\n",bmw->btlv_mcss[ index ].param.personal_rnd );
+  MCSS_TOOL_SetMakeBuchiCallback( bmw->mcss_sys, bmw->btlv_mcss[ index ].param.personal_rnd );
   MCSS_ReloadResource( bmw->mcss_sys, bmw->btlv_mcss[ index ].mcss, &bmw->btlv_mcss[ index ].maw );
 }
 
@@ -2155,11 +2197,12 @@ u32 BTLV_MCSS_GetCells( BTLV_MCSS_WORK *bmw, int position )
  * @param[in]   position  ポケモンの立ち位置
  */
 //============================================================================================
-void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position )
+void  BTLV_MCSS_MakeMAW( BTLV_MCSS_WORK* bmw, const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position )
 {
   int dir = ( ( position & 1 ) ) ? MCSS_DIR_FRONT : MCSS_DIR_BACK;
 
   MCSS_TOOL_MakeMAWPP( pp, maw, dir );
+  MCSS_TOOL_SetMakeBuchiCallback( bmw->mcss_sys, PP_Get( pp, ID_PARA_personal_rnd, NULL ) );
 }
 
 //============================================================================================
@@ -2881,7 +2924,7 @@ static  void  TCB_BTLV_MCSS_Mosaic( GFL_TCB *tcb, void *work )
   }
 
   ret = BTLV_EFFTOOL_CalcParam( &bmtw->emw, &bmtw->now_value );
-  MCSS_SetMosaic( bmw->mcss_sys, bmw->btlv_mcss[ index ].mcss, bmtw->now_value.x >> FX32_SHIFT );
+  BTLV_MCSS_SetMosaic( bmw, bmtw->position, bmtw->now_value.x >> FX32_SHIFT );
   if( ret == TRUE )
   {
     BTLV_EFFECT_FreeTCB( tcb );

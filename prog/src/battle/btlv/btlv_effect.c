@@ -12,6 +12,7 @@
 
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
+#include "system/mcss_tool.h"
 #include "sound/pm_voice.h"
 #include "sound/pm_sndsys.h"
 
@@ -753,8 +754,8 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
   beht->seq_no = 0;
   beht->vpos = vpos;
 
-  BTLV_MCSS_MakeMAW( pp, &beht->maw, vpos );
-  BTLV_MCSS_SetMonsNo( bew->bmw, vpos, PP_Get( pp, ID_PARA_monsno, NULL ) );
+  BTLV_MCSS_SetHengeParam( bew->bmw, vpos, pp );
+  BTLV_MCSS_MakeMAW( bew->bmw, pp, &beht->maw, vpos );
 
   bew->tcb_henge_flag |= BTLV_EFFTOOL_Pos2Bit( vpos );
 
@@ -773,8 +774,8 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
 void BTLV_EFFECT_HengeShortCut( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
 {
   MCSS_ADD_WORK maw;
-  BTLV_MCSS_MakeMAW( pp, &maw, vpos );
-  BTLV_MCSS_SetMonsNo( bew->bmw, vpos, PP_Get( pp, ID_PARA_monsno, NULL ) );
+  BTLV_MCSS_SetHengeParam( bew->bmw, vpos, pp );
+  BTLV_MCSS_MakeMAW( bew->bmw, pp, &maw, vpos );
   BTLV_MCSS_OverwriteMAW( bew->bmw, vpos, &maw );
 }
 

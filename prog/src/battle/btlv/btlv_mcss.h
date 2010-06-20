@@ -185,9 +185,10 @@ extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int posit
 extern  void            BTLV_MCSS_SetPaletteFadeBaseColor( BTLV_MCSS_WORK *bmw, int position, u8 evy, u32 rgb );
 extern  void            BTLV_MCSS_ResetPaletteFadeBaseColor( BTLV_MCSS_WORK *bmw, int position );
 extern  int             BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position );
-extern  void            BTLV_MCSS_SetMonsNo( BTLV_MCSS_WORK *bmw, int position, int mons_no );
+extern  void            BTLV_MCSS_SetHengeParam( BTLV_MCSS_WORK *bmw, int position, const POKEMON_PARAM* pp );
 extern  int             BTLV_MCSS_GetFormNo( BTLV_MCSS_WORK *bmw, int position );
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
+extern  u32             BTLV_MCSS_GetPersonalRnd( BTLV_MCSS_WORK *bmw, int position );
 extern  u16             BTLV_MCSS_GetHPColor( BTLV_MCSS_WORK *bmw, int position );
 extern  u32             BTLV_MCSS_GetStatusFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  BOOL            BTLV_MCSS_GetNoJump( BTLV_MCSS_WORK *bmw, int position );
@@ -203,7 +204,7 @@ extern  void            BTLV_MCSS_SetSideChange( BTLV_MCSS_WORK* bmw, BtlvMcssPo
 extern  int             BTLV_MCSS_GetCaptureBall( BTLV_MCSS_WORK *bmw, int position );
 extern  u32             BTLV_MCSS_GetCells( BTLV_MCSS_WORK *bmw, int position );
 
-extern  void            BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
+extern  void            BTLV_MCSS_MakeMAW( BTLV_MCSS_WORK* bmw, const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
 
 extern  BOOL            BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, int anm_no );
 extern  void            BTLV_MCSS_SetAnimeEndCheck( BTLV_MCSS_WORK* bmw, int position );
