@@ -963,71 +963,91 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   OS_TPrintf("mainSeqFunc_ready\n");
 #endif
 
-  //FLDMAPPER 一括読み込み
-  FLDMAPPER_AllSetUp( fieldWork->g3Dmapper );
+  switch ( fieldWork->subseq )
+  {
+  case 0:
+    //FLDMAPPER 一括読み込み
+    FLDMAPPER_AllSetUp( fieldWork->g3Dmapper );
 
-  if( fieldWork->fldMMdlSys != NULL ){
-    do {
-      MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
-      //VBlank期間用関数だが、暗転中にVRAM登録処理するだけなので副作用がない
-      MMDL_BLACTCONT_ProcVBlank( fieldWork->fldMMdlSys );
-    } while ( MMDL_BLACTCONT_IsThereReserve(fieldWork->fldMMdlSys) == TRUE );
-  }
+    if( fieldWork->fldMMdlSys != NULL ){
+      do {
+        MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+        //VBlank期間用関数だが、暗転中にVRAM登録処理するだけなので副作用がない
+        MMDL_BLACTCONT_ProcVBlank( fieldWork->fldMMdlSys );
+      } while ( MMDL_BLACTCONT_IsThereReserve(fieldWork->fldMMdlSys) == TRUE );
+    }
 
-  // 天気待ち
-  while( FIELD_WEATHER_IsLoading(fieldWork->weather_sys) ){
-	  FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_WEATHER );
-  }
+    // 天気待ち
+    while( FIELD_WEATHER_IsLoading(fieldWork->weather_sys) ){
+      FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_WEATHER );
+    }
 
-  fldmap_G3D_Control( fieldWork );
-  fldmap_G3D_Draw_top( fieldWork );
-  fldmap_G3D_Draw_tail( fieldWork );
-  GFL_CLACT_SYS_Main(); // CLSYSメイン
-  
-  if(fieldWork->fldMsgBG){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
-  
+    fldmap_G3D_Control( fieldWork );
+    fldmap_G3D_Draw_top( fieldWork );
+    fldmap_G3D_Draw_tail( fieldWork );
+    GFL_CLACT_SYS_Main(); // CLSYSメイン
+    
+    if(fieldWork->fldMsgBG){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
+    
 #ifdef  PM_DEBUG
-  if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
+    if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
 #endif
 
-  FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
+    FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
-  // フィールドマップ用制御タスクシステム
-  FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
+    // フィールドマップ用制御タスクシステム
+    FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
 
-  
-  { //フィールド初期化スクリプトの呼び出し
-    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
-    if ( FIELD_STATUS_GetFieldInitFlag( fldstatus ) ) 
+    fieldWork->subseq ++;
+    /* FALL THROUGH */
+
+  case 1:
+    //2010.06.20  tamada
+    //「つづきから」の場合、四天王部屋などで環境音的なSEの開始時に
+    //読み込み中で再生できないという問題がある。
+    //その対処のため、ここで分割ロードの完了を待つ
+    if ( FIELD_STATUS_GetContinueFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ) ) == TRUE )
     {
-      SCRIPT_CallFieldInitScript( fieldWork->gsys, fieldWork->heapID );
-      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
-    } else {
-      SCRIPT_CallFieldRecoverScript( fieldWork->gsys, fieldWork->heapID );
+      if ( PMSND_IsLoading() )
+      {
+        TAMADA_Printf( " BGM Load Wait!!\n" );
+        return MAINSEQ_RESULT_CONTINUE;
+      }
     }
-  }
-  FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
-  FLDMAPPER_AllSetUp( fieldWork->g3Dmapper ); // 初期化スクリプトで追加されたマップブロックを読み込む
+    
+    { //フィールド初期化スクリプトの呼び出し
+      FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+      if ( FIELD_STATUS_GetFieldInitFlag( fldstatus ) ) 
+      {
+        SCRIPT_CallFieldInitScript( fieldWork->gsys, fieldWork->heapID );
+        FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
+      } else {
+        SCRIPT_CallFieldRecoverScript( fieldWork->gsys, fieldWork->heapID );
+      }
+    }
+    FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
+    FLDMAPPER_AllSetUp( fieldWork->g3Dmapper ); // 初期化スクリプトで追加されたマップブロックを読み込む
 
 
-  //フィールドマップ用イベント起動チェックをセットする
-  if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
-      || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
-    GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckUnion, fieldWork );
-  }
-  else if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_NOGRID ){
-    GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckNoGrid, fieldWork );
-  }
-  else if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_HYBRID ){
-    GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckHybrid, fieldWork );
-  }
-  else{
-    GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckNormal_Wrap, fieldWork );
-  }
+    //フィールドマップ用イベント起動チェックをセットする
+    if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
+        || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
+      GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckUnion, fieldWork );
+    }
+    else if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_NOGRID ){
+      GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckNoGrid, fieldWork );
+    }
+    else if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_HYBRID ){
+      GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckHybrid, fieldWork );
+    }
+    else{
+      GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckNormal_Wrap, fieldWork );
+    }
 
-  fieldWork->gamemode = GAMEMODE_NORMAL;
-  GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), TRUE);
+    fieldWork->gamemode = GAMEMODE_NORMAL;
+    GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), TRUE);
+  }
   
 
   return MAINSEQ_RESULT_NEXTSEQ;
