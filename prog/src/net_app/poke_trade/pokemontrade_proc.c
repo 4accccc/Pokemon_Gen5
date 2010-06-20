@@ -2104,6 +2104,10 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         pWork->selectBoxno = pWork->underSelectBoxno;
 //        POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
         _CHANGE_STATE(pWork, _changeMenuOpen);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE);
+        bIconReset=FALSE;
       }
       else if( (POKE_GTS_IsFullMode(pWork) &&  (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) )){
         pWork->selectIndex = pWork->underSelectIndex;
@@ -2129,6 +2133,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     pWork->underSelectIndex = -1;
     if(bIconReset){
       _scrollResetAndIconReset(pWork);
+      GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
     }
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);

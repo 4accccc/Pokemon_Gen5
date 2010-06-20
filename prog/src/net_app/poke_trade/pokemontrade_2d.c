@@ -365,7 +365,6 @@ void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork)
   POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
   GFL_BG_ClearScreen(frame);  //自分ステータス
   GFL_BG_LoadScreenV_Req( frame );
-  GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
 }
 
