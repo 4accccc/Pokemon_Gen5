@@ -308,7 +308,7 @@ static void BgInit( int sub_bg1_offset )
 		GFL_BG_SYS_HEADER BGsys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
-    int sub_visible = GFL_DISP_GetSubVisible(); //GFL_BG_SetBGMode
+    int sub_visible = GFL_DISP_GetSubVisible(); //GFL_BG_SetBGModeÇ≈VisibleÉtÉâÉOÇ™è¡Ç≥ÇÍÇÈÇÃÇ≈
 		GFL_BG_SetBGMode( &BGsys_data );
 		GFL_DISP_GXS_SetVisibleControlDirect(sub_visible);
 

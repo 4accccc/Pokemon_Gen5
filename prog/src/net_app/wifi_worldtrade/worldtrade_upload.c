@@ -412,7 +412,9 @@ static void BgInit( void )
 		GFL_BG_SYS_HEADER BGsys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
 		};
+    int sub_visible = GFL_DISP_GetSubVisible(); //GFL_BG_SetBGModeでVisibleフラグが消されるので
 		GFL_BG_SetBGMode( &BGsys_data );
+		GFL_DISP_GXS_SetVisibleControlDirect(sub_visible);
 	}
 
 	// メイン画面テキスト面

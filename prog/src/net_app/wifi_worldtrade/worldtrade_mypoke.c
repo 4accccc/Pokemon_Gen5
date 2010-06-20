@@ -259,7 +259,9 @@ static void BgInit( void )
 		GFL_BG_SYS_HEADER BGsys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
+    int sub_visible = GFL_DISP_GetSubVisible(); //GFL_BG_SetBGModeÇ≈VisibleÉtÉâÉOÇ™è¡Ç≥ÇÍÇÈÇÃÇ≈
 		GFL_BG_SetBGMode( &BGsys_data );
+		GFL_DISP_GXS_SetVisibleControlDirect(sub_visible);
 		GFL_DISP_GXS_SetVisibleControl(
 		    GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, VISIBLE_ON);
 	}
