@@ -93,6 +93,7 @@ FS_EXTERN_OVERLAY(debug_data);
 
 #include "msg/msg_pmss_peculiar.h"
 #include "../../../resource/quiz/pms_answer.h"
+#include "amprotect.h"
 
 
 //============================================================================================
@@ -140,12 +141,21 @@ static void MailBox_SetFirstMail( GAMEDATA* gamedata );
 
 static void SheimiFromBackIllegal(GAMEDATA * gamedata);
 
+
+#ifdef AMPROTECT_FUNC
+static void magicon1_false_func(void);
+static void magicon2_false_func(void);
+static void magicon3_false_func(void);
+
+
+#endif
+
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
 FS_EXTERN_OVERLAY(intrude_system);
 FS_EXTERN_OVERLAY(union_system);
-
+FS_EXTERN_OVERLAY(amprotect);
 
 //============================================================================================
 //
@@ -883,6 +893,9 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     break;
 
   case MAPCORE_SEQ_COMM_CHECK:
+#ifdef AMPROTECT_FUNC
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(amprotect) );  
+#endif
     if ( ZONEDATA_IsFieldBeaconNG(work->loc_req.zone_id ) == TRUE )
     { 
       GAME_COMM_NO comm_no = GameCommSys_BootCheck(gcsp);
@@ -908,6 +921,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     break;
 
   case MAPCORE_SEQ_UPDATE_DATA:
+
+#ifdef AMPROTECT_FUNC
+    AM_IsMagiconA1(magicon1_false_func);
+#endif
     //マップモードなど機能指定を解除する
     MAPCHG_releaseMapTools( gameSystem );
 
@@ -931,6 +948,9 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
         SHEIMI_NFORM_ChangeNormal_Time(gameData, party, &tm->sv_time, season);
       }
     }
+#ifdef AMPROTECT_FUNC
+    AM_IsMagiconA2(magicon2_false_func);
+#endif
 
     //新しいマップモードなど機能指定を行う
     MAPCHG_setupMapTools( gameSystem, work->loc_req.zone_id );
@@ -942,6 +962,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     if( work->mapchange_type != EV_MAPCHG_UNION ){
       GAMEBEACON_Set_ZoneChange( work->loc_req.zone_id, gameData );
     }
+#ifdef AMPROTECT_FUNC
+    AM_IsMagiconA3(magicon3_false_func);
+#endif
+
     //タイプに応じたフラグ初期化
     switch(work->mapchange_type){
     case EV_MAPCHG_FLYSKY:
@@ -954,6 +978,12 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       FIELD_FLAGCONT_INIT_Teleport( gameData, work->loc_req.zone_id );
       break;
     }
+
+#ifdef AMPROTECT_FUNC
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(amprotect) );  
+#endif
+
+
     (*seq)++;
     break;
   case MAPCORE_SEQ_FIELD_OPEN:
@@ -3513,3 +3543,30 @@ static void SheimiFromBackIllegal(GAMEDATA * gamedata)
   tm = SaveData_GetGameTime( sv );
   SHEIMI_NFORM_ChangeNormal_Time(gamedata, ppt, &tm->sv_time, season);
 }
+
+
+
+#ifdef AMPROTECT_FUNC
+
+extern void magicon_dummy_task(GFL_TCB *tcb, void *pWork);
+extern int debug_tcb_num;
+
+// 検出関数notA1がFALSEの時に実行されます（＝必要な処理を記述）
+static void magicon1_false_func(void){
+  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, 0x1000);
+  GFL_TCB *dust_tcb = GFUser_VIntr_CreateTCB( magicon_dummy_task, NULL, 127 );
+  debug_tcb_num++;
+}
+
+// 検出関数notA2がFALSEの時に実行されます（＝必要な処理を記述）
+static void magicon2_false_func(void){
+  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, 0x1000);
+}
+
+// 検出関数notA3がFALSEの時に実行されます（必要な処理を記述）
+static void magicon3_false_func(void)
+{
+  return;
+}
+
+#endif

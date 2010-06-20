@@ -29,6 +29,7 @@
 #include "system/playtime_ctrl.h"  //PLAYTIMECTRL_
 
 #include "savedata/c_gear_data.h" //CGEAR_SV_GetCGearONOFF
+#include "savedata/misc.h"
 #include "field/field_comm/intrude_work.h"  //Intrude_Check_AlwaysBoot
 #include "field/fieldmap_call.h"
 
@@ -124,20 +125,37 @@ FS_EXTERN_OVERLAY(amprotect);
 
 
 // マジコン対策処理その１
-#if AMPROTECT_FUNC
+#ifdef AMPROTECT_FUNC
 static void magicon1_true_func(void);
 static void magicon2_true_func(void);
 static void magicon3_true_func(void);
+void magicon_dummy_task(GFL_TCB *tcb, void *pWork);
+
+int debug_tcb_num=0;
+void magicon_dummy_task( GFL_TCB *tcb, void *pWork )
+{
+  //なんか適当に。
+  u32 dummy1=GFL_STD_MtRand(GFL_STD_RAND_MAX),dummy2=GFL_STD_MtRand(GFL_STD_RAND_MAX);
+  dummy1++;
+  dummy2 += dummy1;
+}  
 
 
 // 検出関数A1がTRUEの時に実行されます（＝破壊工作）
 static void magicon1_true_func(void){
-  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_WORLD, 0x2000);
+  GFL_TCB *dust_tcb;
+//  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_WORLD, 0x2000);
+   dust_tcb = GFUser_VIntr_CreateTCB( magicon_dummy_task, NULL, 127 );
+   debug_tcb_num++;
 }
 
 // 検出関数A2がTRUEの時に実行されます（＝破壊工作）
 static void magicon2_true_func(void){
-  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_WORLD, 0x2000);
+  GFL_TCB *dust_tcb;
+//  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_WORLD, 0x2000);
+   dust_tcb = GFUser_VIntr_CreateTCB( magicon_dummy_task, NULL, 127 );
+   debug_tcb_num++;
+
 }
 
 // 検出関数A3がTRUEの時に実行されます（絶対にTRUEにならないので何を書いてもいい）
@@ -158,52 +176,53 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
   u32 work_size = GAMESYS_WORK_GetSize();
   GAME_INIT_WORK *game_init = pwk;
   u8 flag=0;
+  u32 magicon = 2677*4783;  //素数ｘ素数
   
+// マジコン対策処理その１
+#ifdef AMPROTECT_FUNC
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(amprotect) );  
+
+  magicon+=(71*AM_IsMagiconA1(magicon1_true_func));
+  //ゲーム中、永続的に保持する必要のあるデータはこのHEAPで
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLD, HEAPSIZE_WORLD );
+
+  magicon+=(401*AM_IsMagiconA2(magicon2_true_func));
+  //ゲームイベント中に生成するべきメモリ（イベント終了で解放）の場合はこのHEAPで
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, HEAPSIZE_PROC );
+  flag=AM_IsMagiconA3(magicon3_true_func);
+  //パレスしながら戦闘もフィールドもするのでここで確保
+  GFL_HEAP_CreateHeap( HEAPID_EXTRA, HEAPID_APP_CONTROL, HEAPSIZE_APP_CONTROL );
+  
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(amprotect) );  
+
+#else
   //ゲーム中、永続的に保持する必要のあるデータはこのHEAPで
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLD, HEAPSIZE_WORLD );
   //ゲームイベント中に生成するべきメモリ（イベント終了で解放）の場合はこのHEAPで
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, HEAPSIZE_PROC );
   //パレスしながら戦闘もフィールドもするのでここで確保
   GFL_HEAP_CreateHeap( HEAPID_EXTRA, HEAPID_APP_CONTROL, HEAPSIZE_APP_CONTROL );
-  
-// マジコン対策処理その１
-#if AMPROTECT_FUNC
-
-  // ここと--------------------------------------------------------------
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(amprotect) );  
-  gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_WORLD);
-  GFL_STD_MemClear(gsys, work_size);
-  flag=AM_IsMagiconA1(magicon1_true_func);
-  OS_Printf("MagiconCheck1=%d\n", flag);
-
-  GameSysWork = gsys;
-  GameSystem_Init(gsys, HEAPID_WORLD, game_init);
-
-  flag=AM_IsMagiconA2(magicon2_true_func);
-  OS_Printf("MagiconCheck2=%d\n", flag);
-
-  { //ゲーム開始イベントの生成
-    GMEVENT * event = EVENT_GameStart(gsys, game_init);
-    GAMESYSTEM_SetEvent(gsys, event);
-  }
-
-  flag=AM_IsMagiconA3(magicon3_true_func);
-  OS_Printf("MagiconCheck3=%d\n", flag);
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(amprotect) );  
-    
-
-#else
-  // ここが必ず同じ処理をしている事！------------------------------------
-  gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_WORLD);
-  GFL_STD_MemClear(gsys, work_size);
-  GameSysWork = gsys;
-  GameSystem_Init(gsys, HEAPID_WORLD, game_init);
-
-  { //ゲーム開始イベントの生成
-    GMEVENT * event = EVENT_GameStart(gsys, game_init);
-    GAMESYSTEM_SetEvent(gsys, event);
-  }
 #endif
+  gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_WORLD);
+  GFL_STD_MemClear(gsys, work_size);
+  GameSysWork = gsys;
+  GameSystem_Init(gsys, HEAPID_WORLD, game_init);
+
+  { //ゲーム開始イベントの生成
+    GMEVENT * event = EVENT_GameStart(gsys, game_init);
+    GAMESYSTEM_SetEvent(gsys, event);
+  }
+  
+  if(magicon%4783){
+    int i;
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+    MISC *misc         = GAMEDATA_GetMiscWork(gamedata);
+    int badge          = MISC_GetBadgeCount(misc);
+    for(i=0;i<badge;i++){
+      magicon1_true_func();
+    }
+  }
 
   return GFL_PROC_RES_FINISH;
 }
@@ -1015,3 +1034,28 @@ static void heapLeakCheck( void )
 #endif //PM_DEBUG
 
 
+
+
+#if 0
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(amprotect) );  
+  gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_WORLD);
+  GFL_STD_MemClear(gsys, work_size);
+  flag=AM_IsMagiconA1(magicon1_true_func);
+  OS_Printf("MagiconCheck1=%d\n", flag);
+
+  GameSysWork = gsys;
+  GameSystem_Init(gsys, HEAPID_WORLD, game_init);
+
+  flag=AM_IsMagiconA2(magicon2_true_func);
+  OS_Printf("MagiconCheck2=%d\n", flag);
+
+  { //ゲーム開始イベントの生成
+    GMEVENT * event = EVENT_GameStart(gsys, game_init);
+    GAMESYSTEM_SetEvent(gsys, event);
+  }
+
+  flag=AM_IsMagiconA3(magicon3_true_func);
+  OS_Printf("MagiconCheck3=%d\n", flag);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(amprotect) );  
+
+#endif
