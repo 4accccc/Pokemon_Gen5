@@ -2396,10 +2396,10 @@
 
 	<row id="ITEMINFO_252">
 		<language name="JPN" width="256">なかに　いろんな　じょうほうが
-つまった　とうめいの　きかい。
+つまった　とうめいな　きかい。
 シルフ　カンパニーせい。</language>
 		<language name="JPN_KANJI" width="256">中に　いろんな　情報が
-つまった　透明の　機械。
+つまった　透明な　機械。
 シルフ　カンパニー製。</language>
 	</row>
 
@@ -5014,11 +5014,11 @@
 	</row>
 
 	<row id="ITEMINFO_543">
-		<language name="JPN" width="256">あいてから　ねらわれやすくなる　まと。
-もたせると　こうかがない　わざが
+		<language name="JPN" width="256">ポケモンの　タイプの　かんけいで
+むこう　だった　わざが
 あたるように　なってしまう。</language>
-		<language name="JPN_KANJI" width="256">相手から　ねらわれやすくなる　的。
-持たせると　効果がない　技が
+		<language name="JPN_KANJI" width="256">ポケモンの　タイプの　関係で
+無効だった　技が
 当たるように　なってしまう。</language>
 	</row>
 
