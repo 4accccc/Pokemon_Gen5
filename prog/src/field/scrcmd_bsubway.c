@@ -97,6 +97,7 @@ typedef struct
 //======================================================================
 //  proto
 //======================================================================
+static BOOL evCommSendData( VMHANDLE *core, void *wk );
 static BOOL evCommTimingSync( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
@@ -1523,7 +1524,9 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //通信データ送信
   case BSWSUB_COMM_SEND_BUF:
-    BSUBWAY_SCRWORK_CommSendData( bsw_scr, param0, param1 );
+    BSUBWAY_SCRWORK_CreateCommSendData( bsw_scr, param0, param1 );
+    VMCMD_SetWait( core, evCommSendData );
+    result = VMCMD_RESULT_SUSPEND;
     break;
   //通信データ受信
   case BSWSUB_COMM_RECV_BUF:
@@ -1662,6 +1665,26 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
 //======================================================================
 //  通信関連
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * 通信データ送信待ち
+ */
+//--------------------------------------------------------------
+static BOOL evCommSendData( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  
+  if( BSUBWAY_SCRWORK_CommSendData(bsw_scr) == TRUE ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
 //--------------------------------------------------------------
 /**
  * 通信同期待ち

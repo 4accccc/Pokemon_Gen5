@@ -791,9 +791,7 @@ sub_train_battle_win_next:
   _ME_PLAY( SEQ_ME_ASA )
   _ME_WAIT()
   
-  IF $play_mode == BSWAY_MODE_COMM_MULTI THEN
-    _CALL sub_train_battle_win_next_menu_comm_multi //通信専用
-  ELSIF $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
+  IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
     _CALL sub_train_battle_win_next_menu_comm_multi //通信専用
   ELSE
     _CALL sub_train_battle_win_next_menu //通常メニュー
@@ -991,7 +989,7 @@ sub_train_battle_win_next_menu_comm_multi:
       
       //選択待ち通信同期
       _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_SELECT, BSW_NULL, comm_ret )
-
+      
       IF $comm_ret == FALSE THEN
         _SYSWIN_CLOSE()
         _CALL sub_common_retmap_comm_error //受付へ
@@ -1002,7 +1000,7 @@ sub_train_battle_win_next_menu_comm_multi:
       
       //選択結果送信
       _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
-
+      
       //通信エラーチェック
       _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
       

@@ -43,6 +43,17 @@ static BOOL check_TrainerType(u8 tr_type);
 #endif
 
 //--------------------------------------------------------------
+/**
+ *	ナンバーをビットに変換
+ */
+//--------------------------------------------------------------
+static inline u32 No2Bit( u32 no )
+{ 
+  GF_ASSERT( no < 32 );
+  return ( 1 << ( no ) );
+}
+
+//--------------------------------------------------------------
 /// ポケモンリスト選択イベント
 //--------------------------------------------------------------
 typedef struct
@@ -853,25 +864,25 @@ u32 FBI_TOOL_MakePokemonParam(
   pwd->spedef_rnd=pow_rnd;
 
   //努力値
-#if 0 //wb null
   exp=0;
   for(i=0;i<6;i++){
-    if(prd_s.exp_bit&No2Bit(i)){
+    if( prd_s.exp_bit & No2Bit(i) ){
       exp++;
     }
   }
-  if((PARA_EXP_TOTAL_MAX/exp)>255){
+  
+  if( (PARA_EXP_TOTAL_MAX/exp) > 255 ){
     exp=255;
   }else{
     exp=PARA_EXP_TOTAL_MAX/exp;
   }
+  
   for(i = 0;i < 6;i++){
     if(prd_s.exp_bit&No2Bit(i)){
       pwd->exp[i]=exp;
     }
   }
-#endif
-
+  
   //技ポイント
   pwd->pp_count=0;
 
@@ -1085,28 +1096,28 @@ static u8 GetPowerRnd(u16 tr_no)
 {
   u8  pow_rnd;
 
-  if(tr_no<100){
+  if(tr_no<50){
     pow_rnd=(0x1f/8)*1;
   }
-  else if(tr_no<120){
+  else if(tr_no<70){
     pow_rnd=(0x1f/8)*2;
   }
-  else if(tr_no<140){
+  else if(tr_no<90){
     pow_rnd=(0x1f/8)*3;
   }
-  else if(tr_no<160){
+  else if(tr_no<110){
     pow_rnd=(0x1f/8)*4;
   }
-  else if(tr_no<180){
+  else if(tr_no<160){
     pow_rnd=(0x1f/8)*5;
   }
-  else if(tr_no<200){
+  else if(tr_no<180){
     pow_rnd=(0x1f/8)*6;
   }
-  else if(tr_no<220){
+  else if(tr_no<200){
     pow_rnd=(0x1f/8)*7;
   }
-  else{
+  else{ //220以降はmax
     pow_rnd=0x1f;
   }
   return pow_rnd;

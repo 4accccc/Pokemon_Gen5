@@ -80,8 +80,8 @@ struct _TAG_BSUBWAY_SCRWORK
   u16 now_renshou; ///<連勝数
   
   u16 btlrec_btlnum; ///<戦闘録画に設定する戦闘数
-  u8 padding[2]; //余り
-
+  u16 comm_send_command; //通信　送信コマンド
+  
   BtlResult comm_btl_result; ///< 勝敗結果
   u16 pare_stage_no; ///<通信マルチパートナーの周回数
   

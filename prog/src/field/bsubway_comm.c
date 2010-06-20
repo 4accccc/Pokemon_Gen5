@@ -527,69 +527,84 @@ static void commSendBattleResult( BSUBWAY_SCRWORK *bsw_scr, u16 result )
 
 //--------------------------------------------------------------
 /**
- * バトルサブウェイ　データ送信
- * @param bsw_scr BSUBWAY_SCRWORK
- * @retval BOOL TRUE=送信成功
+ * バトルサブウェイ　送信データ作成
  */
 //--------------------------------------------------------------
-BOOL BSUBWAY_SCRWORK_CommSendData(
+void BSUBWAY_SCRWORK_CreateCommSendData(
     BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param )
 {
-  int command,size;
+  int size;
   GAMEDATA *gdata  = bsw_scr->gdata;
   
   switch( mode ){
   case BSWAY_COMM_PLAYER_DATA:  //ポケモン選択
-    command = FC_BSUBWAY_PLAYER_DATA;
+    bsw_scr->comm_send_command = FC_BSUBWAY_PLAYER_DATA;
     commSendPlayerData( bsw_scr, gdata );
     break;
   case BSWAY_COMM_TR_DATA:  //抽選トレーナー
-    command = FC_BSUBWAY_TR_DATA;
+    bsw_scr->comm_send_command = FC_BSUBWAY_TR_DATA;
     commSendTrainerData( bsw_scr );
     break;
   case BSWAY_COMM_RETIRE_SELECT:  //リタイアを選ぶか？
-    command = FC_BSUBWAY_RETIRE_SELECT;
+    bsw_scr->comm_send_command = FC_BSUBWAY_RETIRE_SELECT;
     commSendRetireSelect( bsw_scr, param );
     break;
   case BSWAY_COMM_MYSTATUS_DATA: //MYSTATUS送信
-    command = FC_BSUBWAY_MYSTATUS_DATA;
+    bsw_scr->comm_send_command = FC_BSUBWAY_MYSTATUS_DATA;
     {
       MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
       MyStatus_Copy( mystatus, (MYSTATUS*)bsw_scr->send_buf );
     }
     break;
   case BSWAY_COMM_PLAY_MODE:
-    command = FC_BSUBWAY_PLAY_MODE;
+    bsw_scr->comm_send_command = FC_BSUBWAY_PLAY_MODE;
     commSendPlayMode( bsw_scr );
     break;
   case BSWAY_COMM_HOME_SELECT_BOX_TEMOTI:
-    command = FC_BSUBWAY_HOME_SELECT_BOX_TEMOTI;
+    bsw_scr->comm_send_command = FC_BSUBWAY_HOME_SELECT_BOX_TEMOTI;
     commSendHomeSelectBoxTemoti( bsw_scr, param );
     break;
   case BSWAY_COMM_HOME_SELECT_POKEMON:
-    command = FC_BSUBWAY_HOME_SELECT_POKEMON;
+    bsw_scr->comm_send_command = FC_BSUBWAY_HOME_SELECT_POKEMON;
     commSendHomeSelectPokemon( bsw_scr, param );
     break;
   case BSWAY_COMM_BATTLE_RESULT:
-    command = FC_BSUBWAY_BATTLE_RESULT;
+    bsw_scr->comm_send_command = FC_BSUBWAY_BATTLE_RESULT;
     commSendBattleResult( bsw_scr, param );
     break;
   default:
     GF_ASSERT( 0 );
-    return( FALSE );
+    bsw_scr->comm_send_command = FC_BSUBWAY_MAX;
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　データ送信
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval BOOL TRUE=送信成功、もしくはエラー終了
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_SCRWORK_CommSendData( BSUBWAY_SCRWORK *bsw_scr )
+{
+  int size;
   
-#ifdef DEBUG_BSW_PRINT  
+  #ifdef DEBUG_BSW_PRINT  
   KAGAYA_Printf( "bsubway comn send : cmdNo(%d) buf 0:%d, 1:%d, 2:%d\n",
-      command-GFL_NET_CMD_BSUBWAY,
+      bsw_scr->comm_send_command-GFL_NET_CMD_BSUBWAY,
       bsw_scr->send_buf[0], bsw_scr->send_buf[1], bsw_scr->send_buf[2] );
-#endif
+  #endif
   
   //エラーチェック
   if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE ){
-#ifdef DEBUG_BSW_PRINT
-    KAGAYA_Printf( "BSW 通信マルチデータ送信エラー\n" );
-#endif
+    #ifdef DEBUG_BSW_PRINT
+    KAGAYA_Printf( "BSW 送信エラー\n" );
+    #endif
+    return( TRUE );
+  }
+  
+  if( bsw_scr->comm_send_command >= FC_BSUBWAY_MAX ){
+    GF_ASSERT( 0 );
     return( TRUE );
   }
   
@@ -597,13 +612,16 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   size = BSWAY_SIO_BUF_LEN;
   
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),
-        command,size,bsw_scr->send_buf) == TRUE ){
-#ifdef DEBUG_BSW_PRINT
-    KAGAYA_Printf( "通信マルチデータ送信完了\n" );
-#endif
+        bsw_scr->comm_send_command,size,bsw_scr->send_buf) == TRUE ){
+    #ifdef DEBUG_BSW_PRINT
+    KAGAYA_Printf( "BSW 送信完了\n" );
+    #endif
     return( TRUE );
   }
   
+  #ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "BSW 送信ミス\n" );
+  #endif
   return( FALSE );
 }
 
