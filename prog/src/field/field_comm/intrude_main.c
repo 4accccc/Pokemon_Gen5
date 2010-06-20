@@ -853,6 +853,35 @@ BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
 
 //==================================================================
 /**
+ * 会話の認証データを初期化する
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_InitTalkCertification(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  GFL_STD_MemClear(&intcomm->recv_certifi, sizeof(INTRUDE_TALK_CERTIFICATION));
+}
+
+//==================================================================
+/**
+ * 受信データから会話の認証データを取得する
+ *
+ * @param   intcomm		
+ *
+ * @retval  INTRUDE_TALK_CERTIFICATION *		受信した会話の認証データ(NULL時は未受信)
+ */
+//==================================================================
+INTRUDE_TALK_CERTIFICATION * Intrude_GetTalkCertification(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  if(intcomm->recv_certifi.occ == TRUE){
+    return &intcomm->recv_certifi;
+  }
+  return NULL;
+}
+
+//==================================================================
+/**
  * 会話構造体初期化
  *
  * @param   intcomm		

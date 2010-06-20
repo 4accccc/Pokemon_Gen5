@@ -80,6 +80,8 @@ extern void Intrude_UpdatePlayerStatusAll(INTRUDE_COMM_SYS_PTR intcomm);
 extern void Intrude_SetActionStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_ACTION action);
 extern void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm);
+extern void Intrude_InitTalkCertification(INTRUDE_COMM_SYS_PTR intcomm);
+extern INTRUDE_TALK_CERTIFICATION * Intrude_GetTalkCertification(INTRUDE_COMM_SYS_PTR intcomm);
 extern void Intrude_SetProfile(
   INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_PROFILE *profile);
 extern void Intrude_SetPlayerStatus(

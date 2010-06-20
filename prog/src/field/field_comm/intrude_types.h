@@ -234,6 +234,13 @@ typedef struct{
   u8 padding[2];
 }INTRUDE_TALK_ANSWER;
 
+///会話成立時の最後の認証データ
+typedef struct{
+  u8 occ;                     ///<TRUE:データ有効
+  u8 mission_achieve_user;    ///<TRUE:既にミッション達成者がいる
+  u8 padding[2];
+}INTRUDE_TALK_CERTIFICATION;
+
 ///モノリスステータス(ミッションリスト以外でモノリス画面構築に必要なデータ)
 typedef struct{
   u32 clear_mission_count;       ///<ミッションクリア数
@@ -263,6 +270,7 @@ typedef struct _INTRUDE_COMM_SYS{
   COMM_PLAYER_PACKAGE backup_player_pack[FIELD_COMM_MEMBER_MAX];  ///<Backup座標データ(座標変換をしていない)
   INTRUDE_TALK_FIRST_ATTACK recv_talk_first_attack;
   INTRUDE_TALK   talk;
+  INTRUDE_TALK_CERTIFICATION recv_certifi;  ///<受信バッファ：会話成立前の認証データ
   INTRUDE_PROFILE my_profile;   ///<自分プロフィール(受信はgamedata内なので不要)
   
   MISSION_SYSTEM mission;     ///<ミッションシステム

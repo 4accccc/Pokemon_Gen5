@@ -36,6 +36,7 @@ static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData
 static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TalkRandDisagreement(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TalkCancel(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_TalkCertificationParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MonolithStatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MonolithStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionListReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -85,6 +86,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_TalkAnswer, NULL},             //INTRUDE_CMD_TALK_ANSWER
   {_IntrudeRecv_TalkRandDisagreement, NULL},   //INTRUDE_CMD_TALK_RAND_DISAGREEMENT
   {_IntrudeRecv_TalkCancel, NULL},             //INTRUDE_CMD_TALK_CANCEL
+  {_IntrudeRecv_TalkCertificationParam, NULL}, //INTRUDE_CMD_TALK_CERTIFICATION
   {_IntrudeRecv_MonolithStatusReq, NULL},      //INTRUDE_CMD_MONOLITH_STATUS_REQ
   {_IntrudeRecv_MonolithStatus, NULL},         //INTRUDE_CMD_MONOLITH_STATUS
   {_IntrudeRecv_MissionListReq, NULL},         //INTRUDE_CMD_MISSION_LIST_REQ
@@ -768,6 +770,55 @@ BOOL IntrudeSend_TalkCancel(int send_net_id, u8 talk_rand)
 
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_TALK_CANCEL, sizeof(talk_rand), &talk_rand, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：話しかけ成立時の最後の認証データ
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_TalkCertificationParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const INTRUDE_TALK_CERTIFICATION *recv_certifi = pData;
+  
+  OS_TPrintf("話しかけ最後の認証データ受信　net_id=%d\n", netID);
+  intcomm->recv_certifi = *recv_certifi;
+}
+
+//==================================================================
+/**
+ * データ送信：話しかけ成立時の最後の認証データ
+ *
+ * @param   send_net_id		  話しかけ先のNetID
+ * @param   achieve_user		既にミッション達成者がいるか自分で調べた結果
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_TalkCertificationParam(int send_net_id, BOOL achieve_user)
+{
+  INTRUDE_TALK_CERTIFICATION send_certifi;
+  
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+  
+  GFL_STD_MemClear(&send_certifi, sizeof(INTRUDE_TALK_CERTIFICATION));
+  send_certifi.occ = TRUE;
+  send_certifi.mission_achieve_user = achieve_user;
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_TALK_CERTIFICATION, sizeof(INTRUDE_TALK_CERTIFICATION), 
+    &send_certifi, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================

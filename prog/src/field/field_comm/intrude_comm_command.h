@@ -33,6 +33,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_TALK_ANSWER,                    ///<話しかけられたので自分の状況を返す
   INTRUDE_CMD_TALK_RAND_DISAGREEMENT,         ///<会話コード不一致
   INTRUDE_CMD_TALK_CANCEL,                    ///<話しかけをキャンセル
+  INTRUDE_CMD_TALK_CERTIFICATION,             ///<話しかけ成立時の最後の認証データ
   INTRUDE_CMD_MONOLITH_STATUS_REQ,            ///<モノリスステータス要求リクエスト
   INTRUDE_CMD_MONOLITH_STATUS,                ///<モノリスステータス
   INTRUDE_CMD_MISSION_LIST_REQ,               ///<ミッション選択候補リスト要求リクエスト
@@ -90,6 +91,7 @@ extern BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, cons
 extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer, u8 talk_rand);
 extern BOOL IntrudeSend_TalkRandDisagreement(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, u8 talk_rand);
 extern BOOL IntrudeSend_TalkCancel(int send_net_id, u8 talk_rand);
+extern BOOL IntrudeSend_TalkCertificationParam(int send_net_id, BOOL achieve_user);
 extern BOOL IntrudeSend_MonolithStatusReq(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid);
 extern BOOL IntrudeSend_MonolithStatus(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit);
 extern BOOL IntrudeSend_MissionListReq(INTRUDE_COMM_SYS_PTR intcomm, u32 palace_area);
