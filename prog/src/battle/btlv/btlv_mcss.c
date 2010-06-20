@@ -1023,6 +1023,62 @@ void  BTLV_MCSS_GetPokeDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, int positi
 
 //============================================================================================
 /**
+ * @brief MCSSの立ち位置ごとのデフォルト座標を取得（戦闘ルールも指定）
+ *
+ * @param[in]   bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[out]  pos       座標を格納するワークへのポインタ
+ * @param[in]   position  ポケモンの立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_GetPokeDefaultPosByRule( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMcssPos position, BtlRule rule )
+{
+  const VecFx32 *pos_table;
+  switch( position ){
+  case BTLV_MCSS_POS_AA:
+  case BTLV_MCSS_POS_BB:
+    pos_table = &poke_pos_single_table[ position ];
+    break;
+  case BTLV_MCSS_POS_A:
+  case BTLV_MCSS_POS_B:
+  case BTLV_MCSS_POS_C:
+  case BTLV_MCSS_POS_D:
+    if( rule == BTL_RULE_ROTATION )
+    {
+      pos_table = &poke_pos_rotate_table[ position - BTLV_MCSS_POS_A ];
+    }
+    else if( rule == BTL_RULE_TRIPLE )
+    {
+      pos_table = &poke_pos_triple_table[ position - BTLV_MCSS_POS_A ];
+    }
+    else
+    {
+      pos_table = &poke_pos_double_table[ position - BTLV_MCSS_POS_A ];
+    }
+    break;
+  case BTLV_MCSS_POS_E:
+  case BTLV_MCSS_POS_F:
+    GF_ASSERT( rule == BTL_RULE_TRIPLE || rule == BTL_RULE_ROTATION );
+    if( rule == BTL_RULE_ROTATION )
+    {
+      pos_table = &poke_pos_rotate_table[ position - BTLV_MCSS_POS_A ];
+    }
+    else
+    {
+      pos_table = &poke_pos_triple_table[ position - BTLV_MCSS_POS_A ];
+    }
+    break;
+  default:
+    //定義されていないポジションが指定されています
+    GF_ASSERT( 0 );
+    break;
+  }
+  pos->x = pos_table->x;
+  pos->y = pos_table->y;
+  pos->z = pos_table->z;
+}
+
+//============================================================================================
+/**
  * @brief ポケモンの初期拡縮率を取得
  *
  * @param[in] position  取得するポケモンの立ち位置
