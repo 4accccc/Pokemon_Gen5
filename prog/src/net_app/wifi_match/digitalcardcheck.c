@@ -130,6 +130,7 @@ static u32 Util_List_Main( DIGITALCARD_CHECK_WORK *p_wk );
 static void Util_Text_Print( DIGITALCARD_CHECK_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type );
 static BOOL Util_Text_IsEnd( DIGITALCARD_CHECK_WORK *p_wk );
 static void Util_Text_SetVisible( DIGITALCARD_CHECK_WORK *p_wk, BOOL is_visible );
+static void Util_Text_ClearCharacterVram( DIGITALCARD_CHECK_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -340,6 +341,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_START_MSG_ENTRY:
+    Util_Text_ClearCharacterVram( p_wk );
     Util_Text_SetVisible( p_wk, TRUE );
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_00, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
@@ -1339,4 +1341,16 @@ static BOOL Util_Text_IsEnd( DIGITALCARD_CHECK_WORK *p_wk )
 static void Util_Text_SetVisible( DIGITALCARD_CHECK_WORK *p_wk, BOOL is_visible )
 { 
   GFL_BG_SetVisible( BG_FRAME_M_TEXT, is_visible );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   テキストBMPのキャラクタ領域をクリア
+ *
+ * @param   p_wk		
+ */
+//--------------------------------------------------------------
+static void Util_Text_ClearCharacterVram( DIGITALCARD_CHECK_WORK *p_wk )
+{
+  WBM_TEXT_ClearCharacterVram( p_wk->param.p_text );
 }

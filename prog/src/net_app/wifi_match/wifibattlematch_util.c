@@ -322,6 +322,20 @@ void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk )
     GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(p_wk->p_bmpwin) );
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPWINメッセージ  キャラクタ領域をクリアし、VRAMへ転送
+ *
+ *	@param	WBM_TEXT_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WBM_TEXT_ClearCharacterVram( WBM_TEXT_WORK* p_wk )
+{
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
+}
+
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  リスト
