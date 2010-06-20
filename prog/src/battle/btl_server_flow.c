@@ -7953,9 +7953,8 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         }
 
         wazaDmgRec_Add( wk, atkPos, attacker, target, wazaParam, damage );
-
-        scproc_CheckDeadCmd( wk, target );
         scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, FALSE, fMigawari );
+        scproc_CheckDeadCmd( wk, target );
       }
       else
       {
