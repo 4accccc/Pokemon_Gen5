@@ -124,7 +124,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
 
 
-  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BD,0,0);
+//  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BD,0,0);
 
 }
 
