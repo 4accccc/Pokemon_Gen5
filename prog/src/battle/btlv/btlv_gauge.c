@@ -2200,13 +2200,10 @@ BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* col
 
   *color = GAUGETOOL_GetGaugeDottoColor( bgw->bgcl[ pos ].hp, bgw->bgcl[ pos ].hpmax );
 
-  if( GFL_CLACT_WK_GetDrawEnable( bgw->bgcl[ pos ].status_clwk ) ==  FALSE )
+  *sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
+ if( *sick_anm == APP_COMMON_ST_ICON_POKERUS )
   { 
     *sick_anm = APP_COMMON_ST_ICON_NONE;
-  }
-  else
-  { 
-    *sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
   }
 
   return TRUE;

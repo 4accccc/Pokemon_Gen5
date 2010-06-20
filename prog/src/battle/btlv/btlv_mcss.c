@@ -96,7 +96,9 @@ struct  _BTLV_MCSS
   u32             stop_anime_count    :2;
   u32             effect_vanish_flag  :1;     //技エフェクトから呼ばれたvanishを保持
   u32             set_init_pos        :1;     //技エフェクト後、初期位置からはずれていたチェックに引っかかった
-  u32                                 :25;
+  u32             check_effect_end    :1;     //エフェクトの終了を待つフラグ
+  u32             set_pltt_fade_flag  :1;     //パレットフェードが呼ばれた
+  u32                                 :23;
 };
 
 struct _BTLV_MCSS_WORK
@@ -446,13 +448,25 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
             BTLV_MCSS_MoveBlink( bmw, pos, BTLEFF_MEPACHI_MABATAKI, 4, 1 );
           }
         }
-        if( BTLV_EFFECT_CheckExecute() ) continue;
+
         //目を瞑る＆アニメーション速度制御
         if( BTLV_MCSS_CheckExist( bmw, pos ) )
         { 
+          int index = BTLV_MCSS_GetIndex( bmw, pos );
           int color;
           int sick_anm;
-          int index = BTLV_MCSS_GetIndex( bmw, pos );
+
+          //エフェクト起動中にパレットフェードが呼ばれているなら、エフェクト終了まで、状態異常パレットフェードを止める
+          if( BTLV_EFFECT_CheckExecute() && ( bmw->btlv_mcss[ index ].set_pltt_fade_flag ) )
+          { 
+            bmw->btlv_mcss[ index ].set_pltt_fade_flag = 0; 
+            bmw->btlv_mcss[ index ].check_effect_end = 1;
+          }
+          if( ( BTLV_EFFECT_CheckExecute() ) && ( bmw->btlv_mcss[ index ].check_effect_end ) )
+          { 
+            continue;
+          }
+          bmw->btlv_mcss[ index ].check_effect_end = 0;
 
           //身代わりがでているなら何もしない
           if( BTLV_MCSS_GetStatusFlag( bmw, pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) continue;
@@ -480,25 +494,33 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
             case APP_COMMON_ST_ICON_NEMURI:      // 眠り
               BTLV_MCSS_ResetPaletteFadeBaseColor( bmw, pos );
               BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_ON );
+              BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
               BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE / 3 );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_MAHI:        // 麻痺
               BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 15, 0 ) );
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
+              BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_KOORI:       // 氷
               BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 15, 31 ) );
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
               BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_ON );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_YAKEDO:      // 火傷
               BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 0, 0 ) );
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
+              BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_DOKU:        // 毒
             case APP_COMMON_ST_ICON_DOKUDOKU:    // どくどく
               BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 0, 15 ) );
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
+              BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_NONE:        // なし（アニメ番号的にもなし）
@@ -1609,6 +1631,7 @@ void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy,
   if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
 
   MCSS_SetPaletteFade( bmw->btlv_mcss[ index ].mcss, start_evy, end_evy, wait, rgb );
+  bmw->btlv_mcss[ index ].set_pltt_fade_flag = 1;
 }
 
 //============================================================================================
