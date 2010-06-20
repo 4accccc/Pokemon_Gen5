@@ -1,0 +1,13 @@
+PM_DEBUG	=	no
+PM_VERSION	=	VERSION_BLACK
+PM_LANG		=	LANG_JAPAN
+
+ROM_SPEC= spec/pokemon_wb_black$(TWL_LIBSUFFIX).rsf
+
+#----------------------------------------------------------------------------
+#	ロム作成用定義　（ＲＯＭ提出の際は有効にしてsrl作成）
+#----------------------------------------------------------------------------
+NITRO_FINALROM = yes
+TWL_FINALROM = yes
+#TWL_COMPRESS   = True
+AMPROTECT      = yes
