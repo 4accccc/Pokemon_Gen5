@@ -3272,7 +3272,9 @@ static void _touchStateSendCommand(POKEMON_TRADE_WORK* pWork)
 //--------------------------------------------------------------------------------------------
 static void _touchState(POKEMON_TRADE_WORK* pWork)
 {
-
+  pWork->touchON=FALSE;
+  pWork->xspeed=0;
+  pWork->speed=0;
   GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
   GFL_STD_MemClear(pWork->pokeIconForm,sizeof(pWork->pokeIconForm));
   GFL_STD_MemClear(pWork->pokeIconSex,sizeof(pWork->pokeIconSex));
@@ -4439,7 +4441,6 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   if(DEBUGWIN_IsActive()){
     return GFL_PROC_RES_CONTINUE;
   }
-
 
   if(state != NULL){
     state(pWork);
