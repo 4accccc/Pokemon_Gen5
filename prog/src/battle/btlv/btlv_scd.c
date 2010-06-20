@@ -1325,7 +1325,7 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
     break;
 
   case WAZA_TARGET_SIDE_ENEMY:          ///< “G‘¤w’n
-    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ENEMY, basePos) );
+    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_FULL_ENEMY, basePos) );
     break;
 
   case WAZA_TARGET_FIELD:               ///< ê‚ÉŒø‚­i“VŒóŒn‚È‚Çj
