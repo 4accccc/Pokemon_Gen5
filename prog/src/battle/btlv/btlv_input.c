@@ -233,9 +233,9 @@ enum
 enum
 {
   //4ƒ{ƒ^ƒ“
-  BUTTON4_UP_Y = 8 + 2,
+  BUTTON4_UP_Y = 20,
 
-  BUTTON4_DOWN_Y = 64 + 2,
+  BUTTON4_DOWN_Y = 68,
 
   MONSNAME4_X1 = 64,
   MONSNAME4_Y1 = BUTTON4_UP_Y,
