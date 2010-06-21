@@ -1778,6 +1778,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_MSG_STARTNET,
 		SEQ_CONNECT,
 		SEQ_MSG_PRINT,
+    SEQ_CONNECT_TIMING,
 		SEQ_SEND_STATUS,
 		SEQ_TIMING_START,
 		SEQ_CHANGE_SELECT,
@@ -1831,8 +1832,15 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_MSG_PRINT:
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_004, 0, 0  );
-		*p_seq	= SEQ_SEND_STATUS;
+		*p_seq	= SEQ_CONNECT_TIMING;
 		break;
+
+  case SEQ_CONNECT_TIMING:
+    if( COMPATIBLE_IRC_ConnectTimeingWait( p_wk->p_param->p_irc ) )
+    {
+      *p_seq	= SEQ_SEND_STATUS;
+    }
+    break;
 
 	case SEQ_SEND_STATUS:
 		if(COMPATIBLE_MENU_SendStatusData( p_wk->p_param->p_irc, p_wk->p_param->p_gamesys ) )

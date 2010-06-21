@@ -464,8 +464,6 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 	{	
 		SEQ_CONNECT_START,
 		SEQ_CONNECT_WAIT,
-		SEQ_CONNECT_TIMING_START,
-		SEQ_CONNECT_TIMING_WAIT,
 		SEQ_CONNECT_END,
 	};
 
@@ -489,10 +487,47 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		{
       p_sys->is_cancel  = FALSE;
 			IRC_Print("接続した\n");
-			p_sys->seq	= SEQ_CONNECT_TIMING_START;
+			p_sys->seq	= SEQ_CONNECT_END;
 		}
 		break;
 
+	case SEQ_CONNECT_END:
+		IRC_Print("接続人数 = %d\n", GFL_NET_GetConnectNum());
+		p_sys->seq = 0;
+		return TRUE;
+
+	default:
+		GF_ASSERT_MSG( 0, "NET SEQ ERROR %d\n", p_sys->seq  );
+	}
+	
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信完了タイミング同期
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys ワーク
+ *
+ *	@return TRUEで同期完了  FALSEで同期待ち
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_IRC_ConnectTimeingWait( COMPATIBLE_IRC_SYS *p_sys )
+{
+	enum
+	{	
+		SEQ_CONNECT_TIMING_START,
+		SEQ_CONNECT_TIMING_WAIT,
+		SEQ_CONNECT_TIMING_END,
+	};
+
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
+  switch( p_sys->seq )
+  {
 	case SEQ_CONNECT_TIMING_START:
 		GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
 				COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO, WB_NET_IRCCOMPATIBLE);
@@ -503,21 +538,20 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(),
 					COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO, WB_NET_IRCCOMPATIBLE) )
 		{
-			p_sys->seq	= SEQ_CONNECT_END;
+			p_sys->seq	= SEQ_CONNECT_TIMING_END;
 		}
 		break;
 
-	case SEQ_CONNECT_END:
+  case SEQ_CONNECT_TIMING_END:
 		IRC_Print("タイミング取り成功\n");
-		IRC_Print("接続人数 = %d\n", GFL_NET_GetConnectNum());
 		p_sys->seq = 0;
-		return TRUE;
+    return TRUE;
 
 	default:
 		GF_ASSERT_MSG( 0, "NET SEQ ERROR %d\n", p_sys->seq  );
-	}
-	
-	return FALSE;
+  }
+
+  return FALSE;
 }
 
 #if 0
