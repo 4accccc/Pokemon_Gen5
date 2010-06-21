@@ -2253,6 +2253,7 @@ static void Sub_BmpWinAdd(
 {
   util->win = GFL_BMPWIN_Create( frmnum , posx , posy , sizx , sizy , palnum , GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win) , clear_col );
+	GFL_BMPWIN_TransVramCharacter( util->win );
   SetPrintUtil( p_draw, util );
 }
 
@@ -2788,6 +2789,7 @@ static void Draw_MsgInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
   p_draw->printHandleMsg = NULL;
 
   p_draw->printQue = PRINTSYS_QUE_Create( heapID );
+//	PRINTSYS_QUE_ForceCommMode( p_draw->printQue, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -2921,6 +2923,7 @@ static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, PRINT_UTIL * util, u32 msg_
 {
   // ƒNƒŠƒA
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win), 0 );
+	GFL_BMPWIN_TransVramCharacter( util->win );
 
   GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_draw->p_titletmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_draw->p_titlestr, p_draw->p_titletmp );
