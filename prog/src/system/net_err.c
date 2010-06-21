@@ -12,6 +12,7 @@
 #include "system\main.h"
 #include "net\network_define.h"
 #include "system/net_err.h"
+#include "system/ds_system.h"
 #include "arc_def.h"
 #include "net_err.naix"
 
@@ -966,6 +967,41 @@ static void Local_ErrDispDraw(void)
  * 
  */
 //--------------------------------------------------------------
+static const u16 twlerror[]={
+dwctwl_error_0001,
+dwc_error_0002,
+dwctwl_error_0003,
+dwc_error_0004,
+dwc_error_0005,
+dwc_error_0006,
+dwctwl_error_0007,
+dwc_error_0008,
+dwctwl_error_0009,
+dwctwl_error_0010,
+dwc_error_0011,
+dwc_error_0012,
+dwc_error_0013,
+dwc_error_0014,
+dwc_error_0015,
+};
+
+static const u16 nitroerror[]={
+dwctwl_error_0001,
+dwc_error_0002,
+dwctwl_error_0003,
+dwc_error_0004,
+dwc_error_0005,
+dwc_error_0006,
+dwctwl_error_0007,
+dwc_error_0008,
+dwctwl_error_0009,
+dwctwl_error_0010,
+dwc_error_0011,
+dwc_error_0012,
+dwc_error_0013,
+dwc_error_0014,
+dwc_error_0015,
+};
 
 static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr)
 {
@@ -990,7 +1026,12 @@ static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr)
   }
   if( NetErrSystem.wifi_msg >= 0 )
   {
-    msgno = dwc_error_0001 + NetErrSystem.wifi_msg;
+    if(DS_SYSTEM_IsRunOnTwl()){
+      msgno = twlerror[NetErrSystem.wifi_msg];
+    }
+    else{
+      msgno = nitroerror[NetErrSystem.wifi_msg];
+    }
   }
   else
   {

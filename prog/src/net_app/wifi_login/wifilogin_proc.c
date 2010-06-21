@@ -949,7 +949,7 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
     // ‰‚ß‚Ä‚Ìê‡
     pWork->bInitMessage=TRUE;
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-    if(DS_SYSTEM_IsRunOnTwl()){
+    if(!DS_SYSTEM_IsRunOnTwl()){
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
     }
     else{
@@ -960,7 +960,7 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
   else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) )
   {  //•ÊDS‚Ìê‡
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-    if(DS_SYSTEM_IsRunOnTwl()){
+    if(!DS_SYSTEM_IsRunOnTwl()){
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
     }
     else{
