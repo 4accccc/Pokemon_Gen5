@@ -158,6 +158,8 @@ typedef struct{
   VecFx32           push_camera_pos;
   VecFx32           push_camera_target;
   int               wcs_camera_work;
+  int               old_eff_no;
+  int               old_from;
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
@@ -735,6 +737,20 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   bevw->defence_pos = to;
   bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
   bevw->waza = waza;
+
+  if( bevw->waza >= BTLEFF_SINGLE_ENCOUNT_1 )
+  { 
+    //連続でステータス上昇下降エフェクトを行わないようにする
+    if( ( ( bevw->waza == BTLEFF_STATUS_UP ) ||
+          ( bevw->waza == BTLEFF_STATUS_DOWN ) ) &&
+          ( bevw->old_eff_no == bevw->waza ) &&
+          ( bevw->old_from == from ) )
+    { 
+      return;
+    }
+    bevw->old_eff_no = bevw->waza;
+    bevw->old_from = from;
+  }
 
   //リバース描画OFF
   //カメラワークではOFFらない
