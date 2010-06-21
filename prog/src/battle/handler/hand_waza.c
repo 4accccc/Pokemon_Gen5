@@ -208,6 +208,7 @@ static const BtlEventHandlerTable*  ADD_TriAttack( u32* numElems );
 static void handler_TriAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_HimituNoTikara( u32* numElems );
 static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HimituNoTikara_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Osyaberi( u32* numElems );
 static void handler_Osyaberi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Makituku( u32* numElems );
@@ -2213,136 +2214,171 @@ static const BtlEventHandlerTable*  ADD_HimituNoTikara( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_END_HIT_REAL, handler_HimituNoTikara },    // ダメージ反応ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,          handler_HimituNoTikara_Start },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+/**
+ *  ひみつのちから効果種類
+ */
+enum {
+  HIMITSU_METHOD_SICK,    ///< 状態異常
+  HIMITSU_METHOD_RANK,    ///< 能力ランク効果
+  HIMITSU_METHOD_SHRINK,  ///< ひるませる
+};
+/**
+ *  ひみつのちからワザエフェクトIndex
+ */
+enum {
+  HIMITSU_WAZAEFF_NOSIKAKARI,
+  HIMITSU_WAZAEFF_DOROKAKE,
+  HIMITSU_WAZAEFF_MADSHOT,
+  HIMITSU_WAZAEFF_YUKINADARE,
+  HIMITSU_WAZAEFF_KOORINOTUBUTE,
+  HIMITSU_WAZAEFF_MIZUNOHADOU,
+  HIMITSU_WAZAEFF_IWAOTOSI,
+  HIMITSU_WAZAEFF_NEEDLEARM,
+};
+
+/**
+ * 「ひみつのちから」共通処理：BGから追加効果種類、引数、エフェクトIndexナンバー取得
+ *
+ * @retval  u8  ワザエフェクトIndexナンバー
+ */
+static u8 common_HimituNoTikara_getParams( BTL_SVFLOW_WORK* flowWk, u8* dstMethod, u8* dstMethodArg )
+{
+  BtlBgAttr  bg = BTL_SVFTOOL_GetLandForm( flowWk );
+
+  u8 method, method_arg, wazaEff;
+
+  switch( bg ){
+  case BATTLE_BG_ATTR_GROUND:         //通常地面
+  case BATTLE_BG_ATTR_GROUND_S1:        //四季あり地面１
+  case BATTLE_BG_ATTR_GROUND_S2:        //四季あり地面２
+  case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
+  case BATTLE_BG_ATTR_SAND:           //砂地
+    method = HIMITSU_METHOD_RANK;
+    method_arg = BPP_HIT_RATIO;
+    wazaEff = HIMITSU_WAZAEFF_DOROKAKE;
+    break;
+
+  case BATTLE_BG_ATTR_E_INDOOR:         //室内
+  default:
+    method = HIMITSU_METHOD_SICK;
+    method_arg = WAZASICK_MAHI;
+    wazaEff = HIMITSU_WAZAEFF_NOSIKAKARI;
+    break;
+
+  case BATTLE_BG_ATTR_CAVE:           //洞窟
+    method = HIMITSU_METHOD_SHRINK;
+    method_arg = 0;
+    wazaEff = HIMITSU_WAZAEFF_IWAOTOSI;
+    break;
+
+  case BATTLE_BG_ATTR_LAWN:           //芝生
+  case BATTLE_BG_ATTR_E_GRASS:        //エンカウント草
+    method = HIMITSU_METHOD_SICK;
+    method_arg = WAZASICK_NEMURI;
+    wazaEff = HIMITSU_WAZAEFF_NEEDLEARM;
+    break;
+
+  case BATTLE_BG_ATTR_WATER:          //水上
+  case BATTLE_BG_ATTR_POOL:           //水たまり
+  case BATTLE_BG_ATTR_SHOAL:          //浅瀬
+    method = HIMITSU_METHOD_RANK;
+    method_arg = BPP_ATTACK_RANK;
+    wazaEff = HIMITSU_WAZAEFF_MIZUNOHADOU;
+    break;
+
+  case BATTLE_BG_ATTR_MARSH:          //浅い湿原
+    method = HIMITSU_METHOD_RANK;
+    method_arg = BPP_AGILITY_RANK;
+    wazaEff = HIMITSU_WAZAEFF_MADSHOT;
+    break;
+
+  case BATTLE_BG_ATTR_SNOW:           //雪原
+  case BATTLE_BG_ATTR_ICE:            //氷上
+    method = HIMITSU_METHOD_SICK;
+    method_arg = WAZASICK_KOORI;
+    wazaEff = (bg == BATTLE_BG_ATTR_SNOW)? HIMITSU_WAZAEFF_YUKINADARE : HIMITSU_WAZAEFF_KOORINOTUBUTE;
+    break;
+  }/* switch( bg ) */
+
+  if( dstMethod ){
+    *dstMethod = method;
+  }
+  if( dstMethodArg ){
+    *dstMethodArg = method_arg;
+  }
+
+  return wazaEff;
+}
+// ワザ出し開始
+static void handler_HimituNoTikara_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    u8 wazaEffIndex = common_HimituNoTikara_getParams( flowWk, NULL, NULL );
+    BTL_SVFRET_SetWazaEffectIndex( flowWk, wazaEffIndex );
+  }
+}
+
 // ダメージ反応ハンドラ
 static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  enum {
-    WAZAEFF_NOSIKAKARI,
-    WAZAEFF_DOROKAKE,
-    WAZAEFF_MADSHOT,
-    WAZAEFF_YUKINADARE,
-    WAZAEFF_KOORINOTUBUTE,
-    WAZAEFF_MIZUNOHADOU,
-    WAZAEFF_IWAOTOSI,
-    WAZAEFF_NEEDLEARM,
-  };
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_RINPUNGUARD_FLG) == FALSE)
   ){
     u32 rnd = BTL_CALC_GetRand( 100 );
 
     #ifdef PM_DEBUG
+    // 「かならず追加効果」のデバッグ設定に対応
     if( BTL_SVFTOOL_GetDebugFlag(flowWk, BTL_DEBUGFLAG_MUST_TUIKA) ){
       rnd = 0;
     }
     #endif
 
+    if( rnd < 30 )
     {
-      enum {
-        METHOD_SICK,    ///< 状態異常
-        METHOD_RANK,    ///< 能力ランクダウン
-        METHOD_SHRINK,  ///< ひるませる
-      };
-
-      BtlBgAttr  bg = BTL_SVFTOOL_GetLandForm( flowWk );
       const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       u8   targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-      u16        method, method_arg, wazaEff;
+      u8   method, method_arg;
 
-      switch( bg ){
-      case BATTLE_BG_ATTR_GROUND:         //通常地面
-      case BATTLE_BG_ATTR_GROUND_S1:        //四季あり地面１
-      case BATTLE_BG_ATTR_GROUND_S2:        //四季あり地面２
-      case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
-      case BATTLE_BG_ATTR_SAND:           //砂地
-        method = METHOD_RANK;
-        method_arg = BPP_HIT_RATIO;
-        wazaEff = WAZAEFF_DOROKAKE;
-        break;
+      common_HimituNoTikara_getParams( flowWk, &method, &method_arg );
 
-      case BATTLE_BG_ATTR_E_INDOOR:         //室内
-      default:
-        method = METHOD_SICK;
-        method_arg = WAZASICK_MAHI;
-        wazaEff = WAZAEFF_NOSIKAKARI;
-        break;
-
-      case BATTLE_BG_ATTR_CAVE:           //洞窟
-        method = METHOD_SHRINK;
-        method_arg = 0;
-        wazaEff = WAZAEFF_IWAOTOSI;
-        break;
-
-      case BATTLE_BG_ATTR_LAWN:           //芝生
-      case BATTLE_BG_ATTR_E_GRASS:        //エンカウント草
-        method = METHOD_SICK;
-        method_arg = WAZASICK_NEMURI;
-        wazaEff = WAZAEFF_NEEDLEARM;
-        break;
-
-      case BATTLE_BG_ATTR_WATER:          //水上
-      case BATTLE_BG_ATTR_POOL:           //水たまり
-      case BATTLE_BG_ATTR_SHOAL:          //浅瀬
-        method = METHOD_RANK;
-        method_arg = BPP_ATTACK_RANK;
-        wazaEff = WAZAEFF_MIZUNOHADOU;
-        break;
-
-      case BATTLE_BG_ATTR_MARSH:          //浅い湿原
-        method = METHOD_RANK;
-        method_arg = BPP_AGILITY_RANK;
-        wazaEff = WAZAEFF_MADSHOT;
-        break;
-
-      case BATTLE_BG_ATTR_SNOW:           //雪原
-      case BATTLE_BG_ATTR_ICE:            //氷上
-        method = METHOD_SICK;
-        method_arg = WAZASICK_KOORI;
-        wazaEff = (bg == BATTLE_BG_ATTR_SNOW)? WAZAEFF_YUKINADARE : WAZAEFF_KOORINOTUBUTE;
-        break;
-      }/* switch( bg ) */
-
-      BTL_SVFRET_SetWazaEffectIndex( flowWk, wazaEff );
-
-      if( rnd < 30 )
-      {
-        switch( method ){
-        case METHOD_SICK:
-          {
-            BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-              param->pokeID = targetPokeID;
-              param->sickID = method_arg;
-              BTL_CALC_MakeDefaultWazaSickCont( param->sickID, attacker, &param->sickCont );
-            BTL_SVF_HANDEX_Pop( flowWk, param );
-          }
-          break;
-
-        case METHOD_RANK:
-          {
-            BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-              param->poke_cnt = 1;
-              param->pokeID[0] = targetPokeID;
-              param->rankType = method_arg;
-              param->rankVolume = -1;
-            BTL_SVF_HANDEX_Pop( flowWk, param );
-          }
-          break;
-
-        case METHOD_SHRINK:
-          {
-            BTL_HANDEX_PARAM_ADD_SHRINK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SHRINK, pokeID );
-              param->pokeID = targetPokeID;
-              param->per = 100;
-            BTL_SVF_HANDEX_Pop( flowWk, param );
-          }
-          break;
+      switch( method ){
+      case HIMITSU_METHOD_SICK:
+        {
+          BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+            param->pokeID = targetPokeID;
+            param->sickID = method_arg;
+            BTL_CALC_MakeDefaultWazaSickCont( param->sickID, attacker, &param->sickCont );
+          BTL_SVF_HANDEX_Pop( flowWk, param );
         }
-      }/* if( rnd < 30) */
-    }
+        break;
+
+      case HIMITSU_METHOD_RANK:
+        {
+          BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+            param->poke_cnt = 1;
+            param->pokeID[0] = targetPokeID;
+            param->rankType = method_arg;
+            param->rankVolume = -1;
+          BTL_SVF_HANDEX_Pop( flowWk, param );
+        }
+        break;
+
+      case HIMITSU_METHOD_SHRINK:
+        {
+          BTL_HANDEX_PARAM_ADD_SHRINK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SHRINK, pokeID );
+            param->pokeID = targetPokeID;
+            param->per = 100;
+          BTL_SVF_HANDEX_Pop( flowWk, param );
+        }
+        break;
+      }
+    }/* if( rnd < 30) */
   }
 }
 //----------------------------------------------------------------------------------
@@ -9331,6 +9367,9 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 
         // 対象が場にいなければ失敗
         if( !BTL_SVFTOOL_IsExistPokemon(flowWk, targetPokeID) ){ break; }
+
+        // フリーフォールしてる側・されてる側に失敗
+        if( !BTL_SVFTOOL_IsFreeFallPoke(flowWk, targetPokeID) ){ break; }
 
         // 相手がダメージワザを選択していない場合も失敗
         waza = BTL_ACTION_GetWazaID( &action );
