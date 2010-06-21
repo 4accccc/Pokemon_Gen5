@@ -1647,7 +1647,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_START_SAVE_RENEWAL:
     { 
-      Regulation_SetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS, p_wk->p_param->p_gpf_data->WifiMatchUpState );
+      //Regulation_SetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_END );
 
       //ÅŒã‚Ì¬Ñ‚ð”½‰f
       Util_SaveScore( p_wk, p_wk->p_param->p_wifi_sake_data );
@@ -4564,7 +4564,10 @@ static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void Util_PlayerInfo_RenewalData( WIFIBATTLEMATCH_WIFI_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type )
 { 
-  PLAYERINFO_WIFI_RenewalData( p_wk->p_playerinfo, type, p_wk->p_msg, p_wk->p_que, p_wk->p_font, HEAPID_WIFIBATTLEMATCH_CORE );
+  if( p_wk->p_playerinfo )
+  {
+    PLAYERINFO_WIFI_RenewalData( p_wk->p_playerinfo, type, p_wk->p_msg, p_wk->p_que, p_wk->p_font, HEAPID_WIFIBATTLEMATCH_CORE );
+  }
 
 }
 //----------------------------------------------------------------------------

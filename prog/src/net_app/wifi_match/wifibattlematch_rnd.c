@@ -2698,7 +2698,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
