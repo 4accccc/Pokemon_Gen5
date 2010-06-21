@@ -338,6 +338,7 @@ typedef struct {
 
   // ‚Ğ‚ñ€Eó‘ÔˆÙí‚È‚ÇŒ‹‰ÊŠi”[
   BtlPokeStatCode  party_state[ BTL_CLIENT_NUM ][ TEMOTI_POKEMAX ];
+  u32              restHPRatio[ BTL_CLIENT_NUM ];
 
 }BATTLE_SETUP_PARAM;
 
