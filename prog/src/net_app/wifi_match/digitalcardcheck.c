@@ -554,6 +554,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_ENTRY:
+    Util_Text_ClearCharacterVram( p_wk );
     Util_Text_SetVisible( p_wk, TRUE );
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_01, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
@@ -752,6 +753,7 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_START_MSG_CUPEND:
+    Util_Text_ClearCharacterVram( p_wk );
     Util_Text_SetVisible( p_wk, TRUE );
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_06, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
@@ -843,6 +845,7 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_START_MSG_RETIRE:
+    Util_Text_ClearCharacterVram( p_wk );
     Util_Text_SetVisible( p_wk, TRUE );
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_07, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
@@ -934,6 +937,7 @@ static void DC_SEQFUNC_ChangeDS( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_START_MSG_RETIRE:
+    Util_Text_ClearCharacterVram( p_wk );
     Util_Text_SetVisible( p_wk, TRUE );
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_09, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
@@ -999,7 +1003,6 @@ static void DC_SEQFUNC_NoData( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   switch( *p_seq )
   { 
   case SEQ_START_MSG_NODATA:
-    Util_Text_SetVisible( p_wk, TRUE );
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_08, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     break;
