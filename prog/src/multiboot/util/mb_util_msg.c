@@ -714,6 +714,14 @@ void MB_MSG_MessageDips_CommDisableError( MB_MSG_WORK *msgWork , const int msgSp
   BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
   
   GFL_MSG_Delete( msgHandle );
+  if( msgWork->enableKey == TRUE )
+  {
+    APP_PRINTSYS_COMMON_PrintStreamInit( &msgWork->printWork , APP_PRINTSYS_COMMON_TYPE_BOTH );
+  }
+  else
+  {
+    APP_PRINTSYS_COMMON_PrintStreamInit( &msgWork->printWork , APP_PRINTSYS_COMMON_TYPE_TOUCH );
+  }
 }
 
 #endif //MULTI_BOOT_MAKE  //’ÊíŽžˆ—

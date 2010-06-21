@@ -231,6 +231,7 @@ typedef struct
   MB_PARENT_INIT_WORK *initWork;
   MB_COMM_WORK *commWork;
   BOOL         isNetErr;
+  BOOL         isNetErrMb;
   
   MB_PARENT_STATE state;
   u8              subState;
@@ -381,7 +382,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 
   
   work->isPostMoviePoke = FALSE;
-  work->isPostMovieCapsule = FALSE;
+  work->isPostMovieCapsule = TRUE;
   work->localHighScore = 0;
   work->playNum = 0;
   work->totalGet = 0;
@@ -437,6 +438,17 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     work->state = MPS_FADEOUT;
     MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
   }
+  
+#if PM_DEBUG
+  {
+    static int besState = 0xFFFF;
+    if( besState != work->state )
+    {
+      OS_TFPrintf(3,"state[%d]->[%d]\n",besState,work->state);
+      besState = work->state;
+    }
+  }
+#endif
 
   switch( work->state )
   {
@@ -465,7 +477,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       else
       {
         //MSGが違うので特殊関数
-        MB_MSG_MessageHide( work->msgWork );
+        //MB_MSG_MessageHide( work->msgWork );
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
         MB_MSG_MessageDips_CommDisableError( work->msgWork , MSGSPEED_GetWait() );
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
@@ -1388,6 +1400,23 @@ static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 {
+  if( WH_GetSystemState() == WH_SYSSTATE_ERROR )
+  {
+    work->isSendRom = FALSE;
+    work->isNetErrMb = TRUE;
+    if( WH_Finalize() == TRUE )
+    {
+      MBP_ClearBuffer();
+      WH_FreeMemory();
+      return TRUE;
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
+
+
   switch( work->subState )
   {
   case MPSS_SEND_IMAGE_INIT_COMM:
@@ -1410,7 +1439,8 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   case MPSS_SEND_IMAGE_INIT_COMM_WAIT:
     //if( WhCallBackFlg == TRUE )
     {
-      if( WH_GetSystemState() == WH_SYSSTATE_IDLE )
+      const int state = WH_GetSystemState();
+      if( state == WH_SYSSTATE_IDLE )
       {
         if( WH_StartMeasureChannel() == TRUE )
         {
@@ -1420,35 +1450,38 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     }
     break;
   case MPSS_SEND_IMAGE_WAIT_SEARCH_CH:
-    if( WH_GetSystemState() == WH_SYSSTATE_MEASURECHANNEL )
     {
-      MYSTATUS *myStatus = GAMEDATA_GetMyStatus(work->initWork->gameData);
-      MP_PARENT_SendImage_MBPInit( work );
-
-      MB_MSG_MessageHide( work->msgWork );
-      if( work->mode == MPM_POKE_SHIFTER )
+      const int state = WH_GetSystemState();
+      if( state == WH_SYSSTATE_MEASURECHANNEL )
       {
-        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
-      }
-      else
-      {
-        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE2 );
-      }
+        MYSTATUS *myStatus = GAMEDATA_GetMyStatus(work->initWork->gameData);
+        MP_PARENT_SendImage_MBPInit( work );
 
-      MB_MSG_MessageCreateWordset( work->msgWork );
-      MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
+        MB_MSG_MessageHide( work->msgWork );
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
+        }
+        else
+        {
+          MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE2 );
+        }
 
-      if( work->mode == MPM_POKE_SHIFTER )
-      {
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
-      }
-      else
-      {
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_01 , MSGSPEED_GetWait() );
-      }
-      MB_MSG_MessageDeleteWordset( work->msgWork );
+        MB_MSG_MessageCreateWordset( work->msgWork );
+        MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
 
-      work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
+        }
+        else
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_01 , MSGSPEED_GetWait() );
+        }
+        MB_MSG_MessageDeleteWordset( work->msgWork );
+
+        work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
+      }
     }
     break;
   case MPSS_SEND_IMAGE_MBSYS_MAIN:
@@ -2599,6 +2632,7 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   work->heapId = HEAPID_MULTIBOOT;
   work->initWork = initWork;
   work->isNetErr = FALSE;
+  work->isNetErrMb = FALSE;
   
   MB_PARENT_Init( work );
   
@@ -2673,6 +2707,11 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
         NetErr_DispCall( TRUE );
       }
     }
+  }
+  //マルチブートでのエラーは強制エラー
+  if( work->isNetErrMb == TRUE )
+  {
+    NetErr_DispCallPushPop();
   }
 
   if( isMovieTrans == TRUE )

@@ -175,6 +175,7 @@ const u8 *MBP_GetChildMacAddress(u16 aid);
 MBPChildState MBP_GetChildState(u16 aid);
 u16     MBP_GetPlayerNo(const u8 *macAddress);
 const MBPChildInfo *MBP_GetChildInfo(u16 child_aid);
+void MBP_ClearBuffer( void );
 
 
 #ifdef __cplusplus

@@ -1132,3 +1132,20 @@ const u8 *MBP_GetChildMacAddress(u16 aid)
     }
     return childInfo[aid - 1].macAddress;
 }
+
+void MBP_ClearBuffer( void )
+{
+  // ゲーム配信用に使用していたバッファをクリア
+  // MB_COMM_PSTATE_ENDのコールバックが帰ってきた時点で
+  // ワークは開放されているのでFreeしてしまってよい。
+  if (sFilebuf)
+  {
+      GFL_HEAP_FreeMemory(sFilebuf);
+      sFilebuf = NULL;
+  }
+  if (sCWork)
+  {
+      GFL_NET_Align32Free(sCWork);
+      sCWork = NULL;
+  }
+}
