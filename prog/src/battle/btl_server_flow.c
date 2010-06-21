@@ -3845,8 +3845,11 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   scproc_CheckMovedPokeAvoid( wk, attacker, targetRec );
 
   // 最初は居たターゲットが残っていない->うまく決まらなかった、終了
-  if( BTL_POKESET_IsRemovedAll(targetRec) ){
-    scPut_WazaFail( wk, attacker, waza );
+  if( BTL_POKESET_IsRemovedAll(targetRec) )
+  {
+    if( !(wk->fWazaFailMsgDisped) ){
+      scPut_WazaFail( wk, attacker, waza );
+    }
     fEnable = FALSE;
   }
 
@@ -4002,6 +4005,7 @@ static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID) ){
       BTL_POKESET_Remove( targetRec, bpp );
       scPut_WazaAvoid( wk, bpp, wazaParam->wazaID );
+      wk->fWazaFailMsgDisped = TRUE;
     }
   }
 }
@@ -4579,6 +4583,7 @@ static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, WAZAEFF_CTRL* ef
   BTL_N_Printf( DBGSTR_SVFL_PutWazaEffect, que_reserve_pos, waza, effCtrl->attackerPos, effCtrl->targetPos, effCtrl->effectIndex );
 
   effCtrl->effectIndex = BTLV_WAZAEFF_INDEX_DEFAULT;
+  effCtrl->fDone = TRUE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -13783,7 +13788,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
 
     wk->defaultTargetPos = BTL_POS_NULL;
     wk->fMemberChangeReserve = 0;
-    wk->fWazaFailMsgDisped = 0;
+    wk->fWazaFailMsgDisped = FALSE;
   }
 }
 
