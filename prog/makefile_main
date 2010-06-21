@@ -187,6 +187,8 @@ ifeq	($(AMPROTECT),yes)
 MACRO_FLAGS	+=	-DAMPROTECT_FUNC
 endif
 
+COMPSTATIC_SPEC_FILE = ./overlay/compstatic_spec_files
+
 #----------------------------------------------------------------------------
 #	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
 #----------------------------------------------------------------------------

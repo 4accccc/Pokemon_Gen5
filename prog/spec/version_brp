@@ -8,6 +8,6 @@ ROM_SPEC= spec/pokemon_wb_black$(TWL_LIBSUFFIX).rsf
 #	ロム作成用定義　（ＲＯＭ提出の際は有効にしてsrl作成）
 #----------------------------------------------------------------------------
 NITRO_FINALROM = yes
-TWL_FINALROM = yes
-#TWL_COMPRESS   = True
+TWL_FINALROM   = yes
+TWL_COMPRESS   = True
 AMPROTECT      = yes
