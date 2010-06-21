@@ -818,7 +818,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
 //☆☆☆会話チェック
 
-  ///通信用会話処理(仮
+  //通信用会話処理
   {
     //通信イベント発生チェック
     event = UnionEvent_CommCheck( gsys, fieldWork );
