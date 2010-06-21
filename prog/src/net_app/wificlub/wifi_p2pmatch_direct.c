@@ -1709,7 +1709,6 @@ static int _playerDirectBattleStart7( WIFIP2PMATCH_WORK *wk, int seq )
       WIFI_GAME_BATTLE_ROTATION_FLAT,      // ローテーション
     };
     gamemode = modetbl[wk->battleMode*2+wk->battleRule];
-    _myStatusChange(wk, status, gamemode);  // 接続中になる
     wk->endSeq = gamemode;
   }
   {
@@ -1717,6 +1716,7 @@ static int _playerDirectBattleStart7( WIFIP2PMATCH_WORK *wk, int seq )
 
     EndMessageWindowOff(wk);
   }
+  _myStatusChange(wk, status, gamemode);  // 接続中になる
   return SEQ_OUT;            //終了シーケンスへ
 }
 
