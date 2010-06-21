@@ -4066,8 +4066,6 @@ static void scproc_WazaExe_NotEffective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID 
   scEvent_WazaExeEnd_Common( wk, pokeID, waza, BTL_EVENT_WAZA_EXECUTE_NO_EFFECT );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-  BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_MUKOU );
-
   if( BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
     BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_MUKOU );
   }
@@ -4770,9 +4768,18 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
 
     // ねむりの解除チェック
     scproc_CheckWazaExe_NemuriCure( wk, attacker, waza );
+    sick = BPP_GetPokeSick( attacker );
+    if( sick == POKESICK_NEMURI )
+    {
+      if( !scEvent_ExeFailThrew(wk, attacker, waza, SV_WAZAFAIL_NEMURI) ){
+        cause = SV_WAZAFAIL_NEMURI;
+        break;
+      }
+    }
 
     // 命令無視判定
-    if( wk->currentSabotageType == SABOTAGE_DONT_ANY ){
+    if( wk->currentSabotageType == SABOTAGE_DONT_ANY )
+    {
       cause = SV_WAZAFAIL_SABOTAGE;
       break;
     }
@@ -4795,15 +4802,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
 
     // こおりの解除チェック
     fWazaMelt = scproc_CheckWazaExe_KooriCure( wk, attacker, waza );
-
-    // ポケモン系 状態異常による失敗チェック
     sick = BPP_GetPokeSick( attacker );
-    if( sick == POKESICK_NEMURI ){
-      if( !scEvent_ExeFailThrew(wk, attacker, waza, SV_WAZAFAIL_NEMURI) ){
-        cause = SV_WAZAFAIL_NEMURI;
-        break;
-      }
-    }
     if( (sick == POKESICK_KOORI) && (!fWazaMelt) ){
       cause = SV_WAZAFAIL_KOORI;
       break;
