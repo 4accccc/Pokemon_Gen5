@@ -3022,6 +3022,9 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_UP ){   //ベクトルを監視
     pWork->padMode=TRUE;
+    if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
+      pWork->MainObjCursorLine=line;
+    }
     pWork->MainObjCursorIndex--;
     if(pWork->MainObjCursorIndex<0){
       if(pWork->MainObjCursorLine < HAND_HORIZONTAL_NUM){
@@ -3036,6 +3039,9 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_DOWN ){   //ベクトルを監視
     pWork->padMode=TRUE;
+    if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
+      pWork->MainObjCursorLine=line;
+    }
     pWork->MainObjCursorIndex++;
     if(pWork->MainObjCursorLine < HAND_HORIZONTAL_NUM){
       if(pWork->MainObjCursorIndex >= HAND_VERTICAL_NUM){
@@ -3553,6 +3559,15 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
     if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
       pWork->MainObjCursorLine=line;
+      //縦位置補正
+      if(pWork->MainObjCursorLine < HAND_HORIZONTAL_NUM){
+        if(pWork->MainObjCursorIndex >= HAND_VERTICAL_NUM){
+          pWork->MainObjCursorIndex = 0;
+        }
+      }
+      else if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
+        pWork->MainObjCursorIndex = 0;
+      }
     }
     {
       ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, IRC_TRADE_LINE2TRAY(pWork->MainObjCursorLine,pWork),
