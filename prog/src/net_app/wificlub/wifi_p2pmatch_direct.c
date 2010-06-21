@@ -1046,13 +1046,13 @@ static u32 _createRegulationType(WIFIP2PMATCH_WORK *wk, REG_CREATE_TYPE type )
   default:
     GF_ASSERT(0);
   case REG_CREATE_TYPE_DECIDE: ///<決定しているルールから作る
-   // NET_PRINT("決定しているルールから作る\n");
+    NET_PRINT("相手の決定しているルールから作る  %d %d %d\n",wk->battleMode,wk->battleRule,wk->pParentWork->shooter);
     battleMode  = wk->battleMode;
     battleRule  = wk->battleRule;
     shooter     = wk->pParentWork->shooter;
     break;
   case REG_CREATE_TYPE_SELECT: ///<選んでいるルールから作る
- //   NET_PRINT("選んでいるルールから作る\n");
+    NET_PRINT("自分で選んだルールから作る  %d %d %d\n",wk->battleMode,wk->battleRule,wk->pParentWork->shooter);
     battleMode  = wk->pParentWork->battleBoard.battleModeSelect;
     battleRule  = wk->pParentWork->battleBoard.battleRuleSelect;
     shooter     = wk->pParentWork->battleBoard.shooterSelect;
@@ -1094,6 +1094,8 @@ static void _convertRegulation(WIFIP2PMATCH_WORK *wk,u32 regulation)
       wk->battleRule = i / 4;
     }
   }
+  NET_PRINT("受信  %d %d %d\n",wk->battleMode,wk->battleRule,wk->pParentWork->shooter);
+  
 //  NET_PRINT("regch %d %d %d\n",wk->battleMode,wk->battleRule,wk->pParentWork->shooter);
 }
 
@@ -1109,16 +1111,20 @@ static void _convertRegulation(WIFIP2PMATCH_WORK *wk,u32 regulation)
 static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u8 command;
-  u32 regulation = _createRegulation(wk);
+  u32 regulation; // = _createRegulation(wk);
   u32 fail_bit;
 
-
+  if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_MACHINE)){
+     regulation = _createRegulationType(wk, REG_CREATE_TYPE_SELECT );
+  }
+  else{
+     regulation = _createRegulationType(wk, REG_CREATE_TYPE_DECIDE );
+  }
   if(!_regulationCheck(wk)){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT);
     return seq;
   }
-  
   wk->keepGameMode = WIFI_GAME_BATTLE_SINGLE_ALL;
   if(wk->pParentWork->VCTOn[0]!=wk->pParentWork->VCTOn[1]){  //自分と相手のVCTが違う
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE1);
@@ -2217,7 +2223,14 @@ static int _playerDirectVCTChange5( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
   }
   else{
-    u32 regulation = _createRegulation(wk);
+    u32 regulation;
+    if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_MACHINE)){
+      regulation = _createRegulationType(wk, REG_CREATE_TYPE_SELECT );
+    }
+    else{
+      GF_ASSERT(0);
+      regulation = _createRegulationType(wk, REG_CREATE_TYPE_DECIDE );
+    }
     if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_REGLATION,
                          sizeof(u32), &regulation)){
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE6);
