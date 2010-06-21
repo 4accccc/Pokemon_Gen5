@@ -84,7 +84,10 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
 	
 	//座標による分岐
+	//入ってくるサポートを受付嬢が見る
+	_OBJ_ANIME(C03R0601_INFOMATIONW_01,anm_dir_l)
 	
+	//サーポートが主人公をみる
 	SWITCH $LWK_POSX
 	CASE 2 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_come2 )
@@ -106,7 +109,6 @@ EVENT_START		ev_pos_c03r0601_stop_01
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 
-	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down )
 	_OBJ_ANIME_WAIT()
 
@@ -167,7 +169,7 @@ EVENT_START		ev_pos_c03r0601_stop_01
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 */
-
+	
 	SWITCH $LWK_POSX
 	CASE 2 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info2 )
@@ -301,6 +303,14 @@ EVENT_END
 _ANIME_LABEL	anm_support_senyou
 
 	_ANIME_DATA AC_SUPPORT_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 受付嬢：左を向く                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_l
+
+	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
