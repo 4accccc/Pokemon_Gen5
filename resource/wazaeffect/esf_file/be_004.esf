@@ -261,7 +261,6 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 指定されたワークを見て条件分岐	POS_E_FLY	!=	1	NO_FLY_E
 ポケモンSIN移動	POS_E	Y方向	180	360	0.5	24
 ラベル	NO_FLY_E
-エフェクト終了待ち	ポケモン
 制御モード変更	継続
 ラベル	SE_L
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SE_M
@@ -302,36 +301,40 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 エフェクト終了待ち	鳴き声
 ラベル	SHAKE_END
 制御モード変更	継続
-立ち位置チェック	POS_AA	いない	NO_EXIST_AA_6
+立ち位置チェック	POS_AA	いない	NO_RARE_AA
 指定されたワークを見て条件分岐	POS_AA_RARE	==	0	NO_RARE_AA
 サブルーチンコール	BTLEFF_RARE	POS_AA	POS_AA
 ラベル	NO_RARE_AA
+立ち位置チェック	POS_A	いない	NO_RARE_A
+指定されたワークを見て条件分岐	POS_A_RARE	==	0	NO_RARE_A
+サブルーチンコール	BTLEFF_RARE	POS_A	POS_A
+ラベル	NO_RARE_A
+立ち位置チェック	POS_C	いない	NO_RARE_C
+指定されたワークを見て条件分岐	POS_C_RARE	==	0	NO_RARE_C
+サブルーチンコール	BTLEFF_RARE	POS_C	POS_C
+ラベル	NO_RARE_C
+立ち位置チェック	POS_E	いない	NO_RARE_E
+指定されたワークを見て条件分岐	POS_E_RARE	==	0	NO_RARE_E
+サブルーチンコール	BTLEFF_RARE	POS_E	POS_E
+ラベル	NO_RARE_E
+エフェクト終了待ち	パーティクル
+エフェクト終了待ち	ポケモン
+立ち位置チェック	POS_AA	いない	NO_EXIST_AA_6
 ポケモンアニメ	POS_AA	アニメスタート
 ポケモン影バニッシュ	POS_AA	バニッシュオフ
 ラベル	NO_EXIST_AA_6
 立ち位置チェック	POS_A	いない	NO_EXIST_A_6
-指定されたワークを見て条件分岐	POS_A_RARE	==	0	NO_RARE_A
-サブルーチンコール	BTLEFF_RARE	POS_A	POS_A
-ラベル	NO_RARE_A
 ポケモンアニメ	POS_A	アニメスタート
 ポケモン影バニッシュ	POS_A	バニッシュオフ
 ラベル	NO_EXIST_A_6
 立ち位置チェック	POS_C	いない	NO_EXIST_C_6
-指定されたワークを見て条件分岐	POS_C_RARE	==	0	NO_RARE_C
-サブルーチンコール	BTLEFF_RARE	POS_C	POS_C
-ラベル	NO_RARE_C
 ポケモンアニメ	POS_C	アニメスタート
 ポケモン影バニッシュ	POS_C	バニッシュオフ
 ラベル	NO_EXIST_C_6
 立ち位置チェック	POS_E	いない	NO_EXIST_E_6
-指定されたワークを見て条件分岐	POS_E_RARE	==	0	NO_RARE_E
-サブルーチンコール	BTLEFF_RARE	POS_E	POS_E
-ラベル	NO_RARE_E
 ポケモンアニメ	POS_E	アニメスタート
 ポケモン影バニッシュ	POS_E	バニッシュオフ
 ラベル	NO_EXIST_E_6
-エフェクト終了待ち	パーティクル
-エフェクト終了待ち	ポケモン
 タイマーによるウエイト	5
 制御モード変更	継続
 カメラ移動	追従	初期位置	10	0	8
