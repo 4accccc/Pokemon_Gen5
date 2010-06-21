@@ -437,6 +437,8 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
     }
   }
 
+//  OS_Printf("*seq=%d, subseq=%d\n", wk->proc_seq, wk->seq);
+
   GFL_CLACT_SYS_Main();               // セルアクター常駐関数
   _print_func(wk);
   
@@ -1280,7 +1282,7 @@ static void PadControl( GURU2RC_WORK *wk )
     }
 
   // キャンセル
-  }else if(_get_key_trg()&PAD_BUTTON_B){
+  }else if(_get_key_trg()&PAD_BUTTON_CANCEL){
     // やめますか？
     if(GFL_NET_SystemGetCurrentID()){
       // 子機は親機から禁止が来ている場合は終了できない
@@ -1542,11 +1544,14 @@ static int Record_EndSelectWait( GURU2RC_WORK *wk, int seq )
         crec.request   = CREC_REQ_RIDATU_CHECK;
         crec.ridatu_id = GFL_NET_SystemGetCurrentID();
         
-        wk->status_end = TRUE;
-        wk->ridatu_wait = 0;
-        //wk->seq = RECORD_MODE_END_CHILD;
-        wk->seq = RECORD_MODE_END_SELECT_ANSWER_WAIT;
-        Guru2Comm_SendData(wk->g2c, G2COMM_RC_END_CHILD, &crec, sizeof(GURU2COMM_END_CHILD_WORK) );
+        if(Guru2Comm_SendData(wk->g2c, G2COMM_RC_END_CHILD, &crec, sizeof(GURU2COMM_END_CHILD_WORK) )){
+          wk->status_end = TRUE;
+          wk->ridatu_wait = 0;
+          wk->seq = RECORD_MODE_END_SELECT_ANSWER_WAIT;
+        }else{
+          // 送信失敗した場合は理由があるはずなので、最初に戻す
+          wk->seq = RECORD_MODE_INIT;
+        }
       }
     }
     wk->YesNoMenuWork = NULL;
