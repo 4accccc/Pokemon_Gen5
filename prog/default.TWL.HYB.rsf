@@ -103,9 +103,9 @@ Property
 	MakerCode		"01"
 
 	#
-	# REMASTER VERSION: Mastering version
+	# REMASTER VERSION: Mastering version  現在事前ロットチェック用 E.0
 	#
-	RomVersion		0
+	RomVersion		E.0
 
 	#
 	# ROM SPEED TYPE: [MROM/1TROM/UNDEFINED]
