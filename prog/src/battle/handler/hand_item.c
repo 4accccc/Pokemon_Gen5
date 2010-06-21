@@ -177,6 +177,7 @@ static void handler_IbanNomi_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems );
 static void handler_MikuruNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MikuruNomi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MikuruNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MikuruNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_JapoNomi( u32* numElems );
@@ -2368,7 +2369,8 @@ static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_Reaction  },
+    { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_Reaction   },
+    { BTL_EVENT_MEMBER_IN,             handler_MikuruNomi_MemberIn   },
     { BTL_EVENT_USE_ITEM,              handler_MikuruNomi_Use        }, // アイテム使用ハンドラ
     { BTL_EVENT_USE_ITEM_TMP,          handler_MikuruNomi_UseTmp     }, // アイテム使用ハンドラ
   };
@@ -2383,6 +2385,19 @@ static void handler_MikuruNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     if( common_DamageReactCheck(myHandle, flowWk, pokeID, quot) )
+    {
+      ItemPushRun( myHandle, flowWk, pokeID );
+    }
+  }
+}
+// メンバー入場
+static void handler_MikuruNomi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
+    if( common_DamageReactCheckCore(flowWk, pokeID, quot) )
     {
       ItemPushRun( myHandle, flowWk, pokeID );
     }
