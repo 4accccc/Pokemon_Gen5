@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-18T14:13:19"/>
+	<create user="matsumiya" host="W00224" date="2010-06-21T18:15:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,149 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_playable_assistantm_01">
+		<comment>♂
+・ゲーム開始後、自動で表示(暫定）
+・2回目以降の会話</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">・目的説明
+　リュウラセンの塔に向かう
+　　まっすぐ進んだところ
+　アララギ博士がいる
+・制限時間　１０分</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_ambrella_01">
+		<comment>♀（GRIDX=181、GRIDZ=178）
+・会話時
+・pos起動時</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">１２３４５６７８９０１２３４５６７８
+リュウラセンのとう　が　あるのは
+はんたいがわ　ですよ</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_man3_01">
+		<comment>♂（GRIDX=183、GRIDZ=168）
+・</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">１２３４５６７８９０１２３４５６７８
+・季節について
+・なんでもなおしについて</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_rangerw_01">
+		<comment>♀（GRIDX=172、GRIDZ=168）
+・会話時</comment>
+		<attribute name="キャラ指定">RANGERW</attribute>
+		<language name="JPN" width="256">ごめんなさい！
+ジムリーダーは　るす　なんです▼
+どんな　ジムリーダーか
+たたかえるのを　たのしみに　してね！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_rangerw_02">
+		<comment>♀
+・pos起動時
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">RANGERW</attribute>
+		<language name="JPN" width="256">ごめんなさい！
+ジムリーダーは　るす　なんです▼
+どんな　ジムリーダーか
+たたかえるのを　たのしみに　してね！▼</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_sign_01">
+		<comment>ＢＧメッセージ
+・ジム看板</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">セッカシティ　ポケモンジム</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_support_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・戦闘前＋pos起動
+・メッセージ表示後、トレーナー戦闘に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『
+あたしと　ポケモン
+みせてあげるね
+▼</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_support_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・戦闘後、自動で表示
+　以降繰り返し
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『
+[1:00:トレーナー名:0]なら
+もっともっと
+ポケモンとなかよくなれる</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・戦闘前＋pos起動
+・メッセージ表示後、トレーナー戦闘に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">チェレン</attribute>
+		<language name="JPN" width="256">チェレン『
+・ポケモン勝負
+▼</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_rival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・戦闘後
+　以降繰り返し
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……なるほどね
+きみは　いい　ポケモントレーナーだよ▼
+だけど　いっておくよ
+つぎに　あうときは……▼
+ぼくが　しょうり　するから！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_hakase2_01">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">アララギ</attribute>
+		<language name="JPN" width="256">アララギ『ハーイ！▼
+・ココまで到達、おめでとう＝ほめる</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_hakase2_02">
+		<comment>♀
+・メッセージ表示後、フェードアウト
+・LEGEND MEET ムービー再生</comment>
+		<attribute name="キャラ指定">アララギ</attribute>
+		<language name="JPN" width="256">あれが　リュウラセンのとう……▼
+どのような　ポケモンが
+きみを　まっているのかしら</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_playable_d08_end_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>・ムービー後、自動で表示
+・AボタンでTPC、NCLロゴへ</comment>
+		<attribute name="キャラ指定">エンディング</attribute>
+		<language name="JPN" width="256">せいひんばんを　おたのしみに！</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>
