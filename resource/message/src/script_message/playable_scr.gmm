@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-21T18:15:56"/>
+	<create user="matsumiya" host="W00224" date="2010-06-21T21:24:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,7 +306,7 @@
 	</row>
 
 	<row id="msg_playable_ambrella_01">
-		<comment>♀（GRIDX=181、GRIDZ=178）
+		<comment>♀（ｃ07：GRIDX=181、GRIDZ=178）
 ・会話時
 ・pos起動時</comment>
 		<attribute name="キャラ指定">AMBRELLA</attribute>
@@ -317,7 +317,7 @@
 	</row>
 
 	<row id="msg_playable_man3_01">
-		<comment>♂（GRIDX=183、GRIDZ=168）
+		<comment>♂（ｃ07：GRIDX=183、GRIDZ=168）
 ・</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
 		<language name="JPN" width="256">１２３４５６７８９０１２３４５６７８
@@ -327,7 +327,7 @@
 	</row>
 
 	<row id="msg_playable_rangerw_01">
-		<comment>♀（GRIDX=172、GRIDZ=168）
+		<comment>♀（ｃ07：GRIDX=172、GRIDZ=168）
 ・会話時</comment>
 		<attribute name="キャラ指定">RANGERW</attribute>
 		<language name="JPN" width="256">ごめんなさい！
@@ -358,7 +358,7 @@
 	</row>
 
 	<row id="msg_playable_support_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
+		<comment>♀（ｃ07：
 ・戦闘前＋pos起動
 ・メッセージ表示後、トレーナー戦闘に
 ・0＝主人公名前</comment>
@@ -384,7 +384,7 @@
 	</row>
 
 	<row id="msg_playable_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
+		<comment>♂（ｃ07：
 ・戦闘前＋pos起動
 ・メッセージ表示後、トレーナー戦闘に
 ・0＝主人公名前</comment>
@@ -410,8 +410,8 @@
 	</row>
 
 	<row id="msg_playable_hakase2_01">
-		<comment>♀
-・</comment>
+		<comment>♀（d08：GRIDX=22、GRIDZ=44）
+・上向きで配置</comment>
 		<attribute name="キャラ指定">アララギ</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！▼
 ・ココまで到達、おめでとう＝ほめる</language>
@@ -420,6 +420,7 @@
 
 	<row id="msg_playable_hakase2_02">
 		<comment>♀
+・上向き
 ・メッセージ表示後、フェードアウト
 ・LEGEND MEET ムービー再生</comment>
 		<attribute name="キャラ指定">アララギ</attribute>
