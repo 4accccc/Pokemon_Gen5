@@ -1,3 +1,5 @@
+#ifdef PM_DEBUG
+
 #include <wchar.h>    // wcslen
 #include <gflib.h>
 #include "debug_obata_elboard_setup.h"
@@ -465,3 +467,5 @@ static void UpdateCamera( PROC_WORK* work )
 {
   GFL_G3D_CAMERA_Switching( work->camera );
 }
+
+#endif

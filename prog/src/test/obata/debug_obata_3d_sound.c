@@ -1,3 +1,5 @@
+#ifdef PM_DEBUG
+
 #include <gflib.h>
 #include "debug_obata_3d_sound_setup.h"
 #include "system/main.h"
@@ -627,3 +629,5 @@ static void SetMode( PROC_WORK* work, TESTMODE next_mode )
   }
 #endif
 }
+
+#endif

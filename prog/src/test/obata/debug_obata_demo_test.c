@@ -1,3 +1,5 @@
+#ifdef PM_DEBUG
+
 #include <gflib.h>
 #include "debug_obata_demo_test_setup.h"
 #include "system/ica_anime.h"
@@ -313,3 +315,5 @@ static void Draw( PROC_WORK* work )
   frame += anime_speed;
   ICA_ANIME_IncAnimeFrame( work->icaAnime, anime_speed );
 }
+
+#endif

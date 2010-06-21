@@ -1,3 +1,5 @@
+#ifdef PM_DEBUG
+
 #include <wchar.h>    // wcslen
 #include <gflib.h>
 #include "debug_obata_menu_setup.h"
@@ -332,3 +334,5 @@ static void SetNextProc( PROC_WORK* work )
       break;
   }
 }
+
+#endif

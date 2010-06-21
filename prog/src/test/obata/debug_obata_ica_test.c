@@ -1,3 +1,5 @@
+#ifdef PM_DEBUG
+
 #include <gflib.h>
 #include "debug_obata_ica_test_setup.h"
 #include "system/ica_anime.h"
@@ -376,3 +378,5 @@ static void SetAnimeMode( PROC_WORK* work, ANIME_MODE mode )
   work->icaAnime = ICA_ANIME_CreateStreamingAlloc(
       HEAPID_OBATA_DEBUG, ARCID_OBATA_DEBUG, anime_dat_id[ mode ], 10 );
 }
+
+#endif
