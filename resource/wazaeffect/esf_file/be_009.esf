@@ -246,6 +246,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 ポケモンSIN移動	POS_F	Y方向	180	360	0.5	32
 ラベル	NO_FLY_F
 制御モード変更	継続
+着地演出待ち	相手側
 ラベル	SE_L
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SE_M
 SE再生	SEQ_SE_TOUJOU_LARGE	デフォルト	真ん中	0:0:127	0:0:0
@@ -302,22 +303,6 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 サブルーチンコール	BTLEFF_RARE	POS_F	POS_F
 ラベル	NO_RARE_F
 エフェクト終了待ち	すべて
-立ち位置チェック	POS_BB	いない	NO_EXIST_BB_6
-ポケモンアニメ	POS_BB	アニメスタート
-ポケモン影バニッシュ	POS_BB	バニッシュオフ
-ラベル	NO_EXIST_BB_6
-立ち位置チェック	POS_B	いない	NO_EXIST_B_6
-ポケモンアニメ	POS_B	アニメスタート
-ポケモン影バニッシュ	POS_B	バニッシュオフ
-ラベル	NO_EXIST_B_6
-立ち位置チェック	POS_D	いない	NO_EXIST_D_6
-ポケモンアニメ	POS_D	アニメスタート
-ポケモン影バニッシュ	POS_D	バニッシュオフ
-ラベル	NO_EXIST_D_6
-立ち位置チェック	POS_F	いない	NO_EXIST_F_6
-ポケモンアニメ	POS_F	アニメスタート
-ポケモン影バニッシュ	POS_F	バニッシュオフ
-ラベル	NO_EXIST_F_6
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_7
 ポケモン移動	POS_BB	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_BB_7
