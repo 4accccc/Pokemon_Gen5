@@ -35,6 +35,9 @@
  * 	}
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+#ifdef PM_DEBUG
+
 //ƒ‰ƒCƒuƒ‰ƒŠ
 #include <gflib.h>
 
@@ -869,3 +872,6 @@ static GFL_G3D_CAMERA * GRAPHIC_G3D_GetCamera( const GRAPHIC_G3D_WORK *cp_wk )
 	return cp_wk->p_camera;
 }
 #endif// GRAPHIC_G3D_USE
+
+
+#endif //PM_DEBUG

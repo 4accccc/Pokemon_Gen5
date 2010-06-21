@@ -8,6 +8,9 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+#ifdef PM_DEBUG
+
 //  lib
 #include <gflib.h>
 #include "system/main.h"  //HEAPID
@@ -1059,3 +1062,6 @@ static void POKE3D_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
 	MCSS_SetVanishFlag( wk );
 	MCSS_Del(mcss,wk);
 }
+
+
+#endif //PM_DEBUG

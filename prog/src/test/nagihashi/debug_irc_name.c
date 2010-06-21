@@ -8,6 +8,9 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+#ifdef PM_DEBUG
+
 //	lib
 #include <gflib.h>
 #include "system/main.h"	//HEAPID
@@ -1067,4 +1070,6 @@ const GFL_PROC_DATA DebugIrcName_ProcData	=
 	NULL,
 	NULL,
 };
+#endif //PM_DEBUG
+
 #endif //PM_DEBUG

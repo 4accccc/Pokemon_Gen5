@@ -8,6 +8,9 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+#ifdef PM_DEBUG
+
 //ƒ‰ƒCƒuƒ‰ƒŠ
 #include <gflib.h>
 
@@ -1970,3 +1973,5 @@ void DEBUG_UTIL_MainPltAnmLine( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 
   }
 
 }
+
+#endif //PM_DEBUG

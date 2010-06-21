@@ -8,6 +8,10 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+#ifdef PM_DEBUG
+
+
 //ƒ‰ƒCƒuƒ‰ƒŠ
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -1601,3 +1605,6 @@ static void POKEGRADATA_GetMinMax( POKEGRA_DATA *p_min, POKEGRA_DATA *p_max, POK
     POKE_PERSONAL_CloseHandle( p_ppd );
   }
 }
+
+
+#endif //PM_DEBUG
