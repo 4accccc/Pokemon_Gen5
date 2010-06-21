@@ -5060,9 +5060,12 @@ static BOOL common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( !BTL_SVFTOOL_CheckFarPoke(flowWk, atkPokeID, pokeID, waza) )
       {
+        u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
         if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
         {
-          return TRUE;
+          if( defPokeID != pokeID ){
+            return TRUE;
+          }
         }
       }
     }
