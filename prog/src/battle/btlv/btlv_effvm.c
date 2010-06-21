@@ -1824,7 +1824,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
     proj.param3 = -FX32_CONST( ORTHO_WIDTH );
     proj.param4 = FX32_CONST( ORTHO_WIDTH );
     proj.near   = FX32_ONE * 1;
-    proj.far    = FX32_ONE * 1024;
+    proj.far    = FX32_ONE * 512;
     proj.scaleW = FX32_ONE;
 
     if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
@@ -1914,7 +1914,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ALL( VMHANDLE *vmh, void *context_work )
       proj.param3 = -FX32_CONST( ORTHO_WIDTH );
       proj.param4 = FX32_CONST( ORTHO_WIDTH );
       proj.near   = FX32_ONE * 1;
-      proj.far    = FX32_ONE * 1024;
+      proj.far    = FX32_ONE * 512;
       proj.scaleW = FX32_ONE;
 
       if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
@@ -2117,7 +2117,7 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_ORTHO_COORDINATE( VMHANDLE *vmh, void *con
       proj.param3 = -FX32_CONST( ORTHO_WIDTH );
       proj.param4 = FX32_CONST( ORTHO_WIDTH );
       proj.near   = FX32_ONE * 1;
-      proj.far    = FX32_ONE * 1024;
+      proj.far    = FX32_ONE * 512;
       proj.scaleW = FX32_ONE;
 
       if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
@@ -6503,7 +6503,7 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
       proj.param3 = -FX32_CONST( ORTHO_WIDTH );
       proj.param4 = FX32_CONST( ORTHO_WIDTH );
       proj.near   = FX32_ONE * 1;
-      proj.far    = FX32_ONE * 1024;
+      proj.far    = FX32_ONE * 512;
       proj.scaleW = FX32_ONE;
 
       GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at,

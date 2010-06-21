@@ -730,7 +730,7 @@ static	void	MCSS_DrawAct(
 				   FX32_CONST( 128 ),
 				   FX32_ONE * 1,
 				   //FX32_ONE * 1024,
-				   FX32_ONE * ( ( mcss_sys->ortho_far_flag ) ? 256 : 1024 ),
+				   FX32_ONE * ( ( mcss_sys->ortho_far_flag ) ? 512 : 1024 ),
 				   FX32_ONE,
 				   NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );

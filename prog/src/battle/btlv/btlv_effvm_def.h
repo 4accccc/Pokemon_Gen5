@@ -63,7 +63,7 @@
 #define	BTLEFF_CAMERA_POS_NONE					( 0xffffffff )
 
 #define CM  ( 16 )    //カメラ移動フレーム数
-#define CB  ( 12 )    //カメラ移動ブレーキ
+#define CB  ( 0 )    //カメラ移動ブレーキ
 
 //カメラゆれ
 #define	BTLEFF_CAMERA_SHAKE_VERTICAL		( 0 )
