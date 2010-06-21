@@ -2450,27 +2450,35 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
 //------------------------------------------------------
 static BOOL checkBallTargetHide( BTL_CLIENT* wk )
 {
-  const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, BTL_CLIENT_ENEMY1 );
-  u32 frontPosNum = BTL_MAIN_GetFrontPosNum( wk->mainModule );
-  const BTL_POKEPARAM* bpp;
-  u32 i, aliveCnt, fHide;
-
-  fHide = FALSE;
-  aliveCnt = 0;
-  for(i=0; i<frontPosNum; ++i)
+  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD )
   {
-    bpp = BTL_PARTY_GetMemberDataConst( party, i );
-    if( !BPP_IsDead(bpp) )
+    const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, BTL_CLIENT_ENEMY1 );
+    u32 partyMemberCnt = BTL_PARTY_GetMemberCount( party );
+    u32 frontPosNum = BTL_MAIN_GetFrontPosNum( wk->mainModule );
+    const BTL_POKEPARAM* bpp;
+    u32 i, aliveCnt, fHide;
+
+    if( frontPosNum > partyMemberCnt ){
+      frontPosNum = partyMemberCnt;
+    }
+
+    fHide = FALSE;
+    aliveCnt = 0;
+    for(i=0; i<frontPosNum; ++i)
     {
-      ++aliveCnt;
-      if( BPP_IsWazaHide(bpp) ){
-        fHide = TRUE;
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      if( !BPP_IsDead(bpp) )
+      {
+        ++aliveCnt;
+        if( BPP_IsWazaHide(bpp) ){
+          fHide = TRUE;
+        }
       }
     }
-  }
 
-  if( (aliveCnt == 1) && (fHide) ){
-    return TRUE;
+    if( (aliveCnt == 1) && (fHide) ){
+      return TRUE;
+    }
   }
   return FALSE;
 }
