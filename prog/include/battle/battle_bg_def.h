@@ -37,10 +37,6 @@ typedef enum {
   BATTLE_BG_TYPE_RYUURASEN7,      ///< ƒŠƒ…ƒEƒ‰ƒZƒ“‚Ì“ƒ7F
    
   BATTLE_BG_TYPE_MAX,
-
-  //Œã‚ÅÁ‚·—\’è‹Ml‹–
-//  BATTLE_BG_TYPE_SNOW,
-//  BATTLE_BG_TYPE_ROCK,
 }BtlBgType;
 
 //--------------------------------------------------------------
