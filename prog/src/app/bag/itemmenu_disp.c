@@ -2268,6 +2268,7 @@ void ITEMDISP_ItemInfoWindowDispEx( FIELD_ITEMMENU_WORK* pWork, BOOL is_stream )
   pwin = &pWork->itemInfoDispWin;
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin->win), 15);
+	GFL_BMPWIN_TransVramCharacter( pwin->win );
 //  GFL_FONTSYS_SetColor(1, 2, 15);
 
   if( is_stream == TRUE )
