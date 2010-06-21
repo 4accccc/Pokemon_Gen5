@@ -122,7 +122,8 @@ typedef struct{
   u32               se_play_flag          :1;     //SEPLAYされたかフラグ
   u32               zoom_out_flag         :1;
   u32               zoom_out_flag_work    :1;     //技シーケンスで使用するZOOM_OUT_FLAG
-  u32                                     :17;
+  u32               camera_move_ignore    :1;
+  u32                                     :16;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -1127,6 +1128,12 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   wait = ( int )VMGetU32( vmh );
   //ブレーキフレーム数を読み込み
   brake = ( int )VMGetU32( vmh );
+
+  //カメラ移動無視フラグが立っていたらなにもせずに終了
+  if( bevw->camera_move_ignore )
+  { 
+    return bevw->control_mode;
+  }
 
   //カメラ位置を退避していないのに、指定されていたら、初期位置にする
   if( ( cam_move_pos == BTLEFF_CAMERA_POS_PUSH ) && ( bevw->push_camera_flag == FALSE ) )
@@ -3923,6 +3930,9 @@ static VMCMD_RESULT VMEC_SET_PARAM( VMHANDLE *vmh, void *context_work )
   case BTLEFF_WORK_WCS_CAMERA_WORK:
     bevw->wcs_camera_work = param;
     break;
+  case BTLEFF_WORK_CAMERA_MOVE_IGNORE:
+    bevw->camera_move_ignore = param;
+    break;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
@@ -6387,6 +6397,8 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
   case BTLEFF_WORK_WCS_CAMERA_WORK:
     ret = bevw->wcs_camera_work;
     break;
+  case BTLEFF_WORK_CAMERA_MOVE_IGNORE:
+    ret = bevw->camera_move_ignore;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
