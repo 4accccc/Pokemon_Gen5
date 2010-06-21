@@ -78,7 +78,7 @@ enum
   BTLV_GAUGE_POS_AA_X = 200,
   BTLV_GAUGE_POS_AA_Y = 120,
 
-  BTLV_GAUGE_POS_BB_X = 56,
+  BTLV_GAUGE_POS_BB_X = 56 + 4,
   BTLV_GAUGE_POS_BB_Y = 40,
 
   BTLV_GAUGE_POS_A_X = 192 + 8,
@@ -119,7 +119,8 @@ enum
 
   BTLV_GAUGE_BMP_SIZE_X = 8,
   BTLV_GAUGE_BMP_SIZE_Y = 2,
-  BTLV_GAUGE_BMP_POS_X = 8,
+  BTLV_GAUGE_BMP_POS_X_2 = 2,
+  BTLV_GAUGE_BMP_POS_X_8 = 8,
   BTLV_GAUGE_BMP_POS_Y = 5,
 
   BTLV_GAUGE_NAME1U_CHARSTART_M = 0x01,
@@ -146,7 +147,7 @@ enum
   BTLV_GAUGE_NOWHP_CHARSTART = 0x00,
   BTLV_GAUGE_MAXHP_CHARSTART = 0x04,
   BTLV_GAUGE_EXP_CHARSTART = 0x01,
-  BTLV_GAUGE_BALL_CHARSTART = 0x0a,
+  BTLV_GAUGE_BALL_CHARSTART = 0x09,
 
   BTLV_GAUGE_EXP_SE_TIME = 16,
 
@@ -921,12 +922,12 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* of
     { BTLV_STATUS_ENEMY_X, BTLV_STATUS_ENEMY_Y },
   };
   GFL_CLACTPOS  gauge_pos[]={
-    { BTLV_GAUGE_POS_AA_X + MOVE_VALUE,     BTLV_GAUGE_POS_AA_Y },
-    { BTLV_GAUGE_POS_BB_X - MOVE_VALUE,     BTLV_GAUGE_POS_BB_Y },
-    { BTLV_GAUGE_POS_A_X  + MOVE_VALUE,     BTLV_GAUGE_POS_A_Y },
-    { BTLV_GAUGE_POS_B_X  - MOVE_VALUE - 4, BTLV_GAUGE_POS_B_Y },
-    { BTLV_GAUGE_POS_C_X  + MOVE_VALUE,     BTLV_GAUGE_POS_C_Y },
-    { BTLV_GAUGE_POS_D_X  - MOVE_VALUE - 4, BTLV_GAUGE_POS_D_Y },
+    { BTLV_GAUGE_POS_AA_X + MOVE_VALUE, BTLV_GAUGE_POS_AA_Y },
+    { BTLV_GAUGE_POS_BB_X - MOVE_VALUE, BTLV_GAUGE_POS_BB_Y },
+    { BTLV_GAUGE_POS_A_X  + MOVE_VALUE, BTLV_GAUGE_POS_A_Y },
+    { BTLV_GAUGE_POS_B_X  - MOVE_VALUE, BTLV_GAUGE_POS_B_Y },
+    { BTLV_GAUGE_POS_C_X  + MOVE_VALUE, BTLV_GAUGE_POS_C_Y },
+    { BTLV_GAUGE_POS_D_X  - MOVE_VALUE, BTLV_GAUGE_POS_D_Y },
   };
   GFL_CLACTPOS  gauge_pos_3vs3[]={
     { BTLV_GAUGE_POS_AA_X + MOVE_VALUE, BTLV_GAUGE_POS_AA_Y },
@@ -1586,7 +1587,19 @@ static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POK
 
   GFL_FONTSYS_GetColor( &letter, &shadow, &back );
   GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
-  PRINTSYS_Print( bmp, BTLV_GAUGE_BMP_POS_X, BTLV_GAUGE_BMP_POS_Y, monsname, bgw->font );
+
+  { 
+    int dot_len = PRINTSYS_GetStrWidth( monsname, bgw->font, 0 );
+    if( dot_len > 48 )
+    { 
+      PRINTSYS_Print( bmp, BTLV_GAUGE_BMP_POS_X_2, BTLV_GAUGE_BMP_POS_Y, monsname, bgw->font );
+    }
+    else
+    { 
+      PRINTSYS_Print( bmp, BTLV_GAUGE_BMP_POS_X_8, BTLV_GAUGE_BMP_POS_Y, monsname, bgw->font );
+    }
+  }
+
   GFL_FONTSYS_SetColor( letter, shadow, back );
 
   {
