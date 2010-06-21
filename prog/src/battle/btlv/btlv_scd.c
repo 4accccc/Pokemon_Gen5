@@ -557,10 +557,15 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
   BTLV_INPUT_COMMAND_PARAM  bicp;
-  const BTL_PARTY* party;
+  const BTL_PARTY* party[2] = {NULL};
   const BTL_POKEPARAM* bpp;
   const POKEMON_PARAM* pp;
   u16 members, hp, i, j;
+  u16 party_members[2] = {0};
+  int party_idx;
+  int party_ofs;
+  u8 clientID_1, clientID_2;
+  BtlRule btl_rule;
 
   MI_CpuClear16( &bicp, sizeof( BTLV_INPUT_COMMAND_PARAM ) );
 
@@ -581,15 +586,36 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 
   BTLV_EFFECT_SetGaugeYure( bicp.pos );
 
+  btl_rule = BTL_MAIN_GetRule( wk->mainModule );
+
   for( j = 0 ; j < 2 ; j++ )
   {
+    //2client用パーティ格納ワーククリア
+    party[0] = NULL;
+    party[1] = NULL;
+    
     if( j == 0 )
     {
-      //自分の手持ち
-      party = wk->playerParty;
-      members = BTL_PARTY_GetMemberCount( party );
+      clientID_1 = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+      clientID_2 = BTL_MAIN_GetPlayerFriendCleintID( wk->mainModule );
+      if( (btl_rule == BTL_RULE_DOUBLE) && (clientID_2 != BTL_CLIENTID_NULL) )
+      {
+        // 自分と仲間の手持ち  
+        party[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
+        party_members[0] = BTL_PARTY_GetMemberCount( party[0] );
 
-      switch( BTL_MAIN_GetRule( wk->mainModule ) ){
+        party[1] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_2 );
+        party_members[1] = BTL_PARTY_GetMemberCount( party[1] );
+      }
+      else
+      {
+        //自分の手持ちのみ
+        party[0] = wk->playerParty;
+        party_members[0] = BTL_PARTY_GetMemberCount( party[0] );
+      }
+
+
+      switch( btl_rule ){
       case BTL_RULE_SINGLE:    ///< シングル
         bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
         if( BPP_IsDead( bpp ) == FALSE )
@@ -646,17 +672,45 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
       {
         break;
       }
+
+      clientID_1 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 0 ); 
+      clientID_2 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 1 );
+      
       bicp.trainer_flag = TRUE;
       //相手の手持ち
-      party = BTL_POKECON_GetPartyDataConst( wk->pokeCon,
-                                             BTL_MAIN_GetOpponentClientID( wk->mainModule,
-                                             BTL_MAIN_GetPlayerClientID( wk->mainModule ), 0 ) );
-      members = BTL_PARTY_GetMemberCount( party );
+      party[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
+      party_members[0] = BTL_PARTY_GetMemberCount( party[0] );
+
+      // タッグバトル 2人目の相手情報も取得
+      if(btl_rule == BTL_RULE_DOUBLE ){
+        if( clientID_1 != clientID_2 ){
+          party[1] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_2 );
+          party_members[1] = BTL_PARTY_GetMemberCount( party[1] );
+        }
+      }
+    }
+
+    if( party[1] == NULL ){
+      // クライアント１人
+      members = party_members[0];
+    }else{
+      //タッグ、マルチ　3以下のみ参照
+      if( party_members[0] > (TEMOTI_POKEMAX/2) ){ party_members[0] = (TEMOTI_POKEMAX/2); }
+      if( party_members[1] > (TEMOTI_POKEMAX/2) ){ party_members[1] = (TEMOTI_POKEMAX/2); }
+      members = party_members[0] + party_members[1];
     }
 
     for(i=0; i<members; ++i)
     {
-      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      if( i<party_members[0] ){
+        party_idx = 0;
+        party_ofs = i;
+      }else{
+        party_idx = 1;
+        party_ofs = i-party_members[0];
+      }
+      
+      bpp = BTL_PARTY_GetMemberDataConst( party[party_idx], party_ofs );
 
       if( BPP_IsDead( bpp ) == FALSE )
       {

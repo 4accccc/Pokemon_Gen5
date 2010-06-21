@@ -104,6 +104,9 @@ enum {
   BTLIN_STD_FADE_WAIT = 2,
 
   LVUPWIN_STEP_SE = SEQ_SE_MESSAGE,
+
+
+  BBGP_CLIENT_ID_NONE = BTL_CLIENT_NUM,
 };
 
 
@@ -307,7 +310,7 @@ static void tokwin_hide_first( TOK_WIN* tokwin );
 static BOOL tokwin_hide_progress( TOK_WIN* tokwin );
 static void tokwin_renew_start( TOK_WIN* tokwin, BtlPokePos pos );
 static BOOL tokwin_renew_progress( TOK_WIN* tokwin );
-static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, BTLV_BALL_GAUGE_TYPE type );
+static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1, u8 clientID_2, BTLV_BALL_GAUGE_TYPE type );
 static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs );
@@ -945,7 +948,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
 
-      bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
+      bbgp_make( wk, &bbgp, subwk->clientID, BBGP_CLIENT_ID_NONE, BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_NPC1, 1, subwk->clientID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
@@ -985,7 +988,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
 
-      bbgp_make( wk, &bbgp, BTL_MAIN_GetPlayerClientID(wk->mainModule), BTLV_BALL_GAUGE_TYPE_MINE );
+      bbgp_make( wk, &bbgp, BTL_MAIN_GetPlayerClientID(wk->mainModule), BBGP_CLIENT_ID_NONE, BTLV_BALL_GAUGE_TYPE_MINE );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
     }
@@ -1511,7 +1514,7 @@ static BOOL btlinEffSub_OpponentTrainerIn1( BTLV_SCU* wk, int* seq, u8 clientID 
                       BTL_STRID_STD_Encount_NPC1 : BTL_STRID_STD_Encount_Player1;
 
 
-      bbgp_make( wk, &bbgp, clientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
+      bbgp_make( wk, &bbgp, clientID, BBGP_CLIENT_ID_NONE, BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
 
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 1, clientID );
@@ -1582,15 +1585,16 @@ static BOOL btlinEffSub_OpponentTrainerIn2( BTLV_SCU* wk, int* seq, u8 clientID_
   case 2:   // 敵ボールゲージ出現＆「○○が勝負をしかけてきた！」表示
     if( !BTLV_EFFECT_CheckExecute() )
     {
-//      BTLV_BALL_GAUGE_PARAM bbgp;
+      BTLV_BALL_GAUGE_PARAM bbgp;
 
       u16 strID = (BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_COMM)?
                       BTL_STRID_STD_Encount_NPC2 : BTL_STRID_STD_Encount_Player2;
 
-        OS_TPrintf("Competitor=%d\n", BTL_MAIN_GetCompetitor(wk->mainModule));
+      OS_TPrintf("Competitor=%d\n", BTL_MAIN_GetCompetitor(wk->mainModule));
 
-//      bbgp_make( wk, &bbgp, clientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
-//      BTLV_EFFECT_SetBallGauge( &bbgp );
+      //BTS:5245
+      bbgp_make( wk, &bbgp, clientID_1, clientID_2, BTLV_BALL_GAUGE_TYPE_ENEMY );
+      BTLV_EFFECT_SetBallGauge( &bbgp );
 
 //      u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID_2 );
 //      BTLV_EFFECT_SetTrainer( trType, subwk->vpos_2, 0, 0, 0 );
@@ -1885,6 +1889,8 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
       BTLV_EFFECT_AddByPos( subwk->vpos[0], BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
 
+      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
+
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
@@ -2017,7 +2023,7 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
       BTLV_BALL_GAUGE_PARAM bbgp;
 
       subwk->clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-      bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_MINE );
+      bbgp_make( wk, &bbgp, subwk->clientID, BBGP_CLIENT_ID_NONE, BTLV_BALL_GAUGE_TYPE_MINE );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
     }
@@ -2119,7 +2125,7 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
       BTLV_BALL_GAUGE_PARAM bbgp;
 
       subwk->clientID = clientID;
-      bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_MINE );
+      bbgp_make( wk, &bbgp, subwk->clientID, BBGP_CLIENT_ID_NONE, BTLV_BALL_GAUGE_TYPE_MINE );
 
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
@@ -2222,7 +2228,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
 
-      bbgp_make( wk, &bbgp, clientID_1, BTLV_BALL_GAUGE_TYPE_MINE );
+      bbgp_make( wk, &bbgp, clientID_1, clientID_2, BTLV_BALL_GAUGE_TYPE_MINE );
 
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
@@ -2333,7 +2339,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
       BTLV_BALL_GAUGE_PARAM bbgp;
       subwk->clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
       BTL_Printf("自ポケ登場トリプル：ClientID=%d\n", subwk->clientID);
-      bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_MINE );
+      bbgp_make( wk, &bbgp, subwk->clientID, BBGP_CLIENT_ID_NONE, BTLV_BALL_GAUGE_TYPE_MINE );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
     }
@@ -4118,20 +4124,43 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
  *
  */
 //=============================================================================================
-static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, BTLV_BALL_GAUGE_TYPE type )
+static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1, u8 clientID_2, BTLV_BALL_GAUGE_TYPE type )
 {
   int i;
-  const BTL_PARTY*      bparty = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
+  const BTL_PARTY*      bparty[2]={NULL,};
   const BTL_POKEPARAM*  bpp;
-  int count = BTL_PARTY_GetMemberCount( bparty );
+  int count[2]={0};
+  s8 party_idx;
+  s8 party_ofs;
+
+  // BTS:5245
+  // タッグ、マルチ　２人分のボールゲージが表示されるよう修正
+  bparty[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
+  count[0]  = BTL_PARTY_GetMemberCount( bparty[0] );
+  if( clientID_2 < BTL_CLIENT_NUM ){
+    bparty[1] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_2 );
+    count[1]  = BTL_PARTY_GetMemberCount( bparty[1] );
+
+    //タッグ、マルチ　3以下のみ参照
+    if( count[0] > (TEMOTI_POKEMAX/2) ){ count[0] = (TEMOTI_POKEMAX/2); }
+    if( count[1] > (TEMOTI_POKEMAX/2) ){ count[1] = (TEMOTI_POKEMAX/2); }
+  }
 
   bbgp->type = type;
 
   for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
   {
-    if( i < count )
+    if( i < (count[0] + count[1]) )
     {
-      bpp = BTL_PARTY_GetMemberDataConst( bparty, i );
+      if( i<count[0] ){
+        party_idx = 0;
+        party_ofs = i;
+      }else{
+        party_idx = 1;
+        party_ofs = i-count[0];
+      }
+      
+      bpp = BTL_PARTY_GetMemberDataConst( bparty[party_idx], party_ofs );
       if( BPP_IsDead( bpp ) )
       {
         bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_DEAD;
