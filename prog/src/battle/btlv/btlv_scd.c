@@ -785,6 +785,7 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
         BTL_ACTION_SetEscapeParam( wk->destActionParam );
         BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
         BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
+        BTLV_EFFECT_SetCameraWorkStop();
         (*seq)++;
       }
       else{
@@ -1443,6 +1444,7 @@ void BTLV_SCD_SelectRotate_ForceQuit( BTLV_SCD* wk )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
   BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
+  BTLV_EFFECT_SetCameraWorkStop();
 }
 
 //=============================================================================================
@@ -1522,6 +1524,7 @@ BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk )
   case 1:
     BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
     BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
+    BTLV_EFFECT_SetCameraWorkStop();
     wk->forceQuitSeq++;
     break;
   case 2:
