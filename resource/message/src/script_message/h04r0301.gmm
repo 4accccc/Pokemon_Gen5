@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T18:47:50"/>
+	<create user="matsumiya" host="W00224" date="2010-06-21T19:12:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1323" top="162" right="2028" bottom="790" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -466,7 +466,7 @@
 		<language name="JPN" width="256">ほんじつ　つりたい　ポケモンは
 [1:01:ポケモン種族名:0]　だ！▽
 たのむぜ！　メンバー　だい２ごう！</language>
-		<language name="JPN_KANJI" width="256">ほんじつ　釣りたい　ポケモンは
+		<language name="JPN_KANJI" width="256">本日　釣りたい　ポケモンは
 [1:01:ポケモン種族名:0]　だ！▽
 たのむぜ！　メンバー　第２号！</language>
 	</row>
