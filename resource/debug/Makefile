@@ -3,15 +3,9 @@ include $(PROJECT_RSCDIR)\macro_define
 
 SUBDIRS	=	rail_editor watanabe obata nagihashi hitch_check
 
-TARGET_NAMES = \
-	mmodel.naix \
-	mmodel.narc \
-	
 TARGET_DIR = $(PROJECT_ARCDIR)debug
 
-TARGETS = $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
-
-.PHONY:	do-build clean install
+.PHONY:	do-build clean
 
 $(TARGET_DIR)/%.narc:	%.narc
 	$(COPY) $^ $@
@@ -19,13 +13,8 @@ $(TARGET_DIR)/%.narc:	%.narc
 $(TARGET_DIR)/%.naix:	%.naix
 	$(COPY) $^ $@
 
-do-build: install
-
+do-build:
 	@$(MAKE_SUBDIR)
-
-install: $(TARGETS)
 
 clean:
 	@$(MAKE_SUBDIR)
-
-	-rm -f $(TARGETS)
