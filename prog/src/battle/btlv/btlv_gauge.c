@@ -814,7 +814,8 @@ static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvM
   PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
   PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
   PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
-  if( bgw->bgcl[ pos ].gauge_dir )
+  //ボールアイコンは野生戦のみ
+  if( ( bgw->bgcl[ pos ].gauge_dir ) && ( BTLV_EFFECT_GetBtlCompetitor() == BTL_COMPETITOR_WILD ) )
   { 
     PutBallOBJ( bgw, &bgw->bgcl[ pos ] );
   }

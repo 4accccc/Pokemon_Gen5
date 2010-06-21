@@ -257,7 +257,8 @@ typedef enum{
   BTLV_EFFECT_ROTATE_DIR_RIGHT,
 }BTLV_EFFECT_ROTATE_DIR;
 
-extern  BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi,
+extern  BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, BtlCompetitor competitor,
+                                                              const BTL_FIELD_SITUATION* bfs, BOOL multi,
                                                               u16* tr_type, const BTL_MAIN_MODULE* mainModule,
                                                               const BTLV_SCU* scu, HEAPID heapID );
 
@@ -332,6 +333,7 @@ extern  BTLV_CLACT_WORK*  BTLV_EFFECT_GetCLWK( void );
 extern  BTLV_BG_WORK*     BTLV_EFFECT_GetBGWork( void );
 extern  BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void );
 extern  BtlRule           BTLV_EFFECT_GetBtlRule( void );
+extern  BtlCompetitor     BTLV_EFFECT_GetBtlCompetitor( void );
 extern  BOOL              BTLV_EFFECT_GetMulti( void );
 extern  int               BTLV_EFFECT_GetTrType( int pos );
 extern  const BTL_MAIN_MODULE* BTLV_EFFECT_GetMainModule( void );

@@ -80,6 +80,7 @@ volatile  fx32  camera_focus_target_y = 0x00002000; //BTLV_EFFECT_FOCUS_OFFSET_Z
 struct _BTLV_EFFECT_SETUP_PARAM
 {
   BtlRule                 rule;
+  BtlCompetitor           competitor;
   BTL_FIELD_SITUATION     bfs;
   u16                     tr_type[ 4 ];
   BOOL                    multi;
@@ -192,12 +193,13 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  * @param[in] heapID      ヒープID
  */
 //============================================================================================
-BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, const BTL_MAIN_MODULE* mainModule, const BTLV_SCU* scu, HEAPID heapID )
+BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, BtlCompetitor competitor, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, const BTL_MAIN_MODULE* mainModule, const BTLV_SCU* scu, HEAPID heapID )
 {
   BTLV_EFFECT_SETUP_PARAM* besp = GFL_HEAP_AllocMemory( heapID, sizeof( BTLV_EFFECT_SETUP_PARAM ) );
   int i;
 
   besp->rule        = rule;
+  besp->competitor  = competitor;
   besp->bfs         = *bfs;
   besp->multi       = multi;
   besp->scu         = scu;
@@ -252,8 +254,9 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
     tr_type[ 3 ] = 0;
   }
 
-  return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetFieldSituation( mainModule ),
-                                     BTL_MAIN_IsMultiMode( mainModule ), tr_type, mainModule, viewSCU, heapID );
+  return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetCompetitor( mainModule ),
+                                     BTL_MAIN_GetFieldSituation( mainModule ), BTL_MAIN_IsMultiMode( mainModule ),
+                                     tr_type, mainModule, viewSCU, heapID );
 }
 
 //============================================================================================
@@ -1660,6 +1663,18 @@ BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void )
 BtlRule BTLV_EFFECT_GetBtlRule( void )
 {
   return bew->besp.rule;
+}
+
+//============================================================================================
+/**
+ * @brief  バトルコンペチターを取得
+ *
+ * @retval BtlCompetitor
+ */
+//============================================================================================
+BtlCompetitor BTLV_EFFECT_GetBtlCompetitor( void )
+{
+  return bew->besp.competitor;
 }
 
 //============================================================================================
