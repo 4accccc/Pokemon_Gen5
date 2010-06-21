@@ -8,14 +8,14 @@
 //======================================================================
 #pragma once
 
-#include "gamesystem/game_data.h"
+#include "gamesystem/gamesystem.h"
 #include "gamesystem/game_comm.h"
 
 typedef struct _MUS_COMM_WORK MUS_COMM_WORK;
 
 //ワークの作成・削除
 //ここでワークはもらえないので、初期化確認の後、もらうこと！
-extern void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc );
+extern void MUS_COMM_InitField( HEAPID heapId , GAMESYS_WORK *gameSys , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc );
 extern void MUS_COMM_ExitField( MUS_COMM_WORK *work );
 
 extern void* MUS_COMM_InitGameComm(int *seq, void *pwk);

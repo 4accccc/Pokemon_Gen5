@@ -96,7 +96,7 @@ typedef struct
 //======================================================================
 static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData );
 static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gameData );
-static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc );
+static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMESYS_WORK *gsys , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc );
 static void EvCmdMusical_ExitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork );
 
 static GMEVENT_RESULT event_Musical( GMEVENT *event, int *seq, void *work );
@@ -880,7 +880,7 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   case MUSICAL_TOOL_COMM_INIT: //通信開始
     {
       GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
-      EvCmdMusical_InitCommon_Comm( musScriptWork , gdata , gameComm , val1 );
+      EvCmdMusical_InitCommon_Comm( musScriptWork , gsys , gameComm , val1 );
     }
     break;
 
@@ -1054,10 +1054,10 @@ static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDA
   GAMEDATA_SetMusicalScrWork( gameData , NULL );
 }
 
-static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc )
+static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMESYS_WORK *gsys , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc )
 {
   //ここではワークを取れないので、初期化確認でワークをもらう！
-  MUS_COMM_InitField( HEAPID_PROC , gdata , gameComm , isIrc );
+  MUS_COMM_InitField( HEAPID_PROC , gsys , gameComm , isIrc );
 }
 static void EvCmdMusical_ExitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork )
 {

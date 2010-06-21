@@ -167,6 +167,7 @@ struct _MUS_COMM_WORK
   MUS_COMM_STATE commState; //もっと細かい分岐
 
   GAME_COMM_SYS_PTR gameComm;
+  GAMESYS_WORK *gameSys;
   GAMEDATA *gameData;
   MYSTATUS *myStatus;
   
@@ -326,11 +327,12 @@ static GFLNetInitializeStruct aGFLNetInitMusical =
 };  
 
 #pragma mark [>script func
-void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc )
+void MUS_COMM_InitField( HEAPID heapId , GAMESYS_WORK *gameSys , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc )
 {
   MUS_COMM_WORK* work = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof( MUS_COMM_WORK ));
   work->isInitIrc = isIrc;
-  work->gameData = gameData;
+  work->gameSys = gameSys;
+  work->gameData = GAMESYSTEM_GetGameData(gameSys);
   work->gameComm = gameComm;
   work->isErr = FALSE;
   work->isInitMusical = FALSE;
@@ -413,6 +415,12 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
     {
       *seq = 2;
     }
+    if( GFL_NET_GetConnectNum() <= 1 || 
+        NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+    {
+      //エラーへ
+      *seq = 10;
+    }
     break;
   case 2:
     if( work->isInitMusical == FALSE )
@@ -437,6 +445,20 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
         return TRUE;
       }
     }
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+    {
+      //エラーへ
+      *seq = 10;
+    }
+    break;
+  
+  case 10:
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+    {
+      GAMESYSTEM_SetFieldCommErrorReq( work->gameSys , TRUE );
+    }
+    GFL_NET_Exit( NULL );
+    return TRUE;
     break;
   }
   return FALSE;
