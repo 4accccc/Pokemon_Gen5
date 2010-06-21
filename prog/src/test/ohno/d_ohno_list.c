@@ -640,7 +640,7 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 
   pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
-  pWork->pMyPoke = PP_Create(MONSNO_001, 100, 123456, GFL_HEAPID_APP);
+  pWork->pMyPoke = PP_Create(MONSNO_162, 100, 123456, GFL_HEAPID_APP);
   pWork->pNPCPoke = PP_Create(MONSNO_310, 100, 123456, GFL_HEAPID_APP);
 
 
@@ -668,7 +668,7 @@ static void * _PokeTradeDemo2WorkCreate(D_OHNO_WORK *wk)
 
   pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
-  pWork->pMyPoke = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
+  pWork->pMyPoke = PP_Create(MONSNO_162, 100, 123456, GFL_HEAPID_APP);
   pWork->pNPCPoke = PP_Create(MONSNO_510, 100, 123456, GFL_HEAPID_APP);
 
 

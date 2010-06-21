@@ -4205,8 +4205,8 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   }
 
 #if DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_ibe_mana
-//  DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );  
-//  DEBUG_PAUSE_SetEnable( TRUE );
+  DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );  
+  DEBUG_PAUSE_SetEnable( TRUE );
 #endif
 
   IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
