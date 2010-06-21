@@ -14803,7 +14803,11 @@ static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
     u8  failed = scEvent_CheckItemSet( wk, target, selfItem );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
-    if( failed ){
+    if( failed )
+    {
+      hem_state = BTL_Hem_PushState( &wk->HEManager );
+      scEvent_ItemSetFailed( wk, target );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
       return 0;
     }
   }
