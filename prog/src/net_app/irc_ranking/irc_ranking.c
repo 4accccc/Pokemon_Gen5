@@ -143,7 +143,7 @@ enum
 
 #define SCROLL_BAR_FONT_RANK_X		(3)
 #define SCROLL_BAR_FONT_PLAYER_X	(6)
-#define SCROLL_BAR_FONT_SCORE_X		(16)
+#define SCROLL_BAR_FONT_SCORE_X		(15)
 #define SCROLL_BAR_FONT_COUNT_X		(22)
 
 //余白
@@ -2402,22 +2402,35 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
     GFL_MSG_GetString( p_msg, RANKING_RANK_000, p_rank_buf );
     GFL_MSG_GetString( p_msg, RANKING_SCORE_000, p_score_buf );
     GFL_MSG_GetString( p_msg, RANKING_COUNT_000, p_count_buf );
-    WORDSET_RegisterNumber( p_wordset, 0, cp_data->rank, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
-    WORDSET_RegisterNumber( p_wordset, 2, cp_data->score, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
-    WORDSET_RegisterNumber( p_wordset, 3, cp_data->play_cnt, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( p_wordset, 0, cp_data->rank, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( p_wordset, 2, cp_data->score, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( p_wordset, 3, cp_data->play_cnt, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 
     //文字描画
     //ランク
     WORDSET_ExpandStr( p_wordset, p_strbuf, p_rank_buf );
-    PRINTSYS_Print( p_wk->p_bmp, SCROLL_BAR_FONT_RANK_X*GFL_BG_1CHRDOTSIZ+3, SCROLL_FONT_Y_OFS, p_strbuf, p_font );
+    {
+      //わる２をしているのは、半角の文字サイズを認識できていないので
+      const int w = PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 )/2;
+      NAGI_Printf( "rank w=%d\n", w );
+      PRINTSYS_Print( p_wk->p_bmp, (SCROLL_BAR_FONT_RANK_X+2)*GFL_BG_1CHRDOTSIZ-2- w, SCROLL_FONT_Y_OFS, p_strbuf, p_font );
+    }
     //名前
     PRINTSYS_Print( p_wk->p_bmp, SCROLL_BAR_FONT_PLAYER_X*GFL_BG_1CHRDOTSIZ+4, SCROLL_FONT_Y_OFS, cp_data->p_name, p_font );
     //点数
     WORDSET_ExpandStr( p_wordset, p_strbuf, p_score_buf );
-    PRINTSYS_Print( p_wk->p_bmp, SCROLL_BAR_FONT_SCORE_X*GFL_BG_1CHRDOTSIZ-3, SCROLL_FONT_Y_OFS, p_strbuf, p_font );
+    {
+      const int w = PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 )/2;
+      NAGI_Printf( "score w=%d\n", w );
+      PRINTSYS_Print( p_wk->p_bmp, (SCROLL_BAR_FONT_SCORE_X+3)*GFL_BG_1CHRDOTSIZ-2- w, SCROLL_FONT_Y_OFS, p_strbuf, p_font );
+    }
     //回数
     WORDSET_ExpandStr( p_wordset, p_strbuf, p_count_buf );
-    PRINTSYS_Print( p_wk->p_bmp, SCROLL_BAR_FONT_COUNT_X*GFL_BG_1CHRDOTSIZ+4, SCROLL_FONT_Y_OFS, p_strbuf, p_font );
+    {
+      const int w = PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 )/2;
+      NAGI_Printf( "count w=%d\n", w );
+      PRINTSYS_Print( p_wk->p_bmp, (SCROLL_BAR_FONT_COUNT_X+3)*GFL_BG_1CHRDOTSIZ-6-w, SCROLL_FONT_Y_OFS, p_strbuf, p_font );
+    }
 
     GFL_STR_DeleteBuffer( p_strbuf );
     GFL_STR_DeleteBuffer( p_count_buf );
