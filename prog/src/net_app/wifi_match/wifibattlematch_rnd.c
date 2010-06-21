@@ -1230,7 +1230,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   //=====================================
   {
     BOOL is_cancel_enable = (SEQ_WAIT_MATCHING <= *p_seq && *p_seq < SEQ_START_CANCEL_TIMING);
-    BOOL can_disconnect = !(*p_seq <= SEQ_START_BADWORD && *p_seq <= SEQ_WAIT_BADWORD );
+    BOOL can_disconnect = !( SEQ_START_BADWORD <= *p_seq && *p_seq <= SEQ_WAIT_BADWORD );
     cancel_state  = Util_Cancel_Seq( p_wk, is_cancel_enable, can_disconnect );
 
     //自分が切断
@@ -2385,7 +2385,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   //=====================================
   {
     BOOL is_cancel_enable = (SEQ_WAIT_MATCHING <= *p_seq && *p_seq < SEQ_START_CANCEL_TIMING);
-    BOOL can_disconnect = !(*p_seq <= SEQ_START_BADWORD && *p_seq <= SEQ_WAIT_BADWORD );
+    BOOL can_disconnect = !( SEQ_START_BADWORD <= *p_seq  && *p_seq <= SEQ_WAIT_BADWORD );
     cancel_state  = Util_Cancel_Seq( p_wk, is_cancel_enable, can_disconnect );
 
     //キャンセルリクエスト
