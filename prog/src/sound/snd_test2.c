@@ -1,3 +1,5 @@
+#ifdef PM_DEBUG
+
 //============================================================================================
 /**
  * @file  soundTest.c
@@ -1385,3 +1387,4 @@ static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize )
 
 
 
+#endif //PM_DEBUG

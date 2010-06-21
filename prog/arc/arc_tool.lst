@@ -92,7 +92,7 @@
   ARCID_MONOLITH  "monolith.narc"     #モノリスグラフィック
   ARCID_TRAINERCARD "trainer_case.narc"   #トレーナーカード
   ARCID_TRC_UNION   "trc_union.narc"    #ユニオンルーム トレーナーカード キャラ絵
-  ARCID_SOUNDTEST   "soundtest.narc"    #サウンドテスト画像（デバッグ）
+  $DEBUG_YES ARCID_SOUNDTEST   "soundtest.narc"    #サウンドテスト画像（デバッグ）
   ARCID_PMS_AIKOTOBA_DATA "pms_aikotoba.narc" #簡易文・壁紙取得合言葉
   ARCID_PMSI_GRAPHIC  "pmsi.narc"   #簡易文入力画面素材
   ARCID_COMPATI_CHECK "compati_check.narc"  #相性チェック
@@ -127,8 +127,8 @@
   ARCID_FIELD_MENU    "field_menu.narc" #フィールドメニュー
   ARCID_TRFGRA  "trgra/trfgra.narc" #トレーナーグラフィック（正面）
   ARCID_TRBGRA  "trgra/trbgra.narc" #トレーナーグラフィック（背面）
-  ARCID_TALKWIN_TEST "talkwin_test.narc" #会話ウインドウ（テスト）
-  ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
+  $DEBUG_YES ARCID_TALKWIN_TEST "talkwin_test.narc" #会話ウインドウ（テスト）
+  $DEBUG_YES ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
   ARCID_FLDEFF "fieldmap/fldeff.narc" #フィールドエフェクト
   ARCID_POKELIST "pokelist_gra.narc" #ポケモンリスト
   ARCID_IRCRANKING_GRAPHIC  "ircranking_gra.narc" #赤外線相性チェックランキング画面
