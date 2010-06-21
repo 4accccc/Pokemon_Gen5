@@ -634,7 +634,7 @@ static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
 static G3D_MDL_WORK *GRAPHIC_3D_GetObj( const GRAPHIC_3D_WORK *cp_wk, u16 idx );
 static void Graphic_3d_SetUp( void );
 //3d_mdl
-static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_SETUP *cp_setup, HEAPID heapID );
+static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_SETUP *cp_setup, u32 polygonID, HEAPID heapID );
 static void G3DMDL_UnLoad( G3D_MDL_WORK *p_wk );
 static void G3DMDL_Draw( G3D_MDL_WORK *p_wk );
 static BOOL G3DMDL_IsLoopEnd( const G3D_MDL_WORK *cp_wk );
@@ -1680,8 +1680,8 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
     };
     ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 
-    G3DMDL_Load( &p_wk->mdl[0], p_handle, &sc_aura_setup, heapID );
-    G3DMDL_Load( &p_wk->mdl[1], p_handle, &sc_aura_setup, heapID );
+    G3DMDL_Load( &p_wk->mdl[0], p_handle, &sc_aura_setup, 1, heapID );
+    G3DMDL_Load( &p_wk->mdl[1], p_handle, &sc_aura_setup, 2, heapID );
 
     GFL_ARC_CloseDataHandle( p_handle );
   }
@@ -1805,6 +1805,7 @@ static void Graphic_3d_SetUp( void )
   //レンダリングスワップバッファ
   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
 }
+
 //=============================================================================
 /**
  *        3DMDL
@@ -1820,7 +1821,7 @@ static void Graphic_3d_SetUp( void )
  *  @param  heapID              ヒープID
  */
 //-----------------------------------------------------------------------------
-static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_SETUP *cp_setup, HEAPID heapID )
+static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_SETUP *cp_setup, u32 polygonID, HEAPID heapID )
 {
   //ワーククリア
   GFL_STD_MemClear(p_wk, sizeof(G3D_MDL_WORK));
@@ -1844,9 +1845,11 @@ static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_
     if( GFL_G3D_CheckResourceType( p_wk->p_res, GFL_G3D_RES_CHKTYPE_MDL ) )
     {
       int i;
+      NNSG3dRenderObj*  p_rndobj;
 
       p_mdl = p_wk->p_res;
       p_wk->p_rnd = GFL_G3D_RENDER_Create( p_mdl, 0, p_tex );
+      p_rndobj  = GFL_G3D_RENDER_GetRenderObj( p_wk->p_rnd );
 
       // アニメーション作成
       for( i = 0; i < G3D_MDL_ANM_MAX; i++ )
@@ -1864,13 +1867,13 @@ static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_
       {
         GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj, i );
       }
+
+      NNS_G3dMdlSetMdlPolygonIDAll( p_rndobj->resMdl, polygonID);
     }
 
-    //アルファを保存しておく
-    //p_wk->alpha = NNS_G3dMdlGetMdlAlpha( G3D_OBJECT_GetMdl( p_wk->p_obj ), 0 );
   }
 
-  //座標
+  //SRTの初期化
   {
     MTX_Identity33( &p_wk->status.rotate );
     VEC_Set( &p_wk->status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
@@ -3624,7 +3627,8 @@ static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, u32 x, 
 {
   enum
   {
-    AURA_DISTANCE_OFS = 64,
+    AURA_DISTANCE_OFS_L = 64,
+    AURA_DISTANCE_OFS_R = 64,
   };
 
 //  TOUCH_EFFECT_WORK *p_wk = &p_sys->wk[id];
@@ -3639,7 +3643,7 @@ static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, u32 x, 
     NNS_G3dScrPosToWorldLine( x, y, &near, &far );
     VEC_Subtract( &far, &near, &v );
     VEC_Normalize( &v, &v );
-    VEC_MultAdd( FX32_CONST(AURA_DISTANCE_OFS), &v, &near, &near );
+    VEC_MultAdd( FX32_CONST(AURA_DISTANCE_OFS_L), &v, &near, &near );
     G3DMDL_SetPos( p_sys->p_mdl[id], &near );
 
 #if 0
@@ -3662,7 +3666,7 @@ static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_sys, TOUCHEFFID id, u32 x, 
       NNS_G3dScrPosToWorldLine( pos.x, pos.y, &near, &far );
       VEC_Subtract( &far, &near, &v );
       VEC_Normalize( &v, &v );
-      VEC_MultAdd( FX32_CONST(AURA_DISTANCE_OFS), &v, &near, &near );
+      VEC_MultAdd( FX32_CONST(AURA_DISTANCE_OFS_R), &v, &near, &near );
       G3DMDL_SetPos( p_sys->p_mdl[id], &near );
 
 #if 0
