@@ -3012,6 +3012,12 @@ static int EndMessageWait( OEKAKI_WORK *wk )
     wk->printStream = NULL;
     return 1;
   }
+
+  // 強制的にprintStreamを消されたようであればシーケンスを次に進めるために１に
+  if(wk->printStream==NULL){
+    return 1;
+  }
+  
   return 0;
 }
 
