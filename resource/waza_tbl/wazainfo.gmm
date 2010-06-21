@@ -1272,10 +1272,10 @@
 	</row>
 
 	<row id="WAZAINFO_098">
-		<language name="JPN" width="216">めにも　とまらない　ものすごい　はやさで
+		<language name="JPN" width="216">めにも　とまらぬ　ものすごい　はやさで
 あいてに　つっこむ。
 かならず　せんせい　こうげき　できる。</language>
-		<language name="JPN_KANJI" width="216">目にも　止まらない　ものすごい　速さで
+		<language name="JPN_KANJI" width="216">目にも　留まらぬ　ものすごい　速さで
 相手に　つっこむ。
 必ず　先制攻撃　できる。</language>
 	</row>
@@ -2037,10 +2037,10 @@
 	</row>
 
 	<row id="WAZAINFO_183">
-		<language name="JPN" width="216">めにも　とまらない　ものすごい　はやさで
+		<language name="JPN" width="216">めにも　とまらぬ　ものすごい　はやさで
 パンチを　くりだす。
 かならず　せんせい　こうげき　できる。</language>
-		<language name="JPN_KANJI" width="216">目にも　止まらない　ものすごい　速さで
+		<language name="JPN_KANJI" width="216">目にも　留まらぬ　ものすごい　速さで
 パンチを　くりだす。
 必ず　先制攻撃　できる。</language>
 	</row>
@@ -2595,10 +2595,10 @@
 	</row>
 
 	<row id="WAZAINFO_245">
-		<language name="JPN" width="216">めにも　とまらない　はやさで
-あいてに　とっしんする。
+		<language name="JPN" width="216">めにも　とまらぬ　ものすごい　はやさで
+あいてに　とっしんして　こうげきする。
 かならず　せんせい　こうげき　できる。</language>
-		<language name="JPN_KANJI" width="216">目にも　止まらない　速さで
+		<language name="JPN_KANJI" width="216">目にも　留まらぬ　ものすごい　速さで
 相手に　突進して　攻撃する。
 必ず　先制攻撃　できる。</language>
 	</row>
@@ -2651,10 +2651,10 @@
 	<row id="WAZAINFO_251">
 		<language name="JPN" width="216">みかた　ぜんいんで　こうげきする。
 なかまの　ポケモンが　おおいほど
-わざの　いりょくは　あがる。</language>
+わざの　こうげきかいすうが　あがる。</language>
 		<language name="JPN_KANJI" width="216">味方　全員で　攻撃する。
 仲間の　ポケモンが　多いほど
-技の　威力は　あがる。</language>
+技の　攻撃回数が　あがる。</language>
 	</row>
 
 	<row id="WAZAINFO_252">
@@ -4128,7 +4128,7 @@
 		<language name="JPN" width="216">めにも　とまらぬ　はやさで
 じぶんと　あいての　
 もちものを　こうかんする。</language>
-		<language name="JPN_KANJI" width="216">めにも　とまらぬ　速さで
+		<language name="JPN_KANJI" width="216">目にも　留まらぬ　速さで
 自分と　相手の　
 持ち物を　交換する。</language>
 	</row>
@@ -4467,10 +4467,10 @@
 	</row>
 
 	<row id="WAZAINFO_453">
-		<language name="JPN" width="216">めにも　とまらない　ものすごい　はやさで
+		<language name="JPN" width="216">めにも　とまらぬ　ものすごい　はやさで
 あいてに　つっこむ。
 かならず　せんせい　こうげき　できる。</language>
-		<language name="JPN_KANJI" width="216">目にも　止まらない　ものすごい　速さで
+		<language name="JPN_KANJI" width="216">目にも　留まらぬ　ものすごい　速さで
 相手に　つっこむ。
 必ず　先制攻撃　できる。</language>
 	</row>
@@ -4845,12 +4845,12 @@
 	</row>
 
 	<row id="WAZAINFO_495">
-		<language name="JPN" width="216">じぶんの　こうどうの　じゅんばんを
-ほかの　ポケモンに　ゆずる。ゆずりうけた
-ポケモンは　すぐに　うごける。</language>
+		<language name="JPN" width="216">あいての　こうどうを　サポートして
+じぶんの　こうどうの　あとに
+つづけて　うごけるように　する。</language>
 		<language name="JPN_KANJI" width="216">相手の　行動を　サポートして
-自分の　行動の　あとに　続けて　
-動けるように　する。</language>
+自分の　行動の　あとに
+続けて　動けるように　する。</language>
 	</row>
 
 	<row id="WAZAINFO_496">
