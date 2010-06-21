@@ -595,6 +595,7 @@ struct _BTLV_INPUT_WORK
 
   u8                    decide_pos[ BTLV_INPUT_POKEMON_MAX ][ BTLV_INPUT_SCRTYPE_MAX ];   //Aボタンで決定したボタン位置を記憶
   u8                    button_exist[ BTLV_INPUT_BUTTON_MAX ];  //押せるボタンかどうかチェック
+  u8                    waza_exist[ PTL_WAZA_MAX ];             //技Infoに移行できるボタンかどうかチェック
   WazaID                decide_waza[ BTLV_INPUT_POKEMON_MAX ];
   WazaID                waza[ PTL_WAZA_MAX ];
 
@@ -1784,7 +1785,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     int cont = GFL_UI_KEY_GetCont();
-    if( biw->button_exist[ hit ] == FALSE )
+    if( ( biw->button_exist[ hit ] == FALSE ) && ( ( cont & PAD_BUTTON_L ) == 0 ) )
     {
       hit = GFL_UI_TP_HIT_NONE;
     }
@@ -1792,6 +1793,13 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
              ( cont & PAD_BUTTON_L ) &&
              ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) &&
              ( biw->henshin_flag == TRUE ) )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+    else if( ( hit < 4 ) &&
+             ( cont & PAD_BUTTON_L ) &&
+             ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) &&
+             ( biw->waza_exist[ hit ] == FALSE ) )
     { 
       hit = GFL_UI_TP_HIT_NONE;
     }
@@ -1961,13 +1969,19 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     int cont = GFL_UI_KEY_GetCont();
-    if( biw->button_exist[ hit ] == FALSE )
+    if( ( biw->button_exist[ hit ] == FALSE ) && ( ( cont & PAD_BUTTON_L ) == 0 ) )
     { 
       hit = GFL_UI_TP_HIT_NONE;
     }
     else if( ( hit < 4 ) &&
              ( cont & PAD_BUTTON_L ) &&
            ( ( BPP_HENSIN_Check( biw->rotate_bpp[ biw->rotate_scr ] ) == TRUE ) || ( biw->waruagaki_flag == TRUE ) ) )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+    else if( ( hit < 4 ) &&
+             ( cont & PAD_BUTTON_L ) &&
+             ( biw->waza_exist[ hit ] == FALSE ) )
     { 
       hit = GFL_UI_TP_HIT_NONE;
     }
@@ -3556,6 +3570,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
         GFL_FONTSYS_SetColor( letter, shadow, back );
       }
       biw->button_exist[ i ] = ( biwp->pp[ i ] != 0 );  //押せるボタンかどうかチェック
+      biw->waza_exist[ i ] = ( biwp->wazano[ i ] != 0 );
     }
     else
     {
