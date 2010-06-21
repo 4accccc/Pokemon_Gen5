@@ -5,5 +5,6 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 %00
 カメラ移動	追従	攻撃側	16	0	8
 エフェクト終了待ち	すべて
+指定されたワークに値をセット	CAMERA_MOVE_IGNORE	1
 エフェクト終了
 &

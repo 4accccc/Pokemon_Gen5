@@ -4,6 +4,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_006.spa
 #001
 %00
 制御モード変更	継続
+指定されたワークに値をセット	CAMERA_MOVE_IGNORE	0
 カメラ移動	追従	初期位置	16	0	0
 ポケモン拡縮	すべて	追従	1	1	16	0	0
 エフェクト終了待ち	すべて
