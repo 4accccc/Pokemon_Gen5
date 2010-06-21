@@ -347,12 +347,12 @@ static const BOX_CLWK_DATA ClaTypeIconParam = {
 	0, CLSYS_DRAW_SUB,
 };
 
-
-// トレイアイコンに描画するポケモンドットのカラー
-// 追加壁紙と共用です
-static const u8 TrayPokeDotColorPos[] = {
-//  赤    青    黄    緑    黒    茶    紫    灰    白    桃
-	0x1e, 0x2a, 0x2b, 0x29, 0x2c, 0x2d, 0x2e, 0x11, 0x20, 0x2f,
+// トレイアイコンに描画する壁紙のカラー
+static const u8 TrayWallPaperColor[] = {
+	0x1b, 0x17, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21,
+	0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x10, 0x28,
+	// 追加壁紙	
+	0x18, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f,
 };
 
 static const s8	PokeCursorXTbl[] = { 1, -1, 0, 0, 1, 1, -1, -1 };	// アウトラインＸ座標オフセットテーブル
@@ -2961,17 +2961,10 @@ void BOX2OBJ_TrayIconCgxTransPos( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 static void WallPaperBufferFill( BOX2_SYS_WORK * syswk, u8 * buf, u32 wp, u32 chg_col, u32 siz )
 {
 	u32	i;
-	u8	col;
-
-	if( wp >= BOX_NORMAL_WALLPAPER_MAX ){
-		col = WP_IMAGE_COLOR_START + wp;
-	}else{
-		col = WP_IMAGE_COLOR_START + wp;
-	}
 
 	for( i=0; i<siz; i++ ){
 		if( buf[i] == chg_col ){
-			buf[i] = col;
+			buf[i] = TrayWallPaperColor[wp];
 		}
 	}
 }
@@ -3018,7 +3011,7 @@ static void TrayPokeDotPut( BOX2_SYS_WORK * syswk, u32 tray, u8 * buf )
 						color = POKEPER_COLOR_WHITE;
 					}
 				}
-				color = TrayPokeDotColorPos[color];
+				color = color + WP_IMAGE_COLOR_START;
 				color = ( color << 8 ) | color;
 				for( y=py; y<py+TRAY_POKEDOT_SY; y++ ){
 					GFL_STD_MemFill16( &buf[ ((((y>>3)<<2)+(px>>3))<<6) + ((y&7)<<3)+(px&7) ], color, 2 );
