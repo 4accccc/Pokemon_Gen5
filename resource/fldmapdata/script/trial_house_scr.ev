@@ -443,6 +443,7 @@ download:
   _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
   //FALSEのとき、無線通信は使えない
   IF $SCWK_ANSWER == FALSE THEN
+    _BALLOONWIN_CLOSE()     //バルーンウィンドウクローズ
    	//共通メッセージ呼び出し
     _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
     $exit = TRUE
@@ -505,7 +506,7 @@ download:
       //「今すぐ挑戦？」
       _BALLOONWIN_OBJMSG_POS(msg_trialhouse_026, SCWK_TARGET_OBJID, POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
-      _BALLOONWIN_CLOSE()
+      _BALLOONWIN_CLOSE()     //※ForUpper いらないクローズですが、時期を考え、残します　20100621    Saito
       IF $SCWK_ANSWER == 0 THEN //ダウンロード挑戦
         $download_flg = TRUE
         _CALL charange
