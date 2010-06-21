@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-16T12:06:41"/>
+	<create user="matsumiya" host="W00224" date="2010-06-21T20:59:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1322" top="208" right="2027" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -714,9 +714,9 @@
 　120～134匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
 		<language name="JPN" width="256">じゅうじつした　ポケモンずかんね
-アタシの　けんきゅうも　はかどります▼</language>
+わたしの　けんきゅうも　はかどります▼</language>
 		<language name="JPN_KANJI" width="256">充実した　ポケモン図鑑ね
-アタシの　研究も　はかどります▼</language>
+わたしの　研究も　はかどります▼</language>
 	</row>
 
 	<row id="msg_hyouka_i17" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
@@ -725,13 +725,13 @@
 　1135～144匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
 		<language name="JPN" width="256">これだけ　ポケモンを　つかまえたら
-アタシよりも　くわしくなったかも？▼
+わたしよりも　くわしくなったかも？▼
 ポケモンずかんの　かんせいを
-アタシも　おうえん　しています▼</language>
+わたしも　おうえん　しています▼</language>
 		<language name="JPN_KANJI" width="256">これだけ　ポケモンを　捕まえたら
-アタシよりも　詳しくなったかも？▼
+わたしよりも　詳しくなったかも？▼
 ポケモン図鑑の　完成を
-アタシも　応援しています▼</language>
+わたしも　応援しています▼</language>
 	</row>
 
 	<row id="msg_hyouka_i18" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
