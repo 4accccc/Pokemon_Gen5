@@ -1806,7 +1806,7 @@ static void common_PinchRankup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaRankEffe
       param->rankType = rankType;
       param->rankVolume = volume;
       param->poke_cnt = 1;
-      param->fAlmost = TRUE;
+//      param->fAlmost = TRUE;
       param->pokeID[0] = pokeID;
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
