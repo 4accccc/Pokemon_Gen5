@@ -3102,13 +3102,13 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       scPut_WazaMsg( wk, attacker, actWaza );
     }
 
+    // ‚±‚±‚Ü‚Å—ˆ‚½‚çPPŒ¸­‚ÍŠm’è
+    wk->prevExeWaza = actWaza;
+
     // ƒƒUo‚µŽ¸”s”»’è‚Qi‚o‚oŒ¸­Œãj
     if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock )){
        break;
     }
-
-    // ‚±‚±‚Ü‚Å—ˆ‚½‚çƒƒU‚ªo‚é‚±‚Æ‚ÍŠm’è
-    wk->prevExeWaza = actWaza;
 
     // ’x‰„”­“®ƒƒU‚Ì€”õˆ—
     if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){
@@ -6270,7 +6270,6 @@ static void scproc_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
 
   scEvent_WazaDamageSideAfter( wk, attacker, wazaParam, damage );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
 //--------------------------------------------------------------------------
@@ -7219,7 +7218,8 @@ static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
   if( fail_code != BTL_ADDSICK_FAIL_NULL )
   {
     BTL_N_Printf( DBGSTR_SVFL_AddSickFailCode, fail_code );
-    if( fDispFailResult ){
+    if( fDispFailResult )
+    {
       scPut_AddSickFail( wk, target, fail_code, sick );
     }
     return TRUE;
@@ -7233,8 +7233,10 @@ static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
 
     if( fFail )
     {
-      if( fDispFailResult ){
+      if( fDispFailResult )
+      {
         scEvent_AddSick_Failed( wk, target, attacker, sick );
+        wk->fWazaFailMsgDisped = TRUE;
 //        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       }
     }
