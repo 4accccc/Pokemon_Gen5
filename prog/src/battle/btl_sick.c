@@ -292,13 +292,16 @@ static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
   int turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
   if( turns > 0 )
   {
-    u8 pokeID = BPP_GetID( bpp );
-    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      param->fAlmost = TRUE;
-      param->sickID = WAZASICK_NEMURI;
-      param->sickCont = BPP_SICKCONT_MakeTurn( turns );
-      param->pokeID = pokeID;
-    BTL_SVF_HANDEX_Pop( flowWk, param );
+    if( BPP_GetPokeSick(bpp) == POKESICK_NULL )
+    {
+      u8 pokeID = BPP_GetID( bpp );
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+        param->fAlmost = TRUE;
+        param->sickID = WAZASICK_NEMURI;
+        param->sickCont = BPP_SICKCONT_MakeTurn( turns );
+        param->pokeID = pokeID;
+      BTL_SVF_HANDEX_Pop( flowWk, param );
+    }
   }
 }
 
