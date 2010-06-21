@@ -918,7 +918,17 @@ static BOOL TESTMODE_ITEM_SelectFuncWatanabe( TESTMODE_WORK *work , const int id
 
 static BOOL TESTMODE_ITEM_SelectFuncTamada( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL);
+  SAVE_CONTROL_WORK * sv_ctrl = SaveControl_GetPointer();
+  OSTick start;
+  OSTick end;
+  start = OS_GetTick();
+  SaveControl_Load( sv_ctrl );
+  end = OS_GetTick();
+  OS_Printf("load time %ld\n", OS_TicksToMicroSeconds( end - start ) );
+  PMSND_PlaySystemSE( SEQ_SE_BEEP );
+  return FALSE;
+
+  //TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL);
   //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
 #if 0
   {
