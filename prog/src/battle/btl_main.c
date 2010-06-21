@@ -425,6 +425,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
         wk->setupParam->getMoney = (wk->regularMoney + wk->bonusMoney);
         break;
       case BTL_RESULT_LOSE:
+      case BTL_RESULT_DRAW:
         wk->setupParam->getMoney = (int)(wk->loseMoney) * -1;
         break;
       }
