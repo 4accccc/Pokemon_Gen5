@@ -3452,7 +3452,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
 
     if( (inPokePos != BTL_POS_NULL)
-    &&  BTL_MAINUTIL_CheckTripleHitArea(myPos, inPokePos)
+    &&  ( (BTL_SVFTOOL_GetRule(flowWk)!=BTL_RULE_TRIPLE) || (BTL_MAINUTIL_CheckTripleHitArea(myPos, inPokePos)) )
     ){
       const BTL_POKEPARAM* inPoke = BTL_SVFTOOL_GetPokeParam( flowWk, inPokeID );
       PokeTokusei tok = BPP_GetValue( inPoke, BPP_TOKUSEI );
