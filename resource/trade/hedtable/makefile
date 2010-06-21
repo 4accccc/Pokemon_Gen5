@@ -64,6 +64,9 @@ $(TDIR)/$(tname).cdat: $(MONSTERGMM) $(THEADGMM) headtable.rb makefile
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 	ruby headtable.rb $(MONSTERGMM) $(THEADGMM) $(CHANGELANG) $(tname).cdat
 endif
+
+
+$(TDIR)/$(tname).cdat: $(tname).cdat
 	$(COPY) $(tname).cdat $(TDIR)
 
 
