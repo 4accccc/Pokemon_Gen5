@@ -304,7 +304,7 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
 
   {
     // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
-    G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
+    G3X_SetShading( GX_SHADING_HIGHLIGHT );
     G3X_AntiAlias( TRUE );
     G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
     G3X_AlphaBlend( FALSE );		// アルファブレンド　オン

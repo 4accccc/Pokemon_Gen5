@@ -1618,7 +1618,7 @@ static void Graphic_3d_SetUp( void )
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 
   // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
-  G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
+  G3X_SetShading( GX_SHADING_HIGHLIGHT );
   G3X_AntiAlias( TRUE );
  // G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
   G3X_AlphaBlend( TRUE );		// アルファブレンドON
