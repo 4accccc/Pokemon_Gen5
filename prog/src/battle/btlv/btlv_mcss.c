@@ -2140,20 +2140,17 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
     PMV_REF* pRef = &refBody;
     BOOL  chorus = FALSE;
 
-    //エフェクトエディタで確認する場合、mainModuleがNULLなので、回避する
-#ifdef PM_DEBUG
+    //エフェクトエディタやPDCで確認する場合、mainModuleがNULLなので、回避する
     if( mainModule ){
-#endif
-    if( !BTL_MAIN_SetPmvRef(mainModule, position, &refBody) ){
-      pRef = NULL;
-    }
-#ifdef PM_DEBUG
+      if( !BTL_MAIN_SetPmvRef(mainModule, position, &refBody) )
+      {
+        pRef = NULL;
+      }
     }
     else
     {
       pRef = NULL;
     }
-#endif
 
     if( ( chorus_vol ) || ( chorus_speed ) )
     {
