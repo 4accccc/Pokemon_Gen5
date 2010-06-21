@@ -9987,7 +9987,7 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     u8 msgFlag = FALSE;
 
     // なんにせよフリーフォール実行状態のポケモンには効かない
-    if( !BTL_SVFTOOL_IsFreeFallUserPoke(flowWk, targetPokeID) )
+    if( !BTL_SVFTOOL_IsFreeFallPoke(flowWk, targetPokeID) )
     {
       // ふゆう状態でフリーフォールされてる状態じゃないポケ対象
       if( (BTL_SVFTOOL_IsFloatingPoke(flowWk, targetPokeID))
