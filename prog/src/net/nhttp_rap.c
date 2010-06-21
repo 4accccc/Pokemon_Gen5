@@ -77,8 +77,7 @@ const static char ACCOUNT_URL[] ="https://pokemon-ds-pub.basementfactorysystems.
 const static char BTL_DL_URL[] ="https://pokemon-ds-pub.basementfactorysystems.com/dsio/gw?p=worldbattle.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //GET
 const static char BTL_UP_URL[] ="https://pokemon-ds-pub.basementfactorysystems.com/dsio/gw?p=worldbattle.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //POST
 
-//@todo まだ本番のアドレス提供が無い
-const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/validate"; //POST
+const static char POKECHK_URL[] ="https://pkvldtprod.nintendo.co.jp/pokemon/validate"; //POST
 
 #endif
 
