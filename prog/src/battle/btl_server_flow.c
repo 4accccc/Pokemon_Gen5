@@ -3772,9 +3772,9 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     if( enableMode != BTL_WAZAENABLE_NONE )
     {
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-      scPut_WazaEffect( wk, waza, wk->wazaEffCtrl, que_reserve_pos );
       if( enableMode == BTL_WAZAENABLE_QUIT )
       {
+        scPut_WazaEffect( wk, waza, wk->wazaEffCtrl, que_reserve_pos );
         return TRUE;
       }
     }
@@ -9040,12 +9040,6 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
       BOOL fCured;
       u32 p;
 
-      if( sick == WAZASICK_KAIHUKUHUUJI ){
-        TAYA_Printf( "かいふくふうじチェック\n" );
-      }
-      if( sick == WAZASICK_YADORIGI ){
-        TAYA_Printf( "やどりぎチェック\n" );
-      }
       for(p=0; p<pokeCnt; ++p)
       {
         bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeIDList[p] );
@@ -9053,7 +9047,7 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
         {
           BOOL fCured;
 
-          TAYA_Printf("ポケ(%d)の、状態異常[%d]をチェック...\n", BPP_GetID(bpp), sick);
+//          TAYA_Printf("ポケ(%d)の、状態異常[%d]をチェック...\n", BPP_GetID(bpp), sick);
 
           if( BPP_WazaSick_TurnCheck(bpp, sick, &oldCont, &fCured) )
           {

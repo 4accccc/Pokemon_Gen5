@@ -287,6 +287,7 @@ typedef enum {
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
   DBGSTR_SC_WriteReservedPos,
+  DBGSTR_SC_ReservedInfo,
   DBGSTR_SC_PutMsgParam,
   DBGSTR_SC_ReadMsgParam,
   DBGSTR_SC_PutMsg_SE,

@@ -912,6 +912,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
       reserved_cmd = scque_read2byte( que );
       reserved_size = scque_read1byte( que );
       que->readPtr = default_read_pos;
+      BTL_N_Printf( DBGSTR_SC_ReservedInfo, reserved_cmd, reserved_size );
     }
     if( cmd != SCEX_RESERVE )
     {
@@ -919,8 +920,8 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
       u16 default_write_pos = que->writePtr;
       que->writePtr = pos;
       put_core( que, cmd, fmt, ArgBuffer );
-      wrote_size = (que->writePtr - pos - 3);
-      GF_ASSERT(wrote_size == reserved_size);
+      wrote_size = (que->writePtr - pos - 3); // —\–ñƒRƒ}ƒ“ƒh(2)+size(1)‚Å3byte‚ðˆø‚­
+      GF_ASSERT_MSG(wrote_size == reserved_size, "wrote=%d, reserved=%d");
       que->writePtr = default_write_pos;
     }
   }

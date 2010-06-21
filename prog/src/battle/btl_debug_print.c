@@ -365,7 +365,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, WP=%d, Format=%02x, argCnt=%d, args=";
   case DBGSTR_SC_ReservedPos:           return "[QUE]reserved cmd=%d, size=%d, pos=%d, wp=%d\n";
-  case DBGSTR_SC_WriteReservedPos:      return "[QUE]Write Reserved Pos ... pos=%d, cmd=%d";
+  case DBGSTR_SC_WriteReservedPos:      return "[QUE]Write Reserved Pos ... pos=%d, cmd=%d\n";
+  case DBGSTR_SC_ReservedInfo:          return "[QUE]Read ReservedInfo .. cmd=%d, size=%d\n";
   case DBGSTR_SC_PutMsgParam:           return "[QUE] PUT  MSG SC=%d, StrID=%d";
   case DBGSTR_SC_ReadMsgParam:          return "[QUE] READ MSG SC=%d, StrID=%d";
   case DBGSTR_SC_PutMsg_SE:             return "  SE_ID=%d\n";
