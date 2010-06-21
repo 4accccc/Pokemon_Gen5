@@ -128,7 +128,7 @@
   ARCID_TRFGRA  "trgra/trfgra.narc" #トレーナーグラフィック（正面）
   ARCID_TRBGRA  "trgra/trbgra.narc" #トレーナーグラフィック（背面）
   $DEBUG_YES ARCID_TALKWIN_TEST "talkwin_test.narc" #会話ウインドウ（テスト）
-  $DEBUG_YES ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
+  ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
   ARCID_FLDEFF "fieldmap/fldeff.narc" #フィールドエフェクト
   ARCID_POKELIST "pokelist_gra.narc" #ポケモンリスト
   ARCID_IRCRANKING_GRAPHIC  "ircranking_gra.narc" #赤外線相性チェックランキング画面
