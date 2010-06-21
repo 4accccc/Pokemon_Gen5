@@ -226,6 +226,7 @@ static void UnionComm_InitCallback(void *pWork)
   UNION_SYSTEM_PTR unisys = pWork;
   
   unisys->comm_status = UNION_COMM_STATUS_INIT;
+  GFL_NET_ParentHandleError(FALSE);
 }
 
 //==================================================================
