@@ -2228,7 +2228,11 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
 
-      bbgp_make( wk, &bbgp, clientID_1, clientID_2, BTLV_BALL_GAUGE_TYPE_MINE );
+      if( clientID_1 < clientID_2 ){  // A C@‚Ì‡‚É‚·‚éB
+        bbgp_make( wk, &bbgp, clientID_1, clientID_2, BTLV_BALL_GAUGE_TYPE_MINE );
+      }else{
+        bbgp_make( wk, &bbgp, clientID_2, clientID_1, BTLV_BALL_GAUGE_TYPE_MINE );
+      }
 
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;

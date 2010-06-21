@@ -601,11 +601,19 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
       if( (btl_rule == BTL_RULE_DOUBLE) && (clientID_2 != BTL_CLIENTID_NULL) )
       {
         // Ž©•ª‚Æ’‡ŠÔ‚ÌŽèŽ‚¿  
-        party[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
-        party_members[0] = BTL_PARTY_GetMemberCount( party[0] );
+        if( clientID_1 < clientID_2 ){
+          party[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
+          party_members[0] = BTL_PARTY_GetMemberCount( party[0] );
 
-        party[1] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_2 );
-        party_members[1] = BTL_PARTY_GetMemberCount( party[1] );
+          party[1] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_2 );
+          party_members[1] = BTL_PARTY_GetMemberCount( party[1] );
+        }else{
+          party[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_2 );
+          party_members[0] = BTL_PARTY_GetMemberCount( party[0] );
+
+          party[1] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
+          party_members[1] = BTL_PARTY_GetMemberCount( party[1] );
+        }
       }
       else
       {
