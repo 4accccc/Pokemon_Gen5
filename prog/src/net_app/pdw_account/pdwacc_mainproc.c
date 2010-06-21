@@ -115,8 +115,13 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
     }
     break;
   case _WIFI_ERROR:
-    NetErr_DispCall(FALSE);
-    pWork->state++;
+    if(pWork->pwdaccWork.type == PDWACC_DISPPASS){
+      pWork->state=_WIFI_END;
+    }
+    else{
+      NetErr_DispCall(FALSE);
+      pWork->state++;
+    }
     break;
   case _WIFI_LOGOUT:
     if(!GFL_NET_IsInit() || (pWork->pwdaccWork.returnCode == PDWACC_RETURNMODE_ERROR)){
