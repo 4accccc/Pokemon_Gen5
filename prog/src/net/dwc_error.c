@@ -51,6 +51,15 @@
 */
 //=============================================================================
 
+
+static void _ErrorClear(void)
+{
+  GFL_NET_StateClearWifiError();
+  GFL_NET_StateResetError();
+  DWC_ClearError(); //表示後クリアする決まり
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  DWCでエラーをチェックしエラーの軽度によって表示を切り分ける
@@ -80,12 +89,10 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
       case DWC_ETYPE_SHOW_ERROR:
         //エラーコードorメッセージを表示するだけ
         if( !is_heavy )
-        { 
+        {
+          _ErrorClear();
           NetErr_DispCallPushPop();
-          GFL_NET_StateClearWifiError();
           NetErr_ErrWorkInit();
-          GFL_NET_StateResetError();
-          DWC_ClearError(); //表示後クリアする決まり
           return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
         }
         /* fallthru */
@@ -120,12 +127,15 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
       {
         //マッチングタイムアウトをエラーにする場合
         NetErr_ErrorSet();    //エラーをセット
-        NetErr_DispCallPushPop();       //エラーメッセージ表示
-        GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
-        NetErr_ErrWorkInit();           //エラーシステム情報クリア
-        GFL_NET_StateResetError();      //NET内エラー情報クリア
-
+        _ErrorClear();
         GFL_NET_StateWifiMatchEnd(TRUE);  //エラーをクリアしてもずっとタイムアウト中になってしまうので
+        NetErr_DispCallPushPop();
+        NetErr_ErrWorkInit();
+
+//        NetErr_DispCallPushPop();       //エラーメッセージ表示
+//        GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
+//        NetErr_ErrWorkInit();           //エラーシステム情報クリア
+//        GFL_NET_StateResetError();      //NET内エラー情報クリア
         //解消する
         DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
         return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
