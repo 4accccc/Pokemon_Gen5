@@ -762,14 +762,18 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
                                                     &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     set_hp_gauge_draw( bgw, pos, TRUE );
 
-		if( pos < BTLV_MCSS_POS_C ){
-	    bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
-	                                                        bgw->status_charID, bgw->status_plttID,
-		                                                      bgw->status_cellID,
-			                                                    &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
-		}else{
+		// ローテーションバトル時の後衛は暗い色のパレットを適用
+		if( BTLV_EFFECT_GetBtlRule() == BTL_RULE_ROTATION && pos >= BTLV_MCSS_POS_C )
+		{
 	    bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
 	                                                        bgw->status_charID, bgw->status_dark_plttID,
+		                                                      bgw->status_cellID,
+			                                                    &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+		}
+		else
+		{
+	    bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
+	                                                        bgw->status_charID, bgw->status_plttID,
 		                                                      bgw->status_cellID,
 			                                                    &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
 		}
