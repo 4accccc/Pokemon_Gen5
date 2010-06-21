@@ -150,7 +150,7 @@ enum{
   BTLV_OBJ_PLTT_BALL_GAUGE  = 0x20 * 6,   //6:ボールゲージ
   BTLV_OBJ_PLTT_TIMER       = 0x20 * 7,   //7:タイマー
   BTLV_OBJ_PLTT_STATUS_ICON = 0x20 * 8,   //8:状態異常アイコン
-  BTLV_OBJ_PLTT_CLACT       = 0x20 * 9,   //9:BTLV_CLACTで使用するセルアクター（7個分）
+  BTLV_OBJ_PLTT_CLACT       = 0x20 * 10,   //9:BTLV_CLACTで使用するセルアクター（6個分）
 };
 
 //BTLV_EFFECT_SetTCBで使用するグループ指定

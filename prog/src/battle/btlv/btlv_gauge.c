@@ -252,6 +252,7 @@ struct _BTLV_GAUGE_WORK
   u32             status_charID;
   u32             status_cellID;
   u32             status_plttID;
+  u32             status_dark_plttID;
 
   BTLV_GAUGE_CLWK bgcl[ BTLV_GAUGE_CLWK_MAX ];
 
@@ -353,8 +354,14 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
                                                       bgw->heapID );
     bgw->status_plttID = GFL_CLGRP_PLTT_Register( handle, APP_COMMON_GetStatusIconPltArcIdx(),
                                                   CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_STATUS_ICON, bgw->heapID );
+    bgw->status_dark_plttID = GFL_CLGRP_PLTT_Register( handle, APP_COMMON_GetStatusIconPltArcIdx(),
+                                                  CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_STATUS_ICON+0x20, bgw->heapID );
     PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( bgw->status_plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
+    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
+                             GFL_CLGRP_PLTT_GetAddr( bgw->status_dark_plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
+		ColorConceChangePfd( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ, (1<<(BTLV_OBJ_PLTT_STATUS_ICON/0x20+1)), 8, 0 );
+
     GFL_ARC_CloseDataHandle( handle );
   }
 
@@ -416,6 +423,7 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   GFL_CLGRP_CGR_Release( bgw->status_charID );
   GFL_CLGRP_CELLANIM_Release( bgw->status_cellID );
   GFL_CLGRP_PLTT_Release( bgw->status_plttID );
+  GFL_CLGRP_PLTT_Release( bgw->status_dark_plttID );
   GFL_CLACT_UNIT_Delete( bgw->clunit );
   GFL_HEAP_FreeMemory( bgw->arc_data );
   GFL_ARC_CloseDataHandle( bgw->handle );
@@ -754,10 +762,17 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
                                                     &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     set_hp_gauge_draw( bgw, pos, TRUE );
 
-    bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
-                                                        bgw->status_charID, bgw->status_plttID,
-                                                        bgw->status_cellID,
-                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+		if( pos < BTLV_MCSS_POS_C ){
+	    bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
+	                                                        bgw->status_charID, bgw->status_plttID,
+		                                                      bgw->status_cellID,
+			                                                    &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+		}else{
+	    bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
+	                                                        bgw->status_charID, bgw->status_dark_plttID,
+		                                                      bgw->status_cellID,
+			                                                    &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+		}
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
     BTLV_GAUGE_SetStatus( bgw, sick, pos );
 
