@@ -1524,14 +1524,18 @@ static void _paletteLoad(POKEMON_TRADE_WORK *pWork)
                                             &pPal, pWork->heapID );
   u16* paldata = pPal->pRawData;
 
-  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
 
-  paldata[16*2]=0x14a5;  //絵の直値
-  GX_LoadTexPltt(&paldata[16*2], // a pointer to the texture data on the main memory(4 bytes aligned)
+  STD_MoveMemory(&paldata[16*1+1],&paldata[16*1],32-2);
+  
+  paldata[16*1]=0x14a5;  //絵の直値  ベースパレット
+
+  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
+  GX_LoadTexPltt(&paldata[16*1], // a pointer to the texture data on the main memory(4 bytes aligned)
                  myTexPlttAddr,  // an offset address in the texture palette slots
                  32);            // the size of the texture palette(s)(in bytes)
   GX_EndLoadTexPltt();               // restore the texture palette slots
-  GFL_STD_MemCopy(&paldata[32], pWork->palette3d, 32);
+  // パレットを保存してフェードアウトの時に使う
+  GFL_STD_MemCopy(&paldata[16*1], pWork->palette3d, 32);
 
   GFL_HEAP_FreeMemory(pData);
   GFL_ARC_CloseDataHandle( p_handle );

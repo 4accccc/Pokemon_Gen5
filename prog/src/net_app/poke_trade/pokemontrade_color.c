@@ -14,12 +14,14 @@
 #include "pokemontrade_local.h"
 #include "pm_define.h"
 
+#if 0
 // トレイアイコンに描画するポケモンドットのカラー
 // 追加壁紙と共用です
 static const u8 TrayPokeDotColorPos[] = {
 //  赤    青    黄    緑    黒    茶    紫    灰    白    桃
 	0x0e, 0x0f, 0x05, 0x02, 0x0d, 0x0c, 0x06, 0x0b, 0x0a, 0x09,
 };
+#endif
 
 
 static u8 _getColorIndex(POKEMON_PASO_PARAM * ppp,HEAPID heapID)
@@ -47,7 +49,7 @@ static u8 _getColorIndex(POKEMON_PASO_PARAM * ppp,HEAPID heapID)
           color = POKEPER_COLOR_WHITE;
         }
       }
-      color = TrayPokeDotColorPos[color];
+      color = color + 1;//TrayPokeDotColorPos[color];  //１足すのはベースパレットを０にしているため
     }
     PPP_FastModeOff( ppp, fast );
   }
