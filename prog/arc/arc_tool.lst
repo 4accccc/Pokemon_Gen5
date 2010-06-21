@@ -234,7 +234,7 @@
   ARCID_BEACON_STATUS "beacon_status.narc" #すれ違い参照画面
   ARCID_ELBOARD_ZONE "zone.narc"  # 電光掲示板 ゾーン依存データ
   ARCID_FLD_BBD_COLOR "fieldmap/area_map_mmdl_color.narc"  # フィールドビルボードモデルカラー
-  ARCID_MIDI_DOWNLOAD "mididl.narc"  # MIDIファイルダウンロードテスト
+  $DEBUG_YES ARCID_MIDI_DOWNLOAD "mididl.narc"  # MIDIファイルダウンロードテスト
   ARCID_BMODEL_TEXSET_OUTDOOR  "fieldmap/bmodel_texset_outdoor.narc"  #配置モデルテクスチャセットデータ（屋外）
   ARCID_BMODEL_TEXSET_INDOOR   "fieldmap/bmodel_texset_indoor.narc" #配置モデルテクスチャセットデータ（屋内）
   $VERSION_WHITE  ARCID_ZUKAN_AREA "zukan_area_w.narc"  # 図鑑で使用するポケモンの分布データ
