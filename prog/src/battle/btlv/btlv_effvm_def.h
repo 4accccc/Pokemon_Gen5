@@ -410,6 +410,10 @@
 
 #define BTLEFF_GAUGE_MOVE_VALUE     ( 128 )
 
+//着地演出待ち
+#define BTLEFF_LANDING_WAIT_MINE    ( 0 )
+#define BTLEFF_LANDING_WAIT_ENEMY   ( 1 )
+
 #endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
@@ -508,52 +512,54 @@ ex)
 #define	EC_POKEMON_PAL_FADE					      ( 26 )
 #define	EC_POKEMON_VANISH					        ( 27 )
 #define	EC_POKEMON_SHADOW_VANISH	        ( 28 )
-#define	EC_POKEMON_DEL	                  ( 29 )
-#define	EC_TRAINER_SET							      ( 30 )
-#define	EC_TRAINER_MOVE							      ( 31 )
-#define	EC_TRAINER_ANIME_SET				      ( 32 )
-#define	EC_TRAINER_DEL							  		( 33 )
-#define	EC_BG_LOAD	   				        		( 34 )
-#define	EC_BG_SCROLL		   				    		( 35 )
-#define	EC_BG_RASTER_SCROLL		   	    		( 36 )
-#define	EC_BG_PAL_ANM		   				    		( 37 )
-#define	EC_BG_PRIORITY		   				  		( 38 )
-#define	EC_BG_ALPHA		   				      		( 39 )
-#define	EC_BG_PAL_FADE		   				  		( 40 )
-#define	EC_BG_VISIBLE								  		( 41 )
-#define	EC_WINDOW_MOVE										( 42 )
-#define	EC_OBJ_SET	   				        		( 43 )
-#define	EC_OBJ_MOVE	   				        		( 44 )
-#define	EC_OBJ_SCALE	   				      		( 45 )
-#define	EC_OBJ_ANIME_SET	   				  		( 46 )
-#define	EC_OBJ_PAL_FADE		   				  		( 47 )
-#define	EC_OBJ_DEL	   				        		( 48 )
-#define	EC_GAUGE_VANISH	   				    		( 49 )
-#define	EC_SE_PLAY									  		( 50 )
-#define	EC_SE_STOP									  		( 51 )
-#define	EC_SE_PAN								      		( 52 )
-#define	EC_SE_EFFECT								  		( 53 )
-#define	EC_EFFECT_END_WAIT					  		( 54 )
-#define	EC_WAIT											  		( 55 )
-#define	EC_CONTROL_MODE							  		( 56 )
-#define	EC_IF						              		( 57 )
-#define	EC_MCSS_POS_CHECK						  		( 58 )
-#define	EC_SET_WORK						        		( 59 )
-#define	EC_GET_WORK						        		( 60 )
-#define	EC_SET_PARAM						      		( 61 )
-#define	EC_MIGAWARI						        		( 62 )
-#define	EC_HENSHIN						        		( 63 )
-#define	EC_NAKIGOE						        		( 64 )
-#define	EC_BALL_MODE						      		( 65 )
-#define	EC_BALLOBJ_SET						    		( 66 )
-#define	EC_CALL						            		( 67 )
-#define	EC_RETURN						          		( 68 )
-#define	EC_JUMP						            		( 69 )
-#define	EC_PAUSE						          		( 70 )
-#define	EC_SEQ_JUMP						          	( 71 )
+#define	EC_POKEMON_SHADOW_SCALE	          ( 29 )
+#define	EC_POKEMON_DEL	                  ( 30 )
+#define	EC_TRAINER_SET							      ( 31 )
+#define	EC_TRAINER_MOVE							      ( 32 )
+#define	EC_TRAINER_ANIME_SET				      ( 33 )
+#define	EC_TRAINER_DEL							  		( 34 )
+#define	EC_BG_LOAD	   				        		( 35 )
+#define	EC_BG_SCROLL		   				    		( 36 )
+#define	EC_BG_RASTER_SCROLL		   	    		( 37 )
+#define	EC_BG_PAL_ANM		   				    		( 38 )
+#define	EC_BG_PRIORITY		   				  		( 39 )
+#define	EC_BG_ALPHA		   				      		( 40 )
+#define	EC_BG_PAL_FADE		   				  		( 41 )
+#define	EC_BG_VISIBLE								  		( 42 )
+#define	EC_WINDOW_MOVE										( 43 )
+#define	EC_OBJ_SET	   				        		( 44 )
+#define	EC_OBJ_MOVE	   				        		( 45 )
+#define	EC_OBJ_SCALE	   				      		( 46 )
+#define	EC_OBJ_ANIME_SET	   				  		( 47 )
+#define	EC_OBJ_PAL_FADE		   				  		( 48 )
+#define	EC_OBJ_DEL	   				        		( 49 )
+#define	EC_GAUGE_VANISH	   				    		( 50 )
+#define	EC_SE_PLAY									  		( 51 )
+#define	EC_SE_STOP									  		( 52 )
+#define	EC_SE_PAN								      		( 53 )
+#define	EC_SE_EFFECT								  		( 54 )
+#define	EC_EFFECT_END_WAIT					  		( 55 )
+#define	EC_WAIT											  		( 56 )
+#define	EC_CONTROL_MODE							  		( 57 )
+#define	EC_IF						              		( 58 )
+#define	EC_MCSS_POS_CHECK						  		( 59 )
+#define	EC_SET_WORK						        		( 60 )
+#define	EC_GET_WORK						        		( 61 )
+#define	EC_SET_PARAM						      		( 62 )
+#define	EC_MIGAWARI						        		( 63 )
+#define	EC_HENSHIN						        		( 64 )
+#define	EC_NAKIGOE						        		( 65 )
+#define	EC_BALL_MODE						      		( 66 )
+#define	EC_BALLOBJ_SET						    		( 67 )
+#define	EC_CALL						            		( 68 )
+#define	EC_RETURN						          		( 69 )
+#define	EC_JUMP						            		( 70 )
+#define	EC_PAUSE						          		( 71 )
+#define	EC_SEQ_JUMP						          	( 72 )
+#define	EC_LANDING_WAIT						        ( 73 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  		( 72 )
+#define	EC_SEQ_END									  		( 74 )
 
 #ifndef __C_NO_DEF_
 
@@ -1460,6 +1466,42 @@ ex)
 	.long		\pos
 	.long		\flag
 	.endm
+
+//======================================================================
+/**
+ * @brief	ポケモン影拡縮
+ *
+ * #param_num	7
+ * @param	pos			拡縮させるポケモンの立ち位置
+ * @param	type		拡縮タイプ
+ * @param	scale_x	X方向拡縮率
+ * @param	scale_y	Y方向拡縮率
+ * @param	frame		拡縮フレーム数（設定した拡縮値まで何フレームで到達するか）
+ * @param	wait		拡縮ウエイト
+ * @param	count		往復カウント（拡縮タイプが往復のときだけ有効）
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A POS_B POS_C POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D  すべて  自分側  相手側
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR  BTLEFF_POKEMON_POS_AA BTLEFF_POKEMON_POS_BB BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B  BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A  BTLEFF_TRAINER_POS_B  BTLEFF_TRAINER_POS_C  BTLEFF_TRAINER_POS_D  BTLEFF_POKEMON_ALL  BTLEFF_POKEMON_SIDE_MINE  BTLEFF_POKEMON_SIDE_ENEMY
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SCALE_DIRECT	BTLEFF_POKEMON_SCALE_INTERPOLATION	BTLEFF_POKEMON_SCALE_ROUNDTRIP	BTLEFF_POKEMON_SCALE_ROUNDTRIP_LONG
+ * #param	VALUE_FX32	X方向拡縮率
+ * #param	VALUE_FX32	Y方向拡縮率
+ * #param	VALUE_INT		拡縮フレーム数
+ * #param	VALUE_INT		拡縮ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+	.macro	POKEMON_SHADOW_SCALE	pos, type, scale_x, scale_y, frame, wait, count
+	.short	EC_POKEMON_SHADOW_SCALE
+	.long		\pos
+	.long		\type
+	.long		\scale_x
+	.long		\scale_y
+	.long		\frame
+	.long		\wait
+	.long		\count
+	.endm
+
 
 //======================================================================
 /**
@@ -2452,6 +2494,22 @@ ex)
   .macro  SEQ_JUMP  seq_no
   .short  EC_SEQ_JUMP
   .long   \seq_no
+  .endm
+
+//======================================================================
+/**
+ * @brief	着地演出待ち
+ *
+ * #param_num	1
+ * @param	side  チェックする側
+ *
+ * #param	COMBOBOX_TEXT 自分側  相手側
+ * #param	COMBOBOX_VALUE  BTLEFF_LANDING_WAIT_MINE  BTLEFF_LANDING_WAIT_ENEMY
+ */
+//======================================================================
+  .macro  LANDING_WAIT  side
+  .short  EC_LANDING_WAIT
+  .long   \side
   .endm
 
 //======================================================================

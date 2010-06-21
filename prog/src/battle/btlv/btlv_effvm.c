@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -301,6 +301,14 @@ typedef struct
   BOOL              flag;
 }BTLV_EFFVM_WINDOW_MOVE;
 
+//着地演出待ち操作
+typedef struct
+{
+  BTLV_EFFVM_WORK*  bevw;
+  int               side;
+  int               finish_flag;
+}BTLV_EFFVM_LANDING_WAIT;
+
 typedef struct
 { 
   BTLV_EFFVM_WORK*  bevw;
@@ -349,6 +357,7 @@ static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work
 static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_VANISH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SHADOW_VANISH( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_POKEMON_SHADOW_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_DEL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work );
@@ -392,6 +401,7 @@ static VMCMD_RESULT VMEC_RETURN( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_JUMP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SEQ_JUMP( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_LANDING_WAIT( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -443,6 +453,7 @@ static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_WINDOW_MOVE_CB( GFL_TCB* tcb );
 static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_LandingWait( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
 typedef enum
@@ -525,6 +536,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_POKEMON_PAL_FADE,
   VMEC_POKEMON_VANISH,
   VMEC_POKEMON_SHADOW_VANISH,
+  VMEC_POKEMON_SHADOW_SCALE,
   VMEC_POKEMON_DEL,
   VMEC_TRAINER_SET,
   VMEC_TRAINER_MOVE,
@@ -568,6 +580,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_JUMP,
   VMEC_PAUSE,
   VMEC_SEQ_JUMP,
+  VMEC_LANDING_WAIT,
 
   VMEC_SEQ_END,
 };
@@ -2650,6 +2663,51 @@ static VMCMD_RESULT VMEC_POKEMON_SHADOW_VANISH( VMHANDLE *vmh, void *context_wor
 
 //============================================================================================
 /**
+ * @brief ポケモン影拡縮
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_POKEMON_SHADOW_SCALE( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int   type;
+  VecFx32 scale;
+  int   frame;
+  int   wait;
+  int   count;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt = EFFVM_GetPokePosition( bevw, ( int )VMGetU32( vmh ), pos );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_POKEMON_SCALE\n");
+#endif DEBUG_OS_PRINT
+
+  type    = ( int )VMGetU32( vmh );
+  scale.x = ( fx32 )VMGetU32( vmh );
+  scale.y = ( fx32 )VMGetU32( vmh );
+  scale.z = FX32_ONE;
+  frame   = ( int )VMGetU32( vmh );
+  wait    = ( int )VMGetU32( vmh );
+  count   = ( int )VMGetU32( vmh );
+
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
+  {
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    {
+      BTLV_MCSS_MoveShadowScale( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, &scale, frame, wait, count );
+    }
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * @brief ポケモン削除
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -4304,6 +4362,35 @@ static VMCMD_RESULT VMEC_SEQ_JUMP( VMHANDLE *vmh, void *context_work )
 
   return bevw->control_mode;
 }
+
+//============================================================================================
+/**
+ * @brief	着地演出待ち
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_LANDING_WAIT( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int side = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_LANDING_WAIT\n");
+#endif DEBUG_OS_PRINT
+
+  { 
+    BTLV_EFFVM_LANDING_WAIT* belw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_LANDING_WAIT ) );
+    belw->bevw        = bevw;
+    belw->side        = side;
+    belw->finish_flag = 0;
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_LandingWait, belw, 0 ), NULL, GROUP_EFFVM );
+  }
+
+  return bevw->control_mode;
+}
+
 
 //============================================================================================
 /**
@@ -7018,6 +7105,41 @@ static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work )
   }
   tnw->bevw->volume_already_down = 0;
   BTLV_EFFECT_FreeTCB( tcb );
+}
+
+//============================================================================================
+/**
+ * @brief 着地演出を待ってアニメスタートと影バニッシュオフする
+ */
+//============================================================================================
+static  void  TCB_EFFVM_LandingWait( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_EFFVM_LANDING_WAIT*  belw = ( BTLV_EFFVM_LANDING_WAIT* )work;
+  BtlvMcssPos pos;
+  BtlvMcssPos start = ( belw->side ) ? BTLV_MCSS_POS_BB : BTLV_MCSS_POS_AA;
+  int finish_flag = ( belw->side ) ? 0xaa : 0x55;
+
+  for( pos = start ; pos <= BTLV_MCSS_POS_F ; pos += 2 )
+  { 
+    if( BTLV_EFFECT_CheckExist( pos ) )
+    { 
+      if( ( !BTLV_MCSS_CheckTCBExecute( BTLV_EFFECT_GetMcssWork(), pos ) ) &&
+        ( ( belw->finish_flag & BTLV_EFFTOOL_Pos2Bit( pos ) ) == 0 ) )
+      { 
+        BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos, FALSE );
+        BTLV_MCSS_SetShadowVanishFlag( BTLV_EFFECT_GetMcssWork(), pos, FALSE );
+        belw->finish_flag |= BTLV_EFFTOOL_Pos2Bit( pos );
+      }
+    }
+    else
+    {
+      belw->finish_flag |= BTLV_EFFTOOL_Pos2Bit( pos );
+    }
+  }
+  if( finish_flag == belw->finish_flag )
+  { 
+    BTLV_EFFECT_FreeTCB( tcb );
+  }
 }
 
 //============================================================================================

@@ -170,6 +170,8 @@ extern  void            BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, 
                                              VecFx32 *scale, int frame, int wait, int count );
 extern  void            BTLV_MCSS_MoveDefaultScale( BTLV_MCSS_WORK *bmw, int position, int move_type,
                                                     VecFx32 *scale, int frame, int wait, int count );
+extern  void            BTLV_MCSS_MoveShadowScale( BTLV_MCSS_WORK *bmw, int position, int type,
+                                                   VecFx32 *scale, int frame, int wait, int count );
 extern  void            BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type,
                                               VecFx32 *rotate, int frame, int wait, int count );
 extern  void            BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );

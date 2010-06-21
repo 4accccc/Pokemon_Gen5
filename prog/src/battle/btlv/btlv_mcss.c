@@ -116,6 +116,7 @@ struct _BTLV_MCSS_WORK
   u32             mcss_tcb_scale_execute;
   u32             mcss_tcb_rotate_execute;
   u32             mcss_tcb_default_scale_execute;
+  u32             mcss_tcb_shadow_scale_execute;
 
   u32             mcss_tcb_blink_execute;
   u32             mcss_tcb_alpha_execute;
@@ -138,6 +139,7 @@ struct _BTLV_MCSS_WORK
   u8             tcb_id_move[ BTLV_MCSS_POS_TOTAL ];
   u8             tcb_id_scale[ BTLV_MCSS_POS_TOTAL ];
   u8             tcb_id_default_scale[ BTLV_MCSS_POS_TOTAL ];
+  u8             tcb_id_shadow_scale[ BTLV_MCSS_POS_TOTAL ];
   u8             tcb_id_rotate[ BTLV_MCSS_POS_TOTAL ];
   u8             tcb_id_blink[ BTLV_MCSS_POS_TOTAL ];
   u8             tcb_id_alpha[ BTLV_MCSS_POS_TOTAL ];
@@ -189,6 +191,8 @@ static  void  TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Scale_CB( GFL_TCB *tcb );
 static  void  TCB_BTLV_MCSS_DefaultScale( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_DefaultScale_CB( GFL_TCB *tcb );
+static  void  TCB_BTLV_MCSS_ShadowScale( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_MCSS_ShadowScale_CB( GFL_TCB *tcb );
 static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Rotate_CB( GFL_TCB *tcb );
 static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
@@ -1319,6 +1323,37 @@ void  BTLV_MCSS_MoveDefaultScale( BTLV_MCSS_WORK *bmw, int position, int type, V
 
 //============================================================================================
 /**
+ * @brief ポケモン影拡縮
+ *
+ * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  拡縮するポケモンの立ち位置
+ * @param[in] type    拡縮タイプ
+ * @param[in] scale   拡縮タイプにより意味が変化
+ *              EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION  最終的なスケール値
+ *              EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
+ * @param[in] frame   拡縮フレーム数（設定した拡縮値まで何フレームで到達するか）
+ * @param[in] wait    拡縮ウエイト
+ * @param[in] count   往復カウント（EFFTOOL_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
+ */
+//============================================================================================
+void  BTLV_MCSS_MoveShadowScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *scale, int frame, int wait, int count )
+{
+  VecFx32 start;
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { return; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
+
+  MCSS_GetOfsScale( bmw->btlv_mcss[ index ].mcss, &start );
+  bmw->tcb_id_shadow_scale[ position ]++;
+  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, scale, frame, wait, count,
+                           TCB_BTLV_MCSS_ShadowScale, TCB_BTLV_MCSS_ShadowScale_CB, REVERSE_FLAG_OFF, bmw->tcb_id_shadow_scale[ position ] );
+  bmw->mcss_tcb_shadow_scale_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+}
+
+//============================================================================================
+/**
  * @brief ポケモン回転
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
@@ -1616,6 +1651,7 @@ BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
 
   return ( ( bmw->mcss_tcb_move_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_scale_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+       ( bmw->mcss_tcb_shadow_scale_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_default_scale_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_rotate_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
@@ -2662,6 +2698,49 @@ static  void  TCB_BTLV_MCSS_DefaultScale_CB( GFL_TCB *tcb )
     bmtw->bmw->mcss_tcb_default_scale_execute &= ( BTLV_EFFTOOL_Pos2Bit( bmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
   }
 }
+
+//============================================================================================
+/**
+ * @brief ポケモン影拡縮タスク
+ */
+//============================================================================================
+static  void  TCB_BTLV_MCSS_ShadowScale( GFL_TCB *tcb, void *work )
+{
+  BTLV_MCSS_TCB_WORK  *bmtw = ( BTLV_MCSS_TCB_WORK * )work;
+  BTLV_MCSS_WORK *bmw = bmtw->bmw;
+  VecFx32 now_scale;
+  BOOL  ret;
+  int index = BTLV_MCSS_GetIndex( bmw, bmtw->position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { BTLV_EFFECT_FreeTCB( tcb ); return; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { BTLV_EFFECT_FreeTCB( tcb ); return; }
+
+  if( bmw->tcb_id_shadow_scale[ bmtw->position ] != bmtw->tcb_id )
+  {
+    BTLV_EFFECT_FreeTCB( tcb );
+    return;
+  }
+
+  MCSS_GetShadowOfsScale( bmw->btlv_mcss[ index ].mcss, &now_scale );
+  ret = BTLV_EFFTOOL_CalcParam( &bmtw->emw, &now_scale );
+  MCSS_SetShadowOfsScale( bmw->btlv_mcss[ index ].mcss, &now_scale );
+  if( ret == TRUE )
+  {
+    BTLV_EFFECT_FreeTCB( tcb );
+  }
+}
+
+static  void  TCB_BTLV_MCSS_ShadowScale_CB( GFL_TCB *tcb )
+{ 
+  BTLV_MCSS_TCB_WORK  *bmtw = ( BTLV_MCSS_TCB_WORK * )GFL_TCB_GetWork( tcb );
+
+  if( bmtw->bmw->tcb_id_shadow_scale[ bmtw->position ] == bmtw->tcb_id )
+  { 
+    bmtw->bmw->mcss_tcb_shadow_scale_execute &= ( BTLV_EFFTOOL_Pos2Bit( bmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+  }
+}
+
 //============================================================================================
 /**
  * @brief ポケモン回転タスク

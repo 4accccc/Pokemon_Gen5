@@ -493,6 +493,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 				scale.x = FX_Mul( anim_SRT_mc.sx, mcss->shadow_scale.x );
 				scale.y = FX_Mul( anim_SRT_mc.sy, mcss->shadow_scale.y );
+				scale.x = FX_Mul( scale.x, mcss->shadow_ofs_scale.x );
+				scale.y = FX_Mul( scale.y, mcss->shadow_ofs_scale.y );
 
 				G3_Scale( FX_Mul( scale.x, mcss->ofs_scale.x ), FX_Mul( scale.y, mcss->ofs_scale.y ), FX32_ONE );
 			}
@@ -728,7 +730,7 @@ static	void	MCSS_DrawAct(
 				   FX32_CONST( 128 ),
 				   FX32_ONE * 1,
 				   //FX32_ONE * 1024,
-				   FX32_ONE * ( ( mcss_sys->ortho_far_flag ) ? 512 : 1024 ),
+				   FX32_ONE * ( ( mcss_sys->ortho_far_flag ) ? 256 : 1024 ),
 				   FX32_ONE,
 				   NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
@@ -892,6 +894,9 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
+			mcss_sys->mcss[ count ]->shadow_ofs_scale.x = FX32_ONE;
+			mcss_sys->mcss[ count ]->shadow_ofs_scale.y = FX32_ONE;
+			mcss_sys->mcss[ count ]->shadow_ofs_scale.z = FX32_ONE;
 			mcss_sys->mcss[ count ]->maw = *maw;
 			mcss_sys->mcss[ count ]->mcss_anm_frame = FX32_ONE;
 			mcss_sys->mcss[ count ]->ortho_mode = 1;
@@ -1140,6 +1145,21 @@ void	MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate )
 
 //--------------------------------------------------------------------------
 /**
+ * @brief 影描画用スケールゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするスケール値が格納されたワークのポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_GetShadowScale( MCSS_WORK *mcss, VecFx32 *scale )
+{
+  scale->x = mcss->shadow_scale.x;
+  scale->y = mcss->shadow_scale.y;
+  scale->z = mcss->shadow_scale.z;
+}
+
+//--------------------------------------------------------------------------
+/**
  * @brief 影描画用スケールセット
  *
  * @param[in]  mcss MCSSワーク構造体のポインタ
@@ -1152,6 +1172,37 @@ void	MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale )
 	mcss->shadow_scale.y = scale->y;
 	mcss->shadow_scale.z = scale->z;
 }
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 影描画用スケールゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするスケール値が格納されたワークのポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_GetShadowOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
+{
+  scale->x = mcss->shadow_ofs_scale.x;
+  scale->y = mcss->shadow_ofs_scale.y;
+  scale->z = mcss->shadow_ofs_scale.z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 影描画用スケールセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ * @param[in]  pos  セットするスケール値が格納されたワークのポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetShadowOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
+{
+	mcss->shadow_ofs_scale.x = scale->x;
+	mcss->shadow_ofs_scale.y = scale->y;
+	mcss->shadow_ofs_scale.z = scale->z;
+}
+
 //--------------------------------------------------------------------------
 /**
  * @brief 影描画用回転角セット
