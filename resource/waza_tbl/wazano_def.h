@@ -495,7 +495,7 @@
 #define		WAZANO_TYOUNOMAI			( 483 )		//ちょうのまい
 #define		WAZANO_HEBIIBONBAA		( 484 )		//ヘビーボンバー
 #define		WAZANO_SINKURONOIZU		( 485 )		//シンクロノイズ
-#define		WAZANO_EREKUTOBOORU		( 486 )		//エレクトボール
+#define		WAZANO_EREKIBOORU			( 486 )		//エレキボール
 #define		WAZANO_MIZUBITASI			( 487 )		//みずびたし
 #define		WAZANO_NITOROTYAAZI		( 488 )		//ニトロチャージ
 #define		WAZANO_TOGUROWOMAKU		( 489 )		//とぐろをまく
