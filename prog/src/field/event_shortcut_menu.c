@@ -733,6 +733,10 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 //-----------------------------------------------------------------------------
 static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCUT_ID shortcutID )
 {	
+  //proclinkへいくときに呼ぶタイプを設定します
+  //proclinkへいく必要がないもの（自転車やつりざお）は
+  //select_paramへ値を入れてください
+
 	switch( shortcutID )
 	{	
 	case SHORTCUT_ID_ZITENSYA:			//自転車
@@ -754,7 +758,7 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->select_param	= EVENT_ITEMUSE_CALL_DOWSINGMACHINE;
 		return CALLTYPE_ITEM;
 	case SHORTCUT_ID_GURASHIDEA:		//グラシデアの花
-		p_param->select_param	= EVENT_PROCLINK_CALL_POKELIST;
+		p_param->call	= EVENT_PROCLINK_CALL_POKELIST;
 		p_param->data	= PL_MODE_ITEMUSE;
 		return CALLTYPE_PROC;
   case SHORTCUT_ID_PSTATUS_STATUS:		//ポケモン情報＞ステータス

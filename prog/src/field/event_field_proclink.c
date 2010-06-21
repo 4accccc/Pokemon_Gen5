@@ -1310,7 +1310,23 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
         for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
         { 
           p_pp  = PokeParty_GetMemberPointer( p_party, i );
-          if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && PP_CheckRibbon( p_pp ) )
+          if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && PP_CheckRibbon( p_pp ) && !PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) )
+          { 
+            psData->pos = i;
+            break;
+          }
+        }
+      }
+      //ショートカットから技画面を選んだときはタマゴを除外する
+      else if( psData->page == PPT_SKILL )
+      {
+        int i;
+        POKEMON_PARAM *p_pp;
+        POKEPARTY *p_party = GAMEDATA_GetMyPokemon( gmData );
+        for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
+        { 
+          p_pp  = PokeParty_GetMemberPointer( p_party, i );
+          if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && !PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) )
           { 
             psData->pos = i;
             break;
