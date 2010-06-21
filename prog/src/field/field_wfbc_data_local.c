@@ -580,6 +580,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
 
               FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( p_event, cp_people_data->enc_monsno[ index_count % FIELD_WFBC_PEOPLE_ENC_POKE_MAX ] );
               FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( p_event, cp_people_data->goods_wf );
+              break;//BTS:6314‘Îˆ
             }
           }
         }
