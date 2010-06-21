@@ -2246,10 +2246,17 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
 
   switch( tr->seq_no ){
   case 0:
+    if( ( bew->execute_flag | bew->tcb_damage_flag | bew->tcb_henge_flag ) != 0 )
+    { 
+      break;
+    }
+    tr->seq_no++;
+    /*fallthry*/
+  case 1:
     BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir );
     tr->seq_no++;
     break;
-  case 1:
+  case 2:
     if( ( BTLV_STAGE_CheckExecuteAnmReq( bew->bsw ) == FALSE ) &&
         ( BTLV_MCSS_CheckTCBExecuteAllPos( bew->bmw ) == FALSE ) )
     {
