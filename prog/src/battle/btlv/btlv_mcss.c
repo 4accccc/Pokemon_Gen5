@@ -99,7 +99,8 @@ struct  _BTLV_MCSS
   u32             check_effect_end    :1;     //エフェクトの終了を待つフラグ
   u32             set_pltt_fade_flag  :1;     //パレットフェードが呼ばれた
   u32             henge_flag          :1;     //変化した
-  u32                                 :22;
+  u32             push_vanish_flag    :1;     //バニッシュフラグのプッシュ領域
+  u32                                 :21;
 };
 
 struct _BTLV_MCSS_WORK
@@ -2466,6 +2467,50 @@ BOOL  BTLV_MCSS_CheckHengeFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position )
   bmw->btlv_mcss[ index ].henge_flag = 0;
 
   return ret;
+}
+
+//============================================================================================
+/**
+ *  @brief  バニッシュ状態をプッシュ
+ *
+ * @param[in]   bmw       システム管理構造体
+ * @param[in]   position  立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_PushVanishFlag( BTLV_MCSS_WORK* bmw )
+{ 
+  BtlvMcssPos pos;
+
+  for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+  { 
+    if( BTLV_MCSS_CheckExist( bmw, pos ) )
+    { 
+      int index = BTLV_MCSS_GetIndex( bmw, pos );
+      bmw->btlv_mcss[ index ].push_vanish_flag = BTLV_MCSS_GetVanishFlag( bmw, pos );
+    }
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  バニッシュ状態をポップ
+ *
+ * @param[in]   bmw       システム管理構造体
+ * @param[in]   position  立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_PopVanishFlag( BTLV_MCSS_WORK* bmw )
+{ 
+  BtlvMcssPos pos;
+
+  for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+  { 
+    if( BTLV_MCSS_CheckExist( bmw, pos ) )
+    { 
+      int index = BTLV_MCSS_GetIndex( bmw, pos );
+      BTLV_MCSS_SetVanishFlag( bmw, pos, bmw->btlv_mcss[ index ].push_vanish_flag );
+    }
+  }
 }
 
 //============================================================================================

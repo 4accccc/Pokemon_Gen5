@@ -79,6 +79,7 @@ typedef enum
   BTLV_MCSS_VANISH_FLIP = MCSS_VANISH_FLIP,
   BTLV_MCSS_EFFECT_VANISH_ON,
   BTLV_MCSS_EFFECT_VANISH_OFF,
+  BTLV_MCSS_EFFECT_VANISH_POP,
 }BTLV_MCSS_VANISH_FLAG;
 
 typedef enum
@@ -217,6 +218,8 @@ extern  void            BTLV_MCSS_CheckPositionSetInitPos( BTLV_MCSS_WORK* bmw, 
 extern  void            BTLV_MCSS_SetReverseDrawFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position,
                                                       BTLV_MCSS_REVERSE_DRAW draw_flag );
 extern  BOOL            BTLV_MCSS_CheckHengeFlag( BTLV_MCSS_WORK* bmw, BtlvMcssPos position );
+extern  void            BTLV_MCSS_PushVanishFlag( BTLV_MCSS_WORK* bmw );
+extern  void            BTLV_MCSS_PopVanishFlag( BTLV_MCSS_WORK* bmw );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );

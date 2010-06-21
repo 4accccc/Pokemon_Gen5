@@ -1980,6 +1980,10 @@ void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
     bew->camera_work_seq  = 0;
     bew->camera_work_wait = 0;
   }
+  if( cwe == BTLV_EFFECT_CWE_COMM_WAIT )
+  { 
+    BTLV_MCSS_PushVanishFlag( bew->bmw );
+  }
 }
 
 //----------------------------------------------------------------------------

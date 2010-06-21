@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -2637,9 +2637,12 @@ static VMCMD_RESULT VMEC_POKEMON_VANISH( VMHANDLE *vmh, void *context_work )
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_VANISH\n");
 #endif DEBUG_OS_PRINT
-
+  if( flag == BTLV_MCSS_EFFECT_VANISH_POP )
+  { 
+    BTLV_MCSS_PopVanishFlag( BTLV_EFFECT_GetMcssWork() );
+  }
+  else if( pos_cnt )
   //立ち位置情報がないときは、コマンド実行しない
-  if( pos_cnt )
   {
     int i;
     for( i = 0 ; i < pos_cnt ; i++ )
