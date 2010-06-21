@@ -2862,6 +2862,7 @@ static int WO_SeqPstWait( WO_WORK * wk )
   // ステータス画面終了時にここに来る
     WO_DispInit( wk );
     WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR);
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WAZAOSHIE );
     if(wk->psd.ret_mode==PST_RET_DECIDE){
       wk->dat->del_pos = wk->psd.ret_sel;
     }else{
