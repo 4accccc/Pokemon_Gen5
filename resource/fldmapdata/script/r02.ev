@@ -445,7 +445,7 @@ EVENT_START   ev_pos_r02_mama_01
 	//ランニングシューズ入手処理
 	_GET_SHOES()
 	_ME_PLAY( SEQ_ME_KEYITEM )
-	_SYSWIN_MSG_ALLPUT( msg_r02_mama_03, POS_DOWN )
+	_SYSWIN_MSG( msg_r02_mama_03, POS_DOWN )
 	_ME_WAIT()
 	_AB_KEYWAIT_MARK()
 	_SYSWIN_CLOSE()
