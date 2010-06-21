@@ -97,9 +97,7 @@ static void SCRIPTSYS_EntryNextFunc( SCRIPTSYS *scrsys, GMEVENT * next_event );
 static void SCRIPTSYS_CallNextFunc( SCRIPTSYS *scrsys, GMEVENT * event );
 static BOOL SCRIPTSYS_HasNextFunc( const SCRIPTSYS *scrsys );
 
-#ifdef  PM_DEBUG
 static void SCRIPTSYS_SetCodeChecker( VMHANDLE * core );
-#endif
 //イベント
 static GMEVENT * createScriptEvent(
     GAMESYS_WORK * gsys, u16 temp_heapID, u16 scr_id, MMDL * obj, void * ret_script_wk );
@@ -881,9 +879,7 @@ static VMHANDLE * SCRVM_Create(
     core->adrs += (local_scr_id * sizeof(u32));			//ID分進める(adrsがlongなので*4)
     core->adrs += VMGetU32( core );		//ラベルオフセット分進める
   }
-#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto) || defined(DEBUG_ONLY_FOR_nozomu_saitou) || defined(DEBUG_ONLY_FOR_obata_toshihiro)
   SCRIPTSYS_SetCodeChecker( core );
-#endif
 	return core;
 }
 //--------------------------------------------------------------
@@ -1038,7 +1034,36 @@ BOOL SCRIPT_IsSpecialScriptType( SCRIPT_TYPE scr_type )
 
 //============================================================================================
 //============================================================================================
-#ifdef  PM_DEBUG
+#include "system/machine_use.h"
+//--------------------------------------------------------------
+/**
+ * @brief エラー検出時の無限ループ
+ * @date  2010.06.20
+ *
+ * src/system/save_error_warning.cの警告画面無限ループを
+ * 元にしている
+ */
+//--------------------------------------------------------------
+static void eternalLoopMain( void )
+{
+  //このプレイヤーに侵入されないよう通信を終了させる
+  if(GFL_NET_IsInit())
+  {
+    GFL_NET_ResetDisconnect();  ///切断処理中でも一旦リセット
+    GFL_NET_Exit(NULL);
+    GFL_NET_IRCWIRELESS_ResetSystemError();  //赤外線WIRLESS切断
+    do{
+      GFL_NET_Main();
+    }while(GFL_NET_IsExit() == FALSE);
+  }
+  
+  //無限ループ
+  do{
+    MachineSystem_Main(); //ハードリセット用
+  }while(1);
+}
+
+
 #include "../../../resource/fldmapdata/script/scrcmd_list/cmd_check_data.h"
 #include "../../../resource/fldmapdata/script/scrcmd_list/cmd_check_data.cdat"
 //--------------------------------------------------------------
@@ -1058,7 +1083,8 @@ static BOOL checkScrCmd( VMHANDLE * core, void * context, void * check_work, u16
   }
 
   if( code_enable == FALSE ) {
-    OS_Printf( "不正なコマンド実行: scr_type=%d, code=%d\n", script_type, code );
+    GF_ASSERT_MSG( 0, "不正なコマンド実行: scr_type=%d, code=%d\n", script_type, code );
+    eternalLoopMain();  //無限ループに入る
   }
   return code_enable;
 }
@@ -1070,5 +1096,4 @@ static void SCRIPTSYS_SetCodeChecker( VMHANDLE * core )
   GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( VM_GetContext( core ) );
   VM_SetCheckFunc( core, checkScrCmd, gsys );
 }
-#endif
 
