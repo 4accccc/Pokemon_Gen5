@@ -442,7 +442,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
   PLAYER_WORK* p_player = GAMEDATA_GetMyPlayerWork( gamedata );
   u32 zone_id = PLAYERWORK_getZoneID( p_player );
   u32 back_people_num;
-  u32 back_push_skip_num;
+  u32 back_push_num;
 
   p_wk = GAMEDATA_GetMyWFBCCoreData( gamedata );
   p_item = GAMEDATA_GetWFBCItemData( gamedata );
@@ -463,7 +463,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
   }
 
   back_people_num = FIELD_WFBC_CORE_GetPeopleNum( p_wk, MAPMODE_INTRUDE );
-  back_push_skip_num = 0;
+  back_push_num = 0;
   
   // 全員のMoodをFIELD_WFBC_MOOD_SUB減らす
   // マスクのクリア
@@ -477,7 +477,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
       result = WFBC_CORE_People_AddMood( &p_wk->people[i], FIELD_WFBC_MOOD_SUB * diff_day );
       
       // 裏がいっぱいなら消さない。
-      if( (result) && ((back_people_num + back_push_skip_num) >= FIELD_WFBC_PEOPLE_MAX) ) 
+      if( (result) && ((back_people_num + back_push_num) >= FIELD_WFBC_PEOPLE_MAX) ) 
       {
         TOMOYA_Printf( "ＷＦＢＣ　ＮＯＴ　ＣＬＥＡＲ　ＮＰＣ\n" );
         WFBC_CORE_People_SetMood( &p_wk->people[i], 1 );
@@ -495,6 +495,9 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
           // けつの情報を裏世界に渡す。
           WFBC_CORE_PushPeopleArray( p_wk->back_people, &p_wk->people[i] );
           FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+
+          // スキップ数をカウント
+          back_push_num ++;
         }else{
 
           // データとしていなくなったことになった人のマスクは、すべて落とす。
@@ -503,7 +506,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
           p_wk->people[i].one_day_msk = FIELD_WFBC_ONEDAY_MSK_DUMMYMODE_INIT;
 
           // スキップ数をカウント
-          back_push_skip_num ++;
+          back_push_num ++;
 
           TOMOYA_Printf( "ＷＦＢＣ　SKIP　ＮＰＣ\n" );
 
