@@ -88,6 +88,7 @@ static GMEVENT_RESULT EVENT_DebugWifiMatchMain(GMEVENT * event, int *  seq, void
   case _FIELD_COMM:
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
     {
+      PMSND_PushBGM();
       (*seq)++;
     }
     break;
@@ -167,6 +168,7 @@ static GMEVENT_RESULT EVENT_DebugWifiMatchMain(GMEVENT * event, int *  seq, void
     (*seq) ++;
     break;
   case _FIELD_END:
+    PMSND_PopBGM();
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
