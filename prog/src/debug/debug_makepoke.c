@@ -54,6 +54,7 @@ typedef struct {
   int           index;
   int           search_first_index;
   int           searchingFlag;
+  int           delayTimer;
 }COMP_SKB_WORK;
 
 //--------------------------------------------------------------
@@ -136,6 +137,7 @@ typedef struct {
   u8      seq;
   s8      pageNo;
   u8      touch_prev_flag;
+  u32     reactionDelayTimer;
 
   u32       oyaID;
   u32       oyaID_org;
@@ -564,7 +566,7 @@ static BOOL main_root_ctrl( DMP_MAINWORK* wk )
  *
  */
 //----------------------------------------------------
-static int root_wait_ctrl( DMP_MAINWORK* wk ) 
+static int root_wait_ctrl( DMP_MAINWORK* wk )
 {
   u16 key = GFL_UI_KEY_GetTrg();
 
@@ -583,7 +585,7 @@ static int root_wait_ctrl( DMP_MAINWORK* wk )
     }
     return SEQ_PAGE_CHANGE;
   }
-  
+
   //決定/キャンセル
   if( key & PAD_BUTTON_START ){
     update_dst( wk );
@@ -601,7 +603,7 @@ static int root_wait_ctrl( DMP_MAINWORK* wk )
     return SEQ_EXIT;
   }
   wk->boxIdx = check_box_touch( wk );
- 
+
   if( wk->boxIdx >= 0 )
   {
     const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
@@ -609,16 +611,16 @@ static int root_wait_ctrl( DMP_MAINWORK* wk )
     case INPUTBOX_TYPE_STR:
     case INPUTBOX_TYPE_NICKNAME:
       return inputbox_type_str( wk, p );
-    
+
     case INPUTBOX_TYPE_NUM:
       return inputbox_type_num( wk, p );
-    
+
     case INPUTBOX_TYPE_SWITCH:
       return inputbox_type_switch( wk, p );
-    
+
     case INPUTBOX_TYPE_BTN:
       return inputbox_type_btn( wk, p );
-    
+
     }
   }
   return SEQ_WAIT_CTRL;
@@ -634,16 +636,16 @@ static int inputbox_type_str( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
     GFL_SKB_MODE_KATAKANA, TRUE, 0, PAD_BUTTON_START,
     PRINT_FRAME, SKB_PALIDX1, SKB_PALIDX2,
   };
-  
+
   wk->skbSetup = setup;
   box_getstr( wk, wk->boxIdx, wk->strbuf );
-  
+
   if( is_hiragana(wk->strbuf) ){
     wk->skbSetup.mode = GFL_SKB_MODE_HIRAGANA;
   }
   wk->skb = GFL_SKB_Create( (void*)(wk->strbuf), &wk->skbSetup, wk->heapID );
   COMPSKB_Setup( &wk->comp, wk->skb, wk->strbuf, p->arg3, p->arg, wk->heapID );
- 
+
   return ((p->type == INPUTBOX_TYPE_STR)? SEQ_INPUT_STR : SEQ_INPUT_NICKNAME);
 }
 
@@ -654,7 +656,7 @@ static int inputbox_type_num( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
 {
   NumInput_Setup( &wk->numInput, wk->strbuf, wk->win, wk->font,
     &wk->printUtil, wk->printQue, p, box_getvalue(wk, wk->boxIdx), wk );
-  
+
   return SEQ_INPUT_NUM;
 }
 
@@ -664,7 +666,7 @@ static int inputbox_type_num( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
 static int inputbox_type_switch( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
 {
   int val = box_getvalue( wk, wk->boxIdx );
-  
+
   if( wk->touch_prev_flag ){
     if( --val < 0 ){
       val = p->arg2-1;
@@ -785,7 +787,7 @@ static void default_waza_set( DMP_MAINWORK* wk, u16 waza )
 static void rare_param_set( DMP_MAINWORK* wk )
 {
   int i;
- 
+
   wk->boxValue[ INPUTBOX_ID_RARE ] = TRUE;
   {
     u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
@@ -831,7 +833,7 @@ static void update_dst( DMP_MAINWORK* wk )
   PP_Get( wk->dst, ID_PARA_nickname, (void*)(wk->strbuf) );
 
   PP_Clear( wk->dst );
-  
+
   {
     u32 pow_val, exp;
     u8 hp, pow, def, agi, spw, sdf;
@@ -920,7 +922,7 @@ static void update_dst( DMP_MAINWORK* wk )
     u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
     PP_Put( wk->dst, ID_PARA_item, item );
   }
-  
+
 
   // たまごフラグ
   {
@@ -950,7 +952,7 @@ static void update_dst( DMP_MAINWORK* wk )
   //
   //捕まえた場所/生まれた場所
   PP_Put( wk->dst, ID_PARA_get_level, box_getvalue(wk, INPUTBOX_ID_GET_LEVEL) );
-  
+
   PP_Put( wk->dst, ID_PARA_get_place, box_getvalue(wk, INPUTBOX_ID_GET_PLACE) );
   PP_Put( wk->dst, ID_PARA_get_year, box_getvalue(wk, INPUTBOX_ID_GET_YEAR) );
   PP_Put( wk->dst, ID_PARA_get_month, box_getvalue(wk, INPUTBOX_ID_GET_MONTH) );
@@ -1108,7 +1110,7 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
       }
     }
     break;
-  
+
   case ID_PARA_personal_rnd:
     {
       value = PP_Get( pp, p->paraID, NULL );
@@ -1134,7 +1136,7 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     break;
 
   case ID_PARA_get_ball:
-    value = ITEM_BallID2ItemID( PP_Get(pp, p->paraID, NULL)); 
+    value = ITEM_BallID2ItemID( PP_Get(pp, p->paraID, NULL));
     break;
 
   default:
@@ -1590,11 +1592,11 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       u32 id_L = box_getvalue( wk, INPUTBOX_ID_OYAID_L );
       wk->oyaID = (id_H << 16) | (id_L);
       update_dst( wk );
-      
+
       box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
     }
     break;
-  
+
   case INPUTBOX_ID_SEX_SET:
     {
       u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
@@ -1621,7 +1623,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
     }
     break;
-  
+
   case INPUTBOX_ID_FORM:
   case INPUTBOX_ID_ITEM:
     box_setup_form_change( wk );
@@ -1640,7 +1642,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
           box_getvalue( wk, INPUTBOX_ID_TOKUSEI_3RD));
     }
     break;
-  
+
   case INPUTBOX_ID_TOKUSEI_SWITCH:
     {
       box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
@@ -1665,7 +1667,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       PP_Put( wk->dst, ID_PARA_nickname, (u32)wk->tmpbuf );
       box_setup( wk, INPUTBOX_ID_NICKNAME, wk->dst );
       box_setup( wk, INPUTBOX_ID_NICKNAME_FLG, wk->dst );
-    } 
+    }
     break;
 
   case INPUTBOX_ID_PPEDIT1:
@@ -1936,6 +1938,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
     }
     return TRUE;
   case GFL_SKB_REACTION_INPUT:
+    #if 0
     {
       int idx;
       GFL_SKB_PickStr( wk->skb );
@@ -1949,6 +1952,8 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
         wk->index = -1;
       }
     }
+    #endif
+    wk->delayTimer = 90;
     break;
   case GFL_SKB_REACTION_BACKSPACE:
     {
@@ -1965,9 +1970,18 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
     fSearchReq = TRUE;
     break;
   case GFL_SKB_REACTION_NONE:
+    if( wk->delayTimer )
+    {
+      wk->delayTimer--;
+      if( wk->delayTimer == 0 ){
+        fSearchReq = TRUE;
+      }
+    }
     {
       u16 key = GFL_UI_KEY_GetTrg();
-      if( key & PAD_BUTTON_SELECT ){
+      if( key & PAD_BUTTON_SELECT )
+      {
+        wk->delayTimer = 0;
         fSearchReq = TRUE;
       }
     }
