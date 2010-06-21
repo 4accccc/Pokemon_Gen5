@@ -198,6 +198,9 @@ extern void TOUCHBAR_SetSoftPriorityAll( TOUCHBAR_WORK* p_wk, u8 pri );
 ///	アイコンアクティブ設定
 //		アクティブ、ノンアクティブでアニメが変わります
 //		また、ノンアクティブ状態ではアイコンが押せません
+//		  注）
+//		  アイコンアニメ中にアクティブ化するとアニメ終了を検知できず、
+//      ボタンを押しても反応がない状態になります。
 //=====================================
 extern void TOUCHBAR_SetActive( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_active );
 extern BOOL TOUCHBAR_GetActive( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
@@ -233,6 +236,7 @@ extern u8 TOUCHBAR_GetBgPriority( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon
 
 //-------------------------------------
 ///	再起動
-//    内部状態のリセット＋全アイコンのアクティブ化を行います
+//    内部状態のリセット＋アイコンのアクティブ化を行います
 //=====================================
 extern void TOUCHBAR_ReStart( TOUCHBAR_WORK *p_wk );
+extern void TOUCHBAR_ReStartEx( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon );

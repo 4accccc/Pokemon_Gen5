@@ -803,6 +803,20 @@ void TOUCHBAR_ReStart( TOUCHBAR_WORK *p_wk )
 
   TOUCHBAR_SetActiveAll( p_wk, TRUE );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タッチバーリセット  + 一部ボタンのみアクティブにしたいとき　専用
+ *
+ *	@param	TOUCHBAR_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_ReStartEx( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon )
+{
+  p_wk->seq = TOUCHBAR_SEQ_MAIN;
+  p_wk->trg = TOUCHBAR_SELECT_NONE;
+
+  TOUCHBAR_SetActive( p_wk, icon, TRUE );
+}
 
 //=============================================================================
 /**
