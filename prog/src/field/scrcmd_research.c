@@ -328,13 +328,13 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
     int maxCount;
 
     ansNum = AnswerNum_question[ qID ];
-    maxCount = 0;
+    maxCount = -1;
     for( ansIdx=0; ansIdx < ansNum; ansIdx++ )
     {
       int totalCount = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx+1 );
       int todayCount = QuestionnaireWork_GetTodayAnswerNum( qSave, qID, ansIdx+1 );
       int sumCount   = totalCount + todayCount;
-      if( maxCount <= sumCount ) {
+      if( maxCount < sumCount ) {
         maxCount = sumCount;
         majorityAnswerID = AnswerID_question[ qID ][ ansIdx ];
       }
@@ -344,6 +344,7 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
           qID, ansIdx, sumCount, totalCount, todayCount );
 #endif
     }
+    GF_ASSERT( -1 < maxCount );
   }
 
   // Å‚à‘½””h‚Ì‰ñ“šID‚ð•Ô‚·
