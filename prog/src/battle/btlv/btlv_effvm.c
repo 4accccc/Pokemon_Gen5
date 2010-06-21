@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -5313,7 +5313,9 @@ static  BtlRule EFFVM_GetDirPosition( VMHANDLE* vmh, int* pos )
 
   if( *pos == BTLV_MCSS_POS_ERROR )
   {
-    if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
+    if( ( rule == BTL_RULE_SINGLE ) ||
+        ( rule == BTL_RULE_ROTATION ) ||
+        ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_BATTLE ) )
     {
       *pos = bevw->attack_pos ^ 1;
     }
