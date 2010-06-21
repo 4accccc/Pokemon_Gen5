@@ -2048,6 +2048,7 @@ static void Main_CHANGE_load( FIELD_SOUND* fieldSound )
     if( (fieldSound->requestBGM != BGM_NONE) &&
         (fieldSound->requestBGM != fieldSound->currentBGM) ) { 
       // 再ロード開始
+      PMSND_StopBGM();
       ChangeState( fieldSound, FSND_STATE_CHANGE_out );
     }
     else { 
