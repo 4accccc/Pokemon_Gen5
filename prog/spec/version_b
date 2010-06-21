@@ -12,3 +12,5 @@ ROM_SPEC= spec/pokemon_wb_black$(TWL_LIBSUFFIX).rsf
 #TWL_COMPRESS   = True
 #AMPROTECT      = yes
 
+#libsyscall
+LIBSYSCALL_A = $(notdir $(LIBSYSCALL_))

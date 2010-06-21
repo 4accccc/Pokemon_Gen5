@@ -9,3 +9,6 @@ ROM_SPEC= default$(TWL_LIBSUFFIX).rsf
 #----------------------------------------------------------------------------
 #NITRO_FINALROM = yes
 #TWL_FINALROM = yes
+
+#libsyscall
+LIBSYSCALL_A = $(notdir $(LIBSYSCALL_))

@@ -11,3 +11,6 @@ NITRO_FINALROM = yes
 TWL_FINALROM   = yes
 TWL_COMPRESS   = True
 #AMPROTECT      = yes
+
+#libsyscall
+LIBSYSCALL_A = $(PROJECT_PROGDIR)/spec/IRBJ/libsyscall.a

@@ -90,8 +90,7 @@ NITRO_LIBS		= 									\
 				   libctrdg$(NITRO_LIBSUFFIX).a		\
 			       libcht$(NITRO_LIBSUFFIX).a		\
 				   libwxc$(NITRO_LIBSUFFIX).a		\
-				   $(notdir $(LIBSYSCALL_))
-
+				   $(LIBSYSCALL_A)
 
 
 TWL_LIBS		= 								\
@@ -132,7 +131,7 @@ TWL_LIBS		= 									\
 				   libctrdg$(NITRO_LIBSUFFIX).a		\
 			       libcht$(NITRO_LIBSUFFIX).a		\
 				   libwxc$(NITRO_LIBSUFFIX).a		\
-				   $(notdir $(LIBSYSCALL_)) \
+				   $(LIBSYSCALL_A) \
 				   $(notdir $(LIBSYSCALL_TWL_)) \
 						$(CRT0_O)
 
