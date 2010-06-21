@@ -2632,7 +2632,16 @@ static int Subseq_End( WORLDTRADE_WORK *wk)
 	//WirelessIconEasyEnd();
 
 	if( wk->sub_out_flg == 1 ){
-		WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
+    //既にサブの輝度が落ちているならばメインだけにする  20100621 mod Saito
+    if ( GXS_GetMasterBrightness() == -16 )
+    {
+      NOZOMU_Printf("サブは輝度が落ちているからメインだけ\n");
+      WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
+    }
+    else
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
+    }
 #ifdef GTS_FADE_OSP
 		OS_Printf( "******************** worldtrade_upload.c [1737] MS ********************\n" );
 #endif
