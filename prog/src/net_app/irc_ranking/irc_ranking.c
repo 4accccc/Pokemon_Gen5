@@ -2416,7 +2416,7 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
       PRINTSYS_Print( p_wk->p_bmp, (SCROLL_BAR_FONT_RANK_X+2)*GFL_BG_1CHRDOTSIZ-2- w, SCROLL_FONT_Y_OFS, p_strbuf, p_font );
     }
     //ñºëO
-    PRINTSYS_Print( p_wk->p_bmp, SCROLL_BAR_FONT_PLAYER_X*GFL_BG_1CHRDOTSIZ+4, SCROLL_FONT_Y_OFS, cp_data->p_name, p_font );
+    PRINTSYS_Print( p_wk->p_bmp, SCROLL_BAR_FONT_PLAYER_X*GFL_BG_1CHRDOTSIZ+5, SCROLL_FONT_Y_OFS, cp_data->p_name, p_font );
     //ì_êî
     WORDSET_ExpandStr( p_wordset, p_strbuf, p_score_buf );
     {
