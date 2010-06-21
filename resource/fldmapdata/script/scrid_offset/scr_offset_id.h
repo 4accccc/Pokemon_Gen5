@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 06/14 (Mon) 16:48
+ * @date  2010 06/21 (Mon) 16:04
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -153,6 +153,9 @@
 
 #define ID_TV_SCR_OFFSET                 (10520) //
 #define ID_TV_SCR_OFFSET_END             (10524)
+
+#define ID_PLAYABLE_SCR_OFFSET           (10525) //試遊台バージョン用スクリプト
+#define ID_PLAYABLE_SCR_OFFSET_END       (10624)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

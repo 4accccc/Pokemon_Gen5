@@ -138,6 +138,9 @@ tamagetake_scr_def.h: tamagetake_scr.ev
 tv_scr_def.h: tv_scr.ev
 	$(EV_DEF) tv_scr.ev $(SCR_OFFS_ID_H)
 
+playable_scr_def.h: playable_scr.ev
+	$(EV_DEF) playable_scr.ev $(SCR_OFFS_ID_H)
+
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)
 
