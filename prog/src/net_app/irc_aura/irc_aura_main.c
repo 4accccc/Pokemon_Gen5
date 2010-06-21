@@ -221,7 +221,7 @@ enum{
 #define TOUCH_COUNTER_SHAKE_MAX (TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)  //ƒuƒŒ‚ðŽæ“¾‚·‚é‰ñ”
 #define RESULT_SEND_CNT (COMPATIBLE_IRC_SENDATA_CNT)
 
-#define AURA_MSG_CHANGE_SYNC (4*60)
+#define AURA_MSG_CHANGE_SYNC (3*60)
 
 //-------------------------------------
 /// ŒÂ”
