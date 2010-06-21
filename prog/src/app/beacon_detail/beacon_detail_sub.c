@@ -889,6 +889,7 @@ typedef struct _TASKWK_PAGE_SCROLL{
   u8  frame;
   u8  next;
   u8  dir;
+  u8  anm_end;
 
   int child_task;
  
@@ -942,13 +943,18 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
   TASKWK_PAGE_SCROLL* twk = (TASKWK_PAGE_SCROLL*)tcb_wk;
   static const u8 pos_tbl[] = { SCROLL_POS_DOWN, SCROLL_POS_UP };
   
+  if( twk->anm_end == FALSE ){
+    if( TOUCHBAR_GetTrg( twk->bdw->touchbar ) != TOUCHBAR_SELECT_NONE ){
+      twk->anm_end = TRUE;
+    }
+  }
   if( !PRINTSYS_QUE_IsFinished( twk->bdw->print_que ) ){	
     return;
   }
 
   switch( twk->seq ){
   case 0:
-    if( TOUCHBAR_GetTrg( twk->bdw->touchbar ) == TOUCHBAR_SELECT_NONE ){
+    if( twk->anm_end == FALSE ) {
       return;
     }
     TOUCHBAR_SetActiveAll( twk->bdw->touchbar, FALSE );
