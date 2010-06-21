@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 06/21 (Mon) 16:04
+ * @date  2010 06/21 (Mon) 17:17
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -21,9 +21,6 @@
 
 #define ID_POKECEN_SCR_OFFSET            (2100) //ポケセン用スクリプト
 #define ID_POKECEN_SCR_OFFSET_END        (2199)
-
-#define ID_SODATEYA_SCR_OFFSET           (2200) //育て屋用スクリプト
-#define ID_SODATEYA_SCR_OFFSET_END       (2224)
 
 #define ID_NAMECHANGE_SCR_OFFSET         (2225) //姓名判断
 #define ID_NAMECHANGE_SCR_OFFSET_END     (2249)
@@ -88,12 +85,6 @@
 #define ID_DEOX_CHANGE_SCR_OFFSET        (10270) //デオキシスフォルムチェンジ
 #define ID_DEOX_CHANGE_SCR_OFFSET_END    (10279)
 
-#define ID_FOSSIL_SCR_OFFSET             (10280) //化石復元
-#define ID_FOSSIL_SCR_OFFSET_END         (10289)
-
-#define ID_PALPARK_SCR_OFFSET            (10290) //パルパーク
-#define ID_PALPARK_SCR_OFFSET_END        (10309)
-
 #define ID_JUDGE_SCR_OFFSET              (10310) //ジャッジイベント
 #define ID_JUDGE_SCR_OFFSET_END          (10314)
 
@@ -102,9 +93,6 @@
 
 #define ID_ID_PRESENT_SCR_OFFSET         (10325) //ポケモンIDアイテムプレゼントスクリプト
 #define ID_ID_PRESENT_SCR_OFFSET_END     (10329)
-
-#define ID_BSUBWAY_SCR_OFFSET            (10330) //バトルサブウェイ用スクリプト
-#define ID_BSUBWAY_SCR_OFFSET_END        (10349)
 
 #define ID_CROWD_PEOPLE_SCR_OFFSET       (10350) //群集用スクリプト
 #define ID_CROWD_PEOPLE_SCR_OFFSET_END   (10379)
@@ -127,20 +115,8 @@
 #define ID_GPOWER_SCR_OFFSET             (10425) //Gパワーイベントスクリプト
 #define ID_GPOWER_SCR_OFFSET_END         (10429)
 
-#define ID_TRIAL_HOUSE_SCR_OFFSET        (10430) //トライアルハウス受付スクリプト
-#define ID_TRIAL_HOUSE_SCR_OFFSET_END    (10434)
-
 #define ID_PDW_SCR_OFFSET                (10435) //PDW家具屋用スクリプト
 #define ID_PDW_SCR_OFFSET_END            (10439)
-
-#define ID_MUSICAL_SCR_OFFSET            (10440) //ミュージカル用スクリプト
-#define ID_MUSICAL_SCR_OFFSET_END        (10459)
-
-#define ID_SEATEMPLE_SCR_OFFSET          (10460) //海底神殿用スクリプト
-#define ID_SEATEMPLE_SCR_OFFSET_END      (10469)
-
-#define ID_APPRAISAL_SCR_OFFSET          (10470) //鑑定士イベント用スクリプト
-#define ID_APPRAISAL_SCR_OFFSET_END      (10479)
 
 #define ID_SYMBOL_ENCOUNT_SCR_OFFSET     (10480) //シンボルエンカウント（パレスの森）用スクリプト
 #define ID_SYMBOL_ENCOUNT_SCR_OFFSET_END (10499)

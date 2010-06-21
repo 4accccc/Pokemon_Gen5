@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2010 06/21 (Mon) 16:04
+ * @date  2010 06/21 (Mon) 17:17
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -56,40 +56,12 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_symbol_encount_scr_dat
     },
-    {//鑑定士イベント用スクリプト
-      ID_APPRAISAL_SCR_OFFSET,        //(10470),
-      ID_APPRAISAL_SCR_OFFSET_END,    //(10479),
-      NARC_script_seq_appraisal_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_appraisal_scr_dat
-    },
-    {//海底神殿用スクリプト
-      ID_SEATEMPLE_SCR_OFFSET,        //(10460),
-      ID_SEATEMPLE_SCR_OFFSET_END,    //(10469),
-      NARC_script_seq_seatemple_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_seatemple_scr_dat
-    },
-    {//ミュージカル用スクリプト
-      ID_MUSICAL_SCR_OFFSET,          //(10440),
-      ID_MUSICAL_SCR_OFFSET_END,      //(10459),
-      NARC_script_seq_musical_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_musical_scr_dat
-    },
     {//PDW家具屋用スクリプト
       ID_PDW_SCR_OFFSET,              //(10435),
       ID_PDW_SCR_OFFSET_END,          //(10439),
       NARC_script_seq_pdw_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pdw_scr_dat
-    },
-    {//トライアルハウス受付スクリプト
-      ID_TRIAL_HOUSE_SCR_OFFSET,      //(10430),
-      ID_TRIAL_HOUSE_SCR_OFFSET_END,  //(10434),
-      NARC_script_seq_trial_house_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_trialhouse_dat
     },
     {//Gパワーイベントスクリプト
       ID_GPOWER_SCR_OFFSET,           //(10425),
@@ -140,13 +112,6 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_crowd_people_scr_dat
     },
-    {//バトルサブウェイ用スクリプト
-      ID_BSUBWAY_SCR_OFFSET,          //(10330),
-      ID_BSUBWAY_SCR_OFFSET_END,      //(10349),
-      NARC_script_seq_bsubway_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_bsubway_scr_dat
-    },
     {//ポケモンIDアイテムプレゼントスクリプト
       ID_ID_PRESENT_SCR_OFFSET,       //(10325),
       ID_ID_PRESENT_SCR_OFFSET_END,   //(10329),
@@ -167,20 +132,6 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_script_seq_judge_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_judge_scr_dat
-    },
-    {//パルパーク
-      ID_PALPARK_SCR_OFFSET,          //(10290),
-      ID_PALPARK_SCR_OFFSET_END,      //(10309),
-      NARC_script_seq_palpark_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_palpark_scr_dat
-    },
-    {//化石復元
-      ID_FOSSIL_SCR_OFFSET,           //(10280),
-      ID_FOSSIL_SCR_OFFSET_END,       //(10289),
-      NARC_script_seq_fossil_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_kaseki_scr_dat
     },
     {//デオキシスフォルムチェンジ
       ID_DEOX_CHANGE_SCR_OFFSET,      //(10270),
@@ -328,13 +279,6 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_script_seq_namechange_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_namechange_scr_dat
-    },
-    {//育て屋用スクリプト
-      ID_SODATEYA_SCR_OFFSET,         //( 2200),
-      ID_SODATEYA_SCR_OFFSET_END,     //( 2224),
-      NARC_script_seq_sodateya_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_sodateya_scr_dat
     },
     {//ポケセン用スクリプト
       ID_POKECEN_SCR_OFFSET,          //( 2100),
