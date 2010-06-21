@@ -176,7 +176,7 @@ EVENT_START   ev_r03_futago_02
 		
 		_TALK_OBJ_START()
 			
-		_OBJ_ANIME(R03_FUTAGO_01,anm_babygirl1_stop_01)
+		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_gyoe_02 )
 		_OBJ_ANIME_WAIT()
 		
 		_BALLOONWIN_OBJMSG(msg_r03_futago_02,R03_FUTAGO_01)
@@ -187,6 +187,8 @@ EVENT_START   ev_r03_futago_02
 	
 	//ポケモンが２匹以上で戦闘もしていない
 	ELSE
+		
+		_TALK_OBJ_START()
 		
 		//「！」右を向く
 		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_gyoe_02 )
