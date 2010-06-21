@@ -724,20 +724,20 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
       {
         if( BPP_GetPokeSick( bpp ) != POKESICK_NULL )
         {
-          bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NG;
+          bicp.bidp[ j ][ (party_idx*3)+party_ofs ].status = BTLV_INPUT_STATUS_NG;
         }
         else if( BPP_IsFightEnable( bpp ) == FALSE )
         {
-          bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NONE;
+          bicp.bidp[ j ][ (party_idx*3)+party_ofs ].status = BTLV_INPUT_STATUS_NONE;
         }
         else
         {
-          bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_ALIVE;
+          bicp.bidp[ j ][ (party_idx*3)+party_ofs ].status = BTLV_INPUT_STATUS_ALIVE;
         }
       }
       else
       {
-        bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_DEAD;
+        bicp.bidp[ j ][ (party_idx*3)+party_ofs ].status = BTLV_INPUT_STATUS_DEAD;
       }
     }
   }

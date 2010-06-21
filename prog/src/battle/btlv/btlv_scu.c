@@ -4137,6 +4137,9 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1,
   s8 party_idx;
   s8 party_ofs;
 
+  //　ゲージパラメータクリア
+  GFL_STD_MemClear( bbgp, sizeof(BTLV_BALL_GAUGE_PARAM) );
+
   // BTS:5245
   // タッグ、マルチ　２人分のボールゲージが表示されるよう修正
   bparty[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
@@ -4149,8 +4152,10 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1,
     if( count[0] > (TEMOTI_POKEMAX/2) ){ count[0] = (TEMOTI_POKEMAX/2); }
     if( count[1] > (TEMOTI_POKEMAX/2) ){ count[1] = (TEMOTI_POKEMAX/2); }
   }
+  
 
   bbgp->type = type;
+
 
   for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
   {
@@ -4167,24 +4172,20 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1,
       bpp = BTL_PARTY_GetMemberDataConst( bparty[party_idx], party_ofs );
       if( BPP_IsDead( bpp ) )
       {
-        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_DEAD;
+        bbgp->status[ (party_idx*3)+party_ofs ] = BTLV_BALL_GAUGE_STATUS_DEAD;
       }
       else if( BPP_GetPokeSick( bpp ) != POKESICK_NULL )
       {
-        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NG;
+        bbgp->status[ (party_idx*3)+party_ofs ] = BTLV_BALL_GAUGE_STATUS_NG;
       }
       else if( BPP_IsFightEnable( bpp ) == FALSE )
       {
-        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
+        bbgp->status[ (party_idx*3)+party_ofs ] = BTLV_BALL_GAUGE_STATUS_NONE;
       }
       else
       {
-        bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
+        bbgp->status[ (party_idx*3)+party_ofs ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
       }
-    }
-    else
-    {
-      bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
     }
   }
 }
