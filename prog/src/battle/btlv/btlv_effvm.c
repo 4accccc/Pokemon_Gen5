@@ -1250,7 +1250,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
       BtlRule rule = BTLV_EFFECT_GetBtlRule();
       cam_move_pos = bevw->attack_pos;
       if( ( rule ==  BTL_RULE_ROTATION ) &&
-          ( cam_move_pos == BTLV_MCSS_POS_C ) || ( cam_move_pos == BTLV_MCSS_POS_E ) )
+        ( ( cam_move_pos == BTLV_MCSS_POS_C ) || ( cam_move_pos == BTLV_MCSS_POS_E ) ) )
       { 
         cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT_ROTATION;
       }
