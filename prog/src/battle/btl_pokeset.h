@@ -22,6 +22,7 @@ typedef struct {
 
   BTL_POKEPARAM*  bpp[ BTL_POS_MAX ];
   u16             damage[ BTL_POS_MAX ];
+  u16             migawariDamage[ BTL_POS_MAX ];
   u16             sortWork[ BTL_POS_MAX ];
   u8              fMigawariDamage[ BTL_POS_MAX ];
   u8              count;

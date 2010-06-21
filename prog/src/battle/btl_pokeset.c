@@ -34,14 +34,23 @@ void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage
     u32 i;
     for(i=0; i<rec->count; ++i)
     {
-      if( rec->bpp[i] == bpp ){
-        rec->damage[ i ] += damage;
+      if( rec->bpp[i] == bpp )
+      {
+        if( fMigawariDamage ){
+          rec->migawariDamage[ i ] += damage;
+        }else{
+          rec->damage[ i ] += damage;
+        }
         return;
       }
     }
     rec->bpp[ rec->count ] = bpp;
-    rec->damage[ rec->count ] = damage;
-    rec->fMigawariDamage[ rec->count ] = fMigawariDamage;
+    if( fMigawariDamage ){
+      rec->migawariDamage[ rec->count ] += damage;
+    }else{
+      rec->damage[ rec->count ] += damage;
+    }
+
     rec->count++;
     if( rec->count > rec->countMax ){
       rec->countMax = rec->count;
@@ -124,7 +133,7 @@ u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
   {
     if( rec->bpp[i] == bpp )
     {
-      return rec->damage[i];
+      return (rec->damage[i] + rec->migawariDamage[i]);
     }
   }
   GF_ASSERT(0); // ƒ|ƒPƒ‚ƒ“Œ©‚Â‚©‚ç‚È‚¢
@@ -139,7 +148,6 @@ u32 BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp 
   for(i=0; i<rec->count; ++i)
   {
     if( (rec->bpp[i] == bpp)
-    &&  (rec->fMigawariDamage[i] == FALSE)
     ){
       return rec->damage[i];
     }

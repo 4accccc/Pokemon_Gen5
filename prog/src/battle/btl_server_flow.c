@@ -5932,6 +5932,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   // ダメージ記録
   for(i=0; i<poke_cnt; ++i)
   {
+    TAYA_Printf("実体ヒットダメージ=%d\n", dmg[i]);
     BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], dmg[i], FALSE );
     wazaDmgRec_Add( wk, atkPos, attacker, bpp[i], wazaParam, dmg[i] );
     BPP_TURNFLAG_Set( bpp[i], BPP_TURNFLG_DAMAGED );
@@ -6593,6 +6594,7 @@ static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
       bpp = BTL_POKESET_Get( targets, i );
       if( fRealHitOnly ){
         damage = BTL_POKESET_GetDamageReal( targets, bpp );
+        TAYA_Printf("Real damage = %d\n", damage);
       }else{
         damage = BTL_POKESET_GetDamage( targets, bpp );
       }
