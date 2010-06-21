@@ -1362,11 +1362,11 @@ static void VanishFloor(FLD_EXP_OBJ_CNT_PTR ptr, FIELDMAP_WORK *fieldWork, const
   FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_L_3, inVanish );
   FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_R_3, inVanish );
   
-  SetObjVanish(fieldWork, C08GYM0101_WKOBJCODE00_01, inVanish);
-  SetObjVanish(fieldWork, TR_C08GYM0101_F2_01, inVanish);
+  //SetObjVanish(fieldWork, C08GYM0101_WKOBJCODE00_01, inVanish);
+  //SetObjVanish(fieldWork, TR_C08GYM0101_F2_01, inVanish);
 //  SetObjVanish(fieldWork, TR_C08GYM0101_F2_02, inVanish); <<–•Á@20100120
-  SetObjVanish(fieldWork, TR_C08GYM0101_F2_03, inVanish);
-  SetObjVanish(fieldWork, TR_C08GYM0101_F2_04, inVanish);
+  //SetObjVanish(fieldWork, TR_C08GYM0101_F2_03, inVanish);
+  //SetObjVanish(fieldWork, TR_C08GYM0101_F2_04, inVanish);
 }
 
 //--------------------------------------------------------------
