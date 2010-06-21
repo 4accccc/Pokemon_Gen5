@@ -143,10 +143,6 @@ static void Icon_PushFuncNormal( ICON_WORK *p_wk );
 static void Icon_PushFuncFlip( ICON_WORK *p_wk );
 static void Icon_ActiveFuncNormal( ICON_WORK *p_wk, BOOL is_active );
 static void Icon_ActiveFuncFlip( ICON_WORK *p_wk, BOOL is_active );
-//-------------------------------------
-///	再スタート
-//=====================================
-static void TOUCHBAR_ReStart( TOUCHBAR_WORK *p_wk );
 //=============================================================================
 /**
  *					データ
@@ -532,10 +528,6 @@ void TOUCHBAR_SetActive( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_activ
 
 	//設定
 	ICON_SetActive( p_icon, is_active );
-
-  //内部状態を修復
-  //（タッチアニメ中にアクティブにするとアニメ待ちで無限ループになるため）
-  TOUCHBAR_ReStart( p_wk );
 }
 //----------------------------------------------------------------------------
 /**	
@@ -799,14 +791,17 @@ BOOL TOUCHBAR_GetFlip( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  タッチバーリセット：ｗ
+ *	@brief  タッチバーリセット
  *
  *	@param	TOUCHBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void TOUCHBAR_ReStart( TOUCHBAR_WORK *p_wk )
+void TOUCHBAR_ReStart( TOUCHBAR_WORK *p_wk )
 {
   p_wk->seq = TOUCHBAR_SEQ_MAIN;
+  p_wk->trg = TOUCHBAR_SELECT_NONE;
+
+  TOUCHBAR_SetActiveAll( p_wk, TRUE );
 }
 
 //=============================================================================

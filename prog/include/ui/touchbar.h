@@ -230,3 +230,9 @@ extern void TOUCHBAR_SetSoftPriority( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u
 extern u8 TOUCHBAR_GetSoftPriority( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
 extern void TOUCHBAR_SetBgPriority( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u8 pri );
 extern u8 TOUCHBAR_GetBgPriority( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
+
+//-------------------------------------
+///	再起動
+//    内部状態のリセット＋全アイコンのアクティブ化を行います
+//=====================================
+extern void TOUCHBAR_ReStart( TOUCHBAR_WORK *p_wk );
