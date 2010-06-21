@@ -110,7 +110,7 @@ BOOL TOWNMAP_UTIL_CheckFlag( GAMEDATA* p_gamedata, u16 flag )
 
   case TOWNMAP_USER_FLAG_OVERSEAS_TRADE:
     //国連へは世界交換したら地図上に発見
-    return ( 1 < WIFIHISTORY_GetMyCountryCountEx( p_wifi, p_mystatus, FALSE ) );
+    return ( 1 <= WIFIHISTORY_GetMyCountryCountEx( p_wifi, p_mystatus, FALSE ) );
 
   default:
     //さもなくばイベントフラグ
