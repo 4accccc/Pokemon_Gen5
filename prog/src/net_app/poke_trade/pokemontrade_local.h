@@ -792,6 +792,7 @@ extern void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADEPROC_IsTriSelect(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADEPROC_IsNetworkMode(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_PROC_FadeoutStart(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork , const BOOL isTransVBlank );

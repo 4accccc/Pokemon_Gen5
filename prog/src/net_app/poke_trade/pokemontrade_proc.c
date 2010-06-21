@@ -159,6 +159,14 @@ static const NetRecvFuncTable _PacketTbl[] = {
 
 };
 
+void POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(POKEMON_TRADE_WORK* pWork)
+{
+  TOUCHBAR_ReStartEx(pWork->pTouchWork, TOUCHBAR_ICON_RETURN);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+}
+
+
 
 // メールボックスがフルかどうか
 static BOOL _IsMailBoxFull(POKEMON_TRADE_WORK* pWork)
@@ -2682,12 +2690,8 @@ static void _endWaitState(POKEMON_TRADE_WORK* pWork)
       POKETRADE_MESSAGE_WindowClear(pWork);
       _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
 
-      POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
+      POKEMONTRADE_2D_AlphaSet(pWork);
 
-      //      TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-
-      //      TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, TRUE );
-      //   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
       break;
     }
   }
@@ -3307,8 +3311,8 @@ static void _touchStated(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
+  POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
+  
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
@@ -3338,8 +3342,7 @@ static void _scrollResetAndIconReset(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE );
+  POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
   _PokemonIconRenew(pWork);
 }
 
