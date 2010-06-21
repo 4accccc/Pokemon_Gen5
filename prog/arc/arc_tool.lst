@@ -47,7 +47,7 @@
 #
 #==================================================================================================
 
-  ARCID_D_TAYA    "test_graphic/d_taya.narc"    #
+  $DEBUG_YES ARCID_D_TAYA    "test_graphic/d_taya.narc"    #
   $DEBUG_YES ARCID_RAIL_EDITOR "debug/rail_editor.narc"   # レールエディター
   ARCID_WMI     "wmi.narc"  # 通信アイコン
   ARCID_LAYOUT    "layout.narc" # レイアウトエディタから吐き出したもの
