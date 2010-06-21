@@ -4225,6 +4225,11 @@ static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODUL
 
   PokeParty_InitWork( wk->tmpParty );
 
+  // 無効値でクリア
+  for(i=0; i<NELEMS(illusionTargetIdx); ++i){
+    illusionTargetIdx[ i ] = BTL_PARTY_MEMBER_MAX;
+  }
+
   for(i=0; i<memberCount; ++i)
   {
     bpp = BTL_PARTY_GetMemberData( btlParty, i );
@@ -4248,10 +4253,6 @@ static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODUL
           break;
         }
       }
-    }
-    else{
-      // イリュージョン中でなければ無効値
-      illusionTargetIdx[i] = BTL_PARTY_MEMBER_MAX;
     }
   }
 

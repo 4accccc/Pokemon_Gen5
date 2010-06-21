@@ -3249,7 +3249,12 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
     if( !BTL_MAINUTIL_IsFriendPokeID(targetPokeID, pokeID) )
     {
-      BTL_SVFTOOL_AddMemberOutIntr( flowWk, pokeID );
+      BtlPokePos  targetPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
+      BtlPokePos  myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      if( BTL_MAINUTIL_CheckTripleHitArea(myPos, targetPos) )
+      {
+        BTL_SVFTOOL_AddMemberOutIntr( flowWk, pokeID );
+      }
     }
   }
 }
