@@ -5633,23 +5633,27 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
       {
         BTL_PARTY* party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
         u32 numMembers = BTL_PARTY_GetMemberCount( party );
+        u32 HPSum, MaxHPSum;
         u8 orgPokeID = ClientBasePokeID[ clientID ];
         u8 idx;
 
+        HPSum = MaxHPSum = 0;
         for(p=0; p<numMembers; ++p)
         {
           BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberData( party, p );
           idx = BPP_GetID(bpp) - orgPokeID;
+          HPSum += BPP_GetValue( bpp, BPP_HP );
+          MaxHPSum += BPP_GetValue( bpp, BPP_MAX_HP );
 
           if( BPP_IsDead(bpp) ){
             wk->setupParam->party_state[ clientID ][ idx ] = BTL_POKESTATE_DEAD;
-  //          OS_TPrintf("Client_%d, Idx=%d, ‚µ‚ñ‚Å‚é\n", clientID, idx);
           }
           else if( BPP_GetPokeSick(bpp) != POKESICK_NULL ){
             wk->setupParam->party_state[ clientID ][ idx ] = BTL_POKESTATE_SICK;
-  //          OS_TPrintf("Client_%d, Idx=%d, ‚Ñ‚å‚¤‚«\n", clientID, idx);
           }
         }
+
+        wk->setupParam->restHPRatio[ clientID ] = (MaxHPSum * 100) / HPSum;
       }
     }
   }

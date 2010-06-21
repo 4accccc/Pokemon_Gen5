@@ -1299,11 +1299,17 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_OrenNomi( u32* numElems )
 }
 static void handler_OrenNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_DamageReact( myHandle, flowWk, pokeID, 2, TRUE );
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  if( !BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) ){
+    common_DamageReact( myHandle, flowWk, pokeID, 2, TRUE );
+  }
 }
 static void handler_OrenNomi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_DamageReact( myHandle, flowWk, pokeID, 2, FALSE );
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  if( !BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) ){
+    common_DamageReact( myHandle, flowWk, pokeID, 2, FALSE );
+  }
 }
 
 static void handler_OrenNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -1520,7 +1526,10 @@ static void handler_common_KaifukuKonran_Reaction( BTL_EVENT_FACTOR* myHandle, B
 {
   if( work[0] == 0 )
   {
-    common_DamageReact( myHandle, flowWk, pokeID, 2, TRUE );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) ){
+      common_DamageReact( myHandle, flowWk, pokeID, 2, TRUE );
+    }
   }
 }
 /**
@@ -1530,7 +1539,10 @@ static void handler_common_KaifukuKonran_MemberIn( BTL_EVENT_FACTOR* myHandle, B
 {
   if( work[0] == 0 )
   {
-    common_DamageReact( myHandle, flowWk, pokeID, 2, FALSE );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) ){
+      common_DamageReact( myHandle, flowWk, pokeID, 2, FALSE );
+    }
   }
 }
 /**
