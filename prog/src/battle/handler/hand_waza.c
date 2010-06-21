@@ -1607,14 +1607,14 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     {
       const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
       WazaID waza = BPP_GetPrevWazaID( target );
-      u16 counter = BPP_GetWazaContCounter( target );
 
-      TAYA_Printf("wazaID=%d, counter=%d\n", waza, counter);
+//      u16 counter = BPP_GetWazaContCounter( target );
+//      TAYA_Printf("wazaID=%d, counter=%d\n", waza, counter);
 
-      if( (counter > 0)
-      &&  (waza != WAZANO_NULL)
+      if( (waza != WAZANO_NULL)
       &&  (!BTL_TABLES_IsMatchMonomaneFail(waza))
       &&  (BPP_WAZA_SearchIdx(self, waza) == PTL_WAZA_MAX)
+//      &&  (counter > 0)
       ){
         u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
         if( wazaIdx != PTL_WAZA_MAX )
