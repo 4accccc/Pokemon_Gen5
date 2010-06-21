@@ -2508,6 +2508,8 @@ static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
 
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_OBJ );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
+  WIPE_ResetBrightness(WIPE_DISP_MAIN);  //通信アイコン表示のため
+
   WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
