@@ -13,6 +13,8 @@
 
 #include "system/main.h"
 #include "system/pokegra.h"
+#include "system/mcss.h"
+#include "system/mcss_tool.h"
 #include "arc_def.h"
 
 #include "battle/btlv/btlv_effect.h"
@@ -393,7 +395,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
     G3X_AlphaTest( FALSE, 31 );
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
     G3X_AntiAlias( TRUE );
     GFL_BG_SetBGControl3D( 1 );
   }
@@ -410,7 +412,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
-    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, NULL, pvw->heapID );
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, BTL_COMPETITOR_WILD, &bfs, FALSE, tr_type, NULL, NULL, pvw->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
     ZONEDATA_Open( pvw->heapID );
@@ -499,6 +501,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
   }
 
   //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
+#if 0
   {
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
                  GX_WND_PLANEMASK_BG1 |
@@ -510,6 +513,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     G2_SetWnd0Position( 1, 1, 255, 191 );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
   }
+#endif
 
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 
@@ -527,6 +531,11 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
   get_default_value( pvw );
 
   BTLV_MCSS_SetAnm1LoopFlag( BTLV_EFFECT_GetMcssWork(), TRUE );
+
+#if 0
+  BTLV_EFFECT_SetVanishFlag( BTLEFF_STAGE, TRUE );
+  BTLV_EFFECT_SetVanishFlag( BTLEFF_FIELD, TRUE );
+#endif
 
   return GFL_PROC_RES_FINISH;
 }
@@ -1539,11 +1548,29 @@ static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
 
 //  if( mons_no != 0 )
   {
+#if 0
+    MCSS_ADD_WORK  maw;
+    MCSS_WORK*  mcss;
+
+    MCSS_TOOL_MakeMAWPP( pvw->pp, &maw, pos & 1 );
+    mcss = MCSS_Add( BTLV_MCSS_GetMcssSysWork( BTLV_EFFECT_GetMcssWork() ),
+                     pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pos ],
+                     pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pos ],
+                     pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pos ],
+                     &maw );
+    MCSS_TOOL_SetAnmRestartCallback( mcss );
+    { 
+      VecFx32 scale;
+      VEC_Set( &scale, FX32_ONE * 16,  FX32_ONE * 16, FX32_ONE );
+      MCSS_SetScale( mcss, &scale );
+    }
+#else
     BTLV_EFFECT_SetPokemon( pvw->pp, pos );
     BTLV_MCSS_SetPosition( BTLV_EFFECT_GetMcssWork(), pos,
                            pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pos ],
                            pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pos ],
                            pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pos ] );
+#endif
 #if defined DEBUG_ONLY_FOR_sogabe
     //BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos, BTLV_MCSS_ANM_STOP_ON );
 #endif
