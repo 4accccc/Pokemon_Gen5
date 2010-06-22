@@ -13082,17 +13082,27 @@ BOOL BTL_SVFTOOL_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_P
  * @retval  BOOL    正しく取得できたらTRUE（現ターン、参加していないポケなどが指定されたらFALSE）
  */
 //--------------------------------------------------------------------------------------
-BOOL BTL_SVFTOOL_GetMyActionOrder( BTL_SVFLOW_WORK* wk, u8 pokeID, u8* myOrder, u8* totalAction )
+BOOL BTL_SVFTOOL_IsMyActOrderLast( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   u32 i;
+  u32 otherPokeActCount, endActCount;
+
+  otherPokeActCount = endActCount = 0;
   for(i=0; i<wk->numActOrder; ++i)
   {
-    if( BPP_GetID(wk->actOrder[i].bpp) == pokeID ){
-      *myOrder = i;
-      *totalAction = wk->numActOrder;
-      return TRUE;
+    if( BPP_GetID(wk->actOrder[i].bpp) != pokeID )
+    {
+      ++otherPokeActCount;
+      if( wk->actOrder[i].fDone ){
+        ++endActCount;
+      }
     }
   }
+
+  if( otherPokeActCount == endActCount ){
+    return TRUE;
+  }
+
   return FALSE;
 }
 //--------------------------------------------------------------------------------------
