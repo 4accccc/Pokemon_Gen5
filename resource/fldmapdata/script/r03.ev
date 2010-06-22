@@ -100,8 +100,21 @@ EVENT_START   ev_pos_r03_futago_01
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_look_up)
 		_OBJ_ANIME_WAIT()
 		
-		_PLAINWIN_MSG_UP(msg_r03_futago_02)
-		_MSGWIN_CLOSE()
+		{
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+	    DEFINE_LOCAL  LCW_POSZ
+	    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+	    
+	    //プレイヤーが通る4グリッド分を用意
+	    IF $LCW_POSZ == 565 THEN
+			_PLAINWIN_MSG_UP(msg_r03_futago_02)
+			_MSGWIN_CLOSE()
+		ELSE
+			_BALLOONWIN_OBJMSG(msg_r03_futago_02,R03_FUTAGO_01)
+			_BALLOONWIN_CLOSE()
+	    ENDIF
+		}
 		
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_return01)
 		_OBJ_ANIME_WAIT()
