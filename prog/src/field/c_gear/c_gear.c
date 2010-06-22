@@ -1498,7 +1498,7 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
     }
 
 
-    
+    bit = GAME_COMM_STATUS_BIT_WIFI_FREE;
     
     // WIFIカラー
     if(bit & GAME_COMM_STATUS_BIT_WIFI){      // 登録済み
@@ -1506,7 +1506,10 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
           anime_type_beacon_catch, anime_type, panel_type );
     }
     else if(bit & GAME_COMM_STATUS_BIT_WIFI_FREE){  // かぎなし
-      _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIFI, _CGEAR_NET_PALTYPE_YELLOW, 
+      // Freeは赤表示に変更 2010.06.22 tomoya 
+      /*_PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIFI, _CGEAR_NET_PALTYPE_YELLOW, 
+          anime_type_beacon_catch, anime_type, panel_type );*/
+      _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIFI, _CGEAR_NET_PALTYPE_RED, 
           anime_type_beacon_catch, anime_type, panel_type );
     }
     else if(bit & GAME_COMM_STATUS_BIT_WIFI_ZONE){  // 任天堂ゾーン　など　公式
