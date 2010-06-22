@@ -566,6 +566,7 @@ static void handler_SoraWoTobu_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable*  ADD_ShadowDive( u32* numElems );
 static void handler_ShadowDive_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_ShadowDive_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_ShadowDive_DmgStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_ShadowDive_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Tobihaneru( u32* numElems );
 static void handler_Tobihaneru_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -8328,9 +8329,10 @@ static void handler_SoraWoTobu_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable*  ADD_ShadowDive( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TAME_START,          handler_ShadowDive_TameStart    },   // 溜め開始
-    { BTL_EVENT_TAME_RELEASE,        handler_ShadowDive_TameRelease  },   // 溜め解放
-    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak       },   // まもる無効化チェック
+    { BTL_EVENT_TAME_START,          handler_ShadowDive_TameStart   },   // 溜め開始
+    { BTL_EVENT_TAME_RELEASE,        handler_ShadowDive_TameRelease },   // 溜め解放
+    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak      },   // まもる無効化チェック
+    { BTL_EVENT_DAMAGEPROC_START,    handler_Feint_Decide           },   // ダメージ処理開始
     { BTL_EVENT_DAMAGEPROC_END_HIT,  handler_ShadowDive_AfterDamage },   // ダメージ処理後
   };
   *numElems = NELEMS( HandlerTable );
@@ -8357,6 +8359,12 @@ static void handler_ShadowDive_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 {
   // システム側で対処
 }
+//
+static void handler_ShadowDive_DmgStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+
+}
+//
 static void handler_ShadowDive_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
