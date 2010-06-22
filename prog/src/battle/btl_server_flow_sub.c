@@ -1110,10 +1110,12 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
           if( ItemEffectTable[i].func(wk, target, itemID, 0, actParam) )
           {
             SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, BTLEFF_USE_ITEM );
+            SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT );// USE_ITEM SHOOTER_EFFECT ‚ÌƒJƒƒ‰ó‘Ô‚ð‰Šú‰»
             return TRITEM_RESULT_NORMAL;
           }
         }
         SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
+        SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT );// USE_ITEM SHOOTER_EFFECT ‚ÌƒJƒƒ‰ó‘Ô‚ð‰Šú‰»
         return TRITEM_RESULT_NORMAL;
       }
     }
@@ -1154,6 +1156,8 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     }
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
+
+  SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT ); // USE_ITEM SHOOTER_EFFECT ‚ÌƒJƒƒ‰ó‘Ô‚ð‰Šú‰»
 
   return TRITEM_RESULT_NORMAL;
 }
