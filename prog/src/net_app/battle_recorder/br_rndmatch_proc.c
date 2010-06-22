@@ -819,7 +819,7 @@ static void Br_RndMatch_CreateMainDisplayRate( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
       { 
         p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
         p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-        WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( p_word, 0, number, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         WORDSET_ExpandStr( p_word, p_strbuf, p_src );
         GFL_STR_DeleteBuffer( p_src );
       }
@@ -1031,7 +1031,7 @@ static void Br_RndMatch_CreateMainDisplayFree( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
       { 
         p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
         p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-        WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( p_word, 0, number, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         WORDSET_ExpandStr( p_word, p_strbuf, p_src );
         GFL_STR_DeleteBuffer( p_src );
       }
