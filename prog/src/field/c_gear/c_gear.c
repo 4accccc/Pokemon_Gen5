@@ -1498,8 +1498,6 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
     }
 
 
-    bit = GAME_COMM_STATUS_BIT_WIFI_FREE;
-    
     // WIFIÉJÉâÅ[
     if(bit & GAME_COMM_STATUS_BIT_WIFI){      // ìoò^çœÇ›
       _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIFI, _CGEAR_NET_PALTYPE_GREEN, 
