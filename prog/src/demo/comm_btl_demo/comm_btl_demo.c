@@ -1718,7 +1718,10 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
         break;
       }
     }
+      
+    clwk_id = i;
 
+#if 0
     if( type_is_start(type) )
     {
       clwk_id = i;
@@ -1729,6 +1732,7 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
       // ‡”Ô”½“]
       clwk_id = (unit->max-1) - i;
     }
+#endif
 
     GF_ASSERT( clwk_id < unit->max );
     
@@ -1867,7 +1871,7 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
     else
     {
       // ƒoƒgƒ‹Œã‚Ìó‘Ô‚ð”½‰f
-      BALL_UNIT_SetPartyCondition( unit, unit->party, unit->party_state, id );
+      BALL_UNIT_SetPartyCondition( unit, unit->party, unit->party_state, unit->max-1-id );
     }
   }
   else
