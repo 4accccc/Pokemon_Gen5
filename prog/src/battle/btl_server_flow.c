@@ -112,6 +112,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
 static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fPutMsg );
 static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scEvent_AfterMemberInPrev( BTL_SVFLOW_WORK* wk );
 static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx );
@@ -2802,6 +2803,11 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   BTL_POKESET_SortByAgility( pokeSet, wk );
 
 
+  hem_state = BTL_Hem_PushState( &wk->HEManager );
+    scEvent_AfterMemberInPrev( wk );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
+
+
   BTL_POKESET_SeekStart( pokeSet );
   while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
   {
@@ -2841,6 +2847,20 @@ static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
   BTL_EVENTVAR_Pop();
   BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventEnd, BPP_GetID(bpp) );
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] メンバー入場イベント直前
+ *
+ * @param   wk
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_AfterMemberInPrev( BTL_SVFLOW_WORK* wk )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN_PREV );
+  BTL_EVENTVAR_Pop();
 }
 //--------------------------------------------------------------------------
 /**

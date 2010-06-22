@@ -5177,15 +5177,19 @@ static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 
   return FALSE;
 }
-// メンバー入場ハンドラ
-static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Bukiyou_MemberInPrev( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[0] == 0 ){
+    BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Bukiyou_SkipCheck );
+    work[0] = 1;
+  }
+}
+// とくせい書き換え直後ハンドラ
+static void handler_Bukiyou_GetTokusei( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( work[0] == 0 ){
-      BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Bukiyou_SkipCheck );
-      work[0] = 1;
-    }
+    handler_Bukiyou_MemberInPrev( myHandle, flowWk, pokeID, work );
   }
 }
 // とくせい書き換え直前ハンドラ
@@ -5252,8 +5256,8 @@ static void handler_Bukiyou_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bukiyou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,                handler_Bukiyou_MemberIn  }, // メンバー入場ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,     handler_Bukiyou_MemberIn  }, // とくせい書き換えハンドラ
+    { BTL_EVENT_MEMBER_IN_PREV,           handler_Bukiyou_MemberInPrev },
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,     handler_Bukiyou_GetTokusei}, // とくせい書き換えハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,    handler_Bukiyou_PreChange }, // とくせい書き換え直前ハンドラ
     { BTL_EVENT_IEKI_FIXED,               handler_Bukiyou_IekiFixed }, // いえき確定ハンドラ
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,   handler_Bukiyou_ExeCheck  }, // ワザ出し成否チェックハンドラ

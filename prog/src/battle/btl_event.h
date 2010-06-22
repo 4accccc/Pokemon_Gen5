@@ -111,6 +111,7 @@ typedef enum {
   BTL_EVENT_MENBERCHANGE_INTR,      ///< メンバー入れ替え割り込み
   BTL_EVENT_MEMBER_OUT_FIXED,       ///< 個別ポケ退場確定後
   BTL_EVENT_MEMBER_IN,              ///< 個別ポケ入場直後
+  BTL_EVENT_MEMBER_IN_PREV,         ///< 全ポケ入場イベント直前
   BTL_EVENT_MEMBER_IN_COMP,         ///< 全ポケ入場イベント処理後
   BTL_EVENT_GET_RANKEFF_VALUE,      ///< ワザによる能力ランク増減値チェック
   BTL_EVENT_RANKVALUE_CHANGE,       ///< ランク増減値の最終チェック
