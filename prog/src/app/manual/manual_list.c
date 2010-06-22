@@ -307,6 +307,12 @@ BOOL  MANUAL_LIST_Main(
 {
   BOOL b_end = FALSE;
 
+  // まだ書き終わっていないテキストがあるうちは、何の処理もさせずに戻る
+  if( !PRINTSYS_QUE_IsFinished( work->cmn_wk->print_que_main ) )
+  {
+    return FALSE;
+  }
+
   if( work->end_req_count == 0 )
   {
     b_end = TRUE;
@@ -642,12 +648,18 @@ static void Manual_List_Finish( MANUAL_LIST_WORK* work )
 static void Manual_List_FinishAppTaskmenuWin( MANUAL_LIST_WORK* work )
 {
   // APP_TASKMENU_WIN
+
+  // まだ書き終わっていないテキストがあるといけないので、クリアしておく
+  PRINTSYS_QUE_Clear( work->cmn_wk->print_que_main );
   {
     u8 i;
     // ワーク
     for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
     {
-      if( work->atm_win_wk[i] ) APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
+      if( work->atm_win_wk[i] )
+      {
+        APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
+      }
     }
     // リソース
     APP_TASKMENU_RES_Delete( work->atm_res );
@@ -1074,6 +1086,9 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
   u8  atm_win_end_idx;  // 含む
   u16 item_end_idx;     // 含む
 
+//  // まだ書き終わっていないテキストがあるといけないので、クリアしておく
+//  PRINTSYS_QUE_Clear( work->cmn_wk->print_que_main );  // 書き終わるまでリストをつくり直さないことにしたので、クリアの必要はない
+
   // 先頭の調整
   if( work->param->head_pos == 0 )
   {
@@ -1122,7 +1137,10 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
 
     for( i=atm_win_start_idx; i<=atm_win_end_idx; i++ )
     {
-      if( work->atm_win_wk[i] ) APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
+      if( work->atm_win_wk[i] )
+      {
+        APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
+      }
 
       // 窓の設定
       atm_item_wk.str       = GFL_MSG_CreateString( work->cmn_wk->msgdata_main, work->param->item[item_idx].str_id );

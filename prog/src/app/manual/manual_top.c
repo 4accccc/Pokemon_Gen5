@@ -448,6 +448,9 @@ static void Manual_Top_Finish( MANUAL_TOP_WORK* work )
 static void Manual_Top_FinishAppTaskmenuWin( MANUAL_TOP_WORK* work )
 {
   // APP_TASKMENU_WIN
+
+  // まだ書き終わっていないテキストがあるといけないので、クリアしておく
+  PRINTSYS_QUE_Clear( work->cmn_wk->print_que_main );
   {
     u8 i;
     // ワーク
