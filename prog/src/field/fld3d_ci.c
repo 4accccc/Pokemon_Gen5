@@ -118,6 +118,7 @@ typedef struct FLD3D_CI_tag
   GXPlaneMask Mask;
   u8 BgPriority[4];
   BOOL CapEndFlg;
+  BOOL DispSetEndFlg;
   BOOL Emit1;
   BOOL Emit2;
   BOOL Anm1Flg;
@@ -236,6 +237,8 @@ static void ChangeCapDatCol(void);
 static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work);
 
 static void PlaySE(FLD3D_CI_PTR ptr);
+
+static void DispSetVTask( GFL_TCB *p_tcb, void *p_work );
 
 #define DEF_CAM_NEAR	( 1 << FX32_SHIFT )
 #define DEF_CAM_FAR	( 1024 << FX32_SHIFT )
@@ -835,14 +838,25 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     {
       FIELD_LIGHT *light = FIELDMAP_GetFieldLight( fieldmap );
       FIELD_LIGHT_Reflect( light, TRUE );
+
+      //タスク登録
+      ptr->DispSetEndFlg = FALSE;
+      GFUser_VIntr_CreateTCB(DispSetVTask, &ptr->DispSetEndFlg, 0 );
+      (*seq)++;
     }
-    //3D面をオン
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+    break;
+  case 10:
+    //タスクが終了していたら次のシーケンスを実行
+    if ( ptr->DispSetEndFlg == FALSE ) break;
 
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
       NOZOMU_Printf("END::FLD3DCUTIN_HEAP_REST %x\n",size);
     }
+
+/**    
+    //3D面をオン
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 
     //描画モード戻し
     {
@@ -852,7 +866,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
         };
       GFL_BG_SetBGMode( &bg_sys_header );
     }
-
+*/
     {
       FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( fieldmap );
       FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
@@ -899,7 +913,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     
     (*seq)++;
     break;
-  case 10:
+  case 11:
     //終了
     return GMEVENT_RES_FINISH;
   }
@@ -2390,6 +2404,28 @@ static void PlaySE(FLD3D_CI_PTR ptr)
       //インデックスインクリメント
       ptr->SeTblIdx++;
     }
+  }
+}
+
+static void DispSetVTask( GFL_TCB *p_tcb, void *p_work )
+{
+  BOOL *end_flg = p_work;
+  
+  //3D面をオン
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+
+  //描画モード戻し
+  {
+    const GFL_BG_SYS_HEADER bg_sys_header = 
+      {
+        GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+      };
+    GFL_BG_SetBGMode( &bg_sys_header );
+  }
+
+  GFL_TCB_DeleteTask( p_tcb );
+  if (end_flg != NULL){
+    *end_flg = TRUE;
   }
 }
 
