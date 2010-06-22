@@ -5406,15 +5406,15 @@ static BOOL FListSeq_CodeInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   p_frienddata = WifiList_GetDwcDataPtr( p_wifilist,
       p_data->idx.fridx[ listidx ] );
   code = DWC_GetFriendKey( p_frienddata );
+	Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[ listidx ], heapID );
   if(code!=0){
     // コード表示
-//    PMSND_PlaySE(WIFINOTE_DECIDE_SE);
     Draw_FriendCodeSetWordset( p_draw, code );
-    Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[ listidx ], heapID );
     FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_32, heapID );
-    return TRUE;
-  }
-  return FALSE;
+  }else{
+    FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_no_data, heapID );
+	}
+	return TRUE;
 }
 
 //----------------------------------------------------------------------------

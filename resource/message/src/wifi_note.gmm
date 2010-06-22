@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-11T11:56:08"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-06-22T11:53:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -798,6 +798,15 @@
 	<row id="msg_wifi_note_no">
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI" width="216">いいえ</language>
+	</row>
+
+	<row id="msg_wifi_note_no_data">
+		<comment>DWCFriendDataのともだち関係は成立したが
+ゲームデータは無い場合</comment>
+		<language name="JPN" width="216">もういちど　[1:00:トレーナー名:0]さんと
+つないで　みてください</language>
+		<language name="JPN_KANJI" width="216">もう一度　[1:00:トレーナー名:0]さんと
+つないで　みてください</language>
 	</row>
 
 	<flowchart-group-list>
