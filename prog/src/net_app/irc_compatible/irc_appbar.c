@@ -250,7 +250,7 @@ void APPBAR_Main( APPBAR_WORK *p_wk )
     break;
   case SEQ_END:
     p_wk->trg = APPBAR_ICON_RETURN;
-    p_wk->seq = SEQ_TOUCH;
+    //p_wk->seq = SEQ_TOUCH;
     break;
   }
 
@@ -299,6 +299,19 @@ void APPBAR_SetNormal( APPBAR_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  アニメ開始をチェック
+ *
+ *	@param	const APPBAR_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEアニメ開始  FALSEアニメしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL APPBAR_IsStartAnime( const APPBAR_WORK *cp_wk )
+{
+  return cp_wk->seq  != 0;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  ボタンの表示設定
  *
  *	@param	APPBAR_WORK *p_wk ワーク
@@ -322,6 +335,7 @@ void APPBAR_SetVisible( APPBAR_WORK *p_wk, BOOL is_visible )
 void APPBAR_SetTouchEnable( APPBAR_WORK *p_wk, BOOL is_use )
 {
   p_wk->is_use  = is_use;
+  p_wk->seq = 0;
 }
 
 //----------------------------------------------------------------------------

@@ -2521,108 +2521,108 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
   p_trg_left  = &p_wk->trg_left[0];
 
-  switch( *p_seq )
-  {
-  case SEQ_INIT:
-
-    if( p_wk->p_param->p_gamesys )
-    {
-      MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-          AURA_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
-    }
-    else
-    {
-      MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-          AURA_STR_000, 0, 0 );
-    }
-
-    //タッチ演出OFF
-    {
-      int i;
-      TOUCH_EFFECT_SYS *p_touch;
-      p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
-      for( i = 0; i < TOUCHEFFID_MAX; i++ )
-      {
-        TOUCH_EFFECT_SetVisible( p_touch, i, FALSE );
-      }
-      PMSND_StopSE();
-    }
-
-    GUIDE_SetVisible( GUIDE_VISIBLE_LEFT, HEAPID_IRCAURA );
-
-    p_wk->flip_cnt = 0;
-    *p_seq  = SEQ_MAIN;
-    break;
-
-  case SEQ_MAIN:
-    if( TP_GetRectTrg( &sc_left, p_trg_left ) )
-    {
-      GUIDE_SetVisible( 0, HEAPID_IRCAURA );
-
-      p_wk->flip_cnt = 0;
-      p_wk->msg_flip  =  0;
-
-      //左タッチ演出ON
-      {
-        TOUCH_EFFECT_SYS *p_touch;
-        p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
-        TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
-        TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, p_trg_left->x, p_trg_left->y );
-        PMSND_PlaySE( IRCAURA_SE_AURA_L );
-      }
-
-      //計測終了待ち
-      if( SHAKESEARCH_IsEnd( &p_wk->shake_left[0] ) )
-      {
-        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
-        GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
-
-        SEQ_ChangeEx( p_wk, SEQFUNC_TouchLeft, 1 );
-      }
-      else
-      { 
-        if( p_wk->p_param->p_gamesys )
-        {
-          MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-              AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
-        }
-        else
-        {
-          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-              AURA_STR_001, 0, 0 );
-        }
-        SEQ_Change( p_wk, SEQFUNC_TouchLeft );
-      }
-    }
-    else
-    {
-      //３秒ごとのメッセージかえ
-      if( p_wk->flip_cnt++ >= AURA_MSG_CHANGE_SYNC )
-      {
-        p_wk->flip_cnt = 0;
-        p_wk->msg_flip  ^=  1;
-
-        if( p_wk->msg_flip )
-        {
-          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_RES_000 );
-        }
-        else
-        {
-          MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_STR_000 );
-        }
-      }
-    }
-    break;
-
-  }
-
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
     SEQ_End( p_wk );
   }
+  else if( !APPBAR_IsStartAnime(p_wk->p_appbar) )
+  {
 
+    switch( *p_seq )
+    {
+    case SEQ_INIT:
 
+      if( p_wk->p_param->p_gamesys )
+      {
+        MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+            AURA_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+      }
+      else
+      {
+        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+            AURA_STR_000, 0, 0 );
+      }
+
+      //タッチ演出OFF
+      {
+        int i;
+        TOUCH_EFFECT_SYS *p_touch;
+        p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
+        for( i = 0; i < TOUCHEFFID_MAX; i++ )
+        {
+          TOUCH_EFFECT_SetVisible( p_touch, i, FALSE );
+        }
+        PMSND_StopSE();
+      }
+
+      GUIDE_SetVisible( GUIDE_VISIBLE_LEFT, HEAPID_IRCAURA );
+
+      p_wk->flip_cnt = 0;
+      *p_seq  = SEQ_MAIN;
+      break;
+
+    case SEQ_MAIN:
+      if( TP_GetRectTrg( &sc_left, p_trg_left ) )
+      {
+        GUIDE_SetVisible( 0, HEAPID_IRCAURA );
+
+        p_wk->flip_cnt = 0;
+        p_wk->msg_flip  =  0;
+
+        //左タッチ演出ON
+        {
+          TOUCH_EFFECT_SYS *p_touch;
+          p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
+          TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
+          TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, p_trg_left->x, p_trg_left->y );
+          PMSND_PlaySE( IRCAURA_SE_AURA_L );
+        }
+
+        //計測終了待ち
+        if( SHAKESEARCH_IsEnd( &p_wk->shake_left[0] ) )
+        {
+          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
+          GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
+
+          SEQ_ChangeEx( p_wk, SEQFUNC_TouchLeft, 1 );
+        }
+        else
+        { 
+          if( p_wk->p_param->p_gamesys )
+          {
+            MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+                AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+          }
+          else
+          {
+            MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+                AURA_STR_001, 0, 0 );
+          }
+          SEQ_Change( p_wk, SEQFUNC_TouchLeft );
+        }
+      }
+      else
+      {
+        //３秒ごとのメッセージかえ
+        if( p_wk->flip_cnt++ >= AURA_MSG_CHANGE_SYNC )
+        {
+          p_wk->flip_cnt = 0;
+          p_wk->msg_flip  ^=  1;
+
+          if( p_wk->msg_flip )
+          {
+            MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_RES_000 );
+          }
+          else
+          {
+            MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_STR_000 );
+          }
+        }
+      }
+      break;
+    }
+  }
 
   //シーンが異なるチェック
   if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
@@ -2654,98 +2654,100 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
   p_trg_right   = &p_wk->trg_right[0];
   p_shake_left  = &p_wk->shake_left[0];
 
-
-  switch( *p_seq )
-  {
-  case SEQ_MAIN:
-    if( TP_GetRectCont( &sc_left, &pos ) )
-    {
-      //計測終了待ち
-      if( SHAKESEARCH_Main( p_shake_left, &sc_left ) )
-      {
-        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
-        GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
-
-        *p_seq  = SEQ_WAIT_RIGHT;
-      }
-
-
-      //左タッチ演出ON
-      {
-        TOUCH_EFFECT_SYS *p_touch;
-        p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
-        TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
-        TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, pos.x, pos.y );
-      }
-    }
-    else
-    {
-      //もしも左手が終了している場合、おわったことにして次へ行く
-      //終わっていないならば、初期化しなおして最初から
-      if( SHAKESEARCH_IsEnd( p_shake_left ) )
-      {
-        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
-        GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
-
-        *p_seq  = SEQ_WAIT_RIGHT;
-      }
-      else
-      { 
-        SHAKESEARCH_Init( p_shake_left);
-      }
-
-      //押し直すと失敗扱い
-      *p_seq  = SEQ_RET;
-    }
-    break;
-
-  case SEQ_WAIT_RIGHT:
-    if( TP_GetRectCont( &sc_right, p_trg_right ) )
-    {
-      GUIDE_SetVisible( 0, HEAPID_IRCAURA );
-
-      if( p_wk->p_param->p_gamesys )
-      {
-        MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-            AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
-      }
-      else
-      {
-        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-            AURA_STR_001, 0, 0 );
-      }
-
-
-      SEQ_Change( p_wk, SEQFUNC_TouchRight );
-
-      //右タッチ演出ON
-      {
-        TOUCH_EFFECT_SYS *p_touch;
-        p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
-        TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
-        TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, p_trg_right->x, p_trg_right->y );
-        PMSND_PlaySE( IRCAURA_SE_AURA_R );
-      }
-    }
-    else if( TP_GetRectCont( &sc_left, &pos ) )
-    {
-    }
-    else
-    {
-      *p_seq  = SEQ_RET;
-    }
-    break;
-
-  case SEQ_RET:
-    p_wk->minus  += IRC_AURA_SCORE_MINUS;
-    SEQ_Change( p_wk, SEQFUNC_StartGame );
-    break;
-  }
-
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
     SEQ_End( p_wk );
+  }
+  else if( !APPBAR_IsStartAnime(p_wk->p_appbar) )
+  {
+
+    switch( *p_seq )
+    {
+    case SEQ_MAIN:
+      if( TP_GetRectCont( &sc_left, &pos ) )
+      {
+        //計測終了待ち
+        if( SHAKESEARCH_Main( p_shake_left, &sc_left ) )
+        {
+          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
+          GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
+
+          *p_seq  = SEQ_WAIT_RIGHT;
+        }
+
+
+        //左タッチ演出ON
+        {
+          TOUCH_EFFECT_SYS *p_touch;
+          p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
+          TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
+          TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, pos.x, pos.y );
+        }
+      }
+      else
+      {
+        //もしも左手が終了している場合、おわったことにして次へ行く
+        //終わっていないならば、初期化しなおして最初から
+        if( SHAKESEARCH_IsEnd( p_shake_left ) )
+        {
+          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
+          GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
+
+          *p_seq  = SEQ_WAIT_RIGHT;
+        }
+        else
+        { 
+          SHAKESEARCH_Init( p_shake_left);
+        }
+
+        //押し直すと失敗扱い
+        *p_seq  = SEQ_RET;
+      }
+      break;
+
+    case SEQ_WAIT_RIGHT:
+      if( TP_GetRectCont( &sc_right, p_trg_right ) )
+      {
+        GUIDE_SetVisible( 0, HEAPID_IRCAURA );
+
+        if( p_wk->p_param->p_gamesys )
+        {
+          MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+              AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+        }
+        else
+        {
+          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+              AURA_STR_001, 0, 0 );
+        }
+
+
+        SEQ_Change( p_wk, SEQFUNC_TouchRight );
+
+        //右タッチ演出ON
+        {
+          TOUCH_EFFECT_SYS *p_touch;
+          p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
+          TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
+          TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, p_trg_right->x, p_trg_right->y );
+          PMSND_PlaySE( IRCAURA_SE_AURA_R );
+        }
+      }
+      else if( TP_GetRectCont( &sc_left, &pos ) )
+      {
+      }
+      else
+      {
+        *p_seq  = SEQ_RET;
+      }
+      break;
+
+    case SEQ_RET:
+      p_wk->minus  += IRC_AURA_SCORE_MINUS;
+      SEQ_Change( p_wk, SEQFUNC_StartGame );
+      break;
+    }
   }
 
 
@@ -2776,55 +2778,58 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
   SHAKE_SEARCH_WORK *p_shake_right;
   p_shake_right = &p_wk->shake_right[0];
 
-  switch( *p_seq )
-  {
-  case SEQ_MAIN:
-    if( TP_GetRectCont( &sc_right, &pos ) )
-    {
-      if( SHAKESEARCH_Main( p_shake_right, &sc_right ) )
-      {
-        int i;
-
-        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_003, 0, 0 );
-        PMSND_PlaySE( IRCCOMMON_SE_IRC );
-        SEQ_Change( p_wk, SEQFUNC_Result );
-      }
-
-      //右タッチ演出ON
-      {
-        TOUCH_EFFECT_SYS *p_touch;
-        p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
-        TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
-        TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, pos.x, pos.y );
-      }
-
-    }
-    else
-    {
-      //右タッチ演出ON
-      {
-        TOUCH_EFFECT_SYS *p_touch;
-        p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
-        TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, FALSE );
-      }
-      SHAKESEARCH_Init( p_shake_right );
-      *p_seq  = SEQ_RET;
-    }
-    break;
-
-  case SEQ_RET:
-    p_wk->minus  += IRC_AURA_SCORE_MINUS;
-    SEQ_Change( p_wk, SEQFUNC_StartGame );
-    break;
-  }
-
-
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
     
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
     SEQ_End( p_wk );
   }
+  else if( !APPBAR_IsStartAnime(p_wk->p_appbar) )
+  {
+
+    switch( *p_seq )
+    {
+    case SEQ_MAIN:
+      if( TP_GetRectCont( &sc_right, &pos ) )
+      {
+        if( SHAKESEARCH_Main( p_shake_right, &sc_right ) )
+        {
+          int i;
+
+          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_003, 0, 0 );
+          PMSND_PlaySE( IRCCOMMON_SE_IRC );
+          SEQ_Change( p_wk, SEQFUNC_Result );
+        }
+
+        //右タッチ演出ON
+        {
+          TOUCH_EFFECT_SYS *p_touch;
+          p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
+          TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
+          TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, pos.x, pos.y );
+        }
+
+      }
+      else
+      {
+        //右タッチ演出ON
+        {
+          TOUCH_EFFECT_SYS *p_touch;
+          p_touch = GRAPHIC_GetTouchEffWk( &p_wk->grp );
+          TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, FALSE );
+        }
+        SHAKESEARCH_Init( p_shake_right );
+        *p_seq  = SEQ_RET;
+      }
+      break;
+
+    case SEQ_RET:
+      p_wk->minus  += IRC_AURA_SCORE_MINUS;
+      SEQ_Change( p_wk, SEQFUNC_StartGame );
+      break;
+    }
+  }
+
 
   //シーンが異なるチェック
   if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )

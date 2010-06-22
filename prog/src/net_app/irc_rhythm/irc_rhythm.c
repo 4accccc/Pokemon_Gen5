@@ -2320,15 +2320,18 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	p_search	= &p_wk->search;
 
 
-  if( TP_GetRhythmTrg( &trg_pos ) )
-  {	
-    BACKOBJ_COLOR color;
-    color = RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
-    BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos, color );
+  if( !APPBAR_IsStartAnime(p_wk->p_appbar) )
+  {
+    if( TP_GetRhythmTrg( &trg_pos ) )
+    {	
+      BACKOBJ_COLOR color;
+      color = RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
+      BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos, color );
 
-    if( p_wk->sub_seq == 0 )
-    {
-      RHYTHMSEARCH_SetData( p_search );
+      if( p_wk->sub_seq == 0 )
+      {
+        RHYTHMSEARCH_SetData( p_search );
+      }
     }
   }
 
