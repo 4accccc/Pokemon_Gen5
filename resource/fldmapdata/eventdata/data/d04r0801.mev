@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/24 14:57:30
+#save date:2010/06/22 18:41:44
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0801.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D04R2201_SAGE4
 #Event Script Name
 SCRID_D04R0801_HAKAIM_01
 #Direction Type Number
