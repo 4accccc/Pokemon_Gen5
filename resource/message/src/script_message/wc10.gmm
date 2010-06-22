@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-18T22:31:24"/>
+	<create user="matsumiya" host="W00224" date="2010-06-22T22:22:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -264,7 +264,7 @@
 		</language>
 	</columns>
 
-	<dialog left="121" top="122" right="826" bottom="742" maximized="no" rayout="Vertical2">
+	<dialog left="1224" top="155" right="1929" bottom="775" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="15" top="568" right="488" bottom="966" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -272,7 +272,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,8 +296,8 @@
 	<row id="msg_wc10_npc00" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ダミーメッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">ホワイトフォレスト　よいところ!</language>
-		<language name="JPN_KANJI" width="256">ホワイトフォレスト　よいところ!</language>
+		<language name="JPN" width="256">ホワイトフォレスト　よいところ！</language>
+		<language name="JPN_KANJI" width="256">ホワイトフォレスト　よいところ！</language>
 	</row>
 
 	<row id="msg_wc10_girl1_01">
