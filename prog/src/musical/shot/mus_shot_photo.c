@@ -537,11 +537,7 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
       STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
       STA_POKE_SetPositionOffset( work->pokeSys , work->pokeWork[i] , &ofs );
 
-      STA_POKE_GetPositionOffset( work->pokeSys , work->pokeWork[i] , &ofs );
-      if( ofs.y != 0 )
-      {
-        lightpos.y = FX32_CONST(88.0f);
-      }
+      lightpos.y = FX32_CONST(88.0f);
       
     }
     else
