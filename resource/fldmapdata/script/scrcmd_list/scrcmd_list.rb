@@ -25,6 +25,7 @@ file_lines.each do |line|
   elsif line =~ /(EV_SEQ_\w+)/ then
     command_data = CommandData.new
     command_data.seq = $1.strip
+    command_data.command = "NO_DATA_#{code_no}"
     command_data.code_no = code_no
     command_data.normal_enable = true
     command_data.init_enable = true
@@ -81,5 +82,19 @@ end
 table_data << "};"
 
 file = File.open( "cmd_check_data.cdat", "w" ) 
+file.puts( table_data )
+file.close
+
+
+# テーブル出力 ##################################################
+table_data = Array.new
+table_data << "$command_array = ["
+all_command_data = command_list.get_all_command_data
+all_command_data.each do |command_data|
+  table_data << "  \"#{command_data.command}\","
+end
+table_data << "]"
+
+file = File.open( "command_array.rb", "w" ) 
 file.puts( table_data )
 file.close
