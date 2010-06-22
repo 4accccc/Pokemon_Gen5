@@ -961,11 +961,12 @@ static void _UpdatePalletAnime(GAMESYNC_MENU* pWork )
     if(GAME_COMM_STATUS_BIT_WIFI & pWork->bit){  //緑 wep登録
       _changeGsyncAnime(pWork,24);
     }
-    else if(GAME_COMM_STATUS_BIT_WIFI_FREE & pWork->bit){  //黄色  フリー
-      _changeGsyncAnime(pWork,23);
-    }
     else if(GAME_COMM_STATUS_BIT_WIFI_ZONE & pWork->bit){  //青 スポット
       _changeGsyncAnime(pWork,22);
+    }
+    else if(GAME_COMM_STATUS_BIT_WIFI_FREE & pWork->bit){  //黄色  フリー
+//      _changeGsyncAnime(pWork,23);  //黄色
+      _changeGsyncAnime(pWork,21);  //赤
     }
     else if(GAME_COMM_STATUS_BIT_WIFI_LOCK & pWork->bit){   //赤  鍵あり
       _changeGsyncAnime(pWork,21);
