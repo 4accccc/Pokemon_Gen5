@@ -160,6 +160,7 @@ static void handler_Donkan_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static void handler_Donkan_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Donkan( u32* numElems );
 static BOOL common_GuardWazaSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick guardSick );
+static void common_AddSickFailed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID );
 static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_TokuseiWake_CureSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sick );
 static void common_TokuseiWake_CureSickCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sick );
@@ -2331,6 +2332,11 @@ static void handler_MyPace_PokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 {
   work[0] = common_GuardWazaSick( flowWk, pokeID, WAZASICK_KONRAN );
 }
+//
+static void handler_MyPace_AddSickFailed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_AddSickFailed( myHandle, flowWk, pokeID, work, BTL_STRID_SET_KonranNoEffect );
+}
 // とくせい書き換えハンドラ
 static void handler_MyPace_Wake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -2344,10 +2350,10 @@ static void handler_MyPace_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MyPace( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,     handler_MyPace_PokeSick   },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,        handler_AddSickFailCommon },
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_MyPace_Wake       },  // とくせい書き換えハンドラ
-    { BTL_EVENT_ACTPROC_END,           handler_MyPace_ActEnd     },  // アクション終了毎ハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,     handler_MyPace_PokeSick      },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,        handler_MyPace_AddSickFailed },
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_MyPace_Wake          },  // とくせい書き換えハンドラ
+    { BTL_EVENT_ACTPROC_END,           handler_MyPace_ActEnd        },  // アクション終了毎ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2434,7 +2440,7 @@ static BOOL common_GuardWazaSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick g
   }
   return FALSE;
 }
-static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void common_AddSickFailed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u16 strID )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (work[0] == TRUE)
@@ -2444,7 +2450,7 @@ static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
       HANDEX_STR_AddArg( &param->str, pokeID );
     BTL_SVF_HANDEX_Pop( flowWk, param );
 
@@ -2452,6 +2458,12 @@ static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     work[0] = FALSE;
   }
 }
+static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_AddSickFailed( myHandle, flowWk, pokeID, work, BTL_STRID_SET_NoEffect );
+}
+
+
 /**
  * 「とくせい」が有効になった時点で特定の状態異常ならそれを治す処理 共通
  *
