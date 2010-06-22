@@ -12,7 +12,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_002.spa
 ラベル	PLURAL
 トレーナー移動	POS_BB	ダイレクト	0.7375488:0.3999023:-7	0	0	0
 ラベル	NEXT
-トレーナー移動	POS_BB	追従	-6:0:0	1	0	0
+トレーナー移動	POS_BB	追従	-5.5:0:0	1	0	0
 ポケモンα値	POS_TR_BB	ダイレクト	8	0	0	0
 エフェクト終了待ち	すべて
 カメラ移動（座標指定）	追従（相対指定）	1:0:0	1:0:0	16	0	0
