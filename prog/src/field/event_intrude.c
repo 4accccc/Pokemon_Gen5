@@ -43,6 +43,7 @@
 
 #include "palace_gimmick.h"
 #include "field/scrcmd.h"
+#include "field/event_comm_error.h"
 
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/palace01_def.h"  //for SCRID_～
@@ -778,6 +779,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     SEQ_DISGUISE_INIT,
     SEQ_DISGUISE_MAIN,
    	SEQ_TUTORIAL,
+    SEQ_ERROR_DISP_CHECK,
     SEQ_FINISH_BEFORE,
     SEQ_FINISH,
   };
@@ -905,7 +907,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
           (*seq)++;
         }
         else{
-          *seq = SEQ_FINISH_BEFORE;
+          *seq = SEQ_ERROR_DISP_CHECK;
         }
       }
     }
@@ -913,7 +915,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   case SEQ_DISGUISE_MAIN:
     if(IntrudeEvent_Sub_DisguiseEffectMain(&evf->iedw, NULL) == TRUE){
       if(evf->search_sleep_warp == TRUE){
-        *seq = SEQ_FINISH_BEFORE;
+        *seq = SEQ_ERROR_DISP_CHECK;
       }
       else{
         (*seq)++;
@@ -941,14 +943,23 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
       }
       SCRIPT_CallScript( event, scr_id, NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     }
-    *seq = SEQ_FINISH_BEFORE;
+    *seq = SEQ_ERROR_DISP_CHECK;
     break;
     
+  case SEQ_ERROR_DISP_CHECK:
+    //協力者orスリープ切断はエラー画面の表示チェック、表示を行い、表フィールドへ戻す
+    if(GAMEDATA_GetIntrudeMyID(gamedata) != 0 || GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE){
+      if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+        GMEVENT_CallEvent(event, EVENT_FieldCommErrorProc(gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
+      }
+    }
+    (*seq)++;
+    break;
   case SEQ_FINISH_BEFORE: //終了前の最終処理
     GameCommSys_ClearLastStatus(game_comm);
     GameCommStatus_InitPlayerStatus(game_comm);
     
-    //協力者orスリープ切断は表フィールドへ戻す
+    //協力者orスリープ切断はエラー画面の表示チェック、表示を行い、表フィールドへ戻す
     if(GAMEDATA_GetIntrudeMyID(gamedata) != 0 || GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE){
     	GMEVENT_CallEvent( event, EVENT_ChangeMapFromPalace(gsys) );
     }
