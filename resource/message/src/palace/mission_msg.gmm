@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-15T17:28:11"/>
+	<create user="ohmori" host="W00223" date="2010-06-22T17:20:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -416,7 +416,7 @@
 	<row id="msg_intrude_003" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>相手の通信待機メッセージ</comment>
 		<language name="JPN" width="256">しばらくおまちください……</language>
-		<language name="JPN_KANJI" width="256">しばらくお待ち下さい……</language>
+		<language name="JPN_KANJI" width="256">しばらくお待ちください……</language>
 	</row>
 
 	<row id="msg_intrude_004" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">

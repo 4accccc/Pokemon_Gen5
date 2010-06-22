@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-04T12:07:30"/>
+	<create user="ohmori" host="W00223" date="2010-06-22T17:21:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -868,7 +868,7 @@
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
 		<language name="JPN_KANJI" width="256">タッチで　冒険者の
-いる場所に　ワープして下さい</language>
+いる場所に　ワープしてください</language>
 	</row>
 
 	<row id="msg_invasion_info_m02" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -876,7 +876,7 @@
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
 		<language name="JPN_KANJI" width="256">タッチで　冒険者の
-いる場所に　ワープして下さい</language>
+いる場所に　ワープしてください</language>
 	</row>
 
 	<row id="msg_invasion_info_m03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -884,7 +884,7 @@
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
 		<language name="JPN_KANJI" width="256">タッチで　冒険者の
-いる場所に　ワープして下さい</language>
+いる場所に　ワープしてください</language>
 	</row>
 
 	<row id="msg_invasion_info_m04" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -892,7 +892,7 @@
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
 		<language name="JPN_KANJI" width="256">タッチで　冒険者の
-いる場所に　ワープして下さい</language>
+いる場所に　ワープしてください</language>
 	</row>
 
 	<row id="msg_invasion_info_m05" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -900,7 +900,7 @@
 		<language name="JPN" width="256">タッチで　どうぐをかくす
 ばしょに　ワープしてください</language>
 		<language name="JPN_KANJI" width="256">タッチで　道具を隠す
-場所に　ワープして下さい</language>
+場所に　ワープしてください</language>
 	</row>
 
 	<row id="msg_invasion_info_m06" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -908,7 +908,7 @@
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
 		<language name="JPN_KANJI" width="256">タッチで　冒険者の
-いる場所に　ワープして下さい</language>
+いる場所に　ワープしてください</language>
 	</row>
 
 	<row id="msg_invasion_mission_000" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">

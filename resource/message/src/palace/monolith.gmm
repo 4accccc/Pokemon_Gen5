@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-02T12:50:59"/>
+	<create user="ohmori" host="W00223" date="2010-06-22T17:21:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -653,7 +653,7 @@
 		<language name="JPN" width="256">ハイルツリーから　うけとる
 デルパワーを　えらんでください</language>
 		<language name="JPN_KANJI" width="256">ハイルツリーから　受け取る
-デルパワーを　選んで下さい</language>
+デルパワーを　選んでください</language>
 	</row>
 
 	<row id="msg_mono_pow_up_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
