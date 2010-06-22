@@ -201,7 +201,7 @@ static const BOOL RotateTouchDataCancelWaruagaki[] = {
   FALSE,  //技2
   FALSE,  //技3
   FALSE,  //技4
-  TRUE << CANCEL_FLAG_SHIFT | TRUE,   //キャンセル
+  TRUE,   //キャンセル
   FALSE,  //左側ボタン
   FALSE,  //右側ボタン
 };
