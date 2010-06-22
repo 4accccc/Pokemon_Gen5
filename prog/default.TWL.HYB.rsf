@@ -187,10 +187,6 @@ Rating
 	CERO 0
 }
 
-AppendProperty
-{
-  GameCardNitroMode TRUE
-}
 
 RomSpec
 {
