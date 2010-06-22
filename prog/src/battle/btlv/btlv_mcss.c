@@ -49,7 +49,7 @@
 #define BTLV_MCSS_EVY_WAIT ( 24 )
 #define BTLV_MCSS_EVY_MAX  ( 12 )
 
-#define BTLV_MCSS_DEFAULT_Z ( 0x90 )//( 0x64 )    //透視射影でキレイにみえるZOFFSET値
+#define BTLV_MCSS_DEFAULT_Z ( 0x100 )//( 0x90 )//( 0x64 )    //透視射影でキレイにみえるZOFFSET値
 
 enum{
   REVERSE_FLAG_OFF = 0,
