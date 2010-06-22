@@ -54,7 +54,8 @@ dataFileName = ARGV[0]
 #Žó‚¯Žæ‚é•¶Žš—ñ‚ðUTF8‚ÉŽw’è
 
 t = Time.now
-srand( t.sec ^ t.usec ^ Process.pid )
+#srand( t.sec ^ t.usec ^ Process.pid )
+srand( 0x19840127 )
 
 WIN32OLE.codepage = WIN32OLE::CP_UTF8
 xl = WIN32OLE.new('Excel.Application')
