@@ -204,6 +204,8 @@ enum {
   ITEMMOVE_SEQ_END,									// 終了
 };
 
+#define	QUE_BUFF_SIZE		( 2048 )		// プリントキューのバッファサイズ
+
 
 //============================================================================================
 //  プロトタイプ宣言
@@ -721,7 +723,7 @@ void BOX2MAIN_MsgInit( BOX2_SYS_WORK * syswk )
                         ARCID_FONT, NARC_font_num_gftr,
                         GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BOX_APP );
   syswk->app->wset = WORDSET_Create( HEAPID_BOX_APP );
-  syswk->app->que  = PRINTSYS_QUE_Create( HEAPID_BOX_APP );
+	syswk->app->que = PRINTSYS_QUE_CreateEx( QUE_BUFF_SIZE, HEAPID_BOX_APP );
   syswk->app->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_BOX_APP );
 }
 
