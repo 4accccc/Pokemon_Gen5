@@ -925,19 +925,32 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   DUP_DEBUG_ScreenDraw( work , 8 );
 
 #if DEB_ARI
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
-    GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
   {
-    if( work->state != DUS_FADEIN_WAIT_SND &&
-        work->state != DUS_FADEIN_WAIT &&
-        work->state != DUS_FADEOUT_WAIT )
+    VecFx32 pos;
+    MUS_POKE_DRAW_GetPosition( work->drawWork , &pos );
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
     {
-      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                      WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
-      PMSND_FadeOutBGM( FSND_FADE_NORMAL );
-      work->state = DUS_FADEOUT_WAIT;
+      pos.y -= FX32_ONE/16;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      pos.y += FX32_ONE/16;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      pos.x -= FX32_ONE/16;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      pos.x += FX32_ONE/16;
+    }
+    MUS_POKE_DRAW_SetPosition( work->drawWork , &pos );
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      OS_FPrintf(3,"[%.2f][%.2f]\n",FX_FX32_TO_F32(pos.x)*16,FX_FX32_TO_F32(pos.y)*16);
     }
   }
+
 #endif //DEB_ARI
 
   return ret;
@@ -1300,8 +1313,8 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
 
   {
     VecFx32 *ofs = MUS_POKE_DRAW_GetShadowOfs( work->drawWork );
-    pos.x = FIT_POS_X_FX(  FX32_CONST(FIT_POKE_POS_X) - ofs->x );
-    pos.y = FIT_POS_Y_FX(  FX32_CONST(FIT_POKE_POS_Y) - ofs->y );
+    pos.x = FIT_POS_X_FX(  FX32_CONST(FIT_POKE_POS_X) - ofs->x);
+    pos.y = FIT_POS_Y_FX(  FX32_CONST(FIT_POKE_POS_Y) - ofs->y);
     pos.z = FIT_POKE_POS_Z_FX;
     MUS_POKE_DRAW_SetPosition( work->drawWork , &pos );
   }
@@ -1648,52 +1661,6 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
 
 static void DUP_FIT_FittingMain(  FITTING_WORK *work )
 {
-
-#if DEB_ARI
-  if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
-  {
-    work->listAngle += 0x100;
-    DUP_FIT_CalcItemListAngle( work , work->listAngle , -0x100 , LIST_SIZE_X , LIST_SIZE_Y );
-  }
-  if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
-  {
-    work->listAngle -= 0x100;
-    DUP_FIT_CalcItemListAngle( work , work->listAngle , +0x100 , LIST_SIZE_X , LIST_SIZE_Y );
-  }
-  if(GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-  {
-    FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
-    MUS_TPrintf("---DumpResIdx---\n");
-    while( item != NULL )
-    {
-      MUS_ITEM_DRAW_Debug_DumpResData( work->itemDrawSys,DUP_FIT_ITEM_GetItemDrawWork( item ) );
-
-      item = DUP_FIT_ITEM_GetNextItem(item);
-    }
-    MUS_ITEM_DRAW_Debug_DumpResData( work->itemDrawSys,work->shadowItem );
-    MUS_TPrintf("---DumpResIdx---\n");
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A &&
-      work->isDemo == FALSE )
-  {
-    //デバグ用にデフォルト位置に戻してスタート
-    //半回転の位置からスタート
-    work->listAngle = 0;
-    work->listTotalMove = (LIST_ONE_ANGLE*work->totalItemNum)-0x8000; 
-    DUP_FIT_CalcItemListAngle( work , 0 , 0 , LIST_SIZE_X , LIST_SIZE_Y );
-
-    DUP_DEMO_DemoStart( work );
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
-  {
-    work->listSwingAngle = 0x4000;
-    work->listSwingSpeed = -0x200;
-    DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
-  }
-
-
-#endif
-
   if( work->isSortAnime == TRUE )
   {
     DUP_FIT_UpdateSortAnime( work );
@@ -3907,10 +3874,7 @@ static void DUP_EFFECT_UpdateCell( FITTING_WORK *work )
     }
     else
     {
-      if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_Y) == 0 )
-      {
-        work->effUpCnt[i]--;
-      }
+      work->effUpCnt[i]--;
     }
   }
   

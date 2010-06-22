@@ -617,8 +617,8 @@ static  void  MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 
   if( mcss_ortho_mode ){
     G3_OrthoW(  FX32_CONST( 96 ),
-          -FX32_CONST( 96 ),
-          -FX32_CONST( 128 ),
+          -FX32_CONST( 95 ),
+          -FX32_CONST( 127 ),
           FX32_CONST( 128 ),
           MUSICAL_CAMERA_NEAR,
           MUSICAL_CAMERA_FAR,
