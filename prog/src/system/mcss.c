@@ -688,6 +688,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
  * @param[in]  pos_z_default    セルを描画する度にずらずZ方向のオフセット値
  */
 //--------------------------------------------------------------------------
+#ifdef DEBUG_ONLY_for_saitou
+vu32  mcss_ortho_far = FX32_ONE * 512;
+vu32  mcss_ortho_z_offset = MCSS_DEFAULT_Z_ORTHO_512;
+#endif
 static	void	MCSS_DrawAct(
                 MCSS_SYS_WORK* mcss_sys,
                 MCSS_WORK *mcss,
@@ -720,6 +724,17 @@ static	void	MCSS_DrawAct(
   }
 
 	if( mcss_ortho_mode ){
+#ifdef DEBUG_ONLY_for_saitou
+		G3_OrthoW( FX32_CONST( 96 ),
+				   -FX32_CONST( 96 ),
+				   -FX32_CONST( 128 ),
+				   FX32_CONST( 128 ),
+				   FX32_ONE * 1,
+				   //FX32_ONE * 1024,
+				   mcss_ortho_far,
+				   FX32_ONE,
+				   NULL );
+#else
 		G3_OrthoW( FX32_CONST( 96 ),
 				   -FX32_CONST( 96 ),
 				   -FX32_CONST( 128 ),
@@ -729,6 +744,7 @@ static	void	MCSS_DrawAct(
 				   FX32_ONE * ( ( mcss_sys->ortho_far_flag ) ? 512 : 1024 ),
 				   FX32_ONE,
 				   NULL );
+#endif
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 	}
 
@@ -839,7 +855,11 @@ static	void	MCSS_DrawAct(
 	else{
     if( mcss_sys->ortho_far_flag )
     { 
+#ifdef DEBUG_ONLY_for_saitou
+		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -mcss_ortho_z_offset : mcss_ortho_z_offset;
+#else
 		  *pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z_ORTHO_512 : MCSS_DEFAULT_Z_ORTHO_512;
+#endif
     }
     else
     { 
