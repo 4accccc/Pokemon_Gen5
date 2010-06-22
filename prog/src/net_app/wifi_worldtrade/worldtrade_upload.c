@@ -967,8 +967,6 @@ static int Subseq_UploadFinishResult( WORLDTRADE_WORK *wk )
 			// 「GTSのかくにんにしっぱいしました」
 			// サーバーと通信できません→終了
 			OS_TPrintf(" upload error. %d \n", result);
-//			wk->ConnectErrorNo = result;
-//			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
 			// ここはうけつけに戻ってはいけない。無理矢理通信エラー
       WorldTrade_DispCallFatal();
 			break;
@@ -1060,12 +1058,23 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 		case DPW_TR_ERROR_NO_DATA :	
 			OS_TPrintf(" download server stop service.\n");
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
+
 			break;
 
 		// 1ヶ月過ぎてしまった
 		case DPW_TR_ERROR_DATA_TIMEOUT :
 			OS_TPrintf(" server full.\n");
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 
 	// -----------------------------------------
@@ -1907,7 +1916,7 @@ static int Subseq_WaitCancelAsync( WORLDTRADE_WORK *wk )
 
 //------------------------------------------------------------------
 /**
- * @brief   エラーで終了
+ * @brief   エラーでタイトルへ戻る
  *
  * @param   wk		
  *
