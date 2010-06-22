@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-22T18:17:36"/>
+	<create user="matsumiya" host="W00224" date="2010-06-22T20:21:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1990" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -299,8 +299,11 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん▼
 このまちを　ぬけた　どうろのさき
 リュウラセンのとう　で▽
-アララギはかせが　おまちですよ</language>
-		<language name="JPN_KANJI" width="256"></language>
+アララギはかせが　おまちです</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん▼
+このまちを　ぬけた　どうろのさき
+リュウラセンのとう　で▽
+アララギはかせが　おまちです</language>
 	</row>
 
 	<row id="msg_playable_assistantm_02">
@@ -308,18 +311,24 @@
 ・pos（GRIDX=172or174、GRIDZ=181）起動時
 ・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">リュウラセンのとう　は
-はんたいほうこう　ですよ▼</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">あわわわわわわわわー！！▼
+リュウラセンのとう　は
+はんたいほうこう　です！▼</language>
+		<language name="JPN_KANJI" width="256">あわわわわわわわわー！！▼
+リュウラセンのとう　は
+はんたいほうこう　です！▼</language>
 	</row>
 
 	<row id="msg_playable_ambrella_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀（ｃ07：GRIDX=180、GRIDZ=177）
 ・話しかけ時</comment>
 		<attribute name="キャラ指定">AMBRELLA</attribute>
-		<language name="JPN" width="256">・アピールポイント
-・</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">Ｃギアの　ちょうさレーダーで
+すれちがう　ひとの　しゅみを▽
+ちょうさ　できるなんて　ステキ！</language>
+		<language name="JPN_KANJI" width="256">Ｃギアの　ちょうさレーダーで
+すれちがう　ひとの　しゅみを▽
+ちょうさ　できるなんて　ステキ！</language>
 	</row>
 
 	<row id="msg_playable_ambrella_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -328,9 +337,9 @@
 ・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">AMBRELLA</attribute>
 		<language name="JPN" width="256">あのう……　トレーナーさん
-そちらは　いきどまり　ですよ▼</language>
+そちらは　いきどまり　なの▼</language>
 		<language name="JPN_KANJI" width="256">あのう……　トレーナーさん
-そちらは　いきどまり　ですよ▼</language>
+そちらは　いきどまり　なの▼</language>
 	</row>
 
 	<row id="msg_playable_man3_01">
@@ -429,11 +438,11 @@
 		<attribute name="キャラ指定">チェレン</attribute>
 		<language name="JPN" width="256">チェレン『あんまり　ぼくを
 またせないで　くれるかな▼
-さて　さっそくだけど
+では　さっそくだけど
 ポケモンしょうぶと　いこうか▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『あんまり　ぼくを
 またせないで　くれるかな▼
-さて　さっそくだけど
+では　さっそくだけど
 ポケモンしょうぶと　いこうか▼</language>
 	</row>
 
@@ -445,13 +454,15 @@
 		<language name="JPN" width="256">チェレン『……なるほどね
 きみは　すばらしい　トレーナーだ▼
 だけど　いっておくよ
-つぎに　あうときは……▽
-ぼくが　しょうり　するからね！</language>
+つぎは……　ぼくが　かつ！▼
+ちなみに　アララギはかせ　なら
+もっと　すすんだところに　いるよ</language>
 		<language name="JPN_KANJI" width="256">チェレン『……なるほどね
 きみは　すばらしい　トレーナーだ▼
 だけど　いっておくよ
-つぎに　あうときは……▽
-ぼくが　しょうり　するからね！</language>
+つぎは……　ぼくが　かつ！▼
+ちなみに　アララギはかせ　なら
+もっと　すすんだところに　いるよ</language>
 	</row>
 
 	<row id="msg_playable_hakase2_01">
@@ -460,9 +471,12 @@
 		<attribute name="キャラ指定">アララギ</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！
 ここまで　きてくれて　ありがとう！▼
-きてもらった　りゆう　なんだけど
-きみに　あれを　みせたくて▼</language>
-		<language name="JPN_KANJI" width="256"></language>
+どう？　ポケモンと　いっしょに
+あるくのは　たまらないでしょ？▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『ハーイ！
+ここまで　きてくれて　ありがとう！▼
+どう？　ポケモンと　いっしょに
+あるくのは　たまらないでしょ？▼</language>
 	</row>
 
 	<row id="msg_playable_hakase2_02">
@@ -471,12 +485,18 @@
 ・メッセージ表示後、プレイヤーと向き合ってフェードアウト
 ・LEGEND MEET ムービー再生</comment>
 		<attribute name="キャラ指定">アララギ</attribute>
-		<language name="JPN" width="256">あれが　リュウラセンのとう……▼
+		<language name="JPN" width="256">このさきに　そびえるのが
+リュウラセンのとう……▼
 でんせつの　ポケモンが
-ねむると　つたわっているわ▼
-・
-・</language>
-		<language name="JPN_KANJI" width="256"></language>
+ねむると　つたわる　ばしょ▼
+どんな　ポケモンが　いるのか……
+はやく　あいたいわね！</language>
+		<language name="JPN_KANJI" width="256">このさきに　そびえるのが
+リュウラセンのとう……▼
+でんせつの　ポケモンが
+ねむると　つたわる　ばしょ▼
+どんな　ポケモンが　いるのか……
+はやく　あいたいわね！</language>
 	</row>
 
 	<row id="msg_playable_d08_end_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
