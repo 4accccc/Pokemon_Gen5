@@ -182,6 +182,11 @@ Property
 	#### END
 }
 
+Rating
+{
+	CERO 0
+}
+
 AppendProperty
 {
   GameCardNitroMode TRUE

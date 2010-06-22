@@ -146,7 +146,7 @@ Property
 	#
 	# CardRegion: card region [Japan/America/Europe/Australia]
 	#
-	CardRegion	ALL
+	CardRegion	Japan
 
 
 	#
@@ -181,6 +181,11 @@ Property
 	###
 	###
 	#### END
+}
+
+Rating
+{
+	CERO 0
 }
 
 AppendProperty
