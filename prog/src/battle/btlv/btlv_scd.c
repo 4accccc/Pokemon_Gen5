@@ -251,12 +251,12 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
  * @param   wk
  */
 //=============================================================================================
-void BTLV_SCD_FadeOut( BTLV_SCD* wk )
+void BTLV_SCD_FadeOut( BTLV_SCD* wk, BOOL start )
 {
   wk->fadeValue = 0;
   wk->fadeValueEnd = -16;
   wk->fadeStep = -1;
-  BTLV_INPUT_SetFadeOut( wk->biw );
+  BTLV_INPUT_SetFadeOut( wk->biw, start );
 }
 //=============================================================================================
 /**

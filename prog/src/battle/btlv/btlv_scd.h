@@ -85,7 +85,7 @@ extern void BTLV_SCD_ForceQuitSelect( BTLV_SCD* wk );
 
 extern BOOL BTLV_SCD_IsSelTargetDone( BTLV_SCD* wk );
 
-extern void BTLV_SCD_FadeOut( BTLV_SCD* wk );
+extern void BTLV_SCD_FadeOut( BTLV_SCD* wk, BOOL start );
 extern void BTLV_SCD_FadeIn( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_FadeFwd( BTLV_SCD* wk );
 extern u8*  BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk );

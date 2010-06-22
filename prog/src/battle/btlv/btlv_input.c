@@ -1221,11 +1221,15 @@ void BTLV_INPUT_FreeFrame( void )
  *  @param[in]  biw   システム管理構造体のポインタ
  */
 //============================================================================================
-void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
+void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw, BOOL start )
 {
   TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_FADE_ACT ) );
 
-  PaletteFadeReq( biw->pfd, PF_BIT_SUB_ALL, 0xffff, 1, 0, 16, 0, biw->tcbsys );
+	if( start == TRUE ){
+		PaletteFadeReq( biw->pfd, PF_BIT_SUB_ALL, 0xffff, 1, 0, 16, 0, biw->tcbsys );
+	}else{
+		PaletteFadeReq( biw->pfd, PF_BIT_SUB_ALL, 0xffff, 1, STANDBY_FADE, 16, 0, biw->tcbsys );
+	}
   biw->fade_flag = BTLV_INPUT_FADE_OUT;
 
   tfa->biw           = biw;

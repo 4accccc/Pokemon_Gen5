@@ -1156,7 +1156,19 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
 {
   switch( wk->selectItemSeq ){
   case 0:
-    BTLV_SCD_FadeOut( wk->scrnD );
+/*
+  BPL_MODE_NORMAL = 0,  // 通常のポケモン選択
+  BPL_MODE_NO_CANCEL,   // キャンセル無効のポケモン選択
+  BPL_MODE_CHG_DEAD,    // 瀕死入れ替え選択
+  BPL_MODE_ITEMUSE,     // アイテム使用
+  BPL_MODE_WAZASET,     // 技忘れ
+  BPL_MODE_WAZAINFO,    // 技確認
+*/
+		if( wk->plistData.mode == BPL_MODE_CHG_DEAD || wk->plistData.mode == BPL_MODE_NO_CANCEL ){
+	    BTLV_SCD_FadeOut( wk->scrnD, FALSE );
+		}else{
+	    BTLV_SCD_FadeOut( wk->scrnD, TRUE );
+		}
     GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq++;
     break;
@@ -1355,7 +1367,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 
   switch( wk->selectItemSeq ){
   case SEQ_INIT:
-    BTLV_SCD_FadeOut( wk->scrnD );
+    BTLV_SCD_FadeOut( wk->scrnD, TRUE );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq = SEQ_START_SCENE_BAG;
     break;
@@ -2760,7 +2772,7 @@ BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result )
 {
   switch( wk->selectItemSeq ){
   case 0:
-    BTLV_SCD_FadeOut( wk->scrnD );
+    BTLV_SCD_FadeOut( wk->scrnD, FALSE );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq++;
     break;
