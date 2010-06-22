@@ -721,8 +721,10 @@ static const BtlEventHandlerTable* ADD_SIDE_Burning( u32* numElems )
 static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  if( pokeID != BTL_POKEID_NULL )
-  {
+
+  if( (pokeID != BTL_POKEID_NULL)
+  &&  (BTL_SVFTOOL_IsExistPokemon(flowWk, pokeID))
+  ){
     if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
