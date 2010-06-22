@@ -1559,6 +1559,8 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
       wk->CardCenterX = TRCARD_RIGHT_SCALE_CENTER_POSX;
       wk->CardCenterY = TRCARD_SCALE_CENTER_POSY;
     }
+    wk->CardScaleX = START_SCALE;
+    wk->CardScaleY = START_SCALE;
     wk->sub_seq = 1;
     break;
   case CARDSCALE_WIDE_CALC:
