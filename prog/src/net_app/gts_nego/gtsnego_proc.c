@@ -2335,6 +2335,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
 
   G2_BlendNone();
   G2S_BlendNone();
+  WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+  WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
   
   pWork = GFL_PROC_AllocWork( proc, sizeof( GTSNEGO_WORK ), HEAPID_IRCBATTLE );
   GFL_STD_MemClear(pWork, sizeof(GTSNEGO_WORK));
