@@ -40,6 +40,8 @@
 
 #include "net/dwc_tool.h"
 
+#include "field/ringtone_sys_ext.h"
+
 #include "debug/debug_hudson.h"
 
 /*--------------------------------------------------------------------------*/
@@ -295,6 +297,9 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       BTLV_InitSystem( HEAPID_BTL_VIEW );
       BTL_UTIL_PRINTSYS_Init();
+
+      //Sleep時のボリューム操作をマスターボリュームに変更
+      GFUser_SetSleepSoundFunc();
 
       wk->heapID = HEAPID_BTL_SYSTEM;
       wk->setupParam = setup_param;
@@ -555,6 +560,9 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 
     // BTS:2360 BTL_Client、録画再生停止処理でのSE停止を元に戻す。
     PMSND_AllPlayerVolumeEnable(TRUE, PMSND_MASKPL_ALLSE);
+
+    //Sleep時のボリューム操作をプレイヤーボリュームに変更
+    RINGTONE_SYS_SetSleepSoundFunc();
 
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );
