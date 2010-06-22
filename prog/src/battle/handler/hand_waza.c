@@ -1754,15 +1754,18 @@ static void handler_KonoyubiTomare_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
   &&  (BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_ROTATION)
   ){
     u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+
     if( (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID))
     &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != WAZANO_HURIIFOORU)
+    &&  (!BPP_CheckSick(bpp, WAZASICK_FREEFALL))
     ){
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( !BTL_SVFTOOL_CheckFarPoke(flowWk, atkPokeID, pokeID, waza) )
       {
         if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
         {
-          // HGSSでは引き寄せても何も表示していない…
+          // HGSSでは引き寄せても何も表示していないからいいか…
           #if 0
           BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
           HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WazaRecv );
@@ -1976,7 +1979,7 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     else
     {
       BTL_HANDEX_PARAM_RANK_EFFECT* param;
-      TAYA_Printf("のろいを使うポケID=%d\n", pokeID);
+
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
@@ -6767,12 +6770,14 @@ static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_KILL* kill_param;
     BTL_HANDEX_PARAM_RANK_EFFECT* rank_param;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    u32 serial = BTL_SVFTOOL_GetRankEffSerial( flowWk );
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       rank_param->poke_cnt = 1;
       rank_param->pokeID[0] = targetPokeID;
       rank_param->rankType = BPP_ATTACK_RANK;
       rank_param->rankVolume = -2;
+      rank_param->effSerial = serial;
       rank_param->fAlmost = TRUE;
     BTL_SVF_HANDEX_Pop( flowWk, rank_param );
 
@@ -6782,6 +6787,7 @@ static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       rank_param->pokeID[0] = targetPokeID;
       rank_param->rankType = BPP_SP_ATTACK_RANK;
       rank_param->rankVolume = -2;
+      rank_param->effSerial = serial;
       rank_param->fAlmost = TRUE;
     BTL_SVF_HANDEX_Pop( flowWk, rank_param );
 
@@ -10321,10 +10327,16 @@ static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
  * はじけるほのお
  */
 //----------------------------------------------------------------------------------
+#define HAJIKERU_HONOO_0622   (1)
 static const BtlEventHandlerTable*  ADD_HajikeruHonoo( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+#if   HAJIKERU_HONOO_0622
+    { BTL_EVENT_WAZA_DMG_REACTION,    handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
+#else
+//    こちらだと「レッドカード」や「ジャポのみ」に処理順で負ける
     { BTL_EVENT_DAMAGEPROC_END_HIT,   handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
+#endif
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -10333,7 +10345,12 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
+#if   HAJIKERU_HONOO_0622
+    u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+#else
     u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+#endif
+
     BtlPokePos pos = BTL_SVFTOOL_GetPokeLastPos( flowWk, damagedPokeID );
 
     if( pos != BTL_POS_NULL )

@@ -7666,6 +7666,18 @@ static void scproc_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM
     }
   }
 }
+/**
+ *  能力ランク効果処理のシリアルをインクリメント
+ */
+static u32 wazaRankEffSerial_Inc( BTL_SVFLOW_WORK* wk )
+{
+  wk->wazaRankEffSerial++;
+  if( wk->wazaRankEffSerial == 0 ){
+    wk->wazaRankEffSerial = 1;
+  }
+  return wk->wazaRankEffSerial;
+}
+
 //--------------------------------------------------------------------------
 /**
  * ワザによる（直接・追加共通）ランク増減効果の処理
@@ -7682,9 +7694,10 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
 {
   BOOL ret = FALSE;
   u32 eff_cnt, i;
+  u32 rankEffSerial;
   u8 atkPokeID = BPP_GetID( attacker );
 
-  wk->wazaRankEffSerial++;
+  rankEffSerial = wazaRankEffSerial_Inc( wk );
 
   eff_cnt = WAZADATA_GetRankEffectCount( wazaParam->wazaID );
 //  BTL_Printf("ワザ:%dのエフェクト数=%d\n", wazaParam->wazaID, eff_cnt);
@@ -7700,7 +7713,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
       if( effect != WAZA_RANKEFF_MULTI5 )
       {
         fEffective = scproc_RankEffectCore( wk, atkPokeID, target, effect, volume, atkPokeID,
-                ITEM_DUMMY_DATA, wk->wazaRankEffSerial, fAlmost, TRUE );
+                ITEM_DUMMY_DATA, rankEffSerial, fAlmost, TRUE );
       }
       else
       {
@@ -7708,7 +7721,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
         for( e=WAZA_RANKEFF_ORIGIN; e<WAZA_RANKEFF_BASE_MAX; ++e )
         {
           if( scproc_RankEffectCore(wk, atkPokeID, target, e, volume, atkPokeID,
-              ITEM_DUMMY_DATA, wk->wazaRankEffSerial, fAlmost, TRUE)
+              ITEM_DUMMY_DATA, rankEffSerial, fAlmost, TRUE)
           ){
             fEffective = TRUE;
           }
@@ -13527,6 +13540,19 @@ u32 BTL_SVFTOOL_GetWeight( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] ランク効果シリアル値を取得
+ *
+ * @param   wk
+ *
+ * @retval  U32
+ */
+//--------------------------------------------------------------------------------------
+u32 BTL_SVFTOOL_GetRankEffSerial( BTL_SVFLOW_WORK* wk )
+{
+  return wazaRankEffSerial_Inc( wk );
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 決着判定
  *
  * @param   wk
@@ -14346,7 +14372,7 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
       if( !BPP_IsDead(pp_target) )
       {
         if( scproc_RankEffectCore(wk, param_header->userPokeID, pp_target, param->rankType, param->rankVolume,
-          BTL_POKEID_NULL, itemID, 0, param->fAlmost, !(param->fStdMsgDisable))
+          BTL_POKEID_NULL, itemID, param->effSerial, param->fAlmost, !(param->fStdMsgDisable))
         ){
           handexSub_putString( wk, &param->exStr );
           result = 1;

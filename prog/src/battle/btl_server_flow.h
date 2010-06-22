@@ -197,6 +197,7 @@ extern BOOL BTL_SVFTOOL_IsTameHidePoke( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BOOL BTL_SVFTOOL_IsFreeFallUserPoke( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BOOL BTL_SVFTOOL_IsFreeFallPoke( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern u32 BTL_SVFTOOL_GetWeight( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern u32 BTL_SVFTOOL_GetRankEffSerial( BTL_SVFLOW_WORK* wk );
 extern BOOL BTL_SVFTOOL_CheckShowDown( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex );
 extern BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID );
@@ -519,6 +520,7 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  WazaRankEffect rankType;            ///< ランク増減種類
+ u32  effSerial;                     ///< ランク効果シリアル（不要なら0）
  s8   rankVolume;                    ///< ランク増減値(=0だと強制リセット）
  u8   fStdMsgDisable;                ///< 標準メッセージを表示しないフラグ
  u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
