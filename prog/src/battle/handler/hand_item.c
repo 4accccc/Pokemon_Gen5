@@ -848,6 +848,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KuraboNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,           handler_KuraboNomi     }, // メンバー入場チェックハンドラ
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_KuraboNomi     }, // 状態異常チェックハンドラ
+    { BTL_EVENT_ACTPROC_END,         handler_KuraboNomi     },
     { BTL_EVENT_USE_ITEM,            handler_KuraboNomi_Use }, // 通常道具使用
     { BTL_EVENT_USE_ITEM_TMP,        handler_KuraboNomi_Use }, // 強制一時使用（ついばむなど）
   };
@@ -878,6 +879,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KagoNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,           handler_KagoNomi     }, // メンバー入場チェックハンドラ
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_KagoNomi     }, // 状態異常チェックハンドラ
+    { BTL_EVENT_ACTPROC_END,         handler_KagoNomi     },
     { BTL_EVENT_USE_ITEM,            handler_KagoNomi_Use }, // 通常道具使用
     { BTL_EVENT_USE_ITEM_TMP,        handler_KagoNomi_Use }, // 強制一時使用（ついばむなど）
   };
@@ -908,6 +910,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_ChigoNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,           handler_ChigoNomi     },  // メンバー入場チェックハンドラ
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_ChigoNomi     },  // 状態異常チェックハンドラ
+    { BTL_EVENT_ACTPROC_END,         handler_ChigoNomi     },
     { BTL_EVENT_USE_ITEM,            handler_ChigoNomi_Use },  // 通常道具使用
     { BTL_EVENT_USE_ITEM_TMP,        handler_ChigoNomi_Use },  // 強制一時使用（ついばむなど）
   };
@@ -938,6 +941,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_NanasiNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,           handler_NanasiNomi     }, // メンバー入場チェックハンドラ
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_NanasiNomi     }, // 状態異常チェックハンドラ
+    { BTL_EVENT_ACTPROC_END,         handler_NanasiNomi     },
     { BTL_EVENT_USE_ITEM,            handler_NanasiNomi_Use }, // 通常道具使用
     { BTL_EVENT_USE_ITEM_TMP,        handler_NanasiNomi_Use }, // 強制一時使用（ついばむなど）
   };
@@ -968,6 +972,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KiiNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,           handler_KiiNomi     }, // メンバー入場チェックハンドラ
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_KiiNomi     }, // 状態異常チェックハンドラ
+    { BTL_EVENT_ACTPROC_END,         handler_KiiNomi     },
     { BTL_EVENT_USE_ITEM,            handler_KiiNomi_Use }, // 通常道具使用
     { BTL_EVENT_USE_ITEM_TMP,        handler_KiiNomi_Use }, // 強制一時使用（ついばむなど）
   };
@@ -999,6 +1004,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MomonNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,           handler_MomonNomi     },  // 状態異常チェックハンドラ
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_MomonNomi     },  // 状態異常チェックハンドラ
+    { BTL_EVENT_ACTPROC_END,         handler_MomonNomi     },
     { BTL_EVENT_USE_ITEM,            handler_MomonNomi_Use },  // 通常道具使用
     { BTL_EVENT_USE_ITEM_TMP,        handler_MomonNomi_Use },  // 強制一時使用（ついばむなど）
   };
@@ -1029,6 +1035,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_RamNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,           handler_RamNomi     },  // 状態異常チェックハンドラ
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_RamNomi     },  // 状態異常チェックハンドラ
+    { BTL_EVENT_ACTPROC_END,         handler_RamNomi     },
     { BTL_EVENT_USE_ITEM,            handler_RamNomi_Use },  // 通常道具使用
     { BTL_EVENT_USE_ITEM_TMP,        handler_RamNomi_Use },  // 強制一時使用（ついばむなど）
   };
