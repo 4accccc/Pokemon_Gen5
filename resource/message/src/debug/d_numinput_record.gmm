@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-20T11:25:34"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-06-22T16:31:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -610,8 +610,8 @@
 	</row>
 
 	<row id="dni_record_34" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">すれちがい通信をした回数</language>
-		<language name="JPN_KANJI" width="240">すれちがい通信をした回数</language>
+		<language name="JPN" width="240">未使用</language>
+		<language name="JPN_KANJI" width="240">未使用</language>
 	</row>
 
 	<row id="dni_record_35" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -900,8 +900,8 @@
 	</row>
 
 	<row id="dni_record_92" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">すれちがい通信でお礼を受けた回数</language>
-		<language name="JPN_KANJI" width="240">すれちがい通信でお礼を受けた回数</language>
+		<language name="JPN" width="240">未使用</language>
+		<language name="JPN_KANJI" width="240">未使用</language>
 	</row>
 
 	<row id="dni_record_93" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
