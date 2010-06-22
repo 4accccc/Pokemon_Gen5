@@ -100,8 +100,8 @@ EVENT_START   ev_pos_r03_futago_01
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_look_up)
 		_OBJ_ANIME_WAIT()
 		
-		_BALLOONWIN_OBJMSG(msg_r03_futago_02,R03_FUTAGO_01)
-		_BALLOONWIN_CLOSE()
+		_PLAINWIN_MSG_UP(msg_r03_futago_02)
+		_MSGWIN_CLOSE()
 		
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_return01)
 		_OBJ_ANIME_WAIT()
