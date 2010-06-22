@@ -1085,7 +1085,7 @@ static int tmenu_Update( BEACON_VIEW_PTR wk,u8 menu_idx )
         sub_PlaySE( BVIEW_SE_DECIDE );
       }else{
         APP_TASKMENU_WIN_SetDecide( tmenu[i].work, TRUE );
-        sub_PlaySE( BVIEW_SE_CANCEL );
+        sub_PlaySE( BVIEW_SE_DECIDE );
       }
       ret = i;
     }
