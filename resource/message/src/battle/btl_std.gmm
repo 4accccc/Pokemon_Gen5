@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2010-06-18T15:17:35"/>
+	<create user="taya" host="W00146" date="2010-06-22T11:35:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -344,7 +344,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="776"/>
 		<band id="3" index="3" style="0000" width="776"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -986,6 +986,14 @@
 	<row id="BTL_STRID_STD_CriticalHit">
 		<language name="JPN" width="216">きゅうしょに　あたった！</language>
 		<language name="JPN_KANJI" width="216">急所に当たった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_PP_Short">
+		<comment>使おうとしたワザのPPが無かった</comment>
+		<language name="JPN" width="216">しかし　わざの　のこりポイントが
+なかった！</language>
+		<language name="JPN_KANJI" width="216">しかし　技の　残りポイントが
+無かった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_CommSupport">

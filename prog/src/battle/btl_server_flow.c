@@ -5308,6 +5308,11 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Sabotage_GoSleep, pokeID  );
     break;
 
+  case SV_WAZAFAIL_PP_ZERO:
+    scPut_WazaMsg( wk, bpp, waza );
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_PP_Short, pokeID );
+    break;
+
   case SV_WAZAFAIL_TOKUSEI:
   case  SV_WAZAFAIL_NO_REACTION:
     // とくせいの場合、各ハンドラに任せる
@@ -11362,13 +11367,16 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 
   if( ratio )
   {
+    TAYA_Printf("反動ratio=%08x\n", ratio);
     if( reactionType == SV_REACTION_HP )
     {
       u32 maxHP = BPP_GetValue( attacker, BPP_MAX_HP );
       damage = roundMin( BTL_CALC_MulRatioInt(maxHP, ratio), 1 );
+      TAYA_Printf( "反動 HP type .. maxHP=%d, damage = %d\n", maxHP, damage );
     }
     else{
       damage = roundMin( BTL_CALC_MulRatioInt(damage, ratio), 1 );
+      TAYA_Printf( "反動 DMG type .. damage = %d\n", damage );
     }
 
     (*fMustEnable) = anti_fail_flag;
