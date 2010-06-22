@@ -1702,6 +1702,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
   {
+    biw->decide_pos_flag = 0;
     hit = biw->hit;
     biw->hit = GFL_UI_TP_HIT_NONE;
     return hit;
@@ -1848,7 +1849,6 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
         {
           SePlayCancel( biw );
         }
-        biw->decide_pos_flag = 0;
       }
     }
   }
@@ -1942,6 +1942,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       *select = biw->hit;
       *dir    = rotate_result[ biw->rotate_scr ];
       biw->hit = GFL_UI_TP_HIT_NONE;
+      biw->decide_pos_flag = 0;
       PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 0, 0, 0, biw->tcbsys );
       PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 0, 0, 0, biw->tcbsys );
       return TRUE;
@@ -1950,6 +1951,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     { 
       biw->cursor_pos = 0;
       biw->decide_pos[ biw->active_index ][biw->scr_type ] = 0;
+      biw->decide_pos_flag = 0;
       SePlayRotateSelect( biw );
       SetupRotateAction( biw, hit );
       biw->hit = GFL_UI_TP_HIT_NONE;
