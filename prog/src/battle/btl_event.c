@@ -1083,6 +1083,39 @@ int BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
     return 0;
   }
 }
+//=============================================================================================
+/**
+ * 指定ラベルが存在すればその値を取得、なければ何もしない
+ *
+ * @param   label
+ * @param   value   [out]
+ *
+ * @retval  BOOL    ラベルあればTRUE
+ */
+//=============================================================================================
+BOOL BTL_EVENTVAR_GetValueIfExist( BtlEvVarLabel label, int* value )
+{
+  GF_ASSERT(label!=BTL_EVAR_NULL);
+  GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
+  {
+    VAR_STACK* stack = &VarStack;
+
+    int p = stack->sp;
+    while( p < NELEMS(stack->label) )
+    {
+      if( stack->label[p] == label ){
+        *value = stack->value[p];
+        return TRUE;
+      }
+      if( stack->label[p] == BTL_EVAR_NULL ){
+        break;
+      }
+      ++p;
+    }
+    return FALSE;
+  }
+}
+
 // 新規ラベル用に確保した位置のポインタを返す
 static int evar_getNewPoint( const VAR_STACK* stack, BtlEvVarLabel label )
 {

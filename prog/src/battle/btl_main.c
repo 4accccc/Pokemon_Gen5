@@ -2972,12 +2972,13 @@ static inline BtlPokePos getTripleFrontPos( BtlPokePos pos )
 static u32 GetClientCoverPosNum( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   u32 cnt, i;
-  for(cnt=i=0; i<BTL_CLIENT_MAX; ++i)
+  for(cnt=i=0; i<NELEMS(wk->posCoverClientID); ++i)
   {
     if( wk->posCoverClientID[i] == clientID ){
       ++cnt;
     }
   }
+  TAYA_Printf("Client-%d, numCoverPos=%d\n", cnt);
   return cnt;
 }
 
@@ -5098,6 +5099,18 @@ void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party, 
       {
          BPP_ClearViewSrcData( bpp );
       }
+    }
+  }
+
+  for(i=0; i<party->memberCount; ++i)
+  {
+    BTL_POKEPARAM* bpp = party->member[ i ];
+    if( BPP_IsFakeEnable(bpp) )
+    {
+      TAYA_Printf("Member[%d], monsno=%d ... Illusion\n", i, BPP_GetMonsNo(bpp));
+    }
+    else{
+      TAYA_Printf("Member[%d], monsno=%d ... normal\n", i, BPP_GetMonsNo(bpp));
     }
   }
 }

@@ -144,7 +144,8 @@ static BOOL scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 static BOOL scEvent_CheckWazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
   BTL_POKESET* targetRec, u8* robberPokeID, u8* robTargetPokeID );
 static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, BtlPokePos targetPos );
-static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza );
+static BOOL checkPlayersPoke( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza );
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
 static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
@@ -651,6 +652,7 @@ BOOL BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
 {
   SVCL_WORK* cw;
   u32 i, posIdx;
+  BOOL fAnyEvent = FALSE;
 
   SCQUE_Init( wk->que );
 
@@ -658,7 +660,9 @@ BOOL BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
     const BTL_FIELD_SITUATION* fSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
     if( fSit->weather != BTL_WEATHER_NONE )
     {
-      scproc_ChangeWeather( wk, fSit->weather, BTL_WEATHER_TURN_PERMANENT );
+      if( scproc_ChangeWeather( wk, fSit->weather, BTL_WEATHER_TURN_PERMANENT ) ){
+        fAnyEvent = TRUE;
+      }
     }
   }
 
@@ -689,7 +693,11 @@ BOOL BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
     }
   }
 
-  return scproc_AfterMemberIn( wk );
+  if( scproc_AfterMemberIn(wk) ){
+    return TRUE;
+  }
+
+  return fAnyEvent;
 }
 
 void BTL_SVFLOW_StartTurn_Boot( BTL_SVFLOW_WORK* wk )
@@ -3790,21 +3798,44 @@ static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID
 
 //----------------------------------------------------------------------------------
 /**
+ *
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL checkPlayersPoke( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  if( BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
  * ワザ出しレコード更新
  *
  * @param   wk
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza )
+static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza )
 {
-  if( waza == WAZANO_HANERU ){
-    BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_HANERU );
-    return;
-  }
-  if( waza == WAZANO_WARUAGAKI ){
-    BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_WARUAGAKI );
-    return;
+  if( checkPlayersPoke(wk, bpp) )
+  {
+    if( waza == WAZANO_HANERU ){
+      BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_HANERU );
+      return;
+    }
+    if( waza == WAZANO_WARUAGAKI ){
+      BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_WARUAGAKI );
+      return;
+    }
   }
 }
 //----------------------------------------------------------------------------------
@@ -3830,7 +3861,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   BTL_N_Printf( DBGSTR_SVFL_WazaExeStart, BPP_GetID(attacker), waza );
 
   // レコードデータ更新
-  scproc_WazaExeRecordUpdate( wk, waza );
+  scproc_WazaExeRecordUpdate( wk, attacker, waza );
 
   // １ターン溜めワザの発動チェック
   if( WAZADATA_GetFlag(waza, WAZAFLAG_Tame) )
@@ -5747,8 +5778,11 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   {
     dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, wk->psetFriend, wk->calcDmgFriend,
                   wk->hitCheckParam, dmg_ratio, flagSet );
-    if( dmg_sum ){
-      BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_TEMOTI_MAKIZOE );
+    if( dmg_sum )
+    {
+      if( checkPlayersPoke(wk, attacker) ){
+        BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_TEMOTI_MAKIZOE );
+      }
     }
   }
   if( BTL_POKESET_GetCount( wk->psetEnemy ) )

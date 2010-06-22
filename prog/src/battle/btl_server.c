@@ -431,7 +431,6 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
         BOOL fAnyEvent = BTL_SVFLOW_StartBtlIn( server->flowWork );
         if( fAnyEvent )
         {
-          TAYA_Printf("wp=%d\n", server->que->writePtr );
           SendBtlInChapterRecord( server );
           (*seq)++;
           break;

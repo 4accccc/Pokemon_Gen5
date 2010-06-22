@@ -320,6 +320,8 @@ extern void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMi
 extern BOOL BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value );
 extern void BTL_EVENTVAR_MulValue( BtlEvVarLabel label, fx32 value );
 extern int  BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
+extern BOOL BTL_EVENTVAR_GetValueIfExist( BtlEvVarLabel label, int* value );
+
 
 
 

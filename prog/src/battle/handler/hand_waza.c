@@ -442,9 +442,6 @@ static const BtlEventHandlerTable*  ADD_Feint( u32* numElems );
 static void handler_Feint_MamoruBreak( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Feint_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Feint_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Feint_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Feint_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static BOOL handler_Feint_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static const BtlEventHandlerTable*  ADD_TuboWoTuku( u32* numElems );
 static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Nemuru( u32* numElems );
@@ -6203,37 +6200,6 @@ static void handler_Feint_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     }
   }
 }
-// ワザ処理開始
-static void handler_Feint_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  // 自分が攻撃側ならスキップチェックハンドラをアタッチする
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Feint_SkipCheck );
-  }
-}
-// ワザ処理終了
-static void handler_Feint_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  // 自分が攻撃側ならスキップチェックハンドラをデタッチする
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
-  }
-}
-// 「フェイント」スキップチェックハンドラ
-static BOOL handler_Feint_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
-{
-  if( factorType == BTL_EVENT_FACTOR_SIDE )
-  {
-    if( (subID == BTL_SIDEEFF_WIDEGUARD)      // ワイドガード無効
-    ||  (subID == BTL_SIDEEFF_FASTGUARD)      // ファストガード無効
-    ){
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
 
 //----------------------------------------------------------------------------------
 /**
@@ -8362,10 +8328,10 @@ static void handler_SoraWoTobu_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable*  ADD_ShadowDive( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TAME_START,          handler_ShadowDive_TameStart },     // 溜め開始
-    { BTL_EVENT_TAME_RELEASE,        handler_ShadowDive_TameRelease },   // 溜め解放
-    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak },        // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_ShadowDive_AfterDamage },   // ダメージ処理後
+    { BTL_EVENT_TAME_START,          handler_ShadowDive_TameStart    },   // 溜め開始
+    { BTL_EVENT_TAME_RELEASE,        handler_ShadowDive_TameRelease  },   // 溜め解放
+    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak       },   // まもる無効化チェック
+    { BTL_EVENT_DAMAGEPROC_END_HIT,  handler_ShadowDive_AfterDamage },   // ダメージ処理後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

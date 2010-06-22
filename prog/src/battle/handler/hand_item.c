@@ -1049,6 +1049,17 @@ static void common_sickReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
+    // ŠY“–‚·‚é”½‰žƒ^ƒCƒv‚Å‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
+    int reactionType;
+    if( BTL_EVENTVAR_GetValueIfExist(BTL_EVAR_ITEM_REACTION, &reactionType) )
+    {
+      if( (reactionType != BTL_ITEMREACTION_SICK)
+      &&  (reactionType != BTL_ITEMREACTION_GEN)
+      ){
+        return;
+      }
+    }
+
     if( common_sickcode_match(flowWk, pokeID, sickCode) )
     {
       ItemPushRun( myHandle, flowWk, pokeID );

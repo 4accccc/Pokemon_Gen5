@@ -8068,6 +8068,8 @@ static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args )
   u8 clientID = args[0];
   u8 increment = args[1];
 
+  TAYA_Printf("ClientID=%d, myID=%d\n", clientID, wk->myID);
+
   if( clientID == wk->myID )
   {
     wk->shooterEnergy += increment;
