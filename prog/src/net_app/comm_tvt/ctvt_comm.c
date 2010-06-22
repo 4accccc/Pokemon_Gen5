@@ -17,6 +17,7 @@
 #include "system/gfl_use.h"
 #include "system/wipe.h"
 #include "system/camera_system.h"
+#include "system/net_err.h"
 #include "net/network_define.h"
 #include "net/wih_dwc.h"
 #include "net/ctvt_beacon_local.h"
@@ -528,6 +529,11 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_HANDLE_IsTimeSync( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC , WB_NET_COMM_TVT ) == TRUE )
+      {
+        GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
+        commWork->state = CCS_FINISH;
+      }
+      if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
       {
         GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
         commWork->state = CCS_FINISH;
