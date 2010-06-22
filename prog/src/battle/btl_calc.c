@@ -1324,12 +1324,21 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
     BtlExPos exPos;
     u8 pokeID[ BTL_POS_MAX ];
     u8 pokeCnt = 0;
+    u8 fHitFar = FALSE;
+
+    if( rule == BTL_RULE_TRIPLE ){
+      fHitFar = WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar );
+    }
 
     switch( targetType ){
     case WAZA_TARGET_OTHER_SELECT:       ///< 通常ポケ（１体選択）
     case WAZA_TARGET_ENEMY_SELECT:       ///< 相手側ポケ（１体選択）
     case WAZA_TARGET_ENEMY_RANDOM:       ///< 相手ポケ１体ランダム
-      exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+      if( fHitFar ){
+        exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+      }else{
+        exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+      }
       break;
 
     case WAZA_TARGET_FRIEND_USER_SELECT: ///< 自分を含む味方ポケ（１体選択）
@@ -1337,7 +1346,11 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
       break;
 
     case WAZA_TARGET_FRIEND_SELECT:      ///< 自分以外の味方ポケ（１体選択）
-      exPos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
+      if( fHitFar ){
+        exPos = EXPOS_MAKE( BTL_EXPOS_FULL_FRIENDS, myPos );
+      }else{
+        exPos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
+      }
       break;
 
     case WAZA_TARGET_USER:               ///< 自分のみ
