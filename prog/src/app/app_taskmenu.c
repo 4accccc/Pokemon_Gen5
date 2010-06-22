@@ -1104,3 +1104,16 @@ void APP_TASKMENU_WIN_Show( APP_TASKMENU_WIN_WORK *wk )
   GFL_BMPWIN_MakeScreen( wk->bmpwin );
   GFL_BG_LoadScreenV_Req(wk->res->frame);
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字描画中フラグを返す
+ *
+ *	@param	const APP_TASKMENU_WIN_WORK *wk   ワーク
+ *
+ *	@return TRUEならば文字描画中  FALSEならば書き終えた
+ */
+//-----------------------------------------------------------------------------
+BOOL APP_TASKMENU_WIN_IsUpdateMsg( const APP_TASKMENU_WIN_WORK *wk )
+{
+  return wk->isUpdateMsg;
+}

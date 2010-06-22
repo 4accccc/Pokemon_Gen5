@@ -114,4 +114,5 @@ extern void APP_TASKMENU_WIN_SetPaletteAndAnimeColor( APP_TASKMENU_WIN_WORK *wk,
                                                u8 plt, GXRgb animeColS, GXRgb animeColE );
 extern void APP_TASKMENU_WIN_Hide( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_Show( APP_TASKMENU_WIN_WORK *wk );
+extern BOOL APP_TASKMENU_WIN_IsUpdateMsg( const APP_TASKMENU_WIN_WORK *wk );
 
