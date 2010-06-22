@@ -94,10 +94,10 @@ vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_yoshida)|\
     defined(DEBUG_ONLY_FOR_sogabe)
-//#define CAMERA_POS_PRINT
+#define CAMERA_POS_PRINT
 #endif
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define CAMERA_POS_PRINT_FX32
+#define CAMERA_POS_PRINT_FX32
 #endif
 #endif
 
@@ -1106,11 +1106,11 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   };
 
   static  VecFx32 cam_pos_table_3vs3[]={
-    { 0x00000b33, 0x00005333, 0x000114cd },       //BTLEFF_CAMERA_POS_A
+    { 0x00001b33, 0x00006333, 0x000144cd },       //BTLEFF_CAMERA_POS_A
     { 0x0000b994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_B
     { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_C
     { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_D
-    { 0x00009b33, 0x00005333, 0x000114cd },       //BTLEFF_CAMERA_POS_E
+    { 0x00006b33, 0x00006333, 0x000144cd },       //BTLEFF_CAMERA_POS_E
     { 0x00002994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_F
   };
 
@@ -1127,11 +1127,11 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   };
 
   static  VecFx32 cam_target_table_3vs3[]={
-    { 0xffffa000, 0x0000119a, 0x00000000 },       //BTLEFF_CAMERA_POS_A
+    { 0xffffb000, 0x0000219a, 0x00003000 },       //BTLEFF_CAMERA_POS_A
     { 0x0000519f, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_B
     { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_C
     { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_D
-    { 0x00003000, 0x0000119a, 0x00000000 },       //BTLEFF_CAMERA_POS_E
+    { 0x00005000, 0x0000219a, 0x00003000 },       //BTLEFF_CAMERA_POS_E
     { 0xffffbe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_F
   };
 
