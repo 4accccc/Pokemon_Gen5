@@ -794,7 +794,37 @@ extern void GFL_UI_StartFrameRateMode( const GFL_UI_FRAMERATE_ENUM framerate );
 extern int GFL_UI_GetBattLevel(void);
 
 
+//------------------------------------------------------------------
+/**
+ * @brief タッチパネルに触れているか（トリガ） + GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH)つき
+ * @param   none
+ * @retval  BOOL		TRUEで触れた
+ */
+//------------------------------------------------------------------
+inline static BOOL GFL_UI_TP_GetTrgAndSet( void )
+{
+  BOOL flg = GFL_UI_TP_GetTrg();
+  if(flg){
+    GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+  }
+  return flg;
+}
 
+//------------------------------------------------------------------
+/**
+ * @brief キーのトリガ + GFL_UI_SetTouchOrKey(GFL_APP_END_KEY)つき
+ * @param   none
+ * @retval  int		キーのBIT
+ */
+//------------------------------------------------------------------
+inline static int GFL_UI_KEY_GetTrgAndSet( void )
+{
+  int flg = GFL_UI_KEY_GetTrg();
+  if(flg){
+    GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+  }
+  return flg;
+}
 
 
 //-----------------------------------------------------------------------------
