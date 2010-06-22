@@ -25,6 +25,7 @@
 #define DEBUGWIN_LIVESCORE_USE
 #define DEBUGWIN_REPORT_USE
 #define DEBUGWIN_BTLBOX_USE
+#define DEBUGWIN_BTLBGM_USE
 
 
 #define DEBUGWIN_GROUP_REG (41)
@@ -45,6 +46,8 @@
 #define DEBUGWIN_GROUP_REPORT (70)
 
 #define DEBUGWIN_GROUP_BTLBOX (80)
+
+#define DEBUGWIN_GROUP_BTLBGM (90)
 
 
 #include "wifibattlematch_debugdata.h"
@@ -111,22 +114,44 @@ static inline void DebugWin_Util_ChangeDataU32( DEBUGWIN_ITEM* item, u32 *p_para
 static inline void DebugWin_Util_ChangeDataU16( DEBUGWIN_ITEM* item, u16 *p_param, u16 min, u16 max )
 { 
   BOOL is_update  = FALSE;
+  u16 value  = 1;
 
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
-  { 
-    if( *p_param > min )
-    { 
-      (*p_param)--;
-      is_update = TRUE;
-    }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    value = 10;
   }
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    value = 100;
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    value = 1000;
+  }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   { 
-    if( *p_param  < max )
+    if( *p_param - value >= min )
     { 
-      (*p_param)++;
-      is_update = TRUE;
+      (*p_param)-=value;
     }
+    else
+    {
+      (*p_param)  = min;
+    }
+    is_update = TRUE;
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  { 
+    if( *p_param + value <= max )
+    { 
+      (*p_param)+=value;
+    }
+    else
+    {
+      (*p_param)  = max;
+    }
+    is_update = TRUE;
   }
 
   if( is_update )
@@ -1375,6 +1400,71 @@ static inline void DEBUGWIN_BTLBOX_Exit( void )
 }
 #endif//DEBUGWIN_BTLBOX_USE
 
+#ifdef DEBUGWIN_BTLBGM_USE
+
+
+static inline void DebugWin_BtlBgm_U_ChageUse( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBGM_DATA  *p_wk = userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    p_wk->is_use  ^= 1;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_BtlBgm_D_ChangeUse( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+
+  DEBUGWIN_BTLBGM_DATA  *p_wk = userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "BGM‚±‚Ä‚¢[%s]", sc_tbl[ p_wk->is_use ] );
+}
+
+static inline void DebugWin_BtlBgm_U_BtlBgm( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBGM_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU16( item, &p_wk->btl_bgm, 0, 0xFFFF );
+}
+
+static inline void DebugWin_BtlBgm_D_BtlBgm( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBGM_DATA  *p_wk = userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "‚¹‚ñ‚Æ‚¤‚«‚å‚­[%d]", p_wk->btl_bgm );
+}
+
+static inline void DebugWin_BtlBgm_U_WinBgm( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBGM_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU16( item, &p_wk->win_bgm, 0, 0xFFFF );
+}
+
+static inline void DebugWin_BtlBgm_D_WinBgm( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_BTLBGM_DATA  *p_wk = userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "‚©‚¿‚«‚å‚­[%d]", p_wk->win_bgm );
+}
+
+static inline void DEBUGWIN_BTLBGM_Init( HEAPID heapID )
+{
+  DEBUGWIN_BTLBGM_DATA *p_wk  = DEBUGWIN_BTLBGM_DATA_GetInstance();
+
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_BTLBGM, "ƒoƒgƒ‹‚«‚å‚­", heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_BtlBgm_U_ChageUse, DebugWin_BtlBgm_D_ChangeUse, p_wk, DEBUGWIN_GROUP_BTLBGM, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_BtlBgm_U_BtlBgm, DebugWin_BtlBgm_D_BtlBgm, p_wk, DEBUGWIN_GROUP_BTLBGM, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_BtlBgm_U_WinBgm, DebugWin_BtlBgm_D_WinBgm, p_wk, DEBUGWIN_GROUP_BTLBGM, heapID );
+}
+static inline void DEBUGWIN_BTLBGM_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_BTLBGM );
+}
+#endif //DEBUGWIN_BTLBGM_USE
 
 #endif  //PM_DEBUG
 
@@ -1410,5 +1500,11 @@ static inline void DEBUGWIN_BTLBOX_Exit( void )
 #define DEBUGWIN_BTLBOX_Init( ... ) /* */
 #define DEBUGWIN_BTLBOX_Exit( ... ) /* */
 #endif//DEBUGWIN_BTLBOX_USE
+
+
+#ifndef DEBUGWIN_BTLBGM_USE
+#define DEBUGWIN_BTLBGM_Init( ... ) /* */
+#define DEBUGWIN_BTLBGM_Exit( ... ) /* */
+#endif //DEBUGWIN_BTLBGM_USE
 
 

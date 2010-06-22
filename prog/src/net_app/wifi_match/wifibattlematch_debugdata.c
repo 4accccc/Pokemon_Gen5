@@ -28,4 +28,11 @@ DEBUGWIN_REPORT_DATA *DEBUGWIN_REPORT_DATA_GetInstance( void )
   return &g_debug_report_data;
 }
 
+
+DEBUGWIN_BTLBGM_DATA *DEBUGWIN_BTLBGM_DATA_GetInstance( void )
+{
+  static DEBUGWIN_BTLBGM_DATA g_debug_btlbgm_data = {0};
+  return &g_debug_btlbgm_data;
+}
+
 #endif //PM_DEBUG

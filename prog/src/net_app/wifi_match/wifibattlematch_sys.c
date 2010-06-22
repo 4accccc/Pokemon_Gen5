@@ -51,6 +51,7 @@
 
 //デバッグ
 #include "debug/debug_nagihashi.h"
+#include "wifibattlematch_debugdata.h"
 
 //-------------------------------------
 ///	DEBUG
@@ -1252,6 +1253,17 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
+  //戦闘曲強制書き換え（バトルレコーダーの曲置換デバッグ用）
+#ifdef PM_DEBUG
+  {   
+    DEBUGWIN_BTLBGM_DATA *p_debug = DEBUGWIN_BTLBGM_DATA_GetInstance();
+    if( p_debug->is_use )
+    { 
+      p_param->p_btl_setup_param->musicDefault  = p_debug->btl_bgm;
+      p_param->p_btl_setup_param->musicWin    = p_debug->win_bgm;
+    }
+  }
+#endif //PM_DEBUG
 
   if( is_alloc )
   { 

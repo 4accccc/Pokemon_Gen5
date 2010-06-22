@@ -38,4 +38,17 @@ typedef struct
 
 extern DEBUGWIN_REPORT_DATA *DEBUGWIN_REPORT_DATA_GetInstance( void );
 
+//-------------------------------------
+///	êÌì¨ã»éwíË
+//=====================================
+typedef struct 
+{
+  BOOL  is_use;
+  u16   btl_bgm;
+  u16   win_bgm;
+} DEBUGWIN_BTLBGM_DATA;
+
+extern DEBUGWIN_BTLBGM_DATA *DEBUGWIN_BTLBGM_DATA_GetInstance( void );
+
+
 #endif //PM_DEBUG
