@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-22T16:16:27"/>
+	<create user="matsumiya" host="W00224" date="2010-06-22T18:45:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1040,12 +1040,12 @@
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
 		<language name="JPN" width="256">おお！　ポケモンずかん　かんせいまで
 あと　ほんのすこし　ではないか！▼
-ともだちと　こうかんや
+ともだちと　こうかん　したり
 いどうしてる　ポケモンの　ほかくなど▽
 わすれていることは　ないかね？</language>
 		<language name="JPN_KANJI" width="256">おお！　ポケモン図鑑　完成まで
 あと　ほんのすこし　ではないか！▼
-友達と　交換や
+友達と　交換したり
 移動してる　ポケモンの　捕獲など▽
 忘れていることは　ないかね？</language>
 	</row>
