@@ -622,14 +622,15 @@ struct _BTLV_INPUT_WORK
 
 typedef struct
 {
-  BTLV_INPUT_WORK*  biw;
-  int               seq_no;
-  BtlvMcssPos       pos;
-  ARCDATID          datID;
-  int               scr_x;
-  int               scr_y;
-  int               wait;
-  STRBUF*           msg_src;
+  BTLV_INPUT_WORK*    biw;
+  int                 seq_no;
+  BtlvMcssPos         pos;
+  ARCDATID            datID;
+  int                 scr_x;
+  int                 scr_y;
+  int                 wait;
+  STRBUF*             msg_src;
+  BTLV_INPUT_SCRTYPE  scr_type;
 }TCB_TRANSFORM_WORK;
 
 typedef struct
@@ -710,6 +711,12 @@ typedef struct
   BtlBagMode        bagMode;
 }TCB_BAGMODE_SET;
 
+typedef struct
+{
+  BTLV_INPUT_WORK*  biw;
+  int               max;
+}TCB_WINDOW_MASK;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -759,6 +766,8 @@ static  void  TCB_WeatherIconMove_CB( GFL_TCB* tcb );
 static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir );
 static  void  TCB_RotateAction( GFL_TCB* tcb, void* work );
 static  void  TCB_BagModeSet( GFL_TCB* tcb, void* work );
+static  void  TCB_SetWindowMask( GFL_TCB* tcb, void* work );
+static  void  TCB_ClearWindowMask( GFL_TCB* tcb, void* work );
 
 static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
@@ -1328,6 +1337,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
+        ttw->scr_type = biw->scr_type;
         BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 ), TCB_Transform_CB );
       }
       PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
@@ -2038,7 +2048,8 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
 //============================================================================================
 BOOL  BTLV_INPUT_CheckExecute( BTLV_INPUT_WORK* biw )
 { 
-  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) || BTLV_EFFECT_CheckExecute() )
+  //if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) || BTLV_EFFECT_CheckExecute() )
+  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
   { 
     return TRUE;
   }
@@ -2463,7 +2474,10 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
-    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    if( ttw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
+    { 
+      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    }
     ttw->seq_no++;
     ttw->wait = 4;
     break;
@@ -3421,6 +3435,41 @@ static  void  TCB_BagModeSet( GFL_TCB* tcb, void* work )
   }
 }
 
+//============================================================================================
+/**
+ *  @brief  ウインドウマスクをセット
+ */
+//============================================================================================
+static  void  TCB_SetWindowMask( GFL_TCB* tcb, void* work )
+{ 
+  TCB_WINDOW_MASK* twm = ( TCB_WINDOW_MASK* )work;
+
+  GXS_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
+  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, ( twm->max > 1 ) );
+  G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, ( twm->max == 3 ) );
+  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_ALL, FALSE );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ, -8 );
+
+  BTLV_INPUT_FreeTCB( twm->biw, tcb );
+}
+//============================================================================================
+/**
+ *  @brief  ウインドウマスクをクリア
+ */
+//============================================================================================
+static  void  TCB_ClearWindowMask( GFL_TCB* tcb, void* work )
+{ 
+  TCB_WINDOW_MASK* twm = ( TCB_WINDOW_MASK* )work;
+
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
+
+  BTLV_INPUT_FreeTCB( twm->biw, tcb );
+}
+
 //--------------------------------------------------------------
 /**
  * @brief 文字列の長さを取得する
@@ -4191,11 +4240,10 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     //ウインドウマスクでアイコンを暗くする実験
     if( max > 1 )
     {
-      GXS_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
-      G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, ( max > 1 ) );
-      G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, ( max == 3 ) );
-      G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_ALL, FALSE );
-      G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ, -8 );
+      TCB_WINDOW_MASK* twm = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WINDOW_MASK ) );
+      twm->biw = biw;
+      twm->max = max;
+      BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_SetWindowMask, twm, 0 ), NULL );
     }
 
     for( i = 0; i < max ; i++ ){
@@ -4274,6 +4322,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
 {
+  BOOL  ret = TRUE;
   int i;
 
   for( i = 0 ; i < 3 ; i++ )
@@ -4284,6 +4333,7 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
       GFL_CLGRP_CGR_Release( biw->pokeicon_charID[ i ] );
       biw->pokeicon_wk[ i ].clwk = NULL;
       biw->pokeicon_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
+      ret = FALSE;
     }
   }
 
@@ -4297,13 +4347,12 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
     GFL_CLGRP_PLTT_Release( biw->pokeicon_plttID );
     biw->pokeicon_plttID = GFL_CLGRP_REGISTER_FAILED;
   }
-
-  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
-  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-  G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
-
+  if( ret == FALSE )
+  { 
+    TCB_WINDOW_MASK* twm = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WINDOW_MASK ) );
+    twm->biw = biw;
+    BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_ClearWindowMask, twm, 0 ), NULL );
+  }
 }
 
 //--------------------------------------------------------------
