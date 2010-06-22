@@ -359,6 +359,13 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
   BattleBag_ObjInit( wk );
   BattleBag_PageObjSet( wk, wk->page );
 
+  if( *wk->dat->cursor_flg == 1 ){
+    wk->cursor_flg = TRUE;
+  }else{
+    wk->cursor_flg = FALSE;
+  }
+  BAPPTOOL_VanishCursor( wk->cpwk, wk->cursor_flg );
+
   BBAGUI_Init( wk, wk->page, 0 );
 
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
