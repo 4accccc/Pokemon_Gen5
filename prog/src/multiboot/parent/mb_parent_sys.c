@@ -382,7 +382,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 
   
   work->isPostMoviePoke = FALSE;
-  work->isPostMovieCapsule = TRUE;
+  work->isPostMovieCapsule = FALSE;
   work->localHighScore = 0;
   work->playNum = 0;
   work->totalGet = 0;
