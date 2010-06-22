@@ -249,6 +249,7 @@ static int WFBC_GetPeopleNum( const FIELD_WFBC* cp_wk );
 static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE mapmode );
 static void WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff );
 
+static void WFBC_ReadCore( FIELD_WFBC* p_wk );
 static void WFBC_UpdateCore( FIELD_WFBC* p_wk );
 
 static FIELD_WFBC_PEOPLE* WFBC_GetPeople( FIELD_WFBC* p_wk, u32 npc_id );
@@ -259,6 +260,7 @@ static const FIELD_WFBC_PEOPLE* WFBC_GetConstPeople( const FIELD_WFBC* cp_wk, u3
 //=====================================
 static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people );
 static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const FIELD_WFBC_CORE_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data );
+static void WFBC_PEOPLE_SetCore( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core );
 static void WFBC_PEOPLE_GetCore( const FIELD_WFBC_PEOPLE* cp_people, FIELD_WFBC_CORE_PEOPLE* p_core );
 
 
@@ -322,6 +324,7 @@ void FIELD_WFBC_Delete( FIELD_WFBC* p_wk )
 }
 
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  WFBC用高さテーブルインデックスを返す
@@ -351,6 +354,7 @@ void FIELD_WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
 {
   WFBC_GetCore( cp_wk, p_buff );
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -643,6 +647,10 @@ void FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_co
   const FIELD_WFBC_CORE_PEOPLE_POS* cp_pos;
 
   GF_ASSERT( p_wk );
+
+  // 1日変化でデータが変わっている可能性があるので、書き戻す。
+  WFBC_ReadCore( p_wk );
+  
   // 空いているワークを取得
   index = WFBC_GetClearPeople( p_wk );
 
@@ -670,6 +678,9 @@ void FIELD_WFBC_DeletePeople( FIELD_WFBC* p_wk, u32 npc_id )
   FIELD_WFBC_PEOPLE* p_people;
   GF_ASSERT( p_wk );
 
+  // 1日変化でデータが変わっている可能性があるので、書き戻す。
+  WFBC_ReadCore( p_wk );
+
   p_people = WFBC_GetPeople( p_wk, npc_id );
   // インデックスのワークをクリーン
   WFBC_PEOPLE_Clear( p_people );
@@ -691,6 +702,9 @@ void FIELD_WFBC_SetAwayPeople( FIELD_WFBC* p_wk, u32 npc_id )
   FIELD_WFBC_PEOPLE* p_people;
   GF_ASSERT( p_wk );
 
+  // 1日変化でデータが変わっている可能性があるので、書き戻す。
+  WFBC_ReadCore( p_wk );
+
   p_people = WFBC_GetPeople( p_wk, npc_id );
   p_people->status = FIELD_WFBC_PEOPLE_STATUS_AWAY;
  
@@ -710,6 +724,9 @@ void FIELD_WFBC_AddTalkPointPeople( FIELD_WFBC* p_wk, u32 npc_id )
 {
   FIELD_WFBC_PEOPLE* p_people;
   GF_ASSERT( p_wk );
+
+  // 1日変化でデータが変わっている可能性があるので、書き戻す。
+  WFBC_ReadCore( p_wk );
 
   p_people = WFBC_GetPeople( p_wk, npc_id );
 
@@ -734,13 +751,16 @@ void FIELD_WFBC_AddTalkPointPeople( FIELD_WFBC* p_wk, u32 npc_id )
  *	@param  heapID      ヒープID
  */ 
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_wordset, u32 npc_id, u32 word_set_idx, HEAPID heapID )
+void FIELD_WFBC_SetWordSetParentPlayer( FIELD_WFBC* p_wk, WORDSET* p_wordset, u32 npc_id, u32 word_set_idx, HEAPID heapID )
 {
   MYSTATUS* p_mystatus;
   const FIELD_WFBC_PEOPLE* cp_people;
-  GF_ASSERT( cp_wk );
+  GF_ASSERT( p_wk );
 
-  cp_people = WFBC_GetConstPeople( cp_wk, npc_id );
+  // 1日変化でデータが変わっている可能性があるので、書き戻す。
+  WFBC_ReadCore( p_wk );
+
+  cp_people = WFBC_GetConstPeople( p_wk, npc_id );
 
   p_mystatus = MyStatus_AllocWork( GFL_HEAP_LOWID(heapID) );
   MyStatus_Init( p_mystatus );
@@ -769,6 +789,9 @@ void FIELD_WFBC_SetBattlePeople( FIELD_WFBC* p_wk, u32 npc_id )
   FIELD_WFBC_PEOPLE* p_people;
   GF_ASSERT( p_wk );
 
+  // 1日変化でデータが変わっている可能性があるので、書き戻す。
+  WFBC_ReadCore( p_wk );
+
   p_people = WFBC_GetPeople( p_wk, npc_id );
 
   FIELD_WFBC_CORE_PEOPLE_SetBattle( &p_people->people_local );
@@ -788,12 +811,15 @@ void FIELD_WFBC_SetBattlePeople( FIELD_WFBC* p_wk, u32 npc_id )
  *	@retval FALSE   出来ない
  */
 //-----------------------------------------------------------------------------
-BOOL FIELD_WFBC_IsBattlePeople( const FIELD_WFBC* cp_wk, u32 npc_id )
+BOOL FIELD_WFBC_IsBattlePeople( FIELD_WFBC* p_wk, u32 npc_id )
 {
   const FIELD_WFBC_PEOPLE* cp_people;
-  GF_ASSERT( cp_wk );
+  GF_ASSERT( p_wk );
 
-  cp_people = WFBC_GetConstPeople( cp_wk, npc_id );
+  // 1日変化でデータが変わっている可能性があるので、書き戻す。
+  WFBC_ReadCore( p_wk );
+
+  cp_people = WFBC_GetConstPeople( p_wk, npc_id );
 
   return FIELD_WFBC_CORE_PEOPLE_IsBattle( &cp_people->people_local );
 }
@@ -1161,6 +1187,27 @@ static void WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  現状の人物情報を巻き戻す。
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_ReadCore( FIELD_WFBC* p_wk )
+{
+  int i;
+  
+  if( (p_wk->mapmode == MAPMODE_NORMAL) && (p_wk->p_core != NULL) )
+  {
+    // 情報の格納
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+    {
+      WFBC_PEOPLE_SetCore( &p_wk->p_people[i], &p_wk->p_core->people[i] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  マップモードが通常時のセーブデータ更新処理
  *
  *	@param	p_wk  ワーク
@@ -1286,6 +1333,25 @@ static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_COR
   p_people->gz        = cp_pos->gz;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物CORE情報の設定
+ *
+ *	@param	cp_people   人物ワーク
+ *	@param	p_core      情報格納先
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_PEOPLE_SetCore( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core )
+{
+  GF_ASSERT( p_people );
+  GF_ASSERT( cp_core );
+
+  if( p_people->status == FIELD_WFBC_PEOPLE_STATUS_NORMAL )
+  {
+    GFL_STD_MemCopy( cp_core, &p_people->people_local, sizeof(FIELD_WFBC_CORE_PEOPLE) );
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
