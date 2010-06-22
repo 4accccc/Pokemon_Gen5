@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 #include "system/vm_cmd.h"
+#include "system/mcss.h"
 #include "sound/pm_sndsys.h"
 #include "item/item.h"
 
@@ -123,7 +124,8 @@ typedef struct{
   u32               zoom_out_flag         :1;
   u32               zoom_out_flag_work    :1;     //技シーケンスで使用するZOOM_OUT_FLAG
   u32               camera_move_ignore    :1;
-  u32                                     :16;
+  u32               particle_tex_load     :1;     //パーティクルテクスチャデータロード中フラグ
+  u32                                     :15;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -317,6 +319,13 @@ typedef struct
   BTLV_EFFVM_WORK*  bevw;
 }TCB_NONE_WORK;
 
+typedef struct
+{ 
+  BTLV_EFFVM_WORK*  bevw;
+  GFL_PTC_PTR       psys;
+  void*             resource;
+}TCB_PARTICLE_LOAD;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -412,6 +421,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work );
 static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work );
 static  BOOL  VWF_PAUSE_CHECK( VMHANDLE *vmh, void *context_work );
+static  BOOL  VWF_PARTICLE_LOAD_WAIT( VMHANDLE *vmh, void *context_work );
 
 //非公開関数群
 static  int           EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMcssPos* pos );
@@ -457,6 +467,7 @@ static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_WINDOW_MOVE_CB( GFL_TCB* tcb );
 static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_LandingWait( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
 typedef enum
@@ -1684,22 +1695,42 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
       ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
       resource = (void *)&bevw->dpd->adrs[ ofs ];
-      GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+//    GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+      { 
+        TCB_PARTICLE_LOAD* tpl = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_PARTICLE_LOAD ) );
+        tpl->bevw     = bevw;
+        tpl->psys     = bevw->ptc[ ptc_no ];
+        tpl->resource = resource;
+        bevw->particle_tex_load = 1;
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( GFUser_VIntr_GetTCBSYS(), TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
+        VMCMD_SetWait( vmh, VWF_PARTICLE_LOAD_WAIT );
+      }
       EFFVM_RegistSprMax( bevw, ptc_no, resource );
-      BTLV_EFFECT_SetFieldAnmStopOnce();
-      return bevw->control_mode;
+//      BTLV_EFFECT_SetFieldAnmStopOnce();
+//      return bevw->control_mode;
+      return VMCMD_RESULT_SUSPEND;
     }
 #endif
     heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
     bevw->ptc[ ptc_no ] = GFL_PTC_CreateEx( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, POLYID_FIX, POLYID_MIN, POLYID_MAX,
                                             GFL_HEAP_LOWID( bevw->heapID ) );
     resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, GFL_HEAP_LOWID( bevw->heapID ) );
-    GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+//    GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+    { 
+      TCB_PARTICLE_LOAD* tpl = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_PARTICLE_LOAD ) );
+      tpl->bevw     = bevw;
+      tpl->psys     = bevw->ptc[ ptc_no ];
+      tpl->resource = resource;
+      bevw->particle_tex_load = 1;
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( GFUser_VIntr_GetTCBSYS(), TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
+      VMCMD_SetWait( vmh, VWF_PARTICLE_LOAD_WAIT );
+    }
     EFFVM_RegistSprMax( bevw, ptc_no, resource );
-    BTLV_EFFECT_SetFieldAnmStopOnce();
+//    BTLV_EFFECT_SetFieldAnmStopOnce();
   }
 
-  return bevw->control_mode;
+//  return bevw->control_mode;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //============================================================================================
@@ -4916,6 +4947,23 @@ static  BOOL  VWF_PAUSE_CHECK( VMHANDLE *vmh, void *context_work )
   return ( bevw->pause_flag == 0 );
 }
 
+//============================================================================================
+/**
+ * @brief パーティクルテクスチャロード終了チェック
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ *
+ * @retval  TRUE:一時停止終了　FALSE:一時停止動作中
+ */
+//============================================================================================
+static  BOOL  VWF_PARTICLE_LOAD_WAIT( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+  return ( bevw->particle_tex_load == 0 );
+}
+
 //非公開関数群
 //============================================================================================
 /**
@@ -7171,6 +7219,38 @@ static  void  TCB_EFFVM_LandingWait( GFL_TCB* tcb, void* work )
   { 
     BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+//============================================================================================
+/**
+ * @brief パーティクルテクスチャロード
+ */
+//============================================================================================
+static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work )
+{ 
+  TCB_PARTICLE_LOAD*  tpl = ( TCB_PARTICLE_LOAD* )work;
+  { 
+    u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
+    //VCountを確認してちらつきを防ぐ
+    if( ( *v_count < MCSS_VCOUNT_BORDER_LOW ) ||
+        ( *v_count > MCSS_VCOUNT_BORDER_HIGH ) )
+    { 
+      return;
+    }
+  }
+#ifdef PM_DEBUG
+  //デバッグ読み込みの場合は専用のバッファからロードする
+  if( tpl->bevw->debug_flag == TRUE )
+  { 
+    GFL_PTC_SetResourceEx( tpl->psys, tpl->resource, TRUE, NULL );
+  }
+  else
+#endif
+  { 
+    GFL_PTC_SetResource( tpl->psys, tpl->resource, TRUE, NULL );
+  }
+  tpl->bevw->particle_tex_load = 0;
+  BTLV_EFFECT_FreeTCB( tcb );
 }
 
 //============================================================================================
