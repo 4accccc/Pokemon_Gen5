@@ -4926,12 +4926,12 @@
 	</row>
 
 	<row id="WAZAINFO_504">
-		<language name="JPN" width="216">からを　やぶって　まもりを　すてる。
-じぶんの　ぼうぎょ　とくぼうが　さがるが
-こうげき　とくこう　すばやさを　あげる。</language>
-		<language name="JPN_KANJI" width="216">殻を　やぶって　守りを　すてる。
-自分の　防御　特防が　さがるが
-攻撃　特攻　素早さを　あげる。</language>
+		<language name="JPN" width="216">からを　やぶって　じぶんの　ぼうぎょ
+とくぼうを　さげるが　こうげき　とくこう
+すばやさを　ぐーんと　あげる。</language>
+		<language name="JPN_KANJI" width="216">殻を　やぶって　自分の　防御
+特防を　さげるが　攻撃　特攻
+素早さを　ぐーんと　あげる。</language>
 	</row>
 
 	<row id="WAZAINFO_505">
