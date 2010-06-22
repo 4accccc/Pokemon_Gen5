@@ -444,7 +444,7 @@ void  BTLV_EFFECT_Main( void )
 
           // カメラが自分／ズームアウト
           if( ( pos.x == 0x00000b33 && pos.y == 0x00005333 && pos.z == 0x000114cd ) ||
-              ( pos.x == 0x00008b33 && pos.y == 0x00007b33 && pos.x == 0x00017ccd )
+              ( pos.x == 0x00008b33 && pos.y == 0x00007b33 && pos.z == 0x00017ccd )
               )
           {
             hitflag = TRUE;
