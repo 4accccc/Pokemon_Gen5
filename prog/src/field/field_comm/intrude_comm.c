@@ -541,9 +541,10 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       else{
         MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
         int i;
+        int my_netid = GAMEDATA_GetIntrudeMyID(gamedata);
         
         for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-          if(mresult->achieve_netid[i] != INTRUDE_NETID_NULL){
+          if(my_netid != i && mresult->achieve_netid[i] != INTRUDE_NETID_NULL){
             break;
           }
         }
