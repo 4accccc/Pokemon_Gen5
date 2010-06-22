@@ -144,9 +144,9 @@ static void SheimiFromBackIllegal(GAMEDATA * gamedata);
 
 
 #ifdef AMPROTECT_FUNC
-static void magicon1_false_func(void);
-static void magicon2_false_func(void);
-static void magicon3_false_func(void);
+static void magicon1_failure_func(void);
+static void magicon2_failure_func(void);
+static void magicon3_need_func(void);
 
 
 #endif
@@ -924,7 +924,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
   case MAPCORE_SEQ_UPDATE_DATA:
 
 #ifdef AMPROTECT_FUNC
-    AM_IsMagiconA1(magicon1_false_func);
+    AM_IsMagiconA1(magicon1_failure_func);
 #endif
     //マップモードなど機能指定を解除する
     MAPCHG_releaseMapTools( gameSystem );
@@ -950,7 +950,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       }
     }
 #ifdef AMPROTECT_FUNC
-    AM_IsMagiconA2(magicon2_false_func);
+    AM_IsMagiconA2(magicon2_failure_func);
 #endif
 
     //新しいマップモードなど機能指定を行う
@@ -964,7 +964,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       GAMEBEACON_Set_ZoneChange( work->loc_req.zone_id, gameData );
     }
 #ifdef AMPROTECT_FUNC
-    AM_IsMagiconA3(magicon3_false_func);
+    AM_IsNotMagiconA3(magicon3_need_func);
 #endif
 
     //タイプに応じたフラグ初期化
@@ -3558,20 +3558,18 @@ static void SheimiFromBackIllegal(GAMEDATA * gamedata)
 extern void magicon_dummy_task(GFL_TCB *tcb, void *pWork);
 extern int debug_tcb_num;
 
-// 検出関数notA1がFALSEの時に実行されます（＝必要な処理を記述）
-static void magicon1_false_func(void){
-  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, 0x1000);
-  GFL_TCB *dust_tcb = GFUser_VIntr_CreateTCB( magicon_dummy_task, NULL, 127 );
-  debug_tcb_num++;
-}
-
-// 検出関数notA2がFALSEの時に実行されます（＝必要な処理を記述）
-static void magicon2_false_func(void){
+// 検出関数notA1がFALSEの時に実行されます（＝破壊工作）
+static void magicon1_failure_func(void){
   u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, 0x1000);
 }
 
-// 検出関数notA3がFALSEの時に実行されます（必要な処理を記述）
-static void magicon3_false_func(void)
+// 検出関数notA2がFALSEの時に実行されます（＝破壊工作）
+static void magicon2_failure_func(void){
+  u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, 0x1000);
+}
+
+// 検出関数notA3がFALSEの時に実行されます（＝必要な処理or実行しても害の無い処理）
+static void magicon3_need_func(void)
 {
   return;
 }

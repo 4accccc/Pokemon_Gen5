@@ -57,6 +57,19 @@
 
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 
+#include "amprotect.h"
+
+FS_EXTERN_OVERLAY(amprotect);
+
+#ifdef AMPROTECT_FUNC
+static void magicon1_need_func(void);
+static void magicon2_need_func(void);
+static void magicon3_failure_func(void);
+extern void magicon_dummy_task(GFL_TCB *tcb, void *pWork);
+extern int  debug_tcb_num;
+
+#endif
+
 //======================================================================
 //  define
 //======================================================================
@@ -141,6 +154,7 @@ static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew);
 static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata);
 static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp);
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
+
 
 //======================================================================
 //
@@ -579,6 +593,8 @@ static GMEVENT_RESULT fieldBattleEvent(
   GAMESYS_WORK *      gsys     = bew->gsys;
   GAMEDATA *          gamedata = bew->gamedata;
   FIELDMAP_WORK *     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u32 magicon_number  = 6451*3191;
+  
   
   switch( *seq ) {
   // 戦闘用ＢＧＭセット
@@ -619,6 +635,9 @@ static GMEVENT_RESULT fieldBattleEvent(
     break;
 
   case 5:
+#ifdef AMPROTECT_FUNC
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(amprotect) );  
+#endif
     //侵入システムにフィールド中であることを伝える
     {
       FIELD_STATUS *fldstatus = GAMEDATA_GetFieldStatus(gamedata);
@@ -629,6 +648,9 @@ static GMEVENT_RESULT fieldBattleEvent(
     break;
 
   case 6: 
+#ifdef AMPROTECT_FUNC
+    magicon_number += 977*(!AM_IsNotMagiconA1(magicon1_need_func));
+#endif
     //戦闘結果反映処理
     BEW_ReflectBattleResult( bew, gamedata ); 
     //採点処理
@@ -639,9 +661,15 @@ static GMEVENT_RESULT fieldBattleEvent(
       TRIAL_HOUSE_AddBtlPoint( *ptr, bew->battle_param );
     }
     (*seq) ++;
+#ifdef AMPROTECT_FUNC
+    magicon_number += 1489*(!AM_IsNotMagiconA2(magicon2_need_func));
+#endif
     break;
 
   case 7:
+#ifdef AMPROTECT_FUNC
+    magicon_number += 157*AM_IsMagiconA3(magicon3_failure_func);
+#endif
     // 負けた場合, BGMを停止する
     if( (bew->is_no_lose == FALSE) && (BEW_IsLoseResult(bew) == TRUE) ) { 
       GMEVENT_CallEvent( event, EVENT_FSND_ResetBGM( gsys, FSND_FADE_SHORT ) );
@@ -650,6 +678,9 @@ static GMEVENT_RESULT fieldBattleEvent(
     else {
       GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
     }
+#ifdef AMPROTECT_FUNC
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(amprotect) );  
+#endif
     (*seq) ++;
     break;
 
@@ -692,6 +723,14 @@ static GMEVENT_RESULT fieldBattleEvent(
     return GMEVENT_RES_FINISH;
   }
 
+
+#ifdef AMPROTECT_FUNC
+
+  if(magicon_number % 6451){
+    GFL_TCB *dust_tcb = GFUser_VIntr_CreateTCB( magicon_dummy_task, NULL, 127 );
+    debug_tcb_num++;
+  }
+#endif
   return GMEVENT_RES_CONTINUE;
 }
 
@@ -998,3 +1037,25 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
   }
 }
 
+
+
+#ifdef AMPROTECT_FUNC
+static void magicon1_need_func(void)
+{
+  int primal = 71*83;
+  primal += GFL_STD_MtRand(GFL_STD_RAND_MAX)+GFL_STD_MtRand(GFL_STD_RAND_MAX);
+  return;
+}
+static void magicon2_need_func(void)
+{
+  int primal = 2111*101;
+  primal += GFL_STD_MtRand(GFL_STD_RAND_MAX)+GFL_STD_MtRand(GFL_STD_RAND_MAX);
+  return;
+}
+static void magicon3_failure_func(void)
+{
+  int primal = 1759*2677;
+  primal += GFL_STD_MtRand(GFL_STD_RAND_MAX)+GFL_STD_MtRand(GFL_STD_RAND_MAX);
+  return;
+}
+#endif
