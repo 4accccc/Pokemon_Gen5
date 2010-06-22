@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-27T22:39:41"/>
+	<create user="matsumiya" host="W00224" date="2010-06-22T17:14:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1207,19 +1207,17 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER2
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『あんた！
-わざ　かたきうちは　つかってるかい？▼
-わざマシンは
+		<language name="JPN" width="256">アロエ『わざマシンは
 なんどでも　つかえるんだろ？▼
-いろんな　ポケモンに　おしえていけば
-いつかは　ぴったりの▽
+いろんな　ポケモンに
+かたきうちの　わざを　おしえれば▼
+いつかは　ぴったりの
 ポケモンが　みつかるはずさ！</language>
-		<language name="JPN_KANJI" width="256">アロエ『あんた！
-技　かたきうちは　使ってるかい？▼
-わざマシンは
-何度でも　使えるんだろ？▼
-いろんな　ポケモンに　教えていけば
-いつかは　ぴったりの▽
+		<language name="JPN_KANJI" width="256">アロエ『わざマシンは
+なんどでも　使えるんだろ？▼
+いろんな　ポケモンに
+かたきうちの　技を　教えれば▼
+いつかは　ぴったりの
 ポケモンが　みつかるはずさ！</language>
 	</row>
 
