@@ -1758,16 +1758,24 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   {
-    if( GFL_UI_KEY_GetTrg() )
+		int	trg = GFL_UI_KEY_GetTrg();
+		
+    if( trg )
     {
 			if( ITEMMENU_GetItemPocketNumber( pWork ) != 0 ){
 	      PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
 	      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
 	      KTST_SetDraw( pWork, TRUE );
 	      return;
+			}else{
+	      KTST_SetDraw( pWork, TRUE );
+				if( trg & (PAD_BUTTON_DECIDE|PAD_BUTTON_START|PAD_BUTTON_SELECT|PAD_KEY_UP|PAD_KEY_DOWN) ){
+					return;
+				}
 			}
-    }
-		return;
+    }else{
+			return;
+		}
   }
 
   // キャンセル
