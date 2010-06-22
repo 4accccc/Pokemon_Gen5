@@ -5651,7 +5651,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
 
       if( BTL_MAIN_IsExistClient(wk, clientID) )
       {
-        BTL_PARTY* party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
+        BTL_PARTY* party = BTL_POKECON_GetPartyData( &wk->pokeconForClient, clientID );
         u32 numMembers = BTL_PARTY_GetMemberCount( party );
         u32 HPSum, MaxHPSum;
         u8 orgPokeID = ClientBasePokeID[ clientID ];
