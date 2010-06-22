@@ -6,6 +6,7 @@
  * @date  09.12.04
  */
 //======================================================================
+#include "playable_version.h"
 #include "fieldmap.h"
 #include "gym_dragon_sv.h"
 #include "gym_dragon.h"
@@ -1362,11 +1363,13 @@ static void VanishFloor(FLD_EXP_OBJ_CNT_PTR ptr, FIELDMAP_WORK *fieldWork, const
   FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_L_3, inVanish );
   FLD_EXP_OBJ_SetVanish( ptr, GYM_DRAGON_UNIT_IDX, OBJ_BUTTON_R_3, inVanish );
   
-  //SetObjVanish(fieldWork, C08GYM0101_WKOBJCODE00_01, inVanish);
-  //SetObjVanish(fieldWork, TR_C08GYM0101_F2_01, inVanish);
+#ifndef PLAYABLE_VERSION  //試遊台バージョン対応のためOBJ参照箇所をフックする
+  SetObjVanish(fieldWork, C08GYM0101_WKOBJCODE00_01, inVanish);
+  SetObjVanish(fieldWork, TR_C08GYM0101_F2_01, inVanish);
 //  SetObjVanish(fieldWork, TR_C08GYM0101_F2_02, inVanish); <<抹消　20100120
-  //SetObjVanish(fieldWork, TR_C08GYM0101_F2_03, inVanish);
-  //SetObjVanish(fieldWork, TR_C08GYM0101_F2_04, inVanish);
+  SetObjVanish(fieldWork, TR_C08GYM0101_F2_03, inVanish);
+  SetObjVanish(fieldWork, TR_C08GYM0101_F2_04, inVanish);
+#endif
 }
 
 //--------------------------------------------------------------
