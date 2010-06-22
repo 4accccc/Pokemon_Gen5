@@ -214,6 +214,18 @@ BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* system, SWITCH_INDEX idx )
 } 
 
 
+//-------------------------------------------------------------------------------
+/**
+ * @brief スイッチの状態をリセットする
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------
+void ISS_SWITCH_SYS_ResetSwitch( ISS_SWITCH_SYS* system )
+{ 
+  ResetCurrentSwitchSet( system );
+}
+
 
 //===============================================================================
 // ■private method

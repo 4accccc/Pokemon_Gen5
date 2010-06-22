@@ -45,3 +45,5 @@ extern void ISS_SWITCH_SYS_SwitchOn( ISS_SWITCH_SYS* system, SWITCH_INDEX switch
 extern void ISS_SWITCH_SYS_SwitchOff( ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx );
 // スイッチの ON/OFF 取得
 extern BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx );
+// スイッチのリセット
+extern void ISS_SWITCH_SYS_ResetSwitch( ISS_SWITCH_SYS* system );

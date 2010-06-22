@@ -14,6 +14,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/iss_sys.h"
+#include "gamesystem/iss_switch_sys.h"
 #include "gamesystem/pm_weather.h"
 #include "gamesystem/game_beacon.h"
 
@@ -2655,6 +2656,12 @@ static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
       GAMEDATA *gameData = GAMESYSTEM_GetGameData(p_wk->gsys);
       PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
       PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+    }
+    // スイッチＩＳＳリセット
+    {
+      ISS_SYS* iss = GAMESYSTEM_GetIssSystem( p_wk->gsys );
+      ISS_SWITCH_SYS* iss_s = ISS_SYS_GetIssSwitchSystem( iss );
+      ISS_SWITCH_SYS_ResetSwitch( iss_s );
     }
     // BGM 再生開始
     {
