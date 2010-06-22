@@ -147,7 +147,7 @@ static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza );
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
 static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
-static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
+static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
     const BTL_POKEPARAM* attacker, BTL_POKESET* target, BOOL fDamage );
 static BOOL scEvent_CheckMigawariExclude( BTL_SVFLOW_WORK* wk,
@@ -3859,7 +3859,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   scproc_CheckTripleFarPokeAvoid( wk, wk->wazaParam, attacker, targetRec );
 
   // ムーブ直後に自分単体がターゲットならハズレ
-  scproc_CheckMovedPokeAvoid( wk, attacker, targetRec );
+  scproc_CheckMovedPokeAvoid( wk, attacker, targetRec, wk->wazaParam );
 
   // 最初は居たターゲットが残っていない->うまく決まらなかった、終了
   if( BTL_POKESET_IsRemovedAll(targetRec) )
@@ -4035,7 +4035,7 @@ static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
  * @param   targetRec
  */
 //----------------------------------------------------------------------------------
-static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec )
+static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec, const SVFL_WAZAPARAM* wazaParam )
 {
   if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_MOVED) )
   {
@@ -4044,6 +4044,7 @@ static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
       BTL_POKEPARAM* bppTarget = BTL_POKESET_Get( targetRec, 0 );
       if( (bppTarget != NULL)
       &&  (BPP_GetID(bppTarget) == BPP_GetID(attacker))
+      &&  (wazaParam->targetType != WAZA_TARGET_USER)
       ){
         BTL_POKESET_Remove( targetRec, bppTarget );
       }
@@ -6898,7 +6899,6 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       u8 fConsume = FALSE;
 
       que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_KINOMI );
-//      scPut_UseItemAct( wk, bpp );
 
       hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
         scEvent_ItemEquip( wk, bpp );
@@ -6914,7 +6914,6 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
         if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) )
         {
           scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA, TRUE );
-//          scproc_ConsumeItem( wk, bpp );
         }
       }
     }
