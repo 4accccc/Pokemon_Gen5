@@ -81,6 +81,8 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 #define _DOWNLOAD_ERROR  (0xfff0)
 #define _SERVERDOWN_ERROR  (0xfff1)
 #define ERROR503  (503)
+#define _SERVERMAINTENANCE_ERROR  (0xfff2)
+#define ERROR502  (502)
 
 //
 // PHP とのインターフェース構造体
@@ -182,6 +184,24 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork);
 static void _networkClose(G_SYNC_WORK* pWork);
 static void _downloadcheck(G_SYNC_WORK* pWork);
 static void _downloadcgearend(G_SYNC_WORK* pWork);
+static void _ErrorDisp(G_SYNC_WORK* pWork);
+
+
+
+static BOOL _responceChk(G_SYNC_WORK* pWork,int response)
+{
+  switch(response){
+  case ERROR503:
+    pWork->ErrorNo = _SERVERDOWN_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+    return TRUE;
+  case ERROR502:
+    pWork->ErrorNo = _SERVERMAINTENANCE_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 //------------------------------------------------------------------------------
@@ -366,6 +386,9 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
   }
   else if(_SERVERDOWN_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR011;
+  }
+  else if(_SERVERMAINTENANCE_ERROR == pWork->ErrorNo){
+    gmm = GSYNC_ERR012;
   }
   else if((pWork->ErrorNo <= 0) || (pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX)){
     gmm = GSYNC_ERR009;
@@ -601,9 +624,7 @@ static void _wakeupAction71(G_SYNC_WORK* pWork)
     {
       int response;
       response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(response == ERROR503){
-        pWork->ErrorNo = _SERVERDOWN_ERROR;
-        _CHANGE_STATE(_ErrorDisp);
+      if(_responceChk(pWork,response)){
         return;
       }
     }
@@ -1221,9 +1242,7 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
     {
       int response;
       response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(response == ERROR503){
-        pWork->ErrorNo = _SERVERDOWN_ERROR;
-        _CHANGE_STATE(_ErrorDisp);
+      if(_responceChk(pWork,response)){
         return;
       }
     }
@@ -1569,9 +1588,7 @@ static void _createAccount2(G_SYNC_WORK* pWork)
     {
       int response;
       response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(response == ERROR503){
-        pWork->ErrorNo = _SERVERDOWN_ERROR;
-        _CHANGE_STATE(_ErrorDisp);
+      if(_responceChk(pWork,response)){
         return;
       }
     }
@@ -1797,9 +1814,7 @@ static void _ghttpInfoWait1(G_SYNC_WORK* pWork)
     {
       int response;
       response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(response == ERROR503){
-        pWork->ErrorNo = _SERVERDOWN_ERROR;
-        _CHANGE_STATE(_ErrorDisp);
+      if(_responceChk(pWork,response)){
         return;
       }
     }
@@ -1902,9 +1917,7 @@ static void _ghttpPokemonListDownload1(G_SYNC_WORK* pWork)
     {
       int response;
       response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(response == ERROR503){
-        pWork->ErrorNo = _SERVERDOWN_ERROR;
-        _CHANGE_STATE(_ErrorDisp);
+      if(_responceChk(pWork,response)){
         return;
       }
     }
@@ -2170,9 +2183,7 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
     {
       int response;
       response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(response == ERROR503){
-        pWork->ErrorNo = _SERVERDOWN_ERROR;
-        _CHANGE_STATE(_ErrorDisp);
+      if(_responceChk(pWork,response)){
         return;
       }
     }

@@ -79,6 +79,9 @@ typedef struct tag_EVENT_DATA
 
 #define _SERVERDOWN_ERROR  (0xfff1)
 #define ERROR503  (503)
+#define _SERVERMAINTENANCE_ERROR  (0xfff2)
+#define ERROR502  (502)
+
 
 static void _changeState(PDWACC_WORK* pWork,StateFunc* state);
 static void _changeStateDebug(PDWACC_WORK* pWork,StateFunc* state, int line);
@@ -127,7 +130,31 @@ struct _PDWACC_WORK {
 
 static void _ghttpKeyWait(PDWACC_WORK* pWork);
 static void _ghttpInfoWait0(PDWACC_WORK* pWork);
+static void _ErrorDisp(PDWACC_WORK* pWork);
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   レスポンスの検査
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _responceChk(PDWACC_WORK* pWork,int response)
+{
+  switch(response){
+  case ERROR503:
+    pWork->ErrorNo = _SERVERDOWN_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+    return TRUE;
+  case ERROR502:
+    pWork->ErrorNo = _SERVERMAINTENANCE_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 //------------------------------------------------------------------------------
@@ -305,6 +332,9 @@ static void _ErrorDisp(PDWACC_WORK* pWork)
   if(_SERVERDOWN_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR011;
   }
+  if(_SERVERMAINTENANCE_ERROR == pWork->ErrorNo){
+    gmm = GSYNC_ERR012;
+  }
   else if(pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX){
     gmm = GSYNC_ERR009;
   }
@@ -406,9 +436,7 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
     {
       int response;
       response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(response == ERROR503){
-        pWork->ErrorNo = _SERVERDOWN_ERROR;
-        _CHANGE_STATE(_ErrorDisp);
+      if(_responceChk(pWork,response)){
         return;
       }
     }
