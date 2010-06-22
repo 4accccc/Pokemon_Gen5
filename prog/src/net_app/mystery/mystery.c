@@ -514,8 +514,6 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );    //アルバム
 static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );   //カード１枚削除
 static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_DisConnectEnd( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 static void SEQFUNC_EnableWireless( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -636,33 +634,6 @@ static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   }
 #endif //MYSTERY_SAVEDATA_CLEAR
 
-#if 0
-#ifdef DEBUG_SET_SAVEDATA
-  MYSTERY_DEBUG_SetGiftData( &p_wk->data );
-  { 
-    int i;
-    for( i = 0; i < 1; i++ )
-    { 
-      MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data );
-    }
-#if 0
-    { 
-      int i;
-      const u8  *cp_data = (const u8*)&p_wk->data;
-      MYSTERY_Printf( "size == %d\n",sizeof(DOWNLOAD_GIFT_DATA) );
-      MYSTERY_Printf( "adrs == 0x%x\n",&p_wk->data );
-      MYSTERY_Printf( "!!!!!!!!!!!!-- binary start --!!!!!!!!!!!!!!!\n\n" );
-      for( i = 0; i < sizeof(DOWNLOAD_GIFT_DATA); i++ )
-      { 
-        MYSTERY_Printf( "%x", cp_data[i] );
-      }
-      MYSTERY_Printf( "\n" );
-      MYSTERY_Printf( "!!!!!!!!!!!!-- binary end --!!!!!!!!!!!!!!!\n\n" );
-    }
-#endif
-  }
-#endif 
-#endif
 
   //グラフィック設定
 	p_wk->p_graphic	= MYSTERY_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_MYSTERYGIFT );
@@ -1384,17 +1355,6 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
 
-  //エラーチェック
-  switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
-  { 
-  case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
-  case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
-    MYSTERY_NET_ClearError( p_wk->p_net );
-
-    *p_seq  = SEQ_INIT;
-    break;
-  }
-
   //シーケンス
   switch( *p_seq )
   { 
@@ -1852,6 +1812,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_INIT,
     SEQ_SEARCH,
     SEQ_NO_GIFT_INIT,
+    SEQ_NO_GIFT_INIT2,
     SEQ_NO_GIFT_WAIT,
     SEQ_SELECT_GIFT_MSG,
     SEQ_SELECT_GIFT_WAIT,
@@ -2004,13 +1965,26 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_NO_GIFT_INIT:
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_err_003, MYSTERY_TEXT_TYPE_STREAM );
-    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_NO_GIFT_WAIT );
+
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_026, MYSTERY_TEXT_TYPE_WAIT );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_NO_GIFT_INIT2 );
     *p_seq  = SEQ_MSG_WAIT;
     break;
 
+  case SEQ_NO_GIFT_INIT2:
+    p_wk->cnt++;
+    if(( MYSTERY_NET_GetState( p_wk->p_net)  == MYSTERY_NET_STATE_WAIT )
+        && ( p_wk->cnt > 30 ))
+    {
+      p_wk->cnt = 0;
+      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_err_003, MYSTERY_TEXT_TYPE_STREAM );
+      MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_NO_GIFT_WAIT );
+      *p_seq  = SEQ_MSG_WAIT;
+    }
+    break;
+
   case SEQ_NO_GIFT_WAIT:
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
     break;
 
   case SEQ_SELECT_GIFT_MSG:
@@ -2050,20 +2024,6 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_012, MYSTERY_TEXT_TYPE_STREAM );
         MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_CANCEL_GIFT_INIT );
         *p_seq  = SEQ_MSG_WAIT;
-      }
-
-
-      //エラーチェック
-      switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
-      { 
-      case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
-      case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
-        UTIL_DeleteMenu( p_wk );
-        MYSTERY_NET_ClearError( p_wk->p_net );
-
-        MYSTERY_Printf( "取得できなかった\n" );
-        *p_seq  = SEQ_DIRTY_END;
-        break;
       }
     }
     break;
@@ -2137,7 +2097,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           //はい
           UTIL_DeleteMenu(p_wk);
           UTIL_DeleteGuideText( p_wk );
-          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
+          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
         }
         else if( ret == 1 )
         { 
@@ -2170,7 +2130,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     UTIL_DeleteMenu(p_wk);
     UTIL_DeleteGuideText( p_wk );
 
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
     break;
 
   case SEQ_MSG_WAIT:
@@ -2401,7 +2361,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_END:
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectEnd );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
     break;
   }
 }
@@ -2794,130 +2754,6 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     GFL_HEAP_FreeMemory( p_wk->p_wifilogin_param );
     break;
   }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	切断処理しPROC終了
- *
- *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
- *	@param	*p_seq					シーケンス
- *	@param	*p_wk_adrs				ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_DisConnectEnd( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{ 
-  enum
-  { 
-    SEQ_INIT,
-    SEQ_WAIT,
-    SEQ_END,
-  };
-  MYSTERY_WORK  *p_wk     = p_wk_adrs;
-
-  //エラーチェック
-  switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
-  { 
-  case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
-  case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
-    MYSTERY_NET_ClearError( p_wk->p_net );
-
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
-    break;
-  }
-
-  switch( *p_seq )
-  { 
-  case SEQ_INIT:
-    switch( p_wk->mode )
-    { 
-    case MYSTERY_NET_MODE_WIRELESS:
-      break;
-
-    case MYSTERY_NET_MODE_WIFI:
-      MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_LOGOUT_WIFI );
-      break;
-
-    case MYSTERY_NET_MODE_IRC:
-      break;
-    }
-    *p_seq  = SEQ_WAIT;
-    break;
-
-  case SEQ_WAIT:
-    if( MYSTERY_NET_GetState( p_wk->p_net ) == MYSTERY_NET_STATE_WAIT )
-    { 
-      *p_seq  = SEQ_END;
-    }
-    break;
-
-  case SEQ_END:
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
-    break;
-  }
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	切断処理しメニューへ
- *
- *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
- *	@param	*p_seq					シーケンス
- *	@param	*p_wk_adrs				ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{ 
-  enum
-  { 
-    SEQ_START_MSG_DISCONNECT, 
-
-    SEQ_INIT,
-    SEQ_WAIT,
-    SEQ_END,
-  };
-  MYSTERY_WORK  *p_wk     = p_wk_adrs;
-
-  switch( *p_seq )
-  { 
-  case SEQ_START_MSG_DISCONNECT:
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_026, MYSTERY_TEXT_TYPE_WAIT );
-    *p_seq  = SEQ_INIT;
-    break;
-
-  case SEQ_INIT:
-    if( MYSTERY_NET_GetState( p_wk->p_net)  == MYSTERY_NET_STATE_WAIT )
-    {
-      switch( p_wk->mode )
-      { 
-      case MYSTERY_NET_MODE_WIRELESS:
-        break;
-
-      case MYSTERY_NET_MODE_WIFI:
-        MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_LOGOUT_WIFI );
-        break;
-
-      case MYSTERY_NET_MODE_IRC:
-        break;
-      }
-      *p_seq  = SEQ_WAIT;
-    }
-    break;
-
-  case SEQ_WAIT:
-    if( MYSTERY_NET_GetState( p_wk->p_net ) == MYSTERY_NET_STATE_WAIT )
-    { 
-      *p_seq  = SEQ_END;
-    }
-    break;
-
-  case SEQ_END:
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
-    break;
-  }
-
 }
 //----------------------------------------------------------------------------
 /**

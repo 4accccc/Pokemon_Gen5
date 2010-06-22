@@ -31,9 +31,7 @@ typedef enum
   //WiFiダウンロード
   MYSTERY_NET_STATE_WIFI_DOWNLOAD,        //WIFIで受け取り
   MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD, //ダウンロードのキャンセル
-
-  //WIFIログアウト  ( ログインは外部で行うため　)
-  MYSTERY_NET_STATE_LOGOUT_WIFI,
+  MYSTERY_NET_STATE_LOGOUT_WIFI, //WIFIログアウト  ( ログインは外部で行うため　)
 
   //ビーコン受け取り
   MYSTERY_NET_STATE_START_BEACON_DOWNLOAD,  //START終了時、MAINへ勝手に状態遷移

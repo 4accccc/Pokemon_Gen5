@@ -1343,7 +1343,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
     
   case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
+    SEQ_SetNext( p_seqwk, SEQFUNC_LogoutWifi );
     break;
 
 //-------------------------------------
