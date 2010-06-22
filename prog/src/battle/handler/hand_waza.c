@@ -6599,8 +6599,9 @@ static void handler_Kanasibari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     {
       WazaID  prevWaza = BPP_GetPrevOrgWazaID( target );
 
-      if( (prevWaza != WAZANO_NULL) && (prevWaza != WAZANO_WARUAGAKI) )
-      {
+      if( ((prevWaza != WAZANO_NULL) && (prevWaza != WAZANO_WARUAGAKI) )
+      &&  (BPP_WAZA_IsUsable(target, prevWaza))
+      ){
         BTL_HANDEX_PARAM_ADD_SICK* param;
 
         // 現ターンに行動済みのポケモンには効果ターン数を+1する
