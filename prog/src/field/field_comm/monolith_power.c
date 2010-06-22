@@ -1134,6 +1134,9 @@ static void _DecidePanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
     COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_DECIDE, 
     _PANEL_DECIDE_X, _PANEL_DECIDE_Y, msg_mono_pow_012, NULL);
 //  MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, 0, FADE_SUB_OBJ);
+  if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH){
+    MonolithTool_PanelOBJ_SetEnable(&mpw->panel, FALSE);
+  }
 }
 
 //==================================================================
