@@ -34,7 +34,7 @@ extern void FIELD_COMM_ACTOR_CTRL_DeleteActro(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id );
 
 extern BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
-    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gz, u32 *outID );
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gy, s16 gz, u32 *outID );
 
 extern MMDL * FIELD_COMM_ACTOR_CTRL_GetMMdl(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id );

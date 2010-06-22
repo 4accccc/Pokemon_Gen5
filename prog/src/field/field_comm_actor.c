@@ -189,11 +189,42 @@ void FIELD_COMM_ACTOR_CTRL_DeleteActro(
  * フィールド通信用アクター制御　指定座標にいる通信アクターIDを返す
  * @param FIELD_COMM_ACTOR_CTRL
  * @param gx 調べるグリッドX座標
+ * @param gy 調べるグリッドY座標
  * @param gz 調べるグリッドZ座標
  * @param outID gx,gzに居るアクターIDの格納先
  * @retval BOOL TRUE=gx,gzに通信アクターがいる。FALSE=居ない
  */
 //--------------------------------------------------------------
+BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gy, s16 gz, u32 *outID )
+{
+  s16 cy,sy;
+  int i = 0;
+  FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
+  
+  for( ; i < act_ctrl->max; i++, act++ ){
+    if( act->mmdl != NULL ){
+      cy = MMDL_GetGridPosY( act->mmdl );
+
+      sy = cy - gy;
+      
+      if( sy < 0 ){
+        sy = -sy;
+      }
+      
+      if( sy < H_GRID_FELLOW_SIZE ){
+        if( MMDL_HitCheckXZ(act->mmdl,gx,gz,TRUE) ){
+          *outID = act->id;
+          return( TRUE );
+        }
+      }
+    }
+  }
+  
+  return( FALSE );
+}
+
+#if 0 //old 100622 Y座標を考慮しない　BTS6450
 BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gz, u32 *outID )
 {
@@ -211,6 +242,7 @@ BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
   
   return( FALSE );
 }
+#endif
 
 #if 0 //old 100603 通信アクターのみをチェックする
 BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
