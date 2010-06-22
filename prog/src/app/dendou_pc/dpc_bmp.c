@@ -351,4 +351,7 @@ void DPCBMP_ClearInfo( DPCMAIN_WORK * wk )
 {
 	GFL_BMPWIN_ClearScreen( wk->win[DPCBMP_WINID_INFO].win );
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->win[DPCBMP_WINID_INFO].win) );
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[DPCBMP_WINID_INFO].win), 0 );
+	GFL_BMPWIN_TransVramCharacter( wk->win[DPCBMP_WINID_INFO].win );
 }
