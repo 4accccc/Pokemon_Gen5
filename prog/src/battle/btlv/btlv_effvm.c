@@ -1702,7 +1702,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
         tpl->psys     = bevw->ptc[ ptc_no ];
         tpl->resource = resource;
         bevw->particle_tex_load = 1;
-        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( GFUser_VIntr_GetTCBSYS(), TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
+        BTLV_EFFECT_SetTCB( GFUser_VIntr_CreateTCB( TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
         VMCMD_SetWait( vmh, VWF_PARTICLE_LOAD_WAIT );
       }
       EFFVM_RegistSprMax( bevw, ptc_no, resource );
@@ -1722,7 +1722,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       tpl->psys     = bevw->ptc[ ptc_no ];
       tpl->resource = resource;
       bevw->particle_tex_load = 1;
-      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( GFUser_VIntr_GetTCBSYS(), TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
+      BTLV_EFFECT_SetTCB( GFUser_VIntr_CreateTCB( TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
       VMCMD_SetWait( vmh, VWF_PARTICLE_LOAD_WAIT );
     }
     EFFVM_RegistSprMax( bevw, ptc_no, resource );
