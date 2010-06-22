@@ -5481,9 +5481,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
       dmg_sum = scproc_Fight_Damage_SingleCount( wk, wazaParam, attacker, targets, affRec, fDelayAttack );
     }
 
-    if( dmg_sum ){
-      scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
-    }
+    scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
   }
 
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum, fDelayAttack );
