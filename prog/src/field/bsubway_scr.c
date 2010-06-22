@@ -135,12 +135,15 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     if( BSUBWAY_SCOREDATA_CheckExistStageNo( //ステージ存在する
         bsw_scr->scoreData,bsw_scr->play_mode) == TRUE ){
-      //連勝数を復元
+      //新規プレイでステージが継続している場合は
+      //セーブされている連勝数からラウンド数を復元する
       u16 play_mode = bsw_scr->play_mode;
-      u16 round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
-      u16 stage = BSUBWAY_SCOREDATA_GetStageNo_Org0(
+      u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
           bsw_scr->scoreData, play_mode );
-      bsw_RecoverNowRenshou( bsw_scr, stage, round );
+      u16 round = renshou % 7;
+      
+      BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, round );
+      BSUBWAY_SCRWORK_SetNowRenshou( bsw_scr, renshou );
     }
     
     buf8 = bsw_scr->play_mode; //プレイモード
@@ -199,7 +202,8 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
       }
     }
     
-    //連勝数復元
+    //続きからの場合は
+    //セーブしたラウンド、ステージから連勝数復元
     {
       u16 play_mode = bsw_scr->play_mode;
       
@@ -265,6 +269,8 @@ void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
     buf[0] = BSWAY_MODE_COMM_MULTI;
   }else if( bsw_scr->play_mode == BSWAY_MODE_S_MULTI ){
     buf[0] = BSWAY_MODE_S_COMM_MULTI;
+  }else{
+    GF_ASSERT( 0 );
   }
   
   bsw_scr->play_mode = buf[0];
@@ -272,14 +278,21 @@ void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_playmode, buf );
   
-  //ステージが有る場合は連勝数初期化
+  //ステージが有る場合は
+  //セーブされている連勝数からラウンド数を復元する
+  //(新規プレイと同一)
   if( BSUBWAY_SCOREDATA_CheckExistStageNo(
-        bsw_scr->scoreData,bsw_scr->play_mode) == TRUE ){
+        bsw_scr->scoreData,bsw_scr->play_mode) == TRUE )
+  {
     u16 play_mode = bsw_scr->play_mode;
-    u16 round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
-    u16 stage = BSUBWAY_SCOREDATA_GetStageNo_Org0(
+    u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
         bsw_scr->scoreData, play_mode );
-    bsw_RecoverNowRenshou( bsw_scr, stage, round );
+    u16 round = renshou % 7;
+      
+    BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, round );
+    BSUBWAY_SCRWORK_SetNowRenshou( bsw_scr, renshou );
+  }else{ //存在しない場合は連勝数をリセット(連勝数送信、トレーナー抽選の為)
+    BSUBWAY_SCRWORK_ResetNowRenshou( bsw_scr );
   }
 }
 
@@ -347,13 +360,17 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_trainer, bsw_scr->trainer );
   
-#if 0
   //現在の連勝数を反映 -> しません
+  //連勝数の更新は
+  //・負けた時
+  //・７連勝毎のホーム
+  //以外は行わない
+#if 0
   renshou = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
   BSUBWAY_SCOREDATA_SetRenshou(
       bsw_scr->scoreData, bsw_scr->play_mode, renshou );
 #endif
-
+  
   //セーブフラグを有効状態にセット
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, TRUE );
   
@@ -819,7 +836,7 @@ void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *bsw_scr )
   //ステージ数がまだ存在していない場合も考慮し、連勝数からステージ数を出す
   renshou = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
   stage = BSUBWAY_SCRWORK_RenshouToStageNo( renshou );
-
+  
 #ifdef DEBUG_BSW_PRINT
   KAGAYA_Printf( "バトルサブウェイ　トレーナーNo抽選 STAGE=%d,連勝数%d\n",
     stage, renshou );
