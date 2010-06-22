@@ -1204,23 +1204,6 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
         em->seq = _SEQ_CANCEL_INIT;
       }
       else
-      if( ret == PARENT_WAIT_CANCEL_SELECT )
-      {
-        //選択中なので基本進まない。
-        //親が最終決定をしたらすすむ
-        if( em->game_start == TRUE )
-        {
-          em->seq = _SEQ_GAME_START;
-          _ParentWait_ExitCnacel(em);
-        }
-        else
-        if( em->game_cancel == TRUE)
-        {
-          em->seq = _SEQ_CANCEL_INIT;
-          _ParentWait_ExitCnacel(em);
-        }
-      }
-      else
       {
         if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK){
           em->seq = _SEQ_MEMBER_INIT;
@@ -1228,6 +1211,17 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
         }
         else if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_NG){
           em->seq = _SEQ_NG_INIT;
+          _ParentWait_ExitCnacel(em);
+        }
+        //親が最終決定をしたらすすむ
+        else if( em->game_start == TRUE )
+        {
+          em->seq = _SEQ_GAME_START;
+          _ParentWait_ExitCnacel(em);
+        }
+        else if( em->game_cancel == TRUE)
+        {
+          em->seq = _SEQ_CANCEL_INIT;
           _ParentWait_ExitCnacel(em);
         }
       }
