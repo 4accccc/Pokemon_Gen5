@@ -300,7 +300,14 @@ _TALK_START_TURN_NOT()
 			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB )
 			//１個消費処理
 			IF $LWK_SUB == TRUE THEN
+				//========================================/
+				//ヒヒダルマOBJ非表示
 				_FLAG_SET( FV_D03R0101_DARUMA_01 )
+				//========================================/
+				
+				//ヒヒダルマを全部起こしている場合はアララギイベントを起動しないようにする
+				_CALL ev_daruma_wk
+				
 				_SYSWIN_MSG( msg_d03r0101_daruma_03 , POS_DOWN )
 				_SYSWIN_CLOSE()
 				
@@ -311,7 +318,6 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
-					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -355,7 +361,14 @@ _TALK_START_TURN_NOT()
 			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB2 )
 			//１個消費処理
 			IF $LWK_SUB2 == TRUE THEN
+				//========================================/
+				//ヒヒダルマOBJ非表示
 				_FLAG_SET( FV_D03R0101_DARUMA_02 )
+				//========================================/
+				
+				//ヒヒダルマを全部起こしている場合はアララギイベントを起動しないようにする
+				_CALL ev_daruma_wk
+				
 				_SYSWIN_MSG( msg_d03r0101_daruma_03 , POS_DOWN )
 				_SYSWIN_CLOSE()
 				
@@ -366,7 +379,6 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE2 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
-					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -409,7 +421,14 @@ _TALK_START_TURN_NOT()
 			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB3 )
 			//１個消費処理
 			IF $LWK_SUB3 == TRUE THEN
+				//========================================/
+				//ヒヒダルマOBJ非表示
 				_FLAG_SET( FV_D03R0101_DARUMA_03 )
+				//========================================/
+				
+				//ヒヒダルマを全部起こしている場合はアララギイベントを起動しないようにする
+				_CALL ev_daruma_wk
+				
 				_SYSWIN_MSG( msg_d03r0101_daruma_03 , POS_DOWN )
 				_SYSWIN_CLOSE()
 				
@@ -420,7 +439,6 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE3 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
-					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -463,7 +481,14 @@ _TALK_START_TURN_NOT()
 			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB4 )
 			//１個消費処理
 			IF $LWK_SUB4 == TRUE THEN
+				//========================================/
+				//ヒヒダルマOBJ非表示
 				_FLAG_SET( FV_D03R0101_DARUMA_04 )
+				//========================================/
+				
+				//ヒヒダルマを全部起こしている場合はアララギイベントを起動しないようにする
+				_CALL ev_daruma_wk
+				
 				_SYSWIN_MSG( msg_d03r0101_daruma_03 , POS_DOWN )
 				_SYSWIN_CLOSE()
 				
@@ -474,7 +499,6 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE4 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
-					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -517,7 +541,14 @@ _TALK_START_TURN_NOT()
 			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB5 )
 			//１個消費処理
 			IF $LWK_SUB5 == TRUE THEN
+				//========================================/
+				//ヒヒダルマOBJ非表示
 				_FLAG_SET( FV_D03R0101_DARUMA_05 )
+				//========================================/
+				
+				//ヒヒダルマを全部起こしている場合はアララギイベントを起動しないようにする
+				_CALL ev_daruma_wk
+				
 				_SYSWIN_MSG( msg_d03r0101_daruma_03 , POS_DOWN )
 				_SYSWIN_CLOSE()
 				
@@ -528,7 +559,6 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE5 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
-					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
