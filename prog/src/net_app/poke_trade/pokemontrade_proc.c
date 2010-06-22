@@ -3478,6 +3478,7 @@ static BOOL _TouchStateCommonDecide(POKEMON_TRADE_WORK* pWork)
 
   //おなじポケモンを選択したらキャンセル
   if( _IsBothPokemonSelect(pWork, pWork->underSelectBoxno, pWork->underSelectIndex) ){
+    PMSND_PlaySE(SEQ_SE_MSCL_05);   //20100622 add Saito BTS6372
     if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
       _CHANGE_STATE(pWork,_DeletePokemonState);
       return TRUE;
@@ -3589,7 +3590,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
           if((POKEMONTRADEPROC_IsTriSelect(pWork)) &&  //GTSの場合 選択してあるポケモンだと動作が違う
              (-1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex ))){
-
+            PMSND_PlaySE(SEQ_SE_MSCL_05);   //20100622 add Saito BTS6372
             _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
             return;
 
