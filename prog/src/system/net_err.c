@@ -967,6 +967,7 @@ static void Local_ErrDispDraw(void)
  * 
  */
 //--------------------------------------------------------------
+#ifndef MULTI_BOOT_MAKE  //’Êíˆ—
 static const u16 twlerror[]={
 dwctwl_error_0001,
 dwc_error_0002,
@@ -1002,6 +1003,8 @@ dwc_error_0013,
 dwc_error_0014,
 dwc_error_0015,
 };
+#endif //MULTI_BOOT_MAKE  //’Êíˆ—
+
 
 static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr)
 {
