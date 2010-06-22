@@ -853,16 +853,6 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 		{	
 			*p_seq	= SEQ_FADEIN_START;
 		}
-
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-		{	
-			SEQ_Change( p_wk, SEQFUNC_StartGame );
-		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-		{
-			SEQ_End( p_wk );
-		}
-
 		break;
 
 	case SEQ_FADEIN_START:

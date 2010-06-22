@@ -2910,11 +2910,11 @@ static void UI_Main( UI_WORK *p_wk )
 	}
 
 	//ƒL[‚Ìˆ—
-	if( GFL_UI_KEY_GetTrg() )
+	if( GFL_UI_KEY_GetTrg() & (PAD_KEY_UP|PAD_KEY_DOWN) )
 	{
 		p_wk->key_cont_sync	= 0;
 	}
-	else if( GFL_UI_KEY_GetCont() )
+	else if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN) )
 	{	
 		p_wk->key_cont_sync++;
 	}
