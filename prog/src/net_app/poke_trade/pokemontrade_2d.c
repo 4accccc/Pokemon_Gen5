@@ -972,7 +972,8 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
 
 
   if(line == pWork->MainObjCursorLine){
-    if(pWork->padMode==TRUE){
+ //   if(pWork->padMode==TRUE){
+    if(GFL_UI_CheckTouchOrKey()==GFL_APP_END_KEY){
       GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][pWork->MainObjCursorIndex], TRUE );
     }
   }
@@ -1248,7 +1249,7 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
       apos.y = y;
       poke_icon_mark_pos = apos;        //20100614 add Saito
 
-      if(POKETRADE_NEGO_IsStatusLookAt(pWork,line,i) &&  !pWork->padMode){
+      if(POKETRADE_NEGO_IsStatusLookAt(pWork,line,i) &&  (GFL_UI_CheckTouchOrKey()==GFL_APP_END_KEY)){
         apos.y -= 8;
         GFL_CLACT_WK_SetSoftPri(pWork->pokeIcon[no][i],_CLACT_SOFTPRI_POKESEL);
       }

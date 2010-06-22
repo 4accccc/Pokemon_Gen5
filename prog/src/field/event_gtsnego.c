@@ -162,15 +162,15 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     break;
   case _WAIT_TRADE:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
-        (*seq) = _SEQ_EVOLUTION;
-      }
-      else if(!GFL_NET_IsInit()){
+      if(!GFL_NET_IsInit()){
         dbw->login.mode = WIFILOGIN_MODE_ERROR;
         (*seq)  = _CALL_WIFILOGIN;
       }
       else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_ERROR){
         (*seq) = _CALL_WIFINEGO;
+      }
+      else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
+        (*seq) = _SEQ_EVOLUTION;
       }
       else{
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE);
@@ -216,14 +216,18 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     break;
   case _SEQ_EVOLUTIONEND:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      //SHINKADEMO_FreeParam( dbw->aPokeTr.shinka_param );
       {
         SHINKA_DEMO_PARAM* sdp = dbw->aPokeTr.shinka_param;
         GFL_HEAP_FreeMemory( sdp );
       }
-      //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
-      dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
-      (*seq) = _CALL_TRADE;
+      if(!GFL_NET_IsInit()){
+        dbw->login.mode = WIFILOGIN_MODE_ERROR;
+        (*seq)  = _CALL_WIFILOGIN;
+      }
+      else{
+        dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
+        (*seq) = _CALL_TRADE;
+      }
     }
     break;
   case _WAIT_NET_END:

@@ -557,8 +557,6 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_ARCUTIL_TRANSINFO bgchar;
 
-  BOOL padMode;
-
   APP_TASKMENU_WIN_WORK* pAppWin;
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -1109,7 +1107,7 @@ extern void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray);
 extern void POKEMONTRADE_McssAnmStop( u32 data, fx32 currentFrame );
-extern void POKEMONTRADE_CancelCall(void);
+extern void POKEMONTRADE_CancelCall(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_McssMoveDel(_POKEMCSS_MOVE_WORK* pPoke);
 
 

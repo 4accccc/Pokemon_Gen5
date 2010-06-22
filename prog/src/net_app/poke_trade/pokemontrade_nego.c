@@ -95,6 +95,13 @@ static void _rapTimingStart(GFL_NETHANDLE* pNet, const u8 no,POKEMON_TRADE_WORK*
 }
 
 
+static void _selectSixButtonResetCheck(POKEMON_TRADE_WORK* pWork)
+{
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
+    pWork->pokemonselectno = -1;
+  }
+}
 
 //GTSNEGOで交換してはいけないポケモン
 BOOL POKE_GTS_BanPokeCheck(POKEMON_TRADE_WORK* pWork, POKEMON_PASO_PARAM* ppp)
@@ -187,7 +194,7 @@ BOOL POKE_GTS_CreateCancelButton(POKEMON_TRADE_WORK* pWork)
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
     }
     if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      POKEMONTRADE_CancelCall();
+      POKEMONTRADE_CancelCall(pWork);
       _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
       return TRUE;
     }
@@ -668,6 +675,7 @@ static void _NEGO_BackSelect8(POKEMON_TRADE_WORK* pWork)
   POKETRADE_MESSAGE_WindowClear(pWork);
   POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
   POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
+  _selectSixButtonResetCheck(pWork);
   _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
 }
 
@@ -692,7 +700,7 @@ static void _NEGO_BackSelect6(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(GFL_UI_KEY_GetTrgAndSet() || GFL_UI_TP_GetTrgAndSet()){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
@@ -939,7 +947,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTSEネゴのみ強制切断処理
       pWork->triCancel++;
       if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
-        POKEMONTRADE_CancelCall();
+        POKEMONTRADE_CancelCall(pWork);
         _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
         return;
       }
@@ -951,7 +959,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTSEネゴのみ強制切断処理
       pWork->triCancel++;
       if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
-        POKEMONTRADE_CancelCall();
+        POKEMONTRADE_CancelCall(pWork);
         _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
         return;
       }
@@ -1033,25 +1041,25 @@ static BOOL _pokemonStatusKeyLoop(POKEMON_TRADE_WORK* pWork)
   BOOL curSel=FALSE;
   
   // キー処理
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
+  if(GFL_UI_KEY_GetTrgAndSet() == PAD_KEY_RIGHT){
     pWork->pokemonselectno = (pWork->pokemonselectno+3) % 6;
     curSel=TRUE;
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
+  if(GFL_UI_KEY_GetTrgAndSet() == PAD_KEY_LEFT){
     pWork->pokemonselectno = (pWork->pokemonselectno-3) % 6;
     if(pWork->pokemonselectno<0){
       pWork->pokemonselectno+=6;
     }
     curSel=TRUE;
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
+  if(GFL_UI_KEY_GetTrgAndSet() == PAD_KEY_UP){
     if((pWork->pokemonselectno==0) || (pWork->pokemonselectno==3)){
       pWork->pokemonselectno = pWork->pokemonselectno+3;
     }
     pWork->pokemonselectno = pWork->pokemonselectno-1;
     curSel=TRUE;
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
+  if(GFL_UI_KEY_GetTrgAndSet() == PAD_KEY_DOWN){
     if((pWork->pokemonselectno==2) || (pWork->pokemonselectno==5)){
       pWork->pokemonselectno = pWork->pokemonselectno-3;
     }
@@ -1096,6 +1104,7 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
     }
 
     _select6PokeSubMask(pWork);
+    _selectSixButtonResetCheck(pWork);
     _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
     POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
     WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
@@ -1135,7 +1144,7 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
   }
 
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
-    if(GFL_UI_KEY_GetTrg()){
+    if(GFL_UI_KEY_GetTrgAndSet()){
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
       PMSND_PlaySystemSE(SEQ_SE_SELECT1);
@@ -1168,6 +1177,7 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
     WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
+    _selectSixButtonResetCheck(pWork);
     _CHANGE_STATE(pWork, _pokemonStatusWaitN);  //選択にループ
   }
 }
@@ -1195,6 +1205,7 @@ static void _menuMyPokemon(POKEMON_TRADE_WORK* pWork)
     case 2:  //もどる
       _select6PokeSubMask(pWork);
       POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
+      _selectSixButtonResetCheck(pWork);
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
       break;
     }
@@ -1382,6 +1393,7 @@ static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
     default: //いいえ
       POKETRADE_MESSAGE_WindowClear(pWork);
       POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
+      _selectSixButtonResetCheck(pWork);
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
       break;
     }
@@ -1442,7 +1454,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
     }
   }
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
-    if(GFL_UI_KEY_GetTrg()){
+    if(GFL_UI_KEY_GetTrgAndSet()){
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       pWork->pokemonselectno = pWork->pokemonselectno % 6;
       if(pWork->pokemonselectno<0){
@@ -1454,7 +1466,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
     }
   }
 
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+  if(GFL_UI_KEY_GetTrgAndSet() == PAD_BUTTON_DECIDE){
     if(_NEGO_Select6PokemonSelect(pWork, pWork->pokemonselectno)){
       return ;
     }
@@ -1478,7 +1490,7 @@ static void POKETRADE_NEGO_Select6keywaitMsg2(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(GFL_UI_KEY_GetTrgAndSet() || GFL_UI_TP_GetTrgAndSet()){
     POKETRADE_MESSAGE_WindowClear(pWork);
     POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
 
