@@ -355,6 +355,16 @@ void FIELD_WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
   WFBC_GetCore( cp_wk, p_buff );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCCOREデータを最新にする。
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_ReadCore( FIELD_WFBC* p_wk )
+{
+  WFBC_ReadCore( p_wk );
+}
+
 
 //----------------------------------------------------------------------------
 /**

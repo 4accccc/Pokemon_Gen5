@@ -93,6 +93,7 @@ extern void FIELD_WFBC_Delete( FIELD_WFBC* p_wk );
 //-------------------------------------
 ///	ëSëÃèÓïÒÇÃéÊìæ
 //=====================================
+extern void FIELD_WFBC_ReadCore( FIELD_WFBC* p_wk );
 extern void FIELD_WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff );
 
 extern u32 FIELD_WFBC_GetPeopleNum( const FIELD_WFBC* cp_wk );

@@ -240,6 +240,7 @@ VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk )
       mmdlid = MMDL_GetOBJID( p_frontmmdl );
 
       // êlï®èÓïÒéÊìæ
+      FIELD_WFBC_ReadCore( p_wfbc );
       cp_people = FIELD_WFBC_GetPeople( p_wfbc, objid );
       if( cp_people )
       {
