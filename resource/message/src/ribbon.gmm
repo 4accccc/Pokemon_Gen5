@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-10T20:23:40"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-22T18:05:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,14 +315,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1029" top="377" right="1734" bottom="1005" maximized="no" rayout="Vertical2">
+	<dialog left="1029" top="377" right="1280" bottom="1005" maximized="yes" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="445"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="556"/>
+		<band id="2" index="3" style="0000" width="1139"/>
 		<band id="3" index="4" style="0000" width="139"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="666"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1311,9 +1311,9 @@
 		<comment>テキスト名53
 金銀で修正
 </comment>
-		<language name="JPN" font=" 1:small" width="240">ＷｉーＦｉバトルタワーを
+		<language name="JPN" font=" 1:small" width="240">Ｗｉ－Ｆｉバトルタワーを
 かちぬいた　きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ＷｉーＦｉバトルタワーを
+		<language name="JPN_KANJI" font=" 1:small" width="240">Ｗｉ－Ｆｉバトルタワーを
 勝ち抜いた　記念の　リボン</language>
 	</row>
 

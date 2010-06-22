@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-18T12:52:23"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-22T18:07:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -830,7 +830,7 @@
 パソコン管理者</attribute>
 		<language name="JPN" width="256">その　ともだちてちょう　に
 とうろくした　おともだちと▽
-ＷｉーＦｉコネクションを　つかって▼
+Ｗｉ－Ｆｉコネクションを　つかって▼
 ポケモンたいせん　や
 ポケモンこうかん　を▽
 たのしむことが　できるのよ▼
@@ -844,7 +844,7 @@
 ばっちり　とうろく　できます！▼</language>
 		<language name="JPN_KANJI" width="256">その　ともだちてちょう　に
 登録した　おともだちと▽
-ＷｉーＦｉコネクションを　使って▼
+Ｗｉ－Ｆｉコネクションを　使って▼
 ポケモン対戦や
 ポケモン交換を▽
 たのしむことが　できるのよ▼
