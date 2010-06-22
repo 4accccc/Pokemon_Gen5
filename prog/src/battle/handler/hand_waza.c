@@ -1759,6 +1759,7 @@ static void handler_KonoyubiTomare_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     if( (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID))
     &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != WAZANO_HURIIFOORU)
     &&  (!BPP_CheckSick(bpp, WAZASICK_FREEFALL))
+    &&  (!BTL_SVFTOOL_IsMemberOutIntr(flowWk) )
     ){
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( !BTL_SVFTOOL_CheckFarPoke(flowWk, atkPokeID, pokeID, waza) )
