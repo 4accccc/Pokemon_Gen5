@@ -103,9 +103,9 @@ Property
 	MakerCode		"01"
 
 	#
-	# REMASTER VERSION: Mastering version  現在事前ロットチェック用 E.0
+	# REMASTER VERSION: Mastering version  現在事前ロットチェック用 0xE0
 	#
-	RomVersion		0
+	RemasterVersion			0xE0
 
 	#
 	# ROM SPEED TYPE: [MROM/1TROM/UNDEFINED]
@@ -146,8 +146,7 @@ Property
 	#
 	# CardRegion: card region [Japan/America/Europe/Australia]
 	#
-	CardRegion	ALL
-
+	CardRegion	Japan
 
 	#
 	# Codec mode:
