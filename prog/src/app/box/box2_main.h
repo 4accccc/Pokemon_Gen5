@@ -185,10 +185,10 @@ enum {
 // BMPWIN ID
 enum {
 	// 上画面
-	BOX2BMPWIN_ID_NAME = 0,		// ポケモン名
+	BOX2BMPWIN_ID_TITLE = 0,	// タイトル
+	BOX2BMPWIN_ID_NAME,				// ポケモン名
 	BOX2BMPWIN_ID_NICKNAME,		// ニックネーム
 	BOX2BMPWIN_ID_LV,					// レベル
-	BOX2BMPWIN_ID_TITLE,			// タイトル
 	BOX2BMPWIN_ID_SEX,				// 性別
 	BOX2BMPWIN_ID_ZKNNUM,			// 図鑑番号
 	BOX2BMPWIN_ID_SEIKAKU,		// 性格

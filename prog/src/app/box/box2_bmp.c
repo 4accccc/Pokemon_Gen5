@@ -246,6 +246,11 @@
 static const u8	BoxBmpWinData[][6] =
 {
 /** 上画面 **/
+	{	// タイトル
+		BMPWIN_TITLE_FRM, BMPWIN_TITLE_PX, BMPWIN_TITLE_PY,
+		BMPWIN_TITLE_SX, BMPWIN_TITLE_SY, BMPWIN_TITLE_PAL,
+	},
+
 	{	// ポケモン名
 		BMPWIN_NAME_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
 		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_PAL,
@@ -257,10 +262,6 @@ static const u8	BoxBmpWinData[][6] =
 	{	// レベル
 		BMPWIN_LV_FRM, BMPWIN_LV_PX, BMPWIN_LV_PY,
 		BMPWIN_LV_SX, BMPWIN_LV_SY, BMPWIN_LV_PAL,
-	},
-	{	// タイトル
-		BMPWIN_TITLE_FRM, BMPWIN_TITLE_PX, BMPWIN_TITLE_PY,
-		BMPWIN_TITLE_SX, BMPWIN_TITLE_SY, BMPWIN_TITLE_PAL,
 	},
 
 	{	// 性別
@@ -927,15 +928,13 @@ void BOX2BMP_PokeDataPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk )
 {
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_NAME] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_NICKNAME] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_LV] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_SEX] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_ZKNNUM] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_SEIKAKU] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_TOKUSEI] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_ITEM] );
-	ClearScreen( &appwk->win[BOX2BMPWIN_ID_WAZA] );
+	u32	i;
+
+	for( i=BOX2BMPWIN_ID_NAME; i<=BOX2BMPWIN_ID_WAZA; i++ ){
+		ClearScreen( &appwk->win[i] );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[i].win), 0 );
+		GFL_BMPWIN_TransVramCharacter( appwk->win[i].win );
+	}
 
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_WAZA_STR] );
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_SEIKAKU_STR] );
