@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-22T18:11:09"/>
+	<create user="morimoto" host="W00220" date="2010-06-22T19:35:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1373,14 +1373,14 @@
 
 	<row id="msg_bsw_scr_106" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
-トレーナとマルチ　が▽
+トレーナーとマルチ　が▽
 [2:03:４桁:1]れんしょうちゅう　です▼
-ともだちとマルチ　が▽
+ともだちとマルチ　が
 [2:03:４桁:2]れんしょうちゅう　です▼</language>
 		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]様は
-トレーナとマルチ　が▽
+トレーナーとマルチ　が▽
 [2:03:４桁:1]連勝中です▼
-友達とマルチ　が▽
+友達とマルチ　が
 [2:03:４桁:2]連勝中です▼</language>
 	</row>
 
