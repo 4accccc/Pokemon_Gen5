@@ -46,7 +46,7 @@
 #define BTLV_EFFECT_TRAINER_INDEX_NONE  ( 0xffffffff )
 
 #define BTLV_EFFECT_CAMERA_WORK_WAIT      ( 15 * 60 )   //カメラワーク開始までのウエイト（15秒）
-#define BTLV_EFFECT_WCS_CAMERA_WORK_WAIT  (  2 * 60 )   //WCSカメラワーク開始までのウエイト（2秒）
+#define BTLV_EFFECT_WCS_CAMERA_WORK_WAIT  (  5 * 60 )   //WCSカメラワーク開始までのウエイト（5秒）
 
 #define TRTYPE_NONE ( 0xffff )
 
