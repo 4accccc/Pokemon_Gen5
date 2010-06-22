@@ -1073,6 +1073,13 @@ static int tmenu_Update( BEACON_VIEW_PTR wk,u8 menu_idx )
   }
 
   for( i = 0;i < max;i++){
+    //‚Ü‚¾‘‚«ž‚Ý’†
+    if( APP_TASKMENU_WIN_IsUpdateMsg( tmenu[i].work ) == TRUE){
+      APP_TASKMENU_WIN_Update( tmenu[i].work );
+      return ret;
+    }
+  }
+  for( i = 0;i < max;i++){
     if( APP_TASKMENU_WIN_IsTrg( tmenu[i].work )){
       if(i < (max-1)){
         sub_PlaySE( BVIEW_SE_DECIDE );
