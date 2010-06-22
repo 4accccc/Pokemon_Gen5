@@ -625,7 +625,7 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   wk->simulationCounter = 0;
   wk->turnCheckStep = 0;
   wk->wazaRankEffSerial = 0;
-  wk->prevAction = BTL_ACTION_NULL;
+  wk->fDebugClack = FALSE;
 }
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
@@ -711,6 +711,19 @@ SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* c
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
   SCQUE_Init( wk->que );
 
+  #ifdef PM_DEBUG
+  {
+    u16 key = GFL_UI_KEY_GetCont();
+    if( (key&PAD_BUTTON_R) | (key&PAD_BUTTON_X) )
+    {
+      if( BTL_MAIN_CheckImServerMachine(wk->mainModule) ){
+        wk->fDebugClack = TRUE;
+        OS_TPrintf("*** Debug Clack ON ***\n");
+      }
+    }
+  }
+  #endif
+
   if( wk->cmdBuildStep == 0 )
   {
     relivePokeRec_Init( wk );
@@ -730,6 +743,10 @@ SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* c
   wk->numEndActOrder = ActOrderProc_Main( wk, wk->numEndActOrder );
 
   BTL_N_Printf( DBGSTR_SVFL_TurnStart_Result, wk->numEndActOrder, wk->numActOrder );
+
+  #ifdef PM_DEBUG
+  wk->fDebugClack = FALSE;
+  #endif
 
   return wk->flowResult;
 }
@@ -5924,6 +5941,20 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     return dmg_sum;
   }
 
+  // ダメージ不正書き換えテスト
+  #ifdef PM_DEBUG
+  if( wk->fDebugClack )
+  {
+    if( BTL_MAINUTIL_PokeIDtoClientID(BPP_GetID(attacker)) == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
+    {
+      for(i=0;i<poke_cnt;++i){
+        dmg[i] = 999;
+      }
+      OS_TPrintf("自分がサーバーなので不正にダメージ書き換えた\n");
+    }
+  }
+  #endif
+
   // ダメージコマンド出力
   scproc_PrevWazaDamage( wk, wazaParam, attacker, poke_cnt, bpp );
   scPut_WazaDamagePlural( wk, wazaParam, poke_cnt, affAry, bpp, dmg, critical_flg, flagSet.hitPluralPoke );
@@ -5940,7 +5971,6 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   // ダメージ記録
   for(i=0; i<poke_cnt; ++i)
   {
-    TAYA_Printf("実体ヒットダメージ=%d\n", dmg[i]);
     BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], dmg[i], FALSE );
     wazaDmgRec_Add( wk, atkPos, attacker, bpp[i], wazaParam, dmg[i] );
     BPP_TURNFLAG_Set( bpp[i], BPP_TURNFLG_DAMAGED );

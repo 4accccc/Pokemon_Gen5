@@ -65,7 +65,7 @@ extern u8 BTL_MAINUTIL_PokeIDtoClientID( u8 pokeID );
 extern BtlPokePos BTL_MAIN_GetFacedPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos );
 extern BtlPokePos BTL_MAINUTIL_GetFacedPokePos( BtlRule rule, BtlPokePos pos );
 extern u8 BTL_MAIN_GetClientFrontPosCount( const BTL_MAIN_MODULE* wk, u8 clientID );
-extern BOOL BTL_MAIN_CheckImServerMachine( BTL_MAIN_MODULE* wk );
+extern BOOL BTL_MAIN_CheckImServerMachine( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetClientBenchPosIndex( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetClientMultiPos( const BTL_MAIN_MODULE* wk, u8 clientID );

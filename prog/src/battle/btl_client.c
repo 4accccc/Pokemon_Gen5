@@ -220,6 +220,7 @@ struct _BTL_CLIENT {
   u8   fAITrainerBGMChanged : 1;
   u8   fCommError           : 1;
   u8   fBallSelected        : 1;
+  u8   fCmdCheckEnable      : 1;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -526,6 +527,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->mainProc = ClientMain_Normal;
   wk->myState = 0;
   wk->cmdCheckServer = NULL;
+  wk->fCmdCheckEnable = FALSE;
   wk->cmdCheckTimingCode = BTL_RECTIMING_None;
 
   wk->commWaitInfoOn = FALSE;
@@ -646,6 +648,7 @@ void BTL_CLIENT_AttachViewCore( BTL_CLIENT* wk, BTLV_CORE* viewCore )
 void BTL_CLIENT_AttachCmeCheckServer( BTL_CLIENT* wk, BTL_SERVER* server )
 {
   wk->cmdCheckServer = server;
+  wk->fCmdCheckEnable = TRUE;
 }
 
 
@@ -5531,11 +5534,13 @@ restart:
 
       if( (wk->cmdCheckServer != NULL)
       &&  (wk->cmdCheckTimingCode != BTL_RECTIMING_None)
+      &&  (wk->fCmdCheckEnable)
       ){
         if( BTL_SERVER_CMDCHECK_Make(wk->cmdCheckServer, wk->cmdCheckTimingCode, cmdBuf, cmdSize) ){
           BTL_MAIN_NotifyCmdCheckError( wk->mainModule );
           OS_TPrintf("!!!! recvedCmd=%p, %02x, %02x, %02x, ...\n", cmdBuf,
               ((const u8*)cmdBuf)[0], ((const u8*)cmdBuf)[1], ((const u8*)cmdBuf)[2] );
+          wk->fCmdCheckEnable = FALSE;
         }
         wk->cmdCheckTimingCode = BTL_RECTIMING_None;
       }
