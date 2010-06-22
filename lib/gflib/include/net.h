@@ -1343,10 +1343,10 @@ extern BOOL GFL_NET_IW_SystemCheck(void);
 //--------------------------------------------------------------
 /**
  * @brief   ネゴシエーション失敗時親がエラーになるかどうか 
- * @retval  TRUE:親をエラーにする FALSE:親をエラーにしない
+ * @param  TRUE:親をエラーにする FALSE:親をエラーにしない
  */
 //--------------------------------------------------------------
-extern BOOL GFL_NET_ParentHandleError(BOOL bError);
+extern void GFL_NET_ParentHandleError(BOOL bError);
 
 
 #ifdef PM_DEBUG
