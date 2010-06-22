@@ -5207,8 +5207,9 @@ static const BtlEventHandlerTable*  ADD_Yokodori( u32* numElems )
 // –¢•ª—ÞƒƒUˆ—
 static void handler_Yokodori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (!HandCommon_IsPokeOrderLast(flowWk, pokeID))
+  ){
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_YokodoriReady );
       HANDEX_STR_AddArg( &param->str, pokeID );
