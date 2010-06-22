@@ -334,7 +334,7 @@ EVENT_START   ev_d01r0101_support_02
 		_PLAYER_NAME(0)
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_12)
 
-	//例外処理では夢の話をする
+	//例外処理では夢の話をする ※ここに流れてくることは想定していないが念のため
 	ELSE
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_02)
 	ENDIF

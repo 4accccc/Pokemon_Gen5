@@ -114,6 +114,7 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	_GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE( LWK_ENT_CHK )
 	IF $LWK_ENT_CHK == 0 THEN
 		//参加できるポケモンがいない
+		//100621現在は全ポケモンが参加可能のためこちらの処理にはきません
 		
 		//オーナー：！マーク
 		_TIME_WAIT( 16 )

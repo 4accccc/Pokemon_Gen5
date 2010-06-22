@@ -216,8 +216,10 @@ _TALK_OBJ_START()
 		//ヒント　ききたい？
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_02 )
 
-		//LOCALWORK11に１追加
+		//========================================//
+		//初回会話済み
 		_FLAG_SET( FE_C03R0801_HINT_TALK )
+		//========================================//
 	
 	ELSE
 
