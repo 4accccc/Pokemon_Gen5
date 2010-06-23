@@ -464,6 +464,8 @@ static void main_cleanup_view( DMP_MAINWORK* wk )
 //----------------------------------------------------------------------------------
 static BOOL main_root_ctrl( DMP_MAINWORK* wk )
 {
+  PRINTSYS_QUE_Main( wk->printQue );
+
   if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) == FALSE ){
     return FALSE;
   }
@@ -848,6 +850,11 @@ static void update_dst( DMP_MAINWORK* wk )
     PP_Put( wk->dst, ID_PARA_oyasex, wk->oyaSex );
     PP_Put( wk->dst, ID_PARA_oyaname_raw, (u32)(wk->oyaName) );
 
+#ifdef DEBUG_ONLYFOR_iwasawa
+    if(mons_no == MONSNO_HINBASU){
+      PP_Put( wk->dst, ID_PARA_beautiful, 255 );
+    }
+#endif
     TAYA_Printf("[[‘‚«‚İ]] «•Ê=%d, ŒÂ«—”=%08x\n", sex, personal_rnd);
     TAYA_Printf("             HP:%2d  ATK:%2d  DEF:%2d  SAT:%2d  SDF:%2d  AGI:%2d\n",
                 hp, pow, def, spw, sdf, agi );
