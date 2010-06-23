@@ -42,7 +42,7 @@
 #include "net_app/wificlub/wifi_p2pmatch.h"
 //#include "net_app/wificlub/wifi_p2pmatchfour.h"
 #include "net_app/pokemontrade.h"
-//#include "wifi_p2pmatch_local.h"
+#include "field/ringtone_sys_ext.h"
 
 #include "net/dwc_rap.h"
 #include "net/dwc_raputil.h"
@@ -314,6 +314,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     }
     break;
   case _CALL_WIFICLUB:
+    GFUser_SetSleepSoundFunc();  //クラブに入る時に呼ぶ
     (*seq) = P2P_INIT;
     
     break;
@@ -327,6 +328,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     }
     break;
   case _FIELD_OPEN:
+    RINGTONE_SYS_SetSleepSoundFunc();  //フィールドに戻る時に呼ぶ
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
