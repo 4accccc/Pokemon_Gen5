@@ -1800,7 +1800,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     int cont = GFL_UI_KEY_GetCont();
-    if( ( biw->button_exist[ hit ] == FALSE ) && ( ( cont & PAD_BUTTON_L ) == 0 ) )
+    if( ( biw->button_exist[ hit ] == FALSE ) && ( ( ( cont & PAD_BUTTON_L ) == 0 ) || ( biw->scr_type != BTLV_INPUT_SCRTYPE_WAZA ) ) )
     {
       hit = GFL_UI_TP_HIT_NONE;
     }
@@ -2058,6 +2058,20 @@ BOOL  BTLV_INPUT_CheckExecute( BTLV_INPUT_WORK* biw )
     return TRUE;
   }
   return FALSE;
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面のスクリーンタイプを取得
+ *
+ *  @param[in]  biw  下画面管理構造体
+ *
+ *  @retval BTLV_INPUT_SCRTYPE
+ */
+//============================================================================================
+BTLV_INPUT_SCRTYPE  BTLV_INPUT_GetScrType( BTLV_INPUT_WORK* biw )
+{ 
+  return biw->scr_type;
 }
 
 //============================================================================================
