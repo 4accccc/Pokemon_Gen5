@@ -619,7 +619,6 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   wk->fMemberOutIntr = FALSE;
   wk->fWinBGMPlayWild = FALSE;
   wk->fEscMsgDisped = FALSE;
-  wk->fMemberOutIntr = FALSE;
   wk->cmdBuildStep = 0;
   wk->thruDeadMsgPokeID = BTL_POKEID_NULL;
   wk->prevExeWaza = WAZANO_NULL;
@@ -3038,8 +3037,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   reqWaza.targetPos = BTL_POS_NULL;
 
   /* アンコール状態で違うワザを選んでいた場合は強制書き換え */
-  if( BPP_CheckSick(attacker, WAZASICK_ENCORE) )
-  {
+  if( (BPP_CheckSick(attacker, WAZASICK_ENCORE))
+  &&  (!(wk->fMemberOutIntr))
+  ){
     if( action->fight.waza != WAZANO_WARUAGAKI )
     {
       WazaID encoreWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(attacker, WAZASICK_ENCORE) );
