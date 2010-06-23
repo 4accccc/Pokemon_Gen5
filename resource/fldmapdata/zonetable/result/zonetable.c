@@ -7908,7 +7908,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		5,
+		7,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -7942,7 +7942,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		5,
+		7,
 		TRUE,
 		TRUE,
 		FALSE,
