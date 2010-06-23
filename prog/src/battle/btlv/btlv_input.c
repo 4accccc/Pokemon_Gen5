@@ -1989,6 +1989,10 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     { 
       hit = GFL_UI_TP_HIT_NONE;
     }
+    else if( ( hit > 4 ) && ( biw->button_exist[ hit ] == FALSE ) )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
     else if( ( hit < 4 ) &&
              ( cont & PAD_BUTTON_L ) &&
            ( ( BPP_HENSIN_Check( biw->rotate_bpp[ biw->rotate_scr ] ) == TRUE ) || ( biw->waruagaki_flag == TRUE ) ) )
@@ -4136,6 +4140,11 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
     biw->button_exist[ i ] = FALSE;
   }
 
+  for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+  {
+    biw->waza_exist[ i ] = FALSE;
+  }
+
   //‹Z‘I‘ð
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
@@ -4968,7 +4977,7 @@ static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pl
     return hit;
   }
 
-  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) &&
+  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) && ( hit < 4 ) &&
       ( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) ) )
   { 
     biw->hit = BTLV_INPUT_SetWazaInfoModeMask( hit );
