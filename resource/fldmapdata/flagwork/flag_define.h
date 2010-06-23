@@ -115,19 +115,19 @@
 
 #define FE_PC_GOLD                         100 /* 0x0064 ポケセンでゴールドカードになっている */
 #define FE_PC_POKERUS                      101 /* 0x0065 ポケルスに感染して、ポケセンに行ったことあり */
-#define FE_CONNECT_TSIGN_TALK              102 /* 0x0066 サイン受付と会話した */
-#define FE_SODATE_TAMAGO                   103 /* 0x0067 そだてやのたまご */
-#define FE_SODATEYA_AZUKE                  104 /* 0x0068 育て屋に預けたことがある */
+		/* not used   102(0x0066) */
+		/* not used   103(0x0067) */
+		/* not used   104(0x0068) */
 #define FE_CONNECT_UNION_GUIDE_TALK        105 /* 0x0069 ユニオンガイドと会話した */
-#define FE_FIRST_POKE_GET                  106 /* 0x006a ポケモン入手済み */
+		/* not used   106(0x006a) */
 		/* not used   107(0x006b) */
-#define FE_R30R0201_GAKUSYUUSOUTI_GET      108 /* 0x006c 学習装置を入手 */
+		/* not used   108(0x006c) */
 #define FE_T02R0302_BALLGET                109 /* 0x006d カノコタウン民家２F：親父からスーパーボール入手した */
-#define FE_C01R0102_ITEM_GET               110 /* 0x006e サンヨウシティビルＡ ２Ｆ：アイテム入手イベント（アイテム未定） */
+		/* not used   110(0x006e) */
 #define FE_C01R0201_ITEM_GET               111 /* 0x006f サンヨウシティビルＢ １Ｆ：アイテム入手イベント（ピントレンズ） */
 #define FE_SODATEYA_FIRSTTALK              112 /* 0x0070 育て屋受付：初回会話フラグ */
 #define FE_C01R0501_RIVALTALK              113 /* 0x0071 C01トレーナーズスクールのライバルと会話した */
-#define FE_D01R0101_EVCLEAR                114 /* 0x0072 C01ジム前のガイドのMSG分岐に使用。現状はD01R0101到着時にセットしています。 */
+		/* not used   114(0x0072) */
 #define FE_CGEAR_GET                       115 /* 0x0073 Cギア入手フラグ */
 #define FE_C04GYM0101_TRBTL1               116 /* 0x0074 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（１台目） */
 #define FE_C04GYM0101_TRBTL2               117 /* 0x0075 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
@@ -140,7 +140,7 @@
 #define FE_C07GYM_ITEM                     124 /* 0x007c Ｃ07氷ジム：ジムガイドがくれるアイテム入手フラグ */
 #define FE_C08GYM_ITEM                     125 /* 0x007d Ｃ08ドラゴンジム：ジムガイドがくれるアイテム入手フラグ */
 #define FE_MUSEUM_TOUNAN                   126 /* 0x007e 博物館盗難イベントフラグ。盗難イベント中にON */
-#define FE_C04_SUPPORT_GUIDE               127 /* 0x007f Ｃ04ライモンシティのサポート誘導イベントフラグ */
+		/* not used   127(0x007f) */
 #define FE_C02GYM_TRBTL1                   128 /* 0x0080 C02ノーマルジムトレーナーの対戦済みチェックフラグ（１人目） */
 #define FE_C02GYM_TRBTL2                   129 /* 0x0081 C02ノーマルジムトレーナーの対戦済みチェックフラグ（２人目） */
 #define FE_C03GYM_TRBTL1                   130 /* 0x0082 C03虫ジムトレーナーの対戦済みチェックフラグ（右上） */
@@ -164,7 +164,7 @@
 #define FE_C02R0301_POKETRADE              148 /* 0x0094 C02R0301のゲーム内交換フラグ */
 #define FE_PALPARK_FIRSTTALK               149 /* 0x0095 パルパーク受付の初回会話フラグ（説明有り） */
 #define FE_REMIND_FIRSTTALK                150 /* 0x0096 技思い出しオヤジの初回会話フラグ（説明有り） */
-#define FE_ELBOARD_TOUNAN                  151 /* 0x0097 未使用　※参照されなくなったら削除 */
+		/* not used   151(0x0097) */
 #define FE_ELBOARD_C02GYMWIN               152 /* 0x0098 未使用　※参照されなくなったら削除 */
 #define FE_SODATEYAOLDMAN_OPEN             153 /* 0x0099 育て屋にじいさんが戻ってくる（２匹預けられるようになる） */
 #define FE_BC10R0401_BOSS                  154 /* 0x009a ブラックシティ：ボス初回会話チェック */
@@ -184,20 +184,20 @@
 #define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
 #define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
 #define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
-#define FE_C09R0501_CHAMPION               171 /* 0x00ab チャンピオンリーグ：アデク初回会話フラグ */
+		/* not used   171(0x00ab) */
 #define FE_MEZAPA_FIRSTTALK                172 /* 0x00ac めざめるパワーのタイプチェックする人の初回会話フラグ */
-#define FE_T01R0102_SUPPORTBTL             173 /* 0x00ad 自宅２Ｆサポートとの戦闘終了フラグ */
+		/* not used   173(0x00ad) */
 #define FE_HYOUKA_ITEMGET_01               174 /* 0x00ae 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび１ */
 #define FE_HYOUKA_ITEMGET_02               175 /* 0x00af 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび２ */
 #define FE_HYOUKA_ITEMGET_03               176 /* 0x00b0 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび３ */
-#define FE_HYOUKA_ITEMGET_04               177 /* 0x00b1 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび４ */
-#define FE_HYOUKA_ITEMGET_05               178 /* 0x00b2 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび５ */
-#define FE_HYOUKA_ITEMGET_06               179 /* 0x00b3 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび６ */
+		/* not used   177(0x00b1) */
+		/* not used   178(0x00b2) */
+		/* not used   179(0x00b3) */
 #define FE_C08R0402_ITEMGET_01             180 /* 0x00b4 過去未来サブイベントのごほうび入手フラグ */
 #define FE_C06_ITEMGET_1                   181 /* 0x00b5 フキヨセ滑走路に落ちているアイテムの入手フラグ */
 #define FE_LEGEND1_BATTLE                  182 /* 0x00b6 伝説ポケモン：アトスと戦った */
-#define FE_LEGEND2_BATTLE                  183 /* 0x00b7 伝説ポケモン：ポルトスと戦った */
-#define FE_LEGEND3_BATTLE                  184 /* 0x00b8 伝説ポケモン：アラミスと戦った */
+		/* not used   183(0x00b7) */
+		/* not used   184(0x00b8) */
 #define FE_C09_FORBIDDEN                   185 /* 0x00b9 ポケモンリーグ立ち入り禁止状態フラグ。Ｎ城出現&#xff5e;チャンプ復帰まで */
 		/* not used   186(0x00ba) */
 #define FE_C01_ITEMGET_01                  187 /* 0x00bb C01サンヨウシティ：釣り人のアイテム入手フラグ */
@@ -316,15 +316,15 @@
 #define FE_D08_PACKAGEPOKE_END             300 /* 0x012c リュウラセンの塔：Nとパッケージポケモンのイベントを終えた */
 #define FE_C02R0501_ITEMGET_01             301 /* 0x012d シッポウ倉庫：アイテム入手フラグ（初期３匹タイプの威力upアイテム） */
 #define FE_C09_GUIDE_TALK                  302 /* 0x012e 初回挑戦時の解説イベントをみた（ｐｏｓイベント） */
-#define FE_C02GYM_QUESTION_02              303 /* 0x012f シッポウジムの問題２の回答フラグ。1＝正解している */
-#define FE_C02GYM_QUESTION_03              304 /* 0x0130 シッポウジムの問題３の回答フラグ。1＝正解している */
-#define FE_C02GYM_QUESTION_04              305 /* 0x0131 シッポウジムの問題４の回答フラグ。1＝正解している */
+		/* not used   303(0x012f) */
+		/* not used   304(0x0130) */
+		/* not used   305(0x0131) */
 #define FE_T04R0101_APPRAISAL_CROWN        306 /* 0x0132 サザナミタウン：財宝鑑定士に古代の王冠について話した */
 #define FE_PACKAGE_POKE_GET                307 /* 0x0133 パッケージポケモン（シン／ム）の捕獲フラグ */
 #define FE_ROCKCAPSULE_END                 308 /* 0x0134 ロックカプセルイベントの終了 */
-#define FE_TTOWN_RECEPT_TALK               309 /* 0x0135 ギアステーション：トレインタウン行き電車の受付　初回会話フラグ */
+		/* not used   309(0x0135) */
 #define FE_D08_ITEMGET_01                  310 /* 0x0136 リュウラセンの塔：アイテム入手フラグ */
-#define FE_D01R0201_POKE16_01              311 /* 0x0137 夢の跡地B2：ムシャーナ捕獲フラグ */
+		/* not used   311(0x0137) */
 #define FE_C08R0801_ITEMGET_01             312 /* 0x0138 ソウリュウシティ：アイテム入手フラグ */
 #define FE_R14R0201_LEG_GET                313 /* 0x0139 ツチノカミイベント：捕獲チェック */
 #define FE_R18R0101_RANGERM_TALK           314 /* 0x013a 18番道路プレハブ：レンジャーと会話した */
@@ -343,7 +343,7 @@
 #define FE_MUSICAL_COMM_PLAY               327 /* 0x0147 ミュージカルホール：通信ミュージカルで遊んだ */
 #define FE_C03R1201_ITEM_01                328 /* 0x0148 ヒウンビル１Ｆ：アイテム入手フラグ */
 #define FE_T03PC0101_ITEMGET_01            329 /* 0x0149 カゴメタウン：グラシデアのはな入手フラグ */
-#define FE_H03_BADRIDER_WIN                330 /* 0x014a シリンダーブリッジ：暴走族に勝利したフラグ */
+		/* not used   330(0x014a) */
 #define FE_WALLPAPER_OPEN_MSG_01           331 /* 0x014b ボックス壁紙、１段階目追加メッセージを表示した */
 #define FE_WALLPAPER_OPEN_MSG_02           332 /* 0x014c ボックス壁紙、２段階目追加メッセージを表示した */
 #define FE_BC10R0401_BTL_01                333 /* 0x014d ブラックシティ：ローテーションバトル終了フラグ */
@@ -367,7 +367,7 @@
 #define FE_T01R0401_SUPPORT_TALK           351 /* 0x015f 研究所：殿堂入り後サポートと話した */
 #define FE_C05R0201_BTL_01                 352 /* 0x0160 ホドモエシティ：交換後戦闘フラグ（クリア後） */
 #define FE_D09R1401_RIVAL_01               353 /* 0x0161 チャンピオンロード：ライバル初回話しかけフラグ */
-#define FE_T01R0201_SUPPORT_TALK           354 /* 0x0162 サポート宅：クリア後サポートと話した */
+		/* not used   354(0x0162) */
 #define FE_C02R0301_BTL_01                 355 /* 0x0163 シッポウ倉庫：交換後戦闘フラグ（クリア後） */
 #define FE_R13R0101_ITEMGET_01             356 /* 0x0164 13番道路民家：アイテム入手フラグ（プレート２種） */
 #define FE_C09P01_GATE_OPEN                357 /* 0x0165 ポケモンリーグフロント：ゲート開放フラグ */
@@ -377,7 +377,7 @@
 #define FE_C03PC0101_GEONET                361 /* 0x0169 ヒウンポケセン：ジオネット誘導イベントの初回会話フラグ */
 #define FE_N01R0304_TALK                   362 /* 0x016a Nの城：ボールをくれるプラズマ団員・初回会話フラグ */
 #define FE_T05_RAILWAY_TALK                363 /* 0x016b カナワタウン：鉄道トークを聞いたことがある */
-#define FE_D01R0101_POKE_END               364 /* 0x016c 夢の跡地：ゆめのけむりイベント終了フラグ */
+		/* not used   364(0x016c) */
 #define FE_C05R0601_ITEMGET_01             365 /* 0x016d ホドモエマーケット：アイテム入手フラグ */
 #define FE_C04R0502_ITEMGET_01             366 /* 0x016e ライモンシティビル：アイテム入手フラグ */
 #define FE_C04R0801_ITEMGET_01             367 /* 0x016f ライモン16番道路側ゲート：アイテム入手フラグ */
