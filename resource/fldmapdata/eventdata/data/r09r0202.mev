@@ -1,5 +1,5 @@
 #event data
-#save date:2010/06/09 17:54:22
+#save date:2010/06/23 17:11:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0202.wms
 #SECTION START:OBJ_EVENT
@@ -237,7 +237,7 @@ SCRID_ROTOM_CHANGE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 200
+-40 0 184
 #event number: 12
 #Bg Event Label
 BG_ROTOM_CHANGE_13
