@@ -163,7 +163,7 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
     return SEQ_FADEOUT;
   }
  
-  if( TOUCHBAR_GetTrg( wk->touchbar ) == TOUCHBAR_ICON_RETURN ){
+  if( icon == TOUCHBAR_ICON_RETURN ){
     wk->param->ret_mode = 0;  //1にするとCギアトップに直接戻れる
     return SEQ_FADEOUT;
   }

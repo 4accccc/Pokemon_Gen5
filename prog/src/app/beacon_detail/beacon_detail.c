@@ -389,6 +389,12 @@ static int seq_FadeOut( BEACON_DETAIL_WORK* wk )
 {
   switch( wk->seq ){
   case 0:
+    if( wk->param->ret_mode == 0 ){
+  	  _sub_TouchBarMain( wk->touchbar );
+      if( TOUCHBAR_GetTrg( wk->touchbar ) != TOUCHBAR_ICON_RETURN ){
+        break;
+      }
+    }
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
     wk->seq++;
     break;
