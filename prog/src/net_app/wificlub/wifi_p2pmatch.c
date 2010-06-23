@@ -3970,6 +3970,8 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
 static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
 {
   GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_VCTST, WB_NET_WIFICLUB);
+  //BTS6463
+  WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN);
   return seq;
 }
