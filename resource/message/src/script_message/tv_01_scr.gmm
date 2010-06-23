@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-22T22:22:58"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-23T11:56:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1491" top="71" right="2196" bottom="699" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -6559,7 +6559,7 @@ SEE YOU SOON！</language>
 せいかいは　LICKITUNG！
 リキタング！▼
 LICKが　なめる
-TOUNGEが　した　っていみなんですね！▼
+TONGUEが　した　っていみなんですね！▼
 とくちょうの　ながーーい　したを
 ぜんめんに　おしだした▽
 わかりやすい　なまえですね！▼
@@ -6582,7 +6582,7 @@ TOUNGEが　した　っていみなんですね！▼
 正解は　LICKITUNG！
 リキタング！▼
 LICKが　なめる
-TOUNGEが　舌って　意味なんですね！▼
+TONGUEが　舌って　意味なんですね！▼
 特徴の　ながーーい　舌を
 前面に　押し出した▽
 わかりやすい　名前ですね！▼
