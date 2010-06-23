@@ -1334,9 +1334,10 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
       SetupScaleChange( biw, FX32_ONE * 3, FX32_ONE * 3, 0, 128 + 24 );
-      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+      //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+      //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+      //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+      SetupSetScroll( biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_OFF, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
       PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     else
@@ -2801,7 +2802,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
-      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, ttw->scr_x, ttw->scr_y,
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME0_S, ttw->scr_x, ttw->scr_y,
                       BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
