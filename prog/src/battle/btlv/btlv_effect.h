@@ -290,6 +290,7 @@ extern  void              BTLV_EFFECT_CalcGaugeHP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeHPAtOnce( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp );
+extern  void              BTLV_EFFECT_SwitchGaugeMode( void );
 extern  void              BTLV_EFFECT_BallThrow( int position, u16 item_no, u8 yure_cnt, BOOL f_success, BOOL f_critical );
 extern  void              BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no );
 extern  void              BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos );

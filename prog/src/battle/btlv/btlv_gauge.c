@@ -264,7 +264,8 @@ struct _BTLV_GAUGE_WORK
   u32             gauge_num_mode          :1;     //3vs3orローテーション時にHPゲージを数字表示にするかフラグ
   u32             yure_angle              :16;
   u32             pinch_bgm_no_check      :1;
-  u32                                     :10;
+  u32             mode_switch_req         :1;
+  u32                                     :9;
 
   u32             now_bgm_no;
 
@@ -445,9 +446,10 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
   int i;
   int trg = GFL_UI_KEY_GetTrg();
 
-  if( trg & PAD_BUTTON_START )
+  if( bgw->mode_switch_req )
   { 
 		BtlRule	rule = BTLV_EFFECT_GetBtlRule();
+    bgw->mode_switch_req = 0;
 		if( rule != BTL_RULE_SINGLE && rule != BTL_RULE_DOUBLE )
 		{
 			BOOL	calc = FALSE;
@@ -2270,6 +2272,19 @@ BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* col
 
   return TRUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲージモードの切り替えリクエスト
+ *
+ *	@param	bgw   ワーク
+ */
+//-----------------------------------------------------------------------------
+void BTLV_GAUGE_SwitchGaugeMode( BTLV_GAUGE_WORK* bgw )
+{
+  bgw->mode_switch_req = 1;
+}
+
 
 //--------------------------------------------------------------
 /**

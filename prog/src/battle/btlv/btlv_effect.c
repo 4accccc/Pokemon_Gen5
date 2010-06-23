@@ -1082,6 +1082,16 @@ void BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp )
   BTLV_GAUGE_CalcEXPLevelUp( bew->bgw, bpp, position );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲージモードを切り替える
+ */
+//-----------------------------------------------------------------------------
+void BTLV_EFFECT_SwitchGaugeMode( void )
+{
+  BTLV_GAUGE_SwitchGaugeMode( bew->bgw );
+}
+
 //============================================================================================
 /**
  * @brief  ゲージが計算中かチェック

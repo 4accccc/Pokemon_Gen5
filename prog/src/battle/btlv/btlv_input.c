@@ -1722,6 +1722,18 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     return hit;
   }
 
+  //CHANGE00
+  // ゲージ見た目変更
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  {
+    // コマンド選択　技選択　ターゲット選択
+    if( (biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND) || 
+        (biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA) ||
+        (biw->scr_type == BTLV_INPUT_SCRTYPE_DIR) ){
+      BTLV_EFFECT_SwitchGaugeMode();
+    }
+  }
+
 #ifndef ROTATION_NEW_SYSTEM
   //ローテーション選択は、別判定をする
   if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
@@ -1941,6 +1953,13 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       ( biw->button_reaction ) )
   {
     return  FALSE;
+  }
+
+  //CHANGE01
+  // ゲージ見た目変更
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  {
+    BTLV_EFFECT_SwitchGaugeMode();
   }
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
