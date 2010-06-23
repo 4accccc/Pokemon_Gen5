@@ -107,12 +107,12 @@ const BOOL PROF_WORD_CheckProfanityWordCode( PROF_WORD_WORK *work , const STRCOD
       code[i] = code[i] - L'a' + L'A';
     }
     else
-    if( code[i] >= L'ÇÅ' && code[i] <= L'z' )
+    if( code[i] >= L'ÇÅ' && code[i] <= L'Çö' )
     {
       code[i] = code[i] - L'ÇÅ' + L'A';
     }
     else
-    if( code[i] >= L'Ç`' && code[i] <= L'z' )
+    if( code[i] >= L'Ç`' && code[i] <= L'Çy' )
     {
       code[i] = code[i] - L'Ç`' + L'A';
     }
