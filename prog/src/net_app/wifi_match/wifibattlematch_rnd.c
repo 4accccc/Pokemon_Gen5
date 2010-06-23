@@ -1420,6 +1420,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 #endif 
     WIFIBATTLEMATCH_NET_StartTiming( p_wk->p_net, WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_OK );
+    p_wk->match_timeout = 0;
     *p_seq  = SEQ_WAIT_OK_TIMING;
     break;
 
@@ -1428,6 +1429,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     {
       *p_seq  = SEQ_OK_MATCHING_MSG;
     }
+    is_timeout_enable = TRUE;
     break;
 
 
@@ -2583,10 +2585,13 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_START_OK_TIMING:
     WIFIBATTLEMATCH_NET_StartTiming( p_wk->p_net, WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_OK );
+    p_wk->match_timeout = 0;
     *p_seq  = SEQ_WAIT_OK_TIMING;
     break;
 
   case SEQ_WAIT_OK_TIMING:
+
+    is_timeout_enable = TRUE;
     if( WIFIBATTLEMATCH_NET_WaitTiming( p_wk->p_net ) )
     {
       *p_seq  = SEQ_OK_MATCHING_MSG;
