@@ -250,7 +250,7 @@ static void MUSICAL_VIEW_InitGraphic( MUS_VIEW_LOCAL_WORK *work )
     GFL_G3D_CAMERA_Switching( work->camera );
     //エッジマーキングカラーセット
     G3X_SetEdgeColorTable( &stage_edge_color_table[0] );
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
     G3X_AntiAlias( FALSE );
     G3X_AlphaBlend( TRUE );
     

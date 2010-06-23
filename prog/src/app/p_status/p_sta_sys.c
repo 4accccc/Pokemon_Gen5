@@ -614,7 +614,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     GFL_G3D_CAMERA_Switching( work->camera );
     //エッジマーキングカラーセット
     G3X_SetEdgeColorTable( edge_color_table );
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
     
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
     GFL_BG_SetBGControl3D( 0 );

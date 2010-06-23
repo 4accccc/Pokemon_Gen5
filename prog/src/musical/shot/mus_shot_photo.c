@@ -348,7 +348,7 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work )
     GFL_G3D_CAMERA_Switching( work->camera );
     //エッジマーキングカラーセット
     G3X_SetEdgeColorTable( &stage_edge_color_table[0] );
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
     G3X_AntiAlias( TRUE );
     G3X_AlphaBlend( TRUE );
     
