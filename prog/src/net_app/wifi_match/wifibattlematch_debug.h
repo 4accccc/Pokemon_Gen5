@@ -744,6 +744,27 @@ static inline void DebugWin_SakeRec_D_Result_BtlType( void* userWork , DEBUGWIN_
   DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
   DEBUGWIN_ITEM_SetNameV( item , "タイプ[%d]", p_wk->data.btl_type );  
 }
+static inline void DebugWin_SakeRec_U_Result_Shooter( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+
+  if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT|PAD_KEY_RIGHT) )
+  {
+    p_wk->data.shooter_flag  ^= 1;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_SakeRec_D_Result_Shooter( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "シューター[%s]", sc_tbl[ p_wk->data.shooter_flag ] );  
+}
 static inline void DebugWin_SakeRec_U_Result_RestMyPoke( void* userWork , DEBUGWIN_ITEM* item )
 { 
   DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
@@ -851,6 +872,9 @@ static inline void DEBUGWIN_SAKERECORD_Init( WIFIBATTLEMATCH_RECORD_DATA *p_reco
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_Result, DebugWin_SakeRec_D_Result_Result,
        &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_BtlType, DebugWin_SakeRec_D_Result_BtlType,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
+
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_Shooter, DebugWin_SakeRec_D_Result_Shooter,
        &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_RestMyPoke, DebugWin_SakeRec_D_Result_RestMyPoke,
        &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );

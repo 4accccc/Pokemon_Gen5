@@ -199,6 +199,7 @@ typedef enum {
   EDITBOX_ID_REC_YOU_PID,
   EDITBOX_ID_REC_CUPNO,
   EDITBOX_ID_REC_BTLTYPE,
+  EDITBOX_ID_REC_SHOOTER,
   EDITBOX_ID_REC_RESULT,
   EDITBOX_ID_REC_MY_RESTPOKE,
   EDITBOX_ID_REC_YOU_RESTPOKE,
@@ -772,6 +773,10 @@ static const STR_PARAM StrParamsRecord2[] = {
   {STR_TYPE_SWITCH, SAKE_DATA_41,  STR_POS_X, STR_LINE7_POS_Y,
     8*8,STR_LINE7_POS_Y,9*8,TOUCH_H,
     BTLTYPE_00,6,EDITBOX_ID_REC_BTLTYPE },
+  //シューター
+  {STR_TYPE_SWITCH, SAKE_DATA_56,  18*8, STR_LINE7_POS_Y,
+    (18+6)*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
+    SAKE_OFF,2,EDITBOX_ID_REC_SHOOTER },
   //けっか
   {STR_TYPE_SWITCH, SAKE_DATA_40,  STR_POS_X, STR_LINE8_POS_Y,
     8*8,STR_LINE8_POS_Y,9*8,TOUCH_H,
@@ -2458,6 +2463,7 @@ static void StoreRecodeData( MAKE_WORK *p_wk, const WIFIBATTLEMATCH_GDB_SAKE_ALL
   p_wk->BoxValue[EDITBOX_ID_REC_YOU_PID] = cp_record->your_profileID;
   p_wk->BoxValue[EDITBOX_ID_REC_CUPNO] = cp_record->cupNO;
   p_wk->BoxValue[EDITBOX_ID_REC_BTLTYPE] = cp_record->btl_type;
+  p_wk->BoxValue[EDITBOX_ID_REC_SHOOTER] = cp_record->shooter_flag;
   p_wk->BoxValue[EDITBOX_ID_REC_RESULT] = cp_record->result;
   p_wk->BoxValue[EDITBOX_ID_REC_MY_RESTPOKE] = cp_record->rest_my_poke;
   p_wk->BoxValue[EDITBOX_ID_REC_YOU_RESTPOKE] = cp_record->rest_you_poke;
@@ -2568,6 +2574,7 @@ static void ReStoreData( WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *p_data, const MAKE_W
   p_record->your_profileID = cp_wk->BoxValue[EDITBOX_ID_REC_YOU_PID];
   p_record->cupNO = cp_wk->BoxValue[EDITBOX_ID_REC_CUPNO];
   p_record->btl_type = cp_wk->BoxValue[EDITBOX_ID_REC_BTLTYPE];
+  p_record->shooter_flag  = cp_wk->BoxValue[EDITBOX_ID_REC_SHOOTER];
   p_record->result = cp_wk->BoxValue[EDITBOX_ID_REC_RESULT];
   p_record->rest_my_poke = cp_wk->BoxValue[EDITBOX_ID_REC_MY_RESTPOKE];
   p_record->rest_you_poke = cp_wk->BoxValue[EDITBOX_ID_REC_YOU_RESTPOKE];

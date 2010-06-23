@@ -1901,6 +1901,7 @@ static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEP
     p_data->rest_you_poke   = you_rest_poke;
   }
   p_data->btl_type= Regulation_GetParam( cp_reg, REGULATION_BATTLETYPE );
+  p_data->shooter_flag  = Regulation_GetParam( cp_reg, REGULATION_SHOOTER ) ;
 }
 
 

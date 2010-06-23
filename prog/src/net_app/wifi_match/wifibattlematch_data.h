@@ -94,7 +94,8 @@ typedef struct
   u32 day   :5;//日5bit  31
   u32 hour  :5;//時5bit  24
   u32 minute:6;//分6bit  60
-  u32 dummy :5;//余り5bi
+  u32 dummy :4;//余り5bi
+  u32 shooter_flag:1; //シューターかどうか
   u32 cupNO;    //大会No.
   u8  result;   //対戦結果
   u8  btl_type; //対戦タイプ
