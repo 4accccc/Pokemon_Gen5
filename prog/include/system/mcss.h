@@ -43,7 +43,7 @@
 #define	MCSS_DEFAULT_Z_ORTHO_512	( 1 << 8 )
 
 #define MCSS_VCOUNT_BORDER_LOW          ( 192 )   //テクスチャ転送するときのVCOUNTの境界
-#define MCSS_VCOUNT_BORDER_HIGH         ( 208 )//( 213 )   //テクスチャ転送するときのVCOUNTの境界
+#define MCSS_VCOUNT_BORDER_HIGH         ( 200 )//( 213 )   //テクスチャ転送するときのVCOUNTの境界
                                                   //(192~213がレンダリングエンジンのブランク期間）
                                                   //
 #ifndef __ASM_NO_DEF_
