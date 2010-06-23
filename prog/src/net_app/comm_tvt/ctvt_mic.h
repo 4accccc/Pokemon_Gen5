@@ -24,7 +24,8 @@
 #define CTVT_SEND_WAVE_SIZE_ONE  (0x800)
 #define CTVT_SEND_WAVE_SIZE_ONE_REAL  (CTVT_SEND_WAVE_SIZE_ONE/4)
 
-
+//余りにも小さいサイズは再生しない
+#define CTVT_MIC_PLAY_LIMIT (32)
 //======================================================================
 //	enum
 //======================================================================

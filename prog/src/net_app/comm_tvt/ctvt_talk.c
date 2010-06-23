@@ -130,6 +130,7 @@ struct _CTVT_TALK_WORK
   CTVT_TALK_STATE state;
   CTVT_TALK_SUB_STATE subState;
   BOOL reqStopCamera;
+  u8   sendCancelTalkCnt;
   
   //スライダー系
   u8          sliderPos;
@@ -356,6 +357,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   talkWork->blinkButtonReq = FALSE;
   talkWork->blinkButtonCnt = 0;
   talkWork->isDrawPlayWave = FALSE;
+  talkWork->sendCancelTalkCnt = 0;
 
   //入ったとき・戻った時に会話中だった場合、会話アイコンを出す
   {
@@ -840,7 +842,19 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     {
       if( talkMember == selfNexId )
       {
-        CTVT_COMM_SendFlg( work , commWork , CCFT_CANCEL_TALK , 0 );
+        //あまりにも連続で送りすぎてWifiで落ちたのでカウンタ制御
+        if( talkWork->sendCancelTalkCnt > 0 )
+        {
+          talkWork->sendCancelTalkCnt--;
+        }
+        else
+        {
+          const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_CANCEL_TALK , 0 );
+          if( ret == TRUE )
+          {
+            talkWork->sendCancelTalkCnt = 8;
+          }
+        }
       }
       talkWork->recButtonState = CRBT_DISALE;
     }
@@ -1058,7 +1072,8 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
     break;
   case CTSS_WAIT_PLAY:
-    if( talkWork->sendWaveData->recSize > 0 )
+    //余りにも小さいサイズは再生しない
+    if( talkWork->sendWaveData->recSize > CTVT_MIC_PLAY_LIMIT )
     {
       CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(work);
       if( CTVT_MIC_IsPlayWave( micWork ) == TRUE )
