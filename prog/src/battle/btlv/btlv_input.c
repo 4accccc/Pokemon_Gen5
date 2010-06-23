@@ -109,6 +109,8 @@ extern  const u8 PokeSeleMenuKey6DataCount[ 3 ][ WAZA_TARGET_MAX + 1 ];
 #define STANBY_POS_Y  ( 128 + 24 )
 #define COMMAND_POS_Y  ( 128 + 40 )
 
+#define BG_NO_FRAME ( -1 )
+
 //TCB_SCREEN_ANIME用のスクロール値
 enum{
   TSA_SCROLL_X = 0,
@@ -191,6 +193,13 @@ typedef enum
   BUTTON_ANIME_TYPE_VANISH,
   BUTTON_ANIME_TYPE_MAX,
 }BUTTON_ANIME_TYPE;
+
+typedef enum
+{ 
+  BG_VISIBLE_OFF = 0,
+  BG_VISIBLE_ON,
+  BG_VISIBLE_NO_SET,
+}BG_VISIBLE;
 
 //技選択ボタン表示位置定義
 enum
@@ -645,6 +654,8 @@ typedef struct
 typedef struct
 {
   BTLV_INPUT_WORK*  biw;
+  int               seq_no;
+  int               scroll_x;
   int               scroll_y;
   int               scroll_speed;
   int               scroll_count;
@@ -657,6 +668,18 @@ typedef struct
   SCREEN_ANIME_DIR  dir;
   int               wait;
 }TCB_SCREEN_ANIME;
+
+typedef struct
+{
+  BTLV_INPUT_WORK*  biw;
+  int               frame;
+  int               scr_x;
+  int               scr_y;
+  BG_VISIBLE        frame0;
+  BG_VISIBLE        frame1;
+  BG_VISIBLE        frame2;
+  BG_VISIBLE        frame3;
+}TCB_SET_SCROLL;
 
 typedef struct
 {
@@ -759,6 +782,9 @@ static  void  TCB_ButtonAnime_CB( GFL_TCB* tcb );
 static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir );
 static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work );
 static  void  TCB_BallGaugeMove_CB( GFL_TCB* tcb );
+static  void  SetupSetScroll( BTLV_INPUT_WORK* biw, int frame, int scr_x, int scr_y,
+                              BG_VISIBLE frame0, BG_VISIBLE frame1, BG_VISIBLE frame2, BG_VISIBLE frame3 );
+static  void  TCB_SetScroll( GFL_TCB* tcb, void* work );
 static  void  TCB_Fade( GFL_TCB* tcb, void* work );
 static  void  TCB_Fade_CB( GFL_TCB* tcb );
 static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work );
@@ -1021,7 +1047,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   biw->weather_clunit   = GFL_CLACT_UNIT_Create( BTLV_INPUT_WEATHER_ICON_MAX, 2, biw->heapID );
   biw->waruagaki_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_WARUAGAKI_MAX, 1, biw->heapID );
 
-  BTLV_INPUT_SetFrame();
+  BTLV_INPUT_SetFrame( biw );
   BTLV_INPUT_LoadResource( biw );
 
   BTLV_INPUT_CreateCursorOBJ( biw );
@@ -1193,7 +1219,7 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
  *  @brief  下画面BGフレーム設定
  */
 //============================================================================================
-void BTLV_INPUT_SetFrame( void )
+void BTLV_INPUT_SetFrame( BTLV_INPUT_WORK* biw )
 {
   int i;
 
@@ -1201,8 +1227,9 @@ void BTLV_INPUT_SetFrame( void )
   {
     GFL_BG_SetBGControl( GFL_BG_FRAME0_S + i, &bibf[ i ].bgcnt_table, bibf[ i ].bgcnt_mode );
     GFL_BG_ClearScreenCode( GFL_BG_FRAME0_S + i, BG_CLEAR_CODE );
-    GFL_BG_SetScroll( GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_X_SET, 0 );
-    GFL_BG_SetScroll( GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_Y_SET, 0 );
+    //GFL_BG_SetScroll( GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_X_SET, 0 );
+    //GFL_BG_SetScroll( GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_Y_SET, 0 );
+    SetupSetScroll( biw, GFL_BG_FRAME0_S + i, 0, 0, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
   }
 }
 
@@ -1306,12 +1333,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
-      MtxFx22 mtx;
-
-      MTX_Scale22( &mtx, FX32_ONE * 3, FX32_ONE * 3 );
-      GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_SET, 128, &mtx, 256, 256 );
-      GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, 128 + 24, &mtx, 256, 256 );
-
+      SetupScaleChange( biw, FX32_ONE * 3, FX32_ONE * 3, 0, 128 + 24 );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
@@ -1649,13 +1671,17 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         if( bibrp->stop_flag == BTLV_INPUT_BR_STOP_NONE )
         { 
-          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
-          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TTS2BR_FRAME0_SCROLL_Y );
+          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
+          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TTS2BR_FRAME0_SCROLL_Y );
+          SetupSetScroll( biw, GFL_BG_FRAME0_S, 0, TTS2BR_FRAME0_SCROLL_Y,
+                          BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
         }
         else
         { 
-          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TTS2BR_FRAME0_SCROLL_X );
-          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0 );
+          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TTS2BR_FRAME0_SCROLL_X );
+          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0 );
+          SetupSetScroll( biw, GFL_BG_FRAME0_S, TTS2BR_FRAME0_SCROLL_X, 0,
+                          BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
         }
         if( msg_src )
         { 
@@ -2169,16 +2195,18 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+                    BG_VISIBLE_ON, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     change_bag_button_pal( ttw->biw );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
@@ -2212,14 +2240,16 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+                    BG_VISIBLE_OFF, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
@@ -2254,8 +2284,10 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
     {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2308,8 +2340,10 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
     {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2333,11 +2367,13 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
     change_bag_button_pal( ttw->biw );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X2, TSA_SCROLL_Y2,
+                      BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
     ttw->seq_no++;
     break;
   case 1:
@@ -2503,11 +2539,13 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR, 
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X2, TSA_SCROLL_Y2,
+                      BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
     ttw->seq_no++;
     break;
   case 1:
@@ -2560,13 +2598,15 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     SePlayOpen( ttw->biw );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+                    BG_VISIBLE_OFF, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     pop_bag_button_pal( ttw->biw );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
@@ -2586,8 +2626,10 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2611,14 +2653,16 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+                    BG_VISIBLE_OFF, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
@@ -2646,8 +2690,10 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2658,11 +2704,13 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     SePlayOpen( ttw->biw );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+                    BG_VISIBLE_NO_SET, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
@@ -2695,8 +2743,10 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2720,14 +2770,16 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1f_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+                    BG_VISIBLE_ON, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     ttw->seq_no++;
     break;
   case 1:
@@ -2742,11 +2794,13 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
-      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, ttw->scr_x );
-      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, ttw->scr_y );
-      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, ttw->scr_x );
+      //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, ttw->scr_y );
+      //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+      //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+      //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, ttw->scr_x, ttw->scr_y,
+                      BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2769,13 +2823,15 @@ static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1d_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+                    BG_VISIBLE_ON, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
@@ -2813,9 +2869,10 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
     SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    SetupSetScroll( ttw->biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
     ttw->seq_no++;
     break;
   case 1:
@@ -2824,8 +2881,10 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
     {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2847,9 +2906,10 @@ static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
                    rotate_scroll_table[ ttw->biw->rotate_scr ][ 1 ], TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    SetupSetScroll( ttw->biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
     ttw->seq_no++;
     break;
   case 1:
@@ -2858,8 +2918,10 @@ static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
     {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
-      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
     break;
@@ -2950,10 +3012,9 @@ static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, i
 {
   TCB_SCROLL_UP* tsu = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_SCROLL_UP ) );
 
-  GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, scroll_x );
-  GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, scroll_y );
-
   tsu->biw          = biw;
+  tsu->seq_no       = 0;
+  tsu->scroll_x     = scroll_x;
   tsu->scroll_y     = scroll_y;
   tsu->scroll_speed = scroll_speed;
   tsu->scroll_count = scroll_count;
@@ -2971,6 +3032,14 @@ static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, i
 static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work )
 {
   TCB_SCROLL_UP* tsu = ( TCB_SCROLL_UP * )work;
+
+  if( tsu->seq_no == 0 )
+  { 
+    GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, tsu->scroll_x );
+    GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, tsu->scroll_y );
+    tsu->seq_no++;
+    return;
+  }
 
   tsu->scroll_y += tsu->scroll_speed;
 
@@ -3259,6 +3328,58 @@ static  void  TCB_BallGaugeMove_CB( GFL_TCB* tcb )
   TCB_BALL_GAUGE_MOVE*  tbgm = ( TCB_BALL_GAUGE_MOVE * )GFL_TCB_GetWork( tcb );
 
   tbgm->biw->tcb_execute_count--;
+}
+
+//============================================================================================
+/**
+ *  @brief  画面スクロール値セット
+ */
+//============================================================================================
+static  void  SetupSetScroll( BTLV_INPUT_WORK* biw, int frame, int scr_x, int scr_y,
+                              BG_VISIBLE frame0, BG_VISIBLE frame1, BG_VISIBLE frame2, BG_VISIBLE frame3 )
+{ 
+  TCB_SET_SCROLL* tss = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_SET_SCROLL ) );
+
+  tss->biw    = biw;
+  tss->frame  = frame;
+  tss->scr_x  = scr_x;
+  tss->scr_y  = scr_y;
+  tss->frame0 = frame0;
+  tss->frame1 = frame1;
+  tss->frame2 = frame2;
+  tss->frame3 = frame3;
+
+  BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_SetScroll, tss, 0 ), NULL );
+}
+
+static  void  TCB_SetScroll( GFL_TCB* tcb, void* work )
+{ 
+  TCB_SET_SCROLL* tss = ( TCB_SET_SCROLL* )work;
+
+  if( tss->frame != BG_NO_FRAME )
+  { 
+    GFL_BG_SetScroll( tss->frame, GFL_BG_SCROLL_X_SET, tss->scr_x );
+    GFL_BG_SetScroll( tss->frame, GFL_BG_SCROLL_Y_SET, tss->scr_y );
+  }
+
+  if( tss->frame0 != BG_VISIBLE_NO_SET )
+  { 
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, tss->frame0 );
+  }
+  if( tss->frame1 != BG_VISIBLE_NO_SET )
+  { 
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, tss->frame1 );
+  }
+  if( tss->frame2 != BG_VISIBLE_NO_SET )
+  { 
+    GFL_BG_SetVisible( GFL_BG_FRAME2_S, tss->frame2 );
+  }
+  if( tss->frame3 != BG_VISIBLE_NO_SET )
+  { 
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, tss->frame3 );
+  }
+
+  BTLV_INPUT_FreeTCB( tss->biw, tcb );
 }
 
 //============================================================================================

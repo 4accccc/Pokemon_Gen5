@@ -227,7 +227,7 @@ extern  void              BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_InitBG( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_ExitBG( BTLV_INPUT_WORK* biw );
-extern  void              BTLV_INPUT_SetFrame( void );
+extern  void              BTLV_INPUT_SetFrame( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_FreeFrame( void );
 extern  void              BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw, BOOL start );
 extern  void              BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw );
