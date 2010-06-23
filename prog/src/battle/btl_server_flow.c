@@ -15062,11 +15062,17 @@ static u8 scproc_HandEx_ItemSP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
     if( factor )
     {
       u32 hem_state;
+      u16 que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_KINOMI );
 
-      scPut_UseItemAct( wk, bpp );
+//      scPut_UseItemAct( wk, bpp );
 
       hem_state = BTL_Hem_PushState( &wk->HEManager );
-      scEvent_ItemEquipTmp( wk, bpp, param_header->userPokeID );
+        scEvent_ItemEquipTmp( wk, bpp, param_header->userPokeID );
+        if( scproc_HandEx_Result(wk) == HandExResult_Enable )
+        {
+          SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_KINOMI, param->pokeID );
+        }
+
       BTL_Hem_PopState( &wk->HEManager, hem_state );
       BTL_HANDLER_ITEM_TMP_Remove( factor );
       return 1;

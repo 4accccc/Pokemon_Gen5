@@ -1281,7 +1281,7 @@ static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     if( fUseTmp )
     {
       // 一時利用の場合はココでエフェクト出さないといけない…
-      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM_EFFECT, pokeID );
+//      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM_EFFECT, pokeID );
     }
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );

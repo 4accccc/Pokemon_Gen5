@@ -9356,7 +9356,7 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
         if( !BTL_SVFTOOL_IsExistPokemon(flowWk, targetPokeID) ){ break; }
 
         // フリーフォールしてる側・されてる側に失敗
-        if( !BTL_SVFTOOL_IsFreeFallPoke(flowWk, targetPokeID) ){ break; }
+        if( BTL_SVFTOOL_IsFreeFallPoke(flowWk, targetPokeID) ){ break; }
 
         // 相手がダメージワザを選択していない場合も失敗
         waza = BTL_ACTION_GetWazaID( &action );
@@ -10576,10 +10576,10 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_FastGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASEQ_START,           handler_Mamoru_StartSeq }, // ワザ処理開始
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Mamoru_ExeCheck }, // ワザ出し成否チェックハンドラ
-    { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Mamoru_ExeFail  }, // ワザだし失敗確定
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_FastGuard   },  // 未分類ワザ
+    { BTL_EVENT_WAZASEQ_START,           handler_Mamoru_StartSeq },  // ワザ処理開始
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Mamoru_ExeCheck },  // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Mamoru_ExeFail  },  // ワザだし失敗確定
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_FastGuard  },  // 未分類ワザ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
