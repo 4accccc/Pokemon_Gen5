@@ -2651,10 +2651,10 @@
 	<row id="WAZAINFO_251">
 		<language name="JPN" width="216">みかた　ぜんいんで　こうげきする。
 なかまの　ポケモンが　おおいほど
-わざの　こうげきかいすうが　あがる。</language>
+わざの　こうげきかいすうが　ふえる。</language>
 		<language name="JPN_KANJI" width="216">味方　全員で　攻撃する。
 仲間の　ポケモンが　多いほど
-技の　攻撃回数が　あがる。</language>
+技の　攻撃回数が　増える。</language>
 	</row>
 
 	<row id="WAZAINFO_252">
