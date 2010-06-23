@@ -99,7 +99,10 @@ static void _selectSixButtonResetCheck(POKEMON_TRADE_WORK* pWork)
 {
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
     POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
-    pWork->pokemonselectno = -1;
+//    pWork->pokemonselectno = -1;
+  }
+  else if(pWork->pokemonselectno != -1){
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, pWork->pokemonselectno);
   }
 }
 
@@ -642,6 +645,7 @@ static void _menuFriendPokemon(POKEMON_TRADE_WORK* pWork)
     case 1:  //‚à‚Ç‚é
       POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
       _select6PokeSubMask(pWork);
+      _selectSixButtonResetCheck(pWork);
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
       break;
     }
@@ -1283,7 +1287,7 @@ static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
       
       if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
         pWork->pokemonselectno = trgno;
-        OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
+//        OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
         if(trgno/GTS_NEGO_POKESLT_MAX){  //‚±‚¿‚ç‘¤‚ÍŽ©•ª‚Ìƒ|ƒPƒ‚ƒ“‚ª“ü‚Á‚Ä‚¢‚é Ž©•ª‚Ì‚Í‚Ý‚é‚¾‚¯
@@ -1436,6 +1440,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
+    _selectSixButtonResetCheck(pWork);
     _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
     return;
   }
@@ -1455,7 +1460,6 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   }
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
     if(GFL_UI_KEY_GetTrgAndSet()){
-      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       pWork->pokemonselectno = pWork->pokemonselectno % 6;
       if(pWork->pokemonselectno<0){
         pWork->pokemonselectno=0;

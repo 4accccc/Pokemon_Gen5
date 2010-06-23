@@ -1945,7 +1945,9 @@ static void _dispSubStateWait2(POKEMON_TRADE_WORK* pWork)
 #endif
   POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork,FALSE);
   POKETRADE_MESSAGE_ChangePokemonMyStDisp(pWork, pWork->pokemonselectno ,  pp);
-  _PokemonIconRenew(pWork);
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    _PokemonIconRenew(pWork);
+  }
   GFL_HEAP_FreeMemory(pp);
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
@@ -2019,8 +2021,6 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
 
   if(GFL_UI_TP_GetTrgAndSet()){
     _CatchPokemonPositionRewind(pWork);
-    //    pWork->underSelectBoxno = -1;
-    //    pWork->underSelectIndex = -1;
   }
 
 

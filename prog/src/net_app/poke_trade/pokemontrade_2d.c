@@ -1249,7 +1249,7 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
       apos.y = y;
       poke_icon_mark_pos = apos;        //20100614 add Saito
 
-      if(POKETRADE_NEGO_IsStatusLookAt(pWork,line,i) &&  (GFL_UI_CheckTouchOrKey()==GFL_APP_END_KEY)){
+      if(POKETRADE_NEGO_IsStatusLookAt(pWork,line,i) &&  (GFL_UI_CheckTouchOrKey()==GFL_APP_END_TOUCH)){
         apos.y -= 8;
         GFL_CLACT_WK_SetSoftPri(pWork->pokeIcon[no][i],_CLACT_SOFTPRI_POKESEL);
       }
