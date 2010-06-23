@@ -598,6 +598,18 @@ void GFL_NET_IRC_FirstConnect(void)
 
 //--------------------------------------------------------------
 /**
+ * 再接続時に最初の認証すら済んでいなかった場合のワーク初期化処理
+ */
+//--------------------------------------------------------------
+static void _FirstConnectRetry(void)
+{
+  IRC_PRINT("再接続による認証リセット\n");
+  NetIrcSys.isSender = IRC_IsSender();
+  NetIrcSys.target_unit_number = IRC_GetUnitNumber();
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   最初に接続要求した端末か調べる
  *
  * @retval  TRUE:最初に接続要求した端末である
@@ -668,6 +680,9 @@ void GFL_NET_IRC_Move(void)
       //再接続中
       if(IRC_IsConnect() == TRUE){
         //再接続した
+        if(NetIrcSys.friendunique == 0){
+          _FirstConnectRetry();
+        }
         nis->retry_time = 0;
         IRC_PRINT("赤外線：再接続OK!\n");
         if(IRC_IsSender() == TRUE){
