@@ -52,8 +52,8 @@
 
 #pragma mark[>define Font
 //文字列共通オフセット
-#define PSTATUS_STR_OFS_X (2)
-#define PSTATUS_STR_OFS_Y (2)
+#define PSTATUS_STR_OFS_X (1)
+#define PSTATUS_STR_OFS_Y (1)
 
 //フォントカラー
 #define PSTATUS_STR_COL_WHITE (PRINTSYS_LSB_Make(0xf,2,0))

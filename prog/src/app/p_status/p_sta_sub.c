@@ -55,8 +55,8 @@
 #define PSTATUS_SUB_DOWNWIN_HEIGHT ( 4)
 
 //文字列共通オフセット
-#define PSTATUS_STR_OFS_X (2)
-#define PSTATUS_STR_OFS_Y (2)
+#define PSTATUS_STR_OFS_X (1)
+#define PSTATUS_STR_OFS_Y (1)
 
 //上Win用文字座標
 #define PSTATUS_SUB_STR_NAME_X (24 + PSTATUS_STR_OFS_X)
