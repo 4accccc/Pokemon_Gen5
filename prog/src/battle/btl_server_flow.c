@@ -4529,21 +4529,29 @@ static BOOL scEvent_SkipAvoidCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
  * @param   wk
  * @param   attacker    攻撃するポケ
  * @param   target      攻撃されるポケ
- * @param   waza        ワザID
+ * @param   waza        ワザID（遠隔ヒットフラグチェック用／WAZANO_NULLならチェックしない）
  *
  * @retval  BOOL        トリプルで当たらない位置ならTRUE／それ以外FALSE
  */
 //----------------------------------------------------------------------------------
 static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza )
 {
-  if( (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE)
-  &&  (WAZADATA_GetFlag(waza, WAZAFLAG_TripleFar) == FALSE)
-  ){
-    BtlPokePos  atkPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
-    BtlPokePos  tgtPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(target) );
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE )
+  {
+    if( waza != WAZANO_NULL )
+    {
+      if( WAZADATA_GetFlag(waza, WAZAFLAG_TripleFar) ){
+        return FALSE;
+      }
+    }
 
-    if( !BTL_MAINUTIL_CheckTripleHitArea(atkPos, tgtPos) ){
-      return TRUE;
+    {
+      BtlPokePos  atkPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+      BtlPokePos  tgtPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(target) );
+
+      if( !BTL_MAINUTIL_CheckTripleHitArea(atkPos, tgtPos) ){
+        return TRUE;
+      }
     }
   }
   return FALSE;
@@ -15142,13 +15150,10 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
 
   SVFL_WAZAPARAM   wazaParam;
   WAZAEFF_CTRL  ctrlBackup;
-  u16  que_reserve_pos;
   u8 result;
 
   scEvent_GetWazaParam( wk, param->wazaID, attacker, &wazaParam );
 
-  // ワザメッセージ，エフェクト，ワザ出し確定
-  que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
 
   // ワザ対象をワークに取得
   BTL_POKESET_Clear( wk->psetDamaged );
@@ -15182,8 +15187,8 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
   scproc_Fight_Damage_Root( wk, &wazaParam, attacker, wk->psetTmp, &wk->dmgAffRec, TRUE );
 
   // ワザ効果あり確定→演出表示コマンド生成などへ
-  #if 0
   result = wazaEffCtrl_IsEnable( wk->wazaEffCtrl );
+  #if 0
   if( result ){
     wazaEffCtrl_SetEffectIndex( wk->wazaEffCtrl, BTLV_WAZAEFF_DELAY_ATTACK );
     scPut_WazaEffect( wk, wazaParam.wazaID, wk->wazaEffCtrl, que_reserve_pos );

@@ -3289,7 +3289,7 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     {
       BtlPokePos  targetPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
       BtlPokePos  myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-      if( BTL_MAINUTIL_CheckTripleHitArea(myPos, targetPos) )
+      if( !BTL_SVFTOOL_CheckFarPoke(flowWk, pokeID, targetPokeID, WAZANO_NULL) )
       {
         BTL_SVFTOOL_AddMemberOutIntr( flowWk, pokeID );
       }
