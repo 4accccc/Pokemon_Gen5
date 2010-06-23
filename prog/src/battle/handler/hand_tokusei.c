@@ -1146,8 +1146,18 @@ static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   {
     if( work[0] ) // work[0] : スロースタート効果中フラグ
     {
-      if( work[1] < BTL_CALC_TOK_SLOWSTART_ENABLE_TURN ){
+      if( work[1] < BTL_CALC_TOK_SLOWSTART_ENABLE_TURN )
+      {
+        BTL_ACTION_PARAM  action;
+
+        // 現ターンのアクションが取得できなかったらインクリメントしない
+        if( !BTL_SVFTOOL_GetThisTurnAction(flowWk, pokeID, &action) ){ return; }
+
+        // 現ターンに入れ替えで入場したばかりならインクリメントしない
+        if( action.gen.cmd == BTL_ACTION_CHANGE ){ return; }
+
         ++(work[1]);
+        TAYA_Printf("スロスタカウント=%d\n", work[1]);
       }
       if( work[1] >= BTL_CALC_TOK_SLOWSTART_ENABLE_TURN )
       {
