@@ -34,6 +34,7 @@ _EVENT_DATA_END
 /*		C03R1101	プラズマ団POSイベント					  */
 /**************************************************************/
 EVENT_START		ev_c03r1101_monsterball_01
+	_TALK_START_SE_PLAY()
 	
 	//けむりだま入手
 	_OBJ_DEL(C03R1101_MONSTERBALL_01)

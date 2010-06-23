@@ -444,6 +444,7 @@ EVENT_END
 
 //モンスターボール（手紙自身）
 EVENT_START   ev_r13_monsterball_01
+	_TALK_START_SE_PLAY()
 
 	//アイテム入手処理
 	_OBJ_DEL(R13_MONSTERBALL_01)
