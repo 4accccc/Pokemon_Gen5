@@ -21,6 +21,7 @@
 #include "item\itemuse_def.h"
 #include "poke_tool\shinka_check.h"
 #include "gamesystem\g_power.h"
+#include "system/rtc_tool.h"
 
 #include "btl_event.h"
 #include "btl_server_cmd.h"
@@ -1434,11 +1435,13 @@ static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPo
   case ITEM_DAAKUBOORU:  // ダークボール
     {
       const BTL_FIELD_SITUATION* fldSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
+      u8  timezone = PM_RTC_ConvertHourToTimeZone( fldSit->season, fldSit->hour );
+
       if( (fldSit->bgType == BATTLE_BG_TYPE_CAVE) || (fldSit->bgType == BATTLE_BG_TYPE_CAVE_DARK) ){
         return FX32_CONST(3.5);
       }
       if( (BTL_TABLES_IsOutdoorBGType(fldSit->bgType))
-      &&  ((fldSit->hour >= 21) || (fldSit->hour < 5))
+      &&  ((timezone == TIMEZONE_NIGHT) || (timezone == TIMEZONE_MIDNIGHT))
       ){
         return FX32_CONST(3.5);
       }
