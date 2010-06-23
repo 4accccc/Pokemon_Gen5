@@ -3057,6 +3057,11 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
   MAPATTR nattr,fattr;
   MAPATTR_VALUE fattr_val;
 
+  if ( GAMEDATA_GetIntrudeReverseArea( req->gamedata ) == TRUE )
+  { //パレスでは一切のアトリビュート話しかけを行わない
+    return EVENTDATA_ID_NONE;
+  }
+
   nattr = FIELD_PLAYER_GetMapAttr( req->field_player );
   fattr = FIELD_PLAYER_GetDirMapAttr( req->field_player, req->player_dir );
   fattr_val = MAPATTR_GetAttrValue( fattr );
