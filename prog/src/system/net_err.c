@@ -1008,10 +1008,10 @@ dwc_error_0015,
 #endif //MULTI_BOOT_MAKE  //通常時処理
 
 
-static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr)
+static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr, int default_msg)
 {
 #ifndef MULTI_BOOT_MAKE  //通常時処理
-  u32 msgno;
+  u32 msgno = default_msg;
   switch(pErr->errorUser){
   case ERRORCODE_HEAP:
     return dwc_error_0014;
@@ -1121,7 +1121,7 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
       }
       else
       {
-        msgno = _wifierrMessage(&nes->wifi_error);      //WIFIで表示するメッセージを取得
+        msgno = _wifierrMessage(&nes->wifi_error, nes->wifi_msg) ;      //WIFIで表示するメッセージを取得
         OS_TPrintf("エラーメッセージ %d \n",msgno);
       }
 
