@@ -3086,9 +3086,6 @@ static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
       p_wk->p_net = NULL;
     }
-
-    NetErr_ExitNetSystem();
-
     WBM_SEQ_End( p_seqwk );
     break;
   }
