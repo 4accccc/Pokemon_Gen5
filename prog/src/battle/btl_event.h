@@ -113,6 +113,7 @@ typedef enum {
   BTL_EVENT_MEMBER_IN,              ///< 個別ポケ入場直後
   BTL_EVENT_MEMBER_IN_PREV,         ///< 全ポケ入場イベント直前
   BTL_EVENT_MEMBER_IN_COMP,         ///< 全ポケ入場イベント処理後
+  BTL_EVENT_ROTATION_IN,            ///< ローテーション両陣営終了後
   BTL_EVENT_GET_RANKEFF_VALUE,      ///< ワザによる能力ランク増減値チェック
   BTL_EVENT_RANKVALUE_CHANGE,       ///< ランク増減値の最終チェック
   BTL_EVENT_RANKEFF_LAST_CHECK,     ///< ランク増減成否チェック
@@ -509,5 +510,9 @@ extern void BTL_EVENT_RemoveIsolateFactors( void );
 
 extern void BTL_EVENT_SleepFactorMagicMirrorUser( u16 pokeID );
 extern void BTL_EVENT_WakeFactorMagicMirrorUser( u16 pokeID );
+
+extern void BTL_EVENT_SleepFactorRotation( u16 pokeID, BtlEventFactorType factorType );
+extern BOOL BTL_EVENT_WakeFactorRotation( u16 pokeID, BtlEventFactorType factorType );
+
 
 #endif

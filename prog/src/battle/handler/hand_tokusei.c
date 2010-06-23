@@ -57,7 +57,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Atodasi( u32* numElems );
 static void handler_SlowStart_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SlowStart_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SlowStart_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_SlowStart_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SlowStart_RotationIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_SlowStart_Declare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SlowStart( u32* numElems );
 static void handler_Fukugan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -94,8 +95,9 @@ static void handler_PlusMinus( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Plus( u32* numElems );
 static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeTokusei tokuseiID );
 static BOOL checkFlowerGiftEnablePokemon( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
-static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 nextForm, u8 fTokWin );
+static void handler_FlowerGift_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 nextForm, u8 fTokWin );
 static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_AirLock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -151,6 +153,7 @@ static void handler_MizuNoBale_Wake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static void handler_MizuNoBale_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MizuNoBale( u32* numElems );
 static void handler_MyPace_PokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MyPace_AddSickFailed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MyPace_Wake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MyPace_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MyPace( u32* numElems );
@@ -188,6 +191,7 @@ static void handler_Rinpun_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static void handler_Rinpun_Rank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Rinpun_Shrink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Rinpun_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Rinpun_GuardHitEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Rinpun( u32* numElems );
 static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_TennoMegumi( u32* numElems );
@@ -282,6 +286,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_FusiginaMamori( u32* numElems 
 static void handler_Namake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Namake_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nameke_Failed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Nameke_EndAct( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Namake( u32* numElems );
 static void handler_Simerike( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Simerike_Effective( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -307,6 +312,7 @@ static void handler_Katayaburi_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_Katayaburi_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Katayaburi_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Katayaburi( u32* numElems );
+static void handler_Tenkiya_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_AirLock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -329,7 +335,8 @@ static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static void handler_HedoroEki_Dead( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_HedoroEki( u32* numElems );
 static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
-static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Bukiyou_MemberInPrev( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Bukiyou_GetTokusei( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Bukiyou_PreChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Bukiyou_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Bukiyou_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -337,6 +344,7 @@ static void handler_Bukiyou_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bukiyou( u32* numElems );
 static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nenchaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Nenchaku_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nenchaku( u32* numElems );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Pressure( u32* numElems );
 static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -365,6 +373,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_KudakeruYoroi( u32* numElems )
 static void handler_Tikarazuku_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tikarazuku_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tikarazuku_ShrinkCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tikarazuku_HitChk( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikarazuku( u32* numElems );
 static BOOL IsTikarazukuEffecive( WazaID waza );
 static void handler_Makenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -403,6 +412,7 @@ static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunanoTikara( u32* numElems );
 static void handler_SunanoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_DarumaMode( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DarumaMode_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_DarumaMode( u32* numElems );
 static BOOL handler_Surinuke_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void handler_Surinuke_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -435,6 +445,7 @@ static void handler_LightMetal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Amanojaku( u32* numElems );
 static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kinchoukan_RotationIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BOOL handler_Kinchoukan_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void handler_Kinchoukan_CheckItemEquip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -689,29 +700,52 @@ static u16 devideNumHandersAndPri( u32* numHandlers )
 
 //=============================================================================================
 /**
- * ポケモンの「とくせい」ハンドラをシステムから削除
+ * 指定ポケモンの「とくせい」ハンドラをシステムから削除
  *
- * @param   pp
+ * @param   bpp
  *
  */
 //=============================================================================================
-void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp )
+void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* bpp )
 {
   BTL_EVENT_FACTOR* factor;
-  u8 pokeID = BPP_GetID( pp );
+  u8 pokeID = BPP_GetID( bpp );
 
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_TOKUSEI, pokeID)) != NULL )
   {
-    u16 tokuseiID = BTL_EVENT_FACTOR_GetSubID( factor );
     BTL_EVENT_FACTOR_Remove( factor );
   }
 }
 
-
-void BTL_HANDLER_TOKUSEI_Pause( const BTL_POKEPARAM* pp )
+//=============================================================================================
+/**
+ * 指定ポケモンの「とくせい」ハンドラを一時的に休止（ローテーション用）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BTL_HANDLER_TOKUSEI_RotationSleep( const BTL_POKEPARAM* bpp )
 {
-
+  u8 pokeID = BPP_GetID( bpp );
+  BTL_EVENT_SleepFactorRotation( pokeID, BTL_EVENT_FACTOR_TOKUSEI );
 }
+//=============================================================================================
+/**
+ * 指定ポケモンの「とくせい」ハンドラを復帰（ローテーション用）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BTL_HANDLER_TOKUSEI_RotationWake( const BTL_POKEPARAM* bpp )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  if( BTL_EVENT_WakeFactorRotation(pokeID, BTL_EVENT_FACTOR_TOKUSEI) == FALSE )
+  {
+    BTL_HANDLER_TOKUSEI_Add( bpp );
+  }
+}
+
+
 
 void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp2 )
 {
@@ -1093,7 +1127,7 @@ static void handler_SlowStart_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( work[0] )
+    if( work[3] )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_SLOWSTART_AGIRATIO );
     }
@@ -1104,7 +1138,7 @@ static void handler_SlowStart_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( work[0] )
+    if( work[3] )
     {
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
@@ -1119,32 +1153,40 @@ static void handler_SlowStart_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    work[0] = TRUE;   // work[0] : スロースタート効果中フラグ
-    work[1] = 0;      // work[1] : ターンカウンタ
-    {
-      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        param->header.tokwin_flag = TRUE;
-        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SlowStartON );
-        HANDEX_STR_AddArg( &param->str, pokeID );
-      BTL_SVF_HANDEX_Pop( flowWk, param );
-    }
+    common_SlowStart_Declare( myHandle, flowWk, pokeID, work );
   }
 }
-static void handler_SlowStart_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ローテ完了ハンドラ
+static void handler_SlowStart_RotationIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[4] == 0 )
+  if( work[0] == FALSE )
   {
-    handler_SlowStart_MemberIn( myHandle, flowWk, pokeID, work );
-    work[4] = 1;
+    common_SlowStart_Declare( myHandle, flowWk, pokeID, work );
   }
 }
-
+/**
+ *  スロースタート：宣言＆効果開始
+ */
+static void common_SlowStart_Declare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  work[0] = TRUE;   // work[0] : スロースタート開始宣言フラグ
+  work[1] = 0;      // work[1] : ターンカウンタ
+  work[2] = FALSE;  // work[2] : スロースタート終了宣言フラグ
+  work[3] = TRUE;   // work[3] : 効果継続中フラグ
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      param->header.tokwin_flag = TRUE;
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SlowStartON );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+    BTL_SVF_HANDEX_Pop( flowWk, param );
+  }
+}
 // ターンチェック終了ハンドラ
 static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( work[0] ) // work[0] : スロースタート効果中フラグ
+    if( work[2] == FALSE ) // work[2] : スロースタート終了宣言フラグ
     {
       if( work[1] < BTL_CALC_TOK_SLOWSTART_ENABLE_TURN )
       {
@@ -1157,7 +1199,6 @@ static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
         if( action.gen.cmd == BTL_ACTION_CHANGE ){ return; }
 
         ++(work[1]);
-        TAYA_Printf("スロスタカウント=%d\n", work[1]);
       }
       if( work[1] >= BTL_CALC_TOK_SLOWSTART_ENABLE_TURN )
       {
@@ -1166,7 +1207,8 @@ static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
           HANDEX_STR_AddArg( &param->str, pokeID );
         BTL_SVF_HANDEX_Pop( flowWk, param );
 
-        work[0] = FALSE;
+        work[3] = FALSE;
+        work[2] = TRUE;
       }
     }
   }
@@ -1176,6 +1218,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_SlowStart( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,            handler_SlowStart_MemberIn  },  // メンバー入場ハンドラ
+    { BTL_EVENT_ROTATION_IN,          handler_SlowStart_RotationIn},  // ローテ完了ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_SlowStart_MemberIn  },  // とくせい書き換え直後ハンドラ
     { BTL_EVENT_CALC_AGILITY,         handler_SlowStart_Agility   },  // すばやさ計算ハンドラ
     { BTL_EVENT_ATTACKER_POWER,       handler_SlowStart_AtkPower  },  // 攻撃力計算ハンドラ
@@ -1776,6 +1819,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN_COMP,       handler_FlowerGift_MemberInComp }, // ポケ入場ハンドラ
+    { BTL_EVENT_ROTATION_IN,          handler_FlowerGift_MemberInComp },
     { BTL_EVENT_MEMBER_IN,            handler_FlowerGift_MemberIn }, // ポケ入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_FlowerGift_MemberIn }, // とくせい書き換えハンドラ
     { BTL_EVENT_WEATHER_CHANGE_AFTER, handler_FlowerGift_Weather  }, // 天候変化後ハンドラ
@@ -4974,6 +5018,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN_COMP,        handler_Tenkiya_MemberInComp  },  // ポケ入場ハンドラ
+    { BTL_EVENT_ROTATION_IN,           handler_Tenkiya_MemberInComp  },
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_MemberIn  },  // とくせい書き換え直後ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Tenkiya_ChangeTok },  // とくせい書き換え直前ハンドラ
     { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_TokOff    },  // いえき確定ハンドラ
@@ -5279,6 +5324,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bukiyou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN_PREV,           handler_Bukiyou_MemberInPrev },
+    { BTL_EVENT_ROTATION_IN,              handler_Bukiyou_MemberInPrev },
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER,     handler_Bukiyou_GetTokusei}, // とくせい書き換えハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,    handler_Bukiyou_PreChange }, // とくせい書き換え直前ハンドラ
     { BTL_EVENT_IEKI_FIXED,               handler_Bukiyou_IekiFixed }, // いえき確定ハンドラ
@@ -7152,6 +7198,14 @@ static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   // 「きんちょうかん」持ちであることを告知
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
+    handler_Kinchoukan_RotationIn( myHandle, flowWk, pokeID, work );
+  }
+}
+// ローテーション
+static void handler_Kinchoukan_RotationIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[0] == 0 )
+  {
     BTL_HANDEX_PARAM_MESSAGE* param;
     BtlSide side = BTL_MAINUTIL_GetOpponentSide( BTL_MAINUTIL_PokeIDtoSide(pokeID) );
 
@@ -7164,6 +7218,7 @@ static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 
     BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Kinchoukan_SkipCheck );
 
+    work[0] = 1;
   }
 }
 // スキップチェックハンドラ
@@ -7259,6 +7314,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kinchoukan( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,             handler_Kinchoukan_MemberIn       }, // メンバー入場ハンドラ
+    { BTL_EVENT_ROTATION_IN,           handler_Kinchoukan_RotationIn     },
 //    { BTL_EVENT_CHECK_ITEMEQUIP_FAIL,  handler_Kinchoukan_CheckItemEquip }, // 装備アイテム使用チェックハンドラ
 //    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Kinchoukan_MemberIn       }, // とくせい書き換えハンドラ
 //    { BTL_EVENT_MEMBER_OUT_FIXED,      handler_Kinchoukan_MemberOutFixed }, // メンバー退場確定ハンドラ

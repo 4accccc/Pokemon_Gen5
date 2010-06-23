@@ -114,6 +114,8 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_AfterMemberInPrev( BTL_SVFLOW_WORK* wk );
 static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk );
+static void scproc_AfterRotationIn( BTL_SVFLOW_WORK* wk );
+static void scEvent_RotationIn( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx );
 static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, BOOL fIntrDisable );
@@ -367,7 +369,7 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
 static BOOL checkPokeDeadFlagAllOn( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
 static u32 checkExistEnemyMaxLevel( BTL_SVFLOW_WORK* wk );
-static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
+static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke, BOOL fRotationOut );
 static void scEvent_BeforeDead( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scproc_CheckExpGet( BTL_SVFLOW_WORK* wk );
 static BOOL scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
@@ -605,6 +607,7 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   GFL_STD_MemClear( wk->pokeDeadFlag, sizeof(wk->pokeDeadFlag) );
   GFL_STD_MemClear( wk->pokeInFlag, sizeof(wk->pokeInFlag) );
   GFL_STD_MemClear( wk->memberChangeCount, sizeof(wk->memberChangeCount) );
+  GFL_STD_MemClear( &(wk->handlerWorkBackup), sizeof(wk->handlerWorkBackup) );
 
   AffCounter_Clear( &wk->affCounter );
   PSetStack_Init( wk );
@@ -956,6 +959,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     &&  (currentAction != BTL_ACTION_ROTATION)
     ){
       ActOrderProcSub_RecalcAgility( wk, &wk->actOrder[i], (wk->numActOrder - i));
+      scproc_AfterRotationIn( wk );
     }
 
     prevAction = ActOrder_Proc( wk, &wk->actOrder[i] );
@@ -1257,7 +1261,7 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
  * @param   dir
  */
 //=============================================================================================
-void BTL_SVFLOW_MakeRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir )
+static void scproc_Rotation( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir )
 {
   BTL_Printf("クライアント[%d]は回転方向 %d へローテ\n", clientID, dir);
 
@@ -1270,12 +1274,16 @@ void BTL_SVFLOW_MakeRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotate
     SCQUE_PUT_ACT_Rotation( wk->que, clientID, dir );
 
     BTL_PARTY_RotateMembers( party, dir, &outPoke, &inPoke );
-    if( !BPP_IsDead(outPoke) ){
-      scproc_ClearPokeDependEffect( wk, outPoke );
+    if( !BPP_IsDead(outPoke) )
+    {
+      scproc_ClearPokeDependEffect( wk, outPoke, TRUE );
     }
-    if( !BPP_IsDead(inPoke) ){
-      BTL_HANDLER_TOKUSEI_Add( inPoke );
-      BTL_HANDLER_ITEM_Add( inPoke );
+    if( !BPP_IsDead(inPoke) )
+    {
+//      BTL_HANDLER_TOKUSEI_Add( inPoke );
+//      BTL_HANDLER_ITEM_Add( inPoke );
+        BTL_HANDLER_TOKUSEI_RotationWake( inPoke );
+        BTL_HANDLER_ITEM_RotationWake( inPoke );
     }
     BTL_POSPOKE_Rotate( &wk->pospokeWork, dir, clientID, inPoke, wk->pokeCon );
   }
@@ -1891,7 +1899,7 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
         if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
         {
           BTL_N_Printf( DBGSTR_SVFL_ActOrder_Rotation, actOrder->clientID, action.rotation.dir);
-          BTL_SVFLOW_MakeRotationCommand( wk, actOrder->clientID, action.rotation.dir );
+          scproc_Rotation( wk, actOrder->clientID, action.rotation.dir );
         }
         else{
           GF_ASSERT(0);
@@ -2883,6 +2891,35 @@ static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk )
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN_COMP );
   BTL_EVENTVAR_Pop();
 }
+//----------------------------------------------------------------------------------
+/**
+ * サーバーフロー：両陣営のローテーション完了後
+ *
+ * @param   wk
+ *
+ */
+//----------------------------------------------------------------------------------
+static void scproc_AfterRotationIn( BTL_SVFLOW_WORK* wk )
+{
+  u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+    scEvent_RotationIn( wk );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] メンバー入場イベント全員分終了
+ *
+ * @param   wk
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_RotationIn( BTL_SVFLOW_WORK* wk )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ROTATION_IN );
+  BTL_EVENTVAR_Pop();
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -2993,7 +3030,7 @@ static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 
-  scproc_ClearPokeDependEffect( wk, outPoke );
+  scproc_ClearPokeDependEffect( wk, outPoke, FALSE );
   BPP_Clear_ForOut( outPoke );
   SCQUE_PUT_OP_OutClear( wk->que, BPP_GetID(outPoke) );
 
@@ -9573,7 +9610,7 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       }
 
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
-      scproc_ClearPokeDependEffect( wk, poke );
+      scproc_ClearPokeDependEffect( wk, poke, FALSE );
       BPP_Clear_ForDead( poke );
 
       // プレイヤーのポケモンが死んだ時になつき度計算
@@ -9656,7 +9693,7 @@ static u32 checkExistEnemyMaxLevel( BTL_SVFLOW_WORK* wk )
  * 特定ポケモン依存の状態異常・サイドエフェクト等、各種ハンドラをクリアする
  */
 //--------------------------------------------------------------------------
-static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
+static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke, BOOL fRotationOut )
 {
   FRONT_POKE_SEEK_WORK fps;
   BTL_POKEPARAM* bpp;
@@ -9666,8 +9703,14 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* po
 
   scproc_FreeFall_CheckRelease( wk, poke, FALSE );
 
-  BTL_HANDLER_TOKUSEI_Remove( poke );
-  BTL_HANDLER_ITEM_Remove( poke );
+  if( !fRotationOut ){
+    BTL_HANDLER_TOKUSEI_Remove( poke );
+    BTL_HANDLER_ITEM_Remove( poke );
+  }else{
+    BTL_HANDLER_TOKUSEI_RotationSleep( poke );
+    BTL_HANDLER_ITEM_RotationSleep( poke );
+  }
+
   BTL_HANDLER_Waza_RemoveForceAll( poke );
 
   FRONT_POKE_SEEK_InitWork( &fps, wk );

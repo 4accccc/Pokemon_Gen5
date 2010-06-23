@@ -2219,6 +2219,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
 
         if( is_unselectable_waza(wk, procPoke, procAction->fight.waza, &wk->strParam) )
         {
+          BTLV_STRPARAM_SetWait( &wk->strParam, BTLV_MSGWAIT_QUICK );
           selact_startMsg( wk, &wk->strParam );
           (*seq) = SEQ_WAIT_UNSEL_WAZA_MSG;
         }

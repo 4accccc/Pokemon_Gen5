@@ -79,10 +79,11 @@ struct _BTL_EVENT_FACTOR {
   u32       tmpItemFlag      :  1;  ///< アイテム用一時利用フラグ
   u32       rmReserveFlag    :  1;  ///< 削除予約フラグ
 
-  u32       currentStackPtr  :16;   ///< 登録時イベントスタックポインタ
-  u32       recallEnableFlag : 1;   ///< 再帰呼び出し許可
-  u32       existFlag        : 1;   ///< 現在処理中イベントによりAddされた
-  u32       _padd            : 29;
+  u32       currentStackPtr   :16;   ///< 登録時イベントスタックポインタ
+  u32       recallEnableFlag  : 1;   ///< 再帰呼び出し許可
+  u32       existFlag         : 1;   ///< 現在処理中イベントによりAddされた
+  u32       rotationSleepFlag : 1;   ///< 現在処理中イベントによりAddされた
+  u32       _padd            : 28;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -249,6 +250,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
     newFactor->sleepFlag = FALSE;
+    newFactor->rotationSleepFlag = FALSE;
     newFactor->tmpItemFlag = FALSE;
     newFactor->skipCheckHandler = NULL;
     newFactor->dependID = dependID;
@@ -538,6 +540,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
 
     if( ( (factor->callingFlag == FALSE) || (factor->recallEnableFlag) )
     &&  ( factor->sleepFlag == FALSE )
+    &&  ( factor->rotationSleepFlag == FALSE )
     &&  ( (factor->currentStackPtr == 0) || (factor->currentStackPtr < EventStackPtr) )
     &&  ( factor->existFlag )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
@@ -640,6 +643,9 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
             // いえき状態はスキップチェックも行えないようにする
             continue;
           }
+        }
+        if( fp->rotationSleepFlag ){
+          continue;
         }
 
         if( (fp->skipCheckHandler)( fp, flowWork, factor->factorType, eventID, factor->subID, factor->dependID ) ){
@@ -744,6 +750,55 @@ void BTL_EVENT_WakeFactorMagicMirrorUser( u16 pokeID )
     }
   }
 }
+
+//=============================================================================================
+/**
+ * 指定ポケモンの「とくせい」「どうぐ」ハンドラを休止（ローテーション対処）
+ *
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_EVENT_SleepFactorRotation( u16 pokeID, BtlEventFactorType factorType )
+{
+  BTL_EVENT_FACTOR* factor;
+
+  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+  {
+    if( (factor->pokeID == pokeID)
+    &&  (factor->factorType == factorType)
+    ){
+      factor->rotationSleepFlag = TRUE;
+    }
+  }
+}
+//=============================================================================================
+/**
+ * 指定ポケモンの「とくせい」「どうぐ」ハンドラを休止から復帰（ローテーション対処）
+ *
+ * @param   pokeID
+ * @param   factorType
+ *
+ * @retval  BOOL    復帰させたハンドラがあればTRUE
+ */
+//=============================================================================================
+BOOL BTL_EVENT_WakeFactorRotation( u16 pokeID, BtlEventFactorType factorType )
+{
+  BTL_EVENT_FACTOR* factor;
+  BOOL result = FALSE;
+
+  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+  {
+    if( (factor->pokeID == pokeID)
+    &&  (factor->factorType == factorType)
+    ){
+      factor->rotationSleepFlag = FALSE;
+      result = TRUE;
+    }
+  }
+
+  return result;
+}
+
 
 
 static BTL_EVENT_FACTOR* pushFactor( void )

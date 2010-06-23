@@ -756,6 +756,33 @@ void BTL_HANDLER_ITEM_TMP_Remove( BTL_EVENT_FACTOR* factor )
 }
 
 
+//=============================================================================================
+/**
+ * 指定ポケモンのアイテムハンドラを一時的に休止（ローテーション用）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BTL_HANDLER_ITEM_RotationSleep( const BTL_POKEPARAM* bpp )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  BTL_EVENT_SleepFactorRotation( pokeID, BTL_EVENT_FACTOR_ITEM );
+}
+//=============================================================================================
+/**
+ * 指定ポケモンのアイテムハンドラを休止から復帰（ローテーション用）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BTL_HANDLER_ITEM_RotationWake( const BTL_POKEPARAM* bpp )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  if( BTL_EVENT_WakeFactorRotation(pokeID, BTL_EVENT_FACTOR_ITEM) == FALSE )
+  {
+    BTL_HANDLER_ITEM_Add( bpp );
+  }
+}
 
 //----------------------------------------------------------------------------------
 /**

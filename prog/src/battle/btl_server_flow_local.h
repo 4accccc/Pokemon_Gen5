@@ -327,6 +327,14 @@ typedef struct {
   u8  clientID[ BTL_CLIENT_MAX ];
 }CLIENTID_REC;
 
+/**
+ *  ローテーション用ハンドラワーク保存
+ */
+typedef struct {
+
+  int  work[ BTL_POKEID_MAX ][ EVENT_HANDLER_WORK_ELEMS ];
+
+}ROTATION_HANDLER_WORK_BACKUP;
 
 
 //-----------------------------------------------------
@@ -353,6 +361,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_ESCAPEINFO          escInfo;
   BTL_LEVELUP_INFO        lvupInfo;
   CLIENTID_REC            clientIDRec;
+  ROTATION_HANDLER_WORK_BACKUP  handlerWorkBackup;
   u32                     simulationCounter;
   u32                     wazaRankEffSerial;
   u8                      cmdBuildStep;

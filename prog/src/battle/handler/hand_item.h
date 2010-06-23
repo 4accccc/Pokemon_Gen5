@@ -21,5 +21,8 @@ extern void BTL_HANDLER_ITEM_Remove( const BTL_POKEPARAM* pp );
 extern BTL_EVENT_FACTOR*  BTL_HANDLER_ITEM_TMP_Add( const BTL_POKEPARAM* bpp, u16 itemID );
 extern void BTL_HANDLER_ITEM_TMP_Remove( BTL_EVENT_FACTOR* factor );
 
+extern void BTL_HANDLER_ITEM_RotationSleep( const BTL_POKEPARAM* bpp );
+extern void BTL_HANDLER_ITEM_RotationWake( const BTL_POKEPARAM* bpp );
+
 
 #endif  /* #ifndef __HAND_ITEM_H__ */
