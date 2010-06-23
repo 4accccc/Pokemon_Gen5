@@ -5063,8 +5063,9 @@ static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
   if(GFL_NET_DWC_IsNewPlayer()!=-1){
     _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST);
   }
-  if(DWC_STATUS_OFFLINE == WifiDwc_getFriendStatus(wk->friendNo-1)){  //BTS6212
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_012, FALSE);
+  if(DWC_STATUS_OFFLINE == WifiDwc_getFriendStatus(wk->friendNo-1)){  //BTS6212 BTS6409
+    _friendNameExpand(wk, wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
     return seq;
   }
