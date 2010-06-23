@@ -1042,6 +1042,10 @@ static void ForceQuitSelect_Common( BTLV_CORE* core )
 }
 
 
+void BTLV_UI_RestartIfNotStandBy( BTLV_CORE* core )
+{
+  BTLV_SCD_RestartUI_IfNotStandBy( core->scrnD );
+}
 void BTLV_UI_Restart( BTLV_CORE* core )
 {
   BTLV_SCD_RestartUI( core->scrnD );
@@ -1164,11 +1168,11 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   BPL_MODE_WAZASET,     // ‹Z–Y‚ê
   BPL_MODE_WAZAINFO,    // ‹ZŠm”F
 */
-		if( wk->plistData.mode == BPL_MODE_CHG_DEAD || wk->plistData.mode == BPL_MODE_NO_CANCEL ){
-	    BTLV_SCD_FadeOut( wk->scrnD, FALSE );
-		}else{
-	    BTLV_SCD_FadeOut( wk->scrnD, TRUE );
-		}
+    if( wk->plistData.mode == BPL_MODE_CHG_DEAD || wk->plistData.mode == BPL_MODE_NO_CANCEL ){
+      BTLV_SCD_FadeOut( wk->scrnD, FALSE );
+    }else{
+      BTLV_SCD_FadeOut( wk->scrnD, TRUE );
+    }
     GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq++;
     break;
@@ -1777,11 +1781,11 @@ void BTLV_ACT_TameWazaHide( BTLV_CORE* wk, BtlvMcssPos vpos, BTLV_MCSS_VANISH_FL
     if( vanishFlag != BTLV_EFFECT_GetMcssVanishFlag(vpos) )
     {
       if( vanishFlag == BTLV_MCSS_VANISH_ON )
-      { 
+      {
         BTLV_EFFECT_PokemonVanishOn( vpos );
       }
       else
-      { 
+      {
         BTLV_EFFECT_PokemonVanishOff( vpos );
       }
     }

@@ -306,6 +306,14 @@ static void setupMainWin( BTLV_SCD* wk )
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 #endif
 }
+
+void BTLV_SCD_RestartUI_IfNotStandBy( BTLV_SCD* wk )
+{
+  if( BTLV_INPUT_GetScrType(wk->biw) != BTLV_INPUT_SCRTYPE_STANDBY )
+  {
+    BTLV_SCD_RestartUI( wk );
+  }
+}
 /**
  *  UI再起動
  */
@@ -593,14 +601,14 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
     //2client用パーティ格納ワーククリア
     party[0] = NULL;
     party[1] = NULL;
-    
+
     if( j == 0 )
     {
       clientID_1 = BTL_MAIN_GetPlayerClientID( wk->mainModule );
       clientID_2 = BTL_MAIN_GetPlayerFriendCleintID( wk->mainModule );
       if( (btl_rule == BTL_RULE_DOUBLE) && (clientID_2 != BTL_CLIENTID_NULL) )
       {
-        // 自分と仲間の手持ち  
+        // 自分と仲間の手持ち
         if( clientID_1 < clientID_2 ){
           party[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
           party_members[0] = BTL_PARTY_GetMemberCount( party[0] );
@@ -681,9 +689,9 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
         break;
       }
 
-      clientID_1 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 0 ); 
+      clientID_1 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 0 );
       clientID_2 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 1 );
-      
+
       bicp.trainer_flag = TRUE;
       //相手の手持ち
       party[0] = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID_1 );
@@ -717,7 +725,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
         party_idx = 1;
         party_ofs = i-party_members[0];
       }
-      
+
       bpp = BTL_PARTY_GetMemberDataConst( party[party_idx], party_ofs );
 
       if( BPP_IsDead( bpp ) == FALSE )

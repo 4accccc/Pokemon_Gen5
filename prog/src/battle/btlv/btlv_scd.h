@@ -65,6 +65,8 @@ extern void BTLV_SCD_Setup( BTLV_SCD* wk );
 
 extern void BTLV_SCD_RestartUI( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_WaitRestartUI( BTLV_SCD* wk );
+extern void BTLV_SCD_RestartUI_IfNotStandBy( BTLV_SCD* wk );
+
 
 
 extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, u8 shooterEnergy, BTL_ACTION_PARAM* dest );

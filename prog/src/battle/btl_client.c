@@ -1844,8 +1844,16 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     switch( BTLV_UI_SelectAction_Wait(wk->viewCore) ){
 
-    // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
+    // 「ポケモン」を選んだ->交替対象の選択へ
     case BTL_ACTION_CHANGE:
+      // フリーフォール捕まれチェック
+      if( BPP_CheckSick(wk->procPoke, WAZASICK_FREEFALL) )
+      {
+        BTLV_UI_Restart( wk->viewCore );
+        (*seq) = 6;
+        break;
+      }
+
       BTL_N_Printf( DBGSTR_CLIENT_SelectAction_Pokemon );
       shooterCost_Save( wk, wk->procPokeIdx, 0 );
       ClientSubProc_Set( wk, selact_SelectChangePokemon );
@@ -1860,6 +1868,11 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     // 「どうぐ」を選んだ
     case BTL_ACTION_ITEM:
+      // フリーフォール捕まれチェック
+      if( BPP_CheckSick(wk->procPoke, WAZASICK_FREEFALL) ){
+        (*seq) = 6;
+        break;
+      }
       // シューター使えない設定チェック
       if( wk->bagMode == BBAG_MODE_SHOOTER )
       {
@@ -1877,7 +1890,15 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     // 「にげる」or「もどる」
     case BTL_ACTION_ESCAPE:
       // 先頭のポケなら「にげる」として処理
-      if( wk->procPokeIdx == wk->firstPokeIdx ){
+      if( wk->procPokeIdx == wk->firstPokeIdx )
+      {
+        // フリーフォール捕まれチェック
+        if( BPP_CheckSick(wk->procPoke, WAZASICK_FREEFALL) )
+        {
+          (*seq) = 6;
+          break;
+        }
+
         shooterCost_Save( wk, wk->procPokeIdx, 0 );
         ClientSubProc_Set( wk, selact_Escape );
       // ２体目以降は「もどる」として処理
@@ -1913,6 +1934,29 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     if( BTLV_UI_WaitRestart(wk->viewCore) ){
       (*seq) = 3;
     }
+    break;
+
+  // フリーフォール中に「たたかう」以外のコマンドを選んだ時にここ
+  case 6:
+    BTLV_UI_RestartIfNotStandBy( wk->viewCore );
+    (*seq)++;
+    break;
+  case 7:
+    if( BTLV_UI_WaitRestart(wk->viewCore) )
+    {
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_FreeFallBind );
+      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+      selact_startMsg( wk, &wk->strParam );
+      (*seq)++;
+    }
+    break;
+  case 8:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      (*seq) = 1;
+    }
+    break;
+
   }
   return FALSE;
 }
