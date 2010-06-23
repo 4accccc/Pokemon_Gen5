@@ -5,8 +5,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_003.spa
 %00
 射影モード	正射影	すべて
 制御モード変更	継続
-カメラ移動（座標指定）	追従（相対指定）	20:2:16	12:4:16	32	0	32
-トレーナーセット	TRTYPE_DOCTOR	POS_AA	-18:-10:0
+カメラ移動（座標指定）	追従（相対指定）	10:1:16	6:2:16	32	0	32
+トレーナーセット	TRTYPE_DOCTOR	POS_AA	-15:-11:0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB
 ポケモン拡縮	POS_BB	追従	0.5	0.5	12	2	0
 ラベル	NO_EXIST_BB
