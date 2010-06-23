@@ -3214,7 +3214,10 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       }
       else
       {
-        PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+        if( work->ktst == GFL_APP_KTST_KEY )
+        {
+          PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+        }
       }
     }
     break;
@@ -3235,7 +3238,10 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       work->btlJoinNum--;
     }
 
-    PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+    if( work->ktst == GFL_APP_KTST_KEY )
+    {
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+    }
     work->selectPokePara = NULL;
     work->mainSeq = PSMS_SELECT_POKE;
     PLIST_InitMode_Select( work );
