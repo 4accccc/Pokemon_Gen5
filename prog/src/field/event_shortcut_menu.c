@@ -212,6 +212,9 @@ GMEVENT * EVENT_ShortCutMenu( GAMESYS_WORK *p_gamesys, FIELDMAP_WORK *p_fieldmap
 		MMDLSYS_PauseMoveProc( p_fldmdl );
 	}
 
+  //ショートカットメニューはボタンでしか起動しないので
+  //強制的にキーモードへしてしまう
+  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
   
   return p_event;
 }
