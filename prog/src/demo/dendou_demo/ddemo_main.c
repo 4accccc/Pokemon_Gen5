@@ -846,12 +846,15 @@ void DDEMOMAIN_SetNameParticle( DDEMOMAIN_WORK * wk, u32 id )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+#define	PARTICLE_CAMERA_PV		( 4.0 )
+#define	PARTICLE_CAMERA_PH		( 5.33 )
+
 static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp )
 {
 	GFL_G3D_PROJECTION	projection;
 
 	if( ptc == NULL ){ return; }
-
+/*
 	// メイン画面（下）
 	if( disp == TRUE ){
 		projection.param1 = FX32_CONST(3.975);
@@ -864,6 +867,19 @@ static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL dis
 	projection.type = GFL_G3D_PRJORTH;
 	projection.param3 = -FX32_CONST(5.3);
 	projection.param4 = FX32_CONST(5.3);
+*/
+	// メイン画面（下）
+	if( disp == TRUE ){
+		projection.param1 = FX32_CONST(PARTICLE_CAMERA_PV);
+		projection.param2 = -FX32_CONST(PARTICLE_CAMERA_PV);
+	// サブ画面（上）
+	}else{
+		projection.param1 = FX32_CONST(PARTICLE_CAMERA_PV+PARTICLE_CAMERA_PV*2+2);
+		projection.param2 = FX32_CONST(PARTICLE_CAMERA_PV+2);
+	}
+	projection.type = GFL_G3D_PRJORTH;
+	projection.param3 = -FX32_CONST(PARTICLE_CAMERA_PH);
+	projection.param4 = FX32_CONST(PARTICLE_CAMERA_PH);
 	projection.near = 0;
 	projection.far  = FX32_CONST( 1024 );	// 正射影なので関係ないが、念のためクリップのfarを設定
 	projection.scaleW = 0;
