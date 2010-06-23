@@ -1685,23 +1685,25 @@ static int _round_frame( int frame, int max )
     frame = w;
   }else if(frame<0){
     w = frame;
-    frame = GYMREADER_FRAME_MAX-frame;
+    frame = GYMREADER_FRAME_MAX+frame;
   }
   return frame;
 }
 
 
 #define FRAME_SPEED_MIN     ( 4096 )
-#define FRAME_SPEED_MINUS   ( 400 )
+#define FRAME_SPEED_MINUS   ( 1024 )
 
 
 static void _speed_down( BADGEVIEW_WORK *wk )
 {
   // 回転スピードが下がるように計算(でも０にはしない）
   if(wk->animeSpeed>FRAME_SPEED_MIN){
-    wk->animeSpeed-=FRAME_SPEED_MINUS;
+    wk->animeSpeed -= FRAME_SPEED_MINUS;
   }else if(wk->animeSpeed<(-1*FRAME_SPEED_MIN)){
-    wk->animeSpeed+=FRAME_SPEED_MINUS;
+    wk->animeSpeed += FRAME_SPEED_MINUS;
+  }else if( wk->animeSpeed == 0 ){
+    wk->animeSpeed = FRAME_SPEED_MINUS;
   }
   
 }
@@ -1723,28 +1725,29 @@ static const int target_frame_tbl[]={
 static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
 {
   int i;
-    // タッチ開始
-    if(wk->slide.old_on==0 && flag){
-      wk->old_animeFrame = wk->animeFrame;
-      wk->slide.start_x        = x;
-    //タッチ継続  
-    }else if(wk->slide.old_on==1 && flag==1){
-      wk->animeFrame = wk->old_animeFrame + (x - wk->slide.start_x)*1024;
-      wk->animeFrame = _round_frame( wk->animeFrame, GYMREADER_FRAME_MAX );
-      
-    // タッチ終了（慣性取得）
-    }else if(wk->slide.old_on==1 && flag==0){
-      if(wk->slide.old2_x!=0){
-        wk->animeSpeed = (wk->slide.old_x - wk->slide.old2_x)*2048;
-      }
-      if(wk->animeSpeed > 40000){
-        wk->animeSpeed = 40000;
-      }else if(wk->animeSpeed<-40000){
-        wk->animeSpeed = -40000;
-      }
-    // タッチしてない
-    }
 
+  // タッチ開始
+  if(wk->slide.old_on==0 && flag){
+    wk->old_animeFrame = wk->animeFrame;
+    wk->slide.start_x        = x;
+  //タッチ継続  
+  }else if(wk->slide.old_on==1 && flag==1){
+    wk->animeFrame = wk->old_animeFrame + (x - wk->slide.start_x)*1024;
+    wk->animeFrame = _round_frame( wk->animeFrame, GYMREADER_FRAME_MAX );
+    
+  // タッチ終了（慣性取得）
+  }else if(wk->slide.old_on==1 && flag==0){
+    if(wk->slide.old2_x!=0){
+      wk->animeSpeed = (wk->slide.old_x - wk->slide.old2_x)*2048;
+    }
+    if(wk->animeSpeed > 40000){
+      wk->animeSpeed = 40000;
+    }else if(wk->animeSpeed<-40000){
+      wk->animeSpeed = -40000;
+    }
+  }
+
+  // タッチしてない
   if(wk->slide.old_on==0 && flag==0){
     // アニメフレーム計算（回り込みつき）
     wk->animeFrame += wk->animeSpeed;
@@ -1759,6 +1762,8 @@ static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
       }
     // 移動先は指定されていない
     }else{
+      _speed_down(wk);
+
       // 移動スピードが下がってきたときに一番近いリーダーで止まる
       for(i=0;i<BADGE_NUM;i++){
         if(target_frame_tbl[i] > (wk->animeFrame-10000) && target_frame_tbl[i] < (wk->animeFrame+10000)){
@@ -1768,7 +1773,6 @@ static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
           }
         }
       }
-      _speed_down(wk);
     }
   }
 
@@ -1964,6 +1968,8 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
   case TOUCH_GYM_READER_5:
   case TOUCH_GYM_READER_6:
   case TOUCH_GYM_READER_7:
+    //回転が終わるまでタッチできなくする
+    if( wk->animeSpeed == 0 )
     {
       int pos = _get_front_gymreader(wk->animeFrame);
       PMSND_PlaySE( SEQ_SE_SYS_31 );
