@@ -9,6 +9,10 @@
  */
 //=============================================================================
 
+
+//#define DEBUG_RAPID_INPUT  // これが定義されているとき、高速入力が行われる
+
+
 //必ず必要なインクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -601,6 +605,20 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
  *	@retval	終了コード
  */
 //-----------------------------------------------------------------------------
+
+// 文字描画が終わっていたらTRUEを返す  // 文字描画が終わるまで次の文字描画をしないようにしたいので。
+static BOOL IsDrawComplete( PMS_SELECT_MAIN_WORK* wk );
+static BOOL IsDrawComplete( PMS_SELECT_MAIN_WORK* wk )
+{
+  if(    PRINTSYS_QUE_IsFinished( wk->print_que )
+      && PMS_DRAW_IsPrintEnd( wk->pms_draw ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+// シーケンス変更
 static void ChangeSeq( int* seq, PMS_SELECT_MAIN_WORK* wk, int s );
 static void ChangeSeq( int* seq, PMS_SELECT_MAIN_WORK* wk, int s )
 {
@@ -608,6 +626,8 @@ static void ChangeSeq( int* seq, PMS_SELECT_MAIN_WORK* wk, int s )
   wk->sub_seq = 0;
   // wk->sub_resは変更してはならない、1シーケンス後で使うこともあるので。
 }
+
+// PROC 主処理
 static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
@@ -661,9 +681,12 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
     break;
   case SEQ_PLATE_SELECT_MAIN:
     {
-      if( ScenePlateSelect_Main( &(wk->sub_seq), wk ) )
+      if( IsDrawComplete(wk) )
       {
-        ChangeSeq( seq, wk, wk->sub_res );
+        if( ScenePlateSelect_Main( &(wk->sub_seq), wk ) )
+        {
+          ChangeSeq( seq, wk, wk->sub_res );
+        }
       }
     }
     break;
@@ -716,9 +739,12 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
     break;
   case SEQ_CALL_EDIT_FADE_OUT_START:
     {
-       // フェードアウト(見える→黒)
-      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
-      ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_OUT_WAIT );
+      if( IsDrawComplete(wk) )
+      {
+         // フェードアウト(見える→黒)
+        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
+        ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_OUT_WAIT );
+      }
     }
     break;
   case SEQ_CALL_EDIT_FADE_OUT_WAIT:
@@ -927,6 +953,25 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
 {
+  // プリントキューをクリアしておく
+  {
+    u8 i;
+
+    //PRINT_QUE
+    PRINTSYS_QUE_Clear( wk->print_que );
+    
+#ifdef PMS_SELECT_PMSDRAW
+    for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
+    {
+      wk->pms_win_tranReq[i] = FALSE;
+    }
+#endif //PMS_SELECT_PMSDRAW
+
+    // 上画面説明欄に表示するメッセージのウィンドウ
+    wk->wk_bg.explain_s_bmpwin_trans_req = FALSE;
+  }
+
+
   UI_EASY_CLWK_UnLoadResource( &wk->clwkres );
 
 #ifdef PMS_SELECT_TOUCHBAR
@@ -1874,6 +1919,11 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   BOOL b_decide = FALSE;
   BOOL b_input = TRUE;
 
+#ifdef DEBUG_RAPID_INPUT
+  static BOOL b_rapid_input_val = FALSE;
+  b_rapid_input_val = !b_rapid_input_val;
+#endif
+
   if( b_input )
   {
     // セレクト無効状態でキー入力されたら
@@ -1922,7 +1972,11 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       wk->b_touch = FALSE;
       b_input = FALSE;
     }
+#ifndef DEBUG_RAPID_INPUT
     else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+#else
+    else if( b_rapid_input_val )
+#endif
     {
       if( wk->select_id > 0 )
       {
@@ -1955,7 +2009,11 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       wk->b_touch = FALSE;
       b_input = FALSE;
     }
+#ifndef DEBUG_RAPID_INPUT
     else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+#else
+    else if( !b_rapid_input_val )
+#endif
     {
       if( wk->select_id < wk->list_max_add-1 )
       {
@@ -2154,6 +2212,12 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
   PRINTSYS_PrintQueColor( wk->print_que, GFL_BMPWIN_GetBmp(wk->pms_win[ view_pos_id ]), 0, 0, buf, wk->font, color );
 
   GFL_STR_DeleteBuffer( buf );
+
+  {
+    // スクリーン転送    // この2行を追加すると、「あたらしくメッセージをついかする」も更新のたびにちらつくってことがなくなった。
+    GFL_BMPWIN_MakeScreen(wk->pms_win[ view_pos_id ]);
+    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->pms_win[ view_pos_id ]) );
+  }
 
   wk->pms_win_tranReq[ view_pos_id ] = TRUE;
 }

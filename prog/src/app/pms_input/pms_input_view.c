@@ -775,7 +775,8 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 				GFL_CLGRP_CELLANIM_Release( cwk->vwk->resCellDeco[i].anmIdx );
 			}
 			GFL_FONT_Delete(vwk->fontHandle);
-			
+		
+      PRINTSYS_QUE_Clear(vwk->print_que);
       PRINTSYS_QUE_Delete(vwk->print_que);
 			
 			GFL_BG_FreeBGControl( FRM_MAIN_EDITAREA );
