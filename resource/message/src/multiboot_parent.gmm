@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-14T22:02:40"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-23T11:35:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 		</language>
 	</columns>
 
-	<dialog left="172" top="148" right="854" bottom="776" maximized="no" rayout="Vertical2">
+	<dialog left="1404" top="42" right="2086" bottom="670" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="507"/>
@@ -391,21 +391,21 @@
 
 
 	<row id="MSG_MB_PAERNT_01">
-		<language name="JPN" width="208">うえがめんを　さんこうに
-もう１つの　ＤＳに
-ポケットモンスターの
+		<language name="JPN" width="208">もう１つのＤＳに　ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
-いずれかの　ソフトを　セットし
+いずれかの　ソフトを　セットして
+でんげんを　いれた　あとに
+うえがめんを　さんこうに　して
 『ＤＳダウンロードプレイ』から
 『ポケシフター　ＩＤ：[2:04:５桁:0]』を
 えらんでください</language>
-		<language name="JPN_KANJI" width="208">上画面を　参考に
-もう１つの　ＤＳに
-ポケットモンスターの
+		<language name="JPN_KANJI" width="208">もう１つのＤＳに　ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
-いずれかの　ソフトを　セットし
+いずれかの　ソフトを　セットして
+電源を　入れた　あとに
+上画面を　参考にして
 『ＤＳダウンロードプレイ』から
 『ポケシフター　ＩＤ：[2:04:５桁:0]』を
 選んでください</language>
@@ -566,22 +566,22 @@ DSシステムフォントなので
 
 	<row id="MSG_MB_PAERNT_MOVIE_01">
 		<comment>以下映画転送用</comment>
-		<language name="JPN" width="208">したがめんを　さんこうに
-もう１つの　ＤＳに
-ポケットモンスターの
+		<language name="JPN" width="208">もう１つのＤＳに　ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
-いずれかの　ソフトを　セットし
+いずれかの　ソフトを　セットして
+でんげんを　いれた　あとに
+したがめんを　さんこうに　して
 『ＤＳダウンロードプレイ』から
 『てんそうマシン　ＩＤ：[2:04:５桁:0]』を
 えらんでください
 Ｂボタン：キャンセル</language>
-		<language name="JPN_KANJI" width="208">下画面を　参考に
-もう１つの　ＤＳに
-ポケットモンスターの
+		<language name="JPN_KANJI" width="208">もう１つのＤＳに　ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
-いずれかの　ソフトを　セットし
+いずれかの　ソフトを　セットして
+電源を　入れた　あとに
+下画面を　参考にして
 『ＤＳダウンロードプレイ』から
 『てんそうマシン　ＩＤ：[2:04:５桁:0]』を
 選んでください
