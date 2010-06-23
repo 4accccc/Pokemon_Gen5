@@ -1203,6 +1203,9 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     if( REGULATION_STATE_WCS_15 == state_type 
       || state_type == REGULATION_STATE_WCS_02)
     {
+
+      p_param->p_btl_setup_param->fieldSituation.bgAttr = BATTLE_BG_ATTR_E_INDOOR;
+      p_param->p_btl_setup_param->fieldSituation.bgType = BATTLE_BG_TYPE_WCS;
       p_param->p_demo_param->wcs_flag = TRUE;
     }
   }
@@ -1226,6 +1229,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     if( REGULATION_STATE_WCS_15 == state_type 
       || state_type == REGULATION_STATE_WCS_02)
     {
+      p_param->p_btl_setup_param->fieldSituation.bgAttr = BATTLE_BG_ATTR_E_INDOOR;
+      p_param->p_btl_setup_param->fieldSituation.bgType = BATTLE_BG_TYPE_WCS;
       p_param->p_demo_param->wcs_flag = TRUE;
     }
   }
