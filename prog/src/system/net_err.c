@@ -109,7 +109,8 @@ typedef struct{
   GFL_NETSTATE_DWCERROR   wifi_error; //WIFIのエラー
   u8                      error;      //WIFI以外のエラー
   u8                      net_type;   //ネットのタイプ
-  u8                      dummy[2];
+  u8                      msg_force;  //強制メッセージフラグ
+  u8                      dummy;
   NET_ERR_CHECK           err_important_type;  //エラーの重度軽度判別
   u32                     wifi_msg;   //WIFIで表示するものは先に取得するため
 }NET_ERR_SYSTEM;
@@ -282,6 +283,7 @@ BOOL NetErr_DispCall(BOOL fatal_error)
 BOOL NetErr_App_FatalDispCallWifiMessage(int message)
 {
   NetErrSystem.wifi_msg = message;
+  NetErrSystem.msg_force = TRUE;
   NetErrSystem.net_type = GFL_NET_TYPE_WIFI;
   return NetErr_DispCall(TRUE);
 }
@@ -1111,9 +1113,18 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
       mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
 			ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_NET_TEMP);
 
-      msgno = _wifierrMessage(&nes->wifi_error);      //WIFIで表示するメッセージを取得
+      if( nes->msg_force )
+      {
+        msgno = nes->wifi_msg;
+        nes->msg_force  = FALSE;
+        OS_TPrintf("強制エラーメッセージ %d \n",msgno);
+      }
+      else
+      {
+        msgno = _wifierrMessage(&nes->wifi_error);      //WIFIで表示するメッセージを取得
+        OS_TPrintf("エラーメッセージ %d \n",msgno);
+      }
 
-      OS_TPrintf("エラーメッセージ %d \n",msgno);
     }
     else
     { 
