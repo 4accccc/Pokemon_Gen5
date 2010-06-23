@@ -11469,8 +11469,12 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
       TAYA_Printf( "”½“® HP type .. maxHP=%d, damage = %d\n", maxHP, damage );
     }
     else{
-      damage = roundMin( BTL_CALC_MulRatioInt(damage, ratio), 1 );
       TAYA_Printf( "”½“® DMG type .. damage = %d\n", damage );
+
+      if( damage ){
+        damage = roundMin( BTL_CALC_MulRatioInt(damage, ratio), 1 );
+      }
+
     }
 
     (*fMustEnable) = anti_fail_flag;
