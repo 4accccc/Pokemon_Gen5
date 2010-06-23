@@ -8675,9 +8675,9 @@ static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static const BtlEventHandlerTable* ADD_Waruagaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASEQ_START,   handler_Waruagaki_SeqStart    }, // ワザ処理開始ハンドラ
-    { BTL_EVENT_WAZA_PARAM,      handler_Waruagaki_WazaParam   }, // ワザパラメータ取得
-    { BTL_EVENT_CALC_KICKBACK,   handler_Waruagaki_KickBack    }, // 反動チェックハンドラ
+    { BTL_EVENT_WAZA_CALL_DECIDE,  handler_Waruagaki_SeqStart    }, // ワザ処理開始ハンドラ
+    { BTL_EVENT_WAZA_PARAM,        handler_Waruagaki_WazaParam   }, // ワザパラメータ取得
+    { BTL_EVENT_CALC_KICKBACK,     handler_Waruagaki_KickBack    }, // 反動チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
