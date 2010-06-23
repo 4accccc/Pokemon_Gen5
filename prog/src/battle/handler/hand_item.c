@@ -1850,7 +1850,10 @@ static void handler_NazoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   ){
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF) > BTL_TYPEAFF_100 )
     {
-      ItemPushRun( myHandle, flowWk, pokeID );
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( !BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) ){
+        ItemPushRun( myHandle, flowWk, pokeID );
+      }
     }
   }
 }
