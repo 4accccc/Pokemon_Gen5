@@ -202,6 +202,7 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
   pp = PP_Create( sympoke->monsno, level, PTL_SETUP_ID_AUTO, heapID );
   PP_SetupEx( pp, sympoke->monsno, level, oya_id, PTL_SETUP_ID_AUTO, personal_rnd );
   PP_SetTokusei3( pp, sympoke->monsno, sympoke->form_no );
+  PP_ChangeFormNo( pp, sympoke->form_no );
   if ( sympoke->wazano )
   {
     if ( PP_SetWaza( pp, sympoke->wazano ) == PTL_WAZASET_FAIL )
