@@ -946,7 +946,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
 
   BtlAction prevAction, currentAction;
 
-  BTL_N_Printf( DBGSTR_SVFL_ActOrderMainStart, startOrderIdx );
+  BTL_N_Printf( DBGSTR_SVFL_ActOrderMainStart, startOrderIdx, wk->numActOrder );
 
   prevAction = BTL_ACTION_NULL;
 
@@ -1873,6 +1873,7 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
       if( (wk->flowResult == SVFLOW_RESULT_BTL_QUIT)
       &&  (action.gen.cmd != BTL_ACTION_ESCAPE)
       ){
+        TAYA_Printf("Break - 0\n");
         break;
       }
       // éÄÇÒÇ≈ÇΩÇÁé¿çsÇµÇ»Ç¢

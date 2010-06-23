@@ -219,7 +219,7 @@ struct _BTL_CLIENT {
 
   u8   fAITrainerBGMChanged : 1;
   u8   fCommError           : 1;
-  u8   fBallSelected        : 1;
+  u8   fSelActForceFinish   : 1;
   u8   fCmdCheckEnable      : 1;
 
   u8          myChangePokeCnt;
@@ -1564,7 +1564,7 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
   wk->procPokeIdx = 0;
   wk->prevPokeIdx = -1;
   wk->firstPokeIdx = 0;
-  wk->fBallSelected = FALSE;
+  wk->fSelActForceFinish = FALSE;
 
   // ダブル以上の時、「既に選ばれているポケモン」を記録するために初期化をここで行う
   setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
@@ -2470,7 +2470,7 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
         // ボールを選択した場合、残りポケモンのアクション選択は全てスキップさせる
         if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
         {
-          wk->fBallSelected = TRUE;
+          wk->fSelActForceFinish = TRUE;
         }
         selItemWork_Reserve( wk, wk->procPokeIdx, itemID );
         ClientSubProc_Set( wk, selact_CheckFinish );
@@ -2654,9 +2654,8 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
 
   case SEQ_RETURN_ESCAPE:
     BTL_ACTION_SetEscapeParam( wk->procAction );
-    wk->returnDataPtr = &(wk->actionParam[0]);
-    wk->returnDataSize = sizeof(BTL_ACTION_PARAM) * (wk->procPokeIdx + 1);
-    ClientSubProc_Set( wk, selact_Finish );
+    wk->fSelActForceFinish = TRUE;
+    ClientSubProc_Set( wk, selact_CheckFinish );
     break;
 
   }
@@ -2681,16 +2680,25 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
 
       if( wk->procPokeIdx < wk->numCoverPos )
       {
-        if( wk->fBallSelected == FALSE ){
+        if( wk->fSelActForceFinish == FALSE ){
           BTL_N_Printf( DBGSTR_CLIENT_SelectActionBacktoRoot, wk->procPokeIdx );
           ClientSubProc_Set( wk, selact_Root );
           break;
         }
+        // 「にげる」や「バッグ」->「ボール」の場合など、アクション強制選択
         else
         {
+          BTL_POKEPARAM* bpp;
+          BTL_ACTION_PARAM* action;
+
           while( wk->procPokeIdx < wk->numCoverPos )
           {
-            BTL_ACTION_SetNULL( &(wk->actionParam[wk->procPokeIdx++]) );
+            bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+            action = &(wk->actionParam[wk->procPokeIdx]);
+            if( !checkActionForceSet(wk, bpp, action) ){
+              BTL_ACTION_SetNULL( &(wk->actionParam[wk->procPokeIdx]) );
+            }
+            wk->procPokeIdx++;
           }
         }
       }
