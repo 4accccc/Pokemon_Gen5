@@ -101,6 +101,9 @@ struct  _BTLV_MCSS
   u32             henge_flag          :1;     //変化した
   u32             push_vanish_flag    :1;     //バニッシュフラグのプッシュ領域
   u32                                 :21;
+  int             evy;
+  int             evy_dir;
+  int             evy_wait;
 };
 
 struct _BTLV_MCSS_WORK
@@ -122,9 +125,6 @@ struct _BTLV_MCSS_WORK
   u32             mcss_tcb_blink_execute;
   u32             mcss_tcb_alpha_execute;
   u32             mcss_tcb_mosaic_execute;
-  int             evy;
-  int             evy_dir;
-  int             evy_wait;
 
   int             proj;
 
@@ -461,6 +461,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
           int index = BTLV_MCSS_GetIndex( bmw, pos );
           int color;
           int sick_anm;
+          BOOL  set_sick_palette = FALSE;
 
           //エフェクト起動中にパレットフェードが呼ばれているなら、エフェクト終了まで、状態異常パレットフェードを止める
           if( BTLV_EFFECT_CheckExecute() && ( bmw->btlv_mcss[ index ].set_pltt_fade_flag ) )
@@ -479,17 +480,18 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
 
           if( bmw->btlv_mcss[ index ].sick_set_flag == 1 )
           { 
-            if( bmw->evy_dir == 0 )
+            if( bmw->btlv_mcss[ index ].evy_dir == 0 )
             { 
-              bmw->evy_dir = 1;
+              bmw->btlv_mcss[ index ].evy_dir = 1;
             }
-            if( bmw->evy_wait++ > BTLV_MCSS_EVY_WAIT )
+            if( ( bmw->btlv_mcss[ index ].evy_wait++ > BTLV_MCSS_EVY_WAIT ) && ( set_sick_palette == FALSE ) )
             { 
-              bmw->evy_wait = 0;
-              bmw->evy += bmw->evy_dir;
-              if( ( bmw->evy == 0 ) || ( bmw->evy == BTLV_MCSS_EVY_MAX ) )
+              set_sick_palette = TRUE;
+              bmw->btlv_mcss[ index ].evy_wait = 0;
+              bmw->btlv_mcss[ index ].evy += bmw->btlv_mcss[ index ].evy_dir;
+              if( ( bmw->btlv_mcss[ index ].evy == 0 ) || ( bmw->btlv_mcss[ index ].evy == BTLV_MCSS_EVY_MAX ) )
               { 
-                bmw->evy_dir *= -1;
+                bmw->btlv_mcss[ index ].evy_dir *= -1;
               }
             }
           }
@@ -505,26 +507,38 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_MAHI:        // 麻痺
-              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 15, 0 ) );
+              if( set_sick_palette == TRUE )
+              { 
+                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->btlv_mcss[ index ].evy, GX_RGB( 15, 15, 0 ) );
+              }
               BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
               BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_KOORI:       // 氷
-              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 15, 31 ) );
+              if( set_sick_palette == TRUE )
+              { 
+                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 15, 31 ) );
+              }
               BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
               BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_ON );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_YAKEDO:      // 火傷
-              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 0, 0 ) );
+              if( set_sick_palette == TRUE )
+              { 
+                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->btlv_mcss[ index ].evy, GX_RGB( 15, 0, 0 ) );
+              }
               BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
               BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_DOKU:        // 毒
             case APP_COMMON_ST_ICON_DOKUDOKU:    // どくどく
-              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 0, 15 ) );
+              if( set_sick_palette == TRUE )
+              { 
+                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->btlv_mcss[ index ].evy, GX_RGB( 15, 0, 15 ) );
+              }
               BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
               BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
@@ -538,9 +552,9 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
                 BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
                 BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
                 bmw->btlv_mcss[ index ].sick_set_flag = 0;
-                bmw->evy_dir = 0;
-                bmw->evy = 0;
-                bmw->evy_wait = 0;
+                bmw->btlv_mcss[ index ].evy_dir = 0;
+                bmw->btlv_mcss[ index ].evy = 0;
+                bmw->btlv_mcss[ index ].evy_wait = 0;
               }
               break;
             }
@@ -3027,7 +3041,7 @@ static  void  TCB_BTLV_MCSS_MoveSin( GFL_TCB *tcb, void *work )
 {
   BTLV_MCSS_MOVE_SIN_PARAM*  bmmsp = ( BTLV_MCSS_MOVE_SIN_PARAM * )work;
   BTLV_MCSS_WORK *bmw = bmmsp->bmw;
-  VecFx32 pos;
+  VecFx32 pos = { 0, 0, 0 };
   int   idx;
   fx32  value;
   int   index = BTLV_MCSS_GetIndex( bmw, bmmsp->position );
@@ -3047,23 +3061,23 @@ static  void  TCB_BTLV_MCSS_MoveSin( GFL_TCB *tcb, void *work )
   value = FX_F32_TO_FX32( FX_FX16_TO_F32( FX_SinIdx( idx ) ) );
   value = FX_Mul( value, bmmsp->radius );
 
-  pos.x = bmmsp->pos.x;
-  pos.y = bmmsp->pos.y;
-  pos.z = bmmsp->pos.z;
-
   if( bmmsp->dir )
   {
-    pos.y += value;
+    pos.y = value;
   }
   else
   {
-    pos.x += value;
+    pos.x = value;
   }
 
-  MCSS_SetPosition( bmw->btlv_mcss[ index ].mcss, &pos );
+  MCSS_SetOfsPosition( bmw->btlv_mcss[ index ].mcss, &pos );
 
   if( --bmmsp->frame == 0 )
   {
+    pos.x = 0;
+    pos.y = 0;
+    pos.z = 0;
+    MCSS_SetOfsPosition( bmw->btlv_mcss[ index ].mcss, &pos );
     BTLV_EFFECT_FreeTCB( tcb );
   }
 }
