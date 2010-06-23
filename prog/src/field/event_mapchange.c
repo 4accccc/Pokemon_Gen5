@@ -415,6 +415,10 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
     
 #ifdef  PLAYABLE_VERSION  //試遊台バージョン対応のため、初期位置を変更
     LOCATION_SetDefaultPos(&fmw->loc_req, ZONE_ID_C07);
+    LOCATION_SetDirect( &fmw->loc_req, ZONE_ID_C07, EXIT_DIR_DOWN,
+        173 * FX32_ONE * FIELD_CONST_GRID_SIZE,
+        0   * FX32_ONE * FIELD_CONST_GRID_SIZE,
+        178 * FX32_ONE * FIELD_CONST_GRID_SIZE );
 #else
     LOCATION_SetDefaultPos(&fmw->loc_req, gameInitWork->mapid);
 #endif
