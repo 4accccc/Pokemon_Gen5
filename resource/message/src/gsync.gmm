@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-06-22T12:43:53"/>
+	<create user="ohno" host="W00141" date="2010-06-23T11:41:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -479,9 +479,9 @@
 
 	<row id="GSYNC_015">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
-レベルが　[2:01:２桁:1]アップしました</language>
+レベルが[2:01:２桁:1]アップしました</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-レベルが　[2:01:２桁:1]アップしました</language>
+レベルが[2:01:２桁:1]アップしました</language>
 	</row>
 
 	<row id="GSYNC_016">
