@@ -7264,6 +7264,9 @@ static u32 FInfo_Input( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRA
     p_wk->rep = FALSE;
   }
 */
+	if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == FALSE ){
+		return SEQ_FINFO_MAIN;
+	}
 
   ret = FInfoInput_Touch(p_wk, p_data, p_draw, &touch_f);
   if(touch_f){
