@@ -82,41 +82,49 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     //ROMの識別を行う
     CARDRomHeader *headerData;
     s32 lockID = OS_GetLockID();
-
+    BOOL isPullCard = FALSE;
+    
     GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
     CARD_LockRom( (u16)lockID );
-    CARD_CheckPulledOut();  //抜き検出
-    headerData = (CARDRomHeader*)CARD_GetRomHeader();
+    isPullCard = CARD_IsPulledOut();
+    //CARD_CheckPulledOut();  //抜き検出
+    if( isPullCard == FALSE )
+    {
+      headerData = (CARDRomHeader*)CARD_GetRomHeader();
+    }
     CARD_UnlockRom( (u16)lockID );
     OS_ReleaseLockID( (u16)lockID );
     
-    MB_DATA_TPrintf("RomName[%s]\n",headerData->game_name);
-    
-    if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 )
+    if( isPullCard == FALSE )
     {
-      dataWork->cardType = CARD_TYPE_DP;
+      MB_DATA_TPrintf("RomName[%s]\n",headerData->game_name);
+      
+      if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
+        STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 )
+      {
+        dataWork->cardType = CARD_TYPE_DP;
+      }
+      else if( STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 )
+      {
+        dataWork->cardType = CARD_TYPE_PT;
+      }
+      else if( STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
+        STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 )
+      {
+        dataWork->cardType = CARD_TYPE_GS;
+      }
+  #if PM_DEBUG
+      else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
+               STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
+               STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
+               STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
+      {
+        //MBでバグROMかsrl直起動
+        dataWork->isDummyCard = TRUE;
+        dataWork->cardType = CARD_TYPE_DUMMY;
+      }
+  #endif
     }
-    else if( STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 )
-    {
-      dataWork->cardType = CARD_TYPE_PT;
-    }
-    else if( STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 )
-    {
-      dataWork->cardType = CARD_TYPE_GS;
-    }
-#if PM_DEBUG
-    else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
-             STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
-             STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
-             STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
-    {
-      //MBでバグROMかsrl直起動
-      dataWork->isDummyCard = TRUE;
-      dataWork->cardType = CARD_TYPE_DUMMY;
-    }
-#endif
   }
   
   return dataWork;
