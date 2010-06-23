@@ -5274,6 +5274,25 @@ static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
 
 //----------------------------------------------------------------------------
 /**
+ *  @brief  友達登録キー取得
+ *
+ *  @param  p_wk    ワーク
+ *  @param  p_data    データ
+ */
+//-----------------------------------------------------------------------------
+static u64 FList_GetFriendKey( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DATA * p_data )
+{
+	WIFI_LIST * p_wifilist;
+	DWCFriendData * p_frienddata;
+
+	p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData);
+	p_frienddata = WifiList_GetDwcDataPtr( p_wifilist, p_data->idx.fridx[FList_FRIdxGet(p_wk)] );
+
+	return DWC_GetFriendKey( p_frienddata );
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  メニュー表示  初期化
  *
  *  @param  p_wk    ワーク
@@ -5304,7 +5323,11 @@ static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
 	wk.heapId   = heapID;
 	wk.itemNum  = 4;
 	if( sex == PM_NEUTRAL ){
-		wk.itemWork = p_wk->list2;
+		if( FList_GetFriendKey( p_wk, p_data ) != 0 ){
+			wk.itemWork = p_wk->list2;
+		}else{
+			wk.itemWork = p_wk->list1;
+		}
 		p_wk->listType = 1;
 	}else{
 		wk.itemWork = p_wk->list1;
@@ -5391,18 +5414,11 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
 //-----------------------------------------------------------------------------
 static BOOL FListSeq_CodeInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
-  WIFI_LIST* p_wifilist;
-  DWCFriendData* p_frienddata;
-  u64 code;
-  u32 listidx;
+	u64	code = FList_GetFriendKey( p_wk, p_data );
 
-  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
-  listidx = FList_FRIdxGet( p_wk );
-  p_frienddata = WifiList_GetDwcDataPtr( p_wifilist,
-      p_data->idx.fridx[ listidx ] );
-  code = DWC_GetFriendKey( p_frienddata );
-	Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[ listidx ], heapID );
-  if(code!=0){
+	Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[FList_FRIdxGet(p_wk)], heapID );
+
+	if( code != 0 ){
     // コード表示
     Draw_FriendCodeSetWordset( p_draw, code );
     FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_32, heapID );
