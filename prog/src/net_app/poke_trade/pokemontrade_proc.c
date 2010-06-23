@@ -2695,7 +2695,9 @@ static void _endWaitState(POKEMON_TRADE_WORK* pWork)
     case 1:
       POKETRADE_MESSAGE_WindowClear(pWork);
       _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
+      pWork->oldLine = -1;
       IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//Ä•`‰æ BTS6400
+
       POKEMONTRADE_2D_AlphaSet(pWork);
       break;
     }
@@ -2750,6 +2752,8 @@ static void _recvEndReqFunc2(POKEMON_TRADE_WORK *pWork)
     int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
     POKETRADE_MESSAGE_AppMenuOpenCustom(pWork,msg,elementof(msg),32,12);
   }
+  pWork->oldLine = -1;
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//Ä•`‰æ BTS6400
   _CHANGE_STATE(pWork, _endWaitState);
 }
 
