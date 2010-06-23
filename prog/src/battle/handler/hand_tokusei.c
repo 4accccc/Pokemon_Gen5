@@ -1693,12 +1693,9 @@ static void handler_FlowerGift_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 // ポケ入場・とくせい取得後ハンドラ
 static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[0] )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-    {
-      handler_FlowerGift_MemberInComp( myHandle, flowWk, pokeID, work );
-    }
+    handler_FlowerGift_MemberInComp( myHandle, flowWk, pokeID, work );
   }
 }
 /**
@@ -4920,14 +4917,11 @@ static void handler_Tenkiya_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   work[0] = 1;
 }
 // ポケ入場ハンドラ
-static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Tenkiya_GetTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[0] )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-    {
-      handler_Tenkiya_MemberInComp( myHandle, flowWk, pokeID, work );
-    }
+    handler_Tenkiya_MemberInComp( myHandle, flowWk, pokeID, work );
   }
 }
 // 天候変化ハンドラ
@@ -5019,7 +5013,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN_COMP,        handler_Tenkiya_MemberInComp  },  // ポケ入場ハンドラ
     { BTL_EVENT_ROTATION_IN,           handler_Tenkiya_MemberInComp  },
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_MemberIn  },  // とくせい書き換え直後ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_GetTok    },  // とくせい書き換え直後ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Tenkiya_ChangeTok },  // とくせい書き換え直前ハンドラ
     { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_TokOff    },  // いえき確定ハンドラ
     { BTL_EVENT_NOTIFY_AIRLOCK,        handler_Tenkiya_AirLock   },  // エアロック通知ハンドラ
