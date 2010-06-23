@@ -2251,8 +2251,11 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 			tlw->image_p );
 	
 		GFL_HEAP_FreeMemory( tlw->pBufChar );
-	  tlw->pBufChar = NULL;
-    return;
+    if( tlw->mcss->mosaic == 0 )
+    { 
+	    tlw->pBufChar = NULL;
+      return;
+    }
 	}
 
 	if( tlw->mcss )
