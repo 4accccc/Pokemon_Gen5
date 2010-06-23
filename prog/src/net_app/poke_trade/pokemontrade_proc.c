@@ -87,6 +87,7 @@ static void _endWaitState(POKEMON_TRADE_WORK* pWork);
 static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork);
 static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _changeFinish(POKEMON_TRADE_WORK* pWork);
+static void _networkFriendsStandbyWait3(POKEMON_TRADE_WORK* pWork);
 static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork);
 static BOOL _IsBothPokemonSelect(POKEMON_TRADE_WORK* pWork,int boxno , int selectIndex);
 static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork);
@@ -1466,12 +1467,10 @@ static void _networkFriendsStandbyWaitFadeout(POKEMON_TRADE_WORK* pWork)
     G2_BlendNone();
     POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
     POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
-
     _PokemonIconRenew(pWork);
     WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-
-    _CHANGE_STATE(pWork, _networkFriendsStandbyWait2);
+    _CHANGE_STATE(pWork, _networkFriendsStandbyWait3);
   }
 }
 
@@ -1595,6 +1594,24 @@ static void _changePokemonSendData(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+
+//‚±‚¤‚©‚ñ‚É‚¾‚· ’ÊM‘ŠŽè‚Ì€”õ‘Ò‚¿
+static void _networkFriendsStandbyWait3(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBufEx );
+    for(i=0;i<2;i++){
+      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
+      WORDSET_RegisterPokeNickName( pWork->pWordSet, i,  pp );
+    }
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+  _CHANGE_STATE(pWork,_networkFriendsStandbyWait2);
+}
+
+
 //‚±‚¤‚©‚ñ‚É‚¾‚·@’ÊM‘ŠŽè‚Ì€”õ‘Ò‚¿
 static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
 {
@@ -1666,14 +1683,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
 
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_SINGLECHANGE) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_SINGLECHANGE)){
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBufEx );
-    for(i=0;i<2;i++){
-      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
-      WORDSET_RegisterPokeNickName( pWork->pWordSet, i,  pp );
-    }
-    WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    _CHANGE_STATE(pWork,_networkFriendsStandbyWait2);
+    _CHANGE_STATE(pWork,_networkFriendsStandbyWait3);
     return;
   }
   else if((pWork->changeFactor[myID]==POKETRADE_FACTOR_END) &&
