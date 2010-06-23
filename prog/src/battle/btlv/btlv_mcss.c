@@ -3120,6 +3120,8 @@ static  void  TCB_BTLV_MCSS_Mosaic( GFL_TCB *tcb, void *work )
   BTLV_MCSS_SetMosaic( bmw, bmtw->position, bmtw->now_value.x >> FX32_SHIFT );
   if( ret == TRUE )
   {
+    //モザイク処理でコールバックも初期化されているので再セット
+    MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, index, BTLV_MCSS_CallBackFunctorFrame, 1 );
     BTLV_EFFECT_FreeTCB( tcb );
   }
 }
