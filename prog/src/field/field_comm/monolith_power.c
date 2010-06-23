@@ -589,7 +589,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
           GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(appwk->parent->gsys)), 
           appwk->parent->palace_area);
       }
-      appwk->common->power_eqp_update = TRUE;
+      //appwk->common->power_eqp_update = TRUE; ‚à‚¤‘Þo‚·‚é‚Ì‚ÅXV‚µ‚È‚¢
       mpw->decide_cursor_pos = _CURSOR_POS_NONE;
       MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
       MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
