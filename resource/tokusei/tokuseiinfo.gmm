@@ -945,9 +945,9 @@
 	</row>
 
 	<row id="TOKUSEIINFO_079">
-		<language name="JPN" width="216">あいての　せいべつが
+		<language name="JPN" width="216">あいてと　せいべつが
 おなじだと　つよくなる。</language>
-		<language name="JPN_KANJI" width="216">相手の　性別が
+		<language name="JPN_KANJI" width="216">相手と　性別が
 同じだと　強くなる。</language>
 	</row>
 
@@ -1197,10 +1197,10 @@
 	</row>
 
 	<row id="TOKUSEIINFO_115">
-		<language name="JPN" width="216">てんきが　あられのとき
-ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="216">天気が　あられのとき
-ＨＰを　回復する。</language>
+		<language name="JPN" width="216">あられのとき　HPを
+すこしずつ　かいふく。</language>
+		<language name="JPN_KANJI" width="216">あられのとき　ＨＰを
+少しずつ　回復。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_116">
