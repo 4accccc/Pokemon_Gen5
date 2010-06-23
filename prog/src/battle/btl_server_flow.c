@@ -5792,6 +5792,7 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   }
 
 //  wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
+  if( !fDelayAttack )
   wazaEffCtrl_SetEnableDummy( wk->wazaEffCtrl );
   scPut_WazaEffect( wk, wazaParam->wazaID, wk->wazaEffCtrl, que_reserve_pos );
 
@@ -15176,15 +15177,18 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
   ctrlBackup = *(wk->wazaEffCtrl);
   wazaEffCtrl_Init( wk->wazaEffCtrl );
   wazaEffCtrl_Setup( wk->wazaEffCtrl, wk, attacker, wk->psetTmp );
+  wazaEffCtrl_SetEffectIndex( wk->wazaEffCtrl, BTLV_WAZAEFF_DELAY_ATTACK );
 
   scproc_Fight_Damage_Root( wk, &wazaParam, attacker, wk->psetTmp, &wk->dmgAffRec, TRUE );
 
   // ワザ効果あり確定→演出表示コマンド生成などへ
+  #if 0
   result = wazaEffCtrl_IsEnable( wk->wazaEffCtrl );
   if( result ){
     wazaEffCtrl_SetEffectIndex( wk->wazaEffCtrl, BTLV_WAZAEFF_DELAY_ATTACK );
     scPut_WazaEffect( wk, wazaParam.wazaID, wk->wazaEffCtrl, que_reserve_pos );
   }
+  #endif
 
   *(wk->wazaEffCtrl) = ctrlBackup;
   return result;
