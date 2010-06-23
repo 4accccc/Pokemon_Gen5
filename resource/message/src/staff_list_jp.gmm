@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-17T17:42:29"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-19T14:36:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -199,7 +199,7 @@
 			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="192" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1701" top="181" right="2280" bottom="809" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="571"/>
@@ -1329,8 +1329,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_187">
-		<language name="JPN" width="256">Wi-Fiサーバ　かいはつ</language>
-		<language name="JPN_KANJI" width="256">Wi-Fiサーバ　かいはつ</language>
+		<language name="JPN" width="256">Wi-Fi　サーバー　かいはつ</language>
+		<language name="JPN_KANJI" width="256">Wi-Fi　サーバー　かいはつ</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_188">
