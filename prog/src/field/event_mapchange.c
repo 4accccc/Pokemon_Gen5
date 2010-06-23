@@ -2290,6 +2290,11 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
     LOCATION loc;
     //覚えておいた戻り先をそのまま代入
     loc = *(GAMEDATA_GetPalaceReturnLocation( gamedata ) );
+    //WF/BCの場合は、デフォルト位置（ポケセン前）に戻す
+    if ( ZONEDATA_IsWfbc( loc.zone_id ) == TRUE )
+    { 
+      LOCATION_SetDefaultPos(&loc, loc.zone_id);
+    }
     event = EVENT_ChangeMapPalace( gameSystem, fieldWork, &loc );
   }
 #endif
