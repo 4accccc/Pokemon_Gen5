@@ -1207,59 +1207,63 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	IRC_RANKING_WORK	*p_wk	= p_param;
 	u32 sync;
 
-	//キー入力による移動
-	if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_UP )
-	{	
-		fx32 rate;
-		if( ACLR_SCROLL_KEY_MIN < FX32_CONST(sync) )
-		{	
-			rate	= FX_Div( (FX32_CONST(sync) - ACLR_SCROLL_KEY_MIN), ACLR_SCROLL_KEY_DIF );
-			ACLR_SetAclr( &p_wk->aclr, FX_Mul( rate	, ACLR_SCROLL_DISTANCE_MAX ), ACLR_SCROLL_KEY_MOVE_ACLR_SYNC );
-		}
-		else
-		{	
-			ACLR_SetAclr( &p_wk->aclr, ACLR_SCROLL_KEY_MOVE_INIT_DISTANCE, ACLR_SCROLL_KEY_MOVE_INIT_SYNC );
-		}
-	}
-	else if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_DOWN )
-	{	
-		fx32 rate;
-		if( ACLR_SCROLL_KEY_MIN < FX32_CONST(sync) )
-		{	
-			rate	= FX_Div( (FX32_CONST(sync) - ACLR_SCROLL_KEY_MIN), ACLR_SCROLL_KEY_DIF );
-			ACLR_SetAclr( &p_wk->aclr, -FX_Mul( rate, ACLR_SCROLL_DISTANCE_MAX ), ACLR_SCROLL_KEY_MOVE_ACLR_SYNC );
-		}
-		else
-		{	
-			ACLR_SetAclr( &p_wk->aclr, -ACLR_SCROLL_KEY_MOVE_INIT_DISTANCE, ACLR_SCROLL_KEY_MOVE_INIT_SYNC );
-		}
-	}
-	else
-	//タッチによる移動
-	{	
-    GFL_POINT drag_now;
-		VecFx32 dist;
-		fx32 distance;
-		u32		sync;
+  if( !APPBAR_IsStartAnime( p_wk->p_appbar ) )
+  {
 
-		static const VecFx32 sc_up_norm	= 
-		{
-			0, FX32_ONE, 0
-		};
+    //キー入力による移動
+    if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_UP )
+    {	
+      fx32 rate;
+      if( ACLR_SCROLL_KEY_MIN < FX32_CONST(sync) )
+      {	
+        rate	= FX_Div( (FX32_CONST(sync) - ACLR_SCROLL_KEY_MIN), ACLR_SCROLL_KEY_DIF );
+        ACLR_SetAclr( &p_wk->aclr, FX_Mul( rate	, ACLR_SCROLL_DISTANCE_MAX ), ACLR_SCROLL_KEY_MOVE_ACLR_SYNC );
+      }
+      else
+      {	
+        ACLR_SetAclr( &p_wk->aclr, ACLR_SCROLL_KEY_MOVE_INIT_DISTANCE, ACLR_SCROLL_KEY_MOVE_INIT_SYNC );
+      }
+    }
+    else if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_DOWN )
+    {	
+      fx32 rate;
+      if( ACLR_SCROLL_KEY_MIN < FX32_CONST(sync) )
+      {	
+        rate	= FX_Div( (FX32_CONST(sync) - ACLR_SCROLL_KEY_MIN), ACLR_SCROLL_KEY_DIF );
+        ACLR_SetAclr( &p_wk->aclr, -FX_Mul( rate, ACLR_SCROLL_DISTANCE_MAX ), ACLR_SCROLL_KEY_MOVE_ACLR_SYNC );
+      }
+      else
+      {	
+        ACLR_SetAclr( &p_wk->aclr, -ACLR_SCROLL_KEY_MOVE_INIT_DISTANCE, ACLR_SCROLL_KEY_MOVE_INIT_SYNC );
+      }
+    }
+    else
+    //タッチによる移動
+    {	
+      GFL_POINT drag_now;
+      VecFx32 dist;
+      fx32 distance;
+      u32		sync;
 
-		//ドラッグによる移動
-		if( UI_GetDrag( &p_wk->ui, NULL, NULL, &drag_now ) )
-		{	
-      SCROLL_AddPos( &p_wk->scroll, -drag_now.y );
-			ACLR_Stop( &p_wk->aclr );
-		}
-		//はじきにより移動		
-		else if( UI_GetFlik( &p_wk->ui, NULL, NULL, &dist, &sync ) )
-		{	
-			distance	= VEC_DotProduct( &sc_up_norm, &dist );
-			ACLR_SetAclr( &p_wk->aclr, distance, sync );
-		}
-	}
+      static const VecFx32 sc_up_norm	= 
+      {
+        0, FX32_ONE, 0
+      };
+
+      //ドラッグによる移動
+      if( UI_GetDrag( &p_wk->ui, NULL, NULL, &drag_now ) )
+      {	
+        SCROLL_AddPos( &p_wk->scroll, -drag_now.y );
+        ACLR_Stop( &p_wk->aclr );
+      }
+      //はじきにより移動		
+      else if( UI_GetFlik( &p_wk->ui, NULL, NULL, &dist, &sync ) )
+      {	
+        distance	= VEC_DotProduct( &sc_up_norm, &dist );
+        ACLR_SetAclr( &p_wk->aclr, distance, sync );
+      }
+    }
+  }
 
 	//加速可能ならば移動
 	if( ACLR_IsExist(&p_wk->aclr) )
