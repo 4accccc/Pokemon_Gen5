@@ -12,7 +12,7 @@
 //============================================
 
 static const DEMO3D_SCENE_DATA data_n_legend_meat_w_scene = {
-	NARC_data_demo3d_n_legend_meat_w_camera_bin,	///<カメラID
+	NARC_data_demo3d_n_legend_meet_w02_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
@@ -43,10 +43,9 @@ static const DEMO3D_SCENE_DATA data_n_legend_meat_w_scene = {
 
 static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_meat_w_data[] = {
  { DEMO3D_CMD_TYPE_SE_PLAY, 80, { SEQ_SE_MEET_03, 70, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 302, { SEQ_SE_MEET_04, 127, 0, -500, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 490-60, { MASK_MAIN_DISPLAY, 60, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 550-60, { MASK_MAIN_DISPLAY, 60, 16, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_STOP, 549, { SEQ_SE_MEET_03, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SE_PLAY, 250, { SEQ_SE_MEET_04, 127, 0, -500, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SE_STOP, 290, { SEQ_SE_MEET_03, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 300-3, { MASK_MAIN_DISPLAY, 3, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -64,46 +63,46 @@ static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_meat_w_end_data[] = {
 //============================================
 
 ///==================================
-/// n_legend_meat_w_01 Unit File Resource
+/// n_legend_meet_w02_01 Unit File Resource
 
-static const u16 res_n_legend_meat_w_file_n_legend_meat_w_01[] = {
- NARC_data_demo3d_n_legend_meat_w_01_nsbmd,
- NARC_data_demo3d_n_legend_meat_w_01_nsbtp,
- NARC_data_demo3d_n_legend_meat_w_01_nsbta,
- NARC_data_demo3d_n_legend_meat_w_01_nsbca,
- NARC_data_demo3d_n_legend_meat_w_01_nsbma,
+static const u16 res_n_legend_meat_w_file_n_legend_meet_w02_01[] = {
+ NARC_data_demo3d_n_legend_meet_w02_01_nsbmd,
+ NARC_data_demo3d_n_legend_meet_w02_01_nsbta,
+ NARC_data_demo3d_n_legend_meet_w02_01_nsbca,
+ NARC_data_demo3d_n_legend_meet_w02_01_nsbma,
 };
 
-static const DEMO3D_FILE_UNIT res_n_legend_meat_w_file_unit_n_legend_meat_w_01[] = {
- { res_n_legend_meat_w_file_n_legend_meat_w_01, 5 },
+static const DEMO3D_FILE_UNIT res_n_legend_meat_w_file_unit_n_legend_meet_w02_01[] = {
+ { res_n_legend_meat_w_file_n_legend_meet_w02_01, 4 },
 };
 
 ///==================================
-/// n_legend_meat_w_02 Unit File Resource
+/// n_legend_meet_w02_02 Unit File Resource
 
-static const u16 res_n_legend_meat_w_file_n_legend_meat_w_02[] = {
- NARC_data_demo3d_n_legend_meat_w_02_nsbmd,
- NARC_data_demo3d_n_legend_meat_w_02_nsbca,
+static const u16 res_n_legend_meat_w_file_n_legend_meet_w02_02[] = {
+ NARC_data_demo3d_n_legend_meet_w02_02_nsbmd,
+ NARC_data_demo3d_n_legend_meet_w02_02_nsbtp,
+ NARC_data_demo3d_n_legend_meet_w02_02_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_n_legend_meat_w_file_unit_n_legend_meat_w_02[] = {
- { res_n_legend_meat_w_file_n_legend_meat_w_02, 2 },
+static const DEMO3D_FILE_UNIT res_n_legend_meat_w_file_unit_n_legend_meet_w02_02[] = {
+ { res_n_legend_meat_w_file_n_legend_meet_w02_02, 3 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_meat_w_file_unit_n_legend_meat_w_01_tbl[] = {
- { res_n_legend_meat_w_file_unit_n_legend_meat_w_01, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_n_legend_meat_w_file_unit_n_legend_meet_w02_01_tbl[] = {
+ { res_n_legend_meat_w_file_unit_n_legend_meet_w02_01, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_meat_w_file_unit_n_legend_meat_w_02_tbl[] = {
- { res_n_legend_meat_w_file_unit_n_legend_meat_w_02, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_n_legend_meat_w_file_unit_n_legend_meet_w02_02_tbl[] = {
+ { res_n_legend_meat_w_file_unit_n_legend_meet_w02_02, 1 },
 };
 
 static const DEMO3D_SCENE_UNIT res_n_legend_meat_w_scene_unit[] = {
- { res_n_legend_meat_w_file_unit_n_legend_meat_w_01_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_n_legend_meat_w_file_unit_n_legend_meat_w_02_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_n_legend_meat_w_file_unit_n_legend_meet_w02_01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_n_legend_meat_w_file_unit_n_legend_meet_w02_02_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
