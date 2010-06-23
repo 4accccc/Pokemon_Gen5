@@ -422,6 +422,7 @@ static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
       }
       else
       { 
+        MYITEM_SubItem( PDC_GetMyItem( pmw->psp ), pmw->bagData.ret_item, 1, pmw->heapID );
         pmw->seq_no = 4;
       }
     }
