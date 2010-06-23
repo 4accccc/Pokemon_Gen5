@@ -1536,25 +1536,7 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         MYSTERY_MENU_SetBlink( p_wk->p_menu, 0, FALSE );
       }
-      if( bit & (GAME_COMM_STATUS_BIT_WIFI|GAME_COMM_STATUS_BIT_WIFI_ZONE|GAME_COMM_STATUS_BIT_WIFI_FREE|GAME_COMM_STATUS_BIT_WIFI_LOCK) )
-      { 
-        MYSTERY_MENU_SetBlink( p_wk->p_menu, 1, TRUE );
-      }
-      else
-      { 
-        MYSTERY_MENU_SetBlink( p_wk->p_menu, 1, FALSE );
-      }
-#if 0
-      //ÔŠOü‚Í“_–Å‚µ‚È‚¢‚±‚Æ‚É‚È‚è‚Ü‚µ‚½
-      if( bit & GAME_COMM_STATUS_BIT_IRC )
-      { 
-        MYSTERY_MENU_SetBlink( p_wk->p_menu, 2, TRUE );
-      }
-      else
-      { 
-        MYSTERY_MENU_SetBlink( p_wk->p_menu, 2, FALSE );
-      }
-#endif
+
       //‘I‘ð
       ret = UTIL_MainMenu( p_wk ); 
       if( ret != MYSTERY_MENU_SELECT_NULL )
