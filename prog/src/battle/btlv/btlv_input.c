@@ -2539,6 +2539,8 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR, 
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
     //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
