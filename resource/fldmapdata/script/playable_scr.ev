@@ -9,7 +9,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_playable_scr.h"
-  //.include  "d13.h"
+  .include  "c07.h"
+  .include  "d08.h"
+  .include  "d08r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -18,20 +20,582 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_playable_dummy
+_EVENT_DATA    ev_pos_c07_support_01
+_EVENT_DATA    ev_pos_c07_ambrella_01
+_EVENT_DATA    ev_pos_c07_assistentm_01
+_EVENT_DATA    ev_pos_c07_rangerw_01
+_EVENT_DATA    ev_bg_c07_board_01
+_EVENT_DATA    ev_c07_support_01
+_EVENT_DATA    ev_c07_ambrella_01
+_EVENT_DATA    ev_c07_assistentm_01
+_EVENT_DATA    ev_c07_rangerw_01
+_EVENT_DATA    ev_c07_man3_01
+_EVENT_DATA    ev_pos_d08_rival_01
+_EVENT_DATA    ev_d08_rival_01
+_EVENT_DATA    ev_d08r0101_hakase1_01
+_EVENT_DATA    ev_scene_c07_start_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*初回入室時発動イベント：試遊開始                     */
+/**************************************************************/
+EVENT_START   ev_scene_c07_start_01
+	
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_playable_assistantm_01 , C07_ASSISTENTM_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+	
+	//======================================//
+	
+	//C07入室イベント無効
+	$WK_SCENE_C07_PLAYABLE = 1
+	
+	//======================================//
+EVENT_END
+
 
 /**************************************************************/
-//    初期化スクリプト            
+/*POS：サポートPOSイベント                    */
 /**************************************************************/
-//ev_init_playable:
-//  _END
+EVENT_START   ev_pos_c07_support_01
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	_OBJ_ANIME( C07_SUPPORT_01, anm_support_senyou )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 6 )
+	
+	//主人公座標に応じて振り返り
+	SWITCH $POSX
+	CASE 172 THEN
+		_OBJ_ANIME( C07_SUPPORT_01, anm_c07_support_come_x172 )
+		_OBJ_ANIME_WAIT()
+	CASE 173 THEN
+		_OBJ_ANIME( C07_SUPPORT_01, anm_c07_support_come_x173 )
+		_OBJ_ANIME_WAIT()
+	CASE 174 THEN
+		_OBJ_ANIME( C07_SUPPORT_01, anm_c07_support_come_x174 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( C07_SUPPORT_01, anm_c07_support_come_x173 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	//サポート：対戦しよう
+	_BALLOONWIN_OBJMSG( msg_playable_support_01 , C07_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポートと戦闘（持ちタイプで分岐）
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		//最初の３匹で草タイプを選択した時の処理
+		//_TRAINER_BTL_SET( TRID_SUPPORT_04, 0 )
+		_DEBUG_PRINT_WK(0)
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
+		//最初の３匹で炎タイプを選択した時の処理
+		//_TRAINER_BTL_SET( TRID_SUPPORT_05, 0 )
+		_DEBUG_PRINT_WK(1)
+	ELSE
+		//最初の３匹で水タイプを選択した時の処理
+		//_TRAINER_BTL_SET( TRID_SUPPORT_06, 0 )
+		_DEBUG_PRINT_WK(2)
+	ENDIF
+	
+	/*
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+	*/
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	//サポート：わあすごい
+	_BALLOONWIN_OBJMSG( msg_playable_support_02 , C07_SUPPORT_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+	
+	//======================================//
+	
+	//POSイベント無効
+	$WK_SCENE_C07_PLAYABLE = 2
+	
+	//======================================//
+	}
+EVENT_END
+
+//--------------------------------------------------------------
+//	サポート戦：主人公に接近x172
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_support_come_x172
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート戦：主人公に接近x172
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_support_come_x173
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート戦：主人公に接近x172
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_support_come_x174
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// サポート：専用アニメ                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_senyou
+	_ANIME_DATA AC_SUPPORT_ACT0,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*                                                            */
+/*サポート一言メッセージ                    */
 /**************************************************************/
-ev_playable_dummy:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c07_support_01
+	_PLAYER_NAME(0)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_playable_support_02)
+EVENT_END
 
+
+/**************************************************************/
+/*POS：アンブレラストッパー                    */
+/**************************************************************/
+EVENT_START   ev_pos_c07_ambrella_01
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	//主人公の方向を取得
+	DEFINE_LOCAL	LWK_DIR
+	_PLAYER_DIR_GET( LWK_DIR )
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//アニメ：「！」
+	IF $POSX == 179 THEN
+		_OBJ_ANIME( C07_AMBRELLA_01, anm_c07_amblerra_gyoe_01 )
+		//主人公：もしも左向きだったらSTAYWALKしない
+		IF $LWK_DIR != DIR_RIGHT THEN
+			_TIME_WAIT( 20 )
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x172 )
+		ENDIF
+		_OBJ_ANIME_WAIT()
+	ELSIF $POSX >= 180 THEN
+		_OBJ_ANIME( C07_AMBRELLA_01, anm_c07_amblerra_gyoe_02 )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x174 )
+		_OBJ_ANIME_WAIT()
+	ELSE  //左に立ったケースと同じ処理を行う
+		_OBJ_ANIME( C07_AMBRELLA_01, anm_c07_amblerra_gyoe_01 )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x172 )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
+	//アンブレラ：そっちはいきどまり
+	_BALLOONWIN_OBJMSG( msg_playable_ambrella_02 , C07_AMBRELLA_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//一歩戻る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_back_up )
+	_OBJ_ANIME( C07_AMBRELLA_01 ,anm_c07_assistentm_look_up)
+	_OBJ_ANIME_WAIT()
+	}
+EVENT_END
+
+//--------------------------------------------------------------
+//	ストッパー：アンブレラ「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_amblerra_gyoe_01
+	_ANIME_DATA	AC_DIR_L,0
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：アンブレラ「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_amblerra_gyoe_02
+	_ANIME_DATA	AC_DIR_R,0
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*アンブレラ一言メッセージ                    */
+/**************************************************************/
+EVENT_START   ev_c07_ambrella_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_playable_ambrella_01)
+EVENT_END
+
+/**************************************************************/
+/*POS：助手男ストッパー                    */
+/**************************************************************/
+EVENT_START   ev_pos_c07_assistentm_01
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	//主人公の方向を取得
+	DEFINE_LOCAL	LWK_DIR
+	_PLAYER_DIR_GET( LWK_DIR )
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//アニメ：「！」
+	_OBJ_ANIME( C07_ASSISTENTM_01, anm_c07_assistentm_gyoe )
+	_TIME_WAIT( 10 )
+	
+	//主人公座標に応じて振り返り
+	SWITCH $POSX
+	CASE 172 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x172 )
+		_OBJ_ANIME_WAIT()
+	CASE 174 THEN
+		//主人公：もしも左向きだったらSTAYWALKしない
+		IF $LWK_DIR != DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x174 )
+		ENDIF
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //左に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x172 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//アシスタント：そっちじゃないですよ
+	_BALLOONWIN_OBJMSG( msg_playable_assistantm_02 , C07_ASSISTENTM_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//一歩戻る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_back_up )
+	_OBJ_ANIME( C07_ASSISTENTM_01 ,anm_c07_assistentm_look_up)
+	_OBJ_ANIME_WAIT()
+	}
+EVENT_END
+
+//--------------------------------------------------------------
+//	ストッパー：アシスタント「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_assistentm_gyoe
+	_ANIME_DATA	AC_DIR_D,0
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：主人公アシスタントの方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_look_astm_x172
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：主人公アシスタントの方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_look_astm_x174
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：主人公一歩戻る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_back_up
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：アシスタント上を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_assistentm_look_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*助手男一言メッセージ                    */
+/**************************************************************/
+EVENT_START   ev_c07_assistentm_01
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_playable_assistantm_01)
+EVENT_END
+
+/**************************************************************/
+/*POS：ジム前ストッパー                    */
+/**************************************************************/
+EVENT_START   ev_pos_c07_rangerw_01
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公座標に応じて振り返り
+	SWITCH $POSX
+	CASE 171 THEN
+		_OBJ_ANIME( C07_RANGERW_01, anm_c07_rangerw_gyoe_01 )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x172 )
+		_OBJ_ANIME_WAIT()
+	CASE 173 THEN
+		_OBJ_ANIME( C07_RANGERW_01, anm_c07_rangerw_gyoe_02 )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x174 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //左に立ったケースと同じ処理を行う
+		_OBJ_ANIME( C07_RANGERW_01, anm_c07_rangerw_gyoe_01 )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_look_astm_x172 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//レンジャー：ここには
+	_BALLOONWIN_OBJMSG( msg_playable_rangerw_02 , C07_RANGERW_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//一歩戻る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c07_player_back_down )
+	_OBJ_ANIME( C07_RANGERW_01 ,anm_c07_rangerw_look_down)
+	_OBJ_ANIME_WAIT()
+	}
+EVENT_END
+
+//--------------------------------------------------------------
+//	ストッパー：レンジャー「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rangerw_gyoe_01
+	_ANIME_DATA	AC_DIR_L,0
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：レンジャー「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rangerw_gyoe_02
+	_ANIME_DATA	AC_DIR_R,0
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：主人公一歩戻る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_back_down
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：レンジャー下を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rangerw_look_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*ジム前一言メッセージ                    */
+/**************************************************************/
+EVENT_START   ev_c07_rangerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_playable_rangerw_01)
+EVENT_END
+
+/**************************************************************/
+/*民家前一言メッセージ                    */
+/**************************************************************/
+EVENT_START   ev_c07_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_playable_man3_01)
+EVENT_END
+
+/**************************************************************/
+/* ジム看板                                          */
+/**************************************************************/
+EVENT_START   ev_bg_c07_board_01
+	_EASY_BGWIN_MSG( msg_playable_sign_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*POS：ライバル                   */
+/**************************************************************/
+EVENT_START   ev_pos_d08_rival_01
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公座標に応じて振り返り
+	SWITCH $POSX
+	CASE 177 THEN
+		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x177 )
+		_OBJ_ANIME_WAIT()
+	CASE 178 THEN
+		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x178 )
+		_OBJ_ANIME_WAIT()
+	CASE 179 THEN
+		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x179 )
+		_OBJ_ANIME_WAIT()
+	CASE 180 THEN
+		//目の前に立ったのでアニメーションなし
+	CASE 181 THEN
+		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x181 )
+		_OBJ_ANIME_WAIT()
+	CASE 182 THEN
+		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x182 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		//目の前に立ったのでアニメーションなし
+	ENDSWITCH
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	//ライバル：対戦しよう
+	_BALLOONWIN_OBJMSG( msg_playable_rival_01 , D08_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルと戦闘（持ちタイプで分岐）
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		//最初の３匹で草タイプを選択した時の処理
+		//_TRAINER_BTL_SET( TRID_SUPPORT_04, 0 )
+		_DEBUG_PRINT_WK(0)
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
+		//最初の３匹で炎タイプを選択した時の処理
+		//_TRAINER_BTL_SET( TRID_SUPPORT_05, 0 )
+		_DEBUG_PRINT_WK(1)
+	ELSE
+		//最初の３匹で水タイプを選択した時の処理
+		//_TRAINER_BTL_SET( TRID_SUPPORT_06, 0 )
+		_DEBUG_PRINT_WK(2)
+	ENDIF
+	
+	/*
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+	*/
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	//ライバル：なるほどね
+	_BALLOONWIN_OBJMSG( msg_playable_rival_02 , D08_RIVAL_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+	
+	//======================================//
+	
+	//POSイベント無効
+	$WK_SCENE_D08_PLAYABLE = 1
+	
+	//======================================//
+	
+	}
+EVENT_END
+
+//--------------------------------------------------------------
+//	ストッパー：ライバルx177
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d08_rival_come_x177
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：ライバルx178
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d08_rival_come_x178
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：ライバルx179
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d08_rival_come_x179
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：ライバルx181
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d08_rival_come_x181
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：ライバルx182
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d08_rival_come_x182
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*ライバル一言メッセージ                   */
+/**************************************************************/
+EVENT_START   ev_d08_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_playable_rival_02)
+EVENT_END
+
+/**************************************************************/
+/*アララギ娘                  */
+/**************************************************************/
+EVENT_START   ev_d08r0101_hakase1_01
+	/*
+	{
+	//バージョンを取得
+	DEFINE_LOCAL	LCWK_VERSION
+	_GET_ROM_VERSION(LCWK_VERSION)
+	
+	//アララギ：ハーイ！
+	_TALK_OBJ_START()
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_playable_hakase2_01 , D08R0101_HAKASE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME( D08R0101_HAKASE1_01, anm_d08r0101_hakase1_look_up )
+	_OBJ_ANIME_WAIT()
+	
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_playable_hakase2_02 , D08R0101_HAKASE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//アララギ主人公と向き合う
+	_TURN_HERO_SITE()
+	
+	//デモを呼ぶ
+	_DEMO_FADEOUT_BLACK_CALL()
+	
+	//ROMによって、復活するポケモンを変更する
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_W )
+	ELSE
+		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_B )
+	ENDIF
+	}
+	*/
+EVENT_END
+
+//--------------------------------------------------------------
+//	アララギ娘：上を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d08r0101_hakase1_look_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/06/21 17:28:34
+#save date:2010/06/23 18:40:20
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
@@ -9,115 +9,22 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #hold event type:
 1
 #hold event number:
-20
+5
 #event number: 0
 #type
 1
 #ID name
-C07_RIVAL_01
+C07_RANGERW_01
 #OBJ CODE Number
-RIVEL
+RANGERW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_C07_RIVAL_01
+0
 #Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 48 72
-#event number: 1
-#type
-1
-#ID name
-C07_SUPPORT_01
-#OBJ CODE Number
-SUPPORT
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C07_SUPPORT_01
-#Event Script Name
-SCRID_C07_SUPPORT_01
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 48 72
-#event number: 2
-#type
-1
-#ID name
-C07_HAKASE1_01
-#OBJ CODE Number
-HAKASE1
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C07_HAKASE1
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 -4 -520
-#event number: 3
-#type
-1
-#ID name
-C07_LEADER7_01
-#OBJ CODE Number
-LEADER7
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C07_READER7
-#Event Script Name
-SCRID_DUMMY
+SCRID_C07_RANGERW_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -133,39 +40,8 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 48 136
-#event number: 4
-#type
-1
-#ID name
-C07_GIRL2_01
-#OBJ CODE Number
-GIRL2
-#MOVE CODE Number
-MV_DIR_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C07_GIRL2_01
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 48 -136
-#event number: 5
+-56 48 120
+#event number: 1
 #type
 1
 #ID name
@@ -173,7 +49,7 @@ C07_MAN3_01
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_DIR_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -195,146 +71,53 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 48 -392
-#event number: 6
+120 48 120
+#event number: 2
 #type
 1
 #ID name
-C07_MAN2_01
+C07_SUPPORT_01
 #OBJ CODE Number
-MAN2
-#MOVE CODE Number
-MV_RTDL         
-#EVENT TYPE Number
-EV_TYPE_SPINS_L
-#Flag Name
-0
-#Event Script Name
-SCRID_C07_MAN2_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-2
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 48 -168
-#event number: 7
-#type
-1
-#ID name
-C07_WOMAN2_01
-#OBJ CODE Number
-WOMAN2
-#MOVE CODE Number
-MV_RTLU         
-#EVENT TYPE Number
-EV_TYPE_SPINS_L
-#Flag Name
-0
-#Event Script Name
-SCRID_C07_WOMAN2_01
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-2
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 48 -200
-#event number: 8
-#type
-1
-#ID name
-C07_GIRL2_02
-#OBJ CODE Number
-GIRL2
-#MOVE CODE Number
-MV_RTUR         
-#EVENT TYPE Number
-EV_TYPE_SPINS_L
-#Flag Name
-0
-#Event Script Name
-SCRID_C07_GIRL2_02
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-2
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 48 -200
-#event number: 9
-#type
-1
-#ID name
-C07_BOY1_01
-#OBJ CODE Number
-BOY1
-#MOVE CODE Number
-MV_RTRD         
-#EVENT TYPE Number
-EV_TYPE_SPINS_L
-#Flag Name
-0
-#Event Script Name
-SCRID_C07_BOY1_01
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-2
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 48 -168
-#event number: 10
-#type
-1
-#ID name
-C07_NINJA_03
-#OBJ CODE Number
-NINJA
+SUPPORT
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_C07_READER7
+0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C07_SUPPORT_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 48 40
+#event number: 3
+#type
+1
+#ID name
+C07_ASSISTENTM_01
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C07_ASSISTENTM_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -350,256 +133,8 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 48 40
-#event number: 11
-#type
-1
-#ID name
-C07_NINJA_01
-#OBJ CODE Number
-NINJA
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C07_READER7
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 48 88
-#event number: 12
-#type
-1
-#ID name
-C07_NINJA_02
-#OBJ CODE Number
-NINJA
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C07_READER7
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 48 88
-#event number: 13
-#type
-1
-#ID name
-C07_DUMMY_01
-#OBJ CODE Number
-MONSTERBALL
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_FLD_ITEM_79
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-312 0 120
-#event number: 14
-#type
-1
-#ID name
-C07_DUMMY_02
-#OBJ CODE Number
-RANGERM
-#MOVE CODE Number
-MV_LEFT
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 48 8
-#event number: 15
-#type
-1
-#ID name
-C07_FLD_ITEM_01
-#OBJ CODE Number
-MONSTERBALL
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_FLD_ITEM_220
-#Event Script Name
-SCRID_FLD_ITEM_220
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--120 48 -232
-#event number: 16
-#type
-1
-#ID name
-C07_DUMMY_03
-#OBJ CODE Number
-AMBRELLA
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-776 0 -152
-#event number: 17
-#type
-1
-#ID name
-C07_DUMMY_04
-#OBJ CODE Number
-FISHING
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-840 0 -88
-#event number: 18
-#type
-1
-#ID name
-C07_AMBRELLA_02
-#OBJ CODE Number
-AMBRELLA
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C07_AMBRELLA_02
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-424 48 -360
-#event number: 19
+-40 48 -72
+#event number: 4
 #type
 1
 #ID name
@@ -629,7 +164,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 48 120
+72 48 -24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -639,20 +174,20 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-11
+2
 #event number: 0
 #Bg Event Label
 C07_BOARD_01
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
-BG_TALK_DIR_UPDOWN
+BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C07_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -472
+-88 48 104
 #event number: 1
 #Bg Event Label
 C07_BOARD_02
@@ -661,128 +196,11 @@ BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
 BG_TALK_DIR_DOWN
 #Bg Script Name
-SCRID_BG_C07_BOARD_02
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 48 -104
-#event number: 2
-#Bg Event Label
-C07_BOARD_03
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_C07_BOARD_03
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 48 104
-#event number: 3
-#Bg Event Label
-C07_BOARD_04
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_C07_BOARD_03
+SCRID_BG_C07_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
 -24 48 104
-#event number: 4
-#Bg Event Label
-C07_HIDE_ITEM_01
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_124
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-296 0 -760
-#event number: 5
-#Bg Event Label
-C07_HIDE_ITEM_02
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_125
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-344 0 -760
-#event number: 6
-#Bg Event Label
-C07_HIDE_ITEM_03
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_126
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-376 0 -760
-#event number: 7
-#Bg Event Label
-C07_HIDE_ITEM_04
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_078
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 32 -232
-#event number: 8
-#Bg Event Label
-C07_HIDE_ITEM_05
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_077
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-248 -24 -488
-#event number: 9
-#Bg Event Label
-C07_HIDE_ITEM_06
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_171
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-712 48 -312
-#event number: 10
-#Bg Event Label
-C07_HIDE_ITEM_07
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_172
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-744 48 -328
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -792,7 +210,75 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+4
+#event number: 0
+#Pos Event Label
+POS_C07_RANGERW_01
+#Pos Script Name
+SCRID_POS_C07_RANGERW_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 48 120
+#size
+3 1
+#event number: 1
+#Pos Event Label
+POS_C07_ASSISTENTM_01
+#Pos Script Name
+SCRID_POS_C07_ASSISTENTM_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 48 -88
+#size
+3 1
+#event number: 2
+#Pos Event Label
+POS_C07_AMBRELLA_01
+#Pos Script Name
+SCRID_POS_C07_AMBRELLA_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 48 -24
+#size
+4 1
+#event number: 3
+#Pos Event Label
+POS_C07_SUPPORT_01
+#Pos Script Name
+SCRID_POS_C07_SUPPORT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C07_PLAYABLE
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 48 -8
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

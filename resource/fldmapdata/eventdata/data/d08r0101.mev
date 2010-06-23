@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/29 18:41:52
+#save date:2010/06/23 17:17:03
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,39 +9,8 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0101.wms
 #hold event type:
 1
 #hold event number:
-8
+6
 #event number: 0
-#type
-1
-#ID name
-TR_ELITEM_04
-#OBJ CODE Number
-TRAINERM
-#MOVE CODE Number
-MV_RND_UL
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_ELITEM_04
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-4
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 0 -392
-#event number: 1
 #type
 1
 #ID name
@@ -72,7 +41,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 456 0 -168
-#event number: 2
+#event number: 1
 #type
 1
 #ID name
@@ -103,7 +72,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 72 0 -296
-#event number: 3
+#event number: 2
 #type
 1
 #ID name
@@ -134,7 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 88 0 -296
-#event number: 4
+#event number: 3
 #type
 1
 #ID name
@@ -165,7 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 104 0 -296
-#event number: 5
+#event number: 4
 #type
 1
 #ID name
@@ -196,23 +165,23 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 120 0 -296
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
-D08R0101_HAKAIM_01
+D08R0101_HAKASE1_01
 #OBJ CODE Number
-HAKAIM
+HAKASE1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D08R0101_HAKAI
+0
 #Event Script Name
-SCRID_D08R0101_HAKAIM_01
+SCRID_D08R0101_HAKASE1_01
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -226,38 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -488
-#event number: 7
-#type
-1
-#ID name
-D08R0101_FLD_ITEM_01
-#OBJ CODE Number
-MONSTERBALL
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_FLD_ITEM_78
-#Event Script Name
-SCRID_FLD_ITEM_78
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-440 0 -248
+104 0 -472
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -267,20 +205,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Bg Event Label
-D08R0101_HIDE_ITEM_01
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_079
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-280 -8 -136
+0
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

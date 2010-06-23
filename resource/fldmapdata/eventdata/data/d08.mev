@@ -1,5 +1,5 @@
 #event data
-#save date:2010/06/21 17:23:42
+#save date:2010/06/23 18:42:09
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08.wms
 #SECTION START:OBJ_EVENT
@@ -14,17 +14,17 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08.wms
 #type
 1
 #ID name
-D08_HAKASE1_01
+D08_RIVAL_01
 #OBJ CODE Number
-HAKASE1
+RIVEL
 #MOVE CODE Number
-MV_UP
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D08_HAKASE1_01
+0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D08_RIVAL_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 48 -8
+72 48 -40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -60,7 +60,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_D08_RIVAL_01
+#Pos Script Name
+SCRID_POS_D08_RIVAL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D08_PLAYABLE
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 48 -56
+#size
+6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -70,6 +87,23 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Door Event Label
+DOOR_ID_D08_D08R0101_EXIT01
+#Next Zone ID Name
+DOOR_ID_D08_D08R0101_EXIT01
+#Next Door ID Name
+DOOR_ID_D08R0101_D08_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_NONE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 48 24
+#size
+2 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
