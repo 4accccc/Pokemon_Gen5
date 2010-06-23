@@ -530,17 +530,17 @@
 #define FV_T01R0401_RIVAL                  506 /* 0x01fa カノコタウン研究所：ライバル */
 #define FV_T01R0401_SUPPORT                507 /* 0x01fb カノコタウン研究所：サポート */
 #define FV_R01_HAKASE                      508 /* 0x01fc １番道路：アララギ博士 */
-#define FV_R01_RIVAL                       509 /* 0x01fd １番道路：ライバル */
-#define FV_R01_SUPPORT                     510 /* 0x01fe １番道路：サポート */
+		/* not used   509(0x01fd) */
+		/* not used   510(0x01fe) */
 #define FV_T02PC0101_HAKASE                511 /* 0x01ff カラクサタウンＰＣの博士 */
 #define FV_T01R0201_SUPPORT                512 /* 0x0200 サポートの自宅：出発イベントのサポート */
 #define FV_T01_RIVAL                       513 /* 0x0201 研究所前：ストッパーのライバル */
 #define FV_T01_SUPPORT                     514 /* 0x0202 研究所前：サポート */
 #define FV_R01_POKECOUNT_BTL               515 /* 0x0203 １番道路：ポケモン捕獲数勝負（ライバルとサポート） */
-#define FV_R02_RIVAL_01                    516 /* 0x0204 ２番道路：長い草説明イベントのライバル */
+		/* not used   516(0x0204) */
 #define FV_R03_RIVAL_01                    517 /* 0x0205 ３番道路：ライバルと出会い戦闘後イベント */
 #define FV_T02PC0101_SUPPORT               518 /* 0x0206 カラクサタウン：演説イベント終了後 */
-#define FV_T02PC0101_RIVAL                 519 /* 0x0207 カラクサタウン：長草イベント後 */
+#define FV_T02PC0101_RIVAL                 519 /* 0x0207 カラクサタウン：長草イベント後にT02ポケセンに表示 */
 #define FV_T02_HAKASE                      520 /* 0x0208 カラクサタウン：博士のポケセン案内 */
 #define FV_T02_RIVAL                       521 /* 0x0209 カラクサタウン：ライバルのストッパー */
 #define FV_T02_HAKAI                       522 /* 0x020a カラクサタウン：ハカイ団ストッパー */
@@ -548,7 +548,7 @@
 #define FV_T02_NNN                         524 /* 0x020c カラクサタウン：Nとの出会い */
 #define FV_T02_MAN                         525 /* 0x020d カラクサタウン：群集 */
 		/* not used   526(0x020e) */
-#define FV_D01_GYM_LEADER                  527 /* 0x020f 廃墟入り口：ジムリーダー */
+		/* not used   527(0x020f) */
 #define FV_T02_RIVAL_02                    528 /* 0x0210 カラクサタウン：イベント誘導 */
 #define FV_R02_MOTHER                      529 /* 0x0211 ２番道路：ランニングシューズ入手イベントのママ */
 #define FV_C01GYM0101_LEADERS              530 /* 0x0212 C01三つ巴ジム：３兄弟リーダーのうち後から出てくる二人 */
@@ -577,7 +577,7 @@
 #define FV_C04P01_BOSS_01                  553 /* 0x0229 ライモンシティ遊園地：N */
 #define FV_C05_GYMLEADER_01                554 /* 0x022a C05：ジムリーダー達 */
 #define FV_C05_GYMLEADER_02                555 /* 0x022b C05：ジムリーダー達 */
-#define FV_C05_WORKMAN_02                  556 /* 0x022c C05：H02方面ストッパー */
+		/* not used   556(0x022c) */
 #define FV_C05_SAGE_01                     557 /* 0x022d C05：プラズマ団達 */
 #define FV_D05_RIVAL_01                    558 /* 0x022e D05：ライバル */
 #define FV_D05_WORKMAN_01                  559 /* 0x022f D05：workman */
@@ -607,18 +607,18 @@
 #define FV_D06_STOPPER_01                  583 /* 0x0247 D06電気洞窟にあるデンチュラの巣 */
 #define FV_D06R0101_FRIENDS                584 /* 0x0248 D06R0101電気洞窟内部の博士とサポート */
 #define FV_D06R0201_BOSS_01                585 /* 0x0249 D06R0201のN（エヌ）、アイテムを貰う */
-#define FV_D03R0101_SUNGLASSES_01          586 /* 0x024a D03砂漠のサングラス */
+		/* not used   586(0x024a) */
 #define FV_D03R0101_RIVAL_01               587 /* 0x024b D03砂漠のライバル（一人目） */
 #define FV_D03R0101_RIVAL_02               588 /* 0x024c D03砂漠のライバル（二人目） */
 #define FV_D03R0101_CHAMPION_01            589 /* 0x024d D03砂漠のチャンピオン */
 #define FV_D04R0601_EVENT_01               590 /* 0x024e D04遺跡のゲーチス、チャンピオン、ライバル（共有） */
-#define FV_D04R0101_CORN_01                591 /* 0x024f 道路のコーン（ストッパー） */
-#define FV_C03R0801_FUTAGO_01              592 /* 0x0250 遊覧船イベントの双子ちゃん１（左側） */
-#define FV_C03R0801_FUTAGO_02              593 /* 0x0251 遊覧船イベントの双子ちゃん２（右側） */
+		/* not used   591(0x024f) */
+		/* not used   592(0x0250) */
+		/* not used   593(0x0251) */
 #define FV_R10_RIVAL_01                    594 /* 0x0252 10番道路ライバル */
 #define FV_C09R0501_BOSS_01                595 /* 0x0253 チャンピオンの部屋：N城出現イベントのN */
 #define FV_C09R0501_CHAMPION_01            596 /* 0x0254 チャンピオンの部屋：N城出現イベントのチャンピオン */
-#define FV_H03_HAKAI_01                    597 /* 0x0255 H03：ハカイ団のしたっぱ７人と七賢者 */
+		/* not used   597(0x0255) */
 #define FV_C05GYM0101_CORN                 598 /* 0x0256 地面ジム：ストッパー */
 #define FV_C09R0501_CHAMPION_02            599 /* 0x0257 チャンピオンの部屋：ゲームクリア後のチャンピオン */
 #define FV_C09R0501_RIVAL_01               600 /* 0x0258 チャンピオンの部屋：N城出現イベントのライバル */
@@ -629,7 +629,7 @@
 #define FV_D08_CHAMPION_01                 605 /* 0x025d リュウラセンの塔（外）：チャンピオン */
 #define FV_D08_LEADER7_01                  606 /* 0x025e リュウラセンの塔（外）：C07ジムリーダー（ハチク） */
 #define FV_D08R0101_EVENT_01               607 /* 0x025f リュウラセンの塔：博士（父）、C07ジムリーダー（ハチク） */
-#define FV_D08R0401_RIVAL_01               608 /* 0x0260 リュウラセンの塔２：ライバル */
+		/* not used   608(0x0260) */
 #define FV_D08R0601_EVENT_01               609 /* 0x0261 リュウラセンの塔４：ライバル、C07ジムリーダー（ハチク）、プラズマ団 */
 #define FV_D08R0801_BOSS_01                610 /* 0x0262 リュウラセンの塔６：N */
 #define FV_D08R0801_EVENT_01               611 /* 0x0263 リュウラセンの塔６：七人衆、プラズマ団したっぱ */
@@ -712,8 +712,8 @@
 #define FV_D04R0201_SAGE2                  688 /* 0x02b0 古代の城２Fの七賢者２ */
 #define FV_C03P09_SWEETS_01                689 /* 0x02b1 ヒウンシティP09：ヒウンアイス行列 */
 #define FV_C03P09_SWEETS_02                690 /* 0x02b2 ヒウンシティP09：ヒウンアイス行列・後列 */
-#define FV_R03_SUPPORT_02                  691 /* 0x02b3 3番道路：サポート */
-#define FV_R03_SUPPORT_03                  692 /* 0x02b4 3番道路：サポート */
+		/* not used   691(0x02b3) */
+		/* not used   692(0x02b4) */
 #define FV_R08R0101_POKE4                  693 /* 0x02b5 セッカ湿原：ダルタニスイベントのアトス */
 #define FV_R08R0101_POKE5                  694 /* 0x02b6 セッカ湿原：ダルタニスイベントのポルトス */
 #define FV_R08R0101_POKE6                  695 /* 0x02b7 セッカ湿原：ダルタニスイベントのアラミス */
@@ -725,7 +725,7 @@
 #define FV_C03P14_DANCER_02                701 /* 0x02bd ヒウンダンサーズ：路地のダンサー２ */
 #define FV_C03CENTER_DANCER_01             702 /* 0x02be ヒウンダンサーズ：中央部のダンサー１ */
 #define FV_C03CENTER_DANCER_02             703 /* 0x02bf ヒウンダンサーズ：中央部のダンサー２ */
-#define FV_D04R0801_SAGE                   704 /* 0x02c0 クリア後七賢人イベント：古代の城 */
+		/* not used   704(0x02c0) */
 #define FV_R14_SAGE                        705 /* 0x02c1 クリア後七賢人イベント：14番道路 */
 #define FV_D06R0301_SAGE                   706 /* 0x02c2 クリア後七賢人イベント：電気石の洞穴 */
 #define FV_D01R0101_SAGE                   707 /* 0x02c3 クリア後七賢人イベント：夢の跡地 */
@@ -794,10 +794,10 @@
 #define FV_FLDMONS_04                      770 /* 0x0302 タマゲタケ（フィールドアイテム型）４匹目 */
 #define FV_FLDMONS_05                      771 /* 0x0303 タマゲタケ（フィールドアイテム型）５匹目 */
 #define FV_FLDMONS_06                      772 /* 0x0304 タマゲタケ（フィールドアイテム型）６匹目 */
-#define FV_FLDMONS_07                      773 /* 0x0305 タマゲタケ（フィールドアイテム型）７匹目 */
-#define FV_FLDMONS_08                      774 /* 0x0306 タマゲタケ（フィールドアイテム型）８匹目 */
-#define FV_FLDMONS_09                      775 /* 0x0307 タマゲタケ（フィールドアイテム型）９匹目 */
-#define FV_FLDMONS_10                      776 /* 0x0308 タマゲタケ（フィールドアイテム型）１０匹目 */
+		/* not used   773(0x0305) */
+		/* not used   774(0x0306) */
+		/* not used   775(0x0307) */
+		/* not used   776(0x0308) */
 #define FV_H03_BADRIDER                    777 /* 0x0309 シリンダーブリッジ：暴走族リーダーと子分 */
 #define FV_H03_GENERALPERSON               778 /* 0x030a シリンダーブリッジ：おばさんと格闘家（女） */
 #define FV_D12R0102_POKE14_01              779 /* 0x030b リバティ島：ビクティ */
@@ -828,7 +828,7 @@
 #define FV_C06_BOSS                        804 /* 0x0324 フキヨセジム前：N */
 #define FV_D05R0201_RIVAL_01               805 /* 0x0325 冷凍コンテナ室内：ライバル */
 #define FV_H03_PLASMA                      806 /* 0x0326 シリンダーブリッジ：ゲーチス、ダークトリニティ3人 */
-#define FV_POKE_JUDGE_02                   807 /* 0x0327 ジャッジ引越し後（ポケモンの個体値を調べてくれる人） */
+		/* not used   807(0x0327) */
 #define FV_D04R0701_PLASMA                 808 /* 0x0328 古代の城：プラズマ団 */
 #define FV_D04R2201_SAGE4                  809 /* 0x0329 古代の城：七賢人４ */
 #define FV_D04R2301_POKE13                 810 /* 0x032a 古代の城：ドラー */
