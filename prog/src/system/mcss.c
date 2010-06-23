@@ -736,8 +736,8 @@ static	void	MCSS_DrawAct(
 				   NULL );
 #else
 		G3_OrthoW( FX32_CONST( 96 ),
-				   -FX32_CONST( 96 ),
-				   -FX32_CONST( 128 ),
+				   -FX32_CONST( 95 ),
+				   -FX32_CONST( 127 ),
 				   FX32_CONST( 128 ),
 				   FX32_ONE * 1,
 				   //FX32_ONE * 1024,
@@ -2241,11 +2241,6 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
     }
   }
 
-	if( tlw->mcss )
-  {
-    tlw->mcss->is_load_resource = 1;
-	}
-
 	if( tlw->pBufChar )
   {
 		// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
@@ -2256,6 +2251,13 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 			tlw->image_p );
 	
 		GFL_HEAP_FreeMemory( tlw->pBufChar );
+	  tlw->pBufChar = NULL;
+    return;
+	}
+
+	if( tlw->mcss )
+  {
+    tlw->mcss->is_load_resource = 1;
 	}
 
 	if( tlw->pBufPltt )
