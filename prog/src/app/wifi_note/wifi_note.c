@@ -414,6 +414,7 @@ enum{
   SEQ_FLIST_SCRLL,
 
   SEQ_FLIST_MENUINIT, //　メニュー選択
+  SEQ_FLIST_MENUMSGWAIT, //　メニューメッセージ表示待ち
   SEQ_FLIST_MENUWAIT, // メニュー選択待ち
   SEQ_FLIST_INFOINIT,   // 詳しく見るへ
   SEQ_FLIST_INFO,   // 詳しく見るへ
@@ -1533,6 +1534,7 @@ static void FList_DrawOff( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_
 static u32 FListSeq_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw );
 static void FListSeq_ScrollInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+static void FListSeq_MenuMsgInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static BOOL FListSeq_CodeInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
@@ -4334,19 +4336,22 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
     if( MainListPageButtonDecedeAnime( p_wk ) == TRUE ){
       break;
     }
-/*
-    if(p_wk->wait-- > 0){ //ちょっとウェイト
-      break;
-    }
-    p_wk->wait = 0;
-*/
     // 選択したリストインデックスをデータ構造体に設定
     Data_SELECT_ListIdxSet( p_data,
         FList_FRIdxGet( p_wk ) );
 
-    FListSeq_MenuInit( p_wk, p_data, p_draw, heapID );
-    p_data->subseq = SEQ_FLIST_MENUWAIT;
+    FListSeq_MenuMsgInit( p_wk, p_data, p_draw, heapID );
+    p_data->subseq = SEQ_FLIST_MENUMSGWAIT;
+//    p_data->subseq = SEQ_FLIST_MENUWAIT;
     break;
+
+	case SEQ_FLIST_MENUMSGWAIT: //　メニューメッセージ表示待ち
+	  // メッセージ終了待ち
+	  if( FList_TalkMsgEndCheck( p_wk,p_data,p_draw ) == TRUE ){
+	    FListSeq_MenuInit( p_wk, p_data, p_draw, heapID );
+	    p_data->subseq = SEQ_FLIST_MENUWAIT;
+	  }
+		break;
 
   case SEQ_FLIST_MENUWAIT:  // メニュー選択待ち
     p_data->subseq = FListSeq_MenuWait( p_wk, p_data, p_draw, heapID );
@@ -5277,46 +5282,41 @@ static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
+static void FListSeq_MenuMsgInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
-  BMPMENULIST_HEADER list_h;
-  WIFI_LIST* p_wifilist;
-  u32 sex;
-  u32 listidx;
-
-  // wifiリストから性別を取得
-  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
-  listidx = FList_FRIdxGet( p_wk );
-  sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[ listidx ], WIFILIST_FRIEND_SEX );
-
-//  FListDrawArea_ActiveListWrite( &p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_draw, p_wk->pos ,FALSE );
-
-  {
-    APP_TASKMENU_INITWORK wk;
-
-    wk.heapId   = heapID;
-    wk.itemNum  = 4;
-    if( sex == PM_NEUTRAL ){
-      wk.itemWork = p_wk->list2;
-      p_wk->listType = 1;
-    }else{
-      wk.itemWork = p_wk->list1;
-      p_wk->listType = 0;
-    }
-    wk.posType  = ATPT_RIGHT_DOWN;
-    wk.charPosX = 32;
-    wk.charPosY = 24;
-    wk.w        = 17;
-    wk.h        = APP_TASKMENU_PLATE_HEIGHT;
-
-    p_wk->listWork = APP_TASKMENU_OpenMenu( &wk, p_wk->listRes );
-  }
-
   // メッセージ表示
-  Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[ listidx ], heapID );
+  Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[FList_FRIdxGet(p_wk)], heapID );
   FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_13, heapID );
   // やじるし非表示
 //  Draw_YazirushiSetDrawFlag( p_draw, FALSE );
+}
+
+static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
+{
+	APP_TASKMENU_INITWORK wk;
+  WIFI_LIST* p_wifilist;
+  u32 sex;
+
+  // wifiリストから性別を取得
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData);
+  sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[FList_FRIdxGet(p_wk)], WIFILIST_FRIEND_SEX );
+
+	wk.heapId   = heapID;
+	wk.itemNum  = 4;
+	if( sex == PM_NEUTRAL ){
+		wk.itemWork = p_wk->list2;
+		p_wk->listType = 1;
+	}else{
+		wk.itemWork = p_wk->list1;
+		p_wk->listType = 0;
+	}
+	wk.posType  = ATPT_RIGHT_DOWN;
+	wk.charPosX = 32;
+	wk.charPosY = 24;
+	wk.w        = 17;
+	wk.h        = APP_TASKMENU_PLATE_HEIGHT;
+
+	p_wk->listWork = APP_TASKMENU_OpenMenu( &wk, p_wk->listRes );
 }
 
 //----------------------------------------------------------------------------
@@ -5336,11 +5336,6 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
   u32 ret;
   u32 ret_seq = SEQ_FLIST_MENUWAIT;
 
-
-  // メッセージ終了待ち
-  if( FList_TalkMsgEndCheck( p_wk,p_data,p_draw ) == FALSE ){
-    return ret_seq;
-  }
   APP_TASKMENU_UpdateMenu( p_wk->listWork );
   if( APP_TASKMENU_IsFinish( p_wk->listWork ) == TRUE ){
     ret = APP_TASKMENU_GetCursorPos( p_wk->listWork );
