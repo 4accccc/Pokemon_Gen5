@@ -388,6 +388,7 @@ void BOX2MAIN_VFuncReqSet( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2MAIN_VramBankSet(void)
 {
+	GFL_DISP_ClearVRAM( 0 );
   GFL_DISP_SetBank( &VramTbl );
 }
 

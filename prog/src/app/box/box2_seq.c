@@ -111,6 +111,7 @@ static int MainSeq_ButtonAnm( BOX2_SYS_WORK * syswk );
 static int MainSeq_SubProcCall( BOX2_SYS_WORK * syswk );
 static int MainSeq_SubProcMain( BOX2_SYS_WORK * syswk );
 static int MainSeq_Start( BOX2_SYS_WORK * syswk );
+static int MainSeq_StartWait( BOX2_SYS_WORK * syswk );
 static int MainSeq_CursorMoveRet( BOX2_SYS_WORK * syswk );
 static int MainSeq_ArrangePokeMenuRcv( BOX2_SYS_WORK * syswk );
 static int MainSeq_TrayScrollTouch( BOX2_SYS_WORK * syswk );
@@ -305,6 +306,8 @@ static const pBOX2_FUNC MainSeq[] = {
 	MainSeq_SubProcMain,
 
 	MainSeq_Start,
+	MainSeq_StartWait,
+
 	MainSeq_CursorMoveRet,
 	MainSeq_ArrangePokeMenuRcv,
 	MainSeq_TrayScrollTouch,
@@ -745,6 +748,10 @@ static int MainSeq_Release( BOX2_SYS_WORK * syswk )
 {
 	FS_EXTERN_OVERLAY(ui_common);
 
+	if( PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
+		return BOX2SEQ_MAINSEQ_RELEASE;
+	}
+
 	BOX2MAIN_ExitVBlank( syswk );
 
 	BOX2MAIN_YesNoWinExit( syswk );
@@ -1001,25 +1008,25 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 		BOX2MAIN_PokeInfoPut( syswk, BOX2OBJ_POKEICON_TRAY_MAX );
-		seq = BOX2SEQ_MAINSEQ_PARTYOUT_MAIN;
+		syswk->next_seq = BOX2SEQ_MAINSEQ_PARTYOUT_MAIN;
 		break;
 
 	case BOX_MODE_TURETEIKU:	// つれていく
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
-		seq = BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
+		syswk->next_seq = BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
 		break;
 
 	case BOX_MODE_SEIRI:		// ボックスせいり
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
-		seq = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
 		break;
 
 	case BOX_MODE_ITEM:			// アイテム整理
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
-		seq = BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		syswk->next_seq = BOX2SEQ_MAINSEQ_ITEM_MAIN;
 		break;
 
 	case BOX_MODE_BATTLE:		// バトルボックス
@@ -1027,7 +1034,7 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 			BOX2BGWFRM_TemochiButtonOn( syswk->app );
 			BOX2MAIN_PokeInfoPut( syswk, 0 );
 			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_MAIN, 0 );
-			seq = BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
+			syswk->next_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
 		}else{
 			PartyFrmSet_PartyOut( syswk );
 			BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
@@ -1035,7 +1042,7 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 			BOX2BGWFRM_BoxListButtonOn( syswk->app );
 			BOX2MAIN_PokeInfoPut( syswk, BOX2OBJ_POKEICON_TRAY_MAX );
 			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_PARTY, 0 );
-			seq = BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
+			syswk->next_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
 		}
 		break;
 
@@ -1043,11 +1050,31 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
-		seq = BOX2SEQ_MAINSEQ_SLEEP_MAIN;
+		syswk->next_seq = BOX2SEQ_MAINSEQ_SLEEP_MAIN;
 		break;
 	}
 
-	return FadeInSet( syswk, seq );
+//	return FadeInSet( syswk, seq );
+	return MainSeq_StartWait( syswk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：開始キュー待ち
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	次のシーケンス
+ *
+ *	定義：BOX2SEQ_MAINSEQ_START_WAIT
+ */
+//--------------------------------------------------------------------------------------------
+static int MainSeq_StartWait( BOX2_SYS_WORK * syswk )
+{
+	if( PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
+		return BOX2SEQ_MAINSEQ_START_WAIT;
+	}
+	return FadeInSet( syswk, syswk->next_seq );
 }
 
 //--------------------------------------------------------------------------------------------
