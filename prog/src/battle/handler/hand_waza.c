@@ -5352,8 +5352,8 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         if( (!ITEM_CheckMail(selfItemID))
         &&  (!ITEM_CheckMail(targetItemID))
         &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, targetItemID))
-        &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, selfItemID))
         &&  (!HandCommon_CheckForbitItemPokeCombination(target_pokeID, selfItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, selfItemID))
         &&  (!HandCommon_CheckForbitItemPokeCombination(target_pokeID, targetItemID))
         ){
           BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
@@ -7701,7 +7701,7 @@ static const BtlEventHandlerTable*  ADD_TonboGaeri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
 //    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_TonboGaeri   },         // ダメージ直後
-    { BTL_EVENT_DAMAGEPROC_END,  handler_TonboGaeri   },         // ダメージ直後
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L2,  handler_TonboGaeri   },         // ダメージ直後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

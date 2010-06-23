@@ -6707,6 +6707,7 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
     }
   }
 
+  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L2 );
   scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END );
 }
 /**
