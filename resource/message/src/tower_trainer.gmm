@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-22T13:01:02"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-23T17:48:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="200" top="465" right="794" bottom="1035" maximized="no" rayout="Vertical2">
+	<dialog left="396" top="410" right="988" bottom="980" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="586"/>
+		<band id="0" index="0" style="0000" width="584"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="419"/>
+		<band id="2" index="2" style="0000" width="417"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2489,9 +2489,9 @@
 
 	<row id="mes_tower_tr_084_03">
 		<comment>ファビアン</comment>
-		<language name="JPN">おうおう　いいねー　わかいねえー！
+		<language name="JPN">おうおう　イイねー　わかいねえー！
 おいらの　あいぼうが　こてんこてんか！</language>
-		<language name="JPN_KANJI">おうおう　いいねー　若いねえー！
+		<language name="JPN_KANJI">おうおう　イイねー　若いねえー！
 おいらの　相棒が　こてんこてんか！</language>
 	</row>
 
@@ -2879,9 +2879,9 @@
 
 	<row id="mes_tower_tr_099_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>ゴサク</comment>
-		<language name="JPN">ちょっと！　アンタ　まちなさい！
+		<language name="JPN">ちょっと！　アンタ　まちなさいって！
 しゅじゅつは　はじまってもいないよ！</language>
-		<language name="JPN_KANJI">ちょっと！　アンタ　まちなさい！
+		<language name="JPN_KANJI">ちょっと！　アンタ　まちなさいって！
 手術は　始まってもいないよ！</language>
 	</row>
 
@@ -3096,9 +3096,9 @@
 
 カックン</comment>
 		<language name="JPN">きみは　ポケモンを　しつけてるか？
-あまやかすだけじゃ　ダメだぜ</language>
+あまやかすだけじゃ　ダメなんだぜ</language>
 		<language name="JPN_KANJI">きみは　ポケモンを　しつけてるか？
-甘やかすだけじゃ　ダメだぜ</language>
+甘やかすだけじゃ　ダメなんだぜ</language>
 	</row>
 
 	<row id="mes_tower_tr_108_02">
@@ -4028,7 +4028,7 @@
 	<row id="mes_tower_tr_144_01">
 		<comment>パラソルおねえさん２
 
-パク</comment>
+ヌゥン</comment>
 		<language name="JPN">かれに　キミ　スコールみたいだ　って
 いわれたけど　スコールってなに？</language>
 		<language name="JPN_KANJI">彼に　キミ　スコールみたいだ　って
@@ -4036,7 +4036,7 @@
 	</row>
 
 	<row id="mes_tower_tr_144_02">
-		<comment>パク</comment>
+		<comment>ヌゥン</comment>
 		<language name="JPN">ウ　ウ　ウワーン！　ウワーンッ！！
 うれしくて　なみだ　でちゃうのー</language>
 		<language name="JPN_KANJI">ウ　ウ　ウワーン！　ウワーンッ！！
@@ -4044,7 +4044,7 @@
 	</row>
 
 	<row id="mes_tower_tr_144_03">
-		<comment>パク</comment>
+		<comment>ヌゥン</comment>
 		<language name="JPN">ウ　ウ　ウワーン！　ウワーンッ！！
 ウワーンッ！！　ウワーンッ！！</language>
 		<language name="JPN_KANJI">ウ　ウ　ウワーン！　ウワーンッ！！
@@ -4267,9 +4267,9 @@
 
 	<row id="mes_tower_tr_153_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>コウ</comment>
-		<language name="JPN">あれまぁ　アンタのポケモン
+		<language name="JPN">ありゃまあ　アンタの　ポケモン
 くろコゲの　パンみたいだね</language>
-		<language name="JPN_KANJI">あれまぁ　アンタのポケモン
+		<language name="JPN_KANJI">ありゃまあ　アンタの　ポケモン
 黒コゲの　パンみたいだね</language>
 	</row>
 
@@ -4312,9 +4312,9 @@
 		<comment>クラウン１
 
 ジュズマル</comment>
-		<language name="JPN">わらうと　げんきに　なるらしい
+		<language name="JPN">わらうと　げんきになる　らしい
 かがくてきこんきょも　あるっぽい！</language>
-		<language name="JPN_KANJI">笑うと　元気に　なるらしい
+		<language name="JPN_KANJI">笑うと　元気になる　らしい
 科学的根拠も　あるっぽい！</language>
 	</row>
 
@@ -4570,9 +4570,9 @@
 
 ミキヲ</comment>
 		<language name="JPN">ポケモンを　そだてるのも　こどもを
-そだてるのも　とっても　たいへん</language>
+そだてるのも　とっても　たいへんだわ</language>
 		<language name="JPN_KANJI">ポケモンを　育てるのも　子供を
-育てるのも　とっても　大変</language>
+育てるのも　とっても　大変だわ</language>
 	</row>
 
 	<row id="mes_tower_tr_165_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -4596,9 +4596,9 @@
 
 ポルカ</comment>
 		<language name="JPN">ね！　そこのキミ！　おねーさんが
-やさしく　ほいく　しちゃうゾ！</language>
+やさしーく　ほいく　しちゃうゾ！</language>
 		<language name="JPN_KANJI">ね！　そこのキミ！　おねーさんが
-優しく　保育　しちゃうゾ！</language>
+やさしーく　保育　しちゃうゾ！</language>
 	</row>
 
 	<row id="mes_tower_tr_166_02">
@@ -4611,10 +4611,10 @@
 
 	<row id="mes_tower_tr_166_03">
 		<comment>ポルカ</comment>
-		<language name="JPN">おとなだって　ほいくされたい
-きぶんの　ときも　あるんだぞ</language>
-		<language name="JPN_KANJI">大人だって　保育されたい
-気分の　ときも　あるんだぞ</language>
+		<language name="JPN">おとなにだって　ほいく　されたい
+きぶんの　ときも　あるんだゾ！</language>
+		<language name="JPN_KANJI">大人にだって　保育　されたい
+気分の　ときも　あるんだゾ！</language>
 	</row>
 
 	<row id="mes_tower_tr_167_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -4629,18 +4629,18 @@
 
 	<row id="mes_tower_tr_167_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>アントク</comment>
-		<language name="JPN">こうやって　きたえた　ポケモンと
-げんばに　レッツラ　ゴーなのです</language>
-		<language name="JPN_KANJI">こうやって　鍛えた　ポケモンと
+		<language name="JPN">こうやって　ポケモンを　きたえて
+げんばに　レッツラ　ゴーなんです</language>
+		<language name="JPN_KANJI">こうやって　ポケモンを　鍛えて
 現場に　レッツラ　ゴーなのです</language>
 	</row>
 
 	<row id="mes_tower_tr_167_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>アントク</comment>
-		<language name="JPN">ワワ　こんなに　けがしちゃ　あすは
-メイク　マネ　マネできないです</language>
-		<language name="JPN_KANJI">ワワ　こんなに　けがしちゃ　明日は
-メイク　マネ　マネできないです</language>
+		<language name="JPN">ハワワ　こんなに　ケガしちゃ　あすは
+メイク　マネ　マネ　できないです</language>
+		<language name="JPN_KANJI">ハワワ　こんなに　ケガしちゃ　明日は
+メイク　マネ　マネ　できないです</language>
 	</row>
 
 	<row id="mes_tower_tr_168_01">
@@ -5572,9 +5572,9 @@
 	<row id="mes_tower_tr_204_02">
 		<comment>ウツケ</comment>
 		<language name="JPN">じんせいの　すべてを　けんきゅうに
-ささげるのも　わるくないだろ</language>
+ささげるのも　わるくないだろ？</language>
 		<language name="JPN_KANJI">人生の　全てを　研究に
-ささげるのも　悪くないだろ</language>
+ささげるのも　悪くないだろ？</language>
 	</row>
 
 	<row id="mes_tower_tr_204_03">

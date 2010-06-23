@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-29T16:10:52"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-23T17:26:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="402" top="304" right="1107" bottom="924" maximized="no" rayout="Vertical2">
+	<dialog left="324" top="478" right="1029" bottom="1098" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1049,8 +1049,8 @@
 	</row>
 
 	<row id="BTD_TR_144">
-		<language name="JPN">パク</language>
-		<language name="JPN_KANJI">パク</language>
+		<language name="JPN">ヌゥン</language>
+		<language name="JPN_KANJI">ヌゥン</language>
 	</row>
 
 	<row id="BTD_TR_145">
