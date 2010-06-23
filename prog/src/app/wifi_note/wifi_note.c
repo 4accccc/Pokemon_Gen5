@@ -412,6 +412,7 @@ enum{
   SEQ_FLIST_MAIN,
   SEQ_FLIST_SCRLLINIT,
   SEQ_FLIST_SCRLL,
+  SEQ_FLIST_SCRLLEND,
 
   SEQ_FLIST_MENUINIT, //　メニュー選択
   SEQ_FLIST_MENUMSGWAIT, //　メニューメッセージ表示待ち
@@ -1534,6 +1535,7 @@ static void FList_DrawOff( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_
 static u32 FListSeq_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw );
 static void FListSeq_ScrollInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+static BOOL FListSeq_ScrollEnd( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw );
 static void FListSeq_MenuMsgInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
@@ -1542,6 +1544,7 @@ static void FListSeq_DeleteInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
 static BOOL FListSeq_DeleteYesNoDraw( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static u32 FListSeq_DeleteWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static void FList_DrawPage( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 page, u32 pos, u32 draw_area, HEAPID heapID );
+static void FListDrawPageChange( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 page, u32 pos, HEAPID heapID );
 static void FList_DrawShiori( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u32 page );
 static void FList_DrawShioriEff00( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u32 page0, u32 page1 );
 static void FList_DrawShioriEff01( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u32 page0, u32 page1 );
@@ -1559,6 +1562,7 @@ static void FListDrawArea_Exit( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p_draw
 static void FListDrawArea_BackWrite( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p_draw, const WFNOTE_SCRNDATA* cp_scrn );
 //static void FListDrawArea_CursorWrite( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p_draw, u32 pos );
 //static void FListDrawArea_ActiveListWrite( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p_draw, u32 pos ,BOOL active_f);
+static void FListDrawArea_WritePlayerCgx( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, WF_2DCSYS* p_charsys, const WFNOTE_SCRNDATA* cp_scrn, const WFNOTE_IDXDATA* cp_idx, u32 page, HEAPID heapID );
 static void FListDrawArea_WritePlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, WF_2DCSYS* p_charsys, const WFNOTE_SCRNDATA* cp_scrn, const WFNOTE_IDXDATA* cp_idx, u32 page, HEAPID heapID );
 static void FListDrawArea_DrawOff( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p_draw, const WFNOTE_SCRNDATA* cp_scrn );
 static void FListDrawArea_CharWkDel( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p_draw );
@@ -4324,13 +4328,17 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
     p_data->subseq = SEQ_FLIST_SCRLL;
     break;
 
-  case SEQ_FLIST_SCRLL:
+	case SEQ_FLIST_SCRLL:
+		if( FListSeq_ScrollMain( p_wk, p_data, p_draw, heapID ) == TRUE  ){
+			p_data->subseq = SEQ_FLIST_SCRLLEND;
+		}
+		break;
 
-    result = FListSeq_ScrollMain( p_wk, p_data, p_draw, heapID );
-    if( result == TRUE ){
-      p_data->subseq = SEQ_FLIST_MAIN;
-    }
-    break;
+	case SEQ_FLIST_SCRLLEND:
+		if( FListSeq_ScrollEnd( p_wk, p_draw ) == TRUE  ){
+			p_data->subseq = SEQ_FLIST_MAIN;
+		}
+		break;
 
   case SEQ_FLIST_MENUINIT:  //　メニュー選択
     if( MainListPageButtonDecedeAnime( p_wk ) == TRUE ){
@@ -5216,32 +5224,33 @@ static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
     NULL
   };
 
-  // カウンタが終わったらすべてを描画して終わる
-  if( p_wk->count >= FLIST_SCROLL_COUNT ){
+	// 最初に書いたものが書き終わるまで待つ
+	if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == FALSE ){
+		return FALSE;
+	}
 
-    // スクロール座標を元に戻す
-    GFL_BG_SetScrollReq( DFRM_SCROLL, GFL_BG_SCROLL_X_SET, 0 );
-    GFL_BG_SetScrollReq( DFRM_SCRMSG, GFL_BG_SCROLL_X_SET, 0 );
-    // OAMにも反映
-    surfacePos.x = DATA_ScrollSurfaceRect.lefttop_x;
-    surfacePos.y = DATA_ScrollSurfaceRect.lefttop_y;
-    GFL_CLACT_USERREND_SetSurfacePos( p_draw->scrollRender,0, &surfacePos );
+	// カウンタが終わったらすべてを描画して終わる
+	if( p_wk->count > FLIST_SCROLL_COUNT ){
+		// OAMにも反映
+		surfacePos.x = DATA_ScrollSurfaceRect.lefttop_x;
+		surfacePos.y = DATA_ScrollSurfaceRect.lefttop_y;
+		GFL_CLACT_USERREND_SetSurfacePos( p_draw->scrollRender,0, &surfacePos );
 
-    // 作業用グラフィックを消す
-    if( p_wk->way == WF_COMMON_LEFT ){
-      draw_area = WFNOTE_DRAWAREA_LEFT;
-    }else{
-      draw_area = WFNOTE_DRAWAREA_RIGHT;
-    }
-    FListDrawArea_DrawOff( &p_wk->drawdata[ draw_area ], p_draw, &p_draw->scrn );
+		// 作業用グラフィックを消す（OBJのみ）
+		if( p_wk->way == WF_COMMON_LEFT ){
+			draw_area = WFNOTE_DRAWAREA_LEFT;
+		}else{
+			draw_area = WFNOTE_DRAWAREA_RIGHT;
+		}
+//		FListDrawArea_DrawOff( &p_wk->drawdata[ draw_area ], p_draw, &p_draw->scrn );
+		FListDrawArea_CharWkDel( &p_wk->drawdata[ draw_area ], p_draw );
 
-    // メイン面に表示
-    FList_DrawPage( p_wk, p_data, p_draw, p_wk->page, p_wk->pos, WFNOTE_DRAWAREA_MAIN, heapID );
+		// メイン面に描画
+//		FList_DrawPage( p_wk, p_data, p_draw, p_wk->page, p_wk->pos, WFNOTE_DRAWAREA_MAIN, heapID );
+		FListDrawPageChange( p_wk, p_data, p_draw, p_wk->page, p_wk->pos, heapID );
 
-    // 矢印動作開始
-//    Draw_YazirushiSetAnmFlag( p_draw, TRUE );
-    return TRUE;
-  }
+		return TRUE;
+	}
 
   scrll_x = (p_wk->count * FLIST_SCROLL_SIZX) / FLIST_SCROLL_COUNT;
 
@@ -5270,6 +5279,31 @@ static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
   // カウント
   p_wk->count ++;
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  スクロールシーケンス  終了
+ *
+ *  @param  p_wk    ワーク
+ *  @param  p_draw    描画システム
+ *
+ *  @retval TRUE  終了
+ *  @retval FALSE 途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL FListSeq_ScrollEnd( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw )
+{
+	// メイン面の描画待ち
+	if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == TRUE ){
+    // スクロール座標を元に戻す
+    GFL_BG_SetScrollReq( DFRM_SCROLL, GFL_BG_SCROLL_X_SET, 0 );
+    GFL_BG_SetScrollReq( DFRM_SCRMSG, GFL_BG_SCROLL_X_SET, 0 );
+		// スクリーンに反映
+	  PutBmpWin( p_wk->drawdata[WFNOTE_DRAWAREA_MAIN].text->win );
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -5525,6 +5559,38 @@ static void FList_DrawPage( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
   ResetListPageButton( p_wk );
 //  FListDrawArea_CursorWrite( &p_wk->drawdata[draw_area], p_draw, pos );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ページ描画関数（ページ切り替え用）
+ *
+ *  @param  p_wk    ワーク
+ *  @param  p_data    データ
+ *  @param  p_draw    描画システム
+ *  @param  page    ページ
+ *  @param  pos     カーソル位置
+ *  @param  heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void FListDrawPageChange( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 page, u32 pos, HEAPID heapID )
+{
+	// ページとカーソル変更
+	p_wk->page = page;
+	p_wk->pos = pos;
+	// ページに対応したしおりを表示
+	ChangeListPageNumAnime( p_wk, page );
+
+  // 背景を描画しなおす
+  FListDrawArea_BackWrite( &p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_draw, &p_draw->scrn );
+
+  // ページデータ描画
+	FListDrawArea_WritePlayerCgx(
+		&p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_data, p_draw, p_wk->p_charsys, &p_draw->scrn, &p_data->idx, page, heapID );
+
+  // カーソル描画
+  ResetListPageButton( p_wk );
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -5992,7 +6058,7 @@ static void FListDrawArea_ActiveListWrite( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_D
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  プレイヤー情報表示
+ *  @brief  プレイヤー情報表示（キャラのみ）
  *
  *  @param  p_wk    ワーク
  *  @param  p_data    データ
@@ -6004,7 +6070,7 @@ static void FListDrawArea_ActiveListWrite( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_D
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FListDrawArea_WritePlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, WF_2DCSYS* p_charsys, const WFNOTE_SCRNDATA* cp_scrn, const WFNOTE_IDXDATA* cp_idx, u32 page, HEAPID heapID )
+static void FListDrawArea_WritePlayerCgx( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, WF_2DCSYS* p_charsys, const WFNOTE_SCRNDATA* cp_scrn, const WFNOTE_IDXDATA* cp_idx, u32 page, HEAPID heapID )
 {
   int i;
   int idx;
@@ -6035,13 +6101,26 @@ static void FListDrawArea_WritePlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA*
   if( set == FALSE ){
     GFL_BMPWIN_TransVramCharacter( p_wk->text->win );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  プレイヤー情報表示
+ *
+ *  @param  p_wk    ワーク
+ *  @param  p_data    データ
+ *  @param  p_draw    描画システム
+ *  @param  p_charsys キャラクタシステム
+ *  @param  cp_scrn   スクリーンシステム
+ *  @param  cp_idx    インデックスデータ
+ *  @param  page    ページ
+ *  @param  heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void FListDrawArea_WritePlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, WF_2DCSYS* p_charsys, const WFNOTE_SCRNDATA* cp_scrn, const WFNOTE_IDXDATA* cp_idx, u32 page, HEAPID heapID )
+{
+	FListDrawArea_WritePlayerCgx( p_wk, p_data, p_draw, p_charsys, cp_scrn, cp_idx, page, heapID );
   PutBmpWin( p_wk->text->win );
-
-  // 書き込んだBGを更新
-  GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
-
-  // テキスト面表示
-//  GFL_BMPWIN_MakeTransWindow_VBlank( *p_wk->text );
 }
 
 //----------------------------------------------------------------------------
