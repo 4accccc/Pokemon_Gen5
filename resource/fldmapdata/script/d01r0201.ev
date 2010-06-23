@@ -54,6 +54,7 @@ INIT_EVENT_END
 /*   D01R0201　クリア後ムシャーナ                */
 /**************************************************************/
 EVENT_START   ev_d01r0201_poke16_01
+	_TALK_START_SE_PLAY()
 
 	//ムンナ：むにゃ！？
 	_VOICE_PLAY(MONSNO_516,0)
