@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:59:07"/>
+	<create user="matsumiya" host="W00224" date="2010-06-23T21:12:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -521,9 +521,9 @@
 ・アイテム入手処理
 　No083「かみなりのいし」</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">まあ　ここで　であったの
+		<language name="JPN" width="256">まあ　ここで　であったのも
 なにかの　えんだ！　もってけ！▼</language>
-		<language name="JPN_KANJI" width="256">まあ　ここで　出会ったの
+		<language name="JPN_KANJI" width="256">まあ　ここで　出会ったのも
 なにかの　縁だ！　持ってけ！▼</language>
 	</row>
 
