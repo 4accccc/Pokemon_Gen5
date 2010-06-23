@@ -1877,11 +1877,11 @@ void	MCSS_SetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK* mcss, u8 
   { 
     if( mcss_sys->tcb_sys ) 
     { 
-	    mcss->tcb_load_base_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 1 );
+	    mcss->tcb_load_base_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 0 );
     }
     else
     { 
-	     mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+	     mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 0 );
     }
   }
   else
@@ -1927,11 +1927,11 @@ void	MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 
   if( mcss_sys->tcb_sys ) 
   { 
-    mcss->tcb_load_base_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 1 );
+    mcss->tcb_load_base_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 0 );
   }
   else
   { 
-    mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+    mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 0 );
   }
   mcss->fade_pltt_data_flag = 0;
 }
@@ -2441,11 +2441,11 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 
     if( mcss_sys->tcb_sys ) 
     { 
-		  mcss->tcb_load_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 1 );
+		  mcss->tcb_load_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 0 );
     }
     else
     { 
-		  mcss->tcb_load_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+		  mcss->tcb_load_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 0 );
     }
 
 	  if( mcss->pal_fade_start_evy == mcss->pal_fade_end_evy )
