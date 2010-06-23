@@ -1692,7 +1692,7 @@ static int _round_frame( int frame, int max )
 
 
 #define FRAME_SPEED_MIN     ( 4096 )
-#define FRAME_SPEED_MINUS   ( 1024 )
+#define FRAME_SPEED_MINUS   ( 400 )
 
 
 static void _speed_down( BADGEVIEW_WORK *wk )
@@ -1703,7 +1703,7 @@ static void _speed_down( BADGEVIEW_WORK *wk )
   }else if(wk->animeSpeed<(-1*FRAME_SPEED_MIN)){
     wk->animeSpeed += FRAME_SPEED_MINUS;
   }else if( wk->animeSpeed == 0 ){
-    wk->animeSpeed = FRAME_SPEED_MINUS;
+    wk->animeSpeed = FRAME_SPEED_MIN;
   }
   
 }
