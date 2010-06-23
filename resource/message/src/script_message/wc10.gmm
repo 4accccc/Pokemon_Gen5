@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-22T22:22:16"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-23T19:59:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -264,14 +264,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1224" top="155" right="1929" bottom="775" maximized="no" rayout="Vertical2">
+	<dialog left="670" top="169" right="1267" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="15" top="568" right="488" bottom="966" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="589"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="273"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -837,12 +837,14 @@
 	<row id="wc10_09_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
-		<language name="JPN" width="256">しかし　ですね
-しぜんが　あっても　モノが　なければ▽
-しごとは　すすまない　ですね……</language>
-		<language name="JPN_KANJI" width="256">しかし　ですね
-自然があっても　モノがなければ▽
-仕事は　進まない　ですね……</language>
+		<language name="JPN" width="256">いやー　おいしい　くうきを　すえて
+じゅうぶん　リフレッシュ　しました！▼
+べつの　しごとも　あるので
+ブラックシティに　いきたいです</language>
+		<language name="JPN_KANJI" width="256">いやー　おいしい　空気を　吸えて
+じゅうぶん　リフレッシュ　しました！▼
+別の　仕事も　あるので
+ブラックシティに　いきたいです</language>
 	</row>
 
 	<row id="wc10_09_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -937,7 +939,7 @@
 カズホ</attribute>
 		<language name="JPN" width="256">じゅうぶんに　リフレッシュ　したし
 ブラックシティに　もどりたいわ</language>
-		<language name="JPN_KANJI" width="256">充分に　リフレッシュしたし
+		<language name="JPN_KANJI" width="256">じゅうぶんに　リフレッシュしたし
 ブラックシティに　戻りたいわ</language>
 	</row>
 
