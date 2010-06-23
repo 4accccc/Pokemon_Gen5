@@ -5349,12 +5349,15 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
       if( (selfItemID != ITEM_DUMMY_DATA) || (targetItemID != ITEM_DUMMY_DATA) )
       {
+        u16 myMonsNo = BPP_GetMonsNo( self );
+        u16 targetMonsNo = BPP_GetMonsNo( target );
+
         if( (!ITEM_CheckMail(selfItemID))
         &&  (!ITEM_CheckMail(targetItemID))
-        &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, targetItemID))
-        &&  (!HandCommon_CheckForbitItemPokeCombination(target_pokeID, selfItemID))
-        &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, selfItemID))
-        &&  (!HandCommon_CheckForbitItemPokeCombination(target_pokeID, targetItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(myMonsNo, targetItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(targetMonsNo, selfItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(myMonsNo, selfItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(targetMonsNo, targetItemID))
         ){
           BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
 
