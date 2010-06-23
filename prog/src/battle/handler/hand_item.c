@@ -3806,8 +3806,9 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KuroiHedoro( u32* numElems )
 // ターンチェックハンドラ
 static void handler_KuroiHedoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
     if( PokeTypePair_IsMatch(BPP_GetPokeType(bpp), POKETYPE_DOKU) )

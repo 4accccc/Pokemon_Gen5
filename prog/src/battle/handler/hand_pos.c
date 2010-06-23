@@ -163,8 +163,9 @@ static const BtlEventHandlerTable* ADD_POS_Negaigoto( u32* numElems )
 // ターンチェック開始ハンドラ
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == BTL_POKEID_NULL )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == BTL_POKEID_NULL)
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
+  ){
     // 初ターン呼び出し時、これまでの経過ターン数を work[1] に保存
     if( work[0] == 0 ){
       work[1] = BTL_SVFTOOL_GetTurnCount( flowWk );
@@ -381,8 +382,9 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     WORKIDX_WAZAID,
   };
 
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == BTL_POKEID_NULL )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == BTL_POKEID_NULL)
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
+  ){
     u8 turnCnt = BTL_SVFTOOL_GetTurnCount( flowWk );
     if( turnCnt >= work[WORKIDX_TURN] )
     {

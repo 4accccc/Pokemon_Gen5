@@ -9196,15 +9196,18 @@ static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, Btl
     scEvent_TurnCheck( wk, BTL_POKEID_NULL, event_type );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-  while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
+  if( !scproc_CheckShowdown(wk) )
   {
-    hem_state = BTL_Hem_PushState( &wk->HEManager );
-      scEvent_TurnCheck( wk, BPP_GetID(bpp), event_type );
-    BTL_Hem_PopState( &wk->HEManager, hem_state );
+    while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
+    {
+      hem_state = BTL_Hem_PushState( &wk->HEManager );
+        scEvent_TurnCheck( wk, BPP_GetID(bpp), event_type );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-    scproc_CheckDeadCmd( wk, bpp );
-    if( scproc_CheckShowdown(wk) ){
-      break;
+      scproc_CheckDeadCmd( wk, bpp );
+      if( scproc_CheckShowdown(wk) ){
+        break;
+      }
     }
   }
 

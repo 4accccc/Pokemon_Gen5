@@ -724,6 +724,7 @@ static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
   if( (pokeID != BTL_POKEID_NULL)
   &&  (BTL_SVFTOOL_IsExistPokemon(flowWk, pokeID))
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
   ){
     if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
     {
