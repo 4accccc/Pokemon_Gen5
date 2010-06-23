@@ -1078,6 +1078,8 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
     u8 form_no =  POKETOOL_CheckPokeFormNo(  monsno,  form );
     int sextype = POKETOOL_GetPersonalParam( monsno, form_no,POKEPER_ID_sex );
 
+    form_no = POKETOOL_CheckPokeFormNo_Field( monsno, form_no );
+
     switch(sextype){
     case POKEPER_SEX_MALE:
       sex = 0;
