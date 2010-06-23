@@ -5105,8 +5105,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
             {
               if( BTLV_EFFECT_CheckExist( check_pos[ src ][ i ] ) )
               {
-                pos[ pos_cnt ] = check_pos[ src ][ i ];
-                pos_cnt++;
+                if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos[ src ][ i ] ) )
+                { 
+                  pos[ pos_cnt ] = check_pos[ src ][ i ];
+                  pos_cnt++;
+                }
               }
             }
           }
@@ -5120,8 +5123,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
               {
                 if( BTLV_EFFECT_CheckExist( check_pos ) )
                 {
-                  pos[ pos_cnt ] = check_pos;
-                  pos_cnt++;
+                  if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
+                  { 
+                    pos[ pos_cnt ] = check_pos;
+                    pos_cnt++;
+                  }
                 }
               }
             }
@@ -5154,8 +5160,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
             {
               if( BTLV_EFFECT_CheckExist( check_pos ) )
               {
-                pos[ pos_cnt ] = check_pos;
-                pos_cnt++;
+                if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
+                { 
+                  pos[ pos_cnt ] = check_pos;
+                  pos_cnt++;
+                }
               }
             }
           }
@@ -5169,8 +5178,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
             {
               if( BTLV_EFFECT_CheckExist( check_pos ) )
               {
-                pos[ pos_cnt ] = check_pos;
-                pos_cnt++;
+                if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
+                { 
+                  pos[ pos_cnt ] = check_pos;
+                  pos_cnt++;
+                }
               }
             }
           }
@@ -5185,8 +5197,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
             {
               if( BTLV_EFFECT_CheckExist( check_pos ) )
               {
-                pos[ pos_cnt ] = check_pos;
-                pos_cnt++;
+                if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
+                { 
+                  pos[ pos_cnt ] = check_pos;
+                  pos_cnt++;
+                }
               }
             }
           }
@@ -5200,8 +5215,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
             {
               if( BTLV_EFFECT_CheckExist( check_pos ) )
               {
-                pos[ pos_cnt ] = check_pos;
-                pos_cnt++;
+                if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
+                { 
+                  pos[ pos_cnt ] = check_pos;
+                  pos_cnt++;
+                }
               }
             }
           }
@@ -5227,8 +5245,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       {
         if( BTLV_EFFECT_CheckExist( check_pos ) )
         {
-          pos[ pos_cnt ] = check_pos;
-          pos_cnt++;
+          if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
+          { 
+            pos[ pos_cnt ] = check_pos;
+            pos_cnt++;
+          }
         }
       }
     }
@@ -5244,8 +5265,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       {
         if( BTLV_EFFECT_CheckExist( check_pos ) )
         {
-          pos[ pos_cnt ] = check_pos;
-          pos_cnt++;
+          if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
+          { 
+            pos[ pos_cnt ] = check_pos;
+            pos_cnt++;
+          }
         }
       }
     }
