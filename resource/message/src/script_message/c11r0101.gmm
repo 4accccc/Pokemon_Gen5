@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-22T21:13:28"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-23T13:01:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -786,7 +786,7 @@ POS</comment>
 ありがとう▼
 まぁ　とおって　くれ▼
 そして　じぶんの　にわだと　おもって
-こころゆくまで　たのしんでくれ▼</language>
+すきに　うごきまわってくれ▼</language>
 		<language name="JPN_KANJI" width="256">きみだな　[1:00:トレーナー名:3]▼
 聞いたよ▼
 ついに　すべての　場所の　人と
@@ -801,9 +801,9 @@ POS</comment>
 こんな　へきちにある　ビルを
 こんなにも　にぎやかに　してやってくれて▽
 ありがとう▼
-まぁ　通って　くれ▼
+まぁ　通ってくれ▼
 そして　自分の　庭だと　思って
-心ゆくまで　楽しんでくれ▼</language>
+好きに　動きまわってくれ▼</language>
 	</row>
 
 	<row id="msg_reception01_01a">
@@ -1002,11 +1002,11 @@ POS</comment>
 能動的に話しかけた時</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">きっと　みらいは
-きぼうに　あふれているんだな▼
+きぼうに　みちあふれて　いるんだな▼
 きみを　みていると　しぜんと
 そういう　きもちに　なれるよ</language>
 		<language name="JPN_KANJI" width="256">きっと　未来は
-希望に　あふれているんだな▼
+希望に　満ち溢れているんだな▼
 きみを　見ていると　自然と
 そういう　気持ちに　なれるよ</language>
 	</row>
@@ -1018,11 +1018,11 @@ POS</comment>
 		<language name="JPN" width="256">きみが　くると
 ユナイテッドタワーが　にぎやかになる▼
 じぶんの　にわだと　おもって
-こころゆくまで　たのしんでくれ</language>
+すきに　うごきまわってくれ</language>
 		<language name="JPN_KANJI" width="256">きみが　来ると
 ユナイテッドタワーが　にぎやかになる▼
 自分の　庭だと　思って
-心ゆくまで　楽しんでくれ</language>
+好きに　動きまわってくれ</language>
 	</row>
 
 	<flowchart-group-list>
