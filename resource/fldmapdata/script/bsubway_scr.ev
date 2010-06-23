@@ -346,14 +346,17 @@ _RET
 //--------------------------------------------------------------
 sub_bsw_receipt_guide_wifi_upload:
 {
+  //レポート前に復帰位置を受付前にする
+  _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //アップロード
   _CALL sub_common_wifi_upload_score
-    
+   
   IF $SCWK_ANSWER == TRUE THEN  //成績を送りました！
     $SCWK_TEMP0 = msg_bsw_scr_51
     _CALL sub_bsw_common_bwin_receipt
     _MSGWIN_CLOSE()
-       
+    
     //レポート
     _CALL sub_bsw_common_auto_save
   ENDIF
@@ -382,6 +385,9 @@ sub_receipt_rekidai_download:
   _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
+    //レポート前に復帰位置を受付前にする
+    _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+    
     //セーブ
     _CALL sub_bsw_common_auto_save
     
@@ -1266,14 +1272,17 @@ sub_receipt_challenge_wifi:
     
     //まずDLプレイで無い状況にする
     _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_SEL_DL_BTL, FALSE, BSW_NULL, BSW_NULL )
-
-    //レポート
-    _CALL sub_bsw_common_report
+    
+    //レポート前に復帰位置を受付前にする
+    _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+    
+    //レポート (レポートのみ)
+    _CALL sub_bsw_common_report_core
     
     IF $SCWK_ANSWER == 1 THEN //レポートキャンセル
       _RET
     ENDIF
-   
+    
     //wifi接続　ダウンロード
     _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, ret )
     
@@ -2709,11 +2718,8 @@ _RET
 //  受付　レポート処理
 //  @retval SCWK_ANSWER 1=キャンセル
 //--------------------------------------------------------------
-sub_bsw_common_report:
+sub_bsw_common_report_core:
 {
-  //現在位置Push
-  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
-  
   //レポートイベント呼び出し
   _REPORT_EVENT_CALL( SCWK_ANSWER )
   
@@ -2723,6 +2729,21 @@ sub_bsw_common_report:
   ELSE
     $SCWK_ANSWER = 0
   ENDIF
+}
+_RET
+
+
+//--------------------------------------------------------------
+//  受付　レポート処理　現在位置を復帰位置とする
+//  @retval SCWK_ANSWER 1=キャンセル
+//--------------------------------------------------------------
+sub_bsw_common_report:
+{
+  //現在位置Push
+  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //レポートイベント呼び出し
+  _CALL sub_bsw_common_report_core
 }
 _RET
 
@@ -3068,6 +3089,8 @@ sub_common_wifi_upload_score:
   _REBOOT_BEACON_SEARCH()
   
   IF $ret == TRUE THEN //送れた
+    //BSWTOOL_WIFI_UPLOAD_SCOREでアップロードが完了すると
+    //内部で0クリアされるが、念のためこちらでもクリアする
     _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )
     $SCWK_ANSWER = TRUE
   ELSE

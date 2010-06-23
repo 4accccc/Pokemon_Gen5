@@ -122,6 +122,7 @@ static void bsway_GetHomeNPCItemData(
     u16 *msg_before, u16 *msg_after, u16 *item_no );
 
 static u32 bsw_getRegulationLabel( u32 play_mode );
+static u32 bsw_GetNowMapPlayMode( FIELDMAP_WORK *fieldmap );
 
 static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX];
 static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX];
@@ -302,35 +303,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   switch( cmd_id ){
   //ゾーンID別プレイモード取得
   case BSWTOOL_GET_ZONE_PLAY_MODE:
-    {
-      u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
-      switch( zone_id ){
-      case ZONE_ID_C04R0102:
-        *ret_wk = BSWAY_MODE_SINGLE;
-        break;
-      case ZONE_ID_C04R0103:
-        *ret_wk = BSWAY_MODE_S_SINGLE;
-        break;
-      case ZONE_ID_C04R0104:
-        *ret_wk = BSWAY_MODE_DOUBLE;
-        break;
-      case ZONE_ID_C04R0105:
-        *ret_wk = BSWAY_MODE_S_DOUBLE;
-        break;
-      case ZONE_ID_C04R0106:
-        *ret_wk = BSWAY_MODE_MULTI;
-        break;
-      case ZONE_ID_C04R0107:
-        *ret_wk = BSWAY_MODE_S_MULTI;
-        break;
-      case ZONE_ID_C04R0108:
-        *ret_wk = BSWAY_MODE_WIFI;
-        break;
-      default:
-        GF_ASSERT( 0 );
-        *ret_wk = BSWAY_MODE_SINGLE;
-      }
-    }
+    *ret_wk = bsw_GetNowMapPlayMode( fieldmap );
     break;
   //リセット
   case BSWTOOL_SYSTEM_RESET:
@@ -786,6 +759,19 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       SCRIPT_CallEvent( sc, createYesNoEvent(gsys,work,ret_wk,cursor_pos) );
     }
     result = VMCMD_RESULT_SUSPEND;
+    break;
+  //現在の受付マップ別に復帰位置セット
+  case BSWTOOL_SET_RECEIPT_MAP_LOCATION:
+    {
+      LOCATION loc;
+      u16 map_play_mode = bsw_GetNowMapPlayMode( fieldmap );
+      u32 zone_id = data_PlayModeZoneID[map_play_mode];
+      const VecFx32 *pos = &data_PlayModeRecoverPos[map_play_mode];
+      LOCATION_SetDirect( &loc, zone_id, EXIT_DIR_RIGHT,
+          pos->x, pos->y, pos->z );
+      GAMEDATA_SetSpecialLocation( gdata, &loc );
+      EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
+    }
     break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
@@ -2303,6 +2289,44 @@ static u32 bsw_getRegulationLabel( u32 play_mode )
   return( type );
 }
 
+//--------------------------------------------------------------
+/**
+ * 現在マップ別プレイモード取得
+ */
+//--------------------------------------------------------------
+static u32 bsw_GetNowMapPlayMode( FIELDMAP_WORK *fieldmap )
+{
+  u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  u32 play_mode = BSWAY_MODE_SINGLE;
+
+  switch( zone_id ){
+  case ZONE_ID_C04R0102:
+    play_mode = BSWAY_MODE_SINGLE;
+    break;
+  case ZONE_ID_C04R0103:
+    play_mode = BSWAY_MODE_S_SINGLE;
+    break;
+  case ZONE_ID_C04R0104:
+    play_mode = BSWAY_MODE_DOUBLE;
+    break;
+  case ZONE_ID_C04R0105:
+    play_mode = BSWAY_MODE_S_DOUBLE;
+    break;
+  case ZONE_ID_C04R0106:
+    play_mode = BSWAY_MODE_MULTI;
+    break;
+  case ZONE_ID_C04R0107:
+    play_mode = BSWAY_MODE_S_MULTI;
+    break;
+  case ZONE_ID_C04R0108:
+    play_mode = BSWAY_MODE_WIFI;
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  return( play_mode );
+}
+
 //======================================================================
 //  data
 //======================================================================
@@ -2637,14 +2661,14 @@ static const u16 data_HomeNpcTbl_WifiMan[10] =
 {
   GENTLEMAN, //ジェントルマン //0
   BOY2, //たんぱんこぞう
-  BOY1, //じゅくがえり
+  BOY3, //じゅくがえり
   BACKPACKERM, //バックパッカー
   POLICEMAN, //おまわりさん
   OLDMAN1,  //げいじゅつか
   BOY4, //おぼっちゃま
   PILOT, //パイロット
-  MAN3, //エリートトレーナー
-  OLDMAN1, //ベテラントレーナー //9
+  TRAINERM, //エリートトレーナー
+  VETERANM, //ベテラントレーナー //9
 };
 
 //--------------------------------------------------------------
@@ -2652,16 +2676,16 @@ static const u16 data_HomeNpcTbl_WifiMan[10] =
 //--------------------------------------------------------------
 static const u16 data_HomeNpcTbl_WifiWoman[10] =
 {
-  OLDWOMAN1, //ベテラントレーナー //0
-  GIRL1, //ミニスカート
+  VETERANW, //ベテラントレーナー //0
+  GIRL2, //ミニスカート
   GIRL3, //じゅくがえり
   BACKPACKERW, //バックパッカー
   OL, //ＯＬ
   GIRL4, //おじょうさま
-  WOMAN3, //エリートトレーナー
-  OLDWOMAN1, //ベテラントレーナー
+  TRAINERW, //エリートトレーナー
+  VETERANW, //ベテラントレーナー
   LADY, //マダム
-  WOMAN3, //エリートトレーナー //9
+  TRAINERW, //エリートトレーナー //9
 };
 
 //--------------------------------------------------------------
