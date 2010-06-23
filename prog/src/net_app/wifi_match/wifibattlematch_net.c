@@ -729,9 +729,22 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
   WIFIBATTLEMATCH_NETERR_WORK           *p_error  = &p_wk->error;
   WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE repair  = WIFIBATTLEMATCH_NET_ERROR_NONE;
 
+
+  //※１はエラー画面の後によんでしまうとまずいためエラー画面の前で呼ぶ
+  //->エラー画面でエラーここにくる→内部でdisconnect
+  //  →disconnect内でエラークリア
+
+
   //DWCのエラー
   if( GFL_NET_IsInit() )
   { 
+    //※１
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+    {
+      GFL_NET_SetAutoErrorCheck(FALSE);
+      GFL_NET_SetNoChildErrorCheck(FALSE);
+    }
+
     //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
     switch( GFL_NET_DWC_ERROR_ReqErrorDisp(is_heavy, is_timeout) )
     { 
@@ -759,6 +772,9 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
     {
       DEBUG_NET_Printf( "DWCのエラー検知 %d\n",repair );
     }
+
+    //エラー画面とエラーの解決をすでにしているので抜ける
+    return repair;
   }
 
   //個別のエラー
@@ -799,15 +815,17 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
 
     if( repair != GFL_NET_DWC_ERROR_RESULT_NONE )
     {
+      GFL_NET_SetAutoErrorCheck(FALSE);
+      GFL_NET_SetNoChildErrorCheck(FALSE);
       DEBUG_NET_Printf( "ライブラリ個別のエラー検知 %d\n",repair );
     }
 
     switch( repair )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:      //復帰可能地点まで戻る
-      NetErr_DispCallPushPop();
       GFL_NET_StateResetError();
       GFL_NET_StateClearWifiError();
+      NetErr_DispCallPushPop();
       NetErr_ErrWorkInit();
       break;
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -831,11 +849,6 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
     {
       WIFIBATTLEMATCH_NETERR_ClearError( p_error );
     }
-  }
-
-  if( repair != WIFIBATTLEMATCH_NET_ERROR_NONE )
-  {
-    WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
   }
 
   return repair;
