@@ -96,6 +96,7 @@ EVENT_END
 /*		エレベーター	                      									  */
 /**************************************************************/
 EVENT_START		ev_un_elevator
+  _TALK_START_SE_PLAY()
   //案内人が自機のほうを向く
   _OBJ_ANIME( UN_ROOM_INFORMATIONW, anm_dir_right )
   _OBJ_ANIME_WAIT()
