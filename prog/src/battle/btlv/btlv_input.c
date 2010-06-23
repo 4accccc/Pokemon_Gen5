@@ -5467,6 +5467,10 @@ static  void  set_cursor_pos( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw )
 { 
+  if( BTL_MAIN_GetCompetitor( BTLV_EFFECT_GetMainModule() ) == BTL_COMPETITOR_DEMO_CAPTURE )  ///< •ßŠlƒfƒ‚
+  { 
+    return;
+  }
   if( BTLV_EFFECT_CheckItemEnable() == FALSE )
   { 
     u16 pal[ 0x10 ];
