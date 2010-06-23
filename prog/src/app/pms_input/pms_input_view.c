@@ -51,6 +51,12 @@ enum
   EXPLAIN_COL_B     =  7,
 };
 
+enum
+{
+  // プリントキュー関連定数
+  QUE_BUFSIZE = 1280,
+}; 
+
 
 //------------------------------------------------------
 /**
@@ -894,7 +900,8 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 	//ボタンフォント読み出し
 	vwk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_PMS_INPUT_VIEW );
       
-  vwk->print_que = PRINTSYS_QUE_Create( HEAPID_PMS_INPUT_VIEW );
+  //vwk->print_que = PRINTSYS_QUE_Create( HEAPID_PMS_INPUT_VIEW );
+  vwk->print_que = PRINTSYS_QUE_CreateEx( QUE_BUFSIZE, HEAPID_PMS_INPUT_VIEW );  // QUE_DEFAULT_BUFSIZEではあいうえおモードでリストを出したときにバッファが足りなくなる
 }
 
 
