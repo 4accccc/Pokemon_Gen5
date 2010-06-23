@@ -27,6 +27,7 @@ typedef enum {
   COMM_DIGIT = 6,
   BATTLE_DIGIT = 4,
   TRADE_DIGIT = 6,
+  SURETIGAI_DIGIT = 5,
 }TR_DIGIT;
 
 #define TR_DIGIT_MAX  (32)

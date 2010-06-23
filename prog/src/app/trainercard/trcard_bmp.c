@@ -668,7 +668,7 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
   case SCORE_LINE_SURETIGAI_NUM:            // すれ違い通信をした回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_17], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->SuretigaiNum, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->SuretigaiNum, SURETIGAI_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_FEELING_CHECK_NUM:        // フィーリングチェックをした回数
