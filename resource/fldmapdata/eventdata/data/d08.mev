@@ -1,5 +1,5 @@
 #event data
-#save date:2010/06/23 18:42:09
+#save date:2010/06/23 21:36:34
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08.wms
 #SECTION START:OBJ_EVENT
@@ -92,7 +92,7 @@ EVENTDATA_POSTYPE_GRID
 #Door Event Label
 DOOR_ID_D08_D08R0101_EXIT01
 #Next Zone ID Name
-DOOR_ID_D08_D08R0101_EXIT01
+ZONE_ID_D08R0101
 #Next Door ID Name
 DOOR_ID_D08R0101_D08_EXIT01
 #Door Direction

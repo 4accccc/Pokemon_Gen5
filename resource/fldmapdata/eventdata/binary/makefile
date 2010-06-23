@@ -49,7 +49,7 @@ SCRIPTDIR	= ../../script
 #include	../../script/zone_script.list
 #SRCDATA	= $(addprefix $(DATADIR)/,$(filter-out sp_%.mev,$(SCRIPTFILES:.ev=.mev)))
 
-SRCDATA	= $(DATADIR)/d08.mev $(DATADIR)/c07.mev
+SRCDATA	= $(DATADIR)/d08.mev $(DATADIR)/c07.mev $(DATADIR)/d08r0101.mev
 #SRCDATA = $(wildcard $(DATADIR)/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
 BINDAT = $(addprefix $(TMPDIR)/,$(addsuffix .bin,$(TGTDATA)))

@@ -26,7 +26,7 @@ include $(PROJECT_RSCDIR)\macro_define
 
 TMPDIR	= ../tmp
 DATADIR	= ../data
-SRCDATA	= $(DATADIR)/d08.mev $(DATADIR)/c07.mev
+SRCDATA	= $(DATADIR)/d08.mev $(DATADIR)/c07.mev $(DATADIR)/d08r0101.mev
 #SRCDATA = $(wildcard $(DATADIR)/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
 HEADER = $(addprefix $(TMPDIR)/,$(addsuffix .h,$(TGTDATA)))

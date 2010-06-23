@@ -123,6 +123,9 @@ c07_def.h: c07.ev
 d08_def.h: d08.ev
 	$(EV_DEF) d08.ev $(SCR_OFFS_ID_H)
 
+d08r0101_def.h: d08r0101.ev
+	$(EV_DEF) d08r0101.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
