@@ -560,6 +560,8 @@ struct _RHYTHM_MAIN_WORK
   GFL_TCB *p_brightness_task;
   BOOL    is_brightness_req;
 
+  BOOL    is_rhythm_trg;
+
 	//ˆø”
 	IRC_RHYTHM_PARAM	*p_param;
 };
@@ -1048,7 +1050,10 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 	}
 
 	//APPBAR
-	APPBAR_Main( p_wk->p_appbar );
+  if( p_wk->is_rhythm_trg == FALSE )
+  {
+    APPBAR_Main( p_wk->p_appbar );
+  }
 
 	//ƒV[ƒ“‚ðŒp‘±“I‚É‘—‚é
 	COMPATIBLE_IRC_SendSceneContinue( p_wk->p_param->p_irc );
@@ -2317,9 +2322,10 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	int i;
 	GFL_POINT	trg_pos;
 	RHYTHMSEARCH_WORK	*p_search;
+
 	p_search	= &p_wk->search;
 
-
+  p_wk->is_rhythm_trg  = FALSE;
   if( !APPBAR_IsStartAnime(p_wk->p_appbar) )
   {
     if( TP_GetRhythmTrg( &trg_pos ) )
@@ -2332,6 +2338,8 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
       {
         RHYTHMSEARCH_SetData( p_search );
       }
+
+      p_wk->is_rhythm_trg  = TRUE;
     }
   }
 
