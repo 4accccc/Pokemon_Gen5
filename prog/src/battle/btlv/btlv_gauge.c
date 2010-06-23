@@ -230,7 +230,8 @@ struct _BTLV_GAUGE_CLWK
   u32           appear_flag       :1;     //GAUGE_Addされたかどうかフラグ（下画面のボタン記憶クリアに使用）
   u32           se_wait_flag      :1;
   u32           gauge_draw_enable :1;
-  u32                             :2;
+  u32           move_pos_flag     :1;     //サイドチェンジ、MOVE、ローテーションなどで、紐付けられているポケモンが変化
+  u32                             :1;
 
   u32           add_dec;
   u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
@@ -547,6 +548,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 {
   GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
+  MI_CpuClear16( &bgw->bgcl[ pos ], sizeof( BTLV_GAUGE_CLWK ) );
 
   { 
     PokeSick sick;
@@ -625,6 +627,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
 void  BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const POKEMON_PARAM* pp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 {
   GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
+  MI_CpuClear16( &bgw->bgcl[ pos ], sizeof( BTLV_GAUGE_CLWK ) );
 
   gauge_load_resource( bgw, type, pos, PP_GetSick( pp ) );
 
@@ -2254,8 +2257,8 @@ void  BTLV_GAUGE_SetPinchBGMNoCheck( BTLV_GAUGE_WORK* bgw, BOOL value )
 //--------------------------------------------------------------
 BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm )
 { 
-  //ゲージが存在しないときはなにもせずにリターン
-  if( bgw->bgcl[ pos ].base_clwk == NULL ) 
+  //ゲージが存在しないor紐付けられているポケモンが変化しているときはなにもせずにリターン
+  if( ( bgw->bgcl[ pos ].base_clwk == NULL ) || ( bgw->bgcl[ pos ].move_pos_flag ) )
   {
     *color = GAUGETOOL_HP_DOTTO_GREEN;
     *sick_anm = APP_COMMON_ST_ICON_NONE;
@@ -2285,6 +2288,18 @@ void BTLV_GAUGE_SwitchGaugeMode( BTLV_GAUGE_WORK* bgw )
   bgw->mode_switch_req = 1;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲージモードの切り替えリクエスト
+ *
+ *	@param	bgw   ワーク
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_GAUGE_SetMovePosFlag( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
+{ 
+  if( bgw->bgcl[ pos ].base_clwk == NULL ) return;
+  bgw->bgcl[ pos ].move_pos_flag = 1;
+}
 
 //--------------------------------------------------------------
 /**

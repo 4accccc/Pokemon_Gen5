@@ -478,6 +478,8 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
           //g‘ã‚í‚è‚ª‚Å‚Ä‚¢‚é‚È‚ç‰½‚à‚µ‚È‚¢
           if( BTLV_MCSS_GetStatusFlag( bmw, pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) continue;
 
+          if( BTLV_EFFECT_GetGaugeStatus( pos, &color, &sick_anm ) == FALSE ) continue;
+
           if( bmw->btlv_mcss[ index ].sick_set_flag == 1 )
           { 
             if( bmw->btlv_mcss[ index ].evy_dir == 0 )
@@ -496,7 +498,6 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
             }
           }
 
-          if( BTLV_EFFECT_GetGaugeStatus( pos, &color, &sick_anm ) )
           { 
             switch( sick_anm ){ 
             case APP_COMMON_ST_ICON_NEMURI:      // –°‚è
@@ -1426,6 +1427,7 @@ void  BTLV_MCSS_SetSideChange( BTLV_MCSS_WORK* bmw, BtlvMcssPos pos1, BtlvMcssPo
         VecFx32 pos;
         BTLV_MCSS_GetDefaultPos( bmw, &pos, position[ i ^ 1 ] );
         BTLV_MCSS_MovePosition( bmw, position[ i ], EFFTOOL_CALCTYPE_DIRECT, &pos, 0, 0, 0 );
+        BTLV_GAUGE_SetMovePosFlag( BTLV_EFFECT_GetGaugeWork(), position[ i ] );
         if( bmw->btlv_mcss[ index[ i ] ].set_init_pos )
         { 
           bmw->btlv_mcss[ index[ i ] ].set_init_pos = 0;
@@ -3295,6 +3297,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
       for( i = 0 ; i < 3 ; i++ )
       {
         index[ i ] = BTLV_MCSS_GetIndex( bmrw->bmw, src_pos[ bmrw->side ][ i ] );
+        BTLV_GAUGE_SetMovePosFlag( BTLV_EFFECT_GetGaugeWork(), src_pos[ bmrw->side ][ i ] );
       }
       for( i = 0 ; i < 3 ; i++ )
       {
