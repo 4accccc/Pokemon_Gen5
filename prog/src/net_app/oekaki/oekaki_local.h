@@ -149,8 +149,8 @@ enum{
 // タッチパネル情報構造体
 // このデータが通信で送信されます
 typedef struct{
-  u8 x[4];  // 最大４回分のタッチ座標
-  u8 y[4];  // 
+  u8 x[2];  // 最大４回分のタッチ座標
+  u8 y[2];  // 
   u8 color:3; // 選択中のカラー
   u8 size:3;  // サンプリング成功個数
   u8 brush:2; // 選択中のペン先
@@ -205,6 +205,16 @@ enum{
   OEKAKI_PRINT_UTIL_MAX,
 };
 
+#define OEKAKI_FIFO_MAX   ( 100 )
+
+
+// 親機・子機共通の送信FIFO構造体
+// 親機は5人分格納するが、子機は[0]に自分の情報を格納するだけ
+typedef struct{
+  TOUCH_INFO        fifo[OEKAKI_FIFO_MAX][5]; // 送信失敗のリトライ用のFIFO
+  int               start;    // 送信スタートポイント
+  int               end;      // タッチパネル情報を格納する位置
+}TOUCH_FIFO;
 
 //============================================================================================
 //  構造体定義
@@ -271,9 +281,9 @@ struct OEKAKI_WORK{
   u8            brush_color;
   u8            brush;
 
-  TOUCH_INFO        MyTouchResult;        // 自分のサンプリング結果（これは送信するだけ
+  TOUCH_INFO        MyTouchResult;                      // 自分のサンプリング結果（これは送信するだけ
   TOUCH_INFO        AllTouchResult[OEKAKI_MEMBER_MAX];  // 通信で取得したサンプリング結果（このデータで描画する
-  OLD_TOUCH_INFO    OldTouch[OEKAKI_MEMBER_MAX];      // 前回からのポイント履歴
+  OLD_TOUCH_INFO    OldTouch[OEKAKI_MEMBER_MAX];        // 前回からのポイント履歴
 
   u8            *lz_buf;                   // 圧縮画像格納領域
   int           send_num;
@@ -288,10 +298,12 @@ struct OEKAKI_WORK{
   s16           ridatu_wait;              // 離脱用のウェイト
   u16           status_end;               // TRUE:終了シーケンスへ移行
   u16           force_end;                // TRUE:強制終了モード中
+
+  TOUCH_FIFO    TouchFifo;                // タッチ情報送信FIFO
   
   // ----親だけが必要なワーク
 
-  TOUCH_INFO        ParentTouchResult[5];
+  TOUCH_INFO    ParentTouchResult[5];     // 子機から受信した頂点情報を送信するためのバッファ
   int           banFlag;
   int           yesno_flag;               // 現在「はい・いいえ」画面を呼び出し中
   int           firstChild;               // 一番最初にやってきたときに子機から乱入宣言されても無視
@@ -316,6 +328,14 @@ extern void OekakiBoardCommSend(int netID, int command, int pos);
 extern void OekakiBoard_MainSeqCheckChange( OEKAKI_WORK *wk, int seq, u8 id );
 extern void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  );
 extern void Oekaki_SendDataRequest( OEKAKI_WORK *wk, int command, int id );
+
+extern void OekakiTouchFifo_Init( TOUCH_FIFO *touchFifo );
+extern void OekakiTouchFifo_AddEnd( TOUCH_FIFO *touchFifo );
+extern void OekakiTouchFifo_AddStart( TOUCH_FIFO *touchFifo );
+extern void OekakiTouchFifo_Set( TOUCH_INFO *myResult, TOUCH_FIFO *touchFifo, int id );
+extern void OekakiTouchFifo_Get( TOUCH_INFO *myResult, TOUCH_FIFO *touchFifo );
+extern void OekakiTouchFifo_GetParent( TOUCH_INFO *myResult, TOUCH_FIFO *touchFifo );
+extern void OekakiTouchFifo_AddEndParent( TOUCH_FIFO *touchFifo );
 
 
 #endif

@@ -17,7 +17,7 @@
 #include "net/network_define.h"
 
 // ５人接続通信の時にユーザーが子機として送信できる最大受信バイト数
-#define COMM_SEND_5TH_PACKET_MAX  (10)
+#define COMM_SEND_5TH_PACKET_MAX  (6)
 
 // ---------------------------------------------------
 // 通信コマンド定義

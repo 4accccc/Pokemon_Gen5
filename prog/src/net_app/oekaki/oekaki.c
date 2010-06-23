@@ -6,6 +6,12 @@
  * @date    09.01.20
  *
  *
+ * ・TOUCH_INFOの配列を２に減らす
+ * ・親の送信FIFOを作る
+ * ・描画情報を１頂点にするから途切れる。だから２頂点にして線分をかならず引かせるようにすれば
+ * 　いいんじゃないか？
+ * 　↑描いてない時のクライアントの判定が全部作り直しのような気がする…
+ *
  */
 //============================================================================================
 #define DEBUGPLAY_ONE ( 0 )
@@ -148,7 +154,6 @@ static void Oekaki_PrintFunc( OEKAKI_WORK *wk );
 static void _comm_friend_add( OEKAKI_WORK *wk );
 static void Oekaki_SendFunc( OEKAKI_WORK *wk );
 
-
 //====================================================
 /// シーケンス管理構造体
 //====================================================
@@ -246,7 +251,7 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
     GFL_DISP_GXS_InitVisibleControl();
   
     OS_Printf("OEKAKI_HEAP Cretae, before remain = %08x\n", GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OEKAKI, 0x40000 );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OEKAKI, 0x50000 );
 
     wk = GFL_PROC_AllocWork( proc, sizeof(OEKAKI_WORK), HEAPID_OEKAKI );
     GFL_STD_MemFill( wk, 0, sizeof(OEKAKI_WORK) );
@@ -280,8 +285,6 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
     //BGグラフィックセット
     BgGraphicSet( wk, p_handle );
 
-//    InitTPNoBuff(2);
-  
     // VBlank関数セット
     wk->vblankTcb = GFUser_VIntr_CreateTCB( VBlankFunc, wk, 0 );  
   
@@ -1415,24 +1418,32 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
   // サンプリング情報を取得して格納
   {
     TP_ONE_DATA tpData;
+    TOUCH_INFO  tmpResult;
     int i;
-//  if(GFL_UI_TP_Main( &tpData, TP_BUFFERING_JUST, 64 )==TP_OK){
     if(GFL_UI_TP_GetCont()==TRUE){
       u32 x,y;
       GFL_UI_TP_GetPointCont( &x, &y );
       tpData.Size = 1;
       tpData.TPDataTbl[0].x = x;
       tpData.TPDataTbl[0].y = y;
-      SetTouchpanelData( &wk->MyTouchResult, &tpData, wk->brush_color, wk->brush );
+      SetTouchpanelData( &tmpResult, &tpData, wk->brush_color, wk->brush );
 
       if(decide == TRUE){
-        wk->MyTouchResult.size = 0;
+        tmpResult.size = 0;
       }
     }else{
       tpData.Size = 0;
       tpData.TPDataTbl[0].x = 0;
       tpData.TPDataTbl[0].y = 0;
-      SetTouchpanelData( &wk->MyTouchResult, &tpData, wk->brush_color, wk->brush );
+      SetTouchpanelData( &tmpResult, &tpData, wk->brush_color, wk->brush );
+    }
+    // FIFOに積む
+    OekakiTouchFifo_Set( &tmpResult, &wk->TouchFifo, 0 );
+
+    if(GFL_NET_SystemGetCurrentID()==0){      // 親機の時
+      OekakiTouchFifo_AddEndParent( &wk->TouchFifo );
+    }else{
+      OekakiTouchFifo_AddEnd( &wk->TouchFifo );
     }
   }
 
@@ -1496,8 +1507,6 @@ static void EndButtonAppearChange( GFL_CLWK *act, BOOL flag )
 static int Oekaki_MainNormal( OEKAKI_WORK *wk, int seq )
 {
   NormalTouchFunc(wk);      //  タッチパネル処理
-
-
   
   if(GFL_NET_SystemGetCurrentID()==0){      // 親機の時
     if(OnlyParentCheck(wk)!=1){     // 一人じゃないか？
@@ -2598,7 +2607,6 @@ static void Stock_OldTouch( TOUCH_INFO *all, OLD_TOUCH_INFO *stock )
 }
 
 
-static int debug_count;
 //------------------------------------------------------------------
 /**
  * @brief  通信で受信したタッチパネルの結果データを下に描画する
@@ -2633,8 +2641,6 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old
     }
   }
   if(flag && draw){
-    
-//    OS_Printf("write board %d times\n",debug_count++);
     GFL_BMPWIN_MakeTransWindow( win );
   }
   
@@ -2878,24 +2884,53 @@ static int ConnectCheck( OEKAKI_WORK *wk )
 //------------------------------------------------------------------
 static void LineDataSendRecv( OEKAKI_WORK *wk )
 {
+  int ret;
+
+
+  // 親機か子機か
   if( GFL_NET_SystemGetCurrentID()==0 ){
     GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
     // 親機は自分のタッチパネル情報を追加して送信する
     if(GFL_NET_IsEmptySendData(pNet)){  // パケットが空いてるなら
-      wk->MyTouchResult.banFlag    = wk->banFlag;
-      wk->ParentTouchResult[0] = wk->MyTouchResult;
-      GFL_NET_SendData( pNet, CO_OEKAKI_LINEPOS_SERVER, 
+      // FIFOから親機用の頂点情報を取り出す
+      OekakiTouchFifo_GetParent( wk->ParentTouchResult, &wk->TouchFifo );
+
+      wk->ParentTouchResult[0].banFlag = wk->banFlag;
+      ret=GFL_NET_SendData( pNet, CO_OEKAKI_LINEPOS_SERVER, 
                         COMM_SEND_5TH_PACKET_MAX*OEKAKI_MEMBER_MAX, wk->ParentTouchResult );
+      if(ret==TRUE){
+        // 送信成功であればFIFOを進める
+        OekakiTouchFifo_AddStart( &wk->TouchFifo );
+        MORI_Printf("fifo start=%d, end=%d\n", wk->TouchFifo.start, wk->TouchFifo.end);
+      }else{
+        MORI_Printf("親機送信失敗  x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
+      }
+    }else{
+      MORI_Printf("送信バッファに積むことができない\n");
     }
   }else{
+
     GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+    // 子機用の頂点情報をFIFOから取り出す
+    OekakiTouchFifo_Get( &wk->MyTouchResult, &wk->TouchFifo );
     if(GFL_NET_IsEmptySendData(pNet)){
       // 子機は自分のタッチパネル情報を親機に送信する
-      GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), CO_OEKAKI_LINEPOS, 
+      ret=GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), CO_OEKAKI_LINEPOS, 
                         COMM_SEND_5TH_PACKET_MAX, &wk->MyTouchResult );
+      if(ret==TRUE){
+        // 送信成功であればFIFOを進める
+        OekakiTouchFifo_AddStart( &wk->TouchFifo );
+        MORI_Printf("fifo start=%d, end=%d\n", wk->TouchFifo.start, wk->TouchFifo.end);
+      }else{
+        MORI_Printf("子機送信失敗 x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
+      }
+    }else{
+      MORI_Printf("送信バッファに積むことができない\n");
     }
   }
+
 }
 
 
@@ -3260,14 +3295,12 @@ static void SetTouchpanelData( TOUCH_INFO *touchResult, TP_ONE_DATA *tpData, int
     touchResult->x[1] = tpData->TPDataTbl[n].x;
     touchResult->y[1] = tpData->TPDataTbl[n].y;
 
-#if PLFIX_T1624
     // タッチ座標が0,0なら設定しない
     for( i=0; i<2; i++ ){
       if( (touchResult->x[i] + touchResult->y[i]) == 0 ){
         tpData->Size = 0; // なかったことにする
       }
     }
-#endif
   }
 
   // 最大４回サンプリングされるはずだが、それでも送信データは２と格納する
@@ -3280,6 +3313,8 @@ static void SetTouchpanelData( TOUCH_INFO *touchResult, TP_ONE_DATA *tpData, int
   // 色・大きさ設定
   touchResult->color = brush_color;
   touchResult->brush = brush;
+
+  
 
 }
 
@@ -3540,3 +3575,184 @@ void Oekaki_SendDataRequest( OEKAKI_WORK *wk, int command, int id )
     OS_Printf("送信リクエストが重複した now=%d, new=%d\n", wk->send_req.command, command);
   }
 }
+
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief FIFO初期化
+ *
+ * @param   touchFifo   
+ */
+//----------------------------------------------------------------------------------
+void OekakiTouchFifo_Init( TOUCH_FIFO *touchFifo )
+{
+  touchFifo->start = 0;
+  touchFifo->end   = 0;
+}
+
+static int _get_fifo_previous_end(TOUCH_FIFO *touchFifo)
+{
+  int end = touchFifo->end;
+  
+  end--;
+  if(end<0){
+    end = OEKAKI_FIFO_MAX-1;
+  }
+ return end;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief FIFOセット位置＋１
+ *
+ * @param   touchFifo   
+ */
+//----------------------------------------------------------------------------------
+void OekakiTouchFifo_AddEnd( TOUCH_FIFO *touchFifo )
+{
+
+  // 今回格納されているのが０で、前回も０だった場合は積まない
+  if(touchFifo->fifo[touchFifo->end][0].size==0){
+    if(touchFifo->fifo[_get_fifo_previous_end(touchFifo)][0].size==0){
+//      OS_Printf("FIFOを進めなかった touchFifo->end=%d\n",touchFifo->end);
+      return;
+    }
+  }
+
+  // 頂点情報が格納されていたら進める
+  touchFifo->end++;
+
+  // リングバッファが1周したら０に
+  if(touchFifo->end>=OEKAKI_FIFO_MAX){
+    touchFifo->end=0;
+  }
+  
+}
+
+//=============================================================================================
+/**
+ * @brief 親機用のリングバッファ＋１
+ *
+ * @param   touchFifo   
+ */
+//=============================================================================================
+void OekakiTouchFifo_AddEndParent( TOUCH_FIFO *touchFifo )
+{
+  int i;
+  int flag=0,flag2=0;
+
+  // 今回の5人分のデータが全部０
+  for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+    if(touchFifo->fifo[touchFifo->end][i].size==0){
+      flag++;
+    }
+  }
+  // 一つ前に戻ってみても5人分のデータが全部０
+  if(flag==5){
+    int previous=_get_fifo_previous_end(touchFifo);
+    for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+      if(touchFifo->fifo[previous][i].size==0){
+        flag2++;
+      }
+    }
+    
+  }
+  // 上の2つの条件を全部満たしていたら積まない
+  if(flag2==5){
+    return;
+  }
+
+  // 終端ポイントを進める
+  touchFifo->end++;
+  // リングバッファが1周したら０に
+  if(touchFifo->end>=OEKAKI_FIFO_MAX){
+    touchFifo->end=0;
+  }
+  
+}
+
+static void _fifo_size_clear( TOUCH_INFO *pack )
+{
+  int i;
+  for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+    pack[i].size = 0;
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief FIFO取り出し位置＋１
+ *
+ * @param   touchFifo   
+ */
+//----------------------------------------------------------------------------------
+void OekakiTouchFifo_AddStart( TOUCH_FIFO *touchFifo )
+{
+  // startはendを抜かない
+  if(touchFifo->start!=touchFifo->end){
+    _fifo_size_clear( touchFifo->fifo[touchFifo->start] );
+    touchFifo->start++;
+
+    // リングバッファが1周したら０に
+    if(touchFifo->start>=OEKAKI_FIFO_MAX){
+      touchFifo->start=0;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief  頂点情報をFIFOにセット
+ *
+ * @param   myResult    
+ * @param   touchFifo   
+ * @param   id
+ */
+//----------------------------------------------------------------------------------
+void OekakiTouchFifo_Set( TOUCH_INFO *myResult, TOUCH_FIFO *touchFifo, int id )
+{
+  touchFifo->fifo[touchFifo->end][id] = *myResult;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief FIFOから頂点情報を取得（子機用）
+ *
+ * @param   myResult    
+ * @param   touchFifo   
+ */
+//----------------------------------------------------------------------------------
+void OekakiTouchFifo_Get( TOUCH_INFO *myResult, TOUCH_FIFO *touchFifo )
+{
+  if(touchFifo->start!=touchFifo->end){
+    *myResult = touchFifo->fifo[touchFifo->start][0];
+  }else{
+    myResult->size = 0;
+  }
+  
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief FIFOから頂点情報をまとめて取得（親機用）
+ *
+ * @param   myResult    
+ * @param   touchFifo   
+ */
+//----------------------------------------------------------------------------------
+void OekakiTouchFifo_GetParent( TOUCH_INFO *myResult, TOUCH_FIFO *touchFifo )
+{
+  int i;
+  if(touchFifo->start!=touchFifo->end){
+    for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+      myResult[i] = touchFifo->fifo[touchFifo->start][i];
+    }
+  }else{
+    for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+      myResult[i].size = 0;
+    }
+  }
+}
+
