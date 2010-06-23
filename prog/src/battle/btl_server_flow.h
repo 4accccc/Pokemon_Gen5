@@ -726,6 +726,7 @@ typedef struct {
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8              pokeID;            ///< ‘ÎÛƒ|ƒPƒ‚ƒ“ID
+  BtlItemReaction reactionType;
 }BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP;
 
 /**

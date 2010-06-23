@@ -15024,7 +15024,7 @@ static u8 scproc_HandEx_CheckItemEquip( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PA
   const BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP* param = (const BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP*)(param_header);
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
-  scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
+  scproc_CheckItemReaction( wk, bpp, param->reactionType );
   return 1;
 }
 /**

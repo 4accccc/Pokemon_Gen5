@@ -19,12 +19,13 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
 static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_AquaRing( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
-static void cont_Encore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 pokeID );
+static void cont_Encore( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 count );
 static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp );
+static void cure_KaifukuFuji( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp );
 static void cure_Bind( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, BPP_SICK_CONT oldCont );
 static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont );
 static int getCureStrID( WazaSick sick, BOOL fUseItem );
@@ -281,9 +282,10 @@ static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 
   }
 
   switch( sick ){
-  case WAZASICK_AKUBI:       cure_Akubi( flowWk, bpp ); break;
-  case WAZASICK_HOROBINOUTA: cure_HorobiNoUta( flowWk, bpp ); break;
-  case WAZASICK_SASIOSAE:    cure_Sasiosae( flowWk, bpp ); break;
+  case WAZASICK_AKUBI:        cure_Akubi( flowWk, bpp ); break;
+  case WAZASICK_HOROBINOUTA:  cure_HorobiNoUta( flowWk, bpp ); break;
+  case WAZASICK_SASIOSAE:     cure_Sasiosae( flowWk, bpp ); break;
+  case WAZASICK_KAIHUKUHUUJI: cure_KaifukuFuji( flowWk, bpp ); break;
   }
 }
 
@@ -335,8 +337,20 @@ static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
   u8 pokeID = BPP_GetID( bpp );
   BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
     param->pokeID = BPP_GetID( bpp );
+    param->reactionType = BTL_ITEMREACTION_GEN;
   BTL_SVF_HANDEX_Pop( flowWk, param );
 }
+// ‚©‚¢‚Ó‚­‚Ó‚¤‚¶‰ñ•œŽž
+static void cure_KaifukuFuji( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
+{
+//  BTL_HANDLER_ITEM_Add( bpp );
+  u8 pokeID = BPP_GetID( bpp );
+  BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
+    param->pokeID = BPP_GetID( bpp );
+    param->reactionType = BTL_ITEMREACTION_HP;
+  BTL_SVF_HANDEX_Pop( flowWk, param );
+}
+
 
 static void cure_Bind( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, BPP_SICK_CONT oldCont )
 {
