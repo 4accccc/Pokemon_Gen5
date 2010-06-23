@@ -1278,7 +1278,6 @@ static int WO_SeqSelectDecide(WO_WORK* wk)
   if(wk->cur_pos == CPOS_BACK){
     PMSND_PlaySE( WO_SE_CANCEL );
     WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR);
-//    WO_ScrollCursorOff( wk );
     WO_TalkMsgSet( wk, MSG_END_CHECK );
     wk->ynidx = YESNO_END_CHECK;
     wk->next_seq = SEQ_YESNO_PUT;
@@ -1395,11 +1394,13 @@ static int WO_SeqSelect( WO_WORK * wk )
   case 2:   // 技３
   case 3:   // 技４
     if( GFL_UI_TP_GetTrg() == FALSE ){
+      // キーで決定なら直接「はい・いいえ」へ
       if( wk->dat->scr + ret < wk->sel_max ){
         PMSND_PlaySE( WO_SE_DECIDE );
         return WazaSelectEnter( wk );
       }
     }else{
+      // タッチで決定の場合はカーソル移動のみ（ボタン表示はcallback_touchで）
       if( wk->dat->scr + ret < wk->sel_max ){
         PMSND_PlaySE( WO_SE_LIST_MOVE );
       }
@@ -1425,9 +1426,10 @@ static int WO_SeqSelect( WO_WORK * wk )
     EnterButtonOnOff( wk, FALSE );  // 決定を消す
     return RetButtonAnmInit( wk, SEQ_RET_BUTTON );
   case 7:   // おぼえる
-    PMSND_PlaySE( WO_SE_DECIDE );
-    return EnterButtonAnmInit( wk, SEQ_ENTER_BUTTON );
-
+    if(EnterButtonCheck( wk )){
+      PMSND_PlaySE( WO_SE_DECIDE );
+      return EnterButtonAnmInit( wk, SEQ_ENTER_BUTTON );
+    }
   case CURSORMOVE_CURSOR_MOVE:  // 移動
     break;
 
@@ -1724,21 +1726,9 @@ static void WO_DefStrWrite( WO_WORK * wk )
   const POKEMON_PASO_PARAM* ppp;
   u32 siz,i;
 
-  //　せつめい
-//  GFL_MSG_GetString( wk->mman, msg_waza_oboe_exp_01, wk->mbuf );
-//  StrPut( wk, WIN_EXP, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_LEFT ,4);
-//  GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_EXP] );
-
   //　もどる
   GFL_MSG_GetString( wk->mman, msg_exp_decide, wk->mbuf );
   StrPut( wk, WIN_ABTN, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_CENTER ,4);
-
-/*
-  //　もどる
-  GFL_MSG_GetString( wk->mman, msg_exp_back, wk->mbuf );
-  StrPut( wk, WIN_BACK, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_CENTER ,4);
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_BACK] );
-*/
 
   // 「いりょく」
   GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_02, wk->mbuf );
@@ -3102,6 +3092,7 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
     if(wk->oboe_menu_work[0]!=NULL){
       APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[0] );
       APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[1] );
+      GFL_BG_LoadScreenReq( SFRM_MSG );
       wk->oboe_menu_work[0] = NULL;
       wk->oboe_menu_work[1] = NULL;
     }
