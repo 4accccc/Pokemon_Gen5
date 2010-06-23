@@ -149,6 +149,7 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 
 	wk->listMax  = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
 	wk->listMode = ZKNLIST_CALL_NORMAL;
+	ZKNCOMM_InitDefaultMons( wk->prm->savedata, wk->list, wk->listMax );
 	ZKNCOMM_ResetSortData( wk->prm->savedata, &wk->sort );
 
 	if( wk->prm->callMode == ZUKAN_MODE_TOP ){

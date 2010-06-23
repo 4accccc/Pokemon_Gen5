@@ -62,6 +62,41 @@ u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		デフォルトポケモンを登録されているものにする
+ *
+ * @param		sv		図鑑セーブデータ
+ * @param		list	リストデータ
+ * @param		max		リスト項目数
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNCOMM_InitDefaultMons( ZUKAN_SAVEDATA * sv, u16 * list, u16 max )
+{
+	u16	def_mons, init_mons;
+	u16	i;
+
+	init_mons = 0xffff;
+	def_mons  = ZUKANSAVE_GetDefaultMons( sv );
+
+	for( i=0; i<max; i++ ){
+		if( ZUKANSAVE_GetPokeSeeFlag( sv, list[i] ) == TRUE ){
+			if( list[i] == def_mons ){
+				return;
+			}
+			if( init_mons == 0xffff ){
+				init_mons = list[i];
+			}
+		}
+	}
+
+	if( init_mons != 0xffff ){
+		ZUKANSAVE_SetDefaultMons( sv, init_mons );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		ビクティチェック
  *
  * @param		sv		図鑑セーブデータ
