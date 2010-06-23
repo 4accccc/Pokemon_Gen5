@@ -3582,6 +3582,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       pWork->ret_code = BAG_NEXTPROC_EXIT;
       pWork->ret_item = ITEM_DUMMY_DATA;
       SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
+	    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
     }
   // –ß‚éƒ{ƒ^ƒ“
   }else if(BUTTONID_RETURN == bttnid){
