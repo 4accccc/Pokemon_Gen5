@@ -642,7 +642,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     powerdata = GPOWER_PowerData_LoadAlloc(heapId);
     ISC_SAVE_GetDistributionGPower_Array(
       intsave, distribution_bit, INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX);
-    cardData->MonolithLevel = MonolithToolEx_CountUsePower(
+    cardData->gPowerNum = MonolithToolEx_CountUsePower(
       powerdata, GAMEDATA_GetMyOccupyInfo(gameData), distribution_bit);
     GPOWER_PowerData_Unload(powerdata);
   }

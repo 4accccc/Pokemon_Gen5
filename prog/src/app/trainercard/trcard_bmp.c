@@ -677,10 +677,10 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->FeelingCheckNum, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
-  case SCORE_LINE_MONOLITH_LEVEL:           // モノリスレベル
+  case SCORE_LINE_G_POWER:                  // 発動できるデルパワーの回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_19], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MonolithLevel, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->gPowerNum, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col );
     break;
   case SCORE_LINE_MUSICAL_NUM:              // ミュージカルをした回数
@@ -749,9 +749,9 @@ void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData )
     _add_score_list( wk, SCORE_LINE_SURETIGAI_NUM );
   }
 
-  // パレスに行った事があるならモノリスレベルの表示
+  // パレスに行った事があるならデルパワー回数の表示
   if(TrCardData->PaleceFlag){
-    _add_score_list( wk, SCORE_LINE_MONOLITH_LEVEL );
+    _add_score_list( wk, SCORE_LINE_G_POWER );
   }
 
   // ミュージカルに参加した事があるのであれば参加回数を表示

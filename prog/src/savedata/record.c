@@ -167,7 +167,7 @@ static u32 set_value(RECORD * rec, int id, u32 value)
 }
 
 
-#define RECODE_MAXTBL_MAX ( 5 )
+#define RECODE_MAXTBL_MAX ( 6 )
 //----------------------------------------------------------
 /**
  * @brief ƒŒƒR[ƒh€–Ú‚²‚Æ‚ÌãŒÀ‚ğæ“¾‚·‚é
@@ -355,6 +355,7 @@ static u32 get_limit(int id)
     65535,
     9999,
     999,
+    6,
   };
   int index = limit[id];
 

@@ -98,7 +98,7 @@ typedef struct TR_CARD_DATA_tag
   u32 TrainerEncountNum; ///< トレーナー戦をした回数
   u32 SuretigaiNum;      ///< すれ違い通信をした回数
   u16 FeelingCheckNum;   ///< フィーリングチェックをした回数
-  u16 MonolithLevel;     ///< モノリスレベル
+  u16 gPowerNum;         ///< 発動できる持っているデルパワーの回数
   u16 MusicalNum;        ///< ミュージカルをした回数
   u16 PokeshifterHigh;   ///< ポケシフターのハイスコア
   u16 TrialHouseHigh;    ///< トライアウハウスの最高得点
