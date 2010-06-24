@@ -370,8 +370,18 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
 
   case 3:
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+#ifdef  PLAYABLE_VERSION
+    {
+      // 画面フェードイン
+      // ゲーム終了時の季節を表示する
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Season( gsys, fieldmap, season, season ) );
+    }
+#else
     // 画面フェードイン(ゲームスタートデモのつながりを加味して、ホワイトフェード)
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( gsys, fieldmap, FIELD_FADE_WAIT ) );
+#endif  //PLAYABLE_VERSION
     (*seq)++;
     break;
 
