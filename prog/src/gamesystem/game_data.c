@@ -175,7 +175,8 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->sv_control_ptr = SaveControl_GetPointer();
 
   //‹GßÝ’èFƒQ[ƒ€“à‚Å‚Í1ƒ–ŒŽ‚PƒV[ƒYƒ“
-  gd->season_id = PMSEASON_GetRealTimeSeasonID();
+  //‘ÌŒ±”Å‚Å‚Íƒ‰ƒ“ƒ_ƒ€‚ÉŒˆ’è‚·‚é
+  gd->season_id = GFUser_GetPublicRand0( PMSEASON_TOTAL );
 
   //
   gd->subscreen_mode = FIELD_SUBSCREEN_NORMAL;
