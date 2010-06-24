@@ -43,6 +43,8 @@
 #define	ZKNLISTMAIN_TOUCH_BAR_SX		( 32 )
 #define	ZKNLISTMAIN_TOUCH_BAR_SY		( 3 )
 
+// リスト表示項目数
+#define	ZKNLISTMAIN_LIST_POS_MAX		( 7 )
 // リスト項目サイズ
 #define	ZKNLISTMAIN_LIST_PX					( 12 )
 #define	ZKNLISTMAIN_LIST_PY					( 0 )

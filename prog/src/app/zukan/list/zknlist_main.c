@@ -126,9 +126,9 @@ static const FRAMELIST_HEADER	ListHeader = {
 	0,							// 項目登録数
 	3,							// 背景登録数
 
-	0,							// 初期位置
-	7,							// カーソル移動範囲
-	0,							// 初期スクロール値
+	0,												// 初期位置
+	ZKNLISTMAIN_LIST_POS_MAX,	// カーソル移動範囲
+	0,												// 初期スクロール値
 
 	TouchHitTbl,			// タッチデータ
 
@@ -752,10 +752,10 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 
 		for( i=0; i<wk->dat->listMax; i++ ){
 			if( wk->dat->list[i] == def_mons ){
-				if( i > (wk->dat->listMax-7) ){
-					hed.initPos    = i - ( wk->dat->listMax - 7 );
+				if( i > (wk->dat->listMax-ZKNLISTMAIN_LIST_POS_MAX) ){
+					hed.initPos    = i - ( wk->dat->listMax - ZKNLISTMAIN_LIST_POS_MAX );
 					hed.initScroll = i - hed.initPos;
-				}else if( i < 7 ){
+				}else if( i < ZKNLISTMAIN_LIST_POS_MAX ){
 					hed.initPos    = i;
 				}else{
 					hed.initScroll = i;

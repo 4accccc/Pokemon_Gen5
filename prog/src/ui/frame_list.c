@@ -684,6 +684,7 @@ static void InitListDraw( FRAMELIST_WORK * wk, BOOL flg )
 static int MoveListTouch( FRAMELIST_WORK * wk )
 {
 	int	ret;
+	int	mode;
 
 	if( wk->touch == NULL ){
 		return COMMAND_NONE;
@@ -695,6 +696,7 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 		return COMMAND_NONE;
 	}
 
+	mode = GFL_UI_CheckTouchOrKey();
 	GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
 	switch( wk->hed.touch[ret].prm ){
@@ -716,10 +718,14 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 		return COMMAND_SLIDE;
 
 	case FRAMELIST_TOUCH_PARAM_RAIL:					// ƒŒ[ƒ‹
-		wk->railHitPos = ret;
-		wk->listOldPos = wk->listPos;
-//		wk->listPos = 0;
-		return COMMAND_RAIL;
+		if( wk->listMax > wk->listPosMax ){
+			wk->railHitPos = ret;
+			wk->listOldPos = wk->listPos;
+//			wk->listPos = 0;
+			return COMMAND_RAIL;
+		}
+		GFL_UI_SetTouchOrKey( mode );
+		break;
 
 	case FRAMELIST_TOUCH_PARAM_UP:						// ãˆÚ“®
 		if( wk->listScroll != 0 ){

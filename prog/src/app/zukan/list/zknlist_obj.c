@@ -572,6 +572,11 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
 		GFL_CLACT_WK_SetSRTAnimeFlag( wk->clwk[i], FALSE );
 	}
 
+	// スクロールできない
+	if( wk->dat->listMax <= ZKNLISTMAIN_LIST_POS_MAX ){
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, FALSE );
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_SCROLL_RAIL, FALSE );
+	}
 	// バージョンアップ前
 	if( ZUKANSAVE_GetGraphicVersionUpFlag( wk->dat->savedata ) == FALSE ){
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_START, FALSE );
