@@ -2905,6 +2905,11 @@ static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
+    BTLV_INPUT_ClearScreen( ttw->biw );
+    ttw->seq_no++;
+    break;
+  case 1:
+    BTLV_INPUT_CreateRotateScreen( ttw->biw );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
@@ -2915,7 +2920,7 @@ static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
     SetupSetScroll( ttw->biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
     ttw->seq_no++;
     break;
-  case 1:
+  case 2:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
@@ -3455,11 +3460,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
   TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
   int eff = rotate_camera_focus[ biw->rotate_scr ][ dir - 5 ];
 
-  BTLV_INPUT_ClearScreen( biw );
-
   biw->rotate_scr = rotate_screen_table[ biw->rotate_scr ][ dir - 5 ];
-
-  BTLV_INPUT_CreateRotateScreen( biw );
 
   biw->tcb_execute_flag = 1;
   ttw->biw = biw;
