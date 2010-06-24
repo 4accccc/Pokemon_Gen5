@@ -201,7 +201,11 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
     return FALSE;
   }
   pWork->handle = handle;
+#ifdef DEBUG_SERVER
   if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)cainfos, sizeof(cainfos)/sizeof(CPSCaInfo*) )))
+#else
+  if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)nintendoCA, sizeof(cainfos)/sizeof(CPSCaInfo*) )))
+#endif
   {
     GF_ASSERT_MSG(0," NHTTP_SetRootCA(%d)\n",err);
     return FALSE;
