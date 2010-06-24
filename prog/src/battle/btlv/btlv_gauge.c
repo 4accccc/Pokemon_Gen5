@@ -491,15 +491,18 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
       }
       Gauge_CalcEXP( bgw, i );
     }
-    if( bgw->bgcl[ i ].se_wait < BTLV_GAUGE_EXP_SE_TIME )
+    if( bgw->bgcl[ i ].se_wait_flag )
     { 
-      bgw->bgcl[ i ].se_wait++;
-    }
-    if( ( bgw->bgcl[ i ].exp_calc_req == 0 ) && ( bgw->bgcl[ i ].se_wait == BTLV_GAUGE_EXP_SE_TIME ) )
-    {
-      PMSND_StopSE();
-      bgw->bgcl[ i ].se_wait++;
-      bgw->bgcl[ i ].se_wait_flag = 0;
+      if( bgw->bgcl[ i ].se_wait < BTLV_GAUGE_EXP_SE_TIME )
+      { 
+        bgw->bgcl[ i ].se_wait++;
+      }
+      if( ( bgw->bgcl[ i ].exp_calc_req == 0 ) && ( bgw->bgcl[ i ].se_wait == BTLV_GAUGE_EXP_SE_TIME ) )
+      {
+        PMSND_StopSE();
+        bgw->bgcl[ i ].se_wait++;
+        bgw->bgcl[ i ].se_wait_flag = 0;
+      }
     }
     if( bgw->bgcl[ i ].level_up_req )
     {
