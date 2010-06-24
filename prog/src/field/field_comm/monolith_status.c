@@ -17,6 +17,7 @@
 #include "intrude_mission.h"
 #include "intrude_work.h"
 #include "monolith_snd_def.h"
+#include "field/monolith_tool_notwifi.h"
 
 #include "monolith.naix"
 
@@ -508,8 +509,9 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
   //Žg‚¦‚éGƒpƒ[‚Ì”
   GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_005, strbuf);
   WORDSET_RegisterNumber(setup->wordset, 0, 
-    MonolithTool_CountUsePower(
-    setup, MonolithTool_GetOccupyInfo(appwk), &appwk->parent->monolith_status), 
+    MonolithToolEx_CountUsePower(
+    setup->powerdata, MonolithTool_GetOccupyInfo(appwk), 
+    appwk->parent->monolith_status.gpower_distribution_bit), 
     4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_USE_GPOWER], setup->printQue, 

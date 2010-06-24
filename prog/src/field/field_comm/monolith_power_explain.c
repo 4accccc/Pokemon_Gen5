@@ -18,6 +18,7 @@
 #include "intrude_mission.h"
 #include "intrude_types.h"
 #include "gamesystem/g_power.h"
+#include "field/monolith_tool_notwifi.h"
 
 #include "monolith.naix"
 

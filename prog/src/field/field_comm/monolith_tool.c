@@ -43,8 +43,6 @@ enum{
 #define _INFO_YESNO_X   ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
 #define _INFO_YESNO_Y   ( 12 )
 
-///Gパワー：片方の条件を満たしていて、もう片方のレベル差分がこの値以内なら灰色
-#define _POWER_GRAY_OFFSET    (3)
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -1072,77 +1070,6 @@ BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, APP_TASKM
   return FALSE;
 }
 
-//--------------------------------------------------------------
-/**
- * パワーの習得状況を調べる
- *
- * @param   setup		
- * @param   gpower_id		GパワーID
- *
- * @retval  MONO_USE_POWER		習得状況
- */
-//--------------------------------------------------------------
-MONO_USE_POWER MonolithTool_CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy, const MONOLITH_STATUS *monost)
-{
-  u32 distribution_bit = 0;
-  
-  //パレスパワー
-  if(setup->powerdata[gpower_id].level_w == POWER_LEVEL_PALACE){
-    return MONO_USE_POWER_NONE; //パレスパワーは習得できない
-  }
-  
-  //配布パワー
-  if(setup->powerdata[gpower_id].level_w == POWER_LEVEL_DISTRIBUTION){
-    distribution_bit = monost->gpower_distribution_bit[0] | (monost->gpower_distribution_bit[1] << 8);
-    if(distribution_bit & (1 << (gpower_id - GPOWER_ID_DISTRIBUTION_START))){
-      return MONO_USE_POWER_OK;
-    }
-    return MONO_USE_POWER_NONE;
-  }
-  
-  //普通のパワー
-  if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
-    if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
-      return MONO_USE_POWER_OK;
-    }
-    if((s32)setup->powerdata[gpower_id].level_b - occupy->black_level <= _POWER_GRAY_OFFSET){
-      return MONO_USE_POWER_SOMEMORE;
-    }
-  }
-  else if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
-    if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
-      return MONO_USE_POWER_OK;
-    }
-    if((s32)setup->powerdata[gpower_id].level_w - occupy->white_level <= _POWER_GRAY_OFFSET){
-      return MONO_USE_POWER_SOMEMORE;
-    }
-  }
-  return MONO_USE_POWER_NONE;
-}
-
-//==================================================================
-/**
- * 使用できるパワー数を調べる
- *
- * @param   setup		
- * @param   occupy		
- * @param   monost		
- *
- * @retval  u32		
- */
-//==================================================================
-u32 MonolithTool_CountUsePower(MONOLITH_SETUP *setup, const OCCUPY_INFO *occupy, const MONOLITH_STATUS *monost)
-{
-  GPOWER_ID gpower_id;
-  u32 count = 0;
-  
-  for(gpower_id = 0; gpower_id < GPOWER_ID_MAX; gpower_id++){
-    if(MonolithTool_CheckUsePower(setup, gpower_id, occupy, monost) == MONO_USE_POWER_OK){
-      count++;
-    }
-  }
-  return count;
-}
 
 ///バランスゲージ描画用の設定値
 enum{

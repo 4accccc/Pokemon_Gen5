@@ -475,7 +475,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_t01_gmk.c \
         field/field_gimmick_t01_st.c \
 	      app/waza_oshie/waza_oshie.c \
-        system/font2tex.c
+        system/font2tex.c \
+        field/field_comm/monolith_tool_notwifi.c
 
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)

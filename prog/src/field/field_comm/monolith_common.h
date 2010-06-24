@@ -121,15 +121,6 @@ enum{
 ///パネルコントロール数
 #define PANEL_CONTROL_MAX     (4)
 
-///Gパワー習得状況
-typedef enum{
-  MONO_USE_POWER_OK,        ///<習得している
-  MONO_USE_POWER_SOMEMORE,  ///<あと少しで習得
-  MONO_USE_POWER_NONE,      ///<習得していない
-  
-  MONO_USE_POWER_MAX,
-}MONO_USE_POWER;
-
 
 //==============================================================================
 //  構造体定義

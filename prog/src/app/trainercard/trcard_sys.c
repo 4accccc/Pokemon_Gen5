@@ -28,6 +28,8 @@
 #include "savedata/zukan_savedata.h"
 #include "savedata/c_gear_data.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/g_power.h"
+#include "field/monolith_tool_notwifi.h"
 
 //#include "app/mysign.h"
 #include "app/trainer_card.h"
@@ -631,11 +633,18 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   cardData->SuretigaiNum      = MISC_CrossComm_GetSuretigaiCount(misc);
   // フィーリングチェックをした回数
   cardData->FeelingCheckNum = RECORD_Get(rec, RECID_AFFINITY_CHECK_NUM);   
-  // モノリスレベル
+  // 使えるGパワーの数取得
   {
-    OCCUPY_INFO *occupy     = GAMEDATA_GetMyOccupyInfo(gameData);
-    int level = OccupyInfo_GetWhiteLevel(occupy) + OccupyInfo_GetBlackLevel(occupy);
-    cardData->MonolithLevel = level;
+    POWER_CONV_DATA *powerdata;
+    INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( sv );
+    u8 distribution_bit[INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX];
+    
+    powerdata = GPOWER_PowerData_LoadAlloc(heapId);
+    ISC_SAVE_GetDistributionGPower_Array(
+      intsave, distribution_bit, INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX);
+    cardData->MonolithLevel = MonolithToolEx_CountUsePower(
+      powerdata, GAMEDATA_GetMyOccupyInfo(gameData), distribution_bit);
+    GPOWER_PowerData_Unload(powerdata);
   }
   // ミュージカルをした回数
   cardData->MusicalNum        = RECORD_Get( rec, RECID_MUSICAL_PLAY_NUM )     
@@ -675,7 +684,6 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->TrianHouseFlag  = 1;    
   }
   
-
   //図鑑処理
   {
     EVENTWORK * ev = GAMEDATA_GetEventWork( gameData );

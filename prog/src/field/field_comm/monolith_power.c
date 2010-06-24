@@ -25,6 +25,7 @@
 #include "gamesystem/game_comm.h"
 #include "monolith_snd_def.h"
 #include "intrude_work.h"
+#include "field/monolith_tool_notwifi.h"
 
 
 //==============================================================================
@@ -990,7 +991,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSEL
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
   use_count++;
   for(gpower_id = 0; gpower_id < GPOWER_ID_MAX; gpower_id++){
-    use_power = MonolithTool_CheckUsePower(setup, gpower_id, occupy, &appwk->parent->monolith_status);
+    use_power = MonolithToolEx_CheckUsePower(setup->powerdata, gpower_id, occupy, appwk->parent->monolith_status.gpower_distribution_bit);
     if(use_power == MONO_USE_POWER_NONE){
       continue;
     }
