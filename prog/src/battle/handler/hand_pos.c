@@ -348,8 +348,6 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
         eff_param->effectNo = BTLEFF_IYASINONEGAI_KAIHUKU;
         eff_param->pos_from = pokePos;
         eff_param->pos_to = BTL_POS_NULL;
-        eff_param->reservedQuePos = que_reserved_pos;
-        eff_param->fQueReserve = TRUE;
         HANDEX_STR_Setup( &eff_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_IyasiNoNegai );
         HANDEX_STR_AddArg( &eff_param->exStr, pokeID );
       BTL_SVF_HANDEX_Pop( flowWk, eff_param );
