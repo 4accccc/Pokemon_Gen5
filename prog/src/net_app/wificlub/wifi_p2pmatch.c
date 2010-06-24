@@ -2443,14 +2443,14 @@ dwc_error_0015,
 static const u16 nitroerror[]={
 dwctwl_error_0001,
 dwc_error_0002,
-dwctwl_error_0003,
+dwc_error_0003,
 dwc_error_0004,
 dwc_error_0005,
 dwc_error_0006,
-dwctwl_error_0007,
+dwc_error_0007,
 dwc_error_0008,
-dwctwl_error_0009,
-dwctwl_error_0010,
+dwc_error_0009,
+dwc_error_0010,
 dwc_error_0011,
 dwc_error_0012,
 dwc_error_0013,
@@ -7610,7 +7610,7 @@ static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk )
     EndMessageWindowOff( wk );
     WIFI_MCR_PlayerMovePause( &wk->matchroom, FALSE );
 
- //   OS_TPrintf("メッセージを消して、プレイヤー動作を開始する\n");
+//   OS_TPrintf("メッセージを消して、プレイヤー動作を開始する\n");
     
     wk->state = WIFIP2PMATCH_STATE_NONE;
   }
