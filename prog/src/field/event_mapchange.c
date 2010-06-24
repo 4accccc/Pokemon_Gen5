@@ -174,7 +174,11 @@ GMEVENT* EVENT_CallGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInit
 
   switch( gameInitWork->mode ) {
   case GAMEINIT_MODE_FIRST:
+#ifdef  PLAYABLE_VERSION
+    event = EVENT_FirstMapIn( gameSystem, gameInitWork );
+#else
     event = EVENT_FirstGameStart( gameSystem, gameInitWork );
+#endif
     break;
   case GAMEINIT_MODE_CONTINUE:
     event = EVENT_ContinueMapIn( gameSystem, gameInitWork );
@@ -413,15 +417,7 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
     DEBUG_SetStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
     
-#ifdef  PLAYABLE_VERSION  //試遊台バージョン対応のため、初期位置を変更
-    LOCATION_SetDefaultPos(&fmw->loc_req, ZONE_ID_C07);
-    LOCATION_SetDirect( &fmw->loc_req, ZONE_ID_C07, EXIT_DIR_DOWN,
-        173 * FX32_ONE * FIELD_CONST_GRID_SIZE,
-        0   * FX32_ONE * FIELD_CONST_GRID_SIZE,
-        178 * FX32_ONE * FIELD_CONST_GRID_SIZE );
-#else
     LOCATION_SetDefaultPos(&fmw->loc_req, gameInitWork->mapid);
-#endif
 
 #ifdef DEBUG_ONLY_FOR_iwasawa
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
@@ -430,6 +426,16 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
 #endif
   }
 #endif //PM_DEBUG
+#ifdef  PLAYABLE_VERSION
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
+  PLAYABLE_SetStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
+  //試遊台バージョン対応のため、初期位置を変更
+  LOCATION_SetDirect( &fmw->loc_req, ZONE_ID_C07, EXIT_DIR_DOWN,
+      173 * FX32_ONE * FIELD_CONST_GRID_SIZE,
+      0   * FX32_ONE * FIELD_CONST_GRID_SIZE,
+      178 * FX32_ONE * FIELD_CONST_GRID_SIZE );
+#endif
 
   GAME_FieldFirstInit( gameSystem );  // フィールド情報の初期化
   //DS本体情報のセット

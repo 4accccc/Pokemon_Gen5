@@ -44,6 +44,9 @@
 //#define DELAY_CHECK
 #endif
 
+#ifdef  PLAYABLE_VERSION
+#include  "title/game_start.h"
+#endif
 
 
 //==============================================================================
@@ -410,6 +413,7 @@ static void _key_check( TITLE_WORK *tw )
     setSystemMbParam( &tw->CSys, VOICE_MOTION_BL_A, VOICE_MOTION_BL_B );
     return;
   }
+#ifndef PLAYABLE_VERSION
   // セーブデータ初期化
   if( GFL_UI_KEY_GetCont() == BACKUP_ERASE_MASK ){
     tw->mode = END_BACKUP_ERASE;
@@ -422,6 +426,7 @@ static void _key_check( TITLE_WORK *tw )
     tw->seq = SEQ_NEXT;
     return;
   }
+#endif  //PLAYABLE_VERSION
 #ifdef  PM_DEBUG
   // デバッグメニューへ
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
@@ -600,7 +605,11 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
   GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
 
   if( mode == END_SELECT ){
+#ifdef  PLAYABLE_VERSION
+    GameStart_Playable(); //試遊台開始のProc切り替えへ
+#else
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
+#endif
   }else if( mode == END_BACKUP_ERASE ){
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &BACKUP_ERASE_ProcData, NULL);
   }else if( mode == END_MIC_TEST ){

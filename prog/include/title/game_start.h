@@ -8,7 +8,7 @@
 //==============================================================================
 #ifndef __GAME_START_H__
 #define __GAME_START_H__
-
+#include "playable_version.h"
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
@@ -20,6 +20,10 @@ extern void GameStart_Debug(void);
 extern void GameStart_DebugNet(void);
 extern void GameStart_DebugNetOff(void);
 extern void GameStart_Debug_SelectName(void);
+
+#ifdef  PLAYABLE_VERSION
+extern void GameStart_Playable(void);
+#endif
 
 
 #endif	//__GAME_START_H__

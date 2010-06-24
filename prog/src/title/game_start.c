@@ -767,3 +767,58 @@ static void _mystatus_info_set( MYSTATUS *my, STRBUF *name, int sex )
   OS_Printf("TrainerView = %d\n", MyStatus_GetTrainerView( my ));
   
 }
+
+#ifdef  PLAYABLE_VERSION
+//----------------------------------------------------------------------------------
+/**
+ * @brief 試遊台バージョン用初期化処理
+ */
+//----------------------------------------------------------------------------------
+void GameStart_Playable( void )
+{
+  SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
+
+  SaveControl_ClearData(sv_ctrl);  //セーブデータクリア
+  {//名前のセット
+    MYSTATUS    *myStatus;
+    GFL_MSGDATA *msgman;
+    STRBUF *namebuf;
+    int sex = 0;
+    
+    msgman = GFL_MSG_Create( 
+      GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, GFL_HEAPID_APP );
+    if(GFUser_GetPublicRand(2) & 1){
+      namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );
+      sex = PM_MALE;
+    } else{
+      namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_WHITE );
+      sex = PM_FEMALE;
+    }
+    myStatus = SaveData_GetMyStatus( sv_ctrl );
+    _mystatus_info_set(myStatus, namebuf, sex);
+
+    
+    GFL_STR_DeleteBuffer(namebuf);
+    GFL_MSG_Delete(msgman);
+  }
+  {
+    GAME_INIT_WORK * init_param;
+    VecFx32 pos = {0,0,0};
+    
+    { 
+      //常時通信モードのセット
+      CONFIG *config;
+
+      config  = SaveData_GetConfig( sv_ctrl );
+      CONFIG_SetNetworkSearchMode( config, NETWORK_SEARCH_ON );
+      //DebugScanOnly = TRUE;
+    }
+    //CGEARON
+    CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(sv_ctrl),TRUE);
+    
+    init_param = GAMEINIT_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
+    GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
+  }
+}
+#endif
+

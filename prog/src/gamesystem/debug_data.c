@@ -430,3 +430,178 @@ void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
 
 
 #endif  // PM_DEBUG
+
+#ifdef  PLAYABLE_VERSION
+//============================================================================================
+//============================================================================================
+
+//============================================================================================
+// 試遊台用　手持ちポケモン　振り分け　
+//===========================================================================================
+typedef struct{ 
+  u16 monsno;
+  u16 level;
+  u16 wazano[4];
+}INIT_POKE_DATA;
+
+static const INIT_POKE_DATA patternA[] = {
+  { MONSNO_TUTAAZYA, 25,
+    WAZANO_GURASUMIKISAA, WAZANO_KUSABUE, WAZANO_MEGADOREIN, WAZANO_TATAKITUKERU },
+  { MONSNO_SIKIZIKA, 20,
+    WAZANO_NIDOGERI, WAZANO_YADORIGINOTANE, WAZANO_DAMASIUTI, WAZANO_TOSSIN },
+  { MONSNO_ZOROA, 22,
+    WAZANO_USONAKI, WAZANO_MIDAREHIKKAKI, WAZANO_DAMASIUTI, WAZANO_KOWAIKAO },
+};
+static const INIT_POKE_DATA patternB[] = {
+  { MONSNO_MIZYUMARU, 25,
+    WAZANO_SHERUBUREEDO, WAZANO_RENZOKUGIRI, WAZANO_MIZUNOHADOU, WAZANO_KIRISAKU },
+  { MONSNO_SIKIZIKA, 20,
+    WAZANO_NIDOGERI, WAZANO_YADORIGINOTANE, WAZANO_DAMASIUTI, WAZANO_TOSSIN },
+  { MONSNO_ZOROA, 22,
+    WAZANO_USONAKI, WAZANO_MIDAREHIKKAKI, WAZANO_DAMASIUTI, WAZANO_KOWAIKAO },
+};
+static const INIT_POKE_DATA patternC[] = {
+  { MONSNO_POKABU, 25,
+    WAZANO_NITOROTYAAZI, WAZANO_SUMOGGU, WAZANO_KOROGARU, WAZANO_TOSSIN },
+  { MONSNO_SIKIZIKA, 20,
+    WAZANO_NIDOGERI, WAZANO_YADORIGINOTANE, WAZANO_DAMASIUTI, WAZANO_TOSSIN },
+  { MONSNO_ZOROA, 22,
+    WAZANO_USONAKI, WAZANO_MIDAREHIKKAKI, WAZANO_DAMASIUTI, WAZANO_KOWAIKAO },
+};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void pokeAdd( const INIT_POKE_DATA * pdata,
+    POKEPARTY * party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA *zukan, MYSTATUS*mystatus, HEAPID heapID )
+{
+  int i;
+  PP_Setup( pp, pdata->monsno, pdata->level, MyStatus_GetID( mystatus ) );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapID );
+  for ( i = 0; i < 4; i++ )
+  {
+    PP_SetWazaPos( pp , pdata->wazano[i] , i );
+  }
+  PP_Put( pp, ID_PARA_item, ITEM_KAWARAZUNOISI );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+}
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド用（デフォ）
+ */
+//--------------------------------------------------------------
+static void PLAYABLE_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus , HEAPID heapId )
+{
+  int i;
+  const INIT_POKE_DATA * pdata;
+  switch ( GFUser_GetPublicRand(3) )
+  {
+  case 0: pdata = patternA; break;
+  case 1: pdata = patternB; break;
+  case 2: pdata = patternC; break;
+  }
+  for ( i = 0; i < 3; i++ )
+  {
+    pokeAdd( &pdata[i], party, pp, zukan, mystatus, heapId );
+  }
+
+#if 0
+  u64 personal_rnd;
+	PP_Setup(pp, MONSNO_629, 99, MyStatus_GetID( mystatus ));
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_DORAGONKUROO , 0 );
+  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 1 );
+  PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
+  PP_SetWazaPos( pp , WAZANO_SORAWOTOBU , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_557, 0, PTL_SEX_FEMALE );
+	PP_SetupEx(pp, MONSNO_557, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_ANAWOHORU , 0 );
+  PP_SetWazaPos( pp , WAZANO_NAMINORI , 1 );
+  PP_SetWazaPos( pp , WAZANO_DAIBINGU , 2 );
+  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_620, 0, PTL_SEX_MALE );
+	PP_SetupEx(pp, MONSNO_620, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_SAIKOKINESISU , 0 );
+  PP_SetWazaPos( pp , WAZANO_AMAGOI , 1 );
+  PP_SetWazaPos( pp , WAZANO_HURASSYU, 2 );
+  PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_581, 0, PTL_SEX_FEMALE );
+	PP_SetupEx(pp, MONSNO_581, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_GIGADOREIN , 0 );
+  PP_SetWazaPos( pp , WAZANO_IKARINOKONA , 1 );
+  PP_SetWazaPos( pp , WAZANO_KINOKONOHOUSI , 2 );
+  PP_SetWazaPos( pp , WAZANO_AMAIKAORI , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+#endif
+}
+//--------------------------------------------------------------
+/**
+ * @brief   試遊台用に適当に手持ちポケモンをAdd
+ * @param   gamedata  GAMEDATAへのポインタ		
+ */
+//--------------------------------------------------------------
+static void PLAYABLE_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
+{
+  MYSTATUS *myStatus;
+	POKEPARTY *party;
+	POKEMON_PARAM *pp;
+	
+	party = GAMEDATA_GetMyPokemon(gamedata);
+  myStatus = GAMEDATA_GetMyStatus(gamedata);
+  
+	pp = PP_Create(MONSNO_502, 100, MyStatus_GetID(myStatus), heapID);
+
+  PLAYABLE_MyPokeAdd_Field( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus , heapID );
+
+	GFL_HEAP_FreeMemory(pp);
+}
+
+//============================================================================================
+// 試遊台用　手持ちポケモン　振り分け　
+//===========================================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const ITEM_ST PlayableItem[] = {
+	{ ITEM_IIKIZUGUSURI,	5 },
+	{ ITEM_NANDEMONAOSI,	5 },
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグ用に手持ちどうぐを加える
+ * @param   gamedata  GAMEDATAへのポインタ		
+ * @param   heapID    利用するヒープIDの指定
+ */
+//--------------------------------------------------------------
+static void PLAYABLE_MYITEM_MakeBag(GAMEDATA * gamedata, HEAPID heapID)
+{
+	u32	i;
+  MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
+
+	MYITEM_Init( myitem );
+	for( i=0; i<NELEMS(PlayableItem); i++ ){
+		MYITEM_AddItem( myitem, PlayableItem[i].id, PlayableItem[i].no, heapID );
+	}
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void PLAYABLE_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
+{
+  PLAYABLE_MYITEM_MakeBag( gamedata, heapID );
+  PLAYABLE_MyPokeAdd( gamedata, heapID );
+}
+
+
+#endif  //PLAYABLE_VERSION
