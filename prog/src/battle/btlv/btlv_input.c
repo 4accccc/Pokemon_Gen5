@@ -2238,7 +2238,7 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR, 
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1h_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -4861,7 +4861,8 @@ static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw )
 //--------------------------------------------------------------
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, const u8* move_tbl, int hit )
 {
-  int trg = GFL_UI_KEY_GetTrg();
+  int trg   = GFL_UI_KEY_GetTrg();
+  int cont  = GFL_UI_KEY_GetCont();
   BOOL decide_flag = FALSE;
 
   //Bボタン無効ならBボタンを押していないことにする
@@ -4935,6 +4936,13 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
             SePlayCancel( biw );
           }
           decide_flag = TRUE;
+        }
+        else if( ( hit < 4 ) &&
+                 ( cont & PAD_BUTTON_L ) &&
+                 ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) &&
+                 ( biw->waza_exist[ hit ] == TRUE ) )
+        { 
+          SePlayDecide( biw );
         }
       }
       else
