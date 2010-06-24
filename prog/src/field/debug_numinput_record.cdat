@@ -15,6 +15,7 @@ static const DEBUG_NUMINPUT_PARAM DNP_Record_3 = { 0,    999999, DebugGetRecord,
 static const DEBUG_NUMINPUT_PARAM DNP_Record_4 = { 0,      9999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 9,999 )
 static const DEBUG_NUMINPUT_PARAM DNP_Record_5 = { 0,     99999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 99,999 )
 static const DEBUG_NUMINPUT_PARAM DNP_Record_6 = { 0,     65535, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 65,535 )
+static const DEBUG_NUMINPUT_PARAM DNP_Record_7 = { 0,       999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 999 )
 static const DEBUG_NUMINPUT_PARAM DNP_Record_Palpark = { 0, 999, DebugGetPalparkHighScore, DebugSetPalparkHighScore, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_SeaTemple = { 0, 500, DebugGetSeaTempleStepCount, DebugSetSeaTempleStepCount, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Year = { 0, 999, DebugGetPalaceTime, DebugSetPalaceTime, };
@@ -52,10 +53,10 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   { dni_record_82, RECID_EFFECT_ENCOUNT_NUM,  &DNP_Record_4 },         // エフェクトエンカウントした回数
   { dni_record_83, RECID_AFFINITY_CHECK_NUM,  &DNP_Record_4 },         // 相性チェックをした回数
   { dni_record_89, RECID_PDW_SLEEP_POKEMON,   &DNP_Record_4 },         // PDWでポケモンを寝かせた回数
-  { dni_record_90, RECID_POKESHIFTER_COUNT,   &DNP_Record_1 },         // ポケシフターをした回数
-  { dni_record_91, RECID_TRIALHOUSE_COUNT,    &DNP_Record_1 },         // トライアルハウスをした回数
-  { dni_record_93, RECID_TRIALHOUSE_RANK,     &DNP_Record_1 },         // トライアルハウス最高ランク
-  { dni_record_94, RECID_TRIALHOUSE_SCORE,    &DNP_Record_1 },         // トライアルハウス最高スコア
+  { dni_record_90, RECID_POKESHIFTER_COUNT,   &DNP_Record_7 },         // ポケシフターをした回数
+  { dni_record_91, RECID_TRIALHOUSE_COUNT,    &DNP_Record_4 },         // トライアルハウスをした回数
+  { dni_record_93, RECID_TRIALHOUSE_RANK,     &DNP_Record_4 },         // トライアルハウス最高ランク
+  { dni_record_94, RECID_TRIALHOUSE_SCORE,    &DNP_Record_4 },         // トライアルハウス最高スコア
   { dni_record_96, 0,                         &DNP_Record_Palpark },   // パルゲート最高得点
   { dni_record_97, 0,                         &DNP_Record_SeaTemple }, // 海底遺跡内の歩数カウント
 };
@@ -152,7 +153,7 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Musical[] = {
   { dni_record_85, RECID_MUSICAL_WINNER_NUM,       &DNP_Record_4 }, // ミュージカル勝利回数
   { dni_record_86, RECID_MUSICAL_COMM_NUM,         &DNP_Record_4 }, // ミュージカル通信参加回数
   { dni_record_87, RECID_MUSICAL_COMM_WINNER_NUM,  &DNP_Record_4 }, // ミュージカル通信勝利回数
-  { dni_record_88, RECID_MUSICAL_TOTAL_POINT,      &DNP_Record_4 }, // ミュージカル通算取得得点
+  { dni_record_88, RECID_MUSICAL_TOTAL_POINT,      &DNP_Record_6 }, // ミュージカル通算取得得点
 };
 //-------------------------------
 // バトルサブウェイ関連レコード
