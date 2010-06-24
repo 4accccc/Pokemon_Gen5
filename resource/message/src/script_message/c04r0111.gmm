@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-06-18T18:45:48"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-22T18:29:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="136" right="2009" bottom="764" maximized="no" rayout="Vertical2">
+	<dialog left="587" top="533" right="1087" bottom="1161" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -853,9 +853,9 @@
 ♂</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
-		<language name="JPN" width="256">ごうほうで　あばれほうだい！
+		<language name="JPN" width="256">ごうほうで　あばれほうだい　とは！
 らくえんじゃないか　ここは！</language>
-		<language name="JPN_KANJI" width="256">合法で　暴れ放題！
+		<language name="JPN_KANJI" width="256">合法で　暴れ放題　とは！
 楽園じゃないか　ここは！</language>
 	</row>
 
@@ -980,9 +980,9 @@ no.051
 ♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">つよい　トレーナー　どうしの
+		<language name="JPN" width="256">すぐれた　トレーナー　どうしの
 しょうぶは　げいじゅつてきで　ある</language>
-		<language name="JPN_KANJI" width="256">強い　トレーナー　同士の
+		<language name="JPN_KANJI" width="256">優れた　トレーナー　同士の
 勝負は　芸術的で　ある</language>
 	</row>
 
@@ -1502,7 +1502,7 @@ no.051
 せいそういん</attribute>
 		<language name="JPN" width="256">せいそういんでも　じつりょくには
 おおいに　じしん　ありじゃ！</language>
-		<language name="JPN_KANJI" width="256">清掃員でも　実力には
+		<language name="JPN_KANJI" width="256">せいそういんでも　実力には
 大いに　自信　ありじゃ！</language>
 	</row>
 
@@ -1611,13 +1611,13 @@ no.051
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
 		<language name="JPN" width="256">ベテランだって　ゆだんすれば
-えんじに　だって　まける▼
-ポケモンしょうぶに
-ゆだんは　きんもつなのよ</language>
+えんじにさえ　まけることもある▼
+ポケモンしょうぶには　いっしゅんの
+ゆだんも　きんもつなのよ</language>
 		<language name="JPN_KANJI" width="256">ベテランだって　油断すれば
-園児に　だって　負ける▼
-ポケモン勝負に
-油断は　禁物なのよ</language>
+園児にさえ　負けることもある▼
+ポケモン勝負には　一瞬の
+油断も　禁物なのよ</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_2">
@@ -1672,12 +1672,12 @@ no.051
 ♀</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">しょうぶに　あけくれ▼
-れっしゃに　ゆられ▼
+		<language name="JPN" width="256">しょうぶに　あけくれ……▼
+れっしゃに　ゆられ……▼
 ライモンシティを　たってから
 なんじかんが　すぎたのかしら</language>
-		<language name="JPN_KANJI" width="256">勝負に　明け暮れ▼
-列車に　揺られ▼
+		<language name="JPN_KANJI" width="256">勝負に　明け暮れ……▼
+列車に　揺られ……▼
 ライモンシティを　発ってから
 何時間が　過ぎたのかしら</language>
 	</row>

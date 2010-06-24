@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-11T11:21:53"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-24T15:02:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -351,7 +351,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1453" top="314" right="1953" bottom="942" maximized="no" rayout="Vertical2">
+	<dialog left="143" top="321" right="643" bottom="949" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -503,7 +503,7 @@
 		<language name="JPN" width="256">ところでだ……　しょうねん……
 すきなひと　とか　いないのか？</language>
 		<language name="JPN_KANJI" width="256">ところでだ……　少年……
-好きな人　とか　いないのか？</language>
+恋人　とか　いないのか？</language>
 	</row>
 
 	<row id="msg_wheel_summer_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -632,10 +632,10 @@
 ・主人公♂＋冬
 ・観覧車その３</comment>
 		<attribute name="キャラ指定">BABYGIRL2</attribute>
-		<language name="JPN" width="256">ねー　おにーちゃん！　おひざの
-うえに　のっかっても　いーい？</language>
-		<language name="JPN_KANJI" width="256">ねー　おにーちゃん！　おひざの
-うえに　のっかっても　いーい？</language>
+		<language name="JPN" width="256">ねー　ねー　おにーちゃん！
+おひざのうえ　のっても　いーい？</language>
+		<language name="JPN_KANJI" width="256">ねー　ねー　おにーちゃん！
+おひざのうえ　のっても　いーい？</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
