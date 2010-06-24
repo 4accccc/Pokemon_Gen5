@@ -591,7 +591,7 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&work->iem, msg_intrude_004);
+      IntrudeEventPrint_StartStream(&work->iem, msg_intrude_006);
       *seq = SEQ_LAST_MSG_WAIT;
       work->error = TRUE;
       return GMEVENT_RES_CONTINUE;

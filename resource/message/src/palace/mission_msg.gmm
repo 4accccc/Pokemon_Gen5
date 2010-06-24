@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-22T17:20:37"/>
+	<create user="matsuda" host="W00142" date="2010-06-24T13:02:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,14 +365,14 @@
 		</language>
 	</columns>
 
-	<dialog left="555" top="309" right="1276" bottom="1052" maximized="no" rayout="Vertical2">
+	<dialog left="1559" top="137" right="2280" bottom="852" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
 		<band id="0" index="0" style="0000" width="546"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="713"/>
 		<band id="3" index="3" style="0000" width="713"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -429,6 +429,12 @@
 		<comment>アイテム隠しミッションで相手に先に到達されてしまった時</comment>
 		<language name="JPN" width="256">あいてに　さきを　こされました</language>
 		<language name="JPN_KANJI" width="256">相手に　先を　越されました</language>
+	</row>
+
+	<row id="msg_intrude_006" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
+		<comment>アイテム隠しミッションで隠している時に通信が切れたとき</comment>
+		<language name="JPN" width="256">つうしんが　きれました</language>
+		<language name="JPN_KANJI" width="256">通信が　切れました</language>
 	</row>
 
 	<row id="msg_talk_menu_001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
