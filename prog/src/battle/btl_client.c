@@ -6796,7 +6796,9 @@ static BOOL scProc_ACT_MigawariDamage( BTL_CLIENT* wk, int* seq, const int* args
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  PMSND_PlayBGM( args[0] );
+  //ƒsƒ“ƒ`BGM‚ª–Â‚Á‚Ä‚¢‚½‚È‚çPop‚µ‚Ä‚¨‚­
+  BTLV_EFFECT_SwitchBGM( args[0] );
+  //PMSND_PlayBGM( args[0] );
   return TRUE;
 }
 //---------------------------------------------------------------------------------------

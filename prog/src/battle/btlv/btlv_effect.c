@@ -1752,6 +1752,24 @@ int BTLV_EFFECT_GetPinchBGMFlag( void )
 
 //============================================================================================
 /**
+ * @brief  ピンチBGMが鳴っているかチェックをしてBGMを変化させる
+ *
+ * @retval 0:ピンチBGMじゃない　1:ピンチBGM
+ */
+//============================================================================================
+void BTLV_EFFECT_SwitchBGM( const int bgmNo )
+{
+  //ピンチBGMが鳴っていたならPopしておく
+  if( BTLV_GAUGE_GetPinchBGMFlag( bew->bgw ) )
+  { 
+    BTLV_GAUGE_SetPinchBGMFlag( bew->bgw, FALSE );
+    PMSND_PopBGM();
+  }
+  PMSND_PlayBGM( bgmNo );
+}
+
+//============================================================================================
+/**
  * @brief  トレーナー曲チェンジフラグをセット
  *
  * @param[in] bgm_no    チェンジするトレーナー曲
