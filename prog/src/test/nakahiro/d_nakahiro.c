@@ -500,9 +500,9 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
   case  MAIN_SEQ_DENDOU_DEMO:
     wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
       SetPokeParty( wk, wk->ppL, &DDemoMonsList[2][0], VSMListItemL );
-    }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+    }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
       SetPokeParty( wk, wk->ppL, &DDemoMonsList[1][0], VSMListItemL );
     }else{
       SetPokeParty( wk, wk->ppL, &DDemoMonsList[0][0], VSMListItemL );
