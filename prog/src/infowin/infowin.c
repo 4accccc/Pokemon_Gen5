@@ -233,6 +233,7 @@ void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAMEDATA *gameData , con
 
 void  INFOWIN_Update( void )
 {
+  BOOL isWifi = FALSE;
   u8 connectNum = 0;
   GFLNetInitializeStruct *netInit = NULL;
   if( infoWk == NULL )
@@ -257,9 +258,13 @@ void  INFOWIN_Update( void )
   {
     netInit = GFL_NET_GetNETInitStruct();
     connectNum = GFL_NET_GetConnectNum();
+    if( GFL_NET_IsWifiConnect() == TRUE )
+    {
+      isWifi = TRUE;
+    }
   }
   
-  if( connectNum < 2 )
+  if( connectNum < 2 && isWifi == FALSE )
   {
     u32 bit = WIH_DWC_GetAllBeaconTypeBit(infoWk->wifiList);
     
