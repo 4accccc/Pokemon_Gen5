@@ -15,7 +15,13 @@
 #include "demo/command_demo.h"
 #include "corporate.h"
 
+#include "playable_version.h"
+#include "pm_version.h"
+#include "system/gfl_use.h"
 
+#ifdef  PLAYABLE_VERSION
+extern void SetVersion( u8 version );
+#endif
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
@@ -56,6 +62,22 @@ static COMMANDDEMO_DATA cdemo_data;   // デモ処理データ
 //--------------------------------------------------------------
 static GFL_PROC_RESULT TitleControlProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#ifdef  PLAYABLE_VERSION
+  //Lをおしていたらホワイト、Rをおしていたらブラック、それ以外はランダムにする
+  u8 version = GFUser_GetPublicRand( 2 ) == 0 ? VERSION_BLACK : VERSION_WHITE ;
+  u16 key = GFL_UI_KEY_GetCont();
+
+  if ( key & PAD_BUTTON_L )
+  {
+    version = VERSION_WHITE;
+  }
+  else if ( key & PAD_BUTTON_R )
+  {
+    version = VERSION_BLACK;
+  }
+  SetVersion( version );
+
+#endif
   return GFL_PROC_RES_FINISH;
 }
 
@@ -92,7 +114,11 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
       cdemo_data.skip = COMMANDDEMO_SKIP_DEBUG;
       cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+#ifdef  PLAYABLE_VERSION
+      *seq = 3;
+#else
       *seq = 2;
+#endif
     }else{
       *seq = 4;   // タイトルへ
     }
@@ -139,6 +165,9 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     cdemo_data.skip = COMMANDDEMO_SKIP_ON;
     cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+#ifdef  PLAYABLE_VERSION
+    *seq = 3;
+#else
     *seq = 2;
     break;
 
@@ -152,6 +181,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 			*seq = 4;   // タイトルへ
 		}
 		break;
+#endif
 
   case 3:		// デモ２
 		cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE2;
