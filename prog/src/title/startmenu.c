@@ -923,12 +923,14 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 				wk->subSeq = 5;
 				break;
 			}
+/*	いらないらしい　2010/06/24
 			// ペアレンタルコントロール
 			if( DS_SYSTEM_IsRestrictUGC() == TRUE ){
 				StartMessage( wk, START_MENU_STR_ATTENTION_02 );
 				wk->subSeq = 5;
 				break;
 			}
+*/
 			wk->continueRet = 0;
 			wk->subSeq = 4;
 			break;
