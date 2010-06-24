@@ -1817,14 +1817,29 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SutaaNomi( u32* numElems )
 }
 static void handler_SutaaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  static const u8 rankType[] = {
+  static const u8 rankTypeTbl[] = {
     WAZA_RANKEFF_ATTACK, WAZA_RANKEFF_DEFENCE,
     WAZA_RANKEFF_SP_ATTACK, WAZA_RANKEFF_SP_DEFENCE,
     WAZA_RANKEFF_AGILITY,
   };
-  u8 idx = BTL_CALC_GetRand( NELEMS(rankType) );
 
-  common_PinchRankup( flowWk, pokeID, rankType[idx], 2 );
+  u32 cnt, i;
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u8* typeAry = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(rankTypeTbl) );
+
+  for(i=0, cnt=0; i<NELEMS(rankTypeTbl); ++i)
+  {
+    if( BPP_IsRankEffectValid(bpp, rankTypeTbl[i], 1) )
+    {
+      typeAry[ cnt++ ] = rankTypeTbl[ i ];
+    }
+  }
+
+  if( cnt )
+  {
+    i = BTL_CALC_GetRand( cnt );
+    common_PinchRankup( flowWk, pokeID, typeAry[i], 2 );
+  }
 }
 static void handler_SutaaNomi_Tmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
