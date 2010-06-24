@@ -3364,6 +3364,9 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
       if(intcomm != NULL){
         Intrude_SetMinePalaceArea(intcomm, work->palace_area);
+        if(work->partner == TRUE){  //協力者としてのワープなのでここでミッションエントリー
+          MISSION_SetMissionEntry(intcomm, &intcomm->mission);
+        }
       }
     }
 

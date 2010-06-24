@@ -534,7 +534,6 @@ static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, v
         warp_netid = GAMEDATA_GetIntrudeMyID(gamedata);
       }
       else{
-        MISSION_SetMissionEntry(intcomm, &intcomm->mission);
         warp_netid = MISSION_GetMissionTargetNetID(intcomm, &intcomm->mission);
       }
       //GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_NetID(gsys, warp_netid));
