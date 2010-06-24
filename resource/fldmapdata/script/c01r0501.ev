@@ -189,71 +189,74 @@ EVENT_END
 /*  C01R0501 BOARDの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_c01r0501_board_01
-_TALK_START_SE_PLAY()
-	//こくばんに　ポケモンが　たたかっているときに　おこる
-	_SYSWIN_MSG( msg_c01r0501_board_01 , POS_DOWN )
-		
-	//どれについて　みますか？
-	_SYSWIN_MSG( msg_c01r0501_board_02 , POS_DOWN )
-		
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_STATE_SELECT
+
+	_TALK_START_SE_PLAY()
 	
-	//分岐・どく・まひ・ねむり・やけど・こおり・やめる
-	_BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_STATE_SELECT )
+	//こくばんに　ポケモンが　たたかっているときに　おこる
+	_SYSWIN_MSG( msg_c01r0501_board_01 , POS_DOWN )
 	
-	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_01, 0 )	//どく
-	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_02, 1 )	//まひ
-	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_03, 2 )	//ねむり
-	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_04, 3 )	//やけど
-	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_05, 4 )	//こおり
-	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_06, 5 )	//やめる
-	
-	//メニュー表示
-	_BMPMENU_START()
+	//『やめる』が選択されるまで繰り返し
+	WHILE $LWK_STATE_SELECT != 5
 		
-	//選択結果で分岐
-		
-		//どく選択
-		IF $LWK_STATE_SELECT == 0 THEN
+		//どれについて　みますか？
+		_SYSWIN_MSG( msg_c01r0501_board_02 , POS_DOWN )
 			
-			//どくを　うけると　たいりょくが　へっていきます
-			_SYSWIN_MSG( msg_c01r0501_board_03 , POS_DOWN )
-			_SYSWIN_CLOSE()
+		//分岐・どく・まひ・ねむり・やけど・こおり・やめる
+		_BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_STATE_SELECT )
+		
+		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_01, 0 )	//どく
+		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_02, 1 )	//まひ
+		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_03, 2 )	//ねむり
+		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_04, 3 )	//やけど
+		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_05, 4 )	//こおり
+		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_06, 5 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		
+		//選択結果で分岐
+			
+			//どく選択
+			IF $LWK_STATE_SELECT == 0 THEN
 				
-		//まひ選択
-		ELSIF $LWK_STATE_SELECT == 1 THEN
-			
-			//まひすると　すばやさが　さがり
-			_SYSWIN_MSG( msg_c01r0501_board_04 , POS_DOWN )
-			_SYSWIN_CLOSE()
+				//どくを　うけると　たいりょくが　へっていきます
+				_SYSWIN_MSG( msg_c01r0501_board_03 , POS_DOWN )
+					
+			//まひ選択
+			ELSIF $LWK_STATE_SELECT == 1 THEN
 				
-		//ねむり選択
-		ELSIF $LWK_STATE_SELECT == 2 THEN
+				//まひすると　すばやさが　さがり
+				_SYSWIN_MSG( msg_c01r0501_board_04 , POS_DOWN )
+					
+			//ねむり選択
+			ELSIF $LWK_STATE_SELECT == 2 THEN
+			
+				//ねむって　しまうと　その　あいだ　こうげき　できません
+				_SYSWIN_MSG( msg_c01r0501_board_05 , POS_DOWN )
+				
+			//やけど選択
+			ELSIF $LWK_STATE_SELECT == 3 THEN
+				
+				//やけどに　なると　こうげきりょくが　さがるだけでなく
+				_SYSWIN_MSG( msg_c01r0501_board_06 , POS_DOWN )
+				
+			//こおり選択
+			ELSIF $LWK_STATE_SELECT == 4 THEN
+				
+				//こおって　しまうと　なにも　できなくなります
+				_SYSWIN_MSG( msg_c01r0501_board_07 , POS_DOWN )
+				
+			//キャンセル
+			ELSE
+				$LWK_STATE_SELECT = 5	//やめるを選択したことにする
+				
+			ENDIF
 		
-			//ねむって　しまうと　その　あいだ　こうげき　できません
-			_SYSWIN_MSG( msg_c01r0501_board_05 , POS_DOWN )
-			_SYSWIN_CLOSE()
-			
-		//やけど選択
-		ELSIF $LWK_STATE_SELECT == 3 THEN
-			
-			//やけどに　なると　こうげきりょくが　さがるだけでなく
-			_SYSWIN_MSG( msg_c01r0501_board_06 , POS_DOWN )
-			_SYSWIN_CLOSE()
-			
-		//こおり選択
-		ELSIF $LWK_STATE_SELECT == 4 THEN
-			
-			//こおって　しまうと　なにも　できなくなります
-			_SYSWIN_MSG( msg_c01r0501_board_07 , POS_DOWN )
-			_SYSWIN_CLOSE()
-			
-		//やめる
-		ELSE
-			_SYSWIN_CLOSE()
-		
-		ENDIF
+		ENDWHILE
+	
+	//ウインドウを閉じて終了
+	_SYSWIN_CLOSE()
 	
 EVENT_END
 
