@@ -1918,6 +1918,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_TIMING_END:
 		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_MENU_END ) )
 		{	
+      APPBAR_SetTouchEnable( p_wk->p_appbar, FALSE );
 			*p_seq	= SEQ_MSG_CONNECT;
 		}
 		break;

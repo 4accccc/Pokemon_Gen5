@@ -2918,6 +2918,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
   case SEQ_TIMING:
     if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_AURA_END ) )
     {
+      APPBAR_SetTouchEnable( p_wk->p_appbar, FALSE );
       *p_seq  = SEQ_MSG_PRINT_END;
     }
     break;
