@@ -73,10 +73,10 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	//サポート出現
 	_OBJ_ADD_EX( 5,15,DIR_UP,MMDL_ID_EVENTOBJ_00,SUPPORT,MV_DMY )
-	_SE_WAIT()
 	
 	//サポート曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	_SE_WAIT()
 	
 	DEFINE_LOCAL	LWK_POSX
 	DEFINE_LOCAL	LWK_POSZ
@@ -120,55 +120,6 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	//と　そのまえに
 	_BALLOONWIN_OBJMSG( msg_c03r0601_white_02 , MMDL_ID_EVENTOBJ_00 )
 	_MSGWIN_CLOSE()
-/*
-	SWITCH $LWK_POSX
-	CASE 2 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info2_a )
-		_OBJ_ANIME_WAIT()
-	CASE 3 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info3_a )
-		_OBJ_ANIME_WAIT()
-	CASE 4 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info4_a )
-		_OBJ_ANIME_WAIT()
-	CASE 5 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info5_a )
-		_OBJ_ANIME_WAIT()
-	CASE 6 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info6_a )
-		_OBJ_ANIME_WAIT()
-	CASE 7 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info7_a )
-		_OBJ_ANIME_WAIT()
-	ENDSWITCH
-
-	_OBJ_ANIME( C03R0601_INFOMATIONW_01, anm_kiotukete_a )
-	_OBJ_ANIME_WAIT()
-	
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_kiotukete_b )
-	_OBJ_ANIME_WAIT()
-	
-	SWITCH $LWK_POSX
-	CASE 2 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info2_b )
-		_OBJ_ANIME_WAIT()
-	CASE 3 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info3_b )
-		_OBJ_ANIME_WAIT()
-	CASE 4 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info4_b )
-		_OBJ_ANIME_WAIT()
-	CASE 5 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info5_b )
-		_OBJ_ANIME_WAIT()
-	CASE 6 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info6_b )
-		_OBJ_ANIME_WAIT()
-	CASE 7 THEN
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info7_b )
-		_OBJ_ANIME_WAIT()
-	ENDSWITCH
-*/
 	
 	SWITCH $LWK_POSX
 	CASE 2 THEN
@@ -261,34 +212,29 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	SWITCH $LWK_POSX
 	CASE 2 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_leave2 )
-		_OBJ_ANIME_WAIT()
 	CASE 3 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_leave3 )
-		_OBJ_ANIME_WAIT()
 	CASE 4 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_leave4 )
-		_OBJ_ANIME_WAIT()
 	CASE 5 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_leave5 )
-		_OBJ_ANIME_WAIT()
 	CASE 6 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_leave6 )
-		_OBJ_ANIME_WAIT()
 	CASE 7 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_leave7 )
-		_OBJ_ANIME_WAIT()
 	ENDSWITCH
+
+//	_TIME_WAIT( 16 )
+//	_END_EVENT_BGM()	//サポート曲停止
+	_OBJ_ANIME_WAIT()
 
 	//サポートの動作モデルを削除する
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-
+	
 	//階段ＳＥ再生
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 
-	//サポート曲停止
-	_END_EVENT_BGM()
-	
 	//==========================//
 	
 	$WK_SCENE_C03R0601 = 2
