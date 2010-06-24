@@ -400,6 +400,33 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       }
       else
       {
+
+#ifdef PM_DEBUG
+        {
+          int i, j;
+          COMM_BTL_DEMO_TRAINER_DATA  *p_tr;
+          char  name[10]  = {0};
+
+          for( i = 0; i < COMM_BTL_DEMO_TRDATA_MAX; ++i )
+          {
+            POKEMON_PARAM *p_pp;
+            p_tr  = &bcw->demo_prm->trainer_data[i];
+
+            if( p_tr->party )
+            {
+              GFL_STR_CONV_StrcodeToSjis( MyStatus_GetMyName(p_tr->mystatus), name, 10 );
+              OS_TPrintf( "●トレーナー %s=[%d]\n", name, i );
+              OS_TPrintf( "てもち数[%d]\n",  PokeParty_GetPokeCount(p_tr->party) );
+              for( j = 0; j < PokeParty_GetPokeCount(p_tr->party); ++j )
+              {
+                p_pp  = PokeParty_GetMemberPointer( p_tr->party,j );
+                OS_TPrintf( "ポケ no=[%d] state=%d\n", PP_Get( p_pp, ID_PARA_monsno, NULL ), p_tr->party_state[j] );
+              }
+            }
+          }
+        }
+
+#endif //PM_DEBUG
         GFL_PROC_LOCAL_CallProc(work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, bcw->demo_prm);
         (*seq) = SEQ_WAIT_END_DEMO;
       }
