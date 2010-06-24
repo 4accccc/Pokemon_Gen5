@@ -39,6 +39,10 @@
 #include "sound/pm_voice.h"   // for 
 #include "savedata/save_outside.h"
 
+#ifdef  PLAYABLE_VERSION
+#include "message.naix"
+#include "msg/msg_playable.h"
+#endif  //
 //==============================================================================
 //  
 //==============================================================================
@@ -786,12 +790,12 @@ void GameStart_Playable( void )
     int sex = 0;
     
     msgman = GFL_MSG_Create( 
-      GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, GFL_HEAPID_APP );
+      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_playable_dat, GFL_HEAPID_APP );
     if(GFUser_GetPublicRand(2) & 1){
-      namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );
+      namebuf = GFL_MSG_CreateString( msgman, msg_playable_name_b );
       sex = PM_MALE;
     } else{
-      namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_WHITE );
+      namebuf = GFL_MSG_CreateString( msgman, msg_playable_name_w );
       sex = PM_FEMALE;
     }
     myStatus = SaveData_GetMyStatus( sv_ctrl );
