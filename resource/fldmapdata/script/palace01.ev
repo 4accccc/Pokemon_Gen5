@@ -83,6 +83,7 @@ EVENT_START ev_palace01_monolith
   _GET_PALACE_AREA_OFFSET( SCWK_ANSWER )
   IF ($SCWK_ANSWER == 0) && FLAG_OFF( SYS_FLAG_PALACE_MISSION_CLEAR ) THEN
     //まだミッションをクリアしていないので「他人のパレスへ行け！」を表示
+    _TALK_START_SE_PLAY()
 
   	//パレスじじい：主人公を見る
   	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_dir_r )
