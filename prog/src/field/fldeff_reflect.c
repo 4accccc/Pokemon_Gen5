@@ -22,6 +22,8 @@
 #define DEBUG_REFLECT_CHECK
 #endif
 
+#define BUGFIX_BTS_GF1706_GF1720 //BTS GF1706,1720 １ドット潰れ対処
+
 #define REF_SCALE_X_UP (FX16_ONE/4)
 #define REF_SCALE_X_DOWN (-FX16_ONE/4)
 #define REF_SCALE_X_SPEED (FX16_ONE/64)
@@ -44,7 +46,9 @@ struct _TAG_FLDEFF_REFLECT
 #ifdef DEBUG_REFLECT_CHECK
   int d_select;
   int d_ctrl_pos;
+  
   VecFx32 d_offs[MMDL_BLACT_MDLSIZE_MAX];
+  fx32 d_offs_scale_y;
 #endif
 };
 
@@ -89,6 +93,11 @@ static void reflectBlAct_Update(
 
 static const FLDEFF_TASK_HEADER data_reflectTaskHeader;
 
+#ifdef BUGFIX_BTS_GF1706_GF1720
+static fx32 btsGF1706_GetOffsetScaleY( u32 zone_id );
+static fx32 btsGF1706_GetOffsetY( u32 zone_id, MMDL_BLACT_MDLSIZE size );
+#endif
+
 #ifdef PM_DEBUG
 static BOOL debug_CheckMMdl( const MMDL *mmdl );
 #endif
@@ -112,10 +121,7 @@ void * FLDEFF_REFLECT_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
   reflect->fectrl = fectrl;
   
   reflect_InitResource( reflect );
-
-#ifdef DEBUG_REFLECT_CHECK
-  reflect->d_select = MMDL_BLACT_MDLSIZE_MAX;
-#endif
+  
   return( reflect );
 }
 
@@ -377,7 +383,7 @@ static const fx32 data_MdlOffsetZ[MMDL_BLACT_MDLSIZE_MAX] =
 
 static void reflectTask_UpdateBlAct( u16 actID, void *wk )
 {
-  u16 ret;
+  u16 ret,zone_id;
   TASKWORK_REFLECT *work = wk;
   GFL_BBDACT_SYS *bbdactsys = work->head.bbdactsys;
   GFL_BBD_SYS *bbdsys = GFL_BBDACT_GetBBDSystem( bbdactsys );
@@ -386,6 +392,12 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   if( actID == MMDL_BLACTID_NULL ){ //親モデルビルボード無し。
     GF_ASSERT( 0 );
     return;
+  }
+  
+  {
+    FLDEFF_CTRL *fectrl = work->head.eff_reflect->fectrl;
+    FIELDMAP_WORK *fieldmap = FLDEFF_CTRL_GetFieldMapWork( fectrl );
+    zone_id = FIELDMAP_GetZoneID( fieldmap );
   }
   
   ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
@@ -439,85 +451,114 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       }
     }
     #endif
+    
+    #ifdef BUGFIX_BTS_GF1706_GF1720
+    pos.y += btsGF1706_GetOffsetY( zone_id, param->mdl_size );
+    #endif
 
 #ifdef DEBUG_REFLECT_CHECK
     if( MMDL_GetOBJID(work->head.mmdl) == MMDL_ID_PLAYER ){
-      int select;
       int printf = 0;
+      VecFx32 *d_offs;
+      int *pSelect,*pCtrlPos;
       FLDEFF_REFLECT *eff_reflect = work->head.eff_reflect;
       int repeat = GFL_UI_KEY_GetRepeat();
       int cont = GFL_UI_KEY_GetCont();
       int trg = GFL_UI_KEY_GetTrg();
-      VecFx32 *d_offs;
+      
+      pSelect = &eff_reflect->d_select;
+      pCtrlPos = &eff_reflect->d_ctrl_pos;
       
       if( trg & PAD_BUTTON_START ){
-        int *pFlag = &eff_reflect->d_select;
-        
-        (*pFlag)++;
-        if( (*pFlag) > MMDL_BLACT_MDLSIZE_MAX ){
-          (*pFlag) = 0;
+        (*pSelect)++;
+        if( (*pSelect) >= 5 ){
+          (*pSelect) = 0;
         }
         
         KAGAYA_Printf( "reflect操作 " );
         
-        switch( (*pFlag) ){
-        case MMDL_BLACT_MDLSIZE_32x32:
+        switch( (*pSelect) ){
+        case 1:
           KAGAYA_Printf( "32x32\n" );
           break;
-        case MMDL_BLACT_MDLSIZE_16x16:
+        case 2:
           KAGAYA_Printf( "16x16\n" );
           break;
-        case MMDL_BLACT_MDLSIZE_64x64:
+        case 3:
           KAGAYA_Printf( "64x64\n" );
           break;
-        default:
+        case 4:
+          KAGAYA_Printf( "Y拡縮\n" );
+          break;
+        default: //0
           KAGAYA_Printf( "OFF\n" );
         }
       }
       
-      if( eff_reflect->d_select < MMDL_BLACT_MDLSIZE_MAX ){
-        if( trg & PAD_BUTTON_SELECT ){
-          int *pFlag = &eff_reflect->d_ctrl_pos;
+      if( (*pSelect) && (trg & PAD_BUTTON_SELECT) ){
+        (*pCtrlPos)++;
           
-          (*pFlag)++;
-          if( (*pFlag) >= 3 ){
-            (*pFlag) = 0;
-          }
+        if( (*pCtrlPos) >= 3 ){
+          (*pCtrlPos) = 0;
+        }
           
-          switch( (*pFlag) ){
-          case 0:
-            KAGAYA_Printf( "REFLECT CTRL X\n" );
-            break;
-          case 1:
-            KAGAYA_Printf( "REFLECT CTRL Y\n" );
-            break;
-          case 2:
-            KAGAYA_Printf( "REFLECT CTRL Z\n" );
-            break;
-          }
+        switch( (*pCtrlPos) ){
+        case 0:
+          KAGAYA_Printf( "REFLECT CTRL X\n" );
+          break;
+        case 1:
+          KAGAYA_Printf( "REFLECT CTRL Y\n" );
+          break;
+        case 2:
+          KAGAYA_Printf( "REFLECT CTRL Z\n" );
+          break;
         }
       }
       
-      if( eff_reflect->d_select < MMDL_BLACT_MDLSIZE_MAX ){
-        fx32 *pOffs;
-        d_offs = &eff_reflect->d_offs[eff_reflect->d_select];
-        
-        switch( eff_reflect->d_ctrl_pos ){
-        case 0: pOffs = &d_offs->x; break;
-        case 1: pOffs = &d_offs->y; break;
-        default: pOffs = &d_offs->z; break;
+      switch( (*pSelect) ){
+      case 0:
+        break;
+      case 1: //32x32
+      case 2: //16x16
+      case 3: //64x64
+        {
+          fx32 *pOffs;
+          int select = (*pSelect) - 1;
+          
+          d_offs = &eff_reflect->d_offs[select];
+          
+          switch( eff_reflect->d_ctrl_pos ){
+          case 0:   pOffs = &d_offs->x; break;
+          case 1:   pOffs = &d_offs->y; break;
+          default:  pOffs = &d_offs->z; break;
+          }
+          
+          if( repeat & PAD_BUTTON_L ){
+            (*pOffs) -= 0x800;
+            printf = TRUE;
+          }else if( repeat & PAD_BUTTON_R ){
+            (*pOffs) += 0x800;
+            printf = TRUE;
+          }
         }
-        
-        if( repeat & PAD_BUTTON_L ){
-          (*pOffs) -= 0x800;
-          printf = TRUE;
-        }else if( repeat & PAD_BUTTON_R ){
-          (*pOffs) += 0x800;
-          printf = TRUE;
+        break;
+      case 4: //scale
+        {
+          fx32 *pScale;
+          pScale = &eff_reflect->d_offs_scale_y;
+          
+          if( repeat & PAD_BUTTON_L ){
+            (*pScale) -= 0x20;
+            printf = TRUE;
+          }else if( repeat & PAD_BUTTON_R ){
+            (*pScale) += 0x20;
+            printf = TRUE;
+          }
         }
+        break;
       }
       
-      if( (trg & PAD_BUTTON_A) || printf ){
+      if( (*pSelect) && ((trg&PAD_BUTTON_A) || printf) ){
         int i;
         d_offs = eff_reflect->d_offs;
         
@@ -539,6 +580,8 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
           KAGAYA_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
               d_offs->x, d_offs->y, d_offs->z );
         }
+        
+        KAGAYA_Printf( "SCALE = 0x%x\n", eff_reflect->d_offs_scale_y );
       }
     }
     
@@ -584,6 +627,14 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     int idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, actID );
     fx16 sx = work->scale_x;
     fx16 sy = work->scale_y_org;
+   
+    #ifdef BUGFIX_BTS_GF1706_GF1720
+    sy += btsGF1706_GetOffsetScaleY( zone_id );
+    #endif
+      
+#ifdef DEBUG_REFLECT_CHECK    
+    sy += work->head.eff_reflect->d_offs_scale_y;
+#endif
     
     {
       u16 res_idx = 0;
@@ -1038,6 +1089,67 @@ static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX] =
   REF_OFFS_Z*2, //64
 };
 #endif
+
+//======================================================================
+//  BUGFIX
+//======================================================================
+#ifdef BUGFIX_BTS_GF1706_GF1720 
+#include "arc/fieldmap/zone_id.h"
+
+#define BTS_GF1709_OFFSET_SCALE_Y (-0x100)
+
+#define BTS_GF1706_OFFSET_Y (0x1800)
+#define BTS_GF1706_C07_R08_OFFSET_Y (-0x800)
+#define BTS_GF1706_C09R0401_OFFSET_Y (0x800)
+#define BTS_GF1706_R10R0801_OFFSET_Y (-0x5800)
+
+//--------------------------------------------------------------
+/**
+ * BTS GF1720 
+ * 立ち状態の自機が水面にうつり込むとき
+ * 自機の頭１ドットがつぶれてしまうため、めり込んだように見えてしまいます。
+ *
+ * 対処としてスケールを小さくして潰れない形にする
+ */
+//--------------------------------------------------------------
+static fx32 btsGF1706_GetOffsetScaleY( u32 zone_id )
+{
+  return( BTS_GF1709_OFFSET_SCALE_Y );
+}
+
+//--------------------------------------------------------------
+//  BTS GF1720 
+//  立ち状態の自機が水面にうつり込むとき
+//  自機の頭１ドットがつぶれてしまうため、めり込んだように見えてしまいます
+//
+//  マップによってオフセット値を変える
+//  
+//--------------------------------------------------------------
+static fx32 btsGF1706_GetOffsetY( u32 zone_id, MMDL_BLACT_MDLSIZE size )
+{
+  fx32 offs = 0;
+  
+  if( zone_id == ZONE_ID_C07 || zone_id == ZONE_ID_R08 ){  //C7,R08 湿地帯
+    if( size == MMDL_BLACT_MDLSIZE_32x32 ){
+      offs = BTS_GF1706_C07_R08_OFFSET_Y;
+    }
+  }else if( zone_id == ZONE_ID_C09R0401 ){ //四天王部屋
+    if( size == MMDL_BLACT_MDLSIZE_32x32 ){
+      offs = BTS_GF1706_C09R0401_OFFSET_Y;
+    }
+  }else if( zone_id == ZONE_ID_R10R0801 ){
+    if( size == MMDL_BLACT_MDLSIZE_32x32 ){
+      offs = BTS_GF1706_R10R0801_OFFSET_Y;
+    }
+  }else{
+    if( size == MMDL_BLACT_MDLSIZE_32x32 ){
+      offs = BTS_GF1706_OFFSET_Y;
+    }
+  }
+  
+  return( offs );
+}
+#endif //BUGFIX_BTS_GF1706_GF1720
 
 //======================================================================
 //  define
