@@ -980,12 +980,13 @@ dwc_error_0006,
 dwctwl_error_0007,
 dwc_error_0008,
 dwctwl_error_0009,
-dwctwl_error_0010,
+dwc_error_0010,
 dwc_error_0011,
 dwc_error_0012,
 dwc_error_0013,
 dwc_error_0014,
 dwc_error_0015,
+dwctwl_error_0016,
 };
 
 static const u16 nitroerror[]={
@@ -1004,6 +1005,7 @@ dwc_error_0012,
 dwc_error_0013,
 dwc_error_0014,
 dwc_error_0015,
+dwc_error_0016,
 };
 #endif //MULTI_BOOT_MAKE  //í èÌéûèàóù
 

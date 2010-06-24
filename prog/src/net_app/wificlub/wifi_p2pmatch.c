@@ -2422,45 +2422,10 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
  */
 //------------------------------------------------------------------
 
-static const u16 twlerror[]={
-dwctwl_error_0001,
-dwc_error_0002,
-dwctwl_error_0003,
-dwc_error_0004,
-dwc_error_0005,
-dwc_error_0006,
-dwctwl_error_0007,
-dwc_error_0008,
-dwctwl_error_0009,
-dwctwl_error_0010,
-dwc_error_0011,
-dwc_error_0012,
-dwc_error_0013,
-dwc_error_0014,
-dwc_error_0015,
-};
-
-static const u16 nitroerror[]={
-dwctwl_error_0001,
-dwc_error_0002,
-dwc_error_0003,
-dwc_error_0004,
-dwc_error_0005,
-dwc_error_0006,
-dwc_error_0007,
-dwc_error_0008,
-dwc_error_0009,
-dwc_error_0010,
-dwc_error_0011,
-dwc_error_0012,
-dwc_error_0013,
-dwc_error_0014,
-dwc_error_0015,
-};
-
 
 static void _errorDisp(WIFIP2PMATCH_WORK* wk)
 {
+#if 0
   GFL_NETSTATE_DWCERROR* pErr = GFL_NET_StateGetWifiError();
   int msgno,no = pErr->errorCode;
   int type =  GFL_NET_DWC_ErrorType(pErr->errorCode, pErr->errorType);
@@ -2519,6 +2484,7 @@ static void _errorDisp(WIFIP2PMATCH_WORK* wk)
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CHECK_AND_END);
     break;
   }
+#endif
 }
 
 //------------------------------------------------------------------
