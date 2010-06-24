@@ -2359,7 +2359,8 @@ static  void  camera_work_check( void )
 
   if( bew->camera_work_execute == BTLV_EFFECT_CWE_NONE ) return;
 
-  if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
+  if( ( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP ) &&
+      ( bew->camera_work_execute != BTLV_EFFECT_CWE_COMM_WAIT ) )
   {
     if( ( trg ) || ( tp ) )
     {
