@@ -559,7 +559,9 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     BTLV_QuitSystem();
 
     // BTS:2360 BTL_Client、録画再生停止処理でのSE停止を元に戻す。
+    //BTS:6700
     PMSND_AllPlayerVolumeEnable(TRUE, PMSND_MASKPL_ALLSE);
+    PMV_ResetMasterVolume();
 
     //Sleep時のボリューム操作をプレイヤーボリュームに変更
     RINGTONE_SYS_SetSleepSoundFunc();
@@ -2172,6 +2174,7 @@ static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
       }
     }
   }
+
 
   BTLV_CORE_Main( wk->viewCore );
   return quitFlag;

@@ -898,7 +898,9 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     {
       if( wk->viewCore ){
         // BTS:2360 SEの再生を元に戻す。
+        // BTS:6700
         PMSND_AllPlayerVolumeEnable(TRUE, PMSND_MASKPL_ALLSE);
+        PMV_ResetMasterVolume();
       }
       wk->myState = SEQ_BGM_FADEOUT;
     }
@@ -8611,11 +8613,14 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
           //BGM、SE停止
           //BTS:2360
+          //BTS:6700
           //このあとは、バトルをぬけるだけなのでBGMフェードアウト、SE停止。
           //SEは、btl_main QUITの流れで元に戻す。
           {
             PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
             PMSND_AllPlayerVolumeEnable(FALSE, PMSND_MASKPL_ALLSE);
+            PMV_SetMasterVolume( 0 );//この後再生されるポケモンVOICEをならさない
+            BTLV_EFFECT_StopAllPMVoice();//今再生中のポケモンVOICEを停止
             BTL_MAIN_BGMFadeOutDisable( wk->mainModule );
           }
           break;
@@ -8652,11 +8657,14 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
             //BGM、SE停止
             //BTS:2360
+            //BTS:6700
             //チャンプタースキップ時のBGMFadeOut　SEStop
             //SEは、ClientMain_Normal  SEQ_RECPLAY_CTRL の流れで元に戻す。
             {
               PMSND_FadeOutBGM( 30 );
               PMSND_AllPlayerVolumeEnable(FALSE, PMSND_MASKPL_ALLSE);
+              PMV_SetMasterVolume( 0 );//この後再生されるポケモンVOICEをならさない
+              BTLV_EFFECT_StopAllPMVoice();//今再生中のポケモンVOICEを停止
             }
           }
           break;
