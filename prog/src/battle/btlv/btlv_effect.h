@@ -133,6 +133,7 @@ enum{
   BTLEFF_MOOR,                                //湿地エフェクト
   BTLEFF_WEATHER_DAMAGE,                      //天候ダメージエフェクト
                                               //（終わりにカメラ初期位置に戻す命令がないので、使いどころに注意）
+  BTLEFF_ZOOM_IN_RESET,                       //ズームインをリセット（初期位置に戻す）
 
   BTLEFF_STATUS_EFFECT_END,
 };

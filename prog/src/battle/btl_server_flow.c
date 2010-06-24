@@ -5896,7 +5896,8 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   {
     targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(bpp) );
     if( targetPos != BTL_POS_NULL ){
-      SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_ZOOM_IN );
+      SCQUE_PUT_ACT_EffectByVector( wk->que, BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) ),
+                                    targetPos, BTLEFF_ZOOM_IN );
     }
   }
 
@@ -5949,7 +5950,8 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
 
   // カメラズームインをリセット
   if( targetPos != BTL_POS_NULL ){
-    SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT );
+    SCQUE_PUT_ACT_EffectByPos( wk->que, BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) ),
+                               BTLEFF_ZOOM_IN_RESET );
   }
 
   wk->thruDeadMsgPokeID = BTL_POKEID_NULL;

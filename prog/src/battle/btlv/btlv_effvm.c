@@ -66,7 +66,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -94,10 +94,10 @@ vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_yoshida)|\
     defined(DEBUG_ONLY_FOR_sogabe)
-#define CAMERA_POS_PRINT
+//#define CAMERA_POS_PRINT
 #endif
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define CAMERA_POS_PRINT_FX32
+//#define CAMERA_POS_PRINT_FX32
 #endif
 #endif
 
@@ -125,7 +125,8 @@ typedef struct{
   u32               zoom_out_flag_work    :1;     //技シーケンスで使用するZOOM_OUT_FLAG
   u32               camera_move_ignore    :1;
   u32               particle_tex_load     :1;     //パーティクルテクスチャデータロード中フラグ
-  u32                                     :15;
+  u32               zoom_in_migawari      :1;     //カメラズームイン時にみがわり入れ替えを行ったフラグ
+  u32                                     :14;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -847,9 +848,22 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     }
 
     //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
-    if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+    //連続攻撃でのカメラズームインの前に身代わり引っ込めるエフェクトを差し込む
+    if( ( bevw->waza == BTLEFF_ZOOM_IN ) && ( migawari_flag ) )
+    {
+      bevw->migawari_sequence = bevw->sequence;
+      bevw->migawari_table_ofs = table_ofs;
+      bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_BEFORE - BTLEFF_SINGLE_ENCOUNT_1,
+                                              GFL_HEAP_LOWID( bevw->heapID ) );
+      bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
+      bevw->zoom_in_migawari = 1;     //カメラズームイン時にみがわり入れ替えを行ったフラグ
+      table_ofs = TBL_AA2BB;
+    }
+    //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
+    else if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
         //へんしんは技エフェクトではなくなったので除外
         ( bevw->waza != WAZANO_HENSIN ) &&
+        ( bevw->zoom_in_migawari == 0 ) &&
         ( migawari_flag ) )
     {
       bevw->migawari_sequence = bevw->sequence;
@@ -4592,11 +4606,32 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
     }
     //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
-    else if( ( ( bevw->waza == BTLEFF_POKEMON_VANISH_OFF ) || ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) ) &&
+    else if( ( bevw->zoom_in_migawari == 1 ) && ( bevw->waza == BTLEFF_ZOOM_IN_RESET ) )
+    {
+      int* start_ofs;
+  
+      GFL_HEAP_FreeMemory( bevw->sequence );
+      bevw->waza = BTLEFF_MIGAWARI_WAZA_AFTER - BTLEFF_SINGLE_ENCOUNT_1;
+      bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, bevw->waza, GFL_HEAP_LOWID( bevw->heapID ) );
+      bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
+  
+      start_ofs = (int *)&bevw->sequence[ TBL_AA2BB ];
+  
+      //汎用ワークを初期化
+      bevw->sequence_work = 0;
+
+      bevw->zoom_in_migawari = 0;
+  
+      VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+    }
+    //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
+    else if( ( ( bevw->waza == BTLEFF_POKEMON_VANISH_OFF ) ||
+               ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) ) &&
             //へんしんは技エフェクトではなくなったので除外
             ( bevw->waza != WAZANO_HENSIN ) &&
             //バトンタッチは戻すエフェクトにつながるので除外
             ( bevw->waza != WAZANO_BATONTATTI ) &&
+            ( bevw->zoom_in_migawari == 0 ) &&
             ( migawari_flag ) )
     {
       int* start_ofs;
@@ -4615,6 +4650,8 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   
       //汎用ワークを初期化
       bevw->sequence_work = 0;
+
+      bevw->zoom_in_migawari = 0;
   
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
     }
