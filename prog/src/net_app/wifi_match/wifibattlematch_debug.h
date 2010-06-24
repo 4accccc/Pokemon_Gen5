@@ -87,22 +87,44 @@ static inline void DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, 
 static inline void DebugWin_Util_ChangeDataU32( DEBUGWIN_ITEM* item, u32 *p_param, u32 min, u32 max )
 { 
   BOOL is_update  = FALSE;
+  u32 value  = 1;
 
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
-  { 
-    if( *p_param > min )
-    { 
-      (*p_param)--;
-      is_update = TRUE;
-    }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    value = 10;
   }
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    value = 100;
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    value = 1000;
+  }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   { 
-    if( *p_param  < max )
+    if( *p_param - value >= min )
     { 
-      (*p_param)++;
-      is_update = TRUE;
+      (*p_param)-=value;
     }
+    else
+    {
+      (*p_param)  = min;
+    }
+    is_update = TRUE;
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  { 
+    if( *p_param + value <= max )
+    { 
+      (*p_param)+=value;
+    }
+    else
+    {
+      (*p_param)  = max;
+    }
+    is_update = TRUE;
   }
 
   if( is_update )
@@ -163,22 +185,40 @@ static inline void DebugWin_Util_ChangeDataU16( DEBUGWIN_ITEM* item, u16 *p_para
 static inline void DebugWin_Util_ChangeDataU8( DEBUGWIN_ITEM* item, u8 *p_param, u8 min, u8 max )
 { 
   BOOL is_update  = FALSE;
+  u8 value  = 1;
 
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
-  { 
-    if( *p_param > min )
-    { 
-      (*p_param)--;
-      is_update = TRUE;
-    }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    value = 10;
   }
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    value = 100;
+  }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   { 
-    if( *p_param  < max )
+    if( *p_param - value >= min )
     { 
-      (*p_param)++;
-      is_update = TRUE;
+      (*p_param)-=value;
     }
+    else
+    {
+      (*p_param)  = min;
+    }
+    is_update = TRUE;
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  { 
+    if( *p_param + value <= max )
+    { 
+      (*p_param)+=value;
+    }
+    else
+    {
+      (*p_param)  = max;
+    }
+    is_update = TRUE;
   }
 
   if( is_update )
