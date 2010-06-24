@@ -15,6 +15,14 @@ enum {
   PRINT_FLG = TRUE,
 };
 
+typedef enum {
+
+  DMGTYPE_NONE = 0,   ///< ダメージ記録なし
+  DMGTYPE_REAL,       ///< ダメージ記録：実体ヒット
+  DMGTYPE_MIGAWARI,   ///< ダメージ記録：みがわりヒット
+
+}DamageType;
+
 
 /**
  *  初期化
@@ -25,33 +33,25 @@ void BTL_POKESET_Clear( BTL_POKESET* set )
 }
 
 /**
- *  ポケモン１体登録（ダメージ記録）
+ *  ポケモン１体登録
  */
-void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage, BOOL fMigawariDamage )
+void BTL_POKESET_Add( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
 {
   if( rec->count < NELEMS(rec->bpp) )
   {
     u32 i;
     for(i=0; i<rec->count; ++i)
     {
-      if( rec->bpp[i] == bpp )
-      {
-        if( fMigawariDamage ){
-          rec->migawariDamage[ i ] += damage;
-        }else{
-          rec->damage[ i ] += damage;
-        }
+      if( rec->bpp[i] == bpp ){
         return;
       }
     }
     rec->bpp[ rec->count ] = bpp;
-    if( fMigawariDamage ){
-      rec->migawariDamage[ rec->count ] += damage;
-    }else{
-      rec->damage[ rec->count ] += damage;
-    }
-
+    rec->damageType[ rec->count ] = DMGTYPE_NONE;
+    rec->damage[ rec->count ] = 0;
+    rec->migawariDamage[ rec->count ] = 0;
     rec->count++;
+
     if( rec->count > rec->countMax ){
       rec->countMax = rec->count;
     }
@@ -61,14 +61,33 @@ void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage
   {
     GF_ASSERT(0);
   }
+
 }
 /**
- *  ポケモン１体登録
+ *  ポケモン１体登録（ダメージ記録）
  */
-void BTL_POKESET_Add( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
+void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage, BOOL fMigawariDamage )
 {
-  BTL_POKESET_AddWithDamage( rec, bpp, 0, FALSE );
+  BTL_POKESET_Add( rec, bpp );
+  {
+    u32 i;
+    for(i=0; i<rec->count; ++i)
+    {
+      if( rec->bpp[i] == bpp )
+      {
+        if( fMigawariDamage ){
+          rec->migawariDamage[ i ] += damage;
+          rec->damageType[ i ] = DMGTYPE_MIGAWARI;
+        }
+        else{
+          rec->damage[ i ] += damage;
+          rec->damageType[ i ] = DMGTYPE_REAL;
+        }
+      }
+    }
+  }
 }
+
 /**
  *  ポケモン１体除外
  */
@@ -126,33 +145,41 @@ BTL_POKEPARAM* BTL_POKESET_SeekNext( BTL_POKESET* rec )
 /**
  *  ダメージ記録取得（実体・みがわりとも）
  */
-u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
+BOOL BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, u32* damage )
 {
   u32 i;
   for(i=0; i<rec->count; ++i)
   {
     if( rec->bpp[i] == bpp )
     {
-      return (rec->damage[i] + rec->migawariDamage[i]);
+      if( rec->damageType[i] != DMGTYPE_NONE )
+      {
+        *damage = (rec->damage[i] + rec->migawariDamage[i]);
+        return TRUE;
+      }
     }
   }
   GF_ASSERT(0); // ポケモン見つからない
-  return 0;
+  return FALSE;
 }
 /**
  *  ダメージ記録取得（実体のみ）
  */
-u32 BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
+BOOL BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, u32* damage )
 {
   u32 i;
   for(i=0; i<rec->count; ++i)
   {
     if( (rec->bpp[i] == bpp)
     ){
-      return rec->damage[i];
+      if( rec->damageType[i] != DMGTYPE_NONE )
+      {
+        *damage = rec->damage[i];
+        return TRUE;
+      }
     }
   }
-  return 0;
+  return FALSE;
 }
 /**
  *  現在登録されているポケモン総数を取得

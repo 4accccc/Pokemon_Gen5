@@ -23,8 +23,8 @@ typedef struct {
   BTL_POKEPARAM*  bpp[ BTL_POS_MAX ];
   u16             damage[ BTL_POS_MAX ];
   u16             migawariDamage[ BTL_POS_MAX ];
+  u8              damageType[ BTL_POS_MAX ];
   u16             sortWork[ BTL_POS_MAX ];
-  u8              fMigawariDamage[ BTL_POS_MAX ];
   u8              count;
   u8              countMax;
   u8              getIdx;
@@ -103,12 +103,12 @@ extern BTL_POKEPARAM* BTL_POKESET_SeekNext( BTL_POKESET* rec );
 /**
  *  ダメージ記録取得（実体・みがわりとも）
  */
-extern u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp );
+extern BOOL BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, u32* damage );
 
 /**
  *  ダメージ記録取得（実体のみ）
  */
-extern u32 BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp );
+extern BOOL BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, u32* damage );
 
 
 /**

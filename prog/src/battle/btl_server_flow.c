@@ -6739,7 +6739,6 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
 //---------------------------------------------------------------------------------------------
 static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
-  u32 total_damage = 0;
   u32 hem_state;
 
   if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_DRAIN )
@@ -6752,15 +6751,16 @@ static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
     BTL_POKESET_SeekStart( targets );
     while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
     {
-      damage = BTL_POKESET_GetDamage( targets, bpp );
-      total_damage += damage;
-      recoverHP = (WAZADATA_GetParam(waza, WAZAPARAM_DAMAGE_RECOVER_RATIO) * damage) / 100;
-
-      if( recoverHP > 0 )
+      if( BTL_POKESET_GetDamage(targets, bpp, &damage) )
       {
-        if( scproc_DrainCore(wk, attacker, bpp, recoverHP) )
+        recoverHP = (WAZADATA_GetParam(waza, WAZAPARAM_DAMAGE_RECOVER_RATIO) * damage) / 100;
+
+        if( recoverHP > 0 )
         {
-          scPut_Message_Set( wk, bpp, BTL_STRID_SET_Drain );
+          if( scproc_DrainCore(wk, attacker, bpp, recoverHP) )
+          {
+            scPut_Message_Set( wk, bpp, BTL_STRID_SET_Drain );
+          }
         }
       }
     }
@@ -6850,6 +6850,7 @@ static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 {
   const BTL_POKEPARAM* bpp;
   u32 damage, damage_sum, target_cnt, hit_cnt, i;
+  BOOL fHit;
 
   target_cnt = BTL_POKESET_GetCount( targets );
   hit_cnt = damage_sum = 0;
@@ -6862,15 +6863,18 @@ static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 
     for(i=0; i<target_cnt; ++i)
     {
+      fHit = FALSE;
       bpp = BTL_POKESET_Get( targets, i );
-      if( fRealHitOnly ){
-        damage = BTL_POKESET_GetDamageReal( targets, bpp );
-        TAYA_Printf("Real damage = %d\n", damage);
-      }else{
-        damage = BTL_POKESET_GetDamage( targets, bpp );
+      if( fRealHitOnly )
+      {
+        fHit = BTL_POKESET_GetDamageReal( targets, bpp, &damage );
+      }
+      else
+      {
+        fHit = BTL_POKESET_GetDamage( targets, bpp, &damage );
       }
 
-      if( damage )
+      if( fHit )
       {
         damage_sum += damage;
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+hit_cnt, BPP_GetID(bpp) );

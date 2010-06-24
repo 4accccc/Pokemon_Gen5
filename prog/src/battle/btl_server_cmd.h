@@ -267,8 +267,6 @@ static inline void SCQUE_PUT_OP_SetWeight( BTL_SERVER_CMD_QUE* que, u8 pokeID, u
   SCQUE_PUT_Common( que, SC_OP_SET_WEIGHT, pokeID, weight );
 }
 
-
-
 static inline void SCQUE_PUT_OP_WazaSickTurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeCnt, u8 maxSickIdx, u32 packID )
 {
   SCQUE_PUT_Common( que, SC_OP_WAZASICK_TURNCHECK, pokeCnt, maxSickIdx, packID );
