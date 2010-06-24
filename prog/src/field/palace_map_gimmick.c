@@ -25,6 +25,8 @@
 #include "field/eventdata_sxy.h"
 #include "field/eventdata_system.h"
 
+#include "arc/fieldmap/zone_id.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -399,6 +401,11 @@ static void WARP_OBJ_SetUp( PALACE_MAP_GMK_WORK* wk, FIELDMAP_WORK* fieldWork )
       if( exit_type == EXIT_TYPE_INTRUDE ){
         // 位置を生成
         EVENTDATA_GetConnectCenterPos( cp_connect, &pos );
+        //シリンダーブリッジの場合だけ、ワープの表示位置をちょっと下にする
+        if ( FIELDMAP_GetZoneID( fieldWork ) == ZONE_ID_PLH03 )
+        {
+          pos.y -= FX32_CONST(2.0);
+        }
 
         GF_ASSERT( warp_num < MAP_OBJ_WARP_MAX );
 
