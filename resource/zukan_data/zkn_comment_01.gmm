@@ -788,7 +788,7 @@
 せいぶんが　ひふに　しみこんでくる。</language>
 		<language name="JPN_KANJI">羽ばたいて　りんぷんを　まき散らす。
 りんぷんが　体に　つくと　毒の
-成分が　皮膚に　染みこんでくる。</language>
+成分が　皮膚に　染み込んでくる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_050">
@@ -959,7 +959,7 @@
 パンチや　チョップを　たたきこむ。</language>
 		<language name="JPN_KANJI">４本の　力強い　腕は
 目にも　止まらぬ　速さで
-パンチや　チョップを　たたきこむ。</language>
+パンチや　チョップを　たたき込む。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_069">
@@ -2290,7 +2290,7 @@
 しみこませて　いつも　なめている。
 ヒメグマによって　あじが　ちがう。</language>
 		<language name="JPN_KANJI">甘い　ミツを　手のひらに
-染みこませて　いつも　なめている。
+染み込ませて　いつも　なめている。
 ヒメグマによって　味が　違う。</language>
 	</row>
 
@@ -2974,7 +2974,7 @@
 せなかの　すきまから　のぞきこむと
 たましいを　すわれてしまうらしい。</language>
 		<language name="JPN_KANJI">抜け殻が　魂を　宿した。
-背中の　すきまから　のぞきこむと
+背中の　すきまから　のぞき込むと
 魂を　吸われてしまうらしい。</language>
 	</row>
 
@@ -4343,7 +4343,7 @@
 たからを　じぶんのすに　ためこむ。</language>
 		<language name="JPN_KANJI">光り輝く　ものが　大好きで
 洞くつの　中で　見つけた
-宝を　自分の巣に　ためこむ。</language>
+宝を　自分の巣に　ため込む。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_445">
@@ -4433,7 +4433,7 @@
 ねりこまれ　きょうりょくになる。</language>
 		<language name="JPN_KANJI">のど元に　毒袋を　持つ。
 のどを　鳴らすと　たまった　毒は
-練りこまれ　強力になる。</language>
+練り込まれ　強力になる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_455">
@@ -4881,7 +4881,7 @@
 		<language name="JPN">ほほの　ふくろに　エサを　ためこみ
 なんにちも　みはりを　つづける。
 しっぽで　なかまに　あいずする。</language>
-		<language name="JPN_KANJI">ほほの　袋に　エサを　ためこみ
+		<language name="JPN_KANJI">ほほの　袋に　エサを　ため込み
 何日も　見張りを　続ける。
 しっぽで　仲間に　合図する。</language>
 	</row>
@@ -5783,7 +5783,7 @@
 いっしゅんで　うみへ　ひきずりこむ。</language>
 		<language name="JPN_KANJI">腕の　力で　海から　はい出し
 水辺の　獲物に　襲いかかる。
-一瞬で　海へ　引きずりこむ。</language>
+一瞬で　海へ　引きずり込む。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_605">
