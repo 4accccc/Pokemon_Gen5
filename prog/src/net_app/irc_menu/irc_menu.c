@@ -1819,6 +1819,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		if(COMPATIBLE_IRC_InitWait( p_wk->p_param->p_irc ) )
 		{	
 			PMSND_PlaySE( IRCCOMMON_SE_IRC );
+      APPBAR_SetTouchEnable( p_wk->p_appbar, TRUE );
 			*p_seq	= SEQ_CONNECT;
 		}
 		break;
@@ -2074,7 +2075,7 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_003, 0, 0  );
 
     APPBAR_ChangeButton( p_wk->p_appbar, APPBAR_BUTTON_TYPE_CANCEL );
-    APPBAR_SetTouchEnable( p_wk->p_appbar, TRUE );
+    APPBAR_SetTouchEnable( p_wk->p_appbar, FALSE );
 		SEQ_Change( p_wk, SEQFUNC_Connect );
 		break;
 #if 0
