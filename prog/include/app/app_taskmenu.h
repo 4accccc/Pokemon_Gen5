@@ -103,6 +103,7 @@ extern void APP_TASKMENU_ShowOnly( APP_TASKMENU_WORK *work );
 extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID );
 extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID );
 extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateExNotTransCharacter( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID );
+extern const BOOL APP_TASKMENU_IsDecide( APP_TASKMENU_WORK *work );
 extern void APP_TASKMENU_WIN_Delete( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_DeleteNotClearScreen( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk );

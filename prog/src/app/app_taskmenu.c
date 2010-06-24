@@ -321,6 +321,20 @@ const void APP_TASKMENU_SetActive( APP_TASKMENU_WORK *work, BOOL isActive )
 { 
   APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, isActive );
 }
+
+//=============================================================================================
+/**
+ * @brief タスクメニューの決定状態を取得
+ *
+ * @param   work
+ * @return  BOOL       TRUE :決定済み　FALSE ：決定まだ
+ */
+//=============================================================================================
+const BOOL APP_TASKMENU_IsDecide( APP_TASKMENU_WORK *work )
+{
+  return work->isDecide;
+}
+
 //--------------------------------------------------------------
 //  メニューのBmpWinと文字を作る
 //--------------------------------------------------------------
