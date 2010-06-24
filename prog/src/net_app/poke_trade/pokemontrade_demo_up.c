@@ -165,7 +165,9 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );
   POKEMONTRADE_DEMO_PTC_Init(pWork->pPokemonTradeDemo);
+  POKEMONTRADE_DEMO_PTC_Load1(pWork->pPokemonTradeDemo);
   POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo,_DEMO_TYPE_UP); //ICAÝ’è
+  _setNextAnim(pWork, 0);
 
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_2);
 
@@ -175,16 +177,18 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade2_2(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMONTRADE_DEMO_PTC_LoadOne_Init(pWork->pPokemonTradeDemo);
+  POKEMONTRADE_DEMO_PTC_Load2(pWork->pPokemonTradeDemo);
+//  POKEMONTRADE_DEMO_PTC_LoadOne_Init(pWork->pPokemonTradeDemo);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_3);
 }
 
 static void _changeDemo_ModelTrade2_3(POKEMON_TRADE_WORK* pWork)
 {
-  const BOOL ret = POKEMONTRADE_DEMO_PTC_LoadOne_Loop(pWork->pPokemonTradeDemo);
-  if( ret == TRUE )
+ // const BOOL ret = POKEMONTRADE_DEMO_PTC_LoadOne_Loop(pWork->pPokemonTradeDemo);
+//  if( ret == TRUE )
   {
-    _setNextAnim(pWork, 0);
+//    _setNextAnim(pWork, 0);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADEUP_OBJECT);  //ã‚¾‚¯ƒ‚ƒfƒ‹
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
   }
 }
@@ -477,7 +481,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
-  //OS_TPrintf("C %d\n",pWork->anmCount);
+  OS_TPrintf("C %d\n",pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_DEMO_END-1)){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
