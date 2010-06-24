@@ -59,8 +59,10 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec );
 static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk );
 static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility );
 static inline u32 ActPri_ChangeAgility( u32 defPriority, u16 agility );
+static inline u32 ActPri_ChangeWazaPriority( u32 defPriority, u8 agility );
 static inline u8 ActPri_GetWazaPri( u32 priValue );
 static inline u8 ActPri_GetSpPri( u32 priValue );
+static inline u8 ActPri_GetActPri( u32 priValue );
 static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri );
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction, ACTION_ORDER_WORK* order, u32 orderMax );
 static void sortActionSub( ACTION_ORDER_WORK* order, u32 numOrder );
@@ -1042,13 +1044,38 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
 static void ActOrderProcSub_RecalcAgility( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder, u32 numActOrder )
 {
   u32 i;
+  u32 hem_state;
   u16 agility;
+  BtlAction action;
 
 //  TAYA_Printf("numActOrder = %d\n");
   for(i=0; i<numActOrder; ++i)
   {
     agility = scEvent_CalcAgility( wk, actOrder[i].bpp, TRUE );
     actOrder[i].priority = ActPri_ChangeAgility( actOrder[i].priority, agility );
+
+    action = BTL_ACTION_GetAction( &actOrder[i].action );
+    if( action == BTL_ACTION_FIGHT )
+    {
+      WazaID  waza = ActOrder_GetWazaID( &(actOrder[i]) );
+      u16 wazaPri;
+
+      hem_state = BTL_Hem_PushState( &wk->HEManager );
+        wazaPri = scEvent_GetWazaPriority( wk, waza, actOrder[i].bpp );
+        actOrder[i].priority = ActPri_ChangeWazaPriority( actOrder[i].priority, wazaPri );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
+    }
+
+    if( (action == BTL_ACTION_FIGHT)
+    ||  (action == BTL_ACTION_MOVE)
+    ){
+      u8 spPri;
+
+      hem_state = BTL_Hem_PushState( &wk->HEManager );
+        spPri = scEvent_CheckSpecialActPriority( wk, actOrder[i].bpp );
+        actOrder[i].priority = ActPri_SetSpPri( actOrder[i].priority, spPri );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
+    }
 
 //    TAYA_Printf("Order[%d]'s  pokeID=%d, aglity=%d, priority=%08x(%d)\n",
 //              i, BPP_GetID(actOrder[i].bpp), agility, actOrder[i].priority, actOrder[i].priority);
@@ -1398,6 +1425,15 @@ static inline u32 ActPri_ChangeAgility( u32 defPriority, u16 agility )
 {
   return (defPriority & 0xffff0000) | agility;
 }
+static inline u32 ActPri_ChangeWazaPriority( u32 defPriority, u8 wazaPri )
+{
+  u8 actPri = ActPri_GetActPri( defPriority );
+  u8 spPri = ActPri_GetSpPri( defPriority );
+  u16 agility = defPriority & 0xffff;
+
+  return ActPri_Make( actPri, wazaPri, spPri, agility );
+}
+
 
 static inline u8 ActPri_GetWazaPri( u32 priValue )
 {
@@ -1406,6 +1442,10 @@ static inline u8 ActPri_GetWazaPri( u32 priValue )
 static inline u8 ActPri_GetSpPri( u32 priValue )
 {
   return ((priValue >> 16) & 0x07);
+}
+static inline u8 ActPri_GetActPri( u32 priValue )
+{
+  return ((priValue >> 25) & 0x07);
 }
 static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri )
 {
@@ -1519,8 +1559,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
     // 「たたかう」場合はワザによる優先順、アイテム装備による優先フラグを全て見る
     if( actParam->gen.cmd == BTL_ACTION_FIGHT )
     {
-      WazaID  waza;
-      waza = ActOrder_GetWazaID( &order[i] );
+      WazaID  waza = ActOrder_GetWazaID( &order[i] );
       BTL_Printf("ポケ[%d]のワザ優先チェック .. waza=%d\n", BPP_GetID(bpp), waza);
       wazaPri = scEvent_GetWazaPriority( wk, waza, bpp );
 

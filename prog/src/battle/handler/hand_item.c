@@ -2387,24 +2387,6 @@ static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SV
     }
   }
 }
-// 特殊行動プライオリティ効果発生
-static void handler_IbanNomi_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    work[0] = 1;
-  }
-}
-// アクション開始ハンドラ
-static void handler_IbanNomi_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  &&  (work[0] == 1)
-  ){
-//    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
-    ItemPushRun( myHandle, flowWk, pokeID );
-  }
-}
 
 // アイテム使用ハンドラ
 static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
