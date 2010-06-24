@@ -46,12 +46,13 @@ typedef struct
   u16 scrid;
 } STEP_DO_SCRIPT_ID;
 
+#define SEATEMPLE_STEP_MAX (500)
 static const STEP_DO_SCRIPT_ID sc_STEP_DO_SCRIPT_ID[] = {
   { 0,   SCRID_SEATEMPLE_STEP_000 },
   { 100, SCRID_SEATEMPLE_STEP_100 },
   { 300, SCRID_SEATEMPLE_STEP_300 },
   { 450, SCRID_SEATEMPLE_STEP_450 },
-  { 500, SCRID_SEATEMPLE_STEP_500 },
+  { SEATEMPLE_STEP_MAX, SCRID_SEATEMPLE_STEP_500 },
 };
 
 //-----------------------------------------------------------------------------
@@ -93,6 +94,11 @@ GMEVENT * EVENT_SeaTemple_GetStepEvent( GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       return SCRIPT_SetEventScript( gsys, sc_STEP_DO_SCRIPT_ID[i].scrid, NULL, FIELDMAP_GetHeapID( fieldmap ));
 
     }
+  }
+
+  //BTS:6673 カウントが500より大きいときは、常に最後のイベントを発動
+  if( count > SEATEMPLE_STEP_MAX ){
+    return SCRIPT_SetEventScript( gsys, SCRID_SEATEMPLE_STEP_500, NULL, FIELDMAP_GetHeapID( fieldmap ));
   }
 
   return NULL;
