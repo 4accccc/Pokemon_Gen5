@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-16T15:19:01"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-24T16:32:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -335,9 +335,9 @@
 
 	<row id="RHYTHM_STR_000">
 		<language name="JPN" width="256">すきなリズムで　１０かい
-したがめんを　タッチしてください</language>
+したがめんを　タッチ　してください</language>
 		<language name="JPN_KANJI" width="256">好きなリズムで　１０回
-下画面を　タッチしてください</language>
+下画面を　タッチ　してください</language>
 	</row>
 
 	<row id="RHYTHM_STR_001">
