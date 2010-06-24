@@ -31,6 +31,8 @@
 
 #include "net/dwc_tool.h"
 
+#include "playable_version.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					’è”éŒ¾
@@ -200,11 +202,19 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   TOMOYA_Printf( "WFBC_SETUP\n" );
   
   p_wk->data_in = TRUE;
+#ifdef  PLAYABLE_VERSION
+  if ( GET_VERSION() == VERSION_BLACK ) {
+    p_wk->type    = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+  } else {
+    p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST; 
+  }
+#else
 #if PM_VERSION == VERSION_BLACK
   p_wk->type    = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
 #else   // PM_VERSION == VERSION_BLACK
   p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST; 
 #endif  // PM_VERSION == VERSION_BLACK
+#endif  //  PLAYABLE_VERSION
 
   p_wk->random_no = MyStatus_GetID( cp_mystatus );
 
