@@ -204,7 +204,7 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
   int tp_ret;
   int i;
 
-  if(appwk->up_proc_finish == TRUE){// || appwk->force_finish == TRUE){
+  if(appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
   }
   
