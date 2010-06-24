@@ -693,7 +693,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         { 
           //取得できた
         
-          //ついでにサーバー上のセキュアフラグを反映
+          //サーバー上のセキュアフラグを反映
           { 
             int i;
             for( i = 0; i < p_wk->p_param->p_outline->data_num; i++ )
@@ -702,7 +702,23 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
                 RecHeader_ParamGet( 
                     &p_wk->p_param->p_outline->data[ i ].head,
                     RECHEAD_IDX_SECURE, 0 );
+
             }
+#ifdef PM_DEBUG
+            {
+              int i, j;
+              for( i = 0; i < p_wk->p_param->p_outline->data_num; i++ )
+              {
+                BATTLE_REC_HEADER_PTR p_head = &p_wk->p_param->p_outline->data[i].head;
+                NAGI_Printf( "rank[%d]= ", i );
+                for( j = 0; j < 6; j++ )
+                {
+                NAGI_Printf( " %d,", RecHeader_ParamGet(p_head, RECHEAD_IDX_FORM_NO, j) );
+                }
+                NAGI_Printf( "\n" );
+              }
+            }
+#endif //PM_DEBUG
           }
 
           BR_SEQ_SetNext( p_seqwk, Br_Seq_NextRanking );
@@ -1098,7 +1114,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
     //読み込み
     for( j = 0; j < TEMOTI_POKEMAX; j++ )
     { 
-      NAGI_Printf( "mons %d form %d gender %d \n", sort_data.mons_tbl[j], sort_data.form_tbl[i], sort_data.gender_tbl[i] );
+      NAGI_Printf( "mons %d form %d gender %d \n", sort_data.mons_tbl[j], sort_data.form_tbl[j], sort_data.gender_tbl[j] );
 
       { 
         //ポケモンがいなくても呼んでおき、あとで表示操作する
@@ -1108,12 +1124,12 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
 
         //リソースをBR_RANK_LIST_LINE * TEMOTI_POKEMAX分読み込む
         p_wk->cgr[i][j] = GFL_CLGRP_CGR_Register( p_handle,
-            POKEICON_GetCgxArcIndexByMonsNumber( temp, sort_data.form_tbl[i], sort_data.gender_tbl[i], FALSE ), FALSE, CLSYS_DRAW_MAIN, heapID );
+            POKEICON_GetCgxArcIndexByMonsNumber( temp, sort_data.form_tbl[j], sort_data.gender_tbl[j], FALSE ), FALSE, CLSYS_DRAW_MAIN, heapID );
 
         //CLWK作成
         cldata.pos_x  = 106+4 + j * 24;
         cldata.pos_y  =  76-4 + i * 24;
-        cldata.softpri= 6-j;//右に行くほど優先度が高くなる
+        cldata.softpri= 6-j;//右に行くほど優先度が高くなる(ぽけアイコンで←の優先度が高いと顔がかくれてしまうポケモンがいるため)
         p_wk->p_poke[i][j]  = GFL_CLACT_WK_Create( p_unit,
             p_wk->cgr[i][j], p_wk->plt, p_wk->cel,
             &cldata, CLSYS_DRAW_MAIN, heapID );
@@ -1310,18 +1326,21 @@ static void Br_Rank_SortPoke( const BATTLE_REC_OUTLINE_RECV *cp_recv, BR_RANK_SO
   //卵抜きソート
   { 
     int i;
-    int idx;
+    int idx = 0;
     int monsno;
     int formno;
     int gender;
-    idx = 0;
+
+    //ホントはconstにしたいけど、getterがconstじゃないので
+    BATTLE_REC_HEADER_PTR p_head = (BATTLE_REC_HEADER_PTR)&cp_recv->head;
+    
 
     for( i = 0; i < TEMOTI_POKEMAX; i++ )
     { 
 
-      monsno  = cp_recv->head.monsno[ i ];
-      formno  = cp_recv->head.form_no_and_sex[ i ] & HEADER_FORM_NO_MASK;
-      gender  = ( cp_recv->head.form_no_and_sex[ i ] & HEADER_GENDER_MASK ) >> HEADER_GENDER_SHIFT;
+      monsno  = RecHeader_ParamGet(p_head, RECHEAD_IDX_MONSNO, i);
+      formno  = RecHeader_ParamGet(p_head, RECHEAD_IDX_FORM_NO, i);
+      gender  = RecHeader_ParamGet(p_head, RECHEAD_IDX_GENDER, i);
 
       if( monsno >= MONSNO_MAX )
       { 
