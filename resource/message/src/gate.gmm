@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-06-21T12:17:15"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-24T12:40:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1501,7 +1501,7 @@
 	<row id="msg_gate_kazakami">
 		<comment>レア天気</comment>
 		<language name="JPN" width="256">ひじょうにつよい　おおあらしが　はっせい！！</language>
-		<language name="JPN_KANJI" width="256">非常に強い　大あらしが　発生！！</language>
+		<language name="JPN_KANJI" width="256">非常に強い　おおあらしが　発生！！</language>
 	</row>
 
 	<row id="msg_gate_weather" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
