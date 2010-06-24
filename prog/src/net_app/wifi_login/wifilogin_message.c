@@ -186,6 +186,11 @@ void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
     pWork->timeIcon = NULL;
   }
 
+  if( pWork->pStream )
+  { 
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+    pWork->pStream = NULL;
+  }
 
   WIFILOGIN_MESSAGE_TitleEnd( pWork );
   GFL_BG_FreeCharacterArea(WifiLogin_Message_GetTextFrame( pWork->display ),
