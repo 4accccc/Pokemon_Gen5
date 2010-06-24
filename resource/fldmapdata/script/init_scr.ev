@@ -5,6 +5,8 @@
   .text
   .include "scr_seq_def.h"
 
+  .include "../../../prog/include/playable_version.h"
+
 //-------------------------------------------------------------
 //  スクリプトテーブル
 //-------------------------------------------------------------
@@ -20,11 +22,13 @@ _EVENT_DATA_END
 INIT_EVENT_START  ev_init_script
 {
 	_CALL	init_flags
+.ifndef  PLAYABLE_VERSION
 	_CALL init_my_answers
   //全滅時の戻り先設定：通常ゲーム開始時は自宅1階から
   _SET_WARP_ID( WARP_ID_T01 )
 
   _ADD_GOLD( 3000 )   //初期値０円＋３０００円がゲーム開始時の手持ち
+.endif
 }
 INIT_EVENT_END
 
