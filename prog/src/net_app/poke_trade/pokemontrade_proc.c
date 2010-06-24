@@ -2029,71 +2029,74 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
   int boxindex,boxno;
   int line,index;
 
-  if(GFL_UI_TP_GetTrgAndSet()){
-    _CatchPokemonPositionRewind(pWork);
-  }
+  //ＡＰＰタスクで決定がされていないときのみ機能させる　add Saito BTS6605
+  if ( !APP_TASKMENU_IsDecide( pWork->pAppTask ) )
+  {
+    if(GFL_UI_TP_GetTrgAndSet()){
+      _CatchPokemonPositionRewind(pWork);
+    }
 
+    TOUCHBAR_Main(pWork->pTouchWork);
+    switch( TOUCHBAR_GetTouch(pWork->pTouchWork )){
+    case TOUCHBAR_ICON_CUTSOM3:
+      if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+        APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
+      }
+      break;
+    }
+    switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
+    case TOUCHBAR_ICON_CUTSOM3:
+      {
+        pWork->pokemonselectno = 1 - pWork->pokemonselectno;
+        bChange=TRUE;
+      }
+      break;
+    }
+    
+    // _CatchPokemonMoveFunc(pWork);
 
-  TOUCHBAR_Main(pWork->pTouchWork);
-  switch( TOUCHBAR_GetTouch(pWork->pTouchWork )){
-  case TOUCHBAR_ICON_CUTSOM3:
-    if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
+      GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
-    }
-    break;
-  }
-  switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
-  case TOUCHBAR_ICON_CUTSOM3:
-    {
-      pWork->pokemonselectno = 1 - pWork->pokemonselectno;
-      bChange=TRUE;
-    }
-    break;
-  }
-
-  // _CatchPokemonMoveFunc(pWork);
-
-  if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
-    GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
-    APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
-    if(_SerchTouchCLACTPosition(pWork,&pWork->underSelectBoxno,&pWork->underSelectIndex,&line,&index)){
-      pWork->MainObjCursorIndex = index;
-      pWork->MainObjCursorLine = line;
-      pWork->x = x;
-      pWork->y = y;
-      PMSND_PlaySystemSE(POKETRADESE_CUR);
-      bChange = TRUE;
-    }
-    else{
-      if((y >=  2*8) && ((18*8) > y)){
-        bExit = TRUE;  //とじる
+      if(_SerchTouchCLACTPosition(pWork,&pWork->underSelectBoxno,&pWork->underSelectIndex,&line,&index)){
+        pWork->MainObjCursorIndex = index;
+        pWork->MainObjCursorLine = line;
+        pWork->x = x;
+        pWork->y = y;
+        PMSND_PlaySystemSE(POKETRADESE_CUR);
+        bChange = TRUE;
+      }
+      else{
+        if((y >=  2*8) && ((18*8) > y)){
+          bExit = TRUE;  //とじる
+        }
       }
     }
-  }
 
-  if(bChange){
-    POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork,TRUE);
-    _CHANGE_STATE(pWork, _dispSubStateWait2);
-    return;
-  }
+    if(bChange){
+      POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork,TRUE);
+      _CHANGE_STATE(pWork, _dispSubStateWait2);
+      return;
+    }
 
 
-  _CatchPokemonMoveFunc(pWork);
+    _CatchPokemonMoveFunc(pWork);
 
-  if(bExit==FALSE){
-    if(GFL_UI_TP_GetCont()==FALSE && pWork->bTouch){ //タッチパネルを離した直後
-      if((pWork->pCatchCLWK != NULL) && pWork->bUpVec){ //ポケモンを上に登録
-        PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
-        selectno = 0;  //決定と同じ
-        bExit=TRUE;
-      }
-      else{  //ポケモンを元の位置に戻す
-        _CatchPokemonPositionRewind(pWork);
+    if(bExit==FALSE){
+      if(GFL_UI_TP_GetCont()==FALSE && pWork->bTouch){ //タッチパネルを離した直後
+        if((pWork->pCatchCLWK != NULL) && pWork->bUpVec){ //ポケモンを上に登録
+          PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
+          selectno = 0;  //決定と同じ
+          bExit=TRUE;
+        }
+        else{  //ポケモンを元の位置に戻す
+          _CatchPokemonPositionRewind(pWork);
+        }
       }
     }
+    _vectorUpMath(pWork);
+    _CatchPokemonMoveFunc(pWork);
   }
-  _vectorUpMath(pWork);
-  _CatchPokemonMoveFunc(pWork);
 
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
