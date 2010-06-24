@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/27 15:11:13
+#save date:2010/06/23 22:16:57
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plc10.wms
 #SECTION START:OBJ_EVENT
@@ -59,9 +59,9 @@ SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-5
-#Parameter 1 Number
 1
+#Parameter 1 Number
+5
 #Parameter 2 Number
 0
 #Move Limit X Number
@@ -148,7 +148,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Pos Event Label
 POSID_DUMMY_01
@@ -183,6 +183,23 @@ EVENTDATA_POSTYPE_GRID
 440 0 -344
 #size
 1 1
+#event number: 2
+#Pos Event Label
+POSID_DUMMY_02
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -536
+#size
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
