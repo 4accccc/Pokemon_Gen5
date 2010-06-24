@@ -102,7 +102,9 @@ extern void APP_TASKMENU_ShowOnly( APP_TASKMENU_WORK *work );
 //横メニューの際は、「けってい」「やめる」など、複数ウィンドウを作成してください
 extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID );
 extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID );
+extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateExNotTransCharacter( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID );
 extern void APP_TASKMENU_WIN_Delete( APP_TASKMENU_WIN_WORK *wk );
+extern void APP_TASKMENU_WIN_DeleteNotClearScreen( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_SetActive( APP_TASKMENU_WIN_WORK *wk, BOOL isActive );
 extern void APP_TASKMENU_WIN_SetDecide( APP_TASKMENU_WIN_WORK *wk, BOOL isDecide );

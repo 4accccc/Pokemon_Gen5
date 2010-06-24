@@ -157,6 +157,9 @@ struct _MANUAL_LIST_WORK
 
   // 終了リクエスト
   s8                          end_req_count;  // 負のときカウントダウンしない。正のときカウントダウンする。0になったら終了。
+
+  // 初回フラグ
+  BOOL                        first_create_done;  // 初回作成が完了していたらTRUE、完了していなかったらFALSE
 };
 
 
@@ -237,6 +240,9 @@ MANUAL_LIST_WORK*  MANUAL_LIST_Init(
       work->atm_win_is_show[i] = FALSE;
     }
   }
+
+  // 初回フラグ
+  work->first_create_done = FALSE;
 
   // ここで作成
   Manual_List_Prepare( work );
@@ -1139,7 +1145,7 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
     {
       if( work->atm_win_wk[i] )
       {
-        APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
+        APP_TASKMENU_WIN_DeleteNotClearScreen( work->atm_win_wk[i] );
       }
 
       // 窓の設定
@@ -1147,12 +1153,26 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
       atm_item_wk.msgColor  = (i==ATM_WIN_ITEM_UP_HALF||i==ATM_WIN_ITEM_DOWN_HALF)?(ATM_HALF_ITEM_MSGCOLOR):(APP_TASKMENU_ITEM_MSGCOLOR);
       atm_item_wk.type      = APP_TASKMENU_WIN_TYPE_NORMAL;
 
-      work->atm_win_wk[i] = APP_TASKMENU_WIN_Create(
-          work->atm_res,
-          &atm_item_wk,
-          ATM_PLATE_X, ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*i,
-          ATM_PLATE_WIDTH,
-          work->cmn_wk->heap_id );
+      if( work->first_create_done )  // 2回目以降の作成
+      {
+        work->atm_win_wk[i] = APP_TASKMENU_WIN_CreateExNotTransCharacter(
+            work->atm_res,
+            &atm_item_wk,
+            ATM_PLATE_X, ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*i,
+            ATM_PLATE_WIDTH, APP_TASKMENU_PLATE_HEIGHT,
+            0, FALSE,
+            work->cmn_wk->heap_id );
+      }
+      else                           // 初回作成
+      {
+        work->atm_win_wk[i] = APP_TASKMENU_WIN_Create(
+            work->atm_res,
+            &atm_item_wk,
+            ATM_PLATE_X, ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*i,
+            ATM_PLATE_WIDTH,
+            work->cmn_wk->heap_id );
+      }
+
       APP_TASKMENU_WIN_Update( work->atm_win_wk[i] );  // print_que描画をするためにAPP_TASKMENU_WIN_Create直後に1回APP_TASKMENU_WIN_Updateを呼んでおく
       work->atm_win_is_show[i] = TRUE;
 
@@ -1174,7 +1194,9 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
       }
 
       item_idx++; 
-    } 
+    }
+
+    work->first_create_done = TRUE;  // 次から2回目以降
   }
 }
 

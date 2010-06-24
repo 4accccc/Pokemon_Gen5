@@ -150,6 +150,10 @@ static void APP_TASKMENU_ResetPallet( u16 *transBuf, u8 bgFrame , u8 pltNo );
 static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work );
 static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work );
 
+static APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateExCore( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID );
+static void APP_TASKMENU_WIN_DeleteCore( APP_TASKMENU_WIN_WORK *wk );
+
+
 //--------------------------------------------------------------
 //  メニュー開く
 //--------------------------------------------------------------
@@ -766,6 +770,25 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, co
 //-----------------------------------------------------------------------------
 APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID )
 { 
+  APP_TASKMENU_WIN_WORK *wk = APP_TASKMENU_WIN_CreateExCore( res, item, x, y, w, h, anmDouble, isCenter, heapID );
+
+  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmpwin );
+
+  return wk;
+}
+
+APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateExNotTransCharacter( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID )
+{ 
+  APP_TASKMENU_WIN_WORK *wk = APP_TASKMENU_WIN_CreateExCore( res, item, x, y, w, h, anmDouble, isCenter, heapID );
+
+  GFL_BMPWIN_MakeScreen( wk->bmpwin );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->bmpwin) );
+
+  return wk;
+}
+
+static APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateExCore( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID )
+{
   APP_TASKMENU_WIN_WORK *wk;
   u8 drawX = 2;
 
@@ -790,7 +813,6 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
   
   PRINTSYS_PrintQueColor( res->printQue , GFL_BMPWIN_GetBmp( wk->bmpwin ), 
                 8+drawX , 4+2 , item->str , res->fontHandle , item->msgColor );
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmpwin );
 
   // プレートのアニメの色
   wk->animeColS = GX_RGB( APP_TASKMENU_ANIME_S_R, APP_TASKMENU_ANIME_S_G, APP_TASKMENU_ANIME_S_B );
@@ -798,6 +820,7 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
 
   return wk;
 }
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  単発ウィンドウ破棄
@@ -809,6 +832,18 @@ void APP_TASKMENU_WIN_Delete( APP_TASKMENU_WIN_WORK *wk )
 { 
   //BMPWIN削除
   GFL_BMPWIN_ClearScreen( wk->bmpwin );
+  
+  APP_TASKMENU_WIN_DeleteCore( wk );
+}
+
+void APP_TASKMENU_WIN_DeleteNotClearScreen( APP_TASKMENU_WIN_WORK *wk )
+{ 
+  APP_TASKMENU_WIN_DeleteCore( wk );
+}
+
+static void APP_TASKMENU_WIN_DeleteCore( APP_TASKMENU_WIN_WORK *wk )
+{
+  //BMPWIN削除
   GFL_BMPWIN_Delete( wk->bmpwin );
   //ワーク削除
   GFL_HEAP_FreeMemory( wk );
