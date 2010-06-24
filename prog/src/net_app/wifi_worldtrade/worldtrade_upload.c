@@ -2427,7 +2427,7 @@ static int Subseq_ReturnTitleMessage( WORLDTRADE_WORK *wk )
 	
 	// 時間アイコン消去(SUBSEQ_ENDと２重解放になるのでNULLチェックは必要
 	WorldTrade_TimeIconDel(wk);
-		
+
 	// goto
 	WorldTrade_SubLcdMatchObjHide( wk );
 

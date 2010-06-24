@@ -3370,6 +3370,19 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     { 
       *p_seq = SEQ_START_SAKE_RECORD;
     }
+
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      *p_seq  = SEQ_START_SAKE_RECORD;
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      break;
+    }
     break;
     
   case SEQ_START_SAKE_RECORD:
