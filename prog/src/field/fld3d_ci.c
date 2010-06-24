@@ -177,7 +177,6 @@ typedef struct {
   FLD3D_CI_PTR CiPtr;
   RES_SETUP_DAT SetupDat;
   BOOL ObjPause;
-  BOOL MainHook;
   BOOL IsWhiteOut;
 }FLD3D_CI_EVENT_WORK;
 
@@ -682,10 +681,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   case 2:
     {
       //メイン処理フック
-      if ( evt_work->MainHook )
-      {
-        FIELDMAP_SetMainFuncHookFlg(fieldmap, TRUE);
-      }
+      FIELDMAP_SetMainFuncHookFlg(fieldmap, TRUE);
       //キャプチャリクエスト
       ReqCapture(ptr);
       (*seq)++;
@@ -718,6 +714,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 				GX_BLEND_PLANEMASK_BG2, 0,0);
       //ここではまだキャプチャ面のみ表示(パシリ防止)
       GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+      //フォグをオフにする
+      {
+        FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( fieldmap );
+        FIELD_FOG_SetFlag( fog, FALSE );
+      }
       (*seq)++;
     }
     break;
@@ -818,10 +819,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       //3Ｄ面オフの処理とクリアカラーのアルファセットの処理を行わない
 
       //自機描画するために空を飛ぶインのときはここでメインフック解除
-      if ( evt_work->MainHook )
-      {
-        FIELDMAP_SetMainFuncHookFlg(fieldmap, FALSE);
-      }
+      FIELDMAP_SetMainFuncHookFlg(fieldmap, FALSE);
     }
     else
     {
@@ -829,6 +827,12 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
       //クリアカラーのアルファを元に戻す
       G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
+    }
+
+    //フォグをオン
+    {
+      FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( fieldmap );
+      FIELD_FOG_SetFlag( fog, TRUE );
     }
 
     (*seq)++;
@@ -900,10 +904,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //表示状態の復帰
     PopDisp(ptr);
     //メインフック解除
-    if ( evt_work->MainHook )
-    {
-      FIELDMAP_SetMainFuncHookFlg(fieldmap, FALSE);
-    }    
+    FIELDMAP_SetMainFuncHookFlg(fieldmap, FALSE);    
     //ＯＢＪのポーズ解除
     if (evt_work->ObjPause)
     {
@@ -2376,7 +2377,6 @@ static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work)
   MI_CpuClear8( work, size );
   work->CiPtr = ptr;
   work->ObjPause = FALSE;
-  work->MainHook = TRUE;
   work->IsWhiteOut = FALSE;
 }
 
@@ -2407,6 +2407,15 @@ static void PlaySE(FLD3D_CI_PTR ptr)
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * 復帰時Ｖタスク
+ *
+ * @param   p_tcb　　タスクポインタ
+ * @param   p_work   ワークポインタ
+ * @return none
+ */
+//--------------------------------------------------------------------------------------------
 static void DispSetVTask( GFL_TCB *p_tcb, void *p_work )
 {
   BOOL *end_flg = p_work;
