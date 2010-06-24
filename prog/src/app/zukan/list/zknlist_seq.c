@@ -317,6 +317,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
 		ZKNLISTOBJ_VanishJumpPokeIcon( wk );
+		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_NONE:				// 動作なし
