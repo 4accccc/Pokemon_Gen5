@@ -153,6 +153,10 @@ struct _LIVEBATTLEMATCH_FLOW_WORK
 
   //ふりかえり用対戦録画があるか
   BOOL                          is_rec;
+
+
+  BOOL                          is_my_matching_ok;
+  BOOL                          is_you_matching_ok;
 };
 
 //=============================================================================
@@ -1501,7 +1505,13 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
     SEQ_SEND_ENEMYDATA,      //情報交換
     SEQ_RECV_ENEMYDATA,      //情報交換
-    SEQ_CHECK_MATCH,      //マッチングした
+    SEQ_CHECK_MATCH,          //マッチングした
+    SEQ_START_TIMING_RESULT,      //タイミング
+    SEQ_WAIT_TIMING_RESULT,      //タイミング待ち
+    SEQ_SEND_RESULTDATA,      //結果交換
+    SEQ_RECV_RESULTDATA,      //結果交換
+    SEQ_MATCH_RESULT,          //マッチング結果
+
     SEQ_START_DISCONNECT_NOCUP,  //大会が違うため切断
     SEQ_WAIT_DISCONNECT_NOCUP,
     SEQ_START_MSG_NOCUP,  //大会が違うメッセージ
@@ -1551,6 +1561,9 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     UTIL_TEXT_Print( p_wk, LIVE_STR_26, WBM_TEXT_TYPE_QUE);
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
     PMSND_PlaySE( WBM_SND_SE_MATCHING );
+
+    p_wk->is_my_matching_ok = FALSE;
+    p_wk->is_you_matching_ok = FALSE;
 
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_CONNECT ); 
@@ -1665,8 +1678,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_CHECK_MATCH:      //マッチングした
-    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-    PMSND_StopSE();
+
     if( p_wk->param.p_player_data->wificup_no == p_wk->param.p_enemy_data->wificup_no )
     { 
       BOOL is_same_match  = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH );
@@ -1678,21 +1690,55 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       OS_TPrintf( "同じ対戦相手はOK? %d 戦ったことある？ %d\n", is_same_match, is_exist );
 
-      if( is_same_match || (!is_same_match && !is_exist) )
-      { 
-        PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
-        *p_seq  = SEQ_START_MSG_OK;
-      }
-      else
-      { 
-        *p_seq  = SEQ_START_DISCONNECT_NOMATCH;
-      }
+      p_wk->is_my_matching_ok = (is_same_match || (!is_same_match && !is_exist) );
+      *p_seq  = SEQ_START_TIMING_RESULT;
     }
     else
     { 
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+      PMSND_StopSE();
       *p_seq  = SEQ_START_DISCONNECT_NOCUP;
     }
 		break;
+
+  case SEQ_START_TIMING_RESULT:      //タイミング
+    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),72, WB_NET_IRC_BATTLE );
+    *p_seq  = SEQ_WAIT_TIMING_RESULT;
+    break;
+
+  case SEQ_WAIT_TIMING_RESULT:      //タイミング待ち
+    if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(),72, WB_NET_IRC_BATTLE) )
+    {
+      *p_seq  = SEQ_SEND_RESULTDATA;
+    }
+    break;
+
+  case SEQ_SEND_RESULTDATA:      //結果交換
+    if( LIVEBATTLEMATCH_IRC_StartMatchResult(p_wk->p_irc, &p_wk->is_my_matching_ok ) )
+    {
+      *p_seq  = SEQ_RECV_RESULTDATA;
+    }
+    break;
+
+  case SEQ_RECV_RESULTDATA:      //結果交換
+    if( LIVEBATTLEMATCH_IRC_WaitMatchResult(p_wk->p_irc, &p_wk->is_you_matching_ok ) )
+    {
+      *p_seq  = SEQ_MATCH_RESULT;
+    }
+    break;
+  case SEQ_MATCH_RESULT:          //マッチング結果
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+    PMSND_StopSE();
+    if( p_wk->is_you_matching_ok && p_wk->is_my_matching_ok )
+    { 
+      PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
+      *p_seq  = SEQ_START_MSG_OK;
+    }
+    else
+    { 
+      *p_seq  = SEQ_START_DISCONNECT_NOMATCH;
+    }
+    break;
 
   case SEQ_START_DISCONNECT_NOCUP:  //大会が違うため切断
     if( LIVEBATTLEMATCH_IRC_StartDisConnect(p_wk->p_irc))

@@ -96,6 +96,10 @@ extern BOOL LIVEBATTLEMATCH_IRC_WaitEnemyData( LIVEBATTLEMATCH_IRC_WORK *p_wk, W
 extern BOOL LIVEBATTLEMATCH_IRC_SendPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, const POKEPARTY *cp_party );
 extern BOOL LIVEBATTLEMATCH_IRC_RecvPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, POKEPARTY *p_party );
 
+//お互いの情報を送りあう
+extern BOOL LIVEBATTLEMATCH_IRC_StartMatchResult( LIVEBATTLEMATCH_IRC_WORK *p_wk, const BOOL *cp_is_matching_ok );
+extern BOOL LIVEBATTLEMATCH_IRC_WaitMatchResult( LIVEBATTLEMATCH_IRC_WORK *p_wk, BOOL *p_other_matching_ok );
+
 
 //-------------------------------------
 ///	レギュレーション配信

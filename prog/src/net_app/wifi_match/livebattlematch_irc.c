@@ -42,6 +42,7 @@ enum
   LIVEBATTLEMATCH_IRC_RECV_FLAG_ENEMYDATA,
   LIVEBATTLEMATCH_IRC_RECV_FLAG_POKEPARTY,
   LIVEBATTLEMATCH_IRC_RECV_FLAG_REGULATION,
+  LIVEBATTLEMATCH_IRC_RECV_FLAG_MATCHINGOK,
 
   LIVEBATTLEMATCH_IRC_RECV_FLAG_MAX
 };
@@ -74,7 +75,10 @@ struct _LIVEBATTLEMATCH_IRC_WORK
 static void LiveBattleMatch_RecvCallback_RecvEnemyData( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE *p_handle );
 static void LiveBattleMatch_RecvCallback_RecvPokeParty( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE *p_handle );
 static void LiveBattleMatch_RecvCallback_RecvRegulation( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE *p_handle );
+static void LiveBattleMatch_RecvCallback_RecvMatchingOK( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE *p_handle );
+
 static u8* LiveBattleMatch_RecvCallback_GetRecvBuffer( int netID, void* p_wk_adrs, int size );
+
 
 
 //-------------------------------------
@@ -95,6 +99,7 @@ typedef enum
   LIVEBATTLEMATCH_IRC_SEND_CMD_ENEMYDATA = GFL_NET_CMD_IRC_BATTLE,
   LIVEBATTLEMATCH_IRC_SEND_CMD_POKEPARTY,
   LIVEBATTLEMATCH_IRC_SEND_CMD_REGULATION,
+  LIVEBATTLEMATCH_IRC_SEND_CMD_MATCHINGOK_FLAG,
   
   LIVEBATTLEMATCH_IRC_SEND_CMD_MAX,
 }LIVEBATTLEMATCH_IRC_SEND_CMD;
@@ -103,6 +108,9 @@ static const NetRecvFuncTable LIVEBATTLEMATCH_IRC_RecvFuncTable[] =
   { LiveBattleMatch_RecvCallback_RecvEnemyData, LiveBattleMatch_RecvCallback_GetRecvBuffer },
   { LiveBattleMatch_RecvCallback_RecvPokeParty, LiveBattleMatch_RecvCallback_GetRecvBuffer },
   { LiveBattleMatch_RecvCallback_RecvRegulation, LiveBattleMatch_RecvCallback_GetRecvBuffer },
+  {
+    LiveBattleMatch_RecvCallback_RecvMatchingOK, LiveBattleMatch_RecvCallback_GetRecvBuffer
+  },
 };
 
 //LiveBattleMatch_IrcGSIDCallback関数から設定する値（ワークが渡せないのでstatic）
@@ -472,7 +480,6 @@ BOOL LIVEBATTLEMATCH_IRC_StartEnemyData( LIVEBATTLEMATCH_IRC_WORK *p_wk, const v
 {
   NetID netID;
 
-  p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_ENEMYDATA]  = FALSE;
 
   //相手にのみ送信
   netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
@@ -497,6 +504,7 @@ BOOL LIVEBATTLEMATCH_IRC_WaitEnemyData( LIVEBATTLEMATCH_IRC_WORK *p_wk, WIFIBATT
 
   if( ret )
   { 
+    p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_ENEMYDATA]  = FALSE;
     *pp_data  = (WIFIBATTLEMATCH_ENEMYDATA *)p_wk->recv_buffer;
   }
   return ret;
@@ -517,7 +525,6 @@ BOOL LIVEBATTLEMATCH_IRC_SendPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, const PO
 {
   NetID netID;
 
-  p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_POKEPARTY]  = FALSE;
 
   //相手にのみ送信
   netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
@@ -542,11 +549,53 @@ BOOL LIVEBATTLEMATCH_IRC_RecvPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, POKEPART
 
   if( ret )
   { 
+    p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_POKEPARTY]  = FALSE;
     GFL_STD_MemCopy( p_wk->recv_buffer, p_party, PokeParty_GetWorkSize() );
   }
   return ret;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のマッチングがOKかどうかを送る
+ *
+ *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
+ *	@param	is_matching_ok  マッチングがOKか？
+ *
+ *	@return TRUEで送信  FALSEで送信待ち
+ */
+//-----------------------------------------------------------------------------
+BOOL LIVEBATTLEMATCH_IRC_StartMatchResult( LIVEBATTLEMATCH_IRC_WORK *p_wk, const BOOL *cp_is_matching_ok )
+{
+  NetID netID;
+
+  //相手にのみ送信
+  netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+  netID = netID == 0? 1: 0;
+  return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, LIVEBATTLEMATCH_IRC_SEND_CMD_MATCHINGOK_FLAG, sizeof(BOOL), cp_is_matching_ok, TRUE, TRUE, TRUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  相手のマッチングOKフラグを得る
+ *
+ *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
+ *	@param	*p_other_matching_ok            受信した相手のマッチングがOKかフラグ
+ *
+ *	@return TRUEで受信  FALSEで受信待ち
+ */
+//-----------------------------------------------------------------------------
+BOOL LIVEBATTLEMATCH_IRC_WaitMatchResult( LIVEBATTLEMATCH_IRC_WORK *p_wk, BOOL *p_other_matching_ok )
+{
+  BOOL ret;
+  ret = p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_MATCHINGOK];
+
+  if( ret )
+  { 
+    p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_MATCHINGOK]  = FALSE;
+    GFL_STD_MemCopy( p_wk->recv_buffer, p_other_matching_ok, sizeof(BOOL) );
+  }
+  return ret;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -770,6 +819,34 @@ static void LiveBattleMatch_RecvCallback_RecvRegulation( const int netID, const 
 
   p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_REGULATION] = TRUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  マッチングOK受信コールバック
+ *
+ *	@param	const int netID       ネットID
+ *	@param	int size              データサイズ
+ *	@param	void* cp_data_adrs    データアドレス
+ *	@param	p_wk_adrs             INITで与えたワーク
+ *	@param	*p_handle             ネットハンドル
+ */
+//-----------------------------------------------------------------------------
+static void LiveBattleMatch_RecvCallback_RecvMatchingOK( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE *p_handle )
+{
+  LIVEBATTLEMATCH_IRC_WORK *p_wk  = p_wk_adrs;
+
+  if( p_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+  {
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
+  {
+    return;//自分のは今は受け取らない
+  }
+
+  p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_MATCHINGOK] = TRUE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  汎用受信バッファーを取得
