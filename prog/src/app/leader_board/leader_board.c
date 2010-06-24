@@ -31,6 +31,7 @@
 
 #ifdef PM_DEBUG
 //#define BOARD_TEST_DATA
+//#define DEBUG_RAPID_PAGE  // 素早くページ切り替えを行う（printQueあふれがあったため作成）
 #endif
 
 //--------------------------------------------------------------------------------------------
@@ -978,7 +979,9 @@ static BOOL SubSuq_FadeinWait( LEADERBOARD_WORK *wk )
   return TRUE;
 }
 
-
+#ifdef DEBUG_RAPID_PAGE
+static int debug_flag=0;
+#endif
 //----------------------------------------------------------------------------------
 /**
  * @brief 【SUBSEQ】メイン処理
@@ -991,6 +994,12 @@ static BOOL SubSuq_FadeinWait( LEADERBOARD_WORK *wk )
 static BOOL SubSuq_Main( LEADERBOARD_WORK *wk )
 {
   u32 ret;
+
+  // printQueが空くまでは操作禁止
+  if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+    return TRUE;
+  }
+
   // タッチバー処理が最優先
   if(TouchBar_KeyControl(wk)==GFL_UI_TP_HIT_NONE){
     // カーソル制御メイン
@@ -1001,6 +1010,19 @@ static BOOL SubSuq_Main( LEADERBOARD_WORK *wk )
       ExecFunc( wk, FUNC_RIGHT_PAGE );
     }
   }
+#ifdef DEBUG_RAPID_PAGE
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+    debug_flag ^=1;
+    if(debug_flag==0){
+      ExecFunc( wk, FUNC_RIGHT_PAGE );
+    }else{
+      ExecFunc( wk, FUNC_LEFT_PAGE );
+    }
+  }else{
+    debug_flag=0;
+  }
+#endif
+
   return TRUE;
 }
 
