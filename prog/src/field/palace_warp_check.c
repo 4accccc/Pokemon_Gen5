@@ -133,10 +133,19 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
     //読み込み
     // ローダー生成
     p_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID(heap_id) );
+
+    // @todo ホワイトフォレスト・ブラックシティどちらもZONEID_BC10で遷移する。
+    // 　　　本来は、修正を行うべきなのだが、ホワイトフォレスト・ブラックシティでは、
+    // 　　　ハイリンクジャンプ後、ポケモンセンター前に戻るため、ここが間違っていても
+    // 　　　はまりの症状は発生しない。　よって次のVERSIONで修正を行う。
+    // 　　　
+    // 　　　zone_id == ZONE_ID_BC10ではなく、ROMVERSIONでタイプを変更する。
+    // 　　　
     //type =   FIELD_WFBC_CORE_TYPE_BLACK_CITY,    // ブラックシティ
     //         FIELD_WFBC_CORE_TYPE_WHITE_FOREST,  // ホワイトフォレスト
     if (zone_id == ZONE_ID_BC10) type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
     else type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+    
     ppos = FIELD_WFBC_PEOPLE_POS_Create( p_loader, type, GFL_HEAP_LOWID(heap_id) );
 
     //データ取得 indexの最大値＝FIELD_WFBC_PEOPLE_MAX
