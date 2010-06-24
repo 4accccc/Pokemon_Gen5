@@ -1831,7 +1831,7 @@ static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
     result = BTL_SVF_HandEx_Result( wk );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-    TAYA_Printf("スキルコールresult=%d\n");
+    TAYA_Printf("スキルコールresult=%d\n", result);
 
     return (result == HandExResult_Enable);
   }

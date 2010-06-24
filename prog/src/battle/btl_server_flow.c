@@ -2109,12 +2109,15 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
           return SABOTAGE_DONT_ANY;
         }
 
+        // WBでは命令無視タイプ「他の技を出す」パターンを廃止
+        #if 0
         rand = BTL_CALC_GetRand( (lv_poke + lv_border + 1) );
         if( rand < lv_border ){
           if( BPP_WAZA_GetUsableCount(bpp) > 1 ){
             return SABOTAGE_OTHER_WAZA;
           }
         }
+        #endif
 
         rand = BTL_CALC_GetRand( 256 );
         if( rand < (lv_poke - lv_border) )
@@ -14398,6 +14401,10 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+    BTL_POKEPARAM* pp_user = NULL;
+    if( param_header->userPokeID != BTL_POKEID_NULL ){
+      pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+    }
 
     if( !BPP_IsDead(pp_target) )
     {
@@ -14406,10 +14413,19 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
       ){
         if( scproc_SimpleDamage_CheckEnable(wk, pp_target, param->damage) )
         {
+          if( param_header->tokwin_flag ){
+            scPut_TokWin_In( wk, pp_user );
+          }
+
           if( param->fExEffect ){
             scproc_ViewEffect( wk, param->effectNo, param->pos_from, param->pos_to, FALSE, 0 );
           }
           scproc_SimpleDamage_Core(wk, pp_target, param->damage, &param->exStr );
+
+          if( param_header->tokwin_flag ){
+            scPut_TokWin_Out( wk, pp_user );
+          }
+
           return 1;
         }
       }
@@ -14966,7 +14982,7 @@ static u8 scproc_HandEx_changeWeather( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 {
   const BTL_HANDEX_PARAM_CHANGE_WEATHER* param = (const BTL_HANDEX_PARAM_CHANGE_WEATHER*)(param_header);
   const BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  BOOL result;
+  BOOL result = FALSE;
 
   if( param->weather != BTL_WEATHER_NONE )
   {
