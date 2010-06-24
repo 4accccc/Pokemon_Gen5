@@ -157,6 +157,11 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
       if(talk->recv_achieve == FALSE){  //受信確認していない場合は即終了
         //ここの処理は結果を受け取った直後にエラーが発生するときに
         //会話もせずに結果シーケンスに来る為、その時用には即終了、とする
+        if(intcomm != NULL && NetErr_App_CheckError() == NET_ERR_STATUS_NULL
+            && MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
+          //自分が達成者だったが、結果を受け取る前に切断検知で結果画面まで飛ばされた
+          intcomm->achieve_not_result = TRUE;
+        }
         return GMEVENT_RES_FINISH;
       }
       else if(intcomm != NULL && MISSION_CheckRecvResult(&intcomm->mission) == TRUE
@@ -186,6 +191,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
           OccupyInfo_LevelUpBlack(my_occupy, talk->add_black);
           OccupyInfo_LevelUpWhite(my_occupy, talk->add_white);
         }
+        
         (*seq)++;
       }
       else if(intcomm == NULL || NetErr_App_CheckError()){
