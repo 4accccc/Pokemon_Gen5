@@ -1081,7 +1081,7 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
     POKETRADE_2D_GTSPokemonIconChangePosUp( pWork,-1,-1);
 
-    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
+    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork, FALSE); //20100624 mod Saito BTS6424
     {
       ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
       GF_ASSERT(pWork->subchar);

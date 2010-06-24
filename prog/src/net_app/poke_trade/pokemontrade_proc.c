@@ -1458,7 +1458,7 @@ static void _networkFriendsStandbyWaitFadeout(POKEMON_TRADE_WORK* pWork)
   if(WIPE_SYS_EndCheck()){
     GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
 
-    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
+    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork, TRUE); //20100624 mod Saito BTS6424
 
     GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
     IRC_POKETRADE_GraphicInitMainDisp(pWork);

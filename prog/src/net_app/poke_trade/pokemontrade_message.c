@@ -806,12 +806,13 @@ static void POKETRADE_MESSAGE_ResetTypeIcon(POKEMON_TRADE_WORK *pWork)
 
 
 
-void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork)
+void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, const BOOL win_mask_off)
 {
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusFaceMark);
   IRC_POKETRADE_PokeStatusIconReset(pWork);
-  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+
+  if ( win_mask_off ) GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   
   POKETRADE_MESSAGE_ResetPokemonBallIcon(pWork);
   POKETRADE_MESSAGE_ResetTypeIcon(pWork);
