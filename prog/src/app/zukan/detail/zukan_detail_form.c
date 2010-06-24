@@ -6692,7 +6692,7 @@ static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] 
     { {-0.3f,-13.9f,0.0f},{-64.3f,-13.9f,0.0f},{63.7f,-13.9f,0.0f},{-16.3f,-13.9f,0.0f},{15.7f,-13.9f,0.0f} } },
 
   { MONSNO_541,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // ÉLÉoÉS 0
-    { {0.1f,-13.9f,0.0f},{-63.9f,-13.9f,0.0f},{64.1f,-13.9f,0.0f},{-15.8f,-13.9f,0.0f},{16.0f,-13.9f,0.0f} } },
+    { {-0.3f,-13.9f,0.0f},{-64.3f,-13.9f,0.0f},{63.7f,-13.9f,0.0f},{-15.7f,-13.9f,0.0f},{16.0f,-13.9f,0.0f} } },
 
   { MONSNO_541,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // ÉLÉoÉS 0
     { {0.0f,-13.8f,0.0f},{-64.0f,-13.8f,0.0f},{64.0f,-13.8f,0.0f},{-16.0f,-13.8f,0.0f},{16.0f,-13.8f,0.0f} } },
