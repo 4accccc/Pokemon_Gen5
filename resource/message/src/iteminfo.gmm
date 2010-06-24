@@ -2146,7 +2146,7 @@
 		<language name="JPN" width="256">いちばん　まえの　ポケモンに
 もたせると　やせいポケモンが
 でて　きにくくなる。</language>
-		<language name="JPN_KANJI" width="256">一番　前の　ポケモンに
+		<language name="JPN_KANJI" width="256">１番　前の　ポケモンに
 持たせると　野生ポケモンが
 でて　きにくくなる。</language>
 	</row>
@@ -2416,7 +2416,7 @@
 		<language name="JPN" width="256">ふしぎな　かおりの　おこう。
 もたせると　みずタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">不思議な　かおりの　御香。
+		<language name="JPN_KANJI" width="256">不思議な　香りの　御香。
 持たせると　みずタイプの
 技の　威力が　あがる。</language>
 	</row>
@@ -2425,8 +2425,8 @@
 		<language name="JPN" width="256">もたせると　おこうの　ふしぎな
 かおりが　あいてを　まどわせて
 わざが　めいちゅう　しにくくなる。</language>
-		<language name="JPN_KANJI" width="256">持たせると　おこうの　不思議な
-かおりが　相手を　まどわせて
+		<language name="JPN_KANJI" width="256">持たせると　御香の　不思議な
+香りが　相手を　まどわせて
 技が　命中　しにくくなる。</language>
 	</row>
 
@@ -3178,9 +3178,9 @@
 	</row>
 
 	<row id="ITEMINFO_339">
-		<language name="JPN" width="256">あいてを　おこらせて　２ー４ターンの
-あいだ　ダメージを　あたえるわざ
-いがい　だせない　ようにする。</language>
+		<language name="JPN" width="256">あいてを　おこらせる。３ターンの
+あいだ　あいては　ダメージを
+あたえる　わざしか　だせなくなる。</language>
 		<language name="JPN_KANJI" width="256">相手を　怒らせる。３ターンの
 あいだ　相手は　ダメージを
 与える　技しか　だせなくなる。</language>
@@ -3250,9 +3250,9 @@
 	</row>
 
 	<row id="ITEMINFO_347">
-		<language name="JPN" width="256">ふしぎな　ちからに　まもられて
-どく　まひ　やけど　ねむりなどの
-じょうたい　いじょうに　ならない。</language>
+		<language name="JPN" width="256">５ターンの　あいだ
+ふしぎな　ちからに　まもられて
+じょうたい　いじょうに　ならなくなる。</language>
 		<language name="JPN_KANJI" width="256">５ターンの　あいだ
 不思議な　力に　守られて
 状態異常に　ならなくなる。</language>
@@ -3592,11 +3592,11 @@
 	</row>
 
 	<row id="ITEMINFO_385">
-		<language name="JPN" width="256">あいてを　そらへ　つれさり
+		<language name="JPN" width="256">つれさった　あいてを　２ターンめに
 そらから　おとして　こうげきする。
 つれさられた　あいては　うごけない。</language>
-		<language name="JPN_KANJI" width="256">１ターン目で　相手を　空へ　連れさり
-２ターン目に　落として　攻撃する。
+		<language name="JPN_KANJI" width="256">連れさった　相手を　２ターン目に
+空から　落として　攻撃する。
 連れさられた　相手は　動けない。</language>
 	</row>
 
@@ -5369,7 +5369,7 @@
 とても　おおつぶの　しんじゅ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">きれいな　銀色に　光る
-とても　おおつぶの　真珠。
+とても　大粒の　真珠。
 マニアが　高く　買ってくれる。</language>
 	</row>
 
@@ -5717,10 +5717,10 @@
 
 	<row id="ITEMINFO_621">
 		<language name="JPN" width="256">さいだい　４にんで　つうわができる
-テレビきのうつきの
+テレビカメラきのうつきの
 さいしんがた　トランシーバー。</language>
 		<language name="JPN_KANJI" width="256">最大４人で　通話ができる
-テレビ機能つきの
+テレビカメラ機能つきの
 最新型トランシーバー。</language>
 	</row>
 
@@ -5762,10 +5762,10 @@
 
 	<row id="ITEMINFO_626">
 		<language name="JPN" width="256">さいだい　４にんで　つうわができる
-テレビきのうつきの
+テレビカメラきのうつきの
 さいしんがた　トランシーバー。</language>
 		<language name="JPN_KANJI" width="256">最大４人で　通話ができる
-テレビ機能つきの
+テレビカメラ機能つきの
 最新型トランシーバー。</language>
 	</row>
 
