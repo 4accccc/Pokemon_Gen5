@@ -66,7 +66,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -1087,6 +1087,27 @@ void  BTLV_EFFVM_SeEffect( VMHANDLE* vmh, int player, int type, int param, int s
   BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 ), TCB_EFFVM_SEEFFECT_CB, GROUP_EFFVM );
 
   bevw->se_effect_enable_flag = 1;
+}
+
+//============================================================================================
+/**
+ * @brief 鳴き声ストップ
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+void  BTLV_EFFVM_StopAllPMVoice( VMHANDLE* vmh )
+{ 
+  BTLV_EFFVM_WORK*  bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+  int i;
+
+  for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+  { 
+    if( bevw->voiceplayerIndex[ i ] != EFFVM_VOICEPLAYER_INDEX_NONE )
+    { 
+      PMVOICE_Stop( bevw->voiceplayerIndex[ i ] );
+    }
+  }
 }
 
 //============================================================================================
@@ -6387,6 +6408,7 @@ static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw )
 //============================================================================================
 static  void  EFFVM_SePlay( int se_no, int player, int pan, int pitch, int vol, int mod_depth, int mod_speed )
 {
+  SOGABE_Printf("se_no:%d player:%d pan:%d pitch:%d vol:%d mod_depth:%d mod_speed:%d\n",se_no,player,pan,pitch,vol,mod_depth,mod_speed);
   if( player == BTLEFF_SEPLAY_DEFAULT )
   {
     PMSND_PlaySE( se_no );
@@ -7292,6 +7314,7 @@ static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work )
   TCB_PARTICLE_LOAD*  tpl = ( TCB_PARTICLE_LOAD* )work;
   { 
     u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
+    SOGABE_Printf("v_count:%d\n",*v_count);
     //VCountを確認してちらつきを防ぐ
     if( ( *v_count < MCSS_VCOUNT_BORDER_LOW ) ||
         ( *v_count > MCSS_VCOUNT_BORDER_HIGH ) )
