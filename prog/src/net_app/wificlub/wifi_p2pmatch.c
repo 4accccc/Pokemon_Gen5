@@ -2791,15 +2791,15 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
   
-  if(GFL_NET_StateIsWifiLoginMatchState()){
+  if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
+    _errorDisp(wk);
+  }
+  else if(GFL_NET_StateIsWifiLoginMatchState()){
     //OS_TPrintf("WIFI接続完了\n");
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
       MCRSYS_AllDelMoveObjWork(wk);
     }
     _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk,FALSE));
-  }
-  else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
-    _errorDisp(wk);
   }
   else if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING) || GFL_NET_StateIsWifiDisconnect() || !GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER)){
     GFL_NET_StateWifiMatchEnd(TRUE);
@@ -5016,6 +5016,8 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
 //WIFIP2PMATCH_MODE_CONNECTWAIT
 static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
 {
+  MCR_MOVEOBJ* p_npc;
+
   //BTS3795-aの対処 Saito
   //メッセージを早送りするために読んでいます
   WifiP2PMatchMessageEndCheck(wk);
@@ -5029,7 +5031,7 @@ static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
     return seq;
   }
-  
+
   wk->timer++;
 
   if( (wk->timer % (15*60))==0 ){  //カウントアップ
@@ -7766,6 +7768,25 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
 {
   WIFIP2PMATCH_WORK * wk  = mywk;
 
+  if(GFL_NET_IsInit()){
+    switch(GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE)){
+    case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
+      WIFIP2PMatch_pokePartyMenuDelete(wk);
+      BmpWinDelete(wk);
+      GFL_NET_SetAutoErrorCheck(FALSE);
+      GFL_NET_SetNoChildErrorCheck(FALSE);
+//      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
+      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+      wk->timer = _RECONECTING_WAIT_TIME;
+      _CHANGESTATE(wk, WIFIP2PMATCH_RECONECTING_WAIT);
+      return GFL_PROC_RES_CONTINUE;
+    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+      wk->endSeq = WIFI_GAME_ERROR;
+      return GFL_PROC_RES_FINISH;
+    }
+  }
 
   if( NetErr_App_CheckError() == NET_ERR_CHECK_NONE ){
     if(FuncTable[wk->seq]!=NULL){
@@ -7809,25 +7830,6 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   }
   _funcBGMVol(wk);
 
-  if(GFL_NET_IsInit()){
-    switch(GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE)){
-    case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
-      WIFIP2PMatch_pokePartyMenuDelete(wk);
-      BmpWinDelete(wk);
-      GFL_NET_SetAutoErrorCheck(FALSE);
-      GFL_NET_SetNoChildErrorCheck(FALSE);
-      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
-      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
-      wk->timer = _RECONECTING_WAIT_TIME;
-    _CHANGESTATE(wk, WIFIP2PMATCH_RECONECTING_WAIT);
-      break;
-    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
-      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
-      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
-      wk->endSeq = WIFI_GAME_ERROR;
-      return GFL_PROC_RES_FINISH;
-    }
-  }
   return GFL_PROC_RES_CONTINUE;
 }
 

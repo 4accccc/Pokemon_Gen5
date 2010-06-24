@@ -2306,7 +2306,7 @@ static void _checkReturnState(GTSNEGO_WORK* pWork)
 
     GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-    GFL_NET_StateWifiMatchEnd(TRUE);
+//    GFL_NET_StateWifiMatchEnd(TRUE);
     GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
     GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
