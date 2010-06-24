@@ -1404,6 +1404,12 @@ static BOOL SubSuq_FadeinWait( BADGEVIEW_WORK *wk )
 static BOOL SubSuq_Main( BADGEVIEW_WORK *wk )
 {
   u32 ret;
+  
+  // printQueが空くまでは操作禁止
+  if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+    return TRUE;
+  }
+  
   // タッチバー処理
   if(TouchBar_KeyControl(wk)==GFL_UI_TP_HIT_NONE){
 
