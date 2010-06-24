@@ -9366,14 +9366,14 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
   BTL_POKEPARAM* bpp;
 
   pokeCnt = BTL_POKESET_GetCount( pokeSet );
-  TAYA_Printf("ポケ数=%d, ID= ", pokeCnt);
+//  TAYA_Printf("ポケ数=%d, ID= ", pokeCnt);
   for(i=0; i<pokeCnt; ++i)
   {
     bpp = BTL_POKESET_Get( pokeSet, i );
     pokeIDList[ i ] = BPP_GetID( bpp );
-    TAYA_Printf( "%d,", pokeIDList[i] );
+//    TAYA_Printf( "%d,", pokeIDList[i] );
   }
-  TAYA_Printf( "\n" );
+//  TAYA_Printf( "\n" );
 
 
   i = 0;
@@ -9385,6 +9385,8 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
       BPP_SICK_CONT oldCont;
       BOOL fCured;
       u32 p;
+
+//      TAYA_Printf( "状態異常[%d]をチェック開始...\n",  sick );
 
       for(p=0; p<pokeCnt; ++p)
       {
