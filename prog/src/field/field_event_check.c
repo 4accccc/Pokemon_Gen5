@@ -181,6 +181,7 @@ typedef struct {
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
 
 static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
+static void incWalkCount( GAMEDATA * gamedata );
 //--------------------------------------------------------------
 //  個別イベントチェック
 //--------------------------------------------------------------
@@ -351,6 +352,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 
   SET_CHECK("ev_check:move event");
 //☆☆☆一歩移動チェックがここから
+  //歩数をカウント
+  if( req.moveRequest )
+  {
+    incWalkCount( req.gamedata );
+  }
   //座標イベントチェック
   if( req.moveRequest )
   {
@@ -993,6 +999,11 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 
   SET_CHECK("ev_check:move event");
 //☆☆☆一歩移動チェックがここから
+  //歩数をカウント
+  if( req.moveRequest )
+  {
+    incWalkCount( req.gamedata );
+  }
   //座標イベントチェック
   if( req.moveRequest )
   {
@@ -1367,6 +1378,18 @@ static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
     CGEAR_SetStopTVTRingTone( cgear );
     
   }
+}
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/// 歩数カウンタをインクリメントする
+//--------------------------------------------------------------
+static void incWalkCount( GAMEDATA * gamedata )
+{
+  RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
+  RECORD_Inc( record, RECID_WALK_COUNT );
 }
 
 //======================================================================
