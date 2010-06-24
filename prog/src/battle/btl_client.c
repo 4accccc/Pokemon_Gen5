@@ -7956,20 +7956,24 @@ static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args 
   BPP_ChangePokeType( pp, args[1] );
   return TRUE;
 }
+/**
+ *  状態異常ターンチェック処理
+ *  args [0]:numPokemons, [1]:maxSickIndex, [2]:pokeIDPack;
+ */
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 {
   u8 pokeIDList[ BTL_POS_MAX ];
   u32 pokeCnt = args[0];
   WazaSick sick;
-  u32 i;
+  u32 i, maxSickIdx;
   BTL_POKEPARAM* bpp;
 
-  BTL_CALC_PokeIDx6_Unpack32bit( (u32)(args[1]), pokeIDList );
+  maxSickIdx = args[1];
+  BTL_CALC_PokeIDx6_Unpack32bit( (u32)(args[2]), pokeIDList );
 
-  i = 0;
-  while( 1 )
+  for(i=0; i<maxSickIdx; ++i)
   {
-    sick = BTL_TABLES_GetTurnCheckWazaSickByOrder( i++ );
+    sick = BTL_TABLES_GetTurnCheckWazaSickByOrder( i );
     if( sick != WAZASICK_NULL )
     {
       u32 p;

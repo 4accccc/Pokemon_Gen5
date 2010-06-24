@@ -7190,6 +7190,9 @@ static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 next
   hem_state = BTL_Hem_PushState( &wk->HEManager );
   scEvent_ItemSetDecide( wk, bpp, nextItemID );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
+  if( nextItemID == ITEM_DUMMY_DATA ){
+    scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ITEM_LOSE );
+  }
 
   BTL_HANDLER_ITEM_Remove( bpp );
   SCQUE_PUT_OP_SetItem( wk->que, pokeID, nextItemID );
@@ -9389,9 +9392,7 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
         if( !BPP_IsDead(bpp) )
         {
           BOOL fCured;
-
 //          TAYA_Printf("ポケ(%d)の、状態異常[%d]をチェック...\n", BPP_GetID(bpp), sick);
-
           if( BPP_WazaSick_TurnCheck(bpp, sick, &oldCont, &fCured) )
           {
             u32  hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -9399,6 +9400,9 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
             BTL_Hem_PopState( &wk->HEManager, hem_state );
           }
         }
+      }
+      if( scproc_CheckShowdown(wk) ){
+        break;
       }
     }
     else
@@ -9410,7 +9414,7 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 //    BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCal  BTL_POKEPARAM* bpp;lback, wk );
   {
     u32 packID = BTL_CALC_PokeIDx6_Pack32bit( pokeIDList );
-    SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, pokeCnt, packID );
+    SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, pokeCnt, i, packID );
   }
 
   return scproc_CheckExpGet( wk );
