@@ -4908,6 +4908,7 @@ static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int
 
     if(p_wk->p_nhttp)
     {
+      NHTTP_RAP_ErrorClean(p_wk->p_nhttp);
       NHTTP_RAP_End(p_wk->p_nhttp);
       p_wk->p_nhttp  = NULL;
     }
@@ -5128,8 +5129,6 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
     }
     else if( NHTTP_ERROR_BUSY != error )
     { 
-      WIFIBATTLEMATCH_NETERR_SetNhttpError( &p_wk->error, error, __LINE__ );
-
       if(p_wk->p_nhttp)
       {
         NHTTP_RAP_End(p_wk->p_nhttp);
