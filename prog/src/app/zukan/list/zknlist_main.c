@@ -755,9 +755,12 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 				if( i > (wk->dat->listMax-7) ){
 					hed.initPos    = i - ( wk->dat->listMax - 7 );
 					hed.initScroll = i - hed.initPos;
+				}else if( i < 7 ){
+					hed.initPos    = i;
 				}else{
 					hed.initScroll = i;
 				}
+				break;
 			}
 		}
 
