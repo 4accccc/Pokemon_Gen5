@@ -3585,7 +3585,7 @@ static void SubDispMarkingOff( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 static void PutSubDispPokeMark( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info )
 {
-  if( info->rare == 0 ){
+  if( info->rare == 0 || info->tamago == 1 ){
     BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_RARE, FALSE );
   }else{
     BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_RARE, TRUE );
