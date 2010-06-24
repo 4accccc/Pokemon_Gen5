@@ -1964,7 +1964,9 @@ int   MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss )
 //--------------------------------------------------------------------------
 void   MCSS_RestartAnime( MCSS_WORK *mcss )
 { 
-  NNS_G2dRestartMCAnimation( &mcss->mcss_mcanim );
+  //NNS_G2dRestartMCAnimation( &mcss->mcss_mcanim );
+  //セルとマルチセルがずれたので関数置き換え Ariizumi100624
+  NNS_G2dResetMCCellAnimationAll( &mcss->mcss_mcanim.multiCellInstance );
 }
 
 //--------------------------------------------------------------------------
