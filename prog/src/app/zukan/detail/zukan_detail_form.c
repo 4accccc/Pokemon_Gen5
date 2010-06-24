@@ -6660,7 +6660,7 @@ typedef struct
 }
 POKE_ARRANGE_INFO;
 #define MALE_FEMALE_UNKNOWN (3)  // オスメス性別なしどれでも構わない  // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWNと被らない値
-#define POKE_ARRANGE_INFO_TBL_NUM (4)
+#define POKE_ARRANGE_INFO_TBL_NUM (9)
 
 static const POKE_VEC_F32 poke_arrange_default_pos[POKE_ARRANGE_MAX] =
 {
@@ -6685,6 +6685,21 @@ static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] 
 
   { MONSNO_576,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // ナゲキ 0
     { {0.1f,-13.9f,0.0f},{-63.9f,-13.9f,0.0f},{64.1f,-13.9f,0.0f},{-16.0f,-13.9f,0.0f},{16.0f,-13.9f,0.0f} } },
+
+  { MONSNO_557,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // ミジュマル 0
+    { {-0.3f,-13.9f,0.0f},{-64.3f,-13.9f,0.0f},{63.7f,-13.9f,0.0f},{-16.3f,-13.9f,0.0f},{15.7f,-13.9f,0.0f} } },
+
+  { MONSNO_541,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // キバゴ 0
+    { {0.1f,-13.9f,0.0f},{-63.9f,-13.9f,0.0f},{64.1f,-13.9f,0.0f},{-15.8f,-13.9f,0.0f},{16.0f,-13.9f,0.0f} } },
+
+  { MONSNO_541,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // キバゴ 0
+    { {0.0f,-13.8f,0.0f},{-64.0f,-13.8f,0.0f},{64.0f,-13.8f,0.0f},{-16.0f,-13.8f,0.0f},{16.0f,-13.8f,0.0f} } },
+
+  { MONSNO_636,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // クイタラン 0
+    { {0.0f,-13.8f,0.0f},{-64.0f,-13.8f,0.0f},{64.0f,-13.8f,0.0f},{-16.0f,-13.8f,0.0f},{16.0f,-13.8f,0.0f} } },
+
+  { MONSNO_PAUWAU,     0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // パウワウ 0
+    { {-0.2f,-13.9f,0.0f},{-64.2f,-13.9f,0.0f},{63.8f,-13.9f,0.0f},{-16.4f,-13.9f,0.0f},{15.9f,-13.9f,0.0f} } },
 
 
 //  { MONSNO_001,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // デフォルト
