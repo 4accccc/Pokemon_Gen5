@@ -284,6 +284,7 @@ struct OEKAKI_WORK{
   TOUCH_INFO        MyTouchResult;                      // 自分のサンプリング結果（これは送信するだけ
   TOUCH_INFO        AllTouchResult[OEKAKI_MEMBER_MAX];  // 通信で取得したサンプリング結果（このデータで描画する
   OLD_TOUCH_INFO    OldTouch[OEKAKI_MEMBER_MAX];        // 前回からのポイント履歴
+  TP_ONE_DATA       oldTpData;            // 前回のタッチデータ
 
   u8            *lz_buf;                   // 圧縮画像格納領域
   int           send_num;

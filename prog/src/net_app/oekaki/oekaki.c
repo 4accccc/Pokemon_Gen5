@@ -1319,6 +1319,17 @@ static const GFL_UI_TP_HITTBL sub_canvas_touchtbl[]={
 };
 
 
+// 空でーたを格納
+static void _set_blank_data( TOUCH_INFO *result, int color, int brush )
+{
+  TP_ONE_DATA tpData;
+
+  tpData.Size = 0;
+  tpData.TPDataTbl[0].x = 0;
+  tpData.TPDataTbl[0].y = 0;
+  SetTouchpanelData( result, &tpData, color, brush );
+
+}
 
 
 //------------------------------------------------------------------
@@ -1419,32 +1430,37 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
   {
     TP_ONE_DATA tpData;
     TOUCH_INFO  tmpResult;
+    u32 x=0,y=0;
     int i;
     if(GFL_UI_TP_GetCont()==TRUE){
-      u32 x,y;
       GFL_UI_TP_GetPointCont( &x, &y );
-      tpData.Size = 1;
-      tpData.TPDataTbl[0].x = x;
-      tpData.TPDataTbl[0].y = y;
+      tpData.Size = 2;
+      tpData.TPDataTbl[0].x = wk->oldTpData.TPDataTbl[1].x;
+      tpData.TPDataTbl[0].y = wk->oldTpData.TPDataTbl[1].y;
+      tpData.TPDataTbl[1].x = x;
+      tpData.TPDataTbl[1].y = y;
       SetTouchpanelData( &tmpResult, &tpData, wk->brush_color, wk->brush );
 
       if(decide == TRUE){
         tmpResult.size = 0;
       }
     }else{
-      tpData.Size = 0;
-      tpData.TPDataTbl[0].x = 0;
-      tpData.TPDataTbl[0].y = 0;
-      SetTouchpanelData( &tmpResult, &tpData, wk->brush_color, wk->brush );
+      tpData.TPDataTbl[1].x=0;
+      tpData.TPDataTbl[1].y=0;
+      _set_blank_data( &tmpResult, wk->brush_color, wk->brush );
     }
     // FIFOに積む
     OekakiTouchFifo_Set( &tmpResult, &wk->TouchFifo, 0 );
 
-    if(GFL_NET_SystemGetCurrentID()==0){      // 親機の時
-      OekakiTouchFifo_AddEndParent( &wk->TouchFifo );
+    // FIFOのENDポインタを進める
+    if(GFL_NET_SystemGetCurrentID()==0){
+      OekakiTouchFifo_AddEndParent( &wk->TouchFifo ); // 親機
     }else{
-      OekakiTouchFifo_AddEnd( &wk->TouchFifo );
+      OekakiTouchFifo_AddEnd( &wk->TouchFifo );       // 子機
     }
+
+    // 今回のタッチデータを保存
+    wk->oldTpData = tpData;
   }
 
 
@@ -2606,6 +2622,9 @@ static void Stock_OldTouch( TOUCH_INFO *all, OLD_TOUCH_INFO *stock )
   }
 }
 
+// タッチされた座標をセンタリングしている感覚にするためにズラす値
+#define OEKAKI_PEN_OFFSET_X ( 9 )
+#define OEKAKI_PEN_OFFSET_Y ( 17 )
 
 //------------------------------------------------------------------
 /**
@@ -2616,28 +2635,28 @@ static void Stock_OldTouch( TOUCH_INFO *all, OLD_TOUCH_INFO *stock )
  * @param   draw  メモリ上で行ったCGX変更を転送するか？(0:しない  1:する）
  *
  * @retval  none    
+ *
+ * WBで通信方式が変わったため、大幅な変更を行う。
+ * 通信データはDPでは頂点データを送信して、前回の頂点との線を引いていたが、
+ * 今回のお絵かきは送信データは必ず「線分」を送信する。なので2頂点。
+ * 両方に有効な頂点を持たないデータは描画しない
  */
 //------------------------------------------------------------------
 static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old, int draw )
 {
-  int px,py,i,r,flag=0, sx, sy;
+  int px,py,i,flag=0, sx, sy;
 
 //  OS_Printf("id0=%d,id1=%d,id2=%d,id3=%d,id4=%d\n",all[0].size,all[1].size,all[2].size,all[3].size,all[4].size);
 
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
-    if(all[i].size!=0){
-      if(old[i].size){
-        sx = old[i].x-9;
-        sy = old[i].y-17;
-      }
-      for(r=0;r<all[i].size;r++){
-        px = all[i].x[r] - 9;
-        py = all[i].y[r] - 17;
+    if(all[i].size==2){
+        sx = all[i].x[0] - OEKAKI_PEN_OFFSET_X;
+        sy = all[i].y[0] - OEKAKI_PEN_OFFSET_Y;
+        px = all[i].x[1] - OEKAKI_PEN_OFFSET_X;
+        py = all[i].y[1] - OEKAKI_PEN_OFFSET_Y;
         // BG1面用BMP（お絵かき画像）ウインドウ確保
-        DrawPoint_to_Line(win, oekaki_brush[all[i].brush][all[i].color], px, py, &sx, &sy, r, old[i].size);
+        DrawPoint_to_Line(win, oekaki_brush[all[i].brush][all[i].color], px, py, &sx, &sy, 1, old[i].size);
         flag = 1;
-      }
-      
     }
   }
   if(flag && draw){
@@ -2651,6 +2670,41 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old
   }
   
 }
+
+#if 0
+static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old, int draw )
+{
+  int px,py,i,r,flag=0, sx, sy;
+
+//  OS_Printf("id0=%d,id1=%d,id2=%d,id3=%d,id4=%d\n",all[0].size,all[1].size,all[2].size,all[3].size,all[4].size);
+
+  for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+    if(all[i].size!=0){
+      if(old[i].size){
+        sx = old[i].x-OEKAKI_PEN_OFFSET_X;
+        sy = old[i].y-OEKAKI_PEN_OFFSET_Y;
+      }
+      for(r=0;r<all[i].size;r++){
+        px = all[i].x[r] - OEKAKI_PEN_OFFSET_X;
+        py = all[i].y[r] - OEKAKI_PEN_OFFSET_Y;
+        // BG1面用BMP（お絵かき画像）ウインドウ確保
+        DrawPoint_to_Line(win, oekaki_brush[all[i].brush][all[i].color], px, py, &sx, &sy, r, old[i].size);
+        flag = 1;
+      }
+    }
+  }
+  if(flag && draw){
+    GFL_BMPWIN_MakeTransWindow( win );
+  }
+  
+  // 今回の最終座標のバックアップを取る   
+  Stock_OldTouch(all, old);
+  for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+    all[i].size = 0;    // 一度描画したら座標情報は捨てる
+  }
+  
+}
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -2872,7 +2926,14 @@ static int ConnectCheck( OEKAKI_WORK *wk )
   return 0;
 }
 
-
+static int _get_fifo_diff( TOUCH_FIFO *touchFifo )
+{
+  if(touchFifo->end>=touchFifo->start){
+    return touchFifo->end-touchFifo->start;
+  }
+  
+  return OEKAKI_FIFO_MAX-touchFifo->start-1 + touchFifo->end;
+}
 //------------------------------------------------------------------
 /**
  * @brief   タッチパネル情報の送受信を行う
@@ -2902,7 +2963,8 @@ static void LineDataSendRecv( OEKAKI_WORK *wk )
       if(ret==TRUE){
         // 送信成功であればFIFOを進める
         OekakiTouchFifo_AddStart( &wk->TouchFifo );
-        MORI_Printf("fifo start=%d, end=%d\n", wk->TouchFifo.start, wk->TouchFifo.end);
+        MORI_Printf("fifo start=%d, end=%d diff=%d\n", 
+                    wk->TouchFifo.start, wk->TouchFifo.end,_get_fifo_diff(&wk->TouchFifo));
       }else{
         MORI_Printf("親機送信失敗  x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
       }
@@ -2922,7 +2984,8 @@ static void LineDataSendRecv( OEKAKI_WORK *wk )
       if(ret==TRUE){
         // 送信成功であればFIFOを進める
         OekakiTouchFifo_AddStart( &wk->TouchFifo );
-        MORI_Printf("fifo start=%d, end=%d\n", wk->TouchFifo.start, wk->TouchFifo.end);
+        MORI_Printf("fifo start=%d, end=%d diff=%d\n", 
+                    wk->TouchFifo.start, wk->TouchFifo.end,_get_fifo_diff(&wk->TouchFifo));
       }else{
         MORI_Printf("子機送信失敗 x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
       }
