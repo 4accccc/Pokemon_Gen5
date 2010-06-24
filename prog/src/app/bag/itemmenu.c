@@ -1763,10 +1763,12 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     if( trg )
     {
 			if( ITEMMENU_GetItemPocketNumber( pWork ) != 0 ){
-	      PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
-	      ITEMDISP_upMessageRewrite(pWork); // è„âÊñ ï\é¶
-	      KTST_SetDraw( pWork, TRUE );
-	      return;
+				if( !( trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_X|PAD_BUTTON_Y|PAD_BUTTON_START) ) ){
+		      PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
+		      ITEMDISP_upMessageRewrite(pWork); // è„âÊñ ï\é¶
+		      KTST_SetDraw( pWork, TRUE );
+		      return;
+				}
 			}else{
 	      KTST_SetDraw( pWork, TRUE );
 				if( trg & (PAD_BUTTON_DECIDE|PAD_BUTTON_START|PAD_BUTTON_SELECT|PAD_KEY_UP|PAD_KEY_DOWN) ){
