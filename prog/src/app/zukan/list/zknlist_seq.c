@@ -320,78 +320,82 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 		break;
 
 	case FRAMELIST_RET_NONE:				// 動作なし
+		{
+			int	mode = GFL_UI_CheckTouchOrKey();
 
-		ret = ZKNLISTUI_ListMain( wk );
+			ret = ZKNLISTUI_ListMain( wk );
 
-		switch( ret ){
-		case ZKNLISTUI_ID_POKE:				// 00: ポケモン正面絵
-			{
-				int	pos = FRAMELIST_GetListPos( wk->lwk );
-				if( CheckInfoData( wk, pos ) == TRUE ){
-					PMSND_PlaySE( ZKNLIST_SE_DECIDE );
-					return SetInfoData( wk, pos );
+			switch( ret ){
+			case ZKNLISTUI_ID_POKE:				// 00: ポケモン正面絵
+				{
+					int	pos = FRAMELIST_GetListPos( wk->lwk );
+					if( CheckInfoData( wk, pos ) == TRUE ){
+						PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+						return SetInfoData( wk, pos );
+					}else{
+						GFL_UI_SetTouchOrKey( mode );
+					}
 				}
-			}
-			break;
+				break;
 
-		case ZKNLISTUI_ID_ICON1:			// 01: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON2:			// 02: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON3:			// 03: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON4:			// 04: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON5:			// 05: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON6:			// 06: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON7:			// 07: ポケモンアイコン
-			{
-				int	pos = FRAMELIST_GetScrollCount( wk->lwk ) + ret - ZKNLISTUI_ID_ICON1;
-				if( CheckInfoData( wk, pos ) == TRUE ){
-					PMSND_PlaySE( ZKNLIST_SE_DECIDE );
-					FRAMELIST_SetCursorPos( wk->lwk, ret-ZKNLISTUI_ID_ICON1 );
-					return SetInfoData( wk, pos );
+			case ZKNLISTUI_ID_ICON1:			// 01: ポケモンアイコン
+			case ZKNLISTUI_ID_ICON2:			// 02: ポケモンアイコン
+			case ZKNLISTUI_ID_ICON3:			// 03: ポケモンアイコン
+			case ZKNLISTUI_ID_ICON4:			// 04: ポケモンアイコン
+			case ZKNLISTUI_ID_ICON5:			// 05: ポケモンアイコン
+			case ZKNLISTUI_ID_ICON6:			// 06: ポケモンアイコン
+			case ZKNLISTUI_ID_ICON7:			// 07: ポケモンアイコン
+				{
+					int	pos = FRAMELIST_GetScrollCount( wk->lwk ) + ret - ZKNLISTUI_ID_ICON1;
+					if( CheckInfoData( wk, pos ) == TRUE ){
+						PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+						FRAMELIST_SetCursorPos( wk->lwk, ret-ZKNLISTUI_ID_ICON1 );
+						return SetInfoData( wk, pos );
+					}
 				}
+				break;
+
+			case ZKNLISTUI_ID_START:			// 08: スタート
+				PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+				wk->dat->retMode = ZKNLIST_RET_SEARCH;
+				SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+				return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_START, ZKNLISTOBJ_ANM_START_ANM, MAINSEQ_END_SET );
+
+			case ZKNLISTUI_ID_SELECT:			// 09: セレクト
+				PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+				if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
+					ZUKANSAVE_SetZukanMode( wk->dat->savedata, FALSE );
+				}else{
+					ZUKANSAVE_SetZukanMode( wk->dat->savedata, TRUE );
+				}
+				wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
+				SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+				return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
+
+			case ZKNLISTUI_ID_Y:					// 10: Ｙ
+				PMSND_PlaySE( ZKNLIST_SE_Y );
+				SetShortCut( wk );
+				break;
+
+			case ZKNLISTUI_ID_X:					// 11: Ｘ
+				PMSND_PlaySE( ZKNLIST_SE_CLOASE );
+				wk->dat->retMode = ZKNLIST_RET_EXIT_X;
+				SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+				return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_EXIT, APP_COMMON_BARICON_EXIT_ON, MAINSEQ_END_SET );
+
+			case ZKNLISTUI_ID_RETURN:			// 12: 戻る
+				PMSND_PlaySE( ZKNLIST_SE_CANCEL );
+				wk->dat->retMode = ZKNLIST_RET_EXIT;
+				SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+				return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_END_SET );
+
+			case ZKNLISTUI_ID_CANCEL:			// 13: キャンセルボタン
+				PMSND_PlaySE( ZKNLIST_SE_CANCEL );
+				wk->dat->retMode = ZKNLIST_RET_EXIT;
+				SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+				return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_END_SET );
 			}
-			break;
-
-		case ZKNLISTUI_ID_START:			// 08: スタート
-			PMSND_PlaySE( ZKNLIST_SE_DECIDE );
-			wk->dat->retMode = ZKNLIST_RET_SEARCH;
-			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_START, ZKNLISTOBJ_ANM_START_ANM, MAINSEQ_END_SET );
-
-		case ZKNLISTUI_ID_SELECT:			// 09: セレクト
-			PMSND_PlaySE( ZKNLIST_SE_DECIDE );
-			if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
-				ZUKANSAVE_SetZukanMode( wk->dat->savedata, FALSE );
-			}else{
-				ZUKANSAVE_SetZukanMode( wk->dat->savedata, TRUE );
-			}
-			wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
-			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
-
-		case ZKNLISTUI_ID_Y:					// 10: Ｙ
-			PMSND_PlaySE( ZKNLIST_SE_Y );
-			SetShortCut( wk );
-			break;
-
-		case ZKNLISTUI_ID_X:					// 11: Ｘ
-			PMSND_PlaySE( ZKNLIST_SE_CLOASE );
-			wk->dat->retMode = ZKNLIST_RET_EXIT_X;
-			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_EXIT, APP_COMMON_BARICON_EXIT_ON, MAINSEQ_END_SET );
-
-		case ZKNLISTUI_ID_RETURN:			// 12: 戻る
-			PMSND_PlaySE( ZKNLIST_SE_CANCEL );
-			wk->dat->retMode = ZKNLIST_RET_EXIT;
-			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_END_SET );
-
-		case ZKNLISTUI_ID_CANCEL:			// 13: キャンセルボタン
-			PMSND_PlaySE( ZKNLIST_SE_CANCEL );
-			wk->dat->retMode = ZKNLIST_RET_EXIT;
-			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_END_SET );
 		}
-
 		break;
 
 	// 項目選択
