@@ -936,20 +936,23 @@ void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk, u32 py )
  * @brief		ページ切り替え矢印アニメ設定
  *
  * @param		wk			図鑑検索画面ワーク
+ * @param		anm			TRUE = アクティブ, FALSE = パッシブ
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void ZKNSEARCHOBJ_SetListPageArrowAnime( ZKNSEARCHMAIN_WORK * wk )
+void ZKNSEARCHOBJ_SetListPageArrowAnime( ZKNSEARCHMAIN_WORK * wk, BOOL anm )
 {
-	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_LEFT) != APP_COMMON_BARICON_CURSOR_LEFT_ON ){
+	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_LEFT) != APP_COMMON_BARICON_CURSOR_LEFT_ON ||
+			anm == FALSE ){
 		if( FRAMELIST_GetScrollCount( wk->lwk ) == 0 ){
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_OFF );
 		}else{
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT );
 		}
 	}
-	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ){
+	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ||
+			anm == FALSE ){
 		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE ){
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
 		}else{

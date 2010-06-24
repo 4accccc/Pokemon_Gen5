@@ -63,6 +63,7 @@ enum {
 	MAINSEQ_MAIN_FORM,
 	MAINSEQ_EXIT_FORM,
 
+	MAINSEQ_PAGE_MOVE,
 	MAINSEQ_BUTTON_ANM,
 
 	MAINSEQ_END_SET,
@@ -109,6 +110,7 @@ static int MainSeq_ExitColor( ZKNSEARCHMAIN_WORK * wk );
 static int MainSeq_InitForm( ZKNSEARCHMAIN_WORK * wk );
 static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk );
 static int MainSeq_ExitForm( ZKNSEARCHMAIN_WORK * wk );
+static int MainSeq_PageMove( ZKNSEARCHMAIN_WORK * wk );
 static int MainSeq_ButtonAnm( ZKNSEARCHMAIN_WORK * wk );
 static int MainSeq_EndSet( ZKNSEARCHMAIN_WORK * wk );
 
@@ -173,6 +175,7 @@ static const pZKNSEARCH_FUNC MainSeq[] = {
 	MainSeq_MainForm,
 	MainSeq_ExitForm,
 
+	MainSeq_PageMove,
 	MainSeq_ButtonAnm,
 	MainSeq_EndSet,
 };
@@ -739,7 +742,11 @@ static int MainSeq_InitName( ZKNSEARCHMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 {
-	u32	ret = FRAMELIST_Main( wk->lwk );
+	int	seq;
+	u32	ret;
+
+	seq = MAINSEQ_MAIN_NAME;
+	ret = FRAMELIST_Main( wk->lwk );
 
 	switch( ret ){
 	case 0:
@@ -753,6 +760,31 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
 			ChangeSortName( wk, ret );
 		}
+		break;
+
+	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+	case FRAMELIST_RET_MOVE:				// カーソル移動
+	case FRAMELIST_RET_SCROLL:			// スクロール通常
+	case FRAMELIST_RET_RAIL:				// レールスクロール
+	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		break;
+
+	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_NAME;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_NAME;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
+	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		wk->nextSeq = MAINSEQ_MAIN_NAME;
+		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -787,7 +819,7 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}
 
-	return MAINSEQ_MAIN_NAME;
+	return seq;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -850,7 +882,11 @@ static int MainSeq_InitType( ZKNSEARCHMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 {
-	u32	ret = FRAMELIST_Main( wk->lwk );
+	int	seq;
+	u32	ret;
+
+	seq = MAINSEQ_MAIN_TYPE;
+	ret = FRAMELIST_Main( wk->lwk );
 
 	switch( ret ){
 	case 0:
@@ -864,6 +900,31 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
 			ChangeSortType( wk, ret );
 		}
+		break;
+
+	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+	case FRAMELIST_RET_MOVE:				// カーソル移動
+	case FRAMELIST_RET_SCROLL:			// スクロール通常
+	case FRAMELIST_RET_RAIL:				// レールスクロール
+	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		break;
+
+	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_TYPE;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_TYPE;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
+	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		wk->nextSeq = MAINSEQ_MAIN_TYPE;
+		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -898,7 +959,7 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}
 
-	return MAINSEQ_MAIN_TYPE;
+	return seq;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -962,7 +1023,11 @@ static int MainSeq_InitColor( ZKNSEARCHMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 {
-	u32	ret = FRAMELIST_Main( wk->lwk );
+	int	seq;
+	u32	ret;
+
+	seq = MAINSEQ_MAIN_COLOR;
+	ret = FRAMELIST_Main( wk->lwk );
 
 	switch( ret ){
 	case 0:
@@ -976,6 +1041,31 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
 			ChangeSortColor( wk, ret );
 		}
+		break;
+
+	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+	case FRAMELIST_RET_MOVE:				// カーソル移動
+	case FRAMELIST_RET_SCROLL:			// スクロール通常
+	case FRAMELIST_RET_RAIL:				// レールスクロール
+	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		break;
+
+	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_COLOR;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_COLOR;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
+	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		wk->nextSeq = MAINSEQ_MAIN_COLOR;
+		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -1010,7 +1100,7 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}
 
-	return MAINSEQ_MAIN_COLOR;
+	return seq;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1074,7 +1164,11 @@ static int MainSeq_InitForm( ZKNSEARCHMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 {
-	u32	ret = FRAMELIST_Main( wk->lwk );
+	int	seq;
+	u32	ret;
+
+	seq = MAINSEQ_MAIN_FORM;
+	ret = FRAMELIST_Main( wk->lwk );
 
 	switch( ret ){
 	case 0:
@@ -1085,6 +1179,31 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
 			ChangeSortForm( wk, ret );
 		}
+		break;
+
+	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+	case FRAMELIST_RET_MOVE:				// カーソル移動
+	case FRAMELIST_RET_SCROLL:			// スクロール通常
+	case FRAMELIST_RET_RAIL:				// レールスクロール
+	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		break;
+
+	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_FORM;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->nextSeq = MAINSEQ_MAIN_FORM;
+		seq = MAINSEQ_PAGE_MOVE;
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
+	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		wk->nextSeq = MAINSEQ_MAIN_FORM;
+		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -1116,7 +1235,7 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}
 
-	return MAINSEQ_MAIN_FORM;
+	return seq;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1137,6 +1256,23 @@ static int MainSeq_ExitForm( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_INIT_MENU;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：リストページ送り
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int MainSeq_PageMove( ZKNSEARCHMAIN_WORK * wk )
+{
+	if( FRAMELIST_Main( wk->lwk ) == FRAMELIST_RET_NONE ){
+		ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
+		return wk->nextSeq;
+	}
+	return MAINSEQ_PAGE_MOVE;
+}
 
 //--------------------------------------------------------------------------------------------
 /**

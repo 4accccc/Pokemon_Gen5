@@ -686,7 +686,7 @@ static void NameListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -751,7 +751,7 @@ static void TypeListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -813,7 +813,7 @@ static void ColorListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -876,5 +876,5 @@ static void FormListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollFormList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
 }
