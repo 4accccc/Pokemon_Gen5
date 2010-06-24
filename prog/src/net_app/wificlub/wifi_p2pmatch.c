@@ -3124,7 +3124,7 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
 
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-  FriendRequestWaitOff(wk);
+  FriendRequestWaitOff(wk);      // 主人公の動作を許可 状態をNONEにもどす
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
   return seq;
@@ -3820,8 +3820,8 @@ static int _vchatToggleWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(GFL_UI_KEY_GetTrg()){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    // 主人公の動作を許可
-    FriendRequestWaitOff( wk );
+
+    FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     EndMessageWindowOff(wk);
   }
   return seq;
@@ -4223,8 +4223,7 @@ static int WifiP2PMatch_VCTDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
       wk->preConnect = -1;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
 
-      // 主人公の動作を許可
-      FriendRequestWaitOff( wk );
+      FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     }
   }
   return seq;
@@ -4277,8 +4276,7 @@ static int WifiP2PMatch_Disconnect2(WIFIP2PMATCH_WORK *wk, int seq)
 
     wk->preConnect = -1;
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    // 主人公の動作を許可
-    FriendRequestWaitOff( wk );
+    FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
   }
   return seq;
 }
@@ -4335,8 +4333,8 @@ static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
 
       wk->preConnect = -1;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-      // 主人公の動作を許可
-      FriendRequestWaitOff( wk );
+
+      FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     }
   }
   return seq;
@@ -4487,15 +4485,17 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
     // 通信状態を元に戻す
     _GFL_NET_InitAndStruct(wk,FALSE);
 
-    // 主人公の動作を許可
-    FriendRequestWaitOff( wk );
+    FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
   }
   else{  // いいえを選択した場合
 
     // 主人公動作停止を再度表示
-    FriendRequestWaitOff( wk );
-    FriendRequestWaitOn( wk, TRUE );
+//    FriendRequestWaitOff( wk );  //BTS6584
+    //    FriendRequestWaitOn( wk, TRUE );
+    //メッセージ交換だけ行う
+    WifiP2PMatchMessagePrintDirect( wk, msg_wifilobby_142, FALSE );
+
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
   }
 
@@ -4565,8 +4565,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_CANCEL:
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     _windelandSEcall(wk);
-    FriendRequestWaitOff(wk);
-    wk->state = WIFIP2PMATCH_STATE_NONE;
+    FriendRequestWaitOff(wk);      // 主人公の動作を許可 状態をNONEにもどす
     return seq;
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
@@ -4677,8 +4676,7 @@ static int _modeTVT1Wait( WIFIP2PMATCH_WORK* wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
   }
   else{  // いいえを選択した場合
-    FriendRequestWaitOff(wk);
-    wk->state = WIFIP2PMATCH_STATE_NONE;
+    FriendRequestWaitOff(wk);      // 主人公の動作を許可 状態をNONEにもどす
     EndMessageWindowOff(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
   }
@@ -4747,12 +4745,10 @@ static int _modeTVT2Wait( WIFIP2PMATCH_WORK* wk, int seq )
     }
   }
   else{  // いいえを選択した場合
-    wk->state = WIFIP2PMATCH_STATE_NONE;
     EndMessageWindowOff(wk);
     _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
     wk->preConnect = -1;
-    // 主人公の動作を許可
-    FriendRequestWaitOff( wk );
+    FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
 
     // NPCを元に戻す
@@ -4785,8 +4781,7 @@ static int MessageEndReturnList( WIFIP2PMATCH_WORK *wk, int seq )
     GFL_NET_StateWifiMatchEnd(TRUE);
     _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
     wk->preConnect = -1;
-    // 主人公の動作を許可
-    FriendRequestWaitOff( wk );
+    FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
   }
   return seq;
@@ -4805,8 +4800,7 @@ static int ReturnList( WIFIP2PMATCH_WORK *wk, int seq )
   GFL_NET_StateWifiMatchEnd(TRUE);
   _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
   wk->preConnect = -1;
-  // 主人公の動作を許可
-  FriendRequestWaitOff( wk );
+  FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
 
   return seq;
@@ -5520,8 +5514,7 @@ static int WifiP2PMatch_CancelEnableWait( WIFIP2PMATCH_WORK *wk, int seq )
   GFL_NET_StateWifiMatchEnd(TRUE);
   wk->preConnect = -1;
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-  // 主人公の動作を許可
-  FriendRequestWaitOff( wk );
+  FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
   EndMessageWindowOff(wk);
   return seq;
 }
@@ -6127,8 +6120,7 @@ static int _exitWait( WIFIP2PMATCH_WORK *wk, int seq )
     wk->pYesNoWork=NULL;
     EndMessageWindowOff(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    // 主人公の動作を許可
-    FriendRequestWaitOff( wk );
+    FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
   }
   return seq;
 }
@@ -7618,6 +7610,8 @@ static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk )
     EndMessageWindowOff( wk );
     WIFI_MCR_PlayerMovePause( &wk->matchroom, FALSE );
 
+ //   OS_TPrintf("メッセージを消して、プレイヤー動作を開始する\n");
+    
     wk->state = WIFIP2PMATCH_STATE_NONE;
   }
 }
@@ -7821,7 +7815,8 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
     GFL_CLACT_SYS_Main();
   }
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+//#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#if 0
   {
     static const char *sc_print_tbl[] =
     {
@@ -7831,7 +7826,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
       "はなしかけた",
       "られた",
     };
-    NAGI_Printf( "状態:%s\n", sc_print_tbl[ wk->state ] );
+    OS_TPrintf( "状態:%s\n", sc_print_tbl[ wk->state ] );
   }
 #endif
 
