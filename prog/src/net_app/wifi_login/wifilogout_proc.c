@@ -59,6 +59,8 @@ struct _WIFILOGOUT_WORK
   HEAPID                  heapID;       //ヒープID
 
   BOOL                    is_end_net;
+
+  BOOL                    is_error;
 } ;
 
 //=============================================================================
@@ -243,16 +245,6 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Main
 { 
   WIFILOGOUT_WORK   *p_wk     = p_wk_adrs;
 
-  //エラーチェック
-  //（GAMESYSTEMかこの下位のPROCでNetErr_DispCall(FALSE);が呼ばれているのが前提です）
-  if( GFL_NET_IsInit() )
-  { 
-    if( GFL_NET_DWC_ERROR_RESULT_NONE != GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE,FALSE ) )
-    {
-      return GFL_PROC_RES_FINISH;
-    }
-  }
-
   //モジュール動作
   if( p_wk->p_select )
   {
@@ -302,7 +294,7 @@ static void SEQ_Change( WIFILOGOUT_WORK *p_wk, SEQ_FUNCTION seq_funcion )
 //-----------------------------------------------------------------------------
 static void SEQ_ChangeDebug( WIFILOGOUT_WORK *p_wk, SEQ_FUNCTION seq_funcion, int line )
 { 
-  OS_TPrintf( "neg: %d\n", line );
+  OS_TPrintf( "lout: %d\n", line );
   SEQ_Change( p_wk, seq_funcion );
 }
 
@@ -392,6 +384,11 @@ static void SEQFUNCTION_Callback( WIFILOGOUT_WORK *p_wk )
       SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartDisConnectMessage );
     }
   }
+
+  if( p_wk->is_error )
+  {
+    
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -431,14 +428,22 @@ static void SEQFUNCTION_WaitDisConnectMessage( WIFILOGOUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_StartDisConnect( WIFILOGOUT_WORK *p_wk )
 { 
-  //ネットが解放されてもPUSHPOPエラーをだした場合
-  //エラーシステムの内部にエラーが残りことがありえるので、
-  //念のためここでエラーをクリアする。
-  //もしクリアしないで残ってしまう場合Cギアが稼働しないため
+  //ログアウト中にエラーになった場合、
+  //後は切断するだけなので、クリアする
+  //もしクリアしないで残ってしまう場合Cギアが稼働しない
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    GFL_NET_ResetDisconnect();  ///切断処理中でも一旦リセット
+    GFL_NET_IRCWIRELESS_ResetSystemError();  //赤外線WIRLESS切断
+    GFL_NET_StateResetError();
+    GFL_NET_StateClearWifiError();
+    NetErr_ErrWorkInit();
+  }
+
+
   if( GFL_NET_IsExit() )
   { 
     //解放されていたら何もしない
-    NetErr_ErrWorkInit();
     SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartEndMessage );
     OS_TPrintf( "WIFILOGOUT 既にネットは解放されていた\n" );
   }
@@ -447,7 +452,6 @@ static void SEQFUNCTION_StartDisConnect( WIFILOGOUT_WORK *p_wk )
     //初期化されていたら解放
     if( GFL_NET_Exit( NETCALLBACK_End ) )
     { 
-      NetErr_ErrWorkInit();
       SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitDisConnect );
       OS_TPrintf( "WIFILOGOUT ネット解放開始\n" );
     }
