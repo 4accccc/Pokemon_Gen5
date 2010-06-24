@@ -453,6 +453,42 @@ static void PLD_D_PokeEgg( void* userWork , DEBUGWIN_ITEM* item )
   }
 }
 //----------------------------------------------------------------
+static void PLD_U_PokeNowHp( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const int paraId = ID_PARA_hp;
+  PLIST_WORK *work = userWork;
+  if( work->debWork->pokeNo >= PokeParty_GetPokeCount( work->plData->pp ) )
+  {
+    return;
+  }
+  else
+  {
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, work->debWork->pokeNo );
+    u32 temp = PP_Get( pp , paraId , NULL );
+    u32 max = PP_Get( pp , ID_PARA_hpmax , NULL );
+    if( PLD_UpdateU32( &temp , 0 , max ) )
+    {
+      PP_Put( pp , paraId , temp );
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+}
+static void PLD_D_PokeNowHp( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const int paraId = ID_PARA_hp;
+  PLIST_WORK *work = userWork;
+  if( work->debWork->pokeNo >= PokeParty_GetPokeCount( work->plData->pp ) )
+  {
+    DEBUGWIN_ITEM_SetName( item , "--------" );
+  }
+  else
+  {
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, work->debWork->pokeNo );
+    DEBUGWIN_ITEM_SetNameV( item , " NowHp[%d]",PP_Get( pp , paraId , NULL ) );
+  }
+}
+
+//----------------------------------------------------------------
 static void PLD_U_PokeReDraw( void* userWork , DEBUGWIN_ITEM* item )
 {
   PLIST_WORK *work = userWork;
@@ -721,6 +757,7 @@ static void PLIST_InitDebug( PLIST_WORK *work )
   DEBUGWIN_AddItemToGroupEx( PLD_U_PokeItem ,PLD_D_PokeItem , (void*)work , PLIST_DEBUG_GROUP_NUMBER_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PLD_U_PokeForm ,PLD_D_PokeForm , (void*)work , PLIST_DEBUG_GROUP_NUMBER_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PLD_U_PokeEgg ,PLD_D_PokeEgg , (void*)work , PLIST_DEBUG_GROUP_NUMBER_POKE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PLD_U_PokeNowHp ,PLD_D_PokeNowHp , (void*)work , PLIST_DEBUG_GROUP_NUMBER_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PLD_U_PokeReDraw ,PLD_D_PokeReDraw , (void*)work , PLIST_DEBUG_GROUP_NUMBER_POKE , work->heapId );
 
   //Check

@@ -14,6 +14,7 @@
 #include "print/global_msg.h"
 #include "print/str_tool.h"
 #include "app/app_menu_common.h"
+#include "poke_tool/gauge_tool.h"
 #include "waza_tool/wazadata.h"
 #include "field/field_skill_check.h"
 
@@ -928,28 +929,20 @@ static void PSTATUS_SKILL_DrawHPBar( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
   const u16 hpMax = PP_Get( pp , ID_PARA_hpmax , NULL );
   const u16 hp = PP_Get( pp , ID_PARA_hp , NULL );
 
-  const u16 rate = 100*hp/hpMax;
-  u8 len = PSTATUS_SKILL_HPBAR_LEN*hp/hpMax;
+  const u8 col = GAUGETOOL_GetGaugeDottoColor( hp , hpMax );
+  const u8 len = GAUGETOOL_GetNumDotto( hp , hpMax , PSTATUS_SKILL_HPBAR_LEN );
   u8 inCol,outCol;
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( skillWork->upBmpWin[PSBT_HP_GAUGE] );
 
-  if( hp != 0 && len == 0 )
-  {
-    len = 1;
-  }
-  if( hp != hpMax && len == PSTATUS_SKILL_HPBAR_LEN )
-  {
-    len = PSTATUS_SKILL_HPBAR_LEN-1;
-  }
-
   //êFåàíË
-  if( rate <= 25 )
+  if( col == GAUGETOOL_HP_DOTTO_RED ||
+      col == GAUGETOOL_HP_DOTTO_NULL )
   {
     inCol  = PSTATUS_SKILL_HPBAR_COL_RED_IN;
     outCol = PSTATUS_SKILL_HPBAR_COL_RED_OUT;
   }
   else
-  if( rate <= 50 )
+  if( col == GAUGETOOL_HP_DOTTO_YELLOW )
   {
     inCol  = PSTATUS_SKILL_HPBAR_COL_YELLOW_IN;
     outCol = PSTATUS_SKILL_HPBAR_COL_YELLOW_OUT;

@@ -20,6 +20,7 @@
 #include "item/item.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_regulation.h"
+#include "poke_tool/gauge_tool.h"
 #include "pokeicon/pokeicon.h"
 #include "print/global_msg.h"
 
@@ -133,7 +134,7 @@ static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plat
 static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const BOOL isHpAnime );
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawParamEgg( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
-static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork );
+static const u8 PLIST_PLATE_GetHPColor( PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x , const s16 y , GFL_CLACTPOS *pos );
 
 static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
@@ -694,9 +695,9 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
  
   //ポケアイコンアニメ
   {
-    const u8 rate = PLIST_PLATE_GetHPRate( plateWork );
+    const u8 rate = PLIST_PLATE_GetHPColor( plateWork );
     u16 anmSeq = POKEICON_ANM_HPMAX;
-    if( rate == 0 )
+    if( rate == GAUGETOOL_HP_DOTTO_NULL )
     {
       anmSeq = POKEICON_ANM_DEATH;
     }
@@ -706,17 +707,17 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
       anmSeq = POKEICON_ANM_STCHG;
     }
     else
-    if( rate <= 25 )
+    if( rate == GAUGETOOL_HP_DOTTO_RED )
     {
       anmSeq = POKEICON_ANM_HPRED;
     }
     else
-    if( rate <= 50 )
+    if( rate == GAUGETOOL_HP_DOTTO_YELLOW )
     {
       anmSeq = POKEICON_ANM_HPYERROW;
     }
     else
-    if( rate < 100 )
+    if( rate == GAUGETOOL_HP_DOTTO_GREEN )
     {
       anmSeq = POKEICON_ANM_HPGREEN;
     }
@@ -737,24 +738,20 @@ static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
   if( PLIST_UTIL_IsBattleMenu( work ) == FALSE && 
       work->plData->mode != PL_MODE_WAZASET )
   {
-    const u8 rate = PLIST_PLATE_GetHPRate( plateWork );
-    u8 len = PLIST_PLATE_HPBAR_LEN*rate/100;
+    const u8 rate = PLIST_PLATE_GetHPColor( plateWork );
+    const u8 len = GAUGETOOL_GetNumDotto( plateWork->dispHp , PP_Get( plateWork->pp , ID_PARA_hpmax , NULL ) , PLIST_PLATE_HPBAR_LEN );
     u8 inCol,outCol;
     GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plateWork->bmpWin );
     
-    if( len == 0 && rate != 0 )
-    {
-      len = 1;
-    }
-    
     //色決定
-    if( rate <= 25 )
+    if( rate == GAUGETOOL_HP_DOTTO_RED ||
+        rate == GAUGETOOL_HP_DOTTO_NULL  )
     {
       inCol  = PLIST_HPBAR_COL_RED_IN;
       outCol = PLIST_HPBAR_COL_RED_OUT;
     }
     else
-    if( rate <= 50 )
+    if( rate == GAUGETOOL_HP_DOTTO_YELLOW )
     {
       inCol  = PLIST_HPBAR_COL_YELLOW_IN;
       outCol = PLIST_HPBAR_COL_YELLOW_OUT;
@@ -883,7 +880,7 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
 void PLIST_PLATE_ChangeColor( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PLIST_PLATE_COLTYPE col )
 {
   if( col == PPC_NORMAL && 
-      PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+      PLIST_PLATE_GetHPColor( plateWork ) == GAUGETOOL_HP_DOTTO_NULL )
   {
     GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
                 PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_BG_SCROLL_X_CHAR ,
@@ -892,7 +889,7 @@ void PLIST_PLATE_ChangeColor( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , P
   }
   else
   if( col == PPC_NORMAL_SELECT && 
-      PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+      PLIST_PLATE_GetHPColor( plateWork ) == GAUGETOOL_HP_DOTTO_NULL )
   {
     GFL_BG_ChangeScreenPalette( PLIST_BG_PLATE , 
                 PLIST_PLATE_POS_ARR[plateWork->idx][0]+PLIST_BG_SCROLL_X_CHAR ,
@@ -984,7 +981,7 @@ void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , c
         palCol = PPC_CHANGE_SELECT;
       }
       else
-      if( PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+      if( PLIST_PLATE_GetHPColor( plateWork ) == GAUGETOOL_HP_DOTTO_NULL )
       {
         palCol = PPC_DEATH_SELECT;
       }
@@ -1000,7 +997,7 @@ void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , c
         palCol = PPC_CHANGE;
       }
       else
-      if( PLIST_PLATE_GetHPRate( plateWork ) == 0 )
+      if( PLIST_PLATE_GetHPColor( plateWork ) == GAUGETOOL_HP_DOTTO_NULL )
       {
         palCol = PPC_DEATH;
       }
@@ -1318,21 +1315,11 @@ const PLIST_PLATE_CAN_BATTLE PLIST_PLATE_CanJoinBattle( PLIST_WORK *work , PLIST
 //--------------------------------------------------------------
 //HPの割合の計算0～100
 //--------------------------------------------------------------
-static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork )
+static const u8 PLIST_PLATE_GetHPColor( PLIST_PLATE_WORK *plateWork )
 {
   const u32 hpmax = PP_Get( plateWork->pp , ID_PARA_hpmax , NULL );
   const u32 hp = plateWork->dispHp;
-  u8 rate = 100*hp/hpmax;
-  
-  if( hp != 0 && rate == 0 )
-  {
-    rate = 1;
-  }
-  if( hp != hpmax && rate == 100 )
-  {
-    rate = 99;
-  }
-  return rate;
+  return GAUGETOOL_GetGaugeDottoColor(hp,hpmax);
 }
 
 //--------------------------------------------------------------
