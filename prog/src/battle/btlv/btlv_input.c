@@ -2249,7 +2249,7 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
     SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
                     BG_VISIBLE_OFF, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
-    SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    //SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
@@ -2271,15 +2271,20 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
       SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
-      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
       SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
-      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      SetupSetScroll( ttw->biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
+      ttw->wait = 4;
       ttw->seq_no++;
     }
     break;
   case 2:
+    if( --ttw->wait == 0 )
+    { 
+      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+      ttw->seq_no++;
+    }
+    break;
+  case 3:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
