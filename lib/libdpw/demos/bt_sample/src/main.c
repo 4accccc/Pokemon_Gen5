@@ -112,7 +112,7 @@ static int pid;								// プロファイルID
 static MATHRandContext16 rand_cont16;		// 乱数の状態
 
 static DpwBtSampleState app_state;			// アプリケーションのステート
-static s32 room_num;						// BT_ROOM_RANKの部屋の数
+static u8 room_num;							// BT_ROOM_RANKの部屋の数
 static Dpw_Bt_Player upload_player;			// アップロードするプレイヤーデータ
 static Dpw_Bt_Room download_room;			// ダウンロードするルームのデータ
 static Dpw_Common_Profile profile;          // 登録する個人情報
@@ -127,7 +127,7 @@ static DPW_SERVER_TYPE server_type = DPW_SERVER_DEBUG; // アクセスするサーバ
 void NitroMain()
 {
 	// 認証サーバから送られてきたトークン
-	u8 token[TOKEN_LEN] = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde";
+	u8 token[] = {98,207,123,28,141,17,252,6,183,167,90,228,101,204,188,182,152,112,143,177,245,168,215,63,75,192,7,169,126,44,214,82,193,38,203,234,73,82,238,157,157,179,234,157,72,79,104,130,50,240,153,182,159,191,194,6,98,34,118,60,54,243,168,252,153,36,170,32,148,20,76,101,233,128,49,169,86,150,205,168,146,225,7,123,81,102,21,54,167,253,178,136,8,23,37,244,157,54,81,84,131,151,241,82,72,124,67,81,3,212,143,194,170,210,73,154,207,114,152,55,153,36,238,10,51,194,124,123};
 	
 	//================ 初期化
 	//---- OS 初期化
@@ -432,7 +432,7 @@ void NitroMain()
 				}
 				else
 				{
-					room_num = result;		// ルーム数を保存する
+					room_num = (u8)result;		// ルーム数を保存する
 					OS_TPrintf(" room num = %d\n", room_num);
 					app_state = SAMPLE_BT_UPLOAD_PLAYER_FOR_CANCEL;
 				}
