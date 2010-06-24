@@ -916,6 +916,7 @@ typedef struct {
   u16  reservedQuePos;                ///< Que予約領域
   u8   fQueReserve;                   ///< Que予約フラグ
   u8   fMsgWinVanish;                 ///< メッセージウィンドウ消去フラグ
+  BTL_HANDEX_STR_PARAMS    exStr;    ///< エフェクト後メッセージ
 }BTL_HANDEX_PARAM_ADD_EFFECT;
 
 /**

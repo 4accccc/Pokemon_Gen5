@@ -102,6 +102,9 @@ static void FRONT_POKE_SEEK_AddRotationBack( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVF
 static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk, BTL_POKEPARAM** bpp );
 static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2, BOOL fResetMove );
+static void scproc_AfterMove( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2 );
+static void scproc_AfterMoveCore( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scEvent_AfterMove( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fSkipNigeruCalc );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -213,7 +216,7 @@ static u32 BTL_CALCDAMAGE_GetRealHitPoke( BTL_SVFLOW_WORK* wk, const BTL_CALC_DA
   BTL_POKEPARAM** bppAry, u16* dmgAry, BtlTypeAff* affAry, u8* criticalFlagAry, u8* koraeCauseAry );
 static u32 BTL_CALCDAMAGE_GetDamageSum( const BTL_CALC_DAMAGE_REC* rec );
 static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, BOOL fDelayAttack );
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, u32* que_reserve_pos, BOOL fDelayAttack );
 static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec );
 static BOOL HITCHECK_IsFirstTime( const HITCHECK_PARAM* param );
@@ -1912,7 +1915,7 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
           scproc_BeforeFirstFight( wk );
           FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
         }
-        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos );
         wk->currentSabotageType = CheckSabotageType( wk, bpp );
         scproc_Fight( wk, bpp, &action );
         break;
@@ -2092,7 +2095,6 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
     }
   }
   return SABOTAGE_NONE;
-
 }
 
 //--------------------------------------------------------------
@@ -2429,15 +2431,13 @@ static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   {
     scproc_MoveCore( wk, clientID, posIdx, 1, FALSE );
     scPut_Message_Set( wk, bpp, BTL_STRID_SET_TripleMove );
+    scproc_AfterMove( wk, clientID, posIdx, 1 );
   }
   else
   {
     GF_ASSERT_MSG(0, "clientID=%d, pokeID=%d, posIdx=%d\n", clientID, pokeID, posIdx);
   }
 }
-/**
- *
- */
 //----------------------------------------------------------------------------------
 /**
  * ムーブ動作コア
@@ -2476,6 +2476,59 @@ static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 po
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * ムーブ動作直後イベント呼び出し（ルート）
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   posIdx1
+ * @param   posIdx2
+ */
+//----------------------------------------------------------------------------------
+static void scproc_AfterMove( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2 )
+{
+  BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+
+  const BTL_POKEPARAM* bpp1 = BTL_PARTY_GetMemberDataConst( party, posIdx1 );
+  const BTL_POKEPARAM* bpp2 = BTL_PARTY_GetMemberDataConst( party, posIdx2 );
+
+  scproc_AfterMoveCore( wk, bpp1 );
+  scproc_AfterMoveCore( wk, bpp2 );
+}
+//----------------------------------------------------------------------------------
+/**
+ * ムーブ動作直後イベント呼び出し
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scproc_AfterMoveCore( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  if( !BPP_IsDead(bpp) )
+  {
+    u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+    scEvent_AfterMove( wk, bpp );
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ムーブ動作直後
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_AfterMove( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_AFTER_MOVE );
+  BTL_EVENTVAR_Pop();
+}
+
 
 //-----------------------------------------------------------------------------------
 // サーバーフロー：「にげる」
@@ -5602,6 +5655,8 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
    BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, BOOL fDelayAttack )
 {
   u32  dmg_sum = 0;
+  u32  que_reserve_pos;
+  BOOL fEffectPut = FALSE;
 
   FlowFlg_Clear( wk, FLOWFLG_SET_WAZAEFFECT );
   scproc_Fight_DamageProcStart( wk, attacker, wazaParam );
@@ -5622,13 +5677,21 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
       dmg_sum = scproc_Fight_Damage_PluralCount( wk, wazaParam, attacker, targets, affRec );
     }
     else{
-      dmg_sum = scproc_Fight_Damage_SingleCount( wk, wazaParam, attacker, targets, affRec, fDelayAttack );
+      dmg_sum = scproc_Fight_Damage_SingleCount( wk, wazaParam, attacker, targets, affRec, &que_reserve_pos, fDelayAttack );
+      if( !fDelayAttack ){
+        fEffectPut = TRUE;
+      }
     }
 
     scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
   }
 
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum, fDelayAttack );
+
+  if( fEffectPut ){
+    wazaEffCtrl_SetEnableDummy( wk->wazaEffCtrl );
+    scPut_WazaEffect( wk, wazaParam->wazaID, wk->wazaEffCtrl, que_reserve_pos );
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -5825,12 +5888,12 @@ static u32 BTL_CALCDAMAGE_GetDamageSum( const BTL_CALC_DAMAGE_REC* rec )
 */
 //------------------------------------------------------------------------------
 static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, BOOL fDelayAttack )
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, u32* que_reserve_pos, BOOL fDelayAttack )
 {
   FLAG_SET flagSet;
   fx32 dmg_ratio = (BTL_POKESET_GetCountMax(targets) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
   u32 dmg_sum = 0;
-  u16 que_reserve_pos;
+//  u16 que_reserve_pos;
 
 
   // 複数対象のワザか判定
@@ -5846,7 +5909,7 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   BTL_CALCDAMAGE_Set( wk, attacker, wk->psetEnemy, wazaParam, affRec, dmg_ratio, wk->calcDmgEnemy );
 
 //  scproc_SingleCount_DamageDetermine( wk, attacker,
-  que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
+  *que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
 
 
   if( BTL_POKESET_GetCount( wk->psetFriend ) )
@@ -5865,11 +5928,6 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, wk->psetEnemy, wk->calcDmgEnemy,
       wk->hitCheckParam, dmg_ratio, flagSet );
   }
-
-//  wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-  if( !fDelayAttack )
-  wazaEffCtrl_SetEnableDummy( wk->wazaEffCtrl );
-  scPut_WazaEffect( wk, wazaParam->wazaID, wk->wazaEffCtrl, que_reserve_pos );
 
   return dmg_sum;
 }
@@ -9153,6 +9211,8 @@ static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk )
           SCQUE_PUT_ACT_TripleResetMove( wk->que, clientID_1, posIdx1, clientID_2, posIdx2 );
           scproc_MoveCore( wk, clientID_1, posIdx1, 1, TRUE );
           scproc_MoveCore( wk, clientID_2, posIdx2, 1, TRUE );
+          scproc_AfterMove( wk, clientID_1, posIdx1, 1 );
+          scproc_AfterMove( wk, clientID_2, posIdx2, 1 );
         }
       }
     }
@@ -15493,6 +15553,7 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
         {
           scproc_MoveCore( wk, clientID, posIdx1, posIdx2, FALSE );
           handexSub_putString( wk, &param->exStr );
+          scproc_AfterMove( wk, clientID, posIdx1, posIdx2 );
           return 1;
         }
       }
@@ -15643,6 +15704,7 @@ static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
   }
 
   scproc_ViewEffect( wk, param->effectNo, param->pos_from, param->pos_to, param->fQueReserve, param->reservedQuePos );
+  handexSub_putString( wk, &param->exStr );
 
   return 1;
 }

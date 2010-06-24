@@ -187,6 +187,7 @@ typedef enum {
   BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  ///< 未分類ワザ処理（ターゲットいないワザ）
   BTL_EVENT_COMBIWAZA_CHECK,        ///< 合体ワザ成立チェック
   BTL_EVENT_NOTIFY_DEAD,            ///< 死亡直前
+  BTL_EVENT_AFTER_MOVE,             ///< ムーブ動作直後
 
 
 }BtlEventType;
