@@ -5393,6 +5393,7 @@ static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   if( (HandCommon_CheckTargetPokeID(pokeID))
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DELAY_ATTACK_FLAG) == FALSE )
   &&  (BTL_SVFTOOL_IsFreeFallPoke(flowWk, pokeID) == FALSE)
+  &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
   ){
     // 控えに交替可能メンバーがいるなら、どうぐ使用ハンドラ呼び出し
     //（割り込みアクション時＆すでにメンバー入れ替え行動を取ろうとしているポケモンがいる場合を除く）
