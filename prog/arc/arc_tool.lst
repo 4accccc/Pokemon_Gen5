@@ -75,8 +75,8 @@
   ARCID_FONT      "font/font.narc"    # フォントデータ
   ARCID_ITEMDATA    "item_data.narc"    # アイテムデータ
   ARCID_ITEMICON    "item_icon.narc"    # アイテムアイコン
-  $VERSION_BLACK  ARCID_TITLE "title_black.narc"  #ブラック版タイトル
-  $VERSION_WHITE  ARCID_TITLE "title_white.narc"  #ホワイト版タイトル
+  ARCID_TITLE_B "title_black.narc"  #ブラック版タイトル
+  ARCID_TITLE_W "title_white.narc"  #ホワイト版タイトル
   ARCID_CONFIG_GRA  "config_gra.narc"   #設定画面用データ
   ARCID_IRCBATTLE   "ircbattle.narc"           #赤外線マッチングバトル
   ARCID_CG_COMM  "cg_comm.narc"           #コミュニケーションギア 接続後

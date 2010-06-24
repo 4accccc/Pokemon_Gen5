@@ -11,6 +11,11 @@
 #pragma once
 
 #include "pm_version.h"
+#include "playable_version.h"
+
+#ifdef  PLAYABLE_VERSION
+#include  "title_res_playable.h"
+#else
 
 #define TITLE_RES_ARCID (ARCID_TITLE)
 
@@ -58,3 +63,5 @@
 
 
 #endif
+
+#endif  //PLAYABLE_VERSION

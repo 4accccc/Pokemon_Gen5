@@ -13,12 +13,20 @@
 #include "system\gfl_use.h"
 #include "arc_def.h"
 
+#include "playable_version.h"
 #include "corporate.h"
+
+#ifdef  PLAYABLE_VERSION
+#include "title_black.naix"
+#define ARCID_TITLE ARCID_TITLE_B
+#else
 #if PM_VERSION == VERSION_BLACK
 #include "title_black.naix"
 #else
 #include "title_white.naix"
 #endif
+#endif  //PLAYABLE_VERSION
+
 #include "corp.naix"
 
 
