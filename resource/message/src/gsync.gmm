@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-06-23T11:41:24"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-06-24T15:01:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -683,13 +683,13 @@
 はっこうしました
 
 うえのゲームシンクＩＤコード　は
-ゲームかいしじの　メインメニュー
+ゲームかいしじの　タイトルメニュー
 ゲームシンクせっていから
 みなおすことが　できます▼</language>
 		<language name="JPN_KANJI" width="256">ゲームシンクＩＤコードを発行しました
 
 上記のゲームシンクＩＤコード　は
-ゲーム開始時のメインメニュー
+ゲーム開始時の　タイトルメニュー
 ゲームシンク設定から
 見直すことが　できます▼</language>
 	</row>
