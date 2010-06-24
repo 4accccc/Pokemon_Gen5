@@ -238,7 +238,7 @@ enum
 //=====================================
 #define UI_DRAG_MOVE_RATE						(FX32_CONST(1))	
 
-#define UI_SLIDE_MOVE_DISTANCE_MIN	(FX32_CONST(2))	//この距離以上でスライドすれば有効
+#define UI_SLIDE_MOVE_DISTANCE_MIN	(FX32_CONST(1))	//この距離以上でスライドすれば有効
 
 //=============================================================================
 /**
@@ -513,6 +513,7 @@ static BOOL CURSOR_GetTrg( const CURSOR_WORK *cp_wk );
 static BOOL CURSOR_GetPointTrg( const CURSOR_WORK *cp_wk, u32 *p_x, u32 *p_y );
 static int  CURSOR_GetContButton( const CURSOR_WORK *cp_wk );
 static void CURSOR_SetTarget( CURSOR_WORK *p_wk, const PLACE_DATA *cp_data, const GFL_POINT *cp_wld );
+static void CURSOR_ReLoadTarget( CURSOR_WORK *p_wk, const GFL_POINT *cp_wld );
 static const PLACE_DATA * CURSOR_GetTarget( const CURSOR_WORK *cp_wk );
 static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off );
 //-------------------------------------
@@ -1384,8 +1385,15 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			add.x	*= -1;
 			add.y *= -1;
 			PLACE_AddWldPos( &p_wk->place, &add );
+      {
+        {
+          GFL_POINT wld;
+          PLACE_GetWldPos(&p_wk->place, &wld );
+          CURSOR_ReLoadTarget( &p_wk->cursor, &wld );
+        }
+      }
 
-
+#if 0
       //移動中は選択されない
       if( p_wk->cp_select )
       { 
@@ -1395,6 +1403,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
         CURSOR_SetTarget( &p_wk->cursor, NULL, NULL );
         p_wk->cp_select	= NULL;
       }
+#endif
 		}
 	}
 
@@ -2124,6 +2133,27 @@ static void CURSOR_SetTarget( CURSOR_WORK *p_wk, const PLACE_DATA *cp_data, cons
 
 		p_wk->cp_target	= cp_data;
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	演出OBJを出す(再読み込み)
+ *
+ *	@param	CURSOR_WORK *p_wk	ワーク
+ *	@param	WLD								場所ワールド座標
+
+ */
+//-----------------------------------------------------------------------------
+static void CURSOR_ReLoadTarget( CURSOR_WORK *p_wk, const GFL_POINT *cp_wld )
+{	
+	//ターゲットがNULLならば設定
+  if( p_wk->cp_target )
+  {
+		GFL_CLACTPOS pos;
+		pos.x	= PLACEDATA_GetParam( p_wk->cp_target, TOWNMAP_DATA_PARAM_CURSOR_X ) + cp_wld->x;
+		pos.y	= PLACEDATA_GetParam( p_wk->cp_target, TOWNMAP_DATA_PARAM_CURSOR_Y ) + cp_wld->y;
+		GFL_CLACT_WK_SetPos( p_wk->p_clwk[CURSOR_CLWK_RING], &pos, 0 );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3976,7 +4006,6 @@ static void UI_Main( UI_WORK *p_wk )
 	BOOL is_sync;
 	BOOL is_distance;
 	BOOL is_cont	= FALSE;
-	fx32 mag;
 	u32 x, y;
 	p_wk->is_slide	= FALSE;
 
@@ -3984,8 +4013,7 @@ static void UI_Main( UI_WORK *p_wk )
 	if( GFL_UI_TP_GetPointTrg( &x, &y ) )
 	{	
 		//タッチ範囲の中ならば
-		if( ((u32)( x - CURSOR_MOVE_LIMIT_LEFT) <= (u32)(CURSOR_MOVE_LIMIT_RIGHT - CURSOR_MOVE_LIMIT_LEFT))
-				&	((u32)( y - CURSOR_MOVE_LIMIT_TOP) <= (u32)(CURSOR_MOVE_LIMIT_BOTTOM - CURSOR_MOVE_LIMIT_TOP)))
+		if( y <= CURSOR_MOVE_LIMIT_BOTTOM)
 		{	
 
 			p_wk->start.x		= x << FX32_SHIFT;
@@ -3999,8 +4027,7 @@ static void UI_Main( UI_WORK *p_wk )
 	else if(GFL_UI_TP_GetPointCont( &x, &y ) )
 	{	
 		//タッチ範囲の中ならば
-		if( ((u32)( x - CURSOR_MOVE_LIMIT_LEFT) <= (u32)(CURSOR_MOVE_LIMIT_RIGHT - CURSOR_MOVE_LIMIT_LEFT))
-				&	((u32)( y - CURSOR_MOVE_LIMIT_TOP) <= (u32)(CURSOR_MOVE_LIMIT_BOTTOM - CURSOR_MOVE_LIMIT_TOP)))
+		if( y <= CURSOR_MOVE_LIMIT_BOTTOM )
 		{
 			if( p_wk->is_reset )
 			{	
@@ -4016,9 +4043,21 @@ static void UI_Main( UI_WORK *p_wk )
 
       if( VEC_Mag( &p_wk->v ) >= UI_SLIDE_MOVE_DISTANCE_MIN )
       { 
+     //   fx32  mag = VEC_Mag( &p_wk->v );
+     //   OS_Printf( "dist %f\n", FX_FX32_TO_F32( mag ) );
         p_wk->is_slide	= TRUE;
       }
 		}
+    else
+    {
+      //タッチ範囲外ならば、そこから開始
+      p_wk->start.x		= x << FX32_SHIFT;
+			p_wk->start.y		= y << FX32_SHIFT;
+			p_wk->start.z		= 0;
+			p_wk->end.x		= x << FX32_SHIFT;
+			p_wk->end.y		= y << FX32_SHIFT;
+			p_wk->end.z		= 0;
+    }
 	}
 }
 //----------------------------------------------------------------------------
