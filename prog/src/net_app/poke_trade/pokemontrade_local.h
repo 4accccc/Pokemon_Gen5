@@ -1069,6 +1069,7 @@ extern BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_2D_AlphaSet(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE2D_IconAllGray(POKEMON_TRADE_WORK* pWork,BOOL bGray);
+extern void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
 
 
 extern void POKE_GTS_InitFaceIcon(POKEMON_TRADE_WORK* pWork);

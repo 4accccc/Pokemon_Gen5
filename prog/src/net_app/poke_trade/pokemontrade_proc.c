@@ -2483,6 +2483,8 @@ static void _touchState_BeforeTimeing11Send(POKEMON_TRADE_WORK* pWork)
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_FIRSTBOTH,WB_NET_TRADE_SERVICEID)){
     GFL_NET_SetAutoErrorCheck(TRUE);
     GFL_NET_SetNoChildErrorCheck(TRUE);
+    POKEMONTRADE_PokeIconCgxLoad( pWork );
+
     _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
   }
 }

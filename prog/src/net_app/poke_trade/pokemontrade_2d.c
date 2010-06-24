@@ -252,7 +252,7 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
   
   IRC_POKETRADE_TrayInit(pWork,pWork->subchar2);
 
-  _PokeIconCgxLoad( pWork );
+//  _PokeIconCgxLoad( pWork );
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
 
 //	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
@@ -1278,7 +1278,7 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
  * @param	POKEMON_TRADE_WORK ÉèÅ[ÉN
  */
 //--------------------------------------------------------------------------------------------
-static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
+void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
 {
   int i,j,id,k=0;
   NNSG2dCharacterData* pCharData;
