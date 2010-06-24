@@ -374,10 +374,13 @@ static void PSTATUS_RIBBON_UpdateUI( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   }
   else
   {
-    //アクティブ時の更新
-    if( PSTATUS_RIBBON_UpdateKey( work,ribbonWork ) == FALSE )
+    if( ribbonWork->isUpdateStrInfo == FALSE )
     {
-      PSTATUS_RIBBON_UpdateTP( work,ribbonWork );
+      //アクティブ時の更新
+      if( PSTATUS_RIBBON_UpdateKey( work,ribbonWork ) == FALSE )
+      {
+        PSTATUS_RIBBON_UpdateTP( work,ribbonWork );
+      }
     }
   }
 }
@@ -703,6 +706,8 @@ void PSTATUS_RIBBON_DispPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWo
   ribbonWork->isDispInfo = FALSE;
   ribbonWork->isUpdateStrInfo = FALSE;
   ribbonWork->isMoveRibbon = TRUE;
+  ribbonWork->bmpWinName = NULL;
+  ribbonWork->bmpWinInfo = NULL;
 
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
   {
@@ -1108,10 +1113,15 @@ static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_W
 //--------------------------------------------------------------
 static void PSTATUS_RIBBON_ClearInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
-  if( ribbonWork->isDispInfo == TRUE )
+  if( ribbonWork->bmpWinName != NULL )
   {
     GFL_BMPWIN_Delete( ribbonWork->bmpWinName );
+    ribbonWork->bmpWinName = NULL;
+  }
+  if( ribbonWork->bmpWinInfo != NULL )
+  {
     GFL_BMPWIN_Delete( ribbonWork->bmpWinInfo );
+    ribbonWork->bmpWinInfo = NULL;
   }
 }
 
