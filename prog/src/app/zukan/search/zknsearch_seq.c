@@ -783,6 +783,8 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		ZKNSEARCHOBJ_VanishMark( wk );
+		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, wk->dat->sort->name );
 		wk->nextSeq = MAINSEQ_MAIN_NAME;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -923,6 +925,9 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		ZKNSEARCHOBJ_VanishMark( wk );
+		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type1) );
+		ZKNSEARCHOBJ_VanishJumpMark( wk, 1, ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type2) );
 		wk->nextSeq = MAINSEQ_MAIN_TYPE;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -1064,6 +1069,8 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		ZKNSEARCHOBJ_VanishMark( wk );
+		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, wk->dat->sort->color );
 		wk->nextSeq = MAINSEQ_MAIN_COLOR;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -1202,6 +1209,9 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
+		ZKNSEARCHOBJ_VanishJumpFormIcon( wk );
+		ZKNSEARCHOBJ_VanishMark( wk );
+		ZKNSEARCHOBJ_VanishJumpMarkForm( wk );
 		wk->nextSeq = MAINSEQ_MAIN_FORM;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;

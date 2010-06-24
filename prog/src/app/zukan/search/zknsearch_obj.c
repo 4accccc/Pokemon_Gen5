@@ -17,6 +17,7 @@
 
 #include "../zukan_common.h"
 #include "zknsearch_main.h"
+#include "zknsearch_list.h"
 #include "zknsearch_obj.h"
 #include "zukan_gra.naix"
 
@@ -913,6 +914,36 @@ void ZKNSEARCHOBJ_PutFormListNow( ZKNSEARCHMAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		ページ送り時のフォルムアイコン表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHOBJ_VanishJumpFormIcon( ZKNSEARCHMAIN_WORK * wk )
+{
+	s16	i;
+	s16	pos;
+
+	pos = FRAMELIST_GetScrollCount( wk->lwk );
+
+	for( i=0; i<ZKNSEARCHOBJ_FORM_MAX; i++ ){
+		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_M+i, FALSE );
+		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_S+i, FALSE );
+		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_SW+i, FALSE );
+	}
+
+	for( i=0; i<ZKNSEARCHLIST_FORMITEM_DISP_MAX+1; i++ ){
+		ZKNSEARCHOBJ_PutFormList( wk, pos+i, MARK_SY_FORM*i, TRUE );
+		if( ( pos - ( i + 1 ) ) >= 0 ){
+			ZKNSEARCHOBJ_PutFormList( wk, pos-(i+1), 192-MARK_SY_FORM*(i+1), FALSE );
+		}
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		スクロールバー表示
  *
  * @param		wk			図鑑検索画面ワーク
@@ -1138,6 +1169,66 @@ void ZKNSEARCHOBJ_ChangeFormMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg )
 	if( flg == TRUE ){
 		ZKNSEARCHOBJ_SetPos(
 			wk, ZKNSEARCHOBJ_IDX_MARK1_M, MARK_PX_FORM, MARK_PY_FORM+MARK_SY_FORM*pos, CLSYS_DRAW_MAIN );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ送り時のチェックマーク切り替え
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		num			マーク番号
+ * @param		sel			マーク表示位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHOBJ_VanishJumpMark( ZKNSEARCHMAIN_WORK * wk, u16 num, u16 sel )
+{
+	u32	pos;
+	u32	i;
+	s16	start, end;
+
+	pos = FRAMELIST_GetScrollCount( wk->lwk );
+
+	start = pos - ZKNSEARCHLIST_ITEM_DISP_MAX;
+	end   = pos + ZKNSEARCHLIST_ITEM_DISP_MAX;
+
+	if( start < 0 ){ start = 0; }
+
+	if( sel >= start && sel < pos ){
+		ZKNSEARCHOBJ_PutMark( wk, num, (192)-MARK_SY*(pos-sel), FALSE );
+	}else if( sel >= pos && sel < end ){
+		ZKNSEARCHOBJ_PutMark( wk, num, MARK_SY*(sel-pos), TRUE );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ送り時のチェックマーク切り替え（フォルムページ）
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHOBJ_VanishJumpMarkForm( ZKNSEARCHMAIN_WORK * wk )
+{
+	u32	pos;
+	u32	i;
+	s16	start, end;
+
+	pos = FRAMELIST_GetScrollCount( wk->lwk );
+
+	start = wk->dat->sort->form - ZKNSEARCHLIST_FORMITEM_DISP_MAX;
+	end   = wk->dat->sort->form + ZKNSEARCHLIST_FORMITEM_DISP_MAX;
+
+	if( start < 0 ){ start = 0; }
+
+	if( wk->dat->sort->form >= start && wk->dat->sort->form < pos ){
+		ZKNSEARCHOBJ_PutFormMark( wk, (192)-MARK_SY_FORM*(pos-wk->dat->sort->form), FALSE );
+	}else if( wk->dat->sort->form >= pos && wk->dat->sort->form < end ){
+		ZKNSEARCHOBJ_PutFormMark( wk, MARK_SY_FORM*(wk->dat->sort->form-pos), TRUE );
 	}
 }
 
