@@ -6,6 +6,7 @@
  * @date	2008.08.28(木)
  */
 //==============================================================================
+#include "playable_version.h"
 #include <gflib.h>
 #include <backup_system.h>
 #include "system/main.h"
@@ -71,6 +72,10 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   BOOL outside_exists = FALSE;
   BOOL outside_break = FALSE;
   
+#ifdef  PLAYABLE_VERSION
+    outside_exists = 0; //OutsideSave_GetExistFlag(outsv);
+    outside_break = 0;  //OutsideSave_GetBreakFlag(outsv);
+#else
   //内部セーブでヒープを使用しきる前に管理外セーブの存在チェックを行う
   {
     OUTSIDE_SAVE_CONTROL *outsv;
@@ -84,6 +89,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
     
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
   }
+#endif  //PLAYABLE_VERSION
   
 	ctrl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(SAVE_CONTROL_WORK));
 	SaveControlWork = ctrl;
@@ -107,6 +113,9 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 
   //---------------- 内部セーブ＆外部セーブ ----------------
 	//データ存在チェックを行っている
+#ifdef  PLAYABLE_VERSION
+  load_ret = LOAD_RESULT_NULL;
+#else
 	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);
   if(load_ret == LOAD_RESULT_OK || load_ret == LOAD_RESULT_NG){
     //データを読めても初回セットアップしかされていないならデータ無し扱いにする
@@ -115,6 +124,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
       OS_TPrintf("初回セットアップのみの為、データ無し扱い\n");
     }
   }
+#endif
 	ctrl->first_status = 0;
 	if(outside_break == TRUE){
     ctrl->first_status |= FST_OUTSIDE_MYSTERY_BREAK_BIT;
