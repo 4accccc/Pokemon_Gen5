@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-06-18T15:34:14"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-06-24T17:03:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -423,9 +423,10 @@ GFBTS1607：不要なスペース削除</comment>
 	<row id="MSG_TCARD_19" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>カード裏面項目。
 パレス：もっているデルパワーの数
-単位はなし。</comment>
-		<language name="JPN" width="256">もっている　デルパワー</language>
-		<language name="JPN_KANJI" width="256">持っている　デルパワー</language>
+単位はなし。
+100624：使えるデルパワーに表現を修正</comment>
+		<language name="JPN" width="256">つかえる　デルパワー</language>
+		<language name="JPN_KANJI" width="256">使える　デルパワー</language>
 	</row>
 
 	<row id="MSG_TCARD_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
