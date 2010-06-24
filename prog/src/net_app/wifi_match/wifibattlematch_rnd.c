@@ -905,6 +905,19 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_START_POKECHECK_SERVER:
     Util_SubSeq_Start( p_wk, WbmRndSubSeq_EvilCheck );
     *p_seq       = SEQ_WAIT_POKECHECK_SERVER;
+
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    }
+
     break;
 
   case SEQ_WAIT_POKECHECK_SERVER:
@@ -2296,6 +2309,19 @@ static void WbmRndSeq_Free_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_START_SUBSEQ_EVILCHECK:
     Util_SubSeq_Start( p_wk, WbmRndSubSeq_EvilCheck );
     *p_seq  = SEQ_WAIT_SUBSEQ_EVILCHECK;
+
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    }
+
     break;
 
   case SEQ_WAIT_SUBSEQ_EVILCHECK:

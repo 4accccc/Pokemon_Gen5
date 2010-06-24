@@ -5404,11 +5404,24 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
     { 
       BOOL ret;
       ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( p_wk->p_nhttp );
-      GF_ASSERT( ret );
 
-      if( NHTTP_RAP_StartConnect( p_wk->p_nhttp ) == NHTTP_ERROR_NONE )
+      if( ret )
       {
-        p_wk->seq++;
+        if( NHTTP_RAP_StartConnect( p_wk->p_nhttp ) == NHTTP_ERROR_NONE )
+        {
+          p_wk->seq++;
+        }
+        else
+        {
+          if(p_wk->p_nhttp)
+          {
+            NHTTP_RAP_End(p_wk->p_nhttp);
+            p_wk->p_nhttp  = NULL;
+            p_wk->seq = 0;
+          }
+          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR;
+        }
+        DEBUG_NET_Printf( "不正チェック開始\n" );
       }
       else
       {
@@ -5417,11 +5430,10 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
           NHTTP_RAP_End(p_wk->p_nhttp);
           p_wk->p_nhttp  = NULL;
           p_wk->seq = 0;
-          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR;
         }
+        return WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR;
       }
 
-      DEBUG_NET_Printf( "不正チェック開始\n" );
     }
     break;
 
@@ -5467,7 +5479,7 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
         NAGI_Printf( "不正チェック通過してサインもらいました！\n" );
         cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_buff, p_wk->poke_max );
         GFL_STD_MemCopy( cp_sign, p_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
-
+#ifdef PM_DEBUG
         { 
           int i;
           for( i = 0; i < NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN; i++ )
@@ -5478,9 +5490,8 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
               DEBUG_NET_Printf( "\n" );
             }
           }
-
         }
-
+#endif
       }
 
       NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
