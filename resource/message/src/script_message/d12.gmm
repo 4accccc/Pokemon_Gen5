@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-16T12:09:54"/>
+	<create user="matsumiya" host="W00224" date="2010-06-24T15:49:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="50" top="115" right="755" bottom="735" maximized="no" rayout="Vertical2">
+	<dialog left="1439" top="152" right="2144" bottom="772" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -599,7 +599,7 @@
 ごそっと　とらえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『[1:00:トレーナー名:0]の　おかげで
 悪事を　働いた　連中は[BE:00:ページ切り替え（行送り）]
-ごそっと　　捕らえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
+ごそっと　捕らえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -725,38 +725,10 @@
 未来は　明るく　なるのにね！▼</language>
 	</row>
 
-	<row id="msg_d12_hakase2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+	<row id="msg_d12_hakase2_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>未使用</comment>
-		<language name="JPN" width="256">ビクティニは
-その　からだから　あふれる▽
-エネルギーを　はっさんさせる　という▽
-まぼろしの　ポケモン……▼
-その　エネルギーに　ふれた
-ポケモンや　ひとは▼
-ぜんしんに　パワーが　あふれ
-いつもより　ちからを　はっきできたの▼
-そう……！　ビクティニは
-エネルギーや　パワーを　わけあたえ▽
-しょうりを　もたらす　ポケモンとして▽
-みんなに　あいされていたの▼
-だけど　ときの　けんりょくしゃが
-その　パワーを　ひとりじめ　しようと▼
-ビクティニを　とらえてから
-どうなっていたのか▽
-まったく　わからなくて……▼
-この　リバティガーデンとう　で
-しずかに　くらしていたのね……▼</language>
-		<language name="JPN_KANJI" width="256">この　しまに　ちかしつを　つくって
-ビクティニを　かくまった　ひとは▼
-よくぶかい　ひとたちから
-ビクティニを　まもりたかったのね……▼
-でも　それが　けっかてきに
-ビクティニから　じゆうを▽
-うばってしまった……▼
-しまの　なまえは
-リバティガーデンとう▽
-じゆうのにわ……▽
-ひにくな　なまえだわ……▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
