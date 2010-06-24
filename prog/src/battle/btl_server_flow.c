@@ -121,6 +121,7 @@ static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8
 static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, BOOL fIntrDisable );
 static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u16 effectNo );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
+static WazaID checkEncoreWazaChange( const BTL_POKEPARAM* bpp, const BTL_ACTION_PARAM* action );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
 static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza );
@@ -1873,7 +1874,6 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
       if( (wk->flowResult == SVFLOW_RESULT_BTL_QUIT)
       &&  (action.gen.cmd != BTL_ACTION_ESCAPE)
       ){
-        TAYA_Printf("Break - 0\n");
         break;
       }
       // 死んでたら実行しない
@@ -2106,12 +2106,23 @@ static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID, u8 targetPoke
   ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, intrPokeID );
   if( actOrder && (actOrder->fDone == FALSE) )
   {
-    BtlPokePos  targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
-    BTL_N_Printf( DBGSTR_SVFL_ActIntr, actOrder, BPP_GetID(actOrder->bpp));
+    // アンコール状態で違うワザを選んでいた場合は割り込み不可
+    //（とんぼがえり入れ替えなどの場合に起こりうる）
+    {
+      WazaID encoreWaza = checkEncoreWazaChange( actOrder->bpp, &(actOrder->action) );
+      if( encoreWaza != WAZANO_NULL )
+      {
+        return FALSE;
+      }
+    }
 
-    BTL_ACTION_ChangeFightTargetPos( &actOrder->action, targetPos );
-    ActOrder_Proc( wk, actOrder );
-    return TRUE;
+    {
+      BtlPokePos  targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
+      BTL_N_Printf( DBGSTR_SVFL_ActIntr, actOrder, BPP_GetID(actOrder->bpp));
+      BTL_ACTION_ChangeFightTargetPos( &actOrder->action, targetPos );
+      ActOrder_Proc( wk, actOrder );
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -3052,7 +3063,32 @@ static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke 
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_OUT_FIXED );
   BTL_EVENTVAR_Pop();
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * ターン中に受けたアンコールで出す技を書き換える必要がある場合、書き換え後のワザナンバー取得
+ *
+ * @param   bpp
+ * @param   action
+ *
+ * @retval  WazaID    書き換え後ワザナンバー／書き換え不要ならWAZANO_NULL
+ */
+//----------------------------------------------------------------------------------
+static WazaID checkEncoreWazaChange( const BTL_POKEPARAM* bpp, const BTL_ACTION_PARAM* action )
+{
+  if( (BPP_CheckSick(bpp, WAZASICK_ENCORE))
+  ){
+    if( action->fight.waza != WAZANO_WARUAGAKI )
+    {
+      WazaID encoreWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(bpp, WAZASICK_ENCORE) );
+      if( (encoreWaza != action->fight.waza)
+      &&  (BPP_WAZA_GetPP_ByNumber(bpp, encoreWaza))
+      ){
+        return encoreWaza;
+      }
+    }
+  }
+  return WAZANO_NULL;
+}
 //-----------------------------------------------------------------------------------
 // サーバーフロー：「たたかう」ルート
 //-----------------------------------------------------------------------------------
@@ -3075,17 +3111,10 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   reqWaza.targetPos = BTL_POS_NULL;
 
   /* アンコール状態で違うワザを選んでいた場合は強制書き換え */
-  if( (BPP_CheckSick(attacker, WAZASICK_ENCORE))
-  &&  (!(wk->fMemberOutIntr))
-  ){
-    if( action->fight.waza != WAZANO_WARUAGAKI )
-    {
-      WazaID encoreWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(attacker, WAZASICK_ENCORE) );
-      if( (encoreWaza != action->fight.waza)
-      &&  (BPP_WAZA_GetPP_ByNumber(attacker, encoreWaza))
-      ){
-        action->fight.waza = encoreWaza;
-      }
+  {
+    WazaID encoreWaza = checkEncoreWazaChange( attacker, action );
+    if( encoreWaza != WAZANO_NULL ){
+      action->fight.waza = encoreWaza;
     }
   }
 
