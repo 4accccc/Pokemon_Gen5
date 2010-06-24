@@ -8,6 +8,7 @@
  * 2009.06.09 fieldmap.cからイベント起動チェック部分を独立させた
  */
 //======================================================================
+#include "playable_version.h"
 
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
@@ -641,6 +642,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
   }
   
+#ifndef PLAYABLE_VERSION
   //メニュー起動チェック
   if( req.menuRequest ){
     if(WIPE_SYS_EndCheck()){
@@ -655,6 +657,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
     }
   }
+#endif
   
   SET_CHECK("ev_check:subscreen");
   //新サブスクリーンからのイベント起動チェック
