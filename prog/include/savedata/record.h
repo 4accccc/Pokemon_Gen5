@@ -128,8 +128,8 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_IRC_BATTLE        (LARGE_REC_START+36)  ///< @赤外線通信対戦をした回数
 #define RECID_IRC_BTL_WIN       (LARGE_REC_START+37)  ///< @赤外線通信対戦の勝利数
 #define RECID_IRC_BTL_LOSE      (LARGE_REC_START+38)  ///< @赤外線通信対戦の敗北数
-#define RECID_PALACE_TIME       (LARGE_REC_START+39)  ///< @パレス訪問時間合計 40
-#define RECID_PALACE_MISSION     (LARGE_REC_START+40)  ///< @パレスクリアしたミッションの数
+#define RECID_PALACE_TIME       (LARGE_REC_START+39)  ///< @パレス訪問時間合計 40(未使用）
+#define RECID_PALACE_MISSION     (LARGE_REC_START+40) ///< @パレスクリアしたミッションの数(未使用）
 
 #define RECID_LARGE_42   ( LARGE_REC_START+41 )   ///< 4バイトレコード 未使用領域の定義
 #define RECID_LARGE_43   ( LARGE_REC_START+42 )   ///< 次回作用に…
@@ -187,26 +187,26 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_DAYCNT_EVOLUTION    (SMALL_REC_START+17)  ///< @1日にポケモン進化させた回数
 #define RECID_FOSSIL_RESTORE      (SMALL_REC_START+18)  ///< @ポケモンの化石を復元した回数
 #define RECID_GURUGURU_COUNT      (SMALL_REC_START+19)  ///< @ぐるぐる交換をした回数 90
-#define RECID_RANDOM_FREE_SINGLE_WIN   (SMALL_REC_START+20)  ///< @ランダムフリーシングル勝利数
-#define RECID_RANDOM_FREE_SINGLE_LOSE  (SMALL_REC_START+21)  ///< @ランダムフリーシングル敗北数
-#define RECID_RANDOM_FREE_DOUBLE_WIN   (SMALL_REC_START+22)  ///< @ランダムフリーダブル勝利数
-#define RECID_RANDOM_FREE_DOUBLE_LOSE  (SMALL_REC_START+23)  ///< @ランダムフリーダブル敗北数
-#define RECID_RANDOM_FREE_ROTATE_WIN   (SMALL_REC_START+24)  ///< @ランダムフリーローテーション勝利数
-#define RECID_RANDOM_FREE_ROTATE_LOSE  (SMALL_REC_START+25)  ///< @ランダムフリーローテーション敗北数
-#define RECID_RANDOM_FREE_TRIPLE_WIN   (SMALL_REC_START+26)  ///< @ランダムフリートリプル勝利数
-#define RECID_RANDOM_FREE_TRIPLE_LOSE  (SMALL_REC_START+27)  ///< @ランダムフリートリプル敗北数
-#define RECID_RANDOM_FREE_SHOOTER_WIN  (SMALL_REC_START+28)  ///< @ランダムフリーシューター勝利数
-#define RECID_RANDOM_FREE_SHOOTER_LOSE (SMALL_REC_START+29)  ///< @ランダムフリーシューター敗北数 100
-#define RECID_RANDOM_RATE_SINGLE_WIN   (SMALL_REC_START+30)  ///< @ランダムレートシングル勝利数
-#define RECID_RANDOM_RATE_SINGLE_LOSE  (SMALL_REC_START+31)  ///< @ランダムレートシングル敗北数
-#define RECID_RANDOM_RATE_DOUBLE_WIN   (SMALL_REC_START+32)  ///< @ランダムレートダブル勝利数
-#define RECID_RANDOM_RATE_DOUBLE_LOSE  (SMALL_REC_START+33)  ///< @ランダムレートダブル敗北数
-#define RECID_RANDOM_RATE_ROTATE_WIN   (SMALL_REC_START+34)  ///< @ランダムレートローテーション勝利数
-#define RECID_RANDOM_RATE_ROTATE_LOSE  (SMALL_REC_START+35)  ///< @ランダムレートローテーション敗北数
-#define RECID_RANDOM_RATE_TRIPLE_WIN   (SMALL_REC_START+36)  ///< @ランダムレートトリプル勝利数
-#define RECID_RANDOM_RATE_TRIPLE_LOSE  (SMALL_REC_START+37)  ///< @ランダムレートトリプル敗北数
-#define RECID_RANDOM_RATE_SHOOTER_WIN  (SMALL_REC_START+38)  ///< @ランダムレートシューター勝利数
-#define RECID_RANDOM_RATE_SHOOTER_LOSE (SMALL_REC_START+39)  ///< @ランダムレートシューター敗北数 110
+#define RECID_RANDOM_FREE_SINGLE_WIN   (SMALL_REC_START+20)  ///< ↑(未使用）
+#define RECID_RANDOM_FREE_SINGLE_LOSE  (SMALL_REC_START+21)  ///< ランダムマッチ周りの勝敗カウントの(未使用）
+#define RECID_RANDOM_FREE_DOUBLE_WIN   (SMALL_REC_START+22)  ///< つもりだったが別の場所で(未使用）
+#define RECID_RANDOM_FREE_DOUBLE_LOSE  (SMALL_REC_START+23)  ///< 確保されていたので未使用(未使用）
+#define RECID_RANDOM_FREE_ROTATE_WIN   (SMALL_REC_START+24)  ///< (未使用）
+#define RECID_RANDOM_FREE_ROTATE_LOSE  (SMALL_REC_START+25)  ///< (未使用）
+#define RECID_RANDOM_FREE_TRIPLE_WIN   (SMALL_REC_START+26)  ///< (未使用）
+#define RECID_RANDOM_FREE_TRIPLE_LOSE  (SMALL_REC_START+27)  ///< (未使用）
+#define RECID_RANDOM_FREE_SHOOTER_WIN  (SMALL_REC_START+28)  ///< (未使用）
+#define RECID_RANDOM_FREE_SHOOTER_LOSE (SMALL_REC_START+29)  ///< (未使用）
+#define RECID_RANDOM_RATE_SINGLE_WIN   (SMALL_REC_START+30)  ///< (未使用）
+#define RECID_RANDOM_RATE_SINGLE_LOSE  (SMALL_REC_START+31)  ///< (未使用）
+#define RECID_RANDOM_RATE_DOUBLE_WIN   (SMALL_REC_START+32)  ///< (未使用）
+#define RECID_RANDOM_RATE_DOUBLE_LOSE  (SMALL_REC_START+33)  ///< (未使用）
+#define RECID_RANDOM_RATE_ROTATE_WIN   (SMALL_REC_START+34)  ///< (未使用）
+#define RECID_RANDOM_RATE_ROTATE_LOSE  (SMALL_REC_START+35)  ///< (未使用）
+#define RECID_RANDOM_RATE_TRIPLE_WIN   (SMALL_REC_START+36)  ///< (未使用）
+#define RECID_RANDOM_RATE_TRIPLE_LOSE  (SMALL_REC_START+37)  ///< (未使用）
+#define RECID_RANDOM_RATE_SHOOTER_WIN  (SMALL_REC_START+38)  ///< (未使用）
+#define RECID_RANDOM_RATE_SHOOTER_LOSE (SMALL_REC_START+39)  ///< ↓(未使用）
 #define RECID_USE_SHOOTER_COUNT        (SMALL_REC_START+40)  ///< @シューター使用回数
 #define RECID_EFFECT_ENCOUNT_NUM       (SMALL_REC_START+41)  ///< @エフェクトエンカウントをした回数
 #define RECID_AFFINITY_CHECK_NUM       (SMALL_REC_START+42)  ///< @相性チェックをした回数
@@ -279,6 +279,7 @@ extern void RECORD_DebugSet( RECORD *rec );
 // 2:      65,536
 // 3:       9,999
 // 4:         999
+// 5:           7
 // --------------------------------------------------------------------------------------
 
 #define RECID_WALK_COUNT_FLAG       ( 0 )  ///< 歩いた歩数  999,999,999
@@ -375,25 +376,25 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_DAYCNT_EVOLUTION_FLAG   ( 3 )  ///< 1日にポケモン進化させた回数
 #define RECID_FOSSIL_RESTORE_FLAG     ( 3 )  ///< ポケモンの化石を復元した回数  
 #define RECID_GURUGURU_COUNT_FLAG     ( 3 )  ///< ぐるぐる交換をした回数        90
-#define RECID_RANDOM_FREE_SINGLE_WIN_FLAG  ( 2 )  ///< ランダムフリーシングル勝利数
-#define RECID_RANDOM_FREE_SINGLE_LOSE_FLAG ( 2 )  ///< ランダムフリーシングル敗北数
-#define RECID_RANDOM_FREE_DOUBLE_WIN_FLAG  ( 2 )  ///< ランダムフリーダブル勝利数
-#define RECID_RANDOM_FREE_DOUBLE_LOSE_FLAG ( 2 )  ///< ランダムフリーダブル敗北数
-#define RECID_RANDOM_FREE_ROTATE_WIN_FLAG  ( 2 )  ///< ランダムフリーローテーション勝利数
-#define RECID_RANDOM_FREE_ROTATE_LOSE_FLAG ( 2 )  ///< ランダムフリーローテーション敗北数
-#define RECID_RANDOM_FREE_TRIPLE_WIN_FLAG  ( 2 )  ///< ランダムフリートリプル勝利数
-#define RECID_RANDOM_FREE_TRIPLE_LOSE_FLAG ( 2 )  ///< ランダムフリートリプル敗北数
-#define RECID_RANDOM_FREE_SHOOTER_WIN_FLAG ( 2 )  ///< ランダムフリーシューター勝利数 
-#define RECID_RANDOM_FREE_SHOOTER_LOSE_FLAG ( 2 )  ///< ランダムフリーシューター敗北数 100
-#define RECID_RANDOM_RATE_SINGLE_WIN_FLAG  ( 2 )  ///< ランダムレートシングル勝利数
-#define RECID_RANDOM_RATE_SINGLE_LOSE_FLAG ( 2 )  ///< ランダムレートシングル敗北数
-#define RECID_RANDOM_RATE_DOUBLE_WIN_FLAG  ( 2 )  ///< ランダムレートダブル勝利数
-#define RECID_RANDOM_RATE_DOUBLE_LOSE_FLAG ( 2 )  ///< ランダムレートダブル敗北数
-#define RECID_RANDOM_RATE_ROTATE_WIN_FLAG  ( 2 )  ///< ランダムレートローテーション勝利数
-#define RECID_RANDOM_RATE_ROTATE_LOSE_FLAG ( 2 )  ///< ランダムレートローテーション敗北数
-#define RECID_RANDOM_RATE_TRIPLE_WIN_FLAG  ( 2 )  ///< ランダムレートトリプル勝利数
-#define RECID_RANDOM_RATE_TRIPLE_LOSE_FLAG ( 2 )  ///< ランダムレートトリプル敗北数
-#define RECID_RANDOM_RATE_SHOOTER_WIN_FLAG ( 2 )  ///< ランダムレートシューター勝利数 
+#define RECID_RANDOM_FREE_SINGLE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_FREE_SINGLE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_FREE_DOUBLE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_FREE_DOUBLE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_FREE_ROTATE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_FREE_ROTATE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_FREE_TRIPLE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_FREE_TRIPLE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_FREE_SHOOTER_WIN_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_FREE_SHOOTER_LOSE_FLAG ( 2 )  ///<
+#define RECID_RANDOM_RATE_SINGLE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_RATE_SINGLE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_RATE_DOUBLE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_RATE_DOUBLE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_RATE_ROTATE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_RATE_ROTATE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_RATE_TRIPLE_WIN_FLAG  ( 2 )  ///< 
+#define RECID_RANDOM_RATE_TRIPLE_LOSE_FLAG ( 2 )  ///< 
+#define RECID_RANDOM_RATE_SHOOTER_WIN_FLAG ( 2 )  ///< 
 #define RECID_RANDOM_RATE_SHOOTER_LOSE_FLAG ( 2 )  ///< ランダムレートシューター敗北数 110
 #define RECID_USE_SHOOTER_COUNT_FLAG       ( 3 )  ///< シューター使用回数
 #define RECID_EFFECT_ENCOUNT_NUM_FLAG      ( 3 )  ///< エフェクトエンカウントをした回数
