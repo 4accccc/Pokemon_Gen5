@@ -719,6 +719,7 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
       *p_seq = SEQ_CHECK_GPF;
       break;
     case WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR:
+
       //ƒGƒ‰[ˆ—
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
       { 
