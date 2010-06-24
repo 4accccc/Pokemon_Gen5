@@ -481,7 +481,14 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 			//‰e—p‚Ì‰ñ“]
 			G3_RotX( FX_SinIdx( mcss->shadow_rotate_x ), FX_CosIdx( mcss->shadow_rotate_x ) );
-			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
+			{
+        VecFx32 shadowAnmPos;
+        shadowAnmPos.x = FX_Mul(MCSS_CONST( anim_SRT_mc.px ),mcss_sys->mcAnimRate);
+        shadowAnmPos.y = FX_Mul(MCSS_CONST( -anim_SRT_mc.py ),mcss_sys->mcAnimRate);
+        shadowAnmPos.x = FX_Mul(shadowAnmPos.x,mcss->shadow_scale.x);
+        shadowAnmPos.y = FX_Mul(shadowAnmPos.y,mcss->shadow_scale.y);
+  			G3_Translate( shadowAnmPos.x , shadowAnmPos.y, 0 );
+  		}
 			G3_RotZ( -FX_SinIdx( mcss->shadow_rotate_z ), FX_CosIdx( mcss->shadow_rotate_z ) );
 			G3_RotZ( -FX_SinIdx( rotate ), FX_CosIdx( rotate ) );
 			{	

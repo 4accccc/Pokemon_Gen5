@@ -20,7 +20,7 @@ extern const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work );
 extern const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work );
 extern void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isLock );
 
-extern const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work );
+extern POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work );
 extern POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work );
 extern void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast );
 

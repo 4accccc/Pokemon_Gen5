@@ -346,6 +346,16 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   const u32 birthPlace = PPP_Get( ppp, ID_PARA_birth_place , NULL );
   const u32 isEvent = PPP_Get( ppp, ID_PARA_event_get_flag , NULL );
   const BOOL isRare = PPP_CheckRare( ppp );
+  BOOL ieEggBirth = FALSE;
+
+  if( PPP_Get( ppp, ID_PARA_get_year  , NULL ) != 0 ||
+      PPP_Get( ppp, ID_PARA_get_month , NULL ) != 0 ||
+      PPP_Get( ppp, ID_PARA_get_day   , NULL ) != 0 ||
+      PPP_Get( ppp, ID_PARA_get_place , NULL ) != 0 )
+  {
+    ieEggBirth = TRUE;
+  }
+
 
   PPP_FastModeOff(ppp,fastFlg);
 
@@ -355,7 +365,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
     //2010映画セレビィ(イベント前
     if( monsNo == MONSNO_SEREBHI &&
         birthPlace == POKE_MEMO_PLACE_SEREBIXI_BEFORE &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE && isRare == FALSE )
     {
       return TRUE;
     }
@@ -365,7 +375,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
     //2010映画セレビィ(イベント後
     if( monsNo == MONSNO_SEREBHI &&
         birthPlace == POKE_MEMO_PLACE_SEREBIXI_AFTER &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE && isRare == FALSE )
     {
       return TRUE;
     }
@@ -376,7 +386,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
     if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
         birthPlace == POKE_MEMO_PLACE_ENRAISUI_BEFORE &&
         isRare == TRUE &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE )
     {
       return TRUE;
     }
@@ -386,7 +396,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
     if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
         birthPlace == POKE_MEMO_PLACE_ENRAISUI_AFTER &&
         isRare == TRUE &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE )
     {
       return TRUE;
     }
@@ -394,7 +404,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_DARUTANISU:
     //配布ダルタニス
     if( monsNo == MONSNO_654 &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE )
     {
       return TRUE;
     }
@@ -403,7 +413,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_MERODHIA:
     //配布メロディア
     if( monsNo == MONSNO_655 &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE )
     {
       return TRUE;
     }
@@ -412,7 +422,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_INSEKUTA:
     //配布インセクタ
     if( monsNo == MONSNO_656 &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE )
     {
       return TRUE;
     }
@@ -420,7 +430,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_SHEIMI:
     //配布シェイミ
     if( monsNo == MONSNO_SHEIMI &&
-        isEvent == 1 )
+        isEvent == 1 && ieEggBirth == FALSE )
     {
       return TRUE;
     }

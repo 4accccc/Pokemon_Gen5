@@ -151,7 +151,7 @@ struct _PSTATUS_INFO_WORK
 //======================================================================
 #pragma mark [> proto
 static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
-static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp );
+static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , POKEMON_PASO_PARAM *ppp );
 static STRBUF* PSTATUS_INFO_GetPlaceStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const u32 place );
 
 static const u8 winPos[SIB_MAX][4] =
@@ -265,7 +265,7 @@ void PSTATUS_INFO_ReleaseResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
 void PSTATUS_INFO_DispPage( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 {
   u8 i;
-  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+  POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
 
   for( i=0;i<SIB_MAX;i++ )
   {
@@ -582,7 +582,7 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
 //--------------------------------------------------------------
 //	文字の描画
 //--------------------------------------------------------------
-static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
+static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , POKEMON_PASO_PARAM *ppp )
 {
   u32 height = 0;
   BOOL isParent;  //自分のポケか？
@@ -602,6 +602,13 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   //場所はポケシフター対応で書き換える可能性あり。
   u32 place1  = PPP_Get( ppp , ID_PARA_get_place , NULL );
   u32 place2  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
+  //映画イベント配布チェック
+  const BOOL isEveSerebixiBef = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF );
+  const BOOL isEveSerebixiAft = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_AFT );
+  const BOOL isEveEnRaiSuiBef = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF );
+  const BOOL isEveEnRaiSuiAft = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_AFT );
+  const BOOL isMoveiEvent = ( isEveSerebixiBef|isEveSerebixiAft|isEveEnRaiSuiBef|isEveEnRaiSuiAft );
+  
   //自分のポケかチェック
   {
     MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
@@ -706,7 +713,9 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
           
         }
       }
-      else if( place2 >= POKE_MEMO_PLACE_SEREBIXI_BEFORE && place2 <= POKE_MEMO_PLACE_ENRAISUI_AFTER )
+      else if( place2 >= POKE_MEMO_PLACE_SEREBIXI_BEFORE && 
+               place2 <= POKE_MEMO_PLACE_ENRAISUI_AFTER  &&
+               isMoveiEvent == TRUE )
       {
         //2010映画
         switch( place2 )

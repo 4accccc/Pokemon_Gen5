@@ -1426,19 +1426,21 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
   GF_ASSERT( subWork->pokeMcss == NULL );
   {
     subWork->pokeMcss = MCSS_TOOL_AddPokeMcss(work->mcssSys , pp , MCSS_DIR_FRONT , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 );
-    MCSS_SetScale( subWork->pokeMcss , &scale );
+    //MCSS_SetScale( subWork->pokeMcss , &scale );
     MCSS_SetShadowAlpha( subWork->pokeMcss , 2 );
     MCSS_SetShadowRotate( subWork->pokeMcss , PSTATUS_SUB_SHADOW_ROTATE );
     MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
     MCSS_TOOL_SetAnmRestartCallback( subWork->pokeMcss );
+    MCSS_SetOfsScale( subWork->pokeMcss , &scale );
   }
   {
     subWork->pokeMcssBack = MCSS_TOOL_AddPokeMcss(work->mcssSys , pp , MCSS_DIR_BACK , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 );
-    MCSS_SetScale( subWork->pokeMcssBack , &scale );
+    //MCSS_SetScale( subWork->pokeMcssBack , &scale );
     MCSS_SetShadowAlpha( subWork->pokeMcssBack , 2 );
     MCSS_SetShadowRotate( subWork->pokeMcssBack , PSTATUS_SUB_SHADOW_ROTATE );
     MCSS_SetShadowScale( subWork->pokeMcssBack , &shadowScaleBack );
     MCSS_TOOL_SetAnmRestartCallback( subWork->pokeMcssBack );
+    MCSS_SetOfsScale( subWork->pokeMcssBack , &scale );
   }
   PSTATUS_SUB_SetShadowHeight( work , subWork , 0 );
   PSTATUS_SUB_SetShadowOffset( work , subWork , &shadowOffset );

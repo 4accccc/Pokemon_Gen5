@@ -623,7 +623,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
   {
     work->mcssSys = MCSS_Init( 2 , work->heapId );
     MCSS_SetTextureTransAdrs( work->mcssSys , 0 );
-    MCSS_ResetOrthoMode( work->mcssSys );
+    //MCSS_ResetOrthoMode( work->mcssSys );
     MCSS_SetMultiCellAnimeRate( work->mcssSys , FX32_ONE*16 );
   }
   //Vram“]‘—ƒAƒjƒ
@@ -1953,22 +1953,22 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 //Œ»Ý‚ÌPPP‚ðŽæ“¾
 //--------------------------------------------------------------
-const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
+POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
 {
   switch( work->psData->ppt )
   {
   case PST_PP_TYPE_POKEPARAM:
     {
-      const POKEMON_PARAM *pp = work->psData->ppd;
-      return PP_GetPPPPointerConst( pp );
+      POKEMON_PARAM *pp = work->psData->ppd;
+      return PP_GetPPPPointer( pp );
     }
 
     break;
 
   case PST_PP_TYPE_POKEPARTY:
     {
-      const POKEMON_PARAM *pp = PokeParty_GetMemberPointer( (POKEPARTY*)work->psData->ppd , work->dataPos );
-      return PP_GetPPPPointerConst( pp );
+      POKEMON_PARAM *pp = PokeParty_GetMemberPointer( (POKEPARTY*)work->psData->ppd , work->dataPos );
+      return PP_GetPPPPointer( pp );
     }
     break;
 
@@ -1982,7 +1982,7 @@ const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
 #if PM_DEBUG
   case PST_PP_TYPE_DEBUG:
     PSTATUS_UTIL_DebugCreatePP( work );
-    return PP_GetPPPPointerConst( work->calcPP );
+    return PP_GetPPPPointer( work->calcPP );
     break;
 #endif
   }
