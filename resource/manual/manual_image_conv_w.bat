@@ -37,6 +37,9 @@ ntexconv 013_01_honbumae.bmp -no -bg -bgb -bgf direct
 ntexconv 013_02_engraph.bmp -no -bg -bgb -bgf direct
 ntexconv 015_02_mukeau.bmp -no -bg -bgb -bgf direct
 ntexconv 039_01_gamesync.bmp -no -bg -bgb -bgf direct
+ntexconv 039_02_midori.bmp -no -bg -bgb -bgf direct
+ntexconv 039_03_ao.bmp -no -bg -bgb -bgf direct
+ntexconv 039_04_aka.bmp -no -bg -bgb -bgf direct
 ntexconv 040_01_wireless.bmp -no -bg -bgb -bgf direct
 ntexconv 029_02_linkbridge.bmp -no -bg -bgb -bgf direct
 ntexconv 029_03_shitagamen.bmp -no -bg -bgb -bgf direct
@@ -58,7 +61,7 @@ ntexconv 025_02_yobidasi.bmp -no -bg -bgb -bgf direct
 ntexconv 025_03_livecasterwificlub.bmp -no -bg -bgb -bgf direct
 ntexconv 025_04_lockon.bmp -no -bg -bgb -bgf direct
 ntexconv 025_05_migibutton.bmp -no -bg -bgb -bgf direct
-ntexconv 026_01_badge.bmp -no -bg -bgb -bgf direct
+ntexconv 026_01_badge_white.bmp -no -bg -bgb -bgf direct
 ntexconv 027_01_benrimenu.bmp -no -bg -bgb -bgf direct
 ntexconv 027_02_checkbox.bmp -no -bg -bgb -bgf direct
 ntexconv 027_04_select.bmp -no -bg -bgb -bgf direct
