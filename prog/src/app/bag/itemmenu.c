@@ -3706,6 +3706,22 @@ static void _VBlank( GFL_TCB *tcb, void *work )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+static void _startQueWaitState( FIELD_ITEMMENU_WORK * pWork )
+{
+	if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
+		return;
+	}
+
+  // ワイプ開始
+	WIPE_SYS_Start(
+		WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, pWork->heapID );
+
+	PMSND_PlaySE( SE_BAG_SLIDE_IN );
+
+	_CHANGE_STATE( pWork, _startState );
+}
+
 static void _startState(FIELD_ITEMMENU_WORK* pWork)
 {
   BOOL  wipe, obj;
@@ -3838,10 +3854,12 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   InitBlinkPalAnm( pWork );
   InitPaletteAnime( pWork );
 
+/*
   // ワイプ開始
   WIPE_SYS_Start(
     WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
     WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, pWork->heapID );
+*/
 
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
@@ -3861,8 +3879,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   
   ITEMDISP_SetVisible();
 
-  PMSND_PlaySE( SE_BAG_SLIDE_IN );
-  _CHANGE_STATE(pWork, _startState);
+//  PMSND_PlaySE( SE_BAG_SLIDE_IN );
+  _CHANGE_STATE(pWork, _startQueWaitState);
   return GFL_PROC_RES_FINISH;
 }
 
