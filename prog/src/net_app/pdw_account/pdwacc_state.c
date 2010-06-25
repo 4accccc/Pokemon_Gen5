@@ -613,9 +613,6 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
         GAMEDATA_SaveAsyncCancel( pWork->pGameData );
         pWork->bSaveDataAsync = FALSE;
       }
-//      if(pWork->errEnd){
-  //      NetErr_DispCall( TRUE );
-//      }
       WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
       GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
@@ -632,6 +629,9 @@ static GFL_PROC_RESULT PDWACCProc_End( GFL_PROC * proc, int * seq, void * pwk, v
 {
   PDWACC_WORK* pWork = mywk;
 
+  if(pWork->pAppTask){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  }
   PDWACC_MESSAGE_End(pWork->pMessageWork);
   PDWACC_DISP_End(pWork->pDispWork);
   if(pWork->pp){
@@ -640,8 +640,6 @@ static GFL_PROC_RESULT PDWACCProc_End( GFL_PROC * proc, int * seq, void * pwk, v
   if(pWork->pTopAddr){
     GFL_HEAP_FreeMemory(pWork->pTopAddr);
   }
-
-
   NHTTP_RAP_End(pWork->pNHTTPRap);
 
 
