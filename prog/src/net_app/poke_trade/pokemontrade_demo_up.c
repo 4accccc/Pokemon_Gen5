@@ -188,6 +188,7 @@ static void _changeDemo_ModelTrade2_3(POKEMON_TRADE_WORK* pWork)
 //  if( ret == TRUE )
   {
 //    _setNextAnim(pWork, 0);
+    IRC_POKETRADEDEMO_RemoveModel( pWork);
     IRC_POKETRADEDEMO_SetModel( pWork, TRADEUP_OBJECT);  //è„ÇæÇØÉÇÉfÉã
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
   }
