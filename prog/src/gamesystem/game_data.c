@@ -18,6 +18,7 @@
 
 #include <gflib.h>
 
+#include "playable_version.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
 #include "system/main.h"
@@ -174,9 +175,13 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   gd->sv_control_ptr = SaveControl_GetPointer();
 
-  //‹GßÝ’èFƒQ[ƒ€“à‚Å‚Í1ƒ–ŒŽ‚PƒV[ƒYƒ“
+#ifdef PLAYABLE_VERSION
   //‘ÌŒ±”Å‚Å‚Íƒ‰ƒ“ƒ_ƒ€‚ÉŒˆ’è‚·‚é
   gd->season_id = GFUser_GetPublicRand0( PMSEASON_TOTAL );
+#else
+  //‹GßÝ’èFƒQ[ƒ€“à‚Å‚Í1ƒ–ŒŽ‚PƒV[ƒYƒ“
+  gd->season_id = PMSEASON_GetRealTimeSeasonID();
+#endif
 
   //
   gd->subscreen_mode = FIELD_SUBSCREEN_NORMAL;

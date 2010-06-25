@@ -788,7 +788,11 @@ typedef enum{
 //------------------------------------------------------------------
 static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
 {
-#if 0
+#ifdef PLAYABLE_VERSION
+  work->seasonUpdateOccur = FALSE; // ‘ÌŒ±”Å‚Å‚Í‹Gß‚ð•Ï‰»‚³‚¹‚È‚¢
+
+#else
+
   BOOL nextZoneIsOutdoor;
   u16 prevSeason, nextSeason;
 
@@ -816,9 +820,6 @@ static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
     work->nextSeason = nextSeason;
   }
 #endif 
-
-  // ‘ÌŒ±”Å‚Å‚Í‹Gß‚ð•Ï‰»‚³‚¹‚È‚¢
-  work->seasonUpdateOccur = FALSE;
 }
 
 //------------------------------------------------------------------
