@@ -101,8 +101,8 @@ sub_c06pc0101_mezameru_power_check:
         _RET
     ENDIF
 
-    _POKETYPE_NAME( 0, SEL_POS )  //タグにタイプ名をセット
-    _DEBUG_PRINT_WK( SEL_POS )
+    _POKETYPE_NAME( 0, SCWK_ANSWER )  //タグにタイプ名をセット
+    _DEBUG_PRINT_WK( SCWK_ANSWER )
     _CHECK_POKE_WAZA( SCWK_ANSWER, WAZANO_MEZAMERUPAWAA, SEL_POS )
     IF $SCWK_ANSWER == TRUE THEN
         _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_04)
