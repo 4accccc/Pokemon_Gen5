@@ -12312,22 +12312,37 @@ static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 //----------------------------------------------------------------------------------
 static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker )
 {
-  BOOL fFail = FALSE;
-  u32 per = WAZADATA_GetParam( waza, WAZAPARAM_SHRINK_PER );
+  BOOL fFail, fCritical;
+  u32 defaultPer = WAZADATA_GetParam( waza, WAZAPARAM_SHRINK_PER );
+  u32 addPer = 0;
+
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ADD_DEFAULT_PER, per );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
-
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ADD_DEFAULT_PER, defaultPer );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_CRITICAL_FLAG, FALSE );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, 0 );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_SHRINK_PER );
+
     fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
-    per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+    fCritical = BTL_EVENTVAR_GetValue( BTL_EVAR_CRITICAL_FLAG );
+    addPer = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
   BTL_EVENTVAR_Pop();
-  if( fFail ){
+
+  if( fFail && (defaultPer != 0) ){
     return 0;
   }
-  return per;
+
+  {
+    u32 per = defaultPer;
+    if( defaultPer == 0 ){
+      per += addPer;
+    }
+    if( fCritical ){
+      per *= 2;
+    }
+    return per;
+  }
 }
 //----------------------------------------------------------------------------------
 /**

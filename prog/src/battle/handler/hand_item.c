@@ -2434,7 +2434,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-// ターンチェック
+// アイテム反応チェック
 static void handler_MikuruNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -2836,8 +2836,7 @@ static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // ひるみ確率０なら、アイテム威力値に書き換え
-    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-    BTL_N_Printf( DBGSTR_HANDITEM_OujaCheck, per );
+    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_DEFAULT_PER );
     if( per == 0 )
     {
       per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );

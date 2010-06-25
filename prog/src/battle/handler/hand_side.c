@@ -48,7 +48,7 @@ static EXIST_EFFECT ExistEffect[ BTL_SIDE_MAX ][ BTL_SIDEEFF_MAX ];
 /*--------------------------------------------------------------------------*/
 static u8 getMyAddCounter( BTL_EVENT_FACTOR* myHandle, BtlSide side );
 static const BtlEventHandlerTable* ADD_SIDE_Refrector( u32* numElems );
-static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work );
+static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static const BtlEventHandlerTable* ADD_SIDE_Hikarinokabe( u32* numElems );
 static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static void common_wallEffect( BTL_SVFLOW_WORK* flowWk, u8 mySide, WazaDamageType dmgType );
@@ -74,6 +74,7 @@ static const BtlEventHandlerTable* ADD_SIDE_Dokubisi( u32* numElems );
 static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static const BtlEventHandlerTable* ADD_SIDE_Rainbow( u32* numElems );
 static void handler_Rainbow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static void handler_Rainbow_Shrink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static const BtlEventHandlerTable* ADD_SIDE_Burning( u32* numElems );
 static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static const BtlEventHandlerTable* ADD_SIDE_Moor( u32* numElems );
@@ -687,7 +688,7 @@ static const BtlEventHandlerTable* ADD_SIDE_Rainbow( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_ADD_SICK,         handler_Rainbow },  // 追加効果（状態異常）チェックハンドラ
     { BTL_EVENT_ADD_RANK_TARGET,  handler_Rainbow },  // 追加効果（ランク効果）チェックハンドラ
-    { BTL_EVENT_WAZA_SHRINK_PER,  handler_Rainbow },  // ひるみチェックハンドラ
+    { BTL_EVENT_WAZA_SHRINK_PER,  handler_Rainbow_Shrink },  // ひるみチェックハンドラ
 
   };
   *numElems = NELEMS( HandlerTable );
@@ -703,6 +704,16 @@ static void handler_Rainbow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
   }
 }
+static void handler_Rainbow_Shrink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+
+  if( BTL_MAINUTIL_PokeIDtoSide(atkPokeID) == mySide )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_CRITICAL_FLAG, TRUE );
+  }
+}
+
 
 //--------------------------------------------------------------------------------------
 /**

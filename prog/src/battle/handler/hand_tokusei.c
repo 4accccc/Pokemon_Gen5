@@ -2863,12 +2863,21 @@ static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     BTL_Printf("ポケ[%d]の てんのめぐみ で追加発生率２倍=%d%%\n", pokeID, per);
   }
 }
+// ひるみチェックハンドラ
+static void handler_TennoMegumi_Shrink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_CRITICAL_FLAG, TRUE );
+  }
+}
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_TennoMegumi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_ADD_SICK,         handler_TennoMegumi },  // 追加効果（状態異常）チェックハンドラ
     { BTL_EVENT_ADD_RANK_TARGET,  handler_TennoMegumi },  // 追加効果（ランク効果）チェックハンドラ
-    { BTL_EVENT_WAZA_SHRINK_PER,  handler_TennoMegumi },  // ひるみチェックハンドラ
+    { BTL_EVENT_WAZA_SHRINK_PER,  handler_TennoMegumi_Shrink },  // ひるみチェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4992,7 +5001,6 @@ static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
       form_next = FORMNO_POWARUN_NORMAL;
     }
 
-    TAYA_Printf( "form_now=%d, next=%d\n", form_now, form_next);
     if( form_next != form_now )
     {
       BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
@@ -5490,7 +5498,7 @@ static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // ひるみ確率０なら、確率10％に
-    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_DEFAULT_PER );
     if( per == 0 )
     {
       #ifdef PM_DEBUG
