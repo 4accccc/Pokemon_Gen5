@@ -964,8 +964,8 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     if( (prevAction == BTL_ACTION_ROTATION)
     &&  (currentAction != BTL_ACTION_ROTATION)
     ){
-      ActOrderProcSub_RecalcAgility( wk, &wk->actOrder[i], (wk->numActOrder - i));
       scproc_AfterRotationIn( wk );
+      ActOrderProcSub_RecalcAgility( wk, &wk->actOrder[i], (wk->numActOrder - i));
     }
 
     prevAction = ActOrder_Proc( wk, &wk->actOrder[i] );

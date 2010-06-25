@@ -7221,18 +7221,15 @@ static void handler_Kinchoukan_RotationIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 // スキップチェックハンドラ
 static BOOL handler_Kinchoukan_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
 {
-  if( BTL_EVENT_FACTOR_GetWorkValue(myHandle, 0) == 0 )
+  if( factorType == BTL_EVENT_FACTOR_ITEM )
   {
-    if( factorType == BTL_EVENT_FACTOR_ITEM )
+    u8 my_pokeID = BTL_EVENT_FACTOR_GetPokeID( myHandle );
+    TAYA_Printf("きんちょうかん持ち=%d, target=%d, itemID=%d\n", my_pokeID, pokeID, subID );
+    if( !BTL_MAINUTIL_IsFriendPokeID(my_pokeID, pokeID) )
     {
-      u8 my_pokeID = BTL_EVENT_FACTOR_GetPokeID( myHandle );
-      TAYA_Printf("きんちょうかん持ち=%d, target=%d, itemID=%d\n", my_pokeID, pokeID, subID );
-      if( !BTL_MAINUTIL_IsFriendPokeID(my_pokeID, pokeID) )
+      if( ITEM_CheckNuts(subID) )
       {
-        if( ITEM_CheckNuts(subID) )
-        {
-          return TRUE;
-        }
+        return TRUE;
       }
     }
   }
