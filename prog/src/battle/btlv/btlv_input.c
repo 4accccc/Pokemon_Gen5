@@ -808,7 +808,7 @@ static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
 static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
 static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_SetDrawEnablePokeIcon( BTLV_INPUT_WORK* biw, BOOL flag );
-static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw, BtlWeather btl_weather );
 static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, BALL_GAUGE_TYPE type );
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
@@ -1417,7 +1417,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
-      BTLV_INPUT_CreateWeatherIcon( biw );
+      BTLV_INPUT_CreateWeatherIcon( biw, bicp->weather );
 
       ttw->datID = get_command_screen( biw );
 
@@ -2506,7 +2506,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
     ttw->seq_no++;
     break;
   case 1:
-    if( ttw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
+    if( ( ttw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( ttw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) )
     { 
       SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
     }
@@ -4508,9 +4508,8 @@ static  void  BTLV_INPUT_SetDrawEnablePokeIcon( BTLV_INPUT_WORK* biw, BOOL flag 
  * @param[in] biw   システム管理構造体のポインタ
  */
 //--------------------------------------------------------------
-static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
+static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw, BtlWeather btl_weather )
 {
-  BtlWeather  btl_weather = BTL_FIELD_GetWeather();
   int pal[] = { 0, 1, 3, 2, 1 };
   int ofs_x[] = {   5,   5,  1,  1,   1 };
   int ofs_y[] = { -12, -12, -8, -8, -12 };

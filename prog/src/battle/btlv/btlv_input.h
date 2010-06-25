@@ -124,6 +124,7 @@ typedef struct{
   BtlvMcssPos                   pos;
   BtlBagMode                    bagMode;                              //バッグモード
   u8                            shooterEnergy;                        //シューターエネルギー
+  BtlWeather                    weather;
 }BTLV_INPUT_COMMAND_PARAM;
 
 ///ローテーション画面構成用のワーク
