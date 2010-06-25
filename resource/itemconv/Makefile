@@ -13,6 +13,7 @@ USERS	= matsuda hiro_nakamura shimoyamada genya_hosaka tetsuji_ohta
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = item_data
+targetname2 = item_battle_pocket
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -61,7 +62,6 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
-
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: wb_item.xls
@@ -71,6 +71,14 @@ $(targetname).narc: wb_item.xls
 	itemconv.bat $(PROJECT_PROGDIR) $(PROJECT_ROOT)
 	$(NAIXCUT) $(targetname).naix
 endif
+
+
+do-build:	subdir $(TARGETDIR)/$(targetname2).narc
+
+# narc のコピーだけ実行する	ハッシュテーブルのコピーもする
+$(TARGETDIR)/$(targetname2).narc: $(targetname2).narc
+	$(COPY) $(targetname2).narc $(TARGETDIR)
+
 
 #------------------------------------------------------------------------------
 #	make clean ルール

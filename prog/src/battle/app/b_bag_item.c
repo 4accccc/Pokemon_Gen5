@@ -8,6 +8,7 @@
 //============================================================================================
 #include <gflib.h>
 
+#include "arc_def.h"
 #include "b_app_tool.h"
 
 #include "b_bag.h"
@@ -90,6 +91,7 @@ void BattleBag_CorsorReset( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BattleBag_PocketInit( BBAG_WORK * wk )
 {
+/*
   ITEM_ST * item;
 	ARCHANDLE * ah;
 	void * buf;
@@ -118,6 +120,32 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
   }
 
 	GFL_ARC_CloseDataHandle( ah );
+*/
+  ITEM_ST * item;
+	u8 * pocket;
+  u32 i, j, k;
+  s32 prm;
+
+	pocket = GFL_ARC_LoadDataAlloc( ARCID_ITEM_BATTLE_POCKET, 0, wk->dat->heap );
+
+	for( i=0; i<NELEMS(SearchPocket); i++ ){
+    j = 0;
+    while(1){
+      item = MYITEM_PosItemGet( wk->dat->myitem, SearchPocket[i], j );
+      if( item == NULL ){ break; }
+      if( !( item->id == 0 || item->no == 0 ) ){
+				prm = pocket[item->id];
+        for( k=0; k<4; k++ ){
+          if( ( prm & (1<<k) ) == 0 ){ continue; }
+          wk->pocket[ PocketNum[k] ][wk->item_max[ PocketNum[k] ]] = *item;
+          wk->item_max[ PocketNum[k] ]++;
+        }
+      }
+      j++;
+    }
+  }
+
+	GFL_HEAP_FreeMemory( pocket );
 
   for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
     if( wk->item_max[i] == 0 ){

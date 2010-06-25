@@ -10,6 +10,7 @@ del itempocket_def.h
 del item_data.naix
 del item_data.narc
 del itemsort_abc_def.h
+del battle_pocket.dat
 
 md itemdata
 
@@ -20,6 +21,7 @@ rem notepad itemconv_dp.err
 rem notepad itemcnv_gmm.err
 
 nnsarc -c -l -n -i item_data itemdata
+nnsarc -c item_battle_pocket battle_pocket.dat
 
 move itemequip.h %1include/item
 move itemsym.h %1include/item
