@@ -26,6 +26,7 @@
 #define DEBUGWIN_REPORT_USE
 #define DEBUGWIN_BTLBOX_USE
 #define DEBUGWIN_BTLBGM_USE
+#define DEBUGWIN_ATLAS_USE
 
 
 #define DEBUGWIN_GROUP_REG (41)
@@ -48,6 +49,8 @@
 #define DEBUGWIN_GROUP_BTLBOX (80)
 
 #define DEBUGWIN_GROUP_BTLBGM (90)
+
+#define DEBUGWIN_GROUP_ATLAS (100)
 
 
 #include "wifibattlematch_debugdata.h"
@@ -1530,9 +1533,38 @@ static inline void DEBUGWIN_BTLBGM_Exit( void )
 }
 #endif //DEBUGWIN_BTLBGM_USE
 
+#ifdef DEBUGWIN_ATLAS_USE
+static inline void DebugWin_Atlas_U_DirtyFlag( void* userWork , DEBUGWIN_ITEM* item )
+{
+  BOOL *p_is_dirty  = DEBUGWIN_ATLASDIRTY_GetFlag();
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    (*p_is_dirty)  ^= 1;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Atlas_D_DirtyFlag( void* userWork , DEBUGWIN_ITEM* item )
+{
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+  BOOL *p_is_dirty  = DEBUGWIN_ATLASDIRTY_GetFlag();
+  DEBUGWIN_ITEM_SetNameV( item , "レポートふせい[%s]", sc_tbl[ (*p_is_dirty) ] );
+}
+static inline void DEBUGWIN_ATLAS_Init( HEAPID heapID )
+{
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_ATLAS, "アトラス", heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Atlas_U_DirtyFlag, DebugWin_Atlas_D_DirtyFlag, NULL, DEBUGWIN_GROUP_ATLAS, heapID );
+}
+static inline void DEBUGWIN_ATLAS_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_ATLAS );
+}
+#endif //DEBUGWIN_ATLAS_USE
+
 #endif  //PM_DEBUG
-
-
 
 #ifndef DEBUGWIN_SAKE_RECORD_DATA_USE
 #define DEBUGWIN_SAKERECORD_Init( ... )  /*  */
@@ -1570,5 +1602,10 @@ static inline void DEBUGWIN_BTLBGM_Exit( void )
 #define DEBUGWIN_BTLBGM_Init( ... ) /* */
 #define DEBUGWIN_BTLBGM_Exit( ... ) /* */
 #endif //DEBUGWIN_BTLBGM_USE
+
+#ifndef DEBUGWIN_ATLAS_USE
+#define DEBUGWIN_ATLAS_Init( ... ) /* */
+#define DEBUGWIN_ATLAS_Exit( ... ) /* */
+#endif //DEBUGWIN_ATLAS_USE
 
 

@@ -35,4 +35,10 @@ DEBUGWIN_BTLBGM_DATA *DEBUGWIN_BTLBGM_DATA_GetInstance( void )
   return &g_debug_btlbgm_data;
 }
 
+BOOL *DEBUGWIN_ATLASDIRTY_GetFlag( void )
+{
+  static BOOL s_atlas_dirty_flag  = FALSE;
+  return &s_atlas_dirty_flag;
+}
+
 #endif //PM_DEBUG

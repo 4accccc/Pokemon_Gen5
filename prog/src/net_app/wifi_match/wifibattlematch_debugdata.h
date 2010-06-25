@@ -50,5 +50,9 @@ typedef struct
 
 extern DEBUGWIN_BTLBGM_DATA *DEBUGWIN_BTLBGM_DATA_GetInstance( void );
 
+//-------------------------------------
+///	ïsê≥ÉtÉâÉO
+//=====================================
+extern BOOL *DEBUGWIN_ATLASDIRTY_GetFlag( void );
 
 #endif //PM_DEBUG

@@ -2678,6 +2678,17 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     break;
   }
 
+#ifdef PM_DEBUG
+  if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+  {
+    if( is_inverse )
+    {
+      is_win  ^= 1;
+      is_lose ^= 1;
+    }
+  }
+#endif //PM_DEBUG
+
   //‚à‚µ‘Šè‚Ìî•ñ‚ğ‘‚«‚Ş‚È‚ç‚ÎAŒ‹‰Ê‚ğ”½‘Î‚É‚·‚é
   if( !is_my && is_inverse )
   {
@@ -2851,6 +2862,18 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
     is_lose = FALSE;
     break;
   }
+
+
+#ifdef PM_DEBUG
+  if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+  {
+    if( is_inverse )
+    {
+      is_win  ^= 1;
+      is_lose ^= 1;
+    }
+  }
+#endif //PM_DEBUG
 
   //‚à‚µ‘Šè‚ÌŸ—˜î•ñ‚ğ‘‚«‚Ş‚È‚ç‚ÎAŒ‹‰Ê‚ğ”½‘Î‚É‚·‚é
   if( !is_my && is_inverse )
