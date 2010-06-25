@@ -30,6 +30,8 @@
 
 #define BSW_RENSHOU_MAX (9999)
 
+#define BSW_STAGE_MAX (0xffff-1) //-1=エラー判定用
+
 ///バトルサブウェイ初期化モード
 #define BSWAY_PLAY_NEW (0)
 #define BSWAY_PLAY_CONTINUE (1)

@@ -1259,7 +1259,7 @@ void BSUBWAY_SCRWORK_SetNowRenshou( BSUBWAY_SCRWORK *bsw_scr, u16 renshou )
 //--------------------------------------------------------------
 void BSUBWAY_SCRWORK_IncNowRenshou( BSUBWAY_SCRWORK *bsw_scr )
 {
-  if( bsw_scr->now_renshou < 0xffff ){
+  if( bsw_scr->now_renshou < BSW_RENSHOU_MAX ){
     bsw_scr->now_renshou++;
   }
 }
@@ -1291,8 +1291,8 @@ static void bsw_RecoverNowRenshou(
   renshou = stage * 7; //1stage = 7round
   renshou += round;    //1-6round
   
-  if( renshou > 0xffff ){
-    renshou = 0xffff;
+  if( renshou > BSW_RENSHOU_MAX ){
+    renshou = BSW_RENSHOU_MAX;
   }
   
   bsw_scr->now_renshou = renshou;

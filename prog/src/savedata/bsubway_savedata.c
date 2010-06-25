@@ -613,7 +613,7 @@ void BSUBWAY_SCOREDATA_IncStageNo(
 {
   mode = scoreData_ChgMultiMode( mode );
   
-  if( bsw_score->stage[mode] < (0xffff-1) ){ //-1=エラー判定用
+  if( bsw_score->stage[mode] < BSW_STAGE_MAX ){ //-1=エラー判定用
     bsw_score->stage[mode]++;
   }
 }

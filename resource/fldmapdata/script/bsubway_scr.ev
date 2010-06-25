@@ -349,6 +349,13 @@ sub_bsw_receipt_guide_wifi_upload:
   //レポート前に復帰位置を受付前にする
   _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  //レポート
+  _CALL sub_bsw_common_report
+  
+  IF $SCWK_ANSWER == 1 THEN //キャンセル
+    _RET
+  ENDIF
+  
   //アップロード
   _CALL sub_common_wifi_upload_score
    
@@ -379,42 +386,46 @@ sub_receipt_rekidai_download:
     _RET
   ENDIF
   
+  //レポート前に復帰位置を受付前にする
+  _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  /*
   $SCWK_TEMP0 = msg_bsw_scr_33
   _CALL sub_bsw_common_bwin_receipt
   _YES_NO_WIN( ret )
   _MSGWIN_CLOSE()
+  */
+ 
+  //セーブ
+  _CALL sub_bsw_common_report_core
+    
+  IF $SCWK_ANSWER == 1 THEN //レポートキャンセル
+    _RET
+  ENDIF
   
-  IF $ret == SCR_YES THEN
-    //レポート前に復帰位置を受付前にする
-    _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
-    
-    //セーブ
-    _CALL sub_bsw_common_auto_save
-    
-    //フィールド通信切断
-    _CALL sub_common_exit_field_comm
-    
-    IF $SCWK_ANSWER == FALSE THEN //切断失敗
-      $SCWK_TEMP0 = msg_bsw_scr_77
-      _CALL sub_bsw_common_bwin_receipt
-      _AB_KEYWAIT()
-      _MSGWIN_CLOSE()
-    ELSE
-      //歴代データダウンロード
-      _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, ret )
+  //フィールド通信切断
+  _CALL sub_common_exit_field_comm
+  
+  IF $SCWK_ANSWER == FALSE THEN //切断失敗
+    $SCWK_TEMP0 = msg_bsw_scr_77
+    _CALL sub_bsw_common_bwin_receipt
+    _AB_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ELSE
+    //歴代データダウンロード
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, ret )
       
-      //○○の歴代情報をダウンロードしました
-      IF $ret == TRUE THEN
-        _BSUBWAY_TOOL( BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
-        _NUMBER( 0, ret, 2 )
-        _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_ROOM, BSW_NULL, BSW_NULL, ret )
-        _NUMBER( 1, ret, 3 )
-        $SCWK_TEMP0 = msg_bsw_scr_52
-        _CALL sub_bsw_common_bwin_receipt
-        
-//      _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
-      ENDIF
+    //○○の歴代情報をダウンロードしました
+    IF $ret == TRUE THEN
+      _BSUBWAY_TOOL( BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
+      _NUMBER( 0, ret, 2 )
+      _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_ROOM, BSW_NULL, BSW_NULL, ret )
+      _NUMBER( 1, ret, 3 )
+      $SCWK_TEMP0 = msg_bsw_scr_52
+      _CALL sub_bsw_common_bwin_receipt
     ENDIF
+    
+    _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
   ENDIF
   
   _CALL sub_bsw_common_exit
@@ -1226,14 +1237,14 @@ sub_receipt_challenge_wifi:
   IF $dl_play == TRUE THEN
     //DS本体 通信機能チェック
     _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
-
+    
     IF $SCWK_ANSWER == FALSE THEN //通信できません
       _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
   ENDIF
-
+  
   //ワーク作成
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_WIFI )
   
@@ -2723,7 +2734,7 @@ sub_bsw_common_report_core:
   //レポートイベント呼び出し
   _REPORT_EVENT_CALL( SCWK_ANSWER )
   
-  IF $SCWK_ANSWER == 1 THEN //キャンセル
+  IF $SCWK_ANSWER != SCR_REPORT_OK THEN //キャンセル
     _CALL sub_bsw_common_exit
     $SCWK_ANSWER = 1
   ELSE

@@ -2005,6 +2005,7 @@ static void bsway_SetHomeNPC(
   BSWAY_PLAYMODE mode = bsw_scr->play_mode;
   
   if( mode == BSWAY_MODE_WIFI ){
+#if 1 //トレーナーNo指定ミスあり
     u32 id;
     u16 code;
     const MMDL_GRIDPOS *pos_tbl = data_HomeNpcWiFiPosTbl;
@@ -2034,6 +2035,50 @@ static void bsway_SetHomeNPC(
     }
     
     GFL_HEAP_FreeMemory( pLeader );
+#else //トレーナーNo指定ミス解消版
+    int num;
+    u32 id;
+    u16 code;
+    const MMDL_GRIDPOS *pos_tbl = data_HomeNpcWiFiPosTbl;
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+    BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
+        save, GMDATA_ID_BSUBWAY_WIFIDATA );
+    BSUBWAY_LEADER_DATA *pLeader = BSUBWAY_WIFIDATA_GetLeaderDataAlloc(
+        wifiData, HEAPID_PROC );
+    num = BSUBWAY_LEADERDATA_GetDataNum( pLeader );
+    
+    KAGAYA_Printf( "BSW WIFI HOME LEADER Num %d\n", num );
+    
+    if( num ){
+      BSUBWAY_LEADER_DATA *leader = &(pLeader[num-1]);
+      
+      while( num && i < HOME_NPC_WIFI_MAX ){
+        id = *(u32*)leader->id_no;
+        id %= 10;
+        
+        if( leader->gender == 0 ){
+          code = data_HomeNpcTbl_WifiMan[id];
+        }else{
+          code = data_HomeNpcTbl_WifiWoman[id];
+        }
+        
+        mmdl = MMDLSYS_AddMMdlParam( mmdlsys,
+            pos_tbl->gx, pos_tbl->gz, (DIR_UP+i) % DIR_MAX4,
+            obj_id, code, MV_DIR_RND, zone_id );
+        
+        MMDL_SetParam( mmdl, num-1, MMDL_PARAM_0 );
+        MMDL_SetEventID( mmdl, SCRID_C04R0111_NPC_TALK );
+         
+        i++;
+        num--;
+        leader--;
+        obj_id++;
+        pos_tbl++;
+      }
+    }
+
+    GFL_HEAP_FreeMemory( pLeader );
+#endif    
   }else{
     const HOME_NPC_DATA *data = data_HomeNpcTbl;
     BSUBWAY_SCOREDATA *bsw_score = bsw_scr->scoreData;
@@ -2889,9 +2934,9 @@ void BSUBWAY_SCRWORK_DebugCreateWorkTrNo(
  */
 //--------------------------------------------------------------
 void BSUBWAY_SCRWORK_DebugFightAnyRound(
-    GAMESYS_WORK *gsys, u16 game_round_now )
+    GAMESYS_WORK *gsys, u32 game_round_now )
 {
-  u16 round,stage,renshou;
+  u32 round,stage,renshou;
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
   
@@ -2912,9 +2957,17 @@ void BSUBWAY_SCRWORK_DebugFightAnyRound(
     stage++;
   }
   
+  if( stage > BSW_STAGE_MAX ){
+    stage = BSW_STAGE_MAX;
+  }
+  
   renshou = game_round_now - 1;
   
-#if 0  
+  if( renshou > BSW_RENSHOU_MAX ){
+    renshou = BSW_RENSHOU_MAX;
+  }
+  
+#if 0
   OS_Printf( "BSW ================================================\n" );
   OS_Printf( "BSW DEBUG %d戦目へ(STAGE %d ROUND %d RENSHOU %d\n",
       game_round_now, stage, round, renshou );
@@ -3040,6 +3093,7 @@ void BSUBWAY_SCRWORK_DebugClearWifiRoomData( GAMESYS_WORK *gsys )
 void BSUBWAY_SCRWORK_DebugSetCommMultiStage(
     GAMESYS_WORK *gsys, u16 play_mode, u16 stage )
 {
+  u32 renshou;
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
   BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
@@ -3047,11 +3101,17 @@ void BSUBWAY_SCRWORK_DebugSetCommMultiStage(
   BSUBWAY_PLAYDATA *playData =
     SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_PLAYDATA );
   
+  renshou = stage*7;
+  
+  if( renshou > BSW_RENSHOU_MAX ){
+    renshou = BSW_RENSHOU_MAX;
+  }
+  
   if( stage == 0 ){ //0
     BSUBWAY_SCOREDATA_ErrorStageNo( scoreData, play_mode );
   }else{
     BSUBWAY_SCOREDATA_SetStageNo_Org1( scoreData, play_mode, stage+1 );
-    BSUBWAY_SCOREDATA_SetRenshou( scoreData, play_mode, stage*7 );
+    BSUBWAY_SCOREDATA_SetRenshou( scoreData, play_mode, renshou );
     BSUBWAY_PLAYDATA_ResetRoundNo( playData );
   }
 }

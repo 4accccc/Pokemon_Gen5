@@ -4858,13 +4858,13 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
           work->game_round += add10;
         }
       }
-
+      
       if( work->game_round <= 0 ){
         work->game_round = 1;
-      }else if( work->game_round > 99999 ){
-        work->game_round = 99999;
+      }else if( work->game_round > 69986+7 ){
+        work->game_round = 69986+7;
       }
-
+      
       switch( work->play_mode ){
       case BSWAY_MODE_SINGLE:
       case BSWAY_MODE_DOUBLE:
@@ -5400,6 +5400,7 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
     break;
   case 1:
     {
+      int add = 0,stage = 0;
       int trg = GFL_UI_KEY_GetTrg();
       int cont = GFL_UI_KEY_GetCont();
       int repeat = GFL_UI_KEY_GetRepeat();
@@ -5421,26 +5422,33 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
       }
       
       if( repeat & PAD_KEY_UP ){
-        work->stage--;
+        add = -1;
       }else if( repeat & PAD_KEY_DOWN ){
-        work->stage++;
+        add = 1;
       }else if( repeat & PAD_KEY_LEFT ){
-        work->stage -= 10;
+        add = -10;
       }else if( repeat & PAD_KEY_RIGHT ){
-        work->stage += 10;
+        add = 10;
       }
       
-      if( work->stage < 0 ){
-        work->stage = 0;
-      }
-
+      stage = work->stage;
+      stage += add;
+      
       if( work->play_mode == BSWAY_MODE_COMM_MULTI ){
-        if( work->stage > 2 ){
-          work->stage = 2;
+        if( stage > 2 ){
+          stage = 2;
+        }else if( stage < 0 ){
+          stage = 0;
         }
-      }else if( work->stage > 9999 ){ //super comm multi
-        work->stage = 9999;
+      }else{ //super
+        if( stage > 9998 ){ //9999...
+          stage -= 9999;
+        }else if( stage < 0 ){ //-1...
+          stage += 9999;
+        }
       }
+      
+      work->stage = stage;
       
       if( work->stage != work->before_stage ){
         work->before_stage = work->stage;

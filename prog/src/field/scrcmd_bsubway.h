@@ -45,7 +45,7 @@ extern void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode );
 extern void BSUBWAY_SCRWORK_DebugCreateWorkTrNo(
     GAMESYS_WORK *gsys, u16 mode, const u16 *tr_no );
 extern void BSUBWAY_SCRWORK_DebugFightAnyRound(
-    GAMESYS_WORK *gsys, u16 game_round_now );
+    GAMESYS_WORK *gsys, u32 game_round_now );
 extern u8 BSUBWAY_SCRWORK_DebugGetFlag( GAMESYS_WORK *gsys );
 extern void BSUBWAY_SCRWORK_DebugSetFlag( GAMESYS_WORK *gsys, u8 flag );
 extern int BSUBWAY_SCRWORK_DebugGetWifiRank( GAMESYS_WORK *gsys );
