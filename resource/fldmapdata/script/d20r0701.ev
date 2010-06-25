@@ -248,7 +248,6 @@ _ANIME_LABEL	anm_comeback1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-EVENT_END
 
 /**************************************************************/
 /*		D20R0701	â∫ç~POS									  */
