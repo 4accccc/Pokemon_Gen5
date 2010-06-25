@@ -6078,9 +6078,12 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
       fx32  radius  = GFL_PTC_GetEmitterRadius( emit );
       fx32  life    = ( GFL_PTC_GetEmitterParticleLife( emit ) << FX32_SHIFT );
       fx32  scale   = GFL_PTC_GetEmitterBaseScale( emit );
+      fx32  length  = GFL_PTC_GetEmitterLength( emit );
+
       if( beeiw->radius )
       {
         GFL_PTC_SetEmitterRadius( emit, FX_Mul( radius, beeiw->radius ) );
+        GFL_PTC_SetEmitterLength( emit, FX_Mul( length, beeiw->radius ) );
       }
       if( beeiw->life )
       {
