@@ -302,7 +302,7 @@ void BTL_FIELDSIM_Init( BTL_FIELD_WORK* wk, BtlWeather weather )
  * @retval  BtlWeather
  */
 //---------------------------------------------------------------------
-BtlWeather BTL_FIELDSIM_GetWeather( BTL_FIELD_WORK* wk )
+BtlWeather BTL_FIELDSIM_GetWeather( const BTL_FIELD_WORK* wk )
 {
   return wk->weather;
 }
@@ -313,7 +313,7 @@ BtlWeather BTL_FIELDSIM_GetWeather( BTL_FIELD_WORK* wk )
  * @retval  u32
  */
 //---------------------------------------------------------------------
-u32 BTL_FIELDSIM_GetWeatherTurn( BTL_FIELD_WORK* wk )
+u32 BTL_FIELDSIM_GetWeatherTurn( const BTL_FIELD_WORK* wk )
 {
   if( wk->weather != BTL_WEATHER_NONE ){
     return wk->weatherTurn;
@@ -397,8 +397,9 @@ BOOL BTL_FIELDSIM_AddEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect, BPP_SICK
       }
     }
 
+    wk->enableFlag[ effect ] = TRUE;
+
     {
-      u8 dependPokeID = BPP_SICKCONT_GetPokeID( cont );
       u32 i;
 
       wk->cont[ effect ] = cont;
@@ -408,13 +409,15 @@ BOOL BTL_FIELDSIM_AddEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect, BPP_SICK
         wk->dependPokeID[ effect ][i] = BTL_POKEID_NULL;
       }
 
-      if( dependPokeID != BTL_POKEID_NULL )
       {
-        BTL_FIELDSIM_AddDependPoke( wk, effect, dependPokeID );
+        u8 dependPokeID = BPP_SICKCONT_GetPokeID( cont );
+
+        if( dependPokeID != BTL_POKEID_NULL )
+        {
+          BTL_FIELDSIM_AddDependPoke( wk, effect, dependPokeID );
+        }
       }
     }
-
-    wk->enableFlag[ effect ] = TRUE;
     return TRUE;
   }
 

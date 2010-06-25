@@ -8318,6 +8318,10 @@ const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client )
   return client->myParty;
 }
 
+BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client )
+{
+  return BTL_FIELDSIM_GetWeather( client->fldSim );
+}
 
 //=============================================================================================
 /**

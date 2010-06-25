@@ -751,6 +751,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
   }
 
   bicp.center_button_type = wk->fActionPrevButton;
+  bicp.weather = BTL_CLIENT_GetWeather( wk->clientWork );
 
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_COMMAND, &bicp );
 

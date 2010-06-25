@@ -432,14 +432,13 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
         if( fAnyEvent )
         {
           SendBtlInChapterRecord( server );
-          (*seq)++;
-          break;
+          (*seq) = 2;
         }
         else
         {
-          setMainProc_Root( server );
-          break;
+          (*seq) = 3;
         }
+        break;
       }
       // •ßŠlƒfƒ‚‚È‚ç
       else
@@ -453,11 +452,14 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
     }
     break;
   case 3:
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    (*seq)++;
+    break;
+  case 4:
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
