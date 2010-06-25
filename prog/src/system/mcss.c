@@ -743,8 +743,8 @@ static	void	MCSS_DrawAct(
 				   NULL );
 #else
 		G3_OrthoW( FX32_CONST( 96 ),
-				   -FX32_CONST( 95 ),
-				   -FX32_CONST( 127 ),
+				   -FX32_CONST( 96 ),
+				   -FX32_CONST( 128 ),
 				   FX32_CONST( 128 ),
 				   FX32_ONE * 1,
 				   //FX32_ONE * 1024,
