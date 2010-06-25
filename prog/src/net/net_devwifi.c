@@ -110,6 +110,7 @@ static GFLNetDevTable netDevTbl={
 
 	NULL, //DevIsSendDataFunc DevIsSendData; ///< データを送ってよいかどうか
 	NULL, //DevGetSendTurnFunc DevGetSendTurn; ///< 送信可能ターンフラグを取得
+	NULL, //DevGetUniqueAgreementFunc DevGetUniqueAgreement;  ///<ユニークキーで一致しているかどうか
   _DevIsConnectSystemFunc, 
   NULL,	//DevGetSendLockFlagFunc
   NULL,	//DevConnectWorkInitFunc

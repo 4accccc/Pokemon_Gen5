@@ -92,7 +92,9 @@ typedef struct{
   u8 initialize;		///<TRUE:初期化完了
   u8 send_use;		///<今フレームで既にSendを使用したかどうか(TRUE:使用した)
   u8 send_turn;		///<TRUE:送信可能。　FALSE:送信は通信相手のターン
-  u8 send_lock;		///<TRUE:送信ロック中(相手側が巨大データ送信中)
+  u8 send_lock:1;		    ///<TRUE:送信ロック中(相手側が巨大データ送信中)
+  u8 unique_success:1;  ///<TRUE:ユニークキーによる認証完了
+  u8        :6;
 
   u8 parent_MacAddress[6];	///<親のMacAddress
   u8 friendmac[6];     ///< 相手のMAC
@@ -129,6 +131,7 @@ BOOL GFL_NET_IRC_SendCheck(void);
 void GFL_NET_IRC_UpdateSendData(void);
 static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id);
 static int IRC_TargetIDGet(void);
+static void GFL_NET_IRC_UniqueSuccessSetup(void);
 
 
 static void _IRC_SendRapper(u8* buf, u8 size, u8 command, u8 value)
@@ -434,8 +437,13 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
     IRC_PRINT("GSIDが違う %d %d\n",NetIrcSys.aSendBuff.gsid , pData->gsid);
     return;
   }
+  
   if((pData->friendunique == NetIrcSys.aSendBuff.unique)
      && (pData->unique == NetIrcSys.friendunique)){  //相互登録済み 問題ない
+    if(NetIrcSys.unique_success == FALSE){
+      GFL_NET_IRC_UniqueSuccessSetup();
+      NetIrcSys.unique_success = TRUE;
+    }
   }
   else if((pData->friendunique == 0) && (NetIrcSys.friendunique==0)){  //相手の登録まだ 自分もまだ
     NetIrcSys.aSendBuff.friendunique = pData->unique;
@@ -580,11 +588,11 @@ BOOL GFL_NET_IRC_ErrorCheck(void)
 //--------------------------------------------------------------
 void GFL_NET_IRC_FirstConnect(void)
 {
-  NetIrcSys.connect = TRUE;
   NetIrcSys.isSender = IRC_IsSender();
+  NetIrcSys.target_unit_number = IRC_GetUnitNumber();
+  NetIrcSys.connect = TRUE;
   NetIrcSys.my_value = 0;
   NetIrcSys.last_value = SEND_CHECK_VALUE_RANGE-1;	//最初のデータをちゃんと受け取れるようにmy_valueと違えば何でもよい
-  NetIrcSys.target_unit_number = IRC_GetUnitNumber();
   if(NetIrcSys.isSender == TRUE){
     IRC_PRINT("赤外線：親機になった\n");
   }
@@ -598,14 +606,14 @@ void GFL_NET_IRC_FirstConnect(void)
 
 //--------------------------------------------------------------
 /**
- * 再接続時に最初の認証すら済んでいなかった場合のワーク初期化処理
+ * ユニークキーが始めて一致した時に行うワーク設定
  */
 //--------------------------------------------------------------
-static void _FirstConnectRetry(void)
+static void GFL_NET_IRC_UniqueSuccessSetup(void)
 {
-  IRC_PRINT("再接続による認証リセット\n");
   NetIrcSys.isSender = IRC_IsSender();
   NetIrcSys.target_unit_number = IRC_GetUnitNumber();
+  IRC_PRINT("ユニーク一致 isSender=%d, target_unit_number=%d\n", NetIrcSys.isSender, NetIrcSys.target_unit_number);
 }
 
 //--------------------------------------------------------------
@@ -641,6 +649,18 @@ BOOL GFL_NET_IRC_IsConnect(void)
     return TRUE;	//再接続中
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * ユニークキーが一致している状態かを調べる
+ *
+ * @retval  BOOL		TRUE：一致　FALSE：一致していない
+ */
+//==================================================================
+BOOL GFL_NET_IRC_GetUniqueAgreement(void)
+{
+  return NetIrcSys.unique_success;
 }
 
 //--------------------------------------------------------------
@@ -680,9 +700,6 @@ void GFL_NET_IRC_Move(void)
       //再接続中
       if(IRC_IsConnect() == TRUE){
         //再接続した
-        if(NetIrcSys.friendunique == 0){
-          _FirstConnectRetry();
-        }
         nis->retry_time = 0;
         IRC_PRINT("赤外線：再接続OK!\n");
         if(IRC_IsSender() == TRUE){

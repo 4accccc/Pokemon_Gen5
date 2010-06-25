@@ -47,6 +47,7 @@ static void _DevSetNoChildErrorSet(BOOL bOn);
 static void _DevIrcMoveFunc(void);
 static BOOL _DevIsSendDataFunc(void);
 static BOOL _DevGetSendTurnFunc(void);
+static BOOL _DevGetUniqueAgreementFunc(void);
 static BOOL _DevIsConnectSystemFunc(void);
 static BOOL _DevGetSendLockFlagFunc(void);
 static void _DevConnectWorkInitFunc(void);
@@ -102,6 +103,7 @@ static GFLNetDevTable netDevTbl={
 	_DevIrcMoveFunc,
 	_DevIsSendDataFunc,
 	_DevGetSendTurnFunc,
+  _DevGetUniqueAgreementFunc,
 	_DevIsConnectSystemFunc,
 	_DevGetSendLockFlagFunc,
 	_DevConnectWorkInitFunc,
@@ -256,6 +258,11 @@ static BOOL _DevIsSendDataFunc(void)
 static BOOL _DevGetSendTurnFunc(void)
 {
 	return GFL_NET_IRC_SendTurnGet();
+}
+
+static BOOL _DevGetUniqueAgreementFunc(void)
+{
+  return GFL_NET_IRC_GetUniqueAgreement();
 }
 
 static BOOL _DevIsConnectSystemFunc(void)

@@ -56,6 +56,6 @@ extern BOOL GFL_NET_IRC_IsSender(void);
 extern BOOL GFL_NET_IRC_IsConnect(void);
 extern BOOL GFL_NET_IRC_IsConnectSystem(void);
 extern void GFL_NET_IRC_Move(void);
-
+extern BOOL GFL_NET_IRC_GetUniqueAgreement(void);
 
 

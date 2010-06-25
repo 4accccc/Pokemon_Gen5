@@ -112,6 +112,7 @@ static GFLNetDevTable netDevTbl={
 
 	NULL, //DevIsSendDataFunc DevIsSendData; ///< データを送ってよいかどうか
 	NULL, //DevGetSendTurnFunc DevGetSendTurn; ///< 送信可能ターンフラグを取得
+	NULL, //DevGetUniqueAgreementFunc DevGetUniqueAgreement;  ///<ユニークキーで一致しているかどうか
 	NULL, //DevIsConnectSystemFunc DevIsConnectSystem;  ///< 再接続中など関係なく、純粋に今、繋がっているか
 	NULL, //DevGetSendLockFlagFunc DevGetSendLockFlag;  ///< 送信ロックフラグを取得
 	NULL, //DevConnectWorkInitFunc DevConnectWorkInit;           ///<初めての接続後のワーク設定
