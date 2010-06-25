@@ -137,10 +137,10 @@ static const CURSORMOVE_CALLBACK PartyOutMainCallBack = {
 // あずける・ボックス選択
 static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
 {
-	{ 84, 16, 0, 0,	0, 0, 0, 0, {  17,  39,  26, 141 } },		// 00: トレイ名
+	{ 84, 16, 0, 0,	0, 0, 0, 0, {  18,  38,  27, 140 } },		// 00: トレイ名
 	{  0,  0, 0, 0,	1, 1, 1, 1, {  51, 172,   3, 164 } },		// 01: トレイ
-	{  0,  0, 0, 0,	2, 2, 2, 2, {  17,  38,   1,  22 } },		// 02: トレイ切り替え矢印・左
-	{  0,  0, 0, 0,	3, 3, 3, 3, {  17,  38, 145, 166 } },		// 03: トレイ切り替え矢印・右
+	{  0,  0, 0, 0,	2, 2, 2, 2, {  18,  38,   6,  26 } },		// 02: トレイ切り替え矢印・左
+	{  0,  0, 0, 0,	3, 3, 3, 3, {  18,  38, 141, 161 } },		// 03: トレイ切り替え矢印・右
 	{  0,  0, 0, 0,	4, 4, 4, 4, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 04: 戻る
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
@@ -211,9 +211,9 @@ static const CURSORMOVE_DATA PartyInMainCursorMoveData[] =
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 30, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
 	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 30, 28, 24, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{  84,  16, 0, 0,	24, CURSORMOVE_RETBIT|0, 30, 30, {  17,  39,  26, 141 } },		// 30: ボックス名
-	{   0,   0, 0, 0,	31, 31, 31, 31, {  17,  38,   1,  22 } },						// 31: トレイ切り替え矢印・左
-	{   0,   0, 0, 0,	32, 32, 32, 32, {  17,  38, 145, 166 } },						// 32: トレイ切り替え矢印・右
+	{  84,  16, 0, 0,	24, CURSORMOVE_RETBIT|0, 30, 30, {  18,  38,  27, 140 } },		// 30: ボックス名
+	{   0,   0, 0, 0,	31, 31, 31, 31, {  18,  38,   6,  26 } },						// 31: トレイ切り替え矢印・左
+	{   0,   0, 0, 0,	32, 32, 32, 32, {  18,  38, 141, 161 } },						// 32: トレイ切り替え矢印・右
 
 	{ 0, 0, 0, 0,	33, 33, 33, 33, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 33: 戻る１
 	{ 0, 0, 0, 0,	34, 34, 34, 34, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 34: 戻る２
@@ -307,9 +307,9 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 33, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
 	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 33, 28, 24, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{  84,  16, 0, 0,	33, CURSORMOVE_RETBIT|0, 30, 30, {  17,  39,  26, 141 } },		// 30: ボックス名
-	{   0,   0, 0, 0,	31, 31, 31, 31, {  17,  38,   1,  22 } },						// 31: トレイ切り替え矢印・左
-	{   0,   0, 0, 0,	32, 32, 32, 32, {  17,  38, 145, 166 } },						// 32: トレイ切り替え矢印・右
+	{  84,  16, 0, 0,	33, CURSORMOVE_RETBIT|0, 30, 30, {  18,  38,  27, 140 } },		// 30: ボックス名
+	{   0,   0, 0, 0,	31, 31, 31, 31, {  18,  38,   6,  26 } },						// 31: トレイ切り替え矢印・左
+	{   0,   0, 0, 0,	32, 32, 32, 32, {  18,  38, 141, 161 } },						// 32: トレイ切り替え矢印・右
 
 	{  44, 168, 0, 0,	CURSORMOVE_RETBIT|24, 30, 33, 33, { 168, 191,   0,  95 } },		// 33: 手持ちポケモン
 
@@ -372,9 +372,9 @@ static const CURSORMOVE_DATA BoxArrangePokeMoveCursorMoveData[] =
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 39, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
 	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 39, 28, CURSORMOVE_RETBIT|37, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{ 84, 16, 0, 0,	39, CURSORMOVE_RETBIT|0, 30, 30, { 17, 39, 26, 141 } },		// 30: ボックス名
-	{  0,  0, 0, 0,	31, 31, 31, 31, { 17, 38,   1,  22 } },		// 31: ボックス切り替え矢印（左）
-	{  0,  0, 0, 0,	32, 32, 32, 32, { 17, 38, 145, 166 } },		// 32: ボックス切り替え矢印（右）
+	{ 84, 16, 0, 0,	39, CURSORMOVE_RETBIT|0, 30, 30, { 18,  38,  27, 140 } },		// 30: ボックス名
+	{  0,  0, 0, 0,	31, 31, 31, 31, { 18,  38,   6,  26 } },		// 31: ボックス切り替え矢印（左）
+	{  0,  0, 0, 0,	32, 32, 32, 32, { 18,  38, 141, 161 } },		// 32: ボックス切り替え矢印（右）
 
 	{   0,   0, 0, 0,	33, 33, CURSORMOVE_RETBIT|33, 33, {   0,  11, 200, 223 } },		// 33: トレイアイコン
 	{ 212,  22, 0, 0,	34, 35, CURSORMOVE_RETBIT| 5,  0, {  22,  45, 200, 223 } },		// 34: トレイアイコン
@@ -476,9 +476,9 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeMoveCursorMoveData[] =
 	{ 192, 116, 0, 0,	32, 30, CURSORMOVE_RETBIT|23, 35, { 132-12, 132+12-1, 194-12, 194+12-1 } },
 	{ 232, 124, 0, 0,	33, 31, 34, CURSORMOVE_RETBIT|24, { 140-12, 140+12-1, 230-12, 230+12-1 } },
 
-	{ 84, 16, 0, 0,	39, CURSORMOVE_RETBIT|0, 36, 36, { 17, 39, 26, 141 } },		// 36: ボックス名
-	{  0,  0, 0, 0,	37, 37, 37, 37, { 17, 38,   1,  22 } },		// 37: ボックス切り替え矢印（左）
-	{  0,  0, 0, 0,	38, 38, 38, 38, { 17, 38, 145, 166 } },		// 38: ボックス切り替え矢印（右）
+	{ 84, 16, 0, 0,	39, CURSORMOVE_RETBIT|0, 36, 36, { 18,  38,  27, 140 } },		// 36: ボックス名
+	{  0,  0, 0, 0,	37, 37, 37, 37, { 18,  38,   6,  26 } },		// 37: ボックス切り替え矢印（左）
+	{  0,  0, 0, 0,	38, 38, 38, 38, { 18,  38, 141, 161 } },		// 38: ボックス切り替え矢印（右）
 
 	{ 44, 168, 0, 0,	CURSORMOVE_RETBIT|24, 36, 39, 39, { 168, 191, 0, 87 } },			// 39: ボックスリスト
 	{  0,   0, 0, 0,	40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },		// 40: ステータス
@@ -533,9 +533,9 @@ static const CURSORMOVE_DATA BoxItemArrangeMainCursorMoveData[] =
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, CURSORMOVE_RETBIT|33, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
 	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, CURSORMOVE_RETBIT|33, 28, 24, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{  84,  16, 0, 0,	33, CURSORMOVE_RETBIT|0, 30, 30, {  17,  39,  26, 141 } },		// 30: ボックス名
-	{   0,   0, 0, 0,	31, 31, 31, 31, {  17,  38,   1,  22 } },						// 31: トレイ切り替え矢印・左
-	{   0,   0, 0, 0,	32, 32, 32, 32, {  17,  38, 145, 166 } },						// 32: トレイ切り替え矢印・右
+	{  84,  16, 0, 0,	33, CURSORMOVE_RETBIT|0, 30, 30, {  18,  38,  27, 140 } },		// 30: ボックス名
+	{   0,   0, 0, 0,	31, 31, 31, 31, {  18,  38,   6,  26 } },						// 31: トレイ切り替え矢印・左
+	{   0,   0, 0, 0,	32, 32, 32, 32, {  18,  38, 141, 161 } },						// 32: トレイ切り替え矢印・右
 
 	{  44, 168, 0, 0,	CURSORMOVE_RETBIT|24, 30, 33, 33, { 168, 191,   0,  95 } },		// 33: 手持ちポケモン
 	{ 0, 0, 0, 0,	34, 34, 34, 34, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 34: 戻る１
@@ -646,9 +646,9 @@ static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 33, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
 	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 33, 28, 24, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{  84,  16, 0, 0,	33, CURSORMOVE_RETBIT|0, 30, 30, {  17,  39,  26, 141 } },		// 30: ボックス名
-	{   0,   0, 0, 0,	31, 31, 31, 31, {  17,  38,   1,  22 } },						// 31: トレイ切り替え矢印・左
-	{   0,   0, 0, 0,	32, 32, 32, 32, {  17,  38, 145, 166 } },						// 32: トレイ切り替え矢印・右
+	{  84,  16, 0, 0,	33, CURSORMOVE_RETBIT|0, 30, 30, {  18,  38,  27, 140 } },		// 30: ボックス名
+	{   0,   0, 0, 0,	31, 31, 31, 31, {  18,  38,   6,  26 } },						// 31: トレイ切り替え矢印・左
+	{   0,   0, 0, 0,	32, 32, 32, 32, {  18,  38, 141, 161 } },						// 32: トレイ切り替え矢印・右
 
 	{  44, 168, 0, 0,	CURSORMOVE_RETBIT|24, 30, 33, 33, { 168, 191,   0,  95 } },		// 33: バトルボックス
 
@@ -740,9 +740,9 @@ static const CURSORMOVE_DATA SleepMainCursorMoveData[] =
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 30, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
 	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 30, 28, 24, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{  84,  16, 0, 0,	24, CURSORMOVE_RETBIT|0, 30, 30, {  17,  39,  26, 141 } },		// 30: ボックス名
-	{   0,   0, 0, 0,	31, 31, 31, 31, {  17,  38,   1,  22 } },						// 31: トレイ切り替え矢印・左
-	{   0,   0, 0, 0,	32, 32, 32, 32, {  17,  38, 145, 166 } },						// 32: トレイ切り替え矢印・右
+	{  84,  16, 0, 0,	24, CURSORMOVE_RETBIT|0, 30, 30, {  18,  38,  27, 140 } },		// 30: ボックス名
+	{   0,   0, 0, 0,	31, 31, 31, 31, {  18,  38,   6,  26 } },						// 31: トレイ切り替え矢印・左
+	{   0,   0, 0, 0,	32, 32, 32, 32, {  18,  38, 141, 161 } },						// 32: トレイ切り替え矢印・右
 
 	{ 0, 0, 0, 0,	33, 33, 33, 33, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 33: 戻る
 

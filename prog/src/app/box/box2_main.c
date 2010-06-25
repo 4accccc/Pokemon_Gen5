@@ -719,7 +719,8 @@ void BOX2MAIN_MsgInit( BOX2_SYS_WORK * syswk )
                         ARCID_MESSAGE, NARC_message_boxmenu_dat, HEAPID_BOX_APP );
   syswk->app->font = GFL_FONT_Create(
                         ARCID_FONT, NARC_font_large_gftr,
-                        GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BOX_APP );
+//                        GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BOX_APP );
+                        GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_BOX_APP );
   syswk->app->nfnt = GFL_FONT_Create(
                         ARCID_FONT, NARC_font_num_gftr,
                         GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BOX_APP );
