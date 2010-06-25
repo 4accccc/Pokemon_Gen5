@@ -1246,7 +1246,12 @@ static BOOL ServerMain_ExitBattle_ForSubwayTrainer( BTL_SERVER* server, int* seq
     }
     break;
   case 2:
-    setMainProc( server, ServerMain_ExitBattle_KeyWait );
+    if( BTL_MAIN_GetCommMode(server->mainModule) == BTL_COMM_NONE ){
+      setMainProc( server, ServerMain_ExitBattle_KeyWait );
+    }
+    else{
+      return TRUE;
+    }
     break;
   }
   return FALSE;
