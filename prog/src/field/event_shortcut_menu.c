@@ -213,7 +213,7 @@ GMEVENT * EVENT_ShortCutMenu( GAMESYS_WORK *p_gamesys, FIELDMAP_WORK *p_fieldmap
 	}
 
   //ショートカットメニューはボタンでしか起動しないので
-  //強制的にキーモードへしてしまう
+  //強制的にキーモードへしてしまう(入り口時)
   GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
   
   return p_event;

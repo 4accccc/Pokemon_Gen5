@@ -713,6 +713,8 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 	BOOL is_move_change	= FALSE;
 	BOOL is_loop	= FALSE;
 
+  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+
 	//一番上と一番下の場合ループする
 	//移動が2連鎖になってしまうので、ループ検査するためメインの前に行う
 	{	
