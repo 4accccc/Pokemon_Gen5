@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-06-24T13:02:41"/>
+	<create user="ohmori" host="W00223" date="2010-06-24T22:00:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,13 +365,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1559" top="137" right="2280" bottom="852" maximized="no" rayout="Vertical2">
+	<dialog left="1080" top="233" right="1580" bottom="948" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
-		<band id="0" index="0" style="0000" width="546"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="713"/>
-		<band id="3" index="3" style="0000" width="713"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -4194,14 +4194,14 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 
 ・道具追加処理
 ・おこずかい減らす処理</comment>
-		<language name="JPN" width="256">ありがとうございます！
-では　[1:09:どうぐ名:1]を　おわたしします！▼
+		<language name="JPN" width="256">ありがとうございます！　では
+[1:09:どうぐ名:1]を　おわたしします！▼
 [1:00:トレーナー名:3]は　[1:09:どうぐ名:1]を
 てにいれた！▼
 それではまた　たびのどこかで
 おあいしましょう！</language>
-		<language name="JPN_KANJI" width="256">ありがとうございます！
-では　[1:09:どうぐ名:1]を　おわたしします！▼
+		<language name="JPN_KANJI" width="256">ありがとうございます！　では
+[1:09:どうぐ名:1]を　おわたしします！▼
 [1:00:トレーナー名:3]は　[1:09:どうぐ名:1]を
 手に入れた！▼
 それではまた　旅のどこかで
@@ -4216,14 +4216,14 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 
 ・道具追加処理
 ・おこずかい減らす処理</comment>
-		<language name="JPN" width="256">ありがとうございます！
-では　[1:09:どうぐ名:1]を　おわたしします！▼
+		<language name="JPN" width="256">ありがとうございます！　では
+[1:09:どうぐ名:1]を　おわたしします！▼
 [1:00:トレーナー名:3]は　[1:09:どうぐ名:1]を
 てにいれた！▼
 それではまた　たびのどこかで
 おあいしましょう！</language>
-		<language name="JPN_KANJI" width="256">ありがとうございます！
-では　[1:09:どうぐ名:1]を　おわたしします！▼
+		<language name="JPN_KANJI" width="256">ありがとうございます！　では
+[1:09:どうぐ名:1]を　おわたしします！▼
 [1:00:トレーナー名:3]は　[1:09:どうぐ名:1]を
 手に入れた！▼
 それではまた　旅のどこかで
