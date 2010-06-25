@@ -56,7 +56,8 @@ FS_EXTERN_OVERLAY(ui_common);
 /// デバッグ
 //=====================================
 #ifdef PM_DEBUG
-#define GAMESYS_NONE_MOVE //ゲームシステムがなくても動く
+#define GAMESYS_NONE_MOVE // ゲームシステムがなくても動く
+//#define DEBUG_RAPID_PAD   // printQueをあふれさせる操作をシミュレートする
 #endif //PM_DEBUG
 
 #define SCROLL_MOVE_NONE  //スクロールなし版
@@ -2210,6 +2211,11 @@ static void UI_Exit( UI_WORK *p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(UI_WORK) );
 }
+
+
+#ifdef DEBUG_RAPID_PAD
+static int debug_flag=0;
+#endif
 //----------------------------------------------------------------------------
 /**
  *  @brief  ユーザー入力メイン処理
@@ -2258,9 +2264,26 @@ static void UI_Main( UI_WORK *p_wk )
   
   //キー入力
   { 
-    if( GFL_UI_KEY_GetTrg() )
+    u32 trg  = GFL_UI_KEY_GetTrg();
+    u32 cont = GFL_UI_KEY_GetCont();
+
+// printQueあふれシミュレーション用
+#ifdef DEBUG_RAPID_PAD
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+    debug_flag ^=1;
+    if(debug_flag==0){
+      trg  = PAD_KEY_UP;
+    }else{
+      trg = PAD_KEY_DOWN;
+    }
+  }else{
+    debug_flag=0;
+  }
+#endif
+
+    if( trg )
     { 
-      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH && !(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_B|PAD_BUTTON_Y|PAD_BUTTON_X) ) )
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH && !(trg & (PAD_BUTTON_B|PAD_BUTTON_Y|PAD_BUTTON_X) ) )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         p_wk->input = UI_INPUT_KEY;
@@ -2271,45 +2294,45 @@ static void UI_Main( UI_WORK *p_wk )
       } 
     }
 
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    if( trg & PAD_KEY_UP )
     {
       p_wk->input = UI_INPUT_TRG_UP;
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    else if( trg & PAD_KEY_DOWN )
     {
       p_wk->input = UI_INPUT_TRG_DOWN;
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    else if( trg & PAD_KEY_LEFT )
     {
       p_wk->input = UI_INPUT_TRG_LEFT;
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    else if( trg & PAD_KEY_RIGHT )
     {
       p_wk->input = UI_INPUT_TRG_RIGHT;
     }
-    else if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+    else if( cont & PAD_KEY_UP )
     {
       p_wk->input = UI_INPUT_CONT_UP;
     }
-    else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
+    else if( cont & PAD_KEY_DOWN )
     {
       p_wk->input = UI_INPUT_CONT_DOWN;
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    else if( trg & PAD_BUTTON_A )
     {
       p_wk->input = UI_INPUT_TRG_DECIDE;
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    else if( trg & PAD_BUTTON_B )
     {
       GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       p_wk->input = UI_INPUT_TRG_CANCEL;
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    else if( trg & PAD_BUTTON_Y )
     {
       GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       p_wk->input = UI_INPUT_TRG_Y;
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    else if( trg & PAD_BUTTON_X )
     {
       GFL_UI_SetTouchOrKey( GFL_APP_END_KEY ); 
       p_wk->input = UI_INPUT_TRG_X;
@@ -3251,10 +3274,10 @@ static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  コンフィグパラメータにレポート送信設定
+ *  @brief  コンフィグパラメータにレポート送信設定
  *
- *	@param	SCROLL_WORK *p_wk ワーク
- *	@param	param             WIRELESSSAVE_OFF or WIRELESSSAVE_ON
+ *  @param  SCROLL_WORK *p_wk ワーク
+ *  @param  param             WIRELESSSAVE_OFF or WIRELESSSAVE_ON
  */
 //-----------------------------------------------------------------------------
 static void SCROLL_SetConfigParamReport( SCROLL_WORK *p_wk, u16 param )
@@ -3464,12 +3487,12 @@ static void Scroll_Move( SCROLL_WORK *p_wk, int y_add )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スクロール移動  レンジ指定版
+ *  @brief  スクロール移動  レンジ指定版
  *
- *	@param	SCROLL_WORK *p_wk ワーク
- *	@param	y_add Y移動値
- *	@param	min   最小
- *	@param	max   最大
+ *  @param  SCROLL_WORK *p_wk ワーク
+ *  @param  y_add Y移動値
+ *  @param  min   最小
+ *  @param  max   最大
  */
 //-----------------------------------------------------------------------------
 static void Scroll_MoveRange( SCROLL_WORK *p_wk, int y_add, int min, int max )
@@ -4293,6 +4316,12 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   };
 
   CONFIG_WORK *p_wk = p_param;
+
+  // printQueに描画タスクが残っているときは操作を受け付けない
+  if(PRINTSYS_QUE_IsFinished( p_wk->p_que )==FALSE){
+    return;
+  }
+  
 
   //モジュールメイン
   switch( *p_seq )
