@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-24T20:42:38"/>
+	<create user="matsumiya" host="W00224" date="2010-06-25T22:28:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4909,11 +4909,11 @@
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
 		<language name="JPN" width="256">ヒロノリ『なにか　おもいついても
-だいたい　だれか　やってるっスねー▼
+だいたい　さきに　やられてるっスね▼
 おかねを　かせぐのは
 らくじゃねーっスよ！</language>
 		<language name="JPN_KANJI" width="256">ヒロノリ『なにか　思いついても
-大体　先に　やってるっスねー▼
+大体　先に　やられてるっスね▼
 お金を　かせぐのは
 楽じゃねーっスよ！</language>
 	</row>
@@ -4942,7 +4942,7 @@
 つれていって　くれないっスか？</language>
 		<language name="JPN_KANJI" width="256">ヒロノリ『チャーンスなんて
 ここには　なかったっスよー！▼
-ビッグチャンス　ねらうほうが
+穴場の　ビジネス　探すほうが
 オレの　性に　あうっスよ！▼
 悪いっスけど　ホワイトフォレストに
 連れていって　くれないっスか？</language>
@@ -5010,7 +5010,7 @@
 かんきょうで　すごしたいぜ</language>
 		<language name="JPN_KANJI" width="256">ケン『ブラックシティで
 ポケモン勝負の　ことばかり▽
-考え　ていても▽
+考えていても▽
 トレーナーとして　なにかが足りない▼
 もっと　広い　視野が持てる
 環境で　過ごしたいぜ</language>
@@ -5025,7 +5025,7 @@
 うらやましいぜ</language>
 		<language name="JPN_KANJI" width="256">ケン『あんたの　ホワイトフォレスト
 いろいろな　ポケモンが　いるな▼
-視野を　広ろげられそうで
+視野を　広げられそうで
 うらやましいぜ</language>
 	</row>
 
