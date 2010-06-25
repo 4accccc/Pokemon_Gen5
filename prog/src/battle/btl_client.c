@@ -4584,8 +4584,19 @@ static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq )
  */
 static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 {
+  enum {
+    SEQ_INIT = 0,
+    SEQ_SELECT_ROOT,
+    SEQ_TIMELIMIT_OVER,
+    SEQ_SELECT_END,
+
+    SEQ_SELECT_PASS,
+    SEQ_COMM_WAIT,
+    SEQ_SELECT_PASS_END,
+  };
+
   switch( *seq ){
-  case 0:
+  case SEQ_INIT:
   {
     wk->myChangePokeCnt = storeMyChangePokePos( wk, wk->myChangePokePos );
 
@@ -4629,7 +4640,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, outPokeIdx, FALSE, &wk->pokeSelResult );
 
         CmdLimit_Start( wk );
-        (*seq)++;
+        (*seq) = SEQ_SELECT_ROOT;
       }
       // 控えに出せるポケモンがもう居ない
       else
@@ -4662,41 +4673,62 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
     else
     {
       BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
-      BTL_ACTION_SetNULL( &wk->actionParam[0] );
-      wk->returnDataPtr = &(wk->actionParam[0]);
-      wk->returnDataSize = sizeof(wk->actionParam[0]);
-      return TRUE;
+      (*seq) = SEQ_SELECT_PASS;
     }
   }
   break;
 
-  case 1:
+  case SEQ_SELECT_ROOT:
     if( CmdLimit_CheckOver(wk) ){
       BTLV_ForceQuitPokeSelect( wk->viewCore );
-      (*seq) = 2;
+      (*seq) = SEQ_TIMELIMIT_OVER;
       break;
     }
-
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
       storePokeSelResult( wk, &wk->pokeSelResult );
-      (*seq) = 3;
+      (*seq) = SEQ_SELECT_END;
     }
     break;
 
   // コマンド制限時間による強制終了処理
-  case 2:
+  case SEQ_TIMELIMIT_OVER:
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
       storePokeSelResult_ForceQuit( wk );
-      (*seq) = 3;
+      (*seq) = SEQ_SELECT_END;
     }
     break;
 
-  case 3:
+  case SEQ_SELECT_END:
     CmdLimit_End( wk );
     return TRUE;
 
+  // 自分は選ぶ必要が無い場合にここ
+  case SEQ_SELECT_PASS:
+    if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
+    {
+      wk->commWaitInfoOn = TRUE;
+      BTLV_StartCommWait( wk->viewCore );
+      (*seq) = SEQ_COMM_WAIT;
+    }
+    else{
+      (*seq) = SEQ_SELECT_PASS_END;
+    }
+    break;
+
+  case SEQ_COMM_WAIT:
+    if( BTLV_WaitCommWait(wk->viewCore) )
+    {
+      (*seq) = SEQ_SELECT_PASS_END;
+    }
+    break;
+
+  case SEQ_SELECT_PASS_END:
+    BTL_ACTION_SetNULL( &wk->actionParam[0] );
+    wk->returnDataPtr = &(wk->actionParam[0]);
+    wk->returnDataSize = sizeof(wk->actionParam[0]);
+    return TRUE;
   }
 
   return FALSE;
