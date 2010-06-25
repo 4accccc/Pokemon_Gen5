@@ -2703,6 +2703,9 @@ static BOOL MyStatusCheck( GURU2RC_WORK *wk )
 }
 
 
+
+// 「せってい」画面の「はやい」と同じ
+#define GURU2_RECEIPT_MGS_SPEED   ( 0 )
 //------------------------------------------------------------------
 /**
  * @brief   会話ウインドウ表示
@@ -2732,8 +2735,8 @@ static void RecordMessagePrint( GURU2RC_WORK *wk, int msgno, int all_put )
     OS_Printf("PrintStreamが衝突した\n");
   }
   wk->printStream = PRINTSYS_PrintStream( wk->MsgWin, 0,0, wk->TalkString,
-                                          wk->font, MSGSPEED_GetWait(), wk->pMsgTcblSys,
-                                          0,HEAPID_GURU2, 15 );
+                                          wk->font, GURU2_RECEIPT_MGS_SPEED, 
+                                          wk->pMsgTcblSys, 0,HEAPID_GURU2, 15 );
   OS_Printf("msgno:%d 表示開始\n", msgno);
 
   GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
