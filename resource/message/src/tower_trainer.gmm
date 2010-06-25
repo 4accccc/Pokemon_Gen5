@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-25T18:30:15"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-25T19:09:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="110" top="499" right="697" bottom="1069" maximized="no" rayout="Vertical2">
+	<dialog left="309" top="476" right="896" bottom="1046" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="579"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="412"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -7419,9 +7419,9 @@
 
 マルギット</comment>
 		<language name="JPN">うちの　ポケモンの　わざば
-みきれるわけが　なか</language>
+あんたに　みきれるわけが　なか</language>
 		<language name="JPN_KANJI">うちの　ポケモンの　技ば
-見切れる訳が　なか</language>
+あんたに　見切れる訳が　なか</language>
 	</row>
 
 	<row id="mes_tower_tr_276_02">
@@ -7659,9 +7659,9 @@
 	<row id="mes_tower_tr_285_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>マツカゼ</comment>
 		<language name="JPN">きたいどごしすぎて　しまいだス
-しごとではなくて　よかっただな</language>
+ビジネスでは　なくて　よかっただな</language>
 		<language name="JPN_KANJI">期待どごしすぎて　しまいだス
-仕事ではなくて　良かっただな</language>
+ビジネスでは　なくて　良かっただな</language>
 	</row>
 
 	<row id="mes_tower_tr_285_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -7858,9 +7858,9 @@
 		<comment>ブリーダー♀１
 
 ショウ</comment>
-		<language name="JPN">わだすの　きたえた　じまんの
+		<language name="JPN">わだすの　トレーニングした　じまんの
 ポケモンば　みてくださってけろ</language>
-		<language name="JPN_KANJI">わだすの　鍛えた　自慢の
+		<language name="JPN_KANJI">わだすの　トレーニングした　自慢の
 ポケモンば　見てくださってけろ</language>
 	</row>
 
@@ -7875,9 +7875,9 @@
 	<row id="mes_tower_tr_293_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>ショウ</comment>
 		<language name="JPN">おだぐさまは　つよくてかっこええわね
-わだす　すきに　なりそうだず</language>
+んだげっと　つぎは　まけねえがらな</language>
 		<language name="JPN_KANJI">おだぐさまは　強くかっこええわね
-わだす　好きに　なりそうだず</language>
+んだげっと　次は　負けねえがらな</language>
 	</row>
 
 	<row id="mes_tower_tr_294_01">
