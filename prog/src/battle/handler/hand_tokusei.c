@@ -4962,8 +4962,9 @@ static void common_Tenkiya_Off( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetMonsNo(bpp) == MONSNO_POWARUN )
-    {
+    if( (BPP_GetMonsNo(bpp) == MONSNO_POWARUN)
+    &&  (BPP_GetValue(bpp, BPP_FORM) != FORMNO_POWARUN_NORMAL)
+    ){
       BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
         param->pokeID = pokeID;
         param->formNo = FORMNO_POWARUN_NORMAL;
@@ -4991,6 +4992,7 @@ static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
       form_next = FORMNO_POWARUN_NORMAL;
     }
 
+    TAYA_Printf( "form_now=%d, next=%d\n", form_now, form_next);
     if( form_next != form_now )
     {
       BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
@@ -5009,13 +5011,13 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN_COMP,        handler_Tenkiya_MemberInComp  },  // ポケ入場ハンドラ
     { BTL_EVENT_ROTATION_IN,           handler_Tenkiya_MemberInComp  },
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_GetTok    },  // とくせい書き換え直後ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Tenkiya_ChangeTok },  // とくせい書き換え直前ハンドラ
-    { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_TokOff    },  // いえき確定ハンドラ
-    { BTL_EVENT_NOTIFY_AIRLOCK,        handler_Tenkiya_AirLock   },  // エアロック通知ハンドラ
-    { BTL_EVENT_ACTPROC_END,           handler_Tenkiya_Weather   },
-    { BTL_EVENT_TURNCHECK_DONE,        handler_Tenkiya_Weather   },
-    { BTL_EVENT_WEATHER_CHANGE_AFTER,  handler_Tenkiya_Weather   },  // 天候変化後ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_GetTok        },  // とくせい書き換え直後ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Tenkiya_ChangeTok     },  // とくせい書き換え直前ハンドラ
+    { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_TokOff        },  // いえき確定ハンドラ
+    { BTL_EVENT_NOTIFY_AIRLOCK,        handler_Tenkiya_AirLock       },  // エアロック通知ハンドラ
+    { BTL_EVENT_ACTPROC_END,           handler_Tenkiya_Weather       },
+    { BTL_EVENT_TURNCHECK_DONE,        handler_Tenkiya_Weather       },
+    { BTL_EVENT_WEATHER_CHANGE_AFTER,  handler_Tenkiya_Weather       },  // 天候変化後ハンドラ
 
   };
   *numElems = NELEMS(HandlerTable);
@@ -5216,9 +5218,10 @@ static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     {
       // これらのアイテムは無効化しない
       static const u16 IgnoreItems[] = {
-        ITEM_KYOUSEIGIPUSU, ITEM_GAKUSYUUSOUTI, ITEM_OMAMORIKOBAN, ITEM_KIYOMENOOHUDA,
-        ITEM_KAWARAZUNOISI, ITEM_SIAWASETAMAGO, ITEM_PAWAARISUTO,  ITEM_PAWAABERUTO,
-        ITEM_PAWAARENZU,    ITEM_PAWAABANDO,    ITEM_PAWAAANKURU,  ITEM_PAWAAUEITO,
+        ITEM_KYOUSEIGIPUSU, ITEM_GAKUSYUUSOUTI, ITEM_OMAMORIKOBAN,  ITEM_KOUUNNOOKOU,
+        ITEM_KIYOMENOOHUDA, ITEM_KAWARAZUNOISI, ITEM_SIAWASETAMAGO,
+        ITEM_PAWAARISUTO,   ITEM_PAWAABERUTO,   ITEM_PAWAARENZU,    ITEM_PAWAABANDO,
+        ITEM_PAWAAANKURU,   ITEM_PAWAAUEITO,
       };
       u32 i;
       for(i=0; i<NELEMS(IgnoreItems); ++i)
@@ -7305,6 +7308,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kinchoukan( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,             handler_Kinchoukan_MemberIn       }, // メンバー入場ハンドラ
     { BTL_EVENT_ROTATION_IN,           handler_Kinchoukan_RotationIn     },
+    { BTL_EVENT_MEMBER_IN_PREV,        handler_Kinchoukan_RotationIn     },
 //    { BTL_EVENT_CHECK_ITEMEQUIP_FAIL,  handler_Kinchoukan_CheckItemEquip }, // 装備アイテム使用チェックハンドラ
 //    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Kinchoukan_MemberIn       }, // とくせい書き換えハンドラ
 //    { BTL_EVENT_MEMBER_OUT_FIXED,      handler_Kinchoukan_MemberOutFixed }, // メンバー退場確定ハンドラ
