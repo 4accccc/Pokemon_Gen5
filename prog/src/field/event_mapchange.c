@@ -3288,9 +3288,15 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
 {
   PALACE_JUMP* work = (PALACE_JUMP*)wk;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(work->gameSystem);
-
+  enum{
+    SEQ_INIT,
+    SEQ_WARP,
+    SEQ_WARP_AFTER,
+    SEQ_FINISH,
+  };
+  
   switch(*seq){
-  case 0:
+  case SEQ_INIT:
     {
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
       BOOL is_target = FALSE;
@@ -3323,7 +3329,7 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
         }
 
         //マップチェンジイベント変更シーケンスへ
-        (*seq) = 1;
+        (*seq) = SEQ_WARP;
       }
       else
       {     //進入不可能
@@ -3338,11 +3344,11 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
         }
         SCRIPT_CallScript( event, scr_id, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
         //終了シーケンスへ
-        (*seq) = 2;
+        (*seq) = SEQ_FINISH;
       }
     }
     break;
-  case 1:
+  case SEQ_WARP:
     if(Intrude_CheckTutorialComplete(work->gameData) == FALSE){
       if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_NULL){
         break;
@@ -3356,29 +3362,40 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
       //通信が切れました
       SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_FAILED_SHUTDOWN, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
       //終了シーケンスへ
-      (*seq) = 2;
+      (*seq) = SEQ_FINISH;
       break;
     }
     
     {
+      GMEVENT* call_event;
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+
       if(intcomm != NULL){
+        //ワープ直前の「表にいるけど裏状態」な座標が送信されないように停止フラグをセット
+        Intrude_SetSendMyPositionStopFlag(intcomm, TRUE);
         Intrude_SetMinePalaceArea(intcomm, work->palace_area);
         if(work->partner == TRUE){  //協力者としてのワープなのでここでミッションエントリー
           MISSION_SetMissionEntry(intcomm, &intcomm->mission);
         }
       }
-    }
-
-    {
-      GMEVENT* call_event;
+      
       GAMEDATA_SetIntrudeReverseArea(work->gameData, TRUE);
       GAMEDATA_SetIntrudeMyID(work->gameData, GFL_NET_SystemGetCurrentID());
       call_event = EVENT_ChangeMapPalace( work->gameSystem, work->fieldmap, &work->Loc );
-      GMEVENT_ChangeEvent(event, call_event);
+      GMEVENT_CallEvent(event, call_event);
     }
+    *seq = SEQ_WARP_AFTER;
     break;
-  case 2:
+  case SEQ_WARP_AFTER:
+    {
+      INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+      if(intcomm != NULL){
+        Intrude_SetSendMyPositionStopFlag(intcomm, FALSE);
+      }
+    }
+    *seq = SEQ_FINISH;
+    break;
+  case SEQ_FINISH:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

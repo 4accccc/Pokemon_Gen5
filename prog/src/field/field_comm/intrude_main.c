@@ -186,7 +186,7 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   }
 
   //プレイヤーステータス送信
-  if(intcomm->send_status == TRUE){
+  if(intcomm->send_status == TRUE && intcomm->send_my_position_stop == FALSE){
     if(IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine) == TRUE){
       intcomm->send_status = FALSE;
     }
@@ -1330,4 +1330,17 @@ void Intrude_SetMinePalaceArea(INTRUDE_COMM_SYS_PTR intcomm, int palace_area)
   intcomm->intrude_status_mine.palace_area = palace_area;
   GAMEDATA_SetIntrudePalaceArea(gamedata, palace_area);
   FIELD_WFBC_COMM_DATA_SetIntrudeNetID(&intcomm->wfbc_comm_data, palace_area);
+}
+
+//==================================================================
+/**
+ * 送信用の自分座標更新処理を停止するフラグをセット
+ *
+ * @param   intcomm		
+ * @param   stop		  TRUE:更新停止　FALSE:更新する
+ */
+//==================================================================
+void Intrude_SetSendMyPositionStopFlag(INTRUDE_COMM_SYS_PTR intcomm, BOOL stop)
+{
+  intcomm->send_my_position_stop = stop;
 }
