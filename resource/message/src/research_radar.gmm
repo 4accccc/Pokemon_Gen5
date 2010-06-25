@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-06-02T12:25:37"/>
+	<create user="ohmori" host="W00223" date="2010-06-24T21:59:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -386,7 +386,7 @@
 
 	<row id="str_select_determine" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさを　かいしします！</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を開始します!</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を開始します！</language>
 	</row>
 
 	<row id="str_check_examining" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
