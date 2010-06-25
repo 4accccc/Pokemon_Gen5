@@ -684,7 +684,7 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 		{
       GFL_NET_ReloadIconTopOrBottom( TRUE, p_wk->heapID );
       p_wk->p_wih = WIH_DWC_AllBeaconStart(sc_net_init.maxBeaconNum, p_wk->heapID );
-      GFL_NET_Changeover(NULL);
+      GFL_NET_StartBeaconScan();
       *p_seq = SEQ_END;
     }
     break;
