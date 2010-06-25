@@ -835,6 +835,7 @@ static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tb
 static  void  set_cursor_pos( BTLV_INPUT_WORK* biw );
 static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw );
 static  inline  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw );
+static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw );
 
 static  inline  void  SePlayOpen( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
@@ -1418,42 +1419,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
-      if( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
-      {
-        if( bicp->bagMode == BBAG_MODE_SHOOTER )
-        { 
-          ttw->datID = NARC_battgra_wb_battle_w_bg0i_NSCR;
-        }
-        else
-        { 
-          ttw->datID = NARC_battgra_wb_battle_w_bg0a_NSCR;
-        }
-      }
-      else
-      {
-        if( ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( bicp->pos != BTLV_MCSS_POS_C ) )
-        {
-          if( bicp->bagMode == BBAG_MODE_SHOOTER )
-          { 
-            ttw->datID = NARC_battgra_wb_battle_w_bg0k_NSCR;
-          }
-          else
-          { 
-            ttw->datID = NARC_battgra_wb_battle_w_bg0e_NSCR;
-          }
-        }
-        else
-        {
-          if( bicp->bagMode == BBAG_MODE_SHOOTER )
-          { 
-            ttw->datID = NARC_battgra_wb_battle_w_bg0j_NSCR;
-          }
-          else
-          { 
-            ttw->datID = NARC_battgra_wb_battle_w_bg0d_NSCR;
-          }
-        }
-      }
+      ttw->datID = get_command_screen( biw );
 
       BTLV_INPUT_PutShooterEnergy( biw, bicp );
 #ifdef ROTATION_NEW_SYSTEM
@@ -1499,6 +1465,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       ttw->biw = biw;
       ttw->pos = biwp->pos;
       biw->henshin_flag = biwp->henshin_flag;
+      ttw->datID = get_command_screen( biw );
+
       { 
         int i;
         for( i = 0 ; i <PTL_WAZA_MAX ; i++ )
@@ -2260,13 +2228,13 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
     { 
       if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
       {
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
-                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
       else
       {
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
@@ -2312,16 +2280,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-    {
-     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
-                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    }
-    else
-    {
-     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    }
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
@@ -2482,16 +2441,7 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
 {
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-  {
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
-                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-  }
-  else
-  {
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-  }
+  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
@@ -5513,6 +5463,65 @@ static  inline  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw )
   { 
     PaletteWorkSet( BTLV_EFFECT_GetPfd(), &biw->bag_pal, FADE_SUB_BG, 0x20, 0x20 );
   }
+}
+
+//=============================================================================================
+//  コマンドスクリーンを取得
+//=============================================================================================
+static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw )
+{ 
+  if( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
+  {
+    if( biw->type == BTLV_INPUT_TYPE_TRIPLE )
+    { 
+      if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
+      { 
+        return NARC_battgra_wb_battle_w_bg0c_NSCR;
+      }
+      else
+      { 
+        return NARC_battgra_wb_battle_w_bg0b_NSCR;
+      }
+    }
+    else
+    { 
+      if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
+      { 
+        return NARC_battgra_wb_battle_w_bg0i_NSCR;
+      }
+      else
+      { 
+        return NARC_battgra_wb_battle_w_bg0a_NSCR;
+      }
+    }
+  }
+  else
+  {
+    if( ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( biw->focus_pos != BTLV_MCSS_POS_C ) )
+    {
+      if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
+      { 
+        return NARC_battgra_wb_battle_w_bg0k_NSCR;
+      }
+      else
+      { 
+        return NARC_battgra_wb_battle_w_bg0e_NSCR;
+      }
+    }
+    else
+    {
+      if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
+      { 
+        return NARC_battgra_wb_battle_w_bg0j_NSCR;
+      }
+      else
+      { 
+        return NARC_battgra_wb_battle_w_bg0d_NSCR;
+      }
+    }
+  }
+  //当たり障りのないものを返しておく
+  return NARC_battgra_wb_battle_w_bg0a_NSCR;
 }
 
 //=============================================================================================
