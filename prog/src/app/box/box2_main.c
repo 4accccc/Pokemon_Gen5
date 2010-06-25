@@ -322,6 +322,7 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 {
   BOX2_SYS_WORK * syswk = work;
 
+	BOX2BMP_TransCgx( syswk->app );
   GFL_BG_VBlankFunc();
   GFL_CLACT_SYS_VBlankFunc();
 

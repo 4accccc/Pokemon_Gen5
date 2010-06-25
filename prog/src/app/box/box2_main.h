@@ -322,6 +322,7 @@ typedef struct {
 	PRINT_STREAM * stream;		// プリントストリーム
 
 	PRINT_UTIL	win[BOX2BMPWIN_ID_MAX];		// BMPWIN
+	u8	winTrans[BOX2BMPWIN_ID_MAX/8];		// BMPWINキャラ転送フラグ
 
 	GFL_ARCUTIL_TRANSINFO	syswinInfo;			// システムウィンドウ展開位置
 

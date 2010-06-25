@@ -417,6 +417,47 @@ void BOX2BMP_Exit( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		ＢＭＰキャラ転送リクエスト
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		id			BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_TransCgxReq( BOX2_APP_WORK * appwk, u32 id )
+{
+	appwk->winTrans[id/8] |= ( 1 << ( id & 7 ) );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＭＰキャラ転送
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_TransCgx( BOX2_APP_WORK * appwk )
+{
+	u32	i;
+
+	for( i=0; i<BOX2BMPWIN_ID_MAX; i++ ){
+		if( appwk->win[i].win != NULL ){
+			u8	pos, bit;
+			pos = i / 8;
+			bit = 1 << ( i & 7 );
+			if( appwk->winTrans[pos] & bit ){
+				GFL_BMPWIN_TransVramCharacter( appwk->win[i].win );
+				appwk->winTrans[pos] ^= bit;
+			}
+		}
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		プリントメイン
  *
  * @param		appwk		ボックス画面アプリワーク
@@ -623,7 +664,8 @@ static void PokeNamePut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 w
 		ExStrPrint(
 			appwk, winID, appwk->mman, mes_boxmenu_01_01, 0, 0, appwk->font, FCOL_N_BLACK );
 	}else{
-		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+//		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+		BOX2BMP_TransCgxReq( appwk, winID );
 		return;
 	}
 
@@ -678,7 +720,8 @@ static void PokeLvPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 win
 		ExStrPrint(
 			appwk, winID, appwk->mman, mes_box_subst_01_09, npx, 0, appwk->font, FCOL_N_BLACK );
 	}else{
-		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+//		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+		BOX2BMP_TransCgxReq( appwk, winID );
 		return;
 	}
 
@@ -708,11 +751,13 @@ static void PokeSexPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 wi
 			StrPrint(
 				appwk, winID, appwk->mman, mes_box_subst_01_02, 0, 0, appwk->font, FCOL_N_RED );
 		}else{
-			GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+//			GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+			BOX2BMP_TransCgxReq( appwk, winID );
 			return;
 		}
 	}else{
-		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+//		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+		BOX2BMP_TransCgxReq( appwk, winID );
 		return;
 	}
 
@@ -757,11 +802,13 @@ static void PokeNumberPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32
 				syswk->app, winID, syswk->app->mman,
 				mes_box_subst_01_10, npx, 0, syswk->app->font, FCOL_N_BLACK );
 		}else{
-			GFL_BMPWIN_TransVramCharacter( syswk->app->win[winID].win );
+//			GFL_BMPWIN_TransVramCharacter( syswk->app->win[winID].win );
+			BOX2BMP_TransCgxReq( syswk->app, winID );
 			return;
 		}
 	}else{
-		GFL_BMPWIN_TransVramCharacter( syswk->app->win[winID].win );
+//		GFL_BMPWIN_TransVramCharacter( syswk->app->win[winID].win );
+		BOX2BMP_TransCgxReq( syswk->app, winID );
 		return;
 	}
 
@@ -933,7 +980,8 @@ void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk )
 	for( i=BOX2BMPWIN_ID_NAME; i<=BOX2BMPWIN_ID_WAZA; i++ ){
 		ClearScreen( &appwk->win[i] );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[i].win), 0 );
-		GFL_BMPWIN_TransVramCharacter( appwk->win[i].win );
+//		GFL_BMPWIN_TransVramCharacter( appwk->win[i].win );
+		BOX2BMP_TransCgxReq( appwk, i );
 	}
 
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_WAZA_STR] );
@@ -1320,7 +1368,8 @@ void BOX2BMP_MenuStrPrint( BOX2_SYS_WORK * syswk, const BOX2BMP_BUTTON_LIST * li
 	// いらないものは消す
 	for( i=max; i<6; i++ ){
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win), 0 );
-		GFL_BMPWIN_TransVramCharacter( syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win );
+//		GFL_BMPWIN_TransVramCharacter( syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win );
+		BOX2BMP_TransCgxReq( syswk->app, BOX2BMPWIN_ID_MENU6-i );
 	}
 }
 
