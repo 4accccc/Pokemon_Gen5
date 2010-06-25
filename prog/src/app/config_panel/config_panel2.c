@@ -2674,8 +2674,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     else if( p_wk->select != APPBAR_WIN_NULL )
     {
       p_wk->select  = APPBAR_WIN_NULL;
-    } 
-
+    }
     is_update = TRUE;
     break;
 
@@ -3098,6 +3097,15 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       Scroll_ChangePlt( p_wk, FALSE );
       GRAPHIC_StartPalleteFade( p_graphic );
       p_wk->is_info_update  = TRUE;
+      is_bmpprint_decide  = FALSE;
+    }
+    else
+    {
+      //範囲外をタッチ
+      Scroll_ChangePlt( p_wk, FALSE );
+
+      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), FALSE );
+      GRAPHIC_StartPalleteFade( p_graphic );
       is_bmpprint_decide  = FALSE;
     }
     break;
