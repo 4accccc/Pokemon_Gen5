@@ -2484,6 +2484,7 @@ static void _touchState_BeforeTimeing11Send(POKEMON_TRADE_WORK* pWork)
     GFL_NET_SetAutoErrorCheck(TRUE);
     GFL_NET_SetNoChildErrorCheck(TRUE);
     POKEMONTRADE_PokeIconCgxLoad( pWork );
+    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
 
     _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
   }
