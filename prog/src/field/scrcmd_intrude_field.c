@@ -174,7 +174,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
   
   switch( *seq ){
   case SEQ_INIT:
-	  if(NetErr_App_CheckError()){
+	  if(NetErr_App_CheckError() || (intcomm == NULL && GAMEDATA_GetIntrudePalaceArea(gamedata) != GAMEDATA_GetIntrudeMyID(gamedata))){
       *seq = SEQ_FINISH;  //エラーが発生している時はメッセージを出さずに終了
       break;
     }
