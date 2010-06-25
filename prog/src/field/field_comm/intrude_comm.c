@@ -534,7 +534,11 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
     }
     else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
-      if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
+      if(intcomm->achieve_not_result == TRUE){
+        //自分が達成者だったが、結果を受け取る前に切断検知で結果画面まで飛ばされた　タイムアウト
+        GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT);
+      }
+      else if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
         //自分が達成者
         GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS);
       }
@@ -549,11 +553,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
             break;
           }
         }
-        if(intcomm->achieve_not_result == TRUE){
-          //自分が達成者だったが、結果を受け取る前に切断検知で結果画面まで飛ばされた　タイムアウト
-          GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT);
-        }
-        else if(i < FIELD_COMM_MEMBER_MAX){
+        if(i < FIELD_COMM_MEMBER_MAX){
           //他に達成者がいた
           GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL);
         }
