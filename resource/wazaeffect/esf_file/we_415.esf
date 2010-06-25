@@ -7,7 +7,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_271.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_415.spa
 #001
 %00
-カメラ移動（座標指定）	追従（相対指定）	5:3:-5	0:0:0	16	0	12
+カメラ移動（座標指定）	追従（相対指定）	5:5:3	0:0:0	16	0	12
 ポケモンアニメ	攻撃側	アニメストップ
 ポケモン拡縮	攻撃側	往復ロング	0	0.3	2	1	1
 制御モード変更	継続
