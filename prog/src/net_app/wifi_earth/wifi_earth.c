@@ -63,6 +63,8 @@ BOOL  WIFI_LocalAreaExistCheck(int nationID);
 #ifdef PM_DEBUG
 //#define WIFI_ERATH_DEBUG
 //#define WIFI_ERATH_DEBUG_ALL_DRAW
+//#define DEBUG_RAPID_PAD ///<ポイントの上に重なってRボタンを押すとprintQueをあふれされる
+
 #endif
 
 //地点登録最大数
@@ -859,6 +861,22 @@ static const GFL_UI_TP_HITTBL touch_move_table[]={
   { 168, 191,  72, 183, },
   {GFL_UI_TP_HIT_END,0,0,0},    // 終了データ
 };
+#ifdef DEBUG_RAPID_PAD
+static int debug_flag=0;
+static void _debug_pad( EARTH_DEMO_WORK *wk )
+{
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+    debug_flag ^=1;
+    if(debug_flag==0){
+      wk->trg  = PAD_BUTTON_X;
+    }else{
+      wk->cont = PAD_KEY_LEFT;
+    }
+  }else{
+    debug_flag=0;
+  }
+}
+#endif
 
 //----------------------------------------------------------------------------------
 /**
@@ -1200,6 +1218,10 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       u32 minindex; // ダミー
       u16 camera_status_backup = wk->camera_status;
 
+      if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+        break;
+      }
+
       //タッチパネルコントロール
       Earth_TouchPanel(wk);
 
@@ -1223,6 +1245,12 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
         GFL_BMPWIN_TransVramCharacter(wk->msgwin);
         *seq = EARTHDEMO_SEQ_BUTTON_ANIME;
       }else{
+
+// ポイントの上に重なってRボタンを押すとprintQueをあふれされる操作（対策済み）
+#ifdef DEBUG_RAPID_PAD
+        _debug_pad(wk);
+#endif
+
         // 「みる」機能
         if( ((wk->trg & PAD_BUTTON_X)||(wk->tp_result & PAD_BUTTON_X))&&(wk->info_mode == 0) ){
           wk->info_mode = 1;
@@ -1326,7 +1354,6 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
   PRINT_UTIL_Trans( &wk->printUtilLook, wk->printQue );
   PRINT_UTIL_Trans( &wk->printUtilIcon, wk->printQue );
   PRINT_UTIL_Trans( &wk->printUtilMsg, wk->printQue );
-  PRINT_UTIL_Trans( &wk->printUtil, wk->printQue );
 
   return sys_result;
 }
@@ -2624,6 +2651,8 @@ static void  EarthVecFx32_to_MtxFx33_place( MtxFx33* dst, VecFx32* src )
   MTX_Concat33(dst,&tmp,dst);
 }
 
+
+
 //----------------------------------
 //地球操作関数
 //----------------------------------
@@ -2637,6 +2666,8 @@ static BOOL Earth3D_Control( EARTH_DEMO_WORK * wk,int keytrg,int keycont )
 
   rotate_x = wk->rotate.x;
   rotate_y = wk->rotate.y;
+
+  
 
   //カメラ遠近移動判定（世界地球儀モードのみ）
   if((keytrg & PAD_BUTTON_A)||(wk->tp_result & PAD_BUTTON_A)){
