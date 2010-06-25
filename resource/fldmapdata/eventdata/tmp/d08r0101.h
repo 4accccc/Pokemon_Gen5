@@ -15,7 +15,7 @@
 #define D08R0101_NONE_02                   2
 #define D08R0101_NONE_03                   3
 #define D08R0101_NONE_04                   4
-#define D08R0101_HAKASE1_01                5
+#define D08R0101_HAKASE2_01                5
 
 #endif //ZONE_D08R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d08r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

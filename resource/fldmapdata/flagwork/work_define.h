@@ -279,7 +279,7 @@
 #define WK_OTHER_DISCOVER_EGG            16697 /* 0x4139 ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
 		/* not used 16698(0x413a) */
 #define WK_OTHER_C05R0701_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
-		/* not used 16700(0x413c) */
+#define WK_OTHER_PLAYABLE_TYPE           16700 /* 0x413c PLAYABLE：手持ちタイプ判別用ワーク */
 		/* not used 16701(0x413d) */
 		/* not used 16702(0x413e) */
 
