@@ -863,6 +863,10 @@ static int MainSeq_Wait( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_VFunc( BOX2_SYS_WORK * syswk )
 {
+	if( PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
+		return BOX2SEQ_MAINSEQ_VFUNC;
+	}
+
 	if( syswk->app->vfunk.func != NULL ){
 		pBOX2_FUNC func = syswk->app->vfunk.func;
 		if( func( syswk ) == 0 ){
