@@ -94,7 +94,8 @@ static void _demoInit( HEAPID heap_id )
 
   // ÉJÉÅÉâèâä˙ê›íË
   {
-    GFL_G3D_PROJECTION proj = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, cameraNear, cameraFar, 0 };
+//    GFL_G3D_PROJECTION proj = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, cameraNear, cameraFar, 0 };
+    GFL_G3D_PROJECTION proj = { GFL_G3D_PRJORTH, 0, 0, cameraAspect, 0, cameraNear, cameraFar, 0 };
     proj.param1 = FX_SinIdx( cameraPerspway );
     proj.param2 = FX_CosIdx( cameraPerspway );
     GFL_G3D_SetSystemProjection( &proj );
