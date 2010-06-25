@@ -1963,7 +1963,7 @@ BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
 //============================================================================================
 BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int* select )
 {
-  int hit, hit_tp;
+  int hit;
 
 #ifdef PM_DEBUG
   debug_timer_edit_check( biw );
@@ -1991,11 +1991,11 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
   {
-    int hit = biw->hit;
-    BTLV_INPUT_CheckWazaInfoModeMask( &hit );
-    if( hit < 5 )
+    int ret_hit = biw->hit;
+    BTLV_INPUT_CheckWazaInfoModeMask( &ret_hit );
+    if( ret_hit < 5 )
     { 
-      if( ( hit < 4 ) && ( biw->waruagaki_flag == TRUE ) )
+      if( ( ret_hit < 4 ) && ( biw->waruagaki_flag == TRUE ) )
       { 
         biw->hit = BTLV_INPUT_WARUAGAKI_BUTTON;
       }
@@ -2013,8 +2013,9 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       biw->decide_pos[ biw->active_index ][biw->scr_type ] = 0;
       biw->decide_pos_flag = 0;
       SePlayRotateSelect( biw );
-      SetupRotateAction( biw, hit );
+      SetupRotateAction( biw, ret_hit );
       biw->hit = GFL_UI_TP_HIT_NONE;
+      return FALSE;
     }
   }
 
@@ -2327,9 +2328,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
     SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
     pop_bag_button_pal( ttw->biw );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    SetupSetScroll( ttw->biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
     ttw->wait = 4;
     ttw->seq_no++;
     break;
@@ -2658,7 +2657,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR, 
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1h_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -2669,7 +2668,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
                     BG_VISIBLE_OFF, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
-    SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    //SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
@@ -2684,15 +2683,20 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
       SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
                      rotate_scroll_table[ ttw->biw->rotate_scr ][ 1 ], TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
       SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
-      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
       SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
-      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      SetupSetScroll( ttw->biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
+      ttw->wait = 4;
       ttw->seq_no++;
     }
     break;
   case 2:
+      if( --ttw->wait == 0 )
+      { 
+        SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+        ttw->seq_no++;
+      }
+    break;
+  case 3:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
@@ -2875,15 +2879,22 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
     SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
                    rotate_scroll_table[ ttw->biw->rotate_scr ][ 1 ], TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
-    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
     SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
     //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
     SetupSetScroll( ttw->biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
+    ttw->wait = 4;
     ttw->seq_no++;
     break;
   case 1:
+    if( --ttw->wait == 0 )
+    { 
+      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+      ttw->seq_no++;
+    }
+    break;
+  case 2:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
