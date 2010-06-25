@@ -75,6 +75,7 @@ typedef BOOL (*DevIsNewPlayerFunc)(void);  ///< 接続してきたかどうかを返します
 typedef void (*DevIrcMoveFunc)(void);   ///< IRC移動関数
 typedef BOOL (*DevIsSendDataFunc)(void);  ///< データを送ってよいかどうか
 typedef BOOL (*DevGetSendTurnFunc)(void);  ///< 送信可能ターンフラグを取得
+typedef BOOL (*DevGetUniqueAgreementFunc)(void);  ///< ユニークキーで一致しているかどうか
 typedef BOOL (*DevIsConnectSystemFunc)(void);  ///< 再接続中など関係なく、純粋に今、繋がっているか
 typedef BOOL (*DevGetSendLockFlagFunc)(void); ///< 送信ロックフラグを取得
 typedef void (*DevConnectWorkInitFunc)(void); ///< 初めての接続後のワーク設定
@@ -149,6 +150,7 @@ typedef struct{
   DevIrcMoveFunc DevIrcMove;  ///< IRC移動関数
   DevIsSendDataFunc DevIsSendData; ///< データを送ってよいかどうか
   DevGetSendTurnFunc DevGetSendTurn; ///< 送信可能ターンフラグを取得
+  DevGetUniqueAgreementFunc DevGetUniqueAgreement;  ///<ユニークキーで一致しているかどうか
   DevIsConnectSystemFunc DevIsConnectSystem;  ///< 再接続中など関係なく、純粋に今、繋がっているか
   DevGetSendLockFlagFunc DevGetSendLockFlag;  ///< 送信ロックフラグを取得
   DevConnectWorkInitFunc DevConnectWorkInit;           ///<初めての接続後のワーク設定
