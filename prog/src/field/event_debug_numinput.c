@@ -753,7 +753,7 @@ static const DEBUG_MENU_INITIALIZER DebugListSelectData = {
   0,                                ///<項目最大数（固定リストでない場合、０）
   NULL,                             ///<参照するメニューデータ（生成する場合はNULL)
   &DATA_DebugMenuList_ZoneSel,      ///<メニュー表示指定データ（流用）
-  1, 1, 20, 16,
+  1, 1, 30, 16,
   DEBUG_SetMenuWork_DebugList,    ///<メニュー生成関数へのポインタ
   DEBUG_GetDebugListMax,          ///<項目最大数取得関数へのポインタ
 };

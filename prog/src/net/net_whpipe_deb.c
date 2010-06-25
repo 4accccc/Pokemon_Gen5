@@ -26,6 +26,9 @@ u32 DEBUG_NET_WHPIPE_AloneTestCodeGet( void )
   if(DebugAloneTest == _DEBUG_ALONETEST_DEFAULT){
     return 0;
   }
+  else if(DebugAloneTest == 0){
+    return 255;
+  }
   return DebugAloneTest;
 }
 
@@ -34,6 +37,9 @@ void DEBUG_NET_WHPIPE_AloneTestCodeSet( u32 value )
 {
   if( value == 0 ){
     value = _DEBUG_ALONETEST_DEFAULT;
+  }
+  else if( value == 255 ){  //êªïiî≈Ç∆åqÇ™ÇÈ
+    value = 0;
   }
   DebugAloneTest = value;
 

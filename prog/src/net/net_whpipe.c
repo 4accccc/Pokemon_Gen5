@@ -239,9 +239,6 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 	pNetWL->pUserWork = pUserWork;
 	pNetWL->disconnectType = _DISCONNECT_NONE;
 #ifdef PM_DEBUG
-  if(DebugAloneTest == 0){
-    DebugAloneTest = _DEBUG_ALONETEST;
-  }
 	pNetWL->mineDebugNo = DebugAloneTest;
 #else
 	pNetWL->mineDebugNo = POKEMONWB_BEACON_PRODUCT_NO;
