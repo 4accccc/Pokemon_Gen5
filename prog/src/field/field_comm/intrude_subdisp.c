@@ -562,7 +562,13 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   }
   
   {
-    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    //INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    INTRUDE_COMM_SYS_PTR intcomm = NULL;
+    
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+      //画面初期化時のみ、他画面からエラーでの戻りがあるので、game_commから直接引っ張る
+      intcomm = GameCommSys_GetAppWork(game_comm);
+    }
     
     if(intcomm != NULL && intcomm->subdisp_update_stop == TRUE){
       intcomm = NULL;
