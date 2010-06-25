@@ -1,3 +1,5 @@
+$KCODE = "SJIS"
+
 def AddLabel(ary, str)
 
   rc = str.index("ev_zone")
@@ -101,6 +103,12 @@ while line = ev_file.gets
     end
   when 2 then
     #EVENT_END検出
+    ev_int_end = str.index("INIT_EVENT_END")
+    if ev_int_end != nil then
+      printf("対応していないコード検出 %s\n",search_label)
+      exit(-1)
+    end
+
     ev_end = str.index("EVENT_END")
     if ev_end != nil then
       if find != true then      #検索コード発見できなかった

@@ -12,6 +12,6 @@ all_ary.each{|i|
 ary.each{|i|
   src = "../" + i
   dst = i
-  system("ruby com_del.rb #{src} #{dst}")
+#  system("ruby com_del.rb #{src} #{dst}")
   system("ruby scr_check.rb #{dst}")
 }

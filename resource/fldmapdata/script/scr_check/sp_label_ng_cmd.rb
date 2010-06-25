@@ -1,63 +1,6 @@
 require "call_label.rb"
 
-def CallFunc(hash, code_ary, call_label, call_find_code_ary)
-  local_ary = Array.new
-
-  #ハッシュからラベルに一致する配列を取得
-  ary = hash[call_label]
-  if ary == nil then
-    printf("not_label %s\n",call_label)
-    return
-  end
-
-  #配列を検索
-  ary.each{|str|
-    local_ary.clear
-    #検索コード調べる
-    rc = SearchCode(code_ary, str, local_ary)
-    if rc == true then
-      #_CALLか？
-      target = str.index("_CALL")
-      if target != nil then     #見つかった
-#        printf("str = %s\n",str)
-        m = /_/.match(str)
-        fix_str = "_" + m.post_match
-        m = /\s/.match(fix_str)
-        call_str = m.pre_match
-        label_str = m.post_match
-        call_str.gsub!(/\s/,"")
-        label_str.gsub!(/\s/,"")
-        if call_str == "_CALL" then
-#          printf("CALLを発見\n")
-          CallFunc(hash, code_ary, label_str, call_find_code_ary)
-        end
-      else        #_CALL 以外
-#        printf("CALL内で発見\n")
-        make_str = call_label + "-->" + local_ary[0]
-        call_find_code_ary << make_str
-      end
-    end
-  }
-end
-
-def CallFuncParent(hash, code_ary, str, call_find_code_ary)
-  #_CALLか？
-  target = str.index("_CALL")
-  if target != nil then     #見つかった
-#    printf("PARENT CALLを発見 %s\n",str)
-    m = /_/.match(str)
-    fix_str = "_" + m.post_match
-    m = /\s/.match(fix_str)
-    call_str = m.pre_match
-    label_str = m.post_match
-    call_str.gsub!(/\s/,"")
-    label_str.gsub!(/\s/,"")
-#    printf("PARENT CALL部分 %s\n",call_str)
-    if call_str == "_CALL" then
-      CallFunc(hash, code_ary, label_str, call_find_code_ary)
-    end
-  end
-end
+$KCODE = "SJIS"
 
 def AddLabel(ary, str, target_label)
   rc = str.index(target_label)
@@ -110,6 +53,17 @@ list_txt = ARGV[1]
 
 target_label = ARGV[2]
 
+label_type = ARGV[3]
+if label_type == "SP" then
+  EventStart = "INIT_EVENT_START"
+  EventEnd = "INIT_EVENT_END"
+  NgEnd = "EVENT_END"
+else
+  EventStart = "EVENT_START"
+  EventEnd = "EVENT_END"
+  NgEnd = "INIT_EVENT_END"
+end
+
 
 #検索したいコードのリスト作成
 code_ary = Array.new
@@ -121,6 +75,7 @@ find_code_ary = Array.new
 call_find_code_ary = Array.new
 seq = 0
 find = false
+endjump = false
 while line = ev_file.gets
   str = line.chomp("\n").chomp("\r")
 
@@ -129,7 +84,7 @@ while line = ev_file.gets
     #_EVENT_DATA_END検出
     data_end = str.index("_EVENT_DATA_END")
     if data_end == nil then
-      column = str.split " "
+      column = str.split "\s"
       #「_EVENT_DATA」を配列化
       idx = str.index("_EVENT_DATA")
       if idx != nil then
@@ -143,11 +98,27 @@ while line = ev_file.gets
 #      }
     end
   when 1 then
-    #INIT_EVENT_START検出
-    ev_start = str.index("INIT_EVENT_START")
+    #START検出
+    ev_start = str.index(EventStart)
+    fix_str = Marshal.load(Marshal.dump(str))
+    fix_str.gsub!(/\s/,"")
+    ev_ng_end = fix_str.index(EventEnd)
+    if ev_ng_end != nil then
+      if ev_ng_end == 0 then
+        if endjump == false then
+          printf("START検出中にENDを検出　file:%s label:%s\n",ev_file_name, column[1])
+          exit(-1)
+        else
+          #ジャンプ解除
+          endjump = false
+#          printf("%s は　非対象なのでジャンプ\n",column[1])
+        end
+      end
+    end
+
     if ev_start != nil then
       if ev_start == 0 then
-        column = str.split " "
+        column = str.split "\s"
         rc = label.include?(column[1])
         if rc == true then
 #          printf("%sを調査開始\n",column[1])
@@ -155,12 +126,25 @@ while line = ev_file.gets
           #対象コード検索シーケンスへ
           seq = 2
           find = false
+        else
+          #非対象ラベル
+          endjump = true
         end
       end
     end
   when 2 then
-    #INIT_EVENT_END検出
-    ev_end = str.index("INIT_EVENT_END")
+    fix_str = Marshal.load(Marshal.dump(str))
+    fix_str.gsub!(/\s/,"")
+    ev_ng_end = fix_str.index(NgEnd)
+    if ev_ng_end != nil then
+      if ev_ng_end == 0 then
+        printf("対応していないコードを検出　%s\n",search_label)
+        exit(-1)
+      end
+    end
+    
+    #END検出
+    ev_end = str.index(EventEnd)
     if ev_end != nil then
       if find != false then      #検索コード発見した
 #        printf("検索コードがみつかった\n")

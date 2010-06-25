@@ -11,10 +11,11 @@ all_ary.each{|i|
 
 list = ARGV[0]
 target_label = ARGV[1]
+type = ARGV[2]
 
 ary.each{|i|
   src = "../" + i
   dst = i
 #  system("ruby com_del.rb #{src} #{dst}")
-  system("ruby sp_label_ng_cmd.rb #{dst} #{list} #{target_label}")
+  system("ruby sp_label_ng_cmd.rb #{dst} #{list} #{target_label} #{type}")
 }
