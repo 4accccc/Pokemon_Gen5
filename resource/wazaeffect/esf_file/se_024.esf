@@ -6,6 +6,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
 制御モード変更	継続
+MCSSのリバースドローを制御	リバースON
 汎用ワークに値をセット	3
 ポケモンバニッシュ	攻撃側	バニッシュオン
 カメラ移動	追従	3vs3攻撃	CM	0	CB
