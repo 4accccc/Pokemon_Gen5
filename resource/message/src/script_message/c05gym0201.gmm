@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T14:27:41"/>
+	<create user="matsumiya" host="W00224" date="2010-06-25T17:36:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,11 +337,11 @@
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">ときどきは　いま　てにいれた
+		<language name="JPN" width="256">ときどきは　ここで　てにいれた
 ジムバッジを　みて[BE:01:ページ切り替え（クリア）]
 この　しょうぶのことを
 おもいだして　ほしいっすね</language>
-		<language name="JPN_KANJI" width="256">ときどきは　今　手に入れた
+		<language name="JPN_KANJI" width="256">ときどきは　ここで　手に入れた
 ジムバッジを　みて[BE:01:ページ切り替え（クリア）]
 この　勝負のことを
 思い出して　ほしいっすね</language>

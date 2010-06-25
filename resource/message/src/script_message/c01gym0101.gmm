@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T17:35:26"/>
+	<create user="matsumiya" host="W00224" date="2010-06-25T17:36:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -827,10 +827,10 @@
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムバッジを　てにいれた
-きょう　という　すばらしい　ひを[BE:00:ページ切り替え（行送り）]
+その　すばらしい　しゅんかんを[BE:00:ページ切り替え（行送り）]
 いつまでも　おぼえていてほしいっすね</language>
 		<language name="JPN_KANJI" width="256">ジムバッジを　手に入れた
-今日という　素晴らしい日を[BE:00:ページ切り替え（行送り）]
+その　素晴らしい　瞬間を[BE:00:ページ切り替え（行送り）]
 いつまでも　覚えていてほしいっすね</language>
 	</row>
 
