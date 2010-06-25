@@ -1174,12 +1174,6 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     pWork->bGet = _itemInSaveArea(pDreamSave, pDream);
     //アイテムの表示
     _itemDispInit(pWork, pDream);
-/*
-    G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
-                     GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
-                     GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
-                     8,8);
-   */
     //リソース読み込み
     GSYNC_DISP_DownloadFileRead(pWork->pDispWork);
 

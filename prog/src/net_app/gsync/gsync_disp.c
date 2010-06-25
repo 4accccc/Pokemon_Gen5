@@ -831,8 +831,6 @@ void GSYNC_DISP_DreamSmokeBgStart(GSYNC_DISP_WORK* pWork)
 
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
 
-  //G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD , 0, 16);
-
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
     p_handle, NARC_gsync_downner_bg2_NSCR,
     GFL_BG_FRAME3_M, 0,
@@ -893,11 +891,9 @@ static void _blendSmoke(GSYNC_DISP_WORK* pWork)
     return;
   }
 
-  //G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , i, 16);
-
   G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
                    GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
-                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD,
+                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
                    i,8);
 
 
@@ -950,15 +946,11 @@ static void GSYNC_DISP_FriendPokeIconCreate(GSYNC_DISP_WORK* pWork, u32 index)
       pWork->aIconParam[index].pIcon=pIcon;
     }
   }
-  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
-                   GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
-                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-                   8,8);
-
-  //  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+//  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
   //                 GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
-    ///              GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
-     ///            8,8);
+    //               GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+      //             8,8);
+
 }
 
 
@@ -1010,10 +1002,10 @@ static void GSYNC_DISP_ItemiconCreate(GSYNC_DISP_WORK* pWork, int index)
   }
 
 
-  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
-                   GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
-                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-                   8,8);
+//  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
+  //                 GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
+    //               GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+      //             8,8);
 }
 
 //-----------------------------------------------------------------------------
