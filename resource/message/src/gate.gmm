@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-24T12:40:16"/>
+	<create user="murakami_naoto" host="W00228" date="2010-06-25T20:07:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -595,7 +595,7 @@
 
 	<row id="msg_gate_c3_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報3</comment>
-		<language name="JPN" width="256">◇しげきあふれる ヒウンシティ なかでも ジムには おどろきの しかけが・・・？</language>
+		<language name="JPN" width="256">◇しげきあふれる ヒウンシティ なかでも ジムには おどろきの しかけが…？</language>
 		<language name="JPN_KANJI" width="256">◇刺激あふれるヒウンシティ　中でも　ジムにはおどろきの　仕掛けが…？</language>
 	</row>
 
