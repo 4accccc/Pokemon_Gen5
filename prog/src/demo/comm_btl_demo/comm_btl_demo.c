@@ -2506,6 +2506,10 @@ static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk )
     break;
   case WB_NET_UNION:           //UNION
   case WB_NET_COLOSSEUM:       //UNION
+  case WB_NET_UNION_BATTLE_MULTI_FREE_SHOOTER:   ///<マルチ(シューター有)
+  case WB_NET_UNION_BATTLE_MULTI_FREE:           ///<マルチ
+  case WB_NET_UNION_BATTLE_MULTI_FLAT_SHOOTER:   ///<マルチフラット(シューター有)
+  case WB_NET_UNION_BATTLE_MULTI_FLAT:           ///<マルチフラット
     _set_record_result( wk->pwk->record, RECID_COMM_BATTLE, wk->result );
     break;
   }
