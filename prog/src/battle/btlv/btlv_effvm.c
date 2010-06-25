@@ -415,6 +415,7 @@ static VMCMD_RESULT VMEC_JUMP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SEQ_JUMP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_LANDING_WAIT( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_REVERSE_DRAW_SET( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -598,6 +599,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_PAUSE,
   VMEC_SEQ_JUMP,
   VMEC_LANDING_WAIT,
+  VMEC_REVERSE_DRAW_SET,
 
   VMEC_SEQ_END,
 };
@@ -4484,6 +4486,28 @@ static VMCMD_RESULT VMEC_LANDING_WAIT( VMHANDLE *vmh, void *context_work )
     belw->finish_flag = 0;
     BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_LandingWait, belw, 0 ), NULL, GROUP_EFFVM );
   }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	着地演出待ち
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_REVERSE_DRAW_SET( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int flag = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("REVERSE_DRAW_SET\n");
+#endif DEBUG_OS_PRINT
+
+  BTLV_EFFECT_SetReverseDrawFlag( flag );
 
   return bevw->control_mode;
 }

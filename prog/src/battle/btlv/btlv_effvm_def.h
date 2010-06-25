@@ -558,9 +558,10 @@ ex)
 #define	EC_PAUSE						          		( 71 )
 #define	EC_SEQ_JUMP						          	( 72 )
 #define	EC_LANDING_WAIT						        ( 73 )
+#define	EC_REVERSE_DRAW_SET					      ( 74 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  		( 74 )
+#define	EC_SEQ_END									  		( 75 )
 
 #ifndef __C_NO_DEF_
 
@@ -2511,6 +2512,22 @@ ex)
   .macro  LANDING_WAIT  side
   .short  EC_LANDING_WAIT
   .long   \side
+  .endm
+
+//======================================================================
+/**
+ * @brief	MCSSのリバースドローを制御
+ *
+ * #param_num	1
+ * @param	flag  リバースON/OFF
+ *
+ * #param	COMBOBOX_TEXT リバースON リバースOFF
+ * #param	COMBOBOX_VALUE  BTLV_MCSS_REVERSE_DRAW_ON  BTLV_MCSS_REVERSE_DRAW_OFF
+ */
+//======================================================================
+  .macro  REVERSE_DRAW_SET  flag
+  .short  EC_REVERSE_DRAW_SET
+  .long   \flag
   .endm
 
 //======================================================================
