@@ -1300,7 +1300,7 @@ static void _UnderScreenReload( WIFIP2PMATCH_WORK *wk )
 
 
 // PAGE 1
-#define MCV_USERD_NAME_X  ( 32-8 )
+#define MCV_USERD_NAME_X  ( 32-8+1 ) // +1 して、ボール表示にかからないように変更　BTS6678 mod Saito
 #define MCV_USERD_NAME_Y  ( 8-8 )
 #define MCV_USERD_ST_X  ( 104-8 )
 #define MCV_USERD_ST_Y  ( 8-8 )
