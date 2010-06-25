@@ -1550,7 +1550,7 @@ static void POKETRADE_NEGO_Select6keywaitMsgFade(POKEMON_TRADE_WORK* pWork)
 
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
     POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
-    pWork->pokemonselectno=-1;
+    pWork->pokemonselectno=0;
   }
   else{
     POKEMONTRADE_StartPokeSelectSixButton(pWork, 0);
