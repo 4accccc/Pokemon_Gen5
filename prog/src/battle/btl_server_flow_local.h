@@ -142,7 +142,6 @@ typedef struct {
   u8                 clientID;    ///< クライアントID
   u8                 fDone;       ///< 処理終了フラグ
   u8                 fIntrCheck;  ///< 割り込みチェック中フラグ
-  u8                 defaultIdx;  ///< 特殊優先処理前の処理順（0～）
 
 }ACTION_ORDER_WORK;
 
