@@ -152,6 +152,7 @@ struct _BTL_CLIENT {
   RECPLAYER_CONTROL     recPlayer;
   ClientMainProc        mainProc;
   BTL_ESCAPEINFO        escapeInfo;
+  BTL_FIELD_WORK*       fldSim;
 
   BTL_ADAPTER*    adapter;
   BTLV_CORE*      viewCore;
@@ -225,8 +226,6 @@ struct _BTL_CLIENT {
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
-
-  u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
 
   #ifdef PM_DEBUG
   const BTL_CLIENT* viewOldClient;
@@ -369,8 +368,8 @@ static BOOL scProc_ACT_Relive( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACTOP_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACTOP_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
@@ -441,6 +440,7 @@ static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* ar
 static BOOL scProc_OP_CureSickDependPoke( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddWazaDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_TurnCheckField( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args );
 static u8 countFrontPokeTokusei( BTL_CLIENT* wk, PokeTokusei tokusei );
@@ -538,14 +538,13 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->fAITrainerBGMChanged = FALSE;
   wk->fCommError = FALSE;
   wk->recPlayTimerOverState = RECPLAY_TIMEOVER_NONE;
+  wk->fldSim = BTL_FIELDSIM_CreateWork( heapID );
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
   wk->bagMode = bagMode;
   BTL_ESCAPEINFO_Clear( &wk->escapeInfo );
 
   RecPlayer_Init( &wk->recPlayer );
-
-  BTL_CALC_BITFLG_Construction( wk->fieldEffectFlag, sizeof(wk->fieldEffectFlag) );
 
   AIItem_Setup( wk );
   wk->AIRandContext = *randContext;
@@ -581,12 +580,17 @@ BTL_CLIENT* BTL_CLIENT_Create(
 
 void BTL_CLIENT_Delete( BTL_CLIENT* wk )
 {
+  if( wk->fldSim ){
+    BTL_FIELDSIM_DeleteWork( wk->fldSim );
+    wk->fldSim = NULL;
+  }
   if( wk->btlRec ){
     BTL_REC_Delete( wk->btlRec );
   }
   if( wk->AIHandle ){
     TR_AI_Exit( wk->AIHandle );
   }
+
   GFL_HEAP_FreeMemory( wk->cmdQue );
   BTL_ADAPTER_Delete( wk->adapter );
 
@@ -3095,9 +3099,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   }
 
 // ふういんチェック（ふういんをかけたポケが持ってるワザを出せない）
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
+  if( BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_FUIN) )
   {
-    if( BTL_FIELD_CheckFuin(wk->pokeCon, bpp, waza) )
+    if( BTL_FIELDSIM_CheckFuin(wk->fldSim, wk->pokeCon, bpp, waza) )
     {
       if( strParam != NULL )
       {
@@ -3110,7 +3114,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   }
 
   // じゅうりょくチェック
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
+  if( BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_JURYOKU) )
   {
     if( WAZADATA_GetFlag(waza, WAZAFLAG_Flying) )
     {
@@ -3167,7 +3171,7 @@ static u8 StoreSelectableWazaFlag( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8*
  */
 static BOOL IsItemEffective( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
 {
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) ){
+  if( BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_MAGICROOM) ){
 //    TAYA_Printf("マジックルーム効いてるから道具効果なし\n");
     return FALSE;
   }
@@ -3370,7 +3374,7 @@ static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKE
 {
   BOOL fItemEffective = IsItemEffective( wk, procPoke );
 
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) ){
+  if( BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_JURYOKU) ){
     return TRUE;
   }
   if( BPP_CheckSick(procPoke, WAZASICK_FLYING_CANCEL) ){
@@ -5354,6 +5358,7 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_TRAINER2_IN:
     if( !BTLV_EFFECT_CheckExecute() )
     {
+      TAYA_Printf("サブウェイトレーナーメッセージ２開始\n");
       BTLV_StartMsgInBuffer( wk->viewCore );
       (*seq) = SEQ_WAIT_MSG2;
     }
@@ -5362,6 +5367,7 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_MSG2:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
+      TAYA_Printf("サブウェイトレーナー終了\n");
       return TRUE;
     }
     break;
@@ -5545,8 +5551,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_RANKUP,            scProc_ACT_RankUp              },
     { SC_ACT_RANKDOWN,          scProc_ACT_RankDown            },
     { SC_ACT_WEATHER_DMG,       scProc_ACT_WeatherDmg          },
-    { SC_ACT_WEATHER_START,     scProc_ACT_WeatherStart        },
-    { SC_ACT_WEATHER_END,       scProc_ACT_WeatherEnd          },
+    { SC_ACTOP_WEATHER_START,   scProc_ACTOP_WeatherStart      },
+    { SC_ACTOP_WEATHER_END,     scProc_ACTOP_WeatherEnd        },
     { SC_ACT_SIMPLE_HP,         scProc_ACT_SimpleHP            },
     { SC_ACT_KINOMI,            scProc_ACT_Kinomi              },
     { SC_TOKWIN_IN,             scProc_TOKWIN_In               },
@@ -5597,6 +5603,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_CURESICK_DEPEND_POKE,scProc_OP_CureSickDependPoke  },
     { SC_OP_WAZADMG_REC,        scProc_OP_AddWazaDamage        },
     { SC_OP_TURN_CHECK,         scProc_OP_TurnCheck            },
+    { SC_OP_TURN_CHECK_FIELD,   scProc_OP_TurnCheckField       },
     { SC_ACT_KILL,              scProc_ACT_Kill                },
     { SC_ACTOP_MOVE,            scProc_ACTOP_Move              },
     { SC_ACT_EXP,               scProc_ACT_Exp                 },
@@ -6436,7 +6443,7 @@ static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args )
  *  天候変化開始
  */
 //---------------------------------------------------------------------------------------
-static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACTOP_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
 {
   static const struct {
     u16 strID;
@@ -6453,6 +6460,8 @@ static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
+    BTL_FIELDSIM_SetWeather( wk->fldSim, args[0], args[1] );
+
     if( BTL_CLIENT_IsChapterSkipMode(wk) ){
       return TRUE;
     }
@@ -6485,7 +6494,7 @@ static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
  *  ターンチェックによる天候の終了処理
  */
 //---------------------------------------------------------------------------------------
-static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACTOP_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
   case 0:
@@ -6509,6 +6518,7 @@ static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
+      BTL_FIELDSIM_EndWeather( wk->fldSim );
       return TRUE;
     }
     break;
@@ -8100,40 +8110,41 @@ static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_Clear_ForOut( pp );
   return TRUE;
 }
+/**
+ *  フィールドエフェクト追加   args[0]:FieldEffect
+ */
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_CALC_BITFLG_Set( wk->fieldEffectFlag, args[0] );
-  if( !BTL_MAIN_CheckImServerMachine(wk->mainModule) )
-  {
-    BPP_SICK_CONT cont;
-    cont.raw = (u32)(args[1]);
-    BTL_FIELD_AddEffect( args[0], cont );
-  }
+  BPP_SICK_CONT cont;
+  cont.raw = (u32)(args[1]);
+  BTL_FIELDSIM_AddEffect( wk->fldSim, args[0], cont, FALSE );
   return TRUE;
 }
+/**
+ *  フィールドエフェクト追加   args[0]:FieldEffect,  args[1]:依存ポケID
+ */
 static BOOL scProc_OP_AddFldEffDepend( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_CALC_BITFLG_Set( wk->fieldEffectFlag, args[0] );
-  if( !BTL_MAIN_CheckImServerMachine(wk->mainModule) )
-  {
-    BTL_FIELD_AddDependPoke( args[0], args[1] );
-  }
+  BTL_FIELDSIM_AddDependPoke( wk->fldSim, args[0], args[1] );
   return TRUE;
 }
+/**
+ *  特定ポケモン依存のフィールドエフェクトを除去  args[0]:pokeID
+ */
 static BOOL scProc_OP_DelFldEffDepend( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_CALC_BITFLG_Set( wk->fieldEffectFlag, args[0] );
-  if( !BTL_MAIN_CheckImServerMachine(wk->mainModule) )
-  {
-    BTL_FIELD_RemoveDependPokeEffect( args[0] );
-  }
+  BTL_FIELDSIM_RemoveDependPokeEffect( wk->fldSim, args[0] );
   return TRUE;
 }
+/**
+ *  フィールドエフェクト除去   args[0]:FieldEffect
+ */
 static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_CALC_BITFLG_Off( wk->fieldEffectFlag, args[0] );
+  BTL_FIELDSIM_RemoveEffect( wk->fldSim, args[0] );
   return TRUE;
 }
+
 static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
@@ -8216,7 +8227,7 @@ static BOOL scProc_OP_AddWazaDamage( BTL_CLIENT* wk, int* seq, const int* args )
   return TRUE;
 }
 /**
- *  ターンチェック処理
+ *  ポケモン１体ターンチェック処理
  *  args [0]:pokeID
  */
 static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
@@ -8226,6 +8237,15 @@ static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_TurnCheck( bpp );
   BPP_CombiWaza_ClearParam( bpp );
 
+  return TRUE;
+}
+/**
+ *  フィールドエフェクトターンチェック処理
+ *  args
+ */
+static BOOL scProc_OP_TurnCheckField( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_FIELDSIM_TurnCheck( wk->fldSim, NULL, NULL );
   return TRUE;
 }
 

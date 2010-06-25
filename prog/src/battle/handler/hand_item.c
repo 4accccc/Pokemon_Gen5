@@ -2836,10 +2836,16 @@ static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // ひるみ確率０なら、アイテム威力値に書き換え
-    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_DEFAULT_PER );
-    if( per == 0 )
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_ADD_DEFAULT_PER) == 0 )
     {
-      per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
+      u8 per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
+      #ifdef PM_DEBUG
+      if( BTL_SVFTOOL_GetDebugFlag(flowWk, BTL_DEBUGFLAG_MUST_ITEM) ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, 100 );
+        return;
+      }
+      #endif
+
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
       BTL_N_Printf( DBGSTR_HANDITEM_OujaEffective, per );
     }

@@ -37,6 +37,12 @@ typedef enum {
 
 
 /*--------------------------------------------------------------------------*/
+/*                                                                          */
+/*--------------------------------------------------------------------------*/
+typedef struct _BTL_FIELD_WORK    BTL_FIELD_WORK;
+
+
+/*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 
@@ -44,7 +50,6 @@ extern void BTL_FIELD_Init( BtlWeather weather );
 extern BtlWeather BTL_FIELD_GetWeather( void );
 extern u32 BTL_FIELD_GetWeatherTurn( void );
 extern void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn );
-extern void BTL_FIELD_ClearWeather( void );
 
 extern BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont );
 extern BOOL BTL_FIELD_AddDependPoke( BtlFieldEffect effect, u8 pokeID );
@@ -62,6 +67,32 @@ extern BtlWeather BTL_FIELD_TurnCheckWeather( void );
 
 typedef void (*pFieldTurnCheckCallback)( BtlFieldEffect, void* );
 extern void BTL_FIELD_TurnCheck( pFieldTurnCheckCallback callbackFunc, void* callbackArg);
+
+
+/*=============================================================================================*/
+/*                                                                                             */
+/* BTL_FIELD と同等の機能をクライアント側に持たせる為の仕組み                                  */
+/*                                                                                             */
+/*=============================================================================================*/
+extern BTL_FIELD_WORK*  BTL_FIELDSIM_CreateWork( HEAPID heapID );
+extern void BTL_FIELDSIM_DeleteWork( BTL_FIELD_WORK* wk );
+
+extern void BTL_FIELDSIM_Init( BTL_FIELD_WORK* wk, BtlWeather weather );
+extern void BTL_FIELDSIM_SetWeather( BTL_FIELD_WORK* wk, BtlWeather weather, u16 turn );
+extern void BTL_FIELDSIM_EndWeather( BTL_FIELD_WORK* wk );
+extern BtlWeather BTL_FIELDSIM_GetWeather( BTL_FIELD_WORK* wk );
+extern u32 BTL_FIELDSIM_GetWeatherTurn( BTL_FIELD_WORK* wk );
+extern void BTL_FIELDSET_SetWeather( BTL_FIELD_WORK* wk, BtlWeather weather, u16 turn );
+extern BtlWeather BTL_FIELDSIM_TurnCheckWeather( BTL_FIELD_WORK* wk );
+extern BOOL BTL_FIELDSIM_AddEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT cont, BOOL fForServer );
+extern BOOL BTL_FIELDSIM_RemoveEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect );
+extern BOOL BTL_FIELDSIM_AddDependPoke( BTL_FIELD_WORK* wk, BtlFieldEffect effect, u8 pokeID );
+extern BOOL BTL_FIELDSIM_IsDependPoke( BTL_FIELD_WORK* wk, BtlFieldEffect effect, u8 pokeID );
+extern void BTL_FIELDSIM_RemoveDependPokeEffect( BTL_FIELD_WORK* wk, u8 pokeID );
+extern BOOL BTL_FIELDSIM_CheckFuin( BTL_FIELD_WORK* wk, const BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* attacker, WazaID waza );
+extern void BTL_FIELDSIM_TurnCheck( BTL_FIELD_WORK* wk, pFieldTurnCheckCallback callbackFunc, void* callbackArg );
+extern BOOL BTL_FIELDSIM_CheckEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect );
+extern u8 BTL_FIELDSIM_GetDependPokeID( BTL_FIELD_WORK* wk, BtlFieldEffect effect );
 
 
 #endif

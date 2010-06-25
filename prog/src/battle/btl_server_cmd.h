@@ -73,7 +73,8 @@ typedef enum {
   SC_OP_CLEAR_CONSUMED_ITEM,///< アイテム消費情報のクリア
   SC_OP_CURESICK_DEPEND_POKE,///< ポケモン依存状態異常のクリア
   SC_OP_WAZADMG_REC,        ///< ワザダメージ記録
-  SC_OP_TURN_CHECK,         ///< ターンチェック
+  SC_OP_TURN_CHECK,         ///< ポケモン１体ターンチェック
+  SC_OP_TURN_CHECK_FIELD,   ///< フィールド効果ターンチェック
   SC_ACT_WAZA_EFFECT,
   SC_ACT_TAMEWAZA_HIDE,     ///< 【アクション】そらをとぶなどで画面から消える・現れる設定
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -89,8 +90,8 @@ typedef enum {
   SC_ACT_MEMBER_OUT,        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   SC_ACT_MEMBER_IN,         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
   SC_ACT_WEATHER_DMG,       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
-  SC_ACT_WEATHER_START,     ///< 天候変化
-  SC_ACT_WEATHER_END,       ///< ターンチェックで天候終了
+  SC_ACTOP_WEATHER_START,   ///< 天候変化
+  SC_ACTOP_WEATHER_END,       ///< ターンチェックで天候終了
   SC_ACT_SIMPLE_HP,         ///< シンプルなHPゲージ増減処理
   SC_ACT_KINOMI,            ///< きのみを食べる
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
@@ -381,6 +382,10 @@ static inline void SCQUE_PUT_OP_TurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_OP_TURN_CHECK, pokeID );
 }
+static inline void SCQUE_PUT_OP_TurnCheckField( BTL_SERVER_CMD_QUE* que )
+{
+  SCQUE_PUT_Common( que, SC_OP_TURN_CHECK_FIELD, 0 );
+}
 
 
 
@@ -474,14 +479,14 @@ static inline void SCQUE_PUT_ACT_WeatherDamage( BTL_SERVER_CMD_QUE* que, u8 weat
   SCQUE_PUT_Common( que, SC_ACT_WEATHER_DMG, weather, pokeCnt );
 }
 
-static inline void SCQUE_PUT_ACT_WeatherStart( BTL_SERVER_CMD_QUE* que, u8 weather )
+static inline void SCQUE_PUT_ACTOP_WeatherStart( BTL_SERVER_CMD_QUE* que, u8 weather, u8 turn )
 {
-  SCQUE_PUT_Common( que, SC_ACT_WEATHER_START, weather );
+  SCQUE_PUT_Common( que, SC_ACTOP_WEATHER_START, weather, turn );
 }
 
-static inline void SCQUE_PUT_ACT_WeatherEnd( BTL_SERVER_CMD_QUE* que, u8 weather )
+static inline void SCQUE_PUT_ACTOP_WeatherEnd( BTL_SERVER_CMD_QUE* que, u8 weather )
 {
-  SCQUE_PUT_Common( que, SC_ACT_WEATHER_END, weather );
+  SCQUE_PUT_Common( que, SC_ACTOP_WEATHER_END, weather );
 }
 
 static inline void SCQUE_PUT_ACT_SimpleHP( BTL_SERVER_CMD_QUE* que, u8 pokeID )

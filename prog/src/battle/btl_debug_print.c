@@ -495,8 +495,8 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_MEMBER_OUT:  return "SC_ACT_MEMBER_OUT";        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   case SC_ACT_MEMBER_IN:  return "SC_ACT_MEMBER_IN";         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
   case SC_ACT_WEATHER_DMG:  return "SC_ACT_WEATHER_DMG";       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
-  case SC_ACT_WEATHER_START:  return "SC_ACT_WEATHER_START";     ///< 天候変化
-  case SC_ACT_WEATHER_END:  return "SC_ACT_WEATHER_END";       ///< ターンチェックで天候終了
+  case SC_ACTOP_WEATHER_START:  return "SC_ACTOP_WEATHER_START";     ///< 天候変化
+  case SC_ACTOP_WEATHER_END:  return "SC_ACTOP_WEATHER_END";       ///< ターンチェックで天候終了
   case SC_ACT_SIMPLE_HP:  return "SC_ACT_SIMPLE_HP";         ///< シンプルなHPゲージ増減処理
   case SC_ACT_KINOMI:  return "SC_ACT_KINOMI";            ///< きのみを食べる
   case SC_ACT_KILL:  return "SC_ACT_KILL";              ///< 強制瀕死演出（みちづれ、一撃ワザなど）

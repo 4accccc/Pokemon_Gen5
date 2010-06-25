@@ -138,6 +138,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_OP_CURESICK_DEPEND_POKE
   SC_ARGFMT_5555bit_22byte,   // SC_OP_WAZADMG_REC
   SC_ARGFMT_1byte,            // SC_OP_TURN_CHECK
+  SC_ARGFMT_1byte,            // SC_OP_TURN_CHECK_FIELD
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT
   SC_ARGFMT_53bit,            // SC_ACT_TAMEWAZA_HIDE
   SC_ARGFMT_112byte,          // SC_ACT_WAZA_DMG
@@ -153,8 +154,8 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_12byte,           // SC_ACT_MEMBER_OUT
   SC_ARGFMT_5353bit,          // SC_ACT_MEMBER_IN
   SC_ARGFMT_44bit,            // SC_ACT_WEATHER_DMG,
-  SC_ARGFMT_1byte,            // SC_ACT_WEATHER_START,
-  SC_ARGFMT_1byte,            // SC_ACT_WEATHER_END,
+  SC_ARGFMT_11byte,           // SC_ACTOP_WEATHER_START,
+  SC_ARGFMT_1byte,            // SC_ACTOP_WEATHER_END,
   SC_ARGFMT_1byte,            // SC_ACT_SIMPLE_HP
   SC_ARGFMT_1byte,            // SC_ACT_KINOMI
   SC_ARGFMT_53bit,            // SC_ACT_KILL

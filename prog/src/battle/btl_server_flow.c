@@ -3194,7 +3194,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   BtlPokePos  orgTargetPos, actTargetPos;
   BppContFlag  tameFlag;
   FLAG_SET  wazaFlags;
-  u8 fWazaEnable, fWazaLock, fReqWaza, fPPDecrement, orgWazaIdx;
+  u8 fWazaEnable, fWazaLock, fReqWaza, fPPDecrement, fHitRatioUp, orgWazaIdx;
 
   tameFlag = BPP_CONTFLAG_CheckWazaHide( attacker );
 
@@ -3220,6 +3220,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   actTargetPos = orgTargetPos;
   fWazaEnable = FALSE;
   fPPDecrement = FALSE;
+  fHitRatioUp = FALSE;
   fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK) || BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
   BTL_HANDLER_Waza_Add( attacker, orgWaza );
@@ -3311,6 +3312,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // ここまで来たらPP減少は確定
     wk->prevExeWaza = actWaza;
+    fHitRatioUp = BPP_CheckSick( attacker, WAZASICK_HITRATIO_UP );
 
     // ワザ出し失敗判定２（ＰＰ減少後）
     if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock )){
@@ -3319,8 +3321,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // 遅延発動ワザの準備処理
     if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){
-        fWazaEnable = TRUE;
-        break;
+      fWazaEnable = TRUE;
+      break;
     }
 
     // 合体ワザ（先発）の準備処理
@@ -3346,6 +3348,14 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
   // ワザプロセス修了した
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZAPROC_DONE );
+
+  // 命中率上昇効果をクリア
+  if( fHitRatioUp ){
+    if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) ){
+      scPut_CureSick( wk, attacker, WAZASICK_HITRATIO_UP, NULL );
+    }
+  }
+
 
   // PP消費したらワザ使用記録を更新
   if( fPPDecrement || (actWaza == WAZANO_WARUAGAKI) )
@@ -3447,7 +3457,6 @@ static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza )
       // 跳ね返し確定イベント
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_WazaReflect( wk, robPoke, targetPoke, actWaza );
-//      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
 
       // その後、跳ね返し処理
@@ -3460,11 +3469,9 @@ static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza )
 
         BTL_HANDLER_Waza_Add( robPoke, actWaza );
         scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
-//      scproc_EndWazaSeq( wk, robPoke, actWaza );
         BTL_HANDLER_Waza_RemoveForce( robPoke, actWaza );
 
       BTL_EVENT_WakeFactorMagicMirrorUser( BPP_GetID(robPoke) );
-
     }
   }
 }
@@ -4135,6 +4142,11 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
         fEnable = FALSE;
       }
     }
+  }
+
+  // 命中率上昇効果をクリア
+  if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) ){
+    scPut_CureSick( wk, attacker, WAZASICK_HITRATIO_UP, NULL );
   }
 
   if( fEnable )
@@ -8657,7 +8669,7 @@ static BOOL scproc_ChangeWeatherCheck( BTL_SVFLOW_WORK* wk, BtlWeather weather, 
 static void scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
 {
   BTL_FIELD_SetWeather( weather, turn );
-  SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
+  SCQUE_PUT_ACTOP_WeatherStart( wk->que, weather, turn );
   scproc_ChangeWeatherAfter( wk, weather );
 }
 /**
@@ -9539,6 +9551,7 @@ static void scPut_SideEffectOffMsg( BTL_SVFLOW_WORK* wk, BtlSideEffect sideEffec
 static void scproc_turncheck_field( BTL_SVFLOW_WORK* wk )
 {
   BTL_FIELD_TurnCheck( turncheck_field_callback, wk );
+  SCQUE_PUT_OP_TurnCheckField( wk->que );
 }
 static void turncheck_field_callback( BtlFieldEffect effect, void* arg )
 {
@@ -9586,10 +9599,11 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
 static BOOL scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 {
   BtlWeather weather = BTL_FIELD_TurnCheckWeather();
+
   // ターンチェックにより天候が終わった
   if( weather != BTL_WEATHER_NONE )
   {
-    SCQUE_PUT_ACT_WeatherEnd( wk->que, weather );
+    SCQUE_PUT_ACTOP_WeatherEnd( wk->que, weather );
     scproc_ChangeWeatherAfter( wk, BTL_WEATHER_NONE );
     return FALSE;
   }
