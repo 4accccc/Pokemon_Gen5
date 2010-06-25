@@ -188,6 +188,12 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         BOOL zenkoku_flag = FALSE;  // 全国図鑑のときTRUE
         BOOL get_first = FALSE;  // 初捕獲のときTRUE
 
+        {//捕獲回数インクリメント
+          RECORD *record = GAMEDATA_GetRecordPtr(param->gameData);
+          RECORD_Inc(record,RECID_CAPTURE_POKE);
+          RECORD_Inc(record,RECID_DAYCNT_CAPTURE);
+        }
+
         // 親名セットしてるけど、本来はエンカウント前にフィールド側で設定すべき？
         MyStatus_CopyNameString( myStatus, wk->strbuf );
         PP_Put( param->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
