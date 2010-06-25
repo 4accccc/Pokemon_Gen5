@@ -32,6 +32,9 @@
 
 #include "field/field_comm/intrude_work.h"
 
+#include "field/areadata.h"
+#include "system/main.h"
+
 #ifdef PM_DEBUG
 
 #include "debug/debug_flg.h"
@@ -73,6 +76,7 @@ static inline BOOL PM_WEATHER_IsMovePokeWeather( u32 weather_no );
 //-----------------------------------------------------------------------------
 u8 PM_WEATHER_GetZoneWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id )
 {
+#if 0
   GAMEDATA* p_data  = GAMESYSTEM_GetGameData( p_gamesystem );
   CALENDER* calender = GAMEDATA_GetCalender( p_data );
   u16       weather  = MP_CheckMovePokeWeather( p_data, zone_id );
@@ -113,6 +117,38 @@ u8 PM_WEATHER_GetZoneWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id )
     // ゲームデータの季節とRTCの季節に整合性がない場合, ゾーンテーブルに従う
     return ZONEDATA_GetWeatherID( zone_id );
   } 
+#endif
+
+  // 体験版では, 季節ごとに天気を固定する
+  {
+    GAMEDATA* p_gamedata = GAMESYSTEM_GetGameData( p_gamesystem );
+    u8 season_id  = GAMEDATA_GetSeasonID( p_gamedata );
+    u8 weather_no;
+    BOOL indoor;
+
+    // 屋内 or 屋外?
+    {
+      u16       area_id   = ZONEDATA_GetAreaID( zone_id );
+      AREADATA* area_data = AREADATA_Create( HEAPID_PROC, area_id, season_id ); 
+      indoor = ( AREADATA_GetInnerOuterSwitch(area_data) == 0 );
+      AREADATA_Delete( area_data );
+    }
+
+    if( indoor ) {
+      weather_no = WEATHER_NO_SUNNY; // 屋内なら晴れ
+    }
+    else { 
+      switch( season_id ) {
+      default: GF_ASSERT(0);
+      case PMSEASON_SPRING: weather_no = WEATHER_NO_SUNNY; break;
+      case PMSEASON_SUMMER: weather_no = WEATHER_NO_RAIN; break;
+      case PMSEASON_AUTUMN: weather_no = WEATHER_NO_SUNNY; break;
+      case PMSEASON_WINTER: weather_no = WEATHER_NO_SNOW; break;
+      }
+    } 
+
+    return weather_no;
+  }
 }
 
 //----------------------------------------------------------------------------
