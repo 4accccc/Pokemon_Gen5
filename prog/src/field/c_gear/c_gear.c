@@ -416,6 +416,10 @@ static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
 
 #define OAM_PFADE_READER_CROSS_MSK  ( (1<<0x6) | (1<<0x7) | (1<<0x8) | (1<<0x9) )
 
+#ifdef PLAYABLE_VERSION
+#define OAM_PFADE_PLAYABLE_MSK  ( (1<<0x0) | (1<<0x1) | (1<<0x2) | (1<<0x3) | (1<<0x4) | (1<<0x5) | (1<<0xB) | (1<<0xC) | (1<<0xD) | (1<<0xE) | (1<<0xF) )
+#endif //PLAYABLE_VERSION
+
 //-------------------------------------
 ///	BGパレットフェード
 //=====================================
@@ -972,6 +976,9 @@ static void ReaderCrossBttn_Off( C_GEAR_WORK* pWork );
 static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm );
 static void _PFadeSetBlack( C_GEAR_WORK* pWork );
 static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag );
+#ifdef PLAYABLE_VERSION
+static void _PFadeSetPlayableBlack( C_GEAR_WORK* pWork );
+#endif
 static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL on_flag );
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
 static void _PFadeFromBlack( C_GEAR_WORK* pWork );
@@ -2436,6 +2443,27 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
   }else{
     evy = 0;
   }
+
+#ifdef PLAYABLE_VERSION
+  if( on_flag ){
+    // 黒く
+    PaletteFadeReq(
+      pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 8, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
+      );
+  }else{
+
+    // 黒く
+    PaletteFadeReq(
+      pWork->pfade_ptr, PF_BIT_SUB_OBJ, OAM_PFADE_READER_CROSS_MSK | (1<<0xA),   -120, 0, 0, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
+      );
+  }
+
+  // 黒く
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, 8, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
+    );
+#else // PLAYABLE_VERSION
+
   // 黒く
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
@@ -2445,7 +2473,32 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
+
+#endif //PLAYABLE_VERSION
+
 }
+
+#ifdef PLAYABLE_VERSION
+static void _PFadeSetPlayableBlack( C_GEAR_WORK* pWork )
+{
+  // 黒く
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, OAM_PFADE_PLAYABLE_MSK,   -120, 0, 8, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
+    );
+
+  // 黒く
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, 8, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
+    );
+  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+
+  // あかるく
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, OAM_PFADE_READER_CROSS_MSK | (1<<0xA),   -120, 0, 0, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
+    );
+  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+}
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -2765,7 +2818,11 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
   for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
     for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
 
+#ifdef PLAYABLE_VERSION
+      _gearPanelBgScreenMake(pWork, x, y, CGEAR_PANELTYPE_BASE);
+#else 
       _gearPanelBgScreenMake(pWork, x, y, _cgearSave_GetPanelType(pWork,x,y));
+#endif 
     }
   }
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
@@ -3039,6 +3096,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);  //タッチした事になる
 
   switch(bttnid){
+#ifndef PLAYABLE_VERSION
   case TOUCH_LABEL_ALL:
     result  = GFL_UI_TP_GetPointCont(&touchx,&touchy);
     GF_ASSERT( result );
@@ -3090,6 +3148,9 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
   case TOUCH_LABEL_HELP:
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
     break;
+#endif //PLAYABLE_VERSION
+
+    //PLAYABLEでおせるのはこれだけ。
   case TOUCH_LABEL_CROSS:
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW;
     break;
@@ -3097,6 +3158,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
     break;
 
+#ifndef PLAYABLE_VERSION
   case TOUCH_LABEL_LOGO:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
 
@@ -3121,6 +3183,8 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
   case TOUCH_LABEL_POWER:
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_POWER;
     break;
+
+#endif //PLAYABLE_VERSION
   }
 
 
@@ -3286,10 +3350,17 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 static void _gearMarkObjDrawEnable(C_GEAR_WORK* pWork,BOOL bFlg)
 {
   int i;
+#ifdef PLAYABLE_VERSION
+  for(i=0;i < _CLACT_TYPE_MAX ;i++)
+  {
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], FALSE );
+  }
+#else
   for(i=0;i < _CLACT_TYPE_MAX ;i++)
   {
     GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], bFlg );
   }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3312,13 +3383,22 @@ static void _gearAllObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg)
     }
   }
   
-  // タイプ表示用
+  // タイプ表示 強制OFF
+#ifdef PLAYABLE_VERSION
+  for(i=0;i < _CLACT_TYPE_MAX ;i++)
+  {
+    if( pWork->cellType[i] && pWork->power_flag ){
+      GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], FALSE );
+    }
+  }
+#else
   for(i=0;i < _CLACT_TYPE_MAX ;i++)
   {
     if( pWork->cellType[i] && pWork->power_flag ){
       GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], bFlg );
     }
   }
+#endif
 
   // カーソル
   for(i=0;i < _CLACT_TIMEPARTS_MAX;i++)
@@ -3838,6 +3918,7 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 {
   int i;
 
+#ifndef PLAYABLE_VERSION // 演出なし
   for(i=0;i < _CLACT_TYPE_MAX ;i++)
   {
     int x,y;
@@ -3862,6 +3943,7 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 
     }
   }
+#endif //PLAYABLE_VERSION // 演出なし
 }
 
 
@@ -3886,8 +3968,10 @@ static void _modeSelectMenuWaitCore(C_GEAR_WORK* pWork)
   // スリープ中は停止
   if( !SleepMode_IsSleep( pWork ) ){
     if( pWork->power_flag ){
+#ifndef PLAYABLE_VERSION // フック
       _PanelPaletteUpdate( pWork ); 
       _PanelPaletteChange(pWork);
+#endif
 
       _gearCrossObjMain(pWork);
     }
@@ -4245,15 +4329,24 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, GFL_TCB_CalcSystemWorkSize(4) );
   pWork->pfade_tcbsys = GFL_TCB_Init( 4, pWork->pfade_tcbsys_wk );
 
+#ifdef PLAYABLE_VERSION // 演出なし
+  _PanelPaletteAnimeInit( pWork );
+  _CHANGE_STATE(pWork,_modeSelectMenuWait);
+#else
   if( power_effect ){
     _CHANGE_STATE(pWork,_modeSelectMenuWait0);
   }else{
     _PanelPaletteAnimeInit( pWork );
     _CHANGE_STATE(pWork,_modeSelectMenuWait);
   }
+#endif // PLAYABLE_VERSION
 
   _createSubBg(pWork);   //BGVRAM設定
+#ifdef PLAYABLE_VERSION // 演出なし
+  _modeInit(pWork, FALSE);
+#else
   _modeInit(pWork, power_effect);
+#endif
   if(CGEAR_SV_GetCGearPictureONOFF(pWork->pCGSV)){
     ret = _loadExData(pWork,pGameSys);  //デカール読み込み
   }
@@ -4270,6 +4363,10 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*OAM_USE_PLTT_NUM );
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*OAM_USE_PLTT_NUM );
   _PFadeSetDefaultPal( pWork, pWork->power_flag );
+#ifdef PLAYABLE_VERSION // パレットからー
+  _PFadeSetPlayableBlack( pWork );
+#endif
+  
   PaletteFadeTrans( pWork->pfade_ptr );
 
   {
@@ -4295,6 +4392,14 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
     // 時計を合わせる。
     _timeAnimation(pWork);
     
+#ifdef PLAYABLE_VERSION // 演出なし
+    if( power_effect == FALSE ){
+      // スリープチェック
+      _cgear_SleepCheck( pWork, !(GAMESYSTEM_IsEventExists( pGameSys )) );
+      // スリープカラー反映
+      SleepMode_ColorUpdateEx( pWork );
+    }
+#else
     if( power_effect == FALSE ){
 
       // スリープチェック
@@ -4304,6 +4409,7 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
     }else{
       _modeSelectMenuWait0( pWork );
     }
+#endif // PLAYABLE_VERSION
 
   }
 
@@ -4409,6 +4515,13 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
   pWork->pCall = pCall;
   pWork->pWork = pWork2;
 
+#ifdef PLAYABLE_VERSION // 演出なし
+  if(pWork->pCall){
+    pWork->pCall(pWork->pWork);
+  }
+  pWork->pCall=NULL;
+  pWork->pWork=NULL;
+#else
   if( power_effect ){
     _CHANGE_STATE(pWork,_modeSelectMenuWait0);
     // スキップ不可能
@@ -4420,6 +4533,7 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
     pWork->pCall=NULL;
     pWork->pWork=NULL;
   }
+#endif
 
 
   // 初期配置情報を設定
@@ -4454,6 +4568,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   // スリープチェック
   _cgear_SleepCheck( pWork, bAction );
 
+#ifndef PLAYABLE_VERSION
   if( !SleepMode_IsSleep( pWork ) )
   {
     INTRUDE_CONNECT intrude_status = Intrude_GetIntrudeStatus(GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys));
@@ -4506,10 +4621,29 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 
     
   }
+#endif //PLAYABLE_VERSION
 
   
   if( pWork->GetOpenTrg == _CGEAR_SLEEP_END ){
     pWork->GetOpenTrg=_CGEAR_SLEEP_NONE;
+#ifdef PLAYABLE_VERSION // 演出なし
+    // 起動演出中のスリープにも対応。
+    _gearEndStartUpObjAnime( pWork );
+    _gearAllObjDrawEnabel( pWork, TRUE );
+
+    //
+    _gearPanelBgCreate(pWork);	// パネル作成
+    // カラー設定
+    
+    if( SleepMode_IsSleep( pWork ) == FALSE ){
+      _PFadeSetPlayableBlack( pWork );
+      PaletteFadeTrans( pWork->pfade_ptr );
+    }else{
+      _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
+    }
+
+    _CHANGE_STATE(pWork,_modeSelectMenuWait);
+#else 
     if( SleepMode_IsSleep( pWork ) == FALSE ){
       _CHANGE_STATE(pWork,_modeSelectMenuWait1);
     }else{
@@ -4525,6 +4659,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 
       _CHANGE_STATE(pWork,_modeSelectMenuWait);
     }
+#endif // PLAYABLE_VERSION
   }
   {
     StateFunc* state = pWork->state;
