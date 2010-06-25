@@ -1211,7 +1211,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   {
 
     //ƒL[“ü—Í‚É‚æ‚éˆÚ“®
-    if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_UP )
+    if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_DOWN )
     {	
       fx32 rate;
       if( ACLR_SCROLL_KEY_MIN < FX32_CONST(sync) )
@@ -1224,7 +1224,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         ACLR_SetAclr( &p_wk->aclr, ACLR_SCROLL_KEY_MOVE_INIT_DISTANCE, ACLR_SCROLL_KEY_MOVE_INIT_SYNC );
       }
     }
-    else if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_DOWN )
+    else if( UI_IsContKey( &p_wk->ui, &sync ) & PAD_KEY_UP )
     {	
       fx32 rate;
       if( ACLR_SCROLL_KEY_MIN < FX32_CONST(sync) )
