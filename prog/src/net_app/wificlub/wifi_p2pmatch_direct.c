@@ -49,7 +49,8 @@ static int _playerDirectInit1( WIFIP2PMATCH_WORK *wk, int seq )
     _friendNameExpand(wk,  wk->friendNo - 1);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1018, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   return seq;
 }
@@ -137,7 +138,8 @@ static int _playerDirectInit5( WIFIP2PMATCH_WORK *wk, int seq )
 
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   return seq;
 }
@@ -413,7 +415,8 @@ static int _playerDirectSubMain( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+   GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   return seq;
 }
@@ -561,7 +564,8 @@ static int _playerDirectSubFailed( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(GFL_NET_IsParentMachine()){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1038, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
@@ -1141,8 +1145,6 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
   }
-
-//  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   return seq;
 }
 
@@ -1282,7 +1284,8 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   return seq;
 }
@@ -1818,7 +1821,8 @@ static int _playerDirectFailed( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED2);
   }
   else{
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   return seq;
 }
@@ -1883,15 +1887,39 @@ static int _playerDirectFailed3( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  //BTS2302の対処 naigihashi
-  //メッセージを早送りするために読んでいます
-  //メッセージを描画していなくてもここに来る場合があります
   WifiP2PMatchMessageEndCheck(wk);
 
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTE, WB_NET_WIFICLUB )){
+    if(wk->nextSeq!=0){
+      _CHANGESTATE(wk, wk->nextSeq);
+    }
+    else{
+      GF_ASSERT(0);  // 不正コマンド受信は切断
+      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_DISCONNECT);
+    }
+    wk->nextSeq = 0;
+  }
   return seq;
 }
 
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectWaitSt( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  WifiP2PMatchMessageEndCheck(wk);
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB )){
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
 
 
 
@@ -2268,9 +2296,28 @@ static int _playerDirectVCTChange6( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectWaitSendCommand( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,
-                      1, &wk->command)){
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND2);
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   コマンドをセット WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND2
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectWaitSendCommand2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB )){
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,
+                        1, &wk->command)){
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    }
   }
   return seq;
 }
@@ -2332,7 +2379,8 @@ static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
     _friendNameExpand(wk,  wk->friendNo - 1);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   return seq;
 }

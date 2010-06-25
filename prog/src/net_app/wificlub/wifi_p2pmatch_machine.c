@@ -66,7 +66,8 @@ static int _playerMachineInit1( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE);
   }
   else{
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTS, WB_NET_WIFICLUB );
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST);
   }
   return seq;
 }
@@ -90,9 +91,10 @@ static int _playerMachineNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
   }
   if(GFL_UI_KEY_GetTrg()){
     EndMessageWindowOff(wk);
-    command = WIFIP2PMATCH_PLAYERDIRECT_END;
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND, 1, &command);
-    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+//    command = WIFIP2PMATCH_PLAYERDIRECT_END;
+//    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND, 1, &command);
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_END;
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
   }
   return seq;
  

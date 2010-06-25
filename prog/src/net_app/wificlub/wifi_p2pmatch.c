@@ -272,6 +272,10 @@ typedef struct{  // スクリーン用RECT構造体
 #define _TIMING_SECOND_MATCH  (24)// タイミングをそろえる
 #define _TIMING_CEND (25)// タイミングをそろえる
 
+#define _TIMING_DIRECTE (26)// タイミングをそろえる
+#define _TIMING_DIRECTS (27)// タイミングをそろえる
+
+
 #define _RECONECTING_WAIT_TIME (20)  //再接続時間
 
 
@@ -962,6 +966,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectInit7, //  WIFIP2PMATCH_PLAYERDIRECT_INIT7,
   _playerDirectReturn, //WIFIP2PMATCH_PLAYERDIRECT_RETURN
   _playerDirectWait, //  WIFIP2PMATCH_PLAYERDIRECT_WAIT,
+  _playerDirectWaitSt, //  WIFIP2PMATCH_PLAYERDIRECT_WAIT_ST,
   _playerDirectEnd, //  WIFIP2PMATCH_PLAYERDIRECT_END,    //80
   _playerDirectVCT, //  WIFIP2PMATCH_PLAYERDIRECT_VCT,
   _playerDirectTVT, //  WIFIP2PMATCH_PLAYERDIRECT_TVT,
@@ -1029,6 +1034,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _DirectConnectWait,//WIFIP2PMATCH_MODE_CONNECTWAIT,
   _DirectConnectWait2,//  WIFIP2PMATCH_MODE_CONNECTWAIT2,
   _playerDirectWaitSendCommand, // WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND
+  _playerDirectWaitSendCommand2, // WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND2
   _playerDirectBattleGo3KeyWait, // WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT
   _playerDirectEndKeyWait,  //WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT
   _playerDirectEnd3, //WIFIP2PMATCH_PLAYERDIRECT_END3
@@ -5740,8 +5746,9 @@ void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pDa
   }
 
   if(wk->seq == WIFIP2PMATCH_PLAYERDIRECT_WAIT){
-    NET_PRINT("_CHANGESTATE %d\n",pChangeStateNo[0]);
-    _CHANGESTATE(wk, pChangeStateNo[0]);
+    OS_TPrintf("_CHANGESTATE %d\n",pChangeStateNo[0]);
+    wk->nextSeq = pChangeStateNo[0];
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_DIRECTE, WB_NET_WIFICLUB );
   }
   else{
     GF_ASSERT(0);  // 不正コマンド受信は切断
