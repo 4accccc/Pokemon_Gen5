@@ -379,14 +379,17 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_EVENT_AddFactorInfo:      return "AddNewFactor type=%x, dependID=%d, pri=%d, adrs=%p\n";
   case DBGSTR_EVENT_RmvFactorCalling:   return " 呼び出し中に削除されたFactor pokeID=%d, adrs=%p\n";
-  case DBGSTR_EVENT_CallFactorStart:    return " [%p] 呼び出します dependID=%d, type=%d\n";
+  case DBGSTR_EVENT_CallFactorStart:    return " [[ %p 呼び出し開始 type=%d, dependID=%d ]]\n";
+  case DBGSTR_EVENT_CallFactorEnd:      return " [[ %p 呼び出し終了 type=%d, dependID=%d ]]\n";
   case DBGSTR_EVENT_SkipByNewComerFlg:  return " 新入りにつきスキップ Factor pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_ClearNewComFlag:    return " 新入りフラグクリア pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_SkipByCallingFlg:   return " 自己呼び出し中につきスキップ type=%d, pokeID=%d, adrs=%p\n";
+  case DBGSTR_EVENT_SkipByStackLayer:   return " 同階層での登録なのでスキップ type=%d, pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_SkipByCheckHandler: return " ハンドラによるスキップ type=%d, pokeID=%d\n";
 
   case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";
   case DBGSTR_EV_DelFactor:             return "[DEL] Factor=%p Depend=%d, Type=%d, prev=%p, next=%p\n";
+  case DBGSTR_EV_DelReserveFactor:      return "[DeR] Factor=%p Depend=%d, Type=%d\n";
   case DBGSTR_EV_LinkInfoHeader:        return "***** [[EV Chain]] *****\n";
   case DBGSTR_EV_LinkInfoFooder:        return "************************\n\n";
   case DBGSTR_EV_LinkPtr:               return "%p->";

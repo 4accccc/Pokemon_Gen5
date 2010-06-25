@@ -22,12 +22,6 @@
 
 
 
-/*--------------------------------------------------------------------------*/
-/* Debug                                                                    */
-/*--------------------------------------------------------------------------*/
-enum {
-  PRINT_LINK_FLAG = 1,    ///< リンクリスト情報表示
-};
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -194,26 +188,26 @@ static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType )
 //----------------------------------------------------------------------------------
 static void printLinkDebug( void )
 {
-  #if PRINT_LINK_FLAG
+#if 0
   BTL_EVENT_FACTOR* fp;
   u32 cnt = 0;
 
-  BTL_N_Printf( DBGSTR_EV_LinkInfoHeader );
+  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_LinkInfoHeader );
   for(fp=FirstFactorPtr; fp!=NULL; fp=fp->next)
   {
-    BTL_N_PrintfSimple( DBGSTR_EV_LinkPtr, fp );
+    BTL_N_PrintfSimple( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_LinkPtr, fp );
     ++cnt;
     if( cnt % 4 == 0 ){
-      BTL_N_PrintfSimple( DBGSTR_LF );
+      BTL_N_PrintfSimpleEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_LF );
     }
   }
   if( !cnt ){
-    BTL_N_PrintfSimple( DBGSTR_EV_LinkEmpty );
+    BTL_N_PrintfSimpleEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_LinkEmpty );
   }else if( cnt % 4 ){
-    BTL_N_PrintfSimple( DBGSTR_LF );
+    BTL_N_PrintfSimpleEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_LF );
   }
-  BTL_N_Printf( DBGSTR_EV_LinkInfoFooder );
-  #endif
+  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_LinkInfoFooder );
+#endif
 }
 
 //=============================================================================================
@@ -355,6 +349,9 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
   if( factor->callingFlag )
   {
+    if( factor!=NULL ){
+      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelReserveFactor, factor, factor->dependID, factor->factorType );
+    }
     factor->rmReserveFlag = TRUE;
     return;
   }
@@ -442,7 +439,6 @@ int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx )
 void BTL_EVENT_FACTOR_SetTmpItemFlag( BTL_EVENT_FACTOR* factor )
 {
   factor->tmpItemFlag = TRUE;
-  TAYA_Printf("TmpItem currentSP=%d\n", factor->currentStackPtr);
 }
 //=============================================================================================
 /**
@@ -497,7 +493,6 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
   CallHandlersSub( flowWork, eventID, BTL_EVENT_FACTOR_MAX, TRUE );
 }
-
 //=============================================================================================
 /**
  * 全登録要素に対し、指定イベントの通知（スキップ条件をチェック＆特定タイプのハンドラのみ）
@@ -549,48 +544,64 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
   {
     next_factor = factor->next;
 
-    if( ( (factor->callingFlag == FALSE) || (factor->recallEnableFlag) )
-    &&  ( factor->sleepFlag == FALSE )
-    &&  ( factor->rotationSleepFlag == FALSE )
-    &&  ( (targetType==BTL_EVENT_FACTOR_MAX) || (factor->factorType == targetType) )
-    &&  ( (factor->currentStackPtr == 0) || (factor->currentStackPtr < EventStackPtr) )
-    &&  ( factor->existFlag )
-    &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
-    ){
-      const BtlEventHandlerTable* tbl = factor->handlerTable;
-      u32 i;
-      for(i=0; i<factor->numHandlers; i++)
-      {
-        if( tbl[i].eventType == eventID )
-        {
-          if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
-          {
-            factor->callingFlag = TRUE;
-            BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorStart, factor, factor->dependID, factor->factorType );
-            tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
+    do {
 
-            if( factor->recallEnableFlag ){
-              factor->recallEnableFlag = FALSE;
-            }else{
-              factor->callingFlag = FALSE;
-            }
-            // 呼び出し中に削除された
-            if( factor->rmReserveFlag )
+      if( (factor->callingFlag) && (factor->recallEnableFlag == FALSE) ){
+         BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByCallingFlg, factor->factorType, factor->dependID, factor );
+         break;
+      }
+      if( factor->sleepFlag ){
+        break;
+      }
+      if( factor->rotationSleepFlag ){
+        break;
+      }
+      if( (targetType!=BTL_EVENT_FACTOR_MAX) && (factor->factorType != targetType) ){
+        break;
+      }
+      if( (factor->currentStackPtr != 0) && (factor->currentStackPtr >= EventStackPtr) ){
+       BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByStackLayer, factor->factorType, factor->dependID, factor );
+        break;
+      }
+      if( factor->existFlag == FALSE ){
+        break;
+      }
+      if( (eventID == BTL_EVENT_USE_ITEM_TMP) && (factor->tmpItemFlag == FALSE) ){
+        break;
+      }
+
+      {
+        const BtlEventHandlerTable* tbl = factor->handlerTable;
+        u32 i;
+        for(i=0; i<factor->numHandlers; i++)
+        {
+          if( tbl[i].eventType == eventID )
+          {
+            if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
             {
-              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor );
-              BTL_EVENT_FACTOR_Remove( factor );
+              factor->callingFlag = TRUE;
+              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorStart, factor, factor->factorType, factor->dependID );
+              tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
+              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorEnd, factor, factor->factorType, factor->dependID );
+
+
+              if( factor->recallEnableFlag ){
+                factor->recallEnableFlag = FALSE;
+              }else{
+                factor->callingFlag = FALSE;
+              }
+              // 呼び出し中に削除された
+              if( factor->rmReserveFlag )
+              {
+                BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor );
+                BTL_EVENT_FACTOR_Remove( factor );
+              }
             }
+            break;
           }
-          break;
         }
       }
-    }
-    else
-    {
-      if( factor->callingFlag ){
-        BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByCallingFlg, factor->factorType, factor->dependID, factor );
-      }
-    }
+    }while(0);
 
     if( next_factor != NULL )
     {

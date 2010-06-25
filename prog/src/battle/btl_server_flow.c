@@ -6864,6 +6864,7 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
     BTL_POKESET_SeekStart( targets );
     while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
     {
+      TAYA_Printf("ダメージ受け反応チェック ... pokeID=%d\n", BPP_GetID(bpp));
       scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
     }
   }
