@@ -496,8 +496,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
-    GFL_NET_SetAutoErrorCheck(TRUE);
-    GFL_NET_SetNoChildErrorCheck(TRUE);
     _wifilistPlayData(dbw,GAMESYSTEM_GetGameData(gsys));
     BATTLE_PARAM_Delete(dbw->para);
     dbw->para = NULL;
@@ -549,23 +547,22 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _CALL_NET_END:
-    if(GFL_NET_IsInit())
+    if(GFL_NET_IsInit() && (NET_ERR_CHECK_NONE == NetErr_App_CheckError()))
     {
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALEND_NO, WB_NET_IRCBATTLE);
     }
     (*seq) ++;
     break;
   case _CALL_NET_END_TIME:
-    if(GFL_NET_IsInit())
+    if(GFL_NET_IsInit() && (NET_ERR_CHECK_NONE == NetErr_App_CheckError()))
     {
       if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALEND_NO, WB_NET_IRCBATTLE)){
-        GFL_NET_SetAutoErrorCheck(FALSE);
-        GFL_NET_SetNoChildErrorCheck(FALSE);
         dbw->timer=0;
         (*seq) ++;
       }
     }
     else{
+      dbw->timer=0;
       (*seq) ++;
     }
     break;
@@ -587,7 +584,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       NetErr_ErrWorkInit();
       (*seq) = _FIELD_OPEN;
     }
-    if(GFL_NET_IsExit()){
+    if(!GFL_NET_IsInit()){
       (*seq) = _FIELD_OPEN;
     }
     break;
