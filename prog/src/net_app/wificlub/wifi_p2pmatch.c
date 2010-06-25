@@ -3948,6 +3948,21 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
+
+static void _VctIconReloadFunc( WIFIP2PMATCH_WORK *wk )
+{
+  // アイコン書き換え
+  if(GFL_NET_DWC_IsSendVoiceAndInc()){
+    WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
+                                       PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCTBIG +PLAYER_DISP_ICON_MYMODE, 0 );
+  }
+  else{
+    WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
+                                       PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT_ACT + PLAYER_DISP_ICON_MYMODE, 0 );
+  }
+}
+
+
 //------------------------------------------------------------------
 /**
  * $brief   VCT接続中  WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN
@@ -3981,15 +3996,7 @@ static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_VCTEND_COMMSEND3);
   }
   else{
-    // アイコン書き換え
-    if(GFL_NET_DWC_IsSendVoiceAndInc()){
-      WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
-                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCTBIG +PLAYER_DISP_ICON_MYMODE, 0 );
-    }
-    else{
-      WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
-                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT_ACT + PLAYER_DISP_ICON_MYMODE, 0 );
-    }
+    _VctIconReloadFunc(wk);   // アイコン書き換え
   }
 
   return seq;
@@ -4004,12 +4011,9 @@ static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int WifiP2PMatch_VCTConnectEndYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
-
+  _VctIconReloadFunc(wk);   // アイコン書き換え
 
   if( WifiP2PMatchMessageEndCheck(wk)){
-    // 最後に遊んだ日付は、VCTがつながったときに設定する
-    //WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
-
     if(wk->VChatModeOff){
       EndMessageWindowOff(wk);
       _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
@@ -4017,12 +4021,12 @@ static int WifiP2PMatch_VCTConnectEndYesNo( WIFIP2PMATCH_WORK *wk, int seq )
       wk->timer = 60;
       _CHANGESTATE(wk,WIFIP2PMATCH_VCTEND_COMMSEND3);
     }
-    else{
-      // はいいいえウインドウを出す
+    else{      // はいいいえウインドウを出す
       _yenowinCreateM2(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECTEND_WAIT);
     }
   }
+
   return seq;
 }
 
@@ -4037,6 +4041,9 @@ static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i;
   int ret;
+
+  _VctIconReloadFunc(wk);   // アイコン書き換え
+
   ret = _bmpMenu_YesNoSelectMain(wk);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
