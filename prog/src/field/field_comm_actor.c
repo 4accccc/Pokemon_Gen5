@@ -192,33 +192,42 @@ void FIELD_COMM_ACTOR_CTRL_DeleteActro(
  * @param gy 調べるグリッドY座標
  * @param gz 調べるグリッドZ座標
  * @param outID gx,gzに居るアクターIDの格納先
+ * @param no 検索開始ワークNo。先頭から検索する際は初期値0を指定。
  * @retval BOOL TRUE=gx,gzに通信アクターがいる。FALSE=居ない
+ * @note 引数noは呼び出し後、取得位置+1の値になる。
  */
 //--------------------------------------------------------------
 BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
-    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gy, s16 gz, u32 *outID )
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gy, s16 gz,
+    u32 *outID, u32 *no )
 {
-  s16 cy,sy;
-  int i = 0;
-  FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
-  
-  for( ; i < act_ctrl->max; i++, act++ ){
-    if( act->mmdl != NULL ){
-      cy = MMDL_GetGridPosY( act->mmdl );
-
-      sy = cy - gy;
+  u32 max = act_ctrl->max;
+   
+  if( (*no) < max ){
+    s16 cy,sy;
+    FIELD_COMM_ACTOR *act = &(act_ctrl->act_tbl[*no]);
+    
+    do{
+      (*no)++;
       
-      if( sy < 0 ){
-        sy = -sy;
-      }
-      
-      if( sy < H_GRID_FELLOW_SIZE ){
-        if( MMDL_HitCheckXZ(act->mmdl,gx,gz,TRUE) ){
-          *outID = act->id;
-          return( TRUE );
+      if( act->mmdl != NULL ){
+        cy = MMDL_GetGridPosY( act->mmdl );
+        sy = cy - gy;
+        
+        if( sy < 0 ){
+          sy = -sy;
         }
+        
+        if( sy < H_GRID_FELLOW_SIZE ){
+          if( MMDL_HitCheckXZ(act->mmdl,gx,gz,TRUE) ){
+            *outID = act->id;
+            return( TRUE );
+          }
+        }
+        
+        act++;
       }
-    }
+    }while( (*no) < max );
   }
   
   return( FALSE );
