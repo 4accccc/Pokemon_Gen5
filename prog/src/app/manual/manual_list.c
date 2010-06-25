@@ -575,6 +575,9 @@ static void Manual_List_Prepare( MANUAL_LIST_WORK* work )
 
 static void Manual_List_PrepareAppTaskmenuWin( MANUAL_LIST_WORK* work )
 {
+  // 前のが残っているといけないので、キャラVRAM、スクリーンVRAMをクリア
+  GFL_BG_ClearFrame( BG_FRAME_S_MAIN );
+
   // APP_TASKMENU_WIN
   // リソース
   {
