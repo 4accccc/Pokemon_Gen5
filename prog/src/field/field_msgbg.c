@@ -35,6 +35,9 @@
 #define DEBUG_FLDMSGBG //debug処理有効
 #endif
 
+///BTS 社内1804 ＢＧウインドウ、キー待ち記号の表示ズレを修正
+#define BUGFIX_BTS_GF1804
+
 #define FLDMSGBG_BGFRAME (FLDBG_MFRM_MSG) ///<使用BGフレーム
 #define FLDMSGBG_BGFRAME_BLD (FLDBG_MFRM_EFF1) ///<使用BGフレーム 半透明用
 
@@ -3784,14 +3787,23 @@ FLDBGWIN * FLDBGWIN_AddEx( FLDMSGBG *fmb, FLDBGWIN_TYPE type, GFL_FONT* useFontH
   
   {
     GFL_BMP_DATA *bmp;
-    
+
+#ifndef BUGFIX_BTS_GF1804
     bgWin->bmpwin = GFL_BMPWIN_Create( fmb->bgFrame,
         2, 19, 27, 4, PANO_BGWIN, GFL_BMP_CHRAREA_GET_B );
     bgWin->bmp_new = GFL_BMP_Create(
         27, 4, GFL_BMP_16_COLOR, fmb->heapID );
     bgWin->bmp_old = GFL_BMP_Create(
         27, 4, GFL_BMP_16_COLOR, fmb->heapID );
-    
+#else
+    bgWin->bmpwin = GFL_BMPWIN_Create( fmb->bgFrame,
+        2, 19, 28, 4, PANO_BGWIN, GFL_BMP_CHRAREA_GET_B );
+    bgWin->bmp_new = GFL_BMP_Create(
+        28, 4, GFL_BMP_16_COLOR, fmb->heapID );
+    bgWin->bmp_old = GFL_BMP_Create(
+        28, 4, GFL_BMP_16_COLOR, fmb->heapID );
+#endif
+
     bmp = GFL_BMPWIN_GetBmp( bgWin->bmpwin );
     GFL_BMP_Clear( bmp, BGWIN_NCOL );
     GFL_BMPWIN_MakeScreen( bgWin->bmpwin );
@@ -4004,29 +4016,52 @@ static void bgwin_InitGraphic(
  * @retval nothing
  */
 //--------------------------------------------------------------
+#ifndef BUGFIX_BTS_GF1804
 static void bgwin_WriteWindow(
     u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
 {
-  GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+3, px+sx, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx,   px-2,    py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+1, px-1,    py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+2, px,      py-1, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+3, px+sx,   py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1,  1, 1, pal );
   
-  GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
-  GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
-  GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+6,  px-2,    py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+7,  px-1,    py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+9,  px+sx,   py, 1, sy, pal );
   GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
   GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
   
-  GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+12, px-2,    py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+13, px-1,    py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+14, px,      py+sy, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+15, px+sx,   py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy,  1, 1, pal );
 }
+#else
+static void bgwin_WriteWindow(
+    u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
+{
+  GFL_BG_FillScreen( frm, cgx,   px-2,    py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+1, px-1,    py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+2, px,      py-1, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+4, px+sx,   py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+5, px+sx+1, py-1,  1, 1, pal );
+  
+  GFL_BG_FillScreen( frm, cgx+6,  px-2,    py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+7,  px-1,    py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+10, px+sx,   py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+11, px+sx+1, py, 1, sy, pal );
+  
+  GFL_BG_FillScreen( frm, cgx+12, px-2,    py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+13, px-1,    py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+14, px,      py+sy, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+16, px+sx,   py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+17, px+sx+1, py+sy,  1, 1, pal );
+}
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -4041,6 +4076,7 @@ static void bgwin_WriteWindow(
  * @retval nothing
  */
 //--------------------------------------------------------------
+#ifndef BUGFIX_BTS_GF1804
 static void bgwin_CleanWindow(
     u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
 {
@@ -4064,6 +4100,28 @@ static void bgwin_CleanWindow(
   GFL_BG_FillScreen( frm, cgx, px+sx+1, py+sy, 1, 1, pal );
   GFL_BG_FillScreen( frm, cgx, px+sx+2, py+sy, 1, 1, pal );
 }
+#else
+static void bgwin_CleanWindow(
+    u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
+{
+  GFL_BG_FillScreen( frm, cgx, px-2,    py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-1,    py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px,      py-1, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx,   py-1,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+1, py-1,  1, 1, pal );
+  
+  GFL_BG_FillScreen( frm, cgx, px-2,    py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px-1,    py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx,   py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+1, py, 1, sy, pal );
+  
+  GFL_BG_FillScreen( frm, cgx, px-2,    py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-1,    py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px,      py+sy, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx,   py+sy,  1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+1, py+sy,  1, 1, pal );
+}
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -4655,7 +4713,6 @@ void FLDKEYWAITCURSOR_Write(
     FLDKEYWAITCURSOR *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
   u16 x,y,offs;
-  u16 tbl[3] = { 0, 1, 2 };
   
   FLDKEYWAITCURSOR_Clear( work, bmp, n_col );
   
