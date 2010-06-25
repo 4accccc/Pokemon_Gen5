@@ -181,6 +181,7 @@ struct _CG_WIRELESS_MENU {
   u32 subchar;
 
   int palace_state;
+  int palace_num;
   u8 BackupPalette[16 * _PALETTE_CHANGE_NUM *2];
   u8 LightPalette[16 * _PALETTE_CHANGE_NUM *2];
   u16 TransPalette[16 ];
@@ -1033,7 +1034,14 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
   }
 
 
-  if(pWork->palace_state!=no){
+  if(no==INTRUDE_CONNECT_MISSION_TARGET){///<ハイリンク接続時(ミッションのターゲットになっている)
+    int no2 = Intrude_GetMissionEntryNum(pComm);
+    if(pWork->palace_num != no2){
+      //人数変更があった場合 NULLにして再描画させる
+      pWork->palace_state = INTRUDE_CONNECT_NULL;
+    }
+  }
+  if(pWork->palace_state != no){
     switch(no){
     case INTRUDE_CONNECT_NULL:              ///<接続されていない
       GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
@@ -1050,6 +1058,7 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
     case INTRUDE_CONNECT_MISSION_TARGET:    ///<ハイリンク接続時(ミッションのターゲットになっている)
       {
         int no2 = Intrude_GetMissionEntryNum(pComm);
+        pWork->palace_num = no2;
         GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
         _buttonWindowDeleteF3S(_HI_NAMAE, pWork); //20100604 add Saito
         WORDSET_RegisterNumber( pWork->pWordSet, 0,  no2, 1,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
