@@ -476,7 +476,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
           bmw->btlv_mcss[ index ].check_effect_end = 0;
 
           //g‘ã‚í‚è‚ª‚Å‚Ä‚¢‚é‚È‚ç‰½‚à‚µ‚È‚¢
-          if( BTLV_MCSS_GetStatusFlag( bmw, pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) continue;
+          if( BTLV_MCSS_GetStatusFlag( bmw, pos ) & BTLV_MCSS_STATUS_FLAG_LOOKING_MIGAWARI ) continue;
 
           if( BTLV_EFFECT_GetGaugeStatus( pos, &color, &sick_anm ) == FALSE ) continue;
 
@@ -2022,6 +2022,7 @@ void  BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK* bmw, int position, int sw, BOOL fla
     {
       bmw->btlv_mcss[ index ].status_flag &= BTLV_MCSS_STATUS_FLAG_MIGAWARI_OFF;
     }
+    bmw->btlv_mcss[ index ].status_flag &= BTLV_MCSS_STATUS_FLAG_LOOKING_MIGAWARI_OFF;
   }
   else
   {
@@ -2040,6 +2041,7 @@ void  BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK* bmw, int position, int sw, BOOL fla
     {
       bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_MIGAWARI;
     }
+    bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_LOOKING_MIGAWARI;
   }
 }
 

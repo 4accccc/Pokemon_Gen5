@@ -91,11 +91,13 @@ typedef enum
 }BTLV_MCSS_ANM_STOP_FLAG;
 
 typedef enum{
-  BTLV_MCSS_STATUS_FLAG_MIGAWARI  = 0x00000001,    //みがわりフラグ
-  BTLV_MCSS_STATUS_FLAG_RARE      = 0x00000002,    //レアフラグ
+  BTLV_MCSS_STATUS_FLAG_MIGAWARI          = 0x00000001,    //みがわりフラグ
+  BTLV_MCSS_STATUS_FLAG_RARE              = 0x00000002,    //レアフラグ
+  BTLV_MCSS_STATUS_FLAG_LOOKING_MIGAWARI  = 0x00000004,    //みがわりフラグ（見た目）
 
-  BTLV_MCSS_STATUS_FLAG_MIGAWARI_OFF  = ( BTLV_MCSS_STATUS_FLAG_MIGAWARI  ^ 0xffffffff ),    //みがわりフラグ
-  BTLV_MCSS_STATUS_FLAG_RARE_OFF      = ( BTLV_MCSS_STATUS_FLAG_RARE      ^ 0xffffffff ),    //レアフラグ
+  BTLV_MCSS_STATUS_FLAG_MIGAWARI_OFF          = ( BTLV_MCSS_STATUS_FLAG_MIGAWARI  ^ 0xffffffff ),         //みがわりフラグ
+  BTLV_MCSS_STATUS_FLAG_RARE_OFF              = ( BTLV_MCSS_STATUS_FLAG_RARE      ^ 0xffffffff ),         //レアフラグ
+  BTLV_MCSS_STATUS_FLAG_LOOKING_MIGAWARI_OFF  = ( BTLV_MCSS_STATUS_FLAG_LOOKING_MIGAWARI ^ 0xffffffff ),  //みがわりフラグ（見た目）
 }BTLV_MCSS_STATUS_FLAG;
 
 typedef enum{
