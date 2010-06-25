@@ -385,9 +385,12 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talked( GMEVENT *event, int *seq, voi
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
 
   	//ミッション失敗：パレスへ戻される
-    PMSND_PlaySE( INTSE_WARP );
-    GMEVENT_ChangeEvent(event, EVENT_IntrudeWarpPalace(gsys));
-    return GMEVENT_RES_CONTINUE;  //ChangeEventで終了する為Finishしない
+  	if(Intrude_Check_CommConnect(game_comm) != NULL){
+      PMSND_PlaySE( INTSE_WARP );
+      GMEVENT_ChangeEvent(event, EVENT_IntrudeWarpPalace(gsys));
+      return GMEVENT_RES_CONTINUE;  //ChangeEventで終了する為Finishしない
+    }
+    return GMEVENT_RES_FINISH;  //強制退出にまかせる
   }
 	return GMEVENT_RES_CONTINUE;
 }
