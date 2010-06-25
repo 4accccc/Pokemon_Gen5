@@ -4552,20 +4552,15 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork) && (pWork->pNetSave==NULL)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
+        NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
+      }
       if(pWork->pNHTTP){
         NHTTP_RAP_ErrorClean(pWork->pNHTTP);
         NHTTP_RAP_End(pWork->pNHTTP);
         pWork->pNHTTP  = NULL;
         GFL_NET_DWC_SetErrDisconnectCallback(NULL,NULL);
         DWC_RAPCOMMON_ResetSubHeapID();
-      }
-      if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
-        if(GFL_NET_IsWifiConnect()){
-          NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
-        }
-        else{
-          NetErr_DispCall( TRUE );
-        }
       }
       if(GFL_NET_IsWifiConnect()){
         GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE);
@@ -4580,10 +4575,6 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
     }
   }
-
-
-  //  ConnectBGPalAnm_Main(&pWork->cbp);
-
   return retCode;
 }
 
