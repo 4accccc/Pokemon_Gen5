@@ -913,6 +913,7 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
 
       PMSND_AllPlayerVolumeEnable( FALSE, PMSND_MASKPL_BGM );
       BTL_MAIN_ResetForRecPlay( wk->mainModule, nextTurn );
+      PMV_SetMasterVolume( 0 );//PokeVoice再生停止
     }
     break;
 
@@ -974,6 +975,8 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
           PMSND_AllPlayerVolumeEnable( TRUE, PMSND_MASKPL_BGM );
           BTLV_RecPlayFadeIn_Start( wk->viewCore );
           PMSND_FadeInBGM( 30 );
+          BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_PLAY );//SE再生再開
+          PMV_ResetMasterVolume();//PokeVoice再生再開
         }
         wk->myState = SEQ_RECPLAY_FADEIN;
       }
@@ -985,6 +988,13 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
     {
       wk->myState = SEQ_RECPLAY_RETURN_TO_SV;
       wk->subSeq = 0;
+
+      //BTS:6827系対処　スキップ処理でのエフェクトSEを完全にフック
+      //Skip時　下画面生成後はエフェクトSE再生停止
+      //Skip終了時に再開
+      if(BTLV_EFFECT_GetEffectWork() != NULL){
+        BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_MUTE ); // SE再生停止
+      }
     }
     break;
 
@@ -6702,10 +6712,6 @@ static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args
     {
       BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
 
-      if( BTL_CLIENT_IsChapterSkipMode(wk) ){
-        BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_MUTE );
-      }
-
       BTLV_EFFECT_CreateMigawari( vpos );
       (*seq)++;
     }
@@ -6713,9 +6719,6 @@ static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      if( BTL_CLIENT_IsChapterSkipMode(wk) ){
-        BTLV_EFFECT_SetSEMode( BTLV_EFFECT_SE_MODE_PLAY );
-      }
       return TRUE;
     }
   }
