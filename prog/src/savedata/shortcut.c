@@ -251,7 +251,7 @@ u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk )
  *
  *	@param	const SHORTCUT *cp_wk		ワーク
  *	@param	shortcutID										
- *	@param	insert_idx							挿入されるインデックス
+ *	@param	insert_idx							挿入されるインデックス(SHORTCUT_INSERT_LASTの場合後尾)
  *
  *	@param	挿入されたインデックス（－1されていることがある）
  *
@@ -280,7 +280,7 @@ u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 	 */
 
 
-	GF_ASSERT_MSG( insert_idx < SHORTCUT_ID_MAX, "インデックスが最大を超えています\n" );
+	GF_ASSERT_MSG( insert_idx < SHORTCUT_ID_MAX || insert_idx == SHORTCUT_INSERT_LAST, "インデックスが最大を超えています\n" );
 	
 	//自分のインデックスを取得
 	for( erase_idx = 0 ; erase_idx < SHORTCUT_ID_MAX ; erase_idx++ )
@@ -300,22 +300,38 @@ u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 #if PM_DEBUG
 	DEBUG_PrintData( p_wk );
 #endif	
-	//消した分つまるので
-	//インデックス－1
-	if( erase_idx < insert_idx )
-	{	
-		insert_idx--;
-	}
 
+  if( insert_idx == SHORTCUT_INSERT_LAST )
+  {
+    //後尾を検索して挿入
+    for( insert_idx = 0; insert_idx < SHORTCUT_ID_MAX ; insert_idx++ )
+    {	
+      if( p_wk->data[ insert_idx ] == SHORTCUT_ID_NULL )
+      {
+        //挿入
+        p_wk->data[ insert_idx ] = shortcutID;
+        break;
+      }
+    }
+  }
+  else
+  {
+    //消した分つまるので
+    //インデックス－1
+    if( erase_idx < insert_idx )
+    {	
+      insert_idx--;
+    }
 
-	//挿入の以下を１つずつずらす
-	for( i = SHORTCUT_ID_MAX-1; i >= insert_idx ; i-- )
-	{	
-		p_wk->data[ i ] = p_wk->data[ i - 1 ];
-	}
+    //挿入の以下を１つずつずらす
+    for( i = SHORTCUT_ID_MAX-1; i >= insert_idx ; i-- )
+    {	
+      p_wk->data[ i ] = p_wk->data[ i - 1 ];
+    }
 
-	//挿入
-	p_wk->data[ insert_idx ] = shortcutID;
+    //挿入
+    p_wk->data[ insert_idx ] = shortcutID;
+  }
 
 
 	NAGI_Printf( "挿入完了\n" );

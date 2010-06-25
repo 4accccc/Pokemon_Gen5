@@ -495,9 +495,24 @@ u16 BmpMenuList_CursorYGet( BMPMENULIST_WORK * lw )
   u8  yblk = FontHeaderGet( lw->hed.font, FONT_HEADER_SIZE_Y ) + lw->hed.line_spc;
   return  (u16)((lw->cp * yblk) + lw->hed.line_y);
 #else
-  u8 yblk = lw->hed.font_size_y + lw->hed.line_spc;
-  return (u16)((lw->cp * yblk) + lw->hed.line_y);
+  return BmpMenuList_DirectCursorYGet( lw, lw->cp );
 #endif
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * BMPリストのカーソルY座標を取得（位置指定版）
+ *
+ * @param	lw		BMPリストワーク
+ * @param cursor  カーソルの位置
+ *
+ * @return	カーソルY座標
+ */
+//--------------------------------------------------------------------------------------------
+u16 BmpMenuList_DirectCursorYGet( BMPMENULIST_WORK * lw, u16 cursor )
+{
+  u8 yblk = lw->hed.font_size_y + lw->hed.line_spc;
+  return (u16)((cursor * yblk) + lw->hed.line_y);
 }
 
 //--------------------------------------------------------------------------------------------

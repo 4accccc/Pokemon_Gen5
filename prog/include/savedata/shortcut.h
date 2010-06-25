@@ -58,4 +58,7 @@ extern BOOL SHORTCUT_GetRegister( const SHORTCUT *cp_wk, SHORTCUT_ID shortcutID 
 //----------------------------------------------------------
 extern SHORTCUT_ID SHORTCUT_GetType( const SHORTCUT *cp_wk, u8 idx );
 u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk );
+
+
+#define SHORTCUT_INSERT_LAST  0xFF
 extern u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx );

@@ -172,6 +172,7 @@ typedef struct
 	GFL_MSGDATA				*p_msg;		//メッセージデータ
 	GFL_FONT					*p_font;	//フォント
 
+  BOOL              is_insert_last;
   BOOL              is_move_req;
   BOOL              is_visible_req;
 } SCROLL_WORK;
@@ -219,6 +220,8 @@ static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor
 
 
 static void Shortcut_ScrollTask( GFL_TCB *, void *p_wk_adrs );
+
+static void InsertCursor_SetPosY( SCROLL_WORK *p_wk, s32 y );
 
 //=============================================================================
 /**
@@ -736,17 +739,42 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 			Scroll_DeleteList( p_wk, NULL, NULL );
 			Scroll_CreateList( p_wk, list, cursor, p_wk->heapID );
 
+      //挿入モードのときは一番下のカーソルを出す
+      if( p_wk->mode == SCROLL_MOVE_INSERT )
+      {
+        //この場合コールバックが呼ばれる
+        p_wk->is_insert_last  =  TRUE;
+      }
+
       PMSND_PlaySE( SEQ_SE_SELECT1 );
 			is_loop	= TRUE;
 		}
 		else if( cursor_pos == max-1 && GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
 		{	
-			Scroll_DeleteList( p_wk, NULL, NULL );
-			Scroll_CreateList( p_wk, 0, 0, p_wk->heapID );
+      //挿入モードのときは一番下のカーソルを出す
+      if( p_wk->mode == SCROLL_MOVE_INSERT )
+      {
+        u16 cursor;
+        u16 pos;
+        BmpMenuList_PosGet( p_wk->p_list, NULL, &cursor );
+        pos = BmpMenuList_DirectCursorYGet( p_wk->p_list, cursor+1 )/8;
+        InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + pos)*8 );
+        p_wk->is_insert_last  ^=  1;
+      }
+
+      if( p_wk->is_insert_last == FALSE )
+      {
+        Scroll_DeleteList( p_wk, NULL, NULL );
+        Scroll_CreateList( p_wk, 0, 0, p_wk->heapID );
+      }
 
       PMSND_PlaySE( SEQ_SE_SELECT1 );
 			is_loop	= TRUE;
 		}
+    else if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_DOWN|PAD_KEY_UP) )
+    {
+      p_wk->is_insert_last  =  FALSE;
+    }
 	}
 
 	//メイン
@@ -808,13 +836,20 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 			
 			insertID	= BmpMenuList_PosParamGet( p_wk->p_list, p_wk->insert_list + p_wk->insert_cursor );
 
-
 			//セーブデータへの挿入処理
 			BmpMenuList_DirectPosGet( p_wk->p_list, &cursor_pos );
-			insert_pos	= SHORTCUT_Insert( p_wk->p_sv, insertID, cursor_pos );
+
+      if(  p_wk->is_insert_last )
+      {
+        insert_pos	= SHORTCUT_Insert( p_wk->p_sv, insertID, SHORTCUT_INSERT_LAST );
+      }
+      else
+      {
+        insert_pos	= SHORTCUT_Insert( p_wk->p_sv, insertID, cursor_pos );
+      }
 
 
-			NAGI_Printf( "挿入 cursor_pos%d insertID%d insert_l%dp%d\n", cursor_pos, insertID, p_wk->insert_list, p_wk->insert_cursor );
+			NAGI_Printf( "挿入 cursor_pos%d insertID%d insert_l%dp%dlast%d\n", cursor_pos, insertID, p_wk->insert_list, p_wk->insert_cursor, p_wk->is_insert_last );
 
 
 			//再設定
@@ -844,10 +879,12 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 		p_wk->mode ^= 1;
 		if( p_wk->mode == SCROLL_MOVE_NORMAL )
 		{	
+      p_wk->is_insert_last  =  FALSE;
       for( i = 0; i < CLWKID_MAX; i++ )
       { 
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
       }
+      Scroll_MoveCursorCallBack( p_wk->p_list, 0, 0 );
 		}
 		else if( p_wk->mode == SCROLL_MOVE_INSERT )
 		{	
@@ -1028,18 +1065,18 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
 		GFL_BG_LoadScreenV_Req( BG_FRAME_SCROLL_M );
 	}
 
+  if( p_wk->is_insert_last ==  TRUE )
   {
-    int i;
-		GFL_CLACTPOS	clpos;
-    for( i = 0; i < CLWKID_MAX; i++ )
-    { 
-      GFL_CLACT_WK_GetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
-      clpos.y = (SCROLL_BMPWIN_Y + cursor)*8;
-      GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
-    }
+    u16 cursor;
+    u16 pos;
+    cursor	= BmpListParamGet( p_wk->p_list, BMPMENULIST_ID_LINE );
+    pos = BmpMenuList_DirectCursorYGet( p_wk->p_list, cursor )/8;
+    InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + pos)*8 );
   }
-
-
+  else
+  {
+    InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + cursor)*8 );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1180,4 +1217,25 @@ static void Shortcut_ScrollTask( GFL_TCB *, void *p_wk_adrs )
     p_wk->is_move_end = TRUE;
   }
   GFL_BG_SetScroll( BG_FRAME_SCROLL_M, GFL_BG_SCROLL_Y_SET, scroll_y );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  挿入カーソルのY座標設定
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ *	@param  y   Y座標
+ */
+//-----------------------------------------------------------------------------
+static void InsertCursor_SetPosY( SCROLL_WORK *p_wk, s32 y )
+{
+  int i;
+  GFL_CLACTPOS	clpos;
+  for( i = 0; i < CLWKID_MAX; i++ )
+  { 
+    GFL_CLACT_WK_GetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
+    clpos.y = y;
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
+  }
 }
