@@ -402,23 +402,25 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     if( turnCnt >= work[WORKIDX_TURN] )
     {
       u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
-      if( targetPokeID != BTL_POKEID_NULL )
-      {
+      u8 attackerPokeID = work[WORKIDX_USER_POKEID];
+      if( (targetPokeID != BTL_POKEID_NULL)
+      &&  (targetPokeID != attackerPokeID)
+      ){
         const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
         if( !BPP_IsDead(bppTarget) )
         {
           BTL_HANDEX_PARAM_DELAY_WAZADMG* param;
           BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-          msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, work[WORKIDX_USER_POKEID] );
+          msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, attackerPokeID );
             HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
             HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
             HANDEX_STR_AddArg( &msg_param->str, work[ WORKIDX_WAZAID ] );
           BTL_SVF_HANDEX_Pop( flowWk, msg_param );
 
 
-          param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
-            param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
+          param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, attackerPokeID );
+            param->attackerPokeID = attackerPokeID;
             param->targetPokeID = targetPokeID;
             param->wazaID = work[ WORKIDX_WAZAID ];
           BTL_SVF_HANDEX_Pop( flowWk, param );
