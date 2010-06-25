@@ -150,6 +150,7 @@ typedef struct
   int           seq_no;
   BtlRotateDir  dir;
   int           side;
+  BOOL          se_on;
 }TCB_ROTATION;
 
 typedef struct
@@ -1322,9 +1323,10 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
  *
  * @param[in] dir   ローテーションの向き
  * @param[in] side  自分側か相手側か
+ * @param[in] se_on SEを再生するかどうか？(録画スキップ対策)
  */
 //============================================================================================
-void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side )
+void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side ,BOOL se_on )
 {
   TCB_ROTATION *tr = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bew->heapID ), sizeof( TCB_ROTATION ) );
   GF_ASSERT( dir != BTL_ROTATEDIR_NONE )
@@ -1335,6 +1337,7 @@ void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side )
   tr->seq_no = 0;
   tr->dir = ( dir == BTL_ROTATEDIR_L ) ? 0 : 1;
   tr->side = side;
+  tr->se_on = se_on;
 
   bew->tcb_rotate_flag |= BTLV_EFFTOOL_Pos2Bit( side );
 
@@ -2311,12 +2314,19 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
     /*fallthry*/
   case 1:
     BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir );
+    if( tr->se_on ){   //BTS6811対処 by iwasawa 10.06.25
+      PMSND_PlaySE_byPlayerID( SEQ_SE_FLD_59, PLAYER_SE_1 );
+    }
     tr->seq_no++;
     break;
   case 2:
     if( ( BTLV_STAGE_CheckExecuteAnmReq( bew->bsw ) == FALSE ) &&
         ( BTLV_MCSS_CheckTCBExecuteAllPos( bew->bmw ) == FALSE ) )
     {
+      if( tr->se_on ){   //BTS6811対処 by iwasawa 10.06.25
+        PMSND_StopSE_byPlayerID( PLAYER_SE_1 );
+        PMSND_PlaySE_byPlayerID( SEQ_SE_ROTATION_B, PLAYER_SE_SYS );
+      }
       BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
