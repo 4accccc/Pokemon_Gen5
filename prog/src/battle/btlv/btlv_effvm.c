@@ -451,6 +451,7 @@ static  ARCDATID      EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID );
 static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol, int frame );
 static  int           EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw );
 static  void          EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw );
+static  void          EFFVM_CheckShadow( BTLV_EFFVM_WORK* bevw );
 
 static  void          set_mcss_scale_move( fx32 mul_value_m, fx32 mul_value_e, int frame, int wait, int count );
 //static  void          check_linesover( GFL_EMIT_PTR emit, u32 flag );
@@ -4537,38 +4538,14 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //初期位置にいないポケモンをチェック
   EFFVM_CheckPokePosition( bevw );
 
+  //影を消したままになっているかもしれないので、復活させる
+  EFFVM_CheckShadow( bevw );
+
   //リバース描画ON
   BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_ON );
 
   //仮想マシン停止
   VM_End( vmh );
-
-  //BG周りの設定をデフォルトに戻しておく
-  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
-  if( bevw->set_priority_flag )
-  {
-    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
-    if( scu != NULL )
-    { 
-      BTLV_SCU_RestoreDefaultScreen( scu );
-    }
-    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
-    bevw->set_priority_flag = 0;
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
-  }
-  if( bevw->set_alpha_flag )
-  {
-
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
-                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
-                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-                      31, 7 );
-
-    bevw->set_alpha_flag = 0;
-  }
 
 #ifdef PM_DEBUG
   { 
@@ -4680,6 +4657,33 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
   //サブルーチンコールが残っていてはいけない
   GF_ASSERT_MSG( bevw->call_count == 0, "count:%d\n", bevw->call_count );
+
+  //BG周りの設定をデフォルトに戻しておく
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+  if( bevw->set_priority_flag )
+  {
+    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
+    if( scu != NULL )
+    { 
+      BTLV_SCU_RestoreDefaultScreen( scu );
+    }
+    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
+    bevw->set_priority_flag = 0;
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
+  }
+  if( bevw->set_alpha_flag )
+  {
+
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, 7 );
+
+    bevw->set_alpha_flag = 0;
+  }
 
   //SEを強制的にストップ
   if( bevw->se_play_flag )
@@ -6953,6 +6957,26 @@ static  void  EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw )
     if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), pos ) == TRUE )
     {
       BTLV_MCSS_CheckPositionSetInitPos( BTLV_EFFECT_GetMcssWork(), pos );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  パーティクルのちらつきを軽減するために影を消しているのの復活忘れを防ぐために終了時に復活させる
+ *
+ *  @param[in]  bevw      システム管理構造体
+ */
+//-----------------------------------------------------------------------------
+static  void  EFFVM_CheckShadow( BTLV_EFFVM_WORK* bevw )
+{ 
+  BtlvMcssPos pos;
+
+  for( pos = 0 ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+  {
+    if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), pos ) == TRUE )
+    {
+      BTLV_MCSS_SetShadowVanishFlag( BTLV_EFFECT_GetMcssWork(), pos, FALSE );
     }
   }
 }
