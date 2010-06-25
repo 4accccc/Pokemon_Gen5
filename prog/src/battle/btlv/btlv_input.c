@@ -4986,7 +4986,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
       biw->decide_pos_flag = 1;
       break;
     case BTLV_INPUT_SCRTYPE_DIR:
-      if( get_cancel_flag( biw, tp_tbl, biw->cursor_pos ) == FALSE )
+      if( get_cancel_flag( biw, tp_tbl, hit ) == FALSE )
       {
         biw->decide_pos[ biw->active_index ][ biw->scr_type ] = biw->cursor_pos |
                                                                 ( biw->decide_pos[ biw->active_index ]
@@ -5383,7 +5383,7 @@ static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tb
   if( ( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE ) ||
       ( biw->scr_type != BTLV_INPUT_SCRTYPE_COMMAND ) )
   { 
-    return tbl->cancel_flag[ pos ];
+    return tbl->cancel_flag[ pos ] & TRUE;
   }
   else
   { 
