@@ -637,7 +637,10 @@ static const BOX2BMP_BUTTON_LIST SleepMenuStrTbl[] =
 //--------------------------------------------------------------------------------------------
 BOOL BOX2SEQ_Main( BOX2_SYS_WORK * syswk, int * seq )
 {
-	*seq = MainSeq[*seq]( syswk );
+	if( syswk->app != NULL && syswk->app->que != NULL && PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
+	}else{
+		*seq = MainSeq[*seq]( syswk );
+	}
 
 	if( *seq == BOX2SEQ_MAINSEQ_END ){
 		return FALSE;
@@ -747,10 +750,6 @@ static int MainSeq_Init( BOX2_SYS_WORK * syswk )
 static int MainSeq_Release( BOX2_SYS_WORK * syswk )
 {
 	FS_EXTERN_OVERLAY(ui_common);
-
-	if( PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
-		return BOX2SEQ_MAINSEQ_RELEASE;
-	}
 
 	BOX2MAIN_ExitVBlank( syswk );
 
@@ -863,10 +862,6 @@ static int MainSeq_Wait( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_VFunc( BOX2_SYS_WORK * syswk )
 {
-	if( PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
-		return BOX2SEQ_MAINSEQ_VFUNC;
-	}
-
 	if( syswk->app->vfunk.func != NULL ){
 		pBOX2_FUNC func = syswk->app->vfunk.func;
 		if( func( syswk ) == 0 ){
@@ -1002,7 +997,7 @@ static int MainSeq_SubProcMain( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 {
-	int	seq;
+//	int	seq;
 
 	PMSND_PlaySE( SE_BOX2_LOG_IN );
 
@@ -1058,7 +1053,7 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 		break;
 	}
 
-//	return FadeInSet( syswk, seq );
+//	return FadeInSet( syswk, syswk->next_seq );
 	return MainSeq_StartWait( syswk );
 }
 
