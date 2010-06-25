@@ -4660,9 +4660,6 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   GF_ASSERT_MSG( bevw->call_count == 0, "count:%d\n", bevw->call_count );
 
   //BG周りの設定をデフォルトに戻しておく
-  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
   if( bevw->set_priority_flag )
   {
     const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
@@ -4685,6 +4682,9 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
     bevw->set_alpha_flag = 0;
   }
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
 
   //SEを強制的にストップ
   if( bevw->se_play_flag )
