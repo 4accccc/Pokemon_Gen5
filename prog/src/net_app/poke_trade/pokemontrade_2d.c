@@ -253,7 +253,7 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_TrayInit(pWork,pWork->subchar2);
 
 //  _PokeIconCgxLoad( pWork );
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
+ // IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
 
 //	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
 	//		pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
