@@ -132,7 +132,7 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
       bgm = SEQ_BGM_VS_NORAPOKE;
       eff = ENCEFFID_WILD_NORMAL;
     }
-    else if ( MAPATTR_VALUE_CheckDesertDeep( val ) )    //砂
+    else if ( MAPATTR_VALUE_CheckDesert( val ) )        //砂漠アトリビュート
     {
       bgm = SEQ_BGM_VS_NORAPOKE;
       eff = ENCEFFID_WILD_DESERT;
