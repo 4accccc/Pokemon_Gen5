@@ -65,7 +65,7 @@ BOOL PlaceNameEnable = TRUE; // 地名表示の有効フラグ
 #define	COLOR_NO_BACKGROUND (0) // 背景部のカラー番号
 // αブレンド
 #define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3) // αブレンドの第1対象面
-#define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0) // αブレンドの第2対象面
+#define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ) // αブレンドの第2対象面
 #define ALPHA_VALUE_1                     (16) // 第1対象面のαブレンディング係数
 #define ALPHA_VALUE_2                      (4) // 第2対象面のαブレンディング係数
 
