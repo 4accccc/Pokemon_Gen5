@@ -5226,7 +5226,9 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
     if( (BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) != BTL_POS_NULL)
+    &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DELAY_ATTACK_FLAG) == FALSE )
     &&  (BTL_SVFTOOL_IsExistBenchPoke(flowWk, targetPokeID))
+    &&  (!BTL_SVFTOOL_CheckShowDown(flowWk))
     ){
       BTL_HANDEX_PARAM_CONSUME_ITEM* consume_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
         HANDEX_STR_Setup( &consume_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
