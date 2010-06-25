@@ -60,7 +60,7 @@ typedef struct {
 
 extern void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter );
 extern void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_ACTION_PARAM* action, u8 numAction );
-extern void* BTL_RECTOOL_PutBtlInChapter( BTL_RECTOOL* recTool, u32* dataSize );
+extern void* BTL_RECTOOL_PutBtlInTiming( BTL_RECTOOL* recTool, u32* dataSize, BOOL fChapter );
 extern void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, BtlRecTiming timingCode, u32* dataSize );
 extern void* BTL_RECTOOL_PutTimeOverData( BTL_RECTOOL* recTool, u32* dataSize );
 extern void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir );
@@ -101,7 +101,7 @@ typedef struct {
 
 extern void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize );
 extern void BTL_RECREADER_Reset( BTL_RECREADER* wk );
-extern BOOL BTL_RECREADER_CheckBtlInChapter( BTL_RECREADER* wk, u8 clientID );
+extern BOOL BTL_RECREADER_CheckBtlInCmd( BTL_RECREADER* wk, u8 clientID );
 extern const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction, u8* fChapter );
 extern u32 BTL_RECREADER_GetTurnCount( const BTL_RECREADER* wk );
 extern BOOL BTL_RECREADER_IsReadComplete( const BTL_RECREADER* wk, u8 clientID );

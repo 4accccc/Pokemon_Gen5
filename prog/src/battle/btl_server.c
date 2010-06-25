@@ -134,7 +134,7 @@ static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForSubwayTrainer( BTL_SERVER* server, int* seq );
-static BOOL SendBtlInChapterRecord( BTL_SERVER* server );
+static BOOL SendBtlInChapterRecord( BTL_SERVER* server, BOOL fAnyEvent );
 static void print_client_action( const BTL_SVCL_ACTION* clientAction );
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption );
 static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter );
@@ -429,15 +429,8 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
       if( BTL_MAIN_GetCompetitor(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
       {
         BOOL fAnyEvent = BTL_SVFLOW_StartBtlIn( server->flowWork );
-        if( fAnyEvent )
-        {
-          SendBtlInChapterRecord( server );
-          (*seq) = 2;
-        }
-        else
-        {
-          (*seq) = 3;
-        }
+        SendBtlInChapterRecord( server, fAnyEvent );
+        (*seq)++;
         break;
       }
       // 捕獲デモなら
@@ -1434,18 +1427,18 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, cons
 
 
 /**
- *  バトル開始チャプタ記録データ送信開始
+ *  バトル開始記録データ送信開始
  */
-static BOOL SendBtlInChapterRecord( BTL_SERVER* server )
+static BOOL SendBtlInChapterRecord( BTL_SERVER* server, BOOL fAnyEvent )
 {
   void* recData;
   u32   recDataSize;
 
   BTL_RECTOOL_Init( &server->recTool, TRUE );
 
-  recData = BTL_RECTOOL_PutBtlInChapter( &server->recTool, &recDataSize );
+  recData = BTL_RECTOOL_PutBtlInTiming( &server->recTool, &recDataSize, fAnyEvent );
   SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
-  TAYA_Printf("チャプタ記録データ送信\n");
+
   return TRUE;
 }
 /**

@@ -538,7 +538,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->fAITrainerBGMChanged = FALSE;
   wk->fCommError = FALSE;
   wk->recPlayTimerOverState = RECPLAY_TIMEOVER_NONE;
-  wk->fldSim = BTL_FIELDSIM_CreateWork( heapID );
+  wk->fldSim = BTL_MAIN_GetFieldSimWork( mainModule );
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
   wk->bagMode = bagMode;
@@ -580,10 +580,6 @@ BTL_CLIENT* BTL_CLIENT_Create(
 
 void BTL_CLIENT_Delete( BTL_CLIENT* wk )
 {
-  if( wk->fldSim ){
-    BTL_FIELDSIM_DeleteWork( wk->fldSim );
-    wk->fldSim = NULL;
-  }
   if( wk->btlRec ){
     BTL_REC_Delete( wk->btlRec );
   }
@@ -1202,7 +1198,7 @@ static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq )
     BOOL fDone = SubProc_UI_Setup( wk, seq );
     if( fDone )
     {
-      if( BTL_RECREADER_CheckBtlInChapter(wk->btlRecReader, wk->myID) )
+      if( BTL_RECREADER_CheckBtlInCmd(wk->btlRecReader, wk->myID) )
       {
         RecPlayer_TurnIncReq( &wk->recPlayer );
       }
@@ -1210,7 +1206,7 @@ static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq )
     return fDone;
   }
 
-  BTL_RECREADER_CheckBtlInChapter( wk->btlRecReader, wk->myID );
+  BTL_RECREADER_CheckBtlInCmd( wk->btlRecReader, wk->myID );
   return TRUE;
 }
 //------------------------------------------------------------------------------------------------------
@@ -8245,7 +8241,9 @@ static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
  */
 static BOOL scProc_OP_TurnCheckField( BTL_CLIENT* wk, int* seq, const int* args )
 {
+  TAYA_Printf("Fuin Bef = %d\n", BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_FUIN));
   BTL_FIELDSIM_TurnCheck( wk->fldSim, NULL, NULL );
+  TAYA_Printf("Fuin Aft = %d\n", BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_FUIN));
   return TRUE;
 }
 

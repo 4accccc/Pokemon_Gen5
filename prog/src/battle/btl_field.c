@@ -398,6 +398,10 @@ BOOL BTL_FIELDSIM_AddEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect, BPP_SICK
     }
 
     wk->enableFlag[ effect ] = TRUE;
+    if( !fForServer ){
+      u32* p = &wk->enableFlag[ effect ];
+      TAYA_Printf("Client用 フィールドエフェクト[%d]が有効 WkAdrs=%p, adrs=%p, flg=%d\n", effect, wk, p, *p );
+    }
 
     {
       u32 i;
@@ -411,6 +415,8 @@ BOOL BTL_FIELDSIM_AddEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect, BPP_SICK
 
       {
         u8 dependPokeID = BPP_SICKCONT_GetPokeID( cont );
+
+        TAYA_Printf("フィールドエフェクト[%d], 依存PokeID=%d\n", effect, dependPokeID );
 
         if( dependPokeID != BTL_POKEID_NULL )
         {
@@ -577,7 +583,7 @@ BOOL BTL_FIELDSIM_CheckFuin( BTL_FIELD_WORK* wk, const BTL_POKE_CONTAINER* pokeC
   {
     fuinPokeID = wk->dependPokeID[ BTL_FLDEFF_FUIN ][ i ];
 
-    BTL_N_Printf( DBGSTR_FIDLD_FuinCheck, i, fuinPokeID, waza );
+    BTL_N_Printf( DBGSTR_FIDLD_FuinCheck, i, fuinPokeID, atkPokeID, waza );
     if( !BTL_MAINUTIL_IsFriendPokeID(atkPokeID, fuinPokeID) )
     {
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParamConst( pokeCon, fuinPokeID );
@@ -633,6 +639,11 @@ void BTL_FIELDSIM_TurnCheck( BTL_FIELD_WORK* wk, pFieldTurnCheckCallback callbac
 BOOL BTL_FIELDSIM_CheckEffect( BTL_FIELD_WORK* wk, BtlFieldEffect effect )
 {
   GF_ASSERT(effect < BTL_FLDEFF_MAX);
+
+  {
+    u32* p = &(wk->enableFlag[ effect ]);
+    TAYA_Printf( "WorkAdrs=%p, effID=%d, FlagAdrs=%p, flg=%d\n", wk, effect, p, *p);
+  }
   return wk->enableFlag[ effect ];
 }
 //---------------------------------------------------------------------

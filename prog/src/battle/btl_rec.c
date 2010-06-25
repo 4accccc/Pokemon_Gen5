@@ -233,7 +233,7 @@ void BTL_RECREADER_Reset( BTL_RECREADER* wk )
  * @retval  BOOL    打たれていたらTRUE
  */
 //=============================================================================================
-BOOL BTL_RECREADER_CheckBtlInChapter( BTL_RECREADER* wk, u8 clientID )
+BOOL BTL_RECREADER_CheckBtlInCmd( BTL_RECREADER* wk, u8 clientID )
 {
   BtlRecFieldType type;
   u8 numClient, fChapter;
@@ -246,7 +246,7 @@ BOOL BTL_RECREADER_CheckBtlInChapter( BTL_RECREADER* wk, u8 clientID )
   if( type == BTL_RECFIELD_BTLSTART )
   {
     (*rp)++;
-    return TRUE;
+    return fChapter;
   }
   return FALSE;
 }
@@ -357,7 +357,7 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
 
 //=============================================================================================
 /**
- * 記録されているターン数を数える
+ * 記録されているチャプタ数を数える
  *
  * @param   wk
  *
@@ -448,10 +448,10 @@ void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter )
  * @retval  void*   送信データポインタ
  */
 //=============================================================================================
-void* BTL_RECTOOL_PutBtlInChapter( BTL_RECTOOL* recTool, u32* dataSize )
+void* BTL_RECTOOL_PutBtlInTiming( BTL_RECTOOL* recTool, u32* dataSize, BOOL fChapter )
 {
   recTool->buffer[ HEADER_TIMING_CODE ] = BTL_RECTIMING_BtlIn;
-  recTool->buffer[ HEADER_FIELD_TAG ]   = MakeRecFieldTag( BTL_RECFIELD_BTLSTART, 0, 1 );
+  recTool->buffer[ HEADER_FIELD_TAG ]   = MakeRecFieldTag( BTL_RECFIELD_BTLSTART, 0, fChapter );
   *dataSize = HEADER_SIZE;
   return recTool->buffer;
 }

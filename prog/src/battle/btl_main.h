@@ -11,6 +11,7 @@
 
 #include "btl_common.h"
 #include "btl_pokeparam.h"
+#include "btl_field.h"
 #include "btlv/btlv_mcss.h"
 
 /*------------------------------------------------------------------------------*/
@@ -289,6 +290,8 @@ extern const STRBUF* BTL_MAIN_GetClientTrainerName( const BTL_MAIN_MODULE* wk, u
 extern u32 BTL_MAIN_GetClientAIBit( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern const MYSTATUS* BTL_MAIN_GetCommSuppoortPlayerData( const BTL_MAIN_MODULE* wk );
+extern BTL_FIELD_WORK* BTL_MAIN_GetFieldSimWork( BTL_MAIN_MODULE* wk );
+
 
 
 //----------------------------------------------------------------------------------------------

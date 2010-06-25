@@ -128,6 +128,7 @@ struct _BTL_MAIN_MODULE {
   POKEPARTY*            srcParty[ BTL_CLIENT_MAX ];
   POKEPARTY*            srcPartyForServer[ BTL_CLIENT_MAX ];
   POKEPARTY*            tmpParty;
+  BTL_FIELD_WORK*       fieldSimWork;
   POKEMON_PARAM*        ppIllusionZoroArc;
   BTLNET_AIDATA_CONTAINER*  AIDataContainer;
   BTL_RECREADER         recReader;
@@ -319,6 +320,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->serverResult = BTL_RESULT_MAX;  // 無効コードとして
       wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
       wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
+      wk->fieldSimWork = BTL_FIELDSIM_CreateWork( wk->heapID );
 
 
       PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
@@ -527,6 +529,10 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     break;
   case 3:
     BTL_Printf("クリーンアッププロセス１\n");
+    if( wk->fieldSimWork ){
+      BTL_FIELDSIM_DeleteWork( wk->fieldSimWork );
+      wk->fieldSimWork = NULL;
+    }
     if( wk->ppIllusionZoroArc ){
       GFL_HEAP_FreeMemory( wk->ppIllusionZoroArc );
       wk->ppIllusionZoroArc = NULL;
@@ -5323,6 +5329,13 @@ const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clie
 const MYSTATUS* BTL_MAIN_GetCommSuppoortPlayerData( const BTL_MAIN_MODULE* wk )
 {
   return COMM_PLAYER_SUPPORT_GetMyStatus( wk->setupParam->commSupport );
+}
+/**
+ *  クライアント共有フィールドデータポインタを返す
+ */
+BTL_FIELD_WORK* BTL_MAIN_GetFieldSimWork( BTL_MAIN_MODULE* wk )
+{
+  return wk->fieldSimWork;
 }
 
 //----------------------------------------------------------------------------------------------
