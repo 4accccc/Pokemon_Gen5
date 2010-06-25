@@ -426,6 +426,7 @@ static  BOOL  VWF_PARTICLE_LOAD_WAIT( VMHANDLE *vmh, void *context_work );
 
 //非公開関数群
 static  int           EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMcssPos* pos );
+static  int           EFFVM_GetEmitterPosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMcssPos* pos );
 static  int           EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
 static  int           EFFVM_ConvPokePosition( BTLV_EFFVM_WORK* bevw, BtlvMcssPos position );
 static  int           EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
@@ -5031,9 +5032,9 @@ static  BOOL  VWF_PARTICLE_LOAD_WAIT( VMHANDLE *vmh, void *context_work )
 /**
  * @brief 立ち位置情報の取得（ポケモン操作関連専用）
  *
- * @param[in]   bevw      エフェクト管理構造体
- * @param[in]   pos_flag  取得したいポジションフラグ
- * @param[out]  pos       取得したポジションの格納ワーク
+ * @param[in]   bevw          エフェクト管理構造体
+ * @param[in]   pos_flag      取得したいポジションフラグ
+ * @param[out]  pos           取得したポジションの格納ワーク
  *
  * @retval  取得したポジション数
  */
@@ -5090,6 +5091,266 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
     }
     break;
   case BTLEFF_POKEMON_SIDE_DEFENCE:   //防御側
+    pos[ 0 ] = bevw->defence_pos;
+    if( pos[ 0 ] == BTLV_MCSS_POS_ERROR )
+    {
+      BtlRule rule = BTLV_EFFECT_GetBtlRule();
+      pos_cnt = 0;
+      if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
+      {
+        switch( bevw->param.waza_range ){
+        case WAZA_TARGET_ALL:                 ///< 場に出ている全ポケ
+        case WAZA_TARGET_FIELD:               ///< 場全体（天候など）
+          pos_cnt = 1;
+          pos[ 0 ] = bevw->attack_pos;
+          if( BTLV_EFFECT_CheckExist( bevw->attack_pos ^ 1 ) )
+          { 
+            pos[ 1 ] = bevw->attack_pos ^ 1;
+            pos_cnt++;
+          }
+          break;
+        default:
+          pos_cnt = 0;
+          if( BTLV_EFFECT_CheckExist( bevw->attack_pos ^ 1 ) )
+          { 
+            pos[ 0 ] = bevw->attack_pos ^ 1;
+            pos_cnt++;
+          }
+          break;
+        }
+      }
+      else
+      { 
+        switch( bevw->param.waza_range ){
+        case WAZA_TARGET_OTHER_SELECT:        ///< 通常ポケ（１体選択）
+        case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方ポケ（１体選択）
+        case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方ポケ（１体選択）
+        case WAZA_TARGET_ENEMY_SELECT:        ///< 相手側ポケ（１体選択）
+        //case WAZA_TARGET_LONG_SELECT:         ///<対象選択表示用に定義
+          //本来この選択範囲でBTLV_MCSS_POS_ERRORになることはないはず
+          GF_ASSERT( 0 );
+          break;
+        case WAZA_TARGET_OTHER_ALL:           ///< 自分以外の全ポケ
+          if( ( rule == BTL_RULE_TRIPLE ) &&
+              ( bevw->attack_pos != BTLV_MCSS_POS_C ) &&
+              ( bevw->attack_pos != BTLV_MCSS_POS_D ) )
+          {
+            BtlvMcssPos check_pos[ 4 ][ 3 ] = {
+              //BTLV_MCSS_POS_A
+              {
+                BTLV_MCSS_POS_C,
+                BTLV_MCSS_POS_D,
+                BTLV_MCSS_POS_F,
+              },
+              //BTLV_MCSS_POS_B
+              {
+                BTLV_MCSS_POS_C,
+                BTLV_MCSS_POS_D,
+                BTLV_MCSS_POS_E,
+              },
+              //BTLV_MCSS_POS_E
+              {
+                BTLV_MCSS_POS_B,
+                BTLV_MCSS_POS_C,
+                BTLV_MCSS_POS_D,
+              },
+              //BTLV_MCSS_POS_F
+              {
+                BTLV_MCSS_POS_A,
+                BTLV_MCSS_POS_C,
+                BTLV_MCSS_POS_D,
+              },
+            };
+            int src = ( ( bevw->attack_pos > BTLV_MCSS_POS_B ) ? 2 : 0 ) + ( bevw->attack_pos & 1 );
+            int i;
+  
+            for( i = 0 ; i < 3 ; i++ )
+            {
+              if( BTLV_EFFECT_CheckExist( check_pos[ src ][ i ] ) )
+              {
+                pos[ pos_cnt ] = check_pos[ src ][ i ];
+                pos_cnt++;
+              }
+            }
+          }
+          else
+          {
+            BtlvMcssPos check_pos;
+  
+            for( check_pos = BTLV_MCSS_POS_A ; check_pos <= BTLV_MCSS_POS_F ; check_pos++ )
+            {
+              if( bevw->attack_pos != check_pos )
+              {
+                if( BTLV_EFFECT_CheckExist( check_pos ) )
+                {
+                  pos[ pos_cnt ] = check_pos;
+                  pos_cnt++;
+                }
+              }
+            }
+          }
+          break;
+        case WAZA_TARGET_UNKNOWN:             ///< ゆびをふるなど特殊型
+        case WAZA_TARGET_USER:                ///< 自分のみ
+        case WAZA_TARGET_ENEMY_RANDOM:        ///< 相手ポケ１体ランダム
+          //エフェクトによって相手側を指示する意味で防御側をつかっているので、
+          //全ポケ指示とする
+        case WAZA_TARGET_ENEMY_ALL:           ///< 相手側全ポケ
+          {
+            BtlvMcssPos check_pos;
+            BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_A : BTLV_MCSS_POS_B;
+            BtlvMcssPos end_pos = ( rule == BTL_RULE_TRIPLE ) ?  BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
+  
+            if( rule == BTL_RULE_TRIPLE )
+            {
+              if( bevw->attack_pos <= BTLV_MCSS_POS_B )
+              {
+                start_pos += 2;
+              }
+              if( bevw->attack_pos >= BTLV_MCSS_POS_E )
+              {
+                end_pos -= 2;
+              }
+            }
+  
+            for( check_pos = start_pos ; check_pos <= end_pos ; check_pos += 2 )
+            {
+              if( BTLV_EFFECT_CheckExist( check_pos ) )
+              {
+                pos[ pos_cnt ] = check_pos;
+                pos_cnt++;
+              }
+            }
+          }
+          break;
+        case WAZA_TARGET_SIDE_ENEMY:          ///< 敵側陣営
+          {
+            BtlvMcssPos check_pos;
+            BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_A : BTLV_MCSS_POS_B;
+  
+            for( check_pos = start_pos ; check_pos <= BTLV_MCSS_POS_F ; check_pos += 2 )
+            {
+              if( BTLV_EFFECT_CheckExist( check_pos ) )
+              {
+                pos[ pos_cnt ] = check_pos;
+                pos_cnt++;
+              }
+            }
+          }
+          break;
+        case WAZA_TARGET_FRIEND_ALL:          ///< 味方側全ポケ
+        case WAZA_TARGET_SIDE_FRIEND:         ///< 自分側陣営
+          {
+            BtlvMcssPos check_pos;
+            BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_B : BTLV_MCSS_POS_A;
+  
+            for( check_pos = start_pos ; check_pos <= BTLV_MCSS_POS_F ; check_pos += 2 )
+            {
+              if( BTLV_EFFECT_CheckExist( check_pos ) )
+              {
+                pos[ pos_cnt ] = check_pos;
+                pos_cnt++;
+              }
+            }
+          }
+          break;
+        case WAZA_TARGET_ALL:                 ///< 場に出ている全ポケ
+        case WAZA_TARGET_FIELD:               ///< 場全体（天候など）
+          {
+            BtlvMcssPos check_pos;
+  
+            for( check_pos = BTLV_MCSS_POS_A ; check_pos <= BTLV_MCSS_POS_F ; check_pos++ )
+            {
+              if( BTLV_EFFECT_CheckExist( check_pos ) )
+              {
+                pos[ pos_cnt ] = check_pos;
+                pos_cnt++;
+              }
+            }
+          }
+          break;
+        }
+      }
+    }
+    break;
+  case BTLEFF_POKEMON_SIDE_DEFENCE_PAIR:  //防御側ペア
+    if( bevw->defence_pos > BTLV_MCSS_POS_BB ){
+      pos[ 0 ] = bevw->defence_pos ^ BTLV_MCSS_POS_PAIR_BIT;
+    }
+    else{
+      pos[ 0 ] = BTLV_MCSS_POS_ERROR;
+    }
+    break;
+  case BTLEFF_POKEMON_ALL:
+    {
+      BtlvMcssPos check_pos;
+
+      pos_cnt = 0;
+      for( check_pos = BTLV_MCSS_POS_AA ; check_pos <= BTLV_MCSS_POS_F ; check_pos++ )
+      {
+        if( BTLV_EFFECT_CheckExist( check_pos ) )
+        {
+          pos[ pos_cnt ] = check_pos;
+          pos_cnt++;
+        }
+      }
+    }
+    break;
+  case BTLEFF_POKEMON_SIDE_MINE:
+  case BTLEFF_POKEMON_SIDE_ENEMY:
+    {
+      BtlvMcssPos check_pos;
+      BtlvMcssPos start_pos = ( pos_flag == BTLEFF_POKEMON_SIDE_MINE ) ? BTLV_MCSS_POS_AA : BTLV_MCSS_POS_BB;
+
+      pos_cnt = 0;
+      for( check_pos = start_pos ; check_pos <= BTLV_MCSS_POS_F ; check_pos += 2 )
+      {
+        if( BTLV_EFFECT_CheckExist( check_pos ) )
+        {
+          pos[ pos_cnt ] = check_pos;
+          pos_cnt++;
+        }
+      }
+    }
+    break;
+  default:
+    OS_TPrintf("定義されていないフラグが指定されています\n");
+    GF_ASSERT( 0 );
+    break;
+  }
+
+  if( ( pos[ 0 ] != BTLV_MCSS_POS_ERROR ) && ( pos[ 0 ] < BTLV_MCSS_POS_MAX ) )
+  {
+    if( BTLV_EFFECT_CheckExist( pos[ 0 ] ) == TRUE )
+    {
+      pos[ 0 ] = EFFVM_ConvPokePosition( bevw, pos[ 0 ] );
+    }
+    else
+    {
+      pos[ 0 ] = BTLV_MCSS_POS_ERROR;
+      pos_cnt = 0;
+    }
+  }
+
+  return pos_cnt;
+}
+
+//============================================================================================
+/**
+ * @brief 立ち位置情報の取得（エミッタ操作関連専用）
+ *
+ * @param[in]   bevw          エフェクト管理構造体
+ * @param[in]   pos_flag      取得したいポジションフラグ
+ * @param[out]  pos           取得したポジションの格納ワーク
+ *
+ * @retval  取得したポジション数
+ */
+//============================================================================================
+static  int   EFFVM_GetEmitterPosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMcssPos* pos )
+{
+  int pos_cnt = 1;
+
+  { 
     pos[ 0 ] = bevw->defence_pos;
     if( pos[ 0 ] == BTLV_MCSS_POS_ERROR )
     {
@@ -5289,57 +5550,6 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
         }
       }
     }
-    break;
-  case BTLEFF_POKEMON_SIDE_DEFENCE_PAIR:  //防御側ペア
-    if( bevw->defence_pos > BTLV_MCSS_POS_BB ){
-      pos[ 0 ] = bevw->defence_pos ^ BTLV_MCSS_POS_PAIR_BIT;
-    }
-    else{
-      pos[ 0 ] = BTLV_MCSS_POS_ERROR;
-    }
-    break;
-  case BTLEFF_POKEMON_ALL:
-    {
-      BtlvMcssPos check_pos;
-
-      pos_cnt = 0;
-      for( check_pos = BTLV_MCSS_POS_AA ; check_pos <= BTLV_MCSS_POS_F ; check_pos++ )
-      {
-        if( BTLV_EFFECT_CheckExist( check_pos ) )
-        {
-          if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
-          { 
-            pos[ pos_cnt ] = check_pos;
-            pos_cnt++;
-          }
-        }
-      }
-    }
-    break;
-  case BTLEFF_POKEMON_SIDE_MINE:
-  case BTLEFF_POKEMON_SIDE_ENEMY:
-    {
-      BtlvMcssPos check_pos;
-      BtlvMcssPos start_pos = ( pos_flag == BTLEFF_POKEMON_SIDE_MINE ) ? BTLV_MCSS_POS_AA : BTLV_MCSS_POS_BB;
-
-      pos_cnt = 0;
-      for( check_pos = start_pos ; check_pos <= BTLV_MCSS_POS_F ; check_pos += 2 )
-      {
-        if( BTLV_EFFECT_CheckExist( check_pos ) )
-        {
-          if( !BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), check_pos ) )
-          { 
-            pos[ pos_cnt ] = check_pos;
-            pos_cnt++;
-          }
-        }
-      }
-    }
-    break;
-  default:
-    OS_TPrintf("定義されていないフラグが指定されています\n");
-    GF_ASSERT( 0 );
-    break;
   }
 
   if( ( pos[ 0 ] != BTLV_MCSS_POS_ERROR ) && ( pos[ 0 ] < BTLV_MCSS_POS_MAX ) )
@@ -6415,7 +6625,6 @@ static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw )
 //============================================================================================
 static  void  EFFVM_SePlay( int se_no, int player, int pan, int pitch, int vol, int mod_depth, int mod_speed )
 {
-  SOGABE_Printf("se_no:%d player:%d pan:%d pitch:%d vol:%d mod_depth:%d mod_speed:%d\n",se_no,player,pan,pitch,vol,mod_depth,mod_speed);
   if( player == BTLEFF_SEPLAY_DEFAULT )
   {
     PMSND_PlaySE( se_no );
@@ -6586,7 +6795,7 @@ static void EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_EMIT_INIT_
     }
     {
       BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
-      int   pos_cnt = EFFVM_GetPokePosition( bevw, BTLEFF_POKEMON_SIDE_DEFENCE, pos );
+      int   pos_cnt = EFFVM_GetEmitterPosition( bevw, BTLEFF_POKEMON_SIDE_DEFENCE, pos );
       if( pos_cnt )
       {
         int i;
@@ -7341,7 +7550,7 @@ static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work )
   TCB_PARTICLE_LOAD*  tpl = ( TCB_PARTICLE_LOAD* )work;
   { 
     u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
-    SOGABE_Printf("v_count:%d\n",*v_count);
+    SOGABE_Printf("particle v_count:%d\n",*v_count);
     //VCountを確認してちらつきを防ぐ
     if( ( *v_count < MCSS_VCOUNT_BORDER_LOW ) ||
         ( *v_count > MCSS_VCOUNT_BORDER_HIGH ) )
