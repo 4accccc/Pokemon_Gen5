@@ -2005,7 +2005,7 @@ static void bsway_SetHomeNPC(
   BSWAY_PLAYMODE mode = bsw_scr->play_mode;
   
   if( mode == BSWAY_MODE_WIFI ){
-#if 1 //トレーナーNo指定ミスあり
+#if 0 //トレーナーNo指定ミスあり
     u32 id;
     u16 code;
     const MMDL_GRIDPOS *pos_tbl = data_HomeNpcWiFiPosTbl;
@@ -2035,7 +2035,7 @@ static void bsway_SetHomeNPC(
     }
     
     GFL_HEAP_FreeMemory( pLeader );
-#else //トレーナーNo指定ミス解消版
+#else //BTS6821 BTS トレーナーNo指定ミス解消
     int num;
     u32 id;
     u16 code;
@@ -2054,6 +2054,8 @@ static void bsway_SetHomeNPC(
       
       while( num && i < HOME_NPC_WIFI_MAX ){
         id = *(u32*)leader->id_no;
+        KAGAYA_Printf(
+            "BSW WIFI HOME LEADER No.%d(S %d) ID %d\n", i, num, id );
         id %= 10;
         
         if( leader->gender == 0 ){
