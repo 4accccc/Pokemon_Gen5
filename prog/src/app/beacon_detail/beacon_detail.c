@@ -107,7 +107,6 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
 
 static int seq_Main( BEACON_DETAIL_WORK* wk );
 static int seq_EffWait( BEACON_DETAIL_WORK* wk );
-static int seq_Popup( BEACON_DETAIL_WORK* wk );
 static int seq_InitialDraw( BEACON_DETAIL_WORK* wk );
 static int seq_FadeIn( BEACON_DETAIL_WORK* wk );
 static int seq_FadeOut( BEACON_DETAIL_WORK* wk );
@@ -273,7 +272,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
 	BEACON_DETAIL_WORK* wk = mywk;
 
   //タッチバーメイン処理
-  if( (*seq) >= SEQ_MAIN && (*seq) <= SEQ_POPUP ){
+  if( (*seq) >= SEQ_MAIN && (*seq) <= SEQ_EFF_WAIT ){
   	_sub_TouchBarMain( wk->touchbar );
   }
   switch(*seq){
@@ -288,9 +287,6 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
     break;
   case SEQ_EFF_WAIT:
     *seq = seq_EffWait( wk );
-    break;
-  case SEQ_POPUP:
-    *seq = seq_Popup( wk );
     break;
   case SEQ_FADEOUT:
     *seq = seq_FadeOut( wk );
@@ -331,15 +327,8 @@ static int seq_EffWait( BEACON_DETAIL_WORK* wk )
   if( wk->eff_task_ct ){
     return SEQ_EFF_WAIT;
   }
+  BeaconDetail_ButtonActiveControl( wk );
   return SEQ_MAIN;
-}
-
-/*
- *  @brief  ポップアップ
- */
-static int seq_Popup( BEACON_DETAIL_WORK* wk )
-{
-  return BeaconDetail_InputCheck( wk );
 }
 
 /*

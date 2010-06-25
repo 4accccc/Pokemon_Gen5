@@ -190,6 +190,14 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
 }
 
 /*
+ *  @brief  ビーコン詳細画面　メニューバー状態更新
+ */
+void BeaconDetail_ButtonActiveControl( BEACON_DETAIL_WORK* wk )
+{
+  sub_UpDownButtonActiveControl( wk );
+}
+
+/*
  *  @brief  キャラアイコンあたり判定
  */
 static BOOL input_CheckHitTrIcon( BEACON_DETAIL_WORK* wk )
@@ -799,7 +807,6 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
       return;
     }
   }
-  sub_UpDownButtonActiveControl( twk->bdw );
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
@@ -979,7 +986,6 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
   case 3:
     break;
   }
-  sub_UpDownButtonActiveControl( twk->bdw );
 
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);

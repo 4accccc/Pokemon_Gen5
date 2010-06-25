@@ -21,3 +21,8 @@ extern void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk );
  */
 extern int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk );
 
+/*
+ *  @brief  ビーコン詳細画面　メニューバー状態更新
+ */
+extern void BeaconDetail_ButtonActiveControl( BEACON_DETAIL_WORK* wk );
+
