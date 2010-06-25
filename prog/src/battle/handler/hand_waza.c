@@ -1876,7 +1876,7 @@ static void handler_KuroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     reset_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_RANK, pokeID );
     {
       BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
-      BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ALL, myPos );
+      BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ALL, myPos );
       reset_param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, reset_param->pokeID );
     }
     BTL_SVF_HANDEX_Pop( flowWk, reset_param );
