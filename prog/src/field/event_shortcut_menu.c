@@ -234,6 +234,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 {	
 	enum
 	{	
+    SEQ_WAIT,
 		SEQ_INIT,
 		SEQ_OPEN_START,
 		SEQ_OPEN_WAIT,
@@ -261,6 +262,14 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		//-------------------------------------
 		///	メニュー制御
 		//=====================================
+  case SEQ_WAIT:
+    // 地名表示が出ているタイミングでこのイベントが動くと,
+    // ①地名表示のBG消去 ②SEQ_INIT ③VBlank処理(地名表示のOBJ消去) の順で実行される。
+    // →その結果①③間にタイムラグが生じ, BGとOBJがきれいに(見た目同時に)消えない。
+    //  →②の処理をSE_WAITに置き換えることで, ①③間のタイムラグを軽減します。obata
+		*p_seq = SEQ_INIT;
+    break;
+
 	case SEQ_INIT:
 		ShortCutMenu_Init( SHORTCUTMENU_MODE_POPUP, p_wk );
 		*p_seq	= SEQ_OPEN_START;
