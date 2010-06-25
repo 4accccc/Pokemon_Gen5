@@ -1475,7 +1475,9 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
   u32   hem_state;
   u16 agility;
   u8  actionPri, wazaPri;
-  u8  i, j, p, numAction, pokeIdx, action;
+  u8  i, j, p, numAction, pokeIdx, action, fRotationInclude;
+
+  fRotationInclude = FALSE;
 
 // 全ポケモンの行動内容をワークに格納
   for(i=0, p=0; i<BTL_CLIENT_MAX; ++i)
@@ -1500,6 +1502,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
         {
           pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( order[p].action.rotation.dir );
           order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, pokeIdx );
+          fRotationInclude = TRUE;
           BTL_N_Printf ( DBGSTR_SVFL_ActionSortRotation, pokeIdx );
         }
         break;
@@ -1589,26 +1592,24 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
   // プライオリティ値によるソート
   sortActionSub( order, numAction );
 
-  // この時点での処理順をワークに記憶する
-  for(i=0; i<numAction; ++i){
-    order[i].defaultIdx = i;
-  }
-
-  // プライオリティ操作イベント呼び出し
-  for(i=0; i<numAction; ++i)
+  // ローテーションが含まれる場合、直後にプライオリティ操作が入るのでここでは行わない
+  if( !fRotationInclude )
   {
-    if( (order[i].action.gen.cmd == BTL_ACTION_FIGHT)
-    ||  (order[i].action.gen.cmd == BTL_ACTION_MOVE)
-    ){
-      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-      u8 spPri = scEvent_CheckSpecialActPriority( wk, order[i].bpp );
-      order[i].priority = ActPri_SetSpPri( order[i].priority, spPri );
-      BTL_Hem_PopState( &wk->HEManager, hem_state );
+    // プライオリティ操作イベント呼び出し
+    for(i=0; i<numAction; ++i)
+    {
+      if( (order[i].action.gen.cmd == BTL_ACTION_FIGHT)
+      ||  (order[i].action.gen.cmd == BTL_ACTION_MOVE)
+      ){
+        u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+        u8 spPri = scEvent_CheckSpecialActPriority( wk, order[i].bpp );
+        order[i].priority = ActPri_SetSpPri( order[i].priority, spPri );
+        BTL_Hem_PopState( &wk->HEManager, hem_state );
+      }
     }
+    // 再度、プライオリティ値によるソート
+    sortActionSub( order, numAction );
   }
-
-  // 再度、プライオリティ値によるソート
-  sortActionSub( order, numAction );
 
   return p;
 }
