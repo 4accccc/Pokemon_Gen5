@@ -4367,10 +4367,6 @@ static void scproc_WazaExe_NotEffective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID 
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
   scEvent_WazaExeEnd_Common( wk, pokeID, waza, BTL_EVENT_WAZA_EXECUTE_NO_EFFECT );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
-
-  if( BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
-    BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_MUKOU );
-  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -4463,6 +4459,9 @@ static void flowsub_checkWazaAffineNoEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
     {
       BTL_POKESET_Remove( targets, bpp );
       AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp, BTL_TYPEAFF_0 );
+      if( BTL_MAINUTIL_PokeIDtoClientID(BPP_GetID(attacker)) == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
+        BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_MUKOU );
+      }
     }
   }
 }
