@@ -252,7 +252,7 @@ class ZoneDataFile < OutputFile
     matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
 
     mapid = id.downcase
-    if mapid != "c07" && mapid != "d08" then mapid = "d08" end
+    if mapid != "c07" && mapid != "d08" && mapid != "d08r0101" then mapid = "d08" end
     event_id = "NARC_eventdata_#{mapid}_bin"
 		script =  "NARC_script_seq_#{mapid}_bin"
 		sp_script =  "NARC_script_seq_sp_#{mapid}_bin"
