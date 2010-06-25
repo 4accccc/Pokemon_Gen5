@@ -496,6 +496,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
     _wifilistPlayData(dbw,GAMESYSTEM_GetGameData(gsys));
     BATTLE_PARAM_Delete(dbw->para);
     dbw->para = NULL;
