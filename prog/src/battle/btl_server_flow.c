@@ -5720,9 +5720,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
     }
     else{
       dmg_sum = scproc_Fight_Damage_SingleCount( wk, wazaParam, attacker, targets, affRec, &que_reserve_pos, fDelayAttack );
-      if( !fDelayAttack ){
-        fEffectPut = TRUE;
-      }
+      fEffectPut = TRUE;
     }
 
     scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
