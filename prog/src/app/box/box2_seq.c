@@ -997,8 +997,6 @@ static int MainSeq_SubProcMain( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 {
-//	int	seq;
-
 	PMSND_PlaySE( SE_BOX2_LOG_IN );
 
 	switch( syswk->dat->callMode ){
@@ -1007,25 +1005,25 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 		BOX2MAIN_PokeInfoPut( syswk, BOX2OBJ_POKEICON_TRAY_MAX );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_PARTYOUT_MAIN;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_PARTYOUT_MAIN;
 		break;
 
 	case BOX_MODE_TURETEIKU:	// つれていく
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
 		break;
 
 	case BOX_MODE_SEIRI:		// ボックスせいり
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
 		break;
 
 	case BOX_MODE_ITEM:			// アイテム整理
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_ITEM_MAIN;
 		break;
 
 	case BOX_MODE_BATTLE:		// バトルボックス
@@ -1033,7 +1031,7 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 			BOX2BGWFRM_TemochiButtonOn( syswk->app );
 			BOX2MAIN_PokeInfoPut( syswk, 0 );
 			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_MAIN, 0 );
-			syswk->next_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
+			syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
 		}else{
 			PartyFrmSet_PartyOut( syswk );
 			BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
@@ -1041,7 +1039,7 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 			BOX2BGWFRM_BoxListButtonOn( syswk->app );
 			BOX2MAIN_PokeInfoPut( syswk, BOX2OBJ_POKEICON_TRAY_MAX );
 			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_PARTY, 0 );
-			syswk->next_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
+			syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
 		}
 		break;
 
@@ -1049,7 +1047,7 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_SLEEP_MAIN;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_SLEEP_MAIN;
 		break;
 	}
 
@@ -1073,7 +1071,7 @@ static int MainSeq_StartWait( BOX2_SYS_WORK * syswk )
 	if( PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
 		return BOX2SEQ_MAINSEQ_START_WAIT;
 	}
-	return FadeInSet( syswk, syswk->next_seq );
+	return FadeInSet( syswk, syswk->app->que_wait_seq );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -5844,8 +5842,6 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_StatusRcv( BOX2_SYS_WORK * syswk )
 {
-	int	next;
-
 	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 	BOX2OBJ_SetHandCursorAnm( syswk, BOX2OBJ_ANM_HAND_NORMAL );
 	if( syswk->mv_cnv_mode == 0 ){
@@ -5856,20 +5852,21 @@ static int MainSeq_StatusRcv( BOX2_SYS_WORK * syswk )
 
 	switch( syswk->dat->callMode ){
 	case BOX_MODE_AZUKERU:		// あずける
-		next = RcvStatus_ModeAzukeru( syswk );
+		syswk->app->que_wait_seq = RcvStatus_ModeAzukeru( syswk );
 		break;
 	case BOX_MODE_TURETEIKU:	// つれていく
-		next = RcvStatus_ModeTureteiku( syswk );
+		syswk->app->que_wait_seq = RcvStatus_ModeTureteiku( syswk );
 		break;
 	case BOX_MODE_SEIRI:			// せいり
-		next = RcvStatus_ModeSeiri( syswk );
+		syswk->app->que_wait_seq = RcvStatus_ModeSeiri( syswk );
 		break;
 	case BOX_MODE_BATTLE:			// バトルボックス
-		next = RcvStatus_ModeBattleBox( syswk );
+		syswk->app->que_wait_seq = RcvStatus_ModeBattleBox( syswk );
 		break;
 	}
 
-	return FadeInSet( syswk, next );
+//	return FadeInSet( syswk, next );
+	return MainSeq_StartWait( syswk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -5885,41 +5882,40 @@ static int MainSeq_StatusRcv( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_StrInRcv( BOX2_SYS_WORK * syswk )
 {
-	int	next;
-
 	BOX2MAIN_PokeInfoOff( syswk );
 
 	switch( syswk->dat->callMode ){
 	case BOX_MODE_TURETEIKU:	// つれていく
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_PTIN_MAIN, BOX2UI_PTIN_MAIN_NAME );
-		syswk->app->old_cur_pos = BOX2UI_PTIN_MAIN_NAME;
-		next = BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
+		syswk->app->old_cur_pos  = BOX2UI_PTIN_MAIN_NAME;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_PARTYIN_MAIN;
 		break;
 
 	case BOX_MODE_SEIRI:			// せいり
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MAIN, BOX2UI_ARRANGE_MAIN_NAME );
-		syswk->app->old_cur_pos = BOX2UI_ARRANGE_MAIN_NAME;
-		next = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
+		syswk->app->old_cur_pos  = BOX2UI_ARRANGE_MAIN_NAME;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_ARRANGE_MAIN;
 		break;
 
 	case BOX_MODE_ITEM:				// どうぐせいり
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ITEM_MAIN, BOX2UI_ITEM_MAIN_NAME );
-		syswk->app->old_cur_pos = BOX2UI_ITEM_MAIN_NAME;
-		next = BOX2SEQ_MAINSEQ_ITEM_MAIN;
+		syswk->app->old_cur_pos  = BOX2UI_ITEM_MAIN_NAME;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_ITEM_MAIN;
 		break;
 
 	case BOX_MODE_BATTLE:			// バトルボックス
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_BATTLEBOX_MAIN, BOX2UI_BATTLEBOX_MAIN_NAME );
-		syswk->app->old_cur_pos = BOX2UI_BATTLEBOX_MAIN_NAME;
-		next = BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
+		syswk->app->old_cur_pos  = BOX2UI_BATTLEBOX_MAIN_NAME;
+		syswk->app->que_wait_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
 		break;
 	}
 
-	return FadeInSet( syswk, next );
+//	return FadeInSet( syswk, next );
+	return MainSeq_StartWait( syswk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -5935,21 +5931,20 @@ static int MainSeq_StrInRcv( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_BagRcv( BOX2_SYS_WORK * syswk )
 {
-	int	next;
-
 	switch( syswk->dat->callMode ){
 	case BOX_MODE_SEIRI:			// せいり
-		next = RcvBag_ModeSeiri( syswk );
+		syswk->app->que_wait_seq = RcvBag_ModeSeiri( syswk );
 		break;
 	case BOX_MODE_ITEM:				// どうぐせいり
-		next = RcvBag_ModeItem( syswk );
+		syswk->app->que_wait_seq = RcvBag_ModeItem( syswk );
 		break;
 	case BOX_MODE_BATTLE:			// バトルボックス
-		next = RcvBag_ModeBattleBox( syswk );
+		syswk->app->que_wait_seq = RcvBag_ModeBattleBox( syswk );
 		break;
 	}
 
-	return FadeInSet( syswk, next );
+//	return FadeInSet( syswk, next );
+	return MainSeq_StartWait( syswk );
 }
 
 //--------------------------------------------------------------------------------------------

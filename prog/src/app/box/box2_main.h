@@ -391,6 +391,8 @@ typedef struct {
 	void * seqwk;				// シーケンスワーク
 	int	sub_seq;				// シーケンス内シーケンス
 
+	int	que_wait_seq;		// 初期化時のキュー待ち後のシーケンス
+
 }BOX2_APP_WORK;
 
 // ボックス画面システムワーク
