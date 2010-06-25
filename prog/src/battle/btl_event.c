@@ -120,7 +120,8 @@ static VAR_STACK VarStack = {0};
 /*--------------------------------------------------------------------------*/
 static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType );
 static void printLinkDebug( void );
-static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BOOL fSkipCheck );
+static void CallHandlersSub( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BtlEventFactorType type, BOOL fSkipCheck );
+static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BtlEventFactorType targetType, BOOL fSkipCheck );
 static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventID );
 static BTL_EVENT_FACTOR* pushFactor( void );
 static void popFactor( BTL_EVENT_FACTOR* factor );
@@ -482,18 +483,7 @@ void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int va
 //=============================================================================================
 void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
-  ++EventStackPtr;
-  CallHandlersCore( flowWork, eventID, FALSE );
-  --EventStackPtr;
-
-  if( EventStackPtr == 0 )
-  {
-    BTL_EVENT_FACTOR* factor;
-    for( factor=FirstFactorPtr; factor!=NULL; factor = factor->next )
-    {
-      factor->currentStackPtr = 0;
-    }
-  }
+  CallHandlersSub( flowWork, eventID, BTL_EVENT_FACTOR_MAX, FALSE );
 }
 //=============================================================================================
 /**
@@ -505,8 +495,30 @@ void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventI
 //=============================================================================================
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
+  CallHandlersSub( flowWork, eventID, BTL_EVENT_FACTOR_MAX, TRUE );
+}
+
+//=============================================================================================
+/**
+ * 全登録要素に対し、指定イベントの通知（スキップ条件をチェック＆特定タイプのハンドラのみ）
+ *
+ * @param   flowWork
+ * @param   eventID
+ * @param   type
+ */
+//=============================================================================================
+void BTL_EVENT_CallHandlersTargetType( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BtlEventFactorType type )
+{
+  CallHandlersSub( flowWork, eventID, type, TRUE );
+}
+
+/**
+ *  イベント通知共通下請け
+ */
+static void CallHandlersSub( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BtlEventFactorType type, BOOL fSkipCheck )
+{
   ++EventStackPtr;
-  CallHandlersCore( flowWork, eventID, TRUE );
+  CallHandlersCore( flowWork, eventID, type, fSkipCheck );
   --EventStackPtr;
 
   if( EventStackPtr == 0 )
@@ -518,7 +530,6 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * 指定イベント通知コア
@@ -528,7 +539,7 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
  * @param   fSkipCheck
  */
 //----------------------------------------------------------------------------------
-static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BOOL fSkipCheck )
+static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BtlEventFactorType targetType, BOOL fSkipCheck )
 {
   BTL_EVENT_FACTOR* factor;
   BTL_EVENT_FACTOR* next_factor;
@@ -541,6 +552,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
     if( ( (factor->callingFlag == FALSE) || (factor->recallEnableFlag) )
     &&  ( factor->sleepFlag == FALSE )
     &&  ( factor->rotationSleepFlag == FALSE )
+    &&  ( (targetType==BTL_EVENT_FACTOR_MAX) || (factor->factorType == targetType) )
     &&  ( (factor->currentStackPtr == 0) || (factor->currentStackPtr < EventStackPtr) )
     &&  ( factor->existFlag )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )

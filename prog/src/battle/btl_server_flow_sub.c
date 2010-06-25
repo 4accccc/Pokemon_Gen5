@@ -1827,7 +1827,7 @@ static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
     HandExResult  result;
 
-    BTL_SVFRET_Event_AfterMemberIn( wk, bpp );
+    BTL_SVFRET_EventSkillCall( wk, bpp );
     result = BTL_SVF_HandEx_Result( wk );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
 

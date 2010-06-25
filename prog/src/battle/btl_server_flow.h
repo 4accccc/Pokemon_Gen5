@@ -206,7 +206,7 @@ extern BOOL BTL_SVFRET_FreeFallStart( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 targ
 extern void BTL_SVFRET_FreeFallRelease( BTL_SVFLOW_WORK* wk, u8 atkPokeID );
 extern void BTL_SVFRET_AddRelivePokeRecord( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BOOL BTL_SVFRET_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-extern void BTL_SVFRET_Event_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+extern void BTL_SVFRET_EventSkillCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 
 
 

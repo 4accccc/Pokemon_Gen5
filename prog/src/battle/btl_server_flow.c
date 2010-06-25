@@ -119,6 +119,7 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_AfterMemberInPrev( BTL_SVFLOW_WORK* wk );
 static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk );
+static void scEvent_SkillCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_AfterRotationIn( BTL_SVFLOW_WORK* wk );
 static void scEvent_RotationIn( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -2968,6 +2969,24 @@ static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
+  BTL_EVENTVAR_Pop();
+  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventEnd, BPP_GetID(bpp) );
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] メンバー入場イベント
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_SkillCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventBegin, BPP_GetID(bpp) );
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlersTargetType( wk, BTL_EVENT_MEMBER_IN, BTL_EVENT_FACTOR_TOKUSEI );
   BTL_EVENTVAR_Pop();
   BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventEnd, BPP_GetID(bpp) );
 }
@@ -13980,7 +13999,7 @@ BOOL BTL_SVFRET_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 }
 //=============================================================================================
 /**
- * [btl_server_flow_subから操作呼び出し]  メンバー入場イベント呼び出し
+ * [btl_server_flow_subから操作呼び出し]  メンバー入場イベント（とくせいのみ）呼び出し
  *
  * @param   wk
  * @param   bpp
@@ -13988,9 +14007,9 @@ BOOL BTL_SVFRET_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  * @retval  BOOL
  */
 //=============================================================================================
-void BTL_SVFRET_Event_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+void BTL_SVFRET_EventSkillCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
-  scEvent_AfterMemberIn( wk, bpp );
+  scEvent_SkillCall( wk, bpp );
 }
 
 
