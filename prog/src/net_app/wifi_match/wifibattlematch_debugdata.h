@@ -55,4 +55,9 @@ extern DEBUGWIN_BTLBGM_DATA *DEBUGWIN_BTLBGM_DATA_GetInstance( void );
 //=====================================
 extern BOOL *DEBUGWIN_ATLASDIRTY_GetFlag( void );
 
+//-------------------------------------
+///	サーバー時間
+//=====================================
+extern BOOL *DEBUGWIN_SERVERTIME_GetFlag( void );
+
 #endif //PM_DEBUG

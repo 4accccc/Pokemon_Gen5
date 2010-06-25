@@ -27,6 +27,7 @@
 #define DEBUGWIN_BTLBOX_USE
 #define DEBUGWIN_BTLBGM_USE
 #define DEBUGWIN_ATLAS_USE
+#define DEBUGWIN_ETC_USE
 
 
 #define DEBUGWIN_GROUP_REG (41)
@@ -51,6 +52,7 @@
 #define DEBUGWIN_GROUP_BTLBGM (90)
 
 #define DEBUGWIN_GROUP_ATLAS (100)
+#define DEBUGWIN_GROUP_ETC (110)
 
 
 #include "wifibattlematch_debugdata.h"
@@ -1564,6 +1566,37 @@ static inline void DEBUGWIN_ATLAS_Exit( void )
 }
 #endif //DEBUGWIN_ATLAS_USE
 
+#ifdef DEBUGWIN_ETC_USE
+
+#endif //DEBUGWIN_ETC_USE
+static inline void DebugWin_Etc_U_ServerFlag( void* userWork , DEBUGWIN_ITEM* item )
+{
+  BOOL *p_is_flag  = DEBUGWIN_SERVERTIME_GetFlag();
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    (*p_is_flag)  ^= 1;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Etc_D_ServerFlag( void* userWork , DEBUGWIN_ITEM* item )
+{
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+  BOOL *p_is_flag  = DEBUGWIN_SERVERTIME_GetFlag();
+  DEBUGWIN_ITEM_SetNameV( item , "ƒoƒgƒ‹‚É‚¿‚¶‚¯‚¢‚©[%s]", sc_tbl[ (*p_is_flag) ] );
+}
+static inline void DEBUGWIN_ETC_Init( HEAPID heapID )
+{
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_ETC, "‚»‚Ì‚½", heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Etc_U_ServerFlag, DebugWin_Etc_D_ServerFlag, NULL, DEBUGWIN_GROUP_ETC, heapID );
+}
+static inline void DEBUGWIN_ETC_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_ETC );
+}
 #endif  //PM_DEBUG
 
 #ifndef DEBUGWIN_SAKE_RECORD_DATA_USE
@@ -1608,4 +1641,8 @@ static inline void DEBUGWIN_ATLAS_Exit( void )
 #define DEBUGWIN_ATLAS_Exit( ... ) /* */
 #endif //DEBUGWIN_ATLAS_USE
 
+#ifndef DEBUGWIN_ETC_USE
+#define DEBUGWIN_ETC_Init( ... ) /* */
+#define DEBUGWIN_ETC_Exit( ... ) /* */
+#endif //DEBUGWIN_ETC_USE
 

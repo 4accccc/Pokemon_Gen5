@@ -4000,6 +4000,13 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       REGULATION_CARDDATA *p_reg = p_wk->p_reg;
       ret = DWC_GetDateTime( &now_date, &time );
 
+#ifdef PM_DEBUG
+      if( *DEBUGWIN_SERVERTIME_GetFlag() )
+      {
+        now_date.day  += 1;
+      }
+#endif //PM_DEBUG
+
       start_date.year  = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_YEAR );
       start_date.month = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_MONTH );
       start_date.day   = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_DAY );
@@ -5154,9 +5161,11 @@ static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID )
   DEBUGWIN_BTLBOX_Init( heapID );
   DEBUGWIN_BTLBGM_Init( heapID );
   DEBUGWIN_ATLAS_Init( heapID );
+  DEBUGWIN_ETC_Init( heapID );
 }
 static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 {
+  DEBUGWIN_ETC_Exit();
   DEBUGWIN_ATLAS_Exit();
   DEBUGWIN_BTLBGM_Exit();
   DEBUGWIN_BTLBOX_Exit();

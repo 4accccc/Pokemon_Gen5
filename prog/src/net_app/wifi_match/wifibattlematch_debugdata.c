@@ -41,4 +41,9 @@ BOOL *DEBUGWIN_ATLASDIRTY_GetFlag( void )
   return &s_atlas_dirty_flag;
 }
 
+BOOL *DEBUGWIN_SERVERTIME_GetFlag( void )
+{
+  static BOOL s_serverttime_flag  = FALSE;
+  return &s_serverttime_flag;
+}
 #endif //PM_DEBUG
