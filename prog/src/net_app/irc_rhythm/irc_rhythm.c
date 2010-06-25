@@ -239,6 +239,7 @@ enum{
 #define RHYTHMSEARCH_DATA_MIN	(10)	//計測回数最小
 #define TOUCH_DIAMOND_W	(48)				//タッチ幅
 #define TOUCH_DIAMOND_H	(48)
+#define RHYTHMSEARCH_DATA_MINUS_MAX	(99)	//計測回数最大
 
 //-------------------------------------
 ///		MSG_FONT
@@ -433,7 +434,8 @@ typedef struct
 typedef struct
 {	
 	RHYTHMSEARCH_DATA	data[RHYTHMSEARCH_DATA_MAX];
-	u32			data_idx;
+	u16			data_idx;
+  u16     miss_idx;
 	OSTick	start_time;
 } RHYTHMSEARCH_WORK;
 
@@ -2461,7 +2463,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
       { 
         RHYTHMSEARCH_WORK you;
         RHYTHMNET_GetResultData( &p_wk->net, &you );
-        p_wk->p_param->cnt_diff  = MATH_IAbs( (s32)p_wk->search.data_idx - (s32)you.data_idx );
+        p_wk->p_param->cnt_diff  = MATH_IAbs( (s32)p_wk->search.miss_idx - (s32)you.miss_idx );
       }
       p_wk->p_param->result	= IRCRHYTHM_RESULT_CLEAR;
       *p_seq	= SEQ_END;
@@ -2634,7 +2636,7 @@ static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk )
 {	
-	if( p_wk->data_idx < RHYTHMSEARCH_DATA_MAX )
+	if( p_wk->data_idx < RHYTHMSEARCH_DATA_MIN )
 	{	
 		p_wk->data[ p_wk->data_idx ].prog_ms				= OS_TicksToMilliSeconds(OS_GetTick())
 			- p_wk->start_time;
@@ -2653,6 +2655,11 @@ static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk )
 		//セットしたので次へ進める
 		p_wk->data_idx++;
 	}
+  else if( p_wk->miss_idx < RHYTHMSEARCH_DATA_MINUS_MAX )
+  {
+    //ミス回数カウント
+    p_wk->miss_idx++;
+  }
 }
 //----------------------------------------------------------------------------
 /**

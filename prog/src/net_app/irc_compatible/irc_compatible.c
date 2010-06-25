@@ -1134,6 +1134,7 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score,
           rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status, is_init,
           gfdate, HEAPID_IRCCOMPATIBLE_SYSTEM );
+		}
 
 #ifdef PM_DEBUG
       if( s_debug_score_use )
@@ -1141,7 +1142,6 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
         p_param->score  = s_debug_score;
       }
 #endif
-		}
 	}
 
 	return p_param;
