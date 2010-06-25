@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: playable_end.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PLAYABLE_END_NAIX_
+#define NARC_PLAYABLE_END_NAIX_
+
+enum {
+	NARC_playable_end_playable_end_NCLR = 0,
+	NARC_playable_end_playable_end_NCGR = 1,
+	NARC_playable_end_playable_end_NSCR = 2
+};
+
+/* NARC_PLAYABLE_END_NAIX_ */
+#endif

@@ -2227,7 +2227,8 @@ SRCS_OVERLAY_UN_SELECT = app/un_select/un_select.c \
 
 #ジオネット地球儀
 #===> GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_GEONET = net_app/wifi_earth/wifi_earth.c
+SRCS_OVERLAY_GEONET = net_app/wifi_earth/wifi_earth.c \
+                      proc_playable_end.c
 
 # トライアルハウス検定結果
 #===> SRCS_OVERLAY_UI_COMMON

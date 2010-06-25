@@ -298,3 +298,4 @@
   $VERSION_BLACK  ARCID_MANUAL_IMAGE "manual_image_b.narc" # ゲーム内マニュアルの説明画像データ
   $DEBUG_YES ARCID_DEBUG_HITCH_CHECK "debug/hitch_check.narc"  #当たり判定チェック（デバッグ用）
   $DEBUG_YES ARCID_DEBUG_MESSAGE  "debug_message.narc"  #デバッグ用メッセージデータ
+  ARCID_PLAYABLE_END "playable_end.narc" # 試遊台用 最後の一枚絵

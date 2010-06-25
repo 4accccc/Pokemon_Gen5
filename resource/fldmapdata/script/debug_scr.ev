@@ -60,7 +60,8 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_debug_test
 {
-  _GOTO_GAMECLEAR_DEMO( 0 )
+  _CALL_GEONET_PROC()
+  //_GOTO_GAMECLEAR_DEMO( 0 )
   //_MAP_CHANGE( ZONE_ID_D09R1501, 5, 7, DIR_UP )
   //_MAP_CHANGE( ZONE_ID_D02R0201, 10, 10, DIR_UP )
   //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )

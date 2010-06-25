@@ -50,6 +50,12 @@
 #include "app/name_input.h"
 #include "app/dendou_pc.h"
 
+
+#ifdef PLAYABLE_VERSION
+extern GFL_PROC_DATA PlayableEndProcData;
+#endif
+
+
 static void callback_BoxProc( void* work );
 static void CallBackFunc_byHelloMsgIn( void* wk );
 
@@ -284,7 +290,13 @@ VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk )
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   GMEVENT * event;
+
+#ifdef PLAYABLE_VERSION
+  event = EVENT_FieldSubProc( gsys, fieldmap, FS_OVERLAY_ID( geonet ), &PlayableEndProcData, gamedata );
+#else
   event = EVENT_FieldSubProc( gsys, fieldmap, FS_OVERLAY_ID( geonet ), &Earth_Demo_proc_data, gamedata );
+#endif
+
   SCRIPT_CallEvent( sc, event );
 
   return VMCMD_RESULT_SUSPEND;
