@@ -46,6 +46,6 @@ extern BOOL CommPlayer_CheckOcc(COMM_PLAYER_SYS_PTR cps, int index);
 extern u16 CommPlayer_GetObjCode(COMM_PLAYER_SYS_PTR cps, int index);
 extern void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_PACKAGE *pack);
 extern BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pack);
-extern BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gy, s16 gz, u32 *out_index);
+extern BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gy, s16 gz, u32 *out_index, u32 *search_start_no);
 extern BOOL CommPlayer_SetGyoeTask(COMM_PLAYER_SYS_PTR cps, int index);
 extern MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index);

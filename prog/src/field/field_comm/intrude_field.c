@@ -244,6 +244,7 @@ BOOL IntrudeField_CheckTalk(INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *fl
   s16 check_gx, check_gy, check_gz;
   u32 out_index;
   PLAYER_MOVE_FORM move_form;
+  u32 search_start_no = 0;
   
   if(intcomm == NULL || intcomm->cps == NULL){
     return FALSE;
@@ -259,14 +260,19 @@ BOOL IntrudeField_CheckTalk(INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *fl
   }
   
   FIELD_PLAYER_GetFrontGridPos(fld_player, &check_gx, &check_gy, &check_gz);
-  if(CommPlayer_SearchGridPos(intcomm->cps, check_gx, check_gy, check_gz, &out_index) == TRUE){
-    OS_TPrintf("Talkターゲット発見! net_id = %d, gx=%d, gz=%d\n", 
-      out_index, check_gx, check_gz);
-    if(intcomm->intrude_status[out_index].player_pack.vanish == FALSE){
-      *hit_netid = out_index;
-      return TRUE;
+  do{
+    if(CommPlayer_SearchGridPos(intcomm->cps, check_gx, check_gy, check_gz, &out_index, &search_start_no) == TRUE){
+      OS_TPrintf("Talkターゲット発見! net_id = %d, gx=%d, gz=%d\n", 
+        out_index, check_gx, check_gz);
+      if(intcomm->intrude_status[out_index].player_pack.vanish == FALSE){
+        *hit_netid = out_index;
+        return TRUE;
+      }
     }
-  }
+    else{
+      break;
+    }
+  }while(1);
   
   return FALSE;
 }

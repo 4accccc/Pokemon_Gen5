@@ -3652,8 +3652,9 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
       
       //話しかけチェック
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+        u32 search_start_no = 0;
         FIELD_PLAYER_GetFrontGridPos(player, &check_gx, &check_gy, &check_gz);
-        if(CommPlayer_SearchGridPos(clsys->cps, check_gx, check_gy, check_gz, &out_index) == TRUE){
+        if(CommPlayer_SearchGridPos(clsys->cps, check_gx, check_gy, check_gz, &out_index, &search_start_no) == TRUE){
           clsys->talk_obj_id = out_index;
           OS_TPrintf("ターゲット発見! net_id = %d, gx=%d, gz=%d\n", 
             clsys->talk_obj_id, check_gx, check_gz);
