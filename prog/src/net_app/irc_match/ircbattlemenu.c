@@ -1343,7 +1343,7 @@ static void _modeTemotiOrBoxInit(IRC_BATTLE_MENU* pWork)
 
   _buttonWindowCreate(2,aMsgBuff,pWork,wind_irvs1);
 
-  pWork->pButton = GFL_BMN_Create( btn_irvs1, _BttnCallBack, pWork,  pWork->heapID );
+  pWork->pButton = GFL_BMN_Create( btn_irvs3, _BttnCallBack, pWork,  pWork->heapID );
   pWork->touch = &_modeTemotiOrBoxButtonCallback;
 
   _ReturnButtonStart(pWork);
