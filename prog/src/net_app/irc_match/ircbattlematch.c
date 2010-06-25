@@ -190,6 +190,7 @@ typedef enum {
 #define _TIMINGNO_TYPECHECK (124)
 #define _TIMINGNO_MACADDR (125)
 #define _TIMINGNO_MULTISEND (126)
+#define _TIMINGNO_ENDFRIEND (127)
 
 //--------------------------------------------
 // “à•”ƒ[ƒN
@@ -874,6 +875,25 @@ static void _modeSuccessMessageKeyWait(IRC_BATTLE_MATCH* pWork)
 
 }
 
+static void _modeSuccessTimingEnd2(IRC_BATTLE_MATCH* pWork)
+{
+  pWork->timer++;
+  if(pWork->timer>60){
+    GFL_NET_Exit(NULL);
+    _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
+  }
+}
+
+
+static void _modeSuccessTimingEnd(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_ENDFRIEND, WB_NET_IRCBATTLE)){
+    GFL_NET_SetAutoErrorCheck(FALSE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    pWork->timer=0;
+    _CHANGE_STATE(pWork,_modeSuccessTimingEnd2);
+  }
+}
 
 static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
 {
@@ -885,19 +905,10 @@ static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
     int aMsgBuff[]={IRCBTL_STR_44};
     _msgWindowCreate(aMsgBuff, pWork);
   }
-  GFL_NET_SetAutoErrorCheck(FALSE);
-  GFL_NET_SetNoChildErrorCheck(FALSE);
-  PMSND_PlaySystemSE(SEQ_SE_FLD_124);
   _friendNumWindowCreate(IRCBTL_STR_35, pWork);
-
-  if(GFL_NET_IsParentMachine()){
-    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL)){
-      _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
-    }
-  }
-  else{
-    _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
-  }
+  PMSND_PlaySystemSE(SEQ_SE_FLD_124);
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_ENDFRIEND, WB_NET_IRCBATTLE);
+  _CHANGE_STATE(pWork,_modeSuccessTimingEnd);
 }
 
 static int _searchPokeParty(IRC_BATTLE_MATCH* pWork)

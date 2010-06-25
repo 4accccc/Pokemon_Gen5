@@ -41,6 +41,7 @@ struct _EVENT_IRCBATTLE_WORK{
 #endif
   BATTLE_SETUP_PARAM* para;
   COMM_BTL_DEMO_PARAM demo_prm;
+  u32 timer;
   //COMM_BATTLE_CALL_PROC_PARAM callprm;
   //GFLNetInitializeStruct* pInit;
 };

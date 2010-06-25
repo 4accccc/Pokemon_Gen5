@@ -60,6 +60,7 @@ FS_EXTERN_OVERLAY(pokemon_trade);
 FS_EXTERN_OVERLAY(shinka_demo);
 
 #define _LOCALMATCHNO (110)
+#define _LOCALEND_NO (220)
 #define _IRC_BATTEL_LEVEL (50)
 
 enum _EVENT_IRCBATTLE {
@@ -81,6 +82,8 @@ enum _EVENT_IRCBATTLE {
   _CALL_EVOLUTION,
   _WAIT_EVOLUTION,
   _CALL_NET_END,
+  _CALL_NET_END_TIME,
+  _CALL_NET_END_TIME2,
   _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_FADEIN,
@@ -519,11 +522,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _CALL_EVOLUTION:
-    //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    //dbw->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->gamedata,
-    //                                           dbw->aPokeTr.pParty,
-    //                                           dbw->aPokeTr.after_mons_no,
-    //                                           0, dbw->aPokeTr.cond, TRUE );
     {
       SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
       sdp->gamedata          = dbw->gamedata;
@@ -540,45 +538,47 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _WAIT_EVOLUTION:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      //SHINKADEMO_FreeParam( dbw->aPokeTr.shinka_param );
       {
         SHINKA_DEMO_PARAM* sdp = dbw->aPokeTr.shinka_param;
         GFL_HEAP_FreeMemory( sdp );
       }
-      //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
       dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
       (*seq)=_CALL_TRADE;
     }
     break;
-//  case _CALL_MAIL:
-//    dbw->aPokeTr.aMailBox.gamedata = dbw->gamedata;
-//    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &dbw->aPokeTr.aMailBox );
-//    (*seq)++;
-//    break;
-//  case _WAIT_MAIL:
-//    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-///      (*seq)=_CALL_TRADE;
- //   }
-//    break;
   case _CALL_NET_END:
     if(GFL_NET_IsInit())
     {
-      GFL_NET_SetAutoErrorCheck(FALSE);
-      GFL_NET_SetNoChildErrorCheck(FALSE);
-      if(GFL_NET_IsParentMachine())
-      {
-        if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL))
-        {
-          (*seq) ++;
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALEND_NO, WB_NET_IRCBATTLE);
     }
     (*seq) ++;
+    break;
+  case _CALL_NET_END_TIME:
+    if(GFL_NET_IsInit())
+    {
+      if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALEND_NO, WB_NET_IRCBATTLE)){
+        GFL_NET_SetAutoErrorCheck(FALSE);
+        GFL_NET_SetNoChildErrorCheck(FALSE);
+        dbw->timer=0;
+        (*seq) ++;
+      }
+    }
+    else{
+      (*seq) ++;
+    }
+    break;
+  case _CALL_NET_END_TIME2:
+    if(GFL_NET_IsInit())
+    {
+      dbw->timer++;
+      if( dbw->timer>=60){
+        GFL_NET_Exit(NULL);
+        (*seq) ++;
+      }
+    }
+    else{
+      (*seq) ++;
+    }
     break;
   case _WAIT_NET_END:
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
