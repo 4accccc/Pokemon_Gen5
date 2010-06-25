@@ -52,7 +52,7 @@ enum {
 ///< “–‚½‚è”»’èƒ‰ƒxƒ‹
 enum {
   
-  eHRT_CODE_0 = 0,
+  eHRT_CODE_0 = 0,  // “ü—ÍŒ‹‰Ê‚Ì‚P‚QŒ…
   eHRT_CODE_1,
   eHRT_CODE_2,
   eHRT_CODE_3,
@@ -65,7 +65,7 @@ enum {
   eHRT_CODE_10,
   eHRT_CODE_11,
   
-  eHRT_NUM_0,
+  eHRT_NUM_0,       // ’†‰›‚Ì”š
   eHRT_NUM_1,
   eHRT_NUM_2,
   eHRT_NUM_3,
@@ -76,8 +76,8 @@ enum {
   eHRT_NUM_8,
   eHRT_NUM_9,
   
-  eHRT_BACK,
-  eHRT_END,
+  eHRT_BACK,        // ‚à‚Ç‚é
+  eHRT_END,         // ‚¨‚í‚è
   
   eHRT_MAX,
 };

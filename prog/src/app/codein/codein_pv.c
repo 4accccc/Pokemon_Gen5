@@ -473,9 +473,6 @@ BOOL CI_pv_MainUpdate( CODEIN_WORK* wk )
   
   bActive = CI_pv_MainTable[ wk->seq ]( wk ); 
   
-//  BMN_Main( wk->sys.btn );
-//  CI_KEY_Main( wk );
-  
   CI_pv_disp_CurUpdate( wk );
   CI_pv_disp_BtnUpdate( wk );
   
@@ -909,6 +906,26 @@ void CI_pv_ButtonManagerInit( CODEIN_WORK* wk )
                 CI_pv_ButtonManagerCallBack, wk, HEAPID_CODEIN );
 }
 
+static const u8 cursor_touch2pos[][2]={
+  {0,0},{1,0},{2,0},{3,0},{4,0},
+  {0,1},{1,1},{2,1},{3,1},{4,1},
+  {0,2},{3,2},
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タッチした結果で表示はしていないカーソル位置を変更しておく
+ *
+ * @param wk    
+ */
+//----------------------------------------------------------------------------------
+static void _set_cursor_pos( CODEIN_WORK *wk, int button )
+{
+  if(button>=eHRT_NUM_0 && button <eHRT_MAX){
+    wk->cur[ 1 ].move_wk.pos.x = cursor_touch2pos[button-eHRT_NUM_0][0];
+    wk->cur[ 1 ].move_wk.pos.y = cursor_touch2pos[button-eHRT_NUM_0][1];
+  }
+}
 
 //--------------------------------------------------------------
 /**
@@ -1023,6 +1040,7 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
             wk->state.target = cur_p;
           }
         }
+        _set_cursor_pos( wk, button );
       }
       else {
         ///< その他（カーソルターゲットを移動するだけ）
