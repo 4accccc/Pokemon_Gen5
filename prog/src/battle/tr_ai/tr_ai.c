@@ -44,7 +44,7 @@
 //=========================================================================
 #define TR_AI_WAZATBL_MAX ( 48 )
 #define TR_AI_SEQ_COUNT   ( 4 ) //命令をいくつ実行したら、制御を返すかを指定
-#define TR_AI_SEQ_TICK    ( 1000 )
+#define TR_AI_SEQ_TICK    ( 500 )
 
 //=========================================================================
 //  AI用の構造体宣言
@@ -935,7 +935,7 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
       if( ( taw->rule == BTL_RULE_TRIPLE ) && (taw->waza_no ) )
       {
         if( ( BTL_MAINUTIL_CheckTripleHitArea( taw->atk_btl_poke_pos, taw->def_btl_poke_pos ) == FALSE ) &&
-            ( get_waza_param( taw, taw->waza_no, WAZAPARAM_DAMAGE_TYPE ) != WAZADATA_DMG_NONE ) &&
+            //( get_waza_param( taw, taw->waza_no, WAZAPARAM_DAMAGE_TYPE ) != WAZADATA_DMG_NONE ) &&
             ( get_waza_flag( taw, taw->waza_no, WAZAFLAG_TripleFar ) == FALSE ) )
         {
           taw->waza_no = 0;
