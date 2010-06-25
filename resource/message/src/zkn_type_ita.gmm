@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-10T17:51:02"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-25T15:08:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3307,12 +3307,6 @@
 		<comment>そうぞうポケモン</comment>
 		<language name="JPN">Pokémon Primevo</language>
 		<language name="JPN_KANJI">Pokémon Primevo</language>
-	</row>
-
-	<row id="ZKN_TYPE_ITA_487_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>はんこつポケモン：オリジン</comment>
-		<language name="JPN">Pokémon Ribelle</language>
-		<language name="JPN_KANJI">Pokémon Ribelle</language>
 	</row>
 
 	<flowchart-group-list>

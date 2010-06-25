@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-10T16:09:43"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-25T15:09:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3307,12 +3307,6 @@
 		<comment>そうぞうポケモン</comment>
 		<language name="JPN">Alpha Pokémon</language>
 		<language name="JPN_KANJI">Alpha Pokémon</language>
-	</row>
-
-	<row id="ZKN_TYPE_E_487_01">
-		<comment>はんこつポケモン</comment>
-		<language name="JPN">Renegade Pokémon</language>
-		<language name="JPN_KANJI">Renegade Pokémon</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-13T21:11:40"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-25T15:10:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3317,12 +3317,6 @@
 		<comment>アルセウス</comment>
 		<language name="JPN" width="216">ARCEUS</language>
 		<language name="JPN_KANJI">ARCEUS</language>
-	</row>
-
-	<row id="ZKN_MONSNAME_E_487_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>ギラティナ</comment>
-		<language name="JPN" width="216">GIRATINA</language>
-		<language name="JPN_KANJI">GIRATINA</language>
 	</row>
 
 	<flowchart-group-list>

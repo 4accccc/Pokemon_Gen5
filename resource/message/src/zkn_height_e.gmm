@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-11T22:53:25"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-24T22:02:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3297,8 +3297,8 @@
 		<language name="JPN_KANJI">4&apos;11&quot;</language>
 	</row>
 
-	<row id="ZKN_HRIGHT_E_492_000">
-		<comment>シェイミ</comment>
+	<row id="ZKN_HRIGHT_E_492_000" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>シェイミ：ランド</comment>
 		<language name="JPN">0&apos;08&quot;</language>
 		<language name="JPN_KANJI">0&apos;08&quot;</language>
 	</row>
@@ -3313,6 +3313,12 @@
 		<comment>ギラティナ：オリジン</comment>
 		<language name="JPN">22&apos;08&quot;</language>
 		<language name="JPN_KANJI">22&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_492_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>シェイミ：スカイ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
 	</row>
 
 	<flowchart-group-list>

@@ -236,6 +236,9 @@ ZUKAN_INFO_STEP;
 #define GIRATHINA_FORMNO_DEFAULT_ANOTHER (0)                      // ギラティナのデフォルトのフォルム番号(アナザーフォルム、脚付き)
 #define POKEFOOT_OLD_WHITE_MONSNO        (11)                     // POKEFOOT_MONS_NO_OLD_MAXまで(含む)で足跡の絵のない白紙データ  // monsno=11はトランセル
 
+#define FOREIGN_MONSNO_SHEIMI_FORM       (FOREIGN_MONSNO_MAX +2)  // シェイミだけ別フォルム用のテキストがある(492はフォルム0番、495はフォルム1番のデータ)
+#define SHEIMI_FORMNO_DEFAULT_ANOTHER    (0)                      // シェイミのデフォルトのフォルム番号(ランドフォルム)
+
 // 外国語のタイプアイコン
 typedef struct
 {
@@ -1912,6 +1915,10 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
     {
       monsno_formno_pos = FOREIGN_MONSNO_GIRATHINA_FORM;
     }
+    else if( work->monsno == MONSNO_SHEIMI  && work->formno != SHEIMI_FORMNO_DEFAULT_ANOTHER )
+    {
+      monsno_formno_pos = FOREIGN_MONSNO_SHEIMI_FORM;
+    }
   }
 
   {
@@ -1958,7 +1965,8 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
     
     // 例：ピカチュウ
     {
-      u32 disp_id = 0 + monsno_formno_pos;  // 名前判明
+      //u32 disp_id = 0 + monsno_formno_pos;  // 名前判明
+      u32 disp_id = 0 + work->monsno;  // フォルムが変わっても変わらない
       Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_name, work->print_que, work->font,
                             disp_id, 48, 5, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
     }
@@ -1968,7 +1976,8 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
       u32 disp_id = 0;  // 種族不明
       if( work->get_flag )
       {
-        disp_id = 0 + monsno_formno_pos;  // 種族判明
+        //disp_id = 0 + monsno_formno_pos;  // 種族判明
+        disp_id = 0 + work->monsno;  // フォルムが変わっても変わらない
       }
       //Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
       //                      disp_id, 8, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );

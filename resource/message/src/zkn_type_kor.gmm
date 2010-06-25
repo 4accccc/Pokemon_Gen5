@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-10T16:45:40"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-25T15:08:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3307,12 +3307,6 @@
 		<comment>そうぞうポケモン</comment>
 		<language name="JPN">창조포켓몬</language>
 		<language name="JPN_KANJI">창조포켓몬</language>
-	</row>
-
-	<row id="ZKN_TYPE_KOR_487_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>はんこつポケモン：オリジン</comment>
-		<language name="JPN">반골포켓몬</language>
-		<language name="JPN_KANJI">반골포켓몬</language>
 	</row>
 
 	<flowchart-group-list>
