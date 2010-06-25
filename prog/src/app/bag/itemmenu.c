@@ -3636,6 +3636,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
       int no = bttnid - BUTTONID_CHECK_AREA;
       SHORTCUT_SetEventItem( pWork, no );
+      KTST_SetDraw( pWork, FALSE );
+      pWork->oamlistpos_old = 0xffff;
+      _windowRewrite(pWork);
     }
   }
 
