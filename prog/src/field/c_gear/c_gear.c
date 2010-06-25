@@ -1105,6 +1105,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
 
   // ‚à‚µ‚à‚¤‚ ‚é‚È‚çÄŽn“®
   if(sel_select_wk->cellSelect){
+    GFL_CLACT_WK_SetAnmSeq( sel_select_wk->cellSelect, cellInitData.anmseq );//BTS:6780
     GFL_CLACT_WK_ResetAnm( sel_select_wk->cellSelect );
     GFL_CLACT_WK_SetTypePos( sel_select_wk->cellSelect, cellInitData.pos_x, CGEAR_REND_SUB, CLSYS_MAT_X );
     GFL_CLACT_WK_SetTypePos( sel_select_wk->cellSelect, cellInitData.pos_y, CGEAR_REND_SUB, CLSYS_MAT_Y );
