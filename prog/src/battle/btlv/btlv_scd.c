@@ -775,9 +775,12 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
           ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) && wkHudson.TrunCnt >= 0 ) ||
           ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) && wkHudson.TrunCnt >= 4 ) )
       {
-        BTL_POKEPARAM* bpp;
-        bpp = (BTL_POKEPARAM*)BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
-        BPP_CureWazaSick( bpp, WAZASICK_FREEFALL );
+        if( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_SINGLE )
+        {
+          BTL_POKEPARAM* bpp;
+          bpp = (BTL_POKEPARAM*)BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
+          BPP_CureWazaSick( bpp, WAZASICK_FREEFALL );
+        }
         hit = 3;
       }
     }
