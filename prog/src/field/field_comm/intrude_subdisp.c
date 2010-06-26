@@ -517,8 +517,8 @@ enum{
 enum{
   ENTRY_BUTTON_POS_X = 0x1c*8,        ///<参加ボタンのアイコン座標X
   ENTRY_BUTTON_POS_Y = 0x10*8,        ///<参加ボタンのアイコン座標Y
-  ENTRY_BUTTON_HITRANGE_HALF_X = 16,  ///<参加ボタンのタッチ判定半径X
-  ENTRY_BUTTON_HITRANGE_HALF_Y = 8,   ///<参加ボタンのタッチ判定半径Y
+  ENTRY_BUTTON_HITRANGE_HALF_X = 30,  ///<参加ボタンのタッチ判定半径X
+  ENTRY_BUTTON_HITRANGE_HALF_Y = 12,   ///<参加ボタンのタッチ判定半径Y
 };
 
 ///各通信プレイヤー毎にずらす値
