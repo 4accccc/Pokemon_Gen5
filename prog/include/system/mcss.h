@@ -138,6 +138,7 @@ extern  void	          MCSS_GetShadowOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
 extern	void						MCSS_SetShadowOfsScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void	          MCSS_SetShadowRotate( MCSS_WORK *mcss, const u16 rot );
 extern  void	          MCSS_SetShadowRotateZ( MCSS_WORK *mcss, const u16 rot );
+extern  u16	            MCSS_GetShadowRotateZ( MCSS_WORK *mcss );
 extern	void						MCSS_GetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs );
 extern	void						MCSS_SetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs );
 extern	void						MCSS_SetMepachiFlag( MCSS_WORK *mcss );
@@ -167,6 +168,7 @@ extern  void	          MCSS_SetTraverseMCNodesCallBack( MCSS_WORK *mcss, u32 par
 extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, s8 wait, u32 rgb );
 extern  u8              MCSS_GetAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha );
+extern  void	          MCSS_SetAlphaSamePolyID( MCSS_WORK *mcss, BOOL flag );
 extern  u8              MCSS_GetShadowAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetShadowAlpha( MCSS_WORK *mcss, u8 alpha );
 extern  u8              MCSS_GetShadowVanishFlag( MCSS_WORK *mcss );

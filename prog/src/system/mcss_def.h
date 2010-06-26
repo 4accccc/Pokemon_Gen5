@@ -111,7 +111,7 @@ struct _MCSS_WORK
 	u32														fade_pltt_data_flag :1;    
 	u32														ortho_mode          :1;    
 	u32														reverse_draw        :1; //逆から描画    
-	u32														                    :1;    
+	u32														alpha_same_polyID   :1; //半透明かけるときでもPolyIDを同一にするモード    
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
   MCSS_ADD_WORK                 maw;

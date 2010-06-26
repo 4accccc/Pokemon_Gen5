@@ -721,7 +721,7 @@ static	void	MCSS_DrawAct(
 	//影のアルファ値計算
   const u8 shadow_alpha = (mcss->shadow_alpha == MCSS_SHADOW_ALPHA_AUTO ?(mcss->alpha/2):mcss->shadow_alpha); 
 
-  if( mcss->alpha == 31 )
+  if( ( mcss->alpha == 31 ) || ( mcss->alpha_same_polyID ) )
   { 
     polyID = 0;
   }
@@ -1251,6 +1251,11 @@ void	MCSS_SetShadowRotateZ( MCSS_WORK *mcss, const u16 rot )
   mcss->shadow_rotate_z = rot;
 }
 
+u16	MCSS_GetShadowRotateZ( MCSS_WORK *mcss )
+{
+  return  mcss->shadow_rotate_z;
+}
+
 //--------------------------------------------------------------------------
 /**
  * @brief 影オフセット
@@ -1637,6 +1642,19 @@ u8	MCSS_GetAlpha( MCSS_WORK *mcss )
 void	MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha )
 { 
   mcss->alpha = alpha;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief alpha_same_polyIDに値をセット
+ *
+ * @param[in]	mcss		セットするマルチセルワーク構造体
+ * @param[in]	flag		セットする値
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetAlphaSamePolyID( MCSS_WORK *mcss, BOOL flag )
+{ 
+  mcss->alpha_same_polyID = flag;
 }
 
 //--------------------------------------------------------------------------
