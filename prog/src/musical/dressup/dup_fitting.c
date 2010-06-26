@@ -849,6 +849,8 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
                   FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
       GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
       
+      PRINTSYS_QUE_Clear( work->printQue );
+      work->printQue = NULL;
       GFL_BMPWIN_Delete( work->msgWin );
       work->msgWin = NULL;
       DUP_DEBUG_ScreenDraw( work , 6 );
@@ -856,7 +858,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     else
     if( work->curtainScrollCnt > 0 )
     {
-      DUP_DEBUG_ScreenDraw( work , 64 + work->curtainScrollCnt );
+      DUP_DEBUG_ScreenDraw( work , 96 + work->curtainScrollCnt );
       work->curtainScrollCnt -= DUP_CURTAIN_SCROLL_VALUE;
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->curtainScrollCnt );
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->curtainScrollCnt );
@@ -895,9 +897,11 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     GFL_BG_SetPriority( FIT_FRAME_SUB_MSG , 0 );
   }
   DUP_DEBUG_ScreenDraw( work ,12 );
-
   //メッセージ
-  PRINTSYS_QUE_Main( work->printQue );
+  if( work->printQue != NULL )
+  {
+    PRINTSYS_QUE_Main( work->printQue );
+  }
   
   DUP_DEBUG_ScreenDraw( work ,14 );
   //SE用
@@ -923,6 +927,10 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
         DUP_DEBUG_ScreenDraw( work ,36 );
         work->state = DUS_FADEOUT_WAIT;
         DUP_DEBUG_ScreenDraw( work ,38 );
+      }
+      else
+      {
+        DUP_DEBUG_ScreenDraw( work ,64 );
       }
     }
   }
