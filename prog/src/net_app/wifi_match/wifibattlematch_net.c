@@ -2055,6 +2055,20 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  レポート中に受け取った不正フラグを取得
+ *
+ *	@param	const WIFIBATTLEMATCH_NET_WORK *cp_wk   ワーク
+ *
+ *	@return 不正フラグ
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
+{
+  return cp_wk->report.is_dirty;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  セッション作成コールバック
  *
  *	@param	DWCScResult theResult 結果

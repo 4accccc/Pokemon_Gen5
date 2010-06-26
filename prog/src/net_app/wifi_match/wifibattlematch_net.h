@@ -305,6 +305,8 @@ typedef enum
 } WIFIBATTLEMATCH_NET_SC_STATE;
 extern WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
+extern BOOL WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
+
 typedef struct
 {
   DWCScGameResult my_result;

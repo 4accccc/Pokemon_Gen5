@@ -3317,6 +3317,12 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
 
+        //子機しか不正フラグがたたないので、親機が受け取る
+        if( GFL_NET_IsParentMachine() )
+        { 
+          ((BATTLEMATCH_BATTLE_SCORE *)(p_param->cp_btl_score))->is_dirty = WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( p_wk->p_net );
+        }
+
         *p_seq = SEQ_SC_HEAP_EXIT;
       }
       
