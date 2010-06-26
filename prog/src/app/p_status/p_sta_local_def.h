@@ -65,8 +65,9 @@
 #define PSTATUS_STR_COL_TITLE PSTATUS_STR_COL_WHITE
 #define PSTATUS_STR_COL_VALUE PSTATUS_STR_COL_BLACK
 //ê´äiÇ…ÇÊÇÈï‚ê≥ï\é¶óp
-#define PSTATUS_STR_COL_TITLE_R (PRINTSYS_LSB_Make(0xf,4,0))
-#define PSTATUS_STR_COL_TITLE_B (PRINTSYS_LSB_Make(0xf,6,0))
+//Ç›Ç«ÇËÇÃÇ∆Ç±ÇÎÇèëÇ´ä∑Ç¶ÇƒégÇ§
+#define PSTATUS_STR_COL_TITLE_R (PRINTSYS_LSB_Make(0xf,9,0))
+#define PSTATUS_STR_COL_TITLE_B (PRINTSYS_LSB_Make(0xf,0xa,0))
 
 
 

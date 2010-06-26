@@ -1026,6 +1026,13 @@ static void PSTATUS_InitMessage( PSTATUS_WORK *work )
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , PSTATUS_BG_PLT_FONT*16*2, 16*2, work->heapId );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , PSTATUS_BG_SUB_PLT_FONT*16*2, 16*2, work->heapId );
   
+  {
+    u16 *palAdr = (u16*)(HW_DB_BG_PLTT+PSTATUS_BG_SUB_PLT_FONT*32);
+    palAdr[ 9] = GX_RGB(23,18,19);
+    palAdr[10] = GX_RGB(18,18,24);
+  }
+
+  
   work->printQue = PRINTSYS_QUE_CreateEx( 4096 , work->heapId );
 }
 
