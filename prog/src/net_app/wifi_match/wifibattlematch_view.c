@@ -2368,7 +2368,17 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
   PMS_DRAW_SetNullColorPallet( p_wk->p_pms, 0 );
 	
   rank = CalcRank( cp_data->btl_cnt, cp_data->win_cnt, cp_data->lose_cnt );
-	MatchInfo_Bmpwin_Create( p_wk, cp_data, p_font, p_que, p_msg, p_word, rank == WBM_CARD_RANK_BLACK, heapID );
+
+
+  {
+    BOOL is_black = FALSE;
+    if( mode == WIFIBATTLEMATCH_TYPE_RNDRATE
+      || mode == WIFIBATTLEMATCH_TYPE_RNDFREE )
+    {
+      is_black  = (rank == WBM_CARD_RANK_BLACK);
+    }
+    MatchInfo_Bmpwin_Create( p_wk, cp_data, p_font, p_que, p_msg, p_word, is_black, heapID );
+  }
 	MatchInfo_TRAINER_Create( p_wk, MyStatus_GetTrainerView( (MYSTATUS*)cp_data->mystatus ), p_unit, heapID );
 
 
