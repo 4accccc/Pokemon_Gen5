@@ -3546,7 +3546,14 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
         pWork->MainObjCursorLine=line;
-        NOZOMU_Printf("new_%d\n",pWork->MainObjCursorLine);
+        //ŽèŽ‚¿‚Ì—ñ‚Ìê‡cˆÊ’u•â³      20100626 add Saito BTS6598
+        if(pWork->MainObjCursorLine < HAND_HORIZONTAL_NUM)
+        {
+          if(pWork->MainObjCursorIndex >= HAND_VERTICAL_NUM)
+          {
+            pWork->MainObjCursorIndex = HAND_VERTICAL_NUM-1;
+          }
+        }
       }
       else    //20100625 add Saito  BTS6599
       {
