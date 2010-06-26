@@ -426,7 +426,7 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
 
 #ifdef PM_DEBUG
   if(debugseq!=*seq || debugsubseq!=wk->seq){
-    OS_Printf("seq=%d, subseq=%d sharebit=%d ridatu_bit\n", *seq, wk->seq, wk->shareBit, wk->ridatu_bit);
+    OS_Printf("seq=%d, subseq=%d sharebit=%d ridatu_bit=%d\n", *seq, wk->seq, wk->shareBit, wk->ridatu_bit);
     debugseq = *seq;
     debugsubseq = wk->seq;
   }
