@@ -1627,6 +1627,8 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
       }
     }
     OS_Printf("RandomAction = %d, param = %d\n", action, value );
+  }else{
+    OS_Printf("SetAction = %d, param = %d\n", evwk->action, value );
   }
   DEBUG_SendBeaconPriorityEgnoreFlagSet( TRUE );
 
