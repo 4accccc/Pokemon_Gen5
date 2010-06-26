@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-23T19:59:22"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-26T15:55:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -272,7 +272,7 @@
 		<band id="2" index="3" style="0000" width="273"/>
 		<band id="3" index="4" style="0000" width="147"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,11 +293,11 @@
 	</lock>
 
 
-	<row id="msg_wc10_npc00" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="msg_wc10_npc00" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>ダミーメッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">ホワイトフォレスト　よいところ！</language>
-		<language name="JPN_KANJI" width="256">ホワイトフォレスト　よいところ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_wc10_girl1_01">
@@ -409,10 +409,10 @@
 	<row id="wc10_01_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 シュウサク</attribute>
-		<language name="JPN" width="256">でも　さいきん
+		<language name="JPN" width="256">さいきん……
 むねが　ざわつくんだよね▽
 とかいの　かぜを　かんじたいのかも</language>
-		<language name="JPN_KANJI" width="256">でも　最近
+		<language name="JPN_KANJI" width="256">最近……
 胸が　ざわつくんだよね▽
 都会の風を　感じたいのかも</language>
 	</row>
@@ -622,7 +622,7 @@
 けっこう　あり　だよねー！▼</language>
 		<language name="JPN_KANJI" width="256">マサオ『ビルが　大好きで
 ブラックシティに　いたけど▼
-森のなか　っていうのも
+森の中　っていうのも
 けっこう　あり　だよねー！▼</language>
 	</row>
 
@@ -681,11 +681,11 @@
 	<row id="wc10_06_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL2
 ミキ</attribute>
-		<language name="JPN" width="256">うーん　でも
+		<language name="JPN" width="256">うーん……
 おちつきすぎて　たいくつかもぉ？▼
 そんな　じかんも
 たいせつだって　おもうのだけどねー</language>
-		<language name="JPN_KANJI" width="256">うーん　でも
+		<language name="JPN_KANJI" width="256">うーん……
 落ち着きすぎて　退屈かもぉ？▼
 そんな　時間も
 大切だって　思うのだけどねー</language>
@@ -906,7 +906,7 @@
 すきなら　すきって　いえばいいのにさ</language>
 		<language name="JPN_KANJI" width="256">さっき　そこで　ブビィが
 ぼくに　みとれてたよ▼
-めが　あったら　すぐ　逃げちゃった
+目が　あったら　すぐ　逃げちゃった
 好きなら　好きって　いえばいいのにさ</language>
 	</row>
 
@@ -981,10 +981,10 @@
 	<row id="wc10_12_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERW
 レナ</attribute>
-		<language name="JPN" width="256">でも　ひとは　ひとが　つくった
+		<language name="JPN" width="256">……ひとは　ひとが　つくった
 ものに　ひかれて　しまうものね▽
 ブラックシティが　なつかしい……</language>
-		<language name="JPN_KANJI" width="256">でも　人は　人が　つくった
+		<language name="JPN_KANJI" width="256">……人は　人が　つくった
 ものに　ひかれて　しまうものね▽
 ブラックシティが　懐かしい……</language>
 	</row>
@@ -1021,12 +1021,12 @@
 		<attribute name="キャラ指定">BACKPACKERM
 カルロス</attribute>
 		<language name="JPN" width="256">カルロス『おー！　こんにちは▼
-こんなに　みどりが　あるばしょは
-いろんなところを　たびをしたけど▽
+いろんなところを　たびをしたけど
+こんなに　みどりが　あるばしょは▽
 すごく　めずらしいよ！▼</language>
 		<language name="JPN_KANJI" width="256">カルロス『おー！　こんにちは▼
-こんなに　緑がある　場所は
-いろんなところを　旅をしたけど▽
+いろんなところを　旅をしたけど
+こんなに　緑がある　場所は▽
 すごく　珍しいよ！▼</language>
 	</row>
 
@@ -1081,10 +1081,10 @@
 	<row id="wc10_14_03" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 ヒロミ</attribute>
-		<language name="JPN" width="256">きれいな　ところ　だけど……
-ちょっと　たいくつ　かな</language>
-		<language name="JPN_KANJI" width="256">きれいな　ところ　だけど……
-ちょっと　退屈かな</language>
+		<language name="JPN" width="256">ここは　きれいな　ところ　だけど
+ちょっと　たいくつ　かな……</language>
+		<language name="JPN_KANJI" width="256">ここは　きれいな　ところ　だけど
+ちょっと　退屈かな……</language>
 	</row>
 
 	<row id="wc10_14_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -1559,14 +1559,14 @@
 	<row id="wc10_24_01" back-color=",,,#ff8080,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『ここは　ビッグチャンスが
-あふれてそうで　もえてきたっス！▼
+		<language name="JPN" width="256">ヒロノリ『ここで　オレの
+サクセスストーリーが　はじまるっス▼
 ブラックシティじゃ　[1:00:トレーナー名:0]って
 ライバルが　いたっスけど▼
 ここには　いないっスからね！
 バリバリ　かせいじゃうっスよー！▼</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『この　町で　オレは
-サクセスっスよ　燃えてきたっス！▼
+		<language name="JPN_KANJI" width="256">ヒロノリ『ここで　オレの
+サクセスストーリーが　はじまるっス▼
 ブラックシティじゃ　[1:00:トレーナー名:0]って
 ライバルが　いたっスけど▼
 ここには　いないっスからね！
@@ -1678,7 +1678,7 @@
 サトル</attribute>
 		<language name="JPN" width="256">サトル『せかいの　さまざまな
 ポケモンを　みていると▼
-いろいろな　こたえの
+さまざまな　こたえの
 そんざいを　かんじる……▼
 まえに　ブラックシティで
 であった　[1:00:トレーナー名:0]▼

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-25T22:28:15"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-25T21:32:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,8 +295,8 @@
 	<row id="msg_mapscript_dummy">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="plwc10_01_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -379,7 +379,7 @@
 ぼくを　まっている！▽
 ブラックシティで　まってるね！</language>
 		<language name="JPN_KANJI" width="256">わっ　ほんとうに？▼
-うれしいな！　新たしい　刺激が
+うれしいな！　新しい　刺激が
 ぼくを　待っている！▽
 ブラックシティで　待ってるね！</language>
 	</row>
@@ -1534,10 +1534,10 @@
 ツネカズ</attribute>
 		<language name="JPN" width="256">すまん！▼
 すっかり　わすれておったが
-せんやくが　いたのだった</language>
+せんやくが　あったの　だった</language>
 		<language name="JPN_KANJI" width="256">すまん！▼
 すっかり　忘れておったが
-先約が　いたのだった</language>
+先約が　あったの　だった</language>
 	</row>
 
 	<row id="plwc10_15_07" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1601,13 +1601,13 @@
 もう　しぜんに　いやされるのに▽
 あきて　きちゃったの▼
 あなた　よろしかったら
-わたしを　ブラックシティに▽
+わたくしを　ブラックシティに▽
 つれていって　くださらない？</language>
 		<language name="JPN_KANJI" width="256">シオリ『わたくし
-もう自然に　癒されるのに▽
+もう　自然に　癒されるのに▽
 飽きて　きちゃったの▼
 あなた　よろしかったら
-わたしを　ブラックシティに▽
+わたくしを　ブラックシティに▽
 連れていって　くださらない？</language>
 	</row>
 
@@ -1871,7 +1871,7 @@
 そのために　ブラックシティに
 つれていって　くれないかしら？</language>
 		<language name="JPN_KANJI" width="256">ユミコ『わたし　
-もっとバリバリ　生きて行きたいの！▼
+もっとバリバリ　生きていきたいの！▼
 そのために　ブラックシティに
 連れていって　くれないかしら？</language>
 	</row>
@@ -2148,11 +2148,13 @@
 	<row id="plwc10_22_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">RANGERM
 ソウスケ</attribute>
-		<language name="JPN" width="256">おっと！ちょっくら　べつくちで
-いきたいまちが　できちまった▼
+		<language name="JPN" width="256">おっと！▼
+ちょっくら　べつの　ようじで
+いきたいまちが　できちまった▽
 ごめんよ！</language>
-		<language name="JPN_KANJI" width="256">おっと！ちょっくら　別口で
-行きたい街が　できちまった▼
+		<language name="JPN_KANJI" width="256">おっと！▼
+ちょっくら　別の　用事で
+行きたい街が　できちまった▽
 ごめんよ！</language>
 	</row>
 
@@ -2182,7 +2184,7 @@
 いろんなものが　かいたいな！</language>
 		<language name="JPN_KANJI" width="256">エリザ『これから
 ブラックシティに　行くんだ▼
-色んなものが　買いたいな！</language>
+いろんなものが　買いたいな！</language>
 	</row>
 
 	<row id="plwc10_23_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -2203,7 +2205,7 @@
 いろんなものが　かえそうで▽
 うらやましいな……</language>
 		<language name="JPN_KANJI" width="256">エリザ『ブラックシティ……
-色んなものが　買えそうで▽
+いろんなものが　買えそうで▽
 うらやましいな……</language>
 	</row>
 
@@ -2452,12 +2454,12 @@
 サトル</attribute>
 		<language name="JPN" width="256">サトル『フゥ……▼
 たったひとつの　めいかくな
-こたえが　でる▼
-そんなけんきゅうが　したいよ</language>
+こたえが　でる▽
+そんな　けんきゅうが　したいよ</language>
 		<language name="JPN_KANJI" width="256">サトル『フゥ……▼
 たった一つの　明確な
-答えが　でる▼
-そんな研究が　したいよ</language>
+答えが　でる▽
+そんな　研究が　したいよ</language>
 	</row>
 
 	<row id="plwc10_26_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -2616,7 +2618,7 @@
 		<language name="JPN" width="256">ヒロアキ『つぎは
 ブラックシティに　いくんだ▽
 うらやましいだろ！</language>
-		<language name="JPN_KANJI" width="256">ヒロアキ『つぎは
+		<language name="JPN_KANJI" width="256">ヒロアキ『次は
 ブラックシティに　行くんだ▽
 うらやましいだろ！</language>
 	</row>
@@ -2788,11 +2790,11 @@
 グレース</attribute>
 		<language name="JPN" width="256">グレース『しぜんに　つくられた
 うつくしさ　だけでは▽
-ものたりないと　おもうとき▽
+ものたりないと　おもうこと……▽
 あなたには　ない？</language>
 		<language name="JPN_KANJI" width="256">グレース『自然に　つくられた
 美しさ　だけでは▽
-物足りないと　思うとき▽
+物足りないと　思うこと……▽
 あなたには　ない？</language>
 	</row>
 
@@ -3398,7 +3400,7 @@
 		<language name="JPN_KANJI" width="256">タクマ『セイ！　セイ　セイ……
 どうも　気合が　入らないなー▼
 修行続きで
-体が　つかれてるのかな？</language>
+身体が　つかれてるのかな？</language>
 	</row>
 
 	<row id="plbc10_07_03" back-color="#ff8080,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4046,13 +4048,13 @@
 	<row id="plbc10_15_01" back-color="#ff8080,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
-		<language name="JPN" width="256">ツネカズ『すまないな　わたしは
-べつの　ホワイトフォレストに　いく▽
-じゅんびを　しているのだ▼
+		<language name="JPN" width="256">ツネカズ『すまないな
+わたしは　ホワイトフォレストに▽
+いく　じゅんびを　しているのだ▽
 ようじなら　ホワイトフォレストでな！</language>
-		<language name="JPN_KANJI" width="256">ツネカズ『すまないな　わたしは
-別の　ホワイトフォレストに　行く▽
-準備を　しているのだ▼
+		<language name="JPN_KANJI" width="256">ツネカズ『すまないな
+わたしは　ホワイトフォレストに▽
+行く　準備を　しているのだ▽
 用事なら　ホワイトフォレストでな！</language>
 	</row>
 
@@ -4114,10 +4116,10 @@
 ツネカズ</attribute>
 		<language name="JPN" width="256">すまん！▼
 すっかり　わすれておったが
-せんやくが　いたのだった</language>
+せんやくが　あったの　だった</language>
 		<language name="JPN_KANJI" width="256">すまん！▼
 すっかり　忘れておったが
-先約が　いたのだった</language>
+先約が　あったの　だった</language>
 	</row>
 
 	<row id="plbc10_15_07" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4179,13 +4181,11 @@
 		<language name="JPN" width="256">シオリ『わたくし
 もう　うんめいのヒトを▽
 さがすのには　あきちゃったの▼
-ゆっくり　いやされたい　きぶんなの▼
 あなたの　ホワイトフォレストに
 つれていって　くださらない？</language>
 		<language name="JPN_KANJI" width="256">シオリ『わたくし
 もう　運命のヒトを▽
 探すのには　飽きちゃったの▼
-ゆっくり　癒されたい　気分なの▼
 あなたの　ホワイトフォレストに
 連れていって　くださらない？</language>
 	</row>
@@ -4234,10 +4234,10 @@
 		<attribute name="キャラ指定">BOY4
 ヒトシ</attribute>
 		<language name="JPN" width="256">ヒトシ『ぼかぁ　これから　べつの
-ホワイトフォレストに　いくんだ▼
+ホワイトフォレストに　いくんだ▽
 やっぱり　ゆったりぐらしがしたくてね</language>
 		<language name="JPN_KANJI" width="256">ヒトシ『ぼかぁ　これから　別の
-ホワイトフォレストに　行くんだ▼
+ホワイトフォレストに　行くんだ▽
 やっぱり　ゆったり暮らしがしたくてね</language>
 	</row>
 
@@ -4312,12 +4312,10 @@
 	<row id="plbc10_17_08" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BOY4
 ヒトシ</attribute>
-		<language name="JPN" width="256">つれていってくれて
-ありがとう！▼
+		<language name="JPN" width="256">つれていってくれて　ありがとう！▼
 しばらくは　ゆったりした
 くらしを　たのしむことに　するよ</language>
-		<language name="JPN_KANJI" width="256">連れていってくれて
-ありがとう！▼
+		<language name="JPN_KANJI" width="256">連れていってくれて　ありがとう！▼
 しばらくは　ゆったりした
 暮らしを　楽しむことにするよ</language>
 	</row>
@@ -4424,10 +4422,10 @@
 		<attribute name="キャラ指定">OL
 ユミコ</attribute>
 		<language name="JPN" width="256">ユミコ『これから
-ホワイトフォレストに　ひっこすのよ！▼
+ホワイトフォレストに　ひっこすのよ！▽
 あたらしいせいかつが　たのしみ！</language>
 		<language name="JPN_KANJI" width="256">ユミコ『これから
-ホワイトフォレストに　引っ越すのよ！▼
+ホワイトフォレストに　引っ越すのよ！▽
 新しい生活が　楽しみ！</language>
 	</row>
 
@@ -4555,13 +4553,13 @@
 		<language name="JPN" width="256">ミホ『なんだか
 おかいものして　おしゃれするのも▽
 あきて　きちゃった▼
-もっとしぜんたいで　いられる
+もっと　しぜんたいで　いられる
 ホワイトフォレストに　いきたいな▽
 つれていって　くれない？</language>
 		<language name="JPN_KANJI" width="256">ミホ『なんだか
 お買い物して　おしゃれするのも▽
 飽きてきちゃった▼
-もっと自然体で　いられる
+もっと　自然体で　いられる
 ホワイトフォレストに　行きたいな▽
 連れていってくれない？</language>
 	</row>
@@ -4599,11 +4597,11 @@
 		<language name="JPN" width="256">ありがとう！
 ホワイトフォレストで▼
 じぶんを　ムリに　かざらない
-そんなくらしを　するわ</language>
+そんな　くらしを　するわ</language>
 		<language name="JPN_KANJI" width="256">ありがとう！
 ホワイトフォレストで▼
-自分を　ムリに飾らない
-そんな暮らしを　するわ</language>
+自分を　ムリに　飾らない
+そんな　暮らしを　するわ</language>
 	</row>
 
 	<row id="plbc10_21_01" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4648,16 +4646,16 @@
 トシノブ</attribute>
 		<language name="JPN" width="256">トシノブ『いま　みたいに
 ひとの　ひょうかを▽
-きにするんじゃ　なくて▼
+きにするんじゃなくて▼
 ありのままの　じぶんで
 くらしたいなって　おもうんだ▼
 オレを　ホワイトフォレストに
 つれてって　くれないか？</language>
 		<language name="JPN_KANJI" width="256">トシノブ『今みたいに
 人の　評価を▽
-気にするんじゃ　なくて▼
+気にするんじゃなくて▼
 ありのままの　自分で
-暮らしたいなって思うんだ▼
+暮らしたいなって　思うんだ▼
 オレを　ホワイトフォレストに
 連れてって　くれないか？</language>
 	</row>
@@ -4674,11 +4672,11 @@
 	<row id="plbc10_21_06" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 トシノブ</attribute>
-		<language name="JPN" width="256">ごめん　やっぱり▼
-ほかのひとに　ついていくことにしたよ
+		<language name="JPN" width="256">ごめん　やっぱり
+ほかのひとに　ついていくことにしたよ▽
 わるいね</language>
-		<language name="JPN_KANJI" width="256">ごめん　やっぱり▼
-他の人に　ついて行くことにしたよ
+		<language name="JPN_KANJI" width="256">ごめん　やっぱり
+他の人に　ついて行くことにしたよ▽
 悪いね</language>
 	</row>
 
@@ -4720,11 +4718,11 @@
 ソウスケ</attribute>
 		<language name="JPN" width="256">ソウスケ『あーあ……
 もっと　ひととも　ポケモンとも▼
-おたがいに　きもちをつうじあわせる
+おたがいに　きもちを　つうじあわせる
 そんな　せいかつが　したいな……</language>
 		<language name="JPN_KANJI" width="256">ソウスケ『あーあ……
 もっと　人とも　ポケモンとも▼
-お互いに　気持ちを通じあわせる
+お互いに　気持ちを　通じあわせる
 そんな　生活が　したいな……</language>
 	</row>
 
@@ -4778,13 +4776,13 @@
 	<row id="plbc10_22_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">RANGERM
 ソウスケ</attribute>
-		<language name="JPN" width="256">おっと！
-ちょっくら　べつくちで▼
-いきたいまちが　できちまった
+		<language name="JPN" width="256">おっと！▼
+ちょっくら　べつの　ようじで
+いきたいまちが　できちまった▽
 ごめんよ！</language>
-		<language name="JPN_KANJI" width="256">おっと！
-ちょっくら　別口で▼
-行きたい街が　出来ちまった
+		<language name="JPN_KANJI" width="256">おっと！▼
+ちょっくら　別の　用事で
+行きたい街が　出来ちまった▽
 ごめんよ！</language>
 	</row>
 
@@ -4833,13 +4831,13 @@
 	<row id="plbc10_23_03" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">RANGERW
 エリザ</attribute>
-		<language name="JPN" width="256">エリザ『ホワイトフォレストか▼
+		<language name="JPN" width="256">エリザ『ホワイトフォレストか
 なんだか　こころがみたされる▼
-そんなせいかつができそうで
+そんな　せいかつが　できそうで
 うらやましいな</language>
-		<language name="JPN_KANJI" width="256">エリザ『ホワイトフォレストか▼
+		<language name="JPN_KANJI" width="256">エリザ『ホワイトフォレストか
 なんだか　心が満たされる▼
-そんな生活ができそうで
+そんな　生活が　できそうで
 うらやましいな</language>
 	</row>
 
@@ -4879,8 +4877,8 @@
 	<row id="plbc10_23_07" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">RANGERW
 エリザ</attribute>
-		<language name="JPN" width="256">ー</language>
-		<language name="JPN_KANJI" width="256">ー</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="plbc10_23_08" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4909,11 +4907,11 @@
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
 		<language name="JPN" width="256">ヒロノリ『なにか　おもいついても
-だいたい　さきに　やられてるっスね▼
+だいたい　さきに　やられてるっスねー▼
 おかねを　かせぐのは
 らくじゃねーっスよ！</language>
 		<language name="JPN_KANJI" width="256">ヒロノリ『なにか　思いついても
-大体　先に　やられてるっスね▼
+大体　先に　やられてるっスねー▼
 お金を　かせぐのは
 楽じゃねーっスよ！</language>
 	</row>
@@ -4921,11 +4919,11 @@
 	<row id="plbc10_24_03" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『シティ　ならではの
+		<language name="JPN" width="256">ヒロノリ『ビッグシティ　ならではの
 ビジネスチャンスを　さがしたっスが▼
 そんなに　うまい　はなし
 ころがってなんか　ないっスねぇ……</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『シティ　ならではの
+		<language name="JPN_KANJI" width="256">ヒロノリ『ビッグシティ　ならではの
 ビジネスチャンスを　探したっスが▼
 そんなに　うまい話
 転がってなんか　ないっスねぇ……</language>
@@ -4992,11 +4990,11 @@
 		<language name="JPN" width="256">ケン『これから
 ホワイトフォレストにいく▼
 あたらしい　まちで
-ひろいちしきを　えるのだ！</language>
+ひろい　ちしきを　えるのだ！</language>
 		<language name="JPN_KANJI" width="256">ケン『これから
 ホワイトフォレストに行く▼
 新しい　街で
-広い知識を　えるのだ！</language>
+広い　知識を　えるのだ！</language>
 	</row>
 
 	<row id="plbc10_25_02" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5006,13 +5004,13 @@
 ポケモンしょうぶの　ことばかり▽
 かんがえて　いても▽
 トレーナーとして　なにかがたりない▼
-もっと　ひろい　しやがもてる
+もっと　ひろい　しやが　もてる
 かんきょうで　すごしたいぜ</language>
 		<language name="JPN_KANJI" width="256">ケン『ブラックシティで
 ポケモン勝負の　ことばかり▽
-考えていても▽
+考えて　いても▽
 トレーナーとして　なにかが足りない▼
-もっと　広い　視野が持てる
+もっと　広い　視野が　持てる
 環境で　過ごしたいぜ</language>
 	</row>
 
@@ -5179,23 +5177,23 @@
 ローザ</attribute>
 		<language name="JPN" width="256">ローザ『これから　あたし
 ホワイトフォレストに　いくの▽
-まいにちを　だいじにしてすごせそう</language>
+まいにちを　だいじにして　すごせそう</language>
 		<language name="JPN_KANJI" width="256">ローザ『これから　あたし
 ホワイトフォレストに　行くの▽
-毎日を　大事にして過ごせそう</language>
+毎日を　大事にして　過ごせそう</language>
 	</row>
 
 	<row id="plbc10_27_02" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">VETERANW
 ローザ</attribute>
 		<language name="JPN" width="256">ローザ『ただ　まいにちを
-ヒマをつぶして　いきる……▼
+ヒマを　つぶして　いきる……▼
 そんなふうで　いいのかしら
-そうおもうときも　あるの</language>
+そう　おもうときも　あるの</language>
 		<language name="JPN_KANJI" width="256">ローザ『ただ　毎日を
-ヒマをつぶして　生きる……▼
+ヒマを　つぶして　生きる……▼
 そんなふうで　いいのかしら
-そう思うときも　あるの</language>
+そう　思うときも　あるの</language>
 	</row>
 
 	<row id="plbc10_27_03" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5219,7 +5217,7 @@
 つれていって　くれないかしら？</language>
 		<language name="JPN_KANJI" width="256">ローザ『わたし　もっと
 毎日を　大事にして▽
-生きていきたいの▼
+生きて　いきたいの▼
 ホワイトフォレストに
 連れていって　くれないかしら？</language>
 	</row>
@@ -5237,9 +5235,9 @@
 		<attribute name="キャラ指定">VETERANW
 ローザ</attribute>
 		<language name="JPN" width="256">きが　かわっちゃった
-やっぱり　べつの　まちにいくわ</language>
+やっぱり　べつの　まちに　いくわ</language>
 		<language name="JPN_KANJI" width="256">気が　変わっちゃった
-やっぱり　別の　街にいくわ</language>
+やっぱり　別の街に　いくわ</language>
 	</row>
 
 	<row id="plbc10_27_07" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5264,10 +5262,10 @@
 		<attribute name="キャラ指定">BACKPACKERM
 ヒロアキ</attribute>
 		<language name="JPN" width="256">ヒロアキ『つぎは
-ホワイトフォレストにいくんだ▼
+ホワイトフォレストにいくんだ▽
 うらやましいだろ！</language>
 		<language name="JPN_KANJI" width="256">ヒロアキ『次は
-ホワイトフォレストに行くんだ▼
+ホワイトフォレストに行くんだ▽
 うらやましいだろ！</language>
 	</row>
 
@@ -5448,11 +5446,11 @@
 グレース</attribute>
 		<language name="JPN" width="256">グレース『ホワイトフォレスト……
 ひとには　つくることのできない▽
-しぜん　という　なの　げいじゅつ▼
+しぜん　という　なの　げいじゅつ▽
 ……この　めで　みたいものだわ</language>
 		<language name="JPN_KANJI" width="256">グレース『ホワイトフォレスト……
 人には　つくることのできない▽
-自然　という　名の　芸術▼
+自然　という　名の　芸術▽
 ……この目で　みたいものだわ</language>
 	</row>
 
@@ -5461,13 +5459,13 @@
 グレース</attribute>
 		<language name="JPN" width="256">グレース『ホワイトフォレスト……
 ひとには　つくることのできない▽
-しぜん　というなの　げいじゅつ▼
+しぜん　というなの　げいじゅつ▽
 ……この　めで　みてみたいの▼
 あなた……
 わたしを　つれていってくれない？</language>
 		<language name="JPN_KANJI" width="256">グレース『ホワイトフォレスト……
 人には　つくることのできない▽
-自然　という　名の　芸術▼
+自然　という　名の　芸術▽
 ……この目で　みてみたいの▼
 あなた……
 わたしを　連れていってくれない？</language>
@@ -5491,7 +5489,7 @@
 はなしのとちゅうで　ごめんなさいね</language>
 		<language name="JPN_KANJI" width="256">あら　なんでしたっけ？▼
 そうそう　わたくし
-別の　ホワイトフォレストに行くの▼
+別の　ホワイトフォレストに行くの▽
 話の途中で　ごめんなさいね</language>
 	</row>
 
