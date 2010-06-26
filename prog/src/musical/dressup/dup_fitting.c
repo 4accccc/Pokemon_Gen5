@@ -850,7 +850,6 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
       
       PRINTSYS_QUE_Clear( work->printQue );
-      work->printQue = NULL;
       GFL_BMPWIN_Delete( work->msgWin );
       work->msgWin = NULL;
       DUP_DEBUG_ScreenDraw( work , 6 );
