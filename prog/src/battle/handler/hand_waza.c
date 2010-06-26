@@ -1606,8 +1606,12 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
       WazaID waza = BPP_GetPrevWazaID( target );
 
-//      u16 counter = BPP_GetWazaContCounter( target );
-//      TAYA_Printf("wazaID=%d, counter=%d\n", waza, counter);
+      {
+        WazaID orgWaza = BPP_GetPrevOrgWazaID( target );
+        if( orgWaza != waza ){
+          waza = orgWaza;
+        }
+      }
 
       if( (waza != WAZANO_NULL)
       &&  (!BTL_TABLES_IsMatchMonomaneFail(waza))
@@ -1661,15 +1665,12 @@ static void handler_Sketch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
     WazaID waza = BPP_GetPrevWazaID( target );
 
-    /*
-    if( waza == WAZANO_NULL )
     {
-      WazaID  prevSelectedWaza = BPP_GetPrevOrgWazaID( target );
-      if( BTL_TABLES_CheckSketchExWaza(prevSelectedWaza) ){
-        waza = prevSelectedWaza;
+      WazaID orgWaza = BPP_GetPrevOrgWazaID( target );
+      if( orgWaza != waza ){
+        waza = orgWaza;
       }
     }
-    */
 
     if( (waza != WAZANO_NULL)
     &&  (waza != WAZANO_SUKETTI)
@@ -6121,7 +6122,6 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         rank_param->fStdMsgDisable = TRUE;
         rank_param->fAlmost = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, rank_param );
-
 
       msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
         HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Haradaiko );
