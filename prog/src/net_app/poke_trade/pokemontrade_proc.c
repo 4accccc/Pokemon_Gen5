@@ -1555,9 +1555,10 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 // ポケモンのステータス表示
 static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
 {
+  POKEMON_PARAM* pp;
   if(WIPE_SYS_EndCheck()){
-    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
     pWork->pokemonselectno = 0; // 自分のから表示
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
     POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
     _PokemonIconRenew(pWork);
     WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
