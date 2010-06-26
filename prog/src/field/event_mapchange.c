@@ -372,6 +372,12 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 #ifdef  PLAYABLE_VERSION
     {
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+      //季節ポケモンフォルムチェンジ条件を満たしたので、手持ちの季節ポケモンをフォルムチェンジさせる
+      SEASONPOKE_FORM_ChangeForm(gamedata, party, season);
+    }
+    {
       // 画面フェードイン
       // ゲーム終了時の季節を表示する
       u8 season = GAMEDATA_GetSeasonID( gamedata );
