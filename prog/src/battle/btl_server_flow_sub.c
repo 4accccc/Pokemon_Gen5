@@ -1142,10 +1142,12 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     // Žg—pŒø‰Ê‚ ‚è
     if( fEffective )
     {
-      if( targetPos != BTL_POS_NULL )
+
       {
-        SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, BTLEFF_USE_ITEM );
+        u16 effectNo = (targetPos!=NULL)? BTLEFF_USE_ITEM : BTLEFF_BENCH_RECOVERY;
+        SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, effectNo );
       }
+
       if( wk->bagMode != BBAG_MODE_SHOOTER )
       {
         BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
