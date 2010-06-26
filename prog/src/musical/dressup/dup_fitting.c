@@ -837,21 +837,21 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   {
     if( work->isDispMsg == TRUE )
     {
-      DUP_DEBUG_ScreenDraw( work , 1 );
+      DUP_DEBUG_ScreenDraw( work , 2 );
       work->isDispMsg = FALSE;
       GFL_BG_SetPriority( FIT_FRAME_SUB_MSG , 3 );
       GFL_BG_SetPriority( FIT_FRAME_SUB_TOP , 0 );
       GFL_BG_SetPriority( GFL_BG_FRAME1_S , 1 );
       GFL_BG_SetPriority( GFL_BG_FRAME2_S , 2 );
       
-      DUP_DEBUG_ScreenDraw( work , 2 );
+      DUP_DEBUG_ScreenDraw( work , 4 );
       GFL_ARC_UTIL_TransVramScreen( ARCID_DRESSUP_GRA , NARC_dressup_gra_test_bg_u_NSCR , 
                   FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
       GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
       
       GFL_BMPWIN_Delete( work->msgWin );
       work->msgWin = NULL;
-      DUP_DEBUG_ScreenDraw( work , 3 );
+      DUP_DEBUG_ScreenDraw( work , 6 );
     }
     else
     if( work->curtainScrollCnt > 0 )
@@ -863,7 +863,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     }
   }
 
-  DUP_DEBUG_ScreenDraw( work , 4 );
+  DUP_DEBUG_ScreenDraw( work , 8 );
   //アイテム保持の上段メッセージの更新
   if( work->isUpdateMsg == FALSE &&
        work->state == DUS_FITTING_MAIN )
@@ -882,7 +882,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       work->dispItemId = MUSICAL_ITEM_INVALID;
     }
   }
-  DUP_DEBUG_ScreenDraw( work , 5 );
+  DUP_DEBUG_ScreenDraw( work ,10 );
 
   if( work->isUpdateMsg == TRUE &&
       PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
@@ -894,12 +894,12 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     GFL_BG_SetPriority( GFL_BG_FRAME2_S , 3 );
     GFL_BG_SetPriority( FIT_FRAME_SUB_MSG , 0 );
   }
-  DUP_DEBUG_ScreenDraw( work , 6 );
+  DUP_DEBUG_ScreenDraw( work ,12 );
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
   
-  DUP_DEBUG_ScreenDraw( work , 7 );
+  DUP_DEBUG_ScreenDraw( work ,14 );
   //SE用
   if( work->listSeWaitCnt > 0 )
   {
@@ -912,17 +912,21 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
         work->state != DUS_FADEIN_WAIT &&
         work->state != DUS_FADEOUT_WAIT )
     {
+      DUP_DEBUG_ScreenDraw( work ,32 );
       if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
       {
         //リクエストはしない
+        DUP_DEBUG_ScreenDraw( work ,34 );
         WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                         WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
         PMSND_FadeOutBGM( FSND_FADE_NORMAL );
+        DUP_DEBUG_ScreenDraw( work ,36 );
         work->state = DUS_FADEOUT_WAIT;
+        DUP_DEBUG_ScreenDraw( work ,38 );
       }
     }
   }
-  DUP_DEBUG_ScreenDraw( work , 8 );
+  DUP_DEBUG_ScreenDraw( work ,16 );
 
 #if DEB_ARI
   {
