@@ -592,18 +592,7 @@ EVENT_START   ev_d08r0101_hakase2_01
 	//アララギ主人公と向き合う
 	_TURN_HERO_SITE()
 	
-	//デモを呼ぶ
-	_DEMO_FADEOUT_BLACK_CALL()
-	
-	//ROMによって、復活するポケモンを変更する
-	IF $LCWK_VERSION == VERSION_WHITE THEN
-		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_W )
-	ELSE
-		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_B )
-	ENDIF
-	
-	//【仮】フェードインでフィールドに戻る
-	_DEMO_FADEIN_BLACK_CALL()
+  _GOTO_GAMECLEAR_DEMO( 0 )
 	}
 	
 EVENT_END

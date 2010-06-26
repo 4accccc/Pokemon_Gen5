@@ -52,6 +52,7 @@
 
 
 #ifdef PLAYABLE_VERSION
+FS_EXTERN_OVERLAY( gameclear_demo );
 extern GFL_PROC_DATA PlayableEndProcData;
 #endif
 
@@ -292,7 +293,7 @@ VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk )
   GMEVENT * event;
 
 #ifdef PLAYABLE_VERSION
-  event = EVENT_FieldSubProc( gsys, fieldmap, FS_OVERLAY_ID( geonet ), &PlayableEndProcData, gamedata );
+  event = EVENT_FieldSubProc( gsys, fieldmap, FS_OVERLAY_ID( gameclear_demo ), &PlayableEndProcData, gamedata );
 #else
   event = EVENT_FieldSubProc( gsys, fieldmap, FS_OVERLAY_ID( geonet ), &Earth_Demo_proc_data, gamedata );
 #endif
