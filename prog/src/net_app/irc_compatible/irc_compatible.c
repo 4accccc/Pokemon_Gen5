@@ -160,7 +160,6 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u
 static u32 RULE_CalcNameScore( const STRCODE	*cp_player1_name, const STRCODE	*cp_player2_name );
 static u32 MATH_GetMostOnebit( u32 x, u8 bit );
 static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status, GFDATE gfdate );
-static u32 RULE_CalcRhythmMinus( u32 cnt_diff );
 
 #ifdef DEBUGWIN_USE
 static void DEBUGWIN_Init( HEAPID heapID );
@@ -1083,7 +1082,6 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 		if( p_wk->rhythm_score != 0 && p_wk->aura_score != 0 )
 		{	
       BOOL is_init;
-      u32 rhythm_minus;
       GFDATE  gfdate;
       COMPATIBLE_STATUS my_status;
 
@@ -1127,12 +1125,9 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
         gfdate  = p_wk->p_you_status->date;
       }
 
-      //リズムのマイナス点を計算
-      rhythm_minus  = RULE_CalcRhythmMinus( p_wk->rhythm_cnt_diff );
-
       //得点計算
 			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score,
-          rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status, is_init,
+          p_wk->rhythm_cnt_diff, p_wk->aura_minus, &my_status, p_wk->p_you_status, is_init,
           gfdate, HEAPID_IRCCOMPATIBLE_SYSTEM );
 		}
 
@@ -1429,31 +1424,6 @@ static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status, GFDATE gfdate
   RTCDate date;
   GFDATE_GFDate2RTCDate( gfdate, &date );
   return Irc_Compatible_SV_CalcBioRhythm( cp_status->barth_month, cp_status->barth_day, &date );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  リズムチェックのマイナス点を計算
- *
- *	@param	u32 cnt_diff  自分と相手の差
- *
- *	@return マイナス点
- */
-//-----------------------------------------------------------------------------
-static u32 RULE_CalcRhythmMinus( u32 cnt_diff )
-{ 
-  static const sc_minus_tbl[] =
-  { 
-    0,
-    2,
-    4,
-    6,
-    8,
-    10,
-  };
-
-  cnt_diff = MATH_IMin( cnt_diff, NELEMS(sc_minus_tbl) );
-
-  return sc_minus_tbl[ cnt_diff ];
 }
 
 
