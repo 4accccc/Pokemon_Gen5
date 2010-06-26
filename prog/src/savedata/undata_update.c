@@ -23,9 +23,6 @@ static DAT_ADD_ST UpdateData(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
 
 #ifdef PM_DEBUG
 
-//前方宣言
-DAT_ADD_ST UNDATAUP_UpdateD(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
-
 //----------------------------------------------------------
 /**
  * @brief	データ更新　デバッグ用
