@@ -123,6 +123,9 @@ extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
 
 #endif
 
+#ifdef  PLAYABLE_VERSION
+#include "event_gameclear.h"
+#endif
 
 //======================================================================
 //======================================================================
@@ -308,6 +311,15 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 
   
   SET_CHECK("ev_check:special event");
+#ifdef  PLAYABLE_VERSION
+  {
+    if ( PLAYTIME_GetMinute( GAMEDATA_GetPlayTimeWork( req.gamedata ) ) >= 10 )
+    {
+      return EVENT_GameClear( gsys, 2 );  //時間切れで終了
+    }
+  }
+#endif  //PLAYABLE_VERSION
+
 //☆☆☆特殊スクリプト起動チェックがここに入る
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE)

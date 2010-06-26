@@ -50,6 +50,10 @@
 
 #include "field/field_msgbg.h"
 #include "system/bmp_winframe.h"
+
+#ifdef  PLAYABLE_VERSION
+#include  "event_gameclear.h"   //EVENT_GameClear
+#endif
 //==============================================================================================
 //
 //	‘S–ÅŠÖ˜A
@@ -158,6 +162,12 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 //-----------------------------------------------------------------------------
 GMEVENT * EVENT_NormalLose( GAMESYS_WORK * gsys )
 {
+#ifdef  PLAYABLE_VERSION
+
+  return EVENT_GameClear( gsys, 1 );
+
+#else
+
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	GMEVENT * event;
   GAMEOVER_WORK * param;
@@ -178,6 +188,7 @@ GMEVENT * EVENT_NormalLose( GAMESYS_WORK * gsys )
   GAMESYSTEM_SetNetOffEventFlag( gsys, FALSE );
 
   return event;
+#endif  //PLAYABLE_VERSION
 }
 
 

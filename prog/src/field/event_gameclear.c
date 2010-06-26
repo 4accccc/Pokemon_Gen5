@@ -123,10 +123,12 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
 
   switch( work->nowSeq ) {
   case GMCLEAR_SEQ_INIT:
+#ifndef  PLAYABLE_VERSION
     if( work->clear_mode == GAMECLEAR_MODE_DENDOU ) {
       GF_ASSERT( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_GAME_CLEAR ) ); // ゲームクリアなしで殿堂入り ( 通常はありえない )
       ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
     }
+#endif
     PMSND_FadeOutBGM( 30 );
     NowSeqFinish( work, seq );
     break;
@@ -335,6 +337,42 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   int pos = 0;
 
 #ifdef  PLAYABLE_VERSION
+  switch( work->clear_mode ) {
+  case 0:
+    //work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_DEMO;  //LegendMeet
+    work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;      //「製品版をお楽しみに」
+    work->seqArray[pos++] = GMCLEAR_SEQ_END;
+    break;
+  case 1:
+    work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_DEMO;  //LegendMeet
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;      //「製品版をお楽しみに」
+    work->seqArray[pos++] = GMCLEAR_SEQ_END;
+    break;
+  case 2:
     work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
     work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
@@ -343,13 +381,15 @@ static void SetupSequence( GAMECLEAR_WORK* work )
     //work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
     //work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
     //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
-    work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_DEMO;
-    work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_DEMO;  //LegendMeet
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
     //work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
     //work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
     //work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
-    work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;
+    work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;      //「製品版をお楽しみに」
     work->seqArray[pos++] = GMCLEAR_SEQ_END;
+    break;
+  }
 #else
   switch( work->clear_mode ) {
   default: GF_ASSERT(0);
