@@ -1644,7 +1644,15 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
   p_param->b_sync       = FALSE;
   p_param->battle_mode  = battle_mode;;
   p_param->fight_count  = 0;
-  p_param->b_correct    = !p_wk->btl_score.is_dirty;
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
+  {
+    //ライブ大会は不正録画チェックをしない
+    p_param->b_correct    = TRUE;
+  }
+  else
+  {
+    p_param->b_correct    = !p_wk->btl_score.is_dirty;
+  }
 
   //相手のサーバーが、自分のサーバーよりバージョンが上だったら録画できない
   //相手と自分のサーバーが違かったら録画できない
