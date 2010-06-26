@@ -60,7 +60,8 @@ typedef struct _COMM_PLAYER_SYS{
   HEAPID heap_id;
   u8 max;
   u8 update_stop;       ///<TRUE:座標更新を行わない
-  u8 padding[2];
+  u8 dash_flag;
+  u8 padding;
 }COMM_PLAYER_SYS;
 
 
@@ -87,7 +88,7 @@ static void _FieldCommActorSys_CheckCreate(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_P
  * @retval  COMM_PLAYER_SYS_PTR		
  */
 //==================================================================
-COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
+COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id, BOOL dash_flag)
 {
   COMM_PLAYER_SYS_PTR cps;
 
@@ -100,6 +101,7 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
   cps->max = max;
   cps->gsys = gsys;
   cps->heap_id = heap_id;
+  cps->dash_flag = dash_flag;
 
   return cps;
 }
@@ -282,7 +284,7 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
 
   fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
   fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
-  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id, FALSE);
+  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id, cps->dash_flag);
   
   GFL_STD_MemClear(&pack, sizeof(COMM_PLAYER_PACKAGE));
   for(i = 0; i < COMM_PLAYER_MAX; i++){
@@ -531,5 +533,5 @@ static void _FieldCommActorSys_CheckCreate(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_P
   }
   
   fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
-  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id, FALSE);
+  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id, cps->dash_flag);
 }
