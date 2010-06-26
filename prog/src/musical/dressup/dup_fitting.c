@@ -2244,8 +2244,8 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work , const BOOL playSna
   if( work->snapPos != MUS_POKE_EQU_INVALID )
   {
     MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , work->snapPos );
-    dispPos.x = (int)F32_CONST(equipData->pos.x+equipData->ofs.x+FX32_HALF)+128;
-    dispPos.y = (int)F32_CONST(equipData->pos.y+equipData->ofs.y+FX32_HALF)+ 96;
+    dispPos.x = (int)F32_CONST(equipData->pos.x+equipData->ofs.x+0)+128;
+    dispPos.y = (int)F32_CONST(equipData->pos.y+equipData->ofs.y+0)+ 96;
     rotZ = equipData->itemRot;
     MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , itemDrawWork , TRUE );
     if( MUS_ITEM_DRAW_IsBackItem( itemDrawWork ) == TRUE )
@@ -2613,8 +2613,8 @@ static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work )
     MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , ePos );
     
     //“®ìI—¹’n“_Ý’è
-    befPos.x = (int)F32_CONST(equipData->pos.x+equipData->ofs.x+FX32_HALF)+128;
-    befPos.y = (int)F32_CONST(equipData->pos.y+equipData->ofs.y+FX32_HALF)+96;
+    befPos.x = (int)F32_CONST(equipData->pos.x+equipData->ofs.x+0)+128;
+    befPos.y = (int)F32_CONST(equipData->pos.y+equipData->ofs.y+0)+96;
     
     pos.x = FX32_CONST(befPos.x);
     pos.y = FX32_CONST(befPos.y);
@@ -2882,8 +2882,8 @@ static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work , MUS
     if( equipData->isEnable == TRUE && 
        canEquipPos == TRUE )
     {
-      const int equipPosX = (int)F32_CONST(equipData->pos.x+equipData->ofs.x+FX32_HALF)+128-FIT_POKE_POS_X;
-      const int equipPosY = (int)F32_CONST(equipData->pos.y+equipData->ofs.y+FX32_HALF)+96 -FIT_POKE_POS_Y;
+      const int equipPosX = (int)F32_CONST(equipData->pos.x+equipData->ofs.x+0)+128-FIT_POKE_POS_X;
+      const int equipPosY = (int)F32_CONST(equipData->pos.y+equipData->ofs.y+0)+96 -FIT_POKE_POS_Y;
       const int subX = pos->x - equipPosX;
       const int subY = pos->y - equipPosY;
       const int subLen = (subX*subX)+(subY*subY);
