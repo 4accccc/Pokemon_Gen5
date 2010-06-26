@@ -1931,8 +1931,13 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
         break;
       }
       // フリーフォール状態のポケは実行しない
-      if( BPP_CheckSick(bpp, WAZASICK_FREEFALL) ){
-        break;
+      if( BPP_CheckSick(bpp, WAZASICK_FREEFALL) )
+      {
+        if( (action.gen.cmd != BTL_ACTION_ESCAPE)
+        ||  (BTL_MAIN_GetEscapeMode(wk->mainModule) != BTL_ESCAPE_MODE_CONFIRM)
+        ){
+          break;
+        }
       }
 
       scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );

@@ -1907,8 +1907,11 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
         // フリーフォール捕まれチェック
         if( BPP_CheckSick(wk->procPoke, WAZASICK_FREEFALL) )
         {
-          (*seq) = 6;
-          break;
+          // 「降参しますか？」モードでなければ実行不可
+          if( BTL_MAIN_GetEscapeMode(wk->mainModule) != BTL_ESCAPE_MODE_CONFIRM ){
+            (*seq) = 6;
+            break;
+          }
         }
 
         shooterCost_Save( wk, wk->procPokeIdx, 0 );
