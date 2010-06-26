@@ -2790,6 +2790,14 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fFo
     }
 
   }
+  // 通信対戦中は特殊メッセージ
+  else if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE ){
+    if( wk->fEscMsgDisped == FALSE )
+    {
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Retired );
+      wk->fEscMsgDisped = TRUE;
+    }
+  }
 
   // サブウェイ戦・通信対戦などは無条件に逃げる
   BTL_ESCAPEINFO_Add( &wk->escInfo, escapeClientID );
