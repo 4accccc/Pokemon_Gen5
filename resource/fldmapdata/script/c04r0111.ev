@@ -548,6 +548,7 @@ sub_challenge_continue_comm_multi_ok:
     _RET
   ENDIF
   
+  //お互いが選んだポケモンデータを交換　受信
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, recv_result )
   
   //通信エラーチェック
@@ -564,7 +565,7 @@ sub_challenge_continue_comm_multi_ok:
     _SYSWIN_CLOSE()
     
     $SCWK_TEMP0 = $SCWK_TARGET_OBJID
-    $SCWK_TEMP1 = $comm_ret
+    $SCWK_TEMP1 = $recv_result
     _CHG_COMMON_SCR SCRID_BSW_COMM_MULTI_ERROR_MSG_SAMEPOKE
     
     //相手のメッセージ表示完了待ち
@@ -1084,15 +1085,18 @@ EVENT_START ev_c04r0111_home
   //ゲーム情報をセーブデータに反映
   _BSUBWAY_TOOL( BSWSUB_SAVE_GAMECLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  //wifiアップロード
+  IF $wifi_upload_f == TRUE THEN
+    _SYSWIN_MSG( msg_c04r0111_02, POS_DOWN ) //ご案内する前にレポート
+    _REPORT_CALL( SCWK_ANSWER )
+    _MSGWIN_CLOSE()
+    _CHG_COMMON_SCR SCRID_BSW_UPLOAD_WIFI_SCORE
+  ENDIF
+  
   //レポート
   _SYSWIN_MSG( msg_c04r0111_01 , POS_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
   _SYSWIN_CLOSE()
-  
-  //wifiアップロード
-  IF $wifi_upload_f == TRUE THEN
-    _CHG_COMMON_SCR SCRID_BSW_UPLOAD_WIFI_SCORE
-  ENDIF
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
     //途中駅　また話し掛けてくれ

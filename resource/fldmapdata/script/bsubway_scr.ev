@@ -1007,8 +1007,13 @@ sub_receipt_challenge_multi_comm:
   IF $ret != 0 THEN
     _SYSWIN_CLOSE() //通信待機中…消し
     
-    IF $ret == 1 THEN //一体のみ
-      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+    IF $ret != 3 THEN //一体のみ
+      IF $ret == 1 THEN //１番目のポケモン被り
+        _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+      ELSE //２番目
+        _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 1, BSW_NULL, ret )
+      ENDIF
+      
       _MONS_NAME( 0, ret )
       $SCWK_TEMP0 = msg_bsw_scr_54
     ELSE //複数化振り
@@ -3293,12 +3298,17 @@ _RET
 //  受付　通信マルチのポケモン被りメッセージ
 //  BSWSUB_COMM_RECV_BUFでBSWAY_COMM_PLAYER_DATAを実行後が条件。
 //  @param SCWK_TEMP0 OBJ ID
-//  @param SCWK_TEMP1 被っている数
+//  @param SCWK_TEMP1 被っている数 1=一番目のみ 2=２番目のみ 3=両方
 //--------------------------------------------------------------
 ev_bsw_comm_multi_error_msg_samepoke:
 {
-  IF $SCWK_TEMP1 == 1 THEN
-    _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+  IF $SCWK_TEMP1 != 3 THEN
+    IF $SCWK_TEMP1 == 1 THEN
+      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+    ELSE
+      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 1, BSW_NULL, ret )
+    ENDIF
+    
     _MONS_NAME( 0, ret )
     _BALLOONWIN_OBJMSG_POS( msg_bsw_scr_54, SCWK_TEMP0, POS_DOWN )
   ELSE

@@ -850,12 +850,14 @@ static void commCmd_RecvBufPlayerData(
       bsw_scr->mem_poke[0], bsw_scr->mem_poke[1],
       bsw_scr->pare_poke[0], bsw_scr->pare_poke[1] );
 #endif
-
+  
+  //‚P”Ô–Ú‚Ìƒ|ƒPƒ‚ƒ“‚ª”í‚Á‚Ä‚¢‚½‚ç‚P
   if( bsw_scr->mem_poke[0] == bsw_scr->pare_poke[0] ||
       bsw_scr->mem_poke[0] == bsw_scr->pare_poke[1]){
     ret += 1;
   }
   
+  //‚Q”Ô–Ú‚Ìƒ|ƒPƒ‚ƒ“‚ª”í‚Á‚Ä‚¢‚½‚ç‚QA—¼•û”í‚Á‚Ä‚¢‚½‚ç‚R
   if( bsw_scr->mem_poke[1] == bsw_scr->pare_poke[0] ||
       bsw_scr->mem_poke[1] == bsw_scr->pare_poke[1]){
     ret += 2;
