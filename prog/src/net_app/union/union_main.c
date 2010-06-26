@@ -281,7 +281,7 @@ BOOL UnionMain_CheckPlayerFreeMode(GAMESYS_WORK *gsys)
   UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
   
   if(unisys == NULL){
-    return TRUE;
+    return FALSE;
   }
   if((unisys->my_situation.union_status == UNION_STATUS_NORMAL
       || unisys->my_situation.union_status == UNION_STATUS_COLOSSEUM_NORMAL)
