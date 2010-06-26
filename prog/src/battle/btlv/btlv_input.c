@@ -844,6 +844,7 @@ static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
+static  inline  void  SePlayBeep( BTLV_INPUT_WORK* biw );
 
 static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
 
@@ -1809,6 +1810,10 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     int cont = GFL_UI_KEY_GetCont();
     if( ( biw->button_exist[ hit ] == FALSE ) && ( ( ( cont & PAD_BUTTON_L ) == 0 ) || ( biw->scr_type != BTLV_INPUT_SCRTYPE_WAZA ) ) )
     {
+      if( biw->waza_exist[ hit ] )
+      { 
+        SePlayBeep( biw );
+      }
       hit = GFL_UI_TP_HIT_NONE;
     }
     else if( ( hit < 4 ) &&
@@ -2002,6 +2007,10 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     int cont = GFL_UI_KEY_GetCont();
     if( ( biw->button_exist[ hit ] == FALSE ) && ( ( cont & PAD_BUTTON_L ) == 0 ) )
     { 
+      if( biw->waza_exist[ hit ] )
+      { 
+        SePlayBeep( biw );
+      }
       hit = GFL_UI_TP_HIT_NONE;
     }
     else if( ( hit > 4 ) && ( biw->button_exist[ hit ] == FALSE ) )
@@ -5593,6 +5602,16 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
   PMSND_PlaySE( SEQ_SE_ROTATION_B );
+}
+
+//=============================================================================================
+//  ƒr[ƒv‰¹Ä¶
+//=============================================================================================
+static  inline  void  SePlayBeep( BTLV_INPUT_WORK* biw )
+{
+  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+
+  PMSND_PlaySE( SEQ_SE_BEEP );
 }
 
 #ifdef PM_DEBUG
