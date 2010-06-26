@@ -166,7 +166,7 @@ struct _G_SYNC_WORK {
   int time;
   int uploadCount;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
-  char tempbuffer[30];
+  char tempbuffer[32];
   u8 musicalNo;      ///< webで選択した番号  無い場合 0
   u8 cgearNo;        ///< webで選択した番号  無い場合 0
   u8 zukanNo;        ///< webで選択した番号  無い場合 0
@@ -177,6 +177,8 @@ struct _G_SYNC_WORK {
   u8 errEnd;     // エラーの時に電源切断かどうか
   u8 bAccount;   //アカウント取得済みかどうか
   u8 bSaveDataAsync;
+  u8 noERROR;  //ここはエラーにしない
+  u8 dummy;
 };
 
 
@@ -577,10 +579,15 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 {
   DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
+  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) != SAVE_RESULT_OK){
+    return;
+  }
+  pWork->bSaveDataAsync = FALSE;
   pWork->errEnd = FALSE;
+  pWork->noERROR = FALSE;
 
+  
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-
 
   if(pWork->bGet){
     GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
@@ -621,30 +628,46 @@ static void _wakeupAction71(G_SYNC_WORK* pWork)
 {
   int response;
 
-  if(GFL_NET_IsInit()){
+  {
+    int response;
+    response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+    if(_responceChk(pWork,response)){
+      return;
+    }
+  }
+  if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+    NET_PRINT("終了\n");
     {
-      int response;
-      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(_responceChk(pWork,response)){
-        return;
-      }
+      u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+      DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+      gs_response* pRep = (gs_response*)pEvent;
+      NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+
+      pWork->noERROR = TRUE;
+
+      _CHANGE_STATE(_wakeupAction7);
     }
-    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
-      NET_PRINT("終了\n");
-      {
-        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
-        DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
-        gs_response* pRep = (gs_response*)pEvent;
-        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
-        _CHANGE_STATE(_wakeupAction7);
+  }
+}
+
+
+
+static void _wakeupAction_save22(G_SYNC_WORK* pWork)
+{
+  if(pWork->time != 0){
+    pWork->time--;
+    return;
+  }
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD_FINISH, pWork->pNHTTPRap)){
+      pWork->aDownFinish.bGet=TRUE;
+      pWork->aDownFinish.dummy=0;
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), &pWork->aDownFinish, sizeof(NHTTPRAP_URL_DOWNLOAD_FINISH) );
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
+        _CHANGE_STATE(_wakeupAction71);
       }
     }
   }
-  else{
-    _CHANGE_STATE(_wakeupAction7);
-  }
-
-
 }
 
 
@@ -662,27 +685,11 @@ static void _wakeupAction_save2(G_SYNC_WORK* pWork)
   }
   GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
 
-  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) != SAVE_RESULT_OK){
+  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) != SAVE_RESULT_LAST){
     return;
   }
-  pWork->bSaveDataAsync = FALSE;
-
-  if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD_FINISH, pWork->pNHTTPRap)){
-      pWork->aDownFinish.bGet=TRUE;
-      pWork->aDownFinish.dummy=0;
-      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), &pWork->aDownFinish, sizeof(NHTTPRAP_URL_DOWNLOAD_FINISH) );
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
-        _CHANGE_STATE(_wakeupAction71);
-      }
-    }
-  }
-  else{
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
-//    if(GFL_UI_KEY_GetTrg()){
-      _CHANGE_STATE(_wakeupAction7);
-    }
-  }
+  pWork->time = GFUser_GetPublicRand(90);
+  _CHANGE_STATE(_wakeupAction_save22);
 }
 
 
@@ -2515,7 +2522,7 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   GSYNC_DISP_Main(pWork->pDispWork);
   GSYNC_MESSAGE_Main(pWork->pMessageWork);
 
-  if(WIPE_SYS_EndCheck()){
+  if(WIPE_SYS_EndCheck() && !pWork->noERROR){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
       NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
       if(pWork->bSaveDataAsync){
