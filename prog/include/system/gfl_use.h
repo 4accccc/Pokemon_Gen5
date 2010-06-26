@@ -76,4 +76,5 @@ extern void GFUser_ResetVIntrFunc(void);
 
 //デフォルトのDS開閉時サウンド制御コールバックを登録
 extern void GFUser_SetSleepSoundFunc( void );
+extern BOOL GFUser_IsSleepSoundFunc( void );
 

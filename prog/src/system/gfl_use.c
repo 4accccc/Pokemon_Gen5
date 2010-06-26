@@ -607,5 +607,16 @@ void GFUser_SetSleepSoundFunc( void )
    GFL_UI_SleepSoundReleaseSetFunc( sleepSoundReleaseDefault, NULL );
 }
 
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+BOOL GFUser_IsSleepSoundFunc( void )
+{
+  if( GFL_UI_SleepSoundGoGetFunc() == sleepSoundSetupDefault ){
+    GF_ASSERT( GFL_UI_SleepSoundReleaseGetFunc() == sleepSoundReleaseDefault );
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 

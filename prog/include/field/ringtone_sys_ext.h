@@ -10,4 +10,5 @@
 
 //着信音制御対応のDS開閉時サウンドコールバックを登録
 extern void RINGTONE_SYS_SetSleepSoundFunc( void );
+extern BOOL RINGTONE_SYS_IsSleepSoundFunc( void );
 

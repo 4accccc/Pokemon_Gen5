@@ -170,6 +170,7 @@ struct _BTL_MAIN_MODULE {
   u8        fLoseMoneyFixed      : 1;
   u8        fBGMFadeOutDisable   : 1;
   u8        fMoneyDblUp          : 1;
+  u8        fSleepSoundFunc      : 1;
 
 
 };
@@ -300,7 +301,11 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_UTIL_PRINTSYS_Init();
 
       //Sleep時のボリューム操作をマスターボリュームに変更
-      GFUser_SetSleepSoundFunc();
+      if( GFUser_IsSleepSoundFunc() == FALSE ){
+        GF_ASSERT( RINGTONE_SYS_IsSleepSoundFunc() );
+        GFUser_SetSleepSoundFunc();
+        wk->fSleepSoundFunc = TRUE;
+      }
 
       wk->heapID = HEAPID_BTL_SYSTEM;
       wk->setupParam = setup_param;
@@ -570,7 +575,10 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     PMV_ResetMasterVolume();
 
     //Sleep時のボリューム操作をプレイヤーボリュームに変更
-    RINGTONE_SYS_SetSleepSoundFunc();
+    if( wk->fSleepSoundFunc ){
+      RINGTONE_SYS_SetSleepSoundFunc();
+      wk->fSleepSoundFunc = FALSE;
+    }
 
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );

@@ -184,6 +184,23 @@ void RINGTONE_SYS_SetSleepSoundFunc( void )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  RINGTONEのスリープサウンド操作を使用しているか？
+ *
+ *	@retval TRUE    使用している
+ *	@retval FALSE   使用していない
+ */
+//-----------------------------------------------------------------------------
+BOOL RINGTONE_SYS_IsSleepSoundFunc( void )
+{
+  if( GFL_UI_SleepSoundGoGetFunc() == ringTone_sleepSoundGoFunc ){
+    GF_ASSERT( GFL_UI_SleepSoundReleaseGetFunc() == ringTone_sleepSoundReleaseFunc );
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //============================================================================================
 //
 //    内部使用関数
