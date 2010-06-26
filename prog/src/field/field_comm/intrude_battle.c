@@ -150,7 +150,7 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
 
   proc_status = GFL_PROC_LOCAL_Main( ibs->procsys );
   
-  if(NetErr_App_CheckError()){
+  if(NetErr_App_CheckError() || GFL_NET_IsExit() == TRUE){
     if((*seq) > SEQ_INIT && (*seq) < SEQ_BATTLE_WAIT){
       *seq = SEQ_FINISH;
     }
@@ -216,10 +216,10 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     (*seq)++;
     break;
   case SEQ_FINISH:
-    if(GFL_NET_IsInit() == TRUE && NetErr_App_CheckError() == NET_ERR_STATUS_NULL){
-      GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
-    }
     if(ibs->overlay_load_battle == TRUE){
+      if(GFL_NET_IsInit() == TRUE && NetErr_App_CheckError() == NET_ERR_STATUS_NULL){
+        GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+      }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     }
     
