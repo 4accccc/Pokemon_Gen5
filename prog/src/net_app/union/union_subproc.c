@@ -833,7 +833,7 @@ static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIEL
     {
       VecFx32 pos;
       
-      pos.x = 168 << FX32_SHIFT;
+      pos.x = 184 << FX32_SHIFT;
       pos.y = 0;
       pos.z = 232 << FX32_SHIFT;
       *child_event = EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_UNION, &pos, 0, FALSE);
