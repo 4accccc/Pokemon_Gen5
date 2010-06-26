@@ -104,6 +104,7 @@ ncl: $(notdir $(NCLFILE:.ncl=.NCLR))
 	perl $(SCRIPT_DIR)ncl.pl $< $(CNV_DIR)
 
 $(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE) $(OTHERFILE) $(OTHERPLTTFILE)
+	ruby replace.rb
 	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE) -S $(OTHERFILE) -S $(OTHERPLTTFILE)
 	$(NAIXCUT) $(NAIXNAME)
 
