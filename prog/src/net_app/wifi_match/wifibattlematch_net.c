@@ -3577,7 +3577,8 @@ static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** reco
 {
     int i,j;
     WIFIBATTLEMATCH_GDB_RND_SCORE_DATA *p_data = user_param;
-    GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_GDB_RND_SCORE_DATA) );
+//    GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_GDB_RND_SCORE_DATA) );
+//    エラー時コールバックがまわると0クリアしてしまう
 
     for (i = 0; i < record_num; i++)
     {
@@ -3690,7 +3691,8 @@ static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** rec
 {
     int i,j;
     WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *p_data = user_param;
-    GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA) );
+//    GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA) );
+//    エラー時コールバックが回ると0クリアしてしまう
 
     DEBUG_NET_Printf("!!!=====gdb_Print[%d]:======\n", record_num);
     for (i = 0; i < record_num; i++)
