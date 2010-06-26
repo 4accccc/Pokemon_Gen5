@@ -254,6 +254,7 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
 static void PSTATUS_SUB_PokeDeleteMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
 static void PSTATUS_SUB_SetShadowHeight( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , fx32 height );
 static void PSTATUS_SUB_SetShadowOffset( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *offset );
+static void PSATATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *scale , VecFx32 *shadowScale );
 
 //--------------------------------------------------------------
 //	初期化
@@ -1412,12 +1413,13 @@ static void PSTATUS_SUB_TPCheckRotSpeed( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
 static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const POKEMON_PASO_PARAM *ppp )
 {
   MCSS_ADD_WORK addWork;
-  VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE*16};
+  VecFx32 scale = {FX32_CONST(16.0f),FX32_CONST(16.0f),FX32_ONE};
   VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z};
   VecFx32 shadowScaleBack = {PSTATUS_SUB_SHADOW_SCALE_BACK_X , PSTATUS_SUB_SHADOW_SCALE_BACK_Y , PSTATUS_SUB_SHADOW_SCALE_BACK_Z};
   VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
   POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   
+  PSATATUS_SUB_GetPokeScale( work , subWork , &scale , &shadowScale );
 
 #if USE_STATUS_DEBUG
   work->shadowRotate = 302*65536/360;
@@ -1489,4 +1491,69 @@ static void PSTATUS_SUB_SetShadowOffset( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
   VEC_Add( offset , &subWork->shadowOffset , &calcOfs );
   MCSS_SetShadowOffset( subWork->pokeMcss , &calcOfs );
   MCSS_SetShadowOffset( subWork->pokeMcssBack , &calcOfs );
+}
+
+static void PSATATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *scale , VecFx32 *shadowScale )
+{
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+  const u32 monsno = PPP_Get( ppp , ID_PARA_monsno , NULL );
+
+  if( monsno == MONSNO_005 )//リザード
+  {
+    shadowScale->y = FX32_CONST(1.4);
+    scale->y = FX32_CONST(15.5f);
+  }
+  else
+  if( monsno == MONSNO_086 )//パウワウ
+  {
+    scale->x = FX32_CONST(16.4f);
+    scale->y = FX32_CONST(16.4f);
+  }
+  else
+  if( monsno == MONSNO_155 )//ヒノアラシ
+  {
+    scale->x = FX32_CONST(15.9f);
+    scale->y = FX32_CONST(15.7f);
+  }
+  else
+  if( monsno == MONSNO_179 )//メリープ
+  {
+    scale->x = FX32_CONST(16.2f);
+    scale->y = FX32_CONST(16.2f);
+  }
+  else
+  if( monsno == MONSNO_225 )//デリバード
+  {
+    scale->x = FX32_CONST(15.8f);
+    scale->y = FX32_CONST(15.8f);
+  }
+  else
+  if( monsno == MONSNO_248 )//ヨーギラス
+  {
+    scale->x = FX32_CONST(15.8f);
+    scale->y = FX32_CONST(15.8f);
+  }
+  else
+  if( monsno == MONSNO_310 )//ライボルト
+  {
+    scale->x = FX32_CONST(15.5f);
+    scale->y = FX32_CONST(15.5f);
+  }
+  else
+  if( monsno == MONSNO_311 )//プラスル
+  {
+    scale->x = FX32_CONST(15.7f);
+    scale->y = FX32_CONST(15.7f);
+  }
+  
+#if USE_STATUS_DEBUG
+  if( work->scaleRateX != 0 )
+  {
+    scale->x = FX32_CONST(work->scaleRateX)/10;
+  }
+  if( work->scaleRateY != 0 )
+  {
+    scale->y = FX32_CONST(work->scaleRateY)/10;
+  }
+#endif
 }

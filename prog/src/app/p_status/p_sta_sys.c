@@ -2223,8 +2223,15 @@ static const BOOL PSTATUS_UTIL_CheckHaveAnyRibbon( PSTATUS_WORK *work , const PO
 #if PM_DEBUG
 void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
 {
+  u16 pos = work->dataPos+1;
+  if( work->debMonsNo != 0 )
+  {
+    pos = work->debMonsNo;
+  }
+  
+  
   if( work->calcPP != NULL &&
-      PP_Get( work->calcPP , ID_PARA_monsno , NULL ) != work->dataPos+1 )
+      PP_Get( work->calcPP , ID_PARA_monsno , NULL ) != pos )
   {
     GFL_HEAP_FreeMemory( work->calcPP );
     work->calcPP = NULL;
@@ -2232,7 +2239,7 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
   if( work->calcPP == NULL )
   {
     u16 oyaName[5] = {L'ƒu',L'ƒ‰',L'ƒb',L'ƒN',0xFFFF};
-    work->calcPP = PP_Create( work->dataPos+1 , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
+    work->calcPP = PP_Create( pos , 50 , PTL_SETUP_ID_AUTO , HEAPID_POKE_STATUS );
     PP_Put( work->calcPP , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
     PP_Put( work->calcPP , ID_PARA_oyasex , PTL_SEX_MALE );
     PP_Put( work->calcPP , ID_PARA_get_ball , work->dataPos%24+1 );
@@ -2315,6 +2322,12 @@ static void PSTD_U_pokerusu( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_pokerusu( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_U_AddRibbon( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_AddRibbon( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_Monsno( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_Monsno( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_ScaleRateX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_ScaleRateX( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_ScaleRateY( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_ScaleRateY( void* userWork , DEBUGWIN_ITEM* item );
 
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
@@ -2339,6 +2352,9 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   work->isDevMemo = FALSE;
   work->isDevRibbon = FALSE;
   work->addRibbon = 0;
+  work->debMonsNo = 0;
+  work->scaleRateX = 0;
+  work->scaleRateY = 0;
   
   DEBUGWIN_InitProc( PSTATUS_BG_SUB_STR , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 0,31,0 );
@@ -2349,6 +2365,12 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   DEBUGWIN_AddGroupToGroup( MEMOINFO_DEBUG_GROUP_NUMBER , "‚·‚¤‚¿" , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( PSTD_U_ribbon   ,PSTD_D_ribbon   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  if( work->psData->ppt == PST_PP_TYPE_DEBUG )
+  {
+    DEBUGWIN_AddItemToGroupEx( PSTD_U_Monsno   ,PSTD_D_Monsno   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  }
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_ScaleRateX   ,PSTD_D_ScaleRateX   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_ScaleRateY   ,PSTD_D_ScaleRateY   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( PSTD_U_memo  ,PSTD_D_memo  , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTD_U_event ,PSTD_D_event , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
@@ -2765,4 +2787,52 @@ static void PSTD_D_AddRibbon( void* userWork , DEBUGWIN_ITEM* item )
   
 }
 
+static void PSTD_U_Monsno( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  
+  if( PSTD_UpdateU32_Max( &work->debMonsNo , MONSNO_GENOSEKUTO ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PSTD_D_Monsno( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "MonsNo[%d]",work->debMonsNo );  
+  
+}
+static void PSTD_U_ScaleRateX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  
+  if( PSTD_UpdateU32_Max( &work->scaleRateX , 200 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PSTD_D_ScaleRateX( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ScaleRateX[%d]",work->scaleRateX );  
+  
+}
+static void PSTD_U_ScaleRateY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  
+  if( PSTD_UpdateU32_Max( &work->scaleRateY , 200 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PSTD_D_ScaleRateY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ScaleRateY[%d]",work->scaleRateY );  
+  
+}
 #endif //USE_STATUS_DEBUG

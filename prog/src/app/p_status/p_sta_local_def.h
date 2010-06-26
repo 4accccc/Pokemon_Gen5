@@ -324,6 +324,9 @@ typedef struct
   BOOL isDevMemo;
   BOOL isDevRibbon;
   u32 addRibbon;
+  u32 debMonsNo;
+  u32 scaleRateX;
+  u32 scaleRateY;
 #endif
 
 }PSTATUS_WORK;
