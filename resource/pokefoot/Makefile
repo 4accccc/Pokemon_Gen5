@@ -13,6 +13,7 @@ USERS	= matsuda kawada_koji
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = pokefoot
+targetname_ex = pokefoot_ex
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -25,7 +26,7 @@ input_personal            = $(PROJECT_RSCDIR)/personal/personal_wb.csv
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= graphic
+SUBDIRS	= graphic graphic_ex
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -34,6 +35,9 @@ include	$(PROJECT_RSCDIR)\macro_define
 lsources:=$(wildcard .\graphic\*.ncl)
 gsources:=$(wildcard .\graphic\*.ncg)
 esources:=$(wildcard .\graphic\*.nce)
+lsources_ex:=$(wildcard .\graphic_ex\*.ncl)
+gsources_ex:=$(wildcard .\graphic_ex\*.ncg)
+esources_ex:=$(wildcard .\graphic_ex\*.nce)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -47,12 +51,16 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(targetname).narc
+do-build:	$(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname_ex).narc
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
+
+$(TARGETDIR)/$(targetname_ex).narc: $(targetname_ex).narc
+	$(COPY) $(targetname_ex).narc $(TARGETDIR)
+	$(COPY) $(targetname_ex).naix $(TARGETDIR) 
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -60,6 +68,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).narc: $(lsources) $(gsources) $(esources) makefile $(input_personal)
 	@$(MAKE_SUBDIR)
 	$(NAIXCUT) $(targetname).naix
+
+$(targetname_ex).narc: $(lsources_ex) $(gsources_ex) $(esources_ex) makefile $(input_personal)
+	@$(MAKE_SUBDIR)
+	$(NAIXCUT) $(targetname_ex).naix
 endif
 
 #------------------------------------------------------------------------------
@@ -71,8 +83,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	@$(MAKE_SUBDIR)
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
+	rm -f $(targetname_ex).narc
+	rm -f $(targetname_ex).naix
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
-
+	rm -f $(TARGETDIR)/$(targetname_ex).narc
+	rm -f $(TARGETDIR)/$(targetname_ex).naix
 

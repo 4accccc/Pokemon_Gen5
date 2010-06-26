@@ -27,6 +27,7 @@
 #include "system/poke2dgra.h"
 
 #include "poke_tool/pokefoot.h"
+#include "poke_tool/pokefoot_ex.h"
 
 // 鳴き声
 //#include "sound/pm_voice.h"
@@ -232,9 +233,9 @@ ZUKAN_INFO_STEP;
 
 // 外国語図鑑
 #define FOREIGN_MONSNO_MAX               (493)                    // 0はポケモンではないがデータあり、1がフシギダネ、493がアルセウスまで存在する、イッシュから追加された494から存在しない
+
 #define FOREIGN_MONSNO_GIRATHINA_FORM    (FOREIGN_MONSNO_MAX +1)  // ギラティナだけ別フォルム用のテキストがある(487はフォルム0番、494はフォルム1番のデータ)
 #define GIRATHINA_FORMNO_DEFAULT_ANOTHER (0)                      // ギラティナのデフォルトのフォルム番号(アナザーフォルム、脚付き)
-#define POKEFOOT_OLD_WHITE_MONSNO        (11)                     // POKEFOOT_MONS_NO_OLD_MAXまで(含む)で足跡の絵のない白紙データ  // monsno=11はトランセル
 
 #define FOREIGN_MONSNO_SHEIMI_FORM       (FOREIGN_MONSNO_MAX +2)  // シェイミだけ別フォルム用のテキストがある(492はフォルム0番、495はフォルム1番のデータ)
 #define SHEIMI_FORMNO_DEFAULT_ANOTHER    (0)                      // シェイミのデフォルトのフォルム番号(ランドフォルム)
@@ -315,6 +316,7 @@ enum
   AH_APP_COMMON,
   AH_POKE2D,
   AH_POKEFOOT,
+  AH_POKEFOOT_EX,
   AH_MAX,
 };
 
@@ -603,7 +605,7 @@ static void Zukan_Info_DrawOffNotCurrTypeicon( ZUKAN_INFO_WORK* work );
 // ポケモンの足跡
 static void Zukan_Info_CreatePokefootBase( ZUKAN_INFO_WORK* work );
 static void Zukan_Info_DeletePokefootBase( ZUKAN_INFO_WORK* work );
-static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SWAP swap_idx );
+static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, u32 formno, OBJ_SWAP swap_idx );
 static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
 static void Zukan_Info_DrawOffNotCurrPokefoot( ZUKAN_INFO_WORK* work );
 
@@ -2723,21 +2725,36 @@ static void Zukan_Info_DeletePokefootBase( ZUKAN_INFO_WORK* work )
 //-------------------------------------
 /// ポケモンの足跡OBJを生成する
 //=====================================
-static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SWAP swap_idx )
+static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, u32 formno, OBJ_SWAP swap_idx )
 {
   CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
   CLSYS_DEFREND_TYPE defrend_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
   
   GFL_CLWK_DATA cldata;
 
-  // リソース読みこみ
-  ARCHANDLE* handle = work->ah[AH_POKEFOOT];
+  ARCHANDLE* handle;
 
-  //if( monsno > MONSNO_ARUSEUSU ) monsno = 1;  // 開発中だけの処理
-    
-  work->ncg_pokefoot[swap_idx] = GFL_CLGRP_CGR_Register( handle,  // ncgは圧縮されている
-                                     PokeFootCharDataIdxGet((int)monsno),
-                                     TRUE, draw_type, work->heap_id );
+  // pokefootかpokefoot_exか
+  int char_data_idx = POKEFOOT_EX_CharDataIdxGet((int)monsno, (int)formno);
+
+  if( char_data_idx == POKEFOOT_EX_CHAR_DATA_IDX_NULL )  // pokefoot
+  {
+    // リソース読みこみ
+    handle = work->ah[AH_POKEFOOT];
+  
+    work->ncg_pokefoot[swap_idx] = GFL_CLGRP_CGR_Register( handle,  // ncgは圧縮されている
+                                       PokeFootCharDataIdxGet((int)monsno),
+                                       TRUE, draw_type, work->heap_id );
+  }
+  else                                                  // pokefoot_ex
+  {
+    // リソース読みこみ
+    handle = work->ah[AH_POKEFOOT_EX];
+
+    work->ncg_pokefoot[swap_idx] = GFL_CLGRP_CGR_Register( handle,  // ncgは圧縮されている
+                                       char_data_idx,
+                                       TRUE, draw_type, work->heap_id );
+  }
 
   // CLWK作成
   cldata.pos_x   = 8*15;
@@ -2746,7 +2763,7 @@ static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SW
   cldata.softpri = 1;
   cldata.bgpri   = 0;
 
-  if( monsno <= POKEFOOT_MONS_NO_OLD_MAX )
+  if( monsno <= POKEFOOT_MONS_NO_OLD_MAX && char_data_idx != POKEFOOT_EX_CHAR_DATA_IDX_NULL )
   {
     work->clwk_pokefoot[swap_idx] = GFL_CLACT_WK_Create( work->clunit, 
                                         work->ncg_pokefoot[swap_idx],
@@ -2816,12 +2833,7 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
 
   // ポケモンの足跡
   {
-    u16 pokefoot_monsno;
-    if( work->monsno == MONSNO_GIRATHINA && work->formno != GIRATHINA_FORMNO_DEFAULT_ANOTHER )
-      pokefoot_monsno = POKEFOOT_OLD_WHITE_MONSNO;
-    else
-      pokefoot_monsno = work->monsno;
-    Zukan_Info_CreatePokefoot( work, pokefoot_monsno, work->curr_swap_pokefoot );
+    Zukan_Info_CreatePokefoot( work, work->monsno, work->formno, work->curr_swap_pokefoot );
   }
 
   // タイプアイコンとポケモンの足跡の表示/非表示を設定する
@@ -2837,12 +2849,7 @@ static void Zukan_Info_CreateForeignOthers( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LA
 
   // ポケモンの足跡
   {
-    u16 pokefoot_monsno;
-    if( work->monsno == MONSNO_GIRATHINA && work->formno != GIRATHINA_FORMNO_DEFAULT_ANOTHER )
-      pokefoot_monsno = POKEFOOT_OLD_WHITE_MONSNO;
-    else
-      pokefoot_monsno = work->monsno;
-    Zukan_Info_CreatePokefoot( work, pokefoot_monsno, work->curr_swap_pokefoot );
+    Zukan_Info_CreatePokefoot( work, work->monsno, work->formno, work->curr_swap_pokefoot );
   }
 
   // タイプアイコンとポケモンの足跡の表示/非表示を設定する
@@ -2983,6 +2990,11 @@ static void Zukan_Info_OpenHandle( ZUKAN_INFO_WORK* work )
     case AH_POKEFOOT:
       {
         work->ah[i] = GFL_ARC_OpenDataHandle( PokeFootArcFileGet(), work->heap_id );
+      }
+      break;
+    case AH_POKEFOOT_EX:
+      {
+        work->ah[i] = GFL_ARC_OpenDataHandle( POKEFOOT_EX_ArcFileGet(), work->heap_id );
       }
       break;
     default:

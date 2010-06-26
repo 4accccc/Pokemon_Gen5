@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pokefoot_ex.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-06-26T12:43:33
+ *****************************************************************************/
+
+#ifndef NARC_POKEFOOT_EX_NAIX_
+#define NARC_POKEFOOT_EX_NAIX_
+
+enum {
+	NARC_pokefoot_ex_poke_foot_487_001_NCGR = 0,
+	NARC_pokefoot_ex_poke_foot_492_001_NCGR = 1
+};
+
+/* NARC_POKEFOOT_EX_NAIX_ */
+#endif

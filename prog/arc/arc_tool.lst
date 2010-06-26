@@ -298,3 +298,4 @@
   $DEBUG_YES ARCID_DEBUG_HITCH_CHECK "debug/hitch_check.narc"  #当たり判定チェック（デバッグ用）
   $DEBUG_YES ARCID_DEBUG_MESSAGE  "debug_message.narc"  #デバッグ用メッセージデータ
   ARCID_ITEM_BATTLE_POCKET  "item_battle_pocket.narc" # アイテムの戦闘ポケットデータ
+  ARCID_POKEFOOT_EX_GRA "pokefoot_ex.narc"  # ポケモン足跡グラフィック追加データ

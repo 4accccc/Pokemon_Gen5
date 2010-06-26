@@ -110,7 +110,6 @@ SRCS  +=    $(SOUNDSRC) \
         poke_tool/poke_personal.c \
         poke_tool/pokerus.c \
         poke_tool/shinka_check.c \
-        poke_tool/pokefoot.c \
         poke_tool/natsuki.c \
         poke_tool/pokepara_conv.c \
 		    poke_tool/status_rcv.c \
@@ -2119,7 +2118,9 @@ SRCS_OVERLAY_GAMECLEAR_DEMO = field/proc_gameclear_save.c \
 # }ŠÓî•ñ
 #===> SRCS_OVERLAY_BATTLE_RETURN
 #===> SRCS_OVERLAY_UI_COMMON
-SRCS_OVERLAY_ZUKAN_INFO = app/zukan/info/zukan_info.c
+SRCS_OVERLAY_ZUKAN_INFO = app/zukan/info/zukan_info.c \
+                          poke_tool/pokefoot.c \
+                          poke_tool/pokefoot_ex.c
 
 # }ŠÓ“o˜^
 #===> SRCS_OVERLAY_BATTLE_RETURN
