@@ -3716,4 +3716,22 @@ MCSS_SYS_WORK*  BTLV_MCSS_GetMcssSysWork( BTLV_MCSS_WORK *bmw )
   return  bmw->mcss_sys;
 }
 
+//============================================================================================
+/**
+ * @brief MCSS_WORKを取得（デバッグ用）
+ *
+ * @param[in] bmw   BTLV_MCSS管理ワークへのポインタ
+ */
+//============================================================================================
+MCSS_WORK*  BTLV_MCSS_GetMcssWork( BTLV_MCSS_WORK *bmw, BtlvMcssPos position )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { return NULL; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return NULL; }
+
+  return  bmw->btlv_mcss[ index ].mcss;
+}
+
 #endif

@@ -545,6 +545,10 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
  * PROC Main
  */
 //--------------------------------------------------------------------------
+vu32  shadow_offset_x;
+vu32  shadow_offset_y;
+vu32  shadow_offset_z;
+vu32  shadow_rotate_z;
 static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   int pad = GFL_UI_KEY_GetCont();
@@ -580,9 +584,16 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     { 
       if( BTLV_EFFECT_CheckExist( i ) )
       { 
+        VecFx32 ofs;
+
+        VEC_Set( &ofs, shadow_offset_x, shadow_offset_y, shadow_offset_z );
+        MCSS_SetShadowOffset( BTLV_MCSS_GetMcssWork( BTLV_EFFECT_GetMcssWork(), i ), &ofs );
+        MCSS_SetShadowRotateZ( BTLV_MCSS_GetMcssWork( BTLV_EFFECT_GetMcssWork(), i ), shadow_rotate_z );
+
         BTLV_MCSS_SetMepachiFlag( BTLV_EFFECT_GetMcssWork(), i, BTLV_MCSS_MEPACHI_ALWAYS_OFF - pvw->mepachi );
       }
     }
+    return GFL_PROC_RES_CONTINUE;
   }
 
   if( pvw->mcs_enable ){
@@ -1570,6 +1581,14 @@ static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
                            pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pos ],
                            pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pos ],
                            pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pos ] );
+    { 
+      VecFx32 ofs;
+      MCSS_GetShadowOffset( BTLV_MCSS_GetMcssWork( BTLV_EFFECT_GetMcssWork(), pos ), &ofs );
+      shadow_offset_x = ofs.x;
+      shadow_offset_y = ofs.y;
+      shadow_offset_z = ofs.z;
+      shadow_rotate_z = MCSS_GetShadowRotateZ( BTLV_MCSS_GetMcssWork( BTLV_EFFECT_GetMcssWork(), pos ) );
+    }
 #endif
 #if defined DEBUG_ONLY_FOR_sogabe
     //BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos, BTLV_MCSS_ANM_STOP_ON );

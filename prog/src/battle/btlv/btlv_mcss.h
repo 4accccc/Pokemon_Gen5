@@ -53,6 +53,11 @@ typedef enum{
 
   BTLV_MCSS_POS_TOTAL,    //ポケモンとトレーナーをあわせたMAX値
 
+  BTLV_MCSS_POS_A_DOUBLE = BTLV_MCSS_POS_TOTAL,
+  BTLV_MCSS_POS_B_DOUBLE,
+  BTLV_MCSS_POS_C_DOUBLE,
+  BTLV_MCSS_POS_D_DOUBLE,
+
   BTLV_MCSS_POS_PAIR_BIT = 0x02,
   BTLV_MCSS_POS_ERROR = 0xff,
 }BtlvMcssPos;
@@ -230,5 +235,6 @@ extern  void            BTLV_MCSS_SetMcssRotate( BTLV_MCSS_WORK *bmw, int flag )
 extern  void            BTLV_MCSS_SetAnm1LoopFlag( BTLV_MCSS_WORK *bmw, int flag );
 extern  void            BTLV_MCSS_ClearExecute( BTLV_MCSS_WORK *bmw );
 extern  MCSS_SYS_WORK*  BTLV_MCSS_GetMcssSysWork( BTLV_MCSS_WORK *bmw );
+extern  MCSS_WORK*      BTLV_MCSS_GetMcssWork( BTLV_MCSS_WORK *bmw, BtlvMcssPos position );
 #endif
 
