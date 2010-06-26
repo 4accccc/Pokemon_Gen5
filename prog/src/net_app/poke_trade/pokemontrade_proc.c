@@ -3543,10 +3543,49 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){  // 最初にキーが入った場合
     if(GFL_UI_KEY_GetTrgAndSet()){
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
         pWork->MainObjCursorLine=line;
+        NOZOMU_Printf("new_%d\n",pWork->MainObjCursorLine);
       }
-      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+      else    //20100625 add Saito  BTS6599
+      {
+        //カーソルがスクリーン内にあるか？
+        if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine )) //無しのとき
+        {
+          NOZOMU_Printf("カーソルがスクリーン外なのでスクロール\n");
+          {
+            int linest = POKETRADE_boxScrollNum2Line(pWork);  //有効範囲開始列
+            int lineend = linest + 10;  //有効範囲最終列
+            int linemid = linest + 5;   //有効範囲中間列
+            int tmp;
+            NOZOMU_Printf("cur %d  st %d\n",pWork->MainObjCursorLine, linest);
+            tmp = pWork->MainObjCursorLine;   //ターゲット列をセット
+            //終了列がボックスと手持ちをまたか？
+            if ( (lineend >= pWork->TRADEBOX_LINEMAX)&&(tmp < 20) )
+            {
+              //またぐ場合は判定列を伸ばす
+              tmp += (1 + pWork->TRADEBOX_LINEMAX);
+            }
+
+            //判定列が範囲中間列のどちらにあるか？
+            if (linemid < tmp )  //右側
+            {
+              NOZOMU_Printf("右側\n");
+              pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine+1)-256;
+            }
+            else                  //左側
+            {
+              NOZOMU_Printf("左側\n");
+              pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine);
+            }
+          }
+          pWork->oldLine = -1;//強制書き直し
+          pWork->bgscrollRenew = TRUE;
+          _scrollMainFunc(pWork,FALSE,TRUE);
+          return;
+        }
+      }
       _PokemonIconRenew(pWork);
       return;
     }

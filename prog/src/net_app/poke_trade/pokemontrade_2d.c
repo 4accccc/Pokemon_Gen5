@@ -1116,7 +1116,7 @@ int POKETRADE_boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
     {
       line = baseLine + (boxOfs-8)/24;
     }
-    //OS_TPrintf("LINE %d %d\n", pWork->BoxScrollNum, line);
+//    OS_TPrintf("LINE %d %d\n", pWork->BoxScrollNum, line);
   }
   return line;
 }
@@ -1139,11 +1139,11 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
 //  OS_TPrintf("line st %d %d %d %d\n",linest,lineend,pWork->TRADEBOX_LINEMAX,pWork->MainObjCursorLine);
   
   *line = linest + 2;
-  if(*line > pWork->TRADEBOX_LINEMAX){  //てもちになる
+  if(*line >= pWork->TRADEBOX_LINEMAX){  //てもちになる  20100625 mod Saito BTS6599
     *line = linest + 2 - pWork->TRADEBOX_LINEMAX;
   }
 
-  if(lineend > pWork->TRADEBOX_LINEMAX){ //てもちになる
+  if(lineend >= pWork->TRADEBOX_LINEMAX){ //てもちになる  20100625 mod Saito BTS6599
     maincur = pWork->MainObjCursorLine;
     if(pWork->MainObjCursorLine < 20){  //メインカーソルが一周している場合
       maincur = pWork->MainObjCursorLine + 1 + pWork->TRADEBOX_LINEMAX; //計算の為に伸ばす
