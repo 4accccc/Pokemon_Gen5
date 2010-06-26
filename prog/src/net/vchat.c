@@ -194,20 +194,20 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
 
   if(!DS_SYSTEM_IsRunOnTwl()){
     if (_vWork->firstCallback) {
-      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL));
+      MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL);
       _vWork->firstCallback = 0;
     }
   }
   else{
     if (_vWork->firstCallback) {
-      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartLimitedSamplingAsync( &(_vWork->micParam), micCallback, NULL));
+      MIC_StartLimitedSamplingAsync( &(_vWork->micParam), micCallback, NULL);
       _vWork->firstCallback = 0;
     }
   }
 #else
 
   if (_vWork->firstCallback) {
-    GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL));
+    MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL);
     _vWork->firstCallback = 0;
   }
 
@@ -578,7 +578,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
 	}
 
 	// サウンドストリーム再生の初期化。１対１会話限定
-	GF_ASSERT(NNS_SndStrmAllocChannel(&_vWork->sSndStream, 1, cArray));
+	(NNS_SndStrmAllocChannel(&_vWork->sSndStream, 1, cArray));
 	NNS_SndStrmSetVolume(&_vWork->sSndStream, 0);
 
   VCT_PRINT("NNS_SndStrmSetup\n");
@@ -733,13 +733,13 @@ void myvct_free(void){
 
 		// マイクのサンプリングとストリームをとめる。
     if( !DS_SYSTEM_IsRunOnTwl() ){//DSなら
-      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StopAutoSampling());
+      MIC_StopAutoSampling();
     }
     else{
 #if (defined(SDK_TWL))  //こちらが本番
-      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StopLimitedSampling());
+      MIC_StopLimitedSampling();
 #else
-      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StopAutoSampling());
+      MIC_StopAutoSampling();
 #endif
     }
 
