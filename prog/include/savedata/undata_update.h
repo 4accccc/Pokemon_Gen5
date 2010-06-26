@@ -22,4 +22,8 @@ typedef enum
 extern DAT_ADD_ST UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
 extern u32 UNDATAUP_GetDataNum(const UNITEDNATIONS_SAVE *un_data);
 
+#ifdef PM_DEBUG
+extern DAT_ADD_ST UNDATAUP_UpdateD(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
+#endif
+
 
