@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-13T20:14:20"/>
+	<create user="kawada_koji" host="W00215" date="2010-06-26T13:15:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="201" top="335" right="906" bottom="963" maximized="no" rayout="Vertical2">
+	<dialog left="778" top="344" right="1483" bottom="972" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -420,6 +420,13 @@
 	<row id="msg_record_07_03">
 		<language name="JPN" width="256">この　あいてとは　ろくが　できません</language>
 		<language name="JPN_KANJI" width="256">この相手とは　録画できません</language>
+	</row>
+
+	<row id="msg_record_07_04">
+		<language name="JPN" width="256">ふせいなデータを　けんしゅつしたため
+きろく　できませんでした</language>
+		<language name="JPN_KANJI" width="256">不正なデータを　検出したため
+記録できませんでした</language>
 	</row>
 
 	<row id="msg_record_time01">

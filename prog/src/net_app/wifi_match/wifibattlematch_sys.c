@@ -1637,6 +1637,7 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
   p_param->gamedata     = p_wk->param.p_game_data;
   p_param->b_rec        = TRUE;
   p_param->b_sync       = FALSE;
+  p_param->b_correct    = TRUE;
   p_param->battle_mode  = battle_mode;;
   p_param->fight_count  = 0;
 

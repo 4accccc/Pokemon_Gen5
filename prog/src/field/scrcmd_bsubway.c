@@ -1312,6 +1312,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btl_rec_sel_param.gamedata = gdata;
       bsw_scr->btl_rec_sel_param.b_rec = TRUE;
       bsw_scr->btl_rec_sel_param.b_sync = FALSE;
+      bsw_scr->btl_rec_sel_param.b_correct = TRUE;
       bsw_scr->btl_rec_sel_param.battle_mode = data_ModeBattleMode[play_mode];
       bsw_scr->btl_rec_sel_param.fight_count =
         BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
