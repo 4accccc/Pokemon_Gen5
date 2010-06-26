@@ -409,8 +409,11 @@ static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork)
   }
 
   if((pWork->anmCount > _POKEMON_VOICE_TIME) && (POKETRADE_MESSAGE_EndCheck(pWork))){
+#if 0       //20100626 del Saito    BTS6691,BTS6848
     POKETRADE_MESSAGE_WindowClose(pWork);
-
+#else
+    POKETRADE_MESSAGE_WindowClear(pWork);
+#endif    
     if(!pWork->bByebyeMessageEach){
 /*
       {
