@@ -2428,6 +2428,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_Reaction   },
     { BTL_EVENT_MEMBER_IN,             handler_MikuruNomi_MemberIn   },
+    { BTL_EVENT_WAZASEQ_END,           handler_MikuruNomi_MemberIn   },
     { BTL_EVENT_USE_ITEM,              handler_MikuruNomi_Use        }, // アイテム使用ハンドラ
     { BTL_EVENT_USE_ITEM_TMP,          handler_MikuruNomi_UseTmp     }, // アイテム使用ハンドラ
   };
