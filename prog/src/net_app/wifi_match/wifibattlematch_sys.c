@@ -681,8 +681,6 @@ static BOOL BC_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adr
     GF_ASSERT( 0 );
   }
 
-  GFL_STD_MemClear( &p_wk->btl_score, sizeof(BATTLEMATCH_BATTLE_SCORE) );
-
 	GFL_HEAP_FreeMemory( p_param );
 
   return TRUE;
@@ -998,6 +996,9 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //録画バッファをクリア
   BattleRec_DataClear();
 
+  //バトルスコアをクリア
+  GFL_STD_MemClear( &p_wk->btl_score, sizeof(BATTLEMATCH_BATTLE_SCORE) );
+
   //デモパラメータ
   p_param->p_demo_param = GFL_HEAP_AllocMemory( heapID, sizeof(COMM_BTL_DEMO_PARAM) );
 	GFL_STD_MemClear( p_param->p_demo_param, sizeof(COMM_BTL_DEMO_PARAM) );
@@ -1294,6 +1295,8 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   WIFIBATTLEMATCH_BATTLELINK_PARAM  *p_param  = p_param_adrs;
   BATTLE_SETUP_PARAM  *p_btl_param  = p_param->p_btl_setup_param;
   WIFIBATTLEMATCH_BATTLELINK_RESULT result  = p_param->result;
+
+  (*DEBUGWIN_BATTLE_GetFlag())  = TRUE;
 
   //受け取り
   p_wk->btl_score.rule  = p_btl_param->rule;
@@ -1637,13 +1640,12 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
   p_param->gamedata     = p_wk->param.p_game_data;
   p_param->b_rec        = TRUE;
   p_param->b_sync       = FALSE;
-  p_param->b_correct    = TRUE;
   p_param->battle_mode  = battle_mode;;
   p_param->fight_count  = 0;
+  p_param->b_correct    = !p_wk->btl_score.is_dirty;
 
   //相手のサーバーが、自分のサーバーよりバージョンが上だったら録画できない
   //相手と自分のサーバーが違かったら録画できない
-//  if( p_wk->p_enemy_data->btl_server_version <= p_wk->p_player_data->btl_server_version )
   if( BattleRec_ServerVersionCheck( p_wk->p_enemy_data->btl_server_version ) )
   {
     p_param->b_rec      = TRUE;

@@ -60,4 +60,8 @@ extern BOOL *DEBUGWIN_ATLASDIRTY_GetFlag( void );
 //=====================================
 extern BOOL *DEBUGWIN_SERVERTIME_GetFlag( void );
 
+//-------------------------------------
+///	バトルプレイ
+//=====================================
+extern BOOL *DEBUGWIN_BATTLE_GetFlag( void );
 #endif //PM_DEBUG

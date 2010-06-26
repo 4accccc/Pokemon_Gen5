@@ -46,4 +46,10 @@ BOOL *DEBUGWIN_SERVERTIME_GetFlag( void )
   static BOOL s_serverttime_flag  = FALSE;
   return &s_serverttime_flag;
 }
+
+BOOL *DEBUGWIN_BATTLE_GetFlag( void )
+{
+  static BOOL s_btl_flag  = FALSE;
+  return &s_btl_flag;
+}
 #endif //PM_DEBUG

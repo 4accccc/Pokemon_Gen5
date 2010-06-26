@@ -4002,7 +4002,7 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = DWC_TOOL_GetLocalDateTime( &now_date, &time );
 
 #ifdef PM_DEBUG
-      if( *DEBUGWIN_SERVERTIME_GetFlag() )
+      if( (*DEBUGWIN_SERVERTIME_GetFlag()) && (*DEBUGWIN_BATTLE_GetFlag()) )
       {
         now_date.day  += 1;
       }
