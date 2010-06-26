@@ -3455,7 +3455,7 @@ static void handler_Juden_WazaStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 // ワザ処理終了ハンドラ
 static void handler_Juden_WazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   &&  (work[0] == 2)
   ){
     // シーケンス=2 でワザ処理終了したら貼り付き解除
@@ -3689,7 +3689,7 @@ static void handler_Abareru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 // ワザ処理最終ハンドラ
 static void handler_Abareru_SeqEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
@@ -3936,7 +3936,7 @@ static void handler_Korogaru_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 }
 static void handler_Korogaru_SeqEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) == FALSE)
   ){
     common_Korogaru_Unlock( myHandle, flowWk, pokeID, work );

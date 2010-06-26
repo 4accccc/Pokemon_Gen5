@@ -320,6 +320,8 @@ typedef enum {
   DBGSTR_EVENT_AddFactorInfo,
   DBGSTR_EVENT_RmvFactorCalling,
   DBGSTR_EVENT_CallFactorStart,
+  DBGSTR_EVENT_CheckFactorStart,
+  DBGSTR_EVENT_CheckFactorTbl,
   DBGSTR_EVENT_CallFactorEnd,
   DBGSTR_EVENT_SkipByNewComerFlg,
   DBGSTR_EVENT_SkipByCallingFlg,

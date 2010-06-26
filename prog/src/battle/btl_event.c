@@ -573,8 +573,11 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
       {
         const BtlEventHandlerTable* tbl = factor->handlerTable;
         u32 i;
+
+        BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CheckFactorStart, factor->factorType, factor->dependID, factor->numHandlers, eventID );
         for(i=0; i<factor->numHandlers; i++)
         {
+          BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CheckFactorTbl, i, tbl[i].eventType );
           if( tbl[i].eventType == eventID )
           {
             if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )

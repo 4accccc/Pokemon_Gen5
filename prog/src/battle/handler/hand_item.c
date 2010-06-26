@@ -1167,7 +1167,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HimeriNomi( u32* numElems )
 // ワザ最後
 static void handler_HimeriNomi_wazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     if( common_Himeri_LastWazaIdx(flowWk, pokeID) != PTL_WAZA_MAX )
     {
@@ -1336,6 +1336,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_OrenNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_OrenNomi_Reaction },
     { BTL_EVENT_MEMBER_IN,              handler_OrenNomi_MemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_OrenNomi_MemberIn },
     { BTL_EVENT_USE_ITEM,               handler_OrenNomi_Use      },
     { BTL_EVENT_USE_ITEM_TMP,           handler_OrenNomi_Use      },
   };
@@ -1381,6 +1382,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KinomiJuice( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_OrenNomi_Reaction },
     { BTL_EVENT_MEMBER_IN,              handler_OrenNomi_MemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_OrenNomi_MemberIn },
     { BTL_EVENT_USE_ITEM,               handler_OrenNomi_Use      },
   };
   *numElems = NELEMS( HandlerTable );
@@ -1396,6 +1398,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_ObonNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_OrenNomi_Reaction },
     { BTL_EVENT_MEMBER_IN,              handler_OrenNomi_MemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_OrenNomi_MemberIn },
     { BTL_EVENT_USE_ITEM,               handler_ObonNomi_Use      },
     { BTL_EVENT_USE_ITEM_TMP,           handler_ObonNomi_Use      },
   };
@@ -1437,6 +1440,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_FiraNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_common_KaifukuKonran_Reaction },
     { BTL_EVENT_MEMBER_IN,              handler_common_KaifukuKonran_MemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_common_KaifukuKonran_MemberIn },
     { BTL_EVENT_USE_ITEM,               handler_FiraNomi_Use                  },
     { BTL_EVENT_USE_ITEM_TMP,           handler_FiraNomi_UseTmp               },
   };
@@ -1464,6 +1468,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_UiNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_common_KaifukuKonran_Reaction },
     { BTL_EVENT_MEMBER_IN,              handler_common_KaifukuKonran_MemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_common_KaifukuKonran_MemberIn },
     { BTL_EVENT_USE_ITEM,               handler_UiNomi_Use                    },
     { BTL_EVENT_USE_ITEM_TMP,           handler_UiNomi_UseTmp                 },
 
@@ -1491,6 +1496,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MagoNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,      handler_common_KaifukuKonran_Reaction },
     { BTL_EVENT_MEMBER_IN,                handler_common_KaifukuKonran_MemberIn },
+    { BTL_EVENT_ACTPROC_END,              handler_common_KaifukuKonran_MemberIn },
     { BTL_EVENT_USE_ITEM,                 handler_MagoNomi_Use                  },
     { BTL_EVENT_USE_ITEM_TMP,             handler_MagoNomi_UseTmp               },
 
@@ -1519,6 +1525,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_BanziNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_common_KaifukuKonran_Reaction },
     { BTL_EVENT_MEMBER_IN,              handler_common_KaifukuKonran_MemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_common_KaifukuKonran_MemberIn },
     { BTL_EVENT_USE_ITEM,               handler_BanjiNomi_Use                 },
     { BTL_EVENT_USE_ITEM_TMP,           handler_BanjiNomi_UseTmp              },
 
@@ -1547,6 +1554,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_IaNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_common_KaifukuKonran_Reaction },
     { BTL_EVENT_MEMBER_IN,              handler_common_KaifukuKonran_MemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_common_KaifukuKonran_MemberIn },
     { BTL_EVENT_USE_ITEM,               handler_IaNomi_Use                    },
     { BTL_EVENT_USE_ITEM_TMP,           handler_IaNomi_UseTmp                 },
   };
@@ -1634,6 +1642,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_TiiraNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_PinchReactCommon   },
     { BTL_EVENT_MEMBER_IN,              handler_PinchReactMemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_PinchReactMemberIn },
     { BTL_EVENT_USE_ITEM,               handler_TiiraNomi          },
     { BTL_EVENT_USE_ITEM_TMP,           handler_TiiraNomi          },
   };
@@ -1660,6 +1669,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_RyugaNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_PinchReactCommon   },
     { BTL_EVENT_MEMBER_IN,              handler_PinchReactMemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_PinchReactMemberIn },
     { BTL_EVENT_USE_ITEM,               handler_RyugaNomi          },
     { BTL_EVENT_USE_ITEM_TMP,           handler_RyugaNomi          },
   };
@@ -1686,6 +1696,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KamuraNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_PinchReactCommon   },
     { BTL_EVENT_MEMBER_IN,              handler_PinchReactMemberIn },
+    { BTL_EVENT_ACTPROC_END,            handler_PinchReactMemberIn },
     { BTL_EVENT_USE_ITEM,               handler_KamuraNomi         },
     { BTL_EVENT_USE_ITEM_TMP,           handler_KamuraNomi         },
   };
@@ -1712,6 +1723,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_YatapiNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,       handler_PinchReactCommon   },
     { BTL_EVENT_MEMBER_IN,                 handler_PinchReactMemberIn },
+    { BTL_EVENT_ACTPROC_END,               handler_PinchReactMemberIn },
     { BTL_EVENT_USE_ITEM,                  handler_YatapiNomi },
     { BTL_EVENT_USE_ITEM_TMP,              handler_YatapiNomi },
   };
@@ -1738,6 +1750,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_ZuaNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,      handler_PinchReactCommon   },
     { BTL_EVENT_MEMBER_IN,                handler_PinchReactMemberIn },
+    { BTL_EVENT_ACTPROC_END,              handler_PinchReactMemberIn },
     { BTL_EVENT_USE_ITEM,                 handler_ZuaNomi },
     { BTL_EVENT_USE_ITEM_TMP,             handler_ZuaNomi },
   };
@@ -1764,6 +1777,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SanNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,      handler_PinchReactCommon },
     { BTL_EVENT_MEMBER_IN,                handler_PinchReactMemberIn },
+    { BTL_EVENT_ACTPROC_END,              handler_PinchReactMemberIn },
     { BTL_EVENT_USE_ITEM,                 handler_SanNomi },
     { BTL_EVENT_USE_ITEM_TMP,             handler_SanNomi },
   };
@@ -1809,6 +1823,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SutaaNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,      handler_PinchReactCommon },
     { BTL_EVENT_MEMBER_IN,                handler_PinchReactMemberIn },
+    { BTL_EVENT_ACTPROC_END,              handler_PinchReactMemberIn },
     { BTL_EVENT_USE_ITEM,                 handler_SutaaNomi },
     { BTL_EVENT_USE_ITEM_TMP,             handler_SutaaNomi },
   };
@@ -2304,6 +2319,7 @@ static void handler_PinchReactMemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 //----------------------------------------------------------------------------------
 static void common_DamageReact( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n, BOOL fCheckReactionType )
 {
+
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BOOL fReaction;
@@ -2428,7 +2444,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_Reaction   },
     { BTL_EVENT_MEMBER_IN,             handler_MikuruNomi_MemberIn   },
-    { BTL_EVENT_WAZASEQ_END,           handler_MikuruNomi_MemberIn   },
+    { BTL_EVENT_ACTPROC_END,           handler_MikuruNomi_MemberIn   },
     { BTL_EVENT_USE_ITEM,              handler_MikuruNomi_Use        }, // アイテム使用ハンドラ
     { BTL_EVENT_USE_ITEM_TMP,          handler_MikuruNomi_UseTmp     }, // アイテム使用ハンドラ
   };

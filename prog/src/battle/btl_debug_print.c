@@ -380,6 +380,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EVENT_AddFactorInfo:      return "AddNewFactor type=%x, dependID=%d, pri=%d, adrs=%p\n";
   case DBGSTR_EVENT_RmvFactorCalling:   return " 呼び出し中に削除されたFactor pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_CallFactorStart:    return " [[ %p 呼び出し開始 type=%d, dependID=%d ]]\n";
+  case DBGSTR_EVENT_CheckFactorStart:   return "呼び出しテーブルチェック type=%d, dependID=%d, numHandlers=%d, eventID=%d\n";
+  case DBGSTR_EVENT_CheckFactorTbl:     return "   テーブル登録EventID(%d) = %d\n";
   case DBGSTR_EVENT_CallFactorEnd:      return " [[ %p 呼び出し終了 type=%d, dependID=%d ]]\n";
   case DBGSTR_EVENT_SkipByNewComerFlg:  return " 新入りにつきスキップ Factor pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_ClearNewComFlag:    return " 新入りフラグクリア pokeID=%d, adrs=%p\n";

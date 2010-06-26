@@ -3868,7 +3868,7 @@ static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
 static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaEnable )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_GEN_FLAG, fWazaEnable );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZASEQ_END );
@@ -8116,6 +8116,7 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
     if( scEvent_CheckRankEffectSuccess(wk, target, effect, atkPokeID, volume, rankEffSerial) )
     {
       // ここまで来たらランク効果発生
+      TAYA_Printf("実質ランク効果 = %d\n", volume);
       scPut_RankEffect( wk, target, effect, volume, itemID, fStdMsg );
       {
         u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -10604,6 +10605,7 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
   if( volume > 0 )
   {
     volume = BPP_RankUp( target, effect, volume );
+    TAYA_Printf("実質効果アップ段階 = %d\n", volume );
     SCQUE_PUT_OP_RankUp( wk->que, pokeID, effect, volume );
     SCQUE_PUT_ACT_RankUp( wk->que, pokeID, effect, volume );
     if( fStdMsg )
@@ -10619,6 +10621,7 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
   {
     volume *= -1;
     volume = BPP_RankDown( target, effect, volume );
+    TAYA_Printf("実質効果ダウン段階 = %d\n", volume );
     SCQUE_PUT_OP_RankDown( wk->que, pokeID, effect, volume );
     SCQUE_PUT_ACT_RankDown( wk->que, pokeID, effect, volume );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokeID, effect, volume );
