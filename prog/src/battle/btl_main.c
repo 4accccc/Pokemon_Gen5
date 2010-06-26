@@ -1961,9 +1961,10 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, numCoverPos );
 
     // 通信タッグの場合
-    // @todo 条件判定はもっと明確に記述できるように整える。
     if( (sp->multiMode == BTL_MULTIMODE_PP_AA) )
     {
+      u8 friendClientID = BTL_MAIN_GetFriendCleintID( wk, clientID );
+
       wk->client[BTL_CLIENT_ENEMY1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
           BTL_CLIENT_ENEMY1, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, FALSE, &wk->randomContext, wk->heapID );
       BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY1]), BTL_CLIENT_ENEMY1, numCoverPos );
@@ -1972,7 +1973,7 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
           BTL_CLIENT_ENEMY2, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, FALSE, &wk->randomContext, wk->heapID );
       BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY2]), BTL_CLIENT_ENEMY2, numCoverPos );
 
-      BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, BTL_CLIENT_PARTNER, numCoverPos );
+      BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, friendClientID, numCoverPos );
     }
     // 通常の通信ダブルの場合
     else
