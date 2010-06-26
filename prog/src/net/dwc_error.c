@@ -91,6 +91,12 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         if( !is_heavy )
         {
           _ErrorClear();
+          //マッチング時に軽微エラーが出ると、自分の内部が切断状況にならないので
+          //強制的に切ります
+          if( GFL_NET_DWC_IsMatched( ) )
+          {
+            GFL_NET_StateWifiMatchEnd(TRUE);  
+          }
           NetErr_DispCallPushPop();
           NetErr_ErrWorkInit();
           return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
@@ -175,15 +181,13 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
       }
     }
     //システムエラー（ヘビー）系  ヘビー系ができたらifの中に書いてください
-#if 0
-    else  if( .. )
+    else  if( cp_error->errorUser == ERRORCODE_HEAP )
     {
       NetErr_App_ReqErrorDisp();
       NetErr_App_ReqErrorDispForce( dwc_error_0014 );
       DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
       return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
     }
-#endif
   }
 
   return GFL_NET_DWC_ERROR_RESULT_NONE;
