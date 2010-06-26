@@ -110,7 +110,7 @@ static void scEvent_AfterMove( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fSkipNigeruCalc );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fForceNigeru );
+static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fForceNigeru, BOOL fUseItem );
 static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
@@ -1969,7 +1969,7 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
 
           if( result == TRITEM_RESULT_ESCAPE )
           {
-            if( scproc_NigeruCore(wk, bpp, TRUE) ){
+            if( scproc_NigeruCore(wk, bpp, TRUE, TRUE) ){
               wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
             }
           }
@@ -2686,7 +2686,7 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL f
     }
   }
 
-  return scproc_NigeruCore( wk, bpp, fForceNigeru );
+  return scproc_NigeruCore( wk, bpp, fForceNigeru, FALSE );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2721,11 +2721,12 @@ static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
  * @param   wk
  * @param   bpp
  * @param   fNigeruCmd
+ * @param   fUseItem    バッグから逃げアイテムを使用した場合 TRUE
  *
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fForceNigeru )
+static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fForceNigeru, BOOL fUseItem )
 {
   u8 escapeClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
 
@@ -2753,9 +2754,16 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fFo
     // ここまで来たら逃げ確定
     if( !(wk->fEscMsgDisped) )
     {
-      // 特殊な逃げメッセージチェック
-      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-      BOOL fSpMsgDisped = scEvent_NigeruExMessage( wk, bpp );
+      BOOL fSpMsgDisped;
+
+      if( !fUseItem ){
+        // 特殊な逃げメッセージチェック
+        u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+          fSpMsgDisped = scEvent_NigeruExMessage( wk, bpp );
+        BTL_Hem_PopState( &wk->HEManager, hem_state );
+      }else{
+        fSpMsgDisped = FALSE;
+      }
 
       // 何もなければ標準メッセージ
       if( !fSpMsgDisped )
@@ -2772,7 +2780,6 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fFo
           SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
         }
       }
-      BTL_Hem_PopState( &wk->HEManager, hem_state );
 
       wk->fEscMsgDisped = TRUE;
     }
@@ -6864,7 +6871,6 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
     BTL_POKESET_SeekStart( targets );
     while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
     {
-      TAYA_Printf("ダメージ受け反応チェック ... pokeID=%d\n", BPP_GetID(bpp));
       scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
     }
   }
@@ -14672,7 +14678,6 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   u8 fEffective = FALSE;
   u8 result = 0;
   u32 i;
-
 
   for(i=0; i<param->poke_cnt; ++i)
   {
