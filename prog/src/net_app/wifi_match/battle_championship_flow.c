@@ -535,6 +535,7 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           else
           { 
             //ê⁄ë±Ç≈Ç´ÇÈÇ∆Ç´
+            BattleRec_DataClear();
             UTIL_FLOW_End( p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET_WIFICUP );
           }
 #ifdef DEBUGWIN_USE
@@ -821,6 +822,7 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           else
           { 
             //ê⁄ë±Ç≈Ç´ÇÈÇ∆Ç´
+            BattleRec_DataClear();
             UTIL_FLOW_End( p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET_LIVECUP );
           }
 #ifdef DEBUGWIN_USE

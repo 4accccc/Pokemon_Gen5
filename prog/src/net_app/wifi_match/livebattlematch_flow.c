@@ -836,6 +836,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_SAVE: //選手証が正しかったのでサインアップしてセーブ
+    BattleRec_DataClear();
     UTIL_TEXT_Print( p_wk, LIVE_STR_09, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
