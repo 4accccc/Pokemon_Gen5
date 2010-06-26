@@ -99,7 +99,7 @@ static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp, int* task_c
 static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new_f );
 static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 static void effReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id );
-static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
+static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haihu_f );
 static void effReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk );
 static void effReq_PopupMsgGPowerSpecial( BEACON_VIEW_PTR wk, GPOWER_ID sp_gpower_id );
 static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs );
@@ -187,6 +187,13 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   //パネルあたり判定
   ret = touchin_CheckPanel( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
+
+    //NPCデータかどうかチェック
+    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->ctrl.view_top+ret );
+    if( GAMEBEACON_Check_NPC( wk->tmpInfo) ){
+      return SEQ_MAIN;  //NPCなら無反応
+    }
+
     wk->ctrl.target = ret;
     effReq_SetPanelFlash( wk, ret );
     BEACON_VIEW_SUB_EventReserve( wk, EV_CALL_DETAIL_VIEW );
@@ -1901,7 +1908,10 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
   }
   switch( action ){
   case GAMEBEACON_ACTION_GPOWER:
-    return effReq_PopupMsgGPower( wk, info );
+    return effReq_PopupMsgGPower( wk, info, FALSE );
+
+  case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:
+    return effReq_PopupMsgGPower( wk, info, TRUE );
   
   case GAMEBEACON_ACTION_THANKYOU:
     //御礼を受けた回数インクリメント
@@ -2021,9 +2031,20 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u8 type, i
 static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* work);
 static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* work);
 
-static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
+static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haifu_f )
 {
-  GPOWER_ID gpower_id = GAMEBEACON_Get_GPowerID( info );
+  GPOWER_ID gpower_id;
+  
+  if( haifu_f ){
+    gpower_id = GAMEBEACON_Get_Action_DistributionGPower( info );
+  }else{
+    gpower_id = GAMEBEACON_Get_GPowerID( info );
+  }
+  //セキュリティ
+  if( gpower_id == GPOWER_ID_NULL || gpower_id > GPOWER_ENABLE_ID_END ){
+    GF_ASSERT(0);
+    return FALSE;
+  }
 
   //まったく同じパワーが発動中ならスルーする
   if( GPOWER_Check_OccurID( gpower_id, wk->gpower_data ) == gpower_id ){

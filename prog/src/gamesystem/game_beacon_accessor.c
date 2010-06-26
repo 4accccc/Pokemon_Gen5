@@ -14,6 +14,7 @@
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/game_beacon_types.h"
+#include "gamesystem/g_power.h"
 #include "net_app\union\union_beacon_tool.h"
 
 #include "app/townmap_data.h"
@@ -42,6 +43,7 @@ enum{
  BEACON_WSET_TH_RANK,  //トライアルハウスランク
  BEACON_WSET_GPOWER,      //Gパワー名
  BEACON_WSET_FREEWORD,    //フリーワード8文字
+ BEACON_WSET_HAIHU_GPOWER,    //配布Gパワー名
  BEACON_WSET_MAX,
 };
 
@@ -61,12 +63,12 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
   BEACON_WSET_MONSNAME,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_SP_POKE_VICTORY 特別なポケモンに勝利しました！5
   BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_START,	///<BATTLE_TRAINER_START トレーナーと対戦を開始しました！6
   BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_WIN,	  ///<BATTLE_TRAINER_VICTORY トレーナーに勝利しました！7
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<BATTLE_LEADER_START  ジムリーダーと対戦を開始しました！ 8
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_LEADER_VICTORY ジムリーダーに勝利しました！9
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<BATTLE_BIGFOUR_START  四天王と対戦を開始しました！10
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_BIGFOUR_VICTORY 四天王に勝利しました！11
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<BATTLE_CHAMPION_START チャンピオンと対戦を開始しました！12
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_CHAMPION_VICTORY チャンピオンに勝利しました！13
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_START,	///<BATTLE_LEADER_START  ジムリーダーと対戦を開始しました！ 8
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_WIN,	  ///<BATTLE_LEADER_VICTORY ジムリーダーに勝利しました！9
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_START,	///<BATTLE_BIGFOUR_START  四天王と対戦を開始しました！10
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_WIN,	  ///<BATTLE_BIGFOUR_VICTORY 四天王に勝利しました！11
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_START,	///<BATTLE_CHAMPION_START チャンピオンと対戦を開始しました！12
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_WIN,	  ///<BATTLE_CHAMPION_VICTORY チャンピオンに勝利しました！13
   BEACON_WSET_MONSNAME,	  BEACON_ICON_POKE_GET,	  ///<POKE_GET ポケモン捕獲 14
   BEACON_WSET_MONSNAME,	  BEACON_ICON_POKE_GET,	  ///<SP_POKE_GET 特別なポケモン捕獲 15
   BEACON_WSET_NICKNAME,	  BEACON_ICON_POKE_LVUP,	///<POKE_LVUP ポケモンレベルアップ 16
@@ -103,7 +105,7 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
   BEACON_WSET_NICKNAME,	  BEACON_ICON_INFO,	      ///<MUSICAL ミュージカル挑戦中 47
   BEACON_WSET_GPOWER,	    BEACON_ICON_GPOWER,	    ///<OTHER_GPOWER_USE 他人のGパワーを使用 48
   BEACON_WSET_FREEWORD,	  BEACON_ICON_MSG,	      ///<FREEWORD 一言メッセージ 49
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_GPOWER,     ///<DISTRIBUTION_GPOWER Gパワー配布中 50 
+  BEACON_WSET_HAIHU_GPOWER,	  BEACON_ICON_GPOWER,     ///<DISTRIBUTION_GPOWER Gパワー配布中 50 
 };
 
 typedef BOOL (*BEACON_INFO_ERROR_CHECK_FUNC)(const GAMEBEACON_INFO* info );
@@ -122,6 +124,7 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_haifu_gpower(const GAMEBEACON_INFO* info );
 
 static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX] = {
   errchk_action_default,
@@ -139,6 +142,7 @@ static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX
   errchk_action_th_rank,
   errchk_action_gpower,
   errchk_action_default,
+  errchk_action_haifu_gpower,
 };
 
 //==============================================================================
@@ -491,8 +495,9 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
   if( info->play_hour > 999 || info->play_min > 59 ){
     return TRUE;
   }
-  //GパワーIDチェック
-  if( info->g_power_id > GPOWER_ID_MAX ) {
+  //GパワーIDチェック(無効値でない&&有効値より大きいIDならエラー)
+  if( info->g_power_id > GPOWER_ENABLE_ID_END && 
+      info->g_power_id != GPOWER_ID_NULL ) {
     return TRUE;
   }
   //ゾーンIDチェック
@@ -808,6 +813,7 @@ u32 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Get_SelfIntroduction(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
+  GFL_STR_ClearBuffer(dest);
   GFL_STR_SetStringCodeOrderLength( dest,
     info->self_introduction, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE );
 }
@@ -822,7 +828,11 @@ void GAMEBEACON_Get_SelfIntroduction(const GAMEBEACON_INFO *info, STRBUF *dest)
 //==================================================================
 void GAMEBEACON_Get_ThankyouMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
-  GF_ASSERT(info->action.action_no == GAMEBEACON_ACTION_THANKYOU);
+  if( info->action.action_no != GAMEBEACON_ACTION_THANKYOU ){
+    GF_ASSERT(0);
+    GFL_STR_ClearBuffer(dest);
+    return;
+  }
   GFL_STR_SetStringCode( dest, info->action.thanks.thankyou_message );
 }
 
@@ -836,7 +846,11 @@ void GAMEBEACON_Get_ThankyouMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
 //==================================================================
 void GAMEBEACON_Get_FreeWordMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
-  GF_ASSERT(info->action.action_no == GAMEBEACON_ACTION_FREEWORD);
+  if( info->action.action_no != GAMEBEACON_ACTION_FREEWORD ){
+    GF_ASSERT(0);
+    GFL_STR_ClearBuffer(dest);
+    return;
+  }
   GFL_STR_SetStringCode( dest, info->action.freeword_message );
 }
 
@@ -849,6 +863,10 @@ void GAMEBEACON_Get_FreeWordMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
 //==================================================================
 GAMEBEACON_DETAILS_NO GAMEBEACON_Get_Details_DetailsNo(const GAMEBEACON_INFO *info)
 {
+  if( info->details.details_no >= GAMEBEACON_DETAILS_NO_MAX ){
+    GF_ASSERT(0);
+    return GAMEBEACON_DETAILS_NO_WALK;
+  }
   return info->details.details_no;
 }
 
@@ -861,14 +879,20 @@ GAMEBEACON_DETAILS_NO GAMEBEACON_Get_Details_DetailsNo(const GAMEBEACON_INFO *in
 //==================================================================
 u16 GAMEBEACON_Get_Details_BattleTrainer(const GAMEBEACON_INFO *info)
 {
+  u32 tr_no = info->details.battle_trainer;
+
   switch(info->details.details_no){
   case GAMEBEACON_DETAILS_NO_BATTLE_TRAINER:
   case GAMEBEACON_DETAILS_NO_BATTLE_JYMLEADER:
   case GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER:
-    return info->details.battle_trainer;
+    if( tr_no == TRID_NULL || tr_no >= TRID_MAX ){
+      GF_ASSERT(0);
+      tr_no = 1;
+    }
+    return tr_no;
   }
   GF_ASSERT(0);
-  return 0;
+  return 1;
 }
 
 //==================================================================
@@ -880,13 +904,18 @@ u16 GAMEBEACON_Get_Details_BattleTrainer(const GAMEBEACON_INFO *info)
 //==================================================================
 u16 GAMEBEACON_Get_Details_BattleMonsNo(const GAMEBEACON_INFO *info)
 {
+  u32 monsno = info->details.battle_monsno;
   switch(info->details.details_no){
   case GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE:        ///<野生ポケモンと対戦中
   case GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE:          ///<特別なポケモンと対戦中
-    return info->details.battle_monsno;
+    if( monsno == 0 || monsno > MONSNO_END ){
+      GF_ASSERT(0);
+      monsno = MONSNO_MINEZUMI; //当たり障りの無いNo
+    }
+    return monsno;
   }
   GF_ASSERT(0);
-  return 0;
+  return MONSNO_MINEZUMI; //当たり障りの無いNo
 }
 
 //==================================================================
@@ -900,6 +929,11 @@ u16 GAMEBEACON_Get_Details_BattleMonsNo(const GAMEBEACON_INFO *info)
 //==================================================================
 GAMEBEACON_ACTION GAMEBEACON_Get_Action_ActionNo(const GAMEBEACON_INFO *info)
 {
+  if( info->action.action_no == GAMEBEACON_ACTION_NULL ||
+      info->action.action_no >= GAMEBEACON_ACTION_MAX ) {
+    GF_ASSERT(0);
+    return GAMEBEACON_ACTION_SEARCH;
+  }
   return info->action.action_no;
 }
 
@@ -924,7 +958,7 @@ u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info)
     return info->action.monsno;
   }
   GF_ASSERT_MSG(0,"ano = %d\n",info->action.action_no);
-  return info->action.monsno;
+  return MONSNO_MINEZUMI; //当たり障りの無いNo
 }
 
 //==================================================================
@@ -942,7 +976,7 @@ u16 GAMEBEACON_Get_Action_ItemNo(const GAMEBEACON_INFO *info)
     return info->action.itemno;
   }
   GF_ASSERT(0);
-  return info->action.itemno;
+  return ITEM_KIZUGUSURI; //当たり障りないNo
 }
 
 //==================================================================
@@ -959,7 +993,7 @@ u16 GAMEBEACON_Get_Action_WazaNo(const GAMEBEACON_INFO *info)
     return info->action.wazano;
   }
   GF_ASSERT(0);
-  return info->action.wazano;
+  return WAZANO_HATAKU;
 }
 
 //==================================================================
@@ -976,7 +1010,7 @@ u16 GAMEBEACON_Get_Action_DistributionMonsno(const GAMEBEACON_INFO *info)
     return info->action.distribution.monsno;
   }
   GF_ASSERT(0);
-  return info->action.distribution.monsno;
+  return MONSNO_MINEZUMI; //当たり障りの無いNo
 }
 
 //==================================================================
@@ -993,7 +1027,7 @@ u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info)
     return info->action.distribution.itemno;
   }
   GF_ASSERT(0);
-  return info->action.distribution.itemno;
+  return ITEM_KIZUGUSURI; //当たり障りないNo
 }
 
 //==================================================================
@@ -1010,7 +1044,7 @@ GPOWER_ID GAMEBEACON_Get_Action_DistributionGPower(const GAMEBEACON_INFO *info)
     return info->action.distribution.gpower_id;
   }
   GF_ASSERT(0);
-  return info->action.distribution.gpower_id;
+  return GPOWER_ID_SOUGUU_INC_A;
 }
 
 //==================================================================
@@ -1022,6 +1056,8 @@ GPOWER_ID GAMEBEACON_Get_Action_DistributionGPower(const GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
+  GFL_STR_ClearBuffer(dest);
+
   GFL_STR_SetStringCodeOrderLength( dest,
     info->action.normal.nickname, MONS_NAME_SIZE+EOM_SIZE );
 
@@ -1061,7 +1097,7 @@ u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info)
   case GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY:
     return info->action.tr_no;
   }
-  return info->action.tr_no;
+  return 1;
 }
 
 //==================================================================
@@ -1078,7 +1114,7 @@ u32 GAMEBEACON_Get_Action_ThankyouCount(const GAMEBEACON_INFO *info)
     return info->action.thankyou_count;
   }
   GF_ASSERT(0);
-  return info->action.thankyou_count;
+  return 1;
 }
 
 //==================================================================
@@ -1095,7 +1131,7 @@ u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info)
     return info->action.hour;
   }
   GF_ASSERT(0);
-  return info->action.hour;
+  return 1;
 }
 
 //==================================================================
@@ -1114,7 +1150,7 @@ u32 GAMEBEACON_Get_Action_VictoryCount(const GAMEBEACON_INFO *info)
     return info->action.victory_count;
   }
   GF_ASSERT(0);
-  return info->action.victory_count;
+  return 1;
 }
 
 //==================================================================
@@ -1131,7 +1167,7 @@ u8 GAMEBEACON_Get_Action_TrialHouseRank(const GAMEBEACON_INFO *info)
     return info->action.trial_house_rank;
   }
   GF_ASSERT(0);
-  return info->action.trial_house_rank;
+  return TH_RANK_BEGINNER;
 }
 
 //==================================================================
@@ -1148,7 +1184,7 @@ u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info)
     return info->action.gpower_id;
   }
   GF_ASSERT(0);
-  return info->action.gpower_id;
+  return GPOWER_ID_SOUGUU_INC_A;
 }
 
 //==================================================================
@@ -1186,8 +1222,14 @@ u8 GAMEBEACON_GetActionDataIconType( GAMEBEACON_ACTION action )
 void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id)
 {
   u8 type;
-  STRBUF *strbuf = GFL_STR_CreateBuffer( BUFLEN_BEACON_WORDSET_TMP , temp_heap_id);
+  STRBUF *strbuf;
 
+  WORDSET_ClearAllBuffer( wordset );
+  
+  strbuf = GFL_STR_CreateBuffer( BUFLEN_BEACON_WORDSET_TMP , temp_heap_id);
+  if( strbuf == NULL ){
+    return;
+  }
   //トレーナー名展開(デフォルト)
   GAMEBEACON_Get_PlayerNameToBuf(info, strbuf);
   WORDSET_RegisterWord( wordset, 0, strbuf, 0, TRUE, PM_LANG);
@@ -1246,6 +1288,9 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
   case BEACON_WSET_FREEWORD:
     GAMEBEACON_Get_FreeWordMessage( info, strbuf );
     WORDSET_RegisterWord( wordset, 1, strbuf, GAMEBEACON_Get_Sex(info), TRUE, PM_LANG);
+    break;
+  case BEACON_WSET_HAIHU_GPOWER:
+  case BEACON_WSET_DEFAULT:
     break;
   }
   GFL_STR_DeleteBuffer(strbuf);
@@ -1357,12 +1402,10 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
 //エラーチェック サブウェイ連勝数タイプ 
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
 {
-#if 1
   if( info->action.victory_count ==0 || info->action.victory_count > 7 ){
     GF_ASSERT_MSG(0,"%d\n",info->action.victory_count);
     return TRUE;
   }
-#endif
   return FALSE;
 }
 //エラーチェック トライアルハウスランクタイプ 
@@ -1379,6 +1422,15 @@ static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info )
 {
   if( info->action.gpower_id >= GPOWER_ID_MAX ){
     GF_ASSERT_MSG(0,"%d\n",info->action.gpower_id);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック 配布GパワーIDタイプ 
+static BOOL errchk_action_haifu_gpower(const GAMEBEACON_INFO* info )
+{
+  if( info->action.distribution.gpower_id >= GPOWER_ID_MAX ){
+    GF_ASSERT_MSG(0,"%d\n",info->action.distribution.gpower_id);
     return TRUE;
   }
   return FALSE;

@@ -92,6 +92,7 @@ typedef struct
   int                   seq;
 	int										sub_seq;
   int                   eff_task_ct;
+  BOOL                  data_error_f;
 
   BEACON_DETAIL_PARAM*  param;
   GFL_TCBLSYS*  pTcbSys;

@@ -67,6 +67,7 @@
 
 
 #include "arc/wifi_unionobj_plt.cdat" //ユニオンキャラパレット参照テーブル
+#include "arc/fieldmap/zone_id.h"
 
 //////////////////////////////////////////////////////////////
 //定数定義
@@ -327,7 +328,13 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
   case GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER:
     break;
   default:
-    WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID(GAMEBEACON_Get_ZoneID( info )) );
+    {
+      u16 zone_id = GAMEBEACON_Get_ZoneID( info );
+      if( zone_id >= ZONE_ID_MAX){
+        zone_id = ZONE_ID_R01;
+      }
+      WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID(zone_id) );
+    }
     break;
   }
 }
@@ -604,7 +611,8 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
     
 	  //タウンマップ上の座標取得
     if( (dataIndex == TOWNMAP_DATA_ERROR) ||
-        (TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_HIDE_FLAG ) != TOWNMAP_DATA_ERROR )){
+        (TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_HIDE_FLAG ) != TOWNMAP_DATA_ERROR ) ||
+        (zone >= ZONE_ID_MAX)){
       wk->icon_enable_f = FALSE;
       
       wk->icon_x = wk->icon_y = 0;
@@ -649,13 +657,11 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
       (wk->tmpTime&0xFF), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
   
     print_GetMsgToBuf( wk, msg_receive_time01+(hour/12) );
-//    PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
     printReq_BmpwinPrint( wk, &wk->win_popup, 0, 0, wk->str_expand, FCOL_POPUP );
   }
   //ビーコン詳細情報
   sub_DetailWordset( wk->tmpInfo, wk->wset );
   print_GetMsgToBuf( wk, pd->msg_id );
-//  PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 16, wk->str_expand, wk->font, FCOL_POPUP );
   printReq_BmpwinPrint( wk, &wk->win_popup, 0, 16, wk->str_expand, FCOL_POPUP );
 
   GFL_BMPWIN_MakeTransWindow( wk->win_popup.win );

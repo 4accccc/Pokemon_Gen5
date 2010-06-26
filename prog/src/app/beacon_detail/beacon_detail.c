@@ -271,6 +271,11 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
 { 
 	BEACON_DETAIL_WORK* wk = mywk;
 
+  if( wk->data_error_f ){
+    //万一有効なデータが一つもなかったらエラーコードを設定して、なにもしないでアプリ抜ける
+    return GFL_PROC_RES_FINISH;
+  }
+
   //タッチバーメイン処理
   if( (*seq) >= SEQ_MAIN && (*seq) <= SEQ_EFF_WAIT ){
   	_sub_TouchBarMain( wk->touchbar );
@@ -422,14 +427,27 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
   max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
 
   //詳細が有効なデータindexを取得
+  wk->list_top = 0xFF;
   for(i = 0;i < max;i++){
-    if( GAMEBEACON_Check_NPC( wk->tmpInfo )){
+    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, i );
+
+    if( GAMEBEACON_Check_Error( wk->tmpInfo ) || 
+        GAMEBEACON_Check_NPC( wk->tmpInfo ) ){
       continue;
     }
     if( wk->param->target == i ){
       wk->list_top = wk->list_max;
     }
     wk->list[wk->list_max++] = i;
+  }
+  if( wk->list_top == 0xFF || wk->list_top >= wk->list_max ){
+    GF_ASSERT(0);
+    wk->list_top = 0;
+  }
+  if( wk->list_max == 0 ){
+    //万一有効なデータが一つもなかったらエラーコードを設定して、なにもしないでアプリ抜ける
+    wk->data_error_f = TRUE;
+    GF_ASSERT(0);
   }
 
   //メッセージスピード取得
