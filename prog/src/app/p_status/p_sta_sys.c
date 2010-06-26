@@ -1028,8 +1028,8 @@ static void PSTATUS_InitMessage( PSTATUS_WORK *work )
   
   {
     u16 *palAdr = (u16*)(HW_DB_BG_PLTT+PSTATUS_BG_SUB_PLT_FONT*32);
-    palAdr[ 9] = GX_RGB(23,18,19);
-    palAdr[10] = GX_RGB(18,18,24);
+    palAdr[ 9] = GX_RGB(25,18,19);
+    palAdr[10] = GX_RGB(18,18,26);
   }
 
   
