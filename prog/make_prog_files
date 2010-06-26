@@ -1187,7 +1187,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_rec.c \
 			battle/btl_adapter.c \
 			battle/btl_string.c \
-			battle/btl_tables.c
+			battle/btl_field.c
 
 
 
@@ -1218,7 +1218,7 @@ SRCS_OVERLAY_VRAM_H =	battle/handler/hand_field.c \
 			battle/handler/hand_side.c \
 			battle/btlv/btlv_scd.c \
 			battle/btl_sick.c \
-			battle/btl_field.c \
+			battle/btl_tables.c \
 			battle/btl_pokeselect.c \
 			battle/btl_pokeset.c \
 			battle/btl_wazarec.c \
