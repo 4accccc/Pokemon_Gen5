@@ -801,8 +801,8 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     CTVT_DRAW_InitMode( work , work->drawWork );
     break;
   case CTM_ERROR: //I—¹
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
     //break throught;
   case CTM_END: //I—¹
     CTVT_COMM_ExitComm( work , work->commWork );
