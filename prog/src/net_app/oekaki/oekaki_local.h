@@ -188,7 +188,7 @@ typedef struct{
 //====================================================
 typedef struct{
     int command;       // 通信コマンド
-    u8  id;             // 乱入者ID
+    u8  id;            // 乱入者ID
     u8  etc[3];
     COMM_OEKAKI_END_CHILD_WORK trans_work;  // 子機離脱宣言用ワーク
 } OEKAKI_SEND_REQUEST;

@@ -12,6 +12,9 @@
  * 　いいんじゃないか？
  * 　↑描いてない時のクライアントの判定が全部作り直しのような気がする…
  *
+ * 乱入者が来て送信し始めたときに誰かが電プチしていなくなる。
+ * 離脱メンバーがいなくなる処理が終了した時にされる事で親が乱入OKにしてしまう事で
+ * 途中乱入がOKになる状態が確認できたのでココをおさえることにする
  */
 //============================================================================================
 #define DEBUGPLAY_ONE ( 0 )
@@ -346,6 +349,7 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
 {
   OEKAKI_WORK * wk  = (OEKAKI_WORK *)mywk;
 
+  // 親機は接続中bitテーブルと離脱申告bitテーブルを&比較して0になるのを待つ
   if(GFL_NET_SystemGetCurrentID() == 0 && wk->ridatu_bit != 0){
     wk->ridatu_bit &= _get_connect_bit(wk);
   }
@@ -422,7 +426,7 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
 
 #ifdef PM_DEBUG
   if(debugseq!=*seq || debugsubseq!=wk->seq){
-    OS_Printf("seq=%d, subseq=%d\n", *seq, wk->seq);
+    OS_Printf("seq=%d, subseq=%d sharebit=%d ridatu_bit\n", *seq, wk->seq, wk->shareBit, wk->ridatu_bit);
     debugseq = *seq;
     debugsubseq = wk->seq;
   }
@@ -1681,6 +1685,7 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
   // 誤送信を防ぐ
   wk->MyTouchResult.size = 0;
 
+  // 親機から操作禁止が着ている間は子機は操作禁止
   if(wk->AllTouchResult[0].banFlag==OEKAKI_BAN_ON && GFL_NET_SystemGetCurrentID()!=0){
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
     APP_TASKMENU_ShowOnly( wk->app_menuwork );
@@ -1694,15 +1699,11 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
 
   if(GFL_NET_SystemGetCurrentID() == 0 && wk->ridatu_bit != 0){
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
+    APP_TASKMENU_ShowOnly( wk->app_menuwork );
+    OS_Printf("メニュー操作禁止 ridatu_bit=%d, union_bit=%d \n", wk->ridatu_bit, _get_connect_bit(wk));
     return seq;
   }
   
-  if(MyStatusGetNum(wk) != _get_connect_num(wk)){
-    //一致していないなら「やめる」許可しない(子も通るここは親しか更新されないshareNumは見ない)
-    EndSequenceCommonFunc( wk );    //終了選択時の共通処理
-    return seq;
-  }
-
   result = YesNoMenuMain( wk );
   switch(result){       //やめますか？
   case YESNO_RET_YES:
@@ -2963,13 +2964,13 @@ static void LineDataSendRecv( OEKAKI_WORK *wk )
       if(ret==TRUE){
         // 送信成功であればFIFOを進める
         OekakiTouchFifo_AddStart( &wk->TouchFifo );
-        MORI_Printf("fifo start=%d, end=%d diff=%d\n", 
-                    wk->TouchFifo.start, wk->TouchFifo.end,_get_fifo_diff(&wk->TouchFifo));
+//        MORI_Printf("fifo start=%d, end=%d diff=%d\n", 
+//                    wk->TouchFifo.start, wk->TouchFifo.end,_get_fifo_diff(&wk->TouchFifo));
       }else{
-        MORI_Printf("親機送信失敗  x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
+//        MORI_Printf("親機送信失敗  x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
       }
     }else{
-      MORI_Printf("送信バッファに積むことができない\n");
+//      MORI_Printf("送信バッファに積むことができない\n");
     }
   }else{
 
@@ -2984,13 +2985,13 @@ static void LineDataSendRecv( OEKAKI_WORK *wk )
       if(ret==TRUE){
         // 送信成功であればFIFOを進める
         OekakiTouchFifo_AddStart( &wk->TouchFifo );
-        MORI_Printf("fifo start=%d, end=%d diff=%d\n", 
-                    wk->TouchFifo.start, wk->TouchFifo.end,_get_fifo_diff(&wk->TouchFifo));
+//        MORI_Printf("fifo start=%d, end=%d diff=%d\n", 
+//                    wk->TouchFifo.start, wk->TouchFifo.end,_get_fifo_diff(&wk->TouchFifo));
       }else{
-        MORI_Printf("子機送信失敗 x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
+//        MORI_Printf("子機送信失敗 x=%03d, y=%03d\n", wk->MyTouchResult.x[0], wk->MyTouchResult.y[0]);
       }
     }else{
-      MORI_Printf("送信バッファに積むことができない\n");
+//      MORI_Printf("送信バッファに積むことができない\n");
     }
   }
 
@@ -3009,6 +3010,7 @@ static void LineDataSendRecv( OEKAKI_WORK *wk )
 static int MyStatusGetNum( OEKAKI_WORK *wk )
 {
   return Union_App_GetMemberNum( wk->param->uniapp );
+
 }
 
 

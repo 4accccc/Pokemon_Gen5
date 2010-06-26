@@ -258,7 +258,7 @@ static void CommOekakiBoardEndChild(
           wk->ridatu_bit |= 1 << netID;
           wk->send_req.trans_work.ridatu_kyoka = TRUE;
           //離脱OKなので参加制限をかける(乱入があればそちら側で制限がはずされるはず)
-            Union_App_Parent_ResetEntryBlock( wk->param->uniapp);   // 乱入OK
+          Union_App_Parent_ResetEntryBlock( wk->param->uniapp);   // 乱入OK
         }
         break;
       case COEC_REQ_RIDATU_EXE:
@@ -422,6 +422,8 @@ static void Oekaki_GraphicDataSend( OEKAKI_WORK *wk, int no, GFL_NETHANDLE *pNet
   sendbit = Union_App_GetMemberNetBit( wk->param->uniapp );
   GFL_NET_COMMAND_SendHugeData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), sendbit, 
                                 CO_OEKAKI_GRAPHICDATA, sizeof(OEKAKIG_SPLIT_DATA),&wk->send_buf);
+  OS_TPrintf("sendbit=%d, systemConnect=%d\n", sendbit, GFL_NET_SystemGetConnectNum());
+
   OS_Printf("送信データ no=%d, xor = %08x\n",  wk->send_buf.no,  wk->send_buf._xor);
 }
 
