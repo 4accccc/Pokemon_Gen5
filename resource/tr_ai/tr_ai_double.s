@@ -134,6 +134,9 @@ DoubleAI_StrongAI_end:
 	IF_WAZANO	WAZANO_TORIKKURUUMU, DoubleEnemyAI_Torikkuruumu	// トリックルーム2006.6.23ok
 	IF_WAZANO	WAZANO_KONOYUBITOMARE, DoubleEnemyAI_Konoyubitomare	// このゆびとまれ2006.6.14ok
 	
+	IF_WAZANO	WAZANO_IYASINOHADOU, DoubleEnemyAI_Iyasinohadou		// いやしのはどう　2010.6.25
+	IF_WAZANO	WAZANO_OSAKINIDOUZO, DoubleEnemyAI_Osakinidouzo		// おさきにどうぞ　2010.6.25
+
 	CHECK_TYPE	CHECK_WAZA
 	IF_EQUAL	POKETYPE_DENKI,DoubleEnemyAI_ElectricType		// 電気技2006.6.14ok
 	IF_EQUAL	POKETYPE_HONOO,DoubleEnemyAI_FireType				// 炎技2006.6.14ok
@@ -859,7 +862,10 @@ DoubleEnemyAI_rendou_Osakinidouzo_1:
 DoubleEnemyAI_rendou_Osakinidouzo_end:
 	AIEND
 
-
+DoubleEnemyAI_Iyasinohadou:		// いやしのはどう　2010.6.25
+DoubleEnemyAI_Osakinidouzo:		// おさきにどうぞ　2010.6.25
+	INCDEC		-10	
+	AIEND
 
 //--------------------------------------
 //	味方が対象
