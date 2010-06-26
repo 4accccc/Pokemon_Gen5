@@ -1052,7 +1052,8 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
 
         *p_seq       = SEQ_START_CREATE_SAKE;
       }
-      else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       { 
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
@@ -1095,7 +1096,8 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
         //もう一度受信しに行く
         *p_seq  = SEQ_START_RECVRATE_SAKE;
       }
-      else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       {
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )

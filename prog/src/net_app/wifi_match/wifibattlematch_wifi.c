@@ -841,7 +841,8 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_END;
       }
-      else if(  res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       {
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
@@ -2583,7 +2584,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           }
         }
       }
-      if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       {
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
@@ -2766,7 +2767,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC2;
         *p_seq  = SEQ_START_SAKE_TIMING;
       }
-      else if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
+      
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       {
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
