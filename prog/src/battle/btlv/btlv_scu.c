@@ -3953,7 +3953,7 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
     }
     break;
   case 6:
-    if(  !PMSND_CheckPlaySE() ){
+    if(  !(PMSND_CheckPlayingSEIdx(BANK_SE_WB_DECIDE2) || PMSND_CheckPlayingSEIdx(WAVE_SE_WB_SHOOTER)) ){
       return TRUE;
     }
     break;
@@ -4106,7 +4106,7 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
     (tokwin->seq++);
     break;
   case 5:
-    if(  !PMSND_CheckPlaySE() ){
+    if(  !PMSND_CheckPlayingSEIdx(BANK_SE_WB_DECIDE3) ){
       tokwin->seq++;
     }
     break;
