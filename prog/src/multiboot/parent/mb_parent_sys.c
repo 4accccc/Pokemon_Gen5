@@ -1255,6 +1255,7 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
 #pragma mark [>SendImage func
 static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work );
 static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work );
+static void MB_PARENT_SoftResetCallBack( void *pWork );
 
 //--------------------------------------------------------------
 //  ROM送信部分 初期化
@@ -1400,7 +1401,9 @@ static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 {
-  if( WH_GetSystemState() == WH_SYSSTATE_ERROR )
+
+  if( WH_GetSystemState() == WH_SYSSTATE_ERROR ||
+      WH_GetSystemState() == WH_SYSSTATE_FATAL )
   {
     work->isSendRom = FALSE;
     work->isNetErrMb = TRUE;
@@ -1415,6 +1418,17 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
       return FALSE;
     }
   }
+  
+#if PM_DEBUG
+  {
+    static int besSubState = 0xFFFF;
+    if( besSubState != work->subState )
+    {
+      OS_TFPrintf(3,"state[%d]->[%d]\n",besSubState,work->subState);
+      besSubState = work->subState;
+    }
+  }
+#endif
 
 
   switch( work->subState )
@@ -1435,6 +1449,8 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     }
     
     work->subState = MPSS_SEND_IMAGE_INIT_COMM_WAIT;
+
+    GFL_UI_SoftResetSetFunc( MB_PARENT_SoftResetCallBack , work );
     break;
   case MPSS_SEND_IMAGE_INIT_COMM_WAIT:
     //if( WhCallBackFlg == TRUE )
@@ -1520,6 +1536,7 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   case MPSS_SEND_IMAGE_NET_EXIT_WAIT:
     if( WhCallBackFlg == TRUE )
     {
+      GFL_UI_SoftResetSetFunc( NULL , NULL );
       WH_FreeMemory();
       return TRUE;
     }
@@ -1907,6 +1924,29 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
   }
 }
 
+static void MB_PARENT_SoftResetCallBack( void *pWork )
+{
+  //ソフトリセット時、自前で終了処理
+  MB_PARENT_WORK *work = pWork;
+  
+  if( MBP_GetState() != MBP_STATE_STOP )
+  {
+    MBP_Cancel();
+  }
+  while( MBP_GetState() != MBP_STATE_STOP )
+  {
+    OS_TPrintf("WaitA!\n");
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  
+  WhCallBackFlg = FALSE;
+  WH_End( &MP_PARENT_WhCallBack );
+  while( WhCallBackFlg == FALSE )
+  {
+    OS_TPrintf("WaitB!\n");
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+}
 
 #pragma mark [>save func
 //--------------------------------------------------------------
