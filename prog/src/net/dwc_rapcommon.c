@@ -39,23 +39,6 @@
 #define NET_MEMORY_PRINT(...)           ((void) 0)
 #endif  // NET_MEMORY_DEBUG
 
-#ifdef PM_DEBUG
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
-#define DEBUG_SUBHEAP_CHECK,
-#endif //DEBUG_ONLY_FOR_toru_nagihashi
-#endif //PM_DEBUG
-
-#ifdef DEBUG_SUBHEAP_CHECK
-static int alloc_cnt  = 0;
-#define DEBUG_ALLOC_Increment {NAGI_Printf( "sub_heap alloc cnt=%d\n", ++alloc_cnt );}  
-#define DEBUG_ALLOC_Decrement {NAGI_Printf( "sub heap alloc cnt=%d\n", --alloc_cnt );}  
-#else   //DEBUG_SUBHEAP_CHECK
-#define DEBUG_ALLOC_Increment /*  */
-#define DEBUG_ALLOC_Decrement /*  */
-#endif  //DEBUG_SUBHEAP_CHECK
-
-
-
 #define DWCRAPCOMMON_SUBHEAP_GROUPID  0xea
 
 typedef struct{
@@ -65,6 +48,7 @@ typedef struct{
   NNSFndHeapHandle headHandleSub; //サブヒープ
   void          *heapPtrSub;
   DWCAllocType  SubAllocType;  //サブヒープから確保するタイプ
+  u32           subheap_alloc_cnt;  //メモリ取得数
 } DWCRAPCOMMON_WORK;
 
 static DWCRAPCOMMON_WORK* pDwcRapWork = NULL;
@@ -107,6 +91,13 @@ void DWC_RAPCOMMON_ResetSubHeapID(void)
   GFL_HEAP_FreeMemory( pDwcRapWork->heapPtrSub );
   pDwcRapWork->headHandleSub  = NULL;
   pDwcRapWork->heapPtrSub = NULL;
+
+  //もし破棄した段階でメモリが残っていればエラーにする
+  if( pDwcRapWork->subheap_alloc_cnt != 0 )
+  {
+    NAGI_Printf( "！！ヒープ強制エラー！！\n" );
+    GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );
+  }
 }
 
 
@@ -135,7 +126,8 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     (void)OS_RestoreInterrupts(enable);
     NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandleSub),name );
     }
-    DEBUG_ALLOC_Increment
+    pDwcRapWork->subheap_alloc_cnt++;
+    NAGI_Printf( "sub heap alloc cnt=%d\n", pDwcRapWork->subheap_alloc_cnt );
   }
   else
   { 
@@ -203,7 +195,8 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
       OSIntrMode  enable = OS_DisableInterrupts();
       NNS_FndFreeToExpHeap( pDwcRapWork->headHandleSub, ptr );
       (void)OS_RestoreInterrupts(enable);
-      DEBUG_ALLOC_Decrement
+      pDwcRapWork->subheap_alloc_cnt--;
+      NAGI_Printf( "sub_heap alloc cnt=%d\n", pDwcRapWork->subheap_alloc_cnt );
     }
   }
   else
