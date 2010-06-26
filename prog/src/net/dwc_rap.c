@@ -1536,6 +1536,21 @@ static void ConnectionClosedCallback(DWCError error,
     else {
       MYDWC_DEBUGPRINT("Connection to aid %d (friendListIndex = %d) was closed. Rest %d.\n",
                        aid, index, DWC_GetNumConnectionHost());
+      {
+        if(_dWork->bAutoDisconnect){
+          const GFL_NETSTATE_DWCERROR* cp_error =GFL_NET_StateGetWifiError();
+          if( cp_error->errorUser == 0 )
+          {
+            GFL_NET_StateSetWifiError( 
+                cp_error->errorCode, 
+                cp_error->errorType, 
+                cp_error->errorRet, 
+                ERRORCODE_DISCONNECT );
+          }
+          MYDWC_DEBUGPRINT("bAutoDisconnectErr\n");
+        }
+        _CHANGE_STATE(MDSTATE_DISCONNECTTING);
+      }
     }
   }
   else {
