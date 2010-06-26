@@ -320,6 +320,7 @@ typedef struct
   u8      form_no;
   u8      sex;
   u8      egg;
+  u8      new;
 } RANKING_ONE_DATA;
 typedef struct
 { 
@@ -1309,26 +1310,28 @@ static void SEQFUNC_MoveNew( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	now_pos		= SCROLL_GetPosY( &p_wk->scroll );
 	limit_pos	= SCROLL_GetBottomLimitPosY( &p_wk->scroll );
 
-	//新規が一定の場所にくるか、最後までうごいたら
-	if( new_pos  > now_pos && now_pos != limit_pos )
-	{	
-		fx32 rate;
-		p_wk->move_new_sync++;
-		if( ACLR_SCROLL_KEY_MIN < FX32_CONST(p_wk->move_new_sync) )
-		{	
-			rate	= FX_Div( (FX32_CONST(p_wk->move_new_sync) - ACLR_SCROLL_KEY_MIN), ACLR_SCROLL_KEY_DIF );
-			ACLR_SetAclr( &p_wk->aclr, FX_Mul( rate, ACLR_SCROLL_DISTANCE_MAX ), ACLR_SCROLL_KEY_MOVE_ACLR_SYNC );
-		}
-		else
-		{	
-			ACLR_SetAclr( &p_wk->aclr, ACLR_SCROLL_KEY_MOVE_INIT_DISTANCE, ACLR_SCROLL_KEY_MOVE_INIT_SYNC );
-		}
-	}
-	else
-	{	
-		ACLR_Stop( &p_wk->aclr );
-		SEQ_SetNext( &p_wk->seq, SEQFUNC_Main );
-	}
+  {
+    //新規が一定の場所にくるか、最後までうごいたら
+    if( new_pos  > now_pos && now_pos != limit_pos )
+    {	
+      fx32 rate;
+      p_wk->move_new_sync++;
+      if( ACLR_SCROLL_KEY_MIN < FX32_CONST(p_wk->move_new_sync) )
+      {	
+        rate	= FX_Div( (FX32_CONST(p_wk->move_new_sync) - ACLR_SCROLL_KEY_MIN), ACLR_SCROLL_KEY_DIF );
+        ACLR_SetAclr( &p_wk->aclr, FX_Mul( rate, ACLR_SCROLL_DISTANCE_MAX ), ACLR_SCROLL_KEY_MOVE_ACLR_SYNC );
+      }
+      else
+      {	
+        ACLR_SetAclr( &p_wk->aclr, ACLR_SCROLL_KEY_MOVE_INIT_DISTANCE, ACLR_SCROLL_KEY_MOVE_INIT_SYNC );
+      }
+    }
+    else
+    {	
+      ACLR_Stop( &p_wk->aclr );
+      SEQ_SetNext( &p_wk->seq, SEQFUNC_Main );
+    }
+  }
 
 	//加速可能ならば移動
 	if( ACLR_IsExist(&p_wk->aclr) )
@@ -2168,9 +2171,10 @@ static s16 SCROLL_GetNewRankPosY( const SCROLL_WORK *cp_wk )
 {	
 	int i;
 	BOOL is_exist	= FALSE;
+
 	for( i = 0; i < cp_wk->data_len; i++ )
 	{	
-		if( cp_wk->rankbar[i].cp_data->plt == 5 )
+		if( cp_wk->rankbar[i].cp_data->new )
 		{	
 			is_exist	= TRUE;
 			break;
@@ -2765,6 +2769,7 @@ static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID )
 			if( new_rank == i )
 			{	
 				p_data->plt		= 5 + !sex * 5;
+        p_data->new  = TRUE;
 			}else if( p_data->rank == 1 )
 			{	
 				p_data->plt		= 2 + !sex * 5;
