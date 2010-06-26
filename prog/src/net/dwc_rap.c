@@ -1643,6 +1643,7 @@ int mydwc_HandleError(void)
       //エラーコードの表示が必要。
 
       MYDWC_DEBUGPRINT("Disconnect Error!!\n");
+
       if(_dWork){
         switch( _dWork->state )
         {
@@ -1772,12 +1773,16 @@ static BOOL sendKeepAlivePacket(int i)
 static int mydwc_step(void)
 {
   int i,ret;
+  int errorCode;
+  DWCErrorType myErrorType;
 
   _FuncNonSave();  //セーブデータの方にフレンドデータを移し変える
 
-  DWC_ProcessFriendsMatch();  // DWC通信処理更新
+  ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
+  if( !((ret != DWC_ERROR_NONE) && (myErrorType >= DWC_ETYPE_SHUTDOWN_FM)) ){  //エラーのときは処理しない BTS6879
+    DWC_ProcessFriendsMatch();  // DWC通信処理更新
+  }
   mydwc_updateFriendInfo();
-
 
 
   if( _dWork->isvchat )
@@ -2525,7 +2530,7 @@ static void ConnectToGameServerCallback(DWCError error,
       DWCErrorType myErrorType;
       int ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
       if( ret != 0 ){
-        MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
+        MYDWC_DEBUGPRINT("error cb!(%d, %d, %d)\n", ret, errorCode, myErrorType);
       }
     }
     // もう一度最初から。おいおい処理
