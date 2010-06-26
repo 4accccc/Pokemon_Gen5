@@ -164,6 +164,7 @@ typedef enum{
  BEACON_ARG_GDATA_U32,
  BEACON_ARG_FWORD,
  BEACON_ARG_GPOWER,
+ BEACON_ARG_FWAZA,
 }BEACON_ARG_TYPE;
 
 typedef void (*BEACON_SET_FUNC_NONE)(void);
@@ -387,7 +388,7 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   ///<USE_ITEM アイテムを使用 35
   { GAMEBEACON_Set_UseItem,               BEACON_PSET_ITEM,	      BEACON_ARG_U16,	},
   ///<FIELD_SKILL フィールド技を使用 36
-  { GAMEBEACON_Set_FieldSkill,            BEACON_PSET_WAZA,	      BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_FieldSkill,            BEACON_PSET_WAZA,	      BEACON_ARG_FWAZA,	},
   ///<SODATEYA_EGG 育て屋から卵を引き取った 37
   { GAMEBEACON_Set_SodateyaEgg,           BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
   ///<EGG_HATCH タマゴが孵化した 38
@@ -427,7 +428,7 @@ static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
  { 0, 999, BPRM_WSET_NONE }, //BEACON_PSET_PTIME,       プレイタイム
  { 0, CROSS_COMM_SURETIGAI_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_SURETIGAI_CT, すれ違い回数
  { 0, CROSS_COMM_THANKS_RECV_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_THANKS, 御礼回数
- { 1, BREQ_FWAZA_MAX, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
+ { 0, BREQ_FWAZA_MAX-1, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
  { 1, 7, BPRM_WSET_NONE }, //BEACON_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
  { 0, 5, BPRM_WSET_NONE }, //BEACON_PSET_TH_RANK,     トライアルハウスランク
  { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
@@ -1665,6 +1666,10 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
   case	BEACON_ARG_GPOWER:
     GF_ASSERT( value >= 0 );
     ((BEACON_SET_FUNC_GPOWER)evwk->b_prm->func)( (GPOWER_ID)value );
+    break;
+  case	BEACON_ARG_FWAZA:
+    GF_ASSERT( value >= 0 );
+    ((BEACON_SET_FUNC_U16)evwk->b_prm->func)( (u16)DATA_FieldWazaTbl[value] );
     break;
   }
   DEBUG_SendBeaconPriorityEgnoreFlagSet( FALSE );
