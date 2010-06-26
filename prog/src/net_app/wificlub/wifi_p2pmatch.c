@@ -3502,6 +3502,8 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // Ú‘±‚µ‚Ä‚«‚½
     OS_TPrintf("Ú‘± %d\n",wk->DirectModeNo);
     PMSND_PlaySE_byPlayerID( SE_CALL_SIGN,SE_CALL_SIGN_PLAYER );
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
@@ -3640,6 +3642,8 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // Ú‘±‚µ‚Ä‚«‚½
     OS_TPrintf("Ú‘± %d\n",wk->DirectModeNo);
     PMSND_PlaySE_byPlayerID( SE_CALL_SIGN,SE_CALL_SIGN_PLAYER );
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
@@ -5548,8 +5552,6 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
 
-  GFL_NET_SetAutoErrorCheck(TRUE);
-  GFL_NET_SetNoChildErrorCheck(TRUE);
   
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
   mySt = _WifiMyStatusGet( wk, wk->pMatch );
