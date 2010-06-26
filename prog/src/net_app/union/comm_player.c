@@ -282,7 +282,7 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
 
   fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
   fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
-  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id);
+  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id, FALSE);
   
   GFL_STD_MemClear(&pack, sizeof(COMM_PLAYER_PACKAGE));
   for(i = 0; i < COMM_PLAYER_MAX; i++){
@@ -531,5 +531,5 @@ static void _FieldCommActorSys_CheckCreate(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_P
   }
   
   fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
-  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id);
+  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id, FALSE);
 }

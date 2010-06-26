@@ -27,7 +27,8 @@
 typedef struct
 {
   u32 id;
-  u32 del_flag;
+  u16 del_flag;
+  u16 dash_flag;
   MMDL *mmdl;
 }FIELD_COMM_ACTOR;
 
@@ -36,8 +37,8 @@ typedef struct
 //--------------------------------------------------------------
 struct _TAG_FIELD_COMM_ACTOR_CTRL
 {
-  int max;
-  HEAPID heapID;
+  u16 max;
+  u16 dash_flag;
   MMDLSYS *mmdlsys;
   FIELD_COMM_ACTOR *act_tbl;
 };
@@ -79,17 +80,19 @@ static const MMDL_HEADER fldcommActro_MMdlHeader;
  * @param max アクター最大数
  * @param mmdlsys MMDLSYS*
  * @param heapID HEAPID
+ * @param dash_flag TRUE=アクターOBJがHERO,HEROINEであれば走り演出をする
  * @retval FIELD_COMM_ACTOR_CTRL
  */
 //--------------------------------------------------------------
 FIELD_COMM_ACTOR_CTRL * FIELD_COMM_ACTOR_CTRL_Create(
-    int max, MMDLSYS *mmdlsys, HEAPID heapID )
+    u16 max, MMDLSYS *mmdlsys, HEAPID heapID, BOOL dash_flag )
 {
   FIELD_COMM_ACTOR_CTRL *act_ctrl;
   
   act_ctrl = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(FIELD_COMM_ACTOR_CTRL) );
   act_ctrl->max = max;
+  act_ctrl->dash_flag = dash_flag;
   act_ctrl->mmdlsys = mmdlsys;
   
   act_ctrl->act_tbl =
@@ -107,7 +110,7 @@ FIELD_COMM_ACTOR_CTRL * FIELD_COMM_ACTOR_CTRL_Create(
 //--------------------------------------------------------------
 void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl )
 {
-  int i = 0;
+  u16 i = 0;
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
   for( i = 0; i < act_ctrl->max; i++, act++ ){
@@ -139,8 +142,7 @@ void FIELD_COMM_ACTOR_CTRL_AddActor(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id, u16 code,
     const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish )
 {
-  int i;
-  u16 dir;
+  u16 i,dir;
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
   dir = grid_ChangeFourDir( *watch_dir ); //角度->四方向
@@ -150,6 +152,7 @@ void FIELD_COMM_ACTOR_CTRL_AddActor(
       act->mmdl = fldcommAct_mmdl_Add(
           act_ctrl, code, watch_dir, watch_pos, watch_vanish, act );
       act->id = id;
+      act->dash_flag = act_ctrl->dash_flag;
       OS_Printf( "FIELD_COMM_ACTOR AddActor ID %d\n", id );
       return;
     }
@@ -169,7 +172,7 @@ void FIELD_COMM_ACTOR_CTRL_AddActor(
 void FIELD_COMM_ACTOR_CTRL_DeleteActro(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id )
 {
-  int i;
+  u16 i;
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
   for( i = 0; i < act_ctrl->max; i++, act++ ){
@@ -288,7 +291,7 @@ BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
 MMDL * FIELD_COMM_ACTOR_CTRL_GetMMdl(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id )
 {
-  int i;
+  u16 i;
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
   for( i = 0; i < act_ctrl->max; i++, act++ ){
@@ -415,6 +418,7 @@ void MMDL_MoveCommActor_Move( MMDL *mmdl )
        
       status = DRAW_STA_WALK_8F;
       
+      if( work->comm_actor->dash_flag ) //フラグ制御 100626
       {
         u16 code = MMDL_GetOBJCode( mmdl );
           
