@@ -20,6 +20,9 @@ rem picon_attr_cnv attr_list.txt
 rem 上三つのバッチファイルを１つのRubyスクリプトで実行する
 ruby poke_icon_conv.rb attr_list.txt ..\poke_icon.narc
 
+rem 体験版で使用しないアイコンを「？」に置換する
+ruby -Ks playable_replace.rb
+
 rem del *.naix
 rem del *.narc
 
