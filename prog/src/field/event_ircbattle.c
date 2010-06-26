@@ -213,6 +213,9 @@ static void _wifilistPlayData(EVENT_IRCBATTLE_WORK *dbw, GAMEDATA* pGameData)
             WifiList_SetResult(GAMEDATA_GetWiFiList(pGameData),
                                index,0,1,0);
           }
+          else{
+            WifiList_SetLastPlayDate(GAMEDATA_GetWiFiList(pGameData), index);
+          }
         }
       }
     }
