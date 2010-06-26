@@ -1296,7 +1296,9 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   BATTLE_SETUP_PARAM  *p_btl_param  = p_param->p_btl_setup_param;
   WIFIBATTLEMATCH_BATTLELINK_RESULT result  = p_param->result;
 
+#ifdef PM_DEBUG
   (*DEBUGWIN_BATTLE_GetFlag())  = TRUE;
+#endif
 
   //Žó‚¯Žæ‚è
   p_wk->btl_score.rule  = p_btl_param->rule;
