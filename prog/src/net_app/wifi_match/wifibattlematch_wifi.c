@@ -780,7 +780,11 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         WIFIBATTLEMATCH_NET_GetRecvGpfData( p_wk->p_net, p_wk->p_param->p_gpf_data );
         *p_seq = SEQ_CHECK_SIGNIN;
       }
-      else if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR )
+      else if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY )
+      {
+        *p_seq  = SEQ_START_NONE_MSG;
+      }
+      else if( ret != WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE )
       { 
         //ƒGƒ‰[
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
