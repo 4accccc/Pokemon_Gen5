@@ -5487,6 +5487,7 @@ static  int   EFFVM_GetEmitterPosition( BTLV_EFFVM_WORK* bevw, int pos_flag, Btl
           //全ポケ指示とする
         case WAZA_TARGET_ENEMY_ALL:           ///< 相手側全ポケ
           {
+#if 0
             BtlvMcssPos check_pos;
             BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_A : BTLV_MCSS_POS_B;
             BtlvMcssPos end_pos = ( rule == BTL_RULE_TRIPLE ) ?  BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
@@ -5514,10 +5515,36 @@ static  int   EFFVM_GetEmitterPosition( BTLV_EFFVM_WORK* bevw, int pos_flag, Btl
                 }
               }
             }
+#endif
+            if( rule == BTL_RULE_DOUBLE )
+            { 
+              pos[ 0 ] = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_AA : BTLV_MCSS_POS_BB;
+              pos_cnt = 1;
+            }
+            else
+            { 
+              if( ( bevw->attack_pos != BTLV_MCSS_POS_C ) && ( bevw->attack_pos != BTLV_MCSS_POS_D ) )
+              { 
+                static  BtlvMcssPos pos_tbl[] = { 
+                  NULL, NULL,
+                  BTLV_MCSS_POS_D_DOUBLE, BTLV_MCSS_POS_C_DOUBLE,
+                  NULL, NULL,
+                  BTLV_MCSS_POS_B_DOUBLE, BTLV_MCSS_POS_A_DOUBLE,
+                };
+                pos[ 0 ] = pos_tbl[ bevw->attack_pos ]; 
+                pos_cnt = 1;
+              }
+              else
+              { 
+                pos[ 0 ] = bevw->attack_pos ^ 1;
+                pos_cnt = 1;
+              }
+            }
           }
           break;
         case WAZA_TARGET_SIDE_ENEMY:          ///< 敵側陣営
           {
+#if 0
             BtlvMcssPos check_pos;
             BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_A : BTLV_MCSS_POS_B;
   
@@ -5530,6 +5557,31 @@ static  int   EFFVM_GetEmitterPosition( BTLV_EFFVM_WORK* bevw, int pos_flag, Btl
                   pos[ pos_cnt ] = check_pos;
                   pos_cnt++;
                 }
+              }
+            }
+#endif
+            if( rule == BTL_RULE_DOUBLE )
+            { 
+              pos[ 0 ] = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_AA : BTLV_MCSS_POS_BB;
+              pos_cnt = 1;
+            }
+            else
+            { 
+              if( ( bevw->attack_pos != BTLV_MCSS_POS_C ) && ( bevw->attack_pos != BTLV_MCSS_POS_D ) )
+              { 
+                static  BtlvMcssPos pos_tbl[] = { 
+                  NULL, NULL,
+                  BTLV_MCSS_POS_D_DOUBLE, BTLV_MCSS_POS_C_DOUBLE,
+                  NULL, NULL,
+                  BTLV_MCSS_POS_B_DOUBLE, BTLV_MCSS_POS_A_DOUBLE,
+                };
+                pos[ 0 ] = pos_tbl[ bevw->attack_pos ]; 
+                pos_cnt = 1;
+              }
+              else
+              { 
+                pos[ 0 ] = bevw->attack_pos ^ 1;
+                pos_cnt = 1;
               }
             }
           }
@@ -5573,19 +5625,6 @@ static  int   EFFVM_GetEmitterPosition( BTLV_EFFVM_WORK* bevw, int pos_flag, Btl
           break;
         }
       }
-    }
-  }
-
-  if( ( pos[ 0 ] != BTLV_MCSS_POS_ERROR ) && ( pos[ 0 ] < BTLV_MCSS_POS_MAX ) )
-  {
-    if( BTLV_EFFECT_CheckExist( pos[ 0 ] ) == TRUE )
-    {
-      pos[ 0 ] = EFFVM_ConvPokePosition( bevw, pos[ 0 ] );
-    }
-    else
-    {
-      pos[ 0 ] = BTLV_MCSS_POS_ERROR;
-      pos_cnt = 0;
     }
   }
 
@@ -5996,6 +6035,15 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     src.y = beeiw->src_pos.y;
     src.z = beeiw->src_pos.z;
     break;
+  case BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE:
+  case BTLEFF_PARTICLE_PLAY_POS_B_DOUBLE:
+  case BTLEFF_PARTICLE_PLAY_POS_C_DOUBLE:
+  case BTLEFF_PARTICLE_PLAY_POS_D_DOUBLE:
+    BTLV_MCSS_GetPokeDefaultPosByRule( BTLV_EFFECT_GetMcssWork(), &src,
+                                       beeiw->src - BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE + BTLEFF_PARTICLE_PLAY_POS_A,
+                                       BTL_RULE_DOUBLE );
+    beeiw->src = BTLEFF_CAMERA_POS_NONE;
+    break;
   }
 
   if( ( beeiw->src != BTLEFF_CAMERA_POS_NONE ) && ( beeiw->src != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) )
@@ -6037,6 +6085,15 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     dst.x = beeiw->dst_pos.x;
     dst.y = beeiw->dst_pos.y;
     dst.z = beeiw->dst_pos.z;
+    break;
+  case BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE:
+  case BTLEFF_PARTICLE_PLAY_POS_B_DOUBLE:
+  case BTLEFF_PARTICLE_PLAY_POS_C_DOUBLE:
+  case BTLEFF_PARTICLE_PLAY_POS_D_DOUBLE:
+    BTLV_MCSS_GetPokeDefaultPosByRule( BTLV_EFFECT_GetMcssWork(), &dst,
+                                       beeiw->dst - BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE + BTLEFF_PARTICLE_PLAY_POS_A,
+                                       BTL_RULE_DOUBLE );
+    beeiw->dst = BTLEFF_CAMERA_POS_NONE;
     break;
   }
 
