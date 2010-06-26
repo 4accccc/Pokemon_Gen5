@@ -15,6 +15,15 @@
 
 //--------------------------------------------------------------
 /**
+ *    Que領域予約時の付属情報サイズ
+ */
+//--------------------------------------------------------------
+enum {
+  QUE_RESERVE_ARG_SIZE = 3,   // コマンドID(2) + 領域予約サイズ(1)
+};
+
+//--------------------------------------------------------------
+/**
  *    サーバコマンド引数型生成マクロ
  */
 //--------------------------------------------------------------
@@ -863,11 +872,11 @@ u16 SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd )
     pos = que->writePtr;
     put_core( que, cmd, fmt, ArgBuffer );
     reserve_size = que->writePtr - pos;
-    GF_ASSERT(reserve_size >= 3);
+    GF_ASSERT(reserve_size >= QUE_RESERVE_ARG_SIZE);
 
     que->writePtr = pos;
     scque_put2byte( que, SCEX_RESERVE );
-    scque_put1byte( que, reserve_size-3 );
+    scque_put1byte( que, reserve_size-QUE_RESERVE_ARG_SIZE );
 
     que->writePtr = pos + reserve_size;
 
@@ -921,7 +930,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
       u16 default_write_pos = que->writePtr;
       que->writePtr = pos;
       put_core( que, cmd, fmt, ArgBuffer );
-      wrote_size = (que->writePtr - pos - 3); // 予約コマンド(2)+size(1)で3byteを引く
+      wrote_size = (que->writePtr - pos - QUE_RESERVE_ARG_SIZE); // 予約コマンド(2)+size(1)で3byteを引く
       GF_ASSERT_MSG(wrote_size == reserved_size, "wrote=%d, reserved=%d");
       que->writePtr = default_write_pos;
     }
