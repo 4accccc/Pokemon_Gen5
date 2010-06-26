@@ -43,6 +43,7 @@
 #include "gsync_obj_NANR_LBLDEFS.h"
 #include "gsync_poke.cdat"
 #include "msg/msg_gsync.h"
+#include "msg/msg_wifi_system.h"
 #include "gsync.naix"
 #include "savedata/c_gear_picture.h"
 #include "field/tpoke_data.h"
@@ -2523,7 +2524,7 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
       }
       _BoxPokeRemove(pWork);
       if(pWork->errEnd){
-        NetErr_DispCall( TRUE );
+        NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
       }
       WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
