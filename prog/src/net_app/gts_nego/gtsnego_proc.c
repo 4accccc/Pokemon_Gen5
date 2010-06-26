@@ -853,6 +853,7 @@ static void _matchingState( GTSNEGO_WORK *pWork )
     if(GFL_NET_IsInit()){
       GFL_NET_StateWifiMatchEnd(TRUE);
     }
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);   //20100626 add Saito BTS6813
     PMSND_PlaySystemSE(_SE_CANCEL);
     _CHANGE_STATE(pWork,_cancelFlash);
   }
@@ -1507,6 +1508,7 @@ static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work)
 
       GTSNEGO_MESSAGE_CancelButtonDecide(pWork->pMessageWork);
       GFL_NET_StateWifiMatchEnd(TRUE);
+      GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);   //20100626 add Saito BTS6813
       PMSND_PlaySystemSE(_SE_CANCEL);
       _CHANGE_STATE(pWork,_cancelFlash);
     }
