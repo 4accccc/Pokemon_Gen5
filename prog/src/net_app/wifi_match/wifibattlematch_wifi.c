@@ -21,6 +21,7 @@
 #include "poke_tool/poke_regulation.h"
 #include "sound/pm_sndsys.h"
 #include "net/dwc_rapcommon.h"
+#include "net/dwc_tool.h"
 
 //	アーカイブ
 #include "arc_def.h"
@@ -3998,7 +3999,7 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       s32 end;
 
       REGULATION_CARDDATA *p_reg = p_wk->p_reg;
-      ret = DWC_GetDateTime( &now_date, &time );
+      ret = DWC_TOOL_GetLocalDateTime( &now_date, &time );
 
 #ifdef PM_DEBUG
       if( *DEBUGWIN_SERVERTIME_GetFlag() )

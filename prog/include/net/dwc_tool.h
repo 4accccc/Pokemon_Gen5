@@ -10,6 +10,7 @@
  *
  *  現状のツールは以下です
  *  ・不正文字チェック    [DWC_TOOL_BADWORD]
+ *  ・言語別の時間取得    [DWC_TOOL_GetLocalDateTime]
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -188,4 +189,36 @@ static inline void DWC_TOOL_SetBadNickName( STRCODE *p_strcode, u16 len, HEAPID 
 
     GFL_STR_DeleteBuffer( p_src_buff );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  言語別時間を取得
+ *
+ *	@param	RTCDate *p_date 言語別日付を格納する領域
+ *	@param	RTCTime *p_time 言語別時刻を格納する領域
+ *
+ *	@return TRUE取得に成功  FALSE取得に失敗
+ */
+//-----------------------------------------------------------------------------
+static inline BOOL DWC_TOOL_GetLocalDateTime( RTCDate *date, RTCTime *time )
+{
+#if  ( PM_LANG == LANG_JAPAN )
+  enum
+  {
+    LOCAL_TIME = 9*60*60, //+0900(JST)
+  };
+#else
+#error
+#endif //
+
+  BOOL ret = DWC_GetDateTime( date, time );
+  if( ret )
+  {
+    s64 sec = RTC_ConvertDateTimeToSecond( date, time );
+    sec += LOCAL_TIME;
+    RTC_ConvertSecondToDateTime( date, time, sec );
+  }
+
+  return ret;
 }
