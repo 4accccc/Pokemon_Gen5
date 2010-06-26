@@ -49,6 +49,8 @@
 //=============================================================================
 #define HEAP_SIZE              (0x90000)               ///< ヒープサイズ
 
+#define NET_ICON_DISP_FRAME    (8)
+
 
 //=============================================================================
 /**
@@ -270,7 +272,8 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 0, 0 );
 
   // 通信アイコン
-  GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
+  //GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
+  GFL_NET_WirelessIconEasyEnd();  // Mainが始まるまで通信アイコンを表示しないでおく
 
   return GFL_PROC_RES_FINISH;
 }
@@ -334,6 +337,16 @@ static GFL_PROC_RESULT Zukan_Detail_ProcMain( GFL_PROC* proc, int* seq, void* pw
   ZUKAN_DETAIL_WORK*     work     = (ZUKAN_DETAIL_WORK*)mywk;
 
   BOOL create_proc_instant = FALSE;
+
+  if( (*seq) <= NET_ICON_DISP_FRAME )  // MainのNET_ICON_DISP_FRAMEフレーム目で通信アイコンを表示する
+  {
+    if( (*seq) == NET_ICON_DISP_FRAME )
+    {
+      // 通信アイコン
+      GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
+    }
+    (*seq)++;
+  }
 
   if( ZKNDTL_PROC_SysMain(work->zkndtl_proc, work->cmn) )
   {
