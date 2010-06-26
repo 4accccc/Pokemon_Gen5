@@ -783,6 +783,16 @@ void PSTATUS_RIBBON_ClearPage( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonW
   {
     //GFL_BMP_Clear( ribbonWork->ribbonDispWork[i].bmpData , 2 );
   }
+  if( ribbonWork->bmpWinName != NULL )
+  {
+    GFL_BMPWIN_Delete( ribbonWork->bmpWinName );
+    ribbonWork->bmpWinName = NULL;
+  }
+  if( ribbonWork->bmpWinInfo != NULL )
+  {
+    GFL_BMPWIN_Delete( ribbonWork->bmpWinInfo );
+    ribbonWork->bmpWinInfo = NULL;
+  }
 }
 //--------------------------------------------------------------
 //	ページのクリア
