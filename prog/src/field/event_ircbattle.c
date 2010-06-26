@@ -173,26 +173,12 @@ static void _wifilistPlayData(EVENT_IRCBATTLE_WORK *dbw, GAMEDATA* pGameData)
     friend = -1;
   }
   else{
-    for(i = 0;i < 4; i++){
-      if(GFL_STD_MemComp(dbw->demo_prm.trainer_data[i].mystatus,
-                         GAMEDATA_GetMyStatus(pGameData),MyStatus_GetWorkSize())){
-        myno = i;
-        switch(myno){
-        case 0:
-          friend = 2;
-          break;
-        case 1:
-          friend = 3;
-          break;
-        case 2:
-          friend = 0;
-          break;
-        case 3:
-          friend = 1;
-          break;
-        }
-        break;
-      }
+    int nid = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle());
+    if(dbw->irc_match.MultiNo[nid] < 2){
+      friend = 1 - dbw->irc_match.MultiNo[nid];
+    }
+    else{
+      friend = (1 - (dbw->irc_match.MultiNo[nid]-2))+2;
     }
   }
   
@@ -583,13 +569,15 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _WAIT_NET_END:
-    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-      NetErr_ErrWorkInit();
-      (*seq) = _FIELD_OPEN;
-    }
     if(!GFL_NET_IsInit()){
+//      if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+        NetErr_ErrWorkInit();
+//      }
       (*seq) = _FIELD_OPEN;
     }
+//    if(!GFL_NET_IsInit()){
+//      (*seq) = _FIELD_OPEN;
+//    }
     break;
   case _FIELD_OPEN:
     _bgmReturn(dbw);
