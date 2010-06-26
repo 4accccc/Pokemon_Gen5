@@ -1069,7 +1069,7 @@ static void BtlRecSelInit( KAWADA_MAIN_WORK* wk )
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &BTL_REC_SEL_ProcData, wk->btl_rec_sel_param );
 #else
   GFL_OVERLAY_Load(FS_OVERLAY_ID(btl_rec_sel));
-  wk->btl_rec_sel_param = BTL_REC_SEL_AllocParam( wk->heapID, wk->gamedata, FALSE, FALSE, TRUE, 0, 0 );
+  wk->btl_rec_sel_param = BTL_REC_SEL_AllocParam( wk->heapID, wk->gamedata, FALSE, FALSE, FALSE, 0, 0 );
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &BTL_REC_SEL_ProcData, wk->btl_rec_sel_param );
 #endif
 }

@@ -680,21 +680,32 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   // シーケンス処理用
   if( work->b_battle_recorder )
   {
-    if( param->b_rec )
+    if( param->b_correct )
     {
-      Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
-          FADE_TYPE_OUTSIDE );
-      Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
-      Btl_Rec_Sel_FixStartTime( param, work, COUNT_TIME_SEC_MAX );
-      if( param->b_sync ) Btl_Rec_Sel_BgMCreateNon( param, work );
-      work->fix_pause = TRUE;
+      if( param->b_rec )
+      {
+        Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
+            FADE_TYPE_OUTSIDE );
+        Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
+        Btl_Rec_Sel_FixStartTime( param, work, COUNT_TIME_SEC_MAX );
+        if( param->b_sync ) Btl_Rec_Sel_BgMCreateNon( param, work );
+        work->fix_pause = TRUE;
+      }
+      else
+      {
+        Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_WAIT_INIT,
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
+            FADE_TYPE_OUTSIDE );
+      }
     }
     else
     {
-      Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_WAIT_INIT,
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
-          FADE_TYPE_OUTSIDE );
+      {
+        Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_WAIT_INIT,
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
+            FADE_TYPE_OUTSIDE );
+      }
     }
   }
   else
@@ -1169,30 +1180,41 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 str_id;
       if( work->b_battle_recorder )
       {
-        if( param->b_rec )
+        if( param->b_correct )
         {
-          if( param->b_sync )
+          if( param->b_rec )
           {
-            str_id = msg_record_07_01;
+            if( param->b_sync )
+            {
+              str_id = msg_record_07_01;
+            }
+            else
+            {
+              // 下画面のフェードだけして、他は何もせずに終了
+              Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
+                  GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT,
+                  FADE_TYPE_OUTSIDE );
+              break;
+            }
           }
           else
           {
-            // 下画面のフェードだけして、他は何もせずに終了
-            Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
-                GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT,
-                FADE_TYPE_OUTSIDE );
-            break;
+            if( param->b_sync )
+            {
+              str_id = msg_record_07_02;
+            }
+            else
+            {
+              str_id = msg_record_07_03;
+            }
           }
         }
         else
         {
-          if( param->b_sync )
           {
-            str_id = msg_record_07_02;
-          }
-          else
-          {
-            str_id = msg_record_07_03;
+            {
+              str_id = msg_record_07_04;
+            }
           }
         }
       }
