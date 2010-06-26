@@ -30,7 +30,7 @@ const u16 StrawFromTbl[BATT_BG_OBONID_MAX][2] = {
 	{ BATT_BG_OBONID_11,FORMNO_412_SUNA},				//砂漠（屋内）　　　　　　    砂
 	{ BATT_BG_OBONID_12,FORMNO_412_KUSA},				//浅い湿地                    草
 	{ BATT_BG_OBONID_13,FORMNO_412_KUSA},				//氷上（屋内）                草
-	{ BATT_BG_OBONID_14,FORMNO_412_GOMI},       //パレス専用                  ゴミ
+	{ BATT_BG_OBONID_14,FORMNO_412_GOMI},       //パレス専用                  ゴミ <<野生戦闘が起きないので外から呼ばれない
 	{ BATT_BG_OBONID_15,FORMNO_412_GOMI},				//四天王（ゴースト）専用　    ゴミ
 	{ BATT_BG_OBONID_16,FORMNO_412_GOMI},				//四天王（格闘）専用　　　    ゴミ
 	{ BATT_BG_OBONID_17,FORMNO_412_GOMI},				//四天王（悪）専用　　　　    ゴミ
