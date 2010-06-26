@@ -92,27 +92,34 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, void* work )
   HEAPID tmpHeapID = GFL_HEAP_LOWID( HEAPID_FIELDMAP );
   GAMEDATA* gdata = GAMESYSTEM_GetGameData(gsys);
   POWER_CONV_DATA * p_data = GPOWER_PowerData_LoadAlloc( tmpHeapID );
+  GPOWER_ID power = prm->g_power;
 
   event = SCRIPT_SetEventScript( gsys, SCRID_GPOWER_EFFECT_START, NULL, HEAPID_FIELDMAP );
   sc = SCRIPT_GetScriptWorkFromEvent( event );
+
+  //セキュリティ
+  if( power == GPOWER_ID_NULL || power > GPOWER_ENABLE_ID_END ){
+    power = GPOWER_ID_SOUGUU_INC_A;
+    GF_ASSERT(0);
+  }
   {
-    GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, prm->g_power );
-    GPOWER_Set_OccurID( prm->g_power, p_data, prm->mine_f );
+    GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, power );
+    GPOWER_Set_OccurID( power, p_data, prm->mine_f );
 
     //HP全快パワーは固定メッセージ
-    if( prm->g_power == GPOWER_ID_HP_RESTORE_MAX){
-      SCRIPT_SetScriptWorkParam( sc, prm->g_power, msg_gpower_effect_12-msg_gpower_effect_01, prm->mine_f, 0 );
+    if( power == GPOWER_ID_HP_RESTORE_MAX){
+      SCRIPT_SetScriptWorkParam( sc, power, msg_gpower_effect_12-msg_gpower_effect_01, prm->mine_f, 0 );
     }else{
-      SCRIPT_SetScriptWorkParam( sc, prm->g_power, type, prm->mine_f, 0 );
+      SCRIPT_SetScriptWorkParam( sc, power, type, prm->mine_f, 0 );
     }
     sub_InstantPowerUse( gsys, SCRIPT_GetWordSet( sc ), type );
   }
   if( prm->mine_f ){ //自分のを使った時
-    u16 point = GPOWER_ID_to_Point( p_data, prm->g_power );
+    u16 point = GPOWER_ID_to_Point( p_data, power );
     MYITEM_SubItem( GAMEDATA_GetMyItem( gdata ), ITEM_DERUDAMA, point, tmpHeapID );
-    GAMEBEACON_Set_GPower( prm->g_power );
+    GAMEBEACON_Set_GPower( power );
   }else{  //他人のを使った時
-    GAMEBEACON_Set_OtherGPowerUse( prm->g_power );
+    GAMEBEACON_Set_OtherGPowerUse( power );
   }
   GPOWER_PowerData_Unload( p_data );
 
