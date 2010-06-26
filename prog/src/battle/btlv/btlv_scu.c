@@ -109,6 +109,14 @@ enum {
   BBGP_CLIENT_ID_NONE = BTL_CLIENT_NUM,
 };
 
+/**
+ *  とくせいウィンドウ用SE指定
+ */
+enum {
+  TOKWIN_SE_IN        = WAVE_SE_WB_SHOOTER,
+  TOKWIN_SE_FLASH     = BANK_SE_WB_SELECT3,
+  TOKWIN_SE_CHANGE    = BANK_SE_WB_DECIDE3,
+};
 
 typedef enum {
 
@@ -468,15 +476,31 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
   tokwin_cleanupAll( wk );
   statwin_cleanupAll( wk );
 
-  GFL_BMPWIN_Delete( wk->lvupWin );
-  GFL_BMPWIN_Delete( wk->win );
+  if( wk->lvupWin ){
+    GFL_BMPWIN_Delete( wk->lvupWin );
+    wk->lvupWin = NULL;
+  }
+  if( wk->win ){
+    GFL_BMPWIN_Delete( wk->win );
+    wk->win = NULL;
+  }
   GFL_BG_FreeBGControl( BGFRAME_MAIN_MESSAGE );
   GFL_BG_FreeBGControl( BGFRAME_TOKWIN_FRIEND );
   GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 
-  PRINTSYS_QUE_Delete( wk->printQue );
-  GFL_STR_DeleteBuffer( wk->strBufSubB );
-  GFL_STR_DeleteBuffer( wk->strBufSubA );
+  if( wk->printQue ){
+    PRINTSYS_QUE_Delete( wk->printQue );
+    wk->printQue = NULL;
+  }
+
+  if( wk->strBufSubB ){
+    GFL_STR_DeleteBuffer( wk->strBufSubB );
+    wk->strBufSubB = NULL;
+  }
+  if( wk->strBufSubA ){
+    GFL_STR_DeleteBuffer( wk->strBufSubA );
+    wk->strBufSubA = NULL;
+  }
   GFL_STR_DeleteBuffer( wk->strBufMain );
 
   GFL_HEAP_FreeMemory( wk );
@@ -3888,7 +3912,7 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
       GFL_BG_SetScroll( tokwin->bgFrame, GFL_BG_SCROLL_Y_SET, 0 );
     }
 
-    PMSND_PlaySE( WAVE_SE_WB_SHOOTER );  // @TODO 仮
+    PMSND_PlaySE( TOKWIN_SE_IN );
     tokwin->seq++;
     break;
   case 2:
@@ -3938,7 +3962,7 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
       GFL_TCBSYS* tcbSys = BTLV_EFFECT_GetTCBSYS();
       u16 palBit = 1 << (PALIDX_TOKWIN1 + tokwin->mySide );
 
-      PMSND_PlaySE( BANK_SE_WB_DECIDE2 );
+      PMSND_PlaySE( TOKWIN_SE_FLASH );
       PaletteFadeReq( pfd, PF_BIT_MAIN_BG, palBit, 0, 16, 0, 0x7fff, tcbSys );
       tokwin->seq++;
     }
@@ -3953,7 +3977,7 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
     }
     break;
   case 6:
-    if(  !(PMSND_CheckPlayingSEIdx(BANK_SE_WB_DECIDE2) || PMSND_CheckPlayingSEIdx(WAVE_SE_WB_SHOOTER)) ){
+    if(  !(PMSND_CheckPlayingSEIdx(TOKWIN_SE_FLASH) || PMSND_CheckPlayingSEIdx(TOKWIN_SE_IN)) ){
       return TRUE;
     }
     break;
@@ -4063,7 +4087,7 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
     }
     tokwin->moveTimer = 0;
     tokwin->writeRaw = 0;
-    PMSND_PlaySE( BANK_SE_WB_DECIDE3 );
+    PMSND_PlaySE( TOKWIN_SE_CHANGE );
     tokwin->seq++;
     break;
   case 1:
@@ -4106,7 +4130,7 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
     (tokwin->seq++);
     break;
   case 5:
-    if(  !PMSND_CheckPlayingSEIdx(BANK_SE_WB_DECIDE3) ){
+    if(  !PMSND_CheckPlayingSEIdx(TOKWIN_SE_CHANGE) ){
       tokwin->seq++;
     }
     break;
@@ -4152,7 +4176,7 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1,
     if( count[0] > (TEMOTI_POKEMAX/2) ){ count[0] = (TEMOTI_POKEMAX/2); }
     if( count[1] > (TEMOTI_POKEMAX/2) ){ count[1] = (TEMOTI_POKEMAX/2); }
   }
-  
+
 
   bbgp->type = type;
 
@@ -4168,7 +4192,7 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1,
         party_idx = 1;
         party_ofs = i-count[0];
       }
-      
+
       bpp = BTL_PARTY_GetMemberDataConst( bparty[party_idx], party_ofs );
       if( BPP_IsDead( bpp ) )
       {
