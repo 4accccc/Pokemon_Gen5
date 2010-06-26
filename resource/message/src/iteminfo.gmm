@@ -631,11 +631,11 @@
 	</row>
 
 	<row id="ITEMINFO_056">
-		<language name="JPN" width="256">せんとうちゅう　きゅうしょに
-あたりやすくなる　どうぐ。
+		<language name="JPN" width="256">きゅうしょりつが　おおきく　あがる。
+いちどしか　つかうことが　できない。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">戦闘中　急所に
-当たりやすくなる　道具。
+		<language name="JPN_KANJI" width="256">急所率が　大きく　あがる。
+１度しか　使うことが　できない。
 ひっこめると　元に　戻る。</language>
 	</row>
 
@@ -5455,11 +5455,11 @@
 	</row>
 
 	<row id="ITEMINFO_592">
-		<language name="JPN" width="256">せんとうちゅう　きゅうしょに
-それなりに　あたりやすくなる。
+		<language name="JPN" width="256">きゅうしょりつが　あがる。
+つかうたびに　こうかが　アップする。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">戦闘中　急所に
-それなりに　当たりやすくなる。
+		<language name="JPN_KANJI" width="256">急所率が　あがる。
+使うたびに　効果が　アップする。
 ひっこめると　元に　戻る。</language>
 	</row>
 
@@ -5662,11 +5662,11 @@
 	</row>
 
 	<row id="ITEMINFO_615">
-		<language name="JPN" width="256">せんとうちゅう　きゅうしょに
-ものすごく　あたりやすくなる。
+		<language name="JPN" width="256">きゅうしょりつが　おおきく　あがる。
+つかうたびに　こうかが　アップする。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">戦闘中　急所に
-ものすごく　当たりやすくなる。
+		<language name="JPN_KANJI" width="256">急所率が　大きく　あがる。
+使うたびに　効果が　アップする。
 ひっこめると　元に　戻る。</language>
 	</row>
 
