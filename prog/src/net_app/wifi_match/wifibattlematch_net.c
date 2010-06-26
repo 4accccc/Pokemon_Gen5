@@ -2064,7 +2064,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
 {
-  return cp_wk->report.is_dirty;
+  return cp_wk->recv_flag;
 }
 
 //----------------------------------------------------------------------------
