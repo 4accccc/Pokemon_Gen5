@@ -251,8 +251,10 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     //ˆÚ“®Ý’è
   }
   if(pWork->anmCount == ANMCNTC(_IR_POKE_APPEAR_START+2)){
-      MCSS_SetAlpha(pWork->pokeMcss[2], _IRC_FRONT_POKMEON_ALPHA);
-      MCSS_SetAlpha(pWork->pokeMcss[3], _IRC_BACK_POKMEON_ALPHA);
+    MCSS_SetAlpha(pWork->pokeMcss[2], _IRC_FRONT_POKMEON_ALPHA);
+    MCSS_SetAlpha(pWork->pokeMcss[3], _IRC_BACK_POKMEON_ALPHA);
+    MCSS_SetAlphaSamePolyID( pWork->pokeMcss[2], TRUE );
+    MCSS_SetAlphaSamePolyID( pWork->pokeMcss[3], TRUE );
   }
 
 

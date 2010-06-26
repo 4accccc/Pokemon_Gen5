@@ -462,6 +462,7 @@ static void _MCSS_ApperSet(MCSS_WORK *mcss, POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 apos;
   MCSS_SetAlpha(mcss, 31);
+  MCSS_SetAlphaSamePolyID( mcss, FALSE );
   MCSS_ResetVanishFlag(mcss);
   apos.x = _POKEMON_PLAYER_CENTER_POSX;
   apos.y = _POKEMON_PLAYER_CENTER_POSY;
