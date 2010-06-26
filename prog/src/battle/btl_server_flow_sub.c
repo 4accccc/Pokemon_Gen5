@@ -1144,7 +1144,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     {
 
       {
-        u16 effectNo = (targetPos!=NULL)? BTLEFF_USE_ITEM : BTLEFF_BENCH_RECOVERY;
+        u16 effectNo = (targetPos!=BTL_POS_NULL)? BTLEFF_USE_ITEM : BTLEFF_BENCH_RECOVERY;
         SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, effectNo );
       }
 
