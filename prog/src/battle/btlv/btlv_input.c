@@ -2959,7 +2959,7 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
   {
     tsu->pos_y -= 2;
   }
-  else
+  else if( tsu->scale_speed < 0 )
   {
     tsu->pos_y += 2;
   }
