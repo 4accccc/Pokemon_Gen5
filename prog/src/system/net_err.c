@@ -447,7 +447,7 @@ void NetErr_DispCallFatal(void)
 	}
 
 	//通信切断
-	NetErr_ExitNetSystem();
+//	NetErr_ExitNetSystem();
 
 	//エラー画面描画
 	Local_ErrDispInit(TRUE);
@@ -709,7 +709,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
   
   if(fatal_error == TRUE){
   	//通信切断
-  	NetErr_ExitNetSystem();
+  	//NetErr_ExitNetSystem();
 		//エラー画面描画
   	Local_ErrDispInit(fatal_error);
     //無限ループ
