@@ -570,7 +570,7 @@ static u8 Irc_Compatible_SV_InsertRanking( IRC_COMPATIBLE_RANKING_DATA *p_rank, 
 	//挿入箇所をチェック
 	for( i = 0; i < len; i++ )
 	{	
-		if( p_rank[i].is_use == FALSE || p_rank[i].score < cp_new->score )
+		if( p_rank[i].is_use == FALSE || p_rank[i].score <= cp_new->score )
 		{	
 			insert	= i;
 			break;
