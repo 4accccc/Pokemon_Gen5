@@ -1197,7 +1197,7 @@ void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_DistributionGPower(GPOWER_ID g_power_id)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_GPOWER) == FALSE){ return; };
-  BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
+  BEACONINFO_Set_DistributionGPower(&GameBeaconSys->send.info, g_power_id);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
