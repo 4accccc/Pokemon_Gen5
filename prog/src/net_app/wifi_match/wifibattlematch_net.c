@@ -47,8 +47,9 @@
 #ifdef PM_DEBUG
 #define DEBUG_DEBUG_NET_Printf_ON //担当者のみのプリント表示をON
 #define DEBUGWIN_OWNER_NET_ONLY   //担当者は自分としかつながらなくなる
-#define DEBUG_SC_RELEASE_CHECK    //SCの開放チェックチェック
+#define DEBUG_SC_RELEASE_CHECK    //SCの開放チェック
 #define DEBUG_GDB_RELEASE_CHECK   //GDBの開放チェック
+#define DEBUG_EVAL_FREE           //評価値計算で必ず繋がるようにする
 #endif //PM_DEBUG
 
 //担当者は自分しかつながらなくなる
@@ -241,6 +242,11 @@ typedef enum
 #define MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT   (32)    //定数C
 #define MATCHMAKE_EVAL_CALC_DISCONNECT_REVISE   (5)     //定数D
 #define MATCHMAKE_EVAL_CALC_DISCONNECT_RATE     (50)    //定数E
+
+#ifdef DEBUG_EVAL_FREE
+#undef MATCHMAKE_EVAL_CALC_RATE_STANDARD
+#define MATCHMAKE_EVAL_CALC_RATE_STANDARD (65535)
+#endif //DEBUG_EVAL_FREE
 
 //-------------------------------------
 ///	受信フラグ
@@ -1411,6 +1417,7 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
   //指標キーが反映されていないので、無視する
   if( you_rate == -1 && disconnect == -1 && cup == -1 && btlcnt == -1 )
   { 
+    DEBUG_NET_Printf( "▼指標キーが反映されていない\n" );
     return 0;
   }
 
@@ -4871,7 +4878,7 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     DWC_NdProcess();
     if(s_callback_result != DWC_ND_ERROR_NONE)
     {
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+      DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
     }
     if( s_callback_flag )
     { 
