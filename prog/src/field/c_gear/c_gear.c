@@ -4320,7 +4320,7 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
     GAME_COMM_SYS_PTR p_gcommsys = GAMESYSTEM_GetGameCommSysPtr( pGameSys );
     if(p_gcommsys){
 
-      if( Intrude_CheckLiveCommStatus( p_gcommsys ) == LIVE_COMM_INTRUDE ){
+      if( Intrude_CheckLiveCommStatus( p_gcommsys ) == LIVE_COMM_INTRUDE_PARTNER ){
         Intrude_SetLiveCommStatus_IntrudeOut( p_gcommsys );
       }
     }
@@ -4339,7 +4339,7 @@ static void cgear_ExitWork( C_GEAR_WORK* pWork )
     GAME_COMM_SYS_PTR p_gcommsys = GAMESYSTEM_GetGameCommSysPtr( pWork->pGameSys );
     if(p_gcommsys){
 
-      if( Intrude_CheckLiveCommStatus( p_gcommsys ) == LIVE_COMM_INTRUDE ){
+      if( Intrude_CheckLiveCommStatus( p_gcommsys ) == LIVE_COMM_INTRUDE_PARTNER ){
         Intrude_SetLiveCommStatus_IntrudeOut( p_gcommsys );
       }
     }
