@@ -10676,6 +10676,7 @@ static void handler_Telekinesis_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
     if( (defMonsNo == MONSNO_DHIGUDA)
     ||  (defMonsNo == MONSNO_DAGUTORIO)
     ||  (BPP_CheckSick(bppDef, WAZASICK_FLYING_CANCEL))
+    ||  (BPP_CheckSick(bppDef, WAZASICK_NEWOHARU))
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
     }
