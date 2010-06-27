@@ -9,6 +9,7 @@
  * $Id$
  */
 //===================================================================
+#include "playable_version.h"
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
@@ -56,6 +57,10 @@ static  void  GameMain(void);
 static  void  GameExit(void);
 static  void  GameVBlankFunc(void);
 static  void  _set_sound_mode( CONFIG *config );
+
+#ifdef  PLAYABLE_VERSION
+static void checkOnwerComments( void );
+#endif
 
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
@@ -115,6 +120,10 @@ void NitroMain(void)
   // ＧＦＬ初期化
   GFLUser_Init();
 
+#ifdef  PLAYABLE_VERSION
+  checkOnwerComments();
+#endif
+
   //HBLANK割り込み許可
   OS_SetIrqFunction(OS_IE_H_BLANK,SkeltonHBlankFunc);
   //VBLANK割り込み許可
@@ -126,7 +135,6 @@ void NitroMain(void)
   (void)GX_HBlankIntr(TRUE);
   (void)GX_VBlankIntr(TRUE);
   (void)OS_EnableInterrupts();
-
 
   // 必要なTCBとか登録して…
   GameInit();
@@ -565,3 +573,78 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 }
 
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+#ifdef  PLAYABLE_VERSION
+static const u16 passward[27] = {
+  0x0047,   //G
+  0x0041,   //A
+  0x004d,   //M
+  0x0045,   //E
+  0x0046,   //F
+  0x0052,   //R
+  0x0045,   //E
+  0x0041,   //A
+  0x004b,   //K
+  0x0000,   //終端文字;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+  0x0020,   //space;
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定パスワードを本体コメントに記入しないと起動しない
+ */
+//------------------------------------------------------------------
+static void checkOnwerComments( void )
+{
+  int i;
+  BOOL result = TRUE;
+  OSOwnerInfo owner_info;
+  OS_GetOwnerInfo( &owner_info );
+
+  for ( i = 0; i < NELEMS(passward); i ++ )
+  {
+    OS_Printf("%04d : %04d\n", owner_info.comment[i], passward[i] );
+    if ( owner_info.comment[ i ] == passward[ i ] )
+    {
+      if ( passward[ i ] == 0x0000 )
+      {
+        break;  //終端文字なのでチェック打ち切り
+      }
+      continue; //次の文字をチェック
+    }
+    result = FALSE;
+  }
+  if ( owner_info.commentLength != i )
+  {
+    result = FALSE;
+  }
+  if ( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) )
+  { //デバッガ上で動作しているときはチェック無効
+    return;
+  }
+  if ( result == FALSE )
+  {
+    GF_PANIC( "password error!\n" );
+  }
+}
+
+#endif  //  PLAYABLE_VERSION
+
+
+
