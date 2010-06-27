@@ -43,18 +43,21 @@ static void CommOekakiBoardEndChild(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void CommOekakiBoardEnd(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommOekakiBoardEndChildDecide(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 
 // CommCommandOekaki.cから定義するコマンドで対応するコールバック関数
 const NetRecvFuncTable _OekakiCommPacketTbl[] = {
   // お絵かきが見る部分
-  {CommOekakiBoardPicture,       _setPictureBuff}, // CO_OEKAKI_GRAPHICDATA  みんなで描いていた画像データ
-  {CommOekakiBoardLinePos,       NULL, },          // CO_OEKAKI_LINEPOS,   タッチパネルで取得したポジションデータ
-  {CommOekakiBoardLinePosServer, NULL  },          // CO_OEKAKI_LINEPOS,   タッチパネルで取得したポジションデータ
-  {CommOekakiBoardStop,          NULL  },          // CO_OEKAKI_STOP,      乱入者が来たので一旦ストップ
-  {CommOekakiBoardReStart,       NULL  },          // CO_OEKAKI_RESTART,   乱入者処理が終わったので再会
-  {CommOekakiBoardEndChild,      NULL  },          // CO_OEKAKI_END_CHILD,   子機が離脱
-  {CommOekakiBoardEnd,           NULL  },          // CO_OEKAKI_END,     終了
+  {CommOekakiBoardPicture,        _setPictureBuff}, // CO_OEKAKI_GRAPHICDATA  みんなで描いていた画像データ
+  {CommOekakiBoardLinePos,        NULL, },          // CO_OEKAKI_LINEPOS,   タッチパネルで取得したポジションデータ
+  {CommOekakiBoardLinePosServer,  NULL  },          // CO_OEKAKI_LINEPOS,   タッチパネルで取得したポジションデータ
+  {CommOekakiBoardStop,           NULL  },          // CO_OEKAKI_STOP,      乱入者が来たので一旦ストップ
+  {CommOekakiBoardReStart,        NULL  },          // CO_OEKAKI_RESTART,   乱入者処理が終わったので再会
+  {CommOekakiBoardEndChild,       NULL  },          // CO_OEKAKI_END_CHILD,   子機が離脱
+  {CommOekakiBoardEnd,            NULL  },          // CO_OEKAKI_END,     終了
+  {CommOekakiBoardEndChildDecide, NULL  },          // CO_OEKAKI_END_CHILD_DECIDE, 子機が離脱シーケンスに移った
 };
 
 
@@ -255,7 +258,7 @@ static void CommOekakiBoardEndChild(
           wk->send_req.trans_work.ridatu_kyoka = FALSE;  //離脱NG！
         }
         else{
-          wk->ridatu_bit |= 1 << netID;
+//          wk->ridatu_bit |= 1 << netID;
           wk->send_req.trans_work.ridatu_kyoka = TRUE;
           //離脱OKなので参加制限をかける(乱入があればそちら側で制限がはずされるはず)
           Union_App_Parent_ResetEntryBlock( wk->param->uniapp);   // 乱入OK
@@ -300,6 +303,32 @@ static void CommOekakiBoardEndChild(
     }
   }
 }
+
+
+//==============================================================================
+/**
+ * @brief   子機が本当に離脱を開始した(もうどんな事があっても子機のシーケンスは書き変わらない）
+ *
+ * @param   netID 
+ * @param   size  
+ * @param   pData 
+ * @param   pWk   OEKAKI_WORK*
+ *
+ * @retval  none    
+ */
+//==============================================================================
+static void CommOekakiBoardEndChildDecide(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  OEKAKI_WORK *wk = (OEKAKI_WORK*)pWk;
+
+  // 親機は離脱子機をbit情報で保存(この子機は絶対に抜ける）
+  if(GFL_NET_SystemGetCurrentID()==0){
+    wk->ridatu_bit |= 1 << netID;
+    OS_Printf("子機%dから『絶対抜けます！』ってきたよ\n", netID);
+  }
+}
+
 
 //==============================================================================
 /**

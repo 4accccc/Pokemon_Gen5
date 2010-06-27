@@ -1813,7 +1813,9 @@ static int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq )
     wk->ridatu_wait = 0;
     SetNextSequence( wk, OEKAKI_MODE_END_SELECT_ANSWER_NG );
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
-      OS_Printf("wk->status_endを立てた\n");
+    // 本当にやめる事にしたので送信する
+    Oekaki_SendDataRequest( wk, CO_OEKAKI_END_CHILD_DECIDE, GFL_NET_SystemGetCurrentID() );
+    OS_Printf("wk->status_endを立てた\n");
     return seq;
   }
   
@@ -2254,7 +2256,7 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
   return seq;
 }
 
-#define OEKAKI_DEBUG_FUNC
+//#define OEKAKI_DEBUG_FUNC
 
 //------------------------------------------------------------------
 /**
@@ -2269,9 +2271,12 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
 static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq )
 {
   // 接続人数が１減るかチェック
-//  if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) || 
-//     (wk->ridatu_bit & _get_connect_bit(wk))==0){
+#ifdef OEKAKI_DEBUG_FUNC
+  if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) ||   // 離脱した子機が減る
+     (wk->ridatu_bit & _get_connect_bit(wk))==0){                   // 離脱した子機が既にいなくなっている
+#else
   if(wk->err_num != 0 && _get_connect_num(wk) != wk->err_num){
+#endif
     wk->err_num = 0;
   }
 
@@ -2298,9 +2303,12 @@ static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq )
 static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
 {     
   // 接続人数が１減るまでは待つ
-//  if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) || 
-//     (wk->ridatu_bit & _get_connect_bit(wk))==0){
+#ifdef OEKAKI_DEBUG_FUNC
+  if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) || 
+     (wk->ridatu_bit & _get_connect_bit(wk))==0){
+#else
   if(wk->err_num != 0 && _get_connect_num(wk) != wk->err_num){
+#endif
     wk->err_num = 0;
   }
 
@@ -3656,6 +3664,14 @@ static void Oekaki_SendFunc( OEKAKI_WORK *wk )
   case CO_OEKAKI_END_CHILD:
     if(GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_END_CHILD,
                             sizeof(COMM_OEKAKI_END_CHILD_WORK), &wk->send_req.trans_work))
+    {
+      wk->send_req.command = 0;
+    }
+    break;
+  //子機が親機から離脱許可をもらったので本当に抜けるという表明を送信
+  case CO_OEKAKI_END_CHILD_DECIDE:
+    if(GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), 
+                         CO_OEKAKI_END_CHILD_DECIDE, 0, NULL))
     {
       wk->send_req.command = 0;
     }
