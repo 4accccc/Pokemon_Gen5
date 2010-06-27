@@ -497,10 +497,15 @@ static void printNumWin( DEBUG_NUMINPUT_WORK * wk, u32 num )
   STRBUF * strbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
   STRBUF * expandBuf = GFL_STR_CreateBuffer( 64, wk->heapID );
 
+#if 0
   GFL_MSG_GetString( wk->msgman, dni_number_string, strbuf );
   WORDSET_RegisterNumber(wk->wordset, 0, num,
                          10, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( wk->wordset, expandBuf, strbuf );
+#else
+  //u32‚ğƒtƒ‹‚Éo—Í‚µ‚½‚¢‚Ì‚Å•Ï‚¦‚Ä‚İ‚é
+  STRTOOL_SetUnsignedNumber( expandBuf, num, 10, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+#endif
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp( bmpwin ), WINCLR_COL(FBMP_COL_WHITE) );
 
