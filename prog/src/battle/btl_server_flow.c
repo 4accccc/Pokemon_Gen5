@@ -159,6 +159,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec, const SVFL_WAZAPARAM* wazaParam );
+static BOOL scEvent_WazaAffineCheckEnable( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker );
 static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
     const BTL_POKEPARAM* attacker, BTL_POKESET* target, BOOL fDamage );
 static BOOL scEvent_CheckMigawariExclude( BTL_SVFLOW_WORK* wk,
@@ -4134,6 +4135,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   {
     BOOL fMigawariHit = FALSE;
 
+
     switch( category ){
     case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
     case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
@@ -4151,8 +4153,9 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     }
 
     // タイプによる無効化チェック
-    if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) )
-    {
+    if( (fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI))
+    ||  (scEvent_WazaAffineCheckEnable(wk, wk->wazaParam, attacker))
+    ){
       flowsub_checkWazaAffineNoEffect( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
       fMigawariHit = TRUE;
     }
@@ -4315,6 +4318,31 @@ static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
       }
     }
   }
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザのタイプ相性による無効チェックを行うか判定
+ *
+ * @param   wk
+ * @param   wazaParam
+ * @param   attacker
+ *
+ * @retval  BOOL    行う場合はTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_WazaAffineCheckEnable( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker )
+{
+  BOOL fAffineCheck = FALSE;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_AFFINITY_ENABLE );
+    fAffineCheck = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+  BTL_EVENTVAR_Pop();
+
+  return fAffineCheck;
 }
 
 //----------------------------------------------------------------------------------

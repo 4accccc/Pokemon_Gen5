@@ -195,7 +195,7 @@ static const BtlEventHandlerTable*  ADD_Noroi( u32* numElems );
 static void handler_Noroi_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Denjiha( u32* numElems );
-static void handler_Denjiha_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Denjiha( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_NayamiNoTane( u32* numElems );
 static void handler_NayamiNoTane_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_NayamiNoTane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2014,23 +2014,19 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 static const BtlEventHandlerTable*  ADD_Denjiha( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L2,   handler_Denjiha_NoEff },    // 無効化チェックレベル２ハンドラ
+//    { BTL_EVENT_NOEFFECT_CHECK_L2,   handler_Denjiha_NoEff },
+    { BTL_EVENT_CHECK_AFFINITY_ENABLE, handler_Denjiha }, // タイプ相性による無効チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_Denjiha_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// タイプ相性による無効チェック
+static void handler_Denjiha( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // タイプ相性による無効チェックを行う
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
-
-    // 「じめん」タイプには効かない
-    if( BPP_IsMatchType(target, POKETYPE_JIMEN) )
-    {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
-    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
   }
 }
 //----------------------------------------------------------------------------------

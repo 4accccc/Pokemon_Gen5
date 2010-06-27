@@ -87,6 +87,7 @@ typedef enum {
   BTL_EVENT_DEFENDER_GUARD_PREV,    ///< 防御側の能力値（ぼうぎょorとくぼう）取得前ハンドラ
   BTL_EVENT_ATTACKER_POWER,         ///< 攻撃側の能力値（こうげきorとくこう）補正ハンドラ
   BTL_EVENT_DEFENDER_GUARD,         ///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
+  BTL_EVENT_CHECK_AFFINITY_ENABLE,  ///< 相性による無効チェックを行うか確認
   BTL_EVENT_CHECK_AFFINITY,         ///< 相性計算
   BTL_EVENT_ATTACKER_TYPE,          ///< 攻撃側ポケタイプ
   BTL_EVENT_TYPEMATCH_CHECK,        ///< 攻撃側タイプ一致チェック
