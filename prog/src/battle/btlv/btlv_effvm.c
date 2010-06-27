@@ -1734,27 +1734,17 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
       ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
       resource = (void *)&bevw->dpd->adrs[ ofs ];
-//    GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
-      { 
-        TCB_PARTICLE_LOAD* tpl = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_PARTICLE_LOAD ) );
-        tpl->bevw     = bevw;
-        tpl->psys     = bevw->ptc[ ptc_no ];
-        tpl->resource = resource;
-        bevw->particle_tex_load = 1;
-        BTLV_EFFECT_SetTCB( GFUser_VIntr_CreateTCB( TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
-        VMCMD_SetWait( vmh, VWF_PARTICLE_LOAD_WAIT );
-      }
+      GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
       EFFVM_RegistSprMax( bevw, ptc_no, resource );
 //      BTLV_EFFECT_SetFieldAnmStopOnce();
-//      return bevw->control_mode;
-      return VMCMD_RESULT_SUSPEND;
+      return bevw->control_mode;
     }
 #endif
     heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
     bevw->ptc[ ptc_no ] = GFL_PTC_CreateEx( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, POLYID_FIX, POLYID_MIN, POLYID_MAX,
                                             GFL_HEAP_LOWID( bevw->heapID ) );
     resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, GFL_HEAP_LOWID( bevw->heapID ) );
-//    GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+    GFL_PTC_SetResourceSetup( bevw->ptc[ ptc_no ], resource );
     { 
       TCB_PARTICLE_LOAD* tpl = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_PARTICLE_LOAD ) );
       tpl->bevw     = bevw;
@@ -4572,18 +4562,6 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //仮想マシン停止
   VM_End( vmh );
 
-#ifdef PM_DEBUG
-  { 
-    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
-    if( scu == NULL )
-    { 
-      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-    }
-    //デバッグフラグを落としておく
-    bevw->debug_flag = FALSE;
-  }
-#endif
-
 
   //SUSPENDモードに切り替えておく
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
@@ -4709,6 +4687,18 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+
+#ifdef PM_DEBUG
+  { 
+    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
+    if( scu == NULL )
+    { 
+      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+    }
+    //デバッグフラグを落としておく
+    bevw->debug_flag = FALSE;
+  }
+#endif
 
   //SEを強制的にストップ
   if( bevw->se_play_flag )
@@ -7629,26 +7619,19 @@ static  void  TCB_EFFVM_LandingWait( GFL_TCB* tcb, void* work )
 static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work )
 { 
   TCB_PARTICLE_LOAD*  tpl = ( TCB_PARTICLE_LOAD* )work;
+  u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
+  //VCountを確認してちらつきを防ぐ
+  if( ( *v_count < MCSS_VCOUNT_BORDER_LOW ) ||
+      ( *v_count > MCSS_VCOUNT_BORDER_HIGH ) )
   { 
-    u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
-    SOGABE_Printf("particle v_count:%d\n",*v_count);
-    //VCountを確認してちらつきを防ぐ
-    if( ( *v_count < MCSS_VCOUNT_BORDER_LOW ) ||
-        ( *v_count > MCSS_VCOUNT_BORDER_HIGH ) )
-    { 
-      return;
-    }
+    return;
   }
+  { 
 #ifdef PM_DEBUG
-  //デバッグ読み込みの場合は専用のバッファからロードする
-  if( tpl->bevw->debug_flag == TRUE )
-  { 
-    GFL_PTC_SetResourceEx( tpl->psys, tpl->resource, TRUE, NULL );
-  }
-  else
+    u16 before = *v_count;
 #endif
-  { 
-    GFL_PTC_SetResource( tpl->psys, tpl->resource, TRUE, NULL );
+    GFL_PTC_LoadTex( tpl->psys );
+    SOGABE_Printf("particle before:%d after:%d\n",before,*v_count);
   }
   tpl->bevw->particle_tex_load = 0;
   BTLV_EFFECT_FreeTCB( tcb );
