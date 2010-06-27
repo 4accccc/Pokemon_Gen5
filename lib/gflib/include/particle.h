@@ -134,8 +134,10 @@ extern	void			GFL_PTC_DeleteDebug(GFL_PTC_PTR psys);
 //íºê⁄pathéwíËÇÕÇ∆ÇËÇ†Ç¶Ç∏Ç»Çµ
 //extern	void			*Particle_ResourceLoad(int heap_id, const char *path);
 extern	void			*GFL_PTC_LoadArcResource(int file_kind, int index, int heap_id);
+extern  void      GFL_PTC_LoadTex(GFL_PTC_PTR psys);
 extern	void			GFL_PTC_SetResource(GFL_PTC_PTR psys, void *resource, int tex_at_once, GFL_TCBSYS *tcbsys);
 extern	void			GFL_PTC_SetResourceEx(GFL_PTC_PTR psys, void *resource, int tex_at_once, GFL_TCBSYS *tcbsys);
+extern  void	    GFL_PTC_SetResourceSetup(GFL_PTC_PTR psys, void *resource );
 extern	GFL_EMIT_PTR	GFL_PTC_CreateEmitter(GFL_PTC_PTR psys, int res_no, const VecFx32 *init_pos);
 extern	void			GFL_PTC_Draw(GFL_PTC_PTR psys);
 extern	void			GFL_PTC_Calc(GFL_PTC_PTR psys);
@@ -161,9 +163,9 @@ extern	int				GFL_PTC_GetActionNum(void);
 extern	GFL_G3D_CAMERA	*GFL_PTC_GetCameraPtr(GFL_PTC_PTR ptc);
 extern	void			GFL_PTC_SetCameraType(GFL_PTC_PTR ptc, int camera_type);
 extern	u8				GFL_PTC_GetCameraType(GFL_PTC_PTR ptc);
-extern	void			GFL_PTC_SetLnkTexKey(NNSGfdTexKey tex_key);
-extern	void			GFL_PTC_GetLnkTexKey(NNSGfdTexKey tex_key);
-extern	void			GFL_PTC_SetPlttLnkTexKey(NNSGfdPlttKey pltt_key);
+//extern	void			GFL_PTC_SetLnkTexKey(NNSGfdTexKey tex_key);
+//extern	void			GFL_PTC_GetLnkTexKey(NNSGfdTexKey tex_key);
+//extern	void			GFL_PTC_SetPlttLnkTexKey(NNSGfdPlttKey pltt_key);
 
 extern	void			GFL_PTC_GetEmitterVelocity(GFL_EMIT_PTR emit, VecFx32 *vel);
 extern	void			GFL_PTC_SetEmitterVelocity(GFL_EMIT_PTR emit, const VecFx32 *vel);
