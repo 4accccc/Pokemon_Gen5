@@ -3697,6 +3697,7 @@ static void DUP_FIT_DrawMessage( FITTING_WORK *work , u16 msgId , WORDSET *wordS
 {
   STRBUF *srcStr = GFL_MSG_CreateString( work->msgHandle , msgId ); 
 
+  PRINTSYS_QUE_Clear( work->printQue );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWin) , 0xf );
   
   if( wordSet != NULL )
