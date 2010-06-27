@@ -604,8 +604,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_042">
-		<language name="JPN" width="256">３D　グラフィック　サポート　プログラム</language>
-		<language name="JPN_KANJI" width="256">３D　グラフィック　サポート　プログラム</language>
+		<language name="JPN" width="256">３Ｄ　グラフィック　サポート　プログラム</language>
+		<language name="JPN_KANJI" width="256">３Ｄ　グラフィック　サポート　プログラム</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_043">
@@ -839,8 +839,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_089">
-		<language name="JPN" width="256">３D　グラフィック　システム　デザイン</language>
-		<language name="JPN_KANJI" width="256">３D　グラフィック　システム　デザイン</language>
+		<language name="JPN" width="256">３Ｄ　グラフィック　システム　デザイン</language>
+		<language name="JPN_KANJI" width="256">３Ｄ　グラフィック　システム　デザイン</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_090">
@@ -879,8 +879,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_097">
-		<language name="JPN" width="256">UI　グラフィック　メイン　デザイン</language>
-		<language name="JPN_KANJI" width="256">UI　グラフィック　メイン　デザイン</language>
+		<language name="JPN" width="256">ＵＩ　グラフィック　メイン　デザイン</language>
+		<language name="JPN_KANJI" width="256">ＵＩ　グラフィック　メイン　デザイン</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_098">
@@ -1449,8 +1449,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_211">
-		<language name="JPN" width="256">B　＆　W　こうそう</language>
-		<language name="JPN_KANJI" width="256">B　＆　W　こうそう</language>
+		<language name="JPN" width="256">Ｂ　＆　Ｗ　こうそう</language>
+		<language name="JPN_KANJI" width="256">Ｂ　＆　Ｗ　こうそう</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_212">
