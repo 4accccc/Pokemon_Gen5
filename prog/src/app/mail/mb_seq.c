@@ -27,6 +27,11 @@
 #include "mb_snd_def.h"
 
 
+// 有効にすると右矢印と左矢印を１フレームずつタッチする
+#ifdef PM_DEBUG
+//#define DEBUG_RAPID_PAGE
+#endif
+
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -131,7 +136,7 @@ static int MailWritePokeListEnd( MAILBOX_SYS_WORK * syswk );
 //============================================================================================
 
 // メインシーケンステーブル
-static const pMailBoxFunc MainSeq[] = {
+static const pMailBoxFunc MainSeqFunc[] = {
   MainSeq_Init,                       // MBSEQ_MAINSEQ_INIT = 0,       // 初期化
   MainSeq_Release,                    // MBSEQ_MAINSEQ_RELEASE,        // 解放
   MainSeq_Wipe,                       // MBSEQ_MAINSEQ_WIPE,         // ワイプ
@@ -190,7 +195,7 @@ static const YESNO_DATA YesNoFunc[] =
 //--------------------------------------------------------------------------------------------
 BOOL MBSEQ_Main( MAILBOX_SYS_WORK * syswk, int * seq )
 {
-  *seq = MainSeq[*seq]( syswk );
+  *seq = MainSeqFunc[*seq]( syswk );
 
   if( *seq == MBSEQ_MAINSEQ_END ){
     return FALSE;
@@ -204,13 +209,20 @@ BOOL MBSEQ_Main( MAILBOX_SYS_WORK * syswk, int * seq )
 
     if(syswk->app->printQue!=NULL){
       PRINTSYS_QUE_Main( syswk->app->printQue );
+      for(i=0;i<MBMAIN_BMPWIN_ID_TITLE;i++){
+        PRINT_UTIL_Trans( &syswk->app->printUtil[i], syswk->app->printQue );
+      }
     }
     if(syswk->app->pMsgTcblSys!=NULL){
       GFL_TCBL_Main( syswk->app->pMsgTcblSys );
     }
     if(syswk->app->pmsPrintque){
+      int i;
       PMS_DRAW_Main( syswk->app->pms_draw_work );
       PRINTSYS_QUE_Main( syswk->app->pmsPrintque );
+      for(i=MBMAIN_BMPWIN_ID_TITLE;i<MBMAIN_BMPWIN_ID_TITLE;i++){
+        PRINT_UTIL_Trans( &syswk->app->printUtil[i], syswk->app->printQue );
+      }
     }
   }
 
@@ -487,6 +499,10 @@ static int MainSeq_Start( MAILBOX_SYS_WORK * syswk )
   return FadeInSet( syswk, MBSEQ_MAINSEQ_MAIL_SELECT_MAIN );
 }
 
+
+#ifdef DEBUG_RAPID_PAGE
+static int debug_flag=0;
+#endif
 //--------------------------------------------------------------------------------------------
 /**
  * メインシーケンス：メール選択メイン
@@ -499,9 +515,29 @@ static int MainSeq_Start( MAILBOX_SYS_WORK * syswk )
 static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
 {
   u32 ret;
+  u32 touch;
+  // printQueが空くまでは操作禁止
+  if(PRINTSYS_QUE_IsFinished( syswk->app->printQue )==FALSE){
+    return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
+  }
+  
+  touch = MBUI_MailboxTouchButtonCheck( syswk );
+
+#ifdef DEBUG_RAPID_PAGE
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+    debug_flag ^=1;
+    if(debug_flag==0){
+      touch=0;
+    }else{
+      touch=1;
+    }
+  }else{
+    debug_flag=0;
+  }
+#endif
   
   // タッチのみボタンチェック
-  switch( MBUI_MailboxTouchButtonCheck( syswk ) ){
+  switch( touch ){
   case 0:   // 左矢印
     if( syswk->sel_page != 0 ){
       syswk->sel_page--;

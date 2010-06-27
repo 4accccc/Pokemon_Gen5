@@ -22,7 +22,9 @@
 
 #include "mail_gra.naix"
 
-
+#ifdef PM_DEBUG
+//#define MAIL_DEBUG    ///< 有効にすると０番目のメールを２０通コピーして埋めます
+#endif
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -224,16 +226,16 @@ void MBMAIN_BgInit( MAILBOX_SYS_WORK * syswk )
     GFL_BG_SetBGControl( MBMAIN_BGF_BG_M, &cnth, GFL_BG_MODE_TEXT );
   }
 
-  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG0, VISIBLE_ON     );
-  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG1, VISIBLE_ON     );
-  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG2, VISIBLE_ON     );
-  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_ON      );
-  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON      );
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG0, VISIBLE_ON );
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG1, VISIBLE_ON );
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG2, VISIBLE_ON );
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_ON );
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON    );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON     );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON      );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON      );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -545,10 +547,6 @@ void MBMAIN_SelBoxInit( MAILBOX_SYS_WORK * syswk )
     syswk->app->menuitem[i].str      = GFL_MSG_CreateString( syswk->app->mman, menu_item[i][0] ); //メニューに表示する文字列
     syswk->app->menuitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
     syswk->app->menuitem[i].type     = menu_item[i][1]; //戻るマークの表示
-
-//    syswk->app->menuwork[i] = APP_TASKMENU_WIN_Create( syswk->app->menures, &syswk->app->menuitem[i], 
-//                                               MAILBOX_MENU01_X, MAILBOX_MENU01_Y+i*3, 
-//                                               MAILBOX_MENU01_W, HEAPID_MAILBOX_APP );
   }
   
   // はい・いいえ
@@ -557,23 +555,6 @@ void MBMAIN_SelBoxInit( MAILBOX_SYS_WORK * syswk )
     syswk->app->yn_menuitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
     syswk->app->yn_menuitem[i].type     = yn_item[i][1];
   }
-/*
-  syswk->app->selbox = SelectBoxSys_AllocWork( HEAPID_MAILBOX_APP, NULL );
-
-  max = MailMenuMaxGet( syswk );
-
-  syswk->app->sblist = BmpMenuWork_ListCreate( max, HEAPID_MAILBOX_APP );
-
-  for( i=0; i<SELBOX_LIST_NUM; i++ ){
-    if( max == 2 ){
-      if( i == MBMAIN_MENU_POKESET || i == MBMAIN_MENU_DELETE ){
-        continue;
-      }
-    }
-    BmpMenuWork_ListAddArchiveString( syswk->app->sblist, syswk->app->mman, 
-                                      msg_menu01+i, i, HEAPID_MAILBOX_APP );
-  }
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -673,6 +654,12 @@ void MBMAIN_MailDataInit( MAILBOX_SYS_WORK * syswk )
 
     syswk->app->mail[i] = MAIL_AllocMailData(
                 syswk->sv_mail, MAILBLOCK_PASOCOM, i, HEAPID_MAILBOX_APP );
+
+#ifdef MAIL_DEBUG
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
+      MailData_Copy( syswk->app->mail[0],syswk->app->mail[i]);
+    }
+#endif
 
     // メールリスト作成
     if( MailData_IsEnable(syswk->app->mail[i]) == TRUE ){
