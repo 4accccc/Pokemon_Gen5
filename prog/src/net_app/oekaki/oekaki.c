@@ -15,6 +15,8 @@
  * 乱入者が来て送信し始めたときに誰かが電プチしていなくなる。
  * 離脱メンバーがいなくなる処理が終了した時にされる事で親が乱入OKにしてしまう事で
  * 途中乱入がOKになる状態が確認できたのでココをおさえることにする
+ *   ChangeConnectMax(wk, 1) とConnectLimitSet(がほとんと同じ機能なのに混在しているので
+ * 再チェック。
  */
 //============================================================================================
 #define DEBUGPLAY_ONE ( 0 )
@@ -156,6 +158,7 @@ static void OekakiResetYesNoWin(OEKAKI_WORK *wk);
 static void Oekaki_PrintFunc( OEKAKI_WORK *wk );
 static void _comm_friend_add( OEKAKI_WORK *wk );
 static void Oekaki_SendFunc( OEKAKI_WORK *wk );
+static void _wordset_username( OEKAKI_WORK *wk, int word_id, int comm_id );
 
 //====================================================
 /// シーケンス管理構造体
@@ -332,7 +335,9 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
 
 
 
+#ifdef PM_DEBUG
 static int debugseq,debugsubseq;
+#endif
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2028,6 +2033,28 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief MYSTATUSを通信データから取得し、WORDSETに登録する
+ *        (取れなかったら登録しない。ハングするよりはマシ）
+ *
+ * @param   wk        OEKAKI_WORK
+ * @param   word_id   WORDSET指定のバッファ
+ * @param   comm_id   通信ID
+ */
+//----------------------------------------------------------------------------------
+static void _wordset_username( OEKAKI_WORK *wk, int word_id, int comm_id )
+{
+  const MYSTATUS *mystatus = Union_App_GetMystatus(wk->param->uniapp, comm_id);
+  if(mystatus!=NULL){
+    WORDSET_RegisterPlayerName( wk->WordSet, word_id, mystatus); 
+  }else{
+    OS_Printf("MyStatus[%d]が取得できなかったのでWORDSET[%d]に格納しませんでした\n", 
+               comm_id, word_id);
+  }
+}
+
+
+//----------------------------------------------------------------------------------
+/**
  * @brief 親が終了を送信
  *
  * @param   wk    
@@ -2044,8 +2071,9 @@ static  int Oekaki_EndSelectParentSendEnd( OEKAKI_WORK *wk, int seq )
   {
     SetNextSequence( wk, OEKAKI_MODE_FORCE_END );
     // 親機（自分）の名前をWORDSET
-    WORDSET_RegisterPlayerName( wk->WordSet, 0, 
-                                Union_App_GetMystatus(wk->param->uniapp, 0)); 
+    _wordset_username( wk, 0, 0 );
+//    WORDSET_RegisterPlayerName( wk->WordSet, 0, 
+//                                Union_App_GetMystatus(wk->param->uniapp, 0)); 
     seq = SEQ_LEAVE;
     OS_Printf("OEKAKI_MODE_FORCE_ENDにかきかえ\n");
   }
@@ -2068,7 +2096,8 @@ static  int Oekaki_EndSelectParentSendEnd( OEKAKI_WORK *wk, int seq )
 static int Oekaki_ForceEnd( OEKAKI_WORK *wk, int seq )
 {
   // 親機（自分）の名前をWORDSET
-  WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, 0) ); 
+//  WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, 0) ); 
+  _wordset_username( wk, 0, 0 );
   
   EndMessagePrint( wk, msg_oekaki_04, 1 );        // リーダーが抜けたので解散します。
   SetNextSequence( wk, OEKAKI_MODE_FORCE_END_WAIT );
@@ -2300,6 +2329,7 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
 
 
 
+
 //==============================================================================
 /**
  * @brief   どんな状態であっても強制的にメインシーケンスチェンジ
@@ -2321,10 +2351,11 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     }
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
     // 指定の子機の名前をWORDSETに登録（離脱・乱入時)
-    mystatus = Union_App_GetMystatus(wk->param->uniapp, id);
-    if(mystatus!=NULL){
-      WORDSET_RegisterPlayerName( wk->WordSet, 0, mystatus );  
-    }
+    _wordset_username( wk, 0, id );
+//    mystatus = Union_App_GetMystatus(wk->param->uniapp, id);
+//    if(mystatus!=NULL){
+//      WORDSET_RegisterPlayerName( wk->WordSet, 0, mystatus );  
+//    }
     wk->newMemberId = id;
     wk->ridatu_bit = 0;
     OS_Printf("新しい人のID %d\n",id);
@@ -2336,7 +2367,14 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     if(wk->status_end == TRUE){
       return; //自分自身が離脱処理中
     }
-    WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, id) );  
+    // 離脱する子機の名前をWORDSETに登録
+    _wordset_username( wk, 0, id );
+//    mystatus = Union_App_GetMystatus(wk->param->uniapp, id);
+//    if(mystatus!=NULL){
+//      WORDSET_RegisterPlayerName( wk->WordSet, 0, mystatus );  
+//    }else{
+//      OS_Printf("離脱する子機を描画しようとしたが取得できなかったので設定しない\n");
+//    }
     if(id==GFL_NET_SystemGetCurrentID()){
       // 自分が離脱する子機だった場合は「子機がいなくなたよ」とは言わない
       return;
@@ -3153,7 +3191,6 @@ static void ChangeConnectMax( OEKAKI_WORK *wk, int plus )
     if(num>5){
       num = 5;
     }
-//    CommStateSetLimitNum(wk, num);
     ConnectLimitSet(wk,1);
 
 //    OS_Printf("接続人数を %d人に変更\n",num);
