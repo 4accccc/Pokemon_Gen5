@@ -6752,16 +6752,22 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_DarumaMode( u32* numElems )
  */
 //------------------------------------------------------------------------------
 // 「すりぬけ」スキップチェックハンドラ
-static BOOL handler_Surinuke_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
+static BOOL handler_Surinuke_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 dependID )
 {
   if( factorType == BTL_EVENT_FACTOR_SIDE )
   {
-    if( (subID == BTL_SIDEEFF_REFRECTOR)        // リフレクター無効
-    ||  (subID == BTL_SIDEEFF_HIKARINOKABE)     // ひかりのかべ無効
-    ||  (subID == BTL_SIDEEFF_SINPINOMAMORI)    // しんぴのまもり無効
-    ||  (subID == BTL_SIDEEFF_SIROIKIRI)        // しろいきり無効
-    ){
-      return TRUE;
+    u8 myPokeID = BTL_EVENT_FACTOR_GetPokeID( myHandle );
+    BtlSide mySide = BTL_MAINUTIL_PokeIDtoSide( myPokeID );
+
+    if( mySide != dependID )
+    {
+      if( (subID == BTL_SIDEEFF_REFRECTOR)        // リフレクター無効
+      ||  (subID == BTL_SIDEEFF_HIKARINOKABE)     // ひかりのかべ無効
+      ||  (subID == BTL_SIDEEFF_SINPINOMAMORI)    // しんぴのまもり無効
+      ||  (subID == BTL_SIDEEFF_SIROIKIRI)        // しろいきり無効
+      ){
+        return TRUE;
+      }
     }
   }
   return FALSE;
