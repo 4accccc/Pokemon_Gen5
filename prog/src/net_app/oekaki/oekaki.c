@@ -211,19 +211,6 @@ const GFL_PROC_DATA OekakiProcData = {
 };
 
 
-//----------------------------------------------------------------------------------
-/**
- * @brief 接続人数制限（num人しか接続できないようにする）
- *
- * @param   wk    
- * @param   num   
- */
-//----------------------------------------------------------------------------------
-static void CommStateSetLimitNum( OEKAKI_WORK *wk, int num )
-{
-//  Union_App_Parent_EntryBlockNum( wk->param->uniapp, num );
-//  OS_Printf("接続人数を%d人に変更\n", num);
-}
 
 static void ConnectLimitSet( OEKAKI_WORK *wk, int num)
 {
@@ -539,7 +526,6 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
     }
     break;
   case 3:
-    CommStateSetLimitNum(wk,2);
     // ワーク解放
     FreeWork( wk );
 
@@ -1379,7 +1365,6 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
             PMSND_PlaySE(OEKAKI_BS_SE);
             break;
           }
-          CommStateSetLimitNum(wk,_get_connect_num(wk));
           wk->banFlag = OEKAKI_BAN_ON;
           // 「おえかきをやめますか？」
           EndMessagePrint( wk, msg_oekaki_02, 1 );
@@ -1734,7 +1719,6 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
       
     // 親機は接続拒否を解除
     if(GFL_NET_SystemGetCurrentID()==0){
-      CommStateSetLimitNum(wk, _get_connect_num(wk)+1);
       ConnectLimitSet(wk,1);
       wk->banFlag = OEKAKI_BAN_OFF;
     }
@@ -1948,7 +1932,8 @@ static int  Oekaki_EndChildWait( OEKAKI_WORK *wk, int seq )
 static int  Oekaki_EndChildWait2( OEKAKI_WORK *wk, int seq )
 {     
 
-  if( ++wk->wait > OEKAKI_MESSAGE_END_WAIT ){
+  wk->wait++;
+  if( wk->wait > OEKAKI_MESSAGE_END_WAIT ){
     WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, WIPE_FADE_BLACK, 16, 1, HEAPID_OEKAKI );
     seq = SEQ_OUT;            //終了シーケンスへ
   }
@@ -2018,7 +2003,6 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
 
     // 親機は接続拒否を解除
     if(GFL_NET_SystemGetCurrentID()==0){
-      CommStateSetLimitNum( wk, _get_connect_num(wk)+1);
       ConnectLimitSet(wk,1);
       wk->banFlag = OEKAKI_BAN_OFF;
     }
@@ -2072,8 +2056,6 @@ static  int Oekaki_EndSelectParentSendEnd( OEKAKI_WORK *wk, int seq )
     SetNextSequence( wk, OEKAKI_MODE_FORCE_END );
     // 親機（自分）の名前をWORDSET
     _wordset_username( wk, 0, 0 );
-//    WORDSET_RegisterPlayerName( wk->WordSet, 0, 
-//                                Union_App_GetMystatus(wk->param->uniapp, 0)); 
     seq = SEQ_LEAVE;
     OS_Printf("OEKAKI_MODE_FORCE_ENDにかきかえ\n");
   }
@@ -2096,9 +2078,7 @@ static  int Oekaki_EndSelectParentSendEnd( OEKAKI_WORK *wk, int seq )
 static int Oekaki_ForceEnd( OEKAKI_WORK *wk, int seq )
 {
   // 親機（自分）の名前をWORDSET
-//  WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, 0) ); 
   _wordset_username( wk, 0, 0 );
-  
   EndMessagePrint( wk, msg_oekaki_04, 1 );        // リーダーが抜けたので解散します。
   SetNextSequence( wk, OEKAKI_MODE_FORCE_END_WAIT );
 
@@ -2306,7 +2286,8 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
     wk->err_num = 0;
   }
 
-  if( ++wk->wait > OEKAKI_MESSAGE_END_WAIT && wk->err_num == 0 ){
+  wk->wait++;
+  if( wk->wait > OEKAKI_MESSAGE_END_WAIT && wk->err_num == 0 ){
     EndMessageWindowOff( wk );
     SetNextSequence( wk, OEKAKI_MODE );
     if(GFL_NET_SystemGetCurrentID() == 0){
@@ -2317,6 +2298,8 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
     wk->shareNum = Union_App_GetMemberNum( wk->param->uniapp );
     wk->shareBit = Union_App_GetMemberNetBit(wk->param->uniapp);
 
+  }else{
+    OS_Printf("wk->wait=%d, wk->err_num=%d, connect_num=%d\n", wk->wait, wk->err_num, _get_connect_num(wk));
   }
 
 //  OS_Printf("err_num=%d, connect_num=%d wait=%d \n ", wk->err_num, _get_connect_num(wk), wk->wait);
@@ -2352,10 +2335,6 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
     // 指定の子機の名前をWORDSETに登録（離脱・乱入時)
     _wordset_username( wk, 0, id );
-//    mystatus = Union_App_GetMystatus(wk->param->uniapp, id);
-//    if(mystatus!=NULL){
-//      WORDSET_RegisterPlayerName( wk->WordSet, 0, mystatus );  
-//    }
     wk->newMemberId = id;
     wk->ridatu_bit = 0;
     OS_Printf("新しい人のID %d\n",id);
@@ -2369,12 +2348,6 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     }
     // 離脱する子機の名前をWORDSETに登録
     _wordset_username( wk, 0, id );
-//    mystatus = Union_App_GetMystatus(wk->param->uniapp, id);
-//    if(mystatus!=NULL){
-//      WORDSET_RegisterPlayerName( wk->WordSet, 0, mystatus );  
-//    }else{
-//      OS_Printf("離脱する子機を描画しようとしたが取得できなかったので設定しない\n");
-//    }
     if(id==GFL_NET_SystemGetCurrentID()){
       // 自分が離脱する子機だった場合は「子機がいなくなたよ」とは言わない
       return;
@@ -3225,7 +3198,6 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
 //      wk->seq = OEKAKI_MODE_END_PARENT_ONLY;
       wk->next_seq = OEKAKI_MODE_END_PARENT_ONLY; //予約
       OS_Printf("接続制限を１にする");
-          CommStateSetLimitNum(wk,1);
       // やめる選択中だったら強制リセット
       if(wk->yesno_flag){
         OekakiResetYesNoWin(wk);
