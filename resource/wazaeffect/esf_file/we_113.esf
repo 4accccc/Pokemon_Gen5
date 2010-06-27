@@ -3,7 +3,7 @@ $0001
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_113.spa
 #001
 %00
-カメラ移動	追従	攻撃側	16	0	8
+カメラ移動	追従	ZOOM_OUT(複数）	16	0	8
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_113
 パーティクル再生	w_113	W_113_113_BARRI_KIRA1	攻撃側	方向無し	1.5:0:0	1:1:1	1
