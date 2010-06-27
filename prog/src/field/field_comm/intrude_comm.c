@@ -249,15 +249,17 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   
   //通信エラーチェック
   if(NetErr_App_CheckError() || intcomm->error == TRUE){
-    intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
-    intcomm->error = TRUE;
-    GameCommSys_ExitReq(intcomm->game_comm);
-    return;
+    if(intcomm->battle_proc_call == FALSE){
+      intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
+      intcomm->error = TRUE;
+      GameCommSys_ExitReq(intcomm->game_comm);
+      return;
+    }
   }
 
   //スリープに入ろうとしている場合は切断
   if((GFL_UI_CheckCoverOff() == TRUE && GFL_UI_CheckLowBatt() == TRUE)){
-    if(intcomm->timeout_stop == FALSE){
+    if(intcomm->battle_proc_call == FALSE){
       GameCommSys_ExitReq(intcomm->game_comm);
       return;
     }
@@ -373,7 +375,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
         }
       }
     }
-    else if(intcomm->timeout_stop == FALSE && GFL_NET_IsParentMachine() == TRUE && MISSION_CheckSuccessTimeEnd(&intcomm->mission) == TRUE){
+    else if(intcomm->battle_proc_call == FALSE && GFL_NET_IsParentMachine() == TRUE && MISSION_CheckSuccessTimeEnd(&intcomm->mission) == TRUE){
       OS_TPrintf("ミッション成功してタイムアウトによる切断\n");
       GameCommSys_ExitReq(intcomm->game_comm);
     }

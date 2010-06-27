@@ -298,7 +298,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     break;
   case SEQ_RECV_WAIT:
 		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
-      Intrude_SetTimeOutStopFlag(intcomm, TRUE);
+      Intrude_SetIsBattleFlag(intcomm, TRUE);
       (*seq) = SEQ_BATTLE_START_WAIT;
     }
     break;
@@ -381,7 +381,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
 
     if(intcomm != NULL){
-      Intrude_SetTimeOutStopFlag(intcomm, FALSE);
+      Intrude_SetIsBattleFlag(intcomm, FALSE);
     }
 
     if(talk->success == TRUE){
@@ -520,7 +520,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_BATTLE_YES:
     if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, 
         INTRUDE_TALK_STATUS_BATTLE, intcomm->talk.talk_rand) == TRUE){
-      Intrude_SetTimeOutStopFlag(intcomm, TRUE);
+      Intrude_SetIsBattleFlag(intcomm, TRUE);
       *seq = SEQ_BATTLE_YES_MSG;
     }
     break;
@@ -620,7 +620,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   	//‹¤’ÊFinishˆ—
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
     if(intcomm != NULL){
-      Intrude_SetTimeOutStopFlag(intcomm, FALSE);
+      Intrude_SetIsBattleFlag(intcomm, FALSE);
     }
     return GMEVENT_RES_FINISH;
   }

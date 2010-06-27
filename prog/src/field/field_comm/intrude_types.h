@@ -358,7 +358,7 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 live_comm_status:1;      ///<ライブ通信画面用フラグ
   u8 mission_start_event_ended:1; ///<TRUE:ミッション開始画面を表示した
   u8 mission_battle_timing_bit:2;     ///<バトルミッションタイミング受信bit(MISSION_BATTLE_TIMING_BIT)
-  u8 timeout_stop:1;          ///<TRUE:タイムアウトによる切断を行わない
+  u8 battle_proc_call:1;      ///<TRUE:タイムアウトによる切断を行わない
   u8 debug_time_unlimited:1;  ///<デバッグ用　TRUE:タイムアウトで切断をしない
   
   u32 mission_start_timeout:31;  ///<ミッション開始前までのタイムアウト時刻をカウント

@@ -1310,10 +1310,10 @@ BOOL Intrude_CheckNG_Item(u16 item_no)
  *              		  FALSE:タイムアウトによる切断をする
  */
 //==================================================================
-void Intrude_SetTimeOutStopFlag(INTRUDE_COMM_SYS_PTR intcomm, BOOL stop)
+void Intrude_SetIsBattleFlag(INTRUDE_COMM_SYS_PTR intcomm, BOOL is_battle)
 {
-  intcomm->timeout_stop = stop;
-  OS_TPrintf("timeout stop = %d\n", stop);
+  intcomm->battle_proc_call = is_battle;
+  OS_TPrintf("is_battle = %d\n", is_battle);
 }
 
 //==================================================================
