@@ -1,7 +1,9 @@
 EFFSEQ
-$0002
+$0004
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_232.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_232_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_232_2.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	12
@@ -12,11 +14,12 @@ SE再生	SEQ_SE_W001_01	SE2	防御側	20:0:120	0:0:0
 SE再生	SEQ_SE_W014_03	SE1	防御側	40:-500:120	0:0:0
 SE再生	SEQ_SE_W001_01	SE2	防御側	40:0:120	0:0:0
 制御モード変更	逐次
-パーティクルデータロード	w_232
-パーティクル再生	w_232	W_232_232_CLAWL1_METAL	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_232	W_232_232_CLAWL2_METAL	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_232	W_232_232_CLAWR1_METAL	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_232	W_232_232_CLAWR2_METAL	防御側	方向無し	2:0:0	1:1:1	1
+パーティクルデータロード	w_232_1
+パーティクルデータロード	w_232_2
+パーティクル再生	w_232_1	W_232_1_232_CLAWL1_METAL	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_232_1	W_232_1_232_CLAWL2_METAL	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_232_2	W_232_2_232_CLAWR1_METAL	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_232_2	W_232_2_232_CLAWR2_METAL	防御側	方向無し	2:0:0	1:1:1	1
 タイマーによるウエイト	10
 ポケモン移動	防御側	往復	0.3	0	1	2	3
 タイマーによるウエイト	26

@@ -1,10 +1,13 @@
 EFFSEQ
-$0005
+$0008
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_087.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_087_cloud.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_087_cloud.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_087_cloud.NSCR
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_087_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_087_2.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_087_3.spa
 #001
 %00
 制御モード変更	継続
@@ -33,12 +36,14 @@ SE再生	SEQ_SE_W084_01	SE2	防御側	20:0:120	0:0:0
 SE再生	SEQ_SE_W121_01	SE1	防御側	20:0:120	0:0:0
 SE再生	SEQ_SE_W348_02	SE2	防御側	30:200:120	0:0:0
 制御モード変更	逐次
-パーティクルデータロード	w_087
-パーティクル再生	w_087	W_087_087_BASE_KAMI	防御側	方向無し	3:0:0	1:1:1.5	1
-パーティクル再生	w_087	W_087_087_GIZA_KAMI	防御側	方向無し	0:0:0	1:1:1	1
-パーティクル再生	w_087	W_087_087_LINE_KAMI	防御側	方向無し	3:0:0	1:1:1.5	1
-パーティクル再生	w_087	W_087_087_SPARK1_KAMI	防御側	方向無し	0:0:0	1:1:1	1
-パーティクル再生	w_087	W_087_087_SPARK2_KAMI	防御側	方向無し	0:0:0	1:1:1	1
+パーティクルデータロード	w_087_1
+パーティクルデータロード	w_087_2
+パーティクルデータロード	w_087_3
+パーティクル再生	w_087_3	W_087_3_087_BASE_KAMI	防御側	方向無し	3:0:0	1:1:1.5	1
+パーティクル再生	w_087_1	W_087_1_087_GIZA_KAMI	防御側	方向無し	0:0:0	1:1:1	1
+パーティクル再生	w_087_1	W_087_1_087_LINE_KAMI	防御側	方向無し	3:0:0	1:1:1.5	1
+パーティクル再生	w_087_2	W_087_2_087_SPARK1_KAMI	防御側	方向無し	0:0:0	1:1:1	1
+パーティクル再生	w_087_2	W_087_2_087_SPARK2_KAMI	防御側	方向無し	0:0:0	1:1:1	1
 ポケモンパレットフェード	防御側	14	0	2	31:31:0
 ポケモン拡縮	防御側	往復	0.3	-0.3	6	0	1
 ポケモン移動	防御側	往復	0.5	0	1	2	8

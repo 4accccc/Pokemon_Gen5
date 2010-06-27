@@ -1,9 +1,11 @@
 EFFSEQ
-$0004
+$0006
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_090.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_090_jiware.NSCR
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_090_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_090_2.spa
 #001
 %00
 カメラ移動	追従	3vs3防御	CM	0	CB
@@ -29,10 +31,11 @@ SE再生	SEQ_SE_W181_01	SE2	防御側	80:-1000:120	0:0:0
 制御モード変更	逐次
 カメラゆれ	縦ゆれ	0.2	0	1	1	16
 タイマーによるウエイト	20
-パーティクルデータロード	w_090
-パーティクル再生	w_090	W_090_090_JIWARE_HIBI	防御側	方向無し	-1:0:0	1:1:1	1
+パーティクルデータロード	w_090_1
+パーティクルデータロード	w_090_2
+パーティクル再生	w_090_2	W_090_2_090_JIWARE_HIBI	防御側	方向無し	-1:0:0	1:1:1	1
 タイマーによるウエイト	20
-パーティクル再生	w_090	W_090_090_JIWARE_STONE	防御側	方向無し	0:0:0	1:1:1	1
+パーティクル再生	w_090_1	W_090_1_090_JIWARE_STONE	防御側	方向無し	0:0:0	1:1:1	1
 ポケモンアニメ	防御側	アニメストップ
 ポケモン移動	防御側	往復	0.3	0	1	2	14
 エフェクト終了待ち	すべて

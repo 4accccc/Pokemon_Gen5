@@ -1,7 +1,9 @@
 EFFSEQ
-$0002
+$0004
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_306.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_306_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_306_2.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	12
@@ -10,11 +12,12 @@ SE再生	SEQ_SE_W010_01	SE1	防御側	5:200:120	0:0:0
 SE再生	SEQ_SE_W010_01	SE2	防御側	32:200:120	0:0:0
 制御モード変更	逐次
 ポケモンアニメ	攻撃側	アニメストップ
-パーティクルデータロード	w_306
-パーティクル再生	w_306	W_306_306_CLAWL1_BREAK	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_306	W_306_306_CLAWL2_BREAK	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_306	W_306_306_CLAWR1_BREAK	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_306	W_306_306_CLAWR2_BREAK	防御側	方向無し	2:0:0	1:1:1	1
+パーティクルデータロード	w_306_1
+パーティクルデータロード	w_306_2
+パーティクル再生	w_306_1	W_306_1_306_CLAWL1_BREAK	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_306_1	W_306_1_306_CLAWL2_BREAK	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_306_2	W_306_2_306_CLAWR1_BREAK	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_306_2	W_306_2_306_CLAWR2_BREAK	防御側	方向無し	2:0:0	1:1:1	1
 タイマーによるウエイト	10
 ポケモン移動	防御側	往復	0.3	0	1	2	3
 タイマーによるウエイト	26

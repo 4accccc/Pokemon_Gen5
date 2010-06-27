@@ -1,9 +1,12 @@
 EFFSEQ
-$0004
+$0007
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_553_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_553_2.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_192_lightning_y.NSCR
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_553_3.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_553_4.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_553_4.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
@@ -35,8 +38,10 @@ BGのパレットフェード	すべて	0	16	2	0:0:0
 エフェクト終了待ち	すべて
 BGの表示/非表示	お盆	非表示
 パーティクルデータロード	w_553_2
-パーティクル再生	w_553_2	W_553_2_553_ICE_ELEC	攻撃側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_553_2	W_553_2_553_ICE_FIX	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクルデータロード	w_553_3
+パーティクルデータロード	w_553_4
+パーティクル再生	w_553_3	W_553_3_553_ICE_ELEC	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_553_4	W_553_4_553_ICE_FIX	攻撃側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_553_2	W_553_2_553_ICE_IN	攻撃側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
 SE再生	SEQ_SE_W009_01	SYSTEM	攻撃側	15:0:70	0:0:0
@@ -50,8 +55,8 @@ SEパン	SE2	追従	攻撃側	防御側	71	30:0:0
 カメラ移動	追従	防御側	16	0	8
 ポケモンアニメ	防御側	アニメストップ
 エミッタ移動	w_553_2	W_553_2_553_ICE_BEAM	直線	攻撃側	防御側	2:20:0	0.5:1:0
-エミッタ移動	w_553_2	W_553_2_553_ICE_ELEC_BEAM	直線	攻撃側	防御側	2:20:0	0.5:1:0
-エミッタ移動	w_553_2	W_553_2_553_ICE_KEMURI_BEAM	直線	攻撃側	防御側	2:20:0	0.5:1:0
+エミッタ移動	w_553_3	W_553_3_553_ICE_ELEC_BEAM	直線	攻撃側	防御側	2:20:0	0.5:1:0
+エミッタ移動	w_553_4	W_553_4_553_ICE_KEMURI_BEAM	直線	攻撃側	防御側	2:20:0	0.5:1:0
 BGの表示/非表示	フィールド	非表示
 タイマーによるウエイト	20
 制御モード変更	継続
@@ -69,7 +74,7 @@ BGのスクロール	往復	0	8	2	0	10
 ポケモン円移動	防御側	Ｙ軸左	シフトＶ＋	0	2	10:0:1	0
 ポケモン拡縮	防御側	往復ロング	0.3	-0.3	2	0	3
 パーティクル再生	w_553_2	W_553_2_553_ICE_BURN	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_553_2	W_553_2_553_BURN_ELEC	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_553_3	W_553_3_553_BURN_ELEC	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_553_2	W_553_2_553_ICE_BURN_S	防御側	方向無し	2:0:0	1:1:1	1
 エフェクト終了待ち	すべて
 BGのパレットフェード	エフェクト面	0	16	2	0:0:0

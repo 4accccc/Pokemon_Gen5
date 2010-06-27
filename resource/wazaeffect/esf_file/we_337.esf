@@ -1,10 +1,11 @@
 EFFSEQ
-$0005
+$0006
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_337.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_337_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_337.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_337_2.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_337_3.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	12
@@ -36,10 +37,11 @@ SE再生	SEQ_SE_W010_01	SE2	防御側	44:0:20	0:0:0
 SE再生	SEQ_SE_W010_01	SE1	防御側	51:0:10	0:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_337_2
+パーティクルデータロード	w_337_3
 パーティクル再生	w_337_2	W_337_2_337_CLAWL1_DRAGON	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_337_2	W_337_2_337_CLAWL2_DRAGON	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_337_2	W_337_2_337_CLAWR1_DRAGON	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_337_2	W_337_2_337_CLAWR2_DRAGON	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_337_3	W_337_3_337_CLAWR1_DRAGON	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_337_3	W_337_3_337_CLAWR2_DRAGON	防御側	方向無し	2:0:0	1:1:1	1
 タイマーによるウエイト	10
 ポケモンアニメ	防御側	アニメストップ
 ポケモン移動	防御側	往復	0.3	0	1	2	3
