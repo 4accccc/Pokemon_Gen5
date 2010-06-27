@@ -2254,6 +2254,8 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
   return seq;
 }
 
+#define OEKAKI_DEBUG_FUNC
+
 //------------------------------------------------------------------
 /**
  * @brief   子機か抜けた文章終了待ち
@@ -2347,6 +2349,11 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
   const MYSTATUS *mystatus=NULL;
   switch(seq){
   case OEKAKI_MODE_NEWMEMBER: 
+    // 既に離脱中ならシーケンス変更は行わない
+    if(wk->status_end == TRUE){
+      return;
+    }
+    // 「はい・いいえ」表示中だったらクリアする
     if(wk->seq==OEKAKI_MODE_END_SELECT_WAIT || wk->seq==OEKAKI_MODE_END_SELECT_PARENT_WAIT){
       OekakiResetYesNoWin(wk);
     }
