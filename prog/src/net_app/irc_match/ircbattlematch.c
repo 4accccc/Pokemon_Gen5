@@ -1052,6 +1052,11 @@ static void _modeCheckStart33(IRC_BATTLE_MATCH* pWork)
       break;
     default:
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS,WB_NET_IRCBATTLE);
+      if (pWork->pAppTask)   //ƒƒjƒ…[‚Í‚±‚±‚Å•Â‚¶‚é BTS6898
+      {
+        APP_TASKMENU_CloseMenu(pWork->pAppTask);
+        pWork->pAppTask=NULL;
+      }
       _CHANGE_STATE(pWork,_modeCheckStart4);
       break;
     }

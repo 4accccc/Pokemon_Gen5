@@ -2056,7 +2056,7 @@ int GFL_NET_DWC_ErrorType(int code, int type)
   if( code == 20110 ) return 3;
   if( code100 == 512 ) return 4;
   if( code100 == 500 ) return 5;
-  if( code == 51103 ) return 7;
+  if( code == 51103 ) return 6;   ///ìùçá
   if( code100 == 510 ) return 6;
   if( code100 == 511 ) return 6;
   if( code100 == 513 ) return 6;
