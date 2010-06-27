@@ -269,6 +269,10 @@ BOOL UnionComm_ExitWait(int *seq, void *pwk, void *pWork)
 
   if(unisys->comm_status == UNION_COMM_STATUS_EXIT){
     Union_ExitSystem(pwk, unisys);
+    //終了でエラーが残っていると常時通信が起動できない為、エラークリアしておく
+    if(NetErr_App_CheckError()){
+      NetErr_ErrWorkInit();
+    }
     return TRUE;
   }
   return FALSE;
