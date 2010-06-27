@@ -1500,8 +1500,8 @@ static void PSATATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *su
 
   if( monsno == MONSNO_005 )//リザード
   {
-    shadowScale->y = FX32_CONST(1.4);
-    scale->y = FX32_CONST(15.5f);
+    shadowScale->y = FX32_CONST(2.6f);
+    scale->y = FX32_CONST(15.3f);
   }
   else
   if( monsno == MONSNO_086 )//パウワウ
@@ -1544,6 +1544,12 @@ static void PSATATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *su
   {
     scale->x = FX32_CONST(15.7f);
     scale->y = FX32_CONST(15.7f);
+  }
+  else
+  if( monsno == MONSNO_391 )//モウカザル
+  {
+    scale->x = FX32_CONST(15.7f);
+    scale->y = FX32_CONST(15.6f);
   }
   
 #if USE_STATUS_DEBUG
