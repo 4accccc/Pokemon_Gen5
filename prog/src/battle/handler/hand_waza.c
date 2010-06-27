@@ -49,7 +49,7 @@ typedef enum {
 }CombiEffectType;
 
 
-/* @todo 新ワザ名シンボルを一時的に手打ちしておく */
+/* 新ワザ名シンボルを手打ちしておく */
 enum {
   WAZANO_KARI_TUMETOGI = 468,
   WAZANO_KARI_WAIDOGAADO,
@@ -3576,8 +3576,9 @@ static void handler_Ikari_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 }
 static void handler_Ikari_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( !BPP_IsDead(bpp) )
     {
