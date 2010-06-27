@@ -3643,6 +3643,7 @@ static  BOOL  check_shadow_offset( int mons_no, BtlvMcssPos position, VecFx32* o
     u16     rot_z;
     BOOL    flag;
   }shadow_table[] = {
+    { 1, MONSNO_019, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //コラッタ正面
     { 0, MONSNO_047, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, TRUE },  //パラセクト背面
     { 1, MONSNO_050, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, FALSE }, //ディグダ正面
     { 1, MONSNO_051, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, FALSE }, //ダグトリオ正面
