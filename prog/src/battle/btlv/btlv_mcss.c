@@ -220,6 +220,8 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
 
 static  int   BTLV_MCSS_GetIndex( BTLV_MCSS_WORK* bmw, BtlvMcssPos position );
 
+static  BOOL  check_shadow_offset( int mons_no, BtlvMcssPos position, VecFx32* ofs, u16* rot_z, BOOL* flag );
+
 #ifdef PM_DEBUG
 void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
 #endif
@@ -642,15 +644,6 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->btlv_mcss[ index ].maw );
 
-  //影のオフセットを調整
-  { 
-    VecFx32 ofs;
-
-    VEC_Set( &ofs, 0xfffffc00, 0, 0xfffffa00 );
-    MCSS_SetShadowOffset( bmw->btlv_mcss[ index ].mcss, &ofs );
-    MCSS_SetShadowRotateZ( bmw->btlv_mcss[ index ].mcss, 0xf800 );
-  }
-
   BTLV_MCSS_SetReverseDrawFlag( bmw, position, BTLV_MCSS_REVERSE_DRAW_ON );
 
   //ポケモンのナンバー、フォルム、体重データを取得しておく
@@ -665,6 +658,29 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
     int hp    = PP_Get( pp, ID_PARA_hp, NULL );
     int hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
     bmw->btlv_mcss[ index ].param.appear_hp_color = GAUGETOOL_GetGaugeDottoColor( hp, hpmax );
+  }
+
+  //影のオフセットを調整
+  { 
+    VecFx32 ofs;
+    u16     rot_z;
+    BOOL    flag;
+
+    //個別対処するポケモンをチェック
+    if( check_shadow_offset( bmw->btlv_mcss[ index ].param.mons_no, position, &ofs, &rot_z, &flag ) == FALSE )
+    { 
+      VEC_Set( &ofs, 0xfffffc00, 0, 0xfffffa00 );
+      rot_z = 0xf800;
+    }
+    if( flag == FALSE )
+    { 
+      MCSS_SetShadowAlpha( bmw->btlv_mcss[ index ].mcss, 0 );
+    }
+    else
+    { 
+      MCSS_SetShadowOffset( bmw->btlv_mcss[ index ].mcss, &ofs );
+      MCSS_SetShadowRotateZ( bmw->btlv_mcss[ index ].mcss, rot_z );
+    }
   }
 
   bmw->btlv_mcss[ index ].stop_anime_count = BTLV_MCSS_STOP_ANIME_COUNT;
@@ -3605,6 +3621,91 @@ static  int   BTLV_MCSS_GetIndex( BTLV_MCSS_WORK* bmw, BtlvMcssPos position )
     }
   }
   return BTLV_MCSS_NO_INDEX;
+}
+
+//============================================================================================
+/**
+ * @brief ポケモン個別に対応する影オフセットをセット
+ *
+ * @param[in]   mons_no   ポケモンナンバー
+ * @param[in]   position  ポケモンの立ち位置
+ * @param[out]  ofs       影の位置オフセット
+ * @param[out]  rot_z     影の回転オフセット
+ * @param[out]  flag      影のON/OFF
+ */
+//============================================================================================
+static  BOOL  check_shadow_offset( int mons_no, BtlvMcssPos position, VecFx32* ofs, u16* rot_z, BOOL* flag )
+{ 
+  static const struct{
+    int     dir;
+    int     mons_no;
+    VecFx32 ofs;
+    u16     rot_z;
+    BOOL    flag;
+  }shadow_table[] = {
+    { 0, MONSNO_047, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, TRUE },  //パラセクト背面
+    { 1, MONSNO_050, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, FALSE }, //ディグダ正面
+    { 1, MONSNO_051, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, FALSE }, //ダグトリオ正面
+    { 1, MONSNO_058, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //ガーディ正面
+    { 0, MONSNO_111, { 0xFFFFFC00, 0, 0xFFFFFA00 }, 0xF400, TRUE },  //サイホーン背面
+    { 1, MONSNO_128, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //ケンタロス正面
+    { 1, MONSNO_167, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //イトマル正面
+    { 1, MONSNO_227, { 0xFFFFFC00, 0, 0xFFFFFA00 }, 0xFE00, TRUE },  //エアームド正面
+    { 0, MONSNO_244, { 0xFFFFFC00, 0, 0xFFFFF700 }, 0xF400, TRUE },  //エンテイ正面
+    { 1, MONSNO_253, { 0xFFFFFC00, 0, 0xFFFFF400 }, 0x0100, TRUE },  //ジュプトル正面
+    { 1, MONSNO_254, { 0xFFFFFC00, 0, 0xFFFFF400 }, 0x0100, TRUE },  //ジュカイン正面
+    { 0, MONSNO_254, { 0xFFFFFC00, 0, 0xFFFFF600 }, 0xF600, TRUE },  //ジュカイン背面
+    { 1, MONSNO_257, { 0xFFFFF800, 0, 0xFFFFEC00 }, 0x0100, TRUE },  //バシャーモ正面
+    { 1, MONSNO_262, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //グラエナ正面
+    { 0, MONSNO_262, { 0xFFFFFC00, 0, 0xFFFFF700 }, 0xF400, TRUE },  //グラエナ背面
+    { 1, MONSNO_264, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //マッスグマ正面
+    { 1, MONSNO_283, { 0xFFFFFC00, 0, 0xFFFFE800 }, 0xF800, TRUE },  //アメタマ正面
+    { 1, MONSNO_304, { 0x00000000, 0, 0xFFFFEE00 }, 0xF000, TRUE },  //ココドラ正面
+    { 1, MONSNO_305, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //コドラ正面
+    { 1, MONSNO_317, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //マルノーム正面
+    { 1, MONSNO_359, { 0x00000000, 0, 0xFFFFE600 }, 0xEE00, TRUE },  //アブソル正面
+    { 1, MONSNO_376, { 0xFFFFF800, 0, 0xFFFFEC00 }, 0x0100, TRUE },  //メタグロス正面
+    { 1, MONSNO_388, { 0x00000000, 0, 0xFFFFEA00 }, 0xEE00, TRUE },  //ハヤシガメ正面
+    { 0, MONSNO_388, { 0xFFFFFC00, 0, 0xFFFFF700 }, 0xF400, TRUE },  //ハヤシガメ背面
+    { 1, MONSNO_389, { 0x00000000, 0, 0xFFFFEA00 }, 0xEE00, TRUE },  //ドダイトス正面
+    { 0, MONSNO_389, { 0xFFFFFC00, 0, 0xFFFFF700 }, 0xF400, TRUE },  //ドダイトス背面
+    { 1, MONSNO_392, { 0xFFFFF800, 0, 0xFFFFEC00 }, 0x0100, TRUE },  //ゴウカザル正面
+    { 1, MONSNO_450, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, FALSE }, //カバルドン正面
+    { 0, MONSNO_450, { 0xFFFFFC00, 0, 0xFFFFFC00 }, 0xFC00, FALSE }, //カバルドン背面
+    { 1, MONSNO_466, { 0xFFFFFC00, 0, 0xFFFFF400 }, 0x0100, TRUE },  //エレキブル正面
+    { 1, MONSNO_467, { 0xFFFFFC00, 0, 0xFFFFF400 }, 0x0100, TRUE },  //ブーバーン正面
+    { 1, MONSNO_483, { 0xFFFFFC00, 0, 0xFFFFF000 }, 0xFC00, TRUE },  //ディアルガ正面
+    { 1, MONSNO_485, { 0x00000000, 0, 0xFFFFE000 }, 0xF800, TRUE },  //ヒードラン正面
+    { 0, MONSNO_485, { 0xFFFFFC00, 0, 0xFFFFF700 }, 0xF400, TRUE },  //ヒードラン背面
+    { 1, MONSNO_559, { 0xFFFFFC00, 0, 0xFFFFF000 }, 0xFA00, TRUE },  //ダイケンキ正面
+    { 0, MONSNO_559, { 0xFFFFFC00, 0, 0xFFFFF700 }, 0xF400, TRUE },  //ダイケンキ背面
+    { 1, MONSNO_547, { 0xFFFFFC00, 0, 0xFFFFF000 }, 0xF800, TRUE },  //レバルダス正面
+    { 1, MONSNO_512, { 0xFFFFFC00, 0, 0xFFFFF400 }, 0x0100, TRUE },  //ケンホロウ正面
+    { 1, MONSNO_530, { 0xFFFFF800, 0, 0xFFFFEC00 }, 0x0100, TRUE },  //ゾロアーク正面
+    { 1, MONSNO_578, { 0xFFFFFC00, 0, 0xFFFFF000 }, 0xFC00, TRUE },  //デンチュラ正面
+    { 1, MONSNO_509, { 0xFFFFFC00, 0, 0xFFFFE400 }, 0xF800, TRUE },  //オノノクス正面
+    { 1, MONSNO_630, { 0x00000000, 0, 0xFFFFEE00 }, 0xEE00, TRUE },  //コジョフー正面
+    { 1, MONSNO_582, { 0xFFFFFC00, 0, 0xFFFFEA00 }, 0xFA00, TRUE },  //バッフロン正面
+    { 1, MONSNO_650, { 0xFFFFFC00, 0, 0xFFFFF400 }, 0x0100, TRUE },  //レシラム正面
+    { 0, MONSNO_650, { 0xFFFFFC00, 0, 0xFFFFF600 }, 0xF600, TRUE },  //レシラム背面
+    { 1, MONSNO_651, { 0xFFFFFC00, 0, 0xFFFFF400 }, 0x0100, TRUE },  //ゼクロム正面
+  };
+  int i;
+  BOOL  ret = FALSE;
+
+  for( i = 0 ; i < NELEMS( shadow_table ) ; i++ )
+  { 
+    if( ( shadow_table[ i ].mons_no == mons_no ) && ( shadow_table[ i ].dir == ( position & 1 ) ) )
+    { 
+      VEC_Set( ofs, shadow_table[ i ].ofs.x, shadow_table[ i ].ofs.y, shadow_table[ i ].ofs.z ); 
+      *rot_z  = shadow_table[ i ].rot_z;
+      *flag   = shadow_table[ i ].flag;
+      ret = TRUE;
+      break;
+    }
+  }
+
+  return ret;
 }
 
 #ifdef PM_DEBUG
