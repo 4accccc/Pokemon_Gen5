@@ -6323,8 +6323,9 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( !BPP_IsHPFull(bpp) )
     {
-      BTL_HANDEX_PARAM_RECOVER_HP    *hp_param;
-      BTL_HANDEX_PARAM_ADD_SICK      *sick_param;
+      BTL_HANDEX_PARAM_RECOVER_HP        *hp_param;
+      BTL_HANDEX_PARAM_ADD_SICK          *sick_param;
+      BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP  *item_param;
 
       sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         sick_param->pokeID = pokeID;
@@ -6332,6 +6333,7 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
         sick_param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
         sick_param->fAlmost = TRUE;
         sick_param->overWriteMode = BTL_SICK_OW_POKESICK;
+        sick_param->fItemReactionDisable = TRUE;
         HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Nemuru );
         HANDEX_STR_AddArg( &sick_param->exStr, pokeID );
       BTL_SVF_HANDEX_Pop( flowWk, sick_param );
@@ -6341,6 +6343,11 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
         hp_param->recoverHP = (BPP_GetValue(bpp, BPP_MAX_HP) - BPP_GetValue(bpp, BPP_HP));
         hp_param->header.failSkipFlag = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, hp_param );
+
+      item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
+        item_param->pokeID = pokeID;
+        item_param->reactionType = BTL_ITEMREACTION_SICK;
+      BTL_SVF_HANDEX_Pop( flowWk, item_param );
 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
     }

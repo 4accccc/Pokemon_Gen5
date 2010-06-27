@@ -509,6 +509,7 @@ typedef struct {
  BPP_SICK_CONT  sickCont;            ///< 状態異常継続パラメータ
  u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
  u8   fStdMsgDisable;                ///< 標準メッセージオフ
+ u8   fItemReactionDisable;          ///< アイテム反応オフ
  u8   pokeID;                        ///< 対象ポケモンID
  BtlSickOverWriteMode  overWriteMode;///< 上書きモード
  BTL_HANDEX_STR_PARAMS  exStr;       ///< 特殊メッセージ表示（標準メッセージはオフ）

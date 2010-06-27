@@ -297,7 +297,7 @@ static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
 static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
   WazaSick sick, BPP_SICK_CONT sickCont, BtlSickOverWriteMode overWriteMode );
 static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr );
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, BOOL fItemReactionDisable, const BTL_HANDEX_STR_PARAMS* exStr );
 static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk );
 static fx32 svEvent_GetWaitRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaSick sick  );
@@ -5036,7 +5036,7 @@ static BOOL scproc_FreeFall_Start( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
       scPut_SetBppCounter( wk, attacker, BPP_COUNTER_FREEFALL, counterValue );
 
       cont = BPP_SICKCONT_MakePoke( BPP_GetID(attacker) );
-      scproc_AddSickCore( wk, target, attacker, WAZASICK_FREEFALL, cont, FALSE, NULL );
+      scproc_AddSickCore( wk, target, attacker, WAZASICK_FREEFALL, cont, FALSE, FALSE, NULL );
 
       return TRUE;
     }
@@ -7528,7 +7528,7 @@ static BOOL scproc_AddSickRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
 {
   if( scproc_AddSickCheckFail(wk, target, attacker, sick, sickCont, BTL_SICK_OW_NONE, fAlmost) == FALSE )
   {
-    scproc_AddSickCore( wk, target, attacker, sick, sickCont, fDefaultMsgEnable, NULL );
+    scproc_AddSickCore( wk, target, attacker, sick, sickCont, fDefaultMsgEnable, FALSE, NULL );
     return TRUE;
   }
   return FALSE;
@@ -7670,7 +7670,7 @@ static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL
  */
 //----------------------------------------------------------------------------------
 static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr )
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, BOOL fItemReactionDisable, const BTL_HANDEX_STR_PARAMS* exStr )
 {
   scPut_AddSick( wk, target, sick, sickCont );
 
@@ -7727,7 +7727,9 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
   }
 
   // アイテム反応イベントへ
-  scproc_CheckItemReaction( wk, target, BTL_ITEMREACTION_SICK );
+  if( !fItemReactionDisable ){
+    scproc_CheckItemReaction( wk, target, BTL_ITEMREACTION_SICK );
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -14672,7 +14674,8 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
           scPut_TokWin_In( wk, pp_user );
         }
 
-        scproc_AddSickCore( wk, target, pp_user, param->sickID, param->sickCont, fDefaultMsg, &param->exStr );
+        scproc_AddSickCore( wk, target, pp_user, param->sickID, param->sickCont, fDefaultMsg,
+            param->fItemReactionDisable, &param->exStr );
 
         if( param->header.tokwin_flag ){
           scPut_TokWin_Out( wk, pp_user );
