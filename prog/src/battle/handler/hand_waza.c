@@ -6104,12 +6104,14 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     u32 upVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK_RANK );
     if( (BPP_GetValue(bpp, BPP_HP) > downHP) && (upVolume != 0) )
     {
-      BTL_HANDEX_PARAM_SHIFT_HP     *hp_param;
-      BTL_HANDEX_PARAM_RANK_EFFECT  *rank_param;
-      BTL_HANDEX_PARAM_MESSAGE      *msg_param;
+      BTL_HANDEX_PARAM_SHIFT_HP           *hp_param;
+      BTL_HANDEX_PARAM_RANK_EFFECT        *rank_param;
+      BTL_HANDEX_PARAM_MESSAGE            *msg_param;
+      BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP   *item_param;
 
       hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SHIFT_HP, pokeID );
         hp_param->poke_cnt = 1;
+        hp_param->fItemReactionDisable = TRUE;
         hp_param->pokeID[0] = pokeID;
         hp_param->volume[0] = -downHP;
       BTL_SVF_HANDEX_Pop( flowWk, hp_param );
@@ -6127,6 +6129,11 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Haradaiko );
         HANDEX_STR_AddArg( &msg_param->str, pokeID );
       BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+
+      item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
+        item_param->pokeID = pokeID;
+        item_param->reactionType = BTL_ITEMREACTION_HP;
+      BTL_SVF_HANDEX_Pop( flowWk, item_param );
     }
   }
 }

@@ -469,6 +469,7 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
   u8     poke_cnt;
   u8     fEffectDisable;              ///< ゲージエフェクト等無効
+  u8     fItemReactionDisable;        ///< アイテム反応チェックを行わない
   u8     pokeID[ BTL_POS_MAX ];
   int    volume[ BTL_POS_MAX ];
 }BTL_HANDEX_PARAM_SHIFT_HP;

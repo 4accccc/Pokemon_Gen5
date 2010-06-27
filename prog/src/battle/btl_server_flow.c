@@ -14521,9 +14521,12 @@ static u8 scproc_HandEx_shiftHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
     if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID[i]) )
     {
       BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-      if( !BPP_IsDead(pp_target) ){
+      if( !BPP_IsDead(pp_target) )
+      {
         scPut_SimpleHp( wk, pp_target, param->volume[i], !param->fEffectDisable );
-        scproc_CheckItemReaction( wk, pp_target, BTL_ITEMREACTION_HP );
+        if( !(param->fItemReactionDisable) ){
+          scproc_CheckItemReaction( wk, pp_target, BTL_ITEMREACTION_HP );
+        }
         result = 1;
       }
     }
@@ -15795,6 +15798,11 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
     if( BPP_CheckSick(bpp, WAZASICK_FLYING) )
     {
       scPut_CureSick( wk, bpp, WAZASICK_FLYING, NULL );
+      fFall = TRUE;
+    }
+    if( BPP_CheckSick(bpp, WAZASICK_TELEKINESIS) )
+    {
+      scPut_CureSick( wk, bpp, WAZASICK_TELEKINESIS, NULL );
       fFall = TRUE;
     }
 
