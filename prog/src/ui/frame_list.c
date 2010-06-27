@@ -1160,7 +1160,8 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 		// 指定回数スクロール終了
 		if( wk->listBgScrollMax == 0 ){
 			int	ret = GFL_UI_TP_HitCont( wk->touch );
-			if( wk->slideTouchFlag == 1 &&
+			if( ret != GFL_UI_TP_HIT_NONE && wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE &&
+					wk->slideTouchFlag == 1 &&
 					wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE &&
 					( ( wk->slideVec < 0 && wk->slidePos < ret ) || ( wk->slideVec > 0 && wk->slidePos > ret ) ) ){
 				wk->slideTouchFlag = 0;
@@ -1221,6 +1222,8 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 //							wk->slideOldTpy   = wk->nowTpy;
 						}
 					}
+					wk->autoScroll = FALSE;
+					wk->slidePos = wk->listPos;
 					wk->slideAutoStop = 0;
 					wk->slideReqCount = 0;
 					wk->slideStartTpy = wk->nowTpy;
@@ -1446,6 +1449,8 @@ static void InitSlideMove( FRAMELIST_WORK * wk, int pos )
 	wk->slideStartTpy = wk->nowTpy;
 	wk->slideOldTpy   = wk->nowTpy;
 
+	wk->autoScroll = FALSE;
+
 	wk->mainSeq  = MAINSEQ_SLIDE;
 }
 
@@ -1499,10 +1504,12 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 			return FALSE;
 		}
 		// オートスクロール中なら
+/*
 		if( wk->autoScroll == TRUE ){
 			wk->autoScroll = FALSE;
 			wk->slidePos = ret;
 		}
+*/
 		if( wk->slidePos != ret ){
 			wk->slidePosTmp   = ret;
 			wk->slideVec      = wk->slidePos - ret;
