@@ -61,6 +61,32 @@ IRAJ
 (3)0x00001382　WCSレギュレーション配信用
 
 
+
+
+
+
+
+
+/*
+◆GDSの切り替えについて
+
+poke_netライブラリの初期化関数"POKE_NET_GDS_Initialize"の引数に渡しているURLを、製品／デバッグで切り替えて頂く事になります。
+下記を参照頂けますでしょうか。
+
+（テストサーバ：デバッグ版）
+アドレス･･･pkgdstest.nintendo.co.jp
+ポート･･･12401
+
+（本番サーバ：製品版）
+アドレス･･･pkgdsprod.nintendo.co.jp
+ポート･･･12401
+
+
+◆不正検査サーバの製品版URL
+
+https://pkvldtprod.nintendo.co.jp/pokemon/validate
+*/
+
 #endif
 
 /// 分けたかったのですが、CGEARの仕様によりGGIDを統一します

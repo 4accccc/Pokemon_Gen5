@@ -534,8 +534,10 @@ void POKEMONTRADE_DEMO_PTC_Load1( POKEMONTRADE_DEMO_WORK* pWork )
       ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, GetHeapLowID(pWork->heapID));
     for(i=0;i<4;i++)
     {
-      GFL_PTC_SetResourceEx(pWork->ptc[i], pWork->effectRes, FALSE, GFUser_VIntr_GetTCBSYS());
-      //GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+      
+      OS_WaitInterrupt( TRUE, OS_IE_V_BLANK );
+      GFL_PTC_SetResourceEx(pWork->ptc[i], pWork->effectRes, TRUE, GFUser_VIntr_GetTCBSYS());
+      //GFL_PTC_SetResource(pWork->ptc[i], pWork->effectRes, TRUE, NULL);
     }
   }
 }
@@ -546,11 +548,13 @@ void POKEMONTRADE_DEMO_PTC_Load2( POKEMONTRADE_DEMO_WORK* pWork )
     int i;
     for(i=4;i<PTC_KIND_NUM_MAX;i++)
     {
-      GFL_PTC_SetResourceEx(pWork->ptc[i], pWork->effectRes, FALSE, GFUser_VIntr_GetTCBSYS());
-      //GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+      OS_WaitInterrupt( TRUE, OS_IE_V_BLANK );
+      GFL_PTC_SetResourceEx(pWork->ptc[i], pWork->effectRes, TRUE, GFUser_VIntr_GetTCBSYS());
+      //GFL_PTC_SetResource(pWork->ptc[i], pWork->effectRes, TRUE, NULL);
     }
   }
 }
+/*
 void POKEMONTRADE_DEMO_PTC_LoadOne_Init( POKEMONTRADE_DEMO_WORK* pWork )
 {
   //リソース読み込み＆登録
@@ -561,7 +565,10 @@ void POKEMONTRADE_DEMO_PTC_LoadOne_Init( POKEMONTRADE_DEMO_WORK* pWork )
 const BOOL POKEMONTRADE_DEMO_PTC_LoadOne_Loop( POKEMONTRADE_DEMO_WORK* pWork )
 {
   //リソース登録
-  GFL_PTC_SetResourceEx(pWork->ptc[pWork->effLoadCnt], pWork->effectRes, FALSE, GFUser_VIntr_GetTCBSYS());
+  OS_WaitInterrupt( TRUE, OS_IE_V_BLANK );
+//  GFL_PTC_SetResourceEx(pWork->ptc[pWork->effLoadCnt], pWork->effectRes, FALSE, GFUser_VIntr_GetTCBSYS());
+  GFL_PTC_SetResource(pWork->ptc[pWork->effLoadCnt], pWork->effectRes, TRUE, NULL);
+  
   pWork->effLoadCnt++;
   if( pWork->effLoadCnt < PTC_KIND_NUM_MAX )
   {
@@ -570,7 +577,7 @@ const BOOL POKEMONTRADE_DEMO_PTC_LoadOne_Loop( POKEMONTRADE_DEMO_WORK* pWork )
   return TRUE;
 
 }
-
+*/
 //============================================================================================
 /**
  * @brief パーティクル終了関数
