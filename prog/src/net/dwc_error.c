@@ -91,12 +91,6 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         if( !is_heavy )
         {
           _ErrorClear();
-          //マッチング時に軽微エラーが出ると、自分の内部が切断状況にならないので
-          //強制的に切ります
-          if( GFL_NET_DWC_IsMatched( ) )
-          {
-            GFL_NET_StateWifiMatchEnd(TRUE);  
-          }
           NetErr_DispCallPushPop();
           NetErr_ErrWorkInit();
           return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;

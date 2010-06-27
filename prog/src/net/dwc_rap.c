@@ -1608,6 +1608,15 @@ int mydwc_HandleError(void)
       // ゲーム固有の表示のみで、エラーコード表示は必要ない。
       // DWC_ClearError()を呼び出せば、復帰可能。
       DWC_ClearError();
+
+      //外部でClearErrorしてもdwc_rap内部状態がERRORから変わらず、
+      //終了処理ではまる場合があるため、エラー状態の場合は解消する
+      if(_dWork){
+        if( _dWork->state == MDSTATE_ERROR )
+        {
+          _CHANGE_STATE(MDSTATE_LOGIN);
+        }
+      }
       break;
 
     case DWC_ETYPE_SHOW_ERROR:  // エラー表示が必要
@@ -1621,7 +1630,15 @@ int mydwc_HandleError(void)
         //DWC_ScShutdown(); //じまえで呼ぶので呼ばない
       }
 
-      //DWC_ClearError();
+      //DWC_ClearError(); //
+      //外部でClearErrorしてもdwc_rap内部状態がERRORから変わらず、
+      //終了処理ではまる場合があるため、エラー状態の場合は解消する
+      if(_dWork){
+        if( _dWork->state == MDSTATE_ERROR )
+        {
+          _CHANGE_STATE(MDSTATE_LOGIN);
+        }
+      }
       break;
 
     case DWC_ETYPE_SHUTDOWN_GHTTP:

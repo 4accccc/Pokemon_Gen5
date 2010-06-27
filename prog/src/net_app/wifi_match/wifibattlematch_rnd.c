@@ -1502,6 +1502,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       
       if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
+        NAGI_Printf( "check!\n" );
         //ここでエラーが起こった場合、切断カウンターをあげなかったと判断して、
         //戻り先を変えます
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
