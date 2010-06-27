@@ -2450,14 +2450,25 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
 {
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-  GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
-                                   GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-  GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
-  GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
-  BTLV_INPUT_FreeTCB( ttw->biw, tcb );
+  switch( ttw->seq_no ){
+  case 0:
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X0, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
+    ttw->seq_no++;
+    break;
+  case 1:
+    GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+    GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
+    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TSA_SCROLL_X3, TSA_SCROLL_Y3,
+                      BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
+    BTLV_INPUT_FreeTCB( ttw->biw, tcb );
+    break;
+  }
 }
 
 //============================================================================================
