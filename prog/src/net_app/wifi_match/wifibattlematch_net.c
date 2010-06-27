@@ -49,7 +49,7 @@
 #define DEBUGWIN_OWNER_NET_ONLY   //担当者は自分としかつながらなくなる
 #define DEBUG_SC_RELEASE_CHECK    //SCの開放チェック
 #define DEBUG_GDB_RELEASE_CHECK   //GDBの開放チェック
-#define DEBUG_EVAL_FREE           //評価値計算で必ず繋がるようにする
+//#define DEBUG_EVAL_FREE           //評価値計算で必ず繋がるようにする
 #endif //PM_DEBUG
 
 //担当者は自分しかつながらなくなる
