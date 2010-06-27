@@ -2589,7 +2589,7 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
     }
   }
 
-  // 特定の継続フラグを引き継ぎ（今のところパワートリックだけ）
+  // 特定の継続フラグを引き継ぎ（今のところパワートリック＆きあいだめ）
   if( BPP_CONTFLAG_Get(user, BPP_CONTFLG_POWERTRICK) ){
     u16 atk, def;
     BPP_CONTFLAG_Set(target, BPP_CONTFLG_POWERTRICK);
@@ -2599,6 +2599,9 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
     BPP_SetBaseStatus( target, BPP_ATTACK, def );
     BPP_SetBaseStatus( target, BPP_DEFENCE, atk );
     BTL_Printf("パワートリック引き継ぎ: Atk(%d) <-> Def(%d)\n", atk, def);
+  }
+  if( BPP_CONTFLAG_Get(user, BPP_CONTFLG_KIAIDAME) ){
+    BPP_CONTFLAG_Set(target, BPP_CONTFLG_KIAIDAME);
   }
 
   // 受け継がせたらクリア
