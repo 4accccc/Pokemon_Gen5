@@ -1291,6 +1291,20 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
       }
     }
     break;
+  case BTLEFF_CAMERA_POS_ZOOM_OUT_ATTACK:
+    { 
+      BtlRule rule = BTLV_EFFECT_GetBtlRule();
+      if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
+      { 
+        //1vs1orRotation‚È‚çUŒ‚‘ÎÛŽÒ‚ÉˆÚ“®
+        cam_move_pos = bevw->attack_pos;
+      }
+      else
+      { 
+        cam_move_pos = ( bevw->attack_pos & 1 ) ? BTLEFF_CAMERA_POS_BB : BTLEFF_CAMERA_POS_ZOOM_OUT;
+      }
+    }
+    break;
   case BTLEFF_CAMERA_POS_INIT_ORTHO:
     cam_move_pos = BTLEFF_CAMERA_POS_INIT;
     break;
@@ -6867,6 +6881,61 @@ static void EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_EMIT_INIT_
     {
       BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
       int   pos_cnt = EFFVM_GetEmitterPosition( bevw, BTLEFF_POKEMON_SIDE_DEFENCE, pos );
+      if( pos_cnt )
+      {
+        int i;
+
+        for( i = 0 ; i < pos_cnt ; i++ )
+        {
+          BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                        sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+
+          *beeiw = *beeiw_src;
+          beeiw->src = pos[ i ];
+          beeiw->dst = pos[ i ];
+
+          if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+          {
+            GFL_HEAP_FreeMemory( beeiw );
+          }
+        }
+      }
+    }
+  }
+  else if( ( beeiw_src->dst == beeiw_src->src ) &&
+           ( bevw->param.waza_range == WAZA_TARGET_SIDE_FRIEND ) &&
+           ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+           ( bevw->waza != WAZANO_OIKAZE ) &&
+         ( ( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_ATTACK ) ||
+           ( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS ) ) )
+  { 
+    if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS )
+    {
+      beeiw_src->minus_flag = TRUE;
+    }
+    {
+      BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+      int   pos_cnt = 0;
+      BtlRule rule = BTLV_EFFECT_GetBtlRule();
+
+      switch( rule ){ 
+      case BTL_RULE_SINGLE:
+      case BTL_RULE_ROTATION:
+      default:
+        pos[ 0 ] = bevw->attack_pos;
+        pos_cnt = 1;
+        break;
+      case BTL_RULE_DOUBLE:
+        pos[ 0 ] = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_BB : BTLV_MCSS_POS_AA;
+        pos_cnt = 1;
+        break;
+      case BTL_RULE_TRIPLE:
+        pos[ 0 ] = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_B_DOUBLE : BTLV_MCSS_POS_A_DOUBLE;
+        pos[ 1 ] = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_D_DOUBLE : BTLV_MCSS_POS_C_DOUBLE;
+        pos_cnt = 2;
+        break;
+      }
+  
       if( pos_cnt )
       {
         int i;
