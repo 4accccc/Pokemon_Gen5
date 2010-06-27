@@ -42,14 +42,15 @@
  *  ・マイクテスト時、マイクの入力レベルを5 段階で確認できるようにしてください。
  *  ・ゲインをPM_SetAmpGainを使用して、PM_AMPGAIN_80（80倍）に設定
  *    →snd_systemの初期化で行っている。
- *  ・unsigned char型の8bitサンプリングバッファで0から255の範囲を有効値として、128未満のデータを256から減算し（波形のレベル反転）、最大値を探します。
+ *  ・unsigned char型の8bitサンプリングバッファで0から255の範囲を有効値として、
+ *    128未満のデータを256から減算し（波形のレベル反転）、最大値を探します。
  *    →※１
  *    これによって得られたデータを以下のような区切りで測定してください。
- *  ・LEVEL4  188 ～ 255
- *  ・LEVEL3  167 ～ 187
- *  ・LEVEL2  153 ～ 166
- *  ・LEVEL1  141 ～ 152
- *  ・LEVEL0  0 ～ 140
+ *  ・LEVEL4  198 ～ 255
+ *  ・LEVEL3  177 ～ 197
+ *  ・LEVEL2  163 ～ 176
+ *  ・LEVEL1  151 ～ 162
+ *  ・LEVEL0  128 ～ 150(念のため0-150に）
  *  ・サンプリング周波数は任意
  *
  *  ・NTSC-ONLINEのDSマニュアル大全集、全文検索あたりで、「マイク」と検索するとガイドラインがでてきます。
@@ -183,11 +184,11 @@ typedef u8 MIC_BUF_SIZE;
 //-------------------------------------
 ///   マイク規約によるレベル上限
 //=====================================
-#define IS_MICINPUT_LEVEL0( n ) (  0<=n && n<=140)
-#define IS_MICINPUT_LEVEL1( n ) (141<=n && n<=152)
-#define IS_MICINPUT_LEVEL2( n ) (153<=n && n<=166)
-#define IS_MICINPUT_LEVEL3( n ) (167<=n && n<=187)
-#define IS_MICINPUT_LEVEL4( n ) (188<=n && n<=255)
+#define IS_MICINPUT_LEVEL0( n ) (  0<=n && n<=150)
+#define IS_MICINPUT_LEVEL1( n ) (151<=n && n<=162)
+#define IS_MICINPUT_LEVEL2( n ) (163<=n && n<=176)
+#define IS_MICINPUT_LEVEL3( n ) (177<=n && n<=197)
+#define IS_MICINPUT_LEVEL4( n ) (198<=n && n<=255)
 
 //-------------------------------------
 ///   音符が揺れ動く処理の定数
@@ -1664,28 +1665,32 @@ static void MicTest_MIC_StopSampling( MICTEST_MIC_WORK *p_mic )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  マイクバッファを見て、平均音量を出す処理
+ *  @brief  マイクバッファを見て、最大音量値を出す処理
  *
  *  @param  MICAutoParam * p_mic_param  マイクの情報
  *
- *  @return 平均音量値
+ *  @return 最大音量値（max=255)
  */
 //-----------------------------------------------------------------------------
 static int CalcAverageVolumeMicBuffer( MICAutoParam * p_mic_param )
 {
   int i;
-  int volume  = 0;
+  int volume  = 0, max_volume=0;
   int size  = p_mic_param->size / sizeof(MIC_BUF_SIZE) - 1;
   MIC_BUF_SIZE  *p_mic_buffer = p_mic_param->buffer;
+
   for( i = 0; i < size; i++ ) {
     if( p_mic_buffer[i] < 128 ) {
-      volume  += (256 - p_mic_buffer[i]);   //  ※１
+      volume  = (256 - p_mic_buffer[i]);   //  ※１
     }else{
-      volume  += p_mic_buffer[i];
+      volume  = p_mic_buffer[i];
+    }
+
+    if(volume > max_volume){
+      max_volume = volume;
     }
   }
-
-  return volume / size;
+  return max_volume;
 }
 
 
