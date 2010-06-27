@@ -202,7 +202,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
        FIELD_PLACE_NAME_Hide( p_sys );
     }
     //カメラエリア動作をフック
-    FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
+//    FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
     //現在ウォッチターゲットを保存
     wk->Watch = FIELD_CAMERA_GetWatchTarget(camera);
     FIELD_CAMERA_StopTraceRequest(camera);
@@ -217,7 +217,13 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     //カメラパージ
     FIELD_CAMERA_FreeTarget(camera);
     //現在のカメラ設定を保存
+#if 0
     FIELD_CAMERA_SetRecvCamParam(camera);
+#else
+    FIELD_CAMERA_SetRecvCamParamOv( camera );
+    //カメラエリア動作をフック
+    FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
+#endif
     //カメラを空飛びカメラへ線形移動リクエスト
     {
       FLD_CAM_MV_PARAM param;
