@@ -1543,9 +1543,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
 #ifdef DEBUG_POKE_POS_SET
   ////////////////////////////////////////////////////////////////
   {
-    const f32 add = 0.1f;//0.01f;
+    const f32 add = 0.01f;//0.01f;
     f32 add_x = 0.0f;
     f32 add_y = 0.0f;
+    f32 add_z = 0.0f;
     u32 x, y;
     BOOL input = FALSE;
     u8 i;
@@ -1556,11 +1557,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
       if( y<48 )
       {
         add_y = add;
+        //add_z = add;
         input = TRUE;
       }
       else if( y>=144 )
       {
         add_y = -add;
+        //add_z = -add;
         input = TRUE;
       }
       else if( x<64 )
@@ -1582,16 +1585,21 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
         if( work->poke_mcss_wk[i].poke_wk )
         {
           VecFx32 pos;
-          f32     pos_x, pos_y;
+          f32     pos_x, pos_y, pos_z;
           MCSS_GetPosition( work->poke_mcss_wk[i].poke_wk, &pos );
+          //MCSS_GetScale( work->poke_mcss_wk[i].poke_wk, &pos );
           pos_x = FX_FX32_TO_F32(pos.x);
           pos_y = FX_FX32_TO_F32(pos.y);
+          pos_z = FX_FX32_TO_F32(pos.z);
           pos_x += add_x;
           pos_y += add_y;
-          OS_Printf( "[%d] poke_wk (%f,%f)\n", i, pos_x, pos_y );
+          pos_z += add_z;
+          OS_Printf( "[%d] poke_wk (%f,%f,%f)\n", i, pos_x, pos_y, pos_z );
           pos.x = FX_F32_TO_FX32(pos_x);
           pos.y = FX_F32_TO_FX32(pos_y);
+          pos.z = FX_F32_TO_FX32(pos_z);
           MCSS_SetPosition( work->poke_mcss_wk[i].poke_wk, &pos );
+          //MCSS_SetScale( work->poke_mcss_wk[i].poke_wk, &pos );
         }
       }
     }
@@ -6662,7 +6670,7 @@ typedef struct
 }
 POKE_ARRANGE_INFO;
 #define MALE_FEMALE_UNKNOWN (3)  // オスメス性別なしどれでも構わない  // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWNと被らない値
-#define POKE_ARRANGE_INFO_TBL_NUM (10)
+#define POKE_ARRANGE_INFO_TBL_NUM (11)
 
 static const POKE_VEC_F32 poke_arrange_default_pos[POKE_ARRANGE_MAX] =
 {
@@ -6704,6 +6712,9 @@ static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] 
     { {-0.2f,-13.9f,0.0f},{-64.2f,-13.9f,0.0f},{63.8f,-13.9f,0.0f},{-16.4f,-13.9f,0.0f},{15.9f,-13.9f,0.0f} } },
 
   { MONSNO_YAZIRON,    0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // ヤジロン 0
+    { {0.0f,-13.8f,0.0f},{-64.0f,-13.8f,0.0f},{64.0f,-13.8f,0.0f},{-16.0f,-13.8f,0.0f},{16.0f,-13.8f,0.0f} } },
+
+  { MONSNO_KUTIITO,    0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // クチート 0
     { {0.0f,-13.8f,0.0f},{-64.0f,-13.8f,0.0f},{64.0f,-13.8f,0.0f},{-16.0f,-13.8f,0.0f},{16.0f,-13.8f,0.0f} } },
 
 
