@@ -194,10 +194,10 @@ static void CommOekakiBoardLinePosServer(
 /**
  * 通信画面を開始する
  *
- * @param   netID   
- * @param   size    
- * @param   pData   
- * @param   pWk   
+ * @param   netID   通信ID
+ * @param   size    データサイズ
+ * @param   pData   受信データポインタ
+ * @param   pWk     OEKAKI_WORK*
  *
  * @retval  none    
  */

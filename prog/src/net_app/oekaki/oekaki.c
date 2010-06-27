@@ -212,6 +212,14 @@ const GFL_PROC_DATA OekakiProcData = {
 
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 乱入可能人数を設定（お絵かきでは0か1しか設定しない）
+ *
+ * @param   wk    OEKAKI_WORK
+ * @param   num   0:乱入禁止  1:一人だけ乱入可能
+ */
+//----------------------------------------------------------------------------------
 static void ConnectLimitSet( OEKAKI_WORK *wk, int num)
 {
   Union_App_Parent_EntryBlockNum( wk->param->uniapp, num );
@@ -600,7 +608,9 @@ static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *
 //----------------------------------------------------------------------------------
 static void OEKAKI_leave_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork)
 {
-  OS_Printf("離脱コールバック net_id=%d\n", net_id);
+  OEKAKI_WORK  *wk    = (OEKAKI_WORK  *)userwork;
+
+  OS_Printf("離脱コールバック net_id=%d 人数=%d\n", net_id,_get_connect_num(wk));
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1621,6 +1631,7 @@ static int Oekaki_NewMemberEnd( OEKAKI_WORK *wk, int seq )
   // 輝度ダウン解除
   G2_BlendNone();
 
+  OS_Printf("乱入人数変更01\n");
   ChangeConnectMax(wk, 1);
 
   SetNextSequence( wk, OEKAKI_MODE );
@@ -2233,6 +2244,7 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
 
   // 接続可能人数を一旦現在の接続人数に落とす
   if(GFL_NET_SystemGetCurrentID()==0){
+    OS_Printf("乱入人数変更02\n");
     ChangeConnectMax( wk, 0 );
   }
   wk->err_num = _get_connect_num(wk);
@@ -2255,6 +2267,8 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
 static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq )
 {
   // 接続人数が１減るかチェック
+//  if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) || 
+//     (wk->ridatu_bit & _get_connect_bit(wk))==0){
   if(wk->err_num != 0 && _get_connect_num(wk) != wk->err_num){
     wk->err_num = 0;
   }
@@ -2282,6 +2296,8 @@ static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq )
 static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
 {     
   // 接続人数が１減るまでは待つ
+//  if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) || 
+//     (wk->ridatu_bit & _get_connect_bit(wk))==0){
   if(wk->err_num != 0 && _get_connect_num(wk) != wk->err_num){
     wk->err_num = 0;
   }
@@ -2292,6 +2308,7 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
     SetNextSequence( wk, OEKAKI_MODE );
     if(GFL_NET_SystemGetCurrentID() == 0){
       wk->banFlag = OEKAKI_BAN_OFF;
+      OS_Printf("乱入人数変更03\n");
       ChangeConnectMax(wk, 1);
     }
     // 絵を共有した接続人数を更新
@@ -2299,7 +2316,8 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
     wk->shareBit = Union_App_GetMemberNetBit(wk->param->uniapp);
 
   }else{
-    OS_Printf("wk->wait=%d, wk->err_num=%d, connect_num=%d\n", wk->wait, wk->err_num, _get_connect_num(wk));
+    OS_Printf("wait=%d, err_num=%d, connect_num=%d ridatu=%d\n", 
+              wk->wait, wk->err_num, _get_connect_num(wk), wk->ridatu_bit);
   }
 
 //  OS_Printf("err_num=%d, connect_num=%d wait=%d \n ", wk->err_num, _get_connect_num(wk), wk->wait);
@@ -3164,7 +3182,7 @@ static void ChangeConnectMax( OEKAKI_WORK *wk, int plus )
     if(num>5){
       num = 5;
     }
-    ConnectLimitSet(wk,1);
+    ConnectLimitSet(wk,plus);
 
 //    OS_Printf("接続人数を %d人に変更\n",num);
   }
@@ -3211,9 +3229,18 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
     // 接続人数が減った場合は接続最大人数も減らす
     if(num<wk->connectBackup){
       if(wk->banFlag==OEKAKI_BAN_ON){
+        OS_Printf("乱入人数変更04\n");
         ChangeConnectMax( wk, 0 );
       }else{
-        ChangeConnectMax( wk, 1 );
+        // 人は減ったけど今新しい子機にデータ送信しているんだったら乱入OKにしない
+        if(wk->bookJoin==0){
+          OS_Printf("乱入人数変更05\n");
+          ChangeConnectMax( wk, 1 );
+        }else{
+          OS_Printf("乱入人数変更06\n");
+          ChangeConnectMax( wk, 0 );
+          OS_Printf("乱入子機に送信中なのでOKにしない\n");
+        }
       }
     }
     break;
@@ -3231,6 +3258,7 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
     if(wk->bookJoin){ /*乱入待機ビットと比較し、それが落ちていた場合は、乱入者が電源を切ったとみなす*/
       if (!(wk->shareBit&wk->joinBit)){
         //リミット制限再設定
+        OS_Printf("乱入人数変更07\n");
         ChangeConnectMax( wk, 1 );
         //離脱解除
         wk->banFlag = OEKAKI_BAN_OFF;
