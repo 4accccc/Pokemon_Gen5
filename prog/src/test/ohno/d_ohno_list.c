@@ -92,7 +92,9 @@ typedef struct {
   //バトル検定
   int trialNo;
   int trialType;
-
+  /// ポケモン番号
+  int pokeNo;
+  
 
 }D_OHNO_WORK;
 
@@ -194,34 +196,16 @@ static const D_MENULIST DebugMenuList[] = {
     FS_OVERLAY_ID(pokemon_trade)
     },
   {//
-    DEBUG_OHNO_MSG0019,
-    //		&PokemonTradeDemoProcData,
-    &PokemonTradeGTSProcData,
-    //    &PokemonTradeGTSSendProcData,
-    //    &PokemonTradeGTSRecvProcData,
-    //    &PokemonTradeGTSMidProcData,
+    DEBUG_OHNO_MSG0029,
+    &PokemonTradeGTSSendProcData,
     _PokeTradeDemoWorkCreate,
     FS_OVERLAY_ID(pokemon_trade)
     },
-  /*  {//
-		DEBUG_OHNO_MSG0015,
-		&PokemonTradeIrcProcData,
-		_PokeIrcTradeWorkCreate,
-		FS_OVERLAY_ID(pokemon_trade)
-	},*/
   {//
-    		DEBUG_OHNO_MSG0013,
-    		&PokemonTradeProcData,
-    		_PokeIrcTradeWorkCreate,
-    		FS_OVERLAY_ID(pokemon_trade)
-//    DEBUG_OHNO_MSG0025,
-//    &NetDeliveryIRCRecvProcData,
-//    NULL,
-//    FS_OVERLAY_ID(ohno_debugapp)
-    //DEBUG_OHNO_MSG0025,
-    //&SaveFriendProcData,
-    //NULL,
-    //FS_OVERLAY_ID(ohno_debugapp)
+    DEBUG_OHNO_MSG0030,
+    &PokemonTradeGTSRecvProcData,
+    _PokeTradeDemoWorkCreate,
+    FS_OVERLAY_ID(pokemon_trade)
     },
   {//
     //		DEBUG_OHNO_MSG0002,
@@ -557,7 +541,18 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
         PRINTSYS_Print(wk->drawwin.bmp, 0, yini+i*2*8, wk->strbuf[i], wk->fontHandle);
       }
       x = 2;
-      if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0026){
+
+      if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0030){
+        GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0030, wk->strbufEx);
+        WORDSET_RegisterNumber(wk->pWordSet, 0, wk->pokeNo, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+        WORDSET_ExpandStr( wk->pWordSet, wk->strbuf[i], wk->strbufEx  );
+      }
+      else if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0029){
+        GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0029, wk->strbufEx);
+        WORDSET_RegisterNumber(wk->pWordSet, 0, wk->pokeNo, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+        WORDSET_ExpandStr( wk->pWordSet, wk->strbuf[i], wk->strbufEx  );
+      }
+      else if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0026){
         GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0026, wk->strbufEx);
         WORDSET_RegisterNumber(wk->pWordSet, 0, wk->trialNo, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
         WORDSET_RegisterNumber(wk->pWordSet, 1, wk->trialType, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
@@ -591,19 +586,39 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
         wk->cursor_y++;
         break;
       case PAD_KEY_LEFT:
-        wk->trialNo--;
+        if(wk->cursor_y==6){
+          wk->trialNo--;
+        }
+        if(wk->cursor_y==3 || wk->cursor_y==4){
+          wk->pokeNo--;
+        }
         wk->seq = 0;
         break;
       case PAD_KEY_RIGHT:
-        wk->trialNo++;
+        if(wk->cursor_y==3 || wk->cursor_y==4){
+          wk->pokeNo++;
+        }
+        if(wk->cursor_y==6){
+          wk->trialNo++;
+        }
         wk->seq = 0;
         break;
       case PAD_BUTTON_L:
-        wk->trialType--;
+        if(wk->cursor_y==3 || wk->cursor_y==4){
+          wk->pokeNo-=10;
+        }
+        if(wk->cursor_y==6){
+          wk->trialType--;
+        }
         wk->seq = 0;
         break;
       case PAD_BUTTON_R:
-        wk->trialType++;
+        if(wk->cursor_y==3 || wk->cursor_y==4){
+          wk->pokeNo+=10;
+        }
+        if(wk->cursor_y==6){
+          wk->trialType++;
+        }
         wk->seq = 0;
         break;
       }
@@ -640,9 +655,14 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 
   pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
-  pWork->pMyPoke = PP_Create(MONSNO_162, 100, 123456, GFL_HEAPID_APP);
-  pWork->pNPCPoke = PP_Create(MONSNO_310, 100, 123456, GFL_HEAPID_APP);
-
+  if(wk->pokeNo!=0){
+    pWork->pMyPoke = PP_Create(wk->pokeNo, 100, 123456, GFL_HEAPID_APP);
+    pWork->pNPCPoke = PP_Create(wk->pokeNo, 100, 123456, GFL_HEAPID_APP);
+  }
+  else{
+    pWork->pMyPoke = PP_Create(MONSNO_162, 100, 123456, GFL_HEAPID_APP);
+    pWork->pNPCPoke = PP_Create(MONSNO_310, 100, 123456, GFL_HEAPID_APP);
+  }
 
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
   pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
