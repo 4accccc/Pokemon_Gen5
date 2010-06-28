@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-28T12:24:48"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-06-28T15:40:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -538,100 +538,149 @@
 
 	<row id="GSYNC_ERR001" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバーの
-ようりょうオーバー　です</language>
-		<language name="JPN_KANJI" width="256">サーバーの
-容量オーバーです</language>
+		<language name="JPN" width="256">サーバーの　ようりょうオーバー　です
+さいど　ゲームシンクを
+おためしください
+（エラーコード：１３２０1）</language>
+		<language name="JPN_KANJI" width="256">サーバーの　容量オーバー　です
+再度　ゲームシンクを
+おためしください
+（エラーコード：１３２０1）</language>
 	</row>
 
 	<row id="GSYNC_ERR002" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
 		<language name="JPN" width="256">サーバーに
-すでに　データが　あります</language>
+すでに　データが　あります
+（エラーコード：１３２０２）</language>
 		<language name="JPN_KANJI" width="256">サーバーに
-既に　データが　あります</language>
+既に　データが　あります
+（エラーコード：１３２０２）</language>
 	</row>
 
 	<row id="GSYNC_ERR003" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">アップロードされたデータが
-こわれて　います</language>
+		<language name="JPN" width="256">アップロードされた
+データが　こわれています
+さいど　ゲームシンクを
+おためしください
+（エラーコード：１３２０３）</language>
 		<language name="JPN_KANJI" width="256">アップロードされた
-データが　壊れています</language>
+データが　壊れています
+再度　ゲームシンクを
+おためしください
+（エラーコード：１３２０３）</language>
 	</row>
 
 	<row id="GSYNC_ERR004" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
 		<language name="JPN" width="256">アップロードされた
-データが　ふせいです</language>
+データが　ふせいです
+（エラーコード：１３２０４）</language>
 		<language name="JPN_KANJI" width="256">アップロードされた
-データが　不正です</language>
+データが　不正です
+（エラーコード：１３２０４）</language>
 	</row>
 
 	<row id="GSYNC_ERR005" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバーに　データがありません</language>
-		<language name="JPN_KANJI" width="256">サーバーに　データがありません</language>
+		<language name="JPN" width="256">サーバーに　データがありません
+（エラーコード：１３２０５）</language>
+		<language name="JPN_KANJI" width="256">サーバーに　データがありません
+（エラーコード：１３２０５）</language>
 	</row>
 
 	<row id="GSYNC_ERR006" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">Ｗｉ－Ｆｉのサービスは
-しゅうりょう　いたしました</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉの　サービスは
-終了いたしました</language>
+		<language name="JPN" width="256">ごりようの　サービスは
+しゅうりょういたしました
+（エラーコード：１３２０６）</language>
+		<language name="JPN_KANJI" width="256">ごりようの　サービスは
+終了いたしました
+（エラーコード：１３２０６）</language>
 	</row>
 
 	<row id="GSYNC_ERR007" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバーとせつぞくできませんでした</language>
-		<language name="JPN_KANJI" width="256">サーバーと接続できませんでした</language>
+		<language name="JPN" width="256">サーバーと　せつぞくできませんでした
+さいど　ゲームシンクを
+おためしください
+（エラーコード：１３２０７）</language>
+		<language name="JPN_KANJI" width="256">サーバーと　接続できませんでした
+再度　ゲームシンクを
+おためしください
+（エラーコード：１３２０７）</language>
 	</row>
 
 	<row id="GSYNC_ERR008" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">アカウントがありません</language>
-		<language name="JPN_KANJI" width="256">アカウントがありません</language>
+		<language name="JPN" width="256">サーバーないに
+ゲームシンクＩＤコードが
+みつかりません
+（エラーコード：１３２０８）</language>
+		<language name="JPN_KANJI" width="256">サーバー内に
+ゲームシンクＩＤコードが
+見つかりません
+（エラーコード：１３２０８）</language>
 	</row>
 
 	<row id="GSYNC_ERR009" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">ゲームシンクに　しっぱいしました</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクに　失敗しました</language>
+		<language name="JPN" width="256">ゲームシンクに　しっぱいしました
+さいど　ゲームシンクを
+おためしください
+（エラーコード：１３２０９）</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクに　失敗しました
+再度　ゲームシンクを
+おためしください
+（エラーコード：１３２０９）</language>
 	</row>
 
 	<row id="GSYNC_ERR010" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
 		<language name="JPN" width="256">サーバーに　していされた
-ダウンロードデータ　が　ありません</language>
+ダウンロードデータ　が　ありません
+さいど　ゲームシンクを
+おためしください
+（エラーコード：１３２１０）</language>
 		<language name="JPN_KANJI" width="256">サーバーに　指定された
-ダウンロードデータ　が　ありません</language>
+ダウンロードデータ　が　ありません
+再度　ゲームシンクを
+おためしください
+（エラーコード：１３２１０）</language>
 	</row>
 
 	<row id="GSYNC_ERR011" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>HTTPエラーコード
 503</comment>
 		<language name="JPN" width="256">サーバーが　こんざつ　しています
-せつぞくに　しっぱいしました
-じかんを　おいて　さいど
-ゲームシンクを　おためしください</language>
+せつぞく　に　しっぱいしました
+じかんをおいて　さいど
+ゲームシンクを　おためしください
+（エラーコード：１３２１１）</language>
 		<language name="JPN_KANJI" width="256">サーバーが　混雑　しています
-接続に　失敗しました
-時間を　おいて　再度
-ゲームシンクを　おためしください</language>
+接続　に　失敗しました
+時間をおいて　再度
+ゲームシンクを　おためしください
+（エラーコード：１３２１１）</language>
 	</row>
 
 	<row id="GSYNC_ERR012">
 		<comment>HTTPエラーコード
 502 メンテナンス中</comment>
-		<language name="JPN" width="256">サーバーが　こんざつ　しています
-せつぞくに　しっぱいしました
-じかんを　おいて　さいど
-ゲームシンクを　おためしください</language>
-		<language name="JPN_KANJI" width="256">サーバーが　混雑　しています
-接続に　失敗しました
-時間を　おいて　再度
-ゲームシンクを　おためしください</language>
+		<language name="JPN" width="256">サーバーは　現在メンテナンス中です
+メンテナンスの　詳細は
+ポケモングローバルリンクの
+ウェブサイトをご覧下さい
+http://www.pokemon-gl.com/
+（エラーコード）</language>
+		<language name="JPN_KANJI" width="256">サーバーは　げんざい
+メンテナンスちゅうです
+メンテナンスの　しょうさいは
+ポケモングローバルリンクの
+ウェブサイトをごらんください
+http://www.pokemon-gl.com/
+（エラーコード）</language>
 	</row>
 
 	<row id="GSYNC_023">
