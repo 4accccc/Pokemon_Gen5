@@ -350,7 +350,7 @@ sub_bsw_receipt_guide_wifi_upload:
   _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //レポート
-  _CALL sub_bsw_common_report
+  _CALL sub_bsw_common_report_core
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
     _RET
