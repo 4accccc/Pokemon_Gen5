@@ -214,7 +214,6 @@ EVENT_START   ev_pos_c08_champions_01
 		ENDSWITCH
 	ENDIF
 	
-	/*
 	
 	//上を向いてゲーヂスにコメント
 	_BALLOONWIN_OBJMSG( msg_c08_champion_02 , C08_CHAMPION_01 )
@@ -645,7 +644,6 @@ EVENT_START   ev_pos_c08_champions_01
 	//重要イベントでの通信切断から復帰
 	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
-	*/
 	
 EVENT_END
 
