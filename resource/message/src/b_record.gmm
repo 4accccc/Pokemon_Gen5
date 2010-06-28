@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-06-26T13:15:54"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-28T17:44:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="778" top="344" right="1483" bottom="972" maximized="no" rayout="Vertical2">
+	<dialog left="1508" top="433" right="2020" bottom="1061" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="504"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="337"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -423,10 +423,8 @@
 	</row>
 
 	<row id="msg_record_07_04">
-		<language name="JPN" width="256">ふせいなデータを　けんしゅつしたため
-きろく　できませんでした</language>
-		<language name="JPN_KANJI" width="256">不正なデータを　検出したため
-記録できませんでした</language>
+		<language name="JPN" width="256">この　しょうぶは　ろくが　できません</language>
+		<language name="JPN_KANJI" width="256">この勝負は　録画できません</language>
 	</row>
 
 	<row id="msg_record_time01">
