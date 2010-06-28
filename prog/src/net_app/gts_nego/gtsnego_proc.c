@@ -1963,6 +1963,12 @@ static void _friendSelectCancel( GTSNEGO_WORK *pWork )
     //タッチバーＯＢＪの表示  20100614 add Saito
     TOUCHBAR_SetVisibleAll( GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TRUE );
     _CHANGE_STATE(pWork,_modeSelectMenuWait);
+    
+    //キーのとき、カーソルの表示 100628Ariizumi
+    if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY)
+    {
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
+    }
   }
 }
 
