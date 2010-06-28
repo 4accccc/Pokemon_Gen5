@@ -5865,10 +5865,6 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   &&  (work[0] >= GAMAN_STATE_3RD)
   ){
     work[ GAMAN_WORKIDX_TARGET_POKEID ] = gaman_getTargetPokeID( myHandle, flowWk, pokeID, work );
-
-    TAYA_Printf( "がまん対象PokeID=%d\n",
-        work[ GAMAN_WORKIDX_TARGET_POKEID ] );
-
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, work[GAMAN_WORKIDX_TARGET_POKEID] );
   }
 }
@@ -6159,8 +6155,8 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Feint( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_MAMORU_BREAK, handler_Feint_MamoruBreak  }, // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_Feint_AfterDamage  }, // ダメージ処理後
+    { BTL_EVENT_CHECK_MAMORU_BREAK,    handler_Feint_MamoruBreak  }, // まもる無効化チェック
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L1, handler_Feint_AfterDamage  }, // ダメージ処理後
 
     { BTL_EVENT_WAZA_EXE_DECIDE,    handler_Feint_Decide       }, // ワザ出し確定
   };
@@ -7732,7 +7728,7 @@ static const BtlEventHandlerTable*  ADD_TonboGaeri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
 //    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_TonboGaeri   },         // ダメージ直後
-    { BTL_EVENT_DAMAGEPROC_END_HIT_L2,  handler_TonboGaeri   },         // ダメージ直後
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L3,  handler_TonboGaeri   },         // ダメージ直後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -8361,11 +8357,11 @@ static void handler_SoraWoTobu_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable*  ADD_ShadowDive( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TAME_START,          handler_ShadowDive_TameStart   },   // 溜め開始
-    { BTL_EVENT_TAME_RELEASE,        handler_ShadowDive_TameRelease },   // 溜め解放
-    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak      },   // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_START,    handler_Feint_Decide           },   // ダメージ処理開始
-    { BTL_EVENT_DAMAGEPROC_END_HIT,  handler_ShadowDive_AfterDamage },   // ダメージ処理後
+    { BTL_EVENT_TAME_START,            handler_ShadowDive_TameStart   },   // 溜め開始
+    { BTL_EVENT_TAME_RELEASE,          handler_ShadowDive_TameRelease },   // 溜め解放
+    { BTL_EVENT_CHECK_MAMORU_BREAK,    handler_Feint_MamoruBreak      },   // まもる無効化チェック
+    { BTL_EVENT_DAMAGEPROC_START,      handler_Feint_Decide           },   // ダメージ処理開始
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L1, handler_ShadowDive_AfterDamage },   // ダメージ処理後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -10347,7 +10343,7 @@ static const BtlEventHandlerTable*  ADD_HajikeruHonoo( u32* numElems )
     { BTL_EVENT_WAZA_DMG_REACTION,    handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
 #else
 //    こちらだと「レッドカード」や「ジャポのみ」に処理順で負ける
-    { BTL_EVENT_DAMAGEPROC_END_HIT,   handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L2,   handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
 #endif
   };
   *numElems = NELEMS( HandlerTable );
@@ -10831,7 +10827,7 @@ static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_HIT,    handler_InisieNoUta   },   // ダメージ反応ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L2,    handler_InisieNoUta   },   // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -11047,10 +11043,10 @@ static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems )
     { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
     { BTL_EVENT_WAZA_EXE_DECIDE,     handler_CombiWaza_Decide    }, // ワザ出し確定
 //    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
-    { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
-    { BTL_EVENT_WAZA_POWER_BASE,     handler_CombiWaza_Pow       }, // 威力計算
-    { BTL_EVENT_WAZA_EXE_START,      handler_CombiWaza_ChangeEff },
-    { BTL_EVENT_DAMAGEPROC_END_HIT,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
+    { BTL_EVENT_TYPEMATCH_CHECK,       handler_CombiWaza_TypeMatch }, // タイプマッチチェック
+    { BTL_EVENT_WAZA_POWER_BASE,       handler_CombiWaza_Pow       }, // 威力計算
+    { BTL_EVENT_WAZA_EXE_START,        handler_CombiWaza_ChangeEff },
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L2, handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

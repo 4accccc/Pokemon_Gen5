@@ -6899,8 +6899,9 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
   const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack )
 {
+  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L1 );
   scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END_HIT_REAL );
-  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT );
+  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L2 );
 
   // ダメージ反応アイテム
   {
@@ -6912,7 +6913,7 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
     }
   }
 
-  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L2 );
+  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L3 );
   scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END );
 }
 /**

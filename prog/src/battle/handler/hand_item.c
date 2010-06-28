@@ -3558,8 +3558,8 @@ static void handler_TatsujinNoObi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* HAND_ADD_ITEM_InochiNoTama( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_HIT,    handler_InochiNoTama_Reaction },   // ダメージ処理後ハンドラ
-    { BTL_EVENT_WAZA_DMG_PROC2,        handler_InochiNoTama_Damage   },
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L2,   handler_InochiNoTama_Reaction },   // ダメージ処理後ハンドラ
+    { BTL_EVENT_WAZA_DMG_PROC2,          handler_InochiNoTama_Damage   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3656,7 +3656,7 @@ static void handler_NebariNoKagidume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KaigaraNoSuzu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_KaigaraNoSuzu },
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L2, handler_KaigaraNoSuzu },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
