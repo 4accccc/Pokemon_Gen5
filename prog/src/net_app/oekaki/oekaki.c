@@ -1806,6 +1806,7 @@ static int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq )
   // Œë‘—M‚ð–h‚®
   wk->MyTouchResult.size = 0;
 
+/*
   if((wk->oya_share_num != _get_connect_num(wk))
       || (wk->oya_share_num != MyStatusGetNum(wk))){
     OS_TPrintf("share_nuM = %d, Comm = %d, My = %d, Bit = %d\n", wk->oya_share_num, _get_connect_num(wk), MyStatusGetNum(wk), _get_connect_bit(wk));
@@ -1818,7 +1819,7 @@ static int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq )
     OS_Printf("wk->status_end‚ð—§‚Ä‚½\n");
     return seq;
   }
-  
+*/
   wk->ridatu_wait++;
   OS_TPrintf("ridatu_wait = %d\n", wk->ridatu_wait);
   if(wk->ridatu_wait > 30){
