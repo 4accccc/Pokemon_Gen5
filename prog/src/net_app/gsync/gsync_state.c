@@ -50,6 +50,7 @@
 #include "poke_tool/poke_personal.h"
 
 #include "net/dwc_error.h"
+#include "net/dwc_rap.h"
 
 /*
 ■BGM■
@@ -2442,6 +2443,19 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
 
 }
 
+
+//ポケモン不正切断コールバック
+static void check_DisconnectCallback(void* pUserwork, int code, int type, int ret)
+{
+  G_SYNC_WORK* pWork = pUserwork;
+
+  if(pWork->pNHTTPRap){
+    NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+    NHTTP_RAP_End(pWork->pNHTTPRap);  //この関数を呼ぶ事
+    pWork->pNHTTPRap  = NULL;
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモンを眠るエリアから元に戻す
@@ -2497,6 +2511,9 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
     profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
     pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID, &pParent->aSVL);
+
+    GFL_NET_DWC_SetErrDisconnectCallback(check_DisconnectCallback, pWork );
+
     pWork->pBox = GAMEDATA_GetBoxManager(pParent->gameData);
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
@@ -2529,6 +2546,9 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   pWork->pMessageWork = GSYNC_MESSAGE_Init(pWork->heapID, NARC_message_gsync_dat);
 
 
+
+
+  
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
@@ -2627,6 +2647,7 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 
   if(pWork->pNHTTPRap){
     NHTTP_RAP_End(pWork->pNHTTPRap);
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL );
   }
   
   GFL_PROC_FreeWork(proc);

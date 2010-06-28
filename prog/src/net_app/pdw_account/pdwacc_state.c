@@ -30,6 +30,7 @@
 #include "pdwacc_local.h"
 #include "net/nhttp_rap.h"
 #include "net/dwc_error.h"
+#include "net/dwc_rap.h"
 //#include "../../field/event_pdwacc.h"
 #include "savedata/dreamworld_data.h"
 //#include "pdwacc_obj_NANR_LBLDEFS.h"
@@ -534,6 +535,19 @@ static void _dispAccCode(PDWACC_WORK* pWork)
 }
 
 
+//ポケモン不正切断コールバック
+static void lcheck_DisconnectCallback(void* pUserwork, int code, int type, int ret)
+{
+  PDWACC_WORK* pWork = pUserwork;
+
+  if(pWork->pNHTTPRap){
+    NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+    NHTTP_RAP_End(pWork->pNHTTPRap);  //この関数を呼ぶ事
+    pWork->pNHTTPRap  = NULL;
+  }
+}
+
+
 
 FS_EXTERN_OVERLAY(dpw_common);
 
@@ -560,8 +574,8 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->pGameData = pParent->gameData;
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
   pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, pParent->pSvl);
-  OS_TPrintf("profileID %x\n",pWork->profileID);
 
+  GFL_NET_DWC_SetErrDisconnectCallback(lcheck_DisconnectCallback, pWork );
   
   pWork->pDispWork = PDWACC_DISP_Init(pWork->heapID);
   pWork->pMessageWork = PDWACC_MESSAGE_Init(pWork->heapID, NARC_message_pdwacc_dat);
@@ -640,8 +654,11 @@ static GFL_PROC_RESULT PDWACCProc_End( GFL_PROC * proc, int * seq, void * pwk, v
   if(pWork->pTopAddr){
     GFL_HEAP_FreeMemory(pWork->pTopAddr);
   }
-  NHTTP_RAP_End(pWork->pNHTTPRap);
-
+  if(pWork->pNHTTPRap){
+    NHTTP_RAP_End(pWork->pNHTTPRap);
+    pWork->pNHTTPRap=NULL;
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL,NULL);
+  }
 
   GFL_PROC_FreeWork(proc);
 
