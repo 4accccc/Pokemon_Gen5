@@ -112,6 +112,7 @@ enum {
 
   BSUBWAY_SEQ_INIT,       // 初期化
   BSUBWAY_SEQ_INIT_WAIT,  // 初期化ウエイト
+  BSUBWAY_SEQ_INIT_MSG_WAIT, // 初期化メッセージウエイト
   BSUBWAY_SEQ_PERSON_SETUP,// Email認証
   BSUBWAY_SEQ_PERSON_SETUP_WAIT,// Email認証
   BSUBWAY_SEQ_MAIN,       // メイン処理
@@ -719,6 +720,14 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
   // 初期化ウエイト
   case BSUBWAY_SEQ_INIT_WAIT:  
     if( WiFiBsubway_ConnectWait( p_wk ) )
+    {
+      (*p_seq) ++;
+    }
+    break;
+
+  // 初期化メッセージウエイト
+  case BSUBWAY_SEQ_INIT_MSG_WAIT: 
+    if( VIEW_PrintMain( &p_wk->view ) )
     {
       (*p_seq) ++;
     }
