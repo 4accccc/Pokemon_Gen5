@@ -910,6 +910,8 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     pWork->moveMode = FALSE;
     KTST_SetDraw( pWork, FALSE );
 //    _CHANGE_STATE( pWork, _itemMoveCancel );
+    pWork->oamlistpos_old = 0xffff;
+    _windowRewrite( pWork );
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, _itemMoveCancel );
     return;
   }
