@@ -120,11 +120,11 @@ https://pkvldtprod.nintendo.co.jp/pokemon/validate
 #endif  //-- PM_DEBUG
 
 //DWC_InitÅ`Ç≈édólÇ∑ÇÈÅAGameCode
-#ifdef VERSION_BLACK
-#define GF_DWC_GAMECODE		('IRBJ')
+#if ( PM_VERSION == VERSION_WHITE )
+#define GF_DWC_GAMECODE		('IRAJ')
 #define GF_DWC_ND_LOGIN		"IRAJ"
 #else //defined(VERSION_WHITE)
-#define GF_DWC_GAMECODE		('IRAJ')
+#define GF_DWC_GAMECODE		('IRBJ')
 #define GF_DWC_ND_LOGIN		"IRAJ"
 #endif
 
