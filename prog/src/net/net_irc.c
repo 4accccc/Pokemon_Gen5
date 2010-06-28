@@ -458,6 +458,10 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
   }
   else{
     IRC_PRINT("UNIQUEがちがう %d %d %d\n",NetIrcSys.friendunique ,pData->unique, NetIrcSys.aSendBuff.unique );
+    if(NetIrcSys.unique_success == FALSE && NetIrcSys.friendunique != pData->unique){
+      IRC_PRINT("保持しているUNIQUEと不一致の為frienduniqueリセット %d\n", NetIrcSys.friendunique);
+      NetIrcSys.friendunique = 0;
+    }
     return;   //ユニークIDが違ったら無視
   }
 
