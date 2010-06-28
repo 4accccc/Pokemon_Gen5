@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-26T14:05:59"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-28T18:27:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -423,7 +423,7 @@ POS</comment>
 わるさ　するんじゃないぞ▽
 ほい　とおって　いいぞ▼</language>
 		<language name="JPN_KANJI" width="256">あまり　ウロチョロして
-悪さ　するんじゃないぞ▽
+わるさ　するんじゃないぞ▽
 ほい　通って　いいぞ▼</language>
 	</row>
 
@@ -605,7 +605,7 @@ POS</comment>
 交換　したのか！▼
 こりゃあ　たいした　もんだ！
 そんじゃあ　ポケモン図鑑も　もう▽
-だいぶ　埋まったんじゃないか？▼
+だいぶ　うまったんじゃないか？▼
 ……いやあ　大したもんだ
 ほい　まぁ　通ってくれ▼</language>
 	</row>
@@ -752,7 +752,7 @@ POS</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">おおっ　きみか　[1:00:トレーナー名:3]▼
 あと　もう　ひといきで
-すべての　ばしょと▽
+すべての　ところと▽
 こうかん　するんじゃないか？▼
 きみ　みたいな　こどもたちが
 これからの　せかいを▽
@@ -780,7 +780,7 @@ POS</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">きみだな　[1:00:トレーナー名:3]▼
 きいたよ▼
-ついに　すべての　ばしょの　ひとと
+ついに　すべての　ところの　ひとと
 こうかん　したそうじゃないか？▼
 こころなしか
 この　ユナイテッドタワー▽
@@ -962,7 +962,7 @@ POS</comment>
 能動的に話しかけた時</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">きみは　いったい　どうやって
-そんなに　おおくの　ばしょと▽
+そんなに　おおくの　ところと▽
 こうかん　しているんだ？</language>
 		<language name="JPN_KANJI" width="256">きみは　いったい　どうやって
 そんなに　多くの　場所と▽
@@ -993,7 +993,7 @@ POS</comment>
 きょうも　いじょう　なし▽
 んんっ　いいことだ！</language>
 		<language name="JPN_KANJI" width="256">ガードマンをしつづけて　３０年間
-きょうも　異常なし▽
+今日も　異常なし▽
 んんっ　いいことだ！</language>
 	</row>
 
