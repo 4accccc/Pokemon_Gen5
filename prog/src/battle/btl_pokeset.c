@@ -172,7 +172,7 @@ BOOL BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp
   {
     if( (rec->bpp[i] == bpp)
     ){
-      if( rec->damageType[i] != DMGTYPE_NONE )
+      if( rec->damageType[i] == DMGTYPE_REAL )
       {
         *damage = rec->damage[i];
         return TRUE;
