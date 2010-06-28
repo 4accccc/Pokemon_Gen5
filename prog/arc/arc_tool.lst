@@ -104,7 +104,7 @@
   ARCID_MMDL_RES  "fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
   ARCID_INFOWIN   "infowin.narc"    #情報ウィンドウ
   ARCID_BMPOAM    "bmpoam.narc"     #BMPOAM
-  ARCID_POKEGRA_MUS "pokegra_mus.narc"  #ミュージカル用ポケグラ
+#  ARCID_POKEGRA_MUS "pokegra_mus.narc"  #ミュージカル用ポケグラ
   ARCID_WIFI_EARTH_PLACE  "wifi_earth_place.narc" #WI-FI地球画面の地域データ
   ARCID_SHOP_GRA    "shop_gra.narc"   #ショップ画面グラフィック
   ARCID_WAZATYPE_ICON   "wazatype_icon.narc"    #技タイプアイコン
