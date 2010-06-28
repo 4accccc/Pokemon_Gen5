@@ -424,10 +424,11 @@ static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems );
 static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Caman_DmgRec( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gaman_DmgRec( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_CalcDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static u8 gaman_getTargetPokeID( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static u32 gaman_getTotalDamage( const BTL_POKEPARAM* bpp );
 static const BtlEventHandlerTable*  ADD_Recycle( u32* numElems );
@@ -1667,7 +1668,6 @@ static void handler_Sketch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 
     {
       WazaID orgWaza = BPP_GetPrevOrgWazaID( target );
-      TAYA_Printf("prev OrgWaza=%d, actWaza=%d\n", orgWaza, waza );
       if( orgWaza != waza ){
         waza = orgWaza;
       }
@@ -5768,6 +5768,7 @@ enum {
 enum {
   GAMAN_WORKIDX_STATE = 0,
   GAMAN_WORKIDX_DAMAGE,
+  GAMAN_WORKIDX_TARGET_POKEID,
 };
 static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
 {
@@ -5778,7 +5779,7 @@ static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
     { BTL_EVENT_DECIDE_TARGET,             handler_Gaman_Target    },
     { BTL_EVENT_WAZA_DMG_PROC1,            handler_Gaman_CalcDmg   },
     { BTL_EVENT_WAZA_EXECUTE_FAIL,         handler_Gaman_Fail      },
-    { BTL_EVENT_WAZA_DMG_REACTION,         handler_Caman_DmgRec    },
+    { BTL_EVENT_WAZA_DMG_REACTION,         handler_Gaman_DmgRec    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5839,55 +5840,44 @@ static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     }
   }
 }
+// 実行チェック
+static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (work[GAMAN_WORKIDX_STATE] >= GAMAN_STATE_3RD)
+  ){
+
+    // ダメージを食らっていない場合は失敗
+    if( work[GAMAN_WORKIDX_DAMAGE] == 0 ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+    }
+    // 既に対象がいない場合も失敗
+    else if( work[GAMAN_WORKIDX_TARGET_POKEID] == BTL_POKEID_NULL ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+    }
+    work[GAMAN_WORKIDX_STATE] = GAMAN_STATE_END;
+  }
+}
+// ターゲット指定
 static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   &&  (work[0] >= GAMAN_STATE_3RD)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 t, cnt;
-    for(t=0; t<3; ++t)
-    {
-      cnt = BPP_WAZADMGREC_GetCount( bpp, t );
-      if( cnt )
-      {
-        BPP_WAZADMG_REC  rec;
-        u8 targetPokeID;
+    work[ GAMAN_WORKIDX_TARGET_POKEID ] = gaman_getTargetPokeID( myHandle, flowWk, pokeID, work );
 
-        // 直近に自分を殴ったポケモンが対象
-        BPP_WAZADMGREC_Get( bpp, t, 0, &rec );
-        targetPokeID = rec.pokeID;
+    TAYA_Printf( "がまん対象PokeID=%d\n",
+        work[ GAMAN_WORKIDX_TARGET_POKEID ] );
 
-        // 対象が既に場にいない場合（とんぼがえりなど）、ランダムで決定
-        if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) == BTL_POS_NULL )
-        {
-          BtlExPos  exPos;
-          u8  pokeIDAry[ BTL_POS_MAX ];
-          u8  cnt;
-
-          exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) );
-          cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, pokeIDAry );
-          if( cnt ){
-            u8 idx = BTL_CALC_GetRand( cnt );
-            targetPokeID = pokeIDAry[ idx ];
-          }
-          else{
-            targetPokeID = BTL_POKEID_NULL;
-          }
-        }
-
-
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
-        break;
-      }
-    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, work[GAMAN_WORKIDX_TARGET_POKEID] );
   }
 }
 // ダメージ反応ハンドラ（受けたダメージを記憶しておく）
-static void handler_Caman_DmgRec( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Gaman_DmgRec( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+  ){
     if( work[WORKIDX_STICK] )
     {
       work[ GAMAN_WORKIDX_DAMAGE ] += BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
@@ -5908,19 +5898,6 @@ static void handler_Gaman_CalcDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     work[0] = GAMAN_STATE_END;
   }
 }
-static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  &&  (work[GAMAN_WORKIDX_STATE] >= GAMAN_STATE_3RD)
-  ){
-    if( work[GAMAN_WORKIDX_DAMAGE] == 0 )
-    {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-    }
-    work[GAMAN_WORKIDX_STATE] = GAMAN_STATE_END;
-  }
-}
-
 static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 失敗したらすぐに貼り付き＆ワザロック状態解除
@@ -5929,6 +5906,45 @@ static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     gaman_ReleaseStick( flowWk, pokeID, work );
   }
 }
+static u8 gaman_getTargetPokeID( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u32 t, cnt;
+  for(t=0; t<3; ++t)
+  {
+    cnt = BPP_WAZADMGREC_GetCount( bpp, t );
+    if( cnt )
+    {
+      BPP_WAZADMG_REC  rec;
+      u8 targetPokeID;
+
+      // 直近に自分を殴ったポケモンが対象
+      BPP_WAZADMGREC_Get( bpp, t, 0, &rec );
+      targetPokeID = rec.pokeID;
+
+      // 対象が既に場にいない場合（とんぼがえりなど）、ランダムで決定
+      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) == BTL_POS_NULL )
+      {
+        BtlExPos  exPos;
+        u8  pokeIDAry[ BTL_POS_MAX ];
+        u8  cnt;
+
+        exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) );
+        cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, pokeIDAry );
+        if( cnt ){
+          u8 idx = BTL_CALC_GetRand( cnt );
+          targetPokeID = pokeIDAry[ idx ];
+        }
+        else{
+          targetPokeID = BTL_POKEID_NULL;
+        }
+      }
+      return targetPokeID;
+    }
+  }
+  return BTL_POKEID_NULL;
+}
+
 static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( work[WORKIDX_STICK] ){
