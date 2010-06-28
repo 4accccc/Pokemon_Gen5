@@ -339,24 +339,7 @@ BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
 //-----------------------------------------------------------------------------
 void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup )
 {
-  int i;
-//  OS_TFPrintf( 3, "!!PRINT!! %s %d\n", cp_file, line );
-
-#if 0
-  if( setup->stream[0] )
-  { 
-    PRINTSYS_PrintStreamDelete( setup->stream[0] );
-    setup->stream[0] = NULL;
-  }
-
-  setup->stream[0]  = PRINTSYS_PrintStream(
-        bmpwin, x, y, str, setup->font,
-        MSGSPEED_GetWait(), setup->tcbsys, 0, HEAPID_WORLDTRADE, 0x0F );
-
-#else
   GF_STR_PrintColor( bmpwin, font_idx, str, x, y, 0, PRINTSYS_LSB_Make( 1,2, 0xF ), setup );
-#endif
-
 }
 //----------------------------------------------------------------------------
 /**

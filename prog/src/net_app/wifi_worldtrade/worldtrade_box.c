@@ -1546,7 +1546,7 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
         //もしシェイミならばランドフォルムへ戻す
         if( MONSNO_SHEIMI == PPP_Get(ppp, ID_PARA_monsno, NULL) )
         {
-          PPP_Put( ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
+          PPP_ChangeFormNo( ppp , FORMNO_SHEIMI_LAND );
         }
 
 				ExchangeCheck(wk);
@@ -1982,12 +1982,12 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 		win = wk->TalkWin;
 	}
 	// 会話ウインドウ枠描画
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win),  0x0f0f );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win),  0x0f );
+	GFL_BMPWIN_MakeTransWindow(win);
 	BmpWinFrame_Write( win, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( win, FONT_TALK, wk->TalkString, 0, 0, &wk->print );
-	GFL_BMPWIN_MakeTransWindow(win);
 
 
 	GFL_STR_DeleteBuffer(tempbuf);

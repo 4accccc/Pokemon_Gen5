@@ -377,12 +377,12 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
   
 
   // 会話ウインドウ枠描画
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f0f );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f );
+  GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
   BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
   // 文字列描画開始
   GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
-  GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
 
   GFL_STR_DeleteBuffer(tempbuf);
 }
@@ -1928,7 +1928,7 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
     {
     case MONSNO_653:  //ライ
     case MONSNO_SHEIMI://シェイミ
-      PP_Put((POKEMON_PARAM*)(wk->deposit_ppp), ID_PARA_form_no, 0 );
+      PP_ChangeFormNo((POKEMON_PARAM*)(wk->deposit_ppp), 0 );
       break;
     }
     // POKEMON_PARAMとしてコピー
@@ -1939,7 +1939,7 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
     {
     case MONSNO_653:  //ライ
     case MONSNO_SHEIMI://シェイミ
-      PPP_Put(wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND);
+      PPP_ChangeFormNo(wk->deposit_ppp, FORMNO_SHEIMI_LAND);
     }
     // POKEMON_PASO_PARAMなのでReplace関数でPOKEMON_PARAMに肉付けする
     PokeReplace(wk->deposit_ppp,(POKEMON_PARAM *)dtd->postData.data);

@@ -1329,12 +1329,12 @@ static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int f
 	GFL_MSG_GetString(  wk->MsgManager, msgno, wk->TalkString );
 
 	// 会話ウインドウ枠描画
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f0f );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f );
+	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
 	GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, &wk->print);
-	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 }
 
@@ -1355,7 +1355,7 @@ static void SubSeq_TalkPrint( WORLDTRADE_WORK *wk, int msgno, int wait, int flag
 	GFL_MSG_GetString(  wk->MsgManager, msgno, wk->TalkString );
 
 	// 会話ウインドウ枠描画
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TalkWin),  0x0f0f );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TalkWin),  0x0f );
 	BmpWinFrame_Write( wk->TalkWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始

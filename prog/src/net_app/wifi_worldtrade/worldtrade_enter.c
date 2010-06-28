@@ -1015,6 +1015,7 @@ void Enter_MessagePrint( WORLDTRADE_WORK *wk, GFL_MSGDATA *msgman, int msgno, in
 
 	// 会話ウインドウ枠描画
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f );
+  GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, WORLDTRADE_MESFRAME_CHR, WORLDTRADE_MESFRAME_PAL );
 
 	// 文字列描画開始
