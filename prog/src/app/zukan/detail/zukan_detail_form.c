@@ -447,8 +447,8 @@ BUTTON_OBJ;
 // スクロールバー
 #define  BAR_RANGE_TOUCH_X_MIN  (18*8)                   // BAR_RANGE_TOUCH_X_MIN<= <=BAR_RANGE_TOUCH_X_MAX
 #define  BAR_RANGE_TOUCH_X_MAX  (18*8 +11*8-1)
-#define  BAR_RANGE_TOUCH_Y_MIN  (BAR_Y_BASE*8)           // BAR_RANGE_TOUCH_Y_MIN<= <=BAR_RANGE_TOUCH_Y_MAX
-#define  BAR_RANGE_TOUCH_Y_MAX  (BAR_Y_BASE*8 +1*8-1)
+#define  BAR_RANGE_TOUCH_Y_MIN  (BAR_Y_BASE*8  -1*8)           // BAR_RANGE_TOUCH_Y_MIN<= <=BAR_RANGE_TOUCH_Y_MAX
+#define  BAR_RANGE_TOUCH_Y_MAX  (BAR_Y_BASE*8 +1*8-1  +1*8)
 
 
 // 入れ替え
@@ -6670,7 +6670,7 @@ typedef struct
 }
 POKE_ARRANGE_INFO;
 #define MALE_FEMALE_UNKNOWN (3)  // オスメス性別なしどれでも構わない  // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWNと被らない値
-#define POKE_ARRANGE_INFO_TBL_NUM (11)
+#define POKE_ARRANGE_INFO_TBL_NUM (14)
 
 static const POKE_VEC_F32 poke_arrange_default_pos[POKE_ARRANGE_MAX] =
 {
@@ -6716,6 +6716,17 @@ static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] 
 
   { MONSNO_KUTIITO,    0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_BACK, 0,  // クチート 0
     { {0.0f,-13.8f,0.0f},{-64.0f,-13.8f,0.0f},{64.0f,-13.8f,0.0f},{-16.0f,-13.8f,0.0f},{16.0f,-13.8f,0.0f} } },
+
+  { MONSNO_PONIITA,    0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // ポニータ 0
+    { {0.13f,-13.9f,0.0f},{-63.87f,-13.9f,0.0f},{64.13f,-13.9f,0.0f},{-16.0f,-13.9f,0.0f},{16.01f,-13.9f,0.0f} } },
+
+  { MONSNO_TATTUU,     0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // タッツー 0
+    { {0.0f,-13.9f,0.0f},{-64.0f,-13.9f,0.0f},{64.0f,-13.9f,0.0f},{-16.0f,-13.9f,0.0f},{16.02f,-13.9f,0.0f} } },
+
+  { MONSNO_BUBHI,      0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // ブビィ 0
+    { {0.07f,-13.9f,0.0f},{-63.3f,-13.9f,0.0f},{64.7f,-13.9f,0.0f},{-16.07f,-13.9f,0.0f},{16.22f,-13.9f,0.0f} } },
+
+
 
 
 //  { MONSNO_001,        0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // デフォルト
