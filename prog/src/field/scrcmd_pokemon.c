@@ -1580,6 +1580,9 @@ VMCMD_RESULT EvCmdAddTamagoToParty( VMHANDLE *core, void *wk )
  * @param	gdata   ゲームデータポインタ
  * @param prm     追加ポケモンパラメータ
  * @retval POKEMON_PARAM
+ *
+ * @todo  ForUpper フォルム変更はPP_ChangeFormNoを使用したほうがいいのですが、時期を考えて対処を見送ります
+ * @tod   変更はアッパーでお願いします　20100628 Saito
  */
 //--------------------------------------------------------------
 static POKEMON_PARAM* MakePokeParam( GAMEDATA *gdata, ADD_POKE_PRM *prm )
@@ -1596,7 +1599,7 @@ static POKEMON_PARAM* MakePokeParam( GAMEDATA *gdata, ADD_POKE_PRM *prm )
   }
   // 追加するポケモンを作成
   pp = PP_CreateEx( prm->MonsNo, prm->Level, id, PTL_SETUP_ID_AUTO, rnd, prm->HeapID );
-  PP_Put( pp, ID_PARA_form_no, prm->FormNo );    // フォーム
+  PP_Put( pp, ID_PARA_form_no, prm->FormNo );    // フォーム  <<@todo  PP_ChangeFormNoを使用したほうが良いです。
   PP_Put( pp, ID_PARA_item, prm->ItemNo );       // 所持アイテム
   {
     //捕獲ボールセット
