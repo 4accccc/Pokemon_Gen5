@@ -350,11 +350,12 @@ static MMDL * fldcommAct_mmdl_Add(
       mmdl, watch_dir, watch_pos, watch_vanish, comm_actor );
   
   MMDL_InitPosition( mmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
-  MMDL_SetStatusBitHeightGetOFF( mmdl, TRUE );
-  MMDL_SetStatusBitAttrGetOFF( mmdl, TRUE );
-  MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
-  MMDL_SetMoveBitRejectPauseMove( mmdl, TRUE );
-  MMDL_SetMoveBitNotSave( mmdl, TRUE );
+  MMDL_SetStatusBitHeightGetOFF( mmdl, TRUE ); //高さ取得無し
+  MMDL_SetStatusBitAttrGetOFF( mmdl, TRUE );   //アトリビュート取得無し
+  MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE ); //ゾーン変更で削除しない
+  MMDL_SetStatusBitFellowHit( mmdl, FALSE ); //当り判定無し
+  MMDL_SetMoveBitRejectPauseMove( mmdl, TRUE ); //ポーズを無視して動く
+  MMDL_SetMoveBitNotSave( mmdl, TRUE ); //セーブしない
   return( mmdl );
 }
 
@@ -447,7 +448,8 @@ void MMDL_MoveCommActor_Move( MMDL *mmdl )
     
     MMDL_SetDrawStatus( mmdl, status );
   }
-  
+
+#if 0 //old 100628 当たり判定は常に無しになりました
   if( work->watch_vanish != NULL ){
     BOOL hit = TRUE;
     BOOL vanish = FALSE;
@@ -460,6 +462,17 @@ void MMDL_MoveCommActor_Move( MMDL *mmdl )
     MMDL_SetStatusBitVanish( mmdl, vanish );
     MMDL_SetStatusBitFellowHit( mmdl, hit ); //100525 当り判定も操作
   }
+#else
+  if( work->watch_vanish != NULL ){
+    BOOL vanish = FALSE;
+    
+    if( (*work->watch_vanish) == TRUE ){
+      vanish = TRUE;
+    }
+    
+    MMDL_SetStatusBitVanish( mmdl, vanish );
+  }
+#endif
 }
 
 //--------------------------------------------------------------
