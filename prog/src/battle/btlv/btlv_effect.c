@@ -60,7 +60,7 @@ enum
 
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_yoshida
-#define  CAMERA_FOCUS
+//#define  CAMERA_FOCUS
 #endif
 #endif
 
@@ -1768,6 +1768,8 @@ void BTLV_EFFECT_SwitchBGM( const int bgmNo )
     BTLV_GAUGE_SetPinchBGMFlag( bew->bgw, FALSE );
     PMSND_PopBGM();
   }
+  //ピンチBGMチェックはしないようにする
+  BTLV_GAUGE_SetPinchBGMNoCheck( bew->bgw, TRUE );
   PMSND_PlayBGM( bgmNo );
 }
 
