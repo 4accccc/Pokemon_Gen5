@@ -372,6 +372,7 @@
 #define BTLEFF_WORK_PUSH_CAMERA_POS       ( 54 )   ///<カメラ位置退避フラグ
 #define BTLEFF_WORK_WCS_CAMERA_WORK       ( 55 )   ///<WCSカメラワーク
 #define BTLEFF_WORK_CAMERA_MOVE_IGNORE    ( 56 )   ///<カメラ移動無視
+#define BTLEFF_WORK_DEFENCE_POKEMON       ( 57 )   ///<防御側の立ち位置
 
 //条件式
 #define BTLEFF_COND_EQUAL       ( 0 )   // ==
@@ -548,25 +549,26 @@ ex)
 #define	EC_WAIT											  		( 56 )
 #define	EC_CONTROL_MODE							  		( 57 )
 #define	EC_IF						              		( 58 )
-#define	EC_MCSS_POS_CHECK						  		( 59 )
-#define	EC_SET_WORK						        		( 60 )
-#define	EC_GET_WORK						        		( 61 )
-#define	EC_SET_PARAM						      		( 62 )
-#define	EC_MIGAWARI						        		( 63 )
-#define	EC_HENSHIN						        		( 64 )
-#define	EC_NAKIGOE						        		( 65 )
-#define	EC_BALL_MODE						      		( 66 )
-#define	EC_BALLOBJ_SET						    		( 67 )
-#define	EC_CALL						            		( 68 )
-#define	EC_RETURN						          		( 69 )
-#define	EC_JUMP						            		( 70 )
-#define	EC_PAUSE						          		( 71 )
-#define	EC_SEQ_JUMP						          	( 72 )
-#define	EC_LANDING_WAIT						        ( 73 )
-#define	EC_REVERSE_DRAW_SET					      ( 74 )
+#define	EC_IF_WORK						            ( 59 )
+#define	EC_MCSS_POS_CHECK						  		( 60 )
+#define	EC_SET_WORK						        		( 61 )
+#define	EC_GET_WORK						        		( 62 )
+#define	EC_SET_PARAM						      		( 63 )
+#define	EC_MIGAWARI						        		( 64 )
+#define	EC_HENSHIN						        		( 65 )
+#define	EC_NAKIGOE						        		( 66 )
+#define	EC_BALL_MODE						      		( 67 )
+#define	EC_BALLOBJ_SET						    		( 68 )
+#define	EC_CALL						            		( 69 )
+#define	EC_RETURN						          		( 70 )
+#define	EC_JUMP						            		( 71 )
+#define	EC_PAUSE						          		( 72 )
+#define	EC_SEQ_JUMP						          	( 73 )
+#define	EC_LANDING_WAIT						        ( 74 )
+#define	EC_REVERSE_DRAW_SET					      ( 75 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  		( 75 )
+#define	EC_SEQ_END									  		( 76 )
 
 #ifndef __C_NO_DEF_
 
@@ -2230,6 +2232,33 @@ ex)
 	.long   \work
 	.long   \cond
 	.long   \value
+	.long		( \adrs - . ) - 4
+	.endm
+
+//======================================================================
+/**
+ * @brief	指定されたワーク同士を見て条件分岐
+ *
+ * #param_num	4
+ * @param		src   条件分岐に使うワーク
+ * @param		cond  条件式
+ * @param		dst   条件分岐に使うワーク
+ * @param		adrs  飛び先
+ *
+ * #param COMBOBOX_TEXT 攻撃側  防御側
+ * #param COMBOBOX_VALUE BTLEFF_WORK_ATTACK_POKEMON BTLEFF_WORK_DEFENCE_POKEMON
+ * #param COMBOBOX_TEXT ==  !=  <  >  <=  >=
+ * #param COMBOBOX_VALUE  BTLEFF_COND_EQUAL BTLEFF_COND_NOT_EQUAL BTLEFF_COND_MIMAN BTLEFF_COND_KOERU  BTLEFF_COND_IKA BTLEFF_COND_IJOU
+ * #param COMBOBOX_TEXT 攻撃側  防御側
+ * #param COMBOBOX_VALUE BTLEFF_WORK_ATTACK_POKEMON BTLEFF_WORK_DEFENCE_POKEMON
+ * #param VALUE_INT 飛び先ラベル
+ */
+//======================================================================
+	.macro	IF_WORK  src, cond, dst, adrs
+	.short  EC_IF_WORK
+	.long   \src
+	.long   \cond
+	.long   \dst
 	.long		( \adrs - . ) - 4
 	.endm
 

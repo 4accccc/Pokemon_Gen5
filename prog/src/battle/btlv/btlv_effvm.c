@@ -400,6 +400,7 @@ static VMCMD_RESULT VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_IF_WORK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_GET_WORK( VMHANDLE *vmh, void *context_work );
@@ -455,6 +456,7 @@ static  int           EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw );
 static  void          EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw );
 static  void          EFFVM_CheckShadow( BTLV_EFFVM_WORK* bevw );
 
+static  void          if_act( VMHANDLE* vmh, int src, int dst, int cond, int adrs );
 static  void          set_mcss_scale_move( fx32 mul_value_m, fx32 mul_value_e, int frame, int wait, int count );
 //static  void          check_linesover( GFL_EMIT_PTR emit, u32 flag );
 static  BOOL          check_camera_work_effect( int eff_no );
@@ -584,6 +586,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_WAIT,
   VMEC_CONTROL_MODE,
   VMEC_IF,
+  VMEC_IF_WORK,
   VMEC_MCSS_POS_CHECK,
   VMEC_SET_WORK,
   VMEC_GET_WORK,
@@ -3860,45 +3863,83 @@ static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work )
   int cond  = ( int )VMGetU32( vmh );
   int value = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
-  BOOL  flag = FALSE;
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_IF\n");
 #endif DEBUG_OS_PRINT
 
+  if_act( vmh, work, value, cond, adrs );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief 指定されたワーク同士を見て条件分岐
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_IF_WORK( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int src   = EFFVM_GetWork( bevw, ( int )VMGetU32( vmh ) );
+  int cond  = ( int )VMGetU32( vmh );
+  int dst   = EFFVM_GetWork( bevw, ( int )VMGetU32( vmh ) );
+  int adrs  = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_IF\n");
+#endif DEBUG_OS_PRINT
+
+  if_act( vmh, src, dst, cond, adrs );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief 条件分岐
+ */
+//============================================================================================
+static  void  if_act( VMHANDLE* vmh, int src, int dst, int cond, int adrs )
+{ 
+  BOOL  flag = FALSE;
+
   switch( cond ){
   case BTLEFF_COND_EQUAL:       // ==
-    if( work == value )
+    if( src == dst )
     {
       flag = TRUE;
     }
     break;
   case BTLEFF_COND_NOT_EQUAL:   // !=
-    if( work != value )
+    if( src != dst )
     {
       flag = TRUE;
     }
     break;
   case BTLEFF_COND_MIMAN:       // <
-    if( work < value )
+    if( src < dst )
     {
       flag = TRUE;
     }
     break;
   case BTLEFF_COND_KOERU:       // >
-    if( work > value )
+    if( src > dst )
     {
       flag = TRUE;
     }
     break;
   case BTLEFF_COND_IKA:         // <=
-    if( work <= value )
+    if( src <= dst )
     {
       flag = TRUE;
     }
     break;
   case BTLEFF_COND_IJOU:        // >=
-    if( work >= value )
+    if( src >= dst )
     {
       flag = TRUE;
     }
@@ -3909,9 +3950,8 @@ static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work )
   {
     VMCMD_Jump( vmh, vmh->adrs + adrs );
   }
-
-  return bevw->control_mode;
 }
+
 
 //============================================================================================
 /**
@@ -6865,6 +6905,10 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_CAMERA_MOVE_IGNORE:
     ret = bevw->camera_move_ignore;
+    break;
+  case BTLEFF_WORK_DEFENCE_POKEMON:
+    ret = bevw->defence_pos;
+    break;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
