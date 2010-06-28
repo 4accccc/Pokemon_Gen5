@@ -176,8 +176,8 @@ void RINGTONE_SYS_SetSleepSoundFunc( void )
 {
   if ( ringToneSysPtr )
   {
-    GFL_UI_SleepSoundGoSetFunc( ringTone_sleepSoundGoFunc, ringToneSysPtr );
-    GFL_UI_SleepSoundReleaseSetFunc( ringTone_sleepSoundReleaseFunc, ringToneSysPtr );
+
+    GFL_UI_SleepSoundSetFunc( ringTone_sleepSoundGoFunc, ringTone_sleepSoundReleaseFunc, ringToneSysPtr );
   } else {
     //着信音システムがないのに呼び出された場合
     GF_ASSERT( 0 );

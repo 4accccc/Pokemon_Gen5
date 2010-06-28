@@ -603,8 +603,7 @@ static void sleepSoundReleaseDefault( void * work )
 //--------------------------------------------------------------------------
 void GFUser_SetSleepSoundFunc( void )
 {
-   GFL_UI_SleepSoundGoSetFunc( sleepSoundSetupDefault, NULL );
-   GFL_UI_SleepSoundReleaseSetFunc( sleepSoundReleaseDefault, NULL );
+  GFL_UI_SleepSoundSetFunc( sleepSoundSetupDefault, sleepSoundReleaseDefault, NULL );
 }
 
 //--------------------------------------------------------------------------
