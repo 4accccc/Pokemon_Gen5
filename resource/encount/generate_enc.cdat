@@ -13,7 +13,7 @@ static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {
  { ZONE_ID_R01, 83,0, 15,55 },	//カモネギ
  { ZONE_ID_R02, 360,0, 15,55 },	//ソーナノ
  { ZONE_ID_R03, 314,0, 15,55 },	//イルミーゼ
- { ZONE_ID_R04, 231,0, 15,55 },	//ゴマゾウ
+ { ZONE_ID_R04, 449,0, 15,55 },	//ヒポポタス
  { ZONE_ID_R05, 235,0, 15,55 },	//ドーブル
  { ZONE_ID_R06, 312,0, 15,55 },	//マイナン
  { ZONE_ID_R07, 161,0, 15,55 },	//オタチ
@@ -35,7 +35,7 @@ static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {
  { ZONE_ID_R01, 83,0, 15,55 },	//カモネギ
  { ZONE_ID_R02, 360,0, 15,55 },	//ソーナノ
  { ZONE_ID_R03, 313,0, 15,55 },	//バルビート
- { ZONE_ID_R04, 231,0, 15,55 },	//ゴマゾウ
+ { ZONE_ID_R04, 449,0, 15,55 },	//ヒポポタス
  { ZONE_ID_R05, 235,0, 15,55 },	//ドーブル
  { ZONE_ID_R06, 311,0, 15,55 },	//プラスル
  { ZONE_ID_R07, 161,0, 15,55 },	//オタチ
