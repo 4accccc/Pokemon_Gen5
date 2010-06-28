@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-06-28T18:09:21"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-06-28T18:25:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1439" top="152" right="2144" bottom="772" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="800" top="98" right="1273" bottom="496" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -617,9 +617,9 @@
 
 	<row id="START_MENU_LOAD_WARNING_06">
 		<comment>図鑑壁紙のデータ破損</comment>
-		<language name="JPN" width="256">ポケモンずかんの　スキンデータが
+		<language name="JPN" width="256">ずかんの　スキンデータが
 きえてしまった！</language>
-		<language name="JPN_KANJI" width="256">ポケモン図鑑の　スキンデータが
+		<language name="JPN_KANJI" width="256">図鑑の　スキンデータが
 消えてしまった！</language>
 	</row>
 
