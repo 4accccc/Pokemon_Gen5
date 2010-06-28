@@ -1670,7 +1670,8 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       }
       else
       { 
-        if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_NETCMD_SEND_FLAG, sizeof(u32), &p_wk->report.is_dirty ) || p_wk->is_sc_error )
+        if( WIFIBATTLEMATCH_NET_SendBtlDirtyFlag( p_wk, &p_wk->report.is_dirty )
+            || p_wk->is_sc_error )
         { 
           p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
         }
@@ -1684,9 +1685,9 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       }
       else
       { 
-        if( p_wk->is_recv[ WIFIBATTLEMATCH_NET_RECVFLAG_FLAG ] || p_wk->is_sc_error )
+        if( WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( p_wk, &p_wk->report.is_dirty )
+            || p_wk->is_sc_error )
         { 
-          p_wk->report.is_dirty = p_wk->recv_flag;
           p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
         }
       }
@@ -4668,6 +4669,44 @@ BOOL WIFIBATTLEMATCH_NET_RecvDirtyCnt( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 *p_di
   { 
     p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT]  = FALSE;
     GFL_STD_MemCopy( p_wk->recv_buffer, p_dirty_cnt, sizeof(u32) );
+  }
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトル不正フラグを送信する
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	dirty_flag                      不正フラグ
+ *
+ *	@return TRUEで送信  FALSEで送信していない
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_SendBtlDirtyFlag( WIFIBATTLEMATCH_NET_WORK *p_wk, const u32 *cp_dirty_flag )
+{
+  return GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_NETCMD_SEND_FLAG, sizeof(u32), cp_dirty_flag );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトル不正フラグを受信する
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	*p_dirty_flag                   受信した不正フラグ
+ *
+ *	@return TRUEで受信  FALSEで受信中
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 *p_dirty_flag )
+{
+  BOOL ret;
+  ret = p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_FLAG];
+
+  if( ret )
+  { 
+    p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_FLAG]  = FALSE;
+    *p_dirty_flag = p_wk->recv_flag;
   }
   return ret;
 }

@@ -2784,6 +2784,10 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   enum
   { 
     SEQ_CHECK,
+
+    SEQ_SEND_BTLDIRTYFLGA,
+    SEQ_RECV_BTLDIRTYFLGA,
+
     SEQ_START_DISCONNECT_MSG,
     SEQ_START_DISCONNECT,
     SEQ_WAIT_DISCONNECT,
@@ -2815,16 +2819,55 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     break;
 
+  case SEQ_START_DISCONNECT_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_020, WBM_TEXT_TYPE_WAIT);
+    *p_seq = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SEND_BTLDIRTYFLGA );
+    p_wk->cnt = 0;
+    break;
+
+  case SEQ_SEND_BTLDIRTYFLGA:
+    //子機しか不正フラグがたたないので、親機が受け取る
+    if( !GFL_NET_IsParentMachine() )
+    {
+      if( WIFIBATTLEMATCH_NET_SendBtlDirtyFlag( p_wk->p_net, &p_param->cp_btl_score->is_dirty ) )
+      {
+        *p_seq  = SEQ_START_DISCONNECT;
+      }
+    }
+    else
+    {
+        *p_seq  = SEQ_RECV_BTLDIRTYFLGA;
+    }
+    break;
+
+  case SEQ_RECV_BTLDIRTYFLGA:
+    if( WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( p_wk->p_net, (u32*)&p_param->cp_btl_score->is_dirty ) )
+    {
+      *p_seq = SEQ_START_DISCONNECT;
+    }
+
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      p_wk->cnt = 0;
+      *p_seq  = SEQ_WAIT_CARD;
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      p_wk->cnt = 0;
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    }
+
+    break;
     //-------------------------------------
     /// 切断処理
     //=====================================
 
-  case SEQ_START_DISCONNECT_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_020, WBM_TEXT_TYPE_WAIT);
-    *p_seq = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_DISCONNECT );
-    p_wk->cnt = 0;
-    break;
+
 
   case SEQ_START_DISCONNECT:
     {           

@@ -417,6 +417,9 @@ extern BOOL WIFIBATTLEMATCH_NET_RecvPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, P
 //不正カウンタを送り合う
 extern BOOL WIFIBATTLEMATCH_NET_SendDirtyCnt( WIFIBATTLEMATCH_NET_WORK *p_wk, const u32 *cp_dirty_cnt );
 extern BOOL WIFIBATTLEMATCH_NET_RecvDirtyCnt( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 *p_dirty_cnt );
+//バトル不正フラグを送り合う
+extern BOOL WIFIBATTLEMATCH_NET_SendBtlDirtyFlag( WIFIBATTLEMATCH_NET_WORK *p_wk, const u32 *cp_dirty_cnt );
+extern BOOL WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 *p_dirty_cnt );
 //-------------------------------------
 ///	ダウンロードサーバー  (ND)
 //=====================================

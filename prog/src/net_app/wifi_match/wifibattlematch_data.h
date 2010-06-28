@@ -40,7 +40,7 @@ typedef struct
   u8        enemy_rest_poke;  //対戦相手の残りポケモン数
   u8        enemy_rest_hp;    //対戦相手の残りHP（全てのポケモンでのパーセンテージ）
   BOOL      is_error;         //エラーが起こったか
-  BOOL      is_dirty;         //不正が起こったか（子機側しか立てられない）
+  u32       is_dirty;         //不正が起こったか（子機側しか立てられない）
 } BATTLEMATCH_BATTLE_SCORE;
 
 //-------------------------------------
