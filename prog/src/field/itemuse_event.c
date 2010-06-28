@@ -380,22 +380,13 @@ GMEVENT * EVENT_CycleUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
 
 GMEVENT * EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
 {
+  //2010.06.28(月) 未使用ソース。ここに来る事はないがテーブルを削るのは時期的に危険なため、
+  //                             通常のパレスジャンプをさせています。
   VecFx32 pos;
-  ZONEID jump_zone;
-  
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
-    pos.x = 184 << FX32_SHIFT;
-    pos.y = 0;
-    pos.z = 184 << FX32_SHIFT;
-    jump_zone = ZONE_ID_UNION;   //こちらに飛ぶのはデバッグです
-  }
-  else{
-    pos.x = 760 << FX32_SHIFT;
-    pos.y = 0;
-    pos.z = 234 << FX32_SHIFT;
-    jump_zone = ZONE_ID_PALACE01;
-  }
-  return EVENT_ChangeMapPos(gsys, fieldWork, jump_zone, &pos, 0, FALSE);
+  pos.x = 512 << FX32_SHIFT;
+  pos.y = 32;
+  pos.z = 488 << FX32_SHIFT;
+  return EVENT_ChangeMapFldToPalace( gsys, ZONE_ID_PALACE01, &pos, FALSE );
 }
 
 //=============================================================================
