@@ -764,9 +764,10 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     { 
       return;
     }
-    bevw->old_eff_no = bevw->waza;
-    bevw->old_from = from;
   }
+
+  bevw->old_eff_no = bevw->waza;
+  bevw->old_from = from;
 
   //リバース描画OFF
   //カメラワークではOFFらない
@@ -1730,7 +1731,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
   int       ptc_no;
 
 #ifdef DEBUG_OS_PRINT
-  OS_TPrintf("VMEC_PARTICLE_LOAD\n");
+  OS_TPrintf("VMEC_PARTICLE_LOAD:%d\n",datID);
 #endif DEBUG_OS_PRINT
 
   if( EFFVM_RegistPtcNo( bevw, datID, &ptc_no ) == TRUE )
