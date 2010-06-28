@@ -2313,20 +2313,13 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
     tr->seq_no++;
     /*fallthry*/
   case 1:
-    BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir );
-    if( tr->se_on ){   //BTS6811ëŒèà by iwasawa 10.06.25
-      PMSND_PlaySE_byPlayerID( SEQ_SE_FLD_59, PLAYER_SE_1 );
-    }
+    BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir, tr->se_on );
     tr->seq_no++;
     break;
   case 2:
     if( ( BTLV_STAGE_CheckExecuteAnmReq( bew->bsw ) == FALSE ) &&
         ( BTLV_MCSS_CheckTCBExecuteAllPos( bew->bmw ) == FALSE ) )
     {
-      if( tr->se_on ){   //BTS6811ëŒèà by iwasawa 10.06.25
-        PMSND_StopSE_byPlayerID( PLAYER_SE_1 );
-        PMSND_PlaySE_byPlayerID( SEQ_SE_ROTATION_B, PLAYER_SE_SYS );
-      }
       BTLV_EFFECT_FreeTCB( tcb );
     }
     break;

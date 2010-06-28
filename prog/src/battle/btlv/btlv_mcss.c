@@ -16,6 +16,7 @@
 #include "system/mcss_tool.h"
 #include "sound/pm_voice.h"
 #include "sound/pm_wb_voice.h"
+#include "sound/pm_sndsys.h"
 
 #include "btlv_effect.h"
 
@@ -166,7 +167,8 @@ typedef struct
 typedef struct
 {
   BTLV_MCSS_WORK*   bmw;
-  int               seq_no;
+  u32               seq_no:31;
+  u32               se_on:1;
   int               side;
   int               dir;
   int               angle[ 3 ];
@@ -2258,14 +2260,16 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
  * @param[in] bmw   BTLV_MCSS管理ワークへのポインタ
  * @param[in] side  立ち位置側
  * @param[in] dir   ローテーション方向
+ * @param[in] se_on SEを鳴らすかどうか？(スキップ対策)
  */
 //============================================================================================
-void  BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir )
+void  BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir, BOOL se_on )
 {
   BTLV_MCSS_ROTATION_WORK* bmrw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_ROTATION_WORK ) );
 
   bmrw->bmw     = bmw;
   bmrw->seq_no  = 0;
+  bmrw->se_on   = se_on;
   bmrw->side    = side;
   bmrw->dir     = dir;
   bmw->mcss_tcb_rotation_execute = 1;
@@ -3271,6 +3275,10 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
         BTLV_STAGE_SetAnmReq( BTLV_EFFECT_GetStageWork(), bmrw->side, 0, ( ( bmrw->dir == 0 ) ? FX32_ONE : -FX32_ONE ), 60 );
         bmrw->speed = ( ( bmrw->dir == 0 ) ? ( 0x5555 / 60 ) : ( -0x5555 / 60 ) );
         bmrw->frame = 60;
+        
+        if( bmrw->se_on ){   //BTS7000対処 by iwasawa 10.06.28
+          PMSND_PlaySE_byPlayerID( SEQ_SE_FLD_59, PLAYER_SE_1 );
+        }
         bmrw->seq_no++;
       }
     }
@@ -3326,6 +3334,10 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
         {
           bmrw->bmw->btlv_mcss[ index[ i ] ].position = dst_pos[ bmrw->dir ][ bmrw->side ][ i ];
         }
+      }
+      if( bmrw->se_on ){   //BTS7000対処 by iwasawa 10.06.28
+        PMSND_StopSE_byPlayerID( PLAYER_SE_1 );
+        PMSND_PlaySE_byPlayerID( SEQ_SE_ROTATION_B, PLAYER_SE_SYS );
       }
       BTLV_EFFECT_FreeTCB( tcb );
     }
