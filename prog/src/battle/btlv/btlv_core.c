@@ -1092,7 +1092,7 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->pfd = BTLV_EFFECT_GetPfd();
   plist->gamedata = BTL_MAIN_GetGameData( wk->mainModule );
   plist->time_out_flg = FALSE;
-  plist->seFlag = (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE);
+  plist->seFlag = !(BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_COMM);
   plist->comm_err_flg = FALSE;
   plist->end_flg = FALSE;
 
@@ -1268,7 +1268,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
     wk->bagData.time_out_flg = FALSE;
     wk->bagData.shooter_item_bit = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
-    wk->bagData.seFlag = (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE);
+    wk->bagData.seFlag = !(BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_COMM);
     wk->bagData.comm_err_flg = FALSE;
     wk->bagData.wild_flg = (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD);
     wk->bagData.end_flg = FALSE;
