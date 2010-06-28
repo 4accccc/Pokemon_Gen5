@@ -99,7 +99,8 @@ typedef struct {
 	u16	iconPutSub;					// ポケアイコン表示状況（サブ）
 
 	FRAMELIST_WORK * lwk;		// リストワーク
-	u32	listInit;					// リスト初期化シーケンス
+	u32	listInit;						// リスト初期化シーケンス
+	u32	listPosMax;					// リスト位置最大
 
 	u16 * localNo;					// 地方図鑑番号リスト
 

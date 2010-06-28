@@ -767,6 +767,13 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_LIST );
 	}
 
+	// •\Ž¦€–Ú”
+	if( wk->dat->listMax < ZKNLISTMAIN_LIST_POS_MAX ){
+		wk->listPosMax = wk->dat->listMax;
+	}else{
+		wk->listPosMax = ZKNLISTMAIN_LIST_POS_MAX;
+	}
+
 	// €–Ú”wŒiÝ’è
 	FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_zukan_gra_list_listframe_NSCR, FALSE, 0 );
 	FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_zukan_gra_list_listframe2_NSCR, FALSE, 1 );

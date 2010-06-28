@@ -1089,7 +1089,7 @@ void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm )
 	}
 	if( ZKNLISTOBJ_GetAnm(wk,ZKNLISTOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ||
 			anm == FALSE ){
-		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE && pos == (ZKNLISTMAIN_LIST_POS_MAX-1) ){
+		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE && pos == (wk->listPosMax-1) ){
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
 		}else{
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT );
