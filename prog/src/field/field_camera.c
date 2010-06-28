@@ -2639,6 +2639,10 @@ void FIELD_CAMERA_SetRecvCamParamOv(FIELD_CAMERA * camera )
  *	@param	camera      カメラポインタ
  *
  *	@retval none
+ *
+ *	@todo   ForUpper
+ *	@todo   この関数を使用すると、カメラエリアに引っかかってしまうので、内部実装を FIELD_CAMERA_SetLinerParamOv
+ *	@todo   でパッケージするようにできると良いと思います。
  */
 //-----------------------------------------------------------------------------
 void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera)
