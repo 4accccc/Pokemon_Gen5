@@ -61,7 +61,7 @@ NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, in
   p_param->p_misc = p_misc;
 
   //バッファ作成
-  p_param->strbuf = GFL_STR_CreateBuffer( wordmax + 1, heapId );
+  p_param->strbuf = GFL_STR_CreateBuffer( NAMEIN_STR_BUFFER_LENGTH + 1, heapId );
 
   //デフォルト入力文字コピー
   if( default_str )
@@ -101,7 +101,7 @@ NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *
   }
 
   //バッファ作成
-  p_param->strbuf = GFL_STR_CreateBuffer( wordmax + 1, heapId );
+  p_param->strbuf = GFL_STR_CreateBuffer( NAMEIN_STR_BUFFER_LENGTH + 1, heapId );
 
   //デフォルト入力文字コピー
   if( default_str )

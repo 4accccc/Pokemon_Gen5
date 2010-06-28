@@ -22,8 +22,9 @@
 //=============================================================================
 
 //モードがNAMEIN_FRIENDNAMEのときparam1へいれると、友達手帳の初期入力用のはてなOBJが出ます
-#define NAMEIN_TRAINER_VIEW_UNKNOWN  (0xFFFF)
+#define NAMEIN_TRAINER_VIEW_UNKNOWN   (0xFFFF)
 
+#define NAMEIN_STR_BUFFER_LENGTH	    ( 10 )
 
 //-------------------------------------
 ///	名前入力モード  
