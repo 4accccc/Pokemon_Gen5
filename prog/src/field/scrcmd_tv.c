@@ -25,6 +25,14 @@
 #include "event_fieldmap_control.h"
 #include "scrcmd_tv.h"
 
+#ifdef PLAYABLE_VERSION
+
+VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
+{
+  return VMCMD_RESULT_CONTINUE;
+}
+
+#else
 #include "msg/script/msg_tv_01_scr.h"
 
 #include "savedata/misc.h"               // for MISC
@@ -432,3 +440,4 @@ static int CheckClear(GAMEDATA *gdata, const int inMsg, const BOOL inClear)
   //クリア関係ないメッセージ
   return msg;
 }
+#endif //PLAYABLE_VERSION

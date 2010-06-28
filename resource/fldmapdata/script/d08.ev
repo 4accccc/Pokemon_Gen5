@@ -9,7 +9,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_d08.h"
+//  .include  "../../message/dst/script/msg_d08.h"
   .include  "d08.h"
 
 //--------------------------------------------------------------
