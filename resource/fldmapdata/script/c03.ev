@@ -51,7 +51,10 @@ _EVENT_DATA_END
 /*		OL	会話スクリプト									  */
 /**************************************************************/
 EVENT_START		ev_c03_ol1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_ol1_01 )
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_POS( msg_c03_ol1_01, C03_OL1_01, POS_UP )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -65,7 +68,10 @@ EVENT_END
 /*		OL	会話スクリプト									  */
 /**************************************************************/
 EVENT_START		ev_c03_ol3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_ol3_01 )
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_POS( msg_c03_ol3_01, C03_OL3_01, POS_UP )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
