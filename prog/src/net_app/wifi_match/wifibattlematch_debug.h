@@ -1590,7 +1590,7 @@ static inline void DebugWin_Etc_D_ServerFlag( void* userWork , DEBUGWIN_ITEM* it
 }
 static inline void DebugWin_Etc_U_ServerFlag2( void* userWork , DEBUGWIN_ITEM* item )
 {
-  BOOL *p_is_flag  = DEBUGWIN_BATTLE_GetFlag();
+  BOOL *p_is_flag  = DEBUGWIN_SERVERTIME_USER_GetFlag();
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
   {
     (*p_is_flag)  ^= 1;
@@ -1604,7 +1604,7 @@ static inline void DebugWin_Etc_D_ServerFlag2( void* userWork , DEBUGWIN_ITEM* i
     "OFF",
     "ON",
   };
-  BOOL *p_is_flag  = DEBUGWIN_BATTLE_GetFlag();
+  BOOL *p_is_flag  = DEBUGWIN_SERVERTIME_USER_GetFlag();
   DEBUGWIN_ITEM_SetNameV( item , "‚É‚ñ‚¢‚É‚¿‚¶‚¯‚¢‚©[%s]", sc_tbl[ (*p_is_flag) ] );
 }
 static inline void DEBUGWIN_ETC_Init( HEAPID heapID )

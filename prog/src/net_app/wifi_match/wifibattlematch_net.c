@@ -26,6 +26,8 @@
 #include "net/nhttp_rap_evilcheck.h"
 #include "net/dwc_tool.h"
 
+#include "msg/msg_wifi_system.h"
+
 //  セーブデータ
 #include "savedata/system_data.h"
 #include "savedata/wifilist.h"
@@ -5186,6 +5188,24 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
     break;
 
   case SEQ_WAIT_CONNECT:
+    {
+      int response = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
+
+      switch( response )
+      {
+      case 502:
+        p_wk->seq  = SEQ_DIRTY_END;
+
+        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
+        return WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE;
+
+      case 503:
+        p_wk->seq  = SEQ_DIRTY_END;
+        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
+        return WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE;
+      }
+    }
+
     error  = NHTTP_RAP_Process(p_wk->p_nhttp);
     if(NHTTP_ERROR_NONE == error)
     {
@@ -5203,12 +5223,15 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
 
       p_wk->gpf_data  = *pDream;
 
-      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE )
+      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE
+        ||  ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ALREADY_EXISTS )
       { 
         p_wk->seq  = SEQ_END;
       }
       else
       { 
+
+        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR001 + ((gs_response*)pEvent)->ret_cd -1 );
         p_wk->seq  = SEQ_DIRTY_END;
       }
     }
@@ -5228,6 +5251,7 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
     GFL_STD_MemClear( &p_wk->gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
     if(p_wk->p_nhttp)
     {
+      NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
       NHTTP_RAP_End(p_wk->p_nhttp);
       p_wk->p_nhttp  = NULL;
     }
@@ -5290,6 +5314,7 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
     SEQ_START_CONNECT,
     SEQ_WAIT_CONNECT,
 
+    SEQ_DIRTY_END,  
     SEQ_END,
   };
   NHTTPError error;
@@ -5326,6 +5351,23 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
     break;
 
   case SEQ_WAIT_CONNECT:
+    {
+      int response = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
+      switch( response )
+      {
+      case 502:
+        p_wk->seq  = SEQ_DIRTY_END;
+        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
+        return WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE;
+
+      case 503:
+        p_wk->seq  = SEQ_DIRTY_END;
+        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
+        return WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE;
+      }
+    }
+
+
     error  = NHTTP_RAP_Process(p_wk->p_nhttp);
     if(NHTTP_ERROR_NONE == error)
     {
@@ -5333,7 +5375,18 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
       NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
       DEBUG_NET_Printf("GPFサーバーへの書き込み終了\n");
 
-      p_wk->seq  = SEQ_END;
+
+
+      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE
+          ||  ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ALREADY_EXISTS )
+      {  
+        p_wk->seq  = SEQ_END;
+      }
+      else
+      {
+        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR001 + ((gs_response*)pEvent)->ret_cd -1 );
+        p_wk->seq  = SEQ_DIRTY_END;
+      }
     }
     else if( NHTTP_ERROR_BUSY != error )
     { 
@@ -5349,6 +5402,14 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
     }
     break;
 
+  case SEQ_DIRTY_END:
+    if(p_wk->p_nhttp)
+    {
+      NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
+      NHTTP_RAP_End(p_wk->p_nhttp);
+      p_wk->p_nhttp  = NULL;
+    }
+    return WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY;
 
   case SEQ_END :
     if(p_wk->p_nhttp)

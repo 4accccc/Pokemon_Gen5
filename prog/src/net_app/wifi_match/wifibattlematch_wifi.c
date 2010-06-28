@@ -96,11 +96,13 @@ typedef enum
   WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE  = 0,//登録解除した
   WBM_WIFI_SUBSEQ_UNREGISTER_RET_FALSE,   //解除しなかった
   WBM_WIFI_SUBSEQ_UNREGISTER_RET_NONE,   //登録されていない
+  WBM_WIFI_SUBSEQ_UNREGISTER_RET_SERVER,   //サーバー状態が悪い
 
   //大会期間チェックの戻り値
   WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE  = 0,//期間内
   WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER,     //期間後
   WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE,   //期間前
+  WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER,   //サーバー状態が悪い
 
   //ポケモン不正チェックの戻り値
   WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS  = 0,  //成功
@@ -782,7 +784,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
       else if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY )
       {
-        *p_seq  = SEQ_START_NONE_MSG;
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
       else if( ret != WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE )
       { 
@@ -1001,6 +1003,10 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         *p_seq  = SEQ_START_MSG_CUPDATA;
       }
+      else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      }
 
       if( ret != WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE )
       {
@@ -1099,6 +1105,10 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
         *p_seq  = SEQ_START_WRITE_SAKE_DELETE_POKE;
+      }
+      else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
 
       if( ret != WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE )
@@ -1249,6 +1259,10 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
             return;
           }
         }
+      }
+      if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
     }
     break;
@@ -1516,6 +1530,10 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
         *p_seq  = SEQ_START_SAVE_MSG;
+      }
+      else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
 
       if( ret != WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE )
@@ -2098,6 +2116,10 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
         *p_seq  = SEQ_START_OK_REGISTER_MSG;
       }
+      else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      }
 
       //エラー
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
@@ -2251,6 +2273,10 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       else if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE )
       { 
         *p_seq  = SEQ_NEXT_DISCONNECT;
+      }
+      else if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_SERVER )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
 
       //エラー
@@ -2491,6 +2517,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           || ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE )
       { 
         *p_seq  = SEQ_NEXT_START;
+      }
+      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
 
       //エラー
@@ -3056,7 +3086,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupEnd );
+    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
     break;
 
     //-------------------------------------
@@ -3154,6 +3184,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           || ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE )
       { 
         *p_seq  = SEQ_NEXT_START;
+      }
+      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
 
       //エラー
@@ -3548,6 +3582,10 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       { 
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_DisConnextSendTime );
       }
+      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      }
 
       //エラー
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
@@ -3882,6 +3920,11 @@ static void WbmWifiSeq_DisConnextCheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, v
       { 
         *p_seq  = SEQ_END;
       }
+      
+      if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      }
 
       //エラー
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
@@ -4014,7 +4057,8 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = DWC_TOOL_GetLocalDateTime( &now_date, &time );
 
 #ifdef PM_DEBUG
-      if( (*DEBUGWIN_SERVERTIME_GetFlag()) && (*DEBUGWIN_BATTLE_GetFlag()) )
+      if( ((*DEBUGWIN_SERVERTIME_GetFlag()) && (*DEBUGWIN_BATTLE_GetFlag()))
+        || (*DEBUGWIN_SERVERTIME_USER_GetFlag()) )
       {
         now_date.day  += 1;
       }
@@ -4146,6 +4190,11 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
+        *p_seq  = SEQ_END;
+      }
+      else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY )
+      {
+        p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER;
         *p_seq  = SEQ_END;
       }
 
@@ -4348,6 +4397,11 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
+        *p_seq  = SEQ_END;
+      }
+      else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY )
+      {
+        p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_UNREGISTER_RET_SERVER;
         *p_seq  = SEQ_END;
       }
       //ここはサブシーケンスなのでエラー処理はこの上で行う

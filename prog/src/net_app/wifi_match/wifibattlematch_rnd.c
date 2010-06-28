@@ -718,7 +718,7 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     case WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY:
       //‚à‚ç‚¦‚È‚©‚Á‚½‚Ì‚ÅAƒNƒŠƒA
       GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
-      *p_seq = SEQ_CHECK_GPF;
+       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
       break;
     case WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR:
 

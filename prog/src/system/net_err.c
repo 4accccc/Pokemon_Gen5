@@ -635,6 +635,8 @@ void NetErr_App_ReqErrorDispForce(int message )
   if( NetErrSystem.status != NET_ERR_STATUS_REQ )
   { 
     NetErrSystem.wifi_msg = message;
+    NetErrSystem.msg_force = TRUE;
+    NetErrSystem.net_type = GFL_NET_TYPE_WIFI;
     NetErrSystem.status = NET_ERR_STATUS_REQ;
     OS_TPrintf("NetErr App ReqErrDisp Force\n");
   }

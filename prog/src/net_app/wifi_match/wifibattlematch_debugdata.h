@@ -59,6 +59,7 @@ extern BOOL *DEBUGWIN_ATLASDIRTY_GetFlag( void );
 ///	サーバー時間
 //=====================================
 extern BOOL *DEBUGWIN_SERVERTIME_GetFlag( void );
+extern BOOL *DEBUGWIN_SERVERTIME_USER_GetFlag( void );
 
 //-------------------------------------
 ///	バトルプレイ

@@ -46,6 +46,11 @@ BOOL *DEBUGWIN_SERVERTIME_GetFlag( void )
   static BOOL s_serverttime_flag  = FALSE;
   return &s_serverttime_flag;
 }
+BOOL *DEBUGWIN_SERVERTIME_USER_GetFlag( void )
+{
+  static BOOL s_serverttime_user_flag  = FALSE;
+  return &s_serverttime_user_flag;
+}
 
 BOOL *DEBUGWIN_BATTLE_GetFlag( void )
 {
