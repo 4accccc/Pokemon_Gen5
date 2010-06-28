@@ -20,6 +20,7 @@
 #include "field_gimmick_def.h"
 #include "field/zonedata.h"
 #include "field/enc_pokeset.h"  // for ENCPOKE_GetGenerateZone
+#include "gamesystem/pm_season.h" // for PMSEASON_xxxx
 
 #include "savedata/gimmickwork.h"
 #include "savedata/misc.h" // for MISC_xxxx
@@ -1686,6 +1687,12 @@ static void AddNews_PROPAGATION( GATEWORK* work )
 
   // 大量発生が起きていない
   if( zoneID == 0xFFFF ){ return; }
+
+  // R08 は冬にエンカウントできない
+  if( (zoneID == ZONE_ID_R08) && 
+      (GAMEDATA_GetSeasonID(work->gameData) == PMSEASON_WINTER) ) {
+    return;
+  }
 
   // ワードセット作成
   wordset = WORDSET_Create( work->heapID );
