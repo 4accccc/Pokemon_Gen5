@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-05-29T13:21:10"/>
+	<create user="ohno" host="W00141" date="2010-06-28T14:24:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="695"/>
 		<band id="3" index="3" style="0000" width="695"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -472,6 +472,16 @@
 	<row id="DEBUG_OHNO_MSG0028">
 		<language name="JPN" width="256">こうかんでも　みじかい</language>
 		<language name="JPN_KANJI" width="256">こうかんでも　みじかい</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0029">
+		<language name="JPN" width="256">GTSこうかんうえ[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">GTSこうかんうえ[2:02:３桁:0]</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0030">
+		<language name="JPN" width="256">GTSこうかんした[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">GTSこうかんした[2:02:３桁:0]</language>
 	</row>
 
 	<flowchart-group-list>
