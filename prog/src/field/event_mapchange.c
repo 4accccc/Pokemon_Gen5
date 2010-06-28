@@ -83,6 +83,10 @@
 FS_EXTERN_OVERLAY(debug_data);
 #include "debug/debug_flg.h"
 #endif
+#ifdef  PLAYABLE_VERSION
+#include "../gamesystem/debug_data.h"
+FS_EXTERN_OVERLAY(debug_data);
+#endif
 
 #include "seasonpoke_form.h"    //for SEASONPOKE_FORM_ChangeForm
 #include "enceff.h"             //for ENCEFF_SetEncEff
