@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-06-22T16:31:09"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-06-28T13:29:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -610,8 +610,8 @@
 	</row>
 
 	<row id="dni_record_34" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">未使用</language>
-		<language name="JPN_KANJI" width="240">未使用</language>
+		<language name="JPN" width="240">&lt;未使用&gt;すれ違い通信をした回数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;すれ違い通信をした回数</language>
 	</row>
 
 	<row id="dni_record_35" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -635,8 +635,8 @@
 	</row>
 
 	<row id="dni_record_39" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">パレス訪問時間合計</language>
-		<language name="JPN_KANJI" width="240">パレス訪問時間合計</language>
+		<language name="JPN" width="240">&lt;未使用&gt;パレス訪問時間合計</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;パレス訪問時間合計</language>
 	</row>
 
 	<row id="dni_record_40" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -745,103 +745,103 @@
 	</row>
 
 	<row id="dni_record_61" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーシングル勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーシングル勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーシングル勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーシングル勝利数</language>
 	</row>
 
 	<row id="dni_record_62" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーシングル敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーシングル敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーシングル敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーシングル敗北数</language>
 	</row>
 
 	<row id="dni_record_63" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーダブル勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーダブル勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーダブル勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーダブル勝利数</language>
 	</row>
 
 	<row id="dni_record_64" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーダブル敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーダブル敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーダブル敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーダブル敗北数</language>
 	</row>
 
 	<row id="dni_record_65" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーローテーション勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーローテーション勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーローテーション勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーローテーション勝利数</language>
 	</row>
 
 	<row id="dni_record_66" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーローテーション敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーローテーション敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーローテーション敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーローテーション敗北数</language>
 	</row>
 
 	<row id="dni_record_67" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリートリプル勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリートリプル勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリートリプル勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリートリプル勝利数</language>
 	</row>
 
 	<row id="dni_record_68" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリートリプル敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリートリプル敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリートリプル敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリートリプル敗北数</language>
 	</row>
 
 	<row id="dni_record_69" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーシューター勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーシューター勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーシューター勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーシューター勝利数</language>
 	</row>
 
 	<row id="dni_record_70" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムフリーシューター敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムフリーシューター敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムフリーシューター敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムフリーシューター敗北数</language>
 	</row>
 
 	<row id="dni_record_71" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートシングル勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートシングル勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートシングル勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートシングル勝利数</language>
 	</row>
 
 	<row id="dni_record_72" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートシングル敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートシングル敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートシングル敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートシングル敗北数</language>
 	</row>
 
 	<row id="dni_record_73" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートダブル勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートダブル勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートダブル勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートダブル勝利数</language>
 	</row>
 
 	<row id="dni_record_74" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートダブル敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートダブル敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートダブル敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートダブル敗北数</language>
 	</row>
 
 	<row id="dni_record_75" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートローテーション勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートローテーション勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートローテーション勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートローテーション勝利数</language>
 	</row>
 
 	<row id="dni_record_76" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートローテーション敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートローテーション敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートローテーション敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートローテーション敗北数</language>
 	</row>
 
 	<row id="dni_record_77" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートトリプル勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートトリプル勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートトリプル勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートトリプル勝利数</language>
 	</row>
 
 	<row id="dni_record_78" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートトリプル敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートトリプル敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートトリプル敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートトリプル敗北数</language>
 	</row>
 
 	<row id="dni_record_79" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートシューター勝利数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートシューター勝利数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートシューター勝利数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートシューター勝利数</language>
 	</row>
 
 	<row id="dni_record_80" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">ランダムレートシューター敗北数</language>
-		<language name="JPN_KANJI" width="240">ランダムレートシューター敗北数</language>
+		<language name="JPN" width="240">&lt;未使用&gt;ランダムレートシューター敗北数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;ランダムレートシューター敗北数</language>
 	</row>
 
 	<row id="dni_record_81" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
@@ -900,8 +900,8 @@
 	</row>
 
 	<row id="dni_record_92" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">未使用</language>
-		<language name="JPN_KANJI" width="240">未使用</language>
+		<language name="JPN" width="240">&lt;未使用&gt;すれ違い通信でお礼を受けた回数</language>
+		<language name="JPN_KANJI" width="240">&lt;未使用&gt;すれ違い通信でお礼を受けた回数</language>
 	</row>
 
 	<row id="dni_record_93" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">

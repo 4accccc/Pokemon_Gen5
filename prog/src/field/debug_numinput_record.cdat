@@ -18,11 +18,6 @@ static const DEBUG_NUMINPUT_PARAM DNP_Record_6 = { 0,     65535, DebugGetRecord,
 static const DEBUG_NUMINPUT_PARAM DNP_Record_7 = { 0,       999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 999 )
 static const DEBUG_NUMINPUT_PARAM DNP_Record_Palpark = { 0, 999, DebugGetPalparkHighScore, DebugSetPalparkHighScore, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_SeaTemple = { 0, 500, DebugGetSeaTempleStepCount, DebugSetSeaTempleStepCount, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Year = { 0, 999, DebugGetPalaceTime, DebugSetPalaceTime, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Month = { 0, 11, DebugGetPalaceTime, DebugSetPalaceTime, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Day = { 0, 30, DebugGetPalaceTime, DebugSetPalaceTime, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Hour = { 0, 23, DebugGetPalaceTime, DebugSetPalaceTime, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Minute = { 0, 59, DebugGetPalaceTime, DebugSetPalaceTime, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_BSubway = { 0, 9999, DebugGetBSubway, DebugSetBSubway, };
 
 //-------------------------
@@ -88,14 +83,8 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Comm[] = {
 //-------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Palace[] = { 
   //gmm_id, param, dni_param
-  { dni_record_39,  RECID_PALACE_TIME,    &DNP_Record_2 },                 // パレス訪問時間合計
-  { dni_record_40,  RECID_PALACE_MISSION, &DNP_Record_5 },                 // パレスクリアしたミッションの数
-  { dni_record_98,  0,                    &DNP_Record_PalaceTime_Year },   // パレス滞在時間<年>
-  { dni_record_99,  1,                    &DNP_Record_PalaceTime_Month },  // パレス滞在時間<月>
-  { dni_record_100, 2,                    &DNP_Record_PalaceTime_Day },    // パレス滞在時間<日>
-  { dni_record_101, 3,                    &DNP_Record_PalaceTime_Hour },   // パレス滞在時間<時間>
-  { dni_record_102, 4,                    &DNP_Record_PalaceTime_Minute }, // パレス滞在時間<分>
-  { dni_record_103, 5,                    &DNP_Record_PalaceTime_Minute }, // パレス滞在時間<秒>
+  { dni_record_39,  RECID_PALACE_TIME,    &DNP_Record_2 }, // パレス訪問時間合計
+  { dni_record_40,  RECID_PALACE_MISSION, &DNP_Record_5 }, // パレスクリアしたミッションの数
 };
 //-------------------------
 // バトル関連レコード

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-06-25T16:58:28"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-06-28T13:11:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -750,6 +750,41 @@
 	<row id="dni_wifi_friend_04" back-color="#ffff00,,,,,,#ffff00,,,#ffff00,,,#ffff00,,,#ffff00,,">
 		<language name="JPN" width="240">交換した回数</language>
 		<language name="JPN_KANJI" width="240">交換した回数</language>
+	</row>
+
+	<row id="dni_palace_time_00" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<language name="JPN" width="240">パレス滞在時間</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間</language>
+	</row>
+
+	<row id="dni_palace_time_01" back-color="#404040,,,,,,#404040,,,#404040,,,#404040,,,#404040,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;年&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;年&gt;</language>
+	</row>
+
+	<row id="dni_palace_time_02" back-color="#404040,,,,,,#404040,,,#404040,,,#404040,,,#404040,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;月&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;月&gt;</language>
+	</row>
+
+	<row id="dni_palace_time_03" back-color="#404040,,,,,,#404040,,,#404040,,,#404040,,,#404040,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;日&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;日&gt;</language>
+	</row>
+
+	<row id="dni_palace_time_04" back-color="#404040,,,,,,#404040,,,#404040,,,#404040,,,#404040,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;時間&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;時間&gt;</language>
+	</row>
+
+	<row id="dni_palace_time_05" back-color="#404040,,,,,,#404040,,,#404040,,,#404040,,,#404040,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;分&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;分&gt;</language>
+	</row>
+
+	<row id="dni_palace_time_06" back-color="#404040,,,,,,#404040,,,#404040,,,#404040,,,#404040,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;秒&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;秒&gt;</language>
 	</row>
 
 	<flowchart-group-list>

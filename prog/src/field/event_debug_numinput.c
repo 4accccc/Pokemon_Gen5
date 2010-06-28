@@ -170,7 +170,9 @@ static void DebugSetViewOffs01(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 par
 static u32 DebugGetViewOffs02(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetViewOffs02(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
-static void DebugSetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static void DebugSetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value); 
+static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
 #include "debug_numinput.cdat"
 
@@ -249,6 +251,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_WifiFriend = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_ViewOffsets = {
   D_NINPUT_DATA_LIST,   NELEMS( DNI_ViewOffsets ), DNI_ViewOffsets, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_PalaceTime = {
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_PalaceTime ), DNI_PalaceTime, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -296,6 +301,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_place_name_00, (void*)&DATA_PlaceName },
   { dni_wifi_friend_00, (void*)&DATA_WifiFriend },
   { dni_view_offset_00, (void*)&DATA_ViewOffsets },
+  { dni_palace_time_00, (void*)&DATA_PalaceTime },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -499,7 +505,7 @@ static void printNumWin( DEBUG_NUMINPUT_WORK * wk, u32 num )
 
 #if 0
   GFL_MSG_GetString( wk->msgman, dni_number_string, strbuf );
-  WORDSET_RegisterNumber(wk->wordset, 0, num,
+  WORDSET_RegisterHexNumber(wk->wordset, 0, num,
                          10, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( wk->wordset, expandBuf, strbuf );
 #else
@@ -1374,6 +1380,62 @@ static u32 DebugGetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 para
 static void DebugSetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
 {
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief パレス滞在時間
+ */
+//--------------------------------------------------------------
+static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  u32 value;
+  RTCDate date;
+  RTCTime time;
+  s64 total_sec;
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  INTRUDE_SAVE_WORK* intrude = SaveData_GetIntrude( save );
+
+  total_sec = ISC_SAVE_GetPalaceSojournTime( intrude ); 
+  RTC_ConvertSecondToDateTime( &date, &time, total_sec );
+
+  switch( param ) {
+  case 0: value = date.year;   break;
+  case 1: value = date.month - 1;  break; // 日付を経過月数に変換
+  case 2: value = date.day - 1;    break; // 日付を経過日数に変換
+  case 3: value = time.hour;   break;
+  case 4: value = time.minute; break;
+  case 5: value = time.second; break;
+  default: GF_ASSERT(0); break;
+  }
+  return value;
+}
+
+static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value)
+{
+  RTCDate date;
+  RTCTime time;
+  s64 total_sec;
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  INTRUDE_SAVE_WORK* intrude = SaveData_GetIntrude( save );
+
+  total_sec = ISC_SAVE_GetPalaceSojournTime( intrude ); // 秒を取得
+  RTC_ConvertSecondToDateTime( &date, &time, total_sec ); // 日時に変換
+
+  // データを上書き
+  switch( param ) {
+  case 0: date.year   = value; break;
+  case 1: date.month  = 1 + value; break; // 経過月数を日付に変換
+  case 2: date.day    = 1 + value; break; // 経過日数を日付に変換
+  case 3: time.hour   = value; break;
+  case 4: time.minute = value; break;
+  case 5: time.second = value; break;
+  default: GF_ASSERT(0); break;
+  }
+
+  total_sec = RTC_ConvertDateTimeToSecond( &date, &time ); // 秒に戻す
+  ISC_SAVE_SetPalaceSojournTime( intrude, total_sec ); 
+}
+
 
 #endif  //PM_DEBUG
 

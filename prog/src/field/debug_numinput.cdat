@@ -236,4 +236,31 @@ static const DEBUG_NUMINPUT_LIST DNI_ViewOffsets[] = {
   { dni_view_offset_03, 0, &DNP_ViewOffset_03 },
 };
 
+//////////////////////////////////////////////////////
+///パレス滞在時間
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Year = { 
+  0, 999, DebugGetPalaceTime, DebugSetPalaceTime, 
+};
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Month = { 
+  0, 11, DebugGetPalaceTime, DebugSetPalaceTime, 
+};
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Day = { 
+  0, 30, DebugGetPalaceTime, DebugSetPalaceTime, 
+};
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Hour = { 
+  0, 23, DebugGetPalaceTime, DebugSetPalaceTime, 
+};
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Minute = { 
+  0, 59, DebugGetPalaceTime, DebugSetPalaceTime, 
+};
+static const DEBUG_NUMINPUT_LIST DNI_PalaceTime[] = { 
+  //gmm_id, param, dni_param
+  { dni_palace_time_01, 0, &DNP_Record_PalaceTime_Year },   // パレス滞在時間<年>
+  { dni_palace_time_02, 1, &DNP_Record_PalaceTime_Month },  // パレス滞在時間<月>
+  { dni_palace_time_03, 2, &DNP_Record_PalaceTime_Day },    // パレス滞在時間<日>
+  { dni_palace_time_04, 3, &DNP_Record_PalaceTime_Hour },   // パレス滞在時間<時間>
+  { dni_palace_time_05, 4, &DNP_Record_PalaceTime_Minute }, // パレス滞在時間<分>
+  { dni_palace_time_06, 5, &DNP_Record_PalaceTime_Minute }, // パレス滞在時間<秒>
+};
+
 #endif  //PM_DEBUG

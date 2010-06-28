@@ -85,8 +85,6 @@ static u32 DebugGetPalparkHighScore( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 pa
 static void DebugSetPalparkHighScore(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
 static u32 DebugGetSeaTempleStepCount( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetSeaTempleStepCount(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
-static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 static u32 DebugGetBSubway( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetBSubway(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
@@ -533,7 +531,7 @@ static const DEBUG_MENU_INITIALIZER DebugListSelectData = {
   0,                                ///<項目最大数（固定リストでない場合、０）
   NULL,                             ///<参照するメニューデータ（生成する場合はNULL)
   &DATA_DebugMenuList_ZoneSel,      ///<メニュー表示指定データ（流用）
-  1, 1, 20, 16,
+  1, 1, 30, 16,
   DEBUG_SetMenuWork_DebugList,    ///<メニュー生成関数へのポインタ
   DEBUG_GetDebugListMax,          ///<項目最大数取得関数へのポインタ
 };
@@ -657,61 +655,6 @@ static void DebugSetSeaTempleStepCount(GAMESYS_WORK * gsys, GAMEDATA * gdata, u3
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
   SITUATION* situation = SaveData_GetSituation( save );
   Situation_SetSeaTempleStepCount( situation, value );
-}
-
-//--------------------------------------------------------------
-/**
- * @brief パレス滞在時間
- */
-//--------------------------------------------------------------
-static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
-{
-  u32 value;
-  RTCDate date;
-  RTCTime time;
-  s64 total_sec;
-  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
-  INTRUDE_SAVE_WORK* intrude = SaveData_GetIntrude( save );
-
-  total_sec = ISC_SAVE_GetPalaceSojournTime( intrude ); 
-  RTC_ConvertSecondToDateTime( &date, &time, total_sec );
-
-  switch( param ) {
-  case 0: value = date.year;   break;
-  case 1: value = date.month - 1;  break; // 日付を経過月数に変換
-  case 2: value = date.day - 1;    break; // 日付を経過日数に変換
-  case 3: value = time.hour;   break;
-  case 4: value = time.minute; break;
-  case 5: value = time.second; break;
-  default: GF_ASSERT(0); break;
-  }
-  return value;
-}
-
-static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value)
-{
-  RTCDate date;
-  RTCTime time;
-  s64 total_sec;
-  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
-  INTRUDE_SAVE_WORK* intrude = SaveData_GetIntrude( save );
-
-  total_sec = ISC_SAVE_GetPalaceSojournTime( intrude ); // 秒を取得
-  RTC_ConvertSecondToDateTime( &date, &time, total_sec ); // 日時に変換
-
-  // データを上書き
-  switch( param ) {
-  case 0: date.year   = value; break;
-  case 1: date.month  = 1 + value; break; // 経過月数を日付に変換
-  case 2: date.day    = 1 + value; break; // 経過日数を日付に変換
-  case 3: time.hour   = value; break;
-  case 4: time.minute = value; break;
-  case 5: time.second = value; break;
-  default: GF_ASSERT(0); break;
-  }
-
-  total_sec = RTC_ConvertDateTimeToSecond( &date, &time ); // 秒に戻す
-  ISC_SAVE_SetPalaceSojournTime( intrude, total_sec ); 
 }
 
 //--------------------------------------------------------------
