@@ -5698,7 +5698,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
           }
         }
 
-        wk->setupParam->restHPRatio[ clientID ] = (MaxHPSum * 100) / HPSum;
+        wk->setupParam->restHPRatio[ clientID ] = (HPSum * 100) / MaxHPSum;
       }
     }
   }
