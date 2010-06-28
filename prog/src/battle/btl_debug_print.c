@@ -528,6 +528,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_MSG_STD:  return "SC_MSG_STD";               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   case SC_MSG_SET:  return "SC_MSG_SET";               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   case SC_MSG_STD_SE:  return "SC_MSG_STD_SE";            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
+  case SC_MSG_SET_SE: return "SC_MSG_SET_SE";
   }
 
   return NULL;

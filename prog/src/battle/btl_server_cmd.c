@@ -193,6 +193,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_MSG,    // SC_MSG_STD
   SC_ARGFMT_MSG,    // SC_MSG_SET
   SC_ARGFMT_MSG_SE, // SC_MSG_STD_SE
+  SC_ARGFMT_MSG_SE, // SC_MSG_SET_SE
 };
 
 //------------------------------------------------------------------------

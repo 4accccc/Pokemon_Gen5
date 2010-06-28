@@ -10795,6 +10795,32 @@ static void scPut_Message_StdEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, con
 }
 //--------------------------------------------------------------------------
 /**
+ * [Put] 標準メッセージ表示（引数拡張＋SE再生）
+ */
+//--------------------------------------------------------------------------
+static void scPut_Message_StdSE( BTL_SVFLOW_WORK* wk, u16 strID, u16 SENo, u32 argCnt, const int* args )
+{
+  switch( argCnt ){
+  case 0:
+  default:
+    SCQUE_PUT_MSG_STD_SE( wk->que, strID, SENo );
+    break;
+  case 1:
+    SCQUE_PUT_MSG_STD_SE( wk->que, strID, SENo, args[0] );
+    break;
+  case 2:
+    SCQUE_PUT_MSG_STD_SE( wk->que, strID, SENo, args[0], args[1] );
+    break;
+  case 3:
+    SCQUE_PUT_MSG_STD_SE( wk->que, strID, SENo, args[0], args[1], args[2] );
+    break;
+  case 4:
+    SCQUE_PUT_MSG_STD_SE( wk->que, strID, SENo, args[0], args[1], args[2], args[3] );
+    break;
+  }
+}
+//--------------------------------------------------------------------------
+/**
  * [Put] セットメッセージ表示（引数拡張）
  */
 //--------------------------------------------------------------------------
@@ -10816,6 +10842,32 @@ static void scPut_Message_SetEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, con
     break;
   case 4:
     SCQUE_PUT_MSG_SET( wk->que, strID, args[0], args[1], args[2], args[3] );
+    break;
+  }
+}
+//--------------------------------------------------------------------------
+/**
+ * [Put] セットメッセージ表示（引数拡張＋SE）
+ */
+//--------------------------------------------------------------------------
+static void scPut_Message_SetSE( BTL_SVFLOW_WORK* wk, u16 strID, u16 SENo, u32 argCnt, const int* args )
+{
+  switch( argCnt ){
+  case 0:
+  default:
+    SCQUE_PUT_MSG_SET_SE( wk->que, strID, SENo );
+    break;
+  case 1:
+    SCQUE_PUT_MSG_SET_SE( wk->que, strID, SENo, args[0] );
+    break;
+  case 2:
+    SCQUE_PUT_MSG_SET_SE( wk->que, strID, SENo, args[0], args[1] );
+    break;
+  case 3:
+    SCQUE_PUT_MSG_SET_SE( wk->que, strID, SENo, args[0], args[1], args[2] );
+    break;
+  case 4:
+    SCQUE_PUT_MSG_SET_SE( wk->que, strID, SENo, args[0], args[1], args[2], args[3] );
     break;
   }
 }
@@ -15135,15 +15187,30 @@ static u8 scproc_HandEx_changeWeather( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 //----------------------------------------------------------------------------------
 static BOOL handexSub_putString( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_STR_PARAMS* strParam )
 {
-  switch( strParam->type ){
-  case BTL_STRTYPE_STD:
-    scPut_Message_StdEx( wk, strParam->ID, strParam->argCnt, strParam->args );
-    return TRUE;
+  if( strParam->fSEAdd == FALSE )
+  {
+    switch( strParam->type ){
+    case BTL_STRTYPE_STD:
+      scPut_Message_StdEx( wk, strParam->ID, strParam->argCnt, strParam->args );
+      return TRUE;
 
+    case BTL_STRTYPE_SET:
+      scPut_Message_SetEx( wk, strParam->ID, strParam->argCnt, strParam->args );
+      return TRUE;
+    }
+  }
+  else
+  {
+    u16 SENo = strParam->args[ BTL_STR_ARG_MAX - 1 ];
+    switch( strParam->type ){
+    case BTL_STRTYPE_STD:
+      scPut_Message_StdSE( wk, strParam->ID, SENo, strParam->argCnt, strParam->args );
+      return TRUE;
 
-  case BTL_STRTYPE_SET:
-    scPut_Message_SetEx( wk, strParam->ID, strParam->argCnt, strParam->args );
-    return TRUE;
+    case BTL_STRTYPE_SET:
+      scPut_Message_SetSE( wk, strParam->ID, SENo, strParam->argCnt, strParam->args );
+      return TRUE;
+    }
   }
   return FALSE;
 }

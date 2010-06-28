@@ -120,6 +120,7 @@ typedef enum {
   SC_MSG_STD,               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   SC_MSG_SET,               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   SC_MSG_STD_SE,            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
+  SC_MSG_SET_SE,            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
 
   SC_MAX,
 
@@ -611,6 +612,7 @@ extern void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... );
 #define SCQUE_PUT_MSG_STD(que, ...) SCQUE_PUT_MsgImpl( que, SC_MSG_STD, __VA_ARGS__, MSGARG_TERMINATOR )
 #define SCQUE_PUT_MSG_SET(que, ...) SCQUE_PUT_MsgImpl( que, SC_MSG_SET, __VA_ARGS__, MSGARG_TERMINATOR )
 #define SCQUE_PUT_MSG_STD_SE(que, ...) SCQUE_PUT_MsgImpl( que, SC_MSG_STD_SE, __VA_ARGS__, MSGARG_TERMINATOR )
+#define SCQUE_PUT_MSG_SET_SE(que, ...) SCQUE_PUT_MsgImpl( que, SC_MSG_SET_SE, __VA_ARGS__, MSGARG_TERMINATOR )
 
 //=====================================================
 

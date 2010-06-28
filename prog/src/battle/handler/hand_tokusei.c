@@ -7,10 +7,10 @@
  * @date  2008.11.11  ì¬
  */
 //=============================================================================================
-
 #include "poke_tool\poketype.h"
 #include "poke_tool\monsno_def.h"
 #include "waza_tool\wazano_def.h"
+#include "sound\pm_sndsys.h"
 
 #include "..\btl_common.h"
 #include "..\btl_calc.h"
@@ -4801,6 +4801,7 @@ static void handler_Nigeasi_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       param->header.tokwin_flag = TRUE;
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeSuccess );
+      HANDEX_STR_AddSE( &param->str, SEQ_SE_NIGERU );
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }

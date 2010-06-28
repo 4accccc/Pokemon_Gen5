@@ -373,9 +373,11 @@ typedef struct {
  */
 typedef struct {
 
-  u8    type;    ///< 文字列タイプ（ BtlStrType  (btl_string.h) )
-  u8    argCnt;  ///< 引数の数
-  u16   ID;      ///< 文字列ID
+  u16   ID;           ///< 文字列ID
+  u16   type    : 8;  ///< 文字列タイプ（ BtlStrType  (btl_string.h) )
+  u16   argCnt  : 7;  ///< 引数の数
+  u16   fSEAdd  : 1;  ///< 引数終端にSEナンバー格納
+
   int   args[ BTL_STR_ARG_MAX ];  ///< 引数
 
 }BTL_HANDEX_STR_PARAMS;
@@ -402,6 +404,14 @@ static inline void HANDEX_STR_AddArg( BTL_HANDEX_STR_PARAMS* param, int arg )
   if( param->argCnt < BTL_STR_ARG_MAX )
   {
     param->args[ param->argCnt++ ] = arg;
+  }
+}
+static inline void HANDEX_STR_AddSE( BTL_HANDEX_STR_PARAMS* param, u16 SENo )
+{
+  if( param->argCnt < BTL_STR_ARG_MAX )
+  {
+    param->args[ BTL_STR_ARG_MAX - 1 ] = SENo;
+    param->fSEAdd = TRUE;
   }
 }
 

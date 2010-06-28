@@ -355,6 +355,7 @@ static u16 CheckMemberPutStrID( BTL_CLIENT* wk );
 static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_StdSE( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_MSG_SetSE( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args );
@@ -5534,6 +5535,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_MSG_STD,               scProc_MSG_Std                 },
     { SC_MSG_STD_SE,            scProc_MSG_StdSE               },
     { SC_MSG_SET,               scProc_MSG_Set                 },
+    { SC_MSG_SET_SE,            scProc_MSG_SetSE               },
     { SC_MSG_WAZA,              scProc_MSG_Waza                },
     { SC_ACT_WAZA_EFFECT,       scProc_ACT_WazaEffect          },
     { SC_ACT_TAMEWAZA_HIDE,     scProc_ACT_TameWazaHide        },
@@ -6004,8 +6006,9 @@ static BOOL scProc_MSG_StdSE( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
-
-
+/**
+ *
+ */
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
@@ -6025,6 +6028,33 @@ static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+/**
+ *
+ */
+static BOOL scProc_MSG_SetSE( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
+    BTLV_StartMsgSet( wk->viewCore, args[0], &args[2] );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+      PMSND_PlaySE( args[1] );
+    }
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
 
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
 {

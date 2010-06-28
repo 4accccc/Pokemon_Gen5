@@ -12,6 +12,7 @@
 #include "waza_tool\wazano_def.h"
 #include "item\itemsym.h"
 #include "item\item.h"
+#include "sound\pm_sndsys.h"
 
 #include "..\btl_common.h"
 #include "..\btl_calc.h"
@@ -4302,6 +4303,7 @@ static void handler_Kemuridama_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Kemuridama );
       HANDEX_STR_AddArg( &param->str, pokeID );
       HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      HANDEX_STR_AddSE( &param->str, SEQ_SE_NIGERU );
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
