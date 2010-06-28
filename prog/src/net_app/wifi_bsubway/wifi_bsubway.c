@@ -710,6 +710,7 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
   case BSUBWAY_SEQ_INIT:       
     WiFiBsubway_Connect( p_wk );
     
+    VIEW_PrintStream( &p_wk->view, msg_wifi_bt_013 );
     VIEW_StartTimeIcon( &p_wk->view );
 
     (*p_seq) ++;
