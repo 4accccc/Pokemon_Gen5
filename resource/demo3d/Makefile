@@ -49,7 +49,9 @@ demo3d_naix = $(demo3d_narc:.narc=.naix)
 target_narc = $(TARGETDIR)$(notdir $(demo3d_narc))
 target_naix = $(TARGETDIR)$(notdir $(demo3d_naix))
 
-arc_list = $(TMPDIR)arc_list.txt
+#プレイアブル向けに書換え
+#arc_list = $(TMPDIR)arc_list.txt
+arc_list = playable_arc_list.txt
 
 #コンバート対象にする管理表リストをインクルード
 include demo_list.txt	#$(DEMO_LIST)定義
@@ -107,9 +109,9 @@ $(demo_res_dat): demo_list.txt
 
 make_demoid:
 	@echo	デモID/Resourceテーブルコンバート開始
-	ruby conv/make_demoid.rb $(demoid_def_h) $(demo_res_dat) $(DEMO_LIST)
-	unix2dos -D $(demoid_def_h)
-	unix2dos -D $(demo_res_dat)
+#	ruby conv/make_demoid.rb $(demoid_def_h) $(demo_res_dat) $(DEMO_LIST)
+#	unix2dos -D $(demoid_def_h)
+#	unix2dos -D $(demo_res_dat)
 
 ######################################
 #fldmmdlコピー
@@ -141,9 +143,9 @@ $(demo3d_narc): $(obj_nsx) $(obj_bin)
 $(demo3d_naix): $(obj_nsx) $(obj_bin)
 	$(MAKE) make_narc
 
-make_narc:
-	-ls bin/*_camera.bin bin/*.nsb* > $(arc_list)
-	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(arc_list)
+make_narc: $(arc_list)
+#	-ls bin/*_camera.bin bin/*.nsb* > $(arc_list)
+#	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(arc_list)
 	nnsarc -r -l -n -i $(demo3d_narc) -S $(arc_list) > $(TMPDIR)arc_result.txt
 	@echo naixカット
 	$(NAIXCUT) $(demo3d_naix)
@@ -181,9 +183,9 @@ ifeq	($(CMDONLY_USER),false)
 	rm -f $(FLDMMDL_IMD)
 endif
 	rm -f $(TMPDIR)*.*
-	rm -f $(DATDIR)*.*
-	rm -f $(demoid_def_h)
-	rm -f $(demo_res_dat)
+	rm -f $(DATDIR)n_legend_meat_*.cdat
+#	rm -f $(demoid_def_h)
+#	rm -f $(demo_res_dat)
 
 endif
 	make clean -C res2d
