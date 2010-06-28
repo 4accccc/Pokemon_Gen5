@@ -2004,7 +2004,7 @@ static int _playerDirectEndChildNext( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);  //‚©‚¢‚íI—¹
   }
-  GFL_NET_StateWifiMatchEnd(TRUE);
+//  GFL_NET_StateWifiMatchEnd(TRUE);
   wk->state = WIFIP2PMATCH_STATE_NONE;
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
@@ -2049,7 +2049,7 @@ static int _playerDirectEndNext( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
   }
-  GFL_NET_StateWifiMatchEnd(TRUE);
+//  GFL_NET_StateWifiMatchEnd(TRUE);
   wk->state = WIFIP2PMATCH_STATE_NONE;
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
@@ -2088,7 +2088,7 @@ static int _playerDirectEndKeyWait( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectEnd2( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
-  GFL_NET_StateWifiMatchEnd(TRUE);
+//  GFL_NET_StateWifiMatchEnd(TRUE);
 
   if(GFL_NET_IsParentMachine()){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1038, FALSE);
@@ -2110,6 +2110,8 @@ static int _playerDirectEnd2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectEnd3( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
 //  if(!WifiP2PMatchMessageEndCheck(wk)){
  //   return seq;
 //  }
@@ -2340,7 +2342,6 @@ static int _playerMachineTalkEnd( WIFIP2PMATCH_WORK *wk, int seq )
   wk->state = WIFIP2PMATCH_STATE_NONE;
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
-  GFL_NET_StateWifiMatchEnd(TRUE);
 
   if(GFL_NET_IsParentMachine()){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1038, FALSE);
