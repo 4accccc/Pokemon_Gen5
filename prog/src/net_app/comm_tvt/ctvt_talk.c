@@ -75,6 +75,8 @@ typedef enum
   CTS_END_CONFIRM_INIT,
   CTS_END_CONFIRM,
 
+  //ここより下を終了状態との区別で使うので順番変更注意！！
+
   //親機による子機の終了待ち
   CTS_WAIT_FINISH_CHILD_INIT,
   CTS_WAIT_FINISH_CHILD,
@@ -725,7 +727,8 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   
   //相手の会話波形表示
   if( talkWork->isDrawPlayWave == FALSE &&
-      talkWork->state != CTS_TALKING )
+      talkWork->state != CTS_TALKING &&
+      talkWork->state < CTS_WAIT_FINISH_CHILD_INIT )
   {
     if( CTVT_MIC_IsPlayWave( talkWork->micWork ) == TRUE )
     {
