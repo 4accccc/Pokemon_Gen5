@@ -1650,8 +1650,8 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
     work->ktst = GFL_APP_END_KEY;
     if( skillWork->cursorPos < 4 )
     {
-      const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-      const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
+      const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+      const u32 wazaNo = PPP_Get( ppp , ID_PARA_waza1+skillWork->cursorPos , NULL );
       const FIELD_SKILL_CHECK_RET skillRet = 
                 FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
       //忘れていいかチェック
@@ -1781,8 +1781,8 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
           const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
           if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
           {
-            const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-            const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+ret , NULL );
+            const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+            const u32 wazaNo = PPP_Get( ppp , ID_PARA_waza1+ret , NULL );
             const FIELD_SKILL_CHECK_RET skillRet = 
                       FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
             //忘れていいかチェック
@@ -1960,29 +1960,29 @@ static void PSTATUS_SKILL_SwapSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
 {
   //パラメータの処理
   {
-    POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+    POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
     u32 wazano1,wazano2;
     u32 nowPp1,nowPp2;
     u32 ppCount1,ppCount2;
 
     PSTATUS_UTIL_SetCurrentPPPFast( work , TRUE );
 
-    wazano1  = PP_Get( pp , ID_PARA_waza1    +pos1 , NULL );
-    nowPp1   = PP_Get( pp , ID_PARA_pp1      +pos1 , NULL );
-    ppCount1 = PP_Get( pp , ID_PARA_pp_count1+pos1 , NULL );
+    wazano1  = PPP_Get( ppp , ID_PARA_waza1    +pos1 , NULL );
+    nowPp1   = PPP_Get( ppp , ID_PARA_pp1      +pos1 , NULL );
+    ppCount1 = PPP_Get( ppp , ID_PARA_pp_count1+pos1 , NULL );
 
-    wazano2  = PP_Get( pp , ID_PARA_waza1    +pos2 , NULL );
-    nowPp2   = PP_Get( pp , ID_PARA_pp1      +pos2 , NULL );
-    ppCount2 = PP_Get( pp , ID_PARA_pp_count1+pos2 , NULL );
+    wazano2  = PPP_Get( ppp , ID_PARA_waza1    +pos2 , NULL );
+    nowPp2   = PPP_Get( ppp , ID_PARA_pp1      +pos2 , NULL );
+    ppCount2 = PPP_Get( ppp , ID_PARA_pp_count1+pos2 , NULL );
 
-    PP_SetWazaPos( pp , wazano2 , pos1 );
-    PP_SetWazaPos( pp , wazano1 , pos2 );
+    PPP_SetWazaPos( ppp , wazano2 , pos1 );
+    PPP_SetWazaPos( ppp , wazano1 , pos2 );
 
-    PP_Put( pp , ID_PARA_pp1      +pos1 , nowPp2 );
-    PP_Put( pp , ID_PARA_pp_count1+pos1 , ppCount2 );
+    PPP_Put( ppp , ID_PARA_pp1      +pos1 , nowPp2 );
+    PPP_Put( ppp , ID_PARA_pp_count1+pos1 , ppCount2 );
 
-    PP_Put( pp , ID_PARA_pp1      +pos2 , nowPp1 );
-    PP_Put( pp , ID_PARA_pp_count1+pos2 , ppCount1 );
+    PPP_Put( ppp , ID_PARA_pp1      +pos2 , nowPp1 );
+    PPP_Put( ppp , ID_PARA_pp_count1+pos2 , ppCount1 );
 
     PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
   }
@@ -2144,16 +2144,16 @@ static void PSTATUS_SKILL_UpdatePlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *
 //--------------------------------------------------------------
 static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork )
 {
-  const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
 
   u32 wazaNo;
   u32 nowpp;
   u32 maxpp;
   if( plateWork->idx < 4 )
   {
-    wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
-    nowpp = PP_Get( pp , ID_PARA_pp1+plateWork->idx , NULL );
-    maxpp = PP_Get( pp , ID_PARA_pp_max1+plateWork->idx , NULL );
+    wazaNo = PPP_Get( ppp , ID_PARA_waza1+plateWork->idx , NULL );
+    nowpp = PPP_Get( ppp , ID_PARA_pp1+plateWork->idx , NULL );
+    maxpp = PPP_Get( ppp , ID_PARA_pp_max1+plateWork->idx , NULL );
   }
   else
   {
@@ -2237,12 +2237,12 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
 //--------------------------------------------------------------
 static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork )
 {
-  const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
   {
     u32 wazaNo;
     if( plateWork->idx < 4 )
     {
-      wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
+      wazaNo = PPP_Get( ppp , ID_PARA_waza1+plateWork->idx , NULL );
     }
     else
     {
