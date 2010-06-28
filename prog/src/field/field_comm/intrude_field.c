@@ -1589,6 +1589,10 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
       disguise_sex = sex;
     }
 
+    if(intcomm->intrude_status_mine.disguise_no == disguise_code){
+      return; //“¯ƒLƒƒƒ‰‚È‚Ì‚Å•Ïg‚µ‚È‚¢
+    }
+
     intcomm->intrude_status_mine.disguise_no = disguise_code;
     intcomm->intrude_status_mine.disguise_type = disguise_type;
     intcomm->intrude_status_mine.disguise_sex = disguise_sex;
