@@ -43,7 +43,7 @@
  *  ・ゲインをPM_SetAmpGainを使用して、PM_AMPGAIN_80（80倍）に設定
  *    →snd_systemの初期化で行っている。
  *  ・unsigned char型の8bitサンプリングバッファで0から255の範囲を有効値として、
- *    128未満のデータを256から減算し（波形のレベル反転）、最大値を探します。
+ *    128未満のデータを255から減算し（波形のレベル反転）、最大値を探します。
  *    →※１
  *    これによって得られたデータを以下のような区切りで測定してください。
  *  ・LEVEL4  198 ～ 255
@@ -1681,7 +1681,7 @@ static int CalcAverageVolumeMicBuffer( MICAutoParam * p_mic_param )
 
   for( i = 0; i < size; i++ ) {
     if( p_mic_buffer[i] < 128 ) {
-      volume  = (256 - p_mic_buffer[i]);   //  ※１
+      volume  = (255 - p_mic_buffer[i]);   //  ※１
     }else{
       volume  = p_mic_buffer[i];
     }
