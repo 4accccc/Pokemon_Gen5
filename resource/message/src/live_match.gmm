@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-14T19:41:59"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-28T17:46:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -600,7 +600,7 @@
 	<row id="LIVE_STR_19">
 		<language name="JPN" width="256">たいせん　あいてが
 みつかりました！</language>
-		<language name="JPN_KANJI" width="256">対戦　相手が
+		<language name="JPN_KANJI" width="256">対戦相手が
 見つかりました！</language>
 	</row>
 
