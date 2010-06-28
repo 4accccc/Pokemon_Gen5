@@ -2735,6 +2735,7 @@ static void _ParentWait_ExitCnacel( COMM_ENTRY_MENU_PTR em )
     FLDMENUFUNC_DeleteMenu(yesno->menufunc);
     yesno->menufunc = NULL;
   }
+  yesno->seq = 0;
 }
 //==================================================================
 /**
