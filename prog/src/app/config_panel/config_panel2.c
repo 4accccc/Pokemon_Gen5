@@ -480,6 +480,7 @@ typedef struct
   APP_TASKMENU_ITEMWORK item[ APPBAR_WIN_MAX-1 ];
   APP_TASKMENU_WIN_WORK *p_win[ APPBAR_WIN_MAX-1 ];
   GAMEDATA        *p_gdata;
+  BOOL            is_touch;
 } APPBAR_WORK;
 //-------------------------------------
 /// SCROLL
@@ -625,6 +626,7 @@ static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select
 static BOOL APPBAR_IsWaitEffect( APPBAR_WORK *p_wk );
 static void APPBAR_StopEffect( APPBAR_WORK *p_wk );
 static void APPBAR_ReWrite( APPBAR_WORK *p_wk, HEAPID heapID );
+static BOOL APPBAR_IsTouch( const APPBAR_WORK *cp_wk );
 //-------------------------------------
 /// SCROLL
 //=====================================
@@ -635,6 +637,7 @@ static CONFIG_LIST SCROLL_GetSelect( const SCROLL_WORK *cp_wk );
 static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_param );
 static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param );
 static void SCROLL_SetConfigParamReport( SCROLL_WORK *p_wk, u16 param );
+static void SCROLL_SetTouch( SCROLL_WORK *p_wk, GRAPHIC_WORK *p_graphic );
 static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw );
 static void Scroll_Move( SCROLL_WORK *p_wk, int y_add );
 static void Scroll_MoveRange( SCROLL_WORK *p_wk, int y_add, int min, int max );
@@ -2652,7 +2655,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
   UI_INPUT    input;
   CONFIG_LIST select;
   BOOL is_update  = FALSE;
-
+  p_wk->is_touch  = FALSE;
 
   //決定時は入力できない
   if( p_wk->is_decide )
@@ -2685,6 +2688,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
       PMSND_PlaySE( CONFIG_SE_DECIDE );
       p_wk->select = APPBAR_WIN_DECIDE;
       p_wk->is_decide = TRUE;
+      p_wk->is_touch  = TRUE;
     }
     else if(  COLLISION_IsRectXPos( &sc_appbar_rect[APPBAR_WIN_CANCEL], &pos )
         && p_wk->select != APPBAR_WIN_CANCEL )
@@ -2693,6 +2697,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
       PMSND_PlaySE( CONFIG_SE_CANCEL );
       p_wk->select  = APPBAR_WIN_CANCEL;
       p_wk->is_decide = TRUE;
+      p_wk->is_touch  = TRUE;
     }
     else if( p_wk->select != APPBAR_WIN_NULL )
     {
@@ -2784,10 +2789,25 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
   //タッチバーメイン
   TOUCHBAR_Main( p_wk->p_touch );
 
+  switch( TOUCHBAR_GetTouch( p_wk->p_touch ) )
+  {
+  case TOUCHBAR_ICON_CHECK :
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    {
+      p_wk->is_touch  = TRUE;
+    }
+    break;
+  case TOUCHBAR_ICON_CLOSE:
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    {
+      p_wk->is_touch  = TRUE;
+    }
+    break;
+  }
+
   switch( TOUCHBAR_GetTrg( p_wk->p_touch ) )
   {
   case TOUCHBAR_ICON_CHECK :
-
 #ifdef GAMESYS_NONE_MOVE
     if( p_wk->p_gdata == NULL )
     {
@@ -2922,6 +2942,19 @@ static void APPBAR_ReWrite( APPBAR_WORK *p_wk, HEAPID heapID )
                             APPBAR_WIN_X + APPBAR_WIN_W*i, APPBAR_MENUBAR_Y, APPBAR_WIN_W, heapID );
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  APPBARのボタンをタッチしたかどうか
+ *
+ *	@param	const APPBAR_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEでいずれかにタッチした　FALSEでしないない
+ */
+//-----------------------------------------------------------------------------
+static BOOL APPBAR_IsTouch( const APPBAR_WORK *cp_wk )
+{
+  return cp_wk->is_touch;
 }
 //=============================================================================
 /**
@@ -3122,15 +3155,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       p_wk->is_info_update  = TRUE;
       is_bmpprint_decide  = FALSE;
     }
-    else
-    {
-      //範囲外をタッチ
-      Scroll_ChangePlt( p_wk, FALSE );
-
-      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), FALSE );
-      GRAPHIC_StartPalleteFade( p_graphic );
-      is_bmpprint_decide  = FALSE;
-    }
+      
     break;
 
   case UI_INPUT_TRG_RIGHT:
@@ -3233,6 +3258,22 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   //パレット切り替えによるちかちか防止メイン
   Scroll_ChangePlt_Safe_Main( p_wk );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タッチしたときのカーソル消し処理
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SCROLL_SetTouch( SCROLL_WORK *p_wk, GRAPHIC_WORK *p_graphic )
+{
+  Scroll_ChangePlt( p_wk, FALSE );
+
+  GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), FALSE );
+  GRAPHIC_StartPalleteFade( p_graphic );
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  現在何を選択しているか取得
@@ -4334,6 +4375,12 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       SCROLL_Main( &p_wk->scroll, &p_wk->ui, &p_wk->info, &p_wk->graphic, &p_wk->appbar );
     }
     APPBAR_Main(  &p_wk->appbar, &p_wk->ui, &p_wk->scroll );
+
+    //APPBARをタッチしたときのカーソル消し
+    if( APPBAR_IsTouch( &p_wk->appbar ) )
+    {
+      SCROLL_SetTouch( &p_wk->scroll, &p_wk->graphic );
+    }
 
     //状態変移
     {
