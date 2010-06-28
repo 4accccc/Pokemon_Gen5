@@ -898,6 +898,17 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
     }
   }
 
+  //3vs3‚Å‰“Šu‹Z‚Å‚µ‚©“–‚½‚ç‚È‚¢‘ŠŽè‚ð‘I‘ð‚µ‚½‚Æ‚«‚Ìˆ—
+  { 
+    WazaID waza_no = BPP_WAZA_GetID( taw->atk_bpp, taw->select_waza_pos );
+    if( ( taw->rule == BTL_RULE_TRIPLE ) &&
+        ( BTL_MAINUTIL_CheckTripleHitArea( taw->atk_btl_poke_pos, taw->select_waza_dir ) == FALSE ) &&
+        ( get_waza_flag( taw, waza_no, WAZAFLAG_TripleFar ) == FALSE ) )
+    { 
+      taw->select_waza_dir = BTL_POS_1ST_1 + ( taw->select_waza_dir & 1 );
+    }
+  }
+
   return FALSE;
 }
 
@@ -968,6 +979,7 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
           //TickTimeƒo[ƒWƒ‡ƒ“
           if( OS_GetTick() - taw->tick > TR_AI_SEQ_TICK )
           {
+            SOGABE_Printf("tick:%d\n",OS_GetTick() - taw->tick );
             taw->calc_count = TR_AI_SEQ_COUNT;
             taw->status_flag |= AI_STATUSFLAG_CONTINUE;
             break;
