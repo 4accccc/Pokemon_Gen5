@@ -198,6 +198,8 @@ typedef struct
   u32 cancel_seq;
   u32 match_timeout;
 
+  BOOL is_send_report;
+
   //サーバーから落としてきたマッチング相手の登録ポケモン
   POKEPARTY *p_other_party;
 
@@ -3027,7 +3029,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_WAIT_SESSION:
     {
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net );
+      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
       if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
         *p_seq  = SEQ_END_MATCHING_MSG;
@@ -3035,7 +3037,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       
       if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
-        //エラー
+        //ここでエラーが起こった場合、レポートを送信していれば切断カウンターがあがってしまうので戦闘後へ、レポートを送信していなければ、録画後へいく
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
@@ -3086,7 +3088,15 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+    if( p_wk->is_send_report )
+    {
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_EndBattle );
+    }
+    else
+    {
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+    }
     break;
 
     //-------------------------------------
@@ -3347,7 +3357,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net );
+      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, NULL );
       if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
 

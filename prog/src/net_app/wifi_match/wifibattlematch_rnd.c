@@ -206,6 +206,8 @@ typedef struct
   //選手証更新
   BOOL  is_card_update;
 
+  BOOL is_send_report;
+
 #ifdef DEBUGWIN_USE
   u32 playerinfo_mode;
   u32 matchinfo_mode;
@@ -1494,7 +1496,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_WAIT_SESSION:
     {
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net );
+      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
       if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
         *p_seq  = SEQ_END_SESSION;
@@ -1503,8 +1505,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
         NAGI_Printf( "check!\n" );
-        //ここでエラーが起こった場合、切断カウンターをあげなかったと判断して、
-        //戻り先を変えます
+        //ここでエラーが起こった場合、レポートを送信していれば切断カウンターがあがってしまうので戦闘後へ、レポートを送信していなければ、録画後へいく
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
@@ -1558,7 +1559,14 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_ERROR_END:
     WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndRec );
+    if( p_wk->is_send_report )
+    {
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndBattle );
+    }
+    else
+    {
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndRec );
+    }
     break;
 
     //-------------------------------------
@@ -1756,7 +1764,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net );
+      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net , NULL );
       if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
 

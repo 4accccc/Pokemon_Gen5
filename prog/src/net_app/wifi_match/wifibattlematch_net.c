@@ -364,6 +364,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL is_sc_error;
   BOOL is_session;
   BOOL is_sc_you_recv;
+  BOOL is_send_report;
   BOOL is_sc_start;
 
   //ポケモン不正検査で使う
@@ -1498,6 +1499,7 @@ void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
   p_wk->is_sc_error = is_error;
   p_wk->is_session  = FALSE;
   p_wk->is_sc_you_recv  = FALSE;
+  p_wk->is_send_report  = FALSE;
 
   if( type == WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER )
   { 
@@ -1583,14 +1585,18 @@ void WIFIBATTLEMATCH_SC_StartDebug( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMA
  *	@brief  レポート送信の処理中
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
- *	@param  DWCScResult               結果
+ *	@param  BOOL *is_send_report  レポート送信を行ったか
  *	@retval WIFIBATTLEMATCH_NET_SC_STATE列挙を参照
  */
 //-----------------------------------------------------------------------------
-WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk )
+WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is_send_report )
 { 
   DWCScResult ret;
 
+  if( p_is_send_report )
+  {
+    *p_is_send_report = p_wk->is_send_report;
+  }
   { 
     const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
     //マッチング相手と切断した場合
@@ -1610,7 +1616,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         DwcRap_Sc_Finalize( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
- 
     }
 
     if( p_wk->is_sc_error )
@@ -2016,6 +2021,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
     case WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_WAIT:
       if( p_wk->wait_cnt == 0 )
       { 
+        p_wk->is_send_report  = TRUE;
         DEBUG_NET_Printf( "SC:submit report wait\n" );
         p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_EXIT;
       }

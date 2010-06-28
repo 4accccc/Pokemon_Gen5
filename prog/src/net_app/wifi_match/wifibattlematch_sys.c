@@ -1938,6 +1938,7 @@ static void Util_GetRestPoke( const BATTLE_SETUP_PARAM *cp_btl_param, u8 *p_my_p
   int party_no;
   int my_pos;
   int client_no;
+  int max;
 
   *p_my_poke  = 0;
   *p_you_poke = 0;
@@ -1951,7 +1952,9 @@ static void Util_GetRestPoke( const BATTLE_SETUP_PARAM *cp_btl_param, u8 *p_my_p
       else{
         client_no = BTL_CLIENT_PLAYER + (tr_no & 2);
       }
-      for(party_no = 0; party_no < TEMOTI_POKEMAX; party_no++){
+
+      max = PokeParty_GetPokeCount(cp_btl_param->party[client_no] );
+      for(party_no = 0; party_no < max; party_no++){
         if( cp_btl_param->party_state[client_no][party_no] != BTL_POKESTATE_DEAD )
         {
           (*p_my_poke)++;
@@ -1965,7 +1968,8 @@ static void Util_GetRestPoke( const BATTLE_SETUP_PARAM *cp_btl_param, u8 *p_my_p
       else{
         client_no = BTL_CLIENT_ENEMY1 + (tr_no & 2);
       }
-      for(party_no = 0; party_no < TEMOTI_POKEMAX; party_no++){
+      max = PokeParty_GetPokeCount(cp_btl_param->party[client_no] );
+      for(party_no = 0; party_no < max; party_no++){
         if( cp_btl_param->party_state[client_no][party_no] != BTL_POKESTATE_DEAD )
         {
           (*p_you_poke)++;
