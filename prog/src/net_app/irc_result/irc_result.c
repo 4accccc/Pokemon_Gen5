@@ -2450,7 +2450,7 @@ static void HEARTEFF_Init( HEARTEFF_WORK *p_wk, u16 frm, u8 score, HEAPID heapID
     int i;
 
     GFL_STD_MemCopy( p_wk->plt_original, p_wk->plt_buff, 0x10 * 2 );
-    for( i = 0; i < 0xE; i++ )
+    for( i = 0; i < 0xD; i++ )
     { 
       p_wk->plt_buff[i] = GX_RGB( 31, 31, 31 );
     }
@@ -2487,14 +2487,36 @@ static void HEARTEFF_Exit( HEARTEFF_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
 {	
-  static const u8 sc_color_tbl[SCORE_RANK_MAX][2]  =
-  { 
-    { 0,0 }, 
-    { 0xD, 0xC }, 
-    { 0xB, 0xA }, 
-    { 0x9, 0x8 }, 
-    { 0x7, 0x6 }, 
-    { 0x3, 0x5 }, 
+  static const struct
+  {
+    u8  color[2];
+    u8  len;
+  } sc_tbl[SCORE_RANK_MAX]  = 
+  {
+    {
+      {0,0},
+      0,
+    },
+    {
+      {0xC,0xB},
+      2,
+    },
+    {
+      {0x9,0xA},
+      2,
+    },
+    {
+      {0x8},
+      1,
+    },
+    {
+      {0x7,0x6},
+      2,
+    },
+    {
+      {0x3,0x5},
+      2,
+    },
   };
 
   enum
@@ -2536,9 +2558,9 @@ static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
         }
 
         //色をアップ
-        for( i = 0; i < 2; i++ )
+        for( i = 0; i < sc_tbl[ p_wk->now_color_idx ].len; i++ )
         {     
-          plt = sc_color_tbl[ p_wk->now_color_idx ][i];
+          plt = sc_tbl[ p_wk->now_color_idx ].color[i];
           HeartEff_MainPltFade( &p_wk->plt_buff[ plt ], p_wk->cnt, ONE_SYNC, RESULT_BG_PAL_M_08, plt, GX_RGB( 31, 31, 31 ), p_wk->plt_original[ plt ] );
         }
 
@@ -2569,9 +2591,9 @@ static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
       }
 
       //色をアップ
-      for( i = 0; i < 2; i++ )
+      for( i = 0; i < sc_tbl[ p_wk->now_color_idx ].len; i++ )
       {     
-        plt = sc_color_tbl[ p_wk->now_color_idx-1 ][i];
+        plt = sc_tbl[ p_wk->now_color_idx-1 ].color[i]; 
         HeartEff_MainPltFade( &p_wk->plt_buff[ plt ], p_wk->cnt, ONE_SYNC, RESULT_BG_PAL_M_08, plt, p_wk->plt_original[ plt ],  GX_RGB( 31, 31, 31 ) );
       }
       //個別チェック
