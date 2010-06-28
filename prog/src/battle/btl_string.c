@@ -25,8 +25,10 @@
 #include "msg\msg_wazaname.h"
 
 #ifdef PM_DEBUG
+#ifndef PLAYABLE_VERSION
 #include "script_message.naix"
 #include "msg\script\msg_n01r0502.h"
+#endif
 #endif
 
 /*--------------------------------------------------------------------------*/
