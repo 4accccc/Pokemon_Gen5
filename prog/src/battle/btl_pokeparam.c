@@ -2652,16 +2652,21 @@ void BPP_ChangeTokusei( BTL_POKEPARAM* bpp, PokeTokusei tok )
 //=============================================================================================
 void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
 {
+  BOOL fFastMode;
+
   bpp->formNo = formNo;
 
-  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
-  PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+  fFastMode = PP_FastModeOn( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+  PP_ChangeFormNo( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), formNo );
   setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
 
-  if( (bpp->coreParam.monsno == MONSNO_SHEIMI) && (formNo == FORMNO_SHEIMI_LAND) ){
+  if( (bpp->coreParam.monsno == MONSNO_SHEIMI) && (formNo == FORMNO_SHEIMI_LAND) )
+  {
     bpp->coreParam.defaultFormNo = FORMNO_SHEIMI_LAND;
     bpp->tokusei = PP_Get( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_speabino, NULL );
   }
+
+  PP_FastModeOff( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), fFastMode );
 }
 
 
