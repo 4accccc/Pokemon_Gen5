@@ -3667,19 +3667,22 @@ static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DELAY_ATTACK_FLAG) == FALSE)
   ){
     u32 damage_sum = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-    damage_sum /= common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-    if( damage_sum == 0 ){
-      damage_sum = 1;
-    }
-
+    if( damage_sum )
     {
-      BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-        param->pokeID = pokeID;
-        param->recoverHP = damage_sum;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-        HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-      BTL_SVF_HANDEX_Pop( flowWk, param );
+      damage_sum /= common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
+      if( damage_sum == 0 ){
+        damage_sum = 1;
+      }
+
+      {
+        BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+          param->pokeID = pokeID;
+          param->recoverHP = damage_sum;
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverLittle );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+          HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
+      }
     }
   }
 }
