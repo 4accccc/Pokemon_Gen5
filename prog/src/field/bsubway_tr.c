@@ -191,8 +191,8 @@ static const u16 TrainerNoRangeTable_Super_Stage5[1][2]=
 /**
  * @brief  トレーナーナンバー抽選
  * @param bsw_scr BSUBWAY_SCRWORK
- * @param stage ステージ数
- * @param round 何人目か
+ * @param stage ステージ数(0 origin
+ * @param round 何人目か(0 origin
  * @param play_mode プレイモード
  * @retval u16 トレーナーナンバー
  */

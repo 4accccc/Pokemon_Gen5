@@ -28,7 +28,8 @@
 #define BSWAY_NULL_TRAINER  (0xFFFF)
 #define BSWAY_NULL_PARAM  (0)
 
-#define BSW_RENSHOU_MAX (9999)
+#define BSW_RENSHOU_DATA_MAX (0xffff) ///<連勝数 データ最大
+#define BSW_RENSHOU_PRINT_MAX (9999) ///<連勝数 出力する際の最大
 
 #define BSW_STAGE_MAX (0xffff-1) //-1=エラー判定用
 

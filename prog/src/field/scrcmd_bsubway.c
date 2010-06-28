@@ -364,8 +364,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_GET_SAVE_RENSHOU:
     *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, param0 );
     
-    if( *ret_wk > BSW_RENSHOU_MAX ){
-      *ret_wk = BSW_RENSHOU_MAX;
+    if( *ret_wk > BSW_RENSHOU_PRINT_MAX ){
+      *ret_wk = BSW_RENSHOU_PRINT_MAX;
     }
     break;
   //エラー時のスコアセット
@@ -1317,8 +1317,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btl_rec_sel_param.fight_count =
         BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
       
-      if( bsw_scr->btl_rec_sel_param.fight_count > BSW_RENSHOU_MAX ){
-        bsw_scr->btl_rec_sel_param.fight_count = BSW_RENSHOU_MAX;
+      if( bsw_scr->btl_rec_sel_param.fight_count > BSW_RENSHOU_PRINT_MAX ){
+        bsw_scr->btl_rec_sel_param.fight_count = BSW_RENSHOU_PRINT_MAX;
       }
       
       event = EVENT_FieldSubProc_Callback(
@@ -1432,16 +1432,16 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     BSUBWAY_SCRWORK_IncNowRenshou( bsw_scr );
     *ret_wk = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
     
-    if( (*ret_wk) > BSW_RENSHOU_MAX ){
-      *ret_wk = BSW_RENSHOU_MAX;
+    if( (*ret_wk) > BSW_RENSHOU_PRINT_MAX ){
+      *ret_wk = BSW_RENSHOU_PRINT_MAX;
     }
     break;
   //現在の連勝数取得
   case BSWSUB_GET_NOW_RENSHOU:
     *ret_wk = BSUBWAY_SCRWORK_GetNowRenshou( bsw_scr );
     
-    if( *ret_wk > BSW_RENSHOU_MAX ){
-      *ret_wk = BSW_RENSHOU_MAX;
+    if( *ret_wk > BSW_RENSHOU_PRINT_MAX ){
+      *ret_wk = BSW_RENSHOU_PRINT_MAX;
     }
     break;
   //ゲーム開始時のスコア設定
@@ -2226,8 +2226,8 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
     break;
   }
   
-  if( btl_number > BSW_RENSHOU_MAX ){
-    btl_number = BSW_RENSHOU_MAX;
+  if( btl_number > BSW_RENSHOU_PRINT_MAX ){
+    btl_number = BSW_RENSHOU_PRINT_MAX;
   }
   
   res = BattleRec_Save(
@@ -2966,8 +2966,8 @@ void BSUBWAY_SCRWORK_DebugFightAnyRound(
   
   renshou = game_round_now - 1;
   
-  if( renshou > BSW_RENSHOU_MAX ){
-    renshou = BSW_RENSHOU_MAX;
+  if( renshou > BSW_RENSHOU_DATA_MAX ){
+    renshou = BSW_RENSHOU_DATA_MAX;
   }
   
 #if 0
@@ -3106,8 +3106,8 @@ void BSUBWAY_SCRWORK_DebugSetCommMultiStage(
   
   renshou = stage*7;
   
-  if( renshou > BSW_RENSHOU_MAX ){
-    renshou = BSW_RENSHOU_MAX;
+  if( renshou > BSW_RENSHOU_DATA_MAX ){
+    renshou = BSW_RENSHOU_DATA_MAX;
   }
   
   if( stage == 0 ){ //0

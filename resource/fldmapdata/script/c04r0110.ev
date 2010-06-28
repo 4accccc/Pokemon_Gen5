@@ -820,8 +820,8 @@ sub_train_battle_win_next_menu:
     //ただいま？連勝…次は？両目　対戦を続けますか
     _BSUBWAY_TOOL( BSWSUB_GET_NOW_RENSHOU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     
-    IF $SCWK_ANSWER > 9999 THEN
-      $SCWK_ANSWER = 9999
+    IF $SCWK_ANSWER > BSW_RENSHOU_PRINT_MAX THEN
+      $SCWK_ANSWER = BSW_RENSHOU_PRINT_MAX
     ENDIF
     
     _NUMBER( 0, SCWK_ANSWER, 4 )

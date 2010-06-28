@@ -136,13 +136,10 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     if( BSUBWAY_SCOREDATA_CheckExistStageNo( //ステージ存在する
         bsw_scr->scoreData,bsw_scr->play_mode) == TRUE ){
       //新規プレイでステージが継続している場合は
-      //セーブされている連勝数からラウンド数を復元する
+      //セーブされている連勝数を反映
       u16 play_mode = bsw_scr->play_mode;
       u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
           bsw_scr->scoreData, play_mode );
-      u16 round = renshou % 7;
-      
-      BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, round );
       BSUBWAY_SCRWORK_SetNowRenshou( bsw_scr, renshou );
     }
     
@@ -278,20 +275,18 @@ void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_playmode, buf );
   
-  //ステージが有る場合は
-  //セーブされている連勝数からラウンド数を復元する
-  //(新規プレイと同一)
+  //ステージが有る場合はセーブされている連勝数を反映
+  //(MULTI->COMM_MULTIへの変換は新規プレイのみ)
   if( BSUBWAY_SCOREDATA_CheckExistStageNo(
         bsw_scr->scoreData,bsw_scr->play_mode) == TRUE )
   {
     u16 play_mode = bsw_scr->play_mode;
     u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
         bsw_scr->scoreData, play_mode );
-    u16 round = renshou % 7;
-      
-    BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, round );
     BSUBWAY_SCRWORK_SetNowRenshou( bsw_scr, renshou );
-  }else{ //存在しない場合は連勝数をリセット(連勝数送信、トレーナー抽選の為)
+  }
+  else  //存在しない場合は連勝数をリセット(連勝数送信、トレーナー抽選の為)
+  {
     BSUBWAY_SCRWORK_ResetNowRenshou( bsw_scr );
   }
 }
@@ -1259,7 +1254,7 @@ void BSUBWAY_SCRWORK_SetNowRenshou( BSUBWAY_SCRWORK *bsw_scr, u16 renshou )
 //--------------------------------------------------------------
 void BSUBWAY_SCRWORK_IncNowRenshou( BSUBWAY_SCRWORK *bsw_scr )
 {
-  if( bsw_scr->now_renshou < BSW_RENSHOU_MAX ){
+  if( bsw_scr->now_renshou < BSW_RENSHOU_DATA_MAX ){
     bsw_scr->now_renshou++;
   }
 }
@@ -1291,8 +1286,8 @@ static void bsw_RecoverNowRenshou(
   renshou = stage * 7; //1stage = 7round
   renshou += round;    //1-6round
   
-  if( renshou > BSW_RENSHOU_MAX ){
-    renshou = BSW_RENSHOU_MAX;
+  if( renshou > BSW_RENSHOU_DATA_MAX ){
+    renshou = BSW_RENSHOU_DATA_MAX;
   }
   
   bsw_scr->now_renshou = renshou;

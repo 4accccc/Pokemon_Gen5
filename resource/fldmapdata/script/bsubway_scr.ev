@@ -2659,12 +2659,12 @@ sub_bsw_common_renshou_msg:
     _BSUBWAY_TOOL( BSWTOOL_GET_SAVE_RENSHOU, play_mode, BSW_NULL, count )
     _BSUBWAY_TOOL( BSWTOOL_GET_SAVE_RENSHOU, comm_mode, BSW_NULL, comm_count )
     
-    IF $count > 9999 THEN
-      $count = 9999
+    IF $count > BSW_RENSHOU_PRINT_MAX THEN
+      $count = BSW_RENSHOU_PRINT_MAX
     ENDIF
       
-    IF $comm_count > 9999 THEN
-      $comm_count = 9999
+    IF $comm_count > BSW_RENSHOU_PRINT_MAX THEN
+      $comm_count = BSW_RENSHOU_PRINT_MAX
     ENDIF
     
     //ステージ数が存在しているのであれば連勝中メッセージ
@@ -2716,8 +2716,8 @@ sub_bsw_common_renshou_msg:
       IF $count != 0 THEN
         _PLAYER_NAME( 0 )
       
-        IF $count > 9999 THEN
-          $count = 9999
+        IF $count > BSW_RENSHOU_PRINT_MAX THEN
+          $count = BSW_RENSHOU_PRINT_MAX
         ENDIF
         
         _NUMBER( 1, count, 4 )

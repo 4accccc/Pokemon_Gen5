@@ -551,6 +551,10 @@ void BSUBWAY_SCOREDATA_SetRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
 {
   mode = scoreData_ChgMultiMode( mode );
+  if( count > BSW_RENSHOU_DATA_MAX ){
+    GF_ASSERT( 0 );
+    count = BSW_RENSHOU_DATA_MAX;
+  }
   bsw_score->renshou[mode] = count;
 }
 
@@ -1214,6 +1218,20 @@ void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBW
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_LEADER_DATA* dat, u8 rank, u8 room )
 {
+#ifdef PM_DEBUG
+  KAGAYA_Printf( "BSW SAVE LEADER DATA RANK %d ROOM %d\n", rank, room );
+  {
+    int i;
+    u32 id;
+    const BSUBWAY_LEADER_DATA *pLeader = bsw_wifi->leader;
+    
+    for( i = 0; i < BSUBWAY_STOCK_WIFI_LEADER_MAX; i++, pLeader++ ){
+      id = *((u32*)pLeader->id_no);
+      KAGAYA_Printf( "BEFORE BSW SAVE LEADER DATA No.%d ID=%d\n", i, id );
+    }
+  }
+#endif
+
   GFL_STD_MemCopy( dat, &bsw_wifi->leader,
     sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX );
   
@@ -1221,6 +1239,19 @@ void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_
   bsw_wifi->leader_rank = rank;
   bsw_wifi->leader_room = room;
   bsw_wifi->leader_data_f = TRUE;
+
+#ifdef PM_DEBUG
+  {
+    int i;
+    u32 id;
+    const BSUBWAY_LEADER_DATA *pLeader = bsw_wifi->leader;
+    
+    for( i = 0; i < BSUBWAY_STOCK_WIFI_LEADER_MAX; i++, pLeader++ ){
+      id = *((u32*)pLeader->id_no);
+      KAGAYA_Printf( "AFTER BSW SAVE LEADER DATA No.%d ID=%d\n", i, id );
+    }
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1284,7 +1315,6 @@ BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DAT
   p_dat = GFL_HEAP_AllocClearMemory( heapID, sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX );
 
   GFL_STD_MemCopy(bsw_wifi->leader, p_dat, sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
-  
   return p_dat;
 }
 
