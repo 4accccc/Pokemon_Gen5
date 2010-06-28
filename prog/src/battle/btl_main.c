@@ -263,8 +263,7 @@ static void Kentei_ClearField( BATTLE_SETUP_PARAM* sp );
 static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk );
 
 
-
-#define AMPROTECT_FUNC
+// ê‘äOê¸åüèoóp
 #ifdef AMPROTECT_FUNC
 #include "system/irc_internal_another.h"
 FS_EXTERN_OVERLAY(irc_check_another);
