@@ -265,7 +265,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
 //---‰‰oI‚í‚è
 
-  if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEIN_START)){
+  if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEIN_START)-2){
     if(pWork->pMoveMcss[0]){
       GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
       pWork->pMoveMcss[0]=NULL;
