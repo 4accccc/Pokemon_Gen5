@@ -177,6 +177,7 @@ _ANIME_LABEL	anm_c07_support_come_x174
 // サポート：専用アニメ                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_senyou
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA AC_SUPPORT_ACT0,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -464,7 +465,8 @@ EVENT_START   ev_pos_d08_rival_01
 		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x179 )
 		_OBJ_ANIME_WAIT()
 	CASE 180 THEN
-		//目の前に立ったのでアニメーションなし
+		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x180 )
+		_OBJ_ANIME_WAIT()
 	CASE 181 THEN
 		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x181 )
 		_OBJ_ANIME_WAIT()
@@ -472,7 +474,8 @@ EVENT_START   ev_pos_d08_rival_01
 		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x182 )
 		_OBJ_ANIME_WAIT()
 	DEFAULT  //目の前に立ったケースと同じ処理を行う
-		//目の前に立ったのでアニメーションなし
+		_OBJ_ANIME( D08_RIVAL_01, anm_d08_rival_come_x180 )
+		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
 	//プレイヤーネームを格納
@@ -523,6 +526,7 @@ EVENT_END
 //	ストッパー：ライバルx177
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d08_rival_come_x177
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -531,6 +535,7 @@ _ANIME_LABEL	anm_d08_rival_come_x177
 //	ストッパー：ライバルx178
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d08_rival_come_x178
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -539,14 +544,23 @@ _ANIME_LABEL	anm_d08_rival_come_x178
 //	ストッパー：ライバルx179
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d08_rival_come_x179
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパー：ライバルx180
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d08_rival_come_x180
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	ストッパー：ライバルx181
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d08_rival_come_x181
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -555,6 +569,7 @@ _ANIME_LABEL	anm_d08_rival_come_x181
 //	ストッパー：ライバルx182
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d08_rival_come_x182
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -590,11 +605,26 @@ EVENT_START   ev_d08r0101_hakase2_01
 	_BALLOONWIN_CLOSE()
 	
 	//アララギ主人公と向き合う
-	_TURN_HERO_SITE()
+	//_TURN_HERO_SITE()
 	
-  _MAP_FADE_BLACK_OUT_SLOW()
-  _MAP_FADE_END_CHECK()
-  _GOTO_GAMECLEAR_DEMO( 0 )
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,1437696,0,2572288,80 )	//一番最後の引数は移動にかかるフレーム数
+	
+	_TIME_WAIT(30)
+	
+	//暗転
+	_MAP_FADE_BLACK_OUT_SLOW()
+	_MAP_FADE_END_CHECK()
+	
+	//BGM変更
+	_START_EVENT_BGM_EX( SEQ_BGM_D_07, BGM_FADE_SHORT )
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	//_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
+	_GOTO_GAMECLEAR_DEMO( 0 )
 	}
 	
 EVENT_END
