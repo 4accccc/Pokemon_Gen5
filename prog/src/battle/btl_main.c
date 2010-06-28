@@ -175,6 +175,8 @@ struct _BTL_MAIN_MODULE {
 
 };
 
+
+
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
@@ -262,6 +264,12 @@ static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk );
 
 
 
+#define AMPROTECT_FUNC
+#ifdef AMPROTECT_FUNC
+#include "system/irc_internal_another.h"
+FS_EXTERN_OVERLAY(irc_check_another);
+
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -2396,6 +2404,10 @@ int BTL_MAIN_GetPrintWait( const BTL_MAIN_MODULE* wk )
 {
   return MSGSPEED_GetWaitByConfigParam( wk->msgSpeed );
 }
+
+
+
+
 //=============================================================================================
 /**
  * 経験値取得シーケンスが有効な対戦かどうか判定
@@ -2407,6 +2419,31 @@ int BTL_MAIN_GetPrintWait( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
 {
+
+#ifdef AMPROTECT_FUNC
+
+  if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
+  ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
+  ){
+    BOOL fIRCExist=FALSE;
+    
+    // WILD・TRAINER戦の中に入ってくるということは一人用でプレイしている
+    // =通信対戦・IR対戦ではないので無線チェックオーバーレイの使用OKなはず
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(irc_check_another));
+    fIRCExist = IRC_Check_Another();
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(irc_check_another));
+    if(!fIRCExist){
+      return FALSE;   //IR無かったら経験値計算無し
+    }
+    
+    if( !BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_LEGEND_EX) ){
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+#endif
+
   if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
   ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
   ){
