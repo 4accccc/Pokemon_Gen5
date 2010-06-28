@@ -3306,6 +3306,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       wk->wazaParam->fReqWaza = TRUE;
       wk->wazaParam->orgWazaID = orgWaza;
       if( scproc_Fight_CheckReqWazaFail( wk, attacker, wk->wazaParam) ){
+        scproc_decrementPPUsedWaza( wk, attacker, orgWaza, orgWazaIdx, wk->psetTargetOrg );
         fPPDecrement = TRUE;
         break;
       }
