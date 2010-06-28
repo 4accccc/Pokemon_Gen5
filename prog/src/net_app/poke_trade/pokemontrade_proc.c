@@ -3019,6 +3019,15 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
       pWork->BoxScrollNum = centerPOS[0];
       bChange=TRUE;
     }
+
+    //変更がかかる場合、カーソル位置を左から2列目（0オリジン）にする　20100628 add Saito BTS6929_a
+    if ( bChange )
+    {
+      int setline = POKETRADE_boxScrollNum2Line(pWork);
+      setline+=2;
+      if (setline >= pWork->TRADEBOX_LINEMAX) setline -= pWork->TRADEBOX_LINEMAX;
+      pWork->MainObjCursorLine = setline;
+    }
   }
   else if(key & PAD_BUTTON_L ){   //ベクトルを監視
     GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
@@ -3032,6 +3041,15 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
     if(!bChange){
       pWork->BoxScrollNum = centerPOS[pWork->BOX_TRAY_MAX];
       bChange=TRUE;
+    }
+
+    //変更がかかる場合、カーソル位置を左から2列目（0オリジン）にする　20100628 add Saito BTS6929_a
+    if ( bChange )
+    {
+      int setline = POKETRADE_boxScrollNum2Line(pWork);
+      setline+=2;
+      if (setline >= pWork->TRADEBOX_LINEMAX) setline -= pWork->TRADEBOX_LINEMAX;
+      pWork->MainObjCursorLine = setline;
     }
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_UP ){   //ベクトルを監視
@@ -3603,10 +3621,14 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
           pWork->oldLine = -1;//強制書き直し
           pWork->bgscrollRenew = TRUE;
           _scrollMainFunc(pWork,FALSE,TRUE);
+          //スクロール停止 20100628 add Saito BTS6929_b
+          pWork->speed = 0;
           return;
         }
       }
       _PokemonIconRenew(pWork);
+      //スクロール停止 20100628 add Saito BTS6929_b
+      pWork->speed = 0;
       return;
     }
   }
