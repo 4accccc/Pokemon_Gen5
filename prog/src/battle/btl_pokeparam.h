@@ -98,6 +98,7 @@ typedef enum {
   BPP_TURNFLG_TAMEHIDE_OFF,           ///< 溜めワザによる非表示状態を解除する必要あり
   BPP_TURNFLG_MOVED,                  ///< サイドチェンジ・ムーブを行った
   BPP_TURNFLG_TURNCHECK_SICK_PASSED,  ///< ターンチェック状態異常処理を経過した
+  BPP_TURNFLG_HITRATIO_UP,            ///< ミクル効果によりヒット率上昇中
 
   BPP_TURNFLG_MAX,
 

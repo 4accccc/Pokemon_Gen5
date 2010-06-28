@@ -616,6 +616,8 @@ void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARA
  *------------------------------------------------------------*/
 void BTL_SICKEVENT_CheckHitRatio( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
 {
+  // ミクル効果はここで処理せずターンフラグ処理としてシステムに組み込む
+  #if 0
   if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) )
   {
     fx32 ratio;
@@ -624,6 +626,7 @@ void BTL_SICKEVENT_CheckHitRatio( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* 
     ratio = FX32_CONST( param ) / 100;
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
   }
+  #endif
 }
 
 

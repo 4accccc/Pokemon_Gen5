@@ -3235,7 +3235,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   BtlPokePos  orgTargetPos, actTargetPos;
   BppContFlag  tameFlag;
   FLAG_SET  wazaFlags;
-  u8 fWazaEnable, fWazaLock, fReqWaza, fPPDecrement, fHitRatioUp, orgWazaIdx;
+  u8 fWazaEnable, fWazaLock, fReqWaza, fPPDecrement, orgWazaIdx;
 
   tameFlag = BPP_CONTFLAG_CheckWazaHide( attacker );
 
@@ -3261,7 +3261,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   actTargetPos = orgTargetPos;
   fWazaEnable = FALSE;
   fPPDecrement = FALSE;
-  fHitRatioUp = FALSE;
   fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK) || BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
   BTL_HANDLER_Waza_Add( attacker, orgWaza );
@@ -3354,7 +3353,13 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // ここまで来たらPP減少は確定
     wk->prevExeWaza = actWaza;
-    fHitRatioUp = BPP_CheckSick( attacker, WAZASICK_HITRATIO_UP );
+
+    // 命中率上昇チェック
+    if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) )
+    {
+      scPut_CureSick( wk, attacker, WAZASICK_HITRATIO_UP, NULL );
+      BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_HITRATIO_UP );
+    }
 
     // ワザ出し失敗判定２（ＰＰ減少後）
     if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock )){
@@ -3390,14 +3395,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
   // ワザプロセス修了した
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZAPROC_DONE );
-
-  // 命中率上昇効果をクリア
-  if( fHitRatioUp ){
-    if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) ){
-      scPut_CureSick( wk, attacker, WAZASICK_HITRATIO_UP, NULL );
-    }
-  }
-
 
   // PP消費したらワザ使用記録を更新
   if( fPPDecrement || (actWaza == WAZANO_WARUAGAKI) )
@@ -4188,11 +4185,6 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     }
   }
 
-  // 命中率上昇効果をクリア
-  if( BPP_CheckSick(attacker, WAZASICK_HITRATIO_UP) ){
-    scPut_CureSick( wk, attacker, WAZASICK_HITRATIO_UP, NULL );
-  }
-
   if( fEnable )
   {
     BTL_Printf("ワザ=%d, カテゴリ=%d\n", wk->wazaParam.wazaID, category );
@@ -4844,7 +4836,6 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
       BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_RANK, BPP_GetValue(attacker, BPP_HIT_RATIO) );
       BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BPP_GetValue(defender, BPP_AVOID_RATIO) );
       BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.01f), FX32_CONST(32) );
-      BTL_SICKEVENT_CheckHitRatio( wk, attacker, defender );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_RANK );
 
       hitRank = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_RANK );
@@ -4855,6 +4846,10 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
       ||  (fAvoidFlat)
       ){
         avoidRank = BTL_CALC_HITRATIO_MID;
+      }
+
+      if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_HITRATIO_UP) ){
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.2) );
       }
 
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );

@@ -228,6 +228,10 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( POKEMON_PARAM* pp, u8 pokeID, HEAPID heapI
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->coreParam.hpMax = PP_Get( pp, ID_PARA_hpmax, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
+  // 未来バージョン対策で想定外のアイテムナンバーは無効として扱う
+  if( bpp->coreParam.item > ITEM_DATA_MAX ){
+    bpp->coreParam.item = ITEM_DATA_MAX;
+  }
   bpp->coreParam.usedItem = ITEM_DUMMY_DATA;
   bpp->coreParam.fHensin = FALSE;
   bpp->coreParam.ppFake = NULL;

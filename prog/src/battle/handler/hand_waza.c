@@ -1667,6 +1667,7 @@ static void handler_Sketch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 
     {
       WazaID orgWaza = BPP_GetPrevOrgWazaID( target );
+      TAYA_Printf("prev OrgWaza=%d, actWaza=%d\n", orgWaza, waza );
       if( orgWaza != waza ){
         waza = orgWaza;
       }
