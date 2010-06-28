@@ -148,6 +148,7 @@ struct _G_SYNC_WORK {
   GAMEDATA* pGameData;
   MUSICAL_DIST_SAVE* pMusical;
   DREAMWORLD_SAVEDATA* pBackupDream;
+  DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDreamDownload;
   u8* pZknWork;
   u8* pCGearWork;
   void* pTopAddr;
@@ -188,6 +189,8 @@ static void _networkClose(G_SYNC_WORK* pWork);
 static void _downloadcheck(G_SYNC_WORK* pWork);
 static void _downloadcgearend(G_SYNC_WORK* pWork);
 static void _ErrorDisp(G_SYNC_WORK* pWork);
+static void _SymbolPokemonSave(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
+static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 
 
 
@@ -688,15 +691,28 @@ static void _wakeupAction_save2(G_SYNC_WORK* pWork)
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) != SAVE_RESULT_LAST){
     return;
   }
-  pWork->time = GFUser_GetPublicRand(90);
+  pWork->time = GFUser_GetPublicRand(190);
   _CHANGE_STATE(_wakeupAction_save22);
 }
 
 
 static void _wakeupAction_1(G_SYNC_WORK* pWork)
 {
+  DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+
   pWork->errEnd = TRUE;
-  _pokemonArise(pWork);
+
+  _pokemonArise(pWork);  //おこす
+
+  if(!_IsLv1Mode(pWork)){
+
+    _SymbolPokemonSave(pWork, pDreamSave, pWork->pDreamDownload);  //ぽけもんかくのう
+    // 家具
+    _furnitureInSaveArea(pDreamSave, pWork->pDreamDownload);
+    //サインイン
+    DREAMWORLD_SV_SetSignin(pDreamSave,pWork->pDreamDownload->signin);
+  }
+
   pWork->bSaveDataAsync=TRUE;
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
   _CHANGE_STATE(_wakeupAction_save2);
@@ -1074,6 +1090,20 @@ static BOOL _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_D
   return bGet;
 }
 
+//   アイテムがあるかどうか
+static BOOL _itemInCheck(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
+{
+  int i;
+  BOOL bGet=FALSE;
+  
+  for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    if(pDream->itemID[i]!=0 && (pDream->itemID[i]<=ITEM_DATA_MAX)){
+      bGet=TRUE;
+    }
+  }
+  return bGet;
+}
+
 
 //ポケモンをセーブエリアに移動
 static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSave,int monsno,int sex, int form, int tec, int act)
@@ -1120,6 +1150,23 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
   }
 }
 
+static void _SymbolPokemonSave(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
+{
+  int i;
+  //シンボルポケ格納
+  for(i=0;i<DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
+    if(pDream->poke[i].findPokemon==0){
+      break;
+    }
+    _symbolPokemonSave(pWork, pDreamSave,
+                       pDream->poke[i].findPokemon,
+                       pDream->poke[i].findPokemonSex,
+                       pDream->poke[i].findPokemonForm,
+                       pDream->poke[i].findPokemonTecnique,
+                       pDream->poke[i].findPokemonAct);
+  }
+}
+
 
 static void _itemDispInit(G_SYNC_WORK* pWork,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
 {
@@ -1163,23 +1210,13 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
       if(pDream->poke[i].findPokemon==0){
         break;
       }
-      _symbolPokemonSave(pWork, pDreamSave,
-                         pDream->poke[i].findPokemon,
-                         pDream->poke[i].findPokemonSex,
-                         pDream->poke[i].findPokemonForm,
-                         pDream->poke[i].findPokemonTecnique,
-                         pDream->poke[i].findPokemonAct);
       GSYNC_DISP_MoveIconPokeAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX+i,
-                             pDream->poke[i].findPokemon, pDream->poke[i].findPokemonForm,
-                             pDream->poke[i].findPokemonSex);
+                                 pDream->poke[i].findPokemon, pDream->poke[i].findPokemonForm,
+                                 pDream->poke[i].findPokemonSex);
     }
 
-    //サインイン
-    DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
-    // 家具
-    _furnitureInSaveArea(pDreamSave, pDream);
-    //アイテム
-    pWork->bGet = _itemInSaveArea(pDreamSave, pDream);
+    //アイテム チェックのみ
+    pWork->bGet = _itemInCheck(pDreamSave, pDream);
     //アイテムの表示
     _itemDispInit(pWork, pDream);
     //リソース読み込み
@@ -1259,8 +1296,9 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
         gs_response* pRep = (gs_response*)pEvent;
 
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        pWork->pDreamDownload = GFL_HEAP_AllocClearMemory( pWork->heapID, sizeof(DREAM_WORLD_SERVER_DOWNLOAD_DATA));
 
-        
+        GFL_STD_MemCopy(pDream, pWork->pDreamDownload, sizeof(DREAM_WORLD_SERVER_DOWNLOAD_DATA));
         _datacheck(pWork, pDreamSave, pDream, pRep);
       }
     }
@@ -2524,6 +2562,9 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 
   if(WIPE_SYS_EndCheck() && !pWork->noERROR){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      if(pWork->pDownload){
+        GSYNC_DOWNLOAD_ExitAsync(pWork->pDownload);
+      }
       NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
       if(pWork->bSaveDataAsync){
         GAMEDATA_SaveAsyncCancel( pWork->pGameData );
@@ -2554,6 +2595,10 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  }
+  if(pWork->pDreamDownload){
+    GFL_HEAP_FreeMemory(pWork->pDreamDownload);
+    pWork->pDreamDownload=NULL;
   }
   GSYNC_MESSAGE_End(pWork->pMessageWork);
   GSYNC_DISP_End(pWork->pDispWork);

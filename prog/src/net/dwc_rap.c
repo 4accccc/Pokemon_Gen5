@@ -1690,6 +1690,7 @@ int mydwc_HandleError(void)
         case MDSTATE_TIMEOUT:
         case MDSTATE_DISCONNECTTING:
         case MDSTATE_DISCONNECT:
+          OS_TPrintf("A ");
           DWC_ShutdownFriendsMatch(  );
         case MDSTATE_INIT:
         case MDSTATE_CONNECTING:
