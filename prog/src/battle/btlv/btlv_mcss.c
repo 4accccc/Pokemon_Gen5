@@ -671,6 +671,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
     { 
       VEC_Set( &ofs, 0xfffffc00, 0, 0xfffffa00 );
       rot_z = 0xf800;
+      flag  = TRUE;
     }
     if( flag == FALSE )
     { 
