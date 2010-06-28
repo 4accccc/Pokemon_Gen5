@@ -338,10 +338,10 @@ static void SetupSequence( GAMECLEAR_WORK* work )
 
 #ifdef  PLAYABLE_VERSION
   switch( work->clear_mode ) {
-  case 0:
+  case 0: //クリア
     //work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
-    work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+    //work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
     work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
     //work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
@@ -355,7 +355,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
     work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;      //「製品版をお楽しみに」
     work->seqArray[pos++] = GMCLEAR_SEQ_END;
     break;
-  case 1:
+  case 1: //戦闘で全滅
     work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
     //work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
@@ -372,7 +372,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
     work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;      //「製品版をお楽しみに」
     work->seqArray[pos++] = GMCLEAR_SEQ_END;
     break;
-  case 2:
+  case 2: //時間切れ
     work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
     work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
