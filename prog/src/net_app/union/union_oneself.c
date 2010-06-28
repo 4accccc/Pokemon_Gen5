@@ -3620,8 +3620,6 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     return TRUE;
   }
 
-  OS_TPrintf("aaa NetConnect=%d, System=%d\n", GFL_NET_GetConnectNum(), GFL_NET_SystemGetConnectNum());
-  
   switch(*seq){
   case 0:
     {
