@@ -7725,8 +7725,11 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
   &&  (BPP_GetMonsNo(target) == MONSNO_SHEIMI)
   &&  (BPP_GetValue(target,BPP_FORM) == FORMNO_SHEIMI_SKY)
   ){
+    BTL_HANDLER_TOKUSEI_Remove( target );
     BPP_ChangeForm( target, FORMNO_SHEIMI_LAND );
     SCQUE_PUT_ACT_ChangeForm( wk->que, BPP_GetID(target), FORMNO_SHEIMI_LAND );
+    BTL_HANDLER_TOKUSEI_Add( target );
+
     scPut_Message_Set( wk, target, BTL_STRID_SET_ChangeForm );
   }
 
@@ -15193,9 +15196,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     BTL_HANDLER_TOKUSEI_Remove( bpp );
     BPP_ChangeTokusei( bpp, param->tokuseiID );
     SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
-    {
-      BTL_EVENT_FACTOR* p = BTL_HANDLER_TOKUSEI_Add( bpp );
-    }
+    BTL_HANDLER_TOKUSEI_Add( bpp );
 
 
     SCQUE_PUT_TOKWIN_OUT( wk->que, param->pokeID );

@@ -2660,6 +2660,7 @@ void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
 
   if( (bpp->coreParam.monsno == MONSNO_SHEIMI) && (formNo == FORMNO_SHEIMI_LAND) ){
     bpp->coreParam.defaultFormNo = FORMNO_SHEIMI_LAND;
+    bpp->tokusei = PP_Get( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_speabino, NULL );
   }
 }
 
