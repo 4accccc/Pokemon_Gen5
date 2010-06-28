@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-03-27T17:03:58"/>
+	<create user="morimoto" host="W00220" date="2010-06-28T15:22:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1336" top="153" right="2041" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="193" right="1985" bottom="821" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="419" right="1280" bottom="817" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -510,6 +510,14 @@
 せつだん　しました</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
 切断しました</language>
+	</row>
+
+	<row id="msg_wifi_bt_013" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,">
+		<comment>通信待機中メッセージ</comment>
+		<language name="JPN" width="216">つうしん　たいきちゅう　です
+しばらく　おまちください……</language>
+		<language name="JPN_KANJI" width="216">通信待機中です
+しばらく　お待ちください……</language>
 	</row>
 
 	<flowchart-group-list>
