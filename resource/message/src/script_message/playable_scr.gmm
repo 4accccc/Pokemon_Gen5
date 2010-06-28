@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-06-26T15:24:02"/>
+	<create user="matsumiya" host="W00224" date="2010-06-28T18:32:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="191" right="2014" bottom="819" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -402,12 +402,12 @@
 ・続けてトレーナー戦闘に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]
+		<language name="JPN" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！
 あたしの　ポケモン▼
 とても　チャーミングな　うごきで
 わざを　だすんだよ！▽
 いまから　みせてあげるね！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！
 あたしの　ポケモン▼
 とても　チャーミングな　うごきで
 わざを　だすんだよ！▽
@@ -423,11 +423,15 @@
 		<language name="JPN" width="256">ベル『うわあ！！▼
 すごいすごい！
 [1:00:トレーナー名:0]なら　もっともっと▽
-ポケモンと　なかよく　なれるよ！</language>
+ポケモンと　なかよく　なれるよ！▼
+ねえねえ！　チェレンは　どんなふうに
+ポケモンを　そだてているのかなあ？</language>
 		<language name="JPN_KANJI" width="256">ベル『うわあ！！▼
 すごいすごい！
 [1:00:トレーナー名:0]なら　もっともっと▽
-ポケモンと　なかよく　なれるよ！</language>
+ポケモンと　なかよく　なれるよ！▼
+ねえねえ！　チェレンは　どんなふうに
+ポケモンを　そだてているのかなあ？</language>
 	</row>
 
 	<row id="msg_playable_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -436,14 +440,24 @@
 ・メッセージ表示後、トレーナー戦闘に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">チェレン</attribute>
-		<language name="JPN" width="256">チェレン『あんまり　ぼくを
-またせないで　くれるかな▼
-では　さっそくだけど
-ポケモンしょうぶと　いこうか▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『あんまり　ぼくを
-またせないで　くれるかな▼
-では　さっそくだけど
-ポケモンしょうぶと　いこうか▼</language>
+		<language name="JPN" width="256">チェレン『この　さきが
+リュウラセンのとう……▼
+さっき　アララギはかせが
+はいっていったよ▼
+で　ぼくは　ここで
+きみが　くるのを　まっていたわけ▼
+もちろん　きみと
+ポケモンしょうぶを　するためさ▽
+さあ　はじめさせて　もらうよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『この　さきが
+リュウラセンのとう……▼
+さっき　アララギはかせが
+はいっていったよ▼
+で　ぼくは　ここで
+きみが　くるのを　まっていたわけ▼
+もちろん　きみと
+ポケモンしょうぶを　するためさ▽
+さあ　はじめさせて　もらうよ▼</language>
 	</row>
 
 	<row id="msg_playable_rival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -455,14 +469,14 @@
 きみは　すばらしい　トレーナーだ▼
 だけど　いっておくよ
 つぎは……　ぼくが　かつ！▼
-ちなみに　アララギはかせ　なら
-もっと　すすんだところに　いるよ</language>
+アララギはかせが　まっているんだろ？
+さあ　はやく　いきなよ</language>
 		<language name="JPN_KANJI" width="256">チェレン『……なるほどね
 きみは　すばらしい　トレーナーだ▼
 だけど　いっておくよ
 つぎは……　ぼくが　かつ！▼
-ちなみに　アララギはかせ　なら
-もっと　すすんだところに　いるよ</language>
+アララギはかせが　まっているんだろ？
+さあ　はやく　いきなよ</language>
 	</row>
 
 	<row id="msg_playable_hakase2_01">
