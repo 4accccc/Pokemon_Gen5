@@ -496,8 +496,7 @@ BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
 {
   static const u16 table[] = {
     WAZANO_NULL,    WAZANO_SUKETTI,   WAZANO_MONOMANE,
-    WAZANO_HENSIN,  WAZANO_WARUAGAKI, WAZANO_YUBIWOHURU,
-    WAZANO_OSYABERI
+    WAZANO_HENSIN,  WAZANO_WARUAGAKI, WAZANO_OSYABERI,
   };
 
   return checkTableElems( waza, table, NELEMS(table) );
