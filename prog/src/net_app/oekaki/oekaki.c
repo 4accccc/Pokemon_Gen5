@@ -2256,7 +2256,7 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
   return seq;
 }
 
-//#define OEKAKI_DEBUG_FUNC
+#define OEKAKI_RIDATU_FUNC
 
 //------------------------------------------------------------------
 /**
@@ -2271,7 +2271,7 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
 static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq )
 {
   // 接続人数が１減るかチェック
-#ifdef OEKAKI_DEBUG_FUNC
+#ifdef OEKAKI_RIDATU_FUNC
   if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) ||   // 離脱した子機が減る
      (wk->ridatu_bit & _get_connect_bit(wk))==0){                   // 離脱した子機が既にいなくなっている
 #else
@@ -2303,7 +2303,7 @@ static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq )
 static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
 {     
   // 接続人数が１減るまでは待つ
-#ifdef OEKAKI_DEBUG_FUNC
+#ifdef OEKAKI_RIDATU_FUNC
   if((wk->err_num != 0 && _get_connect_num(wk) != wk->err_num) || 
      (wk->ridatu_bit & _get_connect_bit(wk))==0){
 #else
@@ -2400,6 +2400,7 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
   case OEKAKI_MODE_FORCE_END:
     break;
   case OEKAKI_MODE_END_SELECT_ANSWER_OK:
+    Oekaki_SendDataRequest( wk, CO_OEKAKI_END_CHILD_DECIDE, GFL_NET_SystemGetCurrentID() );
     break;
   case OEKAKI_MODE_END_SELECT_ANSWER_NG:
     break;

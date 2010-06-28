@@ -261,7 +261,7 @@ static void CommOekakiBoardEndChild(
 //          wk->ridatu_bit |= 1 << netID;
           wk->send_req.trans_work.ridatu_kyoka = TRUE;
           //—£’EOK‚È‚Ì‚ÅQ‰Á§ŒÀ‚ğ‚©‚¯‚é(—“ü‚ª‚ ‚ê‚Î‚»‚¿‚ç‘¤‚Å§ŒÀ‚ª‚Í‚¸‚³‚ê‚é‚Í‚¸)
-          Union_App_Parent_ResetEntryBlock( wk->param->uniapp);   // —“üOK
+          Union_App_Parent_ResetEntryBlock( wk->param->uniapp);   // —“üNG
         }
         break;
       case COEC_REQ_RIDATU_EXE:
