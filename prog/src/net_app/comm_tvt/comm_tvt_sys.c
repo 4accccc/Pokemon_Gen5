@@ -1250,6 +1250,8 @@ void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx )
       }
     }
     
+    if( CTVT_COMM_IsEnableMember( work , work->commWork , idx ) == TRUE &&
+        CTVT_COMM_IsEnableMemberData( work , work->commWork , idx ) == TRUE )
     {
       //X‚Í–¼‘O‚Ì•ª‘«‚·
       const u8 posX[4] = { 64+8, 128+64+8 , 64+8 , 128+64+8 };
