@@ -274,6 +274,10 @@ static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, 
 {
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
+  //遊覧船の中ではつかえない
+  if ( ZONEDATA_IsPlBoat(zone_id) ) {
+    return FALSE;
+  }
   //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
   return ( ZONEDATA_CheckFieldSkillUse(zone_id));
 }
