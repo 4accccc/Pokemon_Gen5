@@ -1892,6 +1892,20 @@ BOOL IntrudeField_Check_Tutorial_OR_TargetMine(INTRUDE_COMM_SYS_PTR intcomm)
   return FALSE;
 }
 
+//==================================================================
+/**
+ * パレスマップでマップ連結を行わないようにフラグをセットする
+ *
+ * @param   game_comm		
+ */
+//==================================================================
+void IntrudeField_SetPalaceMapNotConnect(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  if(intcomm != NULL){
+    intcomm->palace_map_not_connect = TRUE;
+  }
+}
+
 
 #ifdef PM_DEBUG
 GMEVENT * DEBUG_EVENT_PalaceBarrierMove(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir)

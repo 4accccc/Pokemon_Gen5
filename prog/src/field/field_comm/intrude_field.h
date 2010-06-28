@@ -83,6 +83,7 @@ extern void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork);
 extern BOOL IntrudeField_CheckIntrudeShutdown(GAMESYS_WORK *gsys, u16 zone_id);
 extern GMEVENT * EVENT_MissionTargetWarp(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
 extern BOOL IntrudeField_Check_Tutorial_OR_TargetMine(INTRUDE_COMM_SYS_PTR intcomm);
+extern void IntrudeField_SetPalaceMapNotConnect(INTRUDE_COMM_SYS_PTR intcomm);
 
 
 //--------------------------------------------------------------

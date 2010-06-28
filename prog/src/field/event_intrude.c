@@ -732,9 +732,11 @@ GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys, MISSION_FORCEWARP_M
   evf = GMEVENT_GetEventWork(event);
   evf->warp_talk = warp_talk;
   
-  {//intcommが生きている場合は下画面の更新停止
-    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  //intcommが生きている場合は下画面の更新停止 & マップ連結禁止
+  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
     if(intcomm != NULL){
+      IntrudeField_SetPalaceMapNotConnect(GameCommSys_GetAppWork(game_comm));
       intcomm->subdisp_update_stop = TRUE;
     }
   }
@@ -787,7 +789,6 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   switch( *seq )
   {
   case SEQ_WARP_MY_PALACE:  //自分のパレスへワープ
-    Intrude_SetPalaceMapNotConnect(game_comm);
     GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_Mine(gsys) );
     (*seq)++;
     break;

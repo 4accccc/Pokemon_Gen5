@@ -174,22 +174,6 @@ int Intrude_GetWarpTown(GAME_COMM_SYS_PTR game_comm)
 
 //==================================================================
 /**
- * パレスマップでマップ連結を行わないようにフラグをセットする
- *
- * @param   game_comm		
- */
-//==================================================================
-void Intrude_SetPalaceMapNotConnect(GAME_COMM_SYS_PTR game_comm)
-{
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
-  
-  if(intcomm != NULL){
-    intcomm->palace_map_not_connect = TRUE;
-  }
-}
-
-//==================================================================
-/**
  * ミッションバトル用の相手指定のタイミングコマンドが受信できているか確認します
  *
  * @param   intcomm		
