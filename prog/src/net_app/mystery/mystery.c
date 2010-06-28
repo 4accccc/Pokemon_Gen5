@@ -2701,6 +2701,8 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
           );
     }
 
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_MYSTERYGIFT );
+
     PMSND_PlayBGM( SEQ_BGM_WIFI_PRESENT );
     MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );
     *p_seq  = SEQ_PROC_WAIT;
