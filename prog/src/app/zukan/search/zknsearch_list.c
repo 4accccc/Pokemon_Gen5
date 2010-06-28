@@ -358,6 +358,7 @@ void ZKNSEARCHLIST_MakeRowList( ZKNSEARCHMAIN_WORK * wk )
 		hed.cbWork     = wk;
 
 		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_SEARCH );
+		wk->listPosMax = hed.posMax;
 	}
 
 	// €–Ú”wŒiİ’è
@@ -401,6 +402,7 @@ void ZKNSEARCHLIST_MakeNameList( ZKNSEARCHMAIN_WORK * wk )
 		hed.cbWork     = wk;
 
 		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_SEARCH );
+		wk->listPosMax = hed.posMax;
 	}
 
 	// €–Ú”wŒiİ’è
@@ -444,6 +446,7 @@ void ZKNSEARCHLIST_MakeTypeList( ZKNSEARCHMAIN_WORK * wk )
 		hed.cbWork     = wk;
 
 		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_SEARCH );
+		wk->listPosMax = hed.posMax;
 	}
 
 	// €–Ú”wŒiİ’è
@@ -487,6 +490,7 @@ void ZKNSEARCHLIST_MakeColorList( ZKNSEARCHMAIN_WORK * wk )
 		hed.cbWork     = wk;
 
 		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_SEARCH );
+		wk->listPosMax = hed.posMax;
 	}
 
 	// €–Ú”wŒiİ’è
@@ -530,6 +534,7 @@ void ZKNSEARCHLIST_MakeFormList( ZKNSEARCHMAIN_WORK * wk )
 		hed.cbWork     = wk;
 
 		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_SEARCH );
+		wk->listPosMax = hed.posMax;
 	}
 
 	// €–Ú”wŒiİ’è

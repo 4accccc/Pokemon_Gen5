@@ -68,6 +68,7 @@ typedef struct {
 	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
 
 	int	mainSeq;		// メインシーケンス
+	int	subSeq;			// サブシーケンス
 	int	nextSeq;		// 次のシーケンス
 	int	funcSeq;		// フェードなど特定の処理の後のシーケンス
 
@@ -90,6 +91,7 @@ typedef struct {
 
 	FRAMELIST_WORK * lwk;										// リストワーク
 	STRBUF * item[ZKNSEARCHMAIN_ITEM_MAX];	// リスト項目文字列
+	u32	listPosMax;													// リストカーソル移動範囲
 
 	CURSORMOVE_WORK * cmwk;			// カーソル移動ワーク
 	BLINKPALANM_WORK * blink;		// カーソルアニメワーク

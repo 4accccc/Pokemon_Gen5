@@ -720,6 +720,7 @@ static int MainSeq_InitName( ZKNSEARCHMAIN_WORK * wk )
 		wk->pageSeq++;
 	case 1:
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ZKNSEARCHOBJ_PutNamePage( wk );
 			ZKNSEARCHMAIN_LoadNameListPageScreen( wk );
 			ZKNSEARCHMAIN_ChangeBgPriorityList();
@@ -763,28 +764,45 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 		break;
 
 	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+		break;
+
 	case FRAMELIST_RET_MOVE:				// カーソル移動
 	case FRAMELIST_RET_SCROLL:			// スクロール通常
 	case FRAMELIST_RET_RAIL:				// レールスクロール
 	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 		break;
 
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_LEFT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_NAME;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_RIGHT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_NAME;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
+
+	case FRAMELIST_RET_PAGE_UP_NONE:		// ページ数が足りなくて１ページ上にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_LEFT, MAINSEQ_MAIN_NAME );
+
+	case FRAMELIST_RET_PAGE_DOWN_NONE:	// ページ数が足りなくて１ページ下にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RIGHT, MAINSEQ_MAIN_NAME );
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
 		ZKNSEARCHOBJ_VanishMark( wk );
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, wk->dat->sort->name );
+		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_NAME;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -816,6 +834,7 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 		case ZKNSEARCHUI_LIST_ENTER6:
 		case ZKNSEARCHUI_LIST_ENTER7:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ChangeSortName( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
@@ -862,6 +881,7 @@ static int MainSeq_InitType( ZKNSEARCHMAIN_WORK * wk )
 		wk->pageSeq++;
 	case 1:
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ZKNSEARCHOBJ_PutTypePage( wk );
 			ZKNSEARCHMAIN_LoadTypeListPageScreen( wk );
 			ZKNSEARCHMAIN_ChangeBgPriorityList();
@@ -905,29 +925,46 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 		break;
 
 	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+		break;
+
 	case FRAMELIST_RET_MOVE:				// カーソル移動
 	case FRAMELIST_RET_SCROLL:			// スクロール通常
 	case FRAMELIST_RET_RAIL:				// レールスクロール
 	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 		break;
 
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_LEFT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_TYPE;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_RIGHT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_TYPE;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
+
+	case FRAMELIST_RET_PAGE_UP_NONE:		// ページ数が足りなくて１ページ上にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_LEFT, MAINSEQ_MAIN_TYPE );
+
+	case FRAMELIST_RET_PAGE_DOWN_NONE:	// ページ数が足りなくて１ページ下にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RIGHT, MAINSEQ_MAIN_TYPE );
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
 		ZKNSEARCHOBJ_VanishMark( wk );
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type1) );
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 1, ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type2) );
+		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_TYPE;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -959,6 +996,7 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 		case ZKNSEARCHUI_LIST_ENTER6:
 		case ZKNSEARCHUI_LIST_ENTER7:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ChangeSortType( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
@@ -1006,6 +1044,7 @@ static int MainSeq_InitColor( ZKNSEARCHMAIN_WORK * wk )
 		wk->pageSeq++;
 	case 1:
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ZKNSEARCHOBJ_PutColorPage( wk );
 			ZKNSEARCHMAIN_LoadColorListPageScreen( wk );
 			ZKNSEARCHMAIN_ChangeBgPriorityList();
@@ -1049,28 +1088,45 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 		break;
 
 	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+		break;
+
 	case FRAMELIST_RET_MOVE:				// カーソル移動
 	case FRAMELIST_RET_SCROLL:			// スクロール通常
 	case FRAMELIST_RET_RAIL:				// レールスクロール
 	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 		break;
 
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_LEFT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_COLOR;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_RIGHT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_COLOR;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
+
+	case FRAMELIST_RET_PAGE_UP_NONE:		// ページ数が足りなくて１ページ上にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_LEFT, MAINSEQ_MAIN_COLOR );
+
+	case FRAMELIST_RET_PAGE_DOWN_NONE:	// ページ数が足りなくて１ページ下にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RIGHT, MAINSEQ_MAIN_COLOR );
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
 		ZKNSEARCHOBJ_VanishMark( wk );
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, wk->dat->sort->color );
+		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_COLOR;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -1102,6 +1158,7 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 		case ZKNSEARCHUI_LIST_ENTER6:
 		case ZKNSEARCHUI_LIST_ENTER7:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ChangeSortColor( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
@@ -1149,6 +1206,7 @@ static int MainSeq_InitForm( ZKNSEARCHMAIN_WORK * wk )
 		wk->pageSeq++;
 	case 1:
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ZKNSEARCHOBJ_PutFormPage( wk );
 			ZKNSEARCHMAIN_LoadFormListPageScreen( wk );
 			ZKNSEARCHMAIN_ChangeBgPriorityList();
@@ -1189,29 +1247,46 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 		break;
 
 	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
+		break;
+
 	case FRAMELIST_RET_MOVE:				// カーソル移動
 	case FRAMELIST_RET_SCROLL:			// スクロール通常
 	case FRAMELIST_RET_RAIL:				// レールスクロール
 	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 		break;
 
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_LEFT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_FORM;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->btnID = ZKNSEARCHOBJ_IDX_TB_RIGHT;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_FORM;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
+
+	case FRAMELIST_RET_PAGE_UP_NONE:		// ページ数が足りなくて１ページ上にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_LEFT, MAINSEQ_MAIN_FORM );
+
+	case FRAMELIST_RET_PAGE_DOWN_NONE:	// ページ数が足りなくて１ページ下にスクロールできなかった
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RIGHT, MAINSEQ_MAIN_FORM );
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
 		ZKNSEARCHOBJ_VanishJumpFormIcon( wk );
 		ZKNSEARCHOBJ_VanishMark( wk );
 		ZKNSEARCHOBJ_VanishJumpMarkForm( wk );
+		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+		wk->subSeq = 0;
 		wk->nextSeq = MAINSEQ_MAIN_FORM;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -1240,6 +1315,7 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 		case ZKNSEARCHUI_LIST_ENTER3:
 		case ZKNSEARCHUI_LIST_ENTER4:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			ChangeSortForm( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
@@ -1277,10 +1353,22 @@ static int MainSeq_ExitForm( ZKNSEARCHMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_PageMove( ZKNSEARCHMAIN_WORK * wk )
 {
-	if( FRAMELIST_Main( wk->lwk ) == FRAMELIST_RET_NONE ){
-		ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
-		return wk->nextSeq;
+	switch( wk->subSeq ){
+	case 0:
+		if( FRAMELIST_Main( wk->lwk ) == FRAMELIST_RET_NONE ){
+			wk->subSeq++;
+		}
+		break;
+
+	case 1:
+		if( wk->btnID == ZKNSEARCHOBJ_IDX_MAX || ZKNSEARCHOBJ_CheckAnm( wk, wk->btnID ) == FALSE ){
+			wk->subSeq = 0;
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
+			return wk->nextSeq;
+		}
+		break;
 	}
+
 	return MAINSEQ_PAGE_MOVE;
 }
 
@@ -1329,6 +1417,7 @@ static int MainSeq_ButtonAnm( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}else{
 		if( ZKNSEARCHOBJ_CheckAnm( wk, wk->btnID ) == FALSE ){
+			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
 			return wk->funcSeq;
 		}
 	}

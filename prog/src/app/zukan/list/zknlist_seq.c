@@ -251,6 +251,7 @@ static int MainSeq_InitListWait( ZKNLISTMAIN_WORK * wk )
 	switch( wk->listInit ){
 	case 0:
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
+			ZKNLISTOBJ_SetListPageArrowAnime( wk, FALSE );	// 矢印アニメ変更
 			ZKNLISTOBJ_SetPutPokeIconFlag( wk );
 			SetInitPalFade( wk );
 			wk->listInit++;
@@ -302,21 +303,34 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 	case FRAMELIST_RET_SCROLL:			// スクロール通常
 	case FRAMELIST_RET_RAIL:				// レールスクロール
 	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		ZKNLISTOBJ_SetListPageArrowAnime( wk, FALSE );
 		break;
 
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		wk->buttonID = ZKNLISTOBJ_IDX_TB_LEFT;
+		wk->subSeq = 0;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
 	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
 		ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		wk->buttonID = ZKNLISTOBJ_IDX_TB_RIGHT;
+		wk->subSeq = 0;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
+
+	case FRAMELIST_RET_PAGE_UP_NONE:		// ページ数が足りなくて１ページ上にスクロールできなかった
+		return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON, MAINSEQ_MAIN );
+
+	case FRAMELIST_RET_PAGE_DOWN_NONE:	// ページ数が足りなくて１ページ下にスクロールできなかった
+		return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON, MAINSEQ_MAIN );
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
 		ZKNLISTOBJ_VanishJumpPokeIcon( wk );
+		wk->buttonID = ZKNLISTOBJ_IDX_MAX;
+		wk->subSeq = 0;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
 
@@ -403,6 +417,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 	default:
 		{
 			int	pos = FRAMELIST_GetListPos( wk->lwk );
+			ZKNLISTOBJ_SetListPageArrowAnime( wk, FALSE );
 			if( CheckInfoData( wk, pos ) == TRUE ){
 				PMSND_PlaySE( ZKNLIST_SE_DECIDE );
 				return SetInfoData( wk, pos );
@@ -427,10 +442,22 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_PageMove( ZKNLISTMAIN_WORK * wk )
 {
-	if( FRAMELIST_Main( wk->lwk ) == FRAMELIST_RET_NONE ){
-		ZKNLISTOBJ_SetListPageArrowAnime( wk, FALSE );
-		return MAINSEQ_MAIN;
+	switch( wk->subSeq ){
+	case 0:
+		if( FRAMELIST_Main( wk->lwk ) == FRAMELIST_RET_NONE ){
+			wk->subSeq++;
+		}
+		break;
+
+	case 1:
+		if( wk->buttonID == ZKNLISTOBJ_IDX_MAX || ZKNLISTOBJ_CheckAnm( wk, wk->buttonID ) == FALSE ){
+			wk->subSeq = 0;
+			ZKNLISTOBJ_SetListPageArrowAnime( wk, FALSE );
+			return MAINSEQ_MAIN;
+		}
+		break;
 	}
+
 	return MAINSEQ_PAGE_MOVE;
 }
 
@@ -446,6 +473,7 @@ static int MainSeq_PageMove( ZKNLISTMAIN_WORK * wk )
 static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk )
 {
 	if( ZKNLISTOBJ_CheckAnm( wk, wk->buttonID ) == FALSE ){
+		ZKNLISTOBJ_SetListPageArrowAnime( wk, FALSE );
 		return wk->nextSeq;
 	}	
 	return MAINSEQ_BUTTON_ANM;

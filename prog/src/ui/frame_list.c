@@ -133,6 +133,9 @@ enum {
 	COMMAND_SCROLL_UP_1P,						// スクロール：１ページ上
 	COMMAND_SCROLL_DOWN_1P,					// スクロール：１ページ下
 
+	COMMAND_SCROLL_UP_1P_NONE,			// ページ数が足りなくて１ページ上にスクロールできなかった
+	COMMAND_SCROLL_DOWN_1P_NONE,		// ページ数が足りなくて１ページ下にスクロールできなかった
+
 	COMMAND_LIST_TOP,								// リスト一番上まで移動
 	COMMAND_LIST_BOTTOM,						// リスト一番下まで移動
 
@@ -747,7 +750,8 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 		}else if( wk->listPos != 0 ){
 			wk->listOldPos = wk->listPos;
 			wk->listPos = 0;
-			return COMMAND_CURSOR_MOVE;		// カーソル移動
+//			return COMMAND_CURSOR_MOVE;		// カーソル移動
+			return COMMAND_SCROLL_UP_1P_NONE;			// ページ数が足りなくて１ページ上にスクロールできなかった
 		}
 		break;
 
@@ -757,7 +761,8 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 		}else if( wk->listPos < (wk->listPosMax-1) ){
 			wk->listOldPos = wk->listPos;
 			wk->listPos = wk->listPosMax - 1;
-			return COMMAND_CURSOR_MOVE;		// カーソル移動
+//			return COMMAND_CURSOR_MOVE;		// カーソル移動
+			return COMMAND_SCROLL_DOWN_1P_NONE;		// ページ数が足りなくて１ページ下にスクロールできなかった
 		}
 		break;
 
@@ -844,7 +849,8 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 			wk->listOldPos = wk->listPos;
 			wk->listPos = 0;
 			wk->listWait = KEYWAIT_LIST_PAGE_MOVE;
-			return COMMAND_CURSOR_MOVE;		// カーソル移動
+//			return COMMAND_CURSOR_MOVE;		// カーソル移動
+			return COMMAND_SCROLL_UP_1P_NONE;			// ページ数が足りなくて１ページ上にスクロールできなかった
 		}
 		return COMMAND_NONE;						// 動作なし
 	}
@@ -858,7 +864,8 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 			wk->listOldPos = wk->listPos;
 			wk->listPos = wk->listPosMax - 1;
 			wk->listWait = KEYWAIT_LIST_PAGE_MOVE;
-			return COMMAND_CURSOR_MOVE;		// カーソル移動
+//			return COMMAND_CURSOR_MOVE;		// カーソル移動
+			return COMMAND_SCROLL_DOWN_1P_NONE;		// ページ数が足りなくて１ページ下にスクロールできなかった
 		}
 		return COMMAND_NONE;						// 動作なし
 	}
@@ -961,6 +968,20 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 		}
 		PMSND_PlaySE( SEQ_SE_SELECT1 );
 		return FRAMELIST_RET_PAGE_DOWN;
+
+	case COMMAND_SCROLL_UP_1P_NONE:			// ページ数が足りなくて１ページ上にスクロールできなかった
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
+		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
+		wk->mainSeq = MAINSEQ_WAIT;
+		return FRAMELIST_RET_PAGE_UP_NONE;
+
+	case COMMAND_SCROLL_DOWN_1P_NONE:		// ページ数が足りなくて１ページ下にスクロールできなかった
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
+		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
+		wk->mainSeq = MAINSEQ_WAIT;
+		return FRAMELIST_RET_PAGE_DOWN_NONE;
 
 	case COMMAND_LIST_TOP:				// リスト一番上まで移動
 		wk->listPos = 0;

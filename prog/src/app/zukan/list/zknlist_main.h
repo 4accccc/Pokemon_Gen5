@@ -70,6 +70,7 @@ typedef struct {
 	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
 
 	int	mainSeq;		// メインシーケンス
+	int	subSeq;			// サブシーケンス
 	int	nextSeq;		// 次のシーケンス
 	int	wipeSeq;		// ワイプ後のシーケンス
 

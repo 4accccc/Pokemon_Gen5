@@ -318,7 +318,7 @@ extern void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py );
  * @brief		ページ切り替え矢印アニメ
  *
  * @param		wk			図鑑リストワーク
- * @param		anm			TRUE = アクティブ, FALSE = パッシブ
+ * @param		anm			FALSE = 初期化時
  *
  * @return	none
  */

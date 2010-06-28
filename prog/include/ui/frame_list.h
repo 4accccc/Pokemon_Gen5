@@ -21,16 +21,18 @@
 //============================================================================================
 
 // リスト動作結果
-#define	FRAMELIST_RET_CURSOR_ON		( 0xfffffff6 )		// カーソル表示
-#define	FRAMELIST_RET_MOVE				( 0xfffffff7 )		// カーソル移動
-#define	FRAMELIST_RET_SCROLL			( 0xfffffff8 )		// スクロール通常
-#define	FRAMELIST_RET_RAIL				( 0xfffffff9 )		// レールスクロール
-#define	FRAMELIST_RET_SLIDE				( 0xfffffffa )		// スライドスクロール
-#define	FRAMELIST_RET_PAGE_UP			( 0xfffffffb )		// １ページ上へ
-#define	FRAMELIST_RET_PAGE_DOWN		( 0xfffffffc )		// １ページ下へ
-#define	FRAMELIST_RET_JUMP_TOP		( 0xfffffffd )		// リスト最上部へジャンプ
-#define	FRAMELIST_RET_JUMP_BOTTOM	( 0xfffffffe )		// リスト最下部へジャンプ
-#define	FRAMELIST_RET_NONE				( 0xffffffff )		// 動作なし
+#define	FRAMELIST_RET_CURSOR_ON				( 0xfffffff4 )		// カーソル表示
+#define	FRAMELIST_RET_MOVE						( 0xfffffff5 )		// カーソル移動
+#define	FRAMELIST_RET_SCROLL					( 0xfffffff6 )		// スクロール通常
+#define	FRAMELIST_RET_RAIL						( 0xfffffff7 )		// レールスクロール
+#define	FRAMELIST_RET_SLIDE						( 0xfffffff8 )		// スライドスクロール
+#define	FRAMELIST_RET_PAGE_UP					( 0xfffffff9 )		// １ページ上へ
+#define	FRAMELIST_RET_PAGE_DOWN				( 0xfffffffa )		// １ページ下へ
+#define	FRAMELIST_RET_PAGE_UP_NONE		( 0xfffffffb )		// ページ数が足りなくて１ページ上にスクロールできなかった
+#define	FRAMELIST_RET_PAGE_DOWN_NONE	( 0xfffffffc )		// ページ数が足りなくて１ページ下にスクロールできなかった
+#define	FRAMELIST_RET_JUMP_TOP				( 0xfffffffd )		// リスト最上部へジャンプ
+#define	FRAMELIST_RET_JUMP_BOTTOM			( 0xfffffffe )		// リスト最下部へジャンプ
+#define	FRAMELIST_RET_NONE						( 0xffffffff )		// 動作なし
 
 #define	FRAMELIST_SUB_BG_NONE	( 0xff )		// 上画面ＢＧ未使用
 

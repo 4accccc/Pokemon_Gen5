@@ -313,7 +313,7 @@ extern void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk, u32 py );
  * @brief		ページ切り替え矢印アニメ設定
  *
  * @param		wk			図鑑検索画面ワーク
- * @param		anm			TRUE = アクティブ, FALSE = パッシブ
+ * @param		anm			FALSE = 初期化時
  *
  * @return	none
  */

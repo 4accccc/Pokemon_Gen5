@@ -1070,16 +1070,18 @@ void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
  * @brief		ページ切り替え矢印アニメ
  *
  * @param		wk			図鑑リストワーク
- * @param		anm			TRUE = アクティブ, FALSE = パッシブ
+ * @param		anm			FALSE = 初期化時
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
 void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm )
 {
+	u32	pos = FRAMELIST_GetCursorPos( wk->lwk );
+
 	if( ZKNLISTOBJ_GetAnm(wk,ZKNLISTOBJ_IDX_TB_LEFT) != APP_COMMON_BARICON_CURSOR_LEFT_ON ||
 			anm == FALSE ){
-		if( FRAMELIST_GetScrollCount( wk->lwk ) == 0 ){
+		if( FRAMELIST_GetScrollCount( wk->lwk ) == 0 && pos == 0 ){
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_OFF );
 		}else{
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT );
@@ -1087,7 +1089,7 @@ void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm )
 	}
 	if( ZKNLISTOBJ_GetAnm(wk,ZKNLISTOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ||
 			anm == FALSE ){
-		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE ){
+		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE && pos == (ZKNLISTMAIN_LIST_POS_MAX-1) ){
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
 		}else{
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT );
