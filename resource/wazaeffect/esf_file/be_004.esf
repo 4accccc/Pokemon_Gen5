@@ -8,9 +8,11 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
-制御モード変更	継続
 MCSSのリバースドローを制御	リバースON
 汎用ワークに値をセット	3
+ラベル	POKEMON_TRANS_WAIT
+タイマーによるウエイト	4
+制御モード変更	継続
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA_1
 ポケモン拡縮	POS_AA	ダイレクト	0	0	0	0	0
 ポケモンバニッシュ	POS_AA	バニッシュオン
