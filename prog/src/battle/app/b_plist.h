@@ -72,7 +72,7 @@ typedef struct {
 
   u8  skill_item_use[ TEMOTI_POKEMAX ]; // 技で使用不可
 
-	BOOL	commFlag;			// 通信対戦かどうか　TRUE = 通信対戦
+  BOOL  seFlag;     // SEを再生するかどうか TRUE = 再生
 
   // [in & out]
   u8 * cursor_flg;              // カーソル表示フラグ

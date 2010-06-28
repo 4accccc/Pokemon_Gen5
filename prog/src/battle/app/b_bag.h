@@ -73,7 +73,7 @@ typedef struct {
   s16 item_pos[BATTLE_BAG_POKE_MAX];  // アイテム位置
   s16 item_scr[BATTLE_BAG_POKE_MAX];  // アイテムスクロールカウンタ
 
-  BOOL  commFlag;     // 通信対戦かどうか　TRUE = 通信対戦
+  BOOL  seFlag;     // SEを再生するかどうか TRUE = 再生
 
 }BBAG_DATA;
 

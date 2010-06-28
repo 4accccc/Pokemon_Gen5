@@ -3203,7 +3203,7 @@ static BOOL CheckTimeOut( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void PlaySE( BPLIST_WORK * wk, int no )
 {
-	if( wk->dat->commFlag == FALSE ){
+	if( wk->dat->seFlag == TRUE ){
 		PMSND_PlaySE( no );
 	}
 }
@@ -3220,7 +3220,7 @@ static void PlaySE( BPLIST_WORK * wk, int no )
 //--------------------------------------------------------------------------------------------
 static void PlaySystemSE( BPLIST_WORK * wk, int no )
 {
-	if( wk->dat->commFlag == FALSE ){
+	if( wk->dat->seFlag == TRUE ){
 		PMSND_PlaySystemSE( no );
 	}
 }

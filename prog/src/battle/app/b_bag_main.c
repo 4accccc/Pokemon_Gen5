@@ -1391,7 +1391,7 @@ static BOOL CheckTimeOut( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void PlaySE( BBAG_WORK * wk, int no )
 {
-	if( wk->dat->commFlag == FALSE ){
+	if( wk->dat->seFlag == TRUE ){
 		PMSND_PlaySE( no );
 	}
 }
@@ -1408,7 +1408,7 @@ static void PlaySE( BBAG_WORK * wk, int no )
 //--------------------------------------------------------------------------------------------
 static void PlaySystemSE( BBAG_WORK * wk, int no )
 {
-	if( wk->dat->commFlag == FALSE ){
+	if( wk->dat->seFlag == TRUE ){
 		PMSND_PlaySystemSE( no );
 	}
 }
