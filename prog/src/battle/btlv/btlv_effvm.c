@@ -845,6 +845,13 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
       { 
         ;
       }
+      //へんしんとオウムがえしとしぜんのちからは、単体のエフェクトはないので、みがわりチェックをしない
+      else if( ( bevw->waza == WAZANO_HENSIN ) ||
+               ( bevw->waza == WAZANO_OUMUGAESI ) ||
+               ( bevw->waza == WAZANO_SIZENNOTIKARA ) )
+      { 
+        ;
+      }
       else
       { 
         migawari_flag = ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) &
@@ -4589,6 +4596,13 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       //みらいよちorはめつのねがいの発動ターンではみがわりチェックをしない
       if( ( ( bevw->waza == WAZANO_MIRAIYOTI ) || ( bevw->waza == WAZANO_HAMETUNONEGAI ) ) && 
             ( bevw->param.turn_count == 1 ) )
+      { 
+        ;
+      }
+      //へんしんとオウムがえしとしぜんのちからは、単体のエフェクトはないので、みがわりチェックをしない
+      else if( ( bevw->waza == WAZANO_HENSIN ) ||
+               ( bevw->waza == WAZANO_OUMUGAESI ) ||
+               ( bevw->waza == WAZANO_SIZENNOTIKARA ) )
       { 
         ;
       }
