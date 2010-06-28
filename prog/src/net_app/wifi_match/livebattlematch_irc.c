@@ -62,6 +62,7 @@ struct _LIVEBATTLEMATCH_IRC_WORK
   u8  recv_buffer[LIVEBATTLEMATCH_IRC_RECV_BUFFER_LEN];
   BOOL is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_MAX];
   DELIVERY_IRC_WORK *p_delivery;
+  int ret;
 };
 
 //=============================================================================
@@ -656,7 +657,9 @@ extern LIVEBATTLEMATCH_IRC_RET LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTL
 
   case SEQ_WAIT_RECV:
     {
-      if( DELIVERY_IRC_RecvCheck( p_wk->p_delivery ) )
+
+      p_wk->ret   = DELIVERY_IRC_RecvCheck( p_wk->p_delivery );
+      if( p_wk->ret != DELIVERY_IRC_FUNC )
       { 
         p_wk->seq++;
       }
@@ -672,11 +675,21 @@ extern LIVEBATTLEMATCH_IRC_RET LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTL
   case SEQ_END:
     if( GFL_NET_IsResetEnable() )
     { 
-      return TRUE;
+      switch( p_wk->ret )
+      {
+      case DELIVERY_IRC_SUCCESS:
+        return LIVEBATTLEMATCH_IRC_RET_SUCCESS;
+      case DELIVERY_IRC_NOTDATA:
+        return LIVEBATTLEMATCH_IRC_RET_NOT_LAG;
+      default:
+        GF_ASSERT(0);
+      case DELIVERY_IRC_FAILED:
+        return LIVEBATTLEMATCH_IRC_RET_FAILED;
+      }
     }
   }
 
-  return FALSE;
+  return LIVEBATTLEMATCH_IRC_RET_UPDATE;
 }
 
 //----------------------------------------------------------------------------

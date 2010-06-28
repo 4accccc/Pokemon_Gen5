@@ -694,7 +694,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         else
         { 
           //不正なデータを受信or対応言語がない
-          OS_TPrintf( "なデータを受信or対応言語がない %d\n", ret );
+          OS_TPrintf( "不正なデータを受信or対応言語がない %d\n", ret );
           *p_seq  = SEQ_START_MSG_DIRTY_VER;
         }
       }
