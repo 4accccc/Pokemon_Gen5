@@ -175,7 +175,7 @@ static void ResetSheimiForm( POKEMON_PARAM* poke )
   u32 monsno = PP_Get( poke, ID_PARA_monsno, NULL );
 
   if( monsno == MONSNO_SHEIMI ) {
-    PP_Put( poke, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
+      PP_ChangeFormNo( poke, FORMNO_SHEIMI_LAND );
   }
 }
 
