@@ -3542,8 +3542,20 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
   pWork->pokemonGTSStateMode=TRUE;
 
+
+  //画面タッチしてるか?         20100628 add Saito BTS6942 BTS5189
+  if ( GFL_UI_TP_GetCont() )
+  {
+    //操作系をタッチにする
+    GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+
+    //キーも操作されていたら、処理をフックする
+    if ( GFL_UI_KEY_GetCont() ) return;
+  }
+
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){  // 最初にキーが入った場合
-    if(GFL_UI_KEY_GetTrgAndSet()){
+    if(GFL_UI_KEY_GetTrgAndSet())
+    {
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
         pWork->MainObjCursorLine=line;
@@ -3598,7 +3610,6 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       return;
     }
   }
-
 
   // 監視処理
   if(GFL_UI_KEY_GetTrgAndSet() || GFL_UI_TP_GetTrgAndSet()){  //速度リセット
