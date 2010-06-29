@@ -140,12 +140,12 @@ enum{
 	TPWD_SCR_PY0 = 6*8,
 	TPWD_SCR_PY1 = TPWD_SCR_PY0+TPWD_SCR_SY,
 
-	TPWD_WORD_PX = 4*8,
-	TPWD_WORD_PY = 2*8,
-	TPWD_WORD_SX = 9*8,
-	TPWD_WORD_SY = 2*8,
-	TPWD_WORD_OX = TPWD_WORD_SX+32,
-	TPWD_WORD_OY = TPWD_WORD_SY+8,
+	TPWD_WORD_PX = 2*8,  // wordwinの枠の位置、大きさ  // 左側の左端
+	TPWD_WORD_PY = 13,  // 一番上の上端
+	TPWD_WORD_SX = 12*8+6,  // 横幅
+	TPWD_WORD_SY = 22,  // 縦幅
+	TPWD_WORD_OX = 16*8 -TPWD_WORD_PX,  // 左側の左端と右側の左端の距離
+	TPWD_WORD_OY = TPWD_WORD_SY +2,  // 縦の距離
 };
 
 enum {
