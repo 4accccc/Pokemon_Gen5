@@ -3308,47 +3308,47 @@ $reverse_seed_poke_hash = {
 	"ケルディオ" => [
 		"ケルディオ",
 	],
-	"メロイアvoice" => [
-		"メロイアvoice",
-		"メロイアstep",
+	"メロエッタvoice" => [
+		"メロエッタvoice",
+		"メロエッタstep",
 	],
-	"メロイアstep" => [
-		"メロイアvoice",
-		"メロイアstep",
+	"メロエッタstep" => [
+		"メロエッタvoice",
+		"メロエッタstep",
 	],
-	"インセクタnormal" => [
-		"インセクタnormal",
-		"インセクタaqua",
-		"インセクタinazuma",
-		"インセクタblaze",
-		"インセクタfreeze",
+	"ゲノセクトnormal" => [
+		"ゲノセクトnormal",
+		"ゲノセクトaqua",
+		"ゲノセクトinazuma",
+		"ゲノセクトblaze",
+		"ゲノセクトfreeze",
 	],
-	"インセクタaqua" => [
-		"インセクタnormal",
-		"インセクタaqua",
-		"インセクタinazuma",
-		"インセクタblaze",
-		"インセクタfreeze",
+	"ゲノセクトaqua" => [
+		"ゲノセクトnormal",
+		"ゲノセクトaqua",
+		"ゲノセクトinazuma",
+		"ゲノセクトblaze",
+		"ゲノセクトfreeze",
 	],
-	"インセクタinazuma" => [
-		"インセクタnormal",
-		"インセクタaqua",
-		"インセクタinazuma",
-		"インセクタblaze",
-		"インセクタfreeze",
+	"ゲノセクトinazuma" => [
+		"ゲノセクトnormal",
+		"ゲノセクトaqua",
+		"ゲノセクトinazuma",
+		"ゲノセクトblaze",
+		"ゲノセクトfreeze",
 	],
-	"インセクタblaze" => [
-		"インセクタnormal",
-		"インセクタaqua",
-		"インセクタinazuma",
-		"インセクタblaze",
-		"インセクタfreeze",
+	"ゲノセクトblaze" => [
+		"ゲノセクトnormal",
+		"ゲノセクトaqua",
+		"ゲノセクトinazuma",
+		"ゲノセクトblaze",
+		"ゲノセクトfreeze",
 	],
-	"インセクタfreeze" => [
-		"インセクタnormal",
-		"インセクタaqua",
-		"インセクタinazuma",
-		"インセクタblaze",
-		"インセクタfreeze",
+	"ゲノセクトfreeze" => [
+		"ゲノセクトnormal",
+		"ゲノセクトaqua",
+		"ゲノセクトinazuma",
+		"ゲノセクトblaze",
+		"ゲノセクトfreeze",
 	],
 }

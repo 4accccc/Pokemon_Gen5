@@ -3144,7 +3144,7 @@ $levelwaza_learninglevel_hash = {
 		33,
 		37,
 		41,
-		43,
+		45,
 	],
 	"ヤンヤンマ" => [
 		1,
@@ -6982,6 +6982,7 @@ $levelwaza_learninglevel_hash = {
 	],
 	"チェリンボ" => [
 		1,
+		1,
 		7,
 		10,
 		13,
@@ -6993,6 +6994,7 @@ $levelwaza_learninglevel_hash = {
 		40,
 	],
 	"チェリムnega" => [
+		1,
 		1,
 		1,
 		7,
@@ -7007,6 +7009,7 @@ $levelwaza_learninglevel_hash = {
 		48,
 	],
 	"チェリムposi" => [
+		1,
 		1,
 		1,
 		7,
@@ -9698,6 +9701,7 @@ $levelwaza_learninglevel_hash = {
 		45,
 		50,
 		55,
+		57,
 	],
 	"イシズマイ" => [
 		1,
@@ -9824,6 +9828,7 @@ $levelwaza_learninglevel_hash = {
 		29,
 		33,
 		33,
+		34,
 		39,
 		45,
 		51,
@@ -10587,6 +10592,7 @@ $levelwaza_learninglevel_hash = {
 		1,
 		1,
 		1,
+		1,
 		6,
 		9,
 		14,
@@ -11211,6 +11217,7 @@ $levelwaza_learninglevel_hash = {
 		51,
 		56,
 		61,
+		66,
 	],
 	"モノズ" => [
 		1,
@@ -11475,7 +11482,7 @@ $levelwaza_learninglevel_hash = {
 		67,
 		73,
 	],
-	"メロイアvoice" => [
+	"メロエッタvoice" => [
 		1,
 		6,
 		11,
@@ -11492,7 +11499,7 @@ $levelwaza_learninglevel_hash = {
 		78,
 		85,
 	],
-	"メロイアstep" => [
+	"メロエッタstep" => [
 		1,
 		6,
 		11,
@@ -11509,7 +11516,7 @@ $levelwaza_learninglevel_hash = {
 		78,
 		85,
 	],
-	"インセクタnormal" => [
+	"ゲノセクトnormal" => [
 		1,
 		1,
 		1,
@@ -11530,7 +11537,7 @@ $levelwaza_learninglevel_hash = {
 		73,
 		77,
 	],
-	"インセクタaqua" => [
+	"ゲノセクトaqua" => [
 		1,
 		1,
 		1,
@@ -11551,7 +11558,7 @@ $levelwaza_learninglevel_hash = {
 		73,
 		77,
 	],
-	"インセクタinazuma" => [
+	"ゲノセクトinazuma" => [
 		1,
 		1,
 		1,
@@ -11572,7 +11579,7 @@ $levelwaza_learninglevel_hash = {
 		73,
 		77,
 	],
-	"インセクタblaze" => [
+	"ゲノセクトblaze" => [
 		1,
 		1,
 		1,
@@ -11593,7 +11600,7 @@ $levelwaza_learninglevel_hash = {
 		73,
 		77,
 	],
-	"インセクタfreeze" => [
+	"ゲノセクトfreeze" => [
 		1,
 		1,
 		1,

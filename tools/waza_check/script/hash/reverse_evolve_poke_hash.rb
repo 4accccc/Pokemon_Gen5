@@ -1785,18 +1785,18 @@ $reverse_evolve_poke_hash = {
 	],
 	"ケルディオ"=>[
 	],
-	"メロイアvoice"=>[
+	"メロエッタvoice"=>[
 	],
-	"メロイアstep"=>[
+	"メロエッタstep"=>[
 	],
-	"インセクタnormal"=>[
+	"ゲノセクトnormal"=>[
 	],
-	"インセクタaqua"=>[
+	"ゲノセクトaqua"=>[
 	],
-	"インセクタinazuma"=>[
+	"ゲノセクトinazuma"=>[
 	],
-	"インセクタblaze"=>[
+	"ゲノセクトblaze"=>[
 	],
-	"インセクタfreeze"=>[
+	"ゲノセクトfreeze"=>[
 	],
 }
