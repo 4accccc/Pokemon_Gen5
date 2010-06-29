@@ -87,10 +87,10 @@ typedef struct TR_CARD_DATA_tag
   u8 Clear_d;       ///< クリア日
   u8 ClearTime_m;   ///< クリア時間（分）
   
-  u16 CommNum;        ///< 通信回数
-  u16 CommBattleNum;  ///< 通信対戦回数 
-  u16 CommBattleWin;  ///< 対戦勝ち数
-  u16 CommBattleLose; ///< 対戦負け数
+  u32 CommNum;        ///< 通信回数
+  u32 CommBattleNum;  ///< 通信対戦回数 
+  u32 CommBattleWin;  ///< 対戦勝ち数
+  u32 CommBattleLose; ///< 対戦負け数
   u32 Personality;    ///< 性格
   u32 CommTrade;      ///< 交換回数
   
