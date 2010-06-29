@@ -6251,8 +6251,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   #ifdef PM_DEBUG
   if( wk->fDebugClack )
   {
-    if( BTL_MAINUTIL_PokeIDtoClientID(BPP_GetID(attacker)) == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
-    {
+    if( BTL_MAIN_CheckImServerMachine(wk->mainModule) ){
       for(i=0;i<poke_cnt;++i){
         dmg[i] = 999;
       }
@@ -8361,6 +8360,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         u16  damage = BPP_GetValue( target, BPP_HP );
         BtlTypeAffAbout  affAbout = BTL_CALC_TypeAffAbout( aff );
         BOOL fMigawari = FALSE;
+        BOOL fKorae = FALSE;
 
         wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
 
@@ -8377,11 +8377,16 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
             scproc_Ichigeki_Succeed( wk, target, wazaParam, affAbout );
           }else{
             scproc_Ichigeki_Korae( wk, target, wazaParam, affAbout, korae_cause, damage );
+            fKorae = TRUE;
           }
         }
 
         wazaDmgRec_Add( wk, atkPos, attacker, target, wazaParam, damage );
         scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, FALSE, fMigawari );
+        if( fKorae )
+        {
+          scEvent_DamageProcEnd( wk, attacker, targets, wazaParam, FALSE );
+        }
         scproc_CheckDeadCmd( wk, target );
       }
       else
