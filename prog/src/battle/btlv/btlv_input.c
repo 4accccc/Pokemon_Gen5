@@ -4911,7 +4911,15 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
       if( trg == PAD_BUTTON_A )
       {
         hit = tbl->a_button;
-        if( biw->button_exist[ hit ] == TRUE )
+        if( ( hit < 4 ) &&
+            ( cont & PAD_BUTTON_L ) &&
+            ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) &&
+            ( biw->waruagaki_flag == TRUE ) )
+        { 
+          //ローテーション選択でLボタンを押しながらわるあがきを選択したなら何もしない
+          ;
+        }
+        else if( biw->button_exist[ hit ] == TRUE )
         { 
           if( get_cancel_flag( biw, tp_tbl, hit ) == FALSE )
           {
