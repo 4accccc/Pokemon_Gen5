@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-29T15:11:53"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-29T19:34:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -426,18 +426,18 @@
 	<row id="WIFIMATCH_STR_017">
 		<comment>ロック中</comment>
 		<language name="JPN" width="256">とうろく　ポケモン</language>
-		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
+		<language name="JPN_KANJI" width="256">登録ポケモン</language>
 	</row>
 
 	<row id="WIFIMATCH_STR_017_01">
 		<language name="JPN" width="256">とうろく　ポケモン</language>
-		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
+		<language name="JPN_KANJI" width="256">登録ポケモン</language>
 	</row>
 
 	<row id="WIFIMATCH_STR_017_02">
 		<comment>未登録</comment>
 		<language name="JPN" width="256">とうろく　ポケモン</language>
-		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
+		<language name="JPN_KANJI" width="256">登録ポケモン</language>
 	</row>
 
 	<row id="WIFIMATCH_STR_018">
@@ -584,7 +584,7 @@
 	<row id="WIFIMATCH_TEXT_020">
 		<language name="JPN" width="256">つうしん　たいきちゅうです……
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">通信　待機中です……
+		<language name="JPN_KANJI" width="256">通信待機中です……
 しばらく　お待ちください</language>
 	</row>
 
@@ -667,7 +667,7 @@
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいかい　データを
 さがしています……</language>
-		<language name="JPN_KANJI" width="256">大会　データを
+		<language name="JPN_KANJI" width="256">大会データを
 探しています……</language>
 	</row>
 
@@ -795,7 +795,7 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 		<language name="JPN" width="256">デジタルせんしゅしょうを
 こうしん　できませんでした</language>
 		<language name="JPN_KANJI" width="256">デジタル選手証を
-更新できません　でした</language>
+更新できませんでした</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_15">
@@ -1028,8 +1028,8 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいかい　データを
 かくにん　しています……</language>
-		<language name="JPN_KANJI" width="256">大会　データを
-確認　しています……</language>
+		<language name="JPN_KANJI" width="256">大会データを
+確認しています……</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_37">
