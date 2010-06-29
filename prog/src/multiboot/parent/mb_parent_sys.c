@@ -299,8 +299,8 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work );
 static void MB_PARENT_Term( MB_PARENT_WORK *work );
 static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work );
 static void MB_PARENT_VBlankFunc(GFL_TCB *tcb, void *wk );
-static void MB_PARENT_VSync( void );
-static void MB_PARENT_VSyncMovie( void );
+static void MB_PARENT_VSync( void *pWork );
+static void MB_PARENT_VSyncMovie( void *pWork );
 
 static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work );
 static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work );
@@ -372,11 +372,11 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_PARENT_VBlankFunc , work , 8 );
   if( work->mode == MPM_POKE_SHIFTER )
   {
-    GFUser_SetVIntrFunc( MB_PARENT_VSync );
+    GFUser_SetVIntrFunc( MB_PARENT_VSync , NULL );
   }
   else
   {
-    GFUser_SetVIntrFunc( MB_PARENT_VSyncMovie );
+    GFUser_SetVIntrFunc( MB_PARENT_VSyncMovie , NULL );
     PMSND_PlayBGM( SEQ_BGM_WIFI_PRESENT );
   }
 
@@ -926,7 +926,7 @@ static void MB_PARENT_VBlankFunc(GFL_TCB *tcb, void *wk )
   GFL_CLACT_SYS_VBlankFunc();
 }
 
-static void MB_PARENT_VSync( void )
+static void MB_PARENT_VSync( void *pWork )
 {
   static u8 cnt = 0;
   if( cnt > 1 )
@@ -943,7 +943,7 @@ static void MB_PARENT_VSync( void )
   }
 }
 
-static void MB_PARENT_VSyncMovie( void )
+static void MB_PARENT_VSyncMovie( void *pWork )
 {
   //背景アニメ更新
   MB_PARENT_bgScrollCnt++;

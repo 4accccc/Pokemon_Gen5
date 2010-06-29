@@ -69,7 +69,7 @@ struct _CTVT_MIC_WORK
 //======================================================================
 //	proto
 //======================================================================
-static void CTVT_MIC_Main_VSync( void );
+static void CTVT_MIC_Main_VSync( void *pWork );
 static void CTVT_MIC_PlayWaveInit( CTVT_MIC_WORK *micWork , const HEAPID heapId );
 static void CTVT_MIC_PlayWaveTerm( CTVT_MIC_WORK *micWork );
 static void CTVT_MIC_PlayWaveMain( CTVT_MIC_WORK *micWork );
@@ -135,7 +135,7 @@ CTVT_MIC_WORK* CTVT_MIC_Init( const HEAPID heapId )
   micWork->isRecord = FALSE;
   
   staticMicPointer = micWork;
-  GFUser_SetVIntrFunc( CTVT_MIC_Main_VSync );
+  GFUser_SetVIntrFunc( CTVT_MIC_Main_VSync , NULL );
   
   return micWork;
 }
@@ -194,7 +194,7 @@ void CTVT_MIC_Main_VBlank( CTVT_MIC_WORK *micWork )
 {
 }
 
-static void CTVT_MIC_Main_VSync( void )
+static void CTVT_MIC_Main_VSync( void *pWork )
 {
   if( staticMicPointer->isPlayWave == TRUE )
   {

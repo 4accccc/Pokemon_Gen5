@@ -167,7 +167,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work );
 static void MB_MOVIE_Term( MB_MOVIE_WORK *work );
 static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work );
 static void MB_MOVIE_VBlankFunc(GFL_TCB *tcb, void *wk );
-static void MB_MOVIE_VSyncMovie( void );
+static void MB_MOVIE_VSyncMovie( void *pWork );
 
 static void MB_MOVIE_InitGraphic( MB_MOVIE_WORK *work );
 static void MB_MOVIE_TermGraphic( MB_MOVIE_WORK *work );
@@ -253,7 +253,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
 
   PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
 
-  GFUser_SetVIntrFunc( MB_MOVIE_VSyncMovie );
+  GFUser_SetVIntrFunc( MB_MOVIE_VSyncMovie , NULL );
 }
 
 //--------------------------------------------------------------
@@ -786,7 +786,7 @@ static void MB_MOVIE_VBlankFunc(GFL_TCB *tcb, void *wk )
   }
 }
 
-static void MB_MOVIE_VSyncMovie( void )
+static void MB_MOVIE_VSyncMovie( void *pWork )
 {
   //背景アニメ更新
   MB_MOVIE_bgScrollCnt++;

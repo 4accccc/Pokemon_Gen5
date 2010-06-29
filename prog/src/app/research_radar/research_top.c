@@ -2368,6 +2368,18 @@ static void CleanUpPaletteAnime( RRT_WORK* work )
 
 //------------------------------------------------------------------------------------
 /**
+ * @brief VBlank äÑÇËçûÇ›ä÷êî
+ *
+ * @param pWork
+ */
+//------------------------------------------------------------------------------------
+static void VBlankClactFunc( void *pWork )
+{
+  GFL_CLACT_SYS_VBlankFunc();
+}
+
+//------------------------------------------------------------------------------------
+/**
  * @brief VBlank äÑÇËçûÇ›Çê›íË
  *
  * @param work
@@ -2375,7 +2387,7 @@ static void CleanUpPaletteAnime( RRT_WORK* work )
 //------------------------------------------------------------------------------------
 static void SetVBlankFunc( RRT_WORK* work )
 {
-  GFUser_SetVIntrFunc( GFL_CLACT_SYS_VBlankFunc );
+  GFUser_SetVIntrFunc( VBlankClactFunc , NULL );
 }
 
 //------------------------------------------------------------------------------------

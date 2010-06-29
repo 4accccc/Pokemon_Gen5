@@ -68,9 +68,9 @@ extern const char * GFUser_GetFileNameByArcID(ARCID arcID);
 //アサートの終了処理関数(DEBUG_SD_PRINTで使うため定義を出す
 extern void GFUser_AssertFinish( void );
 
-typedef void (*GFL_USE_VINTR_FUNC)( void );
+typedef void (*GFL_USE_VINTR_FUNC)( void *pWork );
 //VBlank割り込み関数の登録
-extern BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func);
+extern BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func,void *pWork);
 //VBlank割り込み関数の解除
 extern void GFUser_ResetVIntrFunc(void);
 

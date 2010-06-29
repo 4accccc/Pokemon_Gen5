@@ -574,6 +574,7 @@ struct _POKEMON_TRADE_WORK{
   STRBUF* pMessageStrBufEx;
   PRINT_QUE*            SysMsgQue;
   GFL_TCBLSYS *pMsgTcblSys;
+  GFL_TCBLSYS *pTimerTcblSys;
   APP_KEYCURSOR_WORK* pKeyCursor;
 
   GFL_BMPWIN* SerchMojiWin[JAPANESE_SEARCH_INDEX_MAX];  //頭文字検索のウインドウ用

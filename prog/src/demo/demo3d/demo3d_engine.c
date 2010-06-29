@@ -65,7 +65,7 @@ static void set_SceneParam( const DEMO3D_ENGINE_WORK* wk, DEMO3D_PARAM* param, c
 //=============================================================================
 
 // DoubleDisp用VIntr割り込み関数
-static void vintrFunc(void)
+static void vintrFunc(void *pWork)
 {
 	GFL_G3D_DOUBLE3D_VblankIntr();
 }
@@ -170,7 +170,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   if( wk->is_double )
   {
     GFL_G3D_DOUBLE3D_Init( heapID );
-		GFUser_SetVIntrFunc(vintrFunc);
+		GFUser_SetVIntrFunc(vintrFunc,NULL);
   }
   // ステータス初期化
   VEC_Set( &wk->obj_status.trans, 0, 0, 0 );

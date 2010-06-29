@@ -99,6 +99,7 @@ static void mcsRecv( void );
 #endif
 
 static GFL_USE_VINTR_FUNC GflUseVintrFunc;
+static void *GflUseVintrWork;
 static void *extraHeapBuffer = NULL;
 static OSHeapHandle extraHeapHandle;
 //=============================================================================================
@@ -374,17 +375,18 @@ GFL_TCB * GFUser_HIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
 //------------------------------------------------------------------
 void GFLUser_VIntr(void)
 {
-  if(GflUseVintrFunc){ GflUseVintrFunc(); }
+  if(GflUseVintrFunc){ GflUseVintrFunc(GflUseVintrWork); }
 }
 
 //VBlankäÑÇËçûÇ›ä÷êîÇÃìoò^
-BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func)
+BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func,void *pWork)
 {
   if(GflUseVintrFunc){
     GF_ASSERT(0);
     return FALSE;
   }
   GflUseVintrFunc = func;
+  GflUseVintrWork = pWork;
   return TRUE;
 }
 
@@ -392,6 +394,7 @@ BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func)
 void GFUser_ResetVIntrFunc(void)
 {
   GflUseVintrFunc = NULL;
+  GflUseVintrWork = NULL;
 }
 
 //------------------------------------------------------------------

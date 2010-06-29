@@ -182,7 +182,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work );
 static void MB_CHILD_Term( MB_CHILD_WORK *work );
 static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work );
 static void MB_CHILD_VBlankFunc(GFL_TCB *tcb, void *wk );
-static void MB_CHILD_VSync( void );
+static void MB_CHILD_VSync( void *pWork );
 
 static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work );
 static void MB_CHILD_TermGraphic( MB_CHILD_WORK *work );
@@ -254,7 +254,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_CHILD_VBlankFunc , work , 8 );
 
-  GFUser_SetVIntrFunc( MB_CHILD_VSync );
+  GFUser_SetVIntrFunc( MB_CHILD_VSync , NULL );
 
   PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
 }
@@ -584,7 +584,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       {
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
       }
-      GFUser_SetVIntrFunc( MB_CHILD_VSync );
+      GFUser_SetVIntrFunc( MB_CHILD_VSync , NULL );
       MB_CHILD_ErrCheck( work , TRUE );
     }
     break;
@@ -702,7 +702,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_CHILD_LoadResource( work );
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE , FALSE );
 
-    GFUser_SetVIntrFunc( MB_CHILD_VSync );
+    GFUser_SetVIntrFunc( MB_CHILD_VSync , NULL );
     MB_CHILD_ErrCheck( work , TRUE );
 
     PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
@@ -1019,7 +1019,7 @@ static void MB_CHILD_VBlankFunc(GFL_TCB *tcb, void *wk )
   }
 }
 
-static void MB_CHILD_VSync( void )
+static void MB_CHILD_VSync( void *pWork )
 {
   static u8 cnt = 0;
   if( cnt > 1 )

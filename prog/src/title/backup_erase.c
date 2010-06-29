@@ -386,7 +386,7 @@ static void MainSeq_CheckYesNo( BACKUP_ERASE_WORK * wk, int * seq )
  * @li	VBLANK‚Åˆ—‚µ‚Ü‚·
  */
 //--------------------------------------------------------------------------------------------
-static void VIntrFunc_TimeIcon(void)
+static void VIntrFunc_TimeIcon(void *pWork)
 {
 	TIMEICON_Main( TimeIconWork );
 }
@@ -409,7 +409,7 @@ static void MainSeq_ActionMessage( BACKUP_ERASE_WORK * wk, int * seq )
 
 		TimeIconWork = TIMEICON_Create( NULL, wk->win, 15, TIMEICON_DEFAULT_WAIT, HEAPID_BACKUP_ERASE );
 		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->win) );
-		GFUser_SetVIntrFunc( VIntrFunc_TimeIcon );
+		GFUser_SetVIntrFunc( VIntrFunc_TimeIcon , NULL );
 
 		sv = SaveControl_GetPointer();
 		{

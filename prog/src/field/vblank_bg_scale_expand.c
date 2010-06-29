@@ -31,7 +31,7 @@ float scaleUpSpeed = 0.0044f; // ägëÂë¨ìx
  * @brief VBlankäÑÇËçûÇ›èàóù
  */
 //-----------------------------------------------------------------------------
-static void VBlankFunc_BGExpand( void )
+static void VBlankFunc_BGExpand( void *pWork )
 {
   fx32 fxScale;
   float frame = 0;
@@ -64,7 +64,7 @@ void StartVBlankBGExpand()
   scaleCount = 0;
 
   // VBlankä÷êîÇìoò^
-  GFUser_SetVIntrFunc( VBlankFunc_BGExpand );
+  GFUser_SetVIntrFunc( VBlankFunc_BGExpand , NULL );
 }
 
 //-----------------------------------------------------------------------------

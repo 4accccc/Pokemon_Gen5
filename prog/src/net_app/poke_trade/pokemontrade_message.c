@@ -64,7 +64,6 @@ static void WndMaskTask( GFL_TCB *p_tcb, void *p_work );
 
 //------メッセージ関連
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	属性、タイプアイコン破棄
@@ -271,8 +270,9 @@ void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pTimeIcon){
     TIMEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon = NULL;
   }
-  pWork->pTimeIcon = TIMEICON_CreateTcbl(pWork->pMsgTcblSys,pWork->mesWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
+  pWork->pTimeIcon = TIMEICON_CreateTcbl(pWork->pTimerTcblSys,pWork->mesWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
 }
 
 
@@ -288,7 +288,7 @@ void POKETRADE_MESSAGE_WindowClose(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pTimeIcon){
     TIMEICON_Exit(pWork->pTimeIcon);
-    pWork->pTimeIcon=NULL;
+    pWork->pTimeIcon = NULL;
   }
   if(pWork->mesWin){
 		GFL_BMPWIN_Delete(pWork->mesWin);
@@ -308,7 +308,7 @@ void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pTimeIcon){
     TIMEICON_Exit(pWork->pTimeIcon);
-    pWork->pTimeIcon=NULL;
+    pWork->pTimeIcon = NULL;
   }
 	if(pWork->mesWin){
 		GFL_BMPWIN_ClearScreen(pWork->mesWin);
@@ -319,6 +319,15 @@ void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork)
 	}
 }
 
+
+static void _pokeTradeTimeIconUpdate( void *pWork )
+{
+  POKEMON_TRADE_WORK *wk = pWork;
+  if( wk->pTimeIcon != NULL )
+  {
+    GFL_TCBL_Main(wk->pTimerTcblSys);
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -340,10 +349,13 @@ void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork)
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   GFL_FONTSYS_SetColor(1, 2, 15);
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
+  pWork->pTimerTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
   pWork->pKeyCursor = APP_KEYCURSOR_Create( 15, FALSE, TRUE, pWork->heapID );
-
+  
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
 			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
+
+  GFUser_SetVIntrFunc( _pokeTradeTimeIconUpdate , pWork );
 }
 
 //------------------------------------------------------------------------------
@@ -356,6 +368,7 @@ void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork)
 void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
 {
   int i;
+  GFUser_ResetVIntrFunc();
 
   if(pWork->pMsgTcblSys==NULL){
     return;
