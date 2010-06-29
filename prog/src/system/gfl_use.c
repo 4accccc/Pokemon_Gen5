@@ -57,6 +57,8 @@ enum {
 #define HEAPSIZE_SYSTEM (0x006000)
 #define HEAPSIZE_APP    (0x180000)   // PL,GSでは約0x13A000
 #define HEAPSIZE_DSI    (0x486000)   // DSIは16M
+//NITROでmakeした時にHEAPID_EXTRA用に4000増やす
+#define HEAPSIZE_APP_NTR    (0x184000)   // PL,GSでは約0x13A000
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -76,7 +78,11 @@ static const HEAP_INIT_HEADER hih[]={
   { 0x182000,   OS_ARENA_MAIN },
 //  { HEAPSIZE_APP,   OS_ARENA_MAIN },
 #else
+#if (defined(SDK_TWL))
   { HEAPSIZE_APP,   OS_ARENA_MAIN },
+#else
+  { HEAPSIZE_APP_NTR,   OS_ARENA_MAIN },
+#endif
 #endif
 };
 
@@ -153,6 +159,7 @@ void GFLUser_Init(void)
   }
 #endif
 
+#if (defined(SDK_TWL))
   //ヒープシステム初期化
   if( OS_IsRunOnTwl() ){//DSIなら
     GFL_HEAP_Init(&hihDSi[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
@@ -160,6 +167,9 @@ void GFLUser_Init(void)
   else{
     GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
   }
+#else
+  GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
+#endif
 
 
   GFL_HEAP_DTCM_Init( 0x2000 );       //ＤＴＣＭアリーナ
