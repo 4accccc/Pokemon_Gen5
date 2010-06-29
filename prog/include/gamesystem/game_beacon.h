@@ -216,3 +216,7 @@ extern void DEBUG_SendBeaconPriorityEgnoreFlagSet( BOOL flag );
 extern void DEBUG_RecvBeaconBufferClear(void);
 #endif
 
+//--------------------------------------------------------------
+//  É}ÉWÉRÉìëŒçÙ
+//--------------------------------------------------------------
+extern void GAMEBEACON_AMPROTECT_SetTask(void);

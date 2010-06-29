@@ -1446,7 +1446,55 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
 }
 
 
+// 赤外線検出用
+#ifdef AMPROTECT_FUNC
+#include "system/irc_internal_another.h"
+FS_EXTERN_OVERLAY(irc_check_another);
+static void _Amprotect_TcbClearRecvBuff( GFL_TCB *tcb, void * work );
+#endif  //AMPROTECT_FUNC
 
+//==================================================================
+/**
+ * マジコン対策：受信バッファを常にクリアし続けるタスクを生成する
+ */
+//==================================================================
+void GAMEBEACON_AMPROTECT_SetTask(void)
+{
+#ifdef AMPROTECT_FUNC
+  BOOL fIRCExist=FALSE;
+  
+  // WILD・TRAINER戦の中に入ってくるということは一人用でプレイしている
+  // =通信対戦・IR対戦ではないので無線チェックオーバーレイの使用OKなはず
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(irc_check_another));
+  fIRCExist = IRC_Check_Another();
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(irc_check_another));
+  if(fIRCExist == FALSE){
+    //IRが無かったら受信バッファを消すタスクを生成する
+    GFL_TCB_AddTask( GFUser_VIntr_GetTCBSYS(), _Amprotect_TcbClearRecvBuff, NULL, 3 );
+    MATSUDA_Printf("マジコン対策：受信バッファ消去タスク生成\n");
+  }
+#endif  //AMPROTECT_FUNC
+}
+
+//--------------------------------------------------------------
+/**
+ * マジコン対策：受信バッファを常にクリアし続ける
+ *
+ * @param   tcb		
+ * @param   work		NULL
+ */
+//--------------------------------------------------------------
+#ifdef AMPROTECT_FUNC
+static void _Amprotect_TcbClearRecvBuff( GFL_TCB *tcb, void * work )
+{
+  if(GameBeaconSys != NULL){
+    GFL_STD_MemClear(GameBeaconSys->log, sizeof(GAMEBEACON_LOG) * GAMEBEACON_SYSTEM_LOG_MAX);
+    GameBeaconSys->log_num = 0;
+    GameBeaconSys->start_log = 0;
+    GameBeaconSys->end_log = -1;
+  }
+}
+#endif  //AMPROTECT_FUNC
 
 
 #ifdef PM_DEBUG

@@ -487,6 +487,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 
 	switch( result ){
 	case LIST_ITEM_CONTINUE:			// 続きから
+    GAMEBEACON_AMPROTECT_SetTask(); //マジコン対策
 //		GameStart_Continue();
 		if( continueRet == 0 ){
 			GameStart_ContinueNet();
@@ -496,6 +497,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 		break;
 
 	case LIST_ITEM_NEW_GAME:			// 最初から
+    GAMEBEACON_AMPROTECT_SetTask(); //マジコン対策
 		GameStart_Beginning();
 		break;
 
