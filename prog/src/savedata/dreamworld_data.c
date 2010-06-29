@@ -521,6 +521,7 @@ void DREAMWORLD_SV_SetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV,int no)
 {
   if(no < DREAM_WORLD_DATA_MAX_FURNITURE || (no == DREAM_WORLD_NOFURNITURE)){
     pSV->furnitureNo = no;
+    OS_TPrintf("‘I‚ñ‚¾‰Æ‹ï%d  \n",no);
   }
 }
 
