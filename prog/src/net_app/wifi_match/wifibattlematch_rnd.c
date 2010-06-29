@@ -66,7 +66,6 @@ FS_EXTERN_OVERLAY(dpw_common);
 //#if defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_shimoyamada)
 //#define DEBUG_GPF_PASS
 //#endif
-
 //#define DEBUG_DIRTYCHECK_PASS
 
 #define DEBUG_SC_HEAP //SCのヒープ開放を監視する
@@ -674,14 +673,10 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   { 
     SEQ_START_MSG_INIT,
 
-    SEQ_START_RECV_GPF,
-    SEQ_WAIT_RECV_GPF,
-
-    SEQ_CHECK_GPF,
-
     SEQ_SELECT_MSG,
     SEQ_START_SELECT_MODE,
     SEQ_WAIT_SELECT_MODE,
+
     SEQ_START_CANCEL_MSG,
     SEQ_START_CANCEL_SELECT,
     SEQ_WAIT_CANCEL_SELECT,
@@ -697,80 +692,7 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   case SEQ_START_MSG_INIT:
     //エラーで戻ってくる場合、アイコンを消す
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_WAIT );
-    *p_seq = SEQ_START_RECV_GPF;
-    break;
-
-
-  case SEQ_START_RECV_GPF:
-    GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
-    WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
-    *p_seq = SEQ_WAIT_RECV_GPF;
-    break;
-
-  case SEQ_WAIT_RECV_GPF:
-    switch( WIFIBATTLEMATCH_NET_WaitRecvGpfData( p_wk->p_net ) )
-    { 
-    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE:
-      break;
-    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_SUCCESS:
-      WIFIBATTLEMATCH_NET_GetRecvGpfData( p_wk->p_net, p_wk->p_param->p_gpf_data );
-      *p_seq = SEQ_CHECK_GPF;
-      break;
-    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY:
-      //もらえなかったので、クリア
-      GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
-       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-      break;
-    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR:
-
-      //エラー処理
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
-      { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT: //切断しログインからやり直し
-        /* fallthrough */
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //復帰地点まで戻る
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-        break;
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:      //電源切断
-        NetErr_DispCallFatal();
-        break;
-      }
-      break;
-    }
-    break;
-
-    //-------------------------------------
-    /// GPFチェック
-    //=====================================
-  case SEQ_CHECK_GPF:
-
-#ifdef DEBUG_GPF_PASS
-    { 
-      *p_seq = SEQ_SELECT_MSG;
-    }
-#else
-
-#ifdef DEBUG_FLAG_GPF_PASS_ON
-    if( DEBUG_FLG_GetFlg( DEBUG_FLG_WifiMatchRateFlag ) )
-    { 
-      *p_seq = SEQ_SELECT_MSG;
-      return;
-    }
-#endif//DEBUG_FLAG_GPF_PASS_ON
-    { 
-      if( p_wk->p_param->p_gpf_data->signin )
-      { 
-        *p_seq = SEQ_SELECT_MSG;
-      }
-      else
-      { 
-        p_param->retmode = WIFIBATTLEMATCH_CORE_RETMODE_FREE;
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_Start );
-        break;
-      }
-    }
-#endif//DEBUG_GPF_PASS
+    *p_seq = SEQ_SELECT_MSG;
     break;
 
     //-------------------------------------
@@ -796,12 +718,10 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
         switch( select )
         { 
         case 0:
-          *p_seq = 0;
           p_param->retmode = WIFIBATTLEMATCH_CORE_RETMODE_FREE;
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_Start );
           break;
         case 1:
-          *p_seq = 0;
           p_param->retmode = WIFIBATTLEMATCH_CORE_RETMODE_RATE;
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_Start );
           break;
@@ -875,6 +795,14 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   { 
     SEQ_START_RATE_MSG,
     SEQ_START_RECV_MSG,
+
+    //GPF分岐
+    SEQ_START_RECV_GPF,
+    SEQ_WAIT_RECV_GPF,
+    SEQ_CHECK_GPF,
+
+    SEQ_START_NOSERVER_MSG,
+
     SEQ_WAIT_RECVRATE_SAKE,
     SEQ_WAIT_CARDIN,
     SEQ_START_POKECHECK_SERVER,
@@ -901,7 +829,78 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_START_RECV_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_POKECHECK_SERVER );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_RECV_GPF );
+    break;
+
+
+  case SEQ_START_RECV_GPF:
+    GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
+    WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
+    *p_seq = SEQ_WAIT_RECV_GPF;
+    break;
+
+  case SEQ_WAIT_RECV_GPF:
+    switch( WIFIBATTLEMATCH_NET_WaitRecvGpfData( p_wk->p_net ) )
+    { 
+    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE:
+      break;
+    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_SUCCESS:
+      WIFIBATTLEMATCH_NET_GetRecvGpfData( p_wk->p_net, p_wk->p_param->p_gpf_data );
+      *p_seq = SEQ_CHECK_GPF;
+      break;
+    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY:
+      //もらえなかったので、クリア
+      GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
+       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    case WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR:
+      //エラー処理
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT: //切断しログインからやり直し
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+        break;
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //復帰地点まで戻る
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+        break;
+      }
+      break;
+    }
+    break;
+
+  case SEQ_CHECK_GPF:
+
+#ifdef DEBUG_GPF_PASS
+    { 
+      *p_seq  = SEQ_START_POKECHECK_SERVER;
+    }
+#else
+
+#ifdef DEBUG_FLAG_GPF_PASS_ON
+    if( DEBUG_FLG_GetFlg( DEBUG_FLG_WifiMatchRateFlag ) )
+    { 
+      *p_seq  = SEQ_START_POKECHECK_SERVER;
+      return;
+    }
+
+#endif//DEBUG_FLAG_GPF_PASS_ON
+    { 
+      if( p_wk->p_param->p_gpf_data->signin )
+      { 
+        *p_seq  = SEQ_START_POKECHECK_SERVER;
+      }
+      else
+      {
+        *p_seq  = SEQ_START_NOSERVER_MSG;
+      }
+    }
+#endif//DEBUG_GPF_PASS
+    break;
+
+  case SEQ_START_NOSERVER_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_05, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
     break;
 
     //-------------------------------------
