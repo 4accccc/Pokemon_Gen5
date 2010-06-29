@@ -65,5 +65,4 @@ extern int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend );
 extern void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int addListIndex, int heapID, int overWrite);
 
 extern BOOL GFL_NET_DWC_FriendDataAdd(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID);
-extern void GFL_NET_DWC_WriteMyStatus(WIFI_LIST* pList, MYSTATUS* pMyStatus, int addListIndex, int heapID);
 

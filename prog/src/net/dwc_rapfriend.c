@@ -182,13 +182,15 @@ int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend )
  * @retval  int
  */
 //------------------------------------------------------------------
-void GFL_NET_DWC_WriteMyStatus(WIFI_LIST* pList, MYSTATUS* pMyStatus, int addListIndex, int heapID)
+static void GFL_NET_DWC_WriteMyStatus(WIFI_LIST* pList, MYSTATUS* pMyStatus, int addListIndex, int heapID, BOOL bName)
 {
   STRBUF* pBuf;
 
-  pBuf = MyStatus_CreateNameString(pMyStatus, heapID);
-  WifiList_SetFriendName(pList, addListIndex, pBuf);
-  GFL_STR_DeleteBuffer(pBuf);
+  if(bName){
+    pBuf = MyStatus_CreateNameString(pMyStatus, heapID);
+    WifiList_SetFriendName(pList, addListIndex, pBuf);
+    GFL_STR_DeleteBuffer(pBuf);
+  }
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_GAMESYNC_ID, MyStatus_GetProfileID(pMyStatus));
@@ -214,8 +216,11 @@ void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFri
   if(overWrite != 2){
     MI_CpuCopy8(pFriend, keyList, sizeof(DWCFriendData));
   }
-  if((overWrite == 0) || (overWrite == 1)){  //仕様変更 全部上書き
-    GFL_NET_DWC_WriteMyStatus(pList, pMyStatus, addListIndex, heapID);
+  if(overWrite == 0){  //前回の仕様になる 名前書き換え
+    GFL_NET_DWC_WriteMyStatus(pList, pMyStatus, addListIndex, heapID, TRUE);
+  }
+  else if(overWrite == 1){  //名前書き換えない
+    GFL_NET_DWC_WriteMyStatus(pList, pMyStatus, addListIndex, heapID, FALSE);
   }
   tr = MyStatus_GetTrainerView(pMyStatus);
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, tr);
