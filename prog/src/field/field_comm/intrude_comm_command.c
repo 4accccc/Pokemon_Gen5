@@ -448,7 +448,7 @@ static void _IntrudeRecv_DeleteProfile(const int netID, const int size, const vo
   if(intcomm->recv_profile & (1 << (*leave_netid))){
     intcomm->recv_profile ^= 1 << (*leave_netid);
     CommPlayer_Del(intcomm->cps, *leave_netid);
-    GameCommInfo_MessageEntry_Leave(intcomm->game_comm, *leave_netid);
+    //GameCommInfo_MessageEntry_Leave(intcomm->game_comm, *leave_netid);
   }
   OS_TPrintf("Receive:離脱者のプロフィール削除 離脱者のNetID = %d\n", *leave_netid);
 }
