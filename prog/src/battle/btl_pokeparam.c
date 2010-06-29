@@ -3320,7 +3320,10 @@ BOOL BPP_MIGAWARI_IsExist( const BTL_POKEPARAM* bpp )
 {
   return bpp->migawariHP != 0;
 }
-
+u32 BPP_MIGAWARI_GetHP( const BTL_POKEPARAM* bpp )
+{
+  return bpp->migawariHP;
+}
 /**
  *  ƒ_ƒ[ƒW‰ÁZ
  *

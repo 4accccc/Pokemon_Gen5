@@ -441,6 +441,7 @@ extern BOOL BPP_WAZADMGREC_Get( const BTL_POKEPARAM* pp, u8 turn_ridx, u8 rec_ri
 extern void BPP_MIGAWARI_Create( BTL_POKEPARAM* bpp, u16 migawariHP );
 extern void BPP_MIGAWARI_Delete( BTL_POKEPARAM* bpp );
 extern BOOL BPP_MIGAWARI_IsExist( const BTL_POKEPARAM* bpp );
+extern u32 BPP_MIGAWARI_GetHP( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16* damage );
 
 extern void BPP_CONFRONT_REC_Set( BTL_POKEPARAM* bpp, u8 pokeID );
