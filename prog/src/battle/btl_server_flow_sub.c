@@ -1188,7 +1188,7 @@ static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     BtlExPos exPos;
 
     basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
-    exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, basePos );
+    exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, basePos );
     posCnt = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, posAry );
 
     for(i=0; i<posCnt; ++i)
