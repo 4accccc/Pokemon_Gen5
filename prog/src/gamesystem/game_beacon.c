@@ -743,6 +743,7 @@ BOOL GAMEBEACON_SUB_PokeBeaconTypeIsSpecial(const monsno )
 {
   int i;
   static const u16 sp_poke[] = {
+    MONSNO_530,	//É]ÉçÉAÅ[ÉN
     MONSNO_645, //MONSNO_ATOSU, 
     MONSNO_646, //MONSNO_PORUTOSU, 
     MONSNO_647, //MONSNO_ARAMISU, 
