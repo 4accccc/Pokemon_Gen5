@@ -412,6 +412,7 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
   GFL_STR_DeleteBuffer(pWork->pMessageStrBufEx);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
+  GFL_TCBL_Exit(pWork->pTimerTcblSys);
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   pWork->pMsgTcblSys=NULL;
 }
