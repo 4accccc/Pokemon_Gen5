@@ -3479,6 +3479,28 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       //不正な書き込み
       GF_ASSERT( 0 );
       break;
+
+#ifdef PM_DEBUG
+    //デバッグ用の努力値リミットオーバーチェックしないインターフェース
+    case ID_PARA_hp_deb_exp:
+      ppp1->hp_exp = (arg < 256) ? arg:255;
+      break;
+    case ID_PARA_pow_deb_exp:
+      ppp1->pow_exp = (arg < 256) ? arg:255;
+      break;
+    case ID_PARA_def_deb_exp:
+      ppp1->def_exp = (arg < 256) ? arg:255;
+      break;
+    case ID_PARA_agi_deb_exp:
+      ppp1->agi_exp = (arg < 256) ? arg:255;
+      break;
+    case ID_PARA_spepow_deb_exp:
+      ppp1->spepow_exp = (arg < 256) ? arg:255;
+      break;
+    case ID_PARA_spedef_deb_exp:
+      ppp1->spedef_exp = (arg < 256) ? arg:255;
+      break;
+#endif  //PM_DEBUG
   }
 }
 

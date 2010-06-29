@@ -442,6 +442,15 @@ enum{
   //現状ポケシフター経由で手に入れたポケモンのニックネームの文字コード変換時使用に限定
   ID_PARA_nickname_only,            //ニックネーム（nickname_flagの立ち下げを行わない※許可制）
   ID_PARA_nickname_raw_only,        //ニックネーム（nickname_flagの立ち下げを行わない　STRCODE配列使用 ※許可制）
+  
+#ifdef PM_DEBUG
+  ID_PARA_hp_deb_exp,                   //HP努力値(デバッグ用にリミットオーバーチェックしないver)
+  ID_PARA_pow_deb_exp,                  //攻撃力努力値(デバッグ用にリミットオーバーチェックしないver)
+  ID_PARA_def_deb_exp,                  //防御力努力値(デバッグ用にリミットオーバーチェックしないver)
+  ID_PARA_agi_deb_exp,                  //素早さ努力値(デバッグ用にリミットオーバーチェックしないver)
+  ID_PARA_spepow_deb_exp,               //特攻努力値(デバッグ用にリミットオーバーチェックしないver)
+  ID_PARA_spedef_deb_exp,               //特防努力値(デバッグ用にリミットオーバーチェックしないver)
+#endif  //PM_DEBUG
 
   ID_PARA_end                 //パラメータを追加するときは、ここから上に追加
 };

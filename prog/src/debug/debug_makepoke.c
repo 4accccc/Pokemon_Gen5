@@ -897,12 +897,22 @@ static void update_dst( DMP_MAINWORK* wk )
       PP_Put( wk->dst, ID_PARA_pp1+i, box_getvalue(wk, INPUTBOX_ID_PPEDIT1+i) );
     }
 
-    PP_Put( wk->dst, ID_PARA_hp_exp,  box_getvalue(wk, INPUTBOX_ID_HPEXP) );
-    PP_Put( wk->dst, ID_PARA_pow_exp, box_getvalue(wk, INPUTBOX_ID_POWEXP) );
-    PP_Put( wk->dst, ID_PARA_def_exp, box_getvalue(wk, INPUTBOX_ID_DEFEXP) );
-    PP_Put( wk->dst, ID_PARA_agi_exp, box_getvalue(wk, INPUTBOX_ID_AGIEXP) );
-    PP_Put( wk->dst, ID_PARA_spepow_exp, box_getvalue(wk, INPUTBOX_ID_SPWEXP) );
-    PP_Put( wk->dst, ID_PARA_spedef_exp, box_getvalue(wk, INPUTBOX_ID_SDFEXP) );
+    if( wk->proc_param->mode == DMP_MODE_MAKE ){
+      //フィールドデバッグポケ作成の時のみ、努力値リミットオーバー可
+      PP_Put( wk->dst, ID_PARA_hp_deb_exp,  box_getvalue(wk, INPUTBOX_ID_HPEXP) );
+      PP_Put( wk->dst, ID_PARA_pow_deb_exp, box_getvalue(wk, INPUTBOX_ID_POWEXP) );
+      PP_Put( wk->dst, ID_PARA_def_deb_exp, box_getvalue(wk, INPUTBOX_ID_DEFEXP) );
+      PP_Put( wk->dst, ID_PARA_agi_deb_exp, box_getvalue(wk, INPUTBOX_ID_AGIEXP) );
+      PP_Put( wk->dst, ID_PARA_spepow_deb_exp, box_getvalue(wk, INPUTBOX_ID_SPWEXP) );
+      PP_Put( wk->dst, ID_PARA_spedef_deb_exp, box_getvalue(wk, INPUTBOX_ID_SDFEXP) );
+    }else{
+      PP_Put( wk->dst, ID_PARA_hp_exp,  box_getvalue(wk, INPUTBOX_ID_HPEXP) );
+      PP_Put( wk->dst, ID_PARA_pow_exp, box_getvalue(wk, INPUTBOX_ID_POWEXP) );
+      PP_Put( wk->dst, ID_PARA_def_exp, box_getvalue(wk, INPUTBOX_ID_DEFEXP) );
+      PP_Put( wk->dst, ID_PARA_agi_exp, box_getvalue(wk, INPUTBOX_ID_AGIEXP) );
+      PP_Put( wk->dst, ID_PARA_spepow_exp, box_getvalue(wk, INPUTBOX_ID_SPWEXP) );
+      PP_Put( wk->dst, ID_PARA_spedef_exp, box_getvalue(wk, INPUTBOX_ID_SDFEXP) );
+    }
   }
 
   {
