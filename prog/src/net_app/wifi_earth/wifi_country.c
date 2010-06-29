@@ -61,7 +61,7 @@ static const EARTH_AREATABLE NationFlag_to_AreaID[] = {
     country012,
     NARC_wifi_earth_place_place_pos_AUS_dat,
     NARC_message_wifi_place_msg_AUS_dat,
-    AUS07
+    AUS08
   },
   { // ブラジル
     country028,
@@ -133,7 +133,7 @@ static const EARTH_AREATABLE NationFlag_to_AreaID[] = {
     country155,
     NARC_wifi_earth_place_place_pos_NOR_dat,
     NARC_message_wifi_place_msg_NOR_dat,
-    NOR20
+    NOR22
   },
   { // ポーランド
     country166,
@@ -145,7 +145,7 @@ static const EARTH_AREATABLE NationFlag_to_AreaID[] = {
     country174,
     NARC_wifi_earth_place_place_pos_RUS_dat,
     NARC_message_wifi_place_msg_RUS_dat,
-    RUS07
+    RUS08
   },
   { // スウェーデン
     country200,
