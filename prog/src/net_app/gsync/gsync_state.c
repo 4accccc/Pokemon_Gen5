@@ -2510,9 +2510,6 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->pGameData = pParent->gameData;
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
     profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
-    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID, &pParent->aSVL);
-
-    GFL_NET_DWC_SetErrDisconnectCallback(check_DisconnectCallback, pWork );
 
     pWork->pBox = GAMEDATA_GetBoxManager(pParent->gameData);
     pWork->trayno = pParent->boxNo;
@@ -2545,14 +2542,14 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
       _CHANGE_STATE(_BoxNullMsg);
       break;
     }
+    if(pParent->selectType!=GSYNC_CALLTYPE_BOXNULL){
+      pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID, &pParent->aSVL);
+      GFL_NET_DWC_SetErrDisconnectCallback(check_DisconnectCallback, pWork );
+    }
   }
 
   pWork->pDispWork = GSYNC_DISP_Init(pWork->heapID);
   pWork->pMessageWork = GSYNC_MESSAGE_Init(pWork->heapID, NARC_message_gsync_dat);
-
-
-
-
   
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
