@@ -575,34 +575,19 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 #ifdef  PLAYABLE_VERSION
-static const u16 passward[27] = {
-  0x0047,   //G
-  0x0041,   //A
-  0x004d,   //M
-  0x0045,   //E
-  0x0046,   //F
-  0x0052,   //R
-  0x0045,   //E
-  0x0041,   //A
-  0x004b,   //K
-  0x0000,   //終端文字;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
-  0x0020,   //space;
+//ぽけもんぼーだぶりゆ
+static const u16 passward[11] = {
+  0x307d,   //ぽ
+  0x3051,   //け
+  0x3082,   //も
+  0x3093,   //ん
+  0x307c,   //ぼ
+  0x30fc,   //ー
+  0x3060,   //だ
+  0x3076,   //ぶ
+  0x308a,   //り
+  0x3086,   //ゆ
+  0x0000,   //終端文字
 };
 
 //------------------------------------------------------------------
@@ -619,8 +604,8 @@ static void checkOnwerComments( void )
 
   for ( i = 0; i < NELEMS(passward); i ++ )
   {
-    OS_Printf("%04d : %04d\n", owner_info.comment[i], passward[i] );
-    if ( owner_info.comment[ i ] == passward[ i ] )
+    OS_Printf("%04x : %04x\n", owner_info.nickName[i], passward[i] );
+    if ( owner_info.nickName[ i ] == passward[ i ] )
     {
       if ( passward[ i ] == 0x0000 )
       {
@@ -630,7 +615,7 @@ static void checkOnwerComments( void )
     }
     result = FALSE;
   }
-  if ( owner_info.commentLength != i )
+  if ( owner_info.nickNameLength != i )
   {
     result = FALSE;
   }
