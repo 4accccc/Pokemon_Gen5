@@ -208,7 +208,7 @@ typedef struct
 	WIFIBATTLEMATCH_BTLRULE		btl_rule;				//何のバトルか
 	u16										rate;						//レーティング
 	u32										trainerID;			//自分の見た目
-	u16										btl_cnt;				//対戦回数
+	u32										btl_cnt;				//対戦回数
 	u16										win_cnt;				//勝ち回数
 	u16										lose_cnt;				//負け回数
 } PLAYERINFO_RANDOMMATCH_DATA;
@@ -222,7 +222,7 @@ typedef struct
 	GFDATE								end_date;				//大会終了
 	u32										trainerID;			//自分の見た目
 	u16										rate;						//レーティング
-	u16										btl_cnt;				//対戦回数
+	u32										btl_cnt;				//対戦回数
 	u16										btl_max;				//対戦回数上限
   u16                   bgm_no;         //BGMNOによってパレットを切り替えるため
 } PLAYERINFO_WIFICUP_DATA;

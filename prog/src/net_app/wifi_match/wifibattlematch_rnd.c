@@ -3349,7 +3349,7 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMA
           RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
       info_setup.lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
           RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
-      info_setup.btl_cnt  = info_setup.win_cnt + info_setup.lose_cnt;
+      info_setup.btl_cnt  = (u32)info_setup.win_cnt + (u32)info_setup.lose_cnt;
 
       if( info_setup.rate == 0 && info_setup.btl_cnt == 0 )
       { 
@@ -3363,7 +3363,7 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMA
       info_setup.rate     = 0;
       info_setup.win_cnt  = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
       info_setup.lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
-      info_setup.btl_cnt  = info_setup.win_cnt + info_setup.lose_cnt;
+      info_setup.btl_cnt  = (u32)info_setup.win_cnt + (u32)info_setup.lose_cnt;
     }
     info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
     p_wk->p_playerinfo	= PLAYERINFO_RND_Init( &info_setup, is_rate, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH_CORE );

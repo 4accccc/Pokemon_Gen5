@@ -1251,7 +1251,7 @@ static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, BOOL is_rate, 
 		},
 		//‘Îí‰ñ”‚Ì”’l
 		{	
-			25, 15, 5, 2,
+			23, 15, 7, 2,
 		},
 		//Ÿ‚Á‚½”
 		{	
@@ -1352,7 +1352,7 @@ static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, BOOL is_rate, 
 				break;
 			case PLAYERINFO_RND_BMPWIN_BTLCNT_NUM:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_011, p_src );
-				WORDSET_RegisterNumber( p_word, 0, cp_data->btl_cnt, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+				WORDSET_RegisterNumber( p_word, 0, cp_data->btl_cnt, 6, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 				WORDSET_ExpandStr( p_word, p_str, p_src );
 				break;
 			case PLAYERINFO_RND_BMPWIN_WIN_LABEL:
@@ -1551,7 +1551,7 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit
 				else
 				{	
 					GFL_MSG_GetString( p_msg, WIFIMATCH_STR_011, p_src );
-					WORDSET_RegisterNumber( p_word, 0, cp_data->btl_cnt, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+					WORDSET_RegisterNumber( p_word, 0, cp_data->btl_cnt, 6, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 					WORDSET_ExpandStr( p_word, p_str, p_src );
 				}
 				break;
