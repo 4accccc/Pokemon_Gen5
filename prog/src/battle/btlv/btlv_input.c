@@ -1810,7 +1810,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     int cont = GFL_UI_KEY_GetCont();
     if( ( biw->button_exist[ hit ] == FALSE ) && ( ( ( cont & PAD_BUTTON_L ) == 0 ) || ( biw->scr_type != BTLV_INPUT_SCRTYPE_WAZA ) ) )
     {
-      if( biw->waza_exist[ hit ] )
+      if( ( biw->waza_exist[ hit ] ) && ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) )
       { 
         SePlayBeep( biw );
       }
