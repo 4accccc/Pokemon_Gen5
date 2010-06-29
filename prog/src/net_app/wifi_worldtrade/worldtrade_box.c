@@ -1750,7 +1750,7 @@ static int ExchangeCheck( WORLDTRADE_WORK *wk )
 	// あいてのポケモンにメールがついていて、自分のてもちが６ひきだったときは交換できない。
 	if(WorldTrade_PokemonMailCheck(pp) && wk->BoxTrayNo!=WORLDTRADE_BOX_TEMOTI){
 		if(PokeParty_GetPokeCount(wk->param->myparty)==6){
-			SubSeq_MessagePrint( wk, msg_gtc_01_029, 1, 0, 0x0f0f, 1 );
+			SubSeq_MessagePrint( wk, msg_gtc_01_036, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN );
 			return 0;
 		}
