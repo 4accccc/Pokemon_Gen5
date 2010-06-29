@@ -138,6 +138,7 @@ void GFLUser_Init(void)
 #endif
 
 #ifndef MULTI_BOOT_MAKE
+#if (defined(SDK_TWL))
   if ( OS_IsRunOnTwl() == FALSE )
   {
     void *nstart;
@@ -147,6 +148,7 @@ void GFLUser_Init(void)
     extraHeapBuffer = OS_AllocFromHeap( OS_ARENA_MAIN, extraHeapHandle, 0x3F00 );
   }
   else
+#endif
   {
   }
 #endif
@@ -169,11 +171,13 @@ void GFLUser_Init(void)
   //ハイブリッドモード時にNITRO起動だと先頭16kbがヒープとして確保可能
   //TWLの場合は多いから普通にとる
   
+#if (defined(SDK_TWL))
   if ( OS_IsRunOnTwl() == FALSE )
   {
     GFL_HEAP_CreateHeapInBuffer( extraHeapBuffer , 0x3F00 , HEAPID_EXTRA );
   }
   else
+#endif
   {
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_EXTRA, 0x3F00 );
   }
