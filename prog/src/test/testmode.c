@@ -624,7 +624,7 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
     case TESTMODE_NAMESELECT: //l–¼‘I‘ð
       {
         u16 i;
-        GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_debug_message_debugname_dat, work->heapId_);
+        GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, work->heapId_);
 
         for( i=0;i<DEBUG_NAME_MAX;i++ )
         {
