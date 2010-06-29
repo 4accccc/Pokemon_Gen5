@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-25T21:32:02"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-29T17:25:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2558,9 +2558,9 @@
 		<attribute name="キャラ指定">VETERANW
 ローザ</attribute>
 		<language name="JPN" width="256">ローザ『あなたの　ブラックシティ
-たいくつしなそう……　うらやましいわ</language>
+たいくつしなさそう　うらやましいわ</language>
 		<language name="JPN_KANJI" width="256">ローザ『あなたの　ブラックシティ
-退屈しなそう……　うらやましいわ</language>
+退屈しなさそう　うらやましいわ</language>
 	</row>
 
 	<row id="plwc10_27_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
