@@ -16,6 +16,19 @@ extern "C" {
 typedef void (*GFL_DRAW_CALLBACK_FUNC)( NNSG3dRenderObj *renderobj, void *work );
 #endif  //GFL_DRAW_CALLBACK 
 
+
+//-------------------------------------
+///	g3d系処理　GF_ASSERT カット定義
+//  定義ON(1)状態でGF_ASSERTの出力内容を短縮し
+//  LOWメモリで動作するようになります。
+//=====================================
+#define GFL_G3D_SYS_ASSERT_LOW_FLG (1)
+#if GFL_G3D_SYS_ASSERT_LOW_FLG
+#define G3D_SYS_LOW_ASSERT(exp) GF_ASSERT_MSG(exp, "")
+#else
+#define G3D_SYS_LOW_ASSERT(exp) GF_ASSERT(exp)
+#endif
+
 //=============================================================================================
 /**
  *
