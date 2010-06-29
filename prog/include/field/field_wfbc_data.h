@@ -228,7 +228,7 @@ extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mys
 //整合性チェック
 extern BOOL FIELD_WFBC_CORE_IsConfomity( const FIELD_WFBC_CORE* cp_wk );
 //データの調整  不正データの場合、正常な情報に書き換えます。
-extern void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk );
+extern void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus );
 // データの有無   不正データの場合、FALSEを返します。
 extern BOOL FIELD_WFBC_CORE_IsInData( const FIELD_WFBC_CORE* cp_wk );
 // 人の数を返す

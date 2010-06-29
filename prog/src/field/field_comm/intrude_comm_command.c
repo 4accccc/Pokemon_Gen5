@@ -15,6 +15,7 @@
 #include "field/zonedata.h"
 #include "intrude_main.h"
 #include "intrude_mission.h"
+#include "intrude_work.h"
 #include "net/net_whpipe.h"
 
 
@@ -2245,7 +2246,8 @@ static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   
   dest_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
-  FIELD_WFBC_CORE_Management( (FIELD_WFBC_CORE*)wfbc_core );  //不正データ書き換え
+  FIELD_WFBC_CORE_Management( (FIELD_WFBC_CORE*)wfbc_core, Intrude_GetMyStatus(gamedata, netID) );  //不正データ書き換え
+  
   GFL_STD_MemCopy(wfbc_core, dest_wfbc, sizeof(FIELD_WFBC_CORE));
   GAMEDATA_SetUpPalaceWFBCCoreData( gamedata, wfbc_core );
   

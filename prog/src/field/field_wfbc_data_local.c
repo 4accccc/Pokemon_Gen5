@@ -28,6 +28,8 @@
 
 #include "eventwork_def.h"
 
+#include "field_comm/intrude_work.h"
+
 
 #include "net/dwc_tool.h"
 
@@ -300,7 +302,7 @@ BOOL FIELD_WFBC_CORE_IsConfomity( const FIELD_WFBC_CORE* cp_wk )
  *	@param	p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk )
+void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus )
 {
   int i;
 
@@ -321,8 +323,13 @@ void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk )
   // 街タイプの調整
   if( (p_wk->data_in == TRUE) && (p_wk->type >= FIELD_WFBC_CORE_TYPE_MAX) )
   {
+    u32 pm_version, trainerID;
+
+    pm_version  = MyStatus_GetRomCode( cp_mystatus );
+    trainerID   = MyStatus_GetID( cp_mystatus );
+    
     // 不正データ 自分のROMコードに合わせる
-    if( GET_VERSION() == VERSION_BLACK ){
+    if( Intrude_GetIntrudeRomVersion( pm_version, trainerID ) == VERSION_BLACK ){
       p_wk->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
     }else{
       p_wk->type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
