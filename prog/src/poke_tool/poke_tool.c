@@ -2663,6 +2663,10 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
       break;
     case ID_PARA_item:
       ret = ppp1->item;
+      if( ret > ITEM_DATA_MAX ){
+        GF_ASSERT_MSG( 0, "%d\n", ret );
+        ret = 0;  //万一のためのセキュリティ処理
+      }
       break;
     case ID_PARA_id_no:
       ret = ppp1->id_no;
@@ -3148,6 +3152,10 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       ppp1->monsno = arg;
       break;
     case ID_PARA_item:
+      if( arg > ITEM_DATA_MAX ){ //万一のためのセキュリティ処理
+        GF_ASSERT_MSG( 0, "%d\n",arg );
+        break;
+      }
       ppp1->item = arg;
       break;
     case ID_PARA_id_no:
