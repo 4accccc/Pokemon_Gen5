@@ -2519,6 +2519,11 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->indexno = pParent->boxIndex;
     pWork->bAccount = DREAMWORLD_SV_GetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
 
+    {
+      DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+      OS_TPrintf("‘I‚ñ‚¾‰Æ‹ï %d --\n",DREAMWORLD_SV_GetSelectFurnitureNo(pDreamSave));
+    }
+    
     switch(pParent->selectType){
     case GSYNC_CALLTYPE_INFO:      //‹N‚±‚·
       GF_ASSERT(profileID);
