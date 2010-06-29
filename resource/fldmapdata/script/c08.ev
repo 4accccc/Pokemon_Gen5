@@ -124,7 +124,7 @@ EVENT_START   ev_pos_c08_champions_01
 		_OBJ_ANIME_WAIT()
 	CASE 174 THEN
 		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z174 )
-	_OBJ_ANIME_WAIT()
+		_OBJ_ANIME_WAIT()
 	CASE 175 THEN  //–Ú‚Ì‘O‚É—§‚Á‚½Žž
 		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z175 )
 		 _OBJ_ANIME_WAIT()
@@ -163,7 +163,6 @@ EVENT_START   ev_pos_c08_champions_01
 			_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z174w )
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z174w )
 			_OBJ_ANIME_WAIT()
-		_OBJ_ANIME_WAIT()
 		CASE 175 THEN  //–Ú‚Ì‘O‚É—§‚Á‚½Žž
 			_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z175w )
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z175w )
@@ -194,7 +193,6 @@ EVENT_START   ev_pos_c08_champions_01
 			_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z174 )
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z174 )
 			_OBJ_ANIME_WAIT()
-		_OBJ_ANIME_WAIT()
 		CASE 175 THEN  //–Ú‚Ì‘O‚É—§‚Á‚½Žž
 			_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z175 )
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z175 )
