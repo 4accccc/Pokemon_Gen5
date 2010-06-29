@@ -428,7 +428,7 @@
 
 	<row id="TOKUSEIINFO_005">
 		<language name="JPN" width="216">いちげきで
-たおされない</language>
+たおされない。</language>
 		<language name="JPN_KANJI" width="216">一撃で　倒されない。
 </language>
 	</row>
@@ -1309,10 +1309,10 @@
 	</row>
 
 	<row id="TOKUSEIINFO_131">
-		<language name="JPN" width="216">みかたの　じょうたいを
-たまに　なおしてしまう。</language>
-		<language name="JPN_KANJI" width="216">味方の　状態を
-たまに　治してしまう。</language>
+		<language name="JPN" width="216">みかたの　じょうたい
+いじょうを　たまに　なおす。</language>
+		<language name="JPN_KANJI" width="216">味方の　状態異常を
+たまに　治す。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_132">
@@ -1372,10 +1372,10 @@
 	</row>
 
 	<row id="TOKUSEIINFO_140">
-		<language name="JPN" width="216">いきをあわせて　みかたの
-こうげきを　うけない。</language>
-		<language name="JPN_KANJI" width="216">息を合わせて　味方の
-攻撃を　受けない。</language>
+		<language name="JPN" width="216">みかたの　こうげきを
+よみとって　うけない。</language>
+		<language name="JPN_KANJI" width="216">味方の　攻撃を
+読み取って　受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_141">
