@@ -982,6 +982,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
     {
       work->state = MCS_EXIT_GAME;
+      MB_COMM_ExitComm( work->commWork );
     }
     MB_CHILD_ErrCheck( work , FALSE );
     break;

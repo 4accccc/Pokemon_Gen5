@@ -2731,6 +2731,7 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
           NetErr_App_CheckError() == NET_ERR_CHECK_HEAVY )
       {
         //セーブ中だったら電源切断へ
+        NetErr_ExitNetSystem();
         NetErr_DispCall( TRUE );
       }
       else
@@ -2744,6 +2745,7 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
       if( isSave == TRUE )
       {
         //セーブ中だったら電源切断へ
+        NetErr_ExitNetSystem();
         NetErr_DispCall( TRUE );
       }
     }

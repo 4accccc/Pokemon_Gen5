@@ -323,7 +323,7 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
   return FALSE;
 }
 
-#define DLPLAY_CHECK_SAVE_TICK 1
+#define DLPLAY_CHECK_SAVE_TICK 0
 #if DLPLAY_CHECK_SAVE_TICK
 static OSTick dlplaySaveTick;
 #endif

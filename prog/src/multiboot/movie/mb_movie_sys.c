@@ -748,6 +748,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
   case MCS_WAIT_EXIT_COMM:
     if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
     {
+      MB_COMM_ExitComm( work->commWork );
       work->state = MCS_EXIT_GAME;
     }
     MB_MOVIE_ErrCheck( work , FALSE );
