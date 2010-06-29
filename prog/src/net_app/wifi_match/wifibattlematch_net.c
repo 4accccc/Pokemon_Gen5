@@ -2270,6 +2270,21 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
       default:
         GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", cp_data->btl_result );
       }
+
+#ifdef PM_DEBUG
+      if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+      {
+        if( game_result == DWC_SC_GAME_RESULT_LOSS )
+        {
+          game_result = DWC_SC_GAME_RESULT_WIN;
+        }
+        else if( game_result == DWC_SC_GAME_RESULT_WIN )
+        {
+          game_result = DWC_SC_GAME_RESULT_LOSS;
+        }
+      }
+#endif //PM_DEBUG
+
     }
 
     ret = DWC_ScReportSetPlayerData(
