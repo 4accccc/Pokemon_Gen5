@@ -487,6 +487,91 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
   return CARDSYS_END;
 }
 
+#define TCARD_RECORD_ADD_MAX  ( 7 )
+
+enum{
+  RECSUM_ID_COMM=0,
+  RECSUM_ID_COMM_BATTLE,
+  RECSUM_ID_COMM_BATTLE_WIN,
+  RECSUM_ID_COMM_BATTLE_LOSE,
+  RECSUM_ID_COMM_TRADE,
+  RECSUM_ID_ENCOUNT,
+  RECSUM_ID_TRAINER,
+  RECSUM_ID_FEELINGCHECK,
+  RECSUM_ID_MUSICAL,
+};
+
+
+  
+
+static const u16 record_get_table[][7]={
+  { ///< 通信を行った回数の取得テーブル
+    RECID_COMM_TRADE, RECID_COMM_BATTLE, RECID_WIFI_TRADE,    RECID_WIFI_BATTLE, 
+    RECID_IRC_TRADE,  RECID_IRC_BATTLE,  RECID_GURUGURU_COUNT,
+  },
+  { // 通信対戦回数
+    RECID_COMM_BATTLE,RECID_WIFI_BATTLE,     RECID_IRC_BATTLE,0,0,0,0  
+  },
+  { //勝ち数  ワイヤレス+WiFi
+    RECID_COMM_BTL_WIN,  RECID_WIFI_BTL_WIN, RECID_IRC_BTL_WIN,0,0,0,0
+  },
+  { //負け数  ワイヤレス+WiFi
+    RECID_COMM_BTL_LOSE, RECID_WIFI_BTL_LOSE,RECID_IRC_BTL_LOSE,0,0,0,0  
+  },
+  { //通信交換  ワイヤレス+WiFi
+    RECID_COMM_TRADE, RECID_WIFI_TRADE,      RECID_IRC_TRADE,RECID_GURUGURU_COUNT,0,0,0  
+  },
+  { //エンカウント回数
+    RECID_BTL_ENCOUNT,0,0,0,0,0,0,
+  },
+  { // トレーナーと戦った回数
+    RECID_BTL_TRAINER, 0,0,0,0,0,0,
+  },
+  { // フィーリングチェックをした回数
+    RECID_AFFINITY_CHECK_NUM,0,0,0,0,0,0,
+  },
+  { //ミュージカル参加
+    RECID_MUSICAL_PLAY_NUM,    RECID_MUSICAL_COMM_NUM
+  },
+
+
+};
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 各レコードを足して取得する
+ *
+ * @param   rec         レコードデータ構造体
+ * @param   table_index レコードデータ群が記述されている配列の参照INDEX
+ * @param   max         取得する数値の最大値
+ *
+ * @retval  u32         レコードを足した値
+ */
+//----------------------------------------------------------------------------------
+static u32 _record_sum( RECORD *rec, int table_index, u32 max )
+{
+  u32 tmp = 0;
+  int i;
+
+  for(i=0;i<TCARD_RECORD_ADD_MAX;i++){
+    int rec_id = record_get_table[table_index][i];
+    if(rec_id==0){ // 配列参照のINDEXが０だったら終了
+      break;
+    }
+    
+    // レコードを取得して足し込む
+    tmp += RECORD_Get(rec, rec_id );
+
+    // MAXを超えていたらMAXの値にする
+    if(tmp>max){
+      tmp = max;
+    }
+  }
+  
+  
+  return tmp;
+}
 
 //=============================================================================================
 /**
@@ -602,37 +687,25 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     }
   }
   //通信回数  ワイヤレスコンテスト+ワイヤレス交換+WiFi交換+ワイヤレス対戦+WiFi対戦+ワイヤレスポルト
-  cardData->CommNum = RECORD_Get(rec, RECID_COMM_TRADE)  + RECORD_Get(rec, RECID_COMM_BATTLE) +
-                      RECORD_Get(rec, RECID_WIFI_TRADE)  + RECORD_Get(rec, RECID_WIFI_BATTLE) +
-                      RECORD_Get(rec, RECID_IRC_TRADE)   + RECORD_Get(rec, RECID_IRC_BATTLE)  +
-                      RECORD_Get(rec, RECID_GURUGURU_COUNT );
+  cardData->CommNum = _record_sum(rec, RECSUM_ID_COMM, 999999999 );
   // 通信対戦回数
-  cardData->CommBattleNum = RECORD_Get(rec, RECID_COMM_BATTLE) + 
-                            RECORD_Get(rec, RECID_WIFI_BATTLE) +
-                            RECORD_Get(rec, RECID_IRC_BATTLE);
+  cardData->CommBattleNum = _record_sum(rec, RECSUM_ID_COMM_BATTLE, 999999999 );
   //勝ち数  ワイヤレス+WiFi
-  cardData->CommBattleWin = RECORD_Get(rec, RECID_COMM_BTL_WIN) + 
-                            RECORD_Get(rec, RECID_WIFI_BTL_WIN) +
-                            RECORD_Get(rec, RECID_IRC_BTL_WIN);
+  cardData->CommBattleWin = _record_sum(rec, RECSUM_ID_COMM_BATTLE_WIN, 999999999 );
   //負け数  ワイヤレス+WiFi
-  cardData->CommBattleLose = RECORD_Get(rec, RECID_COMM_BTL_LOSE) + 
-                             RECORD_Get(rec, RECID_WIFI_BTL_LOSE) +
-                             RECORD_Get(rec, RECID_IRC_BTL_LOSE);
+  cardData->CommBattleLose = _record_sum(rec, RECSUM_ID_COMM_BATTLE_LOSE, 999999999 );
   //通信交換  ワイヤレス+WiFi
-  cardData->CommTrade = RECORD_Get(rec, RECID_COMM_TRADE) + 
-                        RECORD_Get(rec, RECID_WIFI_TRADE) +
-                        RECORD_Get(rec, RECID_IRC_TRADE)  +
-                        RECORD_Get(rec, RECID_GURUGURU_COUNT);
+  cardData->CommTrade = _record_sum(rec, RECSUM_ID_COMM_TRADE, 999999999 );
 
   // 野生エンカウント回数
-  cardData->EncountNum        = RECORD_Get(rec, RECID_BTL_ENCOUNT);        
+  cardData->EncountNum        = _record_sum( rec, RECSUM_ID_ENCOUNT, 999999999 );
   // トレーナー戦をした回数
-  cardData->TrainerEncountNum = RECORD_Get(rec, RECID_BTL_TRAINER);
+  cardData->TrainerEncountNum = _record_sum( rec, RECSUM_ID_TRAINER, 999999999 );
 
   // すれ違い通信をした回数
   cardData->SuretigaiNum      = MISC_CrossComm_GetSuretigaiCount(misc);
   // フィーリングチェックをした回数
-  cardData->FeelingCheckNum = RECORD_Get(rec, RECID_AFFINITY_CHECK_NUM);   
+  cardData->FeelingCheckNum = _record_sum( rec, RECSUM_ID_FEELINGCHECK, 9999 );
   // 使えるGパワーの数取得
   {
     POWER_CONV_DATA *powerdata;
@@ -647,8 +720,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     GPOWER_PowerData_Unload(powerdata);
   }
   // ミュージカルをした回数
-  cardData->MusicalNum        = RECORD_Get( rec, RECID_MUSICAL_PLAY_NUM )     
-                               +RECORD_Get( rec, RECID_MUSICAL_COMM_NUM );     
+  cardData->MusicalNum        = _record_sum( rec, RECSUM_ID_MUSICAL, 9999 );
   // ポケシフターのハイスコア
   {
     cardData->PokeshifterHigh = MISC_GetPalparkHighscore(misc);

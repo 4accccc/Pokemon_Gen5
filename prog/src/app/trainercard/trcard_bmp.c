@@ -634,19 +634,19 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
   case SCORE_LINE_COMM_WIN_NUM:     // 通信対戦勝利回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_11_2], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommBattleWin, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommBattleWin, COMM_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_COMM_LOSE_NUM:  // 通信対戦で敗北回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_11_3], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommBattleLose, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommBattleLose, COMM_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_COMM_TRADE_NUM:  // 通信交換回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_11_4], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommTrade, TRADE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommTrade, COMM_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_ENCOUNT_NUM_1:    // 野生エンカウント回数（文字列のみ）
@@ -674,31 +674,31 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
   case SCORE_LINE_FEELING_CHECK_NUM:        // フィーリングチェックをした回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_18], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->FeelingCheckNum, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->FeelingCheckNum, FEELING_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_G_POWER:                  // 発動できるデルパワーの回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_19], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->gPowerNum, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->gPowerNum, GPOWER_DIGIT,
             STR_NUM_DISP_SPACE,col );
     break;
   case SCORE_LINE_MUSICAL_NUM:              // ミュージカルをした回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_20], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MusicalNum, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MusicalNum, MUSICAL_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_POKESHIFTER_HIGH:         // ポケシフターのハイスコア
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_21], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->PokeshifterHigh, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->PokeshifterHigh, POKESHIFTER_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_TRIALHOUSE_HIGH:          // トライアウハウスの最高得点
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_22], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseHigh, BATTLE_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseHigh, TRIALHOUSE_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
 //  case SCORE_LINE_TRIALHOUSE_RANK:          // トライアウハウスのランク
