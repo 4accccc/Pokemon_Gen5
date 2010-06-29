@@ -29,10 +29,10 @@ ntrcomp -l -o 014_02_nyuryoku_lz77.nbfs 014_02_nyuryoku.nbfs
 ntrcomp -l -o 012_01_cgear_power_lz77.nbfs 012_01_cgear_power.nbfs
 ntrcomp -l -o 012_02_cgear_custom_lz77.nbfs 012_02_cgear_custom.nbfs
 ntrcomp -l -o 012_03_cgear_shitabou_lz77.nbfs 012_03_cgear_shitabou.nbfs
+ntrcomp -l -o 012_07_cgear_tanin_lz77.nbfs 012_07_cgear_tanin.nbfs
 ntrcomp -l -o 012_04_cgear_sankaku_lz77.nbfs 012_04_cgear_sankaku.nbfs
 ntrcomp -l -o 012_05_cgear_fukidashi_lz77.nbfs 012_05_cgear_fukidashi.nbfs
 ntrcomp -l -o 012_06_cgear_egao_lz77.nbfs 012_06_cgear_egao.nbfs
-ntrcomp -l -o 012_07_cgear_tanin_lz77.nbfs 012_07_cgear_tanin.nbfs
 ntrcomp -l -o 013_01_honbumae_lz77.nbfs 013_01_honbumae.nbfs
 ntrcomp -l -o 013_02_engraph_lz77.nbfs 013_02_engraph.nbfs
 ntrcomp -l -o 015_02_mukeau_lz77.nbfs 015_02_mukeau.nbfs

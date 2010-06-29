@@ -29,10 +29,10 @@ ntexconv 014_02_nyuryoku.bmp -no -bg -bgb -bgf direct
 ntexconv 012_01_cgear_power.bmp -no -bg -bgb -bgf direct
 ntexconv 012_02_cgear_custom.bmp -no -bg -bgb -bgf direct
 ntexconv 012_03_cgear_shitabou.bmp -no -bg -bgb -bgf direct
+ntexconv 012_07_cgear_tanin.bmp -no -bg -bgb -bgf direct
 ntexconv 012_04_cgear_sankaku.bmp -no -bg -bgb -bgf direct
 ntexconv 012_05_cgear_fukidashi.bmp -no -bg -bgb -bgf direct
 ntexconv 012_06_cgear_egao.bmp -no -bg -bgb -bgf direct
-ntexconv 012_07_cgear_tanin.bmp -no -bg -bgb -bgf direct
 ntexconv 013_01_honbumae.bmp -no -bg -bgb -bgf direct
 ntexconv 013_02_engraph.bmp -no -bg -bgb -bgf direct
 ntexconv 015_02_mukeau.bmp -no -bg -bgb -bgf direct
