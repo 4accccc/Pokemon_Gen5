@@ -7587,7 +7587,6 @@ static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
       {
         scEvent_AddSick_Failed( wk, target, attacker, sick );
         wk->fWazaFailMsgDisped = TRUE;
-//        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       }
     }
 
@@ -8887,10 +8886,16 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
       HandExResult result = HandExResult_NULL;
       BOOL fFailMsgEnable;
 
+      result = scproc_HandEx_Result( wk );
+      TAYA_Printf("Uncategory resultIni=%d\n", result);
+
+
       if( scEvent_UnCategoryWaza(wk, wazaParam, attacker, targets, &fFailMsgEnable) )
       {
         result = scproc_HandEx_Result( wk );
-        if( result == HandExResult_Enable ){
+        TAYA_Printf("Uncategory result=%d\n", result);
+        if( result == HandExResult_Enable )
+        {
           wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
         }
       }

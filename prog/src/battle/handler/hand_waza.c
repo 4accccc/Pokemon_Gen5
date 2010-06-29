@@ -6357,6 +6357,7 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
         item_param->pokeID = pokeID;
         item_param->reactionType = BTL_ITEMREACTION_SICK;
+        item_param->header.failSkipFlag = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, item_param );
 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
