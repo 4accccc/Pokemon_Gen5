@@ -389,7 +389,7 @@
 // □回答マーカー
 //-------------------------------------------------------------------------------
 #define ANSWER_MARKER_LEFT   (FX16_CONST(-0.224609f)) // 左上x座標 ( ワールド座標系 )
-#define ANSWER_MARKER_RIGHT  (FX16_CONST(-0.178222f)) // 右下x座標 ( ワールド座標系 )
+#define ANSWER_MARKER_RIGHT  (FX16_CONST(-0.148222f)) // 右下x座標 ( ワールド座標系 )
 #define ANSWER_MARKER_TOP    (FX16_CONST( 0.588867f)) // 左上y座標 ( ワールド座標系 )
 #define ANSWER_MARKER_BOTTOM (FX16_CONST( 0.654785f)) // 右下y座標 ( ワールド座標系 )
 #define ANSWER_MARKER_Z      (FX16_CONST(0.0f))       // z座標 ( ワールド座標系 )
