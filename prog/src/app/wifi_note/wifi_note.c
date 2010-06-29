@@ -2015,7 +2015,7 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
   Draw_Init( &p_wk->draw, &p_wk->data, HEAPID_WIFINOTE );
 
   // 通信アイコン設定
-	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
+//	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
 
   // 各画面のワーク初期化
 //  ModeSelect_Init( &p_wk->mode_select, &p_wk->data, &p_wk->draw, HEAPID_WIFINOTE );
@@ -2551,6 +2551,9 @@ static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPID h
   Draw_SCRNDATA_Init( p_draw, heapID );
 
   Draw_BlinkAnmInit( p_draw, heapID );
+
+  // 通信アイコン設定
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
 
   // OAM面表示
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
