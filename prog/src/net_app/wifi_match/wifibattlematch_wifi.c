@@ -2322,7 +2322,8 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
       else if( ret == WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY )
       {   
-        *p_seq       = SEQ_START_DIRTY_MSG;
+        //*p_seq       = SEQ_START_DIRTY_MSG;
+        *p_seq       = SEQ_NEXT_MATCHING;
       }
 
       //ÉGÉâÅ[
