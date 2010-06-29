@@ -22,6 +22,7 @@
 #include "app/research_radar/questionnaire_index.h"
 #include "savedata/playtime.h"
 #include "field/research_team_def.h"
+#include "system/gfl_use.h"
 
 #include "game_beacon_local.h"
 
