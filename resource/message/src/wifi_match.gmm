@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-19T16:22:30"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-29T15:11:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -858,8 +858,10 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 
 	<row id="WIFIMATCH_WIFI_STR_19">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">さんか　できませんでした</language>
-		<language name="JPN_KANJI" width="256">参加できませんでした</language>
+		<language name="JPN" width="256">ポケモンに　もんだいが　あるため
+さんか　できませんでした[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　問題が　あるため
+参加できませんでした[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_20">
