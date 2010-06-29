@@ -73,6 +73,9 @@ typedef enum{
 }BATTLEMODE_SEARCH_NO;
 
 
+///ポケモン不正チェックに登録する数
+#define GDS_VIDEO_EVIL_CHECK_NUM  (12)
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
@@ -204,6 +207,7 @@ typedef struct _GDS_RAP_WORK{
 	u8 div_save_seq;			///<分割セーブ実行シーケンス
 	u8 send_before_wait;		///<TRUE:送信前にメッセージを見せる為の一定ウェイト
 	u8 local_seq;
+  u8 evil_check_loop; //不正チェック時、最初のチェックと名前修正後の２回チェックを行うための回数カウント
 
   // ポケモン認証　署名
   NHTTP_RAP_WORK* p_nhttp;  // ポケモン認証ワーク
@@ -214,6 +218,13 @@ typedef struct _GDS_RAP_WORK{
   u8 error_poke_pos;        // 認証エラーが発生していたポケモン位置
   u8 error_nhttp;           // 認証取得そのものがエラー
 	DWCSvlResult *pSvl;       // Wi-Fi Login時に取得したSVLへのポインタ
+
+  //ポケモン不正チェックで、名前を書き換えて送信した後に
+  //BRSをセーブしてしまうと、名前が書き変わったままになってしまうので、
+  //書き戻すためのバッファ
+  STRCODE nickname[GDS_VIDEO_EVIL_CHECK_NUM][MONS_NAME_SIZE+EOM_SIZE];
+  BOOL  evilcheck_write;
+
 }GDS_RAP_WORK;
 
 

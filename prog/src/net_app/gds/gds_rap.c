@@ -29,6 +29,10 @@
 #include "battle/btl_net.h"
 #include "gamesystem/game_data.h"
 
+//不正チェックのためのinclude
+#include "print/global_msg.h"
+#include "net/dwc_tool.h"
+#include "print/str_tool.h"
 
 //-------------------------------------
 ///	
@@ -52,8 +56,6 @@
 ///送信前のウェイト(送信しているメッセージを見せる為にウェイトを入れている)
 #define GDS_SEND_BEFORE_WAIT	(60)
 
-///ポケモン不正チェックに登録する数
-#define GDS_VIDEO_EVIL_CHECK_NUM  (12)
 
 //--------------------------------------------------------------
 //	サブシーケンスの戻り値
@@ -258,41 +260,32 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
 		return FALSE;
 	}
 
-  //暗号化する前にポケモン不正チェック用のパラメータを作成
+  //不正チェックのため名前を書き換えるので、
+  //書き戻すためバッファに名前を入れる
   {
-    int client_max, temoti_max, i;
-    BOOL ret;
-    
-    GF_ASSERT(gdsrap->p_nhttp == NULL);
-    gdsrap->p_nhttp = NHTTP_RAP_Init( gdsrap->heap_id, 
-      MyStatus_GetProfileID( GAMEDATA_GetMyStatus(gdsrap->gamedata) ), gdsrap->pSvl );
-    
-    //不正検査領域確保
-    NHTTP_RAP_PokemonEvilCheckCreate( gdsrap->p_nhttp, gdsrap->heap_id, 
-      sizeof(REC_POKEPARA) * GDS_VIDEO_EVIL_CHECK_NUM, NHTTP_POKECHK_VIDIO );
+    int i;
+    int client, poke;
+    int client_max, temoti_max;
+    REC_POKEPARA *param;
 
-    //ポケモン登録
     BattleRec_ClientTemotiGet(br_send->head.mode, &client_max, &temoti_max);
-    gdsrap->evil_check_count = 0;
-    for(i = 0; i < client_max; i++){
-      NHTTP_RAP_PokemonEvilCheckAdd(gdsrap->p_nhttp, 
-        br_send->rec.rec_party[i].member, 
-        sizeof(REC_POKEPARA) * br_send->rec.rec_party[i].PokeCount);//temoti_max);
-      gdsrap->evil_check_count += br_send->rec.rec_party[i].PokeCount;
+    for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ )
+    {
+      //書き換えるためにインデックスを取得
+      client  = i/temoti_max;
+      poke    = i%temoti_max;
+
+      param = &br_send->rec.rec_party[client].member[poke];
+      STRTOOL_Copy( param->nickname, gdsrap->nickname[i], MONS_NAME_SIZE+EOM_SIZE );
     }
-
-    //不正検査 コネクション作成
-    ret = NHTTP_RAP_PokemonEvilCheckConectionCreate(gdsrap->p_nhttp);
-    GF_ASSERT(ret);
-
-    ret = NHTTP_RAP_StartConnect( gdsrap->p_nhttp ) == NHTTP_ERROR_NONE;
-    GF_ASSERT( ret );
   }
+  gdsrap->evilcheck_write = FALSE;
+
+  //不正チェックを行う回数をクリア
+  gdsrap->evil_check_loop  = 0;
   
 	//録画データは巨大な為、コピーせずに、そのままbrsのデータを送信する
 	gdsrap->send_buf.battle_rec_send_ptr = br_send;
-	//brsに展開されている録画データ本体は復号化されているので、送信する前に再度暗号化する
-	BattleRec_GDS_SendData_Conv(GAMEDATA_GetSaveControlWork(gdsrap->gamedata));
 	
 	//GDSプロフィールのみ、最新のを適用する為、上書きする
 	profile_ptr = BattleRec_GDSProfilePtrGet();
@@ -554,6 +547,14 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
 //--------------------------------------------------------------
 static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
 {
+  enum
+  {
+    // バトルビデオ登録のシーケンス
+    SEQ_START_EVILCHECK,
+    SEQ_WAIT_EVILCHECK,
+    SEQ_START_SEND,
+    SEQ_SEND_VIDEO,
+  };
 	int ret = FALSE;
 	
 	//リクエストにデータが貯まっていれば送信
@@ -566,8 +567,43 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
 			gdsrap->response);
 		break;
 	case POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST:	// バトルビデオ登録
+
 	  switch(gdsrap->local_seq){
-	  case 0:
+    case SEQ_START_EVILCHECK:
+      {
+        BATTLE_REC_SEND *br_send = BattleRec_RecWorkAdrsGet();
+        int client_max, temoti_max, i;
+        BOOL ret;
+
+        GF_ASSERT(gdsrap->p_nhttp == NULL);
+        gdsrap->p_nhttp = NHTTP_RAP_Init( gdsrap->heap_id, 
+            MyStatus_GetProfileID( GAMEDATA_GetMyStatus(gdsrap->gamedata) ), gdsrap->pSvl );
+        //不正検査領域確保
+        NHTTP_RAP_PokemonEvilCheckCreate( gdsrap->p_nhttp, gdsrap->heap_id, 
+            sizeof(REC_POKEPARA) * GDS_VIDEO_EVIL_CHECK_NUM, NHTTP_POKECHK_VIDIO );
+
+        //ポケモン登録
+        BattleRec_ClientTemotiGet(br_send->head.mode, &client_max, &temoti_max);
+        gdsrap->evil_check_count = 0;
+        for(i = 0; i < client_max; i++){
+          NHTTP_RAP_PokemonEvilCheckAdd(gdsrap->p_nhttp, 
+              br_send->rec.rec_party[i].member, 
+              sizeof(REC_POKEPARA) * br_send->rec.rec_party[i].PokeCount);//temoti_max);
+          gdsrap->evil_check_count += br_send->rec.rec_party[i].PokeCount;
+        }
+
+        //不正検査 コネクション作成
+        ret = NHTTP_RAP_PokemonEvilCheckConectionCreate(gdsrap->p_nhttp);
+        GF_ASSERT(ret);
+
+        ret = NHTTP_RAP_StartConnect( gdsrap->p_nhttp ) == NHTTP_ERROR_NONE;
+        GF_ASSERT( ret );
+
+        gdsrap->local_seq++;
+      }
+      break;
+
+	  case SEQ_WAIT_EVILCHECK:
 	    {
         NHTTPError error;
         error = NHTTP_RAP_Process( gdsrap->p_nhttp );
@@ -595,33 +631,81 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
                 OS_TPrintf("ポケモン認証エラー %d番 error=%d\n", i, poke_result);
               }
             }
+
+            if( gdsrap->evil_check_loop == 1 )
+            {
+              //名前を変えたので、CRCを再計算する
+              BattleRec_CalcCrcRec( BattleRec_WorkPtrGet() );
+            }
+
+            gdsrap->local_seq++;
           }
           else
           {
-            OS_TPrintf("不正検査失敗\n");
-            gdsrap->error_nhttp = TRUE;
+            BATTLE_REC_SEND *br_send = BattleRec_RecWorkAdrsGet();
+
+            int client, poke;
+            int client_max, temoti_max;
+            REC_POKEPARA *param;
+
+            OS_TPrintf("不正検査%d失敗\n", gdsrap->evil_check_loop);
+            if( gdsrap->evil_check_loop == 1 )
+            {
+              gdsrap->error_nhttp = TRUE;
+            }
+
+            BattleRec_ClientTemotiGet(br_send->head.mode, &client_max, &temoti_max);
             for( i = 0; i < gdsrap->evil_check_count; i++ ){
               poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
               gdsrap->nhttp_last_error = poke_result;
               if( poke_result != NHTTP_RAP_EVILCHECK_RESULT_OK ){
                 OS_TPrintf("ポケモン認証エラー %d番 error=%d\n", i, poke_result);
+
+                //名前を書き換えて再度送る
+                if( gdsrap->evil_check_loop == 0 )
+                {
+                  //書き換えるためにインデックスを取得
+                  client  = i/temoti_max;
+                  poke    = i%temoti_max;
+
+                  param = &br_send->rec.rec_party[client].member[poke];
+                  GFL_MSG_GetStringRaw( GlobalMsg_PokeName, param->monsno, param->nickname, MONS_NAME_SIZE+EOM_SIZE );
+                  OS_TPrintf("ニックネーム書き換え cliend_idx=%d poke_idx=%d\n", client, poke );
+                  gdsrap->evilcheck_write = TRUE;
+                }
               }
+            }
+            
+            if( gdsrap->evil_check_loop == 0 )
+            {
+              gdsrap->local_seq = SEQ_START_EVILCHECK;
+              gdsrap->evil_check_loop++;
+            }
+            else
+            {
+              OS_TPrintf( "２回目の不正！\n" );
+              gdsrap->local_seq++;
             }
           }
 
           NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
           NHTTP_RAP_End( gdsrap->p_nhttp );
-          gdsrap->p_nhttp = NULL;
-          
-          gdsrap->local_seq++;
+          gdsrap->p_nhttp = NULL; 
         }
         else{
-          OS_TPrintf("不正検査中...\n");
+          OS_TPrintf("不正検査%d回中...\n", gdsrap->evil_check_loop);
           return FALSE;
         }
       }
       break;
-	  default:
+
+    case SEQ_START_SEND:
+      //brsに展開されている録画データ本体は復号化されているので、送信する前に再度暗号化する
+      BattleRec_GDS_SendData_Conv(GAMEDATA_GetSaveControlWork(gdsrap->gamedata));
+      gdsrap->local_seq++;
+      break;
+
+	  case SEQ_SEND_VIDEO:
   		ret = POKE_NET_GDS_BattleDataRegist(gdsrap->send_buf.battle_rec_send_ptr, 
   			gdsrap->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN, gdsrap->response);
   		if(ret == TRUE){
@@ -801,6 +885,41 @@ static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv
 	POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *param;
 	SAVE_RESULT ret;
 	
+  //名前を書き戻す処理
+  //不正チェックのため名前を書き換えるので、
+  //書き戻すためバッファに名前を入れる
+  if( recv_sub_work->recv_save_seq0 == 0 )
+  {
+    if( gdsrap->evilcheck_write )
+    {
+      int i;
+      int client, poke;
+      int client_max, temoti_max;
+      REC_POKEPARA *param;
+      BATTLE_REC_SEND *br_send = BattleRec_RecWorkAdrsGet();
+
+      //すでに暗号化されているので復号化
+      BattleRec_DataDecoded();
+
+      //名前書き戻し
+      BattleRec_ClientTemotiGet(br_send->head.mode, &client_max, &temoti_max);
+      for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ )
+      {
+        //書き換えるためにインデックスを取得
+        client  = i/temoti_max;
+        poke    = i%temoti_max;
+
+        param = &br_send->rec.rec_party[client].member[poke];
+        STRTOOL_Copy( gdsrap->nickname[i], param->nickname, MONS_NAME_SIZE+EOM_SIZE );
+      }
+      BattleRec_CalcCrcRec( BattleRec_WorkPtrGet() );
+
+      //再度暗号化
+      BattleRec_DataCoded();
+    }
+  }
+
+  //セーブ処理
 	res = POKE_NET_GDS_GetResponse();
 	param = (POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *)(res->Param);
 	ret = BattleRec_GDS_MySendData_DataNumberSetSave(

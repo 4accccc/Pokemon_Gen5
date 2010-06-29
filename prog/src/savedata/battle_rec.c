@@ -57,7 +57,7 @@
 #elif  defined( DEBUG_ONLY_FOR_shimoyamada )
 #define BATTLE_REC_Printf(...) OS_TPrintf(__VA_ARGS__)
 #elif defined( DEBUG_ONLY_FOR_toru_nagihashi )
-//#define BATTLE_REC_Printf(...) OS_TFPrintf(1,__VA_ARGS__)
+#define BATTLE_REC_Printf(...) OS_TFPrintf(0,__VA_ARGS__)
 #endif //defined
 #endif //DEBUG_BATTLE_REC_PRINT_ON
 
@@ -114,10 +114,8 @@ static BATTLE_REC_SAVEDATA * _BattleRecSaveAlloc(HEAPID heapID)
 //------------------------------------------------------------------
 void BattleRec_Init(HEAPID heapID)
 {
-#ifdef DEBUG_ONLY_FOR_matsuda
   BATTLE_REC_Printf("BATTLE_REC_WORK size = %d\n", sizeof(BATTLE_REC_WORK));
   BATTLE_REC_Printf("BATTLE_REC_HEADER size = %d\n", sizeof(BATTLE_REC_HEADER));
-#endif  //DEBUG_ONLY_FOR_matsuda
 
   if(brs != NULL){
     GFL_HEAP_FreeMemory(brs);
@@ -231,6 +229,13 @@ void BattleRec_DataDecoded(void)
     brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
 }
 
+void BattleRec_DataCoded(void)
+{
+  GF_ASSERT(brs != NULL);
+
+  BattleRec_Coded(&brs->rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE,
+      brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
+}
 
 
 //--------------------------------------------------------------
@@ -284,9 +289,7 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
 
   //データの整合性チェック
   if(BattleRecordCheckData(sv, wk_brs) == FALSE){
-  #ifdef OSP_REC_ON
     BATTLE_REC_Printf("不正な録画データ\n");
-  #endif
     *result = RECLOAD_RESULT_NG;
     return TRUE;
   }
@@ -400,9 +403,7 @@ BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *res
 
   //データの整合性チェック
   if(BattleRecordCheckData(sv, all) == FALSE){
-  #ifdef OSP_REC_ON
     BATTLE_REC_Printf("不正な録画データ\n");
-  #endif
     *result = RECLOAD_RESULT_NG;
     SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
     return FALSE;
@@ -494,8 +495,7 @@ SAVE_RESULT BattleRec_Save(GAMEDATA *gamedata, HEAPID heap_id, BATTLE_MODE rec_m
     head->crc.crc16ccitt_hash = GFL_STD_CrcCalc(head,
       sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - DATANUMBER_SIZE);
     rec->magic_key = REC_OCC_MAGIC_KEY;
-    rec->crc.crc16ccitt_hash = GFL_STD_CrcCalc(rec,
-      sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE);
+    BattleRec_CalcCrcRec( rec );
 
     //CRCをキーにして暗号化
     test_crc = rec->crc.crc16ccitt_hash;
@@ -629,18 +629,14 @@ static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVED
   hash = GFL_STD_CrcCalc(head,
     sizeof(BATTLE_REC_HEADER) -GDS_CRC_SIZE-DATANUMBER_SIZE);
   if(hash != head->crc.crc16ccitt_hash){
-  #ifdef OSP_REC_ON
     BATTLE_REC_Printf("ヘッダーのCRCハッシュ不正\n");
-  #endif
     return FALSE;
   }
 
   //本体全体のCRCハッシュ計算
   hash = GFL_STD_CrcCalc(rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE);
   if (hash != rec->crc.crc16ccitt_hash) {
-  #ifdef OSP_REC_ON
     BATTLE_REC_Printf("録画データ本体のCRCハッシュ不正\n");
-  #endif
     return FALSE;
   }
 
@@ -843,9 +839,22 @@ u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param)
  * @retval  FALSE:自分のROMよりも高いサーバーバージョンが記録されている
  */
 //--------------------------------------------------------------
-extern BOOL BattleRec_ServerVersionCheck( u8 version )
+BOOL BattleRec_ServerVersionCheck( u8 version )
 {
   return version <= BTL_NET_SERVER_VERSION;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  REC_WORKのCRCを再計算
+ *	        （不正文字対策のためにポケモン名を置き換えるので、その際に使用）
+ *
+ *	@param	*wk_brs BRS
+ */
+//-----------------------------------------------------------------------------
+void BattleRec_CalcCrcRec( BATTLE_REC_WORK_PTR rec )
+{
+  rec->crc.crc16ccitt_hash = GFL_STD_CrcCalc(rec,
+      sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE);
 }
 
 

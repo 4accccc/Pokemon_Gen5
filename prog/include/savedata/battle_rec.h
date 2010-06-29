@@ -162,6 +162,8 @@ extern BOOL BattleRec_DataExistCheck(void);
 extern BOOL BattleRec_DataSetCheck(void);
 extern void BattleRec_DataClear(void);
 extern void BattleRec_DataDecoded(void);
+extern void BattleRec_DataCoded(void);
+
 extern BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
 extern BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,int num);
 extern SAVE_RESULT BattleRec_Save(GAMEDATA *gamedata, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
@@ -178,7 +180,7 @@ extern BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGetWork(BATTLE_REC_SAVEDATA *wk_
 extern void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, SAVE_CONTROL_WORK *sv);
 extern u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param);
 extern BOOL BattleRec_ServerVersionCheck( u8 version );
-
+extern void BattleRec_CalcCrcRec( BATTLE_REC_WORK_PTR rec );
 
 //==============================================================================
 //  BattleRec_LoadToolModuleを行わないと使えない関数（battle_rec_tool.オーバーレイに配置！）
