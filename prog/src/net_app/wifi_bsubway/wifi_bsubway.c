@@ -75,6 +75,8 @@
 
 #include "battle/battle.h"
 
+#include "battle/bsubway_battle_data.h"
+
 
 FS_EXTERN_OVERLAY( dpw_common );
 
@@ -82,7 +84,6 @@ FS_EXTERN_OVERLAY( dpw_common );
 
 #define WIFI_BSUBWAY_Printf( ... )  OS_TPrintf( __VA_ARGS__ )
 
-#include "battle/bsubway_battle_data.h"
 
 
 //#define DOWNLOAD_PRINT  // ‚¾‚¤‚ñ‚ë[‚Çî•ñ‚ğo—Í
