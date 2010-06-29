@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-18T15:09:48"/>
+	<create user="matsumiya" host="W00224" date="2010-06-29T19:06:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -692,14 +692,14 @@
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『そして　わたしたちが
 ポケモンを　じゆうに　するとは！▼
-しょうぶに　かち　ちからづくで
+しょうぶに　かち　ちからずくで
 ポケモンを　うばうこと！▼
 というわけで
 おまえたちの　ポケモン▽
 わたしたちが　すくいだしてやる！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『そして　わたしたちが
 ポケモンを　自由に　するとは！▼
-勝負に　勝ち　力づくで
+勝負に　勝ち　力ずくで
 ポケモンを　奪うこと！▼
 というわけで
 おまえたちの　ポケモン▽
