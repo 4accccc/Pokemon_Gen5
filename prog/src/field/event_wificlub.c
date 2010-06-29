@@ -63,7 +63,7 @@
 #include "include/demo/comm_btl_demo.h"
 #include "field/event_battle_call.h"
 
-
+#define _VOL_DEFAULT (127)
 
 //============================================================================================
 FS_EXTERN_OVERLAY(wificlub);
@@ -283,7 +283,12 @@ static void _pokeListWorkOut(EVENT_WIFICLUB_WORK * ep2p,GAMEDATA* pGameData,u32 
 }
 
 
-
+static void _errEndVol(EVENT_WIFICLUB_WORK * ep2p)
+{
+  PMSND_AllPlayerVolumeSet( _VOL_DEFAULT, PMSND_MASKPL_ALL);
+  PMV_SetMasterVolume(_VOL_DEFAULT);
+  ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+}
 
 
 //============================================================================================
@@ -415,7 +420,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
         (*seq) = P2P_MATCH_BOARD;
       }
       else{
-        ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+        _errEndVol(ep2p);
         (*seq)  = P2P_INIT2;
       }
       break;
@@ -432,7 +437,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     if( !GFL_NET_IsInit() || (NET_ERR_CHECK_NONE != NetErr_App_CheckError())){
       NetErr_ExitNetSystem();
       NetErr_DispCallPushPop();
-      ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+      _errEndVol(ep2p);
       (*seq)  = P2P_INIT2;
     }
     else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO, WB_NET_WIFICLUB)){
@@ -475,7 +480,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   case P2P_BATTLE_END:
     GF_ASSERT((pClub->pMatchParam->friendNo-1) >= 0);
     if(!GFL_NET_IsInit()){
-      ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+      _errEndVol(ep2p);
       (*seq)  = P2P_INIT2;
       break;
     }
@@ -516,7 +521,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       break;
     }
     if(!GFL_NET_IsInit()){
-      ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+      _errEndVol(ep2p);
       (*seq)  = P2P_INIT2;
     }
     break;
@@ -543,7 +548,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
     (*seq)  = P2P_TRADE_MAIN;
     if(!GFL_NET_IsInit()){
-      ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+      _errEndVol(ep2p);
       (*seq)  = P2P_INIT2;
     }
     break;
@@ -555,7 +560,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     break;
   case P2P_TVT_END:
     if(!GFL_NET_IsInit()){
-      ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+      _errEndVol(ep2p);
       (*seq)  = P2P_INIT2;
     }
     else{
