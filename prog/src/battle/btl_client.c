@@ -4367,10 +4367,9 @@ static void storePokeSelResult_ForceQuit( BTL_CLIENT* wk )
   u32 i, j;
 
   memberMax = BTL_PARTY_GetMemberCount( wk->myParty );
-  prevMemberIdx = wk->numCoverPos;
+//  prevMemberIdx = wk->numCoverPos;
+  prevMemberIdx = BTL_MAIN_GetClientBenchPosIndex( wk->mainModule, wk->myID );
 
-  TAYA_Printf("時間切れだから強制的に選ぶ。%d体選択しなきゃならなくて、生きてるのは%d体だよ\n",
-        wk->myChangePokeCnt, BTL_PARTY_GetAliveMemberCount(wk->myParty) );
 
   for(i=0; i<wk->myChangePokeCnt; ++i)
   {
