@@ -1682,6 +1682,8 @@ static void MCRSYS_AllDelMoveObjWork( WIFIP2PMATCH_WORK* wk )
   for( i=0; i<MATCHROOM_IN_OBJNUM; i++ )
   {
     wk->p_matchMoveObj[i] = NULL;
+    MCVSys_BttnDel( wk, i+1 );
+
   }
   MI_CpuClear8(wk->matchStatusBackup, sizeof(wk->matchStatusBackup));
 }
