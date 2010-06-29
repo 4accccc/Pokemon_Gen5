@@ -16,6 +16,12 @@
 // デバッグメニューか何かでで切り替えたら全員とつながることにする
 // 全員とつながる番号は０(製品版)
 
+#ifdef PLAYABLE_VERSION
+#define _DEBUG_ALONETEST_DEFAULT  (100)
+#define _DEBUG_ALONETEST (_DEBUG_ALONETEST_DEFAULT)
+
+#else
+
 //誰でも繋がる(デバッグ版)　パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
 #define _DEBUG_ALONETEST_DEFAULT  (122)
 
@@ -71,6 +77,8 @@
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
 #define _DEBUG_ALONETEST (_DEBUG_ALONETEST_DEFAULT)
 #endif
+
+#endif //PLAYABLE_VERSION
 
 #endif  //PM_DEBUG
 

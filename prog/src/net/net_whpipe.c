@@ -32,7 +32,11 @@ extern u8 DebugAloneTest;
 
 #endif  //PM_DEBUG
 
+#ifdef  PLAYABLE_VERSION
+#define POKEMONWB_BEACON_PRODUCT_NO (100)   //この番号のビーコンは製品版
+#else
 #define POKEMONWB_BEACON_PRODUCT_NO (0)   //この番号のビーコンは製品版
+#endif
 
 /**
  *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
