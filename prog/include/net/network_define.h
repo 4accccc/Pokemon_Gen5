@@ -95,6 +95,10 @@ https://pkvldtprod.nintendo.co.jp/pokemon/validate
 #define SYACHI_DOWNLOAD_GGID  (0x00001381)   //映画２０１０専用 MB不具合用
 //#define SYACHI_LEG_GGID (0x00001380)         //大会レギュレーション配信専用
 
+//#define SYACHI_NETWORK_GGID  (0x00001511)  //syachi試遊台のGGID 2010.06.29
+
+
+
 #define NET_DREAMWORLD_VER (1)  //ドリームワールド通信バーション（かならず整数）
 
 
