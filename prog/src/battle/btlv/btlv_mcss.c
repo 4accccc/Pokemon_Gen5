@@ -3669,7 +3669,7 @@ static  BOOL  check_shadow_offset( int mons_no, BtlvMcssPos position, VecFx32* o
     { MONSNO_244, 0, TRUE,  0xFC00, 0xF700, 0xF400 },  //エンテイ正面
     { MONSNO_253, 1, TRUE,  0xFC00, 0xF400, 0x0100 },  //ジュプトル正面
     { MONSNO_254, 1, TRUE,  0xFC00, 0xF400, 0x0100 },  //ジュカイン正面
-    { MONSNO_254, 0, TRUE,  0xFC00, 0xF600, 0xF600 },  //ジュカイン背面
+    { MONSNO_254, 0, TRUE,  0xFC00, 0xF600, 0xF000 },  //ジュカイン背面
     { MONSNO_257, 1, TRUE,  0xF800, 0xEC00, 0x0100 },  //バシャーモ正面
     { MONSNO_262, 1, TRUE,  0x0000, 0xEE00, 0xEE00 },  //グラエナ正面
     { MONSNO_262, 0, TRUE,  0xFC00, 0xF700, 0xF400 },  //グラエナ背面
@@ -3679,6 +3679,7 @@ static  BOOL  check_shadow_offset( int mons_no, BtlvMcssPos position, VecFx32* o
     { MONSNO_305, 1, TRUE,  0x0000, 0xEE00, 0xEE00 },  //コドラ正面
     { MONSNO_317, 1, TRUE,  0x0000, 0xEE00, 0xEE00 },  //マルノーム正面
     { MONSNO_359, 1, TRUE,  0x0000, 0xE600, 0xEE00 },  //アブソル正面
+    { MONSNO_373, 0, TRUE,  0xFC00, 0xF600, 0xF000 },  //ボーマンダ背面
     { MONSNO_376, 1, TRUE,  0xF800, 0xEC00, 0x0100 },  //メタグロス正面
     { MONSNO_388, 1, TRUE,  0x0000, 0xEA00, 0xEE00 },  //ハヤシガメ正面
     { MONSNO_388, 0, TRUE,  0xFC00, 0xF700, 0xF400 },  //ハヤシガメ背面
