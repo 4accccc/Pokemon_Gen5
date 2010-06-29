@@ -343,6 +343,7 @@ extern  const BTL_MAIN_MODULE* BTLV_EFFECT_GetMainModule( void );
 extern  const BTLV_SCU*   BTLV_EFFECT_GetScu( void );
 extern  int               BTLV_EFFECT_GetPinchBGMFlag( void );
 extern  void              BTLV_EFFECT_SwitchBGM( const int bgmNo );
+extern  void              BTLV_EFFECT_SetPinchBGMNoCheck( BOOL flag );
 extern  void              BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no );
 extern  BOOL              BTLV_EFFECT_GetTrainerBGMChangeFlag( void );
 extern  void              BTLV_EFFECT_SetBGMNoCheckPush( int bgm_no );

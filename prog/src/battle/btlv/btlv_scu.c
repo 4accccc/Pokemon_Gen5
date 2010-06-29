@@ -3166,6 +3166,8 @@ void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
 {
   statwin_hide( &wk->statusWin[ pos1 ] );
   statwin_hide( &wk->statusWin[ pos2 ] );
+  //ピンチBGMチェックをしないようにする
+  BTLV_EFFECT_SetPinchBGMNoCheck( TRUE );
 }
 
 //=============================================================================================
@@ -3181,6 +3183,8 @@ BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
 {
   statwin_disp_start( &wk->statusWin[ pos1 ] );
   statwin_disp_start( &wk->statusWin[ pos2 ] );
+  //ピンチBGMチェックをするようにする
+  BTLV_EFFECT_SetPinchBGMNoCheck( FALSE );
   return TRUE;
 }
 
@@ -3195,6 +3199,8 @@ BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
 void BTLV_SCU_UpdateGauge_Start( BTLV_SCU* wk, BtlPokePos pos )
 {
   statwin_hide( &wk->statusWin[ pos ] );
+  //ピンチBGMチェックをしないようにする
+  BTLV_EFFECT_SetPinchBGMNoCheck( TRUE );
 }
 //=============================================================================================
 /**
@@ -3206,6 +3212,8 @@ void BTLV_SCU_UpdateGauge_Start( BTLV_SCU* wk, BtlPokePos pos )
 BOOL BTLV_SCU_UpdateGauge_Wait( BTLV_SCU* wk, BtlPokePos pos )
 {
   statwin_disp_start( &wk->statusWin[ pos ] );
+  //ピンチBGMチェックをするようにする
+  BTLV_EFFECT_SetPinchBGMNoCheck( FALSE );
   return TRUE;
 }
 
