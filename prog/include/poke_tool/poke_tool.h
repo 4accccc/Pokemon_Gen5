@@ -788,5 +788,9 @@ extern  u8  POKETOOL_CheckPokeFormNo_Field( u16 mons_no, u8 form_no );
 //性格によるパラメータ変化値を取得
 extern  PtlSeikakuChgValue  POKETOOL_GetSeikakuChangeValue( u8 chr, u8 cond );
 
+//デフォルト名に戻す(WiFi等の不正名前などで使用しています)
+extern void PP_SetDefaultNickName( POKEMON_PARAM* pp );
+extern void PPP_SetDefaultNickName( POKEMON_PASO_PARAM* ppp );
+
 #endif __ASM_NO_DEF_
 

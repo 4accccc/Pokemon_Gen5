@@ -3817,6 +3817,32 @@ PtlSeikakuChgValue  POKETOOL_GetSeikakuChangeValue( u8 chr, u8 cond )
   return ( SeikakuAbiTbl[ chr ][ cond - 1 ] );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン名をデフォルト名をセットする関数
+ *
+ *	@param	POKEMON_PARAM* pp   ポケパラ
+ */
+//-----------------------------------------------------------------------------
+void PP_SetDefaultNickName( POKEMON_PARAM* pp )
+{
+  PPP_SetDefaultNickName( PP_GetPPPPointer( pp ) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン名をデフォルト名をセットする関数
+ *
+ *	@param	POKEMON_PASO_PARAM* ppp パソパラ
+ */
+//-----------------------------------------------------------------------------
+void PPP_SetDefaultNickName( POKEMON_PASO_PARAM* ppp )
+{
+  STRBUF  *p_name = GFL_MSG_CreateString( GlobalMsg_PokeName, PPP_Get( ppp, ID_PARA_monsno, NULL ) );
+  PPP_Put( ppp, ID_PARA_nickname, (u32)p_name );
+  GFL_HEAP_FreeMemory( p_name );
+}
+
 //============================================================================================
 /**
  *  ポケモン成長テーブルデータを取得
