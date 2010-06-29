@@ -574,6 +574,9 @@ void Intrude_UpdatePlayerStatusAll(INTRUDE_COMM_SYS_PTR intcomm)
   if(GAMEDATA_GetIsSave(gamedata) == TRUE){
     return; //MatrixIDのチェックや通信プレイヤーのAddなどでカードアクセスする為
   }
+  if(intcomm->send_my_position_stop == TRUE){
+    return; //自分の座標が送信出来ない時は相手の座標更新もしない
+  }
   
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     if(intcomm->player_status_update & (1 << net_id)){
