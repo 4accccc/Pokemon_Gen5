@@ -111,7 +111,6 @@ typedef struct
   int vchatcodec;
   s16 canceled_matching;
   s16 bVChat;     // VCHATONOFF
-  int timeoutflag;
 
   int sendintervaltime[_WIFI_NUM_MAX];		// 前回データを送信してからのフレーム数。
   int setupErrorCount;  //エラーした数をカウント
@@ -134,6 +133,10 @@ typedef struct
   u8 bConnectEnable;  ///< 接続許可と禁止を行う
   u8 sendFinish;  //ack
   u8 sendAck;     //ack
+  u8 timeoutflag;
+  u8 friendMatchOn;  //フレンドマッチコントロール 
+  u8 dummy2;
+  u8 dummy3;
 } MYDWC_WORK;
 
 // 親機のAID
@@ -442,6 +445,7 @@ int GFL_NET_DWC_connect()
                             GAME_PRODUCTID,
                             GAME_SECRET_KEY, 0, 0,
                             _dWork->pFriendData, max);
+      _dWork->friendMatchOn = TRUE;
     }
 
     {// IPLのユーザ名を使ってログイン
@@ -1691,7 +1695,10 @@ int mydwc_HandleError(void)
         case MDSTATE_DISCONNECTTING:
         case MDSTATE_DISCONNECT:
           OS_TPrintf("A ");
-          DWC_ShutdownFriendsMatch(  );
+          if( _dWork->friendMatchOn == TRUE){
+            DWC_ShutdownFriendsMatch();
+            _dWork->friendMatchOn=FALSE;
+          }
         case MDSTATE_INIT:
         case MDSTATE_CONNECTING:
         case MDSTATE_CONNECTED:
@@ -2217,7 +2224,10 @@ void GFL_NET_DWC_Logout(void)
   if(_dWork){
     MYDWC_DEBUGPRINT("LOGOUT\n");
     DWC_ClearError();
-    DWC_ShutdownFriendsMatch();
+    if(_dWork->friendMatchOn){
+      DWC_ShutdownFriendsMatch();
+    }
+    _dWork->friendMatchOn=FALSE;
     DWC_CleanupInet();
     GFL_NET_DWC_StopVChat();
     GFL_NET_DWC_free();
@@ -2249,6 +2259,7 @@ static void mydwc_updateFriendInfo( void )
       u8 nowstate = DWC_GetFriendStatusData(&_dWork->pFriendData[ index ],(char*)_dWork->friendinfo[index],&size);
       if(size < 1){//0や-1がありえる
         _dWork->friend_status[index] = DWC_STATUS_OFFLINE;
+        GFL_STD_MemClear(&_dWork->friendinfo[index],MYDWC_STATUS_DATA_SIZE_MAX);
       }
       else{
         _dWork->friend_status[index] = nowstate;
