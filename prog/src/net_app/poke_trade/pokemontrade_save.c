@@ -156,16 +156,23 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
 
 
-  if(
-    (pWork->type == POKEMONTRADE_TYPE_GTS) ||
-    (pWork->type == POKEMONTRADE_TYPE_GTSUP)
-    )
+  //GTSとGTSUPで処理分岐。GTSUPはフェードしているのでここでフェードしない
+  //Ariizumi100629
+  if(pWork->type == POKEMONTRADE_TYPE_GTS)
   {
     _endBGM(pWork);
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
     _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;
   }
+  if(pWork->type == POKEMONTRADE_TYPE_GTSUP)
+  {
+    _endBGM(pWork);
+    pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
+    _CHANGE_STATE(pWork, NULL);        // 終わり
+    return;
+  }
+
 
   POKETRADE_MESSAGE_HeapInit(pWork);
 
