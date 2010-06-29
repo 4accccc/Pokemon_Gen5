@@ -6670,7 +6670,7 @@ typedef struct
 }
 POKE_ARRANGE_INFO;
 #define MALE_FEMALE_UNKNOWN (3)  // オスメス性別なしどれでも構わない  // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWNと被らない値
-#define POKE_ARRANGE_INFO_TBL_NUM (14)
+#define POKE_ARRANGE_INFO_TBL_NUM (15)
 
 static const POKE_VEC_F32 poke_arrange_default_pos[POKE_ARRANGE_MAX] =
 {
@@ -6725,6 +6725,9 @@ static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] 
 
   { MONSNO_BUBHI,      0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // ブビィ 0
     { {0.07f,-13.9f,0.0f},{-63.3f,-13.9f,0.0f},{64.7f,-13.9f,0.0f},{-16.07f,-13.9f,0.0f},{16.22f,-13.9f,0.0f} } },
+
+  { MONSNO_RIORU,      0,                 MALE_FEMALE_UNKNOWN, 0, 0, MCSS_DIR_FRONT, 0,  // リオル 0
+    { {0.0f,-13.92f,0.0f},{-64.0f,-13.92f,0.0f},{64.0f,-13.92f,0.0f},{-16.0f,-13.92f,0.0f},{16.0f,-13.92f,0.0f} } },
 
 
 
