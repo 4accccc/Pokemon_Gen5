@@ -364,19 +364,19 @@
 どのように遊んでいるか調査します</language>
       </row><row id="str_topic_1_caption">
         <language name="JPN" width="256">じぶんの　まわりには　どんなひとが
-おおいのか　ちょうさを　します</language>
+おおいのか　ちょうさします</language>
         <language name="JPN_KANJI" width="256">自分の周りには　どんな人が
 多いのか調査をします</language>
       </row><row id="str_topic_2_caption">
         <language name="JPN" width="256">じぶんの　すきな　ポケモンで
 どんな　あそびをしてるのか　ちょうさします</language>
-        <language name="JPN_KANJI" width="256">自分の　好きな　ポケモンで
+        <language name="JPN_KANJI" width="256">自分の好きなポケモンで
 どんな　遊びをしてるのか　調査します</language>
       </row><row id="str_topic_3_caption">
         <language name="JPN" width="256">じぶんの　りそうや　みんなの　たいせつに
-しているものを　ちょうさをします</language>
+しているものを　ちょうさします</language>
         <language name="JPN_KANJI" width="256">自分の理想や　みんなの大切に
-しているものを調査します</language>
+しているものを　調査します</language>
       </row><row id="str_topic_4_caption">
         <language name="JPN" width="256">どんな　ひとが　すきなのか
 その　けいこうを　ちょうさします</language>
@@ -415,7 +415,7 @@
         <language name="JPN_KANJI" width="256">・男と女　どっち？</language>
       </row><row id="str_question_02">
         <language name="JPN" width="256">・たいせんとこうかん　どっちがすき？</language>
-        <language name="JPN_KANJI" width="256">・対戦と交換　どっちがすき？</language>
+        <language name="JPN_KANJI" width="256">・対戦と交換　どっちが好き？</language>
       </row><row id="str_question_03">
         <language name="JPN" width="256">・とかいと　いなか　すむなら？</language>
         <language name="JPN_KANJI" width="256">・都会と田舎　住むなら？</language>
@@ -469,9 +469,9 @@
         <language name="JPN_KANJI" width="256">・休日は何をしてる？</language>
       </row><row id="str_question_20">
         <language name="JPN" width="256">・どんな　おんがくが　すき？</language>
-        <language name="JPN_KANJI" width="256">・どんな音楽がすき？</language>
+        <language name="JPN_KANJI" width="256">・どんな音楽が好き？</language>
       </row><row id="str_question_21">
-        <language name="JPN" width="256">・すきな　TVばんぐみは？</language>
+        <language name="JPN" width="256">・すきな　ＴＶばんぐみは？</language>
         <language name="JPN_KANJI" width="256">・好きなＴＶ番組は？</language>
       </row><row id="str_question_22">
         <language name="JPN" width="256">・どんな　えいがが　すき？</language>
@@ -580,12 +580,12 @@
       </row><row id="str_question_16_caption">
         <language name="JPN" width="256">がっこうの　べんきょうで　すきなものは？
 をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">学校の勉強で好きなのは？
+        <language name="JPN_KANJI" width="256">学校の勉強で好きなものは？
 を集めたアンケート</language>
       </row><row id="str_question_17_caption">
         <language name="JPN" width="256">がっこうの　べんきょうで　きらいなものは？
 をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">学校の勉強で嫌いなのは？
+        <language name="JPN_KANJI" width="256">学校の勉強で嫌いなものは？
 を集めたアンケート</language>
       </row><row id="str_question_18_caption">
         <language name="JPN" width="256">ポケットモンスターの　せかいで　もし

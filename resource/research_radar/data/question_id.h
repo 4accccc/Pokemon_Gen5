@@ -20,7 +20,7 @@
 #define QUESTION_ID_DREAM (18) //「・もし　なれるとしたら？」
 #define QUESTION_ID_DAY_OFF (19) //「・きゅうじつは　なにをしてる？」
 #define QUESTION_ID_MUSIC (20) //「・どんな　おんがくが　すき？」
-#define QUESTION_ID_TV (21) //「・すきな　TVばんぐみは？」
+#define QUESTION_ID_TV (21) //「・すきな　ＴＶばんぐみは？」
 #define QUESTION_ID_MOVIE (22) //「・どんな　えいがが　すき？」
 #define QUESTION_ID_SPORTS (23) //「・すきな　スポーツは？」
 #define QUESTION_ID_COLOR (24) //「・すきないろは　どれ？」
