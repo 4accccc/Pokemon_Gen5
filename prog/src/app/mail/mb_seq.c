@@ -209,7 +209,7 @@ BOOL MBSEQ_Main( MAILBOX_SYS_WORK * syswk, int * seq )
 
     if(syswk->app->printQue!=NULL){
       PRINTSYS_QUE_Main( syswk->app->printQue );
-      for(i=0;i<MBMAIN_BMPWIN_ID_TITLE;i++){
+      for(i=0;i<MBMAIN_BMPWIN_ID_MAILMSG1;i++){
         PRINT_UTIL_Trans( &syswk->app->printUtil[i], syswk->app->printQue );
       }
     }
@@ -220,7 +220,7 @@ BOOL MBSEQ_Main( MAILBOX_SYS_WORK * syswk, int * seq )
       int i;
       PMS_DRAW_Main( syswk->app->pms_draw_work );
       PRINTSYS_QUE_Main( syswk->app->pmsPrintque );
-      for(i=MBMAIN_BMPWIN_ID_TITLE;i<MBMAIN_BMPWIN_ID_TITLE;i++){
+      for(i=MBMAIN_BMPWIN_ID_MAILMSG1;i<MBMAIN_BMPWIN_ID_MAX;i++){
         PRINT_UTIL_Trans( &syswk->app->printUtil[i], syswk->app->printQue );
       }
     }

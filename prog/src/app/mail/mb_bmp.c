@@ -334,6 +334,12 @@ void MBBMP_Init( MAILBOX_SYS_WORK * syswk )
       PRINT_UTIL_Setup( &syswk->app->printUtil[i], syswk->app->win[i] );
   }
 
+  // メールリストのBMPWIN領域をクリアしておく
+  for(i=0;i<MBMAIN_BMPWIN_ID_SELMAIL;i++){
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[i]), 4 );
+    GFL_BMPWIN_TransVramCharacter( syswk->app->win[i] );
+  }
+
   OS_Printf("eom code is %x\n",GFL_STR_GetEOMCode());
 
   GFL_BMPWIN_MakeTransWindow( syswk->app->win[0] );
@@ -394,10 +400,7 @@ static void StrPrintCore(
   }else if( mode == STRPRINT_MODE_CENTER ){
     x -= ( PRINTSYS_GetStrWidth( str, font, 0 ) / 2 );
   }
-//  GF_STR_PrintColor( win, fnt, str, x, y, MSG_NO_PUT, col, NULL );
   PRINT_UTIL_PrintColor( printUtil, que, x,y, str, font, col );
-//  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_NAME] );
-
 
 }
 
@@ -465,11 +468,12 @@ void MBBMP_MailButtonSet( MAILBOX_SYS_WORK * syswk, u32 frmID, u32 winID, u32 ma
   md   = syswk->app->mail[mailID];
   util = &syswk->app->printUtil[winID];
 
+  GFL_BMP_Clear( backbmp1, 4 );
+  GFL_BMP_Clear( backbmp2, 4 );
+
    GFL_STR_SetStringCode( syswk->app->expbuf, MailData_GetWriterName(md) );
 
   for( i=0; i<BMPWIN_MAIL_SX; i++ ){
-//    GF_BGL_BmpWinPrint( win, &syswk->app->btn_back_cgx[0x00], 0, 0, 8, 8, 8*i, 0, 8, 8 );
-//    GF_BGL_BmpWinPrint( win, &syswk->app->btn_back_cgx[0x20], 0, 0, 8, 8, 8*i, 8, 8, 8 );
     GFL_BMP_Print( GFL_BMPWIN_GetBmp(win), backbmp1, 
                     0, 0, 8*i, 0, 8, 8, GF_BMPPRT_NOTNUKI );
     GFL_BMP_Print( GFL_BMPWIN_GetBmp(win), backbmp2, 
@@ -477,8 +481,6 @@ void MBBMP_MailButtonSet( MAILBOX_SYS_WORK * syswk, u32 frmID, u32 winID, u32 ma
   }
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), 4 );
-//  GFL_BMP_Print( GFL_BMPWIN_GetBmp(win), backbmp1, 
-//                    0, 0, 8*i, 0, 8, 8, GF_BMPPRT_NOTNUKI );
   // メールの色が男女で変わる
   if( MailData_GetWriterSex( md ) == 0 ){
     StrPrintCore( win, syswk->app->expbuf, util, syswk->app->printQue, 0, 0, 
@@ -487,9 +489,6 @@ void MBBMP_MailButtonSet( MAILBOX_SYS_WORK * syswk, u32 frmID, u32 winID, u32 ma
     StrPrintCore( win, syswk->app->expbuf, util, syswk->app->printQue, 0, 0, 
                   syswk->font, FCOL_TCH_RDN_M01, STRPRINT_MODE_LEFT );
   }
-
-//  GF_BGL_BmpWinCgxOn( win );
-//  GFL_BMPWIN_TransVramCharacter( win ); // キャラクターのみ転送
 
   // フレームにBMPを貼り付け
   BGWINFRM_BmpWinOn( syswk->app->wfrm, frmID, win );
