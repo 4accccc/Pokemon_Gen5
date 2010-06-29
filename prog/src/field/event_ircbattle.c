@@ -193,6 +193,7 @@ static void _wifilistPlayData(EVENT_IRCBATTLE_WORK *dbw, GAMEDATA* pGameData)
     if(i != GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle()) && pMy){
       if(WifiList_CheckFriendMystatus(GAMEDATA_GetWiFiList(pGameData), pMy, &index )) {
         if( i == friendNet ){
+          OS_TPrintf("‚Æ‚à‚¾‚¿ %d\n",friendNet,friend);
           WifiList_SetLastPlayDate(GAMEDATA_GetWiFiList(pGameData), index);
         }
         else{
