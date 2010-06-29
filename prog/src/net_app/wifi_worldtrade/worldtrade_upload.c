@@ -2429,7 +2429,10 @@ static int Subseq_ReturnTitleMessage( WORLDTRADE_WORK *wk )
 	WorldTrade_TimeIconDel(wk);
 
 	// goto
-	WorldTrade_SubLcdMatchObjHide( wk );
+  if( wk->SearchResult > 0 )
+  {
+    WorldTrade_SubLcdMatchObjHide( wk );
+  }
 
 	return SEQ_MAIN;
 	
