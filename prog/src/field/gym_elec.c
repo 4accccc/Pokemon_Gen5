@@ -1047,6 +1047,27 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
 
 //--------------------------------------------------------------
 /**
+ * 電気ジムSE初期化
+ * @param   gsys            ゲームシステムポインタ
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------
+void GYM_ELEC_InitSe( GAMESYS_WORK *gsys )
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  //ＳＥ鳴らしっぱなし
+  {
+    FIELD_SOUND* fs;
+    fs = GAMEDATA_GetFieldSound( gamedata );
+    FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
+    //始めはボリューム0
+    FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * 指定プラットホームの現在のレールインデックスを取得
  * @param	      tmp     電気ジムテンポラリワークポインタ
  * @param       inPlatformIdx   プラットフォームインデックス

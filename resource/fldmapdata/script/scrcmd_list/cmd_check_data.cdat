@@ -604,4 +604,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, TRUE, TRUE }, // _GET_CGEAR_STATUS (601)
   { TRUE, TRUE, TRUE }, // _SET_CGEAR_OFF (602)
   { TRUE, TRUE, TRUE }, // NO_DATA_603 (603)
+  { FALSE, TRUE, FALSE }, // _GYM_ELEC_INIT_SE (604)
 };

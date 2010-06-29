@@ -35,6 +35,7 @@ _EVENT_DATA   ev_prg_c04gym0101_capsule_in
 _EVENT_DATA   ev_prg_c04gym0101_capsule_out
 _EVENT_DATA   ev_prg_c04gym0101_tr_disp_on
 _EVENT_DATA		ev_init_c04gym0101			//対戦後のコースタートレーナーをどかす
+_EVENT_DATA		ev_recover_c04gym0101		//環境ＳＥ初期化（セーブ復帰用）
 _EVENT_DATA_END
 
 
@@ -93,6 +94,16 @@ INIT_EVENT_START	ev_init_c04gym0101
 
 INIT_EVENT_END
 
+/************************************************************/
+/*				環境ＳＥ初期化（セーブ復帰用）					*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c04gym0101
+  //セーブ復帰なら実行
+  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _GYM_ELEC_INIT_SE()
+  ENDIF
+INIT_EVENT_END
 
 
 /************************************************************/

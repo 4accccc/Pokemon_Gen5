@@ -910,6 +910,9 @@
 
   //環境音SE　イベントBGMでのPause状態を解除
   DEF_CMD( EvCmdEnvSeBGMPlayClear, EV_SEQ_CLEAR_ENVSE_BGMPLAY_PAUSE )
+
+  //電気ジム環境ＳＥ初期化（セーブ復帰用）
+  DEF_CMD( EvCmdGymElec_InitSe, EV_SEQ_GYM_ELEC_INIT_SE )
   
   
   END_CMD

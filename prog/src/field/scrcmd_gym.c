@@ -89,6 +89,23 @@ VMCMD_RESULT EvCmdGymElec_SetTrEncFlg( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 電気ジム環境ＳＥ初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymElec_InitSe( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  GYM_ELEC_InitSe( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--ノーマル--
 //--------------------------------------------------------------
 /**
