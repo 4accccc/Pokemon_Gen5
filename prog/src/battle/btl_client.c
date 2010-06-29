@@ -3469,6 +3469,7 @@ static void ChangeAI_SetReserve( BTL_CLIENT* wk, u8 outPokeIdx, u8 inPokeIdx )
 //----------------------------------------------------------------------------------
 static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 procPokeIndex, u8* targetIndex )
 {
+  BTL_POKEPARAM* targetEnemyPoke = NULL;
   BOOL fChange = FALSE;
   u8   changeIndex = BTL_PARTY_MEMBER_MAX;
 
@@ -3487,16 +3488,17 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
     return FALSE;
   }
 
-  do {
-    BTL_POKEPARAM* targetEnemyPoke;
-
-    {
-      BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos(wk->mainModule, wk->pokeCon, BPP_GetID(procPoke) );
-      targetEnemyPoke = ChangeAI_DecideTarget( wk, basePos );
-      if( targetEnemyPoke == NULL ){
-        break;
-      }
+  // 入れ替え判定用の相手ポケモンを決定
+  {
+    BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos(wk->mainModule, wk->pokeCon, BPP_GetID(procPoke) );
+    targetEnemyPoke = ChangeAI_DecideTarget( wk, basePos );
+    if( targetEnemyPoke == NULL ){
+      return FALSE;
     }
+  }
+
+  do {
+
 
     if( ChangeAI_CheckHorobi(wk, procPoke) ){  // ほろびのうたチェック
       BTL_N_Printf( DBGSTR_CLIENT_CHGAI_HOROBI );
@@ -3553,7 +3555,7 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
 
     cnt = calcPuttablePokemons( wk, puttableList );
 
-    sortPuttablePokemonList( wk, puttableList, cnt, procPoke );
+    sortPuttablePokemonList( wk, puttableList, cnt, targetEnemyPoke );
     for(i=0; i<cnt; ++i)
     {
       if( !ChangeAI_CheckReserve(wk, puttableList[i]) )
