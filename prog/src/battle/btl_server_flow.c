@@ -14275,6 +14275,40 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 
+void HANDEX_STR_Clear( BTL_HANDEX_STR_PARAMS* param )
+{
+  GFL_STD_MemClear( param, sizeof(*param) );
+  param->type = BTL_STRTYPE_NULL;
+}
+
+BOOL HANDEX_STR_IsEnable( const BTL_HANDEX_STR_PARAMS* param )
+{
+  return param->type != BTL_STRTYPE_NULL;
+}
+
+void HANDEX_STR_Setup( BTL_HANDEX_STR_PARAMS* param, BtlStrType type, u16 strID )
+{
+  param->type = type;
+  param->ID = strID;
+  param->argCnt = 0;
+}
+void HANDEX_STR_AddArg( BTL_HANDEX_STR_PARAMS* param, int arg )
+{
+  if( param->argCnt < BTL_STR_ARG_MAX )
+  {
+    param->args[ param->argCnt++ ] = arg;
+  }
+}
+void HANDEX_STR_AddSE( BTL_HANDEX_STR_PARAMS* param, u16 SENo )
+{
+  if( param->argCnt < BTL_STR_ARG_MAX )
+  {
+    param->args[ BTL_STR_ARG_MAX - 1 ] = SENo;
+    param->fSEAdd = TRUE;
+  }
+}
+
+
 //=============================================================================================
 /**
  * HandEx ƒ[ƒN‚PŒæ“¾
