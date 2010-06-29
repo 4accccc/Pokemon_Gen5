@@ -66,7 +66,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -1025,6 +1025,10 @@ void  BTLV_EFFVM_SePlay( VMHANDLE* vmh, int se_no, int player, int pan, int pitc
   if( pan == BTLEFF_SEPAN_FLAT )
   {
     pan = 0;
+  }
+  else if( ( pan == BTLEFF_SEPAN_L ) || ( pan == BTLEFF_SEPAN_R ) )
+  { 
+    pan = ( pan & 1 ) ? 127 : -128;
   }
   else
   {
