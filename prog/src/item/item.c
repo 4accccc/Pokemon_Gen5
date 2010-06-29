@@ -119,6 +119,10 @@ void ItemPutIn( void * item, u16 pos1, u16 pos2 )
 //--------------------------------------------------------------------------------------------
 u16 ITEM_GetIndex( u16 item, u16 type )
 {
+  if( item > ITEM_DATA_MAX ){
+    GF_ASSERT_MSG(0,"item=%d\n",item);
+    item = 0;
+  }
   switch( type ){
   case ITEM_GET_DATA:   // アイテムデータ
     if( item == ITEM_DUMMY_ID || item == ITEM_RETURN_ID ){ break; }
@@ -242,7 +246,8 @@ ARCHANDLE * ITEM_OpenItemDataArcHandle( HEAPID heapID )
 void * ITEM_GetItemDataArcHandle( ARCHANDLE * ah, u16 item, HEAPID heapID )
 {
   if( item > ITEM_DATA_MAX ){
-		return NULL;
+    GF_ASSERT_MSG(0,"item=%d\n",item);
+    item = 0;
 	}
 	return GFL_ARC_LoadDataAllocByHandle( ah, item, heapID );
 }
@@ -264,7 +269,10 @@ void * ITEM_GetItemDataArcHandle( ARCHANDLE * ah, u16 item, HEAPID heapID )
 //--------------------------------------------------------------------------------------------
 void * ITEM_GetItemArcData( u16 item, u16 type, HEAPID heap_id )
 {
-  if( item > ITEM_DATA_MAX ){ item = 0; }
+  if( item > ITEM_DATA_MAX ){
+    GF_ASSERT_MSG(0,"item=%d\n",item);
+    item = 0;
+  }
 
   switch( type ){
   case ITEM_GET_DATA:   // アイテムデータ
@@ -291,6 +299,10 @@ void * ITEM_GetItemArcData( u16 item, u16 type, HEAPID heap_id )
 void ITEM_GetItemName( STRBUF* buf, u16 item, HEAPID heap_id )
 {
   GFL_MSGDATA *man;
+  if( item > ITEM_DATA_MAX ){
+    GF_ASSERT_MSG(0,"item=%d\n",item);
+    item = 0;
+  }
 
   man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_itemname_dat, heap_id);
   GFL_MSG_GetString(man, item, buf);
@@ -311,6 +323,10 @@ void ITEM_GetItemName( STRBUF* buf, u16 item, HEAPID heap_id )
 void ITEM_GetInfo( STRBUF * buf, u16 item, HEAPID heap_id )
 {
   GFL_MSGDATA *man;
+  if( item > ITEM_DATA_MAX ){
+    GF_ASSERT_MSG(0,"item=%d\n",item);
+    item = 0;
+  }
 
   man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_iteminfo_dat, heap_id);
   GFL_MSG_GetString(man, item, buf);
