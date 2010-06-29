@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-06-23T22:36:11"/>
+	<create user="taya" host="W00146" date="2010-06-29T14:43:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3362,62 +3362,12 @@
 
 	<row id="BTL_STRID_SET_MirrorType">
 		<comment>ミラータイプ</comment>
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]と
+		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]と▽
 おなじタイプになった！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]と
-同じタイプになった！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_MirrorType_2Y">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　やせいの[1:02:ポケモンニックネーム:1]と
-おなじタイプになった！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　野生の[1:02:ポケモンニックネーム:1]と
-同じタイプになった！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_MirrorType_2E">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいての[1:02:ポケモンニックネーム:1]と
-おなじタイプになった！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手の[1:02:ポケモンニックネーム:1]と
-同じタイプになった！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_MirrorType_Y">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]と
-おなじタイプになった！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]と
-同じタイプになった！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_MirrorType_Y2Y">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]と▽
-おなじタイプになった！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]と▽
-同じタイプになった！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_MirrorType_E">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]と
-おなじタイプになった！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]と
-同じタイプになった！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_MirrorType_E2E">
-		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]と▽
-おなじタイプになった！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]と▽
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]と▽
 同じタイプになった！</language>
 	</row>
 
