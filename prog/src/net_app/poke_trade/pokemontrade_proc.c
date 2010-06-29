@@ -1916,6 +1916,10 @@ static void _notWazaChangePoke2(POKEMON_TRADE_WORK* pWork)
     pWork->workPokeIndex=-1;
     POKETRADE_MESSAGE_WindowClear(pWork);
     _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+
+    //20100629 カーソル状態を再描画 add Saito BTS7053
+    pWork->oldLine = -1;
+    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , TRUE ); 
   }
 }
 
@@ -3844,6 +3848,10 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowClear(pWork);
     POKEMONTRADE_2D_AlphaSet(pWork);
     _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
+
+    //20100629 カーソル状態を再描画 add Saito BTS7053
+    pWork->oldLine = -1;
+    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , TRUE ); 
   }
 }
 
