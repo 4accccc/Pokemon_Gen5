@@ -5495,11 +5495,25 @@ static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw )
     { 
       if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
       { 
-        return NARC_battgra_wb_battle_w_bg0c_NSCR;
+        if( biw->focus_pos == BTLV_MCSS_POS_C )
+        { 
+          return NARC_battgra_wb_battle_w_bg0i_NSCR;
+        }
+        else
+        { 
+          return NARC_battgra_wb_battle_w_bg0c_NSCR;
+        }
       }
       else
       { 
-        return NARC_battgra_wb_battle_w_bg0b_NSCR;
+        if( biw->focus_pos == BTLV_MCSS_POS_C )
+        { 
+          return NARC_battgra_wb_battle_w_bg0a_NSCR;
+        }
+        else
+        { 
+          return NARC_battgra_wb_battle_w_bg0b_NSCR;
+        }
       }
     }
     else
