@@ -64,15 +64,22 @@ INIT_EVENT_END
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_c08
-	
+{
 
+	//バージョンを取得
+	DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+	
 	//誘拐イベントワークの値によってサポートの位置を変更する
 	
 	//演説前
 	IF $WK_SCENE_C08 == 0 THEN
 		_OBJ_POS_CHANGE( C08_LEADER8B_01, 409, 0, 176, DIR_LEFT )
-	//誘導イベント（２）
-	ELSIF $WK_SCENE_C08 == 1 THEN
+	//誘導イベント（２）ホワイトver
+	ELSIF $WK_SCENE_C08 == 1 && $LCWK_VERSION == VERSION_WHITE THEN
+		_OBJ_POS_CHANGE( C08_LEADER8B_01, 418, -1, 166, DIR_DOWN )
+	//誘導イベント（２）ブラックver
+	ELSIF $WK_SCENE_C08 == 1 && $LCWK_VERSION == VERSION_BLACK THEN
 		_OBJ_POS_CHANGE( C08_LEADER8B_01, 418, 0, 166, DIR_DOWN )
 	//誘導イベント（３）
 	ELSIF $WK_SCENE_C08 == 2 THEN
@@ -87,7 +94,7 @@ INIT_EVENT_START	ev_init_c08
 	IF$WK_SCENE_C08_GYMCLEAR == 1 THEN
 		_OBJ_ADD_EX( 405, 150, DIR_UP, MMDL_ID_EVENTOBJ_00, HAKASE2, MV_DMY )
 	ENDIF
-
+}
 INIT_EVENT_END
 
 /**************************************************************/
