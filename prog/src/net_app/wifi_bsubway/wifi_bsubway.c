@@ -23,6 +23,7 @@
 #include "net/dpw_rap.h"
 #include "net/nhttp_rap.h"
 #include "net/nhttp_rap_evilcheck.h"
+#include "net/dwc_tool.h"
 
 #include "system/net_err.h"
 #include "system/main.h"
@@ -60,6 +61,7 @@
 #include "print/global_font.h"
 #include "font/font.naix"
 #include "print/str_tool.h"
+#include "print/global_msg.h"
 
 #include "system/bmp_winframe.h"
 #include "system/bmp_menu.h"
@@ -113,6 +115,8 @@ enum {
   BSUBWAY_SEQ_INIT,       // 初期化
   BSUBWAY_SEQ_INIT_WAIT,  // 初期化ウエイト
   BSUBWAY_SEQ_INIT_MSG_WAIT, // 初期化メッセージウエイト
+  BSUBWAY_SEQ_PERSON_NAME_SETUP,// 名前認証
+  BSUBWAY_SEQ_PERSON_NAME_SETUP_WAIT,// 名前認証
   BSUBWAY_SEQ_PERSON_SETUP,// Email認証
   BSUBWAY_SEQ_PERSON_SETUP_WAIT,// Email認証
   BSUBWAY_SEQ_MAIN,       // メイン処理
@@ -139,6 +143,8 @@ enum{
   SCORE_UPLOAD_SEQ_PERSON_MSG_00 = 0,
   SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP,
   SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP_WAIT,
+  SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP01,
+  SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP_WAIT01,
   SCORE_UPLOAD_SEQ_PERSON_UPDATE,
   SCORE_UPLOAD_SEQ_PERSON_UPDATE_WAIT,
   SCORE_UPLOAD_SEQ_SAVE,
@@ -225,6 +231,16 @@ typedef enum{
 #define BSUBWAY_TIMEOUT_TIME      (30*60*2) //2分
 
 
+//-------------------------------------
+///	
+//=====================================
+typedef enum {
+  BSUBWAY_UPLOADCHECK_RESULT_WAIT,  // 認証中
+  BSUBWAY_UPLOADCHECK_RESULT_OK,    // 結果OK
+  BSUBWAY_UPLOADCHECK_RESULT_NG,    // 結果NG
+} BSUBWAY_UPLOADCHECK_RESULT;
+
+
 
 //-------------------------------------
 /// 描画関係
@@ -269,7 +285,6 @@ typedef struct
   Dpw_Common_Profile        dc_profile;         // 自分の情報登録用構造体
   Dpw_Common_ProfileResult  dc_profile_result;  // 自分の情報登録レスポンス用構造体
   Dpw_Bt_Player bt_player;              // 勝ち抜いた自分のデータ
-  const MYSTATUS* cp_mystatus;
   const BSUBWAY_WIFI_DATA* cp_bsubway_wifi; // バトルサブウェイ　WiFiセーブ情報
   const BSUBWAY_SCOREDATA* cp_bsubway_score; // バトルサブウェイ　WiFiセーブ情報
 
@@ -278,6 +293,10 @@ typedef struct
   NHTTP_RAP_WORK* p_nhttp;  // ポケモン認証ワーク
   u16 poke_num;
   u8 sign[NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN];
+
+  //以下不正文字チェック用
+  DWC_TOOL_BADWORD_WORK badword;
+  MYSTATUS              *p_use_mystatus;
 
 } WIFI_BSUBWAY_PERSONAL;
 
@@ -441,8 +460,11 @@ static void ROOM_DATA_SaveLeaderData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WI
 //-------------------------------------
 /// PersonalData
 //=====================================
-static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk );
+static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk, HEAPID heapID );
 static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk );
+// 人名認証
+static void PERSONAL_DATA_SetUpMystatus( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p_gamedata, HEAPID heapID );
+static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpMystatusWait( WIFI_BSUBWAY_PERSONAL* p_wk, HEAPID heapID );
 // 人情報認証
 static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p_gamedata, WIFI_BSUBWAY_ERROR* p_error );
 static BOOL PERSONAL_DATA_SetUpProfileWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error );
@@ -450,7 +472,8 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
 
 // ポケモン認証
 static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error, DWCSvlResult* p_svl_result, HEAPID heapID );
-static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error );
+static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error, BOOL poke_error_check );
+static void PERSONAL_DATA_SetDefaultPokeName( WIFI_BSUBWAY_PERSONAL* p_wk, int index );
 
 // 人情報アップデート
 static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error  );
@@ -619,7 +642,7 @@ static GFL_PROC_RESULT WiFiBsubway_ProcInit( GFL_PROC * p_proc, int * p_seq, voi
 
   // システムワーク初期化
   ROOM_DATA_Init( &p_wk->roomdata );
-  PERSONAL_DATA_Init( &p_wk->personaldata );
+  PERSONAL_DATA_Init( &p_wk->personaldata, HEAPID_WIFI_BSUBWAY );
   ERROR_DATA_Init( &p_wk->bt_error );
   
   // DEBUG出力ON
@@ -730,6 +753,23 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
     if( VIEW_PrintMain( &p_wk->view ) )
     {
       (*p_seq) ++;
+    }
+    break;
+
+  // 名前認証
+  case BSUBWAY_SEQ_PERSON_NAME_SETUP:
+    PERSONAL_DATA_SetUpMystatus( &p_wk->personaldata, p_wk->p_gamedata, HEAPID_WIFI_BSUBWAY );
+    (*p_seq) ++;
+    break;
+
+  // 名前認証
+  case BSUBWAY_SEQ_PERSON_NAME_SETUP_WAIT:
+    {
+      BSUBWAY_UPLOADCHECK_RESULT result;
+      result = PERSONAL_DATA_SetUpMystatusWait( &p_wk->personaldata, HEAPID_WIFI_BSUBWAY );
+      if( result != BSUBWAY_UPLOADCHECK_RESULT_WAIT ){
+        (*p_seq) ++;
+      }
     }
     break;
 
@@ -1152,9 +1192,11 @@ static void ROOM_DATA_SaveLeaderData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WI
  *  @brief  PersonalData  初期化
  */
 //-----------------------------------------------------------------------------
-static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk )
+static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(WIFI_BSUBWAY_PERSONAL) );
+
+  p_wk->p_use_mystatus = MyStatus_AllocWork( heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1169,7 +1211,68 @@ static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk )
     NHTTP_RAP_End( p_wk->p_nhttp );
     p_wk->p_nhttp = NULL;
   }
+  if(p_wk->p_use_mystatus){
+    GFL_HEAP_FreeMemory( p_wk->p_use_mystatus );
+    p_wk->p_use_mystatus = NULL;
+  }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Mystatus をセットアップ　（名前チェック込み）
+ *
+ *	@param	p_wk          ワーク
+ *	@param	p_gamedata    ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void PERSONAL_DATA_SetUpMystatus( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p_gamedata, HEAPID heapID )
+{
+  MYSTATUS* p_mystatus          = GAMEDATA_GetMyStatus( p_gamedata );
+  MyStatus_Copy( p_mystatus, p_wk->p_use_mystatus );
+
+  // 不正名チェック
+  {
+    STRBUF *p_word_check  = MyStatus_CreateNameString( p_wk->p_use_mystatus, heapID );
+    DWC_TOOL_BADWORD_Start( &p_wk->badword, p_word_check, heapID );
+    GFL_STR_DeleteBuffer( p_word_check );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正名称チェック  待ち
+ *
+ *	@param	p_wk  ワーク
+ *	@param  heapID
+ *
+ *  @retval BSUBWAY_UPLOADCHECK_RESULT_WAIT,  // 認証中
+ *  @retval BSUBWAY_UPLOADCHECK_RESULT_OK,    // 結果OK
+ *  @retval BSUBWAY_UPLOADCHECK_RESULT_NG,    // 結果NG
+ */
+//-----------------------------------------------------------------------------
+static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpMystatusWait( WIFI_BSUBWAY_PERSONAL* p_wk, HEAPID heapID )
+{
+  BOOL result;
+  BOOL bad_word;
+  result = DWC_TOOL_BADWORD_Wait( &p_wk->badword, &bad_word );
+
+  if( result == FALSE )
+  {
+    return BSUBWAY_UPLOADCHECK_RESULT_WAIT;
+  }
+  else if( (result == TRUE) && (bad_word == TRUE) )
+  { 
+    STRBUF  *p_modifiname = DWC_TOOL_CreateBadNickName( heapID );
+    //名前置き換え
+    MyStatus_SetMyNameFromString( p_wk->p_use_mystatus, p_modifiname);
+    GFL_STR_DeleteBuffer(p_modifiname);
+    TOMOYA_Printf( "BadName Change\n" );
+    return BSUBWAY_UPLOADCHECK_RESULT_NG;
+  }
+
+  return BSUBWAY_UPLOADCHECK_RESULT_OK;
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -1184,9 +1287,9 @@ static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk )
 static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p_gamedata, WIFI_BSUBWAY_ERROR* p_error )
 {
   SAVE_CONTROL_WORK* p_savedata = GAMEDATA_GetSaveControlWork( p_gamedata );
-  MYSTATUS* p_mystatus          = GAMEDATA_GetMyStatus( p_gamedata );
   BSUBWAY_WIFI_DATA* p_bsubway_wifi  = GAMEDATA_GetBSubwayWifiData( p_gamedata );
   BSUBWAY_SCOREDATA* p_bsubway_score  = GAMEDATA_GetBSubwayScoreData( p_gamedata );
+  MYSTATUS* p_mystatus          = p_wk->p_use_mystatus;
 
   GF_ASSERT( p_wk->setup == FALSE );
   
@@ -1202,7 +1305,6 @@ static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p
   PERSONAL_DATA_InitDpwPlayerData( &p_wk->bt_player, p_gamedata );
 
   // Mystatus保存
-  p_wk->cp_mystatus       = p_mystatus;
   p_wk->cp_bsubway_wifi   = p_bsubway_wifi;
   p_wk->cp_bsubway_score  = p_bsubway_score;
 
@@ -1310,7 +1412,7 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
   BOOL result;
   
   WIFI_BSUBWAY_Printf( "Pokemon　Upload\n" );
-  p_wk->p_nhttp = NHTTP_RAP_Init( heapID,MyStatus_GetProfileID( p_wk->cp_mystatus ), p_svl_result );
+  p_wk->p_nhttp = NHTTP_RAP_Init( heapID,MyStatus_GetProfileID( p_wk->p_use_mystatus ), p_svl_result );
  
   
   GF_ASSERT( p_wk->p_nhttp );
@@ -1355,13 +1457,15 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
  *  @param  p_wk      ワーク
  *  @param  p_error
  *
- *  @retval TRUE    完了
- *  @retval FALSE   途中
+ *  @retval BSUBWAY_UPLOADCHECK_RESULT_WAIT,  // 認証中
+ *  @retval BSUBWAY_UPLOADCHECK_RESULT_OK,    // 結果OK
+ *  @retval BSUBWAY_UPLOADCHECK_RESULT_NG,    // 結果NG
  */
 //-----------------------------------------------------------------------------
-static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error )
+static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error, BOOL poke_error_check )
 {
   NHTTPError error;
+  BSUBWAY_UPLOADCHECK_RESULT result = BSUBWAY_UPLOADCHECK_RESULT_WAIT;
 
   GF_ASSERT( p_wk->p_nhttp );
 
@@ -1384,6 +1488,7 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
     //送られてきた状態は正常か
     if( NHTTP_RAP_EVILCHECK_GetStatusCode( p_data ) == 0 )
     {
+      BOOL pokecheck_ok = TRUE;
       // 正常
 
       // 署名を取得
@@ -1395,14 +1500,21 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
       for( i=0; i<p_wk->poke_num; i++ ){
         poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
         if( poke_result != NHTTP_RAP_EVILCHECK_RESULT_OK ){
-          ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_POKE_ERROR );
-          break;
+          pokecheck_ok = FALSE;
+          if( poke_error_check ){
+            ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_POKE_ERROR );
+          }else{
+            // ポケモン名をデフォルトに変更
+            PERSONAL_DATA_SetDefaultPokeName( p_wk, i );
+          }
         }
       }
-      if( i==p_wk->poke_num ){
+      if( pokecheck_ok ){
         WIFI_BSUBWAY_Printf( "認証　OK\n" );
+        result = BSUBWAY_UPLOADCHECK_RESULT_OK;
       }else{
         WIFI_BSUBWAY_Printf( "認証　Error %d\n", i );
+        result = BSUBWAY_UPLOADCHECK_RESULT_NG;
       }
     }
     else
@@ -1415,6 +1527,7 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
         poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
         WIFI_BSUBWAY_Printf( "認証　Error pokenum %d  result %d\n", i, poke_result );
       }
+      result = BSUBWAY_UPLOADCHECK_RESULT_NG;
     }
 
     NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
@@ -1423,10 +1536,26 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
 
 
     WIFI_BSUBWAY_Printf( "\n" );
-    return TRUE;
   }
 
-  return FALSE;
+  return result;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン名をデフォルト名に変更する。
+ *
+ *	@param	p_wk      ワーク
+ *	@param	index     インデックス
+ */
+//-----------------------------------------------------------------------------
+static void PERSONAL_DATA_SetDefaultPokeName( WIFI_BSUBWAY_PERSONAL* p_wk, int index )
+{
+  BSUBWAY_POKEMON* p_pokedata;
+  GF_ASSERT(index < 3);
+  p_pokedata = (BSUBWAY_POKEMON*)&p_wk->bt_player.pokemon[index];
+  GFL_MSG_GetStringRaw( GlobalMsg_PokeName, p_pokedata->mons_no, p_pokedata->nickname, MONS_NAME_SIZE+EOM_SIZE );
 }
 
 
@@ -1544,27 +1673,27 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
     result    = Dpw_Bt_GetAsyncResult();
     complete  = TRUE;
     switch (result){
-    case DPW_TR_STATUS_SERVER_OK:   // 正常に動作している
+    case DPW_BT_STATUS_SERVER_OK:   // 正常に動作している
       WIFI_BSUBWAY_Printf(" server ok\n");
       p_wk->server_status = result;
       break;
-    case DPW_TR_STATUS_SERVER_STOP_SERVICE: // サービス停止中
-    case DPW_TR_STATUS_SERVER_FULL:     // サーバーが満杯
+    case DPW_BT_STATUS_SERVER_STOP_SERVICE: // サービス停止中
+    case DPW_BT_STATUS_SERVER_FULL:     // サーバーが満杯
       WIFI_BSUBWAY_Printf(" server ng\n");
       p_wk->server_status = result;
       break;
 
-    case DPW_TR_ERROR_SERVER_FULL:
-    case DPW_TR_ERROR_CANCEL:
-    case DPW_TR_ERROR_FAILURE:
-    case DPW_TR_ERROR_SERVER_TIMEOUT:
-    case DPW_TR_ERROR_DISCONNECTED: 
+    case DPW_BT_ERROR_SERVER_FULL:
+    case DPW_BT_ERROR_CANCEL:
+    case DPW_BT_ERROR_FAILURE:
+    case DPW_BT_ERROR_SERVER_TIMEOUT:
+    case DPW_BT_ERROR_DISCONNECTED: 
     case DPW_BT_ERROR_ILLIGAL_REQUEST:
       WIFI_BSUBWAY_Printf(" server ng\n");
       p_wk->error_code = result;
       break;
 
-    case DPW_TR_ERROR_FATAL:      //!< 通信致命的エラー。電源の再投入が必要です
+    case DPW_BT_ERROR_FATAL:      //!< 通信致命的エラー。電源の再投入が必要です
     default:
       NetErr_DispCall(TRUE);
       break;
@@ -1608,17 +1737,17 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
     result    = Dpw_Bt_GetAsyncResult();
     complete  = TRUE;
     switch (result){
-    case DPW_TR_ERROR_SERVER_FULL:
-    case DPW_TR_ERROR_CANCEL:
-    case DPW_TR_ERROR_FAILURE:
-    case DPW_TR_ERROR_SERVER_TIMEOUT:
-    case DPW_TR_ERROR_DISCONNECTED: 
+    case DPW_BT_ERROR_SERVER_FULL:
+    case DPW_BT_ERROR_CANCEL:
+    case DPW_BT_ERROR_FAILURE:
+    case DPW_BT_ERROR_SERVER_TIMEOUT:
+    case DPW_BT_ERROR_DISCONNECTED: 
     case DPW_BT_ERROR_ILLIGAL_REQUEST:
       WIFI_BSUBWAY_Printf(" recv ng\n");
       p_wk->error_code = result;
       break;
 
-    case DPW_TR_ERROR_FATAL:      //!< 通信致命的エラー。電源の再投入が必要です
+    case DPW_BT_ERROR_FATAL:      //!< 通信致命的エラー。電源の再投入が必要です
       NetErr_DispCall(TRUE);
       break;
 
@@ -2063,10 +2192,35 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
     p_wk->seq++;
     break;
   case SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP_WAIT:
-    if( PERSONAL_DATA_SetUpNhttpPokemonWait( &p_wk->personaldata, &p_wk->bt_error ) ){
-      p_wk->seq++;
+    {
+      BSUBWAY_UPLOADCHECK_RESULT result;
+      // この中でエラーだったポケモンの名前をデフォルトに変更
+      result = PERSONAL_DATA_SetUpNhttpPokemonWait( &p_wk->personaldata, &p_wk->bt_error, FALSE );
+      if( result == BSUBWAY_UPLOADCHECK_RESULT_OK ){
+        p_wk->seq = SCORE_UPLOAD_SEQ_PERSON_UPDATE;
+      }else if( result == BSUBWAY_UPLOADCHECK_RESULT_NG ){
+        p_wk->seq = SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP01;
+      }
     }
     break;
+  // ポケモンの名前をデフォルト名にして再挑戦
+  case SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP01:
+    PERSONAL_DATA_SetUpNhttpPokemon( &p_wk->personaldata, &p_wk->bt_error, &p_wk->svl_result, heapID );
+    p_wk->seq++;
+    break;
+  case SCORE_UPLOAD_SEQ_PERSON_POKE_SETUP_WAIT01:
+    {
+      BSUBWAY_UPLOADCHECK_RESULT result;
+      result = PERSONAL_DATA_SetUpNhttpPokemonWait( &p_wk->personaldata, &p_wk->bt_error, TRUE );
+      if( result == BSUBWAY_UPLOADCHECK_RESULT_OK ){
+        p_wk->seq = SCORE_UPLOAD_SEQ_PERSON_UPDATE;
+      }else if( result == BSUBWAY_UPLOADCHECK_RESULT_NG ){
+        // 自動でエラー処理に遷移
+        TOMOYA_Printf( "Auto Error Wait\n" );
+      }
+    }
+    break;
+
   case SCORE_UPLOAD_SEQ_PERSON_UPDATE:
     PERSONAL_DATA_UploadPersonalData( &p_wk->personaldata, &p_wk->bt_error );
     p_wk->seq++;
