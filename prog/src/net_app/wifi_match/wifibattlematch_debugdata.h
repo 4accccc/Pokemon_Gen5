@@ -65,4 +65,9 @@ extern BOOL *DEBUGWIN_SERVERTIME_USER_GetFlag( void );
 ///	バトルプレイ
 //=====================================
 extern BOOL *DEBUGWIN_BATTLE_GetFlag( void );
+
+//-------------------------------------
+///	レポート音
+//=====================================
+extern BOOL *DEBUGWIN_REPORTMARK_GetFlag( void );
 #endif //PM_DEBUG

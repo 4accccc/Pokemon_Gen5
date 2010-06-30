@@ -57,4 +57,10 @@ BOOL *DEBUGWIN_BATTLE_GetFlag( void )
   static BOOL s_btl_flag  = FALSE;
   return &s_btl_flag;
 }
+
+BOOL *DEBUGWIN_REPORTMARK_GetFlag( void )
+{
+  static BOOL s_report_mark_flag  = FALSE;
+  return &s_report_mark_flag;
+}
 #endif //PM_DEBUG

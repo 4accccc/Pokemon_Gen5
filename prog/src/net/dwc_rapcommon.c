@@ -190,13 +190,21 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
 //  if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
   if( DWCRAPCOMMON_SUBHEAP_GROUPID == NNS_FndGetGroupIDForMBlockExpHeap(ptr) )
   { 
-    GF_ASSERT( pDwcRapWork->headHandleSub );
+    if( pDwcRapWork->headHandleSub != NULL )
     {
       OSIntrMode  enable = OS_DisableInterrupts();
       NNS_FndFreeToExpHeap( pDwcRapWork->headHandleSub, ptr );
       (void)OS_RestoreInterrupts(enable);
       pDwcRapWork->subheap_alloc_cnt--;
       NAGI_Printf( "sub_heap alloc cnt=%d\n", pDwcRapWork->subheap_alloc_cnt );
+    }
+    else
+    {
+      //もしサブヒープが存在していないのに解放しにきた場合は
+      //ヒープエラーとしてしまう
+      NAGI_Printf( "！！ヒープ強制エラー！！\n" );
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );
+
     }
   }
   else

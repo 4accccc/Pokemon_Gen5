@@ -32,11 +32,17 @@
 #include "savedata/system_data.h"
 #include "savedata/wifilist.h"
 
-//アトラス情報
+//  アトラス情報
 #include "atlas_syachi2ds_v1.h"
 
 //  外部公開
 #include "wifibattlematch_net.h"
+
+//  デバッグ用にタイミングを知らせるためSEを鳴らすので
+#ifdef PM_DEBUG
+#include "sound/pm_sndsys.h"
+#include "wifibattlematch_snd.h"
+#endif
 
 //=============================================================================
 /**
@@ -1622,7 +1628,9 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
     {
       //もしエラーなのに自分がセッションを作成していなかった場合は
       //セッション作成に戻る
-      if( p_wk->is_session == FALSE && 
+      //(バトル前レポート以外)
+      if( p_wk->report_type != WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER &&
+          p_wk->is_session == FALSE && 
            WIFIBATTLEMATCH_SC_SEQ_SESSION_WAIT < p_wk->seq && p_wk->seq < WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA )
       {
 
@@ -2021,7 +2029,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
     case WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_WAIT:
       if( p_wk->wait_cnt == 0 )
       { 
-        p_wk->is_send_report  = TRUE;
         DEBUG_NET_Printf( "SC:submit report wait\n" );
         p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_EXIT;
       }
@@ -2046,6 +2053,14 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
 
     //終了！
     case WIFIBATTLEMATCH_SC_SEQ_EXIT:
+#ifdef PM_DEBUG
+      if( *DEBUGWIN_REPORTMARK_GetFlag() )
+      {
+        PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
+      }
+#endif //PM_DEBUG
+
+      p_wk->is_send_report  = TRUE;
       DEBUG_NET_Printf( "SC:exit\n" );
       DwcRap_Sc_Finalize( p_wk );
       p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_END_TIMING_START;

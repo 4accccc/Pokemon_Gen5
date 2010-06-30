@@ -1607,11 +1607,31 @@ static inline void DebugWin_Etc_D_ServerFlag2( void* userWork , DEBUGWIN_ITEM* i
   BOOL *p_is_flag  = DEBUGWIN_SERVERTIME_USER_GetFlag();
   DEBUGWIN_ITEM_SetNameV( item , "Ç…ÇÒÇ¢Ç…ÇøÇ∂ÇØÇ¢Ç©[%s]", sc_tbl[ (*p_is_flag) ] );
 }
+static inline void DebugWin_Etc_U_ReportSnd( void* userWork , DEBUGWIN_ITEM* item )
+{
+  BOOL *p_is_flag  = DEBUGWIN_REPORTMARK_GetFlag();
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    (*p_is_flag)  ^= 1;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Etc_D_ReportSnd( void* userWork , DEBUGWIN_ITEM* item )
+{
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+  BOOL *p_is_flag  = DEBUGWIN_REPORTMARK_GetFlag();
+  DEBUGWIN_ITEM_SetNameV( item , "ÉåÉ|Å[ÉgÇªÇ§ÇµÇÒSE[%s]", sc_tbl[ (*p_is_flag) ] );
+}
 static inline void DEBUGWIN_ETC_Init( HEAPID heapID )
 {
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_ETC, "ÇªÇÃÇΩ", heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Etc_U_ServerFlag, DebugWin_Etc_D_ServerFlag, NULL, DEBUGWIN_GROUP_ETC, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Etc_U_ServerFlag2, DebugWin_Etc_D_ServerFlag2, NULL, DEBUGWIN_GROUP_ETC, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Etc_U_ReportSnd, DebugWin_Etc_D_ReportSnd, NULL, DEBUGWIN_GROUP_ETC, heapID );
 }
 static inline void DEBUGWIN_ETC_Exit( void )
 {
