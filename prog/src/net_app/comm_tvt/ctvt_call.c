@@ -368,7 +368,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   callWork->isUpdateMsgWin = FALSE;
   callWork->isUpdateCallMsgWin = FALSE;
   callWork->isPlayCallAnswer = FALSE;
-  callWork->barState = CCBS_NONE;
+  callWork->barState = 0xFF;  //‹­§XV
   callWork->barMenuWork = NULL;
   callWork->state = CCS_FADEIN;
   callWork->connectTimeOutCnt = 0;
