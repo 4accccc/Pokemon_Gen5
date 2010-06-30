@@ -2774,7 +2774,7 @@ static void PokeMcssAnimeStart( POKE_MCSS_WORK* poke_mcss_wk )
     poke_mcss_wk->poke_call_back_data->count = 0;
     poke_mcss_wk->poke_call_back_data->stop  = FALSE;
     NNS_G2dRestartMCAnimation( mcss_anim_ctrl );                             // ResetだけだとPOKE_MCSS_ANIME_LOOP_MAX回だけきちんとループしてくれなかったのでこれも残すことにした 100625
-    NNS_G2dResetMCCellAnimationAll( &(mcss_anim_ctrl->multiCellInstance) );  // Restartだとセルとマルチセルがずれるそうなのでこちらにした 100624
+    //コールバックから呼ばなければずれないNNS_G2dResetMCCellAnimationAll( &(mcss_anim_ctrl->multiCellInstance) );  // Restartだとセルとマルチセルがずれるそうなのでこちらにした 100624
     MCSS_ResetAnmStopFlag( poke_mcss_wk->poke_wk );
   }
 }
@@ -2796,7 +2796,7 @@ static void PokeMcssAnimeMain( POKE_MCSS_WORK* poke_mcss_wk )
     {
       MCSS_SetAnmStopFlag( poke_mcss_wk->poke_wk );
       NNS_G2dRestartMCAnimation( mcss_anim_ctrl );                             // ResetだけだとPOKE_MCSS_ANIME_LOOP_MAX回だけきちんとループしてくれなかったのでこれも残すことにした 100625
-      NNS_G2dResetMCCellAnimationAll( &(mcss_anim_ctrl->multiCellInstance) );  // Restartだとセルとマルチセルがずれるそうなのでこちらにした 100624
+      //コールバックから呼ばなければずれないNNS_G2dResetMCCellAnimationAll( &(mcss_anim_ctrl->multiCellInstance) );  // Restartだとセルとマルチセルがずれるそうなのでこちらにした 100624
       poke_mcss_wk->poke_call_back_data->stop = FALSE;
     }
   }
@@ -2812,7 +2812,7 @@ static void Zukan_Detail_Form_PokeMcssCallBackFunctor( u32 data, fx32 currentFra
     poke_call_back_data->stop = TRUE;
   }
 
-  MCSS_RestartAnime( work->poke_mcss_wk[poke_call_back_data->poke_idx].poke_wk );  // 1ループしたらアニメーションリセット
+  MCSS_ReqRestartAnime( work->poke_mcss_wk[poke_call_back_data->poke_idx].poke_wk );  // 1ループしたらアニメーションリセット
 }
 
 static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
