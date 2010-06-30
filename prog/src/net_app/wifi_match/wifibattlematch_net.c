@@ -552,6 +552,7 @@ static const char *sc_matchmake_key_str[ MATCHMAKE_KEY_MAX ] =
   "cup",
   "dis",
   "cnt",
+  "ver",
 };
 //-------------------------------------
 ///	通信コマンド
