@@ -2427,8 +2427,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   }
 
   //パレス島タッチ判定
-  if(intsub->comm.now_palace_area != GAMEDATA_GetIntrudeMyID(gamedata)
-      || GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+  if(intsub->comm.now_palace_area != GAMEDATA_GetIntrudeMyID(gamedata)){
     _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, 
       PALACE_ICON_HITRANGE_HALF, PALACE_ICON_HITRANGE_HALF, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){
