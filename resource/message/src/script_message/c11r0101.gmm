@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-28T18:27:04"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-30T12:33:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1016,7 +1016,7 @@ POS</comment>
 きみを　みていると　しぜんと
 そういう　きもちに　なれるよ</language>
 		<language name="JPN_KANJI" width="256">きっと　未来は
-希望に　満ち溢れているんだな▼
+希望に　満ちあふれて　いるんだな▼
 きみを　見ていると　自然と
 そういう　気持ちに　なれるよ</language>
 	</row>

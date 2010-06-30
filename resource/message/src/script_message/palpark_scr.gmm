@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-23T11:51:46"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-30T12:55:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="394" top="267" right="1099" bottom="895" maximized="no" rayout="Vertical2">
+	<dialog left="416" top="165" right="1121" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="682" top="69" right="1155" bottom="467" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -388,9 +388,9 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_06">
 		<comment>ワイヤレス通信分岐</comment>
-		<language name="JPN" width="256">DSワイヤレスつうしんを
+		<language name="JPN" width="256">ＤＳワイヤレスつうしんを
 かいし　します</language>
-		<language name="JPN_KANJI" width="256">DSワイヤレス通信を
+		<language name="JPN_KANJI" width="256">ＤＳワイヤレス通信を
 開始します</language>
 	</row>
 
@@ -521,7 +521,7 @@ BOXに6匹以上の空きがある</comment>
 もう　またすぐ　きてくれ！
 すかさず　きてくれ！▼
 そして　さらに　すばらしい
-ポケシフター　さばきを▽
+ポケシフターさばきを▽
 われわれに　みせてくれッ！▼</language>
 		<language name="JPN_KANJI" width="256">……　……
 ……　……▼
@@ -635,7 +635,7 @@ BOXに6匹以上の空きがある</comment>
 あら　これが
 あなたの　トレーナーカード？▼</language>
 		<language name="JPN_KANJI" width="256">あら　こんにちは！▼
-ここにきた　ということは
+ここに来た　ということは
 あなた　見学者ね？▼
 え　違うの？
 よく　こんなとこまで　来たわねぇ▼
@@ -664,8 +664,8 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_first_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>話した後に足早に階段をかけあがる</comment>
-		<language name="JPN" width="256">パークはかせーーーーーーーーーーーーーー▼</language>
-		<language name="JPN_KANJI" width="256">パーク博士ーーーーーーーーーーーーーーー▼</language>
+		<language name="JPN" width="256">パークはかせーーーーーーーーーーーーー▼</language>
+		<language name="JPN_KANJI" width="256">パーク博士ーーーーーーーーーーーーーー▼</language>
 	</row>
 
 	<row id="msg_palpark_first_18">
@@ -712,7 +712,7 @@ msg_palpark_first_19に続く</comment>
 プロフェッショナルな
 トレーナーが　いなくては……▼</language>
 		<language name="JPN_KANJI" width="256">だから　何度も
-いっているだろう▼
+言っているだろう▼
 この　発明は
 たーしかに　グレイトな　ものだが▼
 プロフェッショナルな
@@ -772,7 +772,7 @@ msg_palpark_first_19に続く</comment>
 		<comment>博士</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]くん！▼
 れきしを　うごかす　だいじっけんに
-さんか　しないかね！？▼
+さんか　しないかね？！▼
 ここの　そうちは　ポケシフターと　いって▼
 エネルギー　パーティクルを
 イヴォークしつつ▼
@@ -788,7 +788,7 @@ msg_palpark_first_19に続く</comment>
 ファンタスティックに……▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]くん！▼
 歴史を　動かす　大実験に
-参加　しないかね！？▼
+参加　しないかね？！▼
 ここの　装置は　ポケシフターと　言って▼
 エネルギー　パーティクルを
 イヴォークしつつ▼
