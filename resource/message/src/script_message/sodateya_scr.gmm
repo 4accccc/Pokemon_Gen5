@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-28T16:40:04"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-06-30T12:24:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1284" top="199" right="1989" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,9 +359,9 @@
 ・預けているポケモン＝１匹</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">よくきたな！
-[1:01:ポケモン種族名:0]は　げんきじゃぞ！</language>
+[1:02:ポケモンニックネーム:0]は　げんきじゃぞ！</language>
 		<language name="JPN_KANJI" width="256">よく来たな！
-[1:01:ポケモン種族名:0]は　元気じゃぞ！</language>
+[1:02:ポケモンニックネーム:0]は　元気じゃぞ！</language>
 	</row>
 
 	<row id="msg_sodateya_oldman_03">
@@ -371,9 +371,15 @@
 ・７０％の確率で生まれる
 　キー待ちあり</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
-		<language name="JPN" width="256">２ひきの　なかは
+		<language name="JPN" width="256">よくきたな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　げんきじゃぞ！▼
+２ひきの　なかは
 とっても　よいようじゃ！</language>
-		<language name="JPN_KANJI" width="256">２匹の　仲は
+		<language name="JPN_KANJI" width="256">よく来たな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　元気じゃぞ！▼
+２匹の　仲は
 とっても　よいようじゃ！</language>
 	</row>
 
@@ -384,9 +390,15 @@
 ・５０％の確率で生まれる
 　キー待ちあり</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
-		<language name="JPN" width="256">２ひきの　なかは
+		<language name="JPN" width="256">よくきたな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　げんきじゃぞ！▼
+２ひきの　なかは
 まずまずの　ようじゃ</language>
-		<language name="JPN_KANJI" width="256">２匹の　仲は
+		<language name="JPN_KANJI" width="256">よく来たな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　元気じゃぞ！▼
+２匹の　仲は
 まずまずの　ようじゃ</language>
 	</row>
 
@@ -397,9 +409,15 @@
 ・２０％の確率で生まれる
 　キー待ちあり</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
-		<language name="JPN" width="256">２ひきの　なかは
+		<language name="JPN" width="256">よくきたな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　げんきじゃぞ！▼
+２ひきの　なかは
 それほど　よくないがなあ</language>
-		<language name="JPN_KANJI" width="256">２匹の　仲は
+		<language name="JPN_KANJI" width="256">よく来たな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　元気じゃぞ！▼
+２匹の　仲は
 それほど　よくないがなあ</language>
 	</row>
 
@@ -410,10 +428,16 @@
 ・０％の確率で生まれる
 　キー待ちあり</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
-		<language name="JPN" width="256">２ひきは　おたがいに
+		<language name="JPN" width="256">よくきたな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　げんきじゃぞ！▼
+２ひきは　おたがいに
 ちがう　ポケモンたちと▽
 あそんでおるがなあ……</language>
-		<language name="JPN_KANJI" width="256">２匹は　おたがいに
+		<language name="JPN_KANJI" width="256">よく来たな！▼
+[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　元気じゃぞ！▼
+２匹は　おたがいに
 違う　ポケモンたちと▽
 遊んでおるがなあ……</language>
 	</row>
