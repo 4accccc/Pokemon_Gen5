@@ -22,6 +22,7 @@
 #include "sound/pm_sndsys.h"
 #include "net/dwc_rapcommon.h"
 #include "net/dwc_tool.h"
+#include "battle/btl_net.h" //BTL_NET_SERVER_VERSION
 
 //	アーカイブ
 #include "arc_def.h"
@@ -4974,6 +4975,8 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMAT
 
     GFL_HEAP_FreeMemory( p_party );
   }
+
+  p_my_data->btl_server_version  = BTL_NET_SERVER_VERSION;
 }
 //----------------------------------------------------------------------------
 /**
