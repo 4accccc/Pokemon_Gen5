@@ -399,6 +399,7 @@ static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
     pmw->bagData.ret_item = ITEM_DUMMY_DATA;
     pmw->bagData.cursor_flg = &pmw->cursor_flag;
     pmw->bagData.time_out_flg = FALSE;
+    pmw->bagData.seFlag = TRUE;
     BTLV_INPUT_SetFadeOut( pmw->biw, TRUE );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     pmw->seq_no++;
