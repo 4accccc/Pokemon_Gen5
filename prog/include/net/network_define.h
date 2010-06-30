@@ -128,7 +128,7 @@ https://pkvldtprod.nintendo.co.jp/pokemon/validate
 #define GF_DWC_GAMECODE		('IRAJ')
 #define GF_DWC_ND_LOGIN		"IRAJ"
 #else //defined(VERSION_WHITE)
-#define GF_DWC_GAMECODE		('IRBJ')
+#define GF_DWC_GAMECODE		('IRAJ')
 #define GF_DWC_ND_LOGIN		"IRAJ"
 #endif
 
