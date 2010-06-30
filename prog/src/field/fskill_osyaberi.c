@@ -222,7 +222,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
     break;
 
   case SEQ_MIC_INIT_WAIT: // ƒ}ƒCƒN€”õ‘Ò‚¿
-    SND_MIC_Main();
+    SND_MIC_Main( MIC_FRAMERATE_30 );
     if( SND_MIC_IsAmpOnWaitFlag() == TRUE ){
       TIMEICON_Exit( wk->timeIcon );
 //      PMSND_PauseBGM( TRUE );

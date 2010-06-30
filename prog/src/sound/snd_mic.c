@@ -17,7 +17,7 @@
  *                定数定義
  */
 //=============================================================================
-#define SOUND_MIC_WAIT (3*30) ///< AMPをONにしてからマイクが使用可能になるまで
+#define SOUND_MIC_WAIT (3*60) ///< AMPをONにしてからマイクが使用可能になるまで
 
 #define SWAVE_BUFFER_SIZE   (8180)            //DSiサンプリングレート * 8bit
 
@@ -158,12 +158,12 @@ void SND_MIC_Exit( void )
 /**
  *  @brief  マイクモジュール 主処理
  *
- *  @param  void 
+ *  @param  FrameRate 動作モード（MIC_FRAMERATE_30 or MIC_FRAMERATE_60 )
  *
  *  @retval
  */
 //-----------------------------------------------------------------------------
-void SND_MIC_Main( void )
+void SND_MIC_Main( int FrameRate )
 {
   SND_MIC_WORK* wk = sp_SndMic;
 
@@ -172,7 +172,8 @@ void SND_MIC_Main( void )
   //3秒調べるためのカウント
   if( wk->amp_init_flag ) {
     if( !SND_MIC_IsAmpOnWaitFlag() ) {  
-      wk->amp_wait_cnt++;
+      // 1/30と1/60で３秒間待つカウントが違うので外からもらうようにする
+      wk->amp_wait_cnt += FrameRate;    
     }
   }
 }

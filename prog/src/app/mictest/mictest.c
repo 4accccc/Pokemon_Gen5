@@ -1574,7 +1574,7 @@ static void MicTest_MIC_Main( MICTEST_MIC_WORK *p_mic )
 { 
   BOOL now_mic_use;
 
-  SND_MIC_Main();
+  SND_MIC_Main( MIC_FRAMERATE_60 );
   
   now_mic_use = SND_MIC_IsAmpOnWaitFlag();
 
