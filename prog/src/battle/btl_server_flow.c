@@ -15330,6 +15330,10 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   if( BTL_TABLES_IsNeverChangeTokusei(prevTokusei) ){
     return 0;
   }
+  TAYA_Printf("pokeID=%d, HP=%d\n", param->pokeID, BPP_GetValue(bpp, BPP_HP));
+  if( BPP_IsDead(bpp) ){
+    return 0;
+  }
 
   if( ((param->fSameTokEffective) || ( param->tokuseiID != prevTokusei ))
   ){
