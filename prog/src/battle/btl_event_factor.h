@@ -91,6 +91,7 @@ extern void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor )
 extern void BTL_EVENT_FACTOR_ConvertForIsolate( BTL_EVENT_FACTOR* factor );
 
 
+
 //=============================================================================================
 /**
  * 特定タイプ＆サブIDのファクターを１ターン休止させる

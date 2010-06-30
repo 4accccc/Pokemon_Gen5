@@ -66,18 +66,18 @@ struct _BTL_EVENT_FACTOR {
   const BtlEventHandlerTable* handlerTable;
   BtlEventSkipCheckHandler  skipCheckHandler;
   BtlEventFactorType  factorType;
-  u32       priority         : 20;  ///< ソートプライオリティ
-  u32       numHandlers      :  8;  ///< ハンドラテーブル要素数
-  u32       callingFlag      :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
-  u32       sleepFlag        :  1;  ///< 休眠フラグ
-  u32       tmpItemFlag      :  1;  ///< アイテム用一時利用フラグ
-  u32       rmReserveFlag    :  1;  ///< 削除予約フラグ
+  u32       priority;               ///< ソートプライオリティ
 
-  u32       currentStackPtr   :16;   ///< 登録時イベントスタックポインタ
-  u32       recallEnableFlag  : 1;   ///< 再帰呼び出し許可
-  u32       existFlag         : 1;   ///< 現在処理中イベントによりAddされた
-  u32       rotationSleepFlag : 1;   ///< 現在処理中イベントによりAddされた
-  u32       _padd            : 28;
+  u32       currentStackPtr   : 16;  ///< 登録時イベントスタックポインタ
+  u32       numHandlers       :  8;  ///< ハンドラテーブル要素数
+  u32       callingFlag       :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
+  u32       sleepFlag         :  1;  ///< 休眠フラグ
+  u32       tmpItemFlag       :  1;  ///< アイテム用一時利用フラグ
+  u32       rmReserveFlag     :  1;  ///< 削除予約フラグ
+  u32       recallEnableFlag  :  1;  ///< 再帰呼び出し許可
+  u32       existFlag         :  1;  ///< 現在処理中イベントによりAddされた
+  u32       rotationSleepFlag :  1;  ///< 現在処理中イベントによりAddされた
+  u32       _padd             :  1;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -273,6 +273,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     {
       FirstFactorPtr->prev = newFactor;
       newFactor->next = FirstFactorPtr;
+      newFactor->prev = NULL;
       FirstFactorPtr = newFactor;
     }
     // それ以外はふつうのリンクリスト接続
@@ -335,8 +336,6 @@ void BTL_EVENT_RemoveIsolateFactors( void )
     factor = next;
   }
 }
-
-
 //=============================================================================================
 /**
  * イベント反応要素を削除
@@ -377,6 +376,119 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   printLinkDebug();
   popFactor( factor );
 }
+
+//=============================================================================================
+/**
+ * 登録されている反応要素を、依存ポケモン素早さ順にソート（全く同じ値はランダムで入れ替わる）
+ */
+//=============================================================================================
+void BTL_EVENT_ReOrderFactorsByPokeAgility( BTL_SVFLOW_WORK* flowWork )
+{
+  BTL_EVENT_FACTOR *fp1, *fp2;
+  u32 factorCount = 0;
+
+  // デバッグ出力
+  TAYA_Printf( " -------- Before Sort --------\n");
+  for( fp1=FirstFactorPtr; fp1!=NULL; fp1=fp1->next )
+  {
+    TAYA_Printf( "DependID=%2d, Type=%d, Pri=%08x\n", fp1->dependID, fp1->factorType, fp1->priority );
+  }
+
+
+  // 全ポケ依存要素のプライオリティ再設定
+  for( fp1=FirstFactorPtr; fp1!=NULL; fp1=fp1->next )
+  {
+    if( fp1->pokeID != BTL_POKEID_NULL )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWork, fp1->pokeID );
+      u16 agility = BTL_SVFTOOL_CalcAgility( flowWork, bpp, TRUE );
+      u16 mainPri = getFactorMainPriority( fp1->priority );
+      fp1->priority = calcFactorPriority( mainPri, agility );
+    }
+    ++factorCount;
+  }
+
+  // デバッグ出力
+  TAYA_Printf( " -------- Renew Priority --------\n");
+  for( fp1=FirstFactorPtr; fp1!=NULL; fp1=fp1->next )
+  {
+    TAYA_Printf( "DependID=%2d, Type=%d, Pri=%08x\n", fp1->dependID, fp1->factorType, fp1->priority );
+  }
+
+  // プライオリティ順ソート
+  if( factorCount > 1 )
+  {
+    BTL_EVENT_FACTOR *fp1_next = NULL;
+    BOOL fIns;
+
+    fp1 = FirstFactorPtr->next;
+    while( fp1 != NULL )
+    {
+      fp1_next = fp1->next;
+      for( fp2=FirstFactorPtr; fp2!=fp1; fp2=fp2->next )
+      {
+        fIns = FALSE;
+
+        if( fp1->priority > fp2->priority )
+        {
+          fIns = TRUE;
+          TAYA_Printf(" Dep:%2d,Type:%d,Pri:%08x > Dep:%2d,Type:%d,Pri:%08x\n",
+                  fp1->dependID, fp1->factorType, fp1->priority,
+                  fp2->dependID, fp2->factorType, fp2->priority);
+        }
+        else if( fp1->priority == fp2->priority ){
+          fIns = BTL_CALC_GetRand( 2 )? TRUE : FALSE;
+          TAYA_Printf(" Dep:%2d,Type:%d,Pri:%08x = Dep:%2d,Type:%d,Pri:%08x\n",
+                  fp1->dependID, fp1->factorType, fp1->priority,
+                  fp2->dependID, fp2->factorType, fp2->priority);
+        }
+
+        if( fIns )
+        {
+          if( fp1->prev ){
+            fp1->prev->next = fp1->next;
+          }
+          if( fp1->next ){
+            fp1->next->prev = fp1->prev;
+          }
+
+          fp1->prev = fp2->prev;
+          fp1->next = fp2;
+
+          if( fp2->prev ){
+            fp2->prev->next = fp1;
+          }
+          fp2->prev = fp1;
+
+          if( fp2 == FirstFactorPtr ){
+            FirstFactorPtr = fp1;
+          }
+
+          {
+            BTL_EVENT_FACTOR* fp;
+            TAYA_Printf( " -------- つなぎ替え経過 --------\n");
+            for( fp=FirstFactorPtr; fp!=NULL; fp=fp->next )
+            {
+              TAYA_Printf( "DependID=%2d, Type=%d, Pri=%08x\n", fp->dependID, fp->factorType, fp->priority );
+            }
+          }
+
+          break;
+        }
+      }
+
+      fp1 = fp1->next;
+    }
+  }
+
+  // デバッグ出力
+  TAYA_Printf( " -------- After Sort --------\n");
+  for( fp1=FirstFactorPtr; fp1!=NULL; fp1=fp1->next )
+  {
+    TAYA_Printf( "DependID=%2d, Type=%d, Pri=%08x\n", fp1->dependID, fp1->factorType, fp1->priority );
+  }
+}
+
 //=============================================================================================
 /**
  * ファクターの種類
@@ -861,7 +973,9 @@ static inline u32 calcFactorPriority( BtlEventPriority mainPri, u16 subPri )
 }
 static inline u16 getFactorMainPriority( u32 pri )
 {
-  return (pri >> 16) & 0xffff;
+  u16 mainPri = (pri >> 16) & 0xffff;
+  mainPri = BTL_EVPRI_MAX - mainPri - 1;
+  return mainPri;
 }
 
 
