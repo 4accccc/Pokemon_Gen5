@@ -954,17 +954,19 @@ static void _MessageDisp(int i,int message,int change,BOOL expand ,CG_WIRELESS_M
     return;
   }
   if(pWork->buttonWin[i]){
-    GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+    //GFL_BMPWIN_Delete(pWork->buttonWin[i]);
   }
 
   //  OS_TPrintf("%d %d\n",_msg_wireless[i].width, _msg_wireless[i].height);
-
-  pWork->buttonWin[i] = GFL_BMPWIN_Create(
-    GFL_BG_FRAME3_S,
-    _msg_wireless[i].leftx, _msg_wireless[i].lefty,
-    _msg_wireless[i].width, _msg_wireless[i].height, _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+  
+  if(pWork->buttonWin[i] == NULL){
+    pWork->buttonWin[i] = GFL_BMPWIN_Create(
+      GFL_BG_FRAME3_S,
+      _msg_wireless[i].leftx, _msg_wireless[i].lefty,
+      _msg_wireless[i].width, _msg_wireless[i].height, _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+  }
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-
+  
   if(expand){
     GFL_MSG_GetString(  pWork->pMsgData, message, pWork->pExpStrBuf );
     WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExpStrBuf );
