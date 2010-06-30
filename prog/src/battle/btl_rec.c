@@ -8,6 +8,8 @@
  */
 //=============================================================================================
 
+#include <gflib.h>
+#include "savedata\battle_rec.h"
 
 #include "btl_common.h"
 #include "btl_util.h"
@@ -67,9 +69,6 @@ static inline void ReadRotationTag( u8 tagCode, u8* clientID, BtlRotateDir* dir 
 /*                                                                                           */
 /*===========================================================================================*/
 
-enum {
-  BTL_REC_SIZE = 4096,
-};
 
 enum {
   HEADER_TIMING_CODE = 0,
@@ -83,7 +82,7 @@ struct _BTL_REC {
   u8   fSizeOver;
   u8   dmy;
   const void* readData;
-  u8   buf[ BTL_REC_SIZE ];
+  u8   buf[ BTLREC_OPERATION_BUFFER_SIZE ];
 };
 
 
