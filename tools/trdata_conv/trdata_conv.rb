@@ -8,6 +8,14 @@
   require File.dirname(__FILE__) + '/../hash/item_hash.rb'
   require File.dirname(__FILE__) + '/../hash/tokusei_hash.rb'
 
+  $keep_trainer_name = {
+    "チェレン" => true,
+    "ベル" => true
+  }
+  $keep_trainer_type = {
+    "ポケモントレーナー" => true
+  }
+
 =begin
 	u8			data_type;        //データタイプ
 	u8			tr_type;					//トレーナー分類
@@ -568,7 +576,11 @@ end
 		fp_trno.printf( "#define	TRID_%s   ( %d ) \n", split_data[ PARA::TR_ID ].upcase, trno )
 
     #トレーナー名
-    gmm_name.make_row_kanji( split_data[ PARA::TR_ID ], split_data[ PARA::TR_NAME ], split_data[ PARA::TR_NAME ] )
+    if $keep_trainer_name.has_key?( split_data[ PARA::TR_NAME ] ) == true then
+      gmm_name.make_row_kanji( split_data[ PARA::TR_ID ], split_data[ PARA::TR_NAME ], split_data[ PARA::TR_NAME ] )
+    else
+      gmm_name.make_row_kanji( split_data[ PARA::TR_ID ],"ー","ー" )
+    end
 
 		trno += 1
 	}
@@ -659,7 +671,11 @@ end
     fp_trtypegra.printf( "\t%d,\t\t//%s\n", idx, trainer[ i ][ TR::STR ] )
 		fp_trtype.printf( "#define	%s    ( %d )    //%s\n", trainer[ i ][ TR::TRTYPE ].upcase, no, trainer[ i ][ TR::STR_HASH ] )
     str = "MSG_" + trainer[ i ][ TR::TRTYPE ]
-    gmm_type.make_row_kanji( str, trainer[ i ][ TR::STR ], trainer[ i ][ TR::STR ] )
+    if $keep_trainer_type.has_key?( trainer[ i ][ TR::STR ] ) == true then
+      gmm_type.make_row_kanji( str, trainer[ i ][ TR::STR ], trainer[ i ][ TR::STR ] )
+    else
+      gmm_type.make_row_kanji( str, "ポケモントレーナー", "ポケモントレーナー" )
+    end
 		fp_trtypesex.printf( "\t%s,\t\t//%s\n", trainer[ i ][ TR::GENDER ], trainer[ i ][ TR::STR_HASH ] )
     fp_hash.printf("\t\t\"%s\"=>%d,\n", trainer[ i ][ TR::STR_HASH ], no )
     no += 1
