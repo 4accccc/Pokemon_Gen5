@@ -2194,11 +2194,26 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     }
   }
 }
+// いねむりチェックハンドラ
+static void handler_ReafGuard_InemuriCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // くらう側が自分
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    // 天候が晴れ
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    }
+  }
+}
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_ReafGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL, handler_ReafGuard         }, // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,    handler_AddSickFailCommon },
+    { BTL_EVENT_ADDSICK_CHECKFAIL, handler_ReafGuard              }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,    handler_AddSickFailCommon      },
+    { BTL_EVENT_CHECK_INEMURI,     handler_ReafGuard_InemuriCheck }, // いねむりチェック
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2258,14 +2273,23 @@ static void handler_Fumin_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   common_TokuseiWake_CureSickCore( flowWk, pokeID, POKESICK_NEMURI );
 }
+// いねむりチェックハンドラ
+static void handler_Fumin_InemuriCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Fumin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Fumin_PokeSick    }, // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon },
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Fumin_Wake        }, // とくせい書き換えハンドラ
-    { BTL_EVENT_MEMBER_IN,            handler_Fumin_Wake        }, // ポケ入場ハンドラ
-    { BTL_EVENT_ACTPROC_END,          handler_Fumin_ActEnd      }, // アクション終了毎ハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Fumin_PokeSick     }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_CHECK_INEMURI,        handler_Fumin_InemuriCheck }, // いねむりチェック
+    { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon  },
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Fumin_Wake         }, // とくせい書き換えハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_Fumin_Wake         }, // ポケ入場ハンドラ
+    { BTL_EVENT_ACTPROC_END,          handler_Fumin_ActEnd       }, // アクション終了毎ハンドラ
 
   };
   *numElems = NELEMS(HandlerTable);

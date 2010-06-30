@@ -41,6 +41,7 @@ typedef enum {
   BTL_EVENT_SKIP_NIGERU_CALC,       ///< にげる確率計算スキップチェック
   BTL_EVENT_NIGERU_FORBID,          ///< にげる封じチェック
   BTL_EVENT_NIGERU_EXMSG,           ///< にげる特殊メッセージ
+  BTL_EVENT_CHECK_INEMURI,          ///< いねむり成否チェック
   BTL_EVENT_CHECK_SP_PRIORITY,      ///< 特殊優先度チェック
   BTL_EVENT_WORKED_SP_PRIORITY,     ///< 特殊優先度効果発生した
   BTL_EVENT_GET_WAZA_PRI,           ///< ワザプライオリティ取得

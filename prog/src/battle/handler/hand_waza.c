@@ -302,6 +302,7 @@ static const BtlEventHandlerTable*  ADD_Sawagu( u32* numElems );
 static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Sawagu_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Sawagu_CheckSickFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Sawagu_CheckInemuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Korogaru( u32* numElems );
 static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Korugaru_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -3761,9 +3762,10 @@ static void handler_Abareru_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_Sawagu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_DETERMINE,   handler_Sawagu               }, // ワザ出し確定ハンドラ
-    { BTL_EVENT_TURNCHECK_END,        handler_Sawagu_turnCheck     }, // ターンチェック終了ハンドラ
-    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Sawagu_CheckSickFail }, // 状態異常失敗チェック
+    { BTL_EVENT_WAZA_DMG_DETERMINE,  handler_Sawagu               }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_TURNCHECK_END,       handler_Sawagu_turnCheck     }, // ターンチェック終了ハンドラ
+    { BTL_EVENT_ADDSICK_CHECKFAIL,   handler_Sawagu_CheckSickFail }, // 状態異常失敗チェック
+    { BTL_EVENT_CHECK_INEMURI,       handler_Sawagu_CheckInemuri  }, // いねむり成否チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3865,11 +3867,19 @@ static void handler_Sawagu_CheckSickFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
           HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
           HANDEX_STR_AddArg( &param->str, defPokeID );
         BTL_SVF_HANDEX_Pop( flowWk, param );
-
       }
     }
   }
 }
+static void handler_Sawagu_CheckInemuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[WORKIDX_STICK] )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+
+
 //----------------------------------------------------------------------------------
 /**
  * ころがる・アイスボール

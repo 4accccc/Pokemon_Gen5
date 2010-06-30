@@ -80,6 +80,7 @@ static void scproc_ActStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlA
 static void scEvent_ActProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static BOOL scEvent_CheckInemuriFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID, u8 targetPokeID );
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza );
@@ -2108,6 +2109,14 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
         u16 lv_border = (1 + badgeCnt) * 10;
         u16 rand;
 
+        // 確実に眠りモードに入るための一時的な措置（これでcommitしちゃダメ）
+        #ifdef PM_DEBUG
+        if( !scEvent_CheckInemuriFail(wk, bpp) ){
+          return SABOTAGE_GO_SLEEP;
+        }
+        #endif
+
+
         if( lv_poke <= lv_border ){
           return SABOTAGE_NONE;
         }
@@ -2133,7 +2142,7 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
         rand = BTL_CALC_GetRand( 256 );
         if( rand < (lv_poke - lv_border) )
         {
-          if( !scEvent_WazaSick_CheckFail(wk, bpp, bpp, POKESICK_NEMURI) ){
+          if( !scEvent_CheckInemuriFail(wk, bpp) ){
             return SABOTAGE_GO_SLEEP;
           }
         }
@@ -2148,6 +2157,29 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
     }
   }
   return SABOTAGE_NONE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 命令無視によるいねむり成否チェック
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL    いねむり失敗する場合TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_CheckInemuriFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BOOL fFail;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_INEMURI );
+    fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+  BTL_EVENTVAR_Pop();
+
+  return fFail;
 }
 
 //--------------------------------------------------------------
