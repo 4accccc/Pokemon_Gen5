@@ -879,7 +879,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   case SEQ_ME_WAIT:
     if( PMSND_CheckPlayBGM() == FALSE ){
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
-      GameCommInfo_MessageEntry_MissionFail(game_comm);
+      //GameCommInfo_MessageEntry_MissionFail(game_comm);
       *seq = SEQ_MSG_SET;
     }
     break;

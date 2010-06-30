@@ -900,7 +900,6 @@ void GameCommInfo_MessageEntry_PalaceConnect(GAME_COMM_SYS_PTR gcsp, int player_
 //==================================================================
 void GameCommInfo_MessageEntry_Leave(GAME_COMM_SYS_PTR gcsp, int player_netid)
 {
-  return;
   GameCommInfo_SetQue(gcsp, player_netid, player_netid, msg_invasion_info_003);
 }
 
