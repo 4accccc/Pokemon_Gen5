@@ -4428,6 +4428,9 @@ static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos )
 
   for(i=0, cnt=0; i<numChangePoke; ++i)
   {
+    if( !BTL_MAIN_IsFrontPos(wk->mainModule, changePokePos[i]) ){
+      continue;
+    }
     if( BTL_MAIN_BtlPosToClientID(wk->mainModule, changePokePos[i]) == wk->myID ){
       myCoverPos[ cnt++ ] = changePokePos[ i ];
     }
