@@ -112,6 +112,8 @@ struct _MCSS_WORK
 	u32														ortho_mode          :1;    
 	u32														reverse_draw        :1; //逆から描画    
 	u32														alpha_same_polyID   :1; //半透明かけるときでもPolyIDを同一にするモード    
+	u32                           req_reset_anime     :1; //アニメのリセットリクエスト
+	u32                           pad                 :31;
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
   MCSS_ADD_WORK                 maw;

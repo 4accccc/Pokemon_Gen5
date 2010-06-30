@@ -209,6 +209,14 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 			{	
 				MCSS_CalcPaletteFade( mcss_sys, mcss_sys->mcss[ index ] ); 
 			}
+			
+			if( mcss_sys->mcss[ index ]->req_reset_anime == 1 )
+			{
+        MCSS_RestartAnime( mcss_sys->mcss[ index ] );
+        //アニメを空更新
+  			NNS_G2dTickMCAnimation( &mcss_sys->mcss[ index ]->mcss_mcanim, 0 );
+  			mcss_sys->mcss[ index ]->req_reset_anime = 0;
+      }
     }
 	}
 }
@@ -1773,6 +1781,9 @@ void	MCSS_SetAnimeIndex( MCSS_WORK* mcss, int index )
 
 	// マルチセルアニメーションに再生するシーケンスをセット
 	NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence );
+
+  //リセットフラグを落としておく
+  mcss->req_reset_anime = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -1975,16 +1986,25 @@ int   MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
- * @brief アニメーションリスタート
+ * @brief アニメーションリスタート(アニメ終了コールバック中に呼ばないこと
  *
  * @param[in] mcss      MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
 void   MCSS_RestartAnime( MCSS_WORK *mcss )
 { 
-  //NNS_G2dRestartMCAnimation( &mcss->mcss_mcanim );
-  //セルとマルチセルがずれたので関数置き換え Ariizumi100624
-  NNS_G2dResetMCCellAnimationAll( &mcss->mcss_mcanim.multiCellInstance );
+  NNS_G2dRestartMCAnimation( &mcss->mcss_mcanim );
+}
+//--------------------------------------------------------------------------
+/**
+ * @brief アニメーションリスタートリクエスト(アニメ終了コールバック内から呼ぶ場合はこっち
+ *
+ * @param[in] mcss      MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void   MCSS_ReqRestartAnime( MCSS_WORK *mcss )
+{ 
+  mcss->req_reset_anime = 1;
 }
 
 //--------------------------------------------------------------------------

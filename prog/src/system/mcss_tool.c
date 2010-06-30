@@ -248,6 +248,6 @@ static  void  MCSS_TOOL_AnmRestart( u32 param, fx32 currentFrame )
 { 
   MCSS_WORK*  mcss = ( MCSS_WORK* )param;
 
-  MCSS_RestartAnime( mcss );
+  MCSS_ReqRestartAnime( mcss );
 }
 

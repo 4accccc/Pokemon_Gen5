@@ -188,6 +188,7 @@ extern  void	          MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, 
 extern  void	          MCSS_SetReverseDraw( MCSS_WORK* mcss, MCSS_REVERSE_DRAW flag );
 extern  int	            MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss );
 extern  void            MCSS_RestartAnime( MCSS_WORK *mcss );
+extern  void            MCSS_ReqRestartAnime( MCSS_WORK *mcss );
 extern  void            MCSS_SetPerspectiveZOffset( MCSS_SYS_WORK *mcss_sys , fx32 z_offset );
 extern  void            MCSS_SetOrthoFarFlag( MCSS_SYS_WORK *mcss_sys , const BOOL flg );
 
