@@ -910,6 +910,11 @@ sub_train_battle_win_next_menu:
         _BLACK_OUT()
         _DISP_FADE_END_CHECK()
         _SYSWIN_CLOSE()
+        
+        //ƒŠƒZƒbƒg
+        _FIELD_COMM_EXIT( SCWK_ANSWER )
+        _SET_CGEAR_OFF()
+        _TIME_WAIT( 8 )
         _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
         _END
       ENDIF

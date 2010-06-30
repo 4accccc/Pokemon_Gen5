@@ -1356,6 +1356,11 @@ sub_receipt_challenge_wifi:
         //ブラックアウト
         _BLACK_OUT()
         _DISP_FADE_END_CHECK()
+        
+        //リセット
+        _FIELD_COMM_EXIT( ret )
+        _SET_CGEAR_OFF()
+        _TIME_WAIT( 8 )
         _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
         _END
       ENDIF
@@ -1404,8 +1409,13 @@ ev_bsw_game_continue:
   
   IF $SCWK_ANSWER != SCR_YES THEN //やめる
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_CONTINUE
+
     _BLACK_OUT()
     _DISP_FADE_END_CHECK()
+    
+    _FIELD_COMM_EXIT( ret )
+    _SET_CGEAR_OFF()
+    _TIME_WAIT( 8 )
     _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
     _END
   ENDIF
