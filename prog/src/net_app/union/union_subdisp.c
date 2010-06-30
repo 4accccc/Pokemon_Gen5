@@ -1385,7 +1385,7 @@ static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_
     }
   }
   
-  if(y >= UNION_CHAT_VIEW_LOG_NUM){
+  if(y >= UNION_CHAT_VIEW_LOG_NUM || y > log->chat_log_count){
     return FALSE;
   }
   
