@@ -652,14 +652,8 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
   case SEQ_END:
     IntrudeEventPrint_ExitFieldMsg(&work->iem);
 
-    if(work->success == TRUE){
-      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, work->success));
-      return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
-    }
-    else{
-      return GMEVENT_RES_FINISH;
-    }
-    break;
+    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys, work->success));
+    return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
   }
 	return GMEVENT_RES_CONTINUE;
 }
