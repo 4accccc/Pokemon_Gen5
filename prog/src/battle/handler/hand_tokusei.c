@@ -1685,8 +1685,8 @@ static void handler_FlowerGift_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVF
     work[0] = 1;
   }
 }
-// ポケ入場・とくせい取得後ハンドラ
-static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// とくせい取得後ハンドラ
+static void handler_FlowerGift_GotTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
@@ -1812,8 +1812,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN_COMP,       handler_FlowerGift_MemberInComp }, // ポケ入場ハンドラ
     { BTL_EVENT_ROTATION_IN,          handler_FlowerGift_MemberInComp },
-    { BTL_EVENT_MEMBER_IN,            handler_FlowerGift_MemberIn }, // ポケ入場ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_FlowerGift_MemberIn }, // とくせい書き換えハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_FlowerGift_GotTok   }, // とくせい書き換えハンドラ
     { BTL_EVENT_WEATHER_CHANGE_AFTER, handler_FlowerGift_Weather  }, // 天候変化後ハンドラ
     { BTL_EVENT_IEKI_FIXED,           handler_FlowerGift_TokOff   }, // いえき確定ハンドラ
     { BTL_EVENT_NOTIFY_AIRLOCK,       handler_FlowerGift_AirLock  },  // エアロック通知ハンドラ
