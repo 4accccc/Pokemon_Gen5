@@ -3082,6 +3082,8 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_RIGHT ){   //ベクトルを監視
     GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+    pWork->oldLine--;
+    bChange=TRUE;
     if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
       pWork->MainObjCursorLine=line;
     }
@@ -3089,6 +3091,7 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
       pWork->MainObjCursorLine++;
       if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine)){
         pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine+1)-256;
+        pWork->oldLine = -1;    //書き直し  20100630 add Saito BTS7084
       }
     }
     if(pWork->MainObjCursorLine >= pWork->TRADEBOX_LINEMAX){
@@ -3099,11 +3102,11 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
         pWork->MainObjCursorIndex = HAND_VERTICAL_NUM-1;
       }
     }
-    pWork->oldLine--;
-    bChange=TRUE;
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_LEFT ){   //ベクトルを監視
     GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+    pWork->oldLine++;
+    bChange=TRUE;
     if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){  //移動するカーソルが画面内にいるかどうか
       pWork->MainObjCursorLine=line;
     }
@@ -3114,6 +3117,7 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
       }
       if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine )){
         pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine);
+        pWork->oldLine = -1;    //書き直し  20100630 add Saito BTS7084
       }
     }
     if(pWork->MainObjCursorLine < 0){
@@ -3124,8 +3128,6 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
         pWork->MainObjCursorIndex = HAND_VERTICAL_NUM-1;
       }
     }
-    pWork->oldLine++;
-    bChange=TRUE;
   }
 
   // NET_PRINT("MainObjCursorIndex %d MainObjCursorLine %d  \n",pWork->MainObjCursorIndex,pWork->MainObjCursorLine);
