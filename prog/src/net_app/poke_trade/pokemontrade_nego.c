@@ -1496,6 +1496,15 @@ static void POKETRADE_NEGO_Select6keywaitMsg2(POKEMON_TRADE_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrgAndSet() || GFL_UI_TP_GetTrgAndSet()){
+    //カーソル表示更新 20100630 add Saito BTS7062
+    if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+      NOZOMU_Printf("カーソル状態反映 非表示\n");
+      POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
+    }
+    else{
+      NOZOMU_Printf("カーソル状態反映 表示\n");
+      POKEMONTRADE_StartPokeSelectSixButton(pWork, 0);
+    }
     POKETRADE_MESSAGE_WindowClear(pWork);
     POKEMONTRADE_TOUCHBAR_SetReturnIconActiveTRUE(pWork);
 
