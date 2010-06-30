@@ -314,6 +314,14 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
   //デバッグウィンドウ
   DEBUGWIN_Init( p_wk, heapID );
 
+
+  //ライブ大会メインメニューからきた場合は
+  //ソフトリセットをOFFにする
+  if( p_wk->param.mode == LIVEBATTLEMATCH_FLOW_MODE_START )
+  {
+    GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_USER);
+  }
+
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -326,6 +334,14 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
 void LIVEBATTLEMATCH_FLOW_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
 { 
   GFL_HEAP_FreeMemory( p_wk->p_party );
+
+
+  //ライブ大会メインメニューへもどる場合は
+  //ソフトリセットをONにする
+  if( p_wk->retcode == LIVEBATTLEMATCH_FLOW_RET_LIVEMENU )
+  {
+    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_USER);
+  }
 
   //デバッグ
   DEBUGWIN_Exit( p_wk );
