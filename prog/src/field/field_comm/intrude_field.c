@@ -753,9 +753,6 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
   }
   
   if(event_dir != DIR_NOT){
-    if(intcomm == NULL && NetErr_App_CheckError()){
-      return NULL;  //強制ワープイベントが発動するようにここではNULLを返す
-    }
     if(intcomm == NULL || GFL_NET_GetConnectNum() <= 1 || intcomm->member_num < 2){
       return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, player_dir, event_dir, PALACE_NG_TYPE_NOT_CONNECT);
     }
