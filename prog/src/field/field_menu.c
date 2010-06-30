@@ -95,9 +95,9 @@ enum
 //アイコンアニメ
 enum
 {
-  FIA_NORMAL,
-  FIA_ACTIVE,
-  FIA_DECIDE,
+  FIA_NORMAL=0, ///< 停止状態
+  FIA_ACTIVE,   ///< カーソルが乗ってアクティブ状態
+  FIA_DECIDE,   ///< 決定時(使用されてない？）
   
 }FIELD_MENU_ICON_ANIME;
 
@@ -344,7 +344,6 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   {
     FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
     work->isUpdateCursor = TRUE;
-    FIELD_MENU_UpdateCursor( work );
     if(work->isDispCursor){
       GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
     }else{
@@ -529,7 +528,6 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       if( work->activeIcon->cellIcon != NULL )
       {
         work->waitCnt = 0;
-//        GFL_CLACT_WK_SetAnmSeq( work->activeIcon->cellIcon , FIA_DECIDE );
         _set_cursor_pos( work );
         GFL_CLACT_WK_SetAnmSeq( work->cellCursor, FCA_DECIDE_CURSOR );
         GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
@@ -1126,17 +1124,6 @@ static void FIELD_MENU_InitScrollIn( FIELD_MENU_WORK* work )
 //--------------------------------------------------------------
 const FIELD_MENU_ITEM_TYPE FIELD_MENU_GetMenuItemNo( FIELD_MENU_WORK* work )
 {
-  /*
-  if( work->cursorPosY == 3 )
-  {
-    return FMIT_EXIT;
-  }
-  else
-  {
-    const u8 idx = work->cursorPosX + work->cursorPosY*2;
-    return work->icon[idx].type;
-  }
-  */
   if( work->activeIcon == NULL )
   {
     GF_ASSERT_MSG(0,"FieldMenu ActiveItem is NULL!!\n");
@@ -1279,8 +1266,6 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
         trg & PAD_BUTTON_X )
     {
       _cancel_func_set( work, TRUE );
-//      work->isCancel = TRUE;
-//      work->state = FMS_EXIT_INIT;
     }
     else
     { // 隠れていたカーソル表示
@@ -1335,8 +1320,6 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
       trg & PAD_BUTTON_X )
   {
     _cancel_func_set( work, TRUE );
-//    work->isCancel = TRUE;
-//    work->state = FMS_EXIT_INIT;
   }
   else
   if( trg & PAD_BUTTON_A )
@@ -1346,8 +1329,6 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
       _cancel_func_set( work, FALSE );
       GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     }
-//    work->isCancel = FALSE;
-//    work->state = FMS_EXIT_INIT;
   }
 }
 
@@ -1439,23 +1420,16 @@ static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel )
 //----------------------------------------------------------------------------------
 static void  FIELD_MENU_UpdateCursor( FIELD_MENU_WORK* work )
 {
+
+  // カーソル更新があった
   if( work->isUpdateCursor == TRUE )
   {
     FIELD_MENU_ICON *prevIcon = work->activeIcon;
-    if( work->cursorPosY < 3 )
-    {
-      //戻る以外
-      work->activeIcon = &work->icon[work->cursorPosX + work->cursorPosY*2];
 
-      GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL );
-    }
-    else
-    {
-      //戻る
-      work->activeIcon = &work->icon[6];
-      GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL );
-    }
+    work->activeIcon = &work->icon[work->cursorPosX + work->cursorPosY*2];
+    GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL );
     
+    // カーソル位置をセット
     _set_cursor_pos(work);
     if( work->activeIcon->cellIcon != NULL &&
         work->isDispCursor == TRUE )
@@ -1524,7 +1498,6 @@ static void FIELD_MENU_Icon_CreateIcon( FIELD_MENU_WORK* work ,
     GFL_CLACT_WK_SetAutoAnmSpeed( icon->cellIcon, FX32_ONE );
     GFL_CLACT_WK_SetAutoAnmFlag( icon->cellIcon, TRUE );
     GFL_CLACT_WK_SetAnmSeq( icon->cellIcon , 0 );
-//    GFL_CLACT_WK_SetAffineParam( icon->cellIcon , CLSYS_AFFINETYPE_NORMAL );
 
     if(icon->type==FMIT_NONE){
       GFL_CLACT_WK_SetDrawEnable( icon->cellIcon, FALSE );
