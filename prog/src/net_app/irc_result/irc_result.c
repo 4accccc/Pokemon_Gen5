@@ -2559,7 +2559,7 @@ static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
 
         //色をアップ
         for( i = 0; i < sc_tbl[ p_wk->now_color_idx ].len; i++ )
-        {     
+        {
           plt = sc_tbl[ p_wk->now_color_idx ].color[i];
           HeartEff_MainPltFade( &p_wk->plt_buff[ plt ], p_wk->cnt, ONE_SYNC, RESULT_BG_PAL_M_08, plt, GX_RGB( 31, 31, 31 ), p_wk->plt_original[ plt ] );
         }
@@ -2590,9 +2590,9 @@ static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
         PMSND_PlaySE( IRCRESULT_SE_HEART_01 +  p_wk->now_color_idx-3 );
       }
 
-      //色をアップ
-      for( i = 0; i < sc_tbl[ p_wk->now_color_idx ].len; i++ )
-      {     
+      //色をダウン
+      for( i = 0; i < sc_tbl[ p_wk->now_color_idx - 1 ].len; i++ )
+      {
         plt = sc_tbl[ p_wk->now_color_idx-1 ].color[i]; 
         HeartEff_MainPltFade( &p_wk->plt_buff[ plt ], p_wk->cnt, ONE_SYNC, RESULT_BG_PAL_M_08, plt, p_wk->plt_original[ plt ],  GX_RGB( 31, 31, 31 ) );
       }
