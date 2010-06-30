@@ -41,6 +41,12 @@ typedef struct
   EFFTOOL_MOVE_WORK emw;
 }BTLV_BG_TCB_WORK;
 
+typedef struct
+{
+  int scr_x;
+  int scr_y;
+}BTLV_BG_SET_TCB_WORK;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -49,6 +55,7 @@ typedef struct
 static  void  BTLV_BG_TCBInitialize( BTLV_BG_WORK *bbw, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func );
 static  void  TCB_BTLV_BG_Move( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_BG_CallbackFunc( GFL_TCB* tcb );
+static  void  TCB_BTLV_BG_Set( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -80,6 +87,25 @@ BTLV_BG_WORK*  BTLV_BG_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 void  BTLV_BG_Exit( BTLV_BG_WORK *bbw )
 {
   GFL_HEAP_FreeMemory( bbw );
+}
+
+//============================================================================================
+/**
+ *  座標セット
+ *
+ * @param[in] bbw       BTLV_BG_WORK管理ワークへのポインタ
+ * @param[in] scr_x     セットするX座標
+ * @param[in] scr_y     セットするY座標
+ */
+//============================================================================================
+void  BTLV_BG_SetPosition( BTLV_BG_WORK *bbw, int scr_x, int scr_y )
+{ 
+  BTLV_BG_SET_TCB_WORK* bbstw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bbw->heapID ), sizeof( BTLV_BG_SET_TCB_WORK ) );
+
+  bbstw->scr_x = scr_x;
+  bbstw->scr_y = scr_y;
+
+  BTLV_EFFECT_SetTCB( GFUser_VIntr_CreateTCB( TCB_BTLV_BG_Set, bbstw, 0 ), NULL, GROUP_DEFAULT );
 }
 
 //============================================================================================
@@ -225,8 +251,7 @@ static  void  TCB_BTLV_BG_Move( GFL_TCB *tcb, void *work )
   }
   scr_x = bbtw->now_value.x >> FX32_SHIFT;
   scr_y = bbtw->now_value.y >> FX32_SHIFT;
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, scr_x );
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, scr_y );
+  BTLV_BG_SetPosition( bbw, scr_x, scr_y );
   if( ret == TRUE )
   {
     BTLV_EFFECT_FreeTCB( tcb );
@@ -238,5 +263,18 @@ static  void  TCB_BTLV_BG_CallbackFunc( GFL_TCB* tcb )
   BTLV_BG_TCB_WORK *bbtw = ( BTLV_BG_TCB_WORK * )GFL_TCB_GetWork( tcb );
 
   bbtw->bbw->bg_tcb_move_execute = 0;
+}
+
+//============================================================================================
+/**
+ *  BG座標セットタスク
+ */
+//============================================================================================
+static  void  TCB_BTLV_BG_Set( GFL_TCB *tcb, void *work )
+{ 
+  BTLV_BG_SET_TCB_WORK *bbstw = ( BTLV_BG_SET_TCB_WORK * )GFL_TCB_GetWork( tcb );
+  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bbstw->scr_x );
+  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bbstw->scr_y );
+  BTLV_EFFECT_FreeTCB( tcb );
 }
 

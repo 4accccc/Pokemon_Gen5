@@ -3098,8 +3098,7 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
 
     bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
     bevw->temp_scr_y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M );
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
+    BTLV_BG_SetPosition( BTLV_EFFECT_GetBGWork(), 0, 0 );
 
     bevw->set_priority_flag = 1;
 
@@ -3115,8 +3114,7 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
 
   bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
   bevw->temp_scr_y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M );
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
+  BTLV_BG_SetPosition( BTLV_EFFECT_GetBGWork(), 0, 0 );
 
   bevw->set_priority_flag = 1;
 
@@ -4657,8 +4655,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
     }
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
     bevw->set_priority_flag = 0;
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
+    BTLV_BG_SetPosition( BTLV_EFFECT_GetBGWork(), bevw->temp_scr_x, bevw->temp_scr_y );
   }
 
   if( bevw->set_alpha_flag )
