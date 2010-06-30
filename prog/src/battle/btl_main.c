@@ -2425,7 +2425,7 @@ BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
   ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
   ){
     BOOL fIRCExist=FALSE;
-    
+
     // WILD・TRAINER戦の中に入ってくるということは一人用でプレイしている
     // =通信対戦・IR対戦ではないので無線チェックオーバーレイの使用OKなはず
     GFL_OVERLAY_Load( FS_OVERLAY_ID(irc_check_another));
@@ -2434,7 +2434,7 @@ BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
     if(!fIRCExist){
       return FALSE;   //IR無かったら経験値計算無し
     }
-    
+
     if( !BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_LEGEND_EX) ){
       return TRUE;
     }
@@ -5820,10 +5820,17 @@ u32 BTL_MAIN_GetGameLimitTime( const BTL_MAIN_MODULE * wk )
  */
 BOOL BTL_MAIN_CheckGameLimitTimeOver( const BTL_MAIN_MODULE* wk )
 {
-  if( wk->LimitTimeGame ){
+  if( !(wk->setupParam->fRecordPlay) )
+  {
+    if( wk->LimitTimeGame ){
+      return BTL_CLIENT_IsGameTimeOver( wk->client[wk->myClientID] );
+    }
+    return FALSE;
+  }
+  else
+  {
     return BTL_CLIENT_IsGameTimeOver( wk->client[wk->myClientID] );
   }
-  return FALSE;
 }
 
 //----------------------------------------------------------------------------------------------

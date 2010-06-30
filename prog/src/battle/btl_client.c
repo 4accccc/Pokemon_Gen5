@@ -216,12 +216,13 @@ struct _BTL_CLIENT {
   u8   actionAddCount;
   u8   wazaInfoPokeIdx;
   u8   wazaInfoWazaIdx;
-  u8   recPlayTimerOverState;
+//  u8   recPlayTimerOverState;
 
   u8   fAITrainerBGMChanged : 1;
   u8   fCommError           : 1;
   u8   fSelActForceFinish   : 1;
   u8   fCmdCheckEnable      : 1;
+  u8   fRecPlayEndTimeOver  : 1;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -538,7 +539,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->fForceQuitSelAct = FALSE;
   wk->fAITrainerBGMChanged = FALSE;
   wk->fCommError = FALSE;
-  wk->recPlayTimerOverState = RECPLAY_TIMEOVER_NONE;
+  wk->fRecPlayEndTimeOver = FALSE;
   wk->fldSim = BTL_MAIN_GetFieldSimWork( mainModule );
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
@@ -783,15 +784,11 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
       BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
 
       // 録画再生時のタイムオーバー検出
-      if( wk->myType == BTL_CLIENT_TYPE_RECPLAY )
-      {
-        switch( wk->recPlayTimerOverState ){
-        case RECPLAY_TIMEOVER_IDLE:
-          return FALSE;
-
-        case RECPLAY_TIMEOVER_QUIT:
-          return TRUE;
-        }
+      if( (wk->myType == BTL_CLIENT_TYPE_RECPLAY)
+      &&  (wk->fRecPlayEndTimeOver)
+      &&  (cmd == BTL_ACMD_NONE)
+      ){
+        return FALSE;
       }
 
       setDummyReturnData( wk );
@@ -1141,11 +1138,18 @@ void BTL_CLIENT_GetEscapeInfo( const BTL_CLIENT* wk, BTL_ESCAPEINFO* dst )
 //=============================================================================================
 BOOL BTL_CLIENT_IsGameTimeOver( const BTL_CLIENT* wk )
 {
-  if( wk->gameLimitTime )
+  if( wk->myType != BTL_CLIENT_TYPE_RECPLAY )
   {
-    return BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE_GAME_TIME );
+    if( wk->gameLimitTime )
+    {
+      return BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE_GAME_TIME );
+    }
+    return FALSE;
   }
-  return FALSE;
+  else
+  {
+    return wk->fRecPlayEndTimeOver;
+  }
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -1516,7 +1520,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
         // 描画クライアントではないので終了
         }else{
           setNullActionRecplay( wk );
-          wk->recPlayTimerOverState = RECPLAY_TIMEOVER_IDLE;
+          wk->fRecPlayEndTimeOver = TRUE;
           return TRUE;
         }
       }
@@ -1544,10 +1548,11 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
     }
     break;
 
+  // タイムオーバー検出後、描画クライアントのみここに来る
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) ){
       setNullActionRecplay( wk );
-      wk->recPlayTimerOverState = RECPLAY_TIMEOVER_QUIT;
+      wk->fRecPlayEndTimeOver = TRUE;
       return TRUE;
     }
     break;
