@@ -42,6 +42,7 @@
 #define CTVT_MIC_WAVEOUT_CH	(7)							//波形で使用するチャンネルNO
 #define CTVT_MIC_WAVEOUT_PLAY_SPD (32768)
 
+#define CTVT_MIC_WAIT_INIT_CNT (60*3) //3秒はマイク使えない
 //======================================================================
 //	enum
 //======================================================================
@@ -59,6 +60,7 @@ struct _CTVT_MIC_WORK
   BOOL isRecord;
   BOOL isPlayWave;
   
+  u8   micInitCnt;
   u32  playCnt;
   u32  playSize;
   int  playSpeed;
@@ -133,7 +135,7 @@ CTVT_MIC_WORK* CTVT_MIC_Init( const HEAPID heapId )
   micWork->recSize = 0;
   
   micWork->isRecord = FALSE;
-  
+  micWork->micInitCnt = 0;
   staticMicPointer = micWork;
   GFUser_SetVIntrFunc( CTVT_MIC_Main_VSync , NULL );
   
@@ -189,6 +191,7 @@ void CTVT_MIC_Main( CTVT_MIC_WORK *micWork )
     }
   }
   CTVT_MIC_PlayWaveMain( micWork );
+  
 }
 void CTVT_MIC_Main_VBlank( CTVT_MIC_WORK *micWork )
 {
@@ -200,6 +203,11 @@ static void CTVT_MIC_Main_VSync( void *pWork )
   {
     staticMicPointer->playCnt++;
   }
+  if( staticMicPointer->micInitCnt < CTVT_MIC_WAIT_INIT_CNT )
+  {
+    staticMicPointer->micInitCnt++;
+  }
+
 }
 
 //--------------------------------------------------------------
@@ -498,4 +506,13 @@ const u16 CTVT_MIC_GetPlayCntMax( CTVT_MIC_WORK *micWork )
 //  return (micWork->playSize/270)/(micWork->playSpeed/0x8000);
   //上を通分
   return (micWork->playSize*0x8000)/(270*micWork->playSpeed);
+}
+
+const BOOL CTVT_MIC_CanUseMic( CTVT_MIC_WORK *micWork )
+{
+  if( micWork->micInitCnt < CTVT_MIC_WAIT_INIT_CNT )
+  {
+    return FALSE;
+  }
+  return TRUE;
 }

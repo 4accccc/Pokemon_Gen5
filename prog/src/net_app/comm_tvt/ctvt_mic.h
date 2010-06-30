@@ -62,6 +62,7 @@ extern const BOOL CTVT_MIC_IsFinishWave( CTVT_MIC_WORK *micWork );
 extern const u32 CTVT_MIC_GetPlaySize( CTVT_MIC_WORK *micWork );
 extern const u16 CTVT_MIC_GetPlayCnt( CTVT_MIC_WORK *micWork );
 extern const u16 CTVT_MIC_GetPlayCntMax( CTVT_MIC_WORK *micWork );
+extern const BOOL CTVT_MIC_CanUseMic( CTVT_MIC_WORK *micWork );
 
 //--------------------------------------------------------------
 //	

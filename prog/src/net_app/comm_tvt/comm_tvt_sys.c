@@ -318,17 +318,21 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     work->nextMode = CTVT_DRAW_Main( work , work->drawWork );
     break;
   case CTM_END:
-    if( CTVT_COMM_IsExit(work,work->commWork) == TRUE )
     {
-      return TRUE;
-    }
-    else
-    {
-      return FALSE;
+      if( CTVT_COMM_IsExit(work,work->commWork) == TRUE &&
+          CTVT_CAMERA_IsStopCapture( work , work->camWork ) == TRUE )
+      {
+        return TRUE;
+      }
+      else
+      {
+        return FALSE;
+      }
     }
     break;
   case CTM_ERROR: //I—¹
-    if( CTVT_COMM_IsExit(work,work->commWork) == TRUE )
+    if( CTVT_COMM_IsExit(work,work->commWork) == TRUE &&
+        CTVT_CAMERA_IsStopCapture( work , work->camWork ) == TRUE )
     {
       if( WIPE_SYS_EndCheck() == TRUE )
       {
@@ -806,6 +810,10 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     //break throught;
   case CTM_END: //I—¹
     CTVT_COMM_ExitComm( work , work->commWork );
+    {
+      CTVT_CAMERA_StopCapture( work , work->camWork );
+      CTVT_CAMERA_PlayStopSe(work,work->camWork);
+    }
     break;
   }
 }

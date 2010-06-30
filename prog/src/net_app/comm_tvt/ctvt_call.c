@@ -22,6 +22,7 @@
 #include "app/app_menu_common.h"
 #include "print/wordset.h"
 #include "field/game_beacon_search.h"
+#include "field/zonedata.h"
 #include "savedata/wifilist.h"
 #include "gamesystem/game_data.h"
 
@@ -605,8 +606,10 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       {
         if( callWork->isPlayCallAnswer == FALSE )
         {
+          CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
           PMSND_StopSE();
           PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
+          CTVT_CAMERA_PlayStartSe(work,camWork);
         }
         callWork->state = CCS_FADEOUT;
       }
@@ -1096,8 +1099,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         {
           //フィールドビーコンをはじく
           GBS_BEACON *becData = beaconData;
-          if( becData->beacon_type != GBS_BEACONN_TYPE_PALACE &&
-              becData->beacon_type != GBS_BEACONN_TYPE_INFO )
+          if( becData->beacon_type != GBS_BEACONN_TYPE_INFO )
           {
             continue;
           }
@@ -1123,10 +1125,14 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           else
           {
             GBS_BEACON *becData = beaconData;
-            const STRCODE *name = becData->info.name;
-            const u32 sex = becData->info.sex;
-            const u32 id  = becData->trainer_id;
-            isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+            
+            if( ZONEDATA_IsPalace(becData->info.zone_id) == FALSE )
+            {
+              const STRCODE *name = becData->info.name;
+              const u32 sex = becData->info.sex;
+              const u32 id  = becData->trainer_id;
+              isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+            }
           }
           if( isFriend == FALSE )
           {

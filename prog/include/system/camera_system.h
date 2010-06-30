@@ -118,6 +118,11 @@ extern const CAMERASelect CAMERA_SYS_GetCameraPos( CAMERA_SYSTEM_WORK* work );
 extern void CAMERA_SYS_SetCameraPos( CAMERA_SYSTEM_WORK* work , const CAMERASelect pos );
 extern void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work );
 
+//ÉJÉÅÉâÇÃçƒê∂âπí‚é~âπä÷åW
+extern void CAMERA_SYS_PlayStartSe( CAMERA_SYSTEM_WORK* work );
+extern void CAMERA_SYS_PlayStopSe( CAMERA_SYSTEM_WORK* work );
+extern const BOOL CAMERA_SYS_IsPlaySe( CAMERA_SYSTEM_WORK* work );
+
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------

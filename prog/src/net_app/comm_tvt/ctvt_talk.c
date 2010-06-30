@@ -372,6 +372,11 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
       talkWork->recButtonState = CRBT_DISALE;
     }
   }
+  if( CTVT_MIC_CanUseMic(talkWork->micWork) == FALSE )
+  {
+    talkWork->recButtonState = CRBT_DISALE;
+  }
+
 }
 
 //--------------------------------------------------------------
@@ -556,6 +561,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       talkWork->state = CTS_FADEOUT_BOTH;
       COMM_TVT_SetSusspend( work , TRUE );
       CTVT_CAMERA_StopCapture( work , camWork );
+      CTVT_CAMERA_PlayStopSe(work,camWork);
       talkWork->reqStopCamera = TRUE;
       
     }
@@ -567,8 +573,14 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       CTVT_COMM_ExitComm( work , commWork );
       
+      COMM_TVT_SetSusspend( work , TRUE );
       CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_05 );
       talkWork->state = CTS_END_PARENT_REQ;
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_PlayStopSe(work,camWork);
+        talkWork->reqStopCamera = TRUE;
+      }
     }
     break;
   case CTS_END_PARENT_REQ:
@@ -577,7 +589,6 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     {
       talkWork->subState = CTSS_GO_END;
       talkWork->state = CTS_FADEOUT_BOTH;
-      COMM_TVT_SetSusspend( work , TRUE );
       {
         CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
         CTVT_CAMERA_StopCapture( work , camWork );
@@ -594,6 +605,9 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_FINISH_PARENT , 0 );
       if( ret == TRUE )
       {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        COMM_TVT_SetSusspend( work , TRUE );
+        CTVT_CAMERA_PlayStopSe(work,camWork);
         talkWork->state = CTS_END_WIFI_REQ_INIT;
       }
     }
@@ -607,6 +621,12 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_06 );
       talkWork->state = CTS_END_WIFI_REQ_DISP;
       talkWork->wifiExitCnt = 0;
+      COMM_TVT_SetSusspend( work , TRUE );
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_PlayStopSe(work,camWork);
+        talkWork->reqStopCamera = TRUE;
+      }
     }
     break;
     
@@ -654,6 +674,12 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       
       CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_07 );
       talkWork->state = CTS_END_MEMBER_NONE;
+      COMM_TVT_SetSusspend( work , TRUE );
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_PlayStopSe(work,camWork);
+        talkWork->reqStopCamera = TRUE;
+      }
     }
     break;
   case CTS_END_MEMBER_NONE:
@@ -831,7 +857,8 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   }
 
   //‰ï˜bƒ{ƒ^ƒ“
-  if( connectNum == 1 )
+  if( connectNum == 1 ||
+      CTVT_MIC_CanUseMic(talkWork->micWork) == FALSE )
   {
     talkWork->recButtonState = CRBT_DISALE;
   }
@@ -1403,6 +1430,7 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
         {
           CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
           CTVT_CAMERA_StopCapture( work , camWork );
+          CTVT_CAMERA_PlayStopSe(work,camWork);
           talkWork->reqStopCamera = TRUE;
         }
       }

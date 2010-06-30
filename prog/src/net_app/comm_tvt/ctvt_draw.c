@@ -625,7 +625,13 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       CTVT_COMM_ExitComm( work , commWork );
       
       CTVT_DRAW_DispMessage( work , drawWork , COMM_TVT_SYS_05 );
+      COMM_TVT_SetSusspend( work , TRUE );
       drawWork->state = CDS_END_PARENT_REQ;
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_PlayStopSe(work,camWork);
+        drawWork->reqStopCamera = TRUE;
+      }
     }
     break;
   case CDS_END_PARENT_REQ:
@@ -660,8 +666,14 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       CTVT_COMM_ExitComm( work , commWork );
       
       CTVT_DRAW_DispMessage( work , drawWork , COMM_TVT_SYS_06 );
+      COMM_TVT_SetSusspend( work , TRUE );
       drawWork->state = CDS_END_WIFI_REQ_DISP;
       drawWork->wifiExitCnt = 0;
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_PlayStopSe(work,camWork);
+        drawWork->reqStopCamera = TRUE;
+      }
     }
     break;
   case CDS_END_WIFI_REQ_DISP:
@@ -703,7 +715,13 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       CTVT_COMM_ExitComm( work , commWork );
       
       CTVT_DRAW_DispMessage( work , drawWork , COMM_TVT_SYS_07 );
+      COMM_TVT_SetSusspend( work , TRUE );
       drawWork->state = CDS_END_MEMBER_NONE;
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_PlayStopSe(work,camWork);
+        drawWork->reqStopCamera = TRUE;
+      }
     }
     break;
   case CDS_END_MEMBER_NONE:

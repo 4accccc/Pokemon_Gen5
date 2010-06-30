@@ -55,3 +55,6 @@ extern void CTVT_CAMERA_SetNewMember( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *ca
 extern const BOOL CTVT_CAMERA_IsUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx );
 extern void CTVT_CAMERA_SetUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx , const u8 flg );
 extern void CTVT_CAMERA_SetCameraEffect( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 effect );
+
+extern void CTVT_CAMERA_PlayStartSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
+extern void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );

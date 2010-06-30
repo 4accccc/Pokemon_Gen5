@@ -68,6 +68,8 @@ struct _CTVT_CAMERA_WORK
   BOOL isRefreshClear;
   BOOL isRefreshClearName;
   BOOL isDispDouble;
+  BOOL isPlayStartSe;
+  BOOL isPlayStopSe;
   u8   waitAllConut;  //2回待たないといけない
   u8   allClearCnt;   //ウィンドウを使って再描画する
   BOOL isWaitWindow;  //↑の一時停止
@@ -133,6 +135,8 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   camWork->isRefreshClearName = FALSE;
   camWork->isDispDouble = FALSE;
   camWork->isWaitWindow = FALSE;
+  camWork->isPlayStartSe = FALSE;
+  camWork->isPlayStopSe = FALSE;
   camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
   
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
@@ -916,4 +920,25 @@ void CTVT_CAMERA_SetCameraEffect( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWor
     CAMERA_I2CEffect( CAMERA_SELECT_BOTH , effect );
   }
 #endif
+}
+
+void CTVT_CAMERA_PlayStartSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  if( COMM_TVT_CanUseCamera() == TRUE )
+  {
+    CAMERA_SYS_PlayStartSe( camWork->camSys );
+    camWork->isPlayStartSe = TRUE;
+  }
+}
+void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  if( COMM_TVT_CanUseCamera() == TRUE )
+  {
+    if( camWork->isPlayStartSe == TRUE &&
+        camWork->isPlayStopSe == FALSE )
+    {
+      CAMERA_SYS_PlayStopSe( camWork->camSys );
+      camWork->isPlayStopSe = TRUE;
+    }
+  }
 }

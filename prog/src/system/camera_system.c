@@ -564,7 +564,8 @@ void CAMERA_SYS_StartCapture( CAMERA_SYSTEM_WORK* work )
       work->startRequest = TRUE;
       work->stabilizedCount = 0;
       ARI_TPrintf("CameraSystem Start Capture\n");
-      work->sndState = CSS_WAIT_PLAY_START;
+      //çƒê∂âπÇÕï ä«óù
+      //work->sndState = CSS_WAIT_PLAY_START;
     }
     else
     {
@@ -586,7 +587,8 @@ void CAMERA_SYS_StopCapture( CAMERA_SYSTEM_WORK* work )
     work->startRequest = FALSE;
     CAMERA_StopCapture();
     ARI_TPrintf("CameraSystem Stop Capture.\n");
-    work->sndState = CSS_WAIT_PLAY_END;
+    //í‚é~âπÇÕï ä«óù
+    //work->sndState = CSS_WAIT_PLAY_END;
     //Ç±Ç±Ç≈DMAÇé~ÇﬂÇƒÇÕÇ¢ÇØÇ»Ç¢
   }
   else
@@ -598,7 +600,8 @@ void CAMERA_SYS_StopCapture( CAMERA_SYSTEM_WORK* work )
 //í‚é~ë“Çø(é¿ç€ÇÕí‚é~âπë“Çø
 const BOOL CAMERA_SYS_IsStopCapture( CAMERA_SYSTEM_WORK* work )
 {
-  if( work->sndState == CSS_FINISH )
+  if( work->sndState == CSS_FINISH ||
+      work->sndState == CSS_NONE )
   {
     return TRUE;
   }
@@ -751,6 +754,28 @@ void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work )
 
 }
 
+void CAMERA_SYS_PlayStartSe( CAMERA_SYSTEM_WORK* work )
+{
+  work->sndState = CSS_WAIT_PLAY_START;
+}
+
+void CAMERA_SYS_PlayStopSe( CAMERA_SYSTEM_WORK* work )
+{
+  work->sndState = CSS_WAIT_PLAY_END;
+}
+
+const BOOL CAMERA_SYS_IsPlaySe( CAMERA_SYSTEM_WORK* work )
+{
+  if( work->sndState == CSS_WAIT_PLAY_START ||
+      work->sndState == CSS_PLAYING_START ||
+      work->sndState == CSS_WAIT_PLAY_END ||
+      work->sndState == CSS_PLAYING_END )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 #else
 #pragma mark [>Dummy
 //É_É~Å[
@@ -786,5 +811,8 @@ const u16 CAMERA_SYS_ResolutionSizeToHeight( CAMERA_SYSTEM_WORK* work ){return 0
 const CAMERASelect CAMERA_SYS_GetCameraPos( CAMERA_SYSTEM_WORK* work ){return 0;}
 void CAMERA_SYS_SetCameraPos( CAMERA_SYSTEM_WORK* work , const CAMERASelect pos ){}
 void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work ){}
+void CAMERA_SYS_PlayStartSe( CAMERA_SYSTEM_WORK* work ){}
+void CAMERA_SYS_PlayStopSe( CAMERA_SYSTEM_WORK* work ){}
+const BOOL CAMERA_SYS_IsPlaySe( CAMERA_SYSTEM_WORK* work ){return FALSE;}
 
 #endif //def SDK_TWL
