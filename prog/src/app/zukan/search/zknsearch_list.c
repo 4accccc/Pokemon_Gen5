@@ -568,6 +568,7 @@ void ZKNSEARCHLIST_FreeList( ZKNSEARCHMAIN_WORK * wk )
 	u32	i;
 
 	FRAMELIST_Exit( wk->lwk );
+	wk->lwk = NULL;
 
 	// €–Úíœ
 	for( i=0; i<ZKNSEARCHMAIN_ITEM_MAX; i++ ){

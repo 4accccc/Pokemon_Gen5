@@ -1417,7 +1417,9 @@ static int MainSeq_ButtonAnm( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}else{
 		if( ZKNSEARCHOBJ_CheckAnm( wk, wk->btnID ) == FALSE ){
-			ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
+			if( wk->lwk != NULL ){
+				ZKNSEARCHOBJ_SetListPageArrowAnime( wk, FALSE );
+			}
 			return wk->funcSeq;
 		}
 	}
