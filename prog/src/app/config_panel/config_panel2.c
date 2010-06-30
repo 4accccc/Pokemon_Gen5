@@ -2243,10 +2243,6 @@ static void UI_Main( UI_WORK *p_wk )
     p_wk->slide_start.y = y;
     p_wk->is_start_slide  = TRUE;
 
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
-    {
-      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-    }
   }
   else if( GFL_UI_TP_GetPointCont( &x, &y ) && p_wk->is_start_slide )
   {
@@ -2688,7 +2684,12 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
       PMSND_PlaySE( CONFIG_SE_DECIDE );
       p_wk->select = APPBAR_WIN_DECIDE;
       p_wk->is_decide = TRUE;
-      p_wk->is_touch  = TRUE;
+      p_wk->is_touch  = TRUE;  
+      
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      }
     }
     else if(  COLLISION_IsRectXPos( &sc_appbar_rect[APPBAR_WIN_CANCEL], &pos )
         && p_wk->select != APPBAR_WIN_CANCEL )
@@ -2698,6 +2699,11 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
       p_wk->select  = APPBAR_WIN_CANCEL;
       p_wk->is_decide = TRUE;
       p_wk->is_touch  = TRUE;
+
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      }
     }
     else if( p_wk->select != APPBAR_WIN_NULL )
     {
@@ -3154,6 +3160,11 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       GRAPHIC_StartPalleteFade( p_graphic );
       p_wk->is_info_update  = TRUE;
       is_bmpprint_decide  = FALSE;
+
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      }
     }
       
     break;
