@@ -2113,7 +2113,15 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     if(selectno==0){         //相手に見せる
       POKEMON_PASO_PARAM* ppp =
         IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
-      if(POKEMONTRADE_IsWazaPokemon(pWork,pWork->underSelectBoxno,pWork->underSelectIndex)){// 交換できない技もち
+
+      //選択済みポケモンを選択したか？  20100630 add Saito BTS5249
+      if ( _IsBothPokemonSelect(pWork, pWork->underSelectBoxno, pWork->underSelectIndex) )
+      {
+        pWork->selectIndex = pWork->underSelectIndex;
+        pWork->selectBoxno = pWork->underSelectBoxno;
+        _CHANGE_STATE(pWork, _dispSubStateWait_SendFlg);
+      }
+      else if(POKEMONTRADE_IsWazaPokemon(pWork,pWork->underSelectBoxno,pWork->underSelectIndex)){// 交換できない技もち
         POKE_GTS_VisibleFaceIcon(pWork,TRUE);
         _CHANGE_STATE(pWork,_notWazaChangePoke);
       }
