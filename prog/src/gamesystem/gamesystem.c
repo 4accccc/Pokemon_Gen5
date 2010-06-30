@@ -7,6 +7,7 @@
  *
  */
 //============================================================================================
+#include "playable_version.h"
 #include <gflib.h>
 
 #include "system/main.h"    //HEAPIDÇÃéQè∆óp
@@ -959,6 +960,9 @@ static void GameSystem_ResetBatt10SleepCallback( GAMESYS_WORK *gsys )
 
 static BOOL GameSystem_CallbackNotSleep( void *gsys_void )
 {
+#ifdef  PLAYABLE_VERSION
+  return TRUE;
+#else
   GAMESYS_WORK *gsys = gsys_void;
   GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
 
@@ -975,6 +979,7 @@ static BOOL GameSystem_CallbackNotSleep( void *gsys_void )
     return TRUE;  //ÇÕÇ¢Ç¡ÇƒÇŸÇµÇ≠Ç»Ç¢
   }
   return FALSE;  //ì¸Ç¡ÇƒÇÊÇ¢
+#endif
 }
 
 //==================================================================

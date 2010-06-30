@@ -169,7 +169,8 @@ SUBDIRS	=	wmi \
 			profanity_word \
 			symbol \
 			manual_image \
-			pokeform
+			pokeform \
+			playable_end
 
 
 include $(RESOURCE_MACRO)

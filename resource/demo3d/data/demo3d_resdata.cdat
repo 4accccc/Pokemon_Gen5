@@ -1,50 +1,35 @@
 //=========================================================================
 /**
  * @file	data/demo3d_resdata.cdat
- * @brief	デモ再生アプリで使うリソースへのアクセステーブル。resource/demo3d/demo_list.txtから自動生成
+ * @brief	デモ再生アプリで使うリソースへのアクセステーブル。プレイアブル環境用に直記述
  * @autor	miyuki iwasawa
- * @note	このファイルはdemo3d/conv/make_demoid.rbによって自動生成されたものです。
+ * 本当はコンバーターで自動生成される
  */
 //=========================================================================
-#include "c_cruiser.cdat"
-#include "c_cruiser_port.cdat"
-#include "f_wheel.cdat"
-#include "g_ship_port.cdat"
-#include "intro_town.cdat"
-#include "n_castle.cdat"
-#include "ending_b.cdat"
-#include "ending_w.cdat"
-#include "n_legend_born_b.cdat"
-#include "n_legend_born_w.cdat"
-#include "n_legend_come_b.cdat"
-#include "n_legend_come_w.cdat"
 #include "n_legend_meat_b.cdat"
 #include "n_legend_meat_w.cdat"
-#include "riza_bridge.cdat"
-#include "v_boat_port.cdat"
-#include "title_b.cdat"
-#include "title_w.cdat"
-
 
 static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
  { NULL, NULL, NULL, NULL, 0 },
- { &data_c_cruiser_scene, demo3d_cmd_c_cruiser_data, demo3d_cmd_c_cruiser_end_data, res_c_cruiser_scene_unit, NELEMS(res_c_cruiser_scene_unit) },
- { &data_c_cruiser_port_scene, demo3d_cmd_c_cruiser_port_data, demo3d_cmd_c_cruiser_port_end_data, res_c_cruiser_port_scene_unit, NELEMS(res_c_cruiser_port_scene_unit) },
- { &data_f_wheel_scene, demo3d_cmd_f_wheel_data, demo3d_cmd_f_wheel_end_data, res_f_wheel_scene_unit, NELEMS(res_f_wheel_scene_unit) },
- { &data_g_ship_port_scene, demo3d_cmd_g_ship_port_data, demo3d_cmd_g_ship_port_end_data, res_g_ship_port_scene_unit, NELEMS(res_g_ship_port_scene_unit) },
- { &data_intro_town_scene, demo3d_cmd_intro_town_data, demo3d_cmd_intro_town_end_data, res_intro_town_scene_unit, NELEMS(res_intro_town_scene_unit) },
- { &data_n_castle_scene, demo3d_cmd_n_castle_data, demo3d_cmd_n_castle_end_data, res_n_castle_scene_unit, NELEMS(res_n_castle_scene_unit) },
- { &data_ending_b_scene, demo3d_cmd_ending_b_data, demo3d_cmd_ending_b_end_data, res_ending_b_scene_unit, NELEMS(res_ending_b_scene_unit) },
- { &data_ending_w_scene, demo3d_cmd_ending_w_data, demo3d_cmd_ending_w_end_data, res_ending_w_scene_unit, NELEMS(res_ending_w_scene_unit) },
- { &data_n_legend_born_b_scene, demo3d_cmd_n_legend_born_b_data, demo3d_cmd_n_legend_born_b_end_data, res_n_legend_born_b_scene_unit, NELEMS(res_n_legend_born_b_scene_unit) },
- { &data_n_legend_born_w_scene, demo3d_cmd_n_legend_born_w_data, demo3d_cmd_n_legend_born_w_end_data, res_n_legend_born_w_scene_unit, NELEMS(res_n_legend_born_w_scene_unit) },
- { &data_n_legend_come_b_scene, demo3d_cmd_n_legend_come_b_data, demo3d_cmd_n_legend_come_b_end_data, res_n_legend_come_b_scene_unit, NELEMS(res_n_legend_come_b_scene_unit) },
- { &data_n_legend_come_w_scene, demo3d_cmd_n_legend_come_w_data, demo3d_cmd_n_legend_come_w_end_data, res_n_legend_come_w_scene_unit, NELEMS(res_n_legend_come_w_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ 
  { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
  { &data_n_legend_meat_w_scene, demo3d_cmd_n_legend_meat_w_data, demo3d_cmd_n_legend_meat_w_end_data, res_n_legend_meat_w_scene_unit, NELEMS(res_n_legend_meat_w_scene_unit) },
- { &data_riza_bridge_scene, demo3d_cmd_riza_bridge_data, demo3d_cmd_riza_bridge_end_data, res_riza_bridge_scene_unit, NELEMS(res_riza_bridge_scene_unit) },
- { &data_v_boat_port_scene, demo3d_cmd_v_boat_port_data, demo3d_cmd_v_boat_port_end_data, res_v_boat_port_scene_unit, NELEMS(res_v_boat_port_scene_unit) },
- { &data_title_b_scene, demo3d_cmd_title_b_data, demo3d_cmd_title_b_end_data, res_title_b_scene_unit, NELEMS(res_title_b_scene_unit) },
- { &data_title_w_scene, demo3d_cmd_title_w_data, demo3d_cmd_title_w_end_data, res_title_w_scene_unit, NELEMS(res_title_w_scene_unit) },
+
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
+ { &data_n_legend_meat_b_scene, demo3d_cmd_n_legend_meat_b_data, demo3d_cmd_n_legend_meat_b_end_data, res_n_legend_meat_b_scene_unit, NELEMS(res_n_legend_meat_b_scene_unit) },
 };
 

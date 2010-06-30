@@ -23,6 +23,7 @@
 #include "debug/debug_flg.h"
 #endif //MULTI_BOOT_MAKE
 
+#include "playable_version.h"
 //============================================================================================
 //
 //	バージョンチェック
@@ -64,7 +65,11 @@
  * @brief	ポケモンのカートリッジバージョンを格納しているconst変数
  */
 //---------------------------------------------------------------------------
+#ifdef  PLAYABLE_VERSION
+u8 CasetteVersion = 0;
+#else
 const u8 CasetteVersion = PM_VERSION;
+#endif
 
 //---------------------------------------------------------------------------
 /**
@@ -82,6 +87,10 @@ const u8 CasetteLanguage = PM_LANG;
 //---------------------------------------------------------------------------
 const u8 GetVersion( void )
 {
+#ifdef  PLAYABLE_VERSION
+  GF_ASSERT( CasetteVersion != 0 );
+#endif
+
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg( DEBUG_FLG_ReverseVersion ) == TRUE )
@@ -101,6 +110,12 @@ const u8 GetVersion( void )
   return CasetteVersion;
 }
 
+#ifdef  PLAYABLE_VERSION
+void SetVersion( u8 version )
+{
+  CasetteVersion = version;
+}
+#endif
 
 
 //============================================================================================

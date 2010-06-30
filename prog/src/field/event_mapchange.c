@@ -9,6 +9,7 @@
 //============================================================================================
 #include <gflib.h>
 
+#include "playable_version.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
@@ -82,6 +83,10 @@
 #include "../gamesystem/debug_data.h"
 FS_EXTERN_OVERLAY(debug_data);
 #include "debug/debug_flg.h"
+#endif
+#ifdef  PLAYABLE_VERSION
+#include "../gamesystem/debug_data.h"
+FS_EXTERN_OVERLAY(debug_data);
 #endif
 
 #include "seasonpoke_form.h"    //for SEASONPOKE_FORM_ChangeForm
@@ -174,7 +179,11 @@ GMEVENT* EVENT_CallGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInit
 
   switch( gameInitWork->mode ) {
   case GAMEINIT_MODE_FIRST:
+#ifdef  PLAYABLE_VERSION
+    event = EVENT_FirstMapIn( gameSystem, gameInitWork );
+#else
     event = EVENT_FirstGameStart( gameSystem, gameInitWork );
+#endif
     break;
   case GAMEINIT_MODE_CONTINUE:
     event = EVENT_ContinueMapIn( gameSystem, gameInitWork );
@@ -366,8 +375,24 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
 
   case 3:
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+#ifdef  PLAYABLE_VERSION
+    {
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+      //季節ポケモンフォルムチェンジ条件を満たしたので、手持ちの季節ポケモンをフォルムチェンジさせる
+      SEASONPOKE_FORM_ChangeForm(gamedata, party, season);
+    }
+    {
+      // 画面フェードイン
+      // ゲーム終了時の季節を表示する
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Season( gsys, fieldmap, season, season ) );
+    }
+#else
     // 画面フェードイン(ゲームスタートデモのつながりを加味して、ホワイトフェード)
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( gsys, fieldmap, FIELD_FADE_WAIT ) );
+#endif  //PLAYABLE_VERSION
     (*seq)++;
     break;
 
@@ -422,6 +447,16 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
 #endif
   }
 #endif //PM_DEBUG
+#ifdef  PLAYABLE_VERSION
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
+  PLAYABLE_SetStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
+  //試遊台バージョン対応のため、初期位置を変更
+  LOCATION_SetDirect( &fmw->loc_req, ZONE_ID_C07, EXIT_DIR_DOWN,
+      173 * FX32_ONE * FIELD_CONST_GRID_SIZE,
+      0   * FX32_ONE * FIELD_CONST_GRID_SIZE,
+      178 * FX32_ONE * FIELD_CONST_GRID_SIZE );
+#endif
 
   GAME_FieldFirstInit( gameSystem );  // フィールド情報の初期化
   //DS本体情報のセット
@@ -764,6 +799,11 @@ typedef enum{
 //------------------------------------------------------------------
 static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
 {
+#ifdef PLAYABLE_VERSION
+  work->seasonUpdateOccur = FALSE; // 体験版では季節を変化させない
+
+#else
+
   BOOL nextZoneIsOutdoor;
   u16 prevSeason, nextSeason;
 
@@ -790,6 +830,7 @@ static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
     work->prevSeason = prevSeason;
     work->nextSeason = nextSeason;
   }
+#endif 
 }
 
 //------------------------------------------------------------------

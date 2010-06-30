@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 06/14 (Mon) 16:48
+ * @date  2010 06/28 (Mon) 20:40
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -21,9 +21,6 @@
 
 #define ID_POKECEN_SCR_OFFSET            (2100) //ポケセン用スクリプト
 #define ID_POKECEN_SCR_OFFSET_END        (2199)
-
-#define ID_SODATEYA_SCR_OFFSET           (2200) //育て屋用スクリプト
-#define ID_SODATEYA_SCR_OFFSET_END       (2224)
 
 #define ID_NAMECHANGE_SCR_OFFSET         (2225) //姓名判断
 #define ID_NAMECHANGE_SCR_OFFSET_END     (2249)
@@ -76,9 +73,6 @@
 #define ID_FIELD_EV_SCR_OFFSET           (10130) //各種フィールドイベント用
 #define ID_FIELD_EV_SCR_OFFSET_END       (10149)
 
-#define ID_C3CENTER_SCR_OFFSET           (10200) //C3中央部共通スクリプト
-#define ID_C3CENTER_SCR_OFFSET_END       (10249)
-
 #define ID_GATE_SCR_OFFSET               (10250) //ゲート用共通スクリプト
 #define ID_GATE_SCR_OFFSET_END           (10259)
 
@@ -88,12 +82,6 @@
 #define ID_DEOX_CHANGE_SCR_OFFSET        (10270) //デオキシスフォルムチェンジ
 #define ID_DEOX_CHANGE_SCR_OFFSET_END    (10279)
 
-#define ID_FOSSIL_SCR_OFFSET             (10280) //化石復元
-#define ID_FOSSIL_SCR_OFFSET_END         (10289)
-
-#define ID_PALPARK_SCR_OFFSET            (10290) //パルパーク
-#define ID_PALPARK_SCR_OFFSET_END        (10309)
-
 #define ID_JUDGE_SCR_OFFSET              (10310) //ジャッジイベント
 #define ID_JUDGE_SCR_OFFSET_END          (10314)
 
@@ -102,9 +90,6 @@
 
 #define ID_ID_PRESENT_SCR_OFFSET         (10325) //ポケモンIDアイテムプレゼントスクリプト
 #define ID_ID_PRESENT_SCR_OFFSET_END     (10329)
-
-#define ID_BSUBWAY_SCR_OFFSET            (10330) //バトルサブウェイ用スクリプト
-#define ID_BSUBWAY_SCR_OFFSET_END        (10349)
 
 #define ID_CROWD_PEOPLE_SCR_OFFSET       (10350) //群集用スクリプト
 #define ID_CROWD_PEOPLE_SCR_OFFSET_END   (10379)
@@ -127,20 +112,8 @@
 #define ID_GPOWER_SCR_OFFSET             (10425) //Gパワーイベントスクリプト
 #define ID_GPOWER_SCR_OFFSET_END         (10429)
 
-#define ID_TRIAL_HOUSE_SCR_OFFSET        (10430) //トライアルハウス受付スクリプト
-#define ID_TRIAL_HOUSE_SCR_OFFSET_END    (10434)
-
 #define ID_PDW_SCR_OFFSET                (10435) //PDW家具屋用スクリプト
 #define ID_PDW_SCR_OFFSET_END            (10439)
-
-#define ID_MUSICAL_SCR_OFFSET            (10440) //ミュージカル用スクリプト
-#define ID_MUSICAL_SCR_OFFSET_END        (10459)
-
-#define ID_SEATEMPLE_SCR_OFFSET          (10460) //海底神殿用スクリプト
-#define ID_SEATEMPLE_SCR_OFFSET_END      (10469)
-
-#define ID_APPRAISAL_SCR_OFFSET          (10470) //鑑定士イベント用スクリプト
-#define ID_APPRAISAL_SCR_OFFSET_END      (10479)
 
 #define ID_SYMBOL_ENCOUNT_SCR_OFFSET     (10480) //シンボルエンカウント（パレスの森）用スクリプト
 #define ID_SYMBOL_ENCOUNT_SCR_OFFSET_END (10499)
@@ -151,8 +124,8 @@
 #define ID_TAMAGETAKE_SCR_OFFSET         (10510) //タマゲタケ対戦用スクリプト
 #define ID_TAMAGETAKE_SCR_OFFSET_END     (10519)
 
-#define ID_TV_SCR_OFFSET                 (10520) //
-#define ID_TV_SCR_OFFSET_END             (10524)
+#define ID_PLAYABLE_SCR_OFFSET           (10525) //試遊台バージョン用スクリプト
+#define ID_PLAYABLE_SCR_OFFSET_END       (10624)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

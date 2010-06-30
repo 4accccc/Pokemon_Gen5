@@ -12,6 +12,12 @@
     モジュール名：
 =cut 
 ##============================================================================
+
+
+# 試遊台環境
+$PLAYABLE_VERSION  = 1;  # 試遊台環境のとき1
+
+
 # このソース自体をUTF8で記述し、UTF8で処理を行う
 use utf8;
 binmode STDIN,  ":encoding(shiftjis)";
@@ -448,10 +454,24 @@ sub WriteHWFile
     printf FH "\t\t<language name=\"JPN\">";
     $text = sprintf( "%.1f%s", $mons_tbl[$idx][$form_col_start + $hw_form_col_offset] /10, $hw_unit );
     $text =~ tr/0,1,2,3,4,5,6,7,8,9,\.,m,k,g,\?/０,１,２,３,４,５,６,７,８,９,．,ｍ,ｋ,ｇ,？/;  # 半角を全角にする
-    printf FH "$text";
+    if( $PLAYABLE_VERSION == 1 )
+    {
+      printf FH " ";
+    }
+    else
+    {
+      printf FH "$text";
+    }
     printf FH "</language>\r\n";
     printf FH "\t\t<language name=\"JPN_KANJI\">";
-    printf FH "$text";
+    if( $PLAYABLE_VERSION == 1 )
+    {
+      printf FH " ";
+    }
+    else
+    {
+      printf FH "$text";
+    }
     printf FH "</language>\r\n";
     printf FH "\t</row>\r\n";
     printf FH "\r\n";
@@ -489,10 +509,24 @@ sub WriteHWFile
         printf FH "\t\t<language name=\"JPN\">";
         $text = sprintf( "%.1f%s", $mons_tbl[$idx][$form_col_start + $hw_form_col_offset] /10, $hw_unit );
         $text =~ tr/0,1,2,3,4,5,6,7,8,9,\.,m,k,g,\?/０,１,２,３,４,５,６,７,８,９,．,ｍ,ｋ,ｇ,？/;  # 半角を全角にする
-        printf FH "$text";
+        if( $PLAYABLE_VERSION == 1 )
+        {
+          printf FH " ";
+        }
+        else
+        {
+          printf FH "$text";
+        }
         printf FH "</language>\r\n";
         printf FH "\t\t<language name=\"JPN_KANJI\">";
-        printf FH "$text";
+        if( $PLAYABLE_VERSION == 1 )
+        {
+          printf FH " ";
+        }
+        else
+        {
+          printf FH "$text";
+        }
         printf FH "</language>\r\n";
         printf FH "\t</row>\r\n";
         printf FH "\r\n";

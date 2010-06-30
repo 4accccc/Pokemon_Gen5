@@ -24,6 +24,10 @@
 ##============================================================================
 
 
+# 試遊台環境
+$PLAYABLE_VERSION  = 1;  # 試遊台環境のとき1
+
+
 ##=============================================================================
 =pid
 
@@ -716,10 +720,24 @@ sub WriteGmmFileMonsnoFormno
 
     printf FH "\t<row id=\"%s%03d_%03d\">\r\n", $row_id, $mons_tbl[$idx][$mons_col_monsno], $mons_tbl[$idx][$form_col_start + $form_col_offset_formno   ];
     printf FH "\t\t<language name=\"JPN\">";
-    printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn       ];
+    if( $PLAYABLE_VERSION == 1 )
+    {
+      printf FH " ";
+    }
+    else
+    {
+      printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn       ];
+    }
     printf FH "</language>\r\n";
     printf FH "\t\t<language name=\"JPN_KANJI\">";
-    printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn_kanji ];
+    if( $PLAYABLE_VERSION == 1 )
+    {
+      printf FH " ";
+    }
+    else
+    {
+      printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn_kanji ];
+    }
     printf FH "</language>\r\n";
     printf FH "\t</row>\r\n";
     printf FH "\r\n";
@@ -753,10 +771,24 @@ sub WriteGmmFileMonsnoFormno
        
         printf FH "\t<row id=\"%s%03d_%03d\">\r\n", $row_id, $mons_tbl[$idx][$mons_col_monsno], $mons_tbl[$idx][$form_col_start + $form_col_offset_formno   ];
         printf FH "\t\t<language name=\"JPN\">";
-        printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn       ];
+        if( $PLAYABLE_VERSION == 1 )
+        {
+          printf FH " ";
+        }
+        else
+        {
+          printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn       ];
+        }
         printf FH "</language>\r\n";
         printf FH "\t\t<language name=\"JPN_KANJI\">";
-        printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn_kanji ];
+        if( $PLAYABLE_VERSION == 1 )
+        {
+          printf FH " ";
+        }
+        else
+        {
+          printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn_kanji ];
+        }
         printf FH "</language>\r\n";
         printf FH "\t</row>\r\n";
         printf FH "\r\n";
@@ -828,10 +860,24 @@ sub WriteGmmFileMonsno
 
     printf FH "\t<row id=\"%s%03d\">\r\n", $row_id, $mons_tbl[$idx][$mons_col_monsno];
     printf FH "\t\t<language name=\"JPN\">";
-    printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn       ];
+    if( $PLAYABLE_VERSION == 1 )
+    {
+      printf FH " ";
+    }
+    else
+    {
+      printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn       ];
+    }
     printf FH "</language>\r\n";
     printf FH "\t\t<language name=\"JPN_KANJI\">";
-    printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn_kanji ];
+    if( $PLAYABLE_VERSION == 1 )
+    {
+      printf FH " ";
+    }
+    else
+    {
+      printf FH "%s", $mons_tbl[$idx][$form_col_start + $form_col_offset_jpn_kanji ];
+    }
     printf FH "</language>\r\n";
     printf FH "\t</row>\r\n";
     printf FH "\r\n";

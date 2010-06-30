@@ -10,7 +10,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "c07_def.h"
+  .include  "playable_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
@@ -20,6 +20,5 @@ _SP_EVENT_DATA_END
 
 //テーブル定義
 sp_c07_tbl:
-	_SCENE_CHANGE_DATA		WK_SCENE_C07,1,SCRID_SCENE_C07_HAKASE1_01
-	_SCENE_CHANGE_DATA		WK_SCENE_C07,3,SCRID_SCENE_C07_LEADER7_01
+	_SCENE_CHANGE_DATA		WK_SCENE_C07_PLAYABLE,0,SCRID_SCENE_C07_START_01
 	_SCENE_CHANGE_END

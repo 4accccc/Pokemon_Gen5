@@ -9,6 +9,8 @@
  *       4/2時点では７９秒。タイトル画面の表示している長さは曲の長さと同じでよい。
  */
 //==============================================================================
+#include "playable_version.h"
+
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
@@ -42,6 +44,9 @@
 //#define DELAY_CHECK
 #endif
 
+#ifdef  PLAYABLE_VERSION
+#include  "title/game_start.h"
+#endif
 
 
 //==============================================================================
@@ -59,6 +64,26 @@
 /// ループパートに入った時のフレーム
 #define POKE_LOOP_PART_FRAME  ( 5301 )
 
+#ifdef  PLAYABLE_VERSION
+#define POKE_LOOP_END_FRAME getPokeLoopEndFrame()
+static int getPokeLoopEndFrame(void) {
+  if ( GET_VERSION() == VERSION_BLACK) {
+    return 5619;
+  } else {
+    return 5779;
+  }
+}
+#define PLAY_MONSNO getPlayMonsNo()
+static int getPlayMonsNo( void )
+{
+  if ( GET_VERSION() == VERSION_BLACK ) {
+    return MONSNO_RESIRAMU;
+  } else {
+    return MONSNO_ZEKUROMU;
+  }
+}
+#else
+
 // 黒・白で違う定義
 #if PM_VERSION==VERSION_BLACK
 /// 黒：ポリゴンデモのループ終了フレームの指定
@@ -71,6 +96,8 @@
 /// 白：タイトル画面の鳴き声を出すポケモンの指定
 #define PLAY_MONSNO ( MONSNO_ZEKUROMU )
 #endif
+
+#endif  //PLAYABLE_VERSION
 
 /// 入力トリガマスク
 #define NEXT_PROC_MASK    ( PAD_BUTTON_START | PAD_BUTTON_A )
@@ -386,6 +413,7 @@ static void _key_check( TITLE_WORK *tw )
     setSystemMbParam( &tw->CSys, VOICE_MOTION_BL_A, VOICE_MOTION_BL_B );
     return;
   }
+#ifndef PLAYABLE_VERSION
   // セーブデータ初期化
   if( GFL_UI_KEY_GetCont() == BACKUP_ERASE_MASK ){
     tw->mode = END_BACKUP_ERASE;
@@ -398,6 +426,7 @@ static void _key_check( TITLE_WORK *tw )
     tw->seq = SEQ_NEXT;
     return;
   }
+#endif  //PLAYABLE_VERSION
 #ifdef  PM_DEBUG
   // デバッグメニューへ
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
@@ -576,7 +605,11 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
   GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
 
   if( mode == END_SELECT ){
+#ifdef  PLAYABLE_VERSION
+    GameStart_Playable(); //試遊台開始のProc切り替えへ
+#else
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
+#endif
   }else if( mode == END_BACKUP_ERASE ){
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &BACKUP_ERASE_ProcData, NULL);
   }else if( mode == END_MIC_TEST ){
@@ -1009,6 +1042,41 @@ enum{
   G3DRES_01_BTP,
 };
 
+#ifdef  PLAYABLE_VERSION
+
+#define CAMERA_DATA_BIN_NAME  getCamerabin()
+// 黒：モデリングデータ
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_b[] = {
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbtp, GFL_G3D_UTIL_RESARC },
+};
+
+// 白：モデリングデータ
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_w[] = {
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbtp, GFL_G3D_UTIL_RESARC },
+};
+
+static int getCamerabin(void){
+  if (GET_VERSION() == VERSION_BLACK ) {
+    return NARC_data_demo3d_title_b_camera_bin;
+  } else {
+    return NARC_data_demo3d_title_w_camera_bin;
+  }
+}
+
+#else
+
 //読み込む3Dリソース
 #if PM_VERSION == VERSION_BLACK
 // 黒：モデリングデータ
@@ -1041,6 +1109,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 #define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_w_camera_bin
 
 #endif
+
+#endif  //PLAYABLE_VERSION
 
 //3Dアニメ
 static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
@@ -1079,6 +1149,23 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
   },
 };
 
+#ifdef  PLAYABLE_VERSION
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup_b = {
+  g3Dutil_resTbl_b,           //リソーステーブル
+  NELEMS(g3Dutil_resTbl_b),   //リソース数
+  g3Dutil_objTbl,           //オブジェクト設定テーブル
+  NELEMS(g3Dutil_objTbl),   //オブジェクト数
+};
+
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup_w = {
+  g3Dutil_resTbl_w,           //リソーステーブル
+  NELEMS(g3Dutil_resTbl_w),   //リソース数
+  g3Dutil_objTbl,           //オブジェクト設定テーブル
+  NELEMS(g3Dutil_objTbl),   //オブジェクト数
+};
+
+
+#else
 static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
   g3Dutil_resTbl,           //リソーステーブル
   NELEMS(g3Dutil_resTbl),   //リソース数
@@ -1088,6 +1175,8 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 
 // リソーステーブル数
 #define G3DUTIL_RESCOUNT  (NELEMS(g3Dutil_resTbl))
+#endif
+
 // アニメOBJ数
 #define G3DUTIL_OBJCOUNT  (NELEMS(g3Dutil_objTbl))
 
@@ -1109,8 +1198,18 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 {
   u16 objIdx;
   
+#ifdef PLAYABLE_VERSION
+  if ( GET_VERSION() == VERSION_BLACK ) {
+    CG3d->g3Dutil = GFL_G3D_UTIL_Create( NELEMS(g3Dutil_resTbl_b), G3DUTIL_OBJCOUNT, heapID );
+    CG3d->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( CG3d->g3Dutil, &g3Dutil_setup_b );
+  } else {
+    CG3d->g3Dutil = GFL_G3D_UTIL_Create( NELEMS(g3Dutil_resTbl_w), G3DUTIL_OBJCOUNT, heapID );
+    CG3d->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( CG3d->g3Dutil, &g3Dutil_setup_w );
+  }
+#else
   CG3d->g3Dutil = GFL_G3D_UTIL_Create( G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, heapID );
   CG3d->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( CG3d->g3Dutil, &g3Dutil_setup );
+#endif
 
   //アニメーションを有効にする
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );

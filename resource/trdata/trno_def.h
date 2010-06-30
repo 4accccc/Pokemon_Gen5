@@ -626,7 +626,13 @@
 #define	TRID_DOCTOR_05   ( 613 ) 
 #define	TRID_BCHAMP2_01   ( 614 ) 
 #define	TRID_HEADS_05   ( 615 ) 
-#define TRID_MAX  ( 616 )
+#define	TRID_RIVAL_28   ( 616 ) 
+#define	TRID_RIVAL_29   ( 617 ) 
+#define	TRID_RIVAL_30   ( 618 ) 
+#define	TRID_SUPPORT_19   ( 619 ) 
+#define	TRID_SUPPORT_20   ( 620 ) 
+#define	TRID_SUPPORT_21   ( 621 ) 
+#define TRID_MAX  ( 622 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;

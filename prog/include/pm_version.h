@@ -86,17 +86,31 @@
 
 #ifndef	ASM_CPP
 
+#include "playable_version.h"
+
+#ifdef  PLAYABLE_VERSION
+extern u8 CasetteVersion;
+#else
 extern const u8 CasetteVersion;
+#endif
 
 extern const u8 CasetteLanguage;
 
 extern const u8 GetVersion( void );
+
+#ifdef  PLAYABLE_VERSION
+extern void SetVersion( u8 version );
+#endif
 #endif
 
 #ifdef  PM_DEBUG
 #define GET_VERSION()  GetVersion()
 #else
-#define GET_VERSION()  PM_VERSION
+  #ifdef  PLAYABLE_VERSION
+  #define GET_VERSION()  GetVersion()
+  #else
+  #define GET_VERSION()  PM_VERSION
+  #endif
 #endif
 
 //=========================================================================

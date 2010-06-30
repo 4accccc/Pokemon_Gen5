@@ -3,27 +3,23 @@
 #define ZONE_D08R0101_EVD_H
 
 #define DOOR_ID_D08R0101_D08_EXIT01       0
-#define DOOR_ID_D08R0101_D08R0301_EXIT01  1
 
 #endif //ZONE_D08R0101_EVD_H
 //このファイルは../data/d08r0101.mevから自動生成されました
 #ifndef ZONE_D08R0101_EVC_H
 #define ZONE_D08R0101_EVC_H
 
-#define TR_ELITEM_04                       0
-#define TR_ELITEW_04                       1
-#define D08R0101_NONE_01                   2
-#define D08R0101_NONE_02                   3
-#define D08R0101_NONE_03                   4
-#define D08R0101_NONE_04                   5
-#define D08R0101_HAKAIM_01                 6
-#define D08R0101_FLD_ITEM_01               7
+#define TR_ELITEW_04                       0
+#define D08R0101_NONE_01                   1
+#define D08R0101_NONE_02                   2
+#define D08R0101_NONE_03                   3
+#define D08R0101_NONE_04                   4
+#define D08R0101_HAKASE2_01                5
 
 #endif //ZONE_D08R0101_EVC_H
 //このファイルは../data/d08r0101.mevから自動生成されました
 #ifndef ZONE_D08R0101_EVB_H
 #define ZONE_D08R0101_EVB_H
 
-#define D08R0101_HIDE_ITEM_01             0
 
 #endif //ZONE_D08R0101_EVB_H

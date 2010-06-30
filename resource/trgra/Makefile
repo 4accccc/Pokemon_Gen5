@@ -40,6 +40,8 @@ endif
 #NARCに必要なscrファイル名
 SCRFILE_F = trfgra_wb.scr
 SCRFILE_B = trbgra_wb.scr
+SCRFILE_F2 = trfgra_wb2.scr
+SCRFILE_B2 = trbgra_wb2.scr
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ../../../pokemon_wb_doc/trgra/
@@ -105,11 +107,15 @@ ncl: $(notdir $(TRFNCLFILE:.ncl=.NCLR)) $(notdir $(TRBNCLFILE:.ncl=.NCLR))
 	perl $(SCRIPT_DIR)tr_ncl.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
 $(NARCNAME_F): $(notdir $(TRFNCGFILE:.ncg=.NCBR)) $(notdir $(TRFNCEFILE:.nce=.NCER)) $(notdir $(TRFNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
-	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
+	ruby replace.rb $(SCRFILE_F) > move.sh
+	$(shell move.sh)
+	nnsarc -c  -n -i $(NARCNAME_F) -S $(SCRFILE_F2)
 	$(NAIXCUT) $(NAIXNAME_F)
 
 $(NARCNAME_B): $(notdir $(TRBNCGFILE:.ncg=.NCBR)) $(notdir $(TRBNCEFILE:.nce=.NCER)) $(notdir $(TRBNCLFILE:.ncl=.NCLR)) $(SCRFILE_B)
-	nnsarc -c -l -n -i $(NARCNAME_B) -S $(SCRFILE_B)
+	ruby replace.rb $(SCRFILE_B) > move.sh
+	$(shell move.sh)
+	nnsarc -c  -n -i $(NARCNAME_B) -S $(SCRFILE_B2)
 	$(NAIXCUT) $(NAIXNAME_B)
 endif
 

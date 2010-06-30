@@ -91,7 +91,12 @@ https://pkvldtprod.nintendo.co.jp/pokemon/validate
 
 /// 分けたかったのですが、CGEARの仕様によりGGIDを統一します
 /// 2010.01.08 k.ohno
+
+#ifdef  PLAYABLE_VERSION
+#define SYACHI_NETWORK_GGID  (0x00001511)  //syachi試遊台のGGID 2010.06.29
+#else
 #define SYACHI_NETWORK_GGID  (0x00001380)    //通常はこれ
+#endif  //PLAYABLE_VERSION
 #define SYACHI_DOWNLOAD_GGID  (0x00001381)   //映画２０１０専用 MB不具合用
 //#define SYACHI_LEG_GGID (0x00001380)         //大会レギュレーション配信専用
 

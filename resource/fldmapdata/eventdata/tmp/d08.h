@@ -9,12 +9,7 @@
 #ifndef ZONE_D08_EVC_H
 #define ZONE_D08_EVC_H
 
-#define D08_HAKASE1_01                     0
-#define D08_RIVEL_01                       1
-#define D08_SUPPORT_01                     2
-#define D08_CHAMPION_01                    3
-#define D08_LEADER7_01                     4
-#define D08_FLD_ITEM_01                    5
+#define D08_RIVAL_01                       0
 
 #endif //ZONE_D08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -75,8 +75,8 @@
   ARCID_FONT      "font/font.narc"    # フォントデータ
   ARCID_ITEMDATA    "item_data.narc"    # アイテムデータ
   ARCID_ITEMICON    "item_icon.narc"    # アイテムアイコン
-  $VERSION_BLACK  ARCID_TITLE "title_black.narc"  #ブラック版タイトル
-  $VERSION_WHITE  ARCID_TITLE "title_white.narc"  #ホワイト版タイトル
+  ARCID_TITLE_B "title_black.narc"  #ブラック版タイトル
+  ARCID_TITLE_W "title_white.narc"  #ホワイト版タイトル
   ARCID_CONFIG_GRA  "config_gra.narc"   #設定画面用データ
   ARCID_IRCBATTLE   "ircbattle.narc"           #赤外線マッチングバトル
   ARCID_CG_COMM  "cg_comm.narc"           #コミュニケーションギア 接続後
@@ -103,7 +103,7 @@
   ARCID_MMDL_RES  "fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
   ARCID_INFOWIN   "infowin.narc"    #情報ウィンドウ
   ARCID_BMPOAM    "bmpoam.narc"     #BMPOAM
-  ARCID_POKEGRA_MUS "pokegra_mus.narc"  #ミュージカル用ポケグラ
+#  ARCID_POKEGRA_MUS "pokegra_mus.narc"  #ミュージカル用ポケグラ
   ARCID_WIFI_EARTH_PLACE  "wifi_earth_place.narc" #WI-FI地球画面の地域データ
   ARCID_SHOP_GRA    "shop_gra.narc"   #ショップ画面グラフィック
   ARCID_WAZATYPE_ICON   "wazatype_icon.narc"    #技タイプアイコン
@@ -299,3 +299,4 @@
   $DEBUG_YES ARCID_DEBUG_MESSAGE  "debug_message.narc"  #デバッグ用メッセージデータ
   ARCID_ITEM_BATTLE_POCKET  "item_battle_pocket.narc" # アイテムの戦闘ポケットデータ
   ARCID_POKEFOOT_EX_GRA "pokefoot_ex.narc"  # ポケモン足跡グラフィック追加データ
+  ARCID_PLAYABLE_END "playable_end.narc" # 試遊台用 最後の一枚絵

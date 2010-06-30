@@ -8,7 +8,12 @@
  */
 //============================================================================================
 #pragma once
+#include "playable_version.h"
 #include <gflib.h>
 #include "gamesystem/game_data.h"
 
 extern void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID );
+
+#ifdef  PLAYABLE_VERSION
+extern void PLAYABLE_SetStartData( GAMEDATA * gamedata, HEAPID heapID );
+#endif

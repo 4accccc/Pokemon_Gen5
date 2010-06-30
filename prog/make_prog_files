@@ -2113,7 +2113,8 @@ SRCS_OVERLAY_INTRO = demo/intro/intro.c \
 # ゲームクリアデモ（仮）
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_GAMECLEAR_DEMO = field/proc_gameclear_save.c \
-                              field/proc_gameover.c
+                              field/proc_gameover.c \
+                              proc_playable_end.c
 
 # 図鑑情報
 #===> SRCS_OVERLAY_BATTLE_RETURN
@@ -2305,7 +2306,6 @@ SRCS_OVERLAY_DEBUG_NCL = test/ncl/d_font_view.c
 
 # マジコン対策ライブラリ
 #===>SRCS_OVERLAY_FIELD_INIT
-#LIB=>          AMProtectR2a.a
 SRCS_OVERLAY_AMPROTECT	= system/amprotect.c
 
 #赤外線チェックコピー版

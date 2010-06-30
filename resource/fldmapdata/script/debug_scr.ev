@@ -16,15 +16,15 @@
 
   .include  "debug_scr_local_iwasawa.h"
   
-  .include  "c02.h"
-  .include  "c02gym0101.h"
-  .include  "d06.h"
-  .include  "d06r0101.h"
-  .include  "d08r0901.h"
+  //.include  "c02.h"
+  //.include  "c02gym0101.h"
+  //.include  "d06.h"
+  //.include  "d06r0101.h"
+  //.include  "d08r0901.h"
   
 
-  .include "c08r0401_def.h"
-  .include "t01.h"
+  //.include "c08r0401_def.h"
+  //.include "t01.h"
   .include "hiden_def.h"
 
   .include "init_scr_def.h"
@@ -60,7 +60,8 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_debug_test
 {
-  _GOTO_GAMECLEAR_DEMO( 0 )
+  _CALL_GEONET_PROC()
+  //_GOTO_GAMECLEAR_DEMO( 0 )
   //_MAP_CHANGE( ZONE_ID_D09R1501, 5, 7, DIR_UP )
   //_MAP_CHANGE( ZONE_ID_D02R0201, 10, 10, DIR_UP )
   //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
@@ -303,25 +304,16 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_START()
 	
 		IF $SCWK_TEMP2 == 0 THEN
-			_FLAG_RESET(TMFLG_C03P09_SWEETS)
-			$WK_SCENE_C03P09_SWEETS = 0
+			$WK_SCENE_C07_PLAYABLE = 1
+			$WK_SCENE_D08_PLAYABLE = 0
 		ELSIF $SCWK_TEMP2 == 1 THEN
-			$WK_SCENE_D07_RIVAL_01 = 1
+			$WK_OTHER_PLAYABLE_TYPE = 0
 		ELSIF $SCWK_TEMP2 == 2 THEN
-		
-			$WK_SCENE_R14R0201_LEG = 1
-			_FLAG_RESET( FV_R14R0201_GIRL1 )
-			//神社前に移動
-			_MAP_CHANGE( ZONE_ID_R14R0201, 22, 20, DIR_UP )
-			
+			$WK_OTHER_PLAYABLE_TYPE = 1
 		ELSIF $SCWK_TEMP2 == 3 THEN
-			//C07イベント初期化
-			_FLAG_RESET( FV_C07_HAKASE1 )
-			$WK_SCENE_C07 = 0
+			$WK_OTHER_PLAYABLE_TYPE = 2
 		ELSIF $SCWK_TEMP2 == 4 THEN
-			$WK_SCENE_D07R0401 = 0
-			_FLAG_RESET(FV_D07R0401PLASMA_01)
-			_FLAG_RESET(FV_D07R0401RIVAL_01)
+			$WK_OTHER_PLAYABLE_TYPE = 2
 		ELSIF $SCWK_TEMP2 == 5 THEN
 				//***ワーク操作：C05のPOSを起動***
 				$WK_SCENE_C05 = 4
@@ -752,11 +744,11 @@ EVENT_START   ev_debug_murakami
 			_FLAG_RESET(FV_C02_STONEEVENT_01)
 			_FLAG_RESET(FV_C02_STONEEVENT_02)	
 					
-			_OBJ_ADD( C02_CHAMPION_01 ) 
-			_OBJ_ADD( C02_HAKASE1_01 ) 
-			_OBJ_ADD( C02_HAKASE2_01 ) 
-			_OBJ_ADD( C02_SUPPORT_02 ) 
-			_OBJ_ADD( C02_LEADER02_01 ) 
+			//_OBJ_ADD( C02_CHAMPION_01 ) 
+			//_OBJ_ADD( C02_HAKASE1_01 ) 
+			//_OBJ_ADD( C02_HAKASE2_01 ) 
+			//_OBJ_ADD( C02_SUPPORT_02 ) 
+			//_OBJ_ADD( C02_LEADER02_01 ) 
 	
 			//C02でのライトストーン、ダークストーンのイベント有効
 			$WK_SCENE_C02 = 6
@@ -770,7 +762,7 @@ EVENT_START   ev_debug_murakami
 			//フラグ操作：D06電気洞窟前のPOSイベント起動（電気洞窟ストッパー解除）
 			$WK_SCENE_D06 = 1
 			_FLAG_RESET(FV_D06_STOPPER_01)
-			_OBJ_ADD( D06_STOPPER_01 )
+			//_OBJ_ADD( D06_STOPPER_01 )
 
 			_MAP_CHANGE( ZONE_ID_D06, 107, 343, DIR_UP )
 /*
@@ -833,7 +825,7 @@ EVENT_START   ev_debug_murakami
 			$WK_SCENE_D08_LEGEND  = 8
 			_FLAG_RESET(FV_D08R0901_BOSS_01)
 			_FLAG_RESET(FV_D08_HAKASE1_01)
-			_OBJ_ADD(D08R0901_BOSS_01)
+			//_OBJ_ADD(D08R0901_BOSS_01)
 			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
 		
 		//C02GYM0101盗難イベント（博物館内）	
@@ -914,22 +906,22 @@ EVENT_START   ev_debug_murakami
 		ELSIF $SCWK_TEMP1 == 13 THEN
 			//電気石ダークトリニティのイベント②
 			$WK_SCENE_D06R0101 = 3
-			_OBJ_ADD(D06R0101_NINJA_01)
-			_OBJ_ADD(D06R0101_NINJA_02)
-			_OBJ_ADD(D06R0101_NINJA_03)
+			//_OBJ_ADD(D06R0101_NINJA_01)
+			//_OBJ_ADD(D06R0101_NINJA_02)
+			//_OBJ_ADD(D06R0101_NINJA_03)
 			
 		ELSIF $SCWK_TEMP1 == 14 THEN
 			//電気石ダークトリニティのイベント①
 			$WK_SCENE_D06R0101 = 0
 			
-			_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)	
+			//_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)	
 
 		ELSIF $SCWK_TEMP1 == 15 THEN
 			$WK_SCENE_D06R0101 = 1
 			//博士とサポートを出現
 			_FLAG_RESET(FV_D06R0101_FRIENDS)
-			_OBJ_ADD( D06R0101_HEROINE_01 )
-			_OBJ_ADD( D06R0101_HAKASE2_01 )		
+			//_OBJ_ADD( D06R0101_HEROINE_01 )
+			//_OBJ_ADD( D06R0101_HAKASE2_01 )		
 
 		ELSIF $SCWK_TEMP1 == 16 THEN
 			//リュウラセンの塔が揺れる1回目

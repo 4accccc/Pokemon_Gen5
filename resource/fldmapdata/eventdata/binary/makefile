@@ -49,7 +49,8 @@ SCRIPTDIR	= ../../script
 #include	../../script/zone_script.list
 #SRCDATA	= $(addprefix $(DATADIR)/,$(filter-out sp_%.mev,$(SCRIPTFILES:.ev=.mev)))
 
-SRCDATA = $(wildcard $(DATADIR)/*.mev)
+SRCDATA	= $(DATADIR)/d08.mev $(DATADIR)/c07.mev $(DATADIR)/d08r0101.mev
+#SRCDATA = $(wildcard $(DATADIR)/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
 BINDAT = $(addprefix $(TMPDIR)/,$(addsuffix .bin,$(TGTDATA)))
 
@@ -60,8 +61,8 @@ SCRBASE = $(basename $(notdir $(UNIQ_TOP_EVENT_SCRFILES)))
 UNIQ_SCRIPTHEADER = $(addprefix $(SCRIPTDIR)/,$(addsuffix _def.h,$(SCRBASE)))
 
 
-LIST_FILE 	= list.txt
-
+#LIST_FILE 	= list.txt
+LIST_FILE		= list_playable.txt
 
 .PHONY:	do-build clean
 
@@ -81,12 +82,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(BINDAT)
 	$(COPY) $(TMPDIR)/*.bin ./
-	ls *.bin > $(LIST_FILE)
-	echo dummy_data >> $(LIST_FILE)
-	$(ARCLIST_MAKE) $(LIST_FILE)
+	#ls *.bin > $(LIST_FILE)
+	#echo dummy_data >> $(LIST_FILE)
+	#$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i -S $(LIST_FILE) $(targetname) > arc_result.txt
 	-rm *.bin
-	-rm $(LIST_FILE)
+	#-rm $(LIST_FILE)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 

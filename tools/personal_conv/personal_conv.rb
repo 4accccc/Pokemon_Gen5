@@ -8,6 +8,7 @@
   require File.dirname(__FILE__) + '/../hash/tokusei_hash.rb'
   require 'date'
 
+  require File.dirname(__FILE__) + '/../../resource/playable_keepmons.rb'
 =begin
   u8    basic_hp;       //äÓñ{ÇgÇo
   u8    basic_pow;      //äÓñ{çUåÇóÕ
@@ -749,7 +750,11 @@ end
 
       write_lst_file( fp_lst, gra_no, form_name )
 
-      gmm.make_row_index_kanji( "MONSNAME_", cnt, split_data[ PARA::POKENAME ], split_data[ PARA::POKENAME ] )
+      if $keep_monsname_hash.has_key?( split_data[ PARA::POKENAME ] ) then 
+        gmm.make_row_index_kanji( "MONSNAME_", cnt, split_data[ PARA::POKENAME ], split_data[ PARA::POKENAME ] )
+      else
+        gmm.make_row_index_kanji( "MONSNAME_", cnt, "ÅH" ,  "ÅH" )
+      end
 
       speabi1 = split_data[ PARA::SPEABI1 ]
       if speabi1 == ""

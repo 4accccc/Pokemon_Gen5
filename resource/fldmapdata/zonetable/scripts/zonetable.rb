@@ -251,10 +251,13 @@ class ZoneDataFile < OutputFile
 		movemodel = column[@cl.cMOVEMODEL]
     matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
 
-    event_id = "NARC_eventdata_#{id.downcase}_bin"
-		script =  "NARC_script_seq_#{id.downcase}_bin"
-		sp_script =  "NARC_script_seq_sp_#{id.downcase}_bin"
-		msg = "NARC_script_message_#{id.downcase}_dat"
+    mapid = id.downcase
+    if mapid != "c07" && mapid != "d08" && mapid != "d08r0101" then mapid = "d08r0101" end
+    event_id = "NARC_eventdata_#{mapid}_bin"
+		script =  "NARC_script_seq_#{mapid}_bin"
+		sp_script =  "NARC_script_seq_sp_#{mapid}_bin"
+		#msg = "NARC_script_message_#{mapid}_dat"
+		msg = "NARC_script_message_d08r0101_dat"
 
 		bgm_spring = column[@cl.cBGM_SPRING]
 		bgm_summer = column[@cl.cBGM_SUMMER]

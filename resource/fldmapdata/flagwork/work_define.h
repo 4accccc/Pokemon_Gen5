@@ -145,7 +145,7 @@
 #define WK_SCENE_R03_PLASMA              16533 /* 0x4095 ３番道路：プラズマ団誘拐イベント用ワーク */
 #define WK_SCENE_D07R0201                16534 /* 0x4096 D07ネジ山：ヤーコンと遭遇イベント */
 #define WK_SCENE_C07                     16535 /* 0x4097 C07セッカシティ：イベント用ワーク */
-		/* not used 16536(0x4098) */
+#define WK_SCENE_D08                     16536 /* 0x4098 D08リュウラセンの塔：イベント進行状況確認ワーク */
 #define WK_SCENE_C06                     16537 /* 0x4099 C06フキヨセシティ：POSイベント用ワーク */
 #define WK_SCENE_D06                     16538 /* 0x409a D06電気洞窟の外側：POSイベント用ワーク */
 #define WK_SCENE_D06R0101                16539 /* 0x409b D06R0101電気洞窟の内部：イベント用ワーク */
@@ -153,10 +153,10 @@
 #define WK_SCENE_D03R0101                16541 /* 0x409d D03砂漠（遺跡手前）：イベント用ワーク */
 #define WK_SCENE_D04R0101                16542 /* 0x409e D04遺跡：イベント用ワーク */
 #define WK_SCENE_D04R0601                16543 /* 0x409f D04遺跡奥：イベント用ワーク */
-		/* not used 16544(0x40a0) */
+#define WK_SCENE_R10                     16544 /* 0x40a0 R10／10番道路：イベント用ワーク */
 #define WK_SCENE_C09                     16545 /* 0x40a1 ポケモンリーグ外観：イベント用ワーク */
 #define WK_SCENE_C09R0501                16546 /* 0x40a2 ポケモンリーグチャンピオンの部屋：イベント用ワーク */
-		/* not used 16547(0x40a3) */
+#define WK_SCENE_H03                     16547 /* 0x40a3 H03：暴走族イベント用ワーク */
 #define WK_SCENE_H03_PLASMA              16548 /* 0x40a4 H03：暴走族イベント用ワーク */
 #define WK_SCENE_N01R0101                16549 /* 0x40a5 N城１F大広間：イベント用ワーク */
 #define WK_SCENE_N01R0201                16550 /* 0x40a6 N城２F大広間：イベント用ワーク */
@@ -174,7 +174,7 @@
 #define WK_SCENE_C03R1301_SUNGLASSES     16562 /* 0x40b2 ヒウンシティ（お金持ちの家１F）：ボディチェックイベント用ワーク */
 #define WK_SCENE_C04R0201                16563 /* 0x40b3 ミュージカルホール：イベント用ワーク */
 #define WK_SCENE_D07_RIVAL_01            16564 /* 0x40b4 ネジ山入り口：イベント用ワーク */
-		/* not used 16565(0x40b5) */
+#define WK_SCENE_H01R0201                16565 /* 0x40b5 スカイアローブリッジC03側ゲート：ライバルＰＯＳイベント */
 #define WK_SCENE_N01R0502                16566 /* 0x40b6 Ｎの城 謁見の間：イベント用ワーク */
 #define WK_SCENE_R06R0202                16567 /* 0x40b7 ６番道路洞窟のイベント用ワーク */
 #define WK_SCENE_C08_GYMCLEAR            16568 /* 0x40b8 ソウリュウシティジム：イベント用ワーク */
@@ -186,7 +186,7 @@
 #define WK_SCENE_C03P12                  16574 /* 0x40be ヒウンシティ路地：イベント用ワーク */
 #define WK_SCENE_C03P09_SWEETS           16575 /* 0x40bf ヒウンシティ路地：イベント用ワーク */
 #define WK_SCENE_R07_MOVEPOKE            16576 /* 0x40c0 7番道路：移動ポケモンイベント用ワーク */
-		/* not used 16577(0x40c1) */
+#define WK_SCENE_R13Ｒ0103_LEGEND        16577 /* 0x40c1 13番道路：ツチノカミイベント用ワーク */
 #define WK_SCENE_C04R0601                16578 /* 0x40c2 ライモンシティ４番道路側ゲート：イベント用ワーク */
 #define WK_SCENE_PALACE01                16579 /* 0x40c3 パレス：イベント用ワーク */
 #define WK_SCENE_C3CENTER_DANCE          16580 /* 0x40c4 C03中央部：ヒウンダンサーズイベント用ワーク */
@@ -225,6 +225,8 @@
 #define WK_SCENE_H05                     16613 /* 0x40e5 ワンダーブリッジ：イベント用ワーク */
 #define WK_SCENE_H05_GIRL                16614 /* 0x40e6 ワンダーブリッジ：消える少女イベント用ワーク */
 #define WK_SCENE_R07                     16615 /* 0x40e7 7番道路：ライブキャスターイベント用ワーク */
+#define WK_SCENE_C07_PLAYABLE            16616 /* 0x40e8 playable セッカシティ用ワーク */
+#define WK_SCENE_D08_PLAYABLE            16617 /* 0x40e9 playable リュウラセンの塔用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
@@ -277,7 +279,7 @@
 #define WK_OTHER_DISCOVER_EGG            16697 /* 0x4139 ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
 		/* not used 16698(0x413a) */
 #define WK_OTHER_C05R0701_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
-		/* not used 16700(0x413c) */
+#define WK_OTHER_PLAYABLE_TYPE           16700 /* 0x413c PLAYABLE：手持ちタイプ判別用ワーク */
 		/* not used 16701(0x413d) */
 		/* not used 16702(0x413e) */
 

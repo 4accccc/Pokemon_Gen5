@@ -29,6 +29,8 @@
 
 #include "arc/wifi_unionobj_plt.cdat"
 
+#include "playable_version.h"
+
 typedef struct _POINT{
   int x,y;
 }POINT;
@@ -700,7 +702,11 @@ void BeaconView_LogCounterGet( BEACON_VIEW_PTR wk, u8* sex_ct, u8* version_ct)
 static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 old_log_max ) 
 {
   u8 version_ct = 0, sex_ct = 0;
-  
+ 
+#ifdef PLAYABLE_VERSION
+  return; //体験版では特殊Gパワーは発動しない
+#endif
+
   //ログ内カウンター収集
   BeaconView_LogCounterGet( wk, &sex_ct, &version_ct);
 
