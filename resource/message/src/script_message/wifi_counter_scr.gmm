@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-11T16:29:13"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-30T12:54:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1080" top="382" right="1785" bottom="1010" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="475" top="626" right="994" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="499"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="499"/>
 		<band id="3" index="4" style="0000" width="196"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -381,7 +381,7 @@ Wi-Fi P2P接続画面へ</comment>
 		<comment>エラーメッセージ
 C-Gear入手前</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ただいま　じゅうびちゅう　です！
+		<language name="JPN" width="256">ただいま　じゅんびちゅう　です！
 また　あとで　おこしください</language>
 		<language name="JPN_KANJI" width="256">ただいま　準備中です！
 また　あとで　お越しください</language>
