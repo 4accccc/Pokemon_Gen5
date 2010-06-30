@@ -4647,6 +4647,37 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //SUSPENDモードに切り替えておく
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
 
+  //BG周りの設定をデフォルトに戻しておく
+  if( bevw->set_priority_flag )
+  {
+    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
+    if( scu != NULL )
+    { 
+      BTLV_SCU_RestoreDefaultScreen( scu );
+    }
+    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
+    bevw->set_priority_flag = 0;
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
+  }
+
+  if( bevw->set_alpha_flag )
+  {
+
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, 7 );
+
+    bevw->set_alpha_flag = 0;
+  }
+
+  //SEを強制的にストップ
+  if( bevw->se_play_flag )
+  { 
+    PMSND_StopSE();
+  }
+
   { 
     BOOL  migawari_flag = FALSE;
 
@@ -4693,6 +4724,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       bevw->sequence_work = 0;
   
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+      return;
     }
     //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
     else if( ( bevw->zoom_in_migawari == 1 ) && ( bevw->waza == BTLEFF_ZOOM_IN_RESET ) )
@@ -4712,6 +4744,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       bevw->zoom_in_migawari = 0;
   
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+      return;
     }
     //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
     else if( ( ( bevw->waza == BTLEFF_POKEMON_VANISH_OFF ) ||
@@ -4743,35 +4776,13 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       bevw->zoom_in_migawari = 0;
   
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+      return;
     }
   }
 
   //サブルーチンコールが残っていてはいけない
   GF_ASSERT_MSG( bevw->call_count == 0, "count:%d\n", bevw->call_count );
 
-  //BG周りの設定をデフォルトに戻しておく
-  if( bevw->set_priority_flag )
-  {
-    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
-    if( scu != NULL )
-    { 
-      BTLV_SCU_RestoreDefaultScreen( scu );
-    }
-    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
-    bevw->set_priority_flag = 0;
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
-    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
-  }
-  if( bevw->set_alpha_flag )
-  {
-
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
-                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
-                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-                      31, 7 );
-
-    bevw->set_alpha_flag = 0;
-  }
   GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
@@ -4788,11 +4799,6 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   }
 #endif
 
-  //SEを強制的にストップ
-  if( bevw->se_play_flag )
-  { 
-    PMSND_StopSE();
-  }
 #ifdef DEBUG_SE_END_PRINT
   { 
     BOOL  se_end_flag = FALSE;
