@@ -1924,7 +1924,8 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   b_rapid_input_val = !b_rapid_input_val;
 #endif
 
-  if( b_input )
+  if(    b_input
+      && ( !(wk->b_listbar) ) )  // 右端のスライドバーのバーアイコンを操作していないなら
   {
     // セレクト無効状態でキー入力されたら
     BOOL key_without_b = FALSE;
@@ -1962,9 +1963,11 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
     }
   }
  
- if(    b_input
-     && wk->select_id != SELECT_ID_NULL )  // キー入力の場合は、何か選択されていなければならない。
- {                                         // 何も選択されていないときは、キーのTrg押し直しがあるまで、キー入力は無視する。
+  if(    b_input
+      && wk->select_id != SELECT_ID_NULL  // キー入力の場合は、何か選択されていなければならない。
+                                          // 何も選択されていないときは、キーのTrg押し直しがあるまで、キー入力は無視する。
+      && ( !(wk->b_listbar) ) )           // 右端のスライドバーのバーアイコンを操作していないなら
+  {
     // キー入力
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     {
@@ -2347,9 +2350,9 @@ static BOOL ScenePlateSelect_Init( int* seq, void* work )
 //-----------------------------------------------------------------------------
 static BOOL ScenePlateSelect_Main( int* seq , void* work )
 { 
-  PMS_SELECT_MAIN_WORK* wk = work;
-  TOUCHBAR_ICON result;
-  BOOL b_menu = FALSE;
+  PMS_SELECT_MAIN_WORK*  wk      = work;
+  TOUCHBAR_ICON          result  = TOUCHBAR_SELECT_NONE;
+  BOOL                   b_menu  = FALSE;
 
   PMSSelect_BG_PlateMain( &wk->wk_bg );
 
@@ -2358,6 +2361,7 @@ static BOOL ScenePlateSelect_Main( int* seq , void* work )
     BOOL b_decide = FALSE;
     
     // タッチバー
+    if( !(wk->b_listbar) )  // 右端のスライドバーのバーアイコンを操作していないなら
     {
       // タッチバーの処理の前に現在のタッチorキーをセットしておく
 	    GFL_UI_SetTouchOrKey( wk->b_touch?GFL_APP_KTST_TOUCH:GFL_APP_KTST_KEY );
