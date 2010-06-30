@@ -703,6 +703,7 @@ BOOL BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
     }
   }
 
+//  BTL_EVENT_ReOrderFactorsByPokeAgility( wk );
   if( scproc_AfterMemberIn(wk) ){
     return TRUE;
   }
@@ -729,6 +730,7 @@ SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* c
 {
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
   SCQUE_Init( wk->que );
+//  BTL_EVENT_ReOrderFactorsByPokeAgility( wk );
 
   #ifdef PM_DEBUG
   {
@@ -762,7 +764,6 @@ SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* c
   wk->numEndActOrder = ActOrderProc_Main( wk, wk->numEndActOrder );
 
   BTL_N_Printf( DBGSTR_SVFL_TurnStart_Result, wk->numEndActOrder, wk->numActOrder );
-
   #ifdef PM_DEBUG
   wk->fDebugClack = FALSE;
   #endif
@@ -805,6 +806,7 @@ SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk, const BTL_
 {
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
   SCQUE_Init( wk->que );
+//  BTL_EVENT_ReOrderFactorsByPokeAgility( wk );
 
   if( wk->cmdBuildStep == 0 )
   {
@@ -847,6 +849,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
 
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
   SCQUE_Init( wk->que );
+//  BTL_EVENT_ReOrderFactorsByPokeAgility( wk );
 
   if( wk->cmdBuildStep == 0 )
   {
@@ -5801,6 +5804,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
     scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
   }
 
+  BTL_POKESET_SortByAgility( wk->psetDamaged, wk );
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum, fDelayAttack );
 
   if( fEffectPut ){
@@ -13229,7 +13233,6 @@ u32 BTL_SVFTOOL_GetPerappVoicePower( BTL_SVFLOW_WORK* wk, u8 pokeID )
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
   return BTL_MAIN_GetPerappVoicePower( wk->mainModule, clientID );
 }
-
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 自クライアントが担当している戦闘位置の数を返す
