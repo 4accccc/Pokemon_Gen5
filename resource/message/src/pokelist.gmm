@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-16T17:55:00"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-30T22:08:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1547,9 +1547,9 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>レギュレーションエラーメッセージ
 0:レベルの合計</comment>
 		<language name="JPN" font=" 1:small" width="216">ポケモンの　レベルの　ごうけいが
-[2:02:３桁:0]いじょうに　なっています</language>
+[2:02:３桁:0]を　こえています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンの　レベルの　合計が
-[2:02:３桁:0]以上に　なっています</language>
+[2:02:３桁:0]を　超えています</language>
 	</row>
 
 	<row id="mes_pokelist_07_04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
