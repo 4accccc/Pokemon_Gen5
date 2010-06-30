@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-24T13:01:10"/>
+	<create user="matsushima" host="W00181" date="2010-06-30T17:54:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -350,7 +350,7 @@
 わざマシンと　いっしょに[BE:00:ページ切り替え（行送り）]
 レターが　はいっていましたよ…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おやおや…
-ロックカプセルと　一緒に[BE:00:ページ切り替え（行送り）]
+わざマシンと　一緒に[BE:00:ページ切り替え（行送り）]
 レターが　入っていましたよ…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
