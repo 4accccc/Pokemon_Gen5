@@ -12,6 +12,7 @@ require "egg_group_poke_list_hash_conv.rb"
 require "seed_poke_hash_conv.rb"
 require "reverse_seed_poke_hash_conv.rb"
 require "gender_hash_conv.rb"
+require "tokusei_hash_conv.rb"
 
 OutputMonsFullNameList( "../data/personal_wb.csv", "./hash/" )
 OutputFormNameHash( "../data/personal_wb.csv", "./hash/" )
@@ -28,3 +29,4 @@ OutputReverseSeedPokeHash_from_PersonalData( "../data/personal_wb.csv", "./hash/
 OutputEggGroupHash( "../data/personal_wb.csv", "./hash/" )
 OutputEggGroupPokeListHash( "../data/personal_wb.csv", "./hash/" )
 OutputGenderHash( "../data/personal_wb.csv", "./hash/" )
+OutputTokuseiHash( "../data/personal_wb.csv", "./hash/" )

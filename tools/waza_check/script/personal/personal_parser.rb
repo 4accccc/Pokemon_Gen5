@@ -245,4 +245,13 @@ class PersonalDataParser
     return teach_waza_list
   end
 
+  def get_tokusei_list( mons_fullname )
+    personal_items = get_personal_items( mons_fullname )
+    tokusei_list = Array.new
+    tokusei_list << personal_items[ PERSONAL_PARAM::SPEABI1 ]
+    tokusei_list << personal_items[ PERSONAL_PARAM::SPEABI2 ]
+    tokusei_list << personal_items[ PERSONAL_PARAM::SPEABI3 ]
+    return tokusei_list
+  end
+
 end 
