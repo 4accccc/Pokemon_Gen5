@@ -6091,14 +6091,22 @@ static void handler_Itamiwake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       param->volume[0] = hp_avrg - hp_me;
       param->pokeID[1] = target_pokeID;
       param->volume[1] = hp_avrg - hp_target;
+      param->fItemReactionDisable = TRUE;
     BTL_SVF_HANDEX_Pop( flowWk, param );
 
 
     {
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
+      BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP   *item_param;
+
       msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
         HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_Itamiwake );
       BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+
+      item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
+        item_param->pokeID = pokeID;
+        item_param->reactionType = BTL_ITEMREACTION_HP;
+      BTL_SVF_HANDEX_Pop( flowWk, item_param );
     }
   }
 }
