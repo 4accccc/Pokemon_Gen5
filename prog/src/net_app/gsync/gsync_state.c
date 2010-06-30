@@ -192,6 +192,7 @@ static void _downloadcgearend(G_SYNC_WORK* pWork);
 static void _ErrorDisp(G_SYNC_WORK* pWork);
 static void _SymbolPokemonSave(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
+static BOOL _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 
 
 
@@ -707,6 +708,9 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
 
   if(!_IsLv1Mode(pWork)){
 
+    //   アイテムをセーブエリアに移動
+    _itemInSaveArea(pDreamSave, pWork->pDreamDownload);
+    
     _SymbolPokemonSave(pWork, pDreamSave, pWork->pDreamDownload);  //ぽけもんかくのう
     // 家具
     _furnitureInSaveArea(pDreamSave, pWork->pDreamDownload);
@@ -1673,10 +1677,10 @@ static void _createAccount(G_SYNC_WORK* pWork)
 
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
-      s32 proid = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pWork->pGameData) );
+      u32 proid = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pWork->pGameData) );
 
       GFL_STD_MemClear(pWork->tempbuffer, sizeof(pWork->tempbuffer));
-      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d\0\0\0\0\0\0\0\0\0\0\0\0", proid);
+      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%u\0\0\0\0\0\0\0\0\0\0\0\0", proid);
 
       OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d %s\n",proid,STD_StrLen(pWork->tempbuffer),pWork->tempbuffer);
       NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap),

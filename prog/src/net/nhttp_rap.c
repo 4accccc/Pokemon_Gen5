@@ -53,14 +53,14 @@ static SOCCaInfo* nintendoCA[] = {
 
 #ifdef DEBUG_SERVER
 
-const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=account.playstatus&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
-const static char POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
-const static char DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=savedata.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
-const static char DOWNLOADEND_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=savedata.download.finish&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //POST
-const static char UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //POST
+const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=account.playstatus&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //GET
+const static char POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=sleepily.bitlist&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //GET
+const static char DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=savedata.download&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //GET
+const static char DOWNLOADEND_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=savedata.download.finish&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
+const static char UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=savedata.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
 const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=account.createdata&tok=%s\0"; //POST
-const static char BTL_DL_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=worldbattle.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //GET
-const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=worldbattle.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //POST
+const static char BTL_DL_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=worldbattle.download&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0"; //GET
+const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=worldbattle.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0"; //POST
 
 //const static char POKECHK_URL[] ="http://125.206.241.227/pokemon/validate"; //POST
 const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/validate"; //POST
@@ -68,14 +68,14 @@ const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/vali
 #else
 
 
-const static char ACCOUNT_INFOURL[] = "https://ds.pokemon-gl.com/dsio/gw?p=account.playstatus&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
-const static char POKEMONLISTURL[] ="https://ds.pokemon-gl.com/dsio/gw?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
-const static char DOWNLOAD_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=savedata.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
-const static char DOWNLOADEND_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=savedata.download.finish&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //POST
-const static char UPLOAD_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //POST
+const static char ACCOUNT_INFOURL[] = "https://ds.pokemon-gl.com/dsio/gw?p=account.playstatus&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //GET
+const static char POKEMONLISTURL[] ="https://ds.pokemon-gl.com/dsio/gw?p=sleepily.bitlist&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //GET
+const static char DOWNLOAD_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=savedata.download&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //GET
+const static char DOWNLOADEND_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=savedata.download.finish&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
+const static char UPLOAD_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=savedata.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
 const static char ACCOUNT_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=account.createdata&tok=%s\0"; //POST
-const static char BTL_DL_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //GET
-const static char BTL_UP_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //POST
+const static char BTL_DL_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle.download&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0"; //GET
+const static char BTL_UP_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0"; //POST
 
 const static char POKECHK_URL[] ="https://pkvldtprod.nintendo.co.jp/pokemon/validate"; //POST
 
