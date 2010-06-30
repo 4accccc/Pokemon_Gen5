@@ -308,35 +308,37 @@ void BTL_POKESET_RemoveDeadPoke( BTL_POKESET* rec )
  */
 void BTL_POKESET_SortByAgility( BTL_POKESET* set, BTL_SVFLOW_WORK* flowWk )
 {
-  u32 i, j;
-
-  for(i=0; i<set->count; ++i){
-    set->sortWork[i] = BTL_SVFTOOL_CalcAgility( flowWk, set->bpp[i], TRUE );
-  }
-
-  for(i=0; i<set->count; ++i)
+  if( set->count > 1 )
   {
-    for(j=i+1; j<set->count; ++j)
-    {
-      if( (set->sortWork[j] > set->sortWork[i])
-      ||  ((set->sortWork[j] == set->sortWork[i]) && BTL_CALC_GetRand(2)) // ‘f‘‚³ˆê’v‚È‚çƒ‰ƒ“ƒ_ƒ€
-      ){
-        BTL_POKEPARAM* tmpBpp;
-        u16            tmpDmg;
-        u16            tmpAgi;
+    u32 i, j;
 
-        tmpBpp = set->bpp[i];
-        tmpDmg = set->damage[i];
-        tmpAgi = set->sortWork[i];
-        set->bpp[i]      = set->bpp[j];
-        set->damage[i]   = set->damage[j];
-        set->sortWork[i] = set->sortWork[j];
-        set->bpp[j]      = tmpBpp;
-        set->damage[j]   = tmpDmg;
-        set->sortWork[j] = tmpAgi;
+    for(i=0; i<set->count; ++i){
+      set->sortWork[i] = BTL_SVFTOOL_CalcAgility( flowWk, set->bpp[i], TRUE );
+    }
+
+    for(i=0; i<set->count; ++i)
+    {
+      for(j=i+1; j<set->count; ++j)
+      {
+        if( (set->sortWork[j] > set->sortWork[i])
+        ||  ((set->sortWork[j] == set->sortWork[i]) && BTL_CALC_GetRand(2)) // ‘f‘‚³ˆê’v‚È‚çƒ‰ƒ“ƒ_ƒ€
+        ){
+          BTL_POKEPARAM* tmpBpp;
+          u16            tmpDmg;
+          u16            tmpAgi;
+
+          tmpBpp = set->bpp[i];
+          tmpDmg = set->damage[i];
+          tmpAgi = set->sortWork[i];
+          set->bpp[i]      = set->bpp[j];
+          set->damage[i]   = set->damage[j];
+          set->sortWork[i] = set->sortWork[j];
+          set->bpp[j]      = tmpBpp;
+          set->damage[j]   = tmpDmg;
+          set->sortWork[j] = tmpAgi;
+        }
       }
     }
   }
-
 }
 
