@@ -121,7 +121,7 @@ ev_pdw_furniture_select_routine:
     _BALLOONWIN_CLOSE()
   ELSE
     //家具番号の設定
-    _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_SET_SELECT_FURNITURE , SCWK_ANSWER , 0 , 0)
+    _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_SET_SELECT_FURNITURE , selectNo , 0 , 0)
     //"なるほど！　こんなに　ステキなら夢にも　でてきそうですよね！"
     _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_07, SCWK_TARGET_OBJID, POS_DOWN )
     _LAST_KEYWAIT ()
