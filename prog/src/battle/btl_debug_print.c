@@ -233,7 +233,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_STR_SetPoke2:             return "ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n";
   case DBGSTR_PRINT_BufIdx:             return "bufIdx=%d ....\n";
   case DBGSTR_STR_TagSetNumber:         return "[TAG] SetNumber : keta=%d, value=%d\n";
-  case DBGSTR_STR_SetPokeNickname:      return "setPokeNickName ID=%d ....\n";
+  case DBGSTR_STR_SetPokeNickname:      return "setPokeNickName ID=%d \n";
+  case DBGSTR_STR_SetPokeNicknameTruth: return "setPokeNickName Truth ID=%d\n";
   case DBGSTR_STR_SetTagWazaName:       return "[TAG] Set WazaName ... waza=%d\n";
   case DBGSTR_STR_SetItemName:          return "set Item Name argIdx=%d, ID=%d ....\n";
   case DBGSTR_SVFL_ActOrderStart:       return ">>>> ActProc [開始] ポケ[ID:%d = monsno:%d] (ptr=%p)\n";

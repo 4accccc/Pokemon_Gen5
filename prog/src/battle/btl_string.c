@@ -103,7 +103,8 @@ static struct {
 
   HEAPID          heapID;               ///< ヒープID
   u32             clientID;             ///< UIクライアントID
-  u32             fIgnoreFormat;        ///< 対象による文字列フォーマット変更をオフ（常に自分用=接頭詞なし）
+  u16             fIgnoreFormat;        ///< 対象による文字列フォーマット変更をオフ（常に自分用=接頭詞なし）
+  u16             fForceTrueName;       ///< ポケモンニックネームタグで強制的に正体名を利用（外部gmm対応）
 
 }SysWork;
 
@@ -168,6 +169,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
   SysWork.heapID = heapID;
   SysWork.clientID = playerClientID;
   SysWork.fIgnoreFormat = BTL_MAIN_GetSetupStatusFlag( mainModule, BTL_STATUS_FLAG_LEGEND_EX );
+  SysWork.fForceTrueName = FALSE;
 
   SysWork.wset = WORDSET_Create( heapID );
   SysWork.tmpBuf = GFL_STR_CreateBuffer( TMP_STRBUF_SIZE, heapID );
@@ -643,9 +645,14 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             break;
           case TAGIDX_POKE_NICKNAME:
             BTL_N_Printf( DBGSTR_STR_SetPokeNickname, args[argIdx]);
-            register_PokeNickname( args[argIdx], bufIdx );
+            if( SysWork.fForceTrueName == FALSE ){
+              register_PokeNickname( args[argIdx], bufIdx );
+            }else{
+              register_PokeNicknameTruth( args[argIdx], bufIdx );
+            }
             break;
           case TAGIDX_POKE_NICKNAME_TRUTH:
+            BTL_N_Printf( DBGSTR_STR_SetPokeNicknameTruth, args[argIdx]);
             register_PokeNicknameTruth( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_NAME:
@@ -898,7 +905,6 @@ void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResu
 //=============================================================================================
 void BTL_STR_GetUIString( STRBUF* dst, u16 strID )
 {
-  OS_TPrintf("Get UI String ID=%d\n", strID);
   GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, dst );
 }
 
@@ -932,7 +938,9 @@ void BTL_STR_MakeStringWazaOboeWithArgArray( STRBUF* buf, BtlStrID_WAZAOBOE strI
 static void ms_wazaoboe_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int* args )
 {
   GFL_MSG_GetString( SysWork.msg[MSGSRC_WAZAOBOE], strID, SysWork.tmpBuf );
+  SysWork.fForceTrueName = TRUE;
   registerWords( SysWork.tmpBuf, args, SysWork.wset );
+  SysWork.fForceTrueName = FALSE;
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 

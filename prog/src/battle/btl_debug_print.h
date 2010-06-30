@@ -178,6 +178,7 @@ typedef enum {
   DBGSTR_PRINT_BufIdx,
   DBGSTR_STR_TagSetNumber,
   DBGSTR_STR_SetPokeNickname,
+  DBGSTR_STR_SetPokeNicknameTruth,
   DBGSTR_STR_SetTagWazaName,
   DBGSTR_STR_SetItemName,
   DBGSTR_SVFL_AtkPower,
