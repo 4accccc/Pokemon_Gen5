@@ -573,10 +573,11 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
   pWork->pGameData = pParent->gameData;
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
-  pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, pParent->pSvl);
 
-  GFL_NET_DWC_SetErrDisconnectCallback(lcheck_DisconnectCallback, pWork );
-  
+  if(GFL_NET_IsInit()){
+    pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, pParent->pSvl);
+    GFL_NET_DWC_SetErrDisconnectCallback(lcheck_DisconnectCallback, pWork );
+  }
   pWork->pDispWork = PDWACC_DISP_Init(pWork->heapID);
   pWork->pMessageWork = PDWACC_MESSAGE_Init(pWork->heapID, NARC_message_pdwacc_dat);
 
