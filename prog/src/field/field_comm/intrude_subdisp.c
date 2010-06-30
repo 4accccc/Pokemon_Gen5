@@ -666,6 +666,8 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   int i;
   
   WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(gamedata) );  //ビーコンの電波強度アイコン反映
+  //通信の起動、終了、再起動が外側でコントロールされている為、常にフラグを立ち続ける
+  GFL_NET_WirelessIconOBJWinON();
   
   if(intcomm == NULL || (intcomm != NULL && intcomm->subdisp_update_stop == FALSE)){
     _IntSub_CommParamUpdate(intsub, intcomm);
