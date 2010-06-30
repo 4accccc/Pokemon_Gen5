@@ -181,6 +181,11 @@ extern TOUCHBAR_ICON TOUCHBAR_GetTrg( const TOUCHBAR_WORK *cp_wk );
 extern TOUCHBAR_ICON TOUCHBAR_GetTouch( const TOUCHBAR_WORK *cp_wk );
 
 //-------------------------------------
+///	ボタン待ち  （ボタンを押した後、Trg検知するまではTRUE　ボタンを押せる時はFALSE）
+//=====================================
+extern BOOL TOUCHBAR_IsDecide( const TOUCHBAR_WORK *cp_wk );
+
+//-------------------------------------
 ///	全体の設定
 //(内部ではすべてのICONを設定しているだけなので、全体のフラグと個別のフラグは重複しています)
 //=====================================

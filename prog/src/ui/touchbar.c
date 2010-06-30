@@ -445,6 +445,20 @@ TOUCHBAR_ICON TOUCHBAR_GetTouch( const TOUCHBAR_WORK *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  TOUCHBAR  ボタン決定後かどうか
+ *
+ *	@param	const TOUCHBAR_WORK *cp_wk ワーク
+ *
+ *	@retval TRUE  タッチしてからトリガまで
+ *	@retval FALSE タッチできる状況のとき
+ */
+//-----------------------------------------------------------------------------
+BOOL TOUCHBAR_IsDecide( const TOUCHBAR_WORK *cp_wk )
+{
+  return cp_wk->seq != TOUCHBAR_SEQ_MAIN;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	TOUCHBAR	全てのアイコンを設定
  *
  *	@param	TOUCHBAR_WORK *p_wk	ワーク
