@@ -283,6 +283,7 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ||
           GFL_UI_TP_HitTrg( hitTbl ) == 0 )
       {
+        PMSND_PlaySE( STA_SE_CANCEL );
         infoWork->state = MSIS_WAIT_ANIME;
         GFL_CLACT_WK_SetAnmSeq( infoWork->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
         GFL_CLACT_WK_SetAutoAnmFlag( infoWork->clwkReturn , TRUE );

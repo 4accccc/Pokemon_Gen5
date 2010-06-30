@@ -892,7 +892,8 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
-  
+
+  if( talkWork->state == CTS_WAIT )
   {
     static const GFL_UI_TP_HITTBL hitTbl[3] = 
     {

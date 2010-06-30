@@ -877,6 +877,7 @@ static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
+  else
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
     drawWork->state = CDS_FADEOUT;

@@ -12,5 +12,6 @@
 #include "sound/pm_sndsys.h"
 
 #define STA_SE_SHUTTER_SE (SEQ_SE_MSCL_14)
+#define STA_SE_CANCEL     (SEQ_SE_CANCEL1)
 
 //  PMSND_PlaySE(  );
