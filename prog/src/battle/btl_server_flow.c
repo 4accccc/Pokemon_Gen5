@@ -2109,14 +2109,6 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
         u16 lv_border = (1 + badgeCnt) * 10;
         u16 rand;
 
-        // 確実に眠りモードに入るための一時的な措置（これでcommitしちゃダメ）
-        #ifdef PM_DEBUG
-        if( !scEvent_CheckInemuriFail(wk, bpp) ){
-          return SABOTAGE_GO_SLEEP;
-        }
-        #endif
-
-
         if( lv_poke <= lv_border ){
           return SABOTAGE_NONE;
         }
