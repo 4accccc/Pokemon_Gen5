@@ -238,6 +238,7 @@ typedef enum
   MATCHMAKE_KEY_CUPNO,
   MATCHMAKE_KEY_DISCONNECT,
   MATCHMAKE_KEY_BTLCNT,
+  MATCHMAKE_KEY_VERLANG,
 
   MATCHMAKE_KEY_MAX,
 } MATCHMAKE_KEY;
@@ -980,6 +981,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DISCONNECT, cp_data->disconnect );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_CUPNO, cp_data->cup_no );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTLCNT, cp_data->btlcnt );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_VERLANG, PM_VERSION | (PM_LANG << 16) ); //@todo forupper もしアッパーバージョンでバトルサーバーバージョンが上がったらこの値を見て繋がらないようにする
   STD_TSPrintf( p_wk->filter, "mod=%d And rul=%d And deb=%d", btl_mode, btl_rule, MATCHINGKEY );
   OS_TFPrintf( 3, "%s\n", p_wk->filter );
   p_wk->seq_matchmake = 0;

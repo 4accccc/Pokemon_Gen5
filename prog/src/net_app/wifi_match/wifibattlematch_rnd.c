@@ -1984,6 +1984,7 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 { 
   enum
   { 
+    SEQ_CHECKERR,
     SEQ_START,
 
     SEQ_WAIT_MSG,
@@ -1994,6 +1995,25 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
   switch( *p_seq )
   { 
+  case SEQ_CHECKERR:
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:
+      *p_seq  = SEQ_START;
+      break;
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    }
+    break;
+
+
   case SEQ_START:
     WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
     break;
@@ -2023,6 +2043,7 @@ static void WbmRndSeq_Rate_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void 
 { 
   enum
   { 
+    SEQ_CHECKERR,
     SEQ_START_SELECT_CONTINUE_MSG,
     SEQ_START_SELECT_CONTINUE,
     SEQ_WAIT_SELECT_CONTINUE,
@@ -2035,6 +2056,22 @@ static void WbmRndSeq_Rate_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void 
 
   switch( *p_seq )
   { 
+  case SEQ_CHECKERR:
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:
+      *p_seq  = SEQ_START_SELECT_CONTINUE_MSG;
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    }
+    break;
+
     //-------------------------------------
     /// 対戦続行確認
     //=====================================

@@ -3637,6 +3637,8 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 { 
   enum
   { 
+    SEQ_CHECK_ERR,
+
     SEQ_START_SELECT_CONTINUE_MSG,
     SEQ_START_SELECT_CONTINUE,
     SEQ_WAIT_SELECT_CONTINUE,
@@ -3653,6 +3655,21 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 
   switch( *p_seq )
   { 
+  case SEQ_CHECK_ERR:
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:
+      *p_seq  = SEQ_START_SELECT_CONTINUE_MSG;
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      break;
+    }
+    break;
+
     //-------------------------------------
     ///	続行確認
     //=====================================
