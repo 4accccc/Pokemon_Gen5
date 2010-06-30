@@ -2112,6 +2112,16 @@ void  BTLV_EFFECT_StopAllPMVoice( void )
 
 //----------------------------------------------------------------------------
 /**
+ *  @brief  ステータス上昇下降エフェクトの連続起動抑制をクリア
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_EFFECT_ClearOldStatusEffectBuffer( void )
+{ 
+  BTLV_EFFVM_ClearOldStatusEffectBuffer( bew->vm_core );
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  空いているTCBIndexを取得
  *
  *  @param[in]  bevw システム管理構造体

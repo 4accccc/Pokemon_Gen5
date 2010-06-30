@@ -365,6 +365,7 @@ extern  void              BTLV_EFFECT_SetCameraWorkStop( void );
 extern  void              BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type );
 extern  void              BTLV_EFFECT_SetFieldAnmStopOnce( void );
 extern  void              BTLV_EFFECT_StopAllPMVoice( void );
+extern  void              BTLV_EFFECT_ClearOldStatusEffectBuffer( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

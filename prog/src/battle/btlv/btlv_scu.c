@@ -3691,6 +3691,9 @@ void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
     BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, FALSE, FALSE );
   }
 
+  //ステータス上昇下降エフェクトの連続起動抑制をクリア
+  BTLV_EFFECT_ClearOldStatusEffectBuffer();
+
 //  BTLV_SCU_RestoreDefaultScreen( wk );
   tokwin_disp_first( &wk->tokWin[side], pos, fFlash );
 }
