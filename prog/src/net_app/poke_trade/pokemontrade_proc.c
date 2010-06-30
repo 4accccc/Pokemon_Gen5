@@ -131,6 +131,8 @@ static void _recvPokemonDataReturn(const int netID, const int size, const void* 
 
 static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork);
 
+static void CalcLineAfterLR(POKEMON_TRADE_WORK* pWork, const BOOL bChange); //20100630 add Saito
+
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
   {_recvChangeFactor, NULL },   ///< _NETCMD_CHANGEFACTOR
@@ -3024,14 +3026,8 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
       bChange=TRUE;
     }
 
-    //変更がかかる場合、カーソル位置を左から2列目（0オリジン）にする　20100628 add Saito BTS6929_a
-    if ( bChange )
-    {
-      int setline = POKETRADE_boxScrollNum2Line(pWork);
-      setline+=2;
-      if (setline >= pWork->TRADEBOX_LINEMAX) setline -= pWork->TRADEBOX_LINEMAX;
-      pWork->MainObjCursorLine = setline;
-    }
+    CalcLineAfterLR(pWork, bChange);    //20100630 add Saito
+    
   }
   else if(key & PAD_BUTTON_L ){   //ベクトルを監視
     GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
@@ -3047,14 +3043,8 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
       bChange=TRUE;
     }
 
-    //変更がかかる場合、カーソル位置を左から2列目（0オリジン）にする　20100628 add Saito BTS6929_a
-    if ( bChange )
-    {
-      int setline = POKETRADE_boxScrollNum2Line(pWork);
-      setline+=2;
-      if (setline >= pWork->TRADEBOX_LINEMAX) setline -= pWork->TRADEBOX_LINEMAX;
-      pWork->MainObjCursorLine = setline;
-    }
+    CalcLineAfterLR(pWork, bChange);    //20100630 add Saito
+
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_UP ){   //ベクトルを監視
     GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
@@ -3625,13 +3615,13 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
           pWork->oldLine = -1;//強制書き直し
           pWork->bgscrollRenew = TRUE;
           _scrollMainFunc(pWork,FALSE,TRUE);
-          //スクロール停止 20100628 add Saito BTS6929_b
+          //スクロール停止 20100628 add Saito BTS6919_b
           pWork->speed = 0;
           return;
         }
       }
       _PokemonIconRenew(pWork);
-      //スクロール停止 20100628 add Saito BTS6929_b
+      //スクロール停止 20100628 add Saito BTS6919_b
       pWork->speed = 0;
       return;
     }
@@ -4734,6 +4724,50 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 
   
   return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ＬＲ押下後のラインカーソルライン再計算
+ * @note    変更がかかる場合、カーソル位置を左から2列目（0オリジン）にする
+ * @note    ただし、手持ちとボックス1のときはずれがあるので、例外処理する
+ * 
+ * @param   pWork       ワークポインタ
+ * @param   bChange     変更があったか？
+ *
+ * @retval  none
+ *
+ */
+//------------------------------------------------------------------------------
+static void CalcLineAfterLR(POKEMON_TRADE_WORK* pWork, const BOOL bChange)
+{
+  //変更がかかる場合、カーソル位置を左から2列目（0オリジン）にする　20100628 add Saito BTS6919_a
+  if ( bChange )
+  {
+    int setline = POKETRADE_boxScrollNum2Line(pWork);
+    setline+=2;
+    if (setline >= pWork->TRADEBOX_LINEMAX) setline -= pWork->TRADEBOX_LINEMAX;
+
+    if ( pWork->BoxScrollNum == centerPOS[0] )
+    {
+      //ボックス1をさすようにする　20100630 add Saito
+      NOZOMU_Printf("ボックス1を表示\n");
+      setline = HAND_HORIZONTAL_NUM;
+    }
+    else if ( pWork->BoxScrollNum == centerPOS[pWork->BOX_TRAY_MAX] )
+    {
+      //手持ちをさすようにする　20100630 add Saito
+      NOZOMU_Printf("手持ちを表示\n");
+      setline = 0;
+      //手持ちトレイ上ではカーソル位置の補正がある
+      if(pWork->MainObjCursorIndex >= HAND_VERTICAL_NUM){
+        pWork->MainObjCursorIndex = HAND_VERTICAL_NUM-1;
+      }
+    }
+    pWork->MainObjCursorLine = setline;
+    //強制書き直し
+    pWork->oldLine = -1;
+  }
 }
 
 //----------------------------------------------------------
