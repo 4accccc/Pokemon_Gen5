@@ -1504,6 +1504,11 @@ static void PSATATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *su
     scale->y = FX32_CONST(15.3f);
   }
   else
+  if( monsno == MONSNO_037 )//ロコン
+  {
+    scale->y = FX32_CONST(15.7f);
+  }
+  else
   if( monsno == MONSNO_086 )//パウワウ
   {
     scale->x = FX32_CONST(16.4f);
