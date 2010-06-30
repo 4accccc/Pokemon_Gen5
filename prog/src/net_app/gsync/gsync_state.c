@@ -742,6 +742,7 @@ static void _cgearsave3(G_SYNC_WORK* pWork)
   pWork->cgearNo=DREAM_WORLD_NOPICTURE;
   GFL_HEAP_FreeMemory(pWork->pCGearWork);
   pWork->pCGearWork=NULL;
+  pWork->noERROR = FALSE;
   _CHANGE_STATE(_exsaveEnd);
 }
 
@@ -774,6 +775,8 @@ static void _cgearsave(G_SYNC_WORK* pWork)
     _CHANGE_STATE(_ErrorDisp);
   }
   else{
+    pWork->noERROR = TRUE;
+
     pWork->pCGearWork = GFL_HEAP_AllocMemory(pWork->heapID,SAVESIZE_EXTRA_CGEAR_PICTURE);
     pPic = (CGEAR_PICTURE_SAVEDATA*)pWork->pCGearWork;
 
@@ -795,6 +798,7 @@ static void _zukansave3(G_SYNC_WORK* pWork)
   pWork->zukanNo=DREAM_WORLD_NOPICTURE;
   GFL_HEAP_FreeMemory(pWork->pZknWork);
   pWork->pZknWork=NULL;
+  pWork->noERROR = FALSE;
   _CHANGE_STATE(_exsaveEnd);
 }
 
@@ -822,6 +826,8 @@ static void _zukansave(G_SYNC_WORK* pWork)
     _CHANGE_STATE(_ErrorDisp);
   }
   else{
+    pWork->noERROR = TRUE;
+    
     pWork->pZknWork = GFL_HEAP_AllocMemory(pWork->heapID, SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
     SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, pWork->heapID,
                                pWork->pZknWork,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
@@ -838,6 +844,7 @@ static void _musicalsaveMain(G_SYNC_WORK* pWork)
 
   if( MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( pWork->pMusical )){
     pWork->pMusical=NULL;
+    pWork->noERROR = FALSE;
     _CHANGE_STATE(_exsaveEnd);
   }
 } 
@@ -857,6 +864,7 @@ static void _musicalsave(G_SYNC_WORK* pWork,int size)
       _CHANGE_STATE(_ErrorDisp);
     }
     else{
+      pWork->noERROR = TRUE;
       //ミュージカルセーブ
       pWork->pMusical = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( pWork->pGameData , pCRC, size, pWork->heapID);
       _CHANGE_STATE(_musicalsaveMain);
