@@ -2054,9 +2054,8 @@ static void bsway_SetHomeNPC(
       BSUBWAY_LEADER_DATA *leader = &(pLeader[num-1]);
       
       while( num && i < HOME_NPC_WIFI_MAX ){
-        id = *(u32*)leader->id_no;
-        KAGAYA_Printf(
-            "BSW WIFI HOME LEADER No.%d(S %d) ID %d\n", i, num, id );
+        id = BSUBWAY_LEADERDATA_GetPlayerID( leader );
+        KAGAYA_Printf( "BSW WIFI HOME NPC No.%d(%d) ID %u\n", i, num, id );
         id %= 10;
         
         if( leader->gender == 0 ){

@@ -1218,20 +1218,6 @@ void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBW
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_LEADER_DATA* dat, u8 rank, u8 room )
 {
-#ifdef PM_DEBUG
-  KAGAYA_Printf( "BSW SAVE LEADER DATA RANK %d ROOM %d\n", rank, room );
-  {
-    int i;
-    u32 id;
-    const BSUBWAY_LEADER_DATA *pLeader = bsw_wifi->leader;
-    
-    for( i = 0; i < BSUBWAY_STOCK_WIFI_LEADER_MAX; i++, pLeader++ ){
-      id = *((u32*)pLeader->id_no);
-      KAGAYA_Printf( "BEFORE BSW SAVE LEADER DATA No.%d ID=%d\n", i, id );
-    }
-  }
-#endif
-
   GFL_STD_MemCopy( dat, &bsw_wifi->leader,
     sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX );
   
@@ -1239,19 +1225,6 @@ void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_
   bsw_wifi->leader_rank = rank;
   bsw_wifi->leader_room = room;
   bsw_wifi->leader_data_f = TRUE;
-
-#ifdef PM_DEBUG
-  {
-    int i;
-    u32 id;
-    const BSUBWAY_LEADER_DATA *pLeader = bsw_wifi->leader;
-    
-    for( i = 0; i < BSUBWAY_STOCK_WIFI_LEADER_MAX; i++, pLeader++ ){
-      id = *((u32*)pLeader->id_no);
-      KAGAYA_Printf( "AFTER BSW SAVE LEADER DATA No.%d ID=%d\n", i, id );
-    }
-  }
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1342,7 +1315,33 @@ int BSUBWAY_LEADERDATA_GetDataNum( const BSUBWAY_LEADER_DATA *bsw_leader )
   return result;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  リーダー情報からプレイヤーIDをu32で取得
+ *  @param  pLeader   BSUBWAY_LEADER_DATA*
+ *  @retval u32 プレイヤーID
+ */
+//-----------------------------------------------------------------------------
+u32 BSUBWAY_LEADERDATA_GetPlayerID( const BSUBWAY_LEADER_DATA *pLeader )
+{
+  u32 id;
+#if 0 //BTS6821
+  //id_noを型キャストで４バイトデータとして読み取ると、
+  //BSUBWAY_LEADER_DATAのサイズとid_noの位置から
+  //アドレスによっては４バイトアライメントの境界により
+  //上位２バイトのデータが失われる場合がある
+  id = *(u32*)pLeader->id_no;
+#else
+  //型キャストせず１バイト単位で正しく生成
+  id = (u32)((pLeader->id_no[0])|(pLeader->id_no[1]<<8)|
+      (pLeader->id_no[2]<<16)|(pLeader->id_no[3]<<24));
+#endif
+  return( id );
+}
 
+//--------------------------------------------------------------
+//  debug
+//--------------------------------------------------------------
 #ifdef PM_DEBUG
 // ダミー情報を設定
 void DEBUG_BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room )
@@ -1361,8 +1360,6 @@ void DEBUG_BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank,
   bsw_wifi->leader_data_f = TRUE;
 }
 #endif
-
-
 
 //======================================================================
 //  wb null

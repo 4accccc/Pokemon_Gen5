@@ -84,8 +84,6 @@ FS_EXTERN_OVERLAY( dpw_common );
 
 #define WIFI_BSUBWAY_Printf( ... )  OS_TPrintf( __VA_ARGS__ )
 
-
-
 //#define DOWNLOAD_PRINT  // だうんろーど情報を出力
 
 #else
@@ -1177,13 +1175,50 @@ static void ROOM_DATA_SavePlayerData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WI
 //-----------------------------------------------------------------------------
 static void ROOM_DATA_SaveLeaderData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WIFI_DATA* p_save )
 {
+#ifdef DEBUG_ONLY_FOR_kagaya
+  {
+    u32 id;
+    int i,j;
+    const Dpw_Bt_Leader *pLeader = cp_wk->bt_roomdata.leader;
+    
+    for( i = 0; i < 30; i++, pLeader++ ){
+      WIFI_BSUBWAY_Printf( "----DOWNLOAD LEADER DATA No.%u----\n", i );
+      
+      WIFI_BSUBWAY_Printf( "playerName" );
+      for( j = 0; j < 8; j++ ){
+        WIFI_BSUBWAY_Printf( "[%u]=%u ", j, pLeader->playerName[j] );
+      }
+      WIFI_BSUBWAY_Printf( "\n" );
+      
+      WIFI_BSUBWAY_Printf( "versionCode=%u\n", pLeader->versionCode );
+      WIFI_BSUBWAY_Printf( "langCode=%u\n", pLeader->langCode );
+      WIFI_BSUBWAY_Printf( "countryCode=%u\n", pLeader->countryCode );
+      WIFI_BSUBWAY_Printf( "localCode=%u\n", pLeader->localCode );
+      
+      WIFI_BSUBWAY_Printf( "playerId" );
+      for( j = 0; j < 4; j++ ){
+        WIFI_BSUBWAY_Printf( "[%u]=%u ", j, pLeader->playerId[j] );
+      }
+      id = (u32)((pLeader->playerId[0])|
+            (pLeader->playerId[1]<<8)|
+            (pLeader->playerId[2]<<16)|
+            (pLeader->playerId[3]<<24));
+      WIFI_BSUBWAY_Printf( ":(u32)%d\n", id );
+      
+      WIFI_BSUBWAY_Printf( "leaderMessage" );
+      for( j = 0; j < 8; j++ ){
+        WIFI_BSUBWAY_Printf( "[%u]=%u,", j, pLeader->playerId[j] );
+      }
+      WIFI_BSUBWAY_Printf( "\n" );
+      
+      WIFI_BSUBWAY_Printf( "flags=%u\n", pLeader->flags );
+    }
+  }
+#endif
+
   // Leaderデータ 
   BSUBWAY_WIFIDATA_SetLeaderData( p_save, (const BSUBWAY_LEADER_DATA*)cp_wk->bt_roomdata.leader, cp_wk->rank, cp_wk->room_no );
 }
-
-
-
-
 
 //-------------------------------------
 /// PersonalData

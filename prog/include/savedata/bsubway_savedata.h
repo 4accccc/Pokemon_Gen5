@@ -317,6 +317,7 @@ extern u8 BSUBWAY_WIFIDATA_GetLeaderRank( const BSUBWAY_WIFI_DATA *bsw_wifi );
 extern u8 BSUBWAY_WIFIDATA_GetLeaderRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi );
 extern BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DATA *bsw_wifi, HEAPID heapID );
 extern int BSUBWAY_LEADERDATA_GetDataNum( const BSUBWAY_LEADER_DATA *bsw_leader );
+extern u32 BSUBWAY_LEADERDATA_GetPlayerID( const BSUBWAY_LEADER_DATA *pLeader );
 
 #define BSUBWAY_SCOREDATA_GetRenshouCount(a,b) \
   BSUBWAY_SCOREDATA_GetRenshou(a,b)
