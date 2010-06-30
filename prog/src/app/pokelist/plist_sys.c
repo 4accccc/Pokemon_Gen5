@@ -4285,20 +4285,27 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
     //強制選択
     if( work->isDecideParty == FALSE )
     {
-      REGULATION *reg = (REGULATION*)work->plData->reg;
-      const BOOL ret = PokeRegulationCheckPokeParty_Func( reg , work->plData->pp , work->plData->in_num );
-      GF_ASSERT_MSG( ret ,"PLIST can't select battle order!!\n" );
-      if( ret == FALSE )
+      u8 i;
+      for( i=0;i<PLIST_LIST_MAX;i++ )
       {
-        u8 i;
-        //止まらないために・・・
-        for( i=0;i<PLIST_LIST_MAX;i++ )
+        work->plData->in_num[i] = 0;
+      }
+      {
+        REGULATION *reg = (REGULATION*)work->plData->reg;
+        const BOOL ret = PokeRegulationCheckPokeParty_Func( reg , work->plData->pp , work->plData->in_num );
+        GF_ASSERT_MSG( ret ,"PLIST can't select battle order!!\n" );
+        if( ret == FALSE )
         {
-          work->plData->in_num[i] = 0;
-        }
-        for( i=0;i<reg->NUM_LO;i++ )
-        {
-          work->plData->in_num[i] = i+1;
+          u8 i;
+          //止まらないために・・・
+          for( i=0;i<PLIST_LIST_MAX;i++ )
+          {
+            work->plData->in_num[i] = 0;
+          }
+          for( i=0;i<reg->NUM_LO;i++ )
+          {
+            work->plData->in_num[i] = i+1;
+          }
         }
       }
     }

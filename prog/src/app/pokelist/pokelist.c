@@ -83,13 +83,13 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       plData->pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);
       plData->ret_sel = PL_SEL_POS_POKE1;
       PokeParty_Init( plData->pp , 6 );
-      for( i=0;i<5;i++ )
+      for( i=0;i<6;i++ )
       {
         //*
-        static const u16 no[5] = {487,135,32,2,3};
-        static const u16 lv[5] = {34,100,15,100,10};
+        static const u16 no[6] = {487,135,32,2,3,1};
+        static const u16 lv[6] = {100,99,51,50,1,1};
         POKEMON_PARAM *pPara = PP_Create( no[i] , lv[i] , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
-  #if DEB_ARI
+  #if DEB_ARI&0
         switch( i )
         {
         case 1:
@@ -144,8 +144,12 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         //ƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“ì¬
         plData->reg = (void*)PokeRegulation_LoadDataAlloc( REG_RND_SINGLE , HEAPID_POKELIST );
         reg = plData->reg;
-        reg->MUST_POKE = 135;
-        reg->LEVEL_TOTAL = 125;
+        reg->NUM_LO = 1;
+        reg->NUM_HI = 6;
+        reg->LEVEL = 1;
+        reg->LEVEL_RANGE = 0;
+        reg->MUST_POKE = 0;
+        reg->LEVEL_TOTAL = 200;
         for( i=0;i<6;i++ )
         {
           plData->in_num[i] = 0;
