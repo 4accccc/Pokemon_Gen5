@@ -58,7 +58,7 @@ EVENT_START   ev_pos_r08_support_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
     _OBJ_ANIME_WAIT()
 	
-	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_SUPPORT )
 	 
   	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01)	
 	_OBJ_ANIME_WAIT()
@@ -103,8 +103,6 @@ EVENT_START   ev_pos_r08_support_01
 	//サポート退場処理
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_back_01)
     _OBJ_ANIME_WAIT()
-  
-	_END_EVENT_BGM()
 	
 	//==============フラグワーク操作==============//
 	//サポートを消す
