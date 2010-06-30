@@ -2915,6 +2915,14 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   BPP_Clear_ForIn( bpp );
   wk->pokeInFlag[ pokeID ] = TRUE;
 
+  // ローテーションの場合、後衛に出てきたポケモンに入場イベント処理をさせてはマズイのでフラグを落とす
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+  {
+    if( BTL_MAIN_GetClientFrontPosCount(wk->mainModule, clientID) <= posIdx ){
+      wk->pokeInFlag[ pokeID ] = FALSE;
+    }
+  }
+
   SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, nextPokeIdx, wk->turnCount );
   {
     BtlPokePos  pos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
