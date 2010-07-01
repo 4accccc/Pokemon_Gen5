@@ -834,17 +834,17 @@ static  void  BTLV_INPUT_FreeTCBAll( BTLV_INPUT_WORK* biw );
 static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tbl, int pos );
 static  void  set_cursor_pos( BTLV_INPUT_WORK* biw );
 static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw );
-static  inline  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw );
+static  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw );
 static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw );
 
-static  inline  void  SePlayOpen( BTLV_INPUT_WORK* biw );
-static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
-static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw );
-static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw );
-static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
-static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
-static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
-static  inline  void  SePlayBeep( BTLV_INPUT_WORK* biw );
+static  void  SePlayOpen( BTLV_INPUT_WORK* biw );
+static  void  SePlaySelect( BTLV_INPUT_WORK* biw );
+static  void  SePlayDecide( BTLV_INPUT_WORK* biw );
+static  void  SePlayCancel( BTLV_INPUT_WORK* biw );
+static  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
+static  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
+static  void  SePlayRotation( BTLV_INPUT_WORK* biw );
+static  void  SePlayBeep( BTLV_INPUT_WORK* biw );
 
 static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
 
@@ -1348,10 +1348,12 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
 
+#if 1 
       if( biw->main_loop_tcb_flag == TRUE )
       {
         BTLV_EFFECT_SetCameraWorkStop();
       }
+#endif
 
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
@@ -5484,7 +5486,7 @@ static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  退避していたバッグボタンパレットをリロード
 //=============================================================================================
-static  inline  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw )
+static  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw )
 {
   if( biw->main_loop_tcb_flag == TRUE )
   {
@@ -5568,7 +5570,7 @@ static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  オープン音再生
 //=============================================================================================
-static  inline  void  SePlayOpen( BTLV_INPUT_WORK* biw )
+static  void  SePlayOpen( BTLV_INPUT_WORK* biw )
 {
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
   {
@@ -5579,7 +5581,7 @@ static  inline  void  SePlayOpen( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  選択音再生
 //=============================================================================================
-static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw )
+static  void  SePlaySelect( BTLV_INPUT_WORK* biw )
 {
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
   {
@@ -5590,7 +5592,7 @@ static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  決定音再生
 //=============================================================================================
-static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw )
+static  void  SePlayDecide( BTLV_INPUT_WORK* biw )
 {
   if( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER )
   {
@@ -5607,7 +5609,7 @@ static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  キャンセル音再生
 //=============================================================================================
-static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw )
+static  void  SePlayCancel( BTLV_INPUT_WORK* biw )
 {
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
@@ -5617,7 +5619,7 @@ static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  ローテーション選択音
 //=============================================================================================
-static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
+static  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 {
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
@@ -5627,7 +5629,7 @@ static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  ローテーション決定音
 //=============================================================================================
-static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
+static  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 {
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
@@ -5637,7 +5639,7 @@ static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  ローテーション音
 //=============================================================================================
-static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
+static  void  SePlayRotation( BTLV_INPUT_WORK* biw )
 {
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
@@ -5647,7 +5649,7 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 //  ビープ音再生
 //=============================================================================================
-static  inline  void  SePlayBeep( BTLV_INPUT_WORK* biw )
+static  void  SePlayBeep( BTLV_INPUT_WORK* biw )
 {
   if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
