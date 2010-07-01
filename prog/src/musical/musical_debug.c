@@ -44,8 +44,17 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
   shotData->musVer = MUSICAL_VERSION;
   shotData->pmVersion = VERSION_BLACK;
   shotData->pmLang = LANG_JAPAN;
+
   shotData->spotBit = 1;
-  
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) )
+  {
+    shotData->spotBit = 0xFF;
+  }
+  else
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) )
+  {
+    shotData->spotBit = 0;
+  }
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     u8 j;
@@ -76,10 +85,12 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
     //‘•”õ‰ÓŠ‚Ì‰Šú‰»
     for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
     {
-      shotData->shotPoke[i].equip[j].itemNo = 0;  //65535;
+      shotData->shotPoke[i].equip[j].itemNo = 65535;
       shotData->shotPoke[i].equip[j].angle = 0;
       shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_EAR_R; //MUS_POKE_EQU_INVALID;
     }
+    if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R) )
+    {
       shotData->shotPoke[i].equip[0].itemNo = 11;
       shotData->shotPoke[i].equip[0].angle = 0;
       shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_R;
@@ -104,7 +115,7 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
       shotData->shotPoke[i].equip[7].itemNo = 11;
       shotData->shotPoke[i].equip[7].angle = 0;
       shotData->shotPoke[i].equip[7].equipPos = MUS_POKE_EQU_BODY;
-      
+    }
   }
   
   POKE_PERSONAL_CloseHandle( perData );

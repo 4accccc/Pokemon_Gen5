@@ -254,7 +254,7 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
 static void PSTATUS_SUB_PokeDeleteMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
 static void PSTATUS_SUB_SetShadowHeight( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , fx32 height );
 static void PSTATUS_SUB_SetShadowOffset( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *offset );
-static void PSATATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *scale , VecFx32 *shadowScale );
+static void PSTATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *scale , VecFx32 *shadowScale );
 
 //--------------------------------------------------------------
 //	‰Šú‰»
@@ -1419,7 +1419,7 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
   VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
   POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   
-  PSATATUS_SUB_GetPokeScale( work , subWork , &scale , &shadowScale );
+  PSTATUS_SUB_GetPokeScale( work , subWork , &scale , &shadowScale );
 
 #if USE_STATUS_DEBUG
   work->shadowRotate = 302*65536/360;
@@ -1493,7 +1493,7 @@ static void PSTATUS_SUB_SetShadowOffset( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
   MCSS_SetShadowOffset( subWork->pokeMcssBack , &calcOfs );
 }
 
-static void PSATATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *scale , VecFx32 *shadowScale )
+static void PSTATUS_SUB_GetPokeScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , VecFx32 *scale , VecFx32 *shadowScale )
 {
   const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
   const u32 monsno = PPP_Get( ppp , ID_PARA_monsno , NULL );

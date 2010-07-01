@@ -114,6 +114,7 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MUS_SHOT_PHOTO_ExitGraphic( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work );
+static void MUS_SHOT_PHOTO_SetupPokemonScale( MUS_SHOT_PHOTO_WORK *work , STA_POKE_WORK *pokeWork , const u32 monsNo );
 static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work );
 
 void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work );
@@ -552,10 +553,32 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
     work->lightWork[i] = STA_LIGHT_CreateObject( work->lightSys , ALT_CIRCLE );
     STA_LIGHT_SetPosition( work->lightSys , work->lightWork[i] , &lightpos );
     bit = bit<<1;
+    
+    MUS_SHOT_PHOTO_SetupPokemonScale( work , work->pokeWork[i] , work->musPoke[i]->mcssParam.monsno );
   }
 
 }
 
+static void MUS_SHOT_PHOTO_SetupPokemonScale( MUS_SHOT_PHOTO_WORK *work , STA_POKE_WORK *pokeWork , const u32 monsNo )
+{
+  VecFx32 scale = {FX32_ONE,FX32_ONE,FX32_ONE};
+  if( monsNo == MONSNO_037 )//ロコン
+  {
+    scale.y = FX32_CONST(15.85f)/16;
+  }
+  else
+  if( monsNo == MONSNO_077 )//ポニータ
+  {
+    scale.y = FX32_CONST(15.85f)/16;
+  }
+  else
+  if( monsNo == MONSNO_359 )//アブソル
+  {
+    scale.y = FX32_CONST(15.90f)/16;
+  }
+  STA_POKE_SetScale( work->pokeSys , pokeWork , &scale );
+  
+}
 
 //--------------------------------------------------------------
 //  メッセージ(日付)の初期化
@@ -804,7 +827,7 @@ static void MUS_SHOT_Debug_DrawScroll( void* userWork , DEBUGWIN_ITEM* item )
 static void MUS_SHOT_DebugPolyDraw( MUS_SHOT_PHOTO_WORK *work )
 {
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
   {
     VecFx32 pos;
     G3_PushMtx();
@@ -882,6 +905,41 @@ static void MUS_SHOT_DebugPolyDraw( MUS_SHOT_PHOTO_WORK *work )
     G3_PopMtx(1);
     
   }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    u8 i;
+    static VecFx32 sScale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE*16};
+    VecFx32 scale;
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+    {
+      sScale.y += FX32_CONST(0.05);
+      OS_FPrintf( 2,"scaleY[%.2f]\n",FX_FX32_TO_F32(sScale.y));
+    }
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+    {
+      sScale.y -= FX32_CONST(0.05);
+      OS_FPrintf( 2,"scaleY[%.2f]\n",FX_FX32_TO_F32(sScale.y));
+    }
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+    {
+      sScale.x -= FX32_CONST(0.05);
+      OS_FPrintf( 2,"scaleX[%.2f]\n",FX_FX32_TO_F32(sScale.x));
+    }
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+    {
+      sScale.x += FX32_CONST(0.05);
+      OS_FPrintf( 2,"scaleX[%.2f]\n",FX_FX32_TO_F32(sScale.x));
+    }
+    scale.x = sScale.x/16;
+    scale.y = sScale.y/16;
+    scale.z = sScale.z/16;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      STA_POKE_SetScale( work->pokeSys , work->pokeWork[i] , &scale );
+    }
+  }
+
+
 #endif //DEB_ARI
   
 }

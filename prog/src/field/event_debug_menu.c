@@ -7204,8 +7204,18 @@ static GMEVENT_RESULT debugMenuMusical( GMEVENT *event, int *seq, void *wk )
             MUSICAL_SHOT_DATA *shotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
 
             GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_debug) );
-            //一番重いのはペンドラー
-            MUSICAL_DEBUG_CreateDummyData( shotData , 545 , work->heapId );
+            if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+            {
+              POKEPARTY* party = GAMEDATA_GetMyPokemon( gmData );
+              POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , 0 );
+              const u32 monsno = PP_Get( pp , ID_PARA_monsno , NULL );
+              MUSICAL_DEBUG_CreateDummyData( shotData , monsno , work->heapId );
+            }
+            else
+            {
+              //一番重いのはペンドラー
+              MUSICAL_DEBUG_CreateDummyData( shotData , 545 , work->heapId );
+            }
             GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
           }
           break;
