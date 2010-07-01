@@ -1651,7 +1651,7 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
   }
   else
   {
-    p_param->b_correct    = !p_wk->btl_score.is_dirty;
+    p_param->b_correct    = (!p_wk->btl_score.is_dirty && !p_wk->btl_score.is_other_dirty);
   }
 
   //相手のサーバーが、自分のサーバーよりバージョンが上だったら録画できない

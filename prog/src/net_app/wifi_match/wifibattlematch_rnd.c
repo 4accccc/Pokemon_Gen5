@@ -1769,13 +1769,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net , NULL );
       if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
-
-       //子機しか不正フラグがたたないので、親機が受け取る
-        if( GFL_NET_IsParentMachine() )
-        { 
-          ((BATTLEMATCH_BATTLE_SCORE *)(p_param->cp_btl_score))->is_dirty = WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( p_wk->p_net );
-        }
-
+        //相手の不正フラグを受け取る
+        ((BATTLEMATCH_BATTLE_SCORE *)(p_param->cp_btl_score))->is_other_dirty = WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( p_wk->p_net );
         *p_seq = SEQ_SC_HEAP_EXIT;
       }
 
@@ -2874,17 +2869,10 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_SEND_BTLDIRTYFLGA:
-    //子機しか不正フラグがたたないので、親機が受け取る
-    if( !GFL_NET_IsParentMachine() )
+    //不正フラグをお互い贈りあう
+    if( WIFIBATTLEMATCH_NET_SendBtlDirtyFlag( p_wk->p_net, &p_param->cp_btl_score->is_dirty ) )
     {
-      if( WIFIBATTLEMATCH_NET_SendBtlDirtyFlag( p_wk->p_net, &p_param->cp_btl_score->is_dirty ) )
-      {
-        *p_seq  = SEQ_START_DISCONNECT;
-      }
-    }
-    else
-    {
-        *p_seq  = SEQ_RECV_BTLDIRTYFLGA;
+      *p_seq  = SEQ_RECV_BTLDIRTYFLGA;
     }
     break;
 

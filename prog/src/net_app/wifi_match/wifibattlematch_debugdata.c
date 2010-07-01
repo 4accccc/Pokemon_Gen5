@@ -63,4 +63,11 @@ BOOL *DEBUGWIN_REPORTMARK_GetFlag( void )
   static BOOL s_report_mark_flag  = FALSE;
   return &s_report_mark_flag;
 }
+
+DEBUGWIN_EVILCHECK *DEBUGWIN_EVILCHECK_GetInstance( void )
+{
+  static DEBUGWIN_EVILCHECK s_evilcheck_data  = {0};
+  return &s_evilcheck_data;
+}
+
 #endif //PM_DEBUG

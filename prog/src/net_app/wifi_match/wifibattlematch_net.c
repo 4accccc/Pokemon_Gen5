@@ -1667,16 +1667,9 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       { 
         if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_SC_DIRTY_TIMING,WB_NET_WIFIMATCH) || p_wk->is_sc_error )
         { 
-          //子機しか不正フラグがたたないので、
-          //親機へ送る
-          if( !GFL_NET_IsParentMachine() )
-          { 
+          //不正フラグを贈りあう
+           
             p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_INIT;
-          }
-          else
-          { 
-            p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT;
-          }
         }
       }
       break;
@@ -1691,7 +1684,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         if( WIFIBATTLEMATCH_NET_SendBtlDirtyFlag( p_wk, &p_wk->report.is_dirty )
             || p_wk->is_sc_error )
         { 
-          p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
+          p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT;
         }
       }
       break;
@@ -2371,6 +2364,21 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
         GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", cp_data->btl_result );
       }
     }
+
+#ifdef PM_DEBUG
+      if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+      {
+        if( game_result == DWC_SC_GAME_RESULT_LOSS )
+        {
+          game_result = DWC_SC_GAME_RESULT_WIN;
+        }
+        else if( game_result == DWC_SC_GAME_RESULT_WIN )
+        {
+          game_result = DWC_SC_GAME_RESULT_LOSS;
+        }
+      }
+#endif //PM_DEBUG
+
     ret = DWC_ScReportSetPlayerData(
                 p_my->mReport,
                 1,

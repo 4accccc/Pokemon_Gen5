@@ -70,4 +70,17 @@ extern BOOL *DEBUGWIN_BATTLE_GetFlag( void );
 ///	レポート音
 //=====================================
 extern BOOL *DEBUGWIN_REPORTMARK_GetFlag( void );
+
+//-------------------------------------
+///	不正チェック
+//=====================================
+typedef struct 
+{
+  u8    st_exp[6];
+  BOOL  is_evil;
+  void *p_party;
+} DEBUGWIN_EVILCHECK;
+extern DEBUGWIN_EVILCHECK *DEBUGWIN_EVILCHECK_GetInstance( void );
+
+
 #endif //PM_DEBUG

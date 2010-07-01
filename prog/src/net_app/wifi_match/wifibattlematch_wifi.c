@@ -3363,13 +3363,8 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, NULL );
       if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
-
-        //子機しか不正フラグがたたないので、親機が受け取る
-        if( GFL_NET_IsParentMachine() )
-        { 
-          ((BATTLEMATCH_BATTLE_SCORE *)(p_param->cp_btl_score))->is_dirty = WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( p_wk->p_net );
-        }
-
+        //相手の不正フラグを受け取る
+        ((BATTLEMATCH_BATTLE_SCORE *)(p_param->cp_btl_score))->is_other_dirty = WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( p_wk->p_net );
         *p_seq = SEQ_SC_HEAP_EXIT;
       }
       
@@ -5260,7 +5255,7 @@ static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID )
   DEBUGWIN_BTLBOX_Init( heapID );
   DEBUGWIN_BTLBGM_Init( heapID );
   DEBUGWIN_ATLAS_Init( heapID );
-  DEBUGWIN_ETC_Init( heapID );
+  DEBUGWIN_ETC_InitEx( heapID, (POKEPARTY*)p_wk->p_param->p_player_data->pokeparty );
 }
 static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 {

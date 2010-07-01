@@ -1626,6 +1626,51 @@ static inline void DebugWin_Etc_D_ReportSnd( void* userWork , DEBUGWIN_ITEM* ite
   BOOL *p_is_flag  = DEBUGWIN_REPORTMARK_GetFlag();
   DEBUGWIN_ITEM_SetNameV( item , "レポートそうしんSE[%s]", sc_tbl[ (*p_is_flag) ] );
 }
+
+static inline void DebugWin_Etc_U_DirtyParty( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_EVILCHECK *p_data  = DEBUGWIN_EVILCHECK_GetInstance();
+  POKEPARTY *p_party  = p_data->p_party;
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    int i;
+    POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, 0 );
+
+
+    p_data->is_evil  ^= 1;
+
+    if( p_data->is_evil )
+    {
+      //不正にする
+      for( i = 0; i < PTL_ABILITY_MAX; i++ )
+      {
+        p_data->st_exp[i]  = PP_Get( p_pp, ID_PARA_hp_exp+i, NULL );
+        PP_Put( p_pp, ID_PARA_hp_deb_exp+i, 255 );
+      }
+    }
+    else
+    {
+      //正常に戻す
+      for( i = 0; i < PTL_ABILITY_MAX; i++ )
+      {
+        PP_Put( p_pp, ID_PARA_hp_exp+i, p_data->st_exp[i] );
+      }
+    }
+
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_Etc_D_DirtyParty( void* userWork , DEBUGWIN_ITEM* item )
+{
+  static const char *sc_tbl[] =
+  {
+    "OFF",
+    "ON",
+  };
+  DEBUGWIN_EVILCHECK *p_data  = DEBUGWIN_EVILCHECK_GetInstance();
+  DEBUGWIN_ITEM_SetNameV( item , "パーティふせい[%s]", sc_tbl[ (p_data->is_evil) ] );
+}
+
 static inline void DEBUGWIN_ETC_Init( HEAPID heapID )
 {
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_ETC, "そのた", heapID );
@@ -1633,6 +1678,15 @@ static inline void DEBUGWIN_ETC_Init( HEAPID heapID )
   DEBUGWIN_AddItemToGroupEx( DebugWin_Etc_U_ServerFlag2, DebugWin_Etc_D_ServerFlag2, NULL, DEBUGWIN_GROUP_ETC, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Etc_U_ReportSnd, DebugWin_Etc_D_ReportSnd, NULL, DEBUGWIN_GROUP_ETC, heapID );
 }
+static inline void DEBUGWIN_ETC_InitEx( HEAPID heapID, POKEPARTY *p_party )
+{
+  DEBUGWIN_EVILCHECK  *p_data = DEBUGWIN_EVILCHECK_GetInstance();
+  p_data->p_party = p_party;
+
+  DEBUGWIN_ETC_Init( heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Etc_U_DirtyParty, DebugWin_Etc_D_DirtyParty, NULL, DEBUGWIN_GROUP_ETC, heapID );
+}
+
 static inline void DEBUGWIN_ETC_Exit( void )
 {
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_ETC );
