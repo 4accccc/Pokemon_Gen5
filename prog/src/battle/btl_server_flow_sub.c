@@ -2112,7 +2112,7 @@ void BTL_DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff )
 }
 //----------------------------------------------------------------------------------
 /**
- * 相性記録ワーク：１体分取得
+ * 相性記録ワーク：１体分取得（記録が無ければASSERT停止）
  *
  * @param   rec
  * @param   pokeID
@@ -2122,6 +2122,21 @@ BtlTypeAff BTL_DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID )
 {
   GF_ASSERT(pokeID < BTL_POKEID_MAX);
   GF_ASSERT(rec->aff[pokeID] != BTL_TYPEAFF_MAX);
+
+  return rec->aff[ pokeID ];
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 相性記録ワーク：１体分取得（記録がなければ BTL_TYPEAFF_NULL が帰る）
+ *
+ * @param   rec
+ * @param   pokeID
+ */
+//----------------------------------------------------------------------------------
+BtlTypeAff BTL_DMGAFF_REC_GetIfEnable( const BTL_DMGAFF_REC* rec, u8 pokeID )
+{
+  GF_ASSERT(pokeID < BTL_POKEID_MAX);
 
   return rec->aff[ pokeID ];
 }

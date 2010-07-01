@@ -48,4 +48,4 @@ extern BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk );
 extern void BTL_DMGAFF_REC_Init( BTL_DMGAFF_REC* rec );
 extern void BTL_DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff );
 extern BtlTypeAff BTL_DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID );
-
+extern BtlTypeAff BTL_DMGAFF_REC_GetIfEnable( const BTL_DMGAFF_REC* rec, u8 pokeID );

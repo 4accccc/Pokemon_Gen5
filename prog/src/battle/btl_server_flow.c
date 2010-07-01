@@ -4690,7 +4690,7 @@ static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const BTL_DMGAFF_REC* affRec, BTL_HANDEX_STR_PARAMS* customMsg, BOOL* fNoReaction )
 {
   BOOL fNoEffect = FALSE;
-  BtlTypeAff  dmgAff = BTL_DMGAFF_REC_Get( affRec, BPP_GetID(defender) );
+  BtlTypeAff  dmgAff = BTL_DMGAFF_REC_GetIfEnable( affRec, BPP_GetID(defender) );
 
   HANDEX_STR_Clear( customMsg );
 
