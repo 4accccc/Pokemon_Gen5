@@ -128,6 +128,9 @@
 #define PSTATUS_SKILL_PLATE_FORGET_X ( 4 +PSTATUS_STR_OFS_X)
 #define PSTATUS_SKILL_PLATE_FORGET_Y ( 8 +PSTATUS_STR_OFS_Y)
 
+#define PSTATUS_SKILL_PLATE_ANM_FLASH (4)
+#define PSTATUS_SKILL_PLATE_ANM_SPAN (8)
+#define PSTATUS_SKILL_PLATE_ANM_CNT (PSTATUS_SKILL_PLATE_ANM_SPAN*2)
 
 //======================================================================
 //  enum
@@ -197,7 +200,10 @@ struct _PSTATUS_SKILL_WORK
   BOOL isChangeMode;
   BOOL isForgetConfirm;
   BOOL isHoldTp;
+  BOOL isWaitPlateAnime;
+  BOOL isWaitPlateForget;
 
+  u8   plateAnmCnt;
   u8   cursorPos;
   u8   changeTarget;
   u8   wazaPlateNum;
@@ -310,6 +316,7 @@ PSTATUS_SKILL_WORK* PSTATUS_SKILL_Init( PSTATUS_WORK *work )
   skillWork->isWaitSwapSkill = FALSE;
   skillWork->isChangeMode = FALSE;
   skillWork->isForgetConfirm = FALSE;
+  skillWork->isWaitPlateForget = FALSE;
   skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
   skillWork->cursorPos = 0xFF;
 
@@ -347,7 +354,8 @@ void PSTATUS_SKILL_Main( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
   u8 i;
   if( skillWork->isUpdateStrStatus == FALSE &&
       skillWork->isUpdateStrSkill == FALSE &&
-      skillWork->isWaitSwapSkill == FALSE )
+      skillWork->isWaitSwapSkill == FALSE &&
+      skillWork->isWaitPlateAnime == FALSE )
   {
     PSTATUS_SKILL_UpdateUI( work , skillWork );
   }
@@ -427,6 +435,40 @@ void PSTATUS_SKILL_Main( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
   for( i=0;i<PSTATUS_SKILL_PLATE_NUM;i++ )
   {
     PSTATUS_SKILL_UpdatePlate( work , skillWork , &skillWork->plateWork[i] );
+  }
+  
+  //決定時点滅(技選択のみ)
+  if( skillWork->isWaitPlateAnime == TRUE )
+  {
+    skillWork->plateAnmCnt++;
+    if( skillWork->plateAnmCnt%PSTATUS_SKILL_PLATE_ANM_SPAN < PSTATUS_SKILL_PLATE_ANM_FLASH )
+    {
+      if( skillWork->isWaitPlateForget == TRUE )
+      {
+        PSTATUS_SKILL_PLATE *plateWork = &skillWork->plateWork[skillWork->cursorPos];
+        GFL_CLACT_WK_SetAnmSeq( plateWork->clwkPlate , 3*PSTATUS_SKILL_PLATE_NUM );
+      }
+      else
+      {
+        PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
+      }
+    }
+    else
+    {
+      if( skillWork->isWaitPlateForget == TRUE )
+      {
+        PSTATUS_SKILL_PLATE *plateWork = &skillWork->plateWork[skillWork->cursorPos];
+        GFL_CLACT_WK_SetAnmSeq( plateWork->clwkPlate , 3*PSTATUS_SKILL_PLATE_NUM+1 );
+      }
+      else
+      {
+        PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 1 );
+      }
+    }
+    if( skillWork->plateAnmCnt > PSTATUS_SKILL_PLATE_ANM_CNT )
+    {
+      work->mainSeq = SMS_FADEOUT;
+    }
   }
 }
 
@@ -588,6 +630,8 @@ void PSTATUS_SKILL_DispPage( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
   }
   skillWork->cursorPos = 0xFF;
   skillWork->isDisp = TRUE;
+  skillWork->isWaitPlateAnime = FALSE;
+  skillWork->plateAnmCnt = 0;
 }
 //--------------------------------------------------------------
 //  ページの表示(転送タイミング
@@ -1139,6 +1183,8 @@ void PSTATUS_SKILL_DispPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
 
   skillWork->cursorPos = 0xFF;
   skillWork->isDisp = TRUE;
+  skillWork->isWaitPlateAnime = FALSE;
+  skillWork->plateAnmCnt = 0;
 }
 //--------------------------------------------------------------
 //  ページの表示(転送タイミング
@@ -1639,7 +1685,8 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       work->retVal = SRT_RETURN;
       work->psData->ret_sel = skillWork->changeTarget;
       work->psData->ret_mode = PST_RET_DECIDE;
-      work->mainSeq = SMS_FADEOUT;
+      skillWork->isWaitPlateAnime = TRUE;
+      skillWork->isWaitPlateForget = TRUE;
       work->clwkExitButton = NULL;
       PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
     }
@@ -1664,7 +1711,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
           work->retVal = SRT_RETURN;
           work->psData->ret_mode = PST_RET_DECIDE;
           work->psData->ret_sel = skillWork->cursorPos;
-          work->mainSeq = SMS_FADEOUT;
+          skillWork->isWaitPlateAnime = TRUE;
           work->clwkExitButton = NULL;
           PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
         }
@@ -1697,7 +1744,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       //覚える技を選んだので終了
       work->retVal = SRT_RETURN;
       work->psData->ret_mode = PST_RET_CANCEL;
-      work->mainSeq = SMS_FADEOUT;
+      skillWork->isWaitPlateAnime = TRUE;
       work->clwkExitButton = NULL;
       PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
     }
@@ -1795,7 +1842,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
                 work->retVal = SRT_RETURN;
                 work->psData->ret_mode = PST_RET_DECIDE;
                 work->psData->ret_sel = ret;
-                work->mainSeq = SMS_FADEOUT;
+                skillWork->isWaitPlateAnime = TRUE;
                 work->clwkExitButton = NULL;
                 PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
                 PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , FALSE );
@@ -1837,10 +1884,11 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
         else
         {
           //覚える技を選んだので終了
+          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , FALSE );
           work->ktst = GFL_APP_END_TOUCH;
           work->retVal = SRT_RETURN;
           work->psData->ret_mode = PST_RET_CANCEL;
-          work->mainSeq = SMS_FADEOUT;
+          skillWork->isWaitPlateAnime = TRUE;
           work->clwkExitButton = NULL;
           PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
         }
@@ -1854,7 +1902,8 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
           work->retVal = SRT_RETURN;
           work->psData->ret_sel = skillWork->changeTarget;
           work->psData->ret_mode = PST_RET_DECIDE;
-          work->mainSeq = SMS_FADEOUT;
+          skillWork->isWaitPlateAnime = TRUE;
+          skillWork->isWaitPlateForget = TRUE;
           work->clwkExitButton = NULL;
           PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
         }
@@ -2013,7 +2062,7 @@ static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS
   PSTATUS_SKILL_PLATE *plateWork = &skillWork->plateWork[4];
   if( isDisp == TRUE )
   {
-    GFL_CLACT_WK_SetAnmSeq( plateWork->clwkPlate , 3*PSTATUS_SKILL_PLATE_NUM );
+    GFL_CLACT_WK_SetAnmSeq( plateWork->clwkPlate , 3*PSTATUS_SKILL_PLATE_NUM+1 );
     PSTA_OAM_ActorSetDrawEnable( plateWork->bmpOam , FALSE );
     GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , FALSE );
 
