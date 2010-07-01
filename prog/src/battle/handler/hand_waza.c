@@ -2969,9 +2969,9 @@ static void handler_MilerCoat_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static const BtlEventHandlerTable*  ADD_MetalBurst( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_MetalBurst_CheckExe   },    // ワザ出し成功判定
-    { BTL_EVENT_DECIDE_TARGET,       handler_MetalBurst_Target     },    // ターゲット決定
-    { BTL_EVENT_WAZA_DMG_PROC1,      handler_MetalBurst_CalcDamage },    // ダメージ計算最終ハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_MetalBurst_CheckExe   },    // ワザ出し成功判定
+    { BTL_EVENT_DECIDE_TARGET,          handler_MetalBurst_Target     },    // ターゲット決定
+    { BTL_EVENT_WAZA_DMG_PROC1,         handler_MetalBurst_CalcDamage },    // ダメージ計算最終ハンドラ
 
   };
   *numElems = NELEMS( HandlerTable );
@@ -6105,6 +6105,11 @@ static void handler_Itamiwake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
       item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
         item_param->pokeID = pokeID;
+        item_param->reactionType = BTL_ITEMREACTION_HP;
+      BTL_SVF_HANDEX_Pop( flowWk, item_param );
+
+      item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
+        item_param->pokeID = target_pokeID;
         item_param->reactionType = BTL_ITEMREACTION_HP;
       BTL_SVF_HANDEX_Pop( flowWk, item_param );
     }
