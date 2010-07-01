@@ -5176,7 +5176,8 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 
       if( resultCode == BTL_RESULT_WIN )
       {
-        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
+        //PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
+        BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
         MsgWinningTrainerStart( wk );
         (*seq) = SEQ_WIN_START;
       }
