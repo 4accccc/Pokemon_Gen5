@@ -1243,6 +1243,7 @@ static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk, HEAPID heapID )
 static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk )
 {
   if(p_wk->p_nhttp){
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL);  //NHTTPエラーの時に呼ぶコールバック削除
     NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
     NHTTP_RAP_End( p_wk->p_nhttp );
     p_wk->p_nhttp = NULL;
@@ -1434,6 +1435,21 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
 
 
 // ポケモン認証
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  NHTTPエラーコールバック
+ *  @param  p_wk      ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PERSONAL_DATA_NHTTPErrorCallback(void* pUserwork, int code, int type, int ret)
+{
+  WIFI_BSUBWAY_PERSONAL* p_wk = pUserwork;
+  if(p_wk->p_nhttp){
+    NHTTP_RAP_ErrorClean(p_wk->p_nhttp);
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  ポケモン認証　
@@ -1449,10 +1465,11 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
   
   WIFI_BSUBWAY_Printf( "Pokemon　Upload\n" );
   p_wk->p_nhttp = NHTTP_RAP_Init( heapID,MyStatus_GetProfileID( p_wk->p_use_mystatus ), p_svl_result );
- 
-  
+
   GF_ASSERT( p_wk->p_nhttp );
 
+  GFL_NET_DWC_SetErrDisconnectCallback(PERSONAL_DATA_NHTTPErrorCallback, p_wk);  //NHTTPエラーの時に呼ぶコールバック
+  
   NHTTP_RAP_PokemonEvilCheckCreate( p_wk->p_nhttp, heapID, sizeof(Dpw_Bt_PokemonData)*BSUBWAY_STOCK_WIFI_MEMBER_MAX, NHTTP_POKECHK_SUBWAY);
 
   // ポケモンを設定する
