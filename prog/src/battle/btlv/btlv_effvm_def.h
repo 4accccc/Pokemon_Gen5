@@ -506,71 +506,72 @@ ex)
 #define	EC_PARTICLE_DELETE					      ( 11 )
 #define	EC_EMITTER_MOVE							      ( 12 )
 #define	EC_EMITTER_MOVE_COORDINATE	      ( 13 )
-#define	EC_EMITTER_MOVE_ORTHO_COORDINATE	( 14 )
-#define	EC_EMITTER_CIRCLE_MOVE            ( 15 )
-#define	EC_EMITTER_CIRCLE_MOVE_ORTHO      ( 16 )
-#define	EC_POKEMON_MOVE							      ( 17 )
-#define	EC_POKEMON_CIRCLE_MOVE			      ( 18 )
-#define	EC_POKEMON_SIN_MOVE			          ( 19 )
-#define	EC_POKEMON_SCALE						      ( 20 )
-#define	EC_POKEMON_ROTATE						      ( 21 )
-#define	EC_POKEMON_ALPHA						      ( 22 )
-#define	EC_POKEMON_MOSAIC						      ( 23 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	      ( 24 )
-#define	EC_POKEMON_SET_ANM_FLAG			      ( 25 )
-#define	EC_POKEMON_PAL_FADE					      ( 26 )
-#define	EC_POKEMON_VANISH					        ( 27 )
-#define	EC_POKEMON_SHADOW_VANISH	        ( 28 )
-#define	EC_POKEMON_SHADOW_SCALE	          ( 29 )
-#define	EC_POKEMON_DEL	                  ( 30 )
-#define	EC_TRAINER_SET							      ( 31 )
-#define	EC_TRAINER_MOVE							      ( 32 )
-#define	EC_TRAINER_ANIME_SET				      ( 33 )
-#define	EC_TRAINER_DEL							  		( 34 )
-#define	EC_BG_LOAD	   				        		( 35 )
-#define	EC_BG_SCROLL		   				    		( 36 )
-#define	EC_BG_RASTER_SCROLL		   	    		( 37 )
-#define	EC_BG_PAL_ANM		   				    		( 38 )
-#define	EC_BG_PRIORITY		   				  		( 39 )
-#define	EC_BG_ALPHA		   				      		( 40 )
-#define	EC_BG_PAL_FADE		   				  		( 41 )
-#define	EC_BG_VISIBLE								  		( 42 )
-#define	EC_WINDOW_MOVE										( 43 )
-#define	EC_OBJ_SET	   				        		( 44 )
-#define	EC_OBJ_MOVE	   				        		( 45 )
-#define	EC_OBJ_SCALE	   				      		( 46 )
-#define	EC_OBJ_ANIME_SET	   				  		( 47 )
-#define	EC_OBJ_PAL_FADE		   				  		( 48 )
-#define	EC_OBJ_DEL	   				        		( 49 )
-#define	EC_GAUGE_VANISH	   				    		( 50 )
-#define	EC_SE_PLAY									  		( 51 )
-#define	EC_SE_STOP									  		( 52 )
-#define	EC_SE_PAN								      		( 53 )
-#define	EC_SE_EFFECT								  		( 54 )
-#define	EC_EFFECT_END_WAIT					  		( 55 )
-#define	EC_WAIT											  		( 56 )
-#define	EC_CONTROL_MODE							  		( 57 )
-#define	EC_IF						              		( 58 )
-#define	EC_IF_WORK						            ( 59 )
-#define	EC_MCSS_POS_CHECK						  		( 60 )
-#define	EC_SET_WORK						        		( 61 )
-#define	EC_GET_WORK						        		( 62 )
-#define	EC_SET_PARAM						      		( 63 )
-#define	EC_MIGAWARI						        		( 64 )
-#define	EC_HENSHIN						        		( 65 )
-#define	EC_NAKIGOE						        		( 66 )
-#define	EC_BALL_MODE						      		( 67 )
-#define	EC_BALLOBJ_SET						    		( 68 )
-#define	EC_CALL						            		( 69 )
-#define	EC_RETURN						          		( 70 )
-#define	EC_JUMP						            		( 71 )
-#define	EC_PAUSE						          		( 72 )
-#define	EC_SEQ_JUMP						          	( 73 )
-#define	EC_LANDING_WAIT						        ( 74 )
-#define	EC_REVERSE_DRAW_SET					      ( 75 )
+#define	EC_EMITTER_MOVE_ORTHO	            ( 14 )
+#define	EC_EMITTER_MOVE_ORTHO_COORDINATE	( 15 )
+#define	EC_EMITTER_CIRCLE_MOVE            ( 16 )
+#define	EC_EMITTER_CIRCLE_MOVE_ORTHO      ( 17 )
+#define	EC_POKEMON_MOVE							      ( 18 )
+#define	EC_POKEMON_CIRCLE_MOVE			      ( 19 )
+#define	EC_POKEMON_SIN_MOVE			          ( 20 )
+#define	EC_POKEMON_SCALE						      ( 21 )
+#define	EC_POKEMON_ROTATE						      ( 22 )
+#define	EC_POKEMON_ALPHA						      ( 23 )
+#define	EC_POKEMON_MOSAIC						      ( 24 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	      ( 25 )
+#define	EC_POKEMON_SET_ANM_FLAG			      ( 26 )
+#define	EC_POKEMON_PAL_FADE					      ( 27 )
+#define	EC_POKEMON_VANISH					        ( 28 )
+#define	EC_POKEMON_SHADOW_VANISH	        ( 29 )
+#define	EC_POKEMON_SHADOW_SCALE	          ( 30 )
+#define	EC_POKEMON_DEL	                  ( 31 )
+#define	EC_TRAINER_SET							      ( 32 )
+#define	EC_TRAINER_MOVE							      ( 33 )
+#define	EC_TRAINER_ANIME_SET				      ( 34 )
+#define	EC_TRAINER_DEL							  		( 35 )
+#define	EC_BG_LOAD	   				        		( 36 )
+#define	EC_BG_SCROLL		   				    		( 37 )
+#define	EC_BG_RASTER_SCROLL		   	    		( 38 )
+#define	EC_BG_PAL_ANM		   				    		( 39 )
+#define	EC_BG_PRIORITY		   				  		( 40 )
+#define	EC_BG_ALPHA		   				      		( 41 )
+#define	EC_BG_PAL_FADE		   				  		( 42 )
+#define	EC_BG_VISIBLE								  		( 43 )
+#define	EC_WINDOW_MOVE										( 44 )
+#define	EC_OBJ_SET	   				        		( 45 )
+#define	EC_OBJ_MOVE	   				        		( 46 )
+#define	EC_OBJ_SCALE	   				      		( 47 )
+#define	EC_OBJ_ANIME_SET	   				  		( 48 )
+#define	EC_OBJ_PAL_FADE		   				  		( 49 )
+#define	EC_OBJ_DEL	   				        		( 50 )
+#define	EC_GAUGE_VANISH	   				    		( 51 )
+#define	EC_SE_PLAY									  		( 52 )
+#define	EC_SE_STOP									  		( 53 )
+#define	EC_SE_PAN								      		( 54 )
+#define	EC_SE_EFFECT								  		( 55 )
+#define	EC_EFFECT_END_WAIT					  		( 56 )
+#define	EC_WAIT											  		( 57 )
+#define	EC_CONTROL_MODE							  		( 58 )
+#define	EC_IF						              		( 59 )
+#define	EC_IF_WORK						            ( 60 )
+#define	EC_MCSS_POS_CHECK						  		( 61 )
+#define	EC_SET_WORK						        		( 62 )
+#define	EC_GET_WORK						        		( 63 )
+#define	EC_SET_PARAM						      		( 64 )
+#define	EC_MIGAWARI						        		( 65 )
+#define	EC_HENSHIN						        		( 66 )
+#define	EC_NAKIGOE						        		( 67 )
+#define	EC_BALL_MODE						      		( 68 )
+#define	EC_BALLOBJ_SET						    		( 69 )
+#define	EC_CALL						            		( 70 )
+#define	EC_RETURN						          		( 71 )
+#define	EC_JUMP						            		( 72 )
+#define	EC_PAUSE						          		( 73 )
+#define	EC_SEQ_JUMP						          	( 74 )
+#define	EC_LANDING_WAIT						        ( 75 )
+#define	EC_REVERSE_DRAW_SET					      ( 76 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  		( 76 )
+#define	EC_SEQ_END									  		( 77 )
 
 #ifndef __C_NO_DEF_
 
@@ -1004,6 +1005,47 @@ ex)
 	.long		\start_pos_x
 	.long		\start_pos_y
 	.long		\start_pos_z
+	.long		\end_pos
+	.long		\ofs_y
+	.long		\move_frame
+	.long		\top
+	.long		\life
+	.long		\speed
+	.long		\wave
+	.endm
+
+//======================================================================
+/**
+ * @brief	エミッタ移動（正射影）
+ *
+ * #param_num	7
+ * @param	num					再生パーティクルナンバー
+ * @param	index				spa内インデックスナンバー
+ * @param	move_type		移動タイプ（直線、放物線）
+ * @param	start_pos		移動開始立ち位置
+ * @param	end_pos			移動終了立ち位置
+ * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
+ * @param	param		    再生するときの補正値  life speed  波の回数（波時のみ）
+ *
+ * #param	FILE_DIALOG_COMBOBOX .spa
+ * #param	COMBOBOX_HEADER
+ * #param	COMBOBOX_TEXT	直線	放物線  放物線（半分）  縦波  横波
+ * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE BTLEFF_EMITTER_MOVE_CURVE_HALF	BTLEFF_EMITTER_MOVE_WAVE_V  BTLEFF_EMITTER_MOVE_WAVE_H
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
+ * #param	COMBOBOX_TEXT	攻撃側	防御側  POS_AA  POS_BB
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE BTLEFF_PARTICLE_PLAY_POS_AA BTLEFF_PARTICLE_PLAY_POS_BB
+ * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
+ * #param VALUE_VECFX32 エミッタ寿命　エミッタスピード  波の回数（波時のみ）
+ * #param VALUE_INIT  1:1:0
+ */
+//======================================================================
+	.macro	EMITTER_MOVE_ORTHO	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top, life, speed, wave
+	.short	EC_EMITTER_MOVE_ORTHO
+	.long		\num
+	.long		\index
+	.long		\move_type
+	.long		\start_pos
 	.long		\end_pos
 	.long		\ofs_y
 	.long		\move_frame

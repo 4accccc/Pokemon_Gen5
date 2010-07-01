@@ -355,6 +355,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ALL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_EMITTER_MOVE_ORTHO( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE_ORTHO_COORDINATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE_ORTHO( VMHANDLE *vmh, void *context_work );
@@ -541,6 +542,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_PARTICLE_DELETE,
   VMEC_EMITTER_MOVE,
   VMEC_EMITTER_MOVE_COORDINATE,
+  VMEC_EMITTER_MOVE_ORTHO,
   VMEC_EMITTER_MOVE_ORTHO_COORDINATE,
   VMEC_EMITTER_CIRCLE_MOVE,
   VMEC_EMITTER_CIRCLE_MOVE_ORTHO,
@@ -739,6 +741,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("EFFVM_Start:\nEFFNO:%d\n",waza);
 #endif
+  SOGABE_Printf("EFFVM_Start:\nEFFNO:%d\n",waza);
 
   bevw->sequence = NULL;
   BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
@@ -1785,24 +1788,43 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
     }
 #endif
     heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
-    bevw->ptc[ ptc_no ] = GFL_PTC_CreateEx( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, POLYID_FIX, POLYID_MIN, POLYID_MAX,
-                                            GFL_HEAP_LOWID( bevw->heapID ) );
     resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, GFL_HEAP_LOWID( bevw->heapID ) );
-    GFL_PTC_SetResourceSetup( bevw->ptc[ ptc_no ], resource );
+    if( ( heap != NULL ) && ( resource != NULL ) )
     { 
-      TCB_PARTICLE_LOAD* tpl = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_PARTICLE_LOAD ) );
-      tpl->bevw     = bevw;
-      tpl->psys     = bevw->ptc[ ptc_no ];
-      tpl->resource = resource;
-      bevw->particle_tex_load = 1;
-      BTLV_EFFECT_SetTCB( GFUser_VIntr_CreateTCB( TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
-      VMCMD_SetWait( vmh, VWF_PARTICLE_LOAD_WAIT );
+      bevw->ptc[ ptc_no ] = GFL_PTC_CreateEx( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, POLYID_FIX, POLYID_MIN, POLYID_MAX,
+                                              GFL_HEAP_LOWID( bevw->heapID ) );
+      if( bevw->ptc[ ptc_no ] )
+      { 
+        GFL_PTC_SetResourceSetup( bevw->ptc[ ptc_no ], resource );
+        { 
+          TCB_PARTICLE_LOAD* tpl = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_PARTICLE_LOAD ) );
+          tpl->bevw     = bevw;
+          tpl->psys     = bevw->ptc[ ptc_no ];
+          tpl->resource = resource;
+          bevw->particle_tex_load = 1;
+          BTLV_EFFECT_SetTCB( GFUser_VIntr_CreateTCB( TCB_EFFVM_ParticleLoad, tpl, 0 ), NULL, GROUP_EFFVM );
+          VMCMD_SetWait( vmh, VWF_PARTICLE_LOAD_WAIT );
+        }
+        EFFVM_RegistSprMax( bevw, ptc_no, resource );
+//      BTLV_EFFECT_SetFieldAnmStopOnce();
+      }
     }
-    EFFVM_RegistSprMax( bevw, ptc_no, resource );
-//    BTLV_EFFECT_SetFieldAnmStopOnce();
+
+    //確保に失敗したときの処理
+    if( bevw->ptc[ ptc_no ] == NULL )
+    { 
+      if( heap != NULL )
+      { 
+        GFL_HEAP_FreeMemory( heap );
+      }
+      if( resource != NULL )
+      { 
+        GFL_HEAP_FreeMemory( resource );
+      }
+      bevw->ptc_no[ ptc_no ] = EFFVM_PTCNO_NONE;
+    }
   }
 
-//  return bevw->control_mode;
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -1828,27 +1850,27 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_PARTICLE_PLAY\n");
 #endif DEBUG_OS_PRINT
 
+  beeiw_src->vmh    = vmh;
+  beeiw_src->src    = ( int )VMGetU32( vmh );
+  beeiw_src->dst    = ( int )VMGetU32( vmh );
+  beeiw_src->ofs.x  = 0;
+  beeiw_src->ofs.y  = ( fx32 )VMGetU32( vmh );
+  beeiw_src->ofs.z  = 0;
+  beeiw_src->angle  = ( fx32 )VMGetU32( vmh );
+  //ダミーデータがあるので空読み；
+  dummy = VMGetU32( vmh );
+  beeiw_src->radius = ( fx32 )VMGetU32( vmh );
+  beeiw_src->life   = ( fx32 )VMGetU32( vmh );
+  beeiw_src->scale  = ( fx32 )VMGetU32( vmh );
+  beeiw_src->speed  = ( fx32 )VMGetU32( vmh );
+
+  if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
+  {
+    beeiw_src->dst = beeiw_src->src;
+  }
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
-    beeiw_src->vmh    = vmh;
-    beeiw_src->src    = ( int )VMGetU32( vmh );
-    beeiw_src->dst    = ( int )VMGetU32( vmh );
-    beeiw_src->ofs.x  = 0;
-    beeiw_src->ofs.y  = ( fx32 )VMGetU32( vmh );
-    beeiw_src->ofs.z  = 0;
-    beeiw_src->angle  = ( fx32 )VMGetU32( vmh );
-    //ダミーデータがあるので空読み；
-    dummy = VMGetU32( vmh );
-    beeiw_src->radius = ( fx32 )VMGetU32( vmh );
-    beeiw_src->life   = ( fx32 )VMGetU32( vmh );
-    beeiw_src->scale  = ( fx32 )VMGetU32( vmh );
-    beeiw_src->speed  = ( fx32 )VMGetU32( vmh );
-
-    if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
-    {
-      beeiw_src->dst = beeiw_src->src;
-    }
-
     EFFVM_INIT_EMITTER_POS( bevw, beeiw_src, ptc_no, index );
   }
 
@@ -1879,32 +1901,36 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
   OS_TPrintf("VMEC_PARTICLE_PLAY_COORDINATE\n");
 #endif DEBUG_OS_PRINT
 
+  beeiw->vmh        = vmh;
+  beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->dst        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst_pos.x  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst_pos.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst_pos.z  = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
+  beeiw->angle      = ( fx32 )VMGetU32( vmh );
+  //ダミーデータがあるので空読み；
+  dummy = VMGetU32( vmh );
+  beeiw->radius     = ( fx32 )VMGetU32( vmh );
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = ( fx32 )VMGetU32( vmh );
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
-    beeiw->vmh        = vmh;
-    beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
-    beeiw->dst        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
-    beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
-    beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
-    beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
-    beeiw->dst_pos.x  = ( fx32 )VMGetU32( vmh );
-    beeiw->dst_pos.y  = ( fx32 )VMGetU32( vmh );
-    beeiw->dst_pos.z  = ( fx32 )VMGetU32( vmh );
-    beeiw->ofs.x      = 0;
-    beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
-    beeiw->ofs.z      = 0;
-    beeiw->angle      = ( fx32 )VMGetU32( vmh );
-    //ダミーデータがあるので空読み；
-    dummy = VMGetU32( vmh );
-    beeiw->radius     = ( fx32 )VMGetU32( vmh );
-    beeiw->life       = ( fx32 )VMGetU32( vmh );
-    beeiw->scale      = ( fx32 )VMGetU32( vmh );
-    beeiw->speed      = ( fx32 )VMGetU32( vmh );
-
     if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
     {
       GFL_HEAP_FreeMemory( beeiw );
     }
+  }
+  else
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
   }
 
   return bevw->control_mode;
@@ -1931,6 +1957,29 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
   OS_TPrintf("VMEC_PARTICLE_PLAY\n");
 #endif DEBUG_OS_PRINT
 
+  beeiw_src->vmh      = vmh;
+  beeiw_src->src      = ( int )VMGetU32( vmh );
+  beeiw_src->dst      = ( int )VMGetU32( vmh );
+  beeiw_src->ofs.x    = ( fx32 )VMGetU32( vmh );
+  beeiw_src->ofs.y    = ( fx32 )VMGetU32( vmh );
+  beeiw_src->ofs.z    = ( fx32 )VMGetU32( vmh );
+  beeiw_src->radius   = ( fx32 )VMGetU32( vmh );
+  beeiw_src->life     = ( fx32 )VMGetU32( vmh );
+  beeiw_src->scale    = ( fx32 )VMGetU32( vmh );
+  beeiw_src->speed    = ( fx32 )VMGetU32( vmh );
+  beeiw_src->ortho_mode = ORTHO_MODE_ON;
+
+  if( beeiw_src->src == BTLEFF_PARTICLE_PLAY_SIDE_ATTACKOFS )
+  {
+    beeiw_src->src = BTLEFF_PARTICLE_PLAY_SIDE_ATTACK;
+    beeiw_src->ortho_mode = ORTHO_MODE_OFFSET;
+  }
+
+  if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
+  {
+    beeiw_src->dst = beeiw_src->src;
+  }
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
     GFL_G3D_PROJECTION  proj;
@@ -1952,30 +2001,6 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
       GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at,
                                     GFL_HEAP_LOWID( bevw->heapID ) );
     }
-
-    beeiw_src->vmh      = vmh;
-    beeiw_src->src      = ( int )VMGetU32( vmh );
-    beeiw_src->dst      = ( int )VMGetU32( vmh );
-    beeiw_src->ofs.x    = ( fx32 )VMGetU32( vmh );
-    beeiw_src->ofs.y    = ( fx32 )VMGetU32( vmh );
-    beeiw_src->ofs.z    = ( fx32 )VMGetU32( vmh );
-    beeiw_src->radius   = ( fx32 )VMGetU32( vmh );
-    beeiw_src->life     = ( fx32 )VMGetU32( vmh );
-    beeiw_src->scale    = ( fx32 )VMGetU32( vmh );
-    beeiw_src->speed    = ( fx32 )VMGetU32( vmh );
-    beeiw_src->ortho_mode = ORTHO_MODE_ON;
-
-    if( beeiw_src->src == BTLEFF_PARTICLE_PLAY_SIDE_ATTACKOFS )
-    {
-      beeiw_src->src = BTLEFF_PARTICLE_PLAY_SIDE_ATTACK;
-      beeiw_src->ortho_mode = ORTHO_MODE_OFFSET;
-    }
-
-    if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
-    {
-      beeiw_src->dst = beeiw_src->src;
-    }
-
     EFFVM_INIT_EMITTER_POS( bevw, beeiw_src, ptc_no, index );
   }
 
@@ -2006,21 +2031,21 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ALL( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_PARTICLE_PLAY_ALL\n");
 #endif DEBUG_OS_PRINT
 
+  beeiw_src->vmh    = vmh;
+  beeiw_src->src    = ( int )VMGetU32( vmh );
+  beeiw_src->dst    = ( int )VMGetU32( vmh );
+  beeiw_src->ofs.x  = 0;
+  beeiw_src->ofs.y  = ( fx32 )VMGetU32( vmh );
+  beeiw_src->ofs.z  = 0;
+  beeiw_src->angle  = ( fx32 )VMGetU32( vmh );
+  param_proj = VMGetU32( vmh );
+  beeiw_src->radius = ( fx32 )VMGetU32( vmh );
+  beeiw_src->life   = ( fx32 )VMGetU32( vmh );
+  beeiw_src->scale  = ( fx32 )VMGetU32( vmh );
+  beeiw_src->speed  = ( fx32 )VMGetU32( vmh );
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
-    beeiw_src->vmh    = vmh;
-    beeiw_src->src    = ( int )VMGetU32( vmh );
-    beeiw_src->dst    = ( int )VMGetU32( vmh );
-    beeiw_src->ofs.x  = 0;
-    beeiw_src->ofs.y  = ( fx32 )VMGetU32( vmh );
-    beeiw_src->ofs.z  = 0;
-    beeiw_src->angle  = ( fx32 )VMGetU32( vmh );
-    param_proj = VMGetU32( vmh );
-    beeiw_src->radius = ( fx32 )VMGetU32( vmh );
-    beeiw_src->life   = ( fx32 )VMGetU32( vmh );
-    beeiw_src->scale  = ( fx32 )VMGetU32( vmh );
-    beeiw_src->speed  = ( fx32 )VMGetU32( vmh );
-
     if( param_proj )
     {
       GFL_G3D_PROJECTION  proj;
@@ -2110,27 +2135,27 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_EMITTER_MOVE\n");
 #endif DEBUG_OS_PRINT
 
+  beeiw->vmh        = vmh;
+  beeiw->move_type  = ( int )VMGetU32( vmh );
+  beeiw->src        = ( int )VMGetU32( vmh );
+  beeiw->dst        = ( int )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
+  beeiw->move_frame = ( int )VMGetU32( vmh );
+  beeiw->top        = ( fx32 )VMGetU32( vmh );
+  beeiw->radius     = FX32_ONE;
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = FX32_ONE;
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
+  beeiw->wave       = ( fx32 )VMGetU32( vmh );
+  if( beeiw->wave == 0 )
+  { 
+    beeiw->wave = 1;
+  }
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
-    beeiw->vmh        = vmh;
-    beeiw->move_type  = ( int )VMGetU32( vmh );
-    beeiw->src        = ( int )VMGetU32( vmh );
-    beeiw->dst        = ( int )VMGetU32( vmh );
-    beeiw->ofs.x      = 0;
-    beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
-    beeiw->ofs.z      = 0;
-    beeiw->move_frame = ( int )VMGetU32( vmh );
-    beeiw->top        = ( fx32 )VMGetU32( vmh );
-    beeiw->radius     = FX32_ONE;
-    beeiw->life       = ( fx32 )VMGetU32( vmh );
-    beeiw->scale      = FX32_ONE;
-    beeiw->speed      = ( fx32 )VMGetU32( vmh );
-    beeiw->wave       = ( fx32 )VMGetU32( vmh );
-    if( beeiw->wave == 0 )
-    { 
-      beeiw->wave = 1;
-    }
-
     //移動元と移動先が同一のときは、アサートで止める
     GF_ASSERT( beeiw->dst != beeiw->src );
 
@@ -2138,6 +2163,10 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
     {
       GFL_HEAP_FreeMemory( beeiw );
     }
+  }
+  else
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
   }
 
   return bevw->control_mode;
@@ -2165,30 +2194,30 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
   OS_TPrintf("VMEC_EMITTER_MOVE_COORDINATE\n");
 #endif DEBUG_OS_PRINT
 
+  beeiw->vmh        = vmh;
+  beeiw->move_type  = ( int )VMGetU32( vmh );
+  beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst        = ( int )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
+  beeiw->move_frame = ( int )VMGetU32( vmh );
+  beeiw->top        = ( fx32 )VMGetU32( vmh );
+  beeiw->radius     = FX32_ONE;
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = FX32_ONE;
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
+  beeiw->wave       = ( fx32 )VMGetU32( vmh );
+  if( beeiw->wave == 0 )
+  { 
+    beeiw->wave = 1;
+  }
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
-    beeiw->vmh        = vmh;
-    beeiw->move_type  = ( int )VMGetU32( vmh );
-    beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
-    beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
-    beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
-    beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
-    beeiw->dst        = ( int )VMGetU32( vmh );
-    beeiw->ofs.x      = 0;
-    beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
-    beeiw->ofs.z      = 0;
-    beeiw->move_frame = ( int )VMGetU32( vmh );
-    beeiw->top        = ( fx32 )VMGetU32( vmh );
-    beeiw->radius     = FX32_ONE;
-    beeiw->life       = ( fx32 )VMGetU32( vmh );
-    beeiw->scale      = FX32_ONE;
-    beeiw->speed      = ( fx32 )VMGetU32( vmh );
-    beeiw->wave       = ( fx32 )VMGetU32( vmh );
-    if( beeiw->wave == 0 )
-    { 
-      beeiw->wave = 1;
-    }
-
     //移動元と移動先が同一のときは、アサートで止める
     GF_ASSERT( beeiw->dst != beeiw->src );
 
@@ -2196,6 +2225,87 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
     {
       GFL_HEAP_FreeMemory( beeiw );
     }
+  }
+  else
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief エミッタ移動（正射影）
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_EMITTER_MOVE_ORTHO( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
+  int       dummy;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_EMITTER_MOVE_ORTHO\n");
+#endif DEBUG_OS_PRINT
+
+  beeiw->vmh        = vmh;
+  beeiw->move_type  = ( int )VMGetU32( vmh );
+  beeiw->src        = ( int )VMGetU32( vmh );
+  beeiw->dst        = ( int )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
+  beeiw->move_frame = ( int )VMGetU32( vmh );
+  beeiw->top        = ( fx32 )VMGetU32( vmh );
+  beeiw->radius     = FX_F32_TO_FX32( 0.75f );
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = FX_F32_TO_FX32( 0.75f );
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
+  beeiw->wave       = ( fx32 )VMGetU32( vmh );
+  beeiw->ortho_mode = ORTHO_MODE_EMITTER_MOVE;
+  if( beeiw->wave == 0 )
+  { 
+    beeiw->wave = 1;
+  }
+
+  if( ptc_no != EFFVM_PTCNO_NO_FIND )
+  {
+    GFL_G3D_PROJECTION  proj;
+    VecFx32 Eye    = { 0, 0, 0 };          // Eye position
+    VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
+    VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
+
+    proj.type = GFL_G3D_PRJORTH;
+    proj.param1 = FX32_CONST( ORTHO_HEIGHT );
+    proj.param2 = -FX32_CONST( ORTHO_HEIGHT );
+    proj.param3 = -FX32_CONST( ORTHO_WIDTH );
+    proj.param4 = FX32_CONST( ORTHO_WIDTH );
+    proj.near   = FX32_ONE * 1;
+    proj.far    = FX32_ONE * 512;
+    proj.scaleW = FX32_ONE;
+
+    if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
+    {
+      GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at,
+                                    GFL_HEAP_LOWID( bevw->heapID ) );
+    }
+
+    if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+    {
+      GFL_HEAP_FreeMemory( beeiw );
+    }
+  }
+  else
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
   }
 
   return bevw->control_mode;
@@ -2223,51 +2333,54 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_ORTHO_COORDINATE( VMHANDLE *vmh, void *con
   OS_TPrintf("VMEC_EMITTER_MOVE_ORTHO_COORDINATE\n");
 #endif DEBUG_OS_PRINT
 
+  beeiw->vmh        = vmh;
+  beeiw->move_type  = ( int )VMGetU32( vmh );
+  beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst        = ( int )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
+  beeiw->move_frame = ( int )VMGetU32( vmh );
+  beeiw->top        = ( fx32 )VMGetU32( vmh );
+  beeiw->radius     = FX32_ONE;
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = ( fx32 )VMGetU32( vmh );
+  beeiw->ortho_mode = ORTHO_MODE_EMITTER_MOVE;
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
+    GFL_G3D_PROJECTION  proj;
+    VecFx32 Eye    = { 0, 0, 0 };          // Eye position
+    VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
+    VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
+
+    proj.type = GFL_G3D_PRJORTH;
+    proj.param1 = FX32_CONST( ORTHO_HEIGHT );
+    proj.param2 = -FX32_CONST( ORTHO_HEIGHT );
+    proj.param3 = -FX32_CONST( ORTHO_WIDTH );
+    proj.param4 = FX32_CONST( ORTHO_WIDTH );
+    proj.near   = FX32_ONE * 1;
+    proj.far    = FX32_ONE * 512;
+    proj.scaleW = FX32_ONE;
+
+    if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
     {
-      GFL_G3D_PROJECTION  proj;
-      VecFx32 Eye    = { 0, 0, 0 };          // Eye position
-      VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
-      VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
-
-      proj.type = GFL_G3D_PRJORTH;
-      proj.param1 = FX32_CONST( ORTHO_HEIGHT );
-      proj.param2 = -FX32_CONST( ORTHO_HEIGHT );
-      proj.param3 = -FX32_CONST( ORTHO_WIDTH );
-      proj.param4 = FX32_CONST( ORTHO_WIDTH );
-      proj.near   = FX32_ONE * 1;
-      proj.far    = FX32_ONE * 512;
-      proj.scaleW = FX32_ONE;
-
-      if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
-      {
-        GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at,
-                                      GFL_HEAP_LOWID( bevw->heapID ) );
-      }
+      GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at,
+                                    GFL_HEAP_LOWID( bevw->heapID ) );
     }
-    beeiw->vmh        = vmh;
-    beeiw->move_type  = ( int )VMGetU32( vmh );
-    beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
-    beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
-    beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
-    beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
-    beeiw->dst        = ( int )VMGetU32( vmh );
-    beeiw->ofs.x      = 0;
-    beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
-    beeiw->ofs.z      = 0;
-    beeiw->move_frame = ( int )VMGetU32( vmh );
-    beeiw->top        = ( fx32 )VMGetU32( vmh );
-    beeiw->radius     = FX32_ONE;
-    beeiw->life       = ( fx32 )VMGetU32( vmh );
-    beeiw->speed      = ( fx32 )VMGetU32( vmh );
-    beeiw->scale      = ( fx32 )VMGetU32( vmh );
-    beeiw->ortho_mode = ORTHO_MODE_EMITTER_MOVE;
 
     if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
     {
       GFL_HEAP_FreeMemory( beeiw );
     }
+  }
+  else
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
   }
 
   return bevw->control_mode;
@@ -4721,7 +4834,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       bevw->sequence_work = 0;
   
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
-      return;
+      return VMCMD_RESULT_SUSPEND;
     }
     //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
     else if( ( bevw->zoom_in_migawari == 1 ) && ( bevw->waza == BTLEFF_ZOOM_IN_RESET ) )
@@ -4741,7 +4854,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       bevw->zoom_in_migawari = 0;
   
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
-      return;
+      return VMCMD_RESULT_SUSPEND;
     }
     //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
     else if( ( ( bevw->waza == BTLEFF_POKEMON_VANISH_OFF ) ||
@@ -4773,7 +4886,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       bevw->zoom_in_migawari = 0;
   
       VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
-      return;
+      return VMCMD_RESULT_SUSPEND;
     }
   }
 
@@ -6092,7 +6205,7 @@ static  int EFFVM_GetSprMax( BTLV_EFFVM_WORK *bevw, int ptc_no )
 static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 {
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = ( BTLV_EFFVM_EMIT_INIT_WORK* )GFL_PTC_GetTempPtr();
-  VecFx32 src,dst;
+  VecFx32 src,dst,src2;
   BOOL  minus_flag = beeiw->minus_flag;
 
   switch( beeiw->src ){
@@ -6250,6 +6363,14 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   {
     EFFVM_CalcPosOrtho( &src, &beeiw->ofs );
     EFFVM_CalcPosOrtho( &dst, &beeiw->ofs );
+  }
+  else if( beeiw->ortho_mode == ORTHO_MODE_EMITTER_MOVE )
+  { 
+    src2.x = src.x;
+    src2.y = src.y;
+    src2.z = src.z;
+    src.y += beeiw->ofs.y;
+    EFFVM_CalcPosOrtho( &src2, &beeiw->ofs );
   }
   else
   {
@@ -6488,7 +6609,14 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     }
   }
 
-  GFL_PTC_SetEmitterPosition( emit, &src );
+  if( beeiw->ortho_mode == ORTHO_MODE_EMITTER_MOVE )
+  { 
+    GFL_PTC_SetEmitterPosition( emit, &src2 );
+  }
+  else
+  { 
+    GFL_PTC_SetEmitterPosition( emit, &src );
+  }
 
   GFL_HEAP_FreeMemory( beeiw );
 }
@@ -7075,6 +7203,28 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
   OS_TPrintf("VMEC_EMITTER_CIRCLE_MOVE\n");
 #endif DEBUG_OS_PRINT
 
+  bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                   sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
+  beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
+  bevw->temp_work_count++;
+
+  beecmw->center          = ( int )VMGetU32( vmh );
+  beecmw->radius_h        = ( fx32 )VMGetU32( vmh );
+  beecmw->radius_v        = ( fx32 )VMGetU32( vmh );
+  offset_y                = ( fx32 )VMGetU32( vmh );
+  beecmw->angle           = 0;
+  beecmw->frame           = ( int )VMGetU32( vmh );
+  beecmw->frame_tmp       = beecmw->frame;
+  beecmw->wait            = 0;
+  beecmw->wait_tmp        = ( int )VMGetU32( vmh );
+  beecmw->count           = ( int )VMGetU32( vmh );
+  beecmw->after_wait      = 0;
+  beecmw->after_wait_tmp  = ( int )VMGetU32( vmh );
+
+  beecmw->speed = 0x10000 / beecmw->frame;
+
+  beecmw->ortho_mode = ortho_mode;
+
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
   {
     if( ( ortho_mode == TRUE ) && ( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL ) )
@@ -7097,30 +7247,9 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
                                     GFL_HEAP_LOWID( bevw->heapID ) );
     }
 
-    bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ),
-                                                                     sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
-    beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
-    bevw->temp_work_count++;
 
     //サイズオーバーのアサート
     GF_ASSERT( bevw->temp_work_count < TEMP_WORK_SIZE );
-
-    beecmw->center          = ( int )VMGetU32( vmh );
-    beecmw->radius_h        = ( fx32 )VMGetU32( vmh );
-    beecmw->radius_v        = ( fx32 )VMGetU32( vmh );
-    offset_y                = ( fx32 )VMGetU32( vmh );
-    beecmw->angle           = 0;
-    beecmw->frame           = ( int )VMGetU32( vmh );
-    beecmw->frame_tmp       = beecmw->frame;
-    beecmw->wait            = 0;
-    beecmw->wait_tmp        = ( int )VMGetU32( vmh );
-    beecmw->count           = ( int )VMGetU32( vmh );
-    beecmw->after_wait      = 0;
-    beecmw->after_wait_tmp  = ( int )VMGetU32( vmh );
-
-    beecmw->speed = 0x10000 / beecmw->frame;
-
-    beecmw->ortho_mode = ortho_mode;
 
     switch( beecmw->center ){
     case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L:
@@ -7781,7 +7910,7 @@ static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work )
     u16 before = *v_count;
 #endif
     GFL_PTC_LoadTex( tpl->psys );
-    SOGABE_Printf("particle before:%d after:%d\n",before,*v_count);
+//    SOGABE_Printf("particle before:%d after:%d\n",before,*v_count);
   }
   tpl->bevw->particle_tex_load = 0;
   BTLV_EFFECT_FreeTCB( tcb );
