@@ -538,11 +538,11 @@ static void MB_DATA_InitCardSystem( MB_DATA_WORK *dataWork )
       STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
       STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
 #else
-  if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 )
+  if( headerData->game_code == MB_ROMCODE_DIAMOND ||
+      headerData->game_code == MB_ROMCODE_PEARL ||
+      headerData->game_code == MB_ROMCODE_PLATINUM ||
+      headerData->game_code == MB_ROMCODE_H_GOLD ||
+      headerData->game_code == MB_ROMCODE_S_SILVER )
 #endif
   {
     //マルチブートで子機ROMからファイ(アイコン)を読むための処理
