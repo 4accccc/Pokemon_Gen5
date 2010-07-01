@@ -252,4 +252,3 @@ extern void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x,
  *          ‚»‚Ì‘¼
 */
 //=============================================================================
-extern void WorldTrade_DispCallFatal( void );

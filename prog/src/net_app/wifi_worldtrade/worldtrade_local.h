@@ -37,6 +37,7 @@
 #include "net/nhttp_rap_evilcheck.h"
 #include "app/app_taskmenu.h"
 #include "system/time_icon.h"
+#include "net/dwc_tool.h"
 
 #include "worldtrade_adapter.h"
 
@@ -608,6 +609,8 @@ typedef struct _WORLDTRADE_WORK{
   BOOL  is_trade_download;  //éÛêMÇµÇΩÉtÉâÉO
   BOOL  is_partner_change;
 
+  DWC_TOOL_BADWORD_WORK badword_wk;
+
 #ifdef PM_DEBUG
 	int 					frame;									//
 	int						framenum[9][2];							//
@@ -679,6 +682,7 @@ extern void WorldTrade_ClearPassive(void);
 extern void WorldTrade_InitSystem( WORLDTRADE_WORK *wk );
 extern void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk );
 
+extern void WorldTrade_DispCallFatal( WORLDTRADE_WORK *wk );
 
 // worldtrade_sublcd.c
 extern void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk );

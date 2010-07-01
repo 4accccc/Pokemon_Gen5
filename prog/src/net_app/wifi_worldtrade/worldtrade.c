@@ -19,6 +19,7 @@
 #include "gamesystem/msgspeed.h"
 #include "msg/msg_wifi_gts.h"
 #include "print/printsys.h"
+#include "msg/msg_wifi_system.h"
 
 
 #include "savedata/wifilist.h"
@@ -1373,4 +1374,17 @@ void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk )
   GXS_SetVisibleWnd(GX_WNDMASK_NONE);
 
 
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GTS用フェイタルエラー表示
+ *
+ */
+//-----------------------------------------------------------------------------
+void WorldTrade_DispCallFatal( WORLDTRADE_WORK *wk )
+{
+  GAMEDATA_SaveAsyncCancel(GAMESYSTEM_GetGameData(wk->param->gamesys));
+  NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
 }

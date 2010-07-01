@@ -153,8 +153,12 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 
 	// Ž‚¿Žåî•ñ‚Ì•\Ž¦
 	pp = (POKEMON_PARAM *)wk->UploadPokemonData.postData.data;
-	WorldTrade_PokeInfoPrint2( wk->MsgManager, &wk->InfoWin[INFOWIN_AZUKETAHITO], 
-								wk->UploadPokemonData.name, pp, &wk->InfoWin[INFOWIN_OYA], &wk->print);
+
+  {
+    WorldTrade_PokeInfoPrint2( wk->MsgManager, &wk->InfoWin[INFOWIN_AZUKETAHITO], 
+        (STRCODE*)MyStatus_GetMyName(wk->param->mystatus),
+        pp, &wk->InfoWin[INFOWIN_OYA], &wk->print);
+  }
 
 #ifdef PM_DEBUG
 	{	

@@ -17,7 +17,6 @@
 #include "gamesystem/msgspeed.h"
 #include <dpw_tr.h>
 #include "msg/msg_wifi_gts.h"
-#include "msg/msg_wifi_system.h"
 #include "message.naix"
 //mine
 #include "worldtrade_adapter.h"
@@ -569,14 +568,4 @@ void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y 
   } 
 
   GF_ASSERT( 0 );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  GTS用フェイタルエラー表示
- *
- */
-//-----------------------------------------------------------------------------
-void WorldTrade_DispCallFatal( void )
-{
-  NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
 }

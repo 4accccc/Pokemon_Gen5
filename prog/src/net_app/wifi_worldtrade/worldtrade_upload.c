@@ -78,6 +78,8 @@ static int Subseq_Start( WORLDTRADE_WORK *wk);
 
 static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk );
 static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk );
+static int Subseq_NameCheckStart( WORLDTRADE_WORK *wk );
+static int Subseq_NameCheckResult( WORLDTRADE_WORK *wk );
 
 static int Subseq_UploadStart( WORLDTRADE_WORK *wk );
 static int Subseq_UploadResult( WORLDTRADE_WORK *wk );
@@ -145,6 +147,8 @@ enum{
   
   SUBSEQ_EVILCHECK_START,
   SUBSEQ_EVILCHECK_RESULT,
+  SUBSEQ_NAMECHECK_START,
+  SUBSEQ_NAMECHECK_RESULT,
 
 	SUBSEQ_UPLOAD_START,
 	SUBSEQ_UPLOAD_RESULT,
@@ -217,6 +221,9 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
   Subseq_EvilCheckStart,    //SUBSEQ_EVILCHECK_START,
   Subseq_EvilCheckResult,   //SUBSEQ_EVILCHECK_RESULT,
+  Subseq_NameCheckStart,    //SUBSEQ_NAMECHECK_START,
+  Subseq_NameCheckResult,   //SUBSEQ_NAMECHECK_RESULT,
+
 	Subseq_UploadStart,			// SUBSEQ_UPLOAD_START,
 	Subseq_UploadResult,		// SUBSEQ_UPLOAD_RESULT,
 	Subseq_UploadFinish,		// SUBSEQ_UPLOAD_FINISH,
@@ -746,8 +753,7 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
     { 
       if( wk->evilcheck_data.poke_result == NHTTP_RAP_EVILCHECK_RESULT_OK )
       { 
-        OS_TPrintf( "不正検査終了=[%d]次=%d\n", wk->evilcheck_data.poke_result, wk->evilcheck_mode );
-        wk->subprocess_seq = wk->evilcheck_mode;
+        wk->subprocess_seq = SUBSEQ_NAMECHECK_START;
       }
       else
       { 
@@ -783,6 +789,70 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
 
 	return SEQ_MAIN;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナー名の不正検査を行う  開始
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_NameCheckStart( WORLDTRADE_WORK *wk )
+{
+  STRCODE *p_code   = wk->UploadPokemonData.name;
+  STRBUF  *p_buff   = GFL_STR_CreateBuffer( DPW_TR_NAME_SIZE, HEAPID_WORLDTRADE );
+  
+  GFL_STR_SetStringCodeOrderLength( p_buff, p_code, DPW_TR_NAME_SIZE );
+
+  DWC_TOOL_BADWORD_Start( &wk->badword_wk, p_buff, HEAPID_WORLDTRADE );
+
+  GFL_STR_DeleteBuffer( p_buff );
+
+  wk->subprocess_seq = SUBSEQ_NAMECHECK_RESULT;
+  wk->timeout_count = 0;
+
+	return SEQ_MAIN;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナー名の不正検査を行う  終了
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_NameCheckResult( WORLDTRADE_WORK *wk )
+{ 
+  BOOL is_bad_word;
+
+  if( DWC_TOOL_BADWORD_Wait( &wk->badword_wk, &is_bad_word ) )
+  {
+    if( is_bad_word )
+    {
+      STRCODE *p_code   = wk->UploadPokemonData.name;
+      DWC_TOOL_SetBadNickName( p_code, DPW_TR_NAME_SIZE, HEAPID_WORLDTRADE );
+    }
+
+    OS_TPrintf( "不正検査終了=[%d]次=%d\n", wk->evilcheck_data.poke_result );
+    wk->subprocess_seq = wk->evilcheck_mode;
+  }
+  else
+  {
+    if(wk->timeout_count++ == TIMEOUT_TIME){
+      // サーバーと通信できません→終了
+      OS_TPrintf("name error. \n" );
+      wk->ConnectErrorNo = DPW_TR_ERROR_ILLIGAL_REQUEST;
+      wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
+		}
+  }
+
+	return SEQ_MAIN;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -884,7 +954,7 @@ static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 		}
 		
@@ -892,7 +962,7 @@ static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -970,11 +1040,11 @@ static int Subseq_UploadFinishResult( WORLDTRADE_WORK *wk )
 			// サーバーと通信できません→終了
 			OS_TPrintf(" upload error. %d \n", result);
 			// ここはうけつけに戻ってはいけない。無理矢理通信エラー
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
-			WorldTrade_DispCallFatal();
+			WorldTrade_DispCallFatal(wk);
 			break;
 		}
 
@@ -982,7 +1052,7 @@ static int Subseq_UploadFinishResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -1104,7 +1174,7 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 		}
@@ -1113,7 +1183,7 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -1173,7 +1243,7 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 		// 最後のつめを行おうとしたら交換が成立してしまった。
 		// エラーが起きた事にして外にだしてしまう→もどってくれば交換が成立してます。
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-			WorldTrade_DispCallFatal();
+			WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -1189,11 +1259,11 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 
 			// セーブがほとんど書き込まれている状況ではデータを元に戻せない
 			// 無理矢理通信エラーへ
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 
@@ -1203,7 +1273,7 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -1325,7 +1395,7 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 		}
@@ -1334,7 +1404,7 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -1385,7 +1455,7 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 
 		// 引き取られてしまった
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -1401,13 +1471,13 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 	
 			// ９９％までセーブが書き込まれた状況では元に戻せないので
 			// 無理矢理通信エラーへ
-			WorldTrade_DispCallFatal();
+			WorldTrade_DispCallFatal(wk);
 			break;
 
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 		}
@@ -1416,7 +1486,7 @@ static int Subseq_ExchangeFinishResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -1588,7 +1658,7 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-			WorldTrade_DispCallFatal();
+			WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 		}
@@ -1597,7 +1667,7 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -1720,7 +1790,7 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
 			return SEQ_MAIN;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			return SEQ_MAIN;
 	// -----------------------------------------
 
@@ -1733,7 +1803,7 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
   else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
   }
 	return SEQ_MAIN;
@@ -1899,7 +1969,7 @@ static int Subseq_WaitCancelAsync( WORLDTRADE_WORK *wk )
       break;
 
     case DPW_TR_ERROR_FATAL:
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
       break;
     }
 
@@ -2058,12 +2128,12 @@ static int Subseq_DownloadExFinishResult( WORLDTRADE_WORK *wk)
 
 			// ９９％までセーブが書き込まれた状況では元に戻せないので
 			// 無理矢理通信エラーへ
-			WorldTrade_DispCallFatal();
+			WorldTrade_DispCallFatal(wk);
 
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 		}
@@ -2072,7 +2142,7 @@ static int Subseq_DownloadExFinishResult( WORLDTRADE_WORK *wk)
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
@@ -2276,11 +2346,11 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 
 			// セーブがほとんど書き込まれている状況ではデータを元に戻せない
 			// 無理矢理通信エラーへ
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 			break;
 	// -----------------------------------------
 
@@ -2290,7 +2360,7 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      WorldTrade_DispCallFatal();
+      WorldTrade_DispCallFatal(wk);
 		}
 	}
 	return SEQ_MAIN;
