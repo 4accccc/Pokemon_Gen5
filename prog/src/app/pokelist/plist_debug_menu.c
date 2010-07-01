@@ -518,8 +518,13 @@ static void PLD_U_CheckRegCheck( void* userWork , DEBUGWIN_ITEM* item )
   PLIST_WORK *work = userWork;
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
+    u8 i;
     work->debWork->isCheck = TRUE;
     DEBUGWIN_RefreshScreen();
+    for( i=0;i<6;i++ )
+    {
+      work->debWork->posArr[i] = 0;
+    }
     work->debWork->ret = PokeRegulationCheckPokeParty_Func( &work->debWork->reg , work->plData->pp , work->debWork->posArr );
     work->debWork->isCheck = FALSE;
     DEBUGWIN_RefreshScreen();
