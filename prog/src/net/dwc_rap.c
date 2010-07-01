@@ -1818,10 +1818,7 @@ static int mydwc_step(void)
 
   _FuncNonSave();  //セーブデータの方にフレンドデータを移し変える
 
-  ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
-  if( !((ret != DWC_ERROR_NONE) && (myErrorType >= DWC_ETYPE_SHUTDOWN_FM)) ){  //エラーのときは処理しない BTS6879
-    DWC_ProcessFriendsMatch();  // DWC通信処理更新
-  }
+  DWC_ProcessFriendsMatch();  // DWC通信処理更新
   mydwc_updateFriendInfo();
 
 
@@ -2085,9 +2082,20 @@ int GFL_NET_DWC_ErrorType(int code, int type)
   if( code100 == 510 ) return 6;
   if( code100 == 511 ) return 6;
   if( code100 == 513 ) return 6;
+  
   if( code >= 52000 && code <= 52003 ) return 8;
+  if( code >= 52010 && code <= 52012 ) return 8;
   if( code >= 52100 && code <= 52103 ) return 8;
+  if( code >= 52110 && code <= 52112 ) return 8;
   if( code >= 52200 && code <= 52203 ) return 8;
+  if( code >= 52210 && code <= 52212 ) return 8;
+  if( code >= 52400 && code <= 52403 ) return 8;
+  if( code >= 52410 && code <= 52412 ) return 8;
+  if( code >= 52500 && code <= 52503 ) return 8;
+  if( code >= 52510 && code <= 52512 ) return 8;
+  if( code >= 52700 && code <= 52703 ) return 8;
+  if( code >= 52710 && code <= 52712 ) return 8;
+
   if( code == 80430 ) return 9;
 
   if( code1000 == 20 ) return 0;
@@ -2372,10 +2380,13 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
                                        );
     _dWork->matching_type = MDTYPE_CHILD;
   }
+
+
+
   if(!ans){
     _dWork->setupErrorCount++;
     if(_dWork->setupErrorCount>120){
-      return DWCRAP_STARTGAME_FAILED;
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_DISCONNECT ); //BTS7100ではないが修正
     }
     return DWCRAP_STARTGAME_RETRY;
   }
