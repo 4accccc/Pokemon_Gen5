@@ -13231,6 +13231,11 @@ u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeI
 
     wk->simulationCounter++;
 
+    if( BPP_IsFakeEnable(defender) )
+    {
+      defender = BTL_MAIN_GetFakeTargetPokeParam( wk->mainModule, wk->pokeCon, defender );
+    }
+
     //
     if( fAffinity ){
       aff = BTL_SVFTOOL_SimulationAffinity( wk, atkPokeID, defPokeID, waza );

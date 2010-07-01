@@ -4098,6 +4098,29 @@ void BTL_MAIN_ReflectPokeWazaOboe( BTL_MAIN_MODULE* wk, u8 pokeID )
   BPP_WAZA_Copy( bppCl, bppSv );
 }
 
+/**
+ *  イリュージョン中ポケモンのイリュージョン対象
+ */
+const BTL_POKEPARAM* BTL_MAIN_GetFakeTargetPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* bpp )
+{
+  if( BPP_IsFakeEnable(bpp) )
+  {
+    u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+    const POKEMON_PARAM* ppFake = BPP_GetViewSrcData( bpp );
+    const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( pokeCon, clientID );
+    u32 memberCount = BTL_PARTY_GetMemberCount( party );
+    const BTL_POKEPARAM* member;
+    u32 i;
+    for(i=0; i<memberCount; ++i)
+    {
+      member = BTL_PARTY_GetMemberDataConst( party, i );
+      if( BPP_GetSrcData(member) == ppFake ){
+        return member;
+      }
+    }
+  }
+  return bpp;
+}
 
 //=======================================================================================================
 // BTL_POKE_CONTAINER

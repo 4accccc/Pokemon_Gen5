@@ -188,6 +188,7 @@ extern void BTL_MAIN_ChargeShooterEnergyReq( BTL_MAIN_MODULE* wk, u8 clientID, u
 extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos );
 extern BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID );
 
+extern const BTL_POKEPARAM* BTL_MAIN_GetFakeTargetPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* bpp );
 
 
 //-------------------------------------------------------------------------------
