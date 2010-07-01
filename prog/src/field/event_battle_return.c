@@ -39,6 +39,8 @@
 #include "battle/batt_bg_tbl.h"
 #include "batt_bg_tbl.naix"
 
+#include "sound/pm_sndsys.h"
+
 // local includes --------------------
 #include "event_battle_return.h"
 
@@ -76,6 +78,10 @@ typedef struct {
 
   // ローカルPROCシステム
   GFL_PROCSYS*  local_procsys;
+
+  // バトル→図鑑登録→進化デモという流れの場合BGMが消えていないので。
+  BOOL             first_shinka_check_finish;
+  BOOL             fade_out_bgm_start;
 }BTLRET_WORK;
 
 /*--------------------------------------------------------------------------*/
@@ -126,6 +132,10 @@ static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, 
 
   // ローカルPROCシステムを作成
   wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
+
+  // バトル→図鑑登録→進化デモという流れの場合BGMが消えていないので。
+  wk->first_shinka_check_finish = FALSE;
+  wk->fade_out_bgm_start        = FALSE;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -393,6 +403,33 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     (*seq)++;
     break;
   case 4:
+    // バトル→図鑑登録→進化デモという流れの場合BGMが消えていないので。
+    if( !(wk->first_shinka_check_finish) )
+    {
+      if(    param->btlResult->result == BTL_RESULT_CAPTURE
+          && wk->shinka_poke_bit )
+      {
+        if( !(wk->fade_out_bgm_start) )
+        {
+          PMSND_FadeOutBGM( PMSND_FADE_SHORT );
+          wk->fade_out_bgm_start = TRUE;
+        }
+        else
+        {
+          if( !PMSND_CheckFadeOnBGM() )
+          {
+            PMSND_StopBGM();
+            wk->first_shinka_check_finish = TRUE;
+          }
+        }
+      }
+      else
+      {
+        wk->first_shinka_check_finish = TRUE;
+      }
+      break;
+    }
+
     //進化チェック
     if( wk->shinka_poke_bit )
     {
