@@ -232,6 +232,7 @@ typedef struct
   MB_COMM_WORK *commWork;
   BOOL         isNetErr;
   BOOL         isNetErrMb;
+  BOOL         isNetErrSave;
   
   MB_PARENT_STATE state;
   u8              subState;
@@ -435,6 +436,11 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->state != MPS_FADEOUT &&
       work->state != MPS_WAIT_FADEOUT )
   {
+    work->isNetErrSave = GAMEDATA_GetIsSave( work->initWork->gameData );
+    if( work->isNetErrSave == TRUE )
+    {
+      GAMEDATA_SaveAsyncCancel( work->initWork->gameData );
+    }
     work->state = MPS_FADEOUT;
     MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
   }
@@ -2673,6 +2679,7 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   work->initWork = initWork;
   work->isNetErr = FALSE;
   work->isNetErrMb = FALSE;
+  work->isNetErrSave = FALSE;
   
   MB_PARENT_Init( work );
   
@@ -2692,7 +2699,7 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
   //ƒ[ƒN‰ð•úŒã‚ÉŽg‚¤‚Ì‚Å•ÛŽ
   BOOL isMovieTrans = FALSE;
   BOOL isNetErr = work->isNetErr;
-  BOOL isSave = GAMEDATA_GetIsSave( work->initWork->gameData );
+  BOOL isSave = work->isNetErrSave;
   
 #if MP_PARENT_DEB
   MB_PARENT_TermDebug( work );
