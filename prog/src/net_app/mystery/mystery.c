@@ -1084,7 +1084,7 @@ static void OBJ_ReLoad( OBJ_WORK *p_wk, HEAPID heapID )
     void *p_plt_buff;
     NNSG2dPaletteData *p_plt_data;
     p_plt_buff  = GFL_ARC_UTIL_LoadPalette( ARCID_MYSTERY, NARC_mystery_title_cursol_NCLR, &p_plt_data, heapID );
-    GFL_CLGRP_PLTT_Replace( p_wk->res_plt[ OBJ_RES_PLT_CURSOR ], p_plt_data, 6 );
+    GFL_CLGRP_PLTT_Replace( p_wk->res_plt[ OBJ_RES_PLT_CURSOR ], p_plt_data, 7 );
     GFL_HEAP_FreeMemory( p_plt_buff );
 	} 
 }
