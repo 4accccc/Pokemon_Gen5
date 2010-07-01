@@ -670,9 +670,21 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
     
   case MCS_CHECK_ROM_CRC_LOAD:
-    if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+    if( MB_DATA_CheckRomCode( work->dataWork ) == TRUE )
     {
-      work->state = MCS_CHECK_ROM_CRC;
+      if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+      {
+        work->state = MCS_CHECK_ROM_CRC;
+      }
+    }
+    else
+    {
+      //CRCチェック失敗
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_08 , work->initData->msgSpeed );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+      work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     }
     break;
 

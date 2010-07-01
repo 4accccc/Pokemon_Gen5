@@ -838,9 +838,21 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_CHECK_ROM_CRC_LOAD:
     if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
     {
-      if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+      if( MB_DATA_CheckRomCode( work->dataWork ) == TRUE )
       {
-        work->state = MCS_CHECK_ROM_CRC;
+        if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+        {
+          work->state = MCS_CHECK_ROM_CRC;
+        }
+      }
+      else
+      {
+        //カード不正
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_12 , work->initData->msgSpeed );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+        work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
       }
     }
     MB_CHILD_ErrCheck( work , FALSE );

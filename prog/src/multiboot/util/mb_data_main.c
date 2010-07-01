@@ -76,8 +76,6 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->isDummyCard = FALSE;
   MATH_CRC16CCITTInitTable( &dataWork->crcTable_ ); //CRC初期化
   
-  MB_DATA_InitCardSystem( dataWork );
-  
   {
     //ROMの識別を行う
     CARDRomHeader *headerData;
@@ -127,6 +125,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   #endif
     }
   }
+  MB_DATA_InitCardSystem( dataWork );
   
   return dataWork;
 }
@@ -462,6 +461,45 @@ void  MB_DATA_PermitLastSaveSecond( MB_DATA_WORK *dataWork )
   dataWork->permitLastSaveSecond = TRUE;
 }
 
+const BOOL MB_DATA_CheckRomCode( MB_DATA_WORK *dataWork )
+{
+  //ROMの識別を行う
+  CARDRomHeader *headerData;
+  s32 lockID = OS_GetLockID();
+  BOOL isPullCard = FALSE;
+  
+  GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+  CARD_LockRom( (u16)lockID );
+  CARD_CheckPulledOut();  //抜き検出
+
+  headerData = (CARDRomHeader*)CARD_GetRomHeader();
+
+  CARD_UnlockRom( (u16)lockID );
+  OS_ReleaseLockID( (u16)lockID );
+  
+#if PM_DEBUG
+  if( headerData->game_code == MB_ROMCODE_DIAMOND ||
+      headerData->game_code == MB_ROMCODE_PEARL ||
+      headerData->game_code == MB_ROMCODE_PLATINUM ||
+      headerData->game_code == MB_ROMCODE_H_GOLD ||
+      headerData->game_code == MB_ROMCODE_S_SILVER ||
+      STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
+      STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
+      STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
+      STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
+#else
+  if( headerData->game_code == MB_ROMCODE_DIAMOND ||
+      headerData->game_code == MB_ROMCODE_PEARL ||
+      headerData->game_code == MB_ROMCODE_PLATINUM ||
+      headerData->game_code == MB_ROMCODE_H_GOLD ||
+      headerData->game_code == MB_ROMCODE_S_SILVER )
+#endif
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 #pragma mark [>CardInit
 
 // 複製 ROM アーカイブ構造体。
@@ -526,24 +564,7 @@ static FSResult MyRom_ArchiveProc(FSFile *file, FSCommandType cmd)
 
 static void MB_DATA_InitCardSystem( MB_DATA_WORK *dataWork )
 {
-  CARDRomHeader *headerData = (CARDRomHeader*)CARD_GetRomHeader();
-#if PM_DEBUG
-  if( headerData->game_code == MB_ROMCODE_DIAMOND ||
-      headerData->game_code == MB_ROMCODE_PEARL ||
-      headerData->game_code == MB_ROMCODE_PLATINUM ||
-      headerData->game_code == MB_ROMCODE_H_GOLD ||
-      headerData->game_code == MB_ROMCODE_S_SILVER ||
-      STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
-      STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
-      STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
-      STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
-#else
-  if( headerData->game_code == MB_ROMCODE_DIAMOND ||
-      headerData->game_code == MB_ROMCODE_PEARL ||
-      headerData->game_code == MB_ROMCODE_PLATINUM ||
-      headerData->game_code == MB_ROMCODE_H_GOLD ||
-      headerData->game_code == MB_ROMCODE_S_SILVER )
-#endif
+  if( MB_DATA_CheckRomCode( dataWork ) == TRUE )
   {
     //マルチブートで子機ROMからファイ(アイコン)を読むための処理
     
