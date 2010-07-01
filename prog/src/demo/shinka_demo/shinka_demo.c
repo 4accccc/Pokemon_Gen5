@@ -1360,6 +1360,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_OBJ, 0x1e0, work->heap_sys_id );
 
         // バトルステータス
+        // ここで初期化していないものには0が入っている
         work->bplist_data.gamedata    = param->gamedata;
         work->bplist_data.pp          = (POKEPARTY*)param->ppt;
         work->bplist_data.font        = work->font;
@@ -1372,6 +1373,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         work->bplist_data.cursor_flg  = &work->cursor_flag;
         work->bplist_data.tcb_sys     = work->tcbsys;
         work->bplist_data.pfd         = work->pfd;
+        work->bplist_data.seFlag      = TRUE;
 
         GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
         GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_plist ) );
@@ -1914,7 +1916,10 @@ static void ShinkaDemo_Exit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 //=====================================
 static void ShinkaDemo_SoundInit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
-  PMSND_FadeOutBGM( FSND_FADE_SHORT );
+  if( param->b_field )
+  {
+    PMSND_FadeOutBGM( FSND_FADE_SHORT );
+  }
   work->sound_step = SOUND_STEP_FIELD_FADE_OUT;
 }
 //-------------------------------------
@@ -1943,8 +1948,11 @@ static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
     {
       if( !PMSND_CheckFadeOnBGM() )
       {
-        PMSND_PauseBGM( TRUE );
-        PMSND_PushBGM();
+        if( param->b_field )
+        {
+          PMSND_PauseBGM( TRUE );
+          PMSND_PushBGM();
+        }
         work->sound_step = SOUND_STEP_WAIT;
 
 /*
@@ -2029,10 +2037,13 @@ static void ShinkaDemo_SoundFadeInField( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_W
 {
   if( work->sound_step == SOUND_STEP_WAIT )
   {
-    // フィールドBGM
-    PMSND_PopBGM();
-    PMSND_PauseBGM( FALSE );
-    PMSND_FadeInBGM( FSND_FADE_NORMAL );
+    if( param->b_field )
+    {
+      // フィールドBGM
+      PMSND_PopBGM();
+      PMSND_PauseBGM( FALSE );
+      PMSND_FadeInBGM( FSND_FADE_NORMAL );
+    }
   }
 }
 static void ShinkaDemo_SoundPlayIntro( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
