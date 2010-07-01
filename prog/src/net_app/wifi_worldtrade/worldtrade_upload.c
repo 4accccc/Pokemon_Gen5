@@ -671,6 +671,8 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 
 		// 「セーブしています」と表示してからセーブ
 		wk->subprocess_seq  = SUBSEQ_NOW_SAVE_MES;
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WORLDTRADE );
+
 		break;
 	default:
 		OS_TPrintf("モード指定がない\n");
