@@ -167,10 +167,11 @@ static void _partySub3All(EVENT_IRCBATTLE_WORK *dbw)
 
 static void _wifilistPlayData(EVENT_IRCBATTLE_WORK *dbw, GAMEDATA* pGameData)
 {
-  int i,index,friend,myno,j,friendNet=0;
+  int i,index,friend=-1;
+  int myno,j,friendNet=0;
 
   if(0 == dbw->para->multiMode){
-    friend = -1;
+    friendNet = -1;
   }
   else{
     int nid = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle());
@@ -197,6 +198,7 @@ static void _wifilistPlayData(EVENT_IRCBATTLE_WORK *dbw, GAMEDATA* pGameData)
           WifiList_SetLastPlayDate(GAMEDATA_GetWiFiList(pGameData), index);
         }
         else{
+          OS_TPrintf("‹L˜^‚µ‚Ü‚·\n");
           if(dbw->demo_prm.result == COMM_BTL_DEMO_RESULT_WIN){
             // ƒoƒgƒ‹‚Ì‹L˜^
             WifiList_SetResult(GAMEDATA_GetWiFiList(pGameData),
