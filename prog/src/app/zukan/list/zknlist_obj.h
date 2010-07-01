@@ -306,12 +306,11 @@ extern void ZKNLISTOBJ_ChangePokeIconAnime( ZKNLISTMAIN_WORK * wk, u32 pos );
  * @brief		スクロールバー配置
  *
  * @param		wk			図鑑リストワーク
- * @param		py			Ｙ座標
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py );
+extern void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

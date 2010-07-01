@@ -301,12 +301,11 @@ extern void ZKNSEARCHOBJ_VanishJumpFormIcon( ZKNSEARCHMAIN_WORK * wk );
  * @brief		スクロールバー表示
  *
  * @param		wk			図鑑検索画面ワーク
- * @param		py			Ｙ座標
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk, u32 py );
+extern void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

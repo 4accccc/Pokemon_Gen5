@@ -1050,13 +1050,19 @@ void ZKNLISTOBJ_ChangePokeIconAnime( ZKNLISTMAIN_WORK * wk, u32 pos )
  * @brief		スクロールバー配置
  *
  * @param		wk			図鑑リストワーク
- * @param		py			Ｙ座標
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
+void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk )
 {
+	u32	py;
+	s16	nx, ny;
+
+	ZKNLISTOBJ_GetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, &nx, &ny, CLSYS_DRAW_MAIN );
+	
+	py = FRAMELIST_GetScrollBarPY2( wk->lwk, ny );
+
 	if( py < SCROLL_BAR_UY ){
 		py = SCROLL_BAR_UY;
 	}else if( py > SCROLL_BAR_DY ){

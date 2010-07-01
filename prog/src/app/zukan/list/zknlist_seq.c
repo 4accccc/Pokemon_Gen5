@@ -426,6 +426,8 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 		break;
 	}
 
+	ZKNLISTOBJ_SetScrollBar( wk );
+
 	ZKNLISTOBJ_SetPutPokeIconFlag( wk );
 
 	return seq;

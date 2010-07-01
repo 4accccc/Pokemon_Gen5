@@ -840,6 +840,8 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}
 
+	ZKNSEARCHOBJ_SetScrollBar( wk );
+
 	return seq;
 }
 
@@ -1001,6 +1003,8 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 			break;
 		}
 	}
+
+	ZKNSEARCHOBJ_SetScrollBar( wk );
 
 	return seq;
 }
@@ -1164,6 +1168,8 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 		}
 	}
 
+	ZKNSEARCHOBJ_SetScrollBar( wk );
+
 	return seq;
 }
 
@@ -1320,6 +1326,8 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 			break;
 		}
 	}
+
+	ZKNSEARCHOBJ_SetScrollBar( wk );
 
 	return seq;
 }

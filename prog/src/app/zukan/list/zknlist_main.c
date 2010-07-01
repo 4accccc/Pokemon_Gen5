@@ -882,7 +882,7 @@ static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
 		ZKNLISTOBJ_SetPokeGra( wk, 0 );
 	}
 	ZKNLISTOBJ_ChangePokeIconAnime( wk, listPos-FRAMELIST_GetScrollCount(wk->lwk) );
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
+//	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY2(wk->lwk) );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -904,6 +904,6 @@ static void ListCallBack_Scroll( void * work, s8 mv )
 	ZKNLISTOBJ_PutScrollList( wk, mv*-1 );
 	ZKNLISTOBJ_ChangePokeIconAnime( wk, FRAMELIST_GetCursorPos(wk->lwk) );
 
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
+//	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY2(wk->lwk) );
 	ZKNLISTOBJ_SetListPageArrowAnime( wk, TRUE );
 }

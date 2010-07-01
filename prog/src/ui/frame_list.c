@@ -92,6 +92,7 @@ struct _FRAMELIST_WORK {
 	u8	railHitPos;									// レールタッチテーブル位置
 	u8	railTop;										// レール最上部のＹ座標
 	u8	railBottom;									// レール最下部のＹ座標
+	BOOL	railMode;									// レール動作中か
 
 	u8	slideSeq;
 	s8	slideVec;
@@ -1355,6 +1356,7 @@ static void InitRailMove( FRAMELIST_WORK * wk, int pos )
 
 	wk->railHit[1].rect.top = GFL_UI_TP_HIT_END;
 
+	wk->railMode = TRUE;
 	wk->mainSeq = MAINSEQ_RAIL;
 }
 
@@ -1378,6 +1380,34 @@ static u32 GetRailScroll( FRAMELIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		レールのタッチデータの上下のY座標を取得
+ *
+ * @param		wk			ワーク
+ * @param		ty			上部Y座標
+ * @param		by			下部Y座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void GetScrollBarTouchY( FRAMELIST_WORK * wk, u8 * ty, u8 * by )
+{
+	u8	i = 0;
+
+	while( 1 ){
+		if( wk->hed.touch[i].tbl.rect.top == GFL_UI_TP_HIT_END ){
+			break;
+		}
+		if( wk->hed.touch[i].prm == FRAMELIST_TOUCH_PARAM_RAIL ){
+			*ty = wk->hed.touch[i].tbl.rect.top;
+			*by = wk->hed.touch[i].tbl.rect.bottom;
+			break;
+		}
+		i++;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		スクロールバーの表示Ｙ座標を取得
  *
  * @param		wk			ワーク
@@ -1388,22 +1418,48 @@ static u32 GetRailScroll( FRAMELIST_WORK * wk )
 u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk )
 {
 	u8	ty, by;
-	u8	i;
 
-	i = 0;
-	while( 1 ){
-		if( wk->hed.touch[i].tbl.rect.top == GFL_UI_TP_HIT_END ){
-			return 0;
+	GetScrollBarTouchY( wk, &ty, &by );
+	return SCROLLBAR_GetPosY( wk->listScrollMax, wk->listScroll, ty, by, wk->hed.barSize );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロールバーの表示Ｙ座標を取得（拡張版）
+ *
+ * @param		wk			ワーク
+ * @param		now_y		現在のＹ座標
+ *
+ * @return	Ｙ座標
+ *
+ * @li	レール処理中はタッチＹ座標を返す
+ * @li	現在のＹ座標がスクロール幅に収まっていれば、現在のＹ座標を返す
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetScrollBarPY2( FRAMELIST_WORK * wk, u32 now_y )
+{
+	u32	y1, y2;
+	u8	ty, by;
+
+	if( wk->railMode == TRUE ){
+		if( GFL_UI_TP_HitCont( wk->railHit ) != GFL_UI_TP_HIT_NONE ){
+			u32	px, py;
+			GFL_UI_TP_GetPointCont( &px, &py );
+			return py;
 		}
-		if( wk->hed.touch[i].prm == FRAMELIST_TOUCH_PARAM_RAIL ){
-			ty = wk->hed.touch[i].tbl.rect.top;
-			by = wk->hed.touch[i].tbl.rect.bottom;
-			break;
-		}
-		i++;
 	}
 
-	return SCROLLBAR_GetPosY( wk->listScrollMax, wk->listScroll, ty, by, wk->hed.barSize );
+	GetScrollBarTouchY( wk, &ty, &by );
+	y1 = SCROLLBAR_GetPosY( wk->listScrollMax, wk->listScroll, ty, by, wk->hed.barSize );
+	if( wk->listScrollMax == wk->listScroll ){
+		y2 = by;
+	}else{
+		y2 = SCROLLBAR_GetPosY( wk->listScrollMax, wk->listScroll+1, ty, by, wk->hed.barSize );
+	}
+	if( now_y >= y1 && now_y < y2 ){
+		return now_y;
+	}
+	return y1;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1426,6 +1482,7 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 	}
 
 	if( GFL_UI_TP_HitCont( wk->railHit ) == GFL_UI_TP_HIT_NONE ){
+		wk->railMode = FALSE;
 		wk->mainSeq = MAINSEQ_MAIN;
 		return FALSE;
 	}
@@ -1446,6 +1503,7 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 
 	return TRUE;
 }
+
 
 
 //============================================================================================
