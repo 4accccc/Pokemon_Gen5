@@ -2257,51 +2257,50 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
 {
   BOOL bHit = FALSE;
   int buttonNo;
+  TOUCHBAR_WORK *bar = GTSNEGO_DISP_GetTouchWork(pWork->pDispWork);
   
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
 
-  if(GFL_UI_KEY_GetTrg()){
-    if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
-      GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
-      return;
+  //タッチバーで選択されていない場合、ボタンが反応する　20100701 add Saito
+  if ( !TOUCHBAR_IsDecide( bar ) ){
+    if(GFL_UI_KEY_GetTrg()){
+      if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
+        GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+        return;
+      }
     }
-  }
 
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-    if(!pWork->bSingle){
-      _buttonDecide(pWork, pWork->key1);
-      _CHANGE_STATE(pWork,_modeSelectMenuFlash);
-      return;
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+      if(!pWork->bSingle){
+        _buttonDecide(pWork, pWork->key1);
+        _CHANGE_STATE(pWork,_modeSelectMenuFlash);
+        return;
+      }
+      else{
+        PMSND_PlaySystemSE(_SE_CANCEL);
+      }
     }
-    else{
-      PMSND_PlaySystemSE(_SE_CANCEL);
-    }
-  }
   
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
-    bHit=TRUE;
-    PMSND_PlaySystemSE(_SE_CUR);
-    pWork->key1=_CROSSCUR_TYPE_MAINUP;
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
-    bHit=TRUE;
-    PMSND_PlaySystemSE(_SE_CUR);
-    pWork->key1=_CROSSCUR_TYPE_MAINDOWN;
-  }
-  if(bHit){
-    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
-  }
-
-  {
-    TOUCHBAR_WORK *bar = GTSNEGO_DISP_GetTouchWork(pWork->pDispWork);
-    //タッチバーで選択されていない場合、ボタンが反応する　20100701 add Saito
-    if ( !TOUCHBAR_IsDecide( bar ) ){
-      GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
+      bHit=TRUE;
+      PMSND_PlaySystemSE(_SE_CUR);
+      pWork->key1=_CROSSCUR_TYPE_MAINUP;
     }
-  }
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
+      bHit=TRUE;
+      PMSND_PlaySystemSE(_SE_CUR);
+      pWork->key1=_CROSSCUR_TYPE_MAINDOWN;
+    }
+    if(bHit){
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
+    }
+
+    GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
+  
+  }//ここまで、タッチバー選択していないときに処理する
 
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
