@@ -4851,7 +4851,9 @@ void BTL_MAIN_ChargeShooterEnergyReq( BTL_MAIN_MODULE* wk, u8 clientID, u8 charg
   {
     if( BTL_MAIN_IsExistClient(wk, clientID) )
     {
-      BTL_CLIENT_ChargeShooterEnergy( wk->client[clientID], chargeVolume );
+      if( wk->client[ clientID ] ){
+        BTL_CLIENT_ChargeShooterEnergy( wk->client[clientID], chargeVolume );
+      }
     }
   }
 }
