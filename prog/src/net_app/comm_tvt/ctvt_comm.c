@@ -949,7 +949,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     if( commWork->updateReqTalk == TRUE )
     {
       u8 i;
-      commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
+      u8 isReq = FALSE;
       for( i=0;i<CTVT_MEMBER_NUM;i++ )
       {
         if( commWork->member[i].reqTalk == TRUE )
@@ -958,8 +958,13 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
           {
             commWork->tempTalkMember = i;
           }
+          isReq = TRUE;
           commWork->member[i].reqTalk = FALSE;
         }
+      }
+      if( isReq == FALSE )
+      {
+        commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
       }
       if( commWork->tempTalkMember != commWork->talkMember )
       {
@@ -992,26 +997,6 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   WHSetScanWaitFrame(5);
-  #if 0
-  u8 i;
-  WIH_DWC_MainLoopScanBeaconData();
-  for( i=0;i<CTVT_COMM_SCAN_BEACON_NUM;i++ )
-  {
-    if( WIH_DWC_IsEnableBeaconData(i) == TRUE )
-    {
-      const WMBssDesc* beacon = WIH_DWC_GetBeaconData(i);
-      const _GF_BSS_DATA_INFO* gfInfo = (_GF_BSS_DATA_INFO*)beacon->gameInfo.userGameInfo;
-
-      OS_TPrintf("[%x:%x:%x:%x:%x:%x]\n",
-                      beacon->bssid[0],
-                      beacon->bssid[1],
-                      beacon->bssid[2],
-                      beacon->bssid[3],
-                      beacon->bssid[4],
-                      beacon->bssid[5]);
-    }
-  }
-  #endif
 }
 
 #pragma mark [>comm util
@@ -1274,6 +1259,7 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     
   //COMMが使う＆親機が子に通知する用
   case CCFT_TALK_MEMBER:
+    //OS_TFPrintf(3,"TalkMember[%3d]->[%3d]\n",commWork->talkMember,pkt->value);
     commWork->talkMember = pkt->value;
     if( pkt->value != CTVT_COMM_INVALID_MEMBER )
     {

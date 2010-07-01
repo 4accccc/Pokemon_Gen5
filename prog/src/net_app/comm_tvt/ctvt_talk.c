@@ -780,13 +780,13 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       u16 playCntMax = CTVT_MIC_GetPlayCntMax( talkWork->micWork );
       u32 playSize = CTVT_MIC_GetPlaySize( talkWork->micWork );
       u32 nowPlayPos;
-      OS_TFPrintf(2,"S[%d:%d:%d]",playCnt,playCntMax,playSize);
+      //OS_TFPrintf(2,"S[%d:%d:%d]",playCnt,playCntMax,playSize);
       if( playCnt > playCntMax )
       {
         playCnt = playCntMax;
       }
       nowPlayPos = playSize * playCnt / playCntMax;
-      OS_TFPrintf(2,"[%d]\n",nowPlayPos);
+      //OS_TFPrintf(2,"[%d]\n",nowPlayPos);
       waveBuffer = (void*)((u32)waveBuffer + CTVT_MIC_CUT_SIZE);
       CTVT_TALK_UpdateDrawWave( work , talkWork , waveBuffer , 0x3 , nowPlayPos , playSize );  //óŒêF
       
