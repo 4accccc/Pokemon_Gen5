@@ -432,15 +432,15 @@ void BTL_EVENT_ReOrderFactorsByPokeAgility( BTL_SVFLOW_WORK* flowWork )
         if( fp1->priority > fp2->priority )
         {
           fIns = TRUE;
-          TAYA_Printf(" Dep:%2d,Type:%d,Pri:%08x > Dep:%2d,Type:%d,Pri:%08x\n",
-                  fp1->dependID, fp1->factorType, fp1->priority,
-                  fp2->dependID, fp2->factorType, fp2->priority);
+          TAYA_Printf(" %d-%2d(Pri:%08x) > %d-%2d(Pri:%08x)\n",
+                  fp1->factorType, fp1->dependID, fp1->priority,
+                  fp2->factorType, fp2->dependID, fp2->priority);
         }
         else if( fp1->priority == fp2->priority ){
           fIns = BTL_CALC_GetRand( 2 )? TRUE : FALSE;
-          TAYA_Printf(" Dep:%2d,Type:%d,Pri:%08x = Dep:%2d,Type:%d,Pri:%08x\n",
-                  fp1->dependID, fp1->factorType, fp1->priority,
-                  fp2->dependID, fp2->factorType, fp2->priority);
+          TAYA_Printf(" %d-%2d(Pri:%08x) = %d-%2d(Pri:%08x) .. %d\n",
+                  fp1->factorType, fp1->dependID, fp1->priority,
+                  fp2->factorType, fp2->dependID, fp2->priority, fIns);
         }
 
         if( fIns )
