@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-26T15:57:31"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-07-01T11:22:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -613,15 +613,15 @@
 	</row>
 
 	<row id="IRCBTL_STR_43">
-		<language name="JPN" width="256">ともだちコードを
+		<language name="JPN" width="256">ともだちリストに
 とうろく　しました！</language>
-		<language name="JPN_KANJI" width="256">ともだちコードを　登録しました！</language>
+		<language name="JPN_KANJI" width="256">ともだちリストに　登録しました！</language>
 	</row>
 
 	<row id="IRCBTL_STR_44">
-		<language name="JPN" width="256">ともだちコードを
+		<language name="JPN" width="256">ともだちリストを
 こうしん　しました！</language>
-		<language name="JPN_KANJI" width="256">ともだちコードを　更新しました！</language>
+		<language name="JPN_KANJI" width="256">ともだちリストを　更新しました！</language>
 	</row>
 
 	<row id="IRCBTL_STR_45">
