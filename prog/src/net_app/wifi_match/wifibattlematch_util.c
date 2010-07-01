@@ -77,6 +77,11 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type );
  *	@param	heapID  ヒープID
  *
  *	@return ワーク
+ *
+ *
+ *	以前は上階層のp_queをもらって動いていましたが、printが重複する箇所があったので
+ *	内部でp_queを作り、print前にclearするようにしました。
+ *	引数のp_queは使用しておりません。
  */
 //-----------------------------------------------------------------------------
 WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
@@ -87,7 +92,7 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
   GFL_STD_MemClear( p_wk, sizeof(WBM_TEXT_WORK) );
   p_wk->clear_chr = 0xF;
   p_wk->p_font    = p_font;
-  p_wk->p_que     = p_que;
+  p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
   p_wk->print_update  = WBM_TEXT_TYPE_NONE;
   p_wk->heapID    = heapID;
 
@@ -145,6 +150,7 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
 
+	PRINTSYS_QUE_Delete( p_wk->p_que );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -157,6 +163,9 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
 //-----------------------------------------------------------------------------
 void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
 { 
+  //プリント
+	PRINTSYS_QUE_Main( p_wk->p_que );
+
   switch( p_wk->print_update )
   { 
   default:
@@ -239,6 +248,9 @@ void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_F
 //-----------------------------------------------------------------------------
 static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
 { 
+  //キューをクリアしてから
+  PRINTSYS_QUE_Clear( p_wk->p_que );
+
   //一端消去
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
 
