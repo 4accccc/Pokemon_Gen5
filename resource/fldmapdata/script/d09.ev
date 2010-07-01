@@ -54,6 +54,7 @@ EVENT_START	ev_pos_d09_lfront_connect
 	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_END()		//カメラ操作終了
 	
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_C09_ENTRY )
