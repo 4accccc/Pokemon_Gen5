@@ -436,6 +436,9 @@ typedef struct _INTRUDE_SUBDISP{
   u8 print_touch_player;  ///< 通信相手のアイコンをタッチした場合、その人物のNetID
   u8 mission_target_focus_netid;    ///<ミッションターゲットでフォーカス対象のプレイヤーNetID
   u8 mission_target_focus_wait;     ///<ミッションターゲットフォーカスアニメウェイト
+  
+  u8 mission_end_timer_zero;
+  u8 padding[3];
 }INTRUDE_SUBDISP;
 
 
@@ -767,7 +770,7 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
 
   //通信が切れている or 既に結果取得済みの場合はBG更新しない
   if(intcomm != NULL 
-      && (MISSION_CheckRecvResult(&intcomm->mission) == FALSE || MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == FALSE)){
+      && (MISSION_CheckRecvResult(&intcomm->mission) == FALSE)){
     update = TRUE;
   }
   else if(intcomm == NULL && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE && GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION && GameCommSys_GetLastStatus(game_comm) == GAME_COMM_LAST_STATUS_NULL){
@@ -799,6 +802,14 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
     _IntSub_ActorUpdate_LvNum(intsub, area_occupy);
     
     _UpdatePalFlash_DecideCancelButton(intsub);
+  }
+  else if(intcomm != NULL && MISSION_CheckRecvResult(&intcomm->mission) == TRUE
+      && MISSION_GetMissionEntry(&intcomm->mission) == TRUE 
+      && intsub->mission_end_timer_zero == FALSE
+      && intsub->comm.m_timer == 0){
+    //BTS7201用に強引対処
+    _IntSub_ActorUpdate_LvNum(intsub, area_occupy);
+    intsub->mission_end_timer_zero = TRUE;
   }
 }
 
@@ -1958,7 +1969,7 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
     return;
   }
   
-  if(ZONEDATA_IsPalace(my_zone_id) == TRUE || ZONEDATA_IsBingo(my_zone_id) == TRUE){
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
     if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
       print_type = _TITLE_PRINT_MY_PALACE;
       msg_id = msg_invasion_title_001;
@@ -1969,13 +1980,7 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
     }
   }
   else{
-    if(intsub->comm.target_mine == TRUE){
-      print_type = _TITLE_PRINT_CLEAR;
-    }
-    else{
-      print_type = _TITLE_PRINT_PALACE_GO;
-      msg_id = msg_invasion_title_000;
-    }
+    print_type = _TITLE_PRINT_CLEAR;
   }
   
   if(intsub->title_print_type == print_type || print_type == _TITLE_PRINT_NULL){
