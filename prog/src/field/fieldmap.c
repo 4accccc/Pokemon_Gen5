@@ -1452,11 +1452,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   DEBUG_MAIN_UPDATE_TYPE = 0;
 #endif
 
-  // tailフレームを実行せずにFreeSeqに遷移した場合、
-  // 描画途中のコマンドがNNSにたまっている可能性がるので、
-  // 念のためFlushBuffer
-  NNS_G3dGeFlushBuffer();
-
 
   return MAINSEQ_RESULT_NEXTSEQ;
 }
@@ -2327,6 +2322,12 @@ void FIELDMAP_InitDebugWork( FIELDMAP_WORK* fieldWork )
 static void	fldmap_BG_Exit( FIELDMAP_WORK *fieldWork )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+
+  // tailフレームを実行せずにFreeSeqに遷移した場合、
+  // 描画途中のコマンドがNNSにたまっている可能性がるので、
+  // 念のためFlushBuffer
+  NNS_G3dGeFlushBuffer();
+
 	GFL_G3D_Exit();
 	GFL_BG_Exit();
 }
