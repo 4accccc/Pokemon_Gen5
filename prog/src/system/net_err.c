@@ -455,6 +455,7 @@ void NetErr_DispCallFatal(void)
 //		OS_SpinWait(10000);
 
   //無限ループ
+  GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);  //ハードリセットが効くようにフラグを落とす
   do{
     MachineSystem_Main(); //ハードリセット用
   }while(1);
@@ -715,6 +716,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		//エラー画面描画
   	Local_ErrDispInit(fatal_error);
     //無限ループ
+    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);  //ハードリセットが効くようにフラグを落とす
     do{
       MachineSystem_Main(); //ハードリセット用
     }while(1);
