@@ -2164,6 +2164,11 @@ static void _updateSave(G_SYNC_WORK* pWork)
 {
   DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
+  //セーブエリアに移動
+  DREAMWORLD_SV_SetSleepPokemon(pDream, pWork->pp);
+  BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
+  DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
+  
   //バックアップドリームワールドデータ作成
   pWork->pBackupDream = DREAMWORLD_SV_AllocWork(pWork->heapID);
 
@@ -2437,9 +2442,15 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
     GFL_HEAP_FreeMemory(pWork->pp);
     pWork->pp=NULL;
   }
-
+  
   ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
-  GF_ASSERT(ppp);
+  if(ppp){
+    POKEMON_PARAM* pp = PP_CreateByPPP( ppp, pWork->heapID );
+    pWork->pp = pp;
+    pWork->bBox2SleepSaveData = TRUE;
+  }
+/*
+  ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
   if(ppp){
     POKEMON_PARAM* pp = PP_CreateByPPP( ppp, pWork->heapID );
     DREAMWORLD_SV_SetSleepPokemon(pDream, pp);
@@ -2448,6 +2459,7 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
     DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
     pWork->bBox2SleepSaveData = TRUE;
   }
+   */
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed_shadow);
   
