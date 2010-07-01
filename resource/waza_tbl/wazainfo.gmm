@@ -527,7 +527,7 @@
 	<row id="WAZAINFO_015">
 		<language name="JPN" width="216">カマや　ツメなどで
 あいてを　きりつけて　こうげきする。
-ほそいき　なども　きることが　できる。</language>
+ほそい　きぎも　きることが　できる。</language>
 		<language name="JPN_KANJI" width="216">カマや　ツメなどで
 相手を　切りつけて　攻撃する。
 細い　樹木も　きることが　できる。</language>
@@ -1795,7 +1795,7 @@
 
 	<row id="WAZAINFO_156">
 		<language name="JPN" width="216">２ターンの　あいだ　ねむり　つづける。
-じぶんの　ＨＰと　からだの　いじょうを
+じぶんの　ＨＰと　じょうたいいじょうを
 すべて　かいふく　する。</language>
 		<language name="JPN_KANJI" width="216">２ターンの　あいだ　眠り続ける。
 自分の　ＨＰと　状態異常を
@@ -1840,8 +1840,8 @@
 
 	<row id="WAZAINFO_161">
 		<language name="JPN" width="216">３つの　こうせんで　こうげきする。
-まひか　やけどか　こおり　じょうたいに
-することが　ある。</language>
+まひか　やけどか　こおりじょうたいの
+どれかに　することが　ある。</language>
 		<language name="JPN_KANJI" width="216">３つの　光線で　攻撃する。
 まひか　やけどか　こおり状態の
 どれかに　することが　ある。</language>
@@ -1974,12 +1974,12 @@
 	</row>
 
 	<row id="WAZAINFO_176">
-		<language name="JPN" width="216">じぶんの　タイプを　あいてが　だした
-わざに　ていこう　できる　タイプに
-へんか　させる。</language>
-		<language name="JPN_KANJI" width="216">自分の　タイプを　
-最後に　受けた技に　抵抗できる
-タイプに　変化させる。</language>
+		<language name="JPN" width="216">あいてが　さいごに　つかった　わざに
+ていこう　できる　ように
+じぶんの　タイプを　へんか　させる。</language>
+		<language name="JPN_KANJI" width="216">相手が　最後に　使った技に
+抵抗できる　ように
+自分の　タイプを　変化させる。</language>
 	</row>
 
 	<row id="WAZAINFO_177">
@@ -2148,7 +2148,7 @@
 		<language name="JPN" width="216">うたを　きいた　ポケモンは
 ３ターン　たつと　ひんしに　なる。
 こうたいすると　こうかは　なくなる。</language>
-		<language name="JPN_KANJI" width="216">歌を　聞いた　ポケモンは
+		<language name="JPN_KANJI" width="216">歌を　聴いた　ポケモンは
 ３ターン　たつと　ひんしに　なる。
 交代すると　効果は　なくなる。</language>
 	</row>
@@ -2272,7 +2272,7 @@
 
 	<row id="WAZAINFO_209">
 		<language name="JPN" width="216">でんきを　まとい
-とっしんして　こうげきする。
+あいてに　とっしんして　こうげきする。
 まひ　じょうたいに　することが　ある。</language>
 		<language name="JPN_KANJI" width="216">電気を　まとい
 相手に　突進して　攻撃する。
@@ -2400,7 +2400,7 @@
 		<language name="JPN" width="216">こんしんの　ちからで
 パンチを　くりだして　こうげきする。
 あいてを　かならず　こんらん　させる。</language>
-		<language name="JPN_KANJI" width="216">ありったけの　力で
+		<language name="JPN_KANJI" width="216">こん身の　力で
 パンチを　くりだして　攻撃する。
 相手を　必ず　混乱させる。</language>
 	</row>
@@ -3783,12 +3783,12 @@
 	</row>
 
 	<row id="WAZAINFO_377">
-		<language name="JPN" width="216">５ターンの　あいだ　わざを　つかって
-ＨＰを　かいふく　できなく　する。
-</language>
-		<language name="JPN_KANJI" width="216">５ターンの　あいだ　技を　使って
-ＨＰを　回復　できなくする。
-</language>
+		<language name="JPN" width="216">５ターンの　あいだ
+わざや　とくせいや　どうぐによって
+ＨＰを　かいふく　できなく　する。</language>
+		<language name="JPN_KANJI" width="216">５ターンの　あいだ
+技や　特性や　道具によって
+ＨＰを　回復　できなくする。</language>
 	</row>
 
 	<row id="WAZAINFO_378">
@@ -4098,9 +4098,9 @@
 	</row>
 
 	<row id="WAZAINFO_412">
-		<language name="JPN" width="216">しぜんから　いのちの　ちからを　あつめて
-はっしゃする。あいての　とくぼうを
-さげることが　ある。</language>
+		<language name="JPN" width="216">しぜんから　あつめた
+いのちの　ちからを　はっしゃする。
+あいての　とくぼうを　さげることが　ある。</language>
 		<language name="JPN_KANJI" width="216">自然から　集めた
 命の力を　発射する。
 相手の　特防を　さげることが　ある。</language>
@@ -4255,7 +4255,7 @@
 せんこうの　ちからを　あいてに　はなつ。
 めいちゅうりつを　さげることが　ある。</language>
 		<language name="JPN_KANJI" width="216">磨きあげられた　体から
-スパークの　力を　相手に　放つ。
+せん光の　力を　相手に　放つ。
 命中率を　さげることが　ある。</language>
 	</row>
 
@@ -4269,19 +4269,19 @@
 	</row>
 
 	<row id="WAZAINFO_431">
-		<language name="JPN" width="216">のぼるような　とっしんで
-あいてを　こうげきする。
+		<language name="JPN" width="216">すごい　いきおいで　あいてに
+つっこみ　こうげきする。
 あいてを　こんらん　させることが　ある。</language>
-		<language name="JPN_KANJI" width="216">すごい　勢いで　相手に　つっこみ
-攻撃する。
+		<language name="JPN_KANJI" width="216">すごい　勢いで　相手に
+つっこみ　攻撃する。
 相手を　混乱させることが　ある。</language>
 	</row>
 
 	<row id="WAZAINFO_432">
-		<language name="JPN" width="216">かぜで　あいての　リフレクターや
+		<language name="JPN" width="216">つよいかぜで　あいての　リフレクターや
 ひかりのかべ　などを　はらいのける。
 かいひりつも　さげる。</language>
-		<language name="JPN_KANJI" width="216">強い　風で　相手の　リフレクターや
+		<language name="JPN_KANJI" width="216">強い風で　相手の　リフレクターや
 ひかりのかべ　などを　はらいのける。
 回避率も　さげる。</language>
 	</row>
@@ -4506,7 +4506,7 @@
 		<language name="JPN" width="216">いのちを　かけて　こんしんの　ちからで
 あいてに　ずつきを　する。じぶんも
 ものすごい　ダメージを　うける。</language>
-		<language name="JPN_KANJI" width="216">命を　懸けて　ありったけの　力で
+		<language name="JPN_KANJI" width="216">命を　懸けて　こん身の　力で
 相手に　ずつきを　する。自分も
 ものすごい　ダメージを　受ける。</language>
 	</row>
@@ -4945,7 +4945,7 @@
 
 	<row id="WAZAINFO_506">
 		<language name="JPN" width="216">たたみかける　ように　こうげきする。
-ちょうしの　わるい　あいてに
+じょうたい　いじょうの　あいてに
 おおきな　ダメージを　あたえる。　</language>
 		<language name="JPN_KANJI" width="216">たたみかける　ように　攻撃する。
 状態異常の　相手に
@@ -5053,8 +5053,8 @@
 
 	<row id="WAZAINFO_518">
 		<language name="JPN" width="216">みずの　はしらで　こうげきする。
-おなじ　あいてに　つかうと　いりょくが
-あがって　あたりに　にじが　かかる。</language>
+ほのおと　くみあわせると　いりょくが
+あがって　そらに　にじが　かかる。</language>
 		<language name="JPN_KANJI" width="216">水の柱で　攻撃する。
 ほのおと　組み合わせると　威力が
 あがって　空に　にじが　かかる。</language>
@@ -5062,7 +5062,7 @@
 
 	<row id="WAZAINFO_519">
 		<language name="JPN" width="216">ほのおの　はしらで　こうげきする。
-おなじ　あいてに　つかうと　いりょくが
+くさと　くみあわせると　いりょくが
 あがって　あたりが　ひの　うみに　なる。</language>
 		<language name="JPN_KANJI" width="216">炎の柱で　攻撃する。
 くさと　組み合わせると　威力が
@@ -5071,11 +5071,11 @@
 
 	<row id="WAZAINFO_520">
 		<language name="JPN" width="216">くさの　はしらで　こうげきする。
-おなじ　あいてに　つかうと　いりょくが
+みずと　くみあわせると　いりょくが
 あがって　あたりが　しつげんに　なる。</language>
 		<language name="JPN_KANJI" width="216">草の柱で　攻撃する。
 みずと　組み合わせると　威力が
-あがって　足下が　湿原に　なる。</language>
+あがって　あたりが　湿原に　なる。</language>
 	</row>
 
 	<row id="WAZAINFO_521">
@@ -5278,9 +5278,9 @@
 
 	<row id="WAZAINFO_543">
 		<language name="JPN" width="216">すごい　アフロの　あたまで
-あいてに　ずつき　して　こうげきする。
+あいてに　とっしんして　こうげきする。
 じぶんも　すこし　ダメージを　うける。</language>
-		<language name="JPN_KANJI" width="216">硬い　頭で
+		<language name="JPN_KANJI" width="216">すごい　アフロの　頭で
 相手に　突進して　攻撃する。
 自分も　少し　ダメージを　受ける。</language>
 	</row>
@@ -5331,7 +5331,7 @@
 	</row>
 
 	<row id="WAZAINFO_549">
-		<language name="JPN" width="216">こごえる　ような　つめたい　れいきを
+		<language name="JPN" width="216">こごえる　ような　れいきを
 あいてに　ふきつけて　こうげきする。
 あいての　すばやさを　さげる。</language>
 		<language name="JPN_KANJI" width="216">凍えるような　冷気を
