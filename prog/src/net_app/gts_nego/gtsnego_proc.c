@@ -1172,91 +1172,97 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
 {
   BOOL bHit=FALSE;
   BOOL bReturn=FALSE;
+  TOUCHBAR_WORK *bar = GTSNEGO_DISP_GetTouchWork(pWork->pDispWork);
   
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
 
-  GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
+  //タッチバーで選択されていない場合、ボタンが反応する　20100701 add Saito
+  if ( !TOUCHBAR_IsDecide( bar ) )
+  {
+    GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
 
-  if(GFL_UI_KEY_GetTrg()){
-    if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,pWork->pAppWin, pWork->key2);
-      GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
-      return;
+    if(GFL_UI_KEY_GetTrg()){
+      if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
+        GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,pWork->pAppWin, pWork->key2);
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+        return;
+      }
     }
-  }
   
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
-    _LevelKeyCallback(FALSE, pWork);
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
-    _LevelKeyCallback(TRUE, pWork);
-  }
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
+      _LevelKeyCallback(FALSE, pWork);
+    }
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
+      _LevelKeyCallback(TRUE, pWork);
+    }
   
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
-    PMSND_PlaySystemSE(_SE_CUR);
-    bHit=TRUE;
-    if(pWork->key2 != _CROSSCUR_TYPE_ANY1){
-      pWork->key2--;
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
+      PMSND_PlaySystemSE(_SE_CUR);
+      bHit=TRUE;
+      if(pWork->key2 != _CROSSCUR_TYPE_ANY1){
+        pWork->key2--;
+      }
     }
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
-    PMSND_PlaySystemSE(_SE_CUR);
-    bHit=TRUE;
-    if(pWork->key2 != _CROSSCUR_TYPE_ANY4){
-      pWork->key2++;
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
+      PMSND_PlaySystemSE(_SE_CUR);
+      bHit=TRUE;
+      if(pWork->key2 != _CROSSCUR_TYPE_ANY4){
+        pWork->key2++;
+      }
     }
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-    if(pWork->key2 == _CROSSCUR_TYPE_ANY4){
-      PMSND_PlaySystemSE(_SE_DECIDE);
-      GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key2);
-      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
-      _CHANGE_STATE(pWork, _levelSelectDecide);
-      return;
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+      if(pWork->key2 == _CROSSCUR_TYPE_ANY4){
+        PMSND_PlaySystemSE(_SE_DECIDE);
+        GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key2);
+        APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+        _CHANGE_STATE(pWork, _levelSelectDecide);
+        return;
+      }
     }
-  }
 
 
 #if PM_DEBUG
-  {
-    EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
-    int kkk;
-    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X){
-      for(kkk=0;kkk<EVENT_GTSNEGO_RECONNECT_NUM;kkk++){
-        OS_TPrintf("ID %d = %d\n",kkk,pEv->profileID[kkk]);
+    {
+      EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+      int kkk;
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X){
+        for(kkk=0;kkk<EVENT_GTSNEGO_RECONNECT_NUM;kkk++){
+          OS_TPrintf("ID %d = %d\n",kkk,pEv->profileID[kkk]);
+        }
+      }
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT){
+        for(kkk=0;kkk<99998;kkk++){
+          WIFI_NEGOTIATION_SV_AddChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+        }
+        OS_TPrintf("カンスト\n");
+      }
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
+        _pAppWinDel(pWork);
+        GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
+        _CHANGE_STATE(pWork,_modeDebugAdd2);
+        pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
+        return;
       }
     }
-    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT){
-      for(kkk=0;kkk<99998;kkk++){
-        WIFI_NEGOTIATION_SV_AddChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
-      }
-      OS_TPrintf("カンスト\n");
-    }
-    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
-      _pAppWinDel(pWork);
-      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
-      _CHANGE_STATE(pWork,_modeDebugAdd2);
-      pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
-      return;
-    }
-  }
 #endif
   
-  if(bHit){
-    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, pWork->key2);
-  }
+    if(bHit){
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, pWork->key2);
+    }
 
-  switch(GFL_UI_TP_HitTrg(_tp_data)){
-  case 0:
-     GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
-        PMSND_PlaySystemSE(_SE_DECIDE);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
-    _CHANGE_STATE(pWork, _levelSelectDecide);
-    return;
-    break;
-  }
+    switch(GFL_UI_TP_HitTrg(_tp_data)){
+    case 0:
+       GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+          PMSND_PlaySystemSE(_SE_DECIDE);
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+      _CHANGE_STATE(pWork, _levelSelectDecide);
+      return;
+      break;
+    }
+
+  }//ここまで、タッチバー選択していないときに処理する
 
   {
     TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
@@ -1746,187 +1752,195 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
 {
   BOOL bHit=FALSE;
   int scrollType=PANEL_NONESCROLL_,ret;
+  TOUCHBAR_WORK *bar = GTSNEGO_DISP_GetTouchWork(pWork->pDispWork);
   
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  ret = GTSNEGO_DISP_PanelScrollMain(pWork->pDispWork,&scrollType);
-  if( PANEL_UPSCROLL_ == scrollType){
-    GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
-    GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
 
-    OHNO_Printf("GTSNEGO_DISP_UnionListUp %d\n",pWork->scrollPanelCursor.oamlistpos-2);
+  //タッチバーで選択されていない場合、ボタンが反応する　20100701 add Saito
+  if ( !TOUCHBAR_IsDecide( bar ) )
+  {
+    ret = GTSNEGO_DISP_PanelScrollMain(pWork->pDispWork,&scrollType);
+    if( PANEL_UPSCROLL_ == scrollType){
+      GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
+      GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
 
-    GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
-  }
-  else if( PANEL_DOWNSCROLL_ == scrollType){
-    GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
-    GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
-    OHNO_Printf("GTSNEGO_DISP_UnionListDown %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+      OHNO_Printf("GTSNEGO_DISP_UnionListUp %d\n",pWork->scrollPanelCursor.oamlistpos-2);
 
-    GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
-  }
-  if(ret != PANEL_NONESCROLL_){
-    return;
-  }
-
-  if(GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH){
-    if(GFL_UI_KEY_GetTrg()){
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key3);
-      GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
-      return;
+      GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
     }
-  }
-
-  if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_R){
-    int i,ret;
-    bHit = FALSE;
-    
-    for(i = 0; i < 3; i++){
-      ret = _downScrollFunc(pWork);
-      bHit |= ret;
-      GTSNEGO_DISP_PanelScrollCancel(pWork->pDispWork);
-      if(ret == 0){
-        break;
-      }
-      if(ret == 1){
-        i--;
-        continue;
-      }
-      GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,TRUE);
+    else if( PANEL_DOWNSCROLL_ == scrollType){
       GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
       GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
-      OHNO_Printf("PAD_BUTTON_R %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+      OHNO_Printf("GTSNEGO_DISP_UnionListDown %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+
       GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
     }
-  }
-  if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_L){
-    int i,ret;
-    bHit = FALSE;
-    for(i = 0; i < 3; i++){
-      ret = _upScrollFunc(pWork);
-      bHit |= ret;
-      GTSNEGO_DISP_PanelScrollCancel(pWork->pDispWork);
-      if(ret == 0){
-        break;
+    if(ret != PANEL_NONESCROLL_){
+      return;
+    }
+
+    if(GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH){
+      if(GFL_UI_KEY_GetTrg()){
+        GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key3);
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+        return;
       }
-      if(ret == 1){
-        i--;
-        continue;
-      }
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
-      {
-        GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,FALSE);
+    }
+
+    if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_R){
+      int i,ret;
+      bHit = FALSE;
+    
+      for(i = 0; i < 3; i++){
+        ret = _downScrollFunc(pWork);
+        bHit |= ret;
+        GTSNEGO_DISP_PanelScrollCancel(pWork->pDispWork);
+        if(ret == 0){
+          break;
+        }
+        if(ret == 1){
+          i--;
+          continue;
+        }
+        GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,TRUE);
         GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
-        GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
-        OHNO_Printf("PAD_BUTTON_L %d\n",pWork->scrollPanelCursor.oamlistpos-2);
-        GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
+        GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
+        OHNO_Printf("PAD_BUTTON_R %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+        GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
+        GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
       }
     }
-  }
+    if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_L){
+      int i,ret;
+      bHit = FALSE;
+      for(i = 0; i < 3; i++){
+        ret = _upScrollFunc(pWork);
+        bHit |= ret;
+        GTSNEGO_DISP_PanelScrollCancel(pWork->pDispWork);
+        if(ret == 0){
+          break;
+        }
+        if(ret == 1){
+          i--;
+          continue;
+        }
+        GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
+        {
+          GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,FALSE);
+          GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
+          GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
+          OHNO_Printf("PAD_BUTTON_L %d\n",pWork->scrollPanelCursor.oamlistpos-2);
+          GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
+        }
+      }
+    }
 
 #if PM_DEBUG
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X){
-    _pAppWinDel(pWork);
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_001);
-    _CHANGE_STATE(pWork,_modeDebugDelete);
-    pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
-    return;
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
-    _pAppWinDel(pWork);
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
-    WIFINEGOSV_DEBUG_PrintFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
-    _CHANGE_STATE(pWork,_modeDebugAdd);
-    pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
-    return;
-  }
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X){
+      _pAppWinDel(pWork);
+      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_001);
+      _CHANGE_STATE(pWork,_modeDebugDelete);
+      pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
+      return;
+    }
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
+      _pAppWinDel(pWork);
+      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
+      WIFINEGOSV_DEBUG_PrintFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+      _CHANGE_STATE(pWork,_modeDebugAdd);
+      pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
+      return;
+    }
 #endif
   
-  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
-    bHit = _upScrollFunc(pWork);
-  }
-  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
-    bHit = _downScrollFunc(pWork);
-  }
-  if(bHit){
-    PMSND_PlaySystemSE(_SE_CUR);
-    GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
-                                pWork->scrollPanelCursor.listmax );
-    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
-  }
-
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // キーでの決定
-    PMSND_PlaySystemSE(_SE_DECIDE);
-    GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
-    pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
-    _pAppWinDel(pWork);
-    _CHANGE_STATE(pWork,_friendSelectDecide);
-    return;
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_START){  // キーでの決定
-    PMSND_PlaySystemSE(_SE_DECIDE);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
-    _CHANGE_STATE(pWork,_friendSelectFlashDecide);
-    return;
-  }
-
-  {  //TPで誰を選んだのか
-    int trgindex=GFL_UI_TP_HitTrg(_tp_data2);
-    switch(trgindex){
-    case 3:
-      PMSND_PlaySystemSE(_SE_DECIDE);
-      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
-      _CHANGE_STATE(pWork,_friendSelectFlashDecide);
-      return;
-    case 2:
-      if(pWork->scrollPanelCursor.listmax < 3){
-        break;
-      }
-      //break throw
-    case 1:
-      if(pWork->scrollPanelCursor.listmax < 2){
-        break;
-      }
-      //break throw
-    case 0:
-      GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
-      pWork->key3 = trgindex  + _CROSSCUR_TYPE_FRIEND1;
+    if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
+      bHit = _upScrollFunc(pWork);
+    }
+    if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
+      bHit = _downScrollFunc(pWork);
+    }
+    if(bHit){
+      PMSND_PlaySystemSE(_SE_CUR);
+      GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
+                                 pWork->scrollPanelCursor.listmax );
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
+    }
+
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // キーでの決定
+      PMSND_PlaySystemSE(_SE_DECIDE);
       GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
       pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
-      //カーソル位置セット　20100614 add Saito
-      GTSNEGO_DISP_FriendListSetCurPos(pWork->pDispWork, &pWork->scrollPanelCursor, trgindex);
-      //スクロールの位置セットBTS5781
-      GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,
-                                  pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
-                                  pWork->scrollPanelCursor.listmax );
-
-      PMSND_PlaySystemSE(_SE_DECIDE);
       _pAppWinDel(pWork);
       _CHANGE_STATE(pWork,_friendSelectDecide);
       return;
     }
-  }
-  if(GFL_UI_TP_HitCont(_tp_data3)==0){   //タッチパネルのスライドバー
-    u32 x,y;
-    if(GFL_UI_TP_GetPointCont(&x, &y)==TRUE){
-      int no = GTSNEGO_DISP_ScrollChipDispMouse(pWork->pDispWork, y,
-                                                pWork->scrollPanelCursor.listmax);
-      if(pWork->scrollPanelCursor.oamlistpos!=no){
-        pWork->scrollPanelCursor.oamlistpos = no;
-        GTSNEGO_MESSAGE_FriendListRenew(pWork->pMessageWork, pWork->pGameData,
-                                        pWork->scrollPanelCursor.oamlistpos-2 );
-        GTSNEGO_DISP_UnionListRenew(pWork->pDispWork, pWork->pGameData,
-                                    pWork->scrollPanelCursor.oamlistpos-2 );
-        GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData,
-                                           pWork->scrollPanelCursor.oamlistpos-2);
-        PMSND_PlaySystemSE(_SE_CUR);
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_START){  // キーでの決定
+      PMSND_PlaySystemSE(_SE_DECIDE);
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+      _CHANGE_STATE(pWork,_friendSelectFlashDecide);
+      return;
+    }
+
+    {  //TPで誰を選んだのか
+      int trgindex=GFL_UI_TP_HitTrg(_tp_data2);
+      switch(trgindex){
+      case 3:
+        PMSND_PlaySystemSE(_SE_DECIDE);
+        APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+        _CHANGE_STATE(pWork,_friendSelectFlashDecide);
+        return;
+      case 2:
+        if(pWork->scrollPanelCursor.listmax < 3){
+          break;
+        }
+        //break throw
+      case 1:
+        if(pWork->scrollPanelCursor.listmax < 2){
+          break;
+        }
+        //break throw
+      case 0:
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+        pWork->key3 = trgindex  + _CROSSCUR_TYPE_FRIEND1;
+        GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
+        GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
+        pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
+        //カーソル位置セット　20100614 add Saito
+        GTSNEGO_DISP_FriendListSetCurPos(pWork->pDispWork, &pWork->scrollPanelCursor, trgindex);
+        //スクロールの位置セットBTS5781
+        GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,
+                                    pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
+                                    pWork->scrollPanelCursor.listmax );
+
+        PMSND_PlaySystemSE(_SE_DECIDE);
+        _pAppWinDel(pWork);
+        _CHANGE_STATE(pWork,_friendSelectDecide);
+        return;
       }
     }
-    return;
-  }
+    if(GFL_UI_TP_HitCont(_tp_data3)==0){   //タッチパネルのスライドバー
+      u32 x,y;
+      if(GFL_UI_TP_GetPointCont(&x, &y)==TRUE){
+        int no = GTSNEGO_DISP_ScrollChipDispMouse(pWork->pDispWork, y,
+                                                  pWork->scrollPanelCursor.listmax);
+        if(pWork->scrollPanelCursor.oamlistpos!=no){
+          pWork->scrollPanelCursor.oamlistpos = no;
+          GTSNEGO_MESSAGE_FriendListRenew(pWork->pMessageWork, pWork->pGameData,
+                                          pWork->scrollPanelCursor.oamlistpos-2 );
+          GTSNEGO_DISP_UnionListRenew(pWork->pDispWork, pWork->pGameData,
+                                      pWork->scrollPanelCursor.oamlistpos-2 );
+          GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData,
+                                             pWork->scrollPanelCursor.oamlistpos-2);
+          PMSND_PlaySystemSE(_SE_CUR);
+        }
+      }
+      return;
+    }
+  }//ここまで、タッチバー選択していないときに処理する
+
+
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
   case TOUCHBAR_ICON_RETURN:
@@ -2404,7 +2418,12 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   }
 
   if(pWork->pAppWin){
-    APP_TASKMENU_WIN_Update( pWork->pAppWin );
+    //タッチバーで選択されていない場合、ボタンが反応する　20100701 add Saito
+    TOUCHBAR_WORK *bar = GTSNEGO_DISP_GetTouchWork(pWork->pDispWork);
+    if ( (bar == NULL) || (!TOUCHBAR_IsDecide( bar )) )
+    {
+      APP_TASKMENU_WIN_Update( pWork->pAppWin );
+    }
   }
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
