@@ -821,6 +821,7 @@ void BOX2MAIN_YesNoWinSet( BOX2_SYS_WORK * syswk, u32 pos )
   }
 
   syswk->app->ynWork = APP_TASKMENU_OpenMenu( &wk, syswk->app->ynRes );
+	APP_TASKMENU_SetCursorPos( syswk->app->ynWork, pos );
 }
 
 //--------------------------------------------------------------------------------------------

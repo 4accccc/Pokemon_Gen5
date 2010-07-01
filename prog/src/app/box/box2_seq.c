@@ -7158,7 +7158,11 @@ static int SetCursorMoveRet( BOX2_SYS_WORK * syswk, int next )
 static int YesNoSet( BOX2_SYS_WORK * syswk, u32 id )
 {
 	syswk->app->ynID = id;
-	BOX2MAIN_YesNoWinSet( syswk, 0 );
+	if( id == YESNO_ID_POKEFREE ){
+		BOX2MAIN_YesNoWinSet( syswk, 1 );
+	}else{
+		BOX2MAIN_YesNoWinSet( syswk, 0 );
+	}
 	GFL_UI_KEY_SetRepeatSpeed( syswk->app->key_repeat_speed, syswk->app->key_repeat_wait );
 	return BOX2SEQ_MAINSEQ_YESNO;
 }
