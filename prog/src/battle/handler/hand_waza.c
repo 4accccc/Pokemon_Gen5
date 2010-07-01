@@ -6509,9 +6509,17 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     &&  (!BTL_TABLES_IsMatchEncoreFail(prevWaza))
     &&  (BPP_WAZA_GetPP_ByNumber(target, prevWaza) != 0)
     ){
-      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+      BTL_HANDEX_PARAM_ADD_SICK* param;
+      u8 turns = 3;
+
+      // 現ターンに行動済みのポケモンにはターン数+1する
+      if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_ACTION_DONE) ){
+        ++turns;
+      }
+
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         param->sickID = WAZASICK_ENCORE;
-        param->sickCont = BPP_SICKCONT_MakeTurnParam( 3, prevWaza );
+        param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
         param->pokeID = targetPokeID;
         param->fAlmost = FALSE;
 
