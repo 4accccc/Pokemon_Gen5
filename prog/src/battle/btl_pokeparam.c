@@ -572,6 +572,8 @@ static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
   bpp->prevActWazaID    = WAZANO_NULL;
   bpp->prevWazaType     = POKETYPE_NULL;
   bpp->wazaContCounter  = 0;
+
+//  TAYA_Printf("Bpp(%p), pokeID=%d, prevSelectWazaID=%d .. clear\n", bpp, bpp->coreParam.myID, bpp->prevSelectWazaID );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2559,6 +2561,7 @@ void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
 
   BPP_MIGAWARI_Delete( bpp );
 
+  clearUsedWazaFlag( bpp );
   clearWazaSickWork( bpp, FALSE );
   Effrank_Init( &bpp->varyParam );
 }

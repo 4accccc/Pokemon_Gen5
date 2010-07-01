@@ -6504,6 +6504,8 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 
     prevWaza = BPP_GetPrevOrgWazaID( target );
 
+//    TAYA_Printf("アンコール対象ポケ=%d, prevWaza=%d\n", targetPokeID, prevWaza);
+
     if( (!BPP_CheckSick(target, WAZASICK_ENCORE))
     &&  (!BTL_TABLES_IsMatchEncoreFail(prevWaza))
     &&  (BPP_WAZA_GetPP_ByNumber(target, prevWaza) != 0)

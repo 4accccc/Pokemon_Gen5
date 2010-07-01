@@ -139,7 +139,7 @@ static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, BtlEventType evType );
 static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, BtlEventType evType  );
 static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
-static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
+static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos, u8* fWazaEnable );
 static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BtlPokePos targetPos );
 static void scproc_Fight_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scEvent_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
@@ -3406,9 +3406,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
        break;
     }
 
-    // 遅延発動ワザの準備処理
-    if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){
-      fWazaEnable = TRUE;
+    // 時間差発動ワザの準備処理
+    if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos, &fWazaEnable) ){
       break;
     }
 
@@ -3759,20 +3758,22 @@ static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
 }
 //----------------------------------------------------------------------------------
 /**
- * 必要なら、遅延発動ワザの準備処理を行う。
+ * 必要なら、時間差発動ワザの準備処理を行う。
  *
  * @param   wk
  * @param   attacker
  * @param   waza
  * @param   targetPos
  *
- * @retval  BOOL      遅延発動ワザ準備処理を行った場合TRUE
+ * @retval  BOOL      時間差発動ワザ準備処理を行った場合TRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos )
+static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos, u8* fWazaEnable )
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
   BOOL result = scEvent_CheckDelayWazaSet( wk, attacker, targetPos );
+
+  *fWazaEnable = FALSE;
 
   if( result )
   {
@@ -3781,6 +3782,7 @@ static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* 
     {
       SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza, BTLV_WAZAEFF_DELAY_START );
       scproc_Fight_DecideDelayWaza( wk, attacker );
+      *fWazaEnable = TRUE;
     }
     else{
       scPut_WazaFail( wk, attacker, waza );
@@ -3792,7 +3794,7 @@ static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* 
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] 遅延ワザ準備チェック
+ * [Event] 時間差ワザ準備チェック
  *
  * @param   wk
  * @param   attacker
@@ -3817,7 +3819,7 @@ static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 }
 //----------------------------------------------------------------------------------
 /**
- * 遅延発動ワザの実行確定（ワザエフェクト表示後）
+ * 時間差発動ワザの実行確定（ワザエフェクト表示後）
  *
  * @param   wk
  * @param   attacker
@@ -3834,7 +3836,7 @@ static void scproc_Fight_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] 遅延ワザ発動確定
+ * [Event] 時間差ワザ発動確定
  *
  * @param   wk
  * @param   attacker
