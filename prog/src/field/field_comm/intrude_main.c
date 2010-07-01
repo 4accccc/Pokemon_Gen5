@@ -1240,8 +1240,13 @@ void Intrude_MyMonolithStatusSet(GAMEDATA *gamedata, MONOLITH_STATUS *monost)
   GFL_STD_MemClear(monost, sizeof(MONOLITH_STATUS));
 
   monost->clear_mission_count = ISC_SAVE_GetMissionClearCount(intsave);
-  monost->palace_sojourn_time = ISC_SAVE_PalaceSojournParam(
-    intsave, GAMEDATA_GetPlayTimeWork(gamedata), SOJOURN_TIME_CALC_GET);
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+    monost->palace_sojourn_time = ISC_SAVE_PalaceSojournParam(
+      intsave, GAMEDATA_GetPlayTimeWork(gamedata), SOJOURN_TIME_CALC_GET);
+  }
+  else{
+    monost->palace_sojourn_time = ISC_SAVE_GetPalaceSojournTime(intsave);
+  }
   ISC_SAVE_GetDistributionGPower_Array(
     intsave, monost->gpower_distribution_bit, INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX);
 
