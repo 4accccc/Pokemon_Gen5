@@ -3192,19 +3192,6 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
         
       p_wk->res_cgx	= POKE2DGRA_OBJ_CGR_RegisterPPP( p_handle, PP_GetPPPPointerConst(p_pp), POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
 
-      //転送したパレットを保存
-      //メインOBJ
-
-      if( cp_data->movie_flag )
-      { 
-        u32 plt_addr  = HW_OBJ_PLTT + PLT_OBJ_GIFT_M * 0x20;
-        GFL_STD_MemCopy( (void*)plt_addr, p_wk->plt_poke_dst, sizeof(u16)*0x10 );
-
-        //転送したら真っ白にする
-        GFL_STD_MemFill16( (void*)plt_addr, GX_RGB(31,31,31), sizeof(u16)*0x10 );
-        GFL_STD_MemCopy( (void*)plt_addr, p_wk->plt_poke_src, sizeof(u16)*0x10 );
-      }
-
       //足元座標を保存
       //(中心からのオフセット)
       p_wk->leg_pos = Mystery_GetLegPos( PP_GetPPPPointerConst(p_pp), heapID ) - 48;
@@ -3255,6 +3242,19 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
   default:
     GF_ASSERT( 0 );
     break;
+  }
+
+
+  //映画配信ではパレットフェードさせるので転送したパレットを保存
+  //メインOBJ
+  if( cp_data->movie_flag )
+  { 
+    u32 plt_addr  = HW_OBJ_PLTT + PLT_OBJ_GIFT_M * 0x20;
+    GFL_STD_MemCopy( (void*)plt_addr, p_wk->plt_poke_dst, sizeof(u16)*0x10 );
+
+    //転送したら真っ白にする
+    GFL_STD_MemFill16( (void*)plt_addr, GX_RGB(31,31,31), sizeof(u16)*0x10 );
+    GFL_STD_MemCopy( (void*)plt_addr, p_wk->plt_poke_src, sizeof(u16)*0x10 );
   }
 
 	//CLWK登録
