@@ -1152,6 +1152,7 @@ static void BmpWinInit( OEKAKI_WORK *wk, GFL_PROC* proc )
 
   // メッセージ表示システム用初期化 
   wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_OEKAKI, HEAPID_OEKAKI, 32 , 32 );
+  wk->printQueName = PRINTSYS_QUE_Create( HEAPID_OEKAKI );
   wk->printQue    = PRINTSYS_QUE_Create( HEAPID_OEKAKI );
 
   
@@ -1200,6 +1201,8 @@ static void BmpWinDelete( OEKAKI_WORK *wk )
   GFL_TCBL_Exit( wk->pMsgTcblSys );
   PRINTSYS_QUE_Clear( wk->printQue );
   PRINTSYS_QUE_Delete( wk->printQue );
+  PRINTSYS_QUE_Clear( wk->printQueName );
+  PRINTSYS_QUE_Delete( wk->printQueName );
 
   
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
@@ -2880,6 +2883,9 @@ static void NameCheckPrint( GFL_BMPWIN *win[], PRINTSYS_LSB color, OEKAKI_WORK *
     }
   }
 
+  // 上画面名前リストのプリントキューをクリア
+  PRINTSYS_QUE_Clear( wk->printQueName );
+
   // それぞれの文字パネルの背景色でクリア
   for(i=0;i<5;i++){
     GFL_BMP_Fill( GFL_BMPWIN_GetBmp(win[i]), 0,0,OEKAKI_NAME_BMP_W*8, OEKAKI_NAME_BMP_H*8, 0 );
@@ -2891,11 +2897,11 @@ static void NameCheckPrint( GFL_BMPWIN *win[], PRINTSYS_LSB color, OEKAKI_WORK *
       MyStatus_CopyNameString( wk->TrainerStatus[i][0], wk->TrainerName[i] );
       OS_Printf("name print id=%d\n", i);
       if(id==i){
-          PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_NAME_WIN0+i], wk->printQue, 
+          PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_NAME_WIN0+i], wk->printQueName, 
                                   0, 0, wk->TrainerName[i], wk->font, NAME_COL_MINE );
 
       }else{
-          PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_NAME_WIN0+i], wk->printQue, 
+          PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_NAME_WIN0+i], wk->printQueName, 
                                   0, 0, wk->TrainerName[i], wk->font, color );
 
       }
@@ -3624,9 +3630,10 @@ static void _comm_friend_add( OEKAKI_WORK *wk )
 static void Oekaki_PrintFunc( OEKAKI_WORK *wk )
 {
   int i;
+  PRINTSYS_QUE_Main( wk->printQueName );
   PRINTSYS_QUE_Main( wk->printQue );
   for(i=0;i<OEKAKI_PRINT_UTIL_NAME_WIN4+1;i++){
-    PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQue );
+    PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQueName );
   }
   PRINT_UTIL_Trans( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->printQue );
 

@@ -252,6 +252,7 @@ struct OEKAKI_WORK{
   GFL_BMPWIN    *EndWin;                // やめる
   GFL_BMPWIN    *YesNoWin[2];           // はい・いいえウインドウのポインタ
   PRINT_UTIL    printUtil[OEKAKI_PRINT_UTIL_MAX];
+  PRINT_QUE     *printQueName;          // 上画面名前リスト用のプリントキュー
   PRINT_QUE     *printQue;
   PRINT_STREAM  *printStream;           // 
   GFL_TCBLSYS   *pMsgTcblSys;           // メッセージ表示用タスクシステム
