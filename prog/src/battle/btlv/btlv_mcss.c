@@ -101,7 +101,8 @@ struct  _BTLV_MCSS
   u32             set_pltt_fade_flag  :1;     //パレットフェードが呼ばれた
   u32             henge_flag          :1;     //変化した
   u32             push_vanish_flag    :1;     //バニッシュフラグのプッシュ領域
-  u32                                 :21;
+  u32             anm_restart_flag    :1;     //アニメリスタートフラグ
+  u32                                 :20;
   int             evy;
   int             evy_dir;
   int             evy_wait;
@@ -441,7 +442,26 @@ void  BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw )
 //============================================================================================
 void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
 {
+  //アニメリスタートチェック
+  { 
+    BtlvMcssPos pos;
+
+    for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+    { 
+      if( BTLV_MCSS_CheckExist( bmw, pos ) )
+      { 
+        int index = BTLV_MCSS_GetIndex( bmw, pos );
+        if( bmw->btlv_mcss[ index ].anm_restart_flag )
+        { 
+          bmw->btlv_mcss[ index ].anm_restart_flag = 0; //アニメリスタートフラグ
+          MCSS_RestartAnime( bmw->btlv_mcss[ index ].mcss );
+        }
+      }
+    }
+  }
+
   MCSS_Main( bmw->mcss_sys );
+
   {
     BtlvMcssPos pos;
 
@@ -3380,7 +3400,8 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
   if( MCSS_GetStopCellAnms( bmw->btlv_mcss[ index ].mcss ) == MCSS_CELL_ANIM_NONSTOP )
   {
     //NONSTOPアニメだと1時間くらい放置したときにズレがでるので、Restartを呼んでおく
-    MCSS_RestartAnime( bmw->btlv_mcss[ index ].mcss );
+    bmw->btlv_mcss[ index ].anm_restart_flag = 1; //アニメリスタートフラグ
+    //MCSS_RestartAnime( bmw->btlv_mcss[ index ].mcss );
     return;
   }
 
