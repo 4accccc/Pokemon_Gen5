@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/31 18:01:07
+#save date:2010/07/01 14:13:17
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plh03.wms
 #SECTION START:OBJ_EVENT
@@ -46,7 +46,7 @@ EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -2296
 #size
-17 1
+18 1
 #event number: 1
 #Pos Event Label
 POSID_DUMMY_02
@@ -63,7 +63,7 @@ EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -264
 #size
-17 1
+18 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
