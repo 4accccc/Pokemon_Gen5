@@ -1798,10 +1798,15 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
 {
   int i,num=0;
 
+  pWork->triCancel++;  //ŒðŠ·‚¹‚¸‚É‰½‰ñ‚à‚±‚±‚ð’Ê‚é‚ÆØ’f
+  if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
+    POKEMONTRADE_CancelCall(pWork);
+    _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+    return;
+  }
+
   DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_NHTTP, 0x10000, pWork->heapID );
 
-  pWork->triCancel++;  //ŒðŠ·‚¹‚¸‚É‰½‰ñ‚à‚±‚±‚ð’Ê‚é‚ÆØ’f
-  
   pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
                                  MyStatus_GetProfileID(pWork->pMy), pWork->pParentWork->pSvl);
 
