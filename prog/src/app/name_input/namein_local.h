@@ -311,11 +311,12 @@ typedef enum
 /// ICON
 //=====================================
 //アイコンの座標
-#define ICON_POS_X  (46-12)
+#define ICON_POS_X  (34)
 #define ICON_POS_Y  (20)
 #define ICON_POS_SEX_X  (46)
 #define ICON_WIDTH  (32)
 #define ICON_HEIGHT (32)
+#define ICON_POS_POKE_X  (46-32/2)
 
 //アイコンの動作
 #define ICON_MOVE_SYNC  (8)

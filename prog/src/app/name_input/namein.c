@@ -4178,6 +4178,9 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
 { 
   BOOL is_sex_visible = FALSE;
   int sex;
+  GFL_POINT pos;
+  pos.x  = ICON_POS_X;
+  pos.y  = ICON_POS_Y;
 
   //ƒNƒŠƒA
   GFL_STD_MemClear( p_wk, sizeof(ICON_WORK) );
@@ -4227,6 +4230,9 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       chr   = POKEICON_GetCgxArcIndexByMonsNumber( param1, param2 & 0x00ff, sex, FALSE );
       cel   = POKEICON_GetCellArcIndex();
       anm   = POKEICON_GetAnmArcIndex();
+
+      pos.x  = ICON_POS_POKE_X;
+      pos.y  = ICON_POS_Y;
       is_comp = TRUE;
       break;
 
@@ -4268,8 +4274,8 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
   { 
     GFL_CLWK_DATA cldata;
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-    cldata.pos_x  = ICON_POS_X;
-    cldata.pos_y  = ICON_POS_Y;
+    cldata.pos_x  = pos.x;
+    cldata.pos_y  = pos.y;
     p_wk->p_clwk  =   GFL_CLACT_WK_Create( p_unit,
         p_wk->ncg,
         p_wk->plt,
