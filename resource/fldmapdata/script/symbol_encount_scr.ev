@@ -80,8 +80,10 @@ ev_symbol_pokemon_main:
       _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
       _PLAYER_NAME( 1 )
       _SYSWIN_MSG( msg_symbolmap_poke_02, POS_DEFAULT )
-      _LAST_KEYWAIT()
-      _SYSWIN_CLOSE()
+      //_LAST_KEYWAIT()
+      //_SYSWIN_CLOSE()
+
+			_CALL	sub_ask_sympoke_move
       _RET
     ENDIF
   ENDIF
@@ -107,6 +109,14 @@ ev_symbol_pokemon_main:
     _RET
   ENDIF
 
+	_CALL	sub_ask_sympoke_move
+	_RET
+
+
+/**************************************************************/
+//		à⁄ìÆÇ∑ÇÈÇ©Ç«Ç§Ç©êqÇÀÇÈ
+/**************************************************************/
+sub_ask_sympoke_move:
   _SYMBOL_MAP_GET_INFO( SCR_SYMMAP_INFO_IS_KEEPZONE, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
 
