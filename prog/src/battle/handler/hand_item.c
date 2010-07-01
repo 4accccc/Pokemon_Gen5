@@ -3693,6 +3693,8 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         pow = 100 + (common_GetItemParam(myHandle, ITEM_PRM_ATTACK) * (counter));
         if( pow > 200 ){ pow = 200; }
         ratio = (FX32_CONST(pow) / 100);
+
+//        TAYA_Printf("ƒJƒEƒ“ƒ^=%d, pow=%d, ratio=%08x\n", counter, pow, ratio );
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
       }
     }

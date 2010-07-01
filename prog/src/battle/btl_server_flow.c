@@ -193,7 +193,7 @@ static BOOL scproc_FreeFall_Start( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
 static inline BOOL checkFreeFallUsing( const BTL_POKEPARAM* bpp );
 static void scproc_FreeFall_CheckRelease( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fReleaseProc );
 static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u8 fWazaLock );
-static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock );
+static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scEvent_ExeFailThrew( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza, SV_WazaFailCause cause );
 static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlEventType eventID );
 static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
@@ -3272,7 +3272,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   BtlPokePos  orgTargetPos, actTargetPos;
   BppContFlag  tameFlag;
   FLAG_SET  wazaFlags;
-  u8 fWazaEnable, fWazaLock, fReqWaza, fPPDecrement, orgWazaIdx;
+  u8 fWazaEnable, fWazaLock, fTameLock, fReqWaza, fPPDecrement, orgWazaIdx;
 
   tameFlag = BPP_CONTFLAG_CheckWazaHide( attacker );
 
@@ -3300,7 +3300,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   actTargetPos = orgTargetPos;
   fWazaEnable = FALSE;
   fPPDecrement = FALSE;
-  fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK) || BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
+  fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK);
+  fTameLock = BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
   BTL_HANDLER_Waza_Add( attacker, orgWaza );
   scproc_StartWazaSeq( wk, attacker, orgWaza );
@@ -3308,7 +3309,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   do {
 
     // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
-    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock ) ){ break; }
+    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock||fTameLock ) ){ break; }
 
     // 派生ワザ呼び出しパラメータチェック＆失敗判定
     if( !scEvent_GetReqWazaParam(wk, attacker, orgWaza, orgTargetPos, &reqWaza) )
@@ -3366,7 +3367,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     }
 
     // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
-    if( (!fWazaLock) )
+    if( (!(fWazaLock || fTameLock) ) )
     {
       if( orgWazaIdx != PTL_WAZA_MAX )
       {
@@ -3401,7 +3402,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     }
 
     // ワザ出し失敗判定２（ＰＰ減少後）
-    if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock )){
+    if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza )){
        break;
     }
 
@@ -3436,7 +3437,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZAPROC_DONE );
 
   // PP消費したらワザ使用記録を更新
-  if( fPPDecrement || (actWaza == WAZANO_WARUAGAKI) )
+  if( fPPDecrement || fWazaLock || (actWaza == WAZANO_WARUAGAKI) )
   {
     BPP_UpdateWazaProcResult( attacker, actTargetPos, fWazaEnable, wk->wazaParam->wazaType, actWaza, orgWaza );
     SCQUE_PUT_OP_UpdateWazaProcResult( wk->que, BPP_GetID(attacker), actTargetPos, fWazaEnable,
@@ -5364,7 +5365,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
   }
   return FALSE;
 }
-static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock )
+static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
 {
   if( waza != WAZANO_WARUAGAKI )
   {
