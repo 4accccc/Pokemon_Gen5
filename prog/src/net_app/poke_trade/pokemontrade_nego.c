@@ -74,6 +74,7 @@ static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork);
 static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork);
 static void _select6PokeSubMask(POKEMON_TRADE_WORK* pWork);  //下画面マスク処理
 static BOOL POKEMONTRADE_SendPokemon(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp,int commandID);
+static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork);
 
 
 //６体のポケモン選択
@@ -1114,6 +1115,15 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+//ステータスを何度も再描画すると通信が落ちるのでNOPをくわせ
+static void _pokemonStatusWaitNOP(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->anmCount > 5){
+    _CHANGE_STATE(pWork,_pokemonStatusWaitN);
+  }
+}
+
+
 // ポケモンのステータス表示待ち
 static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
 {
@@ -1142,6 +1152,8 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
     _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
     PMSND_PlaySystemSE(SEQ_SE_SELECT1);
+    pWork->anmCount = 0;
+    _CHANGE_STATE(pWork, _pokemonStatusWaitNOP);
     return;
   }
 
@@ -1150,6 +1162,8 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
       PMSND_PlaySystemSE(SEQ_SE_SELECT1);
+      pWork->anmCount = 0;//7240
+      _CHANGE_STATE(pWork, _pokemonStatusWaitNOP);
       return;
     }
   }
