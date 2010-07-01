@@ -2355,8 +2355,11 @@ static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
       wk, wk->dat->chg_waza, WIN_P6_SKILL,
       WazaMsgID_Tbl[4], 0, P6_WAZANAME_PY, FCOL_P13WN );
     BPL_WazaInfoPut( wk, WIN_P6_INFO, wk->dat->chg_waza );
-    BPL_WazaHitNumPut(
-      wk, WIN_P6_HITNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_HITPER) );
+		if( WAZADATA_IsAlwaysHit(wk->dat->chg_waza) == TRUE ){
+	    BPL_WazaHitNumPut( wk, WIN_P6_HITNUM, 0 );
+		}else{
+	    BPL_WazaHitNumPut( wk, WIN_P6_HITNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_HITPER) );
+		}
     BPL_WazaPowNumPut(
       wk, WIN_P6_POWNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_POWER) );
     BPL_WazaKindPut(
