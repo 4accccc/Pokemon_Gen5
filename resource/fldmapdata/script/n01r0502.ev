@@ -1660,6 +1660,10 @@ ev_last:
 	_END_FACEUP()
 	_PLAINWIN_CLOSE()
 	
+	//BGMチェンジでの環境SEポーズ状態をCLEAR
+	//謁見の間では環境SEがないので、ここでクリアしても実際のプレイでは何も問題ありません。アッパーで環境SEが追加されたら要確認。
+	_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
+	
 	//ゲームクリア
 	_GOTO_GAMECLEAR_DEMO( 0 )
 	//========================================/
