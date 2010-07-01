@@ -257,9 +257,6 @@ EVENT_START   ev_r01_poke_getdemo_01
 	//捕獲回数対決イベントのpos有効
 	$WK_SCENE_R01 = 1
 
-	//BGMチェンジでの環境SEポーズ状態をCLEAR（T01の最初の一歩イベントでイベント曲を再生しているため）
-	_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
-
 //==================================//
 
 
@@ -480,6 +477,7 @@ EVENT_START   ev_r01_rivel_02
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_10)
 	ELSE
 	//カウント後
+		//捕獲カウント勝負後にライバルがいなくなるため、この処理には流れてきません。【不要】
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_11)
 	ENDIF
 EVENT_END
@@ -636,7 +634,7 @@ EVENT_END
 /**************************************************************/
 /*	R01　ポケモンカウント（ヒロイン）カウント後*/
 /**************************************************************/
-
+//POSイベント後にいなくなるためサポートに話しかけることはできなくなっています。【不要】
 EVENT_START   ev_r01_support_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_white_13)
 EVENT_END

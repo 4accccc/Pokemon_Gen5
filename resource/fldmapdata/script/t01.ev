@@ -740,6 +740,8 @@ EVENT_START ev_pos_t01_firststep_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_01 )
 	_OBJ_ANIME( T01_R01_RIVAL, anm_1ststep_rival_01 )
 	_OBJ_ANIME( T01_R01_SUPPORT, anm_1ststep_support_01 )
+	_TIME_WAIT( 8 )
+	_PLACE_NAME_DISPLAY()	//地名表示演出
 	_OBJ_ANIME_WAIT()
 	
 	_TIME_WAIT( 16 )
@@ -775,6 +777,9 @@ EVENT_START ev_pos_t01_firststep_01
 	//========================================//
 	//POS無効
 	$WK_SCENE_T01 = 3
+	
+	//BGMチェンジでの環境SEポーズ状態をCLEAR
+	_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
 	
 	//========================================//
 
