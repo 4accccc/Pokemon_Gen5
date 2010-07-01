@@ -180,7 +180,7 @@ struct _G_SYNC_WORK {
   u8 bAccount;   //アカウント取得済みかどうか
   u8 bSaveDataAsync;
   u8 noERROR;  //ここはエラーにしない
-  u8 dummy;
+  u8 bAccount2;  //メッセージを見たかどうか
 };
 
 
@@ -1605,7 +1605,7 @@ static void _accountCreateMessage3(G_SYNC_WORK* pWork)
     GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     ///メッセージを見たのでフラグをON
     DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
-    pWork->bAccount=TRUE;
+    pWork->bAccount2 = TRUE;
     _CHANGE_STATE(_ghttpPokemonListDownload);
   }
 }
@@ -1815,7 +1815,7 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
       }
       break;
     case GSYNC_CALLTYPE_POKELIST:          //セーブデータ上では眠らせるポケモンを選ぶ
-      if(pWork->bAccount==FALSE){  //サーバにアカウントがあるけどメッセージみてない
+      if(pWork->bAccount2 == FALSE){  //サーバにアカウントがあるけどメッセージみてない
         _CHANGE_STATE(_accountCreateMessage);
       }
       else{
@@ -2021,8 +2021,8 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
 {
   GMTIME* pGMT = SaveData_GetGameTime(pWork->pSaveData);
 
-#if (defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_mizuguchi_mai))
-#else
+//#if (defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_mizuguchi_mai))
+//#else
   if(GMTIME_IsPenaltyMode(pGMT) &&  pWork->bAccount ){  //ペナルティー中は眠る事ができない+アカウント取得済み
     _CHANGE_STATE(_wakeupActionFailed);
     return;
@@ -2041,7 +2041,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
       return;
     }
   }
-#endif
+//#endif
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_POKEMONLIST, pWork->pNHTTPRap)){
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
@@ -2539,6 +2539,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
     pWork->bAccount = DREAMWORLD_SV_GetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
+    pWork->bAccount2 = pWork->bAccount;
 
     {
       DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
