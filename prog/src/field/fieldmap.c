@@ -2933,7 +2933,8 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   zoneChangeScene( fieldWork, new_zone_id );
 
 	// 地名表示システムに, ゾーンの切り替えを通達
-  if(fieldWork->placeNameSys){ 
+  if( fieldWork->placeNameSys &&
+      (GAMESYSTEM_IsEventExists(fieldWork->gsys) == FALSE) ){ 
     FIELD_PLACE_NAME_DisplayOnStanderdRule( fieldWork->placeNameSys, new_zone_id ); 
   }
 
