@@ -4099,7 +4099,7 @@ void BTL_MAIN_ReflectPokeWazaOboe( BTL_MAIN_MODULE* wk, u8 pokeID )
 }
 
 /**
- *  イリュージョン中ポケモンのイリュージョン対象
+ *  イリュージョン中ポケモンのイリュージョン対象データを取得（AI用）
  */
 const BTL_POKEPARAM* BTL_MAIN_GetFakeTargetPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* bpp )
 {
