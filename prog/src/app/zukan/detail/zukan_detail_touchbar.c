@@ -1211,7 +1211,7 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
   if( icon != GENERAL_ICON_MAX )
   {
     ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[icon].cset->id );
-    return;
+    //return;  // こんなところでreturnしたら、ここより下にある「GENERALのパレットアニメ」の箇所を通らないフレームができてしまい、よくない！
   } 
 
 
