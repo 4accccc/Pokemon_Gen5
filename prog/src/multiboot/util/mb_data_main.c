@@ -98,18 +98,19 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     if( isPullCard == FALSE )
     {
       MB_DATA_TPrintf("RomName[%s]\n",headerData->game_name);
-      
-      if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
-        STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 )
+      MB_DATA_TPrintf("RomCode[%d:%x]\n",headerData->game_code,headerData->game_code);
+
+      if( headerData->game_code == MB_ROMCODE_DIAMOND ||
+          headerData->game_code == MB_ROMCODE_PEARL   )
       {
         dataWork->cardType = CARD_TYPE_DP;
       }
-      else if( STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 )
+      else if( headerData->game_code == MB_ROMCODE_PLATINUM )
       {
         dataWork->cardType = CARD_TYPE_PT;
       }
-      else if( STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
-        STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 )
+      else if( headerData->game_code == MB_ROMCODE_H_GOLD ||
+               headerData->game_code == MB_ROMCODE_S_SILVER )
       {
         dataWork->cardType = CARD_TYPE_GS;
       }
@@ -527,11 +528,11 @@ static void MB_DATA_InitCardSystem( MB_DATA_WORK *dataWork )
 {
   CARDRomHeader *headerData = (CARDRomHeader*)CARD_GetRomHeader();
 #if PM_DEBUG
-  if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
-      STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 ||
+  if( headerData->game_code == MB_ROMCODE_DIAMOND ||
+      headerData->game_code == MB_ROMCODE_PEARL ||
+      headerData->game_code == MB_ROMCODE_PLATINUM ||
+      headerData->game_code == MB_ROMCODE_H_GOLD ||
+      headerData->game_code == MB_ROMCODE_S_SILVER ||
       STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
       STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
       STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||

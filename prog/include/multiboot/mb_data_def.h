@@ -23,6 +23,12 @@
 #define MB_DATA_TPrintf(...) (void)((OS_TPrintf(__VA_ARGS__)))
 #endif//デバッグ出力切り替え
 
+//ROMコード
+#define MB_ROMCODE_DIAMOND  (0x4A414441)
+#define MB_ROMCODE_PEARL    (0x4A415041)
+#define MB_ROMCODE_PLATINUM (0x4A555043)
+#define MB_ROMCODE_H_GOLD   (0x4A4B5049)
+#define MB_ROMCODE_S_SILVER (0x4A475049)
 
 //本体に刺さっているカードの種類
 typedef enum {
