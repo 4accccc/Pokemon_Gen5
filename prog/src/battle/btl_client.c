@@ -317,7 +317,7 @@ static BOOL AI_ChangeProcSub_HikaePokeAff( BTL_CLIENT* wk, PokeType wazaType, Bt
 static BOOL AI_ChangeProcSub_CheckWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BtlTypeAff affMin );
 static BtlRotateDir RotAI_CheckRotation( BTL_CLIENT* wk );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
-static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
+static u8 countPuttablePokemons( BTL_CLIENT* wk, u8* list );
 static void sortPuttablePokemonList( BTL_CLIENT* wk, u8* list, u8 numPoke, const BTL_POKEPARAM* target );
 static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
 static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
@@ -329,6 +329,7 @@ static BOOL SubProc_UI_SelectPokemonForChange( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode );
+static BOOL IsCoverRotate( BTL_CLIENT* wk );
 static u32 SetCoverRotateAction( BTL_CLIENT* wk, BTL_ACTION_PARAM* resultAction );
 static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
@@ -358,6 +359,7 @@ static BOOL scProc_MSG_StdSE( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_SetSE( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
+static WazaTarget checkWazaRange( BTL_CLIENT* wk, WazaID waza, BtlPokePos atPokePos );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
@@ -749,6 +751,21 @@ BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk )
 }
 
 
+//=============================================================================================
+/**
+ * シューターエネルギーチャージ
+ *
+ * @param   wk
+ * @param   chargeVolume
+ */
+//=============================================================================================
+void BTL_CLIENT_ChargeShooterEnergy( BTL_CLIENT* wk, u8 chargeVolume )
+{
+  wk->shooterEnergy += chargeVolume;
+  if( wk->shooterEnergy > BTL_SHOOTER_ENERGY_MAX ){
+    wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
+  }
+}
 
 
 /**
@@ -3558,7 +3575,7 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
     u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
     u32 cnt, i;
 
-    cnt = calcPuttablePokemons( wk, puttableList );
+    cnt = countPuttablePokemons( wk, puttableList );
 
     sortPuttablePokemonList( wk, puttableList, cnt, targetEnemyPoke );
     for(i=0; i<cnt; ++i)
@@ -4195,7 +4212,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
  * @retval  u8    選択可能ポケモンの数
  */
 //--------------------------------------------------------------------------
-static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
+static u8 countPuttablePokemons( BTL_CLIENT* wk, u8* list )
 {
   const BTL_POKEPARAM* bpp;
   u8 cnt, numMembers, numFront, i, j;
@@ -4225,7 +4242,7 @@ static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
 }
 //----------------------------------------------------------------------------------
 /**
- * calcPuttablePokemonsで生成した list を出すべき順に並べ替え（相手との相性による）
+ * countPuttablePokemonsで生成した list を出すべき順に並べ替え（相手との相性による）
  *
  * @param   wk
  * @param   list
@@ -4428,9 +4445,12 @@ static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos )
 
   for(i=0, cnt=0; i<numChangePoke; ++i)
   {
+    // BTS-7149対処でこうしたが、これではマズい
+    #if 0
     if( !BTL_MAIN_IsFrontPos(wk->mainModule, changePokePos[i]) ){
       continue;
     }
+    #endif
     if( BTL_MAIN_BtlPosToClientID(wk->mainModule, changePokePos[i]) == wk->myID ){
       myCoverPos[ cnt++ ] = changePokePos[ i ];
     }
@@ -4520,7 +4540,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
     u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
     u8 numPuttable;
 
-    numPuttable = calcPuttablePokemons( wk, puttableList );
+    numPuttable = countPuttablePokemons( wk, puttableList );
     if( numPuttable )
     {
       u8 numSelect = wk->myChangePokeCnt;
@@ -4537,11 +4557,15 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
       if( numSelect > numPuttable )
       {
         #ifdef ROTATION_NEW_SYSTEM
-        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+        {
           // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
-          wk->returnDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          return TRUE;
+          u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
+          if( sendDataSize ){
+            wk->returnDataSize = sendDataSize;
+            wk->returnDataPtr = &(wk->actionParam[0]);
+            return TRUE;
+          }
         }
         #endif
 
@@ -4560,7 +4584,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
     else
     {
       #ifdef ROTATION_NEW_SYSTEM
-      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+      if( IsCoverRotate(wk) )
       {
         // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
         u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
@@ -4626,7 +4650,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
     if( wk->myChangePokeCnt )
     {
       u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
-      u8 numPuttable = calcPuttablePokemons( wk, puttableList );
+      u8 numPuttable = countPuttablePokemons( wk, puttableList );
 
       // 控えに出せるポケモンが居る
       if( numPuttable )
@@ -4642,7 +4666,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 
         // 新ローテーションの場合、先頭が空いている＆繰り出せる控え１体の時に自動決定
         #ifdef ROTATION_NEW_SYSTEM
-        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+        if( IsCoverRotate(wk) )
         {
           const BTL_POKEPARAM* topPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, 0 );
           if( (numPuttable == 1) && BPP_IsDead(topPoke) )
@@ -4669,18 +4693,14 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
       else
       {
         #ifdef ROTATION_NEW_SYSTEM
-        // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
-        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+        // 新ローテーションの場合、前衛が死んでいたら強制的に生きているポケモンを前に出す回転を行う
+        if( IsCoverRotate(wk) )
         {
-          const BTL_POKEPARAM* topPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, 0 );
-          if( BPP_IsDead(topPoke) )
-          {
-            u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
-            if( sendDataSize ){
-              wk->returnDataSize = sendDataSize;
-              wk->returnDataPtr = &(wk->actionParam[0]);
-              return TRUE;
-            }
+          u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
+          if( sendDataSize ){
+            wk->returnDataSize = sendDataSize;
+            wk->returnDataPtr = &(wk->actionParam[0]);
+            return TRUE;
           }
         }
         #endif
@@ -4754,6 +4774,28 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
     return TRUE;
   }
 
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * ローテーションバトルで、前衛が死んで控えがいないので回転を行う必要があるか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL IsCoverRotate( BTL_CLIENT* wk )
+{
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+  {
+    const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, 0 );
+    if( BPP_IsDead(bpp) )
+    {
+      return TRUE;
+    }
+  }
   return FALSE;
 }
 //----------------------------------------------------------------------------------
@@ -8213,14 +8255,15 @@ static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args )
   u8 clientID = args[0];
   u8 increment = args[1];
 
-  TAYA_Printf("ClientID=%d, myID=%d\n", clientID, wk->myID);
+  TAYA_Printf("ClientID=%d, myID=%d (myAdrs=%p)\n", clientID, wk->myID, wk);
 
   if( clientID == wk->myID )
   {
-    wk->shooterEnergy += increment;
-    if( wk->shooterEnergy > BTL_SHOOTER_ENERGY_MAX ){
-      wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
-    }
+    BTL_CLIENT_ChargeShooterEnergy( wk, increment );
+  }
+  else
+  {
+    BTL_MAIN_ChargeShooterEnergyReq( wk->mainModule, clientID, increment );
   }
   return TRUE;
 }

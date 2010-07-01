@@ -115,6 +115,7 @@ extern void BTL_CLIENT_SetRecordPlayerMode( BTL_CLIENT* wk, BTL_RECREADER* recRe
 extern void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum );
 extern void BTL_CLIENT_StopChapterSkip( BTL_CLIENT* wk );
 extern BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk );
+extern void BTL_CLIENT_ChargeShooterEnergy( BTL_CLIENT* wk, u8 chargeVolume );
 extern BOOL BTL_CLIENT_IsRecPlayerMode( const BTL_CLIENT* wk );
 extern u32 BTL_CLIENT_GetRecPlayerMaxChapter( const BTL_CLIENT* wk );
 

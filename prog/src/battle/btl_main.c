@@ -4836,6 +4836,25 @@ u8 BTL_POKECON_GetClientAlivePokeCount( const BTL_POKE_CONTAINER* pokeCon, u8 cl
   const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( pokeCon, clientID );
   return BTL_PARTY_GetAliveMemberCount( party );
 }
+//=============================================================================================
+/**
+ * 指定クライアントのシューターエネルギーチャージ（自分がサーバマシンの場合のみ）
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   chargeVolume    チャージ量
+ */
+//=============================================================================================
+void BTL_MAIN_ChargeShooterEnergyReq( BTL_MAIN_MODULE* wk, u8 clientID, u8 chargeVolume )
+{
+  if( wk->ImServer )
+  {
+    if( BTL_MAIN_IsExistClient(wk, clientID) )
+    {
+      BTL_CLIENT_ChargeShooterEnergy( wk->client[clientID], chargeVolume );
+    }
+  }
+}
 
 
 //=======================================================================================================
