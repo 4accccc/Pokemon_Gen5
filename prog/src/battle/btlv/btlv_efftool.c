@@ -31,10 +31,19 @@
 void	BTLV_EFFTOOL_CalcMove( fx32 start, fx32 end, fx32 *out, fx32 frame )
 {
 	*out = 0;
-	if( end - start ){
+	if( end - start )
+  {
 		*out = FX_Div( end - start, frame );
-		if( *out == 0 ){
-			*out = 1;
+		if( *out == 0 )
+    {
+	    if( end > start )
+      {
+			  *out = 1;
+      }
+      else
+      {
+			  *out = -1;
+      }
 		}
 	}
 }
@@ -57,19 +66,40 @@ void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx
 	if( end->x - start->x ){
 		out->x = FX_Div( end->x - start->x, frame );
 		if( out->x == 0 ){
-			out->x = 1;
+	    if( end->x > start->x )
+      {
+			  out->x = 1;
+      }
+      else
+      {
+			  out->x = -1;
+      }
 		}
 	}
 	if( end->y - start->y ){
 		out->y = FX_Div( end->y - start->y, frame );
 		if( out->y == 0 ){
-			out->y = 1;
+	    if( end->y > start->y )
+      {
+			  out->y = 1;
+      }
+      else
+      {
+			  out->y = -1;
+      }
 		}
 	}
 	if( end->z - start->z ){
 		out->z = FX_Div( end->z - start->z, frame );
 		if( out->z == 0 ){
-			out->z = 1;
+	    if( end->z > start->z )
+      {
+			  out->z = 1;
+      }
+      else
+      {
+			  out->z = -1;
+      }
 		}
 	}
 }
