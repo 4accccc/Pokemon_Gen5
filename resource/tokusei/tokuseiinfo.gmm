@@ -1183,10 +1183,10 @@
 	</row>
 
 	<row id="TOKUSEIINFO_113">
-		<language name="JPN" width="216">ゴーストタイプに　わざが
-あたるようになる。</language>
-		<language name="JPN_KANJI" width="216">ゴーストタイプに　技が
-当たるようになる。</language>
+		<language name="JPN" width="216">ゴーストタイプに
+ノーマルわざが　あたる。</language>
+		<language name="JPN_KANJI" width="216">ゴーストタイプに
+ノーマル技が　当たる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_114">
@@ -1268,9 +1268,9 @@
 
 	<row id="TOKUSEIINFO_125">
 		<language name="JPN" width="216">ちからが　つよくなるが
-ついかこうかが　だせない。</language>
+ついかこうかが　なくなる。</language>
 		<language name="JPN_KANJI" width="216">力が　強くなるが
-追加効果が　だせない。</language>
+追加効果が　なくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_126">
@@ -1296,9 +1296,9 @@
 
 	<row id="TOKUSEIINFO_129">
 		<language name="JPN" width="216">ＨＰが　はんぶんになると
-ちからが　よわくなる。</language>
+のうりょくが　さがる。</language>
 		<language name="JPN_KANJI" width="216">ＨＰが　半分になると
-力が　弱くなる。</language>
+能力が　さがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_130">
