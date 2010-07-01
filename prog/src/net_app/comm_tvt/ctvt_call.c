@@ -1371,10 +1371,13 @@ static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork 
         callWork->scrollOfs = maxLen;
       }
       callWork->scrollBarPos = callWork->scrollOfs * CTVT_CALL_SCROLLBAR_LEN / maxLen;
-      cellPos.x = CTVT_CALL_SCROLL_X;
-      cellPos.y = CTVT_CALL_SCROLL_Y + callWork->scrollBarPos;
-      GFL_CLACT_WK_SetPos( callWork->clwkScrollBar , &cellPos , CLSYS_DRAW_SUB );
-      
+      //ƒo[‰Ÿ‚³‚¦‚ç‚ê‚Ä‚¢‚éŽž‚Í–³Ž‹
+      if( callWork->isHoldScroll == FALSE )
+      {
+        cellPos.x = CTVT_CALL_SCROLL_X;
+        cellPos.y = CTVT_CALL_SCROLL_Y + callWork->scrollBarPos;
+        GFL_CLACT_WK_SetPos( callWork->clwkScrollBar , &cellPos , CLSYS_DRAW_SUB );
+      }
     }
     else
     {
