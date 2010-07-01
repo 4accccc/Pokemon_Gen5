@@ -218,7 +218,7 @@ static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *i
 
 static void _trans_touchbar_screen( HEAPID heapId, int bgfrm );
 static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel );
-static void _set_cursor_pos( FIELD_MENU_WORK *work );
+static void _set_cursor_pos( FIELD_MENU_WORK *work, int x, int y );
 
 static void ScrollObj( FIELD_MENU_WORK* work );
 
@@ -342,6 +342,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   }
   else
   {
+    // 引き継いだカーソル初期位置を取得
     FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
     work->isUpdateCursor = TRUE;
     if(work->isDispCursor){
@@ -528,7 +529,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       if( work->activeIcon->cellIcon != NULL )
       {
         work->waitCnt = 0;
-        _set_cursor_pos( work );
+        _set_cursor_pos( work, work->activeIcon->posX, work->activeIcon->posY );
         GFL_CLACT_WK_SetAnmSeq( work->cellCursor, FCA_DECIDE_CURSOR );
         GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
         work->state = FMS_WAIT_ICON_ANIME;
@@ -1147,9 +1148,16 @@ void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYP
     {
       if( work->icon[i].type == itemType )
       {
+        FIELD_MENU_ICON *tmpIcon;
+
+        // カーソルの初期位置を設定
         work->cursorPosX = i%2;
         work->cursorPosY = i/2;
         work->isUpdateCursor = TRUE;
+        
+        // カーソルの実座標も設定する
+        tmpIcon = &work->icon[work->cursorPosX + work->cursorPosY*2];
+        _set_cursor_pos(work, tmpIcon->posX, tmpIcon->posY);
       }
     }
   }
@@ -1380,11 +1388,11 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
  * @param   work    
  */
 //----------------------------------------------------------------------------------
-static void _set_cursor_pos( FIELD_MENU_WORK *work )
+static void _set_cursor_pos( FIELD_MENU_WORK *work, int x ,int y )
 {
   GFL_CLACTPOS pos;
-  pos.x = work->activeIcon->posX;
-  pos.y = work->activeIcon->posY;
+  pos.x = x;
+  pos.y = y;
   GFL_CLACT_WK_SetPos( work->cellCursor , &pos , FIELD_MENU_RENDER_SURFACE );
   work->palanm_count = 0;
 }
@@ -1430,7 +1438,7 @@ static void  FIELD_MENU_UpdateCursor( FIELD_MENU_WORK* work )
     GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL );
     
     // カーソル位置をセット
-    _set_cursor_pos(work);
+    _set_cursor_pos(work, work->activeIcon->posX, work->activeIcon->posY);
     if( work->activeIcon->cellIcon != NULL &&
         work->isDispCursor == TRUE )
     {
