@@ -1,5 +1,5 @@
 EFFSEQ
-$0007
+$0008
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_073.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_073.spa
@@ -7,17 +7,21 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_073_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_073_2.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_073_3.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_073_4.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_073_1.spa
 #001
 %00
 カメラ移動	追従	ZOOM_OUT（透視）	CM	0	CB
 エフェクト終了待ち	すべて
 制御モード変更	継続
-SE再生	SEQ_SE_W331_01	SE1	防御側	0:300:120	0:0:0
+SE再生	SEQ_SE_W331_01	SE1	攻撃側	0:300:120	0:0:0
 SE動的変化	SE1	追従	ピッチ	0	1000	0	10:0:0
-SE再生	SEQ_SE_W331_01	SE2	防御側	20:300:120	0:0:0
-SE再生	SEQ_SE_W331_01	SE1	防御側	40:300:120	0:0:0
-SEパン	SE1	追従	攻撃側	防御側	0	30:0:0
-SEパン	SE2	追従	攻撃側	防御側	15	30:0:0
+SE再生	SEQ_SE_W331_01	SE2	攻撃側	14:300:120	0:0:0
+SE再生	SEQ_SE_W331_01	SE1	攻撃側	28:300:120	0:0:0
+SE再生	SEQ_SE_W331_01	SE2	攻撃側	42:300:120	0:0:0
+SEパン	SE1	追従	攻撃側	防御側	0	24:0:0
+SEパン	SE2	追従	攻撃側	防御側	14	24:0:0
+SEパン	SE1	追従	攻撃側	防御側	28	24:0:0
+SEパン	SE2	追従	攻撃側	防御側	42	24:0:0
 制御モード変更	逐次
 制御モード変更	継続
 SE再生	SEQ_SE_W331_01	SE2	防御側	90:0:120	0:0:0
@@ -27,13 +31,13 @@ SE再生	SEQ_SE_W331_01	SE2	防御側	103:-400:40	0:0:0
 パーティクルデータロード	w_073_1
 パーティクルデータロード	w_073_2
 パーティクルデータロード	w_073_3
-エミッタ移動	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
+エミッタ移動（正射影）	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
 タイマーによるウエイト	10
-エミッタ移動	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
-タイマーによるウエイト	2
-エミッタ移動	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
+エミッタ移動（正射影）	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
 タイマーによるウエイト	10
-エミッタ移動	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
+エミッタ移動（正射影）	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
+タイマーによるウエイト	10
+エミッタ移動（正射影）	w_073_1	W_073_1_073_YADORIGI_TANE	放物線	攻撃側	防御側	2:45:4	1:1:0
 タイマーによるウエイト	30
 カメラ移動	追従	防御側	16	0	8
 タイマーによるウエイト	10
@@ -42,6 +46,8 @@ SE再生	SEQ_SE_W331_01	SE2	防御側	103:-400:40	0:0:0
 パーティクル再生	w_073_2	W_073_2_073_YADORIGI_ANI	防御側	方向無し	0.5:0:0	1:1:1	1
 パーティクル再生	w_073_2	W_073_2_073_YADORIGI_FIX	防御側	方向無し	0.5:0:0	1:1:1	1
 タイマーによるウエイト	5
+パーティクルデータ削除	w_073_1
+パーティクルデータロード	w_073_1
 パーティクル再生	w_073_1	W_073_1_073_YADORIGI_ANI_L	防御側	方向無し	0.5:0:0	1:1:1	1
 パーティクル再生	w_073_1	W_073_1_073_YADORIGI_FIX_L	防御側	方向無し	0.5:0:0	1:1:1	1
 タイマーによるウエイト	5
