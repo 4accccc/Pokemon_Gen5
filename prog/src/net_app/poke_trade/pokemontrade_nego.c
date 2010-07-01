@@ -949,7 +949,6 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     msgno = gtsnego_info_14;
     pWork->NegoWaitTime = _GTSINFO14_WAIT;
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTSEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-      pWork->triCancel++;
       if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
         POKEMONTRADE_CancelCall(pWork);
         _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
@@ -961,7 +960,6 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     msgno = gtsnego_info_16;
     pWork->NegoWaitTime = _GTSINFO16_WAIT;
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTSEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-      pWork->triCancel++;
       if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
         POKEMONTRADE_CancelCall(pWork);
         _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
@@ -1716,10 +1714,10 @@ static void _PokeEvilChkEnd2(POKEMON_TRADE_WORK* pWork)
     msgno = gtsnego_info_24;
   }
   else if(pWork->evilCheck[1]){
-    msgno = gtsnego_info_11;   //•s³ŒŸ¸
+    msgno = gtsnego_info_10;
   }
   else{
-    msgno = gtsnego_info_10;
+    msgno = gtsnego_info_11;   //•s³ŒŸ¸
   }
   GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
@@ -1801,6 +1799,8 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
   int i,num=0;
 
   DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_NHTTP, 0x10000, pWork->heapID );
+
+  pWork->triCancel++;  //ŒðŠ·‚¹‚¸‚É‰½‰ñ‚à‚±‚±‚ð’Ê‚é‚ÆØ’f
   
   pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
                                  MyStatus_GetProfileID(pWork->pMy), pWork->pParentWork->pSvl);
