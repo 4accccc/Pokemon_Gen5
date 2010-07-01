@@ -2164,17 +2164,17 @@ static void _updateSave(G_SYNC_WORK* pWork)
 {
   DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
+  //バックアップドリームワールドデータ作成
+ // pWork->pBackupDream = DREAMWORLD_SV_AllocWork(pWork->heapID);
+
+//  GFL_STD_MemCopy(pDream, pWork->pBackupDream, DREAMWORLD_SV_GetWorkSize());
+
   //セーブエリアに移動
   DREAMWORLD_SV_SetSleepPokemon(pDream, pWork->pp);
   BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
   DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
+
   
-  //バックアップドリームワールドデータ作成
-  pWork->pBackupDream = DREAMWORLD_SV_AllocWork(pWork->heapID);
-
-  GFL_STD_MemCopy(pDream, pWork->pBackupDream, DREAMWORLD_SV_GetWorkSize());
-
-
   //受信した時間
   {
     RTCDate date;
@@ -2497,13 +2497,13 @@ static void _BoxPokeRemove(G_SYNC_WORK* pWork)
     GFL_HEAP_FreeMemory(pWork->pBackupDream);
     pWork->pBackupDream = NULL;
   }
-  if(pWork->bBox2SleepSaveData){
-    POKEMON_PARAM* pp= DREAMWORLD_SV_GetSleepPokemon(pDream);
-    BOXDAT_PutPokemonPos( pWork->pBox, pWork->trayno, pWork->indexno, PP_GetPPPPointerConst(pp) );
-    PP_Clear(pp);
-    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
-    pWork->bBox2SleepSaveData = FALSE;
-  }
+//  if(pWork->bBox2SleepSaveData){
+//    POKEMON_PARAM* pp= DREAMWORLD_SV_GetSleepPokemon(pDream);
+//    BOXDAT_PutPokemonPos( pWork->pBox, pWork->trayno, pWork->indexno, PP_GetPPPPointerConst(pp) );
+//    PP_Clear(pp);
+ //   DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
+ //   pWork->bBox2SleepSaveData = FALSE;/
+//  }
 }
 
 FS_EXTERN_OVERLAY(dpw_common);
