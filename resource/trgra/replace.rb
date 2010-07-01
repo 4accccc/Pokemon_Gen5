@@ -1,6 +1,24 @@
 require 'fileutils'
 
-keywords = [ "hero", "support", "rival" ]
+keywords = [ "hero", "support", "rival",
+  "tanpan",
+  "elitem",
+  "rangerm",
+  "breederm",
+  "scientistm",
+  "mount",
+  "heads",
+  "kindergartenm",
+
+  "mini",
+  "elitew",
+  "rangerw",
+  "breederw",
+  "scientistw",
+  "parasol",
+  "nurse",
+  "kindergartenw",
+]
 
 DUMMYNAME = "hero"
 
