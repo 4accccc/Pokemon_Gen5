@@ -820,21 +820,30 @@ static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-    {
-      BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-        param->rankType = BPP_ATTACK_RANK;
-        param->rankVolume = -1;
-        param->fAlmost = TRUE;
-        {
-          BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
-          BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
 
-          param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, param->pokeID );
-        }
-      BTL_SVF_HANDEX_Pop( flowWk, param );
+    u8*  pokeIDAry = BTL_SVFTOOL_GetTmpWork( flowWk, BTL_POS_MAX );
+    u8   pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, pokeIDAry );
+
+    if( pokeCnt )
+    {
+      u32 i;
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+
+      {
+        BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+          param->rankType = BPP_ATTACK_RANK;
+          param->rankVolume = -1;
+          param->fAlmost = TRUE;
+          param->poke_cnt = pokeCnt;
+          for(i=0; i<pokeCnt; ++i){
+            param->pokeID[i] = pokeIDAry[i];
+          }
+        BTL_SVF_HANDEX_Pop( flowWk, param );
+      }
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
-    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }
 }
 
@@ -4439,9 +4448,7 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     if( WAZADATA_IsDamage(waza) && (waza != WAZANO_WARUAGAKI) )
     {
       // 効果バツグン以外は無効
-      PokeType waza_type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
-      PokeTypePair myType = BPP_GetPokeType( bpp );
-      BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
+      BtlTypeAff aff = BTL_EVENTVAR_GetValue( BTL_EVAR_TYPEAFF );
       if( aff <= BTL_TYPEAFF_100 )
       {
         if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )

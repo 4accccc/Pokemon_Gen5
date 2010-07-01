@@ -34,6 +34,7 @@ typedef enum {
   BTL_TYPEAFF_400,
 
   BTL_TYPEAFF_MAX,
+  BTL_TYPEAFF_NULL = BTL_TYPEAFF_MAX,
 
 }BtlTypeAff;
 //--------------------------------------------------------------------
