@@ -5014,10 +5014,10 @@
 	</row>
 
 	<row id="ITEMINFO_543">
-		<language name="JPN" width="256">ポケモンの　タイプの　かんけいで
+		<language name="JPN" width="256">ポケモンの　タイプの　あいしょうで
 むこう　だった　わざが
 あたるように　なってしまう。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　タイプの　関係で
+		<language name="JPN_KANJI" width="256">ポケモンの　タイプの　相性で
 無効だった　技が
 当たるように　なってしまう。</language>
 	</row>
