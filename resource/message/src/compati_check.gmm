@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-02-13T17:27:18"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-07-01T14:38:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,96 +334,78 @@
 
 
 	<row id="COMPATI_STR_000">
-		<language name="JPN" width="256">せきがいせん　つうしんを　かいしします
-ＤＳを　あいてと　むきあわせてください</language>
-		<language name="JPN_KANJI" width="256">赤外線通信を開始します
-ＤＳを相手と向き合わせてください</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_001">
-		<language name="JPN" width="256">つうしん　せいこう</language>
-		<language name="JPN_KANJI" width="256">通信成功</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_002">
-		<language name="JPN" width="256">あいしょう
-だめ</language>
-		<language name="JPN_KANJI" width="256">相性
-ダメ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_003">
-		<language name="JPN" width="256">あいしょう
-ふつう</language>
-		<language name="JPN_KANJI" width="256">相性
-ふつう</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_004">
-		<language name="JPN" width="256">あいしょう
-けっこうよい</language>
-		<language name="JPN_KANJI" width="256">相性
-結構よい</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_005">
-		<language name="JPN" width="256">あいしょう
-かなりよい</language>
-		<language name="JPN_KANJI" width="256">相性
-かなり良い</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_006">
-		<language name="JPN" width="256">あいしょう
-さいこう</language>
-		<language name="JPN_KANJI" width="256">相性
-最高</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_007">
-		<language name="JPN" width="256">あいしょうチェックゲーム</language>
-		<language name="JPN_KANJI" width="256">相性チェックゲーム</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_008">
-		<language name="JPN" width="256">えんをこすって　スコアをかせごう</language>
-		<language name="JPN_KANJI" width="256">円をこすって　スコアを稼ごう</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_009">
-		<language name="JPN" width="256">[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_010">
-		<language name="JPN" width="256">あいしょうチェックゲーム</language>
-		<language name="JPN_KANJI" width="256">相性チェックゲーム</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_011">
-		<language name="JPN" width="256">えんを　こすって　スコアを　かせごう</language>
-		<language name="JPN_KANJI" width="256">円をこすって　スコアを　かせごう</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_100">
-		<language name="JPN" width="256">あいて
-　[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">あいて
-　[2:02:３桁:0]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_101">
-		<language name="JPN" width="256">じぶん
-　[2:02:３桁:1]</language>
-		<language name="JPN_KANJI" width="256">じぶん
-　[2:02:３桁:1]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="COMPATI_STR_102">
-		<language name="JPN" width="256">ボーナス [2:03:４桁:3]
-そうごう　[2:02:３桁:2]</language>
-		<language name="JPN_KANJI" width="256">ボーナス [2:03:４桁:3]
-そうごう　[2:02:３桁:2]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
