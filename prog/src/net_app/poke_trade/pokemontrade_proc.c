@@ -4321,6 +4321,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
 
   IRC_POKETRADEDEMO_Init(pWork);
   if(POKEMONTRADE_MOVE_EVOLUTION == pParentWork->ret){
+    GFL_DISP_GX_SetVisibleControlDirect(GX_PLANEMASK_OBJ);
     _CHANGE_STATE(pWork, POKMEONTRADE_SAVE_TimingStart);
     pParentWork->ret=POKEMONTRADE_MOVE_START;
     return GFL_PROC_RES_FINISH;
