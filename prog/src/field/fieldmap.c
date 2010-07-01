@@ -1452,6 +1452,12 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   DEBUG_MAIN_UPDATE_TYPE = 0;
 #endif
 
+  // tailフレームを実行せずにFreeSeqに遷移した場合、
+  // 描画途中のコマンドがNNSにたまっている可能性がるので、
+  // 念のためFlushBuffer
+  NNS_G3dGeFlushBuffer();
+
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
