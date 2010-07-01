@@ -3286,8 +3286,10 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   /* アンコール状態で違うワザを選んでいた場合は強制書き換え */
   {
     WazaID encoreWaza = checkEncoreWazaChange( attacker, action );
-    if( encoreWaza != WAZANO_NULL ){
-      action->fight.waza = encoreWaza;
+    if( encoreWaza != WAZANO_NULL )
+    {
+      BtlPokePos targetPos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, attacker, encoreWaza );
+      BTL_ACTION_SetFightParam( action, encoreWaza, targetPos );
     }
   }
 

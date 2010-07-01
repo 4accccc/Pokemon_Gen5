@@ -6179,7 +6179,7 @@ static const BtlEventHandlerTable*  ADD_Feint( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_MAMORU_BREAK,    handler_Feint_MamoruBreak  }, // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END_HIT_L1, handler_Feint_AfterDamage  }, // ダメージ処理後
+    { BTL_EVENT_WAZA_DMG_DETERMINE,    handler_Feint_AfterDamage  }, // ダメージ処理後
 
     { BTL_EVENT_WAZA_EXE_DECIDE,    handler_Feint_Decide       }, // ワザ出し確定
   };
@@ -6198,9 +6198,9 @@ static void handler_Feint_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_TARGET_POKECNT) )
+//    if( BTL_EVENTVAR_GetValue(BTL_EVAR_TARGET_POKECNT) )
     {
-      u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+      u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
 
       if( (BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_MAMORU))
@@ -6503,7 +6503,6 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     WazaID  prevWaza;
 
     prevWaza = BPP_GetPrevOrgWazaID( target );
-    TAYA_Printf("アンコール対象ポケ=%d, 前に選んだワザ=%d\n", targetPokeID, prevWaza);
 
     if( (!BPP_CheckSick(target, WAZASICK_ENCORE))
     &&  (!BTL_TABLES_IsMatchEncoreFail(prevWaza))
