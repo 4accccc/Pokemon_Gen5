@@ -561,6 +561,18 @@ sub_train_battle_win_clear:
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
   
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //通信マルチならば録画用サーバーVerチェック
+  IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
+    _BSUBWAY_TOOL( BSWSUB_COMM_CHK_BTLREC_VER, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == FALSE THEN //Ver差分で録画不可 録画済にする
+      _BSUBWAY_TOOL( BSWSUB_SET_BTLREC_FINISH_FLAG, TRUE, BSW_NULL, BSW_NULL )
+    ENDIF
+  ENDIF
+  
   //一寸間
   _TIME_WAIT( 40 )
   
@@ -577,9 +589,6 @@ sub_train_battle_win_clear:
       _CALL sub_common_btlrec_win
     ENDIF
   ENDIF
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //クリアした状況を反映
   _BSUBWAY_TOOL( BSWSUB_SET_CLEAR_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -940,13 +949,7 @@ sub_train_battle_win_next_menu_comm_multi:
 {
   DEFINE_LOCAL ret
   DEFINE_LOCAL loop
-  DEFINE_LOCAL play_mode
-  DEFINE_LOCAL multi_flag
   DEFINE_LOCAL rc_flag
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
   
   //メニュー表示前の同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_START, BSW_NULL, comm_ret )
@@ -954,6 +957,13 @@ sub_train_battle_win_next_menu_comm_multi:
   IF $comm_ret == FALSE THEN
     _CALL sub_common_retmap_comm_error //受付へ
     _RET
+  ENDIF
+
+  //録画用サーバーVerチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_BTLREC_VER, BSW_NULL, BSW_NULL, ret )
+  
+  IF $ret == FALSE THEN //Ver差分で録画不可 録画済にする
+    _BSUBWAY_TOOL( BSWSUB_SET_BTLREC_FINISH_FLAG, TRUE, BSW_NULL, BSW_NULL )
   ENDIF
   
   $loop = 1
@@ -1386,6 +1396,19 @@ _RET
 sub_common_retmap_lose_retire:
 {
   DEFINE_LOCAL ret
+  DEFINE_LOCAL play_mode
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //通信マルチならば録画用サーバーVerチェック
+  IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
+    _BSUBWAY_TOOL( BSWSUB_COMM_CHK_BTLREC_VER, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == FALSE THEN //Ver差分で録画不可 録画済にする
+      _BSUBWAY_TOOL( BSWSUB_SET_BTLREC_FINISH_FLAG, TRUE, BSW_NULL, BSW_NULL )
+    ENDIF
+  ENDIF
   
   //戦闘録画済みフラグ取得
   _BSUBWAY_TOOL( BSWSUB_GET_BTLREC_FINISH_FLAG, BSW_NULL, BSW_NULL, ret )

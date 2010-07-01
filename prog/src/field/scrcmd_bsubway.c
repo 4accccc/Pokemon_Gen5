@@ -1617,6 +1617,19 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       *ret_wk = TRUE;
     }
     break;
+  //通信対戦　戦闘録画時のバトルサーバーVerチェック
+  case BSWSUB_COMM_CHK_BTLREC_VER:
+    *ret_wk = FALSE;
+    
+    if( bsw_scr->btl_setup_param != NULL ){
+      if( BattleRec_ServerVersionCheck(
+            bsw_scr->btl_setup_param->commServerVer) == TRUE ){
+        *ret_wk = TRUE;
+      }
+    }else{
+      GF_ASSERT( 0 );
+    }
+    break;
   //----デバッグ
   //DEBUG 選択ポケモン強制セット
   case BSWSUB_DEBUG_SET_SELECT_POKE:
