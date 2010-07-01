@@ -169,6 +169,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     *seq = 3;
 #else
     *seq = 2;
+#endif
     break;
 
   case 2:		// デモ１
@@ -181,7 +182,6 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 			*seq = 4;   // タイトルへ
 		}
 		break;
-#endif
 
   case 3:		// デモ２
 		cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE2;

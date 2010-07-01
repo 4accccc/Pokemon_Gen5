@@ -340,6 +340,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 //----------------------------------------------------------------------------------
 static void _timewait_func( TITLE_WORK *tw )
 {
+#ifndef PLAYABLE_VERSION
   // 指定フレームに来ると上下画面が切り替わる
   if(tw->totalWait==TITLE_FLIP_WAIT){
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 3);
@@ -350,6 +351,7 @@ static void _timewait_func( TITLE_WORK *tw )
     GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_OFF );
     tw->scene_flag = 1;
   }
+#endif  //PLAYABLE_VERSION
   
   if(tw->scene_flag==2){
     if(ICA_ANIME_GetNowFrame( tw->CG3d.icaAnime )==POKE_LOOP_END_FRAME*FX32_ONE){
@@ -378,6 +380,7 @@ static void _timewait_func( TITLE_WORK *tw )
 //----------------------------------------------------------------------------------
 static void _key_check( TITLE_WORK *tw )
 {
+#ifndef PLAYABLE_VERSION
   if( GFL_UI_KEY_GetTrg() & LOOP_PART_MASK && tw->scene_flag==1){
     
     GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
@@ -392,6 +395,7 @@ static void _key_check( TITLE_WORK *tw )
     tw->scene_flag=2;
     return;
   }
+#endif  //PLAYABLE_VERSION
   // ゲーム開始
   if(  GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK){
     tw->mode = END_SELECT;
@@ -511,6 +515,10 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     GFL_FADE_SetMasterBrightReq
       (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
     tw->totalWait = 0;
+#ifdef PLAYABLE_VERSION
+    tw->scene_flag = 2;
+    setLegendPokeScene( &tw->CG3d, POKE_LOOP_PART_FRAME );
+#endif  //PLAYABLE_VERSION
     tw->seq = SEQ_FADEIN;
     PMSND_PlayBGM_WideChannel( SEQ_BGM_POKEMON_THEME );
 
@@ -1338,6 +1346,7 @@ static void setLegendPokeScene( G3D_CONTROL *CG3d, int anime_frame )
   int i;
   int anmFrm = anime_frame*FX32_ONE;
 
+  OS_Printf("setLegendPokeScene:%d\n", anime_frame );
   ICA_ANIME_SetAnimeFrame( CG3d->icaAnime, anmFrm );
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
   for(i=0;i<NELEMS(g3Dutil_objTbl); i++){
