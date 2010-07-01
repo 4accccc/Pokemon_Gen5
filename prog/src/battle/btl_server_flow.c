@@ -734,6 +734,7 @@ SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* c
 //  BTL_EVENT_ReOrderFactorsByPokeAgility( wk );
 
   #ifdef PM_DEBUG
+  if( !BTL_MAIN_IsRecordPlayMode(wk->mainModule) )
   {
     u16 key = GFL_UI_KEY_GetCont();
     if( (key&PAD_BUTTON_R) | (key&PAD_BUTTON_X) )
@@ -5836,7 +5837,8 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
     scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
   }
 
-  BTL_POKESET_SortByAgility( wk->psetDamaged, wk );
+//  BTL_POKESET_SortByAgility( wk->psetDamaged, wk );
+//  BTL_EVENT_ReOrderFactorsByPokeAgility( wk );
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum, fDelayAttack );
 
   if( fEffectPut ){
@@ -6987,6 +6989,7 @@ static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
       {
         damage_sum += damage;
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+hit_cnt, BPP_GetID(bpp) );
+        TAYA_Printf("HitRec [%d] PokeID=%d\n", hit_cnt, BPP_GetID(bpp));
         ++hit_cnt;
       }
     }
@@ -15330,7 +15333,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   if( BTL_TABLES_IsNeverChangeTokusei(prevTokusei) ){
     return 0;
   }
-  TAYA_Printf("pokeID=%d, HP=%d\n", param->pokeID, BPP_GetValue(bpp, BPP_HP));
+
   if( BPP_IsDead(bpp) ){
     return 0;
   }
