@@ -2280,9 +2280,15 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
   if(bHit){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
   }
-  
-  GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
-  
+
+  {
+    TOUCHBAR_WORK *bar = GTSNEGO_DISP_GetTouchWork(pWork->pDispWork);
+    //タッチバーで選択されていない場合、ボタンが反応する　20100701 add Saito
+    if ( !TOUCHBAR_IsDecide( bar ) ){
+      GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
+    }
+  }
+
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
   case TOUCHBAR_ICON_RETURN:
