@@ -354,6 +354,9 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
     MAPCHG_setupMapTools( gsys, fmw->loc_req.zone_id ); //新しいマップモードなど機能指定を行う
     MAPCHG_updateGameData( gsys, &fmw->loc_req ); //新しいマップID、初期位置をセット
 
+#ifdef  PLAYABLE_VERSION
+    GAMEBEACON_Setting( gamedata );   ///ビーコン配信情報をちゃんとセットアップする
+#endif
     (*seq)++;
     break;
 
