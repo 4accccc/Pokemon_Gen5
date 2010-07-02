@@ -520,7 +520,7 @@ sub_skillteacher_wasure_core:
     ENDIF
     
     _GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
-    _TEMOTI_MONS_NAME( 0, select_pos )
+    _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1 , waza_id )
     _WAZA_NAME( 2 , teach_waza_id )
     //"1　２　のポカン！"
