@@ -3677,11 +3677,11 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MetroNome( u32* numElems )
 static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  (BTL_TABLES_IsDelayAttackWaza(BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID)))
+  &&  (!BTL_TABLES_IsDelayAttackWaza(BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID)))
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 counter = BPP_GetWazaContCounter( bpp );
-    if( counter >= 1)
+    if( counter >= 1 )
     {
       WazaID  currentWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       WazaID  prevWaza = BPP_GetPrevWazaID( bpp );
