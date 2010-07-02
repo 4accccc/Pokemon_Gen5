@@ -380,8 +380,10 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
 
-    if(intcomm != NULL){
-      Intrude_SetIsBattleFlag(intcomm, FALSE);
+    //エラーが発生していてもフラグを戻す必要がある為
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
+        && GameCommSys_GetAppWork(game_comm) != NULL){
+      Intrude_SetIsBattleFlag(GameCommSys_GetAppWork(game_comm), FALSE);
     }
 
     if(talk->success == TRUE){
@@ -619,8 +621,10 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
-    if(intcomm != NULL){
-      Intrude_SetIsBattleFlag(intcomm, FALSE);
+    //エラーが発生していてもフラグを戻す必要がある為
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
+        && GameCommSys_GetAppWork(game_comm) != NULL){
+      Intrude_SetIsBattleFlag(GameCommSys_GetAppWork(game_comm), FALSE);
     }
     return GMEVENT_RES_FINISH;
   }

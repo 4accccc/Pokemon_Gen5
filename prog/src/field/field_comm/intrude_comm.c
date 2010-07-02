@@ -255,6 +255,9 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
       GameCommSys_ExitReq(intcomm->game_comm);
       return;
     }
+    else{
+      return; //バトル中だからNetExitしないがエラーは発生している為、ここでreturnする
+    }
   }
 
   //スリープに入ろうとしている場合は切断
@@ -584,17 +587,20 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       GAMEDATA_SetIntrudeNum(gamedata, 1);
     }
     
-    for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
-      GFL_STR_DeleteBuffer(intcomm->search_child[i]);
-    }
-    GFL_HEAP_FreeMemory(intcomm);
-    GFL_HEAP_FreeMemory(pwk);
     if((intcomm->error == TRUE || NetErr_App_CheckError()) 
         && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
       GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
     }
     
     GameCommInfo_QueAllClear(game_comm);
+
+    //全て完了後、ワーク解放
+    for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
+      GFL_STR_DeleteBuffer(intcomm->search_child[i]);
+    }
+    GFL_HEAP_FreeMemory(intcomm);
+    GFL_HEAP_FreeMemory(pwk);
+
     return TRUE;
   }
   return FALSE;
