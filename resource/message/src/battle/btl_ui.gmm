@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-07-02T18:49:28"/>
+	<create user="taya" host="W00146" date="2010-07-02T18:57:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -446,7 +446,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 すでに　せんとうに　でています！</language>
 		<language name="JPN_KANJI" width="216" line="100">[1:02:ポケモンニックネーム:0]は
-既に戦闘に出ています！</language>
+すでに　戦闘に出ています！</language>
 	</row>
 
 	<row id="BTLSTR_UI_WARN_SelectedPoke">
