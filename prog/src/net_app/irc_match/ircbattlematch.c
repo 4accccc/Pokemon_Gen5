@@ -2006,6 +2006,15 @@ static void _ircExitWaitNO(IRC_BATTLE_MATCH* pWork)
     aMsgBuff[0] = pWork->messageBackup;
     _msgWindowCreate(aMsgBuff, pWork);
   }
+
+  //リーダーで接続人数が1人以上のときのボタン作成　20100702 add Saito  BTS7242
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
+    if( pWork->musicalNum > 0 ){
+      _ReturnButtonStart(pWork,TRUE);
+      _CHANGE_STATE(pWork,_ircMatchWait);
+      return;
+    }
+  }
   
   _ReturnButtonStart(pWork,FALSE);
 
