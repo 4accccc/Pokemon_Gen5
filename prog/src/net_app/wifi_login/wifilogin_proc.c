@@ -203,6 +203,18 @@ static void _checkError( WIFILOGIN_WORK* pWork ); //シーケンス内で使用して下さい
 
 
 
+BOOL _keyTouchCheck(WIFILOGIN_WORK* pWork)
+{
+  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+    return TRUE;
+  }
+  if( pWork->dbw->bg != WIFILOGIN_BG_NORMAL ){
+    if(GFL_UI_TP_GetTrg()){
+      return TRUE;
+    }
+  }
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -388,7 +400,7 @@ static void _exitEnd2( WIFILOGIN_WORK* pWork)
   if( !WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+  if(_keyTouchCheck(pWork)){
     _CHANGE_STATE(pWork, _callbackFunciton);
   }
 }
@@ -433,7 +445,7 @@ static void _CheckAndEnd( WIFILOGIN_WORK *pWork )
     pWork->timer--;
     return;
   }
-  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+  if(_keyTouchCheck(pWork)){
     pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
     WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0011);
     _CHANGE_STATE(pWork, _exitExiting);
@@ -451,7 +463,7 @@ static void _CheckAndEnd( WIFILOGIN_WORK *pWork )
 
 static void _saveEndWait(WIFILOGIN_WORK* pWork)
 {
-  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+  if(_keyTouchCheck(pWork)){
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
     {
@@ -905,7 +917,7 @@ static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 	if(!WIPE_SYS_EndCheck()){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+  if(_keyTouchCheck(pWork)){
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     if(DS_SYSTEM_IsRunOnTwl()){
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwctwl_message_0006);
