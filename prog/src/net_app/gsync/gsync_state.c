@@ -1490,6 +1490,11 @@ static void _wakeupAction3(G_SYNC_WORK* pWork)
 
 static void _wakeupAction2(G_SYNC_WORK* pWork)
 {
+  if(pWork->zzzCount % _ZZZCOUNT==0){
+    PMSND_PlaySE(SEQ_SE_SYS_26);
+  }
+  pWork->zzzCount++;
+
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
@@ -1501,6 +1506,7 @@ static void _wakeupAction2(G_SYNC_WORK* pWork)
 
 static void _wakeupAction12(G_SYNC_WORK* pWork)
 {
+
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
@@ -1518,7 +1524,7 @@ static void _wakeupAction12(G_SYNC_WORK* pWork)
     }
   }
   
-  PMSND_PlaySE(SEQ_SE_SYS_26);
+ // PMSND_PlaySE(SEQ_SE_SYS_26);
 
   _CHANGE_STATE(_wakeupAction2);
 
