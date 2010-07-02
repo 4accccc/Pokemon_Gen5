@@ -2159,28 +2159,31 @@ static RET Guru2Subproc_GameOya( GURU2MAIN_WORK *g2m )
     g2m->seq_no = SEQNO_MAIN_GAME_END_INIT;
     return( RET_CONT );
   }
-  
-  if( g2m->comm.push_btn ){
-    if( EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
-      EggDiscJumpTcb_JumpSet( g2m );
-    }
-  }
-  
-  if( ret == FALSE && BtnAnmTcb_PushCheck(g2m) == FALSE ){
-    if( Guru2TP_ButtonHitTrgCheck(g2m) == TRUE ){
+
+  if( ret == FALSE )
+  {
+    if( g2m->comm.push_btn ){
       if( EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
-//        EggDiscJumpTcb_JumpSet( g2m );
-        g2m->comm.send_btn = TRUE;
+        EggDiscJumpTcb_JumpSet( g2m );
       }
-      
-      BtnAnmTcb_PushSet( g2m );
     }
-  }
-  
-  if( g2m->comm.send_btn ){
-    if( Guru2Comm_SendData(g2m->g2p->g2c,
-        G2COMM_GM_BTN,&g2m->comm.send_btn,1) == TRUE ){
-      g2m->comm.send_btn = 0;
+    
+    if( BtnAnmTcb_PushCheck(g2m) == FALSE ){
+      if( Guru2TP_ButtonHitTrgCheck(g2m) == TRUE ){
+        if( EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
+  //        EggDiscJumpTcb_JumpSet( g2m );
+          g2m->comm.send_btn = TRUE;
+        }
+        
+        BtnAnmTcb_PushSet( g2m );
+      }
+    }
+    
+    if( g2m->comm.send_btn ){
+      if( Guru2Comm_SendData(g2m->g2p->g2c,
+          G2COMM_GM_BTN,&g2m->comm.send_btn,1) == TRUE ){
+        g2m->comm.send_btn = 0;
+      }
     }
   }
   
@@ -2502,6 +2505,9 @@ static RET Guru2Subproc_ResultInit( GURU2MAIN_WORK *g2m )
 {
   int i,id;
   int no = g2m->front_eggact->play_no;
+
+  // ”O‚Ì‚½‚ß‹­§’…’n
+  g2m->comm.game_data.egg_joffs = 0;
 
   for( i = 0; i < g2m->comm.play_max; i++ ){
     id = g2m->egg.eact[no].comm_id;
