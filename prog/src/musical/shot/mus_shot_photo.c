@@ -73,6 +73,8 @@ typedef struct
 {
   BOOL startAnm;
   s16  scroll;
+  u16  monsno;
+  u16  form;
 }MUS_SHOT_DEBUGWORK;
 #endif
 
@@ -114,7 +116,6 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MUS_SHOT_PHOTO_ExitGraphic( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work );
-static void MUS_SHOT_PHOTO_SetupPokemonScale( MUS_SHOT_PHOTO_WORK *work , STA_POKE_WORK *pokeWork , const u32 monsNo );
 static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work );
 
 void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work );
@@ -474,7 +475,7 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
                                           FX32_CONST(128+32+64),
                                           FX32_CONST(128+32+128),
                                           FX32_CONST(128+32+192)};
-  VecFx32 pos = {FX32_CONST(64.0f),FX32_CONST(160.0f),FX32_CONST(170.0f)};
+  VecFx32 pos = {FX32_CONST(64.0f),FX32_CONST(155.0f),FX32_CONST(170.0f)};
   VecFx32 lightpos = {FX32_CONST(64.0f),FX32_CONST(128.0f),FX32_CONST(200.0f)};
   const fx32 XBase = FX32_CONST(256.0f/(MUSICAL_POKE_MAX+1));
   
@@ -544,7 +545,7 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
     else
     {
       pos.x = posXArr[i];
-      pos.y = FX32_CONST(160.0f);
+      pos.y = FX32_CONST(155.0f);
       pos.z = posZArr[i];
       STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
       lightpos.y = FX32_CONST(128.0f);
@@ -554,30 +555,8 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
     STA_LIGHT_SetPosition( work->lightSys , work->lightWork[i] , &lightpos );
     bit = bit<<1;
     
-    MUS_SHOT_PHOTO_SetupPokemonScale( work , work->pokeWork[i] , work->musPoke[i]->mcssParam.monsno );
   }
 
-}
-
-static void MUS_SHOT_PHOTO_SetupPokemonScale( MUS_SHOT_PHOTO_WORK *work , STA_POKE_WORK *pokeWork , const u32 monsNo )
-{
-  VecFx32 scale = {FX32_ONE,FX32_ONE,FX32_ONE};
-  if( monsNo == MONSNO_037 )//ロコン
-  {
-    scale.y = FX32_CONST(15.85f)/16;
-  }
-  else
-  if( monsNo == MONSNO_077 )//ポニータ
-  {
-    scale.y = FX32_CONST(15.85f)/16;
-  }
-  else
-  if( monsNo == MONSNO_359 )//アブソル
-  {
-    scale.y = FX32_CONST(15.90f)/16;
-  }
-  STA_POKE_SetScale( work->pokeSys , pokeWork , &scale );
-  
 }
 
 //--------------------------------------------------------------
@@ -655,6 +634,12 @@ static void MUS_SHOT_Debug_UpdateAnime( void* userWork , DEBUGWIN_ITEM* item );
 static void MUS_SHOT_Debug_DrawAnime( void* userWork , DEBUGWIN_ITEM* item );
 static void MUS_SHOT_Debug_UpdateScroll( void* userWork , DEBUGWIN_ITEM* item );
 static void MUS_SHOT_Debug_DrawScroll( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDU_Top( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDD_Top( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDU_MonsNo( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDD_MonsNo( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDU_Form( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDD_Form( void* userWork , DEBUGWIN_ITEM* item );
 
 void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work )
 {
@@ -667,9 +652,14 @@ void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work )
   DEBUGWIN_AddItemToGroupEx( MUS_SHOT_Debug_UpdateBgNo   ,MUS_SHOT_Debug_DrawBgNo   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MUS_SHOT_Debug_UpdateAnime  ,MUS_SHOT_Debug_DrawAnime   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MUS_SHOT_Debug_UpdateScroll  ,MUS_SHOT_Debug_DrawScroll   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MSDU_Top  ,MSDD_Top   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MSDU_MonsNo  ,MSDD_MonsNo   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MSDU_Form  ,MSDD_Form   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
 
   work->debWork.startAnm = FALSE;
   work->debWork.scroll = MUS_PHOTO_SCROLL_OFFSET;
+  work->debWork.monsno = 0;
+  work->debWork.form = 0;
 
 }
 
@@ -820,6 +810,144 @@ static void MUS_SHOT_Debug_DrawScroll( void* userWork , DEBUGWIN_ITEM* item )
   
 }
 
+static void MSDU_Top( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->shotData->spotBit < 15 )
+    {
+      work->shotData->spotBit++;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( work->shotData->spotBit > 0 )
+    {
+      work->shotData->spotBit--;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    if( work->shotData->spotBit == 0 )
+    {
+      work->shotData->spotBit = 15;
+    }
+    else
+    {
+      work->shotData->spotBit = 0;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MSDD_Top( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  const BOOL top1 = (work->shotData->spotBit&1);
+  const BOOL top2 = (work->shotData->spotBit&2);
+  const BOOL top3 = (work->shotData->spotBit&4);
+  const BOOL top4 = (work->shotData->spotBit&8);
+  DEBUGWIN_ITEM_SetNameV( item , "TopBit[%c%c%c%c]",(top1>0?'o':'x'),(top2>0?'o':'x'),(top3>0?'o':'x'),(top4>0?'o':'x') );
+}
+static void MSDU_MonsNo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  u16 val = 1;
+  
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){val = 10;}
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){val = 100;}
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->debWork.monsno +val <= 649 )
+    {
+      work->debWork.monsno += val;
+    }
+    else
+    {
+      work->debWork.monsno = 0;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( work->debWork.monsno < val )
+    {
+      work->debWork.monsno = 649;
+    }
+    else
+    {
+      work->debWork.monsno -= val;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    u8 i;
+    STA_POKE_ExitSystem( work->pokeSys );
+    MUS_POKE_DRAW_TermSystem( work->drawSys );
+    MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
+    STA_LIGHT_ExitSystem( work->lightSys );
+    
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      work->musPoke[i]->mcssParam.monsno = work->debWork.monsno;
+      work->musPoke[i]->mcssParam.form = work->debWork.form;
+    }
+    MUS_SHOT_PHOTO_SetupPokemon(work);
+  }
+  DEBUGWIN_UpdateFrame();
+}
+
+static void MSDD_MonsNo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Monsno[%d](A:Apply)",work->debWork.monsno );
+}
+
+static void MSDU_Form( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  u16 val = 1;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){val = 10;}
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){val = 100;}
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->debWork.form +val <= 27 )
+    {
+      work->debWork.form += val;
+    }
+    else
+    {
+      work->debWork.form = 0;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( work->debWork.form < val )
+    {
+      work->debWork.form = 27;
+    }
+    else
+    {
+      work->debWork.form -= val;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MSDD_Form( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Form[%d]",work->debWork.form );
+}
+
 
 #endif //MUS_PHOTO_USE_DEBUG
 
@@ -905,7 +1033,8 @@ static void MUS_SHOT_DebugPolyDraw( MUS_SHOT_PHOTO_WORK *work )
     G3_PopMtx(1);
     
   }
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
   {
     u8 i;
     static VecFx32 sScale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE*16};
