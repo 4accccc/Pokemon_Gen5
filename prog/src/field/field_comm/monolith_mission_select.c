@@ -268,7 +268,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Init(GFL_PROC * proc, int * seq
     _Msselect_PanelCreate(appwk, mmw);
     _Msselect_CancelIconCreate(appwk, mmw);
     mmw->act_town_cursor = MonolithTool_TownCursor_Create(
-      appwk->setup, &TownIconPosTbl[0], COMMON_RESOURCE_INDEX_DOWN);
+      appwk->setup, &TownIconPosTbl[appwk->common->mission_select_no], COMMON_RESOURCE_INDEX_DOWN);
     
     (*seq)++;
     break;
