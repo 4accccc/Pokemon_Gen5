@@ -1418,6 +1418,27 @@ static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk )
 //  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
+
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+
+enum {
+  ACTPRI_BIT_AGILITY = 13,
+  ACTPRI_BIT_SP      =  3,
+  ACTPRI_BIT_WAZA    =  6,
+  ACTPRI_BIT_ACT     =  3,
+
+  ACTPRI_BITMASK_AGILITY = ((1 << ACTPRI_BIT_AGILITY) - 1),
+  ACTPRI_BITMASK_SP      = ((1 << ACTPRI_BIT_SP) - 1),
+  ACTPRI_BITMASK_WAZA    = ((1 << ACTPRI_BIT_WAZA) - 1),
+  ACTPRI_BITMASK_ACT     = ((1 << ACTPRI_BIT_ACT) - 1),
+
+  ACTPRI_BITSHIFT_AGILITY = 0,
+  ACTPRI_BITSHIFT_SP      = ACTPRI_BIT_AGILITY,
+  ACTPRI_BITSHIFT_WAZA    = (ACTPRI_BITSHIFT_SP + ACTPRI_BIT_SP),
+  ACTPRI_BITSHIFT_ACT     = (ACTPRI_BITSHIFT_WAZA + ACTPRI_BIT_ACT),
+};
+
 static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
 {
   /*
@@ -1429,10 +1450,12 @@ static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
 
   return ( ((actPri&0x07)<<25) | ((wazaPri&0x3f)<<19) | ((spPri&0x07)<<16) | (agility&0xffff) );
 }
+
 static inline u32 ActPri_ChangeAgility( u32 defPriority, u16 agility )
 {
   return (defPriority & 0xffff0000) | agility;
 }
+
 static inline u32 ActPri_ChangeWazaPriority( u32 defPriority, u8 wazaPri )
 {
   u8 actPri = ActPri_GetActPri( defPriority );
@@ -1441,7 +1464,6 @@ static inline u32 ActPri_ChangeWazaPriority( u32 defPriority, u8 wazaPri )
 
   return ActPri_Make( actPri, wazaPri, spPri, agility );
 }
-
 
 static inline u8 ActPri_GetWazaPri( u32 priValue )
 {

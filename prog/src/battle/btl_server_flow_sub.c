@@ -55,6 +55,7 @@
 /*--------------------------------------------------------------------------*/
 static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, BTL_POKESET* rec );
+static BtlPokePos correctNoroiTypeChanged( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BtlPokePos atkPos, BtlPokePos targetPos );
 static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, BTL_POKESET* rec );
 static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
@@ -235,6 +236,30 @@ static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   }
 }
 /**
+ *  「のろい」を打とうとするポケモンが「へんしょく」などでタイプが変わった際に対象選択を補正する
+ */
+static BtlPokePos correctNoroiTypeChanged( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BtlPokePos atkPos, BtlPokePos targetPos )
+{
+  if( wazaParam->wazaID == WAZANO_NOROI )
+  {
+    // 自分以外の１体（選択）：ゴースト以外で使用 -> ゴーストに変更した場合をチェック
+    if( wazaParam->targetType == WAZA_TARGET_OTHER_SELECT )
+    {
+      if( (atkPos == targetPos) || (targetPos == BTL_POS_NULL) ){
+        targetPos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, attacker, WAZANO_NOROI );
+      }
+    }
+    // 自分のみ：ゴーストで使用 -> ゴースト以外に変更した場合をチェック
+    else if( wazaParam->targetType == WAZA_TARGET_USER )
+    {
+      if( atkPos != targetPos ){
+        targetPos = atkPos;
+      }
+    }
+  }
+  return targetPos;
+}
+/**
  *  ワザ対象格納：ダブル用
  */
 static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
@@ -243,6 +268,9 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
 
   BTL_POKEPARAM* bpp = NULL;
+
+  // 「のろい」ｘ「へんしょく」などで、途中で有効範囲と位置指定が食い違うことが起こりうるので補正
+  targetPos = correctNoroiTypeChanged( wk, wazaParam, attacker, atPos, targetPos );
 
   BTL_N_Printf( DBGSTR_SVFS_RegTargetDouble, wazaParam->targetType, BPP_GetID(attacker), targetPos);
 
@@ -330,6 +358,9 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   u32 i, cnt;
 
   BTL_POKEPARAM* bpp = NULL;
+
+  // 「のろい」ｘ「へんしょく」などで、途中で有効範囲と位置指定が食い違うことが起こりうるので補正
+  targetPos = correctNoroiTypeChanged( wk, wazaParam, attacker, atPos, targetPos );
 
   BTL_N_Printf( DBGSTR_SVFS_RegTargetDouble, wazaParam->targetType, BPP_GetID(attacker), targetPos);
 
