@@ -1681,6 +1681,7 @@ static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
   
+  PRINTSYS_QUE_Clear( printQue );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->msgWin) , 0xF );
   str = GFL_MSG_CreateString( msgHandle , msgId );
   PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->msgWin ) , 

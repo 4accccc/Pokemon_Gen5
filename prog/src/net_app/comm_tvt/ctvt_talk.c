@@ -805,30 +805,6 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     }
   }
 
-  //カメラエフェクト
-#if (defined(SDK_TWL))
-  if( talkWork->state <= CTS_TALKING &&
-      COMM_TVT_GetPause(work) == FALSE )
-  {
-    CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NONE );
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_SEPIA01 );
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_MONO );
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NEGATIVE );
-    }
-  }
-#endif
 
   return CTM_TALK;
 }
@@ -855,6 +831,31 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   {
     return;
   }
+
+  //カメラエフェクト
+#if (defined(SDK_TWL))
+  if( talkWork->state <= CTS_TALKING &&
+      COMM_TVT_GetPause(work) == FALSE )
+  {
+    CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NONE );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_SEPIA01 );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_MONO );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NEGATIVE );
+    }
+  }
+#endif
 
   //会話ボタン
   if( connectNum == 1 ||
@@ -1347,6 +1348,7 @@ static void CTVT_TALK_DispMessage( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWor
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
   STRBUF *str;
   
+  PRINTSYS_QUE_Clear( printQue );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->msgWin) , 0xF );
   str = GFL_MSG_CreateString( msgHandle , msgId );
   PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->msgWin ) , 
