@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-07-02T11:47:10"/>
+	<create user="ohno" host="W00141" date="2010-07-02T16:03:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -791,15 +791,18 @@
 	</row>
 
 	<row id="dwc_message_0018">
-		<comment>AgreeEULA</comment>
+		<comment>AgreeEULA 番号が直接書いてあるのは
+エラー関数がエラーを返さない為</comment>
 		<language name="JPN" font=" 1:small" width="216">りようきやく　に
 どういする　ひつようが　あります
 ほんたいせっていで　りようきやく　に
-どういして　ください</language>
+どういして　ください
+（50599）</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">利用規約に
 同意する　必要があります
 本体設定で　利用規約に
-同意して　ください</language>
+同意して　ください
+（50599）</language>
 	</row>
 
 	<row id="dwc_title_0000">
@@ -849,15 +852,18 @@
 	</row>
 
 	<row id="dwc_message_0021">
-		<comment>専用ウインドウ</comment>
+		<comment>専用ウインドウ
+番号が直接書いてあるのはエラーが帰らない為</comment>
 		<language name="JPN" font=" 1:small" width="216">ほんたいの　むせんつうしんが
 オフに　なっています
 ほんたいせっていで　むせんつうしんを
-オンに　してください</language>
+オンに　してください
+（50699）</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">本体の　無線通信が
 ＯＦＦになっています
 本体設定で　無線通信を
-ＯＮに　してください</language>
+ＯＮに　してください
+（50699）</language>
 	</row>
 
 	<row id="dwc_message_0022" back-color="#ffff80,,,,,,,,,,,,,,,,,">
