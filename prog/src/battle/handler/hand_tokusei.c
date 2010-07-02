@@ -6660,8 +6660,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Analyze( u32* numElems )
 static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // é©ï™Ç™çUåÇë§Ç≈
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (!BTL_TABLES_IsDelayAttackWaza( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID)))
+  ){
     // èáî‘ç≈å„Ç»ÇÁà–óÕëùâ¡
     if( HandCommon_IsPokeOrderLast(flowWk, pokeID) )
     {
