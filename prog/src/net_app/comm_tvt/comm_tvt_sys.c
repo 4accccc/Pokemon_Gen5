@@ -265,7 +265,8 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->nameWinUpdateBit = 0;
   
   //PMSND_FadeOutBGM( PMSND_FADE_FAST );
-  PMSND_ChangeBGMVolume( 0xFFFF , 0 );
+  //PMSND_ChangeBGMVolume( 0xFFFF , 0 );
+  PMSND_PlayBGM( SEQ_BGM_SILENCE_FIELD );
 
 }
 
