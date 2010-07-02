@@ -167,6 +167,7 @@ static const pBBagFunc MainSeqFunc[] = {
 void BattleBag_TaskAdd( BBAG_DATA * dat )
 {
   BBAG_WORK * wk;
+	u32 i;
 
   // シューターモードテスト
 //  dat->mode = BBAG_MODE_SHOOTER;
@@ -198,17 +199,20 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 		wk->poke_id = 0;
   }
 
-  {
-    u32 i;
-
+	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
     for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
       MYITEM_BattleBagCursorGet( wk->dat->bagcursor, i, &wk->dat->item_pos[i], &wk->dat->item_scr[i] );
     }
     wk->used_item = MYITEM_BattleBagLastItemGet( wk->dat->bagcursor );
     wk->used_poke = MYITEM_BattleBagLastPageGet( wk->dat->bagcursor );
-  }
 
-  BattleBag_UsedItemChack( wk );
+	  BattleBag_UsedItemChack( wk );
+  }else{
+    for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
+      wk->dat->item_pos[i] = 0;
+			wk->dat->item_scr[i] = 0;
+    }
+	}
 }
 
 //--------------------------------------------------------------------------------------------
