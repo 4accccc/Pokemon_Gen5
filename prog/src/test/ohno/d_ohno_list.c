@@ -94,7 +94,7 @@ typedef struct {
   int trialType;
   /// ƒ|ƒPƒ‚ƒ“”Ô†
   int pokeNo;
-  
+  int form;
 
 }D_OHNO_WORK;
 
@@ -545,11 +545,13 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
       if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0030){
         GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0030, wk->strbufEx);
         WORDSET_RegisterNumber(wk->pWordSet, 0, wk->pokeNo, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+        WORDSET_RegisterNumber(wk->pWordSet, 1, wk->form, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
         WORDSET_ExpandStr( wk->pWordSet, wk->strbuf[i], wk->strbufEx  );
       }
       else if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0029){
         GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0029, wk->strbufEx);
         WORDSET_RegisterNumber(wk->pWordSet, 0, wk->pokeNo, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+        WORDSET_RegisterNumber(wk->pWordSet, 1, wk->form, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
         WORDSET_ExpandStr( wk->pWordSet, wk->strbuf[i], wk->strbufEx  );
       }
       else if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0026){
@@ -621,6 +623,15 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
         }
         wk->seq = 0;
         break;
+
+      case PAD_BUTTON_X:
+        wk->form++;
+        wk->seq = 0;
+        break;
+      case PAD_BUTTON_Y:
+        wk->form--;
+        wk->seq = 0;
+        break;
       }
 
       if(before_cursor != wk->cursor_y){
@@ -658,12 +669,15 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
   if(wk->pokeNo!=0){
     pWork->pMyPoke = PP_Create(wk->pokeNo, 100, 123456, GFL_HEAPID_APP);
     pWork->pNPCPoke = PP_Create(wk->pokeNo, 100, 123456, GFL_HEAPID_APP);
+    PP_Put(pWork->pMyPoke, ID_PARA_form_no, wk->form);
+    PP_Put(pWork->pNPCPoke, ID_PARA_form_no, wk->form);
   }
   else{
     pWork->pMyPoke = PP_Create(MONSNO_162, 100, 123456, GFL_HEAPID_APP);
     pWork->pNPCPoke = PP_Create(MONSNO_310, 100, 123456, GFL_HEAPID_APP);
   }
 
+  
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
   pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
   GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
