@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:56:55"/>
+	<create user="matsumiya" host="W00224" date="2010-07-02T11:38:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -345,7 +345,7 @@
 きせつをも　ちょうえつする▽
 きせきの　くうちょうシステムを▽
 かいはつ　どうにゅう　したんです！▼</language>
-		<language name="JPN_KANJI" width="256">我々は　季節に　寄る
+		<language name="JPN_KANJI" width="256">我々は　季節に　よる
 自然の　様々な　変化を▽
 研究しています▼
 このあたりに　[1:01:ポケモン種族名:0]
@@ -557,12 +557,12 @@ assistantm3_11</comment>
 助手♂</attribute>
 		<language name="JPN" width="256">ありがとうございます！▼
 ですが　そのきせつの　すがたの
-[1:01:ポケモン種族名:0]は　すでに▽
-つかまえてますよ</language>
+[1:01:ポケモン種族名:0]は▽
+すでに　つかまえてますよ</language>
 		<language name="JPN_KANJI" width="256">ありがとうございます！▼
 ですが　その季節の　姿の
-[1:01:ポケモン種族名:0]は　すでに▽
-捕まえていますよ</language>
+[1:01:ポケモン種族名:0]は▽
+すでに　捕まえていますよ</language>
 	</row>
 
 	<row id="msg_r06r0101_assistantm3_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -606,7 +606,7 @@ assistantm3_11</comment>
 捕まえることが　できました▼
 これで　ポケモンと　季節や
 気候の　関係を　じっくり▽
-研究　することができます▼
+研究することが　できます▼
 ありがとう　ございました▼
 大したものでは　ありませんが
 受け取ってください▼</language>
@@ -750,7 +750,7 @@ GRID X=7 Y=３に配置</comment>
 おおきな　はっぱで　いっぱいだ！</language>
 		<language name="JPN_KANJI" width="256">ガラスに　触ると　少し　熱い▼
 ケースの　中は　植物の
-大きな　葉っぱ　いっぱいだ！</language>
+大きな　葉っぱで　いっぱいだ！</language>
 	</row>
 
 	<row id="msg_r06r0101_heatgauge_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
