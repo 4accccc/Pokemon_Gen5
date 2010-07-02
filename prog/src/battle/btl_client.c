@@ -4012,7 +4012,7 @@ static BtlRotateDir RotAI_CheckRotation( BTL_CLIENT* wk )
   u32 i, cnt, r;
 
   dirAry[ 0 ] = BTL_ROTATEDIR_STAY;
-  cnt = 0;
+  cnt = 1;
 
   i = BTL_MAINUTIL_GetRotateInPosIdx( BTL_ROTATEDIR_R );
   bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
