@@ -217,7 +217,7 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     break;
   case SEQ_FINISH:
     if(ibs->overlay_load_battle == TRUE){
-      if(GFL_NET_IsInit() == TRUE && NetErr_App_CheckError() == NET_ERR_STATUS_NULL){
+      if(GFL_NET_IsInit() == TRUE){
         GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
       }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
