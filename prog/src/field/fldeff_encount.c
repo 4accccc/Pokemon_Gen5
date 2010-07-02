@@ -50,6 +50,12 @@ typedef struct _EFFRES_DATA{
   u16 anm_tbl[ENCOUNT_ANMRES_MAX];
 }EFFRES_DATA;
 
+typedef struct _EFFECT_OBJ{
+  GFL_G3D_OBJ *obj;
+  GFL_G3D_ANM *obj_anm[ENCOUNT_ANMRES_MAX];
+  GFL_G3D_RND *obj_rnd;
+}EFFECT_OBJ;
+
 //--------------------------------------------------------------
 ///	FLDEFF_ENCOUNT構造体
 //--------------------------------------------------------------
@@ -59,6 +65,7 @@ struct _TAG_FLDEFF_ENCOUNT
   FLDEFF_ENC_ID eff_id;
   GFL_G3D_RES *g3d_res_mdl[ENCOUNT_IMDRES_MAX];
   GFL_G3D_RES *g3d_res_anm[ENCOUNT_ANMRES_MAX];
+  EFFECT_OBJ  g3d_obj[ENCOUNT_IMDRES_MAX];
 
   EFFRES_DATA data;
 };
@@ -89,9 +96,11 @@ typedef struct
   TASKHEADER_ENCOUNT head;
   MMDL_CHECKSAME_DATA samedata;
 
+#if 0
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *obj_anm[ENCOUNT_ANMRES_MAX];
   GFL_G3D_RND *obj_rnd;
+#endif
 
   FIELD_ENCOUNT* fld_enc;
 }TASKWORK_ENCOUNT;
@@ -303,6 +312,36 @@ static void enc_InitResource( FLDEFF_ENCOUNT* enc, FLDEFF_ENC_ID eff_id )
   }
 }
 
+static void enc_CreateObject( EFFECT_OBJ* obj, FLDEFF_ENCOUNT* enc, u8 ptn_id )
+{
+  int i;
+
+  obj->obj_rnd =
+    GFL_G3D_RENDER_Create( enc->g3d_res_mdl[ptn_id], 0, enc->g3d_res_mdl[ptn_id] );
+
+  for(i = 0;i < enc->data.anm_num;i++){
+    obj->obj_anm[i] =
+    GFL_G3D_ANIME_Create( obj->obj_rnd, enc->g3d_res_anm[i+ptn_id*enc->data.anm_num], 0 );
+  }
+  
+  obj->obj = GFL_G3D_OBJECT_Create( obj->obj_rnd, obj->obj_anm, enc->data.anm_num );
+
+  for(i = 0;i < enc->data.anm_num;i++){
+    GFL_G3D_OBJECT_EnableAnime( obj->obj, i );
+  }
+}
+
+static void enc_DeleteObject( EFFECT_OBJ* obj, FLDEFF_ENCOUNT* enc )
+{
+  int i;
+
+  for( i = 0;i < enc->data.anm_num; i++){
+    GFL_G3D_ANIME_Delete( obj->obj_anm[i] );
+  }
+  GFL_G3D_OBJECT_Delete( obj->obj );
+	GFL_G3D_RENDER_Delete( obj->obj_rnd );
+}
+
 /*
  *  @brief  短い草用リソース初期化
  *
@@ -321,19 +360,22 @@ static void enc_InitResourceSGrass( FLDEFF_ENCOUNT* enc, EFFRES_DATA* data, ARCH
   ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[0] );
   GF_ASSERT( ret );
   enc->g3d_res_anm[0]	= GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[0]+ofs );
-  
+  enc_CreateObject( &enc->g3d_obj[0], enc, 0 );
+ 
   //豪雪地帯
   ofs += data->unit_num;
   enc->g3d_res_mdl[1] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id+ofs );
   ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[1] );
   GF_ASSERT( ret );
   enc->g3d_res_anm[1]	= GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[0]+ofs );
+  enc_CreateObject( &enc->g3d_obj[1], enc, 1 );
 
   //通年春
   enc->g3d_res_mdl[2] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id );
   ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[2] );
   GF_ASSERT( ret );
   enc->g3d_res_anm[2]	= GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[0] );
+  enc_CreateObject( &enc->g3d_obj[2], enc, 2 );
 }
 
 /*
@@ -361,26 +403,8 @@ static void enc_InitResourceNormal( FLDEFF_ENCOUNT* enc, EFFRES_DATA* data, ARCH
       enc->g3d_res_anm[j+i*data->anm_num]	=
         GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[j]+data_ofs );
     }
+    enc_CreateObject( &enc->g3d_obj[i], enc, i );
   }
-#if 0
-  int i,ofs = 0;
-  BOOL ret;
-  
-  if( data->season_f ){
-    ofs = FLDEFF_CTRL_GetSeasonID( enc->fectrl );
-  }else if( data->inout_f ){
-    ofs = FLDEFF_CTRL_GetAreaInOutSwitch( enc->fectrl );
-  }
-
-  enc->g3d_res_mdl[0] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id+ofs );
-  ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[0] );
-  GF_ASSERT( ret );
-  
-  for(i = 0;i < data->anm_num;i++){
-    enc->g3d_res_anm[i]	=
-      GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[i]+ofs );
-  }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -393,6 +417,10 @@ static void enc_InitResourceNormal( FLDEFF_ENCOUNT* enc, EFFRES_DATA* data, ARCH
 static void enc_DeleteResource( FLDEFF_ENCOUNT* enc ) 
 {
   int i;
+  
+  for(i = 0;i < enc->data.ptn_num;i++){
+    enc_DeleteObject( &enc->g3d_obj[i], enc );
+  }
 
   for(i = 0;i < enc->data.anm_num*enc->data.ptn_num;i++){
  	  GFL_G3D_DeleteResource( enc->g3d_res_anm[i] );
@@ -427,6 +455,10 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FIELD_ENCOUNT* fld_enc, FLDEFF_CTRL *fect
 
   eff_id = DATA_EncEffType2EffectID[type];
   enc = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_ENC_SGRASS+eff_id );
+
+  if( enc == NULL ){
+    return NULL;
+  }
 
   MI_CpuClear8( &head, sizeof(TASKHEADER_ENCOUNT));
   head.fld_enc = fld_enc;
@@ -493,7 +525,8 @@ static void encountTask_Init( FLDEFF_TASK *task, void *wk )
   enc = work->head.eff_enc;
 
   FLDEFF_TASK_SetPos( task, &head->pos );
-  
+ 
+#if 0
   work->obj_rnd =
     GFL_G3D_RENDER_Create( enc->g3d_res_mdl[work->head.ptn_id], 0, enc->g3d_res_mdl[work->head.ptn_id] );
   
@@ -511,7 +544,8 @@ static void encountTask_Init( FLDEFF_TASK *task, void *wk )
       GFL_G3D_OBJECT_EnableAnime( work->obj, i );
     }
   }
-  
+#endif
+
   if( FLDEFF_TASK_GetAddParam(task) == FALSE ){ //アニメ無し
     work->seq_no = 1;
   }
@@ -532,12 +566,14 @@ static void encountTask_Delete( FLDEFF_TASK *task, void *wk )
   int i;
   TASKWORK_ENCOUNT *work = wk;
   FLDEFF_ENCOUNT* enc = work->head.eff_enc;
- 
+
+#if 0 
   for( i = 0;i < enc->data.anm_num; i++){
     GFL_G3D_ANIME_Delete( work->obj_anm[i] );
   }
   GFL_G3D_OBJECT_Delete( work->obj );
 	GFL_G3D_RENDER_Delete( work->obj_rnd );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -557,41 +593,29 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
   if(!FIELDMAP_IsReady( FLDEFF_CTRL_GetFieldMapWork( enc->fectrl ) )){
     return;
   }
-#if 0
-  if( work->anm_pause_f ||
-      MMDLSYS_GetPauseMoveFlag(work->head.mmdl_sys)){
-    return;
-  }
-#else
   if( work->anm_pause_f ){
     return;
   }
-#endif
+  
   sub_PlaySE( work, enc );
   
   for( i = 0;i < enc->data.anm_num; i++){
-    GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_ONE );
+//    GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_ONE );
+    GFL_G3D_OBJECT_LoopAnimeFrame( enc->g3d_obj[work->head.ptn_id].obj, i, FX32_ONE );
   }
-  /*
-  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-    FLDEFF_TASK_CallDelete( task );
-  }
-  */
 }
 
 static void sub_PlaySE( TASKWORK_ENCOUNT* work, FLDEFF_ENCOUNT* enc )
 {
   int frame;
   u16 dis = 0;
-//  FIELDMAP_WORK* fieldWork;
   static const u8 volume_tbl[] = { 127, 90, 60, 40 };
- 	  
-  GFL_G3D_OBJECT_GetAnimeFrame( work->obj, 0, &frame );
+ 
+//  GFL_G3D_OBJECT_GetAnimeFrame( work->obj, 0, &frame );
+  GFL_G3D_OBJECT_GetAnimeFrame( enc->g3d_obj[work->head.ptn_id].obj, 0, &frame );
   if(frame != 0){
     return;
   }
-
-//  fieldWork = FLDEFF_CTRL_GetFieldMapWork( enc->fectrl );
 
   if( EFFECT_ENC_GetDistanceToPlayer( work->fld_enc, &dis) == FALSE ){
     return;
@@ -616,10 +640,12 @@ static void encountTask_Draw( FLDEFF_TASK *task, void *wk )
   VecFx32 pos;
   TASKWORK_ENCOUNT *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
+  FLDEFF_ENCOUNT* enc = work->head.eff_enc;
   
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+//  GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+  GFL_G3D_DRAW_DrawObjectCullingON( enc->g3d_obj[work->head.ptn_id].obj, &status );
 }
 
 //--------------------------------------------------------------

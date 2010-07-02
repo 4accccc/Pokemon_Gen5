@@ -616,6 +616,9 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 #ifdef PM_DEBUG
   //エフェクト出現位置デバッグ調整
   attr = debug_EffectPosAdjust( enc, eff_wk, &ewk->effect_encount, idx);
+  if( attr == NULL ){
+    return;
+  }
 #endif
 
   attr->gy = SIZE_GRID_FX32( attr->height );
@@ -725,6 +728,12 @@ static void effect_AddFieldEffect( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, E
     return;
   }
   eff_wk->eff_task = FLDEFF_ENCOUNT_SetEffect( enc, eff_wk->fectrl, ep->gx, ep->gz, ep->height, ep->type );
+
+  if( eff_wk->eff_task == NULL ){
+    GF_ASSERT(0);
+    MI_CpuClear8( ep, sizeof(EFFENC_PARAM));
+    return;
+  }
   IWASAWA_Printf(" EffectAdd( %d, %d, h = 0x%08x) type=%d <0x%08x\n",ep->gx, ep->gz, ep->height, ep->type,eff_wk->eff_task );
 }
 
@@ -918,7 +927,11 @@ static EFFENC_ATTR_POS* debug_EffectPosAdjust( FIELD_ENCOUNT*enc, EFFECT_ENCOUNT
     }
     return &eff_wk->attr_map.attr[i];
   }
+#ifdef DEBUG_ONLY_FOR_iwasawa
+  return NULL;
+#else
   return &eff_wk->attr_map.attr[org_idx];
+#endif
 }
 
 #endif  //PM_DEBUG
