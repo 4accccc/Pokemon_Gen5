@@ -44,7 +44,7 @@ enum{
   LV_POS_SPACE_X = POKEICON_POS_SPACE_X,
   LV_POS_Y = 4*8,
   
-  SEX_POS_X = 4*8,
+  SEX_POS_X = 4*8-1,
   SEX_POS_SPACE_X = POKEICON_POS_SPACE_X,
   SEX_POS_Y = 2*8,
   
