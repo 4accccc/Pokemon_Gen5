@@ -125,7 +125,10 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   #endif
     }
   }
-  MB_DATA_InitCardSystem( dataWork );
+  if( dataWork->cardType != CARD_TYPE_INVALID )
+  {
+    MB_DATA_InitCardSystem( dataWork );
+  }
   
   return dataWork;
 }

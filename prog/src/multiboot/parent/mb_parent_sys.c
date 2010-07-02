@@ -62,7 +62,7 @@
 
 #define MB_PARENT_PLT_MAIN_BG  (0)
 
-#define MB_PARENT_FIRST_TIMEOUT (60*15) //’Êí5•bˆÈ“à‚ÅÚ‘±‚·‚é‚Ì‚ª‚Å‚«‚È‚©‚Á‚½B
+#define MB_PARENT_FIRST_TIMEOUT (60*30) //’Êí5•bˆÈ“à‚ÅÚ‘±‚·‚é‚Ì‚ª‚Å‚«‚È‚©‚Á‚½B
 
 
 #define MP_PARENT_DEB (defined(PM_DEBUG))

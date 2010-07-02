@@ -45,7 +45,7 @@
 #define MB_CHILD_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_CHILD_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
-#define MB_CHILD_FIRST_TIMEOUT (60*15) //通常5秒以内で接続するのができなかった。
+#define MB_CHILD_FIRST_TIMEOUT (60*30) //通常5秒以内で接続するのができなかった。
 
 //======================================================================
 //	enum
@@ -369,7 +369,10 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
   
   case MCS_WAIT_CONNECT:
-    work->timeoutCnt++;
+    if( MB_COMM_IsSendEnable( work->commWork ) == FALSE )
+    {
+      work->timeoutCnt++;
+    }
     if( work->timeoutCnt >= MB_CHILD_FIRST_TIMEOUT )
     {
       //初期接続タイムアウト
