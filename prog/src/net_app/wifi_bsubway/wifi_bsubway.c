@@ -822,7 +822,11 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
 
   // Logout処理
   case BSUBWAY_SEQ_LOGOUT:     
-    LOGOUT_StartProc( p_wk );
+    //エラー表示
+    if( NetErr_DispCall( FALSE ) == FALSE ){
+      // エラー表示がなければLOGOUT
+      LOGOUT_StartProc( p_wk );
+    }
     (*p_seq)++;
     break;
 
@@ -2871,8 +2875,6 @@ static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
   {
     
     // 終了へ
-    //エラー表示
-    NetErr_DispCall( FALSE );
     return FALSE;
   }
 
