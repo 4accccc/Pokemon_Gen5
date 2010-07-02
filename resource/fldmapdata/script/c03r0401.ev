@@ -217,21 +217,15 @@ _RET
 
 add_zoroa:
   DEFINE_LOCAL temoti
-  DEFINE_LOCAL box
   DEFINE_LOCAL add_ok
   DEFINE_LOCAL loop
   DEFINE_LOCAL ret_item
 
   //手持ちの空き数を取得
   _GET_PARTY_POKE_COUNT( temoti, POKECOUNT_MODE_EMPTY )
-  //ボックスの空き数を取得
-  _GET_BOX_POKE_COUNT( box, POKECOUNT_MODE_EMPTY )
 
   $add_ok = FALSE
   IF $temoti != 0 THEN
-    $add_ok = TRUE
-  ENDIF
-  IF $box != 0 THEN
     $add_ok = TRUE
   ENDIF
 
@@ -301,26 +295,36 @@ add_zoroa:
       IF $SCWK_ANSWER == TRUE THEN                            //ボールを選択した
       {
         DEFINE_LOCAL get_msg
+        DEFINE_LOCAL last_idx
         //ゾロアをボールに入れて自機の場所へ
         _CALL zoroa_ball_in
-
         //ME
         _ME_PLAY( SEQ_ME_POKEGET )
 
-        IF $temoti != 0 THEN        //手持ち
-          //ゾロア　Ｌｖ10　特性不問　オス　レア禁止　アイテムなし
-          _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_ZOROA, 0, 10, SCR_TOKUSEI_SPEC_BOTH, SCR_SEX_SPEC_MALE, SCR_RARE_SPEC_FALSE, 0, ret_item )
-          $get_msg = msg_c03r0401_narrator_02
-        ELSE                        //ボックス
-          //ゾロア　Ｌｖ10　特性不問　オス　レア禁止　アイテムなし
-          _ADD_POKEMON_TO_BOX_EX( SCWK_ANSWER, MONSNO_ZOROA, 0, 10, SCR_TOKUSEI_SPEC_BOTH, SCR_SEX_SPEC_MALE, SCR_RARE_SPEC_FALSE, 0, ret_item )
-          $get_msg = msg_c03r0401_narrator_03
-        ENDIF
+        //手持ちの末尾インデックスを取得
+        _GET_PARTY_POKE_COUNT (last_idx, POKECOUNT_MODE_TOTAL)
+
+        //ゾロア　Ｌｖ10　特性不問　オス　レア禁止　アイテムなし
+        _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_ZOROA, 0, 10, SCR_TOKUSEI_SPEC_BOTH, SCR_SEX_SPEC_MALE, SCR_RARE_SPEC_FALSE, 0, ret_item )
+        $get_msg = msg_c03r0401_narrator_02
 
         _SYSWIN_MSG( get_msg, POS_DOWN )
         _ME_WAIT()
         _AB_KEYWAIT_MARK()
-        _SYSWIN_CLOSE()
+
+        {
+          DEFINE_LOCAL name     //名前付けるか？
+          DEFINE_LOCAL ret_wk   //名前入力結果が格納される変数　値は使用しない。受け渡しのために使用
+          //「名前をつけますか？」
+			    _SYSWIN_MSG(msg_c03r0401_narrator_05, POS_DEFAULT )
+          _YES_NO_WIN( name )
+          _SYSWIN_CLOSE()
+          IF $name == 0 THEN      //名前付ける
+            //名前入力画面呼び出し
+				    _PARTY_POKE_NAME_INPUT(ret_wk, last_idx, TRUE)
+          ENDIF
+        }
+
         //「よかったね」
         _BALLOONWIN_OBJMSG( msg_c03r0401_girl1_09 ,C03R0401_GIRL1_01  )
         _BALLOONWIN_CLOSE()
