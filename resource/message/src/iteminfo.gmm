@@ -3136,9 +3136,9 @@
 		<language name="JPN" width="256">５ターンの　あいだ　あられを
 ふらして　こおりタイプ　いがいの
 ポケモンに　ダメージを　あたえる。</language>
-		<language name="JPN_KANJI" width="256">５ターンの　あいだ　あられを　降らして
-こおりタイプで　ない　ポケモン
-全員に　ダメージを　与える。</language>
+		<language name="JPN_KANJI" width="256">５ターンの　あいだ　あられを
+降らして　こおりタイプ　以外の
+ポケモンに　ダメージを　与える。</language>
 	</row>
 
 	<row id="ITEMINFO_335">
@@ -3263,8 +3263,8 @@
 こうげきする。　なついて　いないほど
 いりょくは　あがる。</language>
 		<language name="JPN_KANJI" width="256">不満を　はらすため　全力で
-相手を　攻撃する。
-なついていないほど　威力は　あがる。</language>
+攻撃する。　なついて　いないほど
+威力は　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_349">
@@ -3317,8 +3317,8 @@
 こうげきする。　なついて　いるほど
 いりょくは　あがる。</language>
 		<language name="JPN_KANJI" width="256">トレーナーの　ために　全力で
-相手を　攻撃する。
-なついているほど　威力は　あがる。</language>
+攻撃する。　なついて　いるほど
+威力は　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_355">
@@ -3865,9 +3865,9 @@
 		<language name="JPN" width="256">くちばしで　こうげきする。
 あいてが　きのみを　もっているとき
 ついばんで　こうかを　うけられる。</language>
-		<language name="JPN_KANJI" width="256">くちばしで　攻撃。
+		<language name="JPN_KANJI" width="256">くちばしで　攻撃する。
 相手が　きのみを　持っているとき
-食べて　きのみの　効果を　受けられる。</language>
+ついばんで　効果を　受けられる。</language>
 	</row>
 
 	<row id="ITEMINFO_416">
@@ -3921,7 +3921,7 @@
 しっているまちに　いどうも　できる。</language>
 		<language name="JPN_KANJI" width="256">１ターン目で　空へ　飛び
 ２ターン目に　相手を　攻撃する。
-知っている　街に　飛ぶことも　できる。</language>
+知っている　街に　移動も　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_422">
