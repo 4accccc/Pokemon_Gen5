@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-07-02T16:05:56"/>
+	<create user="matsumiya" host="W00224" date="2010-07-02T17:14:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1702,7 +1702,7 @@
 	<row id="BTL_STRID_STD_Sabotage2">
 		<comment>命令無視２</comment>
 		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　なまけている！</language>
-		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　怠けている！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　なまけている！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Sabotage3">
