@@ -489,7 +489,21 @@ sub_wifi_gts:
     CASE SEQ_SUB_GTS_EXIT THEN
       $reg_return = SEQ_GOODBYE
       $i_loop = FALSE
+
+/*
+    @todo 100702 by iwasawa
+
+    スクリプトの流れ的には、ここが必要。
+    だが、
     
+    BTS7348の対処として _FIELD_COMM_EXIT_EVENT_CALL()が戻り値として
+    SCR_FIELD_COMM_EXIT_ERRORを返さなくなったため、実質必要なくなった
+    時期的にバイナリを変更したくないため、コード的に見栄えは悪いが未対処とする
+
+    CASE SEQ_SUB_GTS_RETRY THEN
+      $reg_return = SEQ_RETRY
+      $i_loop = FALSE
+*/    
     CASE SEQ_SUB_GTS_END THEN
       $reg_return = SEQ_THROW_EXIT
       $i_loop = FALSE
@@ -694,6 +708,16 @@ sub_gts_normal_exchange:
     $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
     _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+    /*
+      @todo 100702 by iwasawa
+
+      最終的な戻り先の sub_wifi_gts()がSEQ_SUB_GTS_RETRYをキャッチしないので
+      この分岐にきた場合、無限ループでハマる。
+      だが、
+      BTS7348の対処として _FIELD_COMM_EXIT_EVENT_CALL()が戻り値として
+      SCR_FIELD_COMM_EXIT_ERRORを返さなくなったため、実質この分岐は必要なくなった。
+      時期的にバイナリを変更したくないため、コード的に見栄えは悪いが未対処とする
+    */    
     $reg_return = SEQ_SUB_GTS_NORMAL_RETRY
     _RET
   ENDIF
@@ -865,6 +889,16 @@ sub_gts_nego_exchange:
     $reg_return = SEQ_SUB_GTS_NEGO_EXIT
     _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+    /*
+      @todo 100702 by iwasawa
+
+      最終的な戻り先の sub_wifi_gts()がSEQ_SUB_GTS_RETRYをキャッチしないので
+      この分岐にきた場合、無限ループでハマる。
+      だが、
+      BTS7348の対処として _FIELD_COMM_EXIT_EVENT_CALL()が戻り値として
+      SCR_FIELD_COMM_EXIT_ERRORを返さなくなったため、実質この分岐は必要なくなった。
+      時期的にバイナリを変更したくないため、コード的に見栄えは悪いが未対処とする
+    */    
     $reg_return = SEQ_SUB_GTS_NEGO_RETRY
     _RET
   ENDIF
