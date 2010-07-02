@@ -546,6 +546,8 @@ static void _removeCallback(void* pW)
     PokeParty_Copy(pWork->aBackup.pPokeParty, pWork->pMyParty );
     //プレイタイムも間借り
     PLAYTIME_SetSaveDate( GAMEDATA_GetPlayTimeWork(pWork->pGameData), &pWork->aBackup.date );
+    GFL_HEAP_FreeMemory(pWork->aBackup.pPokeParty);
+    pWork->aBackup.pPokeParty=NULL;
   }
   if(pWork->aBackup.pBoxTray){
     GFL_STD_MemCopy(pWork->aBackup.pBoxTray,
