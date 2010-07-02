@@ -5363,7 +5363,8 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
 
       if( result == BTL_RESULT_WIN )
       {
-        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
+        //PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
+        BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
       }
       if( (result == BTL_RESULT_WIN) || (result == BTL_RESULT_LOSE) ){
         TrainerGraphicIn( wk, 0 );
