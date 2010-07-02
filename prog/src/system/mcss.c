@@ -766,7 +766,7 @@ static	void	MCSS_DrawAct(
 				   mcss->mcss_palette_proxy.fmt);
 	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
                   GX_POLYGONMODE_MODULATE,	// modulation mode
-                  GX_CULL_BACK,		    			// cull back
+                  GX_CULL_NONE,		    			// cull back
                   polyID,        						// polygon ID(0 - 63)
                   mcss->alpha,	       			// alpha(0 - 31)
                   GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
@@ -824,7 +824,7 @@ static	void	MCSS_DrawAct(
    	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN], shadow_palette->fmt);
   	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
         				    GX_POLYGONMODE_MODULATE,	// modulation mode
-        				    GX_CULL_BACK,					    // cull back
+        				    GX_CULL_NONE,					    // cull back
         				    1,								        // polygon ID(0 - 63)
         				    shadow_alpha,             // alpha(0 - 31)
         				    GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
