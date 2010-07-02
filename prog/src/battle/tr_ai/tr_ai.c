@@ -33,7 +33,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 //#define POINT_VIEW
-//#define AI_SEQ_PRINT
+#define AI_SEQ_PRINT
 #endif
 #endif
 
@@ -45,6 +45,8 @@
 #define TR_AI_WAZATBL_MAX ( 48 )
 #define TR_AI_SEQ_COUNT   ( 4 ) //命令をいくつ実行したら、制御を返すかを指定
 #define TR_AI_SEQ_TICK    ( 500 )
+
+#define TR_AI_NO_SEQUENCE ( 0xff )
 
 //=========================================================================
 //  AI用の構造体宣言
@@ -135,6 +137,15 @@ typedef enum{
   COND_OR_UNDER,    //<=
   COND_OR_OVER,     //>=
 }BranchCond;
+
+typedef struct
+{ 
+  u8    tr_ai[ BTL_CLIENT_MAX ];
+  u8    tr_ai_use[ BTL_CLIENT_MAX ];
+  void* tr_ai_sequence[ BTL_CLIENT_MAX ];
+}TR_AI_CACHE;
+
+static  TR_AI_CACHE*  tr_ai_cache = NULL;
 
 //-----------------------------------------------------------------------------
 //          プロトタイプ宣言
@@ -294,6 +305,10 @@ static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam par
 static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag );
 static  u32   get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const BTL_POKEPARAM* def_bpp, BOOL loss_flag );
 static  s32   get_item_param( TR_AI_WORK* taw, u16 item_no, u16 param );
+static  void  create_tr_ai_chache( HEAPID heapID );
+static  void  delete_tr_ai_chache( void );
+static  void* load_tr_ai_chache( TR_AI_WORK* taw );
+static  void  free_tr_ai_chache( TR_AI_WORK* taw );
 
 //============================================================================================
 /**
@@ -486,6 +501,9 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
     WAZADATA_CreateCache( TR_AI_WAZATBL_MAX, heapID );
   }
 
+  //AIシーケンスのキャッシュを生成
+  create_tr_ai_chache( taw->heapID );
+
   return vmh;
 }
 
@@ -562,6 +580,9 @@ void  TR_AI_Exit( VMHANDLE* vmh )
   {
     WAZADATA_DeleteCache();
   }
+
+  //AIシーケンスのキャッシュを破棄
+  delete_tr_ai_chache();
 }
 
 //============================================================================================
@@ -935,7 +956,7 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
         }
         else{
           taw->waza_no = BPP_WAZA_GetID( taw->atk_bpp, taw->waza_pos );
-          taw->sequence = GFL_ARC_LoadDataAllocByHandle( taw->handle, taw->ai_no, taw->heapID );
+          taw->sequence = load_tr_ai_chache( taw );
           VM_Start( vmh, taw->sequence );
         }
       }
@@ -951,7 +972,7 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
         {
           taw->waza_no = 0;
           VM_End( vmh );
-          GFL_HEAP_FreeMemory( taw->sequence );
+          free_tr_ai_chache( taw );
           taw->sequence = NULL;
         }
       }
@@ -961,8 +982,8 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
         BOOL  ret = VM_Control( vmh );
         if( taw->status_flag & AI_STATUSFLAG_END )
         {
-          GFL_HEAP_FreeMemory( taw->sequence );
           taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
+          free_tr_ai_chache( taw );
           taw->sequence = NULL;
         }
         else
@@ -979,8 +1000,7 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
           //TickTimeバージョン
           if( OS_GetTick() - taw->tick > TR_AI_SEQ_TICK )
           {
-            SOGABE_Printf("tick:%d\n",OS_GetTick() - taw->tick );
-            taw->calc_count = TR_AI_SEQ_COUNT;
+            //SOGABE_Printf("tick:%d\n",OS_GetTick() - taw->tick );
             taw->status_flag |= AI_STATUSFLAG_CONTINUE;
             break;
           }
@@ -3955,5 +3975,111 @@ static  s32   get_item_param( TR_AI_WORK* taw, u16 item_no, u16 param )
   GFL_HEAP_FreeMemory( item_data );
 
   return item_param;
+}
+
+//============================================================================================
+/**
+ *  トレーナーAIキャッシュCreate
+ */
+//============================================================================================
+static  void  create_tr_ai_chache( HEAPID heapID )
+{ 
+  if( tr_ai_cache == NULL )
+  { 
+    int i;
+    tr_ai_cache = GFL_HEAP_AllocClearMemory( heapID, sizeof( TR_AI_CACHE ) );
+
+    for( i = 0 ; i < BTL_CLIENT_MAX ; i++ )
+    { 
+      tr_ai_cache->tr_ai[ i ] = TR_AI_NO_SEQUENCE;
+    }
+  }
+}
+
+//============================================================================================
+/**
+ *  トレーナーAIキャッシュDelete
+ */
+//============================================================================================
+static  void  delete_tr_ai_chache( void )
+{ 
+  if( tr_ai_cache )
+  { 
+    int i;
+    for( i = 0 ; i < BTL_CLIENT_MAX ; i++ )
+    { 
+      if( tr_ai_cache->tr_ai_sequence[ i ] )
+      { 
+        GFL_HEAP_FreeMemory( tr_ai_cache->tr_ai_sequence[ i ] );
+        tr_ai_cache->tr_ai_sequence[ i ] = NULL;
+      }
+    }
+    GFL_HEAP_FreeMemory( tr_ai_cache );
+    tr_ai_cache = NULL;
+  }
+}
+
+//============================================================================================
+/**
+ *  トレーナーAIロード
+ */
+//============================================================================================
+static  void* load_tr_ai_chache( TR_AI_WORK* taw )
+{ 
+  int i;
+
+  for( i = 0 ; i < BTL_CLIENT_MAX ; i++ )
+  { 
+    if( tr_ai_cache->tr_ai[ i ] == taw->ai_no )
+    { 
+      tr_ai_cache->tr_ai_use[ i ]++;
+      return tr_ai_cache->tr_ai_sequence[ i ];
+    }
+  }
+
+  for( i = 0 ; i < BTL_CLIENT_MAX ; i++ )
+  { 
+    if( tr_ai_cache->tr_ai[ i ] == TR_AI_NO_SEQUENCE )
+    { 
+      break;
+    }
+  }
+
+  GF_ASSERT( i < BTL_CLIENT_MAX );
+
+  { 
+    HEAPID  heapID = ( taw->ai_no == AI_THINK_NO_EXPERT ) ? GFL_HEAP_LOWID( taw->heapID ) : taw->heapID;
+    tr_ai_cache->tr_ai[ i ] = taw->ai_no;
+    tr_ai_cache->tr_ai_use[ i ]++;
+    tr_ai_cache->tr_ai_sequence[ i ] = GFL_ARC_LoadDataAllocByHandle( taw->handle, taw->ai_no, heapID );
+  }
+
+  return tr_ai_cache->tr_ai_sequence[ i ];
+}
+
+//============================================================================================
+/**
+ *  トレーナーAIフリー
+ */
+//============================================================================================
+static  void  free_tr_ai_chache( TR_AI_WORK* taw )
+{ 
+  int i;
+
+  for( i = 0 ; i < BTL_CLIENT_MAX ; i++ )
+  { 
+    if( tr_ai_cache->tr_ai[ i ] == taw->ai_no )
+    { 
+      tr_ai_cache->tr_ai_use[ i ]--;
+      if( tr_ai_cache->tr_ai_use[ i ] == 0 )
+      { 
+        tr_ai_cache->tr_ai[ i ] = TR_AI_NO_SEQUENCE;
+        GFL_HEAP_FreeMemory( tr_ai_cache->tr_ai_sequence[ i ] );
+        tr_ai_cache->tr_ai_sequence[ i ] = NULL;
+      }
+      break;
+    }
+  }
+  GF_ASSERT( i < BTL_CLIENT_MAX );
 }
 
