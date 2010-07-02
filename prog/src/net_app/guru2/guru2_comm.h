@@ -149,10 +149,10 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  u16 oya_flag;
-  u16 game_time;
-  s16 disc_speed;
-  u16 disc_angle;
+  fx32 disc_angle;
+  fx32 egg_joffs;
+  u16 egg_angle[5];
+  u16 end_flag;
 }GURU2COMM_GAMEDATA;
 
 //--------------------------------------------------------------

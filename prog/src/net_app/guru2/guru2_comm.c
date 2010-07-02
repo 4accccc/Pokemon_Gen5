@@ -230,7 +230,10 @@ static BOOL guru2Comm_WideUseSendWorkSend(
 //    work->cmd = cmd;
     GFL_STD_MemCopy( buf, work->buf, size );
 //    ret = ( CG_GURU2_CMD, work, GURU2_WIDEUSE_SENDWORK_SIZE );
-    ret=GFL_NET_SendData( pNet, cmd, GURU2_WIDEUSE_SENDWORK_SIZE, work->buf);
+
+    // 毎回 GURU2_WIDEUSE_SENDWORK_SIZE という最大値で送るのは送信サイズが大きいので size+4 に縮めた。
+    ret=GFL_NET_SendData( pNet, cmd, size+4, work->buf);
+//    ret=GFL_NET_SendData( pNet, cmd, GURU2_WIDEUSE_SENDWORK_SIZE, work->buf);
     
     #ifdef PM_DEBUG
     if( ret == FALSE ){
@@ -617,7 +620,8 @@ static void CommCB_Main_Button(
 static void CommCB_Main_GameData(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  if( GFL_NET_SystemGetCurrentID() != 0 ){  //発信した親以外
+  // 親のデータのみを受信
+  if( netID == 0 ){
     GURU2COMM_WORK *g2c = pWk;
     const GURU2COMM_GAMEDATA *data = pData;
 #ifndef GURU2_MAIN_FUNC_OFF

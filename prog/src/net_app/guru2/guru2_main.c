@@ -71,6 +71,7 @@
 //----DEBUG_ONLY_FOR_kagaya END
 
 #define DEBUG_GURU2_PRINTF_FORCE  //他の環境でも出すPrintf()
+#define DEBUG_GURU2_PRINTF_COMM // 通信状況をプリント
 
 #endif
 //----PM_DEBUG END
@@ -461,7 +462,6 @@ enum
   
   SEQNO_MAIN_GAME_INIT,
   SEQNO_MAIN_GAME_OYA,
-  SEQNO_MAIN_GAME_KO,
   
   SEQNO_MAIN_GAME_END_INIT,
   SEQNO_MAIN_GAME_END_ERROR_ROTATE,
@@ -653,6 +653,7 @@ typedef struct
   VecFx32 scale;
   VecFx32 pos;
   VecFx32 offs;
+  fx32 joffs; // ジャンプ用オフセット
 //  CATS_ACT_PTR cap; //EGG_3D_USE
   FRO_OBJ robj;
 }EGGACTOR;
@@ -932,6 +933,7 @@ struct GURU2MAIN_WORK
   int play_send_count;
   int force_end_flag;
   u32 omake_bit;
+  BOOL end_flag;
   
   POKEPARTY *my_poke_party;
     
@@ -1065,11 +1067,11 @@ static void Bg3D_Draw( GURU2MAIN_WORK *g2m );
 static void EggAct_Update( GURU2MAIN_WORK *g2m );
 static void EggAct_Draw( GURU2MAIN_WORK *g2m );
 static void EggAct_Rotate( GURU2MAIN_WORK *g2m, fx32 add );
-static void EggAct_AnglePosSet( EGGACTOR *eact, const VecFx32 *offs );
+static void EggAct_AnglePosSet( EGGACTOR *eact, const VecFx32 *offs, fx32 fa, fx32 joffs );
 static EGGACTOR * EggAct_FrontEggActGet( GURU2MAIN_WORK *g2m );
 
 static void EggKage_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act );
-static void EggKage_Update( GURU2MAIN_WORK *g2m, EGGKAGE *ekage );
+static void EggKage_Update( GURU2MAIN_WORK *g2m, EGGKAGE *ekage, fx32 joffs );
 
 static void EggCursor_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act );
 static void EggCursor_Update( GURU2MAIN_WORK *g2m, EGGCURSOR *ecs, int i );
@@ -1149,7 +1151,7 @@ static BOOL  _me_end_check( void );
 static void  _me_play( int seq_bgm );
 static void _comm_friend_func( GURU2MAIN_WORK *g2m );
 
-
+static void _comm_parent_rotate( GURU2MAIN_WORK *g2m, fx32 speed );
 
 #ifdef GURU2_DEBUG_ON
 static void DEBUG_WorkInit( GURU2MAIN_WORK *g2m );
@@ -1159,6 +1161,8 @@ static void DEBUG_Proc( GURU2MAIN_WORK *g2m );
 #ifdef DEBUG_DISP_CHECK
 extern void DEBUG_DiscTest( GURU2MAIN_WORK *g2m );
 #endif
+
+static void print_all_egg_data( GURU2MAIN_WORK* g2m );
 
 #define GURU2_TCB_MAX   ( 32 )
 
@@ -1820,7 +1824,12 @@ static RET Guru2Subproc_EggAddInit( GURU2MAIN_WORK *g2m )
 {
   int i;
   EGGADDWORK *wk = Guru2MainTempWorkInit( g2m, sizeof(EGGADDWORK) );
-  
+
+#ifdef PM_DEBUG
+  OS_TPrintf("*** 交換前 ***\n");
+  print_all_egg_data( g2m );
+#endif
+
   wk->no = g2m->comm.my_play_no;  //自身の卵から追加
   wk->max = g2m->comm.play_max;
   wk->offs = DATA_DiscOffsetAngle[wk->max][g2m->comm.my_play_no];
@@ -1870,6 +1879,9 @@ static RET Guru2Subproc_EggAdd( GURU2MAIN_WORK *g2m )
     u16 angle = DATA_EggStartAngle[wk->max][wk->no];
     int id = g2m->comm.play_no_tbl[wk->no].comm_id;
     
+    // 通信データも初期化
+    g2m->comm.game_data.egg_angle[wk->no] = angle;
+
     EggAct_StartTcbSet( g2m, id, wk->no, wk->count,
         angle, wk->offs, &g2m->egg.eact[wk->no] );
     
@@ -2136,13 +2148,16 @@ static RET Guru2Subproc_GameInit( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static RET Guru2Subproc_GameOya( GURU2MAIN_WORK *g2m )
 {
-  {
-    BOOL ret = Guru2GameTimeCount( g2m );
+  BOOL ret = Guru2GameTimeCount( g2m );
     
-    if( ret == TRUE && EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
-      g2m->seq_no = SEQNO_MAIN_GAME_END_INIT;
-      return( RET_CONT );
-    }
+  if( ret == TRUE && EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE && g2m->comm.game_data.egg_joffs == 0 ){
+    g2m->end_flag = TRUE;
+  }
+
+  if( g2m->comm.game_data.end_flag == TRUE )
+  {
+    g2m->seq_no = SEQNO_MAIN_GAME_END_INIT;
+    return( RET_CONT );
   }
   
   if( g2m->comm.push_btn ){
@@ -2151,10 +2166,10 @@ static RET Guru2Subproc_GameOya( GURU2MAIN_WORK *g2m )
     }
   }
   
-  if( BtnAnmTcb_PushCheck(g2m) == FALSE ){
+  if( ret == FALSE && BtnAnmTcb_PushCheck(g2m) == FALSE ){
     if( Guru2TP_ButtonHitTrgCheck(g2m) == TRUE ){
       if( EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
-        EggDiscJumpTcb_JumpSet( g2m );
+//        EggDiscJumpTcb_JumpSet( g2m );
         g2m->comm.send_btn = TRUE;
       }
       
@@ -2172,20 +2187,50 @@ static RET Guru2Subproc_GameOya( GURU2MAIN_WORK *g2m )
   { //皿回し
     fx32 speed;
     DISCWORK *disc = &g2m->disc;
-    
-    if( g2m->game_frame < GURU2_GAME_FRAME_H ){
-      disc->speed_fx += DISC_ACCEL_FX;
-      if( disc->speed_fx >= DISC_TOP_SPEED_FX ){
-        disc->speed_fx = DISC_TOP_SPEED_FX;
-      }
-    }else{
-      disc->speed_fx -= DISC_ACCEL_FX;
-      if( disc->speed_fx < DISC_LOW_SPEED_FX ){
-        disc->speed_fx = DISC_LOW_SPEED_FX;
+      
+    if( GFL_NET_SystemGetCurrentID() == 0 )
+    {
+      if( g2m->game_frame < GURU2_GAME_FRAME_H ){
+        disc->speed_fx += DISC_ACCEL_FX;
+        if( disc->speed_fx >= DISC_TOP_SPEED_FX ){
+          disc->speed_fx = DISC_TOP_SPEED_FX;
+        }
+      }else{
+        disc->speed_fx -= DISC_ACCEL_FX;
+        if( disc->speed_fx < DISC_LOW_SPEED_FX ){
+          disc->speed_fx = DISC_LOW_SPEED_FX;
+        }
       }
     }
+  }
+  
+  // 親のみ送信
+  if( GFL_NET_SystemGetCurrentID() == 0 )
+  {
+    int i;
+    GURU2COMM_GAMEDATA data;
     
-    speed = disc->speed_fx;
+    data.disc_angle = ( g2m->disc.rotate_fx );
+    data.end_flag = g2m->end_flag;
+    data.egg_joffs = g2m->egg.eact[0].joffs;
+
+    for( i=0; i<g2m->comm.play_max; i++ )
+    {
+      EGGWORK* egg = &g2m->egg;
+      data.egg_angle[i] = FX32_NUM(egg->eact[i].angle);
+    }
+    
+    Guru2Comm_SendData( g2m->g2c,
+      G2COMM_GM_GAMEDATA, &data, sizeof(GURU2COMM_GAMEDATA) );
+  }
+    
+  if( GFL_NET_SystemGetCurrentID() == 0 )
+  {
+    fx32 speed;
+
+    // 回転
+    speed = g2m->disc.speed_fx;
+//      speed = g2m->comm.game_data.disc_speed; 
     
     if( EggDiscJumpTcb_JumpCheck(g2m) == TRUE ){
       Disc_Rotate( &g2m->disc, (speed)<<1 );
@@ -2194,73 +2239,18 @@ static RET Guru2Subproc_GameOya( GURU2MAIN_WORK *g2m )
     }
   }
   
+#if 0
   {
-    GURU2COMM_GAMEDATA data;
-    
-    data.game_time = g2m->game_frame;
-    data.disc_speed = FX32_NUM( g2m->disc.speed_fx );
-    data.disc_angle = FX32_NUM( g2m->disc.rotate_fx );
-    
-    Guru2Comm_SendData( g2m->g2c,
-      G2COMM_GM_GAMEDATA, &data, sizeof(GURU2COMM_GAMEDATA) );
+    static int d_cnt = 0;
+    OS_Printf("[%03d] send=%d push_btn=%d speed_fx=0x%x rotate_fx=0x%x comm_rotate=0x%x \n",
+        d_cnt++, g2m->comm.game_data_send_flag,
+        g2m->comm.push_btn,
+        g2m->disc.speed_fx,
+        g2m->disc.rotate_fx,
+//        g2m->comm.game_data.disc_speed, 
+        g2m->comm.game_data.disc_angle  );
   }
-  
-  return( RET_NON );
-}
-
-//--------------------------------------------------------------
-/**
- * メイン　子　ゲーム
- * @param g2m GURU2MAIN_WORK
- * @retval  GURU2RET  GURU2RET
- */
-//--------------------------------------------------------------
-static RET Guru2Subproc_GameKo( GURU2MAIN_WORK *g2m )
-{
-  if( g2m->comm.game_data_send_flag == TRUE ){  //ゲームデータ受信
-    g2m->disc.rotate_fx = NUM_FX32( g2m->comm.game_data.disc_angle );
-    g2m->disc.speed_fx = NUM_FX32( g2m->comm.game_data.disc_speed );
-    g2m->game_frame = g2m->comm.game_data.game_time;
-  }
-  
-  {
-    BOOL ret = Guru2GameTimeCount( g2m );
-    
-    if( ret == TRUE && EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
-      g2m->seq_no = SEQNO_MAIN_GAME_END_INIT;
-      return( RET_CONT );
-    }
-  }
-  
-  if( g2m->comm.push_btn ){
-    if( EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
-      EggDiscJumpTcb_JumpSet( g2m );
-    }
-  }
-  
-  if( BtnAnmTcb_PushCheck(g2m) == FALSE ){
-    if( Guru2TP_ButtonHitTrgCheck(g2m) == TRUE ){
-      if( EggDiscJumpTcb_JumpProcCheck(g2m) == FALSE ){
-        EggDiscJumpTcb_JumpSet( g2m );
-        g2m->comm.send_btn = TRUE;
-      }
-      
-      BtnAnmTcb_PushSet( g2m );
-    }
-  }
-  
-  if( g2m->comm.send_btn ){
-    if( Guru2Comm_SendData(g2m->g2p->g2c,
-        G2COMM_GM_BTN,&g2m->comm.send_btn,1) == TRUE ){
-      g2m->comm.send_btn = 0;
-    }
-  }
-  
-  if( EggDiscJumpTcb_JumpCheck(g2m) == TRUE ){
-    Disc_Rotate( &g2m->disc, (g2m->disc.speed_fx)<<1 );
-  }else{
-    DiscRotateEggMove( g2m, g2m->disc.speed_fx );
-  }
+#endif
   
   return( RET_NON );
 }
@@ -2278,13 +2268,22 @@ static RET Guru2Subproc_GameEndInit( GURU2MAIN_WORK *g2m )
   
   g2m->front_eggact = EggAct_FrontEggActGet( g2m );
   
-  if( g2m->front_eggact->comm_id == GFL_NET_SystemGetCurrentID() ){
-    g2m->seq_no = SEQNO_MAIN_GAME_END_ERROR_ROTATE;
-  }else{
-    g2m->seq_no = SEQNO_MAIN_GAME_END_LAST_ROTATE;
+  if( GFL_NET_SystemGetCurrentID() == 0 )
+  {
+    if( g2m->front_eggact->comm_id == GFL_NET_SystemGetCurrentID() ){
+      g2m->seq_no = SEQNO_MAIN_GAME_END_ERROR_ROTATE;
+    }else{
+      g2m->seq_no = SEQNO_MAIN_GAME_END_LAST_ROTATE;
+    }
   }
-  
+  else
+  {
+    g2m->seq_no =  SEQNO_MAIN_GAME_END_TIMING_INIT;
+  }
+
   PMSND_PlaySE( GURU2_SE_TIMEUP );  
+
+  OS_Printf("GameEndInit\n");
   return( RET_CONT );
 }
 
@@ -2301,7 +2300,10 @@ static RET Guru2Subproc_GameEndErrorRotate( GURU2MAIN_WORK *g2m )
   EGGACTOR *eact = g2m->front_eggact;
 
   // 回転処理
-  DiscRotateEggMove( g2m, DISC_LOW_SPEED_FX );
+//  DiscRotateEggMove( g2m, DISC_LOW_SPEED_FX );
+
+  _comm_parent_rotate( g2m, DISC_LOW_SPEED_FX );
+
   // 直近のタマゴアクターを取得
   g2m->front_eggact = EggAct_FrontEggActGet( g2m );
   
@@ -2309,7 +2311,7 @@ static RET Guru2Subproc_GameEndErrorRotate( GURU2MAIN_WORK *g2m )
   if( g2m->front_eggact->comm_id != GFL_NET_SystemGetCurrentID() ){
     g2m->seq_no = SEQNO_MAIN_GAME_END_LAST_ROTATE;
   }
-  
+
   return( RET_NON );
 }
 
@@ -2347,15 +2349,17 @@ static RET Guru2Subproc_GameEndLastRotate( GURU2MAIN_WORK *g2m )
     speed = res;
   }
   
-  Disc_Rotate( &g2m->disc, speed );
-  EggAct_Rotate( g2m, speed );
+//  Disc_Rotate( &g2m->disc, speed );
+//  EggAct_Rotate( g2m, speed );
+
+  _comm_parent_rotate( g2m, speed );
   
   AngleAdd( &angle, speed );
   
   if( FX32_NUM(angle) == FX32_NUM(front) ){
     g2m->seq_no = SEQNO_MAIN_GAME_END_TIMING_INIT;
   }
-  
+
   return( RET_NON );
 }
 
@@ -2371,6 +2375,7 @@ static RET Guru2Subproc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   GFL_NET_HANDLE_TimeSyncStart( pNet,  COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_GAME_END_TIMING_WAIT;
+  OS_Printf("GameEndTimingInit\n");
   return( RET_NON );
 }
 
@@ -2408,24 +2413,31 @@ static RET Guru2Subproc_OyaGameEndDataSend( GURU2MAIN_WORK *g2m )
   EGGACTOR *eact;
   GURU2COMM_GAMERESULT result;
   
-  result.disc_angle = FX32_NUM( g2m->disc.rotate_fx );
+//  result.disc_angle = FX32_NUM( g2m->disc.rotate_fx );
+  result.disc_angle = FX32_NUM( g2m->comm.game_data.disc_angle );
   
   for( i = 0, g2m->omake_bit = 0; i < g2m->comm.play_max; i++ ){
     eact = &g2m->egg.eact[i];
     GF_ASSERT( eact->use_flag );
-    result.egg_angle[eact->play_no] = (u16)FX32_NUM( eact->angle );
+//    result.egg_angle[eact->play_no] = (u16)FX32_NUM( eact->angle );
+    result.egg_angle[eact->play_no] = g2m->comm.game_data.egg_angle[i];
     
     #ifdef DEBUG_GURU2_PRINTF_FORCE
     OS_Printf( "Guru2Result OYA Egg No %d, play_no %d, comm_id %d, angle %d\n", i, eact->play_no, eact->comm_id, result.egg_angle[eact->play_no] );
     #endif
+
+    OS_Printf("comm_angle=%d, egg_angle=%d \n", g2m->comm.game_data.egg_angle[i], FX32_NUM(eact->angle) );
     
     if( Guru2MainOmakeZoneCheck(
-      g2m,eact->angle,g2m->comm.play_max) == TRUE ){
+      g2m, NUM_FX32(g2m->comm.game_data.egg_angle[i]), g2m->comm.play_max ) == TRUE ){
+//      g2m,eact->angle,g2m->comm.play_max) == TRUE ){
       g2m->omake_bit |= (1 << eact->comm_id);
     }
   }
   
   result.omake_bit = g2m->omake_bit;
+
+  OS_Printf("omake_bit=0x%x\n", g2m->omake_bit);
   
   ret = Guru2Comm_SendData( g2m->g2c,
     G2COMM_GM_GAMERESULT, &result, sizeof(GURU2COMM_GAMERESULT) );
@@ -2452,11 +2464,13 @@ static RET Guru2Subproc_KoGameEndDataRecv( GURU2MAIN_WORK *g2m )
     GURU2COMM_GAMERESULT *res = &g2m->comm.game_result;
     
     g2m->disc.rotate_fx = NUM_FX32( res->disc_angle );
+    g2m->comm.game_data.disc_angle = g2m->disc.rotate_fx;
     
     for( i = 0; i < g2m->comm.play_max; i++ ){
       eact = &g2m->egg.eact[i];
       GF_ASSERT( eact->use_flag );
       eact->angle = NUM_FX32( res->egg_angle[eact->play_no] );
+      g2m->comm.game_data.egg_angle[i] = res->egg_angle[eact->play_no];
       
       #ifdef DEBUG_GURU2_PRINTF_FORCE
       OS_Printf( "Guru2Result KO Egg No %d, play_no %d, comm_id %d, angle %d\n", i, eact->play_no, eact->comm_id, res->egg_angle[eact->play_no] );
@@ -2464,6 +2478,8 @@ static RET Guru2Subproc_KoGameEndDataRecv( GURU2MAIN_WORK *g2m )
     }
     
     g2m->omake_bit = res->omake_bit;
+  
+    OS_Printf("omake_bit=0x%x\n", g2m->omake_bit);
     
     Disc_Update( g2m );   //皿更新
     EggAct_Update( g2m ); //タマゴ更新
@@ -2717,6 +2733,11 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
 
 #endif
     g2m->seq_no = SEQNO_MAIN_SAVE;
+
+#ifdef PM_DEBUG
+    OS_TPrintf("*** 交換後 ***\n");
+    print_all_egg_data( g2m );
+#endif
   }
   
   return( RET_NON );
@@ -2968,7 +2989,6 @@ static RET (* const DATA_Guru2ProcTbl[SEQNO_MAIN_MAX])( GURU2MAIN_WORK *g2m ) =
                                               //  
   Guru2Subproc_GameInit,                      //  SEQNO_MAIN_GAME_INIT,
   Guru2Subproc_GameOya,                       //  SEQNO_MAIN_GAME_OYA,
-  Guru2Subproc_GameKo,                        //  SEQNO_MAIN_GAME_KO,
                                               //  
   Guru2Subproc_GameEndInit,                   //  SEQNO_MAIN_GAME_END_INIT,
   Guru2Subproc_GameEndErrorRotate,            //  SEQNO_MAIN_GAME_END_ERROR_ROTATE,
@@ -4152,12 +4172,13 @@ static void Disc_Delete( GURU2MAIN_WORK *g2m )
 static void Disc_Update( GURU2MAIN_WORK *g2m )
 {
   DISCWORK *disc = &g2m->disc;
-  fx32 fa = disc->rotate_fx;
+//  fx32 fa = disc->rotate_fx;
+  fx32 fa = g2m->comm.game_data.disc_angle;
   AngleAdd( &fa, disc->rotate_offs_fx );
   AngleAdd( &fa, disc->rotate_draw_offs_fx );
   disc->rotate.y = (360 - FX32_NUM( fa )) % 360;    //反転させ時計回りに
 //  OS_Printf("disc->rotate.y = %d\n", disc->rotate.y);
-  
+
   disc->draw_pos.x = disc->pos.x + disc->offs_egg.x + disc->offs.x;
   disc->draw_pos.y = disc->pos.y + disc->offs_egg.y + disc->offs.y;
   disc->draw_pos.z = disc->pos.z + disc->offs_egg.z + disc->offs.z;
@@ -4205,6 +4226,16 @@ static void Disc_Draw( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void Disc_Rotate( DISCWORK *disc, fx32 add )
 {
+#ifdef DEBUG_GURU2_PRINTF_COMM
+  // ディスクの回転数をプリント
+  fx32 total = disc->rotate_fx + add;
+  if( FX32_NUM( total ) >= 360 )
+  {
+    static int drcnt=0;
+    drcnt++; OS_Printf("ディスク %d 回転目\n",drcnt);
+  }
+#endif
+
   AngleAdd( &disc->rotate_fx, add );
 }
 
@@ -4519,11 +4550,12 @@ static void EggAct_Update( GURU2MAIN_WORK *g2m )
   
   while( i < max ){
     if( egg->eact[i].use_flag ){
-      EggAct_AnglePosSet( &egg->eact[i], &g2m->disc.offs_egg );
+      EggAct_AnglePosSet( &egg->eact[i], 
+          &g2m->disc.offs_egg, NUM_FX32(g2m->comm.game_data.egg_angle[i]), g2m->comm.game_data.egg_joffs );
     }
     
     if( egg->ekage[i].use_flag ){
-      EggKage_Update( g2m, &egg->ekage[i] );
+      EggKage_Update( g2m, &egg->ekage[i], g2m->comm.game_data.egg_joffs );
     }
     
     if( egg->ecursor[i].use_flag ){
@@ -4632,19 +4664,19 @@ static void EggAct_Rotate( GURU2MAIN_WORK *g2m, fx32 add )
  * @retval
  */
 //--------------------------------------------------------------
-static void EggAct_AnglePosSet( EGGACTOR *eact, const VecFx32 *offs )
+static void EggAct_AnglePosSet( EGGACTOR *eact, const VecFx32 *offs, fx32 fa, fx32 joffs )
 {
   u16 r;
-  fx32 fa;
+//  fx32 fa;
   
-  fa = eact->angle;
+//  fa = eact->angle;
   AngleAdd( &fa, eact->offs_angle );
   r = (u16)FX32_NUM( fa );
   
   eact->pos.x =
     EGG_DISC_CX_FX + eact->offs.x + offs->x + (GFL_CALC_Cos360(r)*EGG_DISC_CXS);
   eact->pos.y =
-    EGG_DISC_CY_FX + eact->offs.y + offs->y;
+    EGG_DISC_CY_FX + eact->offs.y + offs->y + joffs;
   eact->pos.z =
     EGG_DISC_CZ_FX + eact->offs.z + offs->z + (GFL_CALC_Sin360(r)*EGG_DISC_CZS);
   
@@ -4722,7 +4754,7 @@ static void EggKage_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act )
   ekage->use_flag = TRUE;
   ekage->eact = act;
 //  FRO_OBJ_InitInMdl( &ekage->robj, &egg->m_rmdl_kage );
-  EggKage_Update( g2m, ekage );
+  EggKage_Update( g2m, ekage, 0 );
 }
 
 //--------------------------------------------------------------
@@ -4732,7 +4764,7 @@ static void EggKage_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act )
  * @retval
  */
 //--------------------------------------------------------------
-static void EggKage_Update( GURU2MAIN_WORK *g2m, EGGKAGE *ekage )
+static void EggKage_Update( GURU2MAIN_WORK *g2m, EGGKAGE *ekage, fx32 joffs )
 {
   fx32 offs;
   
@@ -4741,11 +4773,11 @@ static void EggKage_Update( GURU2MAIN_WORK *g2m, EGGKAGE *ekage )
   ekage->rotate.z = 0;
   ekage->pos = ekage->eact->pos;
   ekage->pos.x -= ekage->eact->offs.x;
-  ekage->pos.y -= ekage->eact->offs.y;
+  ekage->pos.y -= ( ekage->eact->offs.y + joffs );
   ekage->pos.z -= ekage->eact->offs.z;
   ekage->pos.y += EGGKAGE_OFFS_Y_FX;
   
-  offs = ekage->eact->offs.y;
+  offs = ( ekage->eact->offs.y + joffs );
   
   if( offs < 0 ){
     offs = -offs;
@@ -4989,7 +5021,8 @@ static void EggJump( GURU2MAIN_WORK *g2m, EGGJUMP_WORK *work )
     work->accle_y = -EGG_JUMP_ACCLE_FX;
     work->seq_no++;
   case 1:
-    eact->offs.y += work->add_y;
+    eact->joffs += work->add_y;
+//    eact->offs.y += work->add_y;
     work->add_y += work->accle_y;
     work->frame++;
     
@@ -5005,7 +5038,8 @@ static void EggJump( GURU2MAIN_WORK *g2m, EGGJUMP_WORK *work )
       break;
     }
     
-    eact->offs.y = 0;
+    eact->joffs = 0;
+//    eact->offs.y = 0;
     EggShakeTcb_EggSet( g2m, eact );
     GFL_STD_MemFill( work, 0, sizeof(EGGJUMP_WORK) );
   }
@@ -6090,6 +6124,20 @@ void Guru2Main_CommGameDataSet(
 {
   g2m->comm.game_data_send_flag = TRUE;
   g2m->comm.game_data = *data;
+
+#ifdef DEBUG_GURU2_PRINTF_COMM
+  {
+    static int d_cnt = 0;
+    OS_Printf("[%03d] push_btn=%d rotate=0x%x comm_rotate=0x%x comm_egg_angle[0]=0x%x comm_egg_joffs=0x%x \n",
+        d_cnt++, 
+        g2m->comm.push_btn,
+        g2m->disc.rotate_fx, 
+        data->disc_angle,
+        data->egg_angle[0],
+        data->egg_joffs
+        );
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -6338,7 +6386,10 @@ static BOOL Guru2MainOmakeZoneCheck(
   max = DEBUG_DISC_NO;
   #endif
   
-  AngleAdd( &pos_fx, -g2m->disc.rotate_fx );    //ディスク移動分補正
+  AngleAdd( &pos_fx, -g2m->disc.rotate_fx );            //ディスク移動分補正
+  AngleAdd( &pos_fx, -g2m->disc.rotate_draw_offs_fx );  //ディスク表示オフセット分ずらす
+
+  OS_Printf("rotate=0x%x(%d) comm_rotate=0x%x \n", g2m->disc.rotate_fx, FX32_NUM(g2m->disc.rotate_fx), g2m->comm.game_data.disc_angle );
   
   d_pos = pos_fx;
   AngleAdd( &d_pos, EGG_ATARI_HABA_L_FX );
@@ -6350,7 +6401,7 @@ static BOOL Guru2MainOmakeZoneCheck(
   
   #ifndef DEBUG_DISP_CHECK
   OS_Printf("ぐるぐる おまけエリアチェック " );
-  OS_Printf( "pos0=%d,pos1=%d,max=%d\n",pos0,max);
+  OS_Printf( "pos_fx=%d,pos0=%d,pos1=%d,max=%d\n",FX32_NUM(pos_fx),pos0,pos1,max);
   #endif
   
   tbl = &DATA_OmakeAreaTbl[max];
@@ -6358,6 +6409,10 @@ static BOOL Guru2MainOmakeZoneCheck(
   area = tbl->area;
   
   while( count ){
+    OS_Printf("area_start=%d area_end=%d result=%d \n",area->start, area->end, 
+       ( (pos0 >= area->start && pos0 <= area->end) || (pos1 >= area->start && pos1 <= area->end) ) 
+    );
+    
     if( (pos0 >= area->start && pos0 <= area->end) ||
       (pos1 >= area->start && pos1 <= area->end) ){
       return( TRUE );
@@ -6549,6 +6604,39 @@ static BOOL _me_end_check( void )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  親処理（ディスク、卵回転）＆回転情報送信
+ *
+ *	@param	GURU2MAIN_WORK *g2m
+ *	@param	speed 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _comm_parent_rotate( GURU2MAIN_WORK *g2m, fx32 speed )
+{
+  int i;
+  GURU2COMM_GAMEDATA data;
+
+  if( GFL_NET_SystemGetCurrentID() != 0 )
+  {
+    return;
+  }
+
+  DiscRotateEggMove( g2m, speed );
+  data.disc_angle = ( g2m->disc.rotate_fx );
+  data.egg_joffs = g2m->egg.eact[0].joffs;
+
+  for( i=0; i<g2m->comm.play_max; i++ )
+  {
+    EGGWORK* egg = &g2m->egg;
+    data.egg_angle[i] = FX32_NUM(egg->eact[i].angle);
+  }
+
+  Guru2Comm_SendData( g2m->g2c,
+    G2COMM_GM_GAMEDATA, &data, sizeof(GURU2COMM_GAMEDATA) );
+}
 
 
 
@@ -7030,3 +7118,28 @@ static void DEBUG_OmakeCheck( GURU2MAIN_WORK *g2m )
   }
 }
 #endif  //DEBUG_DISP_CHECK
+
+#ifdef PM_DEBUG
+static void print_all_egg_data( GURU2MAIN_WORK* g2m )
+{
+  int id;
+  int m_pos,f_pos;
+  POKEPARTY *m_poke,*f_poke;
+  POKEMON_PARAM *m_pp,*f_pp;
+
+  m_poke = g2m->my_poke_party;
+  m_pos = g2m->g2p->trade_no;
+  m_pp = PokeParty_GetMemberPointer( m_poke, m_pos );
+  OS_TPrintf( "自分の卵 monsno= %d \n", PP_Get( m_pp, ID_PARA_monsno, NULL ) );
+
+  for( id=0; id<g2m->comm.play_max; id++ )
+  {
+    f_poke = (POKEPARTY *)Guru2Comm_FriendPokePartyGet( g2m->g2c, id );
+    f_pos = g2m->comm.trade_no_tbl[id];
+    f_pp = PokeParty_GetMemberPointer( f_poke, f_pos );
+    OS_TPrintf( "comm_id[%d]の卵 monsno= %d \n",id, PP_Get( f_pp, ID_PARA_monsno, NULL ) );
+  }
+
+}
+#endif
+
