@@ -267,9 +267,9 @@ GFL_FILE_TREE	=	titledemo.narc \
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
 
 ifeq	($(PM_DEBUG),yes)
-GFL_MAKEROM_ROMFILES += dl_rom/child.srl dl_rom/child2.srl
+#GFL_MAKEROM_ROMFILES += dl_rom/child.srl dl_rom/child2.srl
 else
-GFL_MAKEROM_ROMFILES += dl_rom/child_r.srl dl_rom/child2_r.srl
+#GFL_MAKEROM_ROMFILES += dl_rom/child_r.srl dl_rom/child2_r.srl
 endif
 
 #ロムファイル指定(GAME)
