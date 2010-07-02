@@ -252,6 +252,7 @@ static int MainSeq_InitListWait( ZKNLISTMAIN_WORK * wk )
 	case 0:
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
 			ZKNLISTOBJ_SetListPageArrowAnime( wk, FALSE );	// –îˆóƒAƒjƒ•ÏX
+			ZKNLISTOBJ_SetScrollBar( wk );
 			ZKNLISTOBJ_SetPutPokeIconFlag( wk );
 			SetInitPalFade( wk );
 			wk->listInit++;
