@@ -23,21 +23,30 @@
 
 typedef struct{
 	WMBssDesc sBssDesc;
-  u16 timer;
-  u16 level;
+//  u16 timer;
+//  u16 level;
 } _BEACONCATCH_STR;
 
 struct _WIH_DWC_WORK {
   _BEACONCATCH_STR aBeaconCatch[_ALLBEACON_MAX];
   void* ScanMemory;
   NCFGConfigEx* cfg;
-  BOOL bIrc;
+ // BOOL bIrc;
   int timer;
-  BOOL bStop;
+  u16 bStop;
+  u16 levelTimer;
 	u16 AllBeaconNum;
   u16 level;
+  u16 levelGame;
+  u16 loopkeep;
+  int timeWIFI;
+  int timeZONE;
+  int timeFREE;
+  int timeLOCK;
 };
 
+#define _DEFAULT_FRAME (60*10)
+#define _SHORT_FRAME (40*10)
 
 static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork,u16 level);
 //通信の基底にかかわる部分なのでローカルにおき何処からでも参照できる形にしてある
@@ -134,25 +143,33 @@ static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork,u16 level)
   if(_localWork->AllBeaconNum==0){
     return;
   }
-  
-  for(i=0;i<_localWork->AllBeaconNum;i++){
-    _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
-      if(GFL_STD_MemComp(&pS->sBssDesc, pBss, sizeof(WMBssDesc))==0){ //一致
-        pS->timer = DEFAULT_TIMEOUT_FRAME;
-        pS->level = level;
-        return;
-      }
+  if(_localWork->loopkeep >= _localWork->AllBeaconNum){
+    return;
   }
-  for(i=0;i<_localWork->AllBeaconNum;i++){
-    _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
-    if(pS->timer==0){
-      GFL_STD_MemCopy(pBss, &pS->sBssDesc, sizeof(WMBssDesc));
-      pS->timer = DEFAULT_TIMEOUT_FRAME;
-      pS->level = level;
-      return;
-    }
+  if(_localWork->loopkeep >= _ALLBEACON_MAX){
+    return;
   }
+  {
+    _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[ _localWork->loopkeep ];
+    GFL_STD_MemCopy(pBss, &pS->sBssDesc, sizeof(WMBssDesc));
+  }
+  _localWork->loopkeep++;
 }
+
+
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetAllBeaconFlg
+  Description:  ビーコンなら何でも収集して表示するCGEAR用
+  Arguments:    bFlg  ONなら収集
+ *---------------------------------------------------------------------------*/
+
+static void _ResetScanBeaconData(void)
+{
+  _localWork->loopkeep=0;
+}
+
+
 
 /*---------------------------------------------------------------------------*
   Name:         WH_MainLoopScanBeaconData
@@ -166,13 +183,18 @@ void WIH_DWC_MainLoopScanBeaconData(void)
   if(_localWork && _localWork->bStop){
     return;
   }
-  
   if(_localWork){
-    for(i=0;i<_localWork->AllBeaconNum;i++){
-      _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
-      if(pS->timer > 0){
-        pS->timer--;
-      }
+    if(_localWork->timeWIFI>0){
+      _localWork->timeWIFI--;
+    }
+    if(_localWork->timeZONE>0){
+      _localWork->timeZONE--;
+    }
+    if(_localWork->timeFREE>0){
+      _localWork->timeFREE--;
+    }
+    if(_localWork->timeLOCK>0){
+      _localWork->timeLOCK--;
     }
   }
 }
@@ -253,18 +275,6 @@ static u8 WMSP_GetRssi8(u8 rssi)
 }
 #endif
 
-static void _levelMax(_BEACONCATCH_STR* pBS)
-{
-  if(pBS==NULL){
-    return;
-  }
-  {
-    if(_localWork->level < pBS->level){
-      _localWork->level = pBS->level;
-    }
-  }
-}
-
 
 //------------------------------------------------------------------------------
 /**
@@ -320,14 +330,12 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
 { 
   int i;
   GAME_COMM_STATUS_BIT retcode = 0;
+  u32 getBIT=0;
   const GFLNetInitializeStruct *aNetStruct = GFL_NET_GetNETInitStruct();
 
   if(_localWork==NULL){
     return retcode;
   }
-  _localWork->level = 0;
-
-  retcode |= GAME_COMM_STATUS_BIT_IRC;
   
   if(-1 != WIH_DWC_TVTCallCheck(list)){  //TVTは最優先
     retcode |= GAME_COMM_STATUS_BIT_WIRELESS_TR;
@@ -344,9 +352,11 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
       switch(id){
       case WB_NET_UNION:
         retcode |= GAME_COMM_STATUS_BIT_WIRELESS_UN;
+//        _localWork->level = _localWork->levelGame;
         break;
       case WB_NET_MYSTERY:
         retcode |= GAME_COMM_STATUS_BIT_WIRELESS_FU;
+//        _localWork->level = _localWork->levelGame;
         break;
       default:
         break;
@@ -355,21 +365,17 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
   }
   //NAGI_Printf( "ret %d\n", retcode );
   
-  for(i=0;i < _localWork->AllBeaconNum;i++){
+  for(i=0;i < _localWork->loopkeep;i++){
     _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
-    if(pS->timer == 0){
-      continue;
-    }
     {
       WMBssDesc* bss = &pS->sBssDesc;
       DWCApInfo ap;
 
-      _levelMax(pS);
       if(_scanAPReserveed(bss)){
-        retcode |= GAME_COMM_STATUS_BIT_WIFI;
+        _localWork->timeWIFI = _DEFAULT_FRAME;
       }
       else if(_scanFreeSpot(bss)){
-        retcode |= GAME_COMM_STATUS_BIT_WIFI_ZONE;
+        _localWork->timeZONE = _DEFAULT_FRAME;
       }
       else if(DWC_ParseWMBssDesc(_localWork->ScanMemory,bss,&ap)){
         switch(ap.aptype){
@@ -382,49 +388,57 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
         case DWC_APINFO_TYPE_USER5:
 #endif //SDK_TWL
         case DWC_APINFO_TYPE_USB://          :  ニンテンドーWi-Fi USBコネクタ
-          retcode |= GAME_COMM_STATUS_BIT_WIFI;
+          _localWork->timeWIFI = _DEFAULT_FRAME;
           break;
         case DWC_APINFO_TYPE_SHOP://         :  ニンテンドーWi-Fiステーション
         case DWC_APINFO_TYPE_FREESPOT://     :  FREESPOT（フリースポット）
         case DWC_APINFO_TYPE_WAYPORT://      :  Wayport(北米ホットスポット)※現在は使用できません
         case DWC_APINFO_TYPE_NINTENDOZONE:// : Nintendo Zone
-          retcode |= GAME_COMM_STATUS_BIT_WIFI_ZONE;
+          _localWork->timeZONE = _DEFAULT_FRAME;
           break;
+        }
+      }
+      else{
+        if(pS->sBssDesc.ssidLength!=0){
+          if(!_scanPrivacy(&pS->sBssDesc)){
+            _localWork->timeFREE = _SHORT_FRAME;
+          }
+          else{
+            _localWork->timeLOCK = _SHORT_FRAME;
+          }
         }
       }
     }
   }
-  for(i=0;i < _localWork->AllBeaconNum;i++){
-    _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
-    if(pS->timer == 0){
-      continue;
-    }
-    if(!_scanPrivacy(&pS->sBssDesc)){
-      if(pS->sBssDesc.ssidLength!=0){
-        retcode |= GAME_COMM_STATUS_BIT_WIFI_FREE;
-      }
-    }
+  if(_localWork->timeWIFI > 0){
+    retcode |= GAME_COMM_STATUS_BIT_WIFI;
   }
-  if(_localWork->AllBeaconNum>0){
+  if(_localWork->timeZONE > 0){
+    retcode |= GAME_COMM_STATUS_BIT_WIFI_ZONE;
+  }
+  if(_localWork->timeFREE > 0){
+    retcode |= GAME_COMM_STATUS_BIT_WIFI_FREE;
+  }
+  if(_localWork->timeLOCK > 0){
     retcode |= GAME_COMM_STATUS_BIT_WIFI_LOCK;
   }
-  //NAGI_Printf( "ret %d\n", retcode );
-  return retcode;
-}
 
-
-const BOOL WIH_DWC_IsEnableBeaconData( const u8 idx )
-{
-  if( _localWork->aBeaconCatch[idx].timer > 0 )
-  {
-    return TRUE;
+  if( _localWork->levelTimer > 0){
+    _localWork->levelTimer--;
   }
-  return FALSE;
-}
-
-const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx )
-{
-  return &_localWork->aBeaconCatch[idx].sBssDesc;
+  if(retcode==0){
+    _localWork->level=0;
+  }
+  else if(_localWork->levelGame!=0){
+    if(_localWork->levelTimer == 0){
+      _localWork->level = _localWork->levelGame;
+      _localWork->levelTimer = _SHORT_FRAME;
+      _localWork->levelGame = 0;
+    }
+  }
+  _localWork->loopkeep=0;
+  retcode |= GAME_COMM_STATUS_BIT_IRC;
+  return retcode;
 }
 
 
@@ -510,4 +524,27 @@ int WIH_DWC_GetBeaconRssiMax(void)
     return _localWork->level;
   }
   return 0;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   レベルセット
+ * @retval  強度
+ */
+//------------------------------------------------------------------------------
+void WIH_DWC_SetLevel(u8 level)
+{
+  if(_localWork){
+    if(_localWork->levelGame < level && level < 4){
+      _localWork->levelGame = level;
+    }
+  }
+}
+
+void WIH_DWC_ResetLevel(void)
+{
+ // if(_localWork){
+//    _localWork->levelGame = 0;
+//  }
 }

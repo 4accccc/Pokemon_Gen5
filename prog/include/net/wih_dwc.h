@@ -40,8 +40,6 @@ extern GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list);
 extern void WIH_DWC_Stop(void);
 extern void WIH_DWC_Restart(void);
 
-extern const BOOL WIH_DWC_IsEnableBeaconData( const u8 idx );
-extern const WMBssDesc* WIH_DWC_GetBeaconData( const u8 idx );
 
 //   AP情報
 extern void WIH_DWC_CreateCFG(HEAPID id);
@@ -54,3 +52,5 @@ extern int WIH_DWC_TVTCallCheck(WIFI_LIST * list);
 //   拾ったビーコンの強度のMAX
 extern int WIH_DWC_GetBeaconRssiMax(void);
 
+extern void WIH_DWC_SetLevel(u8 level);
+extern void WIH_DWC_ResetLevel(void);
