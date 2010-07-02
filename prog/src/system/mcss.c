@@ -342,6 +342,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	u16												rotate;
 	u8							          flipFlg;
 
+  NNS_G3dGeFlushBuffer();
+
 	G3_PushMtx();
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
 	G3_StoreMtx( 0 );
@@ -452,11 +454,6 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	    if( ortho_mode == 0 ){ 
 				G3_MultMtx44( &inv_camera );
 			}
-
-      if( mcss->rotate.z )
-      { 
-			  SOGABE_Printf("mc_rotZ:%x rotZ:%x\n", anim_SRT_mc.rotZ, mcss->rotate.z >> FX32_SHIFT );
-      }
 
 			rotate = ( anim_SRT_mc.rotZ + ( mcss->rotate.z >> FX32_SHIFT ) ) & 0xffff; 
 
@@ -769,7 +766,7 @@ static	void	MCSS_DrawAct(
 				   mcss->mcss_palette_proxy.fmt);
 	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
                   GX_POLYGONMODE_MODULATE,	// modulation mode
-                  GX_CULL_NONE,		    			// cull back
+                  GX_CULL_BACK,		    			// cull back
                   polyID,        						// polygon ID(0 - 63)
                   mcss->alpha,	       			// alpha(0 - 31)
                   GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
@@ -808,12 +805,12 @@ static	void	MCSS_DrawAct(
 	G3_Begin(GX_BEGIN_QUADS);
 	G3_TexCoord( tex_s,				tex_t );
 	G3_Vtx( 0, 0, 0 );
-	G3_TexCoord( tex_s + size_x,	tex_t );
-	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
-	G3_TexCoord( tex_s + size_x,	tex_t + size_y );
-	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
 	G3_TexCoord( tex_s,				tex_t + size_y );
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
+	G3_TexCoord( tex_s + size_x,	tex_t + size_y );
+	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
+	G3_TexCoord( tex_s + size_x,	tex_t );
+	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
 	G3_End();
 
   //影描画
@@ -827,10 +824,10 @@ static	void	MCSS_DrawAct(
    	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN], shadow_palette->fmt);
   	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
         				    GX_POLYGONMODE_MODULATE,	// modulation mode
-        				    GX_CULL_NONE,					    // cull back
+        				    GX_CULL_BACK,					    // cull back
         				    1,								        // polygon ID(0 - 63)
         				    shadow_alpha,             // alpha(0 - 31)
-        				    GX_POLYGON_ATTR_MISC_FOG	// OR of GXPolygonAttrMisc's value
+        				    GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
         				   );
 
   	G3_Translate( pos.x, pos.y, 0 );
@@ -846,12 +843,12 @@ static	void	MCSS_DrawAct(
   	G3_Begin(GX_BEGIN_QUADS);
   	G3_TexCoord( tex_s,				tex_t );
   	G3_Vtx( 0, 0, 0 );
-  	G3_TexCoord( tex_s + size_x,	tex_t );
-  	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
-  	G3_TexCoord( tex_s + size_x,	tex_t + size_y );
-  	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
   	G3_TexCoord( tex_s,				tex_t + size_y );
   	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
+  	G3_TexCoord( tex_s + size_x,	tex_t + size_y );
+  	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
+  	G3_TexCoord( tex_s + size_x,	tex_t );
+  	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
   	G3_End();
   }
 
@@ -2276,6 +2273,9 @@ static	void	MCSS_LoadResourceByHandle( MCSS_SYS_WORK *mcss_sys, int count, const
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 {
 	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
+#ifdef PM_DEBUG
+    u16 before;
+#endif
 
   if( tlw->tcb_flag == FALSE )
   { 
@@ -2288,6 +2288,10 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
     }
   }
 
+#ifdef PM_DEBUG
+  before = *(u16 *)REG_VCOUNT_ADDR;
+#endif
+
 	if( tlw->pBufChar )
   {
 		// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
@@ -2298,6 +2302,7 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 			tlw->image_p );
 	
 		GFL_HEAP_FreeMemory( tlw->pBufChar );
+//    SOGABE_Printf("tex before:%d after:%d\n",before,*(u16 *)REG_VCOUNT_ADDR);
     if( tlw->mcss->mosaic == 0 )
     { 
 	    tlw->pBufChar = NULL;
@@ -2320,6 +2325,7 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 			tlw->palette_p );
 
 		GFL_HEAP_FreeMemory( tlw->pBufPltt );
+//    SOGABE_Printf("plt before:%d after:%d\n",before,*(u16 *)REG_VCOUNT_ADDR);
 	}
 
 	if( tlw->mcss )
