@@ -16,6 +16,9 @@
 #include "system/net_err.h"
 #include "net/dwc_error.h"
 
+//サウンド（エラー時強制SE停止をするため）
+#include "sound/pm_sndsys.h"
+
 //アーカイブ(エラーメッセージ用)
 #include "msg/msg_battle_rec.h"
 
@@ -604,15 +607,16 @@ BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
     switch( result )
     { 
     case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
+      PMSND_StopSE();
       return BR_NET_SYSERR_RETURN_LIGHT;
 
     case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
+      PMSND_StopSE();
       return BR_NET_SYSERR_RETURN_DISCONNECT;
 
     case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
+      PMSND_StopSE();
       NetErr_App_FatalDispCall();
-      GF_ASSERT( 0 );
-      while(1){}
       break;
     }
   }
