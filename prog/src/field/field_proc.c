@@ -28,10 +28,11 @@
 //--------------------------------------------------------------
 ///	ヒープ用プログラム領域
 //--------------------------------------------------------------
-#define FIELD_PROG_AREA_HEAP_SIZE  (0xfa00)
+#define FIELD_PROG_AREA_HEAP_SIZE  (0x10000)
 static u8 FIELD_PROG_AREA_HEAP_BUF[ FIELD_PROG_AREA_HEAP_SIZE ] ATTRIBUTE_ALIGN(4);  //<-4byteアライメント
 #define FIELD_PROG_AREA_WEATHER_HEAP_SIZE (0x6400)  // 天気に割り当てるメモリサイズ
 #define FIELD_PROG_AREA_PLACENAME_HEAP_SIZE (0x7400)  // 地名表示に割り当てるメモリサイズ
+#define FIELD_PROG_AREA_FLDSCENE (0x500)  // SCENEエリアに割り当てるメモリサイズ
 
 //======================================================================
 //	struct
@@ -96,6 +97,7 @@ static GFL_PROC_RESULT FieldMapProcInit
     // 断片化しやすい。先にメモリを確保し、断片化を回避する。
     GFL_HEAP_CreateHeap( HEAPID_FIELD_PRBUF, HEAPID_WEATHER, FIELD_PROG_AREA_WEATHER_HEAP_SIZE );
     GFL_HEAP_CreateHeap( HEAPID_FIELD_PRBUF, HEAPID_PLACE_NAME, FIELD_PROG_AREA_PLACENAME_HEAP_SIZE );
+    GFL_HEAP_CreateHeap( HEAPID_FIELD_PRBUF, HEAPID_FIELD_SCENE, FIELD_PROG_AREA_FLDSCENE );
 
 
   	fpwk = GFL_PROC_AllocWork(proc, sizeof(FIELDPROC_WORK), HEAPID_FIELDMAP);
@@ -162,6 +164,7 @@ static GFL_PROC_RESULT FieldMapProcEnd
 	GAMESYSTEM_SetFieldMapWork(gsys, NULL);
 	GFL_PROC_FreeWork(proc);
 
+  GFL_HEAP_DeleteHeap( HEAPID_FIELD_SCENE );
   GFL_HEAP_DeleteHeap( HEAPID_WEATHER );
   GFL_HEAP_DeleteHeap( HEAPID_PLACE_NAME );
   GFL_HEAP_DeleteHeap( HEAPID_FIELD_PRBUF );
