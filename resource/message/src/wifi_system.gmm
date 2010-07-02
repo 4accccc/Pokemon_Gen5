@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-07-02T16:03:41"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-07-02T18:11:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="99" top="215" right="803" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="392" top="243" right="1096" bottom="864" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1200,6 +1200,14 @@ http://www.pokemon-gl.com/
 ウェブサイトをご覧下さい
 http://www.pokemon-gl.com/
 （エラーコード）</language>
+	</row>
+
+	<row id="WIFI_DISCONNECT_WAIT" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<comment>エラー前の切断待ち</comment>
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+せつだんしています</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
+切断しています</language>
 	</row>
 
 	<flowchart-group-list>

@@ -124,11 +124,11 @@ static NET_ERR_SYSTEM NetErrSystem = {0};
 //	プロトタイプ宣言
 //==============================================================================
 static BOOL NetErr_DispMain(BOOL fatal_error);
-static void Local_ErrDispInit(BOOL fatal_error);
+static void Local_ErrDispInit(BOOL fatal_error,BOOL isExitWait);
 static void Local_ErrDispExit(BOOL is_black_continue);
 static BOOL Local_SystemOccCheck(void);
 static void Local_ErrDispDraw(void);
-static void Local_ErrMessagePrint(BOOL fatal_error);
+static void Local_ErrMessagePrint(BOOL fatal_error,BOOL isExitWait);
 static void Local_ErrUpdate(void);
 
 //==============================================================================
@@ -377,7 +377,7 @@ void NetErr_DispCallPushPop(void)
 	}
 
 	//エラー画面描画
-	Local_ErrDispInit(FALSE);
+	Local_ErrDispInit(FALSE,FALSE);
 	
 	GX_VBlankIntr(TRUE);  //Wi-Fiでは繋がっているままエラー画面を出すケースがある為VBlankを生かす
 	
@@ -450,7 +450,7 @@ void NetErr_DispCallFatal(void)
 //	NetErr_ExitNetSystem();
 
 	//エラー画面描画
-	Local_ErrDispInit(TRUE);
+	Local_ErrDispInit(TRUE,FALSE);
 	
 //		OS_SpinWait(10000);
 
@@ -686,7 +686,7 @@ void NetErr_ExitNetSystem( void )
     do{
       GFL_NET_ShutdownMain();
       Local_ErrUpdate();
-      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+      //OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 //      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
     }while(GFL_NET_IsExit() == FALSE);
   }
@@ -714,7 +714,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
   	//通信切断
   	//NetErr_ExitNetSystem();
 		//エラー画面描画
-  	Local_ErrDispInit(fatal_error);
+  	Local_ErrDispInit(fatal_error,FALSE);
     //無限ループ
     GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);  //ハードリセットが効くようにフラグを落とす
     do{
@@ -722,12 +722,38 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
     }while(1);
 	}
   
-	if(nes->status == NET_ERR_STATUS_REQ){
+	if(nes->status == NET_ERR_STATUS_REQ)
+	{
+    BOOL isWifi = FALSE;
+    if( nes->net_type == GFL_NET_TYPE_WIFI 
+        || nes->net_type == GFL_NET_TYPE_WIFI_LOBBY 
+        || nes->net_type == GFL_NET_TYPE_WIFI_GTS )
+    {
+      isWifi = TRUE;
+    }
+    
+    if( isWifi == TRUE )
+    {
+  		//エラー画面描画(切断待ち表示
+  		Local_ErrDispInit(fatal_error,TRUE);
+  	}
+
     //通信ライブラリ終了待ち 
     NetErr_ExitNetSystem();
 
-		//エラー画面描画
-		Local_ErrDispInit(fatal_error);
+    if( isWifi == TRUE )
+    {
+  		//エラー画面描画(文字の書き換えのみ
+    	nes->h_intr = GX_HBlankIntr(FALSE);
+    	nes->v_intr = GX_VBlankIntr(FALSE);
+    	Local_ErrMessagePrint(fatal_error,FALSE);
+    }
+    else
+    {
+  		//エラー画面描画
+  		Local_ErrDispInit(fatal_error,FALSE);
+    }
+		//Local_ErrDispInit(fatal_error,FALSE);
 		
 //		OS_SpinWait(10000);
 		
@@ -765,10 +791,11 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
  * @brief   画面情報を退避し、エラー画面を表示
  *
  * @param   fatal_error   TRUE:リセットを促すエラー(Aで抜けられない) 
+ * @param   isExitWait    TRUE:切断待ちを表示する
  * 
  */
 //--------------------------------------------------------------
-static void Local_ErrDispInit(BOOL fatal_error)
+static void Local_ErrDispInit(BOOL fatal_error,BOOL isExitWait)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	
@@ -783,8 +810,11 @@ static void Local_ErrDispInit(BOOL fatal_error)
 	GXS_SetMasterBrightness(-16);
 	
 	//割り込みを止める
-	nes->h_intr = GX_HBlankIntr(FALSE);
-	nes->v_intr = GX_VBlankIntr(FALSE);
+	if( isExitWait == FALSE )
+	{
+  	nes->h_intr = GX_HBlankIntr(FALSE);
+  	nes->v_intr = GX_VBlankIntr(FALSE);
+  }
 	
 	//VRAMバンク情報退避
 	nes->bg_bank = GX_ResetBankForBG();
@@ -829,8 +859,7 @@ static void Local_ErrDispInit(BOOL fatal_error)
 
 	//エラー画面描画
 	Local_ErrDispDraw();
-	Local_ErrMessagePrint(fatal_error);
-
+	Local_ErrMessagePrint(fatal_error,isExitWait);
 
 	//表示ON
 	GX_SetMasterBrightness(0);
@@ -1063,7 +1092,7 @@ static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr, int default_msg)
  * 
  */
 //--------------------------------------------------------------
-static void Local_ErrMessagePrint(BOOL fatal_error)
+static void Local_ErrMessagePrint(BOOL fatal_error,BOOL isExitWait)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	GFL_BMP_DATA *bmpdata;
@@ -1107,48 +1136,57 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
 		
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
-    if( nes->net_type == GFL_NET_TYPE_WIFI 
-        || nes->net_type == GFL_NET_TYPE_WIFI_LOBBY 
-        || nes->net_type == GFL_NET_TYPE_WIFI_GTS )
-    { 
-      int type;
-      //WIFIの場合
-      
-      WORDSET_RegisterNumber( wordset, 0, nes->wifi_error.errorCode, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-
-      mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-			ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_NET_TEMP);
-
-      if( nes->msg_force )
+    {
+      if( isExitWait == TRUE )
       {
-        msgno = nes->wifi_msg;
-        nes->msg_force  = FALSE;
-        OS_TPrintf("強制エラーメッセージ %d \n",msgno);
+        //切断待ち
+        mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+  			ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_NET_TEMP);
+  			msgno = WIFI_DISCONNECT_WAIT;
       }
       else
-      {
-        msgno = _wifierrMessage(&nes->wifi_error, nes->wifi_msg) ;      //WIFIで表示するメッセージを取得
-        OS_TPrintf("エラーメッセージ %d \n",msgno);
-      }
+      if( nes->net_type == GFL_NET_TYPE_WIFI 
+          || nes->net_type == GFL_NET_TYPE_WIFI_LOBBY 
+          || nes->net_type == GFL_NET_TYPE_WIFI_GTS )
+      { 
+        //WIFIの場合
+        int type;
+        
+        WORDSET_RegisterNumber( wordset, 0, nes->wifi_error.errorCode, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
-    }
-    else
-    { 
-      //その他の場合
-      //ワイヤレスや赤外線でのエラーか
-      //エラーが発生していないのにNetErr_DispCallFatalを呼び出した場合
-      WORDSET_RegisterNumber( wordset, 0, nes->error, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+        mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+  			ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_NET_TEMP);
 
-      mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-          ARCID_MESSAGE, NARC_message_net_err_dat, HEAPID_NET_TEMP);
-
-      if( fatal_error == TRUE )
-      {
-        msgno = net_error_0002;
+        if( nes->msg_force )
+        {
+          msgno = nes->wifi_msg;
+          nes->msg_force  = FALSE;
+          OS_TPrintf("強制エラーメッセージ %d \n",msgno);
+        }
+        else
+        {
+          msgno = _wifierrMessage(&nes->wifi_error, nes->wifi_msg) ;      //WIFIで表示するメッセージを取得
+          OS_TPrintf("エラーメッセージ %d \n",msgno);
+        }
       }
       else
-      {
-        msgno = net_error_0001;
+      { 
+        //その他の場合
+        //ワイヤレスや赤外線でのエラーか
+        //エラーが発生していないのにNetErr_DispCallFatalを呼び出した場合
+        WORDSET_RegisterNumber( wordset, 0, nes->error, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+        mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+            ARCID_MESSAGE, NARC_message_net_err_dat, HEAPID_NET_TEMP);
+
+        if( fatal_error == TRUE )
+        {
+          msgno = net_error_0002;
+        }
+        else
+        {
+          msgno = net_error_0001;
+        }
       }
     }
 #else
