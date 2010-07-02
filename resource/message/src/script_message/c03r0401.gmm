@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-18T22:20:21"/>
+	<create user="matsushima" host="W00181" date="2010-07-02T12:34:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -701,6 +701,15 @@ msg_c03r0401_girl1_04</comment>
 ……でも　お姉ちゃん
 ゾロアを　仲間に　できるの？[BE:00:ページ切り替え（行送り）]
 ちょっと　心配に　なっちゃった[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_narrator_04" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>・ニックネームをつけるときのメッセージ</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">なかまに　なった　ゾロアに
+ニックネームを　つけますか？</language>
+		<language name="JPN_KANJI" width="256">仲間に　なった　ゾロアに
+ニックネームを　つけますか？</language>
 	</row>
 
 	<flowchart-group-list>
