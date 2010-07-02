@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-06-21T12:54:34"/>
+	<create user="matsumiya" host="W00224" date="2010-07-02T16:02:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="496" top="188" right="1201" bottom="816" maximized="no" rayout="Vertical2">
+	<dialog left="1631" top="226" right="2336" bottom="854" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,7 +298,7 @@
 たいせんを　つづけますか？</language>
 		<language name="JPN_KANJI" width="256">ただいま　[2:03:４桁:0]連勝！[BE:01:ページ切り替え（クリア）]
 次は　[2:00:１桁:1]両目と　なります
-対戦を　つづけますか？</language>
+対戦を　続けますか？</language>
 	</row>
 
 	<row id="msg_c04r0110_02">

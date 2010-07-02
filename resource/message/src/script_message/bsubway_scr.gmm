@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-06-22T19:35:04"/>
+	<create user="matsumiya" host="W00224" date="2010-07-02T16:04:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -454,7 +454,7 @@
 おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
 むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
 ちゅうい　してください！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">見事　７人を　倒せたら
+		<language name="JPN_KANJI">みごと　７人を　倒せたら
 駅に　到着し　バトルポイントを[BE:00:ページ切り替え（行送り）]
 獲得することが　できますので[BE:00:ページ切り替え（行送り）]
 がんばって　ください！[BE:01:ページ切り替え（クリア）]
@@ -508,7 +508,7 @@
 おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
 むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
 ちゅうい　してください！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">見事　７人を　倒せたら
+		<language name="JPN_KANJI" width="256">みごと　７人を　倒せたら
 駅に　到着し　バトルポイントを[BE:00:ページ切り替え（行送り）]
 獲得することが　できますので[BE:00:ページ切り替え（行送り）]
 がんばって　ください！[BE:01:ページ切り替え（クリア）]
@@ -566,7 +566,7 @@
 おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
 むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
 ちゅうい　してください！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">見事　７組　倒せたら
+		<language name="JPN_KANJI" width="256">みごと　７組　倒せたら
 駅に　到着し　バトルポイントを[BE:00:ページ切り替え（行送り）]
 獲得することが　できますので[BE:00:ページ切り替え（行送り）]
 がんばって　ください！[BE:01:ページ切り替え（クリア）]
@@ -633,7 +633,7 @@
 ちゅうい　してください！▼</language>
 		<language name="JPN_KANJI" width="256">対戦相手は　Ｗｉ－Ｆｉから
 全国の　ツワモノが　やってきます[BE:01:ページ切り替え（クリア）]
-見事　７人を　倒せたら
+みごと　７人を　倒せたら
 駅に　到着し　バトルポイントを[BE:00:ページ切り替え（行送り）]
 獲得することが　できますので[BE:00:ページ切り替え（行送り）]
 がんばって　ください！[BE:01:ページ切り替え（クリア）]
@@ -1050,12 +1050,12 @@
 
 	<row id="msg_bsw_scr_61">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">もしかして　きょうは　ひとり？？[BE:01:ページ切り替え（クリア）]
 だったら　ぼくと　パートナーを
 くもうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
 じゃ　ぼくは　どんな　ポケモンを
 さんか　させればいい？</language>
-		<language name="JPN_KANJI" width="256">もしかして　きょうは1人？？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">もしかして　きょうは　１人？？[BE:01:ページ切り替え（クリア）]
 だったら　ぼくと　パートナーを
 組もうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
 じゃ　ぼくは　どんな　ポケモンを
@@ -1064,12 +1064,12 @@
 
 	<row id="msg_bsw_scr_62">
 		<comment>マルチ　パートナー女</comment>
-		<language name="JPN" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">もしかして　きょうは　ひとり？？[BE:01:ページ切り替え（クリア）]
 だったら　わたしと　パートナーを
 くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
 じゃ　わたしは　どんな　ポケモンを
 さんか　させればいい？</language>
-		<language name="JPN_KANJI" width="256">もしかして　きょうは1人？？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">もしかして　きょうは　１人？？[BE:01:ページ切り替え（クリア）]
 だったら　わたしと　パートナーを
 組もうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
 じゃ　わたしは　どんな　ポケモンを
@@ -1341,23 +1341,22 @@
 		<language name="JPN" width="256">ぼくは　どんな　ポケモンを
 さんか　させればいい？</language>
 		<language name="JPN_KANJI" width="256">僕は　どんな　ポケモンを
-参加　させればいい？</language>
+参加させれば　いい？</language>
 	</row>
 
 	<row id="msg_bsw_scr_103">
 		<comment>AIマルチ　途中駅メッセージ</comment>
 		<language name="JPN" width="256">わたしは　どんな　ポケモンを
-さんか　させればいい？
-</language>
+さんか　させればいい？</language>
 		<language name="JPN_KANJI" width="256">私は　どんな　ポケモンを
-参加　させればいい？</language>
+参加させれば　いい？</language>
 	</row>
 
 	<row id="msg_bsw_scr_104" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
 トレーナーとマルチ　が▽
 [2:03:４桁:1]れんしょうちゅう　です▼</language>
-		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]様は
+		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]さまは
 トレーナーとマルチ　が▽
 [2:03:４桁:1]連勝中です▼</language>
 	</row>
@@ -1366,7 +1365,7 @@
 		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
 ともだちとマルチ　が▽
 [2:03:４桁:1]れんしょうちゅう　です▼</language>
-		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]様は
+		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]さまは
 友達とマルチ　が▽
 [2:03:４桁:1]連勝中です▼</language>
 	</row>
@@ -1377,7 +1376,7 @@
 [2:03:４桁:1]れんしょうちゅう　です▼
 ともだちとマルチ　が
 [2:03:４桁:2]れんしょうちゅう　です▼</language>
-		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]様は
+		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]さまは
 トレーナーとマルチ　が▽
 [2:03:４桁:1]連勝中です▼
 友達とマルチ　が
