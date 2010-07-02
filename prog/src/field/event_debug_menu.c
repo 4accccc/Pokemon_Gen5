@@ -150,7 +150,6 @@ FS_EXTERN_OVERLAY( d_iwasawa );
 //  global
 //======================================================================
 int DbgCutinNo = 0;
-
 //======================================================================
 //  extern
 //======================================================================
@@ -6196,26 +6195,52 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
       amcw->check_zone_id = ZONE_ID_MAX;
     }
     *seq = SEQ_SEEK_ID;
+
     /* FALL THROUGH */
 
   case SEQ_SEEK_ID:
-    zone_id = getNextZoneID( amcw );
-    if ( zone_id >= ZONE_ID_MAX || zone_id < 0 )
-    { 
-      OS_Printf( "FieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
-      OS_Printf( "3DVram restmin = 0x%x: zone = %d\n",DbgVramRest, DbgVramUseMaxZone );
-      OS_Printf( "HUDSON: ALL MAP CHECK SUCCESS!!\n" ); // hudson 検出用
-      return GMEVENT_RES_FINISH;
-    }
     {
-      char buf[ZONEDATA_NAME_LENGTH];
-      ZONEDATA_DEBUG_GetZoneName(buf, zone_id);
-      OS_TPrintf( "\t[[ALL MAP CHECKING... :%s]]!!\n", buf );
+      FIELD_WFBC_CORE* p_core;
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(amcw->gsys);
+      p_core = GAMEDATA_GetMyWFBCCoreData( gmData );
+      zone_id = getNextZoneID( amcw );
+
+      if ( zone_id >= ZONE_ID_MAX || zone_id < 0 )
+      { 
+        OS_Printf( "FieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
+        OS_Printf( "3DVram restmin = 0x%x: zone = %d\n",DbgVramRest, DbgVramUseMaxZone );
+        OS_Printf( "HUDSON: ALL MAP CHECK SUCCESS!!\n" ); // hudson 検出用
+        //WFBCコアタイプを元に戻す
+        {
+          if (PM_VERSION == VERSION_BLACK) p_core->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+          else p_core->type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+        }
+        return GMEVENT_RES_FINISH;
+      }
+
+      {
+        //セーブデータのＷＦＢＣタイプを変更する
+        if ( (zone_id == ZONE_ID_WC10)||(zone_id == ZONE_ID_PLCW10) )
+        {
+          NOZOMU_Printf("ホワイトフォレストへ\n");
+          p_core->type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+        }
+        else if ( (zone_id == ZONE_ID_BC10)||(zone_id == ZONE_ID_PLC10) )
+        {
+          NOZOMU_Printf("ブラックシティへ\n");
+          p_core->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+        }
+      }
+      {
+        char buf[ZONEDATA_NAME_LENGTH];
+        ZONEDATA_DEBUG_GetZoneName(buf, zone_id);
+        OS_TPrintf( "\t[[ALL MAP CHECKING... :%s]]!!\n", buf );
+      }
+      OS_Printf( "ALL MAP CHECK: zone_id = %d\n", zone_id );
+      fieldmap = GAMESYSTEM_GetFieldMapWork( amcw->gsys );
+      GMEVENT_CallEvent( event,
+          DEBUG_EVENT_ChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
     }
-    OS_Printf( "ALL MAP CHECK: zone_id = %d\n", zone_id );
-    fieldmap = GAMESYSTEM_GetFieldMapWork( amcw->gsys );
-    GMEVENT_CallEvent( event,
-        DEBUG_EVENT_ChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
     *seq = SEQ_WAIT;
     break;
   case SEQ_WAIT:
@@ -7307,7 +7332,7 @@ static void DbgRestDataUpdate(const u32 inZone)
   u32 heap_rest = GFL_HEAP_GetHeapFreeSize( HEAPID_FIELDMAP );
   u32 vram_rest = 0;
 
-  NOZOMU_Printf("Zone %d seach..\n", inZone );
+  OS_Printf("Zone %d seach..\n", inZone );
 
   if ( DbgFldHeapRest >= heap_rest )
   {
@@ -7324,6 +7349,8 @@ static void DbgRestDataUpdate(const u32 inZone)
   }
   OS_Printf( "FieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
   OS_Printf( "3DVram restmin = 0x%x: zone = %d\n",DbgVramRest, DbgVramUseMaxZone );
+
+  if (vram_rest <= 0x1a200) OS_FPrintf(3, "足りない zone:%d size:%x\n",inZone, vram_rest);
 }
 
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
@@ -7331,9 +7358,8 @@ static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
     // 合計サイズを計算。
     (*((u32*)pUserData)) += szByte;
     // 情報をデバックコンソールに出力
-    NOZOMU_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
-    NOZOMU_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
-    
+    OS_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
+    OS_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
 }
 
 
