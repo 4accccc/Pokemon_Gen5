@@ -301,16 +301,24 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 
   if( dat->sel_poke > 5 ){ dat->sel_poke = 0; }
 
-	// 技説明モード以外のとき
-	if( dat->mode != BPL_MODE_WAZAINFO ){
-		dat->sel_wp = 0;
-	}
-
   wk = GFL_HEAP_AllocClearMemory( dat->heap, sizeof(BPLIST_WORK) );
 
   GFL_TCB_AddTask( dat->tcb_sys, BattlePokeList_Main, wk, 100 );
 
   wk->dat = dat;
+
+	// 技説明モード以外のとき
+	if( dat->mode != BPL_MODE_WAZAINFO ){
+		dat->sel_wp = 0;
+	// 技説明モードのとき
+	}else{
+		// マルチの位置補正
+		// sel_pokeに0～2が入っているから。
+		if( BattlePokeList_MultiCheck( wk ) == TRUE && dat->multiPos == 1 ){
+			dat->sel_poke += 1;
+		}
+	}
+
   wk->pfd = dat->pfd;
   wk->seq = SEQ_BPL_INIT;
   wk->init_poke = dat->sel_poke;
