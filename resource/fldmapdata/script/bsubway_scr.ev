@@ -1392,6 +1392,9 @@ ev_bsw_game_continue:
   //ステートクリア
   _CALL sub_receipt_flag_clear
   
+  //ビーコンサーチ再開
+  _REBOOT_BEACON_SEARCH()
+  
   //セーブデータ有効チェック
   _BSUBWAY_TOOL( BSWTOOL_IS_SAVE_DATA_ENABLE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
