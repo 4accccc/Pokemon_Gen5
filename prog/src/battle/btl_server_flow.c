@@ -4210,7 +4210,6 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   {
     BOOL fMigawariHit = FALSE;
 
-
     switch( category ){
     case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
     case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
@@ -4218,6 +4217,11 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     case WAZADATA_CATEGORY_DAMAGE_SICK:
     case WAZADATA_CATEGORY_DRAIN:
       fDamage = TRUE;
+      fMigawariHit = TRUE;
+      break;
+    case WAZADATA_CATEGORY_ICHIGEKI:
+      fMigawariHit = TRUE;
+      break;
     }
 
     // ここから先、ハズレ・無効の原因表示はその先に任せる
@@ -4230,11 +4234,10 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     BTL_DMGAFF_REC_Init( &wk->dmgAffRec );
 
     // タイプによる無効化チェック
-    if( (fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI))
+    if( (fMigawariHit)
     ||  (scEvent_WazaAffineCheckEnable(wk, wk->wazaParam, attacker))
     ){
       flowsub_checkWazaAffineNoEffect( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
-      fMigawariHit = TRUE;
     }
 
     // まもる・とくせいなど無効チェック
