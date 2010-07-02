@@ -1665,6 +1665,17 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
     PMSSelect_BG_PlateFutterTrans( &wk->wk_bg, sentence_type );
   }
 
+  // 書き直すところだけでなくここで全て消しておく。そうしないと消されない場所ができてしまうので。
+  // 簡易会話を全てクリア
+  for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
+  {
+    // 表示中ならば消す
+    if( PMS_DRAW_IsPrinting( wk->pms_draw, i) )
+    {
+      PMS_DRAW_Clear( wk->pms_draw, i, FALSE );
+    }
+  }
+
   // 簡易会話を全て描画
   for( i=0; (wk->list_head_id+i) < wk->list_max && i < PMS_SELECT_PMSDRAW_NUM; i++ )
   {
@@ -2188,12 +2199,15 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
   STRBUF* buf;
 
   GF_ASSERT( view_pos_id < PMS_SELECT_PMSDRAW_NUM );
-  
+
+/*
+この関数を呼び出す前に消している
   // 簡易会話を表示中ならば消す
   if( PMS_DRAW_IsPrinting( wk->pms_draw, view_pos_id ) )
   {
     PMS_DRAW_Clear( wk->pms_draw, view_pos_id, FALSE );
   }
+*/
 
   buf = GFL_MSG_CreateString( wk->msg, pms_input01_01 );
   
@@ -2242,12 +2256,15 @@ static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 
   
   GF_ASSERT( view_pos_id < PMS_SELECT_PMSDRAW_NUM );
 
+/*
+この関数を呼び出す前に消している
   // 表示中ならば消す
   if( PMS_DRAW_IsPrinting( wk->pms_draw, view_pos_id ) )
   {
     PMS_DRAW_Clear( wk->pms_draw, view_pos_id, FALSE );
   }
-     
+*/
+
   pms = PMSW_GetDataEntry( wk->pmsw_save, data_id );
 
   // パレットによってプレートの背景色を変更
