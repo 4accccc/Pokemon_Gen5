@@ -153,6 +153,7 @@ struct _BTL_CLIENT {
   ClientMainProc        mainProc;
   BTL_ESCAPEINFO        escapeInfo;
   BTL_FIELD_WORK*       fldSim;
+  GFL_STD_RandContext   randContext;
 
   BTL_ADAPTER*    adapter;
   BTLV_CORE*      viewCore;
@@ -1667,7 +1668,7 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
           if( wazaIdx < PTL_WAZA_MAX )
           {
             WazaID waza = BPP_WAZA_GetID( wk->procPoke, wazaIdx );
-            BtlPokePos  targetPos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, wk->procPoke, waza );
+            BtlPokePos  targetPos = BTL_CALC_DecideWazaTargetAutoForClient( wk->mainModule, wk->pokeCon, wk->procPoke, waza, &wk->randContext );
             BTL_ACTION_SetFightParam( wk->procAction, waza, targetPos );
           }else{
             setWaruagakiAction( wk->procAction, wk, wk->procPoke );
@@ -2995,7 +2996,7 @@ static BOOL checkWazaForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACT
 //----------------------------------------------------------------------------------
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
 {
-  BtlPokePos targetPos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, bpp, WAZANO_WARUAGAKI );
+  BtlPokePos targetPos = BTL_CALC_DecideWazaTargetAutoForClient( wk->mainModule, wk->pokeCon, bpp, WAZANO_WARUAGAKI, &wk->randContext );
   BTL_ACTION_SetFightParam( dst, WAZANO_WARUAGAKI, targetPos );
 }
 
@@ -4125,7 +4126,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         // ƒƒUƒƒbƒNó‘Ô
         if( BPP_CheckSick(wk->procPoke, WAZASICK_WAZALOCK) ){
           WazaID waza = BPP_SICKCONT_GetParam(BPP_GetSickCont(wk->procPoke, WAZASICK_WAZALOCK));
-          BtlPokePos pos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, wk->procPoke, waza );
+          BtlPokePos pos = BTL_CALC_DecideWazaTargetAutoForClient( wk->mainModule, wk->pokeCon, wk->procPoke, waza, &wk->randContext );
           BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
           (*seq) = SEQ_INC;
           break;

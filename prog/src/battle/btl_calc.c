@@ -1274,7 +1274,7 @@ WazaTarget BTL_CALC_GetNoroiTargetType( const BTL_POKEPARAM* attacker )
 
 //=============================================================================================
 /**
- * ワザターゲットをランダムで自動決定
+ * ワザターゲットをランダムで自動決定（サーバ計算用）
  *
  * @param   mainModule
  * @param   bpp
@@ -1380,6 +1380,33 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
   }
 }
 
+//=============================================================================================
+/**
+ * ワザターゲットをランダムで自動決定
+ *  （クライアント用：整合性チェックサーバの計算に影響を与えないよう乱数系の状態をキープする）
+ *
+ * @param   mainModule
+ * @param   pokeCon
+ * @param   bpp
+ * @param   waza
+ * @param   pRandContextSaveWork    乱数コンテキスト保存用の一時ワーク領域（クライアントが用意）
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_CALC_DecideWazaTargetAutoForClient( const BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
+      const BTL_POKEPARAM* bpp, WazaID waza, GFL_STD_RandContext* pRandContextSaveWork )
+{
+  BtlPokePos pos;
+
+  *pRandContextSaveWork = gRandContext;
+
+  pos = BTL_CALC_DecideWazaTargetAuto( mainModule, pokeCon, bpp, waza );
+
+  gRandContext = *pRandContextSaveWork;
+
+  return pos;
+}
 
 //=============================================================================================
 /**

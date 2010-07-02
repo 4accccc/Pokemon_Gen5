@@ -166,6 +166,9 @@ extern BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myCl
 //=============================================================================================
 extern BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* bpp, WazaID waza );
 
+extern BtlPokePos BTL_CALC_DecideWazaTargetAutoForClient( const BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
+      const BTL_POKEPARAM* bpp, WazaID waza, GFL_STD_RandContext* pRandContextSaveWork );
+
 extern u32 BTL_CALC_MulRatio( u32 value, fx32 ratio );
 extern u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio );
 extern u32 BTL_CALC_MulRatioInt( u32 value, u32 ratio );

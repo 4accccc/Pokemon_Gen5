@@ -572,7 +572,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
     if( BTL_MAIN_GetCommMode(server->mainModule) != BTL_COMM_NONE ){
       print_client_action( &server->clientAction );
-      print_que_info( server->que, "Server Send ... ");
+//      print_que_info( server->que, "Server Send ... ");
     }
 
     SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );

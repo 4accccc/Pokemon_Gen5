@@ -446,11 +446,11 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_HP_MINUS:  return "SC_OP_HP_MINUS";           ///< HPマイナス  [ClientID, マイナス量]
   case SC_OP_HP_PLUS:  return "SC_OP_HP_PLUS";            ///< HPプラス    [ClientID, プラス量]
   case SC_OP_HP_ZERO:  return "SC_OP_HP_ZERO";            ///< HP0 にする [ pokeID ]
-  case SC_OP_PP_MINUS:  return "SC_OP_PP_MINUS";           ///< PPマイナス  [ClientID, マイナス量]
-  case SC_OP_PP_MINUS_ORG:  return "SC_OP_PP_MINUS_ORG";           ///< PPマイナス  [ClientID, マイナス量]
-  case SC_OP_WAZA_USED:  return "SC_OP_WAZA_USED";
-  case SC_OP_PP_PLUS:  return "SC_OP_PP_PLUS";            ///< PPプラス    [ClientID, プラス量]
-  case SC_OP_PP_PLUS_ORG:  return "SC_OP_PP_PLUS_ORG";            ///< PPプラス    [ClientID, プラス量]
+  case SC_OP_PP_MINUS:  return "SC_OP_PP_MINUS";           ///< PPマイナス （仮ワザワーク用）
+  case SC_OP_PP_MINUS_ORG:  return "SC_OP_PP_MINUS_ORG";       ///< PPマイナス （真ワザワーク用）
+  case SC_OP_WAZA_USED:  return "SC_OP_WAZA_USED";          ///< ワザ使用記録
+  case SC_OP_PP_PLUS:  return "SC_OP_PP_PLUS";            ///< PPプラス   （仮ワザワーク用）
+  case SC_OP_PP_PLUS_ORG:  return "SC_OP_PP_PLUS_ORG";        ///< PPプラス   （真ワザワーク用）
   case SC_OP_RANK_UP:  return "SC_OP_RANK_UP";            ///< ステータスランクアップ  [ClientID, StatusType, プラス量]
   case SC_OP_RANK_DOWN:  return "SC_OP_RANK_DOWN";          ///< ステータスランクダウン  [ClientID, StatusType, マイナス量]
   case SC_OP_RANK_SET7:  return "SC_OP_RANK_SET7";          ///< ステータスランク７種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
@@ -476,16 +476,20 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_UPDATE_WAZANUMBER:  return "SC_OP_UPDATE_WAZANUMBER";  ///< ワザ書き換え
   case SC_OP_OUTCLEAR:  return "SC_OP_OUTCLEAR";           ///< 退場時クリア
   case SC_OP_ADD_FLDEFF:  return "SC_OP_ADD_FLDEFF";         ///< フィールドエフェクト追加
-  case SC_OP_ADD_FLDEFF_DEPEND: return "SC_OP_ADD_FLDEFF_DEPEND";
+  case SC_OP_ADD_FLDEFF_DEPEND:  return "SC_OP_ADD_FLDEFF_DEPEND";  ///< フィールドエフェクトの依存ポケを追加
+  case SC_OP_DEL_FLDEFF_DEPEND:  return "SC_OP_DEL_FLDEFF_DEPEND";  ///< フィールドエフェクトの依存ポケを削除
   case SC_OP_REMOVE_FLDEFF:  return "SC_OP_REMOVE_FLDEFF";      ///< フィールドエフェクト削除
   case SC_OP_SET_POKE_COUNTER:  return "SC_OP_SET_POKE_COUNTER";   ///< ポケモンカウンタ値セット
   case SC_OP_BATONTOUCH:  return "SC_OP_BATONTOUCH";         ///< バトンタッチ
   case SC_OP_MIGAWARI_CREATE:  return "SC_OP_MIGAWARI_CREATE";    ///< みがわり作成
   case SC_OP_MIGAWARI_DELETE:  return "SC_OP_MIGAWARI_DELETE";    ///< みがわり削除
   case SC_OP_SHOOTER_CHARGE:  return "SC_OP_SHOOTER_CHARGE";     ///< シューターエネルギーチャージ
-  case SC_OP_SET_ILLUSION:  return "SC_OP_SET_ILLUSION";        ///< イリュージョン用参照ポケモン変更
+  case SC_OP_SET_ILLUSION:  return "SC_OP_SET_ILLUSION";       ///< イリュージョン用参照ポケモン変更
   case SC_OP_CLEAR_CONSUMED_ITEM:  return "SC_OP_CLEAR_CONSUMED_ITEM";///< アイテム消費情報のクリア
-  case SC_OP_CURESICK_DEPEND_POKE: return "SC_OP_CURESICK_DEPEND_POKE";
+  case SC_OP_CURESICK_DEPEND_POKE:  return "SC_OP_CURESICK_DEPEND_POKE";///< ポケモン依存状態異常のクリア
+  case SC_OP_WAZADMG_REC:  return "SC_OP_WAZADMG_REC";        ///< ワザダメージ記録
+  case SC_OP_TURN_CHECK:  return "SC_OP_TURN_CHECK";         ///< ポケモン１体ターンチェック
+  case SC_OP_TURN_CHECK_FIELD:  return "SC_OP_TURN_CHECK_FIELD";   ///< フィールド効果ターンチェック
   case SC_ACT_WAZA_EFFECT:  return "SC_ACT_WAZA_EFFECT";
   case SC_ACT_TAMEWAZA_HIDE:  return "SC_ACT_TAMEWAZA_HIDE";     ///< 【アクション】そらをとぶなどで画面から消える・現れる設定
   case SC_ACT_WAZA_DMG:  return "SC_ACT_WAZA_DMG";          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -501,35 +505,37 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_MEMBER_OUT:  return "SC_ACT_MEMBER_OUT";        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   case SC_ACT_MEMBER_IN:  return "SC_ACT_MEMBER_IN";         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
   case SC_ACT_WEATHER_DMG:  return "SC_ACT_WEATHER_DMG";       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
-  case SC_ACTOP_WEATHER_START:  return "SC_ACTOP_WEATHER_START";     ///< 天候変化
+  case SC_ACTOP_WEATHER_START:  return "SC_ACTOP_WEATHER_START";   ///< 天候変化
   case SC_ACTOP_WEATHER_END:  return "SC_ACTOP_WEATHER_END";       ///< ターンチェックで天候終了
   case SC_ACT_SIMPLE_HP:  return "SC_ACT_SIMPLE_HP";         ///< シンプルなHPゲージ増減処理
   case SC_ACT_KINOMI:  return "SC_ACT_KINOMI";            ///< きのみを食べる
   case SC_ACT_KILL:  return "SC_ACT_KILL";              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
-  case SC_ACTOP_MOVE:  return "SC_ACTOP_MOVE";              ///< ムーブ
+  case SC_ACTOP_MOVE:  return "SC_ACTOP_MOVE";            ///< ムーブ
   case SC_ACT_EXP:  return "SC_ACT_EXP";               ///< 経験値取得
   case SC_ACT_BALL_THROW:  return "SC_ACT_BALL_THROW";        ///< ボール投げ
+  case SC_ACT_BALL_THROW_TR:  return "SC_ACT_BALL_THROW_TR";     ///< ボール投げ（トレーナー戦）
   case SC_ACT_ROTATION:  return "SC_ACT_ROTATION";          ///< ローテーション
-  case SC_ACTOP_CHANGE_TOKUSEI:  return "SC_ACTOP_CHANGE_TOKUSEI";    ///< とくせい変更
-  case SC_ACTOP_SWAP_TOKUSEI:  return "SC_ACTOP_SWAP_TOKUSEI";            ///< とくせいスワップ
+  case SC_ACTOP_CHANGE_TOKUSEI:  return "SC_ACTOP_CHANGE_TOKUSEI";  ///< とくせい変更
+  case SC_ACTOP_SWAP_TOKUSEI:  return "SC_ACTOP_SWAP_TOKUSEI";    ///< とくせいスワップ
   case SC_ACT_FAKE_DISABLE:  return "SC_ACT_FAKE_DISABLE";      ///< イリュージョン解除
+  case SC_ACT_EFFECT_SIMPLE:  return "SC_ACT_EFFECT_SIMPLE";     ///< エフェクト発動（パラメータ指定なし）
   case SC_ACT_EFFECT_BYPOS:  return "SC_ACT_EFFECT_BYPOS";      ///< 指定位置にエフェクト発動
   case SC_ACT_EFFECT_BYVECTOR:  return "SC_ACT_EFFECT_BYVECTOR";   ///< 指定発動位置＆終点位置でエフェクト発動
   case SC_ACT_CHANGE_FORM:  return "SC_ACT_CHANGE_FORM";       ///< フォルムナンバーチェンジ
   case SC_ACT_RESET_MOVE:  return "SC_ACT_RESET_MOVE";        ///< リセットムーブカットイン
-  case SC_ACT_MIGAWARI_CREATE: return "SC_ACT_MIGAWARI_CREATE";   ///< みがわり作成
-  case SC_ACT_MIGAWARI_DELETE: return "SC_ACT_MIGAWARI_DELETE";   ///< みがわり消去
-  case SC_ACT_HENSIN: return "SC_ACT_HENSIN";            ///< へんしん
-  case SC_ACT_MIGAWARI_DAMAGE: return "SC_ACT_MIGAWARI_DAMAGE"; ///< みがわりダメージ
-  case SC_ACT_WIN_BGM: return "SC_ACT_WIN_BGM";           ///< 勝利BGM再生
-  case SC_ACT_MSGWIN_HIDE: return "SC_ACT_MSGWIN_HIDE";  ///< メッセージウィンドウフェードアウト
+  case SC_ACT_MIGAWARI_CREATE:  return "SC_ACT_MIGAWARI_CREATE";   ///< みがわり作成
+  case SC_ACT_MIGAWARI_DELETE:  return "SC_ACT_MIGAWARI_DELETE";   ///< みがわり消去
+  case SC_ACT_HENSIN:  return "SC_ACT_HENSIN";            ///< へんしん
+  case SC_ACT_MIGAWARI_DAMAGE:  return "SC_ACT_MIGAWARI_DAMAGE";   ///< みがわりダメージ
+  case SC_ACT_WIN_BGM:  return "SC_ACT_WIN_BGM";           ///< 勝利BGM再生
+  case SC_ACT_MSGWIN_HIDE:  return "SC_ACT_MSGWIN_HIDE";       ///< メッセージウィンドウフェードアウト
   case SC_TOKWIN_IN:  return "SC_TOKWIN_IN";             ///< とくせいウィンドウ表示イン [ClientID]
   case SC_TOKWIN_OUT:  return "SC_TOKWIN_OUT";            ///< とくせいウィンドウ表示アウト [ClientID]
   case SC_MSG_WAZA:  return "SC_MSG_WAZA";              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
   case SC_MSG_STD:  return "SC_MSG_STD";               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   case SC_MSG_SET:  return "SC_MSG_SET";               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   case SC_MSG_STD_SE:  return "SC_MSG_STD_SE";            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
-  case SC_MSG_SET_SE: return "SC_MSG_SET_SE";
+  case SC_MSG_SET_SE:  return "SC_MSG_SET_SE";            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
   }
 
   return NULL;
