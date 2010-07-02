@@ -89,6 +89,7 @@ typedef enum
   MCS_CAPTURE_FADEIN,
   MCS_CAPTURE_FADEIN_WAIT,
 
+  MCS_CHECK_ROM_CRC_CODE,
   MCS_CHECK_ROM_CRC_LOAD,
   MCS_CHECK_ROM_CRC,
 
@@ -302,7 +303,18 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 {
 
   MB_COMM_UpdateSystem( work->commWork );
-
+  
+  #if PM_DEBUG
+  {
+    static u8 befState = 0xFF;
+    if( befState != work->state )
+    {
+      MB_TPrintf("state[%d]->[%d]\n",befState,work->state);
+      befState = work->state;
+    }
+  }
+  #endif
+  
   switch( work->state )
   {
   case MCS_FADEIN:
@@ -830,20 +842,16 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       if( MB_COMM_Send_PokeData( work->commWork ) == TRUE )
       {
         MB_DATA_ResetSaveLoad( work->dataWork );
-        work->state = MCS_CHECK_ROM_CRC_LOAD;
+        work->state = MCS_CHECK_ROM_CRC_CODE;
       }
     }
     break;
-    
-  case MCS_CHECK_ROM_CRC_LOAD:
+  case MCS_CHECK_ROM_CRC_CODE:
     if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
     {
       if( MB_DATA_CheckRomCode( work->dataWork ) == TRUE )
       {
-        if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
-        {
-          work->state = MCS_CHECK_ROM_CRC;
-        }
+        work->state = MCS_CHECK_ROM_CRC_LOAD;
       }
       else
       {
@@ -856,6 +864,12 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       }
     }
     MB_CHILD_ErrCheck( work , FALSE );
+    break;
+  case MCS_CHECK_ROM_CRC_LOAD:
+    if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+    {
+      work->state = MCS_CHECK_ROM_CRC;
+    }
     break;
 
   case MCS_CHECK_ROM_CRC:

@@ -83,6 +83,7 @@ typedef enum
   
   MCS_CHECK_SAVE,
   
+  MCS_CHECK_ROM_CODE,
   MCS_CHECK_ROM_CRC_LOAD,
   MCS_CHECK_ROM_CRC,
 
@@ -297,6 +298,17 @@ static void MB_MOVIE_Term( MB_MOVIE_WORK *work )
 //--------------------------------------------------------------
 static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
 {
+  
+  #if PM_DEBUG
+  {
+    static u8 befState = 0xFF;
+    if( befState != work->state )
+    {
+      MB_TPrintf("state[%d]->[%d]\n",befState,work->state);
+      befState = work->state;
+    }
+  }
+  #endif
 
   MB_COMM_UpdateSystem( work->commWork );
 
@@ -659,7 +671,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       {
         if( MB_COMM_IsPostMovieStartSaveCheck( work->commWork ) == TRUE )
         {
-          work->state = MCS_CHECK_ROM_CRC_LOAD;
+          work->state = MCS_CHECK_ROM_CODE;
         }
       }
       else
@@ -668,14 +680,10 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       }
     }
     break;
-    
-  case MCS_CHECK_ROM_CRC_LOAD:
+  case MCS_CHECK_ROM_CODE:
     if( MB_DATA_CheckRomCode( work->dataWork ) == TRUE )
     {
-      if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
-      {
-        work->state = MCS_CHECK_ROM_CRC;
-      }
+      work->state = MCS_CHECK_ROM_CRC_LOAD;
     }
     else
     {
@@ -685,6 +693,12 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
       work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    }
+    break;
+  case MCS_CHECK_ROM_CRC_LOAD:
+    if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+    {
+      work->state = MCS_CHECK_ROM_CRC;
     }
     break;
 
