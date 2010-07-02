@@ -881,6 +881,7 @@ void EFFENC_DEB_NumInputParamSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 
     if( wk->param.valid_f && value == 0 ){
       effect_EffectDelete( encount, eff_wk );
     }else if( !wk->param.valid_f && value == 1 ){
+      wk->walk_ct = eff_wk->walk_ct_interval;
       EFFECT_ENC_CheckEffectEncountStart( encount );
     }
     break;
