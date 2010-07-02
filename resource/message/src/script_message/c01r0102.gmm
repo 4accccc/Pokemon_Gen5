@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-06-26T16:02:14"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-07-02T11:45:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="12" top="146" right="717" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -528,12 +528,12 @@
 　（TWL限定）
 ・続けてmsg_c01r0102_inventor_08_01</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">ＤＳほんたいの　せっていにより
+		<language name="JPN" width="256">ほんたいの　せっていにより
 むせんつうしんが　つかえません▼
 むせんつうしんを　つかうには
 ほんたいせっていの▽
 むせんつうしんを　オンにしてください▼</language>
-		<language name="JPN_KANJI" width="256">ＤＳ本体の　設定により
+		<language name="JPN_KANJI" width="256">本体の　設定により
 無線通信が　使えません▼
 無線通信を　使うには
 本体設定の　無線通信を▽
