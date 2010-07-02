@@ -4294,7 +4294,8 @@ static void handler_DenkiEngine_CheckEx( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
  *  とくせい「ノーガード」
  */
 //------------------------------------------------------------------------------
-// タイプによる無効化チェックハンドラ
+#if 0
+// ワザ処理開始ハンドラ
 static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 攻撃側が誰であれ、必中状態にする
@@ -4312,11 +4313,13 @@ static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_NoGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_START,        handler_NoGuard  },  // タイプによる無効化チェックハンドラ
+    { BTL_EVENT_WAZA_EXE_START,        handler_NoGuard  },  // ワザ処理開始ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
+#endif
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「きもったま」

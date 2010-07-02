@@ -169,7 +169,7 @@ static void scproc_WazaExe_Effective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waz
 static void scproc_WazaExe_NotEffective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 static void scproc_WazaExe_Done( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 static void scEvent_WazaExeEnd_Common( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza, BtlEventType eventID );
-static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
+static BOOL IsMustHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkWazaAffineNoEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targets, BTL_DMGAFF_REC* affRec );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker,
@@ -4555,13 +4555,19 @@ static void scEvent_WazaExeEnd_Common( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID wa
  * @retval  BOOL    •K’†ó‘Ô‚È‚çTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target )
+static BOOL IsMustHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target )
 {
-  if( (BPP_GetValue(attacker, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
-  ||  (BPP_GetValue(target, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
+  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(attacker))
+  &&  (BPP_GetValue(attacker, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
   ){
     return TRUE;
   }
+  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(target))
+  &&  (BPP_GetValue(target, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
+  ){
+    return TRUE;
+  }
+
   if( BPP_CheckSick(attacker, WAZASICK_MUSTHIT) ){
     return TRUE;
   }
@@ -4627,7 +4633,7 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
   {
-    if( !IsMustHit(attacker, bpp) )
+    if( !IsMustHit(wk, attacker, bpp) )
     {
       if( scproc_checkNoEffect_sub(wk, wazaParam, attacker, bpp, affRec, BTL_EVENT_NOEFFECT_CHECK_L1) ){
         BTL_POKESET_Remove( targets, bpp );
@@ -4766,10 +4772,10 @@ static void flowsub_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARA
   BTL_POKEPARAM* defender;
 
   BTL_POKESET_SeekStart( targets );
-
   while( (defender = BTL_POKESET_SeekNext(targets)) != NULL )
   {
-    if( IsMustHit(attacker, defender) ){
+    TAYA_Printf("pokeID=%d, hide avoid check..\b", BPP_GetID(defender));
+    if( IsMustHit(wk, attacker, defender) ){
       continue;
     }
     if( scEvent_CheckPokeHideAvoid(wk, attacker, defender, wazaParam->wazaID) )
@@ -4891,7 +4897,7 @@ static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, 
 static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam )
 {
-  if( IsMustHit(attacker, defender) ){
+  if( IsMustHit(wk, attacker, defender) ){
     return TRUE;
   }
 
@@ -8410,7 +8416,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
 
     targetPokeID = BPP_GetID( target );
 
-    if( !IsMustHit(attacker, target) )
+    if( !IsMustHit(wk, attacker, target) )
     {
       // ‚»‚ç‚ð‚Æ‚Ô‚È‚Ç‚É‚æ‚éƒnƒYƒŒ
       if( scEvent_CheckPokeHideAvoid(wk, attacker, target, wazaParam->wazaID) ){
@@ -11738,7 +11744,7 @@ static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
       return FALSE;
     }
 
-    if( IsMustHit(attacker, defender) ){
+    if( IsMustHit(wk, attacker, defender) ){
       ret = TRUE;
     }else{
       u8 per = WAZADATA_GetParam( waza, WAZAPARAM_HITPER );
