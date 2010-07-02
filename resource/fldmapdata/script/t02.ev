@@ -310,6 +310,9 @@ EVENT_START   ev_t02_hakase_guide
 	//博士案内イベント終了
 	$WK_SCENE_T02 = 1
 
+	//BGMチェンジでの環境SEポーズ状態をCLEAR
+	_CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
+
 	//========================================//
 
 EVENT_END
