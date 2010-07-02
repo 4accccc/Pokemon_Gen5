@@ -846,8 +846,7 @@ static void _hitAnyKey(GAMESYNC_MENU* pWork)
     _infoMessageEnd(pWork);
     pWork->bitold = 0;   //ビットをリセットする事で表示を元に戻す
     PMSND_PlaySystemSE(_SE_DESIDE);
-    //    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
-    //    pWork->pAppWin = NULL;
+    _PaletteFade(pWork, FALSE);
     _CHANGE_STATE(pWork, _modeSelectMenuInit); //戻る
   }
 }
@@ -1077,8 +1076,6 @@ static void _YesNoStart(GAMESYNC_MENU* pWork)
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
 
-  _PaletteFade(pWork, TRUE);
-  //G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2 |GX_BLEND_PLANEMASK_BG3 , -8 );
 }
 
 
@@ -1209,8 +1206,7 @@ static void _infoMessageDisp(GAMESYNC_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeReportInit(GAMESYNC_MENU* pWork)
 {
-
-  //    GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
+  _PaletteFade(pWork, TRUE);
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
 
@@ -1244,6 +1240,7 @@ static void _modeReporting2(GAMESYNC_MENU* pWork)
 
   if(svr == SAVE_RESULT_OK){
     _infoMessageEnd(pWork);
+    _PaletteFade(pWork, FALSE);
     _CHANGE_STATE(pWork,_modeFadeoutStart);
   }
 }
@@ -1298,11 +1295,11 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
       GFL_BG_ClearScreen(GFL_BG_FRAME1_S);
       pWork->selectType = GAMESYNC_RETURNMODE_NONE;
       _CHANGE_STATE(pWork, _modeSelectMenuInit); //戻る
+      _PaletteFade(pWork, FALSE);
+      
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
-    _PaletteFade(pWork, FALSE);
-    //      G2S_BlendNone();
   }
 }
 
