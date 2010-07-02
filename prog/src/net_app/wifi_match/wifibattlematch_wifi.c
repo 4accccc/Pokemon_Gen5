@@ -2288,9 +2288,6 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
-        break;
-
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
         break;
@@ -3729,9 +3726,6 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        *p_seq  = SEQ_START_SELECT_CONTINUE_MSG;
-        break;
-
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
         break;

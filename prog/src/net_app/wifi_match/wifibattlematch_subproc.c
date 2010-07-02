@@ -211,8 +211,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
         /*  エラーが発生していない  */
         break;
 
-      case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
       case GFL_NET_DWC_ERROR_RESULT_FATAL:
+        break;
+
+      case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
       default:
         OS_TPrintf( "ネット切断\n" );
         p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN;

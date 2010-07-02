@@ -2720,6 +2720,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   BOOL is_win = FALSE;
   BOOL is_lose  = FALSE;
   BOOL is_inverse = FALSE;
+  BOOL is_draw    = FALSE;
   DWCScResult ret;
 
   switch( cp_data->btl_result )
@@ -2739,6 +2740,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   case BTL_RESULT_DRAW:        ///< ひきわけ
     is_win  = FALSE;
     is_lose = FALSE;
+    is_draw = TRUE;
     break;
   case BTL_RESULT_CAPTURE:     ///< 捕まえた（野生のみ）
   default:
@@ -2780,10 +2782,13 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   switch( cp_data->btl_rule )
   { 
   case WIFIBATTLEMATCH_BTLRULE_SINGLE:    ///< シングル
-    ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_SINGLE, 1 );
-    if( ret != DWC_SC_RESULT_NO_ERROR )
-    { 
-      return ret;
+    if( !is_draw )
+    {
+      ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_SINGLE, 1 );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        return ret;
+      }
     }
     ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SINGLE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
@@ -2798,10 +2803,13 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_DOUBLE:    ///< ダブル
-    ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_DOUBLE, 1 );
-    if( ret != DWC_SC_RESULT_NO_ERROR )
-    { 
-      return ret;
+    if( !is_draw )
+    {
+      ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_DOUBLE, 1 );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        return ret;
+      }
     }
     ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_DOUBLE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
@@ -2816,10 +2824,13 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_TRIPLE:    ///< トリプル
-    ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_TRIPLE, 1 );
-    if( ret != DWC_SC_RESULT_NO_ERROR )
-    { 
-      return ret;
+    if( !is_draw )
+    {
+      ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_TRIPLE, 1 );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        return ret;
+      }
     }
     ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_TRIPLE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
@@ -2834,10 +2845,13 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_ROTATE:  ///< ローテーション
-    ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_ROTATE, 1 );
-    if( ret != DWC_SC_RESULT_NO_ERROR )
-    { 
-      return ret;
+    if( !is_draw )
+    {
+      ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_ROTATE, 1 );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        return ret;
+      }
     }
     ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
@@ -2852,10 +2866,13 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_SHOOTER:  ///< シューター
-    ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_SHOOTER, 1 );
-    if( ret != DWC_SC_RESULT_NO_ERROR )
-    { 
-      return ret;
+    if( !is_draw )
+    {
+      ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_SHOOTER, 1 );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        return ret;
+      }
     }
     ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SHOOTER_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
@@ -2905,6 +2922,7 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   BOOL is_win = FALSE;
   BOOL is_lose  = FALSE;
   BOOL is_inverse = FALSE;
+  BOOL is_draw  = FALSE;
   DWCScResult ret;
 
   switch( cp_data->btl_result )
@@ -2924,6 +2942,7 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   case BTL_RESULT_DRAW:        ///< ひきわけ
     is_win  = FALSE;
     is_lose = FALSE;
+    is_draw = TRUE;
     break;
   case BTL_RESULT_CAPTURE:     ///< 捕まえた（野生のみ）
   default:
@@ -2963,10 +2982,13 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
-  ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_WIFICUP, 1 );
-  if( ret != DWC_SC_RESULT_NO_ERROR )
-  { 
-    return ret;
+  if( !is_draw )
+  {
+    ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_WIFICUP, 1 );
+    if( ret != DWC_SC_RESULT_NO_ERROR )
+    { 
+      return ret;
+    }
   }
   ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_WIFICUP_WIN_COUNTER, is_win );
   if( ret != DWC_SC_RESULT_NO_ERROR )
