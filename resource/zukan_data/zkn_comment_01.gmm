@@ -2901,7 +2901,7 @@
 		<language name="JPN">めだまもようの　しょっかくを　もつ。
 ４まいの　はねで　うかびあがり
 ぜんごさゆうに　うごくことができる。</language>
-		<language name="JPN_KANJI">目玉模様の　触覚を　持つ。
+		<language name="JPN_KANJI">目玉模様の　触角を　持つ。
 ４枚の　ハネで　浮かび上がり
 前後左右に　動くことができる。</language>
 	</row>
@@ -2957,7 +2957,7 @@
 しょっかくで　ようすを　さぐる。</language>
 		<language name="JPN_KANJI">地面の　下で　成長する。
 ほとんど　見えない　目の　代わりに
-触覚で　様子を　探る。</language>
+触角で　様子を　探る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_291">
@@ -3955,7 +3955,7 @@
 かたい　しょっかくが　こすれあって
 もっきんのような　おとが　ひびく。</language>
 		<language name="JPN_KANJI">足が　短く　こけそうになるたび
-硬い　触覚が　こすれあって
+硬い　触角が　こすれあって
 木琴のような　音が　響く。</language>
 	</row>
 
@@ -5124,7 +5124,7 @@
 		<language name="JPN">みみの　しょっかくで　あいてに
 ふれると　しんぞうの　おとで
 たいちょうや　きもちが　わかるのだ。</language>
-		<language name="JPN_KANJI">耳の　触覚で　相手に　触れると
+		<language name="JPN_KANJI">耳の　触角で　相手に　触れると
 心臓の　音で
 体調や　気持ちが　わかるのだ。</language>
 	</row>
@@ -5511,7 +5511,7 @@
 		<language name="JPN">リボンのような　しょっかくで
 サイコパワーを　ぞうふくさせる。
 なにかを　じっと　みつめている。</language>
-		<language name="JPN_KANJI">リボンのような　触覚で
+		<language name="JPN_KANJI">リボンのような　触角で
 サイコパワーを　増幅させる。
 なにかを　じっと　見つめている。</language>
 	</row>
