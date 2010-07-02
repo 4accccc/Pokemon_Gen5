@@ -21,6 +21,7 @@ def check_elem( str )
     res = str.gsub(/<lang.*">/, '')
     res = res.gsub(/<\/lan.*>/, '')
     puts res
+    puts "-----------"
   end
 end   
 
@@ -37,14 +38,14 @@ def check_kanji( gmm_file )
     str.each_line{|l|
     
       if b_head == true
-        if l.include?("\"JPN\"")
+        if l.include?("\"JPN\"") && l.include?("edit entry") == false && l.include?("target japanese") == false
           check = l
           b_head = false
         end
       end
       
       if b_head == false
-        # 初回以外行追加
+         # 初回以外行追加
         if check != l
           check += l
         end
@@ -57,7 +58,6 @@ def check_kanji( gmm_file )
           b_head = true
         end
       end
-     
     }
   }
 end
