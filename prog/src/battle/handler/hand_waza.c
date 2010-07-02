@@ -9024,7 +9024,6 @@ static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_TURNFLAG* param;
-    BTL_HANDEX_PARAM_ADD_EFFECT* eff_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
@@ -9032,12 +9031,19 @@ static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       param->flag = BPP_TURNFLG_KIAI_READY;
     BTL_SVF_HANDEX_Pop( flowWk, param );
 
-    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
-      eff_param->effectNo = BTLEFF_KIAIPUNCH_TAME;
-      eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-      eff_param->pos_to = BTL_POS_NULL;
-      eff_param->fMsgWinVanish = TRUE;
-    BTL_SVF_HANDEX_Pop( flowWk, eff_param );
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( !BPP_IsWazaHide(bpp) )
+      {
+        BTL_HANDEX_PARAM_ADD_EFFECT* eff_param;
+        eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
+          eff_param->effectNo = BTLEFF_KIAIPUNCH_TAME;
+          eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+          eff_param->pos_to = BTL_POS_NULL;
+          eff_param->fMsgWinVanish = TRUE;
+        BTL_SVF_HANDEX_Pop( flowWk, eff_param );
+      }
+    }
 
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
