@@ -92,7 +92,8 @@ struct _FRAMELIST_WORK {
 	u8	railHitPos;									// レールタッチテーブル位置
 	u8	railTop;										// レール最上部のＹ座標
 	u8	railBottom;									// レール最下部のＹ座標
-	BOOL	railMode;									// レール動作中か
+	u8	railMode;									// レール動作中か
+	u32	railInitY;									// レール動作開始時にタッチされたＹ座標（処理が１回は走るように）
 
 	u8	slideSeq;
 	s8	slideVec;
@@ -168,6 +169,8 @@ enum {
 
 // キー・タッチ切り替えに対応したボタン
 #define	KEY_TOUCH_CHG_TRG		( PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_BUTTON_DECIDE|PAD_BUTTON_L|PAD_BUTTON_R )
+
+#define	RAIL_INIT_COMP		( 0xffffffff )		// レール処理１回目実行済み
 
 
 //============================================================================================
@@ -1356,7 +1359,14 @@ static void InitRailMove( FRAMELIST_WORK * wk, int pos )
 
 	wk->railHit[1].rect.top = GFL_UI_TP_HIT_END;
 
+	{	// 初期Ｙ座標取得
+		u32	x;
+		if( GFL_UI_TP_GetPointCont( &x, &wk->railInitY ) == FALSE ){
+			wk->railInitY = RAIL_INIT_COMP;
+		}
+	}
 	wk->railMode = TRUE;
+
 	wk->mainSeq = MAINSEQ_RAIL;
 }
 
@@ -1373,7 +1383,10 @@ static u32 GetRailScroll( FRAMELIST_WORK * wk )
 {
 	u32	x, y;
 
-	GFL_UI_TP_GetPointCont( &x, &y );
+	if( GFL_UI_TP_GetPointCont( &x, &y ) == FALSE ){
+		y = wk->railInitY;
+	}
+	wk->railInitY	= RAIL_INIT_COMP;
 
 	return SCROLLBAR_GetCount( wk->listScrollMax, y, wk->railTop, wk->railBottom, wk->hed.barSize );
 }
@@ -1446,6 +1459,8 @@ u32 FRAMELIST_GetScrollBarPY2( FRAMELIST_WORK * wk, u32 now_y )
 			u32	px, py;
 			GFL_UI_TP_GetPointCont( &px, &py );
 			return py;
+		}else{
+			return now_y;
 		}
 	}
 
@@ -1481,7 +1496,7 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 		return TRUE;
 	}
 
-	if( GFL_UI_TP_HitCont( wk->railHit ) == GFL_UI_TP_HIT_NONE ){
+	if( GFL_UI_TP_HitCont( wk->railHit ) == GFL_UI_TP_HIT_NONE && wk->railInitY == RAIL_INIT_COMP ){
 		wk->railMode = FALSE;
 		wk->mainSeq = MAINSEQ_MAIN;
 		return FALSE;
@@ -1535,7 +1550,7 @@ static void InitSlideMove( FRAMELIST_WORK * wk, int pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		レール処理メイン
+ * @brief		スライド処理メイン
  *
  * @param		wk			ワーク
  *

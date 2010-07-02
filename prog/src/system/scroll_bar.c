@@ -35,9 +35,9 @@ u32 SCROLLBAR_GetCount( u32 scrollMax, u32 py, u32 railTop, u32 railBottom, u32 
 	railTop += barSize;
 	railBottom -= barSize;
 
-	if( py < railTop ){
+	if( py <= railTop ){
 		return 0;
-	}else if( py > railBottom ){
+	}else if( py >= railBottom ){
 		return scrollMax;
 	}
 	py -= railTop;
