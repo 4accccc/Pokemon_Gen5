@@ -4046,10 +4046,11 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
     SEQ_START_DATEBEFORE_MSG,
     SEQ_START_DATE_MSG,
-    SEQ_CHECK_LOCK,
+    SEQ_CHECK_STATUS,
     SEQ_START_SAVE_MSG,
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
+    SEQ_CHECK_LOCK,
     SEQ_START_UNLOCK_MSG,
     SEQ_START_SEND_MSG,
     SEQ_SEND_GPF_CUPSTATUS,
@@ -4136,15 +4137,14 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_START_DATE_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_25, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_CHECK_LOCK );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_CHECK_STATUS );
     break;
 
 
-  case SEQ_CHECK_LOCK:
+  case SEQ_CHECK_STATUS:
     {
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      if( BATTLE_BOX_SAVE_GetLockType( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI ) )
+      if( Regulation_GetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS ) == DREAM_WORLD_MATCHUP_SIGNUP
+        || Regulation_GetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS ) == DREAM_WORLD_MATCHUP_ENTRY )
       {
         *p_seq  = SEQ_START_SAVE_MSG;
       }
@@ -4180,7 +4180,23 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       SAVE_RESULT ret = GAMEDATA_SaveAsyncMain( p_param->p_param->p_game_data );
       if( ret == SAVE_RESULT_OK )
       { 
+        *p_seq  = SEQ_CHECK_LOCK;
+      }
+    }
+    break;
+
+
+  case SEQ_CHECK_LOCK:
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      if( BATTLE_BOX_SAVE_GetLockType( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI ) )
+      {
         *p_seq  = SEQ_START_UNLOCK_MSG;
+      }
+      else
+      { 
+        *p_seq  = SEQ_START_SEND_MSG;
       }
     }
     break;
