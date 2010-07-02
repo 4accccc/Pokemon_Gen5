@@ -251,7 +251,10 @@
 #include "net.h"
 #include "net/network_define.h"
 #include "net/wih.h"
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "net/wih_dwc.h"
+#endif //MULTI_BOOT_MAKE
 #include "net/net_whpipe.h"
 
 /*
@@ -1662,7 +1665,10 @@ static void WH_StateOutStartScan(void *arg)
 	switch (state) {
 	case WM_STATECODE_PARENT_NOT_FOUND:
 		//        NET_PRINT("見つからなかった\n");
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
     WIH_DWC_ResetLevel();
+#endif //MULTI_BOOT_MAKE
 		break;
 	case WM_STATECODE_PARENT_FOUND:
 		// 親機が見つかった場合
@@ -1683,7 +1689,10 @@ static void WH_StateOutStartScan(void *arg)
 			WMBssDesc* bddmy = cb->bssDesc[i];
       MI_CpuCopy8(bddmy, bd, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
 
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
       WIH_DWC_SetLevel(cb->linkLevel[i]);
+#endif //MULTI_BOOT_MAKE
 
       if(_pWmInfo->SetBeaconData){
         _pWmInfo->SetBeaconData(bd, GFL_NET_GetWork(), cb->linkLevel[i]);
