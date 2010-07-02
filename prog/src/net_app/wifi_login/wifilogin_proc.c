@@ -203,7 +203,7 @@ static void _checkError( WIFILOGIN_WORK* pWork ); //シーケンス内で使用して下さい
 
 
 
-BOOL _keyTouchCheck(WIFILOGIN_WORK* pWork)
+static BOOL _keyTouchCheck(WIFILOGIN_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     return TRUE;
@@ -213,6 +213,8 @@ BOOL _keyTouchCheck(WIFILOGIN_WORK* pWork)
       return TRUE;
     }
   }
+
+  return FALSE;
 }
 
 

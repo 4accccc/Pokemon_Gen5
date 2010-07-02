@@ -32,6 +32,7 @@
 
 #define DEBUGWIN_GROUP_REG (41)
 #define DEBUGWIN_GROUP_REG_DATE (42)
+#define DEBUGWIN_GROUP_REG_BTL (43)
 
 #define DEBUGWIN_GROUP_SAKE_RECORD (51)
 #define DEBUGWIN_GROUP_SAKE_RECORD_YOUPROFILE (52)
@@ -66,7 +67,7 @@ static inline void DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, 
 { 
   BOOL is_update  = FALSE;
 
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
+  if( GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT )
   { 
     if( *p_param > min )
     { 
@@ -74,7 +75,7 @@ static inline void DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, 
       is_update = TRUE;
     }
   }
-  if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  if( GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT )
   { 
     if( *p_param  < max )
     { 
@@ -257,6 +258,10 @@ typedef struct
   int bgm;
   int same_match;
   int camera;
+  int rule;
+  int shooter_flag;
+  int time_vs;
+  int time_command;
 } DEBUGWIN_REGULATION_DATA;
 
 static DEBUGWIN_REGULATION_DATA debug_data  = {0};
@@ -407,7 +412,66 @@ static inline void DebugWin_Reg_D_ChangeCamera( void* userWork , DEBUGWIN_ITEM* 
   };
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
   DEBUGWIN_ITEM_SetNameV( item , "じょうきょう[%s]", scp_tbl[p_wk->camera] );
+}
 
+static inline void DebugWin_Reg_U_ChangeRule( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeData( item, &p_wk->rule, 0, REGULATION_BATTLE_SHOOTER );
+
+}
+static inline void DebugWin_Reg_D_ChangeRule( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *scp_tbl[]  =
+  { 
+    "シングル",
+    "ダブル",
+    "トリプル",
+    "ローテ",
+    "むこう",
+    "シュータ",
+  };
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ルール[%s]", scp_tbl[p_wk->rule] );
+}
+
+static inline void DebugWin_Reg_U_ChangeShooter( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeData( item, &p_wk->shooter_flag, 0, 1 );
+
+}
+static inline void DebugWin_Reg_D_ChangeShooter( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *scp_tbl[]  =
+  { 
+    "OFF",
+    "ON",
+  };
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "シュータ[%s]", scp_tbl[p_wk->shooter_flag] );
+}
+static inline void DebugWin_Reg_U_ChangeTimeVs( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeData( item, &p_wk->time_vs, 0, 99 );
+
+}
+static inline void DebugWin_Reg_D_ChangeTimeVs( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "しあいじかん[%d]", p_wk->time_vs );
+}
+static inline void DebugWin_Reg_U_ChangeTimeCmd( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeData( item, &p_wk->time_command, 0, 99 );
+
+}
+static inline void DebugWin_Reg_D_ChangeTimeCmd( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "えらぶじかん[%d]", p_wk->time_command );
 }
 
 //-------------------------------------
@@ -427,6 +491,11 @@ static inline void DebugWin_Reg_Get( DEBUGWIN_REGULATION_DATA  *p_wk )
   p_wk->bgm = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM );
   p_wk->same_match = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH );
   p_wk->camera = Regulation_GetParam( p_reg, REGULATION_STATE );
+
+  p_wk->rule  = Regulation_GetParam( p_reg, REGULATION_BATTLETYPE );
+  p_wk->shooter_flag  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
+  p_wk->time_vs = Regulation_GetParam( p_reg, REGULATION_TIME_VS );
+  p_wk->time_command  = Regulation_GetParam( p_reg, REGULATION_TIME_COMMAND );
 }
 
 static inline void DebugWin_Reg_U_Get( void* userWork , DEBUGWIN_ITEM* item )
@@ -456,6 +525,10 @@ static inline void DebugWin_Reg_U_Set( void* userWork , DEBUGWIN_ITEM* item )
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM, p_wk->bgm );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH, p_wk->same_match );
     Regulation_SetParam( p_reg, REGULATION_STATE, p_wk->camera );
+    Regulation_SetParam( p_reg, REGULATION_BATTLETYPE, p_wk->rule );
+    Regulation_SetParam( p_reg, REGULATION_SHOOTER, p_wk->shooter_flag );
+    Regulation_SetParam( p_reg, REGULATION_TIME_VS, p_wk->time_vs );
+    Regulation_SetParam( p_reg, REGULATION_TIME_COMMAND, p_wk->time_command );
   }
 }
 static inline void DebugWin_Reg_U_Clear( void* userWork , DEBUGWIN_ITEM* item )
@@ -518,6 +591,17 @@ static inline void DEBUGWIN_REG_Init( REGULATION_CARDDATA *p_regulation, HEAPID 
       &debug_data, DEBUGWIN_GROUP_REG, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeCamera, DebugWin_Reg_D_ChangeCamera,
       &debug_data, DEBUGWIN_GROUP_REG, heapID );
+
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_REG_BTL, "バトルデータ", DEBUGWIN_GROUP_REG, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeRule, DebugWin_Reg_D_ChangeRule,
+      &debug_data, DEBUGWIN_GROUP_REG_BTL, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeShooter, DebugWin_Reg_D_ChangeShooter,
+      &debug_data, DEBUGWIN_GROUP_REG_BTL, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeTimeVs, DebugWin_Reg_D_ChangeTimeVs,
+      &debug_data, DEBUGWIN_GROUP_REG_BTL, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeTimeCmd, DebugWin_Reg_D_ChangeTimeCmd,
+      &debug_data, DEBUGWIN_GROUP_REG_BTL, heapID );
 }
 
 static inline void DEBUGWIN_REG_Exit( void )

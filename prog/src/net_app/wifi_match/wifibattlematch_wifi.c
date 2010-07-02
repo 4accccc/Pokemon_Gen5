@@ -76,6 +76,8 @@ FS_EXTERN_OVERLAY(dpw_common);
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
 
+#define DEBUG_REG_CRC_CHECK_OFF
+
 #define DEBUGWIN_USE
 #endif //PM_DEBUG
 
@@ -2757,7 +2759,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_CHECK_YOU_CUPNO:
     WIFIBATTLEMATCH_DATA_DebugPrint( p_param->p_player_data );
     WIFIBATTLEMATCH_DATA_DebugPrint( p_param->p_enemy_data );
+#ifdef DEBUG_REG_CRC_CHECK_OFF 
     if( p_param->p_player_data->wificup_no == p_param->p_enemy_data->wificup_no )
+#else
+    if( p_param->p_player_data->wificup_no == p_param->p_enemy_data->wificup_no
+        && p_param->p_player_data->reg_crc == p_param->p_enemy_data->reg_crc )
+#endif
     { 
       DEBUG_WIFICUP_Printf( "大会が同じ！！\n" );
       *p_seq  = SEQ_CHECK_YOU_REGULATION;
@@ -5027,6 +5034,7 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
   { 
     const REGULATION_CARDDATA *cp_reg_card  = cp_wk->p_reg;
     p_my_data->wificup_no      = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO );
+    p_my_data->reg_crc  = Regulation_GetCrc( cp_reg_card );
   }
 }
 //----------------------------------------------------------------------------

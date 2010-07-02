@@ -61,6 +61,7 @@ typedef struct
   u32       btl_server_version;
   u32       profileID;  
   u32       sake_recordID;
+  u32       reg_crc;  //レギュレーションカードのCRC(Wi-Fi大会用)
   s8        sign[ NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN ]; //６体分の署名
   u8        pokeparty[0]; //後尾にポケパーティのデータがつく
 } WIFIBATTLEMATCH_ENEMYDATA;

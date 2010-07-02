@@ -252,6 +252,7 @@ extern int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_C
 extern void Regulation_SetCardParam(REGULATION_CARDDATA * pReg, REGULATION_CARD_PARAM_TYPE type, int param);
 
 extern BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg );
+extern u32 Regulation_GetCrc( const REGULATION_CARDDATA* pReg );
 
 //----------------------------------------------------------
 //	REGULATION_VIEWDATA操作のための関数 デジタル選手証の見た目（登録ポケモンとか）

@@ -464,17 +464,9 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
     pReg->SHOOTER = param;
     break;
   case REGULATION_TIME_VS:     //    #対戦時間
-    if(param > REGULATION_VS_TIME){
-      GF_ASSERT(0);
-      return;
-    }
     pReg->TIME_VS = param;
     break;
   case REGULATION_TIME_COMMAND: //    #入力時間
-    if(param > REGULATION_COMMAND_TIME){
-      GF_ASSERT(0);
-      return;
-    }
     pReg->TIME_COMMAND = param;
     break;
   case REGULATION_NICKNAME: //    #ニックネーム表示
@@ -737,7 +729,21 @@ BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg )
 #if REGPRINT
   OS_TPrintf( "CRCチェック buffer[0x%x]== calc[0x%x]\n", pReg->crc, GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 ));
 #endif
-  return pReg->crc == GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
+  return pReg->crc == Regulation_GetCrc( pReg );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CRCを返す
+ *
+ *	@param	const REGULATION_CARDDATA* pReg レギュレーション
+ *
+ *	@return CRC
+ */
+//-----------------------------------------------------------------------------
+u32 Regulation_GetCrc( const REGULATION_CARDDATA* pReg )
+{
+  return GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
 }
 
 //----------------------------------------------------------
