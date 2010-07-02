@@ -473,6 +473,7 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
 static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error, DWCSvlResult* p_svl_result, HEAPID heapID );
 static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error, BOOL poke_error_check );
 static void PERSONAL_DATA_SetDefaultPokeName( WIFI_BSUBWAY_PERSONAL* p_wk, int index );
+static void PERSONAL_DATA_ClearNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk );
 
 // 人情報アップデート
 static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error  );
@@ -847,6 +848,9 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
     }else{
       (*p_seq) = BSUBWAY_SEQ_END;
     }
+
+    // Error終了のばあい、一応クリーン
+    PERSONAL_DATA_ClearNhttpPokemon( &p_wk->personaldata );
     break;
 
   // エラーウエイト
@@ -1242,12 +1246,6 @@ static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk )
 {
-  if(p_wk->p_nhttp){
-    GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL);  //NHTTPエラーの時に呼ぶコールバック削除
-    NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
-    NHTTP_RAP_End( p_wk->p_nhttp );
-    p_wk->p_nhttp = NULL;
-  }
   if(p_wk->p_use_mystatus){
     GFL_HEAP_FreeMemory( p_wk->p_use_mystatus );
     p_wk->p_use_mystatus = NULL;
@@ -1586,6 +1584,7 @@ static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUB
     NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
     NHTTP_RAP_End( p_wk->p_nhttp );
     p_wk->p_nhttp = NULL;
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL);  //NHTTPエラーの時に呼ぶコールバック削除
 
 
     WIFI_BSUBWAY_Printf( "\n" );
@@ -1609,6 +1608,23 @@ static void PERSONAL_DATA_SetDefaultPokeName( WIFI_BSUBWAY_PERSONAL* p_wk, int i
   GF_ASSERT(index < 3);
   p_pokedata = (BSUBWAY_POKEMON*)&p_wk->bt_player.pokemon[index];
   GFL_MSG_GetStringRaw( GlobalMsg_PokeName, p_pokedata->mons_no, p_pokedata->nickname, MONS_NAME_SIZE+EOM_SIZE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NHTTPのワークがのこっていたらあとしまつ。
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void PERSONAL_DATA_ClearNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk )
+{
+  if(p_wk->p_nhttp){
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL);  //NHTTPエラーの時に呼ぶコールバック削除
+    NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
+    NHTTP_RAP_End( p_wk->p_nhttp );
+    p_wk->p_nhttp = NULL;
+  }
 }
 
 
@@ -2853,7 +2869,10 @@ static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
   // Netエラーチェック
   if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,FALSE) )
   {
+    
     // 終了へ
+    //エラー表示
+    NetErr_DispCall( FALSE );
     return FALSE;
   }
 
