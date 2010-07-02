@@ -1,4 +1,6 @@
 ###################################################################################
+# ・GMMを全て検索
+# ・ひらがな枠内に漢字が存在する項目をリストアップ
 #
 # 作成日：2010/7/2 作成者：保坂 元八
 ###################################################################################
@@ -31,6 +33,7 @@ def check_kanji( gmm_file )
   puts gmm_file + " > "
   File.open( gmm_file, "r" ){|f|
     str = f.read
+    # GMMはUTF-8なので扱いやすいSJISに変換
     str = Kconv.tosjis(str)
     
     check = ""
@@ -84,7 +87,6 @@ def recursive_search(path)
   end
 end
 
-
-#check_kanji( "bag.gmm" )
+# ↓実処理↓
 
 recursive_search( SRC_MESSAAGE ) 
