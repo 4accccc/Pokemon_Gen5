@@ -4126,7 +4126,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         // ƒƒUƒƒbƒNó‘Ô
         if( BPP_CheckSick(wk->procPoke, WAZASICK_WAZALOCK) ){
           WazaID waza = BPP_SICKCONT_GetParam(BPP_GetSickCont(wk->procPoke, WAZASICK_WAZALOCK));
-          BtlPokePos pos = BTL_CALC_DecideWazaTargetAutoForClient( wk->mainModule, wk->pokeCon, wk->procPoke, waza, &wk->randContext );
+          BtlPokePos pos = BTL_CALC_DecideWazaTargetAutoForClient( wk->mainModule, wk->pokeCon, wk->procPoke, waza, &wk->AIRandContext );
           BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
           (*seq) = SEQ_INC;
           break;
