@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-29T19:05:44"/>
+	<create user="matsumiya" host="W00224" date="2010-07-02T12:53:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -374,12 +374,12 @@
 		<attribute name="キャラ指定">プラズマ団その１</attribute>
 		<language name="JPN" width="256">プラズマだん『そうとも！▼
 まちがった　せかいを　ただすためなら
-ちからづくも　とうぜん　だ！▼
+ちからずくも　とうぜん　だ！▼
 さて　われらの　おうさま
 Ｎさまの　もとに　つどおう！！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『そうとも！▼
 間違った　世界を　ただすためなら
-ちからづくも　当然だ！▼
+ちからずくも　当然だ！▼
 さて　われらの　王様
 Ｎさまの　もとに　集おう！！▼</language>
 	</row>
