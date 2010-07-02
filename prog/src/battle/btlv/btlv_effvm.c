@@ -66,7 +66,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -126,7 +126,8 @@ typedef struct{
   u32               camera_move_ignore    :1;
   u32               particle_tex_load     :1;     //パーティクルテクスチャデータロード中フラグ
   u32               zoom_in_migawari      :1;     //カメラズームイン時にみがわり入れ替えを行ったフラグ
-  u32                                     :14;
+  u32               reverse_draw_no_check :1;     //リバースドローチェックをしない
+  u32                                     :13;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -741,7 +742,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("EFFVM_Start:\nEFFNO:%d\n",waza);
 #endif
-  SOGABE_Printf("EFFVM_Start:\nEFFNO:%d\n",waza);
+//  SOGABE_Printf("EFFVM_Start:\nEFFNO:%d\n",waza);
 
   bevw->sequence = NULL;
   BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
@@ -863,6 +864,18 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
         migawari_flag = ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) &
                           BTLV_MCSS_STATUS_FLAG_MIGAWARI );
       }
+    }
+
+    if( bevw->waza == BTLEFF_ZOOM_IN )
+    { 
+      //連続攻撃でのカメラズームインのあとはリバースドローチェックをしない
+      bevw->reverse_draw_no_check = 1;
+    }
+
+    if( bevw->waza == BTLEFF_ZOOM_IN_RESET )
+    { 
+      //連続攻撃でのカメラズームインリセットのあとはリバースドローチェックをする
+      bevw->reverse_draw_no_check = 0;
     }
 
     //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
@@ -4749,7 +4762,10 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   EFFVM_CheckShadow( bevw );
 
   //リバース描画ON
-  BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_ON );
+  if( !bevw->reverse_draw_no_check )
+  { 
+    BTLV_EFFECT_SetReverseDrawFlag( BTLV_EFFECT_REVERSE_DRAW_ON );
+  }
 
   //仮想マシン停止
   VM_End( vmh );
