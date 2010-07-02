@@ -115,7 +115,7 @@ enum
 
 #define _UP_ITEMREPORT_INITX (2)
 #define _UP_ITEMREPORT_INITY (12)
-#define _UP_ITEMREPORT_SIZEX (26)
+#define _UP_ITEMREPORT_SIZEX (28)
 #define _UP_ITEMREPORT_SIZEY (7)
 
 #define _ITEMICON_SCR_X (14)
