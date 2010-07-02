@@ -231,6 +231,13 @@ add_zoroa:
 
   //‹ó‚«‚ª‚È‚¢‚©H
   IF $add_ok == FALSE THEN
+    
+    IF $is_first == TRUE THEN
+       //—‚ÌŽq‰ºŒü‚­
+      _OBJ_ANIME( C03R0401_GIRL1_01, anm_down )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+    
     _CALL add_ng
     _RET
   ENDIF
