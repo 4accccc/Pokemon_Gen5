@@ -6765,7 +6765,7 @@ static void handler_DarumaMode_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_DarumaMode( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END,            handler_DarumaMode            },    // ターンチェック終了ハンドラ
+    { BTL_EVENT_TURNCHECK_DONE,           handler_DarumaMode            },    // ターンチェック終了ハンドラ
     { BTL_EVENT_IEKI_FIXED,               handler_DarumaMode_IekiFixed  },
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,    handler_DarumaMode_IekiFixed  },
   };
