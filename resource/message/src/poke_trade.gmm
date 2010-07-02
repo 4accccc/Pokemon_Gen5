@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-23T18:16:03"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-07-02T12:03:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -399,9 +399,9 @@
 		<language name="JPN_KANJI" width="256">ともだちコード</language>
 	</row>
 
-	<row id="POKETRADE_STR_15">
-		<language name="JPN" width="256">あいしょうチェック</language>
-		<language name="JPN_KANJI" width="256">相性チェック</language>
+	<row id="POKETRADE_STR_15" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="256">フィーリングチェック</language>
+		<language name="JPN_KANJI" width="256">フィーリングチェック</language>
 	</row>
 
 	<row id="POKETRADE_STR_16">
@@ -478,10 +478,10 @@
 	</row>
 
 	<row id="POKETRADE_STR_29">
-		<language name="JPN" width="256">セーブしています
-しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">セーブしています
-しばらく　お待ちください</language>
+		<language name="JPN" width="256">ポケモンレポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="256">ポケモンレポートに　書き込んでいます
+電源を　切らないでください</language>
 	</row>
 
 	<row id="POKETRADE_STR_100">
@@ -866,9 +866,9 @@
 	</row>
 
 	<row id="POKETRADE_STR2_02">
-		<language name="JPN" width="256">じぶんが こうかんできない
-ポケモンを　だして　います</language>
-		<language name="JPN_KANJI" width="256">自分が 交換できない
+		<language name="JPN" width="256">じぶんが　こうかんできない
+ポケモンを　だしています</language>
+		<language name="JPN_KANJI" width="256">自分が　交換できない
 ポケモンを　だしています</language>
 	</row>
 
