@@ -229,6 +229,10 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
 
   // グラフィック、フォントなど
   {
+    // 3Dの画面を初期化したいので、一度3Dありで生成し、すぐに破棄する
+    work->graphic       = ZUKAN_DETAIL_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, work->heap_id, TRUE );
+    ZUKAN_DETAIL_GRAPHIC_Exit( work->graphic );
+
     work->graphic       = ZUKAN_DETAIL_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, work->heap_id, FALSE );
     work->font          = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heap_id );
     work->print_que     = PRINTSYS_QUE_Create( work->heap_id );
