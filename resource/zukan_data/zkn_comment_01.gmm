@@ -680,7 +680,7 @@
 さきが　わかれて　さらに　ふえる。</language>
 		<language name="JPN_KANJI">炎の　玉を　操る。
 成長すると　６本の　しっぽは
-先が　わかれて　さらに　増える。</language>
+先が　分かれて　さらに　増える。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_038">
@@ -878,7 +878,7 @@
 とりこにしてきた。</language>
 		<language name="JPN_KANJI">威風堂々とした　姿は
 古くから　人々の　心を
-虜にしてきた</language>
+虜にしてきた。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_060">
@@ -1109,10 +1109,10 @@
 	<row id="ZKN_COMMENT_01_085">
 		<language name="JPN">しんかのときに　ドードーの　あたまの
 どちらかが　ぶんれつした　ちんしゅ。
-じそく　６０キロいじょうで　はしる。</language>
+じそく６０キロいじょうで　はしる。</language>
 		<language name="JPN_KANJI">進化のときに　ドードーの　頭の
 どちらかが　分裂した　珍種。
-時速　６０キロ以上で　走る。</language>
+時速６０キロ以上で　走る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_086">
@@ -1327,7 +1327,7 @@
 からだに　ためて　うかんでいる。
 ガスは　くさいうえに　ばくはつする。</language>
 		<language name="JPN_KANJI">空気より　軽い　ガスを
-体は　ためて　浮かんでいる。
+体に　ためて　浮かんでいる。
 ガスは　くさい上に　爆発する。</language>
 	</row>
 
@@ -1858,7 +1858,7 @@
 わざと　にがす。いとを　たどれば
 なかまごと　つかまえられるからだ。</language>
 		<language name="JPN_KANJI">獲物の　体に　糸を　つけて
-わざと　逃がす。　糸を　たどれば
+わざと　逃がす。糸を　たどれば
 仲間ごと　捕まえられるからだ。</language>
 	</row>
 
@@ -2613,7 +2613,7 @@
 		<language name="JPN">あしの　うらには　ちいさな　トゲが
 たくさん　ついているので　かべや
 てんじょうを　あるくことが　できる。</language>
-		<language name="JPN_KANJI">足の　裏には　ちいさな　トゲが
+		<language name="JPN_KANJI">足の　裏には　小さな　トゲが
 たくさん　ついているので
 壁や　天井を　歩くことが　できる。</language>
 	</row>
@@ -2929,7 +2929,7 @@
 ねころがって　すごす。その　ようすを
 みていると　ねむけに　おそわれる。</language>
 		<language name="JPN_KANJI">１日のうち　ほとんどの　時間を
-寝転がって　過ごす。　その　様子を
+寝転がって　過ごす。その　様子を
 見ていると　眠気に　襲われる。</language>
 	</row>
 
@@ -3271,7 +3271,7 @@
 とびはねている。はねる　しんどうで
 しんぞうを　こどう　させているのだ。</language>
 		<language name="JPN_KANJI">しっぽを　バネの代わりに　いつも
-飛び跳ねている。跳ねる　振動で
+跳びはねている。跳ねる　振動で
 心臓を　鼓動　させているのだ。</language>
 	</row>
 
@@ -3280,7 +3280,7 @@
 ぞうふくさせる。ふしぎな　ステップで
 あいての　こころを　あやつる。</language>
 		<language name="JPN_KANJI">黒真珠で　サイコパワーを
-増幅させる。　不思議な　ステップで
+増幅させる。不思議な　ステップで
 相手の　心を　操る。</language>
 	</row>
 
@@ -4125,7 +4125,7 @@
 		<language name="JPN">ちいさな　たまには　えいようが
 つまっているだけでなく　おいしいので
 ムックルに　ついばまれたりする。</language>
-		<language name="JPN_KANJI">ちいさな　玉には　栄養が
+		<language name="JPN_KANJI">小さな　玉には　栄養が
 つまっているだけでなく　おいしいので
 ムックルに　ついばまれたりする。</language>
 	</row>
@@ -4134,7 +4134,7 @@
 		<language name="JPN">つよい　ひざしを　かんじとると
 とざしていた　はなびらを　ひろげ
 ぜんしんで　にっこうを　あびる。</language>
-		<language name="JPN_KANJI">強い　日差しを　感じるとると
+		<language name="JPN_KANJI">強い　日差しを　感じとると
 閉ざしていた　花びらを　広げ
 全身で　日光を　浴びる。</language>
 	</row>
@@ -4154,7 +4154,7 @@
 さいぼうに　その　なごりが　ある。</language>
 		<language name="JPN_KANJI">昔は　丈夫な　殻で
 背中　全体を　おおっていた。
-細胞に　その　名残りが　ある。</language>
+細胞に　その　名残が　ある。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_424">
@@ -4162,7 +4162,7 @@
 いろんなことが　きように　できるので
 ほとんど　てを　つかわなくなった。</language>
 		<language name="JPN_KANJI">２本に　分かれた　しっぽは
-色んなことが　器用に　できるので
+いろんなことが　器用に　できるので
 ほとんど　手を　使わなくなった。</language>
 	</row>
 
@@ -4180,7 +4180,7 @@
 かぜに　ながされていくが　きづくと
 いつのまにか　きえてしまっている。</language>
 		<language name="JPN_KANJI">夕暮れ　群れになって　大空を
-風に　流されて行くが　気づくと
+風に　流されていくが　気づくと
 いつのまにか　消えてしまっている。</language>
 	</row>
 
@@ -4242,7 +4242,7 @@
 		<language name="JPN">とびはねると　くちのなかにある
 たまが　あちこちに　はんしゃして
 すずのような　ねいろと　なる。</language>
-		<language name="JPN_KANJI">飛び跳ねると　口の中にある
+		<language name="JPN_KANJI">跳びはねると　口の中にある
 玉が　あちこちに　反射して
 鈴のような　音色と　なる。</language>
 	</row>
@@ -4305,7 +4305,7 @@
 		<language name="JPN">ちいさないしを　かかえるのが　すき。
 あいての　あしもとを　あるきまわって
 ついつい　ころばすことも　ある。</language>
-		<language name="JPN_KANJI">ちいさな石を　抱えるのが　好き。
+		<language name="JPN_KANJI">小さな　石を　抱えるのが　好き。
 相手の　足元を　歩き回って
 ついつい　転ばすことも　ある。</language>
 	</row>
@@ -4333,7 +4333,7 @@
 いりょく　じゅうぶんだが　まだ
 うまくたたかえず　じぶんもきずつく。</language>
 		<language name="JPN_KANJI">大口を　使った　攻撃は
-威力　じゅうぶんだが
+威力　十分だが
 まだ　うまく戦えず　自分も傷つく。</language>
 	</row>
 
@@ -4640,7 +4640,7 @@
 あのよに　つれていくと　いわれる。</language>
 		<language name="JPN_KANJI">弾力のある　体の　中に
 行き場のない　魂を　取り込んで
-あの世に　連れて行くと　言われる。</language>
+あの世に　連れていくと　言われる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_478">
@@ -4729,7 +4729,7 @@
 やぶれたせかいと　いわれる　ばしょで
 しずかに　もとのせかいを　みていた。</language>
 		<language name="JPN_KANJI">暴れ者　ゆえ　追い出されたが
-やぶれたせかいと　言われる　場所で
+破れた世界と　言われる　場所で
 静かに　元の世界を　見ていた。</language>
 	</row>
 
@@ -4783,7 +4783,7 @@
 タマゴのなかから　すがたを　あらわし
 せかいを　うみだしたと　されている。</language>
 		<language name="JPN_KANJI">なにも　ない　場所に　あった
-タマゴのなかから　姿を　現し
+タマゴの中から　姿を　現し
 世界を　生み出したと　されている。</language>
 	</row>
 
@@ -5104,10 +5104,10 @@
 
 	<row id="ZKN_COMMENT_01_529">
 		<language name="JPN">ちちゅうを　ほりすすむ　スピードは
-じそく　５０キロいじょう。ちじょうを
+じそく５０キロいじょう。ちじょうを
 はしる　じどうしゃと　いいしょうぶ。</language>
 		<language name="JPN_KANJI">地中を　掘り進む　スピードは
-時速　５０キロ以上。
+時速５０キロ以上。
 地上を　走る　自動車と　いい勝負。</language>
 	</row>
 
