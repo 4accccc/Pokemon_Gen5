@@ -7248,7 +7248,7 @@ static void handler_LockON( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->pokeID = pokeID;
       param->sickID = WAZASICK_MUSTHIT_TARGET;
-      param->sickCont = BPP_SICKCONT_MakeTurnParam( 2, targetPokeID );
+      param->sickCont = BPP_SICKCONT_MakePokeTurn( targetPokeID, 2 );
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_LockOn );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, targetPokeID );
