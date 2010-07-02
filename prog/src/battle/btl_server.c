@@ -1294,7 +1294,7 @@ static void print_client_action( const BTL_SVCL_ACTION* clientAction )
         OS_TPrintf("   Action(%d) = %d:", j, action->gen.cmd );
         if( action->gen.cmd == BTL_ACTION_FIGHT )
         {
-          OS_TPrintf(" waza=%d, targetPos=%d\n", action->fight.waza, action->fight.targetPos );
+          OS_TPrintf(" waza=%d, targetPos=%d", action->fight.waza, action->fight.targetPos );
         }
         OS_TPrintf("\n");
       }
@@ -1307,7 +1307,7 @@ static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
 {
   #ifdef PM_DEBUG
   // TWL-DEBUGGER ã‚Å‚È‚¢‚Æ•¶Žš—ñƒ‚ƒWƒ…[ƒ‹‚ª³‚µ‚­“®‚©‚È‚¢‚Ì‚Åc
-  if( OS_GetConsoleType() == OS_CONSOLE_TWLDEBUGGER )
+  if( OS_GetConsoleType() & OS_CONSOLE_TWLDEBUGGER )
   {
     OS_TPrintf("  * %s : %d bytes\n", caption, que->writePtr );
     {

@@ -1853,7 +1853,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     // デバッグ用Print制御
     #ifdef PM_DEBUG
-    if( OS_GetConsoleType() == OS_CONSOLE_TWLDEBUGGER ){
+    if( OS_GetConsoleType() & OS_CONSOLE_TWLDEBUGGER ){
       BTL_DEBUGPRINT_Ctrl();
     }
     #endif
