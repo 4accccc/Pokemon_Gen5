@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-02T17:14:48"/>
+	<create user="taya" host="W00146" date="2010-07-02T18:52:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1241,8 +1241,8 @@
 		<comment>みがわり</comment>
 		<language name="JPN" width="216">しかし　みがわりを　だすには
 たいりょくが　たりなかった！</language>
-		<language name="JPN_KANJI" width="216">しかし 身代わりを出すには
-体力が 足りなかった！</language>
+		<language name="JPN_KANJI" width="216">しかし　身代わりを出すには
+体力が　足りなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Reflector">
