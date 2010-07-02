@@ -129,7 +129,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u16 effectNo );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static WazaID checkEncoreWazaChange( const BTL_POKEPARAM* bpp, const BTL_ACTION_PARAM* action );
-static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
+static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action, u16 handlerSubPri );
 static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza );
 static void wazaRobParam_Init( WAZA_ROB_PARAM* param );
@@ -1408,10 +1408,11 @@ static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk )
     waza = ActOrder_GetWazaID( &wk->actOrder[i] );
     if( waza != WAZANO_NULL )
     {
-      if( BTL_HANDLER_Waza_Add(wk->actOrder[i].bpp, waza) )
+      BTL_POKEPARAM* bpp = wk->actOrder[i].bpp;
+      if( BTL_HANDLER_Waza_Add(bpp, waza, BPP_GetValue(bpp, BPP_AGILITY)) )
       {
-        scEvent_BeforeFight(wk, wk->actOrder[i].bpp, waza );
-        BTL_HANDLER_Waza_Remove( wk->actOrder[i].bpp, waza );
+        scEvent_BeforeFight(wk, bpp, waza );
+        BTL_HANDLER_Waza_Remove( bpp, waza );
       }
     }
   }
@@ -1437,6 +1438,8 @@ enum {
   ACTPRI_BITSHIFT_SP      = ACTPRI_BIT_AGILITY,
   ACTPRI_BITSHIFT_WAZA    = (ACTPRI_BITSHIFT_SP + ACTPRI_BIT_SP),
   ACTPRI_BITSHIFT_ACT     = (ACTPRI_BITSHIFT_WAZA + ACTPRI_BIT_ACT),
+
+  ACTPRI_BITMASK_HANDLER  = ((1 << (ACTPRI_BIT_AGILITY+ACTPRI_BIT_SP)) - 1),
 };
 
 static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
@@ -1448,40 +1451,50 @@ static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
     素早さ      ... 16 BIT
   */
 
-  return ( ((actPri&0x07)<<25) | ((wazaPri&0x3f)<<19) | ((spPri&0x07)<<16) | (agility&0xffff) );
+  return ( ((actPri&ACTPRI_BITMASK_ACT)<<ACTPRI_BITSHIFT_ACT) |
+           ((wazaPri & ACTPRI_BITMASK_WAZA) << ACTPRI_BITSHIFT_WAZA) |
+           ((spPri & ACTPRI_BITMASK_SP) << ACTPRI_BITSHIFT_SP) |
+           (agility & ACTPRI_BITMASK_AGILITY)
+         );
 }
 
 static inline u32 ActPri_ChangeAgility( u32 defPriority, u16 agility )
 {
-  return (defPriority & 0xffff0000) | agility;
+  u32 mask = ~(ACTPRI_BITMASK_AGILITY);
+  TAYA_Printf("mask = %08x\n", mask);
+  return (defPriority & mask) | (agility & ACTPRI_BITMASK_AGILITY);
 }
 
 static inline u32 ActPri_ChangeWazaPriority( u32 defPriority, u8 wazaPri )
 {
   u8 actPri = ActPri_GetActPri( defPriority );
   u8 spPri = ActPri_GetSpPri( defPriority );
-  u16 agility = defPriority & 0xffff;
+  u16 agility = defPriority & ACTPRI_BITMASK_AGILITY;
 
   return ActPri_Make( actPri, wazaPri, spPri, agility );
 }
 
 static inline u8 ActPri_GetWazaPri( u32 priValue )
 {
-  return ((priValue >>19) & 0x3f);
+  return ((priValue >> ACTPRI_BITSHIFT_WAZA) & ACTPRI_BITMASK_AGILITY);
 }
 static inline u8 ActPri_GetSpPri( u32 priValue )
 {
-  return ((priValue >> 16) & 0x07);
+  return ((priValue >> ACTPRI_BITSHIFT_SP) & ACTPRI_BITMASK_SP);
 }
 static inline u8 ActPri_GetActPri( u32 priValue )
 {
-  return ((priValue >> 25) & 0x07);
+  return ((priValue >> ACTPRI_BITSHIFT_ACT) & ACTPRI_BITMASK_ACT);
 }
 static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri )
 {
-  priValue &= ~(0x07 << 16);
-  priValue |= ((spPri & 0x07) << 16);
+  priValue &= ~(ACTPRI_BITMASK_SP << ACTPRI_BITSHIFT_SP);
+  priValue |= ((spPri & ACTPRI_BITMASK_SP) << ACTPRI_BITSHIFT_SP);
   return priValue;
+}
+static inline u16 ActPri_GetHandlerPri( u32 priValue )
+{
+  return priValue & ACTPRI_BITMASK_HANDLER;
 }
 
 
@@ -1992,7 +2005,7 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
         }
         BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos );
         wk->currentSabotageType = CheckSabotageType( wk, bpp );
-        scproc_Fight( wk, bpp, &action );
+        scproc_Fight( wk, bpp, &action, ActPri_GetHandlerPri(actOrder->priority) );
         break;
       case BTL_ACTION_ITEM:
         BTL_N_Printf( DBGSTR_SVFL_ActOrder_Item, action.item.number, action.item.targetIdx);
@@ -3287,7 +3300,7 @@ static WazaID checkEncoreWazaChange( const BTL_POKEPARAM* bpp, const BTL_ACTION_
 //-----------------------------------------------------------------------------------
 // サーバーフロー：「たたかう」ルート
 //-----------------------------------------------------------------------------------
-static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action )
+static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action, u16 handlerSubPri )
 {
   REQWAZA_WORK  reqWaza;
   WazaID  orgWaza, actWaza;
@@ -3325,7 +3338,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK);
   fTameLock = BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
-  BTL_HANDLER_Waza_Add( attacker, orgWaza );
+  BTL_HANDLER_Waza_Add( attacker, orgWaza, handlerSubPri );
   scproc_StartWazaSeq( wk, attacker, orgWaza );
 
   do {
@@ -3351,7 +3364,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     {
       scPut_WazaMsg( wk, attacker, orgWaza );
       scPut_ReqWazaEffect( wk, attacker, orgWaza, orgTargetPos );
-      BTL_HANDLER_Waza_Add( attacker, reqWaza.wazaID );
+      BTL_HANDLER_Waza_Add( attacker, reqWaza.wazaID, handlerSubPri );
       actWaza = reqWaza.wazaID;
       actTargetPos = reqWaza.targetPos;
     }else{
@@ -3567,7 +3580,7 @@ static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza )
 
       BTL_EVENT_SleepFactorMagicMirrorUser( BPP_GetID(robPoke) );
 
-        BTL_HANDLER_Waza_Add( robPoke, actWaza );
+        BTL_HANDLER_Waza_Add( robPoke, actWaza, BPP_GetValue(robPoke, BPP_AGILITY) );
         scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
         BTL_HANDLER_Waza_RemoveForce( robPoke, actWaza );
 
@@ -3636,7 +3649,7 @@ static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Wa
         return;
       }
 
-      BTL_HANDLER_Waza_Add( robPoke, actWaza );
+      BTL_HANDLER_Waza_Add( robPoke, actWaza, BPP_GetValue(robPoke, BPP_AGILITY) );
       scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
       BTL_HANDLER_Waza_RemoveForce( robPoke, actWaza );
     }
@@ -11122,7 +11135,7 @@ static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* o
     {
       WazaID waza = ActOrder_GetWazaID( &wk->actOrder[i] );
       if( waza == WAZANO_OIUTI ){
-        if( BTL_HANDLER_Waza_Add( wk->actOrder[i].bpp, waza ) ){
+        if( BTL_HANDLER_Waza_Add( wk->actOrder[i].bpp, waza, BPP_GetValue(wk->actOrder[i].bpp, BPP_AGILITY) ) ){
           wk->actOrder[i].fIntrCheck = TRUE;
         }
       }
