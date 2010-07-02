@@ -2088,6 +2088,26 @@ static void _ircstarStart(IRC_BATTLE_MATCH* pWork)
   _CHANGE_STATE(pWork,_ircstarLoop);
 }
 
+
+static void _ircActionWaitEnd(IRC_BATTLE_MATCH* pWork)
+{
+  {
+    int aMsgBuff[1];
+    aMsgBuff[0] = pWork->messageBackup;
+    _msgWindowCreate(aMsgBuff, pWork);
+  }
+  
+  _CHANGE_STATE(pWork,_ircMatchWait);
+  //リーダーで接続人数が1人以上のときのボタン作成　 BTS7242
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
+    if( pWork->musicalNum > 0 ){
+      _ReturnButtonStart(pWork,TRUE);
+      return;
+    }
+  }
+  _ReturnButtonStart(pWork,FALSE);
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ＩＲＣ接続待機
@@ -2096,7 +2116,6 @@ static void _ircstarStart(IRC_BATTLE_MATCH* pWork)
 //------------------------------------------------------------------------------
 static void _ircActionWait(IRC_BATTLE_MATCH* pWork)
 {
-
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
@@ -2110,18 +2129,7 @@ static void _ircActionWait(IRC_BATTLE_MATCH* pWork)
     else
     {  // いいえを選択した場合
       _buttonWindowDelete(pWork);
-//      _firstConnectMessage(pWork);
-
-      {
-        int aMsgBuff[1];
-        aMsgBuff[0] = pWork->messageBackup;
-        _msgWindowCreate(aMsgBuff, pWork);
-      }
-      
-      _ReturnButtonStart(pWork,FALSE);
-      //pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-      //pWork->touch = &_cancelButtonCallback;
-      _CHANGE_STATE(pWork,_ircMatchWait);
+      _CHANGE_STATE(pWork, _ircActionWaitEnd);
     }
   }
 }
