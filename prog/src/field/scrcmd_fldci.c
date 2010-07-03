@@ -85,7 +85,10 @@ VMCMD_RESULT EvCmdFldCi_CallCutin( VMHANDLE *core, void *wk )
     GMEVENT *call_event;
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     call_event = FLD3D_CI_CreateCutInEvt(gsys, ptr, cutin_no);
-    SCRIPT_CallEvent( sc, call_event );
+    if (call_event != NULL )
+    {
+      SCRIPT_CallEvent( sc, call_event );
+    }
   }
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
@@ -112,7 +115,10 @@ VMCMD_RESULT EvCmdFldCi_CallPokeCutin( VMHANDLE *core, void *wk )
     GMEVENT *call_event;
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     call_event = FLD3D_CI_CreatePokeCutInEvtTemoti( gsys, ptr, pos );
-    SCRIPT_CallEvent( sc, call_event );
+    if (call_event != NULL)
+    {
+      SCRIPT_CallEvent( sc, call_event );
+    }
   }
   
   //イベントコールするので、一度制御を返す
@@ -140,7 +146,10 @@ VMCMD_RESULT EvCmdFldCi_CallNpcFlyCutin( VMHANDLE *core, void *wk )
     GMEVENT *call_event;
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     call_event = FLD3D_CI_CreateNpcFlyCutInEvt( gsys, ptr, obj_id );
-    SCRIPT_CallEvent( sc, call_event );
+    if (call_event != NULL)
+    {
+      SCRIPT_CallEvent( sc, call_event );
+    }
   }
   
   //イベントコールするので、一度制御を返す
@@ -187,7 +196,10 @@ VMCMD_RESULT EvCmdFldCi_CallItemCutin( VMHANDLE *core, void *wk )
     GMEVENT *call_event;
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     call_event = FLD3D_CI_CreateCutInEvt(gsys, ptr, cutin_no);
-    SCRIPT_CallEvent( sc, call_event );
+    if (call_event != NULL)
+    {
+      SCRIPT_CallEvent( sc, call_event );
+    }
   }
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;

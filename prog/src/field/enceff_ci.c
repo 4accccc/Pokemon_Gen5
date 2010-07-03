@@ -27,6 +27,7 @@ typedef struct
 
 static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const int inType, const BOOL inIsFadeWhite );
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT BlackOutEvtIllegal( GMEVENT* event, int* seq, void* work );
 
 //--------------------------------------------------------------
 /**
@@ -531,8 +532,16 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
         cutin_ptr = FIELDMAP_GetFld3dCiPtr(fieldmap);
         //カットインイベントコール
         call_event = FLD3D_CI_CreateEncCutInEvt( gsys, cutin_ptr, work->Type, work->IsWhiteFade );
-        //イベントコール
-        GMEVENT_CallEvent( event, call_event );
+        if (call_event != NULL)
+        {
+          //イベントコール
+          GMEVENT_CallEvent( event, call_event );
+        }
+        else    //カットインが呼べなかった場合の例外処理
+        {
+          call_event = GMEVENT_Create(gsys, event, BlackOutEvtIllegal, 0);
+          GMEVENT_CallEvent( event, call_event );
+        }
 				(*seq)++;
       }
     }
@@ -545,4 +554,39 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
   
   return( GMEVENT_RES_CONTINUE );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カットインが呼べなかった場合の例外ブラックインイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT BlackOutEvtIllegal( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK * fieldmap;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  switch(*seq){
+  case 0:
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 3 );
+    (*seq)++;
+    break;
+  case 1:
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      return GMEVENT_RES_FINISH;
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+
 

@@ -43,6 +43,7 @@ typedef struct SORAWOTOBU_WORK_tag{
 }SORAWOTOBU_WORK;
 
 static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *work);
+static GMEVENT_RESULT FlySkyBlackInEvtIllegal( GMEVENT* event, int* seq, void* work );
 
 //------------------------------------------------------------------
 /*
@@ -161,7 +162,10 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
       }
       //カットイン演出開始
       child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, wk->OutCutinNo);
-      GMEVENT_CallEvent(event, child);
+      if (child != NULL )
+      {
+        GMEVENT_CallEvent(event, child);
+      }
       (*seq)++;
     }
     break;
@@ -283,7 +287,24 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
       }
       //カットイン演出開始
       child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, wk->InCutinNo);
-      GMEVENT_CallEvent(event, child);
+      if ( child != NULL )
+      {
+        GMEVENT_CallEvent(event, child);
+      }
+      else      //カットイン呼べなかった場合
+      {
+        //自機表示
+        MMDL * mmdl;
+        FIELD_PLAYER *fld_player;
+        fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+        MMDL_SetStatusBitVanish(mmdl, FALSE);
+        //自機下向き
+        MMDL_SetDirDisp( mmdl, DIR_DOWN );
+        //カットインが呼べなかった場合の例外ブラックイン処理
+        child = GMEVENT_Create(wk->gsys, event, FlySkyBlackInEvtIllegal, 0);
+        GMEVENT_CallEvent(event, child);
+      }
       (*seq)++;
     }
     break;
@@ -332,4 +353,38 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
 
   return GMEVENT_RES_CONTINUE;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カットインが呼べなかった場合の例外ブラックインイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT FlySkyBlackInEvtIllegal( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK * fieldmap;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  switch(*seq){
+  case 0:
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
+    (*seq)++;
+    break;
+  case 1:
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      return GMEVENT_RES_FINISH;
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
 

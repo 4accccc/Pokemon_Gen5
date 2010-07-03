@@ -32,6 +32,9 @@
 
 #include "event_field_fade.h"   //for EVENT_FlySkyBrightIn
 
+#include "system/main.h" //for HEAPID_FIELDMAP
+
+
 #define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
 #define ANM_TYPE_MAX  (4)
@@ -239,12 +242,79 @@ static void PlaySE(FLD3D_CI_PTR ptr);
 
 static void DispSetVTask( GFL_TCB *p_tcb, void *p_work );
 
+#if 0
+#ifdef PM_DEBUG
+static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
+u32 DbgBefore;
+u32 DbgAfter;
+u32 DbgBeforeHeap;
+u32 DbgAfterHeap;
+#endif
+#endif
+
 #define DEF_CAM_NEAR	( 1 << FX32_SHIFT )
 #define DEF_CAM_FAR	( 1024 << FX32_SHIFT )
 
 FS_EXTERN_OVERLAY(enc_cutin_no);
 
 #include "../../../resource/fld3d_ci_se/ci_se_tbl.cdat"
+
+//※カットンが必要とするフィールドヒープのテーブル  リソースに依存しているので、変更があった場合は再調査が必要
+static const CutinUseFldHeapSize[FLDCIID_MAX] = {
+  0x57e4,
+  0x3438,
+  0x20290,
+  0x51a0,
+  0x21cc8,
+  0x2409c,
+  0x24f50,
+  0x27fc0,
+  0x28fd0,
+  0x29fac,
+  0x27630,
+  0xa478,
+  0x884c,
+  0xe570,
+  0x12a68,
+  0xcf20,
+  0xd530,
+  0x8710,
+  0xa478,
+  0x884c,
+  0xb28,
+  0x1e04,
+  0x14bc8,
+  0x619c,
+  0xac88,
+  0x80e0,
+  0x57e4,
+  0x57e4,
+  0x57e4,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x3438,
+  0x20290,
+  0x21cc8,
+  0x2409c,
+  0x24f50,
+  0x27fc0,
+  0x28fd0,
+  0x29fac,
+  0x27630,
+  0x3438,
+  0x3438,
+  0x3438,
+};
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -401,6 +471,7 @@ void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInN
 {
   GMEVENT * event;
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, inCutInNo);
+  if (event == NULL) return;
   GAMESYSTEM_SetEvent(gsys, event);
 }
 
@@ -442,6 +513,14 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   FLD3D_CI_EVENT_WORK *work;
   int size;
 
+  //ヒープが確保できるかをチェック GFI関数は基本的に直接使用禁止ですが、今回は特別に使用します。
+  if ( GFI_HEAP_GetHeapAllocatableSize(HEAPID_FIELDMAP) < CutinUseFldHeapSize[inCutInNo] )
+  {
+    GF_ASSERT_MSG(0,"CAN_NOT_ALLOC No:%d  Allocatable=%x total=%x",
+        inCutInNo, GFI_HEAP_GetHeapAllocatableSize(HEAPID_FIELDMAP),GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));
+    return NULL;
+  }
+
   size = sizeof(FLD3D_CI_EVENT_WORK);
   ptr->PartGene = 0;
   ptr->SubSeq = 0;
@@ -456,6 +535,11 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
 
   //イベント作成
   {
+//#ifdef PM_DEBUG
+//    //ヒープ監視開始
+//    NOZOMU_Printf("-----------ヒープ監視開始------------\n");
+//    GFL_HEAP_DEBUG_StartPrint( HEAPID_FIELDMAP );
+//#endif
     event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
     work = GMEVENT_GetEventWork(event);
     InitCutinEvtWork(ptr, work);
@@ -485,6 +569,8 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   GMEVENT * event;
   int no = FLDCIID_POKE;
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
+  if ( event == NULL ) return NULL;
+
   //セットアップ後コールバック設定
   ptr->SetupCallBack = PokeGraTransEvt;
   ptr->MainSeqFunc = VoiceMain;
@@ -561,6 +647,12 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   dat = ENC_CUTIN_NO_GetDat(inEncCutinNo);
 
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, dat->CutinNo);
+  if ( event == NULL )
+  {
+    //オーバーレイアンロード
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(enc_cutin_no) );
+    return NULL;
+  }
   
   {
     FLD3D_CI_EVENT_WORK *work;
@@ -720,11 +812,27 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
         FIELD_FOG_SetFlag( fog, FALSE );
       }
       (*seq)++;
+//#ifdef PM_DEBUG
+//      DbgBefore = 0;
+//      DbgAfter = 0;
+//      //起動前ＶＲＡＭ量記憶
+//      NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &DbgBefore );
+//#endif
     }
     break;
   case 4:
+//#ifdef PM_DEBUG
+//    DbgBeforeHeap = GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+//#endif    
     //リソースロード
     SetupResource(event, ptr, &evt_work->SetupDat, ptr->CutInNo);
+//#ifdef PM_DEBUG
+//    DbgAfterHeap = GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+//    {
+//      u32 size = DbgBeforeHeap - DbgAfterHeap;
+//      OS_TFPrintf(3,"CUTIN_NO %d FieldAlloc::%x\n", ptr->CutInNo, size);
+//    }
+//#endif
     //セットアップ終了したので3Ｄ面もオン
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
@@ -761,6 +869,16 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 6: //ＢＧＭロード完了待ち
     if ( PMSND_IsLoading() ) break;    //ロード中なら TRUE
+
+//#ifdef PM_DEBUG
+//    {
+//      int size;
+//      //起動後ＶＲＡＭ量記憶
+//      NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &DbgAfter );
+//      size = DbgBefore - DbgAfter;
+//      OS_TFPrintf(3,"CUTIN_NO %d size = %x\n", ptr->CutInNo , size);
+//    }
+//#endif    
     
     (*seq)++;   //次のシーケンスへ
     //not break;
@@ -802,6 +920,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
     DeleteResource(ptr, &evt_work->SetupDat);
+    NOZOMU_Printf("カットインリソースの解放終了\n");
     
     //空を飛ぶフェードインの場合の処理
     if ( IsFlySkyIn(ptr->CutInNo) )
@@ -916,6 +1035,10 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 11:
     //終了
+//#ifdef PM_DEBUG
+//    GFL_HEAP_DEBUG_EndPrint();
+//    NOZOMU_Printf("-----------ヒープ監視終了------------\n");
+//#endif    
     return GMEVENT_RES_FINISH;
   }
 
@@ -1868,7 +1991,7 @@ static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 空を飛ぶブラックインインイベント
+ * 空を飛ぶブラックインイベント
  *
  * @param   event       イベントポインタ
  * @param   *seq        シーケンサ
@@ -2277,6 +2400,7 @@ GMEVENT *FLD3D_CI_CreateNpcFlyCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, co
   GMEVENT * event;
   int no = FLDCIID_CHAMP_OUT;
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
+  if (event == NULL) return NULL;
   //NPCそらをとぶカットイン用変数セット
   {
     NPC_FLY_WORK *fly_work;
@@ -2438,3 +2562,13 @@ static void DispSetVTask( GFL_TCB *p_tcb, void *p_work )
   }
 }
 
+#ifdef PM_DEBUG
+static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
+{
+    // 合計サイズを計算。
+    (*((u32*)pUserData)) += szByte;
+    // 情報をデバックコンソールに出力
+    NOZOMU_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
+    NOZOMU_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
+}
+#endif
