@@ -1946,7 +1946,7 @@ static void MB_PARENT_SoftResetCallBack( void *pWork )
   {
     MBP_Cancel();
   }
-  while( MBP_GetState() != MBP_STATE_STOP ||
+  while( MBP_GetState() != MBP_STATE_STOP &&
          MBP_GetState() != MBP_STATE_COMPLETE )
   {
     OS_TPrintf("WaitA!\n");
