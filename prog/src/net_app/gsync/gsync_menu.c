@@ -472,12 +472,14 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
       if( OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
         GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
         _infoMessageDispHeight(pWork,10, FALSE);
+        _PaletteFade(pWork, TRUE);
         _CHANGE_STATE(pWork,_hitAnyKey);
         return;
       }
       else{  //DSには確認メッセージが必要
         GFL_MSG_GetString( pWork->pMsgData, GAMESYNC_008, pWork->pStrBuf );
         _infoMessageDisp(pWork);
+        _PaletteFade(pWork, TRUE);
         _CHANGE_STATE(pWork,_wifiConnectYesNoCheck);
         return;
       }
