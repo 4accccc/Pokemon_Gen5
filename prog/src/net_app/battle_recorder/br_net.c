@@ -71,6 +71,7 @@ struct _BR_NET_WORK
 
   BR_NET_REQUEST_PARAM  reqest_param;    ///<リクエストされた引数
   u32                   response_flag[BR_NET_REQUEST_MAX];  ///<レスポンスを受けたかどうかのフラグ
+  BOOL                is_last_disconnect_error;
 };
 
 //=============================================================================
@@ -612,6 +613,7 @@ BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
 
     case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
       PMSND_StopSE();
+      p_wk->is_last_disconnect_error  = TRUE;
       return BR_NET_SYSERR_RETURN_DISCONNECT;
 
     case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
@@ -622,6 +624,20 @@ BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
   }
 
   return BR_NET_SYSERR_RETURN_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  切断エラーが起こったかどうか
+ *
+ *	@param	const BR_NET_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEならば切断エラーが起こった  FALSEならば起こっていない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_IsLastDisConnectError( const BR_NET_WORK *cp_wk )
+{ 
+  return cp_wk->is_last_disconnect_error;
 }
 
 //=============================================================================

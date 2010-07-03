@@ -150,6 +150,9 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		
 	case SEQ_WIFI_CONNECT:	//WIFI接続
 	  {
+      //サブプロセスへの引数構造体をunionにしてあるでmemclearする前に情報をもらう
+      const BOOL is_error = (gmw->br_param.result == BR_RESULT_NET_ERROR);
+
       GFL_STD_MemClear( &gmw->login_param, sizeof(WIFILOGIN_PARAM) );
       gmw->login_param.gamedata = gmw->proc_param->gamedata;
       gmw->login_param.bg       = WIFILOGIN_BG_NORMAL;
@@ -158,7 +161,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
       gmw->login_param.nsid = WB_NET_GDS;
 
 
-      if( gmw->br_param.result == BR_RESULT_NET_ERROR )
+      if( is_error )
       { 
         gmw->login_param.mode = WIFILOGIN_MODE_ERROR;
       }

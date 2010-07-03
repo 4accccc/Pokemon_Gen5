@@ -96,7 +96,7 @@ static BOOL RecvSubProccess_Normal(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_work);
 
-
+static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int ret );
 
 //==============================================================================
 //
@@ -146,6 +146,8 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	gdsrap->gdslib_initialize = TRUE;
 
 	gdsrap->comm_initialize_ok = TRUE;
+
+  GFL_NET_DWC_SetErrDisconnectCallback(GdsRap_DisconnectCallback, gdsrap );
 	
 	return TRUE;
 }
@@ -159,6 +161,8 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 //--------------------------------------------------------------
 void GDSRAP_Exit(GDS_RAP_WORK *gdsrap)
 {
+  GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL );
+
   if(gdsrap->p_nhttp != NULL){
     NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
     NHTTP_RAP_End( gdsrap->p_nhttp );
@@ -694,6 +698,17 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
         }
         else{
           OS_TPrintf("不正検査%d回中...\n", gdsrap->evil_check_loop);
+
+          if( NHTTP_ERROR_BUSY != error )
+          {
+            if(gdsrap->p_nhttp != NULL){
+              NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
+              NHTTP_RAP_ErrorClean( gdsrap->p_nhttp);
+              NHTTP_RAP_End( gdsrap->p_nhttp );
+              gdsrap->p_nhttp = NULL;
+              NAGI_Printf( "GDS_RAP NTHHP　エラークリーン\n" );
+            }
+          }
           return FALSE;
         }
       }
@@ -951,6 +966,39 @@ static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_w
 	//送信前のセーブは無くなったし、ローカルでの送信済みチェックも無くなったので
 	//ケア処理は無くなった
 	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  切断コールバック
+ *
+ *	@param	pUserWork   ユーザーワーク
+ *	@param	code        エラーコード
+ *	@param	type        エラー種類
+ *	@param	ret         エラーリターン
+ */
+//-----------------------------------------------------------------------------
+static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int ret )
+{
+  GDS_RAP_WORK  *gdsrap = pUserWork;
+
+  switch( type )
+  {
+    //切断エラー
+  case DWC_ETYPE_SHUTDOWN_FM:
+  case DWC_ETYPE_DISCONNECT:
+    //NHTTPが解放していないならば先に呼ぶ
+    if(gdsrap->p_nhttp != NULL){
+      NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
+      NHTTP_RAP_ErrorClean( gdsrap->p_nhttp);
+      NHTTP_RAP_End( gdsrap->p_nhttp );
+      gdsrap->p_nhttp = NULL;
+      NAGI_Printf( "切断コールバック　エラークリーン\n" );
+    }
+    break;
+  }
+
+  NAGI_Printf( "切断コールバック\n" );
 }
 
 //--------------------------------------------------------------

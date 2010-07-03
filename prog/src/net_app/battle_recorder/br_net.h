@@ -118,3 +118,5 @@ typedef enum
 } BR_NET_SYSERR_RETURN;
 
 extern BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk );
+extern BOOL BR_NET_IsLastDisConnectError( const BR_NET_WORK *cp_wk );
+
