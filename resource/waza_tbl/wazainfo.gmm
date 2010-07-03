@@ -1354,11 +1354,11 @@
 
 	<row id="WAZAINFO_107">
 		<language name="JPN" width="216">からだを　ちぢめて　ちいさく　みせて
-じぶんの　かいひりつを　あげる。
-</language>
+じぶんの　かいひりつを
+ぐーんと　あげる。</language>
 		<language name="JPN_KANJI" width="216">体を　ちぢめて　小さく　みせて
-自分の　回避率を　あげる。
-</language>
+自分の　回避率を
+ぐーんと　あげる。</language>
 	</row>
 
 	<row id="WAZAINFO_108">
@@ -2553,7 +2553,7 @@
 		<language name="JPN" width="216">５ターンの　あいだ　あめを　ふらせて
 みずタイプの
 わざの　いりょくを　あげる。</language>
-		<language name="JPN_KANJI" width="216">５ターンの　あいだ　雨を　ふらせて
+		<language name="JPN_KANJI" width="216">５ターンの　あいだ　雨を　降らせて
 みずタイプの
 技の　威力を　あげる。</language>
 	</row>

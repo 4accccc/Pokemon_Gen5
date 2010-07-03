@@ -702,7 +702,7 @@
 	<row id="TOKUSEIINFO_044">
 		<language name="JPN" width="216">あめのとき　すこしずつ
 ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="216">雨のとき　すこしずつ
+		<language name="JPN_KANJI" width="216">雨のとき　少しずつ
 ＨＰを　回復する。</language>
 	</row>
 
@@ -884,7 +884,7 @@
 	<row id="TOKUSEIINFO_070">
 		<language name="JPN" width="216">せんとうに　でると
 ひざしが　つよくなる。</language>
-		<language name="JPN_KANJI" width="216">戦闘に　出ると
+		<language name="JPN_KANJI" width="216">戦闘に　でると
 日差しが　強くなる。</language>
 	</row>
 
@@ -969,7 +969,7 @@
 		<language name="JPN" width="216">きのみを　いつもより
 はやく　つかう。</language>
 		<language name="JPN_KANJI" width="216">きのみを　いつもより
-はやく　使う。</language>
+早く　使う。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_083">
@@ -990,7 +990,7 @@
 		<language name="JPN" width="216">ほのお　わざの
 いりょくを　よわめる。</language>
 		<language name="JPN_KANJI" width="216">ほのお　技の
-威力を　よわめる。</language>
+威力を　弱める。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_086">
@@ -1003,7 +1003,7 @@
 	<row id="TOKUSEIINFO_087">
 		<language name="JPN" width="216">あついと　ＨＰが　へる。
 みずで　ＨＰを　かいふく。</language>
-		<language name="JPN_KANJI" width="216">あついと　ＨＰが　へる。
+		<language name="JPN_KANJI" width="216">あついと　ＨＰが　減る。
 みずで　ＨＰを　回復。</language>
 	</row>
 
@@ -1088,7 +1088,7 @@
 		<language name="JPN" width="216">おたがいの　わざが
 かならず　あたる。</language>
 		<language name="JPN_KANJI" width="216">お互いの　技が
-かならず　当たる。</language>
+必ず　当たる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_100">
@@ -1143,14 +1143,14 @@
 	<row id="TOKUSEIINFO_107">
 		<language name="JPN" width="216">あいての　もつ　きけんな
 わざを　さっちする。</language>
-		<language name="JPN_KANJI" width="216">相手の　もつ　危険な
+		<language name="JPN_KANJI" width="216">相手の　持つ　危険な
 技を　察知する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_108">
 		<language name="JPN" width="216">あいての　もつ　わざを
 よみとることが　できる。</language>
-		<language name="JPN_KANJI" width="216">相手の　もつ　技を
+		<language name="JPN_KANJI" width="216">相手の　持つ　技を
 読み取ることが　できる。</language>
 	</row>
 
@@ -1214,7 +1214,7 @@
 		<language name="JPN" width="216">せんとうに　でると
 あられを　ふらす。</language>
 		<language name="JPN_KANJI" width="216">戦闘に　でると
-あられを　ふらす。</language>
+あられを　降らす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_118">
@@ -1256,7 +1256,7 @@
 		<language name="JPN" width="216">ねむっている　あいての
 ＨＰを　へらす。</language>
 		<language name="JPN_KANJI" width="216">ねむっている　相手の
-ＨＰを　へらす。</language>
+ＨＰを　減らす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_124">
@@ -1353,7 +1353,7 @@
 	<row id="TOKUSEIINFO_137">
 		<language name="JPN" width="216">どくのとき　ぶつりの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">どくのとき　物理の
+		<language name="JPN_KANJI" width="216">毒のとき　物理の
 威力が　あがる。</language>
 	</row>
 
@@ -1465,7 +1465,7 @@
 	<row id="TOKUSEIINFO_153">
 		<language name="JPN" width="216">あいてを　たおすと
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="216">相手を　たおすと
+		<language name="JPN_KANJI" width="216">相手を　倒すと
 攻撃が　あがる。</language>
 	</row>
 
