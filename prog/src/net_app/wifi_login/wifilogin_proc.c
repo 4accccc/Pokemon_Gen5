@@ -213,7 +213,6 @@ static BOOL _keyTouchCheck(WIFILOGIN_WORK* pWork)
       return TRUE;
     }
   }
-
   return FALSE;
 }
 
@@ -973,6 +972,7 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
   }
   else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) )
   {  //•ÊDS‚Ìê‡
+    pWork->bInitMessage=TRUE;
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     if(!DS_SYSTEM_IsRunOnTwl()){
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
