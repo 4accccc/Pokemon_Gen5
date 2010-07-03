@@ -14230,6 +14230,7 @@ BOOL BTL_SVFRET_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8* fFail
   BOOL result;
   wk->fKaifukuFujiMsgDisped = FALSE;
   result = scproc_UseItemEquip( wk, bpp );
+  *fFailMsgDisped = wk->fKaifukuFujiMsgDisped;
 
   return result;
 }
