@@ -35,8 +35,8 @@ typedef enum
   BTLV_GAUGE_TYPE_SAFARI,
 }BTLV_GAUGE_TYPE;
 
-typedef struct _BTLV_GAUGE_WORK BTLV_GAUGE_WORK;
-typedef struct _BTLV_GAUGE_CLWK BTLV_GAUGE_CLWK;
+typedef struct _BTLV_GAUGE_WORK           BTLV_GAUGE_WORK;
+typedef struct _BTLV_GAUGE_CLWK           BTLV_GAUGE_CLWK;
 
 extern  BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw );

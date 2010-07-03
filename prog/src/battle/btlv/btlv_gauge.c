@@ -309,7 +309,8 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 static  void  TCB_BTLV_GAUGE_Move( GFL_TCB* tcb, void* work );
 static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work );
 
-static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, PokeSick sick );
+static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos );
+static  void  gauge_free_resource( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp );
 static  void  init_damage_dot( BTLV_GAUGE_CLWK* bgcl );
 static  void  bgm_pause( BOOL flag );
@@ -392,6 +393,48 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
     bgw->tcb = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_GAUGE_DamageEffect, bgdew, 0 );
   }
 
+  { 
+    BtlvMcssPos     pos;
+    BtlvMcssPos     start;
+    BtlvMcssPos     end;
+    BTLV_GAUGE_TYPE type;
+    BtlRule rule =  BTLV_EFFECT_GetBtlRule();
+
+    switch( rule ){ 
+    case BTL_RULE_SINGLE:
+      start = BTLV_MCSS_POS_AA;
+      end   = BTLV_MCSS_POS_BB;
+      type  = BTLV_GAUGE_TYPE_1vs1;
+      break;
+    case BTL_RULE_DOUBLE:
+      start = BTLV_MCSS_POS_A;
+      end   = BTLV_MCSS_POS_D;
+      type  = BTLV_GAUGE_TYPE_2vs2;
+      break;
+    default:
+    case BTL_RULE_TRIPLE:
+      start = BTLV_MCSS_POS_A;
+      end   = BTLV_MCSS_POS_F;
+      type  = BTLV_GAUGE_TYPE_3vs3;
+      break;
+    case BTL_RULE_ROTATION:
+      start = BTLV_MCSS_POS_A;
+      end   = BTLV_MCSS_POS_F;
+      type  = BTLV_GAUGE_TYPE_ROTATE;
+      break;
+    }
+    for( pos = start ; pos <= end ; pos++ )
+    { 
+      GFL_CLACTPOS  ofs = { 128, 0 };
+      if( pos & 1 )
+      { 
+        ofs.x *= -1;
+      }
+      gauge_load_resource( bgw, type, pos );
+      BTLV_GAUGE_SetPos( bgw, pos, &ofs );
+    }
+  }
+
   return bgw;
 }
 
@@ -408,6 +451,7 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
 
   for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
   {
+    gauge_free_resource( bgw, pos );
     BTLV_GAUGE_Del( bgw, pos );
   }
   if( bgw->pinch_bgm_flag )
@@ -550,22 +594,10 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 //============================================================================================
 void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 {
-  GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
-  MI_CpuClear16( &bgw->bgcl[ pos ], sizeof( BTLV_GAUGE_CLWK ) );
+//  GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
+  MI_CpuClear16( &bgw->bgcl[ pos ].gauge_type, sizeof( BTLV_GAUGE_CLWK ) - 16 * 4 );
 
-  { 
-    PokeSick sick;
-    if( ( BPP_SICKCONT_IsMoudokuCont( BPP_GetSickCont( bpp, WAZASICK_DOKU ) ) == TRUE ) &&
-        ( BPP_GetPokeSick( bpp ) == POKESICK_DOKU ) )
-    { 
-      sick = POKESICK_MAX;
-    }
-    else
-    { 
-      sick = BPP_GetPokeSick( bpp );
-    }
-    gauge_load_resource( bgw, type, pos, sick );
-  }
+  //gauge_load_resource( bgw, type, pos );
 
   {
     bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
@@ -575,6 +607,10 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
     bgw->bgcl[ pos ].damage   = 0;
 
     bgw->bgcl[ pos ].level    = BPP_GetValue( bpp, BPP_LEVEL );
+
+    bgw->bgcl[ pos ].gauge_type = type;
+    bgw->bgcl[ pos ].gauge_dir = pos & 1;
+    bgw->bgcl[ pos ].appear_flag = 1;
 
     if( bgw->bgcl[ pos ].level < 100 )
     {
@@ -614,6 +650,23 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
       }
     }
   }
+
+  { 
+    PokeSick sick;
+    if( ( BPP_SICKCONT_IsMoudokuCont( BPP_GetSickCont( bpp, WAZASICK_DOKU ) ) == TRUE ) &&
+        ( BPP_GetPokeSick( bpp ) == POKESICK_DOKU ) )
+    { 
+      sick = POKESICK_MAX;
+    }
+    else
+    { 
+      sick = BPP_GetPokeSick( bpp );
+    }
+    BTLV_GAUGE_SetStatus( bgw, sick, pos );
+    BTLV_GAUGE_SetPos( bgw, pos, NULL );
+  }
+
+  set_hp_gauge_draw( bgw, pos, TRUE );
   init_damage_dot( &bgw->bgcl[ pos ] );
   gauge_init_view( bgw, type, pos, BPP_GetViewSrcData( bpp ) );
 }
@@ -629,10 +682,10 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
 //============================================================================================
 void  BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const POKEMON_PARAM* pp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 {
-  GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
-  MI_CpuClear16( &bgw->bgcl[ pos ], sizeof( BTLV_GAUGE_CLWK ) );
+//  GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
+  MI_CpuClear16( &bgw->bgcl[ pos ].gauge_type, sizeof( BTLV_GAUGE_CLWK ) - 16 * 4 );
 
-  gauge_load_resource( bgw, type, pos, PP_GetSick( pp ) );
+  //gauge_load_resource( bgw, type, pos );
 
   {
     bgw->bgcl[ pos ].hp       = PP_Get( pp, ID_PARA_hp,     NULL );
@@ -641,6 +694,10 @@ void  BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const PO
     bgw->bgcl[ pos ].damage   = 0;
 
     bgw->bgcl[ pos ].level    = PP_Get( pp, ID_PARA_level,  NULL );
+
+    bgw->bgcl[ pos ].gauge_type = type;
+    bgw->bgcl[ pos ].gauge_dir = pos & 1;
+    bgw->bgcl[ pos ].appear_flag = 1;
 
     if( bgw->bgcl[ pos ].level < 100 )
     {
@@ -677,18 +734,18 @@ void  BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const PO
       }
     }
   }
+  BTLV_GAUGE_SetStatus( bgw, PP_GetSick( pp ), pos );
+  BTLV_GAUGE_SetPos( bgw, pos, NULL );
+  set_hp_gauge_draw( bgw, pos, TRUE );
   init_damage_dot( &bgw->bgcl[ pos ] );
   gauge_init_view( bgw, type, pos, pp );
 }
 
-static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, PokeSick sick )
+static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 { 
   u32 arcdatid_char;
   u32 arcdatid_cell;
   u32 arcdatid_anm;
-
-  bgw->bgcl[ pos ].gauge_type = type;
-  bgw->bgcl[ pos ].gauge_dir = pos & 1;
 
   switch( type ){
   default:
@@ -769,8 +826,6 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
                                                     bgw->bgcl[ pos ].hp_charID, bgw->plttID[ pltt_id ],
                                                     bgw->bgcl[ pos ].hp_cellID,
                                                     &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
-    set_hp_gauge_draw( bgw, pos, TRUE );
-
 		// ローテーションバトル時の後衛は暗い色のパレットを適用
 		if( BTLV_EFFECT_GetBtlRule() == BTL_RULE_ROTATION && pos >= BTLV_MCSS_POS_C )
 		{
@@ -787,7 +842,6 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
 			                                                    &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
 		}
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
-    BTLV_GAUGE_SetStatus( bgw, sick, pos );
 
     gauge.softpri = 0;
     bgw->bgcl[ pos ].hp_damage_clwk = GFL_CLACT_WK_Create( bgw->clunit,
@@ -797,17 +851,54 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
     GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hp_damage_clwk, FALSE );
 
     if( ( ( pos & 1 ) == 0 ) &&
-          ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) &&
-          ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_ROTATE ) )
+          ( type != BTLV_GAUGE_TYPE_3vs3 ) &&
+          ( type != BTLV_GAUGE_TYPE_ROTATE ) )
     {
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                        bgw->bgcl[ pos ].exp_charID, bgw->plttID[ pltt_id ],
                                                        bgw->bgcl[ pos ].exp_cellID,
                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     }
-    BTLV_GAUGE_SetPos( bgw, pos, NULL );
   }
-  bgw->bgcl[ pos ].appear_flag = 1;
+}
+
+static  void  gauge_free_resource( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
+{ 
+  if( bgw->bgcl[ pos ].base_clwk )
+  { 
+    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].base_charID );
+    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hpnum_charID );
+    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hp_charID );
+    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hp_damage_charID );
+
+    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].base_cellID );
+    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hpnum_cellID );
+    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hp_cellID );
+    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hp_damage_cellID );
+
+    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].base_clwk );
+    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hpnum_clwk );
+    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hp_clwk );
+    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hp_damage_clwk );
+    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].status_clwk );
+    bgw->bgcl[ pos ].base_clwk      = NULL;
+    bgw->bgcl[ pos ].hpnum_clwk     = NULL;
+    bgw->bgcl[ pos ].hp_clwk        = NULL;
+    bgw->bgcl[ pos ].hp_damage_clwk = NULL;
+    bgw->bgcl[ pos ].status_clwk    = NULL;
+
+    if( ( pos & 1 ) == 0 )
+    { 
+      GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].exp_charID );
+      GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].exp_cellID );
+    }
+
+    if( bgw->bgcl[ pos ].exp_clwk )
+    {
+      GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].exp_clwk );
+      bgw->bgcl[ pos ].exp_clwk = NULL;
+    }
+  }
 }
 
 static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp )
@@ -868,40 +959,13 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
 {
   if( bgw->bgcl[ pos ].gauge_enable )
   {
-    bgw->bgcl[ pos ].gauge_enable = 0;
-
-    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].base_charID );
-    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hpnum_charID );
-    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hp_charID );
-    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hp_damage_charID );
-
-    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].base_cellID );
-    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hpnum_cellID );
-    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hp_cellID );
-    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hp_damage_cellID );
-
-    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].base_clwk );
-    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hpnum_clwk );
-    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hp_clwk );
-    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hp_damage_clwk );
-    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].status_clwk );
-    bgw->bgcl[ pos ].base_clwk      = NULL;
-    bgw->bgcl[ pos ].hpnum_clwk     = NULL;
-    bgw->bgcl[ pos ].hp_clwk        = NULL;
-    bgw->bgcl[ pos ].hp_damage_clwk = NULL;
-    bgw->bgcl[ pos ].status_clwk    = NULL;
-
-    if( ( pos & 1 ) == 0 )
+    GFL_CLACTPOS  ofs = { 128, 0 };
+    if( pos & 1 )
     { 
-      GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].exp_charID );
-      GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].exp_cellID );
+      ofs.x *= -1;
     }
-
-    if( bgw->bgcl[ pos ].exp_clwk )
-    {
-      GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].exp_clwk );
-      bgw->bgcl[ pos ].exp_clwk = NULL;
-    }
+    BTLV_GAUGE_SetPos( bgw, pos, &ofs );
+    bgw->bgcl[ pos ].gauge_enable = 0;
   }
   if( bgw->bgcl[ pos ].tcb )
   { 
@@ -1185,7 +1249,7 @@ void  BTLV_GAUGE_SetDrawEnableByPos( BTLV_GAUGE_WORK* bgw, BOOL on_off, BtlvMcss
 //============================================================================================
 BOOL  BTLV_GAUGE_CheckExist( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
 {
-  return ( bgw->bgcl[ pos ].base_clwk != NULL );
+  return ( bgw->bgcl[ pos ].gauge_enable != 0 );
 }
 
 //============================================================================================
@@ -1585,9 +1649,9 @@ static u32 DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax )
 //--------------------------------------------------------------
 static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POKEMON_PARAM* pp )
 {
-  STRBUF* monsname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, bgw->heapID );
+  STRBUF* monsname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, GFL_HEAP_LOWID( bgw->heapID ) );
   PRINTSYS_LSB  color = PRINTSYS_LSB_Make( 1, 4, 0 );
-  GFL_BMP_DATA* bmp = GFL_BMP_Create( BTLV_GAUGE_BMP_SIZE_X, BTLV_GAUGE_BMP_SIZE_Y, GFL_BMP_16_COLOR, bgw->heapID );
+  GFL_BMP_DATA* bmp = GFL_BMP_Create( BTLV_GAUGE_BMP_SIZE_X, BTLV_GAUGE_BMP_SIZE_Y, GFL_BMP_16_COLOR, GFL_HEAP_LOWID( bgw->heapID ) );
   u8 letter, shadow, back;
 
   GFL_BMP_Clear( bmp, 0 );
@@ -1675,10 +1739,13 @@ static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
 {
   void *obj_vram;
   NNSG2dImageProxy image;
+  int chr_adrs_u = GP_MALE_U + bgcl->sex * 0x40;
+  int chr_adrs_d = GP_MALE_D + bgcl->sex * 0x40;
 
   if( bgcl->sex == PTL_SEX_UNKNOWN )
   {
-    return;
+    chr_adrs_u = GP_SPACE;
+    chr_adrs_d = GP_SPACE;
   }
 
   obj_vram = G2_GetOBJCharPtr();
@@ -1686,22 +1753,22 @@ static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
 
   if( bgcl->gauge_dir )
   { 
-    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_U + bgcl->sex * 0x40 ],
+    MI_CpuCopy16( &bgw->parts_address[ chr_adrs_u ],
                   (void*)( (u32)obj_vram + BTLV_GAUGE_SEXU_CHARSTART_E * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
                   0x20 );
-    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_D + bgcl->sex * 0x40 ],
+    MI_CpuCopy16( &bgw->parts_address[ chr_adrs_d ],
                   (void*)( (u32)obj_vram + BTLV_GAUGE_SEXD_CHARSTART_E * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
                   0x20 );
   }
   else
   { 
-    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_U + bgcl->sex * 0x40 ],
+    MI_CpuCopy16( &bgw->parts_address[ chr_adrs_u ],
                   (void*)( (u32)obj_vram + BTLV_GAUGE_SEXU_CHARSTART_M * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
                   0x20 );
-    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_D + bgcl->sex * 0x40 ],
+    MI_CpuCopy16( &bgw->parts_address[ chr_adrs_d ],
                   (void*)( (u32)obj_vram + BTLV_GAUGE_SEXD_CHARSTART_M * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
                   0x20 );
@@ -1930,9 +1997,9 @@ static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
                   0x20);
   }
 #else
-  STRBUF* num = GFL_STR_CreateBuffer( 4, bgw->heapID );
+  STRBUF* num = GFL_STR_CreateBuffer( 4, GFL_HEAP_LOWID( bgw->heapID ) );
   PRINTSYS_LSB  color = PRINTSYS_LSB_Make( 1, 4, 0 );
-  GFL_BMP_DATA* bmp = GFL_BMP_Create( 3, BTLV_GAUGE_BMP_SIZE_Y, GFL_BMP_16_COLOR, bgw->heapID );
+  GFL_BMP_DATA* bmp = GFL_BMP_Create( 3, BTLV_GAUGE_BMP_SIZE_Y, GFL_BMP_16_COLOR, GFL_HEAP_LOWID( bgw->heapID ) );
   u8 letter, shadow, back;
 
   GFL_BMP_Clear( bmp, 0 );
@@ -1993,16 +2060,17 @@ static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
 {
   void *obj_vram;
   NNSG2dImageProxy image;
+  int chr_adrs = GP_BALL;
 
   if( bgcl->getball == 0 )
   {
-    return;
+    chr_adrs = GP_SPACE;
   }
 
   obj_vram = G2_GetOBJCharPtr();
   GFL_CLACT_WK_GetImgProxy( bgcl->base_clwk, &image );
 
-  MI_CpuCopy16( &bgw->parts_address[ GP_BALL ],
+  MI_CpuCopy16( &bgw->parts_address[ chr_adrs ],
                 (void*)( (u32)obj_vram + BTLV_GAUGE_BALL_CHARSTART * 0x20 +
                 image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
                 0x20 );

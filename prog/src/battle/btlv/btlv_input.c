@@ -8,6 +8,7 @@
 //============================================================================================
 #include <gflib.h>
 
+#include "system/main.h"
 #include "btlv_effect.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -962,7 +963,7 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   BTLV_INPUT_InitBG( biw );
 
   {
-    TCB_BAGMODE_SET* tbs = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BAGMODE_SET ) );
+    TCB_BAGMODE_SET* tbs = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_BAGMODE_SET ) );
     tbs->biw      = biw;
     tbs->bagMode  = bagMode;
     BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_BagModeSet, tbs, 0 ), NULL );
@@ -1332,7 +1333,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
     biw->hit = GFL_UI_TP_HIT_NONE;
-
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
       SetupScaleChange( biw, FX32_ONE * 3, FX32_ONE * 3, 0, 128 + 24 );
@@ -1386,6 +1386,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
 
       biw->focus_pos = bicp->pos;
+
 
       BTLV_INPUT_SetFocus( biw );
       BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_NO_STOP );
@@ -4395,7 +4396,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     //ウインドウマスクでアイコンを暗くする実験
     if( max > 1 )
     {
-      TCB_WINDOW_MASK* twm = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WINDOW_MASK ) );
+      TCB_WINDOW_MASK* twm = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_WINDOW_MASK ) );
       twm->biw = biw;
       twm->max = max;
       BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_SetWindowMask, twm, 0 ), NULL );
@@ -4504,7 +4505,7 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
   }
   if( ret == FALSE )
   {
-    TCB_WINDOW_MASK* twm = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WINDOW_MASK ) );
+    TCB_WINDOW_MASK* twm = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_WINDOW_MASK ) );
     twm->biw = biw;
     BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_ClearWindowMask, twm, 0 ), NULL );
   }
@@ -5659,24 +5660,27 @@ static  void  SePlayBeep( BTLV_INPUT_WORK* biw )
 #ifdef PM_DEBUG
 static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw )
 {
-  int cont  = GFL_UI_KEY_GetCont();
-  int trg   = GFL_UI_KEY_GetTrg();
+  if( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER )
+  { 
+    int cont  = GFL_UI_KEY_GetCont();
+    int trg   = GFL_UI_KEY_GetTrg();
 
-  //タイマー一時停止
-  if( ( cont & PAD_BUTTON_L ) && ( trg & PAD_BUTTON_X ) )
-  {
-    BTLV_TIMER_SwitchTimerStopFlag( BTLV_EFFECT_GetTimerWork() );
-  }
-  //タイマーエディット開始
-  if( ( cont & PAD_BUTTON_L ) && ( trg & PAD_BUTTON_Y ) && ( biw->timer_edit_flag == 0 ) )
-  {
-    biw->timer_edit_flag = BTLV_TIMER_SwitchTimerEditFlag( BTLV_EFFECT_GetTimerWork() );
-  }
-  //タイマーエディット終了
-  if( ( cont & PAD_BUTTON_START ) && ( biw->timer_edit_flag ) )
-  {
-    BTLV_TIMER_SwitchTimerEditFlag( BTLV_EFFECT_GetTimerWork() );
-    biw->timer_edit_flag = 0;
+    //タイマー一時停止
+    if( ( cont & PAD_BUTTON_L ) && ( trg & PAD_BUTTON_X ) )
+    {
+      BTLV_TIMER_SwitchTimerStopFlag( BTLV_EFFECT_GetTimerWork() );
+    }
+    //タイマーエディット開始
+    if( ( cont & PAD_BUTTON_L ) && ( trg & PAD_BUTTON_Y ) && ( biw->timer_edit_flag == 0 ) )
+    {
+      biw->timer_edit_flag = BTLV_TIMER_SwitchTimerEditFlag( BTLV_EFFECT_GetTimerWork() );
+    }
+    //タイマーエディット終了
+    if( ( cont & PAD_BUTTON_START ) && ( biw->timer_edit_flag ) )
+    {
+      BTLV_TIMER_SwitchTimerEditFlag( BTLV_EFFECT_GetTimerWork() );
+      biw->timer_edit_flag = 0;
+    }
   }
 }
 #endif

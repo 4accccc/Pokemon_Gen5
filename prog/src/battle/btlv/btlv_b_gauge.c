@@ -122,7 +122,7 @@ BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp,
   BTLV_BALL_GAUGE_WORK* bbgw    = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( heapID ), sizeof( BTLV_BALL_GAUGE_WORK ) );
   ARCHANDLE*            handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID( heapID ) );
 
-  bbgw->heapID = heapID;
+  bbgw->heapID = GFL_HEAP_LOWID( heapID );
   bbgw->clunit = GFL_CLACT_UNIT_Create( BTLV_BALL_GAUGE_CLWK_MAX, 0, bbgw->heapID );
 
   //ƒŠƒ\[ƒX“Ç‚İ‚İ
