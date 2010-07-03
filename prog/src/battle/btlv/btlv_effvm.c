@@ -9,6 +9,7 @@
 //============================================================================================
 
 #include <gflib.h>
+#include "system/main.h"
 #include "system/vm_cmd.h"
 #include "system/mcss.h"
 #include "sound/pm_sndsys.h"
@@ -738,6 +739,8 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   int table_ofs;
 
   GF_ASSERT_MSG( bevw->sequence == NULL, "すでにエフェクトが起動中です\neffno:%d\n", bevw->waza );
+//  GF_ASSERT( ( from < BTLV_MCSS_POS_MAX ) || ( from == BTLV_MCSS_POS_ERROR ) );
+//  GF_ASSERT( ( to   < BTLV_MCSS_POS_MAX ) || ( to   == BTLV_MCSS_POS_ERROR ) );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("EFFVM_Start:\nEFFNO:%d\n",waza);
@@ -817,6 +820,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, waza - BTLEFF_SINGLE_ENCOUNT_1, GFL_HEAP_LOWID( bevw->heapID ) );
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
   }
+#if 0
   if( ( from != BTLV_MCSS_POS_ERROR ) && ( to != BTLV_MCSS_POS_ERROR ) )
   {
     table_ofs = script_table[ from ][ to ];
@@ -830,6 +834,8 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   {
     table_ofs = TBL_AA2BB;
   }
+#endif
+  table_ofs = TBL_AA2BB;
 
   if( param != NULL )
   { 
@@ -5162,12 +5168,12 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
   if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_VOICE )
   {
     int i;
+    if( bevw->nakigoe_wait_flag )
+    { 
+      return FALSE;
+    }
     for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
     {
-      if( bevw->nakigoe_wait_flag )
-      { 
-        return FALSE;
-      }
       if( bevw->voiceplayerIndex[ i ] != EFFVM_VOICEPLAYER_INDEX_NONE )
       { 
         if( PMVOICE_CheckPlay( bevw->voiceplayerIndex[ i ] ) )
@@ -7927,7 +7933,7 @@ static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work )
     u16 before = *v_count;
 #endif
     GFL_PTC_LoadTex( tpl->psys );
-//    SOGABE_Printf("particle before:%d after:%d\n",before,*v_count);
+    SOGABE_Printf("particle before:%d after:%d\n",before,*v_count);
   }
   tpl->bevw->particle_tex_load = 0;
   BTLV_EFFECT_FreeTCB( tcb );
