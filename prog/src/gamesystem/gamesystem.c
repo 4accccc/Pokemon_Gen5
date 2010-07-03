@@ -44,8 +44,10 @@ static void heapLeakCheck( void );
 
 //デバッグ用変数
 u32 DbgFldHeapRest = 0xffffffff;
+u32 DbgFldHeapRestAlctbl = 0xffffffff;
 u32 DbgVramRest = 0xffffffff;
 u32 DbgFldHeapUseMaxZone = 0;
+u32 DbgFldHeapUseMaxZoneAlctbl = 0;
 u32 DbgVramUseMaxZone = 0;
 
 #endif

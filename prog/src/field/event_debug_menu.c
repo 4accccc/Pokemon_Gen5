@@ -146,6 +146,7 @@
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
+
 //======================================================================
 //  global
 //======================================================================
@@ -155,8 +156,10 @@ int DbgCutinNo = 0;
 //======================================================================
 //デバッグ用変数実体はgamesystem.cにあります
 extern u32 DbgFldHeapRest;
+extern u32 DbgFldHeapRestAlctbl;
 extern u32 DbgVramRest;
 extern u32 DbgFldHeapUseMaxZone;
+extern u32 DbgFldHeapUseMaxZoneAlctbl;
 extern u32 DbgVramUseMaxZone;
 
 //======================================================================
@@ -4416,7 +4419,6 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
       //オーバーレイアンロード
       ENCEFF_UnloadEffOverlay(cnt_ptr);
     }
-
     GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -1 );
     (*seq)++;
@@ -6206,8 +6208,9 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
       zone_id = getNextZoneID( amcw );
 
       if ( zone_id >= ZONE_ID_MAX || zone_id < 0 )
-      { 
-        OS_Printf( "FieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
+      {
+        OS_Printf( "AllocatableFieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRestAlctbl, DbgFldHeapUseMaxZoneAlctbl );
+        OS_Printf( "TotalFieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
         OS_Printf( "3DVram restmin = 0x%x: zone = %d\n",DbgVramRest, DbgVramUseMaxZone );
         OS_Printf( "HUDSON: ALL MAP CHECK SUCCESS!!\n" ); // hudson 検出用
         //WFBCコアタイプを元に戻す
@@ -7331,6 +7334,9 @@ static void DbgRestDataUpdate(const u32 inZone)
 {
   u32 heap_rest = GFL_HEAP_GetHeapFreeSize( HEAPID_FIELDMAP );
   u32 vram_rest = 0;
+  u32 allocatable;
+  //GFI関数は基本的に直接使用禁止ですが、今回は特別に使用します。
+  allocatable = GFI_HEAP_GetHeapAllocatableSize(HEAPID_FIELDMAP);
 
   OS_Printf("Zone %d seach..\n", inZone );
 
@@ -7338,6 +7344,11 @@ static void DbgRestDataUpdate(const u32 inZone)
   {
     DbgFldHeapRest = heap_rest;
     DbgFldHeapUseMaxZone = inZone;
+  }
+  if ( DbgFldHeapRestAlctbl >= allocatable )
+  {
+    DbgFldHeapRestAlctbl = allocatable;
+    DbgFldHeapUseMaxZoneAlctbl = inZone;
   }
   
   NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &vram_rest );
@@ -7347,7 +7358,11 @@ static void DbgRestDataUpdate(const u32 inZone)
     DbgVramRest = vram_rest;
     DbgVramUseMaxZone = inZone;
   }
-  OS_Printf( "FieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
+  OS_Printf( "NowAllocatableFieldHeap rest = 0x%x: zone = %d\n", allocatable, inZone);
+  OS_Printf( "NowTotalFieldHeap rest = 0x%x: zone = %d\n", heap_rest, inZone);
+
+  OS_Printf( "AllocatableFieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRestAlctbl, DbgFldHeapUseMaxZoneAlctbl );
+  OS_Printf( "TotalFieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
   OS_Printf( "3DVram restmin = 0x%x: zone = %d\n",DbgVramRest, DbgVramUseMaxZone );
 
   if (vram_rest <= 0x1a200) OS_FPrintf(3, "足りない zone:%d size:%x\n",inZone, vram_rest);
