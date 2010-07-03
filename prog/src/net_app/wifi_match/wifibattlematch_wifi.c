@@ -3048,8 +3048,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         //ここでエラーが起こった場合、レポートを送信していれば切断カウンターがあがってしまうので戦闘後へ、レポートを送信していなければ、録画後へいく
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
-        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
+          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+          /* fallthrough */
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
@@ -3378,8 +3380,10 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
+          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+          /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
-        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );

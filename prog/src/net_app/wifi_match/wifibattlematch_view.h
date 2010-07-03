@@ -305,7 +305,7 @@ extern void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_TYPE mode, void *p_
 #define MATCHINFO_PLT_OBJ_TRAINER	(MATCHINFO_PLT_OBJ_PMS+PMS_DRAW_OBJ_PLTT_NUM)
 
 #define MATCHINFO_TRAINER_X			(32)
-#define MATCHINFO_TRAINER_Y			(48 - 6)
+#define MATCHINFO_TRAINER_Y			(48 - 4)
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ
