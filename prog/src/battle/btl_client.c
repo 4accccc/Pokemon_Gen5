@@ -3492,7 +3492,7 @@ static void ChangeAI_SetReserve( BTL_CLIENT* wk, u8 outPokeIdx, u8 inPokeIdx )
 //----------------------------------------------------------------------------------
 static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 procPokeIndex, u8* targetIndex )
 {
-  BTL_POKEPARAM* targetEnemyPoke = NULL;
+  const BTL_POKEPARAM* targetEnemyPoke = NULL;
   BOOL fChange = FALSE;
   u8   changeIndex = BTL_PARTY_MEMBER_MAX;
 
@@ -3517,6 +3517,11 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
     targetEnemyPoke = ChangeAI_DecideTarget( wk, basePos );
     if( targetEnemyPoke == NULL ){
       return FALSE;
+    }
+
+    if( BPP_IsFakeEnable(targetEnemyPoke) )
+    {
+      targetEnemyPoke = BTL_MAIN_GetFakeTargetPokeParam( wk->mainModule, wk->pokeCon, targetEnemyPoke );
     }
   }
 
