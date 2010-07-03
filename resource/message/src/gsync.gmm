@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-07-03T13:51:46"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-07-03T16:28:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -735,7 +735,7 @@ http://www.pokemon-gl.com/
 		<language name="JPN_KANJI" width="256">サーバーは　現在メンテナンス中です
 メンテナンスの　詳細は
 ポケモングローバルリンクの
-ウェブサイトをご覧下さい
+ウェブサイトをご覧ください
 http://www.pokemon-gl.com/
 （エラーコード：１３２１２）</language>
 	</row>
@@ -814,7 +814,7 @@ http://www.pokemon-gl.com/
 お楽しみ頂くことが　できます
 http://www.pokemon-gl.com/
 設定について　詳しくは
-説明書を　ごらんください</language>
+説明書を　ご覧ください</language>
 	</row>
 
 	<row id="GSYNC_030">
