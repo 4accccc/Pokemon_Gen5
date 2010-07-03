@@ -141,8 +141,16 @@ static void iaigiri_InitResource( FLDEFF_IAIGIRI *iai )
   iai->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_iaigiri_nsbmd );
 
+#if 0
   GFL_G3D_AllocVramTexture( iai->g3d_res_mdl );
   iai->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, iai, 0 );
+#else
+  {
+    BOOL ret;
+    ret = GFL_G3D_TransVramTexture( iai->g3d_res_mdl );
+    GF_ASSERT( ret );
+  }
+#endif
 
   for( i=0; i<ANIME_NUM; i++ )
   {
@@ -170,7 +178,9 @@ static void iaigiri_DeleteResource( FLDEFF_IAIGIRI *iai )
   GFL_G3D_FreeVramTexture( iai->g3d_res_mdl );
  	GFL_G3D_DeleteResource( iai->g3d_res_mdl );
 
+#if 0
   GFL_TCB_DeleteTask( iai->vblank_task );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -219,12 +229,14 @@ void FLDEFF_IAIGIRI_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
   case DIR_LEFT:  pos.x -= FIELD_CONST_GRID_FX32_SIZE;  break;
   case DIR_RIGHT: pos.x += FIELD_CONST_GRID_FX32_SIZE;  break;
   }
-  
+ 
+#if 0
   if( FLDEFF_CTRL_CheckRegistEffect( fectrl, FLDEFF_PROCID_IAIGIRI ) == FALSE )
   { // エフェクトを登録
     FLDEFF_PROCID id = FLDEFF_PROCID_IAIGIRI;
     FLDEFF_CTRL_RegistEffect( fectrl, &id, 1 );
   }
+#endif
 
   iai = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_IAIGIRI );
   head.eff_iaigiri = iai;

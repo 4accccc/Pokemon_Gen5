@@ -981,6 +981,7 @@ const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[] =
   FLDEFF_PROCID_BUBBLE, //iran
   FLDEFF_PROCID_SHOAL, //g3dobj
   FLDEFF_PROCID_FISHING_LURE, //g3dobj
+  FLDEFF_PROCID_IAIGIRI,
 
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
