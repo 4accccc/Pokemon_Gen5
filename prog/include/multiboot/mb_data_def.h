@@ -71,6 +71,7 @@ struct _MB_DATA_WORK
   BOOL  permitLastSaveSecond;
   BOOL  isFinishSaveAll_;
 
+  BOOL isLockID;  //セーブの書き込み中だけチェックする用
   s32 lockID_;  //カードロック用ID
   MATHCRC16Table  crcTable_;  //CRCチェック用テーブル
   

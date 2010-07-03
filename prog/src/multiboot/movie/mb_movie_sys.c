@@ -151,6 +151,7 @@ typedef struct
   
   BOOL isNetErr;
   BOOL isInitCellSys;
+  BOOL isSave;
   
 }MB_MOVIE_WORK;
 #if PM_DEBUG
@@ -265,6 +266,11 @@ static void MB_MOVIE_Term( MB_MOVIE_WORK *work )
   u8 i,j;
   GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
+
+  if( work->isSave == TRUE )
+  {
+    MB_DATA_CancelSave( work->dataWork );
+  }
 
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -1187,6 +1193,7 @@ static void MB_MOVIE_SaveInit( MB_MOVIE_WORK *work )
 //--------------------------------------------------------------
 static void MB_MOVIE_SaveTerm( MB_MOVIE_WORK *work )
 {
+  work->isSave = FALSE;
   MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_04 , work->initData->msgSpeed );
   work->state = MCS_SAVE_FINISH_WAIT;
 }
@@ -1196,6 +1203,7 @@ static void MB_MOVIE_SaveTerm( MB_MOVIE_WORK *work )
 //--------------------------------------------------------------
 static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
 {
+  work->isSave = TRUE;
   if( work->subState >= MCSS_SAVE_WAIT_FIRST )
   {
   	MB_DATA_SaveData( work->dataWork );

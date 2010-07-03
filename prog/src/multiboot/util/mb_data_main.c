@@ -74,6 +74,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->permitLastSaveFirst = FALSE;
   dataWork->permitLastSaveSecond = FALSE;
   dataWork->isDummyCard = FALSE;
+  dataWork->isLockID = TRUE;
   MATH_CRC16CCITTInitTable( &dataWork->crcTable_ ); //CRC初期化
   
   {
@@ -202,6 +203,25 @@ BOOL  MB_DATA_SaveData( MB_DATA_WORK *dataWork )
     break;
   }
   return FALSE;
+}
+
+void MB_DATA_CancelSave( MB_DATA_WORK *dataWork )
+{
+  MB_DATA_TPrintf("SaveCancel!\n");
+  if(!CARD_TryWaitBackupAsync())
+  {
+    CARD_CancelBackupAsync();		//非同期処理キャンセルのリクエスト
+    CARD_WaitBackupAsync();     //非同期処理の終了を待つ
+    MB_DATA_TPrintf("StopAsyncl!\n");
+  }
+  
+  if( dataWork->isLockID == TRUE )
+  {
+    CARD_UnlockBackup(dataWork->lockID_);
+    OS_ReleaseLockID(dataWork->lockID_);
+    dataWork->isLockID =FALSE;
+    MB_DATA_TPrintf("UnlockLockID!\n");
+  }
 }
 
 //マルチブート子機ではROMの抜け検出ができないため、セーブ前にCRCの

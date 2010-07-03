@@ -170,6 +170,7 @@ typedef struct
   
   BOOL isNetErr;
   BOOL isInitCellSys;
+  BOOL isSave;
   
 }MB_CHILD_WORK;
 
@@ -237,6 +238,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
                                      work->heapId );
                                      
   work->isNetErr = FALSE;
+  work->isSave = TRUE;
   PMSND_InitMultiBoot( work->sndData );
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
@@ -268,6 +270,11 @@ static void MB_CHILD_Term( MB_CHILD_WORK *work )
   u8 i,j;
   GFUser_ResetVIntrFunc();
   GFL_TCB_DeleteTask( work->vBlankTcb );
+
+  if( work->isSave == TRUE )
+  {
+    MB_DATA_CancelSave( work->dataWork );
+  }
 
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -1293,6 +1300,7 @@ static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work )
   MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_05 , work->initData->msgSpeed );
   MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
   work->state = MCS_SAVE_FINISH_WAIT;
+  work->isSave = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1300,6 +1308,7 @@ static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_SaveMain( MB_CHILD_WORK *work )
 {
+  work->isSave = TRUE;
   if( work->subState >= MCSS_SAVE_WAIT_FIRST )
   {
     MB_DATA_SaveData( work->dataWork );

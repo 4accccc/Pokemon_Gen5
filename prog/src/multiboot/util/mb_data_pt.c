@@ -376,6 +376,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       }
       //GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
       CARD_LockBackup( (u16)dataWork->lockID_ );
+      dataWork->isLockID = TRUE;
       dataWork->subSeq++;
       
     }
@@ -533,6 +534,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       //‚±‚±‚ÅLock‚Í•ÛŽ‚µ‚½‚Ü‚Ü
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
       OS_ReleaseLockID( (u16)dataWork->lockID_ );
+      dataWork->isLockID = FALSE;
       dataWork->subSeq++;
       dataWork->isFinishSaveSecond = TRUE;  //2”Ô–Ú‚Í–³‚¢
       dataWork->isFinishSaveAll_ = TRUE;
