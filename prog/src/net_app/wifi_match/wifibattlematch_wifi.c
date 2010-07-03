@@ -1314,7 +1314,20 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     
   case SEQ_START_MOVEIN_CARD:
     Util_PlayerInfo_Create( p_wk );
-    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      if( BATTLE_BOX_SAVE_GetLockType( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI ) )
+      {
+        //ロックされていれば鍵表示
+        Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
+      }
+      else
+      {
+        //ロックされていなければ鍵非表示
+        Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
+      }
+    }
     *p_seq  = SEQ_WAIT_MOVEIN_CARD;
     break;
 
