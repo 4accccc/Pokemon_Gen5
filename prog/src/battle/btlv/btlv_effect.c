@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 
+#include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
 #include "system/mcss_tool.h"
@@ -196,7 +197,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 //============================================================================================
 BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, BtlCompetitor competitor, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, const BTL_MAIN_MODULE* mainModule, const BTLV_SCU* scu, HEAPID heapID )
 {
-  BTLV_EFFECT_SETUP_PARAM* besp = GFL_HEAP_AllocMemory( heapID, sizeof( BTLV_EFFECT_SETUP_PARAM ) );
+  BTLV_EFFECT_SETUP_PARAM* besp = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( heapID ), sizeof( BTLV_EFFECT_SETUP_PARAM ) );
   int i;
 
   besp->rule        = rule;
@@ -476,6 +477,9 @@ void  BTLV_EFFECT_Main( void )
   BTLV_MCSS_Main( bew->bmw );
   BTLV_STAGE_Main( bew->bsw );
   BTLV_FIELD_Main( bew->bfw );
+#ifdef DEBUG_ONLY_FOR_sogabe
+//    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_BTL_VIEW );
+#endif
   BTLV_CAMERA_Main( bew->bcw );
   BTLV_GAUGE_Main( bew->bgw );
 
