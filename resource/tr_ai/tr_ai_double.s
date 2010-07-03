@@ -893,7 +893,19 @@ DoubleMineAI_FireType:
 	JUMP	DoubleMineDamageEnd
 DoubleMineAI_FireType1:
 	IF_ALREADY_MORAIBI	CHECK_ATTACK_FRIEND, DoubleMineDamageEnd
-	JUMP	AI_INC3
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
+	CHECK_TOKUSEI	CHECK_ATTACK                  // 特性がかたやぶり等ならダメージを与えてしまうので攻撃しない。
+	IF_EQUAL	TOKUSYU_KATAYABURI,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TAABOBUREIZU,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TERABORUTEEZI,DoubleMineDamageEnd
+
+	IF_RND_UNDER	150,DoubleMineDamageEnd   // ランダムを少し入れる。 
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
+	JUMP	AI_INC1
 
 //電気タイプ2006.6.16
 DoubleMineAI_ElectricType:
@@ -904,12 +916,35 @@ DoubleMineAI_ElectricType:
 	JUMP	DoubleMineDamageEnd
 
 DoubleMineAI_ElectricType1:
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
+	CHECK_TOKUSEI	CHECK_ATTACK                  // 特性がかたやぶり等ならダメージを与えてしまうので攻撃しない。
+	IF_EQUAL	TOKUSYU_KATAYABURI,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TAABOBUREIZU,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TERABORUTEEZI,DoubleMineDamageEnd
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
 	//ランダムを入れる
 	IF_RND_UNDER	160, DoubleMineAI_ElectricType_End
-	IF_PARA_EQUAL	CHECK_ATTACK_FRIEND,PARA_AGI,12,DoubleMineDamageEnd
-	JUMP	AI_INC3
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AGI,7,DoubleMineDamageEnd    // 2010.7.3　OVERに修正
+
+	JUMP	AI_INC1
 
 DoubleMineAI_ElectricType2:
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
+	CHECK_TOKUSEI	CHECK_ATTACK                  // 特性がかたやぶり等ならダメージを与えてしまうので攻撃しない。
+	IF_EQUAL	TOKUSYU_KATAYABURI,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TAABOBUREIZU,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TERABORUTEEZI,DoubleMineDamageEnd
+
+	IF_RND_UNDER	150,DoubleMineDamageEnd   // ランダムを少し入れる。 
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
 	IF_HP_EQUAL	CHECK_ATTACK_FRIEND,100,AI_DEC10
 	IF_HP_OVER	CHECK_ATTACK_FRIEND,90,DoubleMineAI_ElectricType_End
 	IF_HP_OVER	CHECK_ATTACK_FRIEND,75,DoubleMineAI_ElectricType2_1
@@ -917,15 +952,15 @@ DoubleMineAI_ElectricType2:
 	JUMP	DoubleMineAI_ElectricType2_3
 
 DoubleMineAI_ElectricType2_1://25%
-	IF_RND_UNDER	64, AI_INC3
+	IF_RND_UNDER	64, AI_INC1
 	JUMP	DoubleMineAI_ElectricType_End	
 
 DoubleMineAI_ElectricType2_2://50%
-	IF_RND_UNDER	128, AI_INC3
+	IF_RND_UNDER	128, AI_INC1
 	JUMP	DoubleMineAI_ElectricType_End	
 	
 DoubleMineAI_ElectricType2_3://75%
-	IF_RND_UNDER	192, AI_INC3
+	IF_RND_UNDER	192, AI_INC1
 	JUMP	DoubleMineAI_ElectricType_End	
 
 DoubleMineAI_ElectricType_End:
@@ -942,6 +977,18 @@ DoubleMineAI_WaterType:
 	JUMP	DoubleMineDamageEnd
 
 DoubleMineAI_WaterType1:
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
+	CHECK_TOKUSEI	CHECK_ATTACK                  // 特性がかたやぶり等ならダメージを与えてしまうので攻撃しない。
+	IF_EQUAL	TOKUSYU_KATAYABURI,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TAABOBUREIZU,DoubleMineDamageEnd
+	IF_EQUAL	TOKUSYU_TERABORUTEEZI,DoubleMineDamageEnd
+
+	IF_RND_UNDER	150,DoubleMineDamageEnd   // ランダムを少し入れる。 
+
+//-------2010.7.3修正　かたやぶりは味方に攻撃しない----------
+
 	IF_HP_EQUAL	CHECK_ATTACK_FRIEND,100,AI_DEC10
 	IF_HP_OVER	CHECK_ATTACK_FRIEND,90,DoubleMineAI_WaterType_End
 	IF_HP_OVER	CHECK_ATTACK_FRIEND,75,DoubleMineAI_WaterType1_1
@@ -950,15 +997,15 @@ DoubleMineAI_WaterType1:
 
 
 DoubleMineAI_WaterType1_1://25%
-	IF_RND_UNDER	64, AI_INC3
+	IF_RND_UNDER	64, AI_INC1
 	JUMP	DoubleMineAI_WaterType_End	
 
 DoubleMineAI_WaterType1_2://50%
-	IF_RND_UNDER	128, AI_INC3
+	IF_RND_UNDER	128, AI_INC1
 	JUMP	DoubleMineAI_WaterType_End	
 	
 DoubleMineAI_WaterType1_3://75%
-	IF_RND_UNDER	192, AI_INC3
+	IF_RND_UNDER	192, AI_INC1
 	JUMP	DoubleMineAI_WaterType_End	
 
 DoubleMineAI_WaterType_End:
