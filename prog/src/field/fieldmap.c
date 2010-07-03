@@ -2712,10 +2712,21 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
   
 #ifdef ADDFIX100703_REGU_TEX_HERO
   { //Ž©‹@ƒŠƒ\[ƒX“o˜^
-    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(
-        fieldWork->gsys );
-    int sex = IntrudeField_GetPlayerSettingSex( game_comm );
-    u16 hero_code = FIELD_PLAYER_GetMoveFormToOBJCode(
+    int sex = 0;
+    u16 hero_code;
+    u16 zone_id = fieldWork->location.zone_id;
+    
+    if( ZONEDATA_IsUnionRoom(zone_id) == FALSE &&
+        ZONEDATA_IsColosseum(zone_id) == FALSE ){
+      GAME_COMM_SYS_PTR game_comm =
+        GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
+      sex = IntrudeField_GetPlayerSettingSex( game_comm );
+    }else{
+      const MYSTATUS *myst = GAMEDATA_GetMyStatus( gdata );
+      sex = MyStatus_GetMySex( myst );
+    }
+    
+    hero_code = FIELD_PLAYER_GetMoveFormToOBJCode(
         sex, PLAYER_DRAW_FORM_NORMAL );
     MMDL_BLACTCONT_AddResourceTexCode( fmmdlsys, hero_code );
     KAGAYA_Printf( "FIELD INIT ADD HERO TEX sex=%d\n", sex );
