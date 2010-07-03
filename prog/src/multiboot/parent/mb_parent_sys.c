@@ -1935,7 +1935,7 @@ static void MB_PARENT_SoftResetCallBack( void *pWork )
   //ソフトリセット時、自前で終了処理
   MB_PARENT_WORK *work = pWork;
   
-  if( MBP_GetState() != MBP_STATE_STOP )
+  if( MBP_IsInitNet() == TRUE )
   {
     MBP_Cancel();
   }

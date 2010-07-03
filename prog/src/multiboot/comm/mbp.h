@@ -93,6 +93,7 @@ typedef struct
     u16     downloadChildBmp;          // データダウンロード中の子機フラグ
     u16     bootableChildBmp;          // ダウンロード完了した子機フラグ
     u16     rebootChildBmp;            // ブートを送信した子機フラグ
+    BOOL    isInitComm;
 }
 MBPState;
 
@@ -176,6 +177,7 @@ MBPChildState MBP_GetChildState(u16 aid);
 u16     MBP_GetPlayerNo(const u8 *macAddress);
 const MBPChildInfo *MBP_GetChildInfo(u16 child_aid);
 void MBP_ClearBuffer( void );
+const BOOL MBP_IsInitNet( void );
 
 
 #ifdef __cplusplus

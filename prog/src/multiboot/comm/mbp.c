@@ -147,7 +147,7 @@ void MBP_Init(u32 ggid, u32 tgid )
     // ステータス情報を初期化
     mbpState = (const MBPState)
     {
-    MBP_STATE_STOP, 0, 0, 0, 0, 0, 0};
+    MBP_STATE_STOP, 0, 0, 0, 0, 0, 0 , 0 };
 
     /* MB 親機制御を開始します. */
     // MBワーク領域確保。
@@ -198,6 +198,7 @@ void MBP_Start(const MBGameRegistry *gameInfo, u16 channel)
         MBP_ChangeState(MBP_STATE_ERROR);
         return;
     }
+    mbpState.isInitComm = TRUE;
 
     /* --------------------------------------------------------------------- *
      * MB_StartParent()コール時に初期化されてしまいます。
@@ -559,12 +560,16 @@ void MBP_StartRebootAll(void)
  *---------------------------------------------------------------------------*/
 void MBP_Cancel(void)
 {
-    MBP_ChangeState(MBP_STATE_CANCEL);
+  MBP_ChangeState(MBP_STATE_CANCEL);
+  if( mbpState.isInitComm == TRUE )
+  {
+    mbpState.isInitComm = FALSE;
 #if !defined(MBP_USING_MB_EX)
     MB_End();
 #else
     MB_EndToIdle();
 #endif
+  }
 }
 
 /*---------------------------------------------------------------------------*
@@ -582,12 +587,16 @@ static void MBPi_CheckAllReboot(void)
     if ((mbpState.state == MBP_STATE_REBOOTING) &&
         (mbpState.connectChildBmp == mbpState.rebootChildBmp))
     {
+      if( mbpState.isInitComm == TRUE )
+      {
         MBP_Printf("call MB_End()\n");
+        mbpState.isInitComm = FALSE;
 #if !defined(MBP_USING_MB_EX)
         MB_End();
 #else
         MB_EndToIdle();
 #endif
+      }
     }
 }
 
@@ -1148,4 +1157,9 @@ void MBP_ClearBuffer( void )
       GFL_NET_Align32Free(sCWork);
       sCWork = NULL;
   }
+}
+
+const BOOL MBP_IsInitNet( void )
+{
+  return mbpState.isInitComm;
 }
