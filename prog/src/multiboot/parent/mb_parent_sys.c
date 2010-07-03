@@ -233,6 +233,7 @@ typedef struct
   BOOL         isNetErr;
   BOOL         isNetErrMb;
   BOOL         isNetErrSave;
+  BOOL         isInitMbComm;
   
   MB_PARENT_STATE state;
   u8              subState;
@@ -382,6 +383,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   }
 
   
+  work->isInitMbComm = FALSE;
   work->isPostMoviePoke = FALSE;
   work->isPostMovieCapsule = FALSE;
   work->localHighScore = 0;
@@ -1441,6 +1443,7 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   {
   case MPSS_SEND_IMAGE_INIT_COMM:
     WhCallBackFlg = FALSE;
+    work->isInitMbComm = TRUE;
     WH_Initialize(work->heapId , &MP_PARENT_WhCallBack , FALSE );
     
     GFL_NET_WirelessIconEasyXY( 256-16,0,FALSE,work->heapId );
@@ -1537,6 +1540,7 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   case MPSS_SEND_IMAGE_NET_EXIT:
     WhCallBackFlg = FALSE;
     WH_End( &MP_PARENT_WhCallBack );
+    work->isInitMbComm = FALSE;
     work->subState = MPSS_SEND_IMAGE_NET_EXIT_WAIT;
     break;
   case MPSS_SEND_IMAGE_NET_EXIT_WAIT:
@@ -1944,13 +1948,15 @@ static void MB_PARENT_SoftResetCallBack( void *pWork )
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
     }
   }
-  
-  WhCallBackFlg = FALSE;
-  WH_End( &MP_PARENT_WhCallBack );
-  while( WhCallBackFlg == FALSE )
+  if( work->isInitMbComm == TRUE )
   {
-    OS_TPrintf("WaitB!\n");
-    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    WhCallBackFlg = FALSE;
+    WH_End( &MP_PARENT_WhCallBack );
+    while( WhCallBackFlg == FALSE )
+    {
+      OS_TPrintf("WaitB!\n");
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    }
   }
 }
 
