@@ -1457,8 +1457,8 @@ static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
              ( (agility & ACTPRI_BITMASK_AGILITY) )
           );
 
-  TAYA_Printf("actPri=%d<<%d, wazaPri=%d<<%d, spPri=%d<<%d, agi=%d, PRI=%08x\n",
-    actPri, ACTPRI_BITSHIFT_ACT, wazaPri, ACTPRI_BITSHIFT_WAZA, spPri, ACTPRI_BITSHIFT_SP, agility, pri );
+//  TAYA_Printf("actPri=%d<<%d, wazaPri=%d<<%d, spPri=%d<<%d, agi=%d, PRI=%08x\n",
+//    actPri, ACTPRI_BITSHIFT_ACT, wazaPri, ACTPRI_BITSHIFT_WAZA, spPri, ACTPRI_BITSHIFT_SP, agility, pri );
 
   return pri;
 }
@@ -8380,8 +8380,10 @@ static BOOL scproc_RecoverHP_CheckFailSP( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
 {
   if( BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) )
   {
-    if( fDispFailMsg ){
+    if( fDispFailMsg )
+    {
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFujiExe, BPP_GetID(bpp) );
+      wk->fKaifukuFujiMsgDisped = TRUE;
     }
     return TRUE;
   }
@@ -14223,9 +14225,13 @@ void BTL_SVFRET_FreeFallRelease( BTL_SVFLOW_WORK* wk, u8 atkPokeID )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BTL_SVFRET_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+BOOL BTL_SVFRET_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8* fFailMsgDisped )
 {
-  return scproc_UseItemEquip( wk, bpp );
+  BOOL result;
+  wk->fKaifukuFujiMsgDisped = FALSE;
+  result = scproc_UseItemEquip( wk, bpp );
+
+  return result;
 }
 //=============================================================================================
 /**

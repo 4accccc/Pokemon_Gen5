@@ -975,6 +975,30 @@ static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
 /*  トレーナーアイテム使用                                                                            */
 /*                                                                                                    */
 /*====================================================================================================*/
+
+
+/**
+ *  シューターアイテム使用結果
+ */
+typedef enum {
+  SHOOTER_REACTION_NONE = 0,    ///< 効果なし、リアクションなし
+  SHOOTER_REACTION_ENABLE,      ///< 効果あり
+  SHOOTER_REACTION_FAIL_MSG,    ///< 効果なし、リアクションあり（回復封じメッセージなど）
+}ShooterReactionType;
+
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   itemID
+ * @param   actParam
+ * @param   targetIdx
+ *
+ * @retval  TrItemResult
+ */
+//=============================================================================================
 TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx )
 {
   enum {
@@ -1135,18 +1159,22 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       if( ItemEffectTable[i].fShooterOnly && (itemID == ItemEffectTable[i].effect) )
       {
         u16 que_reserve_pos;
+        u8  reaction = SHOOTER_REACTION_NONE;
 
         if( !BTL_SVFTOOL_IsTameHidePoke(wk, targetPokeID) )
         {
           que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_EFFECT_BYPOS );
-          if( ItemEffectTable[i].func(wk, target, itemID, 0, actParam) )
+          reaction = ItemEffectTable[i].func( wk, target, itemID, 0, actParam );
+          if( reaction == SHOOTER_REACTION_ENABLE )
           {
             SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, BTLEFF_USE_ITEM );
             SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT );// USE_ITEM SHOOTER_EFFECT のカメラ状態を初期化
             return TRITEM_RESULT_NORMAL;
           }
         }
-        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
+        if( reaction == SHOOTER_REACTION_NONE ){
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
+        }
         SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT );// USE_ITEM SHOOTER_EFFECT のカメラ状態を初期化
         return TRITEM_RESULT_NORMAL;
       }
@@ -1173,19 +1201,18 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     // 使用効果あり
     if( fEffective )
     {
-
       {
         u16 effectNo = (targetPos!=BTL_POS_NULL)? BTLEFF_USE_ITEM : BTLEFF_BENCH_RECOVERY;
         SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, effectNo );
       }
-
       if( wk->bagMode != BBAG_MODE_SHOOTER )
       {
         BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
         BTL_MAIN_CalcNatsukiItemUse( wk->mainModule, target, itemID );
       }
     }
-    else{
+    else
+    {
       SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
     }
     BTL_Hem_PopState( &wk->HEManager, hem_state );
@@ -1843,12 +1870,18 @@ static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
   if( !BTL_TABLES_CheckItemCallNoEffect(equipItemID) )
   {
     u8 pokeID = BPP_GetID( bpp );
+    u8 fFailMsgDisped;
+    u8 result;
 
     BTL_N_Printf( DBGSTR_SVFL_UseItemCall, BPP_GetID(bpp) );
 
-    return BTL_SVFRET_UseItemEquip( wk, bpp );
+    result = BTL_SVFRET_UseItemEquip( wk, bpp, &fFailMsgDisped );
+    if( !result ){
+      return (fFailMsgDisped)? SHOOTER_REACTION_FAIL_MSG : SHOOTER_REACTION_NONE;
+    }
+    return SHOOTER_REACTION_ENABLE;
   }
-  return FALSE;
+  return SHOOTER_REACTION_NONE;
 }
 /**
  *  シューター専用：スキルコール
@@ -1864,11 +1897,11 @@ static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
     result = BTL_SVF_HandEx_Result( wk );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-    TAYA_Printf("スキルコールresult=%d\n", result);
-
-    return (result == HandExResult_Enable);
+    if( result == HandExResult_Enable ){
+      return SHOOTER_REACTION_ENABLE;
+    }
   }
-  return FALSE;
+  return SHOOTER_REACTION_NONE;
 }
 /**
  *  シューター専用：アイテムドロップ
@@ -1894,10 +1927,10 @@ static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
         BTL_SVF_HANDEX_Pop( wk, param );
       }
       BTL_Hem_PopState( &wk->HEManager, hem_state );
-      return TRUE;
+      return SHOOTER_REACTION_ENABLE;
     }
   }
-  return FALSE;
+  return SHOOTER_REACTION_NONE;
 }
 /**
  *  シューター専用：フラットコール
@@ -1921,7 +1954,7 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
     BTL_SVF_HANDEX_Pop( wk, msg_param );
   }
   BTL_Hem_PopState( &wk->HEManager, hem_state );
-  return TRUE;
+  return SHOOTER_REACTION_ENABLE;
 }
 
 
