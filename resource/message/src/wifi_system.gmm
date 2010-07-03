@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-07-03T11:36:10"/>
+	<create user="shimoyamada" host="W00184" date="2010-07-03T14:35:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="392" top="243" right="1096" bottom="864" maximized="no" rayout="Vertical2">
+	<dialog left="1261" top="430" right="1893" bottom="1051" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="529"/>
+		<band id="0" index="0" style="0000" width="457"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="696"/>
-		<band id="3" index="3" style="0000" width="696"/>
+		<band id="2" index="2" style="0000" width="624"/>
+		<band id="3" index="3" style="0000" width="624"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1056,131 +1056,188 @@
 	</row>
 
 	<row id="WIFI_GSYNC_ERR001" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">サーバーの　ようりょうオーバー　です
-さいど　せつぞくを
-おためしください
-（エラーコード：１３２０1）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーの　容量オーバー　です
-再度　接続を
-おためしください
-（エラーコード：１３２０1）</language>
+		<comment>追加
+サーバーの容量オーバー</comment>
+		<language name="JPN" font=" 1:small" width="216">サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
+（エラーコード：１３２０１）</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
+（エラーコード：１３２０１）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR002" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">サーバーに
-すでに　データが　あります
+		<comment>追加
+サーバーに既にデータがある</comment>
+		<language name="JPN" font=" 1:small" width="216">サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２０２）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーに
-既に　データが　あります
+		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２０２）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR003" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">アップロードされた
-データが　こわれています
-さいど　せつぞくを
-おためしください
+		<comment>追加
+アップロードされたデータが
+壊れている</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２０３）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">アップロードされた
-データが　壊れています
-再度　接続を
-おためしください
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２０３）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR004" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">アップロードされた
-データが　ふせいです
+		<comment>追加
+アップロードされた
+データが不正</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２０４）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">アップロードされた
-データが　不正です
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２０４）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR005" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">サーバーに　データがありません
+		<comment>追加
+サーバーに指定された
+ゲームシンクIDコードの
+データが存在せず</comment>
+		<language name="JPN" font=" 1:small" width="216">サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２０５）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーに　データがありません
+		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２０５）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR006" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
+		<comment>追加
+サービス終了</comment>
 		<language name="JPN" font=" 1:small" width="216">ごりようの　サービスは
-しゅうりょういたしました
+しゅうりょう　いたしました
 （エラーコード：１３２０６）</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ごりようの　サービスは
-終了いたしました
+終了　いたしました
 （エラーコード：１３２０６）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR007" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">サーバーと　せつぞくできませんでした
-さいど　せつぞくを
-おためしください
+		<comment>追加
+サーバーとの接続失敗</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２０７）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーと　接続できませんでした
-再度　接続を
-おためしください
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２０７）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR008" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">サーバーないに
-ゲームシンクＩＤコードが
-みつかりません
+		<comment>追加
+サーバー内に指定された
+アカウントが存在しない</comment>
+		<language name="JPN" font=" 1:small" width="216">サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２０８）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サーバー内に
-ゲームシンクＩＤコードが
-見つかりません
+		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２０８）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR009" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">せつぞくに　しっぱいしました
-さいど　せつぞくを
-おためしください
+		<comment>追加
+その他の理由で
+接続が失敗</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２０９）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">接続に　失敗しました
-再度　接続を
-おためしください
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２０９）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR010" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<comment>追加</comment>
-		<language name="JPN" font=" 1:small" width="216">サーバーに　していされた
-ダウンロードデータ　が　ありません
-さいど　せつぞくを
-おためしください
+		<comment>追加
+指定されたDLコンテンツが
+データが存在しなかった</comment>
+		<language name="JPN" font=" 1:small" width="216">サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+よくあるしつもん　を　ごらんください
 （エラーコード：１３２１０）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーに　指定された
-ダウンロードデータ　が　ありません
-再度　接続を
-おためしください
+		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　よくある質問　を
+ご覧ください
 （エラーコード：１３２１０）</language>
 	</row>
 
 	<row id="WIFI_GSYNC_ERR011" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>HTTPエラーコード
-503</comment>
+503 混雑</comment>
 		<language name="JPN" font=" 1:small" width="216">サーバーが　こんざつ　しています
 せつぞく　に　しっぱいしました
 じかんをおいて　さいど
-せつぞくを　おためしください
+ゲームシンクを　おためしください
 （エラーコード：１３２１１）</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーが　混雑　しています
 接続　に　失敗しました
 時間をおいて　再度
-接続を　おためしください
+ゲームシンクを　おためしください
 （エラーコード：１３２１１）</language>
 	</row>
 
@@ -1193,13 +1250,13 @@
 ポケモングローバルリンクの
 ウェブサイトをごらんください
 http://www.pokemon-gl.com/
-（エラーコード）</language>
+（エラーコード：１３２１２）</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーは　現在メンテナンス中です
 メンテナンスの　詳細は
 ポケモングローバルリンクの
 ウェブサイトをご覧下さい
 http://www.pokemon-gl.com/
-（エラーコード）</language>
+（エラーコード：１３２１２）</language>
 	</row>
 
 	<row id="WIFI_DISCONNECT_WAIT" back-color="#ffff00,,,,,,,,,,,,,,,,,">
