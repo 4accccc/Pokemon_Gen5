@@ -297,7 +297,8 @@ typedef struct
 {
   WIFIBATTLEMATCH_BTLRULE   btl_rule;
   BtlResult btl_result;
-  u32      is_dirty;
+  u32       is_dirty;
+  u32       is_other_dirty;
 } DWC_SC_WRITE_DATA;
 //SCのリポート作成コア関数
 typedef DWCScResult (*DWCRAP_SC_CREATE_REPORT_CORE_FUNC)( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect );
@@ -1668,8 +1669,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_SC_DIRTY_TIMING,WB_NET_WIFIMATCH) || p_wk->is_sc_error )
         { 
           //不正フラグを贈りあう
-           
-            p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_INIT;
+          p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_INIT;
         }
       }
       break;
@@ -1696,7 +1696,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       }
       else
       { 
-        if( WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( p_wk, &p_wk->report.is_dirty )
+        if( WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( p_wk, &p_wk->report.is_other_dirty )
             || p_wk->is_sc_error )
         { 
           p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
@@ -2721,6 +2721,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   BOOL is_lose  = FALSE;
   BOOL is_inverse = FALSE;
   BOOL is_draw    = FALSE;
+  BOOL is_dirty   = cp_data->is_dirty || cp_data->is_other_dirty;
   DWCScResult ret;
 
   switch( cp_data->btl_result )
@@ -2769,13 +2770,13 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     is_lose ^= 1;
   }
 
-  DEBUGWIN_REPORT_SetData( is_my, is_win, is_lose, cp_data->is_dirty != 0, -1  );
+  DEBUGWIN_REPORT_SetData( is_my, is_win, is_lose, is_dirty != 0, -1  );
 
   DEBUG_NET_Printf( "-----------Report_start-------------\n" );
   DEBUG_NET_Printf( "レポート先%d\n", is_my );
   DEBUG_NET_Printf( "勝ち%d\n", is_win );
   DEBUG_NET_Printf( "負け%d\n", is_lose );
-  DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
+  DEBUG_NET_Printf( "不正%d\n", is_dirty );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
   //ルールによって送るものが違う
@@ -2891,7 +2892,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   }
 
   //共通の送るもの
-  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_CHEATS_COUNTER, cp_data->is_dirty != 0 );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_CHEATS_COUNTER, is_dirty != 0 );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
@@ -2923,6 +2924,7 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   BOOL is_lose  = FALSE;
   BOOL is_inverse = FALSE;
   BOOL is_draw  = FALSE;
+  BOOL is_dirty   = cp_data->is_dirty || cp_data->is_other_dirty;
   DWCScResult ret;
 
   switch( cp_data->btl_result )
@@ -2973,13 +2975,13 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   }
 
 
-  DEBUGWIN_REPORT_SetData( is_my, is_win, is_lose, cp_data->is_dirty != 0, -1  );
+  DEBUGWIN_REPORT_SetData( is_my, is_win, is_lose, is_dirty != 0, -1  );
 
   DEBUG_NET_Printf( "-----------Report_start-------------\n" );
   DEBUG_NET_Printf( "レポート先%d\n", is_my );
   DEBUG_NET_Printf( "勝ち%d\n", is_win );
   DEBUG_NET_Printf( "負け%d\n", is_lose );
-  DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
+  DEBUG_NET_Printf( "不正%d\n", is_dirty );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
   if( !is_draw )
@@ -3000,7 +3002,7 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   { 
     return ret;
   }
-  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_CHEATS_WIFICUP_COUNTER, cp_data->is_dirty != 0 );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_CHEATS_WIFICUP_COUNTER, is_dirty != 0 );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
