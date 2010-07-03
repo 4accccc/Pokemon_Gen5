@@ -1715,7 +1715,7 @@ static inline void DebugWin_Etc_U_DirtyParty( void* userWork , DEBUGWIN_ITEM* it
 {
   DEBUGWIN_EVILCHECK *p_data  = DEBUGWIN_EVILCHECK_GetInstance();
   POKEPARTY *p_party  = p_data->p_party;
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT || GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
     int i;
     POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, 0 );
@@ -1747,7 +1747,7 @@ static inline void DebugWin_Etc_U_DirtyParty( void* userWork , DEBUGWIN_ITEM* it
 static inline void DebugWin_Etc_D_DirtyParty( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUGWIN_EVILCHECK *p_data  = DEBUGWIN_EVILCHECK_GetInstance();
-  DEBUGWIN_ITEM_SetName( item , "パーティふせいにする" );
+  DEBUGWIN_ITEM_SetName( item , "てもちをふせいに" );
 }
 
 static inline void DEBUGWIN_ETC_Init( HEAPID heapID )
