@@ -2114,8 +2114,8 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       POKEMON_PASO_PARAM* ppp =
         IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
 
-      //選択済みポケモンを選択したか？  20100630 add Saito BTS5249
-      if ( _IsBothPokemonSelect(pWork, pWork->underSelectBoxno, pWork->underSelectIndex) )
+      //選択済みポケモンを選択したか？  20100630 add Saito BTS5249 + BTS7362
+      if ( _IsBothPokemonSelect(pWork, pWork->underSelectBoxno, pWork->underSelectIndex) && POKEMONTRADEPROC_IsTriSelect(pWork))
       {
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
