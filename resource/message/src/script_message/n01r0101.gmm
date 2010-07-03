@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-27T15:24:59"/>
+	<create user="matsumiya" host="W00224" date="2010-07-03T15:46:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,7 +309,7 @@
 		<comment>♂
 ・続けてsage4_01</comment>
 		<attribute name="キャラ指定">七賢人３</attribute>
-		<language name="JPN" width="256">たいどう　すたれて
+		<language name="JPN" width="256">だいどう　すたれて
 じんぎ　あり[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大道　廃れて　仁義あり[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -348,7 +348,7 @@
 ・メッセージ表示後、七賢人全員
 　主人公を囲む位置に移動しsage2_02に</comment>
 		<attribute name="キャラ指定">七賢人７</attribute>
-		<language name="JPN" width="256">てんに　ふつか　なく
+		<language name="JPN" width="256">てんに　にじつ　なく
 たみに　ふたりの　おう　なし[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">天に二日なく　民に二王なし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
