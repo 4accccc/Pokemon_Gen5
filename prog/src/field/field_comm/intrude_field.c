@@ -1903,6 +1903,54 @@ void IntrudeField_SetPalaceMapNotConnect(INTRUDE_COMM_SYS_PTR intcomm)
   }
 }
 
+//==================================================================
+/**
+ * フィールドの常駐するプレイヤーOBJを取得する為の性別を得る
+ *
+ * @param   game_comm		
+ *
+ * @retval  int		PM_MALE or PM_FEMALE
+ */
+//==================================================================
+int IntrudeField_GetPlayerSettingSex(GAME_COMM_SYS_PTR game_comm)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
+  const MYSTATUS *myst;
+  
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+    //表フィールド
+    myst = GAMEDATA_GetMyStatus(gamedata);
+  }
+  else{
+    //裏フィールド
+    if(GAMEDATA_GetIntrudePalaceArea(gamedata) == GAMEDATA_GetIntrudeMyID(gamedata)){
+      //自分のエリアにいる(パレス島かシンボルマップのみ)
+      myst = GAMEDATA_GetMyStatus(gamedata);
+    }
+    else{
+      //他人のエリアにいる
+      INTRUDE_COMM_SYS_PTR intcomm = NULL;
+      if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
+          && GameCommSys_GetAppWork(game_comm) != NULL){
+        //エラー中でも取得する必要があるためgame_commから直接取る
+        intcomm = GameCommSys_GetAppWork(game_comm);
+      }
+      if(intcomm == NULL){
+        myst = GAMEDATA_GetMyStatus(gamedata);
+      }
+      else if(ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE){
+        //パレス島にいる時は他人のエリアでも常に自分のステータスを返す
+        myst = GAMEDATA_GetMyStatus(gamedata);
+      }
+      else{
+        myst = GAMEDATA_GetMyStatusPlayer(gamedata, GAMEDATA_GetIntrudePalaceArea(gamedata));
+      }
+    }
+  }
+  
+  return MyStatus_GetMySex(myst);
+}
+
 
 #ifdef PM_DEBUG
 GMEVENT * DEBUG_EVENT_PalaceBarrierMove(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir)
