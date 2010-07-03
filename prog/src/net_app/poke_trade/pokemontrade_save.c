@@ -553,6 +553,7 @@ static void _removeCallback(void* pW)
     GFL_STD_MemCopy(pWork->aBackup.pBoxTray,
                     BOXTRAYDAT_GetTrayData(pWork->pBox, pWork->pParentWork->selectBoxno),
                     BOXTRAYDAT_GetTotalSize());
+    GFL_HEAP_FreeMemory(pWork->aBackup.pBoxTray);
   }
   if(pWork->aBackup.bVoice){
     PERAPVOICE_SetExistFlag(GAMEDATA_GetPerapVoice(pWork->pGameData));
