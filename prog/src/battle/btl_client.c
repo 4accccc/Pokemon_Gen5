@@ -3843,12 +3843,9 @@ static BOOL AI_ChangeProcSub_WazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* procP
     }
   }
 
-
-
   {
     u32 i, rankCnt = 0;
     BPP_WAZADMG_REC rec;
-
 
     for(i=BPP_RANKVALUE_START; i<=BPP_RANKVALUE_END; ++i)
     {
@@ -3863,7 +3860,7 @@ static BOOL AI_ChangeProcSub_WazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* procP
       u32 i, hikaeStart, memberCnt;
 
       memberCnt = BTL_PARTY_GetMemberCount( wk->myParty );
-      hikaeStart = BTL_RULE_GetNumFrontPos( BTL_MAIN_GetRule(wk->mainModule) );
+      hikaeStart = BTL_RULE_HandPokeIndex( BTL_MAIN_GetRule(wk->mainModule), wk->numCoverPos );
 
       for(i=hikaeStart; i<memberCnt; ++i)
       {
@@ -3931,7 +3928,7 @@ static BOOL AI_ChangeProcSub_HikaeWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* 
   u32 i, hikaeStart, memberCnt;
 
   memberCnt = BTL_PARTY_GetMemberCount( wk->myParty );
-  hikaeStart = BTL_RULE_GetNumFrontPos( BTL_MAIN_GetRule(wk->mainModule) );
+  hikaeStart = BTL_RULE_HandPokeIndex( BTL_MAIN_GetRule(wk->mainModule), wk->numCoverPos );
 
   for(i=hikaeStart; i<memberCnt; ++i)
   {
@@ -3954,7 +3951,7 @@ static BOOL AI_ChangeProcSub_HikaePokeAff( BTL_CLIENT* wk, PokeType wazaType, Bt
   u32 i, hikaeStart, memberCnt;
 
   memberCnt = BTL_PARTY_GetMemberCount( wk->myParty );
-  hikaeStart = BTL_RULE_GetNumFrontPos( BTL_MAIN_GetRule(wk->mainModule) );
+  hikaeStart = BTL_RULE_HandPokeIndex( BTL_MAIN_GetRule(wk->mainModule), wk->numCoverPos );
 
   for(i=hikaeStart; i<memberCnt; ++i)
   {
@@ -8462,6 +8459,10 @@ static u16 AIItem_CheckUse( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, const BTL_
     BTL_PARTY_MEMBER_MAX, 4, 2, 1,
   };
   u32 i, numMembers = BTL_PARTY_GetMemberCount( party );
+
+  if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){
+    return ITEM_DUMMY_DATA;
+  }
 
   for(i=0; i<NELEMS(wk->AIItem); ++i)
   {
