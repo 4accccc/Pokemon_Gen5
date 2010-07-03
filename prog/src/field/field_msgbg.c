@@ -134,9 +134,6 @@ struct _FLDKEYWAITCURSOR
   u8 cursor_anm_frame;
   u8 padding;
   GFL_BMP_DATA *bmp_cursor;
-
-  void *pArcChara;
-  NNSG2dCharacterData *pChara;
 };
 
 //--------------------------------------------------------------
@@ -205,6 +202,9 @@ struct _TAG_FLDMSGBG
   
   u8 req_reset_bg2_control;
   u8 padding[3];
+  
+  void *pArcChara_KeyWaitCursor;
+  NNSG2dCharacterData *pChara_KeyWaitCursor;
   
 #ifdef DEBUG_FLDMSGBG
   int d_printTCBcount;
@@ -433,9 +433,17 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
     fmb->printTCBLSys = GFL_TCBL_Init(
         fmb->heapID, fmb->heapID, FLDMSGBG_PRINT_STREAM_MAX, 4 );
   }
-
+  
   { // OPTION
     Control_Init( &fmb->print_cont );
+  }
+  
+  { //KeyWait Cursor
+    fmb->pArcChara_KeyWaitCursor = GFL_ARC_UTIL_Load(
+        ARCID_FLDMAP_WINFRAME, NARC_winframe_talk_cursor_NCGR,
+        FALSE, heapID );
+    NNS_G2dGetUnpackedBGCharacterData(
+        fmb->pArcChara_KeyWaitCursor, &fmb->pChara_KeyWaitCursor );
   }
   
   //FLDMSGBG_SetupResource( fmb );
@@ -510,6 +518,10 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
 {
   int i = 0;
   FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
+  
+  if( fmb->pArcChara_KeyWaitCursor != NULL ){ //KeyWait Cursor
+    GFL_HEAP_FreeMemory( fmb->pArcChara_KeyWaitCursor );
+  }
   
   if( fmb->talkMsgWinSys != NULL ){
     TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
@@ -2277,7 +2289,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveFont_plttNo );
   msgWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
-  FLDKEYWAITCURSOR_Init( &msgWin->cursor_work, fmb->heapID );
+  FLDKEYWAITCURSOR_Init( &msgWin->cursor_work, fmb );
 
   winframe_SetPaletteBlack( fmb->heapID );
   setBlendAlpha( TRUE );
@@ -2521,7 +2533,7 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
   sysWin->bmpwin = syswin_InitBmp( SYSWIN_DEF_PX, bmppos_y, SYSWIN_DEF_SX, SYSWIN_DEF_SY, fmb->heapID );
   sysWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
-  FLDKEYWAITCURSOR_Init( &sysWin->cursor_work, fmb->heapID );
+  FLDKEYWAITCURSOR_Init( &sysWin->cursor_work, fmb );
   
   winframe_SetPaletteBlack( fmb->heapID );
   setBlendAlpha( TRUE );
@@ -2817,7 +2829,7 @@ static void fldTalkMsgWin_Add(
   
   TALKMSGWIN_OpenWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   
-  FLDKEYWAITCURSOR_Init( &tmsg->cursor_work, fmb->heapID );
+  FLDKEYWAITCURSOR_Init( &tmsg->cursor_work, fmb );
   
   if( type == TALKMSGWIN_TYPE_GIZA ){
     tmsg->shake_y = GIZA_SHAKE_Y;
@@ -3186,7 +3198,7 @@ static void fldPlainMsgWin_Add( FLDMSGBG *fmb,
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y,
       type );
   
-  FLDKEYWAITCURSOR_Init( &plnwin->cursor_work, fmb->heapID );
+  FLDKEYWAITCURSOR_Init( &plnwin->cursor_work, fmb );
 }
 
 //--------------------------------------------------------------
@@ -3821,7 +3833,7 @@ FLDBGWIN * FLDBGWIN_AddEx( FLDMSGBG *fmb, FLDBGWIN_TYPE type, GFL_FONT* useFontH
     GFL_BG_LoadScreenReq( fmb->bgFrame );
   }
   
-  FLDKEYWAITCURSOR_Init( &bgWin->cursor_work, bgWin->fmb->heapID );
+  FLDKEYWAITCURSOR_Init( &bgWin->cursor_work, bgWin->fmb );
   
   fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
   setBlendAlpha( FALSE );
@@ -4428,7 +4440,7 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
   GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
   GFL_BG_LoadScreenReq( fmb->bgFrame );
   
-  FLDKEYWAITCURSOR_Init( &spWin->cursor_work, fmb->heapID );
+  FLDKEYWAITCURSOR_Init( &spWin->cursor_work, fmb );
 
   fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
   setBlendAlpha( FALSE );
@@ -4574,10 +4586,11 @@ u32 FLDSPWIN_GetNeedWindowHeightCharaSize(
  * @retval FLDKEYWAITCURSOR
  */
 //--------------------------------------------------------------
-FLDKEYWAITCURSOR * FLDKEYWAITCURSOR_Create( HEAPID heapID )
+FLDKEYWAITCURSOR * FLDKEYWAITCURSOR_Create( const FLDMSGBG *fmb )
 {
-  FLDKEYWAITCURSOR * work = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDKEYWAITCURSOR) );
-  FLDKEYWAITCURSOR_Init( work, heapID );
+  FLDKEYWAITCURSOR * work =
+    GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDKEYWAITCURSOR) );
+  FLDKEYWAITCURSOR_Init( work, fmb );
   return work;
 }
 
@@ -4605,7 +4618,21 @@ void FLDKEYWAITCURSOR_Delete( FLDKEYWAITCURSOR * work )
  * FLDKEYWAITCURSOR_Create‚Å‚È‚­‚±‚¿‚ç‚ğg—p‚·‚é
  */
 //--------------------------------------------------------------
-void FLDKEYWAITCURSOR_Init( FLDKEYWAITCURSOR *work, HEAPID heapID )
+void FLDKEYWAITCURSOR_Init( FLDKEYWAITCURSOR *work, const FLDMSGBG *fmb )
+{
+  GF_ASSERT( fmb->pArcChara_KeyWaitCursor != NULL );
+
+  MI_CpuClear8( work, sizeof(FLDKEYWAITCURSOR) );
+  
+  {
+    work->bmp_cursor = GFL_BMP_CreateWithData(
+        (u8*)fmb->pChara_KeyWaitCursor->pRawData,
+        1, 1, GFL_BMP_16_COLOR, fmb->heapID );
+  }
+}
+
+#if 0 //old
+void FLDKEYWAITCURSOR_Init( FLDKEYWAITCURSOR *work const FLDMSGBG *fmb )
 {
   MI_CpuClear8( work, sizeof(FLDKEYWAITCURSOR) );
   
@@ -4626,6 +4653,7 @@ void FLDKEYWAITCURSOR_Init( FLDKEYWAITCURSOR *work, HEAPID heapID )
   }
 #endif
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -4641,7 +4669,7 @@ void FLDKEYWAITCURSOR_Finish( FLDKEYWAITCURSOR *work )
 {
   work->cursor_state = CURSOR_STATE_NONE;
   GFL_BMP_Delete( work->bmp_cursor );
-  GFL_HEAP_FreeMemory( work->pArcChara );
+//  GFL_HEAP_FreeMemory( work->pArcChara ); //í’“‰»
 }
 
 //--------------------------------------------------------------

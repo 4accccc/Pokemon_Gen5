@@ -216,7 +216,8 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
         iwew->fieldmap, &iwew->itemData[iwew->itemPos], view_count );
     //表示ウィンドウ：描画
     PDWPOSTMAN_ItemWindow_Draw( iwew->piww );
-    iwew->piww->cursor_work = FLDKEYWAITCURSOR_Create( FIELDMAP_GetHeapID( iwew->fieldmap ) );
+    iwew->piww->cursor_work = FLDKEYWAITCURSOR_Create(
+        FIELDMAP_GetFldMsgBG( iwew->fieldmap ) );
     (*seq) ++;
     break;
 

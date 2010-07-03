@@ -54,6 +54,10 @@ struct _TAG_FLDEFF_D06DENKI
   FLDEFF_CTRL *fectrl;
   GFL_G3D_RES *g3d_res_mdl[RESNO_MDL_MAX];
   GFL_G3D_RES *g3d_res_anm[RESNO_ANM_MAX];
+  
+  GFL_G3D_ANM *obj_anm_biri2;
+  GFL_G3D_RND *obj_rnd_biri2;
+  GFL_G3D_OBJ *obj_biri2;
 };
 
 //--------------------------------------------------------------
@@ -71,9 +75,13 @@ typedef struct
 typedef struct
 {
   FLDEFF_D06DENKI *eff_d06;
+#if 0
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *obj_anm;
   GFL_G3D_RND *obj_rnd;
+#endif
+  fx32 anm_frame;
+  BOOL anm_end_flag;
 }TASKWORK_BIRIBIRI;
 
 //--------------------------------------------------------------
@@ -220,6 +228,16 @@ static void d06_InitResource( FLDEFF_D06DENKI *d06 )
     d06->g3d_res_anm[i] = GFL_G3D_CreateResourceHandle(
         handle, anm_idx[i] );
   }
+  
+  d06->obj_rnd_biri2 = GFL_G3D_RENDER_Create(
+      d06->g3d_res_mdl[RESNO_MDL_BIRI2], 0,
+      d06->g3d_res_mdl[RESNO_MDL_BIRI2] );
+  d06->obj_anm_biri2 = GFL_G3D_ANIME_Create(
+      d06->obj_rnd_biri2,
+      d06->g3d_res_anm[RESNO_ANM_BIRI2], 0 );
+  d06->obj_biri2 = GFL_G3D_OBJECT_Create(
+      d06->obj_rnd_biri2, &d06->obj_anm_biri2, 1 );
+  GFL_G3D_OBJECT_EnableAnime( d06->obj_biri2, 0 );
 }
 
 //--------------------------------------------------------------
@@ -233,6 +251,10 @@ static void d06_DeleteResource( FLDEFF_D06DENKI *d06 )
 {
   u32 i;
   
+  GFL_G3D_ANIME_Delete( d06->obj_anm_biri2 );
+  GFL_G3D_OBJECT_Delete( d06->obj_biri2 );
+	GFL_G3D_RENDER_Delete( d06->obj_rnd_biri2 );
+ 
   for( i = 0; i < RESNO_MDL_MAX; i++ ){
     GFL_G3D_FreeVramTexture( d06->g3d_res_mdl[i] );
  	  GFL_G3D_DeleteResource( d06->g3d_res_mdl[i] );
@@ -290,7 +312,7 @@ static void biribiriTask_Init( FLDEFF_TASK *task, void *wk )
   head = FLDEFF_TASK_GetAddPointer( task );
   work->eff_d06 = head->eff_d06;
   FLDEFF_TASK_SetPos( task, &head->pos );
-  
+#if 0  
   work->obj_rnd =
     GFL_G3D_RENDER_Create(
         work->eff_d06->g3d_res_mdl[RESNO_MDL_BIRI2], 0,
@@ -303,6 +325,7 @@ static void biribiriTask_Init( FLDEFF_TASK *task, void *wk )
   work->obj = GFL_G3D_OBJECT_Create(
       work->obj_rnd, &work->obj_anm, 1 );
   GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
+#endif
   
   PMSND_PlaySE( SEQ_SE_FLD_49 );
 }
@@ -318,9 +341,11 @@ static void biribiriTask_Init( FLDEFF_TASK *task, void *wk )
 static void biribiriTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_BIRIBIRI *work = wk;
+#if 0
   GFL_G3D_ANIME_Delete( work->obj_anm );
   GFL_G3D_OBJECT_Delete( work->obj );
 	GFL_G3D_RENDER_Delete( work->obj_rnd );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -334,10 +359,16 @@ static void biribiriTask_Delete( FLDEFF_TASK *task, void *wk )
 static void biribiriTask_Update( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_BIRIBIRI *work = wk;
-  
+
+#if 0  
   if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
   }
+#else
+  if( work->anm_end_flag == TRUE ){
+    FLDEFF_TASK_CallDelete( task );
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -350,13 +381,27 @@ static void biribiriTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void biribiriTask_Draw( FLDEFF_TASK *task, void *wk )
 {
-  VecFx32 pos;
   TASKWORK_BIRIBIRI *work = wk;
-  GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
-
-  MTX_Identity33( &status.rotate );
-  FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+  
+  if( work->anm_end_flag == FALSE ){
+    VecFx32 pos;
+    GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
+    GFL_G3D_OBJ *pObj = work->eff_d06->obj_biri2;
+	  GFL_G3D_OBJECT_SetAnimeFrame( pObj, 0, (int*)&work->anm_frame );
+    
+	  if( GFL_G3D_OBJECT_IncAnimeFrame(pObj,0,FX32_ONE) == FALSE ){
+      work->anm_end_flag = TRUE;
+    }
+    
+    if( GFL_G3D_OBJECT_GetAnimeFrame(
+          pObj,0,(int*)&work->anm_frame) == FALSE ){
+      work->anm_end_flag = TRUE;
+    }
+    
+    MTX_Identity33( &status.rotate );
+    FLDEFF_TASK_GetPos( task, &status.trans );
+    GFL_G3D_DRAW_DrawObjectCullingON( pObj, &status );
+  }
 }
 
 //--------------------------------------------------------------

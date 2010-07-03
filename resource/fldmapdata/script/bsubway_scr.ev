@@ -1299,6 +1299,18 @@ sub_receipt_challenge_wifi:
       _RET
     ENDIF
     
+    //フィールド通信切断
+    _CALL sub_common_exit_field_comm
+    
+    IF $SCWK_ANSWER == FALSE THEN //切断失敗
+      $SCWK_TEMP0 = msg_bsw_scr_77
+      _CALL sub_bsw_common_bwin_receipt
+      _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
+      _CALL sub_bsw_common_exit
+      _RET
+    ENDIF
+    
     //wifi接続　ダウンロード
     _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, ret )
     

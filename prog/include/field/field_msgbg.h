@@ -448,9 +448,9 @@ extern u32 FLDSPWIN_GetNeedWindowHeightCharaSize(
     FLDMSGBG *fmb, const STRBUF *strbuf, u32 margin );
 
 //キー送りカーソル
-extern FLDKEYWAITCURSOR * FLDKEYWAITCURSOR_Create( HEAPID heapID );
+extern FLDKEYWAITCURSOR * FLDKEYWAITCURSOR_Create( const FLDMSGBG *fmb );
 extern void FLDKEYWAITCURSOR_Delete( FLDKEYWAITCURSOR *work );
-extern void FLDKEYWAITCURSOR_Init( FLDKEYWAITCURSOR *work, HEAPID heapID );
+extern void FLDKEYWAITCURSOR_Init( FLDKEYWAITCURSOR *work, const FLDMSGBG *fmb );
 extern void FLDKEYWAITCURSOR_Finish( FLDKEYWAITCURSOR *work );
 extern KEYWAITCURSOR_STATE FLDKEYWAITCURSOR_GetState( FLDKEYWAITCURSOR *work );
 extern void FLDKEYWAITCURSOR_Clear (
