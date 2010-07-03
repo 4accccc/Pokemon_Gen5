@@ -1721,7 +1721,7 @@ static inline void DebugWin_Etc_U_DirtyParty( void* userWork , DEBUGWIN_ITEM* it
     POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, 0 );
 
 
-    p_data->is_evil  ^= 1;
+    p_data->is_evil  = 1;
 
     if( p_data->is_evil )
     {
@@ -1746,13 +1746,8 @@ static inline void DebugWin_Etc_U_DirtyParty( void* userWork , DEBUGWIN_ITEM* it
 }
 static inline void DebugWin_Etc_D_DirtyParty( void* userWork , DEBUGWIN_ITEM* item )
 {
-  static const char *sc_tbl[] =
-  {
-    "OFF",
-    "ON",
-  };
   DEBUGWIN_EVILCHECK *p_data  = DEBUGWIN_EVILCHECK_GetInstance();
-  DEBUGWIN_ITEM_SetNameV( item , "パーティふせい[%s]", sc_tbl[ (p_data->is_evil) ] );
+  DEBUGWIN_ITEM_SetName( item , "パーティふせいにする" );
 }
 
 static inline void DEBUGWIN_ETC_Init( HEAPID heapID )

@@ -76,7 +76,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
 
-#define DEBUG_REG_CRC_CHECK_OFF
+//#define DEBUG_REG_CRC_CHECK_OFF
 
 #define DEBUGWIN_USE
 #endif //PM_DEBUG
@@ -2782,7 +2782,12 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     else
     {
       //大会番号がことなっていたらマッチングに戻る
-      DEBUG_WIFICUP_Printf( "大会番号が違うのでマッチングに戻る\n" );
+      DEBUG_WIFICUP_Printf( "大会番号が違うのでマッチングに戻る no %d=%d crc %d=%d \n",
+          p_param->p_player_data->wificup_no,
+          p_param->p_enemy_data->wificup_no,
+          p_param->p_player_data->reg_crc,
+          p_param->p_enemy_data->reg_crc
+          );
       *p_seq  = SEQ_START_DISCONNECT;
     }
     break;
