@@ -74,6 +74,7 @@ typedef struct
 	ARCDATID	nmcr;
 	ARCDATID	nmar;
 	ARCDATID	ncec;
+  BOOL      heap_low;
 }MCSS_ADD_WORK;
 
 typedef struct	
