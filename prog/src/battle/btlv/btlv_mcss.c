@@ -2570,6 +2570,7 @@ void  BTLV_MCSS_PopVanishFlag( BTLV_MCSS_WORK* bmw )
     { 
       int index = BTLV_MCSS_GetIndex( bmw, pos );
       BTLV_MCSS_SetVanishFlag( bmw, pos, bmw->btlv_mcss[ index ].push_vanish_flag );
+      bmw->btlv_mcss[ index ].effect_vanish_flag = 0;
     }
   }
 }
