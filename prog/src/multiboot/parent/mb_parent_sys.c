@@ -1945,16 +1945,22 @@ static void MB_PARENT_SoftResetCallBack( void *pWork )
   if( MBP_IsInitNet() == TRUE )
   {
     MBP_Cancel();
-    while( MBP_GetState() != MBP_STATE_STOP )
-    {
-      OS_TPrintf("WaitA!\n");
-      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-    }
+  }
+  while( MBP_GetState() != MBP_STATE_STOP ||
+         MBP_GetState() != MBP_STATE_COMPLETE )
+  {
+    OS_TPrintf("WaitA!\n");
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
   }
   if( work->isInitMbComm == TRUE )
   {
     WhCallBackFlg = FALSE;
-    WH_End( &MP_PARENT_WhCallBack );
+    while( WH_End( &MP_PARENT_WhCallBack ) )
+    {
+      OS_TPrintf("WaitC!\n");
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    }
+    
     while( WhCallBackFlg == FALSE )
     {
       OS_TPrintf("WaitB!\n");
