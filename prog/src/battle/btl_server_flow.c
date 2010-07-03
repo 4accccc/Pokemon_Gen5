@@ -1437,7 +1437,7 @@ enum {
   ACTPRI_BITSHIFT_AGILITY = 0,
   ACTPRI_BITSHIFT_SP      = ACTPRI_BIT_AGILITY,
   ACTPRI_BITSHIFT_WAZA    = (ACTPRI_BITSHIFT_SP + ACTPRI_BIT_SP),
-  ACTPRI_BITSHIFT_ACT     = (ACTPRI_BITSHIFT_WAZA + ACTPRI_BIT_ACT),
+  ACTPRI_BITSHIFT_ACT     = (ACTPRI_BITSHIFT_WAZA + ACTPRI_BIT_WAZA),
 
   ACTPRI_BITMASK_HANDLER  = ((1 << (ACTPRI_BIT_AGILITY+ACTPRI_BIT_SP)) - 1),
 };
@@ -1451,17 +1451,21 @@ static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
     ‘f‘‚³      ... 16 BIT
   */
 
-  return ( ((actPri&ACTPRI_BITMASK_ACT)<<ACTPRI_BITSHIFT_ACT) |
-           ((wazaPri & ACTPRI_BITMASK_WAZA) << ACTPRI_BITSHIFT_WAZA) |
-           ((spPri & ACTPRI_BITMASK_SP) << ACTPRI_BITSHIFT_SP) |
-           (agility & ACTPRI_BITMASK_AGILITY)
-         );
+  u32 pri =( ( (actPri & ACTPRI_BITMASK_ACT)   << ACTPRI_BITSHIFT_ACT)  |
+             ( (wazaPri & ACTPRI_BITMASK_WAZA) << ACTPRI_BITSHIFT_WAZA) |
+             ( (spPri & ACTPRI_BITMASK_SP)     << ACTPRI_BITSHIFT_SP)   |
+             ( (agility & ACTPRI_BITMASK_AGILITY) )
+          );
+
+  TAYA_Printf("actPri=%d<<%d, wazaPri=%d<<%d, spPri=%d<<%d, agi=%d, PRI=%08x\n",
+    actPri, ACTPRI_BITSHIFT_ACT, wazaPri, ACTPRI_BITSHIFT_WAZA, spPri, ACTPRI_BITSHIFT_SP, agility, pri );
+
+  return pri;
 }
 
 static inline u32 ActPri_ChangeAgility( u32 defPriority, u16 agility )
 {
   u32 mask = ~(ACTPRI_BITMASK_AGILITY);
-  TAYA_Printf("mask = %08x\n", mask);
   return (defPriority & mask) | (agility & ACTPRI_BITMASK_AGILITY);
 }
 
