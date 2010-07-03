@@ -2051,7 +2051,7 @@ static int Record_EndParentOnly( GURU2RC_WORK *wk, int seq )
   表示が壊れてしまうバグを対処 */
   // メッセージ表示中は呼び出さないようにする
   if( EndMessageWait( wk ) ){
-    RecordMessagePrint( wk, msg_guru2_receipt_01_08, 0 ); // リーダーが抜けたので解散します。
+    RecordMessagePrint( wk, msg_guru2_receipt_01_06, 0 ); 
     wk->seq = RECORD_MODE_END_PARENT_ONLY_WAIT;
   }
 
