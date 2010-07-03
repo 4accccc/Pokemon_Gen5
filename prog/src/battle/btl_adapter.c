@@ -152,6 +152,13 @@ BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, u8 adapterID, BOOL f
   }
 }
 
+void BTL_ADAPTER_Init( BTL_ADAPTER* wk )
+{
+  wk->myState = AS_FREE;
+  wk->processingCmd = BTL_ACMD_NONE;
+  wk->returnDataPreparedFlag = FALSE;
+}
+
 void BTL_ADAPTER_Delete( BTL_ADAPTER* wk )
 {
   GFL_HEAP_FreeMemory( wk );
@@ -290,7 +297,8 @@ u32 BTL_ADAPTER_GetReturnDataSize( BTL_ADAPTER* wk )
 //--------------------------------------------------------------------------------------
 void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk )
 {
-//  GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
+  GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
+
   wk->myState = AS_FREE;
 
 //

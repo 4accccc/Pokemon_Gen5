@@ -134,18 +134,18 @@ static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForSubwayTrainer( BTL_SERVER* server, int* seq );
-static BOOL SendBtlInChapterRecord( BTL_SERVER* server, BOOL fAnyEvent );
 static void print_client_action( const BTL_SVCL_ACTION* clientAction );
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption );
+static BOOL SendBtlInChapterRecord( BTL_SERVER* server, BOOL fAnyEvent );
 static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter );
 static void* MakeSelectActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter, u32* dataSize );
-static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
 static void storeClientAction( BTL_SERVER* server );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static void SetAdapterCmdSingle( BTL_SERVER* server, BtlAdapterCmd cmd, u8 clientID, const void* sendData, u32 dataSize );
 static BOOL WaitAllAdapterReply( BTL_SERVER* server );
 static void ResetAdapterCmd( BTL_SERVER* server );
+static void InitAllAdapter( BTL_SERVER* server );
 static void Svcl_Clear( SVCL_WORK* clwk );
 static BOOL Svcl_IsEnable( const SVCL_WORK* clwk );
 static void Svcl_Setup( SVCL_WORK* clwk, u8 clientID, BTL_ADAPTER* adapter, BOOL fLocalClient );
@@ -301,7 +301,7 @@ void BTL_SERVER_CmdCheckMode( BTL_SERVER* server, u8 clientID, u8 numCoverPos )
 void BTL_SERVER_Startup( BTL_SERVER* server )
 {
   setMainProc( server, ServerMain_WaitReady );
-  ResetAdapterCmd( server );
+  InitAllAdapter( server );
   BTL_SVFLOW_ResetSystem( server->flowWork );
 }
 //--------------------------------------------------------------------------------------
@@ -1614,6 +1614,24 @@ static void ResetAdapterCmd( BTL_SERVER* server )
   {
     if( Svcl_IsEnable(&server->client[i]) ){
       BTL_ADAPTER_ResetCmd( server->client[i].adapter );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 全アダプタの初期化処理
+ *
+ * @param   server
+ */
+//----------------------------------------------------------------------------------
+static void InitAllAdapter( BTL_SERVER* server )
+{
+  int i;
+  for(i=0; i<BTL_CLIENT_MAX; i++)
+  {
+    if( Svcl_IsEnable(&server->client[i]) ){
+      BTL_ADAPTER_Init( server->client[i].adapter );
     }
   }
 }

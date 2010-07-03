@@ -59,7 +59,7 @@ extern void BTL_ADAPTERSYS_Quit( void );
 
 extern BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, u8 adapterID, BOOL fCommType, HEAPID heapID );
 extern void BTL_ADAPTER_Delete( BTL_ADAPTER* wk );
-
+extern void BTL_ADAPTER_Init( BTL_ADAPTER* wk );
 
 // for server
 extern void BTL_ADAPTERSYS_BeginSetCmd( void );
