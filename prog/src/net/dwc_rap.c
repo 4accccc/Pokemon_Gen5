@@ -2121,7 +2121,7 @@ int GFL_NET_DWC_ErrorType(int code, int type)
   case DWC_ETYPE_SHUTDOWN_GHTTP:
   case DWC_ETYPE_SHUTDOWN_ND:
   case DWC_ETYPE_DISCONNECT:
-    return 10;
+    return 11;  //10‚©‚ç11‚É•ÏX
   default:
     GF_ASSERT(0); //DWC‚ª•Ô‚·type‚ª‘‚¦‚Ä‚¢‚é‚È‚çŒ©’¼‚µ‚ª•K—v
     break;

@@ -1061,9 +1061,9 @@ static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr, int default_msg)
   case ERRORCODE_TIMEOUT:
     return dwc_message_0022;
   }
-  if(11 == NetErrSystem.wifi_msg){
-    return dwc_error_0015;
-  }
+//  if(11 == NetErrSystem.wifi_msg){ //エラー番号が無い独自エラーをこのように変換していたが、本来のエラーが出なくなるので削除
+//    return dwc_error_0015;  //ガイドラインBTS30
+//  }
   if( NetErrSystem.wifi_msg >= 0 )
   {
     if(DS_SYSTEM_IsRunOnTwl()){
