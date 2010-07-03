@@ -47,8 +47,9 @@ struct _TAG_FLDEFF_FISHING_LURE
   GFL_G3D_RES *g3d_res_mdl;
   GFL_G3D_RES *g3d_res_anm[ANIME_NUM];
 
-  GFL_TCB* vblank_task;
-  BOOL trans_finished;
+  GFL_G3D_OBJ *g3d_obj;
+  GFL_G3D_ANM *g3d_obj_anm[ANIME_NUM];
+  GFL_G3D_RND *g3d_obj_rnd;
 };
 
 //--------------------------------------------------------------
@@ -57,10 +58,6 @@ struct _TAG_FLDEFF_FISHING_LURE
 typedef struct
 {
   FLDEFF_FISHING_LURE *eff_lure;
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm[ANIME_NUM];
-  GFL_G3D_RND *obj_rnd;
-
   u16 anm_id;
   u16 anm_change_req;
 }TASKWORK_FISHING_LURE;
@@ -79,7 +76,6 @@ typedef struct
 //======================================================================
 static void fishing_lure_InitResource( FLDEFF_FISHING_LURE *wk );
 static void fishing_lure_DeleteResource( FLDEFF_FISHING_LURE *wk );
-static void VBlankFunc( GFL_TCB* tcb, void* wk ); 
 static const FLDEFF_TASK_HEADER DATA_fishing_lure_TaskHeader;
 
 //======================================================================
@@ -133,20 +129,36 @@ static void fishing_lure_InitResource( FLDEFF_FISHING_LURE *wk )
 {
   int i;
   ARCHANDLE *handle;
-  
+  BOOL ret;
+
   handle = FLDEFF_CTRL_GetArcHandleEffect( wk->fectrl );
   
   wk->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_fishing_lure_nsbmd );
 
-  GFL_G3D_AllocVramTexture( wk->g3d_res_mdl );
-  wk->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, wk, 0 );
+  ret = GFL_G3D_TransVramTexture( wk->g3d_res_mdl );
+  GF_ASSERT( ret );
 
   for( i=0; i<ANIME_NUM; i++ )
   {
     wk->g3d_res_anm[i] =
       GFL_G3D_CreateResourceHandle( handle, dat_id[i] );
   }
+
+  wk->g3d_obj_rnd = GFL_G3D_RENDER_Create( wk->g3d_res_mdl, 0, wk->g3d_res_mdl );
+  
+  for( i=0; i<ANIME_NUM; i++ )
+  {
+    wk->g3d_obj_anm[i] =
+      GFL_G3D_ANIME_Create( wk->g3d_obj_rnd, wk->g3d_res_anm[i], 0 );
+  }
+  
+  wk->g3d_obj = GFL_G3D_OBJECT_Create( wk->g3d_obj_rnd, wk->g3d_obj_anm, ANIME_NUM );
+  for( i=0; i<ANIME_NUM; i++ )
+  { 
+    GFL_G3D_OBJECT_EnableAnime( wk->g3d_obj, i );
+  }
+
 }
 
 //--------------------------------------------------------------
@@ -159,32 +171,20 @@ static void fishing_lure_InitResource( FLDEFF_FISHING_LURE *wk )
 static void fishing_lure_DeleteResource( FLDEFF_FISHING_LURE *wk )
 {
   int i;
+
+  GFL_G3D_OBJECT_Delete( wk->g3d_obj );
+  for( i=0; i<ANIME_NUM; i++ )
+  {
+    GFL_G3D_ANIME_Delete( wk->g3d_obj_anm[i] );
+  }
+	GFL_G3D_RENDER_Delete( wk->g3d_obj_rnd );
+
   for( i=0; i<ANIME_NUM; i++ )
   {
     GFL_G3D_DeleteResource( wk->g3d_res_anm[i] );
   }
 	GFL_G3D_FreeVramTexture( wk->g3d_res_mdl );
  	GFL_G3D_DeleteResource( wk->g3d_res_mdl );
-
-  GFL_TCB_DeleteTask( wk->vblank_task );
-}
-
-//--------------------------------------------------------------
-/**
- * @brief VBlank 期間中の処理
- *
- * @param tcb
- * @param work
- */
-//--------------------------------------------------------------
-static void VBlankFunc( GFL_TCB* tcb, void* work )
-{
-  FLDEFF_FISHING_LURE* wk = work;
-
-  if( wk->trans_finished == FALSE ) {
-    GFL_G3D_TransOnlyTexture( wk->g3d_res_mdl );
-    wk->trans_finished = TRUE;
-  }
 }
 
 //======================================================================
@@ -207,12 +207,6 @@ FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos, u8 dir
    { 0, 0, 0, 0 },  //岸 up,down,left,right
    { 0, 0, 3, 3 },  //浅瀬
   };
-
-  if( FLDEFF_CTRL_CheckRegistEffect( fectrl, FLDEFF_PROCID_FISHING_LURE ) == FALSE )
-  { // エフェクトを登録
-    FLDEFF_PROCID id = FLDEFF_PROCID_FISHING_LURE;
-    FLDEFF_CTRL_RegistEffect( fectrl, &id, 1 );
-  }
 
   wk = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_FISHING_LURE );
   head.eff_lure = wk;
@@ -259,24 +253,6 @@ static void fishingLureTask_Init( FLDEFF_TASK *task, void *wk )
   head = FLDEFF_TASK_GetAddPointer( task );
   work->eff_lure = head->eff_lure;
   FLDEFF_TASK_SetPos( task, &head->pos );
-  
-  work->obj_rnd =
-    GFL_G3D_RENDER_Create(
-        work->eff_lure->g3d_res_mdl, 0, work->eff_lure->g3d_res_mdl );
-  
-  for( i=0; i<ANIME_NUM; i++ )
-  {
-    work->obj_anm[i] =
-      GFL_G3D_ANIME_Create(
-          work->obj_rnd, work->eff_lure->g3d_res_anm[i], 0 );
-  }
-  
-  work->obj = GFL_G3D_OBJECT_Create(
-      work->obj_rnd, work->obj_anm, ANIME_NUM );
-  for( i=0; i<ANIME_NUM; i++ )
-  { 
-    GFL_G3D_OBJECT_EnableAnime( work->obj, i );
-  }
 }
 
 //--------------------------------------------------------------
@@ -289,15 +265,6 @@ static void fishingLureTask_Init( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void fishingLureTask_Delete( FLDEFF_TASK *task, void *wk )
 {
-  int i;
-  TASKWORK_FISHING_LURE *work = wk;
-
-  for( i=0; i<ANIME_NUM; i++ )
-  {
-    GFL_G3D_ANIME_Delete( work->obj_anm[i] );
-  }
-  GFL_G3D_OBJECT_Delete( work->obj );
-	GFL_G3D_RENDER_Delete( work->obj_rnd );
 }
 
 //--------------------------------------------------------------
@@ -313,10 +280,11 @@ static void fishingLureTask_Update( FLDEFF_TASK *task, void *wk )
   int i;
   BOOL end = TRUE;
   TASKWORK_FISHING_LURE *work = wk;
+  FLDEFF_FISHING_LURE *eff_lure = work->eff_lure;
   
   for( i=0; i<ANIME_NUM; i++ )
   {
-    GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_CONST( (work->anm_id*2)+1 ) );
+    GFL_G3D_OBJECT_LoopAnimeFrame( eff_lure->g3d_obj, i, FX32_CONST( (work->anm_id*2)+1 ) );
   }
 }
 
@@ -332,11 +300,13 @@ static void fishingLureTask_Draw( FLDEFF_TASK *task, void *wk )
 {
   VecFx32 pos;
   TASKWORK_FISHING_LURE *work = wk;
+  FLDEFF_FISHING_LURE *eff_lure = work->eff_lure;
+
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
 
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+  GFL_G3D_DRAW_DrawObjectCullingON( eff_lure->g3d_obj, &status );
 }
 
 //--------------------------------------------------------------
