@@ -908,6 +908,7 @@ static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
       NARC_intro_intro_doctor_NMCR,
       NARC_intro_intro_doctor_NMAR,
       NARC_intro_intro_doctor_NCEC,
+      FALSE,
     };
 
     // ”ŽŽm•\Ž¦
