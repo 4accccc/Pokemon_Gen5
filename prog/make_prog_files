@@ -525,6 +525,10 @@ SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
 
+#Wi-Fiユーザー情報破壊による警告画面
+#===> SRCS_OVERLAY_DEV_WIFI
+SRCS_OVERLAY_WIFI_BREAK = system/wifi_info_break.c
+
 
 #下画面のオーバーレイレイヤー
 

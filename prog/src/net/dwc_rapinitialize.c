@@ -20,7 +20,12 @@
 #include "system/net_err.h"
 #include "system/ds_system.h"
 #include "msg\msg_wifi_system.h"
+#include "system/wifi_info_break.h"
 
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(wifi_break);
 
 
 //==============================================================================
@@ -37,15 +42,9 @@ void GFL_NET_WifiStart( int heapID , NetErrorFunc errorFunc)
 
   if( DWC_INIT_RESULT_DESTROY_OTHER_SETTING == mydwc_init(heapID) ) //dwcèâä˙âª
   {
-    if(DS_SYSTEM_IsRunOnTwl()){
-      msg = dwctwl_message_0001;
-    }
-    else{
-      msg = dwc_message_0001;
-    }
-    NetErr_SystemInit();
-    NetErr_SystemCreate(heapID);
-    NetErr_App_FatalDispCallWifiMessage(msg);
+    GFL_OVERLAY_Load(FS_OVERLAY_ID(wifi_break));
+    WifiInfoBreak_Call();
+  	GFL_OVERLAY_Unload(FS_OVERLAY_ID(wifi_break));
   }
 }
 
