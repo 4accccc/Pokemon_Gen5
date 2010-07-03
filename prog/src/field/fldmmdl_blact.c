@@ -496,6 +496,28 @@ void MMDL_BLACTCONT_AddResourceTex(
   }
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * MMDL_BLACTCONT リソース追加 レギュラー、VRAM常駐型で登録
+ * @param  mmdlsys  MMDLSYS
+ * @param  code 表示コード配列
+ * @param  max code要素数
+ * @retval  nothing
+ * @note 呼ばれたその場で読み込みが発生する。
+ * @attention アーカイブデータを連続でロードする為、処理速度は重い。
+ */
+//--------------------------------------------------------------
+void MMDL_BLACTCONT_AddResourceTexCode( MMDLSYS *mmdlsys, const u16 code )
+{
+  OBJCODE_PARAM param;
+  const OBJCODE_PARAM_BUF_BBD *prm_bbd;
+  MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
+  
+  MMDLSYS_LoadOBJCodeParam( mmdlsys, code, &param );
+  BBDResUnitIndex_AddResUnit( pBlActCont, &param, BBDRES_VRAM_REGULAR );
+}
+
 //--------------------------------------------------------------
 /**
  * MMDL_BLACTCONT リソース追加 レギュラー、VRAM常駐型で登録
@@ -862,9 +884,9 @@ static void blact_DeleteResource(
     {
       if( MMDL_SearchUseOBJCode(mmdl,code) == FALSE )
       {
-        #if 0 //その場で削除せず
+        #if 1 //その場で削除する
         BBDResUnitIndex_RemoveResUnit( pBlActCont, code );
-        #else //リソース削除を予約する
+        #else //その場で削除せず。リソース削除を予約する
         BBDResUnitIndex_RegistRemoveResUnit( pBlActCont, actID, code );
         #endif
         D_MMDL_DPrintf(
@@ -1704,6 +1726,51 @@ static BOOL BlActAddReserve_RegistResource( MMDL_BLACTCONT *pBlActCont,
   return( FALSE );
 }
 
+
+#if 0 //new
+static BOOL BlActAddReserve_RegistResource( MMDL_BLACTCONT *pBlActCont,
+    u16 code, u8 mdl_size, u8 tex_size, u16 res_idx, BBDRESBIT flag )
+{
+  u32 i = 0;
+  BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+  ADDRES_RESERVE *pRes = pReserve->pReserveRes;
+  
+  for( ; i < pReserve->resDigestFrameMax; i++, pRes++ ){
+    if( pRes->pG3dRes == NULL ){
+      pRes->compFlag = FALSE;
+      pRes->code = code;
+      pRes->mdl_size = mdl_size;
+      pRes->tex_size = tex_size;
+      pRes->flag = flag;
+      pRes->pG3dRes = GFL_G3D_CreateResourceHandle(
+          MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), res_idx );
+      
+      pRes->compFlag = TRUE;
+      
+      DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus(
+          GFL_G3D_GetResourceFileHeader( pRes->pG3dRes ) );
+      DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( pRes->pG3dRes );
+      
+      D_MMDL_DPrintf(
+          "MMDL BLACT RESERVE ADD RESOURCE CODE=%d,ARCIDX=%d\n",
+          pRes->code, res_idx );
+      return( TRUE );
+    }
+  }
+  
+#if 0
+  //予約消化が出来ていない事を知らせるASSERT
+  GF_ASSERT_MSG( 0,
+      "MMDL BLACT RESERVE REG RES MAX:CODE %d", code );
+#else
+  D_MMDL_Printf( 0,
+      "MMDL BLACT RESERVE REG RES MAX:CODE %d", code );
+#endif
+  
+  return( FALSE );
+}
+#endif
+
 //--------------------------------------------------------------
 /**
  * アクター追加予約処理　予約消化
@@ -1759,6 +1826,26 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
     }
   }
 }
+
+/*
+36704
+  | 434
+362d0
+  | 274
+3605c
+  | 434
+35c28
+  | 274
+359b4
+  |
+35580
+3530c
+34ed8
+34c64
+34830
+345bc
+34188
+*/
 
 //--------------------------------------------------------------
 /**

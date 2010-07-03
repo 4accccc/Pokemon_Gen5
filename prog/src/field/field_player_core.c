@@ -26,36 +26,18 @@
 
 #include "field_player_core.h"
 
-//-----------------------------------------------------------------------------
-/**
- *					定数宣言
-*/
-//-----------------------------------------------------------------------------
-//--------------------------------------------------------------
-/// 自機動作モデルヘッダー
-//--------------------------------------------------------------
-static const MMDL_HEADER data_MMdlHeader =
-{
-	MMDL_ID_PLAYER,	///<識別ID
-	HERO,	///<表示するOBJコード
-	MV_DMY,	///<動作コード
-	0,	///<イベントタイプ
-	0,	///<イベントフラグ
-	0,	///<イベントID
-	0,	///<指定方向
-	0,	///<指定パラメタ 0
-	0,	///<指定パラメタ 1
-	0,	///<指定パラメタ 2
-	MOVE_LIMIT_NOT,	///<X方向移動制限
-	MOVE_LIMIT_NOT,	///<Z方向移動制限
-  MMDL_HEADER_POSTYPE_GRID,
-};
+//======================================================================
+//  define
+//======================================================================
+#ifdef ADDFIX100703_REGU_TEX_HERO
+#ifdef DEBUG_ONLY_FOR_kagaya
+#define PRINTHEAP_TEX_HERO
+#endif
+#endif
 
-//-----------------------------------------------------------------------------
-/**
- *					構造体宣言
-*/
-//-----------------------------------------------------------------------------
+//======================================================================
+//  struct
+//======================================================================
 //-------------------------------------
 ///	FIELD_PLAYER_CORE
 //=====================================
@@ -91,30 +73,42 @@ struct _FIELD_PLAYER_CORE
   int draw_form_wait;
 };
 
-//-----------------------------------------------------------------------------
-/**
- *					プロトタイプ宣言
-*/
-//-----------------------------------------------------------------------------
+//======================================================================
+//  proto
+//======================================================================
+//--------------------------------------------------------------
+/// 自機動作モデルヘッダー
+//--------------------------------------------------------------
+static const MMDL_HEADER data_MMdlHeader =
+{
+	MMDL_ID_PLAYER,	///<識別ID
+	HERO,	///<表示するOBJコード
+	MV_DMY,	///<動作コード
+	0,	///<イベントタイプ
+	0,	///<イベントフラグ
+	0,	///<イベントID
+	0,	///<指定方向
+	0,	///<指定パラメタ 0
+	0,	///<指定パラメタ 1
+	0,	///<指定パラメタ 2
+	MOVE_LIMIT_NOT,	///<X方向移動制限
+	MOVE_LIMIT_NOT,	///<Z方向移動制限
+  MMDL_HEADER_POSTYPE_GRID,
+};
+
 static void fldplayer_ChangeOBJCode(
     FIELD_PLAYER_CORE *player_core, u16 code );
 static void fldplayer_ChangeMoveForm(
     FIELD_PLAYER_CORE *player_core, PLAYER_MOVE_FORM form );
 
-//-------------------------------------
 ///	キー入力処理
-//=====================================
 static u16 gjiki_GetInputKeyDir(
     const FIELD_PLAYER_CORE *player_core, u16 key_prs );
 static void gjiki_SetInputKeyDir( FIELD_PLAYER_CORE *player_core, u16 key_prs );
 static u16 getKeyDirX( u16 key_prs );
 static u16 getKeyDirZ( u16 key_prs );
 
-
-
-//-------------------------------------
 ///	Req系
-//=====================================
 static void gjikiReq_SetNormal( FIELD_PLAYER_CORE *player_core );
 static void gjikiReq_SetCycle( FIELD_PLAYER_CORE *player_core );
 static void gjikiReq_SetSwim( FIELD_PLAYER_CORE *player_core );
@@ -126,7 +120,9 @@ static void gjikiReq_SetCutInHero( FIELD_PLAYER_CORE *player_core );
 static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core );
 static void gjiki_PlayBGM( FIELD_PLAYER_CORE *player_core );
 
-
+//======================================================================
+//  field player core
+//======================================================================
 //----------------------------------------------------------------------------
 /**
  * フィールドプレイヤー　作成
@@ -920,6 +916,43 @@ FLDEFF_TASK * FIELD_PLAYER_CORE_GetEffectTaskWork(
 //  private関数
 //======================================================================
 //--------------------------------------------------------------
+//  ADDFIX100703_REGU_TEX_HERO 
+//--------------------------------------------------------------
+#ifdef PRINTHEAP_TEX_HERO
+#include "system/main.h"  //HEAPID_FIELDMAP
+static void printHeap( int num, u16 code )
+{
+  switch( FIELD_PLAYER_CheckOBJCodeToDrawForm(code) ){
+  case PLAYER_DRAW_FORM_NORMAL:
+    OS_TPrintf( "HERO " ); break;
+  case PLAYER_DRAW_FORM_CYCLE:
+    OS_TPrintf( "CYCLE " ); break;
+  case PLAYER_DRAW_FORM_SWIM:
+    OS_TPrintf( "SWIM " ); break;
+  case PLAYER_DRAW_FORM_DIVING:
+    OS_TPrintf( "DIVING " ); break;
+  case PLAYER_DRAW_FORM_ITEMGET:
+    OS_TPrintf( "ITEMGET " ); break;
+  case PLAYER_DRAW_FORM_SAVEHERO:
+    OS_TPrintf( "SAVE " ); break;
+  case PLAYER_DRAW_FORM_PCHERO:
+    OS_TPrintf( "PC " ); break;
+  case PLAYER_DRAW_FORM_YURE:
+    OS_TPrintf( "YURE " ); break;
+  case PLAYER_DRAW_FORM_FISHING:
+    OS_TPrintf( "FISHING " ); break;
+  case PLAYER_DRAW_FORM_CUTIN:
+    OS_TPrintf( "CUTIN " ); break;
+  }
+
+  OS_TPrintf( "%d HEAP_FIELD %6x(%6x)\n",
+      num,
+      GFI_HEAP_GetHeapAllocatableSize( HEAPID_FIELDMAP ),
+      GFL_HEAP_GetHeapFreeSize( HEAPID_FIELDMAP ) );
+}
+#endif
+
+//--------------------------------------------------------------
 /**
  * 自機、動作モデルのOBJコードを変更する
  * @param player_core FIELD_PLAYER＿CORE
@@ -927,16 +960,80 @@ FLDEFF_TASK * FIELD_PLAYER_CORE_GetEffectTaskWork(
  * @retval nothing
  */
 //--------------------------------------------------------------
+//----
+#ifdef ADDFIX100703_REGU_TEX_HERO
+//----
+static void fldplayer_ChangeOBJCode(
+    FIELD_PLAYER_CORE *player_core, u16 code )
+{
+  u16 now_code;
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
+  MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  
+#if 0  
+  OS_TPrintf( "*****HEAPID_FIELD****\n" );
+  GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_FIELDMAP );
+  OS_TPrintf( "****HEAPID_FIELD****\n" );
+#endif
+  
+  now_code = MMDL_GetOBJCode( mmdl );
+
+#ifdef PRINTHEAP_TEX_HERO  
+  OS_TPrintf( "---- 自機変更開始\n" );
+  printHeap( 0, now_code );
+#endif
+  
+  //現在がHERO,HEROINE、もしくは変更がHERO,HEROINEであれば
+  //１回の切り替えのみ
+  if( code == HERO || code == HEROINE ||
+      now_code == HERO || now_code == HEROINE )
+  {
+    MMDL_BLACTCONT_ChangeOBJCodeWithDummy( mmdl, code );
+    MMDLSYS_ForceWaitVBlankProc( mmdlsys );
+  }
+  else //HERO,HEROINEを介さなくてはならない他の切り替え
+  {
+    int i = 0;
+    int wait = 2;
+    int sex = FIELD_PLAYER_CORE_GetSex( player_core );
+    u16 hero_code = FIELD_PLAYER_GetMoveFormToOBJCode(
+        sex, PLAYER_DRAW_FORM_NORMAL );
+    
+    MMDL_BLACTCONT_ChangeOBJCodeWithDummy( mmdl, hero_code );
+    MMDLSYS_ForceWaitVBlankProc( mmdlsys );
+    
+    //一瞬で切り替えるとチラツキの様な印象がある為、間を持たせる
+    while( i++ < wait ){
+      OS_WaitInterrupt( TRUE, OS_IE_V_BLANK );
+    }
+    
+#ifdef PRINTHEAP_TEX_HERO  
+    OS_TPrintf( "一旦自機戻し後 " );
+    printHeap( 1, hero_code );
+#endif
+    
+    MMDL_BLACTCONT_ChangeOBJCodeWithDummy( mmdl, code );
+    MMDLSYS_ForceWaitVBlankProc( mmdlsys );
+  }
+  
+#ifdef PRINTHEAP_TEX_HERO  
+  printHeap( 99, code );
+  OS_TPrintf( "----自機変更完了\n" );
+#endif
+}
+//----
+#else //old
+//----
 static void fldplayer_ChangeOBJCode(
     FIELD_PLAYER_CORE *player_core, u16 code )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
-#if 0
-  MMDL_ChangeOBJCode( mmdl, code );
-#else
+//  MMDL_ChangeOBJCode( mmdl, code );
   MMDL_BLACTCONT_ChangeOBJCodeWithDummy( mmdl, code );
-#endif
 }
+//----
+#endif
+//----
 
 //--------------------------------------------------------------
 /**

@@ -926,7 +926,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       SODATEYA_WORK* work = SODATEYA_WORK_GetSodateyaWork( scw );
       fieldWork->sodateya = SODATEYA_Create( fieldWork->heapID, fieldWork, work );
     }
-
+    
     // scenearea
     {
       zoneChangeScene( fieldWork, fieldWork->map_id );
@@ -2709,7 +2709,19 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 
 	//ビルボードリソース登録
   MMDL_BLACTCONT_AddResourceTex( fieldWork->fldMMdlSys );
-	
+  
+#ifdef ADDFIX100703_REGU_TEX_HERO
+  { //自機リソース登録
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(
+        fieldWork->gsys );
+    int sex = IntrudeField_GetPlayerSettingSex( game_comm );
+    u16 hero_code = FIELD_PLAYER_GetMoveFormToOBJCode(
+        sex, PLAYER_DRAW_FORM_NORMAL );
+    MMDL_BLACTCONT_AddResourceTexCode( fmmdlsys, hero_code );
+    KAGAYA_Printf( "FIELD INIT ADD HERO TEX sex=%d\n", sex );
+  }
+#endif
+  
   MMDL_G3DOBJCONT_Setup( //動作モデルオブジェクト　セットアップ
       fieldWork->fldMMdlSys, fieldWork->fieldG3dObjCtrl );
 

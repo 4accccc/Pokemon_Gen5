@@ -1197,6 +1197,7 @@ extern BOOL MMDL_BLACTCONT_CheckUpdateBBD( const MMDL *mmdl );
 extern void MMDL_BLACTCONT_AddResourceTex(
 	MMDLSYS *mmdlsys, const u16 *code, int max );
 */
+extern void MMDL_BLACTCONT_AddResourceTexCode( MMDLSYS *mmdlsys, const u16 code );
 extern void MMDL_BLACTCONT_AddResourceTex( MMDLSYS *mmdlsys );
 
 extern BOOL MMDL_BLACTCONT_AddActor(
