@@ -247,7 +247,7 @@ typedef struct
   REGULATION_CARDDATA *p_regulation;
   int page;
 
-  int cup_no;
+  u32 cup_no;
   int start_year;
   int start_month;
   int start_day;
@@ -270,12 +270,12 @@ static DEBUGWIN_REGULATION_DATA debug_data  = {0};
 static inline void DebugWin_Reg_U_ChangeNo( void* userWork , DEBUGWIN_ITEM* item )
 { 
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
-  DebugWin_Util_ChangeData( item, &p_wk->cup_no, 0, 65535 );
+  DebugWin_Util_ChangeDataU32( item, &p_wk->cup_no, 0, 0xFFFFFFFF );
 }
 static inline void DebugWin_Reg_D_ChangeNo( void* userWork , DEBUGWIN_ITEM* item )
 { 
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "‚½‚¢‚©‚¢NO[%d]", p_wk->cup_no );  
+  DEBUGWIN_ITEM_SetNameV( item , "‚½‚¢‚©‚¢NO[%u]", p_wk->cup_no );  
 }
 static inline void DebugWin_Reg_U_ChangeStartY( void* userWork , DEBUGWIN_ITEM* item )
 { 
@@ -480,7 +480,7 @@ static inline void DebugWin_Reg_D_ChangeTimeCmd( void* userWork , DEBUGWIN_ITEM*
 static inline void DebugWin_Reg_Get( DEBUGWIN_REGULATION_DATA  *p_wk )
 {
   REGULATION  *p_reg = RegulationData_GetRegulation(p_wk->p_regulation);
-  p_wk->cup_no  = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO );
+  p_wk->cup_no  = (u32)Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO );
   p_wk->start_year = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_YEAR );
   p_wk->start_month = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_MONTH );
   p_wk->start_day = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_DAY );
@@ -514,7 +514,7 @@ static inline void DebugWin_Reg_U_Set( void* userWork , DEBUGWIN_ITEM* item )
   { 
     REGULATION  *p_reg = RegulationData_GetRegulation(p_wk->p_regulation);
 
-    Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO, p_wk->cup_no );
+    Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO, (int)p_wk->cup_no );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_START_YEAR, p_wk->start_year );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_START_MONTH, p_wk->start_month );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_START_DAY, p_wk->start_day );
