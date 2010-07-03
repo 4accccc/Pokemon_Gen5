@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-29T19:31:25"/>
+	<create user="shimoyamada" host="W00184" date="2010-07-03T16:02:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,7 +346,7 @@
 		</language>
 	</columns>
 
-	<dialog left="318" top="502" right="1023" bottom="1130" maximized="no" rayout="Vertical2">
+	<dialog left="167" top="553" right="872" bottom="1181" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="444" top="119" right="917" bottom="517" visible="yes"/>
 		<band id="0" index="0" style="0000" width="467"/>
@@ -405,12 +405,12 @@
 	</row>
 
 	<row id="LIVE_STR_03">
-		<language name="JPN" width="256">せきがいせん　マッチングで
+		<language name="JPN" width="256">せきがいせんつうしんで
 せんしゅしょうを　じゅしんします[BE:01:ページ切り替え（クリア）]
 じぶんと　あいての
 ＤＳカードを　むきあわせて[BE:00:ページ切り替え（行送り）]
 Ａボタンを　おしてください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">赤外線　マッチングで
+		<language name="JPN_KANJI" width="256">赤外線通信で
 選手証を　受信します[BE:01:ページ切り替え（クリア）]
 自分と　相手の
 ＤＳカードを　向きあわせて[BE:00:ページ切り替え（行送り）]
@@ -566,21 +566,21 @@
 
 	<row id="LIVE_STR_16">
 		<language name="JPN" width="256">たいせんする　あいてと
-せきがいせん　つうしん　します[BE:01:ページ切り替え（クリア）]
+せきがいせんつうしん　します[BE:01:ページ切り替え（クリア）]
 じぶんと　あいての
 ＤＳカードを　むきあわせて[BE:00:ページ切り替え（行送り）]
 Ａボタンを　おしてください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">対戦する　相手と
-赤外線　通信します[BE:01:ページ切り替え（クリア）]
+赤外線通信します[BE:01:ページ切り替え（クリア）]
 自分と　相手の
 ＤＳカードを　向きあわせて[BE:00:ページ切り替え（行送り）]
 Ａボタンを　押してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_17">
-		<language name="JPN" width="256">せきがいせん　つうしんを
+		<language name="JPN" width="256">せきがいせんつうしんを
 やめますか？</language>
-		<language name="JPN_KANJI" width="256">赤外線　通信を
+		<language name="JPN_KANJI" width="256">赤外線通信を
 やめますか？</language>
 	</row>
 
@@ -637,10 +637,10 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 	</row>
 
 	<row id="LIVE_STR_22_3">
-		<comment>ライブ対戦マッチング以外の赤外線</comment>
-		<language name="JPN" width="256">マッチングに　
+		<comment>ライブ対戦以外の赤外線</comment>
+		<language name="JPN" width="256">つうしんに　
 しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">マッチングに　
+		<language name="JPN_KANJI" width="256">通信に　
 失敗しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -695,11 +695,11 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 
 	<row id="LIVE_STR_29" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>対戦相手と一度戦っている</comment>
-		<language name="JPN" width="256">マッチングした　あいてとは
+		<language name="JPN" width="256">つうしんした　あいてとは
 いちど　たいせん　しています[BE:01:ページ切り替え（クリア）]
 おなじ　あいてとは
 たいせん　できません[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">マッチングした　相手とは
+		<language name="JPN_KANJI" width="256">通信した　相手とは
 一度　対戦　しています[BE:01:ページ切り替え（クリア）]
 同じ　相手とは
 対戦は　できません[BE:01:ページ切り替え（クリア）]</language>
