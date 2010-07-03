@@ -136,6 +136,7 @@ DoubleAI_StrongAI_end:
 	
 	IF_WAZANO	WAZANO_IYASINOHADOU, DoubleEnemyAI_Iyasinohadou		// いやしのはどう　2010.6.25
 	IF_WAZANO	WAZANO_OSAKINIDOUZO, DoubleEnemyAI_Osakinidouzo		// おさきにどうぞ　2010.6.25
+	IF_WAZANO	WAZANO_TEDASUKE, DoubleEnemyAI_TedasukeNG       		// てだすけ　2010.7.3
 
 	CHECK_TYPE	CHECK_WAZA
 	IF_EQUAL	POKETYPE_DENKI,DoubleEnemyAI_ElectricType		// 電気技2006.6.14ok
@@ -864,7 +865,8 @@ DoubleEnemyAI_rendou_Osakinidouzo_end:
 
 DoubleEnemyAI_Iyasinohadou:		// いやしのはどう　2010.6.25
 DoubleEnemyAI_Osakinidouzo:		// おさきにどうぞ　2010.6.25
-	INCDEC		-10	
+DoubleEnemyAI_TedasukeNG:    		// てだすけ　2010.7.3
+	INCDEC		-40	              // バグ対処　2010.7.3
 	AIEND
 
 //--------------------------------------
