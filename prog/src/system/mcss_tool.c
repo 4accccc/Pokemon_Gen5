@@ -99,6 +99,7 @@ void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, BOOL e
 	maw->nmcr = POKEGRA_GetMCelArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
 	maw->nmar = POKEGRA_GetMAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
 	maw->ncec = POKEGRA_GetNcecArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+  maw->heap_low = FALSE;
 }
 
 //============================================================================================
@@ -120,6 +121,7 @@ void	MCSS_TOOL_MakeMAWTrainer( int	tr_type, MCSS_ADD_WORK *maw, int dir )
 	maw->nmcr = TRGRA_GetMCelArcIndex( tr_type, dir );
 	maw->nmar = TRGRA_GetMAnmArcIndex( tr_type, dir );
 	maw->ncec = TRGRA_GetNcecArcIndex( tr_type, dir );
+  maw->heap_low = TRUE;
 }
 
 //----------------------------------------------------------------------------

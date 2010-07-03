@@ -2058,6 +2058,7 @@ void   MCSS_SetOrthoFarFlag( MCSS_SYS_WORK *mcss_sys , const BOOL flg )
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw )
 {
 	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
+  HEAPID  heapID = ( maw->heap_low == TRUE ) ? GFL_HEAP_LOWID( mcss->heapID ) : mcss->heapID;
 
   if( ( mcss_sys->handle ) && ( mcss_sys->arcID == maw->arcID ) )
   { 
@@ -2073,17 +2074,17 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 
 	// セルデータ、セルアニメーション、マルチセルデータ、
 	// マルチセルアニメーションをロード。
-	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
+	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, heapID );
 	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
 #ifdef	POKEGRA_LZ
-	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, TRUE, &mcss->mcss_nanr, mcss->heapID );
+	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, TRUE, &mcss->mcss_nanr, heapID );
 #else	// POKEGRA_LZ
-	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, FALSE, &mcss->mcss_nanr, mcss->heapID );
+	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, FALSE, &mcss->mcss_nanr, heapID );
 #endif	// POKEGRA_LZ
 	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
-	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
+	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, heapID );
 	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
-	mcss->mcss_nmar_buf = GFL_ARC_UTIL_LoadMultiAnimeBank(	maw->arcID, maw->nmar, FALSE, &mcss->mcss_nmar, mcss->heapID );
+	mcss->mcss_nmar_buf = GFL_ARC_UTIL_LoadMultiAnimeBank(	maw->arcID, maw->nmar, FALSE, &mcss->mcss_nmar, heapID );
 	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
 
 	//
@@ -2092,7 +2093,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
   MCSS_SetAnimeIndex( mcss, 0 );
 
 	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
-	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
+	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, heapID );
   { 
 	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
     u32 size = MCSS_NCEC_HEADER_SIZE + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
@@ -2128,8 +2129,8 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 		{
 			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, GFL_HEAP_LOWID( mcss->heapID ) );
 			GF_ASSERT( tlw->pBufPltt != NULL);
-			mcss->base_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
-			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->base_pltt_data = GFL_HEAP_AllocMemory( heapID, tlw->pPlttData->szByte );
+			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( heapID, tlw->pPlttData->szByte );
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
 			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->base_pltt_data, tlw->pPlttData->szByte );
 		}
