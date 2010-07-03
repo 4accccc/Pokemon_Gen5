@@ -1615,7 +1615,6 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
 
 static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
 {
-  static u16 befState = 0;
   const u16 mbpState = MBP_GetState();
   static const GFL_UI_TP_HITTBL hitTbl[2] = 
   {
@@ -1624,12 +1623,16 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     { GFL_UI_TP_HIT_END ,0,0,0 },
   };
 
-
-  if( befState != mbpState )
+#if PM_DEBUG
   {
-    //OS_TFPrintf(2,"MBState[%d]->[%d]\n",befState,mbpState);
-    befState = mbpState;
+    static u16 befState = 0xFFFF;
+    if( befState != mbpState )
+    {
+      OS_TFPrintf(3,"MBState[%d]->[%d]\n",befState,mbpState);
+      befState = mbpState;
+    }
   }
+#endif
 
   //ˆÈ‰ºƒTƒ“ƒvƒ‹—¬—p
   switch (MBP_GetState())

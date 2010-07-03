@@ -1161,5 +1161,9 @@ void MBP_ClearBuffer( void )
 
 const BOOL MBP_IsInitNet( void )
 {
+#if PM_DEBUG
+  OS_TFPrintf(3,"IsInitNet[%d]\n",mbpState.state);
+#endif
+  
   return mbpState.isInitComm;
 }
