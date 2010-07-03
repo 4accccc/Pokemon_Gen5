@@ -8,6 +8,9 @@
 //=============================================================================
 
 
+#define DEF_POKEMONTRADE_OFS_POS_ARRANGE  // これが定義されているとき、MCSS_SetOfsPositionをポケモンごとに個別調整できる
+
+
 #include <gflib.h>
 
 #include "system/main.h"
@@ -915,6 +918,87 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
 
 
 
+#ifdef DEF_POKEMONTRADE_OFS_POS_ARRANGE
+// ポケモンのオフセット配置
+typedef struct
+{
+  int  mons_no;         // 1スタート  // MONSNO_ANNOON
+  int  form_no;         // 0スタート  // FORMNO_ANNOON_UNR
+  int  sex;             // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN  // prog/include/poke_tool/poke_tool.h
+  int  dir;             // MCSS_DIR_FRONT, MCSS_DIR_BACK
+ 
+  f32  ofs_x;           // ポケモンのオフセット配置
+  f32  ofs_y;
+  f32  ofs_z;
+}
+POKE_ARRANGE_INFO;
+#define MALE_FEMALE_UNKNOWN (3)  // オスメス性別なしどれでも構わない  // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWNと被らない値
+#define FRONT_BACK_UNKNOWN  (2)  // 正面背面どれでも構わない  // MCSS_DIR_FRONT, MCSS_DIR_BACKと被らない値
+#define POKE_ARRANGE_INFO_TBL_NUM (1)
+
+static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] =
+{
+  { MONSNO_OOTATI, 0, MALE_FEMALE_UNKNOWN, MCSS_DIR_BACK, -6.0f +0.3f, 0.0f, 0.0f },  // -6が本来の値
+};
+
+static void _McssSizeCheck(MCSS_WORK *pWork,VecFx32* pScale, int bFront, const POKEMON_PARAM *pp)
+{
+  int  mons_no  = (int)PP_Get( pp, ID_PARA_monsno, NULL );
+  int  form_no  = (int)PP_Get( pp, ID_PARA_form_no, NULL );
+  int  sex      = PP_GetSex( pp );
+  int  dir      = (bFront)?(MCSS_DIR_FRONT):(MCSS_DIR_BACK);
+
+  u8       i;
+  VecFx32  ofs_position;
+  BOOL     b_tbl  = FALSE;
+
+  for( i=0; i<POKE_ARRANGE_INFO_TBL_NUM; i++ )
+  {
+    if(    poke_arrange_info_tbl[i].mons_no == mons_no
+        && poke_arrange_info_tbl[i].form_no == form_no )
+    {
+      if(
+             (    poke_arrange_info_tbl[i].sex == MALE_FEMALE_UNKNOWN
+               || poke_arrange_info_tbl[i].sex == sex )
+          && (    poke_arrange_info_tbl[i].dir == FRONT_BACK_UNKNOWN
+               || poke_arrange_info_tbl[i].dir == dir )
+      )
+      {
+        ofs_position.x  = FX_F32_TO_FX32(poke_arrange_info_tbl[i].ofs_x);
+        if(pScale->x >= 0) ofs_position.x = - ofs_position.x;
+        ofs_position.y  = FX_F32_TO_FX32(poke_arrange_info_tbl[i].ofs_y);
+        ofs_position.z  = FX_F32_TO_FX32(poke_arrange_info_tbl[i].ofs_z);
+        b_tbl  = TRUE;
+        break;
+      }
+    }
+  }
+
+  if( !b_tbl )
+  {
+  //  u16 size_y = MCSS_GetSizeY( pWork );  // マルチセルのおおよそのYサイズを取得
+    u16 size_x = MCSS_GetSizeX( pWork );  // マルチセルのおおよそのXサイズを取得
+  //  s16 offset_y = MCSS_GetOffsetY( pWork );  // マルチセルのY方向のズレを取得  // 浮いているとき-, 沈んでいるとき+
+    s16 offset_x = MCSS_GetOffsetX( pWork );  // マルチセルのX方向のズレを取得  // 右にずれているとき+, 左にずれているとき-
+  //  f32 ofs_position_y;
+    f32 ofs_position_x;
+  
+  //  ofs_position_y = ( POKE_SIZE_MAX - size_y ) / 2.0f + offset_y;
+    if(pScale->x < 0){
+      ofs_position_x = (f32)( offset_x);
+    }
+    else{
+      ofs_position_x = (f32)(-offset_x);
+    }
+  
+    ofs_position.x = FX_F32_TO_FX32(ofs_position_x);
+    ofs_position.y = 0;
+    ofs_position.z = 0;
+  }
+  
+  MCSS_SetOfsPosition( pWork, &ofs_position );  // オフセットポジション
+}
+#else
 static void _McssSizeCheck(MCSS_WORK *pWork,VecFx32* pScale)
 {
 //  u16 size_y = MCSS_GetSizeY( pWork );  // マルチセルのおおよそのYサイズを取得
@@ -938,6 +1022,7 @@ static void _McssSizeCheck(MCSS_WORK *pWork,VecFx32* pScale)
   ofs_position.z = 0;
   MCSS_SetOfsPosition( pWork, &ofs_position );  // オフセットポジション
 }
+#endif
 
 //--------------------------------------------------------------
 //	ポケモンMCSS作成
@@ -974,7 +1059,11 @@ void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int b
   MCSS_TOOL_SetAnmRestartCallback(pWork->pokeMcss[no]);
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
   MCSS_SetShadowVanishFlag(pWork->pokeMcss[no] ,TRUE);
+#ifdef DEF_POKEMONTRADE_OFS_POS_ARRANGE
+  _McssSizeCheck(pWork->pokeMcss[no], &scale, bFront, pp);
+#else
   _McssSizeCheck(pWork->pokeMcss[no], &scale);
+#endif
 }
 
 
