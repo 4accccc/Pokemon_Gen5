@@ -33,7 +33,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 //#define POINT_VIEW
-#define AI_SEQ_PRINT
+//#define AI_SEQ_PRINT
 #endif
 #endif
 
@@ -711,7 +711,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
   else{
     int i;
     int poscnt = 1;
-    u8  point[ PTL_WAZA_MAX ];
+    int point[ PTL_WAZA_MAX ];
     u8  poswork[ PTL_WAZA_MAX ];
 
     point[ 0 ] = taw->waza_point[ 0 ];
@@ -836,7 +836,7 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
     {
       int i;
       int poscnt = 1;
-      u8  point[ PTL_WAZA_MAX ];
+      int point[ PTL_WAZA_MAX ];
       u8  poswork[ PTL_WAZA_MAX ];
 
       point[ 0 ] = taw->waza_point[ 0 ];
