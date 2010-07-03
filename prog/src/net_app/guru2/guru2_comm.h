@@ -25,7 +25,12 @@
 //==============================================================================
 //  define
 //==============================================================================
-#define COMM_GURU2_TIMINGSYNC_NO (202)
+#define GURU2_TIMINGSYNC_BEFORE_TAMAGODATA (202)
+#define GURU2_TIMINGSYNC_BEFORE_START      (203)
+#define GURU2_TIMINGSYNC_END_GAME          (204)
+#define GURU2_TIMINGSYNC_BEFORE_SAVE       (205)
+#define GURU2_TIMINGSYNC_AFTER_SAVE        (206)
+#define GURU2_TIMINGSYNC_RECEIPT           (207)
 
 //--------------------------------------------------------------
 /// í êMêlêî

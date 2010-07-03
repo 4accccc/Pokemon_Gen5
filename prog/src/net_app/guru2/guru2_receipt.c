@@ -1944,7 +1944,7 @@ static int Record_ForceEndWait( GURU2RC_WORK *wk, int seq )
   // 通信同期待ち
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
   GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
-                                  COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU, 
+                                  GURU2_TIMINGSYNC_RECEIPT,WB_NET_GURUGURU, 
                                   MyStatusGetNumBit( wk ) ^ wk->ridatu_bit);
   OS_Printf("bit = %d で終了用の通信同期\n", MyStatusGetNumBit( wk ) ^ wk->ridatu_bit);
 
@@ -1969,7 +1969,7 @@ static int Record_ForceEndSynchronize( GURU2RC_WORK *wk, int seq )
 {
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
-  if(GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU)){
+  if(GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_RECEIPT,WB_NET_GURUGURU)){
     GFL_NET_SetAutoErrorCheck(FALSE);
     OS_Printf("終了時同期成功\n");
     // ワイプフェード開始

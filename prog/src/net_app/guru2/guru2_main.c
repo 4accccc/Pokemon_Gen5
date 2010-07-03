@@ -73,6 +73,8 @@
 #define DEBUG_GURU2_PRINTF_FORCE  //他の環境でも出すPrintf()
 #define DEBUG_GURU2_PRINTF_COMM // 通信状況をプリント
 
+// 有効にすると終了直前にボタンを連打する
+//#define JUST_BEFORE_END_REPEAT_BUTTON 
 #endif
 //----PM_DEBUG END
 
@@ -1696,7 +1698,7 @@ static RET Guru2Subproc_EggDataSendInit( GURU2MAIN_WORK *g2m )
   TIMEICON_Exit( g2m->TimeIconWork );
   g2m->TimeIconWork=NULL;
   
-  GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
+  GFL_NET_HANDLE_TimeSyncStart( pNet, GURU2_TIMINGSYNC_BEFORE_TAMAGODATA, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_EGG_DATA_SEND_TIMING_WAIT;
   return( RET_NON );
 }
@@ -1712,7 +1714,7 @@ static RET Guru2Subproc_EggDataSendTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
-  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_BEFORE_TAMAGODATA, WB_NET_GURUGURU) ){
     g2m->seq_no = SEQNO_MAIN_EGG_DATA_TRADE_POS_SEND;
   }
   
@@ -2057,7 +2059,7 @@ static RET DEBUG_Guru2Subproc_DispCheck( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_CountDownBeforeTimingInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
+  GFL_NET_HANDLE_TimeSyncStart( pNet, GURU2_TIMINGSYNC_BEFORE_START, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_COUNTDOWN_BEFORE_TIMING_WAIT;
   return( RET_NON );
 }
@@ -2072,7 +2074,7 @@ static RET Guru2Subproc_CountDownBeforeTimingInit( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_CountDownBeforeTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_BEFORE_START, WB_NET_GURUGURU) ){
     g2m->seq_no = SEQNO_MAIN_COUNTDOWN_INIT;
   }
   
@@ -2242,18 +2244,6 @@ static RET Guru2Subproc_GameOya( GURU2MAIN_WORK *g2m )
     }
   }
   
-#if 0
-  {
-    static int d_cnt = 0;
-    OS_Printf("[%03d] send=%d push_btn=%d speed_fx=0x%x rotate_fx=0x%x comm_rotate=0x%x \n",
-        d_cnt++, g2m->comm.game_data_send_flag,
-        g2m->comm.push_btn,
-        g2m->disc.speed_fx,
-        g2m->disc.rotate_fx,
-//        g2m->comm.game_data.disc_speed, 
-        g2m->comm.game_data.disc_angle  );
-  }
-#endif
   
   return( RET_NON );
 }
@@ -2376,7 +2366,7 @@ static RET Guru2Subproc_GameEndLastRotate( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_HANDLE_TimeSyncStart( pNet,  COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
+  GFL_NET_HANDLE_TimeSyncStart( pNet,  GURU2_TIMINGSYNC_END_GAME, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_GAME_END_TIMING_WAIT;
   OS_Printf("GameEndTimingInit\n");
   return( RET_NON );
@@ -2392,7 +2382,7 @@ static RET Guru2Subproc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_GameEndTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_END_GAME, WB_NET_GURUGURU) ){
     if( GFL_NET_SystemGetCurrentID() == 0 ){
       g2m->seq_no = SEQNO_MAIN_GAME_END_OYA_DATA_SEND;
     }else{
@@ -2704,7 +2694,7 @@ static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
   RECORD_Inc( g2m->g2p->param->record, RECID_GURUGURU_COUNT );
   
   Guru2TalkWin_Write( g2m, MSG_SAVE );
-  GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
+  GFL_NET_HANDLE_TimeSyncStart( pNet, GURU2_TIMINGSYNC_BEFORE_SAVE, WB_NET_GURUGURU );
   
   g2m->seq_no = SEQNO_MAIN_SAVE_BEFORE_TIMING_WAIT;
 
@@ -2728,7 +2718,7 @@ static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_BEFORE_SAVE, WB_NET_GURUGURU) ){
     Guru2MainFriendEggExchange( g2m, g2m->front_eggact->comm_id );
     // 通信同期セーブ開始
     g2m->NetSaveWork = NET_SAVE_Init( HEAPID_GURU2, g2m->g2p->param->gamedata);
@@ -2760,8 +2750,10 @@ static RET Guru2Subproc_Save( GURU2MAIN_WORK *g2m )
 {
   BOOL ret = NET_SAVE_Main( g2m->NetSaveWork ); // 通信同期セーブメイン
 
+  // エラー検出
   if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-    NetErr_DispCall( TRUE );
+     NetErr_ExitNetSystem();  // 通信強制切断
+     NetErr_DispCall( TRUE ); // エラー画面へ
     WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
     WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
     return (RET_NON);
@@ -2826,7 +2818,7 @@ static RET Guru2Subproc_EndTimingSyncInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
-    GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
+    GFL_NET_HANDLE_TimeSyncStart( pNet, GURU2_TIMINGSYNC_AFTER_SAVE, WB_NET_GURUGURU );
     OS_Printf("通信同期開始\n");
   }
   
@@ -2850,7 +2842,7 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
     OS_Printf("通信同期中\n");
-    if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
+    if( GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_AFTER_SAVE, WB_NET_GURUGURU) ){
       // 時間アイコン表示
       g2m->TimeIconWork = TIMEICON_Create( g2m->tcbSys, g2m->msgwork.bmpwin_talk, 15, 
                                        TIMEICON_DEFAULT_WAIT, HEAPID_GURU2 );
@@ -6031,6 +6023,10 @@ static void DiscRotateEggMove( GURU2MAIN_WORK *g2m, fx32 speed )
   EggAct_Rotate( g2m, speed );
 }
 
+#ifdef JUST_BEFORE_END_REPEAT_BUTTON
+static int debug_frame=5;
+#endif
+
 //--------------------------------------------------------------
 /**
  * ゲーム時間の進行
@@ -6041,11 +6037,30 @@ static void DiscRotateEggMove( GURU2MAIN_WORK *g2m, fx32 speed )
 static BOOL Guru2GameTimeCount( GURU2MAIN_WORK *g2m )
 {
   g2m->game_frame++;
+
+  
+
+#ifdef JUST_BEFORE_END_REPEAT_BUTTON
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
+    debug_frame--;
+  }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y){
+    debug_frame++;
+  }
+
+
+  if(GFL_NET_SystemGetCurrentID()==0){
+    if( g2m->game_frame > GURU2_GAME_FRAME-debug_frame){
+      g2m->comm.send_btn = TRUE;
+      OS_Printf("テストジャンプ\n");
+    }
+  }
+#endif
   
   if( g2m->game_frame < GURU2_GAME_FRAME ){
     return( FALSE );
   }
-  
+
+
   g2m->game_frame = GURU2_GAME_FRAME;
   return( TRUE );
 }
@@ -6612,12 +6627,12 @@ static BOOL _me_end_check( void )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  親処理（ディスク、卵回転）＆回転情報送信
+ *  @brief  親処理（ディスク、卵回転）＆回転情報送信
  *
- *	@param	GURU2MAIN_WORK *g2m
- *	@param	speed 
+ *  @param  GURU2MAIN_WORK *g2m
+ *  @param  speed 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _comm_parent_rotate( GURU2MAIN_WORK *g2m, fx32 speed )
