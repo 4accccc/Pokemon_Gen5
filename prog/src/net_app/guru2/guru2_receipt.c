@@ -39,7 +39,6 @@
 #include "arc/wifi_unionobj.naix"
 #include "arc/wifi_unionobj_plt.cdat"
 #include "app/app_nogear_subscreen.h"
-//#include "comm_command_record.h"
 
 
 #define FIELDOBJ_PAL_START  ( 7 )
@@ -145,37 +144,37 @@ static int  Record_Guru2PokeSelStart( GURU2RC_WORK *wk, int seq );
 
 // ぐるぐる交換受付メインシーケンス用関数配列定義
 static int (* const FuncTable[])(GURU2RC_WORK *wk, int seq)={
-  Record_MainInit,            // RECORD_MODE_INIT  = 0, 
+  Record_MainInit,            // RECORD_MODE_INIT  = 0,               
   Record_NewMember,           // RECORD_MODE_NEWMEMBER,
   Record_NewMemberEnd,        // RECORD_MODE_NEWMEMBER_END,
   Record_MainNormal,          // RECORD_MODE,
   Record_EndSelectPutString,  // RECORD_MODE_END_SELECT,
-  Record_EndSelectWait,       // RECORD_MODE_END_SELECT_WAIT,
+  Record_EndSelectWait,       // RECORD_MODE_END_SELECT_WAIT,         5
   Record_EndSelectAnswerWait, // RECORD_MODE_END_SELECT_ANSWER_WAIT
   Record_EndSelectAnswerOK,   // RECORD_MODE_END_SELECT_ANSWER_OK
   Record_EndSelectAnswerNG,   // RECORD_MODE_END_SELECT_ANSWER_NG
   Record_EndChild,            // RECORD_MODE_END_CHILD,
-  Record_EndChildWait,        // RECORD_MODE_END_CHILD_WAIT,
+  Record_EndChildWait,        // RECORD_MODE_END_CHILD_WAIT,          10
   Record_EndSelectParent,     // RECORD_MODE_END_SELECT_PARENT,
   Record_EndSelectParentWait, // RECORD_MODE_END_SELECT_PARENT_WAIT,
   Record_ForceEnd,            // RECORD_MODE_FORCE_END,
   Record_FroceEndMesWait,     // RECORD_MODE_FORCE_END_MES_WAIT,
-  Record_ForceEndWait,        // RECORD_MODE_FORCE_END_WAIT,
+  Record_ForceEndWait,        // RECORD_MODE_FORCE_END_WAIT,          15
   Record_ForceEndSynchronize, // RECORD_MODE_FORCE_END_SYNCHRONIZE,
   Record_EndParentOnly,       // RECORD_MODE_END_PARENT_ONLY,
   Record_EndParentOnlyWait,   // RECORD_MODE_END_PARENT_ONLY_WAIT,
   Record_LogoutChildMes,      // RECORD_MODE_LOGOUT_CHILD,
-  Record_LogoutChildMesWait,  // RECORD_MODE_LOGOUT_CHILD_WAIT,
+  Record_LogoutChildMesWait,  // RECORD_MODE_LOGOUT_CHILD_WAIT,       20
   Record_LogoutChildClose,    // RECORD_MODE_LOGOUT_CHILD_CLOSE,
   Record_StartSelect,         // RECORD_MODE_START_SELECT,
   Record_StartSelectWait,     // RECORD_MODE_START_SELECT_WAIT
   Record_StartRecordCommand,  // RECORD_MODE_START_RECORD_COMMAND
-  Record_RecordSendData,      // RECORD_MODE_RECORD_SEND_DATA ここがレコードデータ受信チェック
+  Record_RecordSendData,      // RECORD_MODE_RECORD_SEND_DATA         25
 
   Record_MessageWaitSeq,      // RECORD_MODE_MESSAGE_WAIT,
   
   //ぐるぐる
-  Record_Guru2PokeSelStart,   // RECORD_MODE_GURU2_POKESEL_START,
+  Record_Guru2PokeSelStart,   // RECORD_MODE_GURU2_POKESEL_START,     27
 };
 
 //==============================================================================
@@ -231,10 +230,6 @@ GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, voi
     // BGLレジスタ設定
     BgInit();          
     
-  /* WIPEリセットにより画面が見えてしまうバグ*/
-  //  WIPE_ResetBrightness( WIPE_DISP_MAIN );
-  //  WIPE_ResetBrightness( WIPE_DISP_SUB );
-  
     // ワイプフェード開始
     WIPE_SYS_Start(
       WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN,
@@ -325,7 +320,6 @@ static void GURU2RC_entry_callback(NetID net_id, const MYSTATUS *mystatus, void 
       if(ret==FALSE){
         GF_ASSERT("乱入コールバック送信失敗\n");
       }
-//    }
   }
 }
 
@@ -343,7 +337,9 @@ static void GURU2RC_leave_callback(NetID net_id, const MYSTATUS *mystatus, void 
   OS_Printf("離脱コールバック net_id=%d\n", net_id);
 }
 
-
+#ifdef PM_DEBUG
+static int debugseq,debugsubseq;
+#endif
 //--------------------------------------------------------------
 /**
  * ぐるぐる交換受付　メイン
@@ -369,14 +365,6 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
       // 乱入・退出コールバック登録
       Union_App_SetCallback( _get_unionwork(wk), GURU2RC_entry_callback, GURU2RC_leave_callback, wk);
       
-#if 0
-      // 自分が子機で接続台数が２台以上だった場合はぐるぐる交換に乱入した状態
-      if(GFL_NET_SystemGetCurrentID()!=0){
-        if(MyStatusGetNum(wk)>2){
-          //Guru2Comm_SendData(wk->g2c,G2COMM_RC_CHILD_JOIN, NULL, 0);
-        }
-      }
-#endif
     }
 
     break;
@@ -386,7 +374,7 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
       wk->proc_seq = (*FuncTable[wk->seq])( wk, wk->proc_seq );
     }
     
-    if(wk->g2c->record_execute == FALSE){ //レコード混ぜ中の時は更新しない
+    if(wk->g2c->record_execute == FALSE){ 
       NameCheckPrint(
         wk->TrainerNameWin, 0, PRINTSYS_LSB_Make(1, 4, 0), wk );
     }
@@ -437,7 +425,14 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
     }
   }
 
-//  OS_Printf("*seq=%d, subseq=%d\n", wk->proc_seq, wk->seq);
+#ifdef PM_DEBUG
+  // 現在のサブシーケンスをデバッグ情報として出力
+  if(debugseq!=*seq || debugsubseq!=wk->seq){
+    OS_Printf("seq=%d, subseq=%d \n", *seq, wk->seq);
+    debugseq = *seq;
+    debugsubseq = wk->seq;
+  }
+#endif
 
   GFL_CLACT_SYS_Main();               // セルアクター常駐関数
   _print_func(wk);
@@ -729,20 +724,18 @@ static void InitWork( GURU2RC_WORK *wk, ARCHANDLE* p_handle )
 
   wk->seq = RECORD_MODE_INIT;
   
-  // レコードこうかんぼしゅう中！文字列取得
+  // ぐるぐる交換こうかんぼしゅう中！
   GFL_MSG_GetString(  wk->MsgManager, msg_guru2_receipt_title_01, wk->TitleString );
 
   // フィールドOBJ画像読み込み
   LoadFieldObjData( wk, p_handle );
 
-//  wk->ObjPaletteTable = UnionView_PalleteTableAlloc( HEAPID_GURU2 );
-
-
   // パレットアニメ用ワーク初期化
   wk->palwork.sw       = 0;
   wk->palwork.wait     = 0;
   wk->palwork.seq      = 0;
-  wk->palwork.paldata  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_record_s_obj_NCLR, &wk->palwork.palbuf, HEAPID_GURU2 );
+  wk->palwork.paldata  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_record_s_obj_NCLR, 
+                                                      &wk->palwork.palbuf, HEAPID_GURU2 );
   wk->connectBackup    = 0;
   wk->YesNoMenuWork    = NULL;
   wk->g2c->shareNum    = 2;
@@ -768,8 +761,6 @@ static void FreeWork( GURU2RC_WORK *wk )
   // 機械のパレットアニメ用データ解放
   GFL_HEAP_FreeMemory( wk->palwork.paldata );
 
-  // ユニオンOBJのパレットデータ解放
-//  GFL_HEAP_FreeMemory( wk->ObjPaletteTable );
 
   for(i=0;i<RECORD_CORNER_MEMBER_MAX;i++){
     GFL_STR_DeleteBuffer( wk->TrainerName[i] );
@@ -834,14 +825,6 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
   // サブ画面スクリーンキャラ転送
   GFL_ARC_UTIL_TransVramScreen(      ARCID_C_GEAR, NARC_c_gear_c_gear01_n_NSCR, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
 
-#if 0
-  {
-    MYSTATUS *my = GAMEDATA_GetMyStatus( wk->g2p->param->gamedata);
-    int gender   = MyStatus_GetMySex( my );
-    APP_NOGEAR_SUBSCREEN_Trans( HEAPID_GURU2, gender );
-  }
-#endif
-  
   // メイン画面会話ウインドウグラフィック転送
   BmpWinFrame_GraphicSet(
      GFL_BG_FRAME0_M, 1, MESFRAME_PAL_INDEX,
@@ -1253,7 +1236,7 @@ static int Record_MainNormal( GURU2RC_WORK *wk, int seq )
 //------------------------------------------------------------------
 static void PadControl( GURU2RC_WORK *wk )
 {
-  // レコード交換を開始しますか？（親のみ）
+  // ぐるぐる交換を開始しますか？（親のみ）
   if(_get_key_trg() & PAD_BUTTON_DECIDE){
     if(GFL_NET_SystemGetCurrentID()==0){
       OS_Printf("currentID =%d\n", GFL_NET_SystemGetCurrentID());
@@ -1262,19 +1245,12 @@ static void PadControl( GURU2RC_WORK *wk )
 #else
       if(1){
 #endif
-        PMSND_PlaySE(SEQ_SE_DECIDE1);
-
         // 離脱禁止通達(FALSEの場合は進行しない）
-        Union_App_Parent_EntryBlock( _get_unionwork(wk) );
-//        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
-
-//          u8 flag = GURU2COMM_BAN_ON;
+        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
+          PMSND_PlaySE(SEQ_SE_DECIDE1);
           RecordMessagePrint( wk, msg_guru2_receipt_01_02, 0 );
           SequenceChange_MesWait(wk,RECORD_MODE_START_SELECT);
-//        }
-        
-        // 接続人数制限ON
-        //ChangeConnectMax( wk, 0 );
+        }
       }
       else{
         PMSND_PlaySE(SEQ_SE_SELECT1);
@@ -1294,7 +1270,6 @@ static void PadControl( GURU2RC_WORK *wk )
         PMSND_PlaySE(SEQ_SE_SELECT1);
       }
     }else{
-//      if( MyStatusGetNum(wk)==wk->g2c->shareNum ){
       if( Union_App_GetMemberNum(_get_unionwork(wk))==wk->g2c->shareNum && wk->g2c->ridatu_bit == 0){
         // 親機は終了メニューへ
         if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
@@ -1302,11 +1277,6 @@ static void PadControl( GURU2RC_WORK *wk )
           RecordMessagePrint( wk, msg_guru2_receipt_01_03, 0 );
           SequenceChange_MesWait(wk,RECORD_MODE_END_SELECT);
           PMSND_PlaySE(SEQ_SE_CANCEL1);
-          // 離脱禁止通達
-        //  Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
-
-        // 接続人数制限ON
-        //ChangeConnectMax( wk, 0 );
         }
       }
       else{
@@ -1354,17 +1324,7 @@ static void EndSequenceCommonFunc( GURU2RC_WORK *wk )
 static int Record_NewMember( GURU2RC_WORK *wk, int seq )
 {
   // ●●●さんがはいってきました
-//  RecordMessagePrint(wk, msg_oekaki_01);
-//  wk->seq = RECORD_MODE_NEWMEMBER_WAIT;
-//  SequenceChange_MesWait(wk, RECORD_MODE_NEWMEMBER_END );
   wk->seq = RECORD_MODE_NEWMEMBER_END;
-
-  // 画像転送状態になったら輝度ダウン
-//  G2_SetBlendBrightness(  GX_BLEND_PLANEMASK_BG1|
-//              GX_BLEND_PLANEMASK_BG2|
-//              GX_BLEND_PLANEMASK_BG3|
-//              GX_BLEND_PLANEMASK_OBJ
-//                ,  -6);
 
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
   return seq;
@@ -1420,14 +1380,11 @@ static int Record_MessageWaitSeq( GURU2RC_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Record_NewMemberEnd( GURU2RC_WORK *wk, int seq )
 {
-  // 輝度ダウン解除
-//  G2_BlendNone();
 
   if(GFL_NET_SystemGetCurrentID()==0){
     int flag = GURU2COMM_BAN_NONE;
     // 離脱禁止解除通達
     Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
-//    Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
   }
 
   wk->seq = RECORD_MODE;
@@ -1510,7 +1467,6 @@ static int Record_EndSelectWait( GURU2RC_WORK *wk, int seq )
     }
   }
 
-//  if(wk->g2c->shareNum != MyStatusGetNum(wk)){  //一致していないなら「やめる」許可しない
   if(MyStatusGetNum(wk) != Union_App_GetMemberNum(_get_unionwork(wk))){
     //一致していないなら「やめる」許可しない(子も通るここは親しか更新されないshareNumは見ない)
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
@@ -1526,13 +1482,9 @@ static int Record_EndSelectWait( GURU2RC_WORK *wk, int seq )
         int flag = GURU2COMM_BAN_NONE;
         // 離脱禁止解除通達
         Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
-//        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
-        // 接続人数制限OFF
-        //ChangeConnectMax( wk, 1 );
       }
       wk->seq = RECORD_MODE_INIT;
-//      SequenceChange_MesWait( wk, RECORD_MODE_INIT );
     }else{
       if(GFL_NET_SystemGetCurrentID()==0){    
         SequenceChange_MesWait( wk, RECORD_MODE_END_SELECT_PARENT );
@@ -1647,7 +1599,7 @@ static int Record_EndSelectAnswerNG( GURU2RC_WORK *wk, int seq )
 
 //------------------------------------------------------------------
 /**
- * @brief   このメンバーでレコードを開始しますか？
+ * @brief   このメンバーでぐるぐる交換を開始しますか？
  *
  * @param   wk    
  * @param   seq   
@@ -1657,7 +1609,6 @@ static int Record_EndSelectAnswerNG( GURU2RC_WORK *wk, int seq )
 static int Record_StartSelect( GURU2RC_WORK *wk, int seq )
 {
   // はい・いいえ表示
-//  wk->YesNoMenuWork = BmpYesNoSelectInit( &YesNoBmpWin, YESNO_WIN_FRAME_CHAR, MENUFRAME_PAL_INDEX, HEAPID_GURU2 );
   wk->YesNoMenuWork = BmpMenu_YesNoSelectInit( &YesNoBmpWin, YESNO_WIN_FRAME_CHAR,
                                                MENUFRAME_PAL_INDEX, 0, HEAPID_GURU2 );
 
@@ -1767,9 +1718,6 @@ static int Record_RecordSendData( GURU2RC_WORK *wk, int seq )
   int i,result;
 
   result = 0;
-//  for(i=0;i<RECORD_CORNER_MEMBER_MAX;i++){
-//    result += CommIsSpritDataRecv(i);
-//  }
 
   if( GFL_NET_SystemGetCurrentID() == 0 && Union_App_GetMemberNum(_get_unionwork(wk)) != wk->start_num){
     //開始した時の人数と現在の人数が変わっているなら通信エラーにする
@@ -1994,9 +1942,11 @@ static int Record_FroceEndMesWait( GURU2RC_WORK *wk, int seq )
 static int Record_ForceEndWait( GURU2RC_WORK *wk, int seq )
 {
   // 通信同期待ち
-//  CommTimingSyncStart(COMM_GURU2_TIMINGSYNC_NO);
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_HANDLE_TimeSyncStart(pNet, COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU);
+  GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
+                                  COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU, 
+                                  MyStatusGetNumBit( wk ) ^ wk->ridatu_bit);
+  OS_Printf("bit = %d で終了用の通信同期\n", MyStatusGetNumBit( wk ) ^ wk->ridatu_bit);
 
   wk->seq = RECORD_MODE_FORCE_END_SYNCHRONIZE;
 
@@ -2019,7 +1969,7 @@ static int Record_ForceEndSynchronize( GURU2RC_WORK *wk, int seq )
 {
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
-  if(GFL_NET_HANDLE_IsTimeSync(pNet, COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU)){
+  if(GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU)){
     GFL_NET_SetAutoErrorCheck(FALSE);
     OS_Printf("終了時同期成功\n");
     // ワイプフェード開始
@@ -2051,6 +2001,7 @@ static int Record_EndParentOnly( GURU2RC_WORK *wk, int seq )
   表示が壊れてしまうバグを対処 */
   // メッセージ表示中は呼び出さないようにする
   if( EndMessageWait( wk ) ){
+    // 「メンバーがいなくなったので終了します」
     RecordMessagePrint( wk, msg_guru2_receipt_01_06, 0 ); 
     wk->seq = RECORD_MODE_END_PARENT_ONLY_WAIT;
   }
@@ -2366,12 +2317,6 @@ void Guru2Rc_MainSeqCheckChange( GURU2RC_WORK *wk, int seq, u8 id  )
       wk->seq      = seq;
       wk->g2c->shareNum = Union_App_GetMemberNum(_get_unionwork(wk));
       wk->g2c->ridatu_bit = 0;
-//      if(GFL_NET_SystemGetCurrentID()==0){
-//        int flag = GURU2COMM_BAN_ON;//NONE;
-//        // 離脱禁止解除通達
-//        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
-//        
-//      }
       break;
       // ↓↓↓ 
     case RECORD_MODE_LOGOUT_CHILD:
@@ -2618,14 +2563,8 @@ static int MyStatusGetNum( GURU2RC_WORK *wk )
 //------------------------------------------------------------------
 static u32 MyStatusGetNumBit( GURU2RC_WORK *wk )
 {
-  int i;
-  u32 result;
-  for(result=0,i=0;i<RECORD_CORNER_MEMBER_MAX;i++){
-    if(Union_App_GetMystatus(_get_unionwork(wk),i)!=NULL){
-      result |= 1 << i;
-    }
-  }
-  return result;
+  return Union_App_GetMemberNetBit(_get_unionwork(wk));
+
 }
 
 
@@ -2865,11 +2804,6 @@ static void LoadFieldObjData( GURU2RC_WORK *wk, ARCHANDLE* p_handle )
   wk->UnionObjPalBuf = GFL_ARC_UTIL_LoadPalette( ARCID_WIFIUNIONCHAR, 
                                                  NARC_wifi_unionobj_wifi_union_obj_NCLR, 
                                                  &wk->UnionObjPalData, HEAPID_GURU2 );
-//  wk->FieldObjPalBuf[1] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_union_chara_NCLR, &(wk->FieldObjPalData[1]), HEAPID_GURU2 );
-
-  // 画像読み込み
-//  wk->FieldObjCharaBuf[0] = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_hero_lz_ncgr, 1, &(wk->FieldObjCharaData[0]), HEAPID_GURU2 );
-//  wk->FieldObjCharaBuf[1] = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_guru2_2d_union_chara_NCGR,  0, &(wk->FieldObjCharaData[1]), HEAPID_GURU2 );
 
 }
 
@@ -2886,10 +2820,6 @@ static void FreeFieldObjData( GURU2RC_WORK *wk )
 {
 
   GFL_HEAP_FreeMemory( wk->UnionObjPalBuf  );
-//  GFL_HEAP_FreeMemory( wk->FieldObjPalBuf[1]  );
-                      
-//  GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf[0] );
-//  GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf[1] );
 }
 
 
@@ -2919,16 +2849,7 @@ static int _pal_no = 0;
 //------------------------------------------------------------------
 static void TransFieldObjData( GURU2RC_WORK *wk, NNSG2dPaletteData *PalData, int id, int view, int sex )
 {
-/*
-  u8 *chara, *pal;
-  pos   = view;
 
-  chara = (u8*)CharaData[1]->pRawData;
-  pal   = (u8*)PalData[1]->pRawData;
-
-  GX_LoadOBJ( &chara[OBJ_TRANS_SIZE*pos*0x20], obj_offset[id], OBJ_TRANS_SIZE*0x20 );
-  GX_LoadOBJPltt( &pal[pos*32], (id+FIELDOBJ_PAL_START)*32, 32 );
-*/
   void *chrbuf;
   NNSG2dCharacterData *data;
   int offset = sex*8+view;    // 男女８人計１６人分のファイルアクセス
@@ -2997,7 +2918,7 @@ static int RecordCorner_BeaconControl( GURU2RC_WORK *wk, int plus )
     wk->beacon_flag = GURU2COMM_BAN_NONE;
   }
 
-  // 接続人数とレコード交換可能人数が一致するまでは操作禁止
+  // 接続人数とぐるぐる交換可能人数が一致するまでは操作禁止
   if(num==wk->connectBackup){
     return SEQ_MAIN;
   }
@@ -3023,8 +2944,6 @@ static int RecordCorner_BeaconControl( GURU2RC_WORK *wk, int plus )
     break;
   case 2: case 3:case 4:
     // まだ入れるよ
-//    Union_BeaconChange( UNION_PARENT_MODE_GURU2_FREE );
-
     // 接続人数が減った場合は接続最大人数も減らす
     if(num<wk->connectBackup){
       switch(wk->limit_mode){
@@ -3040,8 +2959,6 @@ static int RecordCorner_BeaconControl( GURU2RC_WORK *wk, int plus )
     break;
   case 5:
     // いっぱいです
-//    Union_BeaconChange( UNION_PARENT_MODE_GURU2 );
-    //ChangeConnectMax( wk, plus );
     break;
   }
 
@@ -3067,11 +2984,6 @@ static int _get_key_trg( void )
 {
   // キー情報取得
   int key = GFL_UI_KEY_GetTrg();
-
-  // タッチTRGでもAボタン情報を追加
-  //if( GFL_UI_TP_GetTrg() ){
-  //  key |= PAD_BUTTON_DECIDE;
-  //}
 
   return key;
 }

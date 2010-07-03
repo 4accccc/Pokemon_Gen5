@@ -177,7 +177,7 @@ struct GURU2RC_WORK{
   int           saveseq_work;         // セーブシーケンス管理用ワーク
 
   u16           CursorPal;
-  u16           *ObjPaletteTable;
+  u16           etc_1;
   u8            brush_color;
   u8            brush;
 
