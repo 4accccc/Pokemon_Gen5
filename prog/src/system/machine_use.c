@@ -130,8 +130,10 @@ void MachineSystem_Init(void)
 #endif//
 
 #ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
   //カード抜けを検出したときに呼び出されるコールバックを設定
   CARD_SetPulledOutCallback( &card_pull_callback );
+#endif
 #endif
 }
 
