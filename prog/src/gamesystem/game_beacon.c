@@ -1471,7 +1471,7 @@ void GAMEBEACON_AMPROTECT_SetTask(void)
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(irc_check_another));
   if(fIRCExist == FALSE){
     //IRが無かったら受信バッファを消すタスクを生成する
-    GFL_TCB_AddTask( GFUser_VIntr_GetTCBSYS(), _Amprotect_TcbClearRecvBuff, NULL, 3 );
+    GFUser_HIntr_CreateTCB(_Amprotect_TcbClearRecvBuff, NULL, 3);
     MATSUDA_Printf("マジコン対策：受信バッファ消去タスク生成\n");
   }
 #endif  //AMPROTECT_FUNC
@@ -1489,10 +1489,8 @@ void GAMEBEACON_AMPROTECT_SetTask(void)
 static void _Amprotect_TcbClearRecvBuff( GFL_TCB *tcb, void * work )
 {
   if(GameBeaconSys != NULL){
-    GFL_STD_MemClear(GameBeaconSys->log, sizeof(GAMEBEACON_LOG) * GAMEBEACON_SYSTEM_LOG_MAX);
-    GameBeaconSys->log_num = 0;
-    GameBeaconSys->start_log = 0;
-    GameBeaconSys->end_log = -1;
+    GameBeaconSys->update_log = 0;
+    GameBeaconSys->send.beacon_update = 0;
     GameBeaconSys->update_log = 0;
   }
 }
