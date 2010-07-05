@@ -690,7 +690,7 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
         cellInitData.pos_x = 0;
         cellInitData.pos_y = 0;
         cellInitData.anmseq = POKEICON_ANM_HPMAX;
-        cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
+        cellInitData.softpri = _CLACT_SOFTPRI_POKELIST; // + _LING_LINENO_MAX - line;
         cellInitData.bgpri = 3;
 
         pWork->pokeIconNcgRes[line][i] = GFL_CLGRP_CGR_Register( arcHandlePoke ,NARC_poke_icon_poke_icon_egg_normal_m_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
@@ -1254,7 +1254,7 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
         GFL_CLACT_WK_SetSoftPri(pWork->pokeIcon[no][i],_CLACT_SOFTPRI_POKESEL);
       }
       else{
-        GFL_CLACT_WK_SetSoftPri(pWork->pokeIcon[no][i],_CLACT_SOFTPRI_POKELIST);
+        GFL_CLACT_WK_SetSoftPri(pWork->pokeIcon[no][i],_CLACT_SOFTPRI_POKELIST + _LING_LINENO_MAX - m);
       }
       
       GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);

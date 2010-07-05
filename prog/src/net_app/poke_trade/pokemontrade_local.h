@@ -963,7 +963,7 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define _CLACT_SOFTPRI_SCROLL_BAR  (14)
 #define _CLACT_SOFTPRI_SELECT (15)
 #define _CLACT_SOFTPRI_POKELIST  (16)
-#define _CLACT_SOFTPRI_MARK (19)
+#define _CLACT_SOFTPRI_MARK (50)
 
 // Šç‚ð‚¾‚·ŽžŠÔ
 #define _TIMER_ERUPTED_NUM (60)
