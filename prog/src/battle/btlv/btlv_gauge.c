@@ -2331,7 +2331,9 @@ void  BTLV_GAUGE_SetPinchBGMNoCheck( BTLV_GAUGE_WORK* bgw, BOOL value )
 BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm )
 { 
   //ゲージが存在しないor紐付けられているポケモンが変化しているときはなにもせずにリターン
-  if( ( bgw->bgcl[ pos ].base_clwk == NULL ) || ( bgw->bgcl[ pos ].move_pos_flag ) )
+  if( ( bgw->bgcl[ pos ].base_clwk == NULL ) || 
+      ( bgw->bgcl[ pos ].gauge_enable == 0 ) || 
+      ( bgw->bgcl[ pos ].move_pos_flag ) )
   {
     *color = GAUGETOOL_HP_DOTTO_GREEN;
     *sick_anm = APP_COMMON_ST_ICON_NONE;
