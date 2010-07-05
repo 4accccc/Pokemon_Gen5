@@ -1493,6 +1493,7 @@ static void _Amprotect_TcbClearRecvBuff( GFL_TCB *tcb, void * work )
     GameBeaconSys->log_num = 0;
     GameBeaconSys->start_log = 0;
     GameBeaconSys->end_log = -1;
+    GameBeaconSys->update_log = 0;
   }
 }
 #endif  //AMPROTECT_FUNC
@@ -1575,6 +1576,7 @@ void DEBUG_RecvBeaconBufferClear(void)
   GameBeaconSys->log_num = 0;
   GameBeaconSys->start_log = 0;
   GameBeaconSys->end_log = -1;
+  GameBeaconSys->update_log = 0;
 }
 
 #endif  //PM_DEBUG
