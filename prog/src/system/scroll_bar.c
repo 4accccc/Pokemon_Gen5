@@ -43,7 +43,8 @@ u32 SCROLLBAR_GetCount( u32 scrollMax, u32 py, u32 railTop, u32 railBottom, u32 
 	py -= railTop;
 
 //	cnt = ( ( (scrollMax+1) << 8 ) / ( railBottom - railTop ) * py ) >> 8;
-	cnt = ( ( (scrollMax) << 8 ) / ( railBottom - railTop ) * py ) >> 8;
+//	cnt = ( ( (scrollMax) << 8 ) / ( railBottom - railTop ) * py ) >> 8;		// BTS7404C³‘O‚Ü‚Å‚Ìˆ—B‚±‚ê‚¾‚ÆSCROLLBAR_GetPosY()‚ÌŒ‹‰Ê‚ÆˆÙ‚È‚éB
+	cnt = ( py * ( scrollMax << 8 ) / ( railBottom - railTop ) ) >> 8;
 
 	return cnt;
 }
