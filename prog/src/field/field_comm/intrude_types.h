@@ -169,6 +169,11 @@ typedef enum{
 ///話しかけが発生していない時のtalk_randコード
 #define TALK_RAND_NULL      (0)
 
+enum{
+  STOP_COMM_PLAYER_STATUS_NO_CHECK,   ///<現在のゾーンに対してまだ未チェック
+  STOP_COMM_PLAYER_STATUS_UPDATE_OK,  ///<通信プレイヤーの更新OK
+  STOP_COMM_PLAYER_STATUS_UPDATE_NG,  ///<通信プレイヤーの更新NG
+};
 
 //==============================================================================
 //  型定義
@@ -323,8 +328,7 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 member_send_req;         ///<TRUE:参加人数の送信を行う
   u8 achieve_not_result:1;    ///<TRUE:自分が達成者だったが、結果を受け取る前に結果画面まで飛んだ
   u8 send_my_position_stop:1; ///<TRUE:自分の座標更新による送信を停止する
-  u8 stop_comm_player_update_map:1; ///<TRUE:自分がいるマップが通信プレイヤー更新不可マップである
-  u8 stop_comm_player_check:1;///<TRUE:自分がいるマップが通信プレイヤー更新不可マップかチェックした
+  u8 stop_comm_player_status:2;     ///<STOP_COMM_PLAYER_STATUS_xxx
   u8 padding:4;
   
   u8 warp_town_tblno;         ///<ワープ先のテーブル番号

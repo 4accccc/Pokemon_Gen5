@@ -204,17 +204,18 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     return;
   }
 
-  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE 
-      && intcomm->stop_comm_player_check == FALSE){
-    if(intcomm->stop_comm_player_update_map == FALSE){
-      intcomm->stop_comm_player_check = TRUE;
-      if(IntrudeField_Check_StopCommPlayerUpdateZone(intcomm->intrude_status_mine.zone_id)==FALSE){
-        intcomm->stop_comm_player_update_map = TRUE;
-        return; //自分が通信プレイヤー更新不可マップにいる
+  //通信プレイヤーが更新不可マップにいる場合は処理しない
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+    if(intcomm->stop_comm_player_status == STOP_COMM_PLAYER_STATUS_NO_CHECK){
+      if(IntrudeField_Check_StopCommPlayerUpdateZone(intcomm->intrude_status_mine.zone_id)==TRUE){
+        intcomm->stop_comm_player_status = STOP_COMM_PLAYER_STATUS_UPDATE_OK;
+      }
+      else{
+        intcomm->stop_comm_player_status = STOP_COMM_PLAYER_STATUS_UPDATE_NG;
       }
     }
-    else{
-      return; //自分が通信プレイヤー更新不可マップにいる(既に今のゾーンではチェック済み)
+    if(intcomm->stop_comm_player_status == STOP_COMM_PLAYER_STATUS_UPDATE_NG){
+      return;
     }
   }
 
