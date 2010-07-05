@@ -97,6 +97,8 @@ void DWC_RAPCOMMON_ResetSubHeapID(void)
   {
     NAGI_Printf( "！！ヒープ強制エラー！！\n" );
     GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );
+
+    GF_ASSERT_MSG( 0, "SUB HEAP ERROR! LEAK!! count=%d\n", pDwcRapWork->subheap_alloc_cnt );
   }
 }
 
@@ -205,6 +207,7 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
       NAGI_Printf( "！！ヒープ強制エラー！！\n" );
       GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );
 
+      GF_ASSERT_MSG( 0, "SUB HEAP ERROR! NOT_SUBHEAP!! name=%d ptr=%x size=%d \n", name, ptr, size );
     }
   }
   else
