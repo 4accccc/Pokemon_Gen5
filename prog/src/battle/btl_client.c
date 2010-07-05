@@ -224,6 +224,7 @@ struct _BTL_CLIENT {
   u8   fSelActForceFinish   : 1;
   u8   fCmdCheckEnable      : 1;
   u8   fRecPlayEndTimeOver  : 1;
+  u8   fRecPlayEndBufOver   : 1;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -543,6 +544,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->fAITrainerBGMChanged = FALSE;
   wk->fCommError = FALSE;
   wk->fRecPlayEndTimeOver = FALSE;
+  wk->fRecPlayEndBufOver = FALSE;
   wk->fldSim = BTL_MAIN_GetFieldSimWork( mainModule );
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
@@ -1533,7 +1535,6 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
         {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BattleTimeOver );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
-
           (*seq)++;
         // 描画クライアントではないので終了
         }else{
@@ -1542,12 +1543,23 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
           return TRUE;
         }
       }
-      // 読み込みエラーなら何も言わず終了
+      // 読み込みエラー
       else if( act->gen.cmd == BTL_ACTION_RECPLAY_ERROR )
       {
         BTL_N_Printf( DBGSTR_CLIENT_ReadRecError, wk->myID );
-        setNullActionRecplay( wk );
-        return TRUE;
+        wk->fRecPlayEndBufOver = TRUE;
+        // 描画クライアントなのでメッセージ表示へ
+        if( wk->viewCore )
+        {
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BatteRecBufferOver );
+          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          (*seq) += 2;
+        }
+        else
+        {
+          setNullActionRecplay( wk );
+          return TRUE;
+        }
       }
       else
       {
@@ -1574,6 +1586,15 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
       return TRUE;
     }
     break;
+
+  // 録画データバッファ読み取りオーバー検出後、描画クライアントのみここに来る
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      setNullActionRecplay( wk );
+      return TRUE;
+    }
+    break;
+
   }
   return FALSE;
 }
@@ -4991,6 +5012,11 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
+    // 録画データ長すぎで終わった場合は何も表示しない
+    if( wk->fRecPlayEndBufOver ){
+      return TRUE;
+    }
+    else
     {
       BtlResult  result;
       u16 strID;
@@ -5357,6 +5383,11 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
 
   switch( *seq ){
   case SEQ_INIT:
+    // 録画データ長すぎで終わった場合は何も表示しない
+    if( wk->fRecPlayEndBufOver ){
+      return TRUE;
+    }
+    else
     {
       BtlResult result = expandServerResult( wk );
 
@@ -6438,7 +6469,6 @@ static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
     if( !BTL_MAIN_IsWazaEffectEnable(wk->mainModule) ){
       return TRUE;
     }
-
 
     BTLV_StartRankDownEffect( wk->viewCore, vpos );
     (*seq)++;

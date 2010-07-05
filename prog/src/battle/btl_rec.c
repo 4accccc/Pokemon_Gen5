@@ -82,7 +82,15 @@ struct _BTL_REC {
   u8   fSizeOver;
   u8   dmy;
   const void* readData;
+
+
+#if 1
   u8   buf[ BTLREC_OPERATION_BUFFER_SIZE ];
+#else
+  // ２ターンでバッファを一杯にするテスト措置用
+  u8   buf[ 24 ];
+#endif
+
 };
 
 
@@ -341,8 +349,8 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   }
 
 
-  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d, readPtr=%d, datSize=%d",
-            clientID, type, (*rp), wk->dataSize);
+//  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d, readPtr=%d, datSize=%d",
+//            clientID, type, (*rp), wk->dataSize);
 
   wk->fError = TRUE;
   {

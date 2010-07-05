@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-07-02T18:52:06"/>
+	<create user="taya" host="W00146" date="2010-07-05T19:04:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1667,10 +1667,19 @@
 	</row>
 
 	<row id="BTL_STRID_STD_BattleTimeOver">
+		<comment>対戦中に試合の制限時間を超えた</comment>
 		<language name="JPN" width="216">せいげんじかんが　なくなりました！
 たいせんを　しゅうりょう　します！</language>
 		<language name="JPN_KANJI" width="216">制限時間が　無くなりました！
 対戦を　終了します！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BatteRecBufferOver">
+		<comment>録画できる長さを超えた</comment>
+		<language name="JPN" width="216">しょうぶの　じかんが　ながすぎるため
+さいせいを　ちゅうだん　します！</language>
+		<language name="JPN_KANJI" width="216">勝負の　時間が　長すぎるため
+再生を　中断します！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_DarumaOn">
