@@ -37,6 +37,7 @@
 #include "msg\msg_pms_word10.h"
 #include "msg\msg_pms_word11.h"
 #include "msg\msg_pms_word12.h"
+#include "msg\msg_wifi_place_msg_world.h"
 
 #include "net_app/wifi_country.h"
 
@@ -202,6 +203,18 @@ int GDS_Profile_GetNation(const GDS_PROFILE_PTR gpp)
 	if(gpp->country_code >= WIFI_COUNTRY_MAX){
 		return 0;
 	}
+
+	if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(gpp->country_code) < gpp->local_code){
+    return 0;
+  }
+  
+  if(GDS_Profile_GetLanguage(gpp) == LANG_JAPAN){
+    //言語コードが日本なのに国コードが日本でないのは不正か未設定
+    if(gpp->country_code != country105){
+      return 0;
+    }
+  }
+
 	return gpp->country_code;
 }
 
@@ -216,9 +229,9 @@ int GDS_Profile_GetNation(const GDS_PROFILE_PTR gpp)
 //--------------------------------------------------------------
 int GDS_Profile_GetArea(const GDS_PROFILE_PTR gpp)
 {
-	if(gpp->country_code >= WIFI_COUNTRY_MAX){
-		return 0;
-	}
+	if(GDS_Profile_GetNation(gpp) == 0){
+    return 0; //国コード指定なし
+  }
 	if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(gpp->country_code) < gpp->local_code){
 		return 0;
 	}
