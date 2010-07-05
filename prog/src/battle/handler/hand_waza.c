@@ -3800,21 +3800,25 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       {
         BTL_HANDEX_PARAM_CURE_SICK* cure_param;
         BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
-        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ALL, myPos );
-
+        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ALL, myPos );
         HANDWORK_POKEID* idwk = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(HANDWORK_POKEID) );
+        const BTL_POKEPARAM* bpp;
         u32 i;
 
         idwk->pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, idwk->pokeID );
         for(i=0; i<idwk->pokeCnt; ++i)
         {
-          cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-            cure_param->sickCode = WAZASICK_NEMURI;
-            cure_param->poke_cnt = 1;
-            cure_param->pokeID[0] = idwk->pokeID[i];
-            HANDEX_STR_Setup( &cure_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguWake );
-            HANDEX_STR_AddArg( &cure_param->exStr, idwk->pokeID[i] );
-          BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+          bpp = BTL_SVFTOOL_GetPokeParam( flowWk, idwk->pokeID[i] );
+          if( BPP_CheckSick(bpp, WAZASICK_NEMURI) )
+          {
+            cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+              cure_param->sickCode = WAZASICK_NEMURI;
+              cure_param->poke_cnt = 1;
+              cure_param->pokeID[0] = idwk->pokeID[i];
+              HANDEX_STR_Setup( &cure_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguWake );
+              HANDEX_STR_AddArg( &cure_param->exStr, idwk->pokeID[i] );
+            BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+          }
         }
       }
 
