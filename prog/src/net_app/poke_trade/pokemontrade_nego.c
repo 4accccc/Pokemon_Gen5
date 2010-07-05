@@ -1118,7 +1118,12 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
 //ステータスを何度も再描画すると通信が落ちるのでNOPをくわせ
 static void _pokemonStatusWaitNOP(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->anmCount > 5){
+  int sep = 3;
+
+  if(GFL_NET_IsWifiConnect()){
+    sep = 10;
+  }
+  if(pWork->anmCount > sep){
     _CHANGE_STATE(pWork,_pokemonStatusWaitN);
   }
 }
@@ -1172,6 +1177,8 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     PMSND_PlaySystemSE(POKETRADESE_CUR);
     POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
     _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
+    pWork->anmCount = 0;//7240
+    _CHANGE_STATE(pWork, _pokemonStatusWaitNOP);
   }
 
 
