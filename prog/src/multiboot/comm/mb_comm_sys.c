@@ -820,8 +820,13 @@ const BOOL MB_COMM_Send_InitData( MB_COMM_WORK *commWork , MB_COMM_INIT_DATA *in
   BOOL ret;
   GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
   //GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  MB_COMM_TPrintf("Send InitData.\n");
+  MB_COMM_TPrintf("Send InitData[%d].\n",GFL_NET_GetConnectNum());
 
+  if( GFL_NET_GetConnectNum() < 2 )
+  {
+    MB_COMM_TPrintf("Num is not 2\n");
+    return FALSE;
+  }
   //Žq‹@‚É‚¾‚¯‘—‚ê‚Î—Ç‚¢
   ret = GFL_NET_SendDataEx( parentHandle , 1 , 
                             MCST_INIT_DATA , sizeof( MB_COMM_INIT_DATA ) , 
@@ -842,7 +847,12 @@ static void MB_COMM_Post_InitData( const int netID, const int size , const void*
   MB_COMM_WORK *commWork = (MB_COMM_WORK*)pWork;
   MB_COMM_TPrintf("Post InitData.\n");
   commWork->isPostInitData = TRUE;
-  
+#if PM_DEBUG&0
+  {
+    u16 *scrBuf = (u16*)G2_GetBG3ScrPtr();
+    scrBuf[128] = 0;
+  }
+#endif  
 }
 static u8*    MUS_COMM_Post_InitDataBuff( int netID, void* pWork , int size )
 {

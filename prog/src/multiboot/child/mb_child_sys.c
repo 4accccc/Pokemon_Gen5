@@ -155,6 +155,7 @@ typedef struct
   u8 captureNum;
   u8 saveWaitCnt;
   u16 timeoutCnt;
+  u16 timeoutCnt2;
   
   POKEMON_PASO_PARAM *boxPoke[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
   STRCODE *boxName[MB_POKE_BOX_TRAY];
@@ -198,6 +199,8 @@ static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work , const BOOL noFade );
 static void MB_CHILD_SaveInit( MB_CHILD_WORK *work );
 static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work );
 static void MB_CHILD_SaveMain( MB_CHILD_WORK *work );
+
+static void MB_CHILD_DEBUG_ScreenDraw( const u8 idx );
 
 
 static const GFL_DISP_VRAM vramBank = {
@@ -244,6 +247,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
   work->captureNum = 0;
   work->timeoutCnt = 0;
+  work->timeoutCnt2 = 0;
   work->initData = NULL;
   
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
@@ -380,10 +384,23 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       work->timeoutCnt++;
     }
+    else
+    {
+      work->timeoutCnt2++;
+    }
     if( work->timeoutCnt >= MB_CHILD_FIRST_TIMEOUT )
     {
       //初期接続タイムアウト
       //MsgSpeedが受信できてない！
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_11 , 1 );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+      work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    }
+    else
+    if( work->timeoutCnt2 >= MB_CHILD_FIRST_TIMEOUT )
+    {
+      //なぜかカード抜きでタイムアウト・・・
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_11 , 1 );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
@@ -397,6 +414,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         work->initData = MB_COMM_GetInitData( work->commWork );
         GFL_MSGSYS_SetLangID( work->initData->strMode );
         work->state = MCS_CHECK_ROM;
+        MB_CHILD_DEBUG_ScreenDraw(0);
       }
     }
     break;
@@ -423,6 +441,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     else
     {
       work->state = MCS_LOAD_DATA;
+      MB_CHILD_DEBUG_ScreenDraw(2);
     }
     break;
   
@@ -451,6 +470,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_LOAD_DATA:
     if( MB_DATA_LoadDataFirst( work->dataWork ) == TRUE )
     {
+      MB_CHILD_DEBUG_ScreenDraw(4);
       if( MB_DATA_GetErrorState( work->dataWork ) == DES_NONE )
       {
         work->state = MCS_POKE_CONV;
@@ -476,6 +496,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       {
         work->state = MCS_DATA_CONV;
       }
+      MB_CHILD_DEBUG_ScreenDraw(6);
     }
    
     break;
@@ -490,12 +511,14 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       work->state = MCS_SELECT_FADEOUT;
     }
+    MB_CHILD_DEBUG_ScreenDraw(8);
     MB_CHILD_ErrCheck( work , FALSE );
     break;
     
   case MCS_LOAD_ERROR:
     {
       u8 errType = MB_DATA_GetErrorState( work->dataWork );
+      MB_CHILD_DEBUG_ScreenDraw(32 + errType );
       switch( errType )
       {
       case DES_MISS_LOAD_BACKUP:
@@ -1477,5 +1500,11 @@ static GFL_PROC_RESULT MB_CHILD_ProcMain( GFL_PROC * proc, int * seq , void *pwk
   return GFL_PROC_RES_CONTINUE;
 }
 
-
+static void MB_CHILD_DEBUG_ScreenDraw( const u8 idx )
+{
+#if PM_DEBUG&0
+  u16 *scrBuf = (u16*)G2_GetBG3ScrPtr();
+  scrBuf[idx] = 0;
+#endif
+}
 
