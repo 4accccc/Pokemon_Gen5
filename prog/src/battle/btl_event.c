@@ -37,6 +37,13 @@ enum {
   FACTOR_REGISTER_MAX = FACTOR_MAX_FOR_POKE + FACTOR_MAX_FOR_SIDEEFF + FACTOR_MAX_FOR_FIELD + FACTOR_MAX_FOR_POSEFF,
   EVENTVAL_STACK_DEPTH = 96,   ///< イベント変数スタックの容量
 
+  MAINPRI_BIT_WIDTH = 8,
+  SUBPRI_BIT_WIDTH  = 24,
+  MAINPRI_MAX =  ((1 << MAINPRI_BIT_WIDTH) - 1),
+  SUBPRI_MAX  =  ((1 << SUBPRI_BIT_WIDTH) - 1),
+  MAINPRI_MASK = MAINPRI_MAX,
+  SUBPRI_MASK = SUBPRI_MAX,
+
 };
 
 /**
@@ -120,7 +127,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
 static BTL_EVENT_FACTOR* pushFactor( void );
 static void popFactor( BTL_EVENT_FACTOR* factor );
 static void clearFactorWork( BTL_EVENT_FACTOR* factor );
-static inline u32 calcFactorPriority( BtlEventPriority mainPri, u16 subPri );
+static inline u32 calcFactorPriority( BtlEventPriority mainPri, u32 subPri );
 static inline u16 getFactorMainPriority( u32 pri );
 static void varStack_Init( void );
 static int evar_getNewPoint( const VAR_STACK* stack, BtlEvVarLabel label );
@@ -224,93 +231,98 @@ static void printLinkDebug( void )
  */
 //=============================================================================================
 BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
-  BtlEventPriority mainPri, u16 subPri, u8 dependID,
+  BtlEventPriority mainPri, u32 subPri, u8 dependID,
   const BtlEventHandlerTable* handlerTable, u16 numHandlers )
 {
-  BTL_EVENT_FACTOR* newFactor;
+  GF_ASSERT(mainPri < MAINPRI_MAX);
+  GF_ASSERT(subPri < SUBPRI_MAX);
 
-  newFactor = pushFactor();
-  if( newFactor )
   {
-    newFactor->priority = calcFactorPriority( mainPri, subPri );
+    BTL_EVENT_FACTOR* newFactor;
 
-    BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactorInfo, factorType, dependID, newFactor->priority, newFactor );
-
-    newFactor->factorType = factorType;
-    newFactor->prev = NULL;
-    newFactor->next = NULL;
-    newFactor->handlerTable = handlerTable;
-    newFactor->numHandlers = numHandlers;
-
-    newFactor->subID = subID;
-    newFactor->callingFlag = FALSE;
-    newFactor->sleepFlag = FALSE;
-    newFactor->rotationSleepFlag = FALSE;
-    newFactor->tmpItemFlag = FALSE;
-    newFactor->skipCheckHandler = NULL;
-    newFactor->dependID = dependID;
-    newFactor->rmReserveFlag = FALSE;
-    newFactor->recallEnableFlag = FALSE;
-    newFactor->currentStackPtr = EventStackPtr;
-    newFactor->existFlag = TRUE;
-    if( isDependPokeFactorType(factorType) ){
-      newFactor->pokeID = dependID;
-    }else{
-      newFactor->pokeID = BTL_POKEID_NULL;
-    }
-
-    GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
-
-//    BTL_Printf("イベント登録 依存ポケID=%d\n", newFactor->pokeID);
-
-    // 最初の登録
-    if( FirstFactorPtr == NULL )
+    newFactor = pushFactor();
+    if( newFactor )
     {
-      FirstFactorPtr = newFactor;
-    }
-    // 現在先頭より高プライオリティ
-    else if( newFactor->priority > FirstFactorPtr->priority )
-    {
-      FirstFactorPtr->prev = newFactor;
-      newFactor->next = FirstFactorPtr;
+      newFactor->priority = calcFactorPriority( mainPri, subPri );
+
+      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactorInfo, factorType, dependID, newFactor->priority, newFactor );
+
+      newFactor->factorType = factorType;
       newFactor->prev = NULL;
-      FirstFactorPtr = newFactor;
+      newFactor->next = NULL;
+      newFactor->handlerTable = handlerTable;
+      newFactor->numHandlers = numHandlers;
+
+      newFactor->subID = subID;
+      newFactor->callingFlag = FALSE;
+      newFactor->sleepFlag = FALSE;
+      newFactor->rotationSleepFlag = FALSE;
+      newFactor->tmpItemFlag = FALSE;
+      newFactor->skipCheckHandler = NULL;
+      newFactor->dependID = dependID;
+      newFactor->rmReserveFlag = FALSE;
+      newFactor->recallEnableFlag = FALSE;
+      newFactor->currentStackPtr = EventStackPtr;
+      newFactor->existFlag = TRUE;
+      if( isDependPokeFactorType(factorType) ){
+        newFactor->pokeID = dependID;
+      }else{
+        newFactor->pokeID = BTL_POKEID_NULL;
+      }
+
+      GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
+
+  //    BTL_Printf("イベント登録 依存ポケID=%d\n", newFactor->pokeID);
+
+      // 最初の登録
+      if( FirstFactorPtr == NULL )
+      {
+        FirstFactorPtr = newFactor;
+      }
+      // 現在先頭より高プライオリティ
+      else if( newFactor->priority > FirstFactorPtr->priority )
+      {
+        FirstFactorPtr->prev = newFactor;
+        newFactor->next = FirstFactorPtr;
+        newFactor->prev = NULL;
+        FirstFactorPtr = newFactor;
+      }
+      // それ以外はふつうのリンクリスト接続
+      else
+      {
+        BTL_EVENT_FACTOR *find, *last;
+
+        last = FirstFactorPtr;
+        for( find=FirstFactorPtr->next; find!=NULL; find=find->next )
+        {
+          if( newFactor->priority > find->priority )
+          {
+            newFactor->next = find;
+            newFactor->prev = find->prev;
+            find->prev->next = newFactor;
+            find->prev = newFactor;
+            break;
+          }
+          last = find;
+        }
+        // 最後まで見つからない場合
+        if( find == NULL )
+        {
+          last->next = newFactor;
+          newFactor->prev = last;
+        }
+      }
+      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_AddFactor,
+          newFactor, newFactor->dependID, newFactor->factorType, newFactor->priority );
+      printLinkDebug();
+      return newFactor;
     }
-    // それ以外はふつうのリンクリスト接続
+    // スタックから見つからない
     else
     {
-      BTL_EVENT_FACTOR *find, *last;
-
-      last = FirstFactorPtr;
-      for( find=FirstFactorPtr->next; find!=NULL; find=find->next )
-      {
-        if( newFactor->priority > find->priority )
-        {
-          newFactor->next = find;
-          newFactor->prev = find->prev;
-          find->prev->next = newFactor;
-          find->prev = newFactor;
-          break;
-        }
-        last = find;
-      }
-      // 最後まで見つからない場合
-      if( find == NULL )
-      {
-        last->next = newFactor;
-        newFactor->prev = last;
-      }
+      GF_ASSERT(0);
+      return NULL;
     }
-    BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_AddFactor,
-        newFactor, newFactor->dependID, newFactor->factorType, newFactor->priority );
-    printLinkDebug();
-    return newFactor;
-  }
-  // スタックから見つからない
-  else
-  {
-    GF_ASSERT(0);
-    return NULL;
   }
 }
 
@@ -978,14 +990,14 @@ static void clearFactorWork( BTL_EVENT_FACTOR* factor )
   GFL_STD_MemClear( factor, sizeof(*factor) );
 }
 
-static inline u32 calcFactorPriority( BtlEventPriority mainPri, u16 subPri )
+static inline u32 calcFactorPriority( BtlEventPriority mainPri, u32 subPri )
 {
   mainPri = BTL_EVPRI_MAX - mainPri - 1;
-  return (mainPri << 16) | subPri;
+  return (mainPri << SUBPRI_BIT_WIDTH) | subPri;
 }
 static inline u16 getFactorMainPriority( u32 pri )
 {
-  u16 mainPri = (pri >> 16) & 0xffff;
+  u16 mainPri = (pri >> SUBPRI_BIT_WIDTH) & MAINPRI_MASK;
   mainPri = BTL_EVPRI_MAX - mainPri - 1;
   return mainPri;
 }

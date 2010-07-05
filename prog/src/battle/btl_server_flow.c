@@ -1439,7 +1439,7 @@ enum {
   ACTPRI_BITSHIFT_WAZA    = (ACTPRI_BITSHIFT_SP + ACTPRI_BIT_SP),
   ACTPRI_BITSHIFT_ACT     = (ACTPRI_BITSHIFT_WAZA + ACTPRI_BIT_WAZA),
 
-  ACTPRI_BITMASK_HANDLER  = ((1 << (ACTPRI_BIT_AGILITY+ACTPRI_BIT_SP)) - 1),
+  ACTPRI_BITMASK_HANDLER  = ((1 << (ACTPRI_BIT_AGILITY + ACTPRI_BIT_SP + ACTPRI_BIT_WAZA)) - 1),
 };
 
 static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
@@ -1496,7 +1496,7 @@ static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri )
   priValue |= ((spPri & ACTPRI_BITMASK_SP) << ACTPRI_BITSHIFT_SP);
   return priValue;
 }
-static inline u16 ActPri_GetHandlerPri( u32 priValue )
+static inline u32 ActPri_GetHandlerPri( u32 priValue )
 {
   return priValue & ACTPRI_BITMASK_HANDLER;
 }
