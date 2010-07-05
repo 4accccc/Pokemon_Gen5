@@ -2697,8 +2697,8 @@ static void handler_SiroiHerb_MemberInComp( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 }
 static void handler_SiroiHerb_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ACTION) != BTL_ACTION_ROTATION)
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_ACTION) != BTL_ACTION_ROTATION)
+//  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   ){
     handler_SiroiHerb_MemberInComp( myHandle, flowWk, pokeID, work );
   }
