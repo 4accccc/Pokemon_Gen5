@@ -53,7 +53,13 @@ extern DEBUGWIN_BTLBGM_DATA *DEBUGWIN_BTLBGM_DATA_GetInstance( void );
 //-------------------------------------
 ///	不正フラグ
 //=====================================
-extern BOOL *DEBUGWIN_ATLASDIRTY_GetFlag( void );
+typedef enum
+{
+  DEBUGWIN_ATLASDIRTY_BIT_KEY     = 1<<0,
+  DEBUGWIN_ATLASDIRTY_BIT_RESULT  = 1<<1,
+  DEBUGWIN_ATLASDIRTY_BIT_ALL = DEBUGWIN_ATLASDIRTY_BIT_KEY | DEBUGWIN_ATLASDIRTY_BIT_RESULT,
+}DEBUGWIN_ATLASDIRTY_BIT;
+extern DEBUGWIN_ATLASDIRTY_BIT *DEBUGWIN_ATLASDIRTY_GetFlag( void );
 
 //-------------------------------------
 ///	サーバー時間

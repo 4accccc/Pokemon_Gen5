@@ -2283,7 +2283,7 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
       }
 
 #ifdef PM_DEBUG
-      if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+      if( (*DEBUGWIN_ATLASDIRTY_GetFlag()) & DEBUGWIN_ATLASDIRTY_BIT_RESULT )
       {
         if( game_result == DWC_SC_GAME_RESULT_LOSS )
         {
@@ -2366,7 +2366,7 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
     }
 
 #ifdef PM_DEBUG
-      if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+      if( (*DEBUGWIN_ATLASDIRTY_GetFlag()) & DEBUGWIN_ATLASDIRTY_BIT_RESULT )
       {
         if( game_result == DWC_SC_GAME_RESULT_LOSS )
         {
@@ -2753,7 +2753,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   }
 
 #ifdef PM_DEBUG
-  if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+  if( (*DEBUGWIN_ATLASDIRTY_GetFlag()) & DEBUGWIN_ATLASDIRTY_BIT_KEY )
   {
     if( is_inverse )
     {
@@ -2957,7 +2957,7 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
 
 
 #ifdef PM_DEBUG
-  if( *DEBUGWIN_ATLASDIRTY_GetFlag() )
+  if( (*DEBUGWIN_ATLASDIRTY_GetFlag()) & DEBUGWIN_ATLASDIRTY_BIT_KEY )
   {
     if( is_inverse )
     {
