@@ -682,7 +682,7 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
   
-  if(GAMEDATA_GetReverseArea(gamedata) == FALSE){
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
     if(IntrudeField_Check_StopCommPlayerUpdateZone(FIELDMAP_GetZoneID(fieldWork)) == TRUE){
       CommPlayer_Pop(intcomm->cps);
     }
