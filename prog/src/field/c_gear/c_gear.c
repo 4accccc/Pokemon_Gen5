@@ -3909,6 +3909,19 @@ static void _modeSelectMenuWaitCore(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 {
+
+  // BTS:7471
+  // 条件抜けのケア
+  // ここまで来て、演出完了コールバックがあったら、
+  // 完了コールバックを呼ぶ
+  {
+    if(pWork->pCall){
+      pWork->pCall(pWork->pWork);
+    }
+    pWork->pCall=NULL;
+    pWork->pWork=NULL;
+  }
+
   // 画面が出るまで待つ
   if( _modeSelectWaitSubFadeEnd( pWork ) == FALSE ){
     return ;
