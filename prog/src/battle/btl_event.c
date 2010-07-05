@@ -491,7 +491,7 @@ void BTL_EVENT_ReOrderFactorsByPokeAgility( BTL_SVFLOW_WORK* flowWork )
 
 //=============================================================================================
 /**
- * ファクターの種類
+ * ファクターの種類を分離型に変換
  *
  * @param   factor
  */
@@ -500,6 +500,18 @@ void BTL_EVENT_FACTOR_ConvertForIsolate( BTL_EVENT_FACTOR* factor )
 {
   factor->factorType = BTL_EVENT_FACTOR_ISOLATE;
 }
+//=============================================================================================
+/**
+ * 分離型かどうか判定
+ *
+ * @param   factor
+ */
+//=============================================================================================
+BOOL BTL_EVENT_FACTOR_IsIsolateMode( BTL_EVENT_FACTOR* factor )
+{
+  return ( factor->factorType == BTL_EVENT_FACTOR_ISOLATE );
+}
+
 //=============================================================================================
 /**
  * 実体ID（ワザID、とくせいID，アイテムID等、要素タイプに準じる）を返す

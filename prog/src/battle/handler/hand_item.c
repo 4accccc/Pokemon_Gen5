@@ -5914,6 +5914,7 @@ static void common_Juel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( (WAZADATA_IsDamage(waza))
     &&  (!BTL_TABLES_IsJuelOmmitWaza(waza) )
+    &&  (!BTL_EVENT_FACTOR_IsIsolateMode(myHandle))
     ){
       if( !BTL_SVFTOOL_IsSimulationMode(flowWk) )
       {
@@ -5941,9 +5942,6 @@ static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   &&  (work[0] == 1)
   ){
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.5f) );
-
-    if( BTL_SVFTOOL_IsSimulationMode(flowWk) ){
-      work[0] = 0;
-    }
+    work[0] = 0;
   }
 }

@@ -89,6 +89,7 @@ extern u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler );
 extern void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_ConvertForIsolate( BTL_EVENT_FACTOR* factor );
+extern BOOL BTL_EVENT_FACTOR_IsIsolateMode( BTL_EVENT_FACTOR* factor );
 
 
 
