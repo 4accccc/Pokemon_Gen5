@@ -6128,7 +6128,6 @@ static const u16 ng_zone_table[] = {
   ZONE_ID_UNION,        //ユニオンルーム
   ZONE_ID_CLOSSEUM,
   ZONE_ID_CLOSSEUM02,
-  ZONE_ID_PLD10,
   ZONE_ID_C04R0202,     //ミュージカル控え室
 };
 
