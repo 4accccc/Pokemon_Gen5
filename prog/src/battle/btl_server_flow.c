@@ -159,7 +159,7 @@ static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
 static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
-static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec, const SVFL_WAZAPARAM* wazaParam );
+static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec, const SVFL_WAZAPARAM* wazaParam, BOOL fDamageWaza );
 static BOOL scEvent_WazaAffineCheckEnable( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker );
 static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
     const BTL_POKEPARAM* attacker, BTL_POKESET* target, BOOL fDamage );
@@ -4144,7 +4144,8 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   WazaCategory  category = WAZADATA_GetCategory( waza );
   u8 pokeID = BPP_GetID( attacker );
   u8 fEnable = TRUE;
-  u8 fDamage = FALSE;
+  u8 fDamageWaza = FALSE;
+  u8 fMigawariHit = FALSE;
 
   u16  que_reserve_pos;
 
@@ -4193,6 +4194,22 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     }
   }
 
+
+  switch( category ){
+  case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
+  case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
+  case WAZADATA_CATEGORY_DAMAGE_EFFECT:
+  case WAZADATA_CATEGORY_DAMAGE_SICK:
+  case WAZADATA_CATEGORY_DRAIN:
+    fDamageWaza = TRUE;
+    fMigawariHit = TRUE;
+    break;
+  case WAZADATA_CATEGORY_ICHIGEKI:
+    fMigawariHit = TRUE;
+    break;
+  }
+
+
   // 死んでるポケモンは除外
   BTL_POKESET_RemoveDeadPoke( targetRec );
 
@@ -4200,7 +4217,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   scproc_CheckTripleFarPokeAvoid( wk, wk->wazaParam, attacker, targetRec );
 
   // ムーブ直後に自分単体がターゲットならハズレ
-  scproc_CheckMovedPokeAvoid( wk, attacker, targetRec, wk->wazaParam );
+  scproc_CheckMovedPokeAvoid( wk, attacker, targetRec, wk->wazaParam, fDamageWaza );
 
   // 最初は居たターゲットが残っていない->うまく決まらなかった、終了
   if( BTL_POKESET_IsRemovedAll(targetRec) )
@@ -4213,22 +4230,6 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   if( fEnable )
   {
-    BOOL fMigawariHit = FALSE;
-
-    switch( category ){
-    case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT:
-    case WAZADATA_CATEGORY_DAMAGE_SICK:
-    case WAZADATA_CATEGORY_DRAIN:
-      fDamage = TRUE;
-      fMigawariHit = TRUE;
-      break;
-    case WAZADATA_CATEGORY_ICHIGEKI:
-      fMigawariHit = TRUE;
-      break;
-    }
-
     // ここから先、ハズレ・無効の原因表示はその先に任せる
 
     // そらをとぶなど、画面に見えていない状態のハズレチェック
@@ -4276,7 +4277,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   {
     BTL_Printf("ワザ=%d, カテゴリ=%d\n", wk->wazaParam.wazaID, category );
 
-    if( fDamage ){
+    if( fDamageWaza ){
       scproc_Fight_Damage_Root( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec, FALSE );
     }
     else{
@@ -4383,16 +4384,17 @@ static void scproc_CheckTripleFarPokeAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
  * @param   targetRec
  */
 //----------------------------------------------------------------------------------
-static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec, const SVFL_WAZAPARAM* wazaParam )
+static void scproc_CheckMovedPokeAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targetRec, const SVFL_WAZAPARAM* wazaParam, BOOL fDamageWaza )
 {
-  if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_MOVED) )
+  if( BTL_POKESET_GetCountMax(targetRec) == 1 )
   {
-    if( BTL_POKESET_GetCountMax(targetRec) == 1 )
-    {
-      BTL_POKEPARAM* bppTarget = BTL_POKESET_Get( targetRec, 0 );
-      if( (bppTarget != NULL)
-      &&  (BPP_GetID(bppTarget) == BPP_GetID(attacker))
-      &&  (wazaParam->targetType != WAZA_TARGET_USER)
+    BTL_POKEPARAM* bppTarget = BTL_POKESET_Get( targetRec, 0 );
+    if( (bppTarget != NULL)
+    &&  (BPP_GetID(bppTarget) == BPP_GetID(attacker))
+    &&  (wazaParam->targetType != WAZA_TARGET_USER)
+    ){
+      if( (BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_MOVED))
+      ||  (fDamageWaza)
       ){
         BTL_POKESET_Remove( targetRec, bppTarget );
       }
