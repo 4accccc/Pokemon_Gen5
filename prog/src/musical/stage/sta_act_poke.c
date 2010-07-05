@@ -122,7 +122,7 @@ struct _STA_POKE_SYS
 //======================================================================
 #pragma mark [> proto
 
-static void STA_POKE_SetAdjustFrame( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u16 monsno );
+static void STA_POKE_SetAdjustScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u16 monsno );
 static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 static void STA_POKE_DrawShadow( STA_POKE_SYS *work ,  STA_POKE_WORK *pokeWork );
@@ -563,7 +563,7 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
   VEC_Set( &pokeWork->pokePos , 0,0,0 );
   VEC_Set( &pokeWork->posOfs , 0,0,0 );
   VEC_Set( &pokeWork->scale , FX32_ONE,FX32_ONE,FX32_ONE );
-  STA_POKE_SetAdjustFrame( work , pokeWork , musPoke->mcssParam.monsno );
+  STA_POKE_SetAdjustScale( work , pokeWork , musPoke->mcssParam.monsno );
   pokeWork->rotate = 0;
 //  MUS_POKE_DRAW_StartAnime( pokeWork->drawWork );
   //リソース読み込みのTCBでTRUEにされるので・・・
@@ -630,11 +630,21 @@ void STA_POKE_DeletePoke( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
   pokeWork->isEnable = FALSE;
 }
 
-static void STA_POKE_SetAdjustFrame( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u16 monsno )
+static void STA_POKE_SetAdjustScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u16 monsno )
 {
   if( monsno == MONSNO_037 )//ロコン
   {
     pokeWork->scale.y = FX32_CONST(15.85f)/16;
+  }
+  else
+  if( monsno == MONSNO_053 )//ペルシアン
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_126 )//ブーバー
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
   }
   else
   if( monsno == MONSNO_156 )//バクフーンの前
@@ -646,7 +656,90 @@ static void STA_POKE_SetAdjustFrame( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   {
     pokeWork->scale.y = FX32_CONST(15.90f)/16;
   }
-  
+  else
+  if( monsno == MONSNO_205 )//フォトレス
+  {
+    //こいつはX
+    pokeWork->scale.x = FX32_CONST(15.80f)/16;
+  }
+  else
+  if( monsno == MONSNO_208 )//ハガネール
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_215 )//ニューラ
+  {
+    pokeWork->scale.y = FX32_CONST(15.85f)/16;
+  }
+  else
+  if( monsno == MONSNO_219 )//マグカルゴ
+  {
+    pokeWork->scale.y = FX32_CONST(15.85f)/16;
+  }
+  else
+  if( monsno == MONSNO_232 )//ドンファン
+  {
+    //こいつはX
+    pokeWork->scale.x = FX32_CONST(15.70)/16;
+  }
+  else
+  if( monsno == MONSNO_235 )//ドーブル
+  {
+    pokeWork->scale.y = FX32_CONST(15.80f)/16;
+  }
+  else
+  if( monsno == MONSNO_245 )//スイクン
+  {
+    //こいつはX
+    pokeWork->scale.x = FX32_CONST(15.80f)/16;
+  }
+  else
+  if( monsno == MONSNO_246 )//ヨーギラス
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_248 )//バンギラス
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_253 )//ジュプトル
+  {
+    pokeWork->scale.y = FX32_CONST(15.80f)/16;
+  }
+  else
+  if( monsno == MONSNO_288 )//ヤルキモノ
+  {
+    pokeWork->scale.y = FX32_CONST(15.95f)/16;
+  }
+  else
+  if( monsno == MONSNO_354 )//ジュペッタ
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_388 )//ハヤシガメ
+  {
+    //こいつはX
+    pokeWork->scale.x = FX32_CONST(15.75f)/16;
+  }
+  else
+  if( monsno == MONSNO_393 )//ポッチャマ
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_434 )//スカンプー
+  {
+    pokeWork->scale.y = FX32_CONST(15.80f)/16;
+  }
+  else
+  if( monsno == MONSNO_521 )//モンメン(546)
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
 }
 
 

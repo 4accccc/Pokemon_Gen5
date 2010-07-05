@@ -116,6 +116,7 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MUS_SHOT_PHOTO_ExitGraphic( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work );
+static const fx32 MUS_SHOT_PHOTO_GetAdjustPosX( MUS_SHOT_PHOTO_WORK *work , const u8 idx , const u16 monsno );
 static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work );
 
 void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work );
@@ -471,10 +472,6 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
 {
   u8 i;
   u8 bit = 1;
-  const fx32 posXArr[MUSICAL_POKE_MAX] = {FX32_CONST(128+32),
-                                          FX32_CONST(128+32+64),
-                                          FX32_CONST(128+32+128),
-                                          FX32_CONST(128+32+192)};
   VecFx32 pos = {FX32_CONST(64.0f),FX32_CONST(155.0f),FX32_CONST(170.0f)};
   VecFx32 lightpos = {FX32_CONST(64.0f),FX32_CONST(128.0f),FX32_CONST(200.0f)};
   const fx32 XBase = FX32_CONST(256.0f/(MUSICAL_POKE_MAX+1));
@@ -528,13 +525,13 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
   work->lightSys = STA_LIGHT_InitSystem(work->heapId , NULL );
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
-    lightpos.x = posXArr[i];
+    lightpos.x = MUS_SHOT_PHOTO_GetAdjustPosX( work , i , work->musPoke[i]->mcssParam.monsno );
 
     if( work->shotData->spotBit & bit )
     {
-      VecFx32 ofs = {0,-FX32_CONST(40.0f),0};
-      pos.x = posXArr[i];
-      pos.y = FX32_CONST(160.0f);
+      VecFx32 ofs = {0,-FX32_CONST(35.0f),0};
+      pos.x = MUS_SHOT_PHOTO_GetAdjustPosX( work , i , work->musPoke[i]->mcssParam.monsno );
+      pos.y = FX32_CONST(155.0f);
       pos.z = posZArr[i];
       STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
       STA_POKE_SetPositionOffset( work->pokeSys , work->pokeWork[i] , &ofs );
@@ -544,7 +541,7 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
     }
     else
     {
-      pos.x = posXArr[i];
+      pos.x = MUS_SHOT_PHOTO_GetAdjustPosX( work , i , work->musPoke[i]->mcssParam.monsno );
       pos.y = FX32_CONST(155.0f);
       pos.z = posZArr[i];
       STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
@@ -556,7 +553,15 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
     bit = bit<<1;
     
   }
+}
 
+static const fx32 MUS_SHOT_PHOTO_GetAdjustPosX( MUS_SHOT_PHOTO_WORK *work , const u8 idx , const u16 monsno )
+{
+  const fx32 posXArr[MUSICAL_POKE_MAX] = {FX32_CONST(128+32),
+                                          FX32_CONST(128+32+64),
+                                          FX32_CONST(128+32+128),
+                                          FX32_CONST(128+32+192)};
+  return posXArr[idx];
 }
 
 //--------------------------------------------------------------
@@ -1034,7 +1039,7 @@ static void MUS_SHOT_DebugPolyDraw( MUS_SHOT_PHOTO_WORK *work )
     
   }
   
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
   {
     u8 i;
     static VecFx32 sScale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE*16};
