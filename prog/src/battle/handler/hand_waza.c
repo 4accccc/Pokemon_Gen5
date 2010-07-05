@@ -9906,19 +9906,24 @@ static void handler_NakamaDukuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     if( !BTL_TABLES_CheckNakamaDukuriFailTokusei(myTokusei) )
     {
       u32 targetCnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
-      BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
+      const BTL_POKEPARAM* target;
       u32 i;
 
       // ëŒè€É|ÉPÉÇÉìÇÃÇ∆Ç≠ÇπÇ¢Çé©ï™Ç∆ìØÇ∂Ç‡ÇÃÇ…èëÇ´ä∑Ç¶
       for(i=0; i<targetCnt; ++i)
       {
-        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
-          param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
-          param->tokuseiID = myTokusei;
-          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_TokuseiChange );
-          HANDEX_STR_AddArg( &param->exStr, param->pokeID );
-          HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
-        BTL_SVF_HANDEX_Pop( flowWk, param );
+        target = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+        if( BPP_GetValue(target, BPP_TOKUSEI) != POKETOKUSEI_NAMAKE )
+        {
+          BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
+          param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
+            param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
+            param->tokuseiID = myTokusei;
+            HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_TokuseiChange );
+            HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+            HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
+          BTL_SVF_HANDEX_Pop( flowWk, param );
+        }
       }
     }
   }
