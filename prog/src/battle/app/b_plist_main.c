@@ -2788,6 +2788,10 @@ static int BPL_SeqPokeSelDead( BPLIST_WORK * wk )
 {
   if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BPL_POKESEL_DEAD; }
 
+  if( CheckTimeOut( wk ) == TRUE ){
+    return SEQ_BPL_ENDSET;
+  }
+
   if( BPL_PokemonSelect( wk ) == TRUE ){
     if( wk->dat->sel_poke == BPL_SEL_EXIT ){
       PlaySE( wk, SEQ_SE_CANCEL2 );
