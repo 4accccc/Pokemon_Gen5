@@ -451,8 +451,10 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
 
   for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
   {
-    gauge_free_resource( bgw, pos );
+    //この順番を変えてはダメ！
+    //Delの中でSetPosを呼ぶのでリソース解放してしまうとアクセス例外で止まります
     BTLV_GAUGE_Del( bgw, pos );
+    gauge_free_resource( bgw, pos );
   }
   if( bgw->pinch_bgm_flag )
   {
