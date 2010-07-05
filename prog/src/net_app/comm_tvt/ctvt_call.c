@@ -1126,7 +1126,8 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           {
             GBS_BEACON *becData = beaconData;
             
-            if( ZONEDATA_IsPalace(becData->info.zone_id) == FALSE )
+            if( ZONEDATA_IsPalace(becData->info.zone_id) == FALSE &&
+                ZONEDATA_IsBingo(becData->info.zone_id) == FALSE )
             {
               const STRCODE *name = becData->info.name;
               const u32 sex = becData->info.sex;
