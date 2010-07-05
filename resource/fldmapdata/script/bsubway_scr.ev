@@ -407,10 +407,13 @@ sub_receipt_rekidai_download:
   _CALL sub_common_exit_field_comm
   
   IF $SCWK_ANSWER == FALSE THEN //切断失敗
+    /*
+    BTS7420 メッセージは不要となった
     $SCWK_TEMP0 = msg_bsw_scr_77
     _CALL sub_bsw_common_bwin_receipt
     _AB_KEYWAIT()
     _MSGWIN_CLOSE()
+    */
   ELSE
     //歴代データダウンロード
     _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, ret )
@@ -797,8 +800,11 @@ sub_receipt_challenge_multi_comm:
   _CALL sub_common_exit_field_comm
   
   IF $SCWK_ANSWER == FALSE THEN //切断失敗
+    /*
+    BTS7420 メッセージは不要となった
     $SCWK_TEMP0 = msg_bsw_scr_77
     _CALL sub_bsw_common_bwin_receipt
+    */
     _CALL sub_bsw_common_exit
     _RET
   ENDIF
@@ -1303,10 +1309,13 @@ sub_receipt_challenge_wifi:
     _CALL sub_common_exit_field_comm
     
     IF $SCWK_ANSWER == FALSE THEN //切断失敗
+      /*
+      BTS7420 メッセージは不要となった
       $SCWK_TEMP0 = msg_bsw_scr_77
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
+      */
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
@@ -3116,9 +3125,12 @@ sub_common_wifi_upload_score:
   _CALL sub_common_exit_field_comm
   
   IF $SCWK_ANSWER == FALSE THEN //切断失敗
+    /*
+    BTS7420 メッセージは不要となった
     _SYSWIN_MSG( msg_bsw_scr_77, POS_DOWN )
     _AB_KEYWAIT()
     _MSGWIN_CLOSE()
+    */
     $SCWK_ANSWER = FALSE
     _RET
   ENDIF

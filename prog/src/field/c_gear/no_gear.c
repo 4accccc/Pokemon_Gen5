@@ -27,6 +27,7 @@
 #include "msg/msg_c_gear.h"
 #include "msg/msg_invasion.h"
 
+#include "net/wih_dwc.h"
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 
@@ -245,7 +246,7 @@ static void _gearArcCreate(NO_GEAR_WORK* pWork)
 	GFL_ARC_CloseDataHandle( p_handle );
 
   GFL_NET_ReloadIconTopOrBottom( FALSE, pWork->heapID );
-
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON ); // SUB DISP OBJ ON
 }
 
 //------------------------------------------------------------------------------
@@ -344,6 +345,7 @@ static void _workEnd(NO_GEAR_WORK* pWork)
 	GFL_BG_SetVisible( GEAR_BMPWIN_FRAME, VISIBLE_OFF );
 	GFL_BG_SetVisible( GEAR_MAIN_FRAME, VISIBLE_OFF );
 
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF ); //SUB DISP OBJ ON
 }
 
 
@@ -401,7 +403,10 @@ void NOGEAR_Main( NO_GEAR_WORK* pWork,BOOL bAction )
 		state(pWork);
 	}
 	
-	
+  { //ビーコンの電波強度アイコン反映	
+    GAMEDATA *pGameData = GAMESYSTEM_GetGameData( pWork->pGameSys );
+    WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(pGameData) );
+  }
 }
 
 
