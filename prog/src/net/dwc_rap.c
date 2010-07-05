@@ -2116,7 +2116,7 @@ int GFL_NET_DWC_ErrorType(int code, int type)
   case DWC_ETYPE_NO_ERROR:
   case DWC_ETYPE_LIGHT:
   case DWC_ETYPE_SHOW_ERROR:
-    return 15;  //
+    return 14;  //
   case DWC_ETYPE_SHUTDOWN_FM:
   case DWC_ETYPE_SHUTDOWN_GHTTP:
   case DWC_ETYPE_SHUTDOWN_ND:
