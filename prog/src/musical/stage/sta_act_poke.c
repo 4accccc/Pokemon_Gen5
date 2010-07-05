@@ -736,9 +736,41 @@ static void STA_POKE_SetAdjustScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
     pokeWork->scale.y = FX32_CONST(15.80f)/16;
   }
   else
+  if( monsno == MONSNO_592 )//ムーランド(508)
+  {
+    //こいつはX
+    pokeWork->scale.x = FX32_CONST(15.75f)/16;
+  }
+  else
   if( monsno == MONSNO_521 )//モンメン(546)
   {
     pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_539 )//シンボラー(561)
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_509 )//オノノクス(612)
+  {
+    pokeWork->scale.y = FX32_CONST(15.85f)/16;
+  }
+  else
+  if( monsno == MONSNO_604 )//ゴビット(622)
+  {
+    pokeWork->scale.x = FX32_CONST(15.75f)/16;
+    pokeWork->scale.y = FX32_CONST(15.80f)/16;
+  }
+  else
+  if( monsno == MONSNO_605 )//ゴーグル(623)
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if( monsno == MONSNO_633 )//バルジーナ(630)
+  {
+    pokeWork->scale.y = FX32_CONST(15.80f)/16;
   }
 }
 
