@@ -641,12 +641,14 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       }
     }
 
+/*
     // Ｙ座標補正
     if( y < _SCROLL_TOP_Y ){
       y = _SCROLL_TOP_Y;
     }else if( y > _SCROLL_BOTTOM_Y ){
       y = _SCROLL_BOTTOM_Y;
     }
+*/
 
     // タッチ状態
     KTST_SetDraw( pWork, FALSE );
@@ -654,7 +656,8 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
     {
       int tmp_scr = pWork->oamlistpos;
 
-      pWork->oamlistpos = SCROLLBAR_GetCount( length+1-6, y, _SCROLL_TOP_Y, _SCROLL_BOTTOM_Y, 0 ) - 1;
+//      pWork->oamlistpos = SCROLLBAR_GetCount( length+1-6, y, _SCROLL_TOP_Y, _SCROLL_BOTTOM_Y, 0 ) - 1;
+      pWork->oamlistpos = SCROLLBAR_GetCount( length-6, y, _SCROLL_TOP_Y, _SCROLL_BOTTOM_Y, 0 ) - 1;
 
       ITEMDISP_ScrollCursorMove( pWork );   // スクロールバーOAM座標を変更
 
