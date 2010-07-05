@@ -24,6 +24,11 @@ static void myExitCallback(void *arg);
 static BOOL bHardResetFlg=FALSE;
 #endif
 
+//カード抜けを検出したときに呼ばれるコールバック
+#ifdef PM_DEBUG
+static  BOOL  card_pull_callback( void );
+#endif
+
 //VRAM転送マネージャ定義(NNS関数)
 #define VRAMTRANS_MAN_TASKNUM    (48)
 NNSGfdVramTransferTask    VRAMtransManTaskArray[ VRAMTRANS_MAN_TASKNUM ];
@@ -123,6 +128,11 @@ void MachineSystem_Init(void)
     }
   }
 #endif//
+
+#ifdef PM_DEBUG
+  //カード抜けを検出したときに呼び出されるコールバックを設定
+  CARD_SetPulledOutCallback( &card_pull_callback );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -183,6 +193,20 @@ static void myExitCallback(void *arg)
 #pragma unused(arg)
   PM_SetAutoExit(FALSE); //ハードリセットを任せることなく この後処理する
   bHardResetFlg=TRUE;   //ハードリセットフラグON
+}
+#endif
+
+#ifdef PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief	カード抜けを検出した時に呼ばれる関数
+ */
+//------------------------------------------------------------------
+static  BOOL  card_pull_callback( void )
+{ 
+  GF_ASSERT_MSG( 0, "card pull!\n" );
+
+  return TRUE;
 }
 #endif
 
