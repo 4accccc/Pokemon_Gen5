@@ -125,7 +125,7 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
 
     bfw->field_anm_resource = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
     bfw->field_anm = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
-    bfw->field_anm_work = GFL_HEAP_AllocClearMemory( bfw->heapID, sizeof( BTLV_FIELD_ANM_WORK ) );
+    bfw->field_anm_work = GFL_HEAP_AllocClearMemory( bfw->heapID, sizeof( BTLV_FIELD_ANM_WORK ) * bfw->anm_count );
 
     cnt = 0;
 
