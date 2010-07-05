@@ -98,6 +98,7 @@ static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_w
 
 static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int ret );
 
+static void GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx, int *p_client, int *p_temoti );
 //==============================================================================
 //
 //	
@@ -276,8 +277,7 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
     for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ )
     {
       //書き換えるためにインデックスを取得
-      client  = i/temoti_max;
-      poke    = i%temoti_max;
+      GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke );
 
       param = &br_send->rec.rec_party[client].member[poke];
       STRTOOL_Copy( param->nickname, gdsrap->nickname[i], MONS_NAME_SIZE+EOM_SIZE );
@@ -669,8 +669,7 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
                 if( gdsrap->evil_check_loop == 0 )
                 {
                   //書き換えるためにインデックスを取得
-                  client  = i/temoti_max;
-                  poke    = i%temoti_max;
+                  GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke );
 
                   param = &br_send->rec.rec_party[client].member[poke];
                   GFL_MSG_GetStringRaw( GlobalMsg_PokeName, param->monsno, param->nickname, MONS_NAME_SIZE+EOM_SIZE );
@@ -921,8 +920,7 @@ static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv
       for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ )
       {
         //書き換えるためにインデックスを取得
-        client  = i/temoti_max;
-        poke    = i%temoti_max;
+        GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke );
 
         param = &br_send->rec.rec_party[client].member[poke];
         STRTOOL_Copy( gdsrap->nickname[i], param->nickname, MONS_NAME_SIZE+EOM_SIZE );
@@ -1001,6 +999,35 @@ static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int r
   NAGI_Printf( "切断コールバック\n" );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  連続インデックスから、クライアントインデックスと手持ちインデックスを取得
+ *
+ *	@param	const GDS_RAP_WORK *cp_gdsrap GDSラップ
+ *	@param	idx         連続インデックス
+ *	@param	*p_client   クライアントインデックス
+ *	@param	*p_temoti   手持ちインデックス
+ */
+//-----------------------------------------------------------------------------
+static void GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx, int *p_client, int *p_temoti )
+{
+  int client_max, temoti_max;
+  int index = 0;
+  BATTLE_REC_SEND *br_send = BattleRec_RecWorkAdrsGet();
+  BattleRec_ClientTemotiGet(br_send->head.mode, &client_max, &temoti_max);
+
+  for( *p_client = 0; (*p_client) < client_max; (*p_client)++ )
+  {
+    for( *p_temoti  = 0; (*p_temoti) < br_send->rec.rec_party[*p_client].PokeCount; (*p_temoti)++ )
+    {
+      if( index == idx )
+      {
+        return;
+      }
+      index++;
+    }
+  }
+}
 //--------------------------------------------------------------
 /**
  * @brief   受信データ解釈
