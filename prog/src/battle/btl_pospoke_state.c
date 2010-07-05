@@ -306,6 +306,25 @@ BOOL BTL_POSPOKE_IsExist( const BTL_POSPOKE_WORK* wk, u8 pokeID )
 }
 //=============================================================================================
 /**
+ * 指定ポケモンが戦闘の場に出ているか判定
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_POSPOKE_IsExistFrontPos( const BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, u8 pokeID )
+{
+  BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( wk, pokeID );
+  if( pos != BTL_POS_NULL )
+  {
+    return BTL_MAIN_IsFrontPos( mainModule, pos );
+  }
+  return FALSE;
+}
+//=============================================================================================
+/**
  * 指定ポケモンがいる場所IDを取得
  *
  * @param   wk

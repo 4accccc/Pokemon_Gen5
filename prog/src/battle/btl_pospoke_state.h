@@ -42,6 +42,7 @@ extern void BTL_POSPOKE_PokeOut( BTL_POSPOKE_WORK* wk, u8 pokeID );
 extern void BTL_POSPOKE_Swap( BTL_POSPOKE_WORK* wk, BtlPokePos pos1, BtlPokePos pos2 );
 extern u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* pos );
 extern BOOL BTL_POSPOKE_IsExist( const BTL_POSPOKE_WORK* wk, u8 pokeID );
+extern BOOL BTL_POSPOKE_IsExistFrontPos( const BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, u8 pokeID );
 extern BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_POSPOKE_GetPokeLastPos( const BTL_POSPOKE_WORK* wk, u8 pokeID );
 extern u8 BTL_POSPOKE_GetExistPokeID( const BTL_POSPOKE_WORK* wk, BtlPokePos pos );

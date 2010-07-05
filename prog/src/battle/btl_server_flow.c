@@ -4561,12 +4561,12 @@ static void scEvent_WazaExeEnd_Common( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID wa
 //----------------------------------------------------------------------------------
 static BOOL IsMustHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target )
 {
-  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(attacker))
+  if( BTL_POSPOKE_IsExistFrontPos(&wk->pospokeWork, wk->mainModule, BPP_GetID(attacker))
   &&  (BPP_GetValue(attacker, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
   ){
     return TRUE;
   }
-  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(target))
+  if( BTL_POSPOKE_IsExistFrontPos(&wk->pospokeWork, wk->mainModule, BPP_GetID(target))
   &&  (BPP_GetValue(target, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
   ){
     return TRUE;
