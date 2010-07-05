@@ -2600,6 +2600,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
         
         // “ü‚ê‚éB
         ROOM_DATA_SetUp( &p_wk->roomdata, &p_wk->bt_error, p_wk->code_input );
+        VIEW_PrintStream( &p_wk->view, msg_wifi_bt_013 );
         VIEW_StartTimeIcon( &p_wk->view );
         p_wk->seq ++;
       }else{
