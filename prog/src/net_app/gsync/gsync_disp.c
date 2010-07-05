@@ -737,8 +737,8 @@ static void _CreatePokeIconResource(GSYNC_DISP_WORK* pWork)
 void GSYNC_DISP_PokemonIconCreate(GSYNC_DISP_WORK* pWork, POKEMON_PASO_PARAM* ppp, int draw)
 {
 
-  int x[] = { _POKEMON_CELLX, _POKEMON_CELLX};
-  int y[] = { _POKEMON_CELLY,_POKEMON_CELLY+8};
+  int x[] = { _POKEMON_CELLX, _POKEMON_CELLX-4};
+  int y[] = { _POKEMON_CELLY,_POKEMON_CELLY+4};
   
   {
     GFL_CLWK_DATA cellInitData;
