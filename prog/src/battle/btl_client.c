@@ -804,8 +804,9 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
       BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
 
       // 録画再生時のタイムオーバー検出
+
       if( (wk->myType == BTL_CLIENT_TYPE_RECPLAY)
-      &&  (wk->fRecPlayEndTimeOver)
+      &&  ((wk->fRecPlayEndTimeOver) || (wk->fRecPlayEndBufOver))
       &&  (cmd == BTL_ACMD_NONE)
       ){
         return FALSE;
@@ -1171,6 +1172,20 @@ BOOL BTL_CLIENT_IsGameTimeOver( const BTL_CLIENT* wk )
     return wk->fRecPlayEndTimeOver;
   }
 }
+//=============================================================================================
+/**
+ * 録画バッファ読み取りエラーチェック
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_CLIENT_IsRecPlayBufOver( const BTL_CLIENT* wk )
+{
+  return wk->fRecPlayEndBufOver;
+}
+
 
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
@@ -1514,6 +1529,12 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
+    if( wk->fRecPlayEndBufOver )
+    {
+      setNullActionRecplay( wk );
+      return TRUE;
+    }
+    else
     {
       u8 numAction, fChapter;
 

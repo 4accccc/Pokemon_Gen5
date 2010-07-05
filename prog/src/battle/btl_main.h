@@ -304,6 +304,7 @@ extern BTL_FIELD_WORK* BTL_MAIN_GetFieldSimWork( BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_GetCommandLimitTime( const BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_GetGameLimitTime( const BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_CheckGameLimitTimeOver( const BTL_MAIN_MODULE* wk );
+extern BOOL BTL_MAIN_CheckRecPlayError( BTL_MAIN_MODULE* wk );
 
 
 extern void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum );

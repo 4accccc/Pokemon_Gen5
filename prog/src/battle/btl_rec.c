@@ -83,8 +83,8 @@ struct _BTL_REC {
   u8   dmy;
   const void* readData;
 
-
-#if 1
+// @TODO このままコミットしたらダメ
+#if 0
   u8   buf[ BTLREC_OPERATION_BUFFER_SIZE ];
 #else
   // ２ターンでバッファを一杯にするテスト措置用

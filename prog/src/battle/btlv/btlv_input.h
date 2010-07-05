@@ -95,7 +95,6 @@ typedef enum
   BTLV_INPUT_BR_STOP_NONE = 0,
   BTLV_INPUT_BR_STOP_KEY,         //キーによる中断
   BTLV_INPUT_BR_STOP_BREAK,       //データ破壊による中断
-  BTLV_INPUT_BR_STOP_OVER,        //録画時間オーバーによる中断
   BTLV_INPUT_BR_STOP_SKIP,        //チャプタースキップによる中断
 }BTLV_INPUT_BR_STOP_FLAG;
 

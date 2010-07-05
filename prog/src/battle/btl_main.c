@@ -5877,6 +5877,22 @@ BOOL BTL_MAIN_CheckGameLimitTimeOver( const BTL_MAIN_MODULE* wk )
   }
 }
 
+/**
+ *  録画再生時、読み取りエラー発生チェック
+ */
+BOOL BTL_MAIN_CheckRecPlayError( BTL_MAIN_MODULE* wk )
+{
+  if( wk->setupParam->fRecordPlay )
+  {
+    BOOL fError = BTL_CLIENT_IsRecPlayBufOver( wk->client[wk->myClientID] );
+    if( fError ){
+      wk->serverResult = BTL_RESULT_DRAW;
+    }
+    return fError;
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------------------------
 // バトルパラメータへ書き戻し
 //----------------------------------------------------------------------------------------------

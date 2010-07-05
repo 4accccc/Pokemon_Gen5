@@ -1348,7 +1348,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
 
-#if 1 
+#if 1
       if( biw->main_loop_tcb_flag == TRUE )
       {
         BTLV_EFFECT_SetCameraWorkStop();
@@ -1610,7 +1610,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       switch( bibrp->stop_flag ){
       case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
       case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
-      case BTLV_INPUT_BR_STOP_OVER:   //録画時間オーバーによる中断
       case BTLV_INPUT_BR_STOP_SKIP:   //チャプタースキップによる中断
         GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
                               PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
@@ -4242,7 +4241,6 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
   switch( bibrp->stop_flag ){
   case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
   case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
-  case BTLV_INPUT_BR_STOP_OVER:   //録画時間オーバーによる中断
   case BTLV_INPUT_BR_STOP_SKIP:   //チャプタースキップによる中断
     GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
                           PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
@@ -5661,7 +5659,7 @@ static  void  SePlayBeep( BTLV_INPUT_WORK* biw )
 static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw )
 {
   if( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER )
-  { 
+  {
     int cont  = GFL_UI_KEY_GetCont();
     int trg   = GFL_UI_KEY_GetTrg();
 

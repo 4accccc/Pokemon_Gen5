@@ -539,6 +539,11 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         setMainProc( server, ServerMain_BattleTimeOver );
         break;
       }
+      // 録画再生時のエラーチェック
+      if( BTL_MAIN_CheckRecPlayError(server->mainModule) ){
+        setMainProc( server, ServerMain_ExitBattle );
+        break;
+      }
 
       storeClientAction( server );
       if( SendActionRecord(server, BTL_RECTIMING_StartTurn, check_action_chapter(server)) ){
@@ -748,6 +753,12 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     {
       ResetAdapterCmd( server );
 
+      // 録画再生時のエラーチェック
+      if( BTL_MAIN_CheckRecPlayError(server->mainModule) ){
+        setMainProc( server, ServerMain_ExitBattle );
+        break;
+      }
+
       storeClientAction( server );
       if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
         (*seq)++;
@@ -888,6 +899,12 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+
+      // 録画再生時のエラーチェック
+      if( BTL_MAIN_CheckRecPlayError(server->mainModule) ){
+        setMainProc( server, ServerMain_ExitBattle );
+        break;
+      }
 
       storeClientAction( server );
       if( SendActionRecord(server, BTL_RECTIMING_PokeInChange, FALSE) ){

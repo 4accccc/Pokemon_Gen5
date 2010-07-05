@@ -3342,6 +3342,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK);
   fTameLock = BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
+  TAYA_Printf("Fight pokeID=%d, handlerPri=%d\n", BPP_GetID(attacker), handlerSubPri);
   BTL_HANDLER_Waza_Add( attacker, orgWaza, handlerSubPri );
   scproc_StartWazaSeq( wk, attacker, orgWaza );
 
