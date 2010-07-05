@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-03T12:49:15"/>
+	<create user="matsumiya" host="W00224" date="2010-07-05T19:12:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -3175,7 +3175,7 @@
 そうなんです！
 マジックミラー　という　とくせいは▼
 マジックコートという
-わざを　つかうことで　はねかせる▽
+わざを　つかうことで　はねかえせる▽
 わざを　そのまま　はねかえせるよ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
@@ -3190,7 +3190,7 @@
 そうなんです！
 マジックミラー　という　特性は▼
 マジックコートという
-技を　使うことで　はねかせる▽
+技を　使うことで　はねかえせる▽
 技を　そのまま　はねかえせるよ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
