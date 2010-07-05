@@ -2499,9 +2499,10 @@ static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk )
   case WB_NET_IRC_BATTLE:      //赤外線大会
     _set_record_result( wk->pwk->record, RECID_IRC_BATTLE, wk->result );
     break;
+
+  // wifi世界大戦(WB_NET_WIFIMATCH)とwifiランダムマッチ(WB_NET_WIFIRNDMATCH)は
+  // サーバーとの送信成功後にカウントアップさせるように変更になりました。
   case WB_NET_WIFICLUB:        // wifiCLUB
-  case WB_NET_WIFIMATCH:       // wifi世界大戦
-  case WB_NET_WIFIRNDMATCH:    // wifiランダムマッチ
     _set_record_result( wk->pwk->record, RECID_WIFI_BATTLE, wk->result );
     break;
   case WB_NET_UNION:           //UNION
