@@ -795,12 +795,11 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
       //HPゲージ非表示
       BTLV_EFFECT_SetGaugeDrawEnable( FALSE, BTLEFF_GAUGE_ALL );
     }
-    
     //BG非表示
     GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-
+    
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
     //BGMのマスターボリュームを下げる
     {
@@ -819,6 +818,13 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   {
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, waza - BTLEFF_SINGLE_ENCOUNT_1, GFL_HEAP_LOWID( bevw->heapID ) );
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
+    if( ( waza >= BTLEFF_STATUS_EFFECT_START ) && ( ( *(u16 *)(REG_BLDALPHA_ADDR) & 0x1f ) == 0 ) )
+    { 
+      //BG非表示
+      GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+      GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+    }
   }
 #if 0
   if( ( from != BTLV_MCSS_POS_ERROR ) && ( to != BTLV_MCSS_POS_ERROR ) )
