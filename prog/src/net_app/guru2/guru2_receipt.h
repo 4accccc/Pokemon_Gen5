@@ -193,7 +193,7 @@ struct GURU2RC_WORK{
   s8            limit_mode;               // 接続制限状態
   u8            start_num;                // レコード混ぜ開始人数
   u8            record_send;              // TRUE:レコード送信した
-  
+  u32           force_end_bit;            // 通信終了宣言時のメンバー構成bit
   // 子機が必要なワーク
     int err_num_timeout;   ///PL:0632 err_numが変化しないためシーケンスが進まないバグパッチ修正
   s32           err_num;                // 通信終了をみるためのワーク

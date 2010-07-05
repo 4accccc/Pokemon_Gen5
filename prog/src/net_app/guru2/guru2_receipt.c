@@ -1943,9 +1943,12 @@ static int Record_ForceEndWait( GURU2RC_WORK *wk, int seq )
 {
   // 通信同期待ち
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  // 終了宣言時のメンバー構成を保存する
+  wk->force_end_bit = MyStatusGetNumBit( wk ) ^ wk->ridatu_bit;
   GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
                                   GURU2_TIMINGSYNC_RECEIPT,WB_NET_GURUGURU, 
-                                  MyStatusGetNumBit( wk ) ^ wk->ridatu_bit);
+                                  wk->force_end_bit);
   OS_Printf("bit = %d で終了用の通信同期\n", MyStatusGetNumBit( wk ) ^ wk->ridatu_bit);
 
   wk->seq = RECORD_MODE_FORCE_END_SYNCHRONIZE;
@@ -1969,7 +1972,8 @@ static int Record_ForceEndSynchronize( GURU2RC_WORK *wk, int seq )
 {
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
-  if(GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_RECEIPT,WB_NET_GURUGURU)){
+  if(GFL_NET_HANDLE_IsTimeSync( pNet, GURU2_TIMINGSYNC_RECEIPT,WB_NET_GURUGURU) 
+  || wk->force_end_bit !=  (MyStatusGetNumBit( wk )^ wk->ridatu_bit)){
     GFL_NET_SetAutoErrorCheck(FALSE);
     OS_Printf("終了時同期成功\n");
     // ワイプフェード開始
