@@ -204,8 +204,10 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     return;
   }
 
-  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE 
+      && intcomm->stop_comm_player_check == FALSE){
     if(intcomm->stop_comm_player_update_map == FALSE){
+      intcomm->stop_comm_player_check = TRUE;
       if(IntrudeField_Check_StopCommPlayerUpdateZone(intcomm->intrude_status_mine.zone_id)==FALSE){
         intcomm->stop_comm_player_update_map = TRUE;
         return; //自分が通信プレイヤー更新不可マップにいる

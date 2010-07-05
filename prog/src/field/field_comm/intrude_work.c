@@ -719,5 +719,6 @@ void Intrude_ResetStopCommPlayerUpdateMapFlag(GAME_COMM_SYS_PTR game_comm)
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm != NULL){
     intcomm->stop_comm_player_update_map = FALSE;
+    intcomm->stop_comm_player_check = FALSE;
   }
 }
