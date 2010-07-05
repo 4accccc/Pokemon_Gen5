@@ -717,7 +717,8 @@ struct _POKEMON_TRADE_WORK{
   int bgscroll;
   int ringLineNo;
   int demoBGM;
-  BOOL flipflg;
+  u16 flipflg;
+  u16 bEvCheck;
   int modelno;  ///< 表示しているモデルの番号
   int pokemonselectno;  ///< 自分と相手のポケモン選択中のどちらを指しているか
 

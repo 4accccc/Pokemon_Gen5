@@ -20,6 +20,7 @@
 #include "net/nhttp_rap_evilcheck.h"
 #include "net/dwc_rapcommon.h"
 #include "net/dwc_rap.h"
+#include "net/dwc_tool.h"
 
 #include "net_app/pokemontrade.h"
 #include "system/main.h"
@@ -75,6 +76,7 @@ static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork);
 static void _select6PokeSubMask(POKEMON_TRADE_WORK* pWork);  //下画面マスク処理
 static BOOL POKEMONTRADE_SendPokemon(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp,int commandID);
 static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork);
+static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork);
 
 
 //６体のポケモン選択
@@ -1753,6 +1755,8 @@ static void _PokeEvilChkEnd(POKEMON_TRADE_WORK* pWork)
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
+  pWork->bEvCheck = FALSE;
+
   if( GFL_NET_SendData(pNet, _NETCMD_EVILCHECK,1,&pWork->evilCheck[0])){
     GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_EVIL,WB_NET_TRADE_SERVICEID );
     _CHANGE_STATE(pWork, _PokeEvilChkEnd2);
@@ -1787,7 +1791,42 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
     {
       void* p_buff  = NHTTP_RAP_GetRecvBuffer(pWork->pNHTTP);
       pWork->evilCheck[0] = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );  //検査結果格納
-      _CHANGE_STATE(pWork, _PokeEvilChkEnd);
+      OS_TPrintf("POKEEVEL %d \n", pWork->evilCheck[0] );
+      for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+        OS_TPrintf("POKEEVEL %d \n", NHTTP_RAP_EVILCHECK_GetPokeResult(p_buff, i) );
+      }
+      if(pWork->evilCheck[0]==1 && pWork->bEvCheck==FALSE){
+
+        for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+          if(pWork->GTSSelectPP[1][i]){
+            POKEMON_PARAM* pp = pWork->GTSSelectPP[1][i];
+            if(0 != NHTTP_RAP_EVILCHECK_GetPokeResult(p_buff, i) ){
+              int item = PP_Get( pp , ID_PARA_item ,NULL);
+              STRBUF* pBuff = DWC_TOOL_CreateBadNickName(pWork->heapID);
+
+              if(ITEM_CheckMail(item)){  //メール
+                MAIL_DATA* src = MailData_CreateWork(pWork->heapID);
+
+                PP_Get(pp,ID_PARA_mail_data,src);
+                
+                MailData_SetWriterName(src, (STRCODE*)GFL_STR_GetStringCodePointer(pBuff));
+                PP_Put(pp,ID_PARA_mail_data, (u32)src);
+                GFL_HEAP_FreeMemory(src);
+              }
+              PP_SetDefaultNickName(pp);  //デフォルト名
+              //親名
+              PP_Put( pp, ID_PARA_oyaname_raw, (u32)GFL_STR_GetStringCodePointer(pBuff) );
+
+              GFL_STR_DeleteBuffer( pBuff );              
+            }
+          }
+        }
+        pWork->bEvCheck = TRUE;
+        _CHANGE_STATE(pWork, _PokeEvilChk);  //もう一回
+      }
+      else{
+        _CHANGE_STATE(pWork, _PokeEvilChkEnd);
+      }
     }
     else if( NHTTP_ERROR_BUSY != error )
     {
@@ -1806,8 +1845,6 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
       GFL_NET_DWC_SetErrDisconnectCallback(NULL,NULL);
     }
     
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
-                                 POKETRADE_FACTOR_TIMING_G ,WB_NET_TRADE_SERVICEID);
   }
 
 }
@@ -1819,12 +1856,6 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
 {
   int i,num=0;
 
-  pWork->triCancel++;  //交換せずに何回もここを通ると切断
-  if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
-    POKEMONTRADE_CancelCall(pWork);
-    _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
-    return;
-  }
 
   DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_NHTTP, 0x10000, pWork->heapID );
 
@@ -1862,6 +1893,15 @@ static void _PokeEvilChkPre1(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
     WIPE_ResetBrightness(WIPE_PATTERN_S);
+
+    pWork->triCancel++;  //交換せずに何回もここを通ると切断
+    if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
+      POKEMONTRADE_CancelCall(pWork);
+      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+      return;
+    }
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), POKETRADE_FACTOR_TIMING_G ,WB_NET_TRADE_SERVICEID);
+
     _CHANGE_STATE(pWork, _PokeEvilChk);
   }
 
