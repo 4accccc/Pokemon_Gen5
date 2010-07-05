@@ -741,7 +741,7 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
  * @retval  BOOL  新たにシステム登録された場合TRUE
  */
 //=============================================================================================
-BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza, u16 subPri )
+BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza, u32 subPri )
 {
 //  typedef BTL_EVENT_FACTOR* (*pEventAddFunc)( u16 pri, WazaID wazaID, u8 pokeID );
   typedef const BtlEventHandlerTable* (*pEventAddFunc)( u32* numElems );
