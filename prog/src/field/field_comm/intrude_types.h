@@ -323,7 +323,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 member_send_req;         ///<TRUE:参加人数の送信を行う
   u8 achieve_not_result:1;    ///<TRUE:自分が達成者だったが、結果を受け取る前に結果画面まで飛んだ
   u8 send_my_position_stop:1; ///<TRUE:自分の座標更新による送信を停止する
-  u8 padding:6;
+  u8 stop_comm_player_update_map:1; ///<TRUE:自分がいるマップが通信プレイヤー更新不可マップである
+  u8 padding:5;
   
   u8 warp_town_tblno;         ///<ワープ先のテーブル番号
   u8 area_occupy_update;      ///<TRUE:侵入しているエリアの占拠情報を受信した(下画面やり取り)

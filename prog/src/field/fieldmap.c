@@ -2985,6 +2985,8 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 
+  //侵入：通信プレイヤー更新停止フラグリセット
+  Intrude_ResetStopCommPlayerUpdateMapFlag(GAMESYSTEM_GetGameCommSysPtr(fieldWork->gsys));
 	
   SET_CHECK("zonechange:tail");
 

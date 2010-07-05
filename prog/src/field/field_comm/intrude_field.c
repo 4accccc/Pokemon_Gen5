@@ -145,6 +145,9 @@ static const VecFx32 PalaceWarpPos = {
 //--------------------------------------------------------------
 #include "palace_zone_setting.cdat"
 
+extern const u32 PalaceZoneIDTbl_PlayerUpdate_TblCount;
+extern const u16 PalaceZoneIDTbl_PlayerUpdate[];
+
 
 //==============================================================================
 //
@@ -167,7 +170,9 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gameSys);
   int i, my_net_id;
   BOOL update_ret;
-
+  ZONEID my_zone_id;
+  PLAYER_WORK *my_player;
+  
   if(GAMEDATA_GetIsSave(gamedata) == TRUE){
     return;
   }
@@ -186,9 +191,10 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     return;
   }
 
+  my_player = GAMEDATA_GetMyPlayerWork(gamedata);
+  my_zone_id = PLAYERWORK_getZoneID( my_player );
   if(intcomm->palace_in == FALSE){
-    PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(gamedata);
-    if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID( my_player ) ) == TRUE){
+    if(ZONEDATA_IsPalace( my_zone_id ) == TRUE){
       intcomm->palace_in = TRUE;
     }
   }
@@ -196,6 +202,18 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
 
   if(intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE || NetErr_App_CheckError()){
     return;
+  }
+
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+    if(intcomm->stop_comm_player_update_map == FALSE){
+      if(IntrudeField_Check_StopCommPlayerUpdateZone(intcomm->intrude_status_mine.zone_id)==FALSE){
+        intcomm->stop_comm_player_update_map = TRUE;
+        return; //自分が通信プレイヤー更新不可マップにいる
+      }
+    }
+    else{
+      return; //自分が通信プレイヤー更新不可マップにいる(既に今のゾーンではチェック済み)
+    }
   }
 
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
@@ -211,6 +229,11 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
         MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gamedata, i);
         u16 obj_code = Intrude_GetObjCode(&intcomm->intrude_status[i], 
           GAMEDATA_GetMyStatusPlayer(gamedata, i));
+        if(intcomm->intrude_status[i].disguise_no == DISGUISE_NO_NULL){ //HERO or HEROINE
+          if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+            continue; //表にいる場合はHERO,HEROINE姿のプレイヤーと会うことは無いのでAddしない
+          }
+        }
         CommPlayer_Add(intcomm->cps, i, obj_code, &intcomm->intrude_status[i].player_pack);
       }
       else{
@@ -1951,6 +1974,27 @@ int IntrudeField_GetPlayerSettingSex(GAME_COMM_SYS_PTR game_comm)
   return MyStatus_GetMySex(myst);
 }
 
+//==================================================================
+/**
+ * 自分が通信プレイヤー更新可能マップにいるかをチェックする
+ *
+ * @param   zone_id		現在値
+ *
+ * @retval  BOOL		TRUE:自分が通信プレイヤー更新可能マップにいる
+ * @retval  BOOL		FALSE:自分が通信プレイヤー更新不可マップにいる
+ */
+//==================================================================
+BOOL IntrudeField_Check_StopCommPlayerUpdateZone(int zone_id)
+{
+  int zone_tbl;
+  
+  for(zone_tbl = 0; zone_tbl < PalaceZoneIDTbl_PlayerUpdate_TblCount; zone_tbl++){
+    if(PalaceZoneIDTbl_PlayerUpdate[zone_tbl] == zone_id){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
 #ifdef PM_DEBUG
 GMEVENT * DEBUG_EVENT_PalaceBarrierMove(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir)

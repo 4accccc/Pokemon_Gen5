@@ -28,6 +28,7 @@
 #include "intrude_work.h"
 #include "field/zonedata.h"
 #include "field/fieldmap_call.h"  //FIELDMAP_IsReady
+#include "field/fieldmap.h"
 
 
 SDK_COMPILER_ASSERT(INTRUDE_BCON_PLAYER_PRINT_LIFE < 256);  //search_print_life‚ªu8‚È‚Ì‚Å
@@ -681,7 +682,18 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
   
-  CommPlayer_Pop(intcomm->cps);
+  if(GAMEDATA_GetReverseArea(gamedata) == FALSE){
+    if(IntrudeField_Check_StopCommPlayerUpdateZone(FIELDMAP_GetZoneID(fieldWork)) == TRUE){
+      CommPlayer_Pop(intcomm->cps);
+    }
+    else{
+      CommPlayer_PopClear(intcomm->cps);
+    }
+  }
+  else{
+    CommPlayer_Pop(intcomm->cps);
+  }
+  
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     if(net_id == my_net_id){
       continue;

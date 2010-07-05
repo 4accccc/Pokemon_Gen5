@@ -301,6 +301,28 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
 
 //==================================================================
 /**
+ * 通信プレイヤーPop処理状態をクリアする(Popする必要が無い場合、Popフラグをクリアする処理)
+ *
+ * @param   cps		
+ */
+//==================================================================
+void CommPlayer_PopClear(COMM_PLAYER_SYS_PTR cps)
+{
+  int i;
+
+  GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
+  GF_ASSERT(cps->act_ctrl == NULL);
+
+  for(i = 0; i < COMM_PLAYER_MAX; i++){
+    if(cps->act[i].push_flag == TRUE){
+      cps->act[i].push_flag = FALSE;
+      OS_TPrintf("CommPlayer PopClear! %d\n", i);
+    }
+  }
+}
+
+//==================================================================
+/**
  * 座標更新のポーズフラグをセットする
  *
  * @param   cps		

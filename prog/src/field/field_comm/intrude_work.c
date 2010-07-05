@@ -705,3 +705,19 @@ BOOL Intrude_CheckNetIsExit(GAME_COMM_SYS_PTR game_comm)
   return TRUE;  //終了処理実行中
 }
 
+//==================================================================
+/**
+ * 「通信プレイヤー更新不可マップにいる」と判定したフラグをリセットする
+ *
+ * @param   game_comm		
+ *
+ * 自分のZONE_IDが変更するたびに必ず呼んでください
+ */
+//==================================================================
+void Intrude_ResetStopCommPlayerUpdateMapFlag(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm != NULL){
+    intcomm->stop_comm_player_update_map = FALSE;
+  }
+}

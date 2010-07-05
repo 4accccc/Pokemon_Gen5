@@ -41,6 +41,7 @@ extern void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, u16 obj_code, con
 extern void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index);
 extern void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps);
 extern void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps);
+extern void CommPlayer_PopClear(COMM_PLAYER_SYS_PTR cps);
 extern void CommPlayer_FlagSet_UpdateStop(COMM_PLAYER_SYS_PTR cps, BOOL stop_flag);
 extern BOOL CommPlayer_CheckOcc(COMM_PLAYER_SYS_PTR cps, int index);
 extern u16 CommPlayer_GetObjCode(COMM_PLAYER_SYS_PTR cps, int index);

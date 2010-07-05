@@ -34,12 +34,13 @@ class ZONE_DATA
     @sub_x = "0"               #下画面X
     @sub_y = "0"               #下画面Y
     @connect = "0"             #パレスとの接続可否
+    @plyaer_update = "0"       #通信プレイヤーの更新有
     @comment = "0"             #備考欄
   end
 
   attr_accessor :zone_id, :reverse_zone_id, :warp_zone_id;
   attr_accessor :warp_grid_x, :warp_grid_y, :warp_grid_z;
-  attr_accessor :sub_x, :sub_y, :connect, :comment;
+  attr_accessor :sub_x, :sub_y, :connect, :player_update, :comment;
 end
 
 
@@ -92,6 +93,8 @@ def CsvConvFileCheck()
     ZoneData[s].sub_y = line[cell].sub(/\.0/, "");
     cell += 1;
     ZoneData[s].connect = line[cell];
+    cell += 1;
+    ZoneData[s].player_update = line[cell];
     cell += 1;
     ZoneData[s].comment = line[cell];
     cell += 1;
@@ -166,6 +169,20 @@ def DataFileOutput()
     end
     
     file.printf("};\n");
+
+    update_count = 0;
+    file.printf("\n\n\n//---------------------------------\n");
+    file.printf("//  通信プレイヤー更新有効マップ\n");
+    file.printf("//---------------------------------\n");
+    file.printf("ALIGN4 const u16 PalaceZoneIDTbl_PlayerUpdate[] = {\n");
+    for i in 0..ZoneData.size-1
+      if (ZoneData[i].player_update == "○")
+        file.printf("\t%s,\n", ZoneData[i].zone_id);
+        update_count = update_count + 1;
+      end
+    end
+    file.printf("};\n");
+    file.printf("\nconst u32 PalaceZoneIDTbl_PlayerUpdate_TblCount = %d;\n", update_count);
   }
   
 end

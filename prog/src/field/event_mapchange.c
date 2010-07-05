@@ -984,6 +984,8 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(amprotect) );  
 #endif
 
+    //侵入：通信プレイヤー更新停止フラグリセット
+    Intrude_ResetStopCommPlayerUpdateMapFlag(gcsp);
 
     (*seq)++;
     break;
