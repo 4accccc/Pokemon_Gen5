@@ -564,7 +564,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 	for(i=0;i<BOX_POKE_NUM;i++){
 		add.pos_x = PokemonIconPosTbl[i][0];
 		add.pos_y = PokemonIconPosTbl[i][1];
-		add.softpri   = 20;
+		add.softpri   = 30 - i%6;
 		wk->PokeIconActWork[i] = GFL_CLACT_WK_Create(wk->clactSet,
 			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
 			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
@@ -621,7 +621,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
   //指のアイコンらしいが、この画面で使っていないので流用（ボタンのひかり）
 	add.pos_x = 239;
 	add.pos_y = 136;
-  add.softpri = 30;
+  add.softpri = 100;
   add.bgpri   = 1;
   wk->FingerActWork = GFL_CLACT_WK_Create(wk->clactSet,
 			wk->resObjTbl[RES_CURSOR][CLACT_U_CHAR_RES],
