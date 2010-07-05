@@ -855,7 +855,7 @@ static void _itemMoveCancel(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 {
-  int now_pos, new_pos;
+	int now_pos, new_pos;
 
   BLINKPALANM_Main( pWork->blwk );
 
@@ -864,6 +864,16 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
     return;
   }
+
+  // スクロールバーの操作
+	now_pos = ITEMMENU_GetItemIndex(pWork);
+  if( _itemScrollCheck(pWork) ){
+    new_pos = ITEMMENU_GetItemIndex( pWork );
+    _ItemChange( pWork, now_pos, new_pos );
+    pWork->oamlistpos_old = 0xffff;
+    _windowRewrite( pWork );
+		return;
+	}
 
   // スクロール中フラグクリア
   if( GFL_UI_TP_GetCont() == FALSE ){
@@ -881,6 +891,11 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
       return;
     }
   }
+
+	// タッチスクロール中は以下の処理無効
+	if( pWork->scrollMode == TRUE ){
+		return;
+	}
 
   // 決定
   if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_SELECT) ){
@@ -919,15 +934,8 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 
-  // スクロールバーの操作
-  now_pos = ITEMMENU_GetItemIndex( pWork );
-  if( _itemScrollCheck(pWork) ){
-    new_pos = ITEMMENU_GetItemIndex( pWork );
-    _ItemChange( pWork, now_pos, new_pos );
-    pWork->oamlistpos_old = 0xffff;
-    _windowRewrite( pWork );
   // リストタッチ操作
-  }else if( _itemMovePositionTouchItem(pWork) ){
+	if( _itemMovePositionTouchItem(pWork) ){
     pWork->moveDrag = TRUE;
     ITEMDISP_ScrollCursorChangePos( pWork );
     PMSND_PlaySE( SE_BAG_SLIDE );
@@ -1760,6 +1768,11 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     _windowRewrite(pWork);
     return;
   }
+
+	// タッチスクロール中は以下の処理無効
+	if( pWork->scrollMode == TRUE ){
+		return;
+	}
 
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
