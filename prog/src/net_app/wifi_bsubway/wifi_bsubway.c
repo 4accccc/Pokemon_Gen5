@@ -467,7 +467,7 @@ static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpMystatusWait( WIFI_BSUBWAY_
 // 人情報認証
 static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p_gamedata, WIFI_BSUBWAY_ERROR* p_error );
 static BOOL PERSONAL_DATA_SetUpProfileWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error );
-static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* p_gamedata );
+static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* p_gamedata, const MYSTATUS* cp_mystatus );
 
 // ポケモン認証
 static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error, DWCSvlResult* p_svl_result, HEAPID heapID );
@@ -1341,7 +1341,7 @@ static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p
 
   
   // ユーザーのゲーム情報を生成
-  PERSONAL_DATA_InitDpwPlayerData( &p_wk->bt_player, p_gamedata );
+  PERSONAL_DATA_InitDpwPlayerData( &p_wk->bt_player, p_gamedata, p_mystatus );
 
   // Mystatus保存
   p_wk->cp_bsubway_wifi   = p_bsubway_wifi;
@@ -1388,12 +1388,12 @@ static BOOL PERSONAL_DATA_SetUpProfileWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BS
  *
  *  @param  p_player  情報格納先
  *  @param  p_gamedata  ゲームデータ
+ *  @param  cp_mystatus MYSTATUS
  */
 //-----------------------------------------------------------------------------
-static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* p_gamedata )
+static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* p_gamedata, const MYSTATUS* cp_mystatus )
 {
   SAVE_CONTROL_WORK* p_savedata = GAMEDATA_GetSaveControlWork( p_gamedata );
-  MYSTATUS* p_mystatus          = GAMEDATA_GetMyStatus( p_gamedata );
   WIFI_HISTORY* p_history       = SaveData_GetWifiHistory( p_savedata );
   WIFI_LIST* p_wifilist         = GAMEDATA_GetWiFiList( p_gamedata );
   BSUBWAY_SCOREDATA* p_score    = GAMEDATA_GetBSubwayScoreData( p_gamedata );
@@ -1403,21 +1403,21 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
   GFL_STD_MemClear( p_player, sizeof(Dpw_Bt_Player) );
 
   //name
-  GFL_STD_MemCopy( MyStatus_GetMyName( p_mystatus ), p_player->playerName, 8*2 );
+  GFL_STD_MemCopy( MyStatus_GetMyName( cp_mystatus ), p_player->playerName, 8*2 );
   //playerid
-  *((u32*)p_player->playerId) = MyStatus_GetID( p_mystatus );
+  *((u32*)p_player->playerId) = MyStatus_GetID( cp_mystatus );
   //version
   p_player->versionCode = CasetteVersion;
   //language
   p_player->langCode = CasetteLanguage;
   //countryCode
-  p_player->countryCode = (u8)MyStatus_GetMyNation( p_mystatus );
+  p_player->countryCode = (u8)MyStatus_GetMyNation( cp_mystatus );
   //localCode
-  p_player->localCode = (u8)MyStatus_GetMyArea( p_mystatus );
+  p_player->localCode = (u8)MyStatus_GetMyArea( cp_mystatus );
   //gender
-  p_player->gender = MyStatus_GetMySex( p_mystatus );
+  p_player->gender = MyStatus_GetMySex( cp_mystatus );
   //tr_type BTS:4115への対処　トレーナー見た目からトレーナタイプへ
-  p_player->trainerType = MyStatus_GetTrainerView( p_mystatus );
+  p_player->trainerType = MyStatus_GetTrainerView( cp_mystatus );
   p_player->trainerType = UnionView_GetTrType( p_player->trainerType );
   
   TOMOYA_Printf( "trainer type %d\n", p_player->trainerType );
