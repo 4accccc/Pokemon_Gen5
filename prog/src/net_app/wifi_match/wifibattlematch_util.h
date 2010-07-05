@@ -15,6 +15,7 @@
 #include "system/main.h"    //HEAPID
 #include "print/gf_font.h"  //GFL_FONT
 #include "system/bmp_menulist.h"  //BMPMENULIST_NULL
+#include "gamesystem/game_data.h"
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -164,4 +165,10 @@ extern BOOL WBM_SUBPROC_Main( WBM_SUBPROC_WORK *p_wk );
 extern GFL_PROC_MAIN_STATUS WBM_SUBPROC_GetStatus( const WBM_SUBPROC_WORK *cp_wk );
 extern void WBM_SUBPROC_CallProc( WBM_SUBPROC_WORK *p_wk, u32 procID );
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *			  èüîsÉJÉEÉìÉg
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+extern void WBM_RECORD_Count( GAMEDATA *p_gamedata, BtlResult result );
 

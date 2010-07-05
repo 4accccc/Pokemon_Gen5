@@ -63,7 +63,7 @@
 #endif
 
 #ifdef WIFIMATCH_RATE_AUTO
-//#define WBM_SYS_BATTLE_VSTIME_1
+#define WBM_SYS_BATTLE_VSTIME_1
 #endif //WIFIMATCH_RATE_AUTO
 
 #endif //PM_DEBUG

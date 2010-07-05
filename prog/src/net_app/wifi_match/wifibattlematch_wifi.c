@@ -3421,6 +3421,11 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     DWC_RAPCOMMON_ResetSubHeapID();
     GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
+    //‚±‚±‚Ü‚ÅØ’f“™‚ª‚È‚¢ê‡‚ÍƒŒƒR[ƒh“o˜^
+    {
+      WBM_RECORD_Count( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
+    }
+
     //‘ŠŽè‚ÉØ’f‚³‚ê‚Ä‚¢‚½‚çA˜^‰æ‚ð”ò‚Î‚·
     if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
     { 

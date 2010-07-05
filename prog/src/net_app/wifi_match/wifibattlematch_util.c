@@ -861,3 +861,36 @@ void WBM_SUBPROC_CallProc( WBM_SUBPROC_WORK *p_wk, u32 procID )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WBM_RECORDレコードカウント
+ *
+ *	@param	GAMEDATA *p_gamedata  ゲームデータ
+ *	@param	result                結果
+ */
+//-----------------------------------------------------------------------------
+void WBM_RECORD_Count( GAMEDATA *p_gamedata, BtlResult result )
+{
+  RECORD *p_rec = SaveData_GetRecord(GAMEDATA_GetSaveControlWork(p_gamedata));
+  switch( result )
+  {
+  case BTL_RESULT_RUN_ENEMY:   ///< 相手が逃げた
+  case BTL_RESULT_WIN:         ///< 勝った
+    RECORD_Inc( p_rec, RECID_WIFI_BTL_WIN );
+    break;
+  case BTL_RESULT_RUN:         ///< 逃げた
+  case BTL_RESULT_LOSE:        ///< 負けた
+    RECORD_Inc( p_rec, RECID_WIFI_BTL_LOSE );
+    break;
+  case BTL_RESULT_DRAW:        ///< ひきわけ
+    RECORD_Inc( p_rec, RECID_WIFI_BTL_DRAW );
+    break;
+
+  default:
+    //捕まえた、通信エラーはカウントは行わない
+    break;
+  }
+
+  // 各通信対戦の回数を＋１する
+  RECORD_Inc( p_rec, RECID_WIFI_BATTLE );
+}

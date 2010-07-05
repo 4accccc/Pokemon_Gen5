@@ -1713,7 +1713,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 //-----------------------------------------------------------------------------
 static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
- 
   enum
   { 
     SEQ_SC_HEAP_INIT,
@@ -1814,6 +1813,12 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     DWC_RAPCOMMON_ResetSubHeapID();
     GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
     DEBUG_SC_HEAP_Decrement
+
+      //‚±‚±‚Ü‚ÅØ’f“™‚ª‚È‚¢ê‡‚ÍƒŒƒR[ƒh“o˜^
+    {
+      WBM_RECORD_Count( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
+    }
+
     //‘ŠŽè‚ÉØ’f‚³‚ê‚Ä‚¢‚½‚çA˜^‰æ‚ð”ò‚Î‚·
     if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
     { 
@@ -1829,7 +1834,6 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     /// Ø’fˆ—
     //=====================================
   case SEQ_START_DISCONNECT:
-    
     //‚±‚±‚Ü‚ÅØ’f“™‚ª‚È‚¢ê‡‚Í‘ŠŽè‚ð’m‚è‡‚¢‚É“o˜^
     {           
       SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
@@ -2904,15 +2908,17 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     //-------------------------------------
     /// Ø’fˆ—
     //=====================================
-
-
-
   case SEQ_START_DISCONNECT:
+    //‚±‚±‚Ü‚ÅØ’f‚ª‚È‚¢ê‡‚Í‘ŠŽè‚ð’m‚è‡‚¢‚É“o˜^
     {           
       SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( p_sv_ctrl );
       WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
       EtcSave_SetAcquaintance( p_etc, MyStatus_GetID( (MYSTATUS*)p_enemy_data->mystatus ) );
+    }
+    //‚±‚±‚Ü‚ÅØ’f“™‚ª‚È‚¢ê‡‚ÍƒŒƒR[ƒh“o˜^
+    {
+      WBM_RECORD_Count( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
     }
     WIFIBATTLEMATCH_NET_StartDisConnect( p_wk->p_net );
     *p_seq = SEQ_WAIT_DISCONNECT;
