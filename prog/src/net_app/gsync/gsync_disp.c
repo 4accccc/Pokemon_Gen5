@@ -737,7 +737,9 @@ static void _CreatePokeIconResource(GSYNC_DISP_WORK* pWork)
 void GSYNC_DISP_PokemonIconCreate(GSYNC_DISP_WORK* pWork, POKEMON_PASO_PARAM* ppp, int draw)
 {
 
-
+  int x[] = { _POKEMON_CELLX, _POKEMON_CELLX};
+  int y[] = { _POKEMON_CELLY,_POKEMON_CELLY+8};
+  
   {
     GFL_CLWK_DATA cellInitData;
     ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
@@ -746,8 +748,14 @@ void GSYNC_DISP_PokemonIconCreate(GSYNC_DISP_WORK* pWork, POKEMON_PASO_PARAM* pp
       GFL_CLGRP_CGR_Register( arcHandlePoke , POKEICON_GetCgxArcIndex(ppp) ,
                               FALSE , CLSYS_DRAW_MAX , pWork->heapID );
 
-    cellInitData.pos_x = _POKEMON_CELLX;
-    cellInitData.pos_y = _POKEMON_CELLY;
+    if(draw== CLSYS_DRAW_MAIN){
+      cellInitData.pos_x = x[1];
+      cellInitData.pos_y = y[1];
+    }
+    else{
+      cellInitData.pos_x = x[0];
+      cellInitData.pos_y = y[0];
+    }
     cellInitData.anmseq = 0;
     cellInitData.softpri = _POKEMON_CELL_PRI;
     cellInitData.bgpri = 1;
