@@ -722,6 +722,7 @@ static void PLIST_InitDebug( PLIST_WORK *work )
   work->debWork->banItemIdx = 1;
   work->debWork->pokeNo = 0;
   work->debWork->ret = FALSE;
+  work->debWork->ret2 = 0;
   work->debWork->posArr[0] = 0;
   work->debWork->posArr[1] = 0;
   work->debWork->posArr[2] = 0;
