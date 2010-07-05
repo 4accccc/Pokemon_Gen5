@@ -934,13 +934,14 @@ typedef struct
 POKE_ARRANGE_INFO;
 #define MALE_FEMALE_UNKNOWN (3)  // オスメス性別なしどれでも構わない  // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWNと被らない値
 #define FRONT_BACK_UNKNOWN  (2)  // 正面背面どれでも構わない  // MCSS_DIR_FRONT, MCSS_DIR_BACKと被らない値
-#define POKE_ARRANGE_INFO_TBL_NUM (1)
+#define POKE_ARRANGE_INFO_TBL_NUM (2)
 
 #define POKE_ARRANGE_ADJUST (0.33f)
 
 static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] =
 {
   { MONSNO_OOTATI, 0, MALE_FEMALE_UNKNOWN, MCSS_DIR_BACK, (-6.0f) *POKE_ARRANGE_ADJUST -0.1f, 0.0f, 0.0f },  // (-6)が本来の値
+  { MONSNO_HUWANTE, 0, MALE_FEMALE_UNKNOWN, MCSS_DIR_FRONT, (2.0f) *POKE_ARRANGE_ADJUST +6.0f, 0.0f, 0.0f },  // (2)が本来の値
 };
 
 static void _McssSizeCheck(MCSS_WORK *pWork,VecFx32* pScale, int bFront, const POKEMON_PARAM *pp)
