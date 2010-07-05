@@ -333,7 +333,7 @@ static void _ErrorDisp(PDWACC_WORK* pWork)
   if(_SERVERDOWN_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR011;
   }
-  if(_SERVERMAINTENANCE_ERROR == pWork->ErrorNo){
+  else if(_SERVERMAINTENANCE_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR012;
   }
   else if(pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX){
