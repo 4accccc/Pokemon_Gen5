@@ -129,7 +129,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u16 effectNo );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static WazaID checkEncoreWazaChange( const BTL_POKEPARAM* bpp, const BTL_ACTION_PARAM* action );
-static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action, u16 handlerSubPri );
+static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action, u32 handlerSubPri );
 static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza );
 static void wazaRobParam_Init( WAZA_ROB_PARAM* param );
@@ -3304,7 +3304,7 @@ static WazaID checkEncoreWazaChange( const BTL_POKEPARAM* bpp, const BTL_ACTION_
 //-----------------------------------------------------------------------------------
 // サーバーフロー：「たたかう」ルート
 //-----------------------------------------------------------------------------------
-static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action, u16 handlerSubPri )
+static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action, u32 handlerSubPri )
 {
   REQWAZA_WORK  reqWaza;
   WazaID  orgWaza, actWaza;
@@ -3342,7 +3342,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK);
   fTameLock = BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
-  TAYA_Printf("Fight pokeID=%d, handlerPri=%d\n", BPP_GetID(attacker), handlerSubPri);
+  TAYA_Printf("Fight pokeID=%d, handlerPri=%08x\n", BPP_GetID(attacker), handlerSubPri);
   BTL_HANDLER_Waza_Add( attacker, orgWaza, handlerSubPri );
   scproc_StartWazaSeq( wk, attacker, orgWaza );
 
