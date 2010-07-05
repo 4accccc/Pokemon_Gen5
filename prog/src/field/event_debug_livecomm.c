@@ -1309,7 +1309,7 @@ static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 id
     WORDSET_RegisterNumber( wk->wset, 7, val, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     
     //Œo‰ßŽžŠÔ
-    WORDSET_RegisterNumber( wk->wset, 8, time_sec, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 8, time_sec, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   }else{
     msg_id = dlc_stack_check_param02;
   }
