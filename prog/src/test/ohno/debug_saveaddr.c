@@ -19,6 +19,7 @@
 
 #include "system/main.h"  //HEAPID
 #include "debug_message.naix"
+#include "debug/cgearpict.naix"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "print/global_font.h"
@@ -29,21 +30,25 @@
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
 #include "msg/debug/msg_d_ohno.h"
+#include "gamesystem/game_data.h"
 
 #include "savedata/dreamworld_data.h"
 #include "savedata/mystatus.h"
 #include "../../savedata/mystatus_local.h"
 #include "savedata/record.h"
+#include "savedata/c_gear_data.h"
+#include "savedata/c_gear_picture.h"
+#include "savedata/save_tbl.h"
 
 
-typedef struct _SAVEADDR_WORK SAVEADDR_WORK;
+typedef struct _DEBUGSAVEADDR_WORK DEBUGSAVEADDR_WORK;
 
-typedef void (StateFunc)(SAVEADDR_WORK* pState);
+typedef void (StateFunc)(DEBUGSAVEADDR_WORK* pState);
 
 
 
-static void _changeState(SAVEADDR_WORK* pWork,StateFunc* state);
-static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc* state, int line);
+static void _changeState(DEBUGSAVEADDR_WORK* pWork,StateFunc* state);
+static void _changeStateDebug(DEBUGSAVEADDR_WORK* pWork,StateFunc* state, int line);
 
 #define _NET_DEBUG (1)
 
@@ -55,7 +60,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc* state, int line);
 
 
 
-struct _SAVEADDR_WORK {
+struct _DEBUGSAVEADDR_WORK {
 	GFL_FONT		  *fontHandle;
 	GFL_MSGDATA		*mm;
 	GFL_BMPWIN		*win;
@@ -64,10 +69,11 @@ struct _SAVEADDR_WORK {
 	STRBUF			*strbuf;
 	STRBUF			*strbufEx;
   WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
-
+  GAMEDATA      *pGameData;
 	SAVE_CONTROL_WORK* pSaveData;
 	StateFunc* state;      ///< ハンドルのプログラム状態
 	vu32 count;
+  u8* pCGearWork;
 
 	void* buffer;
 	int bufferSize;
@@ -82,7 +88,7 @@ struct _SAVEADDR_WORK {
 
 
 
-static void _msgPrint(SAVEADDR_WORK* pWork,int msg)
+static void _msgPrint(DEBUGSAVEADDR_WORK* pWork,int msg)
 {
 	GFL_BMP_Clear( pWork->bmp, 0xff );
 	GFL_MSG_GetString(pWork->mm, msg, pWork->strbuf);
@@ -90,7 +96,7 @@ static void _msgPrint(SAVEADDR_WORK* pWork,int msg)
 	GFL_BMPWIN_TransVramCharacter( pWork->win );
 }
 
-static void _msgPrintNo(SAVEADDR_WORK* pWork,int msg,int no)
+static void _msgPrintNo(DEBUGSAVEADDR_WORK* pWork,int msg,int no)
 {
 	GFL_BMP_Clear( pWork->bmp, 0xff );
 	GFL_MSG_GetString(pWork->mm, msg, pWork->strbufEx);
@@ -114,7 +120,7 @@ static void _msgPrintNo(SAVEADDR_WORK* pWork,int msg,int no)
  */
 //------------------------------------------------------------------------------
 
-static void _changeState(SAVEADDR_WORK* pWork,StateFunc state)
+static void _changeState(DEBUGSAVEADDR_WORK* pWork,StateFunc state)
 {
 	pWork->state = state;
 }
@@ -126,7 +132,7 @@ static void _changeState(SAVEADDR_WORK* pWork,StateFunc state)
  */
 //------------------------------------------------------------------------------
 #ifdef _NET_DEBUG
-static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
+static void _changeStateDebug(DEBUGSAVEADDR_WORK* pWork,StateFunc state, int line)
 {
 #ifdef DEBUG_ONLY_FOR_ohno
 	OS_TPrintf("ghttp: %d\n",line);
@@ -170,7 +176,7 @@ static void _dataPrint(u8* pU8, int size)
 
 
 
-static BOOL zukandummydata( SAVEADDR_WORK *pWork )
+static BOOL zukandummydata( DEBUGSAVEADDR_WORK *pWork )
 {
   int size,i;
   u16 crc=0;
@@ -211,6 +217,51 @@ static BOOL zukandummydata( SAVEADDR_WORK *pWork )
 
 
 #endif
+
+
+#if 1
+
+static BOOL cgeardummydata( DEBUGSAVEADDR_WORK *pWork )
+{
+  int i;
+  u16 crc=0;
+  ARCHANDLE* p_handle;
+  void* pCRC;
+  int size = CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE+CGEAR_PICTURTE_SCR_SIZE;
+  int sizeh = size/2;
+  CGEAR_PICTURE_SAVEDATA* pPic;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(pWork->pGameData);
+
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_DEBUG_CGEAR_PICT, GFL_HEAPID_APP );
+
+  pCRC = GFL_ARCHDL_UTIL_Load( p_handle, NARC_cgearpict_mun_decal01_bin, FALSE, GFL_HEAPID_APP);
+
+  crc = GFL_STD_CrcCalc( pCRC, size );
+
+  
+  pWork->pCGearWork = GFL_HEAP_AllocMemory(GFL_HEAPID_APP,SAVESIZE_EXTRA_CGEAR_PICTURE);
+  pPic = (CGEAR_PICTURE_SAVEDATA*)pWork->pCGearWork;
+
+  CGEAR_SV_SetCGearPictureONOFF(CGEAR_SV_GetCGearSaveData(pSave),TRUE);  //CGEARデカール有効
+
+  SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, GFL_HEAPID_APP,
+                             pWork->pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE);
+  GFL_STD_MemCopy(pCRC, pPic->picture, size);
+  CGEAR_SV_SetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave),crc);  //CGEARデカール有効
+  GAMEDATA_ExtraSaveAsyncStart(pWork->pGameData, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+
+  while(1){
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(pWork->pGameData);
+    if(SAVE_RESULT_OK==GAMEDATA_ExtraSaveAsyncMain(pWork->pGameData,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+      break;
+    }
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  return TRUE;
+}
+
+#endif
+
 //------------------------------------------------------------------------------
 /**
  * @brief   セーブデータのアドレス
@@ -253,7 +304,7 @@ extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv);
 
 
 
-static void _keyWait(SAVEADDR_WORK* pWork)
+static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
 {
   {
     int i;
@@ -262,6 +313,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
 
     //zukandummydata(pWork);
+    cgeardummydata(pWork);
     
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
@@ -596,9 +648,11 @@ static GFL_PROC_RESULT DebugSaveAddrProc_Init( GFL_PROC * proc, int * seq, void 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );//テスト
 
 	{
-		SAVEADDR_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(SAVEADDR_WORK), HEAPID_PROC );
+		DEBUGSAVEADDR_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(DEBUGSAVEADDR_WORK), HEAPID_PROC );
 
-		pWork->pSaveData = SaveControl_GetPointer();  //デバッグ
+
+    pWork->pGameData = GAMEDATA_Create( GFL_HEAPID_APP );
+    pWork->pSaveData = SaveControl_GetPointer();  //デバッグ
 		pWork->heapID = HEAPID_PROC;
 
 		GFL_DISP_SetBank( &vramBank );
@@ -683,7 +737,7 @@ static GFL_PROC_RESULT DebugSaveAddrProc_Init( GFL_PROC * proc, int * seq, void 
 
 static GFL_PROC_RESULT DebugSaveAddrProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	SAVEADDR_WORK* pWork = mywk;
+	DEBUGSAVEADDR_WORK* pWork = mywk;
 	StateFunc* state = pWork->state;
 
 	if( state ){
@@ -695,7 +749,7 @@ static GFL_PROC_RESULT DebugSaveAddrProc_Main( GFL_PROC * proc, int * seq, void 
 
 static GFL_PROC_RESULT DebugSaveAddrProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	SAVEADDR_WORK* pWork = mywk;
+	DEBUGSAVEADDR_WORK* pWork = mywk;
 
 	GFL_STR_DeleteBuffer(pWork->strbuf);
 	GFL_STR_DeleteBuffer(pWork->strbufEx);
