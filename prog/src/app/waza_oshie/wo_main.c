@@ -713,8 +713,6 @@ GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 {
   WO_WORK * wk  = mywk;
 
-  GFL_NET_WirelessIconEasyEnd();
-
   WO_DispExit( wk );
 
   GFL_TCBL_Exit( wk->pMsgTcblSys );

@@ -1366,8 +1366,6 @@ static GFL_PROC_RESULT Earth_Demo_Exit(GFL_PROC * proc, int * seq, void * pwk, v
   EARTH_DEMO_WORK * wk  = (EARTH_DEMO_WORK*)mywk;
   int heapID = wk->heapID;
 
-  GFL_NET_WirelessIconEasyEnd();
-
   PRINTSYS_QUE_Clear( wk->printQue ); 
   PRINTSYS_QUE_Delete(wk->printQue);
 
