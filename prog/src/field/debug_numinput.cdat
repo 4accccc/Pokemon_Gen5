@@ -94,7 +94,7 @@ static const DEBUG_NUMINPUT_PARAM net_whpipe_Channel_param = {
 static const DEBUG_NUMINPUT_LIST DNI_DebugNetConfigList[] = {
   //gmm_id, param, dni_param
  { dni_dnc_alonetest, 0, &net_whpipe_alonetest_param },
- { dni_dnc_channel, 0, &net_whpipe_alonetest_param },
+ { dni_dnc_channel, 0, &net_whpipe_Channel_param },
 };
 
 //////////////////////////////////////////////////////

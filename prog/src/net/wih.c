@@ -575,7 +575,10 @@ static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
 #define DATASHARING_DOUBLEMODE (TRUE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
 #define DATASHARING_DOUBLEMODE_PALACE (FALSE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
 
-
+#if PM_DEBUG
+//通信チャンネル固定デバッグ
+extern u8 WH_DebugFixedChannel;
+#endif
 
 
 /* ======================================================================
@@ -1431,6 +1434,13 @@ BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel)
 	_pWmInfo->sScanExParam.channelList = 1;
 	_pWmInfo->sAutoConnectFlag = TRUE;
 
+#if PM_DEBUG
+  if( WH_DebugFixedChannel != 0 )
+  {
+    _pWmInfo->sChannelIndex = WH_DebugFixedChannel;
+  }
+#endif
+
 	if (!WH_StateInStartScan())
 	{
 		WH_ChangeSysState(WH_SYSSTATE_ERROR);
@@ -1467,6 +1477,12 @@ BOOL WH_StartScan(WHStartScanCallbackFunc callback, const u8 *macAddr, u16 chann
 	_pWmInfo->sScanExParam.channelList = 1;
 	_pWmInfo->sAutoConnectFlag = FALSE;          // 自動接続はしない
   _pWmInfo->beaconScanNum = 0;  //ビーコンカウント０
+#if PM_DEBUG
+  if( WH_DebugFixedChannel != 0 )
+  {
+    _pWmInfo->sChannelIndex = WH_DebugFixedChannel;
+  }
+#endif
 
 	// 検索するMACアドレスの条件を設定
 	if (macAddr != NULL)
@@ -2998,9 +3014,6 @@ static WMErrCode WHi_MeasureChannel(WMCallbackFunc func, u16 channel)
 
   Returns:      もっとも使用率の低い利用可能なチャンネル番号.
  *---------------------------------------------------------------------------*/
-#if PM_DEBUG
-extern u8 WH_DebugFixedChannel;
-#endif
 u16 WH_GetMeasureChannel(void)
 {
 	WH_ASSERT(_pWmInfo->sSysState == WH_SYSSTATE_MEASURECHANNEL);
@@ -3040,6 +3053,12 @@ static s16 SelectChannel(u16 bitmap)
 	s16     channel = 0;
 	u16     num = 0;
 	u16     select;
+#if PM_DEBUG
+  if( WH_DebugFixedChannel != 0 )
+  {
+    return WH_DebugFixedChannel;
+  }
+#endif
 
 	for (i = 0; i < 16; i++)
 	{
