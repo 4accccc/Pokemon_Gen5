@@ -116,3 +116,23 @@ int UnionView_Objcode_to_Index(u16 objcode)
   return 0;
 }
 
+//==================================================================
+/**
+ * TrTypeからIndexを逆引きする
+ * @param   trtype  トレーナータイプ
+ * @retval  int		  Index
+ */
+//==================================================================
+int UnionView_TrType_to_Index(u8 trtype)
+{
+  int i;
+  
+  for(i = 0; i < NELEMS(UnionViewTable); i++){
+    if(UnionViewTable[i].tr_type == trtype){
+      return i;
+    }
+  }
+  GF_ASSERT_MSG(0, "tr_type = %d\n", trtype);
+  return 0;
+}
+

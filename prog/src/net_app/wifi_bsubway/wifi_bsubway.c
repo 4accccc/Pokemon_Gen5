@@ -48,6 +48,7 @@
 #include "net_app/wifi_bsubway.h"
 #include "net_app/wifi_login.h"
 #include "net_app/wifi_logout.h"
+#include "net_app/wifi_country.h"
 #include "net_app/connect_anm.h"
 
 
@@ -450,6 +451,9 @@ static u16 ROOM_DATA_GetRoomNo( const WIFI_BSUBWAY_ROOM* cp_wk );
 static u16 ROOM_DATA_GetRoomNum( const WIFI_BSUBWAY_ROOM* cp_wk );
 static u16 ROOM_DATA_GetRoomKeta( const WIFI_BSUBWAY_ROOM* cp_wk );
 static const Dpw_Bt_Room* ROOM_DATA_GetRoomData( const WIFI_BSUBWAY_ROOM* cp_wk );
+
+// ダウンロードデータ　チェック
+static void ROOM_DATA_CheckDownloadData( WIFI_BSUBWAY_ROOM* p_wk );
 
 // セーブ処理
 static void ROOM_DATA_SavePlayerData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WIFI_DATA* p_save );
@@ -1152,6 +1156,36 @@ static const Dpw_Bt_Room* ROOM_DATA_GetRoomData( const WIFI_BSUBWAY_ROOM* cp_wk 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ダウンロードデータをマネージメントする。
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ROOM_DATA_CheckDownloadData( WIFI_BSUBWAY_ROOM* p_wk )
+{
+  int i;
+  Dpw_Bt_Player* p_player = (Dpw_Bt_Player*)p_wk->bt_roomdata.player;
+  Dpw_Bt_Leader* p_leader = (Dpw_Bt_Leader*)p_wk->bt_roomdata.leader;
+
+  for( i=0; i<BSUBWAY_STOCK_WIFI_PLAYER_MAX; i++ ){
+    TOMOYA_Printf( "B player %d country %d local %d trainerType %d\n", i, p_player[i].countryCode, p_player[i].localCode, p_player[i].trainerType );
+    p_player[i].countryCode = WIFI_COUNTRY_GetNGTestCountryCode( p_player[i].countryCode, p_player[i].localCode, p_player[i].langCode );
+    p_player[i].localCode = WIFI_COUNTRY_GetNGTestLocalCode( p_player[i].countryCode, p_player[i].localCode, p_player[i].langCode );
+
+    p_player[i].trainerType = UnionView_GetTrType( UnionView_TrType_to_Index( p_player[i].trainerType ) );//不正な見た目はすべてindex0の見た目になる。
+    TOMOYA_Printf( "A player %d country %d local %d trainerType %d\n", i, p_player[i].countryCode, p_player[i].localCode, p_player[i].trainerType );
+  }
+
+  for( i=0; i<BSUBWAY_STOCK_WIFI_LEADER_MAX; i++ ){
+    TOMOYA_Printf( "B leader %d country %d local %d \n", i, p_leader[i].countryCode, p_leader[i].localCode );
+    p_leader[i].countryCode = WIFI_COUNTRY_GetNGTestCountryCode( p_leader[i].countryCode, p_leader[i].localCode, p_leader[i].langCode );
+    p_leader[i].localCode = WIFI_COUNTRY_GetNGTestLocalCode( p_leader[i].countryCode, p_leader[i].localCode, p_leader[i].langCode );
+    TOMOYA_Printf( "A leader %d country %d local %d \n", i, p_leader[i].countryCode, p_leader[i].localCode );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  プレイヤー情報のセーブ
  *
  *  @param  cp_wk
@@ -1574,15 +1608,23 @@ static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUB
     }
     else
     {
-      // 認証確認失敗
-      ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_DISCONNECTED );
+      if( poke_error_check ){
+        // 認証確認失敗
+        ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_DISCONNECTED );
+      }
+      
+      result = BSUBWAY_UPLOADCHECK_RESULT_NG;
+
       WIFI_BSUBWAY_Printf( "認証　Error %d\n", NHTTP_RAP_EVILCHECK_GetStatusCode( p_data ) );
 
       for( i=0; i<p_wk->poke_num; i++ ){
         poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
+        if( poke_result != NHTTP_RAP_EVILCHECK_RESULT_OK ){
+          // ポケモン名をデフォルトに変更
+          PERSONAL_DATA_SetDefaultPokeName( p_wk, i );
+        }
         WIFI_BSUBWAY_Printf( "認証　Error pokenum %d  result %d\n", i, poke_result );
       }
-      result = BSUBWAY_UPLOADCHECK_RESULT_NG;
     }
 
     NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
@@ -1612,6 +1654,7 @@ static void PERSONAL_DATA_SetDefaultPokeName( WIFI_BSUBWAY_PERSONAL* p_wk, int i
   GF_ASSERT(index < 3);
   p_pokedata = (BSUBWAY_POKEMON*)&p_wk->bt_player.pokemon[index];
   GFL_MSG_GetStringRaw( GlobalMsg_PokeName, p_pokedata->mons_no, p_pokedata->nickname, MONS_NAME_SIZE+EOM_SIZE );
+  TOMOYA_Printf( "MonsName Change\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -2467,6 +2510,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
   case SCORE_UPLOAD_SEQ_GAMEDATA_SAVE:
     // セーブデータ反映
     {
+      ROOM_DATA_CheckDownloadData( &p_wk->roomdata );
       ROOM_DATA_SavePlayerData( &p_wk->roomdata, p_wk->p_bsubway_wifi );
       ROOM_DATA_SaveLeaderData( &p_wk->roomdata, p_wk->p_bsubway_wifi );
     }
@@ -2690,6 +2734,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_SAVE:
     // セーブデータ反映
     {
+      ROOM_DATA_CheckDownloadData( &p_wk->roomdata );
       ROOM_DATA_SaveLeaderData( &p_wk->roomdata, p_wk->p_bsubway_wifi );
     }
     SAVE_Start(p_wk);

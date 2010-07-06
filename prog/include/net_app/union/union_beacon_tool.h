@@ -27,4 +27,4 @@ extern int UnionView_GetMsgType(int view_index);
 extern u16 *UnionView_GetPalNo( u16 * table, int sex, int view_type );
 extern u16 *UnionView_PalleteTableAlloc( int heapID );
 extern int UnionView_Objcode_to_Index(u16 objcode);
-
+extern int UnionView_TrType_to_Index( u8 trtype );
