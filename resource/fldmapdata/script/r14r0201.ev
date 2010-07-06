@@ -453,6 +453,7 @@ EVENT_START   ev_bg_r14r0201_leg_01
 	DEFINE_LOCAL LWK_PARTY_NUM
 	DEFINE_LOCAL LWK_COUNT_NUM
 	DEFINE_LOCAL LWK_OWNER_CK
+	DEFINE_LOCAL LWK_OWNER_RET
 	DEFINE_LOCAL LWK_MONS_NO
 	
 	//バージョン別手持ち親チェック
@@ -474,10 +475,10 @@ EVENT_START   ev_bg_r14r0201_leg_01
 			
 			//自分のバージョンに出現する移動ポケモンであったならオーナーチェックを行う
 			IF $LCWK_VERSION == VERSION_BLACK THEN
-				_CHECK_POKE_OWNER ( LWK_OWNER_CK , LWK_COUNT_NUM )
+				_CHECK_POKE_OWNER ( LWK_OWNER_RET , LWK_COUNT_NUM )
 				
 				//オーナーが自分であったならチェック変数に++
-				IF $LWK_OWNER_CK == TRUE THEN
+				IF $LWK_OWNER_RET == TRUE THEN
 					$LWK_OWNER_CK += 1
 				ENDIF
 				
@@ -490,10 +491,10 @@ EVENT_START   ev_bg_r14r0201_leg_01
 		
 			//自分のバージョンに出現する移動ポケモンであったならオーナーチェックを行う
 			IF $LCWK_VERSION == VERSION_WHITE THEN
-				_CHECK_POKE_OWNER ( LWK_OWNER_CK , LWK_COUNT_NUM )
+				_CHECK_POKE_OWNER ( LWK_OWNER_RET , LWK_COUNT_NUM )
 				
 				//オーナーが自分であったならチェック変数に++
-				IF $LWK_OWNER_CK == TRUE THEN
+				IF $LWK_OWNER_RET == TRUE THEN
 					$LWK_OWNER_CK += 1
 				ENDIF
 				
