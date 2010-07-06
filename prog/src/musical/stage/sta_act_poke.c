@@ -772,6 +772,59 @@ static void STA_POKE_SetAdjustScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   {
     pokeWork->scale.y = FX32_CONST(15.80f)/16;
   }
+  //100706
+  else
+  if( 
+      monsno == MONSNO_045 || //ラフレシア
+      monsno == MONSNO_322  //ドンメル
+    )
+  {
+    //こいつはX
+    pokeWork->scale.x = FX32_CONST(16.25f)/16;
+  }
+  else
+  if(
+      monsno == MONSNO_061 || //ニョロゾ
+      monsno == MONSNO_076 || //ゴローニャ
+      monsno == MONSNO_122 || //バリヤード
+      monsno == MONSNO_123 || //ストライク
+      monsno == MONSNO_128 || //ケンタロス
+      monsno == MONSNO_141 || //カブトプス
+      monsno == MONSNO_214 || //ヘラクロス
+      monsno == MONSNO_256 || //ワカシャモ
+      monsno == MONSNO_277 || //オオスバメ
+      monsno == MONSNO_286 || //キノガッサ
+      monsno == MONSNO_315 || //ロゼリア
+      monsno == MONSNO_444  //ガバイト
+    )
+  {
+    pokeWork->scale.y = FX32_CONST(15.80f)/16;
+  }
+  else
+  if(
+      monsno == MONSNO_513  //プルリル(592)
+    )
+  {
+    pokeWork->scale.y = FX32_CONST(15.85f)/16;
+  }
+  else
+  if(
+      monsno == MONSNO_308 || //チャーレム
+      monsno == MONSNO_398 || //ムクホーク
+      monsno == MONSNO_419 || //フローゼル
+      monsno == MONSNO_460  //ユキノオー
+    )
+  {
+    pokeWork->scale.y = FX32_CONST(15.90f)/16;
+  }
+  else
+  if(
+      monsno == MONSNO_449 //ヒポポタス
+    )
+  {
+    pokeWork->scale.x = FX32_CONST(16.25f)/16;
+    pokeWork->scale.y = FX32_CONST(15.80f)/16;
+  }
 }
 
 

@@ -75,6 +75,7 @@ typedef struct
   s16  scroll;
   u16  monsno;
   u16  form;
+  u16  sex;
 }MUS_SHOT_DEBUGWORK;
 #endif
 
@@ -645,6 +646,8 @@ static void MSDU_MonsNo( void* userWork , DEBUGWIN_ITEM* item );
 static void MSDD_MonsNo( void* userWork , DEBUGWIN_ITEM* item );
 static void MSDU_Form( void* userWork , DEBUGWIN_ITEM* item );
 static void MSDD_Form( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDU_Sex( void* userWork , DEBUGWIN_ITEM* item );
+static void MSDD_Sex( void* userWork , DEBUGWIN_ITEM* item );
 
 void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work )
 {
@@ -660,6 +663,7 @@ void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work )
   DEBUGWIN_AddItemToGroupEx( MSDU_Top  ,MSDD_Top   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MSDU_MonsNo  ,MSDD_MonsNo   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MSDU_Form  ,MSDD_Form   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MSDU_Sex   ,MSDD_Sex    , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
 
   work->debWork.startAnm = FALSE;
   work->debWork.scroll = MUS_PHOTO_SCROLL_OFFSET;
@@ -902,6 +906,7 @@ static void MSDU_MonsNo( void* userWork , DEBUGWIN_ITEM* item )
     {
       work->musPoke[i]->mcssParam.monsno = work->debWork.monsno;
       work->musPoke[i]->mcssParam.form = work->debWork.form;
+      work->musPoke[i]->mcssParam.sex = work->debWork.sex;
     }
     MUS_SHOT_PHOTO_SetupPokemon(work);
   }
@@ -952,7 +957,30 @@ static void MSDD_Form( void* userWork , DEBUGWIN_ITEM* item )
   MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "Form[%d]",work->debWork.form );
 }
+static void MSDU_Sex( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
 
+  if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT)||
+      (GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT) )
+  {
+    if( work->debWork.sex != 0 )
+    {
+      work->debWork.sex = 0;
+    }
+    else
+    {
+      work->debWork.sex = 1;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MSDD_Sex( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Sex[%d]",work->debWork.sex );
+}
 
 #endif //MUS_PHOTO_USE_DEBUG
 
@@ -1039,7 +1067,7 @@ static void MUS_SHOT_DebugPolyDraw( MUS_SHOT_PHOTO_WORK *work )
     
   }
   
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
   {
     u8 i;
     static VecFx32 sScale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE*16};
