@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetConnectionProgress</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetConnectionProgress<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+<a href="NHTTPError.html">NHTTPError</a> NHTTP_GetConnectionProgress( NHTTPConnectionHandle handle, u32* received, u32* contentlen );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>received</var></td>
+    <td>現在までに受信したボディデータ長の合計。<br>
+	NULLを指定した場合は無視されます。</td>
+  </tr>
+  <tr>
+    <td><var>contentlen</var></td>
+    <td>判明している全ボディデータ。<br>
+	NULLを指定した場合は無視されます。</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+通信進捗状況の取得に成功すればNHTTP_ERROR_NONEを、
+失敗すれば<a href="NHTTPError.html">NHTTPError</a>型のいずれかのエラー値を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルの現在の通信進捗状況を取得します。<br>
+この関数は通信完了後でも呼び出すことが出来ます。<br>
+</p>
+
+<h2>注意</h2>
+<p style="color:red">
+得られるcontentlenの値はサーバからのレスポンスヘッダで"Content-Length"フィールドとして与えられるものと同一であり、
+"Content-Length"フィールド自体がレスポンス中に存在しない場合は0が返されるという点に注意してください。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection</a>,
+<a href="NHTTP_GetHeaderField.html">NHTTP_GetHeaderField</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/14 初版 <br>
+</p>
+
+</body>
+</html>

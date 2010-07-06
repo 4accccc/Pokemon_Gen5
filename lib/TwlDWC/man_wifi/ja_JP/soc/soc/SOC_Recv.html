@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_Read, SOC_Recv, SOC_RecvFrom</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Read<br>SOC_Recv<br>SOC_RecvFrom<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Read     ( int <var>s</var>, void* <var>buf</var>, int <var>len</var> );
+int SOC_Recv     ( int <var>s</var>, void* <var>buf</var>, int <var>len</var>, int <var>flags</var> );
+int SOC_RecvFrom ( int <var>s</var>, void* <var>buf</var>, int <var>len</var>, int <var>flags</var>, void* <var>sockFrom</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+<table width="100%">
+  <tr>
+    <td valign="top"><var>s</var></td>
+    <td>ソケット記述子。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>buf</var></td>
+    <td>受信バッファへのポインタ。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>len</var></td>
+    <td>受信バッファの長さ(バイト)。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>flags</var></td>
+    <td>メッセージの受信状態を指定します。<var>flags</var>は、0か以下の値の論理ORをとったものです。<table width="100%">
+      <tr>
+        <td><code>SOC_MSG_PEEK</code> </td>
+        <td>到達メッセージをピークします。データは未読込として扱われ、次の<code>SOC_Recv()</code>または<code>SOC_RecvFrom()</code>は、このデータを返します。 </td>
+      </tr>
+      <tr>
+        <td><code>SOC_MSG_DONTWAIT</code></td>
+        <td>非封鎖処理を行ないます。データがなければ<code>SOC_EWOULDBLOCK</code>を返します。</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><var>sockFrom</var></td>
+    <td>通信相手の名前(アドレス)を取得するためのソケットアドレス構造体(<code><a href="SOCSockAddr.html">SOCSockAddr</a>,<a href="SOCSockAddrIn.html">SOCSockAddrIn</a></code>)へのポインタ。<br>
+ソケットアドレスの<code>len</code>フィールドは適切に初期化してください。(例 <code>sizeof(SOCSockAddrIn)</code>)</td>
+  </tr>
+  </table>
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>0以上</td>
+    <td>受信したメッセージのバイト数。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINVAL</code></td>
+    <td>ソケット記述子の値が不正です。( <var>s</var> < 0 か存在しないソケット)<BR>あるいは、SSLソケットに<code>SOC_MSG_DONTWAIT</code>フラグを指定した。(SSLは封鎖モードでサポートします)<BR>あるいは、封鎖モードの呼び出しを割り込みハンドラ内で使用した。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENETRESET</code></td>
+    <td>ソケットライブラリが初期化されていません。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENOTCONN</code></td>
+    <td>接続されていません。</td>
+  </tr>
+  <tr>
+    <td> <code>SOC_EWOULDBLOCK</code></td>
+    <td>受信を待つデータもしくは帯域外データがありません。(<var>s</var>が非封鎖モードのソケットか、<code>SOC_MSG_DONTWAIT</code>フラグが指定された場合)</td>
+  </tr>
+</table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p><code>SOC_Read(), SOC_Recv(), SOC_RecvFrom() </code>は、ソケットの相手から<var>len</var>バイトの読み込みを試みます。 </p>
+
+<p><code>SOC_Read()</code> は <var>flags</var> を設定しない以外は <code>SOC_Recv()</code> 
+と同等です。 </p>
+<p><code>SOC_Read(), SOC_Recv(), SOC_RecvFrom() </code>
+は、<code><a href="SOC_Fcntl.html">SOC_Fcntl()</a></code> でソケット記述子を非封鎖モードに設定していない限り(もしくは<code>SOC_MSG_DONTWAIT</code>フラグが指定されない限り)、ソケットの受信バッファにメッセージがなければメッセージが届くまでブロックします。</p>
+<p> データグラム・ソケットでは、メッセージ全体が単一処理で読まれます。メッセージが <var>buf</var> で与えられたバッファに収まらなければ、超過したバイトは捨て去られます。ストリーム・ソケットでは、メッセージ境界は無視されます。この場合、データは利用可能になり次第ユーザーへ返ります。</p>
+
+<p><span class="warning">注意</span>：TCPコネクションがクローズされた後でも返り値は0となります。これはPOSIXに規定される仕様に準じています。</p>
+
+<h2>参照</h2>
+
+<p>
+<code><a href="SOCSockAddr.html">SOCSockAddr</a></code>,
+<code><a href="SOC_Fcntl.html">SOC_Fcntl</a></code>
+</p>
+<H2>履歴</H2>
+<P>
+2008/05/13 返り値の修正<BR>
+2005/12/12 説明の記述変更<BR>
+2005/09/13 初版</P>
+</body>
+</html>

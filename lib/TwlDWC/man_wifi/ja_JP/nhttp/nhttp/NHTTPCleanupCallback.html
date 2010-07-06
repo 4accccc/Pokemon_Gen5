@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTPCleanupCallback</title>
+</head>
+
+<body>
+
+<h1>NHTTPCleanupCallback<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+typedef void  (*NHTTPCleanupCallback)( void ); 
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+なし。
+</p>
+
+<h2>返り値</h2>
+<pre>
+なし。
+</pre>
+
+
+<h2>説明</h2>
+<p>
+NHTTP_ライブラリの終了処理が完了した際に呼び出されるコールバック関数です。<br>
+この通知を受けてアプリケーション側で行うべき特別な処理は特にありません。
+</p>
+
+<h2>参照</h2>
+<p>
+<code><a href="./NHTTP_CleanupAsync.html">NHTTP_CleanupAsync</a></code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/19 説明を追記。<br>
+2006/9/29 初版。<br>
+</p>
+
+</body>
+</html>

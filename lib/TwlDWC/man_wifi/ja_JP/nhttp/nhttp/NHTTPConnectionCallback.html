@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTPConnectionCallback, NHTTPConnectionEvent</title>
+</head>
+
+<body>
+
+<h1>NHTTPConnectionCallback, NHTTPConnectionEvent<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+typedef int (*NHTTPConnectionCallback)( NHTTPConnectionHandle handle, NHTTPConnectionEvent event, void* arg );
+
+typedef enum {
+    NHTTP_EVENT_NONE,
+    NHTTP_EVENT_POST_SEND,
+    NHTTP_EVENT_BODY_RECV_FULL,
+    NHTTP_EVENT_BODY_RECV_DONE,
+    NHTTP_EVENT_COMPLETE,
+    NHTTP_CALLBACK_EVENT_MAX
+} NHTTPConnectionEvent;
+
+typedef struct _NHTTPPostSendArg {
+    const char* label;
+    char*       buf;
+    u32         size;
+    u32         offset;
+} NHTTPPostSendArg;
+
+typedef struct _NHTTPBodyBufArg {
+    char*       buf;
+    u32         size;
+    u32         offset;
+} NHTTPBodyBufArg;
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td>イベント通知対象の接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>event</var></td>
+    <td>イベント種別</td>
+  </tr>
+  <tr>
+    <td><var>arg</var></td>
+    <td>イベント毎に異なるコールバック情報構造体へのポインタ</td>
+  </tr>
+</table>
+</p>
+
+<h2>説明</h2>
+<p>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で指定する、通信中のイベント通知コールバック関数です。<br>
+</p>
+<p>
+アプリケーションは、通知された各々のイベント種別にしたがって引数のargを解釈し、
+コールバック内で適切な処理を行うことができます。<br>
+コールバック関数にNULLを指定して通知を受け取らない場合や、
+コールバック関数内で何も処理を行わない場合には、
+ライブラリが判断して適切なデフォルト処理を行います。<br>
+各イベント種別の意味は以下の通りです。
+
+<table width="100%">
+  <tr>
+    <td align="center" valign="top" bgcolor="#ffffe8">イベント種別</td>
+    <td align="center" bgcolor="#ffffe8">argの指す構造体</td>
+    <td align="center" bgcolor="#ffffe8" width="30%">意味</td>
+    <td align="center" bgcolor="#ffffe8" width="30%">デフォルトの処理</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_EVENT_POST_SEND</td>
+    <td bgcolor="#ffffe8"><a href="NHTTPPostSendArg.html">NHTTPPostSendArg</a></td>
+    <td bgcolor="#ffffe8">データが未確定なPOSTデータを送信するタイミングに達したことを通知します。</td>
+    <td bgcolor="#ffffe8">未確定なPOSTデータを準備できないまま、通信は失敗します。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_EVENT_BODY_RECV_FULL</td>
+    <td bgcolor="#ffffe8"><a href="NHTTPBodyBufArg.html">NHTTPBodyBufArg</a></td>
+    <td bgcolor="#ffffe8">通信中にボディ受信バッファが満了したことを通知します。</td>
+    <td bgcolor="#ffffe8">ボディ受信バッファが満了したまま、以降の内容は読み捨てられます。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_EVENT_BODY_RECV_DONE</td>
+    <td bgcolor="#ffffe8"><a href="NHTTPBodyBufArg.html">NHTTPBodyBufArg</a></td>
+    <td bgcolor="#ffffe8">通信処理、またはそのキャンセル処理が完了したことを通知します。</td>
+    <td bgcolor="#ffffe8" rowspan="2">このイベントに関してライブラリ側で行う特別な処理は何もありません。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_EVENT_COMPLETE</td>
+    <td bgcolor="#ffffe8">NULL</td>
+    <td bgcolor="#ffffe8">通信処理、またはそのキャンセル処理が完了したことを通知します。</td>
+    <td bgcolor="#ffffe8"></td>
+  </tr>
+  <tr style="color:gray">
+    <td valign="top" bgcolor="#ffffe8">NHTTP_EVENT_NONE<br>NHTTP_CALLBACK_EVENT_MAX</td>
+    <td bgcolor="#ffffe8" colspan="3">ライブラリ内部の利便性のために定義されており、このイベントが通知されることはありません。</td>
+  </tr>
+</table>
+</p>
+
+<h2>参照</h2>
+<p>
+<code><a href="./NHTTP_CreateConnection.html">NHTTP_CreateConnection</a></code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/30 タイトルを修正。<br>
+2006/10/14 初版<br>
+</p>
+
+</body>
+
+</html>

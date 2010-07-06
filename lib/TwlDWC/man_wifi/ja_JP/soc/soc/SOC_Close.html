@@ -1,0 +1,83 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_Close</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Close<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Close ( int <var>s</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td><var>s</var></td>
+    <td>クローズするソケット記述子。</td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>0</td>
+    <td>成功。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINPROGRESS</code></td>
+    <td>クローズ処理が継続中です。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINVAL</code></td>
+    <td>ソケット記述子の値が不正です。( <var>s</var> < 0)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENETRESET</code></td>
+    <td>ソケットライブラリが初期化されていません。</td>
+  </tr>
+</table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p>ソケット記述子をクローズします。</p>
+
+<p>現状では<code> SOC_O_NONBLOCK </code>フラグが設定されていても、設定されていなくても<code> SOC_Close() </code>は非同期のクローズ処理を行います。<br>
+なお、コマンドキューに空きがない場合はブロックします。また、ストリーム・ソケット ( TCP ) の場合は全てのデータを送信後、送信スレッドを終了させます。</p>
+
+<p>ソケットが完全にクローズされ、メモリ領域が開放されたかどうか判定したい場合は、再度 <code>SOC_Close()</code> を呼び出してください。<code>SOC_Close()</code> は最初に呼び出されたときに<br>
+ソケットをクローズ処理状態に遷移させます。この遷移が成功したときに 0 を返します。そして、再度 <code>SOC_Close()</code> の呼び出したときには、現在のクローズ処理の進行状態を返します。<br>
+このとき <code>SOC_EINPROGRESS</code> が返るならソケットのクローズ処理を継続中を表し、また 0 が返るならクローズ処理が終了し領域が開放されていることを意味します。<br>
+ただし、再呼び出し時に、他のソケットがリソースを再利用している場合は<code> SOC_Close() </code>は誤ってリソースを解放します。<br>
+マルチスレッド環境下でSOCライブラリを利用している場合にクローズ処理の進行状態の確認するには<code> SOC_IsReleased() </code>の使用をお勧めします。</p>
+
+
+<h2>参照</h2>
+
+<p>
+<code><a href="SOC_Shutdown.html">SOC_Shutdown</a></code>,
+<code><a href="SOC_IsReleased.html">SOC_IsReleased</a></code>
+</p>
+<H2>履歴</H2>
+<P>
+2008/06/26 クローズ処理の進行状態の確認にはSOC_Releasedを推薦<BR>
+2008/05/13 返り値 SOC_EINVALを修正、説明を修正<BR>
+2006/05/18 クローズ処理の終了の確認方法<BR>
+2005/12/12 返り値の変更<BR>
+2005/09/13 初版</P>
+</body>
+</html>

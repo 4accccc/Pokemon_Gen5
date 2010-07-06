@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetHeaderField</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetHeaderField<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_GetHeaderField( NHTTPConnectionHandle handle, const char* label, char** value );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>label</var></td>
+    <td>取得を試みるヘッダ情報のラベル名</td>
+  </tr>
+  <tr>
+    <td><var>value</var></td>
+    <td>取得結果のアドレスを格納するためのポインタへのポインタ。<br>
+<font color="red">返されたポインタが指す先を変更することはできません。</font></td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+指定したラベルが存在すればその値の文字数を返します。<br>
+そうでない場合は負の値を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルのHTTPレスポンスヘッダ情報から、指定したラベル名に対応する値を文字列で取得します。<br>
+<br>
+この関数は、実際に通信が行われHTTPレスポンスヘッダを全て受信したあとに限り使用することが出来ます。<br>
+<a href="NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus()</a>が<a href="NHTTPConnectionStatus.html">NHTTP_STATUS_RECEIVING_BODY</a>以降を返す状態が
+それに該当します。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTPConnectionStatus.html">NHTTP_STATUS_RECEIVING_BODY</a>,
+<br>
+<a href="NHTTP_GetHeaderAll.html">NHTTP_GetHeaderAll</a>,
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>,
+<a href="NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/19 引数に関する注意事項など、説明を追記。<br>
+2006/6/26 初版。<br>
+</p>
+
+</body>
+
+</html>

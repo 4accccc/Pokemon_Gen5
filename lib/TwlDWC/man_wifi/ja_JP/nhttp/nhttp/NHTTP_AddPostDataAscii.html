@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_AddPostDataAscii</title>
+</head>
+
+<body>
+
+<h1>NHTTP_AddPostDataAscii<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_AddPostDataAscii( NHTTPConnectionHandle handle, const char* label, const char* value );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>label</var></td>
+    <td>追加するHTTPリクエストPOST項目のラベル(NULL終端ASCII文字列)へのポインタ<br>
+<font color="red">このポインタの指す先は接続ハンドルが解放されるまでライブラリ内部で参照される点に注意してください。</font></td>
+  </tr>
+  <tr>
+    <td><var>value</var></td>
+    <td>追加するHTTPリクエストPOST項目の値(NULL終端ASCII文字列)へのポインタ<br>
+送信すべきデータをこの場で用意しない場合にはNULLを指定することもできます。その場合、
+必要に応じて<a href="NHTTPConnectionCallback.html">NHTTP_EVENT_POST_SEND</a>コールバックが通知されますので、
+その場で適切に応答する必要があります。<br>
+<font color="red">このポインタの指す先は接続ハンドルが解放されるまでライブラリ内部で参照される点に注意してください。</font></td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+POST項目の追加に成功すれば0を、
+接続ハンドルがNULLの場合、
+<a href="./NHTTP_AddPostDataRaw.html">NHTTP_AddPostDataRaw()</a>を既に接続ハンドルに設定した場合、
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection()</a>で通信処理を開始した接続ハンドルに設定しようとした場合、
+内部処理でリスト要素追加時にメモリ確保に失敗した場合に失敗し-1を返します。
+</pre>
+
+
+<h2>説明</h2>
+<p>
+送信すべきHTTPリクエストPOST項目をASCII文字列として追加します。<br>
+この関数は<a href="NHTTP_StartConnection.html">NHTTP_StartConnection()</a>の呼び出しより前に、
+必要に応じて任意の回数呼び出すことが出来ます。<br>
+<br>
+</p>
+
+<h2>注意</h2>
+<p>
+<font color="red">この関数は、ラベル無しで単一のデータをそのまま送信する<a href="./NHTTP_AddPostDataRaw.html">NHTTP_AddPostDataRaw()</a>と併用することはできません。</font>
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="./NHTTPConnectionCallback.html">NHTTPConnectionCallback</a>, 
+<a href="./NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary</a>, 
+<a href="./NHTTP_AddPostDataRaw.html">NHTTP_AddPostDataRaw</a>, 
+<a href="./NHTTP_SetPostDataEncoding.html">NHTTP_SetPostDataEncoding</a>, 
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/19 引数に関する注意事項など、説明を追記。<br>
+2006/6/26 初版。<br>
+</p>
+
+</body>
+</html>

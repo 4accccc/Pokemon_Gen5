@@ -1,0 +1,125 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SOC_Poll</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Poll<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>#define SOC_POLLRDNORM       0x0001  // Normal data read
+#define SOC_POLLWRNORM       0x0008  // Normal data write
+#define SOC_POLLERR          0x0020  // Error (revents only)
+#define SOC_POLLHUP          0x0040  // Disconnected (revents only)
+#define SOC_POLLNVAL         0x0080  // Invalid fd (revents only)
+
+typedef struct SOCPollFD
+{
+    int         fd;
+    short       events;         // input event flags
+    short       revents;        // output event flags
+} SOCPollFD;</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Poll( SOCPollFD <var>fds</var>[], unsigned <var>nfds</var>, OSTick <var>timeout</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td valign="top"><var>fds</var></td>
+    <td><code>SOCPollFD</code> の配列。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>nfds</var></td>
+    <td>配列 <var>fds</var> の <code>SOCPollFD</code> 
+    の数。0の場合は、<var>timeout</var>の値に関わらず、直ぐに0で返ります。</td>
+  </tr>
+  <tr>
+    <td valign="top"><var>timeout</var></td>
+    <td>タイムアウト。負の値 のときはタイムアウトなし。</td>
+  </tr>
+  </table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>正の数</td>
+    <td>読み込みあるいは書き込み可能になったソケット記述子の数。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>呼び出しがタイムアウトしました。</td>
+  </tr>
+  </table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p>指定したソケット記述子のなかで読み込みや書き込み処理が可能になっている記述子がないか調べます。<BR>
+<code>SOC_Poll()</code>はイベントが発生すると返ります。ただし、イベントの発生前に<var>timeout</var>で指定した時間が経過すると返ります。<BR>
+<code>SOC_Poll()</code>の<var>fds</var>フィールドはソケット記述子を指定します。呼び出し時に<var>events</var>フィールドに調べたいイベントを
+指定してください。<BR>
+複数のイベントをOR値で指定可能です。<BR>
+<var>revents</var>フィールドは発生したイベントが返されます。返されるのは<var>events</var>フィールドで指定したイベントとエラーです。
+
+</p>
+
+<table width="100%">
+  <tr>
+    <th><strong>events</strong></th>
+    <th><var>説明</strong></em></code></th>
+  </tr>
+  <tr>
+    <td><code>SOC_POLLRDNORM</code></td>
+    <td>ソケットは読出しが可能です。(読出しを待つ通常データがあります。)</td>
+  </tr>
+  <tr>
+    <td><code>SOC_POLLWRNORM</code></td>
+    <td>ソケットに通常データの書き込みが可能です。</td>
+  </tr>
+  </table>
+
+<table width="100%">
+  <tr>
+    <th><strong>revents</strong>で返されるエラー</th>
+    <th><var>説明</strong></em></code></th>
+  </tr>
+  <tr>
+    <td><code>SOC_POLLERR</code></td>
+    <td>ソケットにエラーが発生しました。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_POLLHUP</code></td>
+    <td>ストリーム・ソケットが未接続です。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_POLLNVAL</code></td>
+    <td>不正なソケット記述子です。</td>
+  </tr>
+  </table>
+
+
+<p><span class="warning">注意</span>：<code>SOC_Poll()</code> は読み込みや書き込み処理が可能になっている可能性があること示します。
+したがって <code>SOC_Poll()</code> に続く <code><a href="SOC_Recv.html">SOC_Read()</a></code>, <code><a href="SOC_Send.html">SOC_Write()</a></code>,<code><a href="SOC_Accept.html">SOC_Accept()</a></code> などの関数で呼び出しスレッドが休眠したり、
+エラーが返される場合があります。</p>
+
+<h2>参照</h2>
+<H2>履歴</H2>
+<P>
+2008/05/14 説明の修正<BR>
+2005/09/13 初版</P>
+</body>
+</html>

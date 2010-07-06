@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_Startup</title>
+</head>
+
+<body>
+
+<h1>NHTTP_Startup<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+typedef void* (*NHTTPAlloc)( u32 size, int align );
+typedef void  (*NHTTPFree)( void* ptr );
+
+int NHTTP_Startup( NHTTPAlloc alloc, NHTTPFree free, u32 threadprio );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>alloc</var></td>
+    <td>NHTTP_ライブラリ内部で使用されるメモリブロック確保関数へのポインタ</td>
+  </tr>
+  <tr>
+    <td><var>free</var></td>
+    <td>NHTTP_ライブラリ内部で使用されるメモリブロック解放関数へのポインタ</td>
+  </tr>
+  <tr>
+    <td><var>threadprio</var></td>
+    <td>HTTPリクエストスレッドの優先度(0から31の範囲、0が最高優先度)<br>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+初期化に成功すれば0を、失敗すれば-1を返します。
+失敗した場合は<a href="NHTTP_GetError.html">NHTTP_GetError()</a>でエラー内容を取得できます。
+</pre>
+
+<h2>説明</h2>
+<p>
+NHTTP_ライブラリを初期化し、使用可能な状態にします。<br>
+全てのNHTTP_ライブラリ関数より先に1回だけ呼び出しておく必要があります。
+また、NHTTP_ライブラリの使用後は必ず<a href="NHTTP_CleanupAsync.html">NHTTP_CleanupAsync()</a>を呼び出して
+ライブラリを終了させる必要があります。<br>
+<br>
+ライブラリの初期化が成功すると、内部では1個の処理用スレッドが起動されます。<br>
+</p>
+
+<h2>注意</h2>
+<p style="color:red">
+ユーザーが設定したメモリ確保関数のスレッド間の排他制御は考慮しておりません。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_CleanupAsync.html">NHTTP_CleanupAsync</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/05/01 返り値を追記。<br>
+2006/12/21 注意を追記。<br>
+2006/10/19 説明を追記。<br>
+2006/6/26 初版。<br>
+</p>
+
+</body>
+</html>

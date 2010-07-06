@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_SetRootCA</title>
+</head>
+
+<body>
+
+<h1>NHTTP_SetRootCA<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_SetRootCA( NHTTPConnectionHandle handle, const char *rootCAData, size_t rootCASize );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>rootCAData</var></td>
+    <td>
+      CPS SSL: <code><a href="../../soc/soc/SOCSslConnection.html">SOCSslConnection</a></code> の <var>ca_info</var> に設定する <a href="../../soc/soc/SOCCaInfo.html">SOCCaInfo</a>** 形式の証明書配列<br>
+      NSSL: ASN.1形式のデータ
+    </td>
+  </tr>
+  <tr>
+    <td><var>rootCASize</var></td>
+    <td>
+      CPS SSL: <code><a href="../../soc/soc/SOCSslConnection.html">SOCSslConnection</a></code> の <var>ca_builtins</var> に設定する証明書の数<br>
+      NSSL: rootCADataのサイズ(BYTE単位)
+    </td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+ルートCAの設定に成功すれば0を、接続ハンドルがNULLの場合に失敗し-1を返します。
+</pre>
+
+<h2>説明</H2>
+<p>
+送信すべきHTTPリクエストに対してルートCAを設定します。
+</p>
+<p>
+利用する SSL の種類に応じて適切な形式の証明書を指定する必要があることに注意して下さい。<br>
+</p>
+
+
+
+<h2>参照</h2>
+<code>
+<a href="NHTTP_SetVerifyOption.html">NHTTP_SetVerifyOption</a>,
+<a href="NHTTP_SetBuiltinRootCA.html">NHTTP_SetBuiltinRootCA</a>,
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>
+</code>
+</p>
+
+<h2>履歴</H2>
+<p>
+2009/02/12 CPS SSL についての記述を追加<br>
+2007/05/21 返り値を追記。<br>
+2006/11/6 説明を修正。<br>
+2006/10/19 説明を追記。<br>
+2006/8/7 初版。<br>
+</p>
+
+</body>
+
+</html>

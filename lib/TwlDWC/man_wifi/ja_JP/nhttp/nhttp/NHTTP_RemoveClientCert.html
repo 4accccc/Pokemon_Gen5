@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_RemoveClientCert</title>
+</head>
+
+<body>
+
+<h1>NHTTP_RemoveClientCert<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_RemoveClientCert( NHTTPConnectionHandle handle );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+クライアント証明書の無効化に成功すれば0を、接続ハンドルがNULLの場合に失敗し-1を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+送信すべきHTTPリクエストに対して<a href="./NHTTP_SetClientCert.html">NHTTP_SetClientCert()</a>
+または<a href="./NHTTP_SetBuiltinClientCert.html">NHTTP_SetBuiltinClientCert()</a>で設定したクライアント証明書と秘密鍵を無効にします。<br>
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="./NHTTP_SetClientCert.html">NHTTP_SetClientCert</a>,
+<a href="./NHTTP_SetBuiltinClientCert.html">NHTTP_SetBuiltinClientCert</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/05/21 返り値を追記。<br>
+2006/10/19 説明を追記。<br>
+2006/8/7 初版。<br>
+</p>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTPError</title>
+</head>
+
+<body>
+
+<h1>NHTTPError<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+typedef enum {
+    NHTTP_ERROR_SYSTEM = -1,    
+
+    NHTTP_ERROR_NONE = 0,      
+    NHTTP_ERROR_ALLOC,         
+    NHTTP_ERROR_TOOMANYREQ,    
+    NHTTP_ERROR_SOCKET,        
+    NHTTP_ERROR_DNS,           
+    NHTTP_ERROR_CONNECT,       
+    NHTTP_ERROR_BUFFULL,       
+    NHTTP_ERROR_HTTPPARSE,     
+    NHTTP_ERROR_CANCELED,      
+    NHTTP_ERROR_SDK,           
+    NHTTP_ERROR_NETWORK,       
+    NHTTP_ERROR_UNKNOWN,       
+    NHTTP_ERROR_DNS_PROXY,     
+    NHTTP_ERROR_CONNECT_PROXY, 
+    NHTTP_ERROR_SSL,           
+    NHTTP_ERROR_BUSY,          
+    NHTTP_ERROR_SSL_ROOTCA,    
+    NHTTP_ERROR_SSL_CLIENTCERT,
+ 
+    NHTTP_ERROR_MAX
+} NHTTPError;
+</code></pre></dd></dl>
+
+<h2>説明</h2>
+<a href="NHTTP_GetConnectionError.html">NHTTP_GetConnectionError()</a>で取得できる、接続ハンドルのエラー値を表す列挙型です。<br>
+各列挙値の意味は以下の通りです。
+<p>
+<table width="100%">
+  <tr>
+    <td valign="top" width="120" bgcolor="#ffe8ff"><code>定義</code></td>
+    <td bgcolor="#ffe8ff">値</td>
+    <td width="520" bgcolor="#ffe8ff">意味</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_SYSTEM</code></td>
+    <td>-1</td>
+    <td>ハンドル不正によるエラー。<br>引数で渡しているコネクションハンドルが不正の場合に返ります。
+  </tr></td>
+  <tr>
+    <td><code>NHTTP_ERROR_NONE</code></td>
+    <td>0</td>
+    <td>成功。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_ALLOC</code></td>
+    <td>1</td>
+    <td>
+      アローケーションに失敗しています。<br>
+      <a href="NHTTP_Startup.html">NHTTP_Startup</a>で設定したメモリ確保関数と解放関数を確認してください。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_TOOMANYREQ</code></td>
+    <td>2</td>
+    <td>
+      <s>リクエストがいっぱいです。</s>このエラーが発生することはありません。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_SOCKET</code></td>
+    <td>3</td>
+    <td>
+      ソケットエラー。<br>
+      ソケットの作成に失敗した場合、またはストリーミング送信のPOSTデータ送信のサイズ調査時に設定したコールバックが負の値を返した場合に返ります。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_DNS</code></td>
+    <td>4</td>
+    <td>
+      DNS解決に失敗しています。<br>
+      リクエストURLが間違っている場合や、存在しない場合に返ります。<br>
+      リクエストURLを確認してください。
+    </td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_CONNECT</code></td>
+    <td>5</td>
+    <td>
+      接続が失敗しています。<br>
+      DNS解決後、リクエストURLのサーバーとの接続前に通信が遮断された場合や、<br>
+      リクエストURLで指定した接続ポート番号が間違っている場合に返ります。
+    </td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_BUFFULL</code></td>
+    <td>6</td>
+    <td>
+      受信バッファが一杯です。<br>
+      Bodyのサイズが<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection</a>で設定したバッファよりも大きい場合に返ります。<br>
+      <a href="NHTTPConnectionCallback.html">NHTTP_EVENT_BODY_RECV_FULL</a>イベントコールバック内から受信バッファを再設定することで解決可能です。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_HTTPPARSE</code></td>
+    <td>7</td>
+    <td>
+      HTTPヘッダの解析に失敗しています。<br>
+      サーバーから受信したHTTPヘッダーが異常な場合に返ります。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_CANCELED</code></td>
+    <td>8</td>
+    <td>リクエストをキャンセルしています。<br>
+      <a href="NHTTP_CancelConnection.html">NHTTP_CancelConnection</a>で実行中のリクエストにキャンセルを要求した場合に返ります。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_SDK</code></td>
+    <td>9</td>
+    <td>
+      NHTTP_スレッドの生成に失敗しています。<br>
+      <a href="NHTTP_Startup.html">NHTTP_Startup</a>実行時、スレッド生成に失敗した場合に返ります。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_NETWORK</code></td>
+    <td>10</td>
+    <td>
+      送信、受信、ソケット終了時に問題がある場合に発生するエラー。<br>
+      送信、受信、終了時に通信が遮断された場合に返ります。 <br>
+    </td>    
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_UNKNOWN</code></td>
+    <td>11</td>
+    <td>
+      <a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection</a>でメソッドに異常な値を設定している場合。<br>
+      または現在実行中のリクエストに対して、<br>
+      <a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>で再度リクエスト開始を要求した場合に発生するエラー。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_DNS_PROXY</code></td>
+    <td>12</td>
+    <td>
+      proxyサーバーのDNS解決に失敗しています。<br>
+      本体設定のproxyサーバーが間違っている場合や、存在しない場合に返ります。<br>
+      本体設定のproxyサーバーを確認してください。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_CONNECT_PROXY</code></td>
+    <td>13</td>
+    <td>
+      proxyサーバーとの接続に失敗しています。<br>
+      DNS解決後、proxyサーバーと接続前に通信が遮断された場合や、<br>
+      本体設定のproxyサーバーのポート番号を間違えている場合に返ります。<br>
+      </td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_SSL</code></td>
+    <td>14</td>
+    <td>
+      SSL通信に失敗しています。<br>
+      SSL通信でサーバーとの接続が失敗した場合に返ります。<br>
+      SSL通信エラーの詳細は<a href="NHTTP_GetConnectionSSLError.html">NHTTP_GetConnectionSSLError()</a>で取得可能です。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_BUSY</code></td>
+    <td>15</td>
+    <td>リクエストが現在実行中であることを表します。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_SSL_ROOTCA</code></td>
+    <td>16</td>
+    <td>ルートCAの設定に失敗しています。</td>
+  </tr>
+  <tr>
+    <td><code>NHTTP_ERROR_SSL_CLIENTCERT</code></td>
+    <td>17</td>
+    <td>クライアント証明書の設定に失敗しています。</td>
+  </tr>
+</table>
+</p>
+
+<h2>履歴</H2>
+<p>
+2007/06/21 NHTTP_ERROR_SSL_ROOTCA NHTTP_ERROR_SSL_CLIENTCERTの追加。<br>
+2006/11/22 NHTTP_ERROR_BUSYの追加。<br>
+2006/11/14 エラー内容の詳細を追加。<br>
+2006/11/08 NHTTP_ERROR_SYSTEMの追加。<br>
+2006/10/19 NHTTP_ERROR_SSLの追加。<br>
+2006/6/26 初版。<br>
+</p>
+
+</body>
+</html>

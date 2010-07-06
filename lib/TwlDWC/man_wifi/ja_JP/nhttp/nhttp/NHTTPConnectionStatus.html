@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTPConnectionStatus</title>
+</head>
+
+<body>
+
+<h1>NHTTPConnectionStatus<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+typedef enum {
+    NHTTP_STATUS_ERROR = -1,
+    NHTTP_STATUS_IDLE = 0,
+    NHTTP_STATUS_CONNECTING,
+    NHTTP_STATUS_SENDING,
+    NHTTP_STATUS_RECEIVING_HEADER,
+    NHTTP_STATUS_RECEIVING_BODY,
+    NHTTP_STATUS_COMPLETE,
+    
+    NHTTP_STATUS_MAX
+} NHTTPConnectionStatus;
+</code></pre></dd></dl>
+
+<h2>説明</h2>
+<p>
+<a href="NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus()</a>で取得できる、接続ハンドルの状態を表す列挙型です。<br>
+各列挙値の意味は以下の通りです。
+<table border="1">
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_STATUS_ERROR</td>
+    <td bgcolor="#ffffe8">不正な状態です。<br>
+	不正な接続ハンドルを指定して<a href="NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus()</a>を呼び出した場合などに返されます。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_STATUS_IDLE</td>
+    <td bgcolor="#ffffe8">まだ<a href="./NHTTP_StartConnection.html">NHTTP_StartConnection()</a>で通信を開始していない状態です。<br>
+	この段階で、各種のリクエスト関数を呼び出して詳細設定を行います。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_STATUS_CONNECTING</td>
+    <td bgcolor="#ffffe8"><a href="./NHTTP_StartConnection.html">NHTTP_StartConnection()</a>によって通信準備リストに追加された状態です。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_STATUS_SENDING</td>
+    <td bgcolor="#ffffe8">内部のスレッドによって実際に通信処理が開始され、リクエストデータを送信している状態です。<br>
+	<a href="./NHTTPConnectionCallback.html">NHTTP_EVENT_POST_SEND</a>イベントはこの状態の時に発生します。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_STATUS_RECEIVING_HEADER</td>
+    <td bgcolor="#ffffe8">リクエストデータの送信が正常に完了し、レスポンスヘッダを受信している状態です。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_STATUS_RECEIVING_BODY</td>
+    <td bgcolor="#ffffe8">レスポンスヘッダの受信が正常に完了し、レスポンスボディを受信している状態です。<br>
+	この状態に達するとレスポンスヘッダの内容は確定し、<a href="./NHTTP_GetHeaderField.html">NHTTP_GetHeaderField()</a>で参照可能になります。
+	<a href="./NHTTPConnectionCallback.html">NHTTP_EVENT_BODY_RECV_FULL</a>イベントおよび
+	<a href="./NHTTPConnectionCallback.html">NHTTP_EVENT_BODY_RECV_DONE</a>イベントはこの状態の時に発生します。</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#ffffe8">NHTTP_STATUS_COMPLETE</td>
+    <td bgcolor="#ffffe8">レスポンスボディの受信が正常に完了し、すべての通信処理が完了した状態です。<br>
+	<a href="./NHTTPConnectionCallback.html">NHTTP_STATUS_COMPLETE</a>イベントはこの状態の時に発生します。</td>
+  </tr>
+</table>
+</p>
+
+<h2>参照</h2>
+<p>
+<code><a href="./NHTTPConnectionCallback.html">NHTTPConnectionCallback</a></code>, 
+<code><a href="./NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus</a></code>, 
+<code><a href="./NHTTP_CreateConnection.html">NHTTP_CreateConnection</a></code>, 
+<code><a href="./NHTTP_StartConnection.html">NHTTP_StartConnection</a></code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/14 初版<br>
+</p>
+
+</body>
+
+</html>

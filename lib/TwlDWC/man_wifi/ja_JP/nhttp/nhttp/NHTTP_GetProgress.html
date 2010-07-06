@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetProgress</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetProgress<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_GetProgress( u32* received, u32* contentlen );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>received</var></td>
+    <td>受信済みHTTPボディサイズを格納する領域へのポインタ</td>
+  </tr>
+  <tr>
+    <td><var>contentlen</var></td>
+    <td>判明しているContent-Lengthを格納する領域へのポインタ</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+進捗状況の取得に成功すれば0を、
+HTTPリクエストキューが空で、かつHTTPリクエストが実行されていない場合に失敗し-1を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+ライブラリ内部のスレッドが現在処理しているHTTPリクエスト処理の進捗状況を取得します。<br>
+<br>
+この関数では現在どの接続ハンドルが処理中なのかを明確に判断できないため、
+現在では<a href="NHTTP_GetConnectionProgress.html">NHTTP_GetConnectionProgress()</a>の使用をおすすめします。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_GetConnectionProgress.html">NHTTP_GetConnectionProgress</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/05/21 返り値を追記。<br>
+2006/10/19 説明を追記。<br>
+2006/6/26 初版。<br>
+</p>
+
+</body>
+
+</html>

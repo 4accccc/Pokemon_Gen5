@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetResultCode</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetResultCode<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_GetResultCode( NHTTPConnectionHandle handle );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+リザルトコードが正常に取得できればその値を返します。<br>
+そうでない場合は負の値を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルのHTTPレスポンスヘッダに含まれるリザルトコードを整数として取得します。<br>
+<font color="red">この値はサーバが応答するHTTPプロトコルとしてのレスポンスであり、
+NHTTP_ライブラリが規定している<a href="NHTTPError.html">NHTTPError</a>型の列挙値ではないという点に
+注意してください。</font><br>
+<br>
+この関数は、実際に通信が行われHTTPレスポンスヘッダを全て受信したあとに限り使用することが出来ます。<br>
+<a href="NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus()</a>が<a href="NHTTPConnectionStatus.html">NHTTP_STATUS_RECEIVING_BODY</a>以降を返す状態が
+それに該当します。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTPConnectionStatus.html">NHTTP_STATUS_RECEIVING_BODY</a>,
+<a href="NHTTPError.html">NHTTPError</a>,
+<br>
+<a href="NHTTP_GetHeaderAll.html">NHTTP_GetHeaderAll</a>,
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>,
+<a href="NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/19 返り値の意味に関して、説明を追記。<br>
+2006/9/13 初版。<br>
+</p>
+
+</body>
+</html>

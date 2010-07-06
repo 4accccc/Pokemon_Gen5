@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetConnectionError</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetConnectionError<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+NHTTPError NHTTP_GetConnectionError( NHTTPConnectionHandle handle );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td>接続ハンドル</td>
+  </tr>
+
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+接続ハンドルに発生した<code><a href="./NHTTPError.html">NHTTPError</a></code>型のエラー値を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルに発生した最新のエラー値を取得します。<br>
+</p>
+
+<h2>参照</h2>
+<p>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/11/14 NHTTP_PrivateAPI.hの includeを削除。返り値の記述間違い修正。<br>
+2006/10/19 説明を一部修正。<br>
+2006/10/11 初版。<br>
+</p>
+
+
+</body>
+</html>

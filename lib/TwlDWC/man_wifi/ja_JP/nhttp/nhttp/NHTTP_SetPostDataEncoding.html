@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_SetPostDataEncoding</title>
+</head>
+
+<body>
+
+<h1>NHTTP_SetPostDataEncoding<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_SetPostDataEncoding( NHTTPConnectionHandle handle, NHTTPEncodingType type );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table border="1" width="90%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>type</var></td>
+    <td>NHTTPEncodingTypeで指定する以下のいずれかのエンコーディング形式<br>
+      <table border='1'>
+        <tr><td bgcolor="#ffffe8">NHTTP_ENCODING_TYPE_URL</td><td>application/x-www-form-urlencoded</td></tr>
+        <tr><td bgcolor="#ffffe8">NHTTP_ENCODING_TYPE_MULTIPART</td><td>multipart/form-data</td></tr>
+        <tr><td bgcolor="#ffffe8">NHTTP_ENCODING_TYPE_AUTO</td><td>自動判定(デフォルト)。 <br>
+1回でも<a href="./NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary()</a>を使用していればNHTTP_ENCODING_TYPE_MULTIPARTを、
+そうでなければNHTTP_ENCODING_TYPE_URLを自動的に選択します。</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+エンコーディング形式の設定に成功すれば0を、
+接続ハンドルがNULLの場合、
+<a href="./NHTTP_AddPostDataRaw.html">NHTTP_AddPostDataRaw()</a>を既に接続ハンドルに設定した場合に失敗し-1を返します。
+</pre>
+
+
+<h2>説明</h2>
+<p>
+送信すべきHTTPリクエストPOST項目のエンコーディング形式を設定します。<br>
+この関数は、<a href="./NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii()</a>や<a href="./NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary()</a>で設定した送信データをPOSTリクエストデータでどのようにエンコーディングするか明示的に指定するために呼び出します。
+</p>
+
+<h3>例</h3>
+
+<p>
+<font style="background-color:#FFFFF8;border-style:solid;border-width:1px;"> 枠内 </font>：関数呼び出し例<br>
+<font style="background-color:#F8FFF8;border-style:solid;border-width:1px;"> 枠内 </font>：実際に送信されるHTTP POSTリクエストデータ<br>
+<font color="blue">青</font>：NHTTP_AddPostData*関数でアプリケーションが指定した値<br>
+<font color="red">赤</font>：ライブラリが自動的に生成する値<br>
+</p>
+
+<p>
+(1) テキストデータのみ送信する際の呼び出し例
+<pre style="background-color:#FFFFF8;border-style:solid;border-width:1px;padding:2px;margin:1px;width:90%">
+NHTTP_SetPostDataEncoding(handle, NHTTP_ENCODING_TYPE_URL);
+NHTTP_AddPostDataAscii(handle, label1, value1);
+NHTTP_AddPostDataAscii(handle, label2, value2);
+</pre>
+<pre style="background-color:#F8FFF8;border-style:solid;border-width:1px;padding:2px;margin:1px;width:90%">
+Content-Type: application/x-www-form-urlencoded
+Content-Length: <font color="red">[length]</font>
+
+<font color="red">URL-encoding(</font><font color="blue">[label1]</font>=<font color="blue">[value1]</font>&amp;<font color="blue">[label2]</font>=<font color="blue">[value2]</font><font color="red">)</font>
+</pre>
+</p>
+
+<p>
+(2) バイナリデータも送信する際の呼び出し例
+<pre style="background-color:#FFFFF8;border-style:solid;border-width:1px;padding:2px;margin:1px;width:90%">
+NHTTP_SetPostDataEncoding(handle, NHTTP_ENCODING_TYPE_MULTIPART);
+NHTTP_AddPostDataAscii(handle, label1, value1);
+NHTTP_AddPostDataBinary(handle, label2, value2, value2_length);
+</pre>
+<pre style="background-color:#F8FFF8;border-style:solid;border-width:1px;padding:2px;margin:1px;width:90%">
+Content-Type: multipart/form-data; boundary=<font color="red">[boundary]</font>
+Content-Length: <font color="red">[length]</font>
+
+<font color="red">[boundary]</font>
+Content-Type: application/octet-stream
+Content-Disposition: form-data; name="<font color="blue">[label1]</font>"
+Content-Transfer-Encoding: binary
+
+<font color="blue">[value1]</font>
+<font color="red">[boundary]</font>
+Content-Type: application/octet-stream
+Content-Disposition: form-data; name="<font color="blue">[label2]</font>"
+Content-Transfer-Encoding: binary
+
+<font color="blue">[value2]</font>
+<font color="red">[boundary]</font>--
+</pre>
+</p>
+
+<p>
+(3) アプリケーションが直接生データを指定して送信する際の呼び出し例
+<pre style="background-color:#FFFFF8;border-style:solid;border-width:1px;padding:2px;margin:1px;width:90%">
+NHTTP_AddPostDataRaw(handle, rawdata, length);
+</pre>
+<pre style="background-color:#F8FFF8;border-style:solid;border-width:1px;padding:2px;margin:1px;width:90%">
+Content-Length: <font color="blue">[length]</font>
+
+<font color="blue">[rawdata]</font>
+</pre>
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+  <a href="./NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii</a>,
+  <a href="./NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/05/21 返り値を追記。<br>
+2007/04/26 コード例を追記。<br>
+2006/10/30 記述ミスを修正。<br>
+2006/10/19 説明を追記。<br>
+2006/7/25 初版。<br>
+</p>
+
+</body>
+</html>

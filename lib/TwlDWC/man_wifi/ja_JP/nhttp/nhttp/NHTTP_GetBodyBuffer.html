@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetBodyBuffer</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetBodyBuffer<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+u32 NHTTP_GetBodyBuffer(NHTTPConnectionHandle handle, char** bodyBuffer, u32* size);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>bodyBuffer</var></td>
+    <td>ボディ受信バッファのポインタを格納するポインタ。<br>
+	NULLを指定した場合は無視されます。</td>
+  </tr>
+  <tr>
+    <td><var>size</var></td>
+    <td>ボディ受信バッファ自体のサイズを格納するポインタ</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+接続ハンドルに現在設定されているボディ受信バッファに読み込まれた受信データ長を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルに現在設定されているボディ受信バッファとその長さ、受信データ長を取得します。<br>
+ボディ受信バッファは最初に<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で設定しますが、
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection</a>で設定した<a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback</a>のNHTTP_EVENT_BODY_RECV_FULLイベント時に再設定することも可能です。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/14 初版 <br>
+</p>
+
+</body>
+</html>

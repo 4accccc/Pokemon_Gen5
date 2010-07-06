@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetConnectionSSLError</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetConnectionSSLError<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_GetConnectionSSLError(NHTTPConnectionHandle handle);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+接続ハンドルに発生したSSLエラー値を返します。
+
+不正な接続ハンドルに対してはNHTTP_ERROR_SYSTEMを返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルに発生したSSLエラー値を取得します。
+</p>
+<p>
+通信処理がSSLに関する問題で失敗した場合は<a href="NHTTP_GetConnectionError.html">NHTTP_GetConnectionError()</a>が<a href="NHTTPError.html">NHTTP_ERROR_SSL</a>を返します。
+この関数は、SSLライブラリから返された詳細なエラー内容を判定するために使用することができます。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_GetConnectionError.html">NHTTP_GetConnectionError</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/11/14 不正なハンドルに対しての返り値の記述間違いSSL_ENONEをNHTTP_ERROR_SYSTEMに修正。<br>
+2006/10/14 初版 <br>
+</p>
+
+</body>
+</html>

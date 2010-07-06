@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_SetSocketBufferSize</title>
+</head>
+
+<body>
+
+<h1>NHTTP_SetSocketBufferSize<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+NHTTPError NHTTP_SetSocketBufferSize(NHTTPConnectionHandle handle, u32 size);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>size</var></td>
+    <td>Socketが使用する内部バッファサイズ</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+設定に成功すればNHTTP_ERROR_NONEを、
+失敗すれば<a href="NHTTPError.html">NHTTPError</a>型のいずれかのエラー値を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+Socketが使用する内部バッファサイズを変更します。<br>
+0を指定すると内部バッファサイズを変更しない初期状態に戻ります。<br>
+</p>
+
+<h2>注意</h2>
+<p style="color:red">
+Socketが使用する内部バッファサイズの値の変更はSocket作成直後のため、<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>前にこの関数を呼ばないと変更が反映されません。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/11/02 引数変更。<br>
+2006/10/31 初版。<br>
+</p>
+
+</body>
+</html>

@@ -36,24 +36,24 @@
 /**
  * セッション作成コールバック関数。
  *
- * @param theResult 結果
- * @param theUserData ユーザ定義データ
+ * Param:  theResult 結果
+ * Param:  theUserData ユーザ定義データ
  */
 void ScCreateSessionCallback( DWCScResult theResult, void* theUserData );
 
 /**
  * レポート送信意思通知コールバック関数。
  *
- * @param theResult 結果
- * @param theUserData ユーザ定義データ
+ * Param:  theResult 結果
+ * Param:  theUserData ユーザ定義データ
  */
 void ScSetReportIntentionCallback( DWCScResult theResult, void* theUserData );
 
 /**
  * レポート送信コールバック関数。
  *
- * @param theResult 結果
- * @param theUserData ユーザ定義データ
+ * Param:  theResult 結果
+ * Param:  theUserData ユーザ定義データ
  */
 void ScSubmitReportCallback(DWCScResult theResult, void* theUserData);
 
@@ -70,8 +70,8 @@ void ScReceivePlayerData();
 /**
  * マッチメイクした相手にデータを送信する。
  *
- * @param data 送信するデータ
- * @param size 送信するデータのサイズ
+ * Param:  data 送信するデータ
+ * Param:  size 送信するデータのサイズ
  */
 void ScSendData( const void* data, int size );
 
@@ -135,7 +135,7 @@ static ScWork work;
 /**
  * 初期化処理
  *
- * @return 成功したか
+ * Return value:  成功したか
  */
 BOOL ScInitialize()
 {
@@ -152,8 +152,8 @@ BOOL ScInitialize()
 /**
  * メイン処理
  *
- * @param host ホストモードで動作するか
- * @return 成功したか
+ * Param:  host ホストモードで動作するか
+ * Return value:  成功したか
  */
 BOOL ScMain( BOOL host )
 {
@@ -373,8 +373,8 @@ void ScFinalize()
 /**
  * セッション作成コールバック関数。
  *
- * @param theResult 結果
- * @param theUserData ユーザ定義データ
+ * Param:  theResult 結果
+ * Param:  theUserData ユーザ定義データ
  */
 void ScCreateSessionCallback( DWCScResult theResult, void* theUserData )
 {
@@ -396,8 +396,8 @@ void ScCreateSessionCallback( DWCScResult theResult, void* theUserData )
 /**
  * レポート送信意思通知コールバック関数。
  *
- * @param theResult 結果
- * @param theUserData ユーザ定義データ
+ * Param:  theResult 結果
+ * Param:  theUserData ユーザ定義データ
  */
 void ScSetReportIntentionCallback(DWCScResult theResult, void* theUserData)
 {
@@ -418,8 +418,8 @@ void ScSetReportIntentionCallback(DWCScResult theResult, void* theUserData)
 /**
  * レポート送信コールバック関数。
  *
- * @param theResult 結果
- * @param theUserData ユーザ定義データ
+ * Param:  theResult 結果
+ * Param:  theUserData ユーザ定義データ
  */
 void ScSubmitReportCallback(DWCScResult theResult, void* theUserData)
 {
@@ -468,8 +468,8 @@ void ScReceivePlayerData()
 /**
  * マッチメイクした相手にデータを送信する。
  *
- * @param data 送信するデータ
- * @param size 送信するデータのサイズ
+ * Param:  data 送信するデータ
+ * Param:  size 送信するデータのサイズ
  */
 void ScSendData( const void* data, int size )
 {
@@ -489,10 +489,10 @@ void ScSendData( const void* data, int size )
 /**
  * DWCからのデータ受信コールバック関数。
  *
- * @param aid データ送信元aid
- * @param buffer 受信バッファアドレス
- * @param size 受信サイズ
- * @param param 属性データ
+ * Param:  aid データ送信元aid
+ * Param:  buffer 受信バッファアドレス
+ * Param:  size 受信サイズ
+ * Param:  param 属性データ
  */
 void ScReceiveDataEvent( u8 aid, u8* buffer, int size, void* param )
 {

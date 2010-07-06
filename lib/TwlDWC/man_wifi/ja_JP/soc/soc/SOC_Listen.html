@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SO_Listen</title>
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">SOC_Listen<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+
+<h2>構文</h2>
+
+<dl>
+  <dd><pre><code>#include &lt;nitroWiFi/soc.h&gt;</code></pre>
+  </dd>
+  <dd><pre><code>int SOC_Listen ( int <var>s</var>, int <var>backlog</var> );</code></pre>
+  </dd>
+</dl>
+
+<h2>引数</h2>
+
+<table width="100%">
+  <tr>
+    <td><var>s</var></td>
+    <td>ソケット記述子。</td>
+  </tr>
+  <tr>
+    <td><var>backlog</var></td>
+    <td>ソケットのリッスン バックログ キューに保持する未処理の接続の最大数を指定します。<!-- <code><var>backlog</var></code>が 
+    0 または負の場合、最大数は 1 に設定されます。--> </td>
+  </tr>
+</table>
+
+<h2>返り値</h2>
+
+<table width="100%">
+  <tr>
+    <td>0</td>
+    <td>成功。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EINVAL</code></td>
+    <td>ソケット記述子の値が不正です。( <var>s</var> < 0 か存在しないソケット)<BR>
+	あるいはソケットが接続処理中です。あるいはストリーム・ソケットではありません。<BR></td>
+  </tr>
+  <tr>
+    <td><code>SOC_ENETRESET</code></td>
+    <td>ソケットライブラリが初期化されていません。</td>
+  </tr>
+  <tr>
+    <td><code>SOC_EWOULDBLOCK</code></td>
+    <td>ソケットが非封鎖モードです。(封鎖モードでないと実行できません)</td>
+  </tr>
+</table>
+
+<p><span class="warning">注意</span>：追加のエラーが今後のライブラリリリースで生じたり返されることがあります。すべての負の返り値は汎用のエラーとして扱ってください。</p>
+
+<h2>説明</h2>
+
+<p><code>SOC_Listen()</code>は互換性のため用意されており、実際にストリーム・ソケットをLISTEN状態(接続受付中)にしません。<BR>
+<code>SOC_Listen()</code>は封鎖モードのストリーム・ソケットに対して実行できます。
+</p>
+
+
+<h2>参照</h2>
+<p>
+<code><a href="SOC_Socket.html">SOC_Socket</a></code>,
+<code><a href="SOC_Bind.html">SOC_Bind</a></code>,
+<code><a href="SOC_Connect.html">SOC_Connect</a></code>,
+<code><a href="SOC_Accept.html">SOC_Accept</a></code></p>
+<H2>履歴</H2>
+<P>
+2008/05/13 返り値の修正、説明の修正<BR>
+2005/12/12 説明、返り値の記述変更<BR>
+2005/09/13 初版</P>
+</body>
+</html>

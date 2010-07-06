@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_CallAlloc</title>
+</head>
+
+<body>
+
+<h1>NHTTP_CallAlloc<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+void* NHTTP_CallAlloc(u32 size, int align);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>size</var></td>
+    <td>確保要求サイズ</td>
+  </tr>
+  <tr>
+    <td><var>align</var></td>
+    <td>バッファアライメント</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+成功すれば新規に確保されたバッファポインタを, そうでなければ NULLを返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+<a href="NHTTP_Startup.html">NHTTP_Startup()</a>でユーザーが設定したメモリ確保関数を直接呼び出します。<br>
+この関数はアプリケーションの利便性のために用意されています。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_Startup.html">NHTTP_Startup</a>, 
+<a href="NHTTP_CallFree.html">NHTTP_CallFree</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/19 説明を追記。<br>
+2006/10/14 初版。<br>
+</p>
+
+</body>
+</html>

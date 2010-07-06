@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<BASE target="main">
+<TITLE>NHTTP 機能一覧</TITLE>
+<LINK rel="stylesheet" href="../css/apilist.css">
+</HEAD>
+<BODY>
+<H1>NHTTP 機能一覧</H1>
+
+<H3><a name="Init">初期化・終了</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTP_Startup.html"><code>NHTTP_Startup</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>NHTTPライブラリを初期化します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_CleanupAsync.html"><code>NHTTP_CleanupAsync</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>NHTTPライブラリを終了します。</td>
+    </tr>
+  </tbody>
+</table>
+
+<H3><a name="General">全般</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTP_GetProgress.html"><code>NHTTP_GetProgress</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>現在進行中のHTTPリクエストの通信進捗状況を取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetError.html"><code>NHTTP_GetError</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>NHTTPライブラリ内で最後に発生したエラーの状況を取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SSLGetError.html"><code>NHTTP_SSLGetError</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>NHTTPライブラリ内で最後に発生したSSLエラーの状況を取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_CallAlloc.html"><code>NHTTP_CallAlloc</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>ユーザが設定したメモリ確保関数を直接呼び出します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_CallFree.html"><code>NHTTP_CallFree</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>ユーザが設定したメモリ解放関数を直接呼び出します。</td>
+    </tr>
+  </tbody>
+</table>
+
+<H3><a name="Connection">接続ハンドル</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTP_CreateConnection.html"><code>NHTTP_CreateConnection</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルを生成します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_DeleteConnection.html"><code>NHTTP_DeleteConnection</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルを解放します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_StartConnection.html"><code>NHTTP_StartConnection</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>通信処理を開始します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_CancelConnection.html"><code>NHTTP_CancelConnection</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>通信処理をキャンセルします。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_WaitForConnection.html"><code>NHTTP_WaitForConnection</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>通信処理またはキャンセル処理が完了するまで待機します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetConnectionStatus.html"><code>NHTTP_GetConnectionStatus</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルの現在の状態を取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetConnectionProgress.html"><code>NHTTP_GetConnectionProgress</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルの現在の通信進捗状況を取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetConnectionError.html"><code>NHTTP_GetConnectionError</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルに発生した最新のエラーを取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetConnectionSSLError.html"><code>NHTTP_GetConnectionSSLError</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルに発生した最新のSSLエラーを取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetUserParam.html"><code>NHTTP_GetUserParam</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルに関連付けられたユーザ定義パラメータを取得します。</td>
+    </tr>
+  </tbody>
+</table>
+
+<H3><a name="Config">接続設定</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTP_SetVerifyOption.html"><code>NHTTP_SetVerifyOption</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>SSL通信の検証内容を設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetRootCA.html"><code>NHTTP_SetRootCA</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>ASN.1フォーマットの証明書データをRootCAに設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetBuiltinRootCA.html"><code>NHTTP_SetBuiltinRootCA</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>指定した組み込みのRootCAを設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetClientCert.html"><code>NHTTP_SetClientCert</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>ASN.1フォーマットのクライアント証明書と秘密鍵を設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetBuiltinClientCert.html"><code>NHTTP_SetBuiltinClientCert</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>指定した組み込みのASN.1フォーマットのクライアント証明書と秘密鍵を設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_RemoveClientCert.html"><code>NHTTP_RemoveClientCert</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>設定したクライアント証明書と秘密鍵を無効にします。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetProxy.html"><code>NHTTP_SetProxy</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>proxyサーバを設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetProxyDefault.html"><code>NHTTP_SetProxyDefault</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>proxyサーバをデフォルトの内容で設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetBasicAuthorization.html"><code>NHTTP_SetBasicAuthorization</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>Basic認証のユーザ名とパスワードを設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetSocketBufferSize.html"><code>NHTTP_SetSocketBufferSize</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>Socketが使用する内部バッファサイズを変更します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_DisableVerifyOptionForDebug.html"><code>NHTTP_DisableVerifyOptionForDebug</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>指定したビットのSSL通信の検証内容を削除します。</td>
+    </tr>
+  </tbody>
+</table>
+
+<H3><a name="Request">HTTPリクエスト</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTP_AddHeaderField.html"><code>NHTTP_AddHeaderField</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPリクエストヘッダ項目を追加します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_AddPostDataAscii.html"><code>NHTTP_AddPostDataAscii</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPリクエストPOST項目(ASCII文字列)を追加します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_AddPostDataBinary.html"><code>NHTTP_AddPostDataBinary</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPリクエストPOST項目(バイナリデータ)を追加します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_AddPostDataRaw.html"><code>NHTTP_AddPostDataRaw</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPリクエストPOST項目全体をバイナリデータで直接設定します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_SetPostDataEncoding.html"><code>NHTTP_SetPostDataEncoding</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPリクエストPOST項目のエンコーディング形式を設定します。</td>
+    </tr>
+  </tbody>
+</table>
+
+<H3><a name="Response">HTTPレスポンス</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTP_GetBodyBuffer.html"><code>NHTTP_GetBodyBuffer</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルに現在設定されているボディ受信バッファとその長さを取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetHeaderField.html"><code>NHTTP_GetHeaderField</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPレスポンスヘッダの情報を、ラベル名を指定して取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetHeaderAll.html"><code>NHTTP_GetHeaderAll</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPレスポンスヘッダ全体を取得します。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTP_GetResultCode.html"><code>NHTTP_GetResultCode</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>HTTPリザルトを取得します。</td>
+    </tr>    
+  </tbody>
+</table>
+
+<H3><a name="Callback">コールバック関数</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTPConnectionCallback.html"><code>NHTTPConnectionCallback</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>通信処理中に発生する各種イベントを通知するコールバック関数です。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTPCleanupCallback.html"><code>NHTTPCleanupCallback</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>NHTTPライブラリ終了処理の完了を通知するコールバック関数です。</td>
+    </tr>
+  </tbody>
+</table>
+
+<H3><a name="Types">定数・構造体</a></H3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="35%"><a href="nhttp/NHTTPError.html"><code>NHTTPError</code></a></td>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>NHTTPライブラリが定義するエラー列挙型です。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTPConnectionStatus.html"><code>NHTTPConnectionStatus</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>接続ハンドルの状態を表す列挙型です。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTPConnectionCallback.html"><code>NHTTPConnectionEvent</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>通信中のイベント種別を表す列挙型です。</td>
+    </tr>
+    <tr>
+      <td><a href="nhttp/NHTTPBodyBufArg.html"><code>NHTTPBodyBufArg</code></a><br><a href="nhttp/NHTTPPostSendArg.html"><code>NHTTPPostSendArg</code></a></td>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <td>イベント通知コールバック用コールバック情報構造体です。</td>
+    </tr>
+  </tbody>
+</table>
+
+<TABLE border="0" height="100%"><TR><TD style="background-color:white"></TD></TR></TABLE>
+</body>
+</html>

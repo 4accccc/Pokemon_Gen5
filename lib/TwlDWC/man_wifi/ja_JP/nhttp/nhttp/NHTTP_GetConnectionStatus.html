@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_CancelConnection</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetConnectionStatus<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+<a href="NHTTPConnectionStatus.html">NHTTPConnectionStatus</a> NHTTP_GetConnectionStatus(NHTTPConnectionHandle handle);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+接続ハンドルの現在の状態を<a href="NHTTPConnectionStatus.html">NHTTPConnectionStatus</a>型で返します。<br>
+不正な接続ハンドルに対しては<a href="NHTTPConnectionStatus.html">NHTTP_STATUS_ERROR</a>を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルの現在の状態を取得します。<br>
+通信が失敗しても<a href="NHTTPConnectionStatus.html">NHTTP_STATUS_ERROR</a>にはならず直前の状態を保持します。<br>
+<a href="NHTTP_GetConnectionError.html">NHTTP_GetConnectionError()</a>の返り値が<a href="NHTTPError.html">NHTTP_ERROR_BUSY</a>かどうかで通信中かどうかを判定することができます。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTPConnectionStatus.html">NHTTPConnectionStatus</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/06/07 説明を追加。<br>
+2006/10/14 初版 <br>
+</p>
+
+</body>
+</html>

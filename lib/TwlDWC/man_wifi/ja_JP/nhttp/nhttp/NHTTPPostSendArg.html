@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTPPostSendArg</title>
+</head>
+
+<body>
+
+<h1>NHTTPPostSendArg<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+typedef struct _NHTTPPostSendArg {
+    const char* label;
+    char*       buf;
+    u32         size;
+    u32         offset;
+} NHTTPPostSendArg;
+</code></pre></dd></dl>
+
+<h2>説明</h2>
+<p>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で指定する <a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback()</a>において、NHTTP_EVENT_POST_SENDイベントが起きた際に argとして渡される構造体です。<br>
+
+</p>
+<table width="100%">
+  <tr>
+    <td><var>label</var></td>
+    <td width="520" bgcolor="#ffffe8">現在送信が行われているPOST項目のラベルです。</td>
+  </tr>
+  <tr>
+    <td><var>buf</var></td>
+    <td width="520" bgcolor="#ffffe8">最初はNULLが入っています。自身が確保した領域をセットすると2回目以降はそのアドレスが入ります。</td>
+  </tr>
+  <tr>
+    <td><var>size</var></td>
+    <td width="520" bgcolor="#ffffe8">送信するデータサイズ。0を指定すると送信終了となります。</td>
+  </tr>
+  <tr>
+    <td><var>offset</var></td>
+    <td width="520" bgcolor="#ffffe8">現在何バイトまでストリーミング応答したかのオフセットが入っています。</td>
+  </tr>
+</table>
+</p>
+
+<h2>注意</h2>
+<p style="color:red">
+ライブラリのスレッドからoffsetの値を変更していますので、アプリケーション側からはoffetの値を変更しないでください。
+</p>
+
+
+<h2>参照</h2>
+<p>
+<code><a href="./NHTTPConnectionCallback.html">NHTTPConnectionCallback</a></code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/14 初版<br>
+</p>
+
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!--DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"-->
+<!--==========================================================================
+  Project:  TwlWiFi - WCM - man
+  File:     WCM_Init.html
+
+  Copyright 2005 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+
+  $Date:: 2008-07-15#$
+  $Rev: 799 $
+  $Author: adachi_hiroaki $
+ ==========================================================================-->
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<META http-equiv="Content-Style-Type" content="text/css">
+		<TITLE>WCM_Init</TITLE>
+		<LINK rel="stylesheet" href="../../css/twl.css">
+		<BASE target="main">
+	</HEAD>
+	<BODY>
+		<H1>WCM_Init, WCM_InitEx<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+
+		<H2>構文</H2>
+		<DL>
+			<DD>
+				<PRE><CODE>
+#include &lt;nitroWiFi/wcm.h&gt;
+
+s32   WCM_Init( void* buf , s32 len );
+s32   WCM_InitEx( void* buf, s32 len, u8 deviceId );
+				</CODE></PRE>
+			</DD>
+		</DL>
+
+		<H2>説明</H2>
+		<P>
+			WCM ライブラリを初期化する同期関数です。WCM ライブラリに含まれる他の API を呼び出す前に一回呼び出して下さい。<BR>
+			<BR>
+			初期化処理に成功した場合、WCM ライブラリの内部状態は <CODE>WCM_PHASE_WAIT</CODE> になり、オプション設定等は全てデフォルトの設定値に初期化されます。<BR>
+			また、キープアライブ機能を実現するために、OS ライブラリの Tick 機能、Alarm 機能が有効になっていない場合には <code>OS_InitTick()</code>、<code>OS_InitAlarm()</code> を自動的に実行しこれらの機能を有効にします。
+		</P>
+
+		<H2>引数</H2>
+		<TABLE border="1">
+			<TBODY>
+				<TR>
+					<TD width="25%"><VAR>buf</VAR></TD>
+					<TD width="75%">WCM ライブラリが内部的に使用するワークバッファへのポインタを指定します。このワークバッファは 32 バイトアラインされていなければなりません。
+					初期化が正常に完了した後は、<A href="WCM_Finish.html"><CODE>WCM_Finish()</CODE></A>を用いて WCM ライブラリを終了するまで与えたバッファを別の用途に用いてはいけません。</TD>
+				</TR>
+				<TR>
+					<TD><VAR>len</VAR></TD>
+					<TD><VAR>buf</VAR> で指定するワークバッファのサイズを指定します。<CODE>WCM_WORK_SIZE</CODE> 以上のサイズを指定する必要があります。</TD>
+				</TR>
+				<TR>
+					<TD><VAR>deviceId</VAR></TD>
+					<TD>使用する無線ハードウェアの ID を指定します。<CODE>WCM_Init()</CODE>を使用した場合は、<EM><CODE>deviceId</CODE></EM> に <CODE>WCM_DEVICEID_WM</CODE> を指定した場合と同じ動作になります。</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+
+		<H2>返り値</H2>
+		<P>
+			以下のいずれかの処理結果を返します。
+		</P>
+		<TABLE border="1">
+			<TBODY>
+				<TR>
+					<TD width="25%"><CODE>WCM_RESULT_SUCCESS</CODE></TD>
+					<TD width="75%">初期化処理が正常に完了したことを示します。</TD>
+				</TR>
+				<TR>
+					<TD><CODE>WCM_RESULT_FAILURE</CODE></TD>
+					<TD>WCM ライブラリが既に初期化されている、与えられたパラメータが不正である、などの原因で初期化に失敗したことを示します。</TD>
+				</TR>
+				<TR>
+					<TD><CODE>WCM_RESULT_NOT_ENOUGH_MEM</CODE></TD>
+					<TD>与えられたワークバッファのサイズが <CODE>WCM_WORK_SIZE</CODE> 未満であり、WCM ライブラリを動作させるにはメモリが不足していることを示します。</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+
+		<H2>参照</H2>
+		<P>
+			<CODE>
+				<A href="WCM_Finish.html">WCM_Finish</A>, <A href="WCM_StartupAsync.html">WCM_StartupAsync</A>
+			</CODE>
+		</P>
+
+		<H2>履歴</H2>
+		<P>
+			2008/01/17 WCM_InitEx の説明を追加<BR>
+			2005/09/02 OSアラーム機能を使用することを追記<BR>
+			2005/07/22 初版<BR>
+		</P>
+
+	</BODY>
+</HTML>

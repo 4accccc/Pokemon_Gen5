@@ -1,0 +1,137 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../css/twl.css" type="text/css">
+<BASE target="main">
+<title>[NHTTP] HTTPライブラリ 概要</title>
+</head>
+
+<body>
+
+<h1>[NHTTP] HTTPライブラリ 概要</h1>
+
+<h2>はじめに</h2>
+<p>
+NHTTPライブラリはHTTPプロトコルを実現するためのライブラリです。
+</p>
+
+<h2>処理の流れ</h2>
+<p>
+<h3>ライブラリの初期化</h3>
+<p>
+まずはじめに<code><a href="nhttp/NHTTP_Startup.html">NHTTP_Startup</a></code>関数を呼び、NHTTPライブラリを初期化します。<br>
+</p>
+
+<h3>接続ハンドルの生成とリクエスト設定</h3>
+<p>
+次に、<code><a href="nhttp/NHTTP_CreateConnection.html">NHTTP_CreateConnection</a></code>関数でHTTP接続ハンドルを生成して
+各種の接続設定およびリクエスト設定を行います。<br>
+必要に応じて、以下の関数群を組み合わせて使用します。<br>
+<ul>
+<li>[接続設定]
+  <ul>
+  <li><code><a href="nhttp/NHTTP_SetVerifyOption.html">NHTTP_SetVerifyOption</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetRootCA.html">NHTTP_SetRootCA</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetBuiltinRootCA.html">NHTTP_SetBuiltinRootCA</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetClientCert.html">NHTTP_SetClientCert</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetBuiltinClientCert.html">NHTTP_SetBuiltinClientCert</a></code><br>
+  <li><code><a href="nhttp/NHTTP_RemoveClientCert.html">NHTTP_RemoveClientCert</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetProxy.html">NHTTP_SetProxy</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetProxyDefault.html">NHTTP_SetProxyDefault</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetBasicAuthorization.html">NHTTP_SetBasicAuthorization</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetSocketBufferSize.html">NHTTP_SetSocketBufferSize</a></code><br>
+  </ul>
+</li>
+<li>[リクエスト設定]
+  <ul>
+  <li><code><a href="nhttp/NHTTP_AddHeaderField.html">NHTTP_AddHeaderField</a></code><br>
+  <li><code><a href="nhttp/NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii</a></code><br>
+  <li><code><a href="nhttp/NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary</a></code><br>
+  <li><code><a href="nhttp/NHTTP_AddPostDataRaw.html">NHTTP_AddPostDataRaw</a></code><br>
+  <li><code><a href="nhttp/NHTTP_SetPostDataEncoding.html">NHTTP_SetPostDataEncoding</a></code><br> 
+  </ul>
+</li>
+</ul>
+</p>
+
+<h3>接続開始</h3>
+<p>
+設定の済んだ接続ハンドルは、<code><a href="nhttp/NHTTP_StartConnection.html">NHTTP_StartConnection</a></code>関数を呼び出すことによって
+実際に通信処理の開始準備に入ります。ライブラリ内部のスレッドは、通信準備中の接続ハンドルを1個ずつ順番に処理します。キューに上限はありません。<br>
+<br>
+通信中は必要に応じて各種の<code><a href="nhttp/NHTTPConnectionCallback.html">NHTTPConnectionEvent</a></code>イベントが発生し、
+<code><a href="nhttp/NHTTP_CreateConnection.html">NHTTP_CreateConnection</a></code>関数で設定したコールバックへ通知されます。<br>
+<br>
+通信処理中は<code><a href="nhttp/NHTTP_GetConnectionError.html">NHTTP_GetConnectionError</a></code>関数の返り値がNHTTP_ERROR_BUSYとなり、
+しばらくたてば通信処理は内部で自動的に終了します。
+<code><a href="nhttp/NHTTP_CancelConnection.html">NHTTP_CancelConnection</a></code>関数でキャンセルすることも可能です。
+通信処理またはそのキャンセル要求が完了するまでその場で待機するには<code><a href="nhttp/NHTTP_WaitForConnection.html">NHTTP_WaitForConnection</a></code>関数が使用可能です。<br>
+<br>
+</p>
+
+<h3>レスポンスの解析と接続ハンドルの解放</h3>
+<p>
+通信が成功した接続ハンドルはHTTPレスポンス情報を保持しています。<br>
+必要に応じて、以下の関数群を使用してレスポンスの内容を参照します。
+<ul>
+<li><code><a href="nhttp/NHTTP_GetBodyBuffer.html">NHTTP_GetBodyBuffer</a></code><br>
+<li><code><a href="nhttp/NHTTP_GetHeaderField.html">NHTTP_GetHeaderField</a></code><br>
+<li><code><a href="nhttp/NHTTP_GetHeaderAll.html">NHTTP_GetHeaderAll</a></code><br>
+<li><code><a href="nhttp/NHTTP_GetResultCode.html">NHTTP_GetResultCode</a></code><br>
+</ul>
+必要な情報を参照した後、接続ハンドルは<code><a href="nhttp/NHTTP_DeleteConnection.html">NHTTP_DeleteConnection</a></code>で解放します。<br>
+<br>
+さらにHTTPリクエストを発行する必要があれば、接続ハンドルを再度生成して同様の手順で通信を行います。
+</p>
+
+<h3>ライブラリの終了</h3>
+すべての処理が完了した後は<code><a href="nhttp/NHTTP_CleanupAsync.html">NHTTP_CleanupAsync</a></code>でNHTTPライブラリを解放して終了します。<br>
+</p>
+
+<h2>注意事項</h2>
+<h3>POSTに関して</h3>
+<p>
+ラベルと値を追加して、リクエスト開始の際にまとめて送信する<code><a href="nhttp/NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii</a></code>,<code><a href="nhttp/NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary</a></code>と、<br>
+ラベル無しで単一のデータのみをリクエスト開始の際に送信する<code><a href="nhttp/NHTTP_AddPostDataRaw.html">NHTTP_AddPostDataRaw</a></code>は併用できません。<br>
+先にセットしたほうが有効になります。
+</p>
+
+<h3>PROXYサーバの使用に関して</h3>
+<p>
+TWL では上級者向け接続設定 4・5・6 にPROXYサーバを設定する事ができますが、これをアプリケーションでサポートするかは任意です。NHTTP では自動的にこれらの設定を利用する事はありません。
+もしサポートする場合は <code><a href="nhttp/NHTTP_SetProxyDefault.html">NHTTP_SetProxyDefault</a></code> を呼び出して下さい。現在接続に使用している設定の PROXYサーバ が設定されます。（接続先1・2・3の場合は何もしません。）
+</p>
+
+<h3>PROXY認証に関して</h3>
+<p>
+PROXY認証に失敗した場合エラー値自体はNHTTP_ERROR_NONEのままです。<br><code><a href="nhttp/NHTTP_GetResultCode.html">NHTTP_GetResultCode</a></code>でHTTPリザルトが200であるかどうかでエラーの判別を行ってください。
+</p>
+
+<h3>SSL に関して</h3>
+
+<p>NHTTP ライブラリは以下の二種類の SSL をサポートしています。</p>
+
+<p>SSL を使用するためには、使用する SSL の種類に応じてリンクするライブラリを切り替える必要があります。<br>
+また、一部の API ではパラメータとして渡す値が違いますのでご注意下さい。</p>
+
+<dl>
+<dt>CPS SSL</dt>
+<dd>外部ライブラリを使用しない通常の SSL のことです。libnhttp.*.a をリンクします。</dd>
+<dt>NSSL</dt>
+<dd>別パッケージにて提供される外部 SSL ライブラリです。同梱の libnhttp.nssl.*.a をリンクします。</dd>
+</dl>
+
+<h2>履歴</h2>
+<p>
+2009/02/12 SSL に関して追記<br>
+2008/09/04 TwlWiFi パッケージ用に手直し<br>
+2006/12/22 旧仕様の説明を削除。<br>
+2006/11/02 接続設定追記。<br>
+2006/10/30 記述ミスを修正。<br>
+2006/10/19 新仕様の公開に伴う全面改定。<br>
+2006/6/26 初版。<br>
+</p>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<BASE target="main">
+<TITLE>NHTTP ライブラリ</TITLE>
+<LINK rel="stylesheet" href="../css/titles.css">
+</HEAD>
+<BODY>
+
+<H3>NHTTP</H3>
+<P>
+[ <A href="outline_nhttp.html">概要</A> / <A href="list_nhttp.html">機能一覧</A> ]
+</P>
+
+<DL>
+<DT>初期化・終了</DT>
+
+<DD><A href="nhttp/NHTTP_Startup.html">NHTTP_Startup</a></DD>
+<DD><A href="nhttp/NHTTP_CleanupAsync.html">NHTTP_CleanupAsync</a></DD>
+</DL>
+
+<DL>
+<DT>全般</DT>
+<DD><A href="nhttp/NHTTP_GetProgress.html">NHTTP_GetProgress</a></DD>
+<DD><A href="nhttp/NHTTP_GetError.html">NHTTP_GetError</a></DD>
+<DD><A href="nhttp/NHTTP_SSLGetError.html">NHTTP_SSLGetError</a></DD>
+<DD><A href="nhttp/NHTTP_CallAlloc.html">NHTTP_CallAlloc</a></DD>
+<DD><A href="nhttp/NHTTP_CallFree.html">NHTTP_CallFree</a></DD>
+</DL>
+
+<DL>
+<DT>接続ハンドル</DT>
+<DD><A href="nhttp/NHTTP_CreateConnection.html">NHTTP_CreateConnection</a></DD>
+<DD><A href="nhttp/NHTTP_DeleteConnection.html">NHTTP_DeleteConnection</a></DD>
+<DD><A href="nhttp/NHTTP_StartConnection.html">NHTTP_StartConnection</a></DD>
+<DD><A href="nhttp/NHTTP_CancelConnection.html">NHTTP_CancelConnection</a></DD>
+<DD><A href="nhttp/NHTTP_WaitForConnection.html">NHTTP_WaitForConnection</a></DD>
+<DD><A href="nhttp/NHTTP_GetConnectionStatus.html">NHTTP_GetConnectionStatus</a></DD>
+<DD><A href="nhttp/NHTTP_GetConnectionProgress.html">NHTTP_GetConnectionProgress</a></DD>
+<DD><A href="nhttp/NHTTP_GetConnectionError.html">NHTTP_GetConnectionError</a></DD>
+<DD><A href="nhttp/NHTTP_GetConnectionSSLError.html">NHTTP_GetConnectionSSLError</a></DD>
+<DD><A href="nhttp/NHTTP_GetUserParam.html">NHTTP_GetUserParam</a></DD>
+</DL>
+
+<DL>
+<DT>接続設定</DT>
+<DD><A href="nhttp/NHTTP_SetVerifyOption.html">NHTTP_SetVerifyOption</a></DD>
+<DD><A href="nhttp/NHTTP_SetRootCA.html">NHTTP_SetRootCA</a></DD>
+<DD><A href="nhttp/NHTTP_SetBuiltinRootCA.html">NHTTP_SetBuiltinRootCA</a></DD>
+<DD><A href="nhttp/NHTTP_SetClientCert.html">NHTTP_SetClientCert</a></DD>
+<DD><A href="nhttp/NHTTP_SetBuiltinClientCert.html">NHTTP_SetBuiltinClientCert</a></DD>
+<DD><A href="nhttp/NHTTP_RemoveClientCert.html">NHTTP_RemoveClientCert</a></DD>
+<DD><A href="nhttp/NHTTP_SetProxy.html">NHTTP_SetProxy</a></DD>
+<DD><A href="nhttp/NHTTP_SetProxyDefault.html">NHTTP_SetProxyDefault</a></DD>
+<DD><A href="nhttp/NHTTP_SetBasicAuthorization.html">NHTTP_SetBasicAuthorization</a></DD>
+<DD><A href="nhttp/NHTTP_SetSocketBufferSize.html">NHTTP_SetSocketBufferSize</a></DD>
+<DD><A href="nhttp/NHTTP_DisableVerifyOptionForDebug.html">NHTTP_DisableVerifyOptionForDebug</a></DD>
+</DL>
+
+<DL>
+<DT>HTTPリクエスト</DT>
+<DD><A href="nhttp/NHTTP_AddHeaderField.html">NHTTP_AddHeaderField</a></DD>
+<DD><A href="nhttp/NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii</a></DD>
+<DD><A href="nhttp/NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary</a></DD>
+<DD><A href="nhttp/NHTTP_AddPostDataRaw.html">NHTTP_AddPostDataRaw</a></DD>
+<DD><A href="nhttp/NHTTP_SetPostDataEncoding.html">NHTTP_SetPostDataEncoding</a></DD>
+</DL>
+
+<DL>
+<DT>HTTPレスポンス</DT>
+<DD><A href="nhttp/NHTTP_GetBodyBuffer.html">NHTTP_GetBodyBuffer</a></DD>
+<DD><A href="nhttp/NHTTP_GetHeaderField.html">NHTTP_GetHeaderField</a></DD>
+<DD><A href="nhttp/NHTTP_GetHeaderAll.html">NHTTP_GetHeaderAll</a></DD>
+<DD><A href="nhttp/NHTTP_GetResultCode.html">NHTTP_GetResultCode</a></DD>
+</DL>
+
+<DL>
+<DT>コールバック関数</DT>
+<DD><A href="nhttp/NHTTPConnectionCallback.html">NHTTPConnectionCallback</a></DD>
+<DD><A href="nhttp/NHTTPCleanupCallback.html">NHTTPCleanupCallback</a></DD>
+</DL>
+
+<DL>
+<DT>定数・構造体</DT>
+<DD><A href="nhttp/NHTTPError.html">NHTTPError</a></DD>
+<DD><A href="nhttp/NHTTPConnectionStatus.html">NHTTPConnectionStatus</a></DD>
+<DD><A href="nhttp/NHTTPConnectionCallback.html">NHTTPConnectionEvent</a></DD>
+<DD><A href="nhttp/NHTTPBodyBufArg.html">NHTTPBodyBufArg</a></DD>
+<DD><A href="nhttp/NHTTPPostSendArg.html">NHTTPPostSendArg</a></DD>
+</DL>
+
+</body>
+</html>

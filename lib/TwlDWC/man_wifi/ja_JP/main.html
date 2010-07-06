@@ -1,0 +1,139 @@
+<!--DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"-->
+<!--==========================================================================
+  Project:  TwlWiFi - man
+  File:     main.html
+
+  Copyright 2005,2006 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+
+  $Date:: 2009-07-30#$
+  $Rev: 1203 $
+  $Author: okubata_ryoma $
+ ==========================================================================-->
+<HTML>
+    <HEAD>
+        <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+        <META http-equiv="Content-Style-Type" content="text/css">
+        <TITLE>TWL-SDK Wi-Fi ライブラリ 関数リファレンスマニュアル</TITLE>
+        <LINK rel="stylesheet" href="css/titles.css">
+    </HEAD>
+    <BODY>
+        <H1 class="title">
+            TWL-SDK Wi-Fi ライブラリ<BR>
+            関数リファレンスマニュアル<BR>
+            (日本語版)
+        </H1>
+
+        <P align="right">
+            <span class="version">TWL-SDK Wi-Fi ライブラリ 3.3 正式版</span>
+        </P>
+        <P class="confidential">
+            &quot;Confidential&quot;
+        </P>
+        <P class="caution">
+            [注意！]　このドキュメントの内容は、秘密情報であるため、厳重な取扱い、管理を行なってください。
+        </P>
+        <P class="copyright">
+            (c) 2006 Nintendo Co.,Ltd. All rights reserved.
+        </P>
+        <P class="recommend">
+            Microsoft Internet Explorer 6.0/Mozilla Firefox 3 推奨
+        </P>
+<HR>
+<B><A href="changelog.html"><FONT color="BLUE">[TWL-SDK Wi-Fi ライブラリ 3.3 正式版 までの変更履歴]</FONT></A></B>
+<font color="#ff0000"><B>
+        <H3>注意</H3>
+        <P>
+            TWL-SDK Wi-Fi ライブラリ 単体では動作しませんので、必ず TWL-SDK を事前にインストールしてください。<BR>
+            また、本体に保存されたネットワーク設定を参照して、無線 AP 接続するための自動接続機能は TWL-DWC という別のライブラリパッケージに含まれます。<BR>
+            インターネットに接続するアプリケーションは必ず TWL-DWC の接続機能を利用する必要がありますので、ご注意ください。
+        </P>
+</B>
+</font>
+        <H3>はじめに</H3>
+        <P>
+            TWL-SDK Wi-Fi ライブラリを使うことで、NITRO および TWL のワイヤレス通信（インフラストラクチャーモード）を利用して、
+            インターネットへアクセスを行なうことができます。<BR>
+            <BR>
+            <STRONG>
+                TWL-SDK Wi-Fi ライブラリには以下の制限があります。
+            </STRONG>
+            <UL>
+                <LI>TWL-SDK 5.3 以降に対応しています。
+                <LI>CodeWarrior for NINTENDO DSi Version 1.1 以降に対応しています。
+                <LI><CODE>TWLWIFI_ROOT</CODE> 環境変数に、TwlWiFi へのパスを設定して下さい。
+                <LI>TWL-SDK Wi-Fi ライブラリの中には、ソースコードを公開しないライブラリも含まれます。ご了承下さい。
+            </UL>
+        </P>
+        <H3>ライブラリの構造</H3>
+        <P>
+            TWL-SDK Wi-Fi ライブラリは、内部では以下のような層構造で構成されています。
+            <UL>
+                <LI>WCM  : ワイヤレス接続管理ライブラリ。無線アクセスポイントとの接続を管理し、CPS ライブラリと無線ドライバの橋渡しを行います。
+                <LI>CPS  : TCP/IP プロトコルスタック。ARP、IP、UDP、TCP、ICMP、DHCPクライアント、DNSクライアント、SSLクライアントを含んでいます。
+                <LI>SOCL : CPS ライブラリ上で動作するソケットライブラリ。
+                <LI>SOC  : SOCL を標準的なソケットインターフェースに合わせる為のラッパーライブラリ。
+                <LI>NHTTP: HTTP/HTTPS 接続を行うための通信ライブラリ。
+                <LI>NSSL : SSL 接続を行うための通信ライブラリ。
+            </UL>
+        </P>
+        <P align="center">
+            <IMG src="lib_composition.jpg" width="346" height="206" border="0">
+        </P>
+        <P>
+            TWL-SDK Wi-Fi ライブラリは現在、以下の接頭辞を予約しています。そのためアプリケーション プログラムでは、以下の名前ではじまる関数や変数を使用しないでください。
+        </P>
+        <P>
+            <TABLE border="1" align="center">
+                <TBODY>
+                    <TR>
+                        <TD width="25%" align="center"><STRONG>WCM</STRONG></TD>
+                        <TD width="75%">ワイヤレス接続ライブラリ用プレフィックス</TD>
+                    </TR>
+                    <TR>
+                        <TD align="center"><STRONG>CPS</STRONG></TD>
+                        <TD>TCP/IP プロトコルスタック用プレフィックス</TD>
+                    </TR>
+                    <TR>
+                        <TD align="center"><STRONG>SOC<BR>SOCL</STRONG></TD>
+                        <TD>ソケットライブラリ用プレフィックス</TD>
+                    </TR>
+                    <TR>
+                        <TD align="center"><STRONG>NHTTP</STRONG></TD>
+                        <TD>HTTPライブラリ用プレフィックス</TD>
+                    </TR>
+                    <TR>
+                        <TD align="center"><STRONG>NSSL</STRONG></TD>
+                        <TD>SSLライブラリ用プレフィックス</TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+        </P>
+
+        <H3>API の使用</H3>
+        <P>
+            プログラムのソースコードには、以下のヘッダファイルをインクルードして下さい。
+            <PRE><CODE>
+    #include &lt;twlWiFi.h&gt;
+            </CODE></PRE>
+            このヘッダファイルをインクルードすると、デフォルトで <CODE>so2soc.h</CODE> 及び <CODE>iw2wcm.h</CODE> がインクルードされますが、
+            これらのヘッダは TWL-INET に存在するライブラリの API 定義を TWL-SDK Wi-Fi ライブラリ用に定義しなおすラッパーです。
+            このラッパーにより、TWL-INET を使って開発を進めていた場合でも、容易にライブラリだけを差し替えることが可能です。<BR>
+            <BR>
+            アプリケーション・ライブラリを作成する Makefile には、以下の共通ビルドツールをインクルードして下さい。
+            <PRE><CODE>
+    include $(TWLWIFI_ROOT)/build/buildtools/commondefs
+    include $(TWLWIFI_ROOT)/build/buildtools/modulerules
+            </CODE></PRE>
+            サンプルを正常に動作させるには、以下のファイルをお手持ちの無線アクセスポイントに合わせて編集し、再ビルドする必要があります。
+            <PRE><CODE>
+    $(TWLWIFI_ROOT)/build/demos/netconnect/src/sitedefs.c
+            </CODE></PRE>
+        </P>
+    </BODY>
+</HTML>

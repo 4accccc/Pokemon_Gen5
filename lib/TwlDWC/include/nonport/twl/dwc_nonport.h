@@ -45,8 +45,6 @@ typedef OSTick  DWCTick;
 u64 DWCi_Np_GetConsoleId( void );
 const char* DWCi_Np_GetConsoleName( void );
 const char* DWCi_Np_GetAppGameName( void );
-BOOL    DWCi_Np_SetRootCAList( const char *url );
-BOOL    DWCi_Np_CleanupRootCAList( const char *url );
 
 static inline DWCTick DWCi_Np_GetTick(void)
 {
