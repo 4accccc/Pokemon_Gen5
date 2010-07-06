@@ -6265,6 +6265,29 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
                                        BTL_RULE_DOUBLE );
     beeiw->src = BTLEFF_CAMERA_POS_NONE;
     break;
+  case BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE_MINE:
+  case BTLEFF_PARTICLE_PLAY_POS_B_DOUBLE_MINE:
+  case BTLEFF_PARTICLE_PLAY_POS_C_DOUBLE_MINE:
+  case BTLEFF_PARTICLE_PLAY_POS_D_DOUBLE_MINE:
+    BTLV_MCSS_GetPokeDefaultPosByRule( BTLV_EFFECT_GetMcssWork(), &src,
+                                       beeiw->src - BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE_MINE + BTLEFF_PARTICLE_PLAY_POS_A,
+                                       BTL_RULE_DOUBLE );
+    switch( beeiw->src ){ 
+    case BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE_MINE:
+      src.z += 0x1a00;
+      break;
+    case BTLEFF_PARTICLE_PLAY_POS_B_DOUBLE_MINE:
+      src.z += 0x2600;
+      break;
+    case BTLEFF_PARTICLE_PLAY_POS_C_DOUBLE_MINE:
+      src.z += 0x0600;
+      break;
+    case BTLEFF_PARTICLE_PLAY_POS_D_DOUBLE_MINE:
+      src.z += 0x3900;
+      break;
+    }
+    beeiw->src = BTLEFF_CAMERA_POS_NONE;
+    break;
   }
 
   if( ( beeiw->src != BTLEFF_CAMERA_POS_NONE ) && ( beeiw->src != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) )
@@ -6314,6 +6337,29 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     BTLV_MCSS_GetPokeDefaultPosByRule( BTLV_EFFECT_GetMcssWork(), &dst,
                                        beeiw->dst - BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE + BTLEFF_PARTICLE_PLAY_POS_A,
                                        BTL_RULE_DOUBLE );
+    beeiw->dst = BTLEFF_CAMERA_POS_NONE;
+    break;
+  case BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE_MINE:
+  case BTLEFF_PARTICLE_PLAY_POS_B_DOUBLE_MINE:
+  case BTLEFF_PARTICLE_PLAY_POS_C_DOUBLE_MINE:
+  case BTLEFF_PARTICLE_PLAY_POS_D_DOUBLE_MINE:
+    BTLV_MCSS_GetPokeDefaultPosByRule( BTLV_EFFECT_GetMcssWork(), &dst,
+                                       beeiw->dst - BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE_MINE + BTLEFF_PARTICLE_PLAY_POS_A,
+                                       BTL_RULE_DOUBLE );
+    switch( beeiw->src ){ 
+    case BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE_MINE:
+      dst.z += 0x1a00;
+      break;
+    case BTLEFF_PARTICLE_PLAY_POS_B_DOUBLE_MINE:
+      dst.z += 0x2600;
+      break;
+    case BTLEFF_PARTICLE_PLAY_POS_C_DOUBLE_MINE:
+      dst.z += 0x0600;
+      break;
+    case BTLEFF_PARTICLE_PLAY_POS_D_DOUBLE_MINE:
+      dst.z += 0x3900;
+      break;
+    }
     beeiw->dst = BTLEFF_CAMERA_POS_NONE;
     break;
   }
@@ -7145,7 +7191,7 @@ static void EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_EMIT_INIT_
          ( ( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_ATTACK ) ||
            ( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS ) ) )
   { 
-    if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS )
+    if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS )
     {
       beeiw_src->minus_flag = TRUE;
     }
@@ -7166,8 +7212,8 @@ static void EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_EMIT_INIT_
         pos_cnt = 1;
         break;
       case BTL_RULE_TRIPLE:
-        pos[ 0 ] = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_B_DOUBLE : BTLV_MCSS_POS_A_DOUBLE;
-        pos[ 1 ] = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_D_DOUBLE : BTLV_MCSS_POS_C_DOUBLE;
+        pos[ 0 ] = ( bevw->attack_pos & 1 ) ? BTLEFF_PARTICLE_PLAY_POS_B_DOUBLE_MINE : BTLEFF_PARTICLE_PLAY_POS_A_DOUBLE_MINE;
+        pos[ 1 ] = ( bevw->attack_pos & 1 ) ? BTLEFF_PARTICLE_PLAY_POS_D_DOUBLE_MINE : BTLEFF_PARTICLE_PLAY_POS_C_DOUBLE_MINE;
         pos_cnt = 2;
         break;
       }
