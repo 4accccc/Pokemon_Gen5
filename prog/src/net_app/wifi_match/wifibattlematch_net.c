@@ -5306,13 +5306,13 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
 
       switch( response )
       {
-      case 502:
+      case 503:
         p_wk->seq  = SEQ_DIRTY_END;
 
         NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
         return WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE;
 
-      case 503:
+      case 502:
         p_wk->seq  = SEQ_DIRTY_END;
         NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
         return WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE;
@@ -5468,12 +5468,12 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
       int response = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
       switch( response )
       {
-      case 502:
+      case 503:
         p_wk->seq  = SEQ_DIRTY_END;
         NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
         return WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE;
 
-      case 503:
+      case 502:
         p_wk->seq  = SEQ_DIRTY_END;
         NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
         return WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE;
