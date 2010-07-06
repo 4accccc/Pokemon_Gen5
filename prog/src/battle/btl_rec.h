@@ -91,7 +91,7 @@ typedef struct {
 
   const u8*   recordData;
   u32         dataSize  : 31;
-  u32         fError    :  1;
+  u32         fReadOver :  1;
 //  u32         readPtr;
   u32         readPtr[ BTL_CLIENT_MAX ];
   u8          readBuf[ BTL_CLIENT_MAX ][64];

@@ -210,7 +210,7 @@ void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize
 
   wk->recordData = recordData;
   wk->dataSize = dataSize;
-  wk->fError = FALSE;
+  wk->fReadOver = FALSE;
 
   for(i=0; i<NELEMS(wk->readPtr); ++i){
     wk->readPtr[i] = 0;
@@ -275,7 +275,7 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   u32* rp;
   u32 i;
 
-  if( wk->fError )
+  if( wk->fReadOver )
   {
     BTL_ACTION_PARAM* actionParam = (BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
     BTL_ACTION_SetRecPlayError( actionParam );
@@ -351,7 +351,7 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
 //  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d, readPtr=%d, datSize=%d",
 //            clientID, type, (*rp), wk->dataSize);
 
-  wk->fError = TRUE;
+  wk->fReadOver = TRUE;
   {
     BTL_ACTION_PARAM* actionParam = (BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
     BTL_ACTION_SetRecPlayError( actionParam );
@@ -413,13 +413,13 @@ u32 BTL_RECREADER_GetTurnCount( const BTL_RECREADER* wk )
 //=============================================================================================
 BOOL BTL_RECREADER_IsReadComplete( const BTL_RECREADER* wk, u8 clientID )
 {
-  if( wk->fError == FALSE )
+  if( wk->fReadOver == FALSE )
   {
     const u32* rp = &wk->readPtr[ clientID ];
     BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_CheckReadComp, clientID, (*rp), wk->dataSize );
     return ( (*rp) == wk->dataSize );
   }
-  return FALSE;
+  return TRUE;
 }
 
 
