@@ -266,6 +266,15 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(zukan_toroku), &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
         (*seq)++;
       }else{
+        // 逃げた
+        if( param->result == PDC_RESULT_ESCAPE )
+        {
+          // 図鑑登録（逃げたので見ただけ）
+          {
+            ZUKANSAVE_SetPokeSee( zukan_savedata, param->pp );  // 見た  // 図鑑フラグをセットする
+          }
+        }
+
         (*seq) = 4;
       }
     }
