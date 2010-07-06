@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	rail_editor watanabe obata nagihashi hitch_check
+SUBDIRS	=	rail_editor watanabe obata nagihashi hitch_check cgearp
 
 TARGET_DIR = $(PROJECT_ARCDIR)debug
 
