@@ -535,6 +535,8 @@ static BOOL UTIL_IsClear( void *p_adrs, u32 size );
 
 static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int type, int ret );
 
+static u32 WifiBattleMatch_GpfServerResponseMsg( u32 ret_cd );
+
 //=============================================================================
 /**
  *					データ
@@ -5078,6 +5080,46 @@ static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  コード
+ *
+ *	@param	u32 ret_cd  レスポンスコード
+ *
+ *	@return メッセージ番号
+ */
+//-----------------------------------------------------------------------------
+static u32 WifiBattleMatch_GpfServerResponseMsg( u32 ret_cd )
+{
+  switch( ret_cd )
+  {
+  case DREAM_WORLD_SERVER_ERROR_NONE:        // 正常です
+    GF_ASSERT( 0 );
+    return 0;
+
+  case DREAM_WORLD_SERVER_ERROR_SERVER_FULL:	// サーバーの容量オーバーです
+    return WIFI_GSYNC_ERR001;
+  case DREAM_WORLD_SERVER_ALREADY_EXISTS:	  // サーバーに既にデータがあります
+    return WIFI_GSYNC_ERR002;
+  case DREAM_WORLD_SERVER_ILLEGAL_DATA:		// アップロードされたデータが壊れています
+    return WIFI_GSYNC_ERR003;
+  case DREAM_WORLD_SERVER_CHEAT_DATA:		  // アップロードされたデータが不正です
+    return WIFI_GSYNC_ERR004;
+  case DREAM_WORLD_SERVER_NO_DATA:		      // サーバにデータがありません
+    return WIFI_GSYNC_ERR005;
+  case DREAM_WORLD_SERVER_END:             // サービスが終了している
+    return WIFI_GSYNC_ERR006;
+  case DREAM_WORLD_SERVER_ILLEGAL_TOKEN:   // 認証トークンに問題がある
+    return WIFI_GSYNC_ERR007;
+  case DREAM_WORLD_SERVER_NO_ACCOUNT:      // アカウントがありません
+    return WIFI_GSYNC_ERR008;
+
+  default:
+  case DREAM_WORLD_SERVER_ERROR_ETC:       // その他サーバがエラーの場合 これ以上の値が来ても同様にエラーにする
+    return WIFI_GSYNC_ERR009;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  受信したデジタル選手証を取得
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
@@ -5302,7 +5344,7 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
       else
       { 
 
-        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR001 + ((gs_response*)pEvent)->ret_cd -1 );
+        NetErr_App_ReqErrorDispForce( WifiBattleMatch_GpfServerResponseMsg( ((gs_response*)pEvent)->ret_cd ) );
         p_wk->seq  = SEQ_DIRTY_END;
       }
     }
@@ -5455,7 +5497,7 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
       }
       else
       {
-        NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR001 + ((gs_response*)pEvent)->ret_cd -1 );
+        NetErr_App_ReqErrorDispForce( WifiBattleMatch_GpfServerResponseMsg( ((gs_response*)pEvent)->ret_cd ) );
         p_wk->seq  = SEQ_DIRTY_END;
       }
     }
