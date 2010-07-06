@@ -1169,15 +1169,19 @@ static BOOL updateRequest( FIELD_PLAYER_CORE *player_core, int no )
 //--------------------------------------------------------------
 static int reqBit_to_Number( u32 bit )
 {
-  int i = 0;
+  int i = FIELD_PLAYER_REQBIT_MAX;
   
-  do{
-    if( (bit&0x01) ){
-      break;
-    }
-    bit >>= 1;
-    i++;
-  }while( i < FIELD_PLAYER_REQBIT_MAX );
+  if( bit ){
+    i = 0;
+    
+    do{
+      if( (bit&0x01) ){
+        break;
+      }
+      bit >>= 1;
+      i++;
+    }while( i < FIELD_PLAYER_REQBIT_MAX );
+  }
   
   return( i );
 }
@@ -1193,6 +1197,11 @@ static int reqBit_to_Number( u32 bit )
 void FIELD_PLAYER_CORE_SetRequest(
   FIELD_PLAYER_CORE * player_core, FIELD_PLAYER_REQBIT req_bit )
 {
+#ifdef PM_DEBUG //リクエスト未消化チェック
+  if( player_core->req_bit ){
+    GF_ASSERT( player_core->req_seq_end_flag == TRUE );
+  }
+#endif 
   player_core->req_bit = req_bit;
   player_core->req_seq_no = 0;
   player_core->req_seq_end_flag = 0;
@@ -1237,7 +1246,6 @@ void FIELD_PLAYER_CORE_ForceUpdateRequest( FIELD_PLAYER_CORE *player_core )
   int no = reqBit_to_Number( bit );
   
   if( no >= FIELD_PLAYER_REQBIT_MAX ){
-    GF_ASSERT( 0 );
     return;
   }
   
