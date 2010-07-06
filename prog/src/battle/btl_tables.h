@@ -27,9 +27,9 @@ extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 
 
 /**
- *  ジュエル系が反応しないワザ判定
+ *  合体ワザ判定
  */
-extern BOOL BTL_TABLES_IsJuelOmmitWaza( WazaID waza );
+extern BOOL BTL_TABLES_IsCombiWaza( WazaID waza );
 
 
 /**

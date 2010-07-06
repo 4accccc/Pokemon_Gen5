@@ -5940,7 +5940,7 @@ static void common_Juel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   ){
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( (WAZADATA_IsDamage(waza))
-    &&  (!BTL_TABLES_IsJuelOmmitWaza(waza) )
+    &&  (!BTL_TABLES_IsCombiWaza(waza) )
     &&  (!BTL_EVENT_FACTOR_IsIsolateMode(myHandle))
     ){
       if( !BTL_SVFTOOL_IsSimulationMode(flowWk) )

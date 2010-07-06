@@ -96,9 +96,9 @@ BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
 
 
 /**
- *  ジュエル系が反応しないワザ判定
+ *  合体ワザ判定
  */
-BOOL BTL_TABLES_IsJuelOmmitWaza( WazaID waza )
+BOOL BTL_TABLES_IsCombiWaza( WazaID waza )
 {
   static const u16 table[] = {
     WAZANO_HONOONOTIKAI, WAZANO_KUSANOTIKAI, WAZANO_MIZUNOTIKAI,
