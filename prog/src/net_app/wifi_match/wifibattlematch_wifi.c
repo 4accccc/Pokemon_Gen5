@@ -203,6 +203,8 @@ typedef struct
 
   BOOL is_send_report;
 
+  WIFIBATTLEMATCH_NET_SC_STATE  sc_state;
+
   //サーバーから落としてきたマッチング相手の登録ポケモン
   POKEPARTY *p_other_party;
 
@@ -3051,17 +3053,25 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_WIFICUP, 0, NULL, FALSE );
     p_wk->is_send_report  = FALSE;
     *p_seq  = SEQ_WAIT_SESSION;
+    p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
     break;
 
   case SEQ_WAIT_SESSION:
     {
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
-      if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
+
+      //内部でエラー検知してもDWCのエラーがでないと、
+      //もう一度内部で処理してしまう場合があるので、
+      //エラーが起こったら起動しないようにしています
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      {
+        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
+      }
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
         *p_seq  = SEQ_END_MATCHING_MSG;
       }
       
-      if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      if( p_wk->sc_state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
         //ここでエラーが起こった場合、レポートを送信していれば切断カウンターがあがってしまうので戦闘後へ、レポートを送信していなければ、録画後へいく
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
@@ -3380,20 +3390,28 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     {
       BOOL is_error = p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
       WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE, WIFIBATTLEMATCH_TYPE_WIFICUP, p_param->p_param->btl_rule, p_param->cp_btl_score, is_error );
+      p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
     }
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, NULL );
-      if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
+
+      //内部でエラー検知してもDWCのエラーがでないと、
+      //もう一度内部で処理してしまう場合があるので、
+      //エラーが起こったら起動しないようにしています
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      {
+        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, NULL );
+      }
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
         //相手の不正フラグを受け取る
         ((BATTLEMATCH_BATTLE_SCORE *)(p_param->cp_btl_score))->is_other_dirty = WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( p_wk->p_net );
         *p_seq = SEQ_SC_HEAP_EXIT;
       }
       
-      if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE  )
+      if( p_wk->sc_state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE  )
       {
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )

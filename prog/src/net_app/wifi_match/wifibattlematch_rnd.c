@@ -207,6 +207,8 @@ typedef struct
 
   BOOL is_send_report;
 
+  WIFIBATTLEMATCH_NET_SC_STATE  sc_state;
+
 #ifdef DEBUGWIN_USE
   u32 playerinfo_mode;
   u32 matchinfo_mode;
@@ -836,6 +838,13 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
 
   case SEQ_START_RECV_GPF:
+#ifdef DEBUG_GPF_PASS
+    { 
+      *p_seq  = SEQ_START_POKECHECK_SERVER;
+      return;
+    }
+#endif
+
     GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
     WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
     *p_seq = SEQ_WAIT_RECV_GPF;
@@ -872,20 +881,14 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   case SEQ_CHECK_GPF:
 
-#ifdef DEBUG_GPF_PASS
-    { 
-      *p_seq  = SEQ_START_POKECHECK_SERVER;
-    }
-#else
-
 #ifdef DEBUG_FLAG_GPF_PASS_ON
     if( DEBUG_FLG_GetFlg( DEBUG_FLG_WifiMatchRateFlag ) )
     { 
       *p_seq  = SEQ_START_POKECHECK_SERVER;
       return;
     }
-
 #endif//DEBUG_FLAG_GPF_PASS_ON
+
     { 
       if( p_wk->p_param->p_gpf_data->signin )
       { 
@@ -896,7 +899,6 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         *p_seq  = SEQ_START_NOSERVER_MSG;
       }
     }
-#endif//DEBUG_GPF_PASS
     break;
 
   case SEQ_START_NOSERVER_MSG:
@@ -1492,19 +1494,26 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     DEBUG_SC_HEAP_Increment
 
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_RNDRATE, 0, NULL, FALSE );
-    p_wk->is_send_report  = FALSE;
+    p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
     *p_seq  = SEQ_WAIT_SESSION;
     break;
 
   case SEQ_WAIT_SESSION:
     {
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
-      if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
+      //内部でエラー検知してもDWCのエラーがでないと、
+      //もう一度内部で処理してしまう場合があるので、
+      //エラーが起こったら起動しないようにしています
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      {
+        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
+      }
+
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
         *p_seq  = SEQ_END_SESSION;
       }
       
-      if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      if( p_wk->sc_state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
         NAGI_Printf( "check!\n" );
         //ここでエラーが起こった場合、レポートを送信していれば切断カウンターがあがってしまうので戦闘後へ、レポートを送信していなければ、録画後へいく
@@ -1512,6 +1521,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
           WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+          NAGI_Printf( "check1!\n" );
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
           DWC_RAPCOMMON_ResetSubHeapID();
@@ -1521,6 +1531,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
 
           Util_Matchinfo_Clear( p_wk );
+          NAGI_Printf( "check2!\n" );
           *p_seq  = SEQ_ERROR_END;
           break;
 
@@ -1528,6 +1539,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
           DEBUG_SC_HEAP_Decrement
+          NAGI_Printf( "check3!\n" );
 
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
           break;
@@ -1762,20 +1774,25 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     {
       BOOL is_error = p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
       WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->cp_btl_score, is_error );
+      p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
     }
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
-      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net , NULL );
-      if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      {
+        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net , NULL );
+      }
+
+      if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
         //相手の不正フラグを受け取る
         ((BATTLEMATCH_BATTLE_SCORE *)(p_param->cp_btl_score))->is_other_dirty = WIFIBATTLEMATCH_NET_SC_GetDirtyFlag( p_wk->p_net );
         *p_seq = SEQ_SC_HEAP_EXIT;
       }
 
-      if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      if( p_wk->sc_state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
