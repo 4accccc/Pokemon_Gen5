@@ -1185,13 +1185,16 @@ static void handler_HimeriNomi_wazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 // アイテム反応汎用
 static void handler_HimeriNomi_reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ITEM_REACTION) != BTL_ITEMREACTION_HP)
-  ){
-    if( common_Himeri_EnableWazaIdx(flowWk, pokeID) != PTL_WAZA_MAX )
-    {
-//      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
-      ItemPushRun( myHandle, flowWk, pokeID );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BtlItemReaction reactionType = BTL_EVENTVAR_GetValue( BTL_EVAR_ITEM_REACTION );
+    if( (reactionType == BTL_ITEMREACTION_PP)
+    ||  (reactionType == BTL_ITEMREACTION_GEN)
+    ){
+      if( common_Himeri_EnableWazaIdx(flowWk, pokeID) != PTL_WAZA_MAX )
+      {
+        ItemPushRun( myHandle, flowWk, pokeID );
+      }
     }
   }
 }
