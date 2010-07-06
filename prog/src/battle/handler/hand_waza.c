@@ -8937,7 +8937,6 @@ static void handler_Onnen_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       if( BPP_IsDead(bpp) )
       {
-        BTL_HANDEX_PARAM_MESSAGE* msg_param;
         WazaID  waza;
         u16     wazaIdx;
 
@@ -8955,13 +8954,12 @@ static void handler_Onnen_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
             pp_param->wazaIdx = wazaIdx;
             pp_param->volume = BPP_WAZA_GetPP( targetPoke, wazaIdx ) * -1;
             pp_param->fDeadPokeEnable = TRUE;
-          BTL_SVF_HANDEX_Pop( flowWk, pp_param );
 
-          msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-            HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_OnnenDone );
-            HANDEX_STR_AddArg( &msg_param->str, target_pokeID );
-            HANDEX_STR_AddArg( &msg_param->str, waza );
-          BTL_SVF_HANDEX_Pop( flowWk, msg_param );
+            HANDEX_STR_Setup( &pp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_OnnenDone );
+            HANDEX_STR_AddArg( &pp_param->exStr, target_pokeID );
+            HANDEX_STR_AddArg( &pp_param->exStr, waza );
+
+          BTL_SVF_HANDEX_Pop( flowWk, pp_param );
         }
 
         BTL_EVENT_FACTOR_Remove( myHandle );  // Ç®ÇÒÇÀÇÒê¨å˜Ç≈é©éE
