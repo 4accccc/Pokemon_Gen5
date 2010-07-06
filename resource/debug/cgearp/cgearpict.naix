@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: cgearpict.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-07-06T14:59:56
+ *****************************************************************************/
+
+#ifndef NARC_CGEARPICT_NAIX_
+#define NARC_CGEARPICT_NAIX_
+
+enum {
+	NARC_cgearpict_mun_decal01_bin = 0
+};
+
+/* NARC_CGEARPICT_NAIX_ */
+#endif
