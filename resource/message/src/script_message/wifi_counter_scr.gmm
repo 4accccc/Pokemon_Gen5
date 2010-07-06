@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-07-06T18:31:17"/>
+	<create user="shimoyamada" host="W00184" date="2010-07-06T18:45:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1306,7 +1306,7 @@ http://www.pokemon-gl.com/
 連れていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_04_exp05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_04_exp05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>ルール／シューター</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シューターバトルは
@@ -1314,7 +1314,7 @@ http://www.pokemon-gl.com/
 トリプルバトルを　おこないます[BE:00:ページ切り替え（行送り）]
 ポケモンが　６ひき　ひつようです[BE:01:ページ切り替え（クリア）]
 たたかうまえに　あいてと
-みせあいを　おこない[BE:00:ページ切り替え（行送り）]
+ポケモンの　みせあいを　おこない[BE:00:ページ切り替え（行送り）]
 ６ひき　えらんで　たいせんします[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
@@ -1326,8 +1326,8 @@ http://www.pokemon-gl.com/
 ミラクルシューターありの[BE:00:ページ切り替え（行送り）]
 トリプルバトルを　行います[BE:00:ページ切り替え（行送り）]
 ポケモンが　６匹　必要です[BE:01:ページ切り替え（クリア）]
-戦うまえに　相手と　自分の
-手持ち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+戦うまえに　相手と
+ポケモンの　見せ合いを　行い[BE:00:ページ切り替え（行送り）]
 ６匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
 連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
