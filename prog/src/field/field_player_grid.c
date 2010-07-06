@@ -395,12 +395,12 @@ FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
     case PLAYER_MOVE_FORM_SWIM:
       FIELD_PLAYER_CORE_SetRequest(
           gjiki->player_core, FIELD_PLAYER_REQBIT_SWIM );
-      FIELD_PLAYER_CORE_UpdateRequest( gjiki->player_core );
+      FIELD_PLAYER_CORE_ForceUpdateRequest( gjiki->player_core );
       break;
     case PLAYER_MOVE_FORM_DIVING:
       FIELD_PLAYER_CORE_SetRequest(
           gjiki->player_core, FIELD_PLAYER_REQBIT_DIVING );
-      FIELD_PLAYER_CORE_UpdateRequest( gjiki->player_core );
+      FIELD_PLAYER_CORE_ForceUpdateRequest( gjiki->player_core );
       break;
     }
   }
@@ -3337,7 +3337,6 @@ static void oze_StartYureJiki( FIELD_PLAYER_GRID *gjiki )
   gjiki_SetMoveBitOzeYure( gjiki, TRUE );
   FIELD_PLAYER_CORE_ChangeDrawForm(
     gjiki->player_core, PLAYER_DRAW_FORM_YURE );
-//  FIELD_PLAYER_ForceWaitVBlank( FIELDMAP_GetFieldPlayer(gjiki->fieldWork) );
 }
 
 //--------------------------------------------------------------
@@ -3355,7 +3354,6 @@ static void oze_EndYureJiki( FIELD_PLAYER_GRID *gjiki )
   
   gjiki_SetMoveBitOzeYure( gjiki, FALSE );
   FIELD_PLAYER_CORE_ResetMoveForm( gjiki->player_core );
-//  FIELD_PLAYER_ForceWaitVBlank( FIELDMAP_GetFieldPlayer(gjiki->fieldWork) );
 }
 
 //======================================================================

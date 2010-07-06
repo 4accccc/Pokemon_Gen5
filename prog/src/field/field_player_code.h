@@ -38,5 +38,7 @@
 #define FIELD_PLAYER_REQBIT_CUTIN (1<<7)
 ///自機をダイビング状態に変更
 #define FIELD_PLAYER_REQBIT_DIVING (1<<8)
+///自機を釣り状態にする
+#define FIELD_PLAYER_REQBIT_FISHING (1<<9)
 ///ビット最大
-#define FIELD_PLAYER_REQBIT_MAX (9)
+#define FIELD_PLAYER_REQBIT_MAX (10)

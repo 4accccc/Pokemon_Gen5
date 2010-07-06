@@ -2878,7 +2878,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
     task = FIELD_PLAYER_GetEffectTaskWork( fld_player );
     FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_OFF );
     FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_NORMAL );
-    FIELD_PLAYER_UpdateRequest( fld_player );
+    FIELD_PLAYER_ForceUpdateRequest( fld_player );
     {
       u16 ac = MMDL_ChangeDirAcmdCode( work->dir, AC_JUMP_U_1G_8F );
       if( work->attr_kishi_flag == TRUE ){
@@ -2891,8 +2891,6 @@ static GMEVENT_RESULT event_NaminoriEnd(
   case 2:
     if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
       FIELD_PLAYER_SetNaminoriEnd( fld_player );
-      FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
-      FIELD_PLAYER_SetNaminoriEventEnd( fld_player, TRUE );
       (*seq)++;
     }
     break;

@@ -320,9 +320,11 @@ static GMEVENT_RESULT CycleEvent(GMEVENT * event, int * seq, void *work)
   case 1:
     {
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-      FIELD_PLAYER_ForceWaitVBlank( fld_player );
+      
+      if( FIELD_PLAYER_UpdateRequest(fld_player) == TRUE ){
+        (*seq)++;
+      }
     }
-    (*seq)++;
     break;
   case 2:
     {

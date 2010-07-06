@@ -609,18 +609,24 @@ static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
     work->seq++;
     break;
   case 3:
-    if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
-      MMDL_EndAcmd( mmdl );
-      task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
-      FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
-      FIELD_PLAYER_SetNaminori( work->fld_player );
-      FIELD_PLAYER_ForceWaitVBlank( work->fld_player );
+    if( MMDL_CheckEndAcmd(mmdl) == FALSE ){
+      break;
+    }
+
+    MMDL_EndAcmd( mmdl );
+    task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
+    FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
+      
+    FIELD_PLAYER_SetRequest( work->fld_player, FIELD_PLAYER_REQBIT_SWIM );
+    work->seq++;
+  case 4:
+    if( FIELD_PLAYER_UpdateRequest(work->fld_player) == TRUE ){
       FIELD_PLAYER_SetNaminoriEventEnd( work->fld_player, TRUE );
       work->end_flag = TRUE;
       work->seq++;
     }
     break;
-  case 4:
+  case 5:
     break;
   }
 }

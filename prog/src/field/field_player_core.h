@@ -65,8 +65,8 @@ extern void FIELD_PLAYER_CORE_ClearOBJCodeFix( FIELD_PLAYER_CORE *player_core );
 // Reqä÷åW
 extern void FIELD_PLAYER_CORE_SetRequest(
   FIELD_PLAYER_CORE * player_core, FIELD_PLAYER_REQBIT req_bit );
-extern void FIELD_PLAYER_CORE_UpdateRequest( FIELD_PLAYER_CORE * player_core );
-
+extern BOOL FIELD_PLAYER_CORE_UpdateRequest( FIELD_PLAYER_CORE *player_core );
+extern void FIELD_PLAYER_CORE_ForceUpdateRequest( FIELD_PLAYER_CORE *player_core );
 
 // èÓïÒÇÃéÊìæÅEê›íË
 extern FIELDMAP_WORK * FIELD_PLAYER_CORE_GetFieldMapWork(
@@ -92,15 +92,22 @@ extern PLAYER_WORK * FIELD_PLAYER_CORE_GetPlayerWork( const FIELD_PLAYER_CORE * 
 // èÓïÒÇÃÇ¢ÇÎÇÒÇ»ä÷åWÇÃä÷êî
 extern BOOL FIELD_PLAYER_CORE_CheckLiveMMdl( const FIELD_PLAYER_CORE *player_core );
 
+#if 0
 extern void FIELD_PLAYER_CORE_ChangeMoveForm(
     FIELD_PLAYER_CORE *player_core, PLAYER_MOVE_FORM form );
+#endif
+
 extern void FIELD_PLAYER_CORE_ResetMoveForm( FIELD_PLAYER_CORE *player_core );
 extern void FIELD_PLAYER_CORE_ChangeDrawForm(
     FIELD_PLAYER_CORE *player_core, PLAYER_DRAW_FORM form );
 extern BOOL FIELD_PLAYER_CORE_CheckDrawFormWait( FIELD_PLAYER_CORE *player_core );
 extern PLAYER_DRAW_FORM FIELD_PLAYER_CORE_GetDrawForm( FIELD_PLAYER_CORE *player_core );
+#if 0
 extern void FIELD_PLAYER_CORE_ChangeFormRequest( FIELD_PLAYER_CORE *player_core, PLAYER_DRAW_FORM form );
+#endif
+#if 0
 extern BOOL FIELD_PLAYER_CORE_ChangeFormWait( FIELD_PLAYER_CORE *player_core );
+#endif
 extern BOOL FIELD_PLAYER_CORE_CheckIllegalOBJCode( FIELD_PLAYER_CORE *player_core );
 extern BOOL FIELD_PLAYER_CORE_CheckAnimeEnd( const FIELD_PLAYER_CORE *player_core );
 

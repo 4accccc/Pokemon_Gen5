@@ -46,6 +46,7 @@ enum {
 */
   REPORT_SEQ_SAVE_SIZE_CHECK,         // セーブサイズ取得
   REPORT_SEQ_PALYER_ANM_CHG,          // 主人公アニメ変更
+  REPORT_SEQ_PALYER_ANM_CHG_WAIT,     // 主人公アニメ変更待ち add 100705
   REPORT_SEQ_SAVE_INIT,               // セーブ初期設定
   REPORT_SEQ_SAVE_MAIN,               // セーブ実行
   REPORT_SEQ_RESULT_OK_BAR_WAIT,      // セーブ成功バー待ち
@@ -121,6 +122,7 @@ static void MsgPrint( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx );
 static BOOL CheckMsgPrint( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
 static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
+static BOOL WaitPlayerRequest( FMENU_REPORT_EVENT_WORK * wk );
 static BOOL CheckPlayerAnime( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportBgAnime( FMENU_REPORT_EVENT_WORK * work );
 static void ResetReportBgAnime( FMENU_REPORT_EVENT_WORK * work );
@@ -256,10 +258,14 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 //    if( MainReportMsg( wk ) == FALSE ){
     if( CheckMsgPrint( wk ) == TRUE ){
       SetReportPlayerAnime( wk );
+      *seq = REPORT_SEQ_PALYER_ANM_CHG_WAIT;
+    }
+    break;
+  case REPORT_SEQ_PALYER_ANM_CHG_WAIT: // add 100705
+    if( WaitPlayerRequest(wk) == TRUE ){
       *seq = REPORT_SEQ_SAVE_INIT;
     }
     break;
-
 	case REPORT_SEQ_SAVE_INIT:							// セーブ初期設定
 		if( CheckPlayerAnime( wk ) == FALSE ){
 			break;
@@ -337,22 +343,29 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
     break;
 
   case REPORT_SEQ_RESULT_OK_WAIT:   // セーブ成功メッセージ待ち
+    if( WaitPlayerRequest(wk) != TRUE ){
+      break;
+    }
+    
     if( CheckPlayerAnime( wk ) == FALSE ){
       break;
     }
+    
     if( MainReportMsg( wk ) == FALSE ){
 //      PMSND_PlaySE( SEQ_SE_SAVE );
       *seq = REPORT_SEQ_RESULT_SE_WAIT;
     }
     break;
-
   case REPORT_SEQ_RESULT_SE_WAIT:   // ＳＥ待ち
     if( PMSND_CheckPlayingSEIdx(SEQ_SE_SAVE) == FALSE ){
       *seq = REPORT_SEQ_END_TRG_WAIT;
     }
     break;
-
   case REPORT_SEQ_RESULT_NG_WAIT:			  // セーブ失敗アニメ待ち
+    if( WaitPlayerRequest(wk) != TRUE ){
+      break;
+    }
+    
     if( CheckPlayerAnime( wk ) == FALSE ){
       break;
     }
@@ -744,12 +757,12 @@ static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
   if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
     MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
     FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_REPORT );
-    FIELD_PLAYER_UpdateRequest( fld_player );
-    FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
     
     //ポーズを解除しアニメするように
     MMDL_OffMoveBitMoveProcPause( mmdl );
     MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
+    
+    FIELD_PLAYER_UpdateRequest( fld_player );
   }
 }
 
@@ -768,8 +781,27 @@ static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
   if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
     FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
     FIELD_PLAYER_UpdateRequest( fld_player );
-    FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
   }
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		自機リクエスト消化待ち add 100705
+ *
+ * @param   wk      ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL WaitPlayerRequest( FMENU_REPORT_EVENT_WORK * wk )
+{
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
+  
+  if( FIELD_PLAYER_UpdateRequest(fld_player) == TRUE ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------------------------------------

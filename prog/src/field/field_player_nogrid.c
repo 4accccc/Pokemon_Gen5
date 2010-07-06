@@ -450,12 +450,12 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER_CORE* p_player_cor
     case PLAYER_MOVE_FORM_SWIM:
       FIELD_PLAYER_CORE_SetRequest(
           p_wk->p_player_core, FIELD_PLAYER_REQBIT_SWIM );
-      FIELD_PLAYER_CORE_UpdateRequest( p_wk->p_player_core );
+      FIELD_PLAYER_CORE_ForceUpdateRequest( p_wk->p_player_core );
       break;
     case PLAYER_MOVE_FORM_DIVING:
       FIELD_PLAYER_CORE_SetRequest(
           p_wk->p_player_core, FIELD_PLAYER_REQBIT_DIVING );
-      FIELD_PLAYER_CORE_UpdateRequest( p_wk->p_player_core );
+      FIELD_PLAYER_CORE_ForceUpdateRequest( p_wk->p_player_core );
       break;
     }
   }

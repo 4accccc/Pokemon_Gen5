@@ -845,6 +845,28 @@ VMCMD_RESULT EvCmdGetFrontObjID( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * 自機リクエスト消化待ち　ウェイと部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitPlayerRequest(VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
+  FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+  
+  if( FIELD_PLAYER_UpdateRequest(fld_player) == TRUE ){
+    return( TRUE );
+  }
+
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
  * 自機リクエスト
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
@@ -860,10 +882,13 @@ VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk )
   FIELD_PLAYER* fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   
   FIELD_PLAYER_SetRequest( fld_player, req );
-  FIELD_PLAYER_UpdateRequest( fld_player );
-  FIELD_PLAYER_ForceWaitVBlank( fld_player ); //BTS5723 100616
   
-  return VMCMD_RESULT_CONTINUE;
+  if( FIELD_PLAYER_UpdateRequest(fld_player) == TRUE ){
+    return VMCMD_RESULT_CONTINUE;
+  }
+  
+  VMCMD_SetWait( core, EvWaitPlayerRequest );
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------

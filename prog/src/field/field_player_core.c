@@ -1,18 +1,14 @@
-//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+//======================================================================
 /**
  *	GAME FREAK inc.
- *
  *	@file		field_player_core.c
  *	@brief  フィールドプレイヤー制御　コア情報
  *	@author	gamefreak
  *	@date		2010.02.05
- *
  *	モジュール名：FIELD_PLAYER_CORE
  */
-//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-
+//======================================================================
 #include "gflib.h"
-
 
 #include "field/field_const.h"
 
@@ -35,12 +31,14 @@
 #endif
 #endif
 
+#define REQ_CHG_DRAW_MIDDLE_WAIT (0)
+
 //======================================================================
 //  struct
 //======================================================================
-//-------------------------------------
+//--------------------------------------------------------------
 ///	FIELD_PLAYER_CORE
-//=====================================
+//--------------------------------------------------------------
 struct _FIELD_PLAYER_CORE 
 {
 	HEAPID heapID;
@@ -48,30 +46,40 @@ struct _FIELD_PLAYER_CORE
 	FIELDMAP_WORK *fieldWork;
   PLAYER_WORK *playerWork;
    
-#if 0 //PLAYER_WORKへ移動
+  #if 0 //PLAYER_WORKへ移動
   PLAYER_MOVE_FORM move_form;
-#endif
+  #endif
   
   PLAYER_MOVE_STATE move_state;
   PLAYER_MOVE_VALUE move_value;
 	
   int sex; //性別
+
 	MMDL *fldmmdl;
-
-
+  
   // キー入力処理
   u16 input_key_dir_x; //キー入力横方向
   u16 input_key_dir_z; //キー入力縦方向
-
+  
   // REQ系メンバ
   FIELD_PLAYER_REQBIT req_bit;
-
+  
   // EffectTask
   FLDEFF_TASK *fldeff_joint;
-
+  
   // 見た目更新ウエイト用　待ち時間
-  int draw_form_wait;
+  u16 draw_form_wait;
+  u16 chg_draw_form_middle_wait;
+  
+  // REQ SEQメンバ
+  s16 req_seq_no;
+  u16 req_seq_end_flag;
 };
+
+//--------------------------------------------------------------
+/// REQPROC
+//--------------------------------------------------------------
+typedef int (*REQPROC)(FIELD_PLAYER_CORE *);
 
 //======================================================================
 //  proto
@@ -100,6 +108,8 @@ static void fldplayer_ChangeOBJCode(
     FIELD_PLAYER_CORE *player_core, u16 code );
 static void fldplayer_ChangeMoveForm(
     FIELD_PLAYER_CORE *player_core, PLAYER_MOVE_FORM form );
+static BOOL fldplayer_CheckOBJCodeHero( FIELD_PLAYER_CORE *player_core );
+static BOOL fldplayer_CheckBBDAct( FIELD_PLAYER_CORE *player_core );
 
 ///	キー入力処理
 static u16 gjiki_GetInputKeyDir(
@@ -109,21 +119,15 @@ static u16 getKeyDirX( u16 key_prs );
 static u16 getKeyDirZ( u16 key_prs );
 
 ///	Req系
-static void gjikiReq_SetNormal( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetCycle( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetSwim( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetMoveFormToDrawForm( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetItemGetHero( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetReportHero( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetPCAzukeHero( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetCutInHero( FIELD_PLAYER_CORE *player_core );
-static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core );
+static const REQPROC * const data_RequestProcTbl[FIELD_PLAYER_REQBIT_MAX];
+
+//parts
 static void gjiki_PlayBGM( FIELD_PLAYER_CORE *player_core );
 
 //======================================================================
 //  field player core
 //======================================================================
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * フィールドプレイヤー　作成
  * @param playerWork 使用するPLAYER_WOKR
@@ -133,7 +137,7 @@ static void gjiki_PlayBGM( FIELD_PLAYER_CORE *player_core );
  * @param heapID HEAPID
  * @retval FIELD_PLAYER_CORE*
  */
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------
 FIELD_PLAYER_CORE * FIELD_PLAYER_CORE_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
 		const VecFx32 *pos, int sex, HEAPID heapID )
@@ -198,8 +202,6 @@ FIELD_PLAYER_CORE * FIELD_PLAYER_CORE_Create(
     if( fixcode == OBJCODEMAX ){
       FIELD_PLAYER_CORE_ResetMoveForm( player_core );
     }
-    
-    
 	}
 	
 #if 0 // MoveFormがセーブされるようになったため、不要なはず。2010.04.14
@@ -395,62 +397,6 @@ void FIELD_PLAYER_CORE_ClearOBJCodeFix( FIELD_PLAYER_CORE *player_core )
   PLAYERWORK_SetOBJCodeFix( player_core->playerWork, OBJCODEMAX );
 }
 
-
-
-
-
-//--------------------------------------------------------------
-/**
- * 自機リクエスト 
- * @param player_core FIELD_PLAYER_CORE
- * @param reqbit FIELD_PLAYER_REQBIT
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FIELD_PLAYER_CORE_SetRequest(
-  FIELD_PLAYER_CORE * player_core, FIELD_PLAYER_REQBIT req_bit )
-{
-  player_core->req_bit = req_bit;
-}
-
-//--------------------------------------------------------------
-/**
- * リクエストを更新
- * @param player_core FIELD_PLAYER_CORE
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FIELD_PLAYER_CORE_UpdateRequest( FIELD_PLAYER_CORE * player_core )
-{
-  int i = 0;
-  FIELD_PLAYER_REQBIT req_bit = player_core->req_bit;
-  static void (* const data_RequestProcTbl[FIELD_PLAYER_REQBIT_MAX])( FIELD_PLAYER_CORE *player_core ) =
-  {
-    gjikiReq_SetNormal, //FIELD_PLAYER_REQBIT_NORMAL
-    gjikiReq_SetCycle, //FIELD_PLAYER_REQBIT_CYCLE
-    gjikiReq_SetSwim, //FIELD_PLAYER_REQBIT_SWIM
-    gjikiReq_SetMoveFormToDrawForm,
-    gjikiReq_SetItemGetHero,
-    gjikiReq_SetReportHero,
-    gjikiReq_SetPCAzukeHero,
-    gjikiReq_SetCutInHero,
-    gjikiReq_SetDiving, //FIELD_PLAYER_REQBIT_SWIM
-  };
-
-  
-  while( i < FIELD_PLAYER_REQBIT_MAX ){
-    if( (req_bit&0x01) ){
-      data_RequestProcTbl[i]( player_core );
-    }
-    req_bit >>= 1;
-    i++;
-  }
-   
-  player_core->req_bit = 0;
-}
-
-
-
 //--------------------------------------------------------------
 /**
  * FILED_PLAYER_CORE　FIELDMAP_WORK取得
@@ -502,13 +448,13 @@ PLAYER_MOVE_VALUE FIELD_PLAYER_CORE_GetMoveValue(
   return( player_core->move_value );
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * FIELD_PLAYER PLAYER_MOVE_STATEセット
  * @param player_core FIELD_PLAYER_CORE
  * @param val PLAYER_MOVE_STATE
  */
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------
 void FIELD_PLAYER_CORE_SetMoveState(
     FIELD_PLAYER_CORE *player_core, PLAYER_MOVE_STATE val )
 {
@@ -579,7 +525,7 @@ GAMESYS_WORK * FIELD_PLAYER_CORE_GetGameSysWork( FIELD_PLAYER_CORE *player_core 
   return( player_core->gsys );
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  プレイヤーワークの取得
  *
@@ -587,19 +533,19 @@ GAMESYS_WORK * FIELD_PLAYER_CORE_GetGameSysWork( FIELD_PLAYER_CORE *player_core 
  *
  *	@return プレイヤーワーク
  */
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------
 PLAYER_WORK * FIELD_PLAYER_CORE_GetPlayerWork( const FIELD_PLAYER_CORE * player_core )
 {
   return (player_core->playerWork);
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * 動作モデルが生きているかチェック
  * @param player_core FIELD_PLAYER_CORE
  * @retval BOOL TRUE=生存
  */
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------
 BOOL FIELD_PLAYER_CORE_CheckLiveMMdl( const FIELD_PLAYER_CORE *player_core )
 {
   const MMDL *fmmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
@@ -627,6 +573,7 @@ BOOL FIELD_PLAYER_CORE_CheckLiveMMdl( const FIELD_PLAYER_CORE *player_core )
  * @retval nothing
  */
 //--------------------------------------------------------------
+#if 0
 void FIELD_PLAYER_CORE_ChangeMoveForm(
     FIELD_PLAYER_CORE *player_core, PLAYER_MOVE_FORM form )
 {
@@ -640,6 +587,7 @@ void FIELD_PLAYER_CORE_ChangeMoveForm(
     FSND_ChangeBGM_byPlayerFormChange( fsnd, gdata, zone_id );
   }
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -673,11 +621,11 @@ void FIELD_PLAYER_CORE_ChangeDrawForm(
   if( MMDL_GetOBJCode(mmdl) != code ){
     fldplayer_ChangeOBJCode( player_core, code );
   }
-
+  
   player_core->draw_form_wait = 0;
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  DrawForm変更待ち
  *
@@ -686,12 +634,13 @@ void FIELD_PLAYER_CORE_ChangeDrawForm(
  *	@retval TRUE  完了
  *	@retval FALSE 変更中
  */
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------
 BOOL FIELD_PLAYER_CORE_CheckDrawFormWait( FIELD_PLAYER_CORE *player_core )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
   u32 actID;
   actID = MMDL_CallDrawGetProc( mmdl, 0 );
+  
   if(actID != MMDL_BLACTID_NULL){
 
     // 描画できる状態から1フレまつ
@@ -727,6 +676,7 @@ PLAYER_DRAW_FORM FIELD_PLAYER_CORE_GetDrawForm( FIELD_PLAYER_CORE *player_core )
  * FIELD_PLAYER_ChangeFormWait()で待つこと
  */
 //--------------------------------------------------------------
+#if 0
 void FIELD_PLAYER_CORE_ChangeFormRequest( FIELD_PLAYER_CORE *player_core, PLAYER_DRAW_FORM form )
 {
   u16 code;
@@ -743,6 +693,7 @@ void FIELD_PLAYER_CORE_ChangeFormRequest( FIELD_PLAYER_CORE *player_core, PLAYER
   }
   MMDL_SetAcmd( mmdl, code );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -754,19 +705,21 @@ void FIELD_PLAYER_CORE_ChangeFormRequest( FIELD_PLAYER_CORE *player_core, PLAYER
  * FIELD_PLAYER_ChangeFormRequest()とセット
  */
 //--------------------------------------------------------------
+#if 0
 BOOL FIELD_PLAYER_CORE_ChangeFormWait( FIELD_PLAYER_CORE *player_core )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
   BOOL result1, result2;
   result1 = FIELD_PLAYER_CORE_CheckDrawFormWait( player_core );
   result2 = MMDL_CheckEndAcmd( mmdl );
-
+  
   // 見た目の更新と、アクションコマンドの終了を待つ
   if( (result1 == TRUE) && (result2 == result1) ){
     return TRUE;
   }
   return FALSE;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -785,7 +738,7 @@ BOOL FIELD_PLAYER_CORE_CheckIllegalOBJCode( FIELD_PLAYER_CORE *player_core )
   return( FALSE );
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  自機のアニメーション完了待ち
  *
@@ -794,7 +747,7 @@ BOOL FIELD_PLAYER_CORE_CheckIllegalOBJCode( FIELD_PLAYER_CORE *player_core )
  *	@retval TRUE    完了
  *	@retval FALSE   途中
  */
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------
 BOOL FIELD_PLAYER_CORE_CheckAnimeEnd( const FIELD_PLAYER_CORE *player_core )
 {
   MMDLSYS* p_mmdlsys = MMDL_GetMMdlSys( player_core->fldmmdl );
@@ -882,8 +835,6 @@ void FIELD_PLAYER_CORE_SetMoveStartKeyDir( FIELD_PLAYER_CORE* player_core, int k
   gjiki_SetInputKeyDir( player_core, key );
 }
 
-
-
 //--------------------------------------------------------------
 /**
  * 自機に波乗りポケモンのタスクポインタをセット
@@ -910,7 +861,6 @@ FLDEFF_TASK * FIELD_PLAYER_CORE_GetEffectTaskWork(
 {
   return( player_core->fldeff_joint );
 }
-
 
 //======================================================================
 //  private関数
@@ -993,19 +943,12 @@ static void fldplayer_ChangeOBJCode(
   }
   else //HERO,HEROINEを介さなくてはならない他の切り替え
   {
-    int i = 0;
-    int wait = 2;
     int sex = FIELD_PLAYER_CORE_GetSex( player_core );
     u16 hero_code = FIELD_PLAYER_GetMoveFormToOBJCode(
         sex, PLAYER_DRAW_FORM_NORMAL );
     
-    MMDL_BLACTCONT_ChangeOBJCodeWithDummy( mmdl, hero_code );
+    MMDL_ChangeOBJCode( mmdl, hero_code ); //HEROへの置き換えはダミー不要
     MMDLSYS_ForceWaitVBlankProc( mmdlsys );
-    
-    //一瞬で切り替えるとチラツキの様な印象がある為、間を持たせる
-    while( i++ < wait ){
-      OS_WaitInterrupt( TRUE, OS_IE_V_BLANK );
-    }
     
 #ifdef PRINTHEAP_TEX_HERO  
     OS_TPrintf( "一旦自機戻し後 " );
@@ -1056,9 +999,46 @@ static void fldplayer_ChangeMoveForm(
   FIELD_PLAYER_CORE_SetMoveForm( player_core, form );
 }
 
-//-------------------------------------
+//--------------------------------------------------------------
+/**
+ * 自機の表示コードがHERO,HEROINEかどうか
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval BOOL TRUE=HERO,HEROINEである
+ */
+//--------------------------------------------------------------
+static BOOL fldplayer_CheckOBJCodeHero( FIELD_PLAYER_CORE *player_core )
+{
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
+  u16 code = MMDL_GetOBJCode( mmdl );
+
+  if( code == HERO || code == HEROINE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機のビルボードアクターチェック
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval BOOL TRUE=アクター存在している
+ */
+//--------------------------------------------------------------
+static BOOL fldplayer_CheckBBDAct( FIELD_PLAYER_CORE *player_core )
+{
+  MMDL *mmdl = player_core->fldmmdl;
+  u16 actID = MMDL_CallDrawGetProc( mmdl, 0 );
+  
+  if( actID != MMDL_BLACTID_NULL ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//======================================================================
 ///	キー入力処理
-//=====================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * キー入力方向取得
@@ -1161,17 +1141,241 @@ static u16 getKeyDirZ( u16 key_prs )
   return( DIR_NOT );
 }
 
-//-------------------------------------
-///	Req系
-//=====================================
-//----------------------------------------------------------------------------
+//======================================================================
+//  自機リクエスト
+//======================================================================
+//--------------------------------------------------------------
 /**
- * 自機リクエスト処理　通常移動に変更
+ * 指定リクエストを実行
+ */
+//--------------------------------------------------------------
+static BOOL updateRequest( FIELD_PLAYER_CORE *player_core, int no )
+{
+  if( player_core->req_seq_end_flag == 0 ){
+    int ret;
+    
+    do{
+      ret = data_RequestProcTbl[no][player_core->req_seq_no]( player_core );
+    }while( ret == TRUE );
+  }
+  
+  return( player_core->req_seq_end_flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_REQBIT -> 番号
+ */
+//--------------------------------------------------------------
+static int reqBit_to_Number( u32 bit )
+{
+  int i = 0;
+  
+  do{
+    if( (bit&0x01) ){
+      break;
+    }
+    bit >>= 1;
+    i++;
+  }while( i < FIELD_PLAYER_REQBIT_MAX );
+  
+  return( i );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト 
+ * @param player_core FIELD_PLAYER_CORE
+ * @param reqbit FIELD_PLAYER_REQBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_CORE_SetRequest(
+  FIELD_PLAYER_CORE * player_core, FIELD_PLAYER_REQBIT req_bit )
+{
+  player_core->req_bit = req_bit;
+  player_core->req_seq_no = 0;
+  player_core->req_seq_end_flag = 0;
+  player_core->draw_form_wait = 0;
+  player_core->chg_draw_form_middle_wait = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * リクエストを更新
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval BOOL TRUE=リクエスト消化完了
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CORE_UpdateRequest( FIELD_PLAYER_CORE *player_core )
+{
+  FIELD_PLAYER_REQBIT bit = player_core->req_bit;
+  int no = reqBit_to_Number( bit );
+  
+  if( no >= FIELD_PLAYER_REQBIT_MAX ){
+    return( TRUE );
+  }
+  
+  if( updateRequest(player_core,no) == TRUE ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * リクエストを強制更新
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval nothing
+ * @attention リクエストが消化し終わるまで強制実行します。
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_CORE_ForceUpdateRequest( FIELD_PLAYER_CORE *player_core )
+{
+  FIELD_PLAYER_REQBIT bit = player_core->req_bit;
+  int no = reqBit_to_Number( bit );
+  
+  if( no >= FIELD_PLAYER_REQBIT_MAX ){
+    GF_ASSERT( 0 );
+    return;
+  }
+  
+  while( updateRequest(player_core,no) == FALSE ){};
+}
+
+#if 0 //old ビット単位で複数処理していた
+void FIELD_PLAYER_CORE_SetRequest(
+  FIELD_PLAYER_CORE * player_core, FIELD_PLAYER_REQBIT req_bit )
+{
+  player_core->req_bit = req_bit;
+}
+
+void FIELD_PLAYER_CORE_UpdateRequest( FIELD_PLAYER_CORE *player_core )
+{
+  int i = 0;
+  FIELD_PLAYER_REQBIT req_bit  = player_core->req_bit;
+  
+  static void (* const data_RequestProcTbl[FIELD_PLAYER_REQBIT_MAX])( FIELD_PLAYER_CORE *player_core ) =
+  {
+    gjikiReq_SetNormal, //FIELD_PLAYER_REQBIT_NORMAL
+    gjikiReq_SetCycle, //FIELD_PLAYER_REQBIT_CYCLE
+    gjikiReq_SetSwim, //FIELD_PLAYER_REQBIT_SWIM
+    gjikiReq_SetMoveFormToDrawForm,
+    gjikiReq_SetItemGetHero,
+    gjikiReq_SetReportHero,
+    gjikiReq_SetPCAzukeHero,
+    gjikiReq_SetCutInHero,
+    gjikiReq_SetDiving, //FIELD_PLAYER_REQBIT_SWIM
+  };
+  
+  while( i < FIELD_PLAYER_REQBIT_MAX ){
+    if( (req_bit&0x01) ){
+      data_RequestProcTbl[i]( player_core );
+    }
+    req_bit >>= 1;
+    i++;
+  }
+   
+  player_core->req_bit = 0;
+}
+#endif
+
+//======================================================================
+//  自機リクエスト　汎用
+//======================================================================
+//--------------------------------------------------------------
+//  リクエスト req_seq_no増加
+//--------------------------------------------------------------
+#define req_NextSeqNo( player_core ) player_core->req_seq_no++;
+
+//--------------------------------------------------------------
+//  リクエスト req_seq_end_flagを立てる
+//--------------------------------------------------------------
+#define req_SetEndFlag( player_core ) player_core->req_seq_end_flag = TRUE;
+
+//--------------------------------------------------------------
+/**
+ * リクエスト　自機のOBJコードを変更する
+ * @param
+ * @retval BOOL TRUE=変更もしくは同一。FALSE=HERO,HEROINEに変更した
+ */
+//--------------------------------------------------------------
+static BOOL reqCommon_SetOBJCode(
+    FIELD_PLAYER_CORE *player_core, u16 code )
+{
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
+  
+  if( MMDL_GetOBJCode(mmdl) == code ){
+    req_SetEndFlag( player_core );
+    return( TRUE );
+  }
+  
+  if( fldplayer_CheckOBJCodeHero(player_core) == TRUE ){
+    fldplayer_ChangeOBJCode( player_core, code );
+    req_SetEndFlag( player_core );
+    return( TRUE );
+  }
+  
+  {
+    int sex = FIELD_PLAYER_CORE_GetSex( player_core );
+    code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_NORMAL );
+    fldplayer_ChangeOBJCode( player_core, code );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * リクエスト　PLAYER_DRAW_FORMセット
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL reqCommon_SetDrawForm(
+    FIELD_PLAYER_CORE *player_core, PLAYER_DRAW_FORM form )
+{
+  int sex = FIELD_PLAYER_CORE_GetSex( player_core );
+  u16 code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, form );
+  return( reqCommon_SetOBJCode(player_core,code) );
+}
+
+//--------------------------------------------------------------
+/**
+ * リクエスト　自機の表示コード変更を待ち、指定PLAYER_DRAW_FORMに変更
+ * @param 
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL reqCommon_WaitSetDrawForm(
+    FIELD_PLAYER_CORE *player_core, PLAYER_DRAW_FORM form )
+{
+  if( fldplayer_CheckBBDAct(player_core) == TRUE ){
+    player_core->chg_draw_form_middle_wait++;
+    
+    if( player_core->chg_draw_form_middle_wait >= REQ_CHG_DRAW_MIDDLE_WAIT ){
+      int sex = FIELD_PLAYER_CORE_GetSex( player_core );
+      u16 code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, form );
+      fldplayer_ChangeOBJCode( player_core, code );
+      req_SetEndFlag( player_core );
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+
+//======================================================================
+//  自機リクエスト　通常移動に変更
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　通常移動に変更 0
  * @param player_core FIELD_PLAYER_CORE
  * @retval nothing
  */
-//-----------------------------------------------------------------------------
-static void gjikiReq_SetNormal( FIELD_PLAYER_CORE *player_core )
+//---------------------------------------------------------------
+static int req_SetNormal0( FIELD_PLAYER_CORE *player_core )
 {
   VecFx32 offs = {0,0,0};
   int sex;
@@ -1192,22 +1396,37 @@ static void gjikiReq_SetNormal( FIELD_PLAYER_CORE *player_core )
   
   // JoinEffectがあれば削除
   task = FIELD_PLAYER_CORE_GetEffectTaskWork( player_core );
+  
   if( task != NULL ){
     FLDEFF_TASK_CallDelete( task );
     FIELD_PLAYER_CORE_SetEffectTaskWork( player_core, NULL );
   }
   
   MMDL_SetVectorOuterDrawOffsetPos( mmdl, &offs );
+  
+  req_SetEndFlag( player_core );
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
+//  自機リクエスト　通常移動に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetNormalTbl[] =
+{
+  req_SetNormal0,
+};
+
+//======================================================================
+//  自機リクエスト　自転車移動に変更
+//======================================================================
+//--------------------------------------------------------------
 /**
- * 自機リクエスト処理　自転車移動に変更
+ * 自機リクエスト処理　自転車移動に変更 0
  * @param player_core FIELD_PLAYER_CORE
- * @retval nothing
+ * @retval int TRUE=再帰呼び出し
  */
 //--------------------------------------------------------------
-static void gjikiReq_SetCycle( FIELD_PLAYER_CORE *player_core )
+static int req_SetCycle0( FIELD_PLAYER_CORE *player_core )
 {
   int sex;
   u16 code;
@@ -1215,24 +1434,50 @@ static void gjikiReq_SetCycle( FIELD_PLAYER_CORE *player_core )
   
   sex = FIELD_PLAYER_CORE_GetSex( player_core );
   mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
-  code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_CYCLE );
   
-  if( MMDL_GetOBJCode(mmdl) != code ){
-    fldplayer_ChangeOBJCode( player_core, code );
-  }
-   
   FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_CYCLE );
   gjiki_PlayBGM( player_core );
+  
+  if( reqCommon_SetDrawForm(player_core,PLAYER_DRAW_FORM_CYCLE) != TRUE ){
+    req_NextSeqNo( player_core );
+  }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
- * 自機リクエスト処理　波乗り移動に変更
+ * 自機リクエスト処理　自転車移動に変更 1
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetCycle1( FIELD_PLAYER_CORE *player_core )
+{
+  reqCommon_WaitSetDrawForm( player_core, PLAYER_DRAW_FORM_CYCLE );
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+//  自機リクエスト　自転車移動に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetCycleTbl[] =
+{
+  req_SetCycle0,
+  req_SetCycle1,
+};
+
+//======================================================================
+//  自機リクエスト　波乗り移動に変更
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　波乗り移動に変更 0
  * @param player_core FIELD_PLAYER_CORE
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void gjikiReq_SetSwim( FIELD_PLAYER_CORE *player_core )
+static int req_SetSwim0( FIELD_PLAYER_CORE *player_core )
 {
   int sex;
   u16 code;
@@ -1241,17 +1486,19 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_CORE *player_core )
   sex = FIELD_PLAYER_CORE_GetSex( player_core );
   mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
   code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_SWIM );
-
+  
   if( MMDL_GetOBJCode(mmdl) != code ){
     fldplayer_ChangeOBJCode( player_core, code );
   }
   
-  if(FIELD_PLAYER_CORE_GetMoveForm( player_core ) != PLAYER_MOVE_FORM_SWIM ){
+  if(FIELD_PLAYER_CORE_GetMoveForm(player_core) != PLAYER_MOVE_FORM_SWIM ){
     FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_SWIM );
   }
+  
   gjiki_PlayBGM( player_core );
   
-  if( FIELD_PLAYER_CORE_GetEffectTaskWork( player_core ) == NULL ){ //波乗りポケモン
+  //波乗りポケモン
+  if( FIELD_PLAYER_CORE_GetEffectTaskWork(player_core) == NULL ){
     u16 dir;
     VecFx32 pos;
     FLDEFF_CTRL *fectrl;
@@ -1266,77 +1513,251 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_CORE *player_core )
 
     FIELD_PLAYER_CORE_SetEffectTaskWork( player_core, task );
   }
+  
+  //強制で波乗りに置き換えるリクエストなので
+  //表示変更待ちは要らない
+  req_SetEndFlag( player_core );
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
+//  自機リクエスト　波乗り移動に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetNaminoriTbl[] =
+{
+  req_SetSwim0,
+};
+
+//======================================================================
+//  自機リクエスト　動作形態にあわせた表示にする
+//======================================================================
+//--------------------------------------------------------------
 /**
- * 自機リクエスト処理　動作形態にあわせた表示にする
+ * 自機リクエスト処理　動作形態にあわせた表示にする 0
  * @param player_core FIELD_PLAYER_CORE
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void gjikiReq_SetMoveFormToDrawForm( FIELD_PLAYER_CORE *player_core )
+static int req_SetMoveFormToDrawForm0( FIELD_PLAYER_CORE *player_core )
 {
-  FIELD_PLAYER_CORE_ResetMoveForm( player_core );
+  PLAYER_MOVE_FORM form = FIELD_PLAYER_CORE_GetMoveForm( player_core );
+  int sex = FIELD_PLAYER_CORE_GetSex( player_core );
+  u16 code = FIELD_PLAYER_GetMoveFormToOBJCode( sex, form );
+  
+  if( reqCommon_SetOBJCode(player_core,code) != TRUE ){
+    req_NextSeqNo( player_core );
+  }
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
- * 自機リクエスト処理　アイテムゲット自機に変更
- * @param player_core FIELD_PLYER
- * @retval  nothing
+ * 自機リクエスト処理　動作形態にあわせた表示にする 1
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval nothing
  */
 //--------------------------------------------------------------
-static void gjikiReq_SetItemGetHero( FIELD_PLAYER_CORE *player_core )
+static int req_SetMoveFormToDrawForm1( FIELD_PLAYER_CORE *player_core )
 {
-  FIELD_PLAYER_CORE_ChangeDrawForm( player_core, PLAYER_DRAW_FORM_ITEMGET );
+  if( fldplayer_CheckBBDAct(player_core) == TRUE ){
+    player_core->chg_draw_form_middle_wait++;
+    
+    if( player_core->chg_draw_form_middle_wait >= REQ_CHG_DRAW_MIDDLE_WAIT ){
+      PLAYER_MOVE_FORM form = FIELD_PLAYER_CORE_GetMoveForm( player_core );
+      int sex = FIELD_PLAYER_CORE_GetSex( player_core );
+      u16 code = FIELD_PLAYER_GetMoveFormToOBJCode( sex, form );
+      fldplayer_ChangeOBJCode( player_core, code );
+      req_SetEndFlag( player_core );
+    }
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+// 自機リクエスト処理　動作形態にあわせた表示にする　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetMoveFormToDrawFormTbl[] =
+{
+  req_SetMoveFormToDrawForm0,
+  req_SetMoveFormToDrawForm1,
+};
+
+//======================================================================
+//  自機リクエスト  アイテムゲット自機に変更
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　アイテムゲット自機に変更 0
+ * @param player_core FIELD_PLYER
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetItemGetHero0( FIELD_PLAYER_CORE *player_core )
+{
+  if( reqCommon_SetDrawForm(player_core,PLAYER_DRAW_FORM_ITEMGET) != TRUE ){
+    req_NextSeqNo( player_core );
+  }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
- * 自機リクエスト処理　PC預け自機に変更
- * @param player_core FIELD_PLYER
- * @retval  nothing
+ * 自機リクエスト処理　アイテムゲット自機に変更 1
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval int TRUE=再帰呼び出し
  */
 //--------------------------------------------------------------
-static void gjikiReq_SetReportHero( FIELD_PLAYER_CORE *player_core )
+static int req_SetItemGetHero1( FIELD_PLAYER_CORE *player_core )
 {
-  FIELD_PLAYER_CORE_ChangeDrawForm( player_core, PLAYER_DRAW_FORM_SAVEHERO );
+  reqCommon_WaitSetDrawForm( player_core, PLAYER_DRAW_FORM_ITEMGET );
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+//  自機リクエスト　アイテムゲット自機に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetItemGetHeroTbl[] =
+{
+  req_SetItemGetHero0,
+  req_SetItemGetHero1,
+};
+
+//======================================================================
+//  自機リクエスト  レポート自機に変更
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　レポート自機に変更 0
+ * @param player_core FIELD_PLYER
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetReportHero0( FIELD_PLAYER_CORE *player_core )
+{
+  if( reqCommon_SetDrawForm(player_core,PLAYER_DRAW_FORM_SAVEHERO) != TRUE ){
+    req_NextSeqNo( player_core );
+  }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
- * 自機リクエスト処理　PC預け自機に変更
- * @param player_core FIELD_PLYER
- * @retval  nothing
+ * 自機リクエスト処理　レポート自機に変更 1
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval int TRUE=再帰呼び出し
  */
 //--------------------------------------------------------------
-static void gjikiReq_SetPCAzukeHero( FIELD_PLAYER_CORE *player_core )
+static int req_SetReportHero1( FIELD_PLAYER_CORE *player_core )
 {
-  FIELD_PLAYER_CORE_ChangeDrawForm( player_core, PLAYER_DRAW_FORM_PCHERO );
+  reqCommon_WaitSetDrawForm( player_core, PLAYER_DRAW_FORM_SAVEHERO );
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+//  自機リクエスト　レポート自機に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetReportHeroTbl[] =
+{
+  req_SetReportHero0,
+  req_SetReportHero1,
+};
+
+//======================================================================
+//  自機リクエスト  PC預け自機に変更
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　PC預け自機に変更 0
+ * @param player_core FIELD_PLYER
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetPcAzukeHero0( FIELD_PLAYER_CORE *player_core )
+{
+  if( reqCommon_SetDrawForm(player_core,PLAYER_DRAW_FORM_PCHERO) != TRUE ){
+    req_NextSeqNo( player_core );
+  }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
- * 自機リクエスト処理　カットイン自機に変更
- * @param player_core FIELD_PLYER
- * @retval  nothing
+ * 自機リクエスト処理　PC預け自機に変更 1
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval int TRUE=再帰呼び出し
  */
 //--------------------------------------------------------------
-static void gjikiReq_SetCutInHero( FIELD_PLAYER_CORE *player_core )
+static int req_SetPcAzukeHero1( FIELD_PLAYER_CORE *player_core )
 {
-  FIELD_PLAYER_CORE_ChangeDrawForm( player_core, PLAYER_DRAW_FORM_CUTIN );
+  reqCommon_WaitSetDrawForm( player_core, PLAYER_DRAW_FORM_PCHERO );
+  return( FALSE );
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
+//  自機リクエスト　PC預け自機に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetPcAzukeHeroTbl[] =
+{
+  req_SetPcAzukeHero0,
+  req_SetPcAzukeHero1,
+};
+
+//======================================================================
+//  自機リクエスト  カットイン自機に変更
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　カットイン自機に変更 0
+ * @param player_core FIELD_PLYER
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetCutinHero0( FIELD_PLAYER_CORE *player_core )
+{
+  if( reqCommon_SetDrawForm(player_core,PLAYER_DRAW_FORM_CUTIN) != TRUE ){
+    req_NextSeqNo( player_core );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　カットイン自機に変更 1
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetCutinHero1( FIELD_PLAYER_CORE *player_core )
+{
+  reqCommon_WaitSetDrawForm( player_core, PLAYER_DRAW_FORM_CUTIN);
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+//  自機リクエスト　カットイン自機に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetCutinHeroTbl[] =
+{
+  req_SetCutinHero0,
+  req_SetCutinHero1,
+};
+
+//======================================================================
+//  自機リクエスト  ダイビング自機に変更
+//======================================================================
+//--------------------------------------------------------------
 /**
  *	@brief  DIVING状態を設定
  */
-//-----------------------------------------------------------------------------
-static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
+//--------------------------------------------------------------
+static int req_SetDiving0( FIELD_PLAYER_CORE *player_core )
 {
-  FLDEFF_CTRL *fectrl;
-  fectrl = FIELDMAP_GetFldEffCtrl( player_core->fieldWork );
+  FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( player_core->fieldWork );
   
   // まず波乗り状態にして
   {
@@ -1347,20 +1768,22 @@ static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
     sex = FIELD_PLAYER_CORE_GetSex( player_core );
     mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
     code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_DIVING );
-
+    
     if( MMDL_GetOBJCode(mmdl) != code ){
       fldplayer_ChangeOBJCode( player_core, code );
     }
     
-    if(FIELD_PLAYER_CORE_GetMoveForm( player_core ) != PLAYER_MOVE_FORM_DIVING ){
+    if( FIELD_PLAYER_CORE_GetMoveForm(player_core) != PLAYER_MOVE_FORM_DIVING ){
       FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_DIVING );
     }
+      
     // ダイビングは、常に画面遷移とともに発動される。
     // さらに、BGMは通常曲でよいので、
     // BGM操作は行わない。
     //gjiki_PlayBGM( player_core );
     
-    if( FIELD_PLAYER_CORE_GetEffectTaskWork( player_core ) == NULL ){ //波乗りポケモン
+    //波乗りポケモン
+    if( FIELD_PLAYER_CORE_GetEffectTaskWork(player_core) == NULL ){
       u16 dir;
       VecFx32 pos;
       FLDEFF_CTRL *fectrl;
@@ -1376,7 +1799,7 @@ static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
       FIELD_PLAYER_CORE_SetEffectTaskWork( player_core, task );
     }
   }
-
+  
   //気泡を設定
   FLDEFF_BUBBLE_SetMMdl( player_core->fldmmdl, fectrl );
 
@@ -1384,9 +1807,107 @@ static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
   if( player_core->fldeff_joint ){
     FLDEFF_NAMIPOKE_SetRippleEffect( player_core->fldeff_joint, FALSE );
   }
+
+  //強制でダイビングに置き換えるリクエストなので
+  //表示変更待ちは要らない
+  req_SetEndFlag( player_core );
+  return( FALSE );
 }
 
+//--------------------------------------------------------------
+//  自機リクエスト　ダイビングに変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetDivingTbl[] =
+{
+  req_SetDiving0,
+};
 
+//======================================================================
+//  自機リクエスト  釣り自機に変更
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　釣り自機に変更 0
+ * @param player_core FIELD_PLYER
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetFishing0( FIELD_PLAYER_CORE *player_core )
+{
+  if( reqCommon_SetDrawForm(player_core,PLAYER_DRAW_FORM_FISHING) != TRUE ){
+    req_NextSeqNo( player_core );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　釣り自機に変更 1
+ * @param player_core FIELD_PLAYER_CORE
+ * @retval int TRUE=再帰呼び出し
+ */
+//--------------------------------------------------------------
+static int req_SetFishing1( FIELD_PLAYER_CORE *player_core )
+{
+  reqCommon_WaitSetDrawForm( player_core, PLAYER_DRAW_FORM_FISHING);
+  
+  /*
+   * add 100617 BUGFIX BTS 社内バグNo.1568
+   * 波乗り中で下にOBJが居るならばオフセットを変える
+  */
+  if( player_core->req_seq_end_flag == TRUE ){
+    if( FIELD_PLAYER_CORE_GetMoveForm(player_core) == PLAYER_MOVE_FORM_SWIM ){
+      int ret = FALSE;
+      MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
+      MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+      s16 gx = MMDL_GetGridPosX( mmdl );
+      s16 gz = MMDL_GetGridPosZ( mmdl );
+      MMDL_TOOL_AddDirGrid( DIR_DOWN, &gx, &gz, 1 );
+      
+      if( MMDLSYS_SearchGridPos(mmdlsys,gx,gz,TRUE) != NULL ){
+        ret = TRUE; //従来の表示に
+      }
+
+      MMDL_DrawFishingHero_SetOffsetType( mmdl, ret );
+    }  
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+//  自機リクエスト　釣り自機に変更　まとめ
+//--------------------------------------------------------------
+static const REQPROC data_req_SetFishingTbl[] =
+{
+  req_SetFishing0,
+  req_SetFishing1,
+};
+
+//======================================================================
+//  自機リクエスト　まとめ
+//======================================================================
+//--------------------------------------------------------------
+/// リクエストテーブル
+//--------------------------------------------------------------
+static const REQPROC * const data_RequestProcTbl[FIELD_PLAYER_REQBIT_MAX] =
+{
+  data_req_SetNormalTbl, //FIELD_PLAYER_REQBIT_NORMAL 
+  data_req_SetCycleTbl, //FIELD_PLAYER_REQBIT_CYCLE
+  data_req_SetNaminoriTbl, //FIELD_PLAYER_REQBIT_SWIM
+  data_req_SetMoveFormToDrawFormTbl, //FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM
+  data_req_SetItemGetHeroTbl, //FIELD_PLAYER_REQBIT_ITEMGET
+  data_req_SetReportHeroTbl, //FIELD_PLAYER_REQBIT_REPORT
+  data_req_SetPcAzukeHeroTbl, //FIELD_PLAYER_REQBIT_PC_AZUKE
+  data_req_SetCutinHeroTbl, //FIELD_PLAYER_REQBIT_CUTIN
+  data_req_SetDivingTbl, //FIELD_PLAYER_REQBIT_DIVING
+  data_req_SetFishingTbl, //FIELD_PLAYER_REQBIT_MAX
+};
+
+//======================================================================
+//  parts
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 自機の形態に合わせてBGMを再生
@@ -1402,5 +1923,3 @@ static void gjiki_PlayBGM( FIELD_PLAYER_CORE *player_core )
   u32 zone_id = FIELDMAP_GetZoneID( player_core->fieldWork );
   FSND_ChangeBGM_byPlayerFormChange( fsnd, gdata, zone_id );
 }
-
-

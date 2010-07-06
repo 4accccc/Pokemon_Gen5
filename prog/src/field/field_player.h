@@ -126,7 +126,8 @@ extern GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
 // プレイヤー動作変更 REQBIT 
 extern void FIELD_PLAYER_SetRequest(
   FIELD_PLAYER * fld_player, FIELD_PLAYER_REQBIT req_bit );
-extern void FIELD_PLAYER_UpdateRequest( FIELD_PLAYER * fld_player );
+extern BOOL FIELD_PLAYER_UpdateRequest( FIELD_PLAYER * fld_player );
+extern void FIELD_PLAYER_ForceUpdateRequest( FIELD_PLAYER * fld_player );
 
 // 自機オーダーチェック
 extern BOOL FIELD_PLAYER_CheckStartMove(
@@ -202,15 +203,25 @@ extern void FIELD_PLAYER_GetDirPos(
 extern void FIELD_PLAYER_GetDirWay( 
     const FIELD_PLAYER *fld_player, u16 dir, VecFx32* way );
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player );
+#if 0
 extern void FIELD_PLAYER_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
+#endif
+#if 0
 extern void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player );
+#endif
+#if 0
 extern void FIELD_PLAYER_ChangeDrawForm(
     FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
+#endif
 extern PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( const FIELD_PLAYER *fld_player );
 extern BOOL FIELD_PLAYER_CheckDrawFormWait( FIELD_PLAYER *fld_player );
+#if 0
 extern void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
+#endif
+#if 0
 extern BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player );
+#endif
 extern BOOL FIELD_PLAYER_CheckNaminoriUse(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
 extern BOOL FIELD_PLAYER_CheckTakinoboriUse(
@@ -230,12 +241,6 @@ extern BOOL FIELD_PLAYER_CheckAnimeEnd( const FIELD_PLAYER *fld_player );
 // モデル検索
 extern MMDL * FIELD_PLAYER_GetFrontMMdl( const FIELD_PLAYER *fld_player );
 extern MMDL * FIELD_PLAYER_GetFrontMMdlEx( const FIELD_PLAYER *fld_player, fx32 y_diff ); // 高さチェックあり
-
-#ifdef BUGFIX_BTS5723
-extern void FIELD_PLAYER_ForceWaitVBlank( FIELD_PLAYER *fld_player );
-#else
-#define FIELD_PLAYER_ForceWaitVBlank( a ) ((void)0)
-#endif
 
 //======================================================================
 //	Grid 専用処理

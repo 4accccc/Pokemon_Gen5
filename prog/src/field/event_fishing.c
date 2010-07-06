@@ -34,6 +34,7 @@
 
 typedef enum{
  SEQ_FISHING_START,
+ SEQ_CHANGE_HERO, //add 100705
  SEQ_START_WAIT,
  SEQ_HIT_WAIT,
  SEQ_HIT,
@@ -41,6 +42,7 @@ typedef enum{
  SEQ_TOO_EARLY,
  SEQ_TOO_SLOW,
  SEQ_END,
+ SEQ_END_RESET_HERO,  //add 100705
  SEQ_HIT_SUCCESS,
 }AMAIKAORI_SEQ;
 
@@ -213,33 +215,16 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       break;
     }
     
-    /*
-     * add 100617 BUGFIX BTS 社内バグNo.1568
-     * 波乗り中で下にOBJが居るならばオフセットを変える
-     */
-    ret = FALSE;
-    
-    if( FIELD_PLAYER_GetMoveForm(wk->fplayer) == PLAYER_MOVE_FORM_SWIM ){
-      s16 gx = MMDL_GetGridPosX( wk->player_mmdl );
-      s16 gz = MMDL_GetGridPosZ( wk->player_mmdl );
-      MMDL_TOOL_AddDirGrid( DIR_DOWN, &gx, &gz, 1 );
-
-      if( MMDLSYS_SearchGridPos(wk->mmdl_sys,gx,gz,TRUE) != NULL ){
-        ret = TRUE; //従来の表示に
-      }
-    }
-    
     //フォルムチェンジ
-    FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
-    MMDL_DrawFishingHero_SetOffsetType( wk->player_mmdl, ret );
-    FIELD_PLAYER_ForceWaitVBlank( wk->fplayer );
-    
-    MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
-    PMSND_PlaySE( SEQ_SE_FLD_19 );
-
+    FIELD_PLAYER_SetRequest( wk->fplayer, FIELD_PLAYER_REQBIT_FISHING );
     (*seq)++;
+  case SEQ_CHANGE_HERO: //add 100705
+    if( FIELD_PLAYER_UpdateRequest(wk->fplayer) == TRUE ){
+      MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
+      PMSND_PlaySE( SEQ_SE_FLD_19 );
+      (*seq)++;
+    }
     break;
-
   case SEQ_START_WAIT:
     if( !sub_TimeWait(wk,TIME_START_WAIT )){
       break;
@@ -310,10 +295,14 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     break;
 
 	case SEQ_END:
-    FIELD_PLAYER_ChangeDrawForm( wk->fplayer, wk->player_form );
-    FIELD_PLAYER_ForceWaitVBlank( wk->fplayer ); //BTS5723 100616
-		return GMEVENT_RES_FINISH;
-
+    FIELD_PLAYER_SetRequest(
+        wk->fplayer, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
+    (*seq) = SEQ_END_RESET_HERO;
+  case SEQ_END_RESET_HERO: //add 100705
+    if( FIELD_PLAYER_UpdateRequest(wk->fplayer) == TRUE ){
+		  return GMEVENT_RES_FINISH;
+    }
+    break;
   //エンカウントイベントへ移行
   case SEQ_HIT_SUCCESS:
     //釣り上げた回数  

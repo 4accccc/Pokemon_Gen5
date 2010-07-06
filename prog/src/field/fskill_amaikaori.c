@@ -36,8 +36,10 @@
 
 typedef enum{
  SEQ_CUTIN_INIT,
+ SEQ_CUTIN_CHANGE_HERO, //add 100705
  SEQ_CUTIN,
- SEQ_CUTIN_WAIT,
+ SEQ_CUTIN_RESET_HERO, //add 100705
+ SEQ_CUTIN_RESET_HERO_WAIT, //add 100705
  SEQ_WEATHER_CHECK,
  SEQ_ENCOUNT_CHECK,
  SEQ_ENCOUNT_FAILED,
@@ -108,13 +110,22 @@ static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *wor
       *seq = SEQ_WEATHER_CHECK;
       break;
     }
-    FIELD_PLAYER_ChangeFormRequest( wk->field_player, PLAYER_DRAW_FORM_CUTIN );
+    
+    FIELD_PLAYER_SetRequest( wk->field_player, FIELD_PLAYER_REQBIT_CUTIN );
     (*seq)++;
+  case SEQ_CUTIN_CHANGE_HERO: //add 100705
+    if( FIELD_PLAYER_UpdateRequest(wk->field_player) == TRUE ){
+      MMDL *mmdl = FIELD_PLAYER_GetMMdl( wk->field_player );
+      MMDL_SetAcmd( mmdl, AC_HERO_CUTIN );
+      (*seq)++;
+    }
     break;
   case SEQ_CUTIN:
-    if( FIELD_PLAYER_ChangeFormWait( wk->field_player )){
+    if( MMDL_EndAcmd(FIELD_PLAYER_GetMMdl(wk->field_player)) == TRUE )
+    {
       GMEVENT *cutin_ev;
-      cutin_ev = FLD3D_CI_CreatePokeCutInEvtTemoti( wk->gsys, FIELDMAP_GetFld3dCiPtr(wk->fieldWork), wk->poke_pos );
+      cutin_ev = FLD3D_CI_CreatePokeCutInEvtTemoti(
+          wk->gsys, FIELDMAP_GetFld3dCiPtr(wk->fieldWork), wk->poke_pos );
       if (cutin_ev != NULL)
       {
         GMEVENT_CallEvent( event, cutin_ev );
@@ -122,9 +133,14 @@ static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *wor
       (*seq)++;
     }
     break;
-  case SEQ_CUTIN_WAIT:
-    FIELD_PLAYER_ResetMoveForm( wk->field_player );
-    *seq = SEQ_WEATHER_CHECK;
+  case SEQ_CUTIN_RESET_HERO: //add 100705
+    FIELD_PLAYER_SetRequest(
+        wk->field_player, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
+    (*seq)++;
+  case SEQ_CUTIN_RESET_HERO_WAIT: //add 100705
+    if( FIELD_PLAYER_UpdateRequest(wk->field_player) == TRUE ){
+      *seq = SEQ_WEATHER_CHECK;
+    }
     break;
 	case SEQ_WEATHER_CHECK:
     if( amaikaori_WeatherCheck( wk ) == FALSE){

@@ -198,14 +198,26 @@ void FIELD_PLAYER_SetRequest(
 /**
  * リクエストを更新
  * @param fld_player FIELD_PLAYER
- * @retval nothing
+ * @retval BOOL TRUE=リクエスト消化完了
  */
 //--------------------------------------------------------------
-void FIELD_PLAYER_UpdateRequest( FIELD_PLAYER * fld_player )
+BOOL FIELD_PLAYER_UpdateRequest( FIELD_PLAYER * fld_player )
 {
-  FIELD_PLAYER_CORE_UpdateRequest( fld_player->corewk );
+  return( FIELD_PLAYER_CORE_UpdateRequest(fld_player->corewk) );
 }
 
+//--------------------------------------------------------------
+/**
+ * リクエストを強制更新
+ * @param fld_player FIELD_PLAYER
+ * @retval nothing
+ * @attention リクエストが消化し終わるまで強制実行します。
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ForceUpdateRequest( FIELD_PLAYER * fld_player )
+{
+  FIELD_PLAYER_CORE_ForceUpdateRequest( fld_player->corewk );
+}
 
 //======================================================================
 //  移動チェック
@@ -350,7 +362,7 @@ BOOL FIELD_PLAYER_IsHitch( const FIELD_PLAYER* fld_player )
 void FIELD_PLAYER_SetNaminori( FIELD_PLAYER * fld_player )
 {
   FIELD_PLAYER_CORE_SetRequest( fld_player->corewk, FIELD_PLAYER_REQBIT_SWIM );
-  FIELD_PLAYER_CORE_UpdateRequest( fld_player->corewk );
+  FIELD_PLAYER_CORE_ForceUpdateRequest( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -363,7 +375,7 @@ void FIELD_PLAYER_SetNaminori( FIELD_PLAYER * fld_player )
 void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER * fld_player )
 {
   FIELD_PLAYER_CORE_SetRequest( fld_player->corewk, FIELD_PLAYER_REQBIT_NORMAL );
-  FIELD_PLAYER_CORE_UpdateRequest( fld_player->corewk );
+  FIELD_PLAYER_CORE_ForceUpdateRequest( fld_player->corewk );
 }
 
 
@@ -1054,6 +1066,7 @@ BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player )
 {
   return FIELD_PLAYER_CORE_CheckLiveMMdl( fld_player->corewk );
 }
+
 //--------------------------------------------------------------
 /**
  * 自機の動作形態を変更 BGM変更あり
@@ -1062,11 +1075,13 @@ BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player )
  * @retval nothing
  */
 //--------------------------------------------------------------
+#if 0 //FIELD_PLAYER_SetRequest()を使用して下さい
 void FIELD_PLAYER_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
 {
   FIELD_PLAYER_CORE_ChangeMoveForm( fld_player->corewk, form );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1076,10 +1091,12 @@ void FIELD_PLAYER_ChangeMoveForm(
  * @retval nothing
  */
 //--------------------------------------------------------------
+#if 0 //FIELD_PLAYER_SetRequest()を使用して下さい
 void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player )
 {
   FIELD_PLAYER_CORE_ResetMoveForm( fld_player->corewk );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1089,11 +1106,13 @@ void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player )
  * @retval nothing
  */
 //--------------------------------------------------------------
+#if 0 //FIELD_PLAYER_SetRequest()を使用して下さい
 void FIELD_PLAYER_ChangeDrawForm(
     FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form )
 {
   FIELD_PLAYER_CORE_ChangeDrawForm( fld_player->corewk, form );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1132,10 +1151,12 @@ BOOL FIELD_PLAYER_CheckDrawFormWait( FIELD_PLAYER *fld_player )
  * FIELD_PLAYER_ChangeFormWait()で待つこと
  */
 //--------------------------------------------------------------
+#if 0 //FIELD_PLAYER_SetRequest()を使用して下さい
 void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form )
 {
   FIELD_PLAYER_CORE_ChangeFormRequest( fld_player->corewk, form );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1147,10 +1168,12 @@ void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM 
  * FIELD_PLAYER_ChangeFormRequest()とセット
  */
 //--------------------------------------------------------------
+#if 0 //FIELD_PLAYER_SetRequest()を使用して下さい
 BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player )
 {
   return FIELD_PLAYER_CORE_ChangeFormWait( fld_player->corewk );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1293,21 +1316,6 @@ BOOL FIELD_PLAYER_CheckPossibleDash( FIELD_PLAYER *fld_player )
   
   return( FALSE );
 }
-
-//BTS5723 100616 進入中、画面上部にちらつきが生じるを対処
-#ifdef BUGFIX_BTS5723
-//--------------------------------------------------------------
-/**
- * 自機の描画が完了するまでVBlank待ち。
- * MMDLSYS_ForceWaitVBlankProc()を呼ぶので注意。
- */
-//--------------------------------------------------------------
-void FIELD_PLAYER_ForceWaitVBlank( FIELD_PLAYER *fld_player )
-{
-  MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fld_player->fieldWork );
-  MMDLSYS_ForceWaitVBlankProc( mmdlsys );
-}
-#endif
 
 //======================================================================
 //	Grid 専用処理
