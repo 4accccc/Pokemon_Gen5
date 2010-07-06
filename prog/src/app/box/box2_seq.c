@@ -5842,7 +5842,12 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_StatusRcv( BOX2_SYS_WORK * syswk )
 {
-	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
+//	BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
+	if( syswk->get_tray != BOX2MAIN_GETPOS_NONE ){
+		BOX2MAIN_TrayPokeInfoPut( syswk, syswk->get_tray, syswk->get_pos );
+	}else{
+		BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
+	}
 	BOX2OBJ_SetHandCursorAnm( syswk, BOX2OBJ_ANM_HAND_NORMAL );
 	if( syswk->mv_cnv_mode == 0 ){
 		BOX2OBJ_PutConvButton( syswk, BOX2OBJ_ANM_CONV_RED, TRUE );

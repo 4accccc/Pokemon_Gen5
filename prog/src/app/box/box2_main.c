@@ -3374,22 +3374,23 @@ static void PokeInfoPutModeNormal( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * i
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		指定位置のポケモン情報表示
+ * @brief		指定位置のポケモン情報表示（トレイ指定）
  *
  * @param		syswk		ボックス画面システムワーク
+ * @param		tray		トレイ番号
  * @param		pos			位置
  *
  * @retval  "TRUE = 表示"
  * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-BOOL BOX2MAIN_PokeInfoPut( BOX2_SYS_WORK * syswk, u32 pos )
+BOOL BOX2MAIN_TrayPokeInfoPut( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 {
   BOX2_POKEINFO_DATA * info;
   POKEMON_PASO_PARAM * ppp;
   BOOL  fast;
 
-  ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, pos );
+  ppp = BOX2MAIN_PPPGet( syswk, tray, pos );
 
   if( ppp != NULL ){
     fast = PPP_FastModeOn( ppp );
@@ -3412,6 +3413,22 @@ BOOL BOX2MAIN_PokeInfoPut( BOX2_SYS_WORK * syswk, u32 pos )
   }
 
   return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		指定位置のポケモン情報表示（現在のトレイ）
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		pos			位置
+ *
+ * @retval  "TRUE = 表示"
+ * @retval  "FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BOX2MAIN_PokeInfoPut( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	return BOX2MAIN_TrayPokeInfoPut( syswk, syswk->tray, pos );
 }
 
 //--------------------------------------------------------------------------------------------
