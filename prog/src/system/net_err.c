@@ -686,7 +686,7 @@ void NetErr_ExitNetSystem( void )
     do{
       GFL_NET_ShutdownMain();
       Local_ErrUpdate();
-      //OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 //      OS_TPrintf("GFL_NET_IsExit‚ÌŠ®—¹‚ð‘Ò‚Á‚Ä‚¢‚Ü‚·\n");
     }while(GFL_NET_IsExit() == FALSE);
   }
