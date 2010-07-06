@@ -200,22 +200,7 @@ int GDS_Profile_GetEggFlag(const GDS_PROFILE_PTR gpp)
 //--------------------------------------------------------------
 int GDS_Profile_GetNation(const GDS_PROFILE_PTR gpp)
 {
-	if(gpp->country_code >= WIFI_COUNTRY_MAX){
-		return 0;
-	}
-
-	if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(gpp->country_code) < gpp->local_code){
-    return 0;
-  }
-  
-  if(GDS_Profile_GetLanguage(gpp) == LANG_JAPAN){
-    //言語コードが日本なのに国コードが日本でないのは不正か未設定
-    if(gpp->country_code != country105){
-      return 0;
-    }
-  }
-
-	return gpp->country_code;
+  return WIFI_COUNTRY_GetNGTestCountryCode(gpp->country_code, gpp->local_code, GDS_Profile_GetLanguage(gpp));
 }
 
 //--------------------------------------------------------------
@@ -229,13 +214,7 @@ int GDS_Profile_GetNation(const GDS_PROFILE_PTR gpp)
 //--------------------------------------------------------------
 int GDS_Profile_GetArea(const GDS_PROFILE_PTR gpp)
 {
-	if(GDS_Profile_GetNation(gpp) == 0){
-    return 0; //国コード指定なし
-  }
-	if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(gpp->country_code) < gpp->local_code){
-		return 0;
-	}
-	return gpp->local_code;
+  return WIFI_COUNTRY_GetNGTestLocalCode(gpp->country_code, gpp->local_code, GDS_Profile_GetLanguage(gpp));
 }
 
 //--------------------------------------------------------------

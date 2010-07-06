@@ -204,23 +204,12 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
   }
 
   //場所
-  if( p_mystatus->nation >= msg_wifi_place_msg_world_max )
-  { 
-    OS_TPrintf( "国が不正だったので、無理やり書き換えます %d %d\n", p_mystatus->nation, p_mystatus->area );
+  if(WIFI_COUNTRY_CheckNG(p_mystatus->nation, p_mystatus->area, p_mystatus->region_code) == FALSE)
+  {
+    OS_TPrintf( "国or地域が不正だったので、無理やり書き換えます %d %d\n", p_mystatus->nation, p_mystatus->area );
     p_mystatus->nation  = 0;
     p_mystatus->area  = 0;
     dirty++;
-  }
-
-  //エリア
-  { 
-    if( p_mystatus->nation != 0 && p_mystatus->area > WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_mystatus->nation ) )
-    {
-      OS_TPrintf( "地域が不正だったので、無理やり書き換えます %d %d\n", p_mystatus->nation, p_mystatus->area );
-      p_mystatus->nation  = 0;
-      p_mystatus->area  = 0;
-      dirty++;
-    }
   }
 
   //PMS

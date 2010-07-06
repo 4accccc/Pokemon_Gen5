@@ -33,6 +33,8 @@
 #include "msg/msg_wifi_place_msg_SWE.h"
 #include "msg/msg_wifi_place_msg_USA.h"
 
+#include "savedata/wifihistory.h"
+
 //データ構造体（国地域テーブルデータ）
 typedef struct EARTH_AREATABLE_tag
 {
@@ -308,4 +310,73 @@ u32 WIFI_COUNTRY_DataIndexToPlaceDataID( u32 dataIndex )
 u32 WIFI_COUNTRY_GetJapanID(void)
 {
   return NationFlag_to_AreaID[NATION_AREA_TABLE_JAPAN_INDEX].nationID;
+}
+
+//==================================================================
+/**
+ * 不正な国・地域コードでないかをチェック
+ *
+ * @param   country_code		国コード
+ * @param   local_code		  地域コード
+ * @param   language		    言語コード(PM_LANG)
+ *
+ * @retval  BOOL	  TRUE:正常　　FALSE:不正
+ */
+//==================================================================
+BOOL WIFI_COUNTRY_CheckNG(u32 country_code, u32 local_code, u32 language)
+{
+	if(country_code >= WIFI_COUNTRY_MAX){
+		return FALSE;
+	}
+
+	if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(country_code) < local_code){
+    return FALSE;
+  }
+  
+  if(language == LANG_JAPAN){
+    //言語コードが日本なのに国コードが日本or未設定でないのは不正
+    if(country_code != country105 && country_code != 0){
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+
+//==================================================================
+/**
+ * 国コードが不正でないか検査し、不正であれば置換後の値を取得する
+ *
+ * @param   country_code		国コード
+ * @param   local_code		  地域コード
+ * @param   language		    言語コード(PM_LANG)
+ *
+ * @retval  u32		正常であればcountry_codeそのままの値、不正であれば0(設定無し)の値が返る
+ */
+//==================================================================
+u32 WIFI_COUNTRY_GetNGTestCountryCode(u32 country_code, u32 local_code, u32 language)
+{
+  if(WIFI_COUNTRY_CheckNG(country_code, local_code, language) == FALSE){
+    return 0;
+  }
+  return country_code;
+}
+
+//==================================================================
+/**
+ * 地域コードが不正でないか検査し、不正であれば置換後の値を取得する
+ *
+ * @param   country_code		国コード
+ * @param   local_code		  地域コード
+ * @param   language		    言語コード(PM_LANG)
+ *
+ * @retval  u32		正常であればlocal_codeそのままの値、不正であれば0(設定無し)の値が返る
+ */
+//==================================================================
+u32 WIFI_COUNTRY_GetNGTestLocalCode(u32 country_code, u32 local_code, u32 language)
+{
+  if(WIFI_COUNTRY_CheckNG(country_code, local_code, language) == FALSE){
+    return 0;
+  }
+  return local_code;
 }
