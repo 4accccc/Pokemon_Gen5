@@ -1387,7 +1387,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       biw->focus_pos = bicp->pos;
 
-
       BTLV_INPUT_SetFocus( biw );
       BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_NO_STOP );
 
@@ -4305,6 +4304,10 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
 
   //攻撃対象選択
   GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0, 32, 2, 32, 32, 0 );
+
+  //パレット暗くする処理を解除
+  PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 0, 0, 0, biw->tcbsys );
+  PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 0, 0, 0, biw->tcbsys );
 }
 
 //--------------------------------------------------------------
