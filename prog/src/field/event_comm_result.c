@@ -238,7 +238,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
         int add_num = talk->point;
         
         if(MYITEM_GetItemMax( ITEM_DERUDAMA ) < now_num + add_num){
-          add_num = ITEM_DERUDAMA - now_num;
+          add_num = MYITEM_GetItemMax(ITEM_DERUDAMA) - now_num;
         }
         MYITEM_AddItem(myitem, ITEM_DERUDAMA, add_num, talk->heapID);
       }
