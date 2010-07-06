@@ -8,6 +8,11 @@
  *  モジュール名：ZUKAN_DETAIL
  */
 //============================================================================
+
+
+#define NET_ICON_NOT_END  // これが定義されているとき、GFL_NET_WirelessIconEasyEndを利用しない
+
+
 #define DEBUG_KAWADA
 
 
@@ -276,8 +281,12 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 0, 0 );
 
   // 通信アイコン
+#ifdef NET_ICON_NOT_END
+  GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
+#else
   //GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
   GFL_NET_WirelessIconEasyEnd();  // Mainが始まるまで通信アイコンを表示しないでおく
+#endif
 
   return GFL_PROC_RES_FINISH;
 }
@@ -347,7 +356,9 @@ static GFL_PROC_RESULT Zukan_Detail_ProcMain( GFL_PROC* proc, int* seq, void* pw
     if( (*seq) == NET_ICON_DISP_FRAME )
     {
       // 通信アイコン
+#ifndef NET_ICON_NOT_END
       GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
+#endif
     }
     (*seq)++;
   }
