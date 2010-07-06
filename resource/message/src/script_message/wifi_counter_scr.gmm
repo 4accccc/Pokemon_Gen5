@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-30T12:54:08"/>
+	<create user="shimoyamada" host="W00184" date="2010-07-06T18:10:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1080" top="382" right="1785" bottom="1010" maximized="no" rayout="Vertical2">
+	<dialog left="1164" top="410" right="1869" bottom="1038" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="475" top="626" right="994" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="499"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="499"/>
 		<band id="3" index="4" style="0000" width="196"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -590,7 +590,7 @@ C-Gear入手前</comment>
 ほしいポケモンを
 探すことも　できます[BE:01:ページ切り替え（クリア）]
 そのポケモンと　交換するときに
-預けていたかたの　ほしいポケモンを[BE:00:ページ切り替え（行送り）]
+預けていた方の　ほしいポケモンを[BE:00:ページ切り替え（行送り）]
 代わりに　お預かりします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -723,11 +723,11 @@ C-Gear入手前</comment>
 待ち合わせ交換も　あります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_gts_nego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_gts_nego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO 説明メニュー</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ネゴシエーションこうかん　って？</language>
-		<language name="JPN_KANJI" width="256">ネゴシエーションって？</language>
+		<language name="JPN_KANJI" width="256">ネゴシエーション交換って？</language>
 	</row>
 
 	<row id="msg_gts_nego_exp_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -751,7 +751,7 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">バトルビデオを　みますか？</language>
 	</row>
 
-	<row id="msg_btlvideo_exp" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_btlvideo_exp" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#ff0000,#80ffff,,,#80ffff,,">
 		<comment>BtlVideo</comment>
 		<attribute name="キャラ指定">BtlVideo</attribute>
 		<language name="JPN" width="256">バトルビデオでは　おてもちの
@@ -772,7 +772,7 @@ C-Gear入手前</comment>
 ともだちに　みせることも　できます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">バトルビデオでは　お手持ちの
 バトルレコーダーを　使って[BE:01:ページ切り替え（クリア）]
-じぶんで　撮った　バトルビデオを
+自分で　撮った　バトルビデオを
 発表したり[BE:01:ページ切り替え（クリア）]
 他の　トレーナーの　バトルビデオを
 みることが　できます[BE:01:ページ切り替え（クリア）]
@@ -989,7 +989,7 @@ http://www.pokemon-gl.com/
 		<language name="JPN" width="256">レーティングモードは
 たいせんを　きわめたい　ひとに[BE:00:ページ切り替え（行送り）]
 おすすめの　モードです[BE:01:ページ切り替え（クリア）]
-つうしんを　つなげると
+つうしんを　つなげたとき
 レーティングの　ちかい　ひとと[BE:00:ページ切り替え（行送り）]
 たいせん　しやすく　なります[BE:01:ページ切り替え（クリア）]
 レーティングは
@@ -1019,13 +1019,13 @@ http://www.pokemon-gl.com/
 １５００から　スタートして[BE:00:ページ切り替え（行送り）]
 勝つと　あがり　負けると　さがります[BE:01:ページ切り替え（クリア）]
 レーティングが　高いほど
-対戦の　強い　トレーナーと　なるので[BE:01:ページ切り替え（クリア）]
+強い　トレーナーと　なるので[BE:01:ページ切り替え（クリア）]
 ぜひ　挑戦して
 今の　レベルを　確かめてください[BE:01:ページ切り替え（クリア）]
 最後に　参加中の
 注意が　ひとつ　あります[BE:01:ページ切り替え（クリア）]
 レーティングモードの　成績は
-ＤＳ本体を　かえて[BE:01:ページ切り替え（クリア）]
+ＤＳ本体を　替えて[BE:01:ページ切り替え（クリア）]
 Ｗｉ－Ｆｉコネクションに
 接続すると[BE:01:ページ切り替え（クリア）]
 それまでの　成績が
@@ -1198,7 +1198,7 @@ http://www.pokemon-gl.com/
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_rndmatch_04_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_04_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>ルール／シングル</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">シングルバトルは　ポケモンが
@@ -1214,8 +1214,8 @@ http://www.pokemon-gl.com/
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シングルバトルは　ポケモンが
 ３～６匹　必要です[BE:01:ページ切り替え（クリア）]
-戦うまえに　相手と　自分の
-手持ちポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+戦うまえに　相手と
+ポケモンの　見せ合いを　行い[BE:00:ページ切り替え（行送り）]
 ３匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
 連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
@@ -1414,33 +1414,33 @@ http://www.pokemon-gl.com/
 空きを　つくって　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_gts_normal_err02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_gts_normal_err02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#ff0000,#80ff80,,,#80ff80,,">
 		<comment>手持ちに2匹いないエラー</comment>
 		<attribute name="キャラ指定">ＧＴＳ</attribute>
 		<language name="JPN" width="256">……あら？
 おきゃくさま！[BE:01:ページ切り替え（クリア）]
-ポケモンを　２ひき　いじょう
+ポケモンを　てもちに　２ひき　いじょう
 おもちで　ないと[BE:00:ページ切り替え（行送り）]
 ＧＴＳを　ごりよう　いただけません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……あら？
 お客さま！[BE:01:ページ切り替え（クリア）]
-ポケモンを　２匹　以上
+ポケモンを　手持ちに　２匹以上
 お持ちで　ないと[BE:00:ページ切り替え（行送り）]
 ＧＴＳを　ご利用　いただけません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_gts_nego_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_gts_nego_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>手持ちに2匹いないエラー</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">……あら？
 おきゃくさま！[BE:01:ページ切り替え（クリア）]
-ポケモンを　２ひき　いじょう
+ポケモンを　てもちに　２ひき　いじょう
 おもちで　ないと[BE:00:ページ切り替え（行送り）]
 ＧＴＳネゴシエーションを[BE:00:ページ切り替え（行送り）]
 ごりよう　いただけません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……あら？
 お客さま！[BE:01:ページ切り替え（クリア）]
-ポケモンを　２匹　以上
+ポケモンを　手持ちに　２匹以上
 お持ちで　ないと[BE:00:ページ切り替え（行送り）]
 ＧＴＳネゴシエーションを[BE:00:ページ切り替え（行送り）]
 ご利用　いただけません[BE:01:ページ切り替え（クリア）]</language>
