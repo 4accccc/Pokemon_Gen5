@@ -134,7 +134,7 @@ void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
     PRINTSYS_PrintStreamDelete(msgWork->printHandle);
     GFL_STR_DeleteBuffer( msgWork->streamStr );
   }
-  
+  PRINTSYS_QUE_Clear( msgWork->printQueMsg );
   PRINTSYS_QUE_Delete( msgWork->printQueMsg );
   APP_KEYCURSOR_Delete( msgWork->cursorWork );
   GFL_TCBL_Exit( msgWork->tcblSys );

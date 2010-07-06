@@ -1123,6 +1123,7 @@ static void PLIST_InitMessage( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 static void PLIST_TermMessage( PLIST_WORK *work )
 {
+  PRINTSYS_QUE_Clear( work->printQue );
   PRINTSYS_QUE_Delete( work->printQue );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->sysFontHandle );
