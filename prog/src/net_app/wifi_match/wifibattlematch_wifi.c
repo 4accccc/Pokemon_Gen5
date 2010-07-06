@@ -2192,6 +2192,7 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 { 
   enum
   { 
+    SEQ_CHECK_ERROR,
     SEQ_START_DRAW_PLAYERINFO,
     SEQ_WAIT_DRAW_PLAYERINFO,
 
@@ -2221,6 +2222,22 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   switch( *p_seq )
   { 
+  case SEQ_CHECK_ERROR:
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_NONE:
+      *p_seq  = SEQ_START_DRAW_PLAYERINFO;
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      /* fallthrough */
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+      break;
+    }
+    break;
+
   case SEQ_START_DRAW_PLAYERINFO:
     if( p_wk->p_playerinfo == NULL )
     { 
