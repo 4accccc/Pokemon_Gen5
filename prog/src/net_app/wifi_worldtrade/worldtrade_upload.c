@@ -49,6 +49,8 @@
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 #include "savedata/perapvoice.h"
+#include "savedata/mail.h"
+#include "item/item.h"
 
 #include "msg/msg_place_name.h"
 #define FIRST_NATUKIDO  (70)		///交換されたポケモンに入れるなつき度
@@ -138,7 +140,7 @@ static int DupulicateCheck( WORLDTRADE_WORK *wk );
 
 #endif
 
-
+static void WorldTrade_SetEvilName( POKEMON_PARAM *pp, HEAPID heapID );
 
 
 enum{
@@ -642,6 +644,7 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 		// おくっています
 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_EVILCHECK_START );
+    wk->evilcheck_loop  = 0;  //SUBSEQ_EVILCHECK_STARTをするときは必ず０にしてから移動
     //不正チェックしてからアップロードへ
     wk->evilcheck_mode  = SUBSEQ_UPLOAD_START;
 		break;
@@ -654,6 +657,7 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 		// 交換します
  		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
  		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_EVILCHECK_START );
+    wk->evilcheck_loop  = 0;  //SUBSEQ_EVILCHECK_STARTをするときは必ず０にしてから移動
     //不正チェックしてから交換へ
     wk->evilcheck_mode  = SUBSEQ_EXCHANGE_START;
 		break;
@@ -758,17 +762,39 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
       else
       { 
         // 「このポケモンはあずける事ができません」→タイトルへ
-        OS_TPrintf( "不正検査NG=[%d]\n", wk->evilcheck_data.poke_result );
-        wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
-        wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+        if( wk->evilcheck_loop  == 0 )
+        {
+          wk->evilcheck_loop++;
+          //初回ならば、ニックネーム、親、メールを変えてもう一度チェック
+          wk->subprocess_seq = SUBSEQ_EVILCHECK_START;
+
+          WorldTrade_SetEvilName( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data, HEAPID_WORLDTRADE );
+        }
+        else
+        {
+          OS_TPrintf( "不正検査NG=[%d]\n", wk->evilcheck_data.poke_result );
+          wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
+          wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+        }
       }
     }
     else
     { 
-      // 「このポケモンはあずける事ができません」→タイトルへ
-      OS_TPrintf( "不正検査NG=[%d]\n", wk->evilcheck_data.poke_result );
-      wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
-      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+      if( wk->evilcheck_loop  == 0 )
+      {
+        wk->evilcheck_loop++;
+        //初回ならば、ニックネーム、親、メールを変えてもう一度チェック
+        wk->subprocess_seq = SUBSEQ_EVILCHECK_START;
+
+        WorldTrade_SetEvilName( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data, HEAPID_WORLDTRADE );
+      }
+      else
+      {
+        // 「このポケモンはあずける事ができません」→タイトルへ
+        OS_TPrintf( "不正検査NG=[%d]\n", wk->evilcheck_data.poke_result );
+        wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
+        wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+      }
     }
   }
   else if( NHTTP_ERROR_BUSY != error )
@@ -1117,10 +1143,19 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 
 				OS_TPrintf(" download is right!\n");
 				// データ復元
+#if 1
+        // データ復元の際は、不正名の置き換えによりすでに別のデータになっているので
+        // セーブデータから復元するように変更
+        DownloadPokemonDataAdd( wk, WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data ),
+            WorldTradeData_GetBoxNo( wk->param->worldtrade_data ), 
+            wk->UploadPokemonData.isTrade );
+#else
 				DownloadPokemonDataAdd( wk, (POKEMON_PARAM*)wk->UploadPokemonData.postData.data,
 										WorldTradeData_GetBoxNo( wk->param->worldtrade_data ), 
 										wk->UploadPokemonData.isTrade );
+#endif
 				wk->subprocess_seq = SUBSEQ_SAVE;
+
 			}
 
 
@@ -3158,3 +3193,38 @@ static int DupulicateCheck( WORLDTRADE_WORK *wk )
 }
 
 #endif
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正名を設定
+ *
+ *	@param	POKEMON_PARAM *pp ポケパラ
+ */
+//-----------------------------------------------------------------------------
+static void WorldTrade_SetEvilName( POKEMON_PARAM *pp, HEAPID heapID )
+{
+  STRBUF * p_name = DWC_TOOL_CreateBadNickName( GFL_HEAP_LOWID(heapID) );
+
+  //ニックネーム
+  PP_SetDefaultNickName( pp );
+
+  //親名
+  PP_Put( pp, ID_PARA_oyaname_raw, (u32)GFL_STR_GetStringCodePointer(p_name) );
+
+  //メールを持っていれば
+  //書いた人も変える
+  {
+    int item = PP_Get( pp , ID_PARA_item ,NULL);
+
+    if(ITEM_CheckMail(item))
+    {
+      MAIL_DATA*  p_mail  = MailData_CreateWork(GFL_HEAP_LOWID(heapID));
+      PP_Get( pp, ID_PARA_mail_data, p_mail );
+      MailData_SetWriterName( p_mail, (STRCODE*)GFL_STR_GetStringCodePointer(p_name));
+      PP_Put( pp, ID_PARA_mail_data, (u32)p_mail );
+      GFL_HEAP_FreeMemory( p_mail );
+    }
+  }
+  GFL_STR_DeleteBuffer( p_name );
+}

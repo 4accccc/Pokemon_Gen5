@@ -128,7 +128,8 @@ enum{
 //==============================================================================
 int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 {
-	POKEMON_PARAM *pp;
+
+  POKEMON_PARAM *pp = WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data );
 	
 	// ワーク初期化
 	InitWork( wk );
@@ -146,32 +147,17 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 
 	SetCellActor(wk);
 
+
 	// 自分のポケモンの情報
 	WorldTrade_PokeInfoPrint( 	wk->MsgManager, wk->MonsNameManager, wk->WordSet, &wk->InfoWin[INFOWIN_NICKNAME], 
-					(POKEMON_PASO_PARAM*)wk->UploadPokemonData.postData.data,
+					PP_GetPPPPointer(pp),
 					&wk->UploadPokemonData.postSimple, &wk->print );
-
-	// 持ち主情報の表示
-	pp = (POKEMON_PARAM *)wk->UploadPokemonData.postData.data;
 
   {
     WorldTrade_PokeInfoPrint2( wk->MsgManager, &wk->InfoWin[INFOWIN_AZUKETAHITO], 
         (STRCODE*)MyStatus_GetMyName(wk->param->mystatus),
         pp, &wk->InfoWin[INFOWIN_OYA], &wk->print);
   }
-
-#ifdef PM_DEBUG
-	{	
-		static char string[256]	= {0};
-		/*
-		STD_ConvertStringUnicodeToSjis( string, NULL,
-                                         wk->UploadPokemonData.name, NULL,
-                                         NULL );
-    */
-    DEB_STR_CONV_StrcodeToSjis( wk->UploadPokemonData.name , string , 128 );
-		OS_Printf( "親名 %s\n", string );
-	}
-#endif //PM_DEBUG
 
 	// ほしいポケモンの条件
 	WodrldTrade_MyPokeWantPrint( wk->MsgManager, wk->MonsNameManager, wk->WordSet, 
@@ -181,7 +167,7 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 				WorldTrade_LevelTermGet(wk->UploadPokemonData.wantSimple.level_min,wk->UploadPokemonData.wantSimple.level_max, LEVEL_PRINT_TBL_DEPOSIT),&wk->print);
 
 	// ポケモン画像転送
-	WorldTrade_TransPokeGraphic( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
+	WorldTrade_TransPokeGraphic( pp );
 	
 	// ２回目以降
 	// ワイプフェード開始（両画面）
@@ -628,6 +614,8 @@ static int SubSeq_Start( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int SubSeq_Main( WORLDTRADE_WORK *wk)
 {
+	POKEMON_PARAM *pp = WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data );
+
 //	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 //		SubSeq_MessagePrint( wk, msg_wifilobby_009, 1, 0, 0x0f0f );
 //		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
@@ -635,7 +623,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 
 	if((GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE) || (GFL_UI_TP_GetTrg())){
 		// 「●●●●をどうしますか？」
-		SubSeq_MessagePrint( wk, msg_gtc_01_006, 1, 0, 0x0f0f,(POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
+		SubSeq_MessagePrint( wk, msg_gtc_01_006, 1, 0, 0x0f0f, pp );
 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SELECT_LIST );
 		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 	}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
@@ -828,7 +816,7 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 		WorldTrade_SelBoxEnd( wk );
 		BmpMenuWork_ListDelete( wk->BmpMenuList );
 		{
-			POKEMON_PARAM *pp = (POKEMON_PARAM *)wk->UploadPokemonData.postData.data;
+      POKEMON_PARAM *pp = WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data );
 			// あずけたポケモンはメールを持っているか？
 			if(WorldTrade_PokemonMailCheck( pp )){
 				// てもちがいっぱいだと受け取れない

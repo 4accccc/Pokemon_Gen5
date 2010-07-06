@@ -611,6 +611,8 @@ typedef struct _WORLDTRADE_WORK{
 
   DWC_TOOL_BADWORD_WORK badword_wk;
 
+  int           evilcheck_loop;     //２回の不正チェックを行うため
+
 #ifdef PM_DEBUG
 	int 					frame;									//
 	int						framenum[9][2];							//

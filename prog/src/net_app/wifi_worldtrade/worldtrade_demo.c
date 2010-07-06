@@ -103,7 +103,10 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 	switch(wk->sub_process_mode){
 	// 預ける
 	case MODE_UPLOAD:
-		p_param->pMyPoke = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
+    //アップロードするポケモンは名前が置換されている可能性があるので、
+    //セーブデータのポケモンを使う
+		p_param->pMyPoke = WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data );
+//      (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
 		p_param->pNPCPoke = p_param->pMyPoke;
 		wk->pNPCStatus = MakePartnerStatusData( &wk->UploadPokemonData );
 		p_param->pNPC  = wk->pNPCStatus;
@@ -113,7 +116,16 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 
 	// 受け取る
 	case MODE_DOWNLOAD:
-		p_param->pNPCPoke = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
+    //受け取ったポケモンは名前が置換されている可能性があるので、
+    //交換されていないばあいセーブデータのポケモンを使う
+    if( wk->UploadPokemonData.isTrade )
+    {
+      p_param->pNPCPoke = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
+    }
+    else
+    {
+      p_param->pNPCPoke = WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data );
+    }
 		p_param->pMyPoke = p_param->pNPCPoke;
 		// 相手のMYSTATUSが無いので、できる限りでっちあげる
 		wk->pNPCStatus = MakePartnerStatusData( &wk->UploadPokemonData );
@@ -124,7 +136,16 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 
 	// 受け取るポケモンが交換されていた
 	case MODE_DOWNLOAD_EX:
-    p_param->pNPCPoke =(POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
+    //受け取ったポケモンは名前が置換されている可能性があるので、
+    //交換されていないばあいセーブデータのポケモンを使う
+    if( wk->UploadPokemonData.isTrade )
+    {
+      p_param->pNPCPoke = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
+    }
+    else
+    {
+      p_param->pNPCPoke = WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data );
+    }
 
     WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
     p_param->pMyPoke = wk->demoPokePara;
