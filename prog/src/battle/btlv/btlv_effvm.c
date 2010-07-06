@@ -822,8 +822,6 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     { 
       //BG”ñ•\Ž¦
       GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
     }
   }
 #if 0
