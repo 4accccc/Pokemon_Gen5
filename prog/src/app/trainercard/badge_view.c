@@ -296,7 +296,7 @@ GFL_PROC_RESULT BadgeViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 
   // フェードイン開始
   WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
-                  WIPE_FADE_BLACK, 16, 1, HEAPID_TR_CARD );
+                  WIPE_FADE_BLACK,  WIPE_DEF_DIV, 1, HEAPID_TR_CARD );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -1461,7 +1461,7 @@ static BOOL SubSuq_FadeOut( BADGEVIEW_WORK *wk )
 {
   // フェードイン開始
   WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
-                  WIPE_FADE_BLACK, 16, 1, HEAPID_TR_CARD );
+                  WIPE_FADE_BLACK,  WIPE_DEF_DIV, 1, HEAPID_TR_CARD );
   wk->seq = SUBSEQ_FADEOUT_WAIT;
 
   return TRUE;
