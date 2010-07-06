@@ -6181,6 +6181,6 @@ void WIFIBATTLEMATCH_NETICON_SetDraw( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_vi
   }
   else
   { 
-    GFL_NET_WirelessIconEasyEnd();
+//    GFL_NET_WirelessIconEasyEnd();
   }
 }

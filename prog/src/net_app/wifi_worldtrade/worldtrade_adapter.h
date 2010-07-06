@@ -149,7 +149,7 @@ static inline void WirelessIconEasy_SetLevel( int level )
 }
 static inline void WirelessIconEasyEnd( void )
 {
-  GFL_NET_WirelessIconEasyEnd();
+//  GFL_NET_WirelessIconEasyEnd();
 }
 
 static inline void TalkFontPaletteLoad(PALTYPE type, u32 offs, u32 heap)
