@@ -34,6 +34,7 @@ extern void  WorldTradeData_Init(WORLDTRADE_DATA *WorldTradeData );
 extern int   WorldTradeData_GetFlag( WORLDTRADE_DATA* WorldTradeData );
 extern void  WorldTradeData_SetFlag( WORLDTRADE_DATA* WorldTradeData, int flag );
 extern void  WorldTradeData_GetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PARAM *poke );
+extern POKEMON_PARAM *WorldTradeData_GetPokemonDataPtr( WORLDTRADE_DATA* WorldTradeData );
 extern void  WorldTradeData_SetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PARAM *poke, int box );
 extern GFDATE  WorldTradeData_GetLastDate_Deposit( WORLDTRADE_DATA* WorldTradeData );
 extern void  WorldTradeData_SetLastDate_Deposit( WORLDTRADE_DATA* WorldTradeData, GFDATE date );

@@ -107,6 +107,19 @@ void  WorldTradeData_GetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PA
 	GFL_STD_MemCopy( WorldTradeData->PokemonData, (void*)poke, POKETOOL_GetWorkSize() );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンデータのポインタをもらう
+ *
+ *	@param	WORLDTRADE_DATA* WorldTradeData   ワーク
+ *
+ *	@return POKEMON_PARAMのアドrす
+ */
+//-----------------------------------------------------------------------------
+POKEMON_PARAM *WorldTradeData_GetPokemonDataPtr( WORLDTRADE_DATA* WorldTradeData )
+{
+  return (POKEMON_PARAM *)WorldTradeData->PokemonData;
+}
 //==============================================================================
 /**
  * @brief   ポケモンを預けたので、コピーを保存しておく
