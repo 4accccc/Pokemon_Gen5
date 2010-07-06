@@ -470,6 +470,7 @@ static void handler_NormalJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_NormalJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_Juel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
 static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
+static void handler_Juel_EndDmgSeq( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -5570,7 +5571,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HonooNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_HonooNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_HonooNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_HonooNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq     },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5590,7 +5592,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MizuNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_MizuNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_MizuNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_MizuNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5610,7 +5613,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_DenkiNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_DenkiNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_DenkiNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_DenkiNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq     },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5630,7 +5634,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KusaNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_KusaNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_KusaNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_KusaNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5650,7 +5655,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KooriNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_KooriNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_KooriNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_KooriNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq     },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5670,7 +5676,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KakutouJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_KakutouJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_KakutouJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_KakutouJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq     },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5690,7 +5697,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_DokuNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_DokuNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_DokuNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_DokuNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5710,7 +5718,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_JimenNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_JimenNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_JimenNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_JimenNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq     },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5730,7 +5739,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HikouNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_HikouNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_HikouNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_HikouNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq     },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5750,7 +5760,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_EsperJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_EsperJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_EsperJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_EsperJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5770,7 +5781,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MusiNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_MusiNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_MusiNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_MusiNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5790,7 +5802,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_IwaNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_IwaNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_IwaNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_IwaNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5810,7 +5823,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_GhostJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_GhostJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_GhostJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_GhostJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5830,7 +5844,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_DragonJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_DragonNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_DragonNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_DragonNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq      },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5849,8 +5864,9 @@ static void handler_DragonNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable* HAND_ADD_ITEM_AkuNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_START,       handler_AkuNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_AkuNoJuel_Pow },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_AkuNoJuel_Decide  },
+    { BTL_EVENT_WAZA_POWER,             handler_AkuNoJuel_Pow     },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5870,7 +5886,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HaganeNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_HaganeNoJuel_Decide },
-    { BTL_EVENT_WAZA_POWER,             handler_HaganeNoJuel_Pow },
+    { BTL_EVENT_WAZA_POWER,             handler_HaganeNoJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq      },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5891,6 +5908,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_NormalJuel( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DAMAGEPROC_START,       handler_NormalJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_NormalJuel_Pow    },
+    { BTL_EVENT_DAMAGEPROC_END,         handler_Juel_EndDmgSeq    },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5905,7 +5923,13 @@ static void handler_NormalJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 }
 
 
-// ジュエル：ワザ出し確定ハンドラ共通
+enum {
+  JUEL_SEQ_NULL = 0,
+  JUEL_SEQ_STANDBY,
+  JUEL_SEQ_END,
+};
+
+// ジュエル：ダメージ処理プロセス開始ハンドラ共通
 static void common_Juel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
@@ -5928,8 +5952,8 @@ static void common_Juel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
           HANDEX_STR_AddArg( &param->exStr, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
         BTL_SVF_HANDEX_Pop( flowWk, param );
 
+        work[0] = JUEL_SEQ_STANDBY;
       }
-      work[0] = 1;
     }
   }
 }
@@ -5939,9 +5963,18 @@ static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   // 自分が攻撃側＆タイプがマッチしていたら威力を増加
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == type)
-  &&  (work[0] == 1)
+  &&  ((work[0] == JUEL_SEQ_STANDBY) || (BTL_SVFTOOL_IsSimulationMode(flowWk)))
   ){
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.5f) );
-    work[0] = 0;
   }
 }
+// ジュエル：ダメージ処理プロセス終了ハンドラ共通
+static void handler_Juel_EndDmgSeq( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (work[0] == JUEL_SEQ_STANDBY)
+  ){
+    work[0] = JUEL_SEQ_END;
+  }
+}
+

@@ -162,6 +162,7 @@ typedef enum {
   BTL_EVENT_DAMAGEPROC_END_HIT_L1,  ///< ダメージワザシーケンス終了（ダメージを受けたポケモン（みがわり含む）が居る）
   BTL_EVENT_DAMAGEPROC_END_HIT_L2,  ///< ダメージワザシーケンス終了（ダメージを受けたポケモン（みがわり含む）が居る）
   BTL_EVENT_DAMAGEPROC_END_HIT_L3,  ///< ダメージワザシーケンス終了（ダメージを受けたポケモン（みがわり含む）が居る）
+  BTL_EVENT_DAMAGEPROC_END_HIT_L4,  ///< ダメージワザシーケンス終了（ダメージを受けたポケモン（みがわり含む）が居る）
   BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザシーケンス終了（常に呼び出し）
   BTL_EVENT_CHANGE_TOKUSEI_BEFORE,  ///< とくせい書き換え直前（書き換え確定）
   BTL_EVENT_CHANGE_TOKUSEI_AFTER,   ///< とくせい書き換え後

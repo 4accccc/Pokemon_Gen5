@@ -4781,12 +4781,14 @@ static void flowsub_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARA
   BTL_POKESET_SeekStart( targets );
   while( (defender = BTL_POKESET_SeekNext(targets)) != NULL )
   {
-    TAYA_Printf("pokeID=%d, hide avoid check..\b", BPP_GetID(defender));
+    TAYA_Printf("pokeID=%d, hide avoid check..\n", BPP_GetID(defender));
     if( IsMustHit(wk, attacker, defender) ){
       continue;
     }
     if( scEvent_CheckPokeHideAvoid(wk, attacker, defender, wazaParam->wazaID) )
     {
+      TAYA_Printf(" remove", BPP_GetID(defender));
+
       BTL_POKESET_Remove( targets, defender );
       scPut_WazaAvoid( wk, defender, wazaParam->wazaID );
     }
@@ -6829,10 +6831,104 @@ static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARA
 
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-    scEvent_DamageProcEnd( wk, attacker, targets, wazaParam, fDelayAttack );
+
+      scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L1 );
+      scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END_HIT_REAL );
+      scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L2 );
+
+      // ダメージ反応アイテム
+      {
+        BTL_POKEPARAM* bpp;
+        BTL_POKESET_SeekStart( targets );
+        while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
+        {
+          scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
+        }
+      }
+
+      scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L3 );
+      scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END_HIT_L4 );
+
+      scEvent_DamageProcEnd( wk, attacker, targets, wazaParam, fDelayAttack );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 }
+/**
+ *  Event] ダメージワザ処理終了（ヒット時のみ下請け）
+ */
+static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
+  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack, BOOL fRealHitOnly, BtlEventType eventID )
+{
+  const BTL_POKEPARAM* bpp;
+  u32 damage, damage_sum, target_cnt, hit_cnt, i;
+  BOOL fHit;
+
+  target_cnt = BTL_POKESET_GetCount( targets );
+  hit_cnt = damage_sum = 0;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DELAY_ATTACK_FLAG, fDelayAttack );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+
+    for(i=0; i<target_cnt; ++i)
+    {
+      fHit = FALSE;
+      bpp = BTL_POKESET_Get( targets, i );
+      if( fRealHitOnly )
+      {
+        fHit = BTL_POKESET_GetDamageReal( targets, bpp, &damage );
+      }
+      else
+      {
+        fHit = BTL_POKESET_GetDamage( targets, bpp, &damage );
+      }
+
+      if( fHit )
+      {
+        damage_sum += damage;
+        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+hit_cnt, BPP_GetID(bpp) );
+        TAYA_Printf("HitRec [%d] PokeID=%d\n", hit_cnt, BPP_GetID(bpp));
+        ++hit_cnt;
+      }
+    }
+    if( hit_cnt )
+    {
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, hit_cnt );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_RINPUNGUARD_FLG, FALSE );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_TIKARAZUKU_FLG, FALSE );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT_PREV );
+
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_TIKARAZUKU_FLG) == FALSE ){
+        BTL_EVENT_CallHandlers( wk, eventID );
+      }
+    }
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ダメージワザ処理終了
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   targets
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
+  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DELAY_ATTACK_FLAG, fDelayAttack );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END );
+  BTL_EVENTVAR_Pop();
+}
+
+
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理 > ひるみチェック
 //------------------------------------------------------------------
@@ -6986,91 +7082,6 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
   BTL_Hem_PopState( &wk->HEManager, hem_state );
   return result;
 }
-//----------------------------------------------------------------------------------
-/**
- * [Event] ダメージワザ処理終了
- *
- * @param   wk
- * @param   attacker
- * @param   targets
- * @param   waza
- */
-//----------------------------------------------------------------------------------
-static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
-  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack )
-{
-  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L1 );
-  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END_HIT_REAL );
-  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L2 );
-
-  // ダメージ反応アイテム
-  {
-    BTL_POKEPARAM* bpp;
-    BTL_POKESET_SeekStart( targets );
-    while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
-    {
-      scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
-    }
-  }
-
-  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT_L3 );
-  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END );
-}
-/**
- *  Event] ダメージワザ処理終了（下請け）
- */
-static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
-  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack, BOOL fRealHitOnly, BtlEventType eventID )
-{
-  const BTL_POKEPARAM* bpp;
-  u32 damage, damage_sum, target_cnt, hit_cnt, i;
-  BOOL fHit;
-
-  target_cnt = BTL_POKESET_GetCount( targets );
-  hit_cnt = damage_sum = 0;
-
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DELAY_ATTACK_FLAG, fDelayAttack );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
-
-    for(i=0; i<target_cnt; ++i)
-    {
-      fHit = FALSE;
-      bpp = BTL_POKESET_Get( targets, i );
-      if( fRealHitOnly )
-      {
-        fHit = BTL_POKESET_GetDamageReal( targets, bpp, &damage );
-      }
-      else
-      {
-        fHit = BTL_POKESET_GetDamage( targets, bpp, &damage );
-      }
-
-      if( fHit )
-      {
-        damage_sum += damage;
-        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+hit_cnt, BPP_GetID(bpp) );
-        TAYA_Printf("HitRec [%d] PokeID=%d\n", hit_cnt, BPP_GetID(bpp));
-        ++hit_cnt;
-      }
-    }
-    if( hit_cnt )
-    {
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, hit_cnt );
-      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_RINPUNGUARD_FLG, FALSE );
-      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_TIKARAZUKU_FLG, FALSE );
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT_PREV );
-
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_TIKARAZUKU_FLG) == FALSE ){
-        BTL_EVENT_CallHandlers( wk, eventID );
-      }
-    }
-  BTL_EVENTVAR_Pop();
-}
-
 //------------------------------------------------------------------
 // サーバーフロー下請け： たたかう > ダメージワザ系 > ダメージ値計算
 //------------------------------------------------------------------

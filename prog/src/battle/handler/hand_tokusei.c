@@ -5805,7 +5805,7 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END,        handler_WaruiTeguse },  // ダメージワザ処理終了処理ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_L4,        handler_WaruiTeguse },  // ダメージワザ処理終了処理ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
