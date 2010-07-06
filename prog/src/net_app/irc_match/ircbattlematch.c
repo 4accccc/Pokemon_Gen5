@@ -1173,16 +1173,21 @@ static void ircExitStart_TS2(IRC_BATTLE_MATCH* pWork)
 
 static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork)
 {
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
-    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
-    _CHANGE_STATE(pWork,ircExitStart_TS2);
+  if(pWork->pAppTask){
+    if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+      int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+      APP_TASKMENU_CloseMenu(pWork->pAppTask);
+      pWork->pAppTask=NULL;
+      GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+      _CHANGE_STATE(pWork,ircExitStart_TS2);
+      return;
+    }
+  }
+  else{
+    _ReturnButtonStart(pWork,FALSE);
     return;
   }
 
-  
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS,WB_NET_IRCBATTLE)){
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_TYPESEND, sizeof(pWork->selectType), &pWork->selectType)){
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMINGNO_TYPECHECK, WB_NET_IRCBATTLE);
