@@ -2780,7 +2780,7 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
 
   if( isMovieTrans == TRUE )
   {
-    OS_ResetSystem(0);
+    GFL_UI_SoftReset( 0 );
   }
 
   return GFL_PROC_RES_FINISH;
