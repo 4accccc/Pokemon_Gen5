@@ -783,7 +783,7 @@ BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data )
         send_buf,
         FALSE,     // 優先度を高くする
         TRUE,     // 同一コマンドがキューに無い場合のみ送信する
-        TRUE      // GFL_NETライブラリの外で保持するバッファを使用
+        FALSE      // GFL_NETライブラリの外で保持するバッファを使用
   );
   if( result ){
     BTL_N_Printf( DBGSTR_NET_SendAITrainerData, tr_data->tr_id );
