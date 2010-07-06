@@ -32,6 +32,7 @@ enum {
 	MAINSEQ_RELEASE,
 	MAINSEQ_WIPE_IN,
 	MAINSEQ_WIPE_OUT,
+	MAINSEQ_START,
 	MAINSEQ_MAIN,
 	MAINSEQ_DEMO,
 	MAINSEQ_END
@@ -40,6 +41,8 @@ enum {
 typedef int (*pZKNTOP_FUNC)(ZKNTOPMAIN_WORK*);
 
 #define	HEAPID_ZUKAN_TOP_L	( GFL_HEAP_LOWID(HEAPID_ZUKAN_TOP) )	// 後方確保用ヒープＩＤ
+
+#define	INIT_FADE_START_WAIT	( 2 )		// 開始時のフェードインまでのウェイト（ないと通信アイコンが赤くなる）
 
 #define	AUTO_START_TIME		( 60*5 )		// 自動的にリストを開始するまでの時間
 
@@ -55,6 +58,7 @@ static int MainSeq_Init( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_Release( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_WipeIn( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_WipeOut( ZKNTOPMAIN_WORK * wk );
+static int MainSeq_Start( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_Main( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk );
 
@@ -71,6 +75,7 @@ static const pZKNTOP_FUNC	MainSeq[] = {
 	MainSeq_Release,
 	MainSeq_WipeIn,
 	MainSeq_WipeOut,
+	MainSeq_Start,
 	MainSeq_Main,
 	MainSeq_Demo,
 };
@@ -413,8 +418,9 @@ static int MainSeq_Init( ZKNTOPMAIN_WORK * wk )
 
 	InitVBlank( wk );
 
-	ZKNCOMM_SetFadeIn( HEAPID_ZUKAN_TOP );
-	return MAINSEQ_WIPE_IN;
+//	ZKNCOMM_SetFadeIn( HEAPID_ZUKAN_TOP );
+//	return MAINSEQ_WIPE_IN;
+	return MAINSEQ_START;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -474,6 +480,26 @@ static int MainSeq_WipeOut( ZKNTOPMAIN_WORK * wk )
 		return MAINSEQ_RELEASE;
 	}
 	return MAINSEQ_WIPE_OUT;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：開始処理
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int MainSeq_Start( ZKNTOPMAIN_WORK * wk )
+{
+	if( wk->time == INIT_FADE_START_WAIT ){
+		wk->time = 0;
+		ZKNCOMM_SetFadeIn( HEAPID_ZUKAN_TOP );
+		return MAINSEQ_WIPE_IN;
+	}
+	wk->time++;
+	return MAINSEQ_START;
 }
 
 //--------------------------------------------------------------------------------------------
