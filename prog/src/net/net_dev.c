@@ -57,6 +57,8 @@ FS_EXTERN_OVERLAY(dpw_common);
 //net_whpipe.cでしか使用しないが、オーバーレイされるsrcの為、値が消えてしまう
 //消されないように常駐であるこのファイルに定義だけ行う
 u8 DebugAloneTest = _DEBUG_ALONETEST;
+//こっちはwih.c
+u8 WH_DebugFixedChannel = 0;
 #endif
 
 

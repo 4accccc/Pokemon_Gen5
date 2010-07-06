@@ -2998,14 +2998,28 @@ static WMErrCode WHi_MeasureChannel(WMCallbackFunc func, u16 channel)
 
   Returns:      もっとも使用率の低い利用可能なチャンネル番号.
  *---------------------------------------------------------------------------*/
+#if PM_DEBUG
+extern u8 WH_DebugFixedChannel;
+#endif
 u16 WH_GetMeasureChannel(void)
 {
 	WH_ASSERT(_pWmInfo->sSysState == WH_SYSSTATE_MEASURECHANNEL);
 
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
-	_pWmInfo->sChannel = (u16)SelectChannel(_pWmInfo->sChannelBitmap);
-	WH_TRACE("decided channel = %d\n", _pWmInfo->sChannel);
-	return _pWmInfo->sChannel;
+#if PM_DEBUG
+  if( WH_DebugFixedChannel != 0 )
+  {
+  	_pWmInfo->sChannel = WH_DebugFixedChannel;
+  	WH_TRACE("decided channel = %d(Debug fix!)\n", _pWmInfo->sChannel);
+  	return _pWmInfo->sChannel;
+  }
+  else
+#endif
+  {
+  	_pWmInfo->sChannel = (u16)SelectChannel(_pWmInfo->sChannelBitmap);
+  	WH_TRACE("decided channel = %d\n", _pWmInfo->sChannel);
+  	return _pWmInfo->sChannel;
+  }
 }
 
 

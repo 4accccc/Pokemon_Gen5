@@ -129,6 +129,8 @@ static u32 DebugGetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 para
 static void DebugSetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
 static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetNetWhpipeChannelFix(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
+static void DebugSetNetWhpipeChannelFix(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetMusEntryNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
@@ -1094,6 +1096,28 @@ static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gameda
 static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
 {
   DEBUG_NET_WHPIPE_AloneTestCodeSet( value );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief チャンネル固定設定
+ */
+//--------------------------------------------------------------
+static u32 DebugGetNetWhpipeChannelFix(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param )
+{
+  extern u8 WH_DebugFixedChannel;
+  return WH_DebugFixedChannel;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief チャンネル固定設定
+ */
+//--------------------------------------------------------------
+static void DebugSetNetWhpipeChannelFix(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  extern u8 WH_DebugFixedChannel;
+  WH_DebugFixedChannel = value;
 }
 
 //--------------------------------------------------------------
