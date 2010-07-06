@@ -796,6 +796,11 @@ static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 static BOOL WaitPlayerRequest( FMENU_REPORT_EVENT_WORK * wk )
 {
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
+
+  // 自機変更リクエストを行っていなければ、何も待たない。
+  if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == FALSE ){
+    return TRUE;
+  }
   
   if( FIELD_PLAYER_UpdateRequest(fld_player) == TRUE ){
     return( TRUE );
