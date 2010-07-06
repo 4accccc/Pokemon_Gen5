@@ -359,6 +359,18 @@ static GFL_PROC_RESULT GameMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
   GFL_HEAP_DeleteHeap( HEAPID_WORLD );
   GFL_HEAP_DeleteHeap( HEAPID_PROC );
   GFL_HEAP_DeleteHeap( HEAPID_APP_CONTROL );
+#ifdef  PLAYABLE_VERSION
+  { //フォールド状態によるバックライトOFFでここに到達、リセットする場合への対処
+    PMBackLightSwitch up,down;
+    //SPIがBUSYの場合を考慮して、成功するまで回す
+		while ( PM_GetBackLight(&up,&down) != PM_RESULT_SUCCESS ) { /* NULL */ };
+		if ( up == PM_BACKLIGHT_OFF )
+    {
+      //SPIがBUSYの場合を考慮して、成功するまで回す
+			while ( PM_SetBackLight(PM_LCD_ALL, PM_BACKLIGHT_ON ) != PM_RESULT_SUCCESS ) { /* NULL */ }
+		}
+  }
+#endif
   OS_ResetSystem( 0 );
   return GFL_PROC_RES_FINISH;
 }
