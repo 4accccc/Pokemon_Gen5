@@ -1105,7 +1105,7 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
       }
     }
   }
-
+  flg = FALSE;
   for(i = 0; i < DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
     k = i + DREAM_WORLD_DATA_MAX_ITEMBOX;
     if(pWork->aIconParam[k].on && !pWork->aIconParam[k].end){
