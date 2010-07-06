@@ -23,6 +23,7 @@
 #include "msg\msg_net_err.h"
 #include "sound\pm_sndsys.h"
 #include "system/machine_use.h"
+#include "net/wih.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include <dwc.h>
@@ -130,6 +131,7 @@ static BOOL Local_SystemOccCheck(void);
 static void Local_ErrDispDraw(void);
 static void Local_ErrMessagePrint(BOOL fatal_error,BOOL isExitWait);
 static void Local_ErrUpdate(void);
+static void _DispFatalError(void);
 
 //==============================================================================
 //
@@ -434,7 +436,7 @@ void NetErr_DispCallPushPop(void)
 
 //==================================================================
 /**
- * Push,Pop有のエラー画面一発呼び出し　※FatalError専用
+ * エラー画面一発呼び出し　※FatalError専用
  *
  * エラー画面を表示した場合、電源切断を促すため、この関数内で無限ループします。
  */
@@ -449,21 +451,27 @@ void NetErr_DispCallFatal(void)
 	//通信切断
 //	NetErr_ExitNetSystem();
 
+	_DispFatalError();
+}
+
+//--------------------------------------------------------------
+/**
+ * FatalError画面を表示し、そのまま無限ループ
+ *
+ * @param   none		
+ */
+//--------------------------------------------------------------
+static void _DispFatalError(void)
+{
 	//エラー画面描画
 	Local_ErrDispInit(TRUE,FALSE);
 	
-//		OS_SpinWait(10000);
-
   //無限ループ
   GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);  //ハードリセットが効くようにフラグを落とす
   do{
     MachineSystem_Main(); //ハードリセット用
   }while(1);
-	
-	//エラー画面終了
-	Local_ErrDispExit(FALSE);
 }
-
 
 //--------------------------------------------------------------
 /**
@@ -670,26 +678,40 @@ void NetErr_ErrWorkInit(void)
   nes->err_important_type = NET_ERR_CHECK_NONE;
 }
 
-//----------------------------------------------------------------------------
+//==================================================================
 /**
- *	@brief  強制切断
+ * 強制切断
  *
+ * @param   none		
+ *
+ * @retval  BOOL		TRUE:正常に切断完了　FALSE:致命的エラーが発生(Wirelessでしかありえない)
  */
-//-----------------------------------------------------------------------------
-void NetErr_ExitNetSystem( void )
-{ 
+//==================================================================
+BOOL NetErr_ExitNetSystem( void )
+{
   if(GFL_NET_IsInit() )
   {
+    const GFLNetInitializeStruct *net_init = GFL_NET_GetNETInitStruct();
     GFL_NET_ResetDisconnect();  ///切断処理中でも一旦リセット
     GFL_NET_Exit(NULL);
     GFL_NET_IRCWIRELESS_ResetSystemError();  //赤外線WIRLESS切断
     do{
+      if(net_init != NULL){
+        if(net_init->bNetType == GFL_NET_TYPE_WIRELESS 
+            || net_init->bNetType == GFL_NET_TYPE_WIRELESS_SCANONLY){
+          if(WH_GetSystemState() == WH_SYSSTATE_FATAL){
+            return FALSE;
+          }
+        }
+      }
       GFL_NET_ShutdownMain();
       Local_ErrUpdate();
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 //      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
     }while(GFL_NET_IsExit() == FALSE);
   }
+  
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -711,15 +733,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 	}
   
   if(fatal_error == TRUE){
-  	//通信切断
-  	//NetErr_ExitNetSystem();
-		//エラー画面描画
-  	Local_ErrDispInit(fatal_error,FALSE);
-    //無限ループ
-    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);  //ハードリセットが効くようにフラグを落とす
-    do{
-      MachineSystem_Main(); //ハードリセット用
-    }while(1);
+  	_DispFatalError();
 	}
   
 	if(nes->status == NET_ERR_STATUS_REQ)
@@ -739,7 +753,9 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
   	}
 
     //通信ライブラリ終了待ち 
-    NetErr_ExitNetSystem();
+    if(NetErr_ExitNetSystem() == FALSE){
+      _DispFatalError();  //致命的エラー
+    }
 
     if( isWifi == TRUE )
     {

@@ -376,8 +376,12 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       (*seq) ++;
     }
     if(NET_ERR_CHECK_NONE!=NetErr_App_CheckError()){
-      NetErr_ExitNetSystem();
-      NetErr_DispCallPushPop();
+      if(NetErr_ExitNetSystem() == TRUE){
+        NetErr_DispCallPushPop();
+      }
+      else{
+        NetErr_DispCallFatal();
+      }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
       (*seq) = _WAIT_NET_END;
     }
@@ -452,10 +456,16 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _TIMINGBATTLE:
     if(NET_ERR_CHECK_NONE!=NetErr_App_CheckError()){
+      BOOL shutdown_ret;
       BATTLE_PARAM_Delete(dbw->para);
       dbw->para = NULL;
-      NetErr_ExitNetSystem();
-      NetErr_DispCallPushPop();
+      shutdown_ret = NetErr_ExitNetSystem();
+      if(shutdown_ret == TRUE){
+        NetErr_DispCallPushPop();
+      }
+      else{
+        NetErr_DispCallFatal();
+      }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
       (*seq) = _WAIT_NET_END;
       break;
