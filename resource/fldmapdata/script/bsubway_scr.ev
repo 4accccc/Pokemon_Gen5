@@ -825,13 +825,20 @@ sub_receipt_challenge_multi_comm:
 */
   
   IF $save_on == TRUE THEN
-    _REPORT_EVENT_CALL( ret )
+    //レポート前に復帰位置を受付前にする
+    _BSUBWAY_TOOL( BSWTOOL_SET_RECEIPT_MAP_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+    //レポート
+    _CALL sub_bsw_common_report_core
+    $ret = SCR_REPORT_OK
+    
+    IF $SCWK_ANSWER == 1 THEN
+      $ret = SCR_REPORT_CANCEL
+    ENDIF
   ELSE
     $ret = SCR_REPORT_OK
   ENDIF
   
   IF $ret != SCR_REPORT_OK THEN //レポートしない
-    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
