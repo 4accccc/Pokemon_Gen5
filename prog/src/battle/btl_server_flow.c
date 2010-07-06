@@ -3125,9 +3125,27 @@ static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk )
 //----------------------------------------------------------------------------------
 static void scproc_AfterRotationIn( BTL_SVFLOW_WORK* wk )
 {
-  u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-    scEvent_RotationIn( wk );
-  BTL_Hem_PopState( &wk->HEManager, hem_state );
+  // でんじふゆう、テレキネシスを落とす
+  FRONT_POKE_SEEK_WORK  fps;
+  BTL_POKEPARAM* bpp;
+
+  FRONT_POKE_SEEK_InitWork( &fps, wk );
+  while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
+  {
+    if( BPP_CheckSick(bpp, WAZASICK_TELEKINESIS) ){
+      scPut_CureSick( wk, bpp, WAZASICK_TELEKINESIS, NULL );
+    }
+    if( BPP_CheckSick(bpp, WAZASICK_FLYING) ){
+      scPut_CureSick( wk, bpp, WAZASICK_FLYING, NULL );
+    }
+  }
+
+
+  {
+    u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+      scEvent_RotationIn( wk );
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
+  }
 }
 //--------------------------------------------------------------------------
 /**
