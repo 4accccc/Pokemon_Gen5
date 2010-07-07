@@ -1212,15 +1212,13 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     {
       //自分が取得できるファイルが複数あるときは、
       //自分のIDから取得すべきファイルを決めて、それを落とす
+      //->完全乱数になりました
       int i;
-      u32 playerID;
       s32 index;
       int cnt   = 0;
       GF_ASSERT( p_nd_data->recv_filenum );
 
-      playerID  = MyStatus_GetID_Low( SaveData_GetMyStatus((SAVE_CONTROL_WORK *)p_wk->cp_sv) );
-      playerID  = playerID == 0 ? 1: playerID;
-      index     = playerID % p_nd_data->recv_filenum;
+      index     = GFL_STD_MtRand( p_nd_data->recv_filenum );
 
       //２つ以上重複しているので、
       //その重複している中から、プレイヤーID%Nのものを取り出す
