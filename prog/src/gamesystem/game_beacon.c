@@ -619,7 +619,6 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->version_bit = 0xffff; //全バージョン指定
   info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
-  OS_TPrintf("aaa zone_id = %d\n", info->zone_id);
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(gamedata, info->zone_id);
   info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID_Low(myst);
