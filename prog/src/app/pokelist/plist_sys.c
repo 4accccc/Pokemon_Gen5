@@ -3089,10 +3089,15 @@ static void PLIST_SelectMenuTerm( PLIST_WORK *work )
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , TRUE );
   }
   
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
-                    GX_BLEND_PLANEMASK_BG3 ,
-                    16 , 10 );
-  work->isActiveWindowMask = FALSE;
+  if( work->menuRet != PMIT_ITEM &&
+      work->menuRet != PMIT_MAIL )
+  {
+    //再度メニュー開くのでここでは消さない
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
+                      GX_BLEND_PLANEMASK_BG3 ,
+                      16 , 10 );
+    work->isActiveWindowMask = FALSE;
+  }
   GFL_BG_ClearScreenCodeVReq(PLIST_BG_MENU,0);
   work->ktst = GFL_UI_CheckTouchOrKey();
 
