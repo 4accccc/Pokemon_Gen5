@@ -406,6 +406,12 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           }
         }
       }
+      else if( err == BR_NET_ERR_RETURN_DISCONNECT )
+      {
+        BR_PROC_SYS_Abort( p_wk->p_param->p_procsys );
+        BR_SEQ_End( p_seqwk );
+        return;
+      }
       else
       { 
         BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );

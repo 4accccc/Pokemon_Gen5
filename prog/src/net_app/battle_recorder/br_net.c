@@ -21,6 +21,7 @@
 
 //アーカイブ(エラーメッセージ用)
 #include "msg/msg_battle_rec.h"
+#include "msg/msg_wifi_system.h"
 
 //外部公開
 #include "br_net.h"
@@ -534,11 +535,30 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
         //バトルビデオ送信時
         if( p_errorinfo->result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS )
         { 
-          if( p_msg_no )
-          { 
-            *p_msg_no = msg_err_030 + p_errorinfo->result;
+          switch( p_errorinfo->result )
+          {
+          case GDSRAP_SP_ERR_NHTTP_400:
+            NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_400 );
+            ret = BR_NET_ERR_RETURN_DISCONNECT;
+            break;
+
+          case GDSRAP_SP_ERR_NHTTP_401:
+            NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_401 );
+            ret = BR_NET_ERR_RETURN_DISCONNECT;
+            break;
+
+          case GDSRAP_SP_ERR_NHTTP_ETC:
+            NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
+            ret = BR_NET_ERR_RETURN_DISCONNECT;
+            break;
+
+          default:
+            if( p_msg_no )
+            { 
+              *p_msg_no = msg_err_030 + p_errorinfo->result;
+            }
+            ret = BR_NET_ERR_RETURN_TOPMENU;
           }
-          ret = BR_NET_ERR_RETURN_TOPMENU;
         }
         break;
 
@@ -578,6 +598,11 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 
     //エラー消去
     GDSRAP_ErrorInfoClear( &p_wk->gdsrap );
+
+    if( ret == BR_NET_ERR_RETURN_DISCONNECT )
+    {
+      p_wk->is_last_disconnect_error  = TRUE;
+    }
     return ret;
   }
 

@@ -107,6 +107,7 @@ typedef enum
   BR_NET_ERR_RETURN_NONE,         //エラーが起きていない
   BR_NET_ERR_RETURN_ONCE,         //１つ前に戻る
   BR_NET_ERR_RETURN_TOPMENU,      //トップメニューへ戻る
+  BR_NET_ERR_RETURN_DISCONNECT,   //切断する（このエラーはバトルビデオ送信時のサーバーレスポンスエラーでしかこない）
 }BR_NET_ERR_RETURN;
 extern BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no );
 
