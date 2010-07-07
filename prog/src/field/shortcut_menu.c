@@ -110,6 +110,9 @@ enum
 #define LISTMOVE_DIFF		(LISTMOVE_END-LISTMOVE_START)
 #define LISTMOVE_SYNC		(4)
 
+// 一度に表示できる最大行数
+#define LISTMOVE_Y_MAX	( 5 )
+
 //-------------------------------------
 ///	スクロール
 //=====================================
@@ -217,6 +220,7 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
 static void Scroll_MoveCursorReqCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 mode );
 static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, HEAPID heapID );
 static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor_bak );
+static void Scroll_AdjustListPos( u16 *list, u16 *cursor, const u16 max );
 
 
 static void Shortcut_ScrollTask( GFL_TCB *, void *p_wk_adrs );
@@ -1078,6 +1082,35 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
     InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + cursor)*8 );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * @brief	リストの増減が起きた時に不都合が起きるカーソル位置を調整する
+ *
+ * @param   list[in/out]      リスト描画スタート位置
+ * @param   cursor[in/out]    カーソル位置
+ * @param   max[in]           項目MAX
+ */
+//----------------------------------------------------------------------------------
+static void Scroll_AdjustListPos( u16 *list, u16 *cursor, const u16 max )
+{
+  // ５個以内ならばスクロールオフセットは０にしてカーソル位置を直接反映させる
+  if(max<=LISTMOVE_Y_MAX){
+    if(*list!=0){
+      *cursor += *list;
+      *list = 0;
+    }
+  }else{
+    // ５個以上の時は、MAX-2の位置を監視してスクロールがストップする位置に
+    // ならないように調整する
+    if( *cursor==(LISTMOVE_Y_MAX-1) && (*list+*cursor)==max-2){
+      (*cursor)--;
+      (*list)++;
+    }
+  }
+  
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	リストを作成
@@ -1127,6 +1160,9 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
 		}
 	}
 
+  // カーソル位置調整
+  Scroll_AdjustListPos( &list_bak, &cursor_bak, max );
+
 	//リストメイン作成
 	{	
 		static const BMPMENULIST_HEADER sc_menulist_default	=
@@ -1136,7 +1172,7 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
 			NULL,	//一行ごとのコールバック
 			NULL,	//BMPWIN
 			0,		//リスト項目数
-			5,		//表示最大項目数
+			LISTMOVE_Y_MAX,		//表示最大項目数
 			0,		//ラベル表示X位置
 			13,		//項目表示X座標
 			0,		//カーソル表示X座標
