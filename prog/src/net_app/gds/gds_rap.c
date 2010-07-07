@@ -98,7 +98,9 @@ static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_w
 
 static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int ret );
 
-static void GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx, int *p_client, int *p_temoti );
+static BOOL GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx, int *p_client, int *p_temoti );
+static void GdsRap_NickNameCopy(const STRCODE *src, STRCODE *dest, int len);
+
 //==============================================================================
 //
 //	
@@ -277,10 +279,11 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
     for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ )
     {
       //書き換えるためにインデックスを取得
-      GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke );
-
+      if(GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke ) == FALSE){
+        break;
+      }
       param = &br_send->rec.rec_party[client].member[poke];
-      STRTOOL_Copy( param->nickname, gdsrap->nickname[i], MONS_NAME_SIZE+EOM_SIZE );
+      GdsRap_NickNameCopy( param->nickname, gdsrap->nickname[i], MONS_NAME_SIZE+EOM_SIZE );
     }
   }
   gdsrap->evilcheck_write = FALSE;
@@ -669,8 +672,9 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
                 if( gdsrap->evil_check_loop == 0 )
                 {
                   //書き換えるためにインデックスを取得
-                  GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke );
-
+                  if(GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke ) == FALSE){
+                    break;
+                  }
                   param = &br_send->rec.rec_party[client].member[poke];
                   GFL_MSG_GetStringRaw( GlobalMsg_PokeName, param->monsno, param->nickname, MONS_NAME_SIZE+EOM_SIZE );
                   OS_TPrintf("ニックネーム書き換え cliend_idx=%d poke_idx=%d\n", client, poke );
@@ -920,10 +924,11 @@ static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv
       for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ )
       {
         //書き換えるためにインデックスを取得
-        GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke );
-
+        if(GdsRap_GetEvilCheckPokeIndex( gdsrap, i, &client, &poke ) == FALSE){
+          break;
+        }
         param = &br_send->rec.rec_party[client].member[poke];
-        STRTOOL_Copy( gdsrap->nickname[i], param->nickname, MONS_NAME_SIZE+EOM_SIZE );
+        GdsRap_NickNameCopy( gdsrap->nickname[i], param->nickname, MONS_NAME_SIZE+EOM_SIZE );
       }
       BattleRec_CalcCrcRec( BattleRec_WorkPtrGet() );
 
@@ -1007,9 +1012,11 @@ static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int r
  *	@param	idx         連続インデックス
  *	@param	*p_client   クライアントインデックス
  *	@param	*p_temoti   手持ちインデックス
+ *
+ *  @retval TRUE：インデックス正常取得　　FALSE：インデックスに該当するポケモンがいない
  */
 //-----------------------------------------------------------------------------
-static void GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx, int *p_client, int *p_temoti )
+static BOOL GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx, int *p_client, int *p_temoti )
 {
   int client_max, temoti_max;
   int index = 0;
@@ -1022,12 +1029,29 @@ static void GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx
     {
       if( index == idx )
       {
-        return;
+        return TRUE;
       }
       index++;
     }
   }
+  return FALSE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 不正名置換用の名前コピー
+ *
+ * @param   src		
+ * @param   dest		
+ * @param   len		
+ */
+//--------------------------------------------------------------
+static void GdsRap_NickNameCopy(const STRCODE *src, STRCODE *dest, int len)
+{
+  //STRTOOL_Copy( src, dest, len ); 文字列長に変更があると終端のEOMなどが残る為CRCが変わってしまう
+  GFL_STD_MemCopy(src, dest, len );
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   受信データ解釈
