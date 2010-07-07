@@ -2333,4 +2333,7 @@ SRCS_OVERLAY_DEBUG_ALL_POKE_CHECK = field/event_debug_btl_all_poke_check.c
 #===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_DEBUG_ALL_WAZA_CAM_CHECK = field/event_debug_btl_all_waza_cam_check.c
 
+# DEBUG_POKE_CHANGE
+#===> SRCS_OVERLAY_BATTLE_PLIST
+SRCS_OVERLAY_DEBUG_POKE_CHANGE = field/event_debug_btl_poke_change.c
 

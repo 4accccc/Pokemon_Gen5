@@ -202,7 +202,7 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
       // 次の技へ
       wk->count++;
 
-      // スキップ じばく、だいばくはつ、一撃必殺技
+      // スキップ じばく、だいばくはつ、かなしばり、一撃必殺技
       if( wk->count == WAZANO_ZIBAKU ||
           wk->count == WAZANO_DAIBAKUHATU ||
           wk->count == WAZANO_KANASIBARI ||

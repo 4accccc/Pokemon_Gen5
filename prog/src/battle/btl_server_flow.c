@@ -2734,7 +2734,8 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL f
   if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) ||
       HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
       HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) ||
-      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
+      HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) ||
+      HUDSON_IsTestCode( HUDSON_TESTCODE_POKE_CHANGE ) )
   {
     fSkipNigeruCalc = TRUE;
     fForceNigeru = TRUE;

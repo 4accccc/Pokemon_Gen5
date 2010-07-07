@@ -2623,7 +2623,8 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
     // “¦‚°‚ê‚é‚æ‚¤‚É‚·‚é
     if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
         HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) ||
-        HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
+        HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) ||
+        HUDSON_IsTestCode( HUDSON_TESTCODE_POKE_CHANGE ) )
     {
       return BTL_ESCAPE_MODE_WILD;
     }

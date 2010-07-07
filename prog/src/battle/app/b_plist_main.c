@@ -1893,6 +1893,22 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
         // 強制的に4匹目を選択（バトンタッチ等対策）
         wk->dat->sel_poke = BPLIST_UI_LIST_POKE4;
       }
+      else if ( HUDSON_IsTestCode( HUDSON_TESTCODE_POKE_CHANGE ) )
+      {
+        wk->dat->chg_waza = 0; // 入れ替え可能に
+        // ランダム
+        wk->dat->sel_poke = GFUser_GetPublicRand0( 3 ) + 3;
+        // 再抽選
+        while( ChangePokeCheck( wk, wk->dat->sel_poke ) == TRUE )
+        {
+          wk->dat->sel_poke = GFUser_GetPublicRand0( 3 ) + 3;
+        }
+        {
+          POKEMON_PARAM* pp;
+          pp = PokeParty_GetMemberPointer( wk->dat->pp, wk->dat->sel_poke );
+          OS_FPrintf(1,"monsno=%d に入れ替え\n", PP_Get( pp, ID_PARA_monsno, NULL ) );
+        }
+      }
 #endif
       return TRUE;
     }
