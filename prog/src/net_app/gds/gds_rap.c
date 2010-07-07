@@ -651,7 +651,6 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
           return TRUE;
         }
 
-        error = NHTTP_RAP_Process( gdsrap->p_nhttp );
         if( NHTTP_ERROR_NONE == error ){
           void *p_data;
           int i;
