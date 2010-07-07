@@ -335,7 +335,7 @@ static void VoiceChatEventCallbackConference(u8 aid, VCTEvent event, VCTSession 
 
 	switch (event) {
 	case VCT_EVENT_DISCONNECTED:
-		VCT_PRINT("Disconnected\n");
+		OS_TPrintf("Disconnected\n");
 		ClearSession(session);
 		break;
 	case VCT_EVENT_CONNECTED:
@@ -343,7 +343,7 @@ static void VoiceChatEventCallbackConference(u8 aid, VCTEvent event, VCTSession 
 		VCT_PRINT("Connected\n");
 		break;
 	case VCT_EVENT_ABORT:
-		VCT_PRINT("Session abrot\n");
+		OS_TPrintf("Session abrot\n");
 		ClearSession(session);
 		break;
 	default:
@@ -376,7 +376,7 @@ static void VoiceChatEventCallbackPhone(u8 aid, VCTEvent event, VCTSession *sess
 		break;
 
 	case VCT_EVENT_RESPONDBYE:
-		VCT_PRINT("Bye From %d\n", session->aid);
+		OS_TPrintf("Bye From %d\n", session->aid);
 		ret = VCT_Response(session, VCT_RESPONSE_OK);
 		if (ret != VCT_ERROR_NONE){
 			VCT_PRINT("Can't send response Ok [%d]\n", ret);
@@ -386,13 +386,13 @@ static void VoiceChatEventCallbackPhone(u8 aid, VCTEvent event, VCTSession *sess
 		break;
 
 	case VCT_EVENT_DISCONNECTED:
-		VCT_PRINT("Disconnected\n");
+		OS_TPrintf("Disconnected\n");
 		ClearSession(session);
 //		GFL_NET_DWC_StopVChat();
 		break;
 
 	case VCT_EVENT_CANCEL:
-		VCT_PRINT("Cancel From %d\n", session->aid);
+		OS_TPrintf("Cancel From %d\n", session->aid);
 		ret = VCT_Response(session, VCT_RESPONSE_TERMINATED);
 		if (ret != VCT_ERROR_NONE){
 			VCT_PRINT("Can't send response RequestTerminated [%d]\n", ret);
@@ -404,7 +404,7 @@ static void VoiceChatEventCallbackPhone(u8 aid, VCTEvent event, VCTSession *sess
 		VCT_PRINT("200 OK From %d\n", session->aid);
 		if(session->mode != _vWork->mode){
 			ClearSession(session);
-			VCT_PRINT("セッションが違うものが来た\n");
+			OS_TPrintf("セッションが違うものが来た\n");
 			return;
 		}
 		if( VCT_StartStreaming(session) )
@@ -418,14 +418,14 @@ static void VoiceChatEventCallbackPhone(u8 aid, VCTEvent event, VCTSession *sess
 		break;
 
 	case VCT_EVENT_REJECT:
-		VCT_PRINT("Reject From %d\n", session->aid);
+		OS_TPrintf("Reject From %d\n", session->aid);
 		ClearSession(session);
 		break;
 
 	case VCT_EVENT_BUSY:
 	case VCT_EVENT_TIMEOUT:
 	case VCT_EVENT_ABORT:
-		VCT_PRINT("Clear session by '%d'\n", event);
+		OS_TPrintf("Clear session by '%d'\n", event);
 		ClearSession(session);
 		break;
 
