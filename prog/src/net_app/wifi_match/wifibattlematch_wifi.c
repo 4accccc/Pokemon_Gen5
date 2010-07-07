@@ -111,6 +111,7 @@ typedef enum
   WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS  = 0,  //成功
   WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY,         //１体でも不正ポケモンがいた
   WBM_WIFI_SUBSEQ_EVILCHECK_RET_NET_ERR,       //ネットエラー
+  WBM_WIFI_SUBSEQ_EVILCHECK_RET_SERVER_ERR,       //サーバーレスポンスエラー
 
 
   WBM_WIFI_SUBSEQ_RET_NONE  = 0xFFFF,       //なし
@@ -2013,7 +2014,11 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           DEBUG_WIFICUP_Printf( "不正チェックNG\n" );
           *p_seq = SEQ_START_DIRTY_POKE_MSG;
         }
-
+      }
+      else if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR )
+      {
+        DEBUG_WIFICUP_Printf( "サーバーレスポンスエラー\n" );
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
 
       //エラー
@@ -2353,9 +2358,14 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         *p_seq       = SEQ_NEXT_MATCHING;
       }
       else if( ret == WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY )
-      {   
-        //*p_seq       = SEQ_START_DIRTY_MSG;
+      {  
+        //不正でもマッチングへ行く
+        //  →署名チェックで弾かれ回らない
         *p_seq       = SEQ_NEXT_MATCHING;
+      }
+      else if( ret == WBM_WIFI_SUBSEQ_EVILCHECK_RET_SERVER_ERR )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
 
       //エラー
@@ -4582,6 +4592,11 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         DEBUG_WIFICUP_Printf( "EvilCheck Error\n" );
         p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_NET_ERR;
+        *p_seq  = SEQ_END;
+      }
+      else if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR )
+      {
+        p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_SERVER_ERR;
         *p_seq  = SEQ_END;
       }
     }

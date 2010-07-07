@@ -129,6 +129,7 @@ typedef enum
   WBM_RND_SUBSEQ_EVILCHECK_RET_SUCCESS  = 0,  //成功
   WBM_RND_SUBSEQ_EVILCHECK_RET_DARTY,         //１体でも不正ポケモンがいた
   WBM_RND_SUBSEQ_EVILCHECK_RET_NET_ERR,       //ネットエラー
+  WBM_RND_SUBSEQ_EVILCHECK_RET_SERVER_ERR,    //サーバーレスポンスエラー
 
   WBM_RND_SUBSEQ_RET_NONE  = 0xFFFF,          //なし
 } WBM_RND_SUBSEQ_RET;
@@ -275,6 +276,7 @@ static void Util_PlayerInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static BOOL Util_PlayerInfo_Move( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static BOOL Util_PlayerInfo_MoveOut( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMATCH_CORE_RETMODE mode );
+static void Util_PlayerInfo_DeleteOut( WIFIBATTLEMATCH_RND_WORK *p_wk );
 //対戦相手のカード作成
 static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBATTLEMATCH_ENEMYDATA *cp_enemy_data );
 static void Util_MatchInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
@@ -872,6 +874,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
         break;
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //復帰地点まで戻る
+        Util_PlayerInfo_DeleteOut( p_wk );
         WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
         break;
       }
@@ -918,6 +921,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      Util_PlayerInfo_DeleteOut( p_wk );
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
       break;
 
@@ -939,6 +943,10 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       {   
         *p_seq       = SEQ_START_DIRTY_MSG;
       }
+      else if( ret == WBM_RND_SUBSEQ_EVILCHECK_RET_SERVER_ERR )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      }
       
       if( ret != WBM_RND_SUBSEQ_RET_NONE )
       {
@@ -946,6 +954,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          Util_PlayerInfo_DeleteOut( p_wk );
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
           break;
 
@@ -1064,6 +1073,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          Util_PlayerInfo_DeleteOut( p_wk );
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
 
           *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
@@ -1108,6 +1118,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          Util_PlayerInfo_DeleteOut( p_wk );
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
 
           *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
@@ -2393,6 +2404,7 @@ static void WbmRndSeq_Free_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      Util_PlayerInfo_DeleteOut( p_wk );
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
       break;
 
@@ -2414,6 +2426,10 @@ static void WbmRndSeq_Free_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       {   
         *p_seq       = SEQ_START_DIRTY_MSG;
       }
+      else if( ret == WBM_RND_SUBSEQ_EVILCHECK_RET_SERVER_ERR )
+      {
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      }
 
       if( ret != WBM_RND_SUBSEQ_RET_NONE )
       {
@@ -2421,6 +2437,7 @@ static void WbmRndSeq_Free_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          Util_PlayerInfo_DeleteOut( p_wk );
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
           break;
 
@@ -3333,6 +3350,12 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         p_wk->subseq_ret  = WBM_RND_SUBSEQ_EVILCHECK_RET_NET_ERR;
         *p_seq  = SEQ_END;
       }
+      else if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR )
+      {
+        NAGI_Printf( "EvilCheck Server Error\n" );
+        p_wk->subseq_ret  = WBM_RND_SUBSEQ_EVILCHECK_RET_SERVER_ERR;
+        *p_seq  = SEQ_END;
+      }
     }
     break;
 
@@ -3479,6 +3502,25 @@ static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATT
   while( !Util_PlayerInfo_Move( p_wk ) )
   { 
 
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のカードを破棄
+ *
+ *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_PlayerInfo_DeleteOut( WIFIBATTLEMATCH_RND_WORK *p_wk )
+{
+
+  if( p_wk->p_playerinfo )
+  { 
+    while( !Util_PlayerInfo_MoveOut( p_wk ) )
+    { 
+
+    }
+    Util_PlayerInfo_Delete( p_wk );
   }
 }
 //----------------------------------------------------------------------------

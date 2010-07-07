@@ -5269,6 +5269,7 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
   };
 
   NHTTPError error;
+  int response;
 
   if( p_wk->p_nhttp == NULL )
   { 
@@ -5301,8 +5302,12 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
     break;
 
   case SEQ_WAIT_CONNECT:
+    response = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
+    error  = NHTTP_RAP_Process(p_wk->p_nhttp);
+    if(NHTTP_ERROR_NONE == error)
     {
-      int response = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
+      u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+      DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA* pDream;
 
       switch( response )
       {
@@ -5317,15 +5322,8 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
         NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
         return WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE;
       }
-    }
 
-    error  = NHTTP_RAP_Process(p_wk->p_nhttp);
-    if(NHTTP_ERROR_NONE == error)
-    {
-      u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
-      DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA* pDream = (DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA*)&pEvent[sizeof(gs_response)];
-
-
+      pDream = (DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA*)&pEvent[sizeof(gs_response)];
       NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
       DEBUG_NET_Printf("ID %x\n",pDream->WifiMatchUpID);
       DEBUG_NET_Printf("FLG %x\n",pDream->GPFEntryFlg);
@@ -5431,6 +5429,7 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
     SEQ_END,
   };
   NHTTPError error;
+  int response;
 
   if( p_wk->p_nhttp == NULL )
   { 
@@ -5464,8 +5463,13 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
     break;
 
   case SEQ_WAIT_CONNECT:
+    response  = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
+    error     = NHTTP_RAP_Process(p_wk->p_nhttp);
+    if(NHTTP_ERROR_NONE == error)
     {
-      int response = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
+      u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+
+
       switch( response )
       {
       case 503:
@@ -5478,17 +5482,9 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
         NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
         return WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE;
       }
-    }
 
-
-    error  = NHTTP_RAP_Process(p_wk->p_nhttp);
-    if(NHTTP_ERROR_NONE == error)
-    {
-      u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
       NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
       DEBUG_NET_Printf("GPFサーバーへの書き込み終了\n");
-
-
 
       if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE
           ||  ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ALREADY_EXISTS )
@@ -5698,9 +5694,55 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
   case SEQ_EVILCHECL_WAIT:
     { 
       NHTTPError error;
+      int response;
+      response  = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
       error = NHTTP_RAP_Process( p_wk->p_nhttp );
       if( NHTTP_ERROR_NONE == error )
       {
+        switch( response )
+        {
+        case 200:
+          /*  err none  */
+          break;
+
+        case 400:
+          NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_400 );
+          if(p_wk->p_nhttp)
+          {
+            NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
+            NHTTP_RAP_End(p_wk->p_nhttp);
+            NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
+            p_wk->p_nhttp  = NULL;
+            p_wk->seq = 0;
+          }
+          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR;
+
+        case 401:
+          NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_401 );
+          if(p_wk->p_nhttp)
+          {
+            NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
+            NHTTP_RAP_End(p_wk->p_nhttp);
+            NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
+            p_wk->p_nhttp  = NULL;
+            p_wk->seq = 0;
+          }
+          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR;
+
+        default:
+          NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
+          if(p_wk->p_nhttp)
+          {
+            NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
+            NHTTP_RAP_End(p_wk->p_nhttp);
+            NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
+            p_wk->p_nhttp  = NULL;
+            p_wk->seq = 0;
+          }
+          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR;
+        }
+
+
         p_wk->seq++;
       }
       else if( NHTTP_ERROR_BUSY != error )
@@ -5720,46 +5762,51 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
 
   case SEQ_END:
     { 
-      int i;
-      void *p_buff;
-      const s8 *cp_sign;
-      p_buff  = NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+      int response;
 
-      p_data->status_code  = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );
-      
-      for( i = 0; i < p_wk->poke_max; i++ )
-      { 
-        p_data->poke_result[i] = NHTTP_RAP_EVILCHECK_GetPokeResult( p_buff, i );
-      }
+      {
+        int i;
+        void *p_buff;
+        const s8 *cp_sign;
 
-      if( p_data->status_code == 0 )
-      { 
-        NAGI_Printf( "不正チェック通過してサインもらいました！\n" );
-        cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_buff, p_wk->poke_max );
-        GFL_STD_MemCopy( cp_sign, p_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
-#ifdef PM_DEBUG
+        p_buff  = NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+        p_data->status_code  = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );
+
+
+        for( i = 0; i < p_wk->poke_max; i++ )
         { 
-          int i;
-          for( i = 0; i < NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN; i++ )
+          p_data->poke_result[i] = NHTTP_RAP_EVILCHECK_GetPokeResult( p_buff, i );
+        }
+
+        if( p_data->status_code == 0 )
+        { 
+          NAGI_Printf( "不正チェック通過してサインもらいました！\n" );
+          cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_buff, p_wk->poke_max );
+          GFL_STD_MemCopy( cp_sign, p_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+#ifdef PM_DEBUG
           { 
-            DEBUG_NET_Printf( "%d ", p_data->sign[i] );
-            if(i % 0x10 == 0xF )
+            int i;
+            for( i = 0; i < NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN; i++ )
             { 
-              DEBUG_NET_Printf( "\n" );
+              DEBUG_NET_Printf( "%d ", p_data->sign[i] );
+              if(i % 0x10 == 0xF )
+              { 
+                DEBUG_NET_Printf( "\n" );
+              }
             }
           }
-        }
 #endif
-      }
+        }
 
-      NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
-      if(p_wk->p_nhttp)
-      {
-        NHTTP_RAP_End(p_wk->p_nhttp);
-        p_wk->p_nhttp  = NULL;
+        NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
+        if(p_wk->p_nhttp)
+        {
+          NHTTP_RAP_End(p_wk->p_nhttp);
+          p_wk->p_nhttp  = NULL;
+        }
+        return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS;
       }
     }
-    return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS;
   }
 
   return WIFIBATTLEMATCH_NET_EVILCHECK_RET_UPDATE;

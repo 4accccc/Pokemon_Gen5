@@ -91,6 +91,7 @@ static int Subseq_Main( WORLDTRADE_WORK *wk);
 static int Subseq_UploadSuccessMessage( WORLDTRADE_WORK *wk);
 static int Subseq_DownloadSuccessMessage( WORLDTRADE_WORK *wk);
 static int Subseq_ErrorMessage( WORLDTRADE_WORK *wk );
+static int Subseq_EndDpw( WORLDTRADE_WORK *wk );
 static int Subseq_ReturnTitleMessage( WORLDTRADE_WORK *wk );
 static int Subseq_End( WORLDTRADE_WORK *wk);
 static int Subseq_ServerServiceError( WORLDTRADE_WORK *wk );
@@ -203,6 +204,7 @@ enum{
 	SUBSEQ_MES_WAIT,
   SUBSEQ_MES_KEYWAIT,
 	SUBSEQ_ERROR_MESSAGE,
+  SUBSEQ_END_DPW,
 	
 	SUBSEQ_RETURN_TITLE_MESSAGE,
 
@@ -277,6 +279,7 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	Subseq_MessageWait,     	// SUBSEQ_MES_WAIT
 	Subseq_MessageKeyWait,     	// SUBSEQ_MES_KEYWAIT
 	Subseq_ErrorMessage,		// SUBSEQ_ERROR_MESSAGE,
+	Subseq_EndDpw,		// SUBSEQ_END_DPW,
 	Subseq_ReturnTitleMessage,	// SUBSEQ_RETURN_TITLE_MESSAGE,
 
 	Subseq_StartCancelAsync, //SUBSEQ_START_CANCEL_ASYNC,
@@ -735,11 +738,54 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
 static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
 { 
   NHTTPError error;
-  error = NHTTP_RAP_Process( wk->nhttp );
+  int responce;
+
+  responce  = NHTTP_RAP_GetGetResultCode(wk->nhttp);
+  error     = NHTTP_RAP_Process( wk->nhttp );
   if( NHTTP_ERROR_NONE == error )
   { 
     void *p_data;
     p_data  = NHTTP_RAP_GetRecvBuffer(wk->nhttp);
+
+    switch( responce )
+    {
+    case 200:
+      /*  err none  */
+      break;
+
+    case 400:
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_400 );
+      NetErr_DispCall(FALSE);
+
+      NHTTP_RAP_ErrorClean(wk->nhttp);
+      NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp);
+      NHTTP_RAP_End(wk->nhttp);
+
+      wk->subprocess_seq  = SUBSEQ_END_DPW;
+      return SEQ_MAIN;
+
+    case 401:
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_401 );
+      NetErr_DispCall(FALSE);
+
+      NHTTP_RAP_ErrorClean(wk->nhttp);
+      NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp);
+      NHTTP_RAP_End(wk->nhttp);
+
+      wk->subprocess_seq  = SUBSEQ_END_DPW;
+      return SEQ_MAIN;
+
+    default:
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
+      NetErr_DispCall(FALSE);
+
+      NHTTP_RAP_ErrorClean(wk->nhttp);
+      NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp);
+      NHTTP_RAP_End(wk->nhttp);
+
+      wk->subprocess_seq  = SUBSEQ_END_DPW;
+      return SEQ_MAIN;
+    }
 
     wk->evilcheck_data.status_code  = NHTTP_RAP_EVILCHECK_GetStatusCode( p_data );
     wk->evilcheck_data.poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, 0 );
@@ -2514,6 +2560,31 @@ static int Subseq_ErrorMessage( WORLDTRADE_WORK *wk )
 	WorldTrade_TimeIconDel(wk);
 
 	return SEQ_MAIN;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DPWの終了処理
+ *
+ *	@param	WORLDTRADE_WORK *wk 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_EndDpw( WORLDTRADE_WORK *wk )
+{
+  //非同期処理が終わっていないければキャンセル
+  if( Dpw_Tr_IsAsyncEnd() )
+  {
+    wk->subprocess_seq      = SUBSEQ_END_ERR;
+  }
+  else
+  {
+    wk->subprocess_seq      = SUBSEQ_START_CANCEL_ASYNC;
+  }
+	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_WIFILOGIN_ERR );
+
+  return SEQ_MAIN;
 }
 
 //------------------------------------------------------------------
