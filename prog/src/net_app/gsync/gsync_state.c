@@ -193,6 +193,7 @@ static void _ErrorDisp(G_SYNC_WORK* pWork);
 static void _SymbolPokemonSave(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static BOOL _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
+static void _BoxPokeRemove(G_SYNC_WORK* pWork);
 
 
 
@@ -368,6 +369,13 @@ static void _ErrorDisp3(G_SYNC_WORK* pWork)
 static void _ErrorDisp2(G_SYNC_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    
+    if(pWork->bSaveDataAsync){
+      GAMEDATA_SaveAsyncCancel( pWork->pGameData );
+      pWork->bSaveDataAsync = FALSE;
+    }
+    _BoxPokeRemove(pWork);
+
     if(pWork->pDownload){
       if(GSYNC_DOWNLOAD_ExitAsync(pWork->pDownload)){
         _CHANGE_STATE(_ErrorDisp3);
