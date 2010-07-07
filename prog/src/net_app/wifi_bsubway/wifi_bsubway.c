@@ -222,6 +222,7 @@ typedef enum{
   BSUBWAY_NHTTP_ERROR_NONE,
   BSUBWAY_NHTTP_ERROR_POKE_ERROR,   // ポケモンが不正
   BSUBWAY_NHTTP_ERROR_DISCONNECTED, // 正常終了しなかった
+  BSUBWAY_NHTTP_ERROR_EVILERROR,   //不正検査サーバのエラー
 
   BSUBWAY_NHTTP_ERROR_MAX,
 } BSUBWAY_NHTTP_ERROR;
@@ -1555,12 +1556,24 @@ static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUB
 {
   NHTTPError error;
   BSUBWAY_UPLOADCHECK_RESULT result = BSUBWAY_UPLOADCHECK_RESULT_WAIT;
+  int responce;
 
   GF_ASSERT( p_wk->p_nhttp );
 
   WIFI_BSUBWAY_Printf( "." );
-  
+
+  responce = NHTTP_RAP_GetGetResultCode( p_wk->p_nhttp  );
   error = NHTTP_RAP_Process( p_wk->p_nhttp );
+  if((responce != 200) && (error==NHTTP_ERROR_NONE)){
+    OS_TPrintf("サーバエラー\n");
+    ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_EVILERROR );
+    NHTTP_RAP_ErrorClean(p_wk->p_nhttp);
+    NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
+    NHTTP_RAP_End( p_wk->p_nhttp );
+    p_wk->p_nhttp = NULL;
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL);  //NHTTPエラーの時に呼ぶコールバック削除
+    return BSUBWAY_UPLOADCHECK_RESULT_NG;
+  }
   if( NHTTP_ERROR_NONE != error )
   { 
     // タイムアウトカウント
@@ -1974,6 +1987,9 @@ static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
       break;
     case BSUBWAY_NHTTP_ERROR_DISCONNECTED:
       msgno = msg_wifi_bt_error_003;
+      break;
+    case BSUBWAY_NHTTP_ERROR_EVILERROR:
+      msgno = msg_wifi_bt_error_006;
       break;
     default:
       GF_ASSERT(0);
