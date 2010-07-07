@@ -711,6 +711,7 @@ static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems );
 static void handler_FreeFall_TameFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FreeFall_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_FailCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems );
@@ -10823,6 +10824,7 @@ static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems )
     { BTL_EVENT_CHECK_TAMETURN_FAIL,    handler_FreeFall_TameFail    },   // 溜め失敗判定
     { BTL_EVENT_TAME_START,             handler_FreeFall_TameStart   },   // 溜め開始
     { BTL_EVENT_TAME_RELEASE,           handler_FreeFall_TameRelease },   // 溜め解放
+    { BTL_EVENT_TEMPT_TARGET,           handler_FreeFall_Target      },  // ターゲット決定
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_FreeFall_FailCheck   },
     { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_FreeFall_TypeCheck   },
   };
@@ -10887,6 +10889,24 @@ static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_SVFRET_FreeFallRelease( flowWk, pokeID );
   }
 }
+// ターゲット決定
+static void handler_FreeFall_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_SINGLE)
+  &&  (BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_ROTATION)
+  ){
+    // 掴んでいるポケモンをターゲットにする
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8 targetPokeID;
+
+    targetPokeID = BPP_FreeFallCounterToPokeID( BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) );
+    if( targetPokeID != BTL_POKEID_NULL )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
+    }
+  }
+}
+
 // ワザ出し失敗チェック
 static void handler_FreeFall_FailCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
