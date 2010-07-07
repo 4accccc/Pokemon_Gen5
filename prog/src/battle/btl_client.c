@@ -701,6 +701,8 @@ void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum )
 {
   BTL_RECREADER_Reset( wk->btlRecReader );
 
+//  TAYA_Printf("ClientID=%d, SetChapterSkipMode .. nextTurn=%d\n", wk->myID, nextTurnNum );
+  BTL_ADAPTER_ResetRecvBuffer( wk->adapter );
   RecPlayer_ChapterSkipOn( &wk->recPlayer, nextTurnNum );
   ChangeMainProc( wk, ClientMain_ChapterSkip );
 }
@@ -915,7 +917,8 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     }
     else
     {
-      if( wk->viewCore ){
+      if( wk->viewCore )
+      {
         // BTS:2360 SEの再生を元に戻す。
         // BTS:6700
         PMSND_AllPlayerVolumeEnable(TRUE, PMSND_MASKPL_ALLSE);
@@ -960,18 +963,19 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
 
   switch( wk->myState ){
   case SEQ_RECPLAY_START:
-    if( wk->viewCore ){
-//      BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
-    }
     wk->myState = SEQ_RECPLAY_READ_ACMD;
+
     /* fallthru */
 
   case SEQ_RECPLAY_READ_ACMD:
     {
       BOOL fSkipEnd = RecPlayer_CheckChapterSkipEnd( &wk->recPlayer );
+      TAYA_Printf("ClientID=%d, SkipTurnCount=%d, nextTurnCount=%d\n",
+            wk->myID,  wk->recPlayer.skipTurnCount, wk->recPlayer.nextTurnCount);
       if( !fSkipEnd )
       {
         BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd( wk->adapter );
+        TAYA_Printf("ClientID=%d, cmd=%d\n", wk->myID, cmd);
         if( cmd != BTL_ACMD_NONE )
         {
           wk->subProc = getSubProc( wk, cmd, NULL );
@@ -1223,7 +1227,6 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
       {
         BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
       }
-
       return TRUE;
     }
     break;
@@ -4455,7 +4458,7 @@ static void storePokeSelResult_ForceQuit( BTL_CLIENT* wk )
         break;
       }
       else{
-        TAYA_Printf("たたかえない\n");
+//        TAYA_Printf("たたかえない\n");
       }
     }
   }
@@ -5467,7 +5470,6 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_TRAINER2_IN:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      TAYA_Printf("サブウェイトレーナーメッセージ２開始\n");
       BTLV_StartMsgInBuffer( wk->viewCore );
       (*seq) = SEQ_WAIT_MSG2;
     }
@@ -5476,7 +5478,6 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_MSG2:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      TAYA_Printf("サブウェイトレーナー終了\n");
       return TRUE;
     }
     break;
@@ -8311,7 +8312,7 @@ static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args )
   u8 clientID = args[0];
   u8 increment = args[1];
 
-  TAYA_Printf("ClientID=%d, myID=%d (myAdrs=%p)\n", clientID, wk->myID, wk);
+//  TAYA_Printf("ClientID=%d, myID=%d (myAdrs=%p)\n", clientID, wk->myID, wk);
 
   if( clientID == wk->myID )
   {
@@ -8382,9 +8383,7 @@ static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
  */
 static BOOL scProc_OP_TurnCheckField( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  TAYA_Printf("Fuin Bef = %d\n", BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_FUIN));
   BTL_FIELDSIM_TurnCheck( wk->fldSim, NULL, NULL );
-  TAYA_Printf("Fuin Aft = %d\n", BTL_FIELDSIM_CheckEffect(wk->fldSim, BTL_FLDEFF_FUIN));
   return TRUE;
 }
 
@@ -8763,9 +8762,19 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
       if( ctrl->fChapterSkip == FALSE )
       {
-        if( ctrl->turnCount < ctrl->maxTurnCount ){
+        if( (ctrl->turnCount < ctrl->maxTurnCount)
+        &&  (ctrl->seq == SEQ_DEFAULT)
+        ){
           ++(ctrl->turnCount);
-          if(ctrl->handlingTimer == 0){
+          if(ctrl->handlingTimer == 0)
+          {
+            if( ctrl->seq == SEQ_FADEOUT ){
+              TAYA_Printf("フェードアウト中、ターン数更新 : %d  fadeOutDone=%d\n", ctrl->turnCount, ctrl->fFadeOutDone );
+            }
+            if( ctrl->seq == SEQ_STAY ){
+              TAYA_Printf("ステイ中、ターン数更新 : %d  fadeOutDone=%d\n", ctrl->turnCount, ctrl->fFadeOutDone );
+            }
+
             ctrl->nextTurnCount = ctrl->turnCount;
           }
           fTurnUpdate = TRUE;
@@ -8790,7 +8799,6 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
     // 最初のチャプタまで何もしない（入場エフェクト待ち）
     if( ctrl->turnCount == 0 ){
-//      BTLV_UpdateRecPlayerInput( wk->viewCore, ctrl->turnCount, ctrl->nextTurnCount );
       return;
     }
 
@@ -8828,7 +8836,8 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           break;
 
         case BTLV_INPUT_BR_SEL_REW:
-          if( ctrl->nextTurnCount > 1 ){
+          if( ctrl->nextTurnCount > 1 )
+          {
             ctrl->nextTurnCount--;
             fCtrlUpdate = TRUE;
           }
@@ -8850,6 +8859,15 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
         if( ctrl->handlingTimer )
         {
+          // @todo デバッグ用措置。このままcommitしちゃだめ。
+          #if 0
+          if( fTurnUpdate )
+          {
+            TAYA_Printf("切り替え猶予中にTurnUpdateあり\n");
+            ctrl->handlingTimer = 1;
+          }
+          #endif
+
           if( --(ctrl->handlingTimer) == 0 )
           {
             ctrl->ctrlCode = RECCTRL_CHAPTER;

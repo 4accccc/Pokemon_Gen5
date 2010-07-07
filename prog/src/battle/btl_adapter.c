@@ -82,6 +82,7 @@ static u32 CommMode;
 /*--------------------------------------------------------------------------*/
 static BOOL _StartToReception( BTL_ADAPTER* wk );
 static BOOL _ReceptionClient( BTL_ADAPTER* wk );
+static inline void sendBuf_clear( SEND_DATA_BUFFER* buf );
 static inline void sendBuf_store( SEND_DATA_BUFFER* buf, BtlAdapterCmd cmd, const void* data, u32 dataSize );
 static inline u32 sendBuf_calcSize( const SEND_DATA_BUFFER* buf );
 static inline BtlAdapterCmd sendBuf_getCmd( const SEND_DATA_BUFFER* buf );
@@ -350,6 +351,18 @@ static BOOL _ReceptionClient( BTL_ADAPTER* wk )
 
 //--------------------------------------------------------------------------------------
 /**
+ *
+ *
+ * @param   wk
+ */
+//--------------------------------------------------------------------------------------
+void BTL_ADAPTER_ResetRecvBuffer( BTL_ADAPTER* wk )
+{
+  sendBuf_clear( &wk->sendDataBuffer );
+}
+
+//--------------------------------------------------------------------------------------
+/**
  * [CLIENT用] アダプタコマンド受信チェック
  *
  * @param   wk
@@ -455,7 +468,11 @@ BOOL BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
 
 
 
-
+static inline void sendBuf_clear( SEND_DATA_BUFFER* buf )
+{
+  buf->header.cmd = BTL_ACMD_NONE;
+  buf->header.size = sizeof(buf->header);
+}
 
 static inline void sendBuf_store( SEND_DATA_BUFFER* buf, BtlAdapterCmd cmd, const void* data, u32 dataSize )
 {
