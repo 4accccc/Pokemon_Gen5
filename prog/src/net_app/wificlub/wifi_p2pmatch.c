@@ -2134,7 +2134,8 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
 {
   int i;
 
-  const u8 CELL_MAX = 17*4 + 6;
+ // const u8 CELL_MAX = 17*4 + 6 + 9*4;
+  const u8 CELL_MAX = 10 + 17*4 + 6 + 8*4;
 
   GFL_CLACT_SYS_Create( &fldmapdata_CLSYS_Init , &_defVBTbl, HEAPID_WIFIP2PMATCH );
   wk->clactSet  = GFL_CLACT_UNIT_Create( CELL_MAX , 0, HEAPID_WIFIP2PMATCH );
@@ -7704,7 +7705,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   u32 result;
 
 
-  GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa1000 );
+  GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa4000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(WIFIP2PMATCH_WORK), HEAPID_WIFIP2PMATCH );
   MI_CpuFill8( wk, 0, sizeof(WIFIP2PMATCH_WORK) );
@@ -7732,10 +7733,6 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 
 
   if(pParentWork->seq == WIFI_GAME_ERROR){
-    pParentWork->seq = WIFI_GAME_NONE;
-    _initBGMVol( wk, WIFI_STATUS_PLAYING);
-  }
-  else if(GFL_NET_GetConnectNum() < 2){
     pParentWork->seq = WIFI_GAME_NONE;
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
   }
