@@ -226,7 +226,7 @@ typedef enum  {
   WB_NET_MUSICAL,       ///ミュージカル      （IRC親機＋無線共通）        順番変更禁止
   WB_NET_MUSICAL_CHILD,       ///ミュージカル  (IRC子機)         順番変更禁止
   WB_NET_MUSICAL_LEADER,       ///ミュージカル  (IRC認証)         順番変更禁止
-  WB_NET_UNION,                             ///<ユニオンルーム
+  WB_NET_UNION,                             ///<ユニオンルーム       ユニオンは順番で見ている部分がある wihdwc cg_wirlessmenu
   WB_NET_COLOSSEUM,       ///<コロシアム
   WB_NET_UNION_PICTURE,                     ///<お絵かき
   WB_NET_UNION_BATTLE_MULTI_FREE_SHOOTER,   ///<マルチ(シューター有)
