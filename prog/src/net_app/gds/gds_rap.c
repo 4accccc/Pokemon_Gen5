@@ -518,8 +518,10 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
           		gdsrap->error_info.req_code = POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST;
           		gdsrap->error_info.result = gdsrap->nhttp_sp_err;
           		gdsrap->error_info.occ = TRUE;
-          		gdsrap->response_callback.func_battle_video_regist(
-          		  gdsrap->response_callback.callback_work, &gdsrap->error_info);
+          		if(gdsrap->response_callback.func_battle_video_regist != NULL){
+            		gdsrap->response_callback.func_battle_video_regist(
+            		  gdsrap->response_callback.callback_work, &gdsrap->error_info);
+            	}
             }
 					}
 					break;
