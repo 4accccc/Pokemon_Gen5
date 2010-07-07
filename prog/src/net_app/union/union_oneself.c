@@ -4626,7 +4626,7 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
     _PlayerMinePause(unisys, fieldWork, TRUE);
     
     {
-      TR_CARD_RANK card_rank = TRAINERCARD_GetCardRank(unisys->uniparent->game_data);
+      TR_CARD_RANK card_rank = clsys->recvbuf.tr_card[clsys->talk_obj_id]->CardRank;
       if(card_rank < TR_CARD_RANK_BLACK){
         msg_id = msg_union_card_01 + card_rank;
       }
