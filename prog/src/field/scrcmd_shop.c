@@ -506,6 +506,7 @@ enum{
   SHOPBUY_SEQ_SELECT,
   SHOPBUY_SEQ_DECIDE_NUM,
   SHOPBUY_SEQ_BACK,
+  SHOPBUY_SEQ_ONLY1_YESNO,
   SHOPBUY_SEQ_YESNO,
   SHOPBUY_SEQ_SELECT_YESNO_WAIT,
   SHOPBUY_SEQ_BUY,
@@ -681,7 +682,7 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   {
     ShopTypeDecideMsg( wk, wk->type );
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
-    wk->next = SHOPBUY_SEQ_YESNO;
+    wk->next = SHOPBUY_SEQ_ONLY1_YESNO;
 
   // •¡””ƒ‚¦‚é‚Ì‚ÅŒÂ”‘I‘ð‚Ö
   }else{
@@ -852,6 +853,16 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     BmpMenuList_Rewrite( wk->menuList );
     wk->seq = SHOPBUY_SEQ_MAIN;
     break;
+  case SHOPBUY_SEQ_ONLY1_YESNO:
+    submenu_screen_clear( SCREEN_SUBMENU_ONLY );
+    GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
+    wk->yesnoWork = BmpMenu_YesNoSelectInit(  &yesno_data, 1, MENU_WINDOW_PAL_OFFSET, 0, wk->heapId );
+    // Œ»Ý‚ÌŠŽ”‚ð•\Ž¦
+    print_carry_item( wk, wk->selectitem );
+    wk->seq = SHOPBUY_SEQ_SELECT_YESNO_WAIT;
+    break;
+
   case SHOPBUY_SEQ_YESNO:
     submenu_screen_clear( SCREEN_SUBMENU_ONLY );
     GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
@@ -864,6 +875,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     if(ret!=BMPMENU_NULL){
       if(ret==0){
         wk->seq = SHOPBUY_SEQ_BUY;
+        submenu_screen_clear( SCREEN_SUBMENU_ONLY );
         BmpMenuList_Rewrite( wk->menuList );
         GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
         GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
