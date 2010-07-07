@@ -3358,8 +3358,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   actTargetPos = orgTargetPos;
   fWazaEnable = FALSE;
   fPPDecrement = FALSE;
-  fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK);
-  fTameLock = BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
+  fWazaLock = BPP_CheckSick( attacker, WAZASICK_WAZALOCK );
+  fTameLock = BPP_CheckSick( attacker, WAZASICK_TAMELOCK );
 
   TAYA_Printf("Fight pokeID=%d, handlerPri=%08x\n", BPP_GetID(attacker), handlerSubPri);
   BTL_HANDLER_Waza_Add( attacker, orgWaza, handlerSubPri );
@@ -3422,7 +3422,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       BTL_POKESET_RemoveDeadPoke( wk->psetTargetOrg );
       BTL_POKESET_CopyAlive( wk->psetTargetOrg, wk->psetTarget );
       BTL_POKESET_SetDefaultTargetCount( wk->psetTarget, defTargetCnt );
-//      TAYA_Printf("TargetCntMax=%d\n", BTL_POKESET_GetCount(wk->psetTarget) );
     }
 
     // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
@@ -5852,6 +5851,8 @@ static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 waza
   if( volume >= restPP ){
     volume = restPP;
   }
+
+  TAYA_Printf("restPP=%d, volume=%d\n", restPP, volume );
 
   if( volume )
   {
@@ -9463,11 +9464,20 @@ static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk )
 {
   if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE )
   {
+    BTL_PARTY *party_1, *party_2;
+
     u8 clientID_1 = BTL_MAIN_GetPlayerClientID( wk->mainModule );
     u8 clientID_2 = BTL_MAIN_GetOpponentClientID( wk->mainModule, clientID_1, 0 );
 
-    BTL_PARTY* party_1 = BTL_POKECON_GetPartyData( wk->pokeCon, clientID_1 );
-    BTL_PARTY* party_2 = BTL_POKECON_GetPartyData( wk->pokeCon, clientID_2 );
+    // 整合性チェックサーバと本サーバでClientIDの並びが違うとNGになるので昇順にしておく
+    if( clientID_1 > clientID_2 ){
+      u8 tmp = clientID_1;
+      clientID_1 = clientID_2;
+      clientID_2 = tmp;
+    }
+
+    party_1 = BTL_POKECON_GetPartyData( wk->pokeCon, clientID_1 );
+    party_2 = BTL_POKECON_GetPartyData( wk->pokeCon, clientID_2 );
 
     if( (BTL_PARTY_GetAliveMemberCount(party_1) == 1)
     &&  (BTL_PARTY_GetAliveMemberCount(party_2) == 1)

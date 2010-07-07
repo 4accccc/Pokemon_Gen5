@@ -5750,10 +5750,9 @@ restart:
       &&  (wk->cmdCheckTimingCode != BTL_RECTIMING_None)
       &&  (wk->fCmdCheckEnable)
       ){
-        if( BTL_SERVER_CMDCHECK_Make(wk->cmdCheckServer, wk->cmdCheckTimingCode, cmdBuf, cmdSize) ){
+        if( BTL_SERVER_CMDCHECK_Make(wk->cmdCheckServer, wk->cmdCheckTimingCode, cmdBuf, cmdSize) )
+        {
           BTL_MAIN_NotifyCmdCheckError( wk->mainModule );
-          OS_TPrintf("!!!! recvedCmd=%p, %02x, %02x, %02x, ...\n", cmdBuf,
-              ((const u8*)cmdBuf)[0], ((const u8*)cmdBuf)[1], ((const u8*)cmdBuf)[2] );
           wk->fCmdCheckEnable = FALSE;
         }
         wk->cmdCheckTimingCode = BTL_RECTIMING_None;
