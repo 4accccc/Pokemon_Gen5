@@ -5241,7 +5241,7 @@ static void handler_GotugotuMet( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
           param->damage = BTL_CALC_QuotMaxHP( target, itemAtk );
 
           HANDEX_STR_Setup( &(param->exStr), BTL_STRTYPE_SET, BTL_STRID_SET_GotuGotuMet );
-          HANDEX_STR_AddArg( &(param->exStr), pokeID );
+          HANDEX_STR_AddArg( &(param->exStr), param->pokeID );
         }
       BTL_SVF_HANDEX_Pop( flowWk, param );
     }
