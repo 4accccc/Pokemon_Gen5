@@ -1784,13 +1784,19 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
 {
   int i;
   int num=0;
+
+
   {
     NHTTPError error;
+    int responce;
+    responce = NHTTP_RAP_GetGetResultCode( pWork->pNHTTP );
     error = NHTTP_RAP_Process( pWork->pNHTTP );
-    if( NHTTP_ERROR_NONE == error )
+
+    if( (NHTTP_ERROR_NONE == error)  && (responce == 200))
     {
       void* p_buff  = NHTTP_RAP_GetRecvBuffer(pWork->pNHTTP);
       pWork->evilCheck[0] = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );  //ŒŸ¸Œ‹‰ÊŠi”[
+
       OS_TPrintf("POKEEVEL %d \n", pWork->evilCheck[0] );
       for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
         OS_TPrintf("POKEEVEL %d \n", NHTTP_RAP_EVILCHECK_GetPokeResult(p_buff, i) );
@@ -1828,9 +1834,10 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
         _CHANGE_STATE(pWork, _PokeEvilChkEnd);
       }
     }
-    else if( NHTTP_ERROR_BUSY != error )
+    else if( (NHTTP_ERROR_BUSY != error) || (responce != 200))
     {
        pWork->evilCheck[0] = 0xff;  //Žå‚É’ÊMƒGƒ‰[
+      NHTTP_RAP_ErrorClean(pWork->pNHTTP);
       _CHANGE_STATE(pWork, _PokeEvilChkEnd);
     }
     else{
