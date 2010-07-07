@@ -907,6 +907,11 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
   {
     //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
     switch(p_error_info->result){
+    case GDSRAP_SP_ERR_NHTTP_400:
+    case GDSRAP_SP_ERR_NHTTP_401:
+    case GDSRAP_SP_ERR_NHTTP_ETC:
+      break;
+      
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS:		//!< 登録成功
   		BR_NET_Printf("aバトルビデオ登録受信成功%d\n");
   		break;

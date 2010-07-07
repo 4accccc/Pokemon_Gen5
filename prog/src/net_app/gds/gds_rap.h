@@ -48,6 +48,15 @@ enum{
 	GDS_ERROR_TYPE_APP,			///<各アプリ毎のエラー
 };
 
+///ポケモン不正チェックサーバでのエラー発生
+///バトルビデオのアップロード時のみ発生するエラー
+///POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESSなどと番号が被らないように注意
+enum{
+  GDSRAP_SP_ERR_NHTTP_400 = 150,
+  GDSRAP_SP_ERR_NHTTP_401,
+  GDSRAP_SP_ERR_NHTTP_ETC,
+};
+
 ///バトルモードNo   ※BattleModeBitTblと並びを同じにしておくこと！！
 typedef enum{
   BATTLEMODE_SEARCH_NO_COLOSSEUM_SINGLE_NOSHOOTER,    ///<コロシアム シングル シューター無し

@@ -87,7 +87,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap);
+static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err);
 static int GDSRAP_MAIN_Recv(GDS_RAP_WORK *gdsrap);
 
 static int Local_GetResponse(GDS_RAP_WORK *gdsrap);
@@ -501,16 +501,28 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
 				gdsrap->send_before_wait--;
 			}
 			else{
+        BOOL poke_evil_err;
+        
 				switch(POKE_NET_GDS_GetStatus()){
 				case POKE_NET_GDS_STATUS_INITIALIZED:	//初期化済み
 				case POKE_NET_GDS_STATUS_ABORTED:		//!< 中断終了
 				case POKE_NET_GDS_STATUS_FINISHED:		//!< 正常終了
 				case POKE_NET_GDS_STATUS_ERROR:			//!< エラー終了
-					ret = GDSRAP_MAIN_Send(gdsrap);
+					ret = GDSRAP_MAIN_Send(gdsrap, &poke_evil_err);
 					if(ret == TRUE){
-						OS_TPrintf("data send! req_code = %d\n", gdsrap->send_req);
-						gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
-						gdsrap->local_seq = 0;
+            if(poke_evil_err == TRUE){  //ポケモン不正サーバでエラー
+          		gdsrap->error_info.type = GDS_ERROR_TYPE_APP;
+          		gdsrap->error_info.req_code = POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST;
+          		gdsrap->error_info.result = gdsrap->nhttp_sp_err;
+          		gdsrap->error_info.occ = TRUE;
+          		gdsrap->response_callback.func_battle_video_regist(
+          		  gdsrap->response_callback.callback_work, &gdsrap->error_info);
+            }
+            else{ //正常送信
+  						OS_TPrintf("data send! req_code = %d\n", gdsrap->send_req);
+  						gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
+  						gdsrap->local_seq = 0;
+  					}
 					}
 					break;
 				default:	//今は送信出来ない
@@ -552,7 +564,7 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
  * @retval  FALSE:送信失敗
  */
 //--------------------------------------------------------------
-static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
+static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
 {
   enum
   {
@@ -564,6 +576,7 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
   };
 	int ret = FALSE;
 	
+	*poke_evil_err = FALSE;
 	//リクエストにデータが貯まっていれば送信
 	switch(gdsrap->send_req){
 	case POKE_NET_GDS_REQCODE_MUSICALSHOT_REGIST:	// ミュージカルショット登録
@@ -613,6 +626,31 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
 	  case SEQ_WAIT_EVILCHECK:
 	    {
         NHTTPError error;
+        int responce;
+
+        responce = NHTTP_RAP_GetGetResultCode( p_wk->p_nhttp  );
+        error = NHTTP_RAP_Process( p_wk->p_nhttp );
+        if((responce != 200) && (error==NHTTP_ERROR_NONE)){
+          switch( NHTTP_RAP_GetGetResultCode(gdsrap->p_nhttp) ){
+          case 400:
+            gdsrap->nhttp_sp_err = GDSRAP_SP_ERR_NHTTP_400;
+            break;
+          case 401:
+            gdsrap->nhttp_sp_err = GDSRAP_SP_ERR_NHTTP_401;
+            break;
+          default:
+            gdsrap->nhttp_sp_err = GDSRAP_SP_ERR_NHTTP_ETC;
+            break;
+          }
+
+          NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
+          NHTTP_RAP_ErrorClean( gdsrap->p_nhttp);
+          NHTTP_RAP_End( gdsrap->p_nhttp );
+          gdsrap->p_nhttp = NULL;
+          *poke_evil_err = TRUE;
+          return TRUE;
+        }
+
         error = NHTTP_RAP_Process( gdsrap->p_nhttp );
         if( NHTTP_ERROR_NONE == error ){
           void *p_data;
@@ -710,6 +748,7 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
               NHTTP_RAP_End( gdsrap->p_nhttp );
               gdsrap->p_nhttp = NULL;
               NAGI_Printf( "GDS_RAP NTHHP　エラークリーン\n" );
+              return TRUE;
             }
           }
           return FALSE;
