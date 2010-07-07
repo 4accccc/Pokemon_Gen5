@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-07-07T18:48:30"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-07-07T23:12:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1265,6 +1265,30 @@ http://www.pokemon-gl.com/
 せつだんしています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 切断しています</language>
+	</row>
+
+	<row id="NHTTP_RESPONSE_400" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<comment>不正チェックサーバーで400が帰ってきた場合</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが
+はっせい　しました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが
+発生しました</language>
+	</row>
+
+	<row id="NHTTP_RESPONSE_401" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<comment>不正チェックサーバーで401が帰ってきた場合</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが
+はっせい　しました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが
+発生しました</language>
+	</row>
+
+	<row id="NHTTP_RESPONSE_ETC" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<comment>不正チェックサーバーでその他エラーが帰ってきた場合</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが
+はっせい　しました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが
+発生しました</language>
 	</row>
 
 	<flowchart-group-list>
