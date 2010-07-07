@@ -632,7 +632,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
     if( pWork->scrollMode == FALSE ){
       if( GFL_UI_TP_GetTrg() == TRUE ){
 //        if( y < _SCROLL_TOP_Y || y > _SCROLL_BOTTOM_Y ){
-        if( y < 16 || y >= 176 ){
+        if( y < 16 || y >= 152 ){
           return FALSE;
         }
         pWork->scrollMode = TRUE;
