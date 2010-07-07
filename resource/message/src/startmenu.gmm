@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-07-02T11:43:58"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-07-07T18:25:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -475,13 +475,13 @@
 		<language name="JPN" width="256">ほんたいの　せっていにより
 むせんつうしんが　つかえません▼
 むせんつうしんを　つかうには
-ほんたいせっていの▽
-むせんつうしんを　オンにしてください</language>
+ほんたいせっていの　むせんつうしんを▽
+オンにしてください（５０６９９）</language>
 		<language name="JPN_KANJI" width="256">本体の　設定により
 無線通信が　使えません▼
 無線通信を　使うには
 本体設定の　無線通信を▽
-ＯＮにしてください</language>
+ＯＮにしてください（５０６９９）</language>
 	</row>
 
 	<row id="START_MENU_STR_ATTENTION_02">

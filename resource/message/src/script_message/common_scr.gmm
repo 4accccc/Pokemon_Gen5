@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-07T16:15:40"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-07-07T18:21:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -617,11 +617,11 @@
 		<language name="JPN">ほんたいの　むせんつうしんが
 オフに　なっています▼
 ほんたいせっていで　むせんつうしんを
-オンに　してください▼</language>
+オンに　してください（５０６９９）▼</language>
 		<language name="JPN_KANJI">本体の　無線通信が
 ＯＦＦになっています▼
 本体設定で　無線通信を
-ＯＮに　してください▼</language>
+ＯＮに　してください（５０６９９）▼</language>
 	</row>
 
 	<row id="msg_common_wireless_off_nowait">
@@ -630,11 +630,11 @@
 		<language name="JPN">ほんたいの　むせんつうしんが
 オフに　なっています▼
 ほんたいせっていで　むせんつうしんを
-オンに　してください</language>
+オンに　してください（５０６９９）</language>
 		<language name="JPN_KANJI">本体の　無線通信が
 ＯＦＦになっています▼
 本体設定で　無線通信を
-ＯＮに　してください</language>
+ＯＮに　してください（５０６９９）</language>
 	</row>
 
 	<row id="msg_common_itemuse_ng" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
