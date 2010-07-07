@@ -7689,6 +7689,7 @@ static int RcvBag_ModeItem( BOX2_SYS_WORK * syswk )
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		// 手持ちのポケモンのメニューから
 		}else{
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
 		}
 		return next;
@@ -7719,6 +7720,7 @@ static int RcvBag_ModeItem( BOX2_SYS_WORK * syswk )
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
 	// 手持ちのポケモンのメニューから
 	}else{
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
 		BOX2BGWFRM_BoxListButtonOn( syswk->app );
 	}
