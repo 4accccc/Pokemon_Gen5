@@ -566,6 +566,23 @@ void MMDL_ActionAcmd( MMDL * mmdl )
 //--------------------------------------------------------------
 BOOL MMDL_ActionLocalAcmd( MMDL * mmdl )
 {
+  if( MMDL_GetAcmdCode(mmdl) != ACMD_NOT ){
+	  MMDL_ActionAcmd( mmdl );
+	
+	  if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD_END) == 0 ){
+		  return( FALSE );
+	  }
+  }
+	
+	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_ACMD_END );
+	MMDL_SetAcmdCode( mmdl, ACMD_NOT );
+	MMDL_SetAcmdSeq( mmdl, 0 );
+	return( TRUE );
+}
+
+#if 0 //old 
+BOOL MMDL_ActionLocalAcmd( MMDL * mmdl )
+{
 	MMDL_ActionAcmd( mmdl );
 	
 	if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_ACMD_END) == 0 ){
@@ -577,6 +594,7 @@ BOOL MMDL_ActionLocalAcmd( MMDL * mmdl )
 	MMDL_SetAcmdSeq( mmdl, 0 );
 	return( TRUE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
