@@ -398,6 +398,7 @@ static void handler_Yokodori_Rob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Yokodori_MagicMirror( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Dorobou( u32* numElems );
+static void handler_Dorobou_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Trick( u32* numElems );
 static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -5311,10 +5312,20 @@ static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_Dorobou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,      handler_Dorobou }, // ダメージプロセス終了ハンドラ
+    { BTL_EVENT_DAMAGEPROC_START,          handler_Dorobou_Start }, // ダメージプロセス開始ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,   handler_Dorobou       }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+// ダメージプロセス開始ハンドラ
+static void handler_Dorobou_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    work[0] = (BPP_GetItem(bpp) != ITEM_DUMMY_DATA);  // work[0] を処理開始時点のアイテム所持フラグとしておく
+  }
 }
 // ダメージプロセス終了ハンドラ
 static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -5322,8 +5333,9 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetItem(self) == ITEM_DUMMY_DATA )
-    {
+    if( (BPP_GetItem(self) == ITEM_DUMMY_DATA)
+    &&  (work[0] == FALSE)
+    ){
       u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
       if( target_pokeID != BTL_POKEID_NULL )
       {
