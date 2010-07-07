@@ -577,7 +577,7 @@ void PMSIV_CATEGORY_VisibleCursor( PMSIV_CATEGORY* wk, BOOL flag )
 //------------------------------------------------------------------
 void PMSIV_CATEGORY_MoveCursor( PMSIV_CATEGORY* wk, u32 pos )
 {
-	GFL_CLACTPOS  clPos;
+	GFL_CLACTPOS  clPos = { 400, 300 };  // カーソルを表示しないときはclPosに値が設定されないので、画面外に置いておく
 	u32  mode;
 	u32  anm;
 
