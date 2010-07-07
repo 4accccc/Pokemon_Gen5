@@ -711,6 +711,69 @@ static void PLD_D_CheckArr6_2( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_ITEM_SetNameV( item , "6[%d]",work->debWork->checkArr[5] );
 }
 
+
+//----------------------------------------------------------------
+static void PLIST_DEB_Update_WaitMember( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+  {
+    if( work->plData->comm_selected_num > 0 )
+    {
+      work->plData->comm_selected_num--;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    if( work->plData->comm_selected_num < 3 )
+    {
+      work->plData->comm_selected_num++;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+}
+
+static void PLIST_DEB_Draw_WaitMember( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "‚½‚¢‚«‚É‚ñ‚¸‚¤[%d]",work->plData->comm_selected_num);
+}
+
+//----------------------------------------------------------------
+static void PLIST_DEB_Update_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( work->plData->time_limit > 0 )
+    {
+      work->plData->time_limit--;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->plData->time_limit < 600 )
+    {
+      work->plData->time_limit++;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+      work->plData->time_limit = 3;
+  }
+}
+
+static void PLIST_DEB_Draw_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "‚Ì‚±‚è‚¶‚©‚ñ[%d]",work->plData->time_limit);
+}
+
 //================================================================
 static void PLIST_InitDebug( PLIST_WORK *work )
 {
@@ -742,6 +805,9 @@ static void PLIST_InitDebug( PLIST_WORK *work )
   DEBUGWIN_AddGroupToGroup( PLIST_DEBUG_GROUP_NUMBER_POKE , "Poke" , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddGroupToGroup( PLIST_DEBUG_GROUP_NUMBER_CHECK , "RegCheck" , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddGroupToGroup( PLIST_DEBUG_GROUP_NUMBER_CHECK2 , "RegCheck2" , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_WaitMember ,PLIST_DEB_Draw_WaitMember , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_TimeLimit ,PLIST_DEB_Draw_TimeLimit , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
 
   //Reg
   DEBUGWIN_AddItemToGroupEx( PLD_U_RegLoPoke ,PLD_D_RegLoPoke , (void*)work , PLIST_DEBUG_GROUP_NUMBER_REG , work->heapId );

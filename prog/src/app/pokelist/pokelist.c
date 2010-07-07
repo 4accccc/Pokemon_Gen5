@@ -186,7 +186,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         //plData->comm_type = PL_COMM_SINGLE;
         plData->is_disp_party = TRUE;
         plData->use_tile_limit = TRUE;
-        plData->time_limit = 30;
+        plData->time_limit = 255;
         plData->comm_selected_num = 0;
         
         PokeRegulationCheckPokeParty_Func( reg , plData->pp , NULL );

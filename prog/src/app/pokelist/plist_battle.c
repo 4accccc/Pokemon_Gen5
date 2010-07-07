@@ -35,7 +35,7 @@
 
 #define PLIST_BATTLE_TIME_STR_LEFT   ( 7)
 #define PLIST_BATTLE_TIME_STR_TOP    (21)
-#define PLIST_BATTLE_TIME_STR_WIDTH  (10)
+#define PLIST_BATTLE_TIME_STR_WIDTH  (11)
 #define PLIST_BATTLE_TIME_STR_HEIGHT ( 3)
 #define PLIST_BATTLE_TIME_NUM_LEFT   (20)
 #define PLIST_BATTLE_TIME_NUM_TOP    (21)
@@ -125,8 +125,8 @@ void PLIST_BATTLE_InitBattle( PLIST_WORK *work )
     }
   }
   work->befSelectedNum = work->plData->comm_selected_num;
-  //初回強制更新のため0xFFFFにしておく
-  work->befTimeLimit = 0xFFFF;
+  //初回強制更新のため0にしておく
+  work->befTimeLimit = 0;
   
   if(  work->plData->use_tile_limit == TRUE  )
   {
@@ -642,18 +642,30 @@ static void PLIST_BATTLE_UpdateTimeLimit( PLIST_WORK *work )
   {
     const u8 min = work->plData->time_limit/60;
     const u8 sec = work->plData->time_limit%60;
-    STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_13_06 ); 
+    STRBUF *str;
     STRBUF *workStr = GFL_STR_CreateBuffer( 32 , work->heapId );
     WORDSET *wordSet = WORDSET_Create( work->heapId );
-
+    u32 strLen;
+    if( min == 0 )
+    {
+      str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_13_06_01 ); 
+      //秒だけならスペース詰め
+      WORDSET_RegisterNumber( wordSet , 1 , sec , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+    }
+    else
+    {
+      str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_13_06 ); 
+      WORDSET_RegisterNumber( wordSet , 0 , min , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( wordSet , 1 , sec , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    }
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->timeLimitNumStr ) , 0 );
 
-    WORDSET_RegisterNumber( wordSet , 0 , min , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 1 , sec , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordSet , workStr , str );
 
+    strLen = PRINTSYS_GetStrWidth(workStr,work->fontHandle,0);
+    OS_TFPrintf(3,"Len[%d]\n",strLen);
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->timeLimitNumStr ) , 
-            0 , 4 , workStr , work->fontHandle , PLIST_FONT_BATTLE_PARAM );
+            0+(36-strLen) , 4 , workStr , work->fontHandle , PLIST_FONT_BATTLE_PARAM );
 
     WORDSET_Delete( wordSet );
     GFL_STR_DeleteBuffer( workStr );
