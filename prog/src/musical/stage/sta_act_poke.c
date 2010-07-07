@@ -811,6 +811,7 @@ static void STA_POKE_SetAdjustScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   else
   if(
       monsno == MONSNO_128 || //ケンタロス
+      monsno == MONSNO_181 || //デンリュウ
       monsno == MONSNO_308 || //チャーレム
       monsno == MONSNO_378 || //レジアイス
       monsno == MONSNO_398 || //ムクホーク
