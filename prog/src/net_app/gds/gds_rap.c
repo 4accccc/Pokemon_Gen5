@@ -518,11 +518,10 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
           		gdsrap->response_callback.func_battle_video_regist(
           		  gdsrap->response_callback.callback_work, &gdsrap->error_info);
             }
-            else{ //³í‘—M
-  						OS_TPrintf("data send! req_code = %d\n", gdsrap->send_req);
-  						gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
-  						gdsrap->local_seq = 0;
-  					}
+            
+  					OS_TPrintf("data send! req_code = %d\n", gdsrap->send_req);
+  					gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
+  					gdsrap->local_seq = 0;
 					}
 					break;
 				default:	//¡‚Í‘—Mo—ˆ‚È‚¢
