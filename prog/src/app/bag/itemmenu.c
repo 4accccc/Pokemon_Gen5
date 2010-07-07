@@ -3115,9 +3115,11 @@ static BOOL SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
 
     pWork->oamlistpos_old = 0xffff;
 //    _windowRewrite(pWork);				// キータッチを切り替えた後にも呼ぶことになるので、外で呼ぶ
+
+		return TRUE;
   }
 
-	return TRUE;
+	return FALSE;
 }
 
 //-----------------------------------------------------------------------------
