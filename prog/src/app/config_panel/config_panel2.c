@@ -2792,51 +2792,57 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     }
   }
 
-  //タッチバーメイン
-  TOUCHBAR_Main( p_wk->p_touch );
-
-  switch( TOUCHBAR_GetTouch( p_wk->p_touch ) )
+  //決定時は入力できない
+  if( !p_wk->is_decide )    //20100707 add Saito BTS7574
   {
-  case TOUCHBAR_ICON_CHECK :
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    //タッチバーメイン
+    TOUCHBAR_Main( p_wk->p_touch );
+  
+    
+    switch( TOUCHBAR_GetTouch( p_wk->p_touch ) )
     {
-      p_wk->is_touch  = TRUE;
-    }
-    break;
-  case TOUCHBAR_ICON_CLOSE:
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-    {
-      p_wk->is_touch  = TRUE;
-    }
-    break;
-  }
-
-  switch( TOUCHBAR_GetTrg( p_wk->p_touch ) )
-  {
-  case TOUCHBAR_ICON_CHECK :
-#ifdef GAMESYS_NONE_MOVE
-    if( p_wk->p_gdata == NULL )
-    {
-      OS_Printf( "\n!!!! GameSysPtr == NULL  !!!!\n" );
+    case TOUCHBAR_ICON_CHECK :
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+      {
+        p_wk->is_touch  = TRUE;
+      }
+      break;
+    case TOUCHBAR_ICON_CLOSE:
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+      {
+        p_wk->is_touch  = TRUE;
+      }
       break;
     }
+
+    switch( TOUCHBAR_GetTrg( p_wk->p_touch ) )
+    {
+    case TOUCHBAR_ICON_CHECK :
+#ifdef GAMESYS_NONE_MOVE
+      if( p_wk->p_gdata == NULL )
+      {
+        OS_Printf( "\n!!!! GameSysPtr == NULL  !!!!\n" );
+        break;
+      }
 #endif //GAMESYS_NONE_MOVE
 
-    if( TOUCHBAR_GetFlip( p_wk->p_touch, TOUCHBAR_ICON_CHECK ) )
-    {
-      GAMEDATA_SetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG, TRUE );
-    }
-    else
-    {
-      GAMEDATA_SetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG, FALSE );
-    }
-    p_wk->select = APPBAR_WIN_NULL;
-    break;
+      if( TOUCHBAR_GetFlip( p_wk->p_touch, TOUCHBAR_ICON_CHECK ) )
+      {
+        GAMEDATA_SetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG, TRUE );
+      }
+      else
+      {
+        GAMEDATA_SetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG, FALSE );
+      }
+      p_wk->select = APPBAR_WIN_NULL;
+      break;
 
-  case TOUCHBAR_ICON_CLOSE:
-    p_wk->select  = APPBAR_WIN_EXIT;
-    p_wk->is_decide = TRUE;
-    break;
+    case TOUCHBAR_ICON_CLOSE:
+      p_wk->select  = APPBAR_WIN_EXIT;
+      p_wk->is_decide = TRUE;
+      break;
+    }
+
   }
 }
 //----------------------------------------------------------------------------
