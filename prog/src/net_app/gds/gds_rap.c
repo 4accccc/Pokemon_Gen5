@@ -510,6 +510,9 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
 				case POKE_NET_GDS_STATUS_ERROR:			//!< エラー終了
 					ret = GDSRAP_MAIN_Send(gdsrap, &poke_evil_err);
 					if(ret == TRUE){
+  					OS_TPrintf("data send! req_code = %d\n", gdsrap->send_req);
+  					gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
+  					gdsrap->local_seq = 0;
             if(poke_evil_err == TRUE){  //ポケモン不正サーバでエラー
           		gdsrap->error_info.type = GDS_ERROR_TYPE_APP;
           		gdsrap->error_info.req_code = POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST;
@@ -518,10 +521,6 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
           		gdsrap->response_callback.func_battle_video_regist(
           		  gdsrap->response_callback.callback_work, &gdsrap->error_info);
             }
-            
-  					OS_TPrintf("data send! req_code = %d\n", gdsrap->send_req);
-  					gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
-  					gdsrap->local_seq = 0;
 					}
 					break;
 				default:	//今は送信出来ない
