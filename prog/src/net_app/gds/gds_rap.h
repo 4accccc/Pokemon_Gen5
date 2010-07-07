@@ -226,6 +226,7 @@ typedef struct _GDS_RAP_WORK{
   u8 evil_check_count;      // 認証チェックに通したポケモンの数
   u8 error_poke_pos;        // 認証エラーが発生していたポケモン位置
   u8 error_nhttp;           // 認証取得そのものがエラー
+  u8 nhttp_sp_err;          // NHTTPのレスポンスコードによるエラーs
 	DWCSvlResult *pSvl;       // Wi-Fi Login時に取得したSVLへのポインタ
 
   //ポケモン不正チェックで、名前を書き換えて送信した後に
