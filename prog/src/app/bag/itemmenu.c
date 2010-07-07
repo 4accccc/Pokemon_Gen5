@@ -2402,7 +2402,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
 
           // アイテムを減らす
           ITEM_Sub( pWork, pWork->InputNum );
-					pWork->bCursorChange = 1;
+//					pWork->bCursorChange = 1;
 
           // 所持金増加
           MISC_AddGold( GAMEDATA_GetMiscWork(pWork->gamedata), val );
@@ -2414,8 +2414,8 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           ITEMDISP_GoldDispWrite( pWork );
 
           // 再描画
-          pWork->oamlistpos_old = 0xffff;
-          _windowRewrite(pWork);
+//          pWork->oamlistpos_old = 0xffff;
+//          _windowRewrite(pWork);
 
           // 「○○○を　わたして XXXXXX円 うけとった」
           GFL_MSG_GetString( pWork->MsgManager, mes_shop_096, pWork->pStrBuf );
@@ -2476,7 +2476,12 @@ static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 {
-  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+	// 再描画
+	GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+	pWork->oamlistpos_old = 0xffff;
+	_windowRewrite(pWork);
+	pWork->bCursorChange = 1;
+	ITEMDISP_ScrollCursorChangePos( pWork );
 
   // おこづかい表示終了
   ITEMDISP_GoldDispOut( pWork );
