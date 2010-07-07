@@ -1060,6 +1060,11 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
         //commWork->member[i].bufferNo
           commWork->PhotobufUseBit -= 1<<commWork->member[i].bufferNo;
         }
+        if( commWork->talkMember == i )
+        {
+          commWork->isCommWave = FALSE;
+          
+        }
         isUpdateState = TRUE;
         commWork->reqCheckBit -= (1<<i);
         CTVT_TPrintf("Leave user[%d]\n",i);
