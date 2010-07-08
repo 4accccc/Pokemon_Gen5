@@ -58,12 +58,10 @@
 //=====================================
 #ifdef PM_DEBUG
 
-//#define DEBUG_REGULATIONCRC_PASS  //レギュレーションのCRCチェックを通過する
 #define DEBUGWIN_USE                  //デバッグウィンドウを使用する
 
 #if defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
-//#define DEBUG_REGULATION_RECVCHECK_PASS  //レギュレーションの受信チェックを通過する
+//#define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
 #elif defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
@@ -507,7 +505,10 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_MSG_RECVCARD_NOW,
     SEQ_START_RECVCARD,
     SEQ_WAIT_RECVCARD,
+
+#ifdef DEBUG_REGULATION_RECV_A_PASS
     SEQ_WAIT_RECV_DEBUG,
+#endif //DEBUG_REGULATION_RECV_A_PASS
 
     SEQ_START_CANCEL,   //キャンセル
     SEQ_WAIT_CANCEL,    //キャンセル
@@ -792,12 +793,8 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_CHECK_RECVCARD: //受け取った選手証をチェック
-#ifdef DEBUG_REGULATIONCRC_PASS
-    if(1)
-#else
     //CRCは正しいか
     if( Regulation_CheckCrc( &p_wk->regulation_temp ) )
-#endif
     { 
       //VERSIONは正しいか
       if( Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_ROMVER) & (1<<GET_VERSION()) )
@@ -806,12 +803,6 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO) ==
             Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_CUPNO) )
         { 
-#ifdef DEBUG_REGULATION_RECVCHECK_PASS
-          { 
-            *p_seq  = SEQ_START_MSG_SAVE;
-            break;
-          }
-#endif 
           //同じなので同じ大会に登録しようとした
           switch( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) )
           {   
@@ -876,7 +867,9 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       Regulation_PrintDebug( &p_wk->regulation_temp );
       OS_TPrintf( "セーブ\n" );
       Regulation_PrintDebug( p_wk->p_regulation );
+#endif //PM_DEBUG
       RegulationSaveData_SetRegulation(p_reg_sv, REGULATION_CARD_TYPE_LIVE, &p_wk->regulation_temp);
+#ifdef PM_DEBUG
       OS_TPrintf( "セット後\n" );
       OS_TPrintf( "テンポラリ\n" );
       Regulation_PrintDebug( &p_wk->regulation_temp );
