@@ -190,7 +190,6 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
 		}
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-//		ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
 		return ZKNSEARCHUI_Y;
 	}
 
@@ -216,7 +215,6 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
 			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
-//			ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
 			return CURSORMOVE_CURSOR_ON;
 		}
 	}	
