@@ -410,9 +410,23 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
         GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN ||
         GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
     {
+      u8 i;
+      u8 nowIdx;
+      s16 nowYPos = -16;  //とりあえず範囲外値
       ribbonWork->speed = 0;
       ribbonWork->isTouchBar = FALSE;
-      PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
+      for( i=0;i<PSTATUS_RIBBON_BAR_NUM;i++ )
+      {
+        if( ribbonWork->ribbonDispWork[i].dispRibbonNo == ribbonWork->selectType )
+        {
+          nowYPos = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i);
+        }
+      }
+      if( nowYPos < -4 || nowYPos > 192-(24+24) )//バーと１本分
+      {
+        PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
+      }
+      ARI_TPrintf("RibbonNowY[%d:%d]\n",ribbonWork->selectType,nowYPos);
       //GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
       PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
       PSTATUS_RIBBON_DispInfo( work , ribbonWork );
