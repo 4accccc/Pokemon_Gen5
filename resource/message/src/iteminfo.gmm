@@ -3304,12 +3304,12 @@
 	</row>
 
 	<row id="ITEMINFO_353">
-		<language name="JPN" width="256">たたかっている　ポケモン　すべてに
+		<language name="JPN" width="256">じぶんの　まわりの　ポケモンに
 じしんの　しょうげきを　あたえて
 こうげきする。</language>
-		<language name="JPN_KANJI" width="256">地震の　衝撃で　周りに
-いるものを　すべて　攻撃する。
-</language>
+		<language name="JPN_KANJI" width="256">自分の　周りの　ポケモンに
+地震の　衝撃を　あたえて　
+攻撃する。</language>
 	</row>
 
 	<row id="ITEMINFO_354">
@@ -3376,11 +3376,11 @@
 	</row>
 
 	<row id="ITEMINFO_361">
-		<language name="JPN" width="256">ヘドロの　なみで　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="256">ヘドロの　なみで　じぶんの　まわりに
+いるものを　こうげきする。
 どくに　することが　ある。</language>
-		<language name="JPN_KANJI" width="256">ヘドロの　波で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="256">ヘドロの　波で　自分の　周りに
+いるものを　攻撃する。
 毒状態に　することが　ある。</language>
 	</row>
 
@@ -3412,9 +3412,9 @@
 	</row>
 
 	<row id="ITEMINFO_365">
-		<language name="JPN" width="256">だいのじの　ほのおで　すべてを
-やきつくす。　あいてを　やけどの
-じょうたいに　することが　ある。</language>
+		<language name="JPN" width="256">だいのじの　ほのおで　あいてを
+やきつくす。　やけどの　じょうたいに
+することが　ある。</language>
 		<language name="JPN_KANJI" width="256">大の字の　炎で
 相手を　焼きつくす。
 やけど状態に　することが　ある。</language>
@@ -3646,11 +3646,11 @@
 	</row>
 
 	<row id="ITEMINFO_391">
-		<language name="JPN" width="256">おおきな　ばくはつを　おこして
-まわりを　まきこみ　こうげきする。
+		<language name="JPN" width="256">おおきな　ばくはつで　じぶんの
+まわりに　いるものを　こうげきする。
 つかったあと　ひんしに　なる。</language>
-		<language name="JPN_KANJI" width="256">大きな　爆発で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="256">大きな　爆発で　自分の　周りに
+いるものを　攻撃する。
 使ったあとに　ひんしに　なる。</language>
 	</row>
 
@@ -3772,11 +3772,11 @@
 	</row>
 
 	<row id="ITEMINFO_405">
-		<language name="JPN" width="256">じめんを　ふみならして　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="256">じめんを　ふみならして　じぶんの
+まわりに　いるものを　こうげきする。
 あいての　すばやさを　さげる。</language>
-		<language name="JPN_KANJI" width="256">地面を　踏みならして　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="256">地面を　踏みならして　自分の
+周りに　いるものを　攻撃する。
 相手の　素早さを　さげる。</language>
 	</row>
 
@@ -3925,11 +3925,11 @@
 	</row>
 
 	<row id="ITEMINFO_422">
-		<language name="JPN" width="256">おおきな　なみを　おこして
-すべての　ポケモンを　こうげきする。
+		<language name="JPN" width="256">おおきな　なみで　じぶんの　まわりに
+いるものを　こうげきする。
 みずのうえを　すすむことも　できる。</language>
-		<language name="JPN_KANJI" width="256">大きな　波で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="256">大きな　波で　自分の　周りに
+いるものを　攻撃する。
 水上も　泳いで　進める。</language>
 	</row>
 
