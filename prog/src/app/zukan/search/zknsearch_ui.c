@@ -395,7 +395,10 @@ int ZKNSEARCHUI_ListMain( ZKNSEARCHMAIN_WORK * wk )
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			FRAMELIST_SetCursorPosPalette( wk->lwk );
+		}
 		return ZKNSEARCHUI_LIST_RESET;
 	}
 
@@ -433,7 +436,10 @@ int ZKNSEARCHUI_FormListMain( ZKNSEARCHMAIN_WORK * wk )
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			FRAMELIST_SetCursorPosPalette( wk->lwk );
+		}
 		return ZKNSEARCHUI_LIST_RESET;
 	}
 
