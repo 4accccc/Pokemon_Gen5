@@ -2536,16 +2536,13 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
     Effrank_Init( &bpp->varyParam );
     flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
   }
-  else{
-    TAYA_Printf( "バトンタッチ使用者 pokeID=%d, atk=%d, def=%d\n",
-      bpp->coreParam.myID, bpp->varyParam.attack, bpp->varyParam.defence );
-  }
 
   bpp->formNo = bpp->coreParam.defaultFormNo;
   bpp->tokusei = bpp->coreParam.defaultTokusei;
 
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, bpp->formNo );
   PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+
 }
 //=============================================================================================
 /**
@@ -2558,6 +2555,7 @@ void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
 {
   setupBySrcData( bpp, bpp->coreParam.ppSrc, FALSE );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
+  flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
 
   BPP_MIGAWARI_Delete( bpp );
 
@@ -2579,7 +2577,7 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
 
   target->varyParam = user->varyParam;
 
-  TAYA_Printf("[%d]->[%d]へバトンタッチで引き継がれた:攻撃ランク=%d, 防御ランク=%d\n",
+  BTL_N_Printf( DBGSTR_BPP_BatonTouch,
     user->coreParam.myID, target->coreParam.myID,
       target->varyParam.attack, target->varyParam.defence );
 
@@ -2605,7 +2603,6 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
     def = BPP_GetValue_Base( target, BPP_DEFENCE );
     BPP_SetBaseStatus( target, BPP_ATTACK, def );
     BPP_SetBaseStatus( target, BPP_DEFENCE, atk );
-    BTL_Printf("パワートリック引き継ぎ: Atk(%d) <-> Def(%d)\n", atk, def);
   }
   if( BPP_CONTFLAG_Get(user, BPP_CONTFLG_KIAIDAME) ){
     BPP_CONTFLAG_Set(target, BPP_CONTFLG_KIAIDAME);
@@ -3091,10 +3088,8 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
     }
     else
     {
-      BTL_Printf("pp[%p]に経験値 %d->%d\n", bpp->coreParam.ppSrc, bpp->coreParam.exp, expSum);
       bpp->coreParam.exp = expSum;
       PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->coreParam.exp );
-      BTL_Printf("  ... exp=%d=%d\n", PP_Get(bpp->coreParam.ppSrc, ID_PARA_exp, NULL),bpp->coreParam.exp);
     }
   }
 

@@ -116,6 +116,7 @@ typedef enum {
   DBGSTR_BPP_NemuriWakeCheck,
   DBGSTR_BPP_WazaLinkOff,
   DBGSTR_BPP_WazaRecord,
+  DBGSTR_BPP_BatonTouch,
 
   DBGSTR_MAIN_SwapPartyMember,
   DBGSTR_MAIN_PartyDataNotifyComplete,

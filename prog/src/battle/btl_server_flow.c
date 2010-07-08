@@ -2051,7 +2051,8 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
         break;
       }
 
-      if( (action.gen.cmd == BTL_ACTION_FIGHT) || (action.gen.cmd == BTL_ACTION_ITEM) ){
+      if( (action.gen.cmd == BTL_ACTION_FIGHT) || (action.gen.cmd == BTL_ACTION_ITEM) )
+      {
         BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
         scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
       }
