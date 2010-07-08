@@ -775,6 +775,17 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
       wk->subprocess_seq  = SUBSEQ_END_DPW;
       return SEQ_MAIN;
 
+    case 408:
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_TIMEOUT );
+      NetErr_DispCall(FALSE);
+
+      NHTTP_RAP_ErrorClean(wk->nhttp);
+      NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp);
+      NHTTP_RAP_End(wk->nhttp);
+
+      wk->subprocess_seq  = SUBSEQ_END_DPW;
+      return SEQ_MAIN;
+
     default:
       NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
       NetErr_DispCall(FALSE);
@@ -2938,7 +2949,10 @@ static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 			pp
 		);
 
-		WorldTradeData_SetPokemonData( wk->param->worldtrade_data, pp, wk->BoxTrayNo );
+    if( flag )
+    {
+      WorldTradeData_SetPokemonData( wk->param->worldtrade_data, pp, wk->BoxTrayNo );
+    }
 
 		// ボックスから消去
 		BOXDAT_ClearPokemon( wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos );
@@ -2953,7 +2967,10 @@ static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 
 
 		// セーブ領域に保存
-		WorldTradeData_SetPokemonData( wk->param->worldtrade_data, pp, wk->BoxTrayNo );
+    if( flag )
+    {
+      WorldTradeData_SetPokemonData( wk->param->worldtrade_data, pp, wk->BoxTrayNo );
+    }
 
 		// 手持ちから消去
 		PokeParty_Delete( wk->param->myparty, wk->BoxCursorPos );

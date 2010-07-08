@@ -547,6 +547,11 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
             ret = BR_NET_ERR_RETURN_DISCONNECT;
             break;
 
+          case GDSRAP_SP_ERR_NHTTP_TIMEOUT:
+            NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_TIMEOUT );
+            ret = BR_NET_ERR_RETURN_DISCONNECT;
+            break;
+
           case GDSRAP_SP_ERR_NHTTP_ETC:
             NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
             ret = BR_NET_ERR_RETURN_DISCONNECT;

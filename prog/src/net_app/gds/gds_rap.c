@@ -638,6 +638,9 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
           case 401:
             gdsrap->nhttp_sp_err = GDSRAP_SP_ERR_NHTTP_401;
             break;
+          case 408:
+            gdsrap->nhttp_sp_err = GDSRAP_SP_ERR_NHTTP_TIMEOUT;
+            break;
           default:
             gdsrap->nhttp_sp_err = GDSRAP_SP_ERR_NHTTP_ETC;
             break;

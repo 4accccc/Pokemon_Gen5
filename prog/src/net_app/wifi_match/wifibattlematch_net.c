@@ -5728,6 +5728,18 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
           }
           return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR;
 
+        case 408:
+          NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_TIMEOUT );
+          if(p_wk->p_nhttp)
+          {
+            NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
+            NHTTP_RAP_End(p_wk->p_nhttp);
+            NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
+            p_wk->p_nhttp  = NULL;
+            p_wk->seq = 0;
+          }
+          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SERVERERR;
+
         default:
           NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
           if(p_wk->p_nhttp)

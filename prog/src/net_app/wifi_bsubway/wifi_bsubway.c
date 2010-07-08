@@ -32,6 +32,7 @@
 
 #include "sound/pm_sndsys.h"
 
+#include "msg/msg_wifi_system.h"
 
 #include "savedata/wifilist.h"
 #include "savedata/wifihistory.h"
@@ -330,6 +331,7 @@ typedef struct {
   s16 timeout;
 
   BSUBWAY_NHTTP_ERROR nhttp_error;
+  s32 response;
 } WIFI_BSUBWAY_ERROR;
 
 //-------------------------------------
@@ -493,7 +495,9 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk );
 static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result );
 static BOOL ERROR_DATA_IsError( const WIFI_BSUBWAY_ERROR* cp_wk );
 static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk );
+static BOOL ERROR_DATA_ReqServerResponseMessage( const WIFI_BSUBWAY_ERROR* cp_wk );
 static void ERROR_DATA_SetNhttpError( WIFI_BSUBWAY_ERROR* p_wk, BSUBWAY_NHTTP_ERROR error );
+static void ERROR_DATA_SetResponseError( WIFI_BSUBWAY_ERROR* p_wk, s32 response );
 static void ERROR_DATA_StartOnlyTimeOut( WIFI_BSUBWAY_ERROR* p_wk );
 static void ERROR_DATA_OnlyTimeOutCount( WIFI_BSUBWAY_ERROR* p_wk );
 
@@ -1556,17 +1560,17 @@ static BSUBWAY_UPLOADCHECK_RESULT PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUB
 {
   NHTTPError error;
   BSUBWAY_UPLOADCHECK_RESULT result = BSUBWAY_UPLOADCHECK_RESULT_WAIT;
-  int responce;
+  int response;
 
   GF_ASSERT( p_wk->p_nhttp );
 
   WIFI_BSUBWAY_Printf( "." );
 
-  responce = NHTTP_RAP_GetGetResultCode( p_wk->p_nhttp  );
+  response = NHTTP_RAP_GetGetResultCode( p_wk->p_nhttp  );
   error = NHTTP_RAP_Process( p_wk->p_nhttp );
-  if((responce != 200) && (error==NHTTP_ERROR_NONE)){
+  if((response != 200) && (error==NHTTP_ERROR_NONE)){
     OS_TPrintf("サーバエラー\n");
-    ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_EVILERROR );
+    ERROR_DATA_SetResponseError( p_error, response );
     NHTTP_RAP_ErrorClean(p_wk->p_nhttp);
     NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
     NHTTP_RAP_End( p_wk->p_nhttp );
@@ -1993,9 +1997,6 @@ static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
     case BSUBWAY_NHTTP_ERROR_DISCONNECTED:
       msgno = msg_wifi_bt_error_008;
       break;
-    case BSUBWAY_NHTTP_ERROR_EVILERROR:
-      msgno = msg_wifi_bt_error_006;
-      break;
     default:
       GF_ASSERT(0);
       break;
@@ -2015,6 +2016,47 @@ static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  サーバーレスポンスエラーメッセージ設定
+ *
+ *	@param	const WIFI_BSUBWAY_ERROR* cp_wk   ワーク
+ *
+ *	@return TRUEでリクエスト  FALSEでなにもしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL ERROR_DATA_ReqServerResponseMessage( const WIFI_BSUBWAY_ERROR* cp_wk )
+{
+  if( cp_wk->nhttp_error == BSUBWAY_NHTTP_ERROR_EVILERROR )
+  {
+    switch( cp_wk->response )
+    {
+    case 200:
+      GF_ASSERT( 0 );
+      
+    case 400:
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_400 );
+      break;
+
+    case 401: 
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_401 );
+      break;
+
+    case 408: 
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_TIMEOUT );
+      break;
+
+    default:
+      NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
+      break;
+    }
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  NhttpError  設定
  *
  *  @param  p_wk    ワーク
@@ -2026,6 +2068,19 @@ static void ERROR_DATA_SetNhttpError( WIFI_BSUBWAY_ERROR* p_wk, BSUBWAY_NHTTP_ER
   p_wk->nhttp_error = error;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NHTTPERRORのレスポンスエラー設定
+ *
+ *	@param	WIFI_BSUBWAY_ERROR* p_wk  ワーク
+ *	@param	response  レスポンスエラー
+ */
+//-----------------------------------------------------------------------------
+static void ERROR_DATA_SetResponseError( WIFI_BSUBWAY_ERROR* p_wk, s32 response )
+{
+  p_wk->nhttp_error = BSUBWAY_NHTTP_ERROR_EVILERROR;
+  p_wk->response    = response;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -2967,15 +3022,24 @@ static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
   // Btエラーチェック
   if( ERROR_DATA_IsError( &p_wk->bt_error ) )
   {
-    s32 msg_id;
-    //　エラー表示処理
-    // エラー表示終了を待つ
-    msg_id = ERROR_DATA_GetPrintMessageID( &p_wk->bt_error );
+    //　レスポンスエラーならば表示処理
+    if( ERROR_DATA_ReqServerResponseMessage( &p_wk->bt_error ) )
+    {
+      return FALSE;
+    }
+    else
+    {
+      s32 msg_id;
 
-    // TimeWait Off
-    VIEW_EndTimeIcon( &p_wk->view );
-    VIEW_PrintStream( &p_wk->view, msg_id );
-    return TRUE;
+      //　エラー表示処理
+      // エラー表示終了を待つ
+      msg_id = ERROR_DATA_GetPrintMessageID( &p_wk->bt_error );
+
+      // TimeWait Off
+      VIEW_EndTimeIcon( &p_wk->view );
+      VIEW_PrintStream( &p_wk->view, msg_id );
+      return TRUE;
+    }
   }
 
 
