@@ -3265,6 +3265,17 @@ static void WbmRndSeq_Err_ReturnLogin( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
 
   p_param->result = WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN;
+
+  if( p_wk->p_net )
+  { 
+    WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
+    p_wk->p_net = NULL;
+  }
+
+  NetErr_ExitNetSystem();
+
+
+
   WBM_SEQ_End( p_seqwk );
   
 }
