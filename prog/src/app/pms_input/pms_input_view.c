@@ -58,6 +58,14 @@ enum
 }; 
 
 
+enum
+{
+  // FRM_MAIN_BACKのBGのキャラのオフセット(キャラ単位)
+  BG_MAIN2_NCGR_CHR_OFS   = 0,
+  BG_MAIN3_NCGR_CHR_OFS   = 8*12,
+};
+
+
 //------------------------------------------------------
 /**
 	*  描画メインワーク
@@ -382,8 +390,8 @@ static void PMSIView_VintrTask( GFL_TCB *tcb, void* wk_adrs )
       //GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(vwk->back_screen_handle, nscr,
       //  FRM_MAIN_BACK, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
   	  
-      GFL_ARCHDL_UTIL_TransVramBgCharacter(vwk->back_screen_handle, ncgr,
-  	  	FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+//      GFL_ARCHDL_UTIL_TransVramBgCharacter(vwk->back_screen_handle, ncgr,  // キャラの読み込み転送までしていたら間に合わないので、キャラは最初に
+//  	  	FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );               // 1度読み込んでそのまま残しておくことにした。だからコメントアウト。
 
       vwk->back_screen_req_trans  = FALSE;
     }
@@ -700,7 +708,18 @@ GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &bank_data, HEAPID_PMS_INPU
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GX_DispOn();
 
+
+  // FRM_MAIN_BACKの背景キャラ転送  // ここで読み込んだらそのまま残しておく。
+  {
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_main2_NCGR,
+        FRM_MAIN_BACK, BG_MAIN2_NCGR_CHR_OFS, 0, FALSE, HEAPID_PMS_INPUT_VIEW );  // 0キャラ目の色はパレット0番の色なので透明
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_main3_NCGR,
+        FRM_MAIN_BACK, BG_MAIN3_NCGR_CHR_OFS, 0, FALSE, HEAPID_PMS_INPUT_VIEW );  // NARC_pmsi_pms_bg_main2_NCGRのキャラ分避けて転送
+  }
+
+
 	GFL_ARC_CloseDataHandle( p_handle );
+
 
 	DeleteCommand(cwk);
 }
@@ -2259,21 +2278,24 @@ void PMSIView_SetBackScreen( PMS_INPUT_VIEW* vwk, BOOL is_wordwin )
   GFL_BG_LoadScreenReq( FRM_MAIN_BACK );
 #else
   u32 nscr, ncgr;
+  u32 chr_ofs;  // キャラは既に固定位置に読み込んであるのでそのオフセット値。
  
   if( is_wordwin )
   {
     nscr = NARC_pmsi_pms_bg_main3_NSCR;
     ncgr = NARC_pmsi_pms_bg_main3_NCGR;
+    chr_ofs = BG_MAIN3_NCGR_CHR_OFS;
   }
   else
   {
     nscr = NARC_pmsi_pms_bg_main2_NSCR;
     ncgr = NARC_pmsi_pms_bg_main2_NCGR;
+    chr_ofs = BG_MAIN2_NCGR_CHR_OFS;
   }
 
   // 背景面転送
   GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(vwk->back_screen_handle, nscr,
-      FRM_MAIN_BACK, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );  // スクリーンはここでVBlank転送しておかないと画面が一瞬崩れる
+      FRM_MAIN_BACK, 0, chr_ofs, 0, FALSE, HEAPID_PMS_INPUT_VIEW );  // スクリーンはここでVBlank転送しておかないと画面が一瞬崩れる
 
   // 背景BGの転送を管理する変数
   vwk->back_screen_req_trans  = TRUE;
