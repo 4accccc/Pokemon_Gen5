@@ -28,6 +28,9 @@
 #define	TB_PX06		( TB_PX07 - TB_SX )
 #define	TB_PX05		( TB_PX06 - TB_SX )
 
+// カーソル表示するキー
+#define	PAD_MAIN_CURSOR_ON	(PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_BUTTON_DECIDE)
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -192,12 +195,18 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
+		}
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		ChangePosMenuMainKey( wk, ZKNSEARCHUI_START );
 		return ZKNSEARCHUI_START;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
+		}
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		ChangePosMenuMainKey( wk, ZKNSEARCHUI_RESET );
 		return ZKNSEARCHUI_RESET;
@@ -206,8 +215,9 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 	if( GFL_UI_KEY_GetTrg() ){
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
 			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-			ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
-			return ret;
+			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
+//			ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
+			return CURSORMOVE_CURSOR_ON;
 		}
 	}	
 
@@ -245,10 +255,14 @@ static void ChangePosMenuMainKey( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 //--------------------------------------------------------------------------------------------
 static void MainCallBack_On( void * work, int now_pos, int old_pos )
 {
-	ZKNSEARCHMAIN_WORK * wk  = work;
+	ZKNSEARCHMAIN_WORK * wk;
+	int	trg;
+	
+	wk  = work;
+	trg = GFL_UI_KEY_GetTrg();
 
 	// キャンセル時はカーソルをONにしない
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+	if( ( trg & PAD_BUTTON_CANCEL ) && !( trg & PAD_MAIN_CURSOR_ON ) ){
 		return;
 	}
 
