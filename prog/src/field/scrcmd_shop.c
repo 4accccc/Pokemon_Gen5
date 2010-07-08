@@ -862,8 +862,9 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     // ‹Zƒ}ƒVƒ“‚¶‚á‚È‚©‚Á‚½‚çŒ»Ý‚ÌŠŽ”‚ð•\Ž¦
     if(wk->type != SHOP_TYPE_WAZA){
       print_carry_item( wk, wk->selectitem );
-      wk->seq = SHOPBUY_SEQ_SELECT_YESNO_WAIT;
     }
+    wk->seq = SHOPBUY_SEQ_SELECT_YESNO_WAIT;
+
     break;
 
   case SHOPBUY_SEQ_YESNO:
