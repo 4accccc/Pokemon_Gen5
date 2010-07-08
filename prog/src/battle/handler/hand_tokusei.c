@@ -2206,7 +2206,7 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static void handler_ReafGuard_InemuriCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // Ç≠ÇÁÇ§ë§Ç™é©ï™
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     // ìVåÛÇ™ê∞ÇÍ
     if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
