@@ -2135,7 +2135,7 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
   int i;
 
  // const u8 CELL_MAX = 17*4 + 6 + 9*4;
-  const u8 CELL_MAX = 10 + 17*4 + 6 + 8*4;
+  const u8 CELL_MAX = 100;   //ƒpƒ\ƒRƒ“‚S@ƒLƒƒƒ‰‚R‚Q–‚Q{‚Q ‰º‰æ–Ê2+ƒ|ƒPƒ‚ƒ“‚U–‚Q = ‚W‚S
 
   GFL_CLACT_SYS_Create( &fldmapdata_CLSYS_Init , &_defVBTbl, HEAPID_WIFIP2PMATCH );
   wk->clactSet  = GFL_CLACT_UNIT_Create( CELL_MAX , 0, HEAPID_WIFIP2PMATCH );
