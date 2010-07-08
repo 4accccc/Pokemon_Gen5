@@ -3435,6 +3435,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE, WIFIBATTLEMATCH_TYPE_WIFICUP, p_param->p_param->btl_rule, p_param->cp_btl_score, is_error );
       p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
     }
+    p_wk->is_send_report  = FALSE;
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
@@ -3445,7 +3446,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       //エラーが起こったら起動しないようにしています
       if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
-        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, NULL );
+        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
       }
       if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
@@ -3479,7 +3480,8 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
 
-    //ここまで切断等がない場合はレコード登録
+    //レポート送信してればカウント
+    if( p_wk->is_send_report )
     {
       WBM_RECORD_Count( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
     }

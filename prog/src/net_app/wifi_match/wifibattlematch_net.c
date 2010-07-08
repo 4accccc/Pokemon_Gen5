@@ -854,7 +854,7 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       //  システムエラーやGDBの結果等一部はDWCのエラーがたたないので
       if( NET_ERR_CHECK_NONE == NetErr_App_CheckError() )
       {
-        GFL_NET_StateSetWifiError(0, 0, 0, ERRORCODE_SYSTEM );
+        GFL_NET_StateSetWifiError(0, 0, 0, ERRORCODE_USER_WIFILOGOUT );
         NetErr_ErrorSet();
       }
 

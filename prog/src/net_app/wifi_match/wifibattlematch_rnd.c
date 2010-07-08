@@ -1523,6 +1523,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_RNDRATE, 0, NULL, FALSE );
     p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
+    p_wk->is_send_report  = FALSE;
     *p_seq  = SEQ_WAIT_SESSION;
     break;
 
@@ -1798,13 +1799,14 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->cp_btl_score, is_error );
       p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
     }
+    p_wk->is_send_report  = FALSE;
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
       if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
-        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net , NULL );
+        p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net , &p_wk->is_send_report );
       }
 
       if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
@@ -1847,7 +1849,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
 
-      //‚±‚±‚Ü‚ÅØ’f“™‚ª‚È‚¢ê‡‚ÍƒŒƒR[ƒh“o˜^
+    //ƒŒƒ|[ƒg‘—M‚µ‚Ä‚¢‚ê‚ÎƒŒƒR[ƒh“o˜^
+    if( p_wk->is_send_report )
     {
       WBM_RECORD_Count( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
     }
