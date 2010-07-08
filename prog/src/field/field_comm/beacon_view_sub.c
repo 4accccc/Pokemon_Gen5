@@ -1907,6 +1907,9 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
     return TRUE;
   }
   switch( action ){
+  case GAMEBEACON_ACTION_SEARCH:
+    return FALSE; //新着でないサーチはポップアップ出さない
+
   case GAMEBEACON_ACTION_GPOWER:
     return effReq_PopupMsgGPower( wk, info, FALSE );
 
