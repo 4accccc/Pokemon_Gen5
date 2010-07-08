@@ -831,7 +831,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     {
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       DREAMWORLD_SAVEDATA* p_dream  = DREAMWORLD_SV_GetDreamWorldSaveData( p_sv );
-      if( DREAMWORLD_SV_GetSignin(p_dream) )
+      if( DREAMWORLD_SV_GetAccount(p_dream) )
       {
         *p_seq  = SEQ_START_RATE_MSG;
       }
