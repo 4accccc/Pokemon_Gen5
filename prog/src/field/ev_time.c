@@ -44,16 +44,37 @@
 
 //============================================================================================
 //============================================================================================
-
 //============================================================================================
 //============================================================================================
 static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days);
 static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime * now);
 
+static BOOL changeTimeCalc( GMTIME * tm,
+    const RTCDate * now_date, const RTCTime * now_time, s32 * diff_day, s32 * diff_minute );
+#if 0
 static void UpdateDateCheck(GAMEDATA * gdata, GMTIME * tm, const RTCDate * now_date);
 static void UpdateMinuteCheck(GAMEDATA * gdata, GMTIME * tm,
     const RTCDate * now_date, const RTCTime * now_time);
+#endif
 
+//============================================================================================
+//============================================================================================
+#ifdef  DEBUG_ONLY_FOR_tamada
+static void DEBUG_DATE_Print( const RTCDate * date, const RTCTime * time )
+{
+  TAMADA_Printf("20%02d %02d/%02d(%d) %02d:%02d:%02d\n",
+      date->year, date->month, date->day, date->week,
+      time->hour, time->minute, time->second );
+}
+
+static void DEBUG_All_Printf( GMTIME * tm, const RTCDate * now_date, const RTCTime * now_time )
+{
+  TAMADA_Printf("SAVE (%04d) ", RTC_ConvertDateToDay(&tm->sv_date) );
+  DEBUG_DATE_Print( &tm->sv_date, &tm->sv_time );
+  TAMADA_Printf("NOW  (%04d) ", RTC_ConvertDateToDay(now_date) );
+  DEBUG_DATE_Print( now_date, now_time );
+}
+#endif  //DEBUG_ONLY_FOR_tamada
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -65,6 +86,99 @@ void EVTIME_Update(GAMEDATA * gdata)
   RTCDate now_date;
   RTCTime now_time;
   GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( gdata ) );
+  s32 diff_day, diff_minute;
+
+  if (tm->use_flag == FALSE) {
+    return;
+  }
+
+  GFL_RTC_GetDateTime(&now_date, &now_time);
+
+  if ( changeTimeCalc( tm, &now_date, &now_time, &diff_day, &diff_minute ) == FALSE )
+  { //時間経過に異常があった場合はスルー
+    return;
+  }
+  if ( diff_minute == 0 && diff_minute != 0 )
+  { //分が進んでいないのに日が進んだらアサート
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  if ( diff_minute )
+  {
+    GMTIME_CountDownPenaltyTime( tm, diff_minute );
+    UpdateMinuteEvent( gdata, diff_minute, &now_time );
+  }
+  if ( diff_day )
+  {
+    UpdateDayEvent( gdata, diff_day ); 
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 経過時間の算出処理
+ * @param tm            時間経過管理ワーク
+ * @param now_date      現在の日付
+ * @param now_time      現在の時刻
+ * @param diff_day      過去から現在への経過時間（日単位）
+ * @param diff_minute   過去から現在への経過時間（分単位）
+ * @return  BOOL  正常取得されたかどうか（TRUE=正常、FALSE=は異常なので更新処理を実行しない）
+ */
+//------------------------------------------------------------------
+static BOOL changeTimeCalc( GMTIME * tm,
+    const RTCDate * now_date, const RTCTime * now_time, s32 * diff_day, s32 * diff_minute )
+{
+  s64  sv_sec = RTC_ConvertDateTimeToSecond( &tm->sv_date, &tm->sv_time );
+  s64 now_sec = RTC_ConvertDateTimeToSecond( now_date, now_time );
+  s32 now_day = RTC_ConvertDateToDay( now_date );
+  s32 diff;
+
+  *diff_day = 0;
+  *diff_minute = 0;
+
+  if ( now_sec < sv_sec ) {
+    //現在　＜　過去　…ありえないはず
+    //現在時間をセットするだけで戻る
+    DEBUG_All_Printf( tm, now_date, now_time );
+    TAMADA_Printf(" Reverse Time!!\n" );
+    tm->sv_date = *now_date;
+    tm->sv_time = *now_time;
+    tm->sv_day  = now_day;
+    return FALSE;
+  }
+
+  diff = ( now_sec - sv_sec ) / 60;
+  if (diff > 0) {
+    //分の更新があった場合
+    *diff_minute = diff;
+    DEBUG_All_Printf( tm, now_date, now_time );
+    TAMADA_Printf(" Update Minute %d\n", *diff_minute );
+    tm->sv_date = *now_date;
+    tm->sv_time = *now_time;
+
+    //分の更新があった時だけ、日付の更新チェックを行う
+    if ( now_day - tm->sv_day > 0 )
+    {
+      *diff_day = now_day - tm->sv_day;
+      tm->sv_day = now_day;
+      TAMADA_Printf(" Update Day %d\n", *diff_day );
+    }
+  }
+  return TRUE;
+}
+
+#if 0
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+void EVTIME_Update(GAMEDATA * gdata)
+{
+  RTCDate now_date;
+  RTCTime now_time;
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( gdata ) );
+  s32 diff_day, diff_minute;
 
   if (tm->use_flag == FALSE) {
     return;
@@ -93,9 +207,6 @@ static void UpdateDateCheck(GAMEDATA * gdata, GMTIME * tm, const RTCDate * now_d
     UpdateDayEvent(gdata, now_day - tm->sv_day);
     tm->sv_day = now_day;
   }
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_SYSTEM_DATA)
-  SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
-#endif //CRC_LOADCHECK  
 }
 
 //------------------------------------------------------------------
@@ -117,10 +228,6 @@ static void UpdateMinuteCheck(GAMEDATA * gdata, GMTIME * tm,
   else{
     //秒
     diff_sec = (now-sv);
-#if 0
-    if(diff_sec > 0){
-    }
-#endif
     //分
     diff_minute = diff_sec / 60;
     if (diff_minute > 0) {
@@ -131,10 +238,8 @@ static void UpdateMinuteCheck(GAMEDATA * gdata, GMTIME * tm,
       tm->sv_time = *now_time;
     }
   }
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_SYSTEM_DATA)
-  SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
-#endif //CRC_LOADCHECK  
 }
+#endif
 
 //============================================================================================
 //============================================================================================
@@ -395,9 +500,6 @@ void EVTIME_SetGameClearDateTime(const GAMEDATA * gdata)
   GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
   tm->clear_sec = GFL_RTC_GetDateTimeBySecond();
 
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_SYSTEM_DATA)
-  SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
-#endif //CRC_LOADCHECK
 }
 
 //------------------------------------------------------------------
