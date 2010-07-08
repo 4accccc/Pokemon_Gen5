@@ -106,6 +106,7 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
     //アップロードするポケモンは名前が置換されている可能性があるので、
     //セーブデータのポケモンを使う
 		p_param->pMyPoke = WorldTradeData_GetPokemonDataPtr( wk->param->worldtrade_data );
+;
 //      (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
 		p_param->pNPCPoke = p_param->pMyPoke;
 		wk->pNPCStatus = MakePartnerStatusData( &wk->UploadPokemonData );
@@ -159,8 +160,9 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 
 	// 交換する
 	case MODE_EXCHANGE:
-		WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
-		p_param->pMyPoke = wk->demoPokePara;
+
+    POKETOOL_CopyPPtoPP( wk->evilcheck_dummy_poke, wk->demoPokePara );
+		p_param->pMyPoke = wk->evilcheck_dummy_poke;
 		p_param->pNPCPoke = (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data;
 		// 相手のMYSTATUSが無いので、できる限りでっちあげる
 		wk->pNPCStatus = MakePartnerStatusData( &wk->DownloadPokemonData[wk->TouchTrainerPos] );

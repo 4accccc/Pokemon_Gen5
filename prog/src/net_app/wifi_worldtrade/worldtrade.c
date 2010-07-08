@@ -151,6 +151,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 
     debug_worldtrade = wk;
 
+    wk->evilcheck_dummy_poke = PokemonParam_AllocWork( HEAPID_WORLDTRADE );
 
     //local_proc
     wk->local_proc  = GFL_PROC_LOCAL_boot(HEAPID_WORLDTRADE);
@@ -325,6 +326,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
   GFL_HEAP_FreeMemory( wk->task_wk_area );
   GFL_PROC_LOCAL_Exit( wk->local_proc );
 
+  GFL_HEAP_FreeMemory(wk->evilcheck_dummy_poke);
   // タッチフォントアンロード
   WT_PRINT_Exit( &wk->print );
   GFL_PROC_FreeWork( proc );        // GFL_PROCワーク開放

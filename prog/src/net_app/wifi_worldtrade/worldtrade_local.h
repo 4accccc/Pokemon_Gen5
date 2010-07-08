@@ -559,7 +559,7 @@ typedef struct _WORLDTRADE_WORK{
 
 	// worldtrade_demo.c用ワーク
 	POKEMON_PARAM *demoPokePara;								///< 交換デモ用のポケモンポインタ
-
+  POKEMON_PARAM *evilcheck_dummy_poke;        ///< 不正ポケモンのダミーデータ
 
 	// worldtrade_box.c用ワーク
 	BOX_RESEARCH			*boxWork;							///< ボックス内データの全ポケモンの基本情報

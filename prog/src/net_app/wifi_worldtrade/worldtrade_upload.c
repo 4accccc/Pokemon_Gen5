@@ -711,6 +711,9 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   
   POKEMON_PARAM  *pp = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
 
+  //不正チェックで生中身が書き換わる前にデモ用にデータを受け取る
+  POKETOOL_CopyPPtoPP( pp, wk->evilcheck_dummy_poke );
+
   wk->nhttp = NHTTP_RAP_Init( HEAPID_WORLDTRADE, MyStatus_GetProfileID( wk->param->mystatus ), &wk->svl );
   NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, POKETOOL_GetWorkSize(), NHTTP_POKECHK_GTS);
 
