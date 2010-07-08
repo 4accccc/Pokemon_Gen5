@@ -100,7 +100,7 @@ void EVTIME_Update(GAMEDATA * gdata)
   { //時間経過に異常があった場合はスルー
     return;
   }
-  if ( diff_minute == 0 && diff_minute != 0 )
+  if ( diff_minute == 0 && diff_day != 0 )
   { //分が進んでいないのに日が進んだらアサート
     GF_ASSERT( 0 );
     return;
@@ -126,6 +126,9 @@ void EVTIME_Update(GAMEDATA * gdata)
  * @param diff_day      過去から現在への経過時間（日単位）
  * @param diff_minute   過去から現在への経過時間（分単位）
  * @return  BOOL  正常取得されたかどうか（TRUE=正常、FALSE=は異常なので更新処理を実行しない）
+ *
+ * @todo  now_timeの秒を０に切り捨てて演算することでRTCと時間更新の誤差を
+ * 初回以外１秒未満にすることが可能（だけど検証時間が足りないのでやらない）
  */
 //------------------------------------------------------------------
 static BOOL changeTimeCalc( GMTIME * tm,
