@@ -1608,7 +1608,10 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
     case BTL_ACTION_SKIP:     actionPri = 0; break;
     case BTL_ACTION_MOVE:     actionPri = 0; break;
     case BTL_ACTION_FIGHT:    actionPri = 0; break;
-    case BTL_ACTION_NULL: continue;
+    case BTL_ACTION_NULL:
+      actionPri = 4;
+      order[i].priority = ActPri_Make( actionPri, 0, BTL_SPPRI_DEFAULT, 0 );
+      continue;
     case BTL_ACTION_RECPLAY_TIMEOVER: continue;
     default:
       GF_ASSERT(0);
@@ -2244,6 +2247,13 @@ static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID, u8 targetPoke
       {
         return FALSE;
       }
+    }
+
+    // ローテーション動作は割り込み不可
+    //（ローテーション入場イベントをこの時点で呼び出さなければならず副作用が見積もりきれない）
+    if( BTL_ACTION_GetAction(&actOrder->action) == BTL_ACTION_ROTATION )
+    {
+      return FALSE;
     }
 
     {
