@@ -1717,6 +1717,90 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       obj_id = MMDL_ID_PLAYER;
     }
   }
+   
+  {
+    SCRCMD_BALLOONWIN_WORK *bwin_work;
+    FIELD_PLAYER *fld_player;
+    
+    bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
+    MI_CpuClear8( bwin_work, sizeof(SCRCMD_BALLOONWIN_WORK) );
+
+    bwin_work->obj_id = obj_id;
+    
+    fld_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
+    
+    {
+      u8 pos_type;
+      FLDTALKMSGWIN_IDX idx;
+      
+      {
+        MMDLSYS * mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+        MMDL *jiki = FIELD_PLAYER_GetMMdl( fld_player );
+        MMDL *tr = MMDLSYS_SearchOBJID( mmdlsys, bwin_work->obj_id );
+        VecFx32 tr_pos;
+        
+        MMDL_GetVectorPos( tr, &tr_pos );
+        pos_type = EvCmdBalloonWin_GetWinTypeDefault( jiki, &tr_pos );
+      }
+      
+      if( pos_type == SCRCMD_MSGWIN_UP ){
+        idx = FLDTALKMSGWIN_IDX_UPPER;
+      }else{ //down
+        idx = FLDTALKMSGWIN_IDX_LOWER;
+      }
+      
+      bwin_work->win_idx = idx;
+      balloonWin_UpdatePos( work, TRUE );
+      
+      setBalloonWindow( work, fparam->msgBG,
+          idx, &bwin_work->tail_pos, msgbuf,
+          TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
+      
+      SCRCMD_WORK_SetBeforeWindowPosType( work, pos_type );
+
+      VMCMD_SetWait( core, BallonWinMsgWait );
+      return VMCMD_RESULT_SUSPEND;
+    }
+  }
+}
+
+#if 0 //old BTS社内1943 メッセージ位置指定がおかしい
+VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  
+  u16 tr_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 kind_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_id  = SCRCMD_GetVMWorkValue( core, work );
+  
+  STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
+  
+  KAGAYA_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
+  
+  //吹きだしウィンドウ既開チェック開いていたら処理を行わない
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) )
+  {
+    #ifdef SCR_ASSERT_ON     
+    GF_ASSERT_MSG( 0,"TR_MSG_ERROR:既にウィンドウあり\n");
+    #else
+    OS_Printf( "TR_MSG_ERROR:既にウィンドウありn");
+    #endif
+    return VMCMD_RESULT_SUSPEND;
+  }
+  
+  TT_TrainerMessageGet(
+      tr_id, kind_id, msgbuf, SCRCMD_WORK_GetHeapID(work) );
+  
+  { //トレーナーOBJを探す
+    MMDLSYS * mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+    if ( MMDLSYS_SearchOBJID( mmdlsys, obj_id ) == NULL ) {
+      //対象トレーナーOBJが見つからない
+      GF_ASSERT( 0 );
+      obj_id = MMDL_ID_PLAYER;
+    }
+  }
     
   {
     SCRCMD_BALLOONWIN_WORK *bwin_work;
@@ -1732,11 +1816,11 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
     dir = MMDL_GetDirDisp( FIELD_PLAYER_GetMMdl( fld_player ) );
 
     {
-      u8 pos_type = SCRCMD_MSGWIN_UPLEFT;
+      u8 pos_type = SCRCMD_MSGWIN_UP;
       FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;
       
       if( dir == DIR_UP ){
-        pos_type = SCRCMD_MSGWIN_DOWNLEFT;
+        pos_type = SCRCMD_MSGWIN_DOWN;
         idx = FLDTALKMSGWIN_IDX_UPPER;
       }
       
@@ -1754,6 +1838,7 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
     }
   }
 }
+#endif
 
 //======================================================================
 //  プレーンウィンドウ
