@@ -23,6 +23,7 @@
 #include "savedata/playtime.h"
 #include "field/research_team_def.h"
 #include "system/gfl_use.h"
+#include "field/zonedata.h"
 
 #include "game_beacon_local.h"
 
@@ -619,6 +620,10 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->version_bit = 0xffff; //全バージョン指定
   info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
+  if(ZONEDATA_IsUnionRoom(info->zone_id) == TRUE || ZONEDATA_IsColosseum(info->zone_id) == TRUE){
+    const LOCATION *loc = GAMEDATA_GetSpecialLocation(gamedata);
+    info->zone_id = loc->zone_id;
+  }
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(gamedata, info->zone_id);
   info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID_Low(myst);
