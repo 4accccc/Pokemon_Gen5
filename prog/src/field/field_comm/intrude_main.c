@@ -648,7 +648,10 @@ static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_i
     u16 obj_code = Intrude_GetObjCode(target_status, Intrude_GetMyStatus(GameCommSys_GetGameData(intcomm->game_comm), net_id));
     if(obj_code != CommPlayer_GetObjCode(intcomm->cps, net_id)){
       CommPlayer_Del(intcomm->cps, net_id);
-      CommPlayer_Add(intcomm->cps, net_id, obj_code, &target_status->player_pack);
+      //表にいる場合はHERO,HEROINE姿のプレイヤーは出会う事が無いのでAddしない
+      if(target_status->disguise_no != DISGUISE_NO_NULL){
+        CommPlayer_Add(intcomm->cps, net_id, obj_code, &target_status->player_pack);
+      }
     }
   }
 }
