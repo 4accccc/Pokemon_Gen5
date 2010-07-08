@@ -49,13 +49,19 @@ INIT_EVENT_START	ev_zone_c09
 	_FLAG_RESET( SYS_FLAG_BIGFOUR_FIGHTWIN )
 	_FLAG_RESET( SYS_FLAG_BIGFOUR_ESPWIN )
 	
+	//GFBTS1934対処
+	//初回解説イベントを終えていなければ、ガードマンを階段中央に配置
+	IF $WK_SCENE_C09 == 0 THEN
+		_SXY_MOVE_NPC_POS( C09_VETERANM_01,DIR_DOWN, 32, 1, 46 )
+	ENDIF
+	
 	//Ｎの城出現後からチャンピオン復帰までリーグフロントに入れない
 	IF FLAG_ON( FE_C09_FORBIDDEN ) THEN
 		$LOCALWORK10 = 111	//POSイベントを有効にする
 	ENDIF
-
+	
 	// リーグフロントのゲートを開ける
-  _FLAG_SET( FE_C09P01_GATE_OPEN )
+	_FLAG_SET( FE_C09P01_GATE_OPEN )
 	
 INIT_EVENT_END
 
@@ -65,21 +71,23 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START	ev_init_c09
 	
+	//GFBTS1934対処のためコメントアウト
+	//ガードマンの位置が高さ0.5の位置にいるため、_OBJ_POS_CHANGEで高さ１を指定すると半グリッド宙に浮いてしまう
+
 	//初回解説イベントを終えていなければ、ガードマンを階段中央に配置
-	IF $WK_SCENE_C09 == 0 THEN
-		_OBJ_POS_CHANGE( C09_VETERANM_01, 32, 1, 46, DIR_DOWN )
-	ENDIF
-	
+//	IF $WK_SCENE_C09 == 0 THEN
+//		_OBJ_POS_CHANGE( C09_VETERANM_01, 32, 1, 46, DIR_DOWN )
+//	ENDIF
 	
 INIT_EVENT_END
 
 INIT_EVENT_START	ev_recover_c09
 	
+	//GFBTS1934対処のためコメントアウト
 	//初回解説イベントを終えていなければ、ガードマンを階段中央に配置
-	IF $WK_SCENE_C09 == 0 THEN
-		_OBJ_POS_CHANGE( C09_VETERANM_01, 32, 1, 46, DIR_DOWN )
-	ENDIF
-	
+//	IF $WK_SCENE_C09 == 0 THEN
+//		_OBJ_POS_CHANGE( C09_VETERANM_01, 32, 1, 46, DIR_DOWN )
+//	ENDIF
 	
 INIT_EVENT_END
 

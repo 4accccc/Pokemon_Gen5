@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/15 11:14:12
+#save date:2010/07/08 12:34:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c09.wms
 #SECTION START:OBJ_EVENT
@@ -91,7 +91,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Pos Event Label
 POS_C09_FIRSTVISIT
@@ -126,6 +126,23 @@ EVENTDATA_POSTYPE_GRID
 -8 0 -264
 #size
 3 1
+#event number: 2
+#Pos Event Label
+POS_C09_PALACEBLOCK_01
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 -264
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
