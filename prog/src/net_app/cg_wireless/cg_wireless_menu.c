@@ -1662,13 +1662,8 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
     pWork->bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(pWork->gamedata));
 
     pWork->unionnumOld = pWork->unionnum;
-    pWork->unionnum = GFL_NET_WLGetServiceNumber(WB_NET_UNION);
-    pWork->unionnum += GFL_NET_WLGetServiceNumber(WB_NET_UNION_PICTURE);
-    pWork->unionnum += GFL_NET_WLGetServiceNumber(WB_NET_UNION_GURUGURU);
-    pWork->unionnum += GFL_NET_WLGetServiceNumber(WB_NET_UNION_BATTLE_MULTI_FREE_SHOOTER);
-    pWork->unionnum += GFL_NET_WLGetServiceNumber(WB_NET_UNION_BATTLE_MULTI_FREE);
-    pWork->unionnum += GFL_NET_WLGetServiceNumber(WB_NET_UNION_BATTLE_MULTI_FLAT_SHOOTER);
-    pWork->unionnum += GFL_NET_WLGetServiceNumber(WB_NET_UNION_BATTLE_MULTI_FLAT);
+    pWork->unionnum = NET_WHPIPE_GetUnionConnectNum();
+    OS_TPrintf("l”%d \n",pWork->unionnum);
   }
 
   GFL_TCBL_Main( pWork->pMsgTcblSys );

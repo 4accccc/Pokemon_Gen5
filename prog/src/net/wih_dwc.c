@@ -345,14 +345,14 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
       retcode |= GAME_COMM_STATUS_BIT_WIRELESS;
     }
   }
+  if(NET_WHPIPE_GetUnionConnectNum()!=0){
+    retcode |= GAME_COMM_STATUS_BIT_WIRELESS_UN;
+  }
+  
   for( i=0;i < aNetStruct->maxBeaconNum;i++ ){
     if( GFL_NET_GetBeaconData( i ) != NULL ){
       GameServiceID id = GFL_NET_WLGetGameServiceID(i);
-      NAGI_Printf( "ID%d idx%d\n", id, i );
-      if((id >= WB_NET_UNION) && (id <=WB_NET_UNION_GURUGURU)){
-        retcode |= GAME_COMM_STATUS_BIT_WIRELESS_UN;
-      }
-      else if(id == WB_NET_MYSTERY){
+      if(id == WB_NET_MYSTERY){
         retcode |= GAME_COMM_STATUS_BIT_WIRELESS_FU;
       }
     }
