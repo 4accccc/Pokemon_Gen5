@@ -903,11 +903,11 @@
 	</row>
 
 	<row id="WAZAINFO_057">
-		<language name="JPN" width="216">おおきな　なみで　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">おおきな　なみで　じぶんの
+まわりに　いるものを　こうげきする。
 みずの　うえも　およいで　すすめる。</language>
-		<language name="JPN_KANJI" width="216">大きな　波で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">大きな　波で　自分の
+周りに　いるものを　攻撃する。
 水上も　泳いで　進める。</language>
 	</row>
 
@@ -1191,11 +1191,11 @@
 	</row>
 
 	<row id="WAZAINFO_089">
-		<language name="JPN" width="216">じしんの　しょうげきで　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">じしんの　しょうげきで　じぶんの
+まわりに　いるものを　こうげきする。
 </language>
-		<language name="JPN_KANJI" width="216">地震の　衝撃で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">地震の　衝撃で　自分の
+周りに　いるものを　攻撃する。
 </language>
 	</row>
 
@@ -1470,11 +1470,11 @@
 	</row>
 
 	<row id="WAZAINFO_120">
-		<language name="JPN" width="216">ばくはつを　おこして　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">ばくはつを　おこして　じぶんの
+まわりに　いるものを　こうげきする。
 つかった　あとに　ひんしに　なる。</language>
-		<language name="JPN_KANJI" width="216">爆発を　おこして　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">爆発を　おこして　自分の
+周りに　いるものを　攻撃する。
 使ったあとに　ひんしに　なる。</language>
 	</row>
 
@@ -1767,11 +1767,11 @@
 	</row>
 
 	<row id="WAZAINFO_153">
-		<language name="JPN" width="216">おおきな　ばくはつで　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">おおきな　ばくはつで　じぶんの
+まわりに　いるものを　こうげきする。
 つかった　あとに　ひんしに　なる。</language>
-		<language name="JPN_KANJI" width="216">大きな　爆発で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">大きな　爆発で　自分の
+周りに　いるものを　攻撃する。
 使ったあとに　ひんしに　なる。</language>
 	</row>
 
@@ -2388,11 +2388,11 @@
 	</row>
 
 	<row id="WAZAINFO_222">
-		<language name="JPN" width="216">じめんを　ゆらして　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">じめんを　ゆらして　じぶんの
+まわりに　いるものを　こうげきする。
 わざの　いりょくは　いろいろ　かわる。</language>
-		<language name="JPN_KANJI" width="216">地面を　揺らして
-周りにいるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">地面を　揺らして　自分の
+周りに　いるものを　攻撃する。
 技の　威力は　いろいろ　変わる。</language>
 	</row>
 
@@ -3073,10 +3073,10 @@
 
 	<row id="WAZAINFO_298">
 		<language name="JPN" width="216">フラフラと　ダンスを　おどって
-まわりに　いるものを　すべて
+じぶんの　まわりに　いるものを
 こんらん　じょうたいに　させる。</language>
 		<language name="JPN_KANJI" width="216">フラフラと　ダンスを　おどって
-周りに　いるものを　すべて
+自分の　周りに　いるものを
 混乱状態に　させる。</language>
 	</row>
 
@@ -4305,20 +4305,20 @@
 	</row>
 
 	<row id="WAZAINFO_435">
-		<language name="JPN" width="216">まばゆい　でんげきで　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">まばゆい　でんげきで　じぶんの
+まわりに　いるものを　こうげきする。
 まひ　じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="216">まばゆい　電撃で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">まばゆい　電撃で　自分の
+周りに　いるものを　攻撃する。
 まひ状態に　することが　ある。</language>
 	</row>
 
 	<row id="WAZAINFO_436">
-		<language name="JPN" width="216">まっかな　ほのおで　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">まっかな　ほのおで　じぶんの
+まわりに　いるものを　こうげきする。
 やけど　じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="216">真っ赤な　炎で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">真っ赤な　炎で　自分の
+周りに　いるものを　攻撃する。
 やけど状態に　することが　ある。</language>
 	</row>
 
@@ -4728,11 +4728,11 @@
 	</row>
 
 	<row id="WAZAINFO_482">
-		<language name="JPN" width="216">ヘドロの　なみで　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">ヘドロの　なみで　じぶんの
+まわりに　いるものを　こうげきする。
 どく　じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="216">ヘドロの　波で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">ヘドロの　波で　自分の
+周りに　いるものを　攻撃する。
 毒状態に　することが　ある。</language>
 	</row>
 
@@ -5097,11 +5097,11 @@
 	</row>
 
 	<row id="WAZAINFO_523">
-		<language name="JPN" width="216">じめんを　ふみならして　まわりに
-いるものを　すべて　こうげきする。
+		<language name="JPN" width="216">じめんを　ふみならして　じぶんの
+まわりに　いるものを　こうげきする。
 あいての　すばやさを　さげる。</language>
-		<language name="JPN_KANJI" width="216">地面を　踏みならして　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">地面を　踏みならして　自分の
+周りに　いるものを　攻撃する。
 相手の　素早さを　さげる。</language>
 	</row>
 
@@ -5295,11 +5295,11 @@
 	</row>
 
 	<row id="WAZAINFO_545">
-		<language name="JPN" width="216">まっかな　ほのおで　まわりに
-いるものを　すべて　こうげきする
+		<language name="JPN" width="216">まっかな　ほのおで　じぶんの
+まわりに　いるものを　こうげきする
 やけど　じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="216">真っ赤な　炎で　周りに
-いるものを　すべて　攻撃する。
+		<language name="JPN_KANJI" width="216">真っ赤な　炎で　自分の
+周りに　いるものを　攻撃する。
 やけど状態に　することが　ある。</language>
 	</row>
 
