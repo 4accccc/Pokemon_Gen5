@@ -938,7 +938,7 @@ static BOOL Enter_ServerServiceError( WORLDTRADE_WORK *wk, WIFILOGIN_MESSAGE_WOR
   
   WIFILOGIN_MESSAGE_InfoMessageDispEx(p_msg, wk->MsgManager, msgno);
 
-	OS_TPrintf("Error発生\n");
+	OS_TPrintf("Error発生 %d\n",wk->ConnectErrorNo);
   wk->local_seq = 0;
 
 	return TRUE;
@@ -964,7 +964,7 @@ static BOOL Enter_ServerServiceEnd( WORLDTRADE_WORK *wk, WIFILOGIN_MESSAGE_WORK 
     if( WIFILOGIN_MESSAGE_InfoMessageEndCheck(p_msg)){
       // 通信エラー管理のために通信ルーチンをOFF
       //CommStateWifiDPWEnd();
-      DWC_CleanupInet();
+ //     DWC_CleanupInet();
       wk->local_seq++;
     }
 		break;
@@ -977,6 +977,8 @@ static BOOL Enter_ServerServiceEnd( WORLDTRADE_WORK *wk, WIFILOGIN_MESSAGE_WORK 
 
     OS_TPrintf( "Dpw_Trを終了しました\n" );
     Dpw_Tr_End();
+    DWC_ShutdownFriendsMatch();   //本来ならば切断時に呼ばれるのだが、いままでここでよんでいたのでおいておく
+    DWC_CleanupInet();
 			wk->local_seq++;
 	//	}
 		break;

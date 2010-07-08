@@ -1034,15 +1034,20 @@ static void _callbackFunciton(WIFILOGIN_WORK* pWork)
         break;
       case WIFILOGIN_CALLBACK_RESULT_FAILED:
         pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-        //_CHANGE_STATE(pWork,_logoutStart);
-
-        if( NET_ERR_CHECK_NONE == NetErr_App_CheckError() )
+        WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+        WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+        WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+        if( GFL_NET_IsInit() )
         {
-          GFL_NET_StateSetWifiError(0, DWC_ETYPE_SHUTDOWN_GHTTP, 0, 0 );
-          NetErr_ErrorSet();
+          NetErr_ExitNetSystem();
         }
-
-        _checkError(pWork);
+        //エラークリア
+        GFL_NET_StateClearWifiError();
+        NetErr_ErrWorkInit();
+        GFL_NET_StateResetError();
+        //再接続へ
+        WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0019);
+        _CHANGE_STATE(pWork,_modeErrorRetry);
         break;
       }
     }
