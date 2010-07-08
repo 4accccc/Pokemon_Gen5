@@ -438,6 +438,10 @@ void BTL_SICK_MakeDefaultMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL_POK
       break;
     }
   }
+  else
+  {
+    HANDEX_STR_Clear( str );
+  }
 }
 
 

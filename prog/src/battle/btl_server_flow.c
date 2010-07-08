@@ -9923,12 +9923,12 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
     break;
   }
 
-  BTL_Printf("ダメージ値=%d\n", damage);
   if( damage > 0 )
   {
     if( scproc_SimpleDamage_CheckEnable(wk, bpp, damage) )
     {
       handexSub_putString( wk, &wk->strParam );
+      HANDEX_STR_Clear( &wk->strParam );
 
       scproc_ViewEffect( wk, BTLEFF_WEATHER_DAMAGE, BTL_SVFTOOL_PokeIDtoPokePos(wk, pokeID), BTL_POS_NULL, FALSE, 0 );
       // このダメージでひんしになるのであれば、カメラを元に戻す。
