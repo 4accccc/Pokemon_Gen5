@@ -746,6 +746,8 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 { 
   enum
   { 
+    SEQ_CHECK_GAMESYNC_REG,
+
     SEQ_START_SEARCH_MSG,
 
     SEQ_START_DOWNLOAD_GPF_DATA,
@@ -766,6 +768,21 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 
   switch( *p_seq )
   { 
+  case SEQ_CHECK_GAMESYNC_REG:
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      DREAMWORLD_SAVEDATA* p_dream  = DREAMWORLD_SV_GetDreamWorldSaveData( p_sv );
+      if( DREAMWORLD_SV_GetSignin(p_dream) )
+      {
+        *p_seq  = SEQ_START_SEARCH_MSG;
+      }
+      else
+      {
+        *p_seq  = SEQ_START_NONE_MSG;
+      }
+    }
+    break;
+
   case SEQ_START_SEARCH_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_04, WBM_TEXT_TYPE_WAIT );
     *p_seq  = SEQ_START_DOWNLOAD_GPF_DATA;
