@@ -1319,10 +1319,19 @@ static void scproc_Rotation( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir 
     }
     if( !BPP_IsDead(inPoke) )
     {
-//      BTL_HANDLER_TOKUSEI_Add( inPoke );
-//      BTL_HANDLER_ITEM_Add( inPoke );
-        BTL_HANDLER_TOKUSEI_RotationWake( inPoke );
-        BTL_HANDLER_ITEM_RotationWake( inPoke );
+      // じゅうりょく効果中にローテーションで前衛に入ったら、でんじふゆう・テレキネシス状態を落とす
+      if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
+      {
+        if( BPP_CheckSick(inPoke, WAZASICK_TELEKINESIS) ){
+          scPut_CureSick( wk, inPoke, WAZASICK_TELEKINESIS, NULL );
+        }
+        if( BPP_CheckSick(inPoke, WAZASICK_FLYING) ){
+          scPut_CureSick( wk, inPoke, WAZASICK_FLYING, NULL );
+        }
+      }
+
+      BTL_HANDLER_TOKUSEI_RotationWake( inPoke );
+      BTL_HANDLER_ITEM_RotationWake( inPoke );
     }
     BTL_POSPOKE_Rotate( &wk->pospokeWork, dir, clientID, inPoke, wk->pokeCon );
   }
@@ -3127,22 +3136,6 @@ static void scEvent_AfterMemberInComp( BTL_SVFLOW_WORK* wk )
 //----------------------------------------------------------------------------------
 static void scproc_AfterRotationIn( BTL_SVFLOW_WORK* wk )
 {
-  // でんじふゆう、テレキネシスを落とす
-  FRONT_POKE_SEEK_WORK  fps;
-  BTL_POKEPARAM* bpp;
-
-  FRONT_POKE_SEEK_InitWork( &fps, wk );
-  while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
-  {
-    if( BPP_CheckSick(bpp, WAZASICK_TELEKINESIS) ){
-      scPut_CureSick( wk, bpp, WAZASICK_TELEKINESIS, NULL );
-    }
-    if( BPP_CheckSick(bpp, WAZASICK_FLYING) ){
-      scPut_CureSick( wk, bpp, WAZASICK_FLYING, NULL );
-    }
-  }
-
-
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_RotationIn( wk );
