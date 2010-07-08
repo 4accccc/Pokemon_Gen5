@@ -2776,6 +2776,7 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh, int sca
         continue;
       }
       if(wx >= ww || wy >= hh){
+        count++;
         continue;
       }
       // Šg‘åA’†‰›‚Ö‚Ì‘‚«‚İ‚ª‹«ŠE‚ğ‰z‚¦‚Ä”½‘Î‘¤‚É‘‚¢‚Ä‚µ‚Ü‚¤‚Ì‚Å‹K’è’l‚Åi‚İB
@@ -2792,7 +2793,7 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh, int sca
       bx = wx / 8;
       px = wx % 8;
       offset = (by*OEKAKI_BOARD_W+bx)*64 + py*8+px;
-//      HOSAKA_Printf("w=%d h=%d bx=%d by=%d px=%d py=%d wx=%d wy=%d offset=%d\n", w,h,bx,by,px,py,wx,wy,offset );
+//      OS_Printf("w=%d h=%d bx=%d by=%d px=%d py=%d wx=%d wy=%d offset=%d\n", w,h,bx,by,px,py,wx,wy,offset );
       if(brush[count]==1){
         sign[offset] = SIGN_COLOR_PEN;
       }else if(brush[count]==2){
