@@ -5334,8 +5334,7 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
 
       p_wk->gpf_data  = *pDream;
 
-      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE
-        ||  ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ALREADY_EXISTS )
+      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE )
       { 
         p_wk->seq  = SEQ_END;
       }
