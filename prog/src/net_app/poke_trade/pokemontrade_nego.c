@@ -1730,11 +1730,20 @@ static void _PokeEvilChkEnd2(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
     return;
   }
-  else if(pWork->evilCheck[1]==0xff){
-    msgno = gtsnego_info_24;   //その他のエラー
+  else if(pWork->evilCheck[0] == 0xf0 ){
+    msgno = gtsnego_info_25;
   }
-  else if(pWork->evilCheck[0]==0xff){
-    msgno = gtsnego_info_24;
+  else if(pWork->evilCheck[0] == 0xf1 ){
+    msgno = gtsnego_info_26;
+  }
+  else if(pWork->evilCheck[0] == 0xf2 ){
+    msgno = gtsnego_info_27;
+  }
+  else if(pWork->evilCheck[0] == 0xff ){
+    msgno = gtsnego_info_28;
+  }
+  else if((pWork->evilCheck[1] & 0xf0) == 0xf0){
+    msgno = gtsnego_info_28;
   }
   else if(pWork->evilCheck[1]){
     msgno = gtsnego_info_10;
@@ -1839,7 +1848,26 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
     }
     else if( (NHTTP_ERROR_BUSY != error) || (responce != 200))
     {
-       pWork->evilCheck[0] = 0xff;  //主に通信エラー
+/*
+401	認証トークンが不正
+400	ゲームモードが不正
+その他200以外	その他サーバエラー
+408 タイムアウト	
+ */
+      switch(responce){
+      case 400:
+        pWork->evilCheck[0] = 0xf0;
+        break;
+      case 401:
+        pWork->evilCheck[0] = 0xf1;
+        break;
+      case 408:
+        pWork->evilCheck[0] = 0xf2;
+        break;
+      default:
+        pWork->evilCheck[0] = 0xff;  //主に通信エラー
+        break;
+      }
       NHTTP_RAP_ErrorClean(pWork->pNHTTP);
       _CHANGE_STATE(pWork, _PokeEvilChkEnd);
     }
