@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-15T13:22:08"/>
+	<create user="ohno" host="W00141" date="2010-07-08T22:08:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,12 +307,12 @@
 
 	<dialog left="447" top="251" right="1152" bottom="879" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<tag-palette left="657" top="209" right="1130" bottom="607" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -524,14 +524,56 @@
 	</row>
 
 	<row id="msg_gtc_01_027">
+		<language name="JPN" width="216">このポケモンを　こうかんに
+だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">このポケモンを　交換に
+だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_01_027_1">
 		<comment>交換に出そうとしたポケモンの名前、自分の名前、
 おやの名前、メールの名前がＮＧワードだった場合
 もしくは、ポケモンのパラメータに異常があった場合の
 警告メッセージ</comment>
-		<language name="JPN" width="216">このポケモンを
-こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">このポケモンを
-交換に　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="216">このポケモンを　こうかんに
+だすことは　できません！（１３２６６）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">このポケモンを　交換に
+だすことは　できません！（１３２６６）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_01_027_2">
+		<language name="JPN" width="216">このポケモンを　こうかんに
+だすことは　できません！（１３２６７）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">このポケモンを　交換に
+だすことは　できません！（１３２６７）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_01_027_3">
+		<language name="JPN" width="216">このポケモンを　こうかんに
+だすことは　できません！（１３２６８）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">このポケモンを　交換に
+だすことは　できません！（１３２６８）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_01_027_4">
+		<language name="JPN" width="216">このポケモンを　こうかんに
+だすことは　できません！（１３２６９）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">このポケモンを　交換に
+だすことは　できません！（１３２６９）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_01_027_5">
+		<language name="JPN" width="216">このポケモンを　こうかんに
+だすことは　できません！（１３２７０）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">このポケモンを　交換に
+だすことは　できません！（１３２７０）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_01_027_6">
+		<language name="JPN" width="216">このポケモンを　こうかんに
+だすことは　できません！（１３２７１）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">このポケモンを　交換に
+だすことは　できません！（１３２７１）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_028">
@@ -1384,11 +1426,11 @@
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳは
 げんざい　こみあって　おります[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち
-ごりようください[BE:01:ページ切り替え（クリア）]</language>
+ごりようください（１３２６１）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳは
 現在　混み合っております[BE:01:ページ切り替え（クリア）]
 しばらく　お待ちいただいたのち
-ご利用ください[BE:01:ページ切り替え（クリア）]</language>
+ご利用ください（１３２６１）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_003">
@@ -1404,8 +1446,59 @@
 
 	<row id="msg_gtc_error_004_01">
 		<comment>サーバー確認画面で表示する際に使用するキー待ちつきのエラーテキスト</comment>
-		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました</language>
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２７２）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２７２）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_004_02">
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２７５）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２７５）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_004_03">
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２６３）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２６３）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_004_04">
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２６５）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２６５）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_004_05">
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２６５）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２６５）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_004_06">
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２７３）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２７３）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_004_07">
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２８１）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２８１）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_004_08">
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました
+（１３２８２）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+（１３２８２）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_005">
@@ -1415,11 +1508,18 @@
 できませんでした[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_gtc_error_006">
+	<row id="msg_gtc_error_006_1">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳとの　つうしんが
-せつだん　されました[BE:01:ページ切り替え（クリア）]</language>
+せつだん　されました（１３２６２）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　通信が
-切断されました[BE:01:ページ切り替え（クリア）]</language>
+切断されました（１３２６２）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gtc_error_006_2">
+		<language name="JPN" font=" 1:small" width="216">ＧＴＳとの　つうしんが
+せつだん　されました（１３２７４）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　通信が
+切断されました（１３２７４）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_006_01">
