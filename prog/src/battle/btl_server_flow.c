@@ -9618,14 +9618,11 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
   BTL_POKEPARAM* bpp;
 
   pokeCnt = BTL_POKESET_GetCount( pokeSet );
-//  TAYA_Printf("ポケ数=%d, ID= ", pokeCnt);
   for(i=0; i<pokeCnt; ++i)
   {
     bpp = BTL_POKESET_Get( pokeSet, i );
     pokeIDList[ i ] = BPP_GetID( bpp );
-//    TAYA_Printf( "%d,", pokeIDList[i] );
   }
-//  TAYA_Printf( "\n" );
 
 
   i = 0;
@@ -9638,15 +9635,12 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
       BOOL fCured;
       u32 p;
 
-//      TAYA_Printf( "状態異常[%d]をチェック開始...\n",  sick );
-
       for(p=0; p<pokeCnt; ++p)
       {
         bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeIDList[p] );
         if( !BPP_IsDead(bpp) )
         {
           BOOL fCured;
-//          TAYA_Printf("ポケ(%d)の、状態異常[%d]をチェック...\n", BPP_GetID(bpp), sick);
           if( BPP_WazaSick_TurnCheck(bpp, sick, &oldCont, &fCured) )
           {
             u32  hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -14916,8 +14910,10 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
             scPut_CureSick( wk, pp_target, check_sick, &oldCont );
             if( !param->fStdMsgDisable )
             {
-              if( BTL_SICK_MakeDefaultCureMsg(check_sick, oldCont, pp_target, itemID, &wk->strParam) ){
+              if( BTL_SICK_MakeDefaultCureMsg(check_sick, oldCont, pp_target, itemID, &wk->strParam) )
+              {
                 handexSub_putString( wk, &wk->strParam );
+                HANDEX_STR_Clear( &wk->strParam );
               }
             }
             else
