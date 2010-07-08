@@ -1435,12 +1435,12 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
 static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u8 dir )
 {
   VecFx32 vec,ofs;
-  BOOL pause_f;
+  BOOL pause_f,jiki_f = FALSE,comact_f = FALSE,updown_anm_f = TRUE;
   u16 zone_id;
   s16 gx;
   const OBJCODE_PARAM* obj_prm;
 #ifdef DEBUG_ONLY_FOR_iwasawa
-#if 1
+#if 0
   static float test_z = -2.1, test_diff = 0.1;
   static BOOL updown_f = 0;
   static BOOL cont_f = 0;
@@ -1456,8 +1456,19 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   gx = MMDL_GetGridPosX( mmdl );
   zone_id = MMDL_GetZoneID( mmdl );
 
+  {
+    FIELDMAP_WORK* fieldWork = MMDLSYS_GetFieldMapWork( MMDL_GetMMdlSys( mmdl ));
+    FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
+    MMDL* player_mmdl = FIELD_PLAYER_GetMMdl( player );
+    jiki_f = ( mmdl == player_mmdl );
+    comact_f = ( MMDL_GetOBJID( mmdl ) == MMDL_ID_COMMACTOR );
+
+    if( jiki_f ){
+      updown_anm_f = ( FIELD_PLAYER_GetMoveValue( player ) != PLAYER_MOVE_VALUE_STOP );
+    }
+  }
 #ifdef DEBUG_ONLY_FOR_iwasawa
-#if 1
+#if 0
   if(work->actID == 1){
     int key = GFL_UI_KEY_GetTrg();
     int cont = GFL_UI_KEY_GetCont();
@@ -1509,7 +1520,7 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
      * 　YオフセットがMMDL_POKE_OFS_UPDOWN_ANM以上で飛んでいるポケモンでない場合もYを維持する
      */
     vec.y = ofs.y;
-  }else if( TsurePoke_CheckUpDown( work, dir, obj_prm ) == FALSE ){
+  }else if( TsurePoke_CheckUpDown( work, dir, obj_prm ) == FALSE && updown_anm_f){
     //上下アニメ用オフセット
     vec.y += MMDL_POKE_OFS_UPDOWN_ANM;
   }
@@ -1520,7 +1531,7 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
    *
    * 処理の意図・詳細については、MMDL_POKE_OFS_SYMBOL_ALL_Z定義のコメントを参照のこと
    */
-  if( ZONEDATA_IsBingo( zone_id)){
+  if( ZONEDATA_IsBingo( zone_id) && !jiki_f){
     u8 idx = gx%3;
 
     //シンボルポケ同士のフリップ対策
@@ -1530,37 +1541,17 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
       vec.z += MMDL_POKE_OFS_SYMBOL_ALL_Z;
     }
   
-    //自機とのフリップ対策。でっかいポケモンはさらに一律オフセットをかける
-#if 0
-	  if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
-      vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;
-    }else if(idx != 2 ){
-      vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;
-    }
-#else
+    //自機とのフリップ対策
     vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;//FX32_CONST(test_z);
-#endif
   }
-  //向きからX/Z描画オフセットをセット
+  //向きからX描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
-
-#if 0
-	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
-    vec.z -= FX32_CONST(2.1);//FX32_CONST(test_z);
+ 
+  //通信アクターはDrawOffset込みの座標を親から貰っているので、
+  //ローカルでは諸々のオフセットをなかったことにする
+  if( comact_f ){
+    VEC_Set(&vec,0,0,0);
   }
-  if((work->actID/4)%2 == 0){
-   if(updown_f){
-      vec.z += FX32_CONST(test_z);
-      vec.y -= FX32_CONST(1.0);
-    }
-  }else{
-   if(!updown_f){
-      vec.z += FX32_CONST(test_z);
-      vec.y -= FX32_CONST(1.0);
-    }
-  }
-#endif
-  
   MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
   
   work->offs_frame++; 
