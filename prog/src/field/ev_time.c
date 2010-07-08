@@ -74,6 +74,8 @@ static void DEBUG_All_Printf( GMTIME * tm, const RTCDate * now_date, const RTCTi
   TAMADA_Printf("NOW  (%04d) ", RTC_ConvertDateToDay(now_date) );
   DEBUG_DATE_Print( now_date, now_time );
 }
+#else
+#define DEBUG_All_Printf(...)   ((void)0)
 #endif  //DEBUG_ONLY_FOR_tamada
 //============================================================================================
 //============================================================================================
