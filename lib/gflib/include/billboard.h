@@ -270,6 +270,10 @@ extern int GFL_BBD_AddResourceKey(	GFL_BBD_SYS* billboardSys,
 extern void	GFL_BBD_RemoveResource( GFL_BBD_SYS* billboardSys, int resIdx );
 //		２）全破棄
 extern void	GFL_BBD_RemoveResourceAll( GFL_BBD_SYS* billboardSys );
+//　　３）ビルボードオブジェクト破棄 Vramのみ
+extern void	GFL_BBD_RemoveResourceVram( GFL_BBD_SYS* billboardSys, int resIdx );
+//    ４）リソースキーによる破棄 Vramのみ
+extern void	GFL_BBD_RemoveResourceVramKey( GFL_BBD_SYS* billboardSys, int resIdx );
 
 //	ビルボードリソースデータポインタ取得
 extern u32	GFL_BBD_GetResourceData( GFL_BBD_SYS* billboardSys, int resIdx );
@@ -334,8 +338,6 @@ inline int	GFL_BBD_AddObject(		GFL_BBD_SYS* billboardSys,
 
 //	ビルボードオブジェクト破棄
 extern void	GFL_BBD_RemoveObject( GFL_BBD_SYS* billboardSys, int objIdx );
-//	ビルボードオブジェクト破棄 Vramのみ
-extern void	GFL_BBD_RemoveResourceVram( GFL_BBD_SYS* billboardSys, int resIdx );
 
 //------------------------------------------------------------------
 /**

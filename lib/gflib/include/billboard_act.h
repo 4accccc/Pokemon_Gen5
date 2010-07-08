@@ -210,9 +210,19 @@ extern GFL_BBDACT_RESUNIT_ID GFL_BBDACT_AddResourceUnit
 
 extern GFL_BBDACT_RESUNIT_ID GFL_BBDACT_AddResourceG3DResUnit
 			( GFL_BBDACT_SYS* bbdActSys, GFL_BBDACT_G3DRES_SETTBL resTbl, u32 resCount );
+
+extern GFL_BBDACT_RESUNIT_ID GFL_BBDACT_AddResourceIdx
+			( GFL_BBDACT_SYS* bbdActSys, int resIdx, GFL_G3D_RES *g3dres );
+
 //破棄
 extern void GFL_BBDACT_RemoveResourceUnit
 			( GFL_BBDACT_SYS* bbdActSys, GFL_BBDACT_RESUNIT_ID idx, u32 resCount );
+extern void GFL_BBDACT_RemoveResourceIdx
+			( GFL_BBDACT_SYS* bbdActSys, GFL_BBDACT_RESUNIT_ID idx );
+
+//ビルボードリソースインデックス取得
+extern int GFL_BBDACT_GetBBDResourceIdx
+			( GFL_BBDACT_SYS* bbdActSys, GFL_BBDACT_RESUNIT_ID idx );
 
 //------------------------------------------------------------------
 /**
