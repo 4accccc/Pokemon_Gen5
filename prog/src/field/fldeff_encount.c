@@ -92,7 +92,8 @@ typedef struct
 typedef struct
 {
   u16 seq_no;
-  u16 anm_pause_f;
+  u8 anm_pause_f;
+  u8 hide_f;
   TASKHEADER_ENCOUNT head;
   MMDL_CHECKSAME_DATA samedata;
 
@@ -506,6 +507,24 @@ void FLDEFF_ENCOUNT_AnmPauseSet( FLDEFF_TASK* task, BOOL pause_f )
 
 //--------------------------------------------------------------
 /**
+ * エフェクトエンカウント エフェクト隠す　
+ * @param fmmdl MMDL
+ * @param FLDEFF_CTRL*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_ENCOUNT_HideSet( FLDEFF_TASK* task, BOOL hide_f )
+{
+  if( task != NULL ){
+    TASKWORK_ENCOUNT *work = (TASKWORK_ENCOUNT*)FLDEFF_TASK_GetWork( task );
+    work->hide_f = hide_f;
+  }else{
+    GF_ASSERT( 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * エフェクトエンカウント　エフェクトタスク　初期化
  * @param task FLDEFF_TASK
  * @param wk task work
@@ -641,6 +660,10 @@ static void encountTask_Draw( FLDEFF_TASK *task, void *wk )
   TASKWORK_ENCOUNT *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
   FLDEFF_ENCOUNT* enc = work->head.eff_enc;
+  
+  if( work->hide_f ){
+    return;
+  }
   
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );

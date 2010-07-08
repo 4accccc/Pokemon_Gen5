@@ -407,6 +407,22 @@ void EFFECT_ENC_EffectAnmPauseSet( FIELD_ENCOUNT* enc, BOOL pause_f )
     FLDEFF_ENCOUNT_AnmPauseSet( eff_wk->eff_task, pause_f );
   }
 }
+/*
+ *  @brief  エフェクトエンカウント　エフェクト隠す
+ */
+void EFFECT_ENC_EffectHideSet( FIELD_ENCOUNT* enc, BOOL hide_f )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFECT_ENCOUNT* eff_wk = enc->eff_enc; 
+  
+  //起動中チェック
+  if( !ewk->effect_encount.param.valid_f ){
+    return;
+  }
+  if( eff_wk->eff_task != NULL){
+    FLDEFF_ENCOUNT_HideSet( eff_wk->eff_task, hide_f );
+  }
+}
 
 //--------------------------------------------------------------------
 /**

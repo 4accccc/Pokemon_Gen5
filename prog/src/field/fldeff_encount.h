@@ -43,4 +43,6 @@ extern void FLDEFF_ENCOUNT_Delete( FLDEFF_CTRL *fectrl, void *work );
 
 extern FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FIELD_ENCOUNT* fld_enc, FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32 height, EFFENC_TYPE_ID type );
 extern void FLDEFF_ENCOUNT_AnmPauseSet( FLDEFF_TASK* task, BOOL pause_f );
+extern void FLDEFF_ENCOUNT_HideSet( FLDEFF_TASK* task, BOOL hide_f );
+
 

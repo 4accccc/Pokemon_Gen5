@@ -83,6 +83,10 @@ extern void EFFECT_ENC_EffectRecoverCancel( FIELD_ENCOUNT* enc );
  *  @brief  エフェクトエンカウント　アニメ再生ポーズ
  */
 extern void EFFECT_ENC_EffectAnmPauseSet( FIELD_ENCOUNT* enc, BOOL pause_f );
+/*
+ *  @brief  エフェクトエンカウント　エフェクト隠す
+ */
+extern void EFFECT_ENC_EffectHideSet( FIELD_ENCOUNT* enc, BOOL hide_f );
 
 /**
  * @brief   エフェクトエンカウトアイテム取得イベントで手に入れるItemNoを取得する

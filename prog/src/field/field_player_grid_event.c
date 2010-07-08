@@ -22,6 +22,8 @@
 
 #include "field_sound.h"
 #include "fieldmap_tcb.h"
+#include "field_encount.h"
+#include "effect_encount.h"
 
 //======================================================================
 //  define
@@ -584,6 +586,16 @@ static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
         task = FLDEFF_NAMIPOKE_SetMMdl(
             fectrl, dir, &pos, mmdl, NAMIPOKE_JOINT_OFF );
         FIELD_PLAYER_SetEffectTaskWork( work->fld_player, task );
+      }
+      {
+        MMDL_GRIDPOS gpos;
+        FIELD_ENCOUNT* enc = FIELDMAP_GetEncount( work->fieldmap );
+        gpos.gx = SIZE_GRID_FX32( pos.x );
+        gpos.gy = SIZE_GRID_FX32( pos.y );
+        gpos.gz = SIZE_GRID_FX32( pos.z );
+        if( EFFECT_ENC_CheckEffectPos( enc, &gpos )){
+          EFFECT_ENC_EffectHideSet( enc, TRUE );
+        }
       }
     }
     
