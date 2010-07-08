@@ -572,7 +572,7 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
       para = &(rec->rec_party[client].member[temoti]);
       if(para->tamago_flag == 0 && para->fusei_tamago_flag == 0){
         head->monsno[n] = para->monsno;
-        head->form_no_and_sex[n] = ( para->form_no & HEADER_FORM_NO_MASK ) | ( para->sex << HEADER_GENDER_MASK );
+        head->form_no_and_sex[n] = ( para->form_no & HEADER_FORM_NO_MASK ) | ( para->sex << HEADER_GENDER_SHIFT );
       }
       n++;
     }
