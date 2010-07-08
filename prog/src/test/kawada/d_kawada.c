@@ -1215,9 +1215,20 @@ static void EggDemoInit( KAWADA_MAIN_WORK* wk )
 
   ZONEDATA_Open( wk->heapID );
 
+/*
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )  monsno = MONSNO_MANAFI;
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )  monsno = MONSNO_PIZYOTTO;
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )  monsno = MONSNO_PIZYON;
+*/
+  monsno = MONSNO_KENTAROSU;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )       monsno = MONSNO_HINOARASI;
+  //if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )       monsno = MONSNO_MARIRU;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )       monsno = MONSNO_MAGUMAGGU;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )       monsno = MONSNO_KINOKOKO;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START )   monsno = MONSNO_SOONANO;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )  monsno = MONSNO_HUWANTE;
+  //if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )       monsno = MONSNO_521;  // モンメン
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )       monsno = MONSNO_630;  // コジョフー
 
   wk->pp = PP_Create( monsno, 1, 0, wk->heapID );
   PP_Put( wk->pp, ID_PARA_tamago_flag, 1 );

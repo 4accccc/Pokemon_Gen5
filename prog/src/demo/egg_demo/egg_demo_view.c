@@ -11,6 +11,7 @@
 //============================================================================
 //#define DEBUG_KAWADA
 //#define SET_PARTICLE_Y_MODE  // これが定義されているとき、パーティクルのY値を編集できるモードになる
+//#define DEBUG_SET_POKE_ARRANGE  // これが定義されているとき、ポケモンの配置を調整できるモードになる
 
 
 // インクルード
@@ -798,6 +799,55 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
 
   // 3D
   Egg_Demo_View_ThreeRearMain( work );
+
+
+#ifdef DEBUG_SET_POKE_ARRANGE
+  {
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+    {
+      BOOL b_move = FALSE;
+
+      VecFx32 pos;
+      f32 pos_x, pos_y;
+      const f32 add = 0.1f;
+
+      int trg = GFL_UI_KEY_GetTrg();
+
+      MCSS_GetPosition( work->mcss_wk, &pos );
+      pos_x = FX_FX32_TO_F32(pos.x);
+      pos_y = FX_FX32_TO_F32(pos.y);
+
+      if( trg & PAD_KEY_LEFT )
+      {
+        b_move = TRUE;
+        pos_x -= add;
+      }
+      else if( trg & PAD_KEY_RIGHT )
+      {
+        b_move = TRUE;
+        pos_x += add;
+      }
+      else if( trg & PAD_KEY_UP )
+      {
+        b_move = TRUE;
+        pos_y += add;
+      }
+      else if( trg & PAD_KEY_DOWN )
+      {
+        b_move = TRUE;
+        pos_y -= add;
+      }
+
+      if( b_move )
+      {
+        pos.x = FX_F32_TO_FX32(pos_x);
+        pos.y = FX_F32_TO_FX32(pos_y);
+        MCSS_SetPosition( work->mcss_wk, &pos );
+        OS_Printf( "(%f, %f)\n", pos_x, pos_y );
+      }
+    }
+  }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -976,6 +1026,29 @@ static void Egg_Demo_View_McssSysExit( EGG_DEMO_VIEW_WORK* work )
 //-------------------------------------
 /// MCSSポケモン初期化処理
 //=====================================
+
+// ポケモンの配置
+typedef struct
+{
+  u32 monsno;
+  f32 pos_x;
+  f32 pos_y;
+}
+POKE_ARRANGE_INFO;
+#define POKE_ARRANGE_INFO_TBL_NUM (4)
+static const POKE_ARRANGE_INFO poke_arrange_info_tbl[POKE_ARRANGE_INFO_TBL_NUM] =
+{
+//  { MONSNO_KENTAROSU,  0.0f, -190.0f },
+  { MONSNO_HINOARASI,  -0.5f, -190.0f },
+//  { MONSNO_MARIRU,     0.0f, -190.0f },
+  { MONSNO_MAGUMAGGU,  -0.5f, -189.9f },
+//  { MONSNO_KINOKOKO,   0.0f, -190.0f },
+  { MONSNO_SOONANO,    0.0f, -189.8f },
+//  { MONSNO_HUWANTE,    0.0f, -190.0f },
+//  { MONSNO_521,        0.0f, -190.0f },  // モンメン
+  { MONSNO_630,        0.0f, -190.2f },  // コジョフー
+};
+
 static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
 {
   {
@@ -992,6 +1065,27 @@ static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
           OS_Printf( "EGG_DEMO_VIEW : StopNode=%d\n", MCSS_GetStopNode(work->mcss_wk, 0) );
     }
 #endif
+  }
+
+  // ポケモンの配置
+  {
+    u8  i;
+    u32 monsno = PP_Get( work->pp, ID_PARA_monsno_egg, NULL );
+    if( monsno != MONSNO_TAMAGO )
+    {
+      for( i=0; i<POKE_ARRANGE_INFO_TBL_NUM; i++ )
+      {
+        if( monsno == poke_arrange_info_tbl[i].monsno )
+        {
+          VecFx32 pos;
+          pos.x = FX_F32_TO_FX32(poke_arrange_info_tbl[i].pos_x);
+          pos.y = FX_F32_TO_FX32(poke_arrange_info_tbl[i].pos_y);
+          pos.z = FX_F32_TO_FX32(-800.0f);
+          MCSS_SetPosition( work->mcss_wk, &pos );
+          break;
+        }
+      }
+    }
   }
 
   {
