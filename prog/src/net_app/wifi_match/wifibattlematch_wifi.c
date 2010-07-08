@@ -3125,13 +3125,14 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+#if 0
           DWC_RAPCOMMON_ResetSubHeapID();
 
           Util_Matchinfo_Clear( p_wk );
 
           *p_seq  = SEQ_ERROR_END;
           break;
-
+#endif
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
           DWC_RAPCOMMON_ResetSubHeapID();
 
@@ -3464,10 +3465,11 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+#if 0
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           DWC_RAPCOMMON_ResetSubHeapID();
           break;
-
+#endif
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           DWC_RAPCOMMON_ResetSubHeapID();
