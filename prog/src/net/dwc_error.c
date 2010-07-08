@@ -174,8 +174,9 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
       }
     }
-    //システムエラー（ヘビー）系  ヘビー系ができたらifの中に書いてください
-    else  if( cp_error->errorUser == ERRORCODE_HEAP )
+    //システムエラー（ヘビー）系
+    else  if( cp_error->errorUser == ERRORCODE_HEAP
+        || cp_error->errorUser == ERRORCODE_USER_WIFILOGOUT )
     {
       NetErr_App_ReqErrorDisp();
       NetErr_App_ReqErrorDispForce( dwc_error_0014 );

@@ -95,7 +95,7 @@ enum
 #endif
 
 #define WBM_SC_HEAP_SIZE    (0x60000)
-#define WBM_SC_BORDER_SIZE  (0)
+#define WBM_SC_BORDER_SIZE  (1000)
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ

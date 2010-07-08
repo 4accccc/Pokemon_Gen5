@@ -1064,6 +1064,7 @@ static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr, int default_msg)
 #ifndef MULTI_BOOT_MAKE  //’ÊíŽžˆ—
   u32 msgno = default_msg;
   switch(pErr->errorUser){
+  case ERRORCODE_USER_WIFILOGOUT:
   case ERRORCODE_HEAP:
     return dwc_error_0014;
   case ERRORCODE_DISCONNECT:

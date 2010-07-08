@@ -3104,7 +3104,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_WAIT_SESSION:
     {
-
       //内部でエラー検知してもDWCのエラーがでないと、
       //もう一度内部で処理してしまう場合があるので、
       //エラーが起こったら起動しないようにしています
