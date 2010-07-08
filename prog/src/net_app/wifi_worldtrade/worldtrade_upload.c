@@ -2491,35 +2491,63 @@ static void PrintError( WORLDTRADE_WORK *wk )
 
 	// エラーが発生しました。
 	switch(wk->ConnectErrorNo){
-	case DPW_TR_ERROR_ILLEGAL_DATA :
-	case DPW_TR_ERROR_CHEAT_DATA:		//!< アップロードされたデータが不正
-	case DPW_TR_ERROR_NG_POKEMON_NAME:	//!< アップロードされたポケモンの名前がNGワードを含んでいる
-	case DPW_TR_ERROR_NG_PARENT_NAME:	//!< アップロードされたポケモンの親の名前がNGワードを含んでいる
-	case DPW_TR_ERROR_NG_MAIL_NAME:	//!< アップロードされたメールの名前がNGワードを含んでいる
-	case DPW_TR_ERROR_NG_OWNER_NAME:	//!< アップロードされた主人公名がNGワードを含んでいる
-
-		// このポケモンは預けることができません！
-		msgno = msg_gtc_01_027;
-		break;
 	case DPW_TR_ERROR_SERVER_FULL:
 		// サーバーがいっぱいです。しばらくしてからきてください
 		msgno = msg_gtc_error_002;
 		break;
 	case DPW_TR_ERROR_SERVER_TIMEOUT:
-	case DPW_TR_ERROR_DISCONNECTED:
 		// ＧＴＳとのせつぞくがきれました。うけつけにもどります
-		msgno = msg_gtc_error_006;
+		msgno = msg_gtc_error_006_1;
 		break;
-	case DPW_TR_ERROR_CANCEL  :
-	case DPW_TR_ERROR_FAILURE :
 	case DPW_TR_ERROR_NO_DATA:
+		//　つうしんエラーが発生しました。
+		msgno = msg_gtc_error_004_03;
+		break;
+	case DPW_TR_ERROR_DATA_TIMEOUT:
+		//　つうしんエラーが発生しました。
+		msgno = msg_gtc_error_004_05;
+		break;
 	case DPW_TR_ERROR_ILLIGAL_REQUEST :
 		//　つうしんエラーが発生しました。
+		msgno = msg_gtc_error_004_04;
+		break;
+	case DPW_TR_ERROR_ILLEGAL_DATA:
+    msgno = msg_gtc_01_027_1;
+    break;
+	case DPW_TR_ERROR_CHEAT_DATA:		//!< アップロードされたデータが不正
+    msgno = msg_gtc_01_027_2;
+    break;
+	case DPW_TR_ERROR_NG_POKEMON_NAME:	//!< アップロードされたポケモンの名前がNGワードを含んでいる
+    msgno = msg_gtc_01_027_3;
+    break;
+	case DPW_TR_ERROR_NG_PARENT_NAME:	//!< アップロードされたポケモンの親の名前がNGワードを含んでいる
+    msgno = msg_gtc_01_027_4;
+    break;
+	case DPW_TR_ERROR_NG_MAIL_NAME:	//!< アップロードされたメールの名前がNGワードを含んでいる
+    msgno = msg_gtc_01_027_5;
+    break;
+	case DPW_TR_ERROR_NG_OWNER_NAME:	//!< アップロードされた主人公名がNGワードを含んでいる
+    msgno = msg_gtc_01_027_6;
+    break;
+  case DPW_TR_ERROR_CANCEL:
+		//　つうしんエラーが発生しました。
 		msgno = msg_gtc_error_004_01;
+		break;
+  case DPW_TR_ERROR_FATAL:
+    msgno = msg_gtc_error_004_06;
+		break;
+	case DPW_TR_ERROR_DISCONNECTED:
+		// ＧＴＳとのせつぞくがきれました。うけつけにもどります
+		msgno = msg_gtc_error_006_2;
+		break;
+	case DPW_TR_ERROR_FAILURE :
+		//　つうしんエラーが発生しました。
+		msgno = msg_gtc_error_004_02;
 		break;
   default:
 		//　つうしんエラーが発生しました。
-		msgno = msg_gtc_error_004_01;
+		msgno = msg_gtc_error_004;
+    break;
 	}
 
 	OS_TPrintf("error %d\n", wk->ConnectErrorNo);
