@@ -1947,13 +1947,17 @@ static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
   if( cp_wk->error_code < 0 ){
     switch( cp_wk->error_code ){
     case DPW_BT_ERROR_SERVER_TIMEOUT:
-    case DPW_BT_ERROR_DISCONNECTED:
       msgno = msg_wifi_bt_error_003;
       break;
+    case DPW_BT_ERROR_DISCONNECTED:
+      msgno = msg_wifi_bt_error_003_01;
+      break;
     case DPW_BT_ERROR_SERVER_FULL:
-      msgno = msg_wifi_bt_error_002;
+      msgno = msg_wifi_bt_error_002_01;
       break;
     case DPW_BT_ERROR_FAILURE:
+      msgno = msg_wifi_bt_error_004_01;
+      break;
     case DPW_BT_ERROR_CANCEL:
       msgno = msg_wifi_bt_error_004;
       break;
@@ -1963,6 +1967,7 @@ static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
 
     default:
       GF_ASSERT(0);
+      msgno = msg_wifi_bt_error_007;
       break;
     }
   // SERVERError
@@ -1983,10 +1988,10 @@ static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
   }else if( cp_wk->nhttp_error != BSUBWAY_NHTTP_ERROR_NONE ){
     switch( cp_wk->nhttp_error ){
     case BSUBWAY_NHTTP_ERROR_POKE_ERROR:
-      msgno = msg_wifi_bt_error_003;
+      msgno = msg_wifi_bt_error_008;
       break;
     case BSUBWAY_NHTTP_ERROR_DISCONNECTED:
-      msgno = msg_wifi_bt_error_003;
+      msgno = msg_wifi_bt_error_008;
       break;
     case BSUBWAY_NHTTP_ERROR_EVILERROR:
       msgno = msg_wifi_bt_error_006;
