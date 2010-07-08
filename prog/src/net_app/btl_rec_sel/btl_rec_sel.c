@@ -169,6 +169,9 @@ FT_STATE;
 // 待ち時間
 #define COUNT_TIME_SEC_MAX (60)  // second
 
+// テキストを表示した後の待ち時間
+#define TEXT_STREAM_WAIT_COUNT_DEFAULT (120)  // 60fpsのときのフレーム数
+
 // 文字数
 #define STRBUF_FIX_TIME_LENGTH       (  8)  // ??:??
 #define STRBUF_LENGTH                (256)  // この文字数で足りるかbuflen.hで要確認
@@ -340,6 +343,8 @@ typedef struct
   // ストリームテキストウィンドウ
   PRINT_STREAM*               text_stream;
   BOOL                        text_stream_need_input;  // ストリームテキスト表示が完了したときに入力を待って終了する場合TRUE
+  u32                         text_stream_wait_count;  // ストリームテキスト表示が完了したときにカウントダウンして0になるまで待つ
+                                                       // 60fps時のフレーム数を入れておけばいい
   GFL_TCBLSYS*                text_tcblsys;
   GFL_BMPWIN*                 text_winin_bmpwin;
   GFL_BMPWIN*                 text_dummy_bmpwin;      ///< 0番のキャラクターを1x1でつくっておく
@@ -1153,10 +1158,12 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         {
 			    PMSND_PlaySE( SEQ_SE_SAVE );
           Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVEOK, msg_record_05_01 );
+          work->text_stream_wait_count = TEXT_STREAM_WAIT_COUNT_DEFAULT;
         }
         else if( work->battle_rec_new_save_result == SAVE_RESULT_NG )  // セーブ異常終了
         {
           Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVENG, msg_record_06_01 );
+          work->text_stream_wait_count = TEXT_STREAM_WAIT_COUNT_DEFAULT;
         }
       }
     }
@@ -1461,6 +1468,7 @@ static void Btl_Rec_Sel_TextInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wo
   // NULL初期化
   work->text_stream            = NULL;
   work->text_stream_need_input = FALSE;
+  work->text_stream_wait_count = 0;
   work->text_strbuf            = NULL;
 }
 static void Btl_Rec_Sel_TextExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
@@ -1587,7 +1595,12 @@ static BOOL Btl_Rec_Sel_TextWaitStreamOne( BTL_REC_SEL_PARAM* param, BTL_REC_SEL
     break;
   case PRINTSTREAM_STATE_DONE:
     {
-      if( work->text_stream_need_input )
+      if( work->text_stream_wait_count > 0 )
+      {
+        (work->text_stream_wait_count)--;
+        // 30fpsか60fpsかは気にしなくてよい。30フレームのときはこの関数の呼び出し元がこの関数を2回呼んでくれるから。
+      }
+      else if( work->text_stream_need_input )
       {
         if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
         {
