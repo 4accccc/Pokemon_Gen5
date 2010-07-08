@@ -12,6 +12,7 @@
 #include "print/printsys.h" // for PRINT_STREAM
 
 #include "app/app_keycursor.h"
+#include "app/app_printsys_common.h"
 
 //=============================================================================
 /**
@@ -269,7 +270,7 @@ void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMP
       if( work->decide_key_flag )
       {
         // ƒL[“ü—Í
-        is_decide = ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL );
+        is_decide = ( GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY );
       }
 
       if( is_decide == FALSE && work->decide_tp_flag )
