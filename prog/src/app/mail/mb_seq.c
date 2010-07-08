@@ -1146,7 +1146,8 @@ static void AlphaSet( MAILBOX_APP_WORK * appwk, BOOL flg )
   if( flg == TRUE ){
     MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_L, TRUE );
     MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_R, TRUE );
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 4, 12 );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ, 
+                      GX_BLEND_PLANEMASK_BG3, 4, 12 );
   }else{
     MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_L, FALSE );
     MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_R, FALSE );
