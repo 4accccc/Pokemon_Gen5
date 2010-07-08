@@ -93,6 +93,8 @@ typedef void (*PTRStateFunc)(GFL_NETWL* pState);
 /// 時間取得
 typedef int (*PTRTimeGet)(void);
 
+#define _CONNECT_COUNT_MAX (1)
+
 
 //管理構造体定義
 struct _NET_WL_WORK {
@@ -100,7 +102,7 @@ struct _NET_WL_WORK {
 	PTRCommRecvLocalFunc recvCallback; ///< 受信コールバック解決用
 	WMBssDesc sBssDesc[SCAN_PARENT_COUNT_MAX];  ///< 親機の情報を記憶している構造体
 	u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
-  _CONNECTNUM_INFO aConnectNum[SCAN_PARENT_COUNT_MAX]; //接続表示の為だけのバッファ
+//  _CONNECTNUM_INFO aConnectNum[_CONNECT_COUNT_MAX]; //接続表示の為だけのバッファ
   u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
 	PTRPARENTFIND_CALLBACK pCallback;
  // PTRTimeGet parentTime;
@@ -317,15 +319,15 @@ static void DEBUG_MACDISP(char* msg,WMBssDesc *bssdesc)
  * @retval  none
  */
 //-------------------------------------------------------------
-
 static void _ConnectNumCheck(WMBssDesc *bssdesc,int serviceNo,int num)
 {
+#if 0
   int i;
 
   if((serviceNo < WB_NET_UNION) || (WB_NET_UNION_GURUGURU < serviceNo)){
     return;  //ユニオン以外収集しない
   }
-  for(i = 0; i < SCAN_PARENT_COUNT_MAX ; i++){
+  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
     if(_pNetWL->aConnectNum[i].downSec!=0){
       if(0==GFL_STD_MemComp(_pNetWL->aConnectNum[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)){
         _pNetWL->aConnectNum[i].downSec  = (DEFAULT_TIMEOUT_FRAME/60);
@@ -334,7 +336,7 @@ static void _ConnectNumCheck(WMBssDesc *bssdesc,int serviceNo,int num)
       }
     }
   }
-  for(i = 0; i < SCAN_PARENT_COUNT_MAX ; i++){
+  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
     if(_pNetWL->aConnectNum[i].downSec==0){
       GFL_STD_MemCopy(bssdesc->bssid,_pNetWL->aConnectNum[i].bssid,  WM_SIZE_BSSID);
       _pNetWL->aConnectNum[i].downSec = (DEFAULT_TIMEOUT_FRAME/60);
@@ -342,6 +344,7 @@ static void _ConnectNumCheck(WMBssDesc *bssdesc,int serviceNo,int num)
       return;
     }
   }
+#endif
 }
 
 
@@ -356,14 +359,16 @@ static void _ConnectNumCheck(WMBssDesc *bssdesc,int serviceNo,int num)
 static void _downNumCheck(void)
 {
   int i;
+#if 0
 
   if((OS_GetVBlankCount() % 60) == 0){
-    for(i = 0; i < SCAN_PARENT_COUNT_MAX ; i++){
+    for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
       if(_pNetWL->aConnectNum[i].downSec!=0){
         _pNetWL->aConnectNum[i].downSec--;
       }
     }
   }
+#endif
 }
 
 
@@ -380,13 +385,15 @@ int NET_WHPIPE_GetUnionConnectNum(void)
 {
   int i,num=0;
 
+#if 0
   if(_pNetWL){
-    for(i = 0; i < SCAN_PARENT_COUNT_MAX ; i++){
+    for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
       if(_pNetWL->aConnectNum[i].downSec!=0){
         num += _pNetWL->aConnectNum[i].connectNum;
       }
     }
   }
+#endif
   return num;
 }
 
