@@ -218,7 +218,7 @@ typedef enum
 #define PLAYER_NUM            2          // プレイヤー数
 #define TEAM_NUM              0          // チーム数
 #define CANCELSELECT_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
-#define ASYNC_TIMEOUT (120*60)     //非同期用タイムアウト
+#define ASYNC_TIMEOUT (60*60)     //非同期用タイムアウト
 #define DISCONNECTS_WAIT_SYNC      (30)  //切断同期用
 
 #define RECV_BUFFER_SIZE  (0x1000)
@@ -1717,8 +1717,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
         DwcRap_Sc_Finalize( p_wk );
-
-        WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
       DEBUG_NET_Printf( "SC:Init end\n" );
@@ -1735,8 +1733,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
         DwcRap_Sc_Finalize( p_wk );
-
-        WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
       DEBUG_NET_Printf( "SC:Login\n" );
@@ -1755,8 +1751,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         { 
           WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
           DwcRap_Sc_Finalize( p_wk );
-
-          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
           return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
         }
         DEBUG_NET_Printf( "SC:Session parent\n" );
@@ -1785,8 +1779,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         { 
           WIFIBATTLEMATCH_NETERR_SetSysError( &p_wk->error, WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT, __LINE__ ); 
           DwcRap_Sc_Finalize( p_wk );
-
-          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
           return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
         }
 
@@ -1795,8 +1787,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         {
           WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, p_wk->result, __LINE__ );
           DwcRap_Sc_Finalize( p_wk );
-
-          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
           return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
         }
       }
@@ -1851,8 +1841,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
           {
             WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
             DwcRap_Sc_Finalize( p_wk );
-
-            WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
             return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
           }
           DEBUG_NET_Printf( "SC:Senddata child\n" );
@@ -1870,8 +1858,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
 
         DwcRap_Sc_Finalize( p_wk );
-
-        WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       } 
       DEBUG_NET_Printf( "SC:intention start\n" );
@@ -1892,8 +1878,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         { 
           WIFIBATTLEMATCH_NETERR_SetSysError( &p_wk->error, WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT, __LINE__ ); 
           DwcRap_Sc_Finalize( p_wk );
-
-          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
           return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
         }
 
@@ -1902,8 +1886,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         {
           WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, p_wk->result, __LINE__ );
           DwcRap_Sc_Finalize( p_wk );
-
-          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
           return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
         }
       }
@@ -2019,7 +2001,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
         DwcRap_Sc_Finalize( p_wk );
-        WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
       DEBUG_NET_Printf( "SC:create report\n" );
@@ -2035,7 +2016,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret, __LINE__ );
         DwcRap_Sc_Finalize( p_wk );
-        WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
       DEBUG_NET_Printf( "SC:submit report start\n" );
@@ -2056,7 +2036,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         { 
           WIFIBATTLEMATCH_NETERR_SetSysError( &p_wk->error, WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT, __LINE__ ); 
           DwcRap_Sc_Finalize( p_wk );
-          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
           return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
         }
 
@@ -2065,7 +2044,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         {
           WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, p_wk->result, __LINE__ );
           DwcRap_Sc_Finalize( p_wk );
-          WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk );
           return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
         }
       }
