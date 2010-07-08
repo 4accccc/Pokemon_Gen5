@@ -2236,7 +2236,9 @@ static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
 		break;
 
 	case BPL_IREKAE_ERR_WAZA:				// 技・特性
-		dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_pos_index) ];
+		// マルチでも、自分のデータはwk->poke[0]～[2]
+//		dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_pos_index) ];
+		dat = &wk->poke[ wk->dat->sel_pos_index ];
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m03 );
 		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
 		break;
