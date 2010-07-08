@@ -564,6 +564,8 @@ EVENT_START	ev_pos_n01r0502_lastbtl_03
 
 	_CALL sub_n_battle
 
+	_CAMERA_END()
+
 }
 EVENT_END
 
@@ -667,12 +669,12 @@ _TALK_OBJ_START()
 
 	CASE  3 THEN
 
-	//Ｎとの戦いに続く…
+		//この状態では話しかけることが出来ません。（イベントはPOS起動になっております）
 		_CALL sub_n_battle
 
 	CASE  4,5 THEN
 
-		//「……ボクの数式は　間違って　いたのか？」
+		//未使用ラベルです、本編中にこのメッセージが表示される事はありません。
 		_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_boss )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
@@ -905,6 +907,8 @@ _TALK_START_TURN_NOT()
 		
 		//Ｎとの戦いに続く…
 		 _CALL sub_n_battle
+	
+		_CAMERA_END()
 	
 	ENDIF
 
@@ -2073,6 +2077,7 @@ EVENT_END
 /*		RIVAL		N01R0502								  */
 /**************************************************************/
 EVENT_START		ev_n01r0502_rival_01
+	//未使用ラベルです、本編中にこのメッセージが表示される事はありません。
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_black )
 EVENT_END
 
@@ -2080,5 +2085,6 @@ EVENT_END
 /*		CHAMP		N01R0502								  */
 /**************************************************************/
 EVENT_START		ev_n01r0502_champion_01
+	//未使用ラベルです、本編中にこのメッセージが表示される事はありません。
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_champion )
 EVENT_END
