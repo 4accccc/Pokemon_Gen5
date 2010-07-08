@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-06-30T11:31:11"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-07-08T16:04:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-952" top="238" right="-247" bottom="693" maximized="no" rayout="Vertical2">
+	<dialog left="-971" top="153" right="-266" bottom="781" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="42" right="1024" bottom="440" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -643,8 +643,8 @@
 確認してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_03">
-		<comment>WIFI大会</comment>
+	<row id="WIFIMATCH_WIFI_STR_03" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">たいかいへ　さんかするのを
 やめますか？</language>
 		<language name="JPN_KANJI" width="256">大会へ　参加するのを
@@ -842,10 +842,10 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 
 	<row id="WIFIMATCH_WIFI_STR_17">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">たいかいへ　さんかするのを
-やめますか？</language>
-		<language name="JPN_KANJI" width="256">大会へ　参加するのを
-やめますか？</language>
+		<language name="JPN" width="256">たいかいの　とうろくを
+ちゅうだん　しますか？</language>
+		<language name="JPN_KANJI" width="256">大会の　登録を
+中断しますか？</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_18">
