@@ -1846,7 +1846,7 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
         _CHANGE_STATE(pWork, _PokeEvilChkEnd);
       }
     }
-    else if( (NHTTP_ERROR_BUSY != error) || (responce != 200))
+    else if( (NHTTP_ERROR_BUSY != error) && (responce != 200))
     {
 /*
 401	認証トークンが不正
