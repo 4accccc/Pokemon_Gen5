@@ -858,9 +858,12 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
     GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
     wk->yesnoWork = BmpMenu_YesNoSelectInit(  &yesno_data, 1, MENU_WINDOW_PAL_OFFSET, 0, wk->heapId );
-    // 現在の所持数を表示
-    print_carry_item( wk, wk->selectitem );
-    wk->seq = SHOPBUY_SEQ_SELECT_YESNO_WAIT;
+
+    // 技マシンじゃなかったら現在の所持数を表示
+    if(wk->type != SHOP_TYPE_WAZA){
+      print_carry_item( wk, wk->selectitem );
+      wk->seq = SHOPBUY_SEQ_SELECT_YESNO_WAIT;
+    }
     break;
 
   case SHOPBUY_SEQ_YESNO:
