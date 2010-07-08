@@ -109,6 +109,8 @@ typedef enum
 #define _SUBSCREEN_PALLET	(0xE)
 
 
+#define _CONNECT_COUNT_MAX (16)  //ユニオン関連のビーコンを集める
+
 // ２－６とDEFのパレットは＋１５
 // １，７、８のパレットは＋５
 
@@ -160,6 +162,18 @@ enum _IBMODE_SELECT {
 typedef void (StateFunc)(CG_WIRELESS_MENU* pState);
 typedef BOOL (TouchFunc)(int no, CG_WIRELESS_MENU* pState);
 
+/**
+ * @brief 接続人数収集構造体
+ */
+
+typedef struct{
+  u8 bssid[WM_SIZE_BSSID+2];
+  u16 downSec;
+  u16 connectNum;
+} _CONNECTNUM_INFO;
+
+
+
 
 struct _CG_WIRELESS_MENU {
   StateFunc* state;      ///< ハンドルのプログラム状態
@@ -179,7 +193,8 @@ struct _CG_WIRELESS_MENU {
   STRBUF* pStrBufTVTName;
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
   u32 subchar;
-
+  _CONNECTNUM_INFO aConnectNum[_CONNECT_COUNT_MAX];
+  
   int palace_state;
   int palace_num;
   u8 BackupPalette[16 * _PALETTE_CHANGE_NUM *2];
@@ -1505,6 +1520,86 @@ static void _modeReportWait(CG_WIRELESS_MENU* pWork)
   _CHANGE_STATE(pWork,_modeReportWait2);
 }
 
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   人数を集めるか
+ * @param   bssdesc   グループ情報
+ * @retval  none
+ */
+//-------------------------------------------------------------
+static void _ConnectNumCheck(void* pWk, WMBssDesc *bssdesc,int serviceNo,int num)
+{
+  int i;
+  CG_WIRELESS_MENU* pWork=pWk;
+
+  if((serviceNo < WB_NET_UNION) || (WB_NET_UNION_GURUGURU < serviceNo)){
+    return;  //ユニオン以外収集しない
+  }
+  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
+    if(pWork->aConnectNum[i].downSec!=0){
+      if(0==GFL_STD_MemComp(pWork->aConnectNum[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)){
+        pWork->aConnectNum[i].downSec  = DEFAULT_TIMEOUT_FRAME;
+        pWork->aConnectNum[i].connectNum = num;
+        return;
+      }
+    }
+  }
+  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
+    if(pWork->aConnectNum[i].downSec==0){
+      GFL_STD_MemCopy(bssdesc->bssid,pWork->aConnectNum[i].bssid,  WM_SIZE_BSSID);
+      pWork->aConnectNum[i].downSec = DEFAULT_TIMEOUT_FRAME;
+      pWork->aConnectNum[i].connectNum = num;
+      return;
+    }
+  }
+}
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   人数を集めるカウンタの計算
+ * @param   bssdesc   グループ情報
+ * @retval  none
+ */
+//-------------------------------------------------------------
+
+static void _downNumCheck(CG_WIRELESS_MENU* pWork)
+{
+  int i;
+
+  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
+    if(pWork->aConnectNum[i].downSec!=0){
+      pWork->aConnectNum[i].downSec--;
+    }
+  }
+}
+
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   ユニオンルーム施設の人数を集めるか
+ * @param   none
+ * @retval  none
+ */
+//-------------------------------------------------------------
+
+static int _GetUnionConnectNum(CG_WIRELESS_MENU* pWork)
+{
+  int i,num=0;
+
+  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
+    if(pWork->aConnectNum[i].downSec!=0){
+      num += pWork->aConnectNum[i].connectNum;
+    }
+  }
+  return num;
+}
+
+
+
 //--------------------------------------------------------------
 /**
  * G3D VBlank処理
@@ -1620,7 +1715,10 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
       pWork->dbw->aTVT.gameData = pWork->gamedata;
     }
     GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
+    //ユニオンルーム検査関数追加
+    NET_WHPIPE_SetBeaconCatchFunc(&_ConnectNumCheck,pWork);
   }
+
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
 
   return GFL_PROC_RES_FINISH;
@@ -1647,13 +1745,11 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
-  //  if(pWork->pAppWin){
-  //    APP_TASKMENU_WIN_Update( pWork->pAppWin );
-  //  }
 
   if(pWork->selectType != CG_WIRELESS_RETURNMODE_TV){
     _setTVTParentName(pWork);
   }
+  _downNumCheck(pWork);
 
   GFL_CLACT_SYS_Main();
 
@@ -1662,8 +1758,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
     pWork->bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(pWork->gamedata));
 
     pWork->unionnumOld = pWork->unionnum;
-    pWork->unionnum = NET_WHPIPE_GetUnionConnectNum();
-    OS_TPrintf("人数%d \n",pWork->unionnum);
+    pWork->unionnum = _GetUnionConnectNum(pWork);
   }
 
   GFL_TCBL_Main( pWork->pMsgTcblSys );
@@ -1705,10 +1800,10 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   if(!WIPE_SYS_EndCheck()){
     return GFL_PROC_RES_CONTINUE;
   }
+  NET_WHPIPE_SetBeaconCatchFunc(NULL,NULL);
 
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
-  //  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
 
   GFL_PROC_FreeWork(proc);
 
@@ -1744,9 +1839,6 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
-  //  if(pWork->pAppWin){
-  //    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-  //  }
 
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 

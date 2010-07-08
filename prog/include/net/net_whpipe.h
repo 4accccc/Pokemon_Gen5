@@ -565,6 +565,19 @@ extern void GFL_NET_WL_PauseScan(BOOL bPause);
 //-------------------------------------------------------------
 extern int NET_WHPIPE_GetUnionConnectNum(void);
 
+/// 接続や非接続時に呼ばれるコールバック定義
+typedef void (*PIPESetBeaconCatchFunc) (void* pWork,WMBssDesc *bssdesc,int serviceNo,int num);
+
+//-------------------------------------------------------------
+/**
+ * @brief   ビーコン収集関数セット
+ */
+//-------------------------------------------------------------
+extern void NET_WHPIPE_SetBeaconCatchFunc(PIPESetBeaconCatchFunc func, void* pWork);
+
+
+
+
 /////////////////////////////////////////////////////////////////////////
 //デバッグ用ルーチン
 #ifdef PM_DEBUG

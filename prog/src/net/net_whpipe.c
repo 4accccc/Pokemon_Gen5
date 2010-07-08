@@ -60,17 +60,6 @@ typedef struct{
 } _GF_BSS_DATA_INFO;
 
 
-/**
- * @brief 接続人数収集構造体
- */
-
-typedef struct{
-  u8 bssid[WM_SIZE_BSSID];
-  u8 downSec;
-  u8 connectNum;
-} _CONNECTNUM_INFO;
-
-
 //-------------------------------------------------------------
 // 定義
 //-------------------------------------------------------------
@@ -93,8 +82,6 @@ typedef void (*PTRStateFunc)(GFL_NETWL* pState);
 /// 時間取得
 typedef int (*PTRTimeGet)(void);
 
-#define _CONNECT_COUNT_MAX (1)
-
 
 //管理構造体定義
 struct _NET_WL_WORK {
@@ -102,11 +89,10 @@ struct _NET_WL_WORK {
 	PTRCommRecvLocalFunc recvCallback; ///< 受信コールバック解決用
 	WMBssDesc sBssDesc[SCAN_PARENT_COUNT_MAX];  ///< 親機の情報を記憶している構造体
 	u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
-//  _CONNECTNUM_INFO aConnectNum[_CONNECT_COUNT_MAX]; //接続表示の為だけのバッファ
+  PIPESetBeaconCatchFunc beaconCatchFunc; //
+  void* beaconCatchFuncWork;
   u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
 	PTRPARENTFIND_CALLBACK pCallback;
- // PTRTimeGet parentTime;
-//  PTRTimeGet childTime;
 	void* pUserWork;
 	u16 _sTgid;
 	u16 errCheckBitmap;      ///< このBITMAPが食い違うとエラーになる
@@ -312,91 +298,6 @@ static void DEBUG_MACDISP(char* msg,WMBssDesc *bssdesc)
 						bssdesc->bssid[3],bssdesc->bssid[4],bssdesc->bssid[5]);
 }
 
-//-------------------------------------------------------------
-/**
- * @brief   人数を集めるか
- * @param   bssdesc   グループ情報
- * @retval  none
- */
-//-------------------------------------------------------------
-static void _ConnectNumCheck(WMBssDesc *bssdesc,int serviceNo,int num)
-{
-#if 0
-  int i;
-
-  if((serviceNo < WB_NET_UNION) || (WB_NET_UNION_GURUGURU < serviceNo)){
-    return;  //ユニオン以外収集しない
-  }
-  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
-    if(_pNetWL->aConnectNum[i].downSec!=0){
-      if(0==GFL_STD_MemComp(_pNetWL->aConnectNum[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)){
-        _pNetWL->aConnectNum[i].downSec  = (DEFAULT_TIMEOUT_FRAME/60);
-        _pNetWL->aConnectNum[i].connectNum = num;
-        return;
-      }
-    }
-  }
-  for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
-    if(_pNetWL->aConnectNum[i].downSec==0){
-      GFL_STD_MemCopy(bssdesc->bssid,_pNetWL->aConnectNum[i].bssid,  WM_SIZE_BSSID);
-      _pNetWL->aConnectNum[i].downSec = (DEFAULT_TIMEOUT_FRAME/60);
-      _pNetWL->aConnectNum[i].connectNum = num;
-      return;
-    }
-  }
-#endif
-}
-
-
-//-------------------------------------------------------------
-/**
- * @brief   人数を集めるカウンタの計算
- * @param   bssdesc   グループ情報
- * @retval  none
- */
-//-------------------------------------------------------------
-
-static void _downNumCheck(void)
-{
-  int i;
-#if 0
-
-  if((OS_GetVBlankCount() % 60) == 0){
-    for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
-      if(_pNetWL->aConnectNum[i].downSec!=0){
-        _pNetWL->aConnectNum[i].downSec--;
-      }
-    }
-  }
-#endif
-}
-
-
-
-//-------------------------------------------------------------
-/**
- * @brief   ユニオンルーム施設の人数を集めるか
- * @param   none
- * @retval  none
- */
-//-------------------------------------------------------------
-
-int NET_WHPIPE_GetUnionConnectNum(void)
-{
-  int i,num=0;
-
-#if 0
-  if(_pNetWL){
-    for(i = 0; i < _CONNECT_COUNT_MAX ; i++){
-      if(_pNetWL->aConnectNum[i].downSec!=0){
-        num += _pNetWL->aConnectNum[i].connectNum;
-      }
-    }
-  }
-#endif
-  return num;
-}
-
 
 
 //-------------------------------------------------------------
@@ -448,7 +349,10 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 #endif
     return FALSE;
 	}
-  _ConnectNumCheck(bssdesc,pGF->serviceNo,pGF->connectNum);  //ユニオンの人数収集
+  if(_pNetWL->beaconCatchFunc){
+    _pNetWL->beaconCatchFunc(_pNetWL->beaconCatchFuncWork ,bssdesc, pGF->serviceNo, pGF->connectNum);  //ユニオンの人数収集
+  }
+
   if(pInit->beaconCompFunc){
 		if(FALSE == pInit->beaconCompFunc(serviceNo, pGF->serviceNo,pNetWL->pUserWork)){
 			return FALSE;   // サービスが異なる場合は拾わない
@@ -1163,8 +1067,6 @@ static void _stateProcess(u16 bitmap)
 	int state = WH_GetSystemState();
 	GFL_NETWL* pNetWL = _pNetWL;
 
-
-   _downNumCheck();
   if(!GFL_NET_WLIsError()){
     _funcBconDataChange();      // ビーコンの中身を書き換え中
   }
@@ -2326,3 +2228,15 @@ void GFL_NET_WL_PauseScan(BOOL bPause)
 
 }
 
+//-------------------------------------------------------------
+/**
+ * @brief   ビーコン収集関数セット
+ */
+//-------------------------------------------------------------
+void NET_WHPIPE_SetBeaconCatchFunc(PIPESetBeaconCatchFunc func, void* pWork)
+{
+  if(_pNetWL){
+    _pNetWL->beaconCatchFunc = func;
+    _pNetWL->beaconCatchFuncWork = pWork;
+  }
+}
