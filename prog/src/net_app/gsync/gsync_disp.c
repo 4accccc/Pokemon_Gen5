@@ -976,7 +976,7 @@ static void GSYNC_DISP_IconOff(ICON_MOVE_PARAM* pIconMove)
     GFL_CLACT_WK_SetDrawEnable(pIconMove->pIcon, FALSE );
   }
   pIconMove->pIcon=NULL;
-  pIconMove->end=TRUE;
+//  pIconMove->end=TRUE;    //ここでは、まだエンドにしない　100708 del Saito  BTS7584
 }
 
 
@@ -1070,8 +1070,21 @@ static void _PokemonMove(ICON_MOVE_PARAM* pIcon)
         GSYNC_DISP_IconOff(pIcon);
       }
     }
+#if 0        //100708 mod Saito  BTS7584
     pIcon->sinCount1 += 200 + GFUser_GetPublicRand(12);
     pIcon->sinCount2 -= 666 + GFUser_GetPublicRand(12);
+#else
+    else    //アイコンアクターがＮＵＬＬになって初めてエンドにする
+    {
+      pIcon->end = TRUE;
+    }
+    
+    if ( !pIcon->end )
+    {
+      pIcon->sinCount1 += 200 + GFUser_GetPublicRand(12);
+      pIcon->sinCount2 -= 666 + GFUser_GetPublicRand(12);
+    }
+#endif    
   }
 }
 
@@ -1105,7 +1118,7 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
       }
     }
   }
-  flg = FALSE;
+
   for(i = 0; i < DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
     k = i + DREAM_WORLD_DATA_MAX_ITEMBOX;
     if(pWork->aIconParam[k].on && !pWork->aIconParam[k].end){
@@ -1115,7 +1128,6 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
   }
   if(flg==FALSE){
     for(i = 0; i < DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
-      k = i + DREAM_WORLD_DATA_MAX_ITEMBOX;
       rand = GFUser_GetPublicRand(DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX) + DREAM_WORLD_DATA_MAX_ITEMBOX;
       if((pWork->aIconParam[rand].on==FALSE) && (pWork->aIconParam[rand].no != 0) ){
 
