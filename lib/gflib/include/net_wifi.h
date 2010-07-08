@@ -372,6 +372,7 @@ typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
 #define ERRORCODE_USER_TIMEOUT (STEPMATCH_SUCCESS+13)     //自分でWIFIエラーにセットするエラー  ユーザー指定タイムアウト
 
 #define ERRORCODE_NHTTP    (STEPMATCH_SUCCESS+14)     //NHTTPがエラーになったとき
+#define ERRORCODE_USER_WIFILOGOUT (STEPMATCH_SUCCESS+15)     //自分でWIFIエラーにセットするエラー  WIFIログアウト切断エラー
 
 
 #if GFL_NET_WIFI //wifi
