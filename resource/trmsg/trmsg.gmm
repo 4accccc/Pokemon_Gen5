@@ -5408,7 +5408,7 @@
 	<row id="TRID_BACKPACKERW_05_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">よる　さみしくなった　ときは
 ポケモンと　いっしょに　ねころんで▽
-ほしの　ままたきを　みるの▽
+ほしの　またたきを　みるの▽
 ほしクズが　ながれるのを　みるの▽
 そして　いきる　リズムを　あわせるの</language>
 		<language name="JPN_KANJI" width="216">……夜　寂しくなった　ときは
@@ -10649,12 +10649,12 @@
 	</row>
 
 	<row id="TRID_RIVAL_10_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……ふう！▼
+		<language name="JPN" width="216">……なるほどね！▼
 きみに　まけるとは
-まだまだ　みじゅく　だな</language>
-		<language name="JPN_KANJI" width="216">……ふう！▼
+まだまだ　みじゅく　だね</language>
+		<language name="JPN_KANJI" width="216">……なるほどね！▼
 きみに　負けるとは
-まだまだ　未熟だな</language>
+まだまだ　未熟だね</language>
 	</row>
 
 	<row id="TRID_RIVAL_11_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -10674,12 +10674,12 @@
 	</row>
 
 	<row id="TRID_RIVAL_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……ふう！▼
+		<language name="JPN" width="216">……なるほどね！▼
 きみに　まけるとは
-まだまだ　みじゅく　だな</language>
-		<language name="JPN_KANJI" width="216">……ふう！▼
+まだまだ　みじゅく　だね</language>
+		<language name="JPN_KANJI" width="216">……なるほどね！▼
 きみに　負けるとは
-まだまだ　未熟だな</language>
+まだまだ　未熟だね</language>
 	</row>
 
 	<row id="TRID_RIVAL_12_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -10699,12 +10699,12 @@
 	</row>
 
 	<row id="TRID_RIVAL_12_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……ふう！▼
+		<language name="JPN" width="216">……なるほどね！▼
 きみに　まけるとは
-まだまだ　みじゅく　だな</language>
-		<language name="JPN_KANJI" width="216">……ふう！▼
+まだまだ　みじゅく　だね</language>
+		<language name="JPN_KANJI" width="216">……なるほどね！▼
 きみに　負けるとは
-まだまだ　未熟だな</language>
+まだまだ　未熟だね</language>
 	</row>
 
 	<row id="TRID_SUPPORT_10_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -10816,10 +10816,10 @@
 
 	<row id="TRID_KINDERGARTENW_04_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ねえねえ　トレーナーさん！
-どんな　ポケモンさん　もってるか▽
+どんな　ポケモンさんと　いっしょか▽
 みせてちょーだい！▼</language>
 		<language name="JPN_KANJI" width="216">ねえねえ　トレーナーさん！
-どんな　ポケモンさん　もってるか▽
+どんな　ポケモンさんと　いっしょか▽
 みせてちょーだい！▼</language>
 	</row>
 
@@ -10858,12 +10858,12 @@
 	</row>
 
 	<row id="TRID_PARASOL_07_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">すなあらしを　さけるために
-かった　パラソルじゃ　ないのに……▼
+		<language name="JPN" width="216">すなあらしを　さけるための
+パラソル　じゃないのに……▼
 ああ！　４ばんどうろに
 わたしの　ナミダが　ふりそそぐ……</language>
-		<language name="JPN_KANJI" width="216">砂あらしを　避けるために
-買った　パラソルじゃ　ないのに……▼
+		<language name="JPN_KANJI" width="216">砂あらしを　避けるための
+パラソル　じゃないのに……▼
 ああ！　４番道路に
 わたしの　ナミダが　降り注ぐ……</language>
 	</row>
@@ -13937,9 +13937,9 @@ può accadere ancora di tutto!</language>
 
 	<row id="TRID_RIVAL_22_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……ありがとう
-きみは　ほんとうに　すごいよ</language>
+きみは　ほんとうに　すごいね</language>
 		<language name="JPN_KANJI" width="216">……ありがとう
-きみは　本当に　すごいよ</language>
+きみは　本当に　すごいね</language>
 	</row>
 
 	<row id="TRID_RIVAL_23_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -13958,9 +13958,9 @@ può accadere ancora di tutto!</language>
 
 	<row id="TRID_RIVAL_23_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……ありがとう
-きみは　ほんとうに　すごいよ</language>
+きみは　ほんとうに　すごいね</language>
 		<language name="JPN_KANJI" width="216">……ありがとう
-きみは　本当に　すごいよ</language>
+きみは　本当に　すごいね</language>
 	</row>
 
 	<row id="TRID_RIVAL_24_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -13979,9 +13979,9 @@ può accadere ancora di tutto!</language>
 
 	<row id="TRID_RIVAL_24_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……ありがとう
-きみは　ほんとうに　すごいよ</language>
+きみは　ほんとうに　すごいね</language>
 		<language name="JPN_KANJI" width="216">……ありがとう
-きみは　本当に　すごいよ</language>
+きみは　本当に　すごいね</language>
 	</row>
 
 	<row id="TRID_MINI_10_TRMSG_FIGHT_LOSE">
@@ -14352,7 +14352,7 @@ può accadere ancora di tutto!</language>
 
 	<row id="TRID_ELITEW_22_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">どう　たたかえば　こうかてきか
-ためしさせて　いただくわね！▼</language>
+ためさせて　いただくわね！▼</language>
 		<language name="JPN_KANJI" width="216">どう　戦えば　効果的か
 試させて　いただくわね！▼</language>
 	</row>
@@ -14384,7 +14384,7 @@ può accadere ancora di tutto!</language>
 
 	<row id="TRID_ELITEW_23_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">どう　たたかえば　こうかてきか
-ためしさせて　いただくわね！▼</language>
+ためさせて　いただくわね！▼</language>
 		<language name="JPN_KANJI" width="216">どう　戦えば　効果的か
 試させて　いただくわね！▼</language>
 	</row>
