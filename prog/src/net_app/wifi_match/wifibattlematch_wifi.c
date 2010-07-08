@@ -2264,6 +2264,7 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_CUP_MSG:
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_22, WBM_TEXT_TYPE_STREAM );
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_CUP_LIST );
     *p_seq  = SEQ_WAIT_MSG; 
@@ -3110,7 +3111,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
           DWC_RAPCOMMON_ResetSubHeapID();
 
-          GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
           Util_Matchinfo_Clear( p_wk );
 
           *p_seq  = SEQ_ERROR_END;
@@ -3744,6 +3744,7 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     ///	‘±sŠm”F
     //=====================================
   case SEQ_START_SELECT_CONTINUE_MSG:
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_37, WBM_TEXT_TYPE_STREAM );
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SELECT_CONTINUE );
