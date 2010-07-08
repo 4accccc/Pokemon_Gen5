@@ -49,10 +49,14 @@ typedef struct{
   void          *heapPtrSub;
   DWCAllocType  SubAllocType;  //サブヒープから確保するタイプ
   u32           subheap_alloc_cnt;  //メモリ取得数
+  u32           subheap_border_size; //
+  BOOL          is_leak_err;
+  HEAPID        auto_release_subheapID;
 } DWCRAPCOMMON_WORK;
 
 static DWCRAPCOMMON_WORK* pDwcRapWork = NULL;
 
+static void DWC_RAPCOMMON_ResetSubHeapIDCore(void);
 //----------------------------------------------------------------------------
 /**
  *	@brief  DWCのサブヒープを作成
@@ -66,6 +70,26 @@ static DWCRAPCOMMON_WORK* pDwcRapWork = NULL;
 //-----------------------------------------------------------------------------
 void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID heapID )
 { 
+  DWC_RAPCOMMON_SetSubHeapIDEx( SubAllocType, size, 0, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DWCのサブヒープを作成 取得サイズに上限設定をつける版
+ *	        nameがDWC_ALLOCTYPE_GSであってもマッチメイクとSCライブラリの
+ *	        ２つが来る場合がある。
+ *	        ここ無理やり切り分けるためにSCライブラリで大きいサイズが来たときのみ
+ *	        ヒープを切り分ける
+ *	        そのために上限設定をできる関数を用意しました
+ *
+ *	@param	DWCAllocType SubAllocType このヒープでからアロケートするタイプ
+ *	@param	size                      サブヒープのサイズ
+ *	@param  border                    この値以上のアロケートならば切り分ける
+ *	@param	heapID                    ヒープID
+ */
+//-----------------------------------------------------------------------------
+void DWC_RAPCOMMON_SetSubHeapIDEx( DWCAllocType SubAllocType, u32 size, u32 border_size, HEAPID heapID )
+{
   GF_ASSERT( pDwcRapWork != NULL );
   GF_ASSERT( pDwcRapWork->heapPtrSub == NULL );
   GF_ASSERT( pDwcRapWork->headHandleSub == NULL );
@@ -77,6 +101,7 @@ void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID hea
   NNS_FndSetGroupIDForExpHeap(
 	      pDwcRapWork->headHandleSub,DWCRAPCOMMON_SUBHEAP_GROUPID );
 
+  pDwcRapWork->subheap_border_size  = border_size;
 }
 
 //----------------------------------------------------------------------------
@@ -87,10 +112,6 @@ void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID hea
 void DWC_RAPCOMMON_ResetSubHeapID(void)
 {
   GF_ASSERT(pDwcRapWork);
-  NNS_FndDestroyExpHeap( pDwcRapWork->headHandleSub );
-  GFL_HEAP_FreeMemory( pDwcRapWork->heapPtrSub );
-  pDwcRapWork->headHandleSub  = NULL;
-  pDwcRapWork->heapPtrSub = NULL;
 
   //もし破棄した段階でメモリが残っていればエラーにする
   if( pDwcRapWork->subheap_alloc_cnt != 0 )
@@ -98,10 +119,54 @@ void DWC_RAPCOMMON_ResetSubHeapID(void)
     NAGI_Printf( "！！ヒープ強制エラー！！\n" );
     GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );
 
+
+    //ランダムマッチで、レポートの処理をサブヒープで切り分けています
+    //切り分けているときにリークが起こる場合
+    //マッチメイクのものがサブヒープに残っている可能性が高いです。
+    //ですので、リークが起こった場合はすぐに解放処理へ行かず、
+    //Wi-Fiの終了時にメインヒープとまとめてクリアします
+    pDwcRapWork->is_leak_err  = TRUE;
+
     //GF_ASSERT_MSG( 0, "SUB HEAP ERROR! LEAK!! count=%d\n", pDwcRapWork->subheap_alloc_cnt );
+  }
+  else
+  {
+    DWC_RAPCOMMON_ResetSubHeapIDCore();
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DWCのサブヒープ解放コア部分
+ */
+//-----------------------------------------------------------------------------
+static void DWC_RAPCOMMON_ResetSubHeapIDCore(void)
+{
+  if( pDwcRapWork->heapPtrSub )
+  {
+    NNS_FndDestroyExpHeap( pDwcRapWork->headHandleSub );
+    GFL_HEAP_FreeMemory( pDwcRapWork->heapPtrSub );
+    pDwcRapWork->headHandleSub  = NULL;
+    pDwcRapWork->heapPtrSub = NULL;
+
+    if( pDwcRapWork->auto_release_subheapID != DWC_RAPCOMMON_AUTORELEASE_HEAPID_NONE )
+    {
+      GFL_HEAP_DeleteHeap( pDwcRapWork->auto_release_subheapID );
+      pDwcRapWork->auto_release_subheapID = DWC_RAPCOMMON_AUTORELEASE_HEAPID_NONE;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サブヒープのReset時にヒープのデリートをする場合の設定
+ *
+ *	@param	HEAPID heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID heapID )
+{
+  pDwcRapWork->auto_release_subheapID = heapID;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -119,8 +184,10 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 
   void *ptr;
 
-  //サブヒープが登録されていてかつ、指定したアロケートタイプだったら
-  if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
+  //サブヒープが登録されていてかつ、指定したアロケートタイプ、かつ指定したサイズ以上ならば
+  if( (pDwcRapWork->headHandleSub != NULL ) 
+      && (name == pDwcRapWork->SubAllocType ) 
+      && (size > pDwcRapWork->subheap_border_size ) )
   { 
     {
     OSIntrMode  enable = OS_DisableInterrupts();
@@ -129,7 +196,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandleSub),name );
     }
     pDwcRapWork->subheap_alloc_cnt++;
-    NAGI_Printf( "sub heap alloc cnt=%d\n", pDwcRapWork->subheap_alloc_cnt );
+    NAGI_Printf( "sub heap alloc cnt=%d size=%d\n", pDwcRapWork->subheap_alloc_cnt, size );
   }
   else
   { 
@@ -234,12 +301,13 @@ void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size)
   pDwcRapWork->heapPtr = GFL_HEAP_AllocMemory(id, size-0x80);
   pDwcRapWork->headHandle = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtr + 31) / 32 * 32 ), size-0x80-64);
 
+  pDwcRapWork->auto_release_subheapID = DWC_RAPCOMMON_AUTORELEASE_HEAPID_NONE;
   
 }
 
 //==============================================================================
 /**
- * @brief   WIFIで使うHEAPIDをセットする
+ * @brief   WIFIで使うHEAPIDをリセットする
  * @param   id     変更するHEAPID
  * @retval  none
  */
@@ -248,11 +316,15 @@ void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size)
 void DWC_RAPCOMMON_ResetHeapID(void)
 {
   GF_ASSERT(pDwcRapWork);
-  GF_ASSERT( pDwcRapWork->heapPtrSub == NULL );
-  GF_ASSERT( pDwcRapWork->headHandleSub == NULL );
+
+  if( pDwcRapWork->is_leak_err == TRUE
+      || pDwcRapWork->heapPtrSub != NULL )
+  {
+    DWC_RAPCOMMON_ResetSubHeapIDCore();
+  }
 
   NNS_FndDestroyExpHeap( pDwcRapWork->headHandle );
-  GFL_HEAP_FreeMemory( pDwcRapWork->heapPtr  );
+  GFL_HEAP_FreeMemory( pDwcRapWork->heapPtr );
   GFL_HEAP_FreeMemory(pDwcRapWork);
   pDwcRapWork=NULL;
 }

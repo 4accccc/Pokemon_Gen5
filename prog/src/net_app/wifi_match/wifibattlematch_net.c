@@ -5868,6 +5868,8 @@ static void WIFIBATTLEMATCH_NETERR_SetScError( WIFIBATTLEMATCH_NETERR_WORK *p_wk
   DEBUG_NET_Printf( "!!!Sc Error!!!=%d line=%d\n", sc_err, line );
   p_wk->sc_err  = sc_err;
   p_wk->type    = WIFIBATTLEMATCH_NET_ERRORTYPE_SC;
+
+  GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_SYSTEM );
 }
 //----------------------------------------------------------------------------
 /**

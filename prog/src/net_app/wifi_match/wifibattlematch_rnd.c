@@ -1501,8 +1501,8 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_START_SESSION:
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
-    DEBUG_SC_HEAP_Increment
+    DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+    DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_RNDRATE, 0, NULL, FALSE );
     p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
@@ -1536,8 +1536,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-          DEBUG_SC_HEAP_Decrement
 
           GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
 
@@ -1548,8 +1546,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-          DEBUG_SC_HEAP_Decrement
           NAGI_Printf( "check3!\n" );
 
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
@@ -1561,8 +1557,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_END_SESSION:
     DWC_RAPCOMMON_ResetSubHeapID();
-    GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-    DEBUG_SC_HEAP_Decrement
     *p_seq  = SEQ_END_MATCHING_MSG;
     break;
 
@@ -1767,8 +1761,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   { 
   case SEQ_SC_HEAP_INIT:
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
-    DEBUG_SC_HEAP_Increment
+    DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+    DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
     *p_seq  = SEQ_START_MSG;
     break;
 
@@ -1813,8 +1807,6 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-          DEBUG_SC_HEAP_Decrement
           //相手に切断されていたら、録画を飛ばす
           if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
           { 
@@ -1828,8 +1820,6 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-          DEBUG_SC_HEAP_Decrement
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
           break;
         }
@@ -1839,8 +1829,6 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
-    GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-    DEBUG_SC_HEAP_Decrement
 
       //ここまで切断等がない場合はレコード登録
     {

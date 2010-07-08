@@ -3075,7 +3075,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_START_SESSION:
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+    DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+    DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_WIFICUP, 0, NULL, FALSE );
     p_wk->is_send_report  = FALSE;
@@ -3108,7 +3109,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
           GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
           Util_Matchinfo_Clear( p_wk );
@@ -3118,7 +3118,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //êÿífÇµÉçÉOÉCÉìÇ©ÇÁÇ‚ÇËíºÇµ
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
@@ -3131,7 +3130,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_END_MATCHING_MSG:
 
     DWC_RAPCOMMON_ResetSubHeapID();
-    GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
     GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_WAIT );
@@ -3404,7 +3402,9 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   { 
   case SEQ_SC_HEAP_INIT:
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+    DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+    DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
+
     *p_seq  = SEQ_START_NET_MSG;
     break;
   case SEQ_START_NET_MSG:
@@ -3449,13 +3449,11 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //êÿífÇµÉçÉOÉCÉìÇ©ÇÁÇ‚ÇËíºÇµ
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           DWC_RAPCOMMON_ResetSubHeapID();
-          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
           break;
         }
       }
@@ -3464,7 +3462,6 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
-    GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
     //Ç±Ç±Ç‹Ç≈êÿífìôÇ™Ç»Ç¢èÍçáÇÕÉåÉRÅ[Éhìoò^
     {
