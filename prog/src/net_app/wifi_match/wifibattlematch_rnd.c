@@ -79,6 +79,8 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 #endif //PM_DEBUG
 
+#define SCREPORT_TIMEOUT_IS_DISCONNECT
+
 //SCƒq[ƒvŠJ•ú‚ðŠÄŽ‹
 #ifdef DEBUG_SC_HEAP
 static int sc_heap_cnt  = 0;
@@ -1553,7 +1555,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           NAGI_Printf( "check1!\n" );
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
-#if 0
+#ifndef SCREPORT_TIMEOUT_IS_DISCONNECT
           DWC_RAPCOMMON_ResetSubHeapID();
 
           GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
@@ -1562,7 +1564,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           NAGI_Printf( "check2!\n" );
           *p_seq  = SEQ_ERROR_END;
           break;
-#endif 
+#endif
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
           DWC_RAPCOMMON_ResetSubHeapID();
           NAGI_Printf( "check3!\n" );
@@ -1826,7 +1828,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
           WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
-#if 0
+#ifndef SCREPORT_TIMEOUT_IS_DISCONNECT
           DWC_RAPCOMMON_ResetSubHeapID();
           //‘ŠŽè‚ÉØ’f‚³‚ê‚Ä‚¢‚½‚çA˜^‰æ‚ð”ò‚Î‚·
           if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )

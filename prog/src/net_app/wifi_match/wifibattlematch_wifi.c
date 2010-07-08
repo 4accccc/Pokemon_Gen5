@@ -81,6 +81,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define DEBUGWIN_USE
 #endif //PM_DEBUG
 
+#define SCREPORT_TIMEOUT_IS_DISCONNECT
 
 
 #define DEBUG_WIFICUP_Printf(...)  OS_TFPrintf( 2, __VA_ARGS__ );
@@ -3125,7 +3126,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
-#if 0
+
+#ifndef SCREPORT_TIMEOUT_IS_DISCONNECT
           DWC_RAPCOMMON_ResetSubHeapID();
 
           Util_Matchinfo_Clear( p_wk );
@@ -3465,7 +3467,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
           /* fallthrough */
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
-#if 0
+#ifndef SCREPORT_TIMEOUT_IS_DISCONNECT
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           DWC_RAPCOMMON_ResetSubHeapID();
           break;
