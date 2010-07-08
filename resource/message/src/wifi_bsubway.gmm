@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-07-07T23:39:18"/>
+	<create user="matsuda" host="W00142" date="2010-07-08T22:26:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,12 +274,12 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="133"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="204"/>
+		<comment position="1" width="234"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="290"/>
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1400" top="160" right="2105" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1757" top="78" right="2462" bottom="706" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="419" right="1280" bottom="817" visible="no"/>
+		<tag-palette left="807" top="419" right="1280" bottom="817" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -445,63 +445,135 @@
 	</row>
 
 	<row id="msg_wifi_bt_error_001">
-		<comment>サーバー運営終了時</comment>
+		<comment>サーバー運営終了時
+DPW_BT_STATUS_SERVER_STOP_SERVICE</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインは
 げんざい　メンテナンスちゅう　です[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち　
-ごりようください[BE:01:ページ切り替え（クリア）]</language>
+ごりようください[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２８１）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインは
 現在　メンテナンス中　です[BE:01:ページ切り替え（クリア）]
 しばらく　お待ちいただいたのち　
-ご利用ください[BE:01:ページ切り替え（クリア）]</language>
+ご利用ください[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２８１）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_002">
-		<comment>サーバーがいっぱいで送受信できなかったとき</comment>
+		<comment>サーバーがいっぱいで送受信できなかったとき
+（サーバーステータス）</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインは
 げんざい　こみあって　おります[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち
-ごりようください[BE:01:ページ切り替え（クリア）]</language>
+ごりようください[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２８２）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインは
 現在　混み合っております[BE:01:ページ切り替え（クリア）]
 しばらく　お待ちいただいたのち
-ご利用ください[BE:01:ページ切り替え（クリア）]</language>
+ご利用ください[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２８２）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_wifi_bt_error_002_01">
+		<comment>サーバーがいっぱいで送受信できなかったとき
+（DPW_BT_ERROR_SERVER_FULL）</comment>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインは
+げんざい　こみあって　おります[BE:01:ページ切り替え（クリア）]
+しばらく　おまちいただいたのち
+ごりようください[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２６１）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインは
+現在　混み合っております[BE:01:ページ切り替え（クリア）]
+しばらく　お待ちいただいたのち
+ご利用ください[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２６１）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_003">
-		<comment>サーバーログインに失敗した</comment>
+		<comment>サーバーログインに失敗した
+（DPW_BT_ERROR_SERVER_TIMEOUT）</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインに
 せつぞく　できませんでした[BE:01:ページ切り替え（クリア）]
-うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
+うけつけに　もどります
+（エラーコード：１３２６２）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインに
 接続できませんでした[BE:01:ページ切り替え（クリア）]
-受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
+受付に　もどります
+（エラーコード：１３２６２）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wifi_bt_error_004" back-color=",,,,,,#00ff00,,,,,,,,,,,">
-		<comment>サーバーからの応答が切れた</comment>
+	<row id="msg_wifi_bt_error_003_01">
+		<comment>通信不能エラー
+（DPW_BT_ERROR_DISCONNECTED）</comment>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインに
+せつぞく　できませんでした[BE:01:ページ切り替え（クリア）]
+うけつけに　もどります
+（エラーコード：１３２６６）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインに
+接続できませんでした[BE:01:ページ切り替え（クリア）]
+受付に　もどります
+（エラーコード：１３２６６）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_wifi_bt_error_004">
+		<comment>サーバーからの応答が切れた
+Dpw_Bt_CancelAsync
+（DPW_BT_ERROR_CANCEL）</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインとの　
 つうしんが　せつだん　されました[BE:01:ページ切り替え（クリア）]
-うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
+うけつけに　もどります
+（エラーコード：１３２６４）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインとの　
 通信が　切断されました[BE:01:ページ切り替え（クリア）]
-受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
+受付に　もどります
+（エラーコード：１３２６４）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_wifi_bt_error_004_01">
+		<comment>サーバーからの応答が切れた
+通信失敗エラー
+DPW_BT_ERROR_FAILURE</comment>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインとの　
+つうしんが　せつだん　されました[BE:01:ページ切り替え（クリア）]
+うけつけに　もどります
+（エラーコード：１３２６７）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインとの　
+通信が　切断されました[BE:01:ページ切り替え（クリア）]
+受付に　もどります
+（エラーコード：１３２６７）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_005">
-		<comment>サーバーがいっぱいで送受信できなかったとき</comment>
+		<comment>（DPW_BT_ERROR_ILLIGAL_REQUEST）</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉトレインに
-してい　できない　すうじです[BE:01:ページ切り替え（クリア）]</language>
+してい　できない　すうじです[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２６３）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉトレインに
-指定できない　数字です[BE:01:ページ切り替え（クリア）]</language>
+指定できない　数字です[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２６３）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wifi_bt_error_006">
+	<row id="msg_wifi_bt_error_006" back-color=",,,#ff8000,,,,,,,,,,,,,,">
 		<comment>不正検査サーバの通信エラー</comment>
 		<language name="JPN" width="216">つうしんエラーが
 はっせい　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">通信エラーが
 発生しました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_wifi_bt_error_007" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>通信致命的エラー</comment>
+		<language name="JPN" width="216">つうしんエラーが
+はっせいしました[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２６７）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">通信エラーが
+発生しました[BE:01:ページ切り替え（クリア）]
+（エラーコード：１３２６７）[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_wifi_bt_error_008">
+		<language name="JPN" width="216">ポケモンに　もんだいが　あるようです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">ポケモンに　問題が　あるようです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_cleanup_000">
