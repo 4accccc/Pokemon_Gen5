@@ -4119,6 +4119,7 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_RND_WORK *p_wk, BOOL i
 
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+        DWC_CloseAllConnectionsHard();
       }
     }
     break;

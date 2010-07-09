@@ -977,6 +977,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   { 
     btl_mode  += is_rnd_rate;
   }
+  DWC_CloseAllConnectionsHard();
 
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL_MODE, btl_mode );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL_RULE, btl_rule );
@@ -1060,6 +1061,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
   };
 
   //DEBUG_NET_Printf( "WiFiState %d \n", GFL_NET_StateGetWifiStatus() );
+  DEBUG_NET_Printf( "match seq %d \n", p_wk->seq_matchmake );
   switch( p_wk->seq_matchmake )
   { 
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_START:
@@ -1069,6 +1071,11 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
         GFL_NET_StateStartWifiRandomMatch_RateMode();
         GFL_NET_DWC_SetVChat( FALSE );
         p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START2;
+      }
+      else
+      {
+        GFL_NET_StateWifiMatchEnd(TRUE);
+        return WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_FAILED;
       }
     }
     break;
@@ -1228,7 +1235,6 @@ void WIFIBATTLEMATCH_NET_SetDisConnectForce( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
   GFL_NET_StateWifiMatchEnd(TRUE);
 }
-
 
 //----------------------------------------------------------------------------
 /**

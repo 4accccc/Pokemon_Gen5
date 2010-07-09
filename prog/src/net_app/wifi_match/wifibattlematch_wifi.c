@@ -2878,6 +2878,21 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       
       if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       {
+        //下記エラーでマッチングタイムアウトを行わず、ここで独自に行うのは、
+        //エラー画面を出さないためです
+        if( GFL_NET_IsInit() )
+        { 
+          const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+          if( cp_error->errorUser == ERRORCODE_TIMEOUT ||
+              cp_error->errorUser == ERRORCODE_DISCONNECT )
+          { 
+            *p_seq  = SEQ_START_CANCEL;
+            GFL_NET_StateResetError();
+            GFL_NET_StateClearWifiError();
+            NetErr_ErrWorkInit();
+          }
+        }
+
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
@@ -2907,18 +2922,25 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     {
       *p_seq  = SEQ_CHECK_DIRTY_POKE;
     }
+
+    //下記エラーでマッチングタイムアウトを行わず、ここで独自に行うのは、
+    //エラー画面を出さないためです
     if( GFL_NET_IsInit() )
     { 
       const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-      if( cp_error->errorUser == ERRORCODE_TIMEOUT )
+      if( cp_error->errorUser == ERRORCODE_TIMEOUT ||
+          cp_error->errorUser == ERRORCODE_DISCONNECT )
       { 
         *p_seq  = SEQ_START_CANCEL;
+        GFL_NET_StateResetError();
+        GFL_NET_StateClearWifiError();
+        NetErr_ErrWorkInit();
       }
     }
 
     //エラー
     switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
-    { 
+    {
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -5303,6 +5325,7 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL 
         p_wk->cancel_seq++;
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+        DWC_CloseAllConnectionsHard();
       }
     }
     break;
