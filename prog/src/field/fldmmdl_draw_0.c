@@ -1458,7 +1458,17 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
     if( jiki_f )
     {
       FIELDMAP_WORK* fieldWork = MMDLSYS_GetFieldMapWork( MMDL_GetMMdlSys( mmdl ));
-      
+     
+      /*
+       *  通常はMmdlのDraw関数が呼ばれるタイミングでは、FIELD_PLAYERは初期化済みなのだが
+       *  フィールド復帰時に、自機の形態復帰が必要なケース(波乗り自機で釣りエンカウト後など)では、
+       *  fieldmap.c->mainSeqFunc_setup()->FIELD_PLAYER_Create()の中で
+       *  MMDLSYS_UpdateProc()が呼ばれて、field_player初期化真っ最中にこのDraw関数が呼ばれる。
+       *
+       *  この時アクセスしてしまうとfield_playerはNULLなので、NULLチェックが必要
+       *
+       *  100709 by kagaya & iwasawa
+       */
       if( FIELDMAP_CheckFieldPlayer( fieldWork )){
         FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
       
