@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-07-08T21:16:01"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-07-09T19:03:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="325"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -672,22 +672,22 @@
 
 	<row id="dwc_message_0007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>専用ウインドウ</comment>
-		<language name="JPN" width="192">ほんとうに　こうしん　しても
+		<language name="JPN" width="192">Ｗｉ－Ｆｉコネクションに　せつぞくして
+Ｗｉ－Ｆｉユーザーじょうほうを
+こうしん　します。ほんとうに
+こうしん　しても　よろしいですか？
+ちゅうい！　ともだちてちょうに
+とうろくした　ともだち　すべてと
+ランダムマッチの　レーティングモードの
+せいせきが　きえて　しまいます</language>
+		<language name="JPN_KANJI" width="192">Ｗｉ－Ｆｉコネクションに　接続して
+Ｗｉ－Ｆｉユーザー情報を　更新します
+本当に　更新しても　
 よろしいですか？
-
-ちゅうい
-ともだちてちょうに　とうろくした
-ともだち　すべてと　ランダムマッチの　
-レーティングモードの　せいせきが
-きえて　しまいます</language>
-		<language name="JPN_KANJI" width="192">本当に　更新しても
-よろしいですか？
-
-注意
-ともだちてちょうに　登録した
-友達　すべてと　ランダムマッチの
-レーティングモードの　成績が
-消えてしまいます</language>
+注意！　ともだちてちょうに
+登録した　友達　すべてと
+ランダムマッチの　レーティングモードの
+成績が　消えてしまいます</language>
 	</row>
 
 	<row id="dwc_message_0008">
