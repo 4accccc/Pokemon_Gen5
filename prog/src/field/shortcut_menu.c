@@ -900,8 +900,11 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT && p_wk->mode == SCROLL_MOVE_NORMAL )
   { 
-    PMSND_PlaySE( SHORTCUTMENU_SND_SE_DECIDE );
-    is_move_change  = TRUE;
+    // ショートカットが１つ以上の時、挿入モードに移行できる
+    if(BmpListParamGet( p_wk->p_list, BMPMENULIST_ID_COUNT )>1){
+      PMSND_PlaySE( SHORTCUTMENU_SND_SE_DECIDE );
+      is_move_change  = TRUE;
+    }
   }
 
   //モード切替
