@@ -878,9 +878,24 @@ void GTSNEGO_MESSAGE_DispCountryInfo(GTSNEGO_MESSAGE_WORK* pWork, int msg)
 static void _SetCountry(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus)
 {
   GFL_BMPWIN* pwin;
+  int nation,nation2;
+  int area,area2;
 
-  WORDSET_RegisterCountryName( pWork->pWordSet, 0, MyStatus_GetMyNation(pMyStatus));
-  WORDSET_RegisterLocalPlaceName( pWork->pWordSet, 1, MyStatus_GetMyNation(pMyStatus),MyStatus_GetMyArea(pMyStatus));
+  nation = MyStatus_GetMyNation(pMyStatus);
+  area = MyStatus_GetMyArea(pMyStatus);
+  nation2 = WIFI_COUNTRY_GetNGTestCountryCode(nation, area, MyStatus_GetRegionCode(pMyStatus));
+  area2 = WIFI_COUNTRY_GetNGTestLocalCode(nation, area, MyStatus_GetRegionCode(pMyStatus));
+
+  OS_TPrintf("%d %d %d %d \n",nation,area,nation2, area2);
+  
+  if((nation == nation2) && (area == area2)){
+    WORDSET_RegisterCountryName( pWork->pWordSet, 0, MyStatus_GetMyNation(pMyStatus));
+    WORDSET_RegisterLocalPlaceName( pWork->pWordSet, 1, MyStatus_GetMyNation(pMyStatus),MyStatus_GetMyArea(pMyStatus));
+  }
+  else{
+    WORDSET_RegisterCountryName( pWork->pWordSet, 0, 0);
+    WORDSET_RegisterLocalPlaceName( pWork->pWordSet, 1, 0, 0);
+  }
 
   GFL_MSG_GetString( pWork->pMsgData, GTSNEGO_039, pWork->pExStrBuf );
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );

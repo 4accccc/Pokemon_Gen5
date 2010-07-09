@@ -2234,31 +2234,6 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 }
 
 
-#if 0
-
-//WIFIP2PMATCH_VCTEND_COMMSEND2
-static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
-{
-  wk->VChatModeOff = FALSE;
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_VCTEND, WB_NET_WIFICLUB)){
-
-WIFIP2PMATCH_RECONECTING_WAIT_PRE
-
-
-if(GFL_NET_HANDLE_IsTime(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_DISCONNECT_END, WB_NET_WIFICLUB);
-
-
-      GFL_NET_SetAutoErrorCheck(FALSE);
-      GFL_NET_SetNoChildErrorCheck(FALSE);
-
-
-      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
-      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
-      wk->timer = _RECONECTING_WAIT_TIME;
-      _CHANGESTATE(wk, WIFIP2PMATCH_RECONECTING_WAIT);
-#endif
-
-
 //------------------------------------------------------------------
 /**
  * $brief   ログイン接続中  WIFIP2PMATCH_CONNECTING_INIT
@@ -5436,8 +5411,7 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
 
   wk->cancelEnableTimer--;
   if(wk->cancelEnableTimer < 0  ){
-
-    MCR_MOVEOBJ* p_npc;                    //BTS7577 しか
+    MCR_MOVEOBJ* p_npc;                    //BTS7577 
     int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
     p_npc = MCRSYS_GetMoveObjWork( wk, friendNo );
     // NPCを元に戻す
@@ -5446,10 +5420,6 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
     }
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT);
 
-    OS_TPrintf("報告してください-------\n");//BTS7577
-//    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
-//    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
   }
   else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_FAIL ){
     _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());

@@ -66,6 +66,7 @@
 #include "waza_tool/wazano_def.h"
 #include "field/field_skill_check.h"
 
+#include "savedata/wifihistory_local.h"
 
 //#define _ENDTABLE  {192-32, 192, 256-32, 256}     //終了
 //#define _SEARCHTABLE  {192-32, 192, 0, 32}        //検索ボタン
@@ -987,6 +988,7 @@ static void _recvUNData(const int netID, const int size, const void* pData, void
 {
   POKEMON_TRADE_WORK *pWork = pWk;
   const u8* pRecvData = pData;
+  UNITEDNATIONS_SAVE aUN;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
@@ -996,7 +998,24 @@ static void _recvUNData(const int netID, const int size, const void* pData, void
   }
   { //国連データ格納
     WIFI_HISTORY* pWH = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(pWork->pGameData));
-    UNDATAUP_Update(pWH, (UNITEDNATIONS_SAVE*)pData);
+    UNITEDNATIONS_SAVE* pUN = (UNITEDNATIONS_SAVE*)pData;
+    int nation,nation2;
+    int area,area2;
+
+    GFL_STD_MemCopy( &aUN , pUN, sizeof(UNITEDNATIONS_SAVE));
+
+    nation = MyStatus_GetMyNation(&aUN.aMyStatus);
+    area = MyStatus_GetMyArea(&aUN.aMyStatus);
+    nation2 = WIFI_COUNTRY_GetNGTestCountryCode(nation, area, MyStatus_GetRegionCode(&aUN.aMyStatus));
+    area2 = WIFI_COUNTRY_GetNGTestLocalCode(nation, area, MyStatus_GetRegionCode(&aUN.aMyStatus));
+
+    if((nation == nation2) && (area == area2)){
+      MyStatus_SetMyNationArea( &aUN.aMyStatus, nation, area);
+    }
+    else{
+      MyStatus_SetMyNationArea( &aUN.aMyStatus, 0, 0);
+    }
+    UNDATAUP_Update(pWH, (UNITEDNATIONS_SAVE*)&aUN);
   }
 }
 
