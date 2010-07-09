@@ -1336,7 +1336,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       return ;
     }
 
-    //マッチングキャンセル処理
     {
       WIFIBATTLEMATCH_NET_MATCHMAKE_STATE state = WIFIBATTLEMATCH_NET_WaitMatchMake( p_wk->p_net );
       //マッチング終了待ち
@@ -1729,7 +1728,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
