@@ -511,6 +511,10 @@ static void SetFormSeeFlag( ZUKAN_SAVEDATA * zw, u32 mons, u32 sex, BOOL rare, u
 			form = 0;
 			max  = FORMNO_655_MAX;
 		}else{
+			// “o˜^‚Å‚«‚È‚¢ƒtƒHƒ‹ƒ€‚Ìê‡
+			if( form >= ZUKANSAVE_GetFormMax( mons ) ){
+				form = 0;
+			}
 			max  = 1;
 		}
 
@@ -747,6 +751,10 @@ void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u
 				for( j=0; j<FormTable[i][1]; j++ ){
 					reset_bit( (u8 *)zw->draw_form[0], cnt+j );
 					reset_bit( (u8 *)zw->draw_form[1], cnt+j );
+				}
+				// “o˜^‚Å‚«‚È‚¢ƒtƒHƒ‹ƒ€‚Ìê‡
+				if( form >= FormTable[i][1] ){
+					form = 0;
 				}
 				if( rare == TRUE ){
 					set_bit( (u8 *)zw->draw_form[COLOR_RARE], cnt+form );
