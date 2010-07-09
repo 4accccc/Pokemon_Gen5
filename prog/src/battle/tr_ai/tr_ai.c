@@ -21,6 +21,7 @@
 #include "battle/btl_pokeparam.h"
 #include "battle/btl_sideeff.h"
 #include "battle/btl_util.h"
+#include "battle/btlv/btlv_effect.h"
 #include "../btl_server_flow.h"
 
 #include "item/item.h"
@@ -3812,6 +3813,7 @@ static  int get_tokusei( TR_AI_WORK* taw, int side, BtlPokePos pos )
   else if( ( side == CHECK_DEFENCE ) || ( side == CHECK_DEFENCE_FRIEND ) )
   {
     //特性の発現を見ている場合はそれを取得
+    taw->look_tokusei[ pos ] = BTLV_EFFECT_GetLookTokusei( pos );
     if( taw->look_tokusei[ pos ] )
     {
       have_tokusei = taw->look_tokusei[ pos ];
@@ -3826,31 +3828,30 @@ static  int get_tokusei( TR_AI_WORK* taw, int side, BtlPokePos pos )
       {
         //特性の発現を見ていない場合はパーソナルで持ちうる特性から取得
         int monsno = BPP_GetMonsNo( bpp );
-        int formno = BPP_GetValue( bpp, BPP_TOKUSEI );
+        int formno = BPP_GetValue( bpp, BPP_FORM );
         int tokusei1;
         int tokusei2;
+        int tokusei3;
+        int tokusei[ 3 ];
+        int cnt = 0;
 
         tokusei1 = POKETOOL_GetPersonalParam( monsno, formno, POKEPER_ID_speabi1 );
         tokusei2 = POKETOOL_GetPersonalParam( monsno, formno, POKEPER_ID_speabi2 );
+        tokusei3 = POKETOOL_GetPersonalParam( monsno, formno, POKEPER_ID_speabi3 );
 
-        //特性を2種類持っているポケモンは、可能性を探る
-        if( ( tokusei1 ) && ( tokusei2 ) )
-        {
-          //どちらにも一致しないなら持っていないことにする
-          if( ( tokusei1 != have_tokusei ) && ( tokusei2 != have_tokusei ) )
-          {
-            have_tokusei = 0;
-          }
+        if( tokusei1 )
+        { 
+          tokusei[ cnt++ ] = tokusei1;
         }
-        //1種類しかもっていないなら決めうち
-        else if( tokusei1 )
-        {
-          have_tokusei = tokusei1;
+        if( tokusei2 )
+        { 
+          tokusei[ cnt++ ] = tokusei2;
         }
-        else
-        {
-          have_tokusei = tokusei2;
+        if( tokusei3 )
+        { 
+          tokusei[ cnt++ ] = tokusei3;
         }
+        have_tokusei = tokusei[ GFL_STD_MtRand( cnt ) ];
       }
     }
   }

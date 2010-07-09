@@ -26,6 +26,7 @@
 #include "battle/battle.h"
 #include "battle/app/b_bag.h"
 
+#include "poke_tool/tokusyu_def.h"
 #include "waza_tool/wazadata.h"
 #include "system/palanm.h"
 
@@ -364,6 +365,8 @@ extern  void              BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe 
 extern  void              BTLV_EFFECT_SetCameraWorkStop( void );
 extern  void              BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type );
 extern  void              BTLV_EFFECT_SetFieldAnmStopOnce( void );
+extern  void              BTLV_EFFECT_SetLookTokusei( BtlvMcssPos pos, int tokusei );
+extern  int               BTLV_EFFECT_GetLookTokusei( BtlvMcssPos pos );
 extern  void              BTLV_EFFECT_StopAllPMVoice( void );
 extern  void              BTLV_EFFECT_ClearOldStatusEffectBuffer( void );
 

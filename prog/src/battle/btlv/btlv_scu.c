@@ -3894,6 +3894,9 @@ static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash )
   }
   tokwin->fFlash = fFlash;
   tokwin->seq = 0;
+
+  //特性の発現を記憶する
+   BTLV_EFFECT_SetLookTokusei( pos, tokusei );
 }
 // 表示更新
 static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
@@ -4082,6 +4085,8 @@ static void tokwin_renew_start( TOK_WIN* tokwin, BtlPokePos pos )
     tokwin_update_cgr( tokwin );
   }
   tokwin->seq = 0;
+  //特性の発現を記憶する
+   BTLV_EFFECT_SetLookTokusei( pos, tokusei );
 }
 static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
 {

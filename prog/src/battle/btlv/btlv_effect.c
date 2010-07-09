@@ -122,6 +122,8 @@ struct _BTLV_EFFECT_WORK
 
   int                     trainer_index[ BTLV_MCSS_POS_MAX ];
 
+  int                     tokusei[ BTLV_MCSS_POS_MAX ];
+
   BTLV_EFFECT_CWE         camera_work_execute;
   int                     camera_work_seq;
   int                     camera_work_wait;
@@ -477,9 +479,6 @@ void  BTLV_EFFECT_Main( void )
   BTLV_MCSS_Main( bew->bmw );
   BTLV_STAGE_Main( bew->bsw );
   BTLV_FIELD_Main( bew->bfw );
-#ifdef DEBUG_ONLY_FOR_sogabe
-//    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_BTL_VIEW );
-#endif
   BTLV_CAMERA_Main( bew->bcw );
   BTLV_GAUGE_Main( bew->bgw );
 
@@ -699,6 +698,8 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
 void BTLV_EFFECT_Hinshi( BtlvMcssPos target )
 {
   BTLV_EFFECT_AddByPos( target, BTLEFF_HINSHI );
+  //”­Œ»‚µ‚½“Á«‚ðƒNƒŠƒA‚µ‚Ä‚¨‚­
+  BTLV_EFFECT_SetLookTokusei( target, TOKUSYU_NULL );
 }
 
 //=============================================================================================
@@ -2102,6 +2103,26 @@ void  BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE type )
 void  BTLV_EFFECT_SetFieldAnmStopOnce( void )
 { 
   BTLV_FIELD_SetAnmStopOnce( bew->bfw );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ”­Œ»‚µ‚½“Á«‚ð‹L‰¯‚·‚é
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_EFFECT_SetLookTokusei( BtlvMcssPos pos, int tokusei )
+{ 
+  bew->tokusei[ pos ] = tokusei;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ”­Œ»‚µ‚½“Á«‚ðŽæ“¾‚·‚é
+ */
+//-----------------------------------------------------------------------------
+int  BTLV_EFFECT_GetLookTokusei( BtlvMcssPos pos )
+{ 
+  return bew->tokusei[ pos ];
 }
 
 //----------------------------------------------------------------------------
