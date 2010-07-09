@@ -1386,7 +1386,7 @@ void POKEMONTRADE_MESSAGE_CancelButtonDelete(POKEMON_TRADE_WORK* pWork,int bar,i
 
 
 const static GFL_UI_TP_HITTBL _tp_data[]={
-  { 24*8-32 , 24*8, 128-32, 128+32},
+  { 24*8-32 , 24*8, 128-64, 128+64},
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
