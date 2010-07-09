@@ -1141,13 +1141,22 @@ static int MainSeq_ArrangePokeMenuRcv( BOX2_SYS_WORK * syswk )
 		default:
 			break;
 		}
-		if( syswk->app->poke_free_err == 1 ){
-			syswk->app->poke_free_err = 0;
-			if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-				BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYPOKE, FALSE );
+		if( syswk->app->menu_rcv_blend == 1 ){
+			syswk->app->menu_rcv_blend = 0;
+			if( syswk->dat->callMode == BOX_MODE_ITEM ){
+				if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+					BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, FALSE );
+				}else{
+					BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
+					BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, FALSE );
+				}
 			}else{
-				BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
-				BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+				if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+					BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYPOKE, FALSE );
+				}else{
+					BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
+					BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+				}
 			}
 		}
 		BOX2BGWFRM_PokeMenuInSet( syswk->app->wfrm );
@@ -5793,6 +5802,13 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 				syswk->app->sub_seq = 1;
 				return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
 			}
+			if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+				BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
+			}else{
+				BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYPOKE, TRUE );
+			}
+			BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
+			syswk->app->menu_rcv_blend = 1;
 			BOX2BGWFRM_PokeMenuOff( syswk->app->wfrm );
 			BOX2BMP_ItemGetCheckMsgPut( syswk, item, BOX2BMPWIN_ID_MSG1 );
 			if( syswk->dat->callMode == BOX_MODE_ITEM ){
@@ -5809,12 +5825,30 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 
 	case 1:		// ƒ[ƒ‹‚ðŽ‚Á‚Ä‚¢‚é
 		PMSND_PlaySE( SE_BOX2_WARNING );
+/*
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
+		}else{
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYPOKE, TRUE );
+		}
+		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
+		syswk->app->menu_rcv_blend = 1;
+*/
 		BOX2BMP_MailGetErrorPut( syswk, BOX2BMPWIN_ID_MSG1 );
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 		return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 
 	case 2:		// ƒ^ƒ}ƒS
 		PMSND_PlaySE( SE_BOX2_WARNING );
+/*
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
+		}else{
+			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYPOKE, TRUE );
+		}
+		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
+		syswk->app->menu_rcv_blend = 1;
+*/
 		BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_EGG, BOX2BMPWIN_ID_MSG1 );
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 		return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
@@ -6198,7 +6232,7 @@ static int MainSeq_PokeFreeInit( BOX2_SYS_WORK * syswk )
 			if( BOX2MAIN_BattlePokeCheck( syswk, pos ) == FALSE ){
 				PMSND_PlaySE( SE_BOX2_WARNING );
 				BOX2BMP_PokeFreeMsgPut( syswk, BOX2BMP_MSGID_POKEFREE_ONE, BOX2BMPWIN_ID_MSG1 );
-				syswk->app->poke_free_err = 1;
+				syswk->app->menu_rcv_blend = 1;
 				syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 				return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 			}
@@ -6208,7 +6242,7 @@ static int MainSeq_PokeFreeInit( BOX2_SYS_WORK * syswk )
 			if( ITEM_CheckMail( item ) == TRUE ){
 				PMSND_PlaySE( SE_BOX2_WARNING );
 				BOX2BMP_PokeSelectMsgPut( syswk, 0, BOX2BMP_MSGID_PARTYOUT_MAIL, BOX2BMPWIN_ID_MSG1 );
-				syswk->app->poke_free_err = 1;
+				syswk->app->menu_rcv_blend = 1;
 				syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 				return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 			}
@@ -6223,7 +6257,7 @@ static int MainSeq_PokeFreeInit( BOX2_SYS_WORK * syswk )
 			if( PPP_Get( ppp, ID_PARA_tamago_flag, NULL ) != 0 ){
 				PMSND_PlaySE( SE_BOX2_WARNING );
 				BOX2BMP_PokeFreeMsgPut( syswk, BOX2BMP_MSGID_POKEFREE_EGG, BOX2BMPWIN_ID_MSG1 );
-				syswk->app->poke_free_err = 1;
+				syswk->app->menu_rcv_blend = 1;
 				syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 				return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 			}

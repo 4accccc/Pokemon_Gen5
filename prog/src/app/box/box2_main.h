@@ -361,7 +361,7 @@ typedef struct {
 	u16	get_item;						// 取得アイテム
 	u16	get_item_init_pos;	// アイテム取得位置
 
-	u8	poke_free_err;			// 逃がすが実行できないとき
+	u8	menu_rcv_blend;			// メニューに戻るときに半透明の設定を戻す
 
 	u8	mode_chg_flg;				// ドラッグ中のモード切替有効無効フラグ 0 = 有効, 1 = 無効
 
