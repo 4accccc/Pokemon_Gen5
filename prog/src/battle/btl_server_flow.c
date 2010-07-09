@@ -1803,6 +1803,25 @@ static ACTION_ORDER_WORK* ActOrderTool_SearchByPokeID( BTL_SVFLOW_WORK* wk, u8 p
   }
   return NULL;
 }
+// 指定ポケモンのアクション内容データポインタを取得（指定ポインタ以降から）
+static ACTION_ORDER_WORK* ActOrderTool_SearchNextByPokeID( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* start, u8 pokeID )
+{
+  u32 i;
+  for(i=0; i<wk->numActOrder; ++i)
+  {
+    if( &(wk->actOrder[i]) == (ACTION_ORDER_WORK*)(start) ){
+      ++i;
+      break;
+    }
+  }
+  for( ; i<wk->numActOrder; ++i)
+  {
+    if( BPP_GetID(wk->actOrder[i].bpp) == pokeID ){
+      return &(wk->actOrder[i]);
+    }
+  }
+  return NULL;
+}
 // 未実行の指定ワザ使用アクション内容データポインタを取得
 static ACTION_ORDER_WORK* ActOrderTool_SearchByWazaID( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex )
 {
@@ -2166,6 +2185,7 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
         if( lv_poke <= lv_border ){
           return SABOTAGE_NONE;
         }
+
         rand = BTL_CALC_GetRand( (lv_poke + lv_border + 1) );
         if( rand < lv_border ){
           return SABOTAGE_NONE;
@@ -2237,33 +2257,46 @@ static BOOL scEvent_CheckInemuriFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID, u8 targetPokeID )
 {
   ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, intrPokeID );
-  if( actOrder && (actOrder->fDone == FALSE) )
+
+  if( actOrder )
   {
-    // アンコール状態で違うワザを選んでいた場合は割り込み不可
-    //（とんぼがえり入れ替えなどの場合に起こりうる）
+
+    // 既に処理済みの「ローテーション動作」を見つけてしまった場合、次のアクションをサーチする
+    if( (actOrder->fDone)
+    &&  (BTL_ACTION_GetAction(&actOrder->action) == BTL_ACTION_ROTATION)
+    ){
+      actOrder = ActOrderTool_SearchNextByPokeID( wk, actOrder, intrPokeID );
+    }
+
+    if( actOrder->fDone == FALSE )
     {
-      WazaID encoreWaza = checkEncoreWazaChange( actOrder->bpp, &(actOrder->action) );
-      if( encoreWaza != WAZANO_NULL )
+      // アンコール状態で違うワザを選んでいた場合は割り込み不可
+      //（とんぼがえり入れ替えなどの場合に起こりうる）
+      {
+        WazaID encoreWaza = checkEncoreWazaChange( actOrder->bpp, &(actOrder->action) );
+        if( encoreWaza != WAZANO_NULL )
+        {
+          return FALSE;
+        }
+      }
+
+      // ローテーション動作は割り込み不可
+      //（ローテーション入場イベントをこの時点で呼び出さなければならず副作用が見積もりきれない）
+      if( BTL_ACTION_GetAction(&actOrder->action) == BTL_ACTION_ROTATION )
       {
         return FALSE;
       }
-    }
 
-    // ローテーション動作は割り込み不可
-    //（ローテーション入場イベントをこの時点で呼び出さなければならず副作用が見積もりきれない）
-    if( BTL_ACTION_GetAction(&actOrder->action) == BTL_ACTION_ROTATION )
-    {
-      return FALSE;
-    }
-
-    {
-      BtlPokePos  targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
-      BTL_N_Printf( DBGSTR_SVFL_ActIntr, actOrder, BPP_GetID(actOrder->bpp));
-      BTL_ACTION_ChangeFightTargetPos( &actOrder->action, targetPos );
-      ActOrder_Proc( wk, actOrder );
-      return TRUE;
+      {
+        BtlPokePos  targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
+        BTL_N_Printf( DBGSTR_SVFL_ActIntr, actOrder, BPP_GetID(actOrder->bpp));
+        BTL_ACTION_ChangeFightTargetPos( &actOrder->action, targetPos );
+        ActOrder_Proc( wk, actOrder );
+        return TRUE;
+      }
     }
   }
+
   return FALSE;
 }
 //--------------------------------------------------------------
