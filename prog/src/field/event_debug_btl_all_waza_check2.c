@@ -132,8 +132,9 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
   switch( *seq )
   {
     case SEQ_INIT:
-      wk->count = 1;//35;
-      OS_TPrintf("トリプル全方向全技チェック開始！\n");
+      wk->count = 1;
+//      OS_TPrintf("トリプル全方向全技チェック開始！\n");
+      OS_TPrintf("トリプル ペンドラーで全技チェック開始！\n");
       *seq = SEQ_SETUP;
       break;
 
@@ -153,7 +154,8 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
         POKEMON_PARAM* pp;
         pp = PokeParty_GetMemberPointer( mp, i );
 
-        PP_ChangeMonsNo( pp, 1+i );
+        PP_ChangeMonsNo( pp, MONSNO_PENDORAA );
+//        PP_ChangeMonsNo( pp, 1+i );
         PP_SetWazaPos( pp, wk->count, 0 );
       }
     }
@@ -181,6 +183,7 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
           POKEMON_PARAM* pp;
           pp = PokeParty_GetMemberPointer( ep, i );
           PP_SetWazaPos( pp, wk->count, 0 );
+          PP_ChangeMonsNo( pp, MONSNO_PENDORAA );
         }
       }
 
@@ -222,7 +225,7 @@ static GMEVENT_RESULT BtlAllWazaCheck2( GMEVENT* event, int* seq, void* wk_adrs 
       break;
 
     case SEQ_EXIT:
-      OS_TPrintf("トリプル全方向全技チェック終了！\n");
+      OS_TPrintf("HUDSON チェック終了！\n");
       return GMEVENT_RES_FINISH;
     default : GF_ASSERT(0);
   }

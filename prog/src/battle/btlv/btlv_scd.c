@@ -774,7 +774,8 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     {
       // ˆê’èƒ^[ƒ“‚Å“¦‚°‚é
       if( ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) && wkHudson.TrunCnt >= 2 ) ||
-          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 6*5+1 ) ||
+//          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 6*5+1 ) ||
+          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 6*1+1 ) ||
           ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) && wkHudson.TrunCnt >= 0 ) ||
           ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) && wkHudson.TrunCnt >= 4 ) ||
           ( HUDSON_IsTestCode( HUDSON_TESTCODE_POKE_CHANGE ) && wkHudson.TrunCnt >= 6*3+1 ) )
