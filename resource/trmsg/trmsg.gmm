@@ -3406,10 +3406,10 @@
 	</row>
 
 	<row id="TRID_FANM_02_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">カツ『こうふん　しすぎた！▼
+		<language name="JPN" width="216">ヒロ『こうふん　しすぎた！▼
 シン『なんという　こうふん！
 まさに　エクスタシー！</language>
-		<language name="JPN_KANJI" width="216">カツ『興奮しすぎた！▼
+		<language name="JPN_KANJI" width="216">ヒロ『興奮しすぎた！▼
 シン『なんという　興奮！
 まさに　エクスタシー！</language>
 	</row>
@@ -8438,13 +8438,13 @@
 
 	<row id="TRID_TANPAN_12_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">サッカーせんしゅ　や
-バスケットの　せんしゅて　いいよなー▼
+バスケットの　せんしゅ　いいよなー▼
 だって　たんぱん……　じゃなくて
 ハーフパンツ　なんだぜ▼
 だけど　やきゅうや　アメフトの
 ユニフォームも　かっこいいよなー！　</language>
 		<language name="JPN_KANJI" width="216">サッカー選手や
-バスケットの　選手て　いいよなー▼
+バスケットの選手　いいよなー▼
 だって　たんぱん……　じゃなくて
 ハーフパンツ　なんだぜ▼
 だけど　野球や　アメフトの
@@ -8570,9 +8570,9 @@
 
 	<row id="TRID_WAITRESS_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">こういうとこでは　たくさん
-みずを　のむといいわ！</language>
+みずを　のむと　いいわ！</language>
 		<language name="JPN_KANJI" width="216">こういうとこでは　たくさん
-水を　飲むといいわ！</language>
+水を　飲むと　いいわ！</language>
 	</row>
 
 	<row id="TRID_WORKER1_07_TRMSG_FIGHT_START">
@@ -8604,8 +8604,8 @@
 	</row>
 
 	<row id="TRID_WORKER2_17_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ふるきずに　ズキズキきやがる……</language>
-		<language name="JPN_KANJI" width="216">古傷に　ズキズキ来やがる……</language>
+		<language name="JPN" width="216">ふるきずに　ズキズキ　きやがる……</language>
+		<language name="JPN_KANJI" width="216">古傷に　ズキズキ　来やがる……</language>
 	</row>
 
 	<row id="TRID_WORKER2_17_TRMSG_FIGHT_AFTER">
@@ -8688,11 +8688,11 @@
 	</row>
 
 	<row id="TRID_FANM_06_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">カツ『つよい　キミに
+		<language name="JPN" width="216">ヒロ『つよい　キミに
 ラブゲーム……▼
 シン『まったく　かてない
 ラブゲーム……</language>
-		<language name="JPN_KANJI" width="216">カツ『強い　キミに
+		<language name="JPN_KANJI" width="216">ヒロ『強い　キミに
 ラブゲーム……▼
 シン『まったく　かてない
 ラブゲーム……</language>
@@ -8748,11 +8748,11 @@
 	</row>
 
 	<row id="TRID_FANM_07_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">カツ『シューー……
+		<language name="JPN" width="216">ヒロ『シューー……
 プスプス……▼
 シン『フォルトーーッ！
 サーブ　しっぱい！！</language>
-		<language name="JPN_KANJI" width="216">カツ『シューー……
+		<language name="JPN_KANJI" width="216">ヒロ『シューー……
 プスプス……▼
 シン『フォルトーーッ！
 サーブ失敗！！</language>
