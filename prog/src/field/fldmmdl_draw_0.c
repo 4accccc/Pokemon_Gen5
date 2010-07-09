@@ -1439,13 +1439,6 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   u16 zone_id;
   s16 gx;
   const OBJCODE_PARAM* obj_prm;
-#ifdef DEBUG_ONLY_FOR_iwasawa
-#if 0
-  static float test_z = -2.1, test_diff = 0.1;
-  static BOOL updown_f = 0;
-  static BOOL cont_f = 0;
-#endif
-#endif
 
   obj_prm = MMDL_GetOBJCodeParam( mmdl );
   
@@ -1457,61 +1450,20 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   zone_id = MMDL_GetZoneID( mmdl );
 
   {
-    FIELDMAP_WORK* fieldWork = MMDLSYS_GetFieldMapWork( MMDL_GetMMdlSys( mmdl ));
-    FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
-    MMDL* player_mmdl = FIELD_PLAYER_GetMMdl( player );
-    jiki_f = ( mmdl == player_mmdl );
-    comact_f = ( MMDL_GetOBJID( mmdl ) == MMDL_ID_COMMACTOR );
+    u16 obj_id = MMDL_GetOBJID( mmdl );
+    
+    jiki_f = ( obj_id == MMDL_ID_PLAYER );
+    comact_f = ( obj_id == MMDL_ID_COMMACTOR );
 
     if( jiki_f ){
-      updown_anm_f = ( FIELD_PLAYER_GetMoveValue( player ) != PLAYER_MOVE_VALUE_STOP );
-    }
-  }
-#ifdef DEBUG_ONLY_FOR_iwasawa
-#if 0
-  if(work->actID == 1){
-    int key = GFL_UI_KEY_GetTrg();
-    int cont = GFL_UI_KEY_GetCont();
-    int flag = 0;
-    if( cont_f ){
-      key = cont;
-    }
-    if( key & PAD_BUTTON_R){
-      test_z += test_diff;
-      flag = 1;
-    }else if( key & PAD_BUTTON_L){
-      test_z -= test_diff;
-      flag = 1;
-    }
-    key = GFL_UI_KEY_GetTrg();
-    if( key & PAD_BUTTON_START ){
-      test_z = 0;
-      flag = 1;
-    }else if( key & PAD_BUTTON_SELECT){
-      test_z = -2.1;
-      flag = 1;
-    }
-    if( cont & PAD_BUTTON_B ){
-      if(key & PAD_KEY_UP){
-        test_diff *= 10;
-        flag = 1;
-      }else if(key & PAD_KEY_DOWN){
-        test_diff /= 10;
-        flag = 1;
+      FIELDMAP_WORK* fieldWork = MMDLSYS_GetFieldMapWork( MMDL_GetMMdlSys( mmdl ));
+      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
+      
+      if( player != NULL ){
+        updown_anm_f = ( FIELD_PLAYER_GetMoveValue( player ) != PLAYER_MOVE_VALUE_STOP );
       }
     }
-    if( key & PAD_BUTTON_B ){
-      updown_f ^= 1;
-    }
-    if( key & PAD_BUTTON_Y){
-      cont_f ^= 1;
-    }
-    if(flag){
-      OS_Printf("test_z = %f Act = %d diff = %f\n",test_z,work->actID,test_diff);
-    }
   }
-#endif
-#endif
   if( pause_f ||
       (ofs.y > MMDL_POKE_OFS_UPDOWN_ANM && obj_prm->draw_proc_no != MMDL_DRAWPROCNO_TPOKE_FLY)){
     /*
@@ -1542,7 +1494,7 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
     }
   
     //自機とのフリップ対策
-    vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;//FX32_CONST(test_z);
+    vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;
   }
   //向きからX描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
