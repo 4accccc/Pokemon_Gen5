@@ -737,7 +737,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
               if( factor->rmReserveFlag )
               {
                 BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor->factorType, factor );
-                if( next_factor->existFlag == FALSE ){
+                if( (next_factor != NULL) && (next_factor->existFlag == FALSE) ){
                   next_factor = factor->next;
                 }
                 BTL_EVENT_FACTOR_Remove( factor );
