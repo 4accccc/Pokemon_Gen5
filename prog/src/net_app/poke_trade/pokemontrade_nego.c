@@ -1768,9 +1768,9 @@ static void _PokeEvilChkEnd(POKEMON_TRADE_WORK* pWork)
 
   if( GFL_NET_SendData(pNet, _NETCMD_EVILCHECK,1,&pWork->evilCheck[0])){
     GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_EVIL,WB_NET_TRADE_SERVICEID );
-    if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
-      GFL_NET_DWC_pausevchat(FALSE);
-    }
+ //   if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
+//      GFL_NET_DWC_pausevchat(FALSE);
+//    }
     _CHANGE_STATE(pWork, _PokeEvilChkEnd2);
   }
 }
@@ -1951,9 +1951,9 @@ static void _PokeEvilChkPre(POKEMON_TRADE_WORK* pWork)
   WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
-  if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
-    GFL_NET_DWC_pausevchat(TRUE);
-  }
+  //if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
+//    GFL_NET_DWC_pausevchat(TRUE);
+//  }
 
   _CHANGE_STATE(pWork, _PokeEvilChkPre1);
 }

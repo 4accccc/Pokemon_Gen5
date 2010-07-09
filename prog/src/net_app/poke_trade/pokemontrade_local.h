@@ -1071,7 +1071,7 @@ extern BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_2D_AlphaSet(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE2D_IconAllGray(POKEMON_TRADE_WORK* pWork,BOOL bGray);
-extern void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
+extern void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork, int count );
 
 
 extern void POKE_GTS_InitFaceIcon(POKEMON_TRADE_WORK* pWork);
@@ -1088,7 +1088,7 @@ extern void POKE_GTS_InitEruptedIcon(POKEMON_TRADE_WORK* pWork,int faceNo, int i
 extern void POKE_GTS_InitEruptedIconResource(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_ReleaseMainObj(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_InitMainObj(POKEMON_TRADE_WORK* pWork);
-extern void PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork  );
+extern BOOL PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork,int index  );
 extern void IRC_POKETRADE3D_SetColorTex( POKEMON_TRADE_WORK* pWork);
 
 extern void POKEMONTRADE_StartPokeSelectSixButton(POKEMON_TRADE_WORK* pWork,int index);

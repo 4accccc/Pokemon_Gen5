@@ -114,18 +114,23 @@ static void PokemonTrade_PartyPokeDotPut( POKEMON_TRADE_WORK* pWork, POKEPARTY* 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork  )
+BOOL PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork, int index  )
 {
   int i;
 
-  
-  for(i = 0; i < pWork->BOX_TRAY_MAX; i++){
-    PokemonTrade_TrayPokeDotPut( pWork, i, &pWork->FriendPokemonCol[0][i*BOX_MAX_POS] );
+  for(i = index; i < pWork->BOX_TRAY_MAX+1; i++){
+    if(i == pWork->BOX_TRAY_MAX){
+      PokemonTrade_PartyPokeDotPut(pWork, pWork->pMyParty,
+                                   &pWork->FriendPokemonCol[0][BOX_MAX_TRAY*BOX_MAX_POS] );
+      return TRUE;
+    }
+    else{
+      PokemonTrade_TrayPokeDotPut( pWork, i, &pWork->FriendPokemonCol[0][i*BOX_MAX_POS] );
+    }
+    break;
   }
-  PokemonTrade_PartyPokeDotPut(pWork, pWork->pMyParty,
-                               &pWork->FriendPokemonCol[0][BOX_MAX_TRAY*BOX_MAX_POS] );
 
-
+#if 0
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     for(i = 0; i < pWork->BOX_TRAY_MAX; i++){
       PokemonTrade_TrayPokeDotPut( pWork, i, &pWork->FriendPokemonCol[1][i*BOX_MAX_POS] );
@@ -133,8 +138,8 @@ void PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork  )
     PokemonTrade_PartyPokeDotPut(pWork, pWork->pMyParty,
                                  &pWork->FriendPokemonCol[1][BOX_MAX_TRAY*BOX_MAX_POS] );
   }
-
-
+#endif
+  return FALSE;
   
 }
 

@@ -1185,7 +1185,6 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     for(j=0;j<_LING_LINENO_MAX;j++){
       for(i=0;i<BOX_VERTICAL_NUM;i++){
         GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
-//        GFL_CLACT_WK_SetDrawEnable(pWork->searchIcon[j][i],FALSE);
         pWork->pokeIconMarkFlg[j][i]=FALSE;
       }
     }
@@ -1278,16 +1277,19 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
  * @param	POKEMON_TRADE_WORK ƒ[ƒN
  */
 //--------------------------------------------------------------------------------------------
-void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
+void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork,int count )
 {
   int i,j,id,k=0;
   NNSG2dCharacterData* pCharData;
   void* pMem;
   ARCHANDLE * pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, pWork->heapID );
 
-  pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*(BOX_POKESET_MAX+TEMOTI_POKEMAX) );
-
-  for(i = 0;i < BOX_MAX_TRAY+1;i++){
+  if(count == 0){
+    pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*(BOX_POKESET_MAX+TEMOTI_POKEMAX) );
+  }
+  
+  for(i = count;i < BOX_MAX_TRAY+1;i++){
+    k = i * BOX_MAX_POS;
     for( j = 0 ; j < BOX_MAX_POS ; j++ ){
       if(BOX_MAX_TRAY == i){
         if(j==TEMOTI_POKEMAX){
@@ -1309,15 +1311,9 @@ void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
         GFL_HEAP_FreeMemory(pMem);
       }
     }
+    break;
   }
-
-
-
-
-  
   GFL_ARC_CloseDataHandle(pokeicon_ah);
-
-
 }
 
 //--------------------------------------------------------------------------------------------

@@ -130,7 +130,7 @@ static void _recvThreePokemon3Box(const int netID, const int size, const void* p
 static void _recvSelectPokemonBox(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvPokemonDataReturn(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
-static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork);
+static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork,int index);
 
 static void CalcLineAfterLR(POKEMON_TRADE_WORK* pWork, const BOOL bChange); //20100630 add Saito
 
@@ -2394,7 +2394,7 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
     POKE_GTS_InitEruptedIconResource(pWork);
 
     if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
-      GFL_NET_DWC_pausevchat(FALSE);
+//      GFL_NET_DWC_pausevchat(FALSE);
     }
     
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_01, pWork->pMessageStrBuf );
@@ -2481,18 +2481,23 @@ static void _touchState_BeforeTimeing14(POKEMON_TRADE_WORK* pWork)
 
 static void _touchState_BeforeTimeing13(POKEMON_TRADE_WORK* pWork)
 {
-  _createEasyPokeInfo(pWork);  //ポケモン情報
-  _CHANGE_STATE(pWork, _touchState_BeforeTimeing14);
+  OS_TPrintf("xxx++ %d \n",OS_GetVBlankCount());
+  _createEasyPokeInfo(pWork, pWork->anmCount-1);  //ポケモン情報
+
+  if(pWork->anmCount >= BOX_MAX_TRAY){
+    _CHANGE_STATE(pWork, _touchState_BeforeTimeing14);
+  }
 }
 
 static void _touchState_BeforeTimeing12(POKEMON_TRADE_WORK* pWork)
 {
-  if(!WIPE_SYS_EndCheck()){
-    return;
+#if PM_DEBUG
+  OS_TPrintf("++++ %d \n",OS_GetVBlankCount());
+#endif
+  if(PokemonTrade_SetMyPokeColor(pWork, pWork->anmCount-1)){  //色設定
+    pWork->anmCount=0;
+    _CHANGE_STATE(pWork, _touchState_BeforeTimeing13);
   }
-
-  PokemonTrade_SetMyPokeColor(pWork);  //色設定
-  _CHANGE_STATE(pWork, _touchState_BeforeTimeing13);
 }
 
 //トレイの数＋メールボックスの状態を送る
@@ -2504,16 +2509,31 @@ static void _touchState_BeforeTimeing1Send(POKEMON_TRADE_WORK* pWork)
     sdata[0] = pWork->BOX_TRAY_MAX;
     sdata[1] = _IsMailBoxFull(pWork);
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_FRIENDBOXNUM, 2, &sdata)){
+    pWork->anmCount=0;
       _CHANGE_STATE(pWork, _touchState_BeforeTimeing12);
     }
   }
   else{
     pWork->friendBoxNum = pWork->BOX_TRAY_MAX;
     pWork->FriendBoxScrollNum = pWork->friendBoxNum*_BOXTRAY_MAX + _TEMOTITRAY_MAX - 80;
+    pWork->anmCount=0;
     _CHANGE_STATE(pWork, _touchState_BeforeTimeing12);
   }
 }
 
+
+//両者タイミングそろえ
+static void _touchState_BeforeTimeing12Send(POKEMON_TRADE_WORK* pWork)
+{
+  POKEMONTRADE_PokeIconCgxLoad( pWork, pWork->anmCount-1 );
+#if PM_DEBUG
+  OS_TPrintf("++**++ %d \n",OS_GetVBlankCount());
+#endif
+  if(pWork->anmCount > BOX_MAX_TRAY+1){
+    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
+    _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
+  }
+}
 
 //両者タイミングそろえ
 static void _touchState_BeforeTimeing11Send(POKEMON_TRADE_WORK* pWork)
@@ -2521,12 +2541,12 @@ static void _touchState_BeforeTimeing11Send(POKEMON_TRADE_WORK* pWork)
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_FIRSTBOTH,WB_NET_TRADE_SERVICEID)){
     GFL_NET_SetAutoErrorCheck(TRUE);
     GFL_NET_SetNoChildErrorCheck(TRUE);
-    POKEMONTRADE_PokeIconCgxLoad( pWork );
-    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
-
-    _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
+    pWork->anmCount=0;
+    _CHANGE_STATE(pWork,_touchState_BeforeTimeing12Send);
   }
 }
+
+
 
 static void _touchState_BeforeTimeing1W(POKEMON_TRADE_WORK* pWork)
 {
@@ -2550,9 +2570,9 @@ static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
   GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
 
 
-  if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
-    GFL_NET_DWC_pausevchat(TRUE);
-  }
+//  if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
+//    GFL_NET_DWC_pausevchat(TRUE);
+//  }
   
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
@@ -4123,7 +4143,7 @@ static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
  * @retval       none
  */
 //------------------------------------------------------------------------------
-static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork)
+static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork, int index)
 {
   int i,j;
   int monsno;
@@ -4131,24 +4151,28 @@ static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork)
   POKE_EASY_INFO *info;
 
   NOZOMU_Printf("===CreateInfo====\n");
-  GFL_STD_MemClear(pWork->pokeInfo,sizeof(pWork->pokeInfo));
-  info = pWork->pokeInfo;
   // 全ボックスの簡易ポケモン情報を作成する　add Saito
   //手持ち
-  for (i=0;i<6;i++)
-  {
-    ppp = IRCPOKEMONTRADE_GetPokeDataAddress( pWork->pBox, pWork->BOX_TRAY_MAX, i, pWork);
-    if(!ppp) continue;
-    if(PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) == 0 ) continue;
-    monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
-    if( monsno == 0 ) continue;
-    info[i].monsno = monsno;
-    info[i].formno = PPP_Get(ppp,ID_PARA_form_no,NULL);
-    info[i].sex = PPP_Get(ppp,ID_PARA_sex,NULL);
+  info = pWork->pokeInfo;
+
+  if(index == 0){
+    GFL_STD_MemClear(pWork->pokeInfo,sizeof(pWork->pokeInfo));
+
+    for (i=0;i<6;i++)
+    {
+      ppp = IRCPOKEMONTRADE_GetPokeDataAddress( pWork->pBox, pWork->BOX_TRAY_MAX, i, pWork);
+      if(!ppp) continue;
+      if(PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) == 0 ) continue;
+      monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
+      if( monsno == 0 ) continue;
+      info[i].monsno = monsno;
+      info[i].formno = PPP_Get(ppp,ID_PARA_form_no,NULL);
+      info[i].sex = PPP_Get(ppp,ID_PARA_sex,NULL);
+    }
   }
 
   //ボックス
-  for (i=0;i<BOX_MAX_TRAY;i++)
+  for (i = index  ; i < BOX_MAX_TRAY ;i++)
   {
     for (j=0;j<BOX_MAX_COLUMN*BOX_MAX_RAW;j++)
     {
@@ -4163,6 +4187,7 @@ static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork)
       info[idx].formno = PPP_Get(ppp,ID_PARA_form_no,NULL);
       info[idx].sex = PPP_Get(ppp,ID_PARA_sex,NULL);
     }
+    break;
   }
 }
 
