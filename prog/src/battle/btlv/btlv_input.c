@@ -818,7 +818,7 @@ static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw );
-static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, const u8* move_tbl, int hit );
+static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, const u8* move_tbl, int hit, BOOL henshin_flag );
 static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt );
@@ -1804,7 +1804,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   }
 
   hit = hit_tp = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
-  hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, NULL, hit );
+  hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, NULL, hit, biw->henshin_flag );
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
@@ -1996,12 +1996,14 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   if( biw->waruagaki_flag == TRUE )
   {
     hit = GFL_UI_TP_HitTrg( RotateTouchDataWaruagaki.hit_tbl );
-    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchDataWaruagaki, RotateKeyDataWaruagaki[ biw->rotate_scr ], NULL, hit );
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchDataWaruagaki, RotateKeyDataWaruagaki[ biw->rotate_scr ], NULL, hit,
+                               BPP_HENSIN_Check( biw->rotate_bpp[ biw->rotate_scr ] ) );
   }
   else
   {
     hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
-    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], RotateMoveTbl, hit );
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], RotateMoveTbl, hit,
+                               BPP_HENSIN_Check( biw->rotate_bpp[ biw->rotate_scr ] ) );
   }
   if( hit != GFL_UI_TP_HIT_NONE )
   {
@@ -4843,13 +4845,14 @@ static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw )
 /**
  * @brief   キー操作チェック
  *
- * @param[in] biw     システム管理構造体のポインタ
- * @param[in] tp_tbl  タッチパネルテーブル（カーソルの表示位置決定に使用）
- * @param[in] key_tbl キー操作テーブル
- * @param[in] hit     キータッチがあったかどうか？
+ * @param[in] biw           システム管理構造体のポインタ
+ * @param[in] tp_tbl        タッチパネルテーブル（カーソルの表示位置決定に使用）
+ * @param[in] key_tbl       キー操作テーブル
+ * @param[in] hit           キータッチがあったかどうか？
+ * @param[in] henshin_flag  へんしんしているかどうか？
  */
 //--------------------------------------------------------------
-static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, const u8* move_tbl, int hit )
+static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, const u8* move_tbl, int hit, BOOL henshin_flag )
 {
   int trg   = GFL_UI_KEY_GetTrg();
   int cont  = GFL_UI_KEY_GetCont();
@@ -4918,9 +4921,17 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
         if( ( hit < 4 ) &&
             ( cont & PAD_BUTTON_L ) &&
             ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) &&
-            ( biw->waruagaki_flag == TRUE ) )
+          ( ( henshin_flag == TRUE ) || ( biw->waruagaki_flag == TRUE ) ) )
         {
-          //ローテーション選択でLボタンを押しながらわるあがきを選択したなら何もしない
+          //ローテーション選択でLボタンを押しながらわるあがきを選択したか変身中なら何もしない
+          ;
+        }
+        else if( ( hit < 4 ) &&
+                 ( cont & PAD_BUTTON_L ) &&
+                 ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) &&
+                 ( henshin_flag == TRUE ) )
+        { 
+          //技選択で変身中にLボタンを押しながら技選択したなら何もしない
           ;
         }
         else if( biw->button_exist[ hit ] == TRUE )
