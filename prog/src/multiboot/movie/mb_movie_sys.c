@@ -563,22 +563,26 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
           {
             if( MB_MOVIE_CheckMoviePoke( work->boxPoke[i][j] ) == TRUE )
             {
-              const u32 itemNo = PPP_Get( work->boxPoke[i][j] , ID_PARA_item , NULL );
-              if( itemNo != 0 )
+              MB_UTIL_CHECK_PLAY_RET ret = MB_UTIL_CheckPlay_PalGate( work->boxPoke[i][j] , work->cardType );
+              if( ret == MUCPR_OK )
               {
-                MB_DATA_AddItem( work->dataWork , itemNo );
-                PPP_Put( work->boxPoke[i][j] , ID_PARA_item , 0 );
+                const u32 itemNo = PPP_Get( work->boxPoke[i][j] , ID_PARA_item , NULL );
+                if( itemNo != 0 )
+                {
+                  MB_DATA_AddItem( work->dataWork , itemNo );
+                  PPP_Put( work->boxPoke[i][j] , ID_PARA_item , 0 );
+                }
+                MB_COMM_AddSendPokeData( work->commWork , work->boxPoke[i][j] );
+                //元データのpppを消す
+                MB_DATA_ClearBoxPPP( work->dataWork , i , j );
+                PPP_Clear( work->boxPoke[i][j] );
+                setNum++;
+                if( setNum >= MB_CAP_POKE_NUM )
+                {
+                  break;
+                }
+                MB_TPrintf("Trans![%2d:%2d]\n",i,j);
               }
-              MB_COMM_AddSendPokeData( work->commWork , work->boxPoke[i][j] );
-              //元データのpppを消す
-              MB_DATA_ClearBoxPPP( work->dataWork , i , j );
-              PPP_Clear( work->boxPoke[i][j] );
-              setNum++;
-              if( setNum >= MB_CAP_POKE_NUM )
-              {
-                break;
-              }
-              MB_TPrintf("Trans![%2d:%2d]\n",i,j);
             }
           }
           if( setNum >= MB_CAP_POKE_NUM )

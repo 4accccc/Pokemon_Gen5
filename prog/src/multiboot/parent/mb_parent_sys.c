@@ -2111,7 +2111,7 @@ static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
     RECORD_Add(record,RECID_CAPTURE_POKE,pokeNum);
     RECORD_Add(record,RECID_DAYCNT_CAPTURE,pokeNum);
   }
-
+  MB_TPrintf( "Num[%d]\n",pokeNum );
   for( i=0;i<pokeNum;i++ )
   {
     POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );
