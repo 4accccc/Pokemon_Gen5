@@ -238,8 +238,8 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK
   u32 i;
   for(i=0; i<NELEMS(setup->playerStatus); ++i)
   {
-    // ここのチェック順番は変えてはいけません
-    // （btl_setup.cでサブウェイトレーナーにplayerStatusを設定している）
+    // ここのチェック順番（トレーナーデータ->プレイヤーデータ）は変えてはいけません
+    // （btl_setup.cでサブウェイトレーナーにplayerStatusを設定しているので）
     if( setup->tr_data[i] ){
       store_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
       rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
@@ -251,6 +251,7 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK
     else{
       rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_NONE;
     }
+    rec->clientStatus[i].voiceLevel = setup->perappVoiceLevel[ i ];
   }
 }
 //----------------------------------------------------------------------------------
@@ -277,6 +278,8 @@ static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WO
       restore_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
       break;
     }
+
+    setup->perappVoiceLevel[i] = rec->clientStatus[i].voiceLevel;
   }
 }
 

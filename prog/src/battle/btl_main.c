@@ -257,6 +257,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk );
 static BtlResult checkWinner( BTL_MAIN_MODULE* wk );
 static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
 static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTATUS* playerStatus );
+static void Bspstore_PerappVoiceLevel( BTL_MAIN_MODULE* wk, u8 clientID );
 static void Bspstore_RecordData( BTL_MAIN_MODULE* wk );
 static u8 CommClientRelation( u8 myClientID, u8 targetClientID );
 static void Kentei_ClearField( BATTLE_SETUP_PARAM* sp );
@@ -356,6 +357,15 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->regularMoney =  BTL_CALC_WinMoney( setup_param );
       wk->bonusMoney = 0;
       wk->loseMoney = 0;
+
+      // 録画再生時以外、ペラップボイスレベルは初期化しておく
+      if( wk->setupParam->fRecordPlay == FALSE )
+      {
+        u32 i;
+        for(i=0; i<BTL_CLIENT_MAX; ++i){
+          wk->setupParam->perappVoiceLevel[i] = 0;
+        }
+      }
 
 
       BTL_ESCAPEINFO_Clear( &wk->escapeInfo );
@@ -712,8 +722,29 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
   if( !BTL_MAIN_IsRecordPlayMode(wk) )
   {
     PERAPVOICE* pVoice = SaveData_GetPerapVoice( GAMEDATA_GetSaveControlWork(sp->gameData) );
+    u32 i;
     wk->perappVoice[ BTL_CLIENT_PLAYER ] = PERAPVOICE_AllocWork( wk->heapID );
     PERAPVOICE_CopyData( wk->perappVoice[ BTL_CLIENT_PLAYER ], pVoice );
+
+    wk->setupParam->perappVoiceLevel[ BTL_CLIENT_PLAYER ] = BTL_MAIN_GetPerappVoicePower( wk, BTL_CLIENT_PLAYER );
+  }
+  else
+  {
+    u8 voiceLevel[ BTL_CLIENT_MAX ];
+    u8 relationID;
+    u32 i;
+
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      relationID = CommClientRelation( wk->myClientID, i );
+      voiceLevel[ relationID ] = wk->setupParam->perappVoiceLevel[ i ];
+//      TAYA_Printf("VoiceLevel ... saveClientID=%d, relClientID=%d, level=%d\n", i, relationID, voiceLevel[relationID]);
+    }
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      wk->setupParam->perappVoiceLevel[ i ] = voiceLevel[ i ];
+//      TAYA_Printf("ClientID=%d. VL=%d\n", i, wk->setupParam->perappVoiceLevel[ i ]);
+    }
   }
 
   BTL_N_Printf( DBGSTR_DEBUGFLAG_BIT, sp->DebugFlagBit );
@@ -1869,6 +1900,7 @@ static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq )
             BTL_N_Printf( DBGSTR_MAIN_PerappVoiceAdded, i );
           }
         }
+        Bspstore_PerappVoiceLevel( wk, i );
       }
 
       BTL_NET_QuitNotifyPerappVoice();
@@ -4579,14 +4611,22 @@ BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV_REF* p
 //=============================================================================================
 u32 BTL_MAIN_GetPerappVoicePower( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  if( wk->perappVoice[ clientID ] )
+  if( !BTL_MAIN_IsRecordPlayMode(wk) )
   {
-    if( PERAPVOICE_GetExistFlag(wk->perappVoice[clientID]) )
+    if( wk->perappVoice[ clientID ] )
     {
-      return PERAPVOICE_GetWazaParam( wk->perappVoice[clientID] );
+      if( PERAPVOICE_GetExistFlag(wk->perappVoice[clientID]) )
+      {
+        return PERAPVOICE_GetWazaParam( wk->perappVoice[clientID] );
+      }
     }
+    return 0;
   }
-  return 0;
+  else
+  {
+    TAYA_Printf("ClientID=%d, PerappVoiceLevel=%d\n", clientID, wk->setupParam->perappVoiceLevel[ clientID ]);
+    return wk->setupParam->perappVoiceLevel[ clientID ];
+  }
 }
 
 
@@ -5922,6 +5962,18 @@ static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTA
     MyStatus_Copy( playerStatus, dst );
   }
 }
+/**
+ *  通信対戦相手のペラップボイスレベルを書き戻し
+ */
+static void Bspstore_PerappVoiceLevel( BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  u8 relation = CommClientRelation( wk->myClientID, clientID );
+  u8 level = BTL_MAIN_GetPerappVoicePower( wk, clientID );
+
+  wk->setupParam->perappVoiceLevel[ relation ] = level;
+}
+
+
 /**
  *  AIトレーナーデータを書き戻し
  */

@@ -82,7 +82,8 @@ typedef enum {
 }BtlRecClientStatusType;
 
 typedef struct {
-  BtlRecClientStatusType    type;
+  u16                       type;         ///< BtlRecClientStatusType
+  u16                       voiceLevel;   ///< ペラップボイスレベル
   union {
     MYSTATUS                player;
     BTLREC_TRAINER_STATUS   trainer;
