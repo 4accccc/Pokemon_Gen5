@@ -707,6 +707,76 @@ static void SCROLL_Exit( SCROLL_WORK *p_wk, SHORTCUT_CURSOR *p_cursor )
   //ワーククリア
   GFL_STD_MemClear( p_wk, sizeof(SCROLL_WORK) );
 }
+
+static void _up_move_func( SCROLL_WORK *p_wk, int cursor_pos, int max, BOOL *is_loop )
+{
+  //上から下へのループ
+  if(cursor_pos == 0){
+    u16 list;
+    u16 cursor;
+    u32 line;
+    line  = BmpListParamGet( p_wk->p_list, BMPMENULIST_ID_LINE );
+
+    list    = (max-1) - (line-1);
+    cursor  = line-1;
+
+    Scroll_DeleteList( p_wk, NULL, NULL );
+    Scroll_CreateList( p_wk, list, cursor, p_wk->heapID );
+
+    //挿入モードのときは一番下のカーソルを出す
+    if( p_wk->mode == SCROLL_MOVE_INSERT )
+    {
+      //この場合コールバックが呼ばれる
+      p_wk->is_insert_last  =  TRUE;
+    }
+
+    PMSND_PlaySE( SEQ_SE_SELECT1 );
+    *is_loop = TRUE;
+
+  // 挿入モードでカーソルが特殊一番下にいる場合に上を入れた時
+  }else if(p_wk->is_insert_last==TRUE){
+    if(p_wk->mode == SCROLL_MOVE_INSERT ){
+      u16 cursor;
+      u16 pos;
+      BmpMenuList_PosGet( p_wk->p_list, NULL, &cursor );
+      pos = BmpMenuList_DirectCursorYGet( p_wk->p_list, cursor )/8;
+      InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + pos)*8 );
+      p_wk->is_insert_last=FALSE;
+      *is_loop=TRUE;    // BmpList_Mainを実行させないようにするために立てる
+    }
+  }
+
+}
+
+static void _down_move_func( SCROLL_WORK *p_wk, int cursor_pos, int max, BOOL *is_loop )
+{
+  if(cursor_pos == max-1){
+    //挿入モードのときはカーソルを一番下のもっと下に移動させる
+    if( p_wk->mode == SCROLL_MOVE_INSERT )
+    {
+      u16 cursor;
+      u16 pos;
+      BmpMenuList_PosGet( p_wk->p_list, NULL, &cursor );
+      pos = BmpMenuList_DirectCursorYGet( p_wk->p_list, cursor+1 )/8;
+      InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + pos)*8 );
+      p_wk->is_insert_last  ^=  1;
+    }
+
+    // 通常モードで一番下の時はリストの再生成を行う（カーソルは一番上に）
+    if( p_wk->is_insert_last == FALSE )
+    {
+      Scroll_DeleteList( p_wk, NULL, NULL );
+      Scroll_CreateList( p_wk, 0, 0, p_wk->heapID );
+    }
+
+    PMSND_PlaySE( SEQ_SE_SELECT1 );
+    *is_loop = TRUE;
+  }else{
+    p_wk->is_insert_last  =  FALSE;
+  }
+
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  スクロールメイン処理
@@ -729,55 +799,13 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
     u32 max;
     BmpMenuList_DirectPosGet( p_wk->p_list, &cursor_pos );
     max = BmpListParamGet( p_wk->p_list, BMPMENULIST_ID_COUNT );
-    if( cursor_pos == 0 && GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
     { 
-      //上から下へのループ
-      u16 list;
-      u16 cursor;
-      u32 line;
-      line  = BmpListParamGet( p_wk->p_list, BMPMENULIST_ID_LINE );
-
-      list    = (max-1) - (line-1);
-      cursor  = line-1;
-
-      Scroll_DeleteList( p_wk, NULL, NULL );
-      Scroll_CreateList( p_wk, list, cursor, p_wk->heapID );
-
-      //挿入モードのときは一番下のカーソルを出す
-      if( p_wk->mode == SCROLL_MOVE_INSERT )
-      {
-        //この場合コールバックが呼ばれる
-        p_wk->is_insert_last  =  TRUE;
-      }
-
-      PMSND_PlaySE( SEQ_SE_SELECT1 );
-      is_loop = TRUE;
+      _up_move_func( p_wk, cursor_pos, max, &is_loop );
     }
-    else if( cursor_pos == max-1 && GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+    else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
     { 
-      //挿入モードのときは一番下のカーソルを出す
-      if( p_wk->mode == SCROLL_MOVE_INSERT )
-      {
-        u16 cursor;
-        u16 pos;
-        BmpMenuList_PosGet( p_wk->p_list, NULL, &cursor );
-        pos = BmpMenuList_DirectCursorYGet( p_wk->p_list, cursor+1 )/8;
-        InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + pos)*8 );
-        p_wk->is_insert_last  ^=  1;
-      }
-
-      if( p_wk->is_insert_last == FALSE )
-      {
-        Scroll_DeleteList( p_wk, NULL, NULL );
-        Scroll_CreateList( p_wk, 0, 0, p_wk->heapID );
-      }
-
-      PMSND_PlaySE( SEQ_SE_SELECT1 );
-      is_loop = TRUE;
-    }
-    else if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_DOWN|PAD_KEY_UP) )
-    {
-      p_wk->is_insert_last  =  FALSE;
+      _down_move_func( p_wk, cursor_pos, max, &is_loop );
     }
   }
 
@@ -1024,7 +1052,6 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
   else if( p_wk->mode == SCROLL_MOVE_INSERT )
   { 
 
-
     GFL_BG_ChangeScreenPalette( 
         BG_FRAME_SCROLL_M, 
         SCROLL_BMPWIN_X, 
@@ -1081,6 +1108,8 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
   {
     InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + cursor)*8 );
   }
+
+
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1170,11 +1199,10 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
     }
   }
 
-  OS_Printf("list=%d, cursor=%d, max=%d\n", list_bak, cursor_bak, max);
-  OS_Printf("list=%d, cursor=%d, max=%d\n", list_bak, cursor_bak, max);
+  //  OS_Printf("list=%d, cursor=%d, max=%d\n", list_bak, cursor_bak, max);
   // カーソル位置調整
   Scroll_AdjustListPos( &list_bak, &cursor_bak, max );
-  OS_Printf("list=%d, cursor=%d, max=%d\n", list_bak, cursor_bak, max);
+  //  OS_Printf("list=%d, cursor=%d, max=%d\n", list_bak, cursor_bak, max);
 
   //リストメイン作成
   { 
