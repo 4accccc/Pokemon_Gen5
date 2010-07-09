@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-07-08T16:04:01"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-07-09T17:57:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-971" top="153" right="-266" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="108" top="128" right="813" bottom="756" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="42" right="1024" bottom="440" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -522,7 +522,7 @@
 
 	<row id="WIFIMATCH_TEXT_010">
 		<language name="JPN" width="256">たいせん　あいてが
-みつかり　ました！</language>
+みつかりました！</language>
 		<language name="JPN_KANJI" width="256">対戦相手が
 見つかりました！</language>
 	</row>
