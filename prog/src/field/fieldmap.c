@@ -1932,6 +1932,18 @@ FIELD_PLAYER * FIELDMAP_GetFieldPlayer( FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
+ * FIELDMAP_WORK FIELD_PLAYERがセットされているか？
+ * @param fieldWork FIELDMAP_WORK
+ * @retval FIELD_PLAYER*
+ */
+//--------------------------------------------------------------
+BOOL FIELDMAP_CheckFieldPlayer( FIELDMAP_WORK *fieldWork )
+{
+	return (fieldWork->field_player != NULL );
+}
+
+//--------------------------------------------------------------
+/**
  * @brief  FIELD_SUBSCREEN_WORKを得る
  * @param fieldWork FIELDMAP_WORK
  * @retval FIELD_SUBSCREEN_WORK*

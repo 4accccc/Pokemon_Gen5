@@ -115,6 +115,7 @@ extern void * FIELDMAP_GetMapCtrlWork( FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetMapCtrlWork(FIELDMAP_WORK *fieldWork,void *ctrlWork);
 extern FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork );
 extern FIELD_PLAYER * FIELDMAP_GetFieldPlayer( FIELDMAP_WORK *fieldWork );
+extern BOOL FIELDMAP_CheckFieldPlayer( FIELDMAP_WORK *fieldWork );
 extern FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetFieldSubscreenWork(

@@ -1455,12 +1455,16 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
     jiki_f = ( obj_id == MMDL_ID_PLAYER );
     comact_f = ( obj_id == MMDL_ID_COMMACTOR );
 
-    if( jiki_f ){
+    if( jiki_f )
+    {
       FIELDMAP_WORK* fieldWork = MMDLSYS_GetFieldMapWork( MMDL_GetMMdlSys( mmdl ));
-      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
       
-      if( player != NULL ){
-        updown_anm_f = ( FIELD_PLAYER_GetMoveValue( player ) != PLAYER_MOVE_VALUE_STOP );
+      if( FIELDMAP_CheckFieldPlayer( fieldWork )){
+        FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
+      
+        if( player != NULL ){
+          updown_anm_f = ( FIELD_PLAYER_GetMoveValue( player ) != PLAYER_MOVE_VALUE_STOP );
+        }
       }
     }
   }
