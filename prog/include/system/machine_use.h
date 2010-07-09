@@ -30,3 +30,6 @@ extern void MachineSystem_Exit(void);
 //------------------------------------------------------------------
 extern void MachineSystem_VIntr(void);
 
+#if PM_DEBUG
+extern void MachineSystem_SetPullOutCallBack( void );
+#endif

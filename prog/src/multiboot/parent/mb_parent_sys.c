@@ -10,6 +10,7 @@
 //======================================================================
 #include <gflib.h>
 #include "system/main.h"
+#include "system/machine_use.h"
 #include "system/gfl_use.h"
 #include "system/net_err.h"
 #include "system/ds_system.h"
@@ -28,6 +29,8 @@
 #include "arc_def.h"
 #include "mb_parent.naix"
 #include "mystery.naix"
+#include "net_err.naix"
+#include "msg/msg_net_err.h"
 
 #include "../../../../resource/fldmapdata/script/palpark_scr_local.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
@@ -56,6 +59,7 @@
 #define MB_PARENT_PLT_SUB_OBJ_APP  (0)
 
 #define MB_PARENT_PLT_SUB_BG  (0)
+#define MB_PARENT_PLT_SUB_ERR (7)
 #define MB_PARENT_PLT_SUB_BAR (8)
 #define MB_PARENT_PLT_SUB_SS  (9)
 #define MB_PARENT_PLT_SUB_SS_MSG  (0x0d)
@@ -308,6 +312,7 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work );
 static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work );
 static void MB_PARENT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MB_PARENT_LoadResource( MB_PARENT_WORK *work );
+static void MB_PARENT_CreateErrorDisp( MB_PARENT_WORK *work );
 
 static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work );
 static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work );
@@ -323,6 +328,8 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work );
 
 static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state );
 
+static BOOL  MB_PARENT_PullOutCallBack( void );
+
 #if MP_PARENT_DEB
 static void MB_PARENT_InitDebug( MB_PARENT_WORK *work );
 static void MB_PARENT_TermDebug( MB_PARENT_WORK *work );
@@ -330,6 +337,7 @@ static void MB_PARENT_TermDebug( MB_PARENT_WORK *work );
 
 BOOL WhCallBackFlg = FALSE;
 static u16 MB_PARENT_bgScrollCnt = 0;
+static BOOL errIsShifter;
 
 FS_EXTERN_OVERLAY(dev_wireless);
 
@@ -357,6 +365,8 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   work->isSendGameData = FALSE;
   work->gameData = NULL;
+  
+  MB_PARENT_CreateErrorDisp( work );
   
   if( work->mode == MPM_POKE_SHIFTER )
   {
@@ -1259,6 +1269,74 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
   }
 }
 
+//--------------------------------------------------------------
+//  カード抜け用エラー画面作成
+//--------------------------------------------------------------
+static void MB_PARENT_CreateErrorDisp( MB_PARENT_WORK *work )
+{
+  u8 frame;
+  ARCHANDLE *arcHandle;
+
+  //説明画面の逆に出す
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    errIsShifter = TRUE;
+    frame = MB_PARENT_FRAME_SUB_SSMSG;
+  }
+  else
+  {
+    errIsShifter = FALSE;
+    frame = MB_PARENT_FRAME_BG;
+  }
+  GFL_BG_SetVisible( frame , FALSE );
+
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_NET_ERR , work->heapId );
+
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_net_err_net_err_NCLR , 
+                    PALTYPE_SUB_BG  , MB_PARENT_PLT_SUB_ERR*32 , 32 , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_net_err_net_err_NCLR , 
+                    PALTYPE_MAIN_BG , MB_PARENT_PLT_SUB_ERR*32 , 32 , work->heapId );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_net_err_net_err_NCGR ,
+                    frame , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_net_err_net_err_NSCR , 
+                    frame ,  0 , 0, FALSE , work->heapId );
+  GFL_BG_ChangeScreenPalette( frame,0,0,32,24,MB_PARENT_PLT_SUB_ERR );
+  GFL_BG_LoadScreenReq( frame );
+  
+  GFL_ARC_CloseDataHandle( arcHandle );
+  
+  //メッセージ書き込み
+  {
+    GFL_BMPWIN *win = GFL_BMPWIN_Create( frame , 
+                                        1 , 4 ,32-2 , 8 , 
+                                        MB_PARENT_PLT_SUB_ERR ,
+                                        GFL_BMP_CHRAREA_GET_B );
+    GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+          ARCID_MESSAGE, NARC_message_net_err_dat, work->heapId);
+    STRBUF *str = GFL_MSG_CreateString(msgHandle, net_error_0002);
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win) , 7 );
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(win) , 0 , 0,
+          str , MB_MSG_GetFont(work->msgWork ) , PRINTSYS_LSB_Make(4, 0xb, 7) );
+
+    GFL_BMPWIN_TransVramCharacter( win );
+    GFL_BMPWIN_MakeScreen( win );
+    GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(win) );
+    
+    GFL_STR_DeleteBuffer(str);
+    GFL_MSG_Delete( msgHandle );
+    GFL_BMPWIN_Delete( win );
+  }
+  
+  //バックドロップ変更
+  {
+    u16 *mplt = (u16*)HW_BG_PLTT;
+    u16 *splt = (u16*)HW_DB_BG_PLTT;
+    mplt[0] = 0x7eea;
+    splt[0] = 0x7eea;
+  }
+  
+}
 
 #pragma mark [>SendImage func
 static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work );
@@ -1381,6 +1459,8 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
     GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_MSG , TRUE );
     GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_SSMSG , TRUE );
   }
+
+  CARD_SetPulledOutCallback( &MB_PARENT_PullOutCallBack );
 }
 
 //--------------------------------------------------------------
@@ -1389,6 +1469,12 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
 static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work )
 {
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(dev_wireless));
+
+#if PM_DEBUG
+  MachineSystem_SetPullOutCallBack();
+#else
+  CARD_SetPulledOutCallback( NULL );
+#endif
 
   GFL_HEAP_FreeMemory( work->romTitleStr );
   GFL_HEAP_FreeMemory( work->romInfoStr );
@@ -2635,6 +2721,22 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   }
 }
 
+#pragma mark [>pull out
+static BOOL  MB_PARENT_PullOutCallBack( void )
+{
+  GFL_DISP_GX_SetVisibleControlDirect( 0 );
+  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+  
+  if( errIsShifter == TRUE )
+  {
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_SSMSG , TRUE );
+  }
+  else
+  {
+    GFL_BG_SetVisible( MB_PARENT_FRAME_BG , TRUE );
+  }
+  return TRUE;
+}
 
 #pragma mark [>proc func
 static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
