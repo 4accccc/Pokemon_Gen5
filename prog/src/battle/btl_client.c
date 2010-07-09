@@ -4758,13 +4758,16 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
         wk->returnDataPtr = &(wk->actionParam[0]);
         wk->returnDataSize = sizeof(wk->actionParam[0]);
-        return TRUE;
+        (*seq) = SEQ_SELECT_PASS;
       }
     }
     // 自分は空きが出来ていないので何も選ぶ必要がない
     else
     {
-      BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
+      BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID );
+      BTL_ACTION_SetNULL( &wk->actionParam[0] );
+      wk->returnDataPtr = &(wk->actionParam[0]);
+      wk->returnDataSize = sizeof(wk->actionParam[0]);
       (*seq) = SEQ_SELECT_PASS;
     }
   }
@@ -4817,9 +4820,6 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
     break;
 
   case SEQ_SELECT_PASS_END:
-    BTL_ACTION_SetNULL( &wk->actionParam[0] );
-    wk->returnDataPtr = &(wk->actionParam[0]);
-    wk->returnDataSize = sizeof(wk->actionParam[0]);
     return TRUE;
   }
 
