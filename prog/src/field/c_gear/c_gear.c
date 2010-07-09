@@ -4538,6 +4538,9 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
       // スリープカラー設定
       _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
 
+      //アニメ開始。
+      _PanelPaletteAnimeInit( pWork );
+
       _CHANGE_STATE(pWork,_modeSelectMenuWait);
     }
   }
