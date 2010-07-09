@@ -2132,6 +2132,8 @@ static void D_Test_EggMcssSetOfsPositionFunc(void* d_test_cmn_wk)
     f32      ofs_position_x;
     VecFx32  ofs_position;
 
+    OS_Printf( "MCSS_GetOffsetX=%d\n", MCSS_GetOffsetX(cmn_wk->mcss_wk) );
+
     if( size_y > 96.0f ) size_y = 96.0f;
 
     ofs_position_y = ( 96.0f - size_y ) / 2.0f + offset_y;
