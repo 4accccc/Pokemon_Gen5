@@ -552,7 +552,7 @@
 		<language name="JPN">おとを　まったく　たてずに　くさちの
 なかを　すすむ。ゆだんしている
 えものに　はいごから　おそいかかる。</language>
-		<language name="JPN_KANJI">音を　まったく　たてずに　草地の
+		<language name="JPN_KANJI">音を　まったく　立てずに　草地の
 中を　進む。油断している獲物に
 背後から　襲いかかる。</language>
 	</row>
@@ -1283,7 +1283,7 @@
 ホネが　からからと　おとを　たてる。</language>
 		<language name="JPN_KANJI">死に別れた　母親を　思い出し
 泣いてしまうとき　頭に　かぶった
-ホネが　からからと　音を　たてる。</language>
+ホネが　からからと　音を　立てる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_105">
@@ -4576,7 +4576,7 @@
 さいぼうが　しょくぶつに　ちかくなり
 たいないで　こうごうせいが　できる。</language>
 		<language name="JPN_KANJI">基本的に　争わない。
-細胞が　植物に　近くなり。
+細胞が　植物に　近くなり
 体内で　光合成が　できる。</language>
 	</row>
 
