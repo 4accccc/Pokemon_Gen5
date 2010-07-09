@@ -307,7 +307,10 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
   case SEQ_HIT_SUCCESS:
     //’Þ‚èã‚°‚½‰ñ”  
     RECORD_Inc( wk->record, RECID_FISHING_SUCCESS );
-    GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE, ENC_TYPE_FISHING ) );
+    {
+      u8 eff_type = wk->enc_type == ENC_TYPE_EFFECT ? ENC_TYPE_EFFECT:ENC_TYPE_FISHING;
+      GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE, eff_type ) );
+    }
 	  return GMEVENT_RES_CONTINUE;
 	}
 	return GMEVENT_RES_CONTINUE;
