@@ -158,10 +158,9 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
     {
       if( !is_heavy )
       { 
+        _ErrorClear();
         NetErr_DispCallPushPop();
-        GFL_NET_StateClearWifiError();
         NetErr_ErrWorkInit();
-        GFL_NET_StateResetError();
         DEBUG_DWC_ERROR_Printf( "GFL_NET_DWC_ERROR_ReqErrorDisp user=%d line=%d\n", cp_error->errorUser, __LINE__ );
         return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
       }
