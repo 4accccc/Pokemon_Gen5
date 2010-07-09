@@ -1330,6 +1330,9 @@ sub_receipt_challenge_wifi:
     //wifi接続　ダウンロード
     _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, ret )
     
+    //ダウンロード後のビーコンサーチ再開
+    _REBOOT_BEACON_SEARCH()
+    
     IF $ret == FALSE THEN //ダウンロードしなかった
       _CALL sub_bsw_common_exit
       _RET
