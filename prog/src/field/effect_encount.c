@@ -332,6 +332,10 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
   if(ev_no){
     effect_EffectDelete( enc, eff_wk );
   }else{
+    if( ep->type == EFFENC_TYPE_WATER || ep->type == EFFENC_TYPE_SEA ){
+      //くじらさんとエフェクトが重なるので隠しちゃう
+      EFFECT_ENC_EffectHideSet( enc, TRUE );
+    }
     ep->push_cancel_f = TRUE;
   }
   return event;
