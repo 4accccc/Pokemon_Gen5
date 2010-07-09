@@ -8564,6 +8564,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
           scEvent_DamageProcEnd( wk, attacker, targets, wazaParam, FALSE );
         }
         scproc_CheckDeadCmd( wk, target );
+
       }
       else
       {
@@ -15184,8 +15185,9 @@ static u8 scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-    if( !BPP_IsDead(pp_target) )
-    {
+    if( (!BPP_IsDead(pp_target))
+    ||  (param->fDeadPokeEnable)
+    ){
       handexSub_putString( wk, &param->exStr );
       scproc_KillPokemon( wk, pp_target );
       return 1;

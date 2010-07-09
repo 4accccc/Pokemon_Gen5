@@ -581,6 +581,7 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< ‹¤—Lƒwƒbƒ_
  u8   pokeID;
+ u8   fDeadPokeEnable;
  BTL_HANDEX_STR_PARAMS      exStr;
 }BTL_HANDEX_PARAM_KILL;
 

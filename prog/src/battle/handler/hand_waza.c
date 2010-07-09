@@ -8891,6 +8891,12 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
         ){
           BTL_HANDEX_PARAM_KILL* kill_param;
 
+          BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
+          kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+            kill_param->pokeID = pokeID;
+            kill_param->fDeadPokeEnable = TRUE;
+          BTL_SVF_HANDEX_Pop( flowWk, kill_param );
+
           kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
             kill_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
             HANDEX_STR_Setup( &kill_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MichidureDone );
