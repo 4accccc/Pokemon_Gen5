@@ -703,6 +703,20 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     GFL_G3D_CAMERA_Switching( work->camera );
   }
   */
+  {
+    VecFx32 ofs={0,0,0};
+    MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+    MCSS_SetOfsPosition( subWork->pokeMcssBack , &ofs );
+    subWork->IsHoldTp = FALSE;
+    subWork->subActState = PSSS_NONE;
+    subWork->tpWorkH.count = 0;
+    subWork->tpWorkH.time = 0;
+    subWork->tpWorkV.count = 0;
+    subWork->tpWorkV.time = 0;
+    subWork->tpWorkR.count = 0;
+    subWork->tpWorkR.time = 0;
+    
+  }
 }
 
 //--------------------------------------------------------------
