@@ -240,6 +240,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
   work->initData = NULL;
   work->isSendPoke = FALSE;
   work->isSendCapsule = FALSE;
+  work->isSave = FALSE;
 
   
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )

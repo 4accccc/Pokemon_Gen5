@@ -241,7 +241,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
                                      work->heapId );
                                      
   work->isNetErr = FALSE;
-  work->isSave = TRUE;
+  work->isSave = FALSE;
   PMSND_InitMultiBoot( work->sndData );
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
