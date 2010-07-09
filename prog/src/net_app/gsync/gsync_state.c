@@ -602,14 +602,14 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
   
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
-  if(pWork->bGet){
-    GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
-    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,8);
-  }
-  else{
+//  if(pWork->bGet){
+  //  GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
+    //GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,8);
+//  }
+  //else{
     GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_026,0, pWork->pp);
     GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,4);
-  }
+//  }
 
 
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);

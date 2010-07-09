@@ -1671,7 +1671,6 @@ int mydwc_HandleError(void)
         case MDSTATE_TIMEOUT:
         case MDSTATE_DISCONNECTTING:
         case MDSTATE_DISCONNECT:
-          OS_TPrintf("A ");
           if( _dWork->friendMatchOn == TRUE){
             DWC_ShutdownFriendsMatch();
             _dWork->friendMatchOn=FALSE;
@@ -3122,7 +3121,6 @@ BOOL GFL_NET_DWC_IsDisconnect(void)
 void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn)
 {
   _dWork->bAutoDisconnect = bOn;
-  OS_TPrintf("Ø’fƒtƒ‰ƒO %d\n");
 }
 
 
