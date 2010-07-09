@@ -709,6 +709,7 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
 
   setup_common_srcParty( wk, sp );
 
+  if( !BTL_MAIN_IsRecordPlayMode(wk) )
   {
     PERAPVOICE* pVoice = SaveData_GetPerapVoice( GAMEDATA_GetSaveControlWork(sp->gameData) );
     wk->perappVoice[ BTL_CLIENT_PLAYER ] = PERAPVOICE_AllocWork( wk->heapID );
