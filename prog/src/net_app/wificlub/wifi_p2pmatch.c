@@ -863,6 +863,7 @@ static int _modeTVT2Wait( WIFIP2PMATCH_WORK* wk, int seq );
 static int _modeTVT3YesNo( WIFIP2PMATCH_WORK* wk, int seq );
 static int _modeTVT3Wait( WIFIP2PMATCH_WORK* wk, int seq );
 static int _playerDirectInit0Next( WIFIP2PMATCH_WORK *wk, int seq );
+static void _FriendFloorInit( WIFIP2PMATCH_WORK *wk );
 
 
 #include "wifi_p2pmatch_message.c"
@@ -2202,7 +2203,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
        && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
       //ここでVCT切断
       DWCRAP_StopVChat();
-      WifiP2PMatch_FriendListInit2( wk, seq );
+      _FriendFloorInit( wk );
       wk->friendNo = wk->pParentWork->friendNo;
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB);
@@ -2992,16 +2993,19 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 }
 
 
+
+
+
 //------------------------------------------------------------------
 /**
- * $brief   フレンドリスト表示初期化   WIFIP2PMATCH_FRIENDLIST_INIT2
+ * $brief   部屋の初期化
  *
  * @param   wk
  *
  * @retval  none
  */
 //------------------------------------------------------------------
-static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
+static void _FriendFloorInit( WIFIP2PMATCH_WORK *wk )
 {
   int i,x;
   int num = 0;
@@ -3014,10 +3018,7 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
   // ここから先は通信エラーをシステムウィンドウで出す
 
-
   p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIP2PMATCH, HEAPID_WIFIP2PMATCH );
-
-
 
   _myVChatStatusOrgSet(wk);
 
@@ -3043,9 +3044,6 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
     // マッチングルーム初期化
     wk->friend_num = WifiList_GetFriendDataLastIdx( wk->pList );
-#ifdef WFP2PM_MANY_OBJ
-    wk->friend_num = 32;
-#endif
     WIFI_MCR_Init( &wk->matchroom, HEAPID_WIFIP2PMATCH, p_handle,
                    obj_code, wk->friend_num, ARCID_WIFIP2PMATCH,wk->clactSet, wk->renddata );
 
@@ -3053,9 +3051,6 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
     MCRSYS_SetMoveObjWork( wk, p_moveobj ); // 登録したワークを保存しておく
 
-#ifdef WFP2PM_MANY_OBJ
-    DEBUG_DummyObjIn( wk, wk->friend_num );
-#endif
   }
   // ビューアー初期化
   if( MCVSys_MoveCheck( wk ) == FALSE ){
@@ -3077,10 +3072,7 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
   // ユーザーデータのBMP作成
   _userDataDisp(wk);
 
-  _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
-
-  _commStateChange(wk,WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
-  _GFL_NET_InitAndStruct(wk,FALSE);
+  _GFL_NET_InitAndStruct(wk,FALSE);  //メモリ初期化
 
   wk->preConnect = -1;
 
@@ -3097,6 +3089,26 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
   // ワイプイン
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+
+}
+
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   フレンドリスト表示初期化   WIFIP2PMATCH_FRIENDLIST_INIT2
+ *
+ * @param   wk
+ *
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+
+  _FriendFloorInit(wk);
+  _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+  _commStateChange(wk,WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
 
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
   FriendRequestWaitOff(wk);      // 主人公の動作を許可 状態をNONEにもどす

@@ -1497,31 +1497,14 @@ static void ConnectionClosedCallback(DWCError error,
   MYDWC_DEBUGPRINT("ConnectionClosedCallback\n");
   if (error == DWC_ERROR_NONE){
 
-    //        if((!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo()) && (DWC_GetNumConnectionHost() == 1))){
     if(((_dWork->closedflag == TRUE) && (DWC_GetNumConnectionHost() == 1))){
       // 全てのコネクションがクローズされた場合
-
       // キャンセル中ならば、キャンセルが完了した。
       if(	_dWork->state == MDSTATE_CANCEL )
       {
-        //  DWC_SetupGameServerのコールバックで呼ばれるため まだ状態がDISCONNECTできていない可能性があるため ここでFINISHにしない
-        //				_dWork->state = MDSTATE_CANCELFINISH;
         MYDWC_DEBUGPRINT("MDSTATE_CANCELFINISH\n");
       }
       else {
-        if(_dWork->bAutoDisconnect){
-          const GFL_NETSTATE_DWCERROR* cp_error =GFL_NET_StateGetWifiError();
-          if( cp_error->errorUser == 0 )
-          {
-            GFL_NET_StateSetWifiError( 
-                cp_error->errorCode, 
-                cp_error->errorType, 
-                cp_error->errorRet, 
-                ERRORCODE_DISCONNECT );
-          }
-//          GFL_NET_StateSetError(0);
-          MYDWC_DEBUGPRINT("bAutoDisconnectErr\n");
-        }
         _CHANGE_STATE(MDSTATE_DISCONNECTTING);
         MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");
       }
@@ -1530,9 +1513,7 @@ static void ConnectionClosedCallback(DWCError error,
         // まだボイスチャットライブラリを解放していない場合。
         GFL_NET_DWC_StopVChat();
       }
-
     }
-
     if (isLocal){
       MYDWC_DEBUGPRINT("Closed connection to aid %d (friendListIndex = %d) Rest %d.\n",
                        aid, index, DWC_GetNumConnectionHost());
@@ -1540,34 +1521,30 @@ static void ConnectionClosedCallback(DWCError error,
     else {
       MYDWC_DEBUGPRINT("Connection to aid %d (friendListIndex = %d) was closed. Rest %d.\n",
                        aid, index, DWC_GetNumConnectionHost());
-      {
-        if(_dWork->bAutoDisconnect){
-          const GFL_NETSTATE_DWCERROR* cp_error =GFL_NET_StateGetWifiError();
-          if( cp_error->errorUser == 0 )
-          {
-            GFL_NET_StateSetWifiError( 
-                cp_error->errorCode, 
-                cp_error->errorType, 
-                cp_error->errorRet, 
-                ERRORCODE_DISCONNECT );
-          }
-          MYDWC_DEBUGPRINT("bAutoDisconnectErr\n");
-        }
-        _CHANGE_STATE(MDSTATE_DISCONNECTTING);
-      }
+      _CHANGE_STATE(MDSTATE_DISCONNECTTING);
     }
   }
   else {
     MYDWC_DEBUGPRINT("Failed to close connections. %d\n\n", error);
   }
 
-  //    mydwc_releaseRecvBuff(aid);
-
+  if(_dWork->bAutoDisconnect){
+    const GFL_NETSTATE_DWCERROR* cp_error =GFL_NET_StateGetWifiError();
+    if( cp_error->errorUser == 0 )
+    {
+      GFL_NET_StateSetWifiError( 
+        cp_error->errorCode, 
+        cp_error->errorType, 
+        cp_error->errorRet, 
+        ERRORCODE_DISCONNECT );
+    }
+  }
   GFI_NET_HANDLE_Delete(aid);  // ハンドル削除
   if( _dWork->disconnectCallback )
   {
     _dWork->disconnectCallback(aid, _dWork->pDisconnectWork);
   }
+  OS_TPrintf("切断コールバック %d\n",_dWork->bAutoDisconnect);
 }
 
 //==============================================================================
@@ -3145,6 +3122,7 @@ BOOL GFL_NET_DWC_IsDisconnect(void)
 void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn)
 {
   _dWork->bAutoDisconnect = bOn;
+  OS_TPrintf("切断フラグ %d\n");
 }
 
 
