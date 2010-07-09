@@ -221,7 +221,8 @@ static u32 MB_ICON_GetCharRes_Func( POKEMON_PASO_PARAM *ppp )
   form = PPP_Get( ppp, ID_PARA_form_no, NULL );
   mons = PPP_Get( ppp, ID_PARA_monsno, NULL );
   egg  = PPP_Get( ppp, ID_PARA_tamago_flag, NULL );
-
+  
+  form = POKETOOL_CheckPokeFormNo( mons , form );
   PPP_FastModeOff( (POKEMON_PASO_PARAM *)ppp, fast );
 
 	if( egg == 1 )
