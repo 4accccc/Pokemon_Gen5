@@ -1121,6 +1121,9 @@ static GFLNetInitializeStruct aGFLNetInit = {
   0,//dummy
 };
 
+#if PM_DEBUG
+static WIFIP2PMATCH_WORK* pDebugWork=NULL;
+#endif
 
 
 static void _GFL_NET_InitAndStruct(WIFIP2PMATCH_WORK *wk,BOOL bInit)
@@ -7727,7 +7730,10 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 #if WB_FIX
   initVramTransferManagerHeap( VRANTRANSFERMAN_NUM, HEAPID_WIFIP2PMATCH );
 #endif
-
+#if PM_DEBUG
+  pDebugWork = wk;
+#endif
+  
   //        wk->MsgIndex = _PRINTTASK_MAX;
   wk->pMatch = pParentWork->pMatch;
 
