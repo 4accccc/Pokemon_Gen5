@@ -5485,8 +5485,7 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
       NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
       DEBUG_NET_Printf("GPFサーバーへの書き込み終了\n");
 
-      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE
-          ||  ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ALREADY_EXISTS )
+      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE )
       {  
         p_wk->seq  = SEQ_END;
       }
