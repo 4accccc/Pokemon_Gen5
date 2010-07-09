@@ -714,6 +714,17 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   //不正チェックで生中身が書き換わる前にデモ用にデータを受け取る
   POKETOOL_CopyPPtoPP( pp, wk->evilcheck_dummy_poke );
 
+  //もし国と地域が不正ならば書き換える
+  //もし言語と国が異なっていたら書き換える
+  wk->UploadPokemonData.countryCode = 
+  WIFI_COUNTRY_GetNGTestCountryCode(wk->UploadPokemonData.countryCode, 
+      wk->UploadPokemonData.localCode, wk->UploadPokemonData.langCode);
+
+  wk->UploadPokemonData.langCode = 
+  WIFI_COUNTRY_GetNGTestLocalCode(wk->UploadPokemonData.countryCode, 
+      wk->UploadPokemonData.localCode, wk->UploadPokemonData.langCode);
+
+
   wk->nhttp = NHTTP_RAP_Init( HEAPID_WORLDTRADE, MyStatus_GetProfileID( wk->param->mystatus ), &wk->svl );
   NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, POKETOOL_GetWorkSize(), NHTTP_POKECHK_GTS);
 
