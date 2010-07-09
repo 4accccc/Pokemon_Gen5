@@ -5436,7 +5436,20 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
 
   wk->cancelEnableTimer--;
   if(wk->cancelEnableTimer < 0  ){
+/*
+    MCR_MOVEOBJ* p_npc;                    //BTS7577 ÇµÇ©
+    int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+    p_npc = MCRSYS_GetMoveObjWork( wk, friendNo );
+    // NPCÇå≥Ç…ñﬂÇ∑
+    if( p_npc != NULL ){
+      WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
+    }
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT);
+   */
+    OS_TPrintf("ïÒçêÇµÇƒÇ≠ÇæÇ≥Ç¢-------\n");//BTS7577
+    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
   }
   else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_FAIL ){
     _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
