@@ -3450,6 +3450,15 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
       {
         p_wk->sc_state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net, &p_wk->is_send_report );
+
+        //レポート送信してればカウント
+        if( p_wk->sc_state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE  )
+        {
+          if( p_wk->is_send_report )
+          {
+            WBM_RECORD_Count( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
+          }
+        }
       }
       if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
@@ -3483,12 +3492,6 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
-
-    //レポート送信してればカウント
-    if( p_wk->is_send_report )
-    {
-      WBM_RECORD_Count( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
-    }
 
     //相手に切断されていたら、録画を飛ばす
     if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
