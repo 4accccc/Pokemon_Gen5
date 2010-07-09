@@ -1436,7 +1436,7 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit
 		},
 		//レーティング
 		{	
-			10,9,15,2,
+			9,9,15,2,
 		},
 		//レーティングの数値
 		{	
@@ -1444,11 +1444,11 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit
 		},
 		//対戦回数
 		{	
-			10,12,15,2,
+			9,12,15,2,
 		},
 		//対戦回数の数値
 		{	
-			25, 12, 5, 2,
+			24, 12, 6, 2,
 		},
 		//登録ポケモン
 		{	
