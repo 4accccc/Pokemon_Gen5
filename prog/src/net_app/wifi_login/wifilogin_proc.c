@@ -862,7 +862,7 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-      _CHANGE_STATE(pWork,_callbackFunciton);
+      _CHANGE_STATE(pWork,_profileIDCheck);
     }
   }
 }
