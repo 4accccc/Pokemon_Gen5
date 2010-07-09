@@ -1629,6 +1629,11 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
     }
+    else if( p_wk->is_sc_error == FALSE && NetErr_App_CheckError() == NET_ERR_CHECK_LIGHT )
+    {//DWCレベルで軽度エラーだった場合(is_sc_errorで引っかからない残りを全部拾う)
+      DwcRap_Sc_Finalize( p_wk );
+      return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
+    }
 
     if( p_wk->is_sc_error )
     {
