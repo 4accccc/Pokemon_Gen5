@@ -7413,6 +7413,7 @@ static int BoxArg_BoxEndNo( BOX2_SYS_WORK * syswk )
 		break;
 
 	case BOX_MODE_SLEEP:	// 寝かせる
+		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		return BOX2SEQ_MAINSEQ_SLEEP_MAIN;
 	}
@@ -9058,6 +9059,7 @@ static void BoxEndPassiveSet( BOX2_SYS_WORK * syswk )
 	case BOX_MODE_SEIRI:			// せいり
 	case BOX_MODE_BATTLE:			// バトルボックス
 	case BOX_MODE_SLEEP:			// ねかせる
+		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
 		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYPOKE, TRUE );
 		}else{
