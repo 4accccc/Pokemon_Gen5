@@ -5369,10 +5369,14 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_NerainoMato( u32* numElems )
 // タイプ相性による無効化チェック
 static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 自分が防御側の時、相性により無効化されていれば有効に書き換え
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  // シミュレーション時にはなにもしない
+  if( !BTL_SVFTOOL_IsSimulationMode(flowWk) )
   {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+    // 自分が防御側の時、相性により無効化されていれば有効に書き換え
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+    }
   }
 }
 //------------------------------------------------------------------------------

@@ -13321,13 +13321,16 @@ BtlTypeAff BTL_SVFTOOL_SimulationAffinity( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8
   SVFL_WAZAPARAM  wazaParam;
   BtlTypeAff result;
 
+  wk->simulationCounter++;
+
   if( BPP_IsFakeEnable(defender) )
   {
     defender = BTL_MAIN_GetFakeTargetPokeParam( wk->mainModule, wk->pokeCon, defender );
   }
-
   scEvent_GetWazaParam( wk, waza, attacker, &wazaParam );
   result = scProc_checkWazaDamageAffinity( wk, attacker, defender, &wazaParam, FALSE );
+
+  wk->simulationCounter--;
 
   return result;
 }
