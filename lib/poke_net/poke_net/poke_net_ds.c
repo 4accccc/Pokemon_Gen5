@@ -653,12 +653,16 @@ BOOL POKE_NET_GetSvl()
 	while(1) {
         state = DWC_SVLProcess();
 		if(state == DWC_SVL_STATE_SUCCESS) {
+            POKE_NET_REQUEST *reqhead;
+
             // ¬Œ÷
 			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"Successed to get SVL Status\n");
 			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"status = %s\n", result.status==TRUE ? "TRUE" : "FALSE");
 			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"svlhost = %s\n", result.svlhost);
 			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"svltoken = %s\n", result.svltoken);
             memcpy( POKE_NET_Control.Auth.SvlToken, result.svltoken, DWC_SVL_TOKEN_LENGTH+1 );
+	        reqhead = (POKE_NET_REQUEST *)&POKE_NET_Control.SendBuffer[sizeof(long)];
+	        reqhead->Auth = POKE_NET_Control.Auth;
             POKE_NET_Control.SvlToken = TRUE;
             return(TRUE);
 		}
