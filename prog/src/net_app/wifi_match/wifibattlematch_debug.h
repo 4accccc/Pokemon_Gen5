@@ -1783,6 +1783,7 @@ static inline void DebugWin_Etc_U_DirtyParty( void* userWork , DEBUGWIN_ITEM* it
       {
         p_data->st_exp[i]  = PP_Get( p_pp, ID_PARA_hp_exp+i, NULL );
         PP_Put( p_pp, ID_PARA_hp_deb_exp+i, 255 );
+        PP_Renew( p_pp );
       }
     }
     else

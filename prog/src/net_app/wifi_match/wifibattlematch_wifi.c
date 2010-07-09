@@ -5109,6 +5109,26 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMAT
     GFL_STD_MemCopy( p_party, (POKEPARTY*)p_my_data->pokeparty, PokeParty_GetWorkSize() );
 
     GFL_HEAP_FreeMemory( p_party );
+
+#ifdef PM_DEBUG
+    {
+      //事前に不正にされていたら、不正にする
+      DEBUGWIN_EVILCHECK *p_data  = DEBUGWIN_EVILCHECK_GetInstance();
+      if( p_data->is_evil )
+      {
+        int i;
+        POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( (POKEPARTY*)p_my_data->pokeparty, 0 );
+        //不正にする
+        for( i = 0; i < PTL_ABILITY_MAX; i++ )
+        {
+          p_data->st_exp[i]  = PP_Get( p_pp, ID_PARA_hp_exp+i, NULL );
+          PP_Put( p_pp, ID_PARA_hp_deb_exp+i, 255 );
+          PP_Renew( p_pp );
+        }
+      }
+    }
+#endif //PM_DEBUG
+
   }
 
   p_my_data->btl_server_version  = BTL_NET_SERVER_VERSION;
