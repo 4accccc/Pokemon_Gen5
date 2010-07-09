@@ -4624,31 +4624,33 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
   switch(*seq){
   case 0:
     _PlayerMinePause(unisys, fieldWork, TRUE);
-    
     {
-      TR_CARD_RANK card_rank = clsys->recvbuf.tr_card[clsys->talk_obj_id]->CardRank;
-      if(card_rank < TR_CARD_RANK_BLACK){
-        msg_id = msg_union_card_01 + card_rank;
-      }
-      else if(card_rank == TR_CARD_RANK_BLACK){
-        int pm_version = MyStatus_GetRomCode(&clsys->basic_status[clsys->talk_obj_id].myst);
-        switch(pm_version){
-        case VERSION_BLACK:
-          msg_id = msg_union_card_07;
-          break;
-        case VERSION_WHITE:
-          msg_id = msg_union_card_06;
-          break;
-        default:
-          msg_id = msg_union_card_08;
-          break;
+      int pm_version = MyStatus_GetRomCode(&clsys->basic_status[clsys->talk_obj_id].myst);
+      if ( (pm_version == VERSION_BLACK) || (pm_version == VERSION_WHITE) )     //ブラック・ホワイトバージョン
+      {
+        TR_CARD_RANK card_rank = clsys->recvbuf.tr_card[clsys->talk_obj_id]->CardRank;
+        if(card_rank < TR_CARD_RANK_BLACK) msg_id = msg_union_card_01 + card_rank;
+        else if(card_rank == TR_CARD_RANK_BLACK)
+        {
+          switch(pm_version){
+          case VERSION_BLACK:
+            msg_id = msg_union_card_07;
+            break;
+          case VERSION_WHITE:
+            msg_id = msg_union_card_06;
+            break;
+          default:
+            msg_id = msg_union_card_08;     //念のため
+            break;
+          }
         }
+        else msg_id = msg_union_card_08;    //念のため
       }
-      else{
+      else      //それ以外のバージョン
+      {
         msg_id = msg_union_card_08;
       }
     }
-
     UnionMsg_TalkStream_WindowSetup(unisys, fieldWork);
     WORDSET_RegisterPlayerName(unisys->wordset, 0, &clsys->basic_status[clsys->talk_obj_id].myst);
     UnionMsg_TalkStream_Print(unisys, msg_id);
