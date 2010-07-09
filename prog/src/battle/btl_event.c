@@ -313,7 +313,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
         }
       }
       BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_AddFactor,
-          newFactor, newFactor->dependID, newFactor->factorType, newFactor->priority );
+          newFactor->dependID, newFactor->factorType, newFactor, newFactor->priority );
       printLinkDebug();
       return newFactor;
     }
@@ -361,7 +361,8 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   if( factor->callingFlag )
   {
     if( factor!=NULL ){
-      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelReserveFactor, factor, factor->dependID, factor->factorType );
+      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelReserveFactor,
+              factor->dependID, factor->factorType, factor );
     }
     factor->rmReserveFlag = TRUE;
     return;
@@ -383,7 +384,7 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   }
 
 
-  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelFactor, factor, factor->dependID, factor->factorType,
+  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelFactor, factor->dependID, factor->factorType, factor,
           factor->prev, factor->next );
   printLinkDebug();
   popFactor( factor );
@@ -683,7 +684,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
     do {
 
       if( (factor->callingFlag) && (factor->recallEnableFlag == FALSE) ){
-         BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByCallingFlg, factor->factorType, factor->dependID, factor );
+         BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByCallingFlg, factor->dependID, factor->factorType, factor );
          break;
       }
       if( factor->sleepFlag ){
@@ -696,7 +697,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
         break;
       }
       if( (factor->currentStackPtr != 0) && (factor->currentStackPtr >= EventStackPtr) ){
-       BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByStackLayer, factor->factorType, factor->dependID, factor );
+       BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByStackLayer, factor->dependID, factor->factorType, factor );
         break;
       }
       if( factor->existFlag == FALSE ){
@@ -719,9 +720,12 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
             if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
             {
               factor->callingFlag = TRUE;
-              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorStart, factor, factor->factorType, factor->dependID );
+              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorStart, factor, factor->dependID, factor->factorType );
+              if( next_factor != NULL ){
+                BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_NextFactorInfo, next_factor->dependID, next_factor->factorType, next_factor );
+              }
               tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
-              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorEnd, factor, factor->factorType, factor->dependID );
+              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorEnd, factor, factor->dependID, factor->factorType );
 
 
               if( factor->recallEnableFlag ){
@@ -732,7 +736,10 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
               // ŒÄ‚Ño‚µ’†‚Éíœ‚³‚ê‚½
               if( factor->rmReserveFlag )
               {
-                BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor );
+                BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor->factorType, factor );
+                if( next_factor->existFlag == FALSE ){
+                  next_factor = factor->next;
+                }
                 BTL_EVENT_FACTOR_Remove( factor );
               }
             }
@@ -750,6 +757,11 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
       }else{
         factor = factor->next;
       }
+      /*
+      if( factor ){
+        BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_NextFactorInfo2, factor->dependID, factor->factorType, factor );
+      }
+      */
     }
     else{
       break;
@@ -811,7 +823,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
         }
 
         if( (fp->skipCheckHandler)( fp, flowWork, factor->factorType, eventID, factor->subID, factor->dependID ) ){
-          BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByCheckHandler, factor->factorType, factor->dependID );
+          BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByCheckHandler, factor->dependID, factor->factorType );
           return TRUE;
         }
       }

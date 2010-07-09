@@ -330,6 +330,8 @@ typedef enum {
   DBGSTR_EVENT_SkipByStackLayer,
   DBGSTR_EVENT_ClearNewComFlag,
   DBGSTR_EVENT_SkipByCheckHandler,
+  DBGSTR_EVENT_NextFactorInfo,
+  DBGSTR_EVENT_NextFactorInfo2,
   DBGSTR_EV_AddFactor,
   DBGSTR_EV_DelFactor,
   DBGSTR_EV_DelReserveFactor,
