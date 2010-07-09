@@ -74,6 +74,19 @@ typedef enum
 //#define MMDL_BBD_DRAW_SIZE (FX16_ONE*8-1)
 #define MMDL_BBD_DRAW_SIZE (FX16_ONE*4)
 
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @date  2010.07.09
+ * @author  tamada GAMEFREAK inc.
+ *
+ * GFL_BBDACT_RESTYPEをさらに拡張している。
+ * GFL_BBDACT内部に手を入れたくないのでfldmmdl_blact.c内部のみで使用する。
+ */
+//--------------------------------------------------------------
+enum {
+  GFL_BBDACT_RESTYPE_NORESOURCE = -1,
+};
 //======================================================================
 //  struct
 //======================================================================
@@ -296,6 +309,47 @@ static const u16 data_BBDTexSizeTbl[TEXSIZE_MAX];
 const GFL_BBDACT_RESDATA testResTable[];
 const u32 testResTableMax;
 */
+
+//======================================================================
+//
+//======================================================================
+
+//リソースファイルをVRAM転送し登録
+static int blact_AddTransTexResourceFile(
+    GFL_BBDACT_SYS *pBBDActSys,
+    GFL_G3D_RES *pResBuf, u8 mdl_size, u8 tex_size )
+{
+  int bbdActResIdx = -1;
+  
+  if( GFL_G3D_TransVramTexture(pResBuf) == TRUE ){
+    int resIdx;
+    GFL_BBD_SYS *pBBDSys = GFL_BBDACT_GetBBDSystem( pBBDActSys );
+		GFL_BBD_TEXFMT texFmt = GFL_BBD_TEXFMT_PAL16;
+    GFL_BBD_TEXSIZ texSiz = data_BBDTexSizeTbl[tex_size];
+    const u16 *size = DATA_MMDL_BLACT_MdlSize[mdl_size];
+	  NNSG3dTexKey texDataKey = GFL_G3D_GetTextureDataVramKey( pResBuf );
+	  NNSG3dPlttKey texPlttKey = GFL_G3D_GetTexturePlttVramKey( pResBuf );
+    
+    resIdx = GFL_BBD_AddResourceKey( pBBDSys,
+        texDataKey, texPlttKey, texFmt, texSiz, size[0], size[1] );
+    bbdActResIdx = GFL_BBDACT_AddResourceIdx( pBBDActSys, resIdx, NULL );
+    GFL_G3D_DeleteResource( pResBuf );
+  }else{
+    GF_ASSERT( 0 );
+  }
+  
+  return( bbdActResIdx );
+}
+
+//登録したリソースを削除
+static void blact_DelTexResource( GFL_BBDACT_SYS *pBBDActSys, u16 resIdx )
+{
+  int bbdResIdx = GFL_BBDACT_GetBBDResourceIdx( pBBDActSys, resIdx );
+  GFL_BBD_SYS *pBBDSys = GFL_BBDACT_GetBBDSystem( pBBDActSys );
+  
+  GFL_BBDACT_RemoveResourceIdx( pBBDActSys, resIdx );
+  GFL_BBD_RemoveResourceVramKey( pBBDSys, bbdResIdx );
+}
 
 //======================================================================
 //  フィールド動作モデル　ビルボードアクター管理
@@ -1282,8 +1336,8 @@ static void BBDResUnitIndex_AddResource(
 {
   GFL_BBDACT_RESUNIT_ID id;
   GFL_BBDACT_RESTYPE type;
-  
-  type = GFL_BBDACT_RESTYPE_DATACUT; //基本はリソース破棄型
+
+  type = (GFL_BBDACT_RESTYPE)GFL_BBDACT_RESTYPE_NORESOURCE; //基本はリソースを保持しないタイプ
   
   if( (flag&BBDRESBIT_TRANS) ){ //転送用リソース指定
     type = GFL_BBDACT_RESTYPE_TRANSSRC;
@@ -1301,6 +1355,7 @@ static void BBDResUnitIndex_AddResource(
  * @param  code  OBJコード
  * @param flag 登録フラグ BBDRESBIT_VRAM等
  * @retval  nothing
+ * @note 呼ばれたその場で読み込みが発生する。
  */
 //--------------------------------------------------------------
 static void BBDResUnitIndex_AddResUnit(
@@ -1312,7 +1367,7 @@ static void BBDResUnitIndex_AddResUnit(
   prm_bbd = MMDL_TOOL_GetOBJCodeParamBufBBD( pParam );
   
   g3dres = GFL_G3D_CreateResourceHandle(
-      MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), prm_bbd->res_idx );
+    MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), prm_bbd->res_idx );
   BBDResUnitIndex_AddResource( pBlActCont, g3dres,
       pParam->code, pParam->mdl_size, pParam->tex_size, flag );
 }
@@ -1328,11 +1383,19 @@ static void BBDResUnitIndex_AddResUnit(
 static void BBDResUnitIndex_RemoveResUnit(
     MMDL_BLACTCONT *pBlActCont, u16 obj_code )
 {
+  u16 flag;
   GFL_BBDACT_RESUNIT_ID id;
+  
   BOOL ret = IDCodeIndex_SearchCode(
-      &pBlActCont->BBDResUnitIdx, obj_code, &id, NULL );
+      &pBlActCont->BBDResUnitIdx, obj_code, &id, &flag );
   GF_ASSERT( ret == TRUE );
-  GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys, id, 1 );
+  
+  if( (flag & BBDRESBIT_TRANS) ){ //転送型
+    GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys, id, 1 );
+  }else{ //常駐型
+    blact_DelTexResource( pBlActCont->pBbdActSys, id );
+  }
+  
   IDCodeIndex_DeleteCode( &pBlActCont->BBDResUnitIdx, obj_code );
 }
 
@@ -1479,7 +1542,7 @@ static void BlActAddReserve_Init( MMDL_BLACTCONT *pBlActCont )
       heapID, sizeof(ADDACT_RESERVE)*pReserve->actMax );
   pReserve->pReserveDelRes = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(DELRES_RESERVE)*pReserve->resMax );
-  
+
   pReserve->funcFlag = TRUE;
   pBlActCont->pReserve = pReserve;
 }
@@ -1516,7 +1579,7 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
       }
       GFL_HEAP_FreeMemory( pReserve->pReserveRes );
     }
-    
+
     { //削除リソース
       DELRES_RESERVE *pDelRes = pReserve->pReserveDelRes;
       for( i = 0; i < pReserve->resMax; i++, pDelRes++ ){
@@ -1528,7 +1591,7 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
       }
       GFL_HEAP_FreeMemory( pReserve->pReserveDelRes );
     }
-    
+
     { //アクター
       ADDACT_RESERVE *pRes = pReserve->pReserveAct;
       for( i = 0; i < pReserve->actMax; i++, pRes++ ){
@@ -1699,7 +1762,7 @@ static BOOL BlActAddReserve_RegistResource( MMDL_BLACTCONT *pBlActCont,
       pRes->tex_size = tex_size;
       pRes->flag = flag;
       pRes->pG3dRes = GFL_G3D_CreateResourceHandle(
-          MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), res_idx );
+            MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), res_idx );
       
       pRes->compFlag = TRUE;
       
@@ -1719,7 +1782,7 @@ static BOOL BlActAddReserve_RegistResource( MMDL_BLACTCONT *pBlActCont,
   GF_ASSERT_MSG( 0,
       "MMDL BLACT RESERVE REG RES MAX:CODE %d", code );
 #else
-  D_MMDL_Printf( 0,
+  D_MMDL_Printf(
       "MMDL BLACT RESERVE REG RES MAX:CODE %d", code );
 #endif
   
@@ -1811,7 +1874,7 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
           #endif
         }
       }
-      
+
       if( pBlActCont->bbdUpdateFlag ){ //リソース削除
         DELRES_RESERVE *pDelRes = pReserve->pReserveDelRes;
         
@@ -2113,7 +2176,7 @@ static void BlActAddReserve_DigestActorCore(
     *(pRes->outID) = blact_SetResActorCore( pBlActCont->mmdlsys,
         &pRes->user_add_pos, pRes->mdl_size, pRes->anm_id, resID, transID );
   }
-      
+   
   if( pRes->user_init_proc != NULL ){ //ユーザー指定初期化処理呼び出し
     pRes->user_init_proc( *pRes->outID, pRes->user_init_work );
   }
@@ -2634,25 +2697,34 @@ static GFL_BBDACT_RESUNIT_ID BlActRes_AddResCore(
     GFL_G3D_RES *g3dres, GFL_BBDACT_RESTYPE type )
 {
   GFL_BBDACT_RESUNIT_ID id;
-  GFL_BBDACT_G3DRESDATA data;
   
-  data.g3dres = g3dres;
-  data.texFmt = GFL_BBD_TEXFMT_PAL16;
-  data.texSiz = data_BBDTexSizeTbl[tex_size];
-  
+  if( type == GFL_BBDACT_RESTYPE_NORESOURCE ) //リソースを保持しないタイプ
   {
-    const u16 *size = DATA_MMDL_BLACT_MdlSize[mdl_size];
-    data.celSizX = size[0];
-    data.celSizY = size[1];
-    #if 0   
-    D_MMDL_DPrintf( "テクスチャリソース追加 セルサイズ X=%d,Y=%d\n",
-        data.celSizX, data.celSizY );
-    #endif
+    id = blact_AddTransTexResourceFile(
+        pBlActCont->pBbdActSys, g3dres, mdl_size, tex_size );
   }
+  else //転送リソース
+  {
+    GFL_BBDACT_G3DRESDATA data;
   
-  data.dataCut = type;
+    data.g3dres = g3dres;
+    data.texFmt = GFL_BBD_TEXFMT_PAL16;
+    data.texSiz = data_BBDTexSizeTbl[tex_size];
   
-  id = GFL_BBDACT_AddResourceG3DResUnit( pBlActCont->pBbdActSys, &data, 1 );
+    {
+      const u16 *size = DATA_MMDL_BLACT_MdlSize[mdl_size];
+      data.celSizX = size[0];
+      data.celSizY = size[1];
+      #if 0   
+      D_MMDL_DPrintf( "テクスチャリソース追加 セルサイズ X=%d,Y=%d\n",
+          data.celSizX, data.celSizY );
+      #endif
+    }
+  
+    data.dataCut = type;
+  
+    id = GFL_BBDACT_AddResourceG3DResUnit( pBlActCont->pBbdActSys, &data, 1 );
+  }
   
   D_MMDL_DPrintf( "MMDL ADD RESOURCE CODE=%d,RESID=%d\n", code, id );
   return( id );
