@@ -580,6 +580,11 @@ static int MainSeq_Init( START_MENU_WORK * wk )
 	}
 #endif	// PM_DEBUG
 
+	// ゲームシンク設定
+	if( DREAMWORLD_SV_GetAccount( DREAMWORLD_SV_GetDreamWorldSaveData(wk->savedata) ) == TRUE ){
+		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_GAMESYNC, MISC_STARTMENU_FLAG_VIEW );
+	}
+
 	// 表示初期化
 	GFL_DISP_GX_SetVisibleControlDirect( 0 );
 	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
