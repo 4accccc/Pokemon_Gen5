@@ -2394,7 +2394,7 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
     POKE_GTS_InitEruptedIconResource(pWork);
 
     if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
-//      GFL_NET_DWC_pausevchat(FALSE);
+      GFL_NET_DWC_pausevchat(FALSE);
     }
     
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_01, pWork->pMessageStrBuf );
@@ -2564,9 +2564,9 @@ static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
   GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
 
 
-//  if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
-//    GFL_NET_DWC_pausevchat(TRUE);
-//  }
+  if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
+    GFL_NET_DWC_pausevchat(TRUE);
+  }
   
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
