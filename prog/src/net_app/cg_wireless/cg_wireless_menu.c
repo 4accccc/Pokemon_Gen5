@@ -832,6 +832,7 @@ static void _modeFadeoutStart(CG_WIRELESS_MENU* pWork)
 
   if(pWork->selectType == CG_WIRELESS_RETURNMODE_TV){
     if(GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(pWork->gsys)) != GAME_COMM_NO_NULL){
+      NET_WHPIPE_SetBeaconCatchFunc(NULL,NULL);
       GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
     }
   }
