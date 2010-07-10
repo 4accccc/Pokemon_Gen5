@@ -211,6 +211,16 @@ void APP_TASKMENU_CloseMenu( APP_TASKMENU_WORK *work )
 
   frm = GFL_BMPWIN_GetFrame(work->menuWin[0]);
 
+  //キューが残ったままBMPWINをクリアしてしまうのを防ぐため
+  //処理が残っていた場合は処理をすすめる
+  for(i=0;i<work->initWork.itemNum;i++)
+  {
+    while( PRINTSYS_QUE_IsExistTarget( work->res->printQue, GFL_BMPWIN_GetBmp(work->menuWin[i] ) ) )
+    {
+      PRINTSYS_QUE_Main( work->res->printQue );
+    }
+  }
+
   for(i=0;i<work->initWork.itemNum;i++)
   {
     GFL_BMPWIN_ClearScreen( work->menuWin[i] );
