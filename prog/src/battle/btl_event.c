@@ -288,7 +288,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
         newFactor->prev = NULL;
         FirstFactorPtr = newFactor;
         BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactor_Case1,
-          FirstFactorPtr->next->dependID, FirstFactorPtr->next->factorType, FirstFactorPtr );
+          FirstFactorPtr->next->dependID, FirstFactorPtr->next->factorType, FirstFactorPtr->next );
       }
       // それ以外はふつうのリンクリスト接続
       else
@@ -394,14 +394,6 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
     {
       factor->next->prev = factor->prev;
     }
-
-    if( (factor->dependID == 0) && (factor->factorType==0) ){
-      TAYA_Printf("0-0だ\n");
-    }
-    if( (factor->dependID == 14) && (factor->factorType==5) ){
-      TAYA_Printf("14-5だ\n");
-    }
-
 
     BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelFactor, factor->dependID, factor->factorType, factor,
             factor->prev, factor->next );
@@ -778,9 +770,11 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
         factor = factor->next;
       }
 
+      /*
       if( factor ){
         BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_NextFactorInfo2, factor->dependID, factor->factorType, factor );
       }
+      */
 
     }
     else{
