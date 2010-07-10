@@ -553,21 +553,25 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
           switch( p_errorinfo->result )
           {
           case GDSRAP_SP_ERR_NHTTP_400:
+            PMSND_StopSE();
             NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_400 );
             ret = BR_NET_ERR_RETURN_DISCONNECT;
             break;
 
           case GDSRAP_SP_ERR_NHTTP_401:
+            PMSND_StopSE();
             NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_401 );
             ret = BR_NET_ERR_RETURN_DISCONNECT;
             break;
 
           case GDSRAP_SP_ERR_NHTTP_TIMEOUT:
+            PMSND_StopSE();
             NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_TIMEOUT );
             ret = BR_NET_ERR_RETURN_DISCONNECT;
             break;
 
           case GDSRAP_SP_ERR_NHTTP_ETC:
+            PMSND_StopSE();
             NetErr_App_ReqErrorDispForce( NHTTP_RESPONSE_ETC );
             ret = BR_NET_ERR_RETURN_DISCONNECT;
             break;
