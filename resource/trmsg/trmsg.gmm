@@ -8777,7 +8777,7 @@
 	<row id="TRID_FANM_07_TRMSG_FIGHT_START_2">
 		<language name="JPN" width="216">セイッ！▼
 みたか　ボクの　ひっさつサーブ！▼
-だが　ケモンしょうぶは
+だが　ポケモンしょうぶは
 もっと　すごいよ！▼</language>
 		<language name="JPN_KANJI" width="216">セイッ！▼
 見たか　ボクの　必殺サーブ！▼
@@ -9449,11 +9449,11 @@
 	</row>
 
 	<row id="TRID_FANM_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">テツ『ストラーーイク！！
+		<language name="JPN" width="216">カツ『ストラーーイク！！
 ゲームセット！　はい　おわり！▼
 ゴウ『ああっ　ぼくの
 モンスターボールっっ！</language>
-		<language name="JPN_KANJI" width="216">テツ『ストラーーイク！！
+		<language name="JPN_KANJI" width="216">カツ『ストラーーイク！！
 ゲームセット！　はい　終わり！▼
 ゴウ『ああっ　ぼくの
 モンスターボールっっ！</language>
