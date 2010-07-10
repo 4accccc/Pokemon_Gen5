@@ -245,7 +245,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     {
       newFactor->priority = calcFactorPriority( mainPri, subPri );
 
-      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactorInfo, factorType, dependID, newFactor->priority, newFactor );
+      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactorInfo, dependID, factorType, newFactor->priority, newFactor );
 
       newFactor->factorType = factorType;
       newFactor->prev = NULL;
@@ -278,6 +278,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
       if( FirstFactorPtr == NULL )
       {
         FirstFactorPtr = newFactor;
+        BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactor_Case0 );
       }
       // 現在先頭より高プライオリティ
       else if( newFactor->priority > FirstFactorPtr->priority )
@@ -286,6 +287,8 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
         newFactor->next = FirstFactorPtr;
         newFactor->prev = NULL;
         FirstFactorPtr = newFactor;
+        BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactor_Case1,
+          FirstFactorPtr->next->dependID, FirstFactorPtr->next->factorType, FirstFactorPtr );
       }
       // それ以外はふつうのリンクリスト接続
       else
@@ -301,6 +304,10 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
             newFactor->prev = find->prev;
             find->prev->next = newFactor;
             find->prev = newFactor;
+            BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactor_Case2,
+                   newFactor->prev->dependID, newFactor->prev->factorType, newFactor->prev,
+                   newFactor->dependID, newFactor->factorType, newFactor,
+                   find->dependID, find->factorType, find );
             break;
           }
           last = find;
@@ -310,6 +317,11 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
         {
           last->next = newFactor;
           newFactor->prev = last;
+          BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactor_Case3,
+                   last->dependID, last->factorType, last,
+                   newFactor->dependID, newFactor->factorType, newFactor,
+                   newFactor->next, FirstFactorPtr
+                 );
         }
       }
       BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_AddFactor,
@@ -358,36 +370,44 @@ void BTL_EVENT_RemoveIsolateFactors( void )
 //=============================================================================================
 void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
-  if( factor->callingFlag )
+  if( (factor!=NULL) && (factor->existFlag) )
   {
-    if( factor!=NULL ){
+    if( factor->callingFlag )
+    {
       BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelReserveFactor,
               factor->dependID, factor->factorType, factor );
+      factor->rmReserveFlag = TRUE;
+      return;
     }
-    factor->rmReserveFlag = TRUE;
-    return;
+
+    if( factor == FirstFactorPtr )
+    {
+      FirstFactorPtr = factor->next;
+    }
+
+    if( factor->prev )
+    {
+      factor->prev->next = factor->next;
+    }
+
+    if( factor->next )
+    {
+      factor->next->prev = factor->prev;
+    }
+
+    if( (factor->dependID == 0) && (factor->factorType==0) ){
+      TAYA_Printf("0-0だ\n");
+    }
+    if( (factor->dependID == 14) && (factor->factorType==5) ){
+      TAYA_Printf("14-5だ\n");
+    }
+
+
+    BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelFactor, factor->dependID, factor->factorType, factor,
+            factor->prev, factor->next );
+    printLinkDebug();
+    popFactor( factor );
   }
-
-  if( factor == FirstFactorPtr )
-  {
-    FirstFactorPtr = factor->next;
-  }
-
-  if( factor->prev )
-  {
-    factor->prev->next = factor->next;
-  }
-
-  if( factor->next )
-  {
-    factor->next->prev = factor->prev;
-  }
-
-
-  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelFactor, factor->dependID, factor->factorType, factor,
-          factor->prev, factor->next );
-  printLinkDebug();
-  popFactor( factor );
 }
 
 //=============================================================================================
@@ -757,11 +777,11 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
       }else{
         factor = factor->next;
       }
-      /*
+
       if( factor ){
         BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_NextFactorInfo2, factor->dependID, factor->factorType, factor );
       }
-      */
+
     }
     else{
       break;

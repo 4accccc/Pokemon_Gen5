@@ -379,7 +379,6 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SC_ReserveCmd:            return " -> reserved cmd=%d, size=%d, rp=%d\n";
 
 
-  case DBGSTR_EVENT_AddFactorInfo:      return "AddNewFactor type=%x, dependID=%d, pri=%d, adrs=%p\n";
   case DBGSTR_EVENT_RmvFactorCalling:   return " ŒÄ‚Ño‚µ’†‚Éíœ‚³‚ê‚½Factor Depend-Type = [%2d-%d], adrs=%p\n";
   case DBGSTR_EVENT_CallFactorStart:    return " ** %p ŒÄ‚Ño‚µŠJŽn Depend-Type = [%2d-%d] **\n";
   case DBGSTR_EVENT_CheckFactorStart:   return "ŒÄ‚Ño‚µƒe[ƒuƒ‹ƒ`ƒFƒbƒN type=%d, dependID=%d, numHandlers=%d, eventID=%d\n";
@@ -393,9 +392,16 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EVENT_NextFactorInfo:     return "   ŽŸ‚Éƒ`ƒFƒbƒN‚·‚é—v‘f Depend-Type = [%2d-%d], adrs=%p\n";
   case DBGSTR_EVENT_NextFactorInfo2:    return " ..next, Depend-Type = [%2d-%d], adrs=%p\n";
 
-  case DBGSTR_EV_AddFactor:             return "[ADD] Depend-Type = [%2d-%d] Factor=%p, Pri=%06x [ADD]\n";
+  case DBGSTR_EVENT_AddFactorInfo:      return "[ADD-0] DependType=[%2d-%d]  pri=%08x, adrs=%p\n";
+  case DBGSTR_EVENT_AddFactor_Case0:    return "  Å‰‚Ì“o˜^\n";
+  case DBGSTR_EVENT_AddFactor_Case1:    return "  æ“ª‚Ö‚Ì“o˜^FŽŸ‚Ì—v‘f = [%2d-%d:%p]\n";
+  case DBGSTR_EVENT_AddFactor_Case2:    return "  “r’†‚Ö‚Ì“o˜^F[%2d-%d:%p]->[%2d-%d:%p]->[%2d-%d:%p]\n";
+  case DBGSTR_EVENT_AddFactor_Case3:    return "  ––”ö‚Ö‚Ì“o˜^F[%2d-%d:%p]->[%2d-%d:%p]->%p, ..FirstFactor=%p\n";
+
+
+  case DBGSTR_EV_AddFactor:             return "[ADD-2] Depend-Type = [%2d-%d] Factor=%p, Pri=%08x\n";
   case DBGSTR_EV_DelFactor:             return "[DEL] Depend-Type = [%2d-%d] Factor=%p, prev=%p, next=%p\n";
-  case DBGSTR_EV_DelReserveFactor:      return "[DeR] Depend-Type = [%2d-%d] Factor=%p\n";
+  case DBGSTR_EV_DelReserveFactor:      return "[Drq] Depend-Type = [%2d-%d] Factor=%p\n";
   case DBGSTR_EV_LinkInfoHeader:        return "***** [[EV Chain]] *****\n";
   case DBGSTR_EV_LinkInfoFooder:        return "************************\n\n";
   case DBGSTR_EV_LinkPtr:               return "%p->";
