@@ -13,6 +13,10 @@
 //======================================================================
 //	typedef struct
 //======================================================================
+//確保するサイズ(256セーブ全体フッタ・4ブロックフッタ
+#define MUSICAL_DIST_SAVE_SIZE ((128*1024)-(256+4))
+//Allocするサイズ
+#define MUSICAL_DIST_SAVE_WORK_SIZE (128*1024)
 
 typedef struct _MUSICAL_DIST_SAVE MUSICAL_DIST_SAVE;
 
