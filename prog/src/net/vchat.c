@@ -864,6 +864,8 @@ BOOL myvct_DelConference(int myAid)
 
 void VCHAT_PauesFlg(BOOL bPause)
 {
-  _vWork->pauseFlg=bPause;
+  if(_vWork){
+    _vWork->pauseFlg=bPause;
+  }
 }
 
