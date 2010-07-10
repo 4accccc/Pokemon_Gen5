@@ -237,8 +237,8 @@ while index <= PROGRAM_NUM
     print( "アーカイブを作成しました。\n" )
     print( "Name[" + narcFileName + "]\n" )
     print( "Size[" + state.size.to_s + "byte(" + ((state.size/1024).to_i).to_s + "kb)]\n" )
-    if( state.size > 128*1024 -(4+24))
-      #CRCで4・セーブのフッターで24
+    if( state.size > 127*1024 -(4+16))
+      #CRCで4・データのヘッダーで16
       print( "------------------------\n" )
       print( "サイズオーバーです！！！\n" )
       print( "------------------------\n" )
