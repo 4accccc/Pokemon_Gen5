@@ -8840,9 +8840,9 @@ static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Michidure( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Michidure_Ready        },  // 未分類ワザハンドラ
-    { BTL_EVENT_ACTPROC_START,       handler_Michidure_ActStart     },  // アクション処理開始ハンドラ
-    { BTL_EVENT_WAZA_DMG_REACTION,   handler_Michidure_WazaDamage   },  // ワザダメージ処理後
+    { BTL_EVENT_UNCATEGORIZE_WAZA,     handler_Michidure_Ready        },  // 未分類ワザハンドラ
+    { BTL_EVENT_ACTPROC_START,         handler_Michidure_ActStart     },  // アクション処理開始ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION_L2,  handler_Michidure_WazaDamage   },  // ワザダメージ処理後
 
 // ターンチェックで消えると後攻で無意味なワザになるのでマズい
 //    { BTL_EVENT_TURNCHECK_BEGIN,     handler_Michidure_TurnCheck  },  // ターンチェック開始ハンドラ
@@ -8909,13 +8909,8 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     }
   }
 }
-// ターンチェック開始ハンドラ
-static void handler_Michidure_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
-    BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
-  }
-}
+
+
 //----------------------------------------------------------------------------------
 /**
  * おんねん
