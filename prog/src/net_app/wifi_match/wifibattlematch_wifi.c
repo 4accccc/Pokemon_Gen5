@@ -3392,15 +3392,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
       if( is_disconnect )
       {
-        const GFL_NETSTATE_DWCERROR* cp_error =GFL_NET_StateGetWifiError();
-        if( cp_error->errorUser == 0 )
-        {
-          GFL_NET_StateSetWifiError( 
-              cp_error->errorCode, 
-              cp_error->errorType, 
-              cp_error->errorRet, 
-              ERRORCODE_DISCONNECT );
-        }
+        WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+        DWC_CloseAllConnectionsHard();
       }
 
       //ƒGƒ‰[

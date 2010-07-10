@@ -1091,12 +1091,34 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
     {
       int ret;
 #if 1
-      if(GFL_NET_STATE_MATCHED == GFL_NET_StateGetWifiStatus())
+      switch( GFL_NET_StateGetWifiStatus() )
       {
+      case GFL_NET_STATE_MATCHING:
+        /* マッチング中 */
+        {
+          const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+          if( cp_error->errorUser == ERRORCODE_TIMEOUT
+              || cp_error->errorUser == ERRORCODE_DISCONNECT )
+          {
+            WIFIBATTLEMATCH_NET_StartDisConnect( p_wk );
+            p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
+          }
+        }
+        break;
+
+      case GFL_NET_STATE_MATCHED:
         p_wk->cancel_select_timeout = 0;
         p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CONNECT_START;
         GFL_NET_SetAutoErrorCheck(TRUE);
         GFL_NET_SetNoChildErrorCheck(TRUE);
+        break;
+      
+      default:
+        DEBUG_NET_Printf( "マッチングに失敗　line %d\n", __LINE__ );
+
+        WIFIBATTLEMATCH_NET_StartDisConnect( p_wk );
+        p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
+        break;
       }
 #else
       ret = GFL_NET_DWC_GetStepMatchResult();
@@ -1193,7 +1215,8 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
 
       { 
         const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-        if( cp_error->errorUser == ERRORCODE_TIMEOUT )
+        if( cp_error->errorUser == ERRORCODE_TIMEOUT
+            || cp_error->errorUser == ERRORCODE_DISCONNECT )
         {
           GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
           GFL_NET_StateResetError();      //NET内エラー情報クリア
@@ -1273,10 +1296,16 @@ BOOL WIFIBATTLEMATCH_NET_WaitDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk )
   {
   case SEQ_START_INIT_TIMEING:
     WIFIBATTLEMATCH_NET_StartTiming( p_wk, WIFIBATTLEMATCH_NET_TIMINGSYNC_DISCONNECT_INIT );
+
+    p_wk->async_timeout = 0;
     p_wk->disconnect_seq++;
     break;
   case SEQ_WAIT_INIT_TIMEING:
     if( WIFIBATTLEMATCH_NET_WaitTiming( p_wk ) )
+    {
+      p_wk->disconnect_seq++;
+    }
+    else if( p_wk->async_timeout++ > 60*10 )
     {
       p_wk->disconnect_seq++;
     }
