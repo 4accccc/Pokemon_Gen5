@@ -38,6 +38,7 @@
 #define CHARGE_PER_LEVEL   (100) // 1レベル毎の引き取り料金
 #define EXP_PER_WALK         (1) // 歩くたびに加算する経験値
 #define EGG_CHECK_INTERVAL (256) // 産卵判定の頻度
+#define MAX_LEVEL          (100)
 
 // 相性(タマゴができる確率[%])
 #define LOVE_LV_GOOD   (70)  // 「とっても よい ようじゃ」
@@ -549,13 +550,14 @@ static u32 CalcExpAdd( u32 exp1, u32 exp2 )
 static void GrowUpPokemon( POKEMON_PARAM* poke, u32 addExp )
 {
   int i;
-  u32 monsno, formno, exp;
+  u32 monsno, formno, exp, max_exp;
   int before_lv, after_lv;
   POKEPER_WAZAOBOE_CODE waza_table[POKEPER_WAZAOBOE_TABLE_ELEMS];
 
   // 基本情報を取得
   monsno = PP_Get( poke, ID_PARA_monsno, NULL );
   formno = PP_Get( poke, ID_PARA_form_no, NULL );
+  max_exp = POKETOOL_GetMinExp( monsno, formno, MAX_LEVEL );
 
   // 預かった当時のレベルを取得
   before_lv = PP_Get( poke, ID_PARA_level, NULL ); 
@@ -563,6 +565,9 @@ static void GrowUpPokemon( POKEMON_PARAM* poke, u32 addExp )
   // 経験値を加算し, パラメータを再計算
   exp = PP_Get( poke, ID_PARA_exp, NULL );
   exp = CalcExpAdd( exp, addExp );
+  if( max_exp < exp ) {
+    exp = max_exp;
+  }
   PP_Put( poke, ID_PARA_exp, exp );
   PP_Renew( poke );
 
