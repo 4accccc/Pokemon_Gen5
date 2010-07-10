@@ -199,9 +199,50 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
   
   //エンカウントデータチェック
-  if( enc->encdata == NULL || !enc->encdata->enable_f ){
+  if( enc == NULL || enc->encdata == NULL || !enc->encdata->enable_f ){
     return;
   }
+  /*
+   *  GF-BTS1949対策　ゾーンチェック
+   *  地続きゾーンの境目で自転車のスピードで侵入すると、
+   *  Mmdlの座標更新&一歩移動イベント起動チェックタイミングより
+   *  最大4f(60fps)遅れてゾーンデータ更新がかかるため、自機mmdlの現在地点のzone_idと
+   *  FIELDMAP_WORK->locationが保持しているゾーンIDが異なるタイミングがある
+   *
+   *  この時エンカウントデータを参照すると色々マズイので、現地点のzone_idと
+   *  フィールドワークが保持しているzone_idをチェックして、ずれていたらFALSEで帰る
+   */
+  {
+    u16 location_zone, mmdl_zone;
+    MAP_MATRIX* mtx = GAMEDATA_GetMapMatrix( enc->gdata );
+    MMDL* mmdl;
+    VecFx32 mmdl_pos;
+
+    if( enc->fwork == NULL || mtx == NULL ){
+      GF_ASSERT(0);
+      return;
+    }
+
+    location_zone = FIELDMAP_GetZoneID( enc->fwork );
+    mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( enc->fwork ) );
+    MMDL_GetVectorPos( mmdl, &mmdl_pos );
+	
+    if( MAP_MATRIX_CheckVectorPosRange( mtx, mmdl_pos.x,mmdl_pos.z) == FALSE ){
+      return;
+    }
+		mmdl_zone = MAP_MATRIX_GetVectorPosZoneID( mtx, mmdl_pos.x, mmdl_pos.z );
+		
+		//IDが無い場合はFALSE
+		if( location_zone == MAP_MATRIX_ZONE_ID_NON ||
+        mmdl_zone == MAP_MATRIX_ZONE_ID_NON ){
+      return;
+    }
+    //IDがずれていないかチェック
+		if( location_zone != mmdl_zone ){
+      IWASAWA_Printf("EffEncChk ZoneID CheckFailed loc=%d, mmdl=%d\n",location_zone, mmdl_zone);
+		  return;
+    }
+  } 
 
   //最初のジムバッジ入手前は起動しない
   if( !MISC_GetBadgeFlag( GAMEDATA_GetMiscWork(enc->gdata), BADGE_ID_01 )){
@@ -573,10 +614,6 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   FLDMAPPER_GRIDINFODATA gridData;
   const FLDMAPPER* g3dMapper = (const FLDMAPPER*)FIELDMAP_GetFieldG3Dmapper( enc->fwork ); 
 
-#ifdef DEBUG_ONLY_FOR_iwasawa
-  OSTick start_tick,end_tick;
-#endif
-
   MI_CpuClear8(&eff_wk->attr_map,sizeof(EFFENC_ATTR_MAP));
   vec.y = 0;
   blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
@@ -586,16 +623,9 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   }
   //検索領域取得
   effect_SearchAreaGet( enc, eff_wk, &esw );
-/*
   IWASAWA_Printf("EffSearch\nPlayer(%d,%d), x(%d～%d), z(%d～%d)\n",
       esw.player_x,esw.player_z,esw.sx,esw.ex,esw.sz,esw.ez);
-*/
 
-#ifdef DEBUG_ONLY_FOR_iwasawa
-  start_tick = OS_GetTick();
-#endif
-  
- 
   vec.z = FX32_CONST(esw.sz*16)+FX32_CONST(8);
   vx = FX32_CONST(esw.sx*16)+FX32_CONST(8);
 
@@ -615,12 +645,6 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
     }
     vec.z += FX32_CONST(16); 
   }
-#ifdef DEBUG_ONLY_FOR_iwasawa
-  {
-    end_tick = OS_GetTick()-start_tick;
-    IWASAWA_Printf("EncEffAttrSearch tick = %d count %d\n",end_tick,eff_wk->attr_map.count);
-  }
-#endif
 }
 
 /*
