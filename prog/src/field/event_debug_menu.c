@@ -3370,6 +3370,7 @@ static BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk )
   GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_menu_wifinote) );
   DEBUG_EntryWifiNote( wk->gmSys );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_menu_wifinote) );
+  return FALSE;
 }
 
 //======================================================================
