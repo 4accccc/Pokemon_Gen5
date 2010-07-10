@@ -10,10 +10,12 @@
 #pragma once
 
 #include "gamesystem/game_data.h"
+
+//ミュージカル配信のダウンロード実サイズ
+#define MUSICAL_DIST_SAVE_DL_SIZE ((127*1024)-(2-16))
 //======================================================================
 //	typedef struct
 //======================================================================
-
 typedef struct _MUSICAL_DIST_SAVE MUSICAL_DIST_SAVE;
 
 
