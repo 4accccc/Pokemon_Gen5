@@ -693,8 +693,21 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     }
   }
 
-  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
-                                pWork->pFriend);
+  {
+    int nation,nation2;
+    int area,area2;
+
+    nation = MyStatus_GetMyNation(pWork->pFriend);
+    area = MyStatus_GetMyArea(pWork->pFriend);
+    nation2 = WIFI_COUNTRY_GetNGTestCountryCode(nation, area, MyStatus_GetRegionCode(pWork->pFriend));
+    area2 = WIFI_COUNTRY_GetNGTestLocalCode(nation, area, MyStatus_GetRegionCode(pWork->pFriend));
+
+    if(!((nation == nation2) && (area == area2))){
+      MyStatus_SetMyNationArea( pWork->pFriend, 0, 0);
+    }
+    WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
+                                  pWork->pFriend);
+  }
 
   {
     WIFI_HISTORY* pWH = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(pWork->pGameData));
