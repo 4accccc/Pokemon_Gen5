@@ -2481,7 +2481,6 @@ static void _touchState_BeforeTimeing14(POKEMON_TRADE_WORK* pWork)
 
 static void _touchState_BeforeTimeing13(POKEMON_TRADE_WORK* pWork)
 {
-  OS_TPrintf("xxx++ %d \n",OS_GetVBlankCount());
   _createEasyPokeInfo(pWork, pWork->anmCount-1);  //ポケモン情報
 
   if(pWork->anmCount >= BOX_MAX_TRAY){
@@ -2491,9 +2490,6 @@ static void _touchState_BeforeTimeing13(POKEMON_TRADE_WORK* pWork)
 
 static void _touchState_BeforeTimeing12(POKEMON_TRADE_WORK* pWork)
 {
-#if PM_DEBUG
-  OS_TPrintf("++++ %d \n",OS_GetVBlankCount());
-#endif
   if(PokemonTrade_SetMyPokeColor(pWork, pWork->anmCount-1)){  //色設定
     pWork->anmCount=0;
     _CHANGE_STATE(pWork, _touchState_BeforeTimeing13);
@@ -2525,10 +2521,8 @@ static void _touchState_BeforeTimeing1Send(POKEMON_TRADE_WORK* pWork)
 //両者タイミングそろえ
 static void _touchState_BeforeTimeing12Send(POKEMON_TRADE_WORK* pWork)
 {
+ // OS_TPrintf("pWork->anmCount %d\n", pWork->anmCount);
   POKEMONTRADE_PokeIconCgxLoad( pWork, pWork->anmCount-1 );
-#if PM_DEBUG
-  OS_TPrintf("++**++ %d \n",OS_GetVBlankCount());
-#endif
   if(pWork->anmCount > BOX_MAX_TRAY+1){
     IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
     _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
@@ -4035,7 +4029,7 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
   int i;
   
   for(i=0;i<elementof(pWork->TempBuffer);i++){
-    pWork->TempBuffer[i] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
+    pWork->TempBuffer[i] = GFL_HEAP_AllocClearMemory( HEAPID_POKEMONTRADE_STATIC, POKETOOL_GetWorkSize() );
   }
 
   if(pGameData){
@@ -4388,7 +4382,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
   }
 
-#if DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_ibe_mana
+#if 0 //DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_ibe_mana
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );  
   DEBUG_PAUSE_SetEnable( TRUE );
 #endif

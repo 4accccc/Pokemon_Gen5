@@ -1282,12 +1282,15 @@ void  POKEMONTRADE_PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork,int count )
   int i,j,id,k=0;
   NNSG2dCharacterData* pCharData;
   void* pMem;
-  ARCHANDLE * pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, pWork->heapID );
+  ARCHANDLE * pokeicon_ah;
 
   if(count == 0){
+//    OS_TPrintf("Šm•Û\n");
     pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*(BOX_POKESET_MAX+TEMOTI_POKEMAX) );
   }
-  
+
+  pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, pWork->heapID );
+
   for(i = count;i < BOX_MAX_TRAY+1;i++){
     k = i * BOX_MAX_POS;
     for( j = 0 ; j < BOX_MAX_POS ; j++ ){
