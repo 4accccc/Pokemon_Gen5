@@ -830,9 +830,9 @@ static void _modeFadeoutStart(CG_WIRELESS_MENU* pWork)
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
+  NET_WHPIPE_SetBeaconCatchFunc(NULL,NULL);
   if(pWork->selectType == CG_WIRELESS_RETURNMODE_TV){
     if(GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(pWork->gsys)) != GAME_COMM_NO_NULL){
-      NET_WHPIPE_SetBeaconCatchFunc(NULL,NULL);
       GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
     }
   }
@@ -1801,8 +1801,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   if(!WIPE_SYS_EndCheck()){
     return GFL_PROC_RES_CONTINUE;
   }
-  NET_WHPIPE_SetBeaconCatchFunc(NULL,NULL);
-
+  if(GFL_NET_IsInit()){
+    NET_WHPIPE_SetBeaconCatchFunc(NULL,NULL);
+  }
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
 
