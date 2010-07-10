@@ -2789,6 +2789,26 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         p_wk->match_timeout = 0;
       }
     }
+    else
+    {
+      //待機中でエラー
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        p_wk->cancel_seq  = 0;
+        Util_List_Delete( p_wk );
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+        break;
+
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        Util_List_Delete( p_wk );
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+        break;
+      } 
+    }
     break;
   case SEQ_WAIT_SENDDATA:
     {
@@ -2878,24 +2898,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       
       if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       {
-        //下記エラーでマッチングタイムアウトを行わず、ここで独自に行うのは、
-        //エラー画面を出さないためです
-        if( GFL_NET_IsInit() )
-        { 
-          const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-          if( cp_error->errorUser == ERRORCODE_TIMEOUT ||
-              cp_error->errorUser == ERRORCODE_DISCONNECT )
-          { 
-            *p_seq  = SEQ_START_CANCEL;
-            GFL_NET_StateResetError();
-            GFL_NET_StateClearWifiError();
-            NetErr_ErrWorkInit();
-          }
-        }
-
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:       //戻る
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2923,24 +2929,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       *p_seq  = SEQ_CHECK_DIRTY_POKE;
     }
 
-    //下記エラーでマッチングタイムアウトを行わず、ここで独自に行うのは、
-    //エラー画面を出さないためです
-    if( GFL_NET_IsInit() )
-    { 
-      const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-      if( cp_error->errorUser == ERRORCODE_TIMEOUT ||
-          cp_error->errorUser == ERRORCODE_DISCONNECT )
-      { 
-        *p_seq  = SEQ_START_CANCEL;
-        GFL_NET_StateResetError();
-        GFL_NET_StateClearWifiError();
-        NetErr_ErrWorkInit();
-      }
-    }
-
     //エラー
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
     {
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:       //戻る
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2987,6 +2979,26 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         p_wk->match_timeout = 0;
       }
     }
+    else
+    {
+      //待機中でエラー
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        p_wk->cancel_seq  = 0;
+        Util_List_Delete( p_wk );
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+        break;
+
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        Util_List_Delete( p_wk );
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+        break;
+      } 
+    }
     break;
   case SEQ_RECV_DIRTY_CHECK_DATA:
     if( WIFIBATTLEMATCH_NET_RecvDirtyCnt( p_wk->p_net, &p_wk->my_dirty_cnt ) )
@@ -3028,25 +3040,11 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         *p_seq  = SEQ_START_CANCEL_TIMING;
       }
 
-      //下記エラーでマッチングタイムアウトを行わず、ここで独自に行うのは、
-      //エラー画面を出さないためです
-      if( GFL_NET_IsInit() )
-      { 
-        const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-        if( cp_error->errorUser == ERRORCODE_TIMEOUT ||
-            cp_error->errorUser == ERRORCODE_DISCONNECT )
-        { 
-          *p_seq  = SEQ_START_CANCEL;
-          GFL_NET_StateResetError();
-          GFL_NET_StateClearWifiError();
-          NetErr_ErrWorkInit();
-        }
-      }
-
       { 
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -3394,9 +3392,16 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
       if( is_disconnect )
       {
-        *p_seq  = SEQ_START_CANCEL;
+        const GFL_NETSTATE_DWCERROR* cp_error =GFL_NET_StateGetWifiError();
+        if( cp_error->errorUser == 0 )
+        {
+          GFL_NET_StateSetWifiError( 
+              cp_error->errorCode, 
+              cp_error->errorType, 
+              cp_error->errorRet, 
+              ERRORCODE_DISCONNECT );
+        }
       }
-
 
       //エラー
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
@@ -5355,7 +5360,8 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL 
   case SEQ_SEND_CANCEL:
     if( can_disconnect )
     {
-      if( WIFIBATTLEMATCH_NET_SendMatchCancel( p_wk->p_net ) )
+      WIFIBATTLEMATCH_NET_SendMatchCancel( p_wk->p_net );
+
       {
         p_wk->cancel_seq++;
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );

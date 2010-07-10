@@ -4113,7 +4113,8 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_RND_WORK *p_wk, BOOL i
   case SEQ_SEND_CANCEL:
     if( can_disconnect )
     {
-      if( WIFIBATTLEMATCH_NET_SendMatchCancel( p_wk->p_net ) )
+      WIFIBATTLEMATCH_NET_SendMatchCancel( p_wk->p_net );
+
       {
         p_wk->cancel_seq++;
 
