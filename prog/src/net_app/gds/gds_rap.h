@@ -285,6 +285,8 @@ extern BOOL GDSRAP_MoveStatusAllCheck(GDS_RAP_WORK *gdsrap);
 extern BOOL GDSRAP_ErrorInfoGet(GDS_RAP_WORK *gdsrap, GDS_RAP_ERROR_INFO **error_info);
 extern void GDSRAP_ErrorInfoClear(GDS_RAP_WORK *gdsrap);
 
+extern void GDSRAP_DisconnectCallback(void* pUserWork, int code, int type, int ret );
+
 //--------------------------------------------------------------
 //	デバッグ用
 //--------------------------------------------------------------

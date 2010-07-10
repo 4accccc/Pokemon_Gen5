@@ -96,8 +96,6 @@ static BOOL RecvSubProccess_Normal(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_work);
 
-static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int ret );
-
 static BOOL GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx, int *p_client, int *p_temoti );
 static void GdsRap_NickNameCopy(const STRCODE *src, STRCODE *dest, int len);
 
@@ -149,8 +147,6 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	gdsrap->gdslib_initialize = TRUE;
 
 	gdsrap->comm_initialize_ok = TRUE;
-
-  GFL_NET_DWC_SetErrDisconnectCallback(GdsRap_DisconnectCallback, gdsrap );
 	
 	return TRUE;
 }
@@ -164,8 +160,6 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 //--------------------------------------------------------------
 void GDSRAP_Exit(GDS_RAP_WORK *gdsrap)
 {
-  GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL );
-
   if(gdsrap->p_nhttp != NULL){
     NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
     NHTTP_RAP_End( gdsrap->p_nhttp );
@@ -1022,7 +1016,7 @@ static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_w
  *	@param	ret         エラーリターン
  */
 //-----------------------------------------------------------------------------
-static void GdsRap_DisconnectCallback(void* pUserWork, int code, int type, int ret )
+void GDSRAP_DisconnectCallback(void* pUserWork, int code, int type, int ret )
 {
   GDS_RAP_WORK  *gdsrap = pUserWork;
 
@@ -1200,6 +1194,7 @@ void GDSRAP_ErrorInfoClear(GDS_RAP_WORK *gdsrap)
 {
 	GFL_STD_MemClear(&gdsrap->error_info, sizeof(GDS_RAP_ERROR_INFO));
 }
+
 
 //--------------------------------------------------------------
 /**

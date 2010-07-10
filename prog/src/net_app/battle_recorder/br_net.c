@@ -15,6 +15,7 @@
 #include "system/main.h"
 #include "system/net_err.h"
 #include "net/dwc_error.h"
+#include "net/dwc_rap.h"
 
 //サウンド（エラー時強制SE停止をするため）
 #include "sound/pm_sndsys.h"
@@ -67,6 +68,7 @@ struct _BR_NET_WORK
 { 
   
   GDS_RAP_WORK        gdsrap;         ///<GDSライブラリ、NitroDWC関連のワーク構造体
+  BOOL                is_init_gdsrap;
   GDS_PROFILE_PTR     p_gds_profile;  ///<GDSのプロフィール
   BR_NET_SEQ_WORK     *p_seq;         ///<状態管理
 
@@ -118,7 +120,7 @@ static void BR_NET_SEQ_SetReservSeq( BR_NET_SEQ_WORK *p_wk, int seq );
 static void BR_NET_SEQ_NextReservSeq( BR_NET_SEQ_WORK *p_wk );
 static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION seq_function );
 
-
+static void BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int ret );
 
 
 //----------------------------------------------------------------------------
@@ -158,6 +160,7 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heap
     gdsrap_data.response_callback.func_battle_video_favorite_regist  = Br_Net_Response_BattleVideoFavorite;
 
     GDSRAP_Init(&p_wk->gdsrap, &gdsrap_data);  //通信ライブラリ初期化
+    p_wk->is_init_gdsrap  = TRUE;
   }
 
   //GDSプロフィール
@@ -173,6 +176,8 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heap
     p_wk->p_seq = BR_NET_SEQ_Init( p_wk, Br_Net_Seq_Nop, heapID );
   }
 
+  GFL_NET_DWC_SetErrDisconnectCallback( BR_NET_DisconnectCallback, p_wk );
+
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -184,11 +189,18 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heap
 //-----------------------------------------------------------------------------
 void BR_NET_Exit( BR_NET_WORK *p_wk )
 { 
+  GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
+
   BR_NET_SEQ_Exit( p_wk->p_seq );
 
   GDS_Profile_FreeMemory( p_wk->p_gds_profile );
 
-  GDSRAP_Exit(&p_wk->gdsrap);
+  if( p_wk->is_init_gdsrap )
+  {
+    GDSRAP_Exit(&p_wk->gdsrap);
+    p_wk->is_init_gdsrap  = FALSE;
+  }
+
   GFL_HEAP_FreeMemory( p_wk );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
@@ -204,8 +216,11 @@ void BR_NET_Exit( BR_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void BR_NET_Main( BR_NET_WORK *p_wk )
 { 
-  BR_NET_SEQ_Main( p_wk->p_seq );
-  GDSRAP_Main(&p_wk->gdsrap);
+  if( p_wk->is_init_gdsrap )
+  {
+    BR_NET_SEQ_Main( p_wk->p_seq );
+    GDSRAP_Main(&p_wk->gdsrap);
+  }
 }
 //=============================================================================
 /**
@@ -1166,4 +1181,32 @@ static void BR_NET_SEQ_NextReservSeq( BR_NET_SEQ_WORK *p_wk )
 static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION seq_function )
 { 
   return cp_wk->seq_function  == seq_function;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  切断コールバック
+ *
+ *	@param	pUserWork ユーザーワーク
+ *	@param	code      エラーコード
+ *	@param	type      エラータイプ
+ *	@param	ret       エラーリターン
+ */
+//-----------------------------------------------------------------------------
+static void BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int ret )
+{
+  BR_NET_WORK *p_wk = pUserWork;
+
+  //GDS_RAPの切断コールバック処理
+  GDSRAP_DisconnectCallback( p_wk, code, type, ret );
+
+  //GDS_RAP削除
+  if( p_wk->is_init_gdsrap )
+  {
+    GDSRAP_Exit(&p_wk->gdsrap);
+    p_wk->is_init_gdsrap  = FALSE;
+  }
+  
+  //切断コールバックが２度呼ばれないように削除
+  GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
 }
