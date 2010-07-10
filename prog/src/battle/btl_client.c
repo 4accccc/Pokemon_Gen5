@@ -119,6 +119,7 @@ typedef struct {
   u8   fFadeOutDone    : 1;
   u8   fTurnIncrement  : 1;
   u8   fLock           : 1;
+  u8   fQuit           : 1;
   u16  handlingTimer;
   u16  turnCount;
   u16  nextTurnCount;
@@ -466,6 +467,7 @@ static BOOL RecPlayer_CheckChapterSkipEnd( const RECPLAYER_CONTROL* ctrl );
 static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl );
 static BOOL RecPlayerCtrl_Lock( RECPLAYER_CONTROL* ctrl );
 static void RecPlayerCtrl_Unlock( RECPLAYER_CONTROL* ctrl );
+static void RecPlayer_Quit( RECPLAYER_CONTROL* ctrl );
 static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl );
 static void AICtrl_Init( void );
 static void AICtrl_Delegate( BTL_CLIENT* wk );
@@ -1554,6 +1556,8 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
       {
         BTL_N_Printf( DBGSTR_CLIENT_ReadRecTimerOver, wk->myID );
 
+        RecPlayer_Quit( &wk->recPlayer );
+
         // 描画クライアントなのでメッセージ表示へ
         if( wk->viewCore )
         {
@@ -1572,6 +1576,8 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
       {
         BTL_N_Printf( DBGSTR_CLIENT_ReadRecError, wk->myID );
         wk->fRecPlayEndBufOver = TRUE;
+        RecPlayer_Quit( &wk->recPlayer );
+
         // 描画クライアントなのでメッセージ表示へ
         if( wk->viewCore )
         {
@@ -8647,6 +8653,7 @@ static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl )
   ctrl->fFadeOutDone = FALSE;
   ctrl->fChapterSkip = FALSE;
   ctrl->fLock = FALSE;
+  ctrl->fQuit = FALSE;
   ctrl->turnCount = 0;
   ctrl->nextTurnCount = 0;
   ctrl->maxTurnCount = 0;
@@ -8736,6 +8743,13 @@ static void RecPlayerCtrl_Unlock( RECPLAYER_CONTROL* ctrl )
   ctrl->fLock = FALSE;
 }
 /**
+ *  キー・タッチパネル操作終了（以降、復帰できない）
+ */
+static void RecPlayer_Quit( RECPLAYER_CONTROL* ctrl )
+{
+  ctrl->fQuit = TRUE;
+}
+/**
  *  メインコントロール（キー・タッチパネルに反応、状態遷移する）
  */
 static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
@@ -8746,6 +8760,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
   if( (wk->myType == BTL_CLIENT_TYPE_RECPLAY)
   &&  (ctrl->fLock == FALSE)
+  &&  (ctrl->fQuit == FALSE)
   &&  (ctrl->maxTurnCount)
   ){
     enum {
