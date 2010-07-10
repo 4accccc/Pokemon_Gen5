@@ -270,6 +270,7 @@ enum{
   WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT2,
   WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT3,
   WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT0,  //256個超えてはいけない
+  WIFIP2PMATCH_MODE_FRIENDLIST_MW_WAIT,
 };
 
 
@@ -515,22 +516,20 @@ struct _WIFIP2PMATCH_WORK{
   int						mode;									// 現在最前面の文字パネル
   int						timer;			// 待ち時間や、フラグなどに使用
   MYSTATUS                *pMyStatus;		// 自分のステータス
-  u8     mainCur;
-  u8     subCur;
   BOOL bInitMessage;		// 初回接続か
   GFL_PROC*		subProc;
-  u16 matchGameMode[WIFIP2PMATCH_MEMBER_MAX];   ///<CNM_WFP2PMF_STATUS
   int preConnect;			// 新しく来た友達(-1=なし)
+  u16 matchGameMode[WIFIP2PMATCH_MEMBER_MAX];   ///<CNM_WFP2PMF_STATUS
   u16 singleCur[_MENUTYPE_MAX];			// バトルタイプ選択メニューカーソル
-//  u16 singleCur[3];			// バトルの詳細部分のメニューカーソル
   u16 bSingle;				// SINGLEバトル　ダブルバトルスイッチ
+  u16 friendNo;			// 今つながっている友達ナンバー
+  u16 bRetryBattle;
+  u16 GameModeKeep;
+
   WIFIP2PMATCH_PROC_PARAM* pParentWork;
   WIFI_STATUS targetStatus;  //接続しようとしている人のステータス
   APP_PRINTSYS_COMMON_WORK trgWork;  //キーの制御を行うワーク
 
-  u16 friendNo;			// 今つながっている友達ナンバー
-  BOOL bRetryBattle;
-  int vctEnc;
 	WIFI_MATCHROOM matchroom;	// マッチングルームワーク
 	MCR_MOVEOBJ*	p_matchMoveObj[ MATCHROOM_IN_OBJNUM ];
 	WIFIP2PMATCH_ICON icon;	// アイコングラフィック
@@ -566,6 +565,8 @@ struct _WIFIP2PMATCH_WORK{
   u8 VChatModeOff;  //VCTOFFが呼ばれた
   u8 vchatrev;
   u8 nextSeq;
+  u8     mainCur;
+  u8     subCur;
 
   WIFIP2PMATCH_STATE state; //プレイヤーの状況
 };

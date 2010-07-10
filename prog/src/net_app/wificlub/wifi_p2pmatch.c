@@ -864,6 +864,7 @@ static int _modeTVT3YesNo( WIFIP2PMATCH_WORK* wk, int seq );
 static int _modeTVT3Wait( WIFIP2PMATCH_WORK* wk, int seq );
 static int _playerDirectInit0Next( WIFIP2PMATCH_WORK *wk, int seq );
 static void _FriendFloorInit( WIFIP2PMATCH_WORK *wk );
+static int _wifip2pmatch_mode_friendlist_mw_wait( WIFIP2PMATCH_WORK *wk, int seq );
 
 
 #include "wifi_p2pmatch_message.c"
@@ -1069,6 +1070,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectInit2Next,//WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT2
   _playerDirectInit3Next,//WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT3
   _playerDirectInit0Next, //WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT0
+  _wifip2pmatch_mode_friendlist_mw_wait, //WIFIP2PMATCH_MODE_FRIENDLIST_MW_WAIT
 
 };
 
@@ -4601,7 +4603,32 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   }
   FriendRequestWaitOn( wk, TRUE );       // 動作停止させる
-  _myStatusChange(wk, WIFI_STATUS_RECRUIT, ret );  //状態を変更
+  wk->timer = 60 * 3;
+  wk->GameModeKeep = ret;
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW_WAIT);
+
+//  _myStatusChange(wk, WIFI_STATUS_RECRUIT, ret );  //状態を変更
+  return seq;
+}
+
+
+//
+
+//------------------------------------------------------------------
+/**
+ * $brief   状態を変更するのに間を空けて、飛ばないようにする BTS7685
+    WIFIP2PMATCH_MODE_FRIENDLIST_MW_WAIT
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int _wifip2pmatch_mode_friendlist_mw_wait( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  wk->timer--;
+  if(wk->timer<0){
+    _myStatusChange(wk, WIFI_STATUS_RECRUIT, wk->GameModeKeep );  //状態を変更
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+  }
   return seq;
 }
 
