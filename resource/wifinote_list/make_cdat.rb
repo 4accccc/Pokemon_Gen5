@@ -89,7 +89,7 @@ def printCDAT( flist )
   printf("};\n\n")
 end
 
-flist = readList( "friendlist.csv" )
+flist = readList( ARGV[0] )
 
 printCDAT( flist )
 
