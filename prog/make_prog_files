@@ -1784,6 +1784,9 @@ SRCS_OVERLAY_DEBUG_MENU_WFBC_CHECK = field/debug_wfbc.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_MENU_INTRUDE = field/event_debug_menu_intrude.c \
                                   field/event_debug_numinput_mission.c
+#DEBUG_MENU_WIFINOTE
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MENU_WIFINOTE  = field/event_debug_menu_wifinote.c
 
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE

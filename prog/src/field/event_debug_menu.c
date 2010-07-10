@@ -100,6 +100,7 @@
 #include "event_debug_sodateya.h" // for DEBUG_EVENT_DebugMenuSodateya
 #include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
 #include "event_debug_menu_intrude.h"   // for DEBUG_EVENT_FLDMENU_Intrude
+#include "event_debug_menu_wifinote.h"  // for DEBUG_
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
@@ -311,6 +312,7 @@ static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenu_WfbcDebug( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DbgRestDataUpdate(const u32 inZone);
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
@@ -399,7 +401,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm },  //ライブ通信デバッグ
   //{ DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset },  //ミッションリスト再作成
   { DEBUG_FIELD_INTRUDE,    debugMenu_Intrude },      //ハイリンク
-
+  { DEBUG_FIELD_WIFINOTE_01,  debugMenu_WriteWifiNote },  //友達手帳書き込み
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d },             //３Dデモ
@@ -3358,6 +3360,18 @@ static BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk )
   return TRUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　友達手帳書き込み
+ */
+//--------------------------------------------------------------
+static BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_menu_wifinote) );
+  DEBUG_EntryWifiNote( wk->gmSys );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_menu_wifinote) );
+}
+
 //======================================================================
 //  バトルレコーダー
 //======================================================================
@@ -6129,6 +6143,7 @@ static const u16 ng_zone_table[] = {
   ZONE_ID_CLOSSEUM,
   ZONE_ID_CLOSSEUM02,
   ZONE_ID_C04R0202,     //ミュージカル控え室
+  ZONE_ID_C03R0801,     //ロイヤルイッシュ号（通信が途切れる）
 };
 
 //#include "arc/fieldmap/map_matrix.naix"
