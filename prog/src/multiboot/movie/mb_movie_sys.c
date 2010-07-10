@@ -516,7 +516,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       const BOOL flg = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_POKE_NUM , work->moviePokeNum );
       if( flg == TRUE )
       {
-        if( work->moviePokeNum > 0 )
+        if( (work->moviePokeNum&0x0000FFFF) > 0 )
         {
           work->state = MCS_WAIT_SEND_POKE_SELECT;
         }

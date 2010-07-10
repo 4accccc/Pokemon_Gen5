@@ -2261,6 +2261,17 @@ static void MB_PARENT_SaveMain( MB_PARENT_WORK *work )
 #pragma mark [>proc movie
 static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
 {
+  
+#if PM_DEBUG
+  {
+    static int besState = 0xFFFF;
+    if( besState != work->state )
+    {
+      OS_TFPrintf(3,"movie state[%d]->[%d]\n",besState,work->state);
+      besState = work->state;
+    }
+  }
+#endif
   //‹¤’Ê•”•ª‚©‚ç•ªŠò‚µ‚Ä‚­‚éB
   switch( work->movieState )
   {
