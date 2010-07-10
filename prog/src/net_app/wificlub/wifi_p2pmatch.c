@@ -5552,8 +5552,12 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   if(PMSND_CheckPlaySE_byPlayerID( SE_CALL_SIGN_PLAYER )){
     return seq;
   }
-
-  
+  if(  DWC_STATUS_OFFLINE == WifiDwc_getFriendStatus(GFL_NET_DWC_GetFriendIndex())){  //ŽÐ“à‚Å”­Œ©‚³‚ê‚½
+    _friendNameExpand(wk, wk->preConnect);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+    return seq;
+  }
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
   mySt = _WifiMyStatusGet( wk, wk->pMatch );
   targetSt = _WifiMyStatusGet( wk,p_status );
