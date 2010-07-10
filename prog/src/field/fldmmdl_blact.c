@@ -165,15 +165,6 @@ typedef struct
 }ADDACT_RESERVE;
 
 //--------------------------------------------------------------
-/// DELRES_RESERVE
-//--------------------------------------------------------------
-typedef struct
-{
-  u16 compFlag; //データ設置完了ふらぐ
-  u16 res_idx;  //削除するリソースインデックス
-}DELRES_RESERVE;
-
-//--------------------------------------------------------------
 /// DMYACT_RESCHG
 //--------------------------------------------------------------
 typedef struct
@@ -198,7 +189,6 @@ typedef struct
   ADDRES_RESERVE_PARAM *pReserveResParam;
   ADDRES_RESERVE *pReserveRes;
   ADDACT_RESERVE *pReserveAct;
-  DELRES_RESERVE *pReserveDelRes;
 }BLACT_RESERVE;
 
 //--------------------------------------------------------------
@@ -243,8 +233,6 @@ static void BBDResUnitIndex_AddResUnit(
     MMDL_BLACTCONT *pBlActCont, const OBJCODE_PARAM *pParam, BBDRESBIT flag );
 static void BBDResUnitIndex_RemoveResUnit(
     MMDL_BLACTCONT *pBlActCont, u16 obj_code );
-static void BBDResUnitIndex_RegistRemoveResUnit(
-    MMDL_BLACTCONT *pBlActCont, u16 act_id, u16 obj_code );
 static BOOL BBDResUnitIndex_SearchResID(
   MMDL_BLACTCONT *pBlActCont, u16 obj_code, u16 *outID, u16 *outFlag );
 
@@ -279,8 +267,6 @@ static BOOL BlActAddReserve_SearchActorOBJCodeOutID(
 static void BlActAddReserve_CancelActor(
     MMDL_BLACTCONT *pBlActCont, MMDL *mmdl );
 static void BlActAddReserve_ClearWork( ADDACT_RESERVE *pRes );
-static BOOL BlActDelReserve_RegistResource(
-    MMDL_BLACTCONT *pBlActCont, u16 res_idx );
 
 static void DummyAct_Init( MMDL_BLACTCONT *pBlActCont );
 static void DummyAct_Delete( MMDL_BLACTCONT *pBlActCont );
@@ -1406,24 +1392,9 @@ static void BBDResUnitIndex_RemoveResUnit(
  * @param  pBlActCont MMDL_BLACTCONT
  * @param  code  OBJコード
  * @retval  nothing
+ * 2010.07.10 tamada 未使用なので削除
  */
 //--------------------------------------------------------------
-static void BBDResUnitIndex_RegistRemoveResUnit(
-    MMDL_BLACTCONT *pBlActCont, u16 act_id, u16 obj_code )
-{
-  GFL_BBDACT_RESUNIT_ID id;
-  BOOL ret = IDCodeIndex_SearchCode(
-      &pBlActCont->BBDResUnitIdx, obj_code, &id, NULL );
-  GF_ASSERT( ret == TRUE );
-  
-  if( BlActDelReserve_RegistResource(pBlActCont,id) == FALSE ){
-    //予約一杯ならその場で削除
-    GF_ASSERT( 0 && "MMDL RESERVE DEL RES MAX" );
-    GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys, id, 1 );
-  }
-  
-  IDCodeIndex_DeleteCode( &pBlActCont->BBDResUnitIdx, obj_code );
-}
 
 //--------------------------------------------------------------
 /**
@@ -1540,8 +1511,6 @@ static void BlActAddReserve_Init( MMDL_BLACTCONT *pBlActCont )
       heapID, sizeof(ADDRES_RESERVE)*pReserve->resDigestFrameMax );
   pReserve->pReserveAct = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(ADDACT_RESERVE)*pReserve->actMax );
-  pReserve->pReserveDelRes = GFL_HEAP_AllocClearMemory(
-      heapID, sizeof(DELRES_RESERVE)*pReserve->resMax );
 
   pReserve->funcFlag = TRUE;
   pBlActCont->pReserve = pReserve;
@@ -1580,17 +1549,6 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
       GFL_HEAP_FreeMemory( pReserve->pReserveRes );
     }
 
-    { //削除リソース
-      DELRES_RESERVE *pDelRes = pReserve->pReserveDelRes;
-      for( i = 0; i < pReserve->resMax; i++, pDelRes++ ){
-        if( pDelRes->compFlag == TRUE ){
-          pDelRes->compFlag = FALSE;
-          GFL_BBDACT_RemoveResourceUnit(
-              pBlActCont->pBbdActSys, pDelRes->res_idx, 1 );
-        }
-      }
-      GFL_HEAP_FreeMemory( pReserve->pReserveDelRes );
-    }
 
     { //アクター
       ADDACT_RESERVE *pRes = pReserve->pReserveAct;
@@ -1875,17 +1833,6 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
         }
       }
 
-      if( pBlActCont->bbdUpdateFlag ){ //リソース削除
-        DELRES_RESERVE *pDelRes = pReserve->pReserveDelRes;
-        
-        for( i = 0; i < pReserve->resMax; i++, pDelRes++ ){
-          if( pDelRes->compFlag == TRUE ){
-            pDelRes->compFlag = FALSE;
-            GFL_BBDACT_RemoveResourceUnit(
-              pBlActCont->pBbdActSys, pDelRes->res_idx, 1 );
-          }
-        }
-      }
     }
   }
 }
@@ -2387,30 +2334,6 @@ static void BlActAddReserve_ClearWork( ADDACT_RESERVE *pRes )
   MI_CpuClear8( pRes, sizeof(ADDACT_RESERVE) );
 }
 
-//--------------------------------------------------------------
-/**
- * リソース削除予約　登録
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static BOOL BlActDelReserve_RegistResource(
-    MMDL_BLACTCONT *pBlActCont, u16 res_idx )
-{
-  u32 i = 0;
-  u32 max = pBlActCont->pReserve->resMax;
-  DELRES_RESERVE *pDelRes = pBlActCont->pReserve->pReserveDelRes;
-
-  for( i = 0; i < max; i++, pDelRes++ ){
-    if( pDelRes->compFlag == FALSE ){
-      pDelRes->res_idx = res_idx;
-      pDelRes->compFlag = TRUE;
-      return( TRUE );
-    }
-  }
-  
-  return( FALSE );
-}
 
 //======================================================================
 //  ダミーアクター関連
