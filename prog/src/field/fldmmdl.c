@@ -781,9 +781,6 @@ static void mmdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
   MMDL_SetGridPosZ( mmdl, set_gz );
   
   MMDL_SetVectorPos( mmdl, &vec );
-  
-  IWASAWA_Printf( "Mmdl (%d,%d) h = %d\n",
-      FX_Whole(vec.x), FX_Whole(vec.z), FX_Whole(vec.y) );
 }
 
 //--------------------------------------------------------------
