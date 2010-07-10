@@ -698,12 +698,17 @@ static BTL_EVENT_FACTOR* AddItemEventCore( const BTL_POKEPARAM* bpp, u16 itemID 
 //=============================================================================================
 void BTL_HANDLER_ITEM_Remove( const BTL_POKEPARAM* bpp )
 {
-  BTL_EVENT_FACTOR* factor;
+  BTL_EVENT_FACTOR *factor, *next;
   u8 pokeID = BPP_GetID( bpp );
 
-  while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_ITEM, pokeID)) != NULL )
+  factor = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_ITEM, pokeID );
+  while( factor )
   {
-    BTL_EVENT_FACTOR_Remove( factor );
+    next = BTL_EVENT_GetNextFactor( factor );
+    if( BTL_EVENT_FACTOR_GetWorkValue(factor, WORKIDX_TMP_FLAG) == 0 ){
+      BTL_EVENT_FACTOR_Remove( factor );
+    }
+    factor = next;
   }
 }
 //=============================================================================================
