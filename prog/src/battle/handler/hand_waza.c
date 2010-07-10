@@ -3440,7 +3440,7 @@ static void handler_Juden_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_DENKI ){
         BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
       }
-      BTL_EVENT_FACTOR_Remove( myHandle );
+//      BTL_EVENT_FACTOR_Remove( myHandle );
     }
   }
 }
