@@ -673,12 +673,6 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
               }
             }
 
-            if( gdsrap->evil_check_loop == 1 )
-            {
-              //名前を変えたので、CRCを再計算する
-              BattleRec_CalcCrcRec( BattleRec_WorkPtrGet() );
-            }
-
             gdsrap->local_seq++;
           }
           else
@@ -719,6 +713,9 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
             
             if( gdsrap->evil_check_loop == 0 )
             {
+              //名前を変えたので、CRCを再計算する
+              BattleRec_CalcCrcRec( BattleRec_WorkPtrGet() );
+
               gdsrap->local_seq = SEQ_START_EVILCHECK;
               gdsrap->evil_check_loop++;
             }
