@@ -865,7 +865,12 @@ static void _musicalsave(G_SYNC_WORK* pWork,int size)
     u16* pCRC = GSYNC_DOWNLOAD_GetData(pWork->pDownload);
     int sizeh = size/2;
     u16 crc;
-    
+
+    if(size > MUSICAL_DIST_SAVE_DL_SIZE){     //ƒTƒCƒY‚ªŽû‚Ü‚Á‚Ä‚¢‚é
+      pWork->ErrorNo = _DOWNLOAD_ERROR;
+      _CHANGE_STATE(_ErrorDisp);
+      return;
+    }
     crc = GFL_STD_CrcCalc( pCRC, size );
     if(crc != pCRC[sizeh]){
       pWork->ErrorNo = _DOWNLOAD_ERROR;
