@@ -1200,13 +1200,20 @@ static void BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int r
   //GDS_RAPの切断コールバック処理
   GDSRAP_DisconnectCallback( p_wk, code, type, ret );
 
-  //GDS_RAP削除
-  if( p_wk->is_init_gdsrap )
+  switch( type )
   {
-    GDSRAP_Exit(&p_wk->gdsrap);
-    p_wk->is_init_gdsrap  = FALSE;
+    //切断エラー
+  case DWC_ETYPE_SHUTDOWN_FM:
+  case DWC_ETYPE_DISCONNECT:
+    //GDS_RAP削除
+    if( p_wk->is_init_gdsrap )
+    {
+      GDSRAP_Exit(&p_wk->gdsrap);
+      p_wk->is_init_gdsrap  = FALSE;
+    }
+    //切断コールバックが２度呼ばれないように削除
+    GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
+    break;
   }
   
-  //切断コールバックが２度呼ばれないように削除
-  GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
 }
