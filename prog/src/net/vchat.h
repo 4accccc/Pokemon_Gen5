@@ -85,6 +85,7 @@ extern BOOL myvct_AddConference(int bitmap, int myAid);
 
 extern BOOL myvct_DelConference(int myAid);
 
+extern void VCHAT_PauesFlg(BOOL bPause);
 
 #endif
 

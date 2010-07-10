@@ -2032,6 +2032,7 @@ void GFL_NET_DWC_pausevchat(BOOL bPause)
   else{
     _dWork->pausevchat = FALSE;
   }
+  VCHAT_PauesFlg(_dWork->pausevchat);
 }
 
 

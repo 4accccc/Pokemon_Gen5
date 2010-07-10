@@ -69,7 +69,8 @@ typedef struct{
 	BOOL bConf[_MAX_PLAYER_NUM];  //対話モードかどうか
 	int mode;     // vctの会話モード
 	int state;
-	int off_flag;
+	u16 off_flag;
+  u16 pauseFlg;
 	int heapID;
 	struct NNSSndStrm sSndStream;
 	VCTSession *session;
@@ -223,7 +224,7 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
 
 
 
-	if( PAD_DetectFold() )
+	if( PAD_DetectFold()  ||  _vWork->pauseFlg)
 	{
 		// DSを閉じた場合
 		micSrc = _vWork->sSilentBuffer;
@@ -858,5 +859,11 @@ BOOL myvct_DelConference(int myAid)
 		}
 	}
 	return TRUE;
+}
+
+
+void VCHAT_PauesFlg(BOOL bPause)
+{
+  _vWork->pauseFlg=bPause;
 }
 
