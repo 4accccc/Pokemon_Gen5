@@ -624,7 +624,7 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
 
         responce = NHTTP_RAP_GetGetResultCode( gdsrap->p_nhttp  );
         error = NHTTP_RAP_Process( gdsrap->p_nhttp );
-        if((responce != 200) && (error==NHTTP_ERROR_NONE)){
+        if((responce != 200) && (error!=NHTTP_ERROR_BUSY)){
           switch( NHTTP_RAP_GetGetResultCode(gdsrap->p_nhttp) ){
           case 400:
             gdsrap->nhttp_sp_err = GDSRAP_SP_ERR_NHTTP_400;
