@@ -659,8 +659,9 @@ static GFL_PROC_RESULT PDWACCProc_End( GFL_PROC * proc, int * seq, void * pwk, v
     NHTTP_RAP_End(pWork->pNHTTPRap);
     pWork->pNHTTPRap=NULL;
   }
-  GFL_NET_DWC_SetErrDisconnectCallback(NULL,NULL);
-
+  if(GFL_NET_IsInit()){
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL,NULL);
+  }
   GFL_PROC_FreeWork(proc);
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
