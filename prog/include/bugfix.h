@@ -18,6 +18,7 @@
 // WIFI交換の時にタイマーアイコンの更新処理と削除処理が重なりフリーズした不具合修正
 #define BUGFIX_GFBTS1957_100712
 
+#define BUGFIX_GFBTS1958_100712 //WiFi大会でマッチング中に、はまるバグの対処
 
 
 //--ガイドライン掲示板 GLBTSXXXX

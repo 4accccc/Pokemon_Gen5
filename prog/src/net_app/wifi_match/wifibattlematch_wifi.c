@@ -56,6 +56,8 @@
 //外部公開
 #include "wifibattlematch_core.h"
 
+#include "bugfix.h"
+
 //-------------------------------------
 ///	オーバーレイ
 //=====================================
@@ -3394,6 +3396,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       {
         WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
         DWC_CloseAllConnectionsHard();
+
+#ifdef BUGFIX_GFBTS1958_100712
+        *p_seq  = SEQ_START_MATCH_MSG;
+#endif
       }
 
       //エラー
