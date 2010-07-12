@@ -1335,11 +1335,18 @@ static BOOL _pokemonIllegalCheck(POKEMON_PARAM* pp)
   if (PP_Get(pp, ID_PARA_fusei_tamago_flag, NULL) == 1) {
     return TRUE;
   }
+#ifdef BUGFIX_BTS7718_100712 //ŒğŠ·‚ÉƒtƒHƒ‹ƒ€ŒŸ¸‚ğs‚í‚È‚¢‚æ‚¤‚ÉC³
+  mons_no = PP_Get( pp, ID_PARA_monsno, NULL  );
+  if(MONSNO_MAX < mons_no){
+    return TRUE;
+  }
+#else
   mons_no = PP_Get( pp, ID_PARA_monsno, NULL  );
   form_no = PP_Get( pp, ID_PARA_form_no, NULL  );
   if( form_no != POKETOOL_CheckPokeFormNo( mons_no, form_no ) ){
     return TRUE;
   }
+#endif //BUGFIX_BTS7718_100712
   return FALSE;
 
 }
