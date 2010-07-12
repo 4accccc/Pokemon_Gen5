@@ -188,6 +188,9 @@ endif
 
 COMPSTATIC_SPEC_FILE = ./overlay/compstatic_spec_files
 
+##バグフィックス定義
+BUGFIX_HEADER = ./include/bugfix.h
+
 #----------------------------------------------------------------------------
 #	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
 #----------------------------------------------------------------------------
@@ -399,7 +402,7 @@ CCFLAGS			+=	-prefix $(PRECOMPILE_CC_MCH)
 precompile: $(PRECOMPILE_CC_MCH)
 
 #バージョン定義ファイルが更新されたらプリコンパイルヘッダも更新する
-$(PRECOMPILE_CC_MCH):	$(VER_FILE)
+$(PRECOMPILE_CC_MCH):	$(VER_FILE) $(BUGFIX_HEADER)
 
 -include $(PRECOMPILE_CC_MCH).d
 $(PRECOMPILE_CC_MCH):%_cc.mch:
