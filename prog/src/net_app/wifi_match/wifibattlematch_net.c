@@ -38,6 +38,8 @@
 //  外部公開
 #include "wifibattlematch_net.h"
 
+#include "bugfix.h"
+
 //  デバッグ用にタイミングを知らせるためSEを鳴らすので
 #ifdef PM_DEBUG
 #include "sound/pm_sndsys.h"
@@ -992,6 +994,13 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   p_wk->seq_matchmake = 0;
   p_wk->async_timeout = 0;
   p_wk->cancel_select_timeout = 0;
+
+
+#ifdef BUGFIX_GFBTS1961_20100712
+  //エラーの時、受信フラグが消えてないことがありえるため
+  GFL_STD_MemClear( p_wk->is_recv, sizeof(BOOL)*WIFIBATTLEMATCH_NET_RECVFLAG_MAX );
+#endif //BUGFIX_GFBTS1961_20100712
+
 
   //接続評価コールバック指定
   switch( mode )
@@ -4696,7 +4705,6 @@ BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATT
 
   if( ret )
   { 
-
     p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA]  = FALSE;
     *pp_data  = (WIFIBATTLEMATCH_ENEMYDATA *)p_wk->recv_buffer;
   }

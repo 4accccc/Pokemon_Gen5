@@ -52,6 +52,10 @@
 #define BUGFIX_GFBTS1963_100712
 
 #define BUGFIX_GFBTS1965_20100712  //仮素材削除対応
+
+//WIFI大会でマッチング中に、対戦相手以外の選手証が表示される場合があるの対処
+#define BUGFIX_GFBTS1961_20100712
+
 //--ガイドライン掲示板 GLBTSXXXX
 
 
