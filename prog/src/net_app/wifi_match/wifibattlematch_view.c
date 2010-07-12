@@ -43,6 +43,8 @@
 #include "wifibattlematch_snd.h"
 #include "wifibattlematch_view.h"
 
+#include "bugfix.h"
+
 //-------------------------------------
 ///	トレーナーOBJ
 //=====================================
@@ -1435,9 +1437,15 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit
 			2,9,9,2,
 		},
 		//レーティング
+#ifdef BUGFIX_BTS7711_100712
+		{	
+			11,9,13,2,
+		},
+#else
 		{	
 			9,9,15,2,
 		},
+#endif 
 		//レーティングの数値
 		{	
 			25, 9, 5, 2,

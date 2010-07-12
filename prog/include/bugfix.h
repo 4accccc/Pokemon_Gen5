@@ -11,6 +11,7 @@
 
 
 //--バグ掲示板 BTSXXXX
+#define BUGFIX_BTS7711_100712   //WiFi大会の選手証でトレーナー名が切れて表示されるバグの対処
 
 
 //--社内バグ掲示板 GFBTSXXXX
