@@ -130,6 +130,11 @@ static int MailWriteExit( MAILBOX_SYS_WORK * syswk );
 
 static int MailWritePokeListEnd( MAILBOX_SYS_WORK * syswk );
 
+// 「メールをよむ」を選択すると、「U」マークも暗くなってしまう。の修正
+#ifdef BUGFIX_BTS7737_20100712
+static void AlphaSet_NoObj( MAILBOX_APP_WORK *appwk );
+#endif
+
 
 //============================================================================================
 //  グローバル変数
@@ -735,6 +740,10 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
     MBOBJ_MailReadCurMove( syswk->app );
     SubDispMailWrite( syswk );
     MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_END_BTN, 14 ); //ENDボタンを暗く
+// 「メールをよむ」を選択すると、「U」マークも暗くなってしまう。の修正
+#ifdef BUGFIX_BTS7737_20100712
+    AlphaSet_NoObj( syswk->app );
+#endif
     return MBSEQ_MAINSEQ_MAIL_READ_MAIN;
 
   case MBMAIN_MENU_DELETE:  // メールを消す
@@ -1132,6 +1141,56 @@ static int ObjButtonAnmSet( MAILBOX_SYS_WORK * syswk, u32 objID, int next )
   return MBSEQ_MAINSEQ_BUTTON_ANM;
 }
 
+
+// 「メールをよむ」を選択すると、「U」マークも暗くなってしまう。の修正
+#ifdef BUGFIX_BTS7737_20100712
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 半透明設定
+ *
+ * @param flg   TRUE = 半透明, FALSE = 通常
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void AlphaSet( MAILBOX_APP_WORK * appwk, BOOL flg )
+{
+  if( flg == TRUE ){
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_L, TRUE );
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_R, TRUE );
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_RET_BTN, TRUE );
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_END_BTN, TRUE );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, 
+                      GX_BLEND_PLANEMASK_BG3, 4, 12 );
+  }else{
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_L, FALSE );
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_R, FALSE );
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_RET_BTN, FALSE );
+    MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_END_BTN, FALSE );
+    G2_BlendNone();
+  }
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 「U」マークにはかからない半透明設定
+ *
+ * @param   appwk   
+ */
+//----------------------------------------------------------------------------------
+static void AlphaSet_NoObj( MAILBOX_APP_WORK *appwk )
+{
+  MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_L, TRUE );
+  MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_ARROW_R, TRUE );
+  MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_RET_BTN, FALSE );
+  MBOBJ_BlendModeSet( appwk, MBMAIN_OBJ_END_BTN, FALSE );
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, 
+                    GX_BLEND_PLANEMASK_BG3, 4, 12 );
+
+}
+#else
 //--------------------------------------------------------------------------------------------
 /**
  * 半透明設定
@@ -1154,6 +1213,8 @@ static void AlphaSet( MAILBOX_APP_WORK * appwk, BOOL flg )
     G2_BlendNone();
   }
 }
+
+#endif
 
 //--------------------------------------------------------------------------------------------
 /**
