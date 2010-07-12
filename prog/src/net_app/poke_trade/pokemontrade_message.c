@@ -273,7 +273,7 @@ void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork)
     pWork->pTimeIcon = NULL;
   }
   //交換時のタイマーアイコンで止まる不具合があったので、TCBLに戻した
-#ifdef DEBUG_GFBTS1957_100712
+#ifdef BUGFIX_GFBTS1957_100712
   pWork->pTimeIcon = TIMEICON_CreateTcbl(pWork->pMsgTcblSys, pWork->mesWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
 #else
   pWork->pTimeIcon = TIMEICON_CreateTcbl(pWork->pTimerTcblSys,pWork->mesWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
@@ -324,7 +324,7 @@ void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork)
 	}
 }
 
-#ifdef DEBUG_GFBTS1957_100712
+#ifdef BUGFIX_GFBTS1957_100712
 #else //交換時のタイマーアイコンで止まる不具合修正 
 static void _pokeTradeTimeIconUpdate( void *pWork )
 {
@@ -356,7 +356,7 @@ void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork)
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   GFL_FONTSYS_SetColor(1, 2, 15);
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
-#ifdef DEBUG_GFBTS1957_100712  //交換時のタイマーアイコンで止まる不具合修正
+#ifdef BUGFIX_GFBTS1957_100712  //交換時のタイマーアイコンで止まる不具合修正
 #else
   pWork->pTimerTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
 #endif
@@ -365,7 +365,7 @@ void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork)
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
 			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
 
-#ifdef DEBUG_GFBTS1957_100712 //交換時のタイマーアイコンで止まる不具合修正
+#ifdef BUGFIX_GFBTS1957_100712 //交換時のタイマーアイコンで止まる不具合修正
 #else
   GFUser_SetVIntrFunc( _pokeTradeTimeIconUpdate , pWork );
 #endif
@@ -425,7 +425,7 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
   GFL_STR_DeleteBuffer(pWork->pMessageStrBufEx);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
-#ifdef DEBUG_GFBTS1957_100712
+#ifdef BUGFIX_GFBTS1957_100712
 #else
   GFL_TCBL_Exit(pWork->pTimerTcblSys);  //交換後に止まる不具合修正
 #endif

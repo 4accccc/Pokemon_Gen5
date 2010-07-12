@@ -13,11 +13,10 @@
 //--バグ掲示板 BTSXXXX
 
 
-
 //--社内バグ掲示板 GFBTSXXXX
 
 // WIFI交換の時にタイマーアイコンの更新処理と削除処理が重なりフリーズした不具合修正
-#define DEBUG_GFBTS1957_100712
+#define BUGFIX_GFBTS1957_100712
 
 
 
