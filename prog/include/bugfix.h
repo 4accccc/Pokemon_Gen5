@@ -43,6 +43,9 @@
 
 #define BUGFIX_GFBTS1958_20100712 //WiFi大会でマッチング中に、はまるバグの対処
 
+//ポケモン交換時にアイテム表示が出ていない不具合修正
+#define BUGFIX_GFBTS1963_100712
+
 #define BUGFIX_GFBTS1965_20100712  //仮素材削除対応
 //--ガイドライン掲示板 GLBTSXXXX
 
