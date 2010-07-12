@@ -33,6 +33,6 @@
 
 #define BUGFIX_GFBTS1958_100712 //WiFi大会でマッチング中に、はまるバグの対処
 
-
+#define BUGFIX_GFBTS1965_20100712  //仮素材削除対応
 //--ガイドライン掲示板 GLBTSXXXX
 

@@ -179,10 +179,13 @@ STA_OBJ_WORK* STA_OBJ_CreateObject( STA_OBJ_SYS *work , const u16 objId )
 #if USE_MUSICAL_EDIT
 	objWork->objId = objId;
 #endif //USE_MUSICAL_EDIT
-	
+
+//‰¼‘fÞíœ‚Åmake‚ð’Ê‚·‚½‚ß‚Ì‘Î‰žB
+#ifndef BUGFIX_GFBTS1965_20100712
 	objWork->resIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_STAGE_GRA , 
 											NARC_stage_gra_stage_ojb01_nsbtx + objId , GFL_BBD_TEXFMT_PAL256 ,
 											GFL_BBD_TEXSIZ_128x128 , 128 , 128 );
+#endif BUGFIX_GFBTS_1964_20100712
 	objWork->bbdIdx = GFL_BBD_AddObject( work->bbdSys , objWork->resIdx , ACT_BBD_SIZE(128.0f) , ACT_BBD_SIZE(128.0f) , 
 										&objWork->pos , 31 , GFL_BBD_LIGHT_NONE );
 	GFL_BBD_SetObjectDrawEnable( work->bbdSys , objWork->bbdIdx , &flg );
