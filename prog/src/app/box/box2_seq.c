@@ -4489,6 +4489,9 @@ static int MainSeq_ItemBagInAnm( BOX2_SYS_WORK * syswk )
 
 	if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
+#ifdef	BUGFIX_BTS7714_20100712
+		BOX2OBJ_TrayMoveArrowVanish( syswk->app, TRUE );
+#endif	// BUGFIX_BTS7714_20100712
 	}else{
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
 	}
@@ -5796,6 +5799,9 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 			}
 			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 			BOX2OBJ_PutConvButton( syswk, BOX2OBJ_ANM_CONV_RED, FALSE );
+#ifdef	BUGFIX_BTS7714_20100712
+			BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
+#endif	// BUGFIX_BTS7714_20100712
 			// ƒ[ƒ‹‚ðŽ‚Á‚Ä‚¢‚é
 			if( ITEM_CheckMail( item ) == TRUE ){
 				BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
