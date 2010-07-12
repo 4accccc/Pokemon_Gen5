@@ -1333,11 +1333,51 @@ static void Br_Rank_SortPoke( const BATTLE_REC_OUTLINE_RECV *cp_recv, BR_RANK_SO
 
     //ホントはconstにしたいけど、getterがconstじゃないので
     BATTLE_REC_HEADER_PTR p_head = (BATTLE_REC_HEADER_PTR)&cp_recv->head;
-    
 
+#ifdef BUGFIX_BTS7719_20100712
+    BOOL  is_multi = FALSE;
+    u32   temoti_max  = TEMOTI_POKEMAX;
+    u32   type;
+
+    //マルチとその他を検知する
+    //マルチの場合は０～２まで自分のポケ、６～８まで協力者のポケが入っている
+    //その他の場合は０～５まで自分のポケが入っている
+    type  = RecHeader_ParamGet( p_head, RECHEAD_IDX_MODE, 0 );
+    switch ( type )
+    {
+    case BATTLE_MODE_COLOSSEUM_MULTI_FREE:           //コロシアム　マルチ　制限無し
+    case BATTLE_MODE_COLOSSEUM_MULTI_50:             //コロシアム　マルチ　フラット
+    case BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER:   //コロシアム　マルチ　制限無し　シューターあり
+    case BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER:     //コロシアム　マルチ　フラット　シューターあり
+    case BATTLE_MODE_SUBWAY_MULTI:
+      is_multi = TRUE;
+      temoti_max  = 9;
+      break;
+    default:
+      is_multi = FALSE;
+      temoti_max  = TEMOTI_POKEMAX;
+      break;
+    };
+#endif  //BUGFIX_BTS7719_20100712
+
+#ifdef BUGFIX_BTS7719_20100712
+    for( i = 0; i < temoti_max; i++ )
+#else
     for( i = 0; i < TEMOTI_POKEMAX; i++ )
+#endif //BUGFIX_BTS7719_20100712
     { 
 
+#ifdef BUGFIX_BTS7719_20100712
+      //マルチの場合３～５は相手のポケモンなので飛ばす
+      if( is_multi )
+      {
+        if( 3 <= i && i <= 5 )
+        {
+          continue;
+        }
+      }
+#endif //BUGFIX_BTS7719_20100712
+  
       monsno  = RecHeader_ParamGet(p_head, RECHEAD_IDX_MONSNO, i);
       formno  = RecHeader_ParamGet(p_head, RECHEAD_IDX_FORM_NO, i);
       gender  = RecHeader_ParamGet(p_head, RECHEAD_IDX_GENDER, i);
