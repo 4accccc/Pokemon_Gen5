@@ -817,6 +817,17 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
   // ハンドル
   Zukan_Info_OpenHandle( work );
 
+#ifdef BUGFIX_GFBTS1964_100712
+  {
+    POKEMON_PERSONAL_DATA* ppd = work->ppd;
+    u16 form_max = (u16)POKE_PERSONAL_GetParam( ppd, POKEPER_ID_form_max );
+    if( work->formno >= form_max )
+    {
+      work->formno = 0;
+    }
+  }
+#endif  // BUGFIX_GFBTS1964_100712
+
   // リソース読み込み
   {
     ARCHANDLE* handle = work->ah[AH_ZUKAN_GRA];
@@ -1370,6 +1381,17 @@ void ZUKAN_INFO_ChangePoke(
   work->personal_rnd   = personal_rnd;
   work->get_flag       = get_flag;
 
+#ifdef BUGFIX_GFBTS1964_100712
+  {
+    POKEMON_PERSONAL_DATA* ppd = work->ppd;
+    u16 form_max = (u16)POKE_PERSONAL_GetParam( ppd, POKEPER_ID_form_max );
+    if( work->formno >= form_max )
+    {
+      work->formno = 0;
+    }
+  }
+#endif  // BUGFIX_GFBTS1964_100712
+
   // モンスターボールのマーク
   Zukan_Info_TransBall_VBlank( work );
 
@@ -1487,6 +1509,17 @@ void ZUKAN_INFO_ChangePokeAndLang(
   work->rare           = rare; 
   work->personal_rnd   = personal_rnd;
   work->get_flag       = get_flag;
+
+#ifdef BUGFIX_GFBTS1964_100712
+  {
+    POKEMON_PERSONAL_DATA* ppd = work->ppd;
+    u16 form_max = (u16)POKE_PERSONAL_GetParam( ppd, POKEPER_ID_form_max );
+    if( work->formno >= form_max )
+    {
+      work->formno = 0;
+    }
+  }
+#endif  // BUGFIX_GFBTS1964_100712
 
   // モンスターボールのマーク
   Zukan_Info_TransBall_VBlank( work );
@@ -1768,6 +1801,12 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
           if( pos == 0 ) break;
           formno_count++;
         }
+#ifdef BUGFIX_GFBTS1964_100712
+        if( pos == 0 )
+        {
+          pos = work->monsno;
+        }
+#endif  // BUGFIX_GFBTS1964_100712
         GF_ASSERT_MSG( pos > 0, "ZUKAN_INFO : フォルム番号が異常です。\n" );
       }
       monsno_formno_pos = pos;
