@@ -1282,6 +1282,7 @@ BOOL ZONEDATA_IsBirthDayWeatherChange( u16 zone_id )
   return FALSE;
 }
 
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
@@ -1299,6 +1300,7 @@ const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
   }
   return namedata;
 }
+#endif  //PM_DEBUG
 
 //------------------------------------------------------------------
 /**

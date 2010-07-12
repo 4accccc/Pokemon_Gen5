@@ -116,12 +116,16 @@ $(TARGETDIR)/$(NARCNAME):	$(RESDIR)/$(NARCNAME)
 #	--(zonetable.rb)-->	zonetable.c（＋その他）
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
-$(RESDIR)/$(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER)
+$(RESDIR)/$(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER) $(PROJECT_PROGDIR)version
 	@echo マップ管理表更新
 	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
 	@$(CONVERTER) contents $(DATATABTXT)
 	@$(MAKE) makebin				#Ｃソース→バイナリ変換して
+ifeq ($(PM_DEBUG),yes)
 	@nnsarc -i -c -l -n $(RESDIR)/$(NARCNAME) $(RESDIR)/*.bin > $(RESDIR)/arc_result.txt	#アーカイブ作成
+else
+	@nnsarc -i -c -l -n $(RESDIR)/$(NARCNAME) $(RESDIR)/zonetable.bin > $(RESDIR)/arc_result.txt	#アーカイブ作成
+endif
 	@$(NAIXCUT) $(RESDIR)/$(NAIXNAME)
 
 
