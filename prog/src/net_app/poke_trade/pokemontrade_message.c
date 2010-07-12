@@ -1323,7 +1323,11 @@ void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMO
     _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 10*8, 4, pWork, TRUE, POKEMONTRADEPROC_IsTimeWaitSelect(pWork));
     _pokeLvMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 16, 19, pWork);
     GFL_FONTSYS_SetColor( 1, 2, palette[side*2+1] );
+#ifdef BUGFIX_GFBTS1963_100712
+    _pokePocketItemMsgDisp(pp, pWork->StatusWin2[side],  0,   0, pWork);
+#else  //BUGFIX_GFBTS1963_100712
     _pokePocketItemMsgDisp(pp, pWork->StatusWin2[side], 16, 16*8, pWork);
+#endif  //BUGFIX_GFBTS1963_100712
     _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                     xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID,ballpal[side] );
   }
