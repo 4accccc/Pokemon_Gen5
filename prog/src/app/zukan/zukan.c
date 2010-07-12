@@ -491,6 +491,9 @@ static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
 		break;
 	
 	case ZKNSEARCH_RET_CANCEL:	// ƒLƒƒƒ“ƒZƒ‹
+#ifdef	BUGFIX_BTS7745_20100712
+		wk->listMode = ZKNLIST_CALL_NORMAL;
+#endif	// BUGFIX_BTS7745_20100712
 		ret = SEQ_LIST_CALL;
 		break;
 
