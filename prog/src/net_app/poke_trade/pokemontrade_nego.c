@@ -1266,7 +1266,11 @@ static void _menuMyPokemonSendG(POKEMON_TRADE_WORK* pWork)
   }
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON,
+#ifdef BUGFIX_BTS7750_20100713
+                         POKETOOL_GetWorkSize(), pWork->TempBuffer[_TEMPBUFF_SEND] )){
+#else
                          POKETOOL_GetWorkSize(), IRC_POKEMONTRADE_GetRecvPP(pWork,0))){
+#endif
       return;
     }
   }
@@ -1316,7 +1320,11 @@ static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
         }
         else{
           POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pp);
+#ifdef BUGFIX_BTS7750_20100713
+          GFL_STD_MemCopy(pp, pWork->TempBuffer[_TEMPBUFF_SEND] ,POKETOOL_GetWorkSize());
+#else
           GFL_STD_MemCopy(pp, IRC_POKEMONTRADE_GetRecvPP(pWork,0) ,POKETOOL_GetWorkSize());
+#endif
           OS_TPrintf("メールセット2%d \n",bBoxFlg);
           IRC_POKEMONTRADE_SetRecvBoxFlg(pWork,0,bBoxFlg);
           _CHANGE_STATE(pWork, _menuMyPokemonSend);
