@@ -27,7 +27,7 @@
 #define BUGFIX_BTS7721_100712
 
 //ふしぎなおくりものでカードを消したときBを押すと送りアイコンのみ消えるバグの修正
-#define BUGFIX_BTS7724_100712   
+#define BUGFIX_BTS7724_20100712
 
 //--社内バグ掲示板 GFBTSXXXX
 
