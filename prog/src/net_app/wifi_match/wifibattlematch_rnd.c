@@ -47,6 +47,7 @@
 
 //外部公開
 #include "wifibattlematch_core.h"
+#include "bugfix.h"
 
 #include "debug/debug_flg.h"
 #include "debug/debug_nagihashi.h"
@@ -1313,6 +1314,21 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_MATCHING:
+#ifdef BUGFIX_BTS7733_20100712
+    //マッチングエラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+      return;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      return ;
+    }
+#endif //BUGFIX_BTS7733_20100712
     { 
       WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
       Util_Matchkey_SetData( &data, p_wk );
@@ -2573,6 +2589,21 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_MATCHING:
+#ifdef BUGFIX_BTS7733_20100712
+    //マッチングエラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+      return;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      return;
+    }
+#endif //BUGFIX_BTS7733_20100712
     { 
       WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
       Util_Matchkey_SetData( &data, p_wk );
