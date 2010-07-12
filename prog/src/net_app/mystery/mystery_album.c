@@ -2654,7 +2654,11 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_MSG_WAIT:
+#ifdef BUGFIX_BTS7724_100712
+    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
+#else
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+#endif //BUGFIX_BTS7724_100712
     { 
       *p_seq  = SEQ_EXIT;
     }
