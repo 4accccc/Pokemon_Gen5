@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-18T16:08:10"/>
+	<create user="matsumiya" host="W00224" date="2010-07-12T15:56:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -339,47 +339,8 @@
 
 	<row id="msg_n01r0203_goddess2_01w">
 		<comment>♀
-・WHITEver</comment>
-		<attribute name="キャラ指定">GODDESS2</attribute>
-		<language name="JPN" width="256">わたしは　へいわの　めがみ……▼
-Ｎに　へいおんを　あたえるもの……▼
-……Ｎは　おさなきころより
-ひとと　はなされ▽
-ポケモンと　ともに　そだちました▼
-わるい　ひとに　うらぎられ
-しいたげられ　きずついた　ポケモン▼
-ゲーチスは　あえて
-そうした　ポケモンばかり▽
-Ｎに　ちかづけていたのです▼
-Ｎは　その　きずを　わかちあい
-ポケモンの　ことだけを　かんがえ▽
-りそうを　もとめるように　なりました▼
-あまりにも　ピュアで
-イノセントな　Ｎの　こころ……▼
-イノセントほど
-うつくしく　こわいものは　ないのに</language>
-		<language name="JPN_KANJI" width="256">わたしは　平和の　女神……▼
-Ｎに　平穏を　与えるもの……▼
-……Ｎは　幼きころより
-人と　離され▽
-ポケモンと　共に　育ちました▼
-……悪意ある　人に　裏切られ
-虐げられ　傷ついた　ポケモン▼
-ゲーチスは　あえて
-そうした　ポケモンばかり▽
-Ｎに　近づけていたのです▼
-Ｎは　その傷を　分かち合い
-ポケモンの　ことだけを　考え▽
-理想を　求めるように　なりました▼
-あまりにも　ピュアで
-イノセントな　Ｎの　心……▼
-イノセントほど
-美しく　怖いものは　ないのに</language>
-	</row>
-
-	<row id="msg_n01r0203_goddess2_01b">
-		<comment>♀
-・BLACKver</comment>
+・WHITEver
+　N＝レシラム＝真実</comment>
 		<attribute name="キャラ指定">GODDESS2</attribute>
 		<language name="JPN" width="256">わたしは　へいわの　めがみ……▼
 Ｎに　へいおんを　あたえるもの……▼
@@ -411,6 +372,47 @@
 Ｎは　その傷を　分かち合い
 ポケモンの　ことだけを　考え▽
 真実を　求めるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　心……▼
+イノセントほど
+美しく　怖いものは　ないのに</language>
+	</row>
+
+	<row id="msg_n01r0203_goddess2_01b">
+		<comment>♀
+・BLACKver
+　N＝ゼクロム＝理想</comment>
+		<attribute name="キャラ指定">GODDESS2</attribute>
+		<language name="JPN" width="256">わたしは　へいわの　めがみ……▼
+Ｎに　へいおんを　あたえるもの……▼
+……Ｎは　おさなきころより
+ひとと　はなされ▽
+ポケモンと　ともに　そだちました▼
+わるい　ひとに　うらぎられ
+しいたげられ　きずついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　ちかづけていたのです▼
+Ｎは　その　きずを　わかちあい
+ポケモンの　ことだけを　かんがえ▽
+りそうを　もとめるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　こころ……▼
+イノセントほど
+うつくしく　こわいものは　ないのに</language>
+		<language name="JPN_KANJI" width="256">わたしは　平和の　女神……▼
+Ｎに　平穏を　与えるもの……▼
+……Ｎは　幼きころより
+人と　離され▽
+ポケモンと　共に　育ちました▼
+……悪意ある　人に　裏切られ
+虐げられ　傷ついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　近づけていたのです▼
+Ｎは　その傷を　分かち合い
+ポケモンの　ことだけを　考え▽
+理想を　求めるように　なりました▼
 あまりにも　ピュアで
 イノセントな　Ｎの　心……▼
 イノセントほど
