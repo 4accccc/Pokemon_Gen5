@@ -2649,13 +2649,22 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_START_SEND_TIMING:
     WIFIBATTLEMATCH_NET_StartTiming( p_wk->p_net, WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_START );
     *p_seq  = SEQ_WAIT_SEND_TIMING;
+#ifdef BUGFIX_BTS7738_20100712
+    p_wk->match_timeout = 0;
+#endif //BUGFIX_BTS7738_20100712
     break;
 
   case SEQ_WAIT_SEND_TIMING:
     if( WIFIBATTLEMATCH_NET_WaitTiming( p_wk->p_net ) )
     {
+#ifdef BUGFIX_BTS7738_20100712
+      p_wk->match_timeout = 0;
+#endif //BUGFIX_BTS7738_20100712
       *p_seq  = SEQ_START_SENDDATA;
     }
+#ifdef BUGFIX_BTS7738_20100712
+    is_timeout_enable = TRUE;
+#endif //BUGFIX_BTS7738_20100712
     break;
 
   case SEQ_START_SENDDATA:
