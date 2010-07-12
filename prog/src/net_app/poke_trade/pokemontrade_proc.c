@@ -1322,6 +1322,11 @@ static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork,int boxno,int i
   if(boxno != pWork->BOX_TRAY_MAX){
     return FALSE;
   }
+#ifdef BUGFIX_BTS7742_20100712  //‚½‚Ü‚²‚Í”é“`‹ZŒŸ¸‚ğ‚µ‚È‚¢
+  if (PPP_Get(ppp, ID_PARA_tamago_flag, NULL)) {
+    return FALSE;
+  }
+#endif
   flg = FIELD_SKILL_CHECK_CanTradePoke( ppp,0 );
 
   return !flg;
