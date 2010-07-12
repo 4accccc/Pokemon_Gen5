@@ -1437,7 +1437,7 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit
 			2,9,9,2,
 		},
 		//レーティング
-#ifdef BUGFIX_BTS7711_100712
+#ifdef BUGFIX_BTS7711_20100712
 		{	
 			11,9,13,2,
 		},
