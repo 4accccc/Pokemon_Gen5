@@ -52,6 +52,8 @@
 #include "net/dwc_error.h"
 #include "net/dwc_rap.h"
 
+
+
 /*
 ■BGM■
 
@@ -2160,7 +2162,10 @@ static void _updateSave2(G_SYNC_WORK* pWork)
       GFL_HEAP_FreeMemory(pWork->pBackupDream);
       pWork->pBackupDream=NULL;
     }
-    pWork->bBox2SleepSaveData=FALSE;
+#ifdef BUGFIX_PGLBTS78_100712
+#else
+    pWork->bBox2SleepSaveData = FALSE;
+#endif
     break;
   case SAVE_RESULT_NG:
     GFL_NET_StateSetWifiError( 
@@ -2188,11 +2193,14 @@ static void _updateSave(G_SYNC_WORK* pWork)
 
 //  GFL_STD_MemCopy(pDream, pWork->pBackupDream, DREAMWORLD_SV_GetWorkSize());
 
+#ifdef BUGFIX_PGLBTS78_100712
+  pWork->bBox2SleepSaveData = FALSE;
+#else
   //セーブエリアに移動
   DREAMWORLD_SV_SetSleepPokemon(pDream, pWork->pp);
   BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
   DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
-
+#endif
   
   //受信した時間
   {
@@ -2461,13 +2469,24 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
     GFL_HEAP_FreeMemory(pWork->pp);
     pWork->pp=NULL;
   }
-  
+#ifdef BUGFIX_PGLBTS78_100712
+  ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
+  if(ppp){
+    POKEMON_PARAM* pp = PP_CreateByPPP( ppp, pWork->heapID );
+    DREAMWORLD_SV_SetSleepPokemon(pDream, pp);
+    pWork->pp = pp;
+    BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
+    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
+    pWork->bBox2SleepSaveData = TRUE;
+  }
+#else
   ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
   if(ppp){
     POKEMON_PARAM* pp = PP_CreateByPPP( ppp, pWork->heapID );
     pWork->pp = pp;
     pWork->bBox2SleepSaveData = TRUE;
   }
+#endif
 /*
   ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, pWork->trayno, pWork->indexno );
   if(ppp){
@@ -2516,6 +2535,15 @@ static void _BoxPokeRemove(G_SYNC_WORK* pWork)
     GFL_HEAP_FreeMemory(pWork->pBackupDream);
     pWork->pBackupDream = NULL;
   }
+#ifdef BUGFIX_PGLBTS78_100712
+  if(pWork->bBox2SleepSaveData){
+    POKEMON_PARAM* pp= DREAMWORLD_SV_GetSleepPokemon(pDream);
+    BOXDAT_PutPokemonPos( pWork->pBox, pWork->trayno, pWork->indexno, PP_GetPPPPointerConst(pp) );
+    PP_Clear(pp);
+    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
+    pWork->bBox2SleepSaveData = FALSE;
+  }
+#endif
 //  if(pWork->bBox2SleepSaveData){
 //    POKEMON_PARAM* pp= DREAMWORLD_SV_GetSleepPokemon(pDream);
 //    BOXDAT_PutPokemonPos( pWork->pBox, pWork->trayno, pWork->indexno, PP_GetPPPPointerConst(pp) );
