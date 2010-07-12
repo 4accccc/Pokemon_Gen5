@@ -2269,7 +2269,13 @@ static void RefreshPolishData( BADGEVIEW_WORK *wk )
     int i;
     for(i=0;i<BADGE_NUM;i++){
       wk->badge.polish[i] = TRCSave_GetBadgePolish( wk->trCard, i );
+
+// BTS7747:バッジがくすむスピードが２日ではなく0.75日になってしまっている（２日で３下がる）
+#ifdef BUGFIX_BTS7747_20100712
+      wk->badge.polish[i] -= now_digit*2;
+#else
       wk->badge.polish[i] -= now_digit*3;
+#endif
       if(wk->badge.polish[i]<0){
         wk->badge.polish[i] = 0;
       }
