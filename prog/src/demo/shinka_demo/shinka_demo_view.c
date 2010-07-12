@@ -103,6 +103,10 @@ POKE;
 #define POKE_Y_MONSNO_564 (FX_F32_TO_FX32(-27.0f))
 #define POKE_Y_MONSNO_565 (FX_F32_TO_FX32(-39.0f))
 
+#ifdef BUGFIX_BTS7721_100712
+  #define POKE_Y_MONSNO_YUNGERAA (FX_F32_TO_FX32(-17.9f))
+#endif  // BUGFIX_BTS7721_100712
+
 // ポケモンのY座標調整
 #define POKE_Y_ADJUST (0.33f)  // この値を掛ける
 
@@ -1157,6 +1161,13 @@ static fx32 ShinkaDemo_View_PokeGetY( const POKEMON_PARAM* pp )
       poke_y = POKE_Y_MONSNO_565;
     }
     break;
+#ifdef BUGFIX_BTS7721_100712
+  case MONSNO_YUNGERAA:
+    {
+      poke_y = POKE_Y_MONSNO_YUNGERAA;
+    }
+    break;
+#endif  // BUGFIX_BTS7721_100712
   }
   return poke_y;
 }
