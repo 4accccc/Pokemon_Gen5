@@ -1002,10 +1002,11 @@ static void _recvUNData(const int netID, const int size, const void* pData, void
     int nation,nation2;
     int area,area2;
 
-    GFL_STD_MemCopy( &aUN , pUN, sizeof(UNITEDNATIONS_SAVE));
+    GFL_STD_MemCopy( pUN, &aUN, sizeof(UNITEDNATIONS_SAVE));
 
     nation = MyStatus_GetMyNation(&aUN.aMyStatus);
     area = MyStatus_GetMyArea(&aUN.aMyStatus);
+    
     nation2 = WIFI_COUNTRY_GetNGTestCountryCode(nation, area, MyStatus_GetRegionCode(&aUN.aMyStatus));
     area2 = WIFI_COUNTRY_GetNGTestLocalCode(nation, area, MyStatus_GetRegionCode(&aUN.aMyStatus));
 
