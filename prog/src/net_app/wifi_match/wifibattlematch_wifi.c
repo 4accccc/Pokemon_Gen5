@@ -3397,9 +3397,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
         DWC_CloseAllConnectionsHard();
 
-#ifdef BUGFIX_GFBTS1958_100712
+#ifdef BUGFIX_GFBTS1958_20100712
         *p_seq  = SEQ_START_MATCH_MSG;
-#endif
+#endif  //BUGFIX_GFBTS1958_20100712
       }
 
       //ÉGÉâÅ[
