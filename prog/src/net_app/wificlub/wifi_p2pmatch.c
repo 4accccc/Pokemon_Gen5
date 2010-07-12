@@ -4603,7 +4603,11 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   }
   FriendRequestWaitOn( wk, TRUE );       // “®ì’âŽ~‚³‚¹‚é
+#ifdef BUGFIX_BTS7736_20100712
+  wk->timer = 0;
+#else
   wk->timer = 60 * 3;
+#endif
   wk->GameModeKeep = ret;
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW_WAIT);
 
