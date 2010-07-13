@@ -321,6 +321,11 @@ typedef enum
   UTIL_CANCEL_STATE_DECIDE, //キャンセルを確定
 }UTIL_CANCEL_STATE;
 static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL is_cancel_enable, BOOL can_disconnect );
+
+#ifdef BUGFIX_BTS7769_20100713
+static void Util_Cancel_ResetSeq( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
+#endif //BUGFIX_BTS7769_20100713
+
 //スコアセーブ
 static BOOL Util_SaveScore( WIFIBATTLEMATCH_WIFI_WORK *p_wk, const WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *cp_data );
 
@@ -2565,6 +2570,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+
+    #ifdef BUGFIX_BTS7769_20100713
+      Util_Cancel_ResetSeq( p_wk );
+    #endif //BUGFIX_BTS7769_20100713
       break;
 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2599,6 +2608,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+
+    #ifdef BUGFIX_BTS7769_20100713
+      Util_Cancel_ResetSeq( p_wk );
+    #endif //BUGFIX_BTS7769_20100713
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2696,6 +2709,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+        #ifdef BUGFIX_BTS7769_20100713
+          Util_Cancel_ResetSeq( p_wk );
+        #endif //BUGFIX_BTS7769_20100713
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2764,6 +2780,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+        #ifdef BUGFIX_BTS7769_20100713
+          Util_Cancel_ResetSeq( p_wk );
+        #endif //BUGFIX_BTS7769_20100713
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2807,6 +2827,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         Util_List_Delete( p_wk );
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+        #ifdef BUGFIX_BTS7769_20100713
+          Util_Cancel_ResetSeq( p_wk );
+        #endif //BUGFIX_BTS7769_20100713
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2912,6 +2936,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+        #ifdef BUGFIX_BTS7769_20100713
+          Util_Cancel_ResetSeq( p_wk );
+        #endif //BUGFIX_BTS7769_20100713
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2943,6 +2971,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+    #ifdef BUGFIX_BTS7769_20100713
+      Util_Cancel_ResetSeq( p_wk );
+    #endif //BUGFIX_BTS7769_20100713
       break;
 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2997,6 +3029,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         Util_List_Delete( p_wk );
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+      #ifdef BUGFIX_BTS7769_20100713
+         Util_Cancel_ResetSeq( p_wk );
+      #endif //BUGFIX_BTS7769_20100713
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -3055,6 +3091,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+        #ifdef BUGFIX_BTS7769_20100713
+          Util_Cancel_ResetSeq( p_wk );
+        #endif //BUGFIX_BTS7769_20100713
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -3332,6 +3372,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+
+      #ifdef BUGFIX_BTS7769_20100713
+        Util_Cancel_ResetSeq( p_wk );
+      #endif //BUGFIX_BTS7769_20100713
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -3417,6 +3461,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+
+      #ifdef BUGFIX_BTS7769_20100713
+        Util_Cancel_ResetSeq( p_wk );
+      #endif //BUGFIX_BTS7769_20100713
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -5409,6 +5457,21 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL 
     return UTIL_CANCEL_STATE_WAIT;
   }
 }
+
+#ifdef BUGFIX_BTS7769_20100713
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャンセルシーケンスをリセット
+ *
+ *	@param	WIFIBATTLEMATCH_WIFI_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_Cancel_ResetSeq( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
+{
+  p_wk->cancel_seq  = 0;
+  Util_List_Delete( p_wk );
+}
+#endif //BUGFIX_BTS7769_20100713
 
 //----------------------------------------------------------------------------
 /**
