@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fldmmdl_objcodestr.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FLDMMDL_OBJCODESTR_NAIX_
+#define NARC_FLDMMDL_OBJCODESTR_NAIX_
+
+enum {
+	NARC_fldmmdl_objcodestr_fldmmdl_objcodestr_bin = 0
+};
+
+/* NARC_FLDMMDL_OBJCODESTR_NAIX_ */
+#endif

@@ -300,3 +300,4 @@
   ARCID_ITEM_BATTLE_POCKET  "item_battle_pocket.narc" # アイテムの戦闘ポケットデータ
   ARCID_POKEFOOT_EX_GRA "pokefoot_ex.narc"  # ポケモン足跡グラフィック追加データ
 	$DEBUG_YES ARCID_DEBUG_CGEAR_PICT "debug/cgearpict.narc" #CGEARの絵のテスト
+  $DEBUG_YES ARCID_DEBUG_MMDL_OBJCODESTR "fieldmap/fldmmdl_objcodestr.narc" #動作モデル 名前

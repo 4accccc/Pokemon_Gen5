@@ -5300,6 +5300,8 @@ void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side )
 //----
 #ifdef DEBUG_MMDL
 //----
+#include "arc/fieldmap/fldmmdl_objcodestr.naix"
+
 //--------------------------------------------------------------
 /**
  * デバッグ　動作モデル　OBJコード文字列を取得(ASCII)
@@ -5318,8 +5320,8 @@ u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID )
   buf = GFL_HEAP_AllocClearMemoryLo(
       heapID, DEBUG_OBJCODE_STR_LENGTH );
   
-  GFL_ARC_LoadDataOfs( buf, ARCID_MMDL_PARAM,
-      NARC_fldmmdl_mdlparam_fldmmdl_objcodestr_bin,
+  GFL_ARC_LoadDataOfs( buf, ARCID_DEBUG_MMDL_OBJCODESTR,
+      NARC_fldmmdl_objcodestr_fldmmdl_objcodestr_bin,
       DEBUG_OBJCODE_STR_LENGTH * code, DEBUG_OBJCODE_STR_LENGTH );
   
   return( buf );
