@@ -211,6 +211,10 @@ typedef struct
 
   BOOL is_send_report;
 
+#ifdef BUGFIX_BTS7762_20100713
+  BOOL  is_sc_before_err;
+#endif //BUGFIX_BTS7762_20100713
+
   WIFIBATTLEMATCH_NET_SC_STATE  sc_state;
 
 #ifdef DEBUGWIN_USE
@@ -1624,6 +1628,10 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
     if( p_wk->is_send_report )
     {
+#ifdef BUGFIX_BTS7762_20100713
+      p_wk->is_sc_before_err  = TRUE;
+#endif //BUGFIX_BTS7762_20100713
+
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndBattle );
     }
     else
@@ -1802,10 +1810,29 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   switch( *p_seq )
   { 
   case SEQ_SC_HEAP_INIT:
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
-    DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
-    *p_seq  = SEQ_START_MSG;
+#ifdef BUGFIX_BTS7762_20100713
+    //以前はWIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERRだけを見て分岐していたが、
+    //以下の処理を満たすためフラグを追加しました
+    //１）戦闘中に切断されていたらレポートを送信しない
+    //２）戦闘デモ前に切断されていたらレポートを送信する
+    if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR
+        && p_wk->is_sc_before_err == FALSE )
+    {
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndRec );
+    }
+    else
+#endif 
+    {
+
+#ifdef BUGFIX_BTS7762_20100713
+      p_wk->is_sc_before_err = FALSE;
+#endif //BUGFIX_BTS7762_20100713
+
+      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
+      DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+      DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
+      *p_seq  = SEQ_START_MSG;
+    }
     break;
 
     //-------------------------------------

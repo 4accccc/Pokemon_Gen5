@@ -212,6 +212,11 @@ typedef struct
   //サーバーから落としてきたマッチング相手の登録ポケモン
   POKEPARTY *p_other_party;
 
+
+#ifdef BUGFIX_BTS7762_20100713
+  BOOL  is_sc_before_err;
+#endif //BUGFIX_BTS7762_20100713
+
   //引数
   WIFIBATTLEMATCH_CORE_PARAM  *p_param;
 
@@ -3207,6 +3212,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+#ifdef BUGFIX_BTS7762_20100713
+    p_wk->is_sc_before_err  = TRUE;
+#endif //BUGFIX_BTS7762_20100713
 
     if( p_wk->is_send_report )
     {
@@ -3461,11 +3469,29 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   switch( *p_seq )
   { 
   case SEQ_SC_HEAP_INIT:
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
-    DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
+#ifdef BUGFIX_BTS7762_20100713
+    //以前はWIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERRだけを見て分岐していたが、
+    //以下の処理を満たすためフラグを追加しました
+    //１）戦闘中に切断されていたらレポートを送信しない
+    //２）戦闘デモ前に切断されていたらレポートを送信する
+    if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR
+        && p_wk->is_sc_before_err == FALSE )
+    {
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_EndRec );
+    }
+    else
+#endif //BUGFIX_BTS7762_20100713
+    {
+#ifdef BUGFIX_BTS7762_20100713
+      p_wk->is_sc_before_err = FALSE;
+#endif //BUGFIX_BTS7762_20100713
 
-    *p_seq  = SEQ_START_NET_MSG;
+      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
+      DWC_RAPCOMMON_SetSubHeapIDEx( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, WBM_SC_BORDER_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+      DWC_RAPCOMMON_SetAutoDeleteSubHeap( HEAPID_WIFIBATTLEMATCH_SC );
+
+      *p_seq  = SEQ_START_NET_MSG;
+    }
     break;
   case SEQ_START_NET_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_18, WBM_TEXT_TYPE_WAIT );
