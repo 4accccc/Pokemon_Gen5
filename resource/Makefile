@@ -169,7 +169,8 @@ SUBDIRS	=	wmi \
 			profanity_word \
 			symbol \
 			manual_image \
-			pokeform
+			pokeform \
+			assert_err
 
 
 include $(RESOURCE_MACRO)
