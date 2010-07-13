@@ -440,7 +440,7 @@ static void WF2DMAP_OBJDrawSysScrnDraw( GFL_BG_INI * p_bgl, u8 bg_frame, u8 writ
 		write_y += nws_y;
 	}
 
-	OS_Printf( "\n" );
+//	OS_Printf( "\n" );
 }
 
 //----------------------------------------------------------------------------
