@@ -103,9 +103,11 @@ Property
 	MakerCode		"01"
 
 	#
-	# REMASTER VERSION: Mastering version  現在事前ロットチェック用 0xE0
+	# REMASTER VERSION: Mastering version
+  #  現在事前ロットチェック用 0xE0
+	# ０に変更  2010.07.13
 	#
-	RemasterVersion			0xE0
+	RemasterVersion			0
 
 	#
 	# ROM SPEED TYPE: [MROM/1TROM/UNDEFINED]
