@@ -15,6 +15,7 @@
 #include "system/ds_system.h"
 #include "arc_def.h"
 #include "net_err.naix"
+#include "assert_err.naix"
 
 #include "print\wordset.h"
 #include "print\printsys.h"
@@ -77,6 +78,10 @@ SDK_COMPILER_ASSERT(MESSAGE_X_LEN*0x20*MESSAGE_Y_LEN + BG_DATA_SIZE <= NETERR_PU
 ///製品版ROMでASSERTを通過した場合にセットする擬似タイプ
 #define TYPE_RELEASE_ROM_ASSERT_CALLBACK    (0x60)
 
+typedef enum{
+  GRATYPE_ERR,      ///<通信エラー画面用グラフィック
+  GRATYPE_ASSERT,   ///<アサートエラー画面用グラフィック
+}GRATYPE;
 
 //==============================================================================
 //	構造体定義
@@ -131,7 +136,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error);
 static void Local_ErrDispInit(BOOL fatal_error,BOOL isExitWait);
 static void Local_ErrDispExit(BOOL is_black_continue);
 static BOOL Local_SystemOccCheck(void);
-static void Local_ErrDispDraw(void);
+static void Local_ErrDispDraw(GRATYPE gra_type);
 static void Local_ErrMessagePrint(BOOL fatal_error,BOOL isExitWait);
 static void Local_ErrUpdate(void);
 static void _DispFatalError(void);
@@ -661,6 +666,13 @@ void NetErr_App_ReqErrorDispForce(int message )
 //==================================================================
 void NetErr_ReleaseRomAssertCallback( void )
 {
+	//いつでもどこでも呼ばれる可能性があるが、フィールドだと既にヒープが足りていない為、
+	//退避領域を開放する
+	GFL_HEAP_FreeMemory(NetErrSystem.push_char_p);
+	GFL_HEAP_FreeMemory(NetErrSystem.push_scrn_p);
+	GFL_HEAP_FreeMemory(NetErrSystem.push_pltt_p);
+	GFL_HEAP_DeleteHeap(HEAPID_NET_ERR);
+	
   //エラーが発生しました。電源を切ってください
   NetErrSystem.net_type = TYPE_RELEASE_ROM_ASSERT_CALLBACK;
   NetErr_DispCall(TRUE);
@@ -870,9 +882,11 @@ static void Local_ErrDispInit(BOOL fatal_error,BOOL isExitWait)
 	G2_SetBG1Offset(0, 0);
 
 	//VRAMのデータを退避(念のため上でBG1の設定をしてから行っている)
-	GFL_STD_MemCopy16(G2_GetBG1CharPtr(), nes->push_char_p, NETERR_PUSH_CHARVRAM_SIZE);
-	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
-	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, NETERR_PUSH_PLTTVRAM_SIZE);
+	if(nes->net_type != TYPE_RELEASE_ROM_ASSERT_CALLBACK){
+  	GFL_STD_MemCopy16(G2_GetBG1CharPtr(), nes->push_char_p, NETERR_PUSH_CHARVRAM_SIZE);
+  	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
+  	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, NETERR_PUSH_PLTTVRAM_SIZE);
+  }
 
 	//取得関数がないのでレジスタから取得している
   nes->g2_blend_cnt  = reg_G2_BLDCNT;
@@ -889,8 +903,13 @@ static void Local_ErrDispInit(BOOL fatal_error,BOOL isExitWait)
   *((u16 *)HW_DB_BG_PLTT)  = 0x7eea;
 
 	//エラー画面描画
-	Local_ErrDispDraw();
-	Local_ErrMessagePrint(fatal_error,isExitWait);
+	if(NetErrSystem.net_type == TYPE_RELEASE_ROM_ASSERT_CALLBACK){
+  	Local_ErrDispDraw(GRATYPE_ASSERT);
+  }
+  else{
+  	Local_ErrDispDraw(GRATYPE_ERR);
+  	Local_ErrMessagePrint(fatal_error,isExitWait);
+  }
 
 	//表示ON
 	GX_SetMasterBrightness(0);
@@ -983,7 +1002,7 @@ static BOOL Local_SystemOccCheck(void)
  * @brief   エラー画面描画
  */
 //--------------------------------------------------------------
-static void Local_ErrDispDraw(void)
+static void Local_ErrDispDraw(GRATYPE gra_type)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	u32 data_size;
@@ -993,22 +1012,45 @@ static void Local_ErrDispDraw(void)
 	NNSG2dPaletteData* palData;
 	BOOL  cmpFlag;
 	NNSG2dPaletteCompressInfo*  cmpInfo;
-	
+	static const struct{
+    u16 arc_id;
+    u16 data_ncg;
+    u16 data_nsc;
+    u16 data_ncl;
+  }ErrGraphicTbl[] = {
+    {
+      ARCID_NET_ERR, 
+      NARC_net_err_net_err_NCGR, 
+      NARC_net_err_net_err_NSCR, 
+      NARC_net_err_net_err_NCLR,
+    },
+    {
+      ARCID_ASSERT_ERR, 
+      NARC_assert_err_error_msg_NCGR, 
+      NARC_assert_err_error_msg_NSCR, 
+      NARC_assert_err_error_msg_NCLR,
+    },
+  };
+  
 	GFL_STD_MemClear32(G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
 
 	//キャラクタ
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCGR, 0, HEAPID_NET_TEMP);
+	arcData = GFL_ARC_UTIL_Load(
+	  ErrGraphicTbl[gra_type].arc_id, ErrGraphicTbl[gra_type].data_ncg, 0, HEAPID_NET_TEMP);
 	if(NNS_G2dGetUnpackedBGCharacterData(arcData, &charData)){
 		DC_FlushRange(charData->pRawData, charData->szByte);
 		//念のためDMAを使用するのは避ける
 		GFL_STD_MemCopy16(charData->pRawData, G2_GetBG1CharPtr(), charData->szByte);
 		OS_TPrintf("エラー画面：キャラクタサイズ＝%dbyte\n", charData->szByte);
-		GF_ASSERT(MESSAGE_START_CHARNO*0x20 >= charData->szByte);	//このASSERTに引っかかる場合はBG_DATA_SIZEを大きくする必要がある。その分エラーメッセージに割けるキャラクタ領域が少なくなるので注意
+		if(gra_type == GRATYPE_ERR){
+  		GF_ASSERT(MESSAGE_START_CHARNO*0x20 >= charData->szByte);	//このASSERTに引っかかる場合はBG_DATA_SIZEを大きくする必要がある。その分エラーメッセージに割けるキャラクタ領域が少なくなるので注意
+  	}
 	}
 	GFL_HEAP_FreeMemory(arcData);
 	
 	//スクリーン
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NSCR, 0, HEAPID_NET_TEMP);
+	arcData = GFL_ARC_UTIL_Load(
+	  ErrGraphicTbl[gra_type].arc_id, ErrGraphicTbl[gra_type].data_nsc, 0, HEAPID_NET_TEMP);
 	if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) ){
 		DC_FlushRange(scrnData->rawData, scrnData->szByte);
 		GFL_STD_MemCopy16(scrnData->rawData, G2_GetBG1ScrPtr(), scrnData->szByte);
@@ -1016,7 +1058,8 @@ static void Local_ErrDispDraw(void)
 	GFL_HEAP_FreeMemory( arcData );
 	
 	//パレット
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCLR, 0, HEAPID_NET_TEMP);
+	arcData = GFL_ARC_UTIL_Load(
+	  ErrGraphicTbl[gra_type].arc_id, ErrGraphicTbl[gra_type].data_ncl, 0, HEAPID_NET_TEMP);
 	cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( arcData, &cmpInfo );
 	if( NNS_G2dGetUnpackedPaletteData( arcData, &palData ) ){
 		DC_FlushRange( palData->pRawData, NETERR_PUSH_PLTTVRAM_SIZE );
@@ -1201,11 +1244,6 @@ static void Local_ErrMessagePrint(BOOL fatal_error,BOOL isExitWait)
           OS_TPrintf("エラーメッセージ %d \n",msgno);
         }
       }
-      else if(nes->net_type == TYPE_RELEASE_ROM_ASSERT_CALLBACK){
-        mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-    			ARCID_MESSAGE, NARC_message_net_err_dat, HEAPID_NET_TEMP);
-        msgno = net_error_0003;
-      }
       else
       { 
         //その他の場合
@@ -1276,3 +1314,4 @@ static void Local_ErrUpdate(void)
   PMVOICE_Main();
 #endif //MULTI_BOOT_MAKE
 }
+

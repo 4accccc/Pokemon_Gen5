@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: assert_err.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ASSERT_ERR_NAIX_
+#define NARC_ASSERT_ERR_NAIX_
+
+enum {
+	NARC_assert_err_error_msg_NCLR = 0,
+	NARC_assert_err_error_msg_NCGR = 1,
+	NARC_assert_err_error_msg_NSCR = 2
+};
+
+/* NARC_ASSERT_ERR_NAIX_ */
+#endif
