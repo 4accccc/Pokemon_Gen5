@@ -1032,6 +1032,14 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         BATTLE_REC_HEADER_PTR head = BattleRec_HeaderPtrGetWork( work->battle_rec_savedata );
         u64 hp;
         int i;
+#ifdef BUGFIX_BTS7753_100713
+        // 使用ポケモンを設定する前にwork->battle_mode_arrange_twoを設定しておかねばならないので、
+        // 先に録画施設の取得、何人対戦かを明らかにしておく。
+        hp = RecHeader_ParamGet( head, RECHEAD_IDX_MODE, 0 );
+        work->battle_rec_mode = (int)hp;
+
+        Btl_Rec_Sel_DecideFromBattleMode( param, work );
+#endif  // BUGFIX_BTS7753_100713
         for( i=0; i<HEADER_MONSNO_MAX; i++ )
         {
           u32 monsno;
@@ -1046,14 +1054,88 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
             hp = RecHeader_ParamGet( head, RECHEAD_IDX_GENDER, i );
             sex = (u32)hp;
           }
+#ifdef BUGFIX_BTS7753_100713
+          if( work->battle_mode_arrange_two )  // 2人対戦
+          {
+            //         相手
+            //      vs
+            // 自分
+
+            // データの並び
+            //  0 1 2 3 4 5 6 7 8 91011 
+            // 自自自自自自相相相相相相
+           
+            // work->pi_dataの並び
+            // work->pi_data[0][]が右上、work->pi_data[1][]が左下
+            // work->pi_data[][b]のbが小さいものが左、bが大きいものが右
+
+            if(i<6)  // 自分
+            {
+              work->pi_data[1][i%PI_PARTY_NUM].monsno = monsno;
+              work->pi_data[1][i%PI_PARTY_NUM].formno = formno;
+              work->pi_data[1][i%PI_PARTY_NUM].sex    = sex;
+            }
+            else  // 相手
+            {
+              work->pi_data[0][i%PI_PARTY_NUM].monsno = monsno;
+              work->pi_data[0][i%PI_PARTY_NUM].formno = formno;
+              work->pi_data[0][i%PI_PARTY_NUM].sex    = sex;
+            }
+          }
+          else  // 4人対戦
+          {
+            //         相手一
+            //         相手二
+            //      vs
+            // 自分
+            // 味方
+
+            // データの並び
+            //  0 1 2 3 4 5 6 7 8 91011
+            // 自自自一一一味味味二二二
+            
+            // work->pi_dataの並び
+            // work->pi_data[0][]が右上、work->pi_data[1][]が左下
+            // work->pi_data[][b]のbが小さいものが左、bが大きいものが右
+            // work->pi_data[][b]のbが0から2が2段の上段、bが3から5が2段の下段
+           
+            int a, b;
+            if(i<3)  // 自分
+            {
+              a = 1;
+              b = i;
+            }
+            else if(i<6)  // 相手一
+            {
+              a = 0;
+              b = i -3;
+            }
+            else if(i<9)  // 味方
+            {
+              a = 1;
+              b = i -3;
+            }
+            else  // 相手二
+            {
+              a = 0;
+              b = i -6;
+            }
+            work->pi_data[a][b].monsno = monsno;
+            work->pi_data[a][b].formno = formno;
+            work->pi_data[a][b].sex    = sex;
+          }
+#else  // BUGFIX_BTS7753_100713
           work->pi_data[i/PI_PARTY_NUM][i%PI_PARTY_NUM].monsno = monsno;
           work->pi_data[i/PI_PARTY_NUM][i%PI_PARTY_NUM].formno = formno;
           work->pi_data[i/PI_PARTY_NUM][i%PI_PARTY_NUM].sex    = sex;
+#endif  // BUGFIX_BTS7753_100713
         }
+#ifndef BUGFIX_BTS7753_100713
         hp = RecHeader_ParamGet( head, RECHEAD_IDX_MODE, i );
         work->battle_rec_mode = (int)hp;
 
         Btl_Rec_Sel_DecideFromBattleMode( param, work );
+#endif  // BUGFIX_BTS7753_100713
         Btl_Rec_Sel_FixShowOnPre( param, work );
         Btl_Rec_Sel_PiInit( param, work );
         if( work->battle_mode_arrange_two )
