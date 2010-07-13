@@ -534,8 +534,6 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   init_param = GAMEINIT_GetGameInitWork(
   GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction );
   
-  GFL_PROC_FreeWork( proc );
-  
   GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 
   // セーブデータで通信モードが上書きされてしまっているのでとっておいた通信モードを再度格納する
@@ -543,6 +541,8 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   // セーブデータでタイトルメニューの項目情報が上書きされてしまっているので再設定
   MISC_SetStartMenuFlagAll( work->selModeParam.miscSave, title_menu_flag );
 
+  GFL_PROC_FreeWork( proc );
+  
   return GFL_PROC_RES_FINISH;
 
 }
