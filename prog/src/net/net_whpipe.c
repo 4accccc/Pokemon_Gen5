@@ -248,7 +248,7 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 #if DEBUG_WH_BEACON_PRINT_ON
 	NET_PRINT("%d %d\n",WM_SIZE_USER_GAMEINFO , sizeof(_GF_BSS_DATA_INFO) );
 #endif
-	GF_ASSERT(WM_SIZE_USER_GAMEINFO == sizeof(_GF_BSS_DATA_INFO));
+	GF_ASSERT_HEAVY(WM_SIZE_USER_GAMEINFO == sizeof(_GF_BSS_DATA_INFO));
 	return TRUE;
 }
 
@@ -838,7 +838,7 @@ int CommBmpListPosBconIndexGet(int index)
 			count++;
 		}
 	}
-	GF_ASSERT(0 && "‚±‚±‚É‚Í—ˆ‚È‚¢‚Í‚¸");
+	GF_ASSERT_HEAVY(0 && "‚±‚±‚É‚Í—ˆ‚È‚¢‚Í‚¸");
 	return 0;
 }
 
@@ -1039,7 +1039,7 @@ static void _funcBconDataChange( void )
 	if(pInit->beaconGetSizeFunc!=NULL){
 		NetBeaconGetSizeFunc func = pInit->beaconGetSizeFunc;
 		size = func(pNetWL->pUserWork);
-    GF_ASSERT(size <= _BEACON_USER_SIZE_MAX);
+    GF_ASSERT_HEAVY(size <= _BEACON_USER_SIZE_MAX);
     GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
 	}
 

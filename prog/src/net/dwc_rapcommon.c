@@ -90,9 +90,9 @@ void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID hea
 //-----------------------------------------------------------------------------
 void DWC_RAPCOMMON_SetSubHeapIDEx( DWCAllocType SubAllocType, u32 size, u32 border_size, HEAPID heapID )
 {
-  GF_ASSERT( pDwcRapWork != NULL );
-  GF_ASSERT( pDwcRapWork->heapPtrSub == NULL );
-  GF_ASSERT( pDwcRapWork->headHandleSub == NULL );
+  GF_ASSERT_HEAVY( pDwcRapWork != NULL );
+  GF_ASSERT_HEAVY( pDwcRapWork->heapPtrSub == NULL );
+  GF_ASSERT_HEAVY( pDwcRapWork->headHandleSub == NULL );
   pDwcRapWork->heapPtrSub    = GFL_HEAP_AllocMemory(heapID, size-0x80);
   pDwcRapWork->headHandleSub = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtrSub + 31) / 32 * 32 ), size-0x80-64); 
   pDwcRapWork->SubAllocType = SubAllocType;
@@ -111,7 +111,7 @@ void DWC_RAPCOMMON_SetSubHeapIDEx( DWCAllocType SubAllocType, u32 size, u32 bord
 //-----------------------------------------------------------------------------
 void DWC_RAPCOMMON_ResetSubHeapID(void)
 {
-  GF_ASSERT(pDwcRapWork);
+  GF_ASSERT_HEAVY(pDwcRapWork);
 
   //もし破棄した段階でメモリが残っていればエラーにする
   if( pDwcRapWork->subheap_alloc_cnt != 0 )
@@ -127,7 +127,7 @@ void DWC_RAPCOMMON_ResetSubHeapID(void)
     //Wi-Fiの終了時にメインヒープとまとめてクリアします
     pDwcRapWork->is_leak_err  = TRUE;
 
-    //GF_ASSERT_MSG( 0, "SUB HEAP ERROR! LEAK!! count=%d\n", pDwcRapWork->subheap_alloc_cnt );
+    //GF_ASSERT_MSG_HEAVY( 0, "SUB HEAP ERROR! LEAK!! count=%d\n", pDwcRapWork->subheap_alloc_cnt );
   }
   else
   {
@@ -225,7 +225,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 
 
   if(ptr == NULL){  // ヒープが無い場合
-//    GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
+//    GF_ASSERT_MSG_HEAVY(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
 //    GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
 //    returnNo = ERRORCODE_HEAP;
     GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );  //エラーになる
@@ -274,7 +274,7 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
       NAGI_Printf( "！！ヒープ強制エラー！！\n" );
       GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );
 
-      //GF_ASSERT_MSG( 0, "SUB HEAP ERROR! NOT_SUBHEAP!! name=%d ptr=%x size=%d \n", name, ptr, size );
+      //GF_ASSERT_MSG_HEAVY( 0, "SUB HEAP ERROR! NOT_SUBHEAP!! name=%d ptr=%x size=%d \n", name, ptr, size );
     }
   }
   else
@@ -295,7 +295,7 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
 
 void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size)
 {
-  GF_ASSERT(pDwcRapWork==NULL);
+  GF_ASSERT_HEAVY(pDwcRapWork==NULL);
 
   pDwcRapWork=GFL_HEAP_AllocClearMemory(GFL_HEAPID_SYSTEM,sizeof(DWCRAPCOMMON_WORK));
   pDwcRapWork->heapPtr = GFL_HEAP_AllocMemory(id, size-0x80);
@@ -315,7 +315,7 @@ void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size)
 
 void DWC_RAPCOMMON_ResetHeapID(void)
 {
-  GF_ASSERT(pDwcRapWork);
+  GF_ASSERT_HEAVY(pDwcRapWork);
 
   if( pDwcRapWork->is_leak_err == TRUE
       || pDwcRapWork->heapPtrSub != NULL )
@@ -387,7 +387,7 @@ BOOL mydwc_checkMyGSID(void)
 {
   DWCUserData *userdata = GFI_NET_GetMyDWCUserData();
 
-  GF_ASSERT(userdata);
+  GF_ASSERT_HEAVY(userdata);
   if( DWC_CheckHasProfile( userdata )
       && DWC_CheckValidConsole( userdata ) ){
     return TRUE;

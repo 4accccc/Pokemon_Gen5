@@ -228,11 +228,11 @@ static void * Nhttp_Rap_EvilCheck_Alloc( u32 size )
 { 
   void *p_adrs;
 
-  GF_ASSERT_MSG( s_heapID != NHTTP_RAP_HEAPID_NONE, "heapIDÇê›íËÇµÇƒÇ≠ÇæÇ≥Ç¢\n" );
+  GF_ASSERT_MSG_HEAVY( s_heapID != NHTTP_RAP_HEAPID_NONE, "heapIDÇê›íËÇµÇƒÇ≠ÇæÇ≥Ç¢\n" );
     
   p_adrs  = GFL_HEAP_AllocMemory( s_heapID, size );
 
-  GF_ASSERT_MSG( p_adrs, "CRYPT alloc failed!! size=%d =restHeap%d \n", size, GFL_HEAP_GetHeapFreeSize(s_heapID) );
+  GF_ASSERT_MSG_HEAVY( p_adrs, "CRYPT alloc failed!! size=%d =restHeap%d \n", size, GFL_HEAP_GetHeapFreeSize(s_heapID) );
 
   return p_adrs;
 }

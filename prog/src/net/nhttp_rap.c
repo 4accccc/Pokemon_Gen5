@@ -174,7 +174,7 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
 
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return FALSE;
   }
   if(pWork==NULL){
@@ -196,7 +196,7 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
                                   urltable[urlno].type,
                                   pWork->getbuffer, _GET_MAXSIZE,
                                   ConnectionCallback, pWork);
-  GF_ASSERT(handle);
+  GF_ASSERT_HEAVY(handle);
   if(handle==NULL){
     return FALSE;
   }
@@ -207,20 +207,20 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)nintendoCA, sizeof(cainfos)/sizeof(CPSCaInfo*) )))
 #endif
   {
-    GF_ASSERT_MSG(0," NHTTP_SetRootCA(%d)\n",err);
+    GF_ASSERT_MSG_HEAVY(0," NHTTP_SetRootCA(%d)\n",err);
     return FALSE;
   }
   if(0!=NHTTP_AddHeaderField(handle, "Accept", "*/*" )){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return FALSE;
   }
   if(0!=NHTTP_AddHeaderField(handle, "User-Agent", "Nintendo-DS"  )){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return FALSE;
   }
 
   if(0!=NHTTP_SetBasicAuthorization( handle, "pokemon", "2Phfv9MY")){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return FALSE;
   }
   return TRUE;
@@ -513,7 +513,7 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
   }
   
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return FALSE;
   }
 
@@ -531,7 +531,7 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
                                   ConnectionCallback, NULL);
   if(handle==NULL){
     NHTTPError  error = NHTTP_GetError();
-    GF_ASSERT_MSG( handle, "Connection‚ªNULL!, error=%d\n", error );
+    GF_ASSERT_MSG_HEAVY( handle, "Connection‚ªNULL!, error=%d\n", error );
     return FALSE;
   }
   pWork->handle = handle;
@@ -540,7 +540,7 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 
   if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)nintendoCA, sizeof(nintendoCA)/sizeof(CPSCaInfo*) )))
   {
-    GF_ASSERT_MSG(0," NHTTP_SetRootCA(%d)\n",err);
+    GF_ASSERT_MSG_HEAVY(0," NHTTP_SetRootCA(%d)\n",err);
     return FALSE;
   }
 

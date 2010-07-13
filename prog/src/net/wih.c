@@ -1722,7 +1722,7 @@ static void WH_StateOutStartScan(void *arg)
                bd->bssid[0], bd->bssid[1], bd->bssid[2],
                bd->bssid[3], bd->bssid[4], bd->bssid[5]);
       WH_TRACE("parent find\n");
-      GF_ASSERT(_pWmInfo->sScanCallback);
+      GF_ASSERT_HEAVY(_pWmInfo->sScanCallback);
       if(_pWmInfo->sScanCallback(bd)){
         // コールバックが必要ならば呼び出し
         found = TRUE;

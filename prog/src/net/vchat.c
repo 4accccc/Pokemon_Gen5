@@ -452,7 +452,7 @@ static void ClearSession(VCTSession *session)
 // 毎フレーム呼ばれる。
 void myvct_main(BOOL offflg)
 {
-
+  
 	_vWork->off_flag = offflg;
 	{
 		// ゲームフレームに一度呼び出すメイン関数。
@@ -603,7 +603,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
                            2,
                            SndCallback,
                            _vWork->sRecBuffer);
-    GF_ASSERT(ret);
+    GF_ASSERT_HEAVY(ret);
   }
 
 	_vWork->state = VCTSTATE_INIT;
@@ -623,7 +623,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
 		config.session      = _vWork->sSession;
 		config.numSession   = maxEntry;
 		config.aid          = DWC_GetMyAID();
-		GF_ASSERT((config.aid != -1));
+		GF_ASSERT_HEAVY((config.aid != -1));
 		if(_vWork->mode == VCT_MODE_CONFERENCE){
 			config.callback = VoiceChatEventCallbackConference;
 		}

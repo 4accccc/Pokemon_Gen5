@@ -218,7 +218,7 @@ static void _beaconDataDiv(DELIVERY_BEACON_WORK* pWork)
 
   for(j = 0; j < pWork->aInit.dataNum ; j++){
     max = (pWork->aInit.data[j].datasize/DELIVERY_BEACON_ONCE_NUM)+1;
-    GF_ASSERT(pWork->aInit.data[j].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+    GF_ASSERT_HEAVY(pWork->aInit.data[j].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
 #if DELIVDEBUG_PRINT
     OS_TPrintf("%d %d\n",pWork->aInit.data[j].datasize, (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
 #endif
@@ -330,7 +330,7 @@ static void _beaconAlloc(DELIVERY_BEACON_WORK* pWork)
 #if DELIVDEBUG_PRINT
     OS_TPrintf("%d %d\n",pWork->aInit.data[0].datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
 #endif
-    GF_ASSERT(pWork->aInit.data[0].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+    GF_ASSERT_HEAVY(pWork->aInit.data[0].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
   }
 }
 

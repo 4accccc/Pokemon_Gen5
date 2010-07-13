@@ -63,7 +63,7 @@ int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index)
   int numMax  = GFI_NET_GetFriendNumMax();
   *index = -1;
 
-//  GF_ASSERT(myUserData);
+//  GF_ASSERT_HEAVY(myUserData);
 
   if( !DWC_IsValidFriendData( data ) ) return DWCFRIEND_INVALID;
 
@@ -153,13 +153,13 @@ int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend )
   int i,hit = FALSE,pos,ret;
   DWCFriendData *keyList  = GFI_NET_GetMyDWCFriendData();
 
-//  GF_ASSERT(keyList);
-//  GF_ASSERT(pFriend);
+//  GF_ASSERT_HEAVY(keyList);
+//  GF_ASSERT_HEAVY(pFriend);
 
   ret = GFL_NET_DWC_CheckFriendByToken(pFriend, &pos);
 
 //  NET_PRINT("%d check  \n",ret);
-//  GF_ASSERT(ret != DWCFRIEND_INVALID);  // 受け取りデータに異常がある
+//  GF_ASSERT_HEAVY(ret != DWCFRIEND_INVALID);  // 受け取りデータに異常がある
 
   if(ret == DWCFRIEND_INLIST){ //同一
   }

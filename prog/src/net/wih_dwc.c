@@ -67,8 +67,8 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
   int i;
   WIH_DWC_WORK* pWork;
   
-  GF_ASSERT(num <= _ALLBEACON_MAX);
-  GF_ASSERT(_localWork==NULL);
+  GF_ASSERT_HEAVY(num <= _ALLBEACON_MAX);
+  GF_ASSERT_HEAVY(_localWork==NULL);
   
   pWork = GFL_NET_Align32Alloc(id , sizeof(WIH_DWC_WORK));
   pWork->AllBeaconNum = num;
@@ -93,7 +93,7 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
 void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork)
 {
   int i;
-  GF_ASSERT(_localWork);
+  GF_ASSERT_HEAVY(_localWork);
 
   WHSetWIHDWCBeaconGetFunc(NULL);
 
@@ -443,7 +443,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
 //------------------------------------------------------------------------------
 void WIH_DWC_CreateCFG(HEAPID id)
 {
-  GF_ASSERT(_localcfg==NULL);
+  GF_ASSERT_HEAVY(_localcfg==NULL);
 
   _localcfg = GFL_NET_Align32Alloc(id ,sizeof(NCFGConfigEx));
 }
@@ -459,7 +459,7 @@ void WIH_DWC_CreateCFG(HEAPID id)
 //------------------------------------------------------------------------------
 void WIH_DWC_DeleteCFG(void)
 {
-  GF_ASSERT(_localcfg);
+  GF_ASSERT_HEAVY(_localcfg);
   GFL_NET_Align32Free(_localcfg);
   _localcfg = NULL;
 }
@@ -471,7 +471,7 @@ void WIH_DWC_DeleteCFG(void)
 //------------------------------------------------------------------------------
 void WIH_DWC_ReloadCFG(void)
 {
-  GF_ASSERT(_localcfg);
+  GF_ASSERT_HEAVY(_localcfg);
   NCFG_ReadConfig(&_localcfg->compat, NULL);
 }
 

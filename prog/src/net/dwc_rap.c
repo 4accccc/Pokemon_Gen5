@@ -280,7 +280,7 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
 
   // ヒープ領域からワーク領域を確保。
-  GF_ASSERT( _dWork == NULL );
+  GF_ASSERT_HEAVY( _dWork == NULL );
 #ifdef DEBUGPRINT_ON
   DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
 #else
@@ -614,7 +614,7 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
 
 
 
-  GF_ASSERT( _dWork != NULL );
+  GF_ASSERT_HEAVY( _dWork != NULL );
 
   if( _dWork->state != MDSTATE_LOGIN )
   {
@@ -632,17 +632,17 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
    *     //            moc.timeout = 1; // 子機に時間の主導権がないように短く設定する
    *     //        }
    *     result = DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE,&moc,sizeof(moc));
-   *     GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
+   *     GF_ASSERT_HEAVY( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
    *   }
    */
   {
     BOOL ret = DWC_AddMatchKeyString(0,PPW_LOBBY_MATCHMAKING_KEY,(const char *)keyStr);
-    GF_ASSERT_MSG(ret!=0, "DWC_AddMatchKeyString\n");
+    GF_ASSERT_HEAVY(ret!=0);
   }
   {
     MI_CpuClear8(_dWork->randommatch_query,_MATCHSTRINGNUM);
     sprintf((char*)_dWork->randommatch_query,randommatch_query,PPW_LOBBY_MATCHMAKING_KEY,keyStr);
-    GF_ASSERT(GFL_STD_StrLen((const char*)_dWork->randommatch_query) < _MATCHSTRINGNUM);
+    GF_ASSERT_HEAVY(GFL_STD_StrLen((const char*)_dWork->randommatch_query) < _MATCHSTRINGNUM);
   }
   if(bParent){
     DWC_AddMatchKeyString(1,(const char*)_dWork->randommatch_query,(const char*)_dWork->randommatch_query);
@@ -707,7 +707,7 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
 
 int GFL_NET_DWC_StartMatchFilter( char* filterStr,int numEntry,DWCEvalPlayerCallback evalcallback,void* pWork)
 {
-  GF_ASSERT( _dWork != NULL );
+  GF_ASSERT_HEAVY( _dWork != NULL );
   if( _dWork->state != MDSTATE_LOGIN )
   {
     return 0;
@@ -1292,7 +1292,7 @@ static void setTimeoutTime(void)
       if(DWC_GetMyAID() != i){
         if(DWC_GetAIDBitmap() & (0x01<<i) ){
           ret = DWC_SetRecvTimeoutTime( i, MYDWC_TIMEOUTSEC * 1000 );
-          GF_ASSERT_MSG(ret,"DWC_SetRecvTimeoutTime\n");
+          GF_ASSERT_MSG_HEAVY(ret,"DWC_SetRecvTimeoutTime\n");
           MYDWC_DEBUGPRINT("setTimeOut %d\n",i);
         }
       }
@@ -1300,7 +1300,7 @@ static void setTimeoutTime(void)
   }
   else{
     ret = DWC_SetRecvTimeoutTime( _WIFI_PARENT_AID, MYDWC_TIMEOUTSEC * 1000 );
-    GF_ASSERT_MSG(ret,"DWC_SetRecvTimeoutTime\n");
+    GF_ASSERT_MSG_HEAVY(ret,"DWC_SetRecvTimeoutTime\n");
     MYDWC_DEBUGPRINT("setTimeOut 0\n");
   }
 
@@ -1422,7 +1422,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
 
   //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
   //  MYDWC_DEBUGPRINT("-受信-\n");
-  GF_ASSERT(aid < 2);  //BTS 3869 ライブラリから0xffが帰ってきてるのを確認したい
+  GF_ASSERT_HEAVY(aid < 2);  //BTS 3869 ライブラリから0xffが帰ってきてるのを確認したい
   if(aid >= 2){
     return;
   }
@@ -2100,7 +2100,7 @@ int GFL_NET_DWC_ErrorType(int code, int type)
   case DWC_ETYPE_DISCONNECT:
     return 11;  //10から11に変更
   default:
-    GF_ASSERT(0); //DWCが返すtypeが増えているなら見直しが必要
+    GF_ASSERT_HEAVY(0); //DWCが返すtypeが増えているなら見直しが必要
     break;
   case DWC_ETYPE_FATAL:
     return 15;
@@ -2249,7 +2249,7 @@ static void mydwc_updateFriendInfo( void )
       else{
         _dWork->friend_status[index] = nowstate;
 #if PM_DEBUG
-        GF_ASSERT(size == MYDWC_STATUS_DATA_SIZE_MAX);
+        GF_ASSERT_HEAVY(size == MYDWC_STATUS_DATA_SIZE_MAX);
 ///        if(backup!=nowstate){
 //          MYDWC_DEBUGPRINT("FRIEND CHANGE %d => %d  %d\n",backup, nowstate,index);
 //        }
@@ -2272,7 +2272,7 @@ BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
 {
   MYDWC_DEBUGPRINT("upload status change(%p, %d)\n", data, size);
 
-  GF_ASSERT(size <= MYDWC_STATUS_DATA_SIZE_MAX);
+  GF_ASSERT_HEAVY(size <= MYDWC_STATUS_DATA_SIZE_MAX);
   return DWC_SetOwnStatusData( data, size );
 }
 

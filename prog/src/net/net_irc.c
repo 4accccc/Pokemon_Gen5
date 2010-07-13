@@ -137,7 +137,7 @@ static void GFL_NET_IRC_UniqueSuccessSetup(void);
 static void _IRC_SendRapper(u8* buf, u8 size, u8 command, u8 value)
 {
   u16 crc;
-  GF_ASSERT(size < _IRC_SEND_SIZE );
+  GF_ASSERT_HEAVY(size < _IRC_SEND_SIZE );
 
   NetIrcSys.aSendBuff.command = command;
   NetIrcSys.aSendBuff.value = value;
@@ -240,7 +240,7 @@ void GFL_NET_IRC_SetGSIDCallback(IrcGSIDCallback* callback)
 //--------------------------------------------------------------
 void GFL_NET_IRC_InitializeFlagSet(void)
 {
-  GF_ASSERT(NetIrcSys.initialize == FALSE);
+  GF_ASSERT_HEAVY(NetIrcSys.initialize == FALSE);
   NetIrcSys.initialize = TRUE;
 }
 
@@ -308,7 +308,7 @@ void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command)
 {
   u8 value;
 
-  GF_ASSERT(NetIrcSys.send_turn == TRUE);
+  GF_ASSERT_HEAVY(NetIrcSys.send_turn == TRUE);
 
 #if GFL_IRC_DEBUG
   if(command != GF_NET_COMMAND_CONTINUE){
@@ -411,7 +411,7 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
   
   NetIrcSys.send_turn = TRUE;
 
-  GF_ASSERT(size <= sizeof(_NETIRC_DATA));
+  GF_ASSERT_HEAVY(size <= sizeof(_NETIRC_DATA));
   if(size==0){
     IRC_PRINT("size0\n");
     return;
