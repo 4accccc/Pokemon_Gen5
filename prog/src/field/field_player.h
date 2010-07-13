@@ -255,6 +255,11 @@ extern void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player,
 extern void FIELD_PLAYER_GetGridPos(
 		const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
 
+#ifdef BUGFIX_GFBTS1967_100713
+extern BOOL FIELD_PLAYER_CheckOzeFallOut( FIELD_PLAYER *fld_player );
+extern void FIELD_PLAYER_FinishOzeFallOut( FIELD_PLAYER *fld_player );
+#endif
+
 //TOOL
 extern void FIELD_PLAYER_GetDirGridPos(
 		const FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz );

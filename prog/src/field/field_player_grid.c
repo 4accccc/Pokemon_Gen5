@@ -1266,6 +1266,9 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_FallOut(
   FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( oze_CheckFallOutEnd(gjiki) == TRUE ){
+#ifdef BUGFIX_GFBTS1967_100713
+    FIELD_PLAYER_GRID_FinishOzeFallOut( gjiki );
+#else
     VecFx32 pos;
     //ステータスを元に戻す
     //OBJコードも元に戻す必要アリ
@@ -1278,6 +1281,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_FallOut(
     MMDL_SetGridPosY( mmdl, SIZE_GRID_FX32(pos.y) );
     MMDL_UpdateCurrentMapAttr( mmdl );
     MMDL_UpdateGridPosCurrent( mmdl );
+#endif
     gjiki_SetMoveBitOzeFallOut( gjiki, FALSE );
     return( JIKI_MOVEORDER_STOP );
   }
@@ -2192,6 +2196,10 @@ static void gjikiOze_SetMove_FallOut(
     if( pos.y < height ){
       pos.y = height;
       MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
+
+#ifdef BUGFIX_GFBTS1967_100713
+      gjiki->naminori_end_flag = TRUE;
+#endif
     }
     
     MMDL_SetVectorPos( mmdl, &pos );
@@ -3048,6 +3056,28 @@ BOOL FIELD_PLAYER_GRID_CheckOzeFallOut( FIELD_PLAYER_GRID * gjiki )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * 自機、尾瀬落下状態を完了する
+ */
+//--------------------------------------------------------------
+#ifdef BUGFIX_GFBTS1967_100713
+void FIELD_PLAYER_GRID_FinishOzeFallOut( FIELD_PLAYER_GRID *gjiki )
+{
+  VecFx32 pos;
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
+  MMDL_SetStatusBitHeightGetOFF( mmdl, FALSE ); //高さ取得開始
+  MMDL_SetMoveBitNonCreateMoveEffect( mmdl, FALSE ); //移動エフェクトOFF解除
+	MMDL_OnMoveBit( mmdl, //ジャンプ動作終了をセット
+  MMDL_MOVEBIT_MOVE_END|MMDL_MOVEBIT_JUMP_END );
+  MMDL_UpdateCurrentHeight( mmdl );
+  MMDL_GetVectorPos( mmdl, &pos );
+  MMDL_SetGridPosY( mmdl, SIZE_GRID_FX32(pos.y) );
+  MMDL_UpdateCurrentMapAttr( mmdl );
+  MMDL_UpdateGridPosCurrent( mmdl );
+}
+#endif
+
 //======================================================================
 //  自機足元処理
 //======================================================================
@@ -3425,6 +3455,7 @@ void FIELD_PLAYER_GRID_ResetSpecialMove( FIELD_PLAYER_GRID *gjiki )
  * 自機が波乗りイベント終了直後か
  * @param gjiki
  * @retval BOOL
+ * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
 BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki )
@@ -3437,6 +3468,7 @@ BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki )
  * 自機が波乗りイベント終了直後のフラグをセット
  * @param gjiki
  * @retval BOOL
+ * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag )

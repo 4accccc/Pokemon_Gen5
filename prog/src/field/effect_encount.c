@@ -378,6 +378,20 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
       EFFECT_ENC_EffectHideSet( enc, TRUE );
     }
     ep->push_cancel_f = TRUE;
+
+#ifdef BUGFIX_GFBTS1967_100713
+    /*
+     * GFBTS1967関連対処
+     * 8番道路の一本橋から落ちてすぐ、エフェクトエンカウントが起動した場合
+     * 自機の特殊落下中ステータスがクリアされないため、明示的にクリアする
+     */
+    {
+      FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
+      if( FIELD_PLAYER_CheckOzeFallOut( fplayer ) ){
+        FIELD_PLAYER_FinishOzeFallOut( fplayer );
+      }
+    }
+#endif  //BUGFIX_GFBTS1967_100713
   }
   return event;
 }

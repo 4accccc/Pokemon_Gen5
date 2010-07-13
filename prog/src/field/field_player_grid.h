@@ -91,6 +91,7 @@ extern u16 FIELD_PLAYER_GRID_GetKeyDir( FIELD_PLAYER_GRID *gjiki, int key );
 
 extern BOOL FIELD_PLAYER_GRID_CheckUnderForceMove( FIELD_PLAYER_GRID *gjiki );
 extern BOOL FIELD_PLAYER_GRID_CheckOzeFallOut( FIELD_PLAYER_GRID *gjiki );
+extern void FIELD_PLAYER_GRID_FinishOzeFallOut( FIELD_PLAYER_GRID *gjiki );
 extern FIELD_PLAYER_CORE * FIELD_PLAYER_GRID_GetFieldPlayerCore(
     FIELD_PLAYER_GRID *gjiki );
 extern MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki );

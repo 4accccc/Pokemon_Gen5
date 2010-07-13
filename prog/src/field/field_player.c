@@ -1266,6 +1266,7 @@ void FIELD_PLAYER_ResetSpecialMove( FIELD_PLAYER *fld_player )
  * 自機が波乗りイベント終了直後か
  * @param fld_player FIELD_PLAYER
  * @retval BOOL TRUE=終了直後
+ * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
 BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player )
@@ -1284,6 +1285,7 @@ BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player )
  * 自機が波乗りイベント終了直後のフラグをセット
  * @param fld_player FIELD_PLAYER
  * @retval BOOL TRUE=終了直後
+ * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL flag )
@@ -1369,6 +1371,49 @@ void FIELD_PLAYER_GetGridPos( const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, 
   *gz = MMDL_GetGridPosZ( fmmdl );
 }
 
+//--------------------------------------------------------------
+/**
+ * フィールドプレイヤー　尾瀬落下状態かどうか
+ * @param fld_player FIELD_PLAYER
+ * @retval BOOL TRUE=尾瀬状態
+ */
+//--------------------------------------------------------------
+#ifdef BUGFIX_GFBTS1967_100713
+BOOL FIELD_PLAYER_CheckOzeFallOut( FIELD_PLAYER *fld_player )
+{
+  if( FIELDMAP_GetBaseSystemType(
+        fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
+  {
+    //尾瀬落下チェック
+    if( FIELD_PLAYER_GRID_CheckOzeFallOut(fld_player->gridwk) == TRUE )
+    {
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+#endif
+
+//--------------------------------------------------------------
+/**
+ * フィールドプレイヤー尾瀬落下状態を完了する
+ */
+//--------------------------------------------------------------
+#ifdef BUGFIX_GFBTS1967_100713
+void FIELD_PLAYER_FinishOzeFallOut( FIELD_PLAYER *fld_player )
+{
+  if( FIELDMAP_GetBaseSystemType(
+        fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
+  {
+    //尾瀬落下チェック
+    if( FIELD_PLAYER_GRID_CheckOzeFallOut(fld_player->gridwk) == TRUE )
+    {
+      FIELD_PLAYER_GRID_FinishOzeFallOut( fld_player->gridwk );
+    }
+  }
+}
+#endif
 
 //======================================================================
 //	NOGrid 専用処理

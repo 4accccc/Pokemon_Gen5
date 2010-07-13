@@ -2896,6 +2896,9 @@ static GMEVENT_RESULT event_NaminoriEnd(
     break;
   case 3:
     MMDLSYS_ClearPauseMoveProc( MMDL_GetMMdlSys(mmdl) );
+#ifdef BUGFIX_GFBTS1967_100713
+    FIELD_PLAYER_SetNaminoriEventEnd( fld_player, TRUE );
+#endif
     return GMEVENT_RES_FINISH;
   }
   
