@@ -173,7 +173,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 		GFL_SAVEDATA_Clear(ctrl->sv_normal);
 		break;
 	default:
-		GF_ASSERT(0); //LOAD:例外エラー！
+		GF_ASSERT_HEAVY(0); //LOAD:例外エラー！
 		break;
 	}
 
@@ -208,7 +208,7 @@ void SaveControl_SystemExit(void)
 //---------------------------------------------------------------------------
 SAVE_CONTROL_WORK * SaveControl_GetPointer(void)
 {
-	GF_ASSERT(SaveControlWork != NULL);
+	GF_ASSERT_HEAVY(SaveControlWork != NULL);
   OS_TPrintf("SAVE_CONTROL_WORKへのGlobal参照\n");
 	return SaveControlWork;
 }
@@ -593,7 +593,7 @@ LOAD_RESULT SaveControl_Extra_Load(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_
 //==================================================================
 void SaveControl_Extra_Unload(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
 {
-  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GF_ASSERT_HEAVY(ctrl->sv_extra[extra_id] != NULL);
   GFL_SAVEDATA_Delete(ctrl->sv_extra[extra_id]);
   ctrl->sv_extra[extra_id] = NULL;
 }
@@ -689,7 +689,7 @@ void SaveControl_Extra_SystemSetup(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_
 //==================================================================
 void SaveControl_Extra_UnloadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
 {
-  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GF_ASSERT_HEAVY(ctrl->sv_extra[extra_id] != NULL);
   GFL_SAVEDATA_Delete(ctrl->sv_extra[extra_id]);
   ctrl->sv_extra[extra_id] = NULL;
 }
@@ -704,7 +704,7 @@ void SaveControl_Extra_UnloadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_i
 //--------------------------------------------------------------
 void SaveControl_Extra_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
 {
-  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GF_ASSERT_HEAVY(ctrl->sv_extra[extra_id] != NULL);
   
   SaveData_SetExtraMagicKey(ctrl, extra_id);
   GFL_BACKUP_SAVEASYNC_EXTRA_Init(ctrl->sv_normal, ctrl->sv_extra[extra_id], 
@@ -723,7 +723,7 @@ SAVE_RESULT SaveControl_Extra_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_
 {
 	SAVE_RESULT result;
 	
-  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GF_ASSERT_HEAVY(ctrl->sv_extra[extra_id] != NULL);
   result = GFL_BACKUP_SAVEASYNC_EXTRA_Main(ctrl->sv_normal, ctrl->sv_extra[extra_id]);
 	return result;
 }
@@ -741,7 +741,7 @@ SAVE_RESULT SaveControl_Extra_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_
 //--------------------------------------------------------------
 void * SaveControl_Extra_DataPtrGet(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, GFL_SVDT_ID gmdata_id)
 {
-  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GF_ASSERT_HEAVY(ctrl->sv_extra[extra_id] != NULL);
 	return GFL_SAVEDATA_Get(ctrl->sv_extra[extra_id], gmdata_id);
 }
 
@@ -757,7 +757,7 @@ void * SaveControl_Extra_DataPtrGet(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra
 //---------------------------------------------------------------------------
 void SaveControl_Extra_ClearData(SAVE_CONTROL_WORK * ctrl, SAVE_EXTRA_ID extra_id)
 {
-  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GF_ASSERT_HEAVY(ctrl->sv_extra[extra_id] != NULL);
 	GFL_SAVEDATA_Clear(ctrl->sv_extra[extra_id]);
 }
 
@@ -771,7 +771,7 @@ void SaveControl_Extra_ClearData(SAVE_CONTROL_WORK * ctrl, SAVE_EXTRA_ID extra_i
 //--------------------------------------------------------------
 void SaveControl_Extra_Erase(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, u32 heap_temp_id)
 {
-  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GF_ASSERT_HEAVY(ctrl->sv_extra[extra_id] != NULL);
 	GFL_BACKUP_Erase(ctrl->sv_extra[extra_id], heap_temp_id);
 }
 
