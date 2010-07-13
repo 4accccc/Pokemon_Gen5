@@ -544,7 +544,10 @@ void myvct_init( int heapID, int codec,int maxEntry )
 
 #if 1
 		_vWork = DWC_RAPCOMMON_Alloc(heapID, sizeof(MYVCT_WORK),32);
-		_vWork->pAudioBuffer = DWC_RAPCOMMON_Alloc(heapID, VCT_AUDIO_BUFFER_SIZE * maxEntry * VCT_DEFAULT_AUDIO_BUFFER_COUNT + 32 ,32);
+#ifdef BUGFIX_BTS7785_20100713
+    GFL_STD_MemClear(_vWork, sizeof(MYVCT_WORK));
+#endif
+    _vWork->pAudioBuffer = DWC_RAPCOMMON_Alloc(heapID, VCT_AUDIO_BUFFER_SIZE * maxEntry * VCT_DEFAULT_AUDIO_BUFFER_COUNT + 32 ,32);
 #else
     _vWork = GFL_NET_Align32Alloc(heapID, sizeof(MYVCT_WORK));
 		_vWork->pAudioBuffer = GFL_NET_Align32Alloc(heapID, VCT_AUDIO_BUFFER_SIZE * maxEntry * VCT_DEFAULT_AUDIO_BUFFER_COUNT + 32 );
