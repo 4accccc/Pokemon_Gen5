@@ -1097,7 +1097,7 @@ void BTL_EVENTVAR_PushInpl( u32 line )
   }
   else
   {
-    GF_ASSERT(0);   // stack overflow
+    GF_ASSERT_HEAVY(0);   // stack overflow
   }
 }
 

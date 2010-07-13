@@ -379,7 +379,7 @@ static inline void unpack_5args( int bytes, u32 pack, int bits1, int bits2, int 
 
 void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data )
 {
-  GF_ASSERT(que->writePtr < BTL_SERVER_CMD_QUE_SIZE);
+  GF_ASSERT_HEAVY(que->writePtr < BTL_SERVER_CMD_QUE_SIZE);
   que->buffer[ que->writePtr++ ] = data;
 }
 u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
@@ -389,7 +389,7 @@ u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
 }
 void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data )
 {
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-1));
+  GF_ASSERT_HEAVY(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-1));
   que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
   que->buffer[ que->writePtr++ ] = (data & 0xff);
 }
@@ -404,7 +404,7 @@ u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
 }
 void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data )
 {
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
+  GF_ASSERT_HEAVY(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
   que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
   que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
   que->buffer[ que->writePtr++ ] = (data & 0xff);
@@ -420,7 +420,7 @@ u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
 }
 void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data )
 {
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-3));
+  GF_ASSERT_HEAVY(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-3));
   que->buffer[ que->writePtr++ ] = (data >> 24)&0xff;
   que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
   que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
