@@ -56,6 +56,9 @@
 // app/trainercard/badge_view.c
 #define BUGFIX_BTS7747_20100712
 
+//wifiクラブ話しかけ時にキャンセルすると、相手側のBUSYがのこってしまう不具合修正
+#define BUGFIX_BTS7749_20100713
+
 //ポケモン交換時に増殖してしまう、表示がかわってしまう不具合修正 BTS7752かねる
 #define BUGFIX_BTS7750_20100713
 

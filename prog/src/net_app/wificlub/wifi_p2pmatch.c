@@ -61,7 +61,6 @@
 
 
 
-
 // 置き換える必要があるがまだない関数  @@OO
 #define SND_HANDLE_FIELD (0)
 #define BGM_POKECEN_VOL (0)
@@ -4200,7 +4199,9 @@ static int WifiP2PMatch_VCTDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
 
       wk->preConnect = -1;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-
+#ifdef BUGFIX_BTS7749_20100713
+      WIFI_MCR_NpcPauseOff( &wk->matchroom, MCRSYS_GetMoveObjWork( wk, WIFI_MCR_PlayerSelect( &wk->matchroom ) ) );
+#endif
       FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     }
   }
@@ -5079,6 +5080,14 @@ static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
     WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( wk->friendNo-1 ));
     _myStatusChange(wk, WIFI_STATUS_CALL, WIFI_GAME_UNIONMATCH);  // 呼びかけ待機中になる
   }
+#ifdef BUGFIX_BTS7749_20100713
+  if(wk->timer > (60*60)){  //繰り返してもつながらない場合切ってしまう
+    _friendNameExpand(wk, wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+    return seq;
+  }
+#endif
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_068, FALSE);
