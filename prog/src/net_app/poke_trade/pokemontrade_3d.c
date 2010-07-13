@@ -19,6 +19,7 @@
 
 #include "trade.naix"
 
+#include "net/dwc_rap.h"
 #include "net_app/pokemontrade.h"
 #include "pokemontrade_local.h"
 #include "msg/msg_poke_trade.h"
@@ -1055,12 +1056,22 @@ void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int b
       scale.x = -scale.x;
     }
   }
+#ifdef BUGFIX_BTS7722_20100713
+  if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
+    GFL_NET_DWC_pausevchat(TRUE);
+  }
+#endif
   if(bFront){
     pWork->pokeMcss[no] = MCSS_TOOL_AddPokeMcss( pWork->mcssSys,pp,MCSS_DIR_FRONT, xpos[no] , PSTATUS_MCSS_POS_Y , PSTATUS_MCSS_POS_MYZ  );
   }
   else{
     pWork->pokeMcss[no] = MCSS_TOOL_AddPokeMcss( pWork->mcssSys,pp,MCSS_DIR_BACK, xpos[no] , PSTATUS_MCSS_POS_Y , PSTATUS_MCSS_POS_YOUZ  );
   }
+#ifdef BUGFIX_BTS7722_20100713
+  if(POKEMONTRADE_TYPE_WIFICLUB == pWork->type){
+   GFL_NET_DWC_pausevchat(FALSE);
+  }
+#endif
   MCSS_TOOL_SetAnmRestartCallback(pWork->pokeMcss[no]);
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
   MCSS_SetShadowVanishFlag(pWork->pokeMcss[no] ,TRUE);

@@ -862,10 +862,24 @@ BOOL myvct_DelConference(int myAid)
 }
 
 
+
 void VCHAT_PauesFlg(BOOL bPause)
 {
   if(_vWork){
     _vWork->pauseFlg=bPause;
+#ifdef BUGFIX_BTS7722_20100713
+    if(_vWork->session){
+      if(bPause){
+        VCT_StopStreaming(_vWork->session);
+        VCT_StopStreaming(_vWork->session);
+        VCT_StopStreaming(_vWork->session);
+        VCT_StopStreaming(_vWork->session);
+      }
+      else{
+        VCT_StartStreaming(_vWork->session);
+      }
+    }
+#endif
   }
 }
 
