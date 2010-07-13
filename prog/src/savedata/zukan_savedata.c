@@ -912,6 +912,13 @@ void ZUKANSAVE_SetPokeGet( ZUKAN_SAVEDATA * zw, POKEMON_PARAM * pp )
   zukan_incorrect(zw);
 
 	fast = PP_FastModeOn( pp );
+#ifdef	BUGFIX_BTS7778_20100713
+	// ƒ^ƒ}ƒS‚È‚ç“o˜^‚µ‚È‚¢
+	if( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == 1 ){
+		PP_FastModeOff( pp, fast );
+		return;
+	}
+#endif	// BUGFIX_BTS7778_20100713
 	mons = PP_Get( pp, ID_PARA_monsno, NULL );
 	rand = PP_Get( pp, ID_PARA_personal_rnd, NULL );
 	form = PP_Get( pp, ID_PARA_form_no, NULL );
@@ -1066,6 +1073,13 @@ void ZUKANSAVE_SetPokeSee( ZUKAN_SAVEDATA * zw, POKEMON_PARAM * pp )
   zukan_incorrect(zw);
 
 	fast = PP_FastModeOn( pp );
+#ifdef	BUGFIX_BTS7778_20100713
+	// ƒ^ƒ}ƒS‚È‚ç“o˜^‚µ‚È‚¢
+	if( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == 1 ){
+		PP_FastModeOff( pp, fast );
+		return;
+	}
+#endif	// BUGFIX_BTS7778_20100713
 	mons = PP_Get( pp, ID_PARA_monsno, NULL );
 	rand = PP_Get( pp, ID_PARA_personal_rnd, NULL );
 	form = PP_Get( pp, ID_PARA_form_no, NULL );
