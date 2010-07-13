@@ -343,7 +343,8 @@ static  void  GameInit(void)
   //通信エラー画面管理システム初期化
   NetErr_SystemInit();
   NetErr_SystemCreate(HEAPID_NET_ERR);
-
+  GFL_ASSERT_SetReleaseRomWarningFunc( NetErr_ReleaseRomAssertCallback );
+  
   /* グローバルメッセージデータ＆フォント初期化 */
   GLOBALMSG_Init( GFL_HEAPID_SYSTEM );
 

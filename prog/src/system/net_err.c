@@ -74,6 +74,9 @@
 //背景BG＋メッセージデータでキャラクタ領域NETERR_PUSH_CHARVRAM_SIZEをオーバーしていないかチェック
 SDK_COMPILER_ASSERT(MESSAGE_X_LEN*0x20*MESSAGE_Y_LEN + BG_DATA_SIZE <= NETERR_PUSH_CHARVRAM_SIZE);
 
+///製品版ROMでASSERTを通過した場合にセットする擬似タイプ
+#define TYPE_RELEASE_ROM_ASSERT_CALLBACK    (0x60)
+
 
 //==============================================================================
 //	構造体定義
@@ -651,6 +654,18 @@ void NetErr_App_ReqErrorDispForce(int message )
   }
 }
 
+//==================================================================
+/**
+ * 製品版ROMでASSERTが呼び出されたときのコールバック
+ */
+//==================================================================
+void NetErr_ReleaseRomAssertCallback( void )
+{
+  //エラーが発生しました。電源を切ってください
+  NetErrSystem.net_type = TYPE_RELEASE_ROM_ASSERT_CALLBACK;
+  NetErr_DispCall(TRUE);
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   外に退避用アドレスを渡す
@@ -1185,6 +1200,11 @@ static void Local_ErrMessagePrint(BOOL fatal_error,BOOL isExitWait)
           msgno = _wifierrMessage(&nes->wifi_error, nes->wifi_msg) ;      //WIFIで表示するメッセージを取得
           OS_TPrintf("エラーメッセージ %d \n",msgno);
         }
+      }
+      else if(nes->net_type == TYPE_RELEASE_ROM_ASSERT_CALLBACK){
+        mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+    			ARCID_MESSAGE, NARC_message_net_err_dat, HEAPID_NET_TEMP);
+        msgno = net_error_0003;
       }
       else
       { 

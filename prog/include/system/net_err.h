@@ -59,6 +59,7 @@ extern void NetErr_DispCallPushPop(void);
 extern void NetErr_DispCallFatal(void);
 extern BOOL NetErr_ExitNetSystem( void );
 extern BOOL NetErr_App_FatalDispCallWifiMessage(int message);
+extern void NetErr_ReleaseRomAssertCallback( void );
 
 extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea );
 
