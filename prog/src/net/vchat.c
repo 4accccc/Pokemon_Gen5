@@ -871,9 +871,6 @@ void VCHAT_PauesFlg(BOOL bPause)
     if(_vWork->session){
       if(bPause){
         VCT_StopStreaming(_vWork->session);
-        VCT_StopStreaming(_vWork->session);
-        VCT_StopStreaming(_vWork->session);
-        VCT_StopStreaming(_vWork->session);
       }
       else{
         VCT_StartStreaming(_vWork->session);
