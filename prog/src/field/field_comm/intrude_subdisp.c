@@ -741,7 +741,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
           }
           break;
         default:
-          GF_ASSERT(0);
+          GF_ASSERT_HEAVY(0);
           break;
         }
       }

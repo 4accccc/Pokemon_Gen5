@@ -224,7 +224,7 @@ static void _CommonEventChangeSet(GMEVENT *event, const COMMTALK_COMMON_EVENT_WO
       ccew->iem.wordset, 0, &ccew->talk_myst );
   }
   else{
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 }
 

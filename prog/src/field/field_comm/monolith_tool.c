@@ -400,7 +400,7 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
   PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color[req];
   int start_colpos, change_colpos, color_num;
   
-  GF_ASSERT(req < PANEL_CONTROL_MAX);
+  GF_ASSERT_HEAVY(req < PANEL_CONTROL_MAX);
   
   start_colpos = _PanelColor_GetStartColorPos(req);
   change_colpos = _PanelColor_GetChangeDataColorPos(req);

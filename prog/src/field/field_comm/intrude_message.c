@@ -173,7 +173,7 @@ void IntrudeEventPrint_StartStream(INTRUDE_EVENT_MSGWORK *iem, u16 msg_id)
 //==================================================================
 static void IntrudeEventPrint_ClearStream(INTRUDE_EVENT_MSGWORK *iem)
 {
-  GF_ASSERT(iem->msgwin_stream != NULL);
+  GF_ASSERT_HEAVY(iem->msgwin_stream != NULL);
   FLDMSGWIN_STREAM_ClearMessage(iem->msgwin_stream);
   iem->print_flag = FALSE;
 }
@@ -327,7 +327,7 @@ static void IntrudeEventPrint_SetupMenu(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLDMENUFUNC_LISTDATA *fldmenu_listdata;
   
-  GF_ASSERT(iem->fldmenu_func == NULL && iem->msgdata != NULL);
+  GF_ASSERT_HEAVY(iem->fldmenu_func == NULL && iem->msgdata != NULL);
   
   fldmenu_listdata = FLDMENUFUNC_CreateMakeListData(
       menulist, list_max, iem->msgdata, INTRUDE_EVENT_HEAPID);
@@ -360,7 +360,7 @@ void IntrudeEventPrint_ExitMenu(INTRUDE_EVENT_MSGWORK *iem)
 //--------------------------------------------------------------
 u32 IntrudeEventPrint_SelectMenu(INTRUDE_EVENT_MSGWORK *iem)
 {
-  GF_ASSERT(iem->fldmenu_func != NULL);
+  GF_ASSERT_HEAVY(iem->fldmenu_func != NULL);
   return FLDMENUFUNC_ProcMenu(iem->fldmenu_func);
 }
 
@@ -395,7 +395,7 @@ void IntrudeEventPrint_SetupYesNo(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *gsys
 {
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 
-  GF_ASSERT(iem->fldmenu_func == NULL && iem->msgdata != NULL);
+  GF_ASSERT_HEAVY(iem->fldmenu_func == NULL && iem->msgdata != NULL);
   iem->fldmenu_func = FLDMENUFUNC_AddYesNoMenu(iem->msgBG, FLDMENUFUNC_YESNO_YES);
 }
 
@@ -422,7 +422,7 @@ void IntrudeEventPrint_ExitYesNo(INTRUDE_EVENT_MSGWORK *iem)
 //--------------------------------------------------------------
 FLDMENUFUNC_YESNO IntrudeEventPrint_SelectYesNo(INTRUDE_EVENT_MSGWORK *iem)
 {
-  GF_ASSERT(iem->fldmenu_func != NULL);
+  GF_ASSERT_HEAVY(iem->fldmenu_func != NULL);
   return FLDMENUFUNC_ProcYesNoMenu(iem->fldmenu_func);
 }
 
@@ -448,7 +448,7 @@ void IntrudeEventPrint_SetupExtraMsgWin(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK
 {
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 
-  GF_ASSERT(iem->fldmsg_win_extra == NULL);
+  GF_ASSERT_HEAVY(iem->fldmsg_win_extra == NULL);
   iem->fldmsg_win_extra = FLDMSGWIN_Add(iem->msgBG, iem->msgdata, bmp_x, bmp_y, size_x, size_y);
 }
 

@@ -115,7 +115,7 @@ static GFL_PROC_RESULT IntrudeBattleProc_Init(GFL_PROC * proc, int * seq, void *
       break;
     }
   }
-  GF_ASSERT(use_count > 0);
+  GF_ASSERT_HEAVY(use_count > 0);
   
   return GFL_PROC_RES_FINISH;
 }

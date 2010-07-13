@@ -102,7 +102,7 @@ void EVENTCHANGE_CommMissionSleep_MtoT_Talk(GMEVENT *event, const COMMTALK_COMMO
       ccew->iem.wordset, 0, &ccew->talk_myst );
   }
   else{
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return;
   }
 

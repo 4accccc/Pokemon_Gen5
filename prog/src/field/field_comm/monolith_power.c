@@ -500,7 +500,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     break;
   case SEQ_YESNO_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
-      GF_ASSERT(mpw->app_menu_work == NULL);
+      GF_ASSERT_HEAVY(mpw->app_menu_work == NULL);
       mpw->app_menu_work = MonolithTool_TaskMenu_YesNoInit(
         appwk->setup, mpw->app_menu_res, HEAPID_MONOLITH);
       (*seq)++;
@@ -859,7 +859,7 @@ static void _Set_TitlePrint(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *
 //--------------------------------------------------------------
 static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id)
 {
-  GF_ASSERT(mpw->print_stream == NULL);
+  GF_ASSERT_HEAVY(mpw->print_stream == NULL);
   
   GFL_FONTSYS_SetColor( 1, 2, 15 );
 
@@ -889,7 +889,7 @@ static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
 {
   STRBUF *str_temp;
   
-  GF_ASSERT(mpw->print_stream == NULL);
+  GF_ASSERT_HEAVY(mpw->print_stream == NULL);
   
   GFL_FONTSYS_SetColor( 1, 2, 15 );
 
@@ -933,7 +933,7 @@ static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( mpw->bmpwin[_BMPWIN_TALKWIN] );
 
-  GF_ASSERT(mpw->print_stream != NULL);
+  GF_ASSERT_HEAVY(mpw->print_stream != NULL);
   PRINTSYS_PrintStreamDelete(mpw->print_stream);
   mpw->print_stream = NULL;
   

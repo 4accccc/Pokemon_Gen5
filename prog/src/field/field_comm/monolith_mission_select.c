@@ -719,7 +719,7 @@ static void _Setup_BmpWinDelete(MONOLITH_MSSELECT_WORK *mmw)
 //--------------------------------------------------------------
 static void _Set_MsgStream(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup, u16 msg_id)
 {
-  GF_ASSERT(mmw->print_stream == NULL);
+  GF_ASSERT_HEAVY(mmw->print_stream == NULL);
   
   GFL_FONTSYS_SetColor( 1, 2, 15 );
 
@@ -757,7 +757,7 @@ static void _Clear_MsgStream(MONOLITH_MSSELECT_WORK *mmw)
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( mmw->bmpwin );
 
-  GF_ASSERT(mmw->print_stream != NULL);
+  GF_ASSERT_HEAVY(mmw->print_stream != NULL);
   PRINTSYS_PrintStreamDelete(mmw->print_stream);
   mmw->print_stream = NULL;
   

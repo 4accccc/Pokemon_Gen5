@@ -180,7 +180,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
           const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
           OCCUPY_INFO *my_occupy = GAMEDATA_GetMyOccupyInfo(gdata);
           
-          GF_ASSERT(mresult != NULL);
+          GF_ASSERT_HEAVY(mresult != NULL);
           talk->mresult = *mresult;
           talk->title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
           talk->explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
