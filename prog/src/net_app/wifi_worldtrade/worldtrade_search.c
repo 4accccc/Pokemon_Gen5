@@ -1638,7 +1638,7 @@ static int CursorPosGet( WORLDTRADE_WORK *wk )
 		pos = wk->dw->rightCursorPos+4;
 	}
 
-  GF_ASSERT(  pos < 7 );
+  GF_ASSERT_HEAVY(  pos < 7 );
 	return pos;
 }
 

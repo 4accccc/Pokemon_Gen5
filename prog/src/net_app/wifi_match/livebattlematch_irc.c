@@ -620,7 +620,7 @@ void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, RE
   init.data[0].version = 1<<GET_VERSION();     // 受け取るバージョンのビット
   init.dataNum  = 1;
 
-  GF_ASSERT( p_wk->p_delivery == NULL );
+  GF_ASSERT_HEAVY( p_wk->p_delivery == NULL );
   p_wk->p_delivery  = DELIVERY_IRC_Init(&init);
   p_wk->seq = 0; 
 }
@@ -877,7 +877,7 @@ static u8* LiveBattleMatch_RecvCallback_GetRecvBuffer( int netID, void* p_wk_adr
 
   if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
   {
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
     return NULL;//自分のは受け取らない
   }
   else

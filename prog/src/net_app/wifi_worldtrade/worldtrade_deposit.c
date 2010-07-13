@@ -1863,7 +1863,7 @@ void WorldTrade_ZukanSortDataGetOnlyIndex( int select, int *start, int *end )
     ZKN_SORT_AIUEO_IDX_START_WA , // わ
     ZKN_SORT_AIUEO_IDX_ALL_END,   //終端
   };
-  GF_ASSERT( select < NELEMS(ZukanSortHiraTable) );
+  GF_ASSERT_HEAVY( select < NELEMS(ZukanSortHiraTable) );
 
   *start  = ZukanSortHiraTable[ select ];
   *end    = ZukanSortHiraTable[ select + 1 ];
@@ -2345,11 +2345,11 @@ void WorldTrade_LevelMinMaxSet( Dpw_Tr_PokemonSearchData *dtps, int index, int t
 
   if(tbl_select == LEVEL_PRINT_TBL_DEPOSIT){
     level_tbl = level_minmax_table;
-    GF_ASSERT(index<(LEVEL_SELECT_NUM));// レベル指定の配列より上だった
+    GF_ASSERT_HEAVY(index<(LEVEL_SELECT_NUM));// レベル指定の配列より上だった
   }
   else{ //LEVEL_PRINT_TBL_SEARCH
     level_tbl = search_level_minmax_table;
-    GF_ASSERT(index<(SEARCH_LEVEL_SELECT_NUM));// レベル指定の配列より上だった
+    GF_ASSERT_HEAVY(index<(SEARCH_LEVEL_SELECT_NUM));// レベル指定の配列より上だった
   }
   
   dtps->level_min = level_tbl[index].min;

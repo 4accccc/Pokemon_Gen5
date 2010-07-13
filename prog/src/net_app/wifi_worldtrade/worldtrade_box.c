@@ -1633,7 +1633,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-  GF_ASSERT( 0 );
+  GF_ASSERT_HEAVY( 0 );
 
 	if(ret==WORLDTRADE_RET_YES){
 		// タイトルメニューを終了
@@ -2249,7 +2249,7 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 	}
   else
   {
-    GF_ASSERT_MSG(0,"BOX範囲外%d\n",now);
+    GF_ASSERT_MSG_HEAVY(0,"BOX範囲外%d\n",now);
   }
 	GFL_ARC_CloseDataHandle( handle );
 	

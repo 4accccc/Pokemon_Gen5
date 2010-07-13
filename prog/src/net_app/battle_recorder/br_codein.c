@@ -217,8 +217,8 @@ BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p
 //--------------------------------------------------------------
 void BR_CODEIN_ParamDelete( BR_CODEIN_PARAM* codein_param )
 {
-	GF_ASSERT( codein_param->strbuf != NULL );
-	GF_ASSERT( codein_param != NULL );
+	GF_ASSERT_HEAVY( codein_param->strbuf != NULL );
+	GF_ASSERT_HEAVY( codein_param != NULL );
 	
 	GFL_STR_DeleteBuffer( codein_param->strbuf );
 	GFL_HEAP_FreeMemory( codein_param );	

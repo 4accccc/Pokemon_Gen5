@@ -1101,7 +1101,7 @@ static void Br_MusicalLook_Photo_CreateSubDisplay( BR_MUSICALLOOK_WORK	*p_wk, BR
 
       p_unit  = BR_GRAPHIC_GetClunit( p_param->p_graphic );
       ret = BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-      GF_ASSERT( ret );
+      GF_ASSERT_HEAVY( ret );
 
       p_wk->p_btn = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
     }

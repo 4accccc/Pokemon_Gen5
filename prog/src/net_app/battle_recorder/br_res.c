@@ -533,7 +533,7 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 {	
 	BR_RES_OBJ_DATA *p_data	= &p_wk->obj[ objID ];
 
-	GF_ASSERT( p_wk->obj_flag[ objID ] == FALSE );
+	GF_ASSERT_HEAVY( p_wk->obj_flag[ objID ] == FALSE );
 
 	switch( objID )
 	{	
@@ -1030,7 +1030,7 @@ static u16 Br_Res_GetCommonObjPlt( BR_RES_COLOR_TYPE color )
     NARC_battle_recorder_gra_batt_rec_browse_obj7_NCLR, //‰©“y  
   };
 
-  GF_ASSERT( color < NELEMS(sc_common_obj_plt) );
+  GF_ASSERT_HEAVY( color < NELEMS(sc_common_obj_plt) );
   return sc_common_obj_plt[ color ];
 }
 
@@ -1057,7 +1057,7 @@ static u16 Br_Res_GetCommonBgPlt( BR_RES_COLOR_TYPE color )
     NARC_battle_recorder_gra_batt_rec_browse_bg7_NCLR,  //‰©“y  
   };
 
-  GF_ASSERT( color < NELEMS(sc_common_bg_plt) );
+  GF_ASSERT_HEAVY( color < NELEMS(sc_common_bg_plt) );
   return sc_common_bg_plt[ color ];
 }
 
@@ -1084,7 +1084,7 @@ static u16 Br_Res_GetCommonFontPlt( BR_RES_COLOR_TYPE color )
     NARC_battle_recorder_gra_batt_rec_font7_NCLR,  //‰©“y  
   };
 
-  GF_ASSERT( color < NELEMS(sc_common_font_plt) );
+  GF_ASSERT_HEAVY( color < NELEMS(sc_common_font_plt) );
   return sc_common_font_plt[ color ];
 }
 
@@ -1111,6 +1111,6 @@ static u16 Br_Res_GetFadeColor( BR_RES_COLOR_TYPE color )
     BR_FADE_COLOR_BROWN,    //‰©“y  
   };
 
-  GF_ASSERT( color < NELEMS(sc_fade_color) );
+  GF_ASSERT_HEAVY( color < NELEMS(sc_fade_color) );
   return sc_fade_color[ color ];
 }

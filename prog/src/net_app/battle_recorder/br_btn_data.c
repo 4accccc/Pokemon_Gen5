@@ -1130,7 +1130,7 @@ static void BR_BTN_DATA_SYS_ReLoadSaveData( BR_BTN_DATA_SYS *p_wk )
 					{	
             u32 id  = p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] - BR_BTN_UNIQUE_OTHERRECORD1;
 
-						GF_ASSERT( id < 4 );
+						GF_ASSERT_HEAVY( id < 4 );
 						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_saveinfo->is_valid[ 1+id ];
 						if( p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID] )
 						{	
@@ -1171,8 +1171,8 @@ const BR_BTN_DATA * BR_BTN_DATA_SYS_GetData( const BR_BTN_DATA_SYS *cp_wk, BR_ME
 	int i;
 	u32 offset;
 
-	GF_ASSERT( menuID < BR_MENUID_MAX );
-	GF_ASSERT( btnID  < sc_btn_data_tbl[menuID].max );
+	GF_ASSERT_HEAVY( menuID < BR_MENUID_MAX );
+	GF_ASSERT_HEAVY( btnID  < sc_btn_data_tbl[menuID].max );
 
 	//オフセット計算
 	offset	= 0;
@@ -1196,7 +1196,7 @@ const BR_BTN_DATA * BR_BTN_DATA_SYS_GetData( const BR_BTN_DATA_SYS *cp_wk, BR_ME
 //-----------------------------------------------------------------------------
 u32 BR_BTN_DATA_SYS_GetDataNum( const BR_BTN_DATA_SYS *cp_wk, BR_MENUID menuID )
 {	
-	GF_ASSERT( menuID < BR_MENUID_MAX );
+	GF_ASSERT_HEAVY( menuID < BR_MENUID_MAX );
 	return sc_btn_data_tbl[menuID].max;
 }
 
@@ -1240,7 +1240,7 @@ void BR_BTN_DATA_SYS_GetLink( const BR_BTN_DATA_SYS *cp_wk, BR_MENUID menuID, u3
 	u32 max;
 	max	= BR_BTN_DATA_SYS_GetLinkMax( cp_wk, menuID );
 
-	GF_ASSERT( idx < max );
+	GF_ASSERT_HEAVY( idx < max );
 
 	if( p_preID )
 	{	
@@ -1266,7 +1266,7 @@ void BR_BTN_DATA_SYS_GetLink( const BR_BTN_DATA_SYS *cp_wk, BR_MENUID menuID, u3
 u32 BR_BTN_DATA_SYS_GetLinkMax( const BR_BTN_DATA_SYS *cp_wk, BR_MENUID menuID )
 {	
 	int i;
-	GF_ASSERT( menuID < BR_MENUID_MAX );
+	GF_ASSERT_HEAVY( menuID < BR_MENUID_MAX );
 
 	for( i = 0; sc_btn_data_tbl[ menuID ].cp_link[i].menuID != BR_BTN_LINK_END; i++ )
 	{
@@ -1288,7 +1288,7 @@ u32 BR_BTN_DATA_SYS_GetLinkMax( const BR_BTN_DATA_SYS *cp_wk, BR_MENUID menuID )
 //-----------------------------------------------------------------------------
 u16 BR_BTN_DATA_GetParam( const BR_BTN_DATA *cp_data, BR_BTN_DATA_PARAM paramID )
 {	
-	GF_ASSERT( paramID < BR_BTN_DATA_PARAM_MAX );
+	GF_ASSERT_HEAVY( paramID < BR_BTN_DATA_PARAM_MAX );
 	return cp_data->param[paramID];
 }
 //----------------------------------------------------------------------------

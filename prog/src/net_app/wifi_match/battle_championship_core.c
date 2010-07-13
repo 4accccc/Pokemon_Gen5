@@ -349,7 +349,7 @@ static void SEQFUNC_FadeIn( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 		break;
 
 	default:
-		GF_ASSERT(0);
+		GF_ASSERT_HEAVY(0);
 	}
 }
 //----------------------------------------------------------------------------
@@ -398,7 +398,7 @@ static void SEQFUNC_FadeOut( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 		break;
 
 	default:
-		GF_ASSERT(0);
+		GF_ASSERT_HEAVY(0);
 	}
 }
 //----------------------------------------------------------------------------

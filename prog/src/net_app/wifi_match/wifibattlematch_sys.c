@@ -373,7 +373,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
       parentID  = GFL_HEAPID_APP;
       break;
     default:
-      GF_ASSERT(0);
+      GF_ASSERT_HEAVY(0);
     }
   }
   
@@ -422,7 +422,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
     WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
     break;
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
   }
 
   //自分のデータ初期化
@@ -631,7 +631,7 @@ static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
     }
     else
     { 
-      GF_ASSERT(0);
+      GF_ASSERT_HEAVY(0);
     }
     break;
   }
@@ -678,7 +678,7 @@ static BOOL BC_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adr
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_RECPLAY );
     break;
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
   }
 
 	GFL_HEAP_FreeMemory( p_param );
@@ -782,7 +782,7 @@ static BOOL WBM_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
     break;
 
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
   }
 
 	GFL_HEAP_FreeMemory( p_param );
@@ -838,7 +838,7 @@ static void *POKELIST_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
       reg_no  = REG_RND_TRIPLE_SHOOTER;
       break;
     default:
-      GF_ASSERT(0);
+      GF_ASSERT_HEAVY(0);
     }
 
     p_param->regulation = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
@@ -865,7 +865,7 @@ static void *POKELIST_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   }
   else
   { 
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 
   p_param->p_select_party   = p_wk->p_player_btl_party;
@@ -1147,7 +1147,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   }
   else 
   { 
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 
   //バトルタイプ設定
@@ -1617,7 +1617,7 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
     }
     else
     { 
-      GF_ASSERT(0);
+      GF_ASSERT_HEAVY(0);
     }
 
     { 
@@ -1751,7 +1751,7 @@ static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
     }
     break;
   case WIFIBATTLEMATCH_TYPE_LIVECUP:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     break;
   case WIFIBATTLEMATCH_TYPE_RNDRATE:
   case WIFIBATTLEMATCH_TYPE_RNDFREE:
@@ -1901,7 +1901,7 @@ static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEP
     RTCDate date;
     RTCTime time;
     ret = DWC_GetDateTime( &date, &time );
-    GF_ASSERT( ret );
+    GF_ASSERT_HEAVY( ret );
 
     p_data->year  = date.year;
     p_data->month = date.month;
@@ -2083,7 +2083,7 @@ static WBM_SYS_SUBPROC_WORK * WBM_SYS_SUBPROC_Init( const WBM_SYS_SUBPROC_DATA *
 //-----------------------------------------------------------------------------
 static void WBM_SYS_SUBPROC_Exit( WBM_SYS_SUBPROC_WORK *p_wk )
 {	
-	GF_ASSERT( p_wk->p_proc_param == NULL );
+	GF_ASSERT_HEAVY( p_wk->p_proc_param == NULL );
 
 	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
 

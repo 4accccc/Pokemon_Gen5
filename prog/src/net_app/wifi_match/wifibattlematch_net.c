@@ -670,7 +670,7 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p
 
   if(!GFL_NET_IsInit())
   {
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 
   GFL_NET_AddCommandTable( GFL_NET_CMD_WIFIMATCH, sc_net_recv_tbl, NELEMS(sc_net_recv_tbl), p_wk );
@@ -1009,7 +1009,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
     p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_WIFI_Eval_Callback;
     break;
   case WIFIBATTLEMATCH_TYPE_LIVECUP:    //ライブ大会
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
     break;
   case WIFIBATTLEMATCH_TYPE_RNDRATE:  //ランダムレート対戦
     p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_RATE_Eval_Callback;
@@ -1018,7 +1018,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
     p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
     break;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 }
 
@@ -1399,7 +1399,7 @@ static void WifiBattleMatch_SetDateTime( WBM_NET_DATETIME *p_wk )
   RTCDate date;
   RTCTime time;
   BOOL ret  = DWC_GetDateTime(&date, &time);
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   GFL_STD_MemClear( p_wk, sizeof(WBM_NET_DATETIME) );
 
@@ -1568,7 +1568,7 @@ void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
       p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCoreBtlAfter;
       break;
     default:
-      GF_ASSERT(0);
+      GF_ASSERT_HEAVY(0);
       break;
     }
   }
@@ -1586,7 +1586,7 @@ void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
         p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCoreBtlError;
         break;
       default:
-        GF_ASSERT(0);
+        GF_ASSERT_HEAVY(0);
         break;
       }
     }
@@ -1614,7 +1614,7 @@ void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
         p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCore;
         break;
       default:
-        GF_ASSERT(0);
+        GF_ASSERT_HEAVY(0);
         break;
       }
     }
@@ -2330,7 +2330,7 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
         game_result = DWC_SC_GAME_RESULT_DRAW;
         break;
       default:
-        GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", cp_data->btl_result );
+        GF_ASSERT_MSG_HEAVY(0, "バトル結果不正値 %d\n", cp_data->btl_result );
       }
 
 #ifdef PM_DEBUG
@@ -2412,7 +2412,7 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
         game_result = DWC_SC_GAME_RESULT_DRAW;
         break;
       default:
-        GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", cp_data->btl_result );
+        GF_ASSERT_MSG_HEAVY(0, "バトル結果不正値 %d\n", cp_data->btl_result );
       }
     }
 
@@ -2939,7 +2939,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     break;
 
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 
   //共通の送るもの
@@ -3231,7 +3231,7 @@ static u8* WifiBattleMatch_RecvBuffAddr(int netID, void* p_wk_adrs, int size)
 
   if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
   {
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
     return NULL;//自分のは受け取らない
   }
   return p_wk->recv_buffer;
@@ -3467,7 +3467,7 @@ WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK
       break;
 
     case WIFIBATTLEMATCH_GDB_SEQ_GET_START:
-      GF_ASSERT( p_wk->table_name_num < WBM_GDB_FIELD_TABLE_MAX );
+      GF_ASSERT_HEAVY( p_wk->table_name_num < WBM_GDB_FIELD_TABLE_MAX );
       if( p_wk->get_recordID == WIFIBATTLEMATCH_GDB_MYRECORD )
       { 
         //自分のレコード取得の場合
@@ -4081,7 +4081,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
 
   p_wk->seq             = 0;
   DEBUG_NET_Printf( "GDBW: request[%d]\n", type );
-  GF_ASSERT( p_wk->p_data->sake_recordID != 0 );
+  GF_ASSERT_HEAVY( p_wk->p_data->sake_recordID != 0 );
 
   switch( type )
   { 
@@ -4349,7 +4349,7 @@ WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET
       break;
 
     case SEQ_START:
-      GF_ASSERT( p_wk->table_name_num < WBM_GDB_FIELD_TABLE_MAX );
+      GF_ASSERT_HEAVY( p_wk->table_name_num < WBM_GDB_FIELD_TABLE_MAX );
       error = DWC_GdbUpdateRecordAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->p_data->sake_recordID, p_wk->p_field_buff, p_wk->table_name_num );
       if( error != DWC_GDB_ERROR_NONE )
       { 
@@ -5140,7 +5140,7 @@ static u32 WifiBattleMatch_GpfServerResponseMsg( u32 ret_cd )
   switch( ret_cd )
   {
   case DREAM_WORLD_SERVER_ERROR_NONE:        // 正常です
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
     return 0;
 
   case DREAM_WORLD_SERVER_ERROR_SERVER_FULL:	// サーバーの容量オーバーです
@@ -5291,7 +5291,7 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, HEAPID heapID )
 { 
-  GF_ASSERT( p_wk->p_nhttp == NULL );
+  GF_ASSERT_HEAVY( p_wk->p_nhttp == NULL );
   p_wk->seq = 0;
   p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(GAMEDATA_GetMyStatus(p_wk->p_gamedata)), p_wk->p_svl_result);
 }
@@ -5450,7 +5450,7 @@ void WIFIBATTLEMATCH_NET_GetRecvGpfData( const WIFIBATTLEMATCH_NET_WORK *cp_wk, 
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID )
 { 
-  GF_ASSERT( p_wk->p_nhttp == NULL );
+  GF_ASSERT_HEAVY( p_wk->p_nhttp == NULL );
   p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(GAMEDATA_GetMyStatus(p_wk->p_gamedata)), p_wk->p_svl_result);
   p_wk->gdb_write_data  = *cp_send;
   p_wk->seq = 0;
@@ -6062,7 +6062,7 @@ static WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_SC_GetErrorRepairTy
     return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
 
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return 0;
   }
 }

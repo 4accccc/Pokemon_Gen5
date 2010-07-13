@@ -1215,7 +1215,7 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
   WIFILOGIN_WORK *pWork;
 	
 
-  GF_ASSERT_MSG( pEv->nsid != 0, "ゲームサービスIDを入れてください\n" );
+  GF_ASSERT_MSG_HEAVY( pEv->nsid != 0, "ゲームサービスIDを入れてください\n" );
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFILOGIN, 0x18000 );
 

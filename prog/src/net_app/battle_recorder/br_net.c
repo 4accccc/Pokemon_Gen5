@@ -238,7 +238,7 @@ void BR_NET_Main( BR_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void BR_NET_StartRequest( BR_NET_WORK *p_wk, BR_NET_REQUEST type, const BR_NET_REQUEST_PARAM *cp_param )
 { 
-  GF_ASSERT( type < BR_NET_REQUEST_MAX );
+  GF_ASSERT_HEAVY( type < BR_NET_REQUEST_MAX );
 
   if( cp_param )
   { 
@@ -277,7 +277,7 @@ void BR_NET_StartRequest( BR_NET_WORK *p_wk, BR_NET_REQUEST type, const BR_NET_R
     BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_UploadFavoriteBattleReq );
     break;
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
   }
 }
 //----------------------------------------------------------------------------
@@ -740,7 +740,7 @@ static void Br_Net_Seq_UploadMusicalShotReq( BR_NET_SEQ_WORK *p_seqwk, int *p_se
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_MusicalShotUpload( &p_wk->gdsrap, p_wk->p_gds_profile, p_wk->reqest_param.cp_upload_musical_shot_data );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -759,7 +759,7 @@ static void Br_Net_Seq_DownloadMusicalShotReq( BR_NET_SEQ_WORK *p_seqwk, int *p_
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_MusicalShotDownload( &p_wk->gdsrap, p_wk->reqest_param.download_musical_shot_search_monsno );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -778,7 +778,7 @@ static void Br_Net_Seq_UploadBattleVideoReq( BR_NET_SEQ_WORK *p_seqwk, int *p_se
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_BattleVideoUpload( &p_wk->gdsrap, p_wk->p_gds_profile );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -797,7 +797,7 @@ static void Br_Net_Seq_DownloadBattleVideoReq( BR_NET_SEQ_WORK *p_seqwk, int *p_
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_BattleVideo_DataDownload( &p_wk->gdsrap, p_wk->reqest_param.download_video_number );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -822,7 +822,7 @@ static void Br_Net_Seq_DownloadBattleSearchReq( BR_NET_SEQ_WORK *p_seqwk, int *p
       p_wk->reqest_param.download_video_search_data.country_code,
       p_wk->reqest_param.download_video_search_data.local_code
       );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -841,7 +841,7 @@ static void Br_Net_Seq_DownloadNewRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *p_s
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_BattleVideoNewDownload( &p_wk->gdsrap );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -860,7 +860,7 @@ static void Br_Net_Seq_DownloadFavoriteRankingReq( BR_NET_SEQ_WORK *p_seqwk, int
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_BattleVideoCommDownload( &p_wk->gdsrap );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -879,7 +879,7 @@ static void Br_Net_Seq_DownloadSubwayRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_BattleVideoSubwayDownload( &p_wk->gdsrap );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }
@@ -898,7 +898,7 @@ static void Br_Net_Seq_UploadFavoriteBattleReq( BR_NET_SEQ_WORK *p_seqwk, int *p
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   ret = GDSRAP_Tool_Send_BattleVideo_FavoriteUpload( &p_wk->gdsrap, p_wk->reqest_param.upload_favorite_video_number );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
 }

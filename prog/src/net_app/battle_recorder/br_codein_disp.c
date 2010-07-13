@@ -48,7 +48,7 @@ void CI_pv_disp_CodeRes_Load( BR_CODEIN_WORK* wk )
 
 	///< code
   ret = BR_RES_GetOBJRes( wk->param.p_res, BR_RES_OBJ_NUM_S, &res );
-  GF_ASSERT(ret);
+  GF_ASSERT_HEAVY(ret);
 
 	wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_CODE] = res.ncl;
 	wk->sys.resIdx[CIO_RES1_NCG][CIO_RES2_CODE] = res.ncg;
@@ -56,7 +56,7 @@ void CI_pv_disp_CodeRes_Load( BR_CODEIN_WORK* wk )
 	
 	///< cur
   ret = BR_RES_GetOBJRes( wk->param.p_res, BR_RES_OBJ_NUM_CURSOR_S, &res );
-  GF_ASSERT(ret);
+  GF_ASSERT_HEAVY(ret);
 
 	wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_CURSOL] = res.ncl;
 	wk->sys.resIdx[CIO_RES1_NCG][CIO_RES2_CURSOL] = res.ncg;
@@ -65,7 +65,7 @@ void CI_pv_disp_CodeRes_Load( BR_CODEIN_WORK* wk )
 
 	///< button
   ret = BR_RES_GetOBJRes( wk->param.p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-  GF_ASSERT(ret);
+  GF_ASSERT_HEAVY(ret);
 
 	wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_BUTTON] = res.ncl;
 	wk->sys.resIdx[CIO_RES1_NCG][CIO_RES2_BUTTON] = res.ncg;

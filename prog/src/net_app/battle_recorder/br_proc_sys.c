@@ -204,8 +204,8 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 		break;
 
 	case SEQ_PROC_BEFORE:
-		GF_ASSERT( p_now->is_use );
-		GF_ASSERT( p_now->cp_data->before_func );
+		GF_ASSERT_HEAVY( p_now->is_use );
+		GF_ASSERT_HEAVY( p_now->cp_data->before_func );
 		//前処理関数を呼ぶ
 		p_now->p_param	= GFL_HEAP_AllocMemory( p_wk->heapID, p_now->cp_data->param_size );
     GFL_STD_MemClear( p_now->p_param, p_now->cp_data->param_size );
@@ -250,7 +250,7 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 		break;
 
 	case SEQ_PROC_AFTER:
-		GF_ASSERT( p_now->is_use );
+		GF_ASSERT_HEAVY( p_now->is_use );
 		//後処理関数を呼ぶ
 		if( p_now->cp_data->after_func )
 		{	
@@ -384,13 +384,13 @@ void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID )
 	BR_PROC_WORK	proc;
 	const BR_PROC_SYS_DATA	*cp_data	= &p_wk->cp_procdata_tbl[procID];
 	
-	GF_ASSERT( procID < p_wk->tbl_max );
+	GF_ASSERT_HEAVY( procID < p_wk->tbl_max );
 
 	//PROC作成
   BR_PROC_Set( &proc, procID, cp_data );
 
 	//スタックに積む
-	GF_ASSERT( p_wk->stack_num < BR_PROC_SYS_STACK_MAX );
+	GF_ASSERT_HEAVY( p_wk->stack_num < BR_PROC_SYS_STACK_MAX );
 	p_wk->stackID[ p_wk->stack_num ]	= procID;
 	p_wk->stack_num++;
 

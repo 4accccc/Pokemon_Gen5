@@ -1174,7 +1174,7 @@ static void Br_Record_Seq_SecureSave( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_SAVE_WAIT:
     {
       SAVE_RESULT result;
-      GF_ASSERT(p_wk->p_param->mode <= BR_RECODE_PROC_OTHER_02 );
+      GF_ASSERT_HEAVY(p_wk->p_param->mode <= BR_RECODE_PROC_OTHER_02 );
       result  = BattleRec_SecureSetSave( p_wk->p_param->p_gamedata, p_wk->p_param->mode, &p_wk->sv_wk0, &p_wk->sv_wk1, p_wk->heapID );
       if( result == SAVE_RESULT_OK )
       { 

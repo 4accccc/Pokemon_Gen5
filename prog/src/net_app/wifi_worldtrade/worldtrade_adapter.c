@@ -367,7 +367,7 @@ void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int
     }
   }
 
-  GF_ASSERT( p_one != NULL );
+  GF_ASSERT_HEAVY( p_one != NULL );
 
   PRINT_UTIL_Setup( &p_one->util, bmpwin );
   PRINT_UTIL_PrintColor( &p_one->util, setup->que, x, y, str, setup->font, color );
@@ -533,7 +533,7 @@ void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *
     }
   } 
 
-  GF_ASSERT( 0 );
+  GF_ASSERT_HEAVY( 0 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -567,5 +567,5 @@ void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y 
     }
   } 
 
-  GF_ASSERT( 0 );
+  GF_ASSERT_HEAVY( 0 );
 }

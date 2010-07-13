@@ -1211,7 +1211,7 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
         PMSND_PlaySE(SE_CANCEL);
         return BMPMENU_CANCEL;
       }
-      GF_ASSERT(ret < 10);
+      GF_ASSERT_HEAVY(ret < 10);
       if(see_check == NULL || see_check[ret]){
         PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
         return ret;
@@ -1225,7 +1225,7 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
         PMSND_PlaySE(SE_CANCEL);
 					return BMPMENU_CANCEL;
 				}
-				GF_ASSERT(wk->listpos < 10);
+				GF_ASSERT_HEAVY(wk->listpos < 10);
 				if(see_check == NULL || see_check[wk->listpos]){
           PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 					return wk->listpos;

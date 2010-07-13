@@ -174,7 +174,7 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
     call_proc = &PokemonTradeGTSMidProcData;
 		break;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
 	}
 #ifndef DEBUG_DEMO_NONE
   GFL_PROC_LOCAL_CallProc( wk->local_proc,
@@ -475,7 +475,7 @@ static POKEMON_PARAM *RecvPokemonParamPointerGet( WORLDTRADE_WORK *wk, int mode 
 		return (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
 	}
 
-	GF_ASSERT_MSG(0,"渡すモードを間違っている");
+	GF_ASSERT_MSG_HEAVY(0,"渡すモードを間違っている");
 	return NULL;
 }
 

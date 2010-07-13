@@ -442,7 +442,7 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SUBPROC_Exit( SUBPROC_WORK *p_wk )
 {
-  GF_ASSERT( p_wk->p_proc_param == NULL );
+  GF_ASSERT_HEAVY( p_wk->p_proc_param == NULL );
 
   GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
   GFL_STD_MemClear( p_wk, sizeof(SUBPROC_WORK) );

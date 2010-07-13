@@ -590,7 +590,7 @@ static void BR_SIDEBAR_ONE_Init( BR_SIDEBAR_ONE *p_wk, GFL_CLUNIT *p_clunit, con
         objID = BR_RES_OBJ_SIDEBAR_S;
       }
       ret = BR_RES_GetOBJRes( cp_res, objID, &res );
-      GF_ASSERT( ret );
+      GF_ASSERT_HEAVY( ret );
     }
 
     //CLWKçÏê¨

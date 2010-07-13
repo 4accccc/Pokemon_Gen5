@@ -306,7 +306,7 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 {	
 	BR_BTN_SYS_WORK *p_wk;
 
-	GF_ASSERT( menuID < BR_MENUID_MAX );
+	GF_ASSERT_HEAVY( menuID < BR_MENUID_MAX );
 
 	//ワーク作成
 	{	
@@ -690,7 +690,7 @@ BR_EXIT_TYPE BR_BTN_SYS_GetExitType( const BR_BTN_SYS_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 static void Br_Btn_Sys_PushStack( BR_BTN_SYS_WORK *p_wk, BR_BTNEX_WORK *p_btn, CLSYS_DRAW_TYPE display )
 {	
-	GF_ASSERT( p_wk->btn_stack_num < p_wk->btn_stack_max );
+	GF_ASSERT_HEAVY( p_wk->btn_stack_num < p_wk->btn_stack_max );
 
 	//積む
 	BR_BTNEX_Copy( p_wk, &p_wk->p_btn_stack[p_wk->btn_stack_num], p_btn, display );
@@ -790,7 +790,7 @@ static void Br_Btn_Sys_ReLoadBtn( BR_BTN_SYS_WORK *p_wk, BR_MENUID menuID, const
 //-----------------------------------------------------------------------------
 static void Br_Btn_Sys_PushRecoveryData( BR_BTN_SYS_RECOVERY_DATA *p_wk, u16 menuID, u16 btnID )
 { 
-  GF_ASSERT( p_wk->stack_num < BR_BTN_SYS_STACK_MAX );
+  GF_ASSERT_HEAVY( p_wk->stack_num < BR_BTN_SYS_STACK_MAX );
 
   p_wk->stack[ p_wk->stack_num ].menuID = menuID;
   p_wk->stack[ p_wk->stack_num ].btnID = btnID;
@@ -1179,7 +1179,7 @@ static void SEQFUNC_ChangePage( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       u32 menuID  = BR_BTNEX_GetParam( &btn, BR_BTN_PARAM_MENUID );
 
       GFL_POINT pos;
-      GF_ASSERT( btn.is_use );
+      GF_ASSERT_HEAVY( btn.is_use );
       //
       pos.x    = BR_BTN_DATA_GetParam( btn.cp_data, BR_BTN_DATA_PARAM_X );
       pos.y    = BR_BTN_DATA_GetParam( btn.cp_data, BR_BTN_DATA_PARAM_Y );
@@ -1766,7 +1766,7 @@ static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_
 {	
 	u32 plt;
 
-	GF_ASSERT( p_wk->is_use == FALSE );
+	GF_ASSERT_HEAVY( p_wk->is_use == FALSE );
 
 	GFL_STD_MemClear( p_wk, sizeof(BR_BTNEX_WORK) );
 	p_wk->is_use	= TRUE;
@@ -2005,8 +2005,8 @@ static void BR_BTNEX_Copy( const BR_BTN_SYS_WORK *cp_wk, BR_BTNEX_WORK *p_dst, c
 {
 	u32 plt;	
 
-	GF_ASSERT( p_dst->is_use == FALSE );
-	GF_ASSERT( cp_src->is_use == TRUE );
+	GF_ASSERT_HEAVY( p_dst->is_use == FALSE );
+	GF_ASSERT_HEAVY( cp_src->is_use == TRUE );
 		
 	//一旦コピー
 	{
@@ -2126,7 +2126,7 @@ static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param )
 
 	default:
 		ret	= 0;
-		GF_ASSERT(0);
+		GF_ASSERT_HEAVY(0);
 	}
 
 	return ret;

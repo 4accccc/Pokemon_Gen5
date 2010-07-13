@@ -690,7 +690,7 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 		break;
 	default:
 		OS_TPrintf("モード指定がない\n");
-		GF_ASSERT(0);
+		GF_ASSERT_HEAVY(0);
 	}
 	// 必ず時間アイコンを追加(upload.cの中では１回しかよばないはず）
 	WorldTrade_TimeIconAdd(wk);
@@ -732,10 +732,10 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   NHTTP_RAP_PokemonEvilCheckAdd( wk->nhttp, pp, POKETOOL_GetWorkSize() );
 
   ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( wk->nhttp );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   ret = NHTTP_RAP_StartConnect( wk->nhttp ) == NHTTP_ERROR_NONE; 
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
 
   OS_TPrintf( "不正検査開始\n" );
   wk->subprocess_seq = SUBSEQ_EVILCHECK_RESULT;

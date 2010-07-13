@@ -547,7 +547,7 @@ BOOL WIFILOGIN_MESSAGE_YesNoIsFinish( const WIFILOGIN_YESNO_WORK* pWork )
   case WIFILOGIN_DISPLAY_UP:
     return pWork->yesno_ret != BMPMENU_NULL;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return 0;
   }
 }
@@ -567,7 +567,7 @@ u8 WIFILOGIN_MESSAGE_YesNoGetCursorPos( const WIFILOGIN_YESNO_WORK* pWork )
   case WIFILOGIN_DISPLAY_UP:
     return pWork->yesno_ret;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return 0;
   }
 }
@@ -663,7 +663,7 @@ static u8 WifiLogin_Message_GetTextFrame( WIFILOGIN_DISPLAY display )
     return GFL_BG_FRAME1_S;
 
   default:
-    GF_ASSERT( 0);
+    GF_ASSERT_HEAVY( 0);
     return 0;
   }
 }
@@ -688,7 +688,7 @@ static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display )
     return GFL_BG_FRAME1_S;
 
   default:
-    GF_ASSERT( 0);
+    GF_ASSERT_HEAVY( 0);
     return 0;
   }
 }

@@ -99,7 +99,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Init( GFL_PROC *p_proc, int *p_
 
 
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
     return 0;
   }
 }
@@ -132,7 +132,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_
     break;
 
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
   }
 
 #ifdef BUGFIX_BTS7775_20100713
@@ -169,7 +169,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Main( GFL_PROC *p_proc, int *p_
     return WifiBattleMatchWifi_ProcData.main_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT_HEAVY( 0 );
     return 0;
   }
 }

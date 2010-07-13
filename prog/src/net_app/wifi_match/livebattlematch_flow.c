@@ -453,7 +453,7 @@ static void SEQFUNC_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RecAfter );
     break;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
   
 }
@@ -1985,7 +1985,7 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       case BTL_RESULT_DRAW:
         break;
       default:
-        GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", p_wk->param.p_btl_score->result );
+        GF_ASSERT_MSG_HEAVY(0, "バトル結果不正値 %d\n", p_wk->param.p_btl_score->result );
       }
 
       LIVEMATCH_DATA_AddMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_WIN,    win );

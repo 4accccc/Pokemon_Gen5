@@ -420,13 +420,13 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     int i;
     for( i = 0; i < p_wk->line_max; i++ )
     {
-      GF_ASSERT( i < BR_LIST_HITTBL_MAX )
+      GF_ASSERT_HEAVY( i < BR_LIST_HITTBL_MAX )
       p_wk->hittbl[ i ].rect.left    = (p_wk->param.x)*8;
       p_wk->hittbl[ i ].rect.top     = (p_wk->param.y + i * p_wk->param.str_line)*8;
       p_wk->hittbl[ i ].rect.right   = (p_wk->param.x + p_wk->param.w)*8;
       p_wk->hittbl[ i ].rect.bottom  = (p_wk->param.y + (i+1) * (p_wk->param.str_line))*8;
     }
-    GF_ASSERT( i < BR_LIST_HITTBL_MAX )
+    GF_ASSERT_HEAVY( i < BR_LIST_HITTBL_MAX )
     p_wk->hittbl[ i ].rect.left    = GFL_UI_TP_HIT_NONE;
     p_wk->hittbl[ i ].rect.top     = GFL_UI_TP_HIT_NONE;
     p_wk->hittbl[ i ].rect.right   = GFL_UI_TP_HIT_NONE;
@@ -469,14 +469,14 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     { 
       BR_RES_LoadOBJ( p_wk->param.p_res, BR_RES_OBJ_ALLOW_M, heapID );
       ret = BR_RES_GetOBJRes( p_wk->param.p_res, BR_RES_OBJ_ALLOW_M, &res );
-      GF_ASSERT( ret );
+      GF_ASSERT_HEAVY( ret );
       type  = CLSYS_DRAW_MAIN;
     }
     else
     { 
       BR_RES_LoadOBJ( p_wk->param.p_res, BR_RES_OBJ_ALLOW_S, heapID );
       ret = BR_RES_GetOBJRes( p_wk->param.p_res, BR_RES_OBJ_ALLOW_S, &res );
-      GF_ASSERT( ret );
+      GF_ASSERT_HEAVY( ret );
       type  = CLSYS_DRAW_SUB;
     }
 
@@ -517,7 +517,7 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     cldata.softpri  = 0;
 
     ret = BR_RES_GetOBJRes( p_wk->param.p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-    GF_ASSERT( ret );
+    GF_ASSERT_HEAVY( ret );
 
     for( i = BR_LIST_CLWK_BAR_L; i < BR_LIST_CLWK_BAR_MAX; i++ )
     { 
@@ -753,8 +753,8 @@ u32 BR_LIST_GetSelect( const BR_LIST_WORK* cp_wk )
 //-----------------------------------------------------------------------------
 void BR_LIST_SetBmp( BR_LIST_WORK* p_wk, u16 idx, GFL_BMP_DATA *p_src )
 { 
-  GF_ASSERT( idx < p_wk->param.list_max );
-  GF_ASSERT( p_wk->param.cp_list[idx].str == NULL );
+  GF_ASSERT_HEAVY( idx < p_wk->param.list_max );
+  GF_ASSERT_HEAVY( p_wk->param.cp_list[idx].str == NULL );
   p_wk->p_bmp[ idx ]  = p_src; 
 }
 
@@ -770,7 +770,7 @@ void BR_LIST_SetBmp( BR_LIST_WORK* p_wk, u16 idx, GFL_BMP_DATA *p_src )
 //-----------------------------------------------------------------------------
 GFL_BMP_DATA *BR_LIST_GetBmp( const BR_LIST_WORK* cp_wk, u16 idx )
 { 
-  GF_ASSERT( idx < cp_wk->param.list_max );
+  GF_ASSERT_HEAVY( idx < cp_wk->param.list_max );
   return cp_wk->p_bmp[ idx ];
 }
 
@@ -801,7 +801,7 @@ u32 BR_LIST_GetParam( const BR_LIST_WORK* cp_wk, BR_LIST_PARAM_IDX param )
     return cp_wk->param.list_max;
 
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return 0;
   }
 }
@@ -1976,7 +1976,7 @@ BR_BALLEFF_WORK *BR_BALLEFF_Init( GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, CLSYS_
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
     ret = BR_RES_GetOBJRes( p_wk->p_res, BR_RES_OBJ_BALL_M + draw, &resdata );
-    GF_ASSERT( ret );
+    GF_ASSERT_HEAVY( ret );
     for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
     { 
       p_wk->p_clwk[i] = GFL_CLACT_WK_Create( 

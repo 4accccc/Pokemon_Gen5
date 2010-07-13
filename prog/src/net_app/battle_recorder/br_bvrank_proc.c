@@ -392,7 +392,7 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     cldata.softpri  = 1;
 
     ret = BR_RES_GetOBJRes( p_wk->p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-    GF_ASSERT( ret );
+    GF_ASSERT_HEAVY( ret );
 
     p_wk->p_btn = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_wk->p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
 ;
@@ -564,7 +564,7 @@ static void Br_Seq_RankingMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         u32 select  = BR_RANK_GetSelect( &p_wk->rank );
         BATTLE_REC_OUTLINE_RECV *p_recv = p_wk->p_param->p_outline->data;
  
-        GF_ASSERT( select < p_wk->p_param->p_outline->data_num );
+        GF_ASSERT_HEAVY( select < p_wk->p_param->p_outline->data_num );
 
         //何番目のデータをよみに行くか
         p_wk->p_param->p_outline->data_idx  = select;
@@ -635,7 +635,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         type  = BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD;
         break;
       default:
-        GF_ASSERT(0);
+        GF_ASSERT_HEAVY(0);
       }
 
       //受信しなおすのでクリア
@@ -686,7 +686,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
           is_exist  = BR_NET_GetDownloadBattleSearch( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num );
           break;
         default:
-          GF_ASSERT(0);
+          GF_ASSERT_HEAVY(0);
         }
 
         if( is_exist )

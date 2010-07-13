@@ -345,7 +345,7 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
       if( p_wk->next_seq == SEQ_LIST_SELECT )
       { 
         BR_POKESEARCH_DISPLAY_DeleteHead( p_wk );
-        GF_ASSERT( p_wk->p_monsno_buff == NULL );
+        GF_ASSERT_HEAVY( p_wk->p_monsno_buff == NULL );
         p_wk->p_monsno_buff = ZUKANDATA_AllocMonsNoBuffer( p_wk->cp_zkn, p_wk->head, p_wk->p_sort_data, &p_wk->monsno_len, p_wk->heapID );
         BR_POKESEARCH_DISPLAY_CreateList( p_wk );
       }
@@ -511,7 +511,7 @@ static void BR_POKESEARCH_DISPLAY_CreateCommon( BR_POKESEARCH_WORK *p_wk )
     cldata.softpri  = 1;
 
     ret = BR_RES_GetOBJRes( p_wk->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-    GF_ASSERT( ret );
+    GF_ASSERT_HEAVY( ret );
 
     p_wk->p_btn = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_wk->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
 ;
@@ -613,8 +613,8 @@ static void BR_POKESEARCH_DISPLAY_CreateList( BR_POKESEARCH_WORK *p_wk )
   //リスト作成
   { 
 
-    GF_ASSERT( p_wk->p_list_data == NULL );
-    GF_ASSERT( p_wk->p_list == NULL );
+    GF_ASSERT_HEAVY( p_wk->p_list_data == NULL );
+    GF_ASSERT_HEAVY( p_wk->p_list == NULL );
     //リストデータ作成
     { 
       int i;

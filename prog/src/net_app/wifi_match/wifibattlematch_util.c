@@ -286,7 +286,7 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
     break;
 
   case WBM_TEXT_TYPE_STREAM:  //ストリームを使う
-    GF_ASSERT( p_wk->p_keycursor == NULL );
+    GF_ASSERT_HEAVY( p_wk->p_keycursor == NULL );
 
     APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
     //文字送りカーソル作成
@@ -732,7 +732,7 @@ WBM_SUBPROC_WORK * WBM_SUBPROC_Init( const WBM_SUBPROC_DATA *cp_procdata_tbl, u3
 //-----------------------------------------------------------------------------
 void WBM_SUBPROC_Exit( WBM_SUBPROC_WORK *p_wk )
 {	
-	GF_ASSERT( p_wk->p_proc_param == NULL );
+	GF_ASSERT_HEAVY( p_wk->p_proc_param == NULL );
 
 	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
 

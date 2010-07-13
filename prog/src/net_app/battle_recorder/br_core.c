@@ -692,11 +692,11 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
           p_param->menuID			= BR_BROWSE_MENUID_OTHER_RECORD;
           break;
         case BR_RECODE_PROC_DOWNLOAD_RANK:
-          GF_ASSERT( 0 ); //‚±‚±‚Í‚±‚È‚¢
+          GF_ASSERT_HEAVY( 0 ); //‚±‚±‚Í‚±‚È‚¢
           p_param->menuID			= BR_BTLVIDEO_MENUID_RANK;
           break;
         case BR_RECODE_PROC_DOWNLOAD_NUMBER:
-          GF_ASSERT( 0 ); //‚±‚±‚Í‚±‚È‚¢
+          GF_ASSERT_HEAVY( 0 ); //‚±‚±‚Í‚±‚È‚¢
           p_param->menuID			= BR_BTLVIDEO_MENUID_RANK;
           break;
         }
@@ -828,7 +828,7 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
         }
         else
         { 
-          GF_ASSERT(0);
+          GF_ASSERT_HEAVY(0);
         }
       }
     }
@@ -1186,7 +1186,7 @@ static void BR_BVDELETE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
   }
   else
   { 
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 }
 //----------------------------------------------------------------------------
@@ -1226,7 +1226,7 @@ static void BR_BVSAVE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 	BR_CORE_WORK						  *p_wk			= p_wk_adrs;
   const BR_RECORD_PROC_PARAM	*cp_record_param	= cp_pre_param;
 
-  GF_ASSERT( preID == BR_PROCID_RECORD );
+  GF_ASSERT_HEAVY( preID == BR_PROCID_RECORD );
 
   p_param->p_res			= p_wk->p_res;
   p_param->p_fade     = p_wk->p_fade;

@@ -139,7 +139,7 @@ static GFL_PROC_RESULT BR_BVDELETE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 	BR_BVDELETE_WORK				*p_wk;
 	BR_BVDELETE_PROC_PARAM	*p_param	= p_param_adrs;
 
-  GF_ASSERT( p_param->mode < BR_BVDELETE_MODE_MAX );
+  GF_ASSERT_HEAVY( p_param->mode < BR_BVDELETE_MODE_MAX );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_BVDELETE_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );

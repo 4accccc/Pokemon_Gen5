@@ -399,17 +399,17 @@ static void VramBankSet( const GFL_DISP_VRAM * vram )
 //------------------------------------------------------------------
 static void InitWork( WORLDTRADE_WORK *wk, WORLDTRADE_PARAM *param )
 {
-  GF_ASSERT( param->savedata != NULL );
-  GF_ASSERT( param->worldtrade_data != NULL );
-  GF_ASSERT( param->systemdata != NULL );
-  GF_ASSERT( param->myparty != NULL );
-  GF_ASSERT( param->mybox != NULL );
+  GF_ASSERT_HEAVY( param->savedata != NULL );
+  GF_ASSERT_HEAVY( param->worldtrade_data != NULL );
+  GF_ASSERT_HEAVY( param->systemdata != NULL );
+  GF_ASSERT_HEAVY( param->myparty != NULL );
+  GF_ASSERT_HEAVY( param->mybox != NULL );
 //  GF_ASSERT( param->zukanwork != NULL );
-  GF_ASSERT( param->wifilist != NULL );
-  GF_ASSERT( param->wifihistory != NULL );
-  GF_ASSERT( param->mystatus != NULL );
-  GF_ASSERT( param->config != NULL );
-  GF_ASSERT( param->record != NULL );
+  GF_ASSERT_HEAVY( param->wifilist != NULL );
+  GF_ASSERT_HEAVY( param->wifihistory != NULL );
+  GF_ASSERT_HEAVY( param->mystatus != NULL );
+  GF_ASSERT_HEAVY( param->config != NULL );
+  GF_ASSERT_HEAVY( param->record != NULL );
 //  GF_ASSERT( param->myitem != NULL );
 
 
@@ -683,8 +683,8 @@ void WorldTrade_TouchWinYesNoMake( WORLDTRADE_WORK *wk, int y, int yesno_bmp_cgx
 void WorldTrade_TouchWinYesNoMakeEx( WORLDTRADE_WORK *wk, int y, int yesno_bmp_cgx,
                         int pltt, int frame, u8 inPassive )
 {
-  GF_ASSERT( wk->task_res == NULL );
-  GF_ASSERT( wk->task_work == NULL );
+  GF_ASSERT_HEAVY( wk->task_res == NULL );
+  GF_ASSERT_HEAVY( wk->task_work == NULL );
 
   wk->task_res  = APP_TASKMENU_RES_Create( frame, pltt, wk->print.font, wk->print.que, HEAPID_WORLDTRADE );
 
@@ -816,8 +816,8 @@ u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK* wk)
 //==============================================================================
 void WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y )
 {
-  GF_ASSERT( wk->task_res == NULL );
-  GF_ASSERT( wk->task_work == NULL );
+  GF_ASSERT_HEAVY( wk->task_res == NULL );
+  GF_ASSERT_HEAVY( wk->task_work == NULL );
 
   wk->task_res  = APP_TASKMENU_RES_Create( frm, WORLDTRADESELBOX_PLT, wk->print.font, wk->print.que, HEAPID_WORLDTRADE );
 
@@ -845,7 +845,7 @@ void WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y )
     APP_TASKMENU_INITWORK initWork;
     GFL_STD_MemClear( &initWork, sizeof(APP_TASKMENU_INITWORK) );
 
-    GF_ASSERT( count <= NELEMS( itemWork ) );
+    GF_ASSERT_HEAVY( count <= NELEMS( itemWork ) );
 
     for( i = 0; i < count; i++ )
     { 
