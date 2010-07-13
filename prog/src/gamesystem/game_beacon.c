@@ -85,7 +85,7 @@ GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
 //==================================================================
 void GAMEBEACON_Init(HEAPID heap_id)
 {
-  GF_ASSERT(GameBeaconSys == NULL);
+  GF_ASSERT_HEAVY(GameBeaconSys == NULL);
   
   GameBeaconSys = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAMEBEACON_SYSTEM));
   GameBeaconSys->end_log = -1;
@@ -98,7 +98,7 @@ void GAMEBEACON_Init(HEAPID heap_id)
 //==================================================================
 void GAMEBEACON_Exit(void)
 {
-  GF_ASSERT(GameBeaconSys != NULL);
+  GF_ASSERT_HEAVY(GameBeaconSys != NULL);
   
   GFL_HEAP_FreeMemory(GameBeaconSys);
 }
@@ -1521,7 +1521,7 @@ void DEBUG_GAMEBEACON_Set_NewEntry(void)
 //==================================================================
 GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void)
 {
-  GF_ASSERT(GameBeaconSys != NULL);
+  GF_ASSERT_HEAVY(GameBeaconSys != NULL);
   return &GameBeaconSys->send.info;
 }
 
@@ -1533,7 +1533,7 @@ GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void)
 void DEBUG_GetBeaconRecvLogCopy( void* log_buf, s8* log_num, s8* start_log, s8* end_log )
 {
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
-  GF_ASSERT( bsys != NULL);
+  GF_ASSERT_HEAVY( bsys != NULL);
 
   MI_CpuCopy32( bsys->log, log_buf, sizeof( GAMEBEACON_LOG )*GAMEBEACON_SYSTEM_LOG_MAX);
   *log_num = bsys->log_num;
@@ -1563,7 +1563,7 @@ void DEBUG_SendBeaconCancel(void)
 //==================================================================
 void DEBUG_SendBeaconPriorityEgnoreFlagSet( BOOL flag )
 {
-  GF_ASSERT(GameBeaconSys != NULL);
+  GF_ASSERT_HEAVY(GameBeaconSys != NULL);
   GameBeaconSys->deb_beacon_priority_egnore = flag;
 }
 
