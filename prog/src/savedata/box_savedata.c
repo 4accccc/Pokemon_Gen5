@@ -212,7 +212,7 @@ BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, const POKEMON_PASO_PAR
   }else{
     // 開放していないトレイが指定された
     if( trayNum >= boxData->trayMax ){
-      GF_ASSERT(0);
+      GF_ASSERT_HEAVY(0);
     }
   }
 
@@ -256,7 +256,7 @@ BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, const POKEMON
 		PPP_RecoverWazaPPAll( &trayData->ppp[pos] );
     return TRUE;
   }else{
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
   return FALSE;
 }
@@ -521,7 +521,7 @@ u32 BOXDAT_GetEmptySpaceTray( const BOX_MANAGER* box, u32 trayNum )
   {
     trayNum = boxData->currentTrayNumber;
   }
-  GF_ASSERT( trayNum < BOX_MAX_TRAY );
+  GF_ASSERT_HEAVY( trayNum < BOX_MAX_TRAY );
 
 
   cnt = 0;
@@ -634,7 +634,7 @@ void BOXDAT_GetBoxName( const BOX_MANAGER* box, u32 trayNumber, STRBUF* buf )
   }
   else
   {
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 }
 
@@ -695,7 +695,7 @@ u32 BOXDAT_GetPokeExistCount( const BOX_MANAGER* box, u32 trayNum )
   }
   else
   {
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
   return 0;
 }
@@ -737,7 +737,7 @@ u32 BOXDAT_GetPokeExistCount2( const BOX_MANAGER* box, u32 trayNum )
   }
   else
   {
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
   return 0;
 }
@@ -799,8 +799,8 @@ u32 BOXDAT_PokeParaGet( const BOX_MANAGER* box, u32 trayNum, u32 pos, int param,
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
   BOX_TRAY_DATA *trayData;
-  GF_ASSERT((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
-  GF_ASSERT(pos<BOX_MAX_POS);
+  GF_ASSERT_HEAVY((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
+  GF_ASSERT_HEAVY(pos<BOX_MAX_POS);
 
   if( trayNum == BOXDAT_TRAYNUM_CURRENT )
   {
@@ -828,8 +828,8 @@ void BOXDAT_PokeParaPut( BOX_MANAGER* box, u32 trayNum, u32 pos, int param, u32 
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
   BOX_TRAY_DATA *trayData;
-  GF_ASSERT((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
-  GF_ASSERT(pos<BOX_MAX_POS);
+  GF_ASSERT_HEAVY((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
+  GF_ASSERT_HEAVY(pos<BOX_MAX_POS);
 
   if( trayNum == BOXDAT_TRAYNUM_CURRENT )
   {
@@ -868,8 +868,8 @@ POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_MANAGER* box, u32 trayN
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
   BOX_TRAY_DATA *trayData;
-  GF_ASSERT( ((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT)) );
-  GF_ASSERT( (pos<BOX_MAX_POS) );
+  GF_ASSERT_HEAVY( ((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT)) );
+  GF_ASSERT_HEAVY( (pos<BOX_MAX_POS) );
 
   if( trayNum == BOXDAT_TRAYNUM_CURRENT )
   {
