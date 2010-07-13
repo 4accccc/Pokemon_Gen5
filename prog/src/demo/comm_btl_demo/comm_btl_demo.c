@@ -2961,7 +2961,18 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
     res = GFL_PTC_LoadArcResource( ARCID_COMM_BTL_DEMO_GRA, spa_idx, g3d->heapID );
     g3d->spa_num = GFL_PTC_GetResNum( res );
     OS_Printf("load spa_idx=%d num=%d \n", spa_idx, g3d->spa_num );
+
+// BTS7754:対戦結果の「WIN」のパーティクルが崩れることがある。
+#ifdef BUGFIX_BTS7754_20100713
+    // パーティクルのテクスチャにゴミが乗るバグだが、対処方法としては、
+    // テクスチャ転送をVBLANK期間で行うように変更するようにしている。
+    // ただ、どうしてメイン期間中にテクスチャを転送すると崩れるのかの原因は
+    // 判明していない。（レンダリング中にDMA転送を行うとレンダリング画面が崩れる事は
+    // 分かっているのだが、今回の逆パターンは聞いたことがない）
+    GFL_PTC_SetResource( g3d->ptc, res, FALSE, GFUser_VIntr_GetTCBSYS() );
+#else
     GFL_PTC_SetResource( g3d->ptc, res, TRUE, NULL );
+#endif
   }
 }
 
