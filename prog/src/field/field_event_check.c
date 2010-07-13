@@ -169,7 +169,13 @@ typedef struct {
 
   u32 debugRequest:1;  ///<デバッグ操作があったかどうか
   u32 exMoveRequest:1;  ///<波乗り開始時等moveReqが検出しない一歩移動の検出
+
+#ifdef BUGFIX_GFBTS1975_100713
+  u32 commErrorRequest:1;  ///<通信エラー画面を呼び出していいタイミングか？
+  u32 req_dmy:21;
+#else
   u32 req_dmy:22;
+#endif
 
 }EV_REQUEST;
 
@@ -642,7 +648,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
   if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+#ifdef BUGFIX_GFBTS1975_100713
+    if(WIPE_SYS_EndCheck() && req.commErrorRequest){
+#else
     if(WIPE_SYS_EndCheck()){
+#endif
       return EVENT_FieldCommErrorProc(gsys, fieldWork);
     }
   }
@@ -671,12 +681,21 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
   }
 
+#ifdef BUGFIX_GFBTS1975_100713
+  if( req.subscreenRequest && WIPE_SYS_EndCheck() ){
+    //Gパワー効果終了チェック
+    event = CheckGPowerEffectEnd( gsys );
+    if( event != NULL ){
+      return event;
+    }
+  }
+#else
   //Gパワー効果終了チェック
   event = CheckGPowerEffectEnd( gsys );
   if( event != NULL ){
     return event;
   }
-  
+#endif
   
   SET_CHECK("ev_check:gpower & intrude");
   //パレス座標イベント
@@ -774,7 +793,11 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
   if(unisys == NULL){
     //ユニオン終了
     if(NetErr_App_CheckError()){  //エラーが発生したままの状態の時はエラー画面を表示
+#ifdef BUGFIX_GFBTS1975_100713
+      if(WIPE_SYS_EndCheck() && req.commErrorRequest){
+#else
       if(WIPE_SYS_EndCheck()){
+#endif
         return EVENT_FieldCommErrorProc(gsys, fieldWork);
       }
       return NULL;
@@ -866,7 +889,11 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
   if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+#ifdef BUGFIX_GFBTS1975_100713
+    if(WIPE_SYS_EndCheck() && req.commErrorRequest){
+#else
     if(WIPE_SYS_EndCheck()){
+#endif
       return EVENT_FieldCommErrorProc(gsys, fieldWork);
     }
   }
@@ -1143,7 +1170,11 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
   if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+#ifdef BUGFIX_GFBTS1975_100713
+    if(WIPE_SYS_EndCheck() && req.commErrorRequest){
+#else
     if(WIPE_SYS_EndCheck()){
+#endif
       return EVENT_FieldCommErrorProc(gsys, fieldWork);
     }
   }
@@ -1174,12 +1205,22 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
-  
+
+#ifdef BUGFIX_GFBTS1975_100713
+  //Gパワー効果終了チェック
+  if( req.subscreenRequest && WIPE_SYS_EndCheck() ){
+    event = CheckGPowerEffectEnd( gsys );
+    if( event != NULL ){
+      return event;
+    }
+  }
+#else
   //Gパワー効果終了チェック
   event = CheckGPowerEffectEnd( gsys );
   if( event != NULL ){
     return event;
   }
+#endif
 
 #ifdef  DEBUG_SPEED_CHECK_ENABLE
   if ( (req.key_trg & PAD_BUTTON_R) || (req.key_cont & PAD_BUTTON_L) )
@@ -1284,6 +1325,11 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
   if (req->player_state == PLAYER_MOVE_STATE_END || req->player_state == PLAYER_MOVE_STATE_OFF )
   {
+#ifdef BUGFIX_GFBTS1975_100713
+    //通信エラーを出していいフラグをOn
+    req->commErrorRequest = TRUE;
+#endif
+
     req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
 
     req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
