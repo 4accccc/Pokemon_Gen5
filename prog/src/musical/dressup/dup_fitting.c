@@ -849,6 +849,10 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
                   FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
       GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
       
+#ifdef BUGFIX_BTS7755_20100713
+      //フラグが立ったままだと、開放したBMPWINの転送が走る恐れがある
+      work->isUpdateMsg = FALSE;
+#endif
       PRINTSYS_QUE_Clear( work->printQue );
       GFL_BMPWIN_Delete( work->msgWin );
       work->msgWin = NULL;
