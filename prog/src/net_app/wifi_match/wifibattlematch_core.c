@@ -15,6 +15,10 @@
 #include "wifibattlematch_rnd.h"
 #include "wifibattlematch_wifi.h"
 
+#ifdef BUGFIX_BTS7775_20100713
+#include "sound/pm_sndsys.h"
+#endif //BUGFIX_BTS7775_20100713
+
 //ŠO•”ŒöŠJ
 #include "wifibattlematch_core.h"
 
@@ -130,6 +134,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_
   default:
     GF_ASSERT( 0 );
   }
+
+#ifdef BUGFIX_BTS7775_20100713
+  PMSND_StopSE();
+#endif //BUGFIX_BTS7775_20100713
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifibattlematch_view) );
 
