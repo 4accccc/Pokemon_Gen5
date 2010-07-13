@@ -34,7 +34,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 //#define POINT_VIEW
-//#define AI_SEQ_PRINT
+#define AI_SEQ_PRINT
 #endif
 #endif
 
@@ -1540,45 +1540,53 @@ static  void  ai_if_wazano( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
 static  VMCMD_RESULT  AI_IF_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
-  int *tbl_adrs = (int*)(vmh->adrs + ( int )VMGetU32( vmh ));
+  u16 *tbl_adrs = (u16*)(vmh->adrs + ( int )VMGetU32( vmh ));
   int jump_adrs = ( int )VMGetU32( vmh );
   int data;
+  int ofs = 0;
+  int index;
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_IF_TABLE_JUMP\n");
 #endif
 
-  while( *tbl_adrs != TR_AI_TABLE_END )
+
+  do
   {
-    if( taw->calc_work == *tbl_adrs )
+    index = tbl_adrs[ ofs ] | ( tbl_adrs[ ofs + 1 ] << 16 );
+    if( taw->calc_work == index )
     {
       VMCMD_Jump( vmh, vmh->adrs + jump_adrs );
       break;
     }
-    tbl_adrs++;
-  }
+    ofs += 2;
+  }while( index != TR_AI_TABLE_END );
 
   return taw->vmcmd_result;
 }
 static  VMCMD_RESULT  AI_IFN_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
-  int *tbl_adrs = (int*)(vmh->adrs + ( int )VMGetU32( vmh ));
+  u16 *tbl_adrs = (u16*)(vmh->adrs + ( int )VMGetU32( vmh ));
   int jump_adrs = ( int )VMGetU32( vmh );
   int data;
+  int ofs = 0;
+  int index;
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_IFN_TABLE_JUMP\n");
 #endif
 
-  while( *tbl_adrs != TR_AI_TABLE_END )
+  do
   {
-    if( taw->calc_work == *tbl_adrs )
+    index = tbl_adrs[ ofs ] | ( tbl_adrs[ ofs + 1 ] << 16 );
+    if( taw->calc_work == index )
     {
       return taw->vmcmd_result;
     }
-    tbl_adrs++;
-  }
+    ofs += 2;
+  }while( *tbl_adrs != TR_AI_TABLE_END );
+
   VMCMD_Jump( vmh, vmh->adrs + jump_adrs );
 
   return taw->vmcmd_result;
