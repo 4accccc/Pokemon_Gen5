@@ -260,7 +260,13 @@ u32 WIFI_COUNTRY_DataIndexToPlaceMsgDataID( u32 dataIndex )
 {
   GF_ASSERT(dataIndex < NELEMS(NationFlag_to_AreaID));
 
-  return NationFlag_to_AreaID[dataIndex].msg_arcID;
+  // 範囲内ならテーブルから
+  if(dataIndex < NELEMS(NationFlag_to_AreaID)){
+    return NationFlag_to_AreaID[dataIndex].msg_arcID;
+  }else{
+    // 範囲外なら世界地図データに置き換え
+    return NationFlag_to_AreaID[0].msg_arcID;
+  }
 }
 
 //------------------------------------------------------------------
@@ -276,7 +282,13 @@ u32 WIFI_COUNTRY_DataIndexToCountryCode( u32 dataIndex )
 {
   GF_ASSERT(dataIndex < NELEMS(NationFlag_to_AreaID));
 
-  return NationFlag_to_AreaID[dataIndex].nationID;
+  // 範囲外ならテーブルから
+  if(dataIndex < NELEMS(NationFlag_to_AreaID)){
+    return NationFlag_to_AreaID[dataIndex].nationID;
+  }else{
+    // 範囲外なら「なし」
+    return NationFlag_to_AreaID[0].nationID;
+  }
 }
 
 
@@ -294,7 +306,12 @@ u32 WIFI_COUNTRY_DataIndexToPlaceDataID( u32 dataIndex )
 {
   GF_ASSERT(dataIndex < NELEMS(NationFlag_to_AreaID));
 
-  return NationFlag_to_AreaID[dataIndex].place_dataID;
+  if(dataIndex < NELEMS(NationFlag_to_AreaID)){
+    return NationFlag_to_AreaID[dataIndex].place_dataID;
+  }else{
+    // 範囲外なら世界地図データに置き換え
+    return NationFlag_to_AreaID[0].place_dataID;
+  }
 }
 
 //NationFlag_to_AreaIDでの日本が置いてあるテーブル
@@ -316,20 +333,20 @@ u32 WIFI_COUNTRY_GetJapanID(void)
 /**
  * 不正な国・地域コードでないかをチェック
  *
- * @param   country_code		国コード
- * @param   local_code		  地域コード
- * @param   language		    言語コード(PM_LANG)
+ * @param   country_code    国コード
+ * @param   local_code      地域コード
+ * @param   language        言語コード(PM_LANG)
  *
- * @retval  BOOL	  TRUE:正常　　FALSE:不正
+ * @retval  BOOL    TRUE:正常　　FALSE:不正
  */
 //==================================================================
 BOOL WIFI_COUNTRY_CheckNG(u32 country_code, u32 local_code, u32 language)
 {
-	if(country_code >= WIFI_COUNTRY_MAX){
-		return FALSE;
-	}
+  if(country_code >= WIFI_COUNTRY_MAX){
+    return FALSE;
+  }
 
-	if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(country_code) < local_code){
+  if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(country_code) < local_code){
     return FALSE;
   }
   
@@ -347,11 +364,11 @@ BOOL WIFI_COUNTRY_CheckNG(u32 country_code, u32 local_code, u32 language)
 /**
  * 国コードが不正でないか検査し、不正であれば置換後の値を取得する
  *
- * @param   country_code		国コード
- * @param   local_code		  地域コード
- * @param   language		    言語コード(PM_LANG)
+ * @param   country_code    国コード
+ * @param   local_code      地域コード
+ * @param   language        言語コード(PM_LANG)
  *
- * @retval  u32		正常であればcountry_codeそのままの値、不正であれば0(設定無し)の値が返る
+ * @retval  u32   正常であればcountry_codeそのままの値、不正であれば0(設定無し)の値が返る
  */
 //==================================================================
 u32 WIFI_COUNTRY_GetNGTestCountryCode(u32 country_code, u32 local_code, u32 language)
@@ -366,11 +383,11 @@ u32 WIFI_COUNTRY_GetNGTestCountryCode(u32 country_code, u32 local_code, u32 lang
 /**
  * 地域コードが不正でないか検査し、不正であれば置換後の値を取得する
  *
- * @param   country_code		国コード
- * @param   local_code		  地域コード
- * @param   language		    言語コード(PM_LANG)
+ * @param   country_code    国コード
+ * @param   local_code      地域コード
+ * @param   language        言語コード(PM_LANG)
  *
- * @retval  u32		正常であればlocal_codeそのままの値、不正であれば0(設定無し)の値が返る
+ * @retval  u32   正常であればlocal_codeそのままの値、不正であれば0(設定無し)の値が返る
  */
 //==================================================================
 u32 WIFI_COUNTRY_GetNGTestLocalCode(u32 country_code, u32 local_code, u32 language)
