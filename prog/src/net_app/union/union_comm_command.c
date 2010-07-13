@@ -100,7 +100,7 @@ SDK_COMPILER_ASSERT(NELEMS(Union_CommPacketTbl) == UNION_CMD_NUM);
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 {
   UNION_SYSTEM_PTR unisys = pWork;
-  GF_ASSERT_MSG(size <= UNION_HUGE_RECEIVE_BUF_SIZE, "size=%x, recv_size=%x\n", size, UNION_HUGE_RECEIVE_BUF_SIZE);
+  GF_ASSERT_MSG_HEAVY(size <= UNION_HUGE_RECEIVE_BUF_SIZE, "size=%x, recv_size=%x\n", size, UNION_HUGE_RECEIVE_BUF_SIZE);
 	return unisys->huge_receive_buf[netID];
 }
 
@@ -385,7 +385,7 @@ static void _UnionRecv_TrainerCardParam(const int netID, const int size, const v
 //==================================================================
 BOOL UnionSend_TrainerCardParam(UNION_SYSTEM_PTR unisys)
 {
-  GF_ASSERT(unisys->alloc.my_card != NULL);
+  GF_ASSERT_HEAVY(unisys->alloc.my_card != NULL);
   
   OS_TPrintf("TR_CARD_DATA = %x\n", sizeof(TR_CARD_DATA));
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
@@ -416,7 +416,7 @@ static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, con
   u8 mac_address[6];
   
   if(clsys == NULL || clsys->cps == NULL || clsys->entry_menu == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return; //準備が出来ていないので受け取らない
   }
   
@@ -463,7 +463,7 @@ static void _UnionRecv_ColosseumEntryAnswer(const int netID, const int size, con
   const COMM_ENTRY_ANSWER *answer = pData;
   
   if(clsys == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return; //準備が出来ていないので受け取らない
   }
   
@@ -504,7 +504,7 @@ static void _UnionRecv_ColosseumEntryAllReady(const int netID, const int size, c
   const COMM_ENTRY_ANSWER *answer = pData;
   
   if(clsys == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return; //準備が出来ていないので受け取らない
   }
   
@@ -545,7 +545,7 @@ static void _UnionRecv_MinigameEntryReq(const int netID, const int size, const v
   
   OS_TPrintf("Recv:ミニゲーム乱入希望 net_id=%d\n", netID);
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     unisys->minigame_entry_req_answer_ng_bit |= 1 << netID;
     return;
   }
@@ -673,7 +673,7 @@ static void _UnionRecv_MinigameIntrudeReq(const int netID, const int size, const
   
   OS_TPrintf("MinigameIntrudeReq受信 netID = %d\n", netID);
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(unisys->alloc.uniapp != NULL);
+    GF_ASSERT_HEAVY(unisys->alloc.uniapp != NULL);
     return;
   }
   
@@ -714,7 +714,7 @@ static void _UnionRecv_MinigameIntrudeOK(const int netID, const int size, const 
   
   OS_TPrintf("MinigameIntrudeOK受信 netID = %d\n", netID);
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(unisys->alloc.uniapp != NULL);
+    GF_ASSERT_HEAVY(unisys->alloc.uniapp != NULL);
     return;
   }
   
@@ -759,7 +759,7 @@ static void _UnionRecv_MinigameBasicStatusReq(const int netID, const int size, c
   
   OS_TPrintf("MinigameBasicStatusReq受信 netID = %d\n", netID);
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(unisys->alloc.uniapp != NULL);
+    GF_ASSERT_HEAVY(unisys->alloc.uniapp != NULL);
     return;
   }
   
@@ -805,7 +805,7 @@ static void _UnionRecv_MinigameBasicStatus(const int netID, const int size, cons
   
   OS_TPrintf("APP_BASIC受信\n");
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return;
   }
   
@@ -848,7 +848,7 @@ static void _UnionRecv_MinigameMystatusReq(const int netID, const int size, cons
   const UNION_APP_MY_PARAM *pAppmy = pData;
   
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return;
   }
   
@@ -903,7 +903,7 @@ static void _UnionRecv_MinigameMystatus(const int netID, const int size, const v
   const UNION_APP_MY_PARAM *pAppmy = pData;
 
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return;
   }
   
@@ -949,7 +949,7 @@ static void _UnionRecv_MinigameIntrudeReady(const int netID, const int size, con
   }
 
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return;
   }
   
@@ -1003,7 +1003,7 @@ static void _UnionRecv_MinigameLeaveChild(const int netID, const int size, const
   }
 
   if(unisys->alloc.uniapp == NULL){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
     return;
   }
   

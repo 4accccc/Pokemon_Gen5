@@ -105,7 +105,7 @@ void Colosseum_DelCommandTable(void)
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 {
   UNION_SYSTEM_PTR unisys = pWork;
-  GF_ASSERT_MSG(size <= UNION_HUGE_RECEIVE_BUF_SIZE, "size=%x, recv_size=%x\n", size, UNION_HUGE_RECEIVE_BUF_SIZE);
+  GF_ASSERT_MSG_HEAVY(size <= UNION_HUGE_RECEIVE_BUF_SIZE, "size=%x, recv_size=%x\n", size, UNION_HUGE_RECEIVE_BUF_SIZE);
 	return unisys->huge_receive_buf[netID];
 }
 

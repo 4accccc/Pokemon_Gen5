@@ -46,7 +46,7 @@ void UNION_CommBoot(GAMESYS_WORK *gsys)
   game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   gdata = GAMESYSTEM_GetGameData( gsys );
   
-  GF_ASSERT(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL);
+  GF_ASSERT_HEAVY(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL);
 
   {
     UNION_PARENT_WORK *upw;
@@ -80,7 +80,7 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap)
   }
   
   unisys = GameCommSys_GetAppWork(game_comm);
-  GF_ASSERT(unisys != NULL);
+  GF_ASSERT_HEAVY(unisys != NULL);
 
   if(GAMESYSTEM_GetFieldCommErrorReq(FIELDMAP_GetGameSysWork(fieldmap)) == TRUE){
     return; //フィールドに対して通信エラーリクエストが発生している場合はここで終了

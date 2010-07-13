@@ -352,7 +352,7 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
 //==================================================================
 void UnionSubProc_EventSet(UNION_SYSTEM_PTR unisys, UNION_SUBPROC_ID sub_proc_id, void *parent_wk)
 {
-  GF_ASSERT(unisys->subproc.id == UNION_SUBPROC_ID_NULL && unisys->subproc.active == FALSE);
+  GF_ASSERT_HEAVY(unisys->subproc.id == UNION_SUBPROC_ID_NULL && unisys->subproc.active == FALSE);
   
   unisys->subproc.id = sub_proc_id;
   unisys->subproc.parent_work = parent_wk;
@@ -971,8 +971,8 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
       *seq = SEQ_ERR;
       break;
     }
-    GF_ASSERT_MSG(plist->ret_mode == PL_RET_NORMAL, "plist->ret_mode 不正 %d\n", plist->ret_mode);
-    GF_ASSERT_MSG(plist->ret_sel == PL_SEL_POS_ENTER, "ret_sel=%d\n", plist->ret_sel);
+    GF_ASSERT_MSG_HEAVY(plist->ret_mode == PL_RET_NORMAL, "plist->ret_mode 不正 %d\n", plist->ret_mode);
+    GF_ASSERT_MSG_HEAVY(plist->ret_sel == PL_SEL_POS_ENTER, "ret_sel=%d\n", plist->ret_sel);
     {//自分の受信バッファにリストで選んだ順にポケモンデータをセット
       int entry_no, temoti_no;
       POKEPARTY *temoti_party;

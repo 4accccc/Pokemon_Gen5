@@ -40,7 +40,7 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
   UNION_CHAT_DATA *dest;
   STRCODE *name;
   
-  GF_ASSERT(bpc != NULL || mine_pmsdata != NULL);
+  GF_ASSERT_HEAVY(bpc != NULL || mine_pmsdata != NULL);
   
   //自分の発言は同一チェックを通さない。他人の発言は同一チェックをする
   if(bpc != NULL && UnionChat_CheckSameLog(log, bpc->mac_address, bpc->beacon.pms_rand) == FALSE){
@@ -52,7 +52,7 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
   if(bpc == NULL){
     MYSTATUS *myst = unisys->uniparent->mystatus;
     MyStatus_CopyNameStrCode(myst, dest->name, PERSON_NAME_SIZE + EOM_SIZE);
-    GF_ASSERT(mine_pmsdata != NULL || (mine_pmsdata==NULL && mine_chat_type != UNION_CHAT_TYPE_NORMAL));
+    GF_ASSERT_HEAVY(mine_pmsdata != NULL || (mine_pmsdata==NULL && mine_chat_type != UNION_CHAT_TYPE_NORMAL));
     dest->pmsdata = *mine_pmsdata;
     dest->chat_type = mine_chat_type;
     dest->rand = 0;

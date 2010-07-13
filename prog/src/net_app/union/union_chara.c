@@ -377,7 +377,7 @@ static MMDL * UNION_CHARA_GetMmdl(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, 
   chara_index = UNION_CHARA_GetCharaIndex(pc, unichara);
   mdlsys = GAMEDATA_GetMMdlSys( unisys->uniparent->game_data );
   mmdl = MMDLSYS_SearchOBJID(mdlsys, chara_index);
-  GF_ASSERT(mmdl != NULL);
+  GF_ASSERT_HEAVY(mmdl != NULL);
   return mmdl;
 }
 
@@ -414,7 +414,7 @@ static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEAC
     }
     unichara++;
   }
-  GF_ASSERT(0); //キャラクタバッファの空きがない
+  GF_ASSERT_HEAVY(0); //キャラクタバッファの空きがない
   return NULL;
 }
 

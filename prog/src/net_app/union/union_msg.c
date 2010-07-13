@@ -1131,8 +1131,8 @@ static void _WordsetSetDefaultData(UNION_SYSTEM_PTR unisys)
   STRBUF *strbuf_targetname, *greeting;
   u16 msgno;
   
-  GF_ASSERT(unisys->msgdata != NULL);
-  GF_ASSERT(unisys->wordset != NULL);
+  GF_ASSERT_HEAVY(unisys->msgdata != NULL);
+  GF_ASSERT_HEAVY(unisys->wordset != NULL);
   
   if(situ->mycomm.talk_pc != NULL){
     target_name = situ->mycomm.talk_pc->beacon.name;
@@ -1316,7 +1316,7 @@ void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fie
   FLDMSGBG *fldmsg_bg;
   
   if(unisys->fld_msgwin_stream == NULL){
-    GF_ASSERT(unisys->msgdata == NULL);
+    GF_ASSERT_HEAVY(unisys->msgdata == NULL);
     fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
     unisys->msgdata = FLDMSGBG_CreateMSGDATA( fldmsg_bg, NARC_message_union_room_dat );
     unisys->strbuf_temp = GFL_STR_CreateBuffer(256, HEAPID_UNION);
@@ -1368,7 +1368,7 @@ void UnionMsg_TalkStream_WindowDel(UNION_SYSTEM_PTR unisys)
 //==================================================================
 void UnionMsg_TalkStream_Print(UNION_SYSTEM_PTR unisys, u32 str_id)
 {
-  GF_ASSERT(unisys->fld_msgwin_stream != NULL);
+  GF_ASSERT_HEAVY(unisys->fld_msgwin_stream != NULL);
 
   GFL_MSG_GetString(unisys->msgdata, str_id, unisys->strbuf_temp);
   WORDSET_ExpandStr(unisys->wordset, unisys->strbuf_talk_expand, unisys->strbuf_temp);
@@ -1458,7 +1458,7 @@ BOOL UnionMsg_YesNo_SelectLoop(UNION_SYSTEM_PTR unisys, BOOL *result)
 {
   FLDMENUFUNC_YESNO yes_no;
   
-  GF_ASSERT(unisys->fldmenu_yesno_func != NULL);
+  GF_ASSERT_HEAVY(unisys->fldmenu_yesno_func != NULL);
   
   yes_no = FLDMENUFUNC_ProcYesNoMenu(unisys->fldmenu_yesno_func);
   if(yes_no == FLDMENUFUNC_YESNO_NULL){
@@ -1524,13 +1524,13 @@ static u32 UnionMsg_Menu_SelectLoop(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fiel
 {
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG( fieldWork );
 
-  GF_ASSERT(fldmsg_bg != NULL);
+  GF_ASSERT_HEAVY(fldmsg_bg != NULL);
   
   if(fldmsg_bg != NULL && FLDMSGBG_CheckFinishPrint( fldmsg_bg ) == FALSE){
     return FLDMENUFUNC_NULL;  //•`‰æ’†‚Í‘I‘ð‚³‚¹‚È‚¢
   }
   
-  GF_ASSERT(unisys->fldmenu_func != NULL);
+  GF_ASSERT_HEAVY(unisys->fldmenu_func != NULL);
   return FLDMENUFUNC_ProcMenu(unisys->fldmenu_func);
 }
 
@@ -1737,7 +1737,7 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
     }
   }
   
-  GF_ASSERT_MSG(0, "menu_ret=%d\n", menu_ret);
+  GF_ASSERT_MSG_HEAVY(0, "menu_ret=%d\n", menu_ret);
   return 0;
 }
 
@@ -1790,9 +1790,9 @@ void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
   PRINTSYS_LSB color;
   u16 title_msgid;
   
-  GF_ASSERT(unisys->wordset != NULL);
-  GF_ASSERT(unisys->fldmsgwin == NULL);
-  GF_ASSERT(unisys->alloc.rpm == NULL);
+  GF_ASSERT_HEAVY(unisys->wordset != NULL);
+  GF_ASSERT_HEAVY(unisys->fldmsgwin == NULL);
+  GF_ASSERT_HEAVY(unisys->alloc.rpm == NULL);
   
   if(shooter_type == TRUE){
     shooter_type = REGULATION_SHOOTER_VALID;

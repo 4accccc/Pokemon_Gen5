@@ -889,7 +889,7 @@ static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     for(i = log->old_chat_view_no; i <= log->chat_view_no; i++){
       if(i > -1){
         chat = UnionChat_GetReadBuffer(log, i);
-        GF_ASSERT(chat != NULL);
+        GF_ASSERT_HEAVY(chat != NULL);
         _UniSub_Chat_DispWrite(unisub, chat, i);
       }
     }
@@ -1041,8 +1041,8 @@ void _UniSub_Chat_DispAllWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
 
   for(i = start; i > end; i--){
     chat = UnionChat_GetReadBuffer(log, i);
-    GF_ASSERT(chat != NULL);
-    GF_ASSERT(write_pos > -1);
+    GF_ASSERT_HEAVY(chat != NULL);
+    GF_ASSERT_HEAVY(write_pos > -1);
     _UniSub_Chat_DispWrite(unisub, chat, write_pos);
     write_pos--;
   }
@@ -1116,7 +1116,7 @@ static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     for(write_pos = UNION_CHAT_VIEW_LOG_NUM - offset; write_pos < UNION_CHAT_VIEW_LOG_NUM; write_pos++)
     {
       chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + write_pos);
-      GF_ASSERT(chat != NULL);
+      GF_ASSERT_HEAVY(chat != NULL);
       _UniSub_Chat_DispWrite(unisub, chat, write_pos);
     }
   }
@@ -1132,7 +1132,7 @@ static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     for(write_pos = (-offset)-1; write_pos > -1; write_pos--)
     {
       chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM - 1) + write_pos);
-      GF_ASSERT_MSG(chat != NULL, "view_no=%d, write_pos=%d, offset=%d\n", log->chat_view_no, write_pos, offset);
+      GF_ASSERT_MSG_HEAVY(chat != NULL, "view_no=%d, write_pos=%d, offset=%d\n", log->chat_view_no, write_pos, offset);
       _UniSub_Chat_DispWrite(unisub, chat, write_pos);
     }
   }
@@ -1448,7 +1448,7 @@ static PLATE_TOUCH_WORK * _UniSub_GetPlateTouchPtr(UNION_SUBDISP_PTR unisub, UNI
     }
   }
   
-  GF_ASSERT(0);
+  GF_ASSERT_HEAVY(0);
   return NULL;
 }
 

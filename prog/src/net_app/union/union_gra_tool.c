@@ -91,12 +91,12 @@ void ChangesInto_1D_from_2D(int arc_id, int index_no, int heap_id, int x, int y,
 	///< データの展開
 	aw = GFL_ARC_LoadDataAlloc(arc_id, index_no, heap_id);
 	
-	GF_ASSERT(aw != NULL);
+	GF_ASSERT_HEAVY(aw != NULL);
 	
 	///< キャラデータの取得
 	res = NNS_G2dGetUnpackedCharacterData(aw, &ch_data);
 	
-	GF_ASSERT(res != FALSE);
+	GF_ASSERT_HEAVY(res != FALSE);
 
 	GF_ASSERT(ch_data->W >= (x + w));		///< サイズチェック
 	GF_ASSERT(ch_data->H >= (y + h));

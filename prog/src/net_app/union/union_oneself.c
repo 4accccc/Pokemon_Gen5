@@ -598,7 +598,7 @@ static POKEPARTY * _BBox_PokePartyAlloc(UNION_SYSTEM_PTR unisys)
 //--------------------------------------------------------------
 static void _BBox_PokePartyFree(POKEPARTY *party)
 {
-  GF_ASSERT(party != NULL);
+  GF_ASSERT_HEAVY(party != NULL);
   GFL_HEAP_FreeMemory(party);
 }
 
@@ -1305,7 +1305,7 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
   switch(*seq){
   case _LOCALSEQ_INIT:
     OS_TPrintf("親へ接続しにいきます\n");
-    GF_ASSERT(situ->mycomm.answer_pc != NULL);
+    GF_ASSERT_HEAVY(situ->mycomm.answer_pc != NULL);
     OS_TPrintf("ChangeOver モード切替：子固定\n");
     GFL_NET_ChangeoverModeSet(
       GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, situ->mycomm.answer_pc->mac_address);
@@ -2478,7 +2478,7 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
   switch(*seq){
   case 0:   //トレーナーカードの情報を送りあう
     //同期取りの前に送信データと受信バッファを作成
-    GF_ASSERT(unisys->alloc.my_card == NULL && unisys->alloc.target_card == NULL);
+    GF_ASSERT_HEAVY(unisys->alloc.my_card == NULL && unisys->alloc.target_card == NULL);
     unisys->alloc.my_card 
       = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
     unisys->alloc.target_card 
@@ -2791,7 +2791,7 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
         break;
       default:
         OS_TPrintf("設定されていないcategory = %d\n", situ->mycomm.mainmenu_select);
-        GF_ASSERT(0);
+        GF_ASSERT_HEAVY(0);
         break;
       }
       *seq = _SEQ_INTRUDE_MSG_WAIT_FINISH;
@@ -3084,7 +3084,7 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
   switch(*seq){
   case _SEQ_INIT:
     //通信プレイヤー制御システムの生成
-    GF_ASSERT(unisys->colosseum_sys == NULL);
+    GF_ASSERT_HEAVY(unisys->colosseum_sys == NULL);
     unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, 
       unisys->uniparent->gsys, unisys->uniparent->mystatus, situ->mycomm.intrude);
 
@@ -3213,7 +3213,7 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
       OS_TPrintf("コロシアム遷移のサブPROC終了\n");
 
       //通信プレイヤー制御システムの生成
-      GF_ASSERT(unisys->colosseum_sys == NULL);
+      GF_ASSERT_HEAVY(unisys->colosseum_sys == NULL);
       unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, 
         unisys->uniparent->gsys, unisys->uniparent->mystatus, situ->mycomm.intrude);
 
@@ -3245,7 +3245,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   int i;
   
-  GF_ASSERT(clsys != NULL);
+  GF_ASSERT_HEAVY(clsys != NULL);
 
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
     if(clsys->entry_menu != NULL){
@@ -3350,7 +3350,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
         (*seq) = 200;
         break;
       default:
-        GF_ASSERT(0);
+        GF_ASSERT_HEAVY(0);
       }
     #if 0
       for(i = 0; i < COMM_ENTRY_USER_MAX; i++){
@@ -3472,7 +3472,7 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
-  GF_ASSERT(clsys != NULL);
+  GF_ASSERT_HEAVY(clsys != NULL);
 
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
     UnionMsg_AllDel(unisys);

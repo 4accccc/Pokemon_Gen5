@@ -128,7 +128,7 @@ void CommPlayer_Exit(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps)
       FIELD_COMM_ACTOR_CTRL_Delete(cps->act_ctrl);
     }
     else{
-      GF_ASSERT(0); //フィールドOverlayが存在しない為、FIELD_COMM_ACTOR_CTRL_Deleteが呼び出せない
+      GF_ASSERT_HEAVY(0); //フィールドOverlayが存在しない為、FIELD_COMM_ACTOR_CTRL_Deleteが呼び出せない
     }
   }
   
@@ -190,7 +190,7 @@ void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, u16 obj_code, const COMM
       }
     }
     if(count > cps->max){
-      GF_ASSERT(0);   //最大人数を超えて追加しようとした
+      GF_ASSERT_HEAVY(0);   //最大人数を超えて追加しようとした
       return;
     }
   }
@@ -248,7 +248,7 @@ void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps)
 {
   int i;
   
-  GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
+  GF_ASSERT_HEAVY(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
   
   if(cps->act_ctrl == NULL){
     return;
@@ -279,8 +279,8 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
   FIELDMAP_WORK *fieldWork;
   MMDLSYS *fldMdlSys;
 
-  GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
-  GF_ASSERT(cps->act_ctrl == NULL);
+  GF_ASSERT_HEAVY(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
+  GF_ASSERT_HEAVY(cps->act_ctrl == NULL);
 
   fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
   fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
@@ -310,8 +310,8 @@ void CommPlayer_PopClear(COMM_PLAYER_SYS_PTR cps)
 {
   int i;
 
-  GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
-  GF_ASSERT(cps->act_ctrl == NULL);
+  GF_ASSERT_HEAVY(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
+  GF_ASSERT_HEAVY(cps->act_ctrl == NULL);
 
   for(i = 0; i < COMM_PLAYER_MAX; i++){
     if(cps->act[i].push_flag == TRUE){
@@ -346,7 +346,7 @@ void CommPlayer_FlagSet_UpdateStop(COMM_PLAYER_SYS_PTR cps, BOOL stop_flag)
 //==================================================================
 BOOL CommPlayer_CheckOcc(COMM_PLAYER_SYS_PTR cps, int index)
 {
-  GF_ASSERT(cps != NULL && index < COMM_PLAYER_MAX);
+  GF_ASSERT_HEAVY(cps != NULL && index < COMM_PLAYER_MAX);
   return cps->act[index].occ;
 }
 
@@ -362,7 +362,7 @@ BOOL CommPlayer_CheckOcc(COMM_PLAYER_SYS_PTR cps, int index)
 //==================================================================
 u16 CommPlayer_GetObjCode(COMM_PLAYER_SYS_PTR cps, int index)
 {
-  GF_ASSERT(cps != NULL && index < COMM_PLAYER_MAX && cps->act[index].occ == TRUE);
+  GF_ASSERT_HEAVY(cps != NULL && index < COMM_PLAYER_MAX && cps->act[index].occ == TRUE);
   return cps->act[index].obj_code;
 }
 
@@ -527,8 +527,8 @@ BOOL CommPlayer_SetGyoeTask(COMM_PLAYER_SYS_PTR cps, int index)
 //==================================================================
 MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index)
 {
-  GF_ASSERT(cps->act_ctrl != NULL);
-  GF_ASSERT(cps->act[index].occ == TRUE);
+  GF_ASSERT_HEAVY(cps->act_ctrl != NULL);
+  GF_ASSERT_HEAVY(cps->act[index].occ == TRUE);
   return FIELD_COMM_ACTOR_CTRL_GetMMdl(cps->act_ctrl, index);
 }
 

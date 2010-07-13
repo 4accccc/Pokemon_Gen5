@@ -409,7 +409,7 @@ void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *g
     }
     member_max++;
   }
-  GF_ASSERT(member_max == 2 || member_max == 4);
+  GF_ASSERT_HEAVY(member_max == 2 || member_max == 4);
   
   my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   my_pos = clsys->recvbuf.stand_position[my_net_id];
@@ -428,7 +428,7 @@ void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *g
       }
     }
     tr_no = set_id + (stand_pos >> 1);
-    GF_ASSERT(tr_no < member_max);
+    GF_ASSERT_HEAVY(tr_no < member_max);
     _BattleDemoParent_SetTrainerData(
       clsys, &cbdp->trainer_data[tr_no], net_id, heap_id);
   }

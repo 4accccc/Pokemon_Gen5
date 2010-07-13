@@ -294,7 +294,7 @@ static void UnionEff_Focus_ResourceSet(UNION_EFF_FOCUS_MANAGER *focus_man, HEAPI
   focus_man->res_anm[0] = GFL_G3D_CreateResourceHandle( handle, NARC_unionroom_sentaku_nsbta );
 
   ret = GFL_G3D_TransVramTexture( focus_man->res_nsbmd );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
   
   GFL_ARC_CloseDataHandle(handle);
 }
@@ -332,7 +332,7 @@ static void UnionEff_Focus_Setup(UNION_EFF_FOCUS_MANAGER *focus_man, MMDL *mmdl)
 {
   UNION_EFF_FOCUS *focus;
   
-  GF_ASSERT(focus_man->res_nsbmd != NULL);
+  GF_ASSERT_HEAVY(focus_man->res_nsbmd != NULL);
   
   focus = _SearchFocusWork(focus_man);
   UnionEff_Focus_Create(focus_man, focus, mmdl, focus_man->eff_no_count);
@@ -535,9 +535,9 @@ static void UnionEff_FriendMark_ResourceSet(UNION_EFF_FRIENDMARK_MANAGER *mark_m
   mark_man->res_nsbmd_asonda = GFL_G3D_CreateResourceHandle(handle, NARC_unionroom_asonda_nsbmd);
 
   ret = GFL_G3D_TransVramTexture( mark_man->res_nsbmd_tomo );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
   ret = GFL_G3D_TransVramTexture( mark_man->res_nsbmd_asonda );
-  GF_ASSERT( ret );
+  GF_ASSERT_HEAVY( ret );
   
   GFL_ARC_CloseDataHandle(handle);
 }
@@ -574,8 +574,8 @@ static void UnionEff_FriendMark_Setup(UNION_EFF_FRIENDMARK_MANAGER *mark_man, MM
 {
   UNION_EFF_FRIENDMARK *mark;
   
-  GF_ASSERT(mark_man->res_nsbmd_tomo != NULL);
-  GF_ASSERT(mark_man->res_nsbmd_asonda != NULL);
+  GF_ASSERT_HEAVY(mark_man->res_nsbmd_tomo != NULL);
+  GF_ASSERT_HEAVY(mark_man->res_nsbmd_asonda != NULL);
   
   mark = _SearchFriendMarkWork(mark_man);
   UnionEff_FriendMark_Create(mark_man, mark, mmdl, mark_man->eff_no_count, mark_type);
