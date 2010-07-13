@@ -110,7 +110,7 @@ GSYNC_DOWNLOAD_WORK* GSYNC_DOWNLOAD_Create(HEAPID id,int dlsize)
 
   GSYNC_DOWNLOAD_WORK* pWork = GFL_HEAP_AllocClearMemory(id, sizeof(GSYNC_DOWNLOAD_WORK));
 
-  GF_ASSERT(!_pDLWork);
+  GF_ASSERT_HEAVY(!_pDLWork);
   _pDLWork = pWork;
   pWork->pbuffer = GFL_HEAP_AllocMemory(id, dlsize+64);
   pWork->size = dlsize;

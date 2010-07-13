@@ -2575,7 +2575,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 
   pWork->heapID = HEAPID_GAMESYNC;
 
-  GF_ASSERT(pParent);
+  GF_ASSERT_HEAVY(pParent);
   if(pParent){
     pWork->pParent = pParent;
     pWork->pGameData = pParent->gameData;
@@ -2595,19 +2595,19 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     
     switch(pParent->selectType){
     case GSYNC_CALLTYPE_INFO:      //起こす
-      GF_ASSERT(profileID);
+      GF_ASSERT_HEAVY(profileID);
       _CHANGE_STATE(_ghttpInfoWait0);
       break;
     case GSYNC_CALLTYPE_BOXSET:   //BOXポケモン選択後
-      GF_ASSERT(profileID);
+      GF_ASSERT_HEAVY(profileID);
       _CHANGE_STATE(_BoxPokeMove);
       break;
     case GSYNC_CALLTYPE_BOXSET_NOACC:   //BOXポケモン選択後 アカウントなし
-      GF_ASSERT(profileID);
+      GF_ASSERT_HEAVY(profileID);
       _CHANGE_STATE(_BoxPokeMove);
       break;
     case GSYNC_CALLTYPE_POKELIST:   //アカウントの検査後眠らせるポケモンを選ぶ
-      GF_ASSERT(profileID);
+      GF_ASSERT_HEAVY(profileID);
       _CHANGE_STATE(_ghttpInfoWait0);
       break;
     case GSYNC_CALLTYPE_BOXNULL:  //ポケモンがいない
@@ -2709,7 +2709,7 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   }
 #if PM_DEBUG
   if(!GFL_HEAP_CheckHeapSafe(pWork->heapID)){
-    GF_ASSERT(0);
+    GF_ASSERT_HEAVY(0);
   }
 #endif
   if(pWork->pp){
