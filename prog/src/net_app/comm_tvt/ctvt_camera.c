@@ -541,7 +541,7 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
   {
     //‚à‚¤ƒRƒR‚É‚Í—ˆ‚È‚¢
     //GFL_STD_MemCopy32( captureArea , camWork->scrBuf , CTVT_BUFFER_SCR_SIZE );
-    GF_ASSERT_MSG(0,"mode CTDM_SINGLE is no support!\n");
+    GF_ASSERT_MSG_HEAVY(0,"mode CTDM_SINGLE is no support!\n");
   }
   else
   {

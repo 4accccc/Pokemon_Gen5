@@ -52,3 +52,4 @@
 	ARCID_MB_CHILD			"../../prog/arc/mb_child_gra.narc"		#子機システム画面
 	ARCID_MB_SELECT			"../../prog/arc/mb_select_gra.narc"		#子機選択画面
 	ARCID_TIMEICON_GRA		"../../prog/arc/time_icon_gra.narc"		#待機中時計アイコン
+	ARCID_ASSERT_ERR		"../../prog/arc/assert_err.narc"		#待機中時計アイコン

@@ -85,7 +85,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     s32 lockID = OS_GetLockID();
     BOOL isPullCard = FALSE;
     
-    GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+    GF_ASSERT_HEAVY( lockID != OS_LOCK_ID_ERROR );
     CARD_LockRom( (u16)lockID );
     isPullCard = CARD_IsPulledOut();
     //CARD_CheckPulledOut();  //î≤Ç´åüèo
@@ -356,7 +356,7 @@ const u16 MB_DATA_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo )
     return MB_DATA_GS_GetItemNum( dataWork , itemNo );
     break;
   }
-  GF_ASSERT( NULL );
+  GF_ASSERT_HEAVY( NULL );
   return 0;
 }
 
@@ -397,13 +397,13 @@ u32   MB_DATA_GetStartAddress( const u16 id , DLPLAY_CARD_TYPE type )
     return MB_DATA_GS_GetStartAddress( id );
   }
   
-  GF_ASSERT( NULL );
+  GF_ASSERT_HEAVY( NULL );
   return 0;
 }
 
 const u32 MB_DATA_GetSavedataSize( const DLPLAY_CARD_TYPE type )
 {
-  GF_ASSERT( type < CARD_TYPE_INVALID );
+  GF_ASSERT_HEAVY( type < CARD_TYPE_INVALID );
   {
     const sizeArr[] = { PT_SAVE_SIZE , PT_SAVE_SIZE , GS_SAVE_SIZE };
     return sizeArr[type];
@@ -412,7 +412,7 @@ const u32 MB_DATA_GetSavedataSize( const DLPLAY_CARD_TYPE type )
 
 const u32 MB_DATA_GetBoxDataSize( const DLPLAY_CARD_TYPE type )
 {
-  GF_ASSERT( type < CARD_TYPE_INVALID );
+  GF_ASSERT_HEAVY( type < CARD_TYPE_INVALID );
   switch( type )
   {
   case CARD_TYPE_DP:
@@ -430,7 +430,7 @@ const u32 MB_DATA_GetBoxDataSize( const DLPLAY_CARD_TYPE type )
 
 const u32 MB_DATA_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type )
 {
-  GF_ASSERT( type < CARD_TYPE_INVALID );
+  GF_ASSERT_HEAVY( type < CARD_TYPE_INVALID );
   switch( type )
   {
   case CARD_TYPE_DP:
@@ -494,7 +494,7 @@ const BOOL MB_DATA_CheckRomCode( MB_DATA_WORK *dataWork )
   s32 lockID = OS_GetLockID();
   BOOL isPullCard = FALSE;
   
-  GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+  GF_ASSERT_HEAVY( lockID != OS_LOCK_ID_ERROR );
   CARD_LockRom( (u16)lockID );
   CARD_CheckPulledOut();  //î≤Ç´åüèo
 

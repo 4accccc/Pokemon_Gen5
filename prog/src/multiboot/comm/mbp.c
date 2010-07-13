@@ -160,7 +160,7 @@ void MBP_Init(u32 ggid, u32 tgid )
 
 	if (MB_Init(sCWork, &myUser, ggid, tgid, MBP_DMA_NO) != MB_SUCCESS)
     {
-        GF_ASSERT_MSG(0,"ERROR in MB_Init\n");
+        GF_ASSERT_MSG_HEAVY(0,"ERROR in MB_Init\n");
     }
 
     // 最大接続子機数を設定(親機の数は抜いた値を設定)
@@ -208,7 +208,7 @@ void MBP_Start(const MBGameRegistry *gameInfo, u16 channel)
     /* ダウンロードプログラムファイル情報を登録します. */
     if (!MBP_RegistFile(gameInfo))
     {
-        GF_ASSERT_MSG(0,"Illegal multiboot gameInfo\n");
+        GF_ASSERT_MSG_HEAVY(0,"Illegal multiboot gameInfo\n");
     }
 }
 
@@ -848,7 +848,7 @@ static void ParentStateCallback(u16 child_aid, u32 status, void *arg)
 
         //-----------------------------------------------------------
     default:
-        GF_ASSERT_MSG(0,"Get illegal parent state.\n");
+        GF_ASSERT_MSG_HEAVY(0,"Get illegal parent state.\n");
     }
 }
 

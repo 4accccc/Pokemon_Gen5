@@ -407,7 +407,7 @@ const u32 CTVT_MIC_DecodeData( CTVT_MIC_WORK *micWork , void* encData , void *de
 static void CTVT_MIC_PlayWaveInit( CTVT_MIC_WORK *micWork , const HEAPID heapId )
 {
   micWork->waveHandle = NNS_SndWaveOutAllocChannel( CTVT_MIC_WAVEOUT_CH );
-  GF_ASSERT_MSG( micWork->waveHandle != NNS_SND_WAVEOUT_INVALID_HANDLE , "Waveハンドルの確保に失敗！！\n" );
+  GF_ASSERT_MSG_HEAVY( micWork->waveHandle != NNS_SND_WAVEOUT_INVALID_HANDLE , "Waveハンドルの確保に失敗！！\n" );
   micWork->isPlayWave = FALSE;
 
 }

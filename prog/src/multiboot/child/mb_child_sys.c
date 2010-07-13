@@ -365,7 +365,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       //êeã@èÓïÒ
       if( MB_IsMultiBootChild() == FALSE )
       {
-        GF_ASSERT_MSG(0,"This DS is not multiboot child!!\n");
+        GF_ASSERT_MSG_HEAVY(0,"This DS is not multiboot child!!\n");
       }
       else
       {

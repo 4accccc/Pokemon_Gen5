@@ -76,7 +76,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
 #endif
     {
       s32 lockID = OS_GetLockID();
-      GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+      GF_ASSERT_HEAVY( lockID != OS_LOCK_ID_ERROR );
       CARD_LockRom( (u16)lockID );
       CARD_CheckPulledOut();  //抜き検出
       CARD_UnlockRom( (u16)lockID );
@@ -86,7 +86,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
     dataWork->pDataMirror= GFL_HEAP_AllocClearMemory(  dataWork->heapId, saveSize );
   
     dataWork->lockID_ = OS_GetLockID();
-    GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
+    GF_ASSERT_HEAVY( dataWork->lockID_ != OS_LOCK_ID_ERROR );
     //プラチナは4MBフラッシュ
     CARD_LockBackup( (u16)dataWork->lockID_ );
     CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
@@ -102,7 +102,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
       {
         SaveErrorCall_Load();
       }
-      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      //GF_ASSERT_HEAVY( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       CARD_ReadFlashAsync( 0x40000 , dataWork->pDataMirror , saveSize , NULL , NULL );
       dataWork->subSeq++;
       
@@ -117,7 +117,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
       {
         SaveErrorCall_Load();
       }
-      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      //GF_ASSERT_HEAVY( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
       OS_ReleaseLockID( (u16)dataWork->lockID_ );
       dataWork->subSeq++;
@@ -186,7 +186,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
         }
       }
     }
-    //GF_ASSERT( dataWork->pBoxData != NULL );
+    //GF_ASSERT_HEAVY( dataWork->pBoxData != NULL );
     dataWork->subSeq++;
     break;
   
@@ -308,7 +308,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       PT_BOX_DATA *pBox = (PT_BOX_DATA*)dataWork->pBoxData;
       {
         s32 lockID = OS_GetLockID();
-        GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
+        GF_ASSERT_HEAVY( lockID != OS_LOCK_ID_ERROR );
         CARD_LockRom( (u16)lockID );
         CARD_CheckPulledOut();  //抜き検出
         CARD_UnlockRom( (u16)lockID );
@@ -329,7 +329,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       
       //ポケモンを消す(消した後に暗号化もするので、暗号化の後
       //正しい削除処理
-      GF_ASSERT( dataWork->selectBoxNumber_ != SELECT_BOX_INVALID );
+      GF_ASSERT_HEAVY( dataWork->selectBoxNumber_ != SELECT_BOX_INVALID );
       for( i=0;i<BOX_MAX_POS;i++ )
       {
         PT_POKEMON_PARAM *param = &pBox->ppp[dataWork->selectBoxNumber_][i];
@@ -361,7 +361,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
         {
           SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
         }
-        //GF_ASSERT( boxFooter->g_count == mainFooter->g_count );
+        //GF_ASSERT_HEAVY( boxFooter->g_count == mainFooter->g_count );
         boxFooter->g_count++;
         mainFooter->g_count++;
         boxFooter->b_count++;
@@ -374,7 +374,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       {
         SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
       }
-      //GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
+      //GF_ASSERT_HEAVY( dataWork->lockID_ != OS_LOCK_ID_ERROR );
       CARD_LockBackup( (u16)dataWork->lockID_ );
       dataWork->isLockID = TRUE;
       dataWork->subSeq++;
@@ -423,7 +423,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
           SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
         }
       }
-      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      //GF_ASSERT_HEAVY( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
       saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x00000 : 0x40000 );
@@ -457,7 +457,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
           SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
         }
       }
-      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      //GF_ASSERT_HEAVY( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       //DLPlayFunc_PutString("Save complete.",dataWork->msgSys );
       //ここでLockは保持したまま
 //      CARD_UnlockBackup( (u16)dataWork->lockID_ );
@@ -493,7 +493,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
           SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
         }
       }
-      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      //GF_ASSERT_HEAVY( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
       saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x00000 : 0x40000 );
@@ -529,7 +529,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
           SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
         }
       }
-      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      //GF_ASSERT_HEAVY( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       //DLPlayFunc_PutString("Save complete!!.",dataWork->msgSys );
       //ここでLockは保持したまま
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
@@ -653,7 +653,7 @@ BOOL MB_DATA_PT_LoadRomCRC( MB_DATA_WORK *dataWork )
       {
         SaveErrorCall_Load();
       }
-      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      //GF_ASSERT_HEAVY( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
       OS_ReleaseLockID( (u16)dataWork->lockID_ );
 
@@ -803,18 +803,18 @@ static u8 MB_DATA_PT_CompareFooterData( PT_SAVE_FOOTER *fData , BOOL fCorr ,
       //グローバルが違うので全体セーブ後
       if( fData->b_count > sData->b_count )
       {
-        GF_ASSERT( fData->g_count > sData->g_count );
+        GF_ASSERT_HEAVY( fData->g_count > sData->g_count );
         *pos = DDS_FIRST;
       }
       else if( fData->b_count < sData->b_count )
       {
-        GF_ASSERT( fData->g_count < sData->g_count );
+        GF_ASSERT_HEAVY( fData->g_count < sData->g_count );
         *pos = DDS_SECOND;
       }
       else
       {
         //ありえないエラー(一応2Mフラッシュがあるらしい・・・
-        GF_ASSERT( FALSE );
+        GF_ASSERT_HEAVY( FALSE );
         *pos = DDS_FIRST;
         return 0;
       }
@@ -833,7 +833,7 @@ static u8 MB_DATA_PT_CompareFooterData( PT_SAVE_FOOTER *fData , BOOL fCorr ,
       else
       {
         //ありえないエラー(一応2Mフラッシュがあるらしい・・・
-        GF_ASSERT( FALSE );
+        GF_ASSERT_HEAVY( FALSE );
         *pos = DDS_FIRST;
         return 0;
       }
@@ -892,7 +892,7 @@ u32   MB_DATA_DP_GetStartAddress( const PT_GMDATA_ID id )
 void* MB_DATA_PT_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
 {
   PT_BOX_DATA *boxData = (PT_BOX_DATA*)dataWork->pBoxData;
-  GF_ASSERT( dataWork->pBoxData != NULL );
+  GF_ASSERT_HEAVY( dataWork->pBoxData != NULL );
   
   return &boxData->ppp[tray][idx];
 
@@ -901,7 +901,7 @@ void* MB_DATA_PT_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 id
 u16* MB_DATA_PT_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray )
 {
   PT_BOX_DATA *boxData = (PT_BOX_DATA*)dataWork->pBoxData;
-  GF_ASSERT( dataWork->pBoxData != NULL );
+  GF_ASSERT_HEAVY( dataWork->pBoxData != NULL );
 
   return boxData->trayName[tray];
 }
@@ -909,7 +909,7 @@ u16* MB_DATA_PT_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray )
 void  MB_DATA_PT_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx )
 {
   PT_BOX_DATA *boxData = (PT_BOX_DATA*)dataWork->pBoxData;
-  GF_ASSERT( dataWork->pBoxData != NULL );
+  GF_ASSERT_HEAVY( dataWork->pBoxData != NULL );
   
   PPP_Clear( (POKEMON_PASO_PARAM*)&boxData->ppp[tray][idx] );
 }
@@ -919,12 +919,12 @@ void  MB_DATA_PT_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 
 void  MB_DATA_PT_AddItem( MB_DATA_WORK *dataWork , u16 itemNo )
 {
   PT_MYITEM *myItem = (PT_MYITEM*)dataWork->pItemData;
-  GF_ASSERT( dataWork->pItemData != NULL );
+  GF_ASSERT_HEAVY( dataWork->pItemData != NULL );
   
   switch( gsItemPocketArr[itemNo] )
   {
   case MB_ITEM_POCKET_NONE:
-    GF_ASSERT_MSG(0,"ItemTypeInvalid!\n");
+    GF_ASSERT_MSG_HEAVY(0,"ItemTypeInvalid!\n");
     break;
   case MB_ITEM_POCKET_NORMAL:
     MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyNormalItem , PT_BAG_NORMAL_ITEM_MAX );
@@ -1023,12 +1023,12 @@ static void MB_DATA_PT_SortItem( MB_DATA_WORK *dataWork , PT_MINEITEM *mineItem 
 const u16 MB_DATA_PT_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo )
 {
   PT_MYITEM *myItem = (PT_MYITEM*)dataWork->pItemData;
-  GF_ASSERT( dataWork->pItemData != NULL );
+  GF_ASSERT_HEAVY( dataWork->pItemData != NULL );
   
   switch( gsItemPocketArr[itemNo] )
   {
   case MB_ITEM_POCKET_NONE:
-    GF_ASSERT_MSG(0,"ItemTypeInvalid!\n");
+    GF_ASSERT_MSG_HEAVY(0,"ItemTypeInvalid!\n");
     break;
   case MB_ITEM_POCKET_NORMAL:
     return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MyNormalItem , PT_BAG_NORMAL_ITEM_MAX );

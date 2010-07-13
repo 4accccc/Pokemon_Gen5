@@ -650,13 +650,13 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       //“Ç‚Ýo‚·
       FS_InitFile( &file );
       result = FS_OpenFile(&file,arcPath);
-      GF_ASSERT( result );
+      GF_ASSERT_HEAVY( result );
       FS_SeekFileToBegin( &file );
       work->gameDataSize = FS_GetLength( &file );
       work->gameData = GFL_HEAP_AllocClearMemory( work->heapId , work->gameDataSize );
       FS_ReadFile( &file,work->gameData,work->gameDataSize );
       result = FS_CloseFile( &file );
-      GF_ASSERT( result );
+      GF_ASSERT_HEAVY( result );
       MB_TPrintf( "[%d]\n",work->gameDataSize );
     }
     work->state = MPS_SEND_GAMEDATA_SEND;
@@ -1897,7 +1897,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
 
       if( ret == MMYR_RET1 )
       {
-        GF_ASSERT_MSG( MBP_GetState() == MBP_STATE_ENTRY , "state is not[MBP_STATE_ENTRY][%d]!!!\n",MBP_GetState() );
+        GF_ASSERT_MSG_HEAVY( MBP_GetState() == MBP_STATE_ENTRY , "state is not[MBP_STATE_ENTRY][%d]!!!\n",MBP_GetState() );
         MB_PARENT_SetFinishState( work , PALPARK_FINISH_CANCEL );
         MBP_Cancel();
         work->confirmState = MPCS_END;
@@ -2123,7 +2123,7 @@ static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
       ZUKANSAVE_SetPokeGet( zukan_savedata , pp );
       GFL_HEAP_FreeMemory( pp );
       
-      GF_ASSERT_MSG( ret == TRUE , "Multiboot parent Box is full!!\n");
+      GF_ASSERT_MSG_HEAVY( ret == TRUE , "Multiboot parent Box is full!!\n");
 #if DEB_ARI
       {
         char name[32];
