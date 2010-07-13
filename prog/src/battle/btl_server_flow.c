@@ -3080,6 +3080,10 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 
   hem_state = BTL_Hem_PushState( &wk->HEManager );
     scEvent_AfterMemberInPrev( wk );
+    if( scproc_HandEx_Result(wk) != HandExResult_NULL )
+    {
+      fAnyEvent = TRUE;
+    }
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
 
@@ -6174,6 +6178,9 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   // 複数対象のワザか判定
   flagSet.hitPluralPoke = (BTL_POKESET_GetCount(targets) > 1);
   flagSet.delayAttack = fDelayAttack;
+
+  // 対象をすばやさ順ソート
+//  BTL_POKESET_SortByAgility( targets, wk );
 
   // 敵・味方を別々のSetにコピー
   BTL_POKESET_CopyFriends( targets, attacker, wk->psetFriend );
