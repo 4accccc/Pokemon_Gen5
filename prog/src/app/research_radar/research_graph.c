@@ -1002,6 +1002,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
     case MENU_ITEM_ANSWER:    ChangeAnswerToPrev( work );    break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
     }
+    return;
   } 
   //-----------------------------
   // →キー or 右カーソルをタッチ
@@ -1012,6 +1013,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
     case MENU_ITEM_ANSWER:    ChangeAnswerToNext( work );    break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
     }
+    return;
   }
 
   //----------
