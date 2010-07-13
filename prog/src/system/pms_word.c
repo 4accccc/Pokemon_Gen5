@@ -242,6 +242,7 @@ PMS_DATA* PMSW_GetDataEntry( PMSW_SAVEDATA* saveData, int id )
 void PMSW_SetDataEntry( PMSW_SAVEDATA* saveData, int id, PMS_DATA* data )
 {
   GF_ASSERT( id < PMS_DATA_ENTRY_MAX );
+  if( id < 0 || id >= PMS_DATA_ENTRY_MAX ) return;  // GF_ASSERT_HEAVY‚Ì‘ã‚í‚è20100713
   GFL_STD_MemCopy( data, &saveData->entry[id], sizeof(PMS_DATA) );
 }
 

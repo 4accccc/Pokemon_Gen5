@@ -665,6 +665,7 @@ void PMSDAT_SetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_id )
 void PMSDAT_SetWord( PMS_DATA* pms, u32 pos, PMS_WORD word )
 {
   GF_ASSERT( pos < PMS_WORD_MAX );
+  if( pos >= PMS_WORD_MAX ) return;  // GF_ASSERT_HEAVYの代わり20100713
   pms->word[pos] = word;
 }
 
@@ -682,6 +683,7 @@ void PMSDAT_SetWord( PMS_DATA* pms, u32 pos, PMS_WORD word )
 void PMSDAT_SetDeco( PMS_DATA* pms, u32 pos, PMS_DECO_ID deco_id )
 {
   GF_ASSERT( pos < PMS_WORD_MAX );
+  if( pos >= PMS_WORD_MAX ) return;  // GF_ASSERT_HEAVYの代わり20100713
 
   // デコメIDをセット
   pms->word[pos] = deco_id;
