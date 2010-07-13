@@ -1445,7 +1445,13 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
+#ifdef BUGFIX_BTS7760_20100713
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:       //戻る   
+#endif //BUGFIX_BTS7760_20100713
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+#ifdef BUGFIX_BTS7760_20100713
+          WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+#endif //BUGFIX_BTS7760_20100713
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
           break;
 
@@ -2738,6 +2744,9 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
         { 
+#ifdef BUGFIX_BTS7760_20100713
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:       //戻る   
+#endif //BUGFIX_BTS7760_20100713
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る   
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
