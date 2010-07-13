@@ -1585,7 +1585,7 @@ static  VMCMD_RESULT  AI_IFN_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
       return taw->vmcmd_result;
     }
     ofs += 2;
-  }while( *tbl_adrs != TR_AI_TABLE_END );
+  }while( index != TR_AI_TABLE_END );
 
   VMCMD_Jump( vmh, vmh->adrs + jump_adrs );
 
