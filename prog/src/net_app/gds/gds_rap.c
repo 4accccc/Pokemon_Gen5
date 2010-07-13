@@ -143,7 +143,7 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	gdsrap->pokenet_auth.ROMCode = PM_VERSION;
 	gdsrap->pokenet_auth.LangCode = PM_LANG;
 	ret = POKE_NET_GDS_Initialize(&gdsrap->pokenet_auth, GF_GDS_SERVER_URL, GF_GDS_SERVER_PORT);
-	GF_ASSERT(ret == TRUE);		//初期化に失敗する事はありえないはず
+	GF_ASSERT_HEAVY(ret == TRUE);		//初期化に失敗する事はありえないはず
 	gdsrap->gdslib_initialize = TRUE;
 
 	gdsrap->comm_initialize_ok = TRUE;
@@ -330,7 +330,7 @@ int GDSRAP_Tool_Send_BattleVideoSearchDownload(GDS_RAP_WORK *gdsrap, u16 monsno,
 		return FALSE;
 	}
   
-  GF_ASSERT(search_mode_no < NELEMS(BattleModeBitTbl));
+  GF_ASSERT_HEAVY(search_mode_no < NELEMS(BattleModeBitTbl));
   
 	GFL_STD_MemClear(&gdsrap->send_buf.battle_rec_search, sizeof(BATTLE_REC_SEARCH_SEND));
 	gdsrap->send_buf.battle_rec_search.monsno = monsno;
@@ -589,7 +589,7 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
         int client_max, temoti_max, i;
         BOOL ret;
 
-        GF_ASSERT(gdsrap->p_nhttp == NULL);
+        GF_ASSERT_HEAVY(gdsrap->p_nhttp == NULL);
         gdsrap->p_nhttp = NHTTP_RAP_Init( gdsrap->heap_id, 
             MyStatus_GetProfileID( GAMEDATA_GetMyStatus(gdsrap->gamedata) ), gdsrap->pSvl );
         //不正検査領域確保
@@ -608,10 +608,10 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
 
         //不正検査 コネクション作成
         ret = NHTTP_RAP_PokemonEvilCheckConectionCreate(gdsrap->p_nhttp);
-        GF_ASSERT(ret);
+        GF_ASSERT_HEAVY(ret);
 
         ret = NHTTP_RAP_StartConnect( gdsrap->p_nhttp ) == NHTTP_ERROR_NONE;
-        GF_ASSERT( ret );
+        GF_ASSERT_HEAVY( ret );
 
         gdsrap->local_seq++;
       }
@@ -800,7 +800,7 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap, BOOL *poke_evil_err)
 		break;
 	default:
 		OS_Printf("-not supported\n");
-		GF_ASSERT(0);
+		GF_ASSERT_HEAVY(0);
 		break;
 	}
 	
@@ -1102,7 +1102,7 @@ static int Local_GetResponse(GDS_RAP_WORK *gdsrap)
 	res = POKE_NET_GDS_GetResponse();
 	size = POKE_NET_GDS_GetResponseSize();
 	
-	GF_ASSERT(gdsrap->recv_wait_req == res->ReqCode);
+	GF_ASSERT_HEAVY(gdsrap->recv_wait_req == res->ReqCode);
 	
 	gdsrap->recv_sub_work.user_callback_func = NULL;
 	

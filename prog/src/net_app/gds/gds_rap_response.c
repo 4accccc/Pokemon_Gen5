@@ -294,7 +294,7 @@ int GDS_RAP_RESPONSE_BattleVideoSearch_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap
 	hit_count = param->HitCount;
 	if(hit_count > array_max){
 		hit_count = array_max;
-		GF_ASSERT(0);	//用意しているバッファよりも受信件数が多い
+		GF_ASSERT_HEAVY(0);	//用意しているバッファよりも受信件数が多い
 	}
 
 	outline_recv = (POKE_NET_GDS_RESPONSE_BATTLEDATA_SEARCH_RECVDATA *)(param->Data);
@@ -342,7 +342,7 @@ int GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy(GDS_RAP_WORK *gdsrap, B
 	hit_count = param->HitCount;
 	if(hit_count > array_max){
 		hit_count = array_max;
-		GF_ASSERT(0);	//用意しているバッファよりも受信件数が多い
+		GF_ASSERT_HEAVY(0);	//用意しているバッファよりも受信件数が多い
 	}
 
 	GFL_STD_MemClear(outline_array, sizeof(BATTLE_REC_OUTLINE_RECV) * array_max);
