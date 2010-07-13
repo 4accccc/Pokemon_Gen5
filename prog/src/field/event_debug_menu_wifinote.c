@@ -74,6 +74,14 @@ static void entryCDat( GAMEDATA * gamedata )
   u16 pStrCode[64];
   int i;
   int result;
+  
+  // 友達情報全クリア
+  {
+    WIFI_LIST* p_list = GAMEDATA_GetWiFiList(gamedata); 
+    for( i=0; i<WIFILIST_FRIEND_MAX; i++ ){
+      WifiList_ResetData( p_list, 0 );
+    }
+  }
 
   tempBuf = GFL_STR_CreateBuffer( 16, HEAPID_FIELDMAP );
 
