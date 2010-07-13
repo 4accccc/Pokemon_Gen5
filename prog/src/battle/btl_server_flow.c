@@ -3541,6 +3541,10 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     SCQUE_PUT_OP_UpdateWazaProcResult( wk->que, BPP_GetID(attacker), actTargetPos, fWazaEnable,
                             wk->wazaParam->wazaType, actWaza, orgWaza );
   }
+  // 使用記録を更新しない場合、「まもる」カウンタをリセットする
+  else{
+    scPut_SetBppCounter( wk, attacker, BPP_COUNTER_MAMORU, 0 );
+  }
 
   // 溜めワザ解放ターンの失敗に対処
   if( (tameFlag != BPP_CONTFLG_NULL) && (BPP_CONTFLAG_CheckWazaHide(attacker) != BPP_CONTFLG_NULL) ){
