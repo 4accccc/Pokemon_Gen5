@@ -758,12 +758,15 @@ static GFL_PROC_RESULT MYSTERY_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
   //ƒV[ƒPƒ“ƒX
   MYSTERY_SEQ_Main( p_wk->p_seq );
   
-  //2D•`‰æ
-	MYSTERY_GRAPHIC_2D_Draw( p_wk->p_graphic );
+  if( p_wk->p_graphic )
+  {
+    //2D•`‰æ
+    MYSTERY_GRAPHIC_2D_Draw( p_wk->p_graphic );
 
-  //3D•`‰æ
-  MYSTERY_GRAPHIC_3D_StartDraw( p_wk->p_graphic );
-  MYSTERY_GRAPHIC_3D_EndDraw( p_wk->p_graphic );
+    //3D•`‰æ
+    MYSTERY_GRAPHIC_3D_StartDraw( p_wk->p_graphic );
+    MYSTERY_GRAPHIC_3D_EndDraw( p_wk->p_graphic );
+  }
   
   MYSTERY_EFFECT_Main( &p_wk->effect );
 
@@ -2643,6 +2646,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     if( p_wk->p_text )
     { 
       MYSTERY_TEXT_Exit( p_wk->p_text );
+      p_wk->p_text  = NULL;
     }
 
     //ƒŠƒ\[ƒX”jŠü
@@ -2651,6 +2655,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
     //ƒOƒ‰ƒtƒBƒbƒN”jŠü
     MYSTERY_GRAPHIC_Exit( p_wk->p_graphic );
+    p_wk->p_graphic = NULL;
 
     *p_seq  = SEQ_PROC_CALL;
     break;
