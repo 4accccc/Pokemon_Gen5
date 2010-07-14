@@ -702,7 +702,7 @@ typedef struct _TASKWK_TALKWIN_REQ{
 
   GFL_BMPWIN *win;
   PRINT_STREAM* printStream;
-  
+  STRBUF *str;
 }TASKWK_TALKWIN_REQ;
 
 #define TALKWIN_BG_FRM    ( DEMO3D_CMD_FREE_BG_M1 )
@@ -765,22 +765,20 @@ static void tcb_TalkWinReq( GFL_TCBL *tcb , void* tcb_wk )
   case 0:
     {
       GFL_MSGDATA *msg_man;
-      STRBUF *str;
 
       //ストリーム開始
       msg_man = GFL_MSG_Create(
 		  GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, twk->msg_arc, cmd->tmpHeapID );
 
-      str = GFL_MSG_CreateString( msg_man, twk->msg_id );
+      twk->str = GFL_MSG_CreateString( msg_man, twk->msg_id );
 
       GFL_FONTSYS_SetColor( 1, 2, 15 );
       twk->printStream = PRINTSYS_PrintStream( twk->win, 0, 0,
-        str, cmd->fontHandle, cmd->msg_spd, cmd->tcbsys, 0, cmd->heapID, 15 );
+        twk->str, cmd->fontHandle, cmd->msg_spd, cmd->tcbsys, 0, cmd->heapID, 15 );
 
       GFL_BMPWIN_MakeTransWindow( twk->win );
       BmpWinFrame_WriteAreaMan( twk->win, WINDOW_TRANS_ON_V, twk->tInfo, TALKWIN_FRAME_PAL );
 
-      GFL_STR_DeleteBuffer( str );
       GFL_MSG_Delete( msg_man );
 
       GFL_BG_SetPriority( TALKWIN_BG_FRM, 0 );
@@ -827,6 +825,7 @@ static void taskwk_TalkWinReqFree( TASKWK_TALKWIN_REQ* twk )
   if( twk->printStream != NULL ){
     PRINTSYS_PrintStreamDelete( twk->printStream );
   }
+  GFL_STR_DeleteBuffer( twk->str );
   GFL_FONTSYS_SetDefaultColor();
   
   BmpWinFrame_Clear( twk->win, WINDOW_TRANS_ON_V );
