@@ -940,7 +940,7 @@ static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u16 * msg_arc
     const SCRIPT_ARC_TABLE * tbl = ScriptArcTable;
     if (scr_id >= tbl[i].scr_id_start)
     {
-      GF_ASSERT_MSG(scr_id <= tbl[i].scr_id_end,"id=%d end=%d",scr_id,tbl[i].scr_id_end);
+      GF_ASSERT_MSG_HEAVY(scr_id <= tbl[i].scr_id_end,"id=%d end=%d",scr_id,tbl[i].scr_id_end);
       *scr_idx = tbl[i].scr_arc_id;
       //*msg_arc = ARCID_SCRIPT_MESSAGE;
       *msg_arc = tbl[i].msg_arc;
