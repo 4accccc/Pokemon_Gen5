@@ -331,7 +331,11 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
 		ZKNLISTOBJ_VanishJumpPokeIcon( wk );
 		wk->buttonID = ZKNLISTOBJ_IDX_MAX;
+#ifdef	BUGFIX_BTS7796_20100714
+		wk->subSeq = 1;
+#else		// BUGFIX_BTS7796_20100714
 		wk->subSeq = 0;
+#endif	// BUGFIX_BTS7796_20100714
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
 

@@ -802,7 +802,11 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHOBJ_VanishMark( wk );
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, wk->dat->sort->name );
 		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+#ifdef	BUGFIX_BTS7796_20100714
+		wk->subSeq = 1;
+#else		// BUGFIX_BTS7796_20100714
 		wk->subSeq = 0;
+#endif	// BUGFIX_BTS7796_20100714
 		wk->nextSeq = MAINSEQ_MAIN_NAME;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -966,7 +970,11 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type1) );
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 1, ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type2) );
 		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+#ifdef	BUGFIX_BTS7796_20100714
+		wk->subSeq = 1;
+#else		// BUGFIX_BTS7796_20100714
 		wk->subSeq = 0;
+#endif	// BUGFIX_BTS7796_20100714
 		wk->nextSeq = MAINSEQ_MAIN_TYPE;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -1130,7 +1138,11 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHOBJ_VanishMark( wk );
 		ZKNSEARCHOBJ_VanishJumpMark( wk, 0, wk->dat->sort->color );
 		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+#ifdef	BUGFIX_BTS7796_20100714
+		wk->subSeq = 1;
+#else		// BUGFIX_BTS7796_20100714
 		wk->subSeq = 0;
+#endif	// BUGFIX_BTS7796_20100714
 		wk->nextSeq = MAINSEQ_MAIN_COLOR;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
@@ -1292,7 +1304,11 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHOBJ_VanishMark( wk );
 		ZKNSEARCHOBJ_VanishJumpMarkForm( wk );
 		wk->btnID = ZKNSEARCHOBJ_IDX_MAX;
+#ifdef	BUGFIX_BTS7796_20100714
+		wk->subSeq = 1;
+#else		// BUGFIX_BTS7796_20100714
 		wk->subSeq = 0;
+#endif	// BUGFIX_BTS7796_20100714
 		wk->nextSeq = MAINSEQ_MAIN_FORM;
 		seq = MAINSEQ_PAGE_MOVE;
 		break;
