@@ -199,6 +199,7 @@ typedef struct
   WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  rnd;    //ランダムマッチ用の情報
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA wifi;   //WIFI大会用の情報
   WBM_NET_DATETIME                    datetime; //ログイン日時
+  u8                                  time_dummy[2];  //上記が６バイトのため
   u8                                  mystatus[MYSTATUS_SAVE_SIZE]; //MYSTATUS
   WIFIBATTLEMATCH_RECORD_DATA         record_data[6]; //履歴データ
   u8                                  record_save_idx;       //履歴データインデックス

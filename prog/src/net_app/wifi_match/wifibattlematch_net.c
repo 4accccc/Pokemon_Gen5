@@ -351,6 +351,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   
   //日時
   WBM_NET_DATETIME  datetime;
+  u8  time_dummy[2];  //上記が６バイトのため
 
   //マッチング
   u32 seq_matchmake;
