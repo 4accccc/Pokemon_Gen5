@@ -247,7 +247,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( wk->heapID );
+  GFL_HEAP_DeleteHeap( HEAPID_BEACON_DETAIL );
 
 	//オーバーレイ破棄
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(townmap));

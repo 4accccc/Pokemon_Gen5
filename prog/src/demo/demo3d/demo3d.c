@@ -289,7 +289,7 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 
   //PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( wk->heapID );
+  GFL_HEAP_DeleteHeap( HEAPID_DEMO3D );
 
   //オーバーレイ破棄
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
