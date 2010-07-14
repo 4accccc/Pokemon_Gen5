@@ -1193,10 +1193,15 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 	
 	{
 		u32 ret;
+#ifdef BUGFIX_BTS7795_20100714
+    u32 decide  = BMPMENU_NULL;
+#endif //BUGFIX_BTS7795_20100714
 		// タッチ処理
 		ret = TouchPanelFunc( wk, MODE_HEADWORD_1 );
 		if(ret!=GFL_UI_TP_HIT_NONE){
+#ifndef BUGFIX_BTS7795_20100714
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+#endif  //BUGFIX_BTS7795_20100714
 
       WorldTrade_CLACT_PosChange( wk->CursorAct, 
           (word_cur_table[ret][0]+16)*8,
@@ -1204,18 +1209,49 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
       if(ret==10){
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
       }else{
+#ifdef BUGFIX_BTS7795_20100714
+        wk->listpos = ret;
+#endif //BUGFIX_BTS7795_20100714
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
       }
 
       if(ret == 10){
         PMSND_PlaySE(SE_CANCEL);
+#ifdef BUGFIX_BTS7795_20100714
+        decide  = BMPMENU_CANCEL;
+#else //BUGFIX_BTS7795_20100714
         return BMPMENU_CANCEL;
+#endif //BUGFIX_BTS7795_20100714
+
+
+#ifdef BUGFIX_BTS7795_20100714
+      }
+      else
+#else
       }
       GF_ASSERT_HEAVY(ret < 10);
+#endif
       if(see_check == NULL || see_check[ret]){
         PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+#ifdef BUGFIX_BTS7795_20100714
+        decide  = ret;
+#else //BUGFIX_BTS7795_20100714
         return ret;
+#endif //BUGFIX_BTS7795_20100714
       }
+#ifdef BUGFIX_BTS7795_20100714
+      
+      if( decide == BMPMENU_NULL )
+      {
+        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+        } 
+      }
+
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      return decide;
+#endif //BUGFIX_BTS7795_20100714
     }else{
       // キー処理
 			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
