@@ -132,12 +132,12 @@ GFL_PROC_RESULT MailBoxProc_End( GFL_PROC * proc, int *seq, void *pwk, void *myw
   // メールボックスシステム内PROCSYS終了
   GFL_PROC_LOCAL_Exit( syswk->mbProcSys );
 
+  OS_Printf("mailbox end return %d\n", syswk->dat->retMode);
+
   GFL_PROC_FreeWork( proc );
 
   GFL_HEAP_CheckHeapSafe( HEAPID_MAILBOX_SYS );
   GFL_HEAP_DeleteHeap( HEAPID_MAILBOX_SYS );
-
-  OS_Printf("mailbox end return %d\n", syswk->dat->retMode);
 
   OS_Printf( "↑↑↑↑↑　メールボックス処理終了　↑↑↑↑↑\n" );
 

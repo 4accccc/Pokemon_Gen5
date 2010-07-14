@@ -232,13 +232,18 @@ GFL_PROC_RESULT MailSysProc_End( GFL_PROC * proc, int *seq, void *pwk, void *myw
   //メールデータテンポラリ領域解放
   MailSys_ReleaseTmpData(wk->dat);
 
-  //ワークエリア解放
-  GFL_PROC_FreeWork(proc);
+  // ヒープ解放の順番を間違っているのを修正した
+  // 以前はDeleteHeap(wk->heapID)と記述していたが、それだと上の
+  // PROC_FreeWorkで解放してしまっている。2010/07/14 by mori
+  {
+    HEAPID heapID = wk->heapID;
+    //ワークエリア解放
+    GFL_PROC_FreeWork(proc);
+    
+    GFL_HEAP_CheckHeapSafe(heapID);
   
-  GFL_HEAP_CheckHeapSafe(wk->heapID);
-
-  GFL_HEAP_DeleteHeap(wk->heapID);
-
+    GFL_HEAP_DeleteHeap(heapID);
+  }
   return GFL_PROC_RES_FINISH;
 }
 

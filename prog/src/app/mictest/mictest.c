@@ -36,6 +36,7 @@
 #include "message.naix"// GMM
 #include "msg/msg_mictest.h"//  GMM
 
+
 /*
  *  マイクテスト任天堂規約
  *
@@ -63,7 +64,6 @@
 //=============================================================================
 //#define MIC_FORMAT_PCM16  //  定義を外すと8bit
 //#define TWL_FREQENCY      // DSiの時のサンプリング周波数を調査する処理が有効になる
-
 
 
 //=============================================================================
@@ -605,10 +605,17 @@ static GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, voi
   //  appli
   MicTest_ExitApplication();
 
-  //ワークエリア解放
-  GFL_PROC_FreeWork( proc );
+  // ヒープ解放の順番を間違っているのを修正した
+  // 以前はDeleteHeap(p_wk->heap_id)と記述していたが、それだと上の
+  // PROC_FreeWorkで解放してしまっている。2010/07/14 by mori
+  {
+    HEAPID heap_id = p_wk->heap_id;
 
-  GFL_HEAP_DeleteHeap( p_wk->heap_id );
+    //ワークエリア解放
+    GFL_PROC_FreeWork( proc );
+  
+    GFL_HEAP_DeleteHeap( heap_id );
+  }
 
   //  曲はフェードイン
   PMSND_FadeInBGM( BGM_FADE_CNT_MAX );
