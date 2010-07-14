@@ -912,7 +912,20 @@ static int SubSeq_Start( WORLDTRADE_WORK *wk)
 
 	if( wk->sub_process_mode==MODE_PARTNER_RETURN ){
 		//メッセージ表示 「えらぶ」で　あいてを　きめてください
-		SubSeq_MessagePrint( wk, msg_gtc_01_033, MSG_ALLPUT, 0, 0x0f0f );	//一括表示
+  
+#ifdef BUGFIX_BTS7794_20100714
+    if( wk->SearchResult != 0 )
+    {
+      SubSeq_MessagePrint( wk, msg_gtc_01_033, MSG_ALLPUT, 0, 0x0f0f );	//一括表示
+    }
+    else
+    {
+      SubSeq_MessagePrint( wk, msg_gtc_01_009, 1, 0, 0x0f0f );
+    }
+#else //BUGFIX_BTS7794_20100714
+    SubSeq_MessagePrint( wk, msg_gtc_01_033, MSG_ALLPUT, 0, 0x0f0f );	//一括表示
+#endif //BUGFIX_BTS7794_20100714
+
 		if(GX_GetMasterBrightness() == -16){    //真っ暗ならば「えらぶ」画面からの戻り
     		WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
     						WIPE_FADE_BLACK, EXCHANGE_SCREEN_SYNC, 1, HEAPID_WORLDTRADE );
