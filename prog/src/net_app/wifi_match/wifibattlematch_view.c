@@ -2817,8 +2817,8 @@ static void MatchInfo_Bmpwin_Delete( MATCHINFO_WORK * p_wk )
 	{	
 		if( p_wk->p_bmpwin[i] )
 		{	
-			GFL_BMPWIN_Delete( p_wk->p_bmpwin[i] );
       GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin[i] );
+			GFL_BMPWIN_Delete( p_wk->p_bmpwin[i] );
 		}
 	}
 }
@@ -3403,8 +3403,8 @@ void WBM_BTLBOX_Exit( WBM_BTLBOX_WORK *p_wk )
     { 
       if( p_wk->p_bmpwin[i] )
       { 
-        GFL_BMPWIN_Delete( p_wk->p_bmpwin[i] );
         GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin[i] );
+        GFL_BMPWIN_Delete( p_wk->p_bmpwin[i] );
       }
     }
   }
