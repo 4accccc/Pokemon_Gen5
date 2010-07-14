@@ -110,6 +110,9 @@ typedef struct
   u32               target;
   char              *p_buffer;
   u32               async_timeout;
+#ifdef BUGFIX_BTS7821_20100714
+  BOOL              is_nd_disconnect_enable;
+#endif //BUGFIX_BTS7821_20100714
 } WIFI_DOWNLOAD_DATA;
 
 //-------------------------------------
@@ -210,6 +213,10 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Irc_GetErrorRepairType( const M
 static u32  UTIL_StringToHex( const char *buf );
 static BOOL UTIL_IsClear( void *p_adrs, u32 size );
 
+#ifdef BUGFIX_BTS7821_20100714
+static BOOL Mystery_Net_ErrDisconnectCallbackEx(void* p_wk_adrs, int code, int type, int ret );
+#endif //BUGFIX_BTS7821_20100714
+
 //=============================================================================
 /**
  *					データ
@@ -300,7 +307,8 @@ MYSTERY_NET_WORK * MYSTERY_NET_Init( const SAVE_CONTROL_WORK *cp_sv, HEAPID heap
  */
 //-----------------------------------------------------------------------------
 void MYSTERY_NET_Exit( MYSTERY_NET_WORK *p_wk )
-{ 
+{
+
   SEQ_Exit( &p_wk->seq );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -1089,6 +1097,10 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_INIT:
+#ifdef BUGFIX_BTS7821_20100714
+      GFL_NET_DWC_SetErrDisconnectCallbackEx(Mystery_Net_ErrDisconnectCallbackEx, &p_wk->wifi_download_data );
+#endif //BUGFIX_BTS7821_20100714
+
     GFL_STD_MemClear( p_nd_data, sizeof(WIFI_DOWNLOAD_DATA) );
     p_nd_data->cancel_req   = FALSE;
     p_nd_data->wifi_cancel  = FALSE;
@@ -1103,6 +1115,9 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     else
     { 
+#ifdef BUGFIX_BTS7821_20100714
+      p_nd_data->is_nd_disconnect_enable = TRUE;
+#endif //BUGFIX_BTS7821_20100714
       WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_ATTR );
     }
     break;
@@ -1341,6 +1356,14 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
     
   case SEQ_END:
+#ifdef BUGFIX_BTS7821_20100714
+      p_nd_data->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
+
+#ifdef BUGFIX_BTS7821_20100714
+    GFL_NET_DWC_SetErrDisconnectCallbackEx( NULL, NULL );
+#endif //BUGFIX_BTS7821_20100714
+
     SEQ_SetNext( p_seqwk, SEQFUNC_LogoutWifi );
     break;
 
@@ -1923,3 +1946,33 @@ static BOOL UTIL_IsClear( void *p_adrs, u32 size )
 
   return TRUE;
 }
+
+#ifdef BUGFIX_BTS7821_20100714
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラー時に切断の前に呼ばれるコールバック  拡張版
+ *
+ *	@param	p_wk_adrs ワークアドレス
+ *	@param	code      エラーコード
+ *	@param	type      エラータイプ
+ *	@param	ret       エラーリターン
+ *  @retval  TRUEならば切断処理をしないでこの関数を呼びつづける　
+ *          FALSEならば切断処理をして終了する
+ */
+//-----------------------------------------------------------------------------
+static BOOL Mystery_Net_ErrDisconnectCallbackEx(void* p_wk_adrs, int code, int type, int ret )
+{
+  WIFI_DOWNLOAD_DATA *p_wk  = p_wk_adrs;
+
+  NAGI_Printf( "Call ErrDisconnectCallback[EX] code=%d type=%d ret=%d\n", code, type, ret );
+  switch( type )
+  {
+    //切断エラー
+  case DWC_ETYPE_SHUTDOWN_FM:
+  case DWC_ETYPE_DISCONNECT:
+    return p_wk->is_nd_disconnect_enable;
+  }
+
+  return FALSE;
+}
+#endif //BUGFIX_BTS7821_20100714
