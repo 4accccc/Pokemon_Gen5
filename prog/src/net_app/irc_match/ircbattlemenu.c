@@ -2190,7 +2190,9 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   _CLACT_Release(pWork);
 
+#ifndef BUGFIX_GFGTS1978_20100714
   GFL_PROC_FreeWork(proc);
+#endif
   if(pWork->pStream){
     PRINTSYS_PrintStreamDelete( pWork->pStream );
   }
@@ -2221,6 +2223,9 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
 
+#ifdef BUGFIX_GFGTS1978_20100714
+  GFL_PROC_FreeWork(proc);
+#endif
 
 	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
 

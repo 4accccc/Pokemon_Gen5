@@ -1554,9 +1554,9 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   }
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
-
+#ifndef BUGFIX_GFGTS1978_20100714
   GFL_PROC_FreeWork(proc);
-
+#endif //BUGFIX_GFGTS1978_20100714
   GFL_HEAP_FreeMemory(pWork->pVramOBJ);
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   APP_KEYCURSOR_Delete( pWork->pKeyCursor );
@@ -1574,6 +1574,9 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 
+#ifdef BUGFIX_GFGTS1978_20100714
+  GFL_PROC_FreeWork(proc);
+#endif //BUGFIX_GFGTS1978_20100714
 
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
 

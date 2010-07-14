@@ -317,7 +317,6 @@ static GFL_PROC_RESULT DebugLayoutMainProcExit( GFL_PROC * proc, int * seq, void
 {
   LAYOUT_WORK* wk = mywk;
 
-  GFL_PROC_FreeWork( proc );
   
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
@@ -325,6 +324,8 @@ static GFL_PROC_RESULT DebugLayoutMainProcExit( GFL_PROC * proc, int * seq, void
   GFL_BG_Exit();
   GFL_BMPWIN_Exit();
   
+  GFL_PROC_FreeWork( proc );
+
   GFL_HEAP_DeleteHeap( HEAPID_LAYOUT );
   
   OS_TPrintf( "proc Exit\n" );

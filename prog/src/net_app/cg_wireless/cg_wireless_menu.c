@@ -1807,7 +1807,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
 
+#ifndef BUGFIX_GFGTS1978_20100714
   GFL_PROC_FreeWork(proc);
+#endif
 
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
@@ -1848,6 +1850,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 
+#ifdef BUGFIX_GFGTS1978_20100714
+  GFL_PROC_FreeWork(proc);
+#endif
 
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
 
