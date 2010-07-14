@@ -119,13 +119,14 @@ static void mapCtrlNoGrid_Create(
 //--------------------------------------------------------------
 static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
-  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
+  //FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
+  
 	FIELDMAP_CTRL_NOGRID_WORK* work = FIELDMAP_GetMapCtrlWork( fieldWork );
 
   FIELDMAP_CTRL_NOGRID_WORK_Delete( work );
   
-	FLDNOGRID_MAPPER_Release( p_mapper );
-  FLDNOGRID_MAPPER_UnBindCameraWork( p_mapper );
+	//FLDNOGRID_MAPPER_Release( p_mapper );
+  //FLDNOGRID_MAPPER_UnBindCameraWork( p_mapper );
 	//DeletePlayerAct( fieldWork->field_player );
 
 }
