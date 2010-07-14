@@ -83,6 +83,12 @@ typedef struct
   void* pDisconnectWork;
   Callback_DisconnectError* pDisconnectErrorCallback;  //CleanUp‚ðæ‚ÉŒÄ‚Ñ‚½‚¢ê‡‚Â‚©‚¤
   void* pDisconnectErrorUserWork;
+
+#ifdef BUGFIX_BTS7821_20100714
+  Callback_DisconnectErrorEx* pDisconnectErrorCallbackEx;  //Ø’f‚ð‘Ò‚¿‚½‚¢ê‡‚Â‚©‚¤
+  void* pDisconnectErrorUserWorkEx;
+#endif //BUGFIX_BTS7821_20100714
+
   MYDWCConnectFunc connectCallback;
   void* pConnectWork;
   GFL_NET_MYDWCConnectModeCheckFunc connectModeCheck;
@@ -1569,10 +1575,19 @@ int mydwc_HandleError(void)
     // ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶B
     MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
 
+#ifdef BUGFIX_BTS7821_20100714
+    if(_dWork->pDisconnectErrorCallbackEx){
+      if( _dWork->pDisconnectErrorCallbackEx(_dWork->pDisconnectErrorUserWorkEx, errorCode, myErrorType, ret) == TRUE )
+      {
+        MYDWC_DEBUGPRINT("callback Ex wait disconnect\n");
+        return 0;
+      }
+    }
+#endif //BUGFIX_BTS7821_20100714
+
     if(_dWork->pDisconnectErrorCallback){
       _dWork->pDisconnectErrorCallback(_dWork->pDisconnectErrorUserWork, errorCode, myErrorType, ret);
     }
-
     
 //    NHTTP_RAP_DisconnectCallbackCall(errorCode, myErrorType, ret);
     // DWC_GetLastErrorEx‚Ìà–¾‚É‚Ì‚Á‚Æ‚é  2008.5.23 -> 2010.1.5 nagihashi update
@@ -3143,5 +3158,12 @@ void GFL_NET_DWC_SetErrDisconnectCallback(Callback_DisconnectError* pFunc,void* 
   _dWork->pDisconnectErrorUserWork = pUserWork;
 }
 
+#ifdef BUGFIX_BTS7821_20100714
+void GFL_NET_DWC_SetErrDisconnectCallbackEx(Callback_DisconnectErrorEx* pFunc,void* pUserWorkEx )
+{
+  _dWork->pDisconnectErrorCallbackEx = pFunc;
+  _dWork->pDisconnectErrorUserWorkEx = pUserWorkEx;
+}
+#endif //BUGFIX_BTS7821_20100714
 
 #endif //GFL_NET_WIFI

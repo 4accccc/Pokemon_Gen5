@@ -19,6 +19,15 @@
 
 typedef void (Callback_DisconnectError)(void* pUserWork, int code, int type, int ret );
 
+
+#ifdef BUGFIX_BTS7821_20100714
+/**
+ * @retval  TRUEならば切断処理をしないでこの関数を呼びつづける　
+ *          FALSEならば切断処理をして終了する
+ */
+typedef BOOL (Callback_DisconnectErrorEx)(void* pUserWork, int code, int type, int ret );
+#endif //BUGFIX_BTS7821_20100714
+
 //==============================================================================
 /**
  * ボイスチャットのコーデックを指定します。
@@ -510,6 +519,20 @@ extern void GFL_NET_DWC_PMSND_ChangeBGMVolume( u16 trackBit, int volume );
  */
 //------------------------------------------------------------------------------
 extern void GFL_NET_DWC_SetErrDisconnectCallback(Callback_DisconnectError* pFunc,void* pUserWork );
+
+#ifdef BUGFIX_BTS7821_20100714
+//------------------------------------------------------------------------------
+/**
+ * @brief   切断時のコールバックを設定する  拡張版
+ *          戻り値によって切断処理を行ないません
+ *          また、上記とは両立して設定が可能です（その場合先に呼ばれます）
+
+ * @param   Callback_NHTTPError* pFunc,  NHTTPErrorコールバック関数
+ * @param   void* pUserWork,  ユーザーワーク
+ */
+//------------------------------------------------------------------------------
+extern void GFL_NET_DWC_SetErrDisconnectCallbackEx(Callback_DisconnectErrorEx* pFunc,void* pUserWorkEx );
+#endif// BUGFIX_BTS7821_20100714
 
 //#include <ppwlobby/ppw_lobby.h>
 

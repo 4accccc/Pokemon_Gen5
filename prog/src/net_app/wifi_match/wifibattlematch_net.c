@@ -415,6 +415,10 @@ struct _WIFIBATTLEMATCH_NET_WORK
   u32               contentlen;
   char              nd_attr2[10];
 
+#ifdef BUGFIX_BTS7821_20100714
+  BOOL              is_nd_disconnect_enable;
+#endif //BUGFIX_BTS7821_20100714
+
   //以下バックアップ用
   s32 init_profileID;
   s32 now_profileID;
@@ -536,6 +540,11 @@ static void WIFIBATTLEMATCH_NETERR_ClearError( WIFIBATTLEMATCH_NETERR_WORK *p_wk
 static BOOL UTIL_IsClear( void *p_adrs, u32 size );
 
 static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int type, int ret );
+
+
+#ifdef BUGFIX_BTS7821_20100714
+static BOOL WifiBattleMatch_ErrDisconnectCallbackEx(void* p_wk_adrs, int code, int type, int ret );
+#endif //BUGFIX_BTS7821_20100714
 
 static u32 WifiBattleMatch_GpfServerResponseMsg( u32 ret_cd );
 
@@ -678,6 +687,10 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p
 
   GFL_NET_DWC_SetErrDisconnectCallback( WifiBattleMatch_ErrDisconnectCallback, p_wk );
 
+#ifdef BUGFIX_BTS7821_20100714
+  GFL_NET_DWC_SetErrDisconnectCallbackEx(WifiBattleMatch_ErrDisconnectCallbackEx, p_wk );
+#endif //BUGFIX_BTS7821_20100714
+
   return p_wk;
 }
 
@@ -689,7 +702,11 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p
  */
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk )
-{ 
+{
+
+#ifdef BUGFIX_BTS7821_20100714
+  GFL_NET_DWC_SetErrDisconnectCallbackEx( NULL, NULL );
+#endif //BUGFIX_BTS7821_20100714
   GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
 
   GFL_NET_DelCommandTable( GFL_NET_CMD_WIFIMATCH );
@@ -4850,6 +4867,9 @@ BOOL WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 *
 extern void WIFIBATTLEMATCH_NET_StartDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk, int cup_no )
 { 
   p_wk->seq = 0;
+#ifdef BUGFIX_BTS7821_20100714
+  p_wk->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
   GFL_STD_MemClear( p_wk->nd_attr2, 10 );
 
   GFL_STD_MemClear( &p_wk->fileInfo, sizeof(DWCNdFileInfo) );
@@ -4894,6 +4914,9 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     }
     else
     {
+#ifdef BUGFIX_BTS7821_20100714
+      p_wk->is_nd_disconnect_enable = TRUE;
+#endif //BUGFIX_BTS7821_20100714
       DwcRap_Nd_WaitNdCallback( p_wk, SEQ_ATTR );
     }
     break;
@@ -4916,7 +4939,7 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
 //=====================================
   case SEQ_FILELIST:
     //強制的に１つをとりにいく
-    { 
+    {
       if( DWC_NdGetFileListAsync( &p_wk->fileInfo, 0, 1 ) == FALSE)
       {
         DEBUG_NET_Printf( "DWC_NdGetFileListNumAsync: Failed.\n" );
@@ -4951,6 +4974,9 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     {
       //存在していなかった場合、
       if( !DWC_NdCleanupAsync() ){  //FALSEの場合コールバックが呼ばれない
+#ifdef BUGFIX_BTS7821_20100714
+        p_wk->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
         return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
       }
       else
@@ -4993,6 +5019,9 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
       // ファイル読み込み終了
       if( !DWC_NdCleanupAsync() ){  //FALSEの場合コールバックが呼ばれない
         OS_Printf("DWC_NdCleanupAsyncに失敗\n");
+#ifdef BUGFIX_BTS7821_20100714
+        p_wk->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
         return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
       }
       else
@@ -5017,18 +5046,30 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     //CRCチェック
     if( Regulation_CheckCrc( &p_wk->temp_buffer ) )
     { 
+#ifdef BUGFIX_BTS7821_20100714
+      p_wk->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
       return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS;
     }
     else
     { 
+#ifdef BUGFIX_BTS7821_20100714
+      p_wk->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
       return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
     }
 
 
   case SEQ_EMPTY_END:
+#ifdef BUGFIX_BTS7821_20100714
+    p_wk->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
     return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
 
   case SEQ_ERROR_END:
+#ifdef BUGFIX_BTS7821_20100714
+    p_wk->is_nd_disconnect_enable = FALSE;
+#endif //BUGFIX_BTS7821_20100714
     return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
 
 //-------------------------------------
@@ -5125,6 +5166,36 @@ static void WifiBattleMatch_ErrDisconnectCallback(void* p_wk_adrs, int code, int
     DwcRap_Sc_Finalize( p_wk );
   }
 }
+
+#ifdef BUGFIX_BTS7821_20100714
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラー時に切断の前に呼ばれるコールバック  拡張版
+ *
+ *	@param	p_wk_adrs ワークアドレス
+ *	@param	code      エラーコード
+ *	@param	type      エラータイプ
+ *	@param	ret       エラーリターン
+ *  @retval  TRUEならば切断処理をしないでこの関数を呼びつづける　
+ *          FALSEならば切断処理をして終了する
+ */
+//-----------------------------------------------------------------------------
+static BOOL WifiBattleMatch_ErrDisconnectCallbackEx(void* p_wk_adrs, int code, int type, int ret )
+{
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
+
+  DEBUG_NET_Printf( "Call ErrDisconnectCallback[EX} code=%d type=%d ret=%d\n", code, type, ret );
+  switch( type )
+  {
+    //切断エラー
+  case DWC_ETYPE_SHUTDOWN_FM:
+  case DWC_ETYPE_DISCONNECT:
+    return p_wk->is_nd_disconnect_enable;
+  }
+
+  return FALSE;
+}
+#endif //BUGFIX_BTS7821_20100714
 
 //----------------------------------------------------------------------------
 /**
