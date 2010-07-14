@@ -2718,7 +2718,11 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   if(pWork->pTopAddr){
     GFL_HEAP_FreeMemory(pWork->pTopAddr);
   }
-
+#ifdef BUGFIX_BTS7821_20100714
+  if(GFL_NET_IsInit()){
+    GFL_NET_DWC_SetErrDisconnectCallbackEx(NULL, NULL );
+  }
+#endif //BUGFIX_BTS7821_20100714
   if(pWork->pNHTTPRap){
     NHTTP_RAP_End(pWork->pNHTTPRap);
     GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL );

@@ -14,6 +14,9 @@
 #include "net/network_define.h"
 #include "net_app/gsync.h"
 #include "gsync_download.h"
+#ifdef BUGFIX_BTS7821_20100714
+#include "net/dwc_rap.h"
+#endif
 
 #include "system/main.h"
 #include "system/wipe.h"
@@ -38,6 +41,9 @@ struct _GSYNC_DOWNLOAD_WORK {
   void* pbuffer;
   int size;
   HEAPID heapID;
+#ifdef BUGFIX_BTS7821_20100714
+  int errorStart;
+#endif
 };
 
 static GSYNC_DOWNLOAD_WORK* _pDLWork = NULL;
@@ -121,6 +127,9 @@ GSYNC_DOWNLOAD_WORK* GSYNC_DOWNLOAD_Create(HEAPID id,int dlsize)
 void GSYNC_DOWNLOAD_Exit(GSYNC_DOWNLOAD_WORK* pWork)
 {
   if(_pDLWork){
+#ifdef BUGFIX_BTS7821_20100714
+    GFL_NET_DWC_SetErrDisconnectCallbackEx(NULL, NULL );
+#endif
     GFL_HEAP_FreeMemory(pWork->pbuffer);
     GFL_HEAP_FreeMemory(pWork);
     _pDLWork = NULL;
@@ -132,6 +141,24 @@ void* GSYNC_DOWNLOAD_GetData(GSYNC_DOWNLOAD_WORK* pWork)
   return pWork->pbuffer;
 }
 
+#ifdef BUGFIX_BTS7821_20100714
+
+static BOOL _errorCallback(void* pUserWork, int code, int type, int ret )
+{
+  GSYNC_DOWNLOAD_WORK* pWork = pUserWork;
+
+  if(pWork->errorStart==FALSE){
+    if(DWC_NdCleanupAsync()){   //DWC_NdCleanupAsync
+      pWork->errorStart = TRUE;
+    }
+  }
+  if( pWork->s_callback_flag ){
+    return FALSE;
+  }
+  return TRUE;
+}
+#endif //BUGFIX_BTS7821_20100714
+
 
 BOOL GSYNC_DOWNLOAD_InitAsync(GSYNC_DOWNLOAD_WORK* pWork)
 {
@@ -139,6 +166,9 @@ BOOL GSYNC_DOWNLOAD_InitAsync(GSYNC_DOWNLOAD_WORK* pWork)
   if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE ){
     return FALSE;
   }
+#ifdef BUGFIX_BTS7821_20100714
+  GFL_NET_DWC_SetErrDisconnectCallbackEx(_errorCallback, pWork );
+#endif
   return TRUE;
 }
 
