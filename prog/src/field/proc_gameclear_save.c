@@ -522,6 +522,7 @@ static void _release_display( GAMECLEAR_MSG_WORK *wk )
 {
     GFL_TCBL_DeleteAll( wk->pMsgTcbSys );
     GFL_TCBL_Exit( wk->pMsgTcbSys );
+    wk->pMsgTcbSys = NULL;
 
     BmpWinFrame_Clear( wk->bmpwin, WINDOW_TRANS_ON );
     GFL_BMPWIN_Delete( wk->bmpwin );
