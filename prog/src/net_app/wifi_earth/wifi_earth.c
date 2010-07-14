@@ -807,7 +807,9 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 
   // メニューのアニメ実行が行われていなかったらサブシーケンス実行可能
   sys_result = SubSeq_Main( wk, seq );
-  Earth3D_Draw(wk);   //３Ｄ描画エンジン
+  if(wk->g3DobjEarth!=NULL){
+    Earth3D_Draw(wk);   //３Ｄ描画エンジン
+  }
   _menu_main(wk);     // タスクメニュー描画
   PRINTSYS_QUE_Main( wk->printQue );
   return  sys_result;
@@ -2528,6 +2530,8 @@ static void Earth_ModelRelease( EARTH_DEMO_WORK * wk )
     GFL_G3D_FreeVramTexture( wk->g3DresMark[p] );
     GFL_G3D_DeleteResource( wk->g3DresMark[p] );
   }
+  
+  wk->g3DobjEarth = NULL;
 }
 
 //----------------------------------
