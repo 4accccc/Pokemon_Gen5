@@ -277,10 +277,12 @@ void RRT_Main( RRT_WORK* work )
   default:  GF_ASSERT(0);
   }
 
-  CheckNewEntry( work );
-  UpdatePaletteAnime( work );
-  RRC_UpdatePaletteAnime( work->commonWork );
-  GFL_CLACT_SYS_Main();
+  if( RRT_IsFinished(work) == FALSE ) { // 破棄後のワークを操作しないようにする
+    CheckNewEntry( work );
+    UpdatePaletteAnime( work );
+    RRC_UpdatePaletteAnime( work->commonWork );
+    GFL_CLACT_SYS_Main();
+  }
 
   // 状態の更新
   CountUpStateCount( work );

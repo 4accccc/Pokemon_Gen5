@@ -441,11 +441,13 @@ void RRL_Main( RRL_WORK* work )
   default:  GF_ASSERT(0);
   }
 
-  UpdateCommonPaletteAnime( work ); // 共通パレットアニメーションを更新
-  UpdatePaletteAnime( work );       // パレットアニメーションを更新
-  GFL_CLACT_SYS_Main();             // セルアクターシステム メイン処理
-  IncStateCount( work );            // 状態カウンタをインクリメント
-  SwitchState( work );              // 状態を更新
+  if( RRL_IsFinished(work) == FALSE ) {
+    UpdateCommonPaletteAnime( work ); // 共通パレットアニメーションを更新
+    UpdatePaletteAnime( work );       // パレットアニメーションを更新
+    GFL_CLACT_SYS_Main();             // セルアクターシステム メイン処理
+    IncStateCount( work );            // 状態カウンタをインクリメント
+    SwitchState( work );              // 状態を更新
+  }
 }
 
 
