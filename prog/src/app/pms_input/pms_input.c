@@ -2669,7 +2669,11 @@ static void setup_wordwin_params( WORDWIN_WORK* word_win, PMS_INPUT_WORK* wk )
 	word_win->back_f = 0;
 	word_win->touch_pos = 0xFFFF;
 
+#ifdef BUGFIX_BTS7812_20100714
+	if( word_win->word_max > WORDWIN_DISP_MAX + PMSI_DUMMY_LABEL_NUM )
+#else  // BUGFIX_BTS7812_20100714
 	if( word_win->word_max > WORDWIN_DISP_MAX )
+#endif  // BUGFIX_BTS7812_20100714
 	{
 		word_win->line_max = (((word_win->word_max-PMSI_DUMMY_LABEL_NUM) - WORDWIN_DISP_MAX) / 2) + (word_win->word_max & 1);
 	}
@@ -3818,32 +3822,8 @@ u32 PMSI_GetCategoryCursorPosBeforeErase( const PMS_INPUT_WORK* wk )
 	* @retval  u32		
 	*/
 //------------------------------------------------------------------
-#ifdef BUGFIX_BTS7812_20100714
-enum
-{
-  WORDWIN_DISP_WORD_MAX = 8*2,
-};
-#endif  // BUGFIX_BTS7812_20100714
-
 u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk )
 {
-#ifdef BUGFIX_BTS7812_20100714
-  u32 num;
-	if( wk->category_mode == CATEGORY_MODE_GROUP )
-	{
-		num = PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos );
-	}
-	else
-	{
-    num = PMSI_SEARCH_GetResultCount( wk->swk );
-	}
-  if( num > WORDWIN_DISP_WORD_MAX -4 )  // 上1行(2単語)、下1行(2単語)はまともに見えていないのでスクロールが必要
-  {
-    // リストの最上段は空欄とするため、総数を＋２
-    num += PMSI_DUMMY_LABEL_NUM;
-  }
-  return num;
-#else  // BUGFIX_BTS7812_20100714
 	if( wk->category_mode == CATEGORY_MODE_GROUP )
 	{
 		// リストの最上段は空欄とするため、総数を＋２　2009/11/14 by nakahiro
@@ -3854,7 +3834,6 @@ u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk )
     return PMSI_SEARCH_GetResultCount( wk->swk ) + PMSI_DUMMY_LABEL_NUM;
 //		return PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos );
 	}
-#endif  // BUGFIX_BTS7812_20100714
 }
 
 //------------------------------------------------------------------

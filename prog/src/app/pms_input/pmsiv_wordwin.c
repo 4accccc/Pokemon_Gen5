@@ -475,7 +475,11 @@ void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 
     {
       u32 word_max = PMSI_GetCategoryWordMax( wk->mwk );
+#ifdef BUGFIX_BTS7812_20100714
+	    BOOL bar_draw = ( word_max > WORDWIN_DISP_WORD_MAX -4 + PMSI_DUMMY_LABEL_NUM );  // 上1行(2単語)、下1行(2単語)はまともに見えていないのでスクロールが必要
+#else  // BUGFIX_BTS7812_20100714
 	    BOOL bar_draw = ( word_max > WORDWIN_DISP_WORD_MAX -4 );  // 上1行(2単語)、下1行(2単語)はまともに見えていないのでスクロールが必要
+#endif  // BUGFIX_BTS7812_20100714
       GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, bar_draw );
     }
 	}
