@@ -4920,9 +4920,18 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //サブルーチンコールが残っていてはいけない
   GF_ASSERT_MSG( bevw->call_count == 0, "count:%d\n", bevw->call_count );
 
+#ifdef BUGFIX_BTS7710_20100712
+  if( bevw->waza != BTLEFF_ZOOM_IN )
+  { 
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+  }
+#else
   GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+#endif
 
 #ifdef PM_DEBUG
   { 
@@ -6950,8 +6959,8 @@ static  void  EFFVM_DeleteEmitter( GFL_PTC_PTR ptc )
   void  *heap;
 
   heap = GFL_PTC_GetHeapPtr( ptc );
-  GFL_HEAP_FreeMemory( heap );
   GFL_PTC_Delete( ptc );
+  GFL_HEAP_FreeMemory( heap );
 }
 
 //============================================================================================
