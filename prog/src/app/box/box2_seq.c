@@ -6382,8 +6382,10 @@ static int MainSeq_PokeFreeEnter( BOX2_SYS_WORK * syswk )
 
 		syswk->get_pos = BOX2MAIN_GETPOS_NONE;
 		if( syswk->dat->callMode == BOX_MODE_AZUKERU ){
+#ifndef	BUGFIX_BTS7790_20100714
 			BOX2BMP_PokeSelectMsgPut(
 				syswk, 0, BOX2BMP_MSGID_PARTYIN_INIT, BOX2BMPWIN_ID_MSG1 );
+#endif	// BUGFIX_BTS7790_20100714
 			return BOX2SEQ_MAINSEQ_PARTYOUT_MAIN;
 		}
 		BOX2OBJ_PutConvButton( syswk, BOX2OBJ_ANM_CONV_RED, TRUE );
