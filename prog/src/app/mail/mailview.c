@@ -1328,6 +1328,7 @@ static void MailView_PmsExit( MAIL_VIEW_DAT *wk )
 {
   PMS_DRAW_Exit( wk->pms_draw_work );
   PRINTSYS_QUE_Delete( wk->pmsPrintque );
+  wk->pmsPrintque = NULL;
   GFL_CLACT_UNIT_Delete( wk->pmsClunit );
 }
 
@@ -1688,6 +1689,7 @@ static void MailView_BmpWinRelease(MAIL_VIEW_DAT* wk)
   }
 
   PRINTSYS_QUE_Delete( wk->printQue );
+  wk->printQue = NULL;
 
   for(i = 0;i < WIN_MAX;i++){
     GFL_BMPWIN_ClearTransWindow( wk->win[i] );
