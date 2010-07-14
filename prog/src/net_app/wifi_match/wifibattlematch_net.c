@@ -3653,7 +3653,7 @@ static void DwcRap_Gdb_SetMyInfo( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
   p_wk->p_field_buff[3].name  = SAKE_STAT_NOW_PROFILE_ID;
   p_wk->p_field_buff[3].type  = DWC_GDB_FIELD_TYPE_INT;
-  p_wk->p_field_buff[3].value.int_s32 = p_wk->cp_user_data->gs_profile_id;
+  p_wk->p_field_buff[3].value.int_s32 = WIFIBATTLEMATCH_NET_GetGsProfileID( p_wk );
   
   p_wk->table_name_num  = 4;
 }
@@ -6290,4 +6290,19 @@ void WIFIBATTLEMATCH_NETICON_SetDraw( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_vi
   { 
 //    GFL_NET_WirelessIconEasyEnd();
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のGSプロファイルIDを取得
+ *
+ *	@param	const WIFIBATTLEMATCH_NET_WORK *cp_wk ワーク
+ *
+ *	@return GSプロファイルID（初期プロファイルIDではない）
+ */
+//-----------------------------------------------------------------------------
+int WIFIBATTLEMATCH_NET_GetGsProfileID( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
+{
+  return WifiList_GetMyGSID( cp_wk->p_wifilist );
 }

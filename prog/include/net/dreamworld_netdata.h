@@ -175,6 +175,9 @@ typedef struct {
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
   u8 dummy1;
   u8 dummy2;
+#ifdef BUGFIX_GFBTS1976_20100714
+  u32 profileID;      ///< プロファイルID
+#endif //BUGFIX_GFBTS1976_20100714
 } DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA;
 
 

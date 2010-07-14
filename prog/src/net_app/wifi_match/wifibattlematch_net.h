@@ -500,3 +500,8 @@ extern void WIFIBATTLEMATCH_NET_StartEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, 
 extern WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_NET_EVILCHECK_DATA *p_data );
 
 extern void WIFIBATTLEMATCH_NETICON_SetDraw( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_visible );
+
+//-------------------------------------
+///	
+//=====================================
+extern int WIFIBATTLEMATCH_NET_GetGsProfileID( const WIFIBATTLEMATCH_NET_WORK *cp_wk );

@@ -1026,6 +1026,9 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_NONE;
       data.GPFEntryFlg      = p_wk->p_param->p_gpf_data->GPFEntryFlg;
+    #ifdef BUGFIX_GFBTS1976_20100714
+      data.profileID  = WIFIBATTLEMATCH_NET_GetGsProfileID( p_wk->p_net );
+    #endif //BUGFIX_GFBTS1976_20100714
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_NONE;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
     }
@@ -1129,6 +1132,9 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_STATUS );
+    #ifdef BUGFIX_GFBTS1976_20100714
+      data.profileID  = WIFIBATTLEMATCH_NET_GetGsProfileID( p_wk->p_net );
+    #endif //BUGFIX_GFBTS1976_20100714
       p_wk->p_param->p_gpf_data->WifiMatchUpState = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_STATUS );
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
       *p_seq  = SEQ_WAIT_WRITE_GPF;
@@ -1567,6 +1573,9 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.GPFEntryFlg      = DREAM_WORLD_ENTRYFLAG_DS_WRITE;
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_SIGNUP;
+    #ifdef BUGFIX_GFBTS1976_20100714
+      data.profileID  = WIFIBATTLEMATCH_NET_GetGsProfileID( p_wk->p_net );
+    #endif //BUGFIX_GFBTS1976_20100714
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_SIGNUP;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
       *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
@@ -2155,6 +2164,9 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_ENTRY;
+    #ifdef BUGFIX_GFBTS1976_20100714
+      data.profileID  = WIFIBATTLEMATCH_NET_GetGsProfileID( p_wk->p_net );
+    #endif //BUGFIX_GFBTS1976_20100714
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_ENTRY;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
       DEBUG_WIFICUP_Printf("GPF‚Ö‘—M %d\n",DREAM_WORLD_MATCHUP_ENTRY);
@@ -4430,6 +4442,9 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_END;
+    #ifdef BUGFIX_GFBTS1976_20100714
+      data.profileID  = WIFIBATTLEMATCH_NET_GetGsProfileID( p_wk->p_net );
+    #endif //BUGFIX_GFBTS1976_20100714
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_END;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE ); 
       *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
@@ -4637,6 +4652,9 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_RETIRE;
+    #ifdef BUGFIX_GFBTS1976_20100714
+      data.profileID  = WIFIBATTLEMATCH_NET_GetGsProfileID( p_wk->p_net );
+    #endif //BUGFIX_GFBTS1976_20100714
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_RETIRE;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE ); 
       *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
