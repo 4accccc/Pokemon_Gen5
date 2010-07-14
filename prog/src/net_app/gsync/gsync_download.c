@@ -245,12 +245,21 @@ static void DWCNdClaenupCallback( void )
 
 BOOL GSYNC_DOWNLOAD_ExitAsync(GSYNC_DOWNLOAD_WORK* pWork)
 {
+#ifdef BUGFIX_BTS7821_20100714
+  if(pWork->errorStart == FALSE){
+    pWork->s_callback_flag = FALSE;
+    if(DWC_NdCleanupAsync() == FALSE){
+      OS_TPrintf( "DWC_NdCleanupAsync: Failed.\n" );
+      return FALSE;
+    }
+  }
+#else
   pWork->s_callback_flag = FALSE;
-
   if(DWC_NdCleanupAsync() == FALSE){
     OS_TPrintf( "DWC_NdCleanupAsync: Failed.\n" );
     return FALSE;
   }
+#endif
   return TRUE;
 }
 
