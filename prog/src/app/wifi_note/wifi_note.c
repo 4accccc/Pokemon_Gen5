@@ -2569,10 +2569,16 @@ static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPID h
 //-----------------------------------------------------------------------------
 static void Draw_Main( WFNOTE_DRAW* p_draw )
 {
-  PRINTSYS_QUE_Main( p_draw->printQue );
-  TransPrintUtil( p_draw );
+  if( p_draw->printQue )  // 解放メモリへのアクセス対策20100714
+  {
+    PRINTSYS_QUE_Main( p_draw->printQue );
+    TransPrintUtil( p_draw );
+  }
 
-  GFL_TCBL_Main( p_draw->msgTcblSys );
+  if( p_draw->msgTcblSys )  // 解放メモリへのアクセス対策20100714
+  {
+    GFL_TCBL_Main( p_draw->msgTcblSys );
+  }
 
   GFL_CLACT_SYS_Main();
 }
@@ -2812,6 +2818,7 @@ static void Draw_MsgExit( WFNOTE_DRAW* p_draw )
 {
   PRINTSYS_QUE_Clear( p_draw->printQue );
   PRINTSYS_QUE_Delete( p_draw->printQue );
+  p_draw->printQue = NULL;  // 解放メモリへのアクセス対策20100714
 
   if( p_draw->printHandleMsg != NULL ){
     PRINTSYS_PrintStreamDelete( p_draw->printHandleMsg );
@@ -2819,6 +2826,8 @@ static void Draw_MsgExit( WFNOTE_DRAW* p_draw )
   }
 
   GFL_TCBL_Exit( p_draw->msgTcblSys );
+  p_draw->msgTcblSys = NULL;  // 解放メモリへのアクセス対策20100714
+  
   //タッチフォントアンロード
   GFL_FONT_Delete( p_draw->fontHandle );
 
