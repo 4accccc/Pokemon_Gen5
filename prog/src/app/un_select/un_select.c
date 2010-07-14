@@ -578,9 +578,13 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
     UN_SELECT_GRAPHIC_Exit( wk->graphic );
 
     //PROC用メモリ解放
-    GFL_PROC_FreeWork( proc );
-    GFL_HEAP_DeleteHeap( wk->heap_id );
-
+    {
+      HEAPID free_heap_id;
+      free_heap_id = wk->heap_id;
+      GFL_PROC_FreeWork( proc );
+      GFL_HEAP_DeleteHeap( free_heap_id );
+    }
+    
     //オーバーレイ破棄
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
