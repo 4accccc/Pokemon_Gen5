@@ -301,6 +301,21 @@ void PMSIView_Delete( PMS_INPUT_VIEW* vwk )
     PMSIV_MENU_Delete( vwk->menu_wk );
 
 		GFL_CLACT_UNIT_Delete( vwk->cellUnit );
+
+    // 解放メモリへのアクセス対策20100714  OBJリソースの解放をGFL_CLACT_UNIT_Delete(ここで一緒にGFL_CLWKも解放してくれている)の後にする
+    {
+			for(i=0; i<2; i++)
+			{
+				GFL_CLGRP_PLTT_Release( vwk->resCell[i].pltIdx );
+				GFL_CLGRP_CGR_Release( vwk->resCell[i].ncgIdx );
+				GFL_CLGRP_CELLANIM_Release( vwk->resCell[i].anmIdx );
+				
+        GFL_CLGRP_PLTT_Release( vwk->resCellDeco[i].pltIdx );
+				GFL_CLGRP_CGR_Release( vwk->resCellDeco[i].ncgIdx );
+				GFL_CLGRP_CELLANIM_Release( vwk->resCellDeco[i].anmIdx );
+			}
+    }
+
 		GFL_CLACT_SYS_Delete();
 
 		GFL_BMPWIN_Exit();
@@ -798,6 +813,8 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 			PMSIV_CATEGORY_Delete( cwk->vwk->category_wk );
 			PMSIV_WORDWIN_Delete( cwk->vwk->wordwin_wk );
 
+/*
+// 解放メモリへのアクセス対策20100714  OBJリソースの解放をGFL_CLACT_UNIT_Delete(ここで一緒にGFL_CLWKも解放してくれている)の後にしたので、コメントアウト
 			for(i=0; i<2; i++)
 			{
 				GFL_CLGRP_PLTT_Release( cwk->vwk->resCell[i].pltIdx );
@@ -808,6 +825,7 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 				GFL_CLGRP_CGR_Release( cwk->vwk->resCellDeco[i].ncgIdx );
 				GFL_CLGRP_CELLANIM_Release( cwk->vwk->resCellDeco[i].anmIdx );
 			}
+*/
 			GFL_FONT_Delete(vwk->fontHandle);
 		
       PRINTSYS_QUE_Clear(vwk->print_que);

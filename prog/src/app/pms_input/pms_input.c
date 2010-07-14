@@ -642,14 +642,18 @@ static void sentence_change_type( SENTENCE_WORK* s_wk, PMS_DATA* pms, enum PMS_T
 //------------------------------------------------------------------
 static void DestructWork( PMS_INPUT_WORK* wk, GFL_PROC* proc )
 {
-	GFL_TCB_Exit( wk->tcbSys );
-	GFL_HEAP_FreeMemory( wk->tcbWork );
+	//GFL_TCB_Exit( wk->tcbSys );  // 解放メモリへのアクセス対策20100714  タスクシステムの解放場所を個別タスクの解放後にしたのでコメントアウト
+  //GFL_HEAP_FreeMemory( wk->tcbWork );  // 解放メモリへのアクセス対策20100714  タスクシステムの解放場所を個別タスクの解放後にしたのでコメントアウト
 	
 	//キーorタッチステータス反映
 	PMSI_PARAM_SetKTStatus(wk->input_param,wk->key_mode);
 	
 	GFL_BMN_Delete( wk->bmn );
 	PMSIView_Delete( wk->vwk );
+
+	GFL_TCB_Exit( wk->tcbSys );  // 解放メモリへのアクセス対策20100714  タスクシステムの解放場所を個別タスクの解放後にする
+	GFL_HEAP_FreeMemory( wk->tcbWork );  // 解放メモリへのアクセス対策20100714  タスクシステムの解放場所を個別タスクの解放後にする
+
 	PMSI_DATA_Delete( wk->dwk );
   PMSI_SEARCH_Delete( wk->swk );
 	GFL_PROC_FreeWork( proc );
