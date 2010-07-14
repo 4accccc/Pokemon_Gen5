@@ -1424,7 +1424,11 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		syswk->subProcMode = SUB_PROC_MODE_MENU_BOX;
 		syswk->cur_rcv_pos = BOX2UI_ARRANGE_MAIN_ITEM;
+#ifdef	BUGFIX_BTS7793_20100714
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+#else		// BUGFIX_BTS7793_20100714
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+#endif	// BUGFIX_BTS7793_20100714
 
 	case BOX2UI_ARRANGE_MAIN_MARKING:	// 39: マーキング
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -2310,7 +2314,11 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ARRANGE_PARTY_ITEM:				// 11: もちもの
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		syswk->subProcMode = SUB_PROC_MODE_MENU_PARTY;
+#ifdef	BUGFIX_BTS7793_20100714
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+#else		// BUGFIX_BTS7793_20100714
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+#endif	// BUGFIX_BTS7793_20100714
 
 	case BOX2UI_ARRANGE_PARTY_MARKING:		// 12: マーキング
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -3018,7 +3026,11 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		syswk->subProcMode = SUB_PROC_MODE_MENU_BOX;
 		syswk->cur_rcv_pos = BOX2UI_BATTLEBOX_MAIN_ITEM;
+#ifdef	BUGFIX_BTS7793_20100714
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+#else		// BUGFIX_BTS7793_20100714
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+#endif	// BUGFIX_BTS7793_20100714
 
 	case BOX2UI_BATTLEBOX_MAIN_CLOSE:		// 39: やめる
 		PMSND_PlaySE( SE_BOX2_CANCEL );
@@ -3267,7 +3279,11 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_BATTLEBOX_PARTY_ITEM:				// 11: もちもの
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		syswk->subProcMode = SUB_PROC_MODE_MENU_PARTY;
+#ifdef	BUGFIX_BTS7793_20100714
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+#else		// BUGFIX_BTS7793_20100714
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+#endif	// BUGFIX_BTS7793_20100714
 
 	case BOX2UI_BATTLEBOX_PARTY_CLOSE:			// 12: やめる
 		PMSND_PlaySE( SE_BOX2_CANCEL );
@@ -4349,9 +4365,15 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 		if( syswk->app->get_item == ITEM_DUMMY_DATA ){
 			syswk->subProcMode = SUB_PROC_MODE_MENU_BOX;
 			syswk->cur_rcv_pos = BOX2UI_ITEM_MAIN_MENU2;
+#ifdef	BUGFIX_BTS7793_20100714
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+		}else{
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+#else		// BUGFIX_BTS7793_20100714
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
 		}else{
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+#endif	// BUGFIX_BTS7793_20100714
 		}
 		break;
 
@@ -5240,9 +5262,15 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 		if( syswk->app->get_item == ITEM_DUMMY_DATA ){
 			syswk->subProcMode = SUB_PROC_MODE_MENU_PARTY;
 			syswk->cur_rcv_pos = BOX2UI_ITEM_PARTY_MENU2;
+#ifdef	BUGFIX_BTS7793_20100714
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+		}else{
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK) );
+#else		// BUGFIX_BTS7793_20100714
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
 		}else{
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+#endif	// BUGFIX_BTS7793_20100714
 		}
 		break;
 
