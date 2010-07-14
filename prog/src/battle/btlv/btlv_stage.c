@@ -271,8 +271,8 @@ void	BTLV_STAGE_Exit( BTLV_STAGE_WORK* bsw )
       for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
       { 
 		    GFL_G3D_ANIME_Delete( bsw->stage_anm[ j ][ i ] );
-		    GFL_G3D_DeleteResource( bsw->stage_anm_resource[ i ] );
       }
+		  GFL_G3D_DeleteResource( bsw->stage_anm_resource[ i ] );
     }
     for( i = 0 ; i < BTLV_STAGE_MAX ; i++ )
     { 
