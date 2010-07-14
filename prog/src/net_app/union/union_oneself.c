@@ -2667,8 +2667,6 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
   case _SEQ_SUBPROC_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       POKEMONTRADE_PARAM* eibw = unisys->parent_work;
-      GFL_HEAP_FreeMemory(eibw->pParty);
-      GFL_HEAP_FreeMemory(unisys->parent_work);
       //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
       //SHINKADEMO_FreeParam( eibw->shinka_param );
       //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
@@ -2676,6 +2674,8 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
         SHINKA_DEMO_PARAM* sdp = eibw->shinka_param;
         GFL_HEAP_FreeMemory( sdp );
       }
+      GFL_HEAP_FreeMemory(eibw->pParty);
+      GFL_HEAP_FreeMemory(unisys->parent_work);
       unisys->parent_work = NULL;
       OS_TPrintf("ÉTÉuPROCèIóπ\n");
       (*seq)++;
