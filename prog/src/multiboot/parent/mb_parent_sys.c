@@ -2828,6 +2828,8 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
   BOOL isMovieTrans = FALSE;
   BOOL isNetErr = work->isNetErr;
   BOOL isSave = work->isNetErrSave;
+  //GFBTS1978類似
+  BOOL isNetErrMb = work->isNetErrMb;
   
 #if MP_PARENT_DEB
   MB_PARENT_TermDebug( work );
@@ -2886,7 +2888,9 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
     }
   }
   //マルチブートでのエラーは強制エラー
-  if( work->isNetErrMb == TRUE )
+  //GFBTS1978類似
+  //if( work->isNetErrMb == TRUE )
+  if( isNetErrMb == TRUE )
   {
     NetErr_DispCallPushPop();
   }
