@@ -206,7 +206,7 @@ PARTY_SELECT_LIST_PTR PARTY_SELECT_LIST_Setup(FIELDMAP_WORK *fieldWork, const PO
 {
   PARTY_SELECT_LIST_PTR psl;
   
-  GF_ASSERT(temoti != NULL && bbox != NULL);
+  GF_ASSERT_HEAVY(temoti != NULL && bbox != NULL);
   
   psl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(PARTY_SELECT_LIST));
   psl->fieldWork = fieldWork;
@@ -244,7 +244,7 @@ SELECT_PARTY PARTY_SELECT_LIST_Exit(PARTY_SELECT_LIST_PTR psl, BOOL *ng_flag)
 {
   SELECT_PARTY select_party = PARTY_SELECT_LIST_GetSelect(psl, ng_flag);
   
-  GF_ASSERT(psl->finish == TRUE); //途中終了は出来ない
+  GF_ASSERT_HEAVY(psl->finish == TRUE); //途中終了は出来ない
 
   _Item_ActorDel(psl);
   _Item_ResourceFree(psl);

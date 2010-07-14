@@ -226,7 +226,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
       GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, setup->standing_pos, HEAPID_PROC );
     break;
   default:
-    GF_ASSERT_MSG(0, "play_category = %d\n", play_category);
+    GF_ASSERT_MSG_HEAVY(0, "play_category = %d\n", play_category);
     return NULL;
   }
   BATTLE_PARAM_SetPokeParty( para, setup->partyPlayer, BTL_CLIENT_PLAYER );
