@@ -2957,11 +2957,11 @@ static void APPBAR_ReWrite( APPBAR_WORK *p_wk, HEAPID heapID )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  APPBARのボタンをタッチしたかどうか
+ *  @brief  APPBARのボタンをタッチしたかどうか
  *
- *	@param	const APPBAR_WORK *cp_wk  ワーク
+ *  @param  const APPBAR_WORK *cp_wk  ワーク
  *
- *	@return TRUEでいずれかにタッチした　FALSEでしないない
+ *  @return TRUEでいずれかにタッチした　FALSEでしないない
  */
 //-----------------------------------------------------------------------------
 static BOOL APPBAR_IsTouch( const APPBAR_WORK *cp_wk )
@@ -3278,9 +3278,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  タッチしたときのカーソル消し処理
+ *  @brief  タッチしたときのカーソル消し処理
  *
- *	@param	SCROLL_WORK *p_wk ワーク
+ *  @param  SCROLL_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 static void SCROLL_SetTouch( SCROLL_WORK *p_wk, GRAPHIC_WORK *p_graphic )
@@ -3866,9 +3866,9 @@ static void CONFIRM_Main( CONFIRM_WORK *p_wk )
     if( APP_TASKMENU_IsFinish( p_wk->p_menu ) )
     {
       //タスクメニュー破棄
-      APP_TASKMENU_CloseMenu( p_wk->p_menu );
       p_wk->select  = CONFIRM_SELECT_YES + APP_TASKMENU_GetCursorPos( p_wk->p_menu );
       p_wk->seq     = SEQ_SELECT_EXIT;
+      APP_TASKMENU_CloseMenu( p_wk->p_menu );
     }
     break;
   }
