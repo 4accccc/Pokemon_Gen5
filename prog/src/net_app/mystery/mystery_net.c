@@ -571,6 +571,15 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wifi_GetErrorRepairType( const 
     case DWC_ETYPE_SHUTDOWN_GHTTP:
     case DWC_ETYPE_SHUTDOWN_ND:
     case DWC_ETYPE_DISCONNECT:
+
+#ifdef BUGFIX_BTS7821_20100714
+      //ND‚ÍCleanUpAsync‚ðs‚í‚È‚¢‚ÆI—¹‚Å‚«‚È‚¢
+      if( cp_wk->wifi_download_data.is_nd_disconnect_enable == TRUE )
+      {
+        return repair;
+      }
+#endif //BUGFIX_BTS7821_20100714
+
       GFL_NET_StateClearWifiError();
       DWC_ClearError();
       NetErr_ExitNetSystem();
