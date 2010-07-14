@@ -20,11 +20,11 @@ typedef u16 HEAPID;
  *  定数
  */
 //----------------------------------------------------------------
-#define DEFAULT_ALIGN       (4)         // メモリ確保時のアライメント値
-#define MEMHEADER_SIZE        (28)        // メモリヘッダサイズ
-#define MEMHEADER_USERINFO_SIZE   (MEMHEADER_SIZE-2)  // メモリヘッダ上ユーザー情報領域サイズ
-#define HEAPID_MASK         (0x7fff)      // ヒープＩＤ取得マスク
-#define HEAPDIR_MASK        (0x8000)      // ヒープ確保方向取得マスク
+#define DEFAULT_ALIGN             (4)                // メモリ確保時のアライメント値
+#define MEMHEADER_SIZE            (28)               // メモリヘッダサイズ
+#define MEMHEADER_USERINFO_SIZE   (MEMHEADER_SIZE-4) // メモリヘッダ上ユーザー情報領域サイズ
+#define HEAPID_MASK               (0x7fff)           // ヒープＩＤ取得マスク
+#define HEAPDIR_MASK              (0x8000)           // ヒープ確保方向取得マスク
 
 //----------------------------------------------------------------
 /**
