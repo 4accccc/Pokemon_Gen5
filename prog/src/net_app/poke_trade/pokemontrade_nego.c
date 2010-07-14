@@ -1809,6 +1809,9 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
   {
     NHTTPError error;
     int responce;
+#ifdef BUGFIX_GFBTS1981_20100714
+    u8 evilIdx = 0;
+#endif //BUGFIX_GFBTS1981_20100714
     responce = NHTTP_RAP_GetGetResultCode( pWork->pNHTTP );
     error = NHTTP_RAP_Process( pWork->pNHTTP );
 
@@ -1824,9 +1827,17 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
       if(pWork->evilCheck[0]==1 && pWork->bEvCheck==FALSE){
 
         for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+#ifdef BUGFIX_GFBTS1981_20100714
+          if(POKEMONTRADE_IsInPokemonRecvPoke(pWork->GTSSelectPP[1][i])){
+#else
           if(pWork->GTSSelectPP[1][i]){
+#endif
             POKEMON_PARAM* pp = pWork->GTSSelectPP[1][i];
+#ifdef BUGFIX_GFBTS1981_20100714
+            if(0 != NHTTP_RAP_EVILCHECK_GetPokeResult(p_buff, evilIdx) ){
+#else  //BUGFIX_GFBTS1981_20100714
             if(0 != NHTTP_RAP_EVILCHECK_GetPokeResult(p_buff, i) ){
+#endif //BUGFIX_GFBTS1981_20100714
               int item = PP_Get( pp , ID_PARA_item ,NULL);
               STRBUF* pBuff = DWC_TOOL_CreateBadNickName(pWork->heapID);
 
@@ -1845,6 +1856,9 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
 
               GFL_STR_DeleteBuffer( pBuff );              
             }
+#ifdef BUGFIX_GFBTS1981_20100714
+            evilIdx++;
+#endif //BUGFIX_GFBTS1981_20100714
           }
         }
         pWork->bEvCheck = TRUE;
@@ -1912,14 +1926,23 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
 
   
   for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+#ifdef BUGFIX_GFBTS1981_20100714
+    if(POKEMONTRADE_IsInPokemonRecvPoke(pWork->GTSSelectPP[1][i])){
+#else
     if(pWork->GTSSelectPP[1][i]){
+#endif
+      OS_TPrintf("‘I‘ð %d \n",i);
       num++;
     }
   }
   NHTTP_RAP_PokemonEvilCheckCreate(pWork->pNHTTP, pWork->heapID,
                                    POKETOOL_GetWorkSize() * num, NHTTP_POKECHK_GTSNEGO);
   for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+#ifdef BUGFIX_GFBTS1981_20100714
+    if(POKEMONTRADE_IsInPokemonRecvPoke(pWork->GTSSelectPP[1][i])){
+#else
     if(pWork->GTSSelectPP[1][i]){
+#endif
       NHTTP_RAP_PokemonEvilCheckAdd(pWork->pNHTTP, pWork->GTSSelectPP[1][i], POKETOOL_GetWorkSize());
     }
   }
