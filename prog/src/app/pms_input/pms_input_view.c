@@ -225,6 +225,9 @@ PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_
 	if( vwk )
 	{
 		int i;
+  
+    vwk->menu_wk = NULL;  // menu_wk作成前にmenu_wkにアクセスしないように20100714
+    vwk->print_que = NULL;  // print_que削除後にprint_queにアクセスしないように20100714  作成前もアクセスしないように
 
 		vwk->main_wk = main_wk;
 		vwk->data_wk = data_wk;
@@ -347,11 +350,17 @@ static void PMSIView_MainTask( GFL_TCB *tcb, void* wk_adrs )
 
 	GFL_CLACT_SYS_Main();
 
+  if( vwk->menu_wk )  // menu_wk作成前にmenu_wkにアクセスしないように20100714  if文で括った
+  {
   PMSIV_MENU_Main( vwk->menu_wk );
+  }
 
+  if( vwk->print_que )  // print_que削除後にprint_queにアクセスしないように20100714  if文で括った
+  {
   PRINTSYS_QUE_Main( vwk->print_que );
 
   trans_explain_message( vwk );
+  }
 }
 
 //------------------------------------------------------------------
@@ -803,6 +812,7 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 		
       PRINTSYS_QUE_Clear(vwk->print_que);
       PRINTSYS_QUE_Delete(vwk->print_que);
+      vwk->print_que = NULL;  // print_que削除後にprint_queにアクセスしないように20100714
 			
 			GFL_BG_FreeBGControl( FRM_MAIN_EDITAREA );
 			GFL_BG_FreeBGControl( FRM_MAIN_CATEGORY );
