@@ -617,13 +617,23 @@ static void DEBUGWIN_RemoveGroupChild( DEBUGWIN_GROUP *group )
     {
       DEBUGWIN_RemoveGroupFunc( (DEBUGWIN_GROUP*)item->work );
     }
-    else
+    
+    item = nextItem;
+  }
+
+  item = group->topLinkData;
+  while( item != NULL )
+  {
+    DEBUGWIN_ITEM *nextItem = item->nextItem;
+    
+    if( !(item->flg & DIF_GROUP) )
     {
       DEBUGWIN_DeleteItem( item );
     }
     
     item = nextItem;
   }
+  
   DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is removed.\n",group->id);
   DEBUGWIN_DeleteItem( group->selfData );
   GFL_HEAP_FreeMemory( group );

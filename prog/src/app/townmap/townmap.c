@@ -4914,13 +4914,13 @@ static void DEBUGMENU_DRAW_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 	switch( p_wk->is_arrive_debug )
 	{	
 	case DEBUGMENU_ARRIVE_NORMAL:
-		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくフラグ[NORMAL]" );
+		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくFLG[NORMAL]" );
 		break;
 	case DEBUGMENU_ARRIVE_ON:
-		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくフラグ[ON]" );	
+		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくFLG[ON]" );	
 		break;
 	case DEBUGMENU_ARRIVE_OFF:
-		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくフラグ[OFF]" );
+		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくFLG[OFF]" );
 		break;
 	}
 }
