@@ -2012,7 +2012,11 @@ static BtlAction ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder
       {
         if( (action.gen.cmd != BTL_ACTION_ESCAPE)
         ||  (BTL_MAIN_GetEscapeMode(wk->mainModule) != BTL_ESCAPE_MODE_CONFIRM)
-        ){
+        )
+        {
+          if( BPP_COUNTER_Get(bpp, BPP_COUNTER_MAMORU) ){
+            scPut_SetBppCounter( wk, bpp, BPP_COUNTER_MAMORU, 0 );
+          }
           break;
         }
       }
@@ -3542,8 +3546,11 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
                             wk->wazaParam->wazaType, actWaza, orgWaza );
   }
   // 使用記録を更新しない場合、「まもる」カウンタをリセットする
-  else{
-    scPut_SetBppCounter( wk, attacker, BPP_COUNTER_MAMORU, 0 );
+  else
+  {
+    if( BPP_COUNTER_Get(attacker, BPP_COUNTER_MAMORU) ){
+      scPut_SetBppCounter( wk, attacker, BPP_COUNTER_MAMORU, 0 );
+    }
   }
 
   // 溜めワザ解放ターンの失敗に対処
