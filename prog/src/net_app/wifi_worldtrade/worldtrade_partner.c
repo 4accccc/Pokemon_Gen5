@@ -201,6 +201,9 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 
 	// サブ画面が上・メイン画面が下
 	GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
+#ifdef BUGFIX_BTS7802_20100714
+  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WORLDTRADE );
+#endif //BUGFIX_BTS7802_20100714
 
 	// ２回目以降
 	// ワイプフェード開始
@@ -287,6 +290,13 @@ int WorldTrade_Partner_End(WORLDTRADE_WORK *wk, int seq)
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
 	
 	WorldTrade_SubProcessUpdate( wk );
+
+#ifdef BUGFIX_BTS7802_20100714
+  if( wk->is_partner_change == FALSE )
+  {
+    GFL_NET_ReloadIconTopOrBottom( FALSE, HEAPID_WORLDTRADE );
+  }
+#endif //BUGFIX_BTS7802_20100714
 	
 	return SEQ_INIT;
 }
