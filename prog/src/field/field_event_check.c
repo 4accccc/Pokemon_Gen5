@@ -171,7 +171,7 @@ typedef struct {
   u32 exMoveRequest:1;  ///<波乗り開始時等moveReqが検出しない一歩移動の検出
 
 #ifdef BUGFIX_GFBTS1975_100713
-  u32 commErrorRequest:1;  ///<通信エラー画面を呼び出していいタイミングか？
+  u32 commRequest:1;  ///<通信エラー画面を呼び出していいタイミングか？
   u32 req_dmy:21;
 #else
   u32 req_dmy:22;
@@ -471,7 +471,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         return EVENT_SymbolMapWarpEasy( gsys, DIR_NOT, GAMEDATA_GetSymbolMapID( req.gamedata ) );
       }
       //話しかけられていないかチェック
+    #ifdef BUGFIX_GFBTS1979_100714
+      if(req.commRequest == TRUE && Intrude_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
+    #else
       if(Intrude_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
+    #endif
         FIELD_PLAYER_ForceStop( req.field_player );
         return EVENT_CommCommon_Talked(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
       }
@@ -649,7 +653,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
   if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
 #ifdef BUGFIX_GFBTS1975_100713
-    if(WIPE_SYS_EndCheck() && req.commErrorRequest){
+    if(WIPE_SYS_EndCheck() && req.commRequest){
 #else
     if(WIPE_SYS_EndCheck()){
 #endif
@@ -793,11 +797,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
   if(unisys == NULL){
     //ユニオン終了
     if(NetErr_App_CheckError()){  //エラーが発生したままの状態の時はエラー画面を表示
-#ifdef BUGFIX_GFBTS1975_100713
-      if(WIPE_SYS_EndCheck() && req.commErrorRequest){
-#else
       if(WIPE_SYS_EndCheck()){
-#endif
         return EVENT_FieldCommErrorProc(gsys, fieldWork);
       }
       return NULL;
@@ -889,11 +889,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
   if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
-#ifdef BUGFIX_GFBTS1975_100713
-    if(WIPE_SYS_EndCheck() && req.commErrorRequest){
-#else
     if(WIPE_SYS_EndCheck()){
-#endif
       return EVENT_FieldCommErrorProc(gsys, fieldWork);
     }
   }
@@ -1171,7 +1167,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
   if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
 #ifdef BUGFIX_GFBTS1975_100713
-    if(WIPE_SYS_EndCheck() && req.commErrorRequest){
+    if(WIPE_SYS_EndCheck() && req.commRequest){
 #else
     if(WIPE_SYS_EndCheck()){
 #endif
@@ -1326,8 +1322,8 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   if (req->player_state == PLAYER_MOVE_STATE_END || req->player_state == PLAYER_MOVE_STATE_OFF )
   {
 #ifdef BUGFIX_GFBTS1975_100713
-    //通信エラーを出していいフラグをOn
-    req->commErrorRequest = TRUE;
+    //通信イベントを起動していいフラグをOn
+    req->commRequest = TRUE;
 #endif
 
     req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
