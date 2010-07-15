@@ -4729,7 +4729,12 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
             BTL_ACTION_SetChangeParam( &(wk->actionParam[0]), 0, puttableList[0] );
             wk->returnDataPtr = &(wk->actionParam[0]);
             wk->returnDataSize = sizeof(wk->actionParam[0]);
+            #ifdef BUGFIX_BTS7825_20100715
+            (*seq) = SEQ_PROC_QUIT_ROOT;
+            break;
+            #else
             return TRUE;
+            #endif
           }
         }
         #endif
@@ -4755,7 +4760,12 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
           if( sendDataSize ){
             wk->returnDataSize = sendDataSize;
             wk->returnDataPtr = &(wk->actionParam[0]);
+            #ifdef BUGFIX_BTS7825_20100715
+            (*seq) = SEQ_PROC_QUIT_ROOT;
+            break;
+            #else
             return TRUE;
+            #endif
           }
         }
         #endif
