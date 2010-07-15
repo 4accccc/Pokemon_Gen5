@@ -3035,7 +3035,11 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_RECV_BTLDIRTYFLGA:
+#ifdef BUGFIX_BTS7849_20100715
+    if( WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( p_wk->p_net, (u32*)&p_param->cp_btl_score->is_other_dirty ) )
+#else //BUGFIX_BTS7849_20100715
     if( WIFIBATTLEMATCH_NET_RecvBtlDirtyFlag( p_wk->p_net, (u32*)&p_param->cp_btl_score->is_dirty ) )
+#endif //BUGFIX_BTS7849_20100715
     {
       *p_seq = SEQ_START_DISCONNECT;
     }
