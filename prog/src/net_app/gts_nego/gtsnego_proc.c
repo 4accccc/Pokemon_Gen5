@@ -1866,6 +1866,9 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
                                  pWork->scrollPanelCursor.listmax );
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
+#ifdef BUGFIX_BTS7830_20100715
+      return;   //20100715 add Saito
+#endif      
     }
 
     if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // ƒL[‚Å‚ÌŒˆ’è
