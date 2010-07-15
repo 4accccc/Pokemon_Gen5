@@ -278,6 +278,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   case SEQ_BATTLE_ENDTIMING_INIT:
     GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), 210, WB_NET_WIFIMATCH );
     WBM_BTL_Printf("戦闘用通信コマンドテーブルをDelしたので同期取り\n");
+#ifdef BUGFIX_BTS7837_20100715
+    p_wk->cnt = 0;
+#endif //BUGFIX_BTS7837_20100715
     (*p_seq) = SEQ_BATTLE_ENDTIMING_WAIT;
     break;
 
@@ -298,6 +301,31 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
       (*p_seq) = SEQ_CALL_END_DEMO;
 #endif //BUGFIX_BTS7837_20100715
     }
+
+#ifdef BUGFIX_BTS7837_20100715
+    //LIVE大会の場合は同期待ちで片側が止まることがあるので、
+    //１０秒まってダメなら先へ進んでしまうことにします
+    //（この後切断にいくので問題ありません）
+    if( GFL_NET_IsInit() )
+    {
+      if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
+      {
+        if( p_wk->cnt++ > 10*60 )
+        {
+          GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+          p_wk->is_add_cmd_tbl  = FALSE;
+
+
+          GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+          p_wk->is_battle_overlay  = FALSE;
+
+          WBM_BTL_Printf("タイムアウト\n");
+          (*p_seq) = SEQ_BATTLE_ENDTIMING_INIT2;
+          p_wk->cnt = 0;
+        }
+      }
+    }
+#endif //BUGFIX_BTS7837_20100715
     break;
 
 
