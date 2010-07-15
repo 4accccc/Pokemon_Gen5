@@ -26,6 +26,12 @@
 #include "gsync_local.h"
 #include "gtsnego.naix"
 #include "msg/msg_gsync.h"
+#ifdef BUGFIX_BTS7852_20100715
+#include "system/net_err.h"
+#define _TIMEOUT (60*60)
+
+#endif// BUGFIX_BTS7852_20100715
+
 
 #if PM_DEBUG
 #include "debug/debugwin_sys.h"
@@ -43,6 +49,11 @@ struct _GSYNC_DOWNLOAD_WORK {
   HEAPID heapID;
 #ifdef BUGFIX_BTS7821_20100714
   int errorStart;
+#endif
+#ifdef BUGFIX_BTS7852_20100715
+  BOOL bCanceled;
+  int Timer;
+  BOOL bTimeOutError;
 #endif
 };
 
@@ -99,7 +110,15 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
     break;
   case DWC_ND_ERROR_CANCELED:
     OS_Printf("DWC_ND_CANCELERR\n");
+#ifdef BUGFIX_BTS7852_20100715
+    _pDLWork->bCanceled = TRUE;
+#endif //BUGFIX_BTS7852_20100715
     break;
+#ifdef BUGFIX_BTS7852_20100715
+  case DWC_ND_ERROR_FATAL:
+    NetErr_App_FatalDispCall();
+    break;
+#endif //BUGFIX_BTS7852_20100715
   }
   OS_Printf("errorcode = %d\n", servererror);
   _pDLWork->s_callback_flag   = TRUE;
@@ -148,6 +167,7 @@ static BOOL _errorCallback(void* pUserWork, int code, int type, int ret )
   GSYNC_DOWNLOAD_WORK* pWork = pUserWork;
 
   if(pWork->errorStart==FALSE){
+    OS_Printf("_errorCallback\n");
     if(DWC_NdCleanupAsync()){   //DWC_NdCleanupAsync
       pWork->errorStart = TRUE;
     }
@@ -186,6 +206,11 @@ BOOL GSYNC_DOWNLOAD_ResultEnd(GSYNC_DOWNLOAD_WORK* pWork)
 //エラーかどうか
 BOOL GSYNC_DOWNLOAD_ResultError(GSYNC_DOWNLOAD_WORK* pWork)
 {
+#ifdef BUGFIX_BTS7852_20100715
+  if( pWork->bTimeOutError && pWork->bCanceled){
+    return TRUE;
+  }
+#endif
   if(_pDLWork->s_callback_flag){
     if(pWork->s_callback_result != DWC_ND_ERROR_NONE){
       return TRUE;
@@ -211,9 +236,46 @@ BOOL GSYNC_DOWNLOAD_SetAttr(GSYNC_DOWNLOAD_WORK* pWork, char* typestr, int no)
 }
 
 
+#ifdef BUGFIX_BTS7852_20100715
+
+//読み込みのEND 
+void GSYNC_DOWNLOAD_FileEnd(GSYNC_DOWNLOAD_WORK* pWork)
+{
+  pWork->Timer = 0;
+  pWork->bTimeOutError = FALSE;
+}
+
+
+static BOOL _cancelFunc(GSYNC_DOWNLOAD_WORK* pWork)
+{
+  if(pWork->bTimeOutError){  //すでにタイムアウトの時は処理しない
+    return FALSE;
+  }
+  if(pWork->Timer){
+    pWork->Timer++;
+    if(pWork->Timer > _TIMEOUT ){  //1分
+      pWork->bTimeOutError = TRUE;
+      if(FALSE == DWC_NdCancelAsync()){
+        pWork->bCanceled = TRUE;  //失敗する時はキャンセルとみなしてよい
+      }
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+#endif //BUGFIX_BTS7852_20100715
+
+
+
+
 BOOL GSYNC_DOWNLOAD_FileListAsync(GSYNC_DOWNLOAD_WORK* pWork)
 {
   pWork->s_callback_flag = FALSE;
+
+#ifdef BUGFIX_BTS7852_20100715
+  pWork->Timer = 1;
+  pWork->bTimeOutError = FALSE;
+#endif
 
   if( DWC_NdGetFileListAsync( &pWork->fileInfo, 0, 1 ) == FALSE)
   {
@@ -227,6 +289,10 @@ BOOL GSYNC_DOWNLOAD_FileListAsync(GSYNC_DOWNLOAD_WORK* pWork)
 BOOL GSYNC_DOWNLOAD_FileAsync(GSYNC_DOWNLOAD_WORK* pWork)
 {
   pWork->s_callback_flag = FALSE;
+#ifdef BUGFIX_BTS7852_20100715
+  pWork->Timer = 1;
+  pWork->bTimeOutError = FALSE;
+#endif
 
   if(DWC_NdGetFileAsync( &pWork->fileInfo, pWork->pbuffer, pWork->size+64) == FALSE){
     OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
@@ -265,6 +331,11 @@ BOOL GSYNC_DOWNLOAD_ExitAsync(GSYNC_DOWNLOAD_WORK* pWork)
 
 void GSYNC_DOWNLOAD_Main(GSYNC_DOWNLOAD_WORK* pWork)
 {
+#ifdef BUGFIX_BTS7821_20100714
+  if(FALSE == _cancelFunc(pWork)){
+    return;
+  }
+#endif //BUGFIX_BTS7821_20100714
   DWC_NdProcess();
 }
 
@@ -273,5 +344,6 @@ int GSYNC_DOWNLOAD_GetSize(GSYNC_DOWNLOAD_WORK* pWork)
 {
   return pWork->fileInfo.size;
 }
+
 
 
