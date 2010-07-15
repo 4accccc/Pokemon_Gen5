@@ -4692,9 +4692,9 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
     SEQ_TIMELIMIT_OVER,
     SEQ_SELECT_END,
 
-    SEQ_SELECT_PASS,
+    SEQ_PROC_QUIT_ROOT,
     SEQ_COMM_WAIT,
-    SEQ_SELECT_PASS_END,
+    SEQ_PROC_QUIT_END,
   };
 
   switch( *seq ){
@@ -4764,7 +4764,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
         wk->returnDataPtr = &(wk->actionParam[0]);
         wk->returnDataSize = sizeof(wk->actionParam[0]);
-        (*seq) = SEQ_SELECT_PASS;
+        (*seq) = SEQ_PROC_QUIT_ROOT;
       }
     }
     // 自分は空きが出来ていないので何も選ぶ必要がない
@@ -4774,7 +4774,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
       BTL_ACTION_SetNULL( &wk->actionParam[0] );
       wk->returnDataPtr = &(wk->actionParam[0]);
       wk->returnDataSize = sizeof(wk->actionParam[0]);
-      (*seq) = SEQ_SELECT_PASS;
+      (*seq) = SEQ_PROC_QUIT_ROOT;
     }
   }
   break;
@@ -4803,10 +4803,11 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 
   case SEQ_SELECT_END:
     CmdLimit_End( wk );
-    return TRUE;
+    (*seq) = SEQ_PROC_QUIT_ROOT;
+    break;
 
-  // 自分は選ぶ必要が無い場合にここ
-  case SEQ_SELECT_PASS:
+  // 自分は選ぶ必要が無い場合は直接ココ
+  case SEQ_PROC_QUIT_ROOT:
     if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
     {
       wk->commWaitInfoOn = TRUE;
@@ -4814,18 +4815,18 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
       (*seq) = SEQ_COMM_WAIT;
     }
     else{
-      (*seq) = SEQ_SELECT_PASS_END;
+      (*seq) = SEQ_PROC_QUIT_END;
     }
     break;
 
   case SEQ_COMM_WAIT:
     if( BTLV_WaitCommWait(wk->viewCore) )
     {
-      (*seq) = SEQ_SELECT_PASS_END;
+      (*seq) = SEQ_PROC_QUIT_END;
     }
     break;
 
-  case SEQ_SELECT_PASS_END:
+  case SEQ_PROC_QUIT_END:
     return TRUE;
   }
 
