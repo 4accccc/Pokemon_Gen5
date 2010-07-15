@@ -4803,8 +4803,12 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 
   case SEQ_SELECT_END:
     CmdLimit_End( wk );
+    #ifdef BUGFIX_BTS7825_20100715
     (*seq) = SEQ_PROC_QUIT_ROOT;
     break;
+    #else
+    return TRUE;
+    #endif
 
   // 自分は選ぶ必要が無い場合は直接ココ
   case SEQ_PROC_QUIT_ROOT:
