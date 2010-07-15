@@ -104,6 +104,8 @@ enum{
 #define APP_END_TOUCH   ( 0 )
 #define APP_END_KEY     ( 1 )
 
+#define MAILVIEW_MSG_BUF_MAX  ( 128 )
+
 typedef struct _MAIL_VIEW_DATA  MAIL_VIEW_DAT;
 
 ///サブプロセス定義用関数型
@@ -133,6 +135,7 @@ struct _MAIL_VIEW_DATA{
   GFL_MSGDATA*  pMsgData;
   GFL_FONT      *font;
   STRBUF  *pMsg[MAILDAT_MSGMAX];
+  STRBUF  *TalkMsgBuf;
   PALETTE_FADE_PTR  palAnm;
 
   MailKeyIn to_key_func;  ///<キーに切替
@@ -898,28 +901,18 @@ static int MailView_KeyInCreate(MAIL_VIEW_DAT* wk)
 //----------------------------------------------------------------------------------
 static void print_talk_msg( MAIL_VIEW_DAT *wk, int msgId )
 {
-  STRBUF* str = NULL;
-
+  
   BmpWinFrame_Write( wk->win[WIN_TALK], WINDOW_TRANS_OFF, BMPL_TALK_WIN_CGX, BMPL_MENU_WIN_PAL );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[WIN_TALK]), WINCLR_COL(15));
 
-  str = GFL_MSG_CreateString( wk->pMsgData, msgId  );
+  GFL_MSG_GetString( wk->pMsgData, msgId, wk->TalkMsgBuf );
   wk->printStream = PRINTSYS_PrintStream(
-    wk->win[WIN_TALK], 0, 0, str, wk->font,
+    wk->win[WIN_TALK], 0, 0, wk->TalkMsgBuf, wk->font,
     wk->msg_spd, wk->pMsgTcblSys, 4, wk->heapID, 15 );
   
   GFL_BMPWIN_MakeTransWindow( wk->win[WIN_TALK] );
 
-//  PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 0, 0, str, wk->font, VIEW_TALK_FCOL );
-
-/*
-  GF_STR_PrintColor(
-    &wk->win[WIN_TALK],FONT_TALK,str,
-    0,0,MSG_ALLPUT,VIEW_TALK_FCOL,NULL);
-*/
-  GFL_STR_DeleteBuffer(str);
-  
 }  
 
 //----------------------------------------------------------------------------------
@@ -1220,6 +1213,7 @@ static int MailViewResInit(MAIL_VIEW_DAT* wk)
     // メッセージデータオープン
     wk->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                  NARC_message_mailview_dat, wk->heapID );
+    wk->TalkMsgBuf  = GFL_STR_CreateBuffer( MAILVIEW_MSG_BUF_MAX, wk->heapID );
     MailView_BGLInit(wk);
     break;
   case 1:
@@ -1285,6 +1279,7 @@ static int MailViewResRelease(MAIL_VIEW_DAT* wk)
   if(wk->pMsg != NULL){
     GFL_MSG_Delete( wk->pMsgData );
   }
+  GFL_STR_DeleteBuffer( wk->TalkMsgBuf );
   APP_TASKMENU_RES_Delete( wk->menures );
 
   MailView_BmpWinRelease(wk);
