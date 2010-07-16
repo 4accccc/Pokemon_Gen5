@@ -120,7 +120,9 @@ typedef struct{
 //static void FONTOAM_OAMDATA_Delete( void* x){}
 static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk );
 
-
+#ifdef BUGFIX_BTS7868_20100716
+#define _TIMEOUT_MW  (60*60)  //一分
+#endif
 
 #define COMM_BRIGHTNESS_SYNC  ( 1 ) // 基本の輝度変更Sync数
 #define _BMPMENULIST_FONTSIZE   (16)
@@ -3120,6 +3122,28 @@ static BOOL _checkParentNewPlayer( WIFIP2PMATCH_WORK *wk )
   return FALSE;
 }
 
+#ifdef BUGFIX_BTS7868_20100716
+//------------------------------------------------------------------
+/**
+ * $brief   誰かが接続してきた場合
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _checkParentErrorConnect(WIFIP2PMATCH_WORK *wk)
+{
+  switch(GFL_NET_StateGetWifiStatus()){
+  case GFL_NET_STATE_TIMEOUT:
+  case GFL_NET_STATE_DISCONNECTING:
+  case GFL_NET_STATE_FAIL:
+    return TRUE;
+  default:
+    return FALSE;
+  }
+  return FALSE;
+}
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -3389,6 +3413,16 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
 
+#ifdef BUGFIX_BTS7868_20100716
+  if(wk->preConnect != -1){  //誰かとつながった状態でタイムアウトスタート
+    wk->localTime++;
+    if(wk->localTime >  _TIMEOUT_MW){ //一分
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_DISCONNECT );
+      return seq;
+    }
+  }
+#endif
+  
   // ボイスチャットONOFF繰り返しでここの画面ではまる為
   // えら状態になったらDISCONNECT処理に遷移
   if( GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_DISCONNECTING ){
@@ -3524,6 +3558,15 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
     return seq;
   }
+#ifdef BUGFIX_BTS7868_20100716
+  checkMatch = _checkParentErrorConnect(wk);
+  if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してるのにおかしい
+    _friendNameExpand(wk, GFL_NET_DWC_GetDisconnectNewPlayer());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+    return seq;
+  }
+#endif
 
   // VCHAT　ON　状態なのに、新しいコネクトが-1ならVCHATをOFFにする
   // 080615 tomoya
@@ -3618,6 +3661,17 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_obj;
   u32 status,gamemode;
 
+
+#ifdef BUGFIX_BTS7868_20100716
+  if(wk->preConnect != -1){  //誰かとつながった状態でタイムアウトスタート
+    wk->localTime++;
+    if(wk->localTime >  _TIMEOUT_MW){ //一分
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_DISCONNECT );
+      return seq;
+    }
+  }
+#endif
+  
   //BTS3567、BTS3795-bの対処 Saito
   //メッセージがある場合、メッセージを早送りするために読んでいます
   WifiP2PMatchMessageEndCheck(wk);
@@ -3641,6 +3695,16 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
+#ifdef BUGFIX_BTS7868_20100716
+  checkMatch = _checkParentErrorConnect(wk);
+  if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してるのにおかしい
+    _friendNameExpand(wk, GFL_NET_DWC_GetDisconnectNewPlayer());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+    return seq;
+  }
+#endif
+  
   if((wk->preConnect == -1) && (GFL_NET_DWC_IsNewPlayer() != -1)){  // 通常のコネクト開始
     wk->preConnect = GFL_NET_DWC_IsNewPlayer();
     _friendNameExpand(wk, wk->preConnect);
@@ -3660,6 +3724,8 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
   // 状態を取得
   status = _WifiMyStatusGet( wk, wk->pMatch );
 
+
+  
   // 誰も自分に接続してきていないときだけリストを動かせる
   if(wk->preConnect == -1){
 
@@ -4466,6 +4532,7 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
 
     FriendRequestWaitOff( wk );      // 主人公の動作を許可 状態をNONEにもどす
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    
   }
   else{  // いいえを選択した場合
 
@@ -5065,7 +5132,11 @@ static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
   WifiP2PMatchMessageEndCheck(wk);
 
   if(GFL_NET_DWC_IsNewPlayer()!=-1){
+#if 0 //def BUGFIX_BTS7751_20100713
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+#else
     _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST);
+#endif
   }
   if(DWC_STATUS_OFFLINE == WifiDwc_getFriendStatus(wk->friendNo-1)){  //BTS6212 BTS6409
     _friendNameExpand(wk, wk->friendNo - 1);
@@ -7633,14 +7704,13 @@ static void FriendRequestWaitOn( WIFIP2PMATCH_WORK* wk, BOOL msg_on )
 //-----------------------------------------------------------------------------
 static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk )
 {
+
+
   if( wk->friend_request_wait == TRUE ){
     // メッセージを消して、プレイヤー動作を開始する
     wk->friend_request_wait = FALSE;
     EndMessageWindowOff( wk );
     WIFI_MCR_PlayerMovePause( &wk->matchroom, FALSE );
-
-//   OS_TPrintf("メッセージを消して、プレイヤー動作を開始する\n");
-    
     wk->state = WIFIP2PMATCH_STATE_NONE;
   }
 }
