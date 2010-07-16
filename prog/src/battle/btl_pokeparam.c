@@ -174,7 +174,7 @@ struct _BTL_POKEPARAM {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP );
+static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP, BOOL fTokuseiUpdate );
 static u32 WazaWorkSys_SetupBySrcPP( BTL_POKEPARAM* bpp, const POKEMON_PARAM* pp_src, BOOL fLinkSurface );
 static void WazaWorkSys_ReflectToPP( BTL_POKEPARAM* bpp );
 static void WazaWorkSys_ReflectFromPP( BTL_POKEPARAM* bpp );
@@ -242,7 +242,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( POKEMON_PARAM* pp, u8 pokeID, HEAPID heapI
   bpp->coreParam.level = PP_Get( pp, ID_PARA_level, 0 );
   bpp->coreParam.mons_pow = POKETOOL_GetPersonalParam( bpp->coreParam.monsno, bpp->coreParam.defaultFormNo, POKEPER_ID_basic_pow );
 
-  setupBySrcData( bpp, pp, TRUE );
+  setupBySrcData( bpp, pp, TRUE, TRUE );
 
 
 
@@ -296,7 +296,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( POKEMON_PARAM* pp, u8 pokeID, HEAPID heapI
  * @param   srcPP
  */
 //----------------------------------------------------------------------------------
-static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP )
+static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP, BOOL fTokuseiUpdate )
 {
   u16 monsno = bpp->coreParam.monsno;
   int i;
@@ -312,8 +312,8 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
   // 基本パラメタ初期化
   setupBySrcDataBase( bpp, srcPP );
 
-  // レベルアップ時の処理では、とくせいを戻さない（スキルスワップ
-  if( !fReflectHP ){
+  // レベルアップ時の処理では、とくせいを戻さない（スキルスワップなどで書き換わるのに対処）
+  if( fTokuseiUpdate ){
     bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   }
 
@@ -527,7 +527,7 @@ static void clearHensin( BTL_POKEPARAM* bpp )
   {
     POKEMON_PARAM* ppSrc = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
 
-    setupBySrcData( bpp, ppSrc, FALSE );
+    setupBySrcData( bpp, ppSrc, FALSE, TRUE );
     WazaWorkSys_ClearSurface( bpp );
 
     bpp->coreParam.fHensin = FALSE;
@@ -2557,7 +2557,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
 {
-  setupBySrcData( bpp, bpp->coreParam.ppSrc, FALSE );
+  setupBySrcData( bpp, bpp->coreParam.ppSrc, FALSE, TRUE );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
 
@@ -3164,7 +3164,7 @@ void BPP_ReflectByPP( BTL_POKEPARAM* bpp )
   if( !(bpp->coreParam.fHensin) )
   {
     // へんしん中でなければパラメータを全て反映
-    setupBySrcData( bpp, bpp->coreParam.ppSrc, TRUE );
+    setupBySrcData( bpp, bpp->coreParam.ppSrc, TRUE, FALSE );
     WazaWorkSys_ReflectFromPP( bpp );
   }
   else{
