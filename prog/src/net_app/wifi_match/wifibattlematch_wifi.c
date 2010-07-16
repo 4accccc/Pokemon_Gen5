@@ -21,6 +21,7 @@
 #include "poke_tool/poke_regulation.h"
 #include "sound/pm_sndsys.h"
 #include "net/dwc_rapcommon.h"
+#include "net/dwc_rap.h"
 #include "net/dwc_tool.h"
 #include "battle/btl_net.h" //BTL_NET_SERVER_VERSION
 
@@ -3459,7 +3460,14 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       if( is_disconnect )
       {
         WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
-        DWC_CloseAllConnectionsHard();
+
+#ifdef BUGFIX_BTS7867_20100716
+        if( NET_ERR_CHECK_NONE == NetErr_App_CheckError()
+            && GFL_NET_IsInit() )
+#endif //BUGFIX_BTS7867_20100716
+        {
+          DWC_CloseAllConnectionsHard();
+        }
 
 #ifdef BUGFIX_GFBTS1958_20100712
         *p_seq  = SEQ_START_MATCH_MSG;
@@ -4304,6 +4312,14 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       s32 end;
 
       REGULATION_CARDDATA *p_reg = p_wk->p_reg;
+
+#ifdef BUGFIX_BTS7867_20100716
+      if( !GFL_NET_IsInit() )
+      {
+        NetErr_DispCallFatal();
+      }
+#endif //BUGFIX_BTS7867_20100716
+
       ret = DWC_TOOL_GetLocalDateTime( &now_date, &time );
 
 #ifdef PM_DEBUG
@@ -5457,7 +5473,14 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_WIFI_WORK *p_wk, BOOL 
         p_wk->cancel_seq++;
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
-        DWC_CloseAllConnectionsHard();
+
+#ifdef BUGFIX_BTS7867_20100716
+        if( NET_ERR_CHECK_NONE == NetErr_App_CheckError()
+            && GFL_NET_IsInit() )
+#endif //BUGFIX_BTS7867_20100716
+        {
+          DWC_CloseAllConnectionsHard();
+        }
       }
     }
     break;
