@@ -624,19 +624,19 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
   StateFunc* state = pWork->state;
   GFL_PROC_RESULT ret = GFL_PROC_RES_FINISH;
 
-#ifdef BUGFIX_GFBTS1989_20100717
-  if(NET_ERR_CHECK_NONE == NetErr_App_CheckError()){
-    if( state ){
+#ifdef BUGFIX_GFBTS1989_20100716
+  if( state ){
+    if(NET_ERR_CHECK_NONE == NetErr_App_CheckError()){
       state( pWork );
-      ret = GFL_PROC_RES_CONTINUE;
     }
+    ret = GFL_PROC_RES_CONTINUE;
   }
 #else
   if( state ){
     state( pWork );
     ret = GFL_PROC_RES_CONTINUE;
   }
-#endif //BUGFIX_GFBTS1989_20100717
+#endif //BUGFIX_GFBTS1989_20100716
 
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
@@ -660,6 +660,11 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
       ret = GFL_PROC_RES_FINISH;
     }
   }
+#ifdef BUGFIX_GFBTS1989_20100716
+  else if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    ret = GFL_PROC_RES_FINISH;
+  }
+#endif
 
   
   return ret;
