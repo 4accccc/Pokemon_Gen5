@@ -85,10 +85,16 @@ extern void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapI
  * @param   NHTTP_RAP_WORK* pWork,  ワーク
  * @param   pData   ポケモンデータ
  * @param   int size                ポケモン構造体のサイズ
+ * @param   追加したポケモン数
  * @retval  none
  */
 //------------------------------------------------------------------------------
 extern void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork,const void* pData, int size);
+
+#ifdef BUGFIX_SERVER_20100716
+extern void NHTTP_RAP_NewPokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int size, int num);
+#endif
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン不正検査 コネクション作成

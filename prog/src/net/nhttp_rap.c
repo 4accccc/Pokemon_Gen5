@@ -521,12 +521,22 @@ void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int
   }
   GFL_STD_MemCopy(pData, &pWork->pData[pWork->length], size);
   pWork->length += size;
-#ifdef BUGFIX_SERVER_20100716
-  pWork->addNum++;
-#endif
   NET_PRINT("[%d] \n", size);
 }
 
+
+#ifdef BUGFIX_SERVER_20100716
+void NHTTP_RAP_NewPokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int size, int num)
+{
+  if(pWork==NULL){
+    return;
+  }
+  GFL_STD_MemCopy(pData, &pWork->pData[pWork->length], size);
+  pWork->length += size;
+  pWork->addNum += num;
+  NET_PRINT("[%d] \n", size);
+}
+#endif
 
 
 BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
