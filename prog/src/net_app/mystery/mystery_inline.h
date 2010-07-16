@@ -302,6 +302,11 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
       PP_Put(pp, ID_PARA_nickname, (u32)p_strbuf );
       GFL_STR_DeleteBuffer( p_strbuf );
     }
+
+#ifdef BUGFIX_OUTROMBTS32_20100716
+    //タマゴは一律孵化歩数定数が１０
+    PP_Put( pp, ID_PARA_friend, 10 );
+#endif //BUGFIX_OUTROMBTS32_20100716
   }
 
   //配布ポケモンフラグ＋トレーナーメモ
