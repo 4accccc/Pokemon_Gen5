@@ -82,6 +82,9 @@ typedef struct tag_EVENT_DATA
 #define ERROR503  (503)
 #define _SERVERMAINTENANCE_ERROR  (0xfff2)
 #define ERROR502  (502)
+#ifdef BUGFIX_BTS7876_20100716
+#define _ETCRESPONCE_ERROR (0xfff3)
+#endif
 
 
 static void _changeState(PDWACC_WORK* pWork,StateFunc* state);
@@ -154,6 +157,14 @@ static BOOL _responceChk(PDWACC_WORK* pWork,int response)
     _CHANGE_STATE(_ErrorDisp);
     return TRUE;
   }
+#ifdef BUGFIX_BTS7876_20100716
+  if(response >= 400){
+    pWork->ErrorNo = _ETCRESPONCE_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+    return TRUE;
+  }
+#endif// BUGFIX_BTS7876_20100716
+  
   return FALSE;
 }
 
@@ -336,6 +347,11 @@ static void _ErrorDisp(PDWACC_WORK* pWork)
   else if(_SERVERMAINTENANCE_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR012;
   }
+#ifdef BUGFIX_BTS7876_20100716
+  else if(_ETCRESPONCE_ERROR == pWork->ErrorNo){
+    gmm = GSYNC_ERR009;
+  }
+#endif //BUGFIX_BTS7876_20100716
   else if(pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX){
     gmm = GSYNC_ERR009;
   }
@@ -608,10 +624,19 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
   StateFunc* state = pWork->state;
   GFL_PROC_RESULT ret = GFL_PROC_RES_FINISH;
 
+#ifdef BUGFIX_GFBTS1989_20100717
+  if(NET_ERR_CHECK_NONE == NetErr_App_CheckError()){
+    if( state ){
+      state( pWork );
+      ret = GFL_PROC_RES_CONTINUE;
+    }
+  }
+#else
   if( state ){
     state( pWork );
     ret = GFL_PROC_RES_CONTINUE;
   }
+#endif //BUGFIX_GFBTS1989_20100717
 
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
