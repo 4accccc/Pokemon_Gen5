@@ -192,7 +192,11 @@ static void _modeSvlGetStart(WIFILOGIN_WORK* pWork);
 static void _modeSvlGetMain(WIFILOGIN_WORK* pWork);
 static void _modeErrorRetry(WIFILOGIN_WORK* pWork);
 
+#ifdef BUGFIX_GFBTS1989_20100716
+static BOOL _checkError( WIFILOGIN_WORK* pWork ); //シーケンス内で使用して下さい
+#else //BUGFIX_GFBTS1989_20100716
 static void _checkError( WIFILOGIN_WORK* pWork ); //シーケンス内で使用して下さい
+#endif //BUGFIX_GFBTS1989_20100716
 
 
 #if PM_DEBUG
@@ -729,7 +733,11 @@ static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
+#ifdef BUGFIX_GFBTS1989_20100716
+static BOOL _checkError( WIFILOGIN_WORK* pWork )
+#else //BUGFIX_GFBTS1989_20100716
 static void _checkError( WIFILOGIN_WORK* pWork )
+#endif //BUGFIX_GFBTS1989_20100716
 {
   if( NetErr_App_CheckError() ){
     const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
@@ -763,6 +771,11 @@ static void _checkError( WIFILOGIN_WORK* pWork )
       //再接続へ
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0019);
       _CHANGE_STATE(pWork,_modeErrorRetry);
+
+
+#ifdef BUGFIX_GFBTS1989_20100716
+      return TRUE;
+#endif //BUGFIX_GFBTS1989_20100716
       break;
 
     case DWC_ETYPE_FATAL:
@@ -771,6 +784,9 @@ static void _checkError( WIFILOGIN_WORK* pWork )
       break;
     }
   }
+#ifdef BUGFIX_GFBTS1989_20100716
+  return FALSE;
+#endif //BUGFIX_GFBTS1989_20100716
 }
 
 static void _modeLoginWait(WIFILOGIN_WORK* pWork)
@@ -1131,6 +1147,13 @@ static void _FadeWait(WIFILOGIN_WORK* pWork)
 
 static void _modeSvlStart2(WIFILOGIN_WORK* pWork)
 {
+#ifdef BUGFIX_GFBTS1989_20100716
+  if( _checkError(pWork ) )
+  {
+    return;
+  }
+#endif //BUGFIX_GFBTS1989_20100716
+
   if( DWC_SVLGetTokenAsync("", pWork->dbw->pSvl) ){
     _CHANGE_STATE(pWork, _modeSvlGetMain);
   }
@@ -1158,6 +1181,13 @@ static void _modeSvlGetMain(WIFILOGIN_WORK* pWork)
 	DWCErrorType	dwcerrortype;
 	int				errorcode;
   DWCSvlResult* pSvl = pWork->dbw->pSvl;
+
+#ifdef BUGFIX_GFBTS1989_20100716
+  if( _checkError(pWork ) )
+  {
+    return;
+  }
+#endif //BUGFIX_GFBTS1989_20100716
 
   state = DWC_SVLProcess();
   if(state == DWC_SVL_STATE_SUCCESS) {
