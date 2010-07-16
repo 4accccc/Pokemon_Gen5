@@ -520,7 +520,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       if((*seq) == SEQ_ORDER_OK_STREAM_WAIT || ((*seq) == SEQ_ORDER_NG_STREAM_WAIT && (GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))))){
       #ifdef BUGFIX_BTS7874_20100716
         if((*seq) == SEQ_ORDER_OK_STREAM_WAIT && intcomm != NULL && MISSION_RecvCheck(&intcomm->mission) == FALSE){
-          //受注OKの場合はミッションデータも受信するまで待つ
+          //受注OKの場合はミッションデータも受信するまで待つ 
           break;
         }
       #endif
