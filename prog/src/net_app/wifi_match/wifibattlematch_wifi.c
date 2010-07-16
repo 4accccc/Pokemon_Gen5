@@ -3143,6 +3143,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_START_OK_TIMING:
     WIFIBATTLEMATCH_NET_StartTiming( p_wk->p_net, WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_OK );
     *p_seq  = SEQ_WAIT_OK_TIMING;
+#ifdef BUGFIX_GFBTS1989_20100716
+    p_wk->match_timeout = 0;
+#endif //BUGFIX_GFBTS1989_20100716
     break;
 
   case SEQ_WAIT_OK_TIMING:
@@ -3150,6 +3153,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     {
       *p_seq  = SEQ_START_OK_MATCHING_MSG;
     }
+#ifdef BUGFIX_GFBTS1989_20100716
+    is_timeout_enable = TRUE;
+#endif //BUGFIX_GFBTS1989_20100716
     break;
 
   case SEQ_START_OK_MATCHING_MSG:
