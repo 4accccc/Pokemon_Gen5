@@ -182,7 +182,6 @@ static void WazaWork_ClearUsedFlag( BPP_WAZA* waza );
 static void WazaWork_UpdateNumber( BPP_WAZA* waza, WazaID nextNumber, u8 ppMax, BOOL fPermenent );
 static void WazaCore_UpdateNumber( BPP_WAZA_CORE* core, WazaID nextID, u8 ppMax );
 static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index );
-static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
 static void clearHensin( BTL_POKEPARAM* bpp );
 static void reflectWazaPP( BTL_POKEPARAM* bpp );
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
@@ -206,6 +205,11 @@ static void ConfrontRec_Clear( BTL_POKEPARAM* bpp );
 static inline BOOL IsMatchTokusei( const BTL_POKEPARAM* bpp, PokeTokusei tokusei );
 
 
+#ifdef BUGFIX_GFBTS1990_20100716
+static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fTypeUpdate );
+#else
+static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
+#endif
 
 //=============================================================================================
 /**
@@ -310,7 +314,11 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
   bpp->coreParam.exp = PP_Get( srcPP, ID_PARA_exp, NULL );
 
   // 基本パラメタ初期化
+  #ifdef BUGFIX_GFBTS1990_20100716
+  setupBySrcDataBase( bpp, srcPP, fTokuseiUpdate );
+  #else
   setupBySrcDataBase( bpp, srcPP );
+  #endif
 
   // レベルアップ時の処理では、とくせいを戻さない（スキルスワップなどで書き換わるのに対処）
   if( fTokuseiUpdate ){
@@ -500,12 +508,17 @@ static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index
  * @param   srcPP
  */
 //----------------------------------------------------------------------------------
+#ifdef BUGFIX_GFBTS1990_20100716
+static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fTypeUpdate )
+#else
 static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
+#endif
 {
-  bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
-  bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
+  if( fTypeUpdate ){
+    bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
+    bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
+  }
   bpp->baseParam.sex = PP_GetSex( srcPP );
-//  bpp->baseParam.level = PP_Get( srcPP, ID_PARA_level, 0 );
   bpp->baseParam.attack = PP_Get( srcPP, ID_PARA_pow, 0 );
   bpp->baseParam.defence = PP_Get( srcPP, ID_PARA_def, 0 );
   bpp->baseParam.sp_attack = PP_Get( srcPP, ID_PARA_spepow, 0 );
@@ -2662,7 +2675,12 @@ void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
 
   fFastMode = PP_FastModeOn( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
   PP_ChangeFormNo( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), formNo );
+
+  #ifdef BUGFIX_GFBTS1990_20100716
+  setupBySrcDataBase( bpp, bpp->coreParam.ppSrc, TRUE );
+  #else
   setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
+  #endif
 
   if( (bpp->coreParam.monsno == MONSNO_SHEIMI) && (formNo == FORMNO_SHEIMI_LAND) )
   {
