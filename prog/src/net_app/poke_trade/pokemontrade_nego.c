@@ -1943,11 +1943,7 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
 #else
     if(pWork->GTSSelectPP[1][i]){
 #endif
-#ifdef BUGFIX_SERVER_20100716
-      NHTTP_RAP_NewPokemonEvilCheckAdd(pWork->pNHTTP, pWork->GTSSelectPP[1][i], POKETOOL_GetWorkSize(),1);
-#else
       NHTTP_RAP_PokemonEvilCheckAdd(pWork->pNHTTP, pWork->GTSSelectPP[1][i], POKETOOL_GetWorkSize());
-#endif
     }
   }
   NHTTP_RAP_PokemonEvilCheckConectionCreate(pWork->pNHTTP);

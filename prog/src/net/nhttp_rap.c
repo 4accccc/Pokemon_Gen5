@@ -125,10 +125,6 @@ struct _NHTTP_RAP_WORK {
   char urlbuff[_URL_BUFFER];
   HEAPID heapID;
   u32 profileid;
-#ifdef BUGFIX_SERVER_20100716
-  int addNum;
-  int  EvilCheckType;
-#endif
 };
 
 static NHTTP_RAP_WORK* pNHTTPWork;  //この変数はエラーの際に使用される
@@ -317,9 +313,6 @@ NHTTP_ERROR_SSL_CLIENTCERT 	17 	クライアント証明書の設定に失敗しています。
 
 
  */
-#ifdef BUGFIX_SERVER_20100716
-#define _GETBUFF_ILIGAL  (18)  //不正検査が正しいサイズを返さなかった
-#endif
 
 NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
 {
@@ -357,22 +350,6 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
       BOOL ret = NHTTP_GetHeaderAll( pWork->handle, &res );
       NET_PRINT( "%s\nok? %d\n", res, ret);
 
-#ifdef BUGFIX_SERVER_20100716
-      if(pWork->EvilCheckType!=0){
-        char * pBuff = pWork->getbuffer;
-        int k;
-        if(pBuff[0]==0){
-          for(k=0; k< pWork->addNum*4; k++){
-            if(pBuff[1+k] != 0){
-              NET_PRINT("不正通信エラー\n");
-              GFL_NET_StateSetWifiError(error,DWC_ETYPE_SHOW_ERROR,error,ERRORCODE_NHTTP);
-              NHTTP_RAP_ErrorClean(pWork);
-              return err;
-            }
-          }
-        }
-      }
-#endif
     }
     else{
 //      int errorCode;
@@ -503,13 +480,8 @@ void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int 
   }
   pWork->pData = GFL_NET_Align32Alloc(heapID, size + DWC_SVL_TOKEN_LENGTH + 4);
   GFL_STD_MemClear( pWork->pData, size + DWC_SVL_TOKEN_LENGTH + 4 );
-#ifdef BUGFIX_SERVER_20100716
-  pWork->EvilCheckType = type+1;
-  pWork->addNum = 0;
-  
-#endif
 
-    NHTTP_RAP_PokemonEvilCheckReset(pWork, type);
+  NHTTP_RAP_PokemonEvilCheckReset(pWork, type);
 }
 
 
@@ -523,21 +495,6 @@ void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int
   pWork->length += size;
   NET_PRINT("[%d] \n", size);
 }
-
-
-#ifdef BUGFIX_SERVER_20100716
-void NHTTP_RAP_NewPokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int size, int num)
-{
-  if(pWork==NULL){
-    return;
-  }
-  GFL_STD_MemCopy(pData, &pWork->pData[pWork->length], size);
-  pWork->length += size;
-  pWork->addNum += num;
-  NET_PRINT("[%d] \n", size);
-}
-#endif
-
 
 BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 {
