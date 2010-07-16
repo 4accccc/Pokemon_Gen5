@@ -306,14 +306,18 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
     bpp->coreParam.hp = PP_Get( srcPP, ID_PARA_hp, 0 );
     bpp->coreParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
   }
+
   bpp->coreParam.exp = PP_Get( srcPP, ID_PARA_exp, NULL );
 
   // 基本パラメタ初期化
   setupBySrcDataBase( bpp, srcPP );
 
-  bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
-  bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
+  // レベルアップ時の処理では、とくせいを戻さない（スキルスワップ
+  if( !fReflectHP ){
+    bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
+  }
 
+  bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
   bpp->weight = POKETOOL_GetPersonalParam( bpp->coreParam.monsno, bpp->formNo, POKEPER_ID_weight );
   if( bpp->weight < BTL_POKE_WEIGHT_MIN ){
     bpp->weight = BTL_POKE_WEIGHT_MIN;
