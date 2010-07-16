@@ -87,6 +87,9 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 #define ERROR503  (503)
 #define _SERVERMAINTENANCE_ERROR  (0xfff2)
 #define ERROR502  (502)
+#ifdef BUGFIX_PGLBTS85_20100715
+#define _ETCRESPONCE_ERROR (0xfff3)
+#endif
 
 //
 // PHP とのインターフェース構造体
@@ -211,6 +214,14 @@ static BOOL _responceChk(G_SYNC_WORK* pWork,int response)
     _CHANGE_STATE(_ErrorDisp);
     return TRUE;
   }
+#ifdef BUGFIX_PGLBTS85_20100715
+  if(response >= 400){
+    pWork->ErrorNo = _ETCRESPONCE_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+    return TRUE;
+  }
+#endif// BUGFIX_PGLBTS85_20100715
+  
   return FALSE;
 }
 
@@ -408,6 +419,11 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
   else if(_SERVERMAINTENANCE_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR012;
   }
+#ifdef BUGFIX_PGLBTS85_20100715
+  else if(_ETCRESPONCE_ERROR == pWork->ErrorNo){
+    gmm = GSYNC_ERR009;
+  }
+#endif //BUGFIX_PGLBTS85_20100715
   else if((pWork->ErrorNo <= 0) || (pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX)){
     gmm = GSYNC_ERR009;
   }
@@ -931,14 +947,20 @@ static void _downloadcgear7(G_SYNC_WORK* pWork)
 
 static void _downloadcgear6(G_SYNC_WORK* pWork)
 {
-  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
-    return;
-  }
+#ifdef BUGFIX_BTS7852_20100715
   if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
+    return;
+  }
+#endif
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
   }
   else{
+#ifdef BUGFIX_BTS7852_20100715
+    GSYNC_DOWNLOAD_FileEnd(pWork->pDownload);
+#endif
     _CHANGE_STATE(_downloadcgear7);
   }
 }
@@ -958,18 +980,24 @@ static void _downloadcgear51(G_SYNC_WORK* pWork)
 
 static void _downloadcgear5(G_SYNC_WORK* pWork)
 {
-  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
-    return;
-  }
+#ifdef BUGFIX_BTS7852_20100715
   if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
+    return;
   }
-  else if(GSYNC_DOWNLOAD_GetSize(pWork->pDownload)==0){
+#endif
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
+  }
+  if(GSYNC_DOWNLOAD_GetSize(pWork->pDownload)==0){
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
   }
   else{
+#ifdef BUGFIX_BTS7852_20100715
+    GSYNC_DOWNLOAD_FileEnd(pWork->pDownload);
+#endif
     _CHANGE_STATE(_downloadcgear51);
   }
 }
@@ -2639,6 +2667,31 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   StateFunc* state = pWork->state;
   GFL_PROC_RESULT ret = GFL_PROC_RES_FINISH;
 
+
+#ifdef BUGFIX_BTS7852_20100715
+  if(WIPE_SYS_EndCheck() && !pWork->noERROR){
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      if(pWork->pDownload){
+        GSYNC_DOWNLOAD_ExitAsync(pWork->pDownload);
+      }
+      NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+      if(pWork->bSaveDataAsync){
+        GAMEDATA_SaveAsyncCancel( pWork->pGameData );
+        pWork->bSaveDataAsync = FALSE;
+      }
+      _BoxPokeRemove(pWork);
+      if(pWork->errEnd){
+        NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
+      }
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
+      pWork->pParent->selectType = GAMESYNC_RETURNMODE_ERROR;
+      return GFL_PROC_RES_FINISH;
+    }
+  }
+#endif //BUGFIX_BTS7852_20100715
+  
   if( state ){
     state( pWork );
     ret = GFL_PROC_RES_CONTINUE;
@@ -2654,6 +2707,8 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   GSYNC_DISP_Main(pWork->pDispWork);
   GSYNC_MESSAGE_Main(pWork->pMessageWork);
 
+#ifndef BUGFIX_BTS7852_20100715
+  
   if(WIPE_SYS_EndCheck() && !pWork->noERROR){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
       if(pWork->pDownload){
@@ -2675,6 +2730,7 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
       ret = GFL_PROC_RES_FINISH;
     }
   }
+#endif //BUGFIX_BTS7852_20100715
   return ret;
 }
 

@@ -22,6 +22,8 @@
 
 #include "field_player_core.h"
 
+#include "bugfix.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -1071,7 +1073,16 @@ static u16 gjiki_GetInputKeyDir(
     if( move_dir != DIR_NOT ){
       //‰ß‹‚É‰Ÿ‚µ‚½•ûŒü‚ğŒp‘±
       if( key_dir_x == input_x && key_dir_z == input_z ){
+//BTS7846y\šƒ{ƒ^ƒ“‚Ì“¯“ü—Í‚ÅA“ü—Í‚µ‚Ä‚¢‚é•ûŒü‚Æˆá‚¤•ûŒü‚Éi‚Şz
+#ifdef BUGFIX_BTS7846_20100715
+        if( key_dir_z == move_dir ){ //ˆÚ“®’†‚Æˆê’v‚·‚é•ûŒü‚ğZ—Dæ‚Å•Ô‚·
+          return( key_dir_z );
+        }else if( key_dir_x == move_dir ){
+          return( key_dir_x );
+        }
+#else //C³‘O
         return( move_dir ); //ˆÚ“®’†‚Æˆê’v‚·‚é•ûŒü‚ğ•Ô‚·
+#endif
       }
       
       if( key_dir_z != input_z ){  //V‹KÎ‚ß‰Ÿ‚µ‚ÍZ—Dæ‚Å•Ô‚·

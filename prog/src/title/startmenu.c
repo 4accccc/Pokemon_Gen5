@@ -2656,6 +2656,8 @@ static void ClearMessage( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static BOOL MainMessage( START_MENU_WORK * wk )
 {
+	if( wk->stream == NULL ){ return FALSE; }
+
 	APP_KEYCURSOR_Main( wk->kcwk, wk->stream, wk->util[BMPWIN_MSG].win );
 
   switch( PRINTSYS_PrintStreamGetState(wk->stream) ){
@@ -2678,6 +2680,7 @@ static BOOL MainMessage( START_MENU_WORK * wk )
 
   case PRINTSTREAM_STATE_DONE: //I—¹
     PRINTSYS_PrintStreamDelete( wk->stream );
+		wk->stream = NULL;
 		wk->stream_clear_flg = FALSE;
 		return FALSE;
 	}

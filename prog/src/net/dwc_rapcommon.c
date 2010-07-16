@@ -228,6 +228,12 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 //    GF_ASSERT_MSG_HEAVY(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
 //    GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
 //    returnNo = ERRORCODE_HEAP;
+#ifdef BUGFIX_BTS7819_20100715
+    GF_PANIC("%d\n",size);
+    //DWCLIB割り込み途中にHEAPがなくなる症状がでたため。エラーを出す事もできなかったのでPANICしにしました
+    //事前にエラー画面を用意しておくとか、ライブラリを変えてもらうとか、メモリを増やすとか DUMMYをつかませてメインでエラーとか
+    //抜本的、または奇抜な対処が必要です
+#endif //BUGFIX_BTS7819_20100715
     GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );  //エラーになる
     return NULL;
   }

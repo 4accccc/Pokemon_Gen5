@@ -35,16 +35,16 @@ typedef struct {
 //--------------------------------------------------------------
 static GMEVENT_RESULT intrudeSecretItemEvent( GMEVENT * event, int *seq, void * work )
 {
-  EISIW * ewk = (EISIW *)work;
+  EISIW ewk = *((EISIW *)work);
   SCRIPT_WORK * sc;
 
   sc = SCRIPT_ChangeScript( event, SCRID_ITEM_EVENT_INTRUDE_SECRET, NULL, HEAPID_FIELDMAP );
-  SCRIPT_SetScriptWorkParam( sc, ewk->intrude_item.item, 0, 0, 0 );
+  SCRIPT_SetScriptWorkParam( sc, ewk.intrude_item.item, 0, 0, 0 );
   {
     HEAPID heapID = HEAPID_FIELDMAP;
     WORDSET * wordset = SCRIPT_GetWordSet( sc );
     STRBUF * strbuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, heapID );
-    GFL_STR_SetStringCodeOrderLength( strbuf, ewk->intrude_item.name, PERSON_NAME_SIZE + EOM_SIZE );
+    GFL_STR_SetStringCodeOrderLength( strbuf, ewk.intrude_item.name, PERSON_NAME_SIZE + EOM_SIZE );
     WORDSET_RegisterWord( wordset, 3, strbuf, PM_FEMALE, TRUE, PM_LANG );
     GFL_STR_DeleteBuffer( strbuf );
   }

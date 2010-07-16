@@ -178,6 +178,12 @@ static GFL_PROC_RESULT GameOverMsgProc_Main( GFL_PROC * proc, int * seq, void * 
 
     GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
 
+#ifdef BUGFIX_BTS7823_20100715 
+    // 通信アイコン
+    GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+#endif
+
     (*seq) ++;
     break;
 

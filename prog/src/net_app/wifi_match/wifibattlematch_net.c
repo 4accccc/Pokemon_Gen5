@@ -514,6 +514,11 @@ static void print_field(DWCGdbField* field); // レコードをデバッグ出力する。
 //=====================================
 static void DwcRap_Nd_WaitNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq );
 static void DwcRap_Nd_CleanUpNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq );
+
+#ifdef BUGFIX_BTS7852_20100715
+static void DwcRap_Nd_CancelNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq );
+#endif //BUGFIX_BTS7852_20100715
+
 static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror);
 
 //-------------------------------------
@@ -4901,6 +4906,9 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
 
     SEQ_WAIT_CALLBACK         = 100,
     SEQ_WAIT_CLEANUP_CALLBACK = 200,
+#ifdef BUGFIX_BTS7821_20100714
+    SEQ_WAIT_CANCEL_CALLBACK = 300,
+#endif //BUGFIX_BTS7821_20100714
   };
 
   switch( p_wk->seq )
@@ -4994,8 +5002,14 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
 
     if( p_wk->async_timeout++ > WIFI_ND_TIMEOUT_SYNC )
     {
-      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_USER_TIMEOUT );
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_USER_WIFILOGOUT );
+
+#ifdef BUGFIX_BTS7852_20100715
+      DwcRap_Nd_CancelNdCallback( p_wk, SEQ_ERROR_END );
+#else //BUGFIX_BTS7852_20100715
       DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
+#endif //BUGFIX_BTS7852_20100715
+
     }
 
     if( s_callback_flag == FALSE )
@@ -5013,7 +5027,18 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     else if( s_callback_result != DWC_ND_ERROR_NONE)
     {
       OS_Printf("DWC_NdGetProgressでエラー\n");
-      DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
+
+#ifdef BUGFIX_BTS7852_20100715
+      //FATALをいれる
+      if( s_callback_result == DWC_ND_ERROR_FATAL )
+      {
+        NetErr_DispCallFatal();
+      }
+      else
+#endif //BUGFIX_BTS7852_20100715
+      {
+        DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
+      }
     }
     else
     {
@@ -5080,9 +5105,29 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
   case SEQ_WAIT_CALLBACK:
     //コールバック処理を待つ
     DWC_NdProcess();
+
+#ifdef BUGFIX_BTS7852_20100715
+    //タイムアウトをいれる
+    if( p_wk->async_timeout++ > WIFI_ND_TIMEOUT_SYNC )
+    {
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_USER_WIFILOGOUT );
+      DwcRap_Nd_CancelNdCallback( p_wk, SEQ_ERROR_END );
+    }
+#endif //BUGFIX_BTS7852_20100715
+
     if(s_callback_result != DWC_ND_ERROR_NONE)
     {
-      DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
+#ifdef BUGFIX_BTS7852_20100715
+      //FATAL検知をいれる
+      if( s_callback_result == DWC_ND_ERROR_FATAL )
+      {
+        NetErr_DispCallFatal();
+      }
+      else
+#endif //BUGFIX_BTS7852_20100715
+      {
+        DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
+      }
     }
     if( s_callback_flag )
     { 
@@ -5102,6 +5147,20 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
       p_wk->seq  = p_wk->next_seq;
     }
     break;
+
+#ifdef BUGFIX_BTS7821_20100714
+    //非同期キャンセル処理が終了すると、
+    //自動的にクリーン処理へ以降する
+  case SEQ_WAIT_CANCEL_CALLBACK:
+    DWC_NdProcess();
+    if( s_callback_flag )
+    { 
+      s_callback_flag = FALSE;
+      DwcRap_Nd_CleanUpNdCallback( p_wk, p_wk->next_seq );
+    }
+    break;
+#endif //BUGFIX_BTS7821_20100714
+
   }
 
   return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_DOWNLOADING;
@@ -5265,6 +5324,10 @@ static void DwcRap_Nd_WaitNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_s
   s_callback_result = DWC_ND_ERROR_NONE;
   p_wk->next_seq    = next_seq;
   p_wk->seq         = 100;
+
+#ifdef BUGFIX_BTS7852_20100715
+  p_wk->async_timeout = 0;
+#endif //BUGFIX_BTS7852_20100715
 }
 //----------------------------------------------------------------------------
 /**
@@ -5289,6 +5352,28 @@ static void DwcRap_Nd_CleanUpNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int nex
   }
 }
 
+#ifdef BUGFIX_BTS7852_20100715
+//----------------------------------------------------------------------------
+/**
+ *	@brief  非同期処理をキャンセルする
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	next_seq  次のシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void DwcRap_Nd_CancelNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq )
+{
+  s_callback_flag   = FALSE;
+  s_callback_result = DWC_ND_ERROR_NONE;
+  p_wk->next_seq    = next_seq;
+  p_wk->seq         = 300;
+
+  if( !DWC_NdCancelAsync(  ) ){  //FALSEの場合コールバックが呼ばれない
+    OS_Printf("DWC_NdCancelAsyncに失敗\n");
+    p_wk->next_seq    = next_seq;
+  }
+}
+#endif //BUGFIX_BTS7852_20100715
 /*-------------------------------------------------------------------------*
  * Name        : NdCallback
  * Description : ND用コールバック
@@ -5312,7 +5397,6 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
     DEBUG_NET_Printf("DWC_ND_CBREASON_INITIALIZE\n");
     break;
   }
-
   switch(error) {
   case DWC_ND_ERROR_NONE:
     DEBUG_NET_Printf("DWC_ND_NOERR\n");
@@ -5340,7 +5424,12 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
     break;
   case DWC_ND_ERROR_CANCELED:
     DEBUG_NET_Printf("DWC_ND_CANCELERR\n");
+
+#ifdef BUGFIX_BTS7852_20100715
+  case DWC_ND_ERROR_FATAL:
+    NetErr_DispCallFatal();
     break;
+#endif //BUGFIX_BTS7852_20100715
   }
   OS_Printf("errorcode = %d\n", servererror);
   s_callback_flag   = TRUE;

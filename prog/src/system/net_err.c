@@ -1142,10 +1142,29 @@ static u32 _wifierrMessage(GFL_NETSTATE_DWCERROR* pErr, int default_msg)
   if( NetErrSystem.wifi_msg >= 0 )
   {
     if(DS_SYSTEM_IsRunOnTwl()){
-      msgno = twlerror[NetErrSystem.wifi_msg];
+#ifdef BUGFIX_BTS7842_20100715
+      if( NetErrSystem.wifi_msg >= NELEMS( twlerror ) )
+      {
+        msgno = dwc_error_0012;
+      }
+      else
+#endif //BUGFIX_BTS7842_20100715
+      {
+        msgno = twlerror[NetErrSystem.wifi_msg];
+      }
     }
     else{
-      msgno = nitroerror[NetErrSystem.wifi_msg];
+
+#ifdef BUGFIX_BTS7842_20100715
+      if( NetErrSystem.wifi_msg >= NELEMS( nitroerror ) )
+      {
+        msgno = dwc_error_0012;
+      }
+      else
+#endif //BUGFIX_BTS7842_20100715
+      {
+        msgno = nitroerror[NetErrSystem.wifi_msg];
+      }
     }
   }
   else
