@@ -1171,12 +1171,16 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_WRITE_SAKE_DELETE_POKE:
+#ifdef BUGFIX_GFBTS1987_20100716
+    *p_seq  = SEQ_START_GIVEUP_MSG;
+#else //BUGFIX_GFBTS1987_20100716
     if( *p_wk->p_param->p_server_time == 0 )
     { 
       GFL_STD_MemClear( p_wk->p_param->p_wifi_sake_data->pokeparty, WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE );
       WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY, p_wk->p_param->p_wifi_sake_data->pokeparty );
       *p_seq  = SEQ_WAIT_WRITE_SAKE_DELETE_POKE;
     }
+#endif //BUGFIX_GFBTS1987_20100716
     break;
 
   case SEQ_WAIT_WRITE_SAKE_DELETE_POKE:
