@@ -208,3 +208,5 @@
 // レスポンスエラーを増やす対応
 #define BUGFIX_PGLBTS85_20100715
 
+//不正検査サーバの返事の確認を追加
+#define BUGFIX_SERVER_20100716
