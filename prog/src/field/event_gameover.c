@@ -117,14 +117,26 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 		break;
 
 	case 1:
+  //全滅後、フィールドに戻ってくると、c-gearのダウンロードスキンにアルファがかかっていない。 
+  //フィールドマップ初期化前に、ブライトネス状態を初期化する。
+#ifdef BUGFIX_GFBTS1994_20100719//
+		//表示オフ解除
+		SetBrightness( BRIGHTNESS_NORMAL, PLANEMASK_ALL, MASK_DOUBLE_DISPLAY);
+#endif
+
+    
 		//イベントコマンド：フィールドマッププロセス復帰
     GMEVENT_CallEvent( event, EVENT_GameOver(param->gsys) );
 		(*seq)++;
 		break;
 
 	case 2:
+  //全滅後、フィールドに戻ってくると、c-gearのダウンロードスキンにアルファがかかっていない。 
+  //フィールドマップ初期化前に、ブライトネス状態を初期化する。
+#ifndef BUGFIX_GFBTS1994_20100719
 		//表示オフ解除
 		SetBrightness( BRIGHTNESS_NORMAL, PLANEMASK_ALL, MASK_DOUBLE_DISPLAY);
+#endif
 
 		//気をつけてねスクリプト
 		
