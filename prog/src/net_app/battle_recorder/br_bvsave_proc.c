@@ -240,10 +240,19 @@ static GFL_PROC_RESULT BR_BVSAVE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
     }
   }
 
+#ifdef BUGFIX_GFBTS1996_20100719
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
+#endif //BUGFIX_GFBTS1996_20100719
+
 	//ƒ‚ƒWƒ…[ƒ‹”jŠü
   PRINTSYS_QUE_Delete( p_wk->p_que );
   BR_SEQ_Exit( p_wk->p_seq );
   BmpOam_Exit( p_wk->p_bmpoam );
+
 
   BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
 
