@@ -1435,6 +1435,11 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
                                   work->print_que,
                                   FALSE );
 
+#ifdef BUGFIX_BTS7893_100719
+        // 通信アイコン
+        GFL_NET_ReloadIconTopOrBottom( FALSE, work->heap_sys_id );
+#endif  // BUGFIX_BTS7893_100719
+
         // フェードイン(黒→見える)
         GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, STATUS_FADE_IN_WAIT );
       }
