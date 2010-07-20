@@ -73,7 +73,11 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
   GX_VRAM_OBJ_128_B ,       // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+#ifdef BUGFIX_GFBTS1995_20100719
+  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
+#else
   GX_VRAM_SUB_OBJ_NONE,     // サブ2DエンジンのOBJ
+#endif
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_NONE,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_NONE,     // テクスチャパレットスロット
@@ -428,8 +432,11 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+#ifdef BUGFIX_GFBTS1995_20100719
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+#else
     //GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-
+#endif
     work->cellUnit  = GFL_CLACT_UNIT_Create( 16 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }

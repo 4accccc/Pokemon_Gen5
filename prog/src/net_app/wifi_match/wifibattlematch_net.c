@@ -779,7 +779,6 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
   //->エラー画面でエラーここにくる→内部でdisconnect
   //  →disconnect内でエラークリア
 
-
   //DWCのエラー
   if( GFL_NET_IsInit() )
   { 
@@ -788,6 +787,15 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
     {
       GFL_NET_SetAutoErrorCheck(FALSE);
       GFL_NET_SetNoChildErrorCheck(FALSE);
+
+#ifdef BUGFIX_BTS7895_20100719
+      //セーブ中のDWCエラーであれば問答無用でフェイタルへいく
+      if( GAMEDATA_GetIsSave( p_wk->p_gamedata ) )
+      {
+        GAMEDATA_SaveAsyncCancel(p_wk->p_gamedata);
+        NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
+      }
+#endif //BUGFIX_BTS7895_20100719
     }
 
     //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
@@ -863,6 +871,15 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       GFL_NET_SetAutoErrorCheck(FALSE);
       GFL_NET_SetNoChildErrorCheck(FALSE);
       DEBUG_NET_Printf( "ライブラリ個別のエラー検知 %d\n",repair );
+
+#ifdef BUGFIX_BTS7895_20100719
+      //セーブ中のライブラリの個別エラーであれば問答無用でフェイタルへいく
+      if( GAMEDATA_GetIsSave( p_wk->p_gamedata ) )
+      {
+        GAMEDATA_SaveAsyncCancel(p_wk->p_gamedata);
+        NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
+      }
+#endif //BUGFIX_BTS7895_20100719
     }
 
     switch( repair )

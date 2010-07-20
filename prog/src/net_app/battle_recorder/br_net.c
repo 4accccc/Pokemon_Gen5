@@ -75,6 +75,10 @@ struct _BR_NET_WORK
   BR_NET_REQUEST_PARAM  reqest_param;    ///<リクエストされた引数
   u32                   response_flag[BR_NET_REQUEST_MAX];  ///<レスポンスを受けたかどうかのフラグ
   BOOL                is_last_disconnect_error;
+
+#ifdef BUGFIX_GFBTS1996_20100719
+  GAMEDATA *p_gamedata;
+#endif //BUGFIX_GFBTS1996_20100719
 };
 
 //=============================================================================
@@ -120,7 +124,11 @@ static void BR_NET_SEQ_SetReservSeq( BR_NET_SEQ_WORK *p_wk, int seq );
 static void BR_NET_SEQ_NextReservSeq( BR_NET_SEQ_WORK *p_wk );
 static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION seq_function );
 
+#ifdef BUGFIX_GFBTS1996_20100719
+static BOOL BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int ret );
+#else //BUGFIX_GFBTS1996_20100719
 static void BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int ret );
+#endif //BUGFIX_GFBTS1996_20100719
 
 
 //----------------------------------------------------------------------------
@@ -142,6 +150,10 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heap
 
   p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(BR_NET_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(BR_NET_WORK) );
+
+#ifdef BUGFIX_GFBTS1996_20100719
+  p_wk->p_gamedata  = p_gamedata;
+#endif //BUGFIX_GFBTS1996_20100719
 
   //GDS初期化
   { 
@@ -176,7 +188,11 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heap
     p_wk->p_seq = BR_NET_SEQ_Init( p_wk, Br_Net_Seq_Nop, heapID );
   }
 
+#ifdef BUGFIX_GFBTS1996_20100719
+  GFL_NET_DWC_SetErrDisconnectCallbackEx( BR_NET_DisconnectCallback, p_wk );
+#else //BUGFIX_GFBTS1996_20100719
   GFL_NET_DWC_SetErrDisconnectCallback( BR_NET_DisconnectCallback, p_wk );
+#endif //BUGFIX_GFBTS1996_20100719
 
   return p_wk;
 }
@@ -189,7 +205,11 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heap
 //-----------------------------------------------------------------------------
 void BR_NET_Exit( BR_NET_WORK *p_wk )
 { 
+#ifdef BUGFIX_GFBTS1996_20100719
+  GFL_NET_DWC_SetErrDisconnectCallbackEx( NULL, NULL );
+#else //BUGFIX_GFBTS1996_20100719
   GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
+#endif //BUGFIX_GFBTS1996_20100719
 
   BR_NET_SEQ_Exit( p_wk->p_seq );
 
@@ -1197,9 +1217,20 @@ static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION
  *	@param	ret       エラーリターン
  */
 //-----------------------------------------------------------------------------
+#ifdef BUGFIX_GFBTS1996_20100719
+static BOOL BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int ret )
+#else //BUGFIX_GFBTS1996_20100719
 static void BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int ret )
+#endif //BUGFIX_GFBTS1996_20100719
 {
   BR_NET_WORK *p_wk = pUserWork;
+
+#ifdef BUGFIX_GFBTS1996_20100719
+  if( GAMEDATA_GetIsSave( p_wk->p_gamedata ) )
+  {
+    return TRUE;
+  }
+#endif //BUGFIX_GFBTS1996_20100719
 
   //GDS_RAPの切断コールバック処理
   GDSRAP_DisconnectCallback( p_wk, code, type, ret );
@@ -1216,8 +1247,16 @@ static void BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int r
       p_wk->is_init_gdsrap  = FALSE;
     }
     //切断コールバックが２度呼ばれないように削除
+#ifdef BUGFIX_GFBTS1996_20100719
+    GFL_NET_DWC_SetErrDisconnectCallbackEx( NULL, NULL );
+#else //BUGFIX_GFBTS1996_20100719
     GFL_NET_DWC_SetErrDisconnectCallback( NULL, NULL );
+#endif //BUGFIX_GFBTS1996_20100719
     break;
   }
-  
+
+
+#ifdef BUGFIX_GFBTS1996_20100719
+  return FALSE;
+#endif // BUGFIX_GFBTS1996_20100719
 }

@@ -198,10 +198,15 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BVSEND_WORK	*p_wk	= p_wk_adrs;
 
   //エラーチェック
-  if( BR_NET_SYSERR_RETURN_DISCONNECT == BR_NET_GetSysError( p_wk->p_param->p_net ) )
-  { 
-    BR_PROC_SYS_Abort( p_wk->p_param->p_procsys );
-    return GFL_PROC_RES_FINISH;
+#ifdef BUGFIX_GFBTS1996_20100719
+  if( GAMEDATA_GetIsSave( p_wk->p_param->p_gamedata ) == FALSE )
+#endif //BUGFIX_GFBTS1996_20100719
+  {
+    if( BR_NET_SYSERR_RETURN_DISCONNECT == BR_NET_GetSysError( p_wk->p_param->p_net ) )
+    { 
+      BR_PROC_SYS_Abort( p_wk->p_param->p_procsys );
+      return GFL_PROC_RES_FINISH;
+    }
   }
 
   //シーケンス
