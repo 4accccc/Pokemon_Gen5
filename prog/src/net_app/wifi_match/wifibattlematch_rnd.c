@@ -20,6 +20,7 @@
 #include "gamesystem/game_data.h"
 #include "system/net_err.h"
 #include "battle/btl_net.h" //BTL_NET_SERVER_VERSION
+#include "net/dwc_rap.h"
 #include "net/dwc_rapcommon.h"
 
 //	アーカイブ
@@ -4227,7 +4228,14 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_RND_WORK *p_wk, BOOL i
 
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
-        DWC_CloseAllConnectionsHard();
+
+#ifdef BUGFIX_BTS7867_20100716
+        if( NET_ERR_CHECK_NONE == NetErr_App_CheckError()
+            && GFL_NET_IsInit() )
+#endif //BUGFIX_BTS7867_20100716
+        {
+          DWC_CloseAllConnectionsHard();
+        }
       }
     }
     break;

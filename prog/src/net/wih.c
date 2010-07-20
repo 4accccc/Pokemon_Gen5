@@ -3138,8 +3138,8 @@ void WH_FreeMemory(void)
 	GFL_NET_Align32Free(_pWmInfo->sRecvBuffer);
 	GFL_NET_Align32Free(_pWmInfo->sSendBuffer);
 	GFL_NET_Align32Free(_pWmInfo);
-	_pWmInfo->sRecvBuffer=NULL;
-	_pWmInfo->sSendBuffer=NULL;
+//	_pWmInfo->sRecvBuffer=NULL;
+//	_pWmInfo->sSendBuffer=NULL;
 	_pWmInfo = NULL;
 }
 

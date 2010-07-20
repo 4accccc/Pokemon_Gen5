@@ -313,6 +313,7 @@ NHTTP_ERROR_SSL_CLIENTCERT 	17 	クライアント証明書の設定に失敗しています。
 
 
  */
+
 NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
 {
   int     result;
@@ -348,6 +349,7 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
       char *res;
       BOOL ret = NHTTP_GetHeaderAll( pWork->handle, &res );
       NET_PRINT( "%s\nok? %d\n", res, ret);
+
     }
     else{
 //      int errorCode;
@@ -493,8 +495,6 @@ void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int
   pWork->length += size;
   NET_PRINT("[%d] \n", size);
 }
-
-
 
 BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 {

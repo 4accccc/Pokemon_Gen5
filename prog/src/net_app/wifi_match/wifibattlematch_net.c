@@ -1002,6 +1002,14 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   { 
     btl_mode  += is_rnd_rate;
   }
+
+#ifdef BUGFIX_BTS7867_20100716
+  if( !GFL_NET_IsInit() )
+  {
+    NetErr_DispCallFatal();
+  }
+#endif //BUGFIX_BTS7867_20100716
+
   DWC_CloseAllConnectionsHard();
 
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL_MODE, btl_mode );
@@ -1421,8 +1429,24 @@ static void WifiBattleMatch_SetDateTime( WBM_NET_DATETIME *p_wk )
 { 
   RTCDate date;
   RTCTime time;
+
+#ifdef BUGFIX_BTS7867_20100716
+  BOOL ret;
+
+  if( !GFL_NET_IsInit() )
+  {
+    NetErr_DispCallFatal();
+  }
+  ret  = DWC_GetDateTime(&date, &time);
+
+  if( ret == FALSE )
+  {
+    NetErr_DispCallFatal();
+  }
+#else //BUGFIX_BTS7867_20100716
   BOOL ret  = DWC_GetDateTime(&date, &time);
   GF_ASSERT_HEAVY( ret );
+#endif //BUGFIX_BTS7867_20100716
 
   GFL_STD_MemClear( p_wk, sizeof(WBM_NET_DATETIME) );
 
@@ -1490,8 +1514,9 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
 
   int value=0;
   int rate, disconnect, cup, btlcnt;
+  int you_rate;
 
-  int you_rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, -1 );
+  you_rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, -1 );
   disconnect= DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].keyStr, -1 );
   btlcnt    = DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_BTLCNT].keyStr, -1 );
   cup       = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].keyStr, -1 );
@@ -1780,6 +1805,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
 
     //‰Šú‰»
     case WIFIBATTLEMATCH_SC_SEQ_INIT:
+
       p_wk->wait_cnt  = 0;
       p_wk->is_sc_start = TRUE;
       DEBUG_NET_Printf( "sc is_sc_start == true\n" );

@@ -689,6 +689,17 @@ static void _wakeupAction_save22(G_SYNC_WORK* pWork)
     pWork->time--;
     return;
   }
+
+#ifdef BUGFIX_BTS7876_20100716
+  if(_IsLv1Mode(pWork)){
+    _CHANGE_STATE(_wakeupAction7);
+    pWork->noERROR = TRUE;
+    return;
+  }
+#endif
+
+
+  
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD_FINISH, pWork->pNHTTPRap)){
       pWork->aDownFinish.bGet=TRUE;

@@ -2414,10 +2414,20 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
 
   StateFunc* state = pWork->state;
+
+#ifdef BUGFIX_GFBTS1989_20100716
+  if(state != NULL){
+    if(NET_ERR_CHECK_NONE == NetErr_App_CheckError()){
+      state(pWork);
+    }
+    retCode = GFL_PROC_RES_CONTINUE;
+  }
+#else
   if(state != NULL){
     state(pWork);
     retCode = GFL_PROC_RES_CONTINUE;
   }
+#endif
 
   if(pWork->pAppWin){
     //タッチバーで選択されていない場合、ボタンが反応する　20100701 add Saito
@@ -2456,6 +2466,11 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
       }
     }
   }
+#ifdef BUGFIX_GFBTS1989_20100716
+  else if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    retCode = GFL_PROC_RES_FINISH;
+  }
+#endif
   return retCode;
 }
 
