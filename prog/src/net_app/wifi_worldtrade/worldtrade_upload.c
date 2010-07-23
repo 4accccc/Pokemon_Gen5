@@ -1999,8 +1999,7 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *rec
       send_poke = recv_tr->postSimple.characterNo;
     }
 
-/*#ifdef BUGFIX_BTS7927_100723*/
-#if 1
+#ifdef BUGFIX_BTS7927_100723
     un_data.recvPokemon = send_poke;  //NPCがもらったポケモン（プレーヤーがあげたポケモン）
     un_data.sendPokemon = PP_Get( recv_pp, ID_PARA_monsno, NULL );  //NPCがあげたポケモン（プレーヤーがもらったポケモン）
 #else
