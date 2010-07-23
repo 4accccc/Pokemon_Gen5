@@ -70,6 +70,7 @@ static void DEBUG_UI_AutoKey(void);
 #endif
 
 
+#define FIELDTEST_VERSION
 //------------------------------------------------------------------
 //  処理時間AVERAGE
 //------------------------------------------------------------------
@@ -94,6 +95,11 @@ static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void );
 static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
 #endif
 
+#ifdef  FIELDTEST_VERSION
+static void checkOnwerComments( void );
+#endif
+
+
 //------------------------------------------------------------------
 //  外部関数宣言
 //------------------------------------------------------------------
@@ -114,6 +120,10 @@ void NitroMain(void)
   MachineSystem_Init();
   // ＧＦＬ初期化
   GFLUser_Init();
+
+#ifdef  FIELDTEST_VERSION
+  checkOnwerComments();
+#endif
 
   //HBLANK割り込み許可
   OS_SetIrqFunction(OS_IE_H_BLANK,SkeltonHBlankFunc);
@@ -566,3 +576,75 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 }
 
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+
+#ifdef  FIELDTEST_VERSION
+//ぽけもんぼーだぶりゆ
+static const u16 passward[11] = {
+  0x307d,   //ぽ
+  0x3051,   //け
+  0x3082,   //も
+  0x3093,   //ん
+  0x3073,   //び
+  0x30fc,   //ー
+  0x3060,   //だ
+  0x3076,   //ぶ
+  0x308a,   //り
+  0x3086,   //ゆ
+  0x0000,   //終端文字
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定パスワードを本体コメントに記入しないと起動しない
+ */
+//------------------------------------------------------------------
+static void checkOnwerComments( void )
+{
+  enum {
+    BOOT_KEY_ASSIGN = PAD_BUTTON_R | PAD_BUTTON_L,
+  };
+  int i;
+  BOOL result = TRUE;
+
+#if (defined(SDK_TWL))
+  OSOwnerInfoEx owner_info;
+  OS_GetOwnerInfoEx( &owner_info );
+#else
+  OSOwnerInfo owner_info;
+  OS_GetOwnerInfo( &owner_info );
+#endif
+
+  if ( ( PAD_Read() & BOOT_KEY_ASSIGN ) != BOOT_KEY_ASSIGN )
+  {
+    GF_PANIC( "keytrigger error!\n" );
+  }
+
+  for ( i = 0; i < NELEMS(passward); i ++ )
+  {
+    OS_Printf("%04x : %04x\n", owner_info.nickName[i], passward[i] );
+    if ( owner_info.nickName[ i ] == passward[ i ] )
+    {
+      if ( passward[ i ] == 0x0000 )
+      {
+        break;  //終端文字なのでチェック打ち切り
+      }
+      continue; //次の文字をチェック
+    }
+    result = FALSE;
+  }
+  if ( owner_info.nickNameLength != i )
+  {
+    result = FALSE;
+  }
+
+  if ( result == FALSE )
+  {
+    GF_PANIC( "password error!\n" );
+  }
+}
+
+#endif  //  FIELDTEST_VERSION
+
+
+
