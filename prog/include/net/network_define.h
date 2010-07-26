@@ -345,10 +345,36 @@ typedef enum{
 #include "net_irc.h"
 
 /// WiFiで使うHeapのサイズ
+//wifiランダムマッチでマッチング時のメモリーの断片化による不具合対処の為 本番用ROMではメモリーを100K多めに割り当てる
+#ifdef BUGFIX_BTS7931_20100726
+
+#ifdef PM_DEBUG
+
 #define GFL_NET_DWC_HEAPSIZE        (0x45400)                           //WIFIクラブのHEAP量
 #define GFL_NET_DWCLOBBY_HEAPSIZE   (0x60000)                           //WIFI広場のHEAP量
 #define GFL_NET_DWC_BSUBWAY_HEAPSIZE  (0x50000)                        //バトルサブウェイのHEAP量
 #define GFL_NET_DWC_RNDMATCH_HEAPSIZE (0x55000)                       //ランダムマッチングのHEAP量
+
+#else  //PM_DEBUG
+
+#define GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE (0x19000)  //100K
+
+#define GFL_NET_DWC_HEAPSIZE        (0x45400+GFL_NET_DWC_RANDOMMATCH_FINAL)                           //WIFIクラブのHEAP量
+#define GFL_NET_DWCLOBBY_HEAPSIZE   (0x60000+GFL_NET_DWC_RANDOMMATCH_FINAL)                           //WIFI広場のHEAP量
+#define GFL_NET_DWC_BSUBWAY_HEAPSIZE  (0x50000)                        //バトルサブウェイのHEAP量
+#define GFL_NET_DWC_RNDMATCH_HEAPSIZE (0x55000+GFL_NET_DWC_RANDOMMATCH_FINAL)                       //ランダムマッチングのHEAP量
+
+#endif //PM_DEBUG
+
+#else //BUGFIX_BTS7931_20100726
+
+#define GFL_NET_DWC_HEAPSIZE        (0x45400)                           //WIFIクラブのHEAP量
+#define GFL_NET_DWCLOBBY_HEAPSIZE   (0x60000)                           //WIFI広場のHEAP量
+#define GFL_NET_DWC_BSUBWAY_HEAPSIZE  (0x50000)                        //バトルサブウェイのHEAP量
+#define GFL_NET_DWC_RNDMATCH_HEAPSIZE (0x55000)                       //ランダムマッチングのHEAP量
+
+
+#endif //BUGFIX_BTS7931_20100726
 
 
 #define GAMESYNC_CGEAR_DOWNLOAD "CGEAR_J"

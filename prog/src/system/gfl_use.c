@@ -54,11 +54,39 @@ enum {
 //------------------------------------------------------------------
 //  ヒープサイズ定義
 //------------------------------------------------------------------
+
+//wifiランダムマッチでマッチング時のメモリーの断片化による不具合対処の為
+//本番用ROMではメモリーを100K多めに割り当てる
+#ifdef BUGFIX_BTS7931_20100726
+
+#ifdef PM_DEBUG
+
 #define HEAPSIZE_SYSTEM (0x006000)
 #define HEAPSIZE_APP    (0x180000)   // PL,GSでは約0x13A000
 #define HEAPSIZE_DSI    (0x486000)   // DSIは16M
 //NITROでmakeした時にHEAPID_EXTRA用に4000増やす
 #define HEAPSIZE_APP_NTR    (0x184000)   // PL,GSでは約0x13A000
+
+#else //PM_DEBUG
+
+//こちらが本番用メモリ
+#define HEAPSIZE_SYSTEM (0x006000)
+#define HEAPSIZE_APP    (0x180000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)   // PL,GSでは約0x13A000
+#define HEAPSIZE_DSI    (0x486000)   // DSIは16M
+//NITROでmakeした時にHEAPID_EXTRA用に4000増やす
+#define HEAPSIZE_APP_NTR    (0x184000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)   // PL,GSでは約0x13A000
+
+#endif //PM_DEBUG
+
+#else //BUGFIX_BTS7931_20100726
+
+#define HEAPSIZE_SYSTEM (0x006000)
+#define HEAPSIZE_APP    (0x180000)   // PL,GSでは約0x13A000
+#define HEAPSIZE_DSI    (0x486000)   // DSIは16M
+//NITROでmakeした時にHEAPID_EXTRA用に4000増やす
+#define HEAPSIZE_APP_NTR    (0x184000)   // PL,GSでは約0x13A000
+
+#endif //BUGFIX_BTS7931_20100726
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

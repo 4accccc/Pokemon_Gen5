@@ -18,7 +18,9 @@
 
 #include "net/dwc_rapcommon.h"
 
- 
+#ifdef BUGFIX_BTS7931_20100726
+#include "system/net_err.h"
+#endif//BUGFIX_BTS7931_20100726
 
 // メモリの残量表示処理 1:ON  0:OFF
 #if GFL_NET_DEBUG
@@ -200,11 +202,18 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
   }
   else
   { 
+#ifdef BUGFIX_BTS7931_20100726
+    OSIntrMode  enable = OS_DisableInterrupts();
+    ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandle, size, align );
+    NET_MEMORY_PRINT( "main alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle),name );
+    (void)OS_RestoreInterrupts(enable);
+#else
     OSIntrMode  enable = OS_DisableInterrupts();
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandle, size, align );
     (void)OS_RestoreInterrupts(enable);
 
     NET_MEMORY_PRINT( "main alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle),name );
+#endif
   }
 
   //残りヒープ調査
@@ -228,12 +237,19 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 //    GF_ASSERT_MSG_HEAVY(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
 //    GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
 //    returnNo = ERRORCODE_HEAP;
+
+#ifdef BUGFIX_BTS7931_20100726
+
+    NetErr_ReleaseRomAssertCallback();
+
+#else  //BUGFIX_BTS7931_20100726
 #ifdef BUGFIX_BTS7819_20100715
     GF_PANIC("%d\n",size);
     //DWCLIB割り込み途中にHEAPがなくなる症状がでたため。エラーを出す事もできなかったのでPANICしにしました
     //事前にエラー画面を用意しておくとか、ライブラリを変えてもらうとか、メモリを増やすとか DUMMYをつかませてメインでエラーとか
     //抜本的、または奇抜な対処が必要です
 #endif //BUGFIX_BTS7819_20100715
+#endif //BUGFIX_BTS7931_20100726
     GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_HEAP );  //エラーになる
     return NULL;
   }
