@@ -4404,8 +4404,13 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_CHECK_STATUS:
     {
+#ifdef BUGFIX_BTS7890_20100726
+      if( p_wk->p_param->p_gpf_data->WifiMatchUpState == DREAM_WORLD_MATCHUP_SIGNUP ||
+        p_wk->p_param->p_gpf_data->WifiMatchUpState == DREAM_WORLD_MATCHUP_ENTRY )
+#else //BUGFIX_BTS7890_20100726
       if( Regulation_GetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS ) == DREAM_WORLD_MATCHUP_SIGNUP
         || Regulation_GetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS ) == DREAM_WORLD_MATCHUP_ENTRY )
+#endif //BUGFIX_BTS7890_20100726
       {
         *p_seq  = SEQ_START_SAVE_MSG;
       }
