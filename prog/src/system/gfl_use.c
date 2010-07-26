@@ -31,6 +31,11 @@
 
 #include "textprint.h"
 
+#ifdef BUGFIX_BTS7931_20100726
+#include "net/network_define.h"
+#endif
+
+
 #ifdef PM_DEBUG
 #include "test/debug_pause.h"
 #include "debug/debugwin_sys.h"

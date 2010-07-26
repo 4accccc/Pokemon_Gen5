@@ -359,10 +359,10 @@ typedef enum{
 
 #define GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE (0x19000)  //100K
 
-#define GFL_NET_DWC_HEAPSIZE        (0x45400+GFL_NET_DWC_RANDOMMATCH_FINAL)                           //WIFIクラブのHEAP量
-#define GFL_NET_DWCLOBBY_HEAPSIZE   (0x60000+GFL_NET_DWC_RANDOMMATCH_FINAL)                           //WIFI広場のHEAP量
+#define GFL_NET_DWC_HEAPSIZE        (0x45400+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)                           //WIFIクラブのHEAP量
+#define GFL_NET_DWCLOBBY_HEAPSIZE   (0x60000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)                           //WIFI広場のHEAP量
 #define GFL_NET_DWC_BSUBWAY_HEAPSIZE  (0x50000)                        //バトルサブウェイのHEAP量
-#define GFL_NET_DWC_RNDMATCH_HEAPSIZE (0x55000+GFL_NET_DWC_RANDOMMATCH_FINAL)                       //ランダムマッチングのHEAP量
+#define GFL_NET_DWC_RNDMATCH_HEAPSIZE (0x55000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)                       //ランダムマッチングのHEAP量
 
 #endif //PM_DEBUG
 
