@@ -313,8 +313,20 @@ static void SetR03OldmanEventWork( FIELDMAP_WORK* fieldmap )
   EVENTWORK*    eventWork  = GAMEDATA_GetEventWork( gameData );
   u16* work;
 
+#ifdef BUGFIX_GFBTS2008_20100726
+  {
+    const POKEPARTY* party = GAMEDATA_GetMyPokemon( gameData );
+    int count = PokeParty_GetPokeCount( party );
+    int max = PokeParty_GetPokeCountMax( party );
+    if( count < max ) {
+      work = EVENTWORK_GetEventWorkAdrs( eventWork, WK_OTHER_DISCOVER_EGG );
+      *work = 1;
+    }
+  }
+#else
   work = EVENTWORK_GetEventWorkAdrs( eventWork, WK_OTHER_DISCOVER_EGG );
   *work = 1;
+#endif
 }
 
 /**
