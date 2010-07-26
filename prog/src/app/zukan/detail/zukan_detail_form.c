@@ -3195,7 +3195,29 @@ static void Zukan_Detail_Form_GetDiffInfoWithoutWork( ZUKAN_DETAIL_FORM_PARAM* p
       }
     }
 
+#ifdef BUGFIX_BTS7936_20100726
+    {
+      u16 prev_other_diff;
+      for( i=0; i<(*a_diff_num); i++ )
+      {
+        if( a_diff_info_list[i].looks_diff == LOOKS_DIFF_ONE )
+        {
+          (*a_diff_sugata_num) = 1;  // LOOKS_DIFF_ONEのときは、姿の数は1しかない。
+        }
+        else  // if( a_diff_info_list[i].looks_diff == LOOKS_DIFF_SEX || a_diff_info_list[i].looks_diff == LOOKS_DIFF_FORM )
+        {
+          if(    ( i==0 )                                                 // 初回は必ず数に入れる。
+              || ( prev_other_diff != a_diff_info_list[i].other_diff ) )  // 2回目以降は前回と異なる姿なら数に入れる。
+          {                                                               // オス、オスの色違い、メス、メスの色違い
+            prev_other_diff = a_diff_info_list[i].other_diff;             // フォルム0、フォルム0の色違い、フォルム1、フォルム1の色違い
+            (*a_diff_sugata_num)++;                                       // の順に並んでいるので。
+          }
+        }
+      }
+    }
+#else  // BUGFIX_BTS7936_20100726
     (*a_diff_sugata_num) = (*a_diff_num) - (*a_diff_irochigai_num);
+#endif  // BUGFIX_BTS7936_20100726
   }
 
 /*
