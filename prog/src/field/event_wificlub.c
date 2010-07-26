@@ -645,9 +645,16 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   pClub->pWork = pClub;
   pClub->soundNo = PMSND_GetBGMsoundNo();
 
-  pClub->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
-  pClub->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
-  pClub->pMatchParam->pRegulation = Regulation_AllocWork(GFL_HEAPID_APP);
+#ifdef BUGFIX_BTS7931_20100726  //HEAP‚Ì’f•Ð‰»‚ÌC³
+  pClub->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork(GetHeapLowID( GFL_HEAPID_APP ));   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
+  pClub->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork(GetHeapLowID( GFL_HEAPID_APP ));   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
+  pClub->pMatchParam->pRegulation = Regulation_AllocWork(GetHeapLowID( GFL_HEAPID_APP ));
+#else  //BUGFIX_BTS7931_20100726  //HEAP‚Ì’f•Ð‰»‚ÌC³
+  pClub->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork( GFL_HEAPID_APP );   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
+  pClub->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork( GFL_HEAPID_APP );   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
+  pClub->pMatchParam->pRegulation = Regulation_AllocWork( GFL_HEAPID_APP );
+#endif //BUGFIX_BTS7931_20100726  //HEAP‚Ì’f•Ð‰»‚ÌC³
+  
   pClub->pMatchParam->battleBoard.shooterSelect = 1;
 }
 
