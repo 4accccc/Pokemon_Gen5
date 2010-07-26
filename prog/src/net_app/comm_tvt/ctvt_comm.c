@@ -1510,6 +1510,21 @@ static void CTVT_COMM_PostDrawData( const int netID, const int size , const void
   for( i=0;i<num;i++ )
   {
     DRAW_SYS_SetPenInfo( drawSys , &drawBuf[i] );
+//２次ロットのみ有効
+#ifdef BUGFIX_BTS7934_100726_2ND
+    //下位バージョン対応
+    //子機がはまると終了不能になるのでエラーで抜ける
+    if( (drawBuf[i].startX ==   0 && drawBuf[i].endX == 255) || 
+        (drawBuf[i].startX == 255 && drawBuf[i].endX ==   0) )
+    {
+      if( COMM_TVT_IsWifi(commWork->parentWork) == FALSE )
+      {
+        CTVT_TPrintf("Post Draw 0 to 255 Error!\n");
+        NetErr_ErrorSet();
+      }
+      //GFL_NET_StateSetWifiError();
+    }
+#endif
   }
 #if USE_COMM_SEND_CHECK
   if( COMM_TVT_IsWifi(commWork->parentWork) == TRUE &&

@@ -132,8 +132,12 @@ static void DRAW_SYS_DrawLine( DRAW_SYS_WORK* work , void *vramAdr , const u16 x
   
   const int baseX = x1 - (penData->sizeX/2);
   const int baseY = y1 - (penData->sizeY/2);
-  
+
+#ifdef BUGFIX_BTS7934_100726
+  int i;
+#else
   u8 i;
+#endif
   u8 drawBit = 31;
   const u8 bitX = ( addX >= 0 ? DSPD_BIT_RIGHT : DSPD_BIT_LEFT );
   const u8 bitY = ( addY >= 0 ? DSPD_BIT_DOWN : DSPD_BIT_UP );

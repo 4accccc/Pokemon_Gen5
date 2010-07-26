@@ -1342,6 +1342,18 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
                     info->col  = drawWork->penCol;
                   }
                   
+//２次ロットのみ有効
+#ifdef BUGFIX_BTS7934_100726_2ND
+                  //下位バージョン対応
+                  if( info->startX == 0 && info->endX == 255 )
+                  {
+                    info->endX = 254;
+                  }
+                  if( info->startX == 255 && info->endX == 0 )
+                  {
+                    info->endX = 1;
+                  }
+#endif
                   if( connectNum == 1 )
                   {
                     DRAW_SYS_SetPenInfo( drawSys , info );
@@ -1397,7 +1409,18 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
           {
             info->col  = drawWork->penCol;
           }
-          
+//２次ロットのみ有効
+#ifdef BUGFIX_BTS7934_100726_2ND
+          //下位バージョン対応
+          if( info->startX == 0 && info->endX == 255 )
+          {
+            info->endX = 254;
+          }
+          if( info->startX == 255 && info->endX == 0 )
+          {
+            info->endX = 1;
+          }
+#endif
           if( connectNum == 1 )
           {
             DRAW_SYS_SetPenInfo( drawSys , info );
