@@ -1081,7 +1081,11 @@ static BOOL GdsRap_GetEvilCheckPokeIndex( const GDS_RAP_WORK *cp_gdsrap, u32 idx
 static void GdsRap_NickNameCopy(const STRCODE *src, STRCODE *dest, int len)
 {
   //STRTOOL_Copy( src, dest, len ); 文字列長に変更があると終端のEOMなどが残る為CRCが変わってしまう
+#ifdef BUGFIX_BTS7939_20100726
+  GFL_STD_MemCopy(src, dest, len * sizeof(STRCODE) );
+#else
   GFL_STD_MemCopy(src, dest, len );
+#endif
 }
 
 //--------------------------------------------------------------
