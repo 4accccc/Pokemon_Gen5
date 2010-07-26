@@ -1599,6 +1599,12 @@ void GAMEDATA_SaveAsyncCancel(GAMEDATA *gamedata)
     gamedata->is_save = FALSE;
 
     SaveControl_SaveAsyncCancel( gamedata->sv_control_ptr );
+
+  #ifdef BUGFIX_LTC0003_20100726
+    if(GFL_UI_CheckSleepDisable(GFL_UI_SLEEP_EXTRA_SAVE) == TRUE){
+      GFL_UI_SleepEnable(GFL_UI_SLEEP_EXTRA_SAVE);
+    }
+  #endif
   }
 }
 
@@ -1627,6 +1633,10 @@ BOOL GAMEDATA_GetIsSave(const GAMEDATA *gamedata)
 //--------------------------------------------------------------
 void GAMEDATA_ExtraSaveAsyncStart(GAMEDATA *gamedata, SAVE_EXTRA_ID extra_id)
 {
+#ifdef BUGFIX_LTC0003_20100726
+  GFL_UI_SleepDisable(GFL_UI_SLEEP_EXTRA_SAVE);
+#endif
+
   //セーブワークの情報を更新
   GAMEDATA_SaveDataUpdate(gamedata);
 
@@ -1672,6 +1682,10 @@ SAVE_RESULT GAMEDATA_ExtraSaveAsyncMain(GAMEDATA *gamedata, SAVE_EXTRA_ID extra_
     WIH_DWC_Restart();
     //セーブ中フラグOFF
     gamedata->is_save = FALSE;
+
+  #ifdef BUGFIX_LTC0003_20100726
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_EXTRA_SAVE);
+  #endif
   }
 
   return sr;

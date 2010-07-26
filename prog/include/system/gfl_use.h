@@ -16,6 +16,9 @@
 typedef enum
 {
   GFL_UI_SLEEP_DSP = GFL_UI_SLEEP_USER, //0x40  //カメラシャッター音
+#ifdef BUGFIX_LTC0003_20100726
+  GFL_UI_SLEEP_EXTRA_SAVE = 0x80, //外部セーブ
+#endif
 }GF_UI_SLEEP_USER_e;
 
 //--------------------------------------------------------------------------------------------
