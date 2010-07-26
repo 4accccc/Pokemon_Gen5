@@ -813,7 +813,15 @@ static void encwork_AddPlayerWalkCount( ENCOUNT_WORK* ewk, const FIELD_PLAYER* p
   MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
 
   if(ewk->player.move_f){
+#ifndef BUGFIX_BTS7926_20100726
     ++ewk->player.walk_ct;
+#else
+    // 【ホワイトフォレストの草むら、水上でエンカウントしなくなることがあった】
+    // enc_CheckEncountWfbc関数ないの計算で桁をオーバーフローしないようにカウントストップ
+    if( ewk->player.walk_ct < 0xA000 ){
+      ++ewk->player.walk_ct;
+    }
+#endif // BUGFIX_BTS7926_20100726
     return;
   }
   if( MMDL_GetGridPosX( mmdl ) == ewk->player.pos_x &&
