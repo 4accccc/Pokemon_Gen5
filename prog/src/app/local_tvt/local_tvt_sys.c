@@ -331,12 +331,13 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
   //OBJÇÃçXêV
   GFL_CLACT_SYS_Main();
 
-  
+#ifndef BUGFIX_GFBTS1997_20100726  
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
     return TRUE;
   }
+#endif
   return FALSE;
 }
 //--------------------------------------------------------------
