@@ -1347,7 +1347,11 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_CHECK_EXITS_REG:
     if( 0 == Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO ) )
     { 
+#ifdef BUGFIX_BTS7898_20100726
+      *p_seq  = SEQ_START_SAVE_MSG;
+#else //BUGFIX_BTS7898_20100726
       *p_seq  = SEQ_START_UPDATE_MSG;
+#endif //BUGFIX_BTS7898_20100726
     }
     else
     { 
