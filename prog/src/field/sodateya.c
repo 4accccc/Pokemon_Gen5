@@ -854,6 +854,29 @@ static u32 CalcLoveLv_normal( const POKEMON_PARAM* poke1, const POKEMON_PARAM* p
 //---------------------------------------------------------------------------------------- 
 static BOOL LayEggCheck( SODATEYA* sodateya )
 {
+#ifdef BUGFIX_QABTS692_20100726
+  // ˆê’èŠÔŠu‚Å”»’è
+  u16 nowCount = sodateya->layEggCount;
+  sodateya->layEggCount += 16;
+  if( EGG_CHECK_INTERVAL - 1 < nowCount )
+  {
+    // Y—‘ƒJƒEƒ“ƒ^‚ğƒŠƒZƒbƒg
+    sodateya->layEggCount = 0;
+
+    // 2‘Ì—a‚¯‚Ä‚¢‚½‚çY—‘”»’è
+    if( 2 <= SODATEYA_WORK_GetPokemonNum( sodateya->work ) )
+    { 
+      // —” < ‘Š« ==> Y—‘
+      if( GFUser_GetPublicRand0(16*100) < SODATEYA_GetLoveLevel(sodateya) ) 
+      {
+        return TRUE; 
+      }
+    }
+  }
+
+  // Y‚Ü‚È‚¢
+  return FALSE;
+#else
   // ˆê’èŠÔŠu‚Å”»’è
   if( EGG_CHECK_INTERVAL < sodateya->layEggCount++ )
   {
@@ -873,6 +896,7 @@ static BOOL LayEggCheck( SODATEYA* sodateya )
 
   // Y‚Ü‚È‚¢
   return FALSE;
+#endif
 }
 
 //---------------------------------------------------------------------------------------- 
