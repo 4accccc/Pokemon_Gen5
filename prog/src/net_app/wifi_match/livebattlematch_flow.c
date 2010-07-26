@@ -1216,6 +1216,10 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
     SEQ_CHECK_ERR,      //エラーをして戻ってきたか？
     SEQ_START_MSG_ERR,
+
+#ifdef BUGFIX_BTS7901_20100726
+    SEQ_CHECK_BTLCNT,
+#endif //BUGFIX_BTS7901_20100726
     
     SEQ_START_MSG_MENU,   //メインメニュー
     SEQ_START_LIST_MENU,
@@ -1253,7 +1257,12 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
     if( p_wk->p_playerinfo )
     { 
+#ifdef BUGFIX_BTS7901_20100726
+      *p_seq  = SEQ_CHECK_BTLCNT;
+#else   //BUGFIX_BTS7901_20100726
       *p_seq  = SEQ_START_MSG_MENU;
+#endif  //BUGFIX_BTS7901_20100726
+
     }
     else
     { 
@@ -1276,16 +1285,44 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     else
     { 
+#ifdef BUGFIX_BTS7901_20100726
+      *p_seq  = SEQ_CHECK_BTLCNT;
+#else   //BUGFIX_BTS7901_20100726
       *p_seq  = SEQ_START_MSG_MENU;
+#endif  //BUGFIX_BTS7901_20100726
     }
     break;
 
   case SEQ_START_MSG_ERR:
     UTIL_TEXT_Print( p_wk, LIVE_ERR_01, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
+
+#ifdef BUGFIX_BTS7901_20100726
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_CHECK_BTLCNT );
+#else   //BUGFIX_BTS7901_20100726
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MENU );
+#endif  //BUGFIX_BTS7901_20100726
     break;
     
+#ifdef BUGFIX_BTS7901_20100726
+  case SEQ_CHECK_BTLCNT:
+    {
+      //大会が終了しているかどうか
+      REGULATION  *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
+      u32 now = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+      u32 max = Regulation_GetParam( p_reg, REGULATION_BTLCOUNT);
+      if( now >= max )
+      {
+        WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RecAfter );
+      }
+      else
+      {
+        *p_seq  = SEQ_START_MSG_MENU;
+      }
+    }
+    break;
+#endif //BUGFIX_BTS7901_20100726
+
   case SEQ_START_MSG_MENU:   //メインメニュー
     UTIL_TEXT_Print( p_wk, LIVE_STR_11, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
