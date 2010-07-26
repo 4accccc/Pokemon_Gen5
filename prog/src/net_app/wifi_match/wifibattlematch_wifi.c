@@ -1528,7 +1528,11 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_WAIT_MOVEOUT_CARD:
     Util_PlayerInfo_Delete( p_wk );
+#ifdef BUGFIX_BTS7898_20100726
+    *p_seq  = SEQ_START_SAVE_MSG;
+#else //BUGFIX_BTS7898_20100726
     *p_seq  = SEQ_START_UPDATE_MSG;
+#endif //BUGFIX_BTS7898_20100726
     break;
 
   //XVˆ—
@@ -1594,7 +1598,11 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
+#ifdef BUGFIX_BTS7898_20100726
+        *p_seq  = SEQ_REGISTER_EXIT;
+#else //BUGFIX_BTS7898_20100726
         *p_seq  = SEQ_START_SAVE_MSG;
+#endif //BUGFIX_BTS7898_20100726
       }
       else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_DIRTY )
       {
@@ -1656,7 +1664,11 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = GAMEDATA_SaveAsyncMain( p_param->p_param->p_game_data );
       if( ret == SAVE_RESULT_OK )
       {
+#ifdef BUGFIX_BTS7898_20100726
+        *p_seq  = SEQ_START_UPDATE_MSG;
+#else //BUGFIX_BTS7898_20100726
         *p_seq  = SEQ_REGISTER_EXIT;
+#endif //BUGFIX_BTS7898_20100726
       }
       else if( ret == SAVE_RESULT_NG )
       { 
