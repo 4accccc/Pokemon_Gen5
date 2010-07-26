@@ -17,6 +17,10 @@
 #include "net/nhttp_rap.h"
 #include "savedata/wifilist.h"
 
+#ifdef BUGFIX_BTS7918_20100726
+#include "system/net_err.h"
+#endif //BUGFIX_BTS7918_20100726
+
 #if GFL_NET_WIFI
 
 // デバッグ出力を大量に吐き出す場合定義
@@ -1734,6 +1738,9 @@ int mydwc_HandleError(void)
   }
   else if( ret != 0 ){
     GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, 0 );
+#ifdef BUGFIX_BTS7918_20100726
+    NetErr_ErrorSet();
+#endif //BUGFIX_BTS7918_20100726
   }
   return returnNo;
 }
