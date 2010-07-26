@@ -78,11 +78,6 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
       else if(EtcSave_CheckAcquaintance(etc_save, bpc->beacon.trainer_id) == TRUE){
         dest->friend_type = UNION_CHAT_FRIEND_TYPE_ACQUAINTANCE;
       }
-    #ifdef BUGFIX_BTS7903_20100721
-      else{
-        dest->friend_type = UNION_CHAT_FRIEND_TYPE_NULL;
-      }
-    #endif
     }
   }
   

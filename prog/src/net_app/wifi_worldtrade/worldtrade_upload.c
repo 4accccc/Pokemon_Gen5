@@ -1999,13 +1999,8 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *rec
       send_poke = recv_tr->postSimple.characterNo;
     }
 
-#ifdef BUGFIX_BTS7927_100723
-    un_data.recvPokemon = send_poke;  //NPCがもらったポケモン（プレーヤーがあげたポケモン）
-    un_data.sendPokemon = PP_Get( recv_pp, ID_PARA_monsno, NULL );  //NPCがあげたポケモン（プレーヤーがもらったポケモン）
-#else
     un_data.recvPokemon = PP_Get( recv_pp, ID_PARA_monsno, NULL );
     un_data.sendPokemon = send_poke;
-#endif
     un_data.favorite    = recv_tr->favorite;
     un_data.nature      = recv_tr->nature;
     un_data.countryCount= recv_tr->countryCount;
