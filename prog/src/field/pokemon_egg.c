@@ -24,6 +24,7 @@
 
 #include "pokemon_egg.h"
 
+#include "bugfix.h"
 
 #define DEBUG_PRINT_ON      // デバッグ出力スイッチ
 #define PRINT_TARGET    (2) // デバッグ出力先
@@ -1115,7 +1116,11 @@ static void MakeEgg(
     PP_SetTokusei3( egg, egg_param->monsno, egg_param->formno );
   }
   else {
+#ifdef  BUGFIX_BTS7955_20100728
+    PP_Put( egg, ID_PARA_end, egg_param->tokusei );
+#else
     PP_Put( egg, ID_PARA_speabino, egg_param->tokusei );
+#endif
   }
 
   // 個体乱数
