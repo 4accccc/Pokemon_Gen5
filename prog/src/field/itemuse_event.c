@@ -85,7 +85,7 @@ static ItemUseCheckFunc const DATA_ItemUseCheckFunc[ITEMCHECK_MAX] = {
   itemcheck_Ananukenohimo, // あなぬけのヒモ
   itemcheck_Amaimitu, // あまいミツ
   itemcheck_Turizao, // つりざお
-  NULL, // バトルレコーダー
+  itemcheck_DowsingMachine, // バトルレコーダー
   NULL, // メール
   NULL, // スプレー
   itemcheck_DowsingMachine, // ダウジングマシン
