@@ -720,7 +720,7 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   WIFI_COUNTRY_GetNGTestCountryCode(wk->UploadPokemonData.countryCode, 
       wk->UploadPokemonData.localCode, wk->UploadPokemonData.langCode);
 
-  wk->UploadPokemonData.langCode = 
+  wk->UploadPokemonData.localCode = 
   WIFI_COUNTRY_GetNGTestLocalCode(wk->UploadPokemonData.countryCode, 
       wk->UploadPokemonData.localCode, wk->UploadPokemonData.langCode);
 
