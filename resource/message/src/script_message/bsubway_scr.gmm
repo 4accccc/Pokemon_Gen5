@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-07-03T15:13:37"/>
+	<create user="morimoto" host="W00220" date="2010-08-06T17:16:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,13 +263,13 @@
 		</language>
 	</columns>
 
-	<dialog left="865" top="85" right="1365" bottom="713" maximized="no" rayout="Vertical2">
+	<dialog left="1700" top="191" right="2115" bottom="819" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="no"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<band id="0" index="1" style="0000" width="445"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="492"/>
+		<band id="2" index="3" style="0000" width="240"/>
+		<band id="3" index="4" style="0000" width="407"/>
 		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -804,11 +804,11 @@
 再開しますか？</language>
 	</row>
 
-	<row id="msg_bsw_scr_33">
-		<language name="JPN" width="256">ごあんないする　まえに
-レポートを　かきます</language>
-		<language name="JPN_KANJI" width="256">ご案内する　前に
-レポートを　書きます</language>
+	<row id="msg_bsw_scr_33" back-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,,">
+		<language name="JPN" width="256">レポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="256">レポートに　書き込んでいます
+電源を　切らないで下さい</language>
 	</row>
 
 	<row id="msg_bsw_scr_34" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -827,11 +827,11 @@
 また　お越しください▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_36">
+	<row id="msg_bsw_scr_36" back-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<language name="JPN" width="256">レポートに　かきこんでいます
-しばらく　おまちください</language>
+でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" width="256">レポートに　書き込んでいます
-しばらく　お待ちください</language>
+電源を　切らないで下さい</language>
 	</row>
 
 	<row id="msg_bsw_scr_37" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1185,8 +1185,10 @@
 	</row>
 
 	<row id="msg_bsw_scr_78" back-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,,">
-		<language name="JPN" width="256">レポートに　かきこんでいます</language>
-		<language name="JPN_KANJI" width="256">レポートに　書き込んでいます</language>
+		<language name="JPN" width="256">レポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="256">レポートに　書き込んでいます
+電源を　切らないで下さい</language>
 	</row>
 
 	<row id="msg_bsw_scr_79" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

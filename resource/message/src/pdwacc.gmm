@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-07-07T18:20:15"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-08-06T17:19:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,9 +371,9 @@
 
 	<row id="PDWACC_007">
 		<language name="JPN" width="256">レポートに　かきこんでいます
-しばらく　おまちください</language>
+でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" width="256">レポートに　書き込んでいます
-しばらく　お待ちください</language>
+電源を　切らないでください</language>
 	</row>
 
 	<row id="PDWACC_008">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-07-08T22:26:20"/>
+	<create user="morimoto" host="W00220" date="2010-08-06T17:25:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1757" top="78" right="2462" bottom="706" maximized="no" rayout="Vertical2">
+	<dialog left="1411" top="168" right="2116" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="419" right="1280" bottom="817" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -394,11 +394,13 @@
 入力してください（０１ー[2:02:３桁:0]）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wifi_bt_008">
+	<row id="msg_wifi_bt_008" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>●成績アップロード
 プラチナでメッセージ変更。</comment>
-		<language name="JPN" width="216">せいせきデータを　おくっています……</language>
-		<language name="JPN_KANJI" width="216">成績データを　送っています……</language>
+		<language name="JPN" width="216">せいせきデータを　おくっています……
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="216">成績データを　送っています……
+電源を　切らないでください</language>
 	</row>
 
 	<row id="msg_wifi_bt_009">

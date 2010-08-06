@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-06-19T17:57:06"/>
+	<create user="shimoyamada" host="W00184" date="2010-08-06T16:54:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="559" top="41" right="1059" bottom="651" maximized="no" rayout="Vertical2">
+	<dialog left="427" top="261" right="927" bottom="871" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="70" top="18" right="543" bottom="416" visible="yes"/>
 		<band id="0" index="0" style="0000" width="492"/>
@@ -2386,11 +2386,11 @@ SVL取得エラー</comment>
 		<language name="JPN_KANJI" font=" 1:small" width="216">本当に　消しても　いいですか？</language>
 	</row>
 
-	<row id="msg_info_015">
+	<row id="msg_info_015" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<language name="JPN" font=" 1:small" width="216">きろくを　けしています……
-レポートを　かいています……</language>
+でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">記録を　消しています……
-レポートを　書いています……</language>
+電源を　切らないでください</language>
 	</row>
 
 	<row id="msg_info_016">
@@ -2477,9 +2477,11 @@ SVL取得エラー</comment>
 		<language name="JPN_KANJI" font=" 1:small" width="216">レポートを　たくさん　書いています……</language>
 	</row>
 
-	<row id="msg_info_030">
-		<language name="JPN" font=" 1:small" width="216">レポートを　かいています……</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">レポートを　書いています……</language>
+	<row id="msg_info_030" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<language name="JPN" font=" 1:small" width="216">レポートを　かいています……
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">レポートを　書いています……
+電源を　切らないでください</language>
 	</row>
 
 	<row id="msg_info_031">

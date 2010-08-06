@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-06-17T14:56:45"/>
+	<create user="morimoto" host="W00220" date="2010-08-06T17:14:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="125" right="1985" bottom="753" maximized="no" rayout="Vertical2">
+	<dialog left="160" top="114" right="865" bottom="742" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="261" top="246" right="734" bottom="644" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -423,11 +423,11 @@
 えらんで　ちょーだいな▼</language>
 	</row>
 
-	<row id="msg_trialhouse_012">
+	<row id="msg_trialhouse_012" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<language name="JPN" width="256">レポートに　かきこんでいます
-しばらく　おまちください</language>
+でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" width="256">レポートに　書き込んでいます
-しばらく　お待ちください</language>
+電源を　切らないで下さい</language>
 	</row>
 
 	<row id="msg_trialhouse_013">
