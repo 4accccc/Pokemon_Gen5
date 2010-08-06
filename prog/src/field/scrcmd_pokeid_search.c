@@ -206,7 +206,13 @@ static int SearchBox(const u32 inMyID, GAMEDATA * gdata, const int inBoxIdx, ARR
   count = 0;
   for(i=0;i<BOX_MAX_POS;i++)
   {
+#ifdef BUGFIX_AF_BTS7899_20100806
+    //ƒ^ƒ}ƒS‚Í‘ÎÛŠO
+    if ( BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_poke_exist, NULL ) &&
+         (!BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_tamago_flg, NULL )) )
+#else
     if ( BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_poke_exist, NULL ) )
+#endif
     {
       u32 id;
       id = BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_id_no, NULL );
