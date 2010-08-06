@@ -646,6 +646,36 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
   //  u32 ret = BmpMenu_MainSE( mw,SE_DECIDE );
   u32 ret = BmpMenu_Main( mw );
 
+#ifdef BUGFIX_AF_BTS7810_20100806
+  BmpMenu_YesNoSelectPrintMain( mw );
+#else
+  BOOL b_finish = PRINTSYS_QUE_Main(mw->hed.print_que);
+  
+  if( (!(mw->hed.b_trans)) && b_finish )
+  {
+    GFL_BMPWIN_TransVramCharacter( mw->hed.win );
+    mw->hed.b_trans = TRUE;
+  }
+#endif
+
+  if( ret != BMPMENU_NULL ){
+    BmpMenu_YesNoMenuExit( mw );
+  }
+  return  ret;
+}
+
+#ifdef BUGFIX_AF_BTS7810_20100806
+//----------------------------------------------------------------------------
+/**
+ *	@brief    はい・いいえ選択ウィンドウの表示
+ *
+ *	@param	  ワーク
+ *
+ *	@retval   TRUEで表示完了  FALSEで表示中
+ */
+//-----------------------------------------------------------------------------
+BOOL BmpMenu_YesNoSelectPrintMain( BMPMENU_WORK * mw )
+{
   BOOL b_finish = PRINTSYS_QUE_Main(mw->hed.print_que);
   
   if( (!(mw->hed.b_trans)) && b_finish )
@@ -654,11 +684,9 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
     mw->hed.b_trans = TRUE;
   }
 
-  if( ret != BMPMENU_NULL ){
-    BmpMenu_YesNoMenuExit( mw );
-  }
-  return  ret;
+  return mw->hed.b_trans;
 }
+#endif
 
 
 

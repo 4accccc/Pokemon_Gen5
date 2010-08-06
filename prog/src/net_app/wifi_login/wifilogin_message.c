@@ -77,7 +77,6 @@
 
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
-
 struct _WIFILOGIN_YESNO_WORK
 { 
   WIFILOGIN_DISPLAY display;
@@ -527,6 +526,13 @@ void WIFILOGIN_MESSAGE_YesNoUpdate( WIFILOGIN_YESNO_WORK* pWork )
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
     break;
   case WIFILOGIN_DISPLAY_UP:
+#ifdef BUGFIX_AF_BTS7810_20100806
+    if( !BmpMenu_YesNoSelectPrintMain( pWork->pYesNoWork ) )
+    {
+      pWork->yesno_ret  = BMPMENU_NULL;
+      return;
+    }
+#endif
     pWork->yesno_ret  = BmpMenu_YesNoSelectMain( pWork->pYesNoWork );
     break;
   }
