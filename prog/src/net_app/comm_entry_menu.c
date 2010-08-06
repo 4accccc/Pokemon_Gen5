@@ -1760,6 +1760,13 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em)
         yesno->breakup_type = BREAKUP_TYPE_NG;
         yesno->seq = 100;
       }
+#ifdef BUGFIX_BTS7889_20100806
+      else if(CommEntryMenu_GetCompletionNum(em) <= 1){
+        //Ž©•ª‚Ð‚Æ‚è‚Ìê‡‚ÍÅIŠm”F–³‚µ
+        _StreamMsgSet(em, _GameTypeMsgPack[em->game_type].msgid_breakup);
+        yesno->seq = 5;
+      }
+#endif
       else{
         _StreamMsgSet(em, msg_connect_04_01);
         yesno->seq++;
