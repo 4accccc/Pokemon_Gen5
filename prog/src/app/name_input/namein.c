@@ -4523,8 +4523,11 @@ static BOOL Icon_MainMove( ICON_WORK *p_wk )
 
     now = ICON_MOVE_START + ICON_MOVE_DIF * p_wk->sync++ / ICON_MOVE_SYNC;
     sin = FX_SinIdx( now );
-
+#ifdef BUGFIX_AF_BTS7858_20100806
+    GFL_CLACT_WK_GetPos( p_wk->p_clwk, &clpos, CLSYS_DRAW_MAIN );
+#else
     clpos.x = ICON_POS_X;
+#endif
     clpos.y = ICON_POS_Y - ((ICON_MOVE_Y*sin) >> FX16_SHIFT);
 
     GFL_CLACT_WK_SetPos( p_wk->p_clwk, &clpos, CLSYS_DRAW_MAIN );
