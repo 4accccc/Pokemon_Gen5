@@ -2239,7 +2239,13 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* wind
 }
 
 
+#ifdef BUGFIX_COUNTRY_NGCHECK_20100806
+//常駐にあるwifi_country.cでincludeするように変更
+extern const u8 EnableCountryList[];
+extern const COUNTRY_ENABLE_MAX;
+#else
 #include "sort_list.cdat"   // EnableCountryList
+#endif  //BUGFIX_COUNTRY_NGCHECK_20100806
 
 //----------------------------------
 //リスト表示３:gmmファイルから登録可能国だけリストに入れる
@@ -3012,7 +3018,6 @@ static u32 WIFI_EarthGetRotateDist( const Vec2DS32* cp_earth, const Vec2DS32* cp
 
   return dist;
 }
-
 
 //----------------------------------
 // デバッグ

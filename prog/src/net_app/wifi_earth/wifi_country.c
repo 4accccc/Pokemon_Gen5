@@ -329,6 +329,9 @@ u32 WIFI_COUNTRY_GetJapanID(void)
   return NationFlag_to_AreaID[NATION_AREA_TABLE_JAPAN_INDEX].nationID;
 }
 
+#ifdef BUGFIX_COUNTRY_NGCHECK_20100806
+#include "sort_list.cdat"
+#endif  //BUGFIX_COUNTRY_NGCHECK_20100806
 //==================================================================
 /**
  * 不正な国・地域コードでないかをチェック
@@ -345,6 +348,27 @@ BOOL WIFI_COUNTRY_CheckNG(u32 country_code, u32 local_code, u32 language)
   if(country_code >= WIFI_COUNTRY_MAX){
     return FALSE;
   }
+
+#ifdef BUGFIX_COUNTRY_NGCHECK_20100806
+  if(country_code > 0){
+    if(local_code == 0 && WIFI_COUNTRY_CountryCodeToPlaceIndexMax(country_code) > 0){
+      return FALSE; //地域が設定出来る国なのに地域を設定していない
+    }
+    
+    //登録可能な国一覧に載っているかチェック
+    if(country_code > 0){
+      int i;
+      for(i = 0; i < COUNTRY_ENABLE_MAX; i++){
+        if(EnableCountryList[i] == country_code){
+          break;
+        }
+      }
+      if(i >= COUNTRY_ENABLE_MAX){
+        return FALSE;
+      }
+    }
+  }
+#endif
 
   if(WIFI_COUNTRY_CountryCodeToPlaceIndexMax(country_code) < local_code){
     return FALSE;

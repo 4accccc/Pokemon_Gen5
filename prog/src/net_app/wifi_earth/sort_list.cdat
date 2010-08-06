@@ -8,7 +8,11 @@
 
 /// 登録可剥巣潟Xト（全ての国ではないことに注意）増やしたい場合は
 ///CountryList.xlsの５０音順の欄を変更してください。
+#ifdef BUGFIX_COUNTRY_NGCHECK_20100806  //常駐に配置するためコンバータを改造してu8で出力するように変更
+ALIGN4 const u8 EnableCountryList[] = {
+#else
 ALIGN4 static const int EnableCountryList[] = {
+#endif
 	country094,	// アイスランド
 	country099,	// アイルランド
 	country001,	// アフガニスタン
@@ -141,5 +145,10 @@ ALIGN4 static const int EnableCountryList[] = {
 	country174,	// ロシア
 };
 
+#ifdef BUGFIX_COUNTRY_NGCHECK_20100806
+const COUNTRY_ENABLE_MAX	= NELEMS(EnableCountryList);
+#else
 static const COUNTRY_ENABLE_MAX	= NELEMS(EnableCountryList);
+#endif  //BUGFIX_COUNTRY_NGCHECK_20100806
+
 #endif
