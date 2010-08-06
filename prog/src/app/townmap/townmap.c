@@ -924,6 +924,10 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     {
       PLACEWND_Start( &p_wk->placewnd, cp_data );
       INFO_Update( &p_wk->info, cp_data );
+#ifdef BUGFIX_AF_BTS8005_20100806
+      PLACE_Active( &p_wk->place, cp_data );
+#endif
+
       p_wk->cp_select	= cp_data;
       {
         GFL_POINT wld;
