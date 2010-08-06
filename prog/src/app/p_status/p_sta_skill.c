@@ -1374,42 +1374,47 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   else
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
   {
-    //Aボタン操作
-    if( skillWork->isChangeMode == FALSE )
+#ifdef BUGFIX_AF_GFBTS2017_100806
+    if( work->psData->mode == PST_MODE_NORMAL )
     {
-      //入れ替えモードへ
-      GFL_CLACTPOS cellPos;
-      skillWork->isChangeMode = TRUE;
-      skillWork->changeTarget = skillWork->cursorPos;
-      PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
-
-      PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
-      GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
-      GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
-      GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
-      PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
-    }
-    else
-    {
-      //入れ替えの確定
-      if( skillWork->changeTarget != skillWork->cursorPos )
+#endif
+      //Aボタン操作
+      if( skillWork->isChangeMode == FALSE )
       {
-        //入れ替え確定
-        PSTATUS_SKILL_SwapSkill( work , skillWork , skillWork->changeTarget , skillWork->cursorPos );
-        PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SWAP);
+        //入れ替えモードへ
+        GFL_CLACTPOS cellPos;
+        skillWork->isChangeMode = TRUE;
+        skillWork->changeTarget = skillWork->cursorPos;
+        PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
+
+        PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+        GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+        GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+        GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
+        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
       }
       else
       {
-        GFL_CLACTPOS cellPos;
-        skillWork->isChangeMode = FALSE;
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
-        GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
-        PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
+        //入れ替えの確定
+        if( skillWork->changeTarget != skillWork->cursorPos )
+        {
+          //入れ替え確定
+          PSTATUS_SKILL_SwapSkill( work , skillWork , skillWork->changeTarget , skillWork->cursorPos );
+          PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SWAP);
+        }
+        else
+        {
+          GFL_CLACTPOS cellPos;
+          skillWork->isChangeMode = FALSE;
+          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
+          GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+          PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
+        }
+        //PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
+        //skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
       }
-      //PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
-      //skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+      return TRUE;
     }
-    return TRUE;
   }
   else
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B &&
@@ -1491,7 +1496,48 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
             PSTATUS_SetActiveBarButton( work , FALSE );
             //PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
           }
-
+#ifdef BUGFIX_AF_GFBTS2017_100806
+          if( work->psData->mode == PST_MODE_NORMAL )
+          {
+            skillWork->isHoldTp = TRUE;
+            //キーで入れ替え中に来たらchangeTargetを変えない！
+            if( skillWork->isChangeMode == TRUE )
+            {
+            }
+            else
+            {
+              skillWork->changeTarget = ret;
+              {
+                GFL_CLACTPOS cellPos;
+                PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[ret] , &cellPos );
+                GFL_CLACT_WK_SetPos( skillWork->clwkArrow , &cellPos , CLSYS_DEFREND_MAIN );
+                GFL_CLACT_WK_SetDrawEnable( skillWork->clwkArrow , TRUE );
+                if( ret == 0 )
+                {
+                  GFL_CLACT_WK_SetAnmSeq( skillWork->clwkArrow , PSCC_ARROW_DOWN );
+                }
+                else
+                if( ret == 3 )
+                {
+                  GFL_CLACT_WK_SetAnmSeq( skillWork->clwkArrow , PSCC_ARROW_UP );
+                }
+                else
+                {
+                  GFL_CLACT_WK_SetAnmSeq( skillWork->clwkArrow , PSCC_ARROW_BOTH );
+                }
+              }
+            }
+            skillWork->holdTpx = work->tpx;
+            skillWork->holdTpy = work->tpy;
+            PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[ret] , &cellPos );
+            GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+            GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
+          }
+          work->ktst = GFL_APP_END_TOUCH;
+          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , TRUE );
+          PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
+#else
           skillWork->isHoldTp = TRUE;
           //キーで入れ替え中に来たらchangeTargetを変えない！
           if( skillWork->isChangeMode == TRUE )
@@ -1529,6 +1575,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
           GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
           PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
+#endif
 
         }
       }
