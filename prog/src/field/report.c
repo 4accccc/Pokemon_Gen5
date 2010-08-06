@@ -634,7 +634,11 @@ static void InitBmp( REPORT_WORK * wk )
 	str = GFL_MSG_CreateString( mman, REPORT_STR_02 );
 	{
 		RTCDate	date;
+#ifdef	BUGFIX_AF_REPORT00_20100806
+		GFL_RTC_GetDate( &date );
+#else		// BUGFIX_AF_REPORT00_20100806
 		RTC_GetDate( &date );
+#endif	// BUGFIX_AF_REPORT00_20100806
 		WORDSET_RegisterNumber( wset, 0, date.year, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 1, date.month, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 2, date.day, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -646,7 +650,11 @@ static void InitBmp( REPORT_WORK * wk )
 	str = GFL_MSG_CreateString( mman, REPORT_STR_03 );
 	{
 		RTCTime	time;
+#ifdef	BUGFIX_AF_REPORT00_20100806
+		GFL_RTC_GetTime( &time );
+#else		// BUGFIX_AF_REPORT00_20100806
 		RTC_GetTime( &time );
+#endif	// BUGFIX_AF_REPORT00_20100806
 		WORDSET_RegisterNumber( wset, 0, time.hour, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 1, time.minute, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
