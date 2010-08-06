@@ -1793,9 +1793,13 @@ static void _parentMeasurechanneling(GFL_NETWL* pNetWL)
 		else{
 			channel = pNetWL->keepChannel;
 		}
+#ifdef BUGFIX_AF_GF_TGID_20100806
+    pNetWL->_sTgid = WM_GetNextTgid();
+#else
 		if(pInit->bTGIDChange){
 			pNetWL->_sTgid = WM_GetNextTgid();
 		}
+#endif
 		NET_WHPIPE_BeaconSetInfo();
 		bRet = WH_ParentConnect(mode[pInit->bMPMode], pNetWL->_sTgid, channel, pInit->maxConnectNum-1 );
 		//   pNetWL->pCallback(bRet);
