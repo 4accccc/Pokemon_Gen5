@@ -294,6 +294,10 @@ void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
   
   BmpWinFrame_Clear( msgWork->bmpWin , WINDOW_TRANS_ON_V );
   GFL_BMPWIN_Delete( msgWork->bmpWin );
+#ifdef BUGFIX_AF_GFBTS2015_100806
+  //‚±‚ÌŒã‚ÉŽžŠÔXV‚ÅbmpWin‚Ì‚ ‚Á‚½ˆÊ’u‚ª‰ó‚ê‚é‚ÆA“]‘—Žž‚ÉŽ~‚Ü‚é
+  PRINTSYS_QUE_Clear( msgWork->printQueMsg );
+#endif
   msgWork->winType = PMT_NONE;
 }
 
