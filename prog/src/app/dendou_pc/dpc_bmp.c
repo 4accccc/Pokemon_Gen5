@@ -166,7 +166,11 @@ void DPCBMP_PutTitle( DPCMAIN_WORK * wk )
 	// “a“°“ü‚è
 	}else{
 		str = GFL_MSG_CreateString( wk->mman, mes_pc_dendou_01_02 );
+#ifdef	BUGFIX_AF_GFBTS2013_20100806
+		WORDSET_RegisterNumber( wk->wset, 0, pt->recNo, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+#else		// BUGFIX_AF_GFBTS2013_20100806
 		WORDSET_RegisterNumber( wk->wset, 0, pt->recNo, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+#endif	// BUGFIX_AF_GFBTS2013_20100806
 		WORDSET_ExpandStr( wk->wset, wk->exp, str );
 		PRINTTOOL_PrintColor(
 			&wk->win[DPCBMP_WINID_TITLE], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP03WN, PRINTTOOL_MODE_LEFT );

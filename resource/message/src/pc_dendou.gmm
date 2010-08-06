@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-05-21T20:30:07"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-08-06T11:28:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -341,8 +341,8 @@
 
 	<row id="mes_pc_dendou_01_02" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>殿堂入りのタイトル</comment>
-		<language name="JPN" width="216" line="2">だい[BD:00:カラー変更:5:6:0][2:01:２桁:0][BD:00:カラー変更:1:2:0]かい　でんどういり</language>
-		<language name="JPN_KANJI" width="216" line="2">第[BD:00:カラー変更:5:6:0][2:01:２桁:0][BD:00:カラー変更:1:2:0]回　殿堂入り</language>
+		<language name="JPN" width="216" line="2">だい[BD:00:カラー変更:5:6:0][2:03:４桁:0][BD:00:カラー変更:1:2:0]かい　でんどういり</language>
+		<language name="JPN_KANJI" width="216" line="2">第[BD:00:カラー変更:5:6:0][2:03:４桁:0][BD:00:カラー変更:1:2:0]回　殿堂入り</language>
 	</row>
 
 	<row id="mes_pc_dendou_01_03" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -354,7 +354,7 @@
 	<row id="mes_pc_dendou_01_04" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>ページ数15/15</comment>
 		<language name="JPN" width="216" line="2">/</language>
-		<language name="JPN_KANJI" width="216" line="2">[2:01:２桁:0]/[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="216" line="2">/</language>
 	</row>
 
 	<row id="mes_pc_dendou_01_05" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
