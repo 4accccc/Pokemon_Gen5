@@ -2160,13 +2160,21 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
       else if( key & PAD_BUTTON_DECIDE )
       {  
+#ifndef BUGFIX_AF_GFBTS2004_20100806
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
+#endif
 
         if( p_wk->cursor == MYSTERY_CURSOR_RETURN )
         { 
           if( !p_wk->is_swap )
-          { 
+          {
+
+#ifdef BUGFIX_AF_GFBTS2004_20100806
+            GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
+            GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
+#endif
+
             PMSND_PlaySE( MYSTERY_SE_DECIDE );
             MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
           }
@@ -2177,6 +2185,11 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           const MYSTERY_CARD_DATA *cp_data  = &p_wk->data[ card_index ];
           if( MYSTERY_CARD_DATA_IsExist(cp_data) )
           { 
+#ifdef BUGFIX_AF_GFBTS2004_20100806
+            GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
+            GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
+#endif
+
             PMSND_PlaySE( MYSTERY_SE_DECIDE );
             //スワップモードならば入れ替えへ
             if( p_wk->is_swap )
