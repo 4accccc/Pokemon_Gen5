@@ -1598,7 +1598,25 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleUp( GMEVENT* event, int* seq, vo
   {
   // ホワイトアウト
   case 0:
+#ifdef BUGFIX_AF_BTS7986_20100806
+    // 季節更新の有無を決定
+    JudgeSeasonUpdateOccur( work ); 
+
+    // 季節フェード
+    if( work->seasonUpdateEnable && work->seasonUpdateOccur ) {
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeOut_Season( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    }else{
+
+      // 基本フェードイン
+      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    }
+
+    
+#else
     GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+#endif
+
     (*seq)++;
     break;
   // 動作モデル停止
@@ -1609,6 +1627,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleUp( GMEVENT* event, int* seq, vo
     if( !FIELD_TASK_MAN_IsAllTaskEnd( p_taskMan ) ) {
       break;
     }
+
 
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
@@ -1624,7 +1643,20 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleUp( GMEVENT* event, int* seq, vo
 
   // ホワイトイン
   case 3:
+#ifdef BUGFIX_AF_BTS7986_20100806
+    // 季節フェード
+    if( work->seasonUpdateEnable && work->seasonUpdateOccur ) {
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn_Season( gameSystem, fieldmap, work->prevSeason, work->nextSeason ) );
+    }else{
+
+      // 基本フェードイン
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    }
+#else
+    // 基本フェードイン
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+#endif
     (*seq)++;
     break;
 
@@ -2105,6 +2137,10 @@ GMEVENT* EVENT_ChangeMapBySeaTempleUp( GAMESYS_WORK* gameSystem )
   work->loc_req.dir_id = EXIT_DIR_DOWN;  // 出てきたときは下を見る。
   work->exit_type    = EXIT_TYPE_NONE;
 
+#ifdef BUGFIX_AF_BTS7986_20100806
+  work->seasonUpdateEnable = TRUE; // 季節更新を有効にする
+#endif
+
   return event;
 }
 
@@ -2128,6 +2164,7 @@ GMEVENT* EVENT_ChangeMapBySeaTempleDown( GAMESYS_WORK* gameSystem, u16 zone_id )
   LOCATION_SetDefaultPos( &(work->loc_req), zone_id );
   work->exit_type    = EXIT_TYPE_NONE;
   work->loc_req.dir_id = EXIT_DIR_UP;  // 出てきたときは上を見る。
+
 
   // 特殊接続を保存
   {
