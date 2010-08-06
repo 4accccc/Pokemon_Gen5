@@ -1452,6 +1452,18 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
 #ifdef BUGFIX_AF_BTS7835_20100806
     if( _ParentEntry_NumDraw(em, player_num) == TRUE )
     {
+    #ifdef BUGFIX_BTS7886_20100806
+      //プレイヤーが減った時だけ
+      if( em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL && player_num == 1 ){
+        if( CommEntryMenu_InterruptCheck(em) == TRUE && em->yesno.menufunc == NULL ){
+          em->draw_player_num = player_num;
+          _StreamMsgSet(em, msg_connect_02_01);
+        }
+      }
+      else{
+        em->draw_player_num = player_num;
+      }
+    #else
       em->draw_player_num = player_num;
       //プレイヤーが減った時だけ
       if( CommEntryMenu_InterruptCheck(em) == TRUE &&
@@ -1461,9 +1473,22 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
       {
         _StreamMsgSet(em, msg_connect_02_01);
       }
+    #endif
     }
 #else
     _ParentEntry_NumDraw(em, player_num);
+  #ifdef BUGFIX_BTS7886_20100806
+    //プレイヤーが減った時だけ
+    if( em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL && player_num == 1 ){
+      if( CommEntryMenu_InterruptCheck(em) == TRUE && em->yesno.menufunc == NULL ){
+        em->draw_player_num = player_num;
+        _StreamMsgSet(em, msg_connect_02_01);
+      }
+    }
+    else{
+      em->draw_player_num = player_num;
+    }
+  #else
     em->draw_player_num = player_num;
     //プレイヤーが減った時だけ
     if( CommEntryMenu_InterruptCheck(em) == TRUE &&
@@ -1473,6 +1498,7 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
     {
       _StreamMsgSet(em, msg_connect_02_01);
     }
+  #endif
 #endif
     
   }
