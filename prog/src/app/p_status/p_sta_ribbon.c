@@ -459,8 +459,13 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
 
         PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
         PSTATUS_RIBBON_DispInfo( work , ribbonWork );
-      }
+#ifdef BUGFIX_AF_BTS7734_100806
       PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
+#endif //BUGFIX_AF_BTS7734_100806
+      }
+#ifndef BUGFIX_AF_BTS7734_100806
+      PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
+#endif //BUGFIX_AF_BTS7734_100806
       return TRUE;
     }
     else
@@ -489,8 +494,13 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
 
         PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
         PSTATUS_RIBBON_DispInfo( work , ribbonWork );
-      }
+#ifdef BUGFIX_AF_BTS7734_100806
       PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
+#endif //BUGFIX_AF_BTS7734_100806
+      }
+#ifndef BUGFIX_AF_BTS7734_100806
+      PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
+#endif //BUGFIX_AF_BTS7734_100806
       return TRUE;
     }
   }
