@@ -3771,7 +3771,15 @@ int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
   pst->game_data  = syswk->dat->gamedata;
   pst->cfg        = syswk->dat->cfg;
   pst->zukan_mode = syswk->dat->zknMode;
+#ifdef	BUGFIX_AF_GFBTS2017_100806
+	if( syswk->dat->bbRockFlg == TRUE ){
+	  pst->mode = PST_MODE_NO_WAZACHG_NEW;
+	}else{
+	  pst->mode = PST_MODE_NORMAL;
+	}
+#else		// BUGFIX_AF_GFBTS2017_100806
   pst->mode       = PST_MODE_NORMAL;
+#endif	// BUGFIX_AF_GFBTS2017_100806
 
   GFL_PROC_LOCAL_CallProc( syswk->localProc, FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, pst );
 
