@@ -409,12 +409,20 @@ void NetErr_DispCallPushPop(void)
 //		OS_SpinWait(10000);
 	
 #ifndef DEBUG_ERR_THROUGH
+#ifdef BUGFIX_BTS7870_20100806
+  while(PAD_DetectFold() == TRUE || (PAD_Read() & ERR_DISP_END_BUTTON) != 0){
+#else
 	while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
+#endif
 		Local_ErrUpdate();	//ボタンを一度離すまで待つ
 		_PushPopErrNetMain();
 	}
 	
+#ifdef BUGFIX_BTS7870_20100806
+  while(PAD_DetectFold() == TRUE || (PAD_Read() & ERR_DISP_END_BUTTON) == 0){
+#else
 	while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
+#endif
 		Local_ErrUpdate();	//エラー画面終了ボタンが押されるまで待つ
 		_PushPopErrNetMain();
 	}
@@ -810,11 +818,19 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 
 
 #ifndef DEBUG_ERR_THROUGH
+#ifdef BUGFIX_BTS7870_20100806
+		while(PAD_DetectFold() == TRUE || (PAD_Read() & ERR_DISP_END_BUTTON) != 0){
+#else
 		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
+#endif
 			Local_ErrUpdate();	//ボタンを一度離すまで待つ
 		}
 		
+#ifdef BUGFIX_BTS7870_20100806
+		while(PAD_DetectFold() == TRUE || (PAD_Read() & ERR_DISP_END_BUTTON) == 0){
+#else
 		while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
+#endif
       Local_ErrUpdate();	//エラー画面終了ボタンが押されるまで待つ
 		}
 #endif //DEBUG_ERR_THROUGH
