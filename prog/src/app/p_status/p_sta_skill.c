@@ -1414,7 +1414,9 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
         //skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
       }
       return TRUE;
+#ifdef BUGFIX_AF_GFBTS2017_100806
     }
+#endif
   }
   else
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B &&
