@@ -565,6 +565,14 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
   case SSEQ_THANKS_END:
     BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
     draw_MenuWindow( wk, msg_sys_now_record, &wk->eff_task_ct );
+
+#ifdef BUGFIX_AF_BTS8022_20100806
+    wk->sub_seq = SSEQ_THANKS_END_WAIT;
+    break;
+
+  case SSEQ_THANKS_END_WAIT:
+    //すれ違い述べ人数再表示 draw_MenuWindow()タスク終了待ち
+#endif
     wk->sub_seq = 0;
     return SEQ_MAIN;
   }
