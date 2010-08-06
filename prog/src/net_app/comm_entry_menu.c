@@ -988,6 +988,11 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     }
     break;
   case _SEQ_RETRY_INIT:
+  #ifdef BUGFIX_AF_BTS7875_20100806
+    em->game_start = FALSE;
+    em->game_cancel = FALSE;
+    em->entry_parent_answer = ENTRY_PARENT_ANSWER_NULL;
+  #endif
     GFL_NET_Init( &em->netInitStruct , NULL , em->netParentWork );
     em->seq = _SEQ_RETRY_WAIT;
     break;
@@ -2477,6 +2482,26 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
       if(ret == FLDMENUFUNC_YESNO_NULL && FLDMSGBG_CheckFinishPrint( FIELDMAP_GetFldMsgBG(em->fieldWork) ) == TRUE)
       {
         //終了待ちの間に親が進んだ！
+      #ifdef BUGFIX_AF_BTS7875_20100806
+        if(em->game_start == TRUE||
+           em->game_cancel == TRUE||
+           em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK||
+           em->entry_parent_answer == ENTRY_PARENT_ANSWER_NG)
+        {
+          FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+          yesno->menufunc = NULL;
+
+          if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK||
+            em->entry_parent_answer == ENTRY_PARENT_ANSWER_NG)
+          { //親機からの返事を受信しているなら選択肢をキャンセルした事にしてメイン処理に戻す
+            psl->local_seq = psl->return_seq;
+          }
+          else{
+            psl->final_select = PARENT_SEARCH_LIST_SELECT_OK;
+            psl->local_seq = _SEQ_FINISH;
+          }
+        }
+      #else
         if(em->game_start == TRUE||
            em->game_cancel == TRUE)
         {
@@ -2485,6 +2510,7 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
           psl->final_select = PARENT_SEARCH_LIST_SELECT_OK;
           psl->local_seq = _SEQ_FINISH;
         }
+      #endif
       }
       else
       {
