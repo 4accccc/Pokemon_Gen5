@@ -15,7 +15,6 @@
 #include "savedata/mystatus_local.h"
 #include "comm_entry_menu_comm_command.h"
 
-
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -254,7 +253,11 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em);
 static BOOL CommEntryMenu_InterruptCheck(COMM_ENTRY_MENU_PTR em);
 static void _MemberInfo_Setup(COMM_ENTRY_MENU_PTR em);
 static void _MemberInfo_Exit(COMM_ENTRY_MENU_PTR em);
+#ifdef BUGFIX_AF_BTS7835_20100806
+static const BOOL _ParentEntry_NumDraw(COMM_ENTRY_MENU_PTR em, int player_num);
+#else
 static void _ParentEntry_NumDraw(COMM_ENTRY_MENU_PTR em, int player_num);
+#endif
 static void _ParentEntry_NameDraw(COMM_ENTRY_MENU_PTR em, COMM_ENTRY_USER *user, int netID);
 static void _ParentEntry_NameErase(COMM_ENTRY_MENU_PTR em, COMM_ENTRY_USER *user, int netID);
 static void _MemberInfo_NameDraw(COMM_ENTRY_MENU_PTR em, const MYSTATUS *myst, NetID netID);
@@ -1441,9 +1444,22 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
     player_num++;
   }
   if(em->draw_player_num != player_num){
+#ifdef BUGFIX_AF_BTS7835_20100806
+    if( _ParentEntry_NumDraw(em, player_num) == TRUE )
+    {
+      em->draw_player_num = player_num;
+      //プレイヤーが減った時だけ
+      if( CommEntryMenu_InterruptCheck(em) == TRUE &&
+          em->yesno.menufunc == NULL &&
+          em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL &&
+          player_num == 1 )
+      {
+        _StreamMsgSet(em, msg_connect_02_01);
+      }
+    }
+#else
     _ParentEntry_NumDraw(em, player_num);
     em->draw_player_num = player_num;
-    
     //プレイヤーが減った時だけ
     if( CommEntryMenu_InterruptCheck(em) == TRUE &&
         em->yesno.menufunc == NULL &&
@@ -1452,6 +1468,8 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
     {
       _StreamMsgSet(em, msg_connect_02_01);
     }
+#endif
+    
   }
 }
 
@@ -2001,18 +2019,34 @@ static void _MemberInfo_Exit(COMM_ENTRY_MENU_PTR em)
  * @param   netID		
  */
 //--------------------------------------------------------------
+#ifdef BUGFIX_AF_BTS7835_20100806
+static const BOOL _ParentEntry_NumDraw(COMM_ENTRY_MENU_PTR em, int player_num)
+#else
 static void _ParentEntry_NumDraw(COMM_ENTRY_MENU_PTR em, int player_num)
+#endif
 {
   if(em->fldmsgwin_list != NULL){
-    FLDMSGWIN_FillClearWindow(em->fldmsgwin_list, 
-      LISTBMP_START_NUM_X, LISTBMP_START_NUM_Y, 
-      (LISTBMP_POS_RIGHT - LISTBMP_POS_LEFT) * 8, LISTBMP_START_NUM_Y + 8*2);
+    
+#ifdef BUGFIX_AF_BTS7835_20100806
+    if( FLDMSGWIN_CheckPrintTrans( em->fldmsgwin_list ) == TRUE )
+#endif
+    {
+      FLDMSGWIN_FillClearWindow(em->fldmsgwin_list, 
+        LISTBMP_START_NUM_X, LISTBMP_START_NUM_Y, 
+        (LISTBMP_POS_RIGHT - LISTBMP_POS_LEFT) * 8, LISTBMP_START_NUM_Y + 8*2);
 
-    WORDSET_RegisterNumber( em->wordset, 0, em->max_num - player_num, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-    WORDSET_ExpandStr( em->wordset, em->strbuf_num_expand, em->strbuf_num_template );
-    FLDMSGWIN_PrintStrBuf(em->fldmsgwin_list, 
-      LISTBMP_START_NUM_X, LISTBMP_START_NUM_Y, em->strbuf_num_expand);
+      WORDSET_RegisterNumber( em->wordset, 0, em->max_num - player_num, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( em->wordset, em->strbuf_num_expand, em->strbuf_num_template );
+      FLDMSGWIN_PrintStrBuf(em->fldmsgwin_list, 
+        LISTBMP_START_NUM_X, LISTBMP_START_NUM_Y, em->strbuf_num_expand);
+#ifdef BUGFIX_AF_BTS7835_20100806
+      return TRUE;
+#endif
+    }
   }
+#ifdef BUGFIX_AF_BTS7835_20100806
+  return FALSE;
+#endif
 }
 
 //--------------------------------------------------------------
