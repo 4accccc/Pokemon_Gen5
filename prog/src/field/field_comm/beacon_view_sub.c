@@ -1446,6 +1446,15 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
     pal = ACT_PANEL_PAL_RANK_MARK*16+RESEARCH_TEAM_RANK_5;
     num = pp->rank;
   }
+
+#ifdef BUGFIX_AF_GFBTS2002_20100806
+  /*
+   *  一度Offカラーで全てクリア
+   */
+  PaletteWorkSet( wk->pfd, &wk->resPlttPanel.dat[ ACT_PANEL_PAL_RANK_MARK*16 ],
+      FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+ACT_PANEL_COL_OFS_RANK, 2*RESEARCH_TEAM_RANK_5 );
+#endif
+
   PaletteWorkSet( wk->pfd, &wk->resPlttPanel.dat[ pal ],
       FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+ACT_PANEL_COL_OFS_RANK, 2*num );
 }
