@@ -1434,9 +1434,15 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   }
   
   new_area = new_area + GFL_NET_SystemGetCurrentID();
+#ifdef BUGFIX_BTS7869_20100806
+  if(new_area > intcomm->connect_map_count){
+    new_area -= intcomm->connect_map_count+1;
+  }
+#else
   if(new_area >= intcomm->member_num){
     new_area -= intcomm->member_num;
   }
+#endif
   if(now_area != new_area){
     OS_TPrintf("new_palace_area = %d new_pos_x = %x\n", new_area, new_pos.x);
     Intrude_SetMinePalaceArea(intcomm, new_area);
