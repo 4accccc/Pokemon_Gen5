@@ -1217,6 +1217,29 @@ BOOL GDSRAP_MoveStatusAllCheck(GDS_RAP_WORK *gdsrap)
 }
 
 
+#ifdef BUGFIX_AF_BTLVIDEO00_20100806
+//==================================================================
+/**
+ * GDSライブラリを終了してもよい状態か調べる
+ *
+ * @param   gdsrap		
+ *
+ * @retval  BOOL		TRUE:終了してよい。 FALSE:終了してはいけない
+ */
+//==================================================================
+BOOL GDSRAP_CheckPokeNetEndStatus(GDS_RAP_WORK *gdsrap)
+{
+  if(gdsrap->comm_initialize_ok == FALSE){
+    return TRUE;
+  }
+  if(GDSRAP_MoveStatusAllCheck(gdsrap) == TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
+#endif  //BUGFIX_AF_BTLVIDEO00_20100806
+
+
 
 //==============================================================================
 //	デバッグ用ツール

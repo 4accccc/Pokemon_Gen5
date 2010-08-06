@@ -260,6 +260,9 @@ typedef struct{
 extern int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data);
 extern int GDSRAP_Main(GDS_RAP_WORK *gdsrap);
 extern void GDSRAP_Exit(GDS_RAP_WORK *gdsrap);
+#ifdef BUGFIX_AF_BTLVIDEO00_20100806
+extern BOOL GDSRAP_CheckPokeNetEndStatus(GDS_RAP_WORK *gdsrap);
+#endif
 
 //--------------------------------------------------------------
 //	ëóêMån

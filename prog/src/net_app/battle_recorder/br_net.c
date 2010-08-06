@@ -669,6 +669,14 @@ BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
     return BR_NET_SYSERR_RETURN_NONE;
   }
 
+#ifdef BUGFIX_AF_BTLVIDEO00_20100806
+  //GDSの処理が残っているのならばエラーを検知しない
+  if( GDSRAP_CheckPokeNetEndStatus( &p_wk->gdsrap ) == FALSE)
+  {
+    return BR_NET_SYSERR_RETURN_NONE;
+  }
+#endif  //BUGFIX_GFBTS1996_20100729
+
   //DWCからのエラー
   { 
     GFL_NET_DWC_ERROR_RESULT  result;
@@ -1217,6 +1225,7 @@ static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION
  *	@param	ret       エラーリターン
  */
 //-----------------------------------------------------------------------------
+
 #ifdef BUGFIX_GFBTS1996_20100719
 static BOOL BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int ret )
 #else //BUGFIX_GFBTS1996_20100719
@@ -1231,6 +1240,13 @@ static void BR_NET_DisconnectCallback(void* pUserWork, int code, int type, int r
     return TRUE;
   }
 #endif //BUGFIX_GFBTS1996_20100719
+
+#ifdef BUGFIX_GFBTS1996_20100729
+  if( GDSRAP_CheckPokeNetEndStatus( &p_wk->gdsrap ) == FALSE )
+  {
+    return TRUE;
+  }
+#endif  //BUGFIX_GFBTS1996_20100729
 
   //GDS_RAPの切断コールバック処理
   GDSRAP_DisconnectCallback( p_wk, code, type, ret );
