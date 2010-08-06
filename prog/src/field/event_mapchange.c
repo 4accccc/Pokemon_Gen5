@@ -506,6 +506,11 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
       //セーブ時の時刻がシェイミスカイフォルムの場合、元に戻す処理
       SheimiFromBackIllegal(gamedata);
       MAPCHG_updateGameData( gsys, spLoc ); //新しいマップID、初期位置をセット
+
+#ifdef BUGFIX_AF_BTS7826_20100806
+      //すれ違い通信用現在位置を復帰先に更新
+      GAMEBEACON_Set_ZoneChange( spLoc->zone_id, gamedata ); 
+#endif
     }
     else
     {
@@ -2667,6 +2672,11 @@ static void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   
   //新しいマップID、初期位置をセット
   MAPCHG_updateGameData( gsys, &loc_req );
+
+#ifdef BUGFIX_AF_BTS7826_20100806
+  //すれ違い通信用現在位置を復帰先に更新
+  GAMEBEACON_Set_ZoneChange( loc_req.zone_id, gamedata ); 
+#endif
 
   //イベント時間更新
   EVTIME_Update( gamedata );
