@@ -2158,7 +2158,11 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           is_update = TRUE;
         }
       }
+#ifdef BUGFIX_AF_BTS7960_20100806
+      else if(  GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+#else
       else if( key & PAD_BUTTON_DECIDE )
+#endif
       {  
 #ifndef BUGFIX_AF_GFBTS2004_20100806
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
