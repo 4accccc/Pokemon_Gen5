@@ -210,6 +210,9 @@ LIVEBATTLEMATCH_IRC_ERROR_REPAIR_TYPE LIVEBATTLEMATCH_IRC_CheckErrorRepairType( 
 
     NetErr_ExitNetSystem();
     NetErr_DispCallPushPop();
+#ifdef BUGFIX_AF_BTS7976_20100806
+    NetErr_ErrWorkInit();
+#endif 
     return LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT;
   }
 

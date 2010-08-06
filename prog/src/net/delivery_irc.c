@@ -502,7 +502,11 @@ static BOOL _initNet(DELIVERY_IRC_WORK* pWork)
     GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_IRC_BATTLE,  //GameServiceID
+#ifdef BUGFIX_AF_BTS7976_20100806
+    0xffffffff, // 赤外線タイムアウト時間
+#else
     0xfffe, // 赤外線タイムアウト時間
+#endif
     0,//MP通信親機送信バイト数
     0,//dummy
   };
