@@ -1013,13 +1013,13 @@ void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
   }
-
+#ifdef PM_DEBUG
   //フィールドの残りヒープをプリント
   if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
     int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
     OS_Printf("size = %x\n",size);
   }
-
+#endif
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 

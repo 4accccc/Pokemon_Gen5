@@ -735,7 +735,7 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
       tmp->FloorVanish = vanish;
     }
   }
-
+#ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
     GMEVENT *event;
@@ -747,6 +747,7 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
       GAMESYSTEM_SetEvent(gsys, event);
     }
   }
+#endif  
 }
 
 //--------------------------------------------------------------

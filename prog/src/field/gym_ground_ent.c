@@ -174,7 +174,7 @@ void GYM_GROUND_ENT_Move(FIELDMAP_WORK *fieldWork)
   int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 //  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_ENT_TMP_ASSIGN_ID);
-
+#ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
       GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
@@ -192,7 +192,7 @@ void GYM_GROUND_ENT_Move(FIELDMAP_WORK *fieldWork)
       }
     }
   }
-
+#endif
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 }
