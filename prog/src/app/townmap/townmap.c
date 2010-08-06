@@ -501,6 +501,9 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk, const MAP_WORK *cp_map );
 static TOUCHBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
+#ifdef BUGFIX_AF_BTS8009_20100806
+static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk);
+#endif 
 //-------------------------------------
 ///	CURSOR
 //=====================================
@@ -1317,6 +1320,11 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	TOWNMAP_WORK	*p_wk	= p_param_adrs;
 	BOOL is_map_move	= FALSE;
 
+#ifdef BUGFIX_AF_BTS8009_20100806
+  if( !APPBAR_IsDecide( &p_wk->appbar ) )
+  {
+#endif
+
 	//カーソルの地図移動
 	if( p_wk->is_scale && !MAP_IsScale( &p_wk->map ) )
 	{	
@@ -1491,6 +1499,11 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 	//マップ判定中は引き困れない
 	CURSOR_SetPullEnable( &p_wk->cursor, !is_map_move );
+
+
+#ifdef BUGFIX_AF_BTS8009_20100806
+  }
+#endif
 
 	///モジュールメイン処理
 	APPBAR_Main( &p_wk->appbar, &p_wk->map );
@@ -1804,6 +1817,21 @@ static TOUCHBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
   }
 	return icon;
 }
+#ifdef BUGFIX_AF_BTS8009_20100806
+//----------------------------------------------------------------------------
+/**
+ *	@brief  APPBAR  内部入力状態検知
+ *
+ *	@param	const APPBAR_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEならば決定待ち、  FALSEならば選択待ち
+ */
+//-----------------------------------------------------------------------------
+static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk)
+{
+  return TOUCHBAR_IsDecide( cp_wk->p_touchbar );
+}
+#endif 
 //=============================================================================
 /**
  *	CURSOR
