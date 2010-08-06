@@ -1375,7 +1375,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
   {
 #ifdef BUGFIX_AF_GFBTS2017_100806
-    if( work->psData->mode == PST_MODE_NORMAL )
+    if( work->psData->mode != PST_MODE_NO_WAZACHG_NEW )
     {
 #endif
       //Aボタン操作
@@ -1497,7 +1497,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
             //PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
           }
 #ifdef BUGFIX_AF_GFBTS2017_100806
-          if( work->psData->mode == PST_MODE_NORMAL )
+          if( work->psData->mode != PST_MODE_NO_WAZACHG_NEW )
           {
             skillWork->isHoldTp = TRUE;
             //キーで入れ替え中に来たらchangeTargetを変えない！

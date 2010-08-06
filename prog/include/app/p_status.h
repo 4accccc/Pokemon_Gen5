@@ -63,6 +63,11 @@ enum {
   PST_MODE_WAZAADD_HIDEN,   // 秘伝可能Ver
   PST_MODE_PORUTO,    // ポルト使用       （使わない）
   PST_MODE_CONDITION,   // コンディション変更デモ （使わない）
+#ifdef BUGFIX_AF_GFBTS2017_100806
+  //今まで入れ替え不可設定をしていたところは動いていて欲しいので
+  //新規で定義を作成し、これでロックする
+  PST_MODE_NO_WAZACHG_NEW,
+#endif
 };
 
 // パラメータタイプ
