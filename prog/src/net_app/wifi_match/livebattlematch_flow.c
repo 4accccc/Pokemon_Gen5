@@ -2193,7 +2193,11 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           switch( select )
           { 
           case 0: //ふりかえる
+#ifdef BUGFIX_AF_BTS8030_20100806
+            *p_seq  = SEQ_CHECK_LOOKBACK;
+#else 
             *p_seq  = SEQ_LOOKBACK_END;
+#endif
             break;
 
           case 1: //おわる
@@ -2234,7 +2238,12 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       u32 your_ver  = p_wk->param.p_enemy_data->btl_server_version;
 
       //自分のバージョンが相手より高ければ振り返ることができる。
+
+#ifdef BUGFIX_AF_BTS8030_20100806
+      if( BattleRec_ServerVersionCheck( your_ver ) )
+#else
       if( my_ver >= your_ver )
+#endif
       { 
         *p_seq  = SEQ_START_MSG_LOOKBACK;
       }
