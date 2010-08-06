@@ -37,7 +37,15 @@ struct _DEMO3D_CMD_WORK {
   BOOL  cmdsys_end_f; ///<コマンドタスクの自殺用
   int   pre_frame; ///< 1sync=1
   int   cmd_idx;
+
+#ifdef BUGFIX_AF_MSGSPEED_DEMO3D_20100806
+  /*
+   *  MSGSPEED_GetWait()の戻り値はs8以上のsignedで受ける必要がある
+   */
+  s8    msg_spd;
+#else
   u8    msg_spd;
+#endif
   u8    bgm_push_f;
   u8    delay_f;
 
