@@ -818,7 +818,12 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
       && (situ->appeal_no == play_appeal_no
       || (play_appeal_no == UNION_APPEAL_NULL && situ->appeal_no == beacon->appeal_no)) //アピール一致
       && unichara->child_no == 0                //親だけ
+#ifdef BUGFIX_BTS7943_20100806
+      && UnionMsg_GetMemberMax(beacon->play_category) > beacon->connect_num   //接続人数未満
+      && beacon->entry_ng == FALSE){            //乱入禁止になっていない
+#else
       && UnionMsg_GetMemberMax(beacon->play_category) > beacon->connect_num){ //接続人数未満
+#endif
     mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
     if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
       MMDL_SetAcmd(mmdl, AC_STAY_JUMP_D_8F);
