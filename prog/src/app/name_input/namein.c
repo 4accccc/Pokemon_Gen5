@@ -3947,6 +3947,13 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID )
 { 
+#ifdef BUGFIX_AF_BTS8006_20100806
+  while( PRINTSYS_QUE_IsExistTarget( p_wk->p_que, GFL_BMPWIN_GetBmp(p_wk->p_bmpwin) ) )
+  {
+    PRINTSYS_QUE_Main( p_wk->p_que );
+  }
+#endif
+
   //ˆê’[Á‹Ž
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );  
 
