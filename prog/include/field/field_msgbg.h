@@ -323,6 +323,9 @@ extern u32 FLDMENUFUNC_GetListMenuLen( u32 num, u32 font_size, u32 space );
 extern void FLDMENUFUNC_InputHeaderListSize(
   FLDMENUFUNC_HEADER *head, u16 count,
   u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
+#ifdef BUGFIX_BTS7887_20100806
+extern void FLDMENUFUNC_WriteWindow( FLDMENUFUNC *menuFunc );
+#endif
 
 //はい、いいえ選択メニュー
 extern FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(

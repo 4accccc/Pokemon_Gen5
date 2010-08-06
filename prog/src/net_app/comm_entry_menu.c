@@ -2521,6 +2521,11 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
         {
           psl->local_seq = psl->return_seq;
           _StreamMsgSet(em, msg_game_wait_parent);
+        #ifdef BUGFIX_BTS7887_20100806
+          if(em->parentsearch.menufunc != NULL){
+            FLDMENUFUNC_WriteWindow( em->parentsearch.menufunc );
+          }
+        #endif
         }
         else
         {

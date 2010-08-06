@@ -2005,6 +2005,21 @@ void FLDMENUFUNC_InputHeaderListSize(
   head->bmpsize_y = bmpsize_y;
 }
 
+#ifdef BUGFIX_BTS7887_20100806
+//--------------------------------------------------------------
+/**
+ * FLDMSGWIN_STREAM メッセージウィンドウ ウィンドウ描画
+ * @param msgWin FLDMSGWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMENUFUNC_WriteWindow( FLDMENUFUNC *menuFunc )
+{
+  BmpWinFrame_Write( menuFunc->bmpwin,
+      WINDOW_TRANS_ON, 1, PANO_MENU_B );
+}
+#endif
+
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_HEADER -> BMPMENULIST_HEADER
