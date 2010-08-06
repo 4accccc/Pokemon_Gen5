@@ -450,3 +450,14 @@ gum_insect.c      1016行目
 
 //国、地域の不正チェックが足りていない
 //#define BUGFIX_COUNTRY_NGCHECK_20100806
+
+/**海外版に向け、ソースにコメント追記した所**/
+/*
+Signedで取得する必要がある MSGSPEED_GetWait()の戻り値を、
+Unsignedの変数に取得してしまっているが、現状変数が未使用のために
+実害がない箇所に関して、注意喚起のためのコメントを残した
+
+src/field/field_comm/beacon_view.c _sub_DataSetup()内 710行目付近
+src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
+*/
+

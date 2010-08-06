@@ -451,6 +451,14 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
   }
 
   //メッセージスピード取得
+  /*
+   *  アフターマスター ローカライズ版に向けてのコメント
+   *
+   *  wk->msg_spdメンバはu8だが、実際はs8以上のsigned型である必要がある。
+   *  現状、msg_spdメンバが非参照のため、修正はせずコメントを残すのみとする
+   *
+   *  by iwasawa 20100806
+  */
   wk->msg_spd  = MSGSPEED_GetWait();
 
 	//メモリ上にタウンマップデータ展開
