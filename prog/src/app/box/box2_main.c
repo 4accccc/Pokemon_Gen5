@@ -3750,7 +3750,11 @@ int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
 {
   FS_EXTERN_OVERLAY(poke_status);
 
+#ifdef	BUGFIX_AF_BOX00_20100806
+  PSTATUS_DATA * pst = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(PSTATUS_DATA) );
+#else		// BUGFIX_AF_BOX00_20100806
   PSTATUS_DATA * pst = GFL_HEAP_AllocMemory( HEAPID_BOX_SYS, sizeof(PSTATUS_DATA) );
+#endif	// BUGFIX_AF_BOX00_20100806
 
   if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
     pst->ppd = BOX2MAIN_PPPGet( syswk, syswk->get_tray, 0 );
