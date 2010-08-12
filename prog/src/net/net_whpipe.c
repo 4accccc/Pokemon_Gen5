@@ -85,6 +85,9 @@ typedef int (*PTRTimeGet)(void);
 
 //管理構造体定義
 struct _NET_WL_WORK {
+#ifdef BUGFIX_AF_GF_BUFF32_20100812
+	u8 gameInfoBuff[WM_SIZE_USER_GAMEINFO];  //送信するビーコンデータ
+#endif
 	PTRStateFunc state;      ///< ハンドルのプログラム状態
 	PTRCommRecvLocalFunc recvCallback; ///< 受信コールバック解決用
 	WMBssDesc sBssDesc[SCAN_PARENT_COUNT_MAX];  ///< 親機の情報を記憶している構造体
@@ -97,7 +100,9 @@ struct _NET_WL_WORK {
 	u16 _sTgid;
 	u16 errCheckBitmap;      ///< このBITMAPが食い違うとエラーになる
   u16 crossTimer;
+#ifndef BUGFIX_AF_GF_BUFF32_20100812
 	u8 gameInfoBuff[WM_SIZE_USER_GAMEINFO];  //送信するビーコンデータ
+#endif
 	u8 connectMac[WM_SIZE_BSSID];
 	u8 mineDebugNo;       ///< 通信識別子、デバッグ用 本番では０
 	u8 channel;
@@ -226,7 +231,11 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 	if(_pNetWL){
 		return FALSE;
 	}
-	pNetWL = GFL_HEAP_AllocClearMemory(heapID, sizeof(GFL_NETWL));
+#ifdef BUGFIX_AF_GF_BUFF32_20100812
+  pNetWL = GFL_NET_Align32Alloc(heapID, sizeof(GFL_NETWL));
+#else
+  pNetWL = GFL_HEAP_AllocClearMemory(heapID, sizeof(GFL_NETWL));
+#endif
 	_pNetWL = pNetWL;
 
 	pNetWL->keepChannel = 0xff;
@@ -782,7 +791,11 @@ static void _commEnd(void)
 		return;
 	}
 	//   WH_DestroyHandle(pNetWL->_pWHWork);
+#ifdef BUGFIX_AF_GF_BUFF32_20100812
+  GFL_NET_Align32Free(pNetWL);
+#else
 	GFL_HEAP_FreeMemory(pNetWL);
+#endif
 	_pNetWL = NULL;
 }
 #if 0

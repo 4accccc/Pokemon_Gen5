@@ -565,7 +565,11 @@ typedef struct{
   u16 scanWaitFrame;
 	/* 親機接続時に使用する設定 */
 	u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
+#ifdef BUGFIX_AF_GF_HANDLE_20100812
+  u16 sHandleFreeBitmap;
+#else //BUGFIX_AF_GF_HANDLE_20100812
   u16 dummy;
+#endif //BUGFIX_AF_GF_HANDLE_20100812
   u8 pauseScan;
   u8 sWH_EndScan;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
 } _WM_INFO_STRUCT;
@@ -1119,13 +1123,18 @@ static void WH_StateOutStartParent(void *arg)
       {
         int nobit = 0x01 << cb->aid;
         if((_pWmInfo->sConnectBitmap & nobit)){  //つながっていない人の切断はスルー
+#ifdef BUGFIX_AF_GF_HANDLE_20100812
+          _pWmInfo->sHandleFreeBitmap |= target_bitmap;
+#endif //BUGFIX_AF_GF_HANDLE_20100812
           _pWmInfo->sConnectBitmap &= ~target_bitmap;
           if(_pWmInfo->disconnectCallBack){
             _pWmInfo->disconnectCallBack(cb->aid);
           }
           GFL_NET_WL_DisconnectError();
+#ifndef BUGFIX_AF_GF_HANDLE_20100812
           GFI_NET_HANDLE_Delete(cb->aid);
           GFL_NET_HANDLE_RequestResetNegotiation(cb->aid);
+#endif  //BUGFIX_AF_GF_HANDLE_20100812
         }
       }
 		}
@@ -3648,6 +3657,20 @@ void WH_StepScan(void)
       }
     }
 	}
+
+
+#ifdef BUGFIX_AF_GF_HANDLE_20100812
+  if(_pWmInfo){
+    int i,max = GFL_NET_GetConnectNumMax();
+    for(i=0;i<max;i++){
+      if(_pWmInfo->sHandleFreeBitmap & (1 << i)){
+        GFI_NET_HANDLE_Delete(i);
+        GFL_NET_HANDLE_RequestResetNegotiation(i);
+      }
+    }
+    _pWmInfo->sHandleFreeBitmap=0;
+  }
+#endif BUGFIX_AF_GF_HANDLE_20100812
 }
 
 

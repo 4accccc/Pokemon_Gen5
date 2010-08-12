@@ -717,6 +717,52 @@ static void _modeProfileWait(WIFILOGIN_WORK* pWork)
   _CHANGE_STATE(pWork,_modeProfileWait2);
 }
 
+
+#ifdef BUGFIX_AF_GF_LOGIN_20108_20100812
+
+static void _modeErrLoginWait2(WIFILOGIN_WORK* pWork)
+{
+
+  if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
+    int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
+
+
+    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
+    pWork->pSelectWork=NULL;
+    
+    if(selectno==0){
+      if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(pWork->pList) ) )
+      {    // 20108‚Å‰Šú‰»‚³‚ê‚½ê‡
+        pWork->bInitMessage=TRUE;
+        WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+        if(!DS_SYSTEM_IsRunOnTwl()){
+          WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
+        }
+        else{
+          WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwctwl_message_0003);
+        }
+        _CHANGE_STATE(pWork,_modeProfileWait);
+      }
+      else{
+        pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
+        _CHANGE_STATE(pWork,_connectionStart);
+        if(pWork->dbw->bg==WIFILOGIN_BG_NORMAL){
+          WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
+        }
+      }
+    }
+    else{
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
+      _CHANGE_STATE(pWork,_callbackFunciton);
+    }
+  }
+}
+
+#endif //BUGFIX_AF_GF_LOGIN_20108_20100812
+
+
 static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
 {
 	if(!WIPE_SYS_EndCheck()){
@@ -724,7 +770,11 @@ static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
   }
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL),0);
-    _CHANGE_STATE(pWork,_modeLoginWait2);
+#ifdef BUGFIX_AF_GF_LOGIN_20108_20100812
+  _CHANGE_STATE(pWork,_modeErrLoginWait2);
+#else
+  _CHANGE_STATE(pWork,_modeLoginWait2);
+#endif
 }
 
 //------------------------------------------------------------------------------

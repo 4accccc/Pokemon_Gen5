@@ -449,6 +449,27 @@
 //#define BUGFIX_AF_GF_GSYNC_NOERROR_20100812
 
 /*
+  ロットチェック
+  ２０１０８のエラーはWIFILoginIDがきえる
+  ログインを繰り返す場合、DWC_CheckHasProfileを調べなおす修正が必要である
+*/
+//#define BUGFIX_AF_GF_LOGIN_20108_20100812
+
+/*
+  レシーブバッファのアライメント修正
+  本来３２ビットアライメントが必要
+  GFLIBの修正も必要  net_system.c 230
+*/
+
+//#define BUGFIX_AF_GF_BUFF32_20100812
+
+/*
+  親機の割り込みでハンドルを消さないように修正
+*/
+//#define BUGFIX_AF_GF_HANDLE_20100812
+
+
+/*
   日韓バージョン以外で、メッセージスピード設定を「はやい」以上にした場合
   観覧車デモのメッセージ描画速度が異常にゆっくりになってしまうバグの修正
 */
