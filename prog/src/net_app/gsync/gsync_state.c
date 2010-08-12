@@ -2201,6 +2201,9 @@ static void _updateSave2(G_SYNC_WORK* pWork)
       GFL_HEAP_FreeMemory(pWork->pBackupDream);
       pWork->pBackupDream=NULL;
     }
+#ifdef BUGFIX_AF_GF_GSYNC_NOERROR_20100812
+    pWork->noERROR = TRUE;
+#endif //BUGFIX_AF_GF_GSYNC_NOERROR_20100812
 #ifdef BUGFIX_PGLBTS78_100712
 #else
     pWork->bBox2SleepSaveData = FALSE;
@@ -2216,6 +2219,9 @@ static void _updateSave2(G_SYNC_WORK* pWork)
     break;
   case SAVE_RESULT_OK:
     pWork->bSaveDataAsync=FALSE;
+#ifdef BUGFIX_AF_GF_GSYNC_NOERROR_20100812
+    pWork->noERROR = FALSE;
+#endif //BUGFIX_AF_GF_GSYNC_NOERROR_20100812
     _CHANGE_STATE(_upeffectLoop6);
     break;
   }
