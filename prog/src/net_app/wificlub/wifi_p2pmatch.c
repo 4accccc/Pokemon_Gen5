@@ -847,6 +847,11 @@ static BOOL _myVChatStatusOrgSet(WIFIP2PMATCH_WORK *wk);
 static int _vchatToggleWait( WIFIP2PMATCH_WORK *wk, int seq );
 static BOOL _tradeNumCheck(WIFIP2PMATCH_WORK * wk);
 static int _childModeConnect( WIFIP2PMATCH_WORK *wk, int seq );
+#ifdef BUGFIX_AF_GF_CLUBSAVE_20100806
+static int _StartLogoutSaveWait( WIFIP2PMATCH_WORK *wk, int seq );
+static int _StartLogoutSave( WIFIP2PMATCH_WORK *wk, int seq );
+static int _StartLogoutSaveMsg( WIFIP2PMATCH_WORK *wk, int seq );  //WIFIP2PMATCH_STARTLOGOUTSAVEMSG
+#endif
 
 
 static int WifiP2PMatch_EndWait( WIFIP2PMATCH_WORK *wk, int seq );
@@ -1072,7 +1077,11 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectInit3Next,//WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT3
   _playerDirectInit0Next, //WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT0
   _wifip2pmatch_mode_friendlist_mw_wait, //WIFIP2PMATCH_MODE_FRIENDLIST_MW_WAIT
-
+#ifdef BUGFIX_AF_GF_CLUBSAVE_20100806
+  _StartLogoutSaveWait, //WIFIP2PMATCH_STARTLOGOUTSAVEWAIT
+  _StartLogoutSave,  //WIFIP2PMATCH_STARTLOGOUTSAVE
+  _StartLogoutSaveMsg,  //WIFIP2PMATCH_STARTLOGOUTSAVEMSG
+#endif
 };
 
 
@@ -6269,7 +6278,12 @@ static int _exitEnd( WIFIP2PMATCH_WORK *wk, int seq )
   wk->timer--;
   if(wk->timer==0){
     wk->endSeq = WIFI_GAME_NONE;
+#ifdef BUGFIX_AF_GF_CLUBSAVE_20100806
+    _CHANGESTATE(wk,WIFIP2PMATCH_STARTLOGOUTSAVEMSG);
+#else
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
+#endif
+
     EndMessageWindowOff(wk);
   }
   return seq;
@@ -7799,6 +7813,64 @@ static void _initBGMVol( WIFIP2PMATCH_WORK* wk, int status)
   wk->aVol.bgmVolStart = wk->aVol.bgmVolEnd;
   //OS_TPrintf("ボリューム初期化 %d\n",wk->aVol.bgmVolEnd);
 }
+
+
+
+#ifdef BUGFIX_AF_GF_CLUBSAVE_20100806
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   セーブ中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static int _StartLogoutSaveWait(WIFIP2PMATCH_WORK* wk, int seq )
+{
+  SAVE_RESULT result = GAMEDATA_SaveAsyncMain(wk->pGameData);
+
+  if (result != SAVE_RESULT_CONTINUE && result != SAVE_RESULT_LAST) {
+  }
+  else{
+    return seq;  //セーブ中に他の遷移を禁じる
+  }
+
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
+  return seq;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   セーブのメッセージがで終わるまで待ち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static int _StartLogoutSave(WIFIP2PMATCH_WORK* wk, int seq )
+{
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    GAMEDATA_SaveAsyncStart(wk->pGameData);
+    _CHANGESTATE(wk, WIFIP2PMATCH_STARTLOGOUTSAVEWAIT);
+  }
+  return seq;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ開始
+ *
+ *	@param	WIFILOGOUT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static int _StartLogoutSaveMsg( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  WifiP2PMatchMessagePrint(wk, msg_wifilobby_010, FALSE);
+  WifiP2PMatchMessage_TimeIconStart(wk);
+  _CHANGESTATE(wk, WIFIP2PMATCH_STARTLOGOUTSAVE);
+  return seq;
+}
+
+#endif
+
 
 //--------------------------------------------------------------------------------------------
 /**

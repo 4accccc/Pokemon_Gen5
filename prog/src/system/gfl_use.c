@@ -317,7 +317,9 @@ void GFLUser_Main(void)
   GFL_UI_Main();
 
   NET_DEV_Main();
-
+#ifdef BUGFIX_BTS7918_20100812
+  NetErr_Main();
+#endif
 
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE

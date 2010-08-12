@@ -28,6 +28,24 @@
 FS_EXTERN_OVERLAY(wifi_break);
 
 
+#ifdef BUGFIX_AF_GF_DWCINITERR_20100812
+//==============================================================================
+/**
+ * @brief   Wi-Fi接続初期化時のDWC_INIT_RESULT_DESTROY_OTHER_SETTINGエラーの場合の関数
+ * @param   pNet    ハンドル
+ * @param   errNo   メモリ領域
+ * @param   pWork   ユーザーワーク
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_InitErrorFunc(GFL_NETHANDLE* pNet,int errNo, void* pWork)
+{
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(wifi_break));
+  WifiInfoBreak_Call();
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(wifi_break));
+}
+#endif //BUGFIX_AF_GF_DWCINITERR_20100812
+
 //==============================================================================
 /**
  * @brief   Wi-Fi接続初期化 初期化時に呼び出しておく必要がある
@@ -40,12 +58,21 @@ void GFL_NET_WifiStart( int heapID , NetErrorFunc errorFunc)
 {
   int msg;
 
+
   if( DWC_INIT_RESULT_DESTROY_OTHER_SETTING == mydwc_init(heapID) ) //dwc初期化
+#ifdef BUGFIX_AF_GF_DWCINITERR_20100812
+  {
+    if(errorFunc!=NULL){
+      errorFunc(NULL,-1,NULL);
+    }
+  }
+#else //BUGFIX_AF_GF_DWCINITERR_20100812
   {
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wifi_break));
     WifiInfoBreak_Call();
   	GFL_OVERLAY_Unload(FS_OVERLAY_ID(wifi_break));
   }
+#endif//BUGFIX_AF_GF_DWCINITERR_20100812
 }
 
 

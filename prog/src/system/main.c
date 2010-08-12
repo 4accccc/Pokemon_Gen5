@@ -44,7 +44,9 @@
 #endif //PM_DEBUG
 
 #include "title/title.h"
-
+#ifdef BUGFIX_AF_GF_DWCINITERR_20100812
+#include "net/dwc_rap.h"
+#endif
 // サウンド読み込みスレッド
 extern OSThread soundLoadThread;
 
@@ -320,8 +322,15 @@ static  void  GameInit(void)
   /* 文字描画システム初期化 */
   PRINTSYS_Init( GFL_HEAPID_SYSTEM );
 
+
+
   // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
+  //ここでエラー表示する事があるので文字描画システムは手前
+#ifdef BUGFIX_AF_GF_DWCINITERR_20100812
+  GFL_NET_Boot( GFL_HEAPID_APP, GFL_NET_InitErrorFunc, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
+#else  //BUGFIX_AF_GF_DWCINITERR_20100812
   GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);  //ここでエラー表示する事があるので文字描画システムは手前
+#endif //BUGFIX_AF_GF_DWCINITERR_20100812
   // AP情報の取得
   WIH_DWC_CreateCFG(HEAPID_NETWORK_FIX);
   WIH_DWC_ReloadCFG();
@@ -381,7 +390,9 @@ static  void  GameMain(void)
   BrightnessChgMain();
   WIPE_SYS_Main();
 
+#ifndef BUGFIX_BTS7918_20100812
   NetErr_Main();
+#endif
 #if PM_DEBUG
   if((GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG)){
     NetErr_DEBUG_ErrorSet();

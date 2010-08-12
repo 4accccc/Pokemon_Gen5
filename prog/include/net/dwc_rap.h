@@ -536,3 +536,15 @@ extern void GFL_NET_DWC_SetErrDisconnectCallbackEx(Callback_DisconnectErrorEx* p
 
 //#include <ppwlobby/ppw_lobby.h>
 
+#ifdef BUGFIX_AF_GF_DWCINITERR_20100812
+//==============================================================================
+/**
+ * @brief   Wi-Fi接続初期化時のDWC_INIT_RESULT_DESTROY_OTHER_SETTINGエラーの場合の関数
+ * @param   pNet    ハンドル
+ * @param   errNo   メモリ領域
+ * @param   pWork   ユーザーワーク
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_InitErrorFunc(GFL_NETHANDLE* pNet,int errNo, void* pWork);
+#endif //BUGFIX_AF_GF_DWCINITERR_20100812
