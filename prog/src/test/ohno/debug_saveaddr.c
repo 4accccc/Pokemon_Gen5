@@ -409,6 +409,10 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_GOLD", (u32)pAddr-(u32)topAddr, sizeof(pMisc->gold));
       pAddr = (u8*)&pMisc->badge;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_BADGE_BIT", (u32)pAddr-(u32)topAddr, sizeof(pMisc->badge));
+      pAddr = (u8*)&pMisc->suretigai_count;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_CROSS_COUNT", (u32)pAddr-(u32)topAddr, sizeof(pMisc->suretigai_count));
+      pAddr = (u8*)&pMisc->thanks_recv_count;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_THANKS_COUNT", (u32)pAddr-(u32)topAddr, sizeof(pMisc->thanks_recv_count));
     }
 
 
@@ -437,7 +441,16 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
     }
 
 
+    {//WIFIリスト
+      WIFI_LIST* pWifiList = SaveData_GetWifiListData(pWork->pSaveData);
+      DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
+      pAddr = (u8*)&userdata->gs_profile_id;
+  //    OS_TPrintf("%d\n",userdata->gs_profile_id);
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(userdata->gs_profile_id));
 
+    }
+
+    
     { //GTSネゴ履歴
       WIFI_NEGOTIATION_SAVEDATA* pGTSNEGO = WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSaveData);
 
@@ -514,17 +527,16 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
     }
     
 
-
     
     {//システム
 //      SYSTEMDATA* pSys = SaveData_GetSystemData(pWork->pSaveData);
 
 //      pAddr = (u8*)&pSys->profileId;
 //      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(pSys->profileId));
-      MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
+//      MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
 
-      pAddr = (u8*)&pMy->profileID;
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PROFILE_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->profileID));
+//      pAddr = (u8*)&pMy->profileID;
+//      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PROFILE_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->profileID));
 
     }
 
@@ -551,6 +563,24 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
 
       pAddr = (u8*)&pZukan->get_flag[0];
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONGET_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+
+      pAddr = (u8*)&pZukan->sex_flag[0][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONLOOK_MALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+      pAddr = (u8*)&pZukan->sex_flag[1][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONLOOK_FEMALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+      pAddr = (u8*)&pZukan->sex_flag[2][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONLOOK_RARE_MALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+      pAddr = (u8*)&pZukan->sex_flag[3][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONLOOK_RARE_FEMALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+
+      pAddr = (u8*)&pZukan->draw_sex[0][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONZUKAN_MALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+      pAddr = (u8*)&pZukan->draw_sex[1][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONZUKAN_FEMALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+      pAddr = (u8*)&pZukan->draw_sex[2][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONZUKAN_RARE_MALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
+      pAddr = (u8*)&pZukan->draw_sex[3][0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONZUKAN_RARE_FEMALE_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
       
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","ZUKANSAVE_ZENKOKU_MONSMAX", (u32)0, ZUKANSAVE_ZENKOKU_MONSMAX);
       
