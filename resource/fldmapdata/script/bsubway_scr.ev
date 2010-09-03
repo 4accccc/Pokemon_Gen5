@@ -3449,6 +3449,10 @@ sub_bsw_ttown_receipt_talk:
     _MAP_CHANGE_NO_FADE( ZONE_ID_T05, 22, 0, 54, DIR_LEFT )
     _MAP_FADE_BLACK_IN()
     _MAP_FADE_END_CHECK()
+    
+    //#ifdef BUGFIX_AF_BTS7813_20100713
+	  _PLACE_NAME_DISPLAY()	//ínñºï\é¶ââèo
+    //#endif
   ELSE
     _CALL sub_receipt_demo_leave_stopper
   ENDIF

@@ -380,7 +380,7 @@ sub_challenge_continue_comm_multi_ok:
   
   //お友達の選択を待っています
   _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
-
+  
   //同期 1
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE1, BSW_NULL, comm_ret )
 
@@ -570,18 +570,25 @@ sub_challenge_continue_comm_multi_ok:
     
     //相手のメッセージ表示完了待ち
     _SYSWIN_MSG_ALLPUT( msg_c04r0111_19, POS_DOWN )
-    _TIME_WAIT( 15 )
-    _MSGWIN_CLOSE()
     
+    //#ifndef BUGFIX_AF_BTS7797_201007
+    //  _TIME_WAIT( 15 )
+    //  _MSGWIN_CLOSE()
+    //  //同期 7
+    //  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE7, BSW_NULL, comm_ret )
+    //#else
     //同期 7
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE7, BSW_NULL, comm_ret )
+    _TIME_WAIT( 15 )
+    _MSGWIN_CLOSE()
+    //#endif
     
     IF $comm_ret == FALSE THEN
       _CALL sub_common_comm_error_end_reqfade
       _CALL sub_challenge_continue_comm_error_retmap
       _RET
     ENDIF
-
+    
     //中断されました
     _BALLOONWIN_OBJMSG_POS( msg_c04r0111_30, SCWK_TARGET_OBJID, POS_DOWN )
     _LAST_KEYWAIT()
