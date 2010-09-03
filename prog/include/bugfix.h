@@ -377,6 +377,14 @@
 //resource/fldmapdata/rail_data/rail/d09.attr
 //#define BUGFIX_AF_GFBTS1999_100903
 
+//【ヤグルマの森外マップ（D02/map18_19）のLOCAL30,22～30,23にかけて、外観では弱草が敷かれていますが、設定されているアトリビュートが水溜りになっているため、エンカウントが起こりません。】
+//resource/fldmapdata/landata/land_res/map18_19.bin
+//#define  BUGFIX_AF_GFBTS1960_100903
+
+//【ヤグルマの森外マップ（D02/map18_19）のLOCAL14,13にて、通常地面にも関わらず、水溜りのアトリビュートが設定されており、歩くと波紋が生じます。】
+//resource/fldmapdata/landata/land_res/map18_19.bin
+//#define  BUGFIX_AF_GFBTS1959_100903
+
 //*****************************************************************************
 //--ガイドライン掲示板 GLBTSXXXX
 //*****************************************************************************
