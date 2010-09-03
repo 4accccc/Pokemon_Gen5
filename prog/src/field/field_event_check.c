@@ -267,7 +267,11 @@ static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player, const EV_REQUEST 
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+#ifndef BUGFIX_AF_BTS7995_20100806
 static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWork );
+#else
+static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWork, int grid_num );
+#endif
 
 
 //======================================================================
@@ -1290,6 +1294,8 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
   req->key_trg = GFL_UI_KEY_GetTrg();
   req->key_cont = GFL_UI_KEY_GetCont();
+  
+#ifndef BUGFIX_AF_BTS7935_20100724
   req->key_direction = DIR_NOT;
   if ( req->key_cont & PAD_KEY_UP    ) {
     req->key_direction = DIR_UP;
@@ -1300,7 +1306,10 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   } else if ( req->key_cont & PAD_KEY_RIGHT ) {
     req->key_direction = DIR_RIGHT;
   }
-
+#else
+  req->key_direction = FIELD_PLAYER_GetKeyDir(
+      FIELDMAP_GetFieldPlayer(fieldWork), req->key_cont );
+#endif
 
   req->fieldWork = fieldWork;
   req->field_player = FIELDMAP_GetFieldPlayer( fieldWork );
@@ -2985,7 +2994,10 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
     MAPATTR_VALUE attr_value;
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
     u16 dir = FIELD_PLAYER_GetKeyDir( req->field_player, req->key_cont );
-    
+#ifdef BUGFIX_AF_BTS7995_20100806
+    int grid_num = 1;
+#endif
+
     if( dir != DIR_NOT )
     {
       FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
@@ -3000,11 +3012,20 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
         attr = MAPATTR_GetAttribute( mapper, &pos );
         attr_flag = MAPATTR_GetAttrFlag( attr );
         kishi = TRUE;
+#ifdef BUGFIX_AF_BTS7995_20100806
+        grid_num++;
+#endif
       }
-
-      if( NaminoriEnd_CheckMMdl(req, fieldWork) == TRUE &&   //前方に誰もいなくて
+      
+#ifdef BUGFIX_AF_BTS7995_20100806
+      if( NaminoriEnd_CheckMMdl(req,fieldWork,grid_num) == TRUE && //前方に誰もいなくて
           (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 && //進入可能で
           (attr_flag&MAPATTR_FLAGBIT_WATER) == 0 ){ //水以外
+#else
+      if( NaminoriEnd_CheckMMdl(req,fieldWork) == TRUE && //前方に誰もいなくて
+          (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 && //進入可能で
+          (attr_flag&MAPATTR_FLAGBIT_WATER) == 0 ){ //水以外
+#endif
         GMEVENT *event;
         event = eventSet_NaminoriEnd( req, gsys, fieldWork, dir, kishi );
         return( event );
@@ -3255,6 +3276,7 @@ u32 FIELD_EVENT_CountBattleMember( GAMESYS_WORK *gsys )
  *         そうでなければ FALSE
  */
 //--------------------------------------------------------------
+#ifndef BUGFIX_AF_BTS7995_20100806
 static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWork )
 {
   int i;
@@ -3284,4 +3306,42 @@ static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWo
 
   return TRUE; 
 }
+//BTS7995 【アイテム「しんかいのウロコ」が配置されている浅瀬で、
+//「なみのり」から浅瀬に上陸出来ない箇所がある】を修正
+#else //BUGFIX_AF_BTS7995_20100806
+static BOOL NaminoriEnd_CheckMMdl(
+    const EV_REQUEST* req, FIELDMAP_WORK* fieldWork, int grid_num )
+{
+  int i;
+  MMDL *mmdl, *jiki;
+  u16 dir;
+  s16 gx, gy, gz;
 
+  // 自機の位置を取得
+  jiki = FIELD_PLAYER_GetMMdl( req->field_player );
+  dir = req->key_direction; //MMDL_GetDirMove( jiki );
+  gx = MMDL_GetGridPosX( jiki );
+  gz = MMDL_GetGridPosZ( jiki );
+  
+  if( grid_num == 0 ){
+    GF_ASSERT( 0 );
+    grid_num++;
+  }
+  
+  //指定先までチェックする
+  for( i=0; i<grid_num; i++ )
+  {
+    gx += MMDL_TOOL_GetDirAddValueGridX( dir );
+    gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+
+    // 動作モデルを検索
+    mmdl = MMDLSYS_SearchGridPos(
+        FIELDMAP_GetMMdlSys(fieldWork), gx, gz, TRUE );
+
+    // 動作モデルを発見
+    if( mmdl ) { return FALSE; }
+  }
+
+  return TRUE; 
+}
+#endif
