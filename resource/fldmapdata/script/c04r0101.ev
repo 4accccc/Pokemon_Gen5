@@ -15,6 +15,8 @@
 
   .include "../../../prog/src/field/bsubway_scr_def.h"
 
+  .include "../../../prog/include/bugfix.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -152,9 +154,27 @@ EVENT_START ev_c04r0101_boy1_btltalk
     //「残念」
     $last_msg = msg_touroku_06
   ELSE
+    _DEBUG_PRINT_WK( easy_talk_word1 )
+.ifdef BUGFIX_AF_BTS7862_20100902
+    _DEBUG_PRINT_WK( easy_talk_word1 )
+    //値比較はprog\include\system\pms_data.hのPMS_WORD_NULLと同じ値（0xffff）で行う
+    IF $easy_talk_word1 == 0xffff THEN     //単語入力なしの定形文を選択したとき
+      //「分かったよ、ありがとう」
+      $last_msg = msg_touroku_09
+    ELSE                                          //単語入力ありの定形文を選択したとき
+      _EASY_TALK_WORD_NAME(0,easy_talk_word1) //始めの単語をセットする
+      //「ありがとう」
+      $last_msg = msg_touroku_05
+      _DEBUG_PRINT_WK( easy_talk_word1 )
+    ENDIF
+    _DEBUG_PRINT_WK( SCWK_ANSWER )
+    _DEBUG_PRINT_WK( last_msg )
+.else
     _EASY_TALK_WORD_NAME(0,easy_talk_word1) //始めの単語をセットする
     //「ありがとう」
     $last_msg = msg_touroku_05
+    _DEBUG_PRINT_WK( last_msg )
+.endif    
   ENDIF
 
   _BALLOONWIN_OBJMSG_POS( last_msg , SCWK_TARGET_OBJID, POS_DL )
