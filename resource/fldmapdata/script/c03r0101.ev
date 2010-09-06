@@ -8,6 +8,7 @@
   .text 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03r0101.h"
+  .include  "../../../prog/include/bugfix.h"
   .include  "c03r0101.h"
 
 //======================================================================
@@ -325,7 +326,11 @@ LEADER_MAIN:
 
     CASE msg_c03r0101__choice_01d THEN //『依頼の確認』
       _CALL LEADER_SAY_Your_request_is           // 隊長「～依頼内容の確認～」
+.ifdef BUGFIX_AF_GFBTS1998_20100906
+      _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_17_01, SCWK_TARGET_OBJID, POS_DOWN )
+.else
       _CALL LEADER_SAY_Come_again_if_you_achieve // 隊長「調査が終了したら, 報告に来てくれ」
+.endif
   
     CASE msg_c03r0101__choice_01c THEN //『なんでもないです』
       _CALL LEADER_SAY_ByeBye // 隊長「そうか……」

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-22T22:20:05"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-09-06T14:56:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -3087,6 +3087,20 @@ assistantm_01_17へ続く
 ほうこくに　きてくれ</language>
 		<language name="JPN_KANJI" width="256">では　調査が　終了したら
 わたしの　ところに　報告に　来てくれ</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_17_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼の確認メッセージで『はい』を選択後、表示
+会話終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">では　ちょうさが　
+しゅうりょうしたら▽
+わたしの　ところに▽
+ほうこくに　きてくれ▼</language>
+		<language name="JPN_KANJI" width="256">では　調査が　終了したら
+わたしの　ところに　報告に　来てくれ▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
