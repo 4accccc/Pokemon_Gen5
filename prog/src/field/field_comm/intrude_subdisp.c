@@ -453,12 +453,20 @@ static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BmpWinDel(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorResourceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub);
+#ifdef BUGFIX_BTS7221_20100903
+static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle, int backup_netid);
+#else
 static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+#endif
 static void _IntSub_ActorDelete(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_Area(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+#ifdef BUGFIX_BTS7221_20100903
+static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle, int backup_netid);
+#else
 static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+#endif
 static void _IntSub_ActorCreate_WarpNG(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
@@ -478,7 +486,11 @@ static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id);
 static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
+#ifdef BUGFIX_BTS7221_20100903
+static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, int backup_netid);
+#else
 static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
+#endif
 static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
 static void _SetPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub);
 static BOOL _CheckPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub);
@@ -529,6 +541,12 @@ static const s8 WearOffset[FIELD_COMM_MEMBER_MAX][2] = {
   {0, -4}, {-4, -4}, {4, -4},
 };
 
+//==============================================================================
+//  外部データ
+//==============================================================================
+#ifdef BUGFIX_BTS7221_20100903
+extern int IntrudeSubscreenNetIDBackup;
+#endif
 
 
 //==============================================================================
@@ -551,6 +569,9 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   ARCHANDLE *handle;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   int i;
+#ifdef BUGFIX_BTS7221_20100903
+  int backup_netid = FIELD_COMM_MEMBER_MAX;
+#endif
   
   intsub = GFL_HEAP_AllocClearMemory(HEAPID_FIELD_SUBSCREEN, sizeof(INTRUDE_SUBDISP));
   intsub->gsys = gsys;
@@ -572,11 +593,27 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
       //画面初期化時のみ、他画面からエラーでの戻りがあるので、game_commから直接引っ張る
       intcomm = GameCommSys_GetAppWork(game_comm);
     }
-    
+  
+  #ifdef BUGFIX_BTS7221_20100903
+    if(intcomm == NULL && GAMEDATA_GetIntrudeReverseArea(GAMESYSTEM_GetGameData(gsys)) == FALSE){
+      //通信が起動していなくて表フィールドにいて初期化ルーチンを通るのは
+      //他の画面を開いている間に侵入相手に切断された場合。
+      //その時は切断直前の下画面用に新規に用意した退避場所NetIDから自分のエリアを引っ張る
+      backup_netid = IntrudeSubscreenNetIDBackup;
+      if(backup_netid >= FIELD_COMM_MEMBER_MAX){
+        backup_netid = 0; //一応
+      }
+    }
+  #endif
+  
     if(intcomm != NULL && intcomm->subdisp_update_stop == TRUE){
       intcomm = NULL;
     }
+  #ifdef BUGFIX_BTS7221_20100903
+    _IntSub_CommParamInit(intsub, intcomm, backup_netid);
+  #else
     _IntSub_CommParamInit(intsub, intcomm);
+  #endif
   }
   intsub->add_player_count = intsub->comm.recv_num;
   
@@ -586,7 +623,11 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   _IntSub_BGLoad(intsub, handle);
   _IntSub_BmpWinAdd(intsub);
   _IntSub_ActorResourceLoad(intsub, handle);
+#ifdef BUGFIX_BTS7221_20100903
+  _IntSub_ActorCreate(intsub, handle, backup_netid);
+#else
   _IntSub_ActorCreate(intsub, handle);
+#endif
   
   GFL_ARC_CloseDataHandle(handle);
 
@@ -1164,12 +1205,20 @@ static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub)
  * @param   handle		
  */
 //--------------------------------------------------------------
+#ifdef BUGFIX_BTS7221_20100903
+static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle, int backup_netid)
+#else
 static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
+#endif
 {
   _IntSub_ActorCreate_TouchTown(intsub, handle);
   _IntSub_ActorCreate_Area(intsub, handle);
   _IntSub_ActorCreate_CursorS(intsub, handle);
+#ifdef BUGFIX_BTS7221_20100903
+  _IntSub_ActorCreate_CursorL(intsub, handle, backup_netid);
+#else
   _IntSub_ActorCreate_CursorL(intsub, handle);
+#endif
   _IntSub_ActorCreate_WarpNG(intsub, handle);
   _IntSub_ActorCreate_LvNum(intsub, handle);
   _IntSub_ActorCreate_EntryButton(intsub, handle);
@@ -1297,7 +1346,11 @@ static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
  * @param   handle		
  */
 //--------------------------------------------------------------
+#ifdef BUGFIX_BTS7221_20100903
+static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle, int backup_netid)
+#else
 static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
+#endif
 {
   GFL_CLWK_DATA head = {
   	0, 0,                       //X, Y座標
@@ -1314,8 +1367,19 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
   intsub->act[INTSUB_ACTOR_CUR_L] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
+#ifdef BUGFIX_BTS7221_20100903
+  if(backup_netid < FIELD_COMM_MEMBER_MAX){
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
+      INTSUB_ACTOR_PAL_BASE_START + backup_netid, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+  else{
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
+      INTSUB_ACTOR_PAL_BASE_START + GAMEDATA_GetIntrudeMyID(gamedata), CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+#else
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
     INTSUB_ACTOR_PAL_BASE_START + GAMEDATA_GetIntrudeMyID(gamedata), CLWK_PLTTOFFS_MODE_PLTT_TOP);
+#endif
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_CUR_L], FALSE);  //表示OFF
   GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_CUR_L], TRUE);  //オートアニメON
 }
@@ -2559,13 +2623,26 @@ static void _IntSub_BGColorScreenChange(INTRUDE_SUBDISP_PTR intsub, int palace_a
  * @param   intcomm		
  */
 //--------------------------------------------------------------
+#ifdef BUGFIX_BTS7221_20100903
+static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, int backup_netid)
+#else
 static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm)
+#endif
 {
   INTRUDE_COMM_PARAM *comm = &intsub->comm;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   
   if(intcomm == NULL){
+  #ifdef BUGFIX_BTS7221_20100903
+    if(backup_netid < FIELD_COMM_MEMBER_MAX){
+      comm->now_palace_area = backup_netid;
+    }
+    else{
+      comm->now_palace_area = GAMEDATA_GetIntrudeMyID(gamedata);
+    }
+  #else
     comm->now_palace_area = GAMEDATA_GetIntrudeMyID(gamedata);
+  #endif
     comm->recv_profile = 1 << comm->now_palace_area;
     comm->recv_num = 1;
     comm->palace_in = FALSE;
