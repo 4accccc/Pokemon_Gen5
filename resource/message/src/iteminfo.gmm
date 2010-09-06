@@ -3458,11 +3458,11 @@
 
 	<row id="ITEMINFO_370">
 		<language name="JPN" width="256">ほのおを　まとい　あいてを
-こうげきする。じぶんの
-すばやさを　あげることが　ある。</language>
+こうげきする。　ちからを　ためて
+じぶんの　すばやさを　あげる。</language>
 		<language name="JPN_KANJI" width="256">炎を　まとい　相手を　攻撃する。
 力を　ためて　自分の
-素早さを　あげることが　ある。</language>
+素早さを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_371">
@@ -3512,11 +3512,11 @@
 
 	<row id="ITEMINFO_376">
 		<language name="JPN" width="256">こえで　あいてを　こうげきする。
-まいターン　じぶんや　みかたが
-つかうと　いりょくが　あがる。</language>
+まいターン　だれかが　つかうと
+いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="256">響く　声で　相手を　攻撃する。
-毎ターン　自分や　味方が
-使い続けると　威力が　あがる。</language>
+毎ターン　だれかが　使い続けると
+威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_377">
