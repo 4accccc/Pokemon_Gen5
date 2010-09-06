@@ -4037,6 +4037,9 @@ EVENT_END
 //======================================================================
 EVENT_START	ev_paper
 {
+.ifdef BUGFIX_AF_GFBTS1915_20100906
+  _TALK_START_SE_PLAY()
+.endif
   _DISP_RESEARCH_TEAM_INFO()
 }
 EVENT_END
