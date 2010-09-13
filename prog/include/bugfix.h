@@ -222,7 +222,7 @@
 //#define BUGFIX_AF_BTS7986_20100806
 
 // ライブ通信のメイン画面でお礼アイコンのON/OFFを切り替えていると、合計人数の数字が重なって表示されることがある
-//#define BUGFIX_AF_BTS8022_20100806
+#define BUGFIX_AF_BTS8022_20100806
 
 //【IDイベントにて別IDのタマゴがボックスにあると、タマゴがカウントされる】
 //#define BUGFIX_AF_BTS7899_20100806
