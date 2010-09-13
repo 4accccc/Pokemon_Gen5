@@ -306,6 +306,15 @@
 //【調査報告画面の順位欄にタッチ判定のない部分が生まれる】
 #define BUGFIX_AF_BTS7816_20100906
 
+// 【子機側のテキストの自動送りの速度が速く途中で切れているように見える】
+// 素材と子機ROMの更新のみになります。
+//multiboot2/spec/main.sgn
+//multiboot/spec/main.sgn
+//prog/filetree/dl_rom/child.srl
+//prog/filetree/dl_rom/child2.srl
+//resource/message/src/mb_child_movie.gmm
+#define BUGFIX_AF_BTS7717_20100906
+
 
 //*****************************************************************************
 //--社内バグ掲示板 GFBTSXXXX
