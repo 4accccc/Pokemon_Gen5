@@ -1010,6 +1010,11 @@ static void MB_CAP_POKE_StateDown(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
         pokeWork->cnt = 0;
         pokeWork->isRun = TRUE;
         pokeWork->stateFunc = MB_CAP_POKE_StateRun;
+#ifdef BUGFIX_AF_BTS8034_100913
+        //ステートの設定とstatefuncが食い違って、このタイミングで
+        //眠り玉があたると寝ない
+        pokeWork->state = MCPS_RUN_LOOK;
+#endif
         MB_CAP_POKE_CheckActSpeed( capWork , pokeWork );
       }
       else
