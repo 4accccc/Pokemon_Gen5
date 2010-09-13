@@ -400,7 +400,7 @@
 #define BUGFIX_AF_GFBTS2015_100806
 
 //【Wi-Fi大会：バトルボックスの技を入れ替えるとマッチングしなくなる】
-//#define BUGFIX_AF_GFBTS2017_100806
+#define BUGFIX_AF_GFBTS2017_100806
 
 //D09　チャンピオンロード外のBLOCK（１，１）　LOCAL(２７，６) RAIL INDEX　１８　FRONT 1　SIDE　２の見た目と合わない場所にエンカウントアトリビュートがあります。
 //resource/fldmapdata/rail_data/rail/d09.atdat
