@@ -339,14 +339,18 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   case SMS_UPDATE:
     PSTATUS_UpdateBarButton( work );
     
+#ifndef BUGFIX_AF_BTS7848_20100913
     PSTATUS_SUB_Main( work , work->subWork );
-
+#endif
     if( work->isWaitDisp == TRUE )
     {
       PSTATUS_WaitDisp( work );
     }
     else
     {
+#ifdef BUGFIX_AF_BTS7848_20100913
+    PSTATUS_SUB_Main( work , work->subWork );
+#endif
       if( work->psData->isExitRequest == TRUE )
       {
         work->retVal = SRT_RETURN;
