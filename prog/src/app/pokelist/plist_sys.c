@@ -2900,6 +2900,14 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
       work->selectState = ret;
       work->ktst = GFL_APP_KTST_TOUCH;
       
+#ifdef BUGFIX_AF_BTS7984_100913
+      //BTS7984【「ならびかえ」のキャンセルをする際に「戻る」アイコンをタッチしても、アイコンの点滅演出がありません】
+      //タマゴうみも光らない。キーには処理が入っていたので光った
+      if( ret == PSSEL_RETURN )
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+      }
+#endif
     }
   }
   
