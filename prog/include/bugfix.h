@@ -50,10 +50,10 @@
 #define BUGFIX_BTS7733_20100712
 
 //【きねんリボン画面のリストにて十字ボタンでカーソル移動させた際のSEについて】
-//#define BUGFIX_AF_BTS7734_100806
+#define BUGFIX_AF_BTS7734_100806
 
 //【ミュージカルのメンバー募集で、リーダー側に表示される「あと○人まで」の数字表記が重なってしまう事があった】
-//#define BUGFIX_AF_BTS7835_20100806
+#define BUGFIX_AF_BTS7835_20100806
 
 //通信切断エラー後、画面を送っても対戦相手を募集している階層へもどることがあるの対処
 #define BUGFIX_BTS7738_20100712
@@ -386,7 +386,7 @@
 //#define BUGFIX_AF_GFBTS2004_20100806
 
 //ランダムマッチのポケモン選択画面で片方がフリーズする
-//#define BUGFIX_AF_GFBTS2015_100806
+#define BUGFIX_AF_GFBTS2015_100806
 
 //【Wi-Fi大会：バトルボックスの技を入れ替えるとマッチングしなくなる】
 //#define BUGFIX_AF_GFBTS2017_100806
