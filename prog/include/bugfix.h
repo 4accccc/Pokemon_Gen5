@@ -380,7 +380,7 @@
 #define	BUGFIX_AF_GFBTS2013_20100806
 
 // ライブ通信メイン画面でメンバーリストのランク表示がスクロール時にバグる現象を修正
-//#define BUGFIX_AF_GFBTS2002_20100806
+#define BUGFIX_AF_GFBTS2002_20100806
 
 //【ふしぎなおくりもの：カードアルバムの矢印がチラつく】
 //#define BUGFIX_AF_GFBTS2004_20100806
