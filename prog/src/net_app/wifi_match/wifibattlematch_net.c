@@ -788,6 +788,12 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       GFL_NET_SetAutoErrorCheck(FALSE);
       GFL_NET_SetNoChildErrorCheck(FALSE);
 
+
+#ifdef BUGFIX_AF_BTS7759_20100914
+      //通信エラー時、音が鳴り続けてしまうのを回避
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+#endif //BUGFIX_AF_BTS7759_20100914
+
 #ifdef BUGFIX_BTS7895_20100719
       //セーブ中のDWCエラーであれば問答無用でフェイタルへいく
       if( GAMEDATA_GetIsSave( p_wk->p_gamedata ) )
