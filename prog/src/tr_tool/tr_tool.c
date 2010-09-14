@@ -424,6 +424,9 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     PTL_SETUP_ID_NOT_RARE,
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
+#ifdef BUGFIX_BTS7992_20100914
+        PP_SetWazaDefault( pp );
+#endif
         pp_set_param( tr_id, pp, ptn[ i ].form_no, ptn[ i ].para );
         PokeParty_Add( pparty, pp );
       }
