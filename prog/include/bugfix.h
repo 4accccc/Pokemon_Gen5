@@ -268,7 +268,7 @@
 #define BUGFIX_AF_BTS7826_20100806
 
 //【ふしぎなカードに関する選択肢を決定する際、Aボタンを押し続けると、再度選択肢が表示されます】
-//#define BUGFIX_AF_BTS7960_20100806
+#define BUGFIX_AF_BTS7960_20100806
 
 //【Wi-Fi接続の選択肢表示前に決定が入力出来てしまう事があります】
 //#define BUGFIX_AF_BTS7810_20100806
@@ -277,19 +277,19 @@
 //#define BUGFIX_AF_BTS7976_20100806
 
 //【ニックネームの入力画面でポケモンアイコンをタッチするとアイコンが右にずれる】
-//#define BUGFIX_AF_BTS7858_20100806
+#define BUGFIX_AF_BTS7858_20100806
 
 //【ハイリンクで侵入されている場合、文字入力パレット画面で2種類のテキストが重なる】
-//#define BUGFIX_AF_BTS8006_20100806
+#define BUGFIX_AF_BTS8006_20100806
 
 //【タウンやシティにいる状態でタウンマップを使用した時のアイコンの表示について】
-//#define BUGFIX_AF_BTS8005_20100806
+#define BUGFIX_AF_BTS8005_20100806
 
 //【「そらをとぶ」画面から抜けようとした直後に決定すると「そらをとぶ」が実行される】
-//#define BUGFIX_AF_BTS8009_20100806
+#define BUGFIX_AF_BTS8009_20100806
 
 //【ライブ大会、設定したバトル回数の最後のバトル後、アッパーバージョンとのバトルビデオが再生できます】
-//#define BUGFIX_AF_BTS8030_20100806
+#define BUGFIX_AF_BTS8030_20100806
 
 //【アイテム「しんかいのウロコ」が配置されている浅瀬で、「なみのり」から浅瀬に上陸出来ない箇所がある】
 //#define BUGFIX_AF_BTS7995_20100806
@@ -568,7 +568,7 @@ gum_insect.c      1016行目
   下記定義をはずしますと、ノイズ１００％のときも対処いたします
 
 */
-//#define BUGFIX_AF_BTLVIDEO00_20100806
+#define BUGFIX_AF_BTLVIDEO00_20100806
 
 //国、地域の不正チェックが足りていない
 //#define BUGFIX_COUNTRY_NGCHECK_20100806
