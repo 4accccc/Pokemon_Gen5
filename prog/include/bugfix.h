@@ -65,6 +65,10 @@
 // app/trainercard/badge_view.c
 #define BUGFIX_BTS7747_20100712
 
+//【身代わり状態で複数回攻撃技を使用すると攻撃時のテキストが一瞬表示される】
+//battle/btlv/btlv_effvm.c
+#define BUGFIX_BTS7710_20100712
+
 //wifiクラブ話しかけ時にキャンセルすると、相手側のBUSYがのこってしまう不具合修正
 #define BUGFIX_BTS7749_20100713
 
@@ -353,6 +357,11 @@
 
 //【ボックスに空きがあると「ようすをみる」画面においてポケモンを下方向へ切り替えることができない】
 #define BUGFIX_AF_BTS8044_20100914
+
+//【ローテーションバトルで「たたかう」を選択した直後、「シューター」ボタンが「バッグ」ボタンに変化している】
+//battle/btlv/btlv_input.c
+//この定義を有効にする場合はresource/battle/battgra_wb.scrにbattle_w_bg0l.NSCRを追加しないとMAKEが通りません
+//#define BUGFIX_AF_BTS7728_20100914
 
 //*****************************************************************************
 //--社内バグ掲示板 GFBTSXXXX
