@@ -229,7 +229,14 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   u8 forbit_leave;                ///<TRUE:離脱禁止
   u8 forbit_leave_answer_req;     ///<TRUE:離脱禁止しました、の返事を返す
   u8 recv_ready_bit;              ///<ゲーム開始準備完了したユーザー(bit管理)
+#ifdef BUGFIX_BTS7886_20100806
+  u8 check_stream_msg;
+  
+  u16 now_msg_id;
+  u16 padding;
+#else
   u8 padding;
+#endif
 }COMM_ENTRY_MENU_SYSTEM;
 
 
@@ -1453,15 +1460,10 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
     if( _ParentEntry_NumDraw(em, player_num) == TRUE )
     {
     #ifdef BUGFIX_BTS7886_20100806
+      em->draw_player_num = player_num;
       //プレイヤーが減った時だけ
       if( em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL && player_num == 1 ){
-        if( CommEntryMenu_InterruptCheck(em) == TRUE && em->yesno.menufunc == NULL ){
-          em->draw_player_num = player_num;
-          _StreamMsgSet(em, msg_connect_02_01);
-        }
-      }
-      else{
-        em->draw_player_num = player_num;
+        em->check_stream_msg = TRUE;
       }
     #else
       em->draw_player_num = player_num;
@@ -1478,15 +1480,10 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
 #else
     _ParentEntry_NumDraw(em, player_num);
   #ifdef BUGFIX_BTS7886_20100806
+    em->draw_player_num = player_num;
     //プレイヤーが減った時だけ
     if( em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL && player_num == 1 ){
-      if( CommEntryMenu_InterruptCheck(em) == TRUE && em->yesno.menufunc == NULL ){
-        em->draw_player_num = player_num;
-        _StreamMsgSet(em, msg_connect_02_01);
-      }
-    }
-    else{
-      em->draw_player_num = player_num;
+      em->check_stream_msg = TRUE;
     }
   #else
     em->draw_player_num = player_num;
@@ -1500,8 +1497,18 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
     }
   #endif
 #endif
-    
   }
+  
+#ifdef BUGFIX_BTS7886_20100806
+  if(em->check_stream_msg == TRUE){
+    if( CommEntryMenu_InterruptCheck(em) == TRUE && em->yesno.menufunc == NULL ){
+      if(player_num == 1){
+        _StreamMsgSet(em, msg_connect_02_01);
+      }
+      em->check_stream_msg = FALSE;
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -2207,6 +2214,13 @@ static void _ChildEntryMember_ListRewriteUpdate(COMM_ENTRY_MENU_PTR em)
 static void _StreamMsgSet(COMM_ENTRY_MENU_PTR em, u32 msg_id)
 {
   STRBUF *temp_strbuf;
+
+#ifdef BUGFIX_BTS7886_20100806
+  if(msg_id == msg_connect_02_01 && em->now_msg_id == msg_connect_02_01){
+    return;
+  }
+  em->now_msg_id = msg_id;
+#endif
   
   temp_strbuf = GFL_MSG_CreateString( em->msgdata, msg_id );
   WORDSET_ExpandStr( em->wordset, em->strbuf_expand, temp_strbuf );
