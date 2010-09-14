@@ -825,7 +825,11 @@ static	void	MCSS_DrawAct(
   	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
         				    GX_POLYGONMODE_MODULATE,	// modulation mode
         				    GX_CULL_NONE,					    // cull back
+#ifdef BUGFIX_AF_BTS8038_20100914
+        				    0,								        // polygon ID(0 - 63)
+#else
         				    1,								        // polygon ID(0 - 63)
+#endif
         				    shadow_alpha,             // alpha(0 - 31)
         				    GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
         				   );
