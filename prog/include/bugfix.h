@@ -295,7 +295,7 @@
 #define BUGFIX_AF_BTS8006_20100806
 
 //【タウンやシティにいる状態でタウンマップを使用した時のアイコンの表示について】
-#define BUGFIX_AF_BTS8005_20100806
+//#define BUGFIX_AF_BTS8005_20100806
 
 //【「そらをとぶ」画面から抜けようとした直後に決定すると「そらをとぶ」が実行される】
 #define BUGFIX_AF_BTS8009_20100806
@@ -592,7 +592,7 @@ gum_insect.c      1016行目
   下記定義をはずしますと、ノイズ１００％のときも対処いたします
 
 */
-#define BUGFIX_AF_BTLVIDEO00_20100806
+//#define BUGFIX_AF_BTLVIDEO00_20100806
 
 //国、地域の不正チェックが足りていない
 //#define BUGFIX_COUNTRY_NGCHECK_20100806
