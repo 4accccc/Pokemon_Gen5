@@ -509,6 +509,10 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       work->btlTermAnmCnt++;
       if( work->btlTermAnmCnt > APP_TASKMENU_ANM_CNT )
       {
+#ifdef BUGFIX_AF_BTS7843_100914
+        //Œˆ’è‚ðÁ“”
+        PLIST_MENU_SetDecideMenuWin_BattleMenu( work->btlMenuWin[0] , FALSE );
+#endif
         if( work->isFinishSync == TRUE )
         {
           const BOOL ret = PLIST_COMM_SendFlg( work->plData , PCFT_FINISH_SELECT , 0 );
