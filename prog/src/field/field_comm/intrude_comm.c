@@ -71,7 +71,7 @@ static void _SearchBconLifeDec(INTRUDE_COMM_SYS_PTR intcomm);
 //==============================================================================
 //  ローカル変数定義
 //==============================================================================
-#ifdef BUGFIX_BTS7221_20100903
+#ifdef BUGFIX_AF_BTS7221_20100903
 ///表フィールドにいる人が別画面から侵入用の下画面に復帰した時に、
 ///通信が既に終了していても直前の色(NetID)で復帰できるように番号を退避する領域
 int IntrudeSubscreenNetIDBackup = 0;
@@ -588,7 +588,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
     }
 
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
-    #ifdef BUGFIX_BTS7221_20100903
+    #ifdef BUGFIX_AF_BTS7221_20100903
       IntrudeSubscreenNetIDBackup = GAMEDATA_GetIntrudeMyID(gamedata);
     #endif
       GAMEDATA_SetIntrudeMyID(gamedata, 0); //既に表にいる場合はこのタイミングでセット

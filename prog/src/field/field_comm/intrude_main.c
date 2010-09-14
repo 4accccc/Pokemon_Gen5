@@ -813,7 +813,7 @@ void Intrude_PlayerPosRecalc(INTRUDE_COMM_SYS_PTR intcomm, fx32 mine_x)
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if((intcomm->recv_profile & (1 << i)) && i != my_netid){
       INTRUDE_STATUS *target = &intcomm->intrude_status[i];
-    #ifdef BUGFIX_BTS8033_20100902
+    #ifdef BUGFIX_AF_BTS8033_20100902
       target->player_pack.pos = intcomm->backup_player_pack[i].pos;
     #else
       target->player_pack = intcomm->backup_player_pack[i];
