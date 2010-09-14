@@ -2844,8 +2844,21 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
+#ifdef BUGFIX_AF_BTS7728_20100914
+    if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
+    { 
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0l_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    }
+    else
+    { 
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    }
+#else
      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+#endif
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
     pop_bag_button_pal( ttw->biw );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
