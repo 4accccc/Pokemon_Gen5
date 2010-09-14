@@ -1477,6 +1477,22 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
     u8 i;
     //当たり判定の作成
     GFL_UI_TP_HITTBL hitTbl[PSTATUS_SKILL_PLATE_NUM+1];
+    
+#ifdef BUGFIX_AF_BTS7973_100913
+    //技個数のカウント
+    u8 wazaNum = 0;
+    {
+      const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+      for( i=0;i<4;i++ )
+      {
+        if( PPP_Get( ppp , ID_PARA_waza1+i , NULL ) != 0 )
+        {
+          wazaNum++;
+        }
+      }
+    }
+#endif
+    
     for( i=0;i<PSTATUS_SKILL_PLATE_NUM;i++ )
     {
       PSTATUS_SKILL_GetTPRect( &skillWork->plateWork[i] , &hitTbl[i] );
@@ -1499,7 +1515,12 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
             //PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
           }
 #ifdef BUGFIX_AF_GFBTS2017_100806
+#ifdef BUGFIX_AF_BTS7973_100913
+          if( work->psData->mode != PST_MODE_NO_WAZACHG_NEW &&
+              wazaNum > 1)
+#else
           if( work->psData->mode != PST_MODE_NO_WAZACHG_NEW )
+#endif
           {
             skillWork->isHoldTp = TRUE;
             //キーで入れ替え中に来たらchangeTargetを変えない！
@@ -1519,7 +1540,11 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
                   GFL_CLACT_WK_SetAnmSeq( skillWork->clwkArrow , PSCC_ARROW_DOWN );
                 }
                 else
+#ifdef BUGFIX_AF_BTS7973_100913
+                if( ret == wazaNum-1 )
+#else
                 if( ret == 3 )
+#endif
                 {
                   GFL_CLACT_WK_SetAnmSeq( skillWork->clwkArrow , PSCC_ARROW_UP );
                 }
@@ -1540,6 +1565,10 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , TRUE );
           PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
 #else
+#ifdef BUGFIX_AF_BTS7973_100913
+          if( wazaNum > 1)
+          {
+#endif
           skillWork->isHoldTp = TRUE;
           //キーで入れ替え中に来たらchangeTargetを変えない！
           if( skillWork->isChangeMode == TRUE )
@@ -1558,7 +1587,11 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
                 GFL_CLACT_WK_SetAnmSeq( skillWork->clwkArrow , PSCC_ARROW_DOWN );
               }
               else
+#ifdef BUGFIX_AF_BTS7973_100913
+              if( ret == wazaNum-1 )
+#else
               if( ret == 3 )
+#endif
               {
                 GFL_CLACT_WK_SetAnmSeq( skillWork->clwkArrow , PSCC_ARROW_UP );
               }
@@ -1577,6 +1610,9 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
           GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
           PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
+#ifdef BUGFIX_AF_BTS7973_100913
+          }
+#endif
 #endif
 
         }
