@@ -1303,6 +1303,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         *p_seq  = SEQ_START_RECV_SAKE_MSG;
 
+#ifndef BUGFIX_AF_BTS7947_20100914
         {
           ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
           switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
@@ -1313,11 +1314,26 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
             return;
           }
         }
+#endif //BUGFIX_AF_BTS7947_20100914
       }
       if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_SERVER )
       {
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
       }
+
+
+#ifdef BUGFIX_AF_BTS7947_20100914
+      {
+        ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          return;
+        }
+      }
+#endif //BUGFIX_AF_BTS7947_20100914
     }
     break;
 
