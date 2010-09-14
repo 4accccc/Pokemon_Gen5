@@ -2057,6 +2057,19 @@ static void _dispSubStateWait_SendFlg6(POKEMON_TRADE_WORK* pWork)
 }
 
 
+#ifdef BUGFIX_AF_BTS7735_20100914
+//タッチパネルが押さえられて無いかどうか
+static void _touchPanelReleaseCheck(POKEMON_TRADE_WORK* pWork)
+{
+  u32 x,y;
+
+  if(!GFL_UI_TP_GetPointCont(&x,&y)){
+    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+  }
+}
+#endif //BUGFIX_AF_BTS7735_20100914
+
+
 //自分画面にステータス表示 相手に見せるかどうか待ち
 static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
 {
@@ -2189,7 +2202,11 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     else{
       //やめる
       POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+#ifdef BUGFIX_AF_BTS7735_20100914
+      _CHANGE_STATE(pWork, _touchPanelReleaseCheck);
+#else //BUGFIX_AF_BTS7735_20100914
       _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+#endif //BUGFIX_AF_BTS7735_20100914
     }
     pWork->underSelectBoxno = -1;
     pWork->underSelectIndex = -1;
