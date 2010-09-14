@@ -78,7 +78,19 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
   statusParam = wk->sub_proc_wk;
 	statusParam->cfg	 = wk->param->config;
 	statusParam->game_data	 = GAMESYSTEM_GetGameData( wk->param->gamesys );
+#ifdef BUGFIX_AF_BTS8044_20100914
+  if( WorldTrade_GetPPorPPP(wk->BoxTrayNo) )
+  {
+    statusParam->max  = WorldTrade_GetPokeMax( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo );
+  }
+  else
+  {
+    //ƒ{ƒbƒNƒX‚Ìê‡‚Í•K‚¸‚R‚OŒÂ‚ÌPP‚Ì˜A”Ô
+    statusParam->max  = 30;
+  }
+#else//BUGFIX_AF_BTS8044_20100914
 	statusParam->max  = WorldTrade_GetPokeMax( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo );
+#endif //BUGFIX_AF_BTS8044_20100914
 	statusParam->pos  = wk->BoxCursorPos;
 	statusParam->mode = PST_MODE_NO_WAZACHG;	// ‹Z“ü‚ê‘Ö‚¦‹ÖŽ~‚É‚·‚é
 	statusParam->waza = 0;
