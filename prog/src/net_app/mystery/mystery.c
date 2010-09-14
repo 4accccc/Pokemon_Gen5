@@ -3323,6 +3323,22 @@ void MYSTERY_DEMO_Start( MYSTERY_DEMO_WORK *p_wk, MYSTERY_DEMO_TYPE type )
     p_wk->move_function = Mystery_Demo_FinishMain;
     break;
   }
+
+#ifdef BUGFIX_AF_BTS7881_20100914
+  //ポケモンが下部に表示されてしまうのをウィンドウマスクで消す
+  //丸い光の球も消えてしまいますが、それは仕様とします。（プランナーと共有済み）
+  GX_SetVisibleWnd(GX_WNDMASK_W0);
+  G2_SetWnd0InsidePlane(
+      GX_WND_PLANEMASK_BG0 |
+      GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 |
+      GX_WND_PLANEMASK_BG3,
+      TRUE );
+  G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 |
+      GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 |
+      GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+      TRUE );
+  G2_SetWnd0Position(0, 192-24, 255, 192);
+#endif //BUGFIX_AF_BTS7881_20100914
 }
 
 //----------------------------------------------------------------------------
@@ -3335,6 +3351,12 @@ void MYSTERY_DEMO_Start( MYSTERY_DEMO_WORK *p_wk, MYSTERY_DEMO_TYPE type )
 //-----------------------------------------------------------------------------
 static void MYSTERY_DEMO_Exit( MYSTERY_DEMO_WORK *p_wk )
 { 
+
+#ifdef BUGFIX_AF_BTS7881_20100914
+  //ウィンドウ解除
+  GX_SetVisibleWnd(GX_WNDMASK_NONE);
+#endif //BUGFIX_AF_BTS7881_20100914
+
   if( MYSTERY_PTC_IsUse( &p_wk->ptc ) )
   { 
     MYSTERY_PTC_Exit( &p_wk->ptc );
