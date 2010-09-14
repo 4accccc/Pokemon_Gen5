@@ -368,6 +368,10 @@ void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
   }
 
   PLIST_MSG_ClearWindow( work , msgWork );
+#ifdef BUGFIX_AF_BTS7924_100914
+  //Que‰Šú‰»’Ç‰Á
+  PRINTSYS_QUE_Clear( msgWork->printQueMsg );
+#endif
 
   if( msgWork->printHandle != NULL )
   {
