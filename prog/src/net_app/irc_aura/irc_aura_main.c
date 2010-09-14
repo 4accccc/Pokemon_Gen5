@@ -4047,7 +4047,11 @@ static void GUIDE_SetVisible( GUIDE_VISIBLE_MASK msk, HEAPID heapID )
         AURA_BG_PAL_M_09 );
   }
 
+#ifdef BUGFIX_AF_BTS7817_20100914
+  GFL_BG_LoadScreenV_Req(sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE]);
+#else   //BUGFIX_AF_BTS7817_20100914
   GFL_BG_LoadScreenReq(sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE]);
+#endif  //BUGFIX_AF_BTS7817_20100914
 
   GFL_ARC_CloseDataHandle( p_handle );
 }
