@@ -291,6 +291,16 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
     }
     else
     {
+#ifdef BUGFIX_AF_BTS7982_20100914
+      //もしもサブヒープの解放が失敗してしまい、
+      //そのタイミングが、ネットのGFL_NET_Exit中だった場合、
+      //NetErrのフラグが立ちっぱなしになってしまう。
+      //そうするとCギアがタッチできなかったり、
+      //意図せぬ箇所で突然エラーになったりします。
+      //ですので、強制的に吹っ飛ばしを行ないます
+      NetErr_ReleaseRomAssertCallback();
+#endif //BUGFIX_AF_BTS7982_20100914
+
       //もしサブヒープが存在していないのに解放しにきた場合は
       //ヒープエラーとしてしまう
       NAGI_Printf( "！！ヒープ強制エラー！！\n" );
