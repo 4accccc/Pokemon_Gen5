@@ -224,6 +224,11 @@ typedef struct
   REGULATION_CARDDATA         *p_reg;
   REGULATION_CARDDATA         recv_card;
 
+
+#ifdef BUGFIX_AF_BTS7944_20100806
+  BOOL  is_unlockd;
+#endif
+
 } WIFIBATTLEMATCH_WIFI_WORK;
 
 //=============================================================================
@@ -4435,6 +4440,11 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     { 
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+
+#ifdef BUGFIX_AF_BTS7944_20100806
+      p_wk->is_unlockd  = BATTLE_BOX_SAVE_GetLockType( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
+#endif
+
       BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
 
       //大会終了状態にしてセーブ
@@ -4460,7 +4470,11 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     {
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+#ifdef BUGFIX_AF_BTS7944_20100806
+      if( p_wk->is_unlockd )
+#else
       if( BATTLE_BOX_SAVE_GetLockType( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI ) )
+#endif
       {
         *p_seq  = SEQ_START_UNLOCK_MSG;
       }
