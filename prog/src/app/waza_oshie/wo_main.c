@@ -1411,7 +1411,11 @@ static int WO_SeqSelect( WO_WORK * wk )
   case 5:   // ã–îˆó
     break;
 
-  case 6:                   // ‚à‚Ç‚é
+#ifdef BUGFIX_AF_BTS7916_20100915
+  case 6: case 8:                  // ‚à‚Ç‚é
+#else
+  case 6:                        // ‚à‚Ç‚é
+#endif
     PMSND_PlaySE( WO_SE_CANCEL );
     if(EnterButtonCheck(wk)){
       return YameruButtonAnmInit( wk, SEQ_RET_BUTTON );
@@ -2880,9 +2884,20 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 static void ScrollButtonOnOff( WO_WORK * wk );
 static void EnterButtonOnOff( WO_WORK * wk, BOOL flg );
 
-
 // CURSORMOVE‚É“n‚·ƒ{ƒ^ƒ“î•ñ
 static const CURSORMOVE_DATA ListKeyTbl[]={
+#ifdef BUGFIX_AF_BTS7916_20100915
+  { 40,  52, 0, 0,  0, 1, 0, 0 ,  {TP_WAZA1_PY,TP_WAZA1_PY+TP_WAZA_SY-1,TP_WAZA_PX,TP_WAZA_PX+TP_WAZA_SX-1},},// 00: ‹Z‚Piƒ_ƒ~[‚Åu‚à‚Ç‚év‚Éƒ‹[ƒvj
+  { 80,  60, 0, 0,  0, 2, 1, 1 ,  {TP_WAZA2_PY,TP_WAZA2_PY+TP_WAZA_SY-1,TP_WAZA_PX,TP_WAZA_PX+TP_WAZA_SX-1},},// 01: ‹Z‚Q
+  { 40,  84, 0, 0,  1, 3, 2, 2 ,  {TP_WAZA3_PY,TP_WAZA3_PY+TP_WAZA_SY-1,TP_WAZA_PX,TP_WAZA_PX+TP_WAZA_SX-1},},// 02: ‹Z‚R
+  { 80,  92, 0, 0,  2, 6, 3, 3 ,  {TP_WAZA4_PY,TP_WAZA4_PY+TP_WAZA_SY-1,TP_WAZA_PX,TP_WAZA_PX+TP_WAZA_SX-1},},// 03: ‹Z‚S
+  { 40, 116, 0, 0,  4, 4, 4, 4 ,  {TP_SB_PY,TP_SB_PY+TP_SB_SY-1,TP_SBD_PX,TP_SBD_PX+TP_SB_SX-1},},// 04: ‰º–îˆó
+  { 80, 124, 0, 0,  5, 5, 5, 5 ,  {TP_SB_PY,TP_SB_PY+TP_SB_SY-1,TP_SBU_PX,TP_SBU_PX+TP_SB_SX-1},},// 05: ã–îˆó
+  { 224,168,  0, 0, 3, 6, 6, 6,   {166, 191, 224, 247,} },      // 06:u~v‚Ìƒ^ƒbƒ`”ÍˆÍ
+  { 224, 168, 0, 0, 7, 7, 7, 7 ,  {TP_ABTN_PY,TP_ABTN_PY+TP_ABTN_SY-1,TP_ABTN_PX,TP_ABTN_PX+TP_ABTN_SX-1},},// 07: ‚¨‚Ú‚¦‚é
+  { 224, 168, 0, 0, 8, 8, 8, 8 ,  {TP_BACK_PY,TP_BACK_PY+TP_BACK_SY-1,TP_BACK_PX,TP_BACK_PX+TP_BACK_SX-1},},// 08: ‚à‚Ç‚é
+  { 0, 0, 0, 0, 0, 0, 0, 0,       {GFL_UI_TP_HIT_END, 0, 0, 0 }},
+#else
   { 40,  52, 0, 0,  0, 1, 0, 0 ,  {TP_WAZA1_PY,TP_WAZA1_PY+TP_WAZA_SY-1,TP_WAZA_PX,TP_WAZA_PX+TP_WAZA_SX-1},},// 00: ‹Z‚Piƒ_ƒ~[‚Åu‚à‚Ç‚év‚Éƒ‹[ƒvj
   { 80,  60, 0, 0,  0, 2, 1, 1 ,  {TP_WAZA2_PY,TP_WAZA2_PY+TP_WAZA_SY-1,TP_WAZA_PX,TP_WAZA_PX+TP_WAZA_SX-1},},// 01: ‹Z‚Q
   { 40,  84, 0, 0,  1, 3, 2, 2 ,  {TP_WAZA3_PY,TP_WAZA3_PY+TP_WAZA_SY-1,TP_WAZA_PX,TP_WAZA_PX+TP_WAZA_SX-1},},// 02: ‹Z‚R
@@ -2892,7 +2907,7 @@ static const CURSORMOVE_DATA ListKeyTbl[]={
   { 224, 168, 0, 0, 3, 6, 6, 6 ,  {TP_BACK_PY,TP_BACK_PY+TP_BACK_SY-1,TP_BACK_PX,TP_BACK_PX+TP_BACK_SX-1},},// 06: ‚à‚Ç‚é
   { 224, 168, 0, 0, 7, 7, 7, 7 ,  {TP_ABTN_PY,TP_ABTN_PY+TP_ABTN_SY-1,TP_ABTN_PX,TP_ABTN_PX+TP_ABTN_SX-1},},// 07: ‚¨‚Ú‚¦‚é
   { 0, 0, 0, 0, 0, 0, 0, 0,       {GFL_UI_TP_HIT_END, 0, 0, 0 }},
-
+#endif
 };
 
 // CURSORMOVE‚É“n‚·ƒR[ƒ‹ƒoƒbƒNŠÖ”ƒf[ƒ^
@@ -2913,6 +2928,9 @@ static const CURSORMOVE_CALLBACK ListCallBack = {
 static void CursorMoveInit( WO_WORK * wk )
 {
   wk->cmwk = CURSORMOVE_Create( ListKeyTbl, &ListCallBack, wk, TRUE, 0, HEAPID_WAZAOSHIE );
+#ifdef BUGFIX_AF_BTS7916_20100915
+  CURSORMOVE_MoveTableBitOff( wk->cmwk, 8 );
+#endif
 
   ScrollButtonOnOff( wk );    // ƒXƒNƒ[ƒ‹İ’è
 }
@@ -3008,6 +3026,8 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos )
   WO_SelCursorChange( wk, now_pos, PALDW_CURSOR );
 }
 
+
+
 //----------------------------------------------------------------------------------
 /**
  * @brief yCURSORMOVEƒR[ƒ‹ƒoƒbƒNzƒ^ƒbƒ`
@@ -3063,7 +3083,19 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
   }else if( now_pos == 7 ){
     now_pos = wk->dat->pos;
     CURSORMOVE_PosSet( wk->cmwk, now_pos );
+
+#ifdef BUGFIX_AF_BTS7916_20100915
+  // V‚µ‚­’Ç‰Á‚µ‚½u‚à‚Ç‚év
+  }else if(now_pos == 8 ){
+    if( wk->cm_pos != 6 ){
+      now_pos = wk->dat->pos;
+      CURSORMOVE_PosSet( wk->cmwk, now_pos );
+    }
   }
+#else
+  }
+#endif
+
 
   OS_Printf("now_pos=%d\n", now_pos);
   WO_SelCursorChange( wk, now_pos, PALDW_CURSOR );
@@ -3084,6 +3116,9 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
     if(wk->oboe_menu_work[0]==NULL){
       wk->oboe_menu_work[0] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[0], 13, 21, 9, HEAPID_WAZAOSHIE );
       wk->oboe_menu_work[1] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[1], 22, 21, 9, HEAPID_WAZAOSHIE );
+#ifdef BUGFIX_AF_BTS7916_20100915
+      CURSORMOVE_MoveTableBitOn( wk->cmwk, 8 );
+#endif
       wk->enter_flg = 1;
     }
   }else {
@@ -3094,6 +3129,9 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
       wk->oboe_menu_work[0] = NULL;
       wk->oboe_menu_work[1] = NULL;
     }
+#ifdef BUGFIX_AF_BTS7916_20100915
+    CURSORMOVE_MoveTableBitOff( wk->cmwk, 8 );
+#endif
     wk->enter_flg = 0;
   }
 
