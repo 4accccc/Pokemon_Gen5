@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-03T17:28:51"/>
+	<create user="shimoyamada" host="W00184" date="2010-09-03T15:44:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,14 +462,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1378" top="113" right="2044" bottom="741" maximized="no" rayout="Vertical2">
+	<dialog left="70" top="281" right="775" bottom="909" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="no"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="no"/>
-		<band id="0" index="0" style="0000" width="491"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="658"/>
-		<band id="3" index="3" style="0000" width="658"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1178,12 +1178,12 @@
 選んでください</language>
 	</row>
 
-	<row id="syachi_mystery_01_005" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="syachi_mystery_01_005" back-color="#8080ff,,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>カード１枚削除メッセージ</comment>
 		<language name="JPN" width="216">いらないカードを　１まい　えらんで
-すててください</language>
+すててください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">いらないカードを　１枚　選んで
-捨ててください</language>
+捨ててください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_006" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1254,12 +1254,12 @@
 かいし　します[BE:01:ページ切り替え（クリア）]
 じぶんと　あいての
 ＤＳカードを　むきあわせて[BE:00:ページ切り替え（行送り）]
-Ａボタンを　おしてください[BE:01:ページ切り替え（クリア）]</language>
+「はい」を　えらんでください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">赤外線通信を
 開始します[BE:01:ページ切り替え（クリア）]
 自分と　相手の
 ＤＳカードを　向き合わせて[BE:00:ページ切り替え（行送り）]
-Ａボタンを　押してください[BE:01:ページ切り替え（クリア）]</language>
+「はい」を　選んでください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_009_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">

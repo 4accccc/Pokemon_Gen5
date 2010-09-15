@@ -3095,7 +3095,9 @@ static void SEQFUNC_DeleteMsg( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   case SEQ_MAIN:
     if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
     { 
+#ifndef BUGFIX_AF_GFBTS2005_20100915
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+#endif //BUGFIX_AF_GFBTS2005_20100915
       {
         *p_seq  = SEQ_EXIT;
       }
