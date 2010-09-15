@@ -13,6 +13,7 @@
 #include "system/main.h"
 #include "app/p_status.h"
 
+
 //==============================================================================
 //  define
 //==============================================================================
@@ -374,10 +375,17 @@ static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
 //--------------------------------------------------------------
 static BOOL _seq_PokeStatus( GURU2_CALL_WORK *g2call )
 {
+#ifdef BUGFIX_AF_BTS7892_20100915
+    int ret = g2call->psd->pos;
+#endif
     GFL_HEAP_FreeMemory( g2call->psd );
 //    g2call->plist =
 //      Guru2ListEvent_SetProc( g2call->fsys, g2call->psel_pos );
+#ifdef BUGFIX_AF_BTS7892_20100915
+      g2call->plist = Guru2PokeListWorkCreate( g2call, PL_MODE_GURU2, ret );
+#else
       g2call->plist = Guru2PokeListWorkCreate( g2call, PL_MODE_GURU2, 0 );
+#endif
 //      GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &g2call->plist );
     GFL_PROC_LOCAL_CallProc( 
       g2call->local_procsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, g2call->plist );
