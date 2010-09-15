@@ -485,7 +485,7 @@
 #define BUGFIX_AF_GFBTS2002_20100806
 
 //【ふしぎなおくりもの：カードアルバムの矢印がチラつく】
-//#define BUGFIX_AF_GFBTS2004_20100806
+#define BUGFIX_AF_GFBTS2004_20100806
 
 //ランダムマッチのポケモン選択画面で片方がフリーズする
 #define BUGFIX_AF_GFBTS2015_100806
