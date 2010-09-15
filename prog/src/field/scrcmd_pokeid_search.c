@@ -209,7 +209,7 @@ static int SearchBox(const u32 inMyID, GAMEDATA * gdata, const int inBoxIdx, ARR
 #ifdef BUGFIX_AF_BTS7899_20100806
     //É^É}ÉSÇÕëŒè€äO
     if ( BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_poke_exist, NULL ) &&
-         (!BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_tamago_flg, NULL )) )
+         (!BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_tamago_flag, NULL )) )
 #else
     if ( BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_poke_exist, NULL ) )
 #endif
