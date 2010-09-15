@@ -631,7 +631,7 @@ EVENT_START		ev_pos_d03r0101_hakase2_01
 	//ハーイ！
 	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_01 , MMDL_ID_EVENTOBJ_00 )
-	_MSGWIN_CLOSE()
+	//GFBTS1968対処：不要なメッセージクローズを削除しました
 	
 	//いせきの　いりぐち
 	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_02 , MMDL_ID_EVENTOBJ_00 )
