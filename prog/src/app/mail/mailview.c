@@ -704,7 +704,12 @@ static int MailView_KeyInView(MAIL_VIEW_DAT* wk)
 {
   if(GFL_UI_KEY_GetTrg()){
     wk->key_mode = APP_KTST_KEY;
+// BTS7983:ポケモンリストからタッチし続けているとメール閲覧画面で即終了してしまう
+#ifdef BUGFIX_AF_BTS7983_20100915
+  }else if(GFL_UI_TP_GetTrg()){
+#else
   }else if(GFL_UI_TP_GetCont()){
+#endif
     wk->key_mode = APP_KTST_TOUCH;
   }else{
     return 0;
