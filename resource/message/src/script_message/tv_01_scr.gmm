@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-14T17:52:16"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-09-15T17:43:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="191" right="2014" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="154" top="228" right="859" bottom="856" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -5059,7 +5059,7 @@
 はちきれんばかりに
 げんきですカー？▼
 こんしゅうも　おまちかね
-『TRADE &apos;N TALK』の　じかんヨ！▼
+『TRADE&apos;N TALK』の　じかんヨ！▼
 こんしゅうの　ひとことは　コレ！
 『きみの　ポケモン　かわいいね！』▼
 ぜひ　つかってみたい　ひとことね！
@@ -5077,7 +5077,7 @@ HAVE A NICE DAY！</language>
 はちきれんばかりに
 元気ですカー？▼
 今週も　お待ちかね
-『TRADE &apos;N TALK』の　時間ヨ！▼
+『TRADE&apos;N TALK』の　時間ヨ！▼
 今週の　一言は　コレ！
 『きみの　ポケモン　かわいいね！』▼
 ぜひ　使ってみたい　一言ね！
@@ -5228,7 +5228,7 @@ HAVE A NICE DAY！　ムチュッ！</language>
 
 ・3＝先頭のポケモン（タマゴを除く）</comment>
 		<language name="JPN" width="256">ジョディ『こんにちは　エブリワン！
-『TRADE&apos;N　TALK』の　じかんよ！▼
+『TRADE&apos;N TALK』の　じかんよ！▼
 こんしゅうの　ひとこと
 コミュニケーションは　コレ！▼
 『しりあえて　よかったわ』▼
@@ -5243,7 +5243,7 @@ HAVE A NICE DAY！　ムチュッ！</language>
 それじゃ　きょうは　ここまで！
 SEE　YOU　SOON！</language>
 		<language name="JPN_KANJI" width="256">ジョディ『こんにちは　エブリワン！
-『TRADE&apos;N　TALK』の　時間よ！▼
+『TRADE&apos;N TALK』の　時間よ！▼
 今週の　一言
 コミュニケーションは　コレ！▼
 『知り合えて　良かったわ』▼
@@ -5533,7 +5533,7 @@ HEYHAAAAY！　これで　お互いの
 ・3＝先頭のポケモン（タマゴを除く）</comment>
 		<language name="JPN" width="256">ボブ『ハッハァ　みんな　きょうも
 ばくはつてきに　げんきかーい？▼
-『TRADE&apos;N　TALK』が　きょうも
+『TRADE&apos;N TALK』が　きょうも
 かってに　はじけちゃうよー！▼
 きょうの　ひとこと
 コミュニケーションは　コレ！▼
@@ -5551,7 +5551,7 @@ HEYHAAAAY！　これで　お互いの
 HAVE A TERRIFIC DAY!</language>
 		<language name="JPN_KANJI" width="256">ボブ『ハッハァ　みんな　今日も
 爆発的に　元気かーい？▼
-『TRADE&apos;N　TALK』が　今日も
+『TRADE&apos;N TALK』が　今日も
 勝手に　はじけちゃうよー！▼
 今日の　一言
 コミュニケーションは　コレ！▼
@@ -5808,7 +5808,7 @@ OHHHH！　バッチリ　おめかしした
 
 ・3＝先頭のポケモン（タマゴを除く）</comment>
 		<language name="JPN" width="256">ボブ『HELLO EVERY ONE OF YOU！
-きょうの　『TRADE&apos;N　TALK』　では▼
+きょうの　『TRADE&apos;N TALK』　では▼
 ガツンと　きあいの　はいった
 しょうり　せんげん！▼
 『おれが　かつ！』
@@ -5825,7 +5825,7 @@ OHHHH！　バッチリ　おめかしした
 ということで　きょうは　ここまで！
 また　あおうぜ　SEE YOU！</language>
 		<language name="JPN_KANJI" width="256">ボブ『HELLO EVERY ONE OF YOU！
-今日の　『TRADE&apos;N　TALK』　では▼
+今日の　『TRADE&apos;N TALK』　では▼
 ガツンと　気合の　入った
 勝利宣言！▼
 『おれが　勝つ！』
