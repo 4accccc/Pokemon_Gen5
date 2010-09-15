@@ -664,11 +664,14 @@ static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work )
     work->cursorPos = ret;
     work->isDecide = TRUE;
     APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, TRUE );
+
+#ifndef BUGFIX_AF_GFBTS1806_20100914 //リターンマークが入っているのにSEが決定音である不具合修正
     if( work->cursorPos == 0 )
     {
       PMSND_PlaySystemSE( APP_TASKMENU_SND_DECIDE );
     }
     else
+#endif //BUGFIX_AF_GFBTS1806_20100914
     {
       if( work->itemWork[ work->cursorPos ].type == APP_TASKMENU_WIN_TYPE_RETURN )
       { 
