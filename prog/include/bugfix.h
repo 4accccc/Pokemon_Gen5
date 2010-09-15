@@ -229,7 +229,7 @@
 #define BUGFIX_AF_BTS8022_20100806
 
 //【IDイベントにて別IDのタマゴがボックスにあると、タマゴがカウントされる】
-//#define BUGFIX_AF_BTS7899_20100806
+#define BUGFIX_AF_BTS7899_20100806
 
 //親機探索メニューで特定の手順で子機が抜けれなくなる
 //#define BUGFIX_AF_BTS7875_20100806
