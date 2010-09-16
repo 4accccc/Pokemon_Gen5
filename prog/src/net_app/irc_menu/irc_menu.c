@@ -433,6 +433,9 @@ struct _IRC_MENU_MAIN_WORK
 	u32		now_ms;
   u32     msg_cnt;
 	BOOL	is_send;
+#ifdef BUGFIX_AF_BTS7929_20100915
+  u32   timeout;
+#endif//BUGFIX_AF_BTS7929_20100915
 };
 
 //=============================================================================
@@ -1793,7 +1796,24 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	};
 
   { 
+#ifdef BUGFIX_AF_BTS7929_20100915
+    BOOL is_timeout = FALSE;
+    if( *p_seq > SEQ_MSG_STARTNET )
+    {
+      if( p_wk->timeout++ > 60*30 )
+      {
+        PMSND_StopSE();
+        is_timeout  = TRUE;
+      }
+    }
+#endif//BUGFIX_AF_BTS7929_20100915
+
+#ifdef BUGFIX_AF_BTS7929_20100915
+    if( (*p_seq < SEQ_MSG_CONNECT && APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN)
+        || is_timeout )
+#else//BUGFIX_AF_BTS7929_20100915
     if( *p_seq < SEQ_MSG_CONNECT && APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+#endif//BUGFIX_AF_BTS7929_20100915
 		{
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
@@ -1812,6 +1832,9 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
 	case SEQ_BOOT:
 		COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
+#ifdef BUGFIX_AF_BTS7929_20100915
+    p_wk->timeout = 0;
+#endif//BUGFIX_AF_BTS7929_20100915
 		*p_seq	= SEQ_MSG_STARTNET;
 		break;
 
@@ -1950,11 +1973,13 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			p_wk->cnt++;
 		}
 	}
-
+#ifndef BUGFIX_AF_BTS7929_20100915
+  //ÇªÇ‡ÇªÇ‡Ç±ÇÃèàóùÇÕã@î\ÇµÇƒÇ¢Ç»Ç¢
 	if( *p_seq < SEQ_SCENE && COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
 	{	
 		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
+#endif  //BUGFIX_AF_BTS7929_20100915
 }
 //----------------------------------------------------------------------------
 /**
