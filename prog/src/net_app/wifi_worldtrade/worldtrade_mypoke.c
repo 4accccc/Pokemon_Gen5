@@ -432,11 +432,19 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 
 static const info_bmpwin_table[][4]={
 	{   2,  1,  12,  2, },	// ポケモンのニックネーム
+#ifdef BUGFIX_AF_BTS7715_20100916
+	{   7,  4,  8,  2, },	// ポケモンの種族名
+#else //BUGFIX_AF_BTS7715_20100916
 	{   8,  4,  8,  2, },	// ポケモンの種族名
+#endif //BUGFIX_AF_BTS7715_20100916
 	{  11,  1,  4,  2, },	// 「レベル」
 	{  14,  1,  4,  2, },	// レベル
 	{   1, 10,  6,  2, },	// 「もちもの」
+#ifdef BUGFIX_AF_BTS7715_20100916
+	{   7, 10, 13,  2, },	// 所持アイテム名
+#else //BUGFIX_AF_BTS7715_20100916
 	{   8, 10, 12,  2, },	// 所持アイテム名
+#endif //BUGFIX_AF_BTS7715_20100916
 	{   1,  4,  6,  2, },	// 「なまえ」
 	{   1, 13, 10,  2, },	//「あずけたひと」
 	{  12, 13,  8,  2, },	// トレーナー名
@@ -444,7 +452,11 @@ static const info_bmpwin_table[][4]={
 	{   1, 18, 10,  2, },	// ポケモン種族名
 	{  13, 18, 12,  2, },	// レベル指定
 	{   1,  7,  4,  2, },	// 「おや」
+#ifdef BUGFIX_AF_BTS7715_20100916
+	{   7,  7,  8,  2, },	// 親名
+#else //BUGFIX_AF_BTS7715_20100916
 	{   8,  7,  8,  2, },	// 親名
+#endif //BUGFIX_AF_BTS7715_20100916
 };
 
 // はい・いいえのBMPWIN領域は最後にもってきたいのだが、
@@ -1025,11 +1037,19 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 	if(sex!=DPW_TR_GENDER_NONE && is_sex_visible){
 		WorldTrade_SysPrint( win[0], sexbuf,   64, 0, 0, sex_mark_col(sex),print );
 	}
+#ifdef BUGFIX_AF_BTS7715_20100916
+	WorldTrade_SysPrint( win[1], strbuf,     6, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+#else //BUGFIX_AF_BTS7715_20100916
 	WorldTrade_SysPrint( win[1], strbuf,     0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+#endif //BUGFIX_AF_BTS7715_20100916
 	WorldTrade_SysPrint( win[2], levellabel, 0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	WorldTrade_SysPrint( win[3], levelbuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	WorldTrade_SysPrint( win[4], itemlabel,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
+#ifdef BUGFIX_AF_BTS7715_20100916
+	WorldTrade_SysPrint( win[5], itembuf,    6, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+#else //BUGFIX_AF_BTS7715_20100916
 	WorldTrade_SysPrint( win[5], itembuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
+#endif //BUGFIX_AF_BTS7715_20100916
 	WorldTrade_SysPrint( win[6], namelabel,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
 
 	GFL_STR_DeleteBuffer( itemlabel  );
@@ -1071,7 +1091,11 @@ void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRC
 	WorldTrade_SysPrint( win[0], ornerlabel, 0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
 	WorldTrade_SysPrint( win[1], ornerbuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print  );
 	WorldTrade_SysPrint( oya_win[0], oyalabel,   0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
+#ifdef BUGFIX_AF_BTS7715_20100916
+	WorldTrade_SysPrint( oya_win[1], oyabuf,   6, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
+#else //BUGFIX_AF_BTS7715_20100916
 	WorldTrade_SysPrint( oya_win[1], oyabuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
+#endif  //BUGFIX_AF_BTS7715_20100916
 	
 	GFL_STR_DeleteBuffer( ornerlabel );
 	GFL_STR_DeleteBuffer( ornerbuf   );
