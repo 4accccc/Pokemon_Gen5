@@ -512,7 +512,11 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 
 // 相手のポケモン情報画面のBMPWIN情報
 static const int info_bmpwin_table[][5]={
+#ifdef BUGFIX_AF_BTS7723_20100916
+	{   2,  1,  9,  2, GFL_BG_FRAME2_M, },	// ポケモンのニックネーム
+#else
 	{   1,  1,  9,  2, GFL_BG_FRAME2_M, },	// ポケモンのニックネーム
+#endif  //BUGFIX_AF_BTS7723_20100916
 #ifdef BUGFIX_AF_BTS7715_20100916
 	{   7,  4,  8,  2, GFL_BG_FRAME2_M, },	// ポケモンの種族名
 #else //BUGFIX_AF_BTS7715_20100916
