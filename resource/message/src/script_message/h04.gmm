@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-09-07T12:24:11"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T20:45:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="174" right="1985" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -955,9 +955,9 @@
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">うちの　ポケモンが　すきな
-[1:09:どうぐ名:0]の　トッピングを　ください！</language>
+[1:09:どうぐ名:0]の　トッピングを　ください！▼</language>
 		<language name="JPN_KANJI" width="256">うちの　ポケモンが　好きな
-[1:09:どうぐ名:0]の　トッピングを　ください！</language>
+[1:09:どうぐ名:0]の　トッピングを　ください！▼</language>
 	</row>
 
 	<row id="msg_h04_man1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1001,9 +1001,9 @@
 		<attribute name="キャラ指定">MAN3
 太った兄さん</attribute>
 		<language name="JPN" width="256">きょうは　がっつりと　たべたいから
-[1:09:どうぐ名:0]おおもりに　しようかなっ！</language>
+[1:09:どうぐ名:0]おおもりに　しようかなっ！▼</language>
 		<language name="JPN_KANJI" width="256">今日は　がっつりと　食べたいから
-[1:09:どうぐ名:0]大盛りに　しようかなっ！</language>
+[1:09:どうぐ名:0]大盛りに　しようかなっ！▼</language>
 	</row>
 
 	<row id="msg_h04_man3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1045,9 +1045,9 @@
 		<attribute name="キャラ指定">WOMAN1
 女性</attribute>
 		<language name="JPN" width="256">わたしの　ポケモンは　グルメよ
-[1:09:どうぐ名:0]を　おねがい　できる？</language>
+[1:09:どうぐ名:0]を　おねがい　できる？▼</language>
 		<language name="JPN_KANJI" width="256">わたしの　ポケモンは　グルメよ
-[1:09:どうぐ名:0]を　お願いできる？</language>
+[1:09:どうぐ名:0]を　お願いできる？▼</language>
 	</row>
 
 	<row id="msg_h04_woman1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1093,9 +1093,9 @@
 		<attribute name="キャラ指定">GIRL2
 活発少女</attribute>
 		<language name="JPN" width="256">わたしも　ポケモンちゃんも
-[1:09:どうぐ名:0]のきぶん！　おねがいね！</language>
+[1:09:どうぐ名:0]のきぶん！　おねがいね！▼</language>
 		<language name="JPN_KANJI" width="256">わたしも　ポケモンちゃんも
-[1:09:どうぐ名:0]の気分！　お願いね！</language>
+[1:09:どうぐ名:0]の気分！　お願いね！▼</language>
 	</row>
 
 	<row id="msg_h04_girl2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

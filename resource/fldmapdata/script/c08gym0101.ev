@@ -492,8 +492,7 @@ EVENT_START	ev_bg_c08gym0101_statue_01
 
 		ELSE
 			//R10でのライバル戦後にライバルの名前追記
-			//BTS7904対処：$WK_SCENE_C08_GYMCLEARを見る条件を変更しました（100915水口）
-			IF $WK_SCENE_C08_GYMCLEAR >= 4 THEN
+			IF $WK_SCENE_C08_GYMCLEAR >= 2 THEN
 				//イベント進行後
 				_PLAINWIN_MSG_DOWN( msg_c02gym0101_statue_b_03 )
 			ELSE

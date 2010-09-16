@@ -40,17 +40,13 @@ _EVENT_DATA_END
 /************************************************************/
 /*				フィールドイニットスクリプト				*/
 /************************************************************/
-INIT_EVENT_START	ev_init_c03p07
-
+INIT_EVENT_START	ev_init_c03p07
 	//群集の起動
 //	_CROWD_PEOPLE_START()
 	
-INIT_EVENT_END
-
-INIT_EVENT_START	ev_recover_c03p07
-
-	//群集の起動
-
+INIT_EVENT_END
+INIT_EVENT_START	ev_recover_c03p07
+	//群集の起動
 //  _CROWD_PEOPLE_START()
 
 INIT_EVENT_END
@@ -387,9 +383,7 @@ ev_c03p07_hakai:
 		_OBJ_ANIME_WAIT()
 		
 		_BALLOONWIN_OBJMSG( msg_c03p07_leader3_07 , C03P07_LEADER3_01 )
-		
-		//GFBTS1941 カメラ演出前の送りマークの修正
-		_AB_KEYWAIT_MARK()
+		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
 		//========================================/	
