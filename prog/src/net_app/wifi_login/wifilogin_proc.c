@@ -872,7 +872,11 @@ static void _modeDifferDSWait7(WIFILOGIN_WORK* pWork)
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
+#ifdef BUGFIX_AF_BTS7878_20100916
+      _CHANGE_STATE(pWork,_profileIDCheck);
+#else //BUGFIX_AF_BTS7878_20100916
       _CHANGE_STATE(pWork,_callbackFunciton);
+#endif //BUGFIX_AF_BTS7878_20100916
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
