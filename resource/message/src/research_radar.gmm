@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-24T21:59:31"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-09-15T18:34:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="115" top="143" right="820" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="793" top="98" right="1266" bottom="496" visible="yes"/>
+		<tag-palette left="793" top="98" right="1266" bottom="496" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -425,8 +425,8 @@
 	<row id="str_check_today_count" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN">[BD:03:Ｘ右寄せ:10]きょうのにんずう
 [BD:03:Ｘ右寄せ:10][2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:12]今日の人数
-[BD:03:Ｘ右寄せ:12][2:03:４桁:0]人</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:10]今日の人数
+[BD:03:Ｘ右寄せ:10][2:03:４桁:0]人</language>
 	</row>
 
 	<row id="str_check_today_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
