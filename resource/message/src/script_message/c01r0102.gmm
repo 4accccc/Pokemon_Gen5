@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-07-07T19:23:39"/>
+	<create user="matsumiya" host="W00224" date="2010-09-16T11:39:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="12" top="146" right="717" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="155" right="2006" bottom="783" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -867,7 +867,7 @@
 		<language name="JPN_KANJI" width="256">ショウロ『なにか　ききたいことある？</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・バトルボックス選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -877,15 +877,17 @@
 １～６ひき　とうろく　しておけます▼
 せきがいせんで　たいせん　するときは
 バトルボックスに　とうろく　した▽
-ポケモンたちで　しょうぶ　するの！▼
-ポケモンを　いれかえなくて　べんりよ</language>
+ポケモンで　たたかうか▼
+てもちの　ポケモンで　たたかうか
+えらぶことが　できるの！</language>
 		<language name="JPN_KANJI" width="256">バトルボックスには
 対戦で　よく使う　ポケモンを▽
 １～６匹　登録　しておけます▼
 赤外線で　対戦するときは
 バトルボックスに　登録した▽
-ポケモンたちで　勝負するの！▼
-ポケモンを　いれかえなくて　便利よ</language>
+ポケモンで　戦うか▼
+手持ちの　ポケモンで　戦うか
+選ぶことが　できるの！</language>
 	</row>
 
 	<row id="msg_c01r0102_girl3_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
