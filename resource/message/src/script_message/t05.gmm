@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-06-19T16:11:57"/>
+	<create user="matsumiya" host="W00224" date="2010-09-15T19:22:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1451" top="230" right="2156" bottom="850" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="244" right="1280" bottom="642" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -773,7 +773,7 @@ Sダブル</comment>
 んー　スンバラシイ！▼</language>
 	</row>
 
-	<row id="msg_t05_railfan_end_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_t05_railfan_end_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 終了メッセージ
 マルチ</comment>
@@ -781,13 +781,13 @@ Sダブル</comment>
 		<language name="JPN" width="256">この　しゃりょうの　かいはつで
 うまれた　ぎじゅつ　によって▼
 スーパーシングルトレインや
-スーパーマルチトレインなどの▽
+スーパーダブルトレインなどの▽
 りょうさん　しゃりょうが▽
 かんせい　したのです！▼</language>
 		<language name="JPN_KANJI" width="256">この車両の　開発で
 うまれた　技術によって▼
 スーパーシングルトレインや
-スーパーマルチトレインなどの▽
+スーパーダブルトレインなどの▽
 量産車両が　完成したのです！▼</language>
 	</row>
 
