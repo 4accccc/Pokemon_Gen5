@@ -200,6 +200,12 @@ int WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq)
 	}
 	wk->sub_out_flg = 0;
 	OS_TPrintf("opening flag = %d\n", wk->OpeningFlag);
+
+
+
+#ifdef BUGFIX_AF_BTS7863_20100916
+  WorldTrade_SubLcdMatchObjHide( wk );
+#endif //BUGFIX_AF_BTS7863_20100916
 	return SEQ_FADEIN;
 }
 //==============================================================================

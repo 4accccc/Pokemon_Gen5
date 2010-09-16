@@ -557,6 +557,13 @@ void WorldTrade_SubLcdMatchObjHide( WORLDTRADE_WORK *wk )
 {
 	int i;
 	for(i=0;i<7;i++){
+#ifdef BUGFIX_AF_BTS7863_20100916
+    if( wk->SubActWork[i+1] == NULL
+        || GFL_CLACT_WK_GetAnmSeq( wk->SubActWork[i+1] ) == ObjAppearNoGet( i )+1)
+    {
+      continue;
+    }
+#endif //BUGFIX_AF_BTS7863_20100916
 		if(GFL_CLACT_WK_GetDrawEnable(wk->SubActWork[i+1])){
 			GFL_CLACT_WK_SetAnmSeq( wk->SubActWork[i+1], ObjAppearNoGet( i )+1 );
 		}
