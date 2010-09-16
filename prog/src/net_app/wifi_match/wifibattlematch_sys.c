@@ -1934,6 +1934,57 @@ static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEP
 //-----------------------------------------------------------------------------
 static void Util_GetRestPoke( const BATTLE_SETUP_PARAM *cp_btl_param, u8 *p_my_poke, u8 *p_you_poke )
 {
+#ifdef BUGFIX_AF_BTS7957_20100916
+  int tr_no;
+  int party_no;
+  int my_pos;
+  int client_no;
+  int max;
+
+  *p_my_poke  = 0;
+  *p_you_poke = 0;
+
+  my_pos = cp_btl_param->commPos;
+  for(tr_no = 0; tr_no <= COMM_BTL_DEMO_TRDATA_B; tr_no++){
+    if(tr_no == BTL_CLIENT_PLAYER){  //自分パーティ
+      if(my_pos & 1){
+        client_no = BTL_CLIENT_ENEMY1 + (tr_no & 2);
+      }
+      else{
+        client_no = BTL_CLIENT_PLAYER + (tr_no & 2);
+      }
+
+      max = PokeParty_GetPokeCount(cp_btl_param->party[BTL_CLIENT_PLAYER] );
+      NAGI_Printf( "max=%d\n", max );
+      for(party_no = 0; party_no < max; party_no++){
+        if( cp_btl_param->party_state[client_no][party_no] != BTL_POKESTATE_DEAD )
+        {
+          (*p_my_poke)++;
+        }
+        NAGI_Printf( "[%d]=%d\n", party_no, cp_btl_param->party_state[client_no][party_no]  );
+      }
+      NAGI_Printf( "\n" );
+    }
+    else{ //敵パーティ
+      if(my_pos & 1){
+        client_no = BTL_CLIENT_PLAYER + (tr_no & 2);
+      }
+      else{
+        client_no = BTL_CLIENT_ENEMY1 + (tr_no & 2);
+      }
+      max = PokeParty_GetPokeCount(cp_btl_param->party[BTL_CLIENT_ENEMY1] );
+      NAGI_Printf( "max=%d\n", max );
+      for(party_no = 0; party_no < max; party_no++){
+        if( cp_btl_param->party_state[client_no][party_no] != BTL_POKESTATE_DEAD )
+        {
+          (*p_you_poke)++;
+        }
+        NAGI_Printf( "[%d]=%d\n", party_no, cp_btl_param->party_state[client_no][party_no]  );
+      }
+      NAGI_Printf( "\n" );
+    }
+  }
+#else //BUGFIX_AF_BTS7957_20100916
   int tr_no;
   int party_no;
   int my_pos;
@@ -1977,6 +2028,7 @@ static void Util_GetRestPoke( const BATTLE_SETUP_PARAM *cp_btl_param, u8 *p_my_p
       }
     }
   }
+#endif //BUGFIX_AF_BTS7957_20100916
 }
 
 //----------------------------------------------------------------------------
