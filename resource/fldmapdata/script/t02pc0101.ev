@@ -91,6 +91,8 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	//ポケモンセンターの凄いところ！
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_02, T02PC0101_HAKASE2_01, POS_DL )
+	//GFBTS1902：イベントの末なのでラストキーウェイトを追加しました。
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	//BGM終了
