@@ -1036,6 +1036,8 @@ ENDSWITCH
 
 //さあ！　さっきの　ミネズミちゃん　あててみて！
 _BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_07 )
+//BTS8023対処：gmm内の送りマークを取り、ABキーウェイトマークに差し替えた。
+_AB_KEYWAIT_MARK()
 _MSGWIN_CLOSE()
 
 //自機にカメラを戻す
