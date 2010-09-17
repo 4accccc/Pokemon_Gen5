@@ -686,7 +686,12 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
     }
     else
     {
+#ifdef BUGFIX_AF_BTS7891_20100917
+      if( ( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_WILD ) ||
+          ( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_DEMO_CAPTURE ) )
+#else
       if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_WILD )
+#endif
       {
         break;
       }
