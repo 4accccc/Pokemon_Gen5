@@ -723,7 +723,7 @@
  *
  *  ’S“–F…Œû
  */
-#define BUGFIX_AF_BTS7904_100915
+#define BUGFIX_AF_BTS7904_100917
 
 /*
  * BTS7910
