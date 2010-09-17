@@ -330,6 +330,11 @@ static GMEVENT_RESULT EventCommCommonTalked_Manager( GMEVENT *event, int *seq, v
 	  if(intcomm == NULL){
       return GMEVENT_RES_FINISH;
     }
+  #ifdef BUGFIX_AF_BTS8033_20100902
+    if(CommPlayer_CheckMmdl(intcomm->cps, manage->talk_net_id) == FALSE){
+      return GMEVENT_RES_FINISH;
+    }
+  #endif
     
     MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( manage->fieldWork ) );
     

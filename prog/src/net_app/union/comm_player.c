@@ -532,6 +532,26 @@ MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index)
   return FIELD_COMM_ACTOR_CTRL_GetMMdl(cps->act_ctrl, index);
 }
 
+#ifdef BUGFIX_AF_BTS8033_20100902
+//==================================================================
+/**
+ * 対象プレイヤーのMMDLポインタが存在しているか調べる
+ *
+ * @param   cps		
+ * @param   index		
+ *
+ * @retval  BOOL		TRUE:存在している
+ */
+//==================================================================
+BOOL CommPlayer_CheckMmdl(COMM_PLAYER_SYS_PTR cps, int index)
+{
+  if(cps == NULL || cps->act_ctrl == NULL || cps->act[index].occ == FALSE){
+    return FALSE;
+  }
+  return TRUE;
+}
+#endif
+
 //--------------------------------------------------------------
 /**
  * フィールドが存在していれば通信プレイヤーシステムを作成する

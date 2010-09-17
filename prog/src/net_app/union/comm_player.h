@@ -50,3 +50,6 @@ extern BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACK
 extern BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gy, s16 gz, u32 *out_index, u32 *search_start_no);
 extern BOOL CommPlayer_SetGyoeTask(COMM_PLAYER_SYS_PTR cps, int index);
 extern MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index);
+#ifdef BUGFIX_AF_BTS8033_20100902
+extern BOOL CommPlayer_CheckMmdl(COMM_PLAYER_SYS_PTR cps, int index);
+#endif
