@@ -2613,7 +2613,12 @@ static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
   u16 dir = FIELD_PLAYER_GetKeyDir( cp_player, req->key_cont );
 
+#ifdef BUGFIX_AF_GFBTS2021_20100923
+  if( (dir == DIR_DOWN) && 
+      ((req->player_state == PLAYER_MOVE_STATE_OFF) || (req->player_state == PLAYER_MOVE_STATE_END)) ){
+#else //BUGFIX_AF_GFBTS2021_20100923
   if( dir == DIR_DOWN ){
+#endif //BUGFIX_AF_GFBTS2021_20100923
     // ‚¸‚è—‚¿ˆ—
     if( RAIL_ATTR_VALUE_CheckSlipDown( MAPATTR_GetAttrValue(req->mapattr) ) )
     {

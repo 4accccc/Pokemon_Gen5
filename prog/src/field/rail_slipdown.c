@@ -236,7 +236,7 @@ static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
 
       FIELD_RAIL_WORK_GetPos( p_slipdown->p_mmdl_rail, &now_pos );
 
-//      TOMOYA_Printf( "nowpos x[%d] y[%d] z[%d]\n", FX_Whole(now_pos.x), FX_Whole(now_pos.y), FX_Whole(now_pos.z) );
+      //TOMOYA_Printf( "nowpos x[%d] y[%d] z[%d]\n", (now_pos.x), (now_pos.y), (now_pos.z) );
 
       // その方向に,１グリッドサイズ移動し、
       // 下る
@@ -282,6 +282,18 @@ static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
         int width = FIELD_RAIL_MAN_GetLocationWidthGrid( cp_railMan, &p_slipdown->target_location );
         MAPATTR attr;
         MAPATTR_FLAG attr_flag;
+
+#ifdef BUGFIX_AF_GFBTS2021_20100923
+        BOOL location_seting = FALSE;
+
+        //今の位置のアトリビュートチェック
+        attr = FLDNOGRID_MAPPER_GetAttr( p_slipdown->p_mapper, &location );
+        attr_flag = MAPATTR_GetAttrFlag( attr );
+
+        if( (attr_flag & MAPATTR_FLAGBIT_HITCH) == 0 ){
+          location_seting = TRUE;
+        }
+#endif //BUGFIX_AF_GFBTS2021_20100923
         
         // 補正
         location.width_grid += RAILSLIPDOWN_MOVE_SIDE_HOSEI;
@@ -306,7 +318,19 @@ static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
 
           // 
           p_slipdown->target_location = location;
+
+#ifdef BUGFIX_AF_GFBTS2021_20100923
+          location_seting = TRUE;
+#endif
         }
+
+#ifdef BUGFIX_AF_GFBTS2021_20100923
+        if( location_seting == FALSE ){
+          p_slipdown->seq = EV_RAILSLIPDOWN_END_LOOP;
+          TOMOYA_Printf( "足元が移動不可能なので、滑り降りない。\n" );
+          return ;
+        }
+#endif
 
         // 求めたロケーションの座標を設定
         FIELD_RAIL_MAN_GetLocationPosition( cp_railMan, &p_slipdown->target_location, &p_slipdown->end_pos );

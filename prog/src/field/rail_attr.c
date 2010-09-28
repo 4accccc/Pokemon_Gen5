@@ -221,10 +221,14 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
       x = ( cp_location->width_grid + (cp_lineattr->x / 2) );
       z = cp_location->line_grid;
 
-//      TOMOYA_Printf( "x = %d, z= %d\n", x,z );
+      //TOMOYA_Printf( "line index = %d, x = %d, z= %d\n", cp_location->rail_index, x,z );
 
       // 範囲内チェック
-      if( (cp_lineattr->x > x) && (cp_lineattr->z) > z )
+#ifdef BUGFIX_AF_GFBTS2025_20100928
+      if( (cp_lineattr->x > x) && (cp_lineattr->z > z) && (0<=x) && (0<=z) ) 
+#else
+      if( (cp_lineattr->x > x) && (cp_lineattr->z > z) ) 
+#endif //BUGFIX_AF_GFBTS2025_20100928
       {
       
         index = (cp_lineattr->x * z) + x;
