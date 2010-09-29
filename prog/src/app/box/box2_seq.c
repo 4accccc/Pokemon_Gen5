@@ -7940,6 +7940,10 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 		while( BOX2MAIN_VFuncBoxMoveFrmIn(syswk) ){}
 		BOX2OBJ_EndTrayCursorScroll( syswk );
 		BOX2BGWFRM_TemochiButtonOn( syswk->app );
+#ifdef	BUGFIX_AF_GFBTS2020_20100924
+		// クリアしないと、スクロール時にアイコンが消える
+		syswk->get_pos = BOX2MAIN_GETPOS_NONE;
+#endif	// BUGFIX_AF_GFBTS2020_20100924
 		return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
 
 	case SUB_PROC_MODE_TB_BOX_GET:		// ボックスのポケモンのタッチバーから（掴んでいる時）
@@ -7969,6 +7973,10 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 		PartyFrmSetRight( syswk );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );
 		BOX2BGWFRM_BoxListButtonOn( syswk->app );
+#ifdef	BUGFIX_AF_GFBTS2020_20100924
+		// クリアしないと、スクロール時にアイコンが消える
+		syswk->get_pos = BOX2MAIN_GETPOS_NONE;
+#endif	// BUGFIX_AF_GFBTS2020_20100924
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
 
 	case SUB_PROC_MODE_TB_PARTY_GET:	// 手持ちのポケモンのタッチバーから（掴んでいる時）
@@ -8024,6 +8032,10 @@ static int RcvStatus_ModeBattleBox( BOX2_SYS_WORK * syswk )
 		PartyFrmSetRight( syswk );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );
 		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_BOXLIST );
+#ifdef	BUGFIX_AF_GFBTS2020_20100924
+		// クリアしないと、スクロール時にアイコンが消える
+		syswk->get_pos = BOX2MAIN_GETPOS_NONE;
+#endif	// BUGFIX_AF_GFBTS2020_20100924
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
 
 	case SUB_PROC_MODE_TB_PARTY_GET:	// 手持ちのポケモンのタッチバーから（掴んでいる時）
