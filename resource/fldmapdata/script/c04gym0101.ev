@@ -480,6 +480,9 @@ ev_trainer_btl_01:
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
+		//GFBTS2018：海外版バグ対処
+		//コースタートレーナーを非表示に戻す
+		_FLAG_SET( FV_C04GYM0101_TR_01 )
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
@@ -517,6 +520,9 @@ ev_trainer_btl_02:
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
+		//GFBTS2018：海外版バグ対処
+		//コースタートレーナーを非表示に戻す
+		_FLAG_SET( FV_C04GYM0101_TR_02 )
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
