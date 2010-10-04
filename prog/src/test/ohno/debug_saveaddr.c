@@ -437,7 +437,16 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
     }
 
 
+    {//WIFIリスト
+      WIFI_LIST* pWifiList = SaveData_GetWifiListData(pWork->pSaveData);
+      DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
+      pAddr = (u8*)&userdata->gs_profile_id;
+  //    OS_TPrintf("%d\n",userdata->gs_profile_id);
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(userdata->gs_profile_id));
 
+    }
+
+    
     { //GTSネゴ履歴
       WIFI_NEGOTIATION_SAVEDATA* pGTSNEGO = WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSaveData);
 
@@ -514,17 +523,16 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
     }
     
 
-
     
     {//システム
 //      SYSTEMDATA* pSys = SaveData_GetSystemData(pWork->pSaveData);
 
 //      pAddr = (u8*)&pSys->profileId;
 //      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(pSys->profileId));
-      MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
+//      MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
 
-      pAddr = (u8*)&pMy->profileID;
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PROFILE_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->profileID));
+//      pAddr = (u8*)&pMy->profileID;
+//      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PROFILE_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->profileID));
 
     }
 

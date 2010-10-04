@@ -101,7 +101,7 @@ STA_LIGHT_SYS* STA_LIGHT_InitSystem( HEAPID heapId , ACTING_WORK* actWork )
 
 	//ŠeŽí‘fÞ‚Ì“Ç‚Ýž‚Ý
 	{
-		ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
+		ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( 0 , work->heapId );
 	
 		work->pltIdx = GFL_CLGRP_PLTT_Register( arcHandle , NARC_stage_gra_spotlight_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
 		work->ncgIdx = GFL_CLGRP_CGR_Register( arcHandle , NARC_stage_gra_spotlight_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );

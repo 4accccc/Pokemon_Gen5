@@ -288,9 +288,9 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   // ヒープ領域からワーク領域を確保。
   GF_ASSERT_HEAVY( _dWork == NULL );
 #ifdef DEBUGPRINT_ON
-  DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
+//  DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
 #else
-  DWC_SetReportLevel(0);
+//  DWC_SetReportLevel(0);
 #endif
 
   NET_PRINT("mydwc_start %d %d\n",sizeof(MYDWC_WORK) + 32, pNetInit->maxBeaconNum);

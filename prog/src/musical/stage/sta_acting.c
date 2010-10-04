@@ -348,7 +348,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
     work->isUsedItemPos[i][1] = FALSE;
   }
 
-  work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
+  work->arcHandle = GFL_ARC_OpenDataHandle( 0 , work->heapId );
 
   STA_ACT_SetupGraphic( work );
   STA_ACT_SetupBg( work );

@@ -184,7 +184,7 @@ void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work )
 //ƒAƒCƒeƒ€”Ô†‚©‚çARC‚Ì”Ô†‚ð’²‚×‚é
 u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx )
 {
-  const u16 fileNum = GFL_ARC_GetDataFileCnt( ARCID_MUSICAL_ITEM );
+  const u16 fileNum = GFL_ARC_GetDataFileCnt( 0 );
   if( itemIdx >= fileNum - 2 )
   {
     return (NARC_musical_item_mus_item999_nsbtx);
@@ -246,7 +246,7 @@ const BOOL MUS_ITEM_DRAW_CanReverseItem( MUS_ITEM_DRAW_WORK *itemWork )
 GFL_G3D_RES* MUS_ITEM_DRAW_LoadResource( u16 itemIdx )
 {
   u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
-  return GFL_G3D_CreateResourceArc( ARCID_MUSICAL_ITEM , arcIdx );
+  return GFL_G3D_CreateResourceArc( 0 , arcIdx );
 }
 void MUS_ITEM_DRAW_DeleteResource( GFL_G3D_RES *res )
 {
@@ -310,7 +310,7 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddItemId( MUS_ITEM_DRAW_SYSTEM* work , u16 it
   texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
   MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
 
-  work->musItem[i].resIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_MUSICAL_ITEM , work->musItem[i].arcIdx,
+  work->musItem[i].resIdx = GFL_BBD_AddResourceArc( work->bbdSys , 0 , work->musItem[i].arcIdx,
               GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
   work->musItem[i].isLoadTex = TRUE;
   MUS_ITEM_DRAW_AddFunc( work , i , pos , sizeX , sizeY );

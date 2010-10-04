@@ -845,7 +845,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       GFL_BG_SetPriority( GFL_BG_FRAME2_S , 2 );
       
       DUP_DEBUG_ScreenDraw( work , 4 );
-      GFL_ARC_UTIL_TransVramScreen( ARCID_DRESSUP_GRA , NARC_dressup_gra_test_bg_u_NSCR , 
+      GFL_ARC_UTIL_TransVramScreen( 0 , NARC_dressup_gra_test_bg_u_NSCR , 
                   FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
       GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
       
@@ -1210,7 +1210,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
 {
   
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
+  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( 0 , work->heapId );
 
   //‰º‰æ–Ê
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_d_NCLR , 
@@ -1506,7 +1506,7 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   //New‚Ì•\Ž¦—p
   {
     u8 i;
-    work->newPicResIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_DRESSUP_GRA , 
+    work->newPicResIdx = GFL_BBD_AddResourceArc( work->bbdSys , 0 , 
                       NARC_dressup_gra_new_str_nsbtx , GFL_BBD_TEXFMT_PAL4 ,
                       GFL_BBD_TEXSIZ_32x32 , 32 , 32 );
     for( i=0;i<ITEM_LIST_NUM;i++ )

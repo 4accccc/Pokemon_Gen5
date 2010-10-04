@@ -1586,6 +1586,7 @@ static void _downNumCheck(CG_WIRELESS_MENU* pWork)
  * @retval  none
  */
 //-------------------------------------------------------------
+#define BUGFIX_UNIONMAXNUM_20100720
 
 static int _GetUnionConnectNum(CG_WIRELESS_MENU* pWork)
 {
@@ -1596,6 +1597,14 @@ static int _GetUnionConnectNum(CG_WIRELESS_MENU* pWork)
       num += pWork->aConnectNum[i].connectNum;
     }
   }
+#ifdef BUGFIX_UNIONMAXNUM_20100720
+  {
+    static const int _UNIONNUM_MAX = 99;
+      if(num > _UNIONNUM_MAX){
+        num = _UNIONNUM_MAX;
+      }
+  }
+#endif
   return num;
 }
 

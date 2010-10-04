@@ -52,6 +52,8 @@
 #include "net/dwc_error.h"
 #include "net/dwc_rap.h"
 
+#define BUGFIX_BTS7882_20100717   //LV1アイテム重複禁止
+#define BUGFIX_BTS7876_20100716
 
 
 /*
@@ -200,6 +202,9 @@ static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SER
 static BOOL _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static void _BoxPokeRemove(G_SYNC_WORK* pWork);
 
+#ifdef BUGFIX_BTS7876_20100716
+static void _lv1put(G_SYNC_WORK* pWork);
+#endif //BUGFIX_BTS7876_20100716
 
 
 static BOOL _responceChk(G_SYNC_WORK* pWork,int response)
@@ -409,6 +414,11 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
   if(pWork->pNHTTPRap){
     NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
   }
+#if 1 //def BUGFIX_BTS????_20100717
+  if(pWork->errEnd){
+    NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
+  }
+#endif
   
   if(_DOWNLOAD_ERROR == pWork->ErrorNo){
     gmm = GSYNC_ERR010;
@@ -662,6 +672,7 @@ static void _wakeupAction71(G_SYNC_WORK* pWork)
   {
     int response;
     response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+ //   response = 400;  //@debug
     if(_responceChk(pWork,response)){
       return;
     }
@@ -690,13 +701,13 @@ static void _wakeupAction_save22(G_SYNC_WORK* pWork)
     return;
   }
 
-#ifdef BUGFIX_BTS7876_20100716
-  if(_IsLv1Mode(pWork)){
-    _CHANGE_STATE(_wakeupAction7);
-    pWork->noERROR = TRUE;
-    return;
-  }
-#endif
+//#ifdef BUGFIX_BTS7876_20100716
+//  if(_IsLv1Mode(pWork)){
+//    _CHANGE_STATE(_wakeupAction7);
+//    pWork->noERROR = TRUE;
+//    return;
+//  }
+//#endif
 
 
   
@@ -754,7 +765,13 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pWork->pDreamDownload->signin);
   }
+#ifdef BUGFIX_BTS7876_20100716
+  else{
+     _lv1put(pWork);
+  }
+#endif //BUGFIX_BTS7876_20100716
 
+  
   pWork->bSaveDataAsync=TRUE;
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
   _CHANGE_STATE(_wakeupAction_save2);
@@ -1306,19 +1323,17 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
  */
 //------------------------------------------------------------------------------
 
+
 static BOOL _lv1check(G_SYNC_WORK* pWork)
 {
   int i,j;
   DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
   DREAM_WORLD_SERVER_STATUS_DATA *pDreamStatus = &pWork->pParent->aDreamStatus;
 
+#ifdef BUGFIX_BTS7882_20100717
+  //アイテムの二重登録はエラーにしなければいけなかったが、LV1のポケモン格納が先に書いてあったので
+  //ポケモンを何回でももらえてしまう  サーバ運用でも回避は可能
   
-  //ポケモンシンボルエンカウント
-  _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
-                     pDreamStatus->findPokemonSex,
-                     pDreamStatus->findPokemonForm,
-                     pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
-
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     for(j=i+1;j<DREAM_WORLD_DATA_MAX_ITEMBOX;j++){
       if((pDreamStatus->itemID[i] != 0) && (pDreamStatus->itemID[j] == pDreamStatus->itemID[i])){
@@ -1326,11 +1341,63 @@ static BOOL _lv1check(G_SYNC_WORK* pWork)
       }
     }
   }
+#endif //BUGFIX_BTS7882_20100717
+#ifndef BUGFIX_BTS7876_20100716
+  //ポケモンシンボルエンカウント
+  _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
+                     pDreamStatus->findPokemonSex,
+                     pDreamStatus->findPokemonForm,
+                     pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
+#endif
+#ifdef BUGFIX_BTS7882_20100717
+  for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    for(j=i+1;j<DREAM_WORLD_DATA_MAX_ITEMBOX;j++){
+      if((pDreamStatus->itemID[i] != 0) && (pDreamStatus->itemID[j] == pDreamStatus->itemID[i])){
+        return FALSE;
+      }
+    }
+  }
+#endif //BUGFIX_BTS7882_20100717
+#ifndef BUGFIX_BTS7876_20100716
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     DREAMWORLD_SV_SetItem(pDreamSave, i, pDreamStatus->itemID[i], pDreamStatus->itemNum[i]);
   }
+#endif //BUGFIX_BTS7876_20100716
   return TRUE;
 }
+
+
+#ifdef BUGFIX_BTS7876_20100716
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   レベル１挿入
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+static void _lv1put(G_SYNC_WORK* pWork)
+{
+  int i,j;
+  DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+  DREAM_WORLD_SERVER_STATUS_DATA *pDreamStatus = &pWork->pParent->aDreamStatus;
+
+  //ポケモンシンボルエンカウント
+  _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
+                     pDreamStatus->findPokemonSex,
+                     pDreamStatus->findPokemonForm,
+                     pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
+
+  OS_TPrintf("ポケモン %d\n",pDreamStatus->findPokemon);
+  
+  for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    DREAMWORLD_SV_SetItem(pDreamSave, i, pDreamStatus->itemID[i], pDreamStatus->itemNum[i]);
+  }
+}
+
+#endif //BUGFIX_BTS7876_20100716
+
 
 //------------------------------------------------------------------------------
 /**

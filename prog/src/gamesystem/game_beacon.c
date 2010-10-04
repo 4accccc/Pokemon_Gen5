@@ -26,6 +26,7 @@
 #include "field/zonedata.h"
 
 #include "game_beacon_local.h"
+#include "fieldmap/zone_id.h"
 
 //==============================================================================
 //  定数定義
@@ -691,6 +692,86 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 
 //--------------------------------------------------------------
 /**
+ * ※Gパワー配信
+ * Gパワー配信用の送信ビーコン初期データをセット
+ *
+ * @param   send		
+ */
+//--------------------------------------------------------------
+void GPowerHaisin_SendBeacon_Init(const STRBUF *name, u16 trainer_id, const STRBUF *selfmsg, u8 union_index)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+  OSOwnerInfo owner_info;
+  PMS_DATA pms = {0};
+  int sex;
+  
+  if(union_index < UNION_VIEW_INDEX_WOMAN_START){
+    sex = PM_MALE;
+  }
+  else{
+    union_index -= UNION_VIEW_INDEX_WOMAN_START;
+    sex = PM_FEMALE;
+  }
+  
+  OS_GetOwnerInfo(&owner_info);
+  
+  info->version_bit = 0xffff; //全バージョン指定
+  info->zone_id = ZONE_ID_C01PC0101;
+  info->townmap_root_zone_id = ZONE_ID_C01;
+  info->g_power_id = GPOWER_ID_NULL;
+  info->trainer_id = trainer_id;
+  info->favorite_color_index = owner_info.favoriteColor;
+  info->sex = sex;
+  info->trainer_view = union_index;
+  info->pm_version = GET_VERSION(); //PM_VERSION;
+  info->language = PM_LANG;
+  info->nation = 0;//MyStatus_GetMyNation(myst);
+  info->area = 0;//MyStatus_GetMyArea(myst);
+  info->research_team_rank = 0;//MISC_CrossComm_GetResearchTeamRank(misc);
+  
+  info->thanks_recv_count = 0;//MISC_CrossComm_GetThanksRecvCount(misc);
+  info->suretigai_count = 0;//MISC_CrossComm_GetSuretigaiCount(misc);
+  
+  {
+    info->play_hour = 0;//PLAYTIME_GetHour( sv_playtime );
+    info->play_min = 0;//PLAYTIME_GetMinute( sv_playtime );
+  }
+  
+  GAMEBEACON_Set_Details_IntroductionPms(&pms);
+
+  { //名前＆自己紹介文コピー　文字数がFullの場合はEOMを差し込まないので
+    //STRTOOL_Copyは使用せずに独自コピー
+    STRCODE code_eom = GFL_STR_GetEOMCode();
+    const STRCODE *src_code;
+    int i;
+
+    src_code = GFL_STR_GetStringCodePointer(name);
+    for(i = 0; i < PERSON_NAME_SIZE; i++){
+      info->name[i] = src_code[i];
+      if(src_code[i] == code_eom){
+        break;
+      }
+    }
+    
+    src_code = GFL_STR_GetStringCodePointer(selfmsg);
+    for(i = 0; i < GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN; i++){
+      info->self_introduction[i] = src_code[i];
+      if(src_code[i] == code_eom){
+        break;
+      }
+    }
+  }
+  
+  //詳細情報
+  BEACONINFO_Set_Details_Walk(info);
+
+  //行動パラメータ
+  info->action.action_no = GAMEBEACON_ACTION_NULL;
+}
+
+//--------------------------------------------------------------
+/**
  * 送信ビーコンをセットした時の共通処理
  *
  * @param   send		
@@ -1202,9 +1283,14 @@ void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Set_DistributionGPower(GPOWER_ID g_power_id)
 {
+#if 0 //Gパワー配信※
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_GPOWER) == FALSE){ return; };
   BEACONINFO_Set_DistributionGPower(&GameBeaconSys->send.info, g_power_id);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+#else
+  BEACONINFO_Set_DistributionGPower(&GameBeaconSys->send.info, g_power_id);
+  GameBeaconSys->send.info.send_counter++;
+#endif
 }
 
 //==================================================================

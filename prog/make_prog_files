@@ -370,7 +370,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         musical/musical_program.c \
         field/event_colosseum_battle.c \
 				net/delivery_beacon.c \
-				net/delivery_irc.c \
 				net_app/mystery/mystery_createdata.c \
         map/dp3format.c \
         field/field_comm/intrude_work.c \
@@ -1322,7 +1321,8 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
 #===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_IRCBATTLEMATCH
-SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
+SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c \
+				test/ohno/d_gpower_list.c
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_OHNO_DEBUG
@@ -1460,16 +1460,6 @@ SRCS_OVERLAY_GTS_NEGOTIATE = net_app/gts_nego/gtsnego_proc.c \
 
 
 
-# 不思議な贈り物
-#===> SRCS_OVERLAY_WIFI_LOGIN
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_MYSTERY = net_app/mystery/mystery.c \
-                      net_app/mystery/mystery_graphic.c \
-                      net_app/mystery/mystery_util.c \
-                      net_app/mystery/mystery_album.c \
-                      net_app/mystery/mystery_net.c \
-                      net_app/mystery/mystery_data_util.c
 
 # CGEAR WIRELESS
 #===> SRCS_OVERLAY_DPW_COMMON
@@ -1548,7 +1538,10 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
         test/matsuda/d_save.c \
         test/matsuda/d_save_extra.c \
         test/matsuda/palace_block.c \
-        test/matsuda/palace_block2.c
+        test/matsuda/palace_block2.c \
+        test/matsuda/d_haisin_power.c \
+        test/matsuda/d_haisin_control.c \
+        test/matsuda/d_haisin_comm.c
 
 
 #ポケモンステータス
@@ -1863,15 +1856,6 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
                 net_app/wifi_match/atlas_syachi2ds_v1.c \
                 net_app/wifi_match/debug/debug_wifi_match.c
 
-# バトル大会メインメニュー＋LIVEバトルマッチングフロー周り＋IRCネット部分
-# バトル大会メニュー
-#===> SRCS_OVERLAY_DEV_IRC
-#===> GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
-SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/wifi_match/battle_championship_core.c \
-        net_app/wifi_match/battle_championship_flow.c \
-        net_app/wifi_match/livebattlematch_flow.c \
-        net_app/wifi_match/digitalcardcheck.c \
-        net_app/wifi_match/livebattlematch_irc.c
 
 #バトルマッチ描画＋汎用モジュール部分
 #===> SRCS_OVERLAY_WIFIBATTLEMATCH_CORE
@@ -2062,15 +2046,6 @@ SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 			battle/app/b_plist_main.c \
 			battle/app/b_plist_ui.c
 
-# WIFIバトルマッチングシステム
-#===> SRCS_OVERLAY_BATTLE
-#===> SRCS_OVERLAY_BATTLE_BAG
-#===> SRCS_OVERLAY_BATTLE_PLIST
-#===> SRCS_OVERLAY_VS_MULTI_LIST
-SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
-                                    net_app/wifi_match/wifibattlematch_battle.c \
-                                    net_app/wifi_match/wifibattlematch_debugdata.c
-
 
 #中村デバッグ
 #===> SRCS_OVERLAY_NAMEIN
@@ -2078,18 +2053,6 @@ SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c \
                               test/nakahiro/pokeicon_view.c
 
 
-#	名木橋デバッグ
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_IRC_AURA
-#===> SRCS_OVERLAY_IRC_RHYTHM
-#===> SRCS_OVERLAY_IRC_RESULT
-#===> SRCS_OVERLAY_IRC_RANKING
-SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
-																test/nagihashi/debug_irc_name.c \
-																test/nagihashi/debug_poke2dcheck.c \
-                                test/nagihashi/debug_utilproc.c \
-                                test/nagihashi/debug_util.c \
-                                test/nagihashi/debug_graphic.c
 
 # 保坂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -2303,7 +2266,6 @@ SRCS_OVERLAY_PDC_RETURN =	field/event_pdc_return.c
 
 # 管理外セーブシステム
 #===> SRCS_OVERLAY_INTRO
-#===> SRCS_OVERLAY_MYSTERY
 SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
 
 # 任天堂デバッグ

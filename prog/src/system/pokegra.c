@@ -59,7 +59,8 @@ static void PokeGra_GetFileOffset( ARCID arc_id , int mons_no, int form_no, int 
 //-----------------------------------------------------------------------------
 ARCID POKEGRA_GetArcID( void )
 {	
-	return ARCID_POKEGRA;
+  return 0;
+  //	return ARCID_POKEGRA;
 }
 //----------------------------------------------------------------------------
 /**

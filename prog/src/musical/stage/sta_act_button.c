@@ -231,7 +231,7 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
   GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   //各種素材の読み込み
   {
-    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( 0 , work->heapId );
   
     work->pltIdx[0] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , NARC_stage_gra_button_NCLR , CLSYS_DRAW_SUB , STA_BUTTON_PLT*0x20 , 0 , 2 , work->heapId  );
     work->ncgIdx[0] = GFL_CLGRP_CGR_Register( arcHandle , NARC_stage_gra_button_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
@@ -244,7 +244,7 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
   }
   //各種素材の読み込み(ドレスアップからタッチエフェクト
   {
-    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( 0 , work->heapId );
   
     work->pltIdx[2] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_anime_sita_NCLR , CLSYS_DRAW_SUB , STA_TOUCH_EFFECT_PLT*32 , work->heapId  );
     work->ncgIdx[2] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_anime_stage_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
@@ -311,7 +311,7 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
 static void STA_BUTTON_TransTexToCell( STA_BUTTON_SYS *work , const u8 idx , const u16 itemNo , const GFL_BBD_TEXSIZ texType )
 {
   //テクスチャ転送テスト
-  void *texRes = GFL_ARC_UTIL_Load( ARCID_MUSICAL_ITEM, itemNo , FALSE , work->heapId );
+  void *texRes = GFL_ARC_UTIL_Load( 0, itemNo , FALSE , work->heapId );
   NNSG3dResTex *texData = NNS_G3dGetTex( texRes );
   
   //Tex・Pltアドレス

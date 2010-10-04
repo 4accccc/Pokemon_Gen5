@@ -162,7 +162,7 @@ STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , ACTING_WORK *actWork , MUS_PO
   
   
   //‰eƒ|ƒŠ‚Ì“Ç‚Ýž‚Ý
-  work->shadowResIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_STAGE_GRA , 
+  work->shadowResIdx = GFL_BBD_AddResourceArc( work->bbdSys , 0 , 
                       NARC_stage_gra_shadow_tex_nsbtx , GFL_BBD_TEXFMT_A3I5 ,
                       GFL_BBD_TEXSIZ_64x64 , 64 , 64 );
   

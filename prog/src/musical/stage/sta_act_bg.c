@@ -135,11 +135,11 @@ void	STA_BG_CreateBg( STA_BG_SYS* work , const u8 bgNo )
 		STA_BG_DeleteBg( work );
 	}
 
-	work->mdlRes = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage01_nsbmd + bgNo ); 
+	work->mdlRes = GFL_G3D_CreateResourceArc( 0, NARC_stage_gra_mus_stage01_nsbmd + bgNo ); 
 
-	work->anmRes[MUS_BG_ANM_ICA] = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage01_nsbta + bgNo ); 
-	work->anmRes[MUS_BG_ANM_ITA] = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage01_nsbca + bgNo ); 
-	work->anmRes[MUS_BG_ANM_ITP] = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage01_nsbtp + bgNo ); 
+	work->anmRes[MUS_BG_ANM_ICA] = GFL_G3D_CreateResourceArc( 0, NARC_stage_gra_mus_stage01_nsbta + bgNo ); 
+	work->anmRes[MUS_BG_ANM_ITA] = GFL_G3D_CreateResourceArc( 0, NARC_stage_gra_mus_stage01_nsbca + bgNo ); 
+	work->anmRes[MUS_BG_ANM_ITP] = GFL_G3D_CreateResourceArc( 0, NARC_stage_gra_mus_stage01_nsbtp + bgNo ); 
 	if( GFL_G3D_TransVramTexture( work->mdlRes ) == FALSE )
 	{
 		GF_ASSERT_MSG( NULL , "Stage Bg System Can't Create Bg!\n" );

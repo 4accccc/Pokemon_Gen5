@@ -66,14 +66,15 @@ static  inline  const u8 get_gra_index( int tr_type, int dir );
 //-----------------------------------------------------------------------------
 ARCID TRGRA_GetArcID( int dir )
 {	
-  if( dir )
+  return 0;
+/*  if( dir )
   { 
 	  return ARCID_TRBGRA;
   }
   else
   { 
 	  return ARCID_TRFGRA;
-  }
+  }*/
 }
 //----------------------------------------------------------------------------
 /**

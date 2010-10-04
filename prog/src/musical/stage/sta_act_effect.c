@@ -129,7 +129,7 @@ STA_EFF_WORK*	STA_EFF_CreateEffect( STA_EFF_SYS *work , int fileIdx )
 	//まずマネージャの作成
 	effWork->ptcWork = GFL_PTC_Create( effWork->effWork,PARTICLE_LIB_HEAP_SIZE,FALSE,work->heapId);
 	//リソース読み込み
-	effRes = GFL_PTC_LoadArcResource( ARCID_STAGE_GRA , fileIdx , work->heapId );
+	effRes = GFL_PTC_LoadArcResource( 0 , fileIdx , work->heapId );
 	//リソースとマネージャの関連付け
 	GFL_PTC_SetResource( effWork->ptcWork , effRes , FALSE , GFUser_VIntr_GetTCBSYS() );
 	

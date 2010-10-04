@@ -53,14 +53,13 @@
   ARCID_LAYOUT    "layout.narc" # レイアウトエディタから吐き出したもの
   ARCID_MESSAGE   "message.narc"    # メッセージデータ
   ARCID_SCRIPT_MESSAGE  "script_message.narc"   # メッセージデータ
-  ARCID_POKEGRA   "pokegra/pokegra_wb.narc" #
   ARCID_FLDMAP_WINFRAME "winframe.narc"   # ウィンドウフレーム
-  ARCID_PTC     "particle/wazaeffect/spa.narc" #技エフェクトパーティクル
-  ARCID_POKEICON    "poke_icon.narc"        #ポケモンアイコン
-  ARCID_FLDMAP_LANDDATA "fieldmap/map_land_data.narc" #フィールドマップ地形データ
-  ARCID_FLDMAP_MAPMATRIX "fieldmap/map_matrix.narc" #フィールドマップマトリクス
-  ARCID_FLDMAP_REPLACE  "fieldmap/map_replace.narc" #マップ置き換えデータ
-  ARCID_BATTGRA   "battle/battgra_wb.narc"  #
+  ARCID_PTC     "wmi.narc" #技エフェクトパーティクル
+  ARCID_POKEICON    "wmi.narc"        #ポケモンアイコン
+  ARCID_FLDMAP_LANDDATA "wmi.narc" #フィールドマップ地形データ
+  ARCID_FLDMAP_MAPMATRIX "wmi.narc" #フィールドマップマトリクス
+  ARCID_FLDMAP_REPLACE  "wmi.narc" #マップ置き換えデータ
+  ARCID_BATTGRA   "wmi.narc"  #
   ARCID_ZONEDATA    "fieldmap/zonedata.narc"    #ゾーン毎データ
   ARCID_AREADATA    "fieldmap/area_data.bin"    #エリア毎設定データ
   ARCID_AREA_MAPTEX "fieldmap/area_map_tex.narc"  #エリア毎地形テクスチャデータ
@@ -96,14 +95,10 @@
   ARCID_PMS_AIKOTOBA_DATA "pms_aikotoba.narc" #簡易文・壁紙取得合言葉
   ARCID_PMSI_GRAPHIC  "pmsi.narc"   #簡易文入力画面素材
   ARCID_COMPATI_CHECK "compati_check.narc"  #相性チェック
-  ARCID_MUSICAL_ITEM  "musical_item.narc"   #ミュージカル装備品
-  ARCID_DRESSUP_GRA "dressup_gra.narc"    #ミュージカル　ドレスアップ
-  ARCID_STAGE_GRA   "stage_gra.narc"    #ミュージカル　ステージ
   ARCID_MMDL_PARAM "fieldmap/fldmmdl_mdlparam.narc" #動作モデル パラメータ
   ARCID_MMDL_RES  "fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
   ARCID_INFOWIN   "infowin.narc"    #情報ウィンドウ
   ARCID_BMPOAM    "bmpoam.narc"     #BMPOAM
-  ARCID_POKEGRA_MUS "pokegra_mus.narc"  #ミュージカル用ポケグラ
   ARCID_WIFI_EARTH_PLACE  "wifi_earth_place.narc" #WI-FI地球画面の地域データ
   ARCID_SHOP_GRA    "shop_gra.narc"   #ショップ画面グラフィック
   ARCID_WAZATYPE_ICON   "wazatype_icon.narc"    #技タイプアイコン
@@ -125,8 +120,6 @@
   ARCID_AREA_ITA        "fieldmap/area_map_ita.narc"  #エリア地面アニメーションデータ
   ARCID_AREA_ITP_TBL    "fieldmap/area_map_itp_tbl.narc"  #エリア地面アニメーションデータ
   ARCID_FIELD_MENU    "field_menu.narc" #フィールドメニュー
-  ARCID_TRFGRA  "trgra/trfgra.narc" #トレーナーグラフィック（正面）
-  ARCID_TRBGRA  "trgra/trbgra.narc" #トレーナーグラフィック（背面）
   $DEBUG_YES ARCID_TALKWIN_TEST "talkwin_test.narc" #会話ウインドウ（テスト）
   ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
   ARCID_FLDEFF "fieldmap/fldeff.narc" #フィールドエフェクト
@@ -157,9 +150,9 @@
     ARCID_B_BAG_GRA "b_bag_gra.narc"    #戦闘バッグ画面グラフィック
     ARCID_B_PLIST_GRA   "b_plist_gra.narc"    #戦闘ポケモンリスト画面グラフィック
   ARCID_GIMMICK_ASSIGN "fieldmap/gimmick_assign.narc" #ギミックアサインデータ
-  ARCID_POKETRADE     "trade.narc"  # ポケモン交換
-  ARCID_POKETRADEDEMO     "tradedemo.narc"  # ポケモン交換デモ
-  ARCID_POKETRADEDEMO_IR      "tradeirdemo.narc"  # ポケモン交換デモ
+  ARCID_POKETRADE     "wmi.narc"  # ポケモン交換
+  ARCID_POKETRADEDEMO     "wmi.narc"  # ポケモン交換デモ
+  ARCID_POKETRADEDEMO_IR      "wmi.narc"  # ポケモン交換デモ
   ARCID_REGULATION      "regulation.narc" # ポケモンバトルレギュレーションデータ
   $DEBUG_YES ARCID_OBATA_DEBUG "debug_obata.narc" # 小幡デバッグメニュー用データ
   ARCID_MICTEST_GRA "mictest.narc" # マイクテスト用グラフィックデータ
@@ -188,51 +181,51 @@
   ARCID_H03_GIMMICK "h03.narc" # H03ギミック
   ARCID_SHORTCUT_MENU_GRA "fld_shortcut_menu_gra.narc"  #フィールドショートカットメニュー用グラフィック
   ARCID_CAPTEX  "enceff_mdl.narc"  #キャプチャテクスチャデータ
-  ARCID_GATE_GIMMICK "gate.narc" # ゲートギミック
-  ARCID_LOCAL_TVT "local_tvt.narc" # ローカルTVトランシーバー
+  ARCID_GATE_GIMMICK "wmi.narc" # ゲートギミック
+  ARCID_LOCAL_TVT "wmi.narc" # ローカルTVトランシーバー
   ARCID_ISS_CITY "iss_city.narc" # 街ISSデータ
   ARCID_WIFIMATCH_GRA "wifimatch_gra.narc"  #WIFIランダム対戦グラフィック
-  ARCID_CDEMO_DATA  "op_demo.narc" # コマンドデモデータ（ホンモノ）
+  ARCID_CDEMO_DATA  "wmi.narc" # コマンドデモデータ（ホンモノ）
   ARCID_GYM_INSECT  "fieldmap/gym_insect.narc"  #虫ジム
   ARCID_ISS_ZONE "iss_zone.narc" # ゾーンISSデータ
   ARCID_BATTLE_RECORDER_GRA "battle_recorder_gra.narc" #バトルレコーダーグラフィック
   ARCID_GYM_GROUND  "fieldmap/gym_ground.narc"  #地面ジム
-  ARCID_MB_PARENT "mb_parent.narc"  #マルチブート親
-  ARCID_MB_CHILD  "mb_child_gra.narc" #マルチブート子
-  ARCID_MB_SELECT "mb_select_gra.narc"  #マルチブート選択画面
-  ARCID_MB_CAPTER "mb_capture_gra.narc" #マルチブートゲーム画面
-  ARCID_GSYNC "gsync.narc"   #GAMESYNC
-  ARCID_GTSNEGO "gtsnego.narc"   #GTSネゴシエーション
-  ARCID_WIFI_LOGIN    "wifi_login.narc" # WIFIログインデータ
-  ARCID_ISS_DUNGEON "iss_dungeon.narc"  # ダンジョンISSデータ
-  ARCID_ISS_SWITCH "iss_switch.narc"  # スイッチISSデータ
-  ARCID_H01_GIMMICK "h01.narc"  # H01ギミックデータ
+  ARCID_MB_PARENT "wmi.narc"  #マルチブート親
+  ARCID_MB_CHILD  "wmi.narc" #マルチブート子
+  ARCID_MB_SELECT "wmi.narc"  #マルチブート選択画面
+  ARCID_MB_CAPTER "wmi.narc" #マルチブートゲーム画面
+  ARCID_GSYNC "wmi.narc"   #GAMESYNC
+  ARCID_GTSNEGO "wmi.narc"   #GTSネゴシエーション
+  ARCID_WIFI_LOGIN    "wmi.narc" # WIFIログインデータ
+  ARCID_ISS_DUNGEON "wmi.narc"  # ダンジョンISSデータ
+  ARCID_ISS_SWITCH "wmi.narc"  # スイッチISSデータ
+  ARCID_H01_GIMMICK "wmi.narc"  # H01ギミックデータ
   ARCID_FLDSKILL_MAPEFF "fieldmap/fieldskill_mapeff.narc"  # フィールド技のマップ効果データ
-  ARCID_FOURKINGS_SCENE "fourkings_scene.narc"  # 四天王部屋　移動シーンデータ
-  ARCID_SEASON_DISPLAY "season_display.narc"  # 季節表示データ
+  ARCID_FOURKINGS_SCENE "wmi.narc"  # 四天王部屋　移動シーンデータ
+  ARCID_SEASON_DISPLAY "wmi.narc"  # 季節表示データ
   ARCID_BATT_BG_TBL "batt_bg_tbl.narc"  # 戦闘背景テーブル
-  ARCID_GYM_ICE "fieldmap/gym_ice.narc" #氷ジム
+  ARCID_GYM_ICE "wmi.narc" #氷ジム
   ARCID_WFBC_PEOPLE "field_wfbc_data.narc"  #WFBC人物情報
-  ARCID_MAIL_GRA  "mail_gra.narc" #メール画面
+  ARCID_MAIL_GRA  "wmi.narc" #メール画面
   ARCID_LAND_DATA_PATCH "fieldmap/field_landdata_patch.narc"  #land_dataの上書き情報
-  ARCID_LEAGUE_FRONT_GIMMICK "league_front.narc"  # ポケモンリーグ フロントギミック
+  ARCID_LEAGUE_FRONT_GIMMICK "wmi.narc"  # ポケモンリーグ フロントギミック
   ARCID_GRID_CAMERA_SCENE "fieldmap/grid_camera_scene.narc" #gridマップのカメラシーン
-  ARCID_ZUKAN_GRA "zukan_gra.narc"  # 図鑑グラフィック
-  ARCID_DEMO3D_GRA "demo3d.narc" # 3Dデモ再生アプリ
-  ARCID_DEMO3D_2DGRA "demo3d_2dgra.narc" # 3Dデモ再生アプリ2Dリソース
-  ARCID_GYM_DRAGON  "fieldmap/gym_dragon.narc"  #ドラゴンジム
-  ARCID_SCR_CAM_PRM "fieldmap/scr_cam_prm.narc" #スクリプトカメラパラメータ
+  ARCID_ZUKAN_GRA "wmi.narc"  # 図鑑グラフィック
+  ARCID_DEMO3D_GRA "wmi.narc" # 3Dデモ再生アプリ
+  ARCID_DEMO3D_2DGRA "wmi.narc" # 3Dデモ再生アプリ2Dリソース
+  ARCID_GYM_DRAGON  "wmi.narc"  #ドラゴンジム
+  ARCID_SCR_CAM_PRM "wmi.narc" #スクリプトカメラパラメータ
   ARCID_CORP        "corp.narc"   #コーポレーション表記
-  ARCID_FLD_TRADE_POKE "fld_trade_poke.narc"  #ゲーム内交換ポケモンデータ
+  ARCID_FLD_TRADE_POKE "wmi.narc"  #ゲーム内交換ポケモンデータ
   ARCID_ELBOARD_SPNEWS "spnews.narc"  # 電光掲示板 臨時ニュースデータ
   ARCID_POKEFOOT_GRA "pokefoot.narc"  # ポケモン足跡グラフィックデータ
   ARCID_PL_BTD_TR "pl_btdtr.narc" #PLバトルタワートレーナーデータ
   ARCID_PL_BTD_PM "pl_btdpm.narc" #PLバトルタワーポケモンデータ
   ARCID_INTRO_GRA "intro.narc" #イントロデモ用グラフィックデータ
-  ARCID_TR_AI "tr_ai_seq.narc" #トレーナーAI
-  ARCID_COMM_TVT_GRA "comm_tvt.narc" #通信トランシーバー
-  ARCID_BEACON_STATUS "beacon_status.narc" #すれ違い参照画面
-  ARCID_ELBOARD_ZONE "zone.narc"  # 電光掲示板 ゾーン依存データ
+  ARCID_TR_AI "wmi.narc" #トレーナーAI
+  ARCID_COMM_TVT_GRA "wmi.narc" #通信トランシーバー
+  ARCID_BEACON_STATUS "wmi.narc" #すれ違い参照画面
+  ARCID_ELBOARD_ZONE "wmi.narc"  # 電光掲示板 ゾーン依存データ
   ARCID_FLD_BBD_COLOR "fieldmap/area_map_mmdl_color.narc"  # フィールドビルボードモデルカラー
   $DEBUG_YES ARCID_MIDI_DOWNLOAD "mididl.narc"  # MIDIファイルダウンロードテスト
   ARCID_BMODEL_TEXSET_OUTDOOR  "fieldmap/bmodel_texset_outdoor.narc"  #配置モデルテクスチャセットデータ（屋外）
@@ -252,18 +245,18 @@
   ARCID_EGG_DEMO "egg_demo_particle.narc"  # タマゴ孵化デモのデータ
   ARCID_FLD_SEA_TEMPLE "fieldmap/field_sea_temple.narc"  # 海底神殿グラフィック
   ARCID_OEKAKI  "oekaki.narc" #おえかきボード
-  ARCID_RESEARCH_RADAR_GRAPHIC "research_radar_graphic.narc"  # 調査レーダー グラフィック
+  ARCID_RESEARCH_RADAR_GRAPHIC "wmi.narc"  # 調査レーダー グラフィック
   ARCID_UN_SELECT_GRA "un_select_gra.narc" #国連フロア選択
-  ARCID_POKEVOICE_PARAM "pokevoice_param.narc" #ポケモン鳴き声パラメータ
-  ARCID_DOWSING_GRA "dowsing_gra.narc"  # ダウジング
-  ARCID_REPORT_GRA  "report_gra.narc" #レポート画面グラフィック
-  ARCID_WIFI_EARTH  "wifi_earth.narc" #WI-FI地球データ
+  ARCID_POKEVOICE_PARAM "wmi.narc" #ポケモン鳴き声パラメータ
+  ARCID_DOWSING_GRA "wmi.narc"  # ダウジング
+  ARCID_REPORT_GRA  "wmi.narc" #レポート画面グラフィック
+  ARCID_WIFI_EARTH  "wmi.narc" #WI-FI地球データ
   ARCID_TIMEICON_GRA  "time_icon_gra.narc" #タイマーアイコングラフィック
   ARCID_LEADER_BOARD  "leader_board.narc" #Wifiリーダーボード画像
   ARCID_FIELD_SAVE_ICON  "fieldmap/save_icon.narc" #フィールドセーブ時ICON
   ARCID_TRIALHOUSE_GRA  "trialhouse_gra.narc"  # トライアルハウス検定結果のグラフィックデータ
-  ARCID_SHOUJOU  "shoujou.narc"  # 図鑑賞状（地方、全国）のグラフィックデータ
-  ARCID_EV_MOVEPOKE  "event_movepoke.narc"  # 移動ポケモンイベント用データ
+  ARCID_SHOUJOU  "wmi.narc"  # 図鑑賞状（地方、全国）のグラフィックデータ
+  ARCID_EV_MOVEPOKE  "wmi.narc"  # 移動ポケモンイベント用データ
   ARCID_SPPOKE_GMK  "fieldmap/sppoke.narc"  # 特殊ポケモンギミックアーカイブ
   ARCID_PSEL "psel.narc"  # 三匹選択の2D、3Dデータ
   ARCID_SUBWAY_MAP_GRA "subway_map_gra.narc"  # 地下鉄路線図のグラフィックデータ
@@ -274,23 +267,23 @@
   ARCID_TPOKE_DATA "fieldmap/tpoke_data.narc"  # 連れ歩きポケモン検索情報
   ARCID_CAMERA_SYS "camera_sys.narc"  # カメラシャッター音
   ARCID_DENDOU_PC_GRA   "dendou_pc_gra.narc"  # 殿堂入りＰＣ画面
-  ARCID_BSW_PD "btl_subway_pd.narc" #バトルサブウェイポケモンデータ
-  ARCID_BSW_TR "btl_subway_td.narc" #バトルサブウェイトレーナーデータ
-  ARCID_DENDOU_DEMO_GRA "dendou_demo_gra.narc" # 殿堂入りデモ画面
+  ARCID_BSW_PD "wmi.narc" #バトルサブウェイポケモンデータ
+  ARCID_BSW_TR "wmi.narc" #バトルサブウェイトレーナーデータ
+  ARCID_DENDOU_DEMO_GRA "wmi.narc" # 殿堂入りデモ画面
   ARCID_GMK_D12 "fieldmap/gmk_d12.narc" # D12ギミックアーカイブ
   ARCID_ZOROA_GMK "fieldmap/zoroa.narc" # ゾロアギミックアーカイブ
   ARCID_LEGEND_GMK "fieldmap/legend_gmk.narc" # 伝説ポケギミックアーカイブ
-  ARCID_STAFF_ROLL  "staff_roll.narc"   # スタッフロール画面用アーカイブ
-  $DEBUG_YES ARCID_DEBUG_REGCARD  "debug_regulation_card.narc" # ポケモンバトルレギュレーションデータデジタル選手証
+  ARCID_STAFF_ROLL  "wmi.narc"   # スタッフロール画面用アーカイブ
+  $DEBUG_YES ARCID_DEBUG_REGCARD  "wmi.narc" # ポケモンバトルレギュレーションデータデジタル選手証
   ARCID_PROF_WORD  "prof_word.narc"   # 不正文字列アーカイブ
   ARCID_R04D03_GMK "fieldmap/r04d03_gmk.narc" # R04D03ギミックアーカイブ
-  $VERSION_WHITE  ARCID_MANUAL "manual_w.narc" # ゲーム内マニュアルのグラフィックデータ
-  $VERSION_BLACK  ARCID_MANUAL "manual_b.narc" # ゲーム内マニュアルのグラフィックデータ
-  ARCID_PALACE_PALETTE "palace_palette.narc" # パレスのグレースケール用テーブル
-  ARCID_GF_LOGO_MOVIE   "gf_logo_movie.narc" # ゲームフリークロゴムービー
-  ARCID_OP_DEMO2_MOVIE  "op_demo2.narc" # オープニングムービー２
+  $VERSION_WHITE  ARCID_MANUAL "wmi.narc" # ゲーム内マニュアルのグラフィックデータ
+  $VERSION_BLACK  ARCID_MANUAL "wmi.narc" # ゲーム内マニュアルのグラフィックデータ
+  ARCID_PALACE_PALETTE "wmi.narc" # パレスのグレースケール用テーブル
+  ARCID_GF_LOGO_MOVIE   "wmi.narc" # ゲームフリークロゴムービー
+  ARCID_OP_DEMO2_MOVIE  "wmi.narc" # オープニングムービー２
   ARCID_SYMBOL_LV  "symbol_lv_tbl.narc" # シンボルポケモンの出現レベルテーブル
-  ARCID_T01_GMK "fieldmap/t01_gmk.narc" # T01ギミックアーカイブ
+  ARCID_T01_GMK "wmi.narc" # T01ギミックアーカイブ
   ARCID_BMODEL_OUTDOOR_AREA  "fieldmap/buildmodel_outdoor_area.narc"  #配置モデルエリアデータ（屋外）
   ARCID_BMODEL_INDOOR_AREA   "fieldmap/buildmodel_indoor_area.narc" #配置モデルエリアデータ（屋内）
   $VERSION_WHITE  ARCID_MANUAL_IMAGE "manual_image_w.narc" # ゲーム内マニュアルの説明画像データ

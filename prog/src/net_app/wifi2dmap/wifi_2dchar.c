@@ -1032,6 +1032,10 @@ void WF_2DC_WkPatAnmStart( WF_2DCWK* p_wk, WF_2DC_ANMTYPE anmtype, WF_COMMON_WAY
 
   if( pFunc[ anmtype ] != NULL ){
     pFunc[ anmtype ]( p_wk, anmway );
+#ifdef BUGFIX_BTS7866_20100721
+    //アニメーション再生が０から始まらない為 －２をいれたが 本来ならフレームの管理が良い
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, -2 * FX32_ONE );
+#endif  //BUGFIX_BTS7866_20100721
   }
 }
 

@@ -940,13 +940,21 @@ static BOOL TESTMODE_ITEM_SelectFuncSogabe( TESTMODE_WORK *work , const int idx 
 }
 
 FS_EXTERN_OVERLAY(ohno_debug);
+
+extern const GFL_PROC_DATA DebugGPowerFuncProcData;
+static BOOL TESTMODE_ITEM_SelectFuncOhno( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ohno_debug) , &DebugGPowerFuncProcData, NULL);
+  return TRUE;
+}
+/*
 extern const GFL_PROC_DATA DebugOhnoListProcData;
 static BOOL TESTMODE_ITEM_SelectFuncOhno( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ohno_debug) , &DebugOhnoListProcData, NULL);
   return TRUE;
 }
-
+*/
 FS_EXTERN_OVERLAY(taya_debug);
 extern const GFL_PROC_DATA DebugTayaMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncTaya( TESTMODE_WORK *work , const int idx )
@@ -1085,7 +1093,7 @@ FS_EXTERN_OVERLAY(nagihashi_debug);
 extern const GFL_PROC_DATA DebugNagiMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncNagi( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(nagihashi_debug), &DebugNagiMainProcData, NULL);
+//  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(nagihashi_debug), &DebugNagiMainProcData, NULL);
   return TRUE;
 }
 

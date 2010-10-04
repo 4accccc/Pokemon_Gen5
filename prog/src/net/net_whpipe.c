@@ -243,7 +243,8 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 #else
 	pNetWL->mineDebugNo = POKEMONWB_BEACON_PRODUCT_NO;
 #endif
-	pNetWL->_sTgid = WM_GetNextTgid();
+
+  pNetWL->_sTgid = WM_GetNextTgid();
 
 #if DEBUG_WH_BEACON_PRINT_ON
 	NET_PRINT("%d %d\n",WM_SIZE_USER_GAMEINFO , sizeof(_GF_BSS_DATA_INFO) );

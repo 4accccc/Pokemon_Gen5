@@ -511,6 +511,7 @@ void POKEMONTRADE_DEMO_PTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
     BOOL bCamera;
     for(i=0;i<PTC_KIND_NUM_MAX;i++){
       pWork->ptcheap[i] = GFL_HEAP_AllocClearMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
+      GF_ASSERT(pWork->ptcheap[i]);
       switch(i){
       case PTC_KIND_DEMO1:
       case PTC_KIND_DEMO2:
@@ -630,6 +631,7 @@ void POKEMONTRADE_DEMO_IRPTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
     }
 
   }
+#ifndef BUGFIX_GFBTS_MEMORY
   //ƒŠƒ\[ƒX“Ç‚Ýž‚Ý•“o˜^
   {
     void *resource;
@@ -638,9 +640,26 @@ void POKEMONTRADE_DEMO_IRPTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
       ARCID_POKETRADEDEMO_IR, NARC_tradeirdemo_irdemo_spa, pWork->heapID);
     for(i=0;i<IRPTC_KIND_NUM_MAX;i++){
       GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+
     }
   }
 
+#else
+
+  //ƒŠƒ\[ƒX“Ç‚Ýž‚Ý•“o˜^
+  {
+    void *resource;
+    int i;
+    pWork->effectRes = GFL_PTC_LoadArcResource(
+      ARCID_POKETRADEDEMO_IR, NARC_tradeirdemo_irdemo_spa, pWork->heapID);
+    for(i=0;i<IRPTC_KIND_NUM_MAX;i++){
+      //GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+      GFL_PTC_SetResourceEx(pWork->ptc[i], pWork->effectRes, TRUE, NULL);
+
+    }
+  }
+#endif
+  
 }
 
 static void _panelLoad(POKEMON_TRADE_WORK* pWork,int boxnum);

@@ -70,7 +70,7 @@ MUS_ITEM_DATA_SYS* MUS_ITEM_DATA_InitSystem( HEAPID heapId )
   
   sysWork = GFL_HEAP_AllocMemory( heapId , sizeof(MUS_ITEM_DATA_SYS) );
   
-  sysWork->dataBuf = GFL_ARC_UTIL_Load( ARCID_MUSICAL_ITEM , NARC_musical_item_item_data_bin , FALSE , heapId );
+  sysWork->dataBuf = GFL_ARC_UTIL_Load( 0 , NARC_musical_item_item_data_bin , FALSE , heapId );
   sysWork->dataArr = (MUS_ITEM_DATA_WORK*)sysWork->dataBuf;
   
 #if DEB_ARI&0

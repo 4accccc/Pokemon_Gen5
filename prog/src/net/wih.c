@@ -501,10 +501,10 @@ static WMParentParam sParentParam ATTRIBUTE_ALIGN(32) =
 
 
 typedef struct{
-	WMParentParam sParentParam;
 	/* WM 用システムワーク領域バッファ */
 	u8 sWmBuffer[WM_SYSTEM_BUF_SIZE];
-	WMBssDesc sBssDesc;
+	WMParentParam sParentParam;
+  WMBssDesc sBssDesc;
 	u8 sScanBuf[WM_SIZE_SCAN_EX_BUF];
 	WMScanExParam sScanExParam;
 	/* データシェアリング用 */
@@ -2043,7 +2043,7 @@ static BOOL WH_StateInStartChildMP(void)
       mode = WH_MP_FREQUENCY_PALACE;
     }
     else{
-      mode = WH_MP_FREQUENCY;
+      mode = WH_MP_FREQUENCY_PALACE; //WH_MP_FREQUENCY;
     }
 #endif
     result = WM_StartMP(WH_StateOutStartChildMP,

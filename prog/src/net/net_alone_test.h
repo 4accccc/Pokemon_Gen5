@@ -20,7 +20,7 @@
 #define _DEBUG_ALONETEST_DEFAULT  (124)
 
 #ifdef DEBUG_ONLY_FOR_ohno
-#define _DEBUG_ALONETEST (1)
+#define _DEBUG_ALONETEST (0)
 #elif DEBUG_ONLY_FOR_sogabe
 #define _DEBUG_ALONETEST (2)
 #elif DEBUG_ONLY_FOR_matsuda

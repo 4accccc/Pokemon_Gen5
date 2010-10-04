@@ -409,7 +409,7 @@ static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *infoWork )
   }
   */
   {
-    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , infoWork->heapId );
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( 0 , infoWork->heapId );
 
     //‰º‰æ–Ê
     GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_d_NCLR , 

@@ -335,9 +335,9 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
 #pragma mark [>bg func
 static void MusicalEdit_InitGraphic( MUS_EDIT_LOCAL_WORK *work )
 {
-  GFL_ARC_UTIL_TransVramPalette( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCLR , 
+  GFL_ARC_UTIL_TransVramPalette( 0 , NARC_mus_debug_musical_editor_NCLR , 
                     PALTYPE_SUB_BG , 0 , sizeof(u16)*16 , work->heapId );
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCGR ,
+  GFL_ARC_UTIL_TransVramBgCharacter( 0 , NARC_mus_debug_musical_editor_NCGR ,
                     EDIT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   
   //ƒtƒHƒ“ƒg“Ç‚Ýž‚Ý
@@ -360,7 +360,7 @@ static void MusicalEdit_TermGraphic( MUS_EDIT_LOCAL_WORK *work )
 static void MusicalEdit_InitBgPokeEquip( MUS_EDIT_LOCAL_WORK *work )
 {
   u8 i;
-  GFL_ARC_UTIL_TransVramScreen( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_poke_NSCR , 
+  GFL_ARC_UTIL_TransVramScreen( 0 , NARC_mus_debug_musical_editor_poke_NSCR , 
                     EDIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
   //PokeWin
@@ -968,11 +968,11 @@ static void MusicalSetting_Init( MUS_EDIT_LOCAL_WORK *work )
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUS_POKE_EQUIP_MAX , work->heapId );
 
   //BG
-  GFL_ARC_UTIL_TransVramPalette( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCLR , 
+  GFL_ARC_UTIL_TransVramPalette( 0 , NARC_mus_debug_musical_editor_NCLR , 
                     PALTYPE_SUB_BG , 0 , sizeof(u16)*16*2 , work->heapId );
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCGR ,
+  GFL_ARC_UTIL_TransVramBgCharacter( 0 , NARC_mus_debug_musical_editor_NCGR ,
                     EDIT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARC_UTIL_TransVramScreen( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_setting_NSCR , 
+  GFL_ARC_UTIL_TransVramScreen( 0 , NARC_mus_debug_musical_setting_NSCR , 
                     EDIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
   //PokeWin

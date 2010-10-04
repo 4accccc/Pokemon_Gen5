@@ -209,17 +209,17 @@ static void MUSICAL_VIEW_InitGraphic( MUS_VIEW_LOCAL_WORK *work )
     MUSICAL_VIEW_SetupBgFunc( &bgHeader2, MUS_VIEW_BG_STR  , GFL_BG_MODE_TEXT );
     
     //BG
-    GFL_ARC_UTIL_TransVramPalette( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCLR , 
+    GFL_ARC_UTIL_TransVramPalette( 0 , NARC_mus_debug_musical_editor_NCLR , 
                       PALTYPE_SUB_BG , 0 , sizeof(u16)*16*2 , work->heapId );
-    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCGR ,
+    GFL_ARC_UTIL_TransVramBgCharacter( 0 , NARC_mus_debug_musical_editor_NCGR ,
                       MUS_VIEW_BG_SUB , 0 , 0, FALSE , work->heapId );
-    GFL_ARC_UTIL_TransVramScreen( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_view_NSCR , 
+    GFL_ARC_UTIL_TransVramScreen( 0 , NARC_mus_debug_musical_view_NSCR , 
                       MUS_VIEW_BG_SUB ,  0 , 0, FALSE , work->heapId );
-    GFL_ARC_UTIL_TransVramPalette( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCLR , 
+    GFL_ARC_UTIL_TransVramPalette( 0 , NARC_mus_debug_musical_editor_NCLR , 
                       PALTYPE_MAIN_BG , 0 , sizeof(u16)*16*2 , work->heapId );
-    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor2_NCGR ,
+    GFL_ARC_UTIL_TransVramBgCharacter( 0 , NARC_mus_debug_musical_editor2_NCGR ,
                       MUS_VIEW_BG_MAIN , 0 , 0, FALSE , work->heapId );
-    GFL_ARC_UTIL_TransVramScreen( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_view2_NSCR , 
+    GFL_ARC_UTIL_TransVramScreen( 0 , NARC_mus_debug_musical_view2_NSCR , 
                       MUS_VIEW_BG_MAIN ,  0 , 0, FALSE , work->heapId );
 
   }

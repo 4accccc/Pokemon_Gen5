@@ -37,6 +37,10 @@ static CORP_PARAM  CorpParam={0,0};   // 社名表示処理ワーク
 static COMMANDDEMO_DATA cdemo_data;   // デモ処理データ
 
 
+extern const GFL_PROC_DATA HaisinControlProcData;
+FS_EXTERN_OVERLAY(matsuda_debug);
+
+
 //==============================================================================
 //
 //  
@@ -80,7 +84,8 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     else
 #endif
     {
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpParam );
+//      GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpParam );
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(matsuda_debug), &HaisinControlProcData, NULL );
       *seq = 1;
     }
     break;
