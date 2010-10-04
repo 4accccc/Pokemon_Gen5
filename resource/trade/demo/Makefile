@@ -59,8 +59,6 @@ cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
-spaobjects = $(subst .spt,.spa,$(parsources))
-
 
 #3D
 NSBMDFILE = $(IMDFILE:.imd=.nsbmd)
@@ -71,7 +69,7 @@ NSBMAFILE = $(IMAFILE:.ima=.nsbma)
 NSBTPFILE = $(ITPFILE:.itp=.nsbtp)
 NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
-OBJ_FILE 	= $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(gobjects) $(spaobjects)\
+OBJ_FILE 	= $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(gobjects) \
 						$(NSBMDFILE) $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -144,7 +142,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 LIST_FILE = list.txt
 
 
-$(targetname).narc:  $(OBJ_FILE) Makefile
+demo_tex001.spa: demo_tex001.spt demo_tex002.spt demo_tex003.spt demo_tex004.spt demo_tex005.spt demo_tex006.spt
+	../../../tools/SPRArchiver.exe -o spahead.h ./ ./ demo_tex001.spa
+	cp spahead.h ../../../prog/src/net_app/poke_trade/
+
+
+$(targetname).narc:  $(OBJ_FILE) Makefile demo_tex001.spa
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera3.ica icacamera.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera4.ica icatarget.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t ball_001.ica ball_001.bin
@@ -155,8 +158,6 @@ $(targetname).narc:  $(OBJ_FILE) Makefile
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_down_cameraichi.ica short_down_cameraichi.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_mcamera_chushiten.ica short_mcamera_chushiten.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_mcamera_ichi.ica short_mcamera_ichi.bin
-	../../../tools/SPRArchiver.exe -o spahead.h ./ ./ demo_tex001.spa
-	cp spahead.h ../../../prog/src/net_app/poke_trade/
 	-ls -f *.N*R > $(LIST_FILE)
 	-ls -f *.nsb* >> $(LIST_FILE)
 	-ls -f *.spa >> $(LIST_FILE)
@@ -164,7 +165,7 @@ $(targetname).narc:  $(OBJ_FILE) Makefile
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
-	##-rm $(LIST_FILE)
+	-rm $(LIST_FILE)
 
 endif
 
