@@ -35,8 +35,8 @@ extern "C" {
     定数定義
  *---------------------------------------------------------------------------*/
 
-//#define WM_DEBUG                // WM のデバッグフラグ(主にARM7)
-//#define WM_DEBUG_DATASHARING    // DataSharing 関係のデバッグメッセージフラグ(ARM9)
+#define WM_DEBUG                // WM のデバッグフラグ(主にARM7)
+#define WM_DEBUG_DATASHARING    // DataSharing 関係のデバッグメッセージフラグ(ARM9)
 //#define WM_DEBUG_CALLBACK       // ARM9 の無線用 PXI 割り込みのデバッグ表示フラグ(ARM9)
 //#define WM_DEBUG_AIDBITMAP      // ARM9 の AID BITMAP 関係のデバッグ表示フラグ(ARM9)
 

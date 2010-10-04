@@ -25,10 +25,10 @@ include	$(TWLSDK_ROOT)/build/buildtools/commondefs
 #SUBDIRS    =   $(GSUBDIRS)
 
 ifneq	($(filter TWL,$(TARGET_PLATFORM_LIST)),)
-ifeq    ($(TWLSDK_PRIVATE),TRUE)
+##ifeq    ($(TWLSDK_PRIVATE),TRUE)
 SUBDIRS_P   +=  ARM9.TWL    # Could build in the environment with "buildtools/@privatedefs".
 SUBDIRS_P   +=  ARM7.TWL
-endif
+##endif
 endif
 
 ifneq	($(filter NITRO,$(TARGET_PLATFORM_LIST)),)
