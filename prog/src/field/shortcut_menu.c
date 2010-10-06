@@ -746,6 +746,12 @@ static void _up_move_func( SCROLL_WORK *p_wk, int cursor_pos, int max, BOOL *is_
       pos = BmpMenuList_DirectCursorYGet( p_wk->p_list, cursor )/8;
       InsertCursor_SetPosY( p_wk, (SCROLL_BMPWIN_Y + pos)*8 );
       p_wk->is_insert_last=FALSE;
+      
+      // >> update 2010/10/05 ichiraku
+      // BTS NO 7709
+      // is_loopがTRUEの時は自分で再生しないといけない
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
+
       *is_loop=TRUE;    // BmpList_Mainを実行させないようにするために立てる
     }
   }
@@ -806,11 +812,13 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
     if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
     { 
       _up_move_func( p_wk, cursor_pos, max, &is_loop );
+      ICHI_Printf("KEY_UP cursor_pos:%d max:%d isloop:%d is_insert_last:%d\n", cursor_pos, max, is_loop, p_wk->is_insert_last);
     }
     else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
     { 
       _down_move_func( p_wk, cursor_pos, max, &is_loop );
     }
+
   }
 
   //メイン
@@ -869,7 +877,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
       u16 list_bak;
       u16 insert_pos;
       SHORTCUTMENU_INPUT insertID;
-      
+
       insertID  = BmpMenuList_PosParamGet( p_wk->p_list, p_wk->insert_list + p_wk->insert_cursor );
 
       //セーブデータへの挿入処理
@@ -1150,10 +1158,10 @@ static void Scroll_AdjustListPos( u16 *list, u16 *cursor, const u16 max )
       // MAX-1の場合はカーソル位置４にしてスクロールポイントを調整する
       *list   = pos-4;
       *cursor = 4;
-      
+
     }
   }
-  
+
 }
 
 
