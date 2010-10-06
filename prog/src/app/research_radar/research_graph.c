@@ -218,6 +218,7 @@ static void SetAnalyzeButtonCursorOff( RRG_WORK* work ); //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚
 static void SetAnalyzeButtonCursorSet( RRG_WORK* work ); //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğƒJ[ƒ\ƒ‹‚ğƒZƒbƒg‚µ‚½ó‘Ô‚É‚·‚é
 static void SetAnalyzeButtonActive( RRG_WORK* work ); //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
 static void SetAnalyzeButtonNotActive( RRG_WORK* work ); //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğ”ñƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
+static void SelectReturnButton( RRG_WORK* work , BOOL on_off ); // –ß‚éƒ{ƒ^ƒ“‚ÌONAOFF‚ğØ‚è‘Ö‚¦‚é
 //u–ß‚évƒ{ƒ^ƒ“
 static void BlinkReturnButton( RRG_WORK* work ); //u–ß‚évƒ{ƒ^ƒ“‚ğ“_–Å‚³‚¹‚é
 // ‰~ƒOƒ‰ƒt
@@ -252,6 +253,7 @@ static void UpdateBGFont_NoData( RRG_WORK* work ); //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v
 static void UpdateBGFont_DataReceiving( RRG_WORK* work ); //uƒf[ƒ^‚µ‚ã‚Æ‚­‚¿‚ã‚¤v‚Ì•\¦‚ğXV‚·‚é
 // OBJ
 static void UpdateControlCursor( RRG_WORK* work ); // ‘€ìƒJ[ƒ\ƒ‹‚Ì•\¦‚ğXV‚·‚é
+static void SetCursorEnable( RRG_WORK* work , BOOL on_off ); // ƒJ[ƒ\ƒ‹‚Ì•\¦A”ñ•\¦‚ğİ’è‚·‚é
 static void UpdateMyAnswerIconOnButton( RRG_WORK* work ); // ©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒ{ƒ^ƒ“ã ) ‚ğXV‚·‚é
 static void UpdateMyAnswerIconOnGraph( RRG_WORK* work ); // ©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒOƒ‰ƒtã ) ‚ğXV‚·‚é
 // BMP-OAM
@@ -722,6 +724,7 @@ static void MainSeq_STANDBY( RRG_WORK* work )
   //u‰~ƒOƒ‰ƒtvƒ^ƒbƒ`
   if( touch == TOUCH_AREA_GRAPH ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+
       work->analyzeByTouchFlag = TRUE;                 // ƒ^ƒbƒ`‚Å‰ğÍ
       BlinkAnalyzeButton( work );                      //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
       FinishCurrentState( work );                      // RRG_STATE_STANDBY ó‘Ô‚ğI—¹
@@ -925,6 +928,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   //u‰~ƒOƒ‰ƒtvƒ^ƒbƒ`
   if( touch == TOUCH_AREA_GRAPH ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      
       work->analyzeByTouchFlag = TRUE;                 // ƒ^ƒbƒ`‚Å‰ğÍ
       BlinkAnalyzeButton( work );                      //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
       FinishCurrentState( work );                      // RRG_STATE_KEYWAIT ó‘Ô‚ğI—¹
@@ -940,6 +944,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`
   if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+       
       work->analyzeByTouchFlag = TRUE;                 // ƒ^ƒbƒ`‚Å‰ğÍ
       BlinkAnalyzeButton( work );                      //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
       FinishCurrentState( work );                      // RRG_STATE_KEYWAIT ó‘Ô‚ğI—¹
@@ -960,6 +965,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   //u¿–âvƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`
   if( touch == TOUCH_AREA_QUESTION ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+       
       work->analyzeByTouchFlag = TRUE;                 // ƒ^ƒbƒ`‚Å‰ğÍ
       BlinkAnalyzeButton( work );                      //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
       FinishCurrentState( work );                      // RRG_STATE_STANDBY ó‘Ô‚ğI—¹
@@ -1021,6 +1027,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   if( trg & PAD_BUTTON_A ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) && 
         ( (work->cursorPos == MENU_ITEM_QUESTION) || (work->cursorPos == MENU_ITEM_ANALYZE) ) ) {
+       
       work->analyzeByTouchFlag = FALSE;                // ƒ{ƒ^ƒ“‚Å‰ğÍ
       BlinkAnalyzeButton( work );                      //w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
       FinishCurrentState( work );                      // RRG_STATE_KEYWAIT ó‘Ô‚ğI—¹
@@ -1066,6 +1073,16 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
     CIRCLE_GRAPH_SetDrawEnable( GetMainGraph(work), TRUE ); // ‰~ƒOƒ‰ƒt•\¦ŠJn
     CIRCLE_GRAPH_AnalyzeReq( GetMainGraph(work) );          // ‰~ƒOƒ‰ƒt•\¦ŠJn
 
+    //=======================================
+    // BTS 7801
+    // –ß‚éƒ{ƒ^ƒ“‚ğˆÃ‚­ƒtƒF[ƒh‚³‚¹‚é
+    SelectReturnButton( work , FALSE );
+
+    //=======================================
+    // BTS 7801
+    // ‰ğÍ’†‚ÍƒJ[ƒ\ƒ‹‚ğ”ñ•\¦‚É‚µ‚Ä‚¨‚­i‘€ì‚Å‚«‚È‚¢‚Ì‚Åj
+    SetCursorEnable( work , FALSE );
+
     IncStateSeq( work );
     break;
 
@@ -1085,6 +1102,11 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
   case 2:
     // ‰ğÍÏ‚İƒtƒ‰ƒO‚ğ—§‚Ä‚é
     work->analyzeFlag = TRUE;
+
+    //=======================================
+    // BTS 7801
+    // –ß‚éƒ{ƒ^ƒ“‚ğ–¾‚é‚­ƒtƒF[ƒh‚³‚¹‚é
+    SelectReturnButton( work , TRUE );
 
     // •\¦‚ğXV
     SetMenuCursorPos( work, MENU_ITEM_ANSWER ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğw‰ñ“šx‚É‡‚í‚¹‚é
@@ -1212,6 +1234,16 @@ static void MainSeq_UPDATE_AT_STANDBY( RRG_WORK* work )
     // ’²¸ƒf[ƒ^‚ğÄƒZƒbƒgƒAƒbƒv
     SetupResearchData( work );
 
+    //=======================================
+    // BTS 7801
+    // –ß‚éƒ{ƒ^ƒ“‚ğˆÃ‚­ƒtƒF[ƒh‚³‚¹‚é
+    SelectReturnButton( work , FALSE );
+
+    //=======================================
+    // BTS 7801
+    // ‰ğÍ’†‚ÍƒJ[ƒ\ƒ‹‚ğ”ñ•\¦‚É‚µ‚Ä‚¨‚­i‘€ì‚Å‚«‚È‚¢‚Ì‚Åj
+    SetCursorEnable( work , FALSE );
+
     // •\¦‚ğXV
     UpdateMainBG_WINDOW( work );        // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğXV‚·‚é
     UpdateBGFont_Answer( work );        //u‰ñ“šv•¶š—ñ‚Ì•\¦‚ğXV‚·‚é
@@ -1291,6 +1323,16 @@ static void MainSeq_UPDATE_AT_KEYWAIT( RRG_WORK* work )
 
     // ’²¸ƒf[ƒ^‚ğÄƒZƒbƒgƒAƒbƒv
     SetupResearchData( work );
+
+    //=======================================
+    // BTS 7801
+    // –ß‚éƒ{ƒ^ƒ“‚ğˆÃ‚­ƒtƒF[ƒh‚³‚¹‚é
+    SelectReturnButton( work , FALSE );
+
+    //=======================================
+    // BTS 7801
+    // ‰ğÍ’†‚ÍƒJ[ƒ\ƒ‹‚ğ”ñ•\¦‚É‚µ‚Ä‚¨‚­i‘€ì‚Å‚«‚È‚¢‚Ì‚Åj
+    SetCursorEnable( work , FALSE );
 
     // •\¦‚ğXV
     SetMenuCursorOff( work );           // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
@@ -2337,6 +2379,40 @@ static void BlinkAnalyzeButton( RRG_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief  –ß‚éƒ{ƒ^ƒ“‚ÌONAOFF‚ğØ‚è‘Ö‚¦‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SelectReturnButton( RRG_WORK* work , BOOL on_off )
+{
+  // –ß‚éƒ{ƒ^ƒ“‚ÌON,OFF
+  if( on_off )
+  {
+    PaletteFadeReq( work->paletteFadeSystem, 
+        PF_BIT_MAIN_OBJ,
+        MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK,
+        MAIN_OBJ_PALETTE_FADE_IN_WAIT,
+        MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH,
+        MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH,
+        MAIN_OBJ_PALETTE_FADE_IN_COLOR,
+        work->VBlankTCBSystem);
+  }
+  else
+  {
+    PaletteFadeReq( work->paletteFadeSystem, 
+        PF_BIT_MAIN_OBJ,
+        MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK,
+        MAIN_OBJ_PALETTE_FADE_OUT_WAIT,
+        MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH,
+        MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH,
+        MAIN_OBJ_PALETTE_FADE_OUT_COLOR,
+        work->VBlankTCBSystem);
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief w•ñ‚ğŒ©‚éxƒ{ƒ^ƒ“‚ğƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
  *
  * @param work
@@ -3170,6 +3246,26 @@ static void UpdateControlCursor( RRG_WORK* work )
     GFL_CLACT_WK_SetAutoAnmFlag( cursorL, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( cursorR, TRUE );
   }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‘€ìƒJ[ƒ\ƒ‹‚Ì•\¦”ñ•\¦‚ğİ’è‚·‚é
+ *
+ * @param work 
+ */
+//-----------------------------------------------------------------------------------------
+static void SetCursorEnable( RRG_WORK* work , BOOL on_off )
+{
+  GFL_CLWK* cursorL;
+  GFL_CLWK* cursorR;
+
+  // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğæ“¾
+  cursorL = GetClactWork( work, CLWK_CONTROL_CURSOR_L );
+  cursorR = GetClactWork( work, CLWK_CONTROL_CURSOR_R );
+
+  GFL_CLACT_WK_SetDrawEnable( cursorL, on_off );
+  GFL_CLACT_WK_SetDrawEnable( cursorR, on_off );
 }
 
 //-----------------------------------------------------------------------------------------

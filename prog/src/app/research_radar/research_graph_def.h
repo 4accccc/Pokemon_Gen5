@@ -351,7 +351,21 @@
 #define MAIN_OBJ_PALETTE_FADE_FLASHIN_START_STRENGTH (7)      // フェード初期濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_FLASHIN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_FLASHIN_COLOR          (0xffff)  // 変更後の色
-
+//-------------------------------------------------------------------------------
+// □パレットフェード ( ボタンのON,OFF )
+//-------------------------------------------------------------------------------
+// 戻るボタンOFF ( OBJ ) 
+#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0x0001) // フェード対象パレット番号のマスク(選択カーソルまでマスクする）
+#define MAIN_OBJ_PALETTE_FADE_OUT_WAIT           (0)      // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
+// 戻るボタンON ( OBJ ) 
+#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0x0001) // フェード対象パレット番号のマスク(選択カーソルまでマスクする）
+#define MAIN_OBJ_PALETTE_FADE_IN_WAIT           (0)      // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH   (0)     // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_COLOR          (0x0000) // 変更後の色
 
 //===============================================================================
 // ■座標
