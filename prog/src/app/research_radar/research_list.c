@@ -255,6 +255,7 @@ static BOOL CheckFadeEnd( void ); // フェードの終了をチェックする
 // パレットフェード
 static void StartPaletteFadeOut( RRL_WORK* work ); // パレットのフェードアウトを開始する
 static void StartPaletteFadeIn ( RRL_WORK* work ); // パレットのフェードインを開始する
+static void StartPaletteFadeInSelect ( RRL_WORK* work ); // 選択後のフェードインを開始する
 static BOOL IsPaletteFadeEnd( RRL_WORK* work ); // パレットのフェードが完了したかどうかを判定する
 // パレットアニメーション
 static void StartCommonPaletteAnime( RRL_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // 共通パレットアニメーションを開始する
@@ -917,6 +918,7 @@ static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
   //---------------------------
   //「けってい」ボタンをタッチ
   if( touchTrg == MENU_TOUCH_AREA_OK_BUTTON ) {
+    
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_OK ); // カーソル移動
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );   // カーソルが乗っている時のパレットアニメを停止
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );     // 選択時のパレットアニメを開始
@@ -994,6 +996,7 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
   //----------------------------
   //「けってい」ボタンをタッチ
   if( touchTrg == MENU_TOUCH_AREA_OK_BUTTON ) {
+   
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_OK ); // カーソル移動
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );   // カーソルが乗っている際のパレットアニメを停止
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );     // 項目選択時のパレットアニメを開始
@@ -1126,6 +1129,12 @@ static void MainState_CONFIRM_DETERMINE( RRL_WORK* work )
 {
   switch( GetStateSeq( work ) ) {
   case 0:
+      
+    //=====================
+    // BTS 7839 修正
+    // 決定された場合は、選択カーソルを明るくする
+    StartPaletteFadeInSelect( work );
+
     SetTopicButtonNotInvestigating( work, GetInvestigatingTopicID(work) ); // 調査中だった項目のボタンを, 調査していない状態に戻す
     UpdateInvestigatingTopicID( work );                                    // 調査する項目を更新
     SetTopicButtonInvestigating( work, GetSelectedTopicID(work) );         // 新たに調査する項目のボタンを, 調査中の状態にする
@@ -3097,6 +3106,9 @@ static BOOL CheckFadeEnd( void )
 //-----------------------------------------------------------------------------------------
 static void StartPaletteFadeOut( RRL_WORK* work )
 {
+  int topicID,selectTopicID;
+  u16 reqBit;
+  
   // MAIN-BG
   PaletteFadeReq( work->paletteFadeSystem, 
                   PF_BIT_MAIN_BG,
@@ -3107,10 +3119,25 @@ static void StartPaletteFadeOut( RRL_WORK* work )
                   MAIN_BG_PALETTE_FADE_OUT_COLOR,
                   work->VBlankTCBSystem );
 
-  // MAIN-OBJ
+  //=====================
+  // BTS 7839 修正
+  // 選択項目によってフェードリクエストを切り替える
+  topicID       = GetInvestigatingTopicID( work );  // 調査中の項目ID
+  selectTopicID = GetSelectedTopicID(work);         // 選択中の項目ID
+
+  if( topicID == selectTopicID )
+  {
+    reqBit =MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK_ON ;
+  }
+  else
+  {
+    reqBit =MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK_OFF ;
+  }
+
+  // MAIN-OBJ(名前部分のパレット)
   PaletteFadeReq( work->paletteFadeSystem, 
                   PF_BIT_MAIN_OBJ,
-                  MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK,
+                  reqBit,
                   MAIN_OBJ_PALETTE_FADE_OUT_WAIT,
                   MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH,
                   MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH,
@@ -3130,6 +3157,9 @@ static void StartPaletteFadeOut( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void StartPaletteFadeIn( RRL_WORK* work )
 {
+  int topicID,selectTopicID;
+  u16 reqBit;
+  
   // MAIN-BG
   PaletteFadeReq( work->paletteFadeSystem, 
                   PF_BIT_MAIN_BG,
@@ -3138,20 +3168,57 @@ static void StartPaletteFadeIn( RRL_WORK* work )
                   MAIN_BG_PALETTE_FADE_IN_START_STRENGTH,
                   MAIN_BG_PALETTE_FADE_IN_END_STRENGTH,
                   MAIN_BG_PALETTE_FADE_IN_COLOR,
-                  work->VBlankTCBSystem );
+                  work->VBlankTCBSystem);
+
+  //=====================
+  // BTS 7839 修正
+  // 調査中の項目を選択している時のみ、円グラフマークのフェードを行わない
+  topicID       = GetInvestigatingTopicID( work );  // 調査中の項目ID
+  selectTopicID = GetSelectedTopicID(work);         // 選択中の項目ID
+
+  if( topicID == selectTopicID )
+  {
+    reqBit =MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK_ON;
+  }
+  else
+  {
+    reqBit =MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK_OFF;
+  }
 
   // MAIN-OBJ
   PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_OBJ,
-                  MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK,
-                  MAIN_OBJ_PALETTE_FADE_IN_WAIT,
-                  MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADE_IN_COLOR,
-                  work->VBlankTCBSystem );
+      PF_BIT_MAIN_OBJ,
+      reqBit,
+      MAIN_OBJ_PALETTE_FADE_IN_WAIT,
+      MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH,
+      MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH,
+      MAIN_OBJ_PALETTE_FADE_IN_COLOR,
+      work->VBlankTCBSystem);
 
   // フラグを落とす
   work->palFadeOutFlag = FALSE;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 選択後のフェードインを開始する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartPaletteFadeInSelect( RRL_WORK* work )
+{
+
+  // MAIN-OBJ
+  PaletteFadeReq( work->paletteFadeSystem, 
+      PF_BIT_MAIN_OBJ,
+      MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK_SELECT,
+      MAIN_OBJ_PALETTE_FADE_IN_WAIT_SELECT,
+      MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH_SELECT,
+      MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH_SELECT,
+      MAIN_OBJ_PALETTE_FADE_IN_COLOR_SELECT,
+      work->VBlankTCBSystem);
+
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4405,8 +4472,10 @@ static void RegisterMainObjResources( RRL_WORK* work )
   character = GFL_CLGRP_CGR_Register( 
       arcHandle, NARC_research_radar_graphic_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID ); 
 
+  //==================================
+  // BTS 7839 修正（選択カーソル用のパレットも読み込むため、読み込み本数を5本に変更）
   palette = GFL_CLGRP_PLTT_RegisterEx( 
-      arcHandle, NARC_research_radar_graphic_obj_NCLR, CLSYS_DRAW_MAIN, ONE_PALETTE_SIZE*6, 0, 4, heapID ); 
+      arcHandle, NARC_research_radar_graphic_obj_NCLR, CLSYS_DRAW_MAIN, ONE_PALETTE_SIZE*6, 0, 5, heapID ); 
 
   cellAnime = GFL_CLGRP_CELLANIM_Register( 
       arcHandle, NARC_research_radar_graphic_obj_NCER, NARC_research_radar_graphic_obj_NANR, heapID ); 

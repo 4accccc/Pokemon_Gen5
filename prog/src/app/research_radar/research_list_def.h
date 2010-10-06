@@ -321,7 +321,8 @@
 #define MAIN_BG_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
 
-#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0x00cf) // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK_ON  (0x00cf) // フェード対象パレット番号のマスク（選択カーソルはマスクしない）
+#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK_OFF (0x04cf) // フェード対象パレット番号のマスク(選択カーソルまでマスクする）
 #define MAIN_OBJ_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
 #define MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
@@ -334,11 +335,18 @@
 #define MAIN_BG_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
 
-#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0x00cf)  // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK_ON (0x00cf)  // フェード対象パレット番号のマスク（カーソル部分まで輝度を戻す）
+#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK_OFF (0x04cf)  // フェード対象パレット番号のマスク（カーソル部分まで輝度を戻す）
 #define MAIN_OBJ_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
 #define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
+
+#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK_SELECT (0x0400)  // フェード対象パレット番号のマスク（カーソル部分まで輝度を戻す）
+#define MAIN_OBJ_PALETTE_FADE_IN_WAIT_SELECT           (0)       // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH_SELECT (10)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH_SELECT   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_COLOR_SELECT          (0x0000)  // 変更後の色
 
 
 //===============================================================================
