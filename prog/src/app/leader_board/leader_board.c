@@ -1420,7 +1420,6 @@ static int TouchBar_KeyControl( LEADERBOARD_WORK *wk )
 
   // キーでキャンセル
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );
     touch = FUNC_END;
   }
   
@@ -1457,6 +1456,12 @@ static void ExecFunc( LEADERBOARD_WORK *wk, int touch )
     }
     break;
   case FUNC_END:
+    // >>
+    // update ichiraku 2010/10/6
+    // BTS NO 7940
+    // ここに書くことでキーとタッチ両方で対応
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );
+
     wk->seq = SUBSEQ_ICON_WAIT;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[LB_OBJ_END], 9 );
     break;
