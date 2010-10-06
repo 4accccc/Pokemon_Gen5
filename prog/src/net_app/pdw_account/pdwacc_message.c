@@ -581,47 +581,47 @@ void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf)
   GFL_BMPWIN* pwin;
   int i;
   STRCODE buff2[]={
-    65,	//A
-    66,	//B
-    67,	//C
-    68,	//D
-    69,	//E
-    70,	//F
-    71,	//G
-    72,	//H
+    0xff21,	//A
+    0xff22,	//B
+    0xff23,	//C
+    0xff24,	//D
+    0xff25,	//E
+    0xff26,	//F
+    0xff27,	//G
+    0xff28,	//H
     //73,	//I
-    74,	//J
-    75,	//K
-    76,	//L
-    77,	//M
-    78,	//N
+    0xff2a,	//J
+    0xff2b,	//K
+    0xff2c,	//L
+    0xff2d,	//M
+    0xff2e,	//N
     //79,	//O
-    80,	//P
-    81,	//Q
-    82,	//R
-    83,	//S
-    84,	//T
-    85,	//U
-    86,	//V
-    87,	//W
-    88,	//X
-    89,	//Y
-    90,	//Z
+    0xff30,	//P
+    0xff31,	//Q
+    0xff32,	//R
+    0xff33,	//S
+    0xff34,	//T
+    0xff35,	//U
+    0xff36,	//V
+    0xff37,	//W
+    0xff38,	//X
+    0xff39,	//Y
+    0xff3a,	//Z
     //48,	//0
     //49,	//1
-    50,	//2
-    51,	//3
-    52,	//4
-    53,	//5
-    54,	//6
-    55,	//7
-    56,	//8
-    57,	//9
+    0xff12,	//2
+    0xff13,	//3
+    0xff14,	//4
+    0xff15,	//5
+    0xff16,	//6
+    0xff17,	//7
+    0xff18,	//8
+    0xff19,	//9
   };
 
   u64 moji;
   u16 word;
-  STRCODE disp[13*sizeof(STRCODE)];
+  STRCODE disp[30*sizeof(STRCODE)];
   s32 id = profileID;
   u16 crc = GFL_STD_CrcCalc( &id, 4 );
   u64 code = id + crc * 0x100000000;
@@ -632,7 +632,8 @@ void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf)
   for(i = 0; i < 10 ; i++){
     word = moji & 0x1f;
     moji = moji >> 5;
-    disp[i]=buff2[word];
+    disp[i*2]=buff2[word];
+    disp[i*2+1]=0x0020;
   }
   GFL_STR_SetStringCode(pStrbuf,disp);
 
