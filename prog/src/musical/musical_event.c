@@ -492,7 +492,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //------------------------------
   case MES_INIT_MUSICAL_SHOT:
     MUSICAL_EVENT_InitMusicalShot( evWork );
-    GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalShot_ProcData, evWork->shotInitWork );
+    GAMESYSTEM_CallProc( evWork->gsys , FS_OVERLAY_ID(musical_shot), &MusicalShot_ProcData, evWork->shotInitWork );
     evWork->state = MES_TERM_MUSICAL_SHOT;
     break;
     
@@ -786,6 +786,7 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
   evWork->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC_WRAPPER , sizeof( MUS_SHOT_INIT_WORK ));
   evWork->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_PROC_WRAPPER , sizeof( MUSICAL_SHOT_DATA ));
   evWork->shotInitWork->isLoadOverlay = FALSE;
+  evWork->shotInitWork->isLoadOverlayCommon = FALSE;
   evWork->shotInitWork->commWork = evWork->commWork;
   {
     u8 i;

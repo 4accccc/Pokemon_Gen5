@@ -135,27 +135,23 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
   msgWork->yesNoBmpWin = NULL;
   
   msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , msgWork->heapId );
-  
-#ifndef MULTI_BOOT_MAKE  //通常時処理
-  //talkmsgwin用にfieldを読む
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( fieldmap ) );
-  OS_TPrintf("デバッグ起動だとASSERT出ますがSKIPしてください。\n");
-  OS_TPrintf("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\n");
-#endif //MULTI_BOOT_MAKE
 
   //会話Win
 #ifdef MB_TYPE_POKE_SHIFTER
   if( useTalkWin == TRUE )
   {
-    TALKMSGWIN_SYS_SETUP setup;
-    setup.heapID = heapId;
-    setup.g3Dcamera = NULL;
-    setup.fontHandle = msgWork->fontHandle;
-    setup.chrNumOffs = MB_MSG_TALKWIN_CGX;
-    setup.ini.frameID = frame;
-    setup.ini.winPltID = MB_MSG_PLT_MAIN_TALKWIN;
-    setup.ini.fontPltID = MB_MSG_PLT_MAIN_FONT;
-    msgWork->talkWinSys = TALKMSGWIN_SystemCreate( &setup );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( fieldmap ) );
+    {
+      TALKMSGWIN_SYS_SETUP setup;
+      setup.heapID = heapId;
+      setup.g3Dcamera = NULL;
+      setup.fontHandle = msgWork->fontHandle;
+      setup.chrNumOffs = MB_MSG_TALKWIN_CGX;
+      setup.ini.frameID = frame;
+      setup.ini.winPltID = MB_MSG_PLT_MAIN_TALKWIN;
+      setup.ini.fontPltID = MB_MSG_PLT_MAIN_FONT;
+      msgWork->talkWinSys = TALKMSGWIN_SystemCreate( &setup );
+    }
   }
   else
   {
@@ -180,6 +176,7 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   if( msgWork->talkWinSys != NULL )
   {
     TALKMSGWIN_SystemDelete( msgWork->talkWinSys );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( fieldmap ) );
   }
 #endif
   if( msgWork->yesNoWork != NULL )
@@ -223,10 +220,6 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   
   GFL_HEAP_FreeMemory( msgWork );
 
-#ifndef MULTI_BOOT_MAKE  //通常時処理
-  //talkmsgwin用にfieldを読む
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( fieldmap ) );
-#endif //MULTI_BOOT_MAKE
 }
 
 //--------------------------------------------------------------

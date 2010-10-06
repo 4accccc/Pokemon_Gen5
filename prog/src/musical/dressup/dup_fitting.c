@@ -42,6 +42,8 @@
 #include "debug/debugwin_sys.h"
 #include "musical/musical_debug_menu.h"
 
+FS_EXTERN_OVERLAY(musical_shot);
+
 //======================================================================
 //  define
 //======================================================================

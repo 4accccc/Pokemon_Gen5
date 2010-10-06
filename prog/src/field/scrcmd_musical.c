@@ -60,6 +60,7 @@
 //======================================================================
 FS_EXTERN_OVERLAY(musical);
 FS_EXTERN_OVERLAY(ircbattlematch);
+FS_EXTERN_OVERLAY(musical_common);
 
 //======================================================================
 //  struct
@@ -171,6 +172,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
     callWork->initWork->isCheckMode = FALSE;
     callWork->initWork->musShotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
     callWork->initWork->isLoadOverlay = TRUE;
+    callWork->initWork->isLoadOverlayCommon = TRUE;
     //ショット呼び出し
     event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
                                          FS_OVERLAY_ID(musical_shot), &MusicalShot_ProcData, callWork->initWork,
@@ -1034,8 +1036,8 @@ static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData )
   musScriptWork->eventWork = NULL;
   musScriptWork->commWork = NULL;
   GAMEDATA_SetMusicalScrWork( gameData , musScriptWork );
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_common));
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
 #if PM_DEBUG
   MUSICAL_DEBUG_InitDebugMenu( musScriptWork , HEAPID_PROC );
 #endif
@@ -1048,8 +1050,8 @@ static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDA
 #if PM_DEBUG
   MUSICAL_DEBUG_TermDebugMenu();
 #endif
-  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_common));
   GFL_HEAP_FreeMemory( musScriptWork );
   GAMEDATA_SetMusicalScrWork( gameData , NULL );
 }

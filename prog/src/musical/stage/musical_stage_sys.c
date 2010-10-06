@@ -75,10 +75,11 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
   //ストリーミング配信分削ってテスト
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0xA8000 );
 
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
+
   work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   if( pwk == NULL )
   {
-    GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
     work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , 327 , 0 , 0xFF000000 ,60 , HEAPID_MUSICAL_STAGE );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , 327 , 0 , 0x00FF0000 ,120 , HEAPID_MUSICAL_STAGE );
@@ -138,9 +139,11 @@ static GFL_PROC_RESULT MusicalStageProc_Term( GFL_PROC * proc, int * seq , void 
     //無理やりプレーヤーに下したので戻す
     work->actInitWork->musPoke[1]->charaType = MUS_CHARA_NPC;
     MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
-    GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   }
   GFL_PROC_FreeWork( proc );
+
+
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STAGE );
 
   return GFL_PROC_RES_FINISH;

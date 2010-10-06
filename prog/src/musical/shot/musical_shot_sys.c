@@ -19,6 +19,7 @@
 #include "poke_tool/monsno_def.h"
 #include "test/ariizumi/ari_debug.h"
 
+FS_EXTERN_OVERLAY(musical_common);
 //======================================================================
 //  define
 //======================================================================
@@ -98,6 +99,7 @@ FS_EXTERN_OVERLAY(musical);
 static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   SHOT_LOCAL_WORK *work;
+
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_SHOT, 0x80000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(SHOT_LOCAL_WORK), HEAPID_MUSICAL_SHOT );
@@ -107,9 +109,12 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
   if( pwk == NULL )
   {
     GFL_OVERLAY_Load( FS_OVERLAY_ID(musical) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(musical_common) );
+
     work->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_SHOT , sizeof( MUS_SHOT_INIT_WORK ));
     work->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_SHOT , sizeof( MUSICAL_SHOT_DATA ));
     work->shotInitWork->isLoadOverlay = FALSE;
+    work->shotInitWork->isLoadOverlayCommon = TRUE;
     {
       u8 i;
       RTCDate date;
@@ -191,6 +196,11 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
   else
   {
     work->shotInitWork = pwk;
+
+    if( work->shotInitWork->isLoadOverlayCommon == TRUE )
+    {
+      GFL_OVERLAY_Load( FS_OVERLAY_ID(musical_common) );
+    }
   }
   
   if( work->shotInitWork->isLoadOverlay == TRUE )
@@ -240,6 +250,11 @@ static GFL_PROC_RESULT MusicalShotProc_Term( GFL_PROC * proc, int * seq , void *
   {
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(musical) );
   }
+
+  if( work->shotInitWork->isLoadOverlayCommon == TRUE )
+  {
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(musical_common) );
+  }
   
   if( pwk == NULL )
   {
@@ -253,6 +268,7 @@ static GFL_PROC_RESULT MusicalShotProc_Term( GFL_PROC * proc, int * seq , void *
   GFL_PROC_FreeWork( proc );
 
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_SHOT );
+
 
   return GFL_PROC_RES_FINISH;
 }

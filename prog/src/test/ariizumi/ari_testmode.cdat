@@ -74,7 +74,7 @@ static BOOL TESTMODE_ITEM_SelectDebDebugAriizumi( TESTMODE_WORK *work , const in
 static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int idx );
-static BOOL TESTMODE_ITEM_SelectDebMultiBootBox( TESTMODE_WORK *work , const int idx );
+//static BOOL TESTMODE_ITEM_SelectDebMultiBootBox( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBootCapture( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebCGHelp( TESTMODE_WORK *work , const int idx );
 
@@ -94,7 +94,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 	{L"かんい文入力"	,TESTMODE_ITEM_SelectDebPmsInput },
 	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
 	{L"CG_HELP"	      ,TESTMODE_ITEM_SelectDebCGHelp },
-	{L"MB_BOX"	      ,TESTMODE_ITEM_SelectDebMultiBootBox },
+//	{L"MB_BOX"	      ,TESTMODE_ITEM_SelectDebMultiBootBox },
 	{L"MB_CAP"	      ,TESTMODE_ITEM_SelectDebMultiBootCapture },
 	{L"マルチブート"	,TESTMODE_ITEM_SelectDebMultiBoot },
 	
@@ -178,11 +178,13 @@ static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int id
   return TRUE;
 }
 
+/*
 static BOOL TESTMODE_ITEM_SelectDebMultiBootBox( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(multiboot), &MultiBootSelect_ProcData, NULL);
   return TRUE;
 }
+*/
 
 static BOOL TESTMODE_ITEM_SelectDebMultiBootCapture( TESTMODE_WORK *work , const int idx )
 {

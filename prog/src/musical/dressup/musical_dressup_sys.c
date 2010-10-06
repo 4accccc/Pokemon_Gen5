@@ -23,6 +23,7 @@
 //  define
 //======================================================================
 FS_EXTERN_OVERLAY(dressup);
+FS_EXTERN_OVERLAY(musical_shot);
 
 //======================================================================
 //  enum
@@ -71,6 +72,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
   DRESSUP_INIT_WORK *initWork = pwk;
   *seq = DUP_SEQ_INIT_FITTING;
   GFL_OVERLAY_Load(FS_OVERLAY_ID(dressup));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_DRESSUP, 0x40000 );
 
@@ -80,7 +82,6 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 #if PM_DEBUG
   if( pwk == NULL )
   {
-    GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
     {
       POKEMON_PARAM *pokePara = PP_Create( MONSNO_NIDOKINGU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_DRESSUP );
       MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_MUSICAL_DRESSUP );
@@ -106,7 +107,6 @@ static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk,
     GFL_HEAP_FreeMemory( work->initWork->musPoke->pokePara );
     GFL_HEAP_FreeMemory( work->initWork->musPoke );
     GFL_HEAP_FreeMemory( work->initWork );
-    GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   }
 #endif
   GFL_HEAP_FreeMemory( work->fitInitWork );
@@ -114,6 +114,7 @@ static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk,
 
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_DRESSUP );
 
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(dressup));
 
   return GFL_PROC_RES_FINISH;

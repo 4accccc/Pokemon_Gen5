@@ -34,6 +34,7 @@
 
 //ミュージカルモジュールを使うので
 FS_EXTERN_OVERLAY( musical_shot );
+FS_EXTERN_OVERLAY( musical_common );
 
 //=============================================================================
 /**
@@ -169,6 +170,7 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(musical_shot) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(musical_common) );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_MUSICALLOOK_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );
@@ -243,6 +245,7 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(musical_shot) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(musical_common) );
 
 	return GFL_PROC_RES_FINISH;
 }
