@@ -985,6 +985,11 @@ static void ExchangeDecideFunc( WORLDTRADE_WORK*wk )
     GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
     wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 
+    //===================================
+    // BTS 7896 修正
+    // 戻る音を鳴らしていなかったので追加
+		PMSND_PlaySE(SE_CANCEL);
+
 /**		
 		// サーバーチェックの後タイトルメニューへ
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_PARTNER, 0 );
