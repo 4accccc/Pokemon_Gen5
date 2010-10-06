@@ -369,6 +369,20 @@ static const u8 nation_table[][2]={
 
 #define LV_PAGE_MAX	(2)
 
+// >> update ichiraku 2010/10/6
+// BTS 7897
+// 挙動が2種類ある
+// １．キーが押しっぱなしだとキーカーソルを表示
+// ２．キーが押しっぱなしだとSEをならさない
+//
+// 1→対処：トリガ入力だけでなくリピート入力もチェックする
+// 2→対処：トリガ入力があるまでは、移動キーを判定しない
+//
+// 同じ修正箇所が7個ある
+// マクロBTS_7897が定義されていると１の対処
+// コメントアウトすると２の対処
+//#define BTS_7897
+
 //------------------------------------------------------------------
 /**
  * @brief   必要なBMPWINワークを確保する
@@ -381,198 +395,198 @@ static const u8 nation_table[][2]={
 //------------------------------------------------------------------
 static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 {
-	int i=0;
+  int i=0;
   GFL_BG_FillCharacter( wk->BgFrame, 0, 1, 0 );
 
-	switch(mode){
+  switch(mode){
 
-	// 名前入力頭文字１
-	case MODE_HEADWORD_1:
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
-		// 子音BMPWIN確保
-		for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   word_table[i][0],		word_table[i][1],	
-									   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-		//	GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
-		}
+    // 名前入力頭文字１
+  case MODE_HEADWORD_1:
+    // もどる
+    wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        word_table[10][0],		word_table[10][1],	
+        INPUT_BACK_W, 			INPUT_BACK_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    // 子音BMPWIN確保
+    for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
+      wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
+          word_table[i][0],		word_table[i][1],	
+          INPUT_LETTER_W, 			INPUT_LETTER_H, 
+          WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      //	GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
+    }
 
-		break;
+    break;
 
-	// 名前入力頭文字２
-	case MODE_HEADWORD_2:
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    // 名前入力頭文字２
+  case MODE_HEADWORD_2:
+    // もどる
+    wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        word_table[10][0],		word_table[10][1],	
+        INPUT_BACK_W, 			INPUT_BACK_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
-		// 母音BMPWIN確保
-		wk->MenuBmp[0]	= GFL_BMPWIN_Create( wk->BgFrame,
-								   word_table[11][0],		word_table[11][1],	
-								   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-								   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[0]), 7 );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[0] );
+    // 母音BMPWIN確保
+    wk->MenuBmp[0]	= GFL_BMPWIN_Create( wk->BgFrame,
+        word_table[11][0],		word_table[11][1],	
+        INPUT_LETTER_W, 			INPUT_LETTER_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[0]), 7 );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[0] );
 
-		for(i=1;i<MODE_HEADWORD2_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
-								word_table[i-1][0],		word_table[i-1][1],	
-								INPUT_LETTER_W, 		INPUT_LETTER_H, 
-								WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
-		}
-		break;
+    for(i=1;i<MODE_HEADWORD2_WIN_NUM;i++){
+      wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
+          word_table[i-1][0],		word_table[i-1][1],	
+          INPUT_LETTER_W, 		INPUT_LETTER_H, 
+          WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
+    }
+    break;
 
-	// 名前入力
-	case MODE_POKEMON_NAME:
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    // 名前入力
+  case MODE_POKEMON_NAME:
+    // もどる
+    wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        word_table[10][0],		word_table[10][1],	
+        INPUT_BACK_W, 			INPUT_BACK_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
-		for(i=0;i<MODE_POKENAME_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   name_table[i][0],		name_table[i][1],	
-									   INPUT_POKENAME_W, 		INPUT_POKENAME_H, 
-									   WORLDTRADE_INPUT_PAL,  	
-									   GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
-		}
+    for(i=0;i<MODE_POKENAME_WIN_NUM;i++){
+      wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
+          name_table[i][0],		name_table[i][1],	
+          INPUT_POKENAME_W, 		INPUT_POKENAME_H, 
+          WORLDTRADE_INPUT_PAL,  	
+          GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
+    }
 
-		// ページ数表示用BMP
-		wk->MenuBmp[MODE_POKENAME_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   INPUT_PAGE_X,			INPUT_PAGE_Y,	
-									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_POKENAME_WIN_NUM]), INPUTPLATE_PAGE_COLOR_DATA  );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_POKENAME_WIN_NUM] );
-		break;
-	case MODE_NATION_HEAD1:
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
-
-
-		// 子音BMPWIN確保
-		for(i=0;i<MODE_NATION_HEADWORD1_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   word_table[i][0],		word_table[i][1],	
-									   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
-		}
+    // ページ数表示用BMP
+    wk->MenuBmp[MODE_POKENAME_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
+        INPUT_PAGE_X,			INPUT_PAGE_Y,	
+        INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_POKENAME_WIN_NUM]), INPUTPLATE_PAGE_COLOR_DATA  );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_POKENAME_WIN_NUM] );
+    break;
+  case MODE_NATION_HEAD1:
+    // もどる
+    wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        word_table[10][0],		word_table[10][1],	
+        INPUT_BACK_W, 			INPUT_BACK_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
 
-		// 「きにしない」
-		wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-								   INPUT_NATION_NONE_SELECT_X,	INPUT_NATION_NONE_SELECT_Y,	
-								   INPUT_NONE_W, 				INPUT_NONE_H, 
-								   WORLDTRADE_INPUT_PAL,  		GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_NONE_SELECT_WIN] );
+    // 子音BMPWIN確保
+    for(i=0;i<MODE_NATION_HEADWORD1_WIN_NUM;i++){
+      wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
+          word_table[i][0],		word_table[i][1],	
+          INPUT_LETTER_W, 			INPUT_LETTER_H, 
+          WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
+    }
 
 
-		break;
-	case MODE_NATION:
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									nation_table[5][0],		nation_table[5][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    // 「きにしない」
+    wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        INPUT_NATION_NONE_SELECT_X,	INPUT_NATION_NONE_SELECT_Y,	
+        INPUT_NONE_W, 				INPUT_NONE_H, 
+        WORLDTRADE_INPUT_PAL,  		GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_NONE_SELECT_WIN] );
 
-		// 国名BMPWIN確保
-		for(i=0;i<MODE_NATION_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   nation_table[i][0],		nation_table[i][1],	
-									   INPUT_NATION_W, 			INPUT_NATION_H, 
-									   WORLDTRADE_INPUT_PAL,  	
-									   GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
-		}
-		// ページ数表示用BMP
-		wk->MenuBmp[MODE_NATION_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   INPUT_NATION_PAGE_X,		INPUT_NATION_PAGE_Y,	
-									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_NATION_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_NATION_WIN_NUM] );
 
-		break;
-	case MODE_SEX:
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    break;
+  case MODE_NATION:
+    // もどる
+    wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        nation_table[5][0],		nation_table[5][1],	
+        INPUT_BACK_W, 			INPUT_BACK_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
-		// 性別選択
-		for(i=0;i<MODE_SEX_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   sexselect_table[i][0],	sexselect_table[i][1],	
-									   INPUT_SEXSELECT_W, 		INPUT_SEXSELECT_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
-		}
+    // 国名BMPWIN確保
+    for(i=0;i<MODE_NATION_WIN_NUM;i++){
+      wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
+          nation_table[i][0],		nation_table[i][1],	
+          INPUT_NATION_W, 			INPUT_NATION_H, 
+          WORLDTRADE_INPUT_PAL,  	
+          GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
+    }
+    // ページ数表示用BMP
+    wk->MenuBmp[MODE_NATION_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
+        INPUT_NATION_PAGE_X,		INPUT_NATION_PAGE_Y,	
+        INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_NATION_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_NATION_WIN_NUM] );
 
-		
-		break;
-	case MODE_LEVEL:
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    break;
+  case MODE_SEX:
+    // もどる
+    wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        word_table[10][0],		word_table[10][1],	
+        INPUT_BACK_W, 			INPUT_BACK_H, 
+        WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
-		// レベル選択
-		for(i=0;i<MODE_LEVEL_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   levelselect_table[i][0],	levelselect_table[i][1],	
-									   INPUT_LEVELSELECT_W, 	INPUT_LEVELSELECT_H, 
-									   WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B);
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
-		}
+    // 性別選択
+    for(i=0;i<MODE_SEX_WIN_NUM;i++){
+      wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
+          sexselect_table[i][0],	sexselect_table[i][1],	
+          INPUT_SEXSELECT_W, 		INPUT_SEXSELECT_H, 
+          WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
+    }
 
-		// ページ数表示用
-		wk->MenuBmp[MODE_LEVEL_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
-									   INPUT_PAGE_X,			INPUT_PAGE_Y,	
-									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B);
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_LEVEL_WIN_NUM]), INPUTPLATE_PAGE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_LEVEL_WIN_NUM] );
 
-		break;
+    break;
+  case MODE_LEVEL:
+    // もどる
+    wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+        word_table[10][0],		word_table[10][1],	
+        INPUT_BACK_W, 			INPUT_BACK_H, 
+        WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
-	}
+    // レベル選択
+    for(i=0;i<MODE_LEVEL_WIN_NUM;i++){
+      wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
+          levelselect_table[i][0],	levelselect_table[i][1],	
+          INPUT_LEVELSELECT_W, 	INPUT_LEVELSELECT_H, 
+          WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B);
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
+    }
+
+    // ページ数表示用
+    wk->MenuBmp[MODE_LEVEL_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
+        INPUT_PAGE_X,			INPUT_PAGE_Y,	
+        INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
+        WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B);
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_LEVEL_WIN_NUM]), INPUTPLATE_PAGE_COLOR_DATA );
+    //GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_LEVEL_WIN_NUM] );
+
+    break;
+
+  }
 
 
 }
@@ -589,102 +603,102 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 //------------------------------------------------------------------
 static void select_bmpwin_del( WORLDTRADE_INPUT_WORK *wk, int mode )
 {
-	int i;
-	s8 px, py;
-	
-	BGWINFRM_PosGet( wk->BgWinFrm, 0, &px, &py );
+  int i;
+  s8 px, py;
 
-	switch(mode){
-	case MODE_HEADWORD_1:
-		for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
-			GFL_BMPWIN_Delete( wk->MenuBmp[i] );
-		}
-		if(px == HEAD1_REWRITE_INIT_X){
+  BGWINFRM_PosGet( wk->BgWinFrm, 0, &px, &py );
+
+  switch(mode){
+  case MODE_HEADWORD_1:
+    for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
+      GFL_BMPWIN_Delete( wk->MenuBmp[i] );
+    }
+    if(px == HEAD1_REWRITE_INIT_X){
       GFL_BG_FillScreen(
           GFL_BG_FRAME2_M, 5, 0x11-1, 1, 1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_FillScreen(
-    		     GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
-    	}
-		GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
-		break;
-	case MODE_HEADWORD_2:
-		for(i=0;i<MODE_HEADWORD2_WIN_NUM;i++){
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
-			GFL_BMPWIN_Delete( wk->MenuBmp[i] );
-		}
-		if(px == HEAD1_REWRITE_INIT_X){
+      GFL_BG_FillScreen(
+          GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
+      GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
+    }
+    GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    break;
+  case MODE_HEADWORD_2:
+    for(i=0;i<MODE_HEADWORD2_WIN_NUM;i++){
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
+      GFL_BMPWIN_Delete( wk->MenuBmp[i] );
+    }
+    if(px == HEAD1_REWRITE_INIT_X){
       GFL_BG_FillScreen(
           GFL_BG_FRAME2_M, 5, 0x11-1, 1, 1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_FillScreen(
-    		     GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
-    	}
-		GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
-		break;
-	case MODE_POKEMON_NAME:
-		for(i=0;i<MODE_PAGE_WIN_NUM+MODE_POKENAME_WIN_NUM;i++){
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
-			GFL_BMPWIN_Delete( wk->MenuBmp[i] );
-		}
-		if(px == HEAD1_REWRITE_INIT_X){
+      GFL_BG_FillScreen(
+          GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
+      GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
+    }
+    GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+    break;
+  case MODE_POKEMON_NAME:
+    for(i=0;i<MODE_PAGE_WIN_NUM+MODE_POKENAME_WIN_NUM;i++){
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
+      GFL_BMPWIN_Delete( wk->MenuBmp[i] );
+    }
+    if(px == HEAD1_REWRITE_INIT_X){
       GFL_BG_FillScreen(
           GFL_BG_FRAME2_M, 5, 0x11-1, 1, 1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_FillScreen(GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
-    	}
-		GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
-		break;
-	case MODE_NATION_HEAD1:
-		for(i=0;i<MODE_NATION_HEADWORD1_WIN_NUM;i++){
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
-			GFL_BMPWIN_Delete( wk->MenuBmp[i] );
-		}
-		if(px == HEAD1_REWRITE_INIT_X){
+      GFL_BG_FillScreen(GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
+      GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
+    }
+    GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
+    break;
+  case MODE_NATION_HEAD1:
+    for(i=0;i<MODE_NATION_HEADWORD1_WIN_NUM;i++){
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
+      GFL_BMPWIN_Delete( wk->MenuBmp[i] );
+    }
+    if(px == HEAD1_REWRITE_INIT_X){
       GFL_BG_FillScreen(
           GFL_BG_FRAME2_M, 5, 0x11-1, 1, 1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_FillScreen(GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
-    	}
-		GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
-		GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]);
-		break;
-	case MODE_NATION:
-		for(i=0;i<MODE_NATION_WIN_NUM+1;i++){
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-			GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
-			GFL_BMPWIN_Delete( wk->MenuBmp[i] );
-		}
+      GFL_BG_FillScreen(GFL_BG_FRAME2_M, 6, 0x11, 1, 0x10-1, 0x10-1, GFL_BG_SCRWRT_PALNL);
+      GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
+    }
+    GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
+    GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]);
+    break;
+  case MODE_NATION:
+    for(i=0;i<MODE_NATION_WIN_NUM+1;i++){
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+      GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
+      GFL_BMPWIN_Delete( wk->MenuBmp[i] );
+    }
     /*
-		if(px == HEAD1_REWRITE_INIT_X || px == 17){ //17=wipeoutしてくる時、この値(BTS4836)
-      GFL_BG_FillScreen(
-    		    GFL_BG_FRAME2_M, 5, 0x11, 1, 1, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_FillScreen(
-    		    GFL_BG_FRAME2_M, 6, 0x11+1, 1, 0x10-2, 0x10-1, GFL_BG_SCRWRT_PALNL);
-    		GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
-    	}*/
-		GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
-		break;
-	case MODE_SEX:
-		for(i=0;i<MODE_SEX_WIN_NUM;i++){
-			GFL_BMPWIN_Delete( wk->MenuBmp[i] );
-		}
-		// もどる
-		GFL_BMPWIN_Delete(wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
-		break;
-	case MODE_LEVEL:
-		for(i=0;i<MODE_LEVEL_WIN_NUM+MODE_PAGE_WIN_NUM;i++){
-			GFL_BMPWIN_Delete( wk->MenuBmp[i] );
-		}
-		// もどる
-		GFL_BMPWIN_Delete(wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
-		break;
-	}
+       if(px == HEAD1_REWRITE_INIT_X || px == 17){ //17=wipeoutしてくる時、この値(BTS4836)
+       GFL_BG_FillScreen(
+       GFL_BG_FRAME2_M, 5, 0x11, 1, 1, 0x10-1, GFL_BG_SCRWRT_PALNL);
+       GFL_BG_FillScreen(
+       GFL_BG_FRAME2_M, 6, 0x11+1, 1, 0x10-2, 0x10-1, GFL_BG_SCRWRT_PALNL);
+       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M);
+       }*/
+    GFL_BMPWIN_Delete( wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
+    break;
+  case MODE_SEX:
+    for(i=0;i<MODE_SEX_WIN_NUM;i++){
+      GFL_BMPWIN_Delete( wk->MenuBmp[i] );
+    }
+    // もどる
+    GFL_BMPWIN_Delete(wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
+    break;
+  case MODE_LEVEL:
+    for(i=0;i<MODE_LEVEL_WIN_NUM+MODE_PAGE_WIN_NUM;i++){
+      GFL_BMPWIN_Delete( wk->MenuBmp[i] );
+    }
+    // もどる
+    GFL_BMPWIN_Delete(wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
+    break;
+  }
 
   GFL_BG_FillCharacterRelease( wk->BgFrame, 1, 0 );
 }
@@ -706,52 +720,52 @@ static void select_bmpwin_del( WORLDTRADE_INPUT_WORK *wk, int mode )
 //==============================================================================
 WORLDTRADE_INPUT_WORK * WorldTrade_Input_Init( WORLDTRADE_INPUT_HEADER *wih, int frame, int situation  )
 {
-	WORLDTRADE_INPUT_WORK *wk = GFL_HEAP_AllocMemory(HEAPID_WORLDTRADE, sizeof(WORLDTRADE_INPUT_WORK));
+  WORLDTRADE_INPUT_WORK *wk = GFL_HEAP_AllocMemory(HEAPID_WORLDTRADE, sizeof(WORLDTRADE_INPUT_WORK));
 
-	wk->MenuBmp     = wih->MenuBmp;
-	wk->BackBmp     = wih->BackBmp;
-	wk->CursorAct   = wih->CursorAct;
-	wk->ArrowAct[0] = wih->ArrowAct[0];
-	wk->ArrowAct[1] = wih->ArrowAct[1];
-	wk->SearchCursorAct = wih->SearchCursorAct;
-	wk->MsgManager      = wih->MsgManager;			// 名前入力メッセージデータマネージャー
-	wk->MonsNameManager = wih->MonsNameManager ;		// ポケモン名メッセージデータマネージャー
-	wk->CountryNameManager = wih->CountryNameManager;
-	wk->zukan			= wih->Zukan;
-	wk->SinouTable		= wih->SinouTable;
+  wk->MenuBmp     = wih->MenuBmp;
+  wk->BackBmp     = wih->BackBmp;
+  wk->CursorAct   = wih->CursorAct;
+  wk->ArrowAct[0] = wih->ArrowAct[0];
+  wk->ArrowAct[1] = wih->ArrowAct[1];
+  wk->SearchCursorAct = wih->SearchCursorAct;
+  wk->MsgManager      = wih->MsgManager;			// 名前入力メッセージデータマネージャー
+  wk->MonsNameManager = wih->MonsNameManager ;		// ポケモン名メッセージデータマネージャー
+  wk->CountryNameManager = wih->CountryNameManager;
+  wk->zukan			= wih->Zukan;
+  wk->SinouTable		= wih->SinouTable;
 
-	wk->BgFrame   = frame;
-	wk->Situation = situation;
-	wk->Head1   = 0;
-	wk->Head2   = 0;
-	wk->Poke    = 0;
-	wk->Nation  = 0;
-	wk->Sex     = 0;
-	wk->Level   = 0;
-	wk->listpos = 0;
-	wk->listpos_backup_x = 0;
-	wk->seq     = WI_SEQ_NONE;
+  wk->BgFrame   = frame;
+  wk->Situation = situation;
+  wk->Head1   = 0;
+  wk->Head2   = 0;
+  wk->Poke    = 0;
+  wk->Nation  = 0;
+  wk->Sex     = 0;
+  wk->Level   = 0;
+  wk->listpos = 0;
+  wk->listpos_backup_x = 0;
+  wk->seq     = WI_SEQ_NONE;
 
-	// BGウインドウフレームワーク確保
-	wk->BgWinFrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, 1, HEAPID_WORLDTRADE );
+  // BGウインドウフレームワーク確保
+  wk->BgWinFrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, 1, HEAPID_WORLDTRADE );
 
-	// 仮想スクリーン面追加
-	BGWINFRM_Add( wk->BgWinFrm, 0, GFL_BG_FRAME2_M, 32, 20 );
+  // 仮想スクリーン面追加
+  BGWINFRM_Add( wk->BgWinFrm, 0, GFL_BG_FRAME2_M, 32, 20 );
 
-	// サブカーソル初期座標設定
-	WorldTrade_CLACT_PosChange( wk->CursorAct, (word_cur_table[0][0]+16)*8, word_cur_table[0][1]*8 );
-	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
+  // サブカーソル初期座標設定
+  WorldTrade_CLACT_PosChange( wk->CursorAct, (word_cur_table[0][0]+16)*8, word_cur_table[0][1]*8 );
+  GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->CursorAct, 1 );
   GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 ); //フレームインしてから設定
 
 
-	// 数字フォントシステム初期化
-	wk->NumFontSys = NUMFONT_Create( 15, 14, 2, HEAPID_WORLDTRADE );
+  // 数字フォントシステム初期化
+  wk->NumFontSys = NUMFONT_Create( 15, 14, 2, HEAPID_WORLDTRADE );
 
-	//	プリント初期化
-	WT_PRINT_Init( &wk->print, wih->config );
-	
-	return wk;
+  //	プリント初期化
+  WT_PRINT_Init( &wk->print, wih->config );
+
+  return wk;
 }
 
 
@@ -768,38 +782,38 @@ WORLDTRADE_INPUT_WORK * WorldTrade_Input_Init( WORLDTRADE_INPUT_HEADER *wih, int
 //==============================================================================
 void WorldTrade_Input_Start( WORLDTRADE_INPUT_WORK *wk, int type )
 {
-	wk->type = type;
+  wk->type = type;
 
-	switch(type){
-	case MODE_POKEMON_NAME:
-		//カーソル位置を初期化
-		wk->listpos = 0;
-    	wk->listpos_backup_x = 0;
-		wk->Head1 = 0;
-		wk->Head2 = 0;
-		wk->seq = WI_SEQ_HEAD1_INIT;
-		break;
-	case MODE_NATION:
-		//カーソル位置を初期化
-		wk->listpos = 0;
-    	wk->listpos_backup_x = 0;
-		wk->Head1 = 0;
-		wk->Head2 = 0;
-		wk->seq = WI_SEQ_NATION_HEAD1_INIT;
-		break;
-	case MODE_SEX:
-		//カーソル位置を初期化
-		wk->listpos = 0;
-    	wk->listpos_backup_x = 0;
-		wk->seq = WI_SEQ_SEX_INIT;
-		break;
-	case MODE_LEVEL:
-		//カーソル位置を初期化
-		wk->listpos = 0;
-    	wk->listpos_backup_x = 0;
-		wk->seq = WI_SEQ_LEVEL_INIT;
-		break;
-	}
+  switch(type){
+  case MODE_POKEMON_NAME:
+    //カーソル位置を初期化
+    wk->listpos = 0;
+    wk->listpos_backup_x = 0;
+    wk->Head1 = 0;
+    wk->Head2 = 0;
+    wk->seq = WI_SEQ_HEAD1_INIT;
+    break;
+  case MODE_NATION:
+    //カーソル位置を初期化
+    wk->listpos = 0;
+    wk->listpos_backup_x = 0;
+    wk->Head1 = 0;
+    wk->Head2 = 0;
+    wk->seq = WI_SEQ_NATION_HEAD1_INIT;
+    break;
+  case MODE_SEX:
+    //カーソル位置を初期化
+    wk->listpos = 0;
+    wk->listpos_backup_x = 0;
+    wk->seq = WI_SEQ_SEX_INIT;
+    break;
+  case MODE_LEVEL:
+    //カーソル位置を初期化
+    wk->listpos = 0;
+    wk->listpos_backup_x = 0;
+    wk->seq = WI_SEQ_LEVEL_INIT;
+    break;
+  }
 }
 
 //==============================================================================
@@ -813,11 +827,11 @@ void WorldTrade_Input_Start( WORLDTRADE_INPUT_WORK *wk, int type )
 //==============================================================================
 void WorldTrade_Input_Exit( WORLDTRADE_INPUT_WORK *wk )
 {
-	WT_PRINT_Exit( &wk->print );
+  WT_PRINT_Exit( &wk->print );
 
-	NUMFONT_Delete( wk->NumFontSys );
-	BGWINFRM_Exit( wk->BgWinFrm );
-	GFL_HEAP_FreeMemory( wk );
+  NUMFONT_Delete( wk->NumFontSys );
+  BGWINFRM_Exit( wk->BgWinFrm );
+  GFL_HEAP_FreeMemory( wk );
 }
 
 //==============================================================================
@@ -831,22 +845,22 @@ void WorldTrade_Input_Exit( WORLDTRADE_INPUT_WORK *wk )
 //==============================================================================
 u32 WorldTrade_Input_Main( WORLDTRADE_INPUT_WORK *wk )
 {
-	u32 ret;
-	ret=(*FuncTable[wk->seq])(wk);
+  u32 ret;
+  ret=(*FuncTable[wk->seq])(wk);
 
-	BGWINFRM_MoveMain( wk->BgWinFrm );
-	WT_PRINT_Main( &wk->print );
+  BGWINFRM_MoveMain( wk->BgWinFrm );
+  WT_PRINT_Main( &wk->print );
   NUMFONT_Main( wk->NumFontSys );
 
 #ifdef PM_DEBUG
-	{
-		int d = ret;
-		if (d !=-1){
-			OS_Printf("ret=%d\n",ret);
-		}
-	}
+  {
+    int d = ret;
+    if (d !=-1){
+      OS_Printf("ret=%d\n",ret);
+    }
+  }
 #endif	
-	return ret;
+  return ret;
 }
 
 
@@ -857,19 +871,19 @@ u32 WorldTrade_Input_Main( WORLDTRADE_INPUT_WORK *wk )
 //        10
 // 上下左右の順番で入力したキーに対応した場所に移動
 static const u8 head1table[][4]={   //キーを押した時の次の飛び先　UP, DOWN, LEFT, RIGHT
-	{ 10, 5, 4, 1, },        //0　あ
-	{ 10, 6, 0, 2, },        //1　か
-	{ 10, 7, 1, 3, },        //2　さ
-	{ 10, 8, 2, 4, },        //3　た
-	{ 10, 9, 3, 0, },        //4　な
-	
-	{ 0, 10, 9, 6, },        //5　は
-	{ 1, 10, 5, 7, },        //6　ま
-	{ 2, 10, 6, 8, },        //7　や
-	{ 3, 10, 7, 9, },        //8　ら
-	{ 4, 10, 8, 5, },        //9　わ
-	
-	{ 9,  4, 10, 10, },      //10　もどる
+  { 10, 5, 4, 1, },        //0　あ
+  { 10, 6, 0, 2, },        //1　か
+  { 10, 7, 1, 3, },        //2　さ
+  { 10, 8, 2, 4, },        //3　た
+  { 10, 9, 3, 0, },        //4　な
+
+  { 0, 10, 9, 6, },        //5　は
+  { 1, 10, 5, 7, },        //6　ま
+  { 2, 10, 6, 8, },        //7　や
+  { 3, 10, 7, 9, },        //8　ら
+  { 4, 10, 8, 5, },        //9　わ
+
+  { 9,  4, 10, 10, },      //10　もどる
 };
 
 // 国指定のときに頭文字を選択する際のテーブル
@@ -878,21 +892,21 @@ static const u8 head1table[][4]={   //キーを押した時の次の飛び先　UP, DOWN, LEFT
 // 5 6 7 8 9
 //         10
 static const u8 n_head1table[][4]={     //キーを押した時の次の飛び先　UP, DOWN, LEFT, RIGHT
-	{ 11,  5,  4,  1, },        //0　あ
-	{ 11,  6,  0, 2, },         //1　か
-	{ 11,  7, 1, 3, },          //2　さ
-	{ 11,  8, 2, 4, },          //3　た
-	{ 11, 9, 3,    0, },        //4　な
-	
-	{ 0, 10,  9,  6, },         //5　は
-	{  1, 10 , 5, 7, },         //6　ま
-	{  2, 10, 6, 8, },          //7　や
-	{  3, 10, 7, 9, },          //8　ら
-	{  4, 10, 8,   5, },        //9　わ
-	
-	{  9, 11, 10, 10, },        //10　もどる
-	{ 10, 0, 11, 11, },	        //11　きにしない
-		
+  { 11,  5,  4,  1, },        //0　あ
+  { 11,  6,  0, 2, },         //1　か
+  { 11,  7, 1, 3, },          //2　さ
+  { 11,  8, 2, 4, },          //3　た
+  { 11, 9, 3,    0, },        //4　な
+
+  { 0, 10,  9,  6, },         //5　は
+  {  1, 10 , 5, 7, },         //6　ま
+  {  2, 10, 6, 8, },          //7　や
+  {  3, 10, 7, 9, },          //8　ら
+  {  4, 10, 8,   5, },        //9　わ
+
+  {  9, 11, 10, 10, },        //10　もどる
+  { 10, 0, 11, 11, },	        //11　きにしない
+
 };
 
 // 頭文字ウインドウカーソル移動テーブル2
@@ -900,182 +914,182 @@ static const u8 n_head1table[][4]={     //キーを押した時の次の飛び先　UP, DOWN, 
 //         5
 
 static const u8 head2table[][4]={   //キーを押した時の次の飛び先　UP, DOWN, LEFT, RIGHT
-	{ 5, 5, 4, 1, },        //0　あ
-	{ 5, 5, 0, 2, },        //1　い
-	{ 5, 5, 1, 3, },        //2　う
-	{ 5, 5, 2, 4, },       //3　え
-	{ 5, 5, 3, 0, },        //4　お
-	
-	{ 4,  4, 5, 5, },       //5　もどる
+  { 5, 5, 4, 1, },        //0　あ
+  { 5, 5, 0, 2, },        //1　い
+  { 5, 5, 1, 3, },        //2　う
+  { 5, 5, 2, 4, },       //3　え
+  { 5, 5, 3, 0, },        //4　お
+
+  { 4,  4, 5, 5, },       //5　もどる
 };
 
 
 
 static const u8 namepostable[][2]={
-	{ 192,  24 },
-	{ 192,  48 },
-	{ 192,  72 },
-	{ 192,  96 },
-	{ 192, 136 },
+  { 192,  24 },
+  { 192,  48 },
+  { 192,  72 },
+  { 192,  96 },
+  { 192, 136 },
 };
 
 static const u8 sexpostable[][2]={
-	{ 192,  32  },
-	{ 192,  64  },
-	{ 192,  96  },
-	{ 192, 136  },
+  { 192,  32  },
+  { 192,  64  },
+  { 192,  96  },
+  { 192, 136  },
 };
 
 static const u8 levelpostable[][2]={
-	{ 192,  24  },
-	{ 192,  48  },
-	{ 192,  72  },
-	{ 192,  96  },
-	{ 192, 136  },
+  { 192,  24  },
+  { 192,  48  },
+  { 192,  72  },
+  { 192,  96  },
+  { 192, 136  },
 };
 
 static const u8 nationpostable[][2]={
-	{ 136,  16  },
-	{ 136,  40  },
-	{ 136,  64  },
-	{ 136,  88  },
-	{ 136, 112  },
-	{ 192, 136  },
+  { 136,  16  },
+  { 136,  40  },
+  { 136,  64  },
+  { 136,  88  },
+  { 136, 112  },
+  { 192, 136  },
 };
 
 
 // 頭文字１用タッチーテーブル
 static const GFL_UI_TP_HITTBL Head1TouchTable[]={
-	{  40,  60, 136, 151,},	// あ
-	{  40,  60, 160, 175,},	// か
-	{  40,  60, 184, 199,},	// さ
-	{  40,  60, 208, 223,},	// た
-	{  40,  60, 232, 247,},	// な
-	{  64,  84, 136, 151,},	// は
-	{  64,  84, 160, 175,},	// ま
-	{  64,  84, 184, 199,},	// や
-	{  64,  84, 208, 223,},	// ら
-	{  64,  84, 232, 247,},	// わ
-	{ 133, 154, 197, 250,},	// もどる
-	{GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
-	
+  {  40,  60, 136, 151,},	// あ
+  {  40,  60, 160, 175,},	// か
+  {  40,  60, 184, 199,},	// さ
+  {  40,  60, 208, 223,},	// た
+  {  40,  60, 232, 247,},	// な
+  {  64,  84, 136, 151,},	// は
+  {  64,  84, 160, 175,},	// ま
+  {  64,  84, 184, 199,},	// や
+  {  64,  84, 208, 223,},	// ら
+  {  64,  84, 232, 247,},	// わ
+  { 133, 154, 197, 250,},	// もどる
+  {GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
+
 };
 
 
 // 頭文字１用タッチーテーブル
 static const GFL_UI_TP_HITTBL NationHead1TouchTable[]={
-	{  40,  60, 136, 151,},	// あ
-	{  40,  60, 160, 175,},	// か
-	{  40,  60, 184, 199,},	// さ
-	{  40,  60, 208, 223,},	// た
-	{  40,  60, 232, 247,},	// な
-	{  64,  84, 136, 151,},	// は
-	{  64,  84, 160, 175,},	// ま
-	{  64,  84, 184, 199,},	// や
-	{  64,  84, 208, 223,},	// ら
-	{  64,  84, 232, 247,},	// わ
-	{ 133, 154, 197, 250,},	// もどる
-	{  16,  35, 136, 248,},	// きにしない
-	{GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
-	
+  {  40,  60, 136, 151,},	// あ
+  {  40,  60, 160, 175,},	// か
+  {  40,  60, 184, 199,},	// さ
+  {  40,  60, 208, 223,},	// た
+  {  40,  60, 232, 247,},	// な
+  {  64,  84, 136, 151,},	// は
+  {  64,  84, 160, 175,},	// ま
+  {  64,  84, 184, 199,},	// や
+  {  64,  84, 208, 223,},	// ら
+  {  64,  84, 232, 247,},	// わ
+  { 133, 154, 197, 250,},	// もどる
+  {  16,  35, 136, 248,},	// きにしない
+  {GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
+
 };
 
 // 頭文字２用タッチーテーブル
 static const GFL_UI_TP_HITTBL Head2TouchTable[]={
-	{  40,  60, 136, 151,},	// あ
-	{  40,  60, 160, 175,},	// い
-	{  40,  60, 184, 199,},	// う
-	{  40,  60, 208, 223,},	// え
-	{  40,  60, 232, 247,},	// お
-	{ 133, 154, 197, 250,},	// もどる
-	{GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
-	
+  {  40,  60, 136, 151,},	// あ
+  {  40,  60, 160, 175,},	// い
+  {  40,  60, 184, 199,},	// う
+  {  40,  60, 208, 223,},	// え
+  {  40,  60, 232, 247,},	// お
+  { 133, 154, 197, 250,},	// もどる
+  {GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
+
 };
 
 // レベル＆ポケモン名用タッチーテーブル
 static const GFL_UI_TP_HITTBL LevelTouchTable[]={
-	{  16,  35, 136, 248,},	// きにしない
-	{  40,  60, 136, 248,},	// LV10～
-	{  64,  84, 136, 248,},	// LV20～
-	{  88, 108, 136, 248,},	// LV30～
-	{ 133, 154, 198, 248,},	// もどる
-	{ 108, 129, 143, 160,}, // 左向き矢印
-	{ 108, 126, 223, 240,}, // 右向き矢印
-	{GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
+  {  16,  35, 136, 248,},	// きにしない
+  {  40,  60, 136, 248,},	// LV10～
+  {  64,  84, 136, 248,},	// LV20～
+  {  88, 108, 136, 248,},	// LV30～
+  { 133, 154, 198, 248,},	// もどる
+  { 108, 129, 143, 160,}, // 左向き矢印
+  { 108, 126, 223, 240,}, // 右向き矢印
+  {GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
 };
 
 // 性別用タッチーテーブル
 static const GFL_UI_TP_HITTBL SexTouchTable[]={
-	{  24,  44, 136, 248,},	// きにしない
-	{  56,  76, 136, 248,},	// オス
-	{  88, 108, 136, 248,},	// メス
-	{ 133, 154, 197, 250,},	// もどる
-	{GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
+  {  24,  44, 136, 248,},	// きにしない
+  {  56,  76, 136, 248,},	// オス
+  {  88, 108, 136, 248,},	// メス
+  { 133, 154, 197, 250,},	// もどる
+  {GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
 };
 
 // 国名用タッチーテーブル
 static const GFL_UI_TP_HITTBL NationTouchTable[]={
-	{   8,  28,   8, 247,},	// 国名１
-	{  32,  52,   8, 247,},	// 国名２
-	{  56,  76,   8, 247,},	// 国名３
-	{  80, 100,   8, 247,},	// 国名４
-	{ 104, 124,   8, 247,},	// 国名５
-	{ 133, 154, 195, 248,},	// もどる
-	{ 124, 145,  77,  96,}, // 左向き矢印
-	{ 124, 145, 173, 190,}, // 右向き矢印
-	{GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
+  {   8,  28,   8, 247,},	// 国名１
+  {  32,  52,   8, 247,},	// 国名２
+  {  56,  76,   8, 247,},	// 国名３
+  {  80, 100,   8, 247,},	// 国名４
+  { 104, 124,   8, 247,},	// 国名５
+  { 133, 154, 195, 248,},	// もどる
+  { 124, 145,  77,  96,}, // 左向き矢印
+  { 124, 145, 173, 190,}, // 右向き矢印
+  {GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
 };
 
 
 
 static const u8 word2_table[][3]={
-	{  2,  2, SELECT_BOX_R_LETTER},
-	{  2,  5, SELECT_BOX_N_LETTER},
-	{  5,  5, SELECT_BOX_N_LETTER},
-	{  8,  5, SELECT_BOX_N_LETTER},
-	{ 11,  5, SELECT_BOX_N_LETTER},
-	{ 14,  5, SELECT_BOX_N_LETTER},
-	
+  {  2,  2, SELECT_BOX_R_LETTER},
+  {  2,  5, SELECT_BOX_N_LETTER},
+  {  5,  5, SELECT_BOX_N_LETTER},
+  {  8,  5, SELECT_BOX_N_LETTER},
+  { 11,  5, SELECT_BOX_N_LETTER},
+  { 14,  5, SELECT_BOX_N_LETTER},
+
 };
 
 static const int head2_word_start[][2]={
-	{  0,	5,},	// あ
-	{  5,	5,},	// か
-	{ 10,	5,},	// さ
-	{ 15,	5,},	// た
-	{ 20,	5,},	// な
-	{ 25,	5,},	// は
-	{ 30,	5,},	// ま
-	{ 35,	3,},	// や
-	{ 40,	5,},	// ら
-	{ 45,	0,},	// わ
+  {  0,	5,},	// あ
+  {  5,	5,},	// か
+  { 10,	5,},	// さ
+  { 15,	5,},	// た
+  { 20,	5,},	// な
+  { 25,	5,},	// は
+  { 30,	5,},	// ま
+  { 35,	3,},	// や
+  { 40,	5,},	// ら
+  { 45,	0,},	// わ
 };
 
 
 static const int head_letter_table[]={
-	msg_gts_word_001,	msg_gts_word_002, msg_gts_word_003, msg_gts_word_004, msg_gts_word_005,	// あ
-	msg_gts_word_006,	msg_gts_word_007, msg_gts_word_008, msg_gts_word_009, msg_gts_word_010, // か
-	msg_gts_word_011,	msg_gts_word_012, msg_gts_word_013, msg_gts_word_014, msg_gts_word_015, // さ
-	msg_gts_word_016,	msg_gts_word_017, msg_gts_word_018, msg_gts_word_019, msg_gts_word_020, // た
-	msg_gts_word_021,	msg_gts_word_022, msg_gts_word_023, msg_gts_word_024, msg_gts_word_025, // な
-	msg_gts_word_026,	msg_gts_word_027, msg_gts_word_028, msg_gts_word_029, msg_gts_word_030, // は
-	msg_gts_word_031,	msg_gts_word_032, msg_gts_word_033, msg_gts_word_034, msg_gts_word_035, // ま
-	msg_gts_word_036,	msg_gts_word_037, msg_gts_word_038, msg_gts_word_045, msg_gts_word_045, // や
-	msg_gts_word_039,	msg_gts_word_040, msg_gts_word_041, msg_gts_word_042, msg_gts_word_043, // ら
-	msg_gts_word_044,                                                                           // わ
+  msg_gts_word_001,	msg_gts_word_002, msg_gts_word_003, msg_gts_word_004, msg_gts_word_005,	// あ
+  msg_gts_word_006,	msg_gts_word_007, msg_gts_word_008, msg_gts_word_009, msg_gts_word_010, // か
+  msg_gts_word_011,	msg_gts_word_012, msg_gts_word_013, msg_gts_word_014, msg_gts_word_015, // さ
+  msg_gts_word_016,	msg_gts_word_017, msg_gts_word_018, msg_gts_word_019, msg_gts_word_020, // た
+  msg_gts_word_021,	msg_gts_word_022, msg_gts_word_023, msg_gts_word_024, msg_gts_word_025, // な
+  msg_gts_word_026,	msg_gts_word_027, msg_gts_word_028, msg_gts_word_029, msg_gts_word_030, // は
+  msg_gts_word_031,	msg_gts_word_032, msg_gts_word_033, msg_gts_word_034, msg_gts_word_035, // ま
+  msg_gts_word_036,	msg_gts_word_037, msg_gts_word_038, msg_gts_word_045, msg_gts_word_045, // や
+  msg_gts_word_039,	msg_gts_word_040, msg_gts_word_041, msg_gts_word_042, msg_gts_word_043, // ら
+  msg_gts_word_044,                                                                           // わ
 };
 
 static const int head2pokename[]={
-	  0,	// あ
-	  5,	// か
-	 10,	// さ
-	 15,	// た
-	 20,	// な
-	 25,	// は
-	 30,	// ま
-	 35,	// や
-	 38,	// ら
-	 43,	// わ
+  0,	// あ
+  5,	// か
+  10,	// さ
+  15,	// た
+  20,	// な
+  25,	// は
+  30,	// ま
+  35,	// や
+  38,	// ら
+  43,	// わ
 };
 
 
@@ -1092,31 +1106,31 @@ static const int head2pokename[]={
 //------------------------------------------------------------------
 static u32 TouchPanelFunc( WORLDTRADE_INPUT_WORK *wk, int mode )
 {
-	u32 ret;
-	switch(mode){
-	case MODE_HEADWORD_1:	// 頭文字子音指定
-		ret=GFL_UI_TP_HitTrg(Head1TouchTable);
-		break;
-	case MODE_NATION_HEAD1:	// 国名頭文字指定
-		ret=GFL_UI_TP_HitTrg(NationHead1TouchTable);
-		break;
-	case MODE_POKEMON_NAME:	// ポケモン名前指定
-	case MODE_LEVEL:		// レベル条件指定
-		ret=GFL_UI_TP_HitTrg(LevelTouchTable);
-		break;
-	case MODE_SEX:			// 性別条件指定
-		ret=GFL_UI_TP_HitTrg(SexTouchTable);
-		break;
-	case MODE_NATION:		// 国名
-		ret=GFL_UI_TP_HitTrg(NationTouchTable);
-		break;
-	case MODE_HEADWORD_2:	// 頭文字母音指定
-	case MODE_NATION_HEAD2:	// 国名頭文字指定
-		ret=GFL_UI_TP_HitTrg(Head2TouchTable);
-		break;
-	}
+  u32 ret;
+  switch(mode){
+  case MODE_HEADWORD_1:	// 頭文字子音指定
+    ret=GFL_UI_TP_HitTrg(Head1TouchTable);
+    break;
+  case MODE_NATION_HEAD1:	// 国名頭文字指定
+    ret=GFL_UI_TP_HitTrg(NationHead1TouchTable);
+    break;
+  case MODE_POKEMON_NAME:	// ポケモン名前指定
+  case MODE_LEVEL:		// レベル条件指定
+    ret=GFL_UI_TP_HitTrg(LevelTouchTable);
+    break;
+  case MODE_SEX:			// 性別条件指定
+    ret=GFL_UI_TP_HitTrg(SexTouchTable);
+    break;
+  case MODE_NATION:		// 国名
+    ret=GFL_UI_TP_HitTrg(NationTouchTable);
+    break;
+  case MODE_HEADWORD_2:	// 頭文字母音指定
+  case MODE_NATION_HEAD2:	// 国名頭文字指定
+    ret=GFL_UI_TP_HitTrg(Head2TouchTable);
+    break;
+  }
 
-	return ret;
+  return ret;
 }
 
 
@@ -1131,74 +1145,86 @@ static u32 TouchPanelFunc( WORLDTRADE_INPUT_WORK *wk, int mode )
 //------------------------------------------------------------------
 static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 {
-	int oldpos = wk->listpos;
-	
-	if(oldpos < 10){    //あ～わ
-	    wk->listpos_backup_x = oldpos;  //X位置を取っておく
-	}
+  int oldpos = wk->listpos;
 
+  if(oldpos < 10){    //あ～わ
+    wk->listpos_backup_x = oldpos;  //X位置を取っておく
+  }
+
+  // >> update ichiraku 2010/10/6
+  // BTS 7897
+  // 0番
+#ifdef BTS_7897
+  if( ( GFL_UI_KEY_GetTrg() || GFL_UI_KEY_GetRepeat() ) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#else
   if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#endif
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     PMSND_PlaySE(WORLDTRADE_MOVE_SE);
     return BMPMENU_NULL;
   }
-	
-	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-		wk->listpos = head1table[wk->listpos][0];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-		wk->listpos = head1table[wk->listpos][1];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
-		wk->listpos = head1table[wk->listpos][2];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
-		wk->listpos = head1table[wk->listpos][3];
-	}
 
-	//「もどる」の位置から「あ～わ」ラインに復帰した場合はX位置を戻す補正
-	if(oldpos >= 10 && wk->listpos < 10){
-        if(wk->listpos > 4){    //下段にもどってきた
-            if(wk->listpos_backup_x > 4){
-                wk->listpos = wk->listpos_backup_x;
-            }
-            else{
-                wk->listpos = wk->listpos_backup_x + 5;
-            }
-            wk->listpos_backup_x = wk->listpos;
-        }
-        else{   //上段に戻ってきた
-            if(wk->listpos_backup_x > 4){
-                wk->listpos = wk->listpos_backup_x - 5;
-            }
-            else{
-                wk->listpos = wk->listpos_backup_x;
-            }
-            wk->listpos_backup_x = wk->listpos;
-        }
+#ifndef BTS_7897
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+#endif
+  {
+    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      wk->listpos = head1table[wk->listpos][0];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      wk->listpos = head1table[wk->listpos][1];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+      wk->listpos = head1table[wk->listpos][2];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+      wk->listpos = head1table[wk->listpos][3];
+    }
+  }
+
+  //「もどる」の位置から「あ～わ」ラインに復帰した場合はX位置を戻す補正
+  if(oldpos >= 10 && wk->listpos < 10){
+    if(wk->listpos > 4){    //下段にもどってきた
+      if(wk->listpos_backup_x > 4){
+        wk->listpos = wk->listpos_backup_x;
+      }
+      else{
+        wk->listpos = wk->listpos_backup_x + 5;
+      }
+      wk->listpos_backup_x = wk->listpos;
+    }
+    else{   //上段に戻ってきた
+      if(wk->listpos_backup_x > 4){
+        wk->listpos = wk->listpos_backup_x - 5;
+      }
+      else{
+        wk->listpos = wk->listpos_backup_x;
+      }
+      wk->listpos_backup_x = wk->listpos;
+    }
+  }
+
+
+  if(oldpos!=wk->listpos){
+    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+    WorldTrade_CLACT_PosChange( wk->CursorAct, 
+        (word_cur_table[wk->listpos][0]+16)*8,
+        word_cur_table[wk->listpos][1]*8 );
+    if(wk->listpos==10){
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
     }
 
+  }
 
-	if(oldpos!=wk->listpos){
-		PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-		WorldTrade_CLACT_PosChange( wk->CursorAct, 
-						(word_cur_table[wk->listpos][0]+16)*8,
-						word_cur_table[wk->listpos][1]*8 );
-		if(wk->listpos==10){
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-		}else{
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
-		}
-
-	}
-	
-	{
-		u32 ret;
+  {
+    u32 ret;
 #ifdef BUGFIX_BTS7795_20100714
     u32 decide  = BMPMENU_NULL;
 #endif //BUGFIX_BTS7795_20100714
-		// タッチ処理
-		ret = TouchPanelFunc( wk, MODE_HEADWORD_1 );
-		if(ret!=GFL_UI_TP_HIT_NONE){
+    // タッチ処理
+    ret = TouchPanelFunc( wk, MODE_HEADWORD_1 );
+    if(ret!=GFL_UI_TP_HIT_NONE){
 #ifndef BUGFIX_BTS7795_20100714
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 #endif  //BUGFIX_BTS7795_20100714
@@ -1228,58 +1254,58 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
       }
       else
 #else
-      }
-      GF_ASSERT_HEAVY(ret < 10);
+    }
+    GF_ASSERT_HEAVY(ret < 10);
 #endif
-      if(see_check == NULL || see_check[ret]){
-        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    if(see_check == NULL || see_check[ret]){
+      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 #ifdef BUGFIX_BTS7795_20100714
-        decide  = ret;
+      decide  = ret;
 #else //BUGFIX_BTS7795_20100714
-        return ret;
+      return ret;
 #endif //BUGFIX_BTS7795_20100714
-      }
+    }
 #ifdef BUGFIX_BTS7795_20100714
-      
-      if( decide == BMPMENU_NULL )
-      {
-        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
-        { 
-          GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
-        } 
+
+    if( decide == BMPMENU_NULL )
+    {
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+      } 
+    }
+
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    return decide;
+#endif //BUGFIX_BTS7795_20100714
+  }else{
+    // キー処理
+    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+
+
+      if(wk->listpos == 10){				
+        PMSND_PlaySE(SE_CANCEL);
+        return BMPMENU_CANCEL;
+      }
+      GF_ASSERT_HEAVY(wk->listpos < 10);
+      if(see_check == NULL || see_check[wk->listpos]){
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        return wk->listpos;
       }
 
-      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-      return decide;
-#endif //BUGFIX_BTS7795_20100714
-    }else{
-      // キー処理
-			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+    }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+      PMSND_PlaySE(SE_CANCEL);
 
-
-				if(wk->listpos == 10){				
-        PMSND_PlaySE(SE_CANCEL);
-					return BMPMENU_CANCEL;
-				}
-				GF_ASSERT_HEAVY(wk->listpos < 10);
-				if(see_check == NULL || see_check[wk->listpos]){
-          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-					return wk->listpos;
-				}
-		
-			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
-				PMSND_PlaySE(SE_CANCEL);
-
-        GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-        WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+      WorldTrade_CLACT_PosChange( wk->CursorAct, 
           (word_cur_table[10][0]+16)*8,
           word_cur_table[10][1]*8 );
 
-				return BMPMENU_CANCEL;
-			}
-		}
-	}
-	return BMPMENU_NULL;
+      return BMPMENU_CANCEL;
+    }
+  }
+}
+return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -1294,20 +1320,20 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 //------------------------------------------------------------------
 static u32 Head2DecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 {
-	if(decide!=5){
-		if(wk->Head1==INPUT_HEAD_YA){
-            if(decide<3){
-    			return decide;
-    		}
-    		else{
-                return BMPMENU_NULL;
-            }
-		}else if(wk->Head1!=INPUT_HEAD_YA){
-			return decide;
-		}
-	}
+  if(decide!=5){
+    if(wk->Head1==INPUT_HEAD_YA){
+      if(decide<3){
+        return decide;
+      }
+      else{
+        return BMPMENU_NULL;
+      }
+    }else if(wk->Head1!=INPUT_HEAD_YA){
+      return decide;
+    }
+  }
 
-	return BMPMENU_CANCEL;
+  return BMPMENU_CANCEL;
 
 }
 
@@ -1322,13 +1348,20 @@ static u32 Head2DecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 //------------------------------------------------------------------
 static u32 WordHead2_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 {
-	int oldpos = wk->listpos;
+  int oldpos = wk->listpos;
 
-	if(oldpos < 5){    //あ～お
-	    wk->listpos_backup_x = oldpos;  //X位置を取っておく
-	}
+  if(oldpos < 5){    //あ～お
+    wk->listpos_backup_x = oldpos;  //X位置を取っておく
+  }
 
+  // >> update ichiraku 2010/10/6
+  // BTS 7897
+  // 1番
+#ifdef BTS_7897
+  if( ( GFL_UI_KEY_GetTrg() || GFL_UI_KEY_GetRepeat() ) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#else
   if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#endif
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
@@ -1336,46 +1369,51 @@ static u32 WordHead2_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
     return BMPMENU_NULL;
   }
 
-	// カーソル移動
-	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-		wk->listpos = head2table[wk->listpos][0];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-		wk->listpos = head2table[wk->listpos][1];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
-		wk->listpos = head2table[wk->listpos][2];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
-		wk->listpos = head2table[wk->listpos][3];
-	}
+  // カーソル移動
+#ifndef BTS_7897
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+#endif
+  {
+    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      wk->listpos = head2table[wk->listpos][0];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      wk->listpos = head2table[wk->listpos][1];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+      wk->listpos = head2table[wk->listpos][2];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+      wk->listpos = head2table[wk->listpos][3];
+    }
+  }
 
-	//「もどる」の位置から「あ～お」ラインに復帰した場合はX位置を戻す補正
-	if(oldpos == 5 && wk->listpos < 5){
-        wk->listpos = wk->listpos_backup_x;
+  //「もどる」の位置から「あ～お」ラインに復帰した場合はX位置を戻す補正
+  if(oldpos == 5 && wk->listpos < 5){
+    wk->listpos = wk->listpos_backup_x;
+  }
+
+  // 移動時はアクターを反映させる
+  if(oldpos!=wk->listpos){
+    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+    if(wk->listpos==5){
+      WorldTrade_CLACT_PosChange( wk->CursorAct, 
+          (word_cur_table[10][0]+16)*8,
+          word_cur_table[10][1]*8 );
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+    }else{
+      WorldTrade_CLACT_PosChange( wk->CursorAct, 
+          (word_cur_table[wk->listpos][0]+16)*8,
+          word_cur_table[wk->listpos][1]*8 );
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
     }
 
-	// 移動時はアクターを反映させる
-	if(oldpos!=wk->listpos){
-    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-		if(wk->listpos==5){
-			WorldTrade_CLACT_PosChange( wk->CursorAct, 
-						(word_cur_table[10][0]+16)*8,
-						 word_cur_table[10][1]*8 );
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-		}else{
-			WorldTrade_CLACT_PosChange( wk->CursorAct, 
-						(word_cur_table[wk->listpos][0]+16)*8,
-						 word_cur_table[wk->listpos][1]*8 );
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
-		}
+  }
 
-	}
-
-	// 決定・キャンセル
-	{
-		u32 ret;
-		u32 decide;
-		// タッチ処理
-		ret = TouchPanelFunc( wk, MODE_HEADWORD_2 );
-		if(ret!=GFL_UI_TP_HIT_NONE){
+  // 決定・キャンセル
+  {
+    u32 ret;
+    u32 decide;
+    // タッチ処理
+    ret = TouchPanelFunc( wk, MODE_HEADWORD_2 );
+    if(ret!=GFL_UI_TP_HIT_NONE){
 
       if(ret==5){
         WorldTrade_CLACT_PosChange( wk->CursorAct, 
@@ -1390,7 +1428,7 @@ static u32 WordHead2_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
       }
 
-			decide = Head2DecideFunc( wk, ret );
+      decide = Head2DecideFunc( wk, ret );
       if(decide == BMPMENU_CANCEL)
       { 
         PMSND_PlaySE(SE_CANCEL);
@@ -1408,35 +1446,35 @@ static u32 WordHead2_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
       }
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
       return decide;
-		}else{
-		// キー処理
-			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-				decide = Head2DecideFunc( wk, wk->listpos );
-    			if(decide == BMPMENU_NULL){ //ヤ行の端2文字分の空白をタッチした時のみの処理
-            return decide;
-          }
-          if(decide == BMPMENU_CANCEL )
-          { 
-            PMSND_PlaySE(SE_CANCEL);
-            return decide;
-          }
-          else if( see_check == NULL || (see_check[head2pokename[wk->Head1] + decide])){
-            PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-            return decide;
-          }
-			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+    }else{
+      // キー処理
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+        decide = Head2DecideFunc( wk, wk->listpos );
+        if(decide == BMPMENU_NULL){ //ヤ行の端2文字分の空白をタッチした時のみの処理
+          return decide;
+        }
+        if(decide == BMPMENU_CANCEL )
+        { 
+          PMSND_PlaySE(SE_CANCEL);
+          return decide;
+        }
+        else if( see_check == NULL || (see_check[head2pokename[wk->Head1] + decide])){
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+          return decide;
+        }
+      }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
         PMSND_PlaySE(SE_CANCEL);
 
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
         WorldTrade_CLACT_PosChange( wk->CursorAct, 
-          (word_cur_table[10][0]+16)*8,
-          word_cur_table[10][1]*8 );
+            (word_cur_table[10][0]+16)*8,
+            word_cur_table[10][1]*8 );
 
-				return BMPMENU_CANCEL;
-			}
-		}
-	}
-	return BMPMENU_NULL;
+        return BMPMENU_CANCEL;
+      }
+    }
+  }
+  return BMPMENU_NULL;
 }
 
 
@@ -1457,13 +1495,13 @@ static u32 WordHead2_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 //------------------------------------------------------------------
 static int _list_page_num( int num, int in_page)
 {
-	int page;
-	if (num == 0){
-		return 1;
-	}
-	page = (num+(in_page-1))/in_page;
+  int page;
+  if (num == 0){
+    return 1;
+  }
+  page = (num+(in_page-1))/in_page;
 
-	return page;
+  return page;
 }
 
 //------------------------------------------------------------------
@@ -1478,31 +1516,31 @@ static int _list_page_num( int num, int in_page)
 //------------------------------------------------------------------
 static u32 NameDecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 {
-	switch(decide){
-	case 4:
-		return BMPMENU_CANCEL;
-		break;
-	case 5:
-		NamePageRefresh( wk, -1 );
-		return BMPMENU_NULL;
-		break;
-	case 6:
-		NamePageRefresh( wk, +1 );
-		return BMPMENU_NULL;
-		break;
-	}
+  switch(decide){
+  case 4:
+    return BMPMENU_CANCEL;
+    break;
+  case 5:
+    NamePageRefresh( wk, -1 );
+    return BMPMENU_NULL;
+    break;
+  case 6:
+    NamePageRefresh( wk, +1 );
+    return BMPMENU_NULL;
+    break;
+  }
 
-	// 項目決定
-	{
-		int namepos = decide+wk->page*POKENAME_1PAGE_MAX;
-		// 名前のある場所なら入力決定
-		if(namepos<wk->listMax){
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-			return wk->NameList[namepos].param;
-		}
-	}
+  // 項目決定
+  {
+    int namepos = decide+wk->page*POKENAME_1PAGE_MAX;
+    // 名前のある場所なら入力決定
+    if(namepos<wk->listMax){
+      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+      return wk->NameList[namepos].param;
+    }
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -1517,38 +1555,38 @@ static u32 NameDecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 //------------------------------------------------------------------
 static void NamePageRefresh( WORLDTRADE_INPUT_WORK *wk, int move )
 {
-	int page_no = _list_page_num( wk->listMax, MODE_POKENAME_WIN_NUM ) - 1;
+  int page_no = _list_page_num( wk->listMax, MODE_POKENAME_WIN_NUM ) - 1;
 
-	if (page_no == 0){
-		return;
-	}
+  if (page_no == 0){
+    return;
+  }
 
-	if(move<0){
-		PMSND_PlaySE(WORLDTRADE_PAGE_SE);
-		//左アローアニメ
-		GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 1 );
-		GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
-		if(wk->page!=0){
-			wk->page--;	
-		}else{
-			wk->page = page_no;
-		}
-	}else{
-		PMSND_PlaySE(WORLDTRADE_PAGE_SE);
-		//右アローアニメ
-		GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 1 );
-		GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
-		if(wk->page < page_no){
-			wk->page++;
-		}else{
-			wk->page = 0;
-		}
-	}
+  if(move<0){
+    PMSND_PlaySE(WORLDTRADE_PAGE_SE);
+    //左アローアニメ
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
+    if(wk->page!=0){
+      wk->page--;	
+    }else{
+      wk->page = page_no;
+    }
+  }else{
+    PMSND_PlaySE(WORLDTRADE_PAGE_SE);
+    //右アローアニメ
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
+    if(wk->page < page_no){
+      wk->page++;
+    }else{
+      wk->page = 0;
+    }
+  }
 
-	PokeName_ListPrint( wk, wk->page, wk->listMax );
-	PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_POKENAME_WIN_NUM], 
-				wk->page,
-				_list_page_num( wk->listMax, MODE_POKENAME_WIN_NUM) );
+  PokeName_ListPrint( wk, wk->page, wk->listMax );
+  PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_POKENAME_WIN_NUM], 
+      wk->page,
+      _list_page_num( wk->listMax, MODE_POKENAME_WIN_NUM) );
 
 }
 
@@ -1563,52 +1601,65 @@ static void NamePageRefresh( WORLDTRADE_INPUT_WORK *wk, int move )
 //------------------------------------------------------------------
 static u32 PokeName_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 {
-	int oldpos = wk->listpos;
+  int oldpos = wk->listpos;
 
-  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-  { 
-    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-    return BMPMENU_NULL;
+  // >> update ichiraku 2010/10/6
+  // BTS 7897
+  // 2番
+#ifdef BTS_7897
+  if( ( GFL_UI_KEY_GetTrg() || GFL_UI_KEY_GetRepeat() ) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#else
+    if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#endif
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+      return BMPMENU_NULL;
+    }
+
+
+  // カーソル移動
+#ifndef BTS_7897
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+#endif
+  {
+    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      if(wk->listpos!=0){
+        wk->listpos--;
+      }else{
+        wk->listpos=4;
+      }
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      if(wk->listpos!=4){
+        wk->listpos++;
+      }else{
+        wk->listpos=0;
+      }
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+      NamePageRefresh( wk, -1 );
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+      NamePageRefresh( wk, +1 );
+    }
   }
 
-
-	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-		if(wk->listpos!=0){
-			wk->listpos--;
-		}else{
-			wk->listpos=4;
-		}
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-		if(wk->listpos!=4){
-			wk->listpos++;
-		}else{
-			wk->listpos=0;
-		}
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
-		NamePageRefresh( wk, -1 );
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
-		NamePageRefresh( wk, +1 );
-	}
-
-	if(oldpos!=wk->listpos){
+  if(oldpos!=wk->listpos){
     PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-		WorldTrade_CLACT_PosChange( wk->CursorAct, 
-					namepostable[wk->listpos][0],namepostable[wk->listpos][1] );
-		if(wk->listpos==4){
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-		}else{
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
-		}
-	}
+    WorldTrade_CLACT_PosChange( wk->CursorAct, 
+        namepostable[wk->listpos][0],namepostable[wk->listpos][1] );
+    if(wk->listpos==4){
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+    }
+  }
 
-	{
-		u32 ret;
+  {
+    u32 ret;
     u32 decide;
-		// タッチ決定
-		ret = TouchPanelFunc( wk, MODE_POKEMON_NAME );
-		if(ret!=GFL_UI_TP_HIT_NONE){
+    // タッチ決定
+    ret = TouchPanelFunc( wk, MODE_POKEMON_NAME );
+    if(ret!=GFL_UI_TP_HIT_NONE){
 
       if( ret < 5 )
       { 
@@ -1634,30 +1685,30 @@ static u32 PokeName_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
       return decide;
-		}else{
-		// キー決定
-			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-				return NameDecideFunc( wk, wk->listpos );
-			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+    }else{
+      // キー決定
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+        return NameDecideFunc( wk, wk->listpos );
+      }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
 
         WorldTrade_CLACT_PosChange( wk->CursorAct, 
             namepostable[4][0],namepostable[4][1] );
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
 
         PMSND_PlaySE(SE_CANCEL);
-				return BMPMENU_CANCEL;
-			}
-		}
-	}
-	return BMPMENU_NULL;
+        return BMPMENU_CANCEL;
+      }
+    }
+  }
+  return BMPMENU_NULL;
 }
 
 
 static const u32 s_ret_table[]={
-	PARA_UNK,
-    PARA_MALE,
-    PARA_FEMALE,
-    BMPMENU_CANCEL,
+  PARA_UNK,
+  PARA_MALE,
+  PARA_FEMALE,
+  BMPMENU_CANCEL,
 };
 //------------------------------------------------------------------
 /**
@@ -1670,48 +1721,66 @@ static const u32 s_ret_table[]={
 //------------------------------------------------------------------
 static u32 SexSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 {
-	int oldpos = wk->listpos;
+  int oldpos = wk->listpos;
 
-  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-  { 
-    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+  ICHI_Printf("CHECK TouchOrKey:%d func:SexSelect_SelectMain\n", GFL_UI_CheckTouchOrKey());
+
+  // >> update ichiraku 2010/10/6
+  // BTS 7897
+  // 3番
+#ifdef BTS_7897
+  if( ( GFL_UI_KEY_GetTrg() || GFL_UI_KEY_GetRepeat() ) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#else
+    if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#endif
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+
+      ICHI_Printf("性別条件入力 ボタン入力かつ最後タッチで終了\n");
+      return BMPMENU_NULL;
+    }
+
+
+  // カーソル移動
+#ifndef BTS_7897
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+#endif
+  {
+    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      if(wk->listpos!=0){
+        wk->listpos--;
+      }else{
+        wk->listpos=3;
+      }
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      if(wk->listpos!=3){
+        wk->listpos++;
+      }else{
+        wk->listpos=0;
+      }
+    }
+  }
+
+  if(oldpos!=wk->listpos){
     PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-    return BMPMENU_NULL;
+    ICHI_Printf("性別条件入力 移動SE再生\n");
+    WorldTrade_CLACT_PosChange( wk->CursorAct, 
+        sexpostable[wk->listpos][0],sexpostable[wk->listpos][1] );
+    if(wk->listpos==3){
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+    }
   }
 
 
-	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-		if(wk->listpos!=0){
-			wk->listpos--;
-		}else{
-			wk->listpos=3;
-		}
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-		if(wk->listpos!=3){
-			wk->listpos++;
-		}else{
-			wk->listpos=0;
-		}
-	}
-
-	if(oldpos!=wk->listpos){
-    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-		WorldTrade_CLACT_PosChange( wk->CursorAct, 
-					sexpostable[wk->listpos][0],sexpostable[wk->listpos][1] );
-		if(wk->listpos==3){
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-		}else{
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
-		}
-	}
-
-
-	{
-		u32 ret;
-		// タッチ決定
-		ret = TouchPanelFunc( wk, MODE_SEX );
-		if(ret!=GFL_UI_TP_HIT_NONE){
+  {
+    u32 ret;
+    // タッチ決定
+    ret = TouchPanelFunc( wk, MODE_SEX );
+    if(ret!=GFL_UI_TP_HIT_NONE){
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
       WorldTrade_CLACT_PosChange( wk->CursorAct, 
           sexpostable[ret][0],sexpostable[ret][1] );
@@ -1729,10 +1798,10 @@ static u32 SexSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
       { 
         PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
       }
-			return s_ret_table[ret];
-		}else{
-		// キー決定
-			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+      return s_ret_table[ret];
+    }else{
+      // キー決定
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
         if( s_ret_table[wk->listpos] == BMPMENU_CANCEL )
         { 
           PMSND_PlaySE(SE_CANCEL);
@@ -1741,21 +1810,21 @@ static u32 SexSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
         { 
           PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
         }
-				return s_ret_table[wk->listpos];
+        return s_ret_table[wk->listpos];
 
-			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+      }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
         PMSND_PlaySE(SE_CANCEL);
 
         WorldTrade_CLACT_PosChange( wk->CursorAct, 
             sexpostable[3][0],sexpostable[3][1] );
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
 
-				return BMPMENU_CANCEL;
-			}
-		}
-	}
+        return BMPMENU_CANCEL;
+      }
+    }
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -1770,31 +1839,31 @@ static u32 SexSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static void LevelPageRefresh( WORLDTRADE_INPUT_WORK *wk, int move )
 {
-	if(move<0){
-		PMSND_PlaySE(WORLDTRADE_PAGE_SE);
-		//左アローアニメ
-		GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 1 );
-		GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
-		if(wk->page!=0){
-			wk->page--;
-		}else{
-			wk->page = LV_PAGE_MAX;
-		}
-	}else{
-		PMSND_PlaySE(WORLDTRADE_PAGE_SE);
-		//右アローアニメ
-		GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 1 );
-		GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
-		if(wk->page < LV_PAGE_MAX){
-			wk->page++;
-		}else{
-			wk->page = 0;
-		}
-	}
-	PokeName_ListPrint( wk, wk->page, wk->listMax );
-	PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_LEVEL_WIN_NUM], 
-				wk->page,
-				_list_page_num( wk->listMax, MODE_LEVEL_WIN_NUM ) );
+  if(move<0){
+    PMSND_PlaySE(WORLDTRADE_PAGE_SE);
+    //左アローアニメ
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
+    if(wk->page!=0){
+      wk->page--;
+    }else{
+      wk->page = LV_PAGE_MAX;
+    }
+  }else{
+    PMSND_PlaySE(WORLDTRADE_PAGE_SE);
+    //右アローアニメ
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
+    if(wk->page < LV_PAGE_MAX){
+      wk->page++;
+    }else{
+      wk->page = 0;
+    }
+  }
+  PokeName_ListPrint( wk, wk->page, wk->listMax );
+  PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_LEVEL_WIN_NUM], 
+      wk->page,
+      _list_page_num( wk->listMax, MODE_LEVEL_WIN_NUM ) );
 
 }
 
@@ -1810,31 +1879,31 @@ static void LevelPageRefresh( WORLDTRADE_INPUT_WORK *wk, int move )
 //------------------------------------------------------------------
 static u32 LevelDecideFunc( WORLDTRADE_INPUT_WORK *wk, u32 decide )
 {
-	switch(decide){
-	case 4:
+  switch(decide){
+  case 4:
     PMSND_PlaySE(SE_CANCEL);
-		return BMPMENU_CANCEL;
-		break;
-	case 5:
-		LevelPageRefresh( wk, -1 );
-		return BMPMENU_NULL;
-		break;
-	case 6:
-		LevelPageRefresh( wk, +1 );
-		return BMPMENU_NULL;
-		break;
-	}
-	// 項目決定
-	{
-		int pos = decide+wk->page*LEVEL_1PAGE_MAX;
-		// 名前のある場所なら入力決定
-		if(pos<wk->listMax){
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-			return wk->NameList[decide].param;
-		}
-	}
-	
-	return BMPMENU_NULL;
+    return BMPMENU_CANCEL;
+    break;
+  case 5:
+    LevelPageRefresh( wk, -1 );
+    return BMPMENU_NULL;
+    break;
+  case 6:
+    LevelPageRefresh( wk, +1 );
+    return BMPMENU_NULL;
+    break;
+  }
+  // 項目決定
+  {
+    int pos = decide+wk->page*LEVEL_1PAGE_MAX;
+    // 名前のある場所なら入力決定
+    if(pos<wk->listMax){
+      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+      return wk->NameList[decide].param;
+    }
+  }
+
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -1848,51 +1917,65 @@ static u32 LevelDecideFunc( WORLDTRADE_INPUT_WORK *wk, u32 decide )
 //------------------------------------------------------------------
 static u32 LevelSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 {
-	int oldpos = wk->listpos;
+  int oldpos = wk->listpos;
 
-  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-  { 
-    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-    return BMPMENU_NULL;
+  // >> update ichiraku 2010/10/6
+  // BTS 7897
+  // 4番
+#ifdef BTS_7897
+  if( ( GFL_UI_KEY_GetTrg() || GFL_UI_KEY_GetRepeat() ) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#else
+    if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#endif
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+      return BMPMENU_NULL;
+    }
+
+  // カーソル移動
+  
+#ifndef BTS_7897
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+#endif
+  {
+    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      if(wk->listpos!=0){
+        wk->listpos--;
+      }else{
+        wk->listpos=4;
+      }
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      if(wk->listpos!=4){
+        wk->listpos++;
+      }else{
+        wk->listpos=0;
+      }
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+      LevelPageRefresh( wk, -1 );
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+      LevelPageRefresh( wk, +1 );
+    }
   }
 
-	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-		if(wk->listpos!=0){
-			wk->listpos--;
-		}else{
-			wk->listpos=4;
-		}
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-		if(wk->listpos!=4){
-			wk->listpos++;
-		}else{
-			wk->listpos=0;
-		}
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
-		LevelPageRefresh( wk, -1 );
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
-		LevelPageRefresh( wk, +1 );
-	}
-
-	if(oldpos!=wk->listpos){
+  if(oldpos!=wk->listpos){
     PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-		WorldTrade_CLACT_PosChange( wk->CursorAct, 
-					levelpostable[wk->listpos][0],levelpostable[wk->listpos][1] );
-		if(wk->listpos==4){
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-		}else{
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
-		}
-	}
+    WorldTrade_CLACT_PosChange( wk->CursorAct, 
+        levelpostable[wk->listpos][0],levelpostable[wk->listpos][1] );
+    if(wk->listpos==4){
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+    }
+  }
 
-	{
-		u32 ret;
+  {
+    u32 ret;
     u32 decide;
-		// タッチ決定
-		ret = TouchPanelFunc( wk, MODE_LEVEL );
-		if(ret!=GFL_UI_TP_HIT_NONE){
+    // タッチ決定
+    ret = TouchPanelFunc( wk, MODE_LEVEL );
+    if(ret!=GFL_UI_TP_HIT_NONE){
 
       if( ret < 5 )
       { 
@@ -1917,24 +2000,24 @@ static u32 LevelSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
       return decide;
-		}else{
-		// キー決定
-			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+    }else{
+      // キー決定
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
         return LevelDecideFunc( wk, wk->listpos );
-			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+      }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
 
         WorldTrade_CLACT_PosChange( wk->CursorAct, 
-					levelpostable[4][0],levelpostable[4][1] );
+            levelpostable[4][0],levelpostable[4][1] );
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
 
         PMSND_PlaySE(SE_CANCEL);
-				return BMPMENU_CANCEL;
-			}
-		}
-	}
+        return BMPMENU_CANCEL;
+      }
+    }
+  }
 
-	return BMPMENU_NULL;
-	
+  return BMPMENU_NULL;
+
 }
 
 
@@ -1950,16 +2033,16 @@ static u32 LevelSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static u32 NationHead1DecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 {
-	switch(decide){
-	case 10:	
-		return BMPMENU_CANCEL;	
-		break;
-	case 11:	
-		return 11;				
-		break;
-	}
+  switch(decide){
+  case 10:	
+    return BMPMENU_CANCEL;	
+    break;
+  case 11:	
+    return 11;				
+    break;
+  }
 
-	return decide;
+  return decide;
 }
 
 //------------------------------------------------------------------
@@ -1973,73 +2056,86 @@ static u32 NationHead1DecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 //------------------------------------------------------------------
 static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 {
-	int oldpos = wk->listpos;
-	
-	if(oldpos < 10){    //あ～わ
-	    wk->listpos_backup_x = oldpos;  //X位置を取っておく
-	}
+  int oldpos = wk->listpos;
 
-  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-  { 
-    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-    return BMPMENU_NULL;
+  if(oldpos < 10){    //あ～わ
+    wk->listpos_backup_x = oldpos;  //X位置を取っておく
   }
-        
-	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-		wk->listpos = n_head1table[wk->listpos][0];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-		wk->listpos = n_head1table[wk->listpos][1];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
-		wk->listpos = n_head1table[wk->listpos][2];
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
-		wk->listpos = n_head1table[wk->listpos][3];
-	}
-	
-	//「もどるorきにしない」の位置から「あ～わ」ラインに復帰した場合はX位置を戻す補正
-	if(oldpos >= 10 && wk->listpos < 10){
-        switch(oldpos){
-        case 10:    //もどる
-            if(wk->listpos_backup_x > 4){
-                wk->listpos = wk->listpos_backup_x;
-            }
-            else{
-                wk->listpos = wk->listpos_backup_x + 5;
-            }
-            wk->listpos_backup_x = wk->listpos;
-            break;
-        case 11:    //きにしない
-            if(wk->listpos_backup_x > 4){
-                wk->listpos = wk->listpos_backup_x - 5;
-            }
-            else{
-                wk->listpos = wk->listpos_backup_x;
-            }
-            wk->listpos_backup_x = wk->listpos;
-            break;
-        }
+
+  // >> update ichiraku 2010/10/6
+  // BTS 7897
+  // 5番
+#ifdef BTS_7897
+  if( ( GFL_UI_KEY_GetTrg() || GFL_UI_KEY_GetRepeat() ) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#else
+    if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#endif
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+      return BMPMENU_NULL;
     }
 
-	if(oldpos!=wk->listpos){
-		PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-		WorldTrade_CLACT_PosChange( wk->CursorAct, 
-						(n_word_table[wk->listpos][0]+16)*8,
-						 n_word_table[wk->listpos][1]*8 );
-		switch(wk->listpos){
-		case 10:	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );	break;
-		case 11:	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );	break;
-		default:	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );	
-		}
+  // カーソル移動
+#ifndef BTS_7897
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+#endif
+  {
+    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      wk->listpos = n_head1table[wk->listpos][0];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      wk->listpos = n_head1table[wk->listpos][1];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+      wk->listpos = n_head1table[wk->listpos][2];
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+      wk->listpos = n_head1table[wk->listpos][3];
+    }
+  }
 
-	}
+  //「もどるorきにしない」の位置から「あ～わ」ラインに復帰した場合はX位置を戻す補正
+  if(oldpos >= 10 && wk->listpos < 10){
+    switch(oldpos){
+    case 10:    //もどる
+      if(wk->listpos_backup_x > 4){
+        wk->listpos = wk->listpos_backup_x;
+      }
+      else{
+        wk->listpos = wk->listpos_backup_x + 5;
+      }
+      wk->listpos_backup_x = wk->listpos;
+      break;
+    case 11:    //きにしない
+      if(wk->listpos_backup_x > 4){
+        wk->listpos = wk->listpos_backup_x - 5;
+      }
+      else{
+        wk->listpos = wk->listpos_backup_x;
+      }
+      wk->listpos_backup_x = wk->listpos;
+      break;
+    }
+  }
+
+  if(oldpos!=wk->listpos){
+    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+    WorldTrade_CLACT_PosChange( wk->CursorAct, 
+        (n_word_table[wk->listpos][0]+16)*8,
+        n_word_table[wk->listpos][1]*8 );
+    switch(wk->listpos){
+    case 10:	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );	break;
+    case 11:	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );	break;
+    default:	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );	
+    }
+
+  }
 
 
-	{
-		u32 ret, decide;
-		// タッチ決定
-		ret = TouchPanelFunc( wk, MODE_NATION_HEAD1 );
-		if(ret!=GFL_UI_TP_HIT_NONE){
+  {
+    u32 ret, decide;
+    // タッチ決定
+    ret = TouchPanelFunc( wk, MODE_NATION_HEAD1 );
+    if(ret!=GFL_UI_TP_HIT_NONE){
 
       WorldTrade_CLACT_PosChange( wk->CursorAct, 
           (n_word_table[ret][0]+16)*8,
@@ -2073,10 +2169,10 @@ static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
       }
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
       return decide;
-		}else{
-		// キー決定
-			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-				decide = NationHead1DecideFunc( wk, wk->listpos );
+    }else{
+      // キー決定
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+        decide = NationHead1DecideFunc( wk, wk->listpos );
         if(decide == BMPMENU_CANCEL)
         { 
           PMSND_PlaySE(SE_CANCEL);
@@ -2086,7 +2182,7 @@ static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
           PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
           return decide;
         }
-			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+      }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
 
         WorldTrade_CLACT_PosChange( wk->CursorAct, 
             (n_word_table[10][0]+16)*8,
@@ -2094,12 +2190,12 @@ static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
 
         PMSND_PlaySE(SE_CANCEL);
-				return BMPMENU_CANCEL;
-			}
-		}
-	}
+        return BMPMENU_CANCEL;
+      }
+    }
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -2115,32 +2211,32 @@ static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 //------------------------------------------------------------------
 static u32 NationDecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 {
-	switch(decide){
-	case 5:		// キャンセル
+  switch(decide){
+  case 5:		// キャンセル
     PMSND_PlaySE(SE_CANCEL);
-		return BMPMENU_CANCEL;
-		break;
-	case 6:		// 左ページへ
-		NationPageRefresh(wk, -1);
-		return BMPMENU_NULL;
-		break;
-	case 7:		// 右ページへ
-		NationPageRefresh(wk, +1);
-		return BMPMENU_NULL;
-		break;
-	}
+    return BMPMENU_CANCEL;
+    break;
+  case 6:		// 左ページへ
+    NationPageRefresh(wk, -1);
+    return BMPMENU_NULL;
+    break;
+  case 7:		// 右ページへ
+    NationPageRefresh(wk, +1);
+    return BMPMENU_NULL;
+    break;
+  }
 
-	// 矢印・キャンセル以外
-	{
-		int namepos = decide+wk->page*NATION_1PAGE_MAX;
-		// 名前のある場所なら入力決定
-		if(namepos<wk->listMax){
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-			return wk->NameList[namepos].param;
-		}
-	}
+  // 矢印・キャンセル以外
+  {
+    int namepos = decide+wk->page*NATION_1PAGE_MAX;
+    // 名前のある場所なら入力決定
+    if(namepos<wk->listMax){
+      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+      return wk->NameList[namepos].param;
+    }
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 
 }
 
@@ -2157,41 +2253,41 @@ static u32 NationDecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 //------------------------------------------------------------------
 static void NationPageRefresh( WORLDTRADE_INPUT_WORK *wk, int move)
 {
-	int page_no = _list_page_num( wk->listMax, MODE_NATION_WIN_NUM ) -1;
+  int page_no = _list_page_num( wk->listMax, MODE_NATION_WIN_NUM ) -1;
 
-	OS_Printf("page_no = %d\n",page_no);
+  OS_Printf("page_no = %d\n",page_no);
 
-	if (page_no == 0){
-		return;
-	}
+  if (page_no == 0){
+    return;
+  }
 
-	if(move<0){
-		PMSND_PlaySE(WORLDTRADE_PAGE_SE);
-		//左アローアニメ
-		GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 1 );
-		GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
-		if(wk->page!=0){
-			wk->page--;
-		}else{
-			wk->page = page_no;
-		}
-	}else{
-		PMSND_PlaySE(WORLDTRADE_PAGE_SE);
-		//右アローアニメ
-		GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 1 );
-		GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
-		if(wk->page < page_no){
-			wk->page++;	
-		}else{
-			wk->page = 0;
-		}
-	}
+  if(move<0){
+    PMSND_PlaySE(WORLDTRADE_PAGE_SE);
+    //左アローアニメ
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
+    if(wk->page!=0){
+      wk->page--;
+    }else{
+      wk->page = page_no;
+    }
+  }else{
+    PMSND_PlaySE(WORLDTRADE_PAGE_SE);
+    //右アローアニメ
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
+    if(wk->page < page_no){
+      wk->page++;	
+    }else{
+      wk->page = 0;
+    }
+  }
 
-	Nation_ListPrint( wk, wk->page, wk->listMax );
-	PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_NATION_WIN_NUM], 
-				wk->page,
-				_list_page_num( wk->listMax, MODE_NATION_WIN_NUM ) );
-	
+  Nation_ListPrint( wk, wk->page, wk->listMax );
+  PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_NATION_WIN_NUM], 
+      wk->page,
+      _list_page_num( wk->listMax, MODE_NATION_WIN_NUM ) );
+
 }
 
 //------------------------------------------------------------------
@@ -2205,51 +2301,64 @@ static void NationPageRefresh( WORLDTRADE_INPUT_WORK *wk, int move)
 //------------------------------------------------------------------
 static u32 Nation_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 {
-	int oldpos = wk->listpos;
+  int oldpos = wk->listpos;
 
-  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-  { 
-    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-    return BMPMENU_NULL;
+  // >> update ichiraku 2010/10/6
+  // BTS 7897
+  // 6番
+#ifdef BTS_7897
+  if( ( GFL_UI_KEY_GetTrg() || GFL_UI_KEY_GetRepeat() ) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#else
+    if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+#endif
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+      return BMPMENU_NULL;
+    }
+
+  // カーソル移動
+#ifndef BTS_7897
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+#endif
+  {
+    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      if(wk->listpos!=0){
+        wk->listpos--;
+      }else{
+        wk->listpos=5;
+      }
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      if(wk->listpos!=5){
+        wk->listpos++;
+      }else{
+        wk->listpos=0;
+      }
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+      NationPageRefresh( wk, -1);
+    }else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+      NationPageRefresh( wk, +1);
+    }
   }
 
-	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-		if(wk->listpos!=0){
-			wk->listpos--;
-		}else{
-			wk->listpos=5;
-		}
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-		if(wk->listpos!=5){
-			wk->listpos++;
-		}else{
-			wk->listpos=0;
-		}
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
-		NationPageRefresh( wk, -1);
-	}else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
-		NationPageRefresh( wk, +1);
-	}
+  if(oldpos!=wk->listpos){
+    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+    WorldTrade_CLACT_PosChange( wk->CursorAct, 
+        nationpostable[wk->listpos][0],nationpostable[wk->listpos][1] );
+    if(wk->listpos==5){
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
+    }
+  }
 
-	if(oldpos!=wk->listpos){
-		PMSND_PlaySE(WORLDTRADE_MOVE_SE);
-		WorldTrade_CLACT_PosChange( wk->CursorAct, 
-					nationpostable[wk->listpos][0],nationpostable[wk->listpos][1] );
-		if(wk->listpos==5){
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-		}else{
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
-		}
-	}
-
-	{
-		u32 ret;
+  {
+    u32 ret;
     u32 decide;
-		// タッチ決定
-		ret = TouchPanelFunc( wk, MODE_NATION );
-		if(ret!=GFL_UI_TP_HIT_NONE){
+    // タッチ決定
+    ret = TouchPanelFunc( wk, MODE_NATION );
+    if(ret!=GFL_UI_TP_HIT_NONE){
 
       if( ret < 6 )
       { 
@@ -2275,22 +2384,22 @@ static u32 Nation_SelectMain( WORLDTRADE_INPUT_WORK *wk )
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
       return decide;
-		}else{
-		// キー決定
-			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-				return NationDecideFunc( wk, wk->listpos );
-			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+    }else{
+      // キー決定
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+        return NationDecideFunc( wk, wk->listpos );
+      }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
         PMSND_PlaySE(SE_CANCEL);
         WorldTrade_CLACT_PosChange( wk->CursorAct, 
             nationpostable[5][0],nationpostable[5][1] );
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-				return BMPMENU_CANCEL;
-			}
-		}
-	}
+        return BMPMENU_CANCEL;
+      }
+    }
+  }
 
-	return BMPMENU_NULL;
-	
+  return BMPMENU_NULL;
+
 }
 
 //------------------------------------------------------------------
@@ -2306,87 +2415,87 @@ static u32 Nation_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static void HeadWord1_Init( WORLDTRADE_INPUT_WORK *wk, int type, int x )
 {
-	int scr_dat;
-	u16 *scr;
+  int scr_dat;
+  u16 *scr;
 
-	// デフォルトスクリーンを仮想面に読み込み
-	
-	if(type==MODE_NATION_HEAD1){	// 国選択の時
-		scr_dat = NARC_worldtrade_search_name2_lz_nscr;
-	}else{							//ポケモン選択の時
-		scr_dat = NARC_worldtrade_search_name3_lz_nscr;
-	}
+  // デフォルトスクリーンを仮想面に読み込み
 
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, scr_dat, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
+  if(type==MODE_NATION_HEAD1){	// 国選択の時
+    scr_dat = NARC_worldtrade_search_name2_lz_nscr;
+  }else{							//ポケモン選択の時
+    scr_dat = NARC_worldtrade_search_name3_lz_nscr;
+  }
 
-	// BMPWIN確保
-	select_bmpwin_add( wk, type );
-//	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, scr_dat, 1 );
+  scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
-	// アカサタナハマヤラワBMPWIN確保
-	{
-		int i;
-		for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
-//			SelectFrameBoxWrite( scr, word_table[i][0], word_table[i][1], SELECT_BOX_N_LETTER );
-		}
-	}
-//	SelectFrameBoxWrite( scr, word_table[10][0]-1, word_table[10][1]-1, SELECT_BOX_END );
+  // BMPWIN確保
+  select_bmpwin_add( wk, type );
+  //	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
 
-// もどる
-	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+  // アカサタナハマヤラワBMPWIN確保
+  {
+    int i;
+    for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
+      //			SelectFrameBoxWrite( scr, word_table[i][0], word_table[i][1], SELECT_BOX_N_LETTER );
+    }
+  }
+  //	SelectFrameBoxWrite( scr, word_table[10][0]-1, word_table[10][1]-1, SELECT_BOX_END );
 
-	// 文字列描画
-	{
-		int i;
-		STRBUF *strbuf;
-		PRINTSYS_LSB color;
-		
-        MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
-		for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
-			strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_10_001+i );
-			if(type == MODE_HEADWORD_1){    //ポケモン検索
-    			if(PokeSeeCount_Category(wk, i) == TRUE){
-                    color = SEARCH_MOJI_COLOR_NORMAL;
-                    wk->see_check[i] = TRUE;
-                }
-                else{
-                    color =  SEARCH_MOJI_COLOR_GRAY;
-                    wk->see_check[i] = FALSE;
-                }
-    		}
-    		else{   //国検索
-    		    if(NationCount_Category(wk, i) == TRUE){
-        		    color = SEARCH_MOJI_COLOR_NORMAL;
-        		    wk->see_check[i] = TRUE;
-        		}
-        		else{
-                    color = SEARCH_MOJI_COLOR_GRAY;
-        		    wk->see_check[i] = FALSE;
-                }
-            }
-            
-			WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], strbuf,  2, color, &wk->print );
-			GFL_STR_DeleteBuffer(strbuf);
-		}
+  // もどる
+  touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
 
-	}
+  // 文字列描画
+  {
+    int i;
+    STRBUF *strbuf;
+    PRINTSYS_LSB color;
+
+    MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
+    for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
+      strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_10_001+i );
+      if(type == MODE_HEADWORD_1){    //ポケモン検索
+        if(PokeSeeCount_Category(wk, i) == TRUE){
+          color = SEARCH_MOJI_COLOR_NORMAL;
+          wk->see_check[i] = TRUE;
+        }
+        else{
+          color =  SEARCH_MOJI_COLOR_GRAY;
+          wk->see_check[i] = FALSE;
+        }
+      }
+      else{   //国検索
+        if(NationCount_Category(wk, i) == TRUE){
+          color = SEARCH_MOJI_COLOR_NORMAL;
+          wk->see_check[i] = TRUE;
+        }
+        else{
+          color = SEARCH_MOJI_COLOR_GRAY;
+          wk->see_check[i] = FALSE;
+        }
+      }
+
+      WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], strbuf,  2, color, &wk->print );
+      GFL_STR_DeleteBuffer(strbuf);
+    }
+
+  }
 
 
 
-	// 国選択の時は「きにしない」を追加する
-	if(type==MODE_NATION_HEAD1){
-		STRBUF *strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_search_015_01 );
-//		SelectFrameBoxWrite( scr, 	word_table[BMPWIN_NONE_SELECT_WIN][0]-1, 
-//									word_table[BMPWIN_NONE_SELECT_WIN][1]-1, SELECT_BOX_N_TEXT );
-		WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[BMPWIN_NONE_SELECT_WIN], 
-									strbuf,  2, PRINTSYS_LSB_Make(15,14,2), &wk->print );
-		GFL_STR_DeleteBuffer(strbuf);
-	}
+  // 国選択の時は「きにしない」を追加する
+  if(type==MODE_NATION_HEAD1){
+    STRBUF *strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_search_015_01 );
+    //		SelectFrameBoxWrite( scr, 	word_table[BMPWIN_NONE_SELECT_WIN][0]-1, 
+    //									word_table[BMPWIN_NONE_SELECT_WIN][1]-1, SELECT_BOX_N_TEXT );
+    WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[BMPWIN_NONE_SELECT_WIN], 
+        strbuf,  2, PRINTSYS_LSB_Make(15,14,2), &wk->print );
+    GFL_STR_DeleteBuffer(strbuf);
+  }
 
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, x, 0 );
-	
-	BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, x, 0 );
+
+  BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
 
 }
 
@@ -2401,35 +2510,35 @@ static void HeadWord1_Init( WORLDTRADE_INPUT_WORK *wk, int type, int x )
 //------------------------------------------------------------------
 static void SexSelect_Init( WORLDTRADE_INPUT_WORK *wk )
 {
-	u16 *scr;
+  u16 *scr;
 
-	// デフォルトスクリーンを仮想面に読み込み
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_seibetsu_lz_nscr, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
+  // デフォルトスクリーンを仮想面に読み込み
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_seibetsu_lz_nscr, 1 );
+  scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
-	// BMPWIN確保
-	select_bmpwin_add( wk, MODE_SEX );
+  // BMPWIN確保
+  select_bmpwin_add( wk, MODE_SEX );
 
-//	SelectFrameBoxWrite( scr, word_table[10][0]-1, word_table[10][1]-1, SELECT_BOX_END );
+  //	SelectFrameBoxWrite( scr, word_table[10][0]-1, word_table[10][1]-1, SELECT_BOX_END );
 
-	// 文字列描画
-	{
-		int i;
-		STRBUF *strbuf;
-		for(i=0;i<MODE_SEX_WIN_NUM;i++){
-			strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_11_001+i );
-			WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], strbuf,  2, PRINTSYS_LSB_Make(15,14,2), &wk->print );
-			GFL_STR_DeleteBuffer(strbuf);
-		}
-	}
+  // 文字列描画
+  {
+    int i;
+    STRBUF *strbuf;
+    for(i=0;i<MODE_SEX_WIN_NUM;i++){
+      strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_11_001+i );
+      WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], strbuf,  2, PRINTSYS_LSB_Make(15,14,2), &wk->print );
+      GFL_STR_DeleteBuffer(strbuf);
+    }
+  }
 
-	// もどる
-	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+  // もどる
+  touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
 
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, 32, 0 );
-	BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, 32, 0 );
+  BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
 
-	BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
+  BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
 
 }
 
@@ -2444,44 +2553,44 @@ static void SexSelect_Init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static void LevelSelect_Init( WORLDTRADE_INPUT_WORK *wk )
 {
-	u16 *scr;
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_level_lz_nscr, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
+  u16 *scr;
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_level_lz_nscr, 1 );
+  scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
-	// 子音頭文字入力用BMPWINの確保
-	select_bmpwin_add( wk, MODE_LEVEL );
+  // 子音頭文字入力用BMPWINの確保
+  select_bmpwin_add( wk, MODE_LEVEL );
 
-//	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
-	
-	if(wk->Situation==SITUATION_SEARCH){
-		wk->listMax  = WorldTrade_LevelListAdd( &wk->NameList, wk->MsgManager, LEVEL_PRINT_TBL_SEARCH);
-	}else if(wk->Situation==SITUATION_DEPOSIT){
-		wk->listMax  = WorldTrade_LevelListAdd( &wk->NameList, wk->MsgManager, LEVEL_PRINT_TBL_DEPOSIT);
-	}
+  //	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
 
-	PokeName_ListPrint( wk, 0, wk->listMax );
-	wk->page    = 0;
-	
-	PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_LEVEL_WIN_NUM], 
-				wk->page, _list_page_num( wk->listMax, MODE_LEVEL_WIN_NUM ) );
+  if(wk->Situation==SITUATION_SEARCH){
+    wk->listMax  = WorldTrade_LevelListAdd( &wk->NameList, wk->MsgManager, LEVEL_PRINT_TBL_SEARCH);
+  }else if(wk->Situation==SITUATION_DEPOSIT){
+    wk->listMax  = WorldTrade_LevelListAdd( &wk->NameList, wk->MsgManager, LEVEL_PRINT_TBL_DEPOSIT);
+  }
 
-	// もどる
-	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+  PokeName_ListPrint( wk, 0, wk->listMax );
+  wk->page    = 0;
+
+  PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_LEVEL_WIN_NUM], 
+      wk->page, _list_page_num( wk->listMax, MODE_LEVEL_WIN_NUM ) );
+
+  // もどる
+  touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
 
 
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, 32, 0 );
-	GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 6);
-	
-	wk->listpos = 0;
-	wk->listpos_backup_x = 0;
-	
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-				namepostable[wk->listpos][0], namepostable[wk->listpos][1] );
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, 32, 0 );
+  GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 6);
 
-	BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
-	BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
+  wk->listpos = 0;
+  wk->listpos_backup_x = 0;
 
-	wk->seq  = WI_SEQ_LEVEL_MAIN;
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      namepostable[wk->listpos][0], namepostable[wk->listpos][1] );
+
+  BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
+  BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
+
+  wk->seq  = WI_SEQ_LEVEL_MAIN;
 
 
 }
@@ -2501,16 +2610,16 @@ static void LevelSelect_Init( WORLDTRADE_INPUT_WORK *wk )
 //==============================================================================
 void WorldTrade_Input_SysPrint( BGWINFRM_WORK *wfwk, GFL_BMPWIN *win, STRBUF *strbuf, int x, PRINTSYS_LSB color, WT_PRINT *print )
 {
-	GF_STR_PrintColor( win, FONT_SYSTEM, strbuf, x, 0, MSG_NO_PUT, color,print);
-	GFL_BMPWIN_TransVramCharacter( win );
-	BGWINFRM_BmpWinOn( wfwk, 0, win );
+  GF_STR_PrintColor( win, FONT_SYSTEM, strbuf, x, 0, MSG_NO_PUT, color,print);
+  GFL_BMPWIN_TransVramCharacter( win );
+  BGWINFRM_BmpWinOn( wfwk, 0, win );
 }
 
 
 static const u8 box_table[][9]={
-	{ 16*0+7, 16*0+9, 16*0+10,  16*0+12, 16*0+8, 16*0+11,},
-	{ 16*1+0, 16*1+2, 16*1+3,   16*1+5,  16*1+1, 16*1+4, },
-	{ 16*1+6, 16*1+8, 16*1+12,  16*1+14, 16*1+7, 16*1+13, 16*1+9, 16*1+11, 16*1+10},
+  { 16*0+7, 16*0+9, 16*0+10,  16*0+12, 16*0+8, 16*0+11,},
+  { 16*1+0, 16*1+2, 16*1+3,   16*1+5,  16*1+1, 16*1+4, },
+  { 16*1+6, 16*1+8, 16*1+12,  16*1+14, 16*1+7, 16*1+13, 16*1+9, 16*1+11, 16*1+10},
 };
 
 #define SUB_WIN_W			( 32 )
@@ -2532,84 +2641,84 @@ static const u8 box_table[][9]={
 //------------------------------------------------------------------
 static void SelectFrameBoxWrite( u16 *scr, int x, int y, int type )
 {
-	int index=0;
-	int i;
-	switch(type){
+  int index=0;
+  int i;
+  switch(type){
 
-	// １文字分のボックス
-	case SELECT_BOX_N_LETTER:	case SELECT_BOX_R_LETTER:
-		// １文字分のボックス
-		scr[  x+y*SUB_WIN_W]     = box_table[type][0]+0x1000;
-		scr[1+x+y*SUB_WIN_W]     = box_table[type][1]+0x1000;
-		scr[x+(y+1)*SUB_WIN_W]   = box_table[type][2]+0x1000;
-		scr[1+x+(y+1)*SUB_WIN_W] = box_table[type][3]+0x1000;
-		break;
+    // １文字分のボックス
+  case SELECT_BOX_N_LETTER:	case SELECT_BOX_R_LETTER:
+    // １文字分のボックス
+    scr[  x+y*SUB_WIN_W]     = box_table[type][0]+0x1000;
+    scr[1+x+y*SUB_WIN_W]     = box_table[type][1]+0x1000;
+    scr[x+(y+1)*SUB_WIN_W]   = box_table[type][2]+0x1000;
+    scr[1+x+(y+1)*SUB_WIN_W] = box_table[type][3]+0x1000;
+    break;
 
-	// 文字列表示のボックス
-	case SELECT_BOX_N_TEXT:     case SELECT_BOX_R_TEXT:
-		index = type-SELECT_BOX_N_TEXT;
+    // 文字列表示のボックス
+  case SELECT_BOX_N_TEXT:     case SELECT_BOX_R_TEXT:
+    index = type-SELECT_BOX_N_TEXT;
 
-		// 四隅を埋めて
-		scr[  x+y*SUB_WIN_W]     			   = box_table[index][0]+0x1000;
-		scr[SELECT_TEXT_W+x+y*SUB_WIN_W-1]     = box_table[index][1]+0x1000;
-		scr[x+(y+1)*SUB_WIN_W]   			   = box_table[index][2]+0x1000;
-		scr[SELECT_TEXT_W+x+(y+1)*SUB_WIN_W-1] = box_table[index][3]+0x1000;
-		// 単語の長さ分横に埋める
-		for(i=1;i<SELECT_TEXT_W-1;i++){
-			scr[x+y*SUB_WIN_W+i]     = box_table[index][4]+0x1000;
-			scr[x+(y+1)*SUB_WIN_W+i] = box_table[index][5]+0x1000;
-			
-		}
-		break;
+    // 四隅を埋めて
+    scr[  x+y*SUB_WIN_W]     			   = box_table[index][0]+0x1000;
+    scr[SELECT_TEXT_W+x+y*SUB_WIN_W-1]     = box_table[index][1]+0x1000;
+    scr[x+(y+1)*SUB_WIN_W]   			   = box_table[index][2]+0x1000;
+    scr[SELECT_TEXT_W+x+(y+1)*SUB_WIN_W-1] = box_table[index][3]+0x1000;
+    // 単語の長さ分横に埋める
+    for(i=1;i<SELECT_TEXT_W-1;i++){
+      scr[x+y*SUB_WIN_W+i]     = box_table[index][4]+0x1000;
+      scr[x+(y+1)*SUB_WIN_W+i] = box_table[index][5]+0x1000;
 
-	// 国名表示のボックス
-	case SELECT_BOX_N_NATION:	case SELECT_BOX_R_NATION:
-		index = type - SELECT_BOX_N_NATION;
-		// 四隅を埋めて
-		scr[  x+y*SUB_WIN_W]     			     = box_table[index][0]+0x1000;
-		scr[SELECT_NATION_W+x+y*SUB_WIN_W-1]     = box_table[index][1]+0x1000;
-		scr[x+(y+1)*SUB_WIN_W]   			     = box_table[index][2]+0x1000;
-		scr[SELECT_NATION_W+x+(y+1)*SUB_WIN_W-1] = box_table[index][3]+0x1000;
-		// 単語の長さ分横に埋める
-		for(i=1;i<SELECT_NATION_W-1;i++){
-			scr[x+y*SUB_WIN_W+i]     = box_table[index][4]+0x1000;
-			scr[x+(y+1)*SUB_WIN_W+i] = box_table[index][5]+0x1000;
-			
-		}
-		break;
+    }
+    break;
 
-	// 戻るボタン
-	case SELECT_BOX_END:
-		index = 2;
-		// 四隅
-		scr[  x+y*SUB_WIN_W]     			   = box_table[index][0]+0x1000;
-		scr[SELECT_END_W+x+y*SUB_WIN_W-1]      = box_table[index][1]+0x1000;
-		scr[x+(y+3)*SUB_WIN_W]   			   = box_table[index][2]+0x1000;
-		scr[SELECT_END_W+x+(y+3)*SUB_WIN_W-1]  = box_table[index][3]+0x1000;
-		// 左端と右端の縦列
-		scr[  x+(y+1)*SUB_WIN_W]     		   = box_table[index][6]+0x1000;
-		scr[SELECT_END_W+x+(y+1)*SUB_WIN_W-1]  = box_table[index][7]+0x1000;
-		scr[x+(y+2)*SUB_WIN_W]   			   = box_table[index][6]+0x1000;
-		scr[SELECT_END_W+x+(y+2)*SUB_WIN_W-1]  = box_table[index][7]+0x1000;
+    // 国名表示のボックス
+  case SELECT_BOX_N_NATION:	case SELECT_BOX_R_NATION:
+    index = type - SELECT_BOX_N_NATION;
+    // 四隅を埋めて
+    scr[  x+y*SUB_WIN_W]     			     = box_table[index][0]+0x1000;
+    scr[SELECT_NATION_W+x+y*SUB_WIN_W-1]     = box_table[index][1]+0x1000;
+    scr[x+(y+1)*SUB_WIN_W]   			     = box_table[index][2]+0x1000;
+    scr[SELECT_NATION_W+x+(y+1)*SUB_WIN_W-1] = box_table[index][3]+0x1000;
+    // 単語の長さ分横に埋める
+    for(i=1;i<SELECT_NATION_W-1;i++){
+      scr[x+y*SUB_WIN_W+i]     = box_table[index][4]+0x1000;
+      scr[x+(y+1)*SUB_WIN_W+i] = box_table[index][5]+0x1000;
 
-		for(i=1;i<SELECT_END_W-1;i++){
-			scr[x+y*SUB_WIN_W+i]    		 = box_table[index][4]+0x1000;
-			scr[x+(y+3)*SUB_WIN_W+i]		 = box_table[index][5]+0x1000;
-			scr[x+(y+1)*SUB_WIN_W+i]		 = box_table[index][8]+0x1000;
-			scr[x+(y+2)*SUB_WIN_W+i]		 = box_table[index][8]+0x1000;
-		}
+    }
+    break;
+
+    // 戻るボタン
+  case SELECT_BOX_END:
+    index = 2;
+    // 四隅
+    scr[  x+y*SUB_WIN_W]     			   = box_table[index][0]+0x1000;
+    scr[SELECT_END_W+x+y*SUB_WIN_W-1]      = box_table[index][1]+0x1000;
+    scr[x+(y+3)*SUB_WIN_W]   			   = box_table[index][2]+0x1000;
+    scr[SELECT_END_W+x+(y+3)*SUB_WIN_W-1]  = box_table[index][3]+0x1000;
+    // 左端と右端の縦列
+    scr[  x+(y+1)*SUB_WIN_W]     		   = box_table[index][6]+0x1000;
+    scr[SELECT_END_W+x+(y+1)*SUB_WIN_W-1]  = box_table[index][7]+0x1000;
+    scr[x+(y+2)*SUB_WIN_W]   			   = box_table[index][6]+0x1000;
+    scr[SELECT_END_W+x+(y+2)*SUB_WIN_W-1]  = box_table[index][7]+0x1000;
+
+    for(i=1;i<SELECT_END_W-1;i++){
+      scr[x+y*SUB_WIN_W+i]    		 = box_table[index][4]+0x1000;
+      scr[x+(y+3)*SUB_WIN_W+i]		 = box_table[index][5]+0x1000;
+      scr[x+(y+1)*SUB_WIN_W+i]		 = box_table[index][8]+0x1000;
+      scr[x+(y+2)*SUB_WIN_W+i]		 = box_table[index][8]+0x1000;
+    }
 
 
-		break;
+    break;
 
-	}
+  }
 }
 
 
 static int	wi_seq_none( WORLDTRADE_INPUT_WORK *wk )
 {
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -2624,9 +2733,9 @@ static int	wi_seq_none( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_winin( WORLDTRADE_INPUT_WORK *wk )
 {
-	// フレームイン待ち
-	if(BGWINFRM_MoveCheck( wk->BgWinFrm, 0)==0){
-		// カーソル表示開始
+  // フレームイン待ち
+  if(BGWINFRM_MoveCheck( wk->BgWinFrm, 0)==0){
+    // カーソル表示開始
 
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
     { 
@@ -2638,22 +2747,23 @@ static int	wi_seq_winin( WORLDTRADE_INPUT_WORK *wk )
     }
 
 
-		if(wk->type==MODE_LEVEL){
+    if(wk->type==MODE_LEVEL){
 
       GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 0 );
       GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 0 );
       GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
       GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
-			WorldTrade_CLACT_PosChange( wk->ArrowAct[0], PAGE_ARROW2_X, PAGE_ARROW_Y);
-			WorldTrade_CLACT_PosChange( wk->ArrowAct[1], PAGE_ARROW1_X, PAGE_ARROW_Y);
-			GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 1 );
-			GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 1 );
-		}
-		wk->seq  = wk->next;
-		MORI_PRINT("input win in\n");
-	}
+      WorldTrade_CLACT_PosChange( wk->ArrowAct[0], PAGE_ARROW2_X, PAGE_ARROW_Y);
+      WorldTrade_CLACT_PosChange( wk->ArrowAct[1], PAGE_ARROW1_X, PAGE_ARROW_Y);
+      GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 1 );
+      GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 1 );
+    }
+    wk->seq  = wk->next;
+    ICHI_Printf("CHECK TouchOrKey:%d func:wi_seq_winin\n", GFL_UI_CheckTouchOrKey());
+    MORI_PRINT("input win in\n");
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -2667,13 +2777,13 @@ static int	wi_seq_winin( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_winwait( WORLDTRADE_INPUT_WORK *wk )
 {
-	// フレームイン待ち
-	if(BGWINFRM_MoveCheck( wk->BgWinFrm, 0)==0){
-		wk->seq  = wk->next;
-		MORI_PRINT("input win no effectin\n");
-	}
+  // フレームイン待ち
+  if(BGWINFRM_MoveCheck( wk->BgWinFrm, 0)==0){
+    wk->seq  = wk->next;
+    MORI_PRINT("input win no effectin\n");
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -2694,8 +2804,8 @@ static int	wi_seq_winout( WORLDTRADE_INPUT_WORK *wk )
     return BMPMENU_NULL;
   }
 
-	// カーソル表示OFFにして
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );		
+  // カーソル表示OFFにして
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );		
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 0 );
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
 
@@ -2712,7 +2822,7 @@ static int	wi_seq_winout( WORLDTRADE_INPUT_WORK *wk )
 
   wk->seq  = WI_SEQ_WINOUTWAIT;
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 
 }
 
@@ -2727,13 +2837,13 @@ static int	wi_seq_winout( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_winoutwait( WORLDTRADE_INPUT_WORK *wk )
 { 
-	// フレームアウト待ち
-	if(BGWINFRM_MoveCheck( wk->BgWinFrm, 0)==0){
-		BGWINFRM_FrameOff( wk->BgWinFrm, 0 );
-		MORI_PRINT("input win out wait\n");
-		wk->seq  = wk->next;
-	}
-	return BMPMENU_NULL;
+  // フレームアウト待ち
+  if(BGWINFRM_MoveCheck( wk->BgWinFrm, 0)==0){
+    BGWINFRM_FrameOff( wk->BgWinFrm, 0 );
+    MORI_PRINT("input win out wait\n");
+    wk->seq  = wk->next;
+  }
+  return BMPMENU_NULL;
 }
 //------------------------------------------------------------------
 /**
@@ -2752,8 +2862,8 @@ static int	wi_seq_winwait_return( WORLDTRADE_INPUT_WORK *wk )
     return BMPMENU_NULL;
   }
 
-	// カーソル表示OFFにして
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );		
+  // カーソル表示OFFにして
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );		
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 0 );
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
 
@@ -2761,7 +2871,7 @@ static int	wi_seq_winwait_return( WORLDTRADE_INPUT_WORK *wk )
 
   wk->seq  = WI_SEQ_WINWAIT;
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -2775,20 +2885,20 @@ static int	wi_seq_winwait_return( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_head1_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	HeadWord1_Init( wk, MODE_HEADWORD_1, HEAD1_MOVE_INIT_X );
-	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-						(word_cur_table[0][0]+16)*8,
-						word_cur_table[0][1]*8 );
+  HeadWord1_Init( wk, MODE_HEADWORD_1, HEAD1_MOVE_INIT_X );
+  GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 4 );
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      (word_cur_table[0][0]+16)*8,
+      word_cur_table[0][1]*8 );
 
-	BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
-	wk->seq   = WI_SEQ_WININ;
-	wk->next  = WI_SEQ_HEAD1_MAIN;
-	wk->Head1 = -1;
+  BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
+  wk->seq   = WI_SEQ_WININ;
+  wk->next  = WI_SEQ_HEAD1_MAIN;
+  wk->Head1 = -1;
 
-	MORI_PRINT("input head1 init\n");
+  MORI_PRINT("input head1 init\n");
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -2803,36 +2913,36 @@ static int	wi_seq_head1_init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_head1_main( WORLDTRADE_INPUT_WORK *wk )
 {
-	int i;
-	u32 ret;
+  int i;
+  u32 ret;
 
-	switch((ret=WordHead_SelectMain( wk, wk->see_check ))){
-	case INPUT_HEAD_A:	case INPUT_HEAD_KA:	case INPUT_HEAD_SA:	case INPUT_HEAD_TA:	case INPUT_HEAD_NA:
-	case INPUT_HEAD_HA:	case INPUT_HEAD_MA: case INPUT_HEAD_YA: case INPUT_HEAD_RA: case INPUT_HEAD_WA:
+  switch((ret=WordHead_SelectMain( wk, wk->see_check ))){
+  case INPUT_HEAD_A:	case INPUT_HEAD_KA:	case INPUT_HEAD_SA:	case INPUT_HEAD_TA:	case INPUT_HEAD_NA:
+  case INPUT_HEAD_HA:	case INPUT_HEAD_MA: case INPUT_HEAD_YA: case INPUT_HEAD_RA: case INPUT_HEAD_WA:
 
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_HEAD1_EXIT;
-		wk->Head1 = ret;
-		// 入力を行う
-		break;
-	// キャンセル
-	case BMPMENU_CANCEL:
-//		BmpWinFrame_Clear( &wk->MsgWin, WINDOW_TRANS_ON );
+    wk->seq  = WI_SEQ_HEAD1_EXIT;
+    wk->Head1 = ret;
+    // 入力を行う
+    break;
+    // キャンセル
+  case BMPMENU_CANCEL:
+    //		BmpWinFrame_Clear( &wk->MsgWin, WINDOW_TRANS_ON );
 
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_WINOUT;
-		wk->next = WI_SEQ_HEAD1_EXIT;
-		wk->Head1 = -1;
+    wk->seq  = WI_SEQ_WINOUT;
+    wk->next = WI_SEQ_HEAD1_EXIT;
+    wk->Head1 = -1;
 
-		// キャンセルなので入力が無い
-		break;
+    // キャンセルなので入力が無い
+    break;
 
-	}
-	return BMPMENU_NULL;
+  }
+  return BMPMENU_NULL;
 }
 
 
@@ -2853,27 +2963,27 @@ static int	wi_seq_head1_exit( WORLDTRADE_INPUT_WORK *wk )
     return BMPMENU_NULL;
   }
 
-	// 子音頭文字入力用BMPWINの解放
-	select_bmpwin_del( wk, MODE_HEADWORD_1 );
+  // 子音頭文字入力用BMPWINの解放
+  select_bmpwin_del( wk, MODE_HEADWORD_1 );
 
-	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  // カーソル表示OFF
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	// 入力しているかしていないかで分岐
-	if(wk->Head1 >= 0){
-		if(wk->Head1!=INPUT_HEAD_WA){
-			wk->seq = WI_SEQ_HEAD2_INIT;
-		}else{
-			wk->Head2 = 0;
-			wk->seq   = WI_SEQ_POKENAME_INIT;
-		}
-		MORI_PRINT("input head1 exit ---> input next Head2(Head1=%d) \n", wk->Head1);
-	}else{
-		MORI_PRINT("input head1 exit ---> input end (Head1=%d) \n", wk->Head1);
-		return BMPMENU_CANCEL;
-	}
-	
-	return BMPMENU_NULL;
+  // 入力しているかしていないかで分岐
+  if(wk->Head1 >= 0){
+    if(wk->Head1!=INPUT_HEAD_WA){
+      wk->seq = WI_SEQ_HEAD2_INIT;
+    }else{
+      wk->Head2 = 0;
+      wk->seq   = WI_SEQ_POKENAME_INIT;
+    }
+    MORI_PRINT("input head1 exit ---> input next Head2(Head1=%d) \n", wk->Head1);
+  }else{
+    MORI_PRINT("input head1 exit ---> input end (Head1=%d) \n", wk->Head1);
+    return BMPMENU_CANCEL;
+  }
+
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -2887,20 +2997,20 @@ static int	wi_seq_head1_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_head1_return( WORLDTRADE_INPUT_WORK *wk )
 {
-	u16 *scr;
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_name3_lz_nscr, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
-	select_bmpwin_add( wk, MODE_HEADWORD_1 );
+  u16 *scr;
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_name3_lz_nscr, 1 );
+  scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
+  select_bmpwin_add( wk, MODE_HEADWORD_1 );
 
-	// もどる
-	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+  // もどる
+  touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
 
-	// アカサタナハマヤラワ書き込み
-	{
+  // アカサタナハマヤラワ書き込み
+  {
     int i;
-		STRBUF *strbuf;
-		PRINTSYS_LSB color;
-		
+    STRBUF *strbuf;
+    PRINTSYS_LSB color;
+
     MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
     for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
       strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_10_001+i );
@@ -2916,20 +3026,20 @@ static int	wi_seq_head1_return( WORLDTRADE_INPUT_WORK *wk )
       WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], strbuf,  2, color, &wk->print );
       GFL_STR_DeleteBuffer(strbuf);
     }
-	}
+  }
 
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
-	BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
+  BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
 
-	GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 4);
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-						(word_cur_table[wk->Head1][0]+16)*8,
-						word_cur_table[wk->Head1][1]*8 );
-	wk->listpos = wk->Head1;
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+  GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 4);
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      (word_cur_table[wk->Head1][0]+16)*8,
+      word_cur_table[wk->Head1][1]*8 );
+  wk->listpos = wk->Head1;
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
 
-//	GFL_HEAP_FreeMemory( buf );
-	wk->seq = WI_SEQ_HEAD1_MAIN;
+  //	GFL_HEAP_FreeMemory( buf );
+  wk->seq = WI_SEQ_HEAD1_MAIN;
 
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   { 
@@ -2940,8 +3050,8 @@ static int	wi_seq_head1_return( WORLDTRADE_INPUT_WORK *wk )
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
 
-	OS_Printf("input head1 return -----\n");
-	return BMPMENU_NULL;
+  OS_Printf("input head1 return -----\n");
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -2955,54 +3065,54 @@ static int	wi_seq_head1_return( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_head2_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	u16 *scr;
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_name1_lz_nscr, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
-	
-	select_bmpwin_add( wk, MODE_HEADWORD_2 );
-	{
-		int i;
-		for(i=0;i<MODE_HEADWORD2_WIN_NUM;i++){
-//			SelectFrameBoxWrite( scr, word2_table[i][0], word2_table[i][1], word2_table[i][2] );
-		}
-	}
-//	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
-	
-	{
-		int i;
-    	int see_count;
-        PRINTSYS_LSB color;
-        
-        MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
-		system_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[0], 
-				  head_letter_table[head2_word_start[wk->Head1][0]], SEARCH_MOJI_COLOR_NORMAL, &wk->print );
-		for(i=1;i<MODE_HEADWORD2_WIN_NUM;i++){
-        	see_count = PokeSeeCount_Siin(wk, head2pokename[wk->Head1]+i-1);
-            if(see_count > 0){
-                color = SEARCH_MOJI_COLOR_NORMAL;
-                wk->see_check[head2pokename[wk->Head1]+i-1] = TRUE;
-            }
-            else{
-                color = SEARCH_MOJI_COLOR_GRAY;
-                wk->see_check[head2pokename[wk->Head1]+i-1] = FALSE;
-            }
-			system_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[i], 
-				  head_letter_table[head2_word_start[wk->Head1][0]+i-1], color, &wk->print);
-		}
-	}
-	touch_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print);
+  u16 *scr;
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_name1_lz_nscr, 1 );
+  scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
-	GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 4);
-	
-	if(wk->Head2<0){
-		wk->listpos = 0;
-	}else{
-		wk->listpos = wk->Head2;
-	}
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-				(word_cur_table[wk->listpos][0]+16)*8,
-				 word_cur_table[wk->listpos][1]*8 );
+  select_bmpwin_add( wk, MODE_HEADWORD_2 );
+  {
+    int i;
+    for(i=0;i<MODE_HEADWORD2_WIN_NUM;i++){
+      //			SelectFrameBoxWrite( scr, word2_table[i][0], word2_table[i][1], word2_table[i][2] );
+    }
+  }
+  //	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
+
+  {
+    int i;
+    int see_count;
+    PRINTSYS_LSB color;
+
+    MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
+    system_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[0], 
+        head_letter_table[head2_word_start[wk->Head1][0]], SEARCH_MOJI_COLOR_NORMAL, &wk->print );
+    for(i=1;i<MODE_HEADWORD2_WIN_NUM;i++){
+      see_count = PokeSeeCount_Siin(wk, head2pokename[wk->Head1]+i-1);
+      if(see_count > 0){
+        color = SEARCH_MOJI_COLOR_NORMAL;
+        wk->see_check[head2pokename[wk->Head1]+i-1] = TRUE;
+      }
+      else{
+        color = SEARCH_MOJI_COLOR_GRAY;
+        wk->see_check[head2pokename[wk->Head1]+i-1] = FALSE;
+      }
+      system_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[i], 
+          head_letter_table[head2_word_start[wk->Head1][0]+i-1], color, &wk->print);
+    }
+  }
+  touch_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print);
+
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
+  GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 4);
+
+  if(wk->Head2<0){
+    wk->listpos = 0;
+  }else{
+    wk->listpos = wk->Head2;
+  }
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      (word_cur_table[wk->listpos][0]+16)*8,
+      word_cur_table[wk->listpos][1]*8 );
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
@@ -3012,11 +3122,11 @@ static int	wi_seq_head2_init( WORLDTRADE_INPUT_WORK *wk )
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
 
-	wk->seq  = WI_SEQ_HEAD2_MAIN;
+  wk->seq  = WI_SEQ_HEAD2_MAIN;
 
-	MORI_PRINT("input head2 init\n");
+  MORI_PRINT("input head2 init\n");
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -3031,28 +3141,28 @@ static int	wi_seq_head2_init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_head2_main( WORLDTRADE_INPUT_WORK *wk )
 {
-	u32 ret;
-	
-	switch((ret=WordHead2_SelectMain( wk, wk->see_check ))){
-	case 0:	case 1: case 2: case 3: case 4:
-	
+  u32 ret;
+
+  switch((ret=WordHead2_SelectMain( wk, wk->see_check ))){
+  case 0:	case 1: case 2: case 3: case 4:
+
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_HEAD2_EXIT;
-		wk->Head2 = ret;
-		break;
-	case BMPMENU_CANCEL:
+    wk->seq  = WI_SEQ_HEAD2_EXIT;
+    wk->Head2 = ret;
+    break;
+  case BMPMENU_CANCEL:
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_HEAD2_EXIT;
-//		wk->next  = WI_SEQ_HEAD1_RETURN;
-		wk->Head2 = -1;
-		break;
-	}
+    wk->seq  = WI_SEQ_HEAD2_EXIT;
+    //		wk->next  = WI_SEQ_HEAD1_RETURN;
+    wk->Head2 = -1;
+    break;
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -3072,21 +3182,21 @@ static int	wi_seq_head2_exit( WORLDTRADE_INPUT_WORK *wk )
   { 
     return BMPMENU_NULL;
   }	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	// 子音頭文字入力用BMPWINの解放
-	select_bmpwin_del( wk, MODE_HEADWORD_2 );
+  // 子音頭文字入力用BMPWINの解放
+  select_bmpwin_del( wk, MODE_HEADWORD_2 );
 
-	// 入力しているかしていないかで分岐
-	if(wk->Head2 >= 0){
-		wk->seq = WI_SEQ_POKENAME_INIT;
-		MORI_PRINT("input head2 exit ---> input return (Head2=%d) \n", wk->Head2);
-	}else{
-		wk->seq = WI_SEQ_HEAD1_RETURN;
-		MORI_PRINT("input head1 return ---> input next Name(Head2=%d) \n", wk->Head2);
-	}
+  // 入力しているかしていないかで分岐
+  if(wk->Head2 >= 0){
+    wk->seq = WI_SEQ_POKENAME_INIT;
+    MORI_PRINT("input head2 exit ---> input return (Head2=%d) \n", wk->Head2);
+  }else{
+    wk->seq = WI_SEQ_HEAD1_RETURN;
+    MORI_PRINT("input head1 return ---> input next Name(Head2=%d) \n", wk->Head2);
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -3109,10 +3219,10 @@ static int	wi_seq_head2_return( WORLDTRADE_INPUT_WORK *wk )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
-	wk->seq  = WI_SEQ_HEAD2_INIT;
+  wk->seq  = WI_SEQ_HEAD2_INIT;
 
-	MORI_PRINT("input head2 return\n");
-	return BMPMENU_NULL;
+  MORI_PRINT("input head2 return\n");
+  return BMPMENU_NULL;
 }
 
 
@@ -3128,14 +3238,14 @@ static int	wi_seq_head2_return( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int PokeName_GetSortNum( u8 *sinou, ZUKAN_SAVEDATA *zukan, int pokenum, u16 *sortlist, int start, int end )
 {
-	int i, count;
-	for(i=start,count=0;i<end;i++){
-		if(ZUKANSAVE_GetPokeSeeFlag( zukan, sortlist[i] )){
-			OS_Printf(" SeeCheck i = %d, table[index+i] = %d\n", i, sortlist[i]);
-			count++;
-		}
-	}
-	return count;
+  int i, count;
+  for(i=start,count=0;i<end;i++){
+    if(ZUKANSAVE_GetPokeSeeFlag( zukan, sortlist[i] )){
+      OS_Printf(" SeeCheck i = %d, table[index+i] = %d\n", i, sortlist[i]);
+      count++;
+    }
+  }
+  return count;
 }
 //------------------------------------------------------------------
 /**
@@ -3152,40 +3262,40 @@ static int PokeName_GetSortNum( u8 *sinou, ZUKAN_SAVEDATA *zukan, int pokenum, u
  */
 //------------------------------------------------------------------
 static int PokeName_MakeSortList( BMPLIST_DATA **list, GFL_MSGDATA *monsnameman, 
-									GFL_MSGDATA *msgman, u8 *sinou, int select, ZUKAN_SAVEDATA *zukan )
+    GFL_MSGDATA *msgman, u8 *sinou, int select, ZUKAN_SAVEDATA *zukan )
 {
-	int i,index,see_count=0;
-	int pokenum;
+  int i,index,see_count=0;
+  int pokenum;
   int start, end;
-	u16 *sortlist = WorldTrade_ZukanSortDataGet( HEAPID_WORLDTRADE, 0, &pokenum );
+  u16 *sortlist = WorldTrade_ZukanSortDataGet( HEAPID_WORLDTRADE, 0, &pokenum );
   WorldTrade_ZukanSortDataGetOnlyIndex( select, &start, &end );
 
   pokenum = end - start;
-	OS_TPrintf("select = %d, num = %d\n",select, pokenum);
-	
-	// 図鑑と比べて何体見ているかを確認
-	see_count = PokeName_GetSortNum( sinou, zukan, pokenum, sortlist, start ,end );
+  OS_TPrintf("select = %d, num = %d\n",select, pokenum);
 
-	// 項目リストの作成
-	*list = BmpMenuWork_ListCreate( see_count+1, HEAPID_WORLDTRADE );
+  // 図鑑と比べて何体見ているかを確認
+  see_count = PokeName_GetSortNum( sinou, zukan, pokenum, sortlist, start ,end );
+
+  // 項目リストの作成
+  *list = BmpMenuWork_ListCreate( see_count+1, HEAPID_WORLDTRADE );
 
 
-	// ポケモン名の登録
-	for(i=start;i<end;i++){
-		if(ZUKANSAVE_GetPokeSeeFlag( zukan, sortlist[i] )){
-			OS_Printf(" ListAdd i = %d, table[index+i] = %d\n", i, sortlist[i]);
-			BmpMenuWork_ListAddArchiveString( *list, monsnameman, sortlist[i], sortlist[i], HEAPID_WORLDTRADE );
-		}
-	}
+  // ポケモン名の登録
+  for(i=start;i<end;i++){
+    if(ZUKANSAVE_GetPokeSeeFlag( zukan, sortlist[i] )){
+      OS_Printf(" ListAdd i = %d, table[index+i] = %d\n", i, sortlist[i]);
+      BmpMenuWork_ListAddArchiveString( *list, monsnameman, sortlist[i], sortlist[i], HEAPID_WORLDTRADE );
+    }
+  }
 
-	OS_Printf("----------------------list_print\n");
-	for(i=0;i<see_count;i++){
-		OS_Printf("%02d: %d\n", i, (*list)[i].param);
-	}
+  OS_Printf("----------------------list_print\n");
+  for(i=0;i<see_count;i++){
+    OS_Printf("%02d: %d\n", i, (*list)[i].param);
+  }
 
-	GFL_HEAP_FreeMemory( sortlist );
+  GFL_HEAP_FreeMemory( sortlist );
 
-	return see_count;
+  return see_count;
 }
 
 
@@ -3204,19 +3314,19 @@ static int PokeName_MakeSortList( BMPLIST_DATA **list, GFL_MSGDATA *monsnameman,
 //------------------------------------------------------------------
 static void PokeName_ListPrint( WORLDTRADE_INPUT_WORK *wk, int page, int max )
 {
-	int i;
-	
-	for(i=0;i<POKENAME_1PAGE_MAX;i++){
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-		if(page*POKENAME_1PAGE_MAX+i<max){
-			WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], 
-									   (STRBUF*)wk->NameList[page*POKENAME_1PAGE_MAX+i].str,  
-									   0, PRINTSYS_LSB_Make(15,14,2),&wk->print );
-		}else{
-			GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
-			BGWINFRM_BmpWinOn( wk->BgWinFrm, 0, wk->MenuBmp[i] );
-		}
-	}
+  int i;
+
+  for(i=0;i<POKENAME_1PAGE_MAX;i++){
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+    if(page*POKENAME_1PAGE_MAX+i<max){
+      WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], 
+          (STRBUF*)wk->NameList[page*POKENAME_1PAGE_MAX+i].str,  
+          0, PRINTSYS_LSB_Make(15,14,2),&wk->print );
+    }else{
+      GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
+      BGWINFRM_BmpWinOn( wk->BgWinFrm, 0, wk->MenuBmp[i] );
+    }
+  }
 
 }
 //------------------------------------------------------------------
@@ -3232,19 +3342,19 @@ static void PokeName_ListPrint( WORLDTRADE_INPUT_WORK *wk, int page, int max )
 //------------------------------------------------------------------
 static void Nation_ListPrint( WORLDTRADE_INPUT_WORK *wk, int page, int max )
 {
-	int i;
-	for(i=0;i<NATION_1PAGE_MAX;i++){
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
-		if(page*NATION_1PAGE_MAX+i<max){
-			WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], 
-									   (STRBUF*)wk->NameList[page*NATION_1PAGE_MAX+i].str,  
-									   0, PRINTSYS_LSB_Make(15,14,2),&wk->print );
-		}else{
-			GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
-			BGWINFRM_BmpWinOn( wk->BgWinFrm, 0, wk->MenuBmp[i] );
-		}
-	}
-	
+  int i;
+  for(i=0;i<NATION_1PAGE_MAX;i++){
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
+    if(page*NATION_1PAGE_MAX+i<max){
+      WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], 
+          (STRBUF*)wk->NameList[page*NATION_1PAGE_MAX+i].str,  
+          0, PRINTSYS_LSB_Make(15,14,2),&wk->print );
+    }else{
+      GFL_BMPWIN_TransVramCharacter( wk->MenuBmp[i] );
+      BGWINFRM_BmpWinOn( wk->BgWinFrm, 0, wk->MenuBmp[i] );
+    }
+  }
+
 }
 
 
@@ -3261,47 +3371,47 @@ static void Nation_ListPrint( WORLDTRADE_INPUT_WORK *wk, int page, int max )
 //------------------------------------------------------------------
 static int	wi_seq_pokename_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	u16 *scr;
+  u16 *scr;
   u8 page_max;
 
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_level_lz_nscr, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_level_lz_nscr, 1 );
+  scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
-	// 子音頭文字入力用BMPWINの確保
-	select_bmpwin_add( wk, MODE_POKEMON_NAME );
+  // 子音頭文字入力用BMPWINの確保
+  select_bmpwin_add( wk, MODE_POKEMON_NAME );
 
-//	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
-	
-	// ポケモン名リストの作成
-	wk->listMax = PokeName_MakeSortList( &wk->NameList, wk->MonsNameManager, wk->MsgManager, 
-							wk->SinouTable, head2pokename[wk->Head1]+wk->Head2, wk->zukan );
-	wk->page = 0;
+  //	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
 
-	// リスト表示
-	PokeName_ListPrint( wk, 0, wk->listMax );
+  // ポケモン名リストの作成
+  wk->listMax = PokeName_MakeSortList( &wk->NameList, wk->MonsNameManager, wk->MsgManager, 
+      wk->SinouTable, head2pokename[wk->Head1]+wk->Head2, wk->zukan );
+  wk->page = 0;
 
-	// ページ数表示
+  // リスト表示
+  PokeName_ListPrint( wk, 0, wk->listMax );
+
+  // ページ数表示
   page_max = _list_page_num( wk->listMax, MODE_POKENAME_WIN_NUM );
   PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_POKENAME_WIN_NUM], 
       wk->page, page_max );
 
-	// もどる表示
-	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+  // もどる表示
+  touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
 
 
-	// スクリーン反映
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
+  // スクリーン反映
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
 
-	// カーソル表示
-	GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 6);
-	
-	wk->listpos = 0;
-	
-	// カーソル位置移動・左右移動カーソル表示
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-				namepostable[wk->listpos][0], namepostable[wk->listpos][1] );
-	WorldTrade_CLACT_PosChange( wk->ArrowAct[0], POKE_ARROW2_X, POKE_ARROW_Y);
-	WorldTrade_CLACT_PosChange( wk->ArrowAct[1], POKE_ARROW1_X, POKE_ARROW_Y);
+  // カーソル表示
+  GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 6);
+
+  wk->listpos = 0;
+
+  // カーソル位置移動・左右移動カーソル表示
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      namepostable[wk->listpos][0], namepostable[wk->listpos][1] );
+  WorldTrade_CLACT_PosChange( wk->ArrowAct[0], POKE_ARROW2_X, POKE_ARROW_Y);
+  WorldTrade_CLACT_PosChange( wk->ArrowAct[1], POKE_ARROW1_X, POKE_ARROW_Y);
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
@@ -3327,9 +3437,9 @@ static int	wi_seq_pokename_init( WORLDTRADE_INPUT_WORK *wk )
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], TRUE );
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
 
-	wk->seq  = WI_SEQ_POKENAME_MAIN;
+  wk->seq  = WI_SEQ_POKENAME_MAIN;
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -3344,29 +3454,29 @@ static int	wi_seq_pokename_init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_pokename_main( WORLDTRADE_INPUT_WORK *wk )
 {
-	u32 ret;
-	switch((ret=PokeName_SelectMain( wk ))){
-	case BMPMENU_CANCEL:
+  u32 ret;
+  switch((ret=PokeName_SelectMain( wk ))){
+  case BMPMENU_CANCEL:
     PMSND_PlaySE(SE_CANCEL);
 
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_POKENAME_CANCEL_EXIT;
-		wk->Poke = -1;
-		break;
-	case BMPMENU_NULL:
-		break;
-	default:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    wk->seq  = WI_SEQ_POKENAME_CANCEL_EXIT;
+    wk->Poke = -1;
+    break;
+  case BMPMENU_NULL:
+    break;
+  default:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_WINOUT;
-		wk->next = WI_SEQ_POKENAME_EXIT;
-		wk->Poke = ret;
-		break;
-	}
-	return BMPMENU_NULL;
+    wk->seq  = WI_SEQ_WINOUT;
+    wk->next = WI_SEQ_POKENAME_EXIT;
+    wk->Poke = ret;
+    break;
+  }
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3380,7 +3490,7 @@ static int	wi_seq_pokename_main( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_pokename_cancel_exit( WORLDTRADE_INPUT_WORK *wk )
 {
-	MORI_PRINT("input pokename exit ---> input next Name(Head2=%d) \n", wk->Head2);
+  MORI_PRINT("input pokename exit ---> input next Name(Head2=%d) \n", wk->Head2);
 
   //キーアニメ待ち
   if( GFL_CLACT_WK_CheckAnmActive( wk->CursorAct ) )
@@ -3388,21 +3498,21 @@ static int	wi_seq_pokename_cancel_exit( WORLDTRADE_INPUT_WORK *wk )
     return BMPMENU_NULL;
   }
 
-	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  // カーソル表示OFF
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 0 );
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
-	select_bmpwin_del( wk, MODE_POKEMON_NAME );
-	// ポケモン名リストの解放
-	BmpMenuWork_ListDelete( wk->NameList );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
+  select_bmpwin_del( wk, MODE_POKEMON_NAME );
+  // ポケモン名リストの解放
+  BmpMenuWork_ListDelete( wk->NameList );
 
-	if(wk->Head1!=INPUT_HEAD_WA){
-		wk->seq = WI_SEQ_HEAD2_RETURN;
-	}else{
-		wk->seq = WI_SEQ_HEAD1_RETURN;
-	}
-	return BMPMENU_NULL;
+  if(wk->Head1!=INPUT_HEAD_WA){
+    wk->seq = WI_SEQ_HEAD2_RETURN;
+  }else{
+    wk->seq = WI_SEQ_HEAD1_RETURN;
+  }
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3416,7 +3526,7 @@ static int	wi_seq_pokename_cancel_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int wi_seq_pokename_exit( WORLDTRADE_INPUT_WORK *wk )
 {
-	int ret=BMPMENU_NULL;
+  int ret=BMPMENU_NULL;
 
   //キーアニメ待ち
   if( GFL_CLACT_WK_CheckAnmActive( wk->CursorAct ) )
@@ -3424,14 +3534,14 @@ static int wi_seq_pokename_exit( WORLDTRADE_INPUT_WORK *wk )
     return BMPMENU_NULL;
   }
 
-	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  // カーソル表示OFF
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	select_bmpwin_del( wk, MODE_POKEMON_NAME );
-	// ポケモン名リストの解放
-	BmpMenuWork_ListDelete( wk->NameList );
+  select_bmpwin_del( wk, MODE_POKEMON_NAME );
+  // ポケモン名リストの解放
+  BmpMenuWork_ListDelete( wk->NameList );
 
-	return wk->Poke;
+  return wk->Poke;
 }
 
 //------------------------------------------------------------------
@@ -3445,25 +3555,25 @@ static int wi_seq_pokename_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_head1_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	HeadWord1_Init( wk, MODE_NATION_HEAD1, HEAD1_MOVE_INIT_X );
-	GFL_CLACT_WK_SetAnmSeq(   wk->CursorAct, 4 );
+  HeadWord1_Init( wk, MODE_NATION_HEAD1, HEAD1_MOVE_INIT_X );
+  GFL_CLACT_WK_SetAnmSeq(   wk->CursorAct, 4 );
 
 
-	BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
-	wk->seq     = WI_SEQ_WININ;
-	wk->next    = WI_SEQ_NATION_HEAD1_MAIN;
-	wk->listpos = INPUT_HEAD_NONE;
-	wk->Head1   = -1;
+  BGWINFRM_MoveInit( wk->BgWinFrm, 0, -4, 0, 4 );
+  wk->seq     = WI_SEQ_WININ;
+  wk->next    = WI_SEQ_NATION_HEAD1_MAIN;
+  wk->listpos = INPUT_HEAD_NONE;
+  wk->Head1   = -1;
 
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-					(n_word_table[wk->listpos][0]+16)*8,
-					 n_word_table[wk->listpos][1]*8 );
-    GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
-    
-	MORI_PRINT("input nation head1 init\n");
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      (n_word_table[wk->listpos][0]+16)*8,
+      n_word_table[wk->listpos][1]*8 );
+  GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+
+  MORI_PRINT("input nation head1 init\n");
 
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 //------------------------------------------------------------------
 /**
@@ -3476,34 +3586,34 @@ static int	wi_seq_nation_head1_init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_head1_main( WORLDTRADE_INPUT_WORK *wk )
 {
-	u32 ret;
-	switch((ret=NationHead1_SelectMain(wk, wk->see_check))){
-	case BMPMENU_NULL:
-		break;
-	case BMPMENU_CANCEL:	// キャンセル
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+  u32 ret;
+  switch((ret=NationHead1_SelectMain(wk, wk->see_check))){
+  case BMPMENU_NULL:
+    break;
+  case BMPMENU_CANCEL:	// キャンセル
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
-		wk->seq   = WI_SEQ_WINOUT;
-		wk->next  = WI_SEQ_NATION_HEAD1_EXIT;
-		wk->Head1 = -1;
-		break;
-	case INPUT_HEAD_NONE:	// 「きにしない」を入力した
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    wk->seq   = WI_SEQ_WINOUT;
+    wk->next  = WI_SEQ_NATION_HEAD1_EXIT;
+    wk->Head1 = -1;
+    break;
+  case INPUT_HEAD_NONE:	// 「きにしない」を入力した
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
-		wk->seq   = WI_SEQ_WINOUT;
-		wk->next  = WI_SEQ_NATION_HEAD1_EXIT;
-		wk->Head1 = -2;
-		break;
-	case INPUT_HEAD_A:	case INPUT_HEAD_KA:	case INPUT_HEAD_SA:	case INPUT_HEAD_TA:	case INPUT_HEAD_NA:
-	case INPUT_HEAD_HA:	case INPUT_HEAD_MA: case INPUT_HEAD_YA: case INPUT_HEAD_RA: case INPUT_HEAD_WA:
-	default:				// 通常の入力
+    wk->seq   = WI_SEQ_WINOUT;
+    wk->next  = WI_SEQ_NATION_HEAD1_EXIT;
+    wk->Head1 = -2;
+    break;
+  case INPUT_HEAD_A:	case INPUT_HEAD_KA:	case INPUT_HEAD_SA:	case INPUT_HEAD_TA:	case INPUT_HEAD_NA:
+  case INPUT_HEAD_HA:	case INPUT_HEAD_MA: case INPUT_HEAD_YA: case INPUT_HEAD_RA: case INPUT_HEAD_WA:
+  default:				// 通常の入力
 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
-		wk->Head1 = ret;
-		wk->seq   = WI_SEQ_NATION_HEAD1_EXIT;
-	}
-	return BMPMENU_NULL;
+    wk->Head1 = ret;
+    wk->seq   = WI_SEQ_NATION_HEAD1_EXIT;
+  }
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3522,35 +3632,35 @@ static int	wi_seq_nation_head1_exit( WORLDTRADE_INPUT_WORK *wk )
   { 
     return BMPMENU_NULL;
   }	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	select_bmpwin_del( wk, MODE_NATION_HEAD1 );
-	
-	if(wk->Head1<0){
-		if(wk->Head1==-1){
-			return BMPMENU_CANCEL;	// キャンセル
-		}else if(wk->Head1==-2){
-			return 0;				// 「きにしない」を選んだ
-		}
-	}else{
-		if(wk->Head1!=INPUT_HEAD_WA){
-			wk->seq = WI_SEQ_NATION_HEAD2_INIT;
-		}else{
-			wk->Head2 = 0;
-			BGWINFRM_MoveInit( wk->BgWinFrm, 0,  -4, 0, 3 );
-			// 検索画面のメインカーソルを隠す
-			if(wk->SearchCursorAct!=NULL){
-				GFL_CLACT_WK_SetDrawEnable( wk->SearchCursorAct, 0 );
-			}
-			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
-			wk->seq  = WI_SEQ_WINWAIT;
+  select_bmpwin_del( wk, MODE_NATION_HEAD1 );
+
+  if(wk->Head1<0){
+    if(wk->Head1==-1){
+      return BMPMENU_CANCEL;	// キャンセル
+    }else if(wk->Head1==-2){
+      return 0;				// 「きにしない」を選んだ
+    }
+  }else{
+    if(wk->Head1!=INPUT_HEAD_WA){
+      wk->seq = WI_SEQ_NATION_HEAD2_INIT;
+    }else{
+      wk->Head2 = 0;
+      BGWINFRM_MoveInit( wk->BgWinFrm, 0,  -4, 0, 3 );
+      // 検索画面のメインカーソルを隠す
+      if(wk->SearchCursorAct!=NULL){
+        GFL_CLACT_WK_SetDrawEnable( wk->SearchCursorAct, 0 );
+      }
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
+      wk->seq  = WI_SEQ_WINWAIT;
 
       BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
 
-			wk->next = WI_SEQ_NATION_INIT;
-		}
-	}
-	return BMPMENU_NULL;
+      wk->next = WI_SEQ_NATION_INIT;
+    }
+  }
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3564,15 +3674,15 @@ static int	wi_seq_nation_head1_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_head1_return( WORLDTRADE_INPUT_WORK *wk )
 {
-	HeadWord1_Init( wk, MODE_NATION_HEAD1, HEAD1_REWRITE_INIT_X );
-	GFL_CLACT_WK_SetAnmSeq(   wk->CursorAct, 4 );
-	GFL_CLACT_WK_SetDrawEnable(   wk->CursorAct, 1 );
-	wk->listpos = wk->Head1;
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-					(n_word_table[wk->listpos][0]+16)*8,
-					 n_word_table[wk->listpos][1]*8 );
+  HeadWord1_Init( wk, MODE_NATION_HEAD1, HEAD1_REWRITE_INIT_X );
+  GFL_CLACT_WK_SetAnmSeq(   wk->CursorAct, 4 );
+  GFL_CLACT_WK_SetDrawEnable(   wk->CursorAct, 1 );
+  wk->listpos = wk->Head1;
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      (n_word_table[wk->listpos][0]+16)*8,
+      n_word_table[wk->listpos][1]*8 );
 
-	//イニットに戻らないからここで検索画面のメインカーソル表示
+  //イニットに戻らないからここで検索画面のメインカーソル表示
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
@@ -3582,8 +3692,8 @@ static int	wi_seq_nation_head1_return( WORLDTRADE_INPUT_WORK *wk )
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
 
-	wk->seq   = WI_SEQ_NATION_HEAD1_MAIN;
-	return BMPMENU_NULL;
+  wk->seq   = WI_SEQ_NATION_HEAD1_MAIN;
+  return BMPMENU_NULL;
 }
 
 
@@ -3598,54 +3708,54 @@ static int	wi_seq_nation_head1_return( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_head2_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	u16 *scr;
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_name1_lz_nscr, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
-	select_bmpwin_add( wk, MODE_HEADWORD_2 );
-	{
-		int i;
-		for(i=0;i<MODE_HEADWORD2_WIN_NUM;i++){
-//			SelectFrameBoxWrite( scr, word2_table[i][0], word2_table[i][1], word2_table[i][2] );
-		}
-	}
-//	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
-	
-	{
-		int i;
-        MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
-		system_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[0], 
-				   head_letter_table[head2_word_start[wk->Head1][0]], SEARCH_MOJI_COLOR_NORMAL, &wk->print );
-		for(i=1;i<MODE_HEADWORD2_WIN_NUM;i++){
-            int nation_num;
-            PRINTSYS_LSB color;
-            nation_num = NationCount_Siin(wk, head2pokename[wk->Head1]+i-1);
-            if(nation_num > 0){
-                color = SEARCH_MOJI_COLOR_NORMAL;
-                wk->see_check[head2pokename[wk->Head1]+i-1] = TRUE;
-            }
-            else{
-                color = SEARCH_MOJI_COLOR_GRAY;
-                wk->see_check[head2pokename[wk->Head1]+i-1] = FALSE;
-            }
-			system_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[i], 
-				  head_letter_table[head2_word_start[wk->Head1][0]+i-1], color, &wk->print);
-		}
+  u16 *scr;
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_name1_lz_nscr, 1 );
+  scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
+  select_bmpwin_add( wk, MODE_HEADWORD_2 );
+  {
+    int i;
+    for(i=0;i<MODE_HEADWORD2_WIN_NUM;i++){
+      //			SelectFrameBoxWrite( scr, word2_table[i][0], word2_table[i][1], word2_table[i][2] );
+    }
+  }
+  //	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
+
+  {
+    int i;
+    MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
+    system_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[0], 
+        head_letter_table[head2_word_start[wk->Head1][0]], SEARCH_MOJI_COLOR_NORMAL, &wk->print );
+    for(i=1;i<MODE_HEADWORD2_WIN_NUM;i++){
+      int nation_num;
+      PRINTSYS_LSB color;
+      nation_num = NationCount_Siin(wk, head2pokename[wk->Head1]+i-1);
+      if(nation_num > 0){
+        color = SEARCH_MOJI_COLOR_NORMAL;
+        wk->see_check[head2pokename[wk->Head1]+i-1] = TRUE;
+      }
+      else{
+        color = SEARCH_MOJI_COLOR_GRAY;
+        wk->see_check[head2pokename[wk->Head1]+i-1] = FALSE;
+      }
+      system_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[i], 
+          head_letter_table[head2_word_start[wk->Head1][0]+i-1], color, &wk->print);
+    }
 
 
-	}
-	touch_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print);
+  }
+  touch_print( wk->BgWinFrm,wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print);
 
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
-	GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 4);
-	
-	if(wk->Head2<0){
-		wk->listpos = 0;
-	}else{
-		wk->listpos = wk->Head2;
-	}
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-				(word_cur_table[wk->listpos][0]+16)*8,
-				 word_cur_table[wk->listpos][1]*8 );
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
+  GFL_CLACT_WK_SetAnmSeq(wk->CursorAct, 4);
+
+  if(wk->Head2<0){
+    wk->listpos = 0;
+  }else{
+    wk->listpos = wk->Head2;
+  }
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      (word_cur_table[wk->listpos][0]+16)*8,
+      word_cur_table[wk->listpos][1]*8 );
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
@@ -3654,15 +3764,15 @@ static int	wi_seq_nation_head2_init( WORLDTRADE_INPUT_WORK *wk )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
-	if(wk->SearchCursorAct!=NULL){
-		GFL_CLACT_WK_SetDrawEnable( wk->SearchCursorAct, 1 );
-	}
+  if(wk->SearchCursorAct!=NULL){
+    GFL_CLACT_WK_SetDrawEnable( wk->SearchCursorAct, 1 );
+  }
 
-	wk->seq    = WI_SEQ_NATION_HEAD2_MAIN;
+  wk->seq    = WI_SEQ_NATION_HEAD2_MAIN;
 
-	MORI_PRINT("input head2 init\n");
+  MORI_PRINT("input head2 init\n");
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -3677,24 +3787,24 @@ static int	wi_seq_nation_head2_init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_head2_main( WORLDTRADE_INPUT_WORK *wk )
 {
-	u32 ret;
-	switch((ret=WordHead2_SelectMain( wk, wk->see_check ))){
-	case 0:	case 1: case 2: case 3: case 4:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+  u32 ret;
+  switch((ret=WordHead2_SelectMain( wk, wk->see_check ))){
+  case 0:	case 1: case 2: case 3: case 4:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_NATION_HEAD2_EXIT;
-		wk->Head2 = ret;
-		break;
-	case BMPMENU_CANCEL:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    wk->seq  = WI_SEQ_NATION_HEAD2_EXIT;
+    wk->Head2 = ret;
+    break;
+  case BMPMENU_CANCEL:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
-		wk->seq  = WI_SEQ_NATION_HEAD2_EXIT;
-		wk->Head2 = -1;
-		break;
-	}
+    wk->seq  = WI_SEQ_NATION_HEAD2_EXIT;
+    wk->Head2 = -1;
+    break;
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3713,29 +3823,29 @@ static int	wi_seq_nation_head2_exit( WORLDTRADE_INPUT_WORK *wk )
   { 
     return BMPMENU_NULL;
   }	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	select_bmpwin_del( wk, MODE_HEADWORD_2 );
-	
-	if(wk->Head2<0){
-		wk->seq = WI_SEQ_NATION_HEAD1_RETURN;
-	}else{
-		BGWINFRM_MoveInit( wk->BgWinFrm, 0,  -4, 0, 3 );
-		// 検索画面のメインカーソルを隠す
-		if(wk->SearchCursorAct!=NULL){
-			GFL_CLACT_WK_SetDrawEnable( wk->SearchCursorAct, 0 );
-		}
-		GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
-		wk->seq  = WI_SEQ_WINWAIT;
+  select_bmpwin_del( wk, MODE_HEADWORD_2 );
+
+  if(wk->Head2<0){
+    wk->seq = WI_SEQ_NATION_HEAD1_RETURN;
+  }else{
+    BGWINFRM_MoveInit( wk->BgWinFrm, 0,  -4, 0, 3 );
+    // 検索画面のメインカーソルを隠す
+    if(wk->SearchCursorAct!=NULL){
+      GFL_CLACT_WK_SetDrawEnable( wk->SearchCursorAct, 0 );
+    }
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
+    wk->seq  = WI_SEQ_WINWAIT;
 
 
     BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
 
-		wk->next = WI_SEQ_NATION_INIT;
-	}
-	return BMPMENU_NULL;
-	
-	
+    wk->next = WI_SEQ_NATION_INIT;
+  }
+  return BMPMENU_NULL;
+
+
 }
 //------------------------------------------------------------------
 /**
@@ -3748,8 +3858,8 @@ static int	wi_seq_nation_head2_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_head2_return( WORLDTRADE_INPUT_WORK *wk )
 {
-	wk->seq     = WI_SEQ_NATION_HEAD2_INIT;
-	wk->listpos = wk->Head2;
+  wk->seq     = WI_SEQ_NATION_HEAD2_INIT;
+  wk->listpos = wk->Head2;
 
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   { 
@@ -3759,7 +3869,7 @@ static int	wi_seq_nation_head2_return( WORLDTRADE_INPUT_WORK *wk )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 
@@ -3776,31 +3886,31 @@ static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
 {
   u8 page_max;
 
-	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
+  BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
 
-	// 子音頭文字入力用BMPWINの確保
-	select_bmpwin_add( wk, MODE_NATION );
-	
-	wk->listMax = WorldTrade_NationSortListMake( &wk->NameList, wk->CountryNameManager, 
-												 head2pokename[wk->Head1]+wk->Head2 );
-	Nation_ListPrint( wk, 0, wk->listMax );
-	wk->page    = 0;
+  // 子音頭文字入力用BMPWINの確保
+  select_bmpwin_add( wk, MODE_NATION );
+
+  wk->listMax = WorldTrade_NationSortListMake( &wk->NameList, wk->CountryNameManager, 
+      head2pokename[wk->Head1]+wk->Head2 );
+  Nation_ListPrint( wk, 0, wk->listMax );
+  wk->page    = 0;
 
   page_max  = _list_page_num( wk->listMax, MODE_NATION_WIN_NUM );
   PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_NATION_WIN_NUM], 
       wk->page, page_max );
 
-	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009,&wk->print );
+  touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009,&wk->print );
 
-	BGWINFRM_FramePut( wk->BgWinFrm, 0, 1, 0 );
-	
-	wk->listpos = 0;
-	
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-				nationpostable[wk->listpos][0], nationpostable[wk->listpos][1] );
+  BGWINFRM_FramePut( wk->BgWinFrm, 0, 1, 0 );
 
-	WorldTrade_CLACT_PosChange( wk->ArrowAct[0], NATION_PAGE_ARROW2_X, NATION_PAGE_ARROW_Y);
-	WorldTrade_CLACT_PosChange( wk->ArrowAct[1], NATION_PAGE_ARROW1_X, NATION_PAGE_ARROW_Y);
+  wk->listpos = 0;
+
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      nationpostable[wk->listpos][0], nationpostable[wk->listpos][1] );
+
+  WorldTrade_CLACT_PosChange( wk->ArrowAct[0], NATION_PAGE_ARROW2_X, NATION_PAGE_ARROW_Y);
+  WorldTrade_CLACT_PosChange( wk->ArrowAct[1], NATION_PAGE_ARROW1_X, NATION_PAGE_ARROW_Y);
 
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   { 
@@ -3827,10 +3937,10 @@ static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
 
 
-	wk->seq  = WI_SEQ_NATION_MAIN;
-	
+  wk->seq  = WI_SEQ_NATION_MAIN;
 
-	return BMPMENU_NULL;
+
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3844,29 +3954,29 @@ static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_main( WORLDTRADE_INPUT_WORK *wk )
 {
-	u32 ret;
-	switch((ret=Nation_SelectMain(wk))){
-	case BMPMENU_CANCEL:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+  u32 ret;
+  switch((ret=Nation_SelectMain(wk))){
+  case BMPMENU_CANCEL:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
     BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
-		wk->seq  = WI_SEQ_WINWAIT_RETURN;
-		wk->next = WI_SEQ_NATION_CANCEL_EXIT;
-		break;
-	case BMPMENU_NULL:
-		break;
-	default:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    wk->seq  = WI_SEQ_WINWAIT_RETURN;
+    wk->next = WI_SEQ_NATION_CANCEL_EXIT;
+    break;
+  case BMPMENU_NULL:
+    break;
+  default:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq    = WI_SEQ_WINOUT;
-		wk->next   = WI_SEQ_NATION_EXIT;
-		wk->Nation = ret;
-		break;
-	}
+    wk->seq    = WI_SEQ_WINOUT;
+    wk->next   = WI_SEQ_NATION_EXIT;
+    wk->Nation = ret;
+    break;
+  }
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3885,21 +3995,21 @@ static int	wi_seq_nation_cancel_exit( WORLDTRADE_INPUT_WORK *wk )
   { 
     return BMPMENU_NULL;
   }	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 0 );
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
 
-	select_bmpwin_del( wk, MODE_NATION );
+  select_bmpwin_del( wk, MODE_NATION );
 
-	// 国名リストの解放
-	BmpMenuWork_ListDelete( wk->NameList );
+  // 国名リストの解放
+  BmpMenuWork_ListDelete( wk->NameList );
 
-	if(wk->Head1!=INPUT_HEAD_WA){
-		wk->seq = WI_SEQ_NATION_HEAD2_RETURN;
-	}else{
-		wk->seq = WI_SEQ_NATION_HEAD1_RETURN;
-	}
-	return BMPMENU_NULL;
+  if(wk->Head1!=INPUT_HEAD_WA){
+    wk->seq = WI_SEQ_NATION_HEAD2_RETURN;
+  }else{
+    wk->seq = WI_SEQ_NATION_HEAD1_RETURN;
+  }
+  return BMPMENU_NULL;
 }
 
 
@@ -3919,19 +4029,19 @@ static int	wi_seq_nation_exit( WORLDTRADE_INPUT_WORK *wk )
   { 
     return BMPMENU_NULL;
   }	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
   GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 0 );
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 0 );
 
-	select_bmpwin_del( wk, MODE_NATION );
+  select_bmpwin_del( wk, MODE_NATION );
 
 
-	// 国名リストの解放
-	BmpMenuWork_ListDelete( wk->NameList );
+  // 国名リストの解放
+  BmpMenuWork_ListDelete( wk->NameList );
 
-	OS_Printf("result nation = %d\n", wk->Nation);	
-	return wk->Nation;
-	
+  OS_Printf("result nation = %d\n", wk->Nation);	
+  return wk->Nation;
+
 }
 
 //------------------------------------------------------------------
@@ -3945,18 +4055,19 @@ static int	wi_seq_nation_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_sex_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	wk->listpos = 0;
+  wk->listpos = 0;
 
-	SexSelect_Init( wk );
-	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-								sexpostable[wk->listpos][0],sexpostable[wk->listpos][1] );
+  SexSelect_Init( wk );
+  GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      sexpostable[wk->listpos][0],sexpostable[wk->listpos][1] );
 
-	wk->seq     = WI_SEQ_WININ;
-	wk->next    = WI_SEQ_SEX_MAIN;
+  wk->seq     = WI_SEQ_WININ;
+  wk->next    = WI_SEQ_SEX_MAIN;
 
-	MORI_PRINT("input sex init\n");
-	return BMPMENU_NULL;
+  MORI_PRINT("input sex init\n");
+  ICHI_Printf("CHECK TouchOrKey:%d func:wi_seq_sex_init\n", GFL_UI_CheckTouchOrKey());
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -3970,27 +4081,27 @@ static int	wi_seq_sex_init( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_sex_main( WORLDTRADE_INPUT_WORK *wk )
 {
-	u32 ret;
-	switch((ret=SexSelect_SelectMain( wk ))){
-	case BMPMENU_CANCEL:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+  u32 ret;
+  switch((ret=SexSelect_SelectMain( wk ))){
+  case BMPMENU_CANCEL:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
-		wk->seq  = WI_SEQ_WINOUT;
-		wk->next = WI_SEQ_SEX_EXIT;
-		wk->Sex  = BMPMENU_CANCEL;
-		break;
-	case BMPMENU_NULL:
-		break;
-	default:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    wk->seq  = WI_SEQ_WINOUT;
+    wk->next = WI_SEQ_SEX_EXIT;
+    wk->Sex  = BMPMENU_CANCEL;
+    break;
+  case BMPMENU_NULL:
+    break;
+  default:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq  = WI_SEQ_WINOUT;
-		wk->next = WI_SEQ_SEX_EXIT;
-		wk->Sex  = ret;
-		break;
-	}
-	return BMPMENU_NULL;
+    wk->seq  = WI_SEQ_WINOUT;
+    wk->next = WI_SEQ_SEX_EXIT;
+    wk->Sex  = ret;
+    break;
+  }
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -4009,12 +4120,12 @@ static int	wi_seq_sex_exit( WORLDTRADE_INPUT_WORK *wk )
   { 
     return BMPMENU_NULL;
   }	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	select_bmpwin_del( wk, MODE_SEX );
-//	BmpMenuWork_ListDelete( wk->NameList );
+  select_bmpwin_del( wk, MODE_SEX );
+  //	BmpMenuWork_ListDelete( wk->NameList );
 
-	return wk->Sex;
+  return wk->Sex;
 
 }
 
@@ -4029,18 +4140,18 @@ static int	wi_seq_sex_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_level_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	wk->listpos = 0;
+  wk->listpos = 0;
 
-	LevelSelect_Init( wk );
-	GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
-	WorldTrade_CLACT_PosChange( wk->CursorAct, 
-								levelpostable[wk->listpos][0],levelpostable[wk->listpos][1] );
+  LevelSelect_Init( wk );
+  GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+  WorldTrade_CLACT_PosChange( wk->CursorAct, 
+      levelpostable[wk->listpos][0],levelpostable[wk->listpos][1] );
 
-	wk->seq     = WI_SEQ_WININ;
-	wk->next    = WI_SEQ_LEVEL_MAIN;
+  wk->seq     = WI_SEQ_WININ;
+  wk->next    = WI_SEQ_LEVEL_MAIN;
 
 
-	return BMPMENU_NULL;
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -4055,27 +4166,27 @@ static int	wi_seq_level_init( WORLDTRADE_INPUT_WORK *wk )
 static int	wi_seq_level_main( WORLDTRADE_INPUT_WORK *wk )
 {
 
-	u32 ret;
-	switch((ret=LevelSelect_SelectMain( wk ))){
-	case BMPMENU_CANCEL:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+  u32 ret;
+  switch((ret=LevelSelect_SelectMain( wk ))){
+  case BMPMENU_CANCEL:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
-		wk->seq   = WI_SEQ_WINOUT;
-		wk->next  = WI_SEQ_LEVEL_EXIT;
-		wk->Level = BMPMENU_CANCEL;
-		break;
-	case BMPMENU_NULL:
-		break;
-	default:
-		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    wk->seq   = WI_SEQ_WINOUT;
+    wk->next  = WI_SEQ_LEVEL_EXIT;
+    wk->Level = BMPMENU_CANCEL;
+    break;
+  case BMPMENU_NULL:
+    break;
+  default:
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
 
-		wk->seq   = WI_SEQ_WINOUT;
-		wk->next  = WI_SEQ_LEVEL_EXIT;
-		wk->Level = wk->NameList[ret+wk->page*MODE_LEVEL_WIN_NUM].param;
-		break;
-	}
-	return BMPMENU_NULL;
+    wk->seq   = WI_SEQ_WINOUT;
+    wk->next  = WI_SEQ_LEVEL_EXIT;
+    wk->Level = wk->NameList[ret+wk->page*MODE_LEVEL_WIN_NUM].param;
+    break;
+  }
+  return BMPMENU_NULL;
 }
 
 //------------------------------------------------------------------
@@ -4094,12 +4205,12 @@ static int	wi_seq_level_exit( WORLDTRADE_INPUT_WORK *wk )
   { 
     return BMPMENU_NULL;
   }	// カーソル表示OFF
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 0 );
 
-	select_bmpwin_del( wk, MODE_LEVEL );
-	BmpMenuWork_ListDelete( wk->NameList );
+  select_bmpwin_del( wk, MODE_LEVEL );
+  BmpMenuWork_ListDelete( wk->NameList );
 
-	return wk->Level;
+  return wk->Level;
 }
 
 
@@ -4115,13 +4226,13 @@ static int	wi_seq_level_exit( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static void system_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win, int mesno, PRINTSYS_LSB color, WT_PRINT *print )
 {
-	STRBUF *strbuf;
+  STRBUF *strbuf;
 
-	strbuf = GFL_MSG_CreateString( mm, mesno );
-//	WorldTrade_SysPrint( win, strbuf,  2, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
-	WorldTrade_Input_SysPrint( wfwk, win, strbuf,  2, color, print );
-	GFL_STR_DeleteBuffer(strbuf);
-	
+  strbuf = GFL_MSG_CreateString( mm, mesno );
+  //	WorldTrade_SysPrint( win, strbuf,  2, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
+  WorldTrade_Input_SysPrint( wfwk, win, strbuf,  2, color, print );
+  GFL_STR_DeleteBuffer(strbuf);
+
 }
 //------------------------------------------------------------------
 /**
@@ -4135,16 +4246,16 @@ static void system_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win,
 //------------------------------------------------------------------
 static void touch_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win, int mesno, WT_PRINT *print )
 {
-	STRBUF *strbuf;
+  STRBUF *strbuf;
 
-	strbuf = GFL_MSG_CreateString( mm, mesno );
+  strbuf = GFL_MSG_CreateString( mm, mesno );
 
-	GF_STR_PrintColor( win, FONT_TOUCH, strbuf, 0, 0, MSG_NO_PUT, PRINTSYS_LSB_Make(15,14,2),print);
-	GFL_BMPWIN_TransVramCharacter( win );
-	BGWINFRM_BmpWinOn( wfwk, 0, win );
+  GF_STR_PrintColor( win, FONT_TOUCH, strbuf, 0, 0, MSG_NO_PUT, PRINTSYS_LSB_Make(15,14,2),print);
+  GFL_BMPWIN_TransVramCharacter( win );
+  BGWINFRM_BmpWinOn( wfwk, 0, win );
 
-	GFL_STR_DeleteBuffer(strbuf);
-	
+  GFL_STR_DeleteBuffer(strbuf);
+
 }
 
 
@@ -4162,15 +4273,15 @@ static void touch_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win, 
 //------------------------------------------------------------------
 static void PagePrint( BGWINFRM_WORK *wfwk, NUMFONT *numfont, GFL_BMPWIN *win, int page, int max )
 {
-	// 「ページ数 ／ ページMAX」描画
+  // 「ページ数 ／ ページMAX」描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), INPUTPLATE_PAGE_COLOR_DATA );
   NUMFONT_WriteNumber( numfont, page+1, 2, NUMFONT_MODE_RIGHT, win,  0, 0 );
-	NUMFONT_WriteMark(   numfont, NUMFONT_MARK_SLASH, win, 8*2, 0 );
-	NUMFONT_WriteNumber( numfont,  max, 2, NUMFONT_MODE_LEFT, win, 8*3, 0 );
+  NUMFONT_WriteMark(   numfont, NUMFONT_MARK_SLASH, win, 8*2, 0 );
+  NUMFONT_WriteNumber( numfont,  max, 2, NUMFONT_MODE_LEFT, win, 8*3, 0 );
 
-	// BGFrameに反映
-	GFL_BMPWIN_TransVramCharacter( win );
-	BGWINFRM_BmpWinOn( wfwk, 0, win );
+  // BGFrameに反映
+  GFL_BMPWIN_TransVramCharacter( win );
+  BGWINFRM_BmpWinOn( wfwk, 0, win );
 
 
 }
@@ -4186,19 +4297,19 @@ static void PagePrint( BGWINFRM_WORK *wfwk, NUMFONT *numfont, GFL_BMPWIN *win, i
 //==================================================================
 static int PokeSeeCount_Siin(WORLDTRADE_INPUT_WORK *wk, int siin)
 {
-	int pokenum, see_count;
+  int pokenum, see_count;
   u16 *sortlist;
   int start, end;
-    
-	sortlist = WorldTrade_ZukanSortDataGet( HEAPID_WORLDTRADE, 0, &pokenum );
+
+  sortlist = WorldTrade_ZukanSortDataGet( HEAPID_WORLDTRADE, 0, &pokenum );
   WorldTrade_ZukanSortDataGetOnlyIndex( siin, &start, &end );
   pokenum = end - start;
 
-	see_count = PokeName_GetSortNum( wk->SinouTable, wk->zukan, pokenum, sortlist, start, end );
-    GFL_HEAP_FreeMemory(sortlist);
-    
-    OS_TPrintf("子音 %d 見たフラグ数=%d\n", siin, see_count);
-    return see_count;
+  see_count = PokeName_GetSortNum( wk->SinouTable, wk->zukan, pokenum, sortlist, start, end );
+  GFL_HEAP_FreeMemory(sortlist);
+
+  OS_TPrintf("子音 %d 見たフラグ数=%d\n", siin, see_count);
+  return see_count;
 }
 
 //--------------------------------------------------------------
@@ -4213,24 +4324,24 @@ static int PokeSeeCount_Siin(WORLDTRADE_INPUT_WORK *wk, int siin)
 //--------------------------------------------------------------
 static BOOL PokeSeeCount_Category(WORLDTRADE_INPUT_WORK *wk, int select)
 {
-    int siin_start_index = 0;
-    int i;
-    
-    siin_start_index = head2pokename[select];
-    
-    if(head2_word_start[select][1] > 0){
-        for(i = 0; i < head2_word_start[select][1]; i++){
-            if(PokeSeeCount_Siin(wk, siin_start_index + i) > 0){
-                return TRUE;
-            }
-        }
+  int siin_start_index = 0;
+  int i;
+
+  siin_start_index = head2pokename[select];
+
+  if(head2_word_start[select][1] > 0){
+    for(i = 0; i < head2_word_start[select][1]; i++){
+      if(PokeSeeCount_Siin(wk, siin_start_index + i) > 0){
+        return TRUE;
+      }
     }
-    else{
-        if(PokeSeeCount_Siin(wk, siin_start_index) > 0){
-            return TRUE;
-        }
+  }
+  else{
+    if(PokeSeeCount_Siin(wk, siin_start_index) > 0){
+      return TRUE;
     }
-    return FALSE;
+  }
+  return FALSE;
 }
 
 //==================================================================
@@ -4244,11 +4355,11 @@ static BOOL PokeSeeCount_Category(WORLDTRADE_INPUT_WORK *wk, int select)
 //==================================================================
 static int NationCount_Siin(WORLDTRADE_INPUT_WORK *wk, int siin)
 {
-    int nation_num, number, i;
-    
-    nation_num = WorldTrade_NationSortListNumGet( siin, &number );
-    OS_TPrintf("国 子音 %d 見たフラグ数=%d\n", siin, nation_num);
-    return nation_num;
+  int nation_num, number, i;
+
+  nation_num = WorldTrade_NationSortListNumGet( siin, &number );
+  OS_TPrintf("国 子音 %d 見たフラグ数=%d\n", siin, nation_num);
+  return nation_num;
 }
 
 //--------------------------------------------------------------
@@ -4263,22 +4374,22 @@ static int NationCount_Siin(WORLDTRADE_INPUT_WORK *wk, int siin)
 //--------------------------------------------------------------
 static BOOL NationCount_Category(WORLDTRADE_INPUT_WORK *wk, int select)
 {
-    int siin_start_index = 0;
-    int i;
-    
-    siin_start_index = head2pokename[select];
-    
-    if(head2_word_start[select][1] > 0){
-        for(i = 0; i < head2_word_start[select][1]; i++){
-            if(NationCount_Siin(wk, siin_start_index + i) > 0){
-                return TRUE;
-            }
-        }
+  int siin_start_index = 0;
+  int i;
+
+  siin_start_index = head2pokename[select];
+
+  if(head2_word_start[select][1] > 0){
+    for(i = 0; i < head2_word_start[select][1]; i++){
+      if(NationCount_Siin(wk, siin_start_index + i) > 0){
+        return TRUE;
+      }
     }
-    else{
-        if(NationCount_Siin(wk, siin_start_index) > 0){
-            return TRUE;
-        }
+  }
+  else{
+    if(NationCount_Siin(wk, siin_start_index) > 0){
+      return TRUE;
     }
-    return FALSE;
+  }
+  return FALSE;
 }
