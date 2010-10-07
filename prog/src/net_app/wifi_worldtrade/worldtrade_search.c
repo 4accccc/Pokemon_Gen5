@@ -1588,6 +1588,14 @@ static int SubSeq_ServerQueryFailure( WORLDTRADE_WORK *wk )
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_MAIN );
 	PMSND_PlaySE(SE_GTC_NG);
 
+
+#ifdef BUGFIX_AF_GFBTS2027_2010107
+  // 「GTSで検索失敗したあと選ぶ選択すると確定でブラックアウトする」バグ修正
+  //失敗なので、押せる状態になっていたボタンは消す
+  wk->SearchResult  = 0;
+  FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, FALSE, &wk->print );
+#endif  //BUGFIX_AF_GFBTS2027_2010107
+
 	return SEQ_MAIN;
 }
 
