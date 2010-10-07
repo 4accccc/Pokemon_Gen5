@@ -935,3 +935,13 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
  * 担当：田谷
 */
 #define BUGFIX_AF_GFBTS2022_100929
+
+
+/*
+ * とくせい「しぜんかいふく」持ちの入れ替えAIにて、
+ * 控えにいるひん死ポケモンを入れ替え対象に選んでしまうことがあるのを修正。
+ *
+ * 担当：田谷
+*/
+#define BUGFIX_AF_GFBTS2026_101006
+

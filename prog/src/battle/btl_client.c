@@ -4015,12 +4015,23 @@ static BOOL AI_ChangeProcSub_HikaePokeAff( BTL_CLIENT* wk, PokeType wazaType, Bt
     if( !ChangeAI_CheckReserve(wk, i) )
     {
       const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
-      PokeTypePair  pokeType = BPP_GetPokeType( bpp );
-      if( BTL_CALC_TypeAffPair(wazaType, pokeType) <= affMax )
-      {
-        *pokeIndex = i;
-        return TRUE;
+
+      #ifdef BUGFIX_AF_GFBTS2026_101006
+      // ひん死で戦えないポケモンは条件チェックを行わないよう修正 2010.10.06  tay
+      if( !BPP_IsFightEnable(bpp) ){
+        continue;
       }
+      #endif
+
+      {
+        PokeTypePair  pokeType = BPP_GetPokeType( bpp );
+        if( BTL_CALC_TypeAffPair(wazaType, pokeType) <= affMax )
+        {
+          *pokeIndex = i;
+          return TRUE;
+        }
+      }
+
     }
   }
   return FALSE;
