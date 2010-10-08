@@ -5554,6 +5554,29 @@
   .short  \pos
   .endm
 
+// >> update ichiraku 2010/10/8
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_TEMOTI_PP
+ * @brief 手持ちポケモンのPPチェック
+ * @param ret_wk  チェック結果を受け取るワーク
+ * @param pos     チェックするポケモンの位置（０～５）
+ * @retval  TRUE    チェックしたポケモンのPPが全てが満タン
+ * @retval  FALSE   チェックしたポケモンのPPが減っている
+ * タマゴの場合はTRUEを返す
+ */
+//--------------------------------------------------------------
+#define _CHECK_TEMOTI_PP( ret_wk, pos ) \
+    _ASM_CHECK_TEMOTI_PP ret_wk, pos
+
+  .macro  _ASM_CHECK_TEMOTI_PP ret_wk, pos
+  .short  EV_SEQ_CHECK_TEMOTI_PP
+  .short  \ret_wk
+  .short  \pos
+  .endm
+ 
+// <<
+
 //--------------------------------------------------------------
 /**
  * @def _CHECK_TEMOTI_EGG

@@ -282,6 +282,74 @@ VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+// >> update ichiraku 2010/10/8
+// 手持ちポケモンのPPをチェックする
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンのPPチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckPokemonPP( VMHANDLE * core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );   // 結果格納ワーク
+  u16 pos = SCRCMD_GetVMWorkValue( core, wk );  // ポケモンの位置
+
+  {
+    POKEMON_PARAM *p_pp;  // ポケモンパラメータ
+    *ret_wk = FALSE;
+
+    // 指定位置のポケモンパラメータ取得
+    if( SCRCMD_GetTemotiPP( wk, pos, &p_pp ) == TRUE )
+    {
+      u16 wazaNo;   // 技No
+      u16 nowPP;    // 現在PP
+      u16 maxPP;    // 最大PP
+      u16 i;
+      BOOL  result = TRUE; // ループ間で使用 
+
+      // タマゴチェック
+      if( PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) == TRUE || 
+          PP_Get( p_pp, ID_PARA_fusei_tamago_flag, NULL ) == TRUE )
+      {
+        *ret_wk = TRUE;
+        return VMCMD_RESULT_CONTINUE;
+      }
+
+
+      // PPチェック(技4つ分)
+      for( i=0; i<PTL_WAZA_MAX; i++ )
+      {
+        wazaNo= PP_Get( p_pp, ID_PARA_waza1 + i, NULL );
+
+        // 技があるかチェック
+        if( wazaNo != WAZANO_NULL )
+        {
+          nowPP = PP_Get( p_pp, ID_PARA_pp1 + i, NULL );
+          maxPP = PP_Get( p_pp, ID_PARA_pp_max1 + i, NULL );
+
+          // PP満タンチェック
+          if( nowPP != maxPP )
+          {
+            result = FALSE;
+            break;
+          }
+        }
+      }
+
+      // チェック結果格納
+      *ret_wk = result;
+    }
+
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+// <<
+
 //--------------------------------------------------------------
 /**
  * @brief 手持ちポケモンのタマゴかどうかの判定
@@ -416,7 +484,7 @@ VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk )
   tamago_flg = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_tamago_flag );
   if (tamago_flg) *ret_wk = MONSNO_TAMAGO;
   else *ret_wk = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_monsno );
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -545,7 +613,7 @@ VMCMD_RESULT EvCmdGetPartyPokeCountByMonsNo( VMHANDLE * core, void *wk )
   u16*      ret_wk = SCRCMD_GetVMWork( core, work );
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
-  
+
   u16 num,total;
 
   total = PokeParty_GetPokeCount( party );
@@ -649,7 +717,7 @@ VMCMD_RESULT EvCmdGetPartyPosByMonsNo( VMHANDLE * core, void *wk )
   u16*      pos = SCRCMD_GetVMWork( core, work );
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
-  
+
   u16 num,total;
 
   total = PokeParty_GetPokeCount( party );
@@ -704,7 +772,7 @@ VMCMD_RESULT EvCmdChkPokeWaza( VMHANDLE *core, void *wk )
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
   u16 waza = SCRCMD_GetVMWorkValue( core, wk );
   u16 tno = SCRCMD_GetVMWorkValue( core, wk );
-  
+
   *ret_wk = 0;
   if ( SCRCMD_GetTemotiPP( wk, tno, &pp ) == TRUE)
   {
@@ -713,7 +781,7 @@ VMCMD_RESULT EvCmdChkPokeWaza( VMHANDLE *core, void *wk )
       *ret_wk = 1;
     }
   }
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -733,24 +801,24 @@ VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
   POKEPARTY *party = GAMEDATA_GetMyPokemon( gamedata );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
   u16 waza = SCRCMD_GetVMWorkValue( core, wk );
-  
+
   max = PokeParty_GetPokeCount( party );
 
 #ifdef DEBUG_ONLY_FOR_kagaya  //test
   *ret_wk = 0;
   return VMCMD_RESULT_CONTINUE;
 #endif
-  
+
   for( i = 0, *ret_wk = 6; i < max; i++ ){
     pp = PokeParty_GetMemberPointer( party, i );
-    
+
     if ( SCRCMD_CheckTemotiWaza( pp, waza ) == TRUE )
     {
       *ret_wk = i;
       break;
     }
   }
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -869,7 +937,7 @@ VMCMD_RESULT EvCmdGetPokemonWazaNum( VMHANDLE *core, void *wk )
 
   int          waza_count = 0;
   POKEMON_PARAM *pp;
-  
+
   if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
   {
     for( i=0; i<PTL_WAZA_MAX; i++ )
@@ -899,7 +967,7 @@ VMCMD_RESULT EvCmdGetPokemonWazaID( VMHANDLE *core, void *wk )
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第2引数
   u16            waza_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第3引数
-  
+
   POKEMON_PARAM *pp;
   if ( SCRCMD_GetTemotiPP( work, poke_pos, &pp ) == TRUE )
   {
@@ -946,46 +1014,46 @@ VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk )
     PP_SetWazaPush( pp , waza_id );
   }
   else
-  if( waza_id == 0 )
-  {
-    //忘れモード
-    u8 i;
-    u8 forgetPos = waza_pos;
-    if( waza_pos < PTL_WAZA_MAX-1 )
+    if( waza_id == 0 )
     {
-      //詰める
-      for( i=waza_pos ; i<PTL_WAZA_MAX-1 ; i++ )
+      //忘れモード
+      u8 i;
+      u8 forgetPos = waza_pos;
+      if( waza_pos < PTL_WAZA_MAX-1 )
       {
-        const u32 temp_waza_no = PP_Get( pp , ID_PARA_waza1+i+1 , NULL );
-        if( temp_waza_no != 0 )
+        //詰める
+        for( i=waza_pos ; i<PTL_WAZA_MAX-1 ; i++ )
         {
-          const u32 temp_waza_cnt = PP_Get( pp , ID_PARA_pp_count1+i+1 , NULL );
-          const u32 temp_waza_pp = PP_Get( pp , ID_PARA_pp1+i+1 , NULL );
-          PP_Put( pp , ID_PARA_waza1+i , temp_waza_no );
-          PP_Put( pp , ID_PARA_pp_count1+i , temp_waza_cnt );
-          PP_Put( pp , ID_PARA_pp1+i , temp_waza_pp );
+          const u32 temp_waza_no = PP_Get( pp , ID_PARA_waza1+i+1 , NULL );
+          if( temp_waza_no != 0 )
+          {
+            const u32 temp_waza_cnt = PP_Get( pp , ID_PARA_pp_count1+i+1 , NULL );
+            const u32 temp_waza_pp = PP_Get( pp , ID_PARA_pp1+i+1 , NULL );
+            PP_Put( pp , ID_PARA_waza1+i , temp_waza_no );
+            PP_Put( pp , ID_PARA_pp_count1+i , temp_waza_cnt );
+            PP_Put( pp , ID_PARA_pp1+i , temp_waza_pp );
 
-          forgetPos = i+1;
-        }
-        else
-        {
-          break;
+            forgetPos = i+1;
+          }
+          else
+          {
+            break;
+          }
         }
       }
+      PP_Put( pp , ID_PARA_waza1+forgetPos , 0 );
+      PP_Put( pp , ID_PARA_pp_count1+forgetPos , 0 );
+      PP_Put( pp , ID_PARA_pp1+forgetPos , 0 );
     }
-    PP_Put( pp , ID_PARA_waza1+forgetPos , 0 );
-    PP_Put( pp , ID_PARA_pp_count1+forgetPos , 0 );
-    PP_Put( pp , ID_PARA_pp1+forgetPos , 0 );
-  }
-  else
-  {
-    //置き換えモード
-    PP_SetWazaPos( pp , waza_id , waza_pos );
-    
-  }
+    else
+    {
+      //置き換えモード
+      PP_SetWazaPos( pp , waza_id , waza_pos );
+
+    }
   PP_FastModeOff( pp , fastMode );
   return VMCMD_RESULT_CONTINUE;
-  
+
 }
 
 
@@ -1012,7 +1080,7 @@ VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
     *ret_wk = FALSE;    //親は他人
     return VMCMD_RESULT_CONTINUE;
   }
-  
+
   {
     //ＩＤ同じか？
     u32 id;
@@ -1110,13 +1178,13 @@ VMCMD_RESULT EvCmdChgFormNo( VMHANDLE *core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
-  
+
   POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
   BOOL rc;
 
   rc = PP_ChangeFormNo( pp, formno );
   GF_ASSERT(rc);
-  
+
   //図鑑登録「見た」
   {
     ZUKAN_SAVEDATA *zw = GAMEDATA_GetZukanSave( gdata );
@@ -1146,13 +1214,13 @@ VMCMD_RESULT EvCmdChgRotomFormNo( VMHANDLE *core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
-  
+
   POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
   BOOL rc;
 
   rc = PP_ChangeRotomFormNo( pp, formno, waza_pos );
   GF_ASSERT(rc);
-  
+
   //図鑑登録「見た」
   {
     ZUKAN_SAVEDATA *zw = GAMEDATA_GetZukanSave( gdata );
@@ -1183,7 +1251,7 @@ VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk )
 
   if ( SCRCMD_GetTemotiPP( work, poke_pos, &poke ) == TRUE )
   {
-  // 思い出し技の有無を返す
+    // 思い出し技の有無を返す
     waza = WAZAOSHIE_GetRemaindWaza( poke, heap_id );
     *ret_wk = WAZAOSHIE_WazaTableChack( waza );
     GFL_HEAP_FreeMemory( waza );
@@ -1213,15 +1281,15 @@ VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk )
   };
 
   GF_ASSERT( type < POKE_GET_PLACE_CHECK_MAX );
-  
+
   place = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_get_place );
-  
+
   if( place == POKE_GET_PLACE_CHECK_PLACE[ type ] ){
     *ret_wk = TRUE;
   }else{
     *ret_wk = FALSE;
   }
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 

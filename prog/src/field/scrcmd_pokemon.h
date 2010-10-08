@@ -28,6 +28,10 @@ extern VMCMD_RESULT EvCmdGetParamEXP( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPokemonRecover( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk );
+// >> update ichiraku 2010/10/8
+// 手持ちポケモンのPPをチェックする
+extern VMCMD_RESULT EvCmdCheckPokemonPP( VMHANDLE * core, void *wk );
+// <<
 extern VMCMD_RESULT EvCmdCheckPokemonEgg( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetPokemonFriendValue( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk );
