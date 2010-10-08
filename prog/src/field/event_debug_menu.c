@@ -314,6 +314,10 @@ static BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenu_WfbcDebug( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk );
 
+// << update ichiraku 2010/10/5
+// ためしにデバック機能追加してみた
+static BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *p_wk );
+
 static void DbgRestDataUpdate(const u32 inZone);
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
 
@@ -327,6 +331,9 @@ static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
   { DEBUG_FIELD_TITLE_00, (void*)BMPMENULIST_LABEL },       //○ジャンプ（移動用）
+  // << update ichiraku 2010/10/5
+  // ためしにデバック機能追加してみた
+  { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi },    // いちらくテスト
   { DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },    //空を飛ぶ
   { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },            //ジャンプ（ユニオン等）
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },   //ゾーン選択ジャンプ
@@ -387,7 +394,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   //{ DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeCreate },  //シンボルポケモン作成
   { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeList },  //シンボルポケモン作成
   { DEBUG_FIELD_STR71, debugMenuCallProc_Musical },  //ミュージカル
-//  { DEBUG_FIELD_STR74, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
+  //  { DEBUG_FIELD_STR74, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
   { DEBUG_FIELD_STR75, debugMenu_CreateFeelingData },           //フィーリング作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
@@ -395,7 +402,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList},      //Gパワー
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },  //ともだちコード配信
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake },             //サケ操作
-//  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
+  //  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
   { DEBUG_FIELD_GEONET, debugMenuCallProc_Geonet },         //ジオネット呼び出し
   { DEBUG_FIELD_GEONET_CLEAR, debugMenu_ClearWifiHistory }, //ジオネット情報クリア
   { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm },  //ライブ通信デバッグ
@@ -410,10 +417,10 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR70, debugMenuCallProc_PCScript },        //パソコン呼び出し
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },           //Yボタン登録最大
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu }, //GTSネゴ
-//  { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },           //GTS
-//  { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
-//  { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },   //WIFI世界対戦
-//  { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
+  //  { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },           //GTS
+  //  { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
+  //  { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },   //WIFI世界対戦
+  //  { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone },           //着信音
@@ -428,29 +435,29 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
  */
 //------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_toru_nagihashi
-  #define QuickJumpStart   DEBUG_FIELD_STR41
+#define QuickJumpStart   DEBUG_FIELD_STR41
 #elif defined DEBUG_ONLY_FOR_matsumiya
-  #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
+#define QuickJumpStart   DEBUG_FIELD_STR03
+#define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_masafumi_saitou
-  #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
+#define QuickJumpStart   DEBUG_FIELD_STR03
+#define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_suginaka_katsunori
-  #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
+#define QuickJumpStart   DEBUG_FIELD_STR03
+#define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_mizuguchi_mai || defined DEBUG_ONLY_FOR_mai_ando
-  #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
+#define QuickJumpStart   DEBUG_FIELD_STR03
+#define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_murakami_naoto
-  #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
+#define QuickJumpStart   DEBUG_FIELD_STR03
+#define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_ohno
-  #define QuickJumpStart   DEBUG_FIELD_STR19
+#define QuickJumpStart   DEBUG_FIELD_STR19
 //#elif defined DEBUG_ONLY_FOR_
 //  #define QuickJumpStart
 #elif defined DEBUG_ONLY_FOR_iwasawa
-  #define QuickJumpStart   DEBUG_FIELD_NUMINPUT
-  #define QuickJumpSelect  DEBUG_FIELD_STR65
+#define QuickJumpStart   DEBUG_FIELD_NUMINPUT
+#define QuickJumpSelect  DEBUG_FIELD_STR65
 #endif
 
 //--------------------------------------------------------------
@@ -508,14 +515,14 @@ static const DEBUG_MENU_INITIALIZER DebugMenuData = {
  */
 //--------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_DebugMenu(
-  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
-  HEAPID heapID, u16 page_id )
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
+    HEAPID heapID, u16 page_id )
 {
   DEBUG_MENU_EVENT_WORK * dmew;
   GMEVENT * event;
 
   event = GMEVENT_Create(
-    gsys, NULL, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
+      gsys, NULL, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
 
   dmew = GMEVENT_GetEventWork(event);
   GFL_STD_MemClear( dmew, sizeof(DEBUG_MENU_EVENT_WORK) );
@@ -564,7 +571,7 @@ static FLDMENUFUNC * DebugMenuInitCore(
   gsys = FIELDMAP_GetGameSysWork( fieldmap );
   msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
   msgData = GFL_MSG_Create(
-    GFL_MSG_LOAD_NORMAL, msgarcid, init->msg_dat_id, FIELDMAP_GetHeapID( fieldmap ) );
+      GFL_MSG_LOAD_NORMAL, msgarcid, init->msg_dat_id, FIELDMAP_GetHeapID( fieldmap ) );
 
   if (init->getMaxFunc) {
     max = init->getMaxFunc( gsys, cb_work );
@@ -632,7 +639,7 @@ GFL_MSGDATA * DEBUGFLDMENU_CreateMSGDATA( FIELDMAP_WORK * fieldmap, u32 arcDatID
 {
   GFL_MSGDATA *msgData;
   msgData = GFL_MSG_Create(
-    GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, arcDatIDMsg, FIELDMAP_GetHeapID( fieldmap ) );
+      GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, arcDatIDMsg, FIELDMAP_GetHeapID( fieldmap ) );
   return( msgData );
 }
 
@@ -938,7 +945,7 @@ static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
 
   param.fieldmap = fieldWork;
   param.bFieldEnd = TRUE;
-  
+
 
   next_event = GMEVENT_CreateOverlayEventCall( gameSys, 
       FS_OVERLAY_ID(event_wificlub), 
@@ -985,7 +992,7 @@ static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( d_numinput ), DEBUG_EVENT_FLDMENU_NumInput, wk );
+      FS_OVERLAY_ID( d_numinput ), DEBUG_EVENT_FLDMENU_NumInput, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -1007,7 +1014,7 @@ static BOOL debugMenuCallProc_ResearchNumInput( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( d_numinput_research ), DEBUG_EVENT_DebugMenu_Research, wk );
+      FS_OVERLAY_ID( d_numinput_research ), DEBUG_EVENT_DebugMenu_Research, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -1029,7 +1036,7 @@ static BOOL debugMenuCallProc_RecordNumInput( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( d_numinput_record ), DEBUG_EVENT_FLDMENU_RecordNumInput, wk );
+      FS_OVERLAY_ID( d_numinput_record ), DEBUG_EVENT_FLDMENU_RecordNumInput, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -1041,7 +1048,7 @@ static BOOL debugMenuCallProc_RecordNumInput( DEBUG_MENU_EVENT_WORK *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- */
+*/
 //--------------------------------------------------------------
 typedef struct {
   HEAPID heapID;
@@ -1081,17 +1088,17 @@ static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DMESSWORK *work;
 
-    GMEVENT_Change( event,
+  GMEVENT_Change( event,
       debugMenuSubscreenSelectEvent, sizeof(DMESSWORK) );
-    work = GMEVENT_GetEventWork( event );
-    GFL_STD_MemClear( work, sizeof(DMESSWORK) );
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DMESSWORK) );
 
-    work->gmSys = gsys;
-    work->gmEvent = event;
-    work->heapID = heapID;
-    work->fieldWork = fieldWork;
-    work->subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-    return( TRUE );
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+  work->subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+  return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -1258,7 +1265,7 @@ static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( debug_menu_mmdl_list ), DEBUG_EVENT_DebugMenu_MmdlList, wk );
+      FS_OVERLAY_ID( debug_menu_mmdl_list ), DEBUG_EVENT_DebugMenu_MmdlList, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -1270,7 +1277,7 @@ static BOOL debugMenuCallProc_DisguiseList( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( debug_menu_mmdl_list ), DEBUG_EVENT_DebugMenu_DisguiseList, wk );
+      FS_OVERLAY_ID( debug_menu_mmdl_list ), DEBUG_EVENT_DebugMenu_DisguiseList, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -1369,13 +1376,13 @@ static GMEVENT_RESULT debugMenuControlLight(
 
       // パレット情報を転送
       GFL_ARC_UTIL_TransVramPalette(
-        ARCID_FONT, NARC_font_default_nclr,
-        PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
+          ARCID_FONT, NARC_font_default_nclr,
+          PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
 
       // ビットマップウィンドウを作成
       work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
-        1, 1, 30, 22,
-        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
+          1, 1, 30, 22,
+          FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
       GFL_BMPWIN_MakeScreen( work->p_win );
       GFL_BMPWIN_TransVramCharacter( work->p_win );
@@ -1503,13 +1510,13 @@ static GMEVENT_RESULT debugMenuControlFog(
 
       // パレット情報を転送
       GFL_ARC_UTIL_TransVramPalette(
-        ARCID_FONT, NARC_font_default_nclr,
-        PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
+          ARCID_FONT, NARC_font_default_nclr,
+          PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
 
       // ビットマップウィンドウを作成
       work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
-        1, 1, 30, 22,
-        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
+          1, 1, 30, 22,
+          FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
       GFL_BMPWIN_MakeScreen( work->p_win );
       GFL_BMPWIN_TransVramCharacter( work->p_win );
@@ -1617,10 +1624,10 @@ static const FLDMENUFUNC_LIST DATA_WeatherMenuList[] =
   { D_TOMOYA_WEATEHR12, (void*)WEATHER_NO_MIST },
 
   /*  未使用
-  { D_TOMOYA_WEATEHR13, (void*)WEATHER_NO_EVENING_RAIN },
-  { D_TOMOYA_WEATEHR05, (void*)WEATHER_NO_SPARK },
-  { D_TOMOYA_WEATEHR08, (void*)WEATHER_NO_MIRAGE },
-  */
+      { D_TOMOYA_WEATEHR13, (void*)WEATHER_NO_EVENING_RAIN },
+      { D_TOMOYA_WEATEHR05, (void*)WEATHER_NO_SPARK },
+      { D_TOMOYA_WEATEHR08, (void*)WEATHER_NO_MIRAGE },
+      */
 };
 #define DEBUG_WEATHERLIST_LIST_MAX  ( NELEMS(DATA_WeatherMenuList) )
 
@@ -1650,7 +1657,7 @@ static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
   DEBUG_WEATERLIST_EVENT_WORK *work;
 
   GMEVENT_Change( event,
-    debugMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
+      debugMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
 
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
@@ -1873,7 +1880,7 @@ static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
   DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work;
 
   GMEVENT_Change( event,
-    debugMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
+      debugMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
 
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
@@ -1975,7 +1982,7 @@ static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
-    FS_OVERLAY_ID( debug_menu_makepoke ), DEBUG_EVENT_DebugMenu_MakePoke, p_wk );
+      FS_OVERLAY_ID( debug_menu_makepoke ), DEBUG_EVENT_DebugMenu_MakePoke, p_wk );
 
   GMEVENT_ChangeEvent( p_wk->gmEvent, event );
 
@@ -2000,7 +2007,7 @@ static BOOL debugMenuCallProc_DebugReWritePoke( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
-    FS_OVERLAY_ID( debug_menu_rewrite_poke ), DEBUG_EVENT_DebugMenu_ReWritePoke, p_wk );
+      FS_OVERLAY_ID( debug_menu_rewrite_poke ), DEBUG_EVENT_DebugMenu_ReWritePoke, p_wk );
 
   GMEVENT_ChangeEvent( p_wk->gmEvent, event );
 
@@ -2387,7 +2394,7 @@ static GMEVENT_RESULT debugEvnetChangeName( GMEVENT *p_event, int *p_seq, void *
   {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param ) );
+          FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param ) );
     *p_seq  = SEQ_PROC_END;
     break;
 
@@ -2502,7 +2509,7 @@ static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk
   {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(townmap), &TownMap_ProcData, p_wk->p_param ) );
+          FS_OVERLAY_ID(townmap), &TownMap_ProcData, p_wk->p_param ) );
     *p_seq  = SEQ_PROC_END;
     break;
 
@@ -2597,9 +2604,9 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
 
   param.fieldmap = p_wk->fieldWork;
   param.is_debug = TRUE;
-  
-  
-  
+
+
+
   GMEVENT_ChangeEvent( p_wk->gmEvent, 
       GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
         FS_OVERLAY_ID(event_gts), EVENT_CallGts, &param ) );
@@ -2699,7 +2706,7 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
       }
 
       GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_gds->gsys, p_gds->fieldWork,
-          NO_OVERLAY_ID, &GdsMainProcData, gds_param ) );
+            NO_OVERLAY_ID, &GdsMainProcData, gds_param ) );
       (*p_seq)++;
     }
     break;
@@ -2781,8 +2788,8 @@ static GMEVENT_RESULT debugMenuUITemplate( GMEVENT *p_event, int *p_seq, void *p
   switch(*p_seq )
   {
   case SEQ_CALL_PROC:
-      GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(ui_debug), &UITemplateProcData, &p_wk->param ) );
+    GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+          FS_OVERLAY_ID(ui_debug), &UITemplateProcData, &p_wk->param ) );
     *p_seq  = SEQ_EXIT;
     break;
 
@@ -3051,119 +3058,119 @@ static BOOL debugMenu_CreateMusicalShotData( DEBUG_MENU_EVENT_WORK *wk )
 //-----------------------------------------------------------------------------
 static void FEELINGCHECK_AddRankData( SAVE_CONTROL_WORK *p_sv_ctrl )
 {	
-	IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
-	{	
-		STRCODE	str[128];
-		u16	strlen;
-		u16 idx;
-		static const struct
-		{	
-			u16 * p_str;
+  IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
+  {	
+    STRCODE	str[128];
+    u16	strlen;
+    u16 idx;
+    static const struct
+    {	
+      u16 * p_str;
       u8  str_len;
       u8  sex;
       u8  month;
       u8  day;
-			u32 ID;
+      u32 ID;
       u16 mons_no;
-		} scp_debug_rank_data[]	=
-		{	
-			{	
-				L"いちたろう",
+    } scp_debug_rank_data[]	=
+    {	
+      {	
+        L"いちたろう",
         5,
         1,
         10,
         22,
-				0x573,
+        0x573,
         1,
-			},
-			{	
-				L"じろう",
+      },
+      {	
+        L"じろう",
         3,
         1,
         1,
         27,
-				0x785,
+        0x785,
         2,
-			},
-			{	
-				L"さぶろう",
+      },
+      {	
+        L"さぶろう",
         4,
         1,
         4,
         8,
-				0x123,
+        0x123,
         3,
-			},
-			{	
-				L"しろう",
+      },
+      {	
+        L"しろう",
         3,
         1,
         7,
         14,
-				0x987,
+        0x987,
         4,
-			},
-			{	
-				L"ごろう",
+      },
+      {	
+        L"ごろう",
         3,
         0,
         2,
         15,
-				0x782,
+        0x782,
         5,
-			},
-			{	
-				L"ろくろう",
+      },
+      {	
+        L"ろくろう",
         4,
         0,
         8,
         2,
-				0x191,
+        0x191,
         6,
-			},
-			{	
-				L"ななお",
+      },
+      {	
+        L"ななお",
         3,
         0,
         1,
         7,
-				0x232,
+        0x232,
         7,
-			},
-			{	
-				L"はちべえ",
+      },
+      {	
+        L"はちべえ",
         4,
         0,
         11,
         27,
-				0x595,
+        0x595,
         8,
-			},
-			{	
-				L"くろう",
+      },
+      {	
+        L"くろう",
         3,
         0,
         10,
         18,
-				0x999,
+        0x999,
         9,
-			}
-		};
-		u16 *p_str;
+      }
+    };
+    u16 *p_str;
 
-		idx	= GFUser_GetPublicRand( NELEMS(scp_debug_rank_data) );
+    idx	= GFUser_GetPublicRand( NELEMS(scp_debug_rank_data) );
 
-		p_str	= scp_debug_rank_data[idx].p_str;
+    p_str	= scp_debug_rank_data[idx].p_str;
 
-		strlen	= scp_debug_rank_data[idx].str_len;
-		GFL_STD_MemCopy(p_str, str, strlen*2);
-		str[strlen]	= GFL_STR_GetEOMCode();
+    strlen	= scp_debug_rank_data[idx].str_len;
+    GFL_STD_MemCopy(p_str, str, strlen*2);
+    str[strlen]	= GFL_STR_GetEOMCode();
 
-		//セーブする
-		IRC_COMPATIBLE_SV_AddRanking( p_sv, str,
+    //セーブする
+    IRC_COMPATIBLE_SV_AddRanking( p_sv, str,
         GFUser_GetPublicRand( 101 ), scp_debug_rank_data[idx].sex, scp_debug_rank_data[idx].month, scp_debug_rank_data[idx].day, scp_debug_rank_data[idx].ID,
-  scp_debug_rank_data[idx].mons_no, 0, PTL_SEX_MALE, 0 );
-	}
+        scp_debug_rank_data[idx].mons_no, 0, PTL_SEX_MALE, 0 );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3275,12 +3282,12 @@ static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   GMEVENT* set_event;
   EV_DEBUG_WIFIMATCH param;
-  
+
   param.fieldmap = p_wk->fieldWork;
 
   set_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
-        FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );
-  
+      FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );
+
   GMEVENT_ChangeEvent( p_wk->gmEvent, set_event );
   return TRUE;
 }
@@ -3297,12 +3304,12 @@ static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   GMEVENT* set_event;
   EV_DEBUG_WIFIMATCH param;
-  
+
   param.fieldmap = p_wk->fieldWork;
 
   set_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
-        FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );
-  
+      FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );
+
   GMEVENT_ChangeEvent( p_wk->gmEvent, set_event );
   return TRUE;
 }
@@ -3328,7 +3335,7 @@ static BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk )
 static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk )
 {
   GMEVENT* event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-              FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveCommFromField, NULL );
+      FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveCommFromField, NULL );
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
 }
@@ -3355,7 +3362,7 @@ static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk )
 {
   GMEVENT* event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-              FS_OVERLAY_ID( debug_menu_intrude ), DEBUG_EVENT_FLDMENU_Intrude, wk->fieldWork );
+      FS_OVERLAY_ID( debug_menu_intrude ), DEBUG_EVENT_FLDMENU_Intrude, wk->fieldWork );
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
 }
@@ -3458,7 +3465,7 @@ static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p
   {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &p_wk->param ) );
+          FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &p_wk->param ) );
     *p_seq  = SEQ_PROC_END;
     break;
 
@@ -3564,13 +3571,13 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
 
       // パレット情報を転送
       GFL_ARC_UTIL_TransVramPalette(
-        ARCID_FONT, NARC_font_default_nclr,
-        PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
+          ARCID_FONT, NARC_font_default_nclr,
+          PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
 
       // ビットマップウィンドウを作成
       p_work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
-        1, 1, 30, 22,
-        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
+          1, 1, 30, 22,
+          FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_work->p_win ), 0xf );
       GFL_BMPWIN_MakeScreen( p_work->p_win );
       GFL_BMPWIN_TransVramCharacter( p_work->p_win );
@@ -3757,8 +3764,8 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
 
     // フォントデータ
     p_work->p_debug_font = GFL_FONT_Create(
-      ARCID_FONT, NARC_font_large_gftr,
-      GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+        ARCID_FONT, NARC_font_large_gftr,
+        GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   }
 
 
@@ -3783,13 +3790,13 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
 
       // パレット情報を転送
       GFL_ARC_UTIL_TransVramPalette(
-        ARCID_FONT, NARC_font_default_nclr,
-        PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
+          ARCID_FONT, NARC_font_default_nclr,
+          PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
 
       // ビットマップウィンドウを作成
       p_work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
-        1, 1, 30, 22,
-        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
+          1, 1, 30, 22,
+          FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_work->p_win ), 0xf );
       GFL_BMPWIN_MakeScreen( p_work->p_win );
       GFL_BMPWIN_TransVramCharacter( p_work->p_win );
@@ -4112,7 +4119,7 @@ static BOOL debugMenuCallProc_CaptureList( DEBUG_MENU_EVENT_WORK *wk )
   DEBUG_CAPTURELIST_EVENT_WORK *work;
 
   GMEVENT_Change( event,
-    debugMenuCaptureListEvent, sizeof(DEBUG_CAPTURELIST_EVENT_WORK) );
+      debugMenuCaptureListEvent, sizeof(DEBUG_CAPTURELIST_EVENT_WORK) );
 
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_CAPTURELIST_EVENT_WORK) );
@@ -4204,7 +4211,7 @@ static GMEVENT_RESULT debugMenuCaptureListEvent(
 
     //LCDCにメモリマッピング
     GX_SetBankForLCDC(GX_VRAM_LCDC_D);
-  //  GX_SetGraphicsMode(GX_DISPMODE_VRAM_C, GX_BGMODE_0, GX_BG0_AS_3D);
+    //  GX_SetGraphicsMode(GX_DISPMODE_VRAM_C, GX_BGMODE_0, GX_BG0_AS_3D);
 
     return GMEVENT_RES_FINISH;
   }
@@ -4224,7 +4231,7 @@ static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( d_iwasawa ), EVENT_DebugMovePoke, wk );
+      FS_OVERLAY_ID( d_iwasawa ), EVENT_DebugMovePoke, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -4373,7 +4380,7 @@ static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk )
   DEBUG_ENCEFF_LIST_EVENT_WORK *work;
 
   GMEVENT_Change( event,
-    debugMenuEncEffListEvent, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
+      debugMenuEncEffListEvent, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
 
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
@@ -4435,7 +4442,7 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
       ENCEFF_UnloadEffOverlay(cnt_ptr);
     }
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -1 );
+        GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -1 );
     (*seq)++;
     break;
   case 3:
@@ -4523,7 +4530,7 @@ static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p
   {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( evt_work->Event, EVENT_FieldSubProc( evt_work->gsys, evt_work->FieldWork,
-        FS_OVERLAY_ID(debug_make_undata), &ProcData_DebugMakeUNData, &evt_work->p_work ) );
+          FS_OVERLAY_ID(debug_make_undata), &ProcData_DebugMakeUNData, &evt_work->p_work ) );
     *p_seq  = SEQ_PROC_END;
     break;
   case SEQ_PROC_END:
@@ -4565,12 +4572,12 @@ enum
 {
   DEBUG_BSWAY_ZONE_HOME,
   DEBUG_BSWAY_ZONE_TRAIN,
-  
+
   DEBUG_BSWAY_SCDATA_VIEW,
   DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD,
   DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD,
   DEBUG_BSWAY_WIFI_UPLOAD,
-  
+
   DEBUG_BSWAY_ZONE_SINGLE,
   DEBUG_BSWAY_ZONE_DOUBLE,
   DEBUG_BSWAY_ZONE_MULTI,
@@ -4593,14 +4600,14 @@ enum
   DEBUG_BSWAY_BTL_S_SINGLE_49,
   DEBUG_BSWAY_BTL_S_DOUBLE_49,
   DEBUG_BSWAY_BTL_S_MULTI_49,
-  
+
   DEBUG_BSWAY_SET_REGU_OFF,
   DEBUG_BSWAY_SET_BTL_SKIP,
   DEBUG_BSWAY_ANYSTAGE,
   DEBUG_BSWAY_CHANGE_WIFI_RANK,
   DEBUG_BSWAY_CLEAR_WIFI_ROOM,
   DEBUG_BSWAY_SELECT_TRAINER,
-  
+
   DEBUG_BSWAY_COMM_MULTI_STAGE,
   DEBUG_BSWAY_S_COMM_MULTI_STAGE,
 };
@@ -4641,7 +4648,7 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_28, (void*)DEBUG_BSWAY_BTL_S_DOUBLE_49},
   { DEBUG_FIELD_BSW_29, (void*)DEBUG_BSWAY_BTL_S_MULTI_49},
   { DEBUG_FIELD_BSW_30, (void*)DEBUG_BSWAY_ANYSTAGE},
-  
+
   { DEBUG_FIELD_BSW_41, (void*)DEBUG_BSWAY_CHANGE_WIFI_RANK },
   { DEBUG_FIELD_BSW_42, (void*)DEBUG_BSWAY_CLEAR_WIFI_ROOM },
   { DEBUG_FIELD_BSW_45, (void*)DEBUG_BSWAY_SELECT_TRAINER },
@@ -4692,7 +4699,7 @@ typedef struct
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMSGBG *fldMsgBG;
-  
+
   GFL_MSGDATA *msgData;
   FLDMENUFUNC *menuFunc;
   FLDSYSWIN *sysWin;
@@ -4706,13 +4713,13 @@ typedef struct
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMSGBG *fldMsgBG;
-  
+
   int play_mode;
   int game_round;
   int before_round;
   int key_repeat;
   int key_repeat_wait;
-  
+
   STRBUF *strBuf;
   STRBUF *strTempBuf;
   GFL_MSGDATA *msgData;
@@ -4736,7 +4743,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK  *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init(
@@ -4749,17 +4756,17 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       u16 dummy_ret;
       GMEVENT *next_event = NULL;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
         return( GMEVENT_RES_FINISH );
       }
-      
+
       work->play_mode = ret;
       (*seq)++;
       break;
@@ -4767,7 +4774,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
   case 2:
     {
       FLDMSGBG * msgbg = FIELDMAP_GetFldMsgBG( work->fieldWork );
-        
+
       work->strBuf = GFL_STR_CreateBuffer( 128, work->heapID );
       work->strTempBuf = GFL_STR_CreateBuffer( 128, work->heapID );
       work->msgData = DEBUGFLDMENU_CreateMSGDATA( work->fieldWork,
@@ -4793,18 +4800,18 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
         GFL_MSG_Delete( work->msgData );
         GFL_STR_DeleteBuffer( work->strBuf );
         GFL_STR_DeleteBuffer( work->strTempBuf );
-       
+
         if( trg & PAD_BUTTON_B ){
           return( GMEVENT_RES_FINISH );
         }
-        
+
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, work->play_mode );
         BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, work->game_round );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       }
-      
+
       if( cont && cont == work->key_repeat ){
         if( work->key_repeat_wait < 30*10 ){
           work->key_repeat_wait++;
@@ -4874,13 +4881,13 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
           work->game_round += add10;
         }
       }
-      
+
       if( work->game_round <= 0 ){
         work->game_round = 1;
       }else if( work->game_round > 69986+7 ){
         work->game_round = 69986+7;
       }
-      
+
       switch( work->play_mode ){
       case BSWAY_MODE_SINGLE:
       case BSWAY_MODE_DOUBLE:
@@ -4889,7 +4896,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
           work->game_round = 21;
         }
       }
-      
+
       if( work->game_round != work->before_round ){
         work->before_round = work->game_round;
         STRTOOL_SetNumber(
@@ -4897,35 +4904,35 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
             STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
         FLDMSGWIN_ClearWindow( work->msgWin );
         FLDMSGWIN_PrintStrBuf( work->msgWin, 16, 1, work->strBuf );
-        
+
         {
           int stage = 0,round = 0;
-          
+
           stage = work->game_round / 7;
           round = work->game_round % 7;
-          
+
           if( work->game_round % 7 ){
             stage++;
           }
-          
+
           if( round == 0 ){
             round = 7;
           }
-          
+
           STRTOOL_SetNumber( work->strTempBuf, work->game_round, 5,
-            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+              STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
           WORDSET_RegisterWord(
               work->wordSet, 0, work->strTempBuf, 0, TRUE, PM_LANG );
           STRTOOL_SetNumber( work->strTempBuf, stage, 5,
-            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+              STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
           WORDSET_RegisterWord(
               work->wordSet, 1, work->strTempBuf, 0, TRUE, PM_LANG );
           STRTOOL_SetNumber( work->strTempBuf, round, 1,
-            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+              STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
           WORDSET_RegisterWord(
               work->wordSet, 2, work->strTempBuf, 0, TRUE, PM_LANG );
-          
-            GFL_MSG_GetString(
+
+          GFL_MSG_GetString(
               work->msgData, DEBUG_FIELD_BSW_40, work->strTempBuf );
           WORDSET_ExpandStr(
               work->wordSet, work->strBuf, work->strTempBuf );
@@ -4951,7 +4958,7 @@ static void debugMenuCallProc_BSubwayAnyStage(
       sizeof(DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK) );
-  
+
   work->heapID = heapID;
   work->gmSys = gsys;
   work->gmEvent = event;
@@ -4987,14 +4994,14 @@ typedef struct
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMSGBG *fldMsgBG;
-  
+
   int play_mode;
   int select_trainer_num;
   int select_trainer_max;
   u16 trainer_no[2];
   int key_repeat;
   int key_repeat_wait;
-  
+
   STRBUF *strBuf;
   STRBUF *strTempBuf;
   GFL_MSGDATA *msgData;
@@ -5009,7 +5016,7 @@ static GMEVENT_RESULT debugMenuBSubwaySelectTrainerEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK  *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init(
@@ -5022,17 +5029,17 @@ static GMEVENT_RESULT debugMenuBSubwaySelectTrainerEvent(
       u16 dummy_ret;
       GMEVENT *next_event = NULL;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
         return( GMEVENT_RES_FINISH );
       }
-      
+
       work->play_mode = ret;
       (*seq)++;
       break;
@@ -5040,7 +5047,7 @@ static GMEVENT_RESULT debugMenuBSubwaySelectTrainerEvent(
   case 2:
     {
       FLDMSGBG * msgbg = FIELDMAP_GetFldMsgBG( work->fieldWork );
-        
+
       work->strBuf = GFL_STR_CreateBuffer( 128, work->heapID );
       work->strTempBuf = GFL_STR_CreateBuffer( 128, work->heapID );
       work->msgData = DEBUGFLDMENU_CreateMSGDATA( work->fieldWork,
@@ -5120,7 +5127,7 @@ static GMEVENT_RESULT debugMenuBSubwaySelectTrainerEvent(
         } 
         return( GMEVENT_RES_CONTINUE );
       }
-      
+
       if( cont && cont == work->key_repeat ){
         if( work->key_repeat_wait < 30*10 ){
           work->key_repeat_wait++;
@@ -5242,7 +5249,7 @@ static void debugMenuCallProc_BSubwaySelectTrainer(
       sizeof(DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK) );
-  
+
   work->heapID = heapID;
   work->gmSys = gsys;
   work->gmEvent = event;
@@ -5254,14 +5261,14 @@ static void debugMenuCallProc_BSubwaySelectTrainer(
 static BOOL bsubway_CheckBattleZoneID( DEBUG_BSUBWAY_EVENT_WORK *work )
 {
   u16 zone_id = FIELDMAP_GetZoneID( work->fieldWork );
-  
+
   if( ZONEDATA_IsBattleSubway(zone_id) == TRUE ){
     if( zone_id != ZONE_ID_C04R0110 &&
         zone_id != ZONE_ID_C04R0111 ){
       return( TRUE );
     }
   }
-  
+
   FLDSYSWIN_ClearWindow( work->sysWin );
   FLDSYSWIN_Print( work->sysWin, 1, 0, DEBUG_FIELD_BSW_37 );
   return( FALSE );
@@ -5276,10 +5283,10 @@ typedef struct
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMSGBG *fldMsgBG;
-  
+
   int rank;
   int before_rank;
-  
+
   STRBUF *strBuf;
   STRBUF *strTempBuf;
   GFL_MSGDATA *msgData;
@@ -5293,7 +5300,7 @@ static GMEVENT_RESULT debugMenuBSubwayChangeWifiRank(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_BSW_CHANGE_WIFI_RANK *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     {
@@ -5310,18 +5317,18 @@ static GMEVENT_RESULT debugMenuBSubwayChangeWifiRank(
       int trg = GFL_UI_KEY_GetTrg();
       int cont = GFL_UI_KEY_GetCont();
       int repeat = GFL_UI_KEY_GetRepeat();
-      
+
       if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
         FLDMSGWIN_Delete( work->msgWin );
         GFL_STR_DeleteBuffer( work->strBuf );
-        
+
         if( trg & PAD_BUTTON_A ){
           BSUBWAY_SCRWORK_DebugSetWifiRank( work->gmSys, work->rank );
         }
-        
+
         return( GMEVENT_RES_FINISH );
       }
-      
+
       if( repeat & PAD_KEY_UP ){
         work->rank--;
         if( work->rank < 1 ){ work->rank = 1; }
@@ -5335,7 +5342,7 @@ static GMEVENT_RESULT debugMenuBSubwayChangeWifiRank(
         work->rank += 2;
         if( work->rank > 10 ){ work->rank = 10; }
       }
-      
+
       if( work->rank != work->before_rank ){
         work->before_rank = work->rank;
         STRTOOL_SetNumber( work->strBuf, work->rank, 5,
@@ -5356,12 +5363,12 @@ static void debugMenuCallProc_BSubwayChangeWifiRank(
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_BSW_CHANGE_WIFI_RANK *work;
-  
+
   GMEVENT_Change( event, debugMenuBSubwayChangeWifiRank,
       sizeof(DEBUG_BSW_CHANGE_WIFI_RANK) );
   work = GMEVENT_GetEventWork( event );
- GFL_STD_MemClear( work, sizeof(DEBUG_BSW_CHANGE_WIFI_RANK) );
-  
+  GFL_STD_MemClear( work, sizeof(DEBUG_BSW_CHANGE_WIFI_RANK) );
+
   work->heapID = heapID;
   work->gmSys = gsys;
   work->gmEvent = event;
@@ -5378,7 +5385,7 @@ typedef struct
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMSGBG *fldMsgBG;
-  
+
   int stage;
   int before_stage;
   u16 play_mode;
@@ -5396,7 +5403,7 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_BSW_SELECT_COMM_MULTI_STAGE *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     {
@@ -5406,7 +5413,7 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
       work->msgWin = FLDMSGWIN_Add( msgbg, NULL, 1, 1, 8, 2 );
       work->stage = 0;
       work->before_stage = -1;
-      
+
       work->msgData = DEBUGFLDMENU_CreateMSGDATA( work->fieldWork,
           NARC_debug_message_d_field_dat );
       work->wordSet = WORDSET_Create( work->heapID );
@@ -5420,7 +5427,7 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
       int trg = GFL_UI_KEY_GetTrg();
       int cont = GFL_UI_KEY_GetCont();
       int repeat = GFL_UI_KEY_GetRepeat();
-      
+
       if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
         FLDMSGWIN_Delete( work->msgWin );
         FLDSYSWIN_Delete( work->sysWin );
@@ -5428,15 +5435,15 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
         GFL_MSG_Delete( work->msgData );
         GFL_STR_DeleteBuffer( work->strBuf );
         GFL_STR_DeleteBuffer( work->strTempBuf );
-        
+
         if( trg & PAD_BUTTON_A ){
           BSUBWAY_SCRWORK_DebugSetCommMultiStage(
               work->gmSys, work->play_mode, work->stage );
         }
-        
+
         return( GMEVENT_RES_FINISH );
       }
-      
+
       if( repeat & PAD_KEY_UP ){
         add = -1;
       }else if( repeat & PAD_KEY_DOWN ){
@@ -5446,10 +5453,10 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
       }else if( repeat & PAD_KEY_RIGHT ){
         add = 10;
       }
-      
+
       stage = work->stage;
       stage += add;
-      
+
       if( work->play_mode == BSWAY_MODE_COMM_MULTI ){
         if( stage > 2 ){
           stage = 2;
@@ -5463,16 +5470,16 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
           stage += 9999;
         }
       }
-      
+
       work->stage = stage;
-      
+
       if( work->stage != work->before_stage ){
         work->before_stage = work->stage;
         STRTOOL_SetNumber( work->strBuf, work->stage+1, 5,
             STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
         FLDMSGWIN_ClearWindow( work->msgWin );
         FLDMSGWIN_PrintStrBuf( work->msgWin, 16, 1, work->strBuf );
-        
+
         STRTOOL_SetNumber( work->strTempBuf, work->stage+1, 5,
             STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         WORDSET_RegisterWord(
@@ -5482,9 +5489,9 @@ static GMEVENT_RESULT debugMenuBSubwaySelectCommMultiStage(
         WORDSET_RegisterWord(
             work->wordSet, 1, work->strTempBuf, 0, TRUE, PM_LANG );
         GFL_MSG_GetString(
-              work->msgData, DEBUG_FIELD_BSW_50, work->strTempBuf );
+            work->msgData, DEBUG_FIELD_BSW_50, work->strTempBuf );
         WORDSET_ExpandStr(
-              work->wordSet, work->strBuf, work->strTempBuf );
+            work->wordSet, work->strBuf, work->strTempBuf );
         FLDSYSWIN_ClearWindow( work->sysWin );
         FLDSYSWIN_PrintStrBuf( work->sysWin, 1, 0, work->strBuf );
       }
@@ -5501,12 +5508,12 @@ static void debugMenuCallProc_BSubwaySelectCommMulti(
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_BSW_SELECT_COMM_MULTI_STAGE *work;
-  
+
   GMEVENT_Change( event, debugMenuBSubwaySelectCommMultiStage,
       sizeof(DEBUG_BSW_SELECT_COMM_MULTI_STAGE) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_BSW_SELECT_COMM_MULTI_STAGE) );
-  
+
   work->heapID = heapID;
   work->gmSys = gsys;
   work->gmEvent = event;
@@ -5542,30 +5549,30 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       FLDMENUFUNC *menuFunc = work->menuFunc;
       GMEVENT *next_event = NULL;
       EV_WIFIBSUBWAY_PARAM wifi_bsubway_param;
-      
+
       ret = FLDMENUFUNC_ProcMenu( menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
         FLDSYSWIN_Delete( sysWin );
         FLDMENUFUNC_DeleteMenu( menuFunc );
         GFL_MSG_Delete( msgData );
         return( GMEVENT_RES_FINISH );
       }
-      
+
       switch( ret ){
       case DEBUG_BSWAY_ZONE_HOME: //ホームへ移動
         param = ZONE_ID_C04R0111;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &home_map_pos );
+            work->gmSys, work->fieldWork, param, &home_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_TRAIN: //車内へ移動
         param = ZONE_ID_C04R0110;
         next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+            work->gmSys, work->fieldWork, param );
         break;
       case DEBUG_BSWAY_SCDATA_VIEW: //歴代リーダー表示
         next_event = BSUBWAY_EVENT_CallLeaderBoard( work->gmSys );
@@ -5573,61 +5580,61 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD: //wifi データダウンロード
         wifi_bsubway_param.mode = WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD;
         wifi_bsubway_param.ret_wk = &dummy_ret;
-        
+
         next_event = GMEVENT_CreateOverlayEventCall( work->gmSys, 
-                      FS_OVERLAY_ID(event_wifibsubway), 
-                      WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
+            FS_OVERLAY_ID(event_wifibsubway), 
+            WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
         break;
       case DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD:  //wif 履歴ダウンロード
         wifi_bsubway_param.mode = WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD;
         wifi_bsubway_param.ret_wk = &dummy_ret;
-        
+
         next_event = GMEVENT_CreateOverlayEventCall( work->gmSys, 
-                      FS_OVERLAY_ID(event_wifibsubway), 
-                      WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
+            FS_OVERLAY_ID(event_wifibsubway), 
+            WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
         break;
       case DEBUG_BSWAY_WIFI_UPLOAD: //wifi データアップロード
         wifi_bsubway_param.mode = WIFI_BSUBWAY_MODE_SCORE_UPLOAD;
         wifi_bsubway_param.ret_wk = &dummy_ret;
-        
+
         next_event = GMEVENT_CreateOverlayEventCall( work->gmSys, 
-                      FS_OVERLAY_ID(event_wifibsubway), 
-                      WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
+            FS_OVERLAY_ID(event_wifibsubway), 
+            WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
         break;
       case DEBUG_BSWAY_ZONE_SINGLE: //シングル受付へ
         param = ZONE_ID_C04R0102;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &receipt_map_pos );
+            work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_DOUBLE: //ダブル受付へ
         param = ZONE_ID_C04R0104;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &receipt_map_pos );
+            work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_MULTI: //マルチ受付へ
         param = ZONE_ID_C04R0106;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &receipt_map_pos );
+            work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_WIFI: //WiFi受付へ
         param = ZONE_ID_C04R0108;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &receipt_map_pos );
+            work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_S_SINGLE: //Sシングル受付へ
         param = ZONE_ID_C04R0103;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &receipt_map_pos );
+            work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_S_DOUBLE: //Sダブル受付へ
         param = ZONE_ID_C04R0105;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &receipt_map_pos );
+            work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_S_MULTI: //Sマルチ受付へ
         param = ZONE_ID_C04R0107;
         next_event = DEBUG_EVENT_QuickChangeMapAppoint(
-          work->gmSys, work->fieldWork, param, &receipt_map_pos );
+            work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_AUTO_SINGLE: //シングルオート戦闘
         if( bsubway_CheckBattleZoneID(work) == TRUE ){
@@ -5742,7 +5749,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
           flag ^= BSW_DEBUG_FLAG_REGU_OFF;
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
-          
+
           FLDSYSWIN_ClearWindow( work->sysWin );
 
           if( (flag & BSW_DEBUG_FLAG_REGU_OFF) ){
@@ -5757,7 +5764,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
           flag ^= BSW_DEBUG_FLAG_BTL_SKIP;
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
-          
+
           FLDSYSWIN_ClearWindow( work->sysWin );
 
           if( (flag & BSW_DEBUG_FLAG_BTL_SKIP) ){
@@ -5828,12 +5835,12 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       default:
         break;
       }
-      
+
       if( chg_event == TRUE || next_event != NULL ){
         FLDSYSWIN_Delete( sysWin );
         FLDMENUFUNC_DeleteMenu( menuFunc );
         GFL_MSG_Delete( msgData );
-        
+
         if( next_event != NULL ){
           GMEVENT_CallEvent( event, next_event );
           (*seq)++;
@@ -5844,7 +5851,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
   case 2:
     return GMEVENT_RES_FINISH;
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -5855,18 +5862,18 @@ static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_BSUBWAY_EVENT_WORK  *work;
-  
+
   GMEVENT_Change( event,
-    debugMenuBSubwayEvent, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
+      debugMenuBSubwayEvent, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
   work->fieldWork = fieldWork;
   work->fldMsgBG = FIELDMAP_GetFldMsgBG( fieldWork );
-  
+
   return( TRUE );
 }
 
@@ -5947,7 +5954,7 @@ static BOOL debugMenuCallProc_GPowerList( DEBUG_MENU_EVENT_WORK *wk )
   DEBUG_GPOWER_EVENT_WORK *work;
 
   GMEVENT_Change( event,
-    debugMenuGPowerListEvent, sizeof(DEBUG_GPOWER_EVENT_WORK) );
+      debugMenuGPowerListEvent, sizeof(DEBUG_GPOWER_EVENT_WORK) );
 
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_GPOWER_EVENT_WORK) );
@@ -6018,7 +6025,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
  */
 //--------------------------------------------------------------
 static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list,
-  HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
+    HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
 {
   int id;
   STRBUF *strBuf = GFL_STR_CreateBuffer( 64, heapID );
@@ -6154,10 +6161,10 @@ static BOOL checkNGZoneID( zone_id )
 {
   int i;
 #if 0
-    if ( ZONEDATA_GetMatrixID(zone_id) == NARC_map_matrix_palacefield_mat_bin )
-    {
-      continue;
-    }
+  if ( ZONEDATA_GetMatrixID(zone_id) == NARC_map_matrix_palacefield_mat_bin )
+  {
+    continue;
+  }
 #endif
   for ( i = 0; i < NELEMS(ng_zone_table); i++ )
   {
@@ -6693,17 +6700,17 @@ static void SetZukanDataAll( DEBUG_ZUKAN_WORK * wk )
     if( sex_vec == POKEPER_SEX_UNKNOWN ){
       SetZukanDataAllOne( wk, pp, PTL_SEX_UNKNOWN, FALSE, TRUE );   // レアじゃない
       SetZukanDataAllOne( wk, pp, PTL_SEX_UNKNOWN, TRUE, FALSE );   // レア
-    // 性別あり
+      // 性別あり
     }else{
       // ♂もいる
       if( sex_vec != POKEPER_SEX_FEMALE ){
-//        PP_Put( pp, ID_PARA_sex, PTL_SEX_MALE );
+        //        PP_Put( pp, ID_PARA_sex, PTL_SEX_MALE );
         SetZukanDataAllOne( wk, pp, PTL_SEX_MALE, FALSE, TRUE );    // レアじゃない
         SetZukanDataAllOne( wk, pp, PTL_SEX_MALE, TRUE, FALSE );    // レア
       }
       // ♀もいる
       if( sex_vec != POKEPER_SEX_MALE ){
-//        PP_Put( pp, ID_PARA_sex, PTL_SEX_FEMALE );
+        //        PP_Put( pp, ID_PARA_sex, PTL_SEX_FEMALE );
         SetZukanDataAllOne( wk, pp, PTL_SEX_FEMALE, FALSE, TRUE );  // レアじゃない
         SetZukanDataAllOne( wk, pp, PTL_SEX_FEMALE, TRUE, FALSE );  // レア
       }
@@ -6813,10 +6820,10 @@ static void DZM_DataMake( DEBUG_ZUKAN_MANUAL_WORK * wk )
   // みた
   if( wk->mode == 0 ){
     ZUKANSAVE_DebugDataSetSee( wk->sv, start, end, wk->heapID );
-  // ほかく
+    // ほかく
   }else if( wk->mode == 1 ){
     ZUKANSAVE_DebugDataSetGet( wk->sv, start, end, wk->heapID );
-  // 範囲クリア
+    // 範囲クリア
   }else{
     ZUKANSAVE_DebugDataClear( wk->sv, start, end );
   }
@@ -6993,131 +7000,131 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
         return GMEVENT_RES_CONTINUE;
       }
       else
-      if( ret == FLDMENUFUNC_CANCEL )
-      {
-        FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        return GMEVENT_RES_FINISH;
-      }
-      else
-      {
-        POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
-        BOX_MANAGER *boxData = GAMEDATA_GetBoxManager(gmData);
-        u64 id = 0xbb76c1c5;
-        u64 rnd;
-        if( ret < 100 )
+        if( ret == FLDMENUFUNC_CANCEL )
         {
-          POKEMON_PARAM *pp;
-          //ポケモン作成
-          switch( ret )
-          {
-          case 0: //10えいがセレビィ
-            pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_BEFORE );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 1: //10えいがエンテイ
-            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_ENTEI , 0 , 0 , 0 , TRUE );
-            pp = PP_CreateEx( MONSNO_ENTEI , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 2: //10えいがライコウ
-            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_RAIKOU , 0 , 0 , 0 , TRUE );
-            pp = PP_CreateEx( MONSNO_RAIKOU , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 3: //10えいがスイクン
-            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_SUIKUN , 0 , 0 , 0 , TRUE );
-            pp = PP_CreateEx( MONSNO_SUIKUN , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 4: //10えいがセレビィ(後
-            pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_AFTER );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 5: //10えいがエンテイ(後
-            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_ENTEI , 0 , 0 , 0 , TRUE );
-            pp = PP_CreateEx( MONSNO_ENTEI , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 6: //10えいがライコウ(後
-            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_RAIKOU , 0 , 0 , 0 , TRUE );
-            pp = PP_CreateEx( MONSNO_RAIKOU , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 7: //10えいがスイクン(後
-            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_SUIKUN , 0 , 0 , 0 , TRUE );
-            pp = PP_CreateEx( MONSNO_SUIKUN , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
-            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 8: //メロディア
-            pp = PP_Create( MONSNO_655 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 9: //ダルタニス
-            pp = PP_Create( MONSNO_654 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 10: //インセクタ
-            pp = PP_Create( MONSNO_656 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          case 11: //はいふシェイミ
-            pp = PP_Create( MONSNO_SHEIMI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-            break;
-          }
-          {
-            u16 oyaName[] = {L'イ',L'ベ',L'ン',L'ト',L'ぽ',L'け',0xFFFF};
-            PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-            PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
-          }
-          //手持ちに空きがあれば入れる
-          if( PokeParty_GetPokeCount( party ) < 6 )
-          {
-            PokeParty_Add( party , pp );
-          }
-          else
-          {
-            BOXDAT_PutPokemon( boxData , PP_GetPPPPointer( pp ) );
-          }
-          GFL_HEAP_FreeMemory( pp );
+          FLDMENUFUNC_DeleteMenu( work->menuFunc );
+          return GMEVENT_RES_FINISH;
         }
         else
         {
-          switch( ret )
+          POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
+          BOX_MANAGER *boxData = GAMEDATA_GetBoxManager(gmData);
+          u64 id = 0xbb76c1c5;
+          u64 rnd;
+          if( ret < 100 )
           {
-          case 100://ロックカプセル
+            POKEMON_PARAM *pp;
+            //ポケモン作成
+            switch( ret )
             {
-              MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
-              MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
-              MISC *miscData = GAMEDATA_GetMiscWork( gmData );
-
-              EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_LOCKCAPSULE , myStatus );
-              MYITEM_AddItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId );
+            case 0: //10えいがセレビィ
+              pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_BEFORE );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 1: //10えいがエンテイ
+              rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_ENTEI , 0 , 0 , 0 , TRUE );
+              pp = PP_CreateEx( MONSNO_ENTEI , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 2: //10えいがライコウ
+              rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_RAIKOU , 0 , 0 , 0 , TRUE );
+              pp = PP_CreateEx( MONSNO_RAIKOU , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 3: //10えいがスイクン
+              rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_SUIKUN , 0 , 0 , 0 , TRUE );
+              pp = PP_CreateEx( MONSNO_SUIKUN , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 4: //10えいがセレビィ(後
+              pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_AFTER );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 5: //10えいがエンテイ(後
+              rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_ENTEI , 0 , 0 , 0 , TRUE );
+              pp = PP_CreateEx( MONSNO_ENTEI , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 6: //10えいがライコウ(後
+              rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_RAIKOU , 0 , 0 , 0 , TRUE );
+              pp = PP_CreateEx( MONSNO_RAIKOU , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 7: //10えいがスイクン(後
+              rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_SUIKUN , 0 , 0 , 0 , TRUE );
+              pp = PP_CreateEx( MONSNO_SUIKUN , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
+              PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 8: //メロディア
+              pp = PP_Create( MONSNO_655 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 9: //ダルタニス
+              pp = PP_Create( MONSNO_654 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 10: //インセクタ
+              pp = PP_Create( MONSNO_656 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
+            case 11: //はいふシェイミ
+              pp = PP_Create( MONSNO_SHEIMI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+              PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+              break;
             }
-            break;
-          case 101://ビクティチケット
             {
-              MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
-              MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
-              MISC *miscData = GAMEDATA_GetMiscWork( gmData );
-
-              EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_VICTYTICKET , myStatus );
-              MYITEM_AddItem( myItem , ITEM_RIBATHITIKETTO , 1 , work->heapId );
+              u16 oyaName[] = {L'イ',L'ベ',L'ン',L'ト',L'ぽ',L'け',0xFFFF};
+              PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+              PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
             }
-            break;
+            //手持ちに空きがあれば入れる
+            if( PokeParty_GetPokeCount( party ) < 6 )
+            {
+              PokeParty_Add( party , pp );
+            }
+            else
+            {
+              BOXDAT_PutPokemon( boxData , PP_GetPPPPointer( pp ) );
+            }
+            GFL_HEAP_FreeMemory( pp );
+          }
+          else
+          {
+            switch( ret )
+            {
+            case 100://ロックカプセル
+              {
+                MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
+                MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
+                MISC *miscData = GAMEDATA_GetMiscWork( gmData );
+
+                EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_LOCKCAPSULE , myStatus );
+                MYITEM_AddItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId );
+              }
+              break;
+            case 101://ビクティチケット
+              {
+                MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
+                MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
+                MISC *miscData = GAMEDATA_GetMiscWork( gmData );
+
+                EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_VICTYTICKET , myStatus );
+                MYITEM_AddItem( myItem , ITEM_RIBATHITIKETTO , 1 , work->heapId );
+              }
+              break;
 
 
+            }
           }
         }
-      }
     }
     break;
   }
@@ -7138,7 +7145,7 @@ static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk )
 {
   GMEVENT * new_event;
   new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( debug_symbol ), EVENT_DEBUG_SymbolPokeList, wk );
+      FS_OVERLAY_ID( debug_symbol ), EVENT_DEBUG_SymbolPokeList, wk );
   GMEVENT_ChangeEvent( wk->gmEvent, new_event );
 
   return TRUE;
@@ -7221,49 +7228,49 @@ static GMEVENT_RESULT debugMenuMusical( GMEVENT *event, int *seq, void *wk )
         return GMEVENT_RES_CONTINUE;
       }
       else
-      if( ret == FLDMENUFUNC_CANCEL )
-      {
-        FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        return GMEVENT_RES_FINISH;
-      }
-      else
-      {
-        switch( ret )
+        if( ret == FLDMENUFUNC_CANCEL )
         {
-        case 0:
-          {
-            u16 i;
-            for( i=0;i<MUSICAL_ITEM_MAX_REAL;i++ )
-            {
-              MUSICAL_SAVE_AddItem( musSave , i );
-            }
-          }
-          break;
-        case 1:
-          MUSICAL_SAVE_InitWork( musSave );
-          break;
-        case 2:
-          {
-            MUSICAL_SHOT_DATA *shotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
-
-            GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_debug) );
-            if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-            {
-              POKEPARTY* party = GAMEDATA_GetMyPokemon( gmData );
-              POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , 0 );
-              const u32 monsno = PP_Get( pp , ID_PARA_monsno , NULL );
-              MUSICAL_DEBUG_CreateDummyData( shotData , monsno , work->heapId );
-            }
-            else
-            {
-              //一番重いのはペンドラー
-              MUSICAL_DEBUG_CreateDummyData( shotData , 545 , work->heapId );
-            }
-            GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
-          }
-          break;
+          FLDMENUFUNC_DeleteMenu( work->menuFunc );
+          return GMEVENT_RES_FINISH;
         }
-      }
+        else
+        {
+          switch( ret )
+          {
+          case 0:
+            {
+              u16 i;
+              for( i=0;i<MUSICAL_ITEM_MAX_REAL;i++ )
+              {
+                MUSICAL_SAVE_AddItem( musSave , i );
+              }
+            }
+            break;
+          case 1:
+            MUSICAL_SAVE_InitWork( musSave );
+            break;
+          case 2:
+            {
+              MUSICAL_SHOT_DATA *shotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
+
+              GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_debug) );
+              if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+              {
+                POKEPARTY* party = GAMEDATA_GetMyPokemon( gmData );
+                POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , 0 );
+                const u32 monsno = PP_Get( pp , ID_PARA_monsno , NULL );
+                MUSICAL_DEBUG_CreateDummyData( shotData , monsno , work->heapId );
+              }
+              else
+              {
+                //一番重いのはペンドラー
+                MUSICAL_DEBUG_CreateDummyData( shotData , 545 , work->heapId );
+              }
+              GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
+            }
+            break;
+          }
+        }
     }
   }
 
@@ -7288,7 +7295,7 @@ static BOOL debugMenuCallProc_Cutin( DEBUG_MENU_EVENT_WORK *wk )
   DEBUG_ENCEFF_LIST_EVENT_WORK *work;
 
   GMEVENT_Change( event,
-    debugCutin, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
+      debugCutin, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
 
@@ -7345,6 +7352,42 @@ static GMEVENT_RESULT debugCutin(
   return( GMEVENT_RES_CONTINUE );
 }
 
+
+// << update ichiraku 2010/10/5
+// ためしにデバック機能追加してみた
+// 簡単な性別変更をコピペ
+static BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *wk )
+{
+  int sex;
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldMap = wk->fieldWork;
+  u16 zone_id = FIELDMAP_GetZoneID( fieldMap );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( wk->gdata );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( wk->gdata );
+  MYSTATUS *s_mystatus = SaveData_GetMyStatus( save );
+
+  // 性別をひっくり返す
+  sex = MyStatus_GetMySex( mystatus );
+  sex ^= 1;
+  MyStatus_SetMySex( mystatus, sex );
+  MyStatus_SetMySex( s_mystatus, sex );
+
+  // ユニオン見た目もひっくり返す
+  MyStatus_SetTrainerView( mystatus,   sex*MYSTATUS_UNIONVIEW_MAX );
+  MyStatus_SetTrainerView( s_mystatus, sex*MYSTATUS_UNIONVIEW_MAX );
+
+  {
+    GMEVENT * mapchange_event;
+    mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldMap, zone_id );
+    GMEVENT_ChangeEvent( event, mapchange_event );
+  }
+
+  return( TRUE );
+
+}
+
 static void DbgRestDataUpdate(const u32 inZone)
 {
   u32 heap_rest = GFL_HEAP_GetHeapFreeSize( HEAPID_FIELDMAP );
@@ -7365,7 +7408,7 @@ static void DbgRestDataUpdate(const u32 inZone)
     DbgFldHeapRestAlctbl = allocatable;
     DbgFldHeapUseMaxZoneAlctbl = inZone;
   }
-  
+
   NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &vram_rest );
 
   if ( DbgVramRest >= vram_rest )
@@ -7385,11 +7428,11 @@ static void DbgRestDataUpdate(const u32 inZone)
 
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
 {
-    // 合計サイズを計算。
-    (*((u32*)pUserData)) += szByte;
-    // 情報をデバックコンソールに出力
-    OS_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
-    OS_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
+  // 合計サイズを計算。
+  (*((u32*)pUserData)) += szByte;
+  // 情報をデバックコンソールに出力
+  OS_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
+  OS_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
 }
 
 
@@ -7442,7 +7485,7 @@ static GMEVENT_RESULT EV_debugMenu_WfbcDebug( GMEVENT *event, int *seq, void *wk
 {
   EV_DEBUGMENU_WFBC *work = wk;
 
-  
+
   switch( *seq ){
   case 0:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_menu_wfbc_check) );
