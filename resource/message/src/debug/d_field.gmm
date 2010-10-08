@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-07-10T16:21:21"/>
+	<create user="ichiraku_katsuhiko" host="W00241" date="2010-10-05T19:30:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="443" top="164" right="1148" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="-129" top="117" right="399" bottom="639" visible="yes"/>
+		<tag-palette left="-81" top="168" right="447" bottom="690" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -2180,6 +2180,11 @@ LR→補完&quot;</language>
 ([2:04:５桁:1]連勝）</language>
 		<language name="JPN_KANJI" width="240">[2:04:５桁:0]週目になります
 ([2:04:５桁:1]連勝）</language>
+	</row>
+
+	<row id="DEBUG_FIELD_TEST_ICHI">
+		<language name="JPN" width="240">いちらくテスト</language>
+		<language name="JPN_KANJI" width="240">いちらくテスト</language>
 	</row>
 
 	<flowchart-group-list>
