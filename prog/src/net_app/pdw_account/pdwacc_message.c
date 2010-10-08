@@ -44,6 +44,9 @@
 #include "test/debug_pause.h"
 #endif
 
+// ++ アクセスコードの文字間に入れるスペース 任天堂様からの共有ソース
+#define PASSWORD_CHARACTER_SPACE (1)
+
 //--------------------------------------------
 // 画面構成定義
 //--------------------------------------------
@@ -581,6 +584,45 @@ void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf)
   GFL_BMPWIN* pwin;
   int i;
   STRCODE buff2[]={
+    65,	//A
+    66,	//B
+    67,	//C
+    68,	//D
+    69,	//E
+    70,	//F
+    71,	//G
+    72,	//H
+    //73,	//I
+    74,	//J
+    75,	//K
+    76,	//L
+    77,	//M
+    78,	//N
+    //79,	//O
+    80,	//P
+    81,	//Q
+    82,	//R
+    83,	//S
+    84,	//T
+    85,	//U
+    86,	//V
+    87,	//W
+    88,	//X
+    89,	//Y
+    90,	//Z
+    //48,	//0
+    //49,	//1
+    50,	//2
+    51,	//3
+    52,	//4
+    53,	//5
+    54,	//6
+    55,	//7
+    56,	//8
+    57,	//9
+  };
+
+  /*  STRCODE buff2[]={  //全角に修正希望がある場合これ
     0xff21,	//A
     0xff22,	//B
     0xff23,	//C
@@ -618,25 +660,26 @@ void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf)
     0xff18,	//8
     0xff19,	//9
   };
-
+*/
   u64 moji;
   u16 word;
-  STRCODE disp[30*sizeof(STRCODE)];
   s32 id = profileID;
   u16 crc = GFL_STD_CrcCalc( &id, 4 );
   u64 code = id + crc * 0x100000000;
+  const u16 xadd_param[1] = {PASSWORD_CHARACTER_SPACE};
+
   OS_TPrintf("id=%x crc=%x code=%x\n",id,crc,code);
 
   moji = code;
-  GFL_STD_MemFill(disp,0xff,sizeof(disp));
+  GFL_STR_ClearBuffer(pStrbuf);
   for(i = 0; i < 10 ; i++){
     word = moji & 0x1f;
     moji = moji >> 5;
-    disp[i*2]=buff2[word];
-    disp[i*2+1]=0x0020;
-  }
-  GFL_STR_SetStringCode(pStrbuf,disp);
+    // ++ アクセスコードの字間にスペース(x加算)を入れる 任天堂様からの共有ソース
+    GFL_STR_AddCode(pStrbuf, buff2[word]);
+    PRINTSYS_CreateTagCode(pStrbuf, PRINTSYS_TAGGROUP_CTRL_GEN, PRINTSYS_CTRL_GENERAL_X_ADD, NELEMS(xadd_param), xadd_param);
 
+  }
 }
 
 
