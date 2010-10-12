@@ -21,7 +21,7 @@ MSG_ID_DEF_FILES= "../../../../../prog/include/msg/script/*.h" # ƒƒbƒZ[ƒWID‚Ì’
 
 puts Benchmark.measure{
 
-  puts "–¢g—pƒƒbƒZ[ƒW‚ğ’²¸’†‚µ‚Ü‚·"
+  puts "–¢g—pƒƒbƒZ[ƒW‚ğ’²¸‚µ‚Ü‚·"
 
   puts "ƒƒbƒZ[ƒWID‚ğæ“¾‚µ‚Ä‚¢‚Ü‚·EEE"
   # ƒƒbƒZ[ƒWƒŠƒXƒg
