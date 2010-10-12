@@ -331,9 +331,6 @@ static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
   { DEBUG_FIELD_TITLE_00, (void*)BMPMENULIST_LABEL },       //○ジャンプ（移動用）
-  // << update ichiraku 2010/10/5
-  // ためしにデバック機能追加してみた
-  { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi },    // いちらくテスト
   { DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },    //空を飛ぶ
   { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },            //ジャンプ（ユニオン等）
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },   //ゾーン選択ジャンプ
@@ -424,7 +421,10 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone },           //着信音
-  { DEBUG_FIELD_STR73, debugMenu_WfbcDebug }                   //WFBCオートチェック
+  { DEBUG_FIELD_STR73, debugMenu_WfbcDebug },                   //WFBCオートチェック
+  // << update ichiraku 2010/10/5
+  // ためしにデバック機能追加してみた
+  { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi },    // いちらくテスト
 };
 
 
