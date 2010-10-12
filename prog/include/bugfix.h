@@ -947,3 +947,11 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
 */
 #define BUGFIX_AF_GFBTS2026_101006
 
+/*
+ * レベルアップと同時に努力値の加算でパラメータが増加する際、
+ * クライアント側データに正しい値が設定されない（HPなどがサーバ側より１低い状態になる）不具合の修正
+ *
+ * 担当：田谷
+*/
+#define BUGFIX_AF_GFBTS2028_101007
+

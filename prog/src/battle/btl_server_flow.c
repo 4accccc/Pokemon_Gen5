@@ -981,8 +981,12 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     // レベルアップコマンド発生
     fExpGet = scproc_CheckExpGet( wk );
 
+    BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
+
     // 決着（大爆発など同時全滅のケースは、死亡レコードを見れば解決する）
     fShowDown = scproc_CheckShowdown( wk );
+
+    BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
 
     if( fShowDown ){
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
@@ -999,6 +1003,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     }
 
     if( fExpGet ){
+      BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
       wk->flowResult = SVFLOW_RESULT_LEVELUP;
       return i+1;
     }
@@ -1163,12 +1168,18 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
       BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, i );
       u8 side = BTL_MAIN_GetClientSide( wk->mainModule, i );
       u8 aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
+      if( i == 0 )
+      {
+        BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
+      }
       if( aliveCnt )
       {
         pokeExist[ side ] = TRUE;
       }
     }
   }
+
+  BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
 
   if( (pokeExist[0] == FALSE) || (pokeExist[1] == FALSE) ){
     return TRUE;
@@ -10200,9 +10211,14 @@ static void scEvent_BeforeDead( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 static BOOL scproc_CheckExpGet( BTL_SVFLOW_WORK* wk )
 {
   BOOL result = FALSE;
+
+  BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
+
   if( BTL_MAIN_IsExpSeqEnable(wk->mainModule) )
   {
     u32 i, deadPokeCnt = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
+
+    BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
 
     for(i=0; i<deadPokeCnt; ++i)
     {
@@ -10210,6 +10226,8 @@ static BOOL scproc_CheckExpGet( BTL_SVFLOW_WORK* wk )
       {
         u8 pokeID = BTL_DEADREC_GetPokeID( &wk->deadRec, 0, i );
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+
+        BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
 
         // 野生戦でプレイヤー勝利ならこの時点でBGM再生コマンド
         if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
@@ -10255,6 +10273,7 @@ static BOOL scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke )
   }
   return FALSE;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * 経験値計算結果を元にコマンド生成
@@ -10278,7 +10297,6 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
     {
       BTL_POKEPARAM* bpp;
 
-
       bpp = BTL_PARTY_GetMemberData( party, i );
       if( BPP_GetValue(bpp, BPP_LEVEL) < PTL_LEVEL_MAX )
       {
@@ -10289,6 +10307,11 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
 //        BTL_Printf("経験値はいったメッセージ :strID=%d, pokeID=%d, exp=%d\n", strID, pokeID, exp);
         SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );
 
+        #ifdef BUGFIX_AF_GFBTS2028_101007
+        SCQUE_PUT_OP_Doryoku( wk->que, pokeID, calcExp->hp, calcExp->pow, calcExp->def, calcExp->agi,
+                calcExp->sp_pow, calcExp->sp_def );
+        #endif
+
         {
           u32 restExp = exp;
           while(1){
@@ -10297,10 +10320,10 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
             }
           }
         }
+
         SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
 
         BTL_MAIN_RECORDDATA_Add( wk->mainModule, RECID_DAYCNT_EXP, exp );
-
         result = TRUE;
 
       }

@@ -69,7 +69,13 @@ static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u8 defaultTargetPokeID );
 static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
 static inline u32 _calc_adjust_level_sub( u32 val );
+
+#ifdef BUGFIX_AF_GFBTS2028_101007
+static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
+#else
 static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke );
+#endif
+
 static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
     u8* yure_cnt, u8* fCritical );
@@ -823,7 +829,12 @@ void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
     if( result[i].exp )
     {
       BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberData( party, i );
-      PutDoryokuExp( bpp, deadPoke );
+
+      #ifdef BUGFIX_AF_GFBTS2028_101007
+        PutDoryokuExp( bpp, deadPoke, &result[i] );
+      #else
+        PutDoryokuExp( bpp, deadPoke );
+      #endif
     }
   }
 }
@@ -879,7 +890,11 @@ static inline u32 _calc_adjust_level_sub( u32 val )
 /**
  *  努力値計算、結果をSrcデータに反映させる
  */
-static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
+#ifdef BUGFIX_AF_GFBTS2028_101007
+static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result )
+#else
+ static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
+#endif
 {
   /**
    *  ステータスIndex
@@ -962,8 +977,21 @@ static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
             sum = PARA_EXP_MAX;
           }
           PP_Put( pp, RelationTbl[i].pokeParamID, sum );
+
+          #ifdef BUGFIX_AF_GFBTS2028_101007
+          switch( i ){
+          case _HP:   result->hp = exp[i]; break;
+          case _POW:  result->pow = exp[i]; break;
+          case _DEF:  result->def = exp[i]; break;
+          case _AGI:  result->agi = exp[i]; break;
+          case _SPOW: result->sp_pow = exp[i]; break;
+          case _SDEF: result->sp_def = exp[i]; break;
+          }
+          #endif
         }
       }
+
+    OS_TPrintf("SV努力値増やしたPP=%p\n", pp);
 
     PP_FastModeOff( pp, fFastMode );
   }
