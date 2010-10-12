@@ -21,6 +21,9 @@ include uniq_script.list
 
 #
 HEADER_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=_def.h) $(filter-out sp_%,$(SCRIPTFILES:.ev=_def.h))
+ifeq	($(PM_DEBUG),yes)
+HEADER_TARGETS += $(UNIQ_DEBUG_EVENT_SCRFILES:.ev=_def.h)
+endif
 
 
 
