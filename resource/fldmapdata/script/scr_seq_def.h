@@ -17,6 +17,8 @@
   .include "scrcmd_table/def_table_macro.h"
 //スクリプト定義テーブル
   .include "../../../prog/src/field/scrcmd_table.cdat"
+  .include "../../../prog/src/field/scrcmd_bsubway_table.cdat"
+  .include "../../../prog/src/field/scrcmd_un_table.cdat"
 
 //======================================================================
 // イベントデータ関連

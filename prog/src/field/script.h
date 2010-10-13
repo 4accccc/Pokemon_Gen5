@@ -125,7 +125,6 @@ extern SCRIPTSYS * SCRIPT_GetScriptSysFromEvent( GMEVENT *event );
 //--------------------------------------------------------------
 extern SCRIPTSYS * SCRIPT_GetScriptSys( SCRIPT_WORK * sc );
 
-
 //------------------------------------------------------------------
 /**
  * @brief スクリプトIDのチェック

@@ -19,6 +19,7 @@
 #include "script_def.h"
 #include "scrcmd.h"     //ScriptCmdTbl  ScriptCmdMax
 #include "scrcmd_work.h"
+#include "scrcmd_overlay.h"
 #include "eventwork_def.h"
 
 #include "field/zonedata.h"
@@ -79,6 +80,7 @@ struct _SCRIPTSYS{
 	SCRIPT_EVENTFUNC next_func;		//スクリプト終了時に呼び出される関数
   void * next_func_params;      //スクリプト終了時に呼び出される関数に渡す引数
 
+  VMCMD_FUNC * scrcmd_table; //テーブル
 };
 
 //============================================================================================
@@ -516,8 +518,6 @@ SCRIPTSYS * SCRIPT_GetScriptSys( SCRIPT_WORK * sc )
   return ev_sc->scrsys;
 }
 
-
-
 //============================================================================================
 //	フラグ関連
 //============================================================================================
@@ -850,13 +850,20 @@ static VMHANDLE * SCRVM_Create(
     work = SCRCMD_WORK_Create( &head, main_heapID );
   }
 	
+
   {
+    GAMESYS_WORK *gsys  = SCRIPT_GetGameSysWork( sc );
+    GAMEDATA  *gd = GAMESYSTEM_GetGameData( gsys );
+
     VM_INITIALIZER init;
     init.stack_size = 0x0100;
     init.reg_size = 0x040;
     init.command_table = ScriptCmdTbl;
     init.command_max  = ScriptCmdMax;
-	
+    init.command_table_ex = VMCMD_OVERLAY_GetTable( gd );
+    init.command_ex_max = VMCMD_OVERLAY_GetTableMax( gd );
+    init.ex_start_idx = 1000;
+
     core = VM_Create( main_heapID, &init );	//仮想マシン初期化
   }
 	

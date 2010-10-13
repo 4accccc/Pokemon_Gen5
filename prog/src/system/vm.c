@@ -208,24 +208,55 @@ BOOL VM_Control( VMHANDLE * core )
 
 			code = VMGetU16( core );
 
+      NAGI_Printf( "scrcmd=%d\n", code );
+
+      //もし通常テーブルより大きい場合は、拡張テーブルを使う。
 			if( code >= core->init_value.command_max ) {
-				VM_ERROR("vm command error %04x:%08x\n",code, core->adrs - 2);
-				core->status = VMSTAT_HALT;
-				return FALSE;
-			}
-      if( core->check_func ) {
-        if ( core->check_func( core, core->context, core->check_work, code ) == FALSE )
+
+        //拡張テーブルの開始インデックス未満の場合また
+        //拡張テーブル最大値以上の場合はエラー
+        //拡張テーブルが設定されていないときもエラー
+        if( code < core->init_value.ex_start_idx
+          || code >= core->init_value.command_ex_max + core->init_value.ex_start_idx
+          || core->init_value.command_table_ex == NULL )
         {
           VM_ERROR("vm command error %04x:%08x\n",code, core->adrs - 2);
           core->status = VMSTAT_HALT;
           return FALSE;
         }
-      }
-			if( core->init_value.command_table[code]( core, core->context )
-					== VMCMD_RESULT_SUSPEND ){
-				break;
+
+        /*
+         *今はない
+        if( core->check_func ) {
+          if ( core->check_func( core, core->context, core->check_work, code ) == FALSE )
+          {
+            VM_ERROR("vm command error %04x:%08x\n",code, core->adrs - 2);
+            core->status = VMSTAT_HALT;
+            return FALSE;
+          }
+        }
+        */
+        if( core->init_value.command_table_ex[code - core->init_value.ex_start_idx]( core, core->context )
+            == VMCMD_RESULT_SUSPEND ){
+          break;
+        }
 			}
-		}
+      else
+      {
+        if( core->check_func ) {
+          if ( core->check_func( core, core->context, core->check_work, code ) == FALSE )
+          {
+            VM_ERROR("vm command error %04x:%08x\n",code, core->adrs - 2);
+            core->status = VMSTAT_HALT;
+            return FALSE;
+          }
+        }
+        if( core->init_value.command_table[code]( core, core->context )
+            == VMCMD_RESULT_SUSPEND ){
+          break;
+        }
+      }
+    }
 		break;
 	default:
 		VM_ERROR("vm error status %02x\n", core->status);

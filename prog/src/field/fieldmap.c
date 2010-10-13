@@ -120,6 +120,8 @@
 
 #include "pleasure_boat.h"    //for PL_BOAT_
 
+#include "scrcmd_overlay.h"
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -883,6 +885,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     SET_CHECK("setup: gimmick setup");  //デバッグ：処理負荷計測
     //フィールドギミックセットアップ
     FLDGMK_SetUpFieldGimmick(fieldWork);
+    //スクリプトオーバーレイ読込み
+    SCRCMD_OVERLAY_CheckMapChange( fieldWork->gamedata, FIELDMAP_GetZoneID(fieldWork) );
+    SCRCMD_OVERLAY_SetUp( fieldWork->gamedata );
     break;
 
   case 5:
@@ -1354,6 +1359,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   // 地名表示システム破棄
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys ); }
+
+  //スクリプトオーバーレイ破棄
+  SCRCMD_OVERLAY_CleanUp( fieldWork->gamedata );
 
   //ギミック終了
   FLDGMK_EndFieldGimmick(fieldWork);

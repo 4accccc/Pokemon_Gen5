@@ -95,6 +95,10 @@ typedef struct {
 	u16 reg_size;						///<使用するレジスタの数
 	const VMCMD_FUNC * command_table;	///<使用する仮想マシン命令の関数テーブル
 	u32 command_max;					///<使用する仮想マシン命令定義の最大数
+
+  const VMCMD_FUNC * command_table_ex;	///<使用する仮想マシン命令の関数テーブル(オーバレイ領域)
+	u32 command_ex_max;					///<使用する仮想マシン命令定義の最大数（オーバーレイ領域）
+  u32 ex_start_idx;           //exテーブル使用開始インデックス（command_maxより大きい値にしてください）
 }VM_INITIALIZER;
 
 //********************************************************************************************

@@ -137,6 +137,8 @@ struct _GAMEDATA{
   MUSICAL_SCRIPT_WORK *musicalScrWork;  //ミュージカルスクリプト用ワーク
 
   PLAYTIME* playtime; // プレイ時間
+
+  u32 scriptCommandOverlayID; //フィールドスクリプトコマンド用オーバーレイID
 };
 
 //==============================================================================
@@ -275,6 +277,8 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //ミュージカル用スクリプトワーク NULL初期化
   gd->musicalScrWork = NULL;
 
+  //スクリプトオーバーレイ初期化
+  gd->scriptCommandOverlayID  = 0;
   return gd;
 }
 
@@ -2063,4 +2067,29 @@ EVENTWORK * SaveData_GetEventWork( SAVE_CONTROL_WORK * sv_control_ptr )
   return SaveControl_DataPtrGet( sv_control_ptr, GMDATA_ID_EVENT_WORK );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドスクリプトコマンド用のIDを取得
+ *
+ *	@param	gamedata
+ *
+ *	@return フィールドスクリプトコマンドオーバーレイ用のID
+ */
+//-----------------------------------------------------------------------------
+u32 GAMEDATA_GetFieldScriptCommandOverlayID( const GAMEDATA *gamedata )
+{
+  return gamedata->scriptCommandOverlayID;
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドスクリプトコマンド用のIDを設定
+ *
+ *	@param	gamedata
+ *	@param フィールドスクリプトコマンドオーバーレイ用のID
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetFieldScriptCommandOverlayID( GAMEDATA *gamedata, u32 scrCmdID )
+{
+  gamedata->scriptCommandOverlayID  = scrCmdID;
+}

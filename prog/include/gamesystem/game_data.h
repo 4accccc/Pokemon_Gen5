@@ -840,5 +840,23 @@ extern void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value);
 //==================================================================
 extern PLAYTIME* GAMEDATA_GetPlayTimeWork(GAMEDATA *gamedata);
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドスクリプトコマンド用のIDを取得
+ *
+ *	@param	gamedata
+ *
+ *	@return フィールドスクリプトコマンドオーバーレイ用のID
+ */
+//-----------------------------------------------------------------------------
+extern u32 GAMEDATA_GetFieldScriptCommandOverlayID( const GAMEDATA *gamedata );
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドスクリプトコマンド用のIDを設定
+ *
+ *	@param	gamedata
+ *	@param フィールドスクリプトコマンドオーバーレイ用のID
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetFieldScriptCommandOverlayID( GAMEDATA *gamedata, u32 scrCmdID );

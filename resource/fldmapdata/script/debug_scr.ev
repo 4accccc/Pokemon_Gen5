@@ -53,6 +53,7 @@ _EVENT_DATA   ev_debug_ariizumi
 _EVENT_DATA   ev_debug_ohkubo
 _EVENT_DATA   ev_debug_matsushima
 _EVENT_DATA   ev_debug_common
+_EVENT_DATA   ev_debug_nagihashi
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -1263,6 +1264,13 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_debug_matsushima
+  _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_nagihashi
   _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
 EVENT_END
 

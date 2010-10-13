@@ -377,6 +377,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/script_sys.c \
         field/script_work.c \
         field/scrcmd.c \
+        field/scrcmd_overlay.c \
 				field/map_matrix.c \
         field/map_replace.c \
         field/warpdata.c \
@@ -746,7 +747,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_iaigiri.c \
         field/event_pokecen_pc.c \
         field/bsubway_scr.c \
-        field/scrcmd_bsubway.c \
         field/bsubway_tr.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
@@ -766,7 +766,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/intrude_secret_item.c \
         field/event_intrude_secret_item.c \
         field/united_nations.c \
-        field/scrcmd_un.c \
         field/fldeff_btrain.c \
         field/fldeff_hide.c \
         field/fldeff_bubble.c \
@@ -794,7 +793,20 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_leg_gmk.c \
         field/event_game_manual.c \
         field/fld_vreq.c \
-		field/field_palace_sys.c
+    		field/field_palace_sys.c
+
+# スクリプトコマンド並列化  バトルサブウェイ
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_BSUBWAY  = field/scrcmd_bsubway.c \
+                               field/scrcmd_bsubway_table.c
+
+# スクリプトコマンド並列化  国連
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_UN  = field/scrcmd_un.c \
+                          field/scrcmd_un_table.c
+
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -807,24 +819,24 @@ SRCS_OVERLAY_OEKAKI = net_app/oekaki/comm_command_oekaki.c \
 
 
 # フィールド天気
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_SCRCMD
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_SUNNY = field/weather_sunny.c
 
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_SCRCMD
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_SNOW = field/weather_snow.c
 
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_SCRCMD
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_SCRCMD
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
 
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_SCRCMD
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
 
@@ -1574,7 +1586,7 @@ SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
 #つまりフィールドかつWIFIを想定しています
 #===> SRCS_OVERLAY_MUSICAL_SHOT
 #===> SRCS_OVERLAY_DRESSUP
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_SCRCMD
 #===> GROUP_OVERLAY_SUBSCREEN
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MUSICAL_COMMON = musical/musical_system.c \
@@ -2020,7 +2032,7 @@ SRCS_OVERLAY_DEBUG_MAKE_UNDATA = debug/debug_make_undata.c
 SRCS_OVERLAY_DEBUG_ZONE_JUMP = debug/debug_zone_jump.c
 
 # デバッグデータ作成
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 
 

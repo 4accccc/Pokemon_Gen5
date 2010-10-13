@@ -1,0 +1,29 @@
+//======================================================================
+/**
+ * @file  scrcmd_un_table.cdat
+ * @brief 国連スクリプトコマンド定義
+ * @date  2010.10.12
+ * @author  Toru=Nagihashi
+ *
+ */
+//======================================================================
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( un )
+
+  //国連関連
+  DEF_CMD( EvCmdUn_GetCountryNum, EV_SEQ_UN_GET_COUNTRY_NUM )
+  DEF_CMD( EvCmdUn_SetTalkFlg, EV_SEQ_UN_SET_TALK_FLG )
+  DEF_CMD( EvCmdUn_CheckTalkFlg, EV_SEQ_UN_CHK_TALK_FLG )
+  DEF_CMD( EvCmdUn_SetPlayerNature, EV_SEQ_UN_SET_MY_NATURE )
+  DEF_CMD( EvCmdUn_SetCountryInfo, EV_SEQ_UN_SET_COUNTRY_INFO )
+  DEF_CMD( EvCmdUn_GetRoomObjMsg, EV_SEQ_UN_GET_ROOM_OBJ_MSG )
+  DEF_CMD( EvCmdUn_GetValidDataNum, EV_SEQ_UN_GET_VALID_DATA_NUM )
+  DEF_CMD( EvCmdUn_SetPlayerFavorite, EV_SEQ_UN_SET_MY_FAVORITE )
+  DEF_CMD( EvCmdUn_GetPlayerFavorite, EV_SEQ_UN_GET_MY_FAVORITE )
+  
+  END_CMD
+  //スクリプトコマンドテーブル終了

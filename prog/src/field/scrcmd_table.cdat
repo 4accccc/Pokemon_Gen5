@@ -465,12 +465,6 @@
   DEF_CMD( EvCmdDemoScene, EV_SEQ_DEMO_SCENE )
   DEF_CMD( EvCmdCallTVTDemo, EV_SEQ_CALL_TVT_DEMO )
   DEF_CMD( EvCmdGameClearDemo, EV_SEQ_GOTO_GAMECLEAR )
-
-  //バトルサブウェイ関連
-  DEF_CMD( EvCmdBSubwayWorkClear, EV_SEQ_BSUBWAY_WORK_CLEAR )
-  DEF_CMD( EvCmdBSubwayWorkCreate, EV_SEQ_BSUBWAY_WORK_CREATE )
-  DEF_CMD( EvCmdBSubwayWorkRelease, EV_SEQ_BSUBWAY_WORK_RELEASE )
-  DEF_CMD( EvCmdBSubwayTool, EV_SEQ_BSUBWAY_TOOL )
   
   // 移動ポケモンイベント
   DEF_CMD( EvCmdMovePoke_Create, EV_SEQ_EV_MOVEPOKE_CREATE )
@@ -663,18 +657,9 @@
   DEF_CMD( EvCmdSetFeelingCheckName, EV_SEQ_SET_FEELING_NAME )
 
   //国連
-  DEF_CMD( EvCmdUn_GetCountryNum, EV_SEQ_UN_GET_COUNTRY_NUM )
-  DEF_CMD( EvCmdUn_SetTalkFlg, EV_SEQ_UN_SET_TALK_FLG )
-  DEF_CMD( EvCmdUn_CheckTalkFlg, EV_SEQ_UN_CHK_TALK_FLG )
-  DEF_CMD( EvCmdUn_SetPlayerNature, EV_SEQ_UN_SET_MY_NATURE )
-  DEF_CMD( EvCmdUn_SetCountryInfo, EV_SEQ_UN_SET_COUNTRY_INFO )
   DEF_CMD( EvCmdUn_GetRoomObjCode, EV_SEQ_UN_GET_ROOM_OBJ_CODE )
   DEF_CMD( EvCmdUn_GetRoomInfo, EV_SEQ_UN_GET_ROOM_INFO )
-  DEF_CMD( EvCmdUn_GetRoomObjMsg, EV_SEQ_UN_GET_ROOM_OBJ_MSG )
   DEF_CMD( EvCmdUn_CallFloorSelApp, EV_SEQ_UN_CALL_FLOOR_SEL_APP )
-  DEF_CMD( EvCmdUn_GetValidDataNum, EV_SEQ_UN_GET_VALID_DATA_NUM )
-  DEF_CMD( EvCmdUn_SetPlayerFavorite, EV_SEQ_UN_SET_MY_FAVORITE )
-  DEF_CMD( EvCmdUn_GetPlayerFavorite, EV_SEQ_UN_GET_MY_FAVORITE )
 
   //技教え関連
   DEF_CMD( EvCmdSkillTeachCheckParty, EV_SEQ_SKILLTEACH_CHECK_PARTY )

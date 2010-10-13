@@ -75,6 +75,7 @@
 #include "scrcmd_seatemple.h"
 #include "scrcmd_feeling_check.h"
 #include "scrcmd_un.h"
+#include "scrcmd_un_init.h"
 #include "scrcmd_sxy.h"
 #include "scrcmd_easytalk.h"
 #include "scrcmd_weather.h"
