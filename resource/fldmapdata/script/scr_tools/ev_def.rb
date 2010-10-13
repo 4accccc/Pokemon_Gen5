@@ -19,7 +19,7 @@ SCROFFS_START = "ID_START_SCR_OFFSET"
 SCROFFS_START_TRAINER_2VS2 = "ID_TRAINER_2VS2_OFFSET"
 
 #トレーナースクリプトファイル名
-FNAME_TRAINER = "./trainer.ev"
+FNAME_TRAINER = "trainer.ev"
 
 #=======================================================================
 # 関数
