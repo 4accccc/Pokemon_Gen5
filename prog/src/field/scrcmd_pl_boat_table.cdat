@@ -1,0 +1,26 @@
+//======================================================================
+/**
+ * @file  scrcmd_pl_boat_table.cdat
+ * @brief 遊覧船スクリプトコマンド定義
+ * @date  2010.10.13
+ * @author  Toru=Nagihashi
+ *
+ */
+//======================================================================
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( pl_boat )
+
+  // 遊覧船関連
+  DEF_CMD( EvCmdPlBoat_Start, EV_SEQ_PL_BOAT_START )
+  DEF_CMD( EvCmdPlBoat_End, EV_SEQ_PL_BOAT_END )
+  DEF_CMD( EvCmdPlBoat_GetTrNum, EV_SEQ_PL_BOAT_GET_TR_NUM )
+  DEF_CMD( EvCmdPlBoat_AddTime, EV_SEQ_PL_BOAT_ADD_TIME )
+  DEF_CMD( EvCmdPlBoat_SetRoomInfo, EV_SEQ_PL_BOAT_SET_ROOM_INFO )
+  DEF_CMD( EvCmdPlBoat_EndGame, EV_SEQ_PL_BOAT_GAME_END )
+  
+  END_CMD
+  //スクリプトコマンドテーブル終了

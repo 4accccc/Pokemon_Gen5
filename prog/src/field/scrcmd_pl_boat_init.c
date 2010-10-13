@@ -26,7 +26,7 @@
 
 #include "field_sound.h"
 
-#include "scrcmd_pl_boat.h"
+#include "scrcmd_pl_boat_init.h"
 
 #include "pleasure_boat.h"
 

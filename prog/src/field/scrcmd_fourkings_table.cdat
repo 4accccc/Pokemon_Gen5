@@ -1,0 +1,23 @@
+//======================================================================
+/**
+ * @file  scrcmd_fourkings_table.cdat
+ * @brief 四天王部屋スクリプトコマンド定義
+ * @date  2010.10.13
+ * @author  Toru=Nagihashi
+ *
+ */
+//======================================================================
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( fourkings )
+
+  // 四天王関連
+  DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
+  DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
+  DEF_CMD( EvCmdFourKings_SetSoundSystem, EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM )
+  
+  END_CMD
+  //スクリプトコマンドテーブル終了

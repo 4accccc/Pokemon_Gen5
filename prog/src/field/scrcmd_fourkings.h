@@ -12,6 +12,8 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "system/vm.h"
+
 #ifdef _cplusplus
 extern "C"{
 #endif

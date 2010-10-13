@@ -668,9 +668,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_proc_fld.c \
         field/scrcmd_encount.c \
         field/scrcmd_camera.c \
-        field/scrcmd_fourkings.c \
         field/scrcmd_fld_battle.c \
-        field/scrcmd_c03center.c \
         field/scrcmd_pokemon_fld.c \
         field/scrcmd_crowd_people.c \
         field/scrcmd_feeling_check.c \
@@ -739,7 +737,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_fldci.c \
         field/fskill_sorawotobu.c \
         field/pleasure_boat.c \
-        field/scrcmd_pl_boat.c \
         field/event_autoway.c \
         field/event_current.c \
         field/fldeff_d06denki.c \
@@ -750,7 +747,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/bsubway_tr.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
-        field/scrcmd_palpark.c \
         field/scrcmd_beacon.c \
         field/party_select_list.c \
         field/field_bbd_color.c \
@@ -761,7 +757,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/enceff.c \
         field/enceffno.c \
         field/scrcmd_pokeid_search.c \
-        field/scrcmd_seatemple.c \
         savedata/intrude_save_field.c \
         field/intrude_secret_item.c \
         field/event_intrude_secret_item.c \
@@ -794,6 +789,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_game_manual.c \
         field/fld_vreq.c \
     		field/field_palace_sys.c
+#        field/scrcmd_c03center.c は未使用だったのでなくしました
 
 # スクリプトコマンド並列化  バトルサブウェイ
 #===> SRCS_OVERLAY_FIELDMAP
@@ -807,6 +803,30 @@ SRCS_OVERLAY_SCRCMD_BSUBWAY  = field/scrcmd_bsubway.c \
 SRCS_OVERLAY_SCRCMD_UN  = field/scrcmd_un.c \
                           field/scrcmd_un_table.c
 
+# スクリプトコマンド並列化  遊覧船
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_PL_BOAT  =  field/scrcmd_pl_boat.c \
+                                field/scrcmd_pl_boat_table.c
+
+# スクリプトコマンド並列化  四天王部屋
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_FOURKINGS  =  field/scrcmd_fourkings.c \
+                                field/scrcmd_fourkings_table.c
+
+
+# スクリプトコマンド並列化  パルパーク（ポケシフター）
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_PALPARK  =  field/scrcmd_palpark.c \
+                                field/scrcmd_palpark_table.c
+
+# スクリプトコマンド並列化  海底神殿
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_SEATEMPLE  =  field/scrcmd_seatemple.c \
+                                field/scrcmd_seatemple_table.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE

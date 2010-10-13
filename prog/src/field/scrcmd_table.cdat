@@ -327,7 +327,7 @@
   DEF_CMD( EvCmdSetStartMenuFlag, EV_SEQ_SET_START_MENU_FLAG )
   DEF_CMD( EvCmdChkStartMenuViewFlag, EV_SEQ_CHK_START_MENU_VIEW_FLAG )
 
-  DEF_CMD( EvCmdSeaTempleGetStepWalk, EV_SEQ_GET_SEATEMPLE_STEP_WALK )
+  NO_CMD()
   DEF_CMD( EvCmdChkDendouData, EV_SEQ_CHK_DENDOU_DATA )
 
   // 育て屋
@@ -416,9 +416,9 @@
   DEF_CMD( EvCmdPokecenPcRun, EV_SEQ_POKECEN_PC_RUN )
   DEF_CMD( EvCmdPokecenPcOff, EV_SEQ_POKECEN_PC_OFF )
 
-  DEF_CMD( EvCmdC03Center_ControlPlayerWay, EV_SEQ_C03CENTER_PLAYERWAY )
+  NO_CMD()  //DEF_CMD( EvCmdC03Center_ControlPlayerWay, EV_SEQ_C03CENTER_PLAYERWAY ) 実験でしか使用していなかった
   DEF_CMD( EvCmdCrowdPeople, EV_SEQ_CROWD_PEOPLE_START )
-  DEF_CMD( EvCmdSeaTempleStart, EV_SEQ_SEATEMPLE_START )
+  NO_CMD()
   DEF_CMD( EvCmdWeatherChange, EV_SEQ_WEATHER_CHANGE )
 
   //レポート関連
@@ -570,19 +570,13 @@
   DEF_CMD( EvCmdFldCi_CallNpcFlyCutin, EV_SEQ_CALL_NPCFLY_CUTIN )
 
   // 四天王関連
-  DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
-  DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
-  DEF_CMD( EvCmdFourKings_SetSoundSystem, EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   // 遊覧船関連
-  DEF_CMD( EvCmdPlBoat_Start, EV_SEQ_PL_BOAT_START )
-  DEF_CMD( EvCmdPlBoat_End, EV_SEQ_PL_BOAT_END )
-  DEF_CMD( EvCmdPlBoat_GetTrNum, EV_SEQ_PL_BOAT_GET_TR_NUM )
-  DEF_CMD( EvCmdPlBoat_AddTime, EV_SEQ_PL_BOAT_ADD_TIME )
   DEF_CMD( EvCmdPlBoat_GetRoomInfo, EV_SEQ_PL_BOAT_GET_ROOM_INFO )
-  DEF_CMD( EvCmdPlBoat_SetRoomInfo, EV_SEQ_PL_BOAT_SET_ROOM_INFO )
   DEF_CMD( EvCmdPlBoat_CallDemo, EV_SEQ_PL_BOAT_CALL_DEMO )
-  DEF_CMD( EvCmdPlBoat_EndGame, EV_SEQ_PL_BOAT_GAME_END )
 
   // マップフェード
   DEF_CMD( EvCmdMapFade_BlackIn, EV_SEQ_MAP_FADE_BLACK_IN )
@@ -618,8 +612,8 @@
 
 
   //パルパーク関連
-  DEF_CMD( EvCmdPalparkCall    , EV_SEQ_CALL_PALPARK ) 
-  DEF_CMD( EvCmdGetPalparkValue, EV_SEQ_GET_PALPARK_VALUE )
+  NO_CMD()
+  NO_CMD()
 
   //WFBC関連
   DEF_CMD( EvCmdWfbc_TalkStart, EV_SEQ_WFBC_TALKSTART )

@@ -19,6 +19,10 @@
   .include "../../../prog/src/field/scrcmd_table.cdat"
   .include "../../../prog/src/field/scrcmd_bsubway_table.cdat"
   .include "../../../prog/src/field/scrcmd_un_table.cdat"
+  .include "../../../prog/src/field/scrcmd_pl_boat_table.cdat"
+  .include "../../../prog/src/field/scrcmd_fourkings_table.cdat"
+  .include "../../../prog/src/field/scrcmd_palpark_table.cdat"
+  .include "../../../prog/src/field/scrcmd_seatemple_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -4986,6 +4990,7 @@
  * @def _GET_SEATEMPLE_STEP_WALK
  * @brief   海底遺跡　歩行数の取得
  * @param ret_wk  歩数格納先
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _GET_SEATEMPLE_STEP_WALK( ret_wk ) \
@@ -9087,6 +9092,7 @@
  * @def _FOURKINGS_WALKEVENT
  * @brief 四天王　歩きアニメーションイベント呼び出し
  * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _FOURKINGS_WALKEVENT( fourking_id ) _ASM_FOURKINGS_WALKEVENT fourking_id
@@ -9101,6 +9107,7 @@
  * @def _FOURKINGS_SET_TOP_CAMERA
  * @brief 四天王　頂上のカメラ指定
  * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _FOURKINGS_SET_TOP_CAMERA( fourking_id ) _ASM_FOURKINGS_SET_TOP_CAMERA fourking_id
@@ -9115,6 +9122,7 @@
  * @def _FOURKINGS_SET_SOUND_SYSTEM
  * @brief 四天王　部屋　音システム設定
  * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _FOURKINGS_SET_SOUND_SYSTEM( fourking_id ) _ASM_FOURKINGS_SET_SOUND_SYSTEM fourking_id
@@ -9136,6 +9144,7 @@
 //--------------------------------------------------------------
 /**
  * 遊覧船モード開始
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_START() _ASM_PL_BOAT_START
@@ -9147,6 +9156,7 @@
 //--------------------------------------------------------------
 /**
  * 遊覧船モード終了
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_END() _ASM_PL_BOAT_END
@@ -9160,6 +9170,7 @@
  * 遊覧船内トレーナ数取得
  * @param type　    検索タイプ  PL_TR_SEARCH_TYPE_～　pl_boat_def.h 参照
  * @param ret_wk    検索結トレーナー数
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_GET_TR_NUM(type,ret_wk) _ASM_PL_BOAT_GET_TR_NUM type, ret_wk
@@ -9175,6 +9186,7 @@
  * 遊覧船内時間更新
  * @param add_time    加算時間（秒）
  * @param whistle     加算結果後、汽笛がなる時間の場合、汽笛を鳴らすかどうか　0：鳴らさない　1：鳴らす
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_ADD_TIME(add_time, whistle) _ASM_PL_BOAT_ADD_TIME add_time, whistle
@@ -9188,6 +9200,7 @@
 //--------------------------------------------------------------
 /**
  * 遊覧船ゲーム終了
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_GAME_END() _ASM_PL_BOAT_GAME_END
@@ -9204,6 +9217,7 @@
  * @param info_kind   取得情報
  * @param param       情報取得パラメータ
  * @param ret_wk      格納バッファ
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_GET_ROOM_INFO(room_idx,info_kind,param,ret_wk) \
@@ -9224,6 +9238,7 @@
  * @param info_kind   取得情報
  * @param param       情報取得パラメータ
  * @param set_val      セット情報
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_SET_ROOM_INFO(room_idx,info_kind,param,set_val) \
@@ -9241,6 +9256,8 @@
 /**
  * 遊覧船甲板デモコール
  * @param ret_wk
+ * @note
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PL_BOAT_CALL_DEMO(ret_wk) _ASM_PL_BOAT_CALL_DEMO ret_wk
@@ -9534,6 +9551,7 @@
  * @def _BSUBWAY_WORK_CLEAR
  * @brief バトルサブウェイ　ワーククリア
  * @param none
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _BSUBWAY_WORK_CLEAR() \
@@ -9549,6 +9567,7 @@
  * @brief バトルサブウェイ　ワーク作成
  * @param init 初期化種類 BSWAY_PLAY_NEW等
  * @param mode バトルモード BSWAY_MODE_SINGLE等
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _BSUBWAY_WORK_CREATE( init, mode ) \
@@ -9565,6 +9584,7 @@
  * @def _BSUBWAY_WORK_RELEASE
  * @brief バトルサブウェイ　ワーク開放
  * @param none
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _BSUBWAY_WORK_RELEASE() \
@@ -9581,6 +9601,7 @@
  * @param cmd 呼び出すコマンド　BSWAY_TOOL_CHK_ENTRY_POKE_NUM等
  * @param param コマンドに渡すパラメータ
  * @param ret_wk 結果格納先
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _BSUBWAY_TOOL( cmd, param0, param1, ret_wk ) \
@@ -9672,6 +9693,7 @@
  * @def _PALPARK_CALL
  * @brief パルパーク呼び出し
  * @param none
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _PALPARK_CALL() \
@@ -9688,6 +9710,7 @@
  *      基本的に下にあるラッパーを呼んでください
  *  @param type 種類(前回ゲームステート・ハイスコア
  *  @param ret_val  戻り値
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _GET_PALPARK_VALUE( type, retVal ) \
@@ -9705,6 +9728,7 @@
  *  @brief パルパーク：前回終了状態(0:捕獲あり 1:捕獲あり+ハイスコア 2:捕獲無し 3:エラー
  *         palpark_scr_local.h参照
  *  @param ret_val  戻り値
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _GET_PALPARK_VALUE_FINISH_STATE( retVal ) \
@@ -9721,6 +9745,7 @@
  *  _GET_PALPARK_VALUE_HIGHSCORE
  *  @brief パルパーク：ハイスコア
  *  @param ret_val  戻り値
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _GET_PALPARK_VALUE_HIGHSCORE( retVal ) \
@@ -10071,6 +10096,7 @@
 //--------------------------------------------------------------
 /**
  * @brief D20海底表現ON
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _SEATEMPLE_START() \
@@ -10179,6 +10205,7 @@
  * @brief 国連関連 交換した国数を取得
  * @param my_country  自分の国を結果に含めるか？  TRUE:含める　FALSE:含めない
  * @param ret       検索結果
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_GET_COUNTRY_NUM( my_country, ret ) _ASM_UN_GET_COUNTRY_NUM my_country, ret
@@ -10193,6 +10220,7 @@
 /**
  * @brief 国連関連 有効データ数
  * @param ret       検索結果
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_GET_VALID_DATA_NUM( ret ) _ASM_UN_GET_VALID_DATA_NUM ret
@@ -10206,6 +10234,7 @@
 /**
  * @brief 国連関連 会話フラグセット
  * @param obj_idx   OBJインデックス0～4
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_SET_TALK_FLG( obj_idx ) _ASM_UN_SET_TALK_FLG obj_idx
@@ -10220,6 +10249,7 @@
  * @brief 国連関連 会話フラグチェック
  * @param obj_idx   OBJインデックス0～4
  * @param ret       検索結果
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_CHK_TALK_FLG( obj_idx, ret ) _ASM_UN_CHK_TALK_FLG obj_idx, ret
@@ -10235,6 +10265,7 @@
  * @brief 国連関連 自分の性格をセット
  * @param nature_idx 性格コード
  * @note prog/include/savedata/nature_def.h　参照
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_SET_MY_NATURE( nature_idx ) _ASM_UN_SET_MY_NATURE nature_idx
@@ -10249,6 +10280,7 @@
  * @brief 国連関連 自分の趣味をセット
  * @param favorite_idx    趣味コード
  * @note  resource\research_radar\data\hobby_id.h　参照
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_SET_MY_FAVORITE( favorite_idx ) _ASM_UN_SET_MY_FAVORITE favorite_idx
@@ -10262,6 +10294,7 @@
 /**
  * @brief 国連関連 自分の趣味を取得
  * @param ret       結果
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_GET_MY_FAVORITE( ret ) _ASM_UN_GET_MY_FAVORITE ret
@@ -10305,6 +10338,7 @@
 /**
  * @brief 国連関連 部屋内情報取得
  * @param ret       検索結果
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_GET_ROOM_INFO( infotype, ret ) _ASM_UN_GET_ROOM_INFO infotype, ret
@@ -10321,6 +10355,7 @@
  * @param idx       部屋の中のOBJインデックス0～4
  * @param idx       取得したいのは初回メッセージか？  TRUEで初回メッセージ
  * @param ret       検索結果
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_GET_ROOM_OBJ_MSG( idx, first, ret ) _ASM_UN_GET_ROOM_OBJ_MSG idx, first, ret
@@ -10356,6 +10391,7 @@
 /**
  * @brief 国連関連 自分が国コードをセットしているかを調べる
  * @param ret       検索結果  TRUE:セットされている   FALSE:セットされていない
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
 #define _UN_IS_SETTING_MYCOUNTRY( ret ) _ASM_UN_IS_SETTING_MYCOUNTRY ret

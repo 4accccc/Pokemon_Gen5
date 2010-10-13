@@ -22,6 +22,10 @@
 //スクリプトオーバーレイ定義
 #include "scrcmd_bsubway_table.h"
 #include "scrcmd_un_table.h"
+#include "scrcmd_pl_boat_table.h"
+#include "scrcmd_fourkings_table.h"
+#include "scrcmd_palpark_table.h"
+#include "scrcmd_seatemple_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -35,6 +39,10 @@
 //=====================================
 FS_EXTERN_OVERLAY( scrcmd_bsubway );
 FS_EXTERN_OVERLAY( scrcmd_un );
+FS_EXTERN_OVERLAY( scrcmd_pl_boat );
+FS_EXTERN_OVERLAY( scrcmd_fourkings );
+FS_EXTERN_OVERLAY( scrcmd_palpark );
+FS_EXTERN_OVERLAY( scrcmd_seatemple );
 
 //=============================================================================
 /**
@@ -73,6 +81,45 @@ static const ZONEID UseZoneIDTbl_un[] =
   ZONE_ID_C03PC0101,  //国コードをセットしているかどうか
 };
 
+//-------------------------------------
+///	遊覧船
+//=====================================
+static const ZONEID UseZoneIDTbl_pl_boat[] =
+{
+  ZONE_ID_C03R0801,
+};
+
+//-------------------------------------
+///	四天王部屋
+//=====================================
+static const ZONEID UseZoneIDTbl_fourkings[]  =
+{
+  ZONE_ID_C09R0101,
+  ZONE_ID_C09R0201,
+  ZONE_ID_C09R0301,
+  ZONE_ID_C09R0401,
+};
+
+//-------------------------------------
+///	ポケシフター（名前は共通化させるためパルパークです）
+//=====================================
+static const ZONEID UseZoneIDTbl_palpark[]  =
+{
+  ZONE_ID_R15R0301,
+};
+
+//-------------------------------------
+///	海底神殿
+//=====================================
+static const ZONEID UseZoneIDTbl_seatemple[]  =
+{
+  ZONE_ID_D20R0101,
+  ZONE_ID_D20R0201,
+  ZONE_ID_D20R0301,
+  ZONE_ID_D20R0401,
+  ZONE_ID_D20R0501,
+};
+
 //=============================================================================
 /**
  *					管理テーブル
@@ -108,6 +155,34 @@ static const struct
     UseZoneIDTbl_un,
     NELEMS( UseZoneIDTbl_un ),
     FS_OVERLAY_ID( scrcmd_un ),
+  },
+  //PL_BOAT
+  {
+    ScriptCmdTbl_pl_boat,
+    UseZoneIDTbl_pl_boat,
+    NELEMS(UseZoneIDTbl_pl_boat),
+    FS_OVERLAY_ID( scrcmd_pl_boat ),
+  },
+  //FOURKINGS
+  {
+    ScriptCmdTbl_fourkings,
+    UseZoneIDTbl_fourkings,
+    NELEMS( UseZoneIDTbl_fourkings ),
+    FS_OVERLAY_ID( scrcmd_fourkings ),
+  },
+  //PALPARK
+  {
+    ScriptCmdTbl_palpark,
+    UseZoneIDTbl_palpark,
+    NELEMS( UseZoneIDTbl_palpark ),
+    FS_OVERLAY_ID( scrcmd_palpark ),
+  },
+  //SEATEMPLE
+  {
+    ScriptCmdTbl_seatemple,
+    UseZoneIDTbl_seatemple,
+    NELEMS(UseZoneIDTbl_seatemple),
+    FS_OVERLAY_ID( scrcmd_seatemple ),
   },
 };
 //=============================================================================
