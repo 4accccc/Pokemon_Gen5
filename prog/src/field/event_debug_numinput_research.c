@@ -176,91 +176,91 @@ static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 };
 
 // 調査隊関連
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu_team[] =
+static const DEBUG_MENU_LIST DATA_DNumInputMenu_team[] =
 {
-  { dni_research_team, (void*)&DATA_researchTeam },
+  { dni_research_team, (void*)&DATA_researchTeam, GFL_OVERLAY_BLANK_ID },
 };
 
 // 今日の回答人数 ( 質問ごと )
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Qtoday[] =
+static const DEBUG_MENU_LIST DATA_DNumInputMenu_Qtoday[] =
 {
-  { dni_q_today, (void*)&DATA_Q_today },
+  { dni_q_today, (void*)&DATA_Q_today, GFL_OVERLAY_BLANK_ID },
 };
 
 // いままでの回答人数 ( 質問ごと )
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Qtotal[] =
+static const DEBUG_MENU_LIST DATA_DNumInputMenu_Qtotal[] =
 {
-  { dni_q_total,     (void*)&DATA_Q_total },
+  { dni_q_total,     (void*)&DATA_Q_total, GFL_OVERLAY_BLANK_ID },
 };
 
 // 今日の回答人数 ( 回答ごと )
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Atoday[] =
+static const DEBUG_MENU_LIST DATA_DNumInputMenu_Atoday[] =
 {
-  { dni_a_today_q01, (void*)&DATA_A_today_Q01 },
-  { dni_a_today_q02, (void*)&DATA_A_today_Q02 },
-  { dni_a_today_q03, (void*)&DATA_A_today_Q03 },
-  { dni_a_today_q04, (void*)&DATA_A_today_Q04 },
-  { dni_a_today_q05, (void*)&DATA_A_today_Q05 },
-  { dni_a_today_q06, (void*)&DATA_A_today_Q06 },
-  { dni_a_today_q07, (void*)&DATA_A_today_Q07 },
-  { dni_a_today_q08, (void*)&DATA_A_today_Q08 },
-  { dni_a_today_q09, (void*)&DATA_A_today_Q09 },
-  { dni_a_today_q10, (void*)&DATA_A_today_Q10 },
-  { dni_a_today_q11, (void*)&DATA_A_today_Q11 },
-  { dni_a_today_q12, (void*)&DATA_A_today_Q12 },
-  { dni_a_today_q13, (void*)&DATA_A_today_Q13 },
-  { dni_a_today_q14, (void*)&DATA_A_today_Q14 },
-  { dni_a_today_q15, (void*)&DATA_A_today_Q15 },
-  { dni_a_today_q16, (void*)&DATA_A_today_Q16 },
-  { dni_a_today_q17, (void*)&DATA_A_today_Q17 },
-  { dni_a_today_q18, (void*)&DATA_A_today_Q18 },
-  { dni_a_today_q19, (void*)&DATA_A_today_Q19 },
-  { dni_a_today_q20, (void*)&DATA_A_today_Q20 },
-  { dni_a_today_q21, (void*)&DATA_A_today_Q21 },
-  { dni_a_today_q22, (void*)&DATA_A_today_Q22 },
-  { dni_a_today_q23, (void*)&DATA_A_today_Q23 },
-  { dni_a_today_q24, (void*)&DATA_A_today_Q24 },
-  { dni_a_today_q25, (void*)&DATA_A_today_Q25 },
-  { dni_a_today_q26, (void*)&DATA_A_today_Q26 },
-  { dni_a_today_q27, (void*)&DATA_A_today_Q27 },
-  { dni_a_today_q28, (void*)&DATA_A_today_Q28 },
-  { dni_a_today_q29, (void*)&DATA_A_today_Q29 },
-  { dni_a_today_q30, (void*)&DATA_A_today_Q30 },
+  { dni_a_today_q01, (void*)&DATA_A_today_Q01, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q02, (void*)&DATA_A_today_Q02, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q03, (void*)&DATA_A_today_Q03, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q04, (void*)&DATA_A_today_Q04, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q05, (void*)&DATA_A_today_Q05, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q06, (void*)&DATA_A_today_Q06, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q07, (void*)&DATA_A_today_Q07, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q08, (void*)&DATA_A_today_Q08, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q09, (void*)&DATA_A_today_Q09, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q10, (void*)&DATA_A_today_Q10, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q11, (void*)&DATA_A_today_Q11, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q12, (void*)&DATA_A_today_Q12, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q13, (void*)&DATA_A_today_Q13, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q14, (void*)&DATA_A_today_Q14, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q15, (void*)&DATA_A_today_Q15, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q16, (void*)&DATA_A_today_Q16, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q17, (void*)&DATA_A_today_Q17, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q18, (void*)&DATA_A_today_Q18, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q19, (void*)&DATA_A_today_Q19, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q20, (void*)&DATA_A_today_Q20, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q21, (void*)&DATA_A_today_Q21, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q22, (void*)&DATA_A_today_Q22, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q23, (void*)&DATA_A_today_Q23, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q24, (void*)&DATA_A_today_Q24, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q25, (void*)&DATA_A_today_Q25, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q26, (void*)&DATA_A_today_Q26, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q27, (void*)&DATA_A_today_Q27, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q28, (void*)&DATA_A_today_Q28, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q29, (void*)&DATA_A_today_Q29, GFL_OVERLAY_BLANK_ID },
+  { dni_a_today_q30, (void*)&DATA_A_today_Q30, GFL_OVERLAY_BLANK_ID },
 };
 
 // いままでの回答人数 ( 回答ごと )
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Atotal[] =
+static const DEBUG_MENU_LIST DATA_DNumInputMenu_Atotal[] =
 {
-  { dni_a_total_q01, (void*)&DATA_A_total_Q01 },
-  { dni_a_total_q02, (void*)&DATA_A_total_Q02 },
-  { dni_a_total_q03, (void*)&DATA_A_total_Q03 },
-  { dni_a_total_q04, (void*)&DATA_A_total_Q04 },
-  { dni_a_total_q05, (void*)&DATA_A_total_Q05 },
-  { dni_a_total_q06, (void*)&DATA_A_total_Q06 },
-  { dni_a_total_q07, (void*)&DATA_A_total_Q07 },
-  { dni_a_total_q08, (void*)&DATA_A_total_Q08 },
-  { dni_a_total_q09, (void*)&DATA_A_total_Q09 },
-  { dni_a_total_q10, (void*)&DATA_A_total_Q10 },
-  { dni_a_total_q11, (void*)&DATA_A_total_Q11 },
-  { dni_a_total_q12, (void*)&DATA_A_total_Q12 },
-  { dni_a_total_q13, (void*)&DATA_A_total_Q13 },
-  { dni_a_total_q14, (void*)&DATA_A_total_Q14 },
-  { dni_a_total_q15, (void*)&DATA_A_total_Q15 },
-  { dni_a_total_q16, (void*)&DATA_A_total_Q16 },
-  { dni_a_total_q17, (void*)&DATA_A_total_Q17 },
-  { dni_a_total_q18, (void*)&DATA_A_total_Q18 },
-  { dni_a_total_q19, (void*)&DATA_A_total_Q19 },
-  { dni_a_total_q20, (void*)&DATA_A_total_Q20 },
-  { dni_a_total_q21, (void*)&DATA_A_total_Q21 },
-  { dni_a_total_q22, (void*)&DATA_A_total_Q22 },
-  { dni_a_total_q23, (void*)&DATA_A_total_Q23 },
-  { dni_a_total_q24, (void*)&DATA_A_total_Q24 },
-  { dni_a_total_q25, (void*)&DATA_A_total_Q25 },
-  { dni_a_total_q26, (void*)&DATA_A_total_Q26 },
-  { dni_a_total_q27, (void*)&DATA_A_total_Q27 },
-  { dni_a_total_q28, (void*)&DATA_A_total_Q28 },
-  { dni_a_total_q29, (void*)&DATA_A_total_Q29 },
-  { dni_a_total_q30, (void*)&DATA_A_total_Q30 },
+  { dni_a_total_q01, (void*)&DATA_A_total_Q01, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q02, (void*)&DATA_A_total_Q02, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q03, (void*)&DATA_A_total_Q03, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q04, (void*)&DATA_A_total_Q04, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q05, (void*)&DATA_A_total_Q05, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q06, (void*)&DATA_A_total_Q06, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q07, (void*)&DATA_A_total_Q07, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q08, (void*)&DATA_A_total_Q08, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q09, (void*)&DATA_A_total_Q09, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q10, (void*)&DATA_A_total_Q10, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q11, (void*)&DATA_A_total_Q11, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q12, (void*)&DATA_A_total_Q12, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q13, (void*)&DATA_A_total_Q13, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q14, (void*)&DATA_A_total_Q14, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q15, (void*)&DATA_A_total_Q15, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q16, (void*)&DATA_A_total_Q16, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q17, (void*)&DATA_A_total_Q17, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q18, (void*)&DATA_A_total_Q18, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q19, (void*)&DATA_A_total_Q19, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q20, (void*)&DATA_A_total_Q20, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q21, (void*)&DATA_A_total_Q21, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q22, (void*)&DATA_A_total_Q22, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q23, (void*)&DATA_A_total_Q23, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q24, (void*)&DATA_A_total_Q24, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q25, (void*)&DATA_A_total_Q25, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q26, (void*)&DATA_A_total_Q26, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q27, (void*)&DATA_A_total_Q27, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q28, (void*)&DATA_A_total_Q28, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q29, (void*)&DATA_A_total_Q29, GFL_OVERLAY_BLANK_ID },
+  { dni_a_total_q30, (void*)&DATA_A_total_Q30, GFL_OVERLAY_BLANK_ID },
 };
 
 // 調査隊関連

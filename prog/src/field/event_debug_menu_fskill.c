@@ -44,14 +44,14 @@ static BOOL debugMenuCallProc_Diving( DEBUG_MENU_EVENT_WORK *p_wk );
 
 
 
-static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[] =
+static const DEBUG_MENU_LIST DATA_SubFieldSkillList[] =
 {
-  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },              //波乗り
-  { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },               //怪力
-  { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, //穴ヌケの紐
-  { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru },         //穴を掘る
-  { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport },           //テレポート
-  { DEBUG_FIELD_FSKILL_01, debugMenuCallProc_Diving },            //ダイビング
+  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori, GFL_OVERLAY_BLANK_ID },              //波乗り
+  { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki, GFL_OVERLAY_BLANK_ID },               //怪力
+  { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo, GFL_OVERLAY_BLANK_ID }, //穴ヌケの紐
+  { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru, GFL_OVERLAY_BLANK_ID },         //穴を掘る
+  { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport, GFL_OVERLAY_BLANK_ID },           //テレポート
+  { DEBUG_FIELD_FSKILL_01, debugMenuCallProc_Diving, GFL_OVERLAY_BLANK_ID },            //ダイビング
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {

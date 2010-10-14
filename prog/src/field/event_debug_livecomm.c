@@ -268,26 +268,26 @@ typedef struct {
 //
 //======================================================================
 
-static const FLDMENUFUNC_LIST DATA_DebugLiveCommMenuList[] =
+static const DEBUG_MENU_LIST DATA_DebugLiveCommMenuList[] =
 {
-  { dlc_menu_01, (void*)MENU_UPDATE_STOP },
-  { dlc_menu_02, (void*)MENU_BEACON_REQ },
-  { dlc_menu_03, (void*)MENU_STACK_CHECK },
-  { dlc_menu_04, (void*)MENU_SURETIGAI_NUM },
-  { dlc_menu_05, (void*)MENU_THANKS_NUM },
-  { dlc_menu_06, (void*)MENU_STACK_CLEAR },
-  { dlc_menu_07, (void*)MENU_MEMBER_CLEAR },
-  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK },
-  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR },
-  { dlc_menu_exit, (void*)MENU_EXIT },
+  { dlc_menu_01, (void*)MENU_UPDATE_STOP, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_02, (void*)MENU_BEACON_REQ, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_03, (void*)MENU_STACK_CHECK, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_04, (void*)MENU_SURETIGAI_NUM, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_05, (void*)MENU_THANKS_NUM, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_06, (void*)MENU_STACK_CLEAR, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_07, (void*)MENU_MEMBER_CLEAR, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
-static const FLDMENUFUNC_LIST DATA_DebugLiveCommFromFieldMenuList[] =
+static const DEBUG_MENU_LIST DATA_DebugLiveCommFromFieldMenuList[] =
 {
-  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK },
-  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR },
-  { dlc_menu_10, (void*)MENU_MY_GPOWER },
-  { dlc_menu_exit, (void*)MENU_EXIT },
+  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_10, (void*)MENU_MY_GPOWER, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {

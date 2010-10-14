@@ -2019,6 +2019,23 @@ void FLDMENUFUNC_WriteWindow( FLDMENUFUNC *menuFunc )
       WINDOW_TRANS_ON, 1, PANO_MENU_B );
 }
 #endif
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在選択中のインデックスを取得する
+ *
+ *	@param	const FLDMENUFUNC *menuFunc   メニューワーク
+ *
+ *	@return 現在選択しているインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 FLDMENUFUNC_GetNowIndex( const FLDMENUFUNC *menuFunc )
+{
+  u16 list;
+  u16 cursor;
+  BmpMenuList_PosGet( menuFunc->pMenuListWork, &list, &cursor );
+
+  return list + cursor;
+}
 
 //--------------------------------------------------------------
 /**

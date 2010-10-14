@@ -65,14 +65,14 @@ static const DEBUG_NUMINPUT_LIST DNIList_Mission[] =
 
 static const DEBUG_NUMINPUT_INITIALIZER DNI_Init = { NELEMS( DNIList_Mission ), DNIList_Mission, };
 
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
+static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
 {
-  { STR_INTRUDE_MISSION_01, (void*)0 },
-  { STR_INTRUDE_MISSION_02, (void*)1 },
-  { STR_INTRUDE_MISSION_03, (void*)2 },
-  { STR_INTRUDE_MISSION_04, (void*)3 },
-  { STR_INTRUDE_MISSION_05, (void*)4 },
-  { STR_INTRUDE_MISSION_06, (void*)5 },
+  { STR_INTRUDE_MISSION_01, (void*)0, GFL_OVERLAY_BLANK_ID },
+  { STR_INTRUDE_MISSION_02, (void*)1, GFL_OVERLAY_BLANK_ID },
+  { STR_INTRUDE_MISSION_03, (void*)2, GFL_OVERLAY_BLANK_ID },
+  { STR_INTRUDE_MISSION_04, (void*)3, GFL_OVERLAY_BLANK_ID },
+  { STR_INTRUDE_MISSION_05, (void*)4, GFL_OVERLAY_BLANK_ID },
+  { STR_INTRUDE_MISSION_06, (void*)5, GFL_OVERLAY_BLANK_ID },
 }; 
 
 //--------------------------------------------------------------

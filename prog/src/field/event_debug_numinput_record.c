@@ -122,16 +122,16 @@ static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
   0,    //表示サイズY キャラ単位
 };
 
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
+static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
 {
-  { dni_record_field, (void*)&DATA_Record_Field },
-  { dni_record_comm, (void*)&DATA_Record_Comm },
-  { dni_record_palace, (void*)&DATA_Record_Palace },
-  { dni_record_battle, (void*)&DATA_Record_Battle },
-  { dni_record_random, (void*)&DATA_Record_Random },
-  { dni_record_musical, (void*)&DATA_Record_Musical },
-  { dni_record_bsubway, (void*)&DATA_Record_BSubway },
-  { dni_record_day, (void*)&DATA_Record_Day },
+  { dni_record_field, (void*)&DATA_Record_Field, GFL_OVERLAY_BLANK_ID },
+  { dni_record_comm, (void*)&DATA_Record_Comm, GFL_OVERLAY_BLANK_ID },
+  { dni_record_palace, (void*)&DATA_Record_Palace, GFL_OVERLAY_BLANK_ID },
+  { dni_record_battle, (void*)&DATA_Record_Battle, GFL_OVERLAY_BLANK_ID },
+  { dni_record_random, (void*)&DATA_Record_Random, GFL_OVERLAY_BLANK_ID },
+  { dni_record_musical, (void*)&DATA_Record_Musical, GFL_OVERLAY_BLANK_ID },
+  { dni_record_bsubway, (void*)&DATA_Record_BSubway, GFL_OVERLAY_BLANK_ID },
+  { dni_record_day, (void*)&DATA_Record_Day, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {

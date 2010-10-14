@@ -50,18 +50,18 @@ static const FLDMENUFUNC_HEADER menuHeader =
 //=============================================================================
 // ■メニューリスト
 //=============================================================================
-static const FLDMENUFUNC_LIST menuList[] = 
+static const DEBUG_MENU_LIST menuList[] = 
 {
-  {sodateya_azukeru,       (void*)sodateya_azukeru},       // あずける
-  {sodateya_hikitoru,      (void*)sodateya_hikitoru},      // ひきとる
-  {sodateya_shiiku_1,      (void*)sodateya_shiiku_1},      // 飼育する ( 100歩分 )
-  {sodateya_shiiku_2,      (void*)sodateya_shiiku_2},      // 飼育する ( 1万歩分 )
-  {sodateya_shiiku_3,      (void*)sodateya_shiiku_3},      // 飼育する ( 100万歩分 )
-  {sodateya_tamago_get,    (void*)sodateya_tamago_get},    // タマゴを貰う
-  {sodateya_tamago_del,    (void*)sodateya_tamago_del},    // タマゴを捨てる
-  {sodateya_tamago_breed,  (void*)sodateya_tamago_breed},  // タマゴを温める
-  {sodateya_tamago_hatch,  (void*)sodateya_tamago_hatch},  // タマゴを孵す
-  {sodateya_tamago_delete, (void*)sodateya_tamago_delete}, // タマゴを孵す
+  {sodateya_azukeru,       (void*)sodateya_azukeru, GFL_OVERLAY_BLANK_ID },       // あずける
+  {sodateya_hikitoru,      (void*)sodateya_hikitoru, GFL_OVERLAY_BLANK_ID },      // ひきとる
+  {sodateya_shiiku_1,      (void*)sodateya_shiiku_1, GFL_OVERLAY_BLANK_ID },      // 飼育する ( 100歩分 )
+  {sodateya_shiiku_2,      (void*)sodateya_shiiku_2, GFL_OVERLAY_BLANK_ID },      // 飼育する ( 1万歩分 )
+  {sodateya_shiiku_3,      (void*)sodateya_shiiku_3, GFL_OVERLAY_BLANK_ID },      // 飼育する ( 100万歩分 )
+  {sodateya_tamago_get,    (void*)sodateya_tamago_get, GFL_OVERLAY_BLANK_ID },    // タマゴを貰う
+  {sodateya_tamago_del,    (void*)sodateya_tamago_del, GFL_OVERLAY_BLANK_ID },    // タマゴを捨てる
+  {sodateya_tamago_breed,  (void*)sodateya_tamago_breed, GFL_OVERLAY_BLANK_ID },  // タマゴを温める
+  {sodateya_tamago_hatch,  (void*)sodateya_tamago_hatch, GFL_OVERLAY_BLANK_ID },  // タマゴを孵す
+  {sodateya_tamago_delete, (void*)sodateya_tamago_delete, GFL_OVERLAY_BLANK_ID }, // タマゴを孵す
 };
 
 //=============================================================================

@@ -38,13 +38,13 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
 static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk );
 //#define MYSTERY_DLDATA_DEBUG_PRINT
-static const FLDMENUFUNC_LIST DATA_SubMysteryCardMakeList[] =
+static const DEBUG_MENU_LIST DATA_SubMysteryCardMakeList[] =
 {
-  { DEBUG_FIELD_MYSTERY_01, debugMenuCallProc_MakeMysteryCardPoke },              //ポケモン作成
-  { DEBUG_FIELD_MYSTERY_02, debugMenuCallProc_MakeMysteryCardItem },               //道具作成
-  { DEBUG_FIELD_MYSTERY_03, debugMenuCallProc_MakeMysteryCardGPower },              //Gパワー作成
-  { DEBUG_FIELD_MYSTERY_04, debugMenuCallProc_MakeMysteryCardGLiberty },              //リバティ作成
-  { DEBUG_FIELD_MYSTERY_05, debugMenuCallProc_MakeMysteryCardEgg },              //タマゴ作成
+  { DEBUG_FIELD_MYSTERY_01, debugMenuCallProc_MakeMysteryCardPoke, GFL_OVERLAY_BLANK_ID },              //ポケモン作成
+  { DEBUG_FIELD_MYSTERY_02, debugMenuCallProc_MakeMysteryCardItem, GFL_OVERLAY_BLANK_ID },               //道具作成
+  { DEBUG_FIELD_MYSTERY_03, debugMenuCallProc_MakeMysteryCardGPower, GFL_OVERLAY_BLANK_ID },              //Gパワー作成
+  { DEBUG_FIELD_MYSTERY_04, debugMenuCallProc_MakeMysteryCardGLiberty, GFL_OVERLAY_BLANK_ID },              //リバティ作成
+  { DEBUG_FIELD_MYSTERY_05, debugMenuCallProc_MakeMysteryCardEgg, GFL_OVERLAY_BLANK_ID },              //タマゴ作成
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {

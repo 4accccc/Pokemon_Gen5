@@ -76,6 +76,7 @@
 #include "net_app/union/union_main.h"
 
 #include "debug/debugwin_sys.h" //デバッグメニュー
+#include "event_debug_menu.h"
 
 #if USE_DEBUGWIN_SYSTEM
 #include "mapdatafunc/field_func_random_generate.h" //デバッグ登録のため
@@ -539,6 +540,10 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	//マップコントロール
 	fieldWork->func_tbl = FIELDDATA_GetFieldFunctions( fieldWork->map_id );
 
+#ifdef PM_DEBUG
+  //デバッグ情報
+  DEBUG_EVENT_Init( fieldWork->gamedata );
+#endif //PM_DEBUG
 
 	return fieldWork;
 }
@@ -553,6 +558,11 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 {
   GAMESYS_WORK *gsys = fieldWork->gsys;
+
+#ifdef PM_DEBUG
+  //デバッグ情報消去
+  DEBUG_EVENT_Exit( fieldWork->gamedata );
+#endif //PM_DEBUG
 
   //エリアデータ
   AREADATA_Delete( fieldWork->areadata );

@@ -60,15 +60,15 @@ static BOOL debugMenuCallProc_Clear( DEBUG_MENU_EVENT_WORK * p_wk );
 /// デバッグメニューリスト
 /// データを追加する事でメニューの項目も増えます。
 //--------------------------------------------------------------
-static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
+static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 {
-  { DEBUG_FIELD_RESEARCH_team,   debugMenuCallProc_Team },   // 調査隊関連
-  { DEBUG_FIELD_RESEARCH_Qtotal, debugMenuCallProc_QTotal }, // いままでの調査人数 ( 質問 )
-  { DEBUG_FIELD_RESEARCH_Atotal, debugMenuCallProc_ATotal }, // いままでの調査人数 ( 回答 )
-  { DEBUG_FIELD_RESEARCH_Qtoday, debugMenuCallProc_QToday }, // 今日の調査人数 ( 質問 )
-  { DEBUG_FIELD_RESEARCH_Atoday, debugMenuCallProc_AToday }, // 今日の調査人数 ( 回答 )
-  { DEBUG_FIELD_RESEARCH_Random, debugMenuCallProc_Random }, // ランダムセットアップ
-  { DEBUG_FIELD_RESEARCH_clear,  debugMenuCallProc_Clear },  // 調査データクリア
+  { DEBUG_FIELD_RESEARCH_team,   debugMenuCallProc_Team, GFL_OVERLAY_BLANK_ID },   // 調査隊関連
+  { DEBUG_FIELD_RESEARCH_Qtotal, debugMenuCallProc_QTotal, GFL_OVERLAY_BLANK_ID }, // いままでの調査人数 ( 質問 )
+  { DEBUG_FIELD_RESEARCH_Atotal, debugMenuCallProc_ATotal, GFL_OVERLAY_BLANK_ID }, // いままでの調査人数 ( 回答 )
+  { DEBUG_FIELD_RESEARCH_Qtoday, debugMenuCallProc_QToday, GFL_OVERLAY_BLANK_ID }, // 今日の調査人数 ( 質問 )
+  { DEBUG_FIELD_RESEARCH_Atoday, debugMenuCallProc_AToday, GFL_OVERLAY_BLANK_ID }, // 今日の調査人数 ( 回答 )
+  { DEBUG_FIELD_RESEARCH_Random, debugMenuCallProc_Random, GFL_OVERLAY_BLANK_ID }, // ランダムセットアップ
+  { DEBUG_FIELD_RESEARCH_clear,  debugMenuCallProc_Clear, GFL_OVERLAY_BLANK_ID },  // 調査データクリア
 }; 
 
 //--------------------------------------------------------------

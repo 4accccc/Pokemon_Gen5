@@ -50,6 +50,8 @@ u32 DbgFldHeapUseMaxZone = 0;
 u32 DbgFldHeapUseMaxZoneAlctbl = 0;
 u32 DbgVramUseMaxZone = 0;
 
+//event_debug_menu.c‚ÅŽg—p
+FSOverlayID debugmenu_overlayID = GFL_OVERLAY_BLANK_ID;
 #endif
 
 //============================================================================================

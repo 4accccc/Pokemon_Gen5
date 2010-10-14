@@ -312,12 +312,12 @@ GMEVENT * DEBUG_EVENT_FLDMENU_ChangeSeason( GAMESYS_WORK * gsys, void * wk )
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 #include "gamesystem/pm_season.h"
-static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
+static const DEBUG_MENU_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
 {
-  { DEBUG_FIELD_STR_SPRING, (void*)PMSEASON_SPRING },
-  { DEBUG_FIELD_STR_SUMMER, (void*)PMSEASON_SUMMER },
-  { DEBUG_FIELD_STR_AUTUMN, (void*)PMSEASON_AUTUMN },
-  { DEBUG_FIELD_STR_WINTER, (void*)PMSEASON_WINTER },
+  { DEBUG_FIELD_STR_SPRING, (void*)PMSEASON_SPRING, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_STR_SUMMER, (void*)PMSEASON_SUMMER, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_STR_AUTUMN, (void*)PMSEASON_AUTUMN, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_STR_WINTER, (void*)PMSEASON_WINTER, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSeasonJumpMenuData = {

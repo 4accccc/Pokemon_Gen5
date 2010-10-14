@@ -51,10 +51,10 @@ static BOOL debugMenuCallProc_NowConnectCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 /// デバッグメニューリスト
 /// データを追加する事でメニューの項目も増えます。
 //--------------------------------------------------------------
-static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
+static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 {
-  { DEBUG_FIELD_CONNECT_01, debugMenuCallProc_NowConnectCheck }, // 現在のマップ
-  { DEBUG_FIELD_CONNECT_02, debugMenuCallProc_AllConnectCheck }, // 全マップ
+  { DEBUG_FIELD_CONNECT_01, debugMenuCallProc_NowConnectCheck , GFL_OVERLAY_BLANK_ID }, // 現在のマップ
+  { DEBUG_FIELD_CONNECT_02, debugMenuCallProc_AllConnectCheck , GFL_OVERLAY_BLANK_ID }, // 全マップ
 };
 
 

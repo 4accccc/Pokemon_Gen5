@@ -55,10 +55,16 @@ typedef u16 GET_MAX_FUNC( GAMESYS_WORK* gsys, void* c_work );
  * 使用方法についてはどこでもジャンプなどを参照のこと。
  */
 //--------------------------------------------------------------
+typedef struct
+{
+  u32 str_id;             ///<表示する文字列ID
+  void *selectParam;      ///<選択された際に返すパラメタ
+  FSOverlayID overlayID;  ///<上記が依存するオーバーレイID
+}DEBUG_MENU_LIST;
 typedef struct {
   u16 msg_dat_id;     ///<引用するメッセージアーカイブの指定
   u16 max;            ///<項目最大数（固定リストでない場合、０）
-  const FLDMENUFUNC_LIST * menulist;  ///<参照するメニューデータ（生成する場合はNULL)
+  const DEBUG_MENU_LIST * menulist;
   const FLDMENUFUNC_HEADER * menuH;   ///<メニュー表示指定データ
   u8 px, py, sx, sy;
   MAKE_LIST_FUNC * makeListFunc;      ///<メニュー生成関数へのポインタ（固定メニューの場合はNULL)
@@ -81,6 +87,9 @@ extern const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel;
 extern FLDMENUFUNC * DEBUGFLDMENU_Init(
     FIELDMAP_WORK * fieldmap, HEAPID heapID, const DEBUG_MENU_INITIALIZER * init );
 
+extern FLDMENUFUNC * DEBUGFLDMENU_InitArcID(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init, u32 msg_arc_id );
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern FLDMENUFUNC * DEBUGFLDMENU_InitEx(

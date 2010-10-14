@@ -48,11 +48,11 @@ static const FLDMENUFUNC_HEADER menuHeader =
 //--------------------------------------------------------------
 // メニューリスト
 //--------------------------------------------------------------
-static const FLDMENUFUNC_LIST menuList[] = 
+static const DEBUG_MENU_LIST menuList[] = 
 {
-  {STR_NEWBORN,     (void*)STR_NEWBORN},      // うまれたて
-  {STR_OLDBORN,     (void*)STR_OLDBORN},      // もうすぐ孵化
-  {STR_ILLEGAL_EGG, (void*)STR_ILLEGAL_EGG},  // だめタマゴ
+  {STR_NEWBORN,     (void*)STR_NEWBORN, GFL_OVERLAY_BLANK_ID },      // うまれたて
+  {STR_OLDBORN,     (void*)STR_OLDBORN, GFL_OVERLAY_BLANK_ID },      // もうすぐ孵化
+  {STR_ILLEGAL_EGG, (void*)STR_ILLEGAL_EGG, GFL_OVERLAY_BLANK_ID },  // だめタマゴ
 };
 
 //--------------------------------------------------------------

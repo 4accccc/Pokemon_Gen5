@@ -82,15 +82,15 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_Default =
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuSymbolPokeListEvent(GMEVENT *event, int *seq, void *wk );
 
-static const FLDMENUFUNC_LIST DATA_SubSymbolPokeList[] =
+static const DEBUG_MENU_LIST DATA_SubSymbolPokeList[] =
 {
-  { DEBUG_FIELD_SYMBOL_11, debugMenuCallProc_SymbolPokeCreate },
-  { DEBUG_FIELD_SYMBOL_13, debugMenuCallProc_SymbolPokeMultiCreate },
-  { DEBUG_FIELD_SYMBOL_05, debugMenuCallProc_SymbolPokeKeepLargeFull },
-  { DEBUG_FIELD_SYMBOL_06, debugMenuCallProc_SymbolPokeKeepSmallFull },
-  { DEBUG_FIELD_SYMBOL_07, debugMenuCallProc_SymbolPokeFreeLargeFull },
-  { DEBUG_FIELD_SYMBOL_08, debugMenuCallProc_SymbolPokeFreeSmallFull },
-  { DEBUG_FIELD_SYMBOL_09, debugMenuCallProc_SymbolPokeCountup },
+  { DEBUG_FIELD_SYMBOL_11, debugMenuCallProc_SymbolPokeCreate, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_13, debugMenuCallProc_SymbolPokeMultiCreate, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_05, debugMenuCallProc_SymbolPokeKeepLargeFull, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_06, debugMenuCallProc_SymbolPokeKeepSmallFull, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_07, debugMenuCallProc_SymbolPokeFreeLargeFull, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_08, debugMenuCallProc_SymbolPokeFreeSmallFull, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_09, debugMenuCallProc_SymbolPokeCountup, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubSymbolPokeListSelectData = {

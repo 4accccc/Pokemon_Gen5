@@ -66,13 +66,13 @@ static const FLDMENUFUNC_HEADER menuHeader =
 //--------------------------------------------------------------
 // メニューリスト
 //--------------------------------------------------------------
-static const FLDMENUFUNC_LIST menuList[] = 
+static const DEBUG_MENU_LIST menuList[] = 
 {
-  {STR_INTRUDE_TUTORIAL_CLEAR,     (void*)clearTutorial},      // チュートリアルクリア
-  {STR_INTRUDE_DUMP_PLAYER,       (void*)dumpPlayerInfo},      // プレイヤー情報
-  {STR_INTRUDE_MISSION_RESET,     (void*)resetMissionList},      // ミッションリスト再作成
-  {STR_INTRUDE_TIME_UNLIMITED,     (void*)timeUnlimited},      // ミッションリスト再作成
-  {STR_INTRUDE_MISSION_00,         (void*)selectMission},      // ミッション選択
+  {STR_INTRUDE_TUTORIAL_CLEAR,     (void*)clearTutorial, GFL_OVERLAY_BLANK_ID },      // チュートリアルクリア
+  {STR_INTRUDE_DUMP_PLAYER,       (void*)dumpPlayerInfo, GFL_OVERLAY_BLANK_ID },      // プレイヤー情報
+  {STR_INTRUDE_MISSION_RESET,     (void*)resetMissionList, GFL_OVERLAY_BLANK_ID },      // ミッションリスト再作成
+  {STR_INTRUDE_TIME_UNLIMITED,     (void*)timeUnlimited, GFL_OVERLAY_BLANK_ID },      // ミッションリスト再作成
+  {STR_INTRUDE_MISSION_00,         (void*)selectMission, GFL_OVERLAY_BLANK_ID },      // ミッション選択
 };
 
 //--------------------------------------------------------------

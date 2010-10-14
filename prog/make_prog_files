@@ -791,39 +791,74 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
     		field/field_palace_sys.c
 #        field/scrcmd_c03center.c は未使用だったのでなくしました
 
-# スクリプトコマンド並列化  バトルサブウェイ
+# デバッグメニュー並列化  ジャンプ系
 #===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_JUMP  = field/event_debug_menu_ov_jump.c
+
+# デバッグメニュー並列化  フィールド系
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_FIELD  = field/event_debug_menu_ov_field.c
+
+# デバッグメニュー並列化  システム系
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_SYSTEM  = field/event_debug_menu_ov_system.c
+
+# デバッグメニュー並列化  データ作成系
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_DATA  = field/event_debug_menu_ov_data.c
+
+# デバッグメニュー並列化  通信系
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_NET  = field/event_debug_menu_ov_net.c
+
+# デバッグメニュー並列化  アプリ系
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_APP  = field/event_debug_menu_ov_app.c
+
+# デバッグメニュー並列化  スタッフ系
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_STAFF  = field/event_debug_menu_ov_staff.c
+
+# スクリプトコマンド並列化  バトルサブウェイ
+#===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_BSUBWAY  = field/scrcmd_bsubway.c \
                                field/scrcmd_bsubway_table.c
 
 # スクリプトコマンド並列化  国連
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_UN  = field/scrcmd_un.c \
                           field/scrcmd_un_table.c
 
 # スクリプトコマンド並列化  遊覧船
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_PL_BOAT  =  field/scrcmd_pl_boat.c \
                                 field/scrcmd_pl_boat_table.c
 
 # スクリプトコマンド並列化  四天王部屋
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_FOURKINGS  =  field/scrcmd_fourkings.c \
                                 field/scrcmd_fourkings_table.c
 
 
 # スクリプトコマンド並列化  パルパーク（ポケシフター）
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_PALPARK  =  field/scrcmd_palpark.c \
                                 field/scrcmd_palpark_table.c
 
 # スクリプトコマンド並列化  海底神殿
-#===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_SEATEMPLE  =  field/scrcmd_seatemple.c \
                                 field/scrcmd_seatemple_table.c
