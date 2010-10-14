@@ -1,7 +1,7 @@
 require 'kconv'  # for String.toutf8 
 
 
-@@place_name_hash = Hash.new
+$place_name_hash = Hash.new
 
 
 def get_zone_name( place_name_id ) 
@@ -35,11 +35,11 @@ def create_place_name_hash
   zone_table.each do |zone_line|
     items = zone_line.split( /\s/ )
     zone_id = items[0]
-    place_name_id = items[25]
+    place_name_id = items[26]
     if zone_id == "END" then break end
     zone_name = get_zone_name( place_name_id )
     if zone_name != nil 
-      @@place_name_hash[ zone_id ] = zone_name
+      $place_name_hash[ zone_id ] = zone_name
     end
   end
 

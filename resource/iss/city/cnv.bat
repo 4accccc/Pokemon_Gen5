@@ -1,7 +1,22 @@
-set PROJECT_ROOT=C:/home/pokemon_wb/
-set Path=c:\cygwin\bin;C:\WINDOWS\system32;C:/home/pokemon_wb/lib\NitroSystem\tools\win\bin;
-set PROJECT_RSCDIR=C:/home/pokemon_wb/resource/
-set PROJECT_ARCDIR=C:/home/pokemon_wb/prog/arc/
 
+:: =====================================================
+:: prompt.batÇ©ÇÁé©ÇÁÇãNìÆÇ∑ÇÈèàóù
+:: =====================================================
+@echo off
+if "%1" == "" goto call_cmd
+goto EX
+
+:call_cmd
+../../../prompt.bat cmd %0 ex
+goto end
+
+:: =====================================================
+:: é¿ç€ÇÃèàóù
+:: =====================================================
+:EX
+@echo on
 make
-pause
+@echo off
+
+:end
+Pause

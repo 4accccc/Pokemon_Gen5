@@ -1,4 +1,20 @@
-Path=c:\cygwin\bin;
+
+:: =====================================================
+:: prompt.bat‚©‚ç©‚ç‚ğ‹N“®‚·‚éˆ—
+:: =====================================================
+@echo off
+if "%1" == "" goto call_cmd
+goto EX
+
+:call_cmd
+../../prompt.bat cmd %0 ex
+goto end
+
+:: =====================================================
+:: ÀÛ‚Ìˆ—
+:: =====================================================
+:EX
+@echo on
 cp ../../resource/sodateya/kowaza_table.xls ./data/kowaza_table.xls
 cp ../../resource/personal/personal_wb.csv ./data/personal_wb.csv
 cp ../../resource/trdata/trainer_wb.csv ./data/trainer_wb.csv
@@ -14,4 +30,7 @@ exceltabconv.exe ../waza_check/data/wb_item.xls
 
 cd ../waza_check/script
 ruby -Ks -I ./hash;./hash_conv;./personal;./trainer update_hash.rb
-pause
+@echo off
+
+:end
+Pause

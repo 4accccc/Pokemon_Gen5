@@ -83,7 +83,7 @@ check_file_list.each do |file_path|
           info.item_label = item_label
           info.zone_id    = GetZoneID_byEvFileName( filename )
           info.item_name  = GetItemName( item_label )
-          info.zone_name  = @@place_name_hash[ info.zone_id ]
+          info.zone_name  = $place_name_hash[ info.zone_id ]
           item_info_list << info
         # アイテムラベル名がない
         else
