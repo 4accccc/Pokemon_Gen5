@@ -317,6 +317,7 @@ static BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk );
 // << update ichiraku 2010/10/5
 // ためしにデバック機能追加してみた
 static BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DebugTest_Onoue( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DbgRestDataUpdate(const u32 inZone);
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
@@ -425,6 +426,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   // << update ichiraku 2010/10/5
   // ためしにデバック機能追加してみた
   { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi },    // いちらくテスト
+  { DEBUG_FIELD_TEST_ONOUE, debugMenuCallProc_DebugTest_Onoue },    // おのうえテスト
 };
 
 
@@ -7352,6 +7354,47 @@ static GMEVENT_RESULT debugCutin(
   return( GMEVENT_RES_CONTINUE );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  尾上用テスト
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugTest_Onoue( DEBUG_MENU_EVENT_WORK *wk )
+{
+  int sex;
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldMap = wk->fieldWork;
+  u16 zone_id = FIELDMAP_GetZoneID( fieldMap );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( wk->gdata );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( wk->gdata );
+  MYSTATUS *s_mystatus = SaveData_GetMyStatus( save );
+
+  // 性別をひっくり返す
+  sex = MyStatus_GetMySex( mystatus );
+  sex ^= 1;
+  MyStatus_SetMySex( mystatus, sex );
+  MyStatus_SetMySex( s_mystatus, sex );
+
+  // ユニオン見た目もひっくり返す
+  MyStatus_SetTrainerView( mystatus,   sex*MYSTATUS_UNIONVIEW_MAX );
+  MyStatus_SetTrainerView( s_mystatus, sex*MYSTATUS_UNIONVIEW_MAX );
+
+  {
+    GMEVENT * mapchange_event;
+    mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldMap, zone_id );
+    GMEVENT_ChangeEvent( event, mapchange_event );
+  }
+
+  return( TRUE );
+
+}
 
 // << update ichiraku 2010/10/5
 // ためしにデバック機能追加してみた
