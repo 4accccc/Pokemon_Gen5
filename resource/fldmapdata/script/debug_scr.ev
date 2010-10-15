@@ -52,6 +52,7 @@ _EVENT_DATA   ev_debug_hosaka
 _EVENT_DATA   ev_debug_ariizumi
 _EVENT_DATA   ev_debug_ohkubo
 _EVENT_DATA   ev_debug_matsushima
+_EVENT_DATA   ev_debug_ichiraku
 _EVENT_DATA   ev_debug_common
 _EVENT_DATA   ev_debug_nagihashi
 _EVENT_DATA_END
@@ -1266,6 +1267,30 @@ EVENT_END
 EVENT_START   ev_debug_matsushima
   _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
 EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_ichiraku
+
+  //ローカル変数を定義
+	DEFINE_LOCAL	LWK_HERO_X
+	DEFINE_LOCAL	LWK_HERO_Z
+
+	//自機の位置取得
+	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+
+  _DEBUG_PRINT_WK( LWK_HERO_X )
+  _DEBUG_PRINT_WK( LWK_HERO_Z )
+  $LWK_HERO_X -= 3
+  $LWK_HERO_Z -= 5
+  _DEBUG_PRINT_WK( LWK_HERO_X )
+  _DEBUG_PRINT_WK( LWK_HERO_Z )
+
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 782, 753)
+  _OBJ_ANIME_WAIT()
+EVENT_END
+
 
 /**************************************************************/
 /*                                                            */

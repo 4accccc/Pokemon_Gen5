@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-06-16T17:22:06"/>
+	<create user="ichiraku_katsuhiko" host="W00241" date="2010-10-12T16:57:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -800,6 +800,11 @@
 		<comment>とりあえず確保</comment>
 		<language name="JPN" width="256">仮メッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_debug_ichiraku_1" back-color="#008000,,,#008000,,#008000,#008000,#008000,,,#008000,,#008000,#008000,,,#008000,,">
+		<language name="JPN" width="256">歩行自動経路</language>
+		<language name="JPN_KANJI" width="256">歩行自動経路</language>
 	</row>
 
 	<flowchart-group-list>
