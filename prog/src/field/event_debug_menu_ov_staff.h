@@ -19,7 +19,6 @@
 extern BOOL debugMenuCallProc_PCScript( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk );
-extern BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
 extern BOOL debugMenu_WfbcDebug( DEBUG_MENU_EVENT_WORK *wk );

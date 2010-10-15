@@ -16,70 +16,19 @@
 #include "arc_def.h"
 
 #include "field/field_msgbg.h"
-
 #include "message.naix"
 #include "debug_message.naix"
 #include "msg/debug/msg_d_field.h"
-
 #include "fieldmap.h"
 #include "field/zonedata.h"
 #include "arc/fieldmap/zone_id.h"
 #include "field/eventdata_sxy.h"
-
 #include "event_debug_menu.h"
-
-#include "net_app/irc_match/ircbattlemenu.h"
-#include "event_ircbattle.h"
-#include "event_wificlub.h"
-#include "field_subscreen.h"
 #include "sound/pm_sndsys.h"
-
-#include "font/font.naix"
-
 
 #include "field_debug.h" 
 #include "field_event_check.h"
-
-
-#include "event_debug_beacon.h"
-#include "app/waza_oshie.h"
-
-#include "field_buildmodel.h"
-
-#include "field_sound.h"
-
-
-
-#include "field/eventwork.h"
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"
-
-
-#include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
-
-//CGEAR PICTURE
-#include "c_gear.naix"
-#include "./c_gear/c_gear.h"
-#include "./c_gear/event_cgearget.h"
-#include "savedata/save_tbl.h"
-#include "savedata/c_gear_picture.h"
-#include "savedata/wifihistory.h"
-
 #include "event_debug_local.h"
-
-#include "event_debug_menu_intrude.h"   // for DEBUG_EVENT_FLDMENU_Intrude
-#include "event_debug_menu_wifinote.h"  // for DEBUG_
-
-#include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
-
-#include "event_debug_wifimatch.h"
-#include "event_battlerecorder.h"
-
-#include "debug/debug_makepoke.h"
-#include "debug/debug_mystery_card.h"
-
-
-
-
 
 //オーバーレイ切り分け
 #include "event_debug_menu_ov_jump.h"
@@ -89,6 +38,7 @@
 #include "event_debug_menu_ov_net.h"
 #include "event_debug_menu_ov_app.h"
 #include "event_debug_menu_ov_staff.h"
+#include "event_debug_menu_ov_bsubway.h"
 
 
 
@@ -102,6 +52,7 @@ FS_EXTERN_OVERLAY( debugmenu_data );
 FS_EXTERN_OVERLAY( debugmenu_net );
 FS_EXTERN_OVERLAY( debugmenu_app );
 FS_EXTERN_OVERLAY( debugmenu_staff );
+FS_EXTERN_OVERLAY( debugmenu_bsubway );
 
 //======================================================================
 //  extern
@@ -217,15 +168,19 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   //{ DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset, FS_OVERLAY_ID(debugmenu_net) },  //ミッションリスト再作成
   { DEBUG_FIELD_INTRUDE,    debugMenu_Intrude, FS_OVERLAY_ID(debugmenu_net) },      //ハイリンク
   { DEBUG_FIELD_WIFINOTE_01,  debugMenu_WriteWifiNote, FS_OVERLAY_ID(debugmenu_net) },  //友達手帳書き込み
+  //event_debug_menu_ov_app.c
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate, FS_OVERLAY_ID(debugmenu_app) },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d, FS_OVERLAY_ID(debugmenu_app) },             //３Dデモ
 
+  //event_debug_menu_ov_staff.c
   { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },       //○スタッフ用
   { DEBUG_FIELD_STR70, debugMenuCallProc_PCScript, FS_OVERLAY_ID(debugmenu_staff) },        //パソコン呼び出し
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut, FS_OVERLAY_ID(debugmenu_staff) },           //Yボタン登録最大
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu, FS_OVERLAY_ID(debugmenu_staff) }, //GTSネゴ
-  { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway, FS_OVERLAY_ID(debugmenu_staff) },                //バトルサブウェイ
+  //event_debug_menu_ov_bsubway.c サブウェイ部分だけ大きかったので切り分け
+  { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway, FS_OVERLAY_ID(debugmenu_bsubway) },                //バトルサブウェイ
+  //event_debug_menu_ov_staff.c
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan, FS_OVERLAY_ID(debugmenu_staff) },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone, FS_OVERLAY_ID(debugmenu_staff) },           //着信音
   { DEBUG_FIELD_STR73, debugMenu_WfbcDebug, FS_OVERLAY_ID(debugmenu_staff) },                   //WFBCオートチェック
