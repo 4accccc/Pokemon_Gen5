@@ -193,14 +193,6 @@ typedef enum {
 //-----------------------------------------------------------------------------
 static void EvAcmdSet( MMDL_ACMD_LIST *p_list, DIR_TYPE dir, u16 *p_list_num, u16 num, HEAPID heapId )
 {
-  //MMDL_ACMD_LIST *p_tmp;
-
-  // アニメーションコマンド1つ分 メモリ作成
-  //p_tmp = GFL_HEAP_AllocClearMemory( heapId, MMDL_ACMD_LIST_SIZE );
-  //&p_list[ *p_list_num ] = p_tmp;
-  
-  //ICHI_Printf("メモリ作成 %d個目\n", *p_list_num);
-  //(MMDL_ACMD_LIST *)p_list = GFL_HEAP_AllocClearMemory( heapId, MMDL_ACMD_LIST_SIZE );
 
   switch( dir ){
   case DIR_U:  // 上
@@ -693,7 +685,7 @@ static u32 EvRouteCalc( SCRCMD_WORK *p_wk, MMDL_ACMD_LIST *p_list, MMDL *p_mmdl,
   }
 
   // 最後は絶対にアニメーション終了コマンド入れる
-  p_list[ list_num ].code = ACMD_END;
+  p_list[ list_num ].code = ACMD_AUTO_END;
   p_list[ list_num ].num  = 0;
 
   ICHI_Printf("探索終了 list_num:%d\n", list_num);
@@ -739,10 +731,9 @@ VMCMD_RESULT EvCmdObjAnimeAuto( VMHANDLE *core, void *wk )
   //アニメーションコマンドリストを探索し、タスクにセットする
   {
     MMDL_ACMD_LIST  *p_list;
-    u32   list_num;
 
-    // メモリ作成し、データコピー
-    p_list = GFL_HEAP_AllocClearMemory( heap_id, MMDL_ACMD_LIST_SIZE * ACMD_LIST_MAX );
+    // メモリ作成
+    p_list = GFL_HEAP_AllocClearMemory( heap_id, (MMDL_ACMD_LIST_SIZE * ACMD_LIST_MAX) );
 
     // 経路算出
     EvRouteCalc( work, p_list, p_mmdl, target_x, target_z );

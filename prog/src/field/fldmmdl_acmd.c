@@ -87,10 +87,10 @@ typedef struct
 {
 	int seq_no;					///<処理番号
 	BOOL end_flag;				///<終了フラグ
-  BOOL auto_flag;       // _OBJ_ANIME_AUTOで設定されたかフラグ >> update ichiraku 2010/10/14
 	int acmd_count;				///<アニメ実行回数を記録
 	MMDL * mmdl;			///<アニメ対象MMDL *
 	const MMDL_ACMD_LIST *list;	///<実行するコマンドリスト
+  MMDL_ACMD_LIST* list_addrs; // コマンドリストの先頭アドレス >> update ichiraku 2010/10/14
 }ACMD_LIST_WORK;
 
 #define ACMD_LIST_WORK_SIZE (sizeof(ACMD_LIST_WORK)) ///<ACMD_LIST_WORKサイズ
@@ -287,6 +287,11 @@ GFL_TCB * MMDL_SetAcmdList(
 	
 	work->mmdl = mmdl;
 	work->list = list;
+
+  // update ichiraku 2010/10/14
+  // メモリ解放用にコマンドリストの先頭アドレス保存しておく
+  work->list_addrs = (MMDL_ACMD_LIST *)list;
+
 	return( tcb );
 }
 
@@ -321,9 +326,10 @@ void MMDL_EndAcmdList( GFL_TCB * tcb )
 
   // update ichiraku 2010/10/14
   // 自動アニメ専用フラグが立っているとメモリを解放する
-  if( work->auto_flag == TRUE )
+  if( work->list_addrs != NULL )
   {
-    GFL_HEAP_FreeMemory( (void *)work->list );
+    GFL_HEAP_FreeMemory( work->list_addrs );
+    ICHI_Printf("自動アニメヒープ削除\n");
   }
 
   GFL_HEAP_FreeMemory( work );
@@ -440,7 +446,6 @@ static int AcmdListProc_AcmdSetCount( ACMD_LIST_WORK *work )
   // ACMD_ENDのチェックより先に行う必要がある
   if( list->code == ACMD_AUTO_END )
   {
-    work->auto_flag= TRUE;  // 専用フラグをたてる
     work->end_flag = TRUE;
     work->seq_no = SEQNO_AL_END;
     return ( FALSE );
@@ -451,6 +456,7 @@ static int AcmdListProc_AcmdSetCount( ACMD_LIST_WORK *work )
     return( TRUE );
   }
 
+  work->list_addrs = NULL;    // ＊NULLにしないと解放してしまう
   work->end_flag = TRUE;
   work->seq_no = SEQNO_AL_END;
 
