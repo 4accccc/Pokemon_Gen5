@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-29T19:36:05"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-10-15T17:01:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -347,10 +347,10 @@
 
 	<row id="RESULT_STR_001">
 		<comment>一番ひくい</comment>
-		<language name="JPN" width="256">ふたりの　フィーリングは　ランクＪ！
-ただの　しりあい　くらい……</language>
-		<language name="JPN_KANJI" width="256">ふたりの　フィーリングは　ランクＪ！
-ただの　知り合い　くらい……</language>
+		<language name="JPN" width="256">タッチそうさを　しっぱいしています…
+ガイドに　そって　プレイしてください</language>
+		<language name="JPN_KANJI" width="256">タッチ操作を　失敗しています…
+ガイドに　沿って　プレイしてください</language>
 	</row>
 
 	<row id="RESULT_STR_002">

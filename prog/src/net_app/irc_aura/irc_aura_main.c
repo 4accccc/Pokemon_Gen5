@@ -2532,18 +2532,28 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     switch( *p_seq )
     {
     case SEQ_INIT:
-
-      if( p_wk->p_param->p_gamesys )
+#ifdef BUGFIX_AF_FEELING_CHECK_SCORE_101015
+      if( SHAKESEARCH_IsEnd( &p_wk->shake_left[0] ) )
       {
-        MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-            AURA_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+            AURA_STR_007, 0, 0 );
       }
       else
       {
-        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-            AURA_STR_000, 0, 0 );
+#endif //BUGFIX_AF_FEELING_CHECK_SCORE_101015
+        if( p_wk->p_param->p_gamesys )
+        {
+          MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+              AURA_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+        }
+        else
+        {
+          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+              AURA_STR_000, 0, 0 );
+        }
+#ifdef BUGFIX_AF_FEELING_CHECK_SCORE_101015
       }
-
+#endif //BUGFIX_AF_FEELING_CHECK_SCORE_101015
       //タッチ演出OFF
       {
         int i;
@@ -2604,21 +2614,28 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
       }
       else
       {
-        //３秒ごとのメッセージかえ
-        if( p_wk->flip_cnt++ >= AURA_MSG_CHANGE_SYNC )
+#ifdef BUGFIX_AF_FEELING_CHECK_SCORE_101015
+        if( !SHAKESEARCH_IsEnd( &p_wk->shake_left[0] ) )
         {
-          p_wk->flip_cnt = 0;
-          p_wk->msg_flip  ^=  1;
+#endif //BUGFIX_AF_FEELING_CHECK_SCORE_101015
+          //３秒ごとのメッセージかえ
+          if( p_wk->flip_cnt++ >= AURA_MSG_CHANGE_SYNC )
+          {
+            p_wk->flip_cnt = 0;
+            p_wk->msg_flip  ^=  1;
 
-          if( p_wk->msg_flip )
-          {
-            MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_RES_000 );
+            if( p_wk->msg_flip )
+            {
+              MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_RES_000 );
+            }
+            else
+            {
+              MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_STR_000 );
+            }
           }
-          else
-          {
-            MSGWND_PrintPlayerNamePack( &p_wk->msgwnd[MSGWNDID_TEXT], p_wk, AURA_STR_000 );
-          }
+#ifdef BUGFIX_AF_FEELING_CHECK_SCORE_101015
         }
+#endif //BUGFIX_AF_FEELING_CHECK_SCORE_101015
       }
       break;
     }
