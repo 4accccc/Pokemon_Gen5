@@ -1509,6 +1509,33 @@
   .long  ((\adrs-.)-4)
   .endm
 
+// >> update ichiraku 2010/10/12
+// NPC歩行経路の自動生成追加
+//--------------------------------------------------------------
+/**
+ *  _OBJ_ANIME_AUTO フィールドOBJ 自動アニメーションコマンド
+ *  
+ *  指定位置（プレイヤーの目の前など）まで当たり判定がある場所を
+ *  避けながら自動で歩いていくスクリプトコマンドを実装する
+ *
+ *  @param obj_id アニメーションを行うOBJ ID
+ *  @param target_x 指定位置のグリッドX座標
+ *  @param target_z 指定位置のグリッドZ座標
+ *
+ *  @note 注意！ 動作停止をセットしたい時は、
+ *  _OBJ_PAUSE_ALLをもう一度呼ばないといけない！
+ */
+//--------------------------------------------------------------
+#define _OBJ_ANIME_AUTO( obj_id, target_x, target_z ) _ASM_OBJ_ANIME_AUTO obj_id, target_x, target_z 
+
+  .macro  _ASM_OBJ_ANIME_AUTO obj_id, target_x, target_z
+  .short  EV_SEQ_OBJ_ANIME_AUTO
+  .short  \obj_id 
+  .short  \target_x
+  .short  \target_z
+  .endm
+// <<
+
 //--------------------------------------------------------------
 /**
  *  _OBJ_ANIME_WAIT アニメーションコマンド終了待ち

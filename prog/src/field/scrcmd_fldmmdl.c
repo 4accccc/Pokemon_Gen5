@@ -20,6 +20,7 @@
 #include "script_def.h" //SCR_OBJID_
 #include "script_local.h"
 #include "field_player.h" //FIELD_PLAYER
+#include "field_player_grid.h"  // FIELD_PLAYER_GRID
 #include "fieldmap.h"     //FIELDMAP_
 #include "field/field_const.h"  //GRID_TO_FX32
 #include "eventdata_local.h"
@@ -157,6 +158,606 @@ VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+// >> update ichiraku 2010/10/12
+
+#define ACMD_LIST_MAX   ( 30 )      // アニメコマンドのMAX
+#define GRID_AVOID_MAX  ( 10 )      // 障害物を避けるグリッド数のMAX
+
+// 進む方向
+typedef enum {
+  DIR_U = 0,  // 上
+  DIR_D,  // 下
+  DIR_L,  // 左
+  DIR_R,  // 右
+}DIR_TYPE;
+
+// ライン定義
+typedef enum {
+  LINE_X_RIGHT, // Xラインで右移動
+  LINE_X_LEFT,  // Xラインで左移動
+  LINE_Z_UP,    // Zラインで上移動
+  LINE_Z_DOWN,  // Zラインで下移動
+}LINE_TYPE;
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  方向別アニメコマンド設定
+ *
+ *	@param	MMDL_ACMD_LIST *p_list  アニメーションコマンド格納するポインタ
+ *	@param	dir         方向
+ *	@param	*p_list_num アニメコマンド総数
+ *  @param  num         総数
+ *  @param  heapId      ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void EvAcmdSet( MMDL_ACMD_LIST *p_list, DIR_TYPE dir, u16 *p_list_num, u16 num, HEAPID heapId )
+{
+  //MMDL_ACMD_LIST *p_tmp;
+
+  // アニメーションコマンド1つ分 メモリ作成
+  //p_tmp = GFL_HEAP_AllocClearMemory( heapId, MMDL_ACMD_LIST_SIZE );
+  //&p_list[ *p_list_num ] = p_tmp;
+  
+  //ICHI_Printf("メモリ作成 %d個目\n", *p_list_num);
+  //(MMDL_ACMD_LIST *)p_list = GFL_HEAP_AllocClearMemory( heapId, MMDL_ACMD_LIST_SIZE );
+
+  switch( dir ){
+  case DIR_U:  // 上
+    p_list[ *p_list_num ].code = AC_WALK_U_8F;
+    p_list[ *p_list_num ].num  = num;
+    break;
+  case DIR_D:  // 下
+    p_list[ *p_list_num ].code = AC_WALK_D_8F;
+    p_list[ *p_list_num ].num  = num;
+    break;
+  case DIR_L:  // 左
+    p_list[ *p_list_num ].code = AC_WALK_L_8F;
+    p_list[ *p_list_num ].num  = num;
+    break;
+  case DIR_R:  // 右
+    p_list[ *p_list_num ].code = AC_WALK_R_8F;
+    p_list[ *p_list_num ].num  = num;
+    break;
+  default:
+    OS_Printf("ここには通らないはず\n");
+    GF_ASSERT(0);
+  }
+
+  *p_list_num+=1;
+
+  // エラーチェック
+  if( *p_list_num > ACMD_LIST_MAX )
+  {
+    GF_ASSERT_MSG( 0, "アニメコマンドがMAX値を超えました。");
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  前方の位置セット
+ *
+ *	@param	const DIR_TYPE dir  方向
+ *	@param	*p_pos  設定される位置
+ *	@param  len     距離(基本は1)
+ */
+//-----------------------------------------------------------------------------
+static void EvSetFrontPos( const DIR_TYPE dir, VecFx32 *p_pos, u16 len )
+{
+  switch( dir ){
+  case DIR_U: p_pos->z -= FIELD_CONST_GRID_FX32_SIZE * len; break;
+  case DIR_D: p_pos->z += FIELD_CONST_GRID_FX32_SIZE * len; break;
+  case DIR_L: p_pos->x -= FIELD_CONST_GRID_FX32_SIZE * len; break;
+  case DIR_R: p_pos->x += FIELD_CONST_GRID_FX32_SIZE * len; break;
+  default: GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定位置に障害物があるかチェック
+ *
+ *	@param	FIELDMAP_WORK* p_fieldMap_wk
+ *	@param	pos   調べたい位置
+ *
+ *	@return TRUE:障害物あり FALSE:障害物なし
+ */
+//-----------------------------------------------------------------------------
+static BOOL EvCheckAttr( FIELDMAP_WORK* p_fieldMap_wk, VecFx32 pos )
+{
+
+  // 地形チェック
+  {
+    FLDMAPPER     *g3Dmapper= FIELDMAP_GetFieldG3Dmapper( p_fieldMap_wk );
+    MAPATTR       attr      = MAPATTR_GetAttribute( g3Dmapper, &pos );
+    MAPATTR_FLAG  attr_flag = MAPATTR_GetAttrFlag( attr );
+
+    // アトリビュートフラグチェック
+    if( attr_flag & MAPATTR_FLAGBIT_HITCH ||
+        attr_flag & MAPATTR_FLAGBIT_WATER)
+    {
+      // 障害物あり
+      return TRUE;
+    }
+  }
+
+  // NPCがいるかチェック
+  {
+    MMDL *p_mmdl;
+    // 動作モデルを検索
+    p_mmdl = MMDLSYS_SearchGridPos(
+        FIELDMAP_GetMMdlSys(p_fieldMap_wk),
+        FX32_TO_GRID(pos.x),
+        FX32_TO_GRID(pos.z),
+        TRUE );
+
+    // 動作モデルを発見
+    if( p_mmdl ) { return TRUE; }
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  障害物を避けて一歩進む
+ *	        障害物の大きさも考慮しているが限界がある(GRID_AVOID_MAX)
+ *
+ *	@param	const DIR_TYPE dir  進む方向
+ *	@param	*p_fieldMap_wk      マップアトリビュート取得用
+ *	@param	*p_pos              現在位置
+ *	@param	*p_list             アニメコマンドリストへのポインタ
+ *	@param	*p_list_num         アニメコマンドリストの数へのポインタ
+ *
+ *	@return TRUE：避けれた FALSE:避けれない
+ */
+//-----------------------------------------------------------------------------
+static BOOL EvAttrHit( const DIR_TYPE dir, FIELDMAP_WORK* p_fieldMap_wk, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num )
+{
+  HEAPID  heap_id = FIELDMAP_GetHeapID( p_fieldMap_wk );
+  VecFx32 save_pos;
+
+  // 位置保存
+  VEC_Set( &save_pos, p_pos->x, p_pos->y, p_pos->z );
+
+  switch( dir ){
+  case DIR_R:   // 右に行きたいのにいけないとき
+  case DIR_L:   // 左に行きたいのにいけないとき
+    {
+      u16  len = 1;
+
+      // まず上から調べて次に下から調べる
+      while(1)
+      {
+        VecFx32 tmp_pos = save_pos;
+
+        // 上いって右いってみる
+        EvSetFrontPos( DIR_U, &tmp_pos, len );
+        EvSetFrontPos( dir, &tmp_pos, 1 );
+
+        // 障害物チェック
+        if( !( EvCheckAttr( p_fieldMap_wk, tmp_pos ) ) )
+        {
+          // 方向別アニメコマンドセット
+          EvAcmdSet( p_list, DIR_U, p_list_num, len, heap_id );
+          EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+          // 座標も同時に移動させる
+          VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
+          break;
+        }else
+        {
+          tmp_pos = save_pos;
+          // 上がだめだったので下から調べてみる
+          EvSetFrontPos( DIR_D, &tmp_pos, len );
+          EvSetFrontPos( dir, &tmp_pos, 1 );
+
+          if( !(EvCheckAttr( p_fieldMap_wk, tmp_pos )) )
+          {
+            // 方向別アニメコマンドセット
+            EvAcmdSet( p_list, DIR_D, p_list_num, len, heap_id );
+            EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+            // 座標も同時に移動させる
+            VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
+            break;
+          }else
+          {
+            // エラーチェック
+            if( len > GRID_AVOID_MAX ){
+              return FALSE;
+            }
+
+            len++;
+            continue;
+          }
+        }
+      }// while(1)
+    }
+    break;
+  case DIR_U:   // 上に行きたいのに行けないとき
+  case DIR_D:   // 下に行きたいのに行けないとき
+    {
+      u16  len = 1;
+
+      // まず上から調べて次に下から調べる
+      while(1)
+      {
+        VecFx32 tmp_pos = save_pos;
+
+        // 左いって上下みてみる
+        EvSetFrontPos( DIR_L, &tmp_pos, len );
+        EvSetFrontPos( dir, &tmp_pos, 1 );
+
+        // 障害物チェック
+        if( !(EvCheckAttr( p_fieldMap_wk, tmp_pos )) )
+        {
+          // 方向別アニメコマンドセット
+          EvAcmdSet( p_list, DIR_L, p_list_num, len, heap_id );
+          EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+          // 座標も同時に移動させる
+          VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
+          break;
+        }else
+        {
+          tmp_pos = save_pos;
+          // 左がだめだったので右から調べてみる
+          EvSetFrontPos( DIR_R, &tmp_pos, len );
+          EvSetFrontPos( dir, &tmp_pos, 1 );
+
+          if( !(EvCheckAttr( p_fieldMap_wk, tmp_pos )) )
+          {
+            // 方向別アニメコマンドセット
+            EvAcmdSet( p_list, DIR_R, p_list_num, len, heap_id );
+            EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+            // 座標も同時に移動させる
+            VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
+            break;
+          }else
+          {
+            // エラーチェック
+            if( len > GRID_AVOID_MAX ){
+              return FALSE;
+            }
+
+            len++;
+            continue;
+          }
+        }
+      }// while(1)
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインにそって一歩進む
+ *	        障害物があってもよけて一歩進む
+ *
+ *	@param	LINE_TYPE line    進んでいるライン  LINE_X_LEFTとか
+ *	@param	*p_fieldMap_wk    フィールドマップワーク
+ *	@param	*p_pos            キャラの実座標
+ *	@param	*p_list           アニメコマンドリストへのポインタ
+ *	@param	*p_list_num       アニメコマンドリストの数へのポインタ
+ */
+//-----------------------------------------------------------------------------
+static void EvLineStep( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num )
+{
+  HEAPID    heap_id = FIELDMAP_GetHeapID( p_fieldMap_wk );
+  DIR_TYPE  dir;
+  VecFx32   tmp_pos;
+
+  // 位置保存
+  VEC_Set( &tmp_pos, p_pos->x, p_pos->y, p_pos->z );
+
+  // 進む方向決める
+  switch( line ){
+  case LINE_X_LEFT:   dir = DIR_L;  break;
+  case LINE_X_RIGHT:  dir = DIR_R;  break;
+  case LINE_Z_UP:     dir = DIR_U;  break;
+  case LINE_Z_DOWN:   dir = DIR_D;  break;
+  default:
+                      GF_ASSERT(0);
+  }
+
+  // 一歩先を調べて、進めるかチェック
+  {
+    EvSetFrontPos( dir, &tmp_pos, 1 );
+
+    // 障害物チェック
+    if( EvCheckAttr( p_fieldMap_wk, tmp_pos ) )
+    {
+      BOOL ret;
+      ret = EvAttrHit( dir, p_fieldMap_wk, p_pos, p_list, p_list_num );
+      GF_ASSERT_MSG(ret, "障害物避けれない\n");
+      ICHI_Printf("進入禁止\t");
+    }else
+    {
+      // 方向別アニメコマンドセット
+      EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+      // 座標も同時に移動させる
+      EvSetFrontPos( dir, p_pos, 1 );
+
+      ICHI_Printf("進入OK\t\t");
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライン合わせチェック
+ *	        ラインを合わせる処理もする
+ *
+ *	@param	LINE_TYPE line  進んでいるライン  LINE_X_LEFTとか
+ *	@param	*p_fieldMap_wk  フィールドマップワーク
+ *	@param	old_line        過去(正式)なライン
+ *	@param	now_line        現在いるライン
+ *	@param	*p_list         アニメコマンドリストへのポインタ
+ *	@param	*p_list_num     アニメコマンドリストの数へのポインタ
+ *
+ *	@return TRUE:ラインが合わせれた FALSE:合わせれない
+ */
+//-----------------------------------------------------------------------------
+static BOOL EvLineCheck( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, fx32 old_line, fx32 now_line, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num )
+{
+  HEAPID    heap_id = FIELDMAP_GetHeapID( p_fieldMap_wk );
+  DIR_TYPE  dir;
+  VecFx32   tmp_pos;
+  s16       diff;   // どれだけ離れいるか
+
+  diff = FX32_TO_GRID(now_line) - FX32_TO_GRID(old_line);
+
+  ICHI_Printf("ラインの差は%d\n", diff);
+
+  VEC_Set( &tmp_pos, p_pos->x, p_pos->y, p_pos->z );
+
+  // 進む方向みて、ずれている方向も調べる
+  switch( line ){
+  case LINE_X_LEFT:   // 上か下にずれている
+  case LINE_X_RIGHT:
+    {
+      if( diff > 0 ){dir = DIR_U;}
+      else          {dir = DIR_D;}
+    }
+    break;
+  case LINE_Z_UP:
+  case LINE_Z_DOWN:
+    {
+      if( diff > 0 ){ dir = DIR_L; }
+      else          { dir = DIR_R; }
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  // ラインに戻れるかチェック
+  // 戻れるなら、離れている距離分進む
+  {
+    u16 len = GFL_STD_Abs( diff );
+
+    EvSetFrontPos( dir, &tmp_pos, len );
+
+    // 障害物チェック
+    if( EvCheckAttr( p_fieldMap_wk, tmp_pos ) )
+    {
+      return FALSE;
+    }else
+    {
+      // 方向別アニメコマンドセット
+      EvAcmdSet( p_list, dir, p_list_num, len, heap_id );
+      // 座標も同時に移動させる
+      EvSetFrontPos( dir, p_pos, len );
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  歩行経路を算出
+ *	        
+ *	        STEP1.指定位置とラインを合わせる(XかZ)
+ *	        STEP2.指定位置に向かう
+ *	        STEP3.障害物があったら、避ける方向を判定して避ける方に進む
+ *	        STEP4.STEP2と同じ方向に進めるようになったら進む
+ *	        STEP5.元のラインに戻れるかチェックして、戻れるようになったら戻る
+ *	        STEP6. STEP2に戻る
+ *
+ *	@param	SCRCMD_WORK *p_wk       スクリプトコマンドのワーク
+ *	@param	MMDL_ACMD_LIST *p_list  アニメーションコマンドのリストのポインタ
+ *	@param	p_mmdl  キャラクターモデル
+ *	@param	tx      指定グリッドX座標
+ *	@param	tz      指定グリッドZ座標
+ *  
+ *  @return アニメーションコマンドの総数
+ *  
+ *  算出された経路はアニメーションコマンドの配列としてp_listに入る
+ */
+//-----------------------------------------------------------------------------
+static u32 EvRouteCalc( SCRCMD_WORK *p_wk, MMDL_ACMD_LIST *p_list, MMDL *p_mmdl, u16 tx, u16 tz )
+{
+  u16     list_num = 0;   // アニメーションの数
+  u8      dir = 0;        // 進む方向
+  u8      line;           // 合っているライン
+  VecFx32 pos;            // モデルの実座標
+  VecFx32 tpos;           // 指定位置
+
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( p_wk );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+
+  HEAPID  heap_id = FIELDMAP_GetHeapID( fparam->fieldMap );
+
+  // モデルの実座標取得
+  MMDL_GetVectorPos( p_mmdl, &pos);
+
+  // 指定位置の座標をグリッド座標から実座標に
+  tpos.x = GRID_TO_FX32( tx );
+  tpos.z = GRID_TO_FX32( tz );
+
+  // 移動する前に指定した位置が障害物かチェック
+  if( EvCheckAttr( fparam->fieldMap, tpos ) )
+  {
+    GF_ASSERT_MSG(0, "指定した位置は障害物です\n");
+  }
+
+  // 指定位置移動までループ
+  // ラインごと
+  // Xライン
+  {
+    LINE_TYPE line;
+    fx32      line_z = pos.z; // ラインの値
+
+    // 左右どちらに移動か？
+    line = (tpos.x > pos.x)?(LINE_X_RIGHT):(LINE_X_LEFT); 
+
+    while( FX32_TO_GRID(pos.x) != FX32_TO_GRID(tpos.x) )
+    {
+      // 一歩進む
+      EvLineStep( line, fparam->fieldMap, &pos, p_list, &list_num );
+      ICHI_Printf("現在(%d:%d) 指定(%d:%d)\n", FX32_TO_GRID(pos.x), FX32_TO_GRID(pos.z),FX32_TO_GRID(tpos.x), FX32_TO_GRID(tpos.z));
+
+      // ラインが合っているかチェック
+      // ラインが違う、かつまだ到達座標きていない
+      if( (line_z != pos.z) && (FX32_TO_GRID(pos.x) != FX32_TO_GRID(tpos.x)) )
+      {
+        BOOL ret;
+
+        ICHI_Printf("==========Xラインチェック=========\n");
+        ret = EvLineCheck( line, fparam->fieldMap, line_z, pos.z, &pos, p_list, &list_num );
+
+        ICHI_Printf("ラインが合っていない\n");
+        if( ret == TRUE ){
+          line_z = pos.z;
+          ICHI_Printf("ラインを合わすが出来た\n");
+        }
+      }
+
+      // エラーチェック
+      // 指定座標を過ぎていたらエラーにする→回り込みに対応していない為
+      if( line == LINE_X_RIGHT )
+      {
+        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.x) >= FX32_TO_GRID(pos.x)), "指定X座標を通り過ぎた");
+      }else if( line == LINE_X_LEFT )
+      {
+        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.x) <= FX32_TO_GRID(pos.x)), "指定X座標を通り過ぎた");
+      }
+    }
+  }
+
+  // Zライン
+  {
+    LINE_TYPE line;
+    fx32      line_x = pos.x;   // ラインの値
+
+    // 左右どちらに移動か？
+    line = (tpos.z > pos.z)?(LINE_Z_DOWN):(LINE_Z_UP); 
+
+    while( FX32_TO_GRID(pos.z) != FX32_TO_GRID(tpos.z) )
+    {
+      // 一歩進む
+      EvLineStep( line, fparam->fieldMap, &pos, p_list, &list_num );
+      ICHI_Printf("現在(%d:%d) 指定(%d:%d)\n", FX32_TO_GRID(pos.x), FX32_TO_GRID(pos.z),FX32_TO_GRID(tpos.x), FX32_TO_GRID(tpos.z));
+
+      // ラインが合っているかチェック
+      // ラインが違う、かつまだ到達座標きていない
+      if( (line_x != pos.x) && (FX32_TO_GRID(pos.z) != FX32_TO_GRID(tpos.z)) )
+      {
+        BOOL ret;
+
+        ICHI_Printf("==========Zラインチェック=========\n");
+        ret = EvLineCheck( line, fparam->fieldMap, line_x, pos.x, &pos, p_list, &list_num );
+
+        ICHI_Printf("ラインが合っていない\n");
+        if( ret == TRUE ){
+          line_x = pos.x;
+          ICHI_Printf("ラインを合わすが出来た\n");
+        }
+      }
+
+      // エラーチェック
+      // 指定座標を過ぎていたらエラーにする→回り込みに対応していない為
+      if( line == LINE_Z_DOWN )
+      {
+        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.z) >= FX32_TO_GRID(pos.z)), "指定Z座標を通り過ぎた");
+      }else if( line == LINE_Z_UP )
+      {
+        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.z) <= FX32_TO_GRID(pos.z)), "指定Z座標を通り過ぎた");
+      }
+    }
+  }
+
+  // 最後は絶対にアニメーション終了コマンド入れる
+  p_list[ list_num ].code = ACMD_END;
+  p_list[ list_num ].num  = 0;
+
+  ICHI_Printf("探索終了 list_num:%d\n", list_num);
+
+  return list_num;
+}
+
+
+// NPC歩行経路の自動生成
+//----------------------------------------------------------------------------
+/**
+ * @brief  動作モデル自動アニメーション
+ *
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdObjAnimeAuto( VMHANDLE *core, void *wk )
+{
+  VM_CODE *p;
+  GFL_TCB *anm_tcb;   // 登録用タスク
+  MMDL *p_mmdl;       // 対象のフィールドOBJのポインタ
+  SCRCMD_WORK *work = wk;
+  u16 obj_id = SCRCMD_GetVMWorkValue(core,work); //obj ID
+  u16 target_x = SCRCMD_GetVMWorkValue( core, work ); // 指定グリッドX座標
+  u16 target_z = SCRCMD_GetVMWorkValue( core, work ); // 指定グリッドZ座標
+
+  // フィールドマップ
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  HEAPID  heap_id = FIELDMAP_GetHeapID( fparam->fieldMap );
+
+  // OBJIDからモデル取得
+  p_mmdl = FieldObjPtrGetByObjId( work, obj_id );
+
+  // エラーチェック
+  if( p_mmdl == NULL ){
+    OS_Printf( "obj_id = %d\n", obj_id );
+    GF_ASSERT( (0) && "対象のフィールドOBJのポインタ取得失敗！" );
+    return VMCMD_RESULT_CONTINUE;        //08.06.12 プラチナで追加
+  }
+
+  //アニメーションコマンドリストを探索し、タスクにセットする
+  {
+    MMDL_ACMD_LIST  *p_list;
+    u32   list_num;
+
+    // メモリ作成し、データコピー
+    p_list = GFL_HEAP_AllocClearMemory( heap_id, MMDL_ACMD_LIST_SIZE * ACMD_LIST_MAX );
+
+    // 経路算出
+    EvRouteCalc( work, p_list, p_mmdl, target_x, target_z );
+
+    // 算出結果セット
+    anm_tcb = MMDL_SetAcmdList( p_mmdl, p_list );
+  }
+
+  //TCBセット
+  SCRCMD_WORK_SetMMdlAnmTCB( work, anm_tcb );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+// <<
+
 //--------------------------------------------------------------
 /**
  * 動作モデルアニメーション終了待ち　ウェイと部分
@@ -167,11 +768,11 @@ VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  
+
   if( SCRCMD_WORK_CheckMMdlAnmTCB(work) == FALSE ){
     return TRUE;
   }
-  
+
   return FALSE;
 }
 
@@ -201,7 +802,7 @@ VMCMD_RESULT EvCmdMoveCodeGet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   u16 *ret_wk  = SCRCMD_GetVMWork( core, work );
-  
+
   *ret_wk = 0;
   mmdl = MMDLSYS_SearchOBJID( mmdlsys, SCRCMD_GetVMWorkValue(core,work) );
   GF_ASSERT( mmdl != NULL && "SCRCMD GET MOVECODE NON OBJ" );
@@ -223,7 +824,7 @@ VMCMD_RESULT EvCmdMoveCodeChange( VMHANDLE *core, void *wk )
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   u16 id = SCRCMD_GetVMWorkValue( core, work );
   u16 code = SCRCMD_GetVMWorkValue( core, work );
-  
+
   mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
   GF_ASSERT( mmdl != NULL && "SCRCMD GET MOVECODE NON OBJ" );
   MMDL_ChangeMoveCode( mmdl, code );
@@ -244,7 +845,7 @@ VMCMD_RESULT EvCmdObjPosGet( VMHANDLE *core, void *wk )
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDL *mmdl = MMDLSYS_SearchOBJID(
       mmdlsys, SCRCMD_GetVMWorkValue(core,work) );
-  
+
   x = SCRCMD_GetVMWork( core, work );
   z = SCRCMD_GetVMWork( core, work );
   *x = MMDL_GetGridPosX( mmdl );
@@ -267,7 +868,7 @@ VMCMD_RESULT EvCmdPlayerPosGet( VMHANDLE *core, void *wk )
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
   MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  
+
   x = SCRCMD_GetVMWork( core, work );
   z = SCRCMD_GetVMWork( core, work );
   *x = MMDL_GetGridPosX( mmdl );
@@ -288,7 +889,7 @@ VMCMD_RESULT EvCmdPlayerDirGet( VMHANDLE * core, void *wk )
   MMDL *player = scmd_GetMMdlPlayer( work );
 
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  
+
   *ret_wk = MMDL_GetDirDisp( player );
 
   return VMCMD_RESULT_CONTINUE;
@@ -317,15 +918,15 @@ VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk )
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
-  
+
   code = MMDL_TOOL_GetWorkOBJCode( evwork, code );
   mmdl = MMDLSYS_AddMMdlParam(
       mmdlsys, gx, gz, dir, id, code, move, zone_id );
-  
+
   if( mmdl != NULL ){ //追加されたOBJは即ポーズさせる
     MMDL_OnMoveBitMoveProcPause( mmdl );
   }
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -362,16 +963,16 @@ VMCMD_RESULT EvCmdObjAddEvent( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-	u16 count = EVENTDATA_GetNpcCount( evdata );
-	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+  EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+  u16 count = EVENTDATA_GetNpcCount( evdata );
+  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
   int zone_id = PLAYERWORK_getZoneID( player );
   u16 id = SCRCMD_GetVMWorkValue( core, work );
-  
+
   if( count ){
     EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
-		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
-		MMDL *mmdl = MMDLSYS_AddMMdlHeaderID(
+    const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+    MMDL *mmdl = MMDLSYS_AddMMdlHeaderID(
         mmdlsys, header, zone_id, count, evwork, id );
     if( mmdl != NULL ){ //追加されたOBJは即ポーズさせる
       MMDL_OnMoveBitMoveProcPause( mmdl );
@@ -380,7 +981,7 @@ VMCMD_RESULT EvCmdObjAddEvent( VMHANDLE *core, void *wk )
   }else{
     GF_ASSERT( 0 );
   }
-  
+
   return( VMCMD_RESULT_CONTINUE );
 }
 
@@ -400,10 +1001,10 @@ VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
   u16 id = SCRCMD_GetVMWorkValue( core, work );
-  
+
   mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
   GF_ASSERT( mmdl != NULL );
-  
+
   MMDL_DeleteEvent( mmdl, evwork );
   return( VMCMD_RESULT_CONTINUE );
 }
@@ -418,23 +1019,23 @@ VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdObjPosChange( VMHANDLE *core, void *wk )
 {
-	MMDL *mmdl;
+  MMDL *mmdl;
   SCRCMD_WORK *work = wk;
-	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
-	s16 x		= SCRCMD_GetVMWorkValue(core,work);
-	s16 y		= SCRCMD_GetVMWorkValue(core,work);
-	s16 z		= SCRCMD_GetVMWorkValue(core,work);
-	u16 dir		= SCRCMD_GetVMWorkValue(core,work);
+  u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  s16 x		= SCRCMD_GetVMWorkValue(core,work);
+  s16 y		= SCRCMD_GetVMWorkValue(core,work);
+  s16 z		= SCRCMD_GetVMWorkValue(core,work);
+  u16 dir		= SCRCMD_GetVMWorkValue(core,work);
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
-  
-	//対象のフィールドOBJのポインタ取得
-	mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+
+  //対象のフィールドOBJのポインタ取得
+  mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
   if ( mmdl == NULL ) {
     GF_ASSERT_MSG( 0, "ERROR OBJ ID(%d)", obj_id);
   } else {
     MMDL_InitGridPosition( mmdl, x, y, z, dir );
   }
-	return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_CONTINUE;
 }
 
 #if 0
@@ -448,14 +1049,14 @@ VMCMD_RESULT EvCmdObjPosChange( VMHANDLE *core, void *wk )
 static BOOL EvCmdSxyPosChange( VM_MACHINE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-	u16 id = SCRCMD_GetVMWorkValue(core,work);
-	u16 gx = SCRCMD_GetVMWorkValue(core,work);
-	u16 gz = SCRCMD_GetVMWorkValue(core,work);
+  u16 id = SCRCMD_GetVMWorkValue(core,work);
+  u16 gx = SCRCMD_GetVMWorkValue(core,work);
+  u16 gz = SCRCMD_GetVMWorkValue(core,work);
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-  
-	EventData_NpcDataPosChange( core->fsys, id, gx, gz );
-	return 0;
+
+  EventData_NpcDataPosChange( core->fsys, id, gx, gz );
+  return 0;
 }
 #endif
 
@@ -469,16 +1070,16 @@ static BOOL EvCmdSxyPosChange( VM_MACHINE *core, void *wk )
 VMCMD_RESULT EvCmdObjEventFlagGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
   u16 *ret_wk = SCRCMD_GetVMWork( core, work );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
   GF_ASSERT( mmdl != NULL && "OBJ GET EVENT FLAG 対象のOBJが居ません\n" );
-  
+
   if( mmdl != NULL ){
     *ret_wk = MMDL_GetEventFlag( mmdl );
   }
-  
+
   return( VMCMD_RESULT_CONTINUE );
 }
 
@@ -493,12 +1094,12 @@ VMCMD_RESULT EvCmdObjParamGet( VMHANDLE *core, void *wk )
   SDK_COMPILER_ASSERT( SCR_OBJPARAM1 == MMDL_PARAM_1 );
   SDK_COMPILER_ASSERT( SCR_OBJPARAM2 == MMDL_PARAM_2 );
   SCRCMD_WORK *work = wk;
-	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
   u16 prm_no  = SCRCMD_GetVMWorkValue( core, work );
   u16 *ret_wk = SCRCMD_GetVMWork( core, work );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
-  
+
   if( prm_no > MMDL_PARAM_2 ) {
     GF_ASSERT_MSG(0, "EvCmdObjParamGet:param no(%d)が大きすぎます\n", prm_no );
   } else if( mmdl == NULL ){
@@ -519,16 +1120,16 @@ VMCMD_RESULT EvCmdObjParamGet( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdObjSetNotDelZoneChange( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
-  
+
   if( mmdl != NULL ){
     MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
   }else{
     GF_ASSERT( 0 );
   }
-      
+
   return( VMCMD_RESULT_CONTINUE );
 }
 
@@ -552,28 +1153,28 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
 
   //自機動作停止チェック
   if( CheckStepWatchBit(PLAYER_BIT) &&
-    MMDL_CheckEndAcmd(player) == TRUE ){
+      MMDL_CheckEndAcmd(player) == TRUE ){
     MMDL_OnMoveBitMoveProcPause( player );
     ResetStepWatchBit(PLAYER_BIT);
   }
-  
+
   //話しかけ対象動作停止チェック
   if( CheckStepWatchBit(OTHER_BIT) &&
-    MMDL_CheckMoveBitMove(fmmdl) == FALSE ){
+      MMDL_CheckMoveBitMove(fmmdl) == FALSE ){
     MMDL_OnMoveBitMoveProcPause( fmmdl );
     ResetStepWatchBit(OTHER_BIT);
   }
-  
+
   //自機の連れ歩き動作停止チェック
   if( CheckStepWatchBit(PLAYER_PAIR_BIT) ){
     MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
-    
+
     if( MMDL_CheckMoveBitMove(player_pair) == FALSE ){
       MMDL_OnMoveBitMoveProcPause( player_pair );
       ResetStepWatchBit(PLAYER_PAIR_BIT);
     }
   }
-  
+
   //話しかけ対象の連れ歩き動作停止チェック
   if( CheckStepWatchBit(OTHER_PAIR_BIT) ){
     MMDL *other_pair = MMDL_SearchMovePair( fmmdl );
@@ -587,11 +1188,11 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
       }
     }
   }
-  
+
   if( step_watch_bit == 0 ){
     return TRUE;
   }
-  
+
   return FALSE;
 }
 
@@ -611,15 +1212,15 @@ VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
   MMDL *player = scmd_GetMMdlPlayer( work );
   MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
   MMDL *other_pair = MMDL_SearchMovePair( fmmdl );
-  
+
   InitStepWatchBit();
   MMDLSYS_PauseMoveProc( fmmdlsys );
-  
+
   if( MMDL_CheckEndAcmd(player) == FALSE ){
     SetStepWatchBit(PLAYER_BIT);
     MMDL_OffMoveBitMoveProcPause( player );
   }
-  
+
   if( fmmdl != NULL ){
     if( MMDL_CheckMoveBitMove(fmmdl) == TRUE ){
       SetStepWatchBit(OTHER_BIT);
@@ -630,14 +1231,14 @@ VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
   if( player_pair ){
     GF_ASSERT( 0 );
   }
-  
+
   if( other_pair ){
     if( MMDL_CheckMoveBitMove(other_pair) == TRUE ){
       SetStepWatchBit(OTHER_PAIR_BIT);
       MMDL_OffMoveBitMoveProcPause( other_pair );
     }
   }
-  
+
   VMCMD_SetWait( core, EvWaitTalkObj );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -655,15 +1256,15 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc;
   MMDL *fmmdl;
-  
+
   sc = SCRCMD_WORK_GetScriptWork( work );
   fmmdl = SCRIPT_GetTargetObj( sc );
-  
+
   if( (fmmdl) == NULL ){
     MMDLSYS *fmmdlsys;
     fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
     MMDLSYS_PauseMoveProc( fmmdlsys );
-    
+
     //08.06.18
     //話しかけの対象がいないBGやPOSの時
     //連れ歩きOBJの移動動作中かのチェックをしていない
@@ -671,7 +1272,7 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
     //ふれあい広場などで、連れ歩きOBJに対して、
     //スクリプトでアニメを発行すると、
     //アニメが行われず終了待ちにいかないでループしてしまう
-    
+
     {
       FIELD_OBJ_PTR player_pair =
         FieldOBJSys_MoveCodeSearch( fsys->fldobjsys, MV_PAIR );
@@ -679,12 +1280,12 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
       if (player_pair) {
         //連れ歩きフラグが立っていて、移動動作中なら
         if( SysFlag_PairCheck(
-          SaveData_GetEventWork(fsys->savedata)) == 1
-          && FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
-          
+              SaveData_GetEventWork(fsys->savedata)) == 1
+            && FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
+
           //ペアの動作ポーズ解除
           FieldOBJ_MovePauseClear( player_pair );
-          
+
           //移動動作の終了待ちをセット
           VM_SetWait( core, EvWaitPairObj );
           return VMCMD_RESULT_SUSPEND;
@@ -694,7 +1295,7 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
   }else{
     EvCmdTalkObjPauseAll( core, wk );
   }
-  
+
   return VMCMD_RESULT_SUSPEND;
 }
 #endif
@@ -703,10 +1304,10 @@ VMCMD_RESULT SCRCMD_SUB_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work )
 {
   SCRIPT_WORK *sc;
   MMDL *fmmdl;
-  
+
   sc = SCRCMD_WORK_GetScriptWork( work );
   fmmdl = SCRIPT_GetTargetObj( sc );
-  
+
   if( (fmmdl) == NULL ){
     MMDLSYS *fmmdlsys;
     fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
@@ -714,7 +1315,7 @@ VMCMD_RESULT SCRCMD_SUB_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work )
   }else{
     return( EvCmdTalkObjPauseAll(core,work) );
   }
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -753,14 +1354,14 @@ VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   MMDL *jiki,*fmmdl;
   u16 dir;
-  
+
   jiki = scmd_GetMMdlPlayer( work );
 
   dir = MMDL_GetDirDisp( jiki );
-  
+
   dir = MMDL_TOOL_FlipDir( dir );
   fmmdl = SCRIPT_GetTargetObj( sc );
-  
+
   if( fmmdl == NULL ){
     GF_ASSERT( 0 );
   } else {
@@ -787,7 +1388,7 @@ VMCMD_RESULT EvCmdGetObjID( VMHANDLE *core, void *wk )
   u16 dir;
   VecFx32 pos;
   fx32 fy;
-  
+
   gx = SCRCMD_GetVMWorkValue( core, work );
   gy = SCRCMD_GetVMWorkValue( core, work );
   gz = SCRCMD_GetVMWorkValue( core, work );
@@ -857,7 +1458,7 @@ static BOOL EvWaitPlayerRequest(VMHANDLE * core, void *wk )
   SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
   FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-  
+
   if( FIELD_PLAYER_UpdateRequest(fld_player) == TRUE ){
     return( TRUE );
   }
@@ -880,13 +1481,13 @@ VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk )
   u16 req = VMGetU16( core );
   FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
   FIELD_PLAYER* fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-  
+
   FIELD_PLAYER_SetRequest( fld_player, req );
-  
+
   if( FIELD_PLAYER_UpdateRequest(fld_player) == TRUE ){
     return VMCMD_RESULT_CONTINUE;
   }
-  
+
   VMCMD_SetWait( core, EvWaitPlayerRequest );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -1041,7 +1642,7 @@ VMCMD_RESULT EvCmdPosPlayerTurn( VMHANDLE *core, void *wk )
         break;
       }
     }
-  
+
     //自機の見た目の向きを取得
     player_dir = FIELD_PLAYER_GetDir( fld_player );
     //向きの比較をする
@@ -1066,7 +1667,7 @@ VMCMD_RESULT EvCmdPosPlayerTurn( VMHANDLE *core, void *wk )
       return VMCMD_RESULT_SUSPEND;
     }
   }
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1087,7 +1688,7 @@ VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk )
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   u16 *ret_wk = SCRCMD_GetVMWork( core, work );
   PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
-  
+
   switch( form ){
   case PLAYER_MOVE_FORM_NORMAL:
     *ret_wk = SCR_PLAYER_FORM_NORMAL;
@@ -1105,7 +1706,7 @@ VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk )
     GF_ASSERT( 0 );
     *ret_wk = SCR_PLAYER_FORM_NORMAL;
   }
-  
+
   return( VMCMD_RESULT_CONTINUE );
 }
 
@@ -1116,19 +1717,19 @@ VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdObjHighJump( VMHANDLE *core, void *wk )
 {
-	MMDL *mmdl;
+  MMDL *mmdl;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
-	u16 gx	= SCRCMD_GetVMWorkValue( core, work );
-	u16 gy	= SCRCMD_GetVMWorkValue( core, work );
-	u16 gz	= SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  u16 gx	= SCRCMD_GetVMWorkValue( core, work );
+  u16 gy	= SCRCMD_GetVMWorkValue( core, work );
+  u16 gz	= SCRCMD_GetVMWorkValue( core, work );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   VecFx32 start, end;
-  
-	//対象のフィールドOBJのポインタ取得
-	mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+
+  //対象のフィールドOBJのポインタ取得
+  mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
   GF_ASSERT( mmdl != NULL && "ERROR OBJ ID" );
 
   // 今の座標と終了座標を求める
@@ -1136,7 +1737,7 @@ VMCMD_RESULT EvCmdObjHighJump( VMHANDLE *core, void *wk )
   end.x = GRID_TO_FX32( gx ) + MMDL_VEC_X_GRID_OFFS_FX32;
   end.y = GRID_TO_FX32( gy );
   end.z = GRID_TO_FX32( gz ) + MMDL_VEC_Z_GRID_OFFS_FX32;
-  
+
   SCRIPT_CallEvent( sc, EVENT_HighJump(gsys, mmdl, &start, &end) );
 
   return VMCMD_RESULT_SUSPEND;
@@ -1159,7 +1760,7 @@ VMCMD_RESULT EvCmdCheckPlayerIllegalOBJCode( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   u16 *ret_wk = SCRCMD_GetVMWork( core, work );
-  
+
   *ret_wk = FIELD_PLAYER_CheckIllegalOBJCode( fld_player );
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1192,7 +1793,7 @@ VMCMD_RESULT EvCmdPlayerRailLocationGet( VMHANDLE *core, void *wk )
   p_railWork = MMDL_GetRailWork( mmdl );
 
   FIELD_RAIL_WORK_GetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1223,7 +1824,7 @@ VMCMD_RESULT EvCmdObjRailLocationGet( VMHANDLE *core, void *wk )
   p_railWork = MMDL_GetRailWork( mmdl );
 
   FIELD_RAIL_WORK_GetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1277,7 +1878,7 @@ VMCMD_RESULT EvCmdPlayerRailLocationSet( VMHANDLE *core, void *wk )
   FIELD_RAIL_WORK_SetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
   FIELD_RAIL_WORK_GetLocation( p_railWork, &location );
   MMDL_SetRailLocation( mmdl, &location );
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk )
@@ -1305,7 +1906,7 @@ VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk )
   FIELD_RAIL_WORK_SetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
   FIELD_RAIL_WORK_GetLocation( p_railWork, &location );
   MMDL_SetRailLocation( mmdl, &location );
-  
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1364,41 +1965,41 @@ VMCMD_RESULT EvCmdObjFallIn( VMHANDLE *core, void *wk )
   FIELDMAP_WORK*   fieldmap = fldparam->fieldMap;
   FIELD_TASK_MAN*  taskMan  = FIELDMAP_GetTaskManager( fieldmap );
 
-	// 引数エラー: 指定されたOBJIDは存在しない
-	if( mmdl == NULL ) {
-		GF_ASSERT(0); 
-		return VMCMD_RESULT_CONTINUE;
-	}
+  // 引数エラー: 指定されたOBJIDは存在しない
+  if( mmdl == NULL ) {
+    GF_ASSERT(0); 
+    return VMCMD_RESULT_CONTINUE;
+  }
 
-	// 動作モデルを落下地点に移動
-	{
-		VecFx32 pos;
-		fx32 y = 0;
-		s16 grid_y;
+  // 動作モデルを落下地点に移動
+  {
+    VecFx32 pos;
+    fx32 y = 0;
+    s16 grid_y;
 
-		pos.x = GRID_TO_FX32( grid_x ) + GRID_HALF_FX32; // グリッドの中心
-		pos.y = 250 << FX32_SHIFT;
-		pos.z = GRID_TO_FX32( grid_z ) + GRID_HALF_FX32; // グリッドの中心
-		MMDL_GetMapPosHeight( mmdl, &pos, &y );
-		pos.y = y;
-		grid_y = SIZE_GRID_FX32( pos.y );
-		MMDL_InitGridPosition( mmdl, grid_x, grid_y, grid_z, dir );
-		MMDL_SetVectorPos( mmdl, &pos );
-	}
+    pos.x = GRID_TO_FX32( grid_x ) + GRID_HALF_FX32; // グリッドの中心
+    pos.y = 250 << FX32_SHIFT;
+    pos.z = GRID_TO_FX32( grid_z ) + GRID_HALF_FX32; // グリッドの中心
+    MMDL_GetMapPosHeight( mmdl, &pos, &y );
+    pos.y = y;
+    grid_y = SIZE_GRID_FX32( pos.y );
+    MMDL_InitGridPosition( mmdl, grid_x, grid_y, grid_z, dir );
+    MMDL_SetVectorPos( mmdl, &pos );
+  }
 
-	// 動作モデルの描画オフセットを初期設定 ( 画面外にいるようにする )
-	{
-		VecFx32 offset = { 0, 250<<FX32_SHIFT, 0 };
-		MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
-	}
+  // 動作モデルの描画オフセットを初期設定 ( 画面外にいるようにする )
+  {
+    VecFx32 offset = { 0, 250<<FX32_SHIFT, 0 };
+    MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+  }
 
   // タスクを登録
-	{
-		FIELD_TASK* task;
+  {
+    FIELD_TASK* task;
 
-		task = FIELD_TASK_PlayerFall( fieldmap, mmdl, 40, 250 ); 
-		FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
-	}
+    task = FIELD_TASK_PlayerFall( fieldmap, mmdl, 40, 250 ); 
+    FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

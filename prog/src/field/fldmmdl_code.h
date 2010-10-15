@@ -651,6 +651,7 @@
 #define AC_SHIN_MU_C_FLY 0xbc ///<シンムC 滞空アニメ
 #define ACMD_MAX 0xbd ///<アニメーションコマンド最大数
 
+#define ACMD_AUTO_END 0xfd  // アニメーションコマンド終了（_OBJ_ANIME_AUTO用）>> update ichiraku 2010/10/14
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド
 

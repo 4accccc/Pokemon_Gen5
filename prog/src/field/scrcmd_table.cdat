@@ -902,6 +902,11 @@
   // 手持ちポケモンのPPをチェックするスクリプトコマンド追加
   DEF_CMD( EvCmdCheckPokemonPP, EV_SEQ_CHECK_TEMOTI_PP )
 
+  // >> update ichiraku 2010/10/12
+  // NPC歩行経路の自動生成
+  DEF_CMD( EvCmdObjAnimeAuto, EV_SEQ_OBJ_ANIME_AUTO )      
+
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

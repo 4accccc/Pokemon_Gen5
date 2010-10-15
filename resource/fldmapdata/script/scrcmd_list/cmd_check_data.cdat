@@ -587,4 +587,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, TRUE, TRUE }, // NO_DATA_584 (584)
   { FALSE, TRUE, FALSE }, // _GYM_ELEC_INIT_SE (585)
   { TRUE, TRUE, TRUE }, // _CHECK_TEMOTI_PP (586)
+  { TRUE, FALSE, FALSE }, // _OBJ_ANIME_AUTO (606)
 };
