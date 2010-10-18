@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-10-18T13:55:48"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-10-18T14:09:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -322,6 +322,32 @@
 		<language name="JPN_KANJI" width="256">このメッセージは　テスト用です▼
 スクリプトのお勉強
 がんばってね！</language>
+	</row>
+
+	<row id="msg_t01r0302_woman1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">このメッセージは　テストようです▼
+ほーら　ひとことしゃべれたね！</language>
+		<language name="JPN_KANJI" width="256">このメッセージは　テスト用です▼
+ほーら　ひとことしゃべれたね！</language>
+	</row>
+
+	<row id="msg_t01r0302_boy1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+		<comment>講習用データ</comment>
+		<attribute name="キャラ指定">BOY1</attribute>
+		<language name="JPN" width="256">このメッセージは　テストようです▼
+ぼくねー　おどるのすきなんだよ！
+ちょっとユーみててー！▼</language>
+		<language name="JPN_KANJI" width="256">このメッセージは　テスト用です▼
+ぼくねー　踊るの好きなんだよ！
+ちょっとユー見ててー！▼</language>
+	</row>
+
+	<row id="msg_t01r0302_boy1_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+		<comment>講習用データ</comment>
+		<attribute name="キャラ指定">BOY1</attribute>
+		<language name="JPN" width="256">ほらね　なかなかでしょ</language>
+		<language name="JPN_KANJI" width="256">ほらね　なかなかでしょ</language>
 	</row>
 
 	<flowchart-group-list>
