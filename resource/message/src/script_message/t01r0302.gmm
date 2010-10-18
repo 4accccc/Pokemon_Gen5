@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-10-18T14:09:52"/>
+	<create user="ito_hiroto" host="W00178" date="2010-10-18T17:21:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="32" top="357" right="737" bottom="985" maximized="no" rayout="Vertical2">
+	<dialog left="25" top="352" right="730" bottom="980" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="766" top="13" right="1239" bottom="411" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -348,6 +348,46 @@
 		<attribute name="キャラ指定">BOY1</attribute>
 		<language name="JPN" width="256">ほらね　なかなかでしょ</language>
 		<language name="JPN_KANJI" width="256">ほらね　なかなかでしょ</language>
+	</row>
+
+	<row id="msg_t01r0302_boy2_01" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">さて！　わたしは　あさ７じに　おきて
+なっとうパスタを　つくって　たべて▼
+GTSに　うみがめを　あずけて
+ヒメグマを　ようきゅう　してから▼
+かいしゃにきた　でしょうか？</language>
+		<language name="JPN_KANJI" width="256">さて！　わたしは　あさ７じに　おきて
+なっとうパスタを　つくって　たべて▼
+GTSに　うみがめを　あずけて
+ヒメグマを　ようきゅう　してから▼
+かいしゃにきた　でしょうか？</language>
+	</row>
+
+	<row id="msg_t01r0302_boy2_02" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ざんねん！
+わたしが　ほしがったのは▼
+ヒメグマではなく
+クヌギダマでした！▼
+だからどうした！</language>
+		<language name="JPN_KANJI" width="256">ざんねん！
+わたしが　ほしがったのは▼
+ヒメグマではなく
+クヌギダマでした！▼
+だからどうした！</language>
+	</row>
+
+	<row id="msg_t01r0302_boy2_03" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">そのとおり！
+くわしすぎて　ぎゃくに　あやしい▼
+その　うたぐりぶかさ
+すばらしいね！</language>
+		<language name="JPN_KANJI" width="256">そのとおり！
+くわしすぎて　ぎゃくに　あやしい▼
+その　うたぐりぶかさ
+すばらしいね！</language>
 	</row>
 
 	<flowchart-group-list>
