@@ -271,13 +271,20 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     //>>引数からテストモード切り替え
     
     // 全マップチェック
+#if 0
+/*    デバグメニューをオーバーレイ化したので、
+ *    ひとまずコメントアウトしています。
+ *    下記関数を使うためにはオーバーレイを読み込む必要があります
+ */
     if ( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_JUMP ) )
     {
       new_event = EVENT_DEBUG_AllMapCheck( gsys, FALSE );
       GAMESYSTEM_SetEvent( gsys, new_event );
     }
     // 全接続チェック
-    else if ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_CONNECT ) )
+    else
+#endif
+    if ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_CONNECT ) )
     {
       new_event = GMEVENT_CreateOverlayEventCall( gsys, 
           FS_OVERLAY_ID( debug_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
