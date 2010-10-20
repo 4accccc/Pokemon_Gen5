@@ -769,7 +769,7 @@ MYSTERY_LIST_WORK * MYSTERY_LIST_Init( const MYSTERY_LIST_SETUP *cp_setup, HEAPI
       NULL,
       NULL,
       NULL,
-      
+      BMPMENULIST_ARROW_WAIT_MAX
     };
     BMPMENULIST_HEADER  header;
     header  = sc_def_header;

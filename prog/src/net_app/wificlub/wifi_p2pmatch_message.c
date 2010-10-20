@@ -594,6 +594,7 @@ static BMPMENULIST_HEADER _parentInfoMenuListHeader = {
   NULL,   //表示に使用するプリントユーティ
   NULL,   //表示に使用するプリントキュー
   NULL,   //表示に使用するフォントハンドル
+  BMPMENULIST_ARROW_WAIT_MAX, //矢印カーソルが表示されるまでのウェイト
 };
 
 ///選択メニューのリスト
@@ -623,6 +624,7 @@ static BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
   NULL,   //表示に使用するプリントユーティ
   NULL,   //表示に使用するプリントキュー
   NULL,   //表示に使用するフォントハンドル
+  BMPMENULIST_ARROW_WAIT_MAX, //矢印カーソルが表示されるまでのウェイト
 };
 
 
@@ -653,6 +655,7 @@ static BMPMENULIST_HEADER _parentCustomMenuListHeader = {
   NULL,   //表示に使用するプリントユーティ
   NULL,   //表示に使用するプリントキュー
   NULL,   //表示に使用するフォントハンドル
+  BMPMENULIST_ARROW_WAIT_MAX, //矢印カーソルが表示されるまでのウェイト
 };
 
 
@@ -728,6 +731,7 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
   }
   BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
+  PRINT_UTIL_Trans( &wk->SysMsgPrintUtil, wk->SysMsgQue );
 }
 
 
@@ -785,6 +789,7 @@ static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
   NULL,   //表示に使用するプリントユーティ
   NULL,   //表示に使用するプリントキュー
   NULL,   //表示に使用するフォントハンドル
+  BMPMENULIST_ARROW_WAIT_MAX, //矢印カーソルが表示されるまでのウェイト
 };
 
 
@@ -841,6 +846,7 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
   BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
   GFL_BMPWIN_MakeScreen(wk->SubListWin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
+  PRINT_UTIL_Trans( &wk->SysMsgPrintUtil, wk->SysMsgQue );
 }
 
 //------------------------------------------------------------------

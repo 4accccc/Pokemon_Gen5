@@ -2037,6 +2037,13 @@ static const BMPMENULIST_HEADER MenuListHeader = {
     FONT_SYSTEM,      // 文字指定
     0,            // ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
     NULL,                   // ワーク
+    12,
+    12,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    BMPMENULIST_ARROW_WAIT_MAX, //矢印カーソルが表示されるまでのウェイト
 };
 
 

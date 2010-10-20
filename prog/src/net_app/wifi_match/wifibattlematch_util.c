@@ -467,6 +467,7 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
       NULL,
       NULL,
       
+      BMPMENULIST_ARROW_WAIT_MAX, //矢印カーソルが表示されるまでのウェイト
     };
     BMPMENULIST_HEADER  header;
     header  = sc_def_header;
