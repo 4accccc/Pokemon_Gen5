@@ -118,6 +118,7 @@ typedef struct {
   POKEMON_PARAM* pokeParam;   // 名前入力対象ポケモン
   u16*           retWork;     // 結果の格納先ワークへのポインタ
   BOOL           fade_flag;   // アプリ呼び出し前後のフェード有り無し
+  STRBUF         *p_default_str;  // デフォルト名 update ichiraku
 } PARTY_NAMEIN_WORK; 
 
 //-------------------------------------------------------------------------------------
@@ -172,6 +173,13 @@ GMEVENT* EVENT_NameInput_PartyPoke(
     MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
     u32        monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     u32        formno = PP_Get( pp, ID_PARA_form_no, NULL ) | ( PP_Get( pp, ID_PARA_sex, NULL ) << 8 );
+
+    // >> update ichiraku 2010/10/19
+    // ポケモンのデフォルト名取得追加
+    work->p_default_str = GFL_STR_CreateBuffer( 32, HEAPID_PROC );
+    PP_Get( pp, ID_PARA_nickname, work->p_default_str );
+    // <<
+
     work->nameInParam = NAMEIN_AllocParam( 
         HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL, misc );
     work->pokeParam   = pp;
@@ -201,7 +209,17 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke( GMEVENT* event, int* seq, 
   case 1: //----------------------------------------------- イベント終了
     // 入力された名前を反映させる
     if( pniw->nameInParam->cancel != TRUE ) { 
-      PP_Put( pniw->pokeParam, ID_PARA_nickname, (u32)pniw->nameInParam->strbuf );
+      // update ichiraku 2010/10/19
+      // 自分で比較する
+      if( GFL_STR_CompareBuffer( pniw->nameInParam->strbuf, pniw->p_default_str ) == FALSE )
+      {
+        PP_Put( pniw->pokeParam, ID_PARA_nickname, (u32)pniw->nameInParam->strbuf );
+      }
+      else
+      {
+        pniw->nameInParam->cancel = TRUE;
+        ICHI_Printf("入力前と同じ名前だった\n");
+      }
     }
     // 入力結果をワークに返す
     *(pniw->retWork) = (pniw->nameInParam->cancel != TRUE);
@@ -211,6 +229,8 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke( GMEVENT* event, int* seq, 
       RECORD * rec = GAMEDATA_GetRecordPtr( gdata );
       RECORD_Inc( rec, RECID_NICKNAME );
     }
+
+    GFL_STR_DeleteBuffer( pniw->p_default_str );
     NAMEIN_FreeParam( pniw->nameInParam );
     return GMEVENT_RES_FINISH;
   }
