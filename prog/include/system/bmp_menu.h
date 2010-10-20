@@ -22,8 +22,8 @@
 #define BMPMENU_CANCEL  ( 0xfffffffe )
 #define BMPMENU_DUMMY ( 0xfffffffd )
 
-#define BMPMENU_ARROW_WAIT_MIN  (  1 )  // 最速でカーソルを出す
-#define BMPMENU_ARROW_WAIT_MAX  ( 10 )  // ウェイトを入れてからカーソルを出す
+#define BMPMENU_ARROW_WAIT_MIN  (  2 )  // 最速でカーソルを出す
+#define BMPMENU_ARROW_WAIT_MAX  ( 20 )  // ウェイトを入れてからカーソルを出す
 
 
 typedef struct {

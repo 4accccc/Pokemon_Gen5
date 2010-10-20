@@ -23,8 +23,8 @@
 /********************************************************************/
 #define BMPMENULIST_MAX   ( 4 )   // 登録最大数（適当）
 
-#define BMPMENULIST_ARROW_WAIT_MIN  (  1 )  // 最速でカーソルを出す
-#define BMPMENULIST_ARROW_WAIT_MAX  ( 10 )  // ウェイトを入れてからカーソルを出す
+#define BMPMENULIST_ARROW_WAIT_MIN  (  2 )  // 最速でカーソルを出す
+#define BMPMENULIST_ARROW_WAIT_MAX  ( 20 )  // ウェイトを入れてからカーソルを出す
 
 typedef struct _BMPMENULIST_WORK  BMPMENULIST_WORK;
 

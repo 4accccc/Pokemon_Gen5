@@ -127,6 +127,10 @@ BMPMENULIST_WORK * BmpMenuList_Set(
 #else
     lw->arrow_wait = lw->hed.arrow_wait;
 #endif
+    // フレームレートに対応してウェイトを調整する
+    if(GFL_UI_GetFrameRate()==GFL_UI_FRAMERATE_30){
+      lw->arrow_wait /=2;
+    }
   }
 
   // テンポラリ初期化
@@ -1467,7 +1471,7 @@ void BmpMenuList_SetCancelMode( BMPMENULIST_WORK *lw, BMPMENULIST_CANCELMODE mod
 }
 
 #ifdef PM_DEBUG
-static int debug_yesno_wait = 10; // 操作対象の友達番号
+static int debug_yesno_wait = BMPMENULIST_ARROW_WAIT_MAX; // 操作対象の友達番号
 void BmpMenuList_SetYesNoWait( int value )
 {
   debug_yesno_wait = value;

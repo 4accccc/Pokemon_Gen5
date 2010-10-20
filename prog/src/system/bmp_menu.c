@@ -634,6 +634,11 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
 #else
     pWK->arrow_wait = BMPMENU_ARROW_WAIT_MAX;
 #endif
+    // フレームレートに対応してウェイトを調整する
+    if(GFL_UI_GetFrameRate()==GFL_UI_FRAMERATE_30){
+      pWk->arrow_wait /=2;
+    }
+
   }
   GFL_BMPWIN_MakeScreen(hed.win);
   BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
