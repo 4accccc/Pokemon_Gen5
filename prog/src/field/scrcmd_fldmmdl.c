@@ -166,7 +166,7 @@ VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 
 // 進む方向
 typedef enum {
-  DIR_U = 0,  // 上
+  DIR_U = DIR_UP,  // 上
   DIR_D,  // 下
   DIR_L,  // 左
   DIR_R,  // 右
@@ -180,6 +180,23 @@ typedef enum {
   LINE_Z_DOWN,  // Zラインで下移動
 }LINE_TYPE;
 
+//-------------------------------------
+///	自動アニメパラメータ
+//=====================================
+typedef struct {
+  SCRCMD_WORK     *p_scwk;
+  FIELDMAP_WORK   *p_fieldMap_wk;
+
+  // パラメータ関係
+  // スクリプトコマンドの引数が追加されるならここ
+  u16   target_x;     // 指定グリッドX座標
+  u16   target_z;     // 指定グリッドZ座標
+  u16   force_type;   // 障害物を強制的に無視するフラグ
+  u16   ac_frame;     // 移動にかかるフレーム数
+  u16   first_line;   // 先にXとZどちらに移動するか 0:X 1:Z
+}ANIME_AUTO_PARAM;
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  方向別アニメコマンド設定
@@ -188,27 +205,41 @@ typedef enum {
  *	@param	dir         方向
  *	@param	*p_list_num アニメコマンド総数
  *  @param  num         総数
- *  @param  heapId      ヒープID
  */
 //-----------------------------------------------------------------------------
-static void EvAcmdSet( MMDL_ACMD_LIST *p_list, DIR_TYPE dir, u16 *p_list_num, u16 num, HEAPID heapId )
+static void EvAcmdSet( MMDL_ACMD_LIST *p_list, DIR_TYPE dir, u16 *p_list_num, u16 num, ANIME_AUTO_PARAM *p_param )
 {
+  u16 ac_walk;    // アクションコマンドコード
+
+  // フレームからアクションコマンドコードの上移動を取得する
+  switch( p_param->ac_frame ){
+  case 32:  ac_walk = AC_WALK_U_32F; break;
+  case 16:  ac_walk = AC_WALK_U_16F; break;
+  case 12:  ac_walk = AC_WALK_U_12F; break;
+  case 8:   ac_walk = AC_WALK_U_8F; break;
+  case 7:   ac_walk = AC_WALK_U_7F; break;
+  case 6:   ac_walk = AC_WALK_U_6F; break;
+  case 4:   ac_walk = AC_WALK_U_4F; break;
+  case 3:   ac_walk = AC_WALK_U_3F; break;
+  case 2:   ac_walk = AC_WALK_U_2F; break;
+  default:  ac_walk = AC_WALK_U_16F;break;  // デフォルト
+  }
 
   switch( dir ){
   case DIR_U:  // 上
-    p_list[ *p_list_num ].code = AC_WALK_U_8F;
+    p_list[ *p_list_num ].code = ac_walk;
     p_list[ *p_list_num ].num  = num;
     break;
   case DIR_D:  // 下
-    p_list[ *p_list_num ].code = AC_WALK_D_8F;
+    p_list[ *p_list_num ].code = ac_walk + 1;
     p_list[ *p_list_num ].num  = num;
     break;
   case DIR_L:  // 左
-    p_list[ *p_list_num ].code = AC_WALK_L_8F;
+    p_list[ *p_list_num ].code = ac_walk + 2;
     p_list[ *p_list_num ].num  = num;
     break;
   case DIR_R:  // 右
-    p_list[ *p_list_num ].code = AC_WALK_R_8F;
+    p_list[ *p_list_num ].code = ac_walk + 3;
     p_list[ *p_list_num ].num  = num;
     break;
   default:
@@ -255,30 +286,58 @@ static void EvSetFrontPos( const DIR_TYPE dir, VecFx32 *p_pos, u16 len )
  *	@return TRUE:障害物あり FALSE:障害物なし
  */
 //-----------------------------------------------------------------------------
-static BOOL EvCheckAttr( FIELDMAP_WORK* p_fieldMap_wk, VecFx32 pos )
+static BOOL EvCheckAttr( ANIME_AUTO_PARAM *p_param, VecFx32 pos )
 {
-
-  // 地形チェック
+  // 強制フラグが立っていると何もチェックしない
+  if( p_param->force_type & FORCE_TYPE_ALL )
   {
-    FLDMAPPER     *g3Dmapper= FIELDMAP_GetFieldG3Dmapper( p_fieldMap_wk );
+    // マップの範囲外はチェックする
+    FLDMAPPER     *g3Dmapper= FIELDMAP_GetFieldG3Dmapper( p_param->p_fieldMap_wk );
     MAPATTR       attr      = MAPATTR_GetAttribute( g3Dmapper, &pos );
     MAPATTR_FLAG  attr_flag = MAPATTR_GetAttrFlag( attr );
-
-    // アトリビュートフラグチェック
-    if( attr_flag & MAPATTR_FLAGBIT_HITCH ||
-        attr_flag & MAPATTR_FLAGBIT_WATER)
+    if( FLDMAPPER_CheckOutRange( g3Dmapper, &pos ) == TRUE )
     {
-      // 障害物あり
+      ICHI_Printf("マップ範囲外\n");
+      return TRUE;
+    }
+    
+    return FALSE;
+  }
+
+  {
+    FLDMAPPER     *g3Dmapper= FIELDMAP_GetFieldG3Dmapper( p_param->p_fieldMap_wk );
+
+    // 地形チェック
+    if( !(p_param->force_type & FORCE_TYPE_MAP) )  // マップ無視フラグ
+    {
+      MAPATTR       attr      = MAPATTR_GetAttribute( g3Dmapper, &pos );
+      MAPATTR_FLAG  attr_flag = MAPATTR_GetAttrFlag( attr );
+      // アトリビュートフラグチェック
+      if( attr_flag & MAPATTR_FLAGBIT_HITCH ||
+          attr_flag & MAPATTR_FLAGBIT_WATER)
+      {
+        // 障害物あり
+        ICHI_Printf("地形侵入不可\n");
+        return TRUE;
+      }
+    }
+
+    // マップの範囲外チェック
+    // 0 < pos < マップ範囲 をチェック
+    if( FLDMAPPER_CheckOutRange( g3Dmapper, &pos ) == TRUE )
+    {
+      ICHI_Printf("マップ範囲外\n");
       return TRUE;
     }
   }
 
   // NPCがいるかチェック
+  if( !(p_param->force_type & FORCE_TYPE_NPC) )  // OBJ無視フラグがOFFのときのみ
   {
     MMDL *p_mmdl;
     // 動作モデルを検索
     p_mmdl = MMDLSYS_SearchGridPos(
-        FIELDMAP_GetMMdlSys(p_fieldMap_wk),
+        FIELDMAP_GetMMdlSys(p_param->p_fieldMap_wk),
         FX32_TO_GRID(pos.x),
         FX32_TO_GRID(pos.z),
         TRUE );
@@ -304,9 +363,8 @@ static BOOL EvCheckAttr( FIELDMAP_WORK* p_fieldMap_wk, VecFx32 pos )
  *	@return TRUE：避けれた FALSE:避けれない
  */
 //-----------------------------------------------------------------------------
-static BOOL EvAttrHit( const DIR_TYPE dir, FIELDMAP_WORK* p_fieldMap_wk, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num )
+static BOOL EvAttrHit( const DIR_TYPE dir, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num, ANIME_AUTO_PARAM *p_param )
 {
-  HEAPID  heap_id = FIELDMAP_GetHeapID( p_fieldMap_wk );
   VecFx32 save_pos;
 
   // 位置保存
@@ -328,11 +386,11 @@ static BOOL EvAttrHit( const DIR_TYPE dir, FIELDMAP_WORK* p_fieldMap_wk, VecFx32
         EvSetFrontPos( dir, &tmp_pos, 1 );
 
         // 障害物チェック
-        if( !( EvCheckAttr( p_fieldMap_wk, tmp_pos ) ) )
+        if( !( EvCheckAttr( p_param, tmp_pos ) ) )
         {
           // 方向別アニメコマンドセット
-          EvAcmdSet( p_list, DIR_U, p_list_num, len, heap_id );
-          EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+          EvAcmdSet( p_list, DIR_U, p_list_num, len, p_param );
+          EvAcmdSet( p_list, dir, p_list_num, 1, p_param );
           // 座標も同時に移動させる
           VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
           break;
@@ -343,11 +401,11 @@ static BOOL EvAttrHit( const DIR_TYPE dir, FIELDMAP_WORK* p_fieldMap_wk, VecFx32
           EvSetFrontPos( DIR_D, &tmp_pos, len );
           EvSetFrontPos( dir, &tmp_pos, 1 );
 
-          if( !(EvCheckAttr( p_fieldMap_wk, tmp_pos )) )
+          if( !(EvCheckAttr( p_param, tmp_pos )) )
           {
             // 方向別アニメコマンドセット
-            EvAcmdSet( p_list, DIR_D, p_list_num, len, heap_id );
-            EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+            EvAcmdSet( p_list, DIR_D, p_list_num, len, p_param );
+            EvAcmdSet( p_list, dir, p_list_num, 1, p_param );
             // 座標も同時に移動させる
             VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
             break;
@@ -380,11 +438,11 @@ static BOOL EvAttrHit( const DIR_TYPE dir, FIELDMAP_WORK* p_fieldMap_wk, VecFx32
         EvSetFrontPos( dir, &tmp_pos, 1 );
 
         // 障害物チェック
-        if( !(EvCheckAttr( p_fieldMap_wk, tmp_pos )) )
+        if( !(EvCheckAttr( p_param, tmp_pos )) )
         {
           // 方向別アニメコマンドセット
-          EvAcmdSet( p_list, DIR_L, p_list_num, len, heap_id );
-          EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+          EvAcmdSet( p_list, DIR_L, p_list_num, len, p_param );
+          EvAcmdSet( p_list, dir, p_list_num, 1, p_param );
           // 座標も同時に移動させる
           VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
           break;
@@ -395,11 +453,11 @@ static BOOL EvAttrHit( const DIR_TYPE dir, FIELDMAP_WORK* p_fieldMap_wk, VecFx32
           EvSetFrontPos( DIR_R, &tmp_pos, len );
           EvSetFrontPos( dir, &tmp_pos, 1 );
 
-          if( !(EvCheckAttr( p_fieldMap_wk, tmp_pos )) )
+          if( !(EvCheckAttr( p_param, tmp_pos )) )
           {
             // 方向別アニメコマンドセット
-            EvAcmdSet( p_list, DIR_R, p_list_num, len, heap_id );
-            EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+            EvAcmdSet( p_list, DIR_R, p_list_num, len, p_param );
+            EvAcmdSet( p_list, dir, p_list_num, 1, p_param );
             // 座標も同時に移動させる
             VEC_Set( p_pos, tmp_pos.x, tmp_pos.y, tmp_pos.z );
             break;
@@ -436,9 +494,8 @@ static BOOL EvAttrHit( const DIR_TYPE dir, FIELDMAP_WORK* p_fieldMap_wk, VecFx32
  *	@param	*p_list_num       アニメコマンドリストの数へのポインタ
  */
 //-----------------------------------------------------------------------------
-static void EvLineStep( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num )
+static void EvLineStep( LINE_TYPE line, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num, ANIME_AUTO_PARAM *p_param )
 {
-  HEAPID    heap_id = FIELDMAP_GetHeapID( p_fieldMap_wk );
   DIR_TYPE  dir;
   VecFx32   tmp_pos;
 
@@ -460,20 +517,20 @@ static void EvLineStep( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, VecFx32 *p
     EvSetFrontPos( dir, &tmp_pos, 1 );
 
     // 障害物チェック
-    if( EvCheckAttr( p_fieldMap_wk, tmp_pos ) )
+    if( EvCheckAttr( p_param, tmp_pos ) )
     {
       BOOL ret;
-      ret = EvAttrHit( dir, p_fieldMap_wk, p_pos, p_list, p_list_num );
+      ret = EvAttrHit( dir, p_pos, p_list, p_list_num, p_param );
       GF_ASSERT_MSG(ret, "障害物避けれない\n");
       ICHI_Printf("進入禁止\t");
     }else
     {
       // 方向別アニメコマンドセット
-      EvAcmdSet( p_list, dir, p_list_num, 1, heap_id );
+      EvAcmdSet( p_list, dir, p_list_num, 1, p_param );
       // 座標も同時に移動させる
       EvSetFrontPos( dir, p_pos, 1 );
 
-      ICHI_Printf("進入OK\t\t");
+      ICHI_Printf("進入OK\t");
     }
   }
 }
@@ -493,9 +550,8 @@ static void EvLineStep( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, VecFx32 *p
  *	@return TRUE:ラインが合わせれた FALSE:合わせれない
  */
 //-----------------------------------------------------------------------------
-static BOOL EvLineCheck( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, fx32 old_line, fx32 now_line, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num )
+static BOOL EvLineCheck( LINE_TYPE line, fx32 old_line, fx32 now_line, VecFx32 *p_pos, MMDL_ACMD_LIST *p_list, u16 *p_list_num, ANIME_AUTO_PARAM *p_param )
 {
-  HEAPID    heap_id = FIELDMAP_GetHeapID( p_fieldMap_wk );
   DIR_TYPE  dir;
   VecFx32   tmp_pos;
   s16       diff;   // どれだけ離れいるか
@@ -534,13 +590,13 @@ static BOOL EvLineCheck( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, fx32 old_
     EvSetFrontPos( dir, &tmp_pos, len );
 
     // 障害物チェック
-    if( EvCheckAttr( p_fieldMap_wk, tmp_pos ) )
+    if( EvCheckAttr( p_param, tmp_pos ) )
     {
       return FALSE;
     }else
     {
       // 方向別アニメコマンドセット
-      EvAcmdSet( p_list, dir, p_list_num, len, heap_id );
+      EvAcmdSet( p_list, dir, p_list_num, len, p_param );
       // 座標も同時に移動させる
       EvSetFrontPos( dir, p_pos, len );
       return TRUE;
@@ -548,6 +604,93 @@ static BOOL EvLineCheck( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, fx32 old_
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  X軸かZ軸の移動 first_lineで変わる
+ *
+ *	@param	*p_list         アニメコマンドリストへのポインタ
+ *	@param	*p_list_num     アニメコマンドリストの数へのポインタ
+ *	@param	*p_pos          現在位置へのポインタ
+ *	@param	*p_tpos         指定位置へのポインタ
+ *	@param	*p_param        パラメータへのポインタ
+ */
+//-----------------------------------------------------------------------------
+static void EvLineCalc( MMDL_ACMD_LIST *p_list, u16 *p_list_num, VecFx32 *p_pos, VecFx32 *p_tpos, ANIME_AUTO_PARAM *p_param )
+{
+  LINE_TYPE line;
+  fx32      line_val; // ラインの値
+  fx32      *p_line_now;
+  fx32      *p_pos_tmp;
+  fx32      *p_tpos_tmp;
+
+  // Xライン
+  if( p_param->first_line == DIR_LR )
+  {
+    line_val = p_pos->z; // ラインの値
+    p_line_now = &p_pos->z;
+
+    // 左右どちらに移動か？
+    line = (p_tpos->x > p_pos->x)?(LINE_X_RIGHT):(LINE_X_LEFT); 
+
+    // アドレス保存
+    p_pos_tmp = &p_pos->x;
+    p_tpos_tmp= &p_tpos->x;
+  }
+  // Zライン
+  else
+  {
+    line_val = p_pos->x;   // ラインの値
+    p_line_now = &p_pos->x;
+
+    // 左右どちらに移動か？
+    line = (p_tpos->z > p_pos->z)?(LINE_Z_DOWN):(LINE_Z_UP); 
+
+    // アドレス保存
+    p_pos_tmp = &p_pos->z;
+    p_tpos_tmp= &p_tpos->z;
+  }
+
+
+  while( FX32_TO_GRID(*p_pos_tmp) != FX32_TO_GRID(*p_tpos_tmp) )
+  {
+    // 一歩進む
+    EvLineStep( line, p_pos, p_list, p_list_num, p_param );
+
+    // ラインが合っているかチェック
+    // ラインが違う、かつまだ到達座標きていない
+    if( (*p_line_now != line_val) && (FX32_TO_GRID(*p_pos_tmp) != FX32_TO_GRID(*p_tpos_tmp)) )
+    {
+      BOOL ret;
+
+      ICHI_Printf("==========ラインチェック=========\n");
+      ret = EvLineCheck( line, line_val, *p_line_now, p_pos, p_list, p_list_num, p_param );
+
+      ICHI_Printf("ラインが合っていない\n");
+      if( ret == TRUE ){
+        line_val = *p_line_now;
+        ICHI_Printf("ラインを合わすが出来た\n");
+      }
+    }
+
+    // エラーチェック
+    // 指定座標を過ぎていたらエラーにする→回り込みに対応していない為
+    if( line == LINE_X_RIGHT )
+    {
+      GF_ASSERT_MSG( (FX32_TO_GRID(*p_tpos_tmp) >= FX32_TO_GRID(*p_pos_tmp)), "指定X座標を通り過ぎた");
+    }else if( line == LINE_X_LEFT )
+    {
+      GF_ASSERT_MSG( (FX32_TO_GRID(*p_tpos_tmp) <= FX32_TO_GRID(*p_pos_tmp)), "指定X座標を通り過ぎた");
+    }else if( line == LINE_Z_DOWN )
+    {
+      GF_ASSERT_MSG( (FX32_TO_GRID(*p_tpos_tmp) >= FX32_TO_GRID(*p_pos_tmp)), "指定Z座標を通り過ぎた");
+    }else if( line == LINE_Z_UP )
+    {
+      GF_ASSERT_MSG( (FX32_TO_GRID(*p_tpos_tmp) <= FX32_TO_GRID(*p_pos_tmp)), "指定Z座標を通り過ぎた");
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -572,7 +715,7 @@ static BOOL EvLineCheck( LINE_TYPE line, FIELDMAP_WORK* p_fieldMap_wk, fx32 old_
  *  算出された経路はアニメーションコマンドの配列としてp_listに入る
  */
 //-----------------------------------------------------------------------------
-static u32 EvRouteCalc( SCRCMD_WORK *p_wk, MMDL_ACMD_LIST *p_list, MMDL *p_mmdl, u16 tx, u16 tz )
+static u32 EvRouteCalc( MMDL_ACMD_LIST *p_list, MMDL *p_mmdl, ANIME_AUTO_PARAM *p_param )
 {
   u16     list_num = 0;   // アニメーションの数
   u8      dir = 0;        // 進む方向
@@ -580,109 +723,25 @@ static u32 EvRouteCalc( SCRCMD_WORK *p_wk, MMDL_ACMD_LIST *p_list, MMDL *p_mmdl,
   VecFx32 pos;            // モデルの実座標
   VecFx32 tpos;           // 指定位置
 
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( p_wk );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-
-  HEAPID  heap_id = FIELDMAP_GetHeapID( fparam->fieldMap );
-
   // モデルの実座標取得
   MMDL_GetVectorPos( p_mmdl, &pos);
 
   // 指定位置の座標をグリッド座標から実座標に
-  tpos.x = GRID_TO_FX32( tx );
-  tpos.z = GRID_TO_FX32( tz );
+  tpos.x = GRID_TO_FX32( p_param->target_x );
+  tpos.z = GRID_TO_FX32( p_param->target_z );
 
   // 移動する前に指定した位置が障害物かチェック
-  if( EvCheckAttr( fparam->fieldMap, tpos ) )
+  if( EvCheckAttr( p_param, tpos ) )
   {
-    GF_ASSERT_MSG(0, "指定した位置は障害物です\n");
+    GF_ASSERT_MSG(0, "指定位置%d:%d Error\n", p_param->target_x, p_param->target_z);
   }
 
   // 指定位置移動までループ
   // ラインごと
-  // Xライン
-  {
-    LINE_TYPE line;
-    fx32      line_z = pos.z; // ラインの値
-
-    // 左右どちらに移動か？
-    line = (tpos.x > pos.x)?(LINE_X_RIGHT):(LINE_X_LEFT); 
-
-    while( FX32_TO_GRID(pos.x) != FX32_TO_GRID(tpos.x) )
-    {
-      // 一歩進む
-      EvLineStep( line, fparam->fieldMap, &pos, p_list, &list_num );
-      ICHI_Printf("現在(%d:%d) 指定(%d:%d)\n", FX32_TO_GRID(pos.x), FX32_TO_GRID(pos.z),FX32_TO_GRID(tpos.x), FX32_TO_GRID(tpos.z));
-
-      // ラインが合っているかチェック
-      // ラインが違う、かつまだ到達座標きていない
-      if( (line_z != pos.z) && (FX32_TO_GRID(pos.x) != FX32_TO_GRID(tpos.x)) )
-      {
-        BOOL ret;
-
-        ICHI_Printf("==========Xラインチェック=========\n");
-        ret = EvLineCheck( line, fparam->fieldMap, line_z, pos.z, &pos, p_list, &list_num );
-
-        ICHI_Printf("ラインが合っていない\n");
-        if( ret == TRUE ){
-          line_z = pos.z;
-          ICHI_Printf("ラインを合わすが出来た\n");
-        }
-      }
-
-      // エラーチェック
-      // 指定座標を過ぎていたらエラーにする→回り込みに対応していない為
-      if( line == LINE_X_RIGHT )
-      {
-        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.x) >= FX32_TO_GRID(pos.x)), "指定X座標を通り過ぎた");
-      }else if( line == LINE_X_LEFT )
-      {
-        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.x) <= FX32_TO_GRID(pos.x)), "指定X座標を通り過ぎた");
-      }
-    }
-  }
-
-  // Zライン
-  {
-    LINE_TYPE line;
-    fx32      line_x = pos.x;   // ラインの値
-
-    // 左右どちらに移動か？
-    line = (tpos.z > pos.z)?(LINE_Z_DOWN):(LINE_Z_UP); 
-
-    while( FX32_TO_GRID(pos.z) != FX32_TO_GRID(tpos.z) )
-    {
-      // 一歩進む
-      EvLineStep( line, fparam->fieldMap, &pos, p_list, &list_num );
-      ICHI_Printf("現在(%d:%d) 指定(%d:%d)\n", FX32_TO_GRID(pos.x), FX32_TO_GRID(pos.z),FX32_TO_GRID(tpos.x), FX32_TO_GRID(tpos.z));
-
-      // ラインが合っているかチェック
-      // ラインが違う、かつまだ到達座標きていない
-      if( (line_x != pos.x) && (FX32_TO_GRID(pos.z) != FX32_TO_GRID(tpos.z)) )
-      {
-        BOOL ret;
-
-        ICHI_Printf("==========Zラインチェック=========\n");
-        ret = EvLineCheck( line, fparam->fieldMap, line_x, pos.x, &pos, p_list, &list_num );
-
-        ICHI_Printf("ラインが合っていない\n");
-        if( ret == TRUE ){
-          line_x = pos.x;
-          ICHI_Printf("ラインを合わすが出来た\n");
-        }
-      }
-
-      // エラーチェック
-      // 指定座標を過ぎていたらエラーにする→回り込みに対応していない為
-      if( line == LINE_Z_DOWN )
-      {
-        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.z) >= FX32_TO_GRID(pos.z)), "指定Z座標を通り過ぎた");
-      }else if( line == LINE_Z_UP )
-      {
-        GF_ASSERT_MSG( (FX32_TO_GRID(tpos.z) <= FX32_TO_GRID(pos.z)), "指定Z座標を通り過ぎた");
-      }
-    }
-  }
+  EvLineCalc( p_list, &list_num, &pos, &tpos, p_param );
+  // ライン変更
+  p_param->first_line = (p_param->first_line == DIR_LR) ? DIR_UD : DIR_LR;
+  EvLineCalc( p_list, &list_num, &pos, &tpos, p_param );
 
   // 最後は絶対にアニメーション終了コマンド入れる
   p_list[ list_num ].code = ACMD_AUTO_END;
@@ -705,13 +764,10 @@ static u32 EvRouteCalc( SCRCMD_WORK *p_wk, MMDL_ACMD_LIST *p_list, MMDL *p_mmdl,
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdObjAnimeAuto( VMHANDLE *core, void *wk )
 {
-  VM_CODE *p;
   GFL_TCB *anm_tcb;   // 登録用タスク
   MMDL *p_mmdl;       // 対象のフィールドOBJのポインタ
   SCRCMD_WORK *work = wk;
   u16 obj_id = SCRCMD_GetVMWorkValue(core,work); //obj ID
-  u16 target_x = SCRCMD_GetVMWorkValue( core, work ); // 指定グリッドX座標
-  u16 target_z = SCRCMD_GetVMWorkValue( core, work ); // 指定グリッドZ座標
 
   // フィールドマップ
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -730,13 +786,23 @@ VMCMD_RESULT EvCmdObjAnimeAuto( VMHANDLE *core, void *wk )
 
   //アニメーションコマンドリストを探索し、タスクにセットする
   {
-    MMDL_ACMD_LIST  *p_list;
+    MMDL_ACMD_LIST    *p_list;
+    ANIME_AUTO_PARAM  param;
 
     // メモリ作成
     p_list = GFL_HEAP_AllocClearMemory( heap_id, (MMDL_ACMD_LIST_SIZE * ACMD_LIST_MAX) );
 
+    // パラメータセット
+    param.p_scwk  = work;
+    param.p_fieldMap_wk = fparam->fieldMap;
+    param.target_x  = SCRCMD_GetVMWorkValue( core, work );;
+    param.target_z  = SCRCMD_GetVMWorkValue( core, work );;
+    param.force_type= SCRCMD_GetVMWorkValue( core, work );
+    param.ac_frame  = SCRCMD_GetVMWorkValue( core, work );;
+    param.first_line= SCRCMD_GetVMWorkValue( core, work );;
+
     // 経路算出
-    EvRouteCalc( work, p_list, p_mmdl, target_x, target_z );
+    EvRouteCalc( p_list, p_mmdl, &param );
 
     // 算出結果セット
     anm_tcb = MMDL_SetAcmdList( p_mmdl, p_list );

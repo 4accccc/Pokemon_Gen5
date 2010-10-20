@@ -1519,20 +1519,29 @@
  *  避けながら自動で歩いていくスクリプトコマンドを実装する
  *
  *  @param obj_id アニメーションを行うOBJ ID
- *  @param target_x 指定位置のグリッドX座標
- *  @param target_z 指定位置のグリッドZ座標
+ *  @param target_x 指定位置のグリッドX座標 (マイナス座標不可)
+ *  @param target_z 指定位置のグリッドZ座標（マイナス座標不可）
+ *  @param force_type 障害物を無視して歩くフラグ (FORCE_TYPE_XXX) 
+ *  @param ac_frame 1歩のフレーム数(32,16,12,8,7,6,4,3,2)
+ *  @param first_line 動き出しをXとZどちらが先か(DIR_LR or DIR_UD)
  *
  *  @note 注意！ 動作停止をセットしたい時は、
  *  _OBJ_PAUSE_ALLをもう一度呼ばないといけない！
+ *  ※force_typeでマップを無視する時は慎重に！
+ *  　間違えた座標を打っても移動してしまいます。
+ *  ※もしマイナス値を指定したい場合は、一楽までご相談下さい
  */
 //--------------------------------------------------------------
-#define _OBJ_ANIME_AUTO( obj_id, target_x, target_z ) _ASM_OBJ_ANIME_AUTO obj_id, target_x, target_z 
+#define _OBJ_ANIME_AUTO( obj_id, target_x, target_z, force_type, ac_frame, first_line ) _ASM_OBJ_ANIME_AUTO obj_id, target_x, target_z, force_type, ac_frame, first_line
 
-  .macro  _ASM_OBJ_ANIME_AUTO obj_id, target_x, target_z
+  .macro  _ASM_OBJ_ANIME_AUTO obj_id, target_x, target_z, force_type, ac_frame, first_line
   .short  EV_SEQ_OBJ_ANIME_AUTO
   .short  \obj_id 
   .short  \target_x
   .short  \target_z
+  .short  \force_type
+  .short  \ac_frame
+  .short  \first_line
   .endm
 // <<
 

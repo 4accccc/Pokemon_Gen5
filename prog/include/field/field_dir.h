@@ -24,4 +24,21 @@
 #define DIR_NOT			(9)					///<向きが無い
 #define DIR_MAX4		(DIR_RIGHT+1)		///<四方向最大
 
+// update ichiraku 2010/10/19
+//=============================================================================
+/**
+ *    _OBJ_ANIME_AUTOのパラメータ用
+ */
+//=============================================================================
+// force_typeパラメータ
+#define FORCE_TYPE_NOT  (0x0) // 障害物無視しない
+#define FORCE_TYPE_NPC  (0x1) // NPCのみ無視する
+#define FORCE_TYPE_MAP  (0x2) // マップのみ無視する
+#define FORCE_TYPE_ALL  (0x4) // 全て無視する
+
+
+// first_lineパラメータ
+#define DIR_LR    (0)   // 左右（X軸）
+#define DIR_UD    (1)   // 上下（Z軸）
+
 #endif //FIELD_DIR_H_FILE
