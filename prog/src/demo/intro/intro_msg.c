@@ -523,6 +523,7 @@ void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u3
 		header.print_util	= MSG_GetPrintUtil( wk, p_bmpwin );
 		header.print_que	= wk->print_que;
 		header.font_handle= wk->font;
+    header.arrow_wait = BMPMENULIST_ARROW_WAIT_MAX;
 
 		list->p_list	= BmpMenuList_Set( &header, 0, 0, heapID );
 		BmpMenuList_SetCursorBmp( list->p_list, heapID );

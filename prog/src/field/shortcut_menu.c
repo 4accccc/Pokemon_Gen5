@@ -1248,6 +1248,7 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
       NULL, //プリントUTIL
       NULL, //プリントQUE
       NULL, //フォント
+      BMPMENULIST_ARROW_WAIT_MIN,
     };
     BMPMENULIST_HEADER  header  = sc_menulist_default;
     header.list       = p_wk->p_data;

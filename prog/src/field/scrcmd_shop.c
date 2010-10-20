@@ -1841,7 +1841,7 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
   header.print_util   = &wk->printUtil; //表示に使用するプリントユーティリティ
   header.print_que    = wk->printQue; //表示に使用するプリントキュー
   header.font_handle  = wk->font; //表示に使用するフォントハンドル
-  
+  header.arrow_wait   = BMPMENULIST_ARROW_WAIT_MIN;
 
    wk->menuList = BmpMenuList_Set( &header, 0, 0, wk->heapId );
   

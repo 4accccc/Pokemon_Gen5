@@ -686,6 +686,7 @@ static const BMPMENULIST_HEADER MenuListHeader = {
   /* 表示に使用するプリントユーティリティ */NULL,
   /* 表示に使用するプリントキュー */NULL,
   /* 表示に使用するフォントハンドル */NULL,
+  BMPMENULIST_ARROW_WAIT_MAX,
 };
 
 static const BMPMENULIST_HEADER PlaceListHeader = {
@@ -702,6 +703,7 @@ static const BMPMENULIST_HEADER PlaceListHeader = {
   /* 表示に使用するプリントユーティリティ */NULL,
   /* 表示に使用するプリントキュー */NULL,
   /* 表示に使用するフォントハンドル */NULL,
+  BMPMENULIST_ARROW_WAIT_MAX,
 };
 
 //============================================================================================
