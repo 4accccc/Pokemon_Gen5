@@ -307,6 +307,7 @@ const GFL_PROC_DATA	DebugNagiMainProcData	=
 	DEBUG_PROC_NAGI_Exit,
 };
 
+
 //-------------------------------------
 ///	BGƒVƒXƒeƒ€
 //=====================================
