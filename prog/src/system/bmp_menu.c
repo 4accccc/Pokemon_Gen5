@@ -38,21 +38,27 @@ struct _BMPMENU_WORK {
   BMPMENU_HEADER  hed;
   BMPCURSOR *cursor;
 
-  u32 cancel;
+  u32 cancel;       // Bボタンキャンセル有りか？
 
-  u8  index;
-  u8  cur_pos;
-  u8  len;
-  u8  px;
-
-  u8  py;
-  u8  sx;
-  u8  sy;
-  u8  mv;
+  u8  index;        // カーソル開始位置
+  u8  cur_pos;      // 現在のカーソル
+  u8  len;          // メニュー文字列の一番多い文字数を格納
+  u8  px;           // ウインドウの表示位置X（キャラ単位）
+  u8  py;           // ウインドウの表示位置Y（キャラ単位）
+  u8  sx;           // 文字列表示開始位置オフセットX（カーソル用に右にどれだけ動かすか）
+  u8  sy;           // 
+  u8  mv;           // 移動結果格納ワーク
 
   HEAPID  heap_id;  // メモリ取得モード
-  u8  dmy[2];   // ビット余り
+  u8  arrow_wait;  // 選択開始までのウェイトを設定
+  u8  dmy;          // フラグ余り
 };
+
+
+#ifdef PM_DEBUG
+extern int BmpMenuList_GetYesNoWait( void );
+extern void BmpMenuList_SetYesNoWait( int value );
+#endif
 
 //======================================================================
 //  プロトタイプ宣言
@@ -119,7 +125,6 @@ BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER *dat,
 #endif
 
   BmpMenuStrPut( mw );
-  BmpMenuCursorPut( mw );
 
   return mw;
 }
@@ -609,6 +614,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   hed.c_disp_f = 0;
   hed.loop_f = 0;
   hed.print_util = GFL_HEAP_AllocClearMemory(heap,sizeof(PRINT_UTIL));
+  hed.arrow_wait = BMPMENU_ARROW_WAIT_MAX;
 
   hed.font_handle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
   hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
@@ -619,6 +625,16 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   hed.b_trans   = FALSE;
 
   pWk = BmpMenu_AddEx( &hed, 14, 0, pos, heap, PAD_BUTTON_CANCEL );
+
+  if(hed.arrow_wait==0){
+    pWk->arrow_wait = BMPMENU_ARROW_WAIT_MIN;
+  }else{
+#ifdef PM_DEBUG
+    pWk->arrow_wait = BmpMenuList_GetYesNoWait();
+#else
+    pWK->arrow_wait = BMPMENU_ARROW_WAIT_MAX;
+#endif
+  }
   GFL_BMPWIN_MakeScreen(hed.win);
   BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
 
@@ -643,18 +659,31 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
 //--------------------------------------------------------------------------------------------
 u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
 {
-  //  u32 ret = BmpMenu_MainSE( mw,SE_DECIDE );
-  u32 ret = BmpMenu_Main( mw );
+  u32 ret=0;
+  // YESNOにカーソルが表示されるまでのウェイトを入れた by mori 2010/10/14
+  if(mw->arrow_wait!=0){
+    mw->arrow_wait--;
+    if(mw->arrow_wait==0){
+      BmpMenuCursorPut( mw );
+      GFL_BMPWIN_TransVramCharacter( mw->hed.win );
+    }
+    ret = BMPMENU_NULL;
+  }else{
 
+    // 通常処理
+    ret = BmpMenu_Main( mw );
+  }
 #ifdef BUGFIX_AF_BTS7810_20100806
   BmpMenu_YesNoSelectPrintMain( mw );
 #else
-  BOOL b_finish = PRINTSYS_QUE_Main(mw->hed.print_que);
-  
-  if( (!(mw->hed.b_trans)) && b_finish )
   {
-    GFL_BMPWIN_TransVramCharacter( mw->hed.win );
-    mw->hed.b_trans = TRUE;
+    BOOL b_finish = PRINTSYS_QUE_Main(mw->hed.print_que);
+    
+    if( (!(mw->hed.b_trans)) && b_finish )
+    {
+      GFL_BMPWIN_TransVramCharacter( mw->hed.win );
+      mw->hed.b_trans = TRUE;
+    }
   }
 #endif
 
@@ -667,11 +696,11 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
 #ifdef BUGFIX_AF_BTS7810_20100806
 //----------------------------------------------------------------------------
 /**
- *	@brief    はい・いいえ選択ウィンドウの表示
+ *  @brief    はい・いいえ選択ウィンドウの表示
  *
- *	@param	  ワーク
+ *  @param    ワーク
  *
- *	@retval   TRUEで表示完了  FALSEで表示中
+ *  @retval   TRUEで表示完了  FALSEで表示中
  */
 //-----------------------------------------------------------------------------
 BOOL BmpMenu_YesNoSelectPrintMain( BMPMENU_WORK * mw )

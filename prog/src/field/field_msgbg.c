@@ -1556,7 +1556,6 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   menuH.icon = icon;
   menuH.call_back = callback;
   menuH.work = work;
-  
   menuFunc->pMenuListWork =
     BmpMenuList_Set( &menuH, list_pos, cursor_pos, fmb->heapID );
 //  BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
@@ -2021,11 +2020,11 @@ void FLDMENUFUNC_WriteWindow( FLDMENUFUNC *menuFunc )
 #endif
 //----------------------------------------------------------------------------
 /**
- *	@brief  現在選択中のインデックスを取得する
+ *  @brief  現在選択中のインデックスを取得する
  *
- *	@param	const FLDMENUFUNC *menuFunc   メニューワーク
+ *  @param  const FLDMENUFUNC *menuFunc   メニューワーク
  *
- *	@return 現在選択しているインデックス
+ *  @return 現在選択しているインデックス
  */
 //-----------------------------------------------------------------------------
 u32 FLDMENUFUNC_GetNowIndex( const FLDMENUFUNC *menuFunc )
@@ -2064,6 +2063,9 @@ static void FldMenuFuncH_BmpMenuListH(
   menuH->font_size_x = fmenuH->font_size_x; //文字サイズX(ドット
   menuH->font_size_y = fmenuH->font_size_y; //文字サイズY(ドット
   menuH->icon = fmenuH->icon;
+  menuH->arrow_wait = BMPMENULIST_ARROW_WAIT_MAX; // Swanでカーソル遅延機能を追加
+                                                  // by mori 2010.10.19
+  
 }
 
 //======================================================================
@@ -2175,7 +2177,7 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
 }
 
 //--------------------------------------------------------------
-//	ストリーム用コールバック
+//  ストリーム用コールバック
 //--------------------------------------------------------------
 static BOOL fldMsgPrintStream_CallBack( u32 value )
 {
@@ -2535,7 +2537,7 @@ BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin )
 //--------------------------------------------------------------
 GFL_BMPWIN * FLDMSGWIN_STREAM_GetBmpWin( FLDMSGWIN_STREAM *msgWin )
 {
-	return msgWin->bmpwin;
+  return msgWin->bmpwin;
 }
 
 //======================================================================
@@ -3809,7 +3811,7 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
  *
  * @param fmb FLDMSGBG*
  * @param type FLDBGWIN_TYPE
- * @param	useFontHandle フォントハンドル外部指定
+ * @param useFontHandle フォントハンドル外部指定
  * @retval FLDBGWIN*
  *
  * *10/04/27 海底神殿暗号メッセージ用に作成 takahashi tomoya 

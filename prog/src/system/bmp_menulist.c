@@ -61,9 +61,10 @@ struct _BMPMENULIST_WORK {
   u8  cur_actID;  //
   u8  work;   //移動方向（使ってないようなので）
 
-  HEAPID  heapID;   // メモリ取得モード
+  HEAPID  heapID;  // メモリ取得モード
   u8  cancel_mode; // キャンセル
-  u16 padding; //long padding
+  u8  arrow_wait; // カーソルが表示されるまでのウェイト
+  u8  padding;     //long padding
 };
 
 /********************************************************************/
@@ -82,6 +83,8 @@ static void CallBackSet( BMPMENULIST_WORK * lw, u8 mode );
 
 static void BmpWinDataShift(
   GFL_BMPWIN *bmpwin, u8 direct, u8 offset, u8 data, u16 size );
+
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -115,6 +118,17 @@ BMPMENULIST_WORK * BmpMenuList_Set(
   lw->work      = 0;
   lw->heapID    = heapID;
 
+  // カーソルが表示されるまでのウェイトを設定
+  if(lw->hed.arrow_wait==0){
+    lw->arrow_wait=BMPMENULIST_ARROW_WAIT_MIN;
+  }else{
+#ifdef PM_DEBUG
+    lw->arrow_wait = BmpMenuList_GetYesNoWait();  
+#else
+    lw->arrow_wait = lw->hed.arrow_wait;
+#endif
+  }
+
   // テンポラリ初期化
   lw->tmp.f_col   = lw->hed.f_col;  // 表示文字色
   lw->tmp.b_col   = lw->hed.b_col;  // 表示背景色
@@ -144,7 +158,7 @@ BMPMENULIST_WORK * BmpMenuList_Set(
   // リストキャラデータ初期化
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.win), lw->hed.b_col );
   ListScreenPut( lw, lw->lp, 0, lw->hed.line, TRUE );   // 全体リスト描画
-  ListCursorPut( lw );                // カーソル描画
+//  ListCursorPut( lw );                // カーソル描画
 
   CallBackSet( lw, 1 );
 
@@ -166,10 +180,19 @@ BMPMENULIST_WORK * BmpMenuList_Set(
 u32 BmpMenuList_Main( BMPMENULIST_WORK * lw )
 {
   u16 skip_u, skip_d;
-  int trg = GFL_UI_KEY_GetTrg();
+  int trg    = GFL_UI_KEY_GetTrg();
   int repeat = GFL_UI_KEY_GetRepeat();
 
   lw->work = BMPMENULIST_MOVE_NONE;
+
+  // カーソル表示までのウエィト
+  if(lw->arrow_wait!=0){
+    lw->arrow_wait--;
+    if(lw->arrow_wait==0){
+      ListCursorPut( lw );     // カーソル描画
+    }
+    return BMPMENULIST_NULL;
+  }
 
   if( trg & PAD_BUTTON_DECIDE ){
     PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
@@ -503,10 +526,10 @@ u16 BmpMenuList_CursorYGet( BMPMENULIST_WORK * lw )
 /**
  * BMPリストのカーソルY座標を取得（位置指定版）
  *
- * @param	lw		BMPリストワーク
+ * @param lw    BMPリストワーク
  * @param cursor  カーソルの位置
  *
- * @return	カーソルY座標
+ * @return  カーソルY座標
  */
 //--------------------------------------------------------------------------------------------
 u16 BmpMenuList_DirectCursorYGet( BMPMENULIST_WORK * lw, u16 cursor )
@@ -1422,7 +1445,7 @@ void BmpMenuList_SetCursorString( BMPMENULIST_WORK *lw, u32 strID )
 void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID )
 {
   BmpCursor_SetCursorBitmap( lw->cursor, heapID );
-  ListCursorPut( lw );
+//  ListCursorPut( lw );
 }
 
 //--------------------------------------------------------------
@@ -1442,3 +1465,16 @@ void BmpMenuList_SetCancelMode( BMPMENULIST_WORK *lw, BMPMENULIST_CANCELMODE mod
 {
   lw->cancel_mode = mode;
 }
+
+#ifdef PM_DEBUG
+static int debug_yesno_wait = 10; // 操作対象の友達番号
+void BmpMenuList_SetYesNoWait( int value )
+{
+  debug_yesno_wait = value;
+}
+
+int BmpMenuList_GetYesNoWait( void )
+{
+  return debug_yesno_wait;
+}
+#endif

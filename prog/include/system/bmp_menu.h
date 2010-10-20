@@ -22,14 +22,18 @@
 #define BMPMENU_CANCEL  ( 0xfffffffe )
 #define BMPMENU_DUMMY ( 0xfffffffd )
 
+#define BMPMENU_ARROW_WAIT_MIN  (  1 )  // 最速でカーソルを出す
+#define BMPMENU_ARROW_WAIT_MAX  ( 10 )  // ウェイトを入れてからカーソルを出す
+
+
 typedef struct {
   const BMPMENU_DATA * menu;
   GFL_BMPWIN *win;
-  u8  dummy;
+  u8  arrow_wait; // 矢印カーソルが表示されるまでのウェイト(0でも構わない)
   u8  x_max;      // 横方向項目最大数（必ず１以上）
   u8  y_max;      // 縦方向項目最大数（必ず１以上）
-  u8  line_spc:4;   // 文字間隔Ｙ
-  u8  c_disp_f:2;   // カーソル表示フラグ
+  u8  line_spc:4; // 文字間隔Ｙ
+  u8  c_disp_f:2; // カーソル表示フラグ
   u8  loop_f:2;   // LOOPフラグ ( 0=OFF, 1=ON )
   
   u16 font_size_x;    //文字サイズX(ドット
@@ -238,8 +242,6 @@ typedef struct {
 //--------------------------------------------------------------------------------------------
 extern BMPMENU_WORK * BmpMenu_YesNoSelectInit
   ( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap );
-extern BMPMENU_WORK * BmpMenu_YesNoSelectInitFixPos
-  ( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -259,11 +261,11 @@ extern u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw );
 #ifdef BUGFIX_AF_BTS7810_20100806
 //----------------------------------------------------------------------------
 /**
- *	@brief    はい・いいえ選択ウィンドウの表示
+ *  @brief    はい・いいえ選択ウィンドウの表示
  *
- *	@param	  ワーク
+ *  @param    ワーク
  *
- *	@retval   TRUEで表示完了  FALSEで表示中
+ *  @retval   TRUEで表示完了  FALSEで表示中
  */
 //-----------------------------------------------------------------------------
 extern BOOL BmpMenu_YesNoSelectPrintMain( BMPMENU_WORK * mw );
