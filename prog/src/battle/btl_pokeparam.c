@@ -3531,3 +3531,32 @@ static inline BOOL IsMatchTokusei( const BTL_POKEPARAM* bpp, PokeTokusei tokusei
   return (bpp->tokusei == tokusei);
 }
 
+#ifdef BUGFIX_AF_GFBTS2028_101007
+//=============================================================================================
+/**
+ * SrcPP のパラメータ再計算（レベルアップ時の努力値加算が反映されない不具合の対処）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_RenewPP( BTL_POKEPARAM* bpp )
+{
+  POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
+  PP_Renew( pp );
+}
+#endif
+
+
+BOOL BPP_IsHP41( const BTL_POKEPARAM* bpp )
+{
+  if( bpp->coreParam.hp == 41 )
+  {
+    OS_TPrintf("ID=%d, HP==41です\n", bpp->coreParam.myID);
+    return TRUE;
+  }
+  else
+  {
+    OS_TPrintf("ID=%d, HP41じゃないよ %dだよ\n", bpp->coreParam.myID, bpp->coreParam.hp);
+    return FALSE;
+  }
+}

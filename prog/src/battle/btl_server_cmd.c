@@ -80,6 +80,11 @@ typedef enum {
   SC_ARGFMT_32111bit_2byte    = SC_ARGFMT(6,1),
   SC_ARGFMT_5555bit_22byte    = SC_ARGFMT(6,2),
 
+  #ifdef BUGFIX_AF_GFBTS2028_101007
+  // à¯êîÇVå¬ÇÃå^
+  SC_ARGFMT_1x7byte = SC_ARGFMT(7,0),
+  #endif
+
   // à¯êîÇWå¬ÇÃå^
   SC_ARGFMT_1x8byte = SC_ARGFMT(8,0),
 
@@ -194,6 +199,10 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_MSG,    // SC_MSG_SET
   SC_ARGFMT_MSG_SE, // SC_MSG_STD_SE
   SC_ARGFMT_MSG_SE, // SC_MSG_SET_SE
+
+#ifdef BUGFIX_AF_GFBTS2028_101007
+  SC_ARGFMT_1x7byte,  // SC_OP_SET_DORYOKU
+#endif
 };
 
 //------------------------------------------------------------------------
@@ -597,6 +606,18 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       scque_put2byte( que, args[5] );
     }
     break;
+
+  #ifdef BUGFIX_AF_GFBTS2028_101007
+  case SC_ARGFMT_1x7byte:
+    {
+      int i;
+      for(i=0; i<7; ++i){
+        scque_put1byte( que, args[i] );
+      }
+    }
+    break;
+  #endif
+
   case SC_ARGFMT_1x8byte:
     {
       int i;
@@ -791,6 +812,17 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       args[5] = scque_read2byte( que );
     }
     break;
+
+  #ifdef BUGFIX_AF_GFBTS2028_101007
+  case SC_ARGFMT_1x7byte:
+    {
+      int i;
+      for(i=0; i<7; ++i){
+        args[i] = scque_read1byte( que );
+      }
+    }
+    break;
+  #endif
 
   case SC_ARGFMT_1x8byte:
     {

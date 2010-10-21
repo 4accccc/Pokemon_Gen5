@@ -474,6 +474,10 @@ static void AICtrl_Delegate( BTL_CLIENT* wk );
 static void aictrl_RestoreViewClient( BTL_CLIENT* wk );
 static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk );
 
+#ifdef BUGFIX_AF_GFBTS2028_101007
+static BOOL scProc_OP_SetDoryoku( BTL_CLIENT* wk, int* seq, const int* args );
+#endif
+
 
 //=============================================================================================
 /**
@@ -5767,6 +5771,10 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MIGAWARI_DAMAGE,   scProc_ACT_MigawariDamage      },
     { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM             },
     { SC_ACT_MSGWIN_HIDE,       scProc_ACT_MsgWinHide          },
+
+#ifdef BUGFIX_AF_GFBTS2028_101007
+    { SC_OP_SET_DORYOKU,        scProc_OP_SetDoryoku           },
+#endif
   };
 
 restart:
@@ -7038,6 +7046,47 @@ static BOOL scProc_ACT_MsgWinHide( BTL_CLIENT* wk, int* seq, const int* args )
   return FALSE;
 }
 
+
+#ifdef BUGFIX_AF_GFBTS2028_101007
+//---------------------------------------------------------------------------------------
+/**
+ *  努力値セット理
+ *  args .. [0]:対象ポケモンID  [1]:hp [2]:pow [3]:def [4]:agi [5]:sp_pow [6]:sp_def
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_OP_SetDoryoku( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  static const u16 param[] = {
+    ID_PARA_hp_exp,
+    ID_PARA_pow_exp,
+    ID_PARA_def_exp,
+    ID_PARA_agi_exp,
+    ID_PARA_spepow_exp,
+    ID_PARA_spedef_exp,
+  };
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  POKEMON_PARAM* pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
+
+  u32 i;
+
+  for(i=0; i<NELEMS(param); ++i)
+  {
+    if( param[i+1] )
+    {
+      u32 exp = args[1+i] + PP_Get( pp, param[i], NULL );
+      if( exp > PARA_EXP_MAX ){
+        exp = PARA_EXP_MAX;
+      }
+      OS_TPrintf("param[%d] = %d\n", i, exp);
+      PP_Put( pp, param[i], exp );
+    }
+  }
+
+  return TRUE;
+}
+#endif
+
 //---------------------------------------------------------------------------------------
 /**
  *  経験値加算処理
@@ -7116,7 +7165,12 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   // レベルアップ処理ルート
   case SEQ_LVUP_ROOT:
     BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP));
+    #ifdef   BUGFIX_AF_GFBTS2028_101007
+    BPP_RenewPP( bpp );
+    #endif
+
     BPP_ReflectByPP( bpp );
+    BPP_IsHP41( bpp );
     BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP));
     {
        // 場に出ているならゲージ演出

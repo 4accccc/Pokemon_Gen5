@@ -122,6 +122,10 @@ typedef enum {
   SC_MSG_STD_SE,            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
   SC_MSG_SET_SE,            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
 
+#ifdef BUGFIX_AF_GFBTS2028_101007
+  SC_OP_SET_DORYOKU,        ///< 努力値加算[ hp, pow, def, agi, sp_pow, sp_agi ]
+#endif
+
   SC_MAX,
 
   SCEX_RESERVE,
@@ -387,6 +391,12 @@ static inline void SCQUE_PUT_OP_TurnCheckField( BTL_SERVER_CMD_QUE* que )
 {
   SCQUE_PUT_Common( que, SC_OP_TURN_CHECK_FIELD, 0 );
 }
+#ifdef BUGFIX_AF_GFBTS2028_101007
+static inline void SCQUE_PUT_OP_Doryoku( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 hp, u8 pow, u8 def, u8 agi, u8 sp_pow, u8 sp_def )
+{
+  SCQUE_PUT_Common( que, SC_OP_SET_DORYOKU, pokeID, hp, pow, def, agi, sp_pow, sp_def );
+}
+#endif
 
 
 
