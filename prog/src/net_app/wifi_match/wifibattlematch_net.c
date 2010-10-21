@@ -791,7 +791,11 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
 
 #ifdef BUGFIX_AF_BTS7759_20100914
       //通信エラー時、音が鳴り続けてしまうのを回避
+#ifdef BUGFIX_AF_SYSTEM165_101021
+      PMSND_StopSE();
+#else
       PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+#endif
 #endif //BUGFIX_AF_BTS7759_20100914
 
 #ifdef BUGFIX_BTS7895_20100719
@@ -877,6 +881,11 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       GFL_NET_SetAutoErrorCheck(FALSE);
       GFL_NET_SetNoChildErrorCheck(FALSE);
       DEBUG_NET_Printf( "ライブラリ個別のエラー検知 %d\n",repair );
+
+
+#ifdef BUGFIX_AF_SYSTEM165_101021
+      PMSND_StopSE();
+#endif
 
 #ifdef BUGFIX_BTS7895_20100719
       //セーブ中のライブラリの個別エラーであれば問答無用でフェイタルへいく
