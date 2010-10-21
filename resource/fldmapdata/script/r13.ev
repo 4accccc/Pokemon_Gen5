@@ -317,10 +317,11 @@ _PLAYER_DIR_GET(LWK_DIR)
 				_OBJ_ANIME_WAIT()
     			
     			//羽ばたき音
+    			//海外版修正SYSTEM97：使用ＳＥと天候ＳＥのプレイヤーが同じため、_SE_WAIT()だと天候のループ音をずっと待ち続けてしまう不具合を対処
 				_SE_PLAY(SEQ_SE_W017_01)
-				_SE_WAIT()
+				_TIME_WAIT( 32 )
 				_SE_PLAY(SEQ_SE_W017_01)
-				_SE_WAIT()
+				_TIME_WAIT( 32 )
 				
     			_OBJ_DEL(R13_POKE100_01)
 			
