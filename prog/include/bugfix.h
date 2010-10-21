@@ -977,3 +977,13 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
  *  担当：名木橋
  */
 #define BUGFIX_AF_FEELING_CHECK_SCORE_101015
+
+/*
+ * 使用するDSを変更してWi-Fiクラブに接続し、Wi-Fiユーザー情報を更新した後、
+ * Wi-Fiコネクションから切断することを告げるメッセージが表示されません。
+ * フレンドが0人の状態でWi-Fiクラブに初回接続する場合も同様です。
+ *
+ *  担当：大野さんから引き継いで名木橋
+ */
+#define BUGFIX_AF_SYSTEM175_101021
+

@@ -121,7 +121,10 @@ enum _EVENT_IRCBATTLE {
   P2P_SETEND,
   P2P_NETENDCALL,
   P2P_NETEND,
-
+#ifdef BUGFIX_AF_SYSTEM175_101021
+  P2P_WIFIENDST,
+  P2P_WIFIENDEN,
+#endif
 
 };
 
@@ -358,6 +361,10 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       ep2p->login.display = WIFILOGIN_DISPLAY_UP;
       ep2p->login.bg = WIFILOGIN_BG_NORMAL;
       ep2p->login.nsid = WB_NET_WIFICLUB;
+#ifdef BUGFIX_AF_SYSTEM175_101021
+      ep2p->login.bgm = WIFILOGIN_BGM_NONE;
+      PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
+#endif
     }
     ep2p->localProc = GFL_PROC_LOCAL_boot(HEAPID_PROC);
     GFL_PROC_LOCAL_CallProc(ep2p->localProc,
@@ -373,15 +380,49 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     GFL_PROC_LOCAL_Exit(ep2p->localProc);
     
     if(WifiList_GetFriendDataNum(GAMEDATA_GetWiFiList(ep2p->pGameData)) == 0){
+#ifdef BUGFIX_AF_SYSTEM175_101021
+      (*seq)  = P2P_WIFIENDST;  //  P2P_NETENDCALL;//
+#else
       (*seq)  = P2P_NETENDCALL;
+#endif
     }
     else if( ep2p->login.result == WIFILOGIN_RESULT_LOGIN ){
       (*seq)  = P2P_MATCH_BOARD;
+#ifdef BUGFIX_AF_SYSTEM175_101021
+      PMSND_FadeOutBGM( PMSND_FADE_FAST );
+#endif
     }
     else{ 
+#ifdef BUGFIX_AF_SYSTEM175_101021
+      PMSND_FadeOutBGM( PMSND_FADE_FAST );
+#endif
       (*seq)  = P2P_EXIT;
     }
     break;
+#ifdef BUGFIX_AF_SYSTEM175_101021
+  case P2P_WIFIENDST:
+    ep2p->logout.gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
+    ep2p->logout.display = WIFILOGIN_DISPLAY_UP;
+    ep2p->logout.bg = WIFILOGIN_BG_NORMAL;
+    ep2p->logout.bgm = WIFILOGIN_BGM_NONE;
+    ep2p->logout.fade = WIFILOGIN_FADE_DEFAULT;
+    ep2p->logout.logout_before_callback = NULL;
+    ep2p->logout.p_callback_wk = NULL;
+    ep2p->localProc = GFL_PROC_LOCAL_boot(HEAPID_PROC);
+    GFL_PROC_LOCAL_CallProc(ep2p->localProc, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &ep2p->logout);
+    (*seq)++;
+    break;
+  case P2P_WIFIENDEN:
+    if( GFL_PROC_LOCAL_Main(ep2p->localProc) != GFL_PROC_MAIN_NULL ){
+      NetErr_DispCall(FALSE);
+      return FALSE;
+    }
+    GFL_PROC_LOCAL_Exit(ep2p->localProc);
+    PMSND_FadeOutBGM( PMSND_FADE_FAST );
+    (*seq) = _WAIT_NET_END;
+    break;
+#endif //BUGFIX_AF_SYSTEM175_101021
+    
   case P2P_MATCH_BOARD:
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
     GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
