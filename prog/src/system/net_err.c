@@ -386,6 +386,10 @@ void NetErr_DispCallPushPop(void)
 		return;
 	}
 
+#ifdef BUGFIX_AF_SYSTEM165_101021
+      PMSND_StopSE();
+#endif
+
 	//ÉGÉâÅ[âÊñ ï`âÊ
 	Local_ErrDispInit(FALSE,FALSE);
 	
