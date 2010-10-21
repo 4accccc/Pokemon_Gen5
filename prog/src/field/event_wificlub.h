@@ -38,6 +38,9 @@
 #include "net_app/comm_tvt_sys.h"  //TVトランシーバ
 //#include "wifi_status.h"
 #include "net_app/wifi_login.h"
+#ifdef BUGFIX_AF_SYSTEM175_101021
+#include "net_app/wifi_logout.h"
+#endif
 
 #include "app/pokelist.h"
 #include "include/demo/comm_btl_demo.h"
@@ -71,6 +74,9 @@ typedef struct {
   WIFI_LIST* pWifiList;
 //  GAMESYS_WORK * gsys;
   WIFILOGIN_PARAM     login;
+#ifdef BUGFIX_AF_SYSTEM175_101021
+  WIFILOGOUT_PARAM     logout;
+#endif
   BATTLE_SETUP_PARAM* para;
   COMM_BTL_DEMO_PARAM demo_prm;
   COMM_BATTLE_CALL_PROC_PARAM prm;
