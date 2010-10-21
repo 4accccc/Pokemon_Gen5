@@ -5697,7 +5697,13 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MEMBER_IN,         scProc_ACT_MemberIn            },
     { SC_ACT_RANKUP,            scProc_ACT_RankUp              },
     { SC_ACT_RANKDOWN,          scProc_ACT_RankDown            },
+
+#ifdef BUGFIX_AF_GFBTS2028_101007
+    { SC_OP_SET_DORYOKU,        scProc_OP_SetDoryoku           },
+#else
     { SC_ACT_WEATHER_DMG,       scProc_ACT_WeatherDmg          },
+#endif
+
     { SC_ACTOP_WEATHER_START,   scProc_ACTOP_WeatherStart      },
     { SC_ACTOP_WEATHER_END,     scProc_ACTOP_WeatherEnd        },
     { SC_ACT_SIMPLE_HP,         scProc_ACT_SimpleHP            },
@@ -5771,10 +5777,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MIGAWARI_DAMAGE,   scProc_ACT_MigawariDamage      },
     { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM             },
     { SC_ACT_MSGWIN_HIDE,       scProc_ACT_MsgWinHide          },
-
-#ifdef BUGFIX_AF_GFBTS2028_101007
-    { SC_OP_SET_DORYOKU,        scProc_OP_SetDoryoku           },
-#endif
   };
 
 restart:

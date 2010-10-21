@@ -89,7 +89,18 @@ typedef enum {
   SC_ACT_MEMBER_OUT_MSG,    ///< 【ポケモン退場メッセージ】[ ClientID, pokeID ]
   SC_ACT_MEMBER_OUT,        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   SC_ACT_MEMBER_IN,         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
+
+/**
+ * SC_ACT_WEATHER_DMG は、定義されているだけで使用されていない。
+ * ServerCmd の並びを変更せずにバグ修正するため、SC_OP_SET_DORYOKU をここに割り当てる。
+ * 2010.10.21  taya
+ */
+#ifdef BUGFIX_AF_GFBTS2028_101007
+  SC_OP_SET_DORYOKU,        ///< 努力値加算[ hp, pow, def, agi, sp_pow, sp_agi ]
+#else
   SC_ACT_WEATHER_DMG,       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
+#endif
+
   SC_ACTOP_WEATHER_START,   ///< 天候変化
   SC_ACTOP_WEATHER_END,       ///< ターンチェックで天候終了
   SC_ACT_SIMPLE_HP,         ///< シンプルなHPゲージ増減処理
@@ -121,10 +132,6 @@ typedef enum {
   SC_MSG_SET,               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   SC_MSG_STD_SE,            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
   SC_MSG_SET_SE,            ///< メッセージ表示＆SE [MsgID, SENo, numArgs, arg1, arg2, ... ]
-
-#ifdef BUGFIX_AF_GFBTS2028_101007
-  SC_OP_SET_DORYOKU,        ///< 努力値加算[ hp, pow, def, agi, sp_pow, sp_agi ]
-#endif
 
   SC_MAX,
 
@@ -484,11 +491,14 @@ static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID,
 {
   SCQUE_PUT_Common( que, SC_ACT_MEMBER_IN, clientID, posIdx, memberIdx, fPutMsg );
 }
+
+#ifndef BUGFIX_AF_GFBTS2028_101007
 // 【アクション】天候による一斉ダメージ   weather:天候ID, pokeCnt:ダメージを受けるポケモン数
 static inline void SCQUE_PUT_ACT_WeatherDamage( BTL_SERVER_CMD_QUE* que, u8 weather, u8 pokeCnt )
 {
   SCQUE_PUT_Common( que, SC_ACT_WEATHER_DMG, weather, pokeCnt );
 }
+#endif
 
 static inline void SCQUE_PUT_ACTOP_WeatherStart( BTL_SERVER_CMD_QUE* que, u8 weather, u8 turn )
 {

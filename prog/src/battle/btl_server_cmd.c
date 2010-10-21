@@ -167,7 +167,13 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_ACT_MEMBER_OUT_MSG
   SC_ARGFMT_12byte,           // SC_ACT_MEMBER_OUT
   SC_ARGFMT_5353bit,          // SC_ACT_MEMBER_IN
+
+#ifdef BUGFIX_AF_GFBTS2028_101007
+  SC_ARGFMT_1x7byte,          // SC_OP_SET_DORYOKU
+#else
   SC_ARGFMT_44bit,            // SC_ACT_WEATHER_DMG,
+#endif
+
   SC_ARGFMT_11byte,           // SC_ACTOP_WEATHER_START,
   SC_ARGFMT_1byte,            // SC_ACTOP_WEATHER_END,
   SC_ARGFMT_1byte,            // SC_ACT_SIMPLE_HP
@@ -200,9 +206,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_MSG_SE, // SC_MSG_STD_SE
   SC_ARGFMT_MSG_SE, // SC_MSG_SET_SE
 
-#ifdef BUGFIX_AF_GFBTS2028_101007
-  SC_ARGFMT_1x7byte,  // SC_OP_SET_DORYOKU
-#endif
 };
 
 //------------------------------------------------------------------------
