@@ -195,10 +195,11 @@ static void _networkClose(G_SYNC_WORK* pWork);
 static void _downloadcheck(G_SYNC_WORK* pWork);
 static void _downloadcgearend(G_SYNC_WORK* pWork);
 static void _ErrorDisp(G_SYNC_WORK* pWork);
-static void _SymbolPokemonSave(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
+static void _SymbolPokemonSave2(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static BOOL _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static void _BoxPokeRemove(G_SYNC_WORK* pWork);
+static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSave,int monsno,int sex, int form, int tec, int act);
 
 
 
@@ -381,6 +382,12 @@ static void _ErrorDisp3(G_SYNC_WORK* pWork)
 
 static void _ErrorDisp2(G_SYNC_WORK* pWork)
 {
+#ifdef BUGFIX_GFBTS2029_20101021
+  if(pWork->errEnd){  //これ以上は進ませない
+    return;
+  }
+#endif
+  
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
     
     if(pWork->bSaveDataAsync){
@@ -690,6 +697,7 @@ static void _wakeupAction_save22(G_SYNC_WORK* pWork)
     return;
   }
 
+#ifndef BUGFIX_GFBTS2029_20101021
 #ifdef BUGFIX_BTS7876_20100716
   if(_IsLv1Mode(pWork)){
     _CHANGE_STATE(_wakeupAction7);
@@ -697,7 +705,7 @@ static void _wakeupAction_save22(G_SYNC_WORK* pWork)
     return;
   }
 #endif
-
+#endif //BUGFIX_GFBTS2029_20101021
 
   
   if(GFL_NET_IsInit()){
@@ -748,12 +756,29 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
     //   アイテムをセーブエリアに移動
     _itemInSaveArea(pDreamSave, pWork->pDreamDownload);
     
-    _SymbolPokemonSave(pWork, pDreamSave, pWork->pDreamDownload);  //ぽけもんかくのう
+    _SymbolPokemonSave2(pWork, pDreamSave, pWork->pDreamDownload);  //ぽけもんかくのう
     // 家具
     _furnitureInSaveArea(pDreamSave, pWork->pDreamDownload);
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pWork->pDreamDownload->signin);
   }
+#ifdef BUGFIX_GFBTS2029_20101021
+  else{
+    int i,j;
+    DREAM_WORLD_SERVER_STATUS_DATA *pDreamStatus = &pWork->pParent->aDreamStatus;
+
+    //ポケモンシンボルエンカウント
+    _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
+                       pDreamStatus->findPokemonSex,
+                       pDreamStatus->findPokemonForm,
+                       pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
+    for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+      DREAMWORLD_SV_SetItem(pDreamSave, i, pDreamStatus->itemID[i], pDreamStatus->itemNum[i]);
+    }
+
+    
+  }
+#endif
 
   pWork->bSaveDataAsync=TRUE;
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
@@ -1217,7 +1242,7 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
   }
 }
 
-static void _SymbolPokemonSave(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
+static void _SymbolPokemonSave2(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave, DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
 {
   int i;
   //シンボルポケ格納
@@ -1312,13 +1337,15 @@ static BOOL _lv1check(G_SYNC_WORK* pWork)
   DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
   DREAM_WORLD_SERVER_STATUS_DATA *pDreamStatus = &pWork->pParent->aDreamStatus;
 
-  
+#ifndef BUGFIX_GFBTS2029_20101021  
   //ポケモンシンボルエンカウント
   _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
                      pDreamStatus->findPokemonSex,
                      pDreamStatus->findPokemonForm,
                      pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
 
+#endif //BUGFIX_GFBTS2029_20101021  
+  
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     for(j=i+1;j<DREAM_WORLD_DATA_MAX_ITEMBOX;j++){
       if((pDreamStatus->itemID[i] != 0) && (pDreamStatus->itemID[j] == pDreamStatus->itemID[i])){
@@ -1326,9 +1353,11 @@ static BOOL _lv1check(G_SYNC_WORK* pWork)
       }
     }
   }
+#ifndef BUGFIX_GFBTS2029_20101021  
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     DREAMWORLD_SV_SetItem(pDreamSave, i, pDreamStatus->itemID[i], pDreamStatus->itemNum[i]);
   }
+#endif// BUGFIX_GFBTS2029_20101021  
   return TRUE;
 }
 
@@ -1690,6 +1719,98 @@ static void _accountCreateMessage(G_SYNC_WORK* pWork)
   _CHANGE_STATE(_accountCreateMessage2);
 }
 
+
+
+#ifdef BUGFIX_PDWMAIL01_20101021
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   データアップロード完了 セーブする
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _createAccount4(G_SYNC_WORK* pWork)
+{
+  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+
+  if(_IsNetworkMode(pWork) ){
+
+    {
+      int response;
+      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
+      if(_responceChk(pWork,response)){
+        return;
+      }
+    }
+
+    
+    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+      NET_PRINT("終了\n");
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        gs_response* pRep = (gs_response*)pEvent;
+        int d,j;
+        u32 size;
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+
+        if(pRep->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE){  //成功
+
+          GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+          _CHANGE_STATE( _accountCreateMessage);
+
+        }
+        else{
+          pWork->ErrorNo = pRep->ret_cd;
+          _CHANGE_STATE(_ErrorDisp);
+        }
+      }
+    }
+  }
+  else{
+    GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    _CHANGE_STATE(_accountCreateMessage);
+  }
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   仮アカウント時のデータアップロード中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _createAccount3(G_SYNC_WORK* pWork)
+{
+  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+
+  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+
+  if(_IsNetworkMode(pWork)){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
+      u32 size;
+      u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
+        _CHANGE_STATE(_createAccount4);
+      }
+    }
+  }
+  else{
+    GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
+    _CHANGE_STATE(_createAccount4);
+  }
+
+}
+
+#endif //BUGFIX_PDWMAIL01_20101021
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン仮アカウント作成
@@ -1712,6 +1833,20 @@ static void _createAccount2(G_SYNC_WORK* pWork)
         gs_response* pEvent = (gs_response*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
 
+#ifdef BUGFIX_PDWMAIL01_20101021
+
+        if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
+           _CHANGE_STATE(_ghttpPokemonListDownload);
+        }
+        else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
+          _CHANGE_STATE( _createAccount3);
+        }
+        else{
+          pWork->ErrorNo = pEvent->ret_cd;
+          _CHANGE_STATE(_ErrorDisp);
+        }
+
+#else
         if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
            _CHANGE_STATE(_ghttpPokemonListDownload);
         }
@@ -1723,6 +1858,7 @@ static void _createAccount2(G_SYNC_WORK* pWork)
           pWork->ErrorNo = pEvent->ret_cd;
           _CHANGE_STATE(_ErrorDisp);
         }
+#endif
       }
     }
   }
