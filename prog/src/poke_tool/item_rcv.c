@@ -186,25 +186,23 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
 	tmp[7] = ITEM_GetBufParam( dat, ITEM_PRM_EXP_LIMIT_FLAG );
 
   // HP努力値アップ
-  if( PP_Get( pp, ID_PARA_monsno, NULL ) != MONSNO_NUKENIN ){
-    if( ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP ) != 0 ){
-      tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP_POINT );
-      if( tmp[6] > 0 ){
-        if( !( tmp[0] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
-						tmp[0] < PRMEXP_ONE_MAX &&
-						(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
-          GFL_HEAP_FreeMemory( dat );
-          return TRUE;
-        }
-      }else if( tmp[6] < 0 ){
-        if( tmp[0] > 0 ){
-          GFL_HEAP_FreeMemory( dat );
-          return TRUE;
-        }
-        if( Friend_UpCheck( pp, dat ) == TRUE ){
-          GFL_HEAP_FreeMemory( dat );
-          return TRUE;
-        }
+  if( ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP ) != 0 ){
+    tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP_POINT );
+    if( tmp[6] > 0 && ( PP_Get( pp, ID_PARA_monsno, NULL ) != MONSNO_NUKENIN ) ){
+      if( !( tmp[0] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+          tmp[0] < PRMEXP_ONE_MAX &&
+          (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+        GFL_HEAP_FreeMemory( dat );
+        return TRUE;
+      }
+    }else if( tmp[6] < 0 ){
+      if( tmp[0] > 0 ){
+        GFL_HEAP_FreeMemory( dat );
+        return TRUE;
+      }
+      if( Friend_UpCheck( pp, dat ) == TRUE ){
+        GFL_HEAP_FreeMemory( dat );
+        return TRUE;
       }
     }
   }
@@ -212,9 +210,9 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_POWER_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_POWER_EXP_POINT );
     if( tmp[6] > 0 ){
-			if( !( tmp[1] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
-					tmp[1] < PRMEXP_ONE_MAX &&
-					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+      if( !( tmp[1] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+          tmp[1] < PRMEXP_ONE_MAX &&
+          (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -233,9 +231,9 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_DEFENCE_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_DEFENCE_EXP_POINT );
     if( tmp[6] > 0 ){
-			if( !( tmp[2] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
-					tmp[2] < PRMEXP_ONE_MAX &&
-					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+      if( !( tmp[2] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+          tmp[2] < PRMEXP_ONE_MAX &&
+          (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -254,9 +252,9 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_AGILITY_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_AGILITY_EXP_POINT );
     if( tmp[6] > 0 ){
-			if( !( tmp[3] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
-					tmp[3] < PRMEXP_ONE_MAX &&
-					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+      if( !( tmp[3] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+          tmp[3] < PRMEXP_ONE_MAX &&
+          (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -275,9 +273,9 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_SP_ATTACK_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_SP_ATTACK_EXP_POINT );
     if( tmp[6] > 0 ){
-			if( !( tmp[4] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
-					tmp[4] < PRMEXP_ONE_MAX &&
-					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+      if( !( tmp[4] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+          tmp[4] < PRMEXP_ONE_MAX &&
+          (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -296,9 +294,9 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_SP_DEFENCE_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_SP_DEFENCE_EXP_POINT );
     if( tmp[6] > 0 ){
-			if( !( tmp[5] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
-					tmp[5] < PRMEXP_ONE_MAX &&
-					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+      if( !( tmp[5] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+          tmp[5] < PRMEXP_ONE_MAX &&
+          (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -411,8 +409,8 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
 
   // 瀕死回復 or 全員瀕死回復
   if( ( ITEM_GetBufParam(dat,ITEM_PRM_DEATH_RCV) != 0 ||
-      ITEM_GetBufParam(dat,ITEM_PRM_ALL_DEATH_RCV) != 0 )
-    && ITEM_GetBufParam( dat, ITEM_PRM_LV_UP ) == 0 ){
+        ITEM_GetBufParam(dat,ITEM_PRM_ALL_DEATH_RCV) != 0 )
+      && ITEM_GetBufParam( dat, ITEM_PRM_LV_UP ) == 0 ){
     if( tmp[0] == 0 ){
       HP_Recover( pp, tmp[0], tmp[1], ITEM_GetBufParam(dat,ITEM_PRM_HP_RCV_POINT) );
       use_flg = TRUE;
@@ -435,8 +433,8 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
     if( tmp[2] < 100 )
     {
       const u32 nextLevelExp = POKETOOL_GetMinExp(PP_Get( pp, ID_PARA_monsno, NULL ),
-                                                  PP_Get( pp, ID_PARA_form_no, NULL ),
-                                                  tmp[2]+1) ;
+          PP_Get( pp, ID_PARA_form_no, NULL ),
+          tmp[2]+1) ;
       PP_Put( pp, ID_PARA_exp, nextLevelExp );
       PP_Renew(pp);
       if( tmp[0] == 0 )
@@ -490,25 +488,31 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   tmp[3] = PP_Get( pp, ID_PARA_agi_exp, NULL );
   tmp[4] = PP_Get( pp, ID_PARA_spepow_exp, NULL );
   tmp[5] = PP_Get( pp, ID_PARA_spedef_exp, NULL );
-	tmp[8] = ITEM_GetBufParam( dat, ITEM_PRM_EXP_LIMIT_FLAG );
+  tmp[8] = ITEM_GetBufParam( dat, ITEM_PRM_EXP_LIMIT_FLAG );
 
   // HP努力値アップ
-  if( PP_Get( pp, ID_PARA_monsno, NULL ) != MONSNO_NUKENIN )
+  if( ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP ) != 0 )
   {
-    if( ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP ) != 0 )
+    tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_HP_EXP_POINT );
+
+    // 「ヌケニン」だと努力値UPはさせない
+    if( tmp[7] > 0 && PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_NUKENIN )
     {
-      tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_HP_EXP_POINT );
-      tmp[6] = PrmExp_Up( tmp[0], (tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]), tmp[7], tmp[8] );
-      if( tmp[6] != -1 )
-      {
-        tmp[0] = tmp[6];
-        PP_Put( pp, ID_PARA_hp_exp, tmp[0] );
-        PP_Renew( pp );
-        use_flg = TRUE;
-      }
-      if( tmp[7] > 0 ){ dat_flg = TRUE; }
+      GFL_HEAP_FreeMemory( dat );
+      return FALSE;
     }
+
+    tmp[6] = PrmExp_Up( tmp[0], (tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]), tmp[7], tmp[8] );
+    if( tmp[6] != -1 )
+    {
+      tmp[0] = tmp[6];
+      PP_Put( pp, ID_PARA_hp_exp, tmp[0] );
+      PP_Renew( pp );
+      use_flg = TRUE;
+    }
+    if( tmp[7] > 0 ){ dat_flg = TRUE; }
   }
+
   // 攻撃努力値アップ
   if( ITEM_GetBufParam( dat, ITEM_PRM_POWER_EXP ) != 0 ){
     tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_POWER_EXP_POINT );
@@ -728,9 +732,9 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up, s32 limit )
   if( exp == 0 && up < 0 ){
     return -1;
   }
-	if( exp == PRMEXP_ONE_MAX && up > 0 ){
-		return -1;
-	}
+  if( exp == PRMEXP_ONE_MAX && up > 0 ){
+    return -1;
+  }
   if( exp >= ITEM_PRMEXP_MAX && limit == 0 && up > 0 ){
     return -1;
   }
