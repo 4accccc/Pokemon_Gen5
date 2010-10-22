@@ -525,6 +525,13 @@ static void ExitEvent( EVENT_WORK* work )
     task = FIELD_PLAYER_GetEffectTaskWork( work->player );
     FLDEFF_NAMIPOKE_SetRippleEffect( task, TRUE );
   }
+#ifdef BUGFIX_GFBTS1969_101022
+  /*
+   * GFBTS1969 対処
+   * 強制水流イベントが終了直後に、エンカウントエフェクトに対応する
+   */
+  FIELD_PLAYER_SetNaminoriEventEnd( work->player, TRUE );
+#endif  // BUGFIX_GFBTS1969_101022
 }
 
 //---------------------------------------------------------------------------------------------

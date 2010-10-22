@@ -1000,3 +1000,12 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
  *  担当：名木橋
  */
 #define BUGFIX_AF_SYSTEM165_101021
+
+
+/*
+ * GFBTS 1969
+ * 強制移動水流の移動終着点にエフェクトエンカウントが発生していても、
+ * 特殊エンカウントイベントが起動しない不具合を対処
+ *
+ */
+#define BUGFIX_GFBTS1969_101022
