@@ -675,6 +675,8 @@ extern  u8    PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp );
 extern  BOOL  PP_CheckRare( const POKEMON_PARAM *pp );
 extern  BOOL  PPP_CheckRare( const POKEMON_PASO_PARAM *pp );
 extern  PokeSick PP_GetSick( const POKEMON_PARAM* pp );
+extern  u8    PP_GetTokuseiIndex( const POKEMON_PARAM * pp );
+extern  u8    PPP_GetTokuseiIndex( const POKEMON_PASO_PARAM * ppp );
 
 // パラメータ設定系（汎用）
 extern  void  PP_Put( POKEMON_PARAM *pp, int id, u32 arg );

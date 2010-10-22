@@ -148,6 +148,7 @@ typedef struct {
   NUMINPUT_WORK   numInput;
   GFL_SKB_SETUP   skbSetup;
   PROCPARAM_DEBUG_MAKEPOKE* proc_param;
+  BOOL      is_rnd_priority;
 
 }DMP_MAINWORK;
 
@@ -824,14 +825,31 @@ static void update_dst( DMP_MAINWORK* wk )
   mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
   tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
-#if 0
-  sex = box_getvalue( wk, INPUTBOX_ID_SEX );
-  personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, rare_flag );
-#else
-  personal_rnd =  box_getvalue( wk, INPUTBOX_ID_PER_RND_H) << 16;
-  personal_rnd |= box_getvalue( wk, INPUTBOX_ID_PER_RND_L);
-  sex = POKETOOL_GetSex( mons_no, form_no, personal_rnd );
-#endif
+
+  if( box_getvalue( wk, INPUTBOX_ID_RNDFLAG ) == 1 )
+  {
+    //ŒÂ‘Ì—”’¼Ú
+    personal_rnd =  box_getvalue( wk, INPUTBOX_ID_PER_RND_H) << 16;
+    personal_rnd |= box_getvalue( wk, INPUTBOX_ID_PER_RND_L);
+    sex = POKETOOL_GetSex( mons_no, form_no, personal_rnd );
+  }
+  else
+  {
+    //“Á«‚â«•ÊÝ’è—Dæ
+    PtlTokuseiSpec tokusei;
+    switch( box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH ) )
+    {
+    default:
+    case 0:
+      tokusei = PTL_TOKUSEI_SPEC_1;
+      break;
+    case 1:
+      tokusei = PTL_TOKUSEI_SPEC_2;
+      break;
+    }
+    sex = box_getvalue( wk, INPUTBOX_ID_SEX );
+    personal_rnd = POKETOOL_CalcPersonalRandSpec( wk->oyaID, mons_no, form_no, sex, tokusei, rare_flag );
+  }
   PP_Get( wk->dst, ID_PARA_nickname, (void*)(wk->strbuf) );
 
   PP_Clear( wk->dst );
@@ -881,9 +899,19 @@ static void update_dst( DMP_MAINWORK* wk )
     PP_Put( wk->dst, ID_PARA_exp, exp );
   }
 
-  // “Á«
-  PP_Put( wk->dst, ID_PARA_speabino, tokusei );
-  personalSpeabi_3rd_flag_set( wk->dst );
+  // ‘æ‚R“Á«•–{—ˆŽ‚Á‚Ä‚¢‚È‚¢“Á«
+  //PP_Put( wk->dst, ID_PARA_speabino, tokusei );
+  //personalSpeabi_3rd_flag_set( wk->dst );
+  switch( box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH )  )
+  {
+  case 2:
+    PP_SetTokusei3( wk->dst, mons_no, form_no );
+    break;
+  case 3:
+    PP_Put( wk->dst, ID_PARA_speabino, tokusei );
+    break;
+  }
+  
 
   {
     u32 i;
@@ -1191,6 +1219,10 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     }
     return;
 #endif
+  case INPUTBOX_ID_RNDFLAG:
+    {
+      value = wk->boxValue[ boxID ];
+    }
   default:
     break;
   }

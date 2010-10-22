@@ -1202,6 +1202,55 @@ PokeSick PP_GetSick( const POKEMON_PARAM* pp )
 }
 //=============================================================================================
 /**
+ * ポケモンの特性インデックス（第一特性か第二特性か第三特性か）を取得
+ *
+ * @param[in]   pp ポケモンパラメータ構造体
+ *
+ * @retval  u8  0ならば第一特性 1ならば第二特性　2ならば第三特性
+ */
+//=============================================================================================
+u8    PP_GetTokuseiIndex( const POKEMON_PARAM * pp )
+{ 
+  return PPP_GetTokuseiIndex( &pp->ppp );
+}
+//=============================================================================================
+/**
+ * ポケモンの特性インデックス（第一特性か第二特性か第三特性か）を取得
+ *
+ * @param[in]   ppp ポケモンパソパラメータ構造体
+ *
+ * @retval  u8  0ならば第一特性 1ならば第二特性　2ならば第三特性
+ */
+//=============================================================================================
+u8    PPP_GetTokuseiIndex( const POKEMON_PASO_PARAM * ppp )
+{
+  u32 mons_no = PPP_Get( ppp, ID_PARA_monsno, NULL );
+  u32 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+  POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+  u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
+  u16 param = 0;
+  u32 mask = PRAND_TOKUSEI_MASK;
+
+  //シャチで特性を判断するビット位置が変更になったのでカセットバージョンを見て変更する
+  if( PPP_Get( ppp, ID_PARA_get_cassette, 0 ) < VERSION_WHITE )
+  {
+    mask = PRAND_TOKUSEI_MASK_OLD;
+  }
+
+  if( PPP_Get( ppp, ID_PARA_tokusei_3_flag, NULL ) )
+  {
+    param = 2;
+  }
+  else if( Personal_GetTokuseiCount(ppd) == 2 ){
+    if( rnd & mask ){
+      param = 1;
+    }
+  }
+
+  return param;
+}
+//=============================================================================================
+/**
  * ポケモンの状態異常を設定
  *
  * @param   pp      ポケモンパラメータ構造体

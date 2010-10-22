@@ -62,6 +62,8 @@ static const DEBUG_MENU_LIST menuList[] =
   {sodateya_tamago_breed,  (void*)sodateya_tamago_breed, GFL_OVERLAY_BLANK_ID },  // タマゴを温める
   {sodateya_tamago_hatch,  (void*)sodateya_tamago_hatch, GFL_OVERLAY_BLANK_ID },  // タマゴを孵す
   {sodateya_tamago_delete, (void*)sodateya_tamago_delete, GFL_OVERLAY_BLANK_ID }, // タマゴを孵す
+
+  {sodateya_tamago_auto_test, (void*)sodateya_tamago_auto_test, GFL_OVERLAY_BLANK_ID }, // オートデバッグ（１００匹孵化してデバッグ出力する）
 };
 
 //=============================================================================
@@ -105,6 +107,7 @@ static void DebugSodateya_TamagoDel( EVENT_WORK* work ); // タマゴを捨てる
 static void DebugSodateya_TamagoBreed( EVENT_WORK* work ); // タマゴを温める
 static void DebugSodateya_TamagoHatch( EVENT_WORK* work ); // タマゴを孵す
 static void DebugSodateya_DeleteTailPoke( EVENT_WORK* work ); // 末尾ポケモンを削除する
+static void DebugSodateya_AutoTest( EVENT_WORK* work ); // 指定引数孵化しデバグプリント
 
 
 //=============================================================================
@@ -179,6 +182,7 @@ static GMEVENT_RESULT DebugMenuSodateyaEvent( GMEVENT *event, int *seq, void *wk
     case sodateya_tamago_breed:  DebugSodateya_TamagoBreed( work );      break;
     case sodateya_tamago_hatch:  DebugSodateya_TamagoHatch( work );      break;
     case sodateya_tamago_delete: DebugSodateya_DeleteTailPoke( work );   break;
+    case sodateya_tamago_auto_test: DebugSodateya_AutoTest( work );   break;
     } 
 
     // キャンセルで終了
@@ -396,6 +400,207 @@ static void DebugSodateya_DeleteTailPoke( EVENT_WORK* work )
     PMSND_StopSE();
     PMSND_PlaySE( SEQ_SE_BEEP );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定数孵化してデバッグ出力する
+ *
+ *	@param	EVENT_WORK* work ワーク
+ */
+//-----------------------------------------------------------------------------
+static void DebugSodateya_AutoTest( EVENT_WORK* work )
+{
+  enum
+  {
+    DEBUG_SODATEYA_AUTO_TEST_DETAIL_FLAG  = 1,  //ここの真偽で詳細情報を載せるかどうか
+    DEBUG_SODATEYA_AUTO_TEST_TEST_NUM = 100,    //何回テストするか
+  };
+
+  //手持ちに空きがないならばやらない
+  {
+    POKEPARTY* party    = GAMEDATA_GetMyPokemon( work->gameData );
+    int        poke_num = PokeParty_GetPokeCount( party );
+    if( poke_num ==  PokeParty_GetPokeCountMax( party ))
+    {
+      OS_Printf( "手持ちに空きを作ってください\n" );
+      PMSND_StopSE();
+      PMSND_PlaySE( SEQ_SE_BEEP );
+      return;
+    }
+  }
+
+  //生まれない組み合わせならばやらない
+  {
+    SODATEYA*  sodateya = FIELDMAP_GetSodateya( work->fieldmap );
+    if( SODATEYA_GetLoveLevel( sodateya ) == 0 )
+    {
+      OS_Printf( "育て屋に預けてある組み合わせでは生まれません\n" );
+      PMSND_StopSE();
+      PMSND_PlaySE( SEQ_SE_BEEP );
+      return;
+    }
+  }
+
+  //テスト実行
+  OS_Printf( "▼孵化オートテスト開始\n" );
+  {
+    int i;
+
+    //統計情報
+    u32 total_sex[3] = {0};
+    u32 total_tokusei[3] = {0};
+    u32 total_tokusei_num[3] = {0};
+    u32 total_seikaku[PTL_SEIKAKU_MAX] = {0};
+
+    //指定回数テストを行う
+    for( i = 0; i < DEBUG_SODATEYA_AUTO_TEST_TEST_NUM; i++ )
+    {
+      //卵ができるまで歩く
+      {
+        SODATEYA*  sodateya = FIELDMAP_GetSodateya( work->fieldmap );
+        while( !SODATEYA_BreedPokemon(sodateya) )
+        {
+          /* nothing */
+        }
+      }
+
+      //卵を末尾に追加
+      {
+        POKEPARTY* party    = GAMEDATA_GetMyPokemon( work->gameData );
+        SODATEYA*  sodateya = FIELDMAP_GetSodateya( work->fieldmap );
+        SODATEYA_TakeBackEgg( sodateya, party );
+      }
+
+      //卵情報チェック
+      {
+        POKEPARTY* party    = GAMEDATA_GetMyPokemon( work->gameData );
+        int        poke_num = PokeParty_GetPokeCount( party );
+        POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party, poke_num-1 );
+
+        //詳細情報表示
+        if( DEBUG_SODATEYA_AUTO_TEST_DETAIL_FLAG )
+        {
+          OS_Printf( "・詳細表示[%d]\n", i );
+          OS_Printf( "ポケモン:%d\n", PP_Get( pp, ID_PARA_monsno, NULL ) );
+          OS_Printf( "フォルム:%d\n", PP_Get( pp, ID_PARA_form_no, NULL ) );
+          OS_Printf( "せいべつ:%d\n", PP_Get( pp, ID_PARA_sex, NULL ) );
+          OS_Printf( "特性番号:%d\n", PP_GetTokuseiIndex( pp ) );
+          OS_Printf( "とくせい:%d\n", PP_Get( pp, ID_PARA_speabino, NULL ) );
+          OS_Printf( "せいかく:%d\n", PP_Get( pp, ID_PARA_seikaku, NULL ) );
+          OS_Printf( "HP:%d\n", PP_Get( pp, ID_PARA_hp_rnd, NULL ) );
+          OS_Printf( "こうげき:%d\n", PP_Get( pp, ID_PARA_pow_rnd, NULL ) );
+          OS_Printf( "ぼうぎょ:%d\n", PP_Get( pp, ID_PARA_def_rnd, NULL ) );
+          OS_Printf( "すばやさ:%d\n", PP_Get( pp, ID_PARA_agi_rnd, NULL ) );
+          OS_Printf( "とくこう:%d\n", PP_Get( pp, ID_PARA_spepow_rnd, NULL ) );
+          OS_Printf( "とくぼう:%d\n", PP_Get( pp, ID_PARA_spedef_rnd, NULL ) );
+        }
+
+        //統計情報チェック
+        {
+          total_sex[ PP_Get( pp, ID_PARA_sex, NULL ) ]++;
+          total_tokusei[ PP_GetTokuseiIndex( pp ) ]++;
+          total_seikaku[ PP_Get( pp, ID_PARA_seikaku, NULL ) ]++;
+
+          if( total_tokusei_num[ PP_GetTokuseiIndex( pp ) ] == 0 )
+          {
+            total_tokusei_num[ PP_GetTokuseiIndex( pp ) ] = PP_Get( pp, ID_PARA_speabino, NULL );
+          }
+          else
+          {
+
+            //とくせいチェック
+            {
+              POKEMON_PERSONAL_DATA *p_ppd  = POKE_PERSONAL_OpenHandle( 
+                  PP_Get( pp, ID_PARA_monsno, NULL ),
+                  PP_Get( pp, ID_PARA_form_no, NULL ),
+                  GFL_HEAP_LOWID(work->heap_id) );
+              u32 tokusei = POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_speabi1 + PP_GetTokuseiIndex( pp ) );
+              GF_ASSERT_MSG( PP_Get( pp, ID_PARA_speabino, NULL ) == tokusei, "異なった特性が入っています now[%d],real[%d]\n", PP_Get( pp, ID_PARA_speabino, NULL ), tokusei );
+              POKE_PERSONAL_CloseHandle( p_ppd );
+            }
+
+            //とくせいチェック
+            //第N特性に2種類の特性があった場合はアサートで止める
+            {
+              GF_ASSERT_MSG( total_tokusei_num[ PP_GetTokuseiIndex( pp ) ] == PP_Get( pp, ID_PARA_speabino, NULL ), "違う特性！特性index[%d]前の特性[%d]今の特性[%d]\n", PP_GetTokuseiIndex( pp ), total_tokusei_num[ PP_GetTokuseiIndex( pp ) ], PP_Get( pp, ID_PARA_speabino, NULL ) );
+            }
+          }
+        }
+      }
+
+      //末尾の卵削除
+      {
+        POKEPARTY* party    = GAMEDATA_GetMyPokemon( work->gameData );
+        int        poke_num = PokeParty_GetPokeCount( party );
+        PokeParty_Delete( party, poke_num - 1 );
+      }
+    }
+
+    //特性情報表示
+    {
+      static const char* scp_sex_label[]  =
+      {
+        "オス",
+        "メス",
+        "不明",
+      };
+      static const char* scp_tokusei_label[]  =
+      {
+        "第一特性",
+        "第二特性",
+        "第三特性",
+      };
+      static const char* scp_seikaku_label[]  =
+      {
+        "がんばりや",
+        "さみしがり",
+        "ゆうかん",
+        "いじっぱり",
+        "やんちゃ",
+        "ずぶとい",
+        "すなお",
+        "のんき",
+        "わんぱく",
+        "のうてんき",
+        "おくびょう",
+        "せっかち",
+        "まじめ",
+        "ようき",
+        "むじゃき",
+        "ひかえめ",
+        "おっとり",
+        "れいせい",
+        "てれや",
+        "うっかりや",
+        "おだやか",
+        "おとなしい",
+        "なまいき",
+        "しんちょう",
+        "きまぐれ",
+      };
+      int i;
+      OS_Printf( "【統計情報】\n" );
+      OS_Printf( "・性別\n"  );
+      for( i = 0; i < 3; i++ )
+      {
+        OS_Printf( "%s:%d％\n", scp_sex_label[i], total_sex[i] * 100 / DEBUG_SODATEYA_AUTO_TEST_TEST_NUM );
+        
+      }
+      OS_Printf( "・特性\n" );
+      for( i = 0; i < 3; i++ )
+      {
+        OS_Printf( "%s[%d]:%d％\n", scp_tokusei_label[i], total_tokusei_num[i], total_tokusei[i] * 100 / DEBUG_SODATEYA_AUTO_TEST_TEST_NUM );
+      }
+      OS_Printf( "・性格\n" );
+      for( i = 0; i < PTL_SEIKAKU_MAX; i++ )
+      {
+        OS_Printf( "%s:%d％\n", scp_seikaku_label[i], total_seikaku[i] * 100 / DEBUG_SODATEYA_AUTO_TEST_TEST_NUM );
+        
+      }
+    }
+  }
+
+  OS_Printf( "▲孵化オートテスト終了！！\n" );
 }
 
 #endif // PM_DEBUG

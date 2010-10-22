@@ -42,7 +42,6 @@ typedef struct {
   u32 formno;
   u32 level;
   u32 seikaku;
-  u32 tokusei;
   u32 friend;
   u32 ability_rnd[ PTL_ABILITY_MAX ];
   u32 id_no;
@@ -82,15 +81,13 @@ static void EggCordinate_Seikaku_basic( const PARENT* parent, EGG_PARAM* egg ); 
 static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ); // 特性
 static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* egg );
-static void EggCordinate_Tokusei( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id );
 static void EggCordinate_Friend( EGG_PARAM* egg, HEAPID heap_id ); // なつき度 ( 孵化カウント )
-static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ); // 個体乱数
+static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ); // パワー乱数
 static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_ID( const MYSTATUS* mystatus, EGG_PARAM* egg ); // ID
 static void EggCordinate_PersonalRnd_at_random( const PARENT* parent, EGG_PARAM* egg ); // 個性乱数
 static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* egg );
-static u32 GetPersonalRnd_at_random( void );
 static void EggCordinate_Waza_default( EGG_PARAM* egg ); // デフォルト技セット
 static void EggCordinate_Waza_egg( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ); // タマゴ技セット
 static void EggCordinate_Waza_parent( const PARENT* parent, EGG_PARAM* egg ); // 継承技 ( 両親 ) セット
@@ -101,7 +98,6 @@ static void MakeEgg( POKEMON_PARAM* egg, const EGG_PARAM* egg_param, const MYSTA
 // ユーティリティ
 static BOOL IsWazaMachineAbleToUse( HEAPID heap_id, u16 monsno, u16 formno, u16 itemno ); // 技マシンが使えるかどうかをチェックする
 static u16 GetSeedMonsNo( u16 monsno ); // 種ポケモンを取得する
-static u8 GetTokuseiIndex( u16 monsno, u16 formno, u16 tokusei, HEAPID heap_id ); // 何番目の特性なのかを取得する
 // デバッグ
 #ifdef PM_DEBUG
 static POKEMON_PARAM* CreateDebugEgg( GAMEDATA* gameData, HEAPID heapID, u32 monsno ); // デバッグ用タマゴを作成する
@@ -152,9 +148,8 @@ void POKEMON_EGG_Create(
   EggCordinate_Seikaku_kawarazunoisi( &parent, &egg_param ); 
   EggCordinate_TokuseiIndex_basic( &parent, &egg_param, heap_id ); // 特性
   EggCordinate_TokuseiIndex_metamon( &parent, &egg_param );
-  EggCordinate_Tokusei( &parent, &egg_param, heap_id );
   EggCordinate_Friend( &egg_param, heap_id ); // なつき度 ( 孵化カウント )
-  EggCordinate_AbilityRnd_select_by_item( &parent, &egg_param ); // 個体乱数
+  EggCordinate_AbilityRnd_select_by_item( &parent, &egg_param ); // パワー乱数
   EggCordinate_AbilityRnd_select_at_random( &parent, &egg_param );
   EggCordinate_AbilityRnd_deirve_from_parent( &parent, &egg_param );
   EggCordinate_ID( mystatus, &egg_param ); // ID
@@ -562,13 +557,7 @@ static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* eg
   u32 mother_tokusei_idx;
 
   // 母ポケモンの特性インデックスを取得
-  {
-    u32 mother_monsno  = PP_Get( parent->mother, ID_PARA_monsno, NULL );
-    u32 mother_formno  = PP_Get( parent->mother, ID_PARA_form_no, NULL );
-    u32 mother_tokusei = PP_Get( parent->mother, ID_PARA_speabino, NULL );
-    mother_tokusei_idx = GetTokuseiIndex( mother_monsno, mother_formno, mother_tokusei, heap_id );
-  }
-
+  mother_tokusei_idx = PP_GetTokuseiIndex( parent->mother );
   rnd = GFUser_GetPublicRand0(100);  // 乱数取得[0, 99]
 
   // 特性番号を決定
@@ -623,36 +612,6 @@ static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* 
 
 //---------------------------------------------------------------------------------------- 
 /**
- * @brief タマゴの特性を決定する
- */
-//---------------------------------------------------------------------------------------- 
-static void EggCordinate_Tokusei( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id )
-{
-  u32 tokusei_list[3];
-
-  // 特性リスト ( 種の特性 ) を取得
-  {
-    POKEMON_PERSONAL_DATA* personalData;
-    personalData   = POKE_PERSONAL_OpenHandle( egg->monsno, egg->formno, heap_id );
-    tokusei_list[0] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi1 );
-    tokusei_list[1] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi2 );
-    tokusei_list[2] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi3 );
-    POKE_PERSONAL_CloseHandle( personalData );
-  }
-
-  if( egg->tokusei_idx < 2 ) { // 第一特性 or 第二特性
-
-    egg->tokusei = tokusei_list[ egg->tokusei_idx ]; 
-
-    // 決定した番号に特性がない場合, 特性0にする
-    if( egg->tokusei == TOKUSYU_NULL ) {
-      egg->tokusei = tokusei_list[0];
-    } 
-  }
-}
-
-//---------------------------------------------------------------------------------------- 
-/**
  * @brief タマゴのなつき度 ( 孵化カウント ) を決定する
  *
  * タマゴの間は, なつき度を孵化カウンタとして利用する
@@ -673,10 +632,10 @@ static void EggCordinate_Friend( EGG_PARAM* egg, HEAPID heap_id )
 
 //---------------------------------------------------------------------------------------- 
 /**
- * @brief タマゴの個体乱数を決定する ( アイテム所持 )
+ * @brief タマゴのパワー乱数を決定する ( アイテム所持 )
  *
  * パワーxxxx系のアイテムを所持している場合, 
- * アイテムに対応する個体乱数を両親から計１つ継承する
+ * アイテムに対応するパワー乱数を両親から計１つ継承する
  */
 //---------------------------------------------------------------------------------------- 
 static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg )
@@ -740,9 +699,9 @@ static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PA
 
 //---------------------------------------------------------------------------------------- 
 /**
- * @brief タマゴの個体乱数を決定する ( 基本ルール )
+ * @brief タマゴのパワー乱数を決定する ( 基本ルール )
  *
- * 両親から計３つの個体乱数をランダムに継承する
+ * 両親から計３つのパワー乱数をランダムに継承する
  */
 //---------------------------------------------------------------------------------------- 
 static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg )
@@ -770,7 +729,7 @@ static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_
 
 //---------------------------------------------------------------------------------------- 
 /**
- * @brief タマゴの個体乱数を決定する
+ * @brief タマゴのパワー乱数を決定する
  */
 //---------------------------------------------------------------------------------------- 
 static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg )
@@ -814,7 +773,20 @@ static void EggCordinate_ID( const MYSTATUS* mystatus, EGG_PARAM* egg )
 //---------------------------------------------------------------------------------------- 
 static void EggCordinate_PersonalRnd_at_random( const PARENT* parent, EGG_PARAM* egg )
 {
-  egg->personal_rnd = GetPersonalRnd_at_random();
+  PtlTokuseiSpec  tokusei = PTL_TOKUSEI_SPEC_1;
+
+  switch( egg->tokusei_idx )
+  {
+  default:
+  case 0:
+    tokusei = PTL_TOKUSEI_SPEC_1;
+    break;
+  case 1:
+    tokusei = PTL_TOKUSEI_SPEC_2;
+    break;
+  }
+
+  egg->personal_rnd = POKETOOL_CalcPersonalRandSpec( egg->id_no, egg->monsno, egg->formno, PTL_SEX_SPEC_UNKNOWN, tokusei, PTL_RARE_SPEC_BOTH );
 }
 
 //---------------------------------------------------------------------------------------- 
@@ -840,23 +812,13 @@ static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* 
   // 抽選
   for( i=0; i<RARE_EGG_CHANCE; i++ )
   {
-    egg->personal_rnd = GetPersonalRnd_at_random();
+    EggCordinate_PersonalRnd_at_random( parent, egg );
 
     // レアになった
     if( POKETOOL_CheckRare( egg->id_no, egg->personal_rnd ) ) { 
       return; 
     }
   }
-}
-
-//---------------------------------------------------------------------------------------- 
-/**
- * @brief ランダムな個体乱数を取得する
- */
-//---------------------------------------------------------------------------------------- 
-static u32 GetPersonalRnd_at_random( void )
-{
-  return GFUser_GetPublicRand0( 0xffffffff );
 }
 
 //---------------------------------------------------------------------------------------- 
@@ -1111,19 +1073,13 @@ static void MakeEgg(
   PP_Put( egg, ID_PARA_seikaku, egg_param->seikaku );
   PP_Put( egg, ID_PARA_friend, egg_param->friend );
 
-  // 特性
-  if( egg_param->tokusei_idx == 2 ) { // 第三特性
+  // 第三特性
+  if( egg_param->tokusei_idx == 2 ) 
+  {
     PP_SetTokusei3( egg, egg_param->monsno, egg_param->formno );
   }
-  else {
-#ifdef  BUGFIX_BTS7955_20100728
-    PP_Put( egg, ID_PARA_end, egg_param->tokusei );
-#else
-    PP_Put( egg, ID_PARA_speabino, egg_param->tokusei );
-#endif
-  }
 
-  // 個体乱数
+  // パワー乱数
   for( i=0; i<PTL_ABILITY_MAX; i++ )
   {
     if( egg_param->derive_ability_from_father[i] || 
@@ -1248,43 +1204,6 @@ static u16 GetSeedMonsNo( u16 monsno )
   GFL_ARC_LoadDataOfs( &seed_monsno, ARCID_PMSTBL, monsno, 0, sizeof(u16) );
   return seed_monsno;
 } 
-
-//---------------------------------------------------------------------------------------- 
-/**
- * @brief 何番目の特性なのかを取得する
- */
-//---------------------------------------------------------------------------------------- 
-static u8 GetTokuseiIndex( u16 monsno, u16 formno, u16 tokusei, HEAPID heap_id )
-{
-  u32 tokusei_idx;
-  u32 tokusei_list[3];
-
-  // 特性リスト ( 種の特性 ) を取得
-  {
-    POKEMON_PERSONAL_DATA* personalData;
-    personalData = POKE_PERSONAL_OpenHandle( monsno, formno, heap_id );
-    tokusei_list[0] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi1 );
-    tokusei_list[1] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi2 );
-    tokusei_list[2] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi3 );
-    POKE_PERSONAL_CloseHandle( personalData );
-  }
-  
-  // 特性番号を調べる
-  for( tokusei_idx=0; tokusei_idx<3; tokusei_idx++ )
-  {
-    if( tokusei == tokusei_list[ tokusei_idx ] ) { 
-      break; 
-    }
-  }
-
-  // 不正な特性だった場合
-  if( 3 <= tokusei_idx ) { 
-    GF_ASSERT(0);
-    tokusei_idx = 0; // 不正値なら特性1とする
-  }
-
-  return tokusei_idx;
-}
 
 
 #ifdef PM_DEBUG
