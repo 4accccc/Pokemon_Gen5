@@ -1269,11 +1269,11 @@ void FIELD_PLAYER_ResetSpecialMove( FIELD_PLAYER *fld_player )
  * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
-BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player )
+BOOL FIELD_PLAYER_EVREQUEST_GetExMove( FIELD_PLAYER *fld_player )
 {
   if( FIELDMAP_GetBaseSystemType(
         fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
-    return( FIELD_PLAYER_GRID_CheckNaminoriEventEnd(fld_player->gridwk) );
+    return( FIELD_PLAYER_GRID_EVREQUEST_GetExMove(fld_player->gridwk) );
   }
   
   //OS_Printf( "rail not support\n" );
@@ -1288,11 +1288,11 @@ BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player )
  * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
-void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL flag )
+void FIELD_PLAYER_EVREQUEST_ReqExMove( FIELD_PLAYER *fld_player )
 {
   if( FIELDMAP_GetBaseSystemType(
         fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
-    FIELD_PLAYER_GRID_SetNaminoriEventEnd( fld_player->gridwk, flag );
+    FIELD_PLAYER_GRID_EVREQUEST_ReqExMove( fld_player->gridwk );
   }else{
     //OS_Printf( "rail not support\n" );
   }

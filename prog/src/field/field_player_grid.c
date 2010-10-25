@@ -165,7 +165,7 @@ struct _TAG_FIELD_PLAYER_GRID
   u16 dash_play_se;
   u16 dash_play_se_count;
   
-  u32 naminori_end_flag;
+  u32 exMove_flag;
 };
 
 //--------------------------------------------------------------
@@ -495,7 +495,7 @@ static void gjiki_InitMoveStartCommon(
     gjiki_OffMoveBitUnderOff( gjiki );
   }
   
-  gjiki->naminori_end_flag = FALSE;
+  gjiki->exMove_flag = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -2198,7 +2198,7 @@ static void gjikiOze_SetMove_FallOut(
       MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
 
 #ifdef BUGFIX_GFBTS1967_100713
-      gjiki->naminori_end_flag = TRUE;
+      gjiki->exMove_flag = TRUE;
 #endif
     }
     
@@ -3458,9 +3458,9 @@ void FIELD_PLAYER_GRID_ResetSpecialMove( FIELD_PLAYER_GRID *gjiki )
  * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
-BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki )
+BOOL FIELD_PLAYER_GRID_EVREQUEST_GetExMove( FIELD_PLAYER_GRID *gjiki )
 {
-  return( gjiki->naminori_end_flag );
+  return( gjiki->exMove_flag );
 }
 
 //--------------------------------------------------------------
@@ -3471,13 +3471,9 @@ BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki )
  * @note 波乗り開始、波乗り終了、滝登り、滝下り、尾瀬着地に立つフラグ
  */
 //--------------------------------------------------------------
-void FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag )
+void FIELD_PLAYER_GRID_EVREQUEST_ReqExMove( FIELD_PLAYER_GRID *gjiki )
 {
-  if( flag == TRUE ){
-    gjiki->naminori_end_flag = TRUE;
-  }else{
-    gjiki->naminori_end_flag = FALSE;
-  }
+  gjiki->exMove_flag = TRUE;
 }
 
 //----------------------------------------------------------------------------

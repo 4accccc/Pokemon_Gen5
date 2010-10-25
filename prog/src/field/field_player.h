@@ -229,8 +229,8 @@ extern BOOL FIELD_PLAYER_CheckTakinoboriUse(
 extern void FIELD_PLAYER_CheckSpecialDrawForm(
     FIELD_PLAYER *fld_player, BOOL menu_open_flag );
 extern void FIELD_PLAYER_ResetSpecialMove( FIELD_PLAYER *fld_player );
-extern BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player );
-extern void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL flag );
+extern BOOL FIELD_PLAYER_EVREQUEST_GetExMove( FIELD_PLAYER *fld_player );
+extern void FIELD_PLAYER_EVREQUEST_ReqExMove( FIELD_PLAYER *fld_player );
 extern BOOL FIELD_PLAYER_CheckPossibleDash( FIELD_PLAYER *fld_player );
 
 extern void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code );

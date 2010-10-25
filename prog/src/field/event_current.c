@@ -530,7 +530,7 @@ static void ExitEvent( EVENT_WORK* work )
    * GFBTS1969 対処
    * 強制水流イベントが終了直後に、エンカウントエフェクトに対応する
    */
-  FIELD_PLAYER_SetNaminoriEventEnd( work->player, TRUE );
+  FIELD_PLAYER_EVREQUEST_ReqExMove( work->player );
 #endif  // BUGFIX_GFBTS1969_101022
 }
 

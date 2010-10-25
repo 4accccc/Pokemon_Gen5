@@ -1361,7 +1361,7 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   if( req->player_value == PLAYER_MOVE_VALUE_WALK ){
     req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
   }
-  if(FIELD_PLAYER_CheckNaminoriEventEnd( req->field_player )){
+  if(FIELD_PLAYER_EVREQUEST_GetExMove( req->field_player )){
     req->exMoveRequest = TRUE; 
   }
   req->stepRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
@@ -2953,7 +2953,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
   case 3:
     MMDLSYS_ClearPauseMoveProc( MMDL_GetMMdlSys(mmdl) );
 #ifdef BUGFIX_GFBTS1967_100713
-    FIELD_PLAYER_SetNaminoriEventEnd( fld_player, TRUE );
+    FIELD_PLAYER_EVREQUEST_ReqExMove( fld_player );
 #endif
     return GMEVENT_RES_FINISH;
   }
