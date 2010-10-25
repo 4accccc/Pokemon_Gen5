@@ -1,11 +1,11 @@
 EFFSEQ
 $0006
-c:\home\pokemon_wb\resource\particle\wazaeffect\w_055.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_510.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_519.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_510.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_518.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_520.spa
+c:\home\swan\resource\particle\wazaeffect\w_055.spa
+C:\home\swan\resource\particle\wazaeffect\w_510.spa
+C:\home\swan\resource\particle\wazaeffect\w_519.spa
+C:\home\swan\resource\particle\wazaeffect\w_510.spa
+C:\home\swan\resource\particle\wazaeffect\w_518.spa
+C:\home\swan\resource\particle\wazaeffect\w_520.spa
 #001
 %00
 パーティクルデータロード	w_520

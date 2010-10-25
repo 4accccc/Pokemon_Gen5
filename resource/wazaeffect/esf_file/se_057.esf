@@ -1,9 +1,9 @@
 EFFSEQ
 $0004
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_390.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_052.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_196.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_057_fire_burn.spa
+C:\home\swan\resource\particle\wazaeffect\w_390.spa
+C:\home\swan\resource\particle\wazaeffect\w_052.spa
+C:\home\swan\resource\particle\wazaeffect\w_196.spa
+C:\home\swan\resource\particle\wazaeffect\be_se_057_fire_burn.spa
 #001
 %00
 カメラ移動（座標指定）	追従（相対指定）	3:0:6	0:0:0	32	0	28

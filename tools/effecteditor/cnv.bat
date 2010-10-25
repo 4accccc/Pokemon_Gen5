@@ -2,12 +2,12 @@
 
 SET LANG=C-SJIS
 SET HOME_TMP=%~dp0
-SET PROJECT_ROOT=c:\home\pokemon_wb\
+SET PROJECT_ROOT=c:\home\swan\
 SET PROJECT_PROGDIR=%PROJECT_ROOT%prog/
 SET PROJECT_ARCDIR=%PROJECT_PROGDIR%arc/
 SET PROJECT_RSCDIR=%PROJECT_ROOT%resource/
-SET WBLIBDIR=C:\home\pokemon_wb\lib
-SET TAGFILE=c:\home\pokemon_wb\tags
+SET WBLIBDIR=C:\home\swan\lib
+SET TAGFILE=c:\home\swan\tags
 
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
@@ -56,9 +56,9 @@ PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cyg
 
 @ECHO ON
 
-cd C:\home\pokemon_wb\tools\effecteditor
+cd C:\home\swan\tools\effecteditor
 del we_000.bin
-ruby c:\home\pokemon_wb\resource\wazaeffect\eescmk.rb c:\home\pokemon_wb\prog\src\battle\btlv\btlv_effvm_def.h we_test.esf c:/home/pokemon_wb/ on
+ruby c:\home\swan\resource\wazaeffect\eescmk.rb c:\home\swan\prog\src\battle\btlv\btlv_effvm_def.h we_test.esf c:/home/swan/ on
 
 if not %ERRORLEVEL%==0 GOTO ERROR
 

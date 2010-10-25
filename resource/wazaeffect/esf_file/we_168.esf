@@ -1,11 +1,11 @@
 EFFSEQ
 $0006
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_1.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_2.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_1.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_2.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_1.spa
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_1.spa
+C:\home\swan\resource\particle\wazaeffect\w_168_1.spa
+C:\home\swan\resource\particle\wazaeffect\w_168_2.spa
+C:\home\swan\resource\particle\wazaeffect\w_168_1.spa
+C:\home\swan\resource\particle\wazaeffect\w_168_2.spa
+C:\home\swan\resource\particle\wazaeffect\w_168_1.spa
+C:\home\swan\resource\particle\wazaeffect\w_168_1.spa
 !0006
 カメラ移動	追従	攻撃側	10	0	8
 エフェクト終了待ち	すべて

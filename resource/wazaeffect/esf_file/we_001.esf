@@ -1,6 +1,6 @@
 EFFSEQ
 $0001
-c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+c:\home\swan\resource\particle\wazaeffect\w_001.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
@@ -8,6 +8,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 パーティクルデータロード	w_001
 パーティクル再生	w_001	W_001_001_BALL_BURN	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_001	W_001_001_HIT_MARK	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_001	W_001_001_TEST_SMILE	防御側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
 SE再生	SEQ_SE_W001_01	SE1	防御側	0:0:115	0:0:0
 SE再生	SEQ_SE_W001_01	SE2	防御側	8:300:100	0:0:0

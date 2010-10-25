@@ -9,7 +9,7 @@
 	.text
 
 #define	__ASM_NO_DEF_
-	.include	c:/home/pokemon_wb/prog/src/battle/btlv/btlv_efftool.h
+	.include	c:/home/swan/prog/src/battle/btlv/btlv_efftool.h
 	.include	c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h
 	.include	c:/home/pokemon_wb/prog/include/system/mcss.h
 	.include	c:/home/pokemon_wb/prog/include/sound/wb_sound_data.sadl

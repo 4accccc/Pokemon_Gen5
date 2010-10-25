@@ -86,8 +86,8 @@ btlv_mcss_def.h: ../../prog/src/battle/btlv/btlv_mcss.h
 	ruby ../../tools/enum2def.rb ../../prog/src/battle/btlv/btlv_mcss.h
 
 esf: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
-%.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h ../../prog/include/sound/wb_sound_data.sadl ../../../pokemon_wb_doc/particle/wazaeffect/mkparticle_be.mk ../../../pokemon_wb_doc/particle/wazaeffect/mkparticle_we.mk
-	ruby eescmk.rb c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h $(RES_DIR)$*.esf c:/home/pokemon_wb/
+%.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h ../../prog/include/sound/wb_sound_data.sadl ../../../swan_doc/particle/wazaeffect/mkparticle_be.mk ../../../swan_doc/particle/wazaeffect/mkparticle_we.mk
+	ruby eescmk.rb c:/home/swan/prog/src/battle/btlv/btlv_effvm_def.h $(RES_DIR)$*.esf c:/home/swan/
 
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
 #	$(MWAS) $< -o $*.o
