@@ -1,13 +1,14 @@
 #EVƒtƒ@ƒCƒ‹—ñ‹“
-all_ary = Dir.glob("../*.ev")
+all_ary = Dir.glob("../../*.ev")
 ary = Array.new
 all_ary.each{|i|
-  i.sub!(/..\//,"")
+  i.sub!(/..\/..\//,"")
   ary << i
 }
 
 ary.each{|i|
-  src = "../" + i
-  dst = i
+  src = "../../" + i
+  dst = "../ev_tmp/" + i
   system("ruby com_del.rb #{src} #{dst}")
+  puts "copy "+i
 }

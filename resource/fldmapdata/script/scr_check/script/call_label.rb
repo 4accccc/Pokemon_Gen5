@@ -57,6 +57,14 @@ def IsRet(str)
     return true
   end
 
+  if fix_str == "_END" then
+    return true
+  end
+
+  if fix_str == "_CHG_LOCAL_SCR" then
+    return true
+  end
+
   return false
 end
 
@@ -81,15 +89,19 @@ class SubLabelHash
       str = line.chomp("\n").chomp("\r")
       case mode
       when 0 then     #ラベル探し
-        rc = str.include?(":")
+        # ev_TRIDは自動生成されている部分なので、無視する
+        unless str.include?("ev_TRID_") then
+          rc = str.include?(":")
+        end
         if rc == true then
           m = /:/.match(str)
           label = m.pre_match
+
           ary.clear       #配列クリア
           mode = 1        #ラベル終了検出開始
         end
       when 1 then         #ラベル終了探し（_RET）
-        retval = @ifsw.SearchStartCode(str)
+        retval = @ifsw.SearchStartCode(str) # IFやSWITCHを検索
         if retval == 0 then
           #ENDIF探しを開始
           mode = 2
@@ -105,12 +117,13 @@ class SubLabelHash
 
         rc = IsRet(str)
         if rc == true then  #_RET検出　ラベル終了
+          
           #既にラベルあるかをチェック
           rc = @label_hash.key?(label)
           if rc == true then
             printf("ラベルがすでにある　%s\n",label)
             exit(-1)
-          end  
+          end 
           #溜め込んだ文字配列をハッシュに登録
           copy_ary = Marshal.load(Marshal.dump(ary))
           @label_hash[label] = copy_ary
@@ -184,8 +197,10 @@ end
 def CallFunc(hash, code_ary, call_label, call_find_code_ary)
   local_ary = Array.new
 
+
   #ハッシュからラベルに一致する配列を取得
   ary = hash[call_label]
+
   if ary == nil then
     printf("not_label %s\n",call_label)
     return
@@ -229,7 +244,7 @@ def CallFuncParent(hash, code_ary, str, call_find_code_ary)
   not_space_str = str.gsub(/\s/,"")
   target = not_space_str.index("_CALL")
   if (target != nil)&&(target == 0) then     #見つかった
-#    printf("PARENT CALLを発見 %s\n",str)
+    #printf("PARENT CALLを発見 %s\n",str)
     m = /_/.match(str)
     fix_str = "_" + m.post_match
     rc = fix_str.index("\s")

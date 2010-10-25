@@ -1393,7 +1393,8 @@ sub_receipt_challenge_wifi:
         _SET_CGEAR_OFF()
         _TIME_WAIT( 8 )
         _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
-        _END
+        // リセット後ここに帰ってくることはありません
+        //_END
       ENDIF
     ENDIF
   ENDWHILE
@@ -1429,68 +1430,70 @@ ev_bsw_game_continue:
   //セーブデータ有効チェック
   _BSUBWAY_TOOL( BSWTOOL_IS_SAVE_DATA_ENABLE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
-  IF $SCWK_ANSWER == 0 THEN //エラー
-    _CALL sub_bsw_common_report_error_exit  //エラー処理
-    _CHG_LOCAL_SCR
-    _END
-  ENDIF
-  
-  //おまちしておりました
-  $SCWK_TEMP0 = msg_bsw_scr_32
-  _CALL sub_bsw_common_bwin_receipt
-  _YES_NO_WIN( SCWK_ANSWER )
-  _MSGWIN_CLOSE()
-  
-  IF $SCWK_ANSWER != SCR_YES THEN //やめる
-    $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_CONTINUE
+  IF $SCWK_ANSWER != 0 THEN //エラー
+ 
+    //おまちしておりました
+    $SCWK_TEMP0 = msg_bsw_scr_32
+    _CALL sub_bsw_common_bwin_receipt
+    _YES_NO_WIN( SCWK_ANSWER )
+    _MSGWIN_CLOSE()
 
-    _BLACK_OUT()
-    _DISP_FADE_END_CHECK()
-    
-    _FIELD_COMM_EXIT( ret )
-    _SET_CGEAR_OFF()
-    _TIME_WAIT( 8 )
-    _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
-    _END
+    IF $SCWK_ANSWER != SCR_YES THEN //やめる
+      $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_CONTINUE
+
+      _BLACK_OUT()
+      _DISP_FADE_END_CHECK()
+
+      _FIELD_COMM_EXIT( ret )
+      _SET_CGEAR_OFF()
+      _TIME_WAIT( 8 )
+      _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
+      // ここには帰ってきません
+      //_END
+    ENDIF
+
+    //ワーク確保&初期化
+    _BSUBWAY_WORK_CREATE( BSWAY_PLAY_CONTINUE, BSWAY_MODE_NULL )
+
+    //プレイモード取得
+    _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+
+    //現在のラウンド数別にフラグ初期化(受付エラー、車内乗車状態に)
+    _BSUBWAY_TOOL( BSWTOOL_GET_NOW_ROUND, BSW_NULL, BSW_NULL, ret )
+
+    IF $ret <= 1 THEN //wifi初回乗車前から
+      _CALL sub_receipt_flag_set_geton_first
+    ELSE //ラウンド2以降から
+      _CALL sub_receipt_flag_set_geton_continue
+    ENDIF
+
+    //現在位置セーブ
+    _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+
+    //セーブ
+    _SYSWIN_MSG( msg_bsw_scr_33, POS_DOWN )
+    _REPORT_CALL( SCWK_ANSWER )
+    _MSGWIN_CLOSE()
+
+    //それでは中断した所まで案内します
+    $SCWK_TEMP0 = msg_bsw_scr_34
+    _CALL sub_bsw_common_bwin_receipt
+    _MSGWIN_CLOSE()
+
+    //バトルサブウェイ挑戦中のビーコンセット
+    _BEACON_SET_REQ_SUBWAY_START()
+
+    //デモ　出発
+    _CALL sub_receipt_demo_start_train
+
+    //マップチェンジ
+    _CALL sub_common_map_change_train
+
+  ELSE
+    _CALL sub_bsw_common_report_error_exit  //エラー処理
   ENDIF
-  
-  //ワーク確保&初期化
-  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_CONTINUE, BSWAY_MODE_NULL )
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  
-  //現在のラウンド数別にフラグ初期化(受付エラー、車内乗車状態に)
-  _BSUBWAY_TOOL( BSWTOOL_GET_NOW_ROUND, BSW_NULL, BSW_NULL, ret )
-  
-  IF $ret <= 1 THEN //wifi初回乗車前から
-    _CALL sub_receipt_flag_set_geton_first
-  ELSE //ラウンド2以降から
-    _CALL sub_receipt_flag_set_geton_continue
-  ENDIF
-  
-  //現在位置セーブ
-  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
-  
-  //セーブ
-  _SYSWIN_MSG( msg_bsw_scr_33, POS_DOWN )
-  _REPORT_CALL( SCWK_ANSWER )
-  _MSGWIN_CLOSE()
-  
-  //それでは中断した所まで案内します
-  $SCWK_TEMP0 = msg_bsw_scr_34
-  _CALL sub_bsw_common_bwin_receipt
-  _MSGWIN_CLOSE()
-  
-  //バトルサブウェイ挑戦中のビーコンセット
-  _BEACON_SET_REQ_SUBWAY_START()
-  
-  //デモ　出発
-  _CALL sub_receipt_demo_start_train
-  
-  //マップチェンジ
-  _CALL sub_common_map_change_train
-  
+
+  // スクリプトチェックを正しく行うため、_CHG_LOCAL_SCRを最後に行うように変更しました
   _CHG_LOCAL_SCR
 }
 _RET

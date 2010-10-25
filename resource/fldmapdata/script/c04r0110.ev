@@ -925,7 +925,8 @@ sub_train_battle_win_next_menu:
         _SET_CGEAR_OFF()
         _TIME_WAIT( 8 )
         _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
-        _END
+        // リセット後ここに帰ってくることはありません
+        //_END
       ENDIF
     CASE 3 THEN //リタイア
       //リタイアするか

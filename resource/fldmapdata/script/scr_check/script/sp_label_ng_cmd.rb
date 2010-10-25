@@ -11,7 +11,8 @@ end
 
 def SearchCode(code_ary, str, find_code_ary)
   code_ary.each{|i|
-    target = str.index(i)
+    #target = str.index(i)
+    target = str.index(/[\s^]#{i}[\s\n\(]/)
     if target != nil then     #見つかった
       if find_code_ary != nil then
         find_code_ary << i
@@ -154,28 +155,28 @@ while line = ev_file.gets
       seq = 1
     else
       #検索コード調べる
-      if find == false then
-        find = SearchCode(code_ary, str, find_code_ary)
-        if find == true then
-          CallFuncParent(hash, code_ary, str, call_find_code_ary)
+        find_tmp = SearchCode(code_ary, str, find_code_ary)
+        # 1度見つけた後は常にtrue
+        if find == false then
+          find = find_tmp
         end
-      end
+        CallFuncParent(hash, code_ary, str, call_find_code_ary)
     end
   end
 end
 
-if dump_ary.length != 0 then
-  printf("========%s========\n",ARGV[0])
+if dump_ary.length != 0 || call_find_code_ary.length != 0 then
+  fname = ARGV[0].gsub(/.*ev_tmp\//,"")
+  printf("========%s========\n",fname)
   dump_ary.each_with_index{|label, idx|
     printf("%s ==> %s\n",label, find_code_ary[idx])
   }
 end
 
 if call_find_code_ary.length != 0 then
-  printf("●-------CALL-------\n")
 
   call_find_code_ary.each{|i|
-    p i
+    puts "CALL " + i
   }
 end
 

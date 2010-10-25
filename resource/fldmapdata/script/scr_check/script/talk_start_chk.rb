@@ -1,8 +1,8 @@
 #EVƒtƒ@ƒCƒ‹—ñ‹“
-all_ary = Dir.glob("../*.ev")
+all_ary = Dir.glob("../ev_tmp/*.ev")
 ary = Array.new
 all_ary.each{|i|
-  i.sub!(/..\//,"")
+  i.sub!(/..\/ev_tmp\//,"")
   idx = i.index("sp_")
   if (idx == nil) || (idx != 0) then
     ary << i
@@ -10,8 +10,7 @@ all_ary.each{|i|
 }
 
 ary.each{|i|
-  src = "../" + i
-  dst = i
+  dst = "../ev_tmp/" + i
 #  system("ruby com_del.rb #{src} #{dst}")
-  system("ruby scr_check_bg.rb #{dst}")
+  system("ruby scr_check.rb #{dst}")
 }

@@ -117,8 +117,8 @@ sub_trainer_talk_3vs3_NG:
 //--------------------------------------------------------------------
 //  戦闘勝利後の会話
 //--------------------------------------------------------------------
-ev_trainer_talk_after:
   /*
+  ev_trainer_talk_after:
   //話しかけたトレーナーが再戦可能かチェック
   _REVENGE_TRAINER_SEARCH LWK_TRAINERID, SCWK_ANSWER
   IF $SCWK_ANSWER != 0 THEN

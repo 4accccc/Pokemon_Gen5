@@ -1,6 +1,6 @@
 //======================================================================
 // trainer.ev
-// ../../../prog/include/tr_tool/trno_def.hを元にコンバートしています
+// ../../trdata/trno_def.hを元にコンバートしています
 //  ●コンバート実行
 //    trainer(.bat)
 //  ●更新されるファイル
@@ -629,6 +629,8 @@ _EVENT_DATA ev_TRID_HAKAIW1_12
 _EVENT_DATA ev_TRID_HAKAIW1_13
 _EVENT_DATA ev_TRID_HAKAIW1_14
 _EVENT_DATA ev_TRID_DOCTOR_05
+_EVENT_DATA ev_TRID_BCHAMP2_01
+_EVENT_DATA ev_TRID_HEADS_05
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1248,10 +1250,12 @@ ev_TRID_HAKAIW1_12:
 ev_TRID_HAKAIW1_13:
 ev_TRID_HAKAIW1_14:
 ev_TRID_DOCTOR_05:
+ev_TRID_BCHAMP2_01:
+ev_TRID_HEADS_05:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
-// scr_trainer/trainer_base.ev
+// ./scr_trainer/trainer_base.ev
 //----------------------------------------------------------------------
 
   DEFINE_LOCAL  LWK_TRAINERID
@@ -1372,8 +1376,8 @@ sub_trainer_talk_3vs3_NG:
 //--------------------------------------------------------------------
 //  戦闘勝利後の会話
 //--------------------------------------------------------------------
-ev_trainer_talk_after:
   /*
+  ev_trainer_talk_after:
   //話しかけたトレーナーが再戦可能かチェック
   _REVENGE_TRAINER_SEARCH LWK_TRAINERID, SCWK_ANSWER
   IF $SCWK_ANSWER != 0 THEN

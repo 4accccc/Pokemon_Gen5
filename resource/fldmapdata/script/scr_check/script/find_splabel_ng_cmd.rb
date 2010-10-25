@@ -1,8 +1,8 @@
 #EVƒtƒ@ƒCƒ‹—ñ‹“
-all_ary = Dir.glob("../*.ev")
+all_ary = Dir.glob("../ev_tmp/*.ev")
 ary = Array.new
 all_ary.each{|i|
-  i.sub!(/..\//,"")
+  i.sub!(/..\/ev_tmp\//,"")
   idx = i.index("sp_")
   if (idx == nil) || (idx != 0) then
     ary << i
@@ -14,8 +14,7 @@ target_label = ARGV[1]
 type = ARGV[2]
 
 ary.each{|i|
-  src = "../" + i
-  dst = i
+  src = "../ev_tmp/" + i
 #  system("ruby com_del.rb #{src} #{dst}")
-  system("ruby sp_label_ng_cmd.rb #{dst} #{list} #{target_label} #{type}")
+  system("ruby sp_label_ng_cmd.rb #{src} #{list} #{target_label} #{type}")
 }
