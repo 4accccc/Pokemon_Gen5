@@ -8,7 +8,6 @@ include $(PROJECT_RSCDIR)\macro_define
 ifeq ($(SCRIPT_DEBUGGER_MODE),yes)
 
 SUBDIRS	= flagwork \
-					eventdata/groupdata \
 					eventdata/define \
 					script \
 					eventdata/binary
@@ -25,7 +24,6 @@ SUBDIRS	=	flagwork \
 					map_replace \
 					build_model \
 					mm_list \
-					eventdata/groupdata \
 					eventdata/define \
 					scr_cam_prm \
 					script \
