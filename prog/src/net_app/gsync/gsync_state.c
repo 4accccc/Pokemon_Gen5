@@ -1721,95 +1721,6 @@ static void _accountCreateMessage(G_SYNC_WORK* pWork)
 
 
 
-#ifdef BUGFIX_PDWMAIL01_20101021
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   データアップロード完了 セーブする
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _createAccount4(G_SYNC_WORK* pWork)
-{
-  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
-
-  if(_IsNetworkMode(pWork) ){
-
-    {
-      int response;
-      response = NHTTP_RAP_GetGetResultCode(pWork->pNHTTPRap);
-      if(_responceChk(pWork,response)){
-        return;
-      }
-    }
-
-    
-    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
-      NET_PRINT("終了\n");
-      {
-        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
-        gs_response* pRep = (gs_response*)pEvent;
-        int d,j;
-        u32 size;
-        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
-
-        if(pRep->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE){  //成功
-
-          GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-          _CHANGE_STATE( _accountCreateMessage);
-
-        }
-        else{
-          pWork->ErrorNo = pRep->ret_cd;
-          _CHANGE_STATE(_ErrorDisp);
-        }
-      }
-    }
-  }
-  else{
-    GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    _CHANGE_STATE(_accountCreateMessage);
-  }
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   仮アカウント時のデータアップロード中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _createAccount3(G_SYNC_WORK* pWork)
-{
-  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
-
-  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
-
-  if(_IsNetworkMode(pWork)){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
-      u32 size;
-      u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
-      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
-        _CHANGE_STATE(_createAccount4);
-      }
-    }
-  }
-  else{
-    GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
-    _CHANGE_STATE(_createAccount4);
-  }
-
-}
-
-#endif //BUGFIX_PDWMAIL01_20101021
-
 
 //------------------------------------------------------------------------------
 /**
@@ -1833,20 +1744,6 @@ static void _createAccount2(G_SYNC_WORK* pWork)
         gs_response* pEvent = (gs_response*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
 
-#ifdef BUGFIX_PDWMAIL01_20101021
-
-        if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
-           _CHANGE_STATE(_ghttpPokemonListDownload);
-        }
-        else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
-          _CHANGE_STATE( _createAccount3);
-        }
-        else{
-          pWork->ErrorNo = pEvent->ret_cd;
-          _CHANGE_STATE(_ErrorDisp);
-        }
-
-#else
         if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
            _CHANGE_STATE(_ghttpPokemonListDownload);
         }
@@ -1858,7 +1755,6 @@ static void _createAccount2(G_SYNC_WORK* pWork)
           pWork->ErrorNo = pEvent->ret_cd;
           _CHANGE_STATE(_ErrorDisp);
         }
-#endif
       }
     }
   }
@@ -1878,7 +1774,27 @@ static void _createAccount2(G_SYNC_WORK* pWork)
 
 static void _createAccount(G_SYNC_WORK* pWork)
 {
+#ifdef BUGFIX_GFBTS2030_20101025
 
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATEUPLOAD, pWork->pNHTTPRap)){
+      u32 size;
+      u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
+
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
+        _CHANGE_STATE(_createAccount2);
+      }
+    }
+  }
+  else{
+    if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+      _CHANGE_STATE(_createAccount2);
+    }
+  }
+
+#else //BUGFIX_GFBTS2030_20101025
+  
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
       u32 proid = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pWork->pGameData) );
@@ -1901,6 +1817,7 @@ static void _createAccount(G_SYNC_WORK* pWork)
       _CHANGE_STATE(_createAccount2);
     }
   }
+#endif //BUGFIX_GFBTS2030_20101025
 }
 
 

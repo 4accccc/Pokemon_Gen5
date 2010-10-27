@@ -489,6 +489,28 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
 static void _ghttpInfoWait0(PDWACC_WORK* pWork)
 {
 
+#ifdef BUGFIX_GFBTS2030_20101025
+
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATEUPLOAD, pWork->pNHTTPRap)){
+
+      u32 size;
+      u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
+
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
+        _CHANGE_STATE(_ghttpInfoWait1);
+      }
+    }
+  }
+  else{
+    if(GFL_UI_KEY_GetTrg()){
+      _CHANGE_STATE(_ghttpInfoWait1);
+    }
+  }
+
+#else //BUGFIX_GFBTS2030_20101025
+
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
       s32 proid = pWork->profileID;
@@ -510,7 +532,7 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
       _CHANGE_STATE(_ghttpInfoWait1);
     }
   }
-
+#endif //BUGFIX_GFBTS2030_20101025
 
 }
 

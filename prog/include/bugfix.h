@@ -1016,3 +1016,15 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
 
 
 #define BUGFIX_GFBTS2029_20101021
+
+/*
+  ポケモンドリームワールドの変更
+  アカウント作成時にセーブデータを一緒に更新する事で、PGLのサービス導入がしやすくなる
+  新しいクリエイト命令を使用することで対応する
+  TPCサポートセンター様からの要望
+  担当：大野
+  
+ */
+
+
+#define BUGFIX_GFBTS2030_20101025

@@ -62,6 +62,11 @@ const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/
 const static char BTL_DL_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=worldbattle.download&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0"; //GET
 const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=worldbattle.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0"; //POST
 
+
+#ifdef BUGFIX_GFBTS2030_20101025
+const static char CREATEUPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/dsio/gw?p=account.create.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
+#endif //BUGFIX_GFBTS2030_20101025
+
 //const static char POKECHK_URL[] ="http://125.206.241.227/pokemon/validate"; //POST
 const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/validate"; //POST
 
@@ -78,6 +83,12 @@ const static char BTL_DL_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle
 const static char BTL_UP_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0"; //POST
 
 const static char POKECHK_URL[] ="https://pkvldtprod.nintendo.co.jp/pokemon/validate"; //POST
+
+
+#ifdef BUGFIX_GFBTS2030_20101025
+const static char CREATEUPLOAD_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=account.create.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
+#endif //BUGFIX_GFBTS2030_20101025
+
 
 #endif
 
@@ -103,6 +114,9 @@ static NHTTPRAP_URLTBL urltable[]={
   {BTL_UP_URL, NHTTP_REQMETHOD_POST},
   {POKECHK_URL, NHTTP_REQMETHOD_POST},
   {DOWNLOADEND_URL, NHTTP_REQMETHOD_POST},
+#ifdef BUGFIX_GFBTS2030_20101025
+  {CREATEUPLOAD_URL, NHTTP_REQMETHOD_POST},
+#endif //BUGFIX_GFBTS2030_20101025
 };
 
 
