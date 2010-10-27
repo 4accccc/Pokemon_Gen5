@@ -1011,7 +1011,7 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
 状態となっています。
 これにより体験版で得たアイテムが消失する時があります
   担当：大野
-  
+
  */
 
 
@@ -1023,8 +1023,19 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
   新しいクリエイト命令を使用することで対応する
   TPCサポートセンター様からの要望
   担当：大野
-  
+
  */
 
 
 #define BUGFIX_GFBTS2030_20101025
+
+
+
+/*
+ * 海外版とのランダムマッチ対戦終了後、録画できないと表示されてしまう問題を修正
+ * （未初期化領域の内容をサーバコマンドとして送信していた不具合）
+ *
+ * 担当：田谷
+*/
+#define BUGFIX_AF_GFBTS2031_101027
+

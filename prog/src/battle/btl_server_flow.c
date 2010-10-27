@@ -9680,6 +9680,16 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
   WazaSick sick;
   BTL_POKEPARAM* bpp;
 
+#ifdef BUGFIX_AF_GFBTS2031_101027
+  // 日本語製品版にて、意図せず送信していた未初期化領域の値を明示的にセットしている（taya）
+  pokeIDList[ 0 ] = 0;
+  pokeIDList[ 1 ] = 0;
+  pokeIDList[ 2 ] = 0;
+  pokeIDList[ 3 ] = 0;
+  pokeIDList[ 4 ] = 3;
+  pokeIDList[ 5 ] = 0;
+#endif
+
   pokeCnt = BTL_POKESET_GetCount( pokeSet );
   for(i=0; i<pokeCnt; ++i)
   {
@@ -16177,6 +16187,12 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
     if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_SORAWOTOBU) )
     {
       scproc_TameHideCancel( wk, bpp, BPP_CONTFLG_SORAWOTOBU );
+      #if 1
+      if( checkFreeFallUsing(bpp) )
+      {
+        scproc_FreeFall_CheckRelease( wk, bpp, TRUE );
+      }
+      #endif
       fFall = TRUE;
     }
     if( scEvent_CheckFloating(wk, bpp, TRUE) )
