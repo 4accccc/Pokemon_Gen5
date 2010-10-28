@@ -102,8 +102,44 @@ void EtcSave_SetAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
 {
   int i, copy_num;
   
+//【ユニオン友達リストの追加が排他的になっていない】
+// 同じ人とユニオン接続し続けていても３２人に到達してしまいます。
+#ifdef BUGFIX_AF_GFGTS2032_20101028
+  // ユニオン友達リストは必ず32以下のはず
+  GF_ASSERT( etcsave->acquaintance_occ_num<=ACQUAINTANCE_ID_MAX );
+  
+  for(i = 0; i < etcsave->acquaintance_occ_num; i++){
+    if(etcsave->acquaintance_trainer_id[i] == trainer_id){
+
+      //既に登録済みの人なので最後尾に付け直す(寿命更新)
+      copy_num = (etcsave->acquaintance_occ_num - 1 - i);
+      if(copy_num <= 0){
+        return; //既に最後尾
+      }
+      GFL_STD_MemCopy(&etcsave->acquaintance_trainer_id[i + 1], 
+        &etcsave->acquaintance_trainer_id[i], sizeof(u32) * copy_num);
+      etcsave->acquaintance_trainer_id[etcsave->acquaintance_occ_num - 1] = trainer_id;
+      return;
+    }
+  }
+  
+  //新規登録
+  if(etcsave->acquaintance_occ_num < ACQUAINTANCE_ID_MAX){
+    etcsave->acquaintance_trainer_id[etcsave->acquaintance_occ_num] = trainer_id;
+    etcsave->acquaintance_occ_num++;
+  }
+  else{
+    GFL_STD_MemCopy(&etcsave->acquaintance_trainer_id[1], 
+      etcsave->acquaintance_trainer_id, sizeof(u32) * (ACQUAINTANCE_ID_MAX - 1));
+    etcsave->acquaintance_trainer_id[ACQUAINTANCE_ID_MAX - 1] = trainer_id;
+    etcsave->acquaintance_occ_num = ACQUAINTANCE_ID_MAX; //念のため友達人数を32人と上書きする
+  }
+
+#else
+
   for(i = 0; i < etcsave->acquaintance_occ_num; i++){
     if(etcsave->acquaintance_trainer_id[etcsave->acquaintance_occ_num] == trainer_id){
+
       //既に登録済みの人なので最後尾に付け直す(寿命更新)
       copy_num = (etcsave->acquaintance_occ_num - 1 - i);
       if(copy_num <= 0){
@@ -126,6 +162,8 @@ void EtcSave_SetAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
       etcsave->acquaintance_trainer_id, sizeof(u32) * (ACQUAINTANCE_ID_MAX - 1));
     etcsave->acquaintance_trainer_id[ACQUAINTANCE_ID_MAX - 1] = trainer_id;
   }
+
+#endif
 }
 
 //==================================================================
