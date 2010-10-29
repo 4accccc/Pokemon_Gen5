@@ -30,6 +30,7 @@ typedef enum {
   AUTHOR_NOZOMU,
   AUTHOR_HOSAKA,
   AUTHOR_ICHI,
+  AUTHOR_ONOUE,
 
   AUTHOR_IGNORE,    ///< ‚±‚ê‚ðŽw’è‚·‚é‚Æo—Í‚³‚ê‚È‚¢
 }AUTHOR_ID;
@@ -69,6 +70,8 @@ typedef enum {
 #define DEFINED_AUTHOR_ID (AUTHOR_NOZOMU)
 #elif defined DEBUG_ONLY_FOR_ichiraku_katsuhiko
 #define DEFINED_AUTHOR_ID (AUTHOR_ICHI)
+#elif defined DEBUG_ONLY_FOR_onoue_masayuki
+#define DEFINED_AUTHOR_ID (AUTHOR_ONOUE)
 #else
 #define DEFINED_AUTHOR_ID (AUTHOR_FREE)
 #endif
@@ -123,5 +126,6 @@ extern void DEBUG_Printf( AUTHOR_ID author_id, const char * fmt, ... );
 #define   ARIIZUMI_Printf( ...)   DEBUG_Printf( AUTHOR_ARIIZUMI, __VA_ARGS__ )
 #define   OBATA_Printf( ... )     DEBUG_Printf( AUTHOR_OBATA, __VA_ARGS__ )
 #define   ICHI_Printf( ... )     DEBUG_Printf( AUTHOR_ICHI, __VA_ARGS__ )
+#define   ONOUE_Printf( ... )     DEBUG_Printf( AUTHOR_ONOUE, __VA_ARGS__ )
 
 #endif
