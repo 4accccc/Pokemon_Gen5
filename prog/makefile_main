@@ -402,7 +402,7 @@ CCFLAGS			+=	-prefix $(PRECOMPILE_CC_MCH)
 precompile: $(PRECOMPILE_CC_MCH)
 
 #バージョン定義ファイルが更新されたらプリコンパイルヘッダも更新する
-$(PRECOMPILE_CC_MCH):	$(VER_FILE) $(BUGFIX_HEADER)
+$(PRECOMPILE_CC_MCH):	$(VER_FILE) $(BUGFIX_HEADER) include/pm_version.h include/system/debug_print.h
 
 -include $(PRECOMPILE_CC_MCH).d
 $(PRECOMPILE_CC_MCH):%_cc.mch:
