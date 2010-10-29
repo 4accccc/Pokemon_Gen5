@@ -868,17 +868,33 @@ static void _recvMultiPartyNo(const int netID, const int size, const void* pData
 
 static void _modeSuccessMessageKeyWait(IRC_BATTLE_MATCH* pWork)
 {
-  if(GFL_UI_TP_GetTrg()){
+  // =============================
+  // 戻るボタンを押すことで終了するように処理を変更 onoue
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     _netBreakOff(pWork);
     _CHANGE_STATE(pWork,_modeFadeoutStart);
   }
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換完了SE待ちを行う
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void _modeSuccessTimingEnd2(IRC_BATTLE_MATCH* pWork)
 {
   pWork->timer++;
-  if(pWork->timer>60){
+
+  // =============================
+  // SE終了待ちに処理を変更 onoue
+  if( PMSND_CheckPlaySE() == FALSE )
+  {
+    _ReturnButtonStart(pWork,FALSE);
     GFL_NET_Exit(NULL);
     _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
   }
