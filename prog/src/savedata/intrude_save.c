@@ -218,7 +218,11 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
         break;
       }
     }
+#ifdef BUGFIX_AF_SYSTEM214_101101
+    if(pos == PERSON_NAME_SIZE+EOM_SIZE){
+#else
     if(pos == PERSON_NAME_SIZE){
+#endif
       return;
     }
     if(src->tbl_no >= SECRET_ITEM_DATA_TBL_MAX){
