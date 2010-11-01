@@ -1716,8 +1716,16 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
       pWork->dbw->aTVT.gameData = pWork->gamedata;
     }
     GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
+
+#ifdef BUGFIX_AF_SYSTEM217_20101101
+    //ユニオンルーム検査関数追加
+    if(GFL_NET_IsInit()){
+      NET_WHPIPE_SetBeaconCatchFunc(&_ConnectNumCheck,pWork);
+    }
+#else //BUGFIX_AF_SYSTEM217_20101101
     //ユニオンルーム検査関数追加
     NET_WHPIPE_SetBeaconCatchFunc(&_ConnectNumCheck,pWork);
+#endif //BUGFIX_AF_SYSTEM217_20101101
   }
 
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
