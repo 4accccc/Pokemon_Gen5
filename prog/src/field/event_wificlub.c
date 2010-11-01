@@ -378,7 +378,22 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       return FALSE;
     }
     GFL_PROC_LOCAL_Exit(ep2p->localProc);
-    
+
+#ifdef BUGFIX_AF_SYSTEM175_101101
+    if( ep2p->login.result == WIFILOGIN_RESULT_LOGIN ){
+      if(WifiList_GetFriendDataNum(GAMEDATA_GetWiFiList(ep2p->pGameData)) == 0){
+        (*seq)  = P2P_WIFIENDST;
+      }
+      else{
+        (*seq)  = P2P_MATCH_BOARD;
+        PMSND_FadeOutBGM( PMSND_FADE_FAST );
+      }
+    }
+    else{ 
+      PMSND_FadeOutBGM( PMSND_FADE_FAST );
+      (*seq)  = P2P_EXIT;
+    }
+#else //BUGFIX_AF_SYSTEM175_101101
     if(WifiList_GetFriendDataNum(GAMEDATA_GetWiFiList(ep2p->pGameData)) == 0){
 #ifdef BUGFIX_AF_SYSTEM175_101021
       (*seq)  = P2P_WIFIENDST;  //  P2P_NETENDCALL;//
@@ -398,6 +413,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
 #endif
       (*seq)  = P2P_EXIT;
     }
+#endif //BUGFIX_AF_SYSTEM175_101101
     break;
 #ifdef BUGFIX_AF_SYSTEM175_101021
   case P2P_WIFIENDST:
