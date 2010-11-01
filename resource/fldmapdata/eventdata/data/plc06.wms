@@ -9,11 +9,11 @@
 #block z offset
 8
 #3dp file names
-C:\home\wb_data3d\field\out10\map02_08.3dp
-C:\home\wb_data3d\field\out10\map02_09.3dp
-C:\home\wb_data3d\field\out10\map02_10.3dp
+C:\home\swan_data3d\field\out10\map02_08.3dp
+C:\home\swan_data3d\field\out10\map02_09.3dp
+C:\home\swan_data3d\field\out10\map02_10.3dp
 
-C:\home\wb_data3d\field\out10\map03_09.3dp
+C:\home\swan_data3d\field\out10\map03_09.3dp
 
 #block size
 32 32

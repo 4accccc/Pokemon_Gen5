@@ -9,18 +9,18 @@
 #block z offset
 0
 #3dp file names
-C:\home\wb_data3d\field\out21\h05_a00_00.3dp
-C:\home\wb_data3d\field\out21\h05_a00_01.3dp
-C:\home\wb_data3d\field\out21\h05_a01_00.3dp
-C:\home\wb_data3d\field\out21\h05_a01_01.3dp
-C:\home\wb_data3d\field\out21\h05_a02_00.3dp
-C:\home\wb_data3d\field\out21\h05_a02_01.3dp
-C:\home\wb_data3d\field\out21\h05_a03_00.3dp
-C:\home\wb_data3d\field\out21\h05_a03_01.3dp
-C:\home\wb_data3d\field\out21\h05_a04_00.3dp
-C:\home\wb_data3d\field\out21\h05_a04_01.3dp
-C:\home\wb_data3d\field\out21\h05_a05_00.3dp
-C:\home\wb_data3d\field\out21\h05_a05_01.3dp
+C:\home\swan_data3d\field\out21\h05_a00_00.3dp
+C:\home\swan_data3d\field\out21\h05_a00_01.3dp
+C:\home\swan_data3d\field\out21\h05_a01_00.3dp
+C:\home\swan_data3d\field\out21\h05_a01_01.3dp
+C:\home\swan_data3d\field\out21\h05_a02_00.3dp
+C:\home\swan_data3d\field\out21\h05_a02_01.3dp
+C:\home\swan_data3d\field\out21\h05_a03_00.3dp
+C:\home\swan_data3d\field\out21\h05_a03_01.3dp
+C:\home\swan_data3d\field\out21\h05_a04_00.3dp
+C:\home\swan_data3d\field\out21\h05_a04_01.3dp
+C:\home\swan_data3d\field\out21\h05_a05_00.3dp
+C:\home\swan_data3d\field\out21\h05_a05_01.3dp
 #block size
 32 32
 #End of WorldMap SaveData

@@ -9,8 +9,8 @@
 #block z offset
 15
 #3dp file names
-C:\home\wb_data3d\field\out06\map11_15.3dp
-C:\home\wb_data3d\field\out06\map12_15.3dp
+C:\home\swan_data3d\field\out06\map11_15.3dp
+C:\home\swan_data3d\field\out06\map12_15.3dp
 #block size
 32 32
 #End of WorldMap SaveData
