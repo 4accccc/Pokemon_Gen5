@@ -23,7 +23,7 @@
 #include "print/printsys.h"         // for PRINTSYS_xxxx
 #include "gamesystem/game_beacon.h" // for GAMEBEACON_xxxx
 #include "sound/pm_sndsys.h"        // for PMSND_xxxx
-#include "sound/wb_sound_data.sadl" // for SEQ_SE_XXXX
+#include "sound/swan_sound_data.sadl" // for SEQ_SE_XXXX
 
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx

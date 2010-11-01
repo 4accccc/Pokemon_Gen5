@@ -72,7 +72,7 @@
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
-//#include "sound/wb_sound_data.sadl"
+//#include "sound/swan_sound_data.sadl"
 #include "net_app/union/union_main.h"
 
 #include "debug/debugwin_sys.h" //デバッグメニュー

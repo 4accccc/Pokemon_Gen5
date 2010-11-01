@@ -22,7 +22,7 @@
 #include "pokeicon/pokeicon.h"
 #include "app/app_nogear_subscreen.h"
 
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "sound/pm_sndsys.h"
 
 #include "savedata/trialhouse_save.h"

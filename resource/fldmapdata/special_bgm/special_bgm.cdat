@@ -1,5 +1,5 @@
 // resource/fldmapdata/special_bgm/special_bgm.rb ‚É‚æ‚è©“®¶¬
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 

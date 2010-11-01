@@ -54,7 +54,7 @@ enum {
 };
 #include "zone_id.h"
 #include "../area_data/area_id.h"
-#include "..\..\sound\wb_sound_data.sadl"
+#include "..\..\sound\swan_sound_data.sadl"
 //#include "../map_matrix/map_matrix.naix"
 #include "tmp/map_matrix.h"
 #include "../script/script_seq.naix"      //script ID 定義ファイル

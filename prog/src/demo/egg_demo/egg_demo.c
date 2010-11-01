@@ -41,7 +41,7 @@
 #include "msg/script/msg_egg_event.h"
 #include "egg_demo_particle.naix"
 // サウンド
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 
 
 // オーバーレイ

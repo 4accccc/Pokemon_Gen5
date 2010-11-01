@@ -26,7 +26,7 @@
 #include "system/bmp_oam.h"          // for BmpOam_xxxx
 #include "gamesystem/game_beacon.h"  // for GAMEBEACON_xxxx
 #include "sound/pm_sndsys.h"         // for PMSND_xxxx
-#include "sound/wb_sound_data.sadl"  // for SEQ_SE_XXXX
+#include "sound/swan_sound_data.sadl"  // for SEQ_SE_XXXX
 #include "print/gf_font.h"           // for GFL_FONT_xxxx
 #include "print/printsys.h"          // for PRINTSYS_xxxx
 

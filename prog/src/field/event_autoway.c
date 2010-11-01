@@ -17,7 +17,7 @@
 #include "fldmmdl_code.h"
 #include "map_attr_def.h"  // for MATTR_xxxx
 #include "sound/pm_sndsys.h"  // for PMSND_PlaySE
-#include "sound/wb_sound_data.sadl"  // for SEQ_SE_xxxx
+#include "sound/swan_sound_data.sadl"  // for SEQ_SE_xxxx
 
 
 //=============================================================================================

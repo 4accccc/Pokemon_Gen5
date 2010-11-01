@@ -55,7 +55,7 @@
 
 #include "trial_house.h"
 
-#include "sound/wb_sound_data.sadl" //サウンドラベルファイル
+#include "sound/swan_sound_data.sadl" //サウンドラベルファイル
 
 #include "amprotect.h"
 

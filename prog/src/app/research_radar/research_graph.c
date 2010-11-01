@@ -29,7 +29,7 @@
 #include "savedata/save_control.h"       // for SaveControl_xxxx
 #include "savedata/questionnaire_save.h" // for QuestionnareWork_xxxx
 #include "sound/pm_sndsys.h"             // for PMSND_xxxx
-#include "sound/wb_sound_data.sadl"      // for SEQ_SE_XXXX
+#include "sound/swan_sound_data.sadl"      // for SEQ_SE_XXXX
 #include "print/gf_font.h"               // for GFL_FONT_xxxx
 #include "print/printsys.h"              // for PRINTSYS_xxxx
 #include "print/wordset.h"               // for WORDSET_xxxx

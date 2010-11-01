@@ -9,7 +9,7 @@
 #include <gflib.h>
 #include "player_volume_fader.h"
 
-#include "sound/wb_sound_data.sadl" // PLAYER_
+#include "sound/swan_sound_data.sadl" // PLAYER_
 
 
 #ifdef PM_DEBUG

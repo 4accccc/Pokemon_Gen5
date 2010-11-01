@@ -14,7 +14,7 @@
 #include "gamesystem/game_event.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 
 #include "fieldmap.h"
 #include "field/zonedata.h"

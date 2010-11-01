@@ -11,7 +11,7 @@
 
 #include "print/printsys.h"
 #ifndef MULTI_BOOT_MAKE  //’Êíˆ—
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #else
 #include "sound/pm_sndsys.h"
 #endif

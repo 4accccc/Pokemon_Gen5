@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 #include "field_sound_system.h"
 #include "field_sound.h"
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_data.h"
 #include "field/zonedata.h"

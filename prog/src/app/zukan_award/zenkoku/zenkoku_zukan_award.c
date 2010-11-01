@@ -28,7 +28,7 @@
 #include "print/wordset.h"
 #include "app/app_nogear_subscreen.h"
 
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "sound/pm_sndsys.h"
 
 #include "zenkoku_zukan_award_graphic.h"

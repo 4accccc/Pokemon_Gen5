@@ -12,7 +12,7 @@
 #include "tr_tool/tr_tool.h"
 
 #include "enceffno_def.h"
-#include "sound/wb_sound_data.sadl" //サウンドラベルファイル
+#include "sound/swan_sound_data.sadl" //サウンドラベルファイル
 
 #include "field/zonedata.h"
 #include "arc/fieldmap/zone_id.h"

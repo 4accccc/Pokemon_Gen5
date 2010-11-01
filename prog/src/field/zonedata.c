@@ -34,7 +34,7 @@
 
 #include "map_change_type.h"
 
-#include "sound/wb_sound_data.sadl" //SEQ_BGM_C_08_`
+#include "sound/swan_sound_data.sadl" //SEQ_BGM_C_08_`
 
 //-------------------------------------
 // “à•”ƒ[ƒN

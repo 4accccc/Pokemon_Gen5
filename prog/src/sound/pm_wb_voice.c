@@ -13,7 +13,7 @@
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
-#include "sound/wb_sound_data.sadl"   //サウンドラベルファイル
+#include "sound/swan_sound_data.sadl"   //サウンドラベルファイル
 
 #include "sound/pm_wb_voice.h"
 #include "arc_def.h"

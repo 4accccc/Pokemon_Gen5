@@ -57,7 +57,7 @@ FS_EXTERN_OVERLAY(battle_plist);
 #include "savedata/save_control.h"
 #include "app/p_status.h"
 
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "sound/sound_manager.h"
 #include "sound/pm_sndsys.h"
 #include "../../field/field_sound.h"

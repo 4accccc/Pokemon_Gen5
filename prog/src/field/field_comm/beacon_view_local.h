@@ -27,7 +27,7 @@
 #include "msg/msg_beacon_status.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 
 #include "beacon_view_def.h"
 

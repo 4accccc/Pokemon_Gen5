@@ -41,7 +41,7 @@
 
 //アーカイブ
 #include "arc_def.h"
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 
 
 //外部公開

@@ -35,7 +35,7 @@
 //アーカイブ
 #include "arc_def.h"
 #include "arc/fieldmap/zone_id.h"
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "sound/pm_sndsys.h" // for SEQ_SE_XXX
 
 //外部公開

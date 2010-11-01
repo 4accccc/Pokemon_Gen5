@@ -33,7 +33,7 @@
 // サウンド
 //#include "sound/pm_voice.h"
 #include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "sound/pm_sndsys.h"
 
 

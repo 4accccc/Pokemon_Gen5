@@ -16,7 +16,7 @@
 #include "effect_encount.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 
 #include "fldeff_encount.h"
 #include "field_encount_local.h"

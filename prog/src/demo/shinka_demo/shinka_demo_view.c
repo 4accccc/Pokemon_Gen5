@@ -27,7 +27,7 @@
 #include "system/mcss_tool.h"
 
 #include "sound/pm_wb_voice.h"  // wb‚Å‚Ípm_voice‚Å‚Í‚È‚­‚±‚¿‚ç‚ðŽg‚¤
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "sound/pm_sndsys.h"
 
 #include "shinka_demo_view.h"

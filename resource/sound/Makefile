@@ -5,7 +5,7 @@
 #	2008.09.02	ohno_katsumi@gamefreak.co.jp
 #------------------------------------------------------------------------------
 
-SOUNDPLAYERDIR = ../../../pokemon_wb_doc/wb_sound_player
+SOUNDPLAYERDIR = ../../../swan_doc/swan_sound_player
 DIFFCOPY = ../../tools/diffcopy
 
 

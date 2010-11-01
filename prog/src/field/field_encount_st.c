@@ -29,7 +29,7 @@
 #include "field_encount_local.h"
 #include "effect_encount.h"
 
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "debug/debug_flg.h"
 
 //--------------------------------------------------------------

@@ -49,7 +49,7 @@ DATAFILE	= zonetable.xls
 DATATABTXT	= $(WORKDIR)/$(DATAFILE:.xls=.txt)
 CONVSRCS	= $(RESDIR)/zonetable.c
 DEPFILES	= ../area_data/area_id.h \
-						../../sound/wb_sound_data.sadl \
+						../../sound/swan_sound_data.sadl \
 						../script/script_seq.naix \
 						../../message/script_message.naix \
 						../../encount/encount_data_w.naix \

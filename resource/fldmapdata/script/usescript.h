@@ -39,7 +39,7 @@
 #include "../flagwork/work_define.h"  //イベントワーク
 
 //サウンドラベル
-#include "../../../prog/include/sound/wb_sound_data.sadl"
+#include "../../../prog/include/sound/swan_sound_data.sadl"
 
 #include "../../personal/monsno_def.h"    //ポケモンナンバー
 #include "../../personal/monsnum_def.h"    //ポケモンナンバー

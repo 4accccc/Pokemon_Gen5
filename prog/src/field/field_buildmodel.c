@@ -36,7 +36,7 @@
 #include "map/dp3format.h"
 
 #include "sound/pm_sndsys.h"  //PMSND_
-#include "sound/wb_sound_data.sadl" //SEŽw’è
+#include "sound/swan_sound_data.sadl" //SEŽw’è
 
 #include "field/field_comm/intrude_work.h"
 

@@ -10,7 +10,7 @@
 #include "system/pms_data.h"
 #include "gamesystem/pm_season.h"
 #include "savedata/battle_rec.h"
-#include "sound/wb_sound_data.sadl" //サウンドラベルファイル
+#include "sound/swan_sound_data.sadl" //サウンドラベルファイル
 #include "tr_tool/tr_tool.h"
 #include "tr_tool/trno_def.h"
 #include "tr_tool/trtype_def.h"

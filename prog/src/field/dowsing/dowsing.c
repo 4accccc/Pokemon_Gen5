@@ -48,7 +48,7 @@
 #include "dowsing_gra.naix"
 
 // サウンド
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 
 // オーバーレイ
 

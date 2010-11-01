@@ -13,7 +13,7 @@
 #include "gamesystem/game_event.h"
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
-#include "sound/wb_sound_data.sadl" // for SEQ_ME_BADGE
+#include "sound/swan_sound_data.sadl" // for SEQ_ME_BADGE
 #include "sound/pm_sndsys.h" // for PMSND_xxxx
 
 #include "fieldmap.h"

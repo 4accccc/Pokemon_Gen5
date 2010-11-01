@@ -24,7 +24,7 @@
 #include "app/townmap_util.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 
 #include "beacon_detail_def.h"
 

@@ -11,7 +11,7 @@
 
 //マルチブート用きり分け
 #ifdef MULTI_BOOT_MAKE  //DL子機時処理
-  #include "multiboot/wb_sound_palpark.sadl"
+  #include "multiboot/swan_sound_palpark.sadl"
   #define GROUP_GLOBAL (0)
   #define SEQ_SE_END (1400)
   // エラー回避用に定義
@@ -181,7 +181,7 @@ void  PMSND_Init( void )
   PmSndHeapHandle = NNS_SndHeapCreate(PmSoundHeap, SOUND_HEAP_SIZE);
 
   // サウンドの設定
-  NNS_SndArcInitWithResult( &PmSoundArc, "wb_sound_data.sdat", PmSndHeapHandle, FALSE );
+  NNS_SndArcInitWithResult( &PmSoundArc, "swan_sound_data.sdat", PmSndHeapHandle, FALSE );
 
   PMSND_InitCore( TRUE );
 

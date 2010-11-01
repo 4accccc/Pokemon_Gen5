@@ -20,7 +20,7 @@ ROW_SOUND_IDX = 2  # BGM No.
 SUMMARY = "// resource/fldmapdata/special_bgm/special_bgm.rb により自動生成" 
 INCLUDE = 
 "
-#include \"sound/wb_sound_data.sadl\"
+#include \"sound/swan_sound_data.sadl\"
 #include \"../../../resource/fldmapdata/flagwork/flag_define.h\"
 #include \"../../../resource/fldmapdata/zonetable/zone_id.h\"
 " 
@@ -117,7 +117,7 @@ end
 #----------------------------------------------------------------------------------
 def GetSoundIdx( bgmLavel ) 
   # 定義ファイルを開く
-  filename = ENV["PROJECT_RSCDIR"] + "sound/wb_sound_data.sadl"
+  filename = ENV["PROJECT_RSCDIR"] + "sound/swan_sound_data.sadl"
   file = File.open( filename, "r" )
 
   # 指定されたゾーンIDを検索

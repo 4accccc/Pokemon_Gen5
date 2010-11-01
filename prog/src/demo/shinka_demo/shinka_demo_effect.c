@@ -19,7 +19,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
-#include "sound/wb_sound_data.sadl"
+#include "sound/swan_sound_data.sadl"
 #include "sound/pm_sndsys.h"
 
 #include "shinka_demo_effect.h"
