@@ -1045,3 +1045,23 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
 */
 #define BUGFIX_AF_GFBTS2031_101027
 
+
+/*
+  >■System #214
+  >【名前が7文字の侵入者がアイテムミッションを達成しても、
+  >　ターゲット側で隠された道具を拾えません】
+  >
+  >名前が7文字の侵入者がアイテムを隠した場合、ターゲット側で
+  >名前が不正と判定され、隠したアイテムが保存されません。
+  >
+  >→取り急ぎ弊社で以下のように修正させていただきました。
+  >　問題ないかのご確認と、問題なければアッパーバージョン修正として
+  >　反映をお願いできますでしょうか？ 
+  >
+  >　intrude_save.c (212)、intrude_save.c (217) において、
+  >　PERSON_NAME_SIZE → NELEMS(src->name) と変更しました。
+
+  PERSON_NAME_SIZE+EOM_SIZEで修正しました
+    担当：有泉
+ */
+#define BUGFIX_AF_SYSTEM214_101101

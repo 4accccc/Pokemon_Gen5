@@ -209,7 +209,11 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
   {
     STRCODE EOMCODE = GFL_STR_GetEOMCode();
     int pos;
+#ifdef BUGFIX_AF_SYSTEM214_101101
+    for(pos = 0; pos < PERSON_NAME_SIZE+EOM_SIZE; pos++){
+#else
     for(pos = 0; pos < PERSON_NAME_SIZE; pos++){
+#endif
       if(src->name[pos] == EOMCODE){
         break;
       }
