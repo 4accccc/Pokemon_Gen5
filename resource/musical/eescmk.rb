@@ -382,7 +382,7 @@ end
 #				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_efftool.h\n")
 #				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
 #				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/system/mcss.h\n")
-#				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/sound/wb_sound_data.sadl\n")
+#				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/sound/swan_sound_data.sadl\n")
 #				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/musical/stage/script/musical_script_command.h\n")
 				inc_header.size.times { |inc|

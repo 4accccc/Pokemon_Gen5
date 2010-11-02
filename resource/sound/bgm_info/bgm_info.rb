@@ -109,7 +109,7 @@ table    = Array.new # テーブルデータ[シーケンス番号, ISSタイプ]
 
 # 各ファイル名
 SRC_FILENAME      = ARGV[0]
-DEF_SEQ_FILENAME  = "../wb_sound_data.sadl"
+DEF_SEQ_FILENAME  = "../swan_sound_data.sadl"
 DEF_TYPE_FILENAME = "iss_type.h"
 DST_FILENAME      = "bgm_info.bin"
 

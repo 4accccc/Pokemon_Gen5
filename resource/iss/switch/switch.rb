@@ -6,7 +6,7 @@
 def GetSeqNo( seq_label )
 
 	# ファイルを開く
-	file_def = File.open( "../../../prog/include/sound/wb_sound_data.sadl" )
+	file_def = File.open( "../../../prog/include/sound/swan_sound_data.sadl" )
 
 	# 1行ずつ見ていく
 	file_def.each do |line|

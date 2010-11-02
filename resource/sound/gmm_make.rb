@@ -4,7 +4,7 @@
 # 実行すると「sound_data.sadl」の中から「SEQ_」がマッチする文字列を取り出して
 # サウンドデバッグ画面で使うgmmファイルを作成します。
 # 同じフォルダに「sound_data.sadl」+ messageフォルダーのtemplate.gmmを固定参照します
-# ruby gmm_make.rb template.gmm wb_sound_data.sadl soundtestname.gmm
+# ruby gmm_make.rb template.gmm swan_sound_data.sadl soundtestname.gmm
 # 2008.01.10 by AkitoMori
 # 2009.01.28 k.ohno
 #-------------------------------------------------------------------------------
