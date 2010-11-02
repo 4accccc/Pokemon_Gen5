@@ -92,13 +92,14 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
       cdemo_data.skip = COMMANDDEMO_SKIP_DEBUG;
       cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
-      *seq = 2;
+//      *seq = 2;   // 2だとムービーだけど…
+      *seq = 4;   //こっちもタイトルで
     }else{
       *seq = 4;   // タイトルへ
     }
     break;
 
-  case 2:		// デモ１
+  case 2:   // デモ１
     if( cdemo_data.ret != COMMANDDEMO_RET_SKIP_DEBUG ){
       cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE1;
       cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
@@ -109,7 +110,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     }
     break;
 
-  case 3:		// デモ２
+  case 3:   // デモ２
     if( cdemo_data.ret != COMMANDDEMO_RET_SKIP_DEBUG ){
       cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE2;
       cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
@@ -134,7 +135,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     break;
 
   case 1:   // ＧＦロゴ
-		CorpParam.mode = ONLY_DEVELOP_VIEW;     // 2回目以降の権利者表示モード設定
+    CorpParam.mode = ONLY_DEVELOP_VIEW;     // 2回目以降の権利者表示モード設定
     cdemo_data.mode = COMMANDDEMO_MODE_GF_LOGO;
     cdemo_data.skip = COMMANDDEMO_SKIP_ON;
     cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
@@ -142,23 +143,23 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     *seq = 2;
     break;
 
-  case 2:		// デモ１
-		if( cdemo_data.ret == COMMANDDEMO_RET_NORMAL ){
-			cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE1;
-			cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
-			GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
-			*seq = 3;
-		}else{
-			*seq = 4;   // タイトルへ
-		}
-		break;
+  case 2:   // デモ１
+    if( cdemo_data.ret == COMMANDDEMO_RET_NORMAL ){
+      cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE1;
+      cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+      *seq = 3;
+    }else{
+      *seq = 4;   // タイトルへ
+    }
+    break;
 
-  case 3:		// デモ２
-		cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE2;
-		cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
-		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
-		*seq = 4;   // タイトルへ
-		break;
+  case 3:   // デモ２
+    cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE2;
+    cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+    *seq = 4;   // タイトルへ
+    break;
 
   case 4:   // メインタイトル
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
