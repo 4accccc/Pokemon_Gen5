@@ -5,8 +5,8 @@
 # 作成日：2010/6/4 作成者：保坂 元八
 ###################################################################################
 
-ARC_PATH = "c:/home/pokemon_wb/prog/arc"
-SRC_PATH = "c:/home/pokemon_wb/prog/src"
+ARC_PATH = "c:/home/swan/prog/arc"
+SRC_PATH = "c:/home/swan/prog/src"
 LINE_MAX = 150
 
 #構造体定義

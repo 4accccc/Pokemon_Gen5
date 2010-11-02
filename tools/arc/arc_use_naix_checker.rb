@@ -3,9 +3,9 @@
 # 作成日：2010/6/4 作成者：保坂 元八
 ###################################################################################
 
-ARC_PATH = "c:/home/pokemon_wb/prog/arc"
-SRC_PATH = "c:/home/pokemon_wb/prog/src"
-SCRIPT_PATH = "c:/home/pokemon_wb/resource/fldmapdata/script"
+ARC_PATH = "c:/home/swan/prog/arc"
+SRC_PATH = "c:/home/swan/prog/src"
+SCRIPT_PATH = "c:/home/swan/resource/fldmapdata/script"
 
 # 再帰的にCファイルを検出
 def recursive_search(path, word)
