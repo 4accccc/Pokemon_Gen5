@@ -259,7 +259,7 @@ CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimp
 GFL_FILE_TREE	=	titledemo.narc \
 					skb.narc \
 					soundstatus.narc \
-					wb_sound_data.sdat \
+					swan_sound_data.sdat \
 					gfl_font.dat \
 					dl_rom/icon_b.char \
 					dl_rom/icon_b.plt  \
