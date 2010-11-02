@@ -42,7 +42,7 @@ SCRFILE_F = trfgra_wb.scr
 SCRFILE_B = trbgra_wb.scr
 
 #リソースファイルの存在するディレクトリを指定
-RES_DIR = ../../../pokemon_wb_doc/trgra/
+RES_DIR = ../../../swan_doc/trgra/
 
 #LINK情報をCNV書き換えたファイルを格納するディレクトリを指定
 COPY_DIR = ./conv/

@@ -1,6 +1,7 @@
 #! ruby -Ks
-require "C:/home/pokemon_wb/tools/hash/monsno_hash"   # モンスターNo.
-require "C:/home/pokemon_wb/tools/hash/wazaoboe_hash" # 技覚え
+
+require ENV['PROJECT_ROOT']+"/tools/hash/monsno_hash"   # モンスターNo.
+require ENV['PROJECT_ROOT']+"/tools/hash/wazaoboe_hash" # 技覚え
 
 #####################################################################################
 #

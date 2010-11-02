@@ -1,6 +1,6 @@
-cd \home\pokemon_wb\resource\trdata
+cd \home\swan\resource\trdata
 make
-cd \home\pokemon_wb\resource\trgra
+cd \home\swan\resource\trgra
 make
 echo トレーナーグラフィックコンバート終了
 pause

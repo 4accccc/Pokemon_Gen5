@@ -41,14 +41,14 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: normal other
 
 normal:
-	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)pokegra_wb.lst ../../../pokemon_wb_doc/pokegra/ $(COPY_DIR)
+	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)pokegra_wb.lst ../../../swan_doc/pokegra/ $(COPY_DIR)
 
 other:
-	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)otherform_wb.lst ../../../pokemon_wb_doc/pokegra/ $(COPY_DIR)
+	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)otherform_wb.lst ../../../swan_doc/pokegra/ $(COPY_DIR)
 
 fake:
 	ruby fake_list_make.rb $(COPY_DIR)otherform_wb.lst $(COPY_DIR)otherform_wb_fake.lst
-	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)otherform_wb_fake.lst ../../../pokemon_wb_doc/pokegra/ $(COPY_DIR)
+	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)otherform_wb_fake.lst ../../../swan_doc/pokegra/ $(COPY_DIR)
 
 endif
 

@@ -1,3 +1,3 @@
 echo off
-svn update c:\home\pokemon_wb\resource\trdata\trfgra_wb.scr
-cmd /c c:\home\pokemon_wb\prompt.bat cmd mktrgra.bat
+svn update c:\home\swan\resource\trdata\trfgra_wb.scr
+cmd /c c:\home\swan\prompt.bat cmd mktrgra.bat
