@@ -572,6 +572,9 @@ struct _WIFIP2PMATCH_WORK{
   u8 nextSeq;
   u8     mainCur;
   u8     subCur;
+  u8     is_talk; //BTS7978を修正するため話しかけ状態を検知するために追加
+  u8     dummy;
+  u16     dummy2;
 
   WIFIP2PMATCH_STATE state; //プレイヤーの状況
 };
