@@ -1979,6 +1979,9 @@ static BOOL Mystery_Net_ErrDisconnectCallbackEx(void* p_wk_adrs, int code, int t
     //Ø’fƒGƒ‰[
   case DWC_ETYPE_SHUTDOWN_FM:
   case DWC_ETYPE_DISCONNECT:
+#ifdef BUGFIX_AF_SYSTEM188_20101102
+  case DWC_ETYPE_SHUTDOWN_ND:
+#endif
     return p_wk->is_nd_disconnect_enable;
   }
 

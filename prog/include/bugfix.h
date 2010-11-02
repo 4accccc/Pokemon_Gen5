@@ -1090,4 +1090,16 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
  */
 
 #define BUGFIX_AF_SYSTEM217_20101101
-
+/*
+> ■System #188
+> 【不正な名前のエラーをシミュレートするとはまる】
+> 
+> 認証サーバエラーシミュレータを用いて不正な名前エラーを設定した状態で
+> ふしぎなおくりものをWi-Fiから受け取ろうとするとはまります。
+> 
+> →dwc_rap.c の mydwc_HandleError関数内でDWCからerrorType
+> 　DWC_ETYPE_SHUTDOWN_ND が返るとはまります。
+> 　サービスロケータに障害が発生すると、はまることになります。
+> 　ご確認お願いいたします。
+*/
+#define BUGFIX_AF_SYSTEM188_20101102
