@@ -2,12 +2,12 @@ REM @ECHO OFF
 
 SET LANG=C-SJIS
 SET HOME_TMP=%~dp0
-SET PROJECT_ROOT=c:\home\pokemon_wb\
+SET PROJECT_ROOT=c:\home\swan\
 SET PROJECT_PROGDIR=%PROJECT_ROOT%prog/
 SET PROJECT_ARCDIR=%PROJECT_PROGDIR%arc/
 SET PROJECT_RSCDIR=%PROJECT_ROOT%resource/
-SET WBLIBDIR=C:\home\pokemon_wb\lib
-SET TAGFILE=c:\home\pokemon_wb\tags
+SET WBLIBDIR=C:\home\swan\lib
+SET TAGFILE=c:\home\swan\tags
 
 REM ##################################################
 REM		ディレクトリパス定義
@@ -38,8 +38,8 @@ REM ##################################################
 REM		ユーザー個別設定の呼び出し
 REM ##################################################
 
-cd C:\home\pokemon_wb\tools\pokemon_viewer
-set PERL_DIR=..\..\..\pokemon_wb\tools\pokegra\
+cd C:\home\swan\tools\pokemon_viewer
+set PERL_DIR=..\..\..\swan\tools\pokegra\
 
 del p*.n*
 

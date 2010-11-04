@@ -9,7 +9,7 @@ set GS_SRC_DIR=C:\gshome\pokemon_gs\src\application\e_mail\
 REM ---------------------------------------------------------
 REM コンバート先フォルダ
 REM ---------------------------------------------------------
-set WB_DST_DIR=c:\home\pokemon_wb\prog\src\app\e_mail\
+set WB_DST_DIR=c:\home\swan\prog\src\app\e_mail\
 
 REM ---------------------------------------------------------
 REM コンバートするファイル
