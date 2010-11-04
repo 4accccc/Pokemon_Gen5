@@ -44,7 +44,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2) $(GMMDIR)$(GMMFILE)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += out_end *.o *.elf *.bin $(NARCNAME1) $(NARCNAME2) $(GMMFILE)
+LDIRT_CLEAN += out_end *.o *.elf *.bin $(NARCNAME1) $(NARCNAME2) $(GMMFILE) trmsg_tmp.txt trmsg_tmp.xls temp.gmm trmsgtbl.s
 endif
 
 .PHONY:	do-build
@@ -53,7 +53,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .SUFFIXES: .s .bin
 
-do-build: out_end trmsgtbl.bin trmsgtbl.narc
+do-build: trmsg_tmp.txt out_end trmsgtbl.bin trmsgtbl.narc
+
 trmsgtbl.narc: trmsgtbl.bin
 	$(TOOLDIR)trtblmk trmsgtbl.bin trmsgtblofs.bin
 	nnsarc -c -l -n -i trmsgtbl.narc trmsgtbl.bin
@@ -66,7 +67,11 @@ trmsgtbl.bin: trmsgtbl.s
 	rm $*.o
 	rm $*.elf
 
-out_end: trmsg.csv
+trmsg_tmp.txt: wb_trainermsg.xls
+	cp  wb_trainermsg.xls trmsg_tmp.xls
+	../../tools/exceltool/excelcommaconv.exe trmsg_tmp.xls
+
+out_end: trmsg_tmp.txt
 	ruby $(TOOLDIR)trmsgconv.rb $< ../message/template.gmm
 
 endif
