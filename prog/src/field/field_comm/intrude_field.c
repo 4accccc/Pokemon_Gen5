@@ -1394,6 +1394,14 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     return;
   }
   
+#ifdef BUGFIX_AF_SYSTEM242_20101104
+  if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE)
+  {
+     //©•ª‚ª’B¬Ò
+    OS_TFPrintf(2,"return!!\n");
+    return;
+  }
+#endif  
   FIELD_PLAYER_GetPos( pcActor, &pos );
   new_pos = pos;
   palace_area_calc_x = pos.x;
