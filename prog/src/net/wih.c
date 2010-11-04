@@ -256,6 +256,7 @@
 #include "net/wih_dwc.h"
 #endif //MULTI_BOOT_MAKE
 #include "net/net_whpipe.h"
+#include "system/net_err.h"
 
 /*
   wh.c : Wireless Manager 関連 Wrapper
@@ -3700,9 +3701,11 @@ void WH_Reset(void)
 		}
 	}
 
-	if (!WH_StateInReset())
+  if (!WH_StateInReset())
 	{
-		WH_ChangeSysState(WH_SYSSTATE_FATAL);
+    //BTS8036にて修正。重くなる原因は不明
+		//WH_ChangeSysState(WH_SYSSTATE_FATAL);
+    NetErr_DispCallFatal();
 	}
 }
 
