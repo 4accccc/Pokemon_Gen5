@@ -16,7 +16,6 @@ goto EX
 
 :call_cmd
 cd %~dp0
-pwd
 ../../../../prompt.bat cmd %0 %1 ex
 goto end
 
