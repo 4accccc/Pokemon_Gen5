@@ -210,6 +210,7 @@ GFL_PROC_DATA MusicalEdit_ProcData =
 };
 
 FS_EXTERN_OVERLAY(musical);
+FS_EXTERN_OVERLAY(musical_common);
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
@@ -221,6 +222,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0xE0000 );
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_common));
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
@@ -267,6 +269,7 @@ static GFL_PROC_RESULT MusicalEditProc_Term( GFL_PROC * proc, int * seq , void *
 
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_common));
 
   return GFL_PROC_RES_FINISH;
 }
