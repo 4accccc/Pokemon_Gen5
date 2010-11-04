@@ -31,6 +31,10 @@
 
 #include "sodateya.h" 
 
+#ifdef BUGFIX_AF_SYSTEM207_20101104
+#include "seasonpoke_form.h" // for SEASONPOKE_FORM_ChangeForm
+#endif
+
 //========================================================================================
 // ¡ ’è”
 //========================================================================================
@@ -256,6 +260,17 @@ void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party )
   // ƒ^ƒ}ƒS‚ðíœ
   SODATEYA_WORK_ClrEgg( sodateya->work ); 
   GFL_HEAP_FreeMemory( egg );
+
+#ifdef BUGFIX_AF_SYSTEM207_20101104
+  // ŽèŽ‚¿ƒ|ƒPƒ‚ƒ“‚ÌƒtƒHƒ‹ƒ€‚ð‹Gß‚Æˆê’v‚³‚¹‚é
+  // ( Žó‚¯Žæ‚Á‚½ƒ^ƒ}ƒS‚ªƒVƒLƒWƒJ‚Ìê‡, ƒtƒHƒ‹ƒ€‚ð‹Gß‚Æˆê’v‚³‚¹‚é. }ŠÓ“o˜^‚Í‚µ‚È‚¢. )
+  {
+    GAMESYS_WORK* gameSystem = FIELDMAP_GetGameSysWork( sodateya->fieldmap );
+    GAMEDATA* gameData = GAMESYSTEM_GetGameData( gameSystem );
+    u8 seasonID = GAMEDATA_GetSeasonID( gameData );
+    SEASONPOKE_FORM_ChangeForm( gameData, party, seasonID );
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------------------
