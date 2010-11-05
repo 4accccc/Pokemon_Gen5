@@ -1,6 +1,6 @@
 # SE ‚Ì‘SƒŠƒXƒg‚ğì¬
 all_se_list = Array.new
-file = File::open( "../../prog/include/sound/wb_sound_data.sadl", "r" )
+file = File::open( "../../prog/include/sound/swan_sound_data.sadl", "r" )
 lines = file.readlines
 file.close
 

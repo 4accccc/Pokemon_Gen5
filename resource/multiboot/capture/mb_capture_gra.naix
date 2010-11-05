@@ -11,7 +11,7 @@
 #define NARC_MB_CAPTURE_GRA_NAIX_
 
 enum {
-	NARC_mb_capture_gra_wb_sound_palpark_game_sdat = 0,
+	NARC_mb_capture_gra_swan_sound_palpark_game_sdat = 0,
 	NARC_mb_capture_gra_cap_bgd_NCLR = 1,
 	NARC_mb_capture_gra_cap_bgd_NCGR = 2,
 	NARC_mb_capture_gra_cap_bgd_NSCR = 3,

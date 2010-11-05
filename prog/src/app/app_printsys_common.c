@@ -10,7 +10,7 @@
 #include <gflib.h>
 
 #ifdef MULTI_BOOT_MAKE //’Êíˆ—
-  #include "multiboot/wb_sound_palpark.sadl"
+  #include "multiboot/swan_sound_palpark.sadl"
 #endif
 
 #include "sound/pm_sndsys.h"

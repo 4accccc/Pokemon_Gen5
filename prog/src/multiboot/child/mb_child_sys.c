@@ -19,7 +19,7 @@
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
-#include "multiboot/wb_sound_palpark.sadl"
+#include "multiboot/swan_sound_palpark.sadl"
 #include "sound/pm_sndsys.h"
 
 
@@ -236,7 +236,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
   work->sndData = GFL_ARC_UTIL_Load( ARCID_MB_CHILD ,
-                                     NARC_mb_child_gra_wb_sound_palpark_sdat ,
+                                     NARC_mb_child_gra_swan_sound_palpark_sdat ,
                                      FALSE ,
                                      work->heapId );
                                      

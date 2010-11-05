@@ -27,7 +27,7 @@
 #define MULTI_BOOT_MAKE
 #endif
 
-#include "multiboot/wb_sound_palpark.sadl"
+#include "multiboot/swan_sound_palpark.sadl"
 #include "sound/pm_sndsys.h"
 
 #ifdef FACE_MB_MAKE

@@ -197,7 +197,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   work->state = MSS_FADEIN;
   
   work->sndData = GFL_ARCHDL_UTIL_Load( work->initWork->arcHandle ,
-                                        NARC_mb_capture_gra_wb_sound_palpark_game_sdat ,
+                                        NARC_mb_capture_gra_swan_sound_palpark_game_sdat ,
                                         FALSE ,
                                         work->heapId );
   MB_CAPTURE_InitGraphic( work );
