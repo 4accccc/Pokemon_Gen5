@@ -1,0 +1,1 @@
+GAME_FILE_TREE=	a/0/0/0

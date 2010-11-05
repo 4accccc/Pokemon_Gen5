@@ -1,0 +1,49 @@
+#------------------------------------------------------------------------------
+#	再帰的なMake呼び出しマクロ
+#
+#	SUBDIRSに定義したディレクトリそれぞれについて再帰的にMakeを行う
+#
+#------------------------------------------------------------------------------
+AND	=	&&
+ECHO	:= echo
+define MAKE_SUBDIR
+    +$(foreach DIR,$(SUBDIRS),$(MAKE) $(SUBDIR_FLAGS) -C $(DIR) $(MAKECMDGOALS) $(AND)) true
+    +$(foreach FILE,$(SUBMAKES),$(MAKE) $(SUBDIR_FLAGS) -C $(dir $(FILE)) -f $(notdir $(FILE)) $(MAKECMDGOALS) $(AND)) true
+endef
+
+ifeq ($(MAKEFILE),Makefile)
+MAKEFILE_	=
+else
+MAKEFILE_	= /$(MAKEFILE)
+endif
+
+define ECHO_CURDIR
+	$(ECHO) "==== $(CURDIR)$(MAKEFILE_)";
+endef
+
+
+#------------------------------------------------------------------------------
+# コピーの方法を記述
+#------------------------------------------------------------------------------
+DIFFCOPY = ruby $(PROJECT_ROOT)tools/diffcopy.rb
+COPY = cp
+
+# naixの時間部分を消去する
+NAIXCUT = ruby $(PROJECT_ROOT)/tools/naixcutstamp.rb
+# バイナリファイルを結合する
+BINLINKER = ruby $(PROJECT_ROOT)/tools/binlinker.rb
+# lsで作成したリストの頭と尻に"を追加する
+ARCLIST_MAKE = perl $(PROJECT_ROOT)tools/arc_list_make.pl
+
+
+#------------------------------------------------------------------------------
+#	ユーザーごとの動作切り替え用
+#	USERSで定義されている文字列に自分のユーザーIDがない場合は
+#	CONVERTUSERは定義されない
+#------------------------------------------------------------------------------
+ifneq	(,$(findstring $(USERNAME),$(USERS)))
+CONVERTUSER	= true
+else
+CONVERTUSER = false
+endif
+
