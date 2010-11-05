@@ -4,7 +4,7 @@
 #define FACE_MB_MAKE
 #define MULTI_BOOT_MAKE
 #endif
-#include "multiboot/wb_sound_palpark_game.sadl"
+#include "multiboot/swan_sound_palpark_game.sadl"
 #include "sound/pm_sndsys.h"
 #ifdef FACE_MB_MAKE
 #undef FACE_MB_MAKE
