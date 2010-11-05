@@ -1120,7 +1120,7 @@ System #242
 　BUGFIX_BTS7869_20100806 の定義を無効にすると再現しなくなりましたので、
 　この対処の影響と思われます。
 */
-//#define BUGFIX_AF_SYSTEM242_20101104
+#define BUGFIX_AF_SYSTEM242_20101104
 
 /*
 > ■System #207
