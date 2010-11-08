@@ -113,7 +113,7 @@ extern void DEBUG_TEXT_EndWait( DEBUG_TEXT_WORK *p_wk );
 ///	定数
 //=====================================
 #define DEBUG_LIST_SELECT_NULL  (BMPMENULIST_NULL)
-#define DEBUG_LIST_WINDOW_MAX   (3)
+#define DEBUG_LIST_WINDOW_MAX   (32)
 
 //-------------------------------------
 ///	選択リスト
@@ -123,7 +123,8 @@ typedef struct
   GFL_MSGDATA *p_msg;
   GFL_FONT    *p_font;
   PRINT_QUE   *p_que;
-  u32 strID[DEBUG_LIST_WINDOW_MAX];
+  u32     strID[DEBUG_LIST_WINDOW_MAX];
+  STRBUF  *p_strbuf[DEBUG_LIST_WINDOW_MAX];
   u32 list_max;
 
   u16 frm;
@@ -141,6 +142,7 @@ typedef struct _DEBUG_LIST_WORK DEBUG_LIST_WORK;
 ///	パブリック
 //=====================================
 extern DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heapID );
+extern DEBUG_LIST_WORK * DEBUG_LIST_InitEx( const DEBUG_LIST_SETUP *cp_setup, u32 x, u32 y, u32 w, u32 h, u32 view_line, HEAPID heapID );
 extern void DEBUG_LIST_Exit( DEBUG_LIST_WORK *p_wk );
 extern u32 DEBUG_LIST_Main( DEBUG_LIST_WORK *p_wk );
 
@@ -285,6 +287,14 @@ extern void DEBUG_NUMIN_Start( DEBUG_NUMIN_WORK *p_wk, u8 keta, s32 min, s32 max
 extern void DEBUG_NUMIN_Main( DEBUG_NUMIN_WORK *p_wk );
 extern u16  DEBUG_NUMIN_GetNum( const DEBUG_NUMIN_WORK *cp_wk );
 extern BOOL DEBUG_NUMIN_IsEnd( const DEBUG_NUMIN_WORK *cp_wk );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  文字列
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+extern STRBUF * DEBUG_STRING_CreateUTF16ToSTRBUF( const u16 *p_str, HEAPID heapID );
+
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**

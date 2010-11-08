@@ -44,6 +44,7 @@
 #include "title/title.h"
 #include "net_app/wifi_logout.h"
 #include "net_app/mystery.h"
+#include "debug_snd_strm.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -276,6 +277,7 @@ static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallMystery( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallIrcRegulation( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -357,6 +359,7 @@ enum
 	LISTDATA_SEQ_PROC_WIFILOGOUT,
   LISTDATA_SEQ_PROC_MYSTERY,
   LISTDATA_SEQ_SEND_IRC_REGULATION,
+  LISTDATA_SEQ_PROC_SND_STRM,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -387,6 +390,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[LISTDATA_SEQ_MAX]	=
   LISTDATA_CallWifiLogout,
   LISTDATA_CallMystery,
   LISTDATA_CallIrcRegulation,
+  LISTDATA_CallSndStrm,
 };
 
 //-------------------------------------
@@ -398,7 +402,10 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"バトルレコーダー", LISTDATA_SEQ_PROC_BTLRECORDER,
 	},
-#endif 
+#endif
+  {
+    L"サウンドストリーム", LISTDATA_SEQ_PROC_SND_STRM
+  },
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
@@ -1442,6 +1449,17 @@ static void LISTDATA_CallMystery( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallIrcRegulation( DEBUG_NAGI_MAIN_WORK *p_wk )
 { 
   DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_NAGI_IRC_REGULATION_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンドストリーム
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk )
+{
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_SND_STRM_ProcData, NULL );
 }
 //=============================================================================
 /**

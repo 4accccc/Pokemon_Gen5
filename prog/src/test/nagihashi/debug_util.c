@@ -33,6 +33,7 @@
 
 //文字表示
 #include "print/printsys.h"
+#include <wchar.h>	//wcslen
 
 //外部公開
 #include "debug_util.h"
@@ -702,6 +703,25 @@ struct _DEBUG_LIST_WORK
 //-----------------------------------------------------------------------------
 DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heapID )
 { 
+  const u8 w  = DEBUG_LIST_W;
+  const u8 h  = cp_setup->list_max*2;
+  const u8 x  = 32 - w - 1; //1はフレーム分
+  const u8 y  = 24 - h - 1 - 6; //１は自分のフレーム分と6はテキスト分
+  return DEBUG_LIST_InitEx( cp_setup, x, y, w, h, cp_setup->list_max, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化  （高さ）
+ *
+ *	@param	DEBUG_LIST_SETUP *cp_setup  リスト設定ワーク
+ *	@param  height                    高さ
+ *	@param	heapID                    heapID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+DEBUG_LIST_WORK * DEBUG_LIST_InitEx( const DEBUG_LIST_SETUP *cp_setup, u32 x, u32 y, u32 w, u32 h, u32 view_line, HEAPID heapID )
+{
   DEBUG_LIST_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(DEBUG_LIST_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_LIST_WORK) );
@@ -711,10 +731,6 @@ DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heap
   { 
     //右下、テキストボックスの上に位置するため
     //表示項目から位置、高さを計算
-    const u8 w  = DEBUG_LIST_W;
-    const u8 h  = cp_setup->list_max * 2;
-    const u8 x  = 32 - w - 1; //1はフレーム分
-    const u8 y  = 24 - h - 1 - 6; //１は自分のフレーム分と6はテキスト分
     p_wk->p_bmpwin  = GFL_BMPWIN_Create( cp_setup->frm, x, y, w, h, cp_setup->font_plt, GFL_BMP_CHRAREA_GET_B );
     BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF, cp_setup->frm_chr, cp_setup->frm_plt );
     GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
@@ -727,8 +743,16 @@ DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heap
     p_wk->p_list_data = BmpMenuWork_ListCreate( cp_setup->list_max, heapID );
     for( i = 0; i < cp_setup->list_max; i++ )
     { 
-      BmpMenuWork_ListAddArchiveString( p_wk->p_list_data,
-          cp_setup->p_msg, cp_setup->strID[ i ], i, heapID );
+      if( cp_setup->p_strbuf[i] == NULL )
+      {
+        BmpMenuWork_ListAddArchiveString( p_wk->p_list_data,
+            cp_setup->p_msg, cp_setup->strID[ i ], i, heapID );
+      }
+      else
+      {
+        BmpMenuWork_ListAddString( p_wk->p_list_data,
+            cp_setup->p_strbuf[i], i, heapID  );
+      }
     }
   }
   //リスト作成
@@ -768,8 +792,8 @@ DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heap
     header  = sc_def_header;
 
     header.list         = p_wk->p_list_data;
-    header.count        = cp_setup->list_max;
-    header.line         = cp_setup->list_max;
+    header.count        = cp_setup->list_max; //リスト項目数
+    header.line         = view_line; //表示項目数
     header.win          = p_wk->p_bmpwin;
     header.msgdata      = cp_setup->p_msg;
     header.print_util   = &p_wk->print_util;
@@ -779,10 +803,10 @@ DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heap
 
     BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
     BmpMenuList_SetCancelMode( p_wk->p_list, BMPMENULIST_CANCELMODE_USE );
-    
   }
 
   return p_wk;
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1885,6 +1909,47 @@ static void PRINT_GetStrWithNumber( STRBUF *p_dst, const char *cp_src, ... )
   GFL_STR_SetStringCode( p_dst, str_code);
 }
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  文字列
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//----------------------------------------------------------------------------
+/**
+ *	@brief  UTF16形式から、STRBUF形式へ文字列変換
+ *
+ *	@param	const u16 *p_str  UTF16形式の文字列 例：L"てすと"
+ *	@param	heapID 作成するためのヒープ
+ *
+ *	@return STRBUF形式の文字列
+ */
+//-----------------------------------------------------------------------------
+STRBUF * DEBUG_STRING_CreateUTF16ToSTRBUF( const u16 *p_str, HEAPID heapID )
+{
+
+  STRCODE *p_strcode;
+  STRBUF  *p_strbuf;
+  u16	strlen;
+
+  //長さを取得
+  strlen	  = wcslen(p_str);
+
+  //STRCODE格納バッファを作成
+  p_strcode = GFL_HEAP_AllocMemory( heapID, (strlen+1)*sizeof(STRCODE) );
+
+  //STRCODEへ格納
+  GFL_STD_MemCopy(p_str, p_strcode, strlen*sizeof(STRCODE));
+  p_strcode[strlen]	= GFL_STR_GetEOMCode();
+
+  //STRCODEをSTRBUFへ
+  p_strbuf = GFL_STR_CreateBuffer( strlen+1, heapID);
+  GFL_STR_SetStringCode( p_strbuf, p_strcode);
+
+  //使用済みSTRCODEを消去
+  GFL_HEAP_FreeMemory( p_strcode );
+
+  return p_strbuf;
+}
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  ETC

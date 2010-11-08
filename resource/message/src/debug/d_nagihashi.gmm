@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-04-23T11:50:01"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-11-08T16:23:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,15 +365,15 @@
 		</language>
 	</columns>
 
-	<dialog left="-972" top="262" right="-393" bottom="890" maximized="no" rayout="Vertical2">
+	<dialog left="-1177" top="294" right="-472" bottom="922" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="571"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="404"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -408,6 +408,18 @@
 	<row id="TEST_STR_03">
 		<language name="JPN" width="256">配信中です……</language>
 		<language name="JPN_KANJI" width="256">配信中です……</language>
+	</row>
+
+	<row id="STRM_STR_00">
+		<language name="JPN" width="256">どの　ストリームを　再生　しますか？</language>
+		<language name="JPN_KANJI" width="256">どの　ストリームを　再生　しますか？</language>
+	</row>
+
+	<row id="STRM_STR_01">
+		<language name="JPN" width="256">曲名　[1:00:トレーナー名:0]
+[2:01:２桁:1]khz PCM[2:01:２桁:2]を　再生中</language>
+		<language name="JPN_KANJI" width="256">曲名　[1:00:トレーナー名:0]
+[2:01:２桁:1]khz PCM[2:01:２桁:2]を　再生中</language>
 	</row>
 
 	<flowchart-group-list>

@@ -302,3 +302,4 @@
 	$DEBUG_YES ARCID_DEBUG_CGEAR_PICT "debug/cgearpict.narc" #CGEARの絵のテスト
   ARCID_ASSERT_ERR   "assert_err.narc"          #製品版でのASSERT_HEAVYエラー画面
   $DEBUG_YES ARCID_DEBUG_MMDL_OBJCODESTR "fieldmap/fldmmdl_objcodestr.narc" #動作モデル 名前
+  $DEBUG_YES ARCID_DEBUG_SOUND_STREAM "debug\snd_strm.narc" #デバッグ用サウンドストリームファイル
