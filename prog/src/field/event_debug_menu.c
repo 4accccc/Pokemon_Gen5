@@ -94,7 +94,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump, FS_OVERLAY_ID(debugmenu_jump) },    //空を飛ぶ
   { DEBUG_FIELD_STR43, debugMenuCallProc_Jump, FS_OVERLAY_ID(debugmenu_jump) },            //ジャンプ（ユニオン等）
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect, FS_OVERLAY_ID(debugmenu_jump) },   //ゾーン選択ジャンプ
-  { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},  //四季ジャンプ
+  { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect, FS_OVERLAY_ID(debugmenu_jump)},  //四季ジャンプ
   { DEBUG_FIELD_STR05_b,   debugMenuCallProc_DebugZoneJump, FS_OVERLAY_ID(debugmenu_jump) }, //ゾーンジャンプ
   { DEBUG_FIELD_STR09, debugMenuCallProc_AllMapCheck, FS_OVERLAY_ID(debugmenu_jump) }, //オールマップチェック
   { DEBUG_FIELD_STR10, debugMenuCallProc_AllConnectCheck, FS_OVERLAY_ID(debugmenu_jump) }, //オール接続チェック
