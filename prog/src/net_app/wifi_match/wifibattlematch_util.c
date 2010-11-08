@@ -1,10 +1,10 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		wifibattlematch_util.c
- *	@brief  世界対戦用共通モジュール
- *	@author	Toru=Nagihashi
- *	@data		2009.11.29
+ *  @file   wifibattlematch_util.c
+ *  @brief  世界対戦用共通モジュール
+ *  @author Toru=Nagihashi
+ *  @data   2009.11.29
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -29,16 +29,16 @@
 #include "wifibattlematch_util.h"
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *					テキスト描画構造体
+ *          テキスト描画構造体
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	定数
+/// 定数
 //=====================================
 #define WBM_TEXT_TYPE_NONE  (WBM_TEXT_TYPE_MAX)
 
 //-------------------------------------
-///	メッセージウィンドウ
+/// メッセージウィンドウ
 //=====================================
 struct _WBM_TEXT_WORK
 {
@@ -59,29 +59,29 @@ struct _WBM_TEXT_WORK
   APP_PRINTSYS_COMMON_WORK  common;
 };
 //-------------------------------------
-///	プロトタイプ
+/// プロトタイプ
 //=====================================
 static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type );
 
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  初期化
+ *  @brief  BMPWINメッセージ  初期化
  *
- *	@param	u16 frm       BG面
- *	@param	font_plt      フォントパレット
- *	@param  frm_plt       フレームパレット
- *	@param  frm_chr       フレームキャラ
- *	@param	heapID  ヒープID
+ *  @param  u16 frm       BG面
+ *  @param  font_plt      フォントパレット
+ *  @param  frm_plt       フレームパレット
+ *  @param  frm_chr       フレームキャラ
+ *  @param  heapID  ヒープID
  *
- *	@return ワーク
+ *  @return ワーク
  *
  *
- *	以前は上階層のp_queをもらって動いていましたが、printが重複する箇所があったので
- *	内部でp_queを作り、print前にclearするようにしました。
- *	引数のp_queは使用しておりません。
+ *  以前は上階層のp_queをもらって動いていましたが、printが重複する箇所があったので
+ *  内部でp_queを作り、print前にclearするようにしました。
+ *  引数のp_queは使用しておりません。
  */
 //-----------------------------------------------------------------------------
 WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
@@ -98,17 +98,17 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
 
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 768, heapID );
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 768, heapID );
 
-	//BMPWIN作成
-	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
+  //BMPWIN作成
+  p_wk->p_bmpwin  = GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
 
-	//プリントキュー設定
-	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+  //プリントキュー設定
+  PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 
-	//転送
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
-	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+  //転送
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+  GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 
   p_wk->p_tcbl      = GFL_TCBL_Init( heapID, heapID, 1, 32 );
 
@@ -119,9 +119,9 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  破棄
+ *  @brief  BMPWINメッセージ  破棄
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
@@ -150,21 +150,21 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
 
-	PRINTSYS_QUE_Delete( p_wk->p_que );
+  PRINTSYS_QUE_Delete( p_wk->p_que );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ  メイン処理
+ *  @brief  メッセージ  メイン処理
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
 { 
   //プリント
-	PRINTSYS_QUE_Main( p_wk->p_que );
+  PRINTSYS_QUE_Main( p_wk->p_que );
 
   switch( p_wk->print_update )
   { 
@@ -204,12 +204,12 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  プリント開始
+ *  @brief  BMPWINメッセージ  プリント開始
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
- *	@param	*p_msg            メッセージ
- *	@param	strID             メッセージID
- *	@param	*p_font           フォント
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
+ *  @param  *p_msg            メッセージ
+ *  @param  strID             メッセージID
+ *  @param  *p_font           フォント
  */
 //-----------------------------------------------------------------------------
 void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, WBM_TEXT_TYPE type )
@@ -222,27 +222,27 @@ void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, WBM_TEX
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  プリント開始  （デバッグ版）
+ *  @brief  BMPWINメッセージ  プリント開始  （デバッグ版）
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
- *	@param	str              文字列   0xFFFF終端
- *	@param	*p_font           フォント
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
+ *  @param  str              文字列   0xFFFF終端
+ *  @param  *p_font           フォント
  */
 //-----------------------------------------------------------------------------
 void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font )
 { 
-	//文字列作成
-	GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, cp_str, len );
+  //文字列作成
+  GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, cp_str, len );
 
   WBM_TEXT_PrintInner( p_wk, WBM_TEXT_TYPE_QUE );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト文字描画プライベート
+ *  @brief  テキスト文字描画プライベート
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
- *	@param	type              描画タイプ
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
+ *  @param  type              描画タイプ
  *
  */
 //-----------------------------------------------------------------------------
@@ -303,11 +303,11 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ  終了検知
+ *  @brief  メッセージ  終了検知
  *
- *	@param	const WBM_TEXT_WORK* cp_wk  ワーク
+ *  @param  const WBM_TEXT_WORK* cp_wk  ワーク
  *
- *	@return TRUEでプリント終了中  FALSEでプリント中
+ *  @return TRUEでプリント終了中  FALSEでプリント中
  */
 //-----------------------------------------------------------------------------
 BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk )
@@ -316,9 +316,9 @@ BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ  待機終了
+ *  @brief  メッセージ  待機終了
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk )
@@ -337,9 +337,9 @@ void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  キャラクタ領域をクリアし、VRAMへ転送
+ *  @brief  BMPWINメッセージ  キャラクタ領域をクリアし、VRAMへ転送
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void WBM_TEXT_ClearCharacterVram( WBM_TEXT_WORK* p_wk )
@@ -350,17 +350,17 @@ void WBM_TEXT_ClearCharacterVram( WBM_TEXT_WORK* p_wk )
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  リスト
- *				    ・簡単にリストを出すために最大値決めうち
+ *          リスト
+ *            ・簡単にリストを出すために最大値決めうち
  *            ・表示数＝リスト最大数
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	定数
+/// 定数
 //=====================================/
 #define WBM_LIST_W  (12)
 //-------------------------------------
-///	選択リスト
+/// 選択リスト
 //=====================================
 struct _WBM_LIST_WORK
 { 
@@ -372,16 +372,16 @@ struct _WBM_LIST_WORK
   u32               cancel_idx;
 };
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  リスト初期化
+ *  @brief  リスト初期化
  *
- *	@param	WBM_LIST_SETUP *cp_setup  リスト設定ワーク
- *	@param	heapID                    heapID
+ *  @param  WBM_LIST_SETUP *cp_setup  リスト設定ワーク
+ *  @param  heapID                    heapID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 WBM_LIST_WORK * WBM_LIST_Init( const WBM_LIST_SETUP *cp_setup, HEAPID heapID )
@@ -397,16 +397,16 @@ WBM_LIST_WORK * WBM_LIST_Init( const WBM_LIST_SETUP *cp_setup, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リスト初期化
+ *  @brief  リスト初期化
  *
- *	@param	WBM_LIST_SETUP *cp_setup  リスト設定ワーク
- *	@param  x 座標X
- *	@param  y 座標Y
- *	@param  w 幅
- *	@param  h 高さ
- *	@param	heapID                    heapID
+ *  @param  WBM_LIST_SETUP *cp_setup  リスト設定ワーク
+ *  @param  x 座標X
+ *  @param  y 座標Y
+ *  @param  w 幅
+ *  @param  h 高さ
+ *  @param  heapID                    heapID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 w, u8 h, HEAPID heapID )
@@ -442,7 +442,6 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
       NULL,
       NULL,
       NULL,
-      NULL,
 
       0,  //count
       0,  //line
@@ -475,7 +474,6 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
     header.list         = p_wk->p_list_data;
     header.count        = cp_setup->list_max;
     header.line         = cp_setup->list_max;
-    header.win          = p_wk->p_bmpwin;
     header.msgdata      = cp_setup->p_msg;
     header.print_util   = &p_wk->print_util;
     header.print_que    = cp_setup->p_que;
@@ -500,9 +498,9 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  リスト破棄処理
+ *  @brief  リスト破棄処理
  *
- *	@param	WBM_LIST_WORK *p_wk ワーク
+ *  @param  WBM_LIST_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void WBM_LIST_Exit( WBM_LIST_WORK *p_wk )
@@ -517,11 +515,11 @@ void WBM_LIST_Exit( WBM_LIST_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  リストメイン処理
+ *  @brief  リストメイン処理
  *
- *	@param	WBM_LIST_WORK *p_wk   ワーク
+ *  @param  WBM_LIST_WORK *p_wk   ワーク
  *
- *	@return 選択していないならばWBM_LIST_SELECT_NULL それ以外ならば選択したリストインデックス
+ *  @return 選択していないならばWBM_LIST_SELECT_NULL それ以外ならば選択したリストインデックス
  */
 //-----------------------------------------------------------------------------
 u32 WBM_LIST_Main( WBM_LIST_WORK *p_wk )
@@ -540,54 +538,54 @@ u32 WBM_LIST_Main( WBM_LIST_WORK *p_wk )
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  シーケンス管理
+ *          シーケンス管理
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	シーケンスワーク
+/// シーケンスワーク
 //=====================================
 struct _WBM_SEQ_WORK
 {
-	WBM_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
-	int seq;											//実行中のシーケンス関数の中のシーケンス
-	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
+  WBM_SEQ_FUNCTION  seq_function;   //実行中のシーケンス関数
+  int seq;                      //実行中のシーケンス関数の中のシーケンス
+  void *p_wk_adrs;              //実行中のシーケンス関数に渡すワーク
   int reserv_seq;               //予約シーケンス
 };
 
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	初期化
+ *  @brief  SEQ 初期化
  *
- *	@param	WBM_SEQ_WORK *p_wk	ワーク
- *	@param	*p_param				パラメータ
- *	@param	seq_function		シーケンス
+ *  @param  WBM_SEQ_WORK *p_wk  ワーク
+ *  @param  *p_param        パラメータ
+ *  @param  seq_function    シーケンス
  *
  */
 //-----------------------------------------------------------------------------
 WBM_SEQ_WORK * WBM_SEQ_Init( void *p_wk_adrs, WBM_SEQ_FUNCTION seq_function, HEAPID heapID )
-{	
+{ 
   WBM_SEQ_WORK *p_wk;
 
-	//作成
+  //作成
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_SEQ_WORK) );
-	GFL_STD_MemClear( p_wk, sizeof(WBM_SEQ_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(WBM_SEQ_WORK) );
 
-	//初期化
-	p_wk->p_wk_adrs	= p_wk_adrs;
+  //初期化
+  p_wk->p_wk_adrs = p_wk_adrs;
 
-	//セット
-	WBM_SEQ_SetNext( p_wk, seq_function );
+  //セット
+  WBM_SEQ_SetNext( p_wk, seq_function );
 
   return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	破棄
+ *  @brief  SEQ 破棄
  *
- *	@param	WBM_SEQ_WORK *p_wk	ワーク
+ *  @param  WBM_SEQ_WORK *p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 void WBM_SEQ_Exit( WBM_SEQ_WORK *p_wk )
@@ -596,64 +594,64 @@ void WBM_SEQ_Exit( WBM_SEQ_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	メイン処理
+ *  @brief  SEQ メイン処理
  *
- *	@param	WBM_SEQ_WORK *p_wk ワーク
+ *  @param  WBM_SEQ_WORK *p_wk ワーク
  *
  */
 //-----------------------------------------------------------------------------
 void WBM_SEQ_Main( WBM_SEQ_WORK *p_wk )
-{	
-	if( p_wk->seq_function )
-	{	
-		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
-	}
+{ 
+  if( p_wk->seq_function )
+  { 
+    p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
+  }
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	終了取得
+ *  @brief  SEQ 終了取得
  *
- *	@param	const WBM_SEQ_WORK *cp_wk		ワーク
+ *  @param  const WBM_SEQ_WORK *cp_wk   ワーク
  *
- *	@return	TRUEならば終了	FALSEならば処理中
- */	
+ *  @return TRUEならば終了  FALSEならば処理中
+ */ 
 //-----------------------------------------------------------------------------
 BOOL WBM_SEQ_IsEnd( const WBM_SEQ_WORK *cp_wk )
-{	
-	return cp_wk->seq_function == NULL;
+{ 
+  return cp_wk->seq_function == NULL;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	次のシーケンスを設定
+ *  @brief  SEQ 次のシーケンスを設定
  *
- *	@param	WBM_SEQ_WORK *p_wk	ワーク
- *	@param	seq_function		シーケンス
+ *  @param  WBM_SEQ_WORK *p_wk  ワーク
+ *  @param  seq_function    シーケンス
  *
  */
 //-----------------------------------------------------------------------------
 void WBM_SEQ_SetNext( WBM_SEQ_WORK *p_wk, WBM_SEQ_FUNCTION seq_function )
-{	
-	p_wk->seq_function	= seq_function;
-	p_wk->seq	= 0;
+{ 
+  p_wk->seq_function  = seq_function;
+  p_wk->seq = 0;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	終了
+ *  @brief  SEQ 終了
  *
- *	@param	WBM_SEQ_WORK *p_wk	ワーク
+ *  @param  WBM_SEQ_WORK *p_wk  ワーク
  *
  */
 //-----------------------------------------------------------------------------
 void WBM_SEQ_End( WBM_SEQ_WORK *p_wk )
-{	
+{ 
   WBM_SEQ_SetNext( p_wk, NULL );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  SEQ 次のシーケンスを予約
+ *  @brief  SEQ 次のシーケンスを予約
  *
- *	@param	WBM_SEQ_WORK *p_wk  ワーク
- *	@param	seq             次のシーケンス
+ *  @param  WBM_SEQ_WORK *p_wk  ワーク
+ *  @param  seq             次のシーケンス
  */
 //-----------------------------------------------------------------------------
 void WBM_SEQ_SetReservSeq( WBM_SEQ_WORK *p_wk, int seq )
@@ -662,9 +660,9 @@ void WBM_SEQ_SetReservSeq( WBM_SEQ_WORK *p_wk, int seq )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  SEQ 予約されたシーケンスへ飛ぶ
+ *  @brief  SEQ 予約されたシーケンスへ飛ぶ
  *
- *	@param	WBM_SEQ_WORK *p_wk ワーク
+ *  @param  WBM_SEQ_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void WBM_SEQ_NextReservSeq( WBM_SEQ_WORK *p_wk )
@@ -674,172 +672,172 @@ void WBM_SEQ_NextReservSeq( WBM_SEQ_WORK *p_wk )
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  サブプロセス
- *				    ・プロセスを行き来するシステム
+ *          サブプロセス
+ *            ・プロセスを行き来するシステム
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	ワーク
+/// ワーク
 //=====================================
 struct _WBM_SUBPROC_WORK
 {
-	GFL_PROCSYS			  *p_procsys;
-	void						  *p_proc_param;
+  GFL_PROCSYS       *p_procsys;
+  void              *p_proc_param;
 
-	HEAPID					  heapID;
-	void						  *p_wk_adrs;
-	const WBM_SUBPROC_DATA			*cp_procdata_tbl;
+  HEAPID            heapID;
+  void              *p_wk_adrs;
+  const WBM_SUBPROC_DATA      *cp_procdata_tbl;
   u32               tbl_len;
 
-	u8							  next_procID;
-	u8							  now_procID;
-	u16							  seq;
+  u8                next_procID;
+  u8                now_procID;
+  u16               seq;
 
   GFL_PROC_MAIN_STATUS  status;
 } ;
 //-------------------------------------
-///	外部公開
+/// 外部公開
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	WBM_SUBPROCシステム	初期化
+ *  @brief  WBM_SUBPROCシステム 初期化
  *
- *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
- *	@param	cp_procdata_tbl			プロセス接続テーブル
- *	@param	void *p_wk_adrs			アロック関数と解放関数に渡すワーク
- *	@param	heapID							システム構築用ヒープID
+ *  @param  WBM_SUBPROC_WORK *p_wk  ワーク
+ *  @param  cp_procdata_tbl     プロセス接続テーブル
+ *  @param  void *p_wk_adrs     アロック関数と解放関数に渡すワーク
+ *  @param  heapID              システム構築用ヒープID
  *
  */
 //-----------------------------------------------------------------------------
 WBM_SUBPROC_WORK * WBM_SUBPROC_Init( const WBM_SUBPROC_DATA *cp_procdata_tbl, u32 tbl_len, void *p_wk_adrs, HEAPID heapID )
-{	
+{ 
   WBM_SUBPROC_WORK *p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_SUBPROC_WORK ) );
-	GFL_STD_MemClear( p_wk, sizeof(WBM_SUBPROC_WORK) );
-	p_wk->p_procsys				= GFL_PROC_LOCAL_boot( heapID );
-	p_wk->p_wk_adrs				= p_wk_adrs;
-	p_wk->cp_procdata_tbl	= cp_procdata_tbl;
+  GFL_STD_MemClear( p_wk, sizeof(WBM_SUBPROC_WORK) );
+  p_wk->p_procsys       = GFL_PROC_LOCAL_boot( heapID );
+  p_wk->p_wk_adrs       = p_wk_adrs;
+  p_wk->cp_procdata_tbl = cp_procdata_tbl;
   p_wk->tbl_len         = tbl_len;
-	p_wk->heapID					= heapID;
+  p_wk->heapID          = heapID;
 
   return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	WBM_SUBPROCシステム	破棄
+ *  @brief  WBM_SUBPROCシステム 破棄
  *
- *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
+ *  @param  WBM_SUBPROC_WORK *p_wk  ワーク
  *
  */
 //-----------------------------------------------------------------------------
 void WBM_SUBPROC_Exit( WBM_SUBPROC_WORK *p_wk )
-{	
-	GF_ASSERT_HEAVY( p_wk->p_proc_param == NULL );
+{ 
+  GF_ASSERT_HEAVY( p_wk->p_proc_param == NULL );
 
-	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
+  GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	WBM_SUBPROCシステム	メイン処理
+ *  @brief  WBM_SUBPROCシステム メイン処理
  *
- *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
+ *  @param  WBM_SUBPROC_WORK *p_wk  ワーク
  *
- *	@retval	TRUEならば終了	FALSEならばPROCが存在する
+ *  @retval TRUEならば終了  FALSEならばPROCが存在する
  */
 //-----------------------------------------------------------------------------
 BOOL WBM_SUBPROC_Main( WBM_SUBPROC_WORK *p_wk )
-{	
-	enum
-	{	
-		SEQ_INIT,
-		SEQ_ALLOC_PARAM,
-		SEQ_MAIN,
-		SEQ_FREE_PARAM,
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_ALLOC_PARAM,
+    SEQ_MAIN,
+    SEQ_FREE_PARAM,
     SEQ_NEXT,
-		SEQ_END,
-	};
+    SEQ_END,
+  };
 
-	switch( p_wk->seq )
-	{	
-	case SEQ_INIT:
-		p_wk->now_procID	= p_wk->next_procID;
-		p_wk->seq	= SEQ_ALLOC_PARAM;
-		break;
+  switch( p_wk->seq )
+  { 
+  case SEQ_INIT:
+    p_wk->now_procID  = p_wk->next_procID;
+    p_wk->seq = SEQ_ALLOC_PARAM;
+    break;
 
-	case SEQ_ALLOC_PARAM:
-		//プロセス引数作成関数があれば呼び出し
-		if( p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func )
-		{	
-			p_wk->p_proc_param	= p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func(
-					p_wk->heapID, p_wk->p_wk_adrs );
-		}
-		else
-		{	
-			p_wk->p_proc_param	= NULL;
-		}
-
-		//プロック呼び出し
-		GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, p_wk->cp_procdata_tbl[	p_wk->now_procID ].ov_id,
-					p_wk->cp_procdata_tbl[	p_wk->now_procID ].cp_procdata, p_wk->p_proc_param );
-
-		p_wk->seq	= SEQ_MAIN;
-		break;
-
-	case SEQ_MAIN:
-		{	
-			p_wk->status	= GFL_PROC_LOCAL_Main( p_wk->p_procsys );
-			if( GFL_PROC_MAIN_NULL == p_wk->status )
-			{	
-				p_wk->seq	= SEQ_FREE_PARAM;
-			}
-		}
-		break;
-
-	case SEQ_FREE_PARAM:
-		//プロセス引数破棄関数呼び出し
-		if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func )
-		{	
-			if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs ) )
-      { 
-        p_wk->p_proc_param	= NULL;
-				p_wk->seq	= SEQ_NEXT;
-      }
-		}
+  case SEQ_ALLOC_PARAM:
+    //プロセス引数作成関数があれば呼び出し
+    if( p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func )
+    { 
+      p_wk->p_proc_param  = p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func(
+          p_wk->heapID, p_wk->p_wk_adrs );
+    }
     else
     { 
-				p_wk->seq	= SEQ_NEXT;
+      p_wk->p_proc_param  = NULL;
+    }
+
+    //プロック呼び出し
+    GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, p_wk->cp_procdata_tbl[  p_wk->now_procID ].ov_id,
+          p_wk->cp_procdata_tbl[  p_wk->now_procID ].cp_procdata, p_wk->p_proc_param );
+
+    p_wk->seq = SEQ_MAIN;
+    break;
+
+  case SEQ_MAIN:
+    { 
+      p_wk->status  = GFL_PROC_LOCAL_Main( p_wk->p_procsys );
+      if( GFL_PROC_MAIN_NULL == p_wk->status )
+      { 
+        p_wk->seq = SEQ_FREE_PARAM;
+      }
+    }
+    break;
+
+  case SEQ_FREE_PARAM:
+    //プロセス引数破棄関数呼び出し
+    if( p_wk->cp_procdata_tbl[  p_wk->now_procID ].free_func )
+    { 
+      if( p_wk->cp_procdata_tbl[  p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs ) )
+      { 
+        p_wk->p_proc_param  = NULL;
+        p_wk->seq = SEQ_NEXT;
+      }
+    }
+    else
+    { 
+        p_wk->seq = SEQ_NEXT;
     }
     break;
 
   case SEQ_NEXT:
-		//もし次のプロセスがあれば呼び出し
-		//なければ終了
-		if( p_wk->now_procID != p_wk->next_procID )
-		{	
-			p_wk->seq	= SEQ_INIT;
-		}
-		else
-		{	
-			p_wk->seq	= SEQ_END;
-		}
-		break;
+    //もし次のプロセスがあれば呼び出し
+    //なければ終了
+    if( p_wk->now_procID != p_wk->next_procID )
+    { 
+      p_wk->seq = SEQ_INIT;
+    }
+    else
+    { 
+      p_wk->seq = SEQ_END;
+    }
+    break;
 
-	case SEQ_END:
-		return TRUE;
-	}
+  case SEQ_END:
+    return TRUE;
+  }
 
-	return FALSE;
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WBM_SUBPROCシステム PROC状態を取得
+ *  @brief  WBM_SUBPROCシステム PROC状態を取得
  *
- *	@param	const WBM_SUBPROC_WORK *cp_wk   ワーク
+ *  @param  const WBM_SUBPROC_WORK *cp_wk   ワーク
  *
- *	@return
+ *  @return
  */
 //-----------------------------------------------------------------------------
 GFL_PROC_MAIN_STATUS WBM_SUBPROC_GetStatus( const WBM_SUBPROC_WORK *cp_wk )
@@ -849,25 +847,25 @@ GFL_PROC_MAIN_STATUS WBM_SUBPROC_GetStatus( const WBM_SUBPROC_WORK *cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	WBM_SUBPROCシステム	プロセスリクエスト
+ *  @brief  WBM_SUBPROCシステム プロセスリクエスト
  *
- *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
- *	@param	proc_id							呼ぶプロセスID
+ *  @param  WBM_SUBPROC_WORK *p_wk  ワーク
+ *  @param  proc_id             呼ぶプロセスID
  *
  */
 //-----------------------------------------------------------------------------
 void WBM_SUBPROC_CallProc( WBM_SUBPROC_WORK *p_wk, u32 procID )
-{	
-	p_wk->next_procID	= procID;
+{ 
+  p_wk->next_procID = procID;
 }
 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WBM_RECORDレコードカウント
+ *  @brief  WBM_RECORDレコードカウント
  *
- *	@param	GAMEDATA *p_gamedata  ゲームデータ
- *	@param	result                結果
+ *  @param  GAMEDATA *p_gamedata  ゲームデータ
+ *  @param  result                結果
  */
 //-----------------------------------------------------------------------------
 void WBM_RECORD_Count( GAMEDATA *p_gamedata, BtlResult result )

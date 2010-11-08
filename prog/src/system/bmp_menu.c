@@ -63,13 +63,6 @@ extern void BmpMenuList_SetYesNoWait( int value );
 //======================================================================
 //  プロトタイプ宣言
 //======================================================================
-#if 0
-static void BmpMenuWinWriteMain(
-  GF_BGL_INI * ini, u8 frm, u8 px, u8 py, u8 sx, u8 sy, u8 pal, u16 cgx );
-static void BmpTalkWinWriteMain(
-  GF_BGL_INI * ini, u8 frm, u8 px, u8 py, u8 sx, u8 sy, u8 pal, u16 cgx );
-#endif
-
 static BOOL BmpMenuCursorMove( BMPMENU_WORK * mw, u8 mv, u16 se );
 static u8 BmpMenuCursorMoveCheck( BMPMENU_WORK * mw, u8 mv );
 static u8 BmpMenuStrLen( BMPMENU_WORK * buf );
@@ -398,7 +391,7 @@ static BOOL BmpMenuCursorMove( BMPMENU_WORK * mw, u8 mv, u16 se )
 
     // BMP一旦消去
     GFL_BMP_Fill(
-      GFL_BMPWIN_GetBmp(mw->hed.win), px, py, mw->sx, mw->sy, 0xff );
+      GFL_BMPWIN_GetBmp(mw->hed.print_util->win), px, py, mw->sx, mw->sy, 0xff );
   }
   
   BmpMenuCursorPut( mw );
@@ -515,7 +508,7 @@ static void BmpMenuStrPut( BMPMENU_WORK * mw )
   u8  i, j;
 
   {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(mw->hed.win), 0xff );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(mw->hed.print_util->win), 0xff );
   }
 
   px = mw->px;
@@ -596,6 +589,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   GFL_MSGDATA * man;
   BMP_MENULIST_DATA * ld;
   BMPMENU_WORK* pWk;
+  GFL_BMPWIN *win;
 
 
   man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_yesnomenu_dat, heap );
@@ -607,7 +601,8 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   GFL_STD_MemClear(&hed,sizeof(BMPMENU_HEADER));
 
   hed.menu     = ld;
-  hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
+//  hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
+  win = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
   hed.x_max    = 1;
   hed.y_max    = 2;
   hed.line_spc = 1;
@@ -619,7 +614,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   hed.font_handle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
   hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
   hed.font_size_x = 10; //hed.font_size_y; この値だと文字左端がカーソル移動で消えてしまう
-  PRINT_UTIL_Setup(hed.print_util, hed.win);
+  PRINT_UTIL_Setup(hed.print_util, win);
   hed.print_que = PRINTSYS_QUE_Create( heap );
   
   hed.b_trans   = FALSE;
@@ -640,11 +635,11 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
     }
 
   }
-  GFL_BMPWIN_MakeScreen(hed.win);
-  BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
+  GFL_BMPWIN_MakeScreen(hed.print_util->win);
+  BmpWinFrame_Write( hed.print_util->win, WINDOW_TRANS_ON, cgx, pal );
 
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(hed.win) );
-  GFL_BMPWIN_TransVramCharacter( hed.win );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(hed.print_util->win) );
+  GFL_BMPWIN_TransVramCharacter( hed.print_util->win );
   return pWk;
 
 }
@@ -670,7 +665,7 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
     mw->arrow_wait--;
     if(mw->arrow_wait==0){
       BmpMenuCursorPut( mw );
-      GFL_BMPWIN_TransVramCharacter( mw->hed.win );
+      GFL_BMPWIN_TransVramCharacter( mw->hed.print_util->win );
     }
     ret = BMPMENU_NULL;
   }else{
@@ -686,7 +681,7 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
     
     if( (!(mw->hed.b_trans)) && b_finish )
     {
-      GFL_BMPWIN_TransVramCharacter( mw->hed.win );
+      GFL_BMPWIN_TransVramCharacter( mw->hed.print_util->win );
       mw->hed.b_trans = TRUE;
     }
   }
@@ -714,7 +709,7 @@ BOOL BmpMenu_YesNoSelectPrintMain( BMPMENU_WORK * mw )
   
   if( (!(mw->hed.b_trans)) && b_finish )
   {
-    GFL_BMPWIN_TransVramCharacter( mw->hed.win );
+    GFL_BMPWIN_TransVramCharacter( mw->hed.print_util->win );
     mw->hed.b_trans = TRUE;
   }
 
@@ -736,15 +731,17 @@ BOOL BmpMenu_YesNoSelectPrintMain( BMPMENU_WORK * mw )
 //--------------------------------------------------------------------------------------------
 void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 {
+  GFL_BMPWIN *win = mw->hed.print_util->win;
+
   PRINTSYS_QUE_Clear( mw->hed.print_que );
   PRINTSYS_QUE_Delete( mw->hed.print_que );
   GFL_HEAP_FreeMemory( mw->hed.print_util );
 
-  BmpWinFrame_Clear( mw->hed.win, WINDOW_TRANS_ON );
+  BmpWinFrame_Clear( win, WINDOW_TRANS_ON );
   GFL_FONT_Delete( mw->hed.font_handle );
   BmpMenuWork_ListDelete( (BMPMENU_DATA*)mw->hed.menu );
 
-  GFL_BMPWIN_Delete( mw->hed.win );
+  GFL_BMPWIN_Delete( win );
   BmpMenu_Exit( mw, NULL );
 }
 

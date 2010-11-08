@@ -1,10 +1,10 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		debug_util.c
- *	@brief  デバッグで使用するモジュール類
- *	@author	Toru=Nagihashi
- *	@data		2009.12.09
+ *  @file   debug_util.c
+ *  @brief  デバッグで使用するモジュール類
+ *  @author Toru=Nagihashi
+ *  @data   2009.12.09
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -33,53 +33,53 @@
 
 //文字表示
 #include "print/printsys.h"
-#include <wchar.h>	//wcslen
+#include <wchar.h>  //wcslen
 
 //外部公開
 #include "debug_util.h"
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *					BMPWINメッセージ描画構造体
+ *          BMPWINメッセージ描画構造体
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	メッセージウィンドウ
+/// メッセージウィンドウ
 //=====================================
 struct _DEBUG_MSGWIN_WORK
 {
-	PRINT_UTIL				util;				//文字描画
-	PRINT_QUE					*p_que;			//文字キュー
-	GFL_BMPWIN*				p_bmpwin;		//BMPWIN
-	STRBUF*						p_strbuf;		//文字バッファ
-	u16								frm;        //BG面
+  PRINT_UTIL        util;       //文字描画
+  PRINT_QUE         *p_que;     //文字キュー
+  GFL_BMPWIN*       p_bmpwin;   //BMPWIN
+  STRBUF*           p_strbuf;   //文字バッファ
+  u16               frm;        //BG面
   PRINTSYS_LSB      color;      //文字色
   GFL_POINT         ofs;        //文字描画位置オフセット
   DEBUG_MSGWIN_POS pos_type;  //描画位置タイプ
   DEBUG_MSGWIN_TRANS_MODE mode; //転送モード
 };
 //-------------------------------------
-///	座標計算
+/// 座標計算
 //=====================================
 static void Mystery_Msgwin_CalcPos( const DEBUG_MSGWIN_WORK* cp_wk, GFL_FONT *p_font, GFL_POINT *p_pos );
 static void Mystery_Msgwin_CalcPosCore( DEBUG_MSGWIN_POS type, const GFL_POINT *cp_ofs, GFL_BMP_DATA *p_bmp, STRBUF *p_strbuf, GFL_FONT *p_font, GFL_POINT *p_pos );
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  初期化
+ *  @brief  BMPWINメッセージ  初期化
  *
- *	@param	u16 frm BG面
- *	@param	x       X座標
- *	@param	y       Y座標
- *	@param	w       幅
- *	@param	h       高さ
- *	@param	plt     フォントパレット
- *	@param	*p_que  キュー
- *	@param	heapID  ヒープID
+ *  @param  u16 frm BG面
+ *  @param  x       X座標
+ *  @param  y       Y座標
+ *  @param  w       幅
+ *  @param  h       高さ
+ *  @param  plt     フォントパレット
+ *  @param  *p_que  キュー
+ *  @param  heapID  ヒープID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_MSGWIN_WORK * DEBUG_MSGWIN_Init( DEBUG_MSGWIN_TRANS_MODE mode, u16 frm, u8 x, u8 y, u8 w, u8 h, u8 plt, PRINT_QUE *p_que, HEAPID heapID )
@@ -88,22 +88,22 @@ DEBUG_MSGWIN_WORK * DEBUG_MSGWIN_Init( DEBUG_MSGWIN_TRANS_MODE mode, u16 frm, u8
 
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(DEBUG_MSGWIN_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_MSGWIN_WORK) );
-  p_wk->p_que			= p_que;
+  p_wk->p_que     = p_que;
   p_wk->frm       = frm;
   p_wk->color     = DEBUG_MSGWIN_DEFAULT_COLOR;
   p_wk->mode      = mode;
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 512, heapID );
 
-	//BMPWIN作成
-	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
+  //BMPWIN作成
+  p_wk->p_bmpwin  = GFL_BMPWIN_Create( frm, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
 
-	//プリントキュー設定
-	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+  //プリントキュー設定
+  PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 
-	//転送
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB( p_wk->color ) );
+  //転送
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB( p_wk->color ) );
   if( p_wk->mode == DEBUG_MSGWIN_TRANS_MODE_AUTO )
   { 
     GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
@@ -115,26 +115,26 @@ DEBUG_MSGWIN_WORK * DEBUG_MSGWIN_Init( DEBUG_MSGWIN_TRANS_MODE mode, u16 frm, u8
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  破棄
+ *  @brief  BMPWINメッセージ  破棄
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWIN_Exit( DEBUG_MSGWIN_WORK* p_wk )
 { 
   //BMPWIN破棄
-	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+  GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 
-	//バッファ破棄
-	GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+  //バッファ破棄
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  クリア
+ *  @brief  BMPWINメッセージ  クリア
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWIN_Clear( DEBUG_MSGWIN_WORK* p_wk )
@@ -143,61 +143,61 @@ void DEBUG_MSGWIN_Clear( DEBUG_MSGWIN_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  プリント開始
+ *  @brief  BMPWINメッセージ  プリント開始
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk ワーク
- *	@param	*p_msg            メッセージ
- *	@param	strID             メッセージID
- *	@param	*p_font           フォント
+ *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク
+ *  @param  *p_msg            メッセージ
+ *  @param  strID             メッセージID
+ *  @param  *p_font           フォント
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWIN_Print( DEBUG_MSGWIN_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font )
 { 
   GFL_POINT pos;
 
-	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB( p_wk->color ) );	
+  //一端消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB( p_wk->color ) ); 
 
-	//文字列作成
-	GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
+  //文字列作成
+  GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
 
   //位置計算
   Mystery_Msgwin_CalcPos( p_wk, p_font, &pos );
 
-	//文字列描画
-	PRINT_UTIL_PrintColor( &p_wk->util, p_wk->p_que, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
+  //文字列描画
+  PRINT_UTIL_PrintColor( &p_wk->util, p_wk->p_que, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  STRBUFプリント開始
+ *  @brief  BMPWINメッセージ  STRBUFプリント開始
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk ワーク
- *	@param	*p_strbuf         STRBUF  すぐ破棄してもかまいません
- *	@param	*p_font           フォント
+ *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク
+ *  @param  *p_strbuf         STRBUF  すぐ破棄してもかまいません
+ *  @param  *p_font           フォント
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWIN_PrintBuf( DEBUG_MSGWIN_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font )
 { 
   GFL_POINT pos;
 
-	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB( p_wk->color ) );	
+  //一端消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB( p_wk->color ) ); 
 
-	//文字列作成
+  //文字列作成
   GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
 
   //位置計算
   Mystery_Msgwin_CalcPos( p_wk, p_font, &pos );
 
-	//文字列描画
-	PRINT_UTIL_PrintColor( &p_wk->util, p_wk->p_que, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
+  //文字列描画
+  PRINT_UTIL_PrintColor( &p_wk->util, p_wk->p_que, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  色指定
+ *  @brief  BMPWINメッセージ  色指定
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk ワーク
- *	@param  lsb               色指定
+ *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク
+ *  @param  lsb               色指定
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWIN_SetColor( DEBUG_MSGWIN_WORK* p_wk, PRINTSYS_LSB color )
@@ -206,12 +206,12 @@ void DEBUG_MSGWIN_SetColor( DEBUG_MSGWIN_WORK* p_wk, PRINTSYS_LSB color )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  位置指定
+ *  @brief  BMPWINメッセージ  位置指定
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk ワーク
- *	@param	x                       X座標
- *	@param	y                       Y座標
- *	@param	type                    指定
+ *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク
+ *  @param  x                       X座標
+ *  @param  y                       Y座標
+ *  @param  type                    指定
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWIN_SetPos( DEBUG_MSGWIN_WORK* p_wk, s16 x, s16 y, DEBUG_MSGWIN_POS type )
@@ -222,11 +222,11 @@ void DEBUG_MSGWIN_SetPos( DEBUG_MSGWIN_WORK* p_wk, s16 x, s16 y, DEBUG_MSGWIN_PO
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ  プリント書き込み処理
+ *  @brief  BMPWINメッセージ  プリント書き込み処理
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk   ワーク
+ *  @param  DEBUG_MSGWIN_WORK* p_wk   ワーク
  *
- *	@return TRUEならば書き込んだ  FALSEならばまだ
+ *  @return TRUEならば書き込んだ  FALSEならばまだ
  */
 //-----------------------------------------------------------------------------
 BOOL DEBUG_MSGWIN_PrintMain( DEBUG_MSGWIN_WORK* p_wk )
@@ -249,9 +249,9 @@ BOOL DEBUG_MSGWIN_PrintMain( DEBUG_MSGWIN_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINメッセージ転送関数
+ *  @brief  BMPWINメッセージ転送関数
  *
- *	@param	DEBUG_MSGWIN_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWIN_Trans( DEBUG_MSGWIN_WORK* p_wk )
@@ -265,11 +265,11 @@ void DEBUG_MSGWIN_Trans( DEBUG_MSGWIN_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  描画座標計算
+ *  @brief  描画座標計算
  *
- *	@param	const DEBUG_MSGWIN_WORK* cp_wk  ワーク
- *	@param  フォント
- *	@param	*p_pos                            描画位置受け取り
+ *  @param  const DEBUG_MSGWIN_WORK* cp_wk  ワーク
+ *  @param  フォント
+ *  @param  *p_pos                            描画位置受け取り
  *
  */
 //-----------------------------------------------------------------------------
@@ -279,14 +279,14 @@ static void Mystery_Msgwin_CalcPos( const DEBUG_MSGWIN_WORK* cp_wk, GFL_FONT *p_
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  描画位置計算コア部分
+ *  @brief  描画位置計算コア部分
  *
- *	@param	DEBUG_MSGWIN_POS type 位置の種類
- *	@param  cp_ofs                  位置オフセット
- *	@param	GFL_BMP_DATA *cp_bmp    BMP
- *	@param	*p_strbuf               文字列
- *	@param	*p_font                 フォント
- *	@param	*p_pos                  座標受け取り
+ *  @param  DEBUG_MSGWIN_POS type 位置の種類
+ *  @param  cp_ofs                  位置オフセット
+ *  @param  GFL_BMP_DATA *cp_bmp    BMP
+ *  @param  *p_strbuf               文字列
+ *  @param  *p_font                 フォント
+ *  @param  *p_pos                  座標受け取り
  */
 //-----------------------------------------------------------------------------
 static void Mystery_Msgwin_CalcPosCore( DEBUG_MSGWIN_POS type, const GFL_POINT *cp_ofs, GFL_BMP_DATA *p_bmp, STRBUF *p_strbuf, GFL_FONT *p_font, GFL_POINT *p_pos )
@@ -321,11 +321,11 @@ static void Mystery_Msgwin_CalcPosCore( DEBUG_MSGWIN_POS type, const GFL_POINT *
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *					テキスト描画構造体
+ *          テキスト描画構造体
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	定数
+/// 定数
 //=====================================
 #define DEBUG_TEXT_TYPE_NONE  (DEBUG_TEXT_TYPE_MAX)
 
@@ -352,24 +352,24 @@ struct _DEBUG_TEXT_WORK
 } ;
 
 //-------------------------------------
-///	プロトタイプ
+/// プロトタイプ
 //=====================================
 static void DEBUG_TEXT_PrintInner( DEBUG_TEXT_WORK* p_wk, DEBUG_TEXT_TYPE type );
 
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  初期化
+ *  @brief  テキスト  初期化
  *
- *	@param	u16 frm       BG面
- *	@param	font_plt      フォントパレット
- *	@param  PRINT_QUE     プリントQ
- *	@param  GFL_FONT      フォント
- *	@param	heapID        ヒープID
+ *  @param  u16 frm       BG面
+ *  @param  font_plt      フォントパレット
+ *  @param  PRINT_QUE     プリントQ
+ *  @param  GFL_FONT      フォント
+ *  @param  heapID        ヒープID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_TEXT_WORK * DEBUG_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
@@ -385,17 +385,17 @@ DEBUG_TEXT_WORK * DEBUG_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_F
 
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 512, heapID );
 
-	//BMPWIN作成
-	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
+  //BMPWIN作成
+  p_wk->p_bmpwin  = GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
 
-	//プリントキュー設定
-	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+  //プリントキュー設定
+  PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 
-	//転送
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
-	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+  //転送
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+  GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 
   p_wk->p_tcbl    = GFL_TCBL_Init( heapID, heapID, 1, 32 );
 
@@ -403,15 +403,15 @@ DEBUG_TEXT_WORK * DEBUG_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_F
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  初期化  １行メッセージ
+ *  @brief  テキスト  初期化  １行メッセージ
  *
- *	@param	u16 frm       BG面
- *	@param	font_plt      フォントパレット
- *	@param  PRINT_QUE     プリントQ
- *	@param  GFL_FONT      フォント
- *	@param	heapID        ヒープID
+ *  @param  u16 frm       BG面
+ *  @param  font_plt      フォントパレット
+ *  @param  PRINT_QUE     プリントQ
+ *  @param  GFL_FONT      フォント
+ *  @param  heapID        ヒープID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_TEXT_WORK * DEBUG_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
@@ -428,17 +428,17 @@ DEBUG_TEXT_WORK * DEBUG_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p_que
   APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 512, heapID );
 
-	//BMPWIN作成
-	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 21, 30, 2, font_plt, GFL_BMP_CHRAREA_GET_B );
+  //BMPWIN作成
+  p_wk->p_bmpwin  = GFL_BMPWIN_Create( frm, 1, 21, 30, 2, font_plt, GFL_BMP_CHRAREA_GET_B );
 
-	//プリントキュー設定
-	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+  //プリントキュー設定
+  PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 
-	//転送
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
-	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+  //転送
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+  GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 
   p_wk->p_tcbl    = GFL_TCBL_Init( heapID, heapID, 1, 32 );
 
@@ -446,9 +446,9 @@ DEBUG_TEXT_WORK * DEBUG_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p_que
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  破棄
+ *  @brief  テキスト  破棄
  *
- *	@param	DEBUG_TEXT_WORK* p_wk ワーク
+ *  @param  DEBUG_TEXT_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_TEXT_Exit( DEBUG_TEXT_WORK* p_wk )
@@ -479,9 +479,9 @@ void DEBUG_TEXT_Exit( DEBUG_TEXT_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  描画処理
+ *  @brief  テキスト  描画処理
  *
- *	@param	DEBUG_TEXT_WORK* p_wk   ワーク
+ *  @param  DEBUG_TEXT_WORK* p_wk   ワーク
  *
  */
 //-----------------------------------------------------------------------------
@@ -525,12 +525,12 @@ void DEBUG_TEXT_Main( DEBUG_TEXT_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /*
- *	@brief  テキスト プリント開始
+ *  @brief  テキスト プリント開始
  *
- *	@param	DEBUG_TEXT_WORK* p_wk ワーク
- *	@param	*p_msg            メッセージ
- *	@param	strID             メッセージID
- *	@param  type              描画タイプ
+ *  @param  DEBUG_TEXT_WORK* p_wk ワーク
+ *  @param  *p_msg            メッセージ
+ *  @param  strID             メッセージID
+ *  @param  type              描画タイプ
  */
 //-----------------------------------------------------------------------------
 void DEBUG_TEXT_Print( DEBUG_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, DEBUG_TEXT_TYPE type )
@@ -544,11 +544,11 @@ void DEBUG_TEXT_Print( DEBUG_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, DEB
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  プリント開始  バッファ版
+ *  @brief  テキスト  プリント開始  バッファ版
  *
- *	@param	DEBUG_TEXT_WORK* p_wk ワーク
- *	@param	STRBUF *cp_strbuf       文字バッファ
- *	@param	type                    描画タイプ
+ *  @param  DEBUG_TEXT_WORK* p_wk ワーク
+ *  @param  STRBUF *cp_strbuf       文字バッファ
+ *  @param  type                    描画タイプ
  *
  */
 //-----------------------------------------------------------------------------
@@ -563,10 +563,10 @@ void DEBUG_TEXT_PrintBuf( DEBUG_TEXT_WORK* p_wk, const STRBUF *cp_strbuf, DEBUG_
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト文字描画プライベート
+ *  @brief  テキスト文字描画プライベート
  *
- *	@param	DEBUG_TEXT_WORK* p_wk ワーク
- *	@param	type              描画タイプ
+ *  @param  DEBUG_TEXT_WORK* p_wk ワーク
+ *  @param  type              描画タイプ
  *
  */
 //-----------------------------------------------------------------------------
@@ -621,11 +621,11 @@ static void DEBUG_TEXT_PrintInner( DEBUG_TEXT_WORK* p_wk, DEBUG_TEXT_TYPE type )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  プリント終了待ち  （QUEの場合はQUE終了、STREAMのときは最後まで文字描画終了）
+ *  @brief  テキスト  プリント終了待ち  （QUEの場合はQUE終了、STREAMのときは最後まで文字描画終了）
  *
- *	@param	const DEBUG_TEXT_WORK *cp_wk ワーク
+ *  @param  const DEBUG_TEXT_WORK *cp_wk ワーク
  *
- *	@return TRUEならば文字描画完了  FALSEならば最中。
+ *  @return TRUEならば文字描画完了  FALSEならば最中。
  */
 //-----------------------------------------------------------------------------
 BOOL DEBUG_TEXT_IsEndPrint( const DEBUG_TEXT_WORK *cp_wk )
@@ -635,11 +635,11 @@ BOOL DEBUG_TEXT_IsEndPrint( const DEBUG_TEXT_WORK *cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  枠を描画
+ *  @brief  テキスト  枠を描画
  *
- *	@param	DEBUG_TEXT_WORK *p_wk   ワーク
- *	@param  フレームのキャラ
- *	@param  フレームのパレット
+ *  @param  DEBUG_TEXT_WORK *p_wk   ワーク
+ *  @param  フレームのキャラ
+ *  @param  フレームのパレット
  */
 //-----------------------------------------------------------------------------
 void DEBUG_TEXT_WriteWindowFrame( DEBUG_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt )
@@ -648,9 +648,9 @@ void DEBUG_TEXT_WriteWindowFrame( DEBUG_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  テキスト  待機アイコンを消去
+ *  @brief  テキスト  待機アイコンを消去
  *
- *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *  @param  WBM_TEXT_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_TEXT_EndWait( DEBUG_TEXT_WORK *p_wk )
@@ -668,17 +668,17 @@ void DEBUG_TEXT_EndWait( DEBUG_TEXT_WORK *p_wk )
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  リスト
- *				    ・簡単にリストを出すために最大値決めうち
+ *          リスト
+ *            ・簡単にリストを出すために最大値決めうち
  *            ・表示数＝リスト最大数
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	定数
+/// 定数
 //=====================================/
 #define DEBUG_LIST_W  (12)
 //-------------------------------------
-///	選択リスト
+/// 選択リスト
 //=====================================
 struct _DEBUG_LIST_WORK
 { 
@@ -689,16 +689,16 @@ struct _DEBUG_LIST_WORK
   BMP_MENULIST_DATA *p_list_data;
 };
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  リスト初期化
+ *  @brief  リスト初期化
  *
- *	@param	DEBUG_LIST_SETUP *cp_setup  リスト設定ワーク
- *	@param	heapID                    heapID
+ *  @param  DEBUG_LIST_SETUP *cp_setup  リスト設定ワーク
+ *  @param  heapID                    heapID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heapID )
@@ -711,13 +711,13 @@ DEBUG_LIST_WORK * DEBUG_LIST_Init( const DEBUG_LIST_SETUP *cp_setup, HEAPID heap
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  リスト初期化  （高さ）
+ *  @brief  リスト初期化  （高さ）
  *
- *	@param	DEBUG_LIST_SETUP *cp_setup  リスト設定ワーク
- *	@param  height                    高さ
- *	@param	heapID                    heapID
+ *  @param  DEBUG_LIST_SETUP *cp_setup  リスト設定ワーク
+ *  @param  height                    高さ
+ *  @param  heapID                    heapID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_LIST_WORK * DEBUG_LIST_InitEx( const DEBUG_LIST_SETUP *cp_setup, u32 x, u32 y, u32 w, u32 h, u32 view_line, HEAPID heapID )
@@ -762,7 +762,6 @@ DEBUG_LIST_WORK * DEBUG_LIST_InitEx( const DEBUG_LIST_SETUP *cp_setup, u32 x, u3
       NULL,
       NULL,
       NULL,
-      NULL,
 
       0,  //count
       0,  //line
@@ -794,7 +793,6 @@ DEBUG_LIST_WORK * DEBUG_LIST_InitEx( const DEBUG_LIST_SETUP *cp_setup, u32 x, u3
     header.list         = p_wk->p_list_data;
     header.count        = cp_setup->list_max; //リスト項目数
     header.line         = view_line; //表示項目数
-    header.win          = p_wk->p_bmpwin;
     header.msgdata      = cp_setup->p_msg;
     header.print_util   = &p_wk->print_util;
     header.print_que    = cp_setup->p_que;
@@ -810,9 +808,9 @@ DEBUG_LIST_WORK * DEBUG_LIST_InitEx( const DEBUG_LIST_SETUP *cp_setup, u32 x, u3
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  リスト破棄処理
+ *  @brief  リスト破棄処理
  *
- *	@param	DEBUG_LIST_WORK *p_wk ワーク
+ *  @param  DEBUG_LIST_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_LIST_Exit( DEBUG_LIST_WORK *p_wk )
@@ -827,11 +825,11 @@ void DEBUG_LIST_Exit( DEBUG_LIST_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  リストメイン処理
+ *  @brief  リストメイン処理
  *
- *	@param	DEBUG_LIST_WORK *p_wk   ワーク
+ *  @param  DEBUG_LIST_WORK *p_wk   ワーク
  *
- *	@return 選択していないならばDEBUG_LIST_SELECT_NULL それ以外ならば選択したリストインデックス
+ *  @return 選択していないならばDEBUG_LIST_SELECT_NULL それ以外ならば選択したリストインデックス
  */
 //-----------------------------------------------------------------------------
 u32 DEBUG_LIST_Main( DEBUG_LIST_WORK *p_wk )
@@ -851,11 +849,11 @@ u32 DEBUG_LIST_Main( DEBUG_LIST_WORK *p_wk )
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  BMPWINの集まり
+ *          BMPWINの集まり
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	メッセージウィンドウ
+/// メッセージウィンドウ
 //=====================================
 struct _DEBUG_MSGWINSET_WORK
 { 
@@ -866,23 +864,23 @@ struct _DEBUG_MSGWINSET_WORK
   DEBUG_MSGWIN_WORK *p_msgwin[0];
 };
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINSET 初期化
+ *  @brief  BMPWINSET 初期化
  *  
  *  @param  mode                                      反映モード
- *	@param	const DEBUG_MSGWINSET_SETUP_TBL *cp_tbl 設定テーブル
- *	@param	tbl_len                                   テーブル数
- *	@param	frm                                       フレーム
- *	@param	plt                                       パレット
- *	@param	*p_que                                    キュー
- *	@param	*p_msg                                    メッセージ
- *	@param	*p_font                                   フォント
- *	@param	heapID                                    ヒープID
+ *  @param  const DEBUG_MSGWINSET_SETUP_TBL *cp_tbl 設定テーブル
+ *  @param  tbl_len                                   テーブル数
+ *  @param  frm                                       フレーム
+ *  @param  plt                                       パレット
+ *  @param  *p_que                                    キュー
+ *  @param  *p_msg                                    メッセージ
+ *  @param  *p_font                                   フォント
+ *  @param  heapID                                    ヒープID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_MSGWINSET_WORK * DEBUG_MSGWINSET_Init( DEBUG_MSGWIN_TRANS_MODE mode, const DEBUG_MSGWINSET_SETUP_TBL *cp_tbl, u32 tbl_len, u16 frm, u8 plt, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, GFL_FONT *p_font, HEAPID heapID )
@@ -927,10 +925,10 @@ DEBUG_MSGWINSET_WORK * DEBUG_MSGWINSET_Init( DEBUG_MSGWIN_TRANS_MODE mode, const
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  再描画  
+ *  @brief  再描画  
  *
- *	@param	DEBUG_MSGWINSET_WORK* p_wk            ワーク
- *	@param	DEBUG_MSGWINSET_PRINT_TBL *cp_print   書き込みデータ
+ *  @param  DEBUG_MSGWINSET_WORK* p_wk            ワーク
+ *  @param  DEBUG_MSGWINSET_PRINT_TBL *cp_print   書き込みデータ
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_Print( DEBUG_MSGWINSET_WORK* p_wk, const DEBUG_MSGWINSET_PRINT_TBL *cp_tbl )
@@ -963,9 +961,9 @@ void DEBUG_MSGWINSET_Print( DEBUG_MSGWINSET_WORK* p_wk, const DEBUG_MSGWINSET_PR
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINSET 破棄
+ *  @brief  BMPWINSET 破棄
  *
- *	@param	DEBUG_MSGWINSET_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGWINSET_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_Exit( DEBUG_MSGWINSET_WORK* p_wk )
@@ -982,9 +980,9 @@ void DEBUG_MSGWINSET_Exit( DEBUG_MSGWINSET_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINSETクリア
+ *  @brief  BMPWINSETクリア
  *
- *	@param	DEBUG_MSGWINSET_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGWINSET_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_Clear( DEBUG_MSGWINSET_WORK* p_wk )
@@ -999,11 +997,11 @@ void DEBUG_MSGWINSET_Clear( DEBUG_MSGWINSET_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINSET プリント街
+ *  @brief  BMPWINSET プリント街
  *
- *	@param	DEBUG_MSGWINSET_WORK* p_wk  ワーク
+ *  @param  DEBUG_MSGWINSET_WORK* p_wk  ワーク
  *
- *	@return TRUEで描画完了  FALSEで描画中
+ *  @return TRUEで描画完了  FALSEで描画中
  */
 //-----------------------------------------------------------------------------
 BOOL DEBUG_MSGWINSET_PrintMain( DEBUG_MSGWINSET_WORK* p_wk )
@@ -1022,10 +1020,10 @@ BOOL DEBUG_MSGWINSET_PrintMain( DEBUG_MSGWINSET_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  個別消去
+ *  @brief  個別消去
  *
- *	@param	DEBUG_MSGWINSET_WORK* p_wk  ワーク
- *	@param	idx                           インデックス
+ *  @param  DEBUG_MSGWINSET_WORK* p_wk  ワーク
+ *  @param  idx                           インデックス
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_ClearOne( DEBUG_MSGWINSET_WORK* p_wk, u16 idx )
@@ -1036,9 +1034,9 @@ void DEBUG_MSGWINSET_ClearOne( DEBUG_MSGWINSET_WORK* p_wk, u16 idx )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPWINSET DEBUG_MSGWIN_TRANS_MODE_AUTOモードの場合使用する転送関数
+ *  @brief  BMPWINSET DEBUG_MSGWIN_TRANS_MODE_AUTOモードの場合使用する転送関数
  *
- *	@param	DEBUG_MSGWINSET_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGWINSET_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_Trans( DEBUG_MSGWINSET_WORK* p_wk )
@@ -1063,12 +1061,12 @@ struct _DEBUG_MSGWINBUFF_WORK
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バッファの作成
+ *  @brief  バッファの作成
  *
- *	@param	DEBUG_MSGWINSET_WORK *p_wk  ワーク
- *	@param	heapID                        ヒープID
+ *  @param  DEBUG_MSGWINSET_WORK *p_wk  ワーク
+ *  @param  heapID                        ヒープID
  *
- *	@return バッファ
+ *  @return バッファ
  */
 //-----------------------------------------------------------------------------
 DEBUG_MSGWINBUFF_WORK *DEBUG_MSGWINSET_CreateBuff( DEBUG_MSGWINSET_WORK *p_wk, HEAPID heapID )
@@ -1098,9 +1096,9 @@ DEBUG_MSGWINBUFF_WORK *DEBUG_MSGWINSET_CreateBuff( DEBUG_MSGWINSET_WORK *p_wk, H
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バッファの破棄
+ *  @brief  バッファの破棄
  *
- *	@param	DEBUG_MSGWINBUFF_WORK *p_wk ワーク
+ *  @param  DEBUG_MSGWINBUFF_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_DeleteBuff( DEBUG_MSGWINBUFF_WORK *p_wk )
@@ -1116,10 +1114,10 @@ void DEBUG_MSGWINSET_DeleteBuff( DEBUG_MSGWINBUFF_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バッファへの書き込み
+ *  @brief  バッファへの書き込み
  *
- *	@param	DEBUG_MSGWINBUFF_WORK  *p_wk        ワーク
- *	@param	DEBUG_MSGWINSET_PRINT_TBL *cp_tbl 書き込みテーブル
+ *  @param  DEBUG_MSGWINBUFF_WORK  *p_wk        ワーク
+ *  @param  DEBUG_MSGWINSET_PRINT_TBL *cp_tbl 書き込みテーブル
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_PrintBuff( DEBUG_MSGWINBUFF_WORK *p_wk, const DEBUG_MSGWINSET_PRINT_TBL *cp_tbl, PRINT_QUE *p_que )
@@ -1142,7 +1140,7 @@ void DEBUG_MSGWINSET_PrintBuff( DEBUG_MSGWINBUFF_WORK *p_wk, const DEBUG_MSGWINS
         GFL_POINT pos;
 
         //一端消去
-        GFL_BMP_Clear( p_wk->p_bmp[i], PRINTSYS_LSB_GetB( cp_print->color ) );	
+        GFL_BMP_Clear( p_wk->p_bmp[i], PRINTSYS_LSB_GetB( cp_print->color ) );  
 
         //位置計算
         ofs.x = cp_print->pos_x;
@@ -1169,10 +1167,10 @@ void DEBUG_MSGWINSET_PrintBuff( DEBUG_MSGWINBUFF_WORK *p_wk, const DEBUG_MSGWINS
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  バッファの設定（転送はTrans関数で行なう）
+ *  @brief  バッファの設定（転送はTrans関数で行なう）
  *  
- *	@param	DEBUG_MSGWINSET_WORK *p_wk    ワーク
- *	@param	DEBUG_MSGWINBUFF_WORK *cp_buff バッファ
+ *  @param  DEBUG_MSGWINSET_WORK *p_wk    ワーク
+ *  @param  DEBUG_MSGWINBUFF_WORK *cp_buff バッファ
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGWINSET_SetBuff( DEBUG_MSGWINBUFF_WORK *p_wk )
@@ -1193,55 +1191,55 @@ void DEBUG_MSGWINSET_SetBuff( DEBUG_MSGWINBUFF_WORK *p_wk )
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  シーケンス管理
+ *          シーケンス管理
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	シーケンスワーク
+/// シーケンスワーク
 //=====================================
 struct _DEBUG_SEQ_WORK
 {
-	DEBUG_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
-	BOOL is_end;									//シーケンスシステム終了フラグ
-	int seq;											//実行中のシーケンス関数の中のシーケンス
-	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
+  DEBUG_SEQ_FUNCTION  seq_function;   //実行中のシーケンス関数
+  BOOL is_end;                  //シーケンスシステム終了フラグ
+  int seq;                      //実行中のシーケンス関数の中のシーケンス
+  void *p_wk_adrs;              //実行中のシーケンス関数に渡すワーク
   int reserv_seq;               //予約シーケンス
 };
 
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	初期化
+ *  @brief  SEQ 初期化
  *
- *	@param	DEBUG_SEQ_WORK *p_wk	ワーク
- *	@param	*p_param				パラメータ
- *	@param	seq_function		シーケンス
+ *  @param  DEBUG_SEQ_WORK *p_wk  ワーク
+ *  @param  *p_param        パラメータ
+ *  @param  seq_function    シーケンス
  *
  */
 //-----------------------------------------------------------------------------
 DEBUG_SEQ_WORK * DEBUG_SEQ_Init( void *p_wk_adrs, DEBUG_SEQ_FUNCTION seq_function, HEAPID heapID )
-{	
+{ 
   DEBUG_SEQ_WORK *p_wk;
 
-	//作成
+  //作成
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(DEBUG_SEQ_WORK) );
-	GFL_STD_MemClear( p_wk, sizeof(DEBUG_SEQ_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(DEBUG_SEQ_WORK) );
 
-	//初期化
-	p_wk->p_wk_adrs	= p_wk_adrs;
+  //初期化
+  p_wk->p_wk_adrs = p_wk_adrs;
 
-	//セット
-	DEBUG_SEQ_SetNext( p_wk, seq_function );
+  //セット
+  DEBUG_SEQ_SetNext( p_wk, seq_function );
 
   return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	破棄
+ *  @brief  SEQ 破棄
  *
- *	@param	DEBUG_SEQ_WORK *p_wk	ワーク
+ *  @param  DEBUG_SEQ_WORK *p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_SEQ_Exit( DEBUG_SEQ_WORK *p_wk )
@@ -1250,64 +1248,64 @@ void DEBUG_SEQ_Exit( DEBUG_SEQ_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	メイン処理
+ *  @brief  SEQ メイン処理
  *
- *	@param	DEBUG_SEQ_WORK *p_wk ワーク
+ *  @param  DEBUG_SEQ_WORK *p_wk ワーク
  *
  */
 //-----------------------------------------------------------------------------
 void DEBUG_SEQ_Main( DEBUG_SEQ_WORK *p_wk )
-{	
-	if( !p_wk->is_end )
-	{	
-		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
-	}
+{ 
+  if( !p_wk->is_end )
+  { 
+    p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
+  }
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	終了取得
+ *  @brief  SEQ 終了取得
  *
- *	@param	const DEBUG_SEQ_WORK *cp_wk		ワーク
+ *  @param  const DEBUG_SEQ_WORK *cp_wk   ワーク
  *
- *	@return	TRUEならば終了	FALSEならば処理中
- */	
+ *  @return TRUEならば終了  FALSEならば処理中
+ */ 
 //-----------------------------------------------------------------------------
 BOOL DEBUG_SEQ_IsEnd( const DEBUG_SEQ_WORK *cp_wk )
-{	
-	return cp_wk->is_end;
+{ 
+  return cp_wk->is_end;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	次のシーケンスを設定
+ *  @brief  SEQ 次のシーケンスを設定
  *
- *	@param	DEBUG_SEQ_WORK *p_wk	ワーク
- *	@param	seq_function		シーケンス
+ *  @param  DEBUG_SEQ_WORK *p_wk  ワーク
+ *  @param  seq_function    シーケンス
  *
  */
 //-----------------------------------------------------------------------------
 void DEBUG_SEQ_SetNext( DEBUG_SEQ_WORK *p_wk, DEBUG_SEQ_FUNCTION seq_function )
-{	
-	p_wk->seq_function	= seq_function;
-	p_wk->seq	= 0;
+{ 
+  p_wk->seq_function  = seq_function;
+  p_wk->seq = 0;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	SEQ	終了
+ *  @brief  SEQ 終了
  *
- *	@param	DEBUG_SEQ_WORK *p_wk	ワーク
+ *  @param  DEBUG_SEQ_WORK *p_wk  ワーク
  *
  */
 //-----------------------------------------------------------------------------
 void DEBUG_SEQ_End( DEBUG_SEQ_WORK *p_wk )
-{	
-	p_wk->is_end	= TRUE;
+{ 
+  p_wk->is_end  = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  SEQ 次のシーケンスを予約
+ *  @brief  SEQ 次のシーケンスを予約
  *
- *	@param	DEBUG_SEQ_WORK *p_wk  ワーク
- *	@param	seq             次のシーケンス
+ *  @param  DEBUG_SEQ_WORK *p_wk  ワーク
+ *  @param  seq             次のシーケンス
  */
 //-----------------------------------------------------------------------------
 void DEBUG_SEQ_SetReservSeq( DEBUG_SEQ_WORK *p_wk, int seq )
@@ -1316,9 +1314,9 @@ void DEBUG_SEQ_SetReservSeq( DEBUG_SEQ_WORK *p_wk, int seq )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  SEQ 予約されたシーケンスへ飛ぶ
+ *  @brief  SEQ 予約されたシーケンスへ飛ぶ
  *
- *	@param	DEBUG_SEQ_WORK *p_wk ワーク
+ *  @param  DEBUG_SEQ_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_SEQ_NextReservSeq( DEBUG_SEQ_WORK *p_wk )
@@ -1331,10 +1329,10 @@ void DEBUG_SEQ_NextReservSeq( DEBUG_SEQ_WORK *p_wk )
  */
 //=============================================================================
 //-------------------------------------
-///	定数
+/// 定数
 //=====================================
 //-------------------------------------
-///	メッセージOAM
+/// メッセージOAM
 //=====================================
 struct _DEBUG_MSGOAM_WORK
 { 
@@ -1344,32 +1342,32 @@ struct _DEBUG_MSGOAM_WORK
   GFL_POINT           ofs;        //文字描画位置オフセット
   DEBUG_MSGOAM_POS  pos_type;   //描画位置タイプ
   STRBUF              *p_strbuf;  //文字バッファ
-  BMPOAM_ACT_PTR		  p_bmpoam_wk;  //BMPOAM
+  BMPOAM_ACT_PTR      p_bmpoam_wk;  //BMPOAM
   PRINT_QUE           *p_que;       //描画キュー
 };
 
 //-------------------------------------
-///	文字描画位置計算
+/// 文字描画位置計算
 //=====================================
 static void Mystery_Msgoam_CalcPos( const DEBUG_MSGOAM_WORK* cp_wk, GFL_FONT *p_font, GFL_POINT *p_pos );
 
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  MSGOAM  作成
+ *  @brief  MSGOAM  作成
  *
- *	@param	const GFL_CLWK_DATA *cp_data  OAM情報
- *	@param	w                             幅  キャラ単位
- *	@param	h                             高さ  キャラ単位
- *	@param	plt_idx                       GFL_CLGRPに登録したパレットインデックス
- *	@param  plt_ofs                       パレットオフセット
- *	@param	p_bmpoam_sys                  BMPOAMシステム
- *	@param	*p_que  メッセージ描画キュー
- *	@param	heapID  ヒープID
+ *  @param  const GFL_CLWK_DATA *cp_data  OAM情報
+ *  @param  w                             幅  キャラ単位
+ *  @param  h                             高さ  キャラ単位
+ *  @param  plt_idx                       GFL_CLGRPに登録したパレットインデックス
+ *  @param  plt_ofs                       パレットオフセット
+ *  @param  p_bmpoam_sys                  BMPOAMシステム
+ *  @param  *p_que  メッセージ描画キュー
+ *  @param  heapID  ヒープID
  *
- *	@return MSGOAMワーク
+ *  @return MSGOAMワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_MSGOAM_WORK * DEBUG_MSGOAM_Init( const GFL_CLWK_DATA *cp_cldata, u8 w, u8 h, u32 plt_idx, u8 plt_ofs, CLSYS_DRAW_TYPE draw_type, BMPOAM_SYS_PTR p_bmpoam_sys, PRINT_QUE *p_que, HEAPID heapID )
@@ -1380,36 +1378,36 @@ DEBUG_MSGOAM_WORK * DEBUG_MSGOAM_Init( const GFL_CLWK_DATA *cp_cldata, u8 w, u8 
   p_wk->p_que = p_que;
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 128, heapID );
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
 
   //BMP作成
   p_wk->p_bmp = GFL_BMP_Create( w, h, GFL_BMP_16_COLOR, heapID );
 
-	//BMPOAM作成
-	{	
-		BMPOAM_ACT_DATA	actdata;
-		
-		GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
-		actdata.bmp	= p_wk->p_bmp;
-		actdata.x		= cp_cldata->pos_x;
-		actdata.y		= cp_cldata->pos_y;
-		actdata.pltt_index	= plt_idx;
-		actdata.soft_pri		= cp_cldata->softpri;
-		actdata.setSerface	= draw_type;
-		actdata.draw_type		= draw_type;
-		actdata.bg_pri			= cp_cldata->bgpri;
+  //BMPOAM作成
+  { 
+    BMPOAM_ACT_DATA actdata;
+    
+    GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
+    actdata.bmp = p_wk->p_bmp;
+    actdata.x   = cp_cldata->pos_x;
+    actdata.y   = cp_cldata->pos_y;
+    actdata.pltt_index  = plt_idx;
+    actdata.soft_pri    = cp_cldata->softpri;
+    actdata.setSerface  = draw_type;
+    actdata.draw_type   = draw_type;
+    actdata.bg_pri      = cp_cldata->bgpri;
     actdata.pal_offset  = plt_ofs;
-		p_wk->p_bmpoam_wk	  = BmpOam_ActorAdd( p_bmpoam_sys, &actdata );
-	}
+    p_wk->p_bmpoam_wk   = BmpOam_ActorAdd( p_bmpoam_sys, &actdata );
+  }
 
   return p_wk;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  MSGOAM　破棄
+ *  @brief  MSGOAM　破棄
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGOAM_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGOAM_Exit( DEBUG_MSGOAM_WORK* p_wk )
@@ -1421,9 +1419,9 @@ void DEBUG_MSGOAM_Exit( DEBUG_MSGOAM_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  MSGOAM  背景色でクリア
+ *  @brief  MSGOAM  背景色でクリア
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGOAM_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGOAM_Clear( DEBUG_MSGOAM_WORK* p_wk )
@@ -1434,63 +1432,63 @@ void DEBUG_MSGOAM_Clear( DEBUG_MSGOAM_WORK* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  MSGOAM  文字描画
+ *  @brief  MSGOAM  文字描画
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk ワーク
- *	@param	*p_msg                    メッセージ
- *	@param	strID                     文字番号
- *	@param	*p_font                   フォント
+ *  @param  DEBUG_MSGOAM_WORK* p_wk ワーク
+ *  @param  *p_msg                    メッセージ
+ *  @param  strID                     文字番号
+ *  @param  *p_font                   フォント
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGOAM_Print( DEBUG_MSGOAM_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font )
 { 
   GFL_POINT pos;
 
-	//一端消去
-	GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) );	
+  //一端消去
+  GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) ); 
 
-	//文字列作成
-	GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
+  //文字列作成
+  GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
 
   //位置計算
   Mystery_Msgoam_CalcPos( p_wk, p_font, &pos );
 
-	//文字列描画
+  //文字列描画
   PRINTSYS_PrintQueColor( p_wk->p_que, p_wk->p_bmp, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
   p_wk->trans_req = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  MSGOAM  文字描画STRBUF版
+ *  @brief  MSGOAM  文字描画STRBUF版
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk     ワーク
- *	@param	STRBUF *cp_strbuf             文字列
- *	@param	*p_font                       フォント
+ *  @param  DEBUG_MSGOAM_WORK* p_wk     ワーク
+ *  @param  STRBUF *cp_strbuf             文字列
+ *  @param  *p_font                       フォント
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGOAM_PrintBuf( DEBUG_MSGOAM_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font )
 { 
   GFL_POINT pos;
 
-	//一端消去
-	GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) );	
+  //一端消去
+  GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) ); 
 
-	//文字列作成
+  //文字列作成
   GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
 
   //位置計算
   Mystery_Msgoam_CalcPos( p_wk, p_font, &pos );
 
-	//文字列描画
+  //文字列描画
   PRINTSYS_PrintQueColor( p_wk->p_que, p_wk->p_bmp, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
   p_wk->trans_req = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  文字色を設定
+ *  @brief  文字色を設定
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk   ワーク
- *	@param	color                       文字色
+ *  @param  DEBUG_MSGOAM_WORK* p_wk   ワーク
+ *  @param  color                       文字色
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGOAM_SetStrColor( DEBUG_MSGOAM_WORK* p_wk, PRINTSYS_LSB color )
@@ -1500,12 +1498,12 @@ void DEBUG_MSGOAM_SetStrColor( DEBUG_MSGOAM_WORK* p_wk, PRINTSYS_LSB color )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  文字描画位置設定
+ *  @brief  文字描画位置設定
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk ワーク
- *	@param	x 座標
- *	@param	y 座標
- *	@param	type  座標タイプ
+ *  @param  DEBUG_MSGOAM_WORK* p_wk ワーク
+ *  @param  x 座標
+ *  @param  y 座標
+ *  @param  type  座標タイプ
  */
 //-----------------------------------------------------------------------------
 void DEBUG_MSGOAM_SetStrPos( DEBUG_MSGOAM_WORK* p_wk, s16 x, s16 y, DEBUG_MSGOAM_POS type )
@@ -1516,11 +1514,11 @@ void DEBUG_MSGOAM_SetStrPos( DEBUG_MSGOAM_WORK* p_wk, s16 x, s16 y, DEBUG_MSGOAM
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  表示処理
+ *  @brief  表示処理
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk ワーク
+ *  @param  DEBUG_MSGOAM_WORK* p_wk ワーク
  *
- *	@return TRUEで描画完了  FALSEで描画中
+ *  @return TRUEで描画完了  FALSEで描画中
  */
 //-----------------------------------------------------------------------------
 BOOL DEBUG_MSGOAM_PrintMain( DEBUG_MSGOAM_WORK* p_wk )
@@ -1539,11 +1537,11 @@ BOOL DEBUG_MSGOAM_PrintMain( DEBUG_MSGOAM_WORK* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  BMPOAM取得
+ *  @brief  BMPOAM取得
  *
- *	@param	DEBUG_MSGOAM_WORK* p_wk   ワーク
+ *  @param  DEBUG_MSGOAM_WORK* p_wk   ワーク
  *
- *	@return BMPOAM
+ *  @return BMPOAM
  */
 //-----------------------------------------------------------------------------
 BMPOAM_ACT_PTR DEBUG_MSGOAM_GetBmpOamAct( DEBUG_MSGOAM_WORK* p_wk )
@@ -1552,11 +1550,11 @@ BMPOAM_ACT_PTR DEBUG_MSGOAM_GetBmpOamAct( DEBUG_MSGOAM_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  描画座標計算
+ *  @brief  描画座標計算
  *
- *	@param	const DEBUG_MSGOAM_WORK* cp_wk  ワーク
- *	@param  フォント
- *	@param	*p_pos                            描画位置受け取り
+ *  @param  const DEBUG_MSGOAM_WORK* cp_wk  ワーク
+ *  @param  フォント
+ *  @param  *p_pos                            描画位置受け取り
  *
  */
 //-----------------------------------------------------------------------------
@@ -1592,11 +1590,11 @@ static void Mystery_Msgoam_CalcPos( const DEBUG_MSGOAM_WORK* cp_wk, GFL_FONT *p_
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  数値上下
+ *          数値上下
  */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
-///	メッセージOAM
+/// メッセージOAM
 //=====================================
 struct _DEBUG_NUMIN_WORK
 { 
@@ -1614,7 +1612,7 @@ struct _DEBUG_NUMIN_WORK
 };
 
 //-------------------------------------
-///	プライベート
+/// プライベート
 //=====================================
 static u32 Debug_NumIn_AddKeta( u32 now, u32 keta, s8 dir );
 static void Debug_NumIn_Print( DEBUG_NUMIN_WORK *p_wk );
@@ -1622,19 +1620,19 @@ static u8 GetFig( u32 now, u8 keta );
 static void PRINT_GetStrWithNumber( STRBUF *p_dst, const char *cp_src, ... );
 
 //-------------------------------------
-///	パブリック
+/// パブリック
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  数値入力  初期化
+ *  @brief  数値入力  初期化
  *
- *	@param	DEBUG_NUMIN_WORK *p_wk  ワーク
- *	@param	frm                     フレーム
- *	@param	plt                     パレット
- *	@param	*p_font                 フォント
- *	@param	heapID                  ヒープID
+ *  @param  DEBUG_NUMIN_WORK *p_wk  ワーク
+ *  @param  frm                     フレーム
+ *  @param  plt                     パレット
+ *  @param  *p_font                 フォント
+ *  @param  heapID                  ヒープID
  *
- *	@return ワーク
+ *  @return ワーク
  */
 //-----------------------------------------------------------------------------
 DEBUG_NUMIN_WORK * DEBUG_NUMIN_Init( u8 frm, u8 plt, GFL_FONT *p_font, HEAPID heapID )
@@ -1653,9 +1651,9 @@ DEBUG_NUMIN_WORK * DEBUG_NUMIN_Init( u8 frm, u8 plt, GFL_FONT *p_font, HEAPID he
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  数値入力  破棄
+ *  @brief  数値入力  破棄
  *
- *	@param	DEBUG_NUMIN_WORK *p_wk ワーク
+ *  @param  DEBUG_NUMIN_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_NUMIN_Exit( DEBUG_NUMIN_WORK *p_wk )
@@ -1671,15 +1669,15 @@ void DEBUG_NUMIN_Exit( DEBUG_NUMIN_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  数値入力開始
+ *  @brief  数値入力開始
  *
- *	@param	DEBUG_NUMIN_WORK *p_wk  ワーク
- *	@param	keta  桁
- *	@param	min   最小
- *	@param	max   最大
- *	@param	now   現在
- *	@param	x     X座標
- *	@param	y     Y座標
+ *  @param  DEBUG_NUMIN_WORK *p_wk  ワーク
+ *  @param  keta  桁
+ *  @param  min   最小
+ *  @param  max   最大
+ *  @param  now   現在
+ *  @param  x     X座標
+ *  @param  y     Y座標
  */
 //-----------------------------------------------------------------------------
 void DEBUG_NUMIN_Start( DEBUG_NUMIN_WORK *p_wk, u8 keta, s32 min, s32 max, s32 now, u8 x, u8 y )
@@ -1702,9 +1700,9 @@ void DEBUG_NUMIN_Start( DEBUG_NUMIN_WORK *p_wk, u8 keta, s32 min, s32 max, s32 n
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  数値入力メイン
+ *  @brief  数値入力メイン
  *
- *	@param	DEBUG_NUMIN_WORK *p_wk  ワーク
+ *  @param  DEBUG_NUMIN_WORK *p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 void DEBUG_NUMIN_Main( DEBUG_NUMIN_WORK *p_wk )
@@ -1774,11 +1772,11 @@ void DEBUG_NUMIN_Main( DEBUG_NUMIN_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  数値入力  数値取得
+ *  @brief  数値入力  数値取得
  *
- *	@param	const DEBUG_NUMIN_WORK *cp_wk ワーク
+ *  @param  const DEBUG_NUMIN_WORK *cp_wk ワーク
  *
- *	@return 入力した数値
+ *  @return 入力した数値
  */
 //-----------------------------------------------------------------------------
 u16  DEBUG_NUMIN_GetNum( const DEBUG_NUMIN_WORK *cp_wk )
@@ -1788,11 +1786,11 @@ u16  DEBUG_NUMIN_GetNum( const DEBUG_NUMIN_WORK *cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  数値入力  入力が完了したかどうか
+ *  @brief  数値入力  入力が完了したかどうか
  *
- *	@param	const DEBUG_NUMIN_WORK *cp_wk   ワーク
+ *  @param  const DEBUG_NUMIN_WORK *cp_wk   ワーク
  *
- *	@return TRUE入力終了  FALSE入力破棄
+ *  @return TRUE入力終了  FALSE入力破棄
  */
 //-----------------------------------------------------------------------------
 BOOL DEBUG_NUMIN_IsEnd( const DEBUG_NUMIN_WORK *cp_wk )
@@ -1801,13 +1799,13 @@ BOOL DEBUG_NUMIN_IsEnd( const DEBUG_NUMIN_WORK *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  桁を足す
+ *  @brief  桁を足す
  *
- *	@param	u32 now 現在
- *	@param	keta    桁
- *	@param	dir     方向
+ *  @param  u32 now 現在
+ *  @param  keta    桁
+ *  @param  dir     方向
  *
- *	@return   数値
+ *  @return   数値
  */
 //-----------------------------------------------------------------------------
 static u32 Debug_NumIn_AddKeta( u32 now, u32 keta, s8 dir )
@@ -1823,9 +1821,9 @@ static u32 Debug_NumIn_AddKeta( u32 now, u32 keta, s8 dir )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  表示
+ *  @brief  表示
  *
- *	@param	DEBUG_NUMIN_WORK *p_wk ワーク
+ *  @param  DEBUG_NUMIN_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 static void Debug_NumIn_Print( DEBUG_NUMIN_WORK *p_wk )
@@ -1855,12 +1853,12 @@ static void Debug_NumIn_Print( DEBUG_NUMIN_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  桁番目の数値を取得
+ *  @brief  桁番目の数値を取得
  *
- *	@param	u32 now 数字
- *	@param	keta    桁
+ *  @param  u32 now 数字
+ *  @param  keta    桁
  *
- *	@return keta番目の数値
+ *  @return keta番目の数値
  */
 //-----------------------------------------------------------------------------
 static u8 GetFig( u32 now, u8 keta )
@@ -1881,10 +1879,10 @@ static u8 GetFig( u32 now, u8 keta )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  文字に数値をいれる
+ *  @brief  文字に数値をいれる
  *
- *	@param	STRBUF *p_dst   受け取り
- *	@param	u16 *cp_src     文字列
+ *  @param  STRBUF *p_dst   受け取り
+ *  @param  u16 *cp_src     文字列
  */
 //-----------------------------------------------------------------------------
 static void PRINT_GetStrWithNumber( STRBUF *p_dst, const char *cp_src, ... )
@@ -1911,17 +1909,17 @@ static void PRINT_GetStrWithNumber( STRBUF *p_dst, const char *cp_src, ... )
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  文字列
+ *          文字列
  */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //----------------------------------------------------------------------------
 /**
- *	@brief  UTF16形式から、STRBUF形式へ文字列変換
+ *  @brief  UTF16形式から、STRBUF形式へ文字列変換
  *
- *	@param	const u16 *p_str  UTF16形式の文字列 例：L"てすと"
- *	@param	heapID 作成するためのヒープ
+ *  @param  const u16 *p_str  UTF16形式の文字列 例：L"てすと"
+ *  @param  heapID 作成するためのヒープ
  *
- *	@return STRBUF形式の文字列
+ *  @return STRBUF形式の文字列
  */
 //-----------------------------------------------------------------------------
 STRBUF * DEBUG_STRING_CreateUTF16ToSTRBUF( const u16 *p_str, HEAPID heapID )
@@ -1929,17 +1927,17 @@ STRBUF * DEBUG_STRING_CreateUTF16ToSTRBUF( const u16 *p_str, HEAPID heapID )
 
   STRCODE *p_strcode;
   STRBUF  *p_strbuf;
-  u16	strlen;
+  u16 strlen;
 
   //長さを取得
-  strlen	  = wcslen(p_str);
+  strlen    = wcslen(p_str);
 
   //STRCODE格納バッファを作成
   p_strcode = GFL_HEAP_AllocMemory( heapID, (strlen+1)*sizeof(STRCODE) );
 
   //STRCODEへ格納
   GFL_STD_MemCopy(p_str, p_strcode, strlen*sizeof(STRCODE));
-  p_strcode[strlen]	= GFL_STR_GetEOMCode();
+  p_strcode[strlen] = GFL_STR_GetEOMCode();
 
   //STRCODEをSTRBUFへ
   p_strbuf = GFL_STR_CreateBuffer( strlen+1, heapID);
@@ -1952,20 +1950,20 @@ STRBUF * DEBUG_STRING_CreateUTF16ToSTRBUF( const u16 *p_str, HEAPID heapID )
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
- *				  ETC
+ *          ETC
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //----------------------------------------------------------------------------
 /**
- *	@brief  パレットフェード
+ *  @brief  パレットフェード
  *
- *	@param	NNS_GFD_DST_TYPE type 転送先
- *	@param	*p_buff               バッファ
- *	@param	cnt                   カウント
- *	@param	plt_num               パレット縦
- *	@param	plt_col               パレット横
- *	@param	start                 開始色
- *	@param	end                   終了色
+ *  @param  NNS_GFD_DST_TYPE type 転送先
+ *  @param  *p_buff               バッファ
+ *  @param  cnt                   カウント
+ *  @param  plt_num               パレット縦
+ *  @param  plt_col               パレット横
+ *  @param  start                 開始色
+ *  @param  end                   終了色
  */
 //-----------------------------------------------------------------------------
 void DEBUG_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end )
@@ -1998,14 +1996,14 @@ void DEBUG_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  パレットフェード１行すべて塗り替える版
+ *  @brief  パレットフェード１行すべて塗り替える版
  *
- *	@param	NNS_GFD_DST_TYPE type 転送先
- *	@param	*p_buff               バッファ0x10個分
- *	@param	cnt                   カウント
- *	@param	plt_num               パレット行
- *	@param	GXRgb start[]         開始色0x10個分
- *	@param	end[]                 終了色0x10個分
+ *  @param  NNS_GFD_DST_TYPE type 転送先
+ *  @param  *p_buff               バッファ0x10個分
+ *  @param  cnt                   カウント
+ *  @param  plt_num               パレット行
+ *  @param  GXRgb start[]         開始色0x10個分
+ *  @param  end[]                 終了色0x10個分
  */
 //-----------------------------------------------------------------------------
 void DEBUG_UTIL_MainPltAnmLine( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, GXRgb start[], GXRgb end[] )

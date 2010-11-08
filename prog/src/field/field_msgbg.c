@@ -1551,7 +1551,6 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   menuH.print_util = FLDMSGPRINT_GetPrintUtil( menuFunc->msgPrint );
   menuH.print_que = FLDMSGPRINT_GetPrintQue( menuFunc->msgPrint );
   menuH.font_handle = fmb->fontHandle;
-  menuH.win = menuFunc->bmpwin;
   menuH.list = (const BMP_MENULIST_DATA *)pMenuListData;
   menuH.icon = icon;
   menuH.call_back = callback;

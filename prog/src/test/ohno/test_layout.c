@@ -593,7 +593,7 @@ BOOL LayoutDebugMenu_Main( DEBUG_FLDMENU *d_menu )
       head.print_util = d_menu->printUtil;
       head.print_que = d_menu->printQue;
       head.font_handle = d_menu->fontHandle;
-      head.win = d_menu->bmpwin;
+//      head.win = d_menu->bmpwin;
 
       d_menu->menulistdata =
         BmpMenuWork_ListCreate( lmax, d_menu->heapID );

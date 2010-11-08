@@ -564,7 +564,7 @@ _infoMenu _parentPokePartyMenuList[] = {
   { msg_wifilobby_099, (u32)_BATTLEBOX },  //バトルボックス
 };
 
-static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y);
+static void _print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y);
 
 
 ///選択メニューのリスト
@@ -572,7 +572,6 @@ static BMPMENULIST_HEADER _parentInfoMenuListHeader = {
   NULL,     // 表示文字データポインタ
   NULL,         // カーソル移動ごとのコールバック関数
   _print_callback,         // 一列表示ごとのコールバック関数
-  NULL,                   //
   elementof(_parentInfoMenuList),// リスト項目数
   elementof(_parentInfoMenuList),// 表示最大項目数
   0,            // ラベル表示Ｘ座標
@@ -602,7 +601,6 @@ static BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
   NULL,     // 表示文字データポインタ
   NULL,         // カーソル移動ごとのコールバック関数
   NULL,         // 一列表示ごとのコールバック関数
-  NULL,                   //
   NELEMS(_parentSingleInfoMenuList),  // リスト項目数
   NELEMS(_parentSingleInfoMenuList),  // 表示最大項目数
   0,            // ラベル表示Ｘ座標
@@ -633,7 +631,6 @@ static BMPMENULIST_HEADER _parentCustomMenuListHeader = {
   NULL,     // 表示文字データポインタ
   NULL,         // カーソル移動ごとのコールバック関数
   NULL,         // 一列表示ごとのコールバック関数
-  NULL,                   //
   NELEMS(_parentCustomInfoMenuList),  // リスト項目数
   NELEMS(_parentCustomInfoMenuList),  // 表示最大項目数
   0,            // ラベル表示Ｘ座標
@@ -667,7 +664,7 @@ static BMPMENULIST_HEADER _parentCustomMenuListHeader = {
  * @retval  none
  */
 //------------------------------------------------------------------
-static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y)
+static void _print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y)
 {
   WIFIP2PMATCH_WORK *pWork = BmpMenuList_GetWorkPtr(wk);
 
@@ -715,15 +712,15 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
     GFL_BG_FRAME2_M, 32-width-1, y, width, length * 2, MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   GFL_BMPWIN_MakeScreen(wk->SubListWin);
   BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
-
+  PRINT_UTIL_Setup( &wk->SysMsgPrintUtil, wk->SubListWin );
 
   plisth->list = wk->submenulist;
-  plisth->win = wk->SubListWin;
 
   plisth->print_que = wk->SysMenuQue;
   plisth->print_util = &wk->SysMsgPrintUtil;
   plisth->font_handle = wk->fontHandle;
   plisth->work = wk;
+  
 
   wk->sublw = BmpMenuList_Set(plisth, 0, wk->singleCur[menutype], HEAPID_WIFIP2PMATCH);
   while(!PRINTSYS_QUE_IsFinished(wk->SysMenuQue)){
@@ -767,7 +764,6 @@ static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
   NULL,     // 表示文字データポインタ
   NULL,         // カーソル移動ごとのコールバック関数
   NULL,         // 一列表示ごとのコールバック関数
-  NULL,                   //
   NELEMS(_childMatchMenuList),  // リスト項目数
   NELEMS(_childMatchMenuList),  // 表示最大項目数
   0,            // ラベル表示Ｘ座標
@@ -830,9 +826,10 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
     GFL_BG_FRAME2_M, 16, 11+ ((3-length)*2), 15  , length * 2,
     MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
-  list_h.list = wk->submenulist;
-  list_h.win = wk->SubListWin;
+  PRINT_UTIL_Setup( &wk->SysMsgPrintUtil, wk->SubListWin );
 
+
+  list_h.list = wk->submenulist;
   list_h.print_que = wk->SysMenuQue;
   list_h.print_util = &wk->SysMsgPrintUtil;
   list_h.font_handle = wk->fontHandle;
@@ -1588,8 +1585,8 @@ static void _battleShooterSelectMenu( WIFIP2PMATCH_WORK *wk )
 /**
  * 指定POKEPARTYのステータス情報を書き込む
  *
- * @param   psl		
- * @param   party		
+ * @param   psl   
+ * @param   party   
  */
 //--------------------------------------------------------------
 static void _Print_DrawPokeStatusBmpWin(WIFIP2PMATCH_WORK *wk, const POKEPARTY *party)

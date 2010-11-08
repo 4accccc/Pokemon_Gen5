@@ -1207,7 +1207,7 @@ typedef struct {
 
   GFL_TCBLSYS   *msgTcblSys;
   PRINT_STREAM  *printHandleMsg;  //メッセージ用
-	BOOL	stream_clear_flg;
+  BOOL  stream_clear_flg;
 
   PRINT_QUE   *printQue;
   PRINT_UTIL * printUtil[NOTE_PRINTUTIL_MAX];
@@ -2015,7 +2015,7 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
   Draw_Init( &p_wk->draw, &p_wk->data, HEAPID_WIFINOTE );
 
   // 通信アイコン設定
-//	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
+//  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
 
   // 各画面のワーク初期化
 //  ModeSelect_Init( &p_wk->mode_select, &p_wk->data, &p_wk->draw, HEAPID_WIFINOTE );
@@ -2259,7 +2259,7 @@ static void Sub_BmpWinAdd(
 {
   util->win = GFL_BMPWIN_Create( frmnum , posx , posy , sizx , sizy , palnum , GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win) , clear_col );
-	GFL_BMPWIN_TransVramCharacter( util->win );
+  GFL_BMPWIN_TransVramCharacter( util->win );
   SetPrintUtil( p_draw, util );
 }
 
@@ -2529,15 +2529,15 @@ static u32 Data_FrIdxGetIdx( const WFNOTE_DATA* cp_data, u32 idx )
 static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPID heapID )
 {
   // まず行うもの
-	// 表示初期化
-	GFL_DISP_GX_SetVisibleControlDirect( 0 );
-	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-	// ブレンド初期化
-	G2_BlendNone();
-	G2S_BlendNone();
-	// 輝度を最低にしておく
-	GX_SetMasterBrightness( -16 );
-	GXS_SetMasterBrightness( -16 );
+  // 表示初期化
+  GFL_DISP_GX_SetVisibleControlDirect( 0 );
+  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+  // ブレンド初期化
+  G2_BlendNone();
+  G2S_BlendNone();
+  // 輝度を最低にしておく
+  GX_SetMasterBrightness( -16 );
+  GXS_SetMasterBrightness( -16 );
   GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
   p_draw->p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_NOTE, heapID );
 
@@ -2553,7 +2553,7 @@ static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPID h
   Draw_BlinkAnmInit( p_draw, heapID );
 
   // 通信アイコン設定
-	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
+  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
 
   // OAM面表示
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -2804,7 +2804,7 @@ static void Draw_MsgInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
   p_draw->printHandleMsg = NULL;
 
   p_draw->printQue = PRINTSYS_QUE_Create( heapID );
-//	PRINTSYS_QUE_ForceCommMode( p_draw->printQue, TRUE );
+//  PRINTSYS_QUE_ForceCommMode( p_draw->printQue, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -2941,7 +2941,7 @@ static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, PRINT_UTIL * util, u32 msg_
 {
   // クリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win), 0 );
-	GFL_BMPWIN_TransVramCharacter( util->win );
+  GFL_BMPWIN_TransVramCharacter( util->win );
 
   GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_draw->p_titletmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_draw->p_titlestr, p_draw->p_titletmp );
@@ -4155,14 +4155,14 @@ static void ModeSelect_TalkMsgPrint( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_dra
 static BOOL CheckPrintStreamEnd( PRINT_STREAM * stream, BOOL * clear_flg )
 {
   switch( PRINTSYS_PrintStreamGetState(stream) ){
-  case PRINTSTREAM_STATE_RUNNING:	// 実行中
+  case PRINTSTREAM_STATE_RUNNING: // 実行中
     if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
       PRINTSYS_PrintStreamShortWait( stream, 0 );
     }
     *clear_flg = FALSE;
     break;
 
-	case PRINTSTREAM_STATE_PAUSE:		// 一時停止中
+  case PRINTSTREAM_STATE_PAUSE:   // 一時停止中
     if( *clear_flg == FALSE ){
       if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
@@ -4172,19 +4172,19 @@ static BOOL CheckPrintStreamEnd( PRINT_STREAM * stream, BOOL * clear_flg )
     }
     break;
 
-  case PRINTSTREAM_STATE_DONE:		// 終了
+  case PRINTSTREAM_STATE_DONE:    // 終了
     PRINTSYS_PrintStreamDelete( stream );
     *clear_flg = FALSE;
     return FALSE;
   }
 
-	return TRUE;
+  return TRUE;
 }
 
 
 static BOOL ModeSelect_TalkMsgEndCheck( const WFNOTE_MODESELECT* cp_wk, WFNOTE_DATA* p_data , WFNOTE_DRAW *p_draw )
 {
-	if( CheckPrintStreamEnd( p_draw->printHandleMsg, &p_draw->stream_clear_flg ) == FALSE ){
+  if( CheckPrintStreamEnd( p_draw->printHandleMsg, &p_draw->stream_clear_flg ) == FALSE ){
 //    p_data->key_mode = MsgPrintGetKeyTouchStatus();
     p_data->key_mode = GFL_APP_END_KEY;
     return TRUE;
@@ -4307,16 +4307,16 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
 
     case RCODE_FLIST_SEQMAIN_PCHG_LEFT:// ページ変更
       FList_ScrSeqChange( p_wk, p_data, WF_COMMON_LEFT );
-	    ChangeListPageNumAnime( p_wk, p_wk->page );
-			BLINKPALANM_InitAnimeCount( p_draw->bpawk_obj );
-	    BLINKPALANM_Main( p_draw->bpawk_obj );
+      ChangeListPageNumAnime( p_wk, p_wk->page );
+      BLINKPALANM_InitAnimeCount( p_draw->bpawk_obj );
+      BLINKPALANM_Main( p_draw->bpawk_obj );
       break;
 
     case RCODE_FLIST_SEQMAIN_PCHG_RIGHT:// ページ変更
       FList_ScrSeqChange( p_wk, p_data, WF_COMMON_RIGHT );
-	    ChangeListPageNumAnime( p_wk, p_wk->page );
-			BLINKPALANM_InitAnimeCount( p_draw->bpawk_obj );
-	    BLINKPALANM_Main( p_draw->bpawk_obj );
+      ChangeListPageNumAnime( p_wk, p_wk->page );
+      BLINKPALANM_InitAnimeCount( p_draw->bpawk_obj );
+      BLINKPALANM_Main( p_draw->bpawk_obj );
       break;
 
     case RCODE_FLIST_SEQMAIN_CANCEL:  // 戻る
@@ -4340,17 +4340,17 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
     p_data->subseq = SEQ_FLIST_SCRLL;
     break;
 
-	case SEQ_FLIST_SCRLL:
-		if( FListSeq_ScrollMain( p_wk, p_data, p_draw, heapID ) == TRUE  ){
-			p_data->subseq = SEQ_FLIST_SCRLLEND;
-		}
-		break;
+  case SEQ_FLIST_SCRLL:
+    if( FListSeq_ScrollMain( p_wk, p_data, p_draw, heapID ) == TRUE  ){
+      p_data->subseq = SEQ_FLIST_SCRLLEND;
+    }
+    break;
 
-	case SEQ_FLIST_SCRLLEND:
-		if( FListSeq_ScrollEnd( p_wk, p_draw ) == TRUE  ){
-			p_data->subseq = SEQ_FLIST_MAIN;
-		}
-		break;
+  case SEQ_FLIST_SCRLLEND:
+    if( FListSeq_ScrollEnd( p_wk, p_draw ) == TRUE  ){
+      p_data->subseq = SEQ_FLIST_MAIN;
+    }
+    break;
 
   case SEQ_FLIST_MENUINIT:  //　メニュー選択
     if( MainListPageButtonDecedeAnime( p_wk ) == TRUE ){
@@ -4365,13 +4365,13 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
 //    p_data->subseq = SEQ_FLIST_MENUWAIT;
     break;
 
-	case SEQ_FLIST_MENUMSGWAIT: //　メニューメッセージ表示待ち
-	  // メッセージ終了待ち
-	  if( FList_TalkMsgEndCheck( p_wk,p_data,p_draw ) == TRUE ){
-	    FListSeq_MenuInit( p_wk, p_data, p_draw, heapID );
-	    p_data->subseq = SEQ_FLIST_MENUWAIT;
-	  }
-		break;
+  case SEQ_FLIST_MENUMSGWAIT: //　メニューメッセージ表示待ち
+    // メッセージ終了待ち
+    if( FList_TalkMsgEndCheck( p_wk,p_data,p_draw ) == TRUE ){
+      FListSeq_MenuInit( p_wk, p_data, p_draw, heapID );
+      p_data->subseq = SEQ_FLIST_MENUWAIT;
+    }
+    break;
 
   case SEQ_FLIST_MENUWAIT:  // メニュー選択待ち
     p_data->subseq = FListSeq_MenuWait( p_wk, p_data, p_draw, heapID );
@@ -4588,7 +4588,6 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
 {
   int i, j;
   STRBUF* p_str;
-  BMPMENULIST_HEADER list_h;
 
 /*
   static const u16 sc_TEXTCGX[ 2 ] = {
@@ -5236,33 +5235,33 @@ static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
     NULL
   };
 
-	// 最初に書いたものが書き終わるまで待つ
-	if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == FALSE ){
-		return FALSE;
-	}
+  // 最初に書いたものが書き終わるまで待つ
+  if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == FALSE ){
+    return FALSE;
+  }
 
-	// カウンタが終わったらすべてを描画して終わる
-	if( p_wk->count > FLIST_SCROLL_COUNT ){
-		// OAMにも反映
-		surfacePos.x = DATA_ScrollSurfaceRect.lefttop_x;
-		surfacePos.y = DATA_ScrollSurfaceRect.lefttop_y;
-		GFL_CLACT_USERREND_SetSurfacePos( p_draw->scrollRender,0, &surfacePos );
+  // カウンタが終わったらすべてを描画して終わる
+  if( p_wk->count > FLIST_SCROLL_COUNT ){
+    // OAMにも反映
+    surfacePos.x = DATA_ScrollSurfaceRect.lefttop_x;
+    surfacePos.y = DATA_ScrollSurfaceRect.lefttop_y;
+    GFL_CLACT_USERREND_SetSurfacePos( p_draw->scrollRender,0, &surfacePos );
 
-		// 作業用グラフィックを消す（OBJのみ）
-		if( p_wk->way == WF_COMMON_LEFT ){
-			draw_area = WFNOTE_DRAWAREA_LEFT;
-		}else{
-			draw_area = WFNOTE_DRAWAREA_RIGHT;
-		}
-//		FListDrawArea_DrawOff( &p_wk->drawdata[ draw_area ], p_draw, &p_draw->scrn );
-		FListDrawArea_CharWkDel( &p_wk->drawdata[ draw_area ], p_draw );
+    // 作業用グラフィックを消す（OBJのみ）
+    if( p_wk->way == WF_COMMON_LEFT ){
+      draw_area = WFNOTE_DRAWAREA_LEFT;
+    }else{
+      draw_area = WFNOTE_DRAWAREA_RIGHT;
+    }
+//    FListDrawArea_DrawOff( &p_wk->drawdata[ draw_area ], p_draw, &p_draw->scrn );
+    FListDrawArea_CharWkDel( &p_wk->drawdata[ draw_area ], p_draw );
 
-		// メイン面に描画
-//		FList_DrawPage( p_wk, p_data, p_draw, p_wk->page, p_wk->pos, WFNOTE_DRAWAREA_MAIN, heapID );
-		FListDrawPageChange( p_wk, p_data, p_draw, p_wk->page, p_wk->pos, heapID );
+    // メイン面に描画
+//    FList_DrawPage( p_wk, p_data, p_draw, p_wk->page, p_wk->pos, WFNOTE_DRAWAREA_MAIN, heapID );
+    FListDrawPageChange( p_wk, p_data, p_draw, p_wk->page, p_wk->pos, heapID );
 
-		return TRUE;
-	}
+    return TRUE;
+  }
 
   scrll_x = (p_wk->count * FLIST_SCROLL_SIZX) / FLIST_SCROLL_COUNT;
 
@@ -5306,16 +5305,16 @@ static BOOL FListSeq_ScrollMain( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
 //-----------------------------------------------------------------------------
 static BOOL FListSeq_ScrollEnd( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw )
 {
-	// メイン面の描画待ち
-	if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == TRUE ){
+  // メイン面の描画待ち
+  if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == TRUE ){
     // スクロール座標を元に戻す
     GFL_BG_SetScrollReq( DFRM_SCROLL, GFL_BG_SCROLL_X_SET, 0 );
     GFL_BG_SetScrollReq( DFRM_SCRMSG, GFL_BG_SCROLL_X_SET, 0 );
-		// スクリーンに反映
-	  PutBmpWin( p_wk->drawdata[WFNOTE_DRAWAREA_MAIN].text->win );
-		return TRUE;
-	}
-	return FALSE;
+    // スクリーンに反映
+    PutBmpWin( p_wk->drawdata[WFNOTE_DRAWAREA_MAIN].text->win );
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -5328,13 +5327,13 @@ static BOOL FListSeq_ScrollEnd( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static u64 FList_GetFriendKey( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DATA * p_data )
 {
-	WIFI_LIST * p_wifilist;
-	DWCFriendData * p_frienddata;
+  WIFI_LIST * p_wifilist;
+  DWCFriendData * p_frienddata;
 
-	p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData);
-	p_frienddata = WifiList_GetDwcDataPtr( p_wifilist, p_data->idx.fridx[FList_FRIdxGet(p_wk)] );
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData);
+  p_frienddata = WifiList_GetDwcDataPtr( p_wifilist, p_data->idx.fridx[FList_FRIdxGet(p_wk)] );
 
-	return DWC_GetFriendKey( p_frienddata );
+  return DWC_GetFriendKey( p_frienddata );
 }
 
 //----------------------------------------------------------------------------
@@ -5358,7 +5357,7 @@ static void FListSeq_MenuMsgInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, 
 
 static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
-	APP_TASKMENU_INITWORK wk;
+  APP_TASKMENU_INITWORK wk;
   WIFI_LIST* p_wifilist;
   u32 sex;
 
@@ -5366,26 +5365,26 @@ static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData);
   sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[FList_FRIdxGet(p_wk)], WIFILIST_FRIEND_SEX );
 
-	wk.heapId   = heapID;
-	wk.itemNum  = 4;
-	if( sex == PM_NEUTRAL ){
-		if( FList_GetFriendKey( p_wk, p_data ) != 0 ){
-			wk.itemWork = p_wk->list2;
-		}else{
-			wk.itemWork = p_wk->list1;
-		}
-		p_wk->listType = 1;
-	}else{
-		wk.itemWork = p_wk->list1;
-		p_wk->listType = 0;
-	}
-	wk.posType  = ATPT_RIGHT_DOWN;
-	wk.charPosX = 32;
-	wk.charPosY = 24;
-	wk.w        = 17;
-	wk.h        = APP_TASKMENU_PLATE_HEIGHT;
+  wk.heapId   = heapID;
+  wk.itemNum  = 4;
+  if( sex == PM_NEUTRAL ){
+    if( FList_GetFriendKey( p_wk, p_data ) != 0 ){
+      wk.itemWork = p_wk->list2;
+    }else{
+      wk.itemWork = p_wk->list1;
+    }
+    p_wk->listType = 1;
+  }else{
+    wk.itemWork = p_wk->list1;
+    p_wk->listType = 0;
+  }
+  wk.posType  = ATPT_RIGHT_DOWN;
+  wk.charPosX = 32;
+  wk.charPosY = 24;
+  wk.w        = 17;
+  wk.h        = APP_TASKMENU_PLATE_HEIGHT;
 
-	p_wk->listWork = APP_TASKMENU_OpenMenu( &wk, p_wk->listRes );
+  p_wk->listWork = APP_TASKMENU_OpenMenu( &wk, p_wk->listRes );
 }
 
 //----------------------------------------------------------------------------
@@ -5460,18 +5459,18 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
 //-----------------------------------------------------------------------------
 static BOOL FListSeq_CodeInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
-	u64	code = FList_GetFriendKey( p_wk, p_data );
+  u64 code = FList_GetFriendKey( p_wk, p_data );
 
-	Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[FList_FRIdxGet(p_wk)], heapID );
+  Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[FList_FRIdxGet(p_wk)], heapID );
 
-	if( code != 0 ){
+  if( code != 0 ){
     // コード表示
     Draw_FriendCodeSetWordset( p_draw, code );
     FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_32, heapID );
   }else{
     FList_TalkMsgWrite( p_wk, p_draw, msg_wifi_note_no_data, heapID );
-	}
-	return TRUE;
+  }
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -5586,18 +5585,18 @@ static void FList_DrawPage( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
 //-----------------------------------------------------------------------------
 static void FListDrawPageChange( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 page, u32 pos, HEAPID heapID )
 {
-	// ページとカーソル変更
-	p_wk->page = page;
-	p_wk->pos = pos;
-	// ページに対応したしおりを表示
-	ChangeListPageNumAnime( p_wk, page );
+  // ページとカーソル変更
+  p_wk->page = page;
+  p_wk->pos = pos;
+  // ページに対応したしおりを表示
+  ChangeListPageNumAnime( p_wk, page );
 
   // 背景を描画しなおす
   FListDrawArea_BackWrite( &p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_draw, &p_draw->scrn );
 
   // ページデータ描画
-	FListDrawArea_WritePlayerCgx(
-		&p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_data, p_draw, p_wk->p_charsys, &p_draw->scrn, &p_data->idx, page, heapID );
+  FListDrawArea_WritePlayerCgx(
+    &p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_data, p_draw, p_wk->p_charsys, &p_draw->scrn, &p_data->idx, page, heapID );
 
   // カーソル描画
   ResetListPageButton( p_wk );
@@ -5778,7 +5777,7 @@ static void FList_TalkMsgWrite( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u3
 //-----------------------------------------------------------------------------
 static BOOL FList_TalkMsgEndCheck( const WFNOTE_FRIENDLIST* cp_wk, WFNOTE_DATA* p_data ,WFNOTE_DRAW* p_draw)
 {
-	if( CheckPrintStreamEnd( p_draw->printHandleMsg, &p_draw->stream_clear_flg ) == FALSE ){
+  if( CheckPrintStreamEnd( p_draw->printHandleMsg, &p_draw->stream_clear_flg ) == FALSE ){
 //    p_data->key_mode = MsgPrintGetKeyTouchStatus();
     p_data->key_mode = GFL_APP_END_KEY;
     return TRUE;
@@ -6131,7 +6130,7 @@ static void FListDrawArea_WritePlayerCgx( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DA
 //-----------------------------------------------------------------------------
 static void FListDrawArea_WritePlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, WF_2DCSYS* p_charsys, const WFNOTE_SCRNDATA* cp_scrn, const WFNOTE_IDXDATA* cp_idx, u32 page, HEAPID heapID )
 {
-	FListDrawArea_WritePlayerCgx( p_wk, p_data, p_draw, p_charsys, cp_scrn, cp_idx, page, heapID );
+  FListDrawArea_WritePlayerCgx( p_wk, p_data, p_draw, p_charsys, cp_scrn, cp_idx, page, heapID );
   PutBmpWin( p_wk->text->win );
 }
 
@@ -6470,9 +6469,9 @@ static void CodeIn_DrawExit( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
 /**
  *  @brief  名前入力　ワーク作成
  *
- *  @param  p_wk			ワーク
+ *  @param  p_wk      ワーク
  *  @param  p_data    データ
- *	@param	newData		新規データ
+ *  @param  newData   新規データ
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
@@ -6480,39 +6479,39 @@ static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p
 {
   MISC * misc;
   NAMEIN_PARAM * p_param;
-	WIFI_LIST * list;
-	u32	sex;
-	u32	pos;
+  WIFI_LIST * list;
+  u32 sex;
+  u32 pos;
 
-	misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(p_data->pGameData) );
+  misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(p_data->pGameData) );
 
-	list = GAMEDATA_GetWiFiList( p_data->pGameData );
-	pos  = p_data->idx.fridx[p_data->select_listidx];
-	sex  = WifiList_GetFriendInfo( list, pos, WIFILIST_FRIEND_SEX );
+  list = GAMEDATA_GetWiFiList( p_data->pGameData );
+  pos  = p_data->idx.fridx[p_data->select_listidx];
+  sex  = WifiList_GetFriendInfo( list, pos, WIFILIST_FRIEND_SEX );
 
-	//「？」表示
-	if( newData == TRUE || sex == PM_NEUTRAL ){
-	  p_param = NAMEIN_AllocParam(
-								heapID,
-								NAMEIN_FRIENDNAME,
-								NAMEIN_TRAINER_VIEW_UNKNOWN,
-								0,
-	              NAMEIN_PERSON_LENGTH,
-	              NULL,
-								misc );
-	// トレーナー表示
-	}else{
-		u32	view = WifiList_GetFriendInfo( list, pos, WIFILIST_FRIEND_UNION_GRA );
+  //「？」表示
+  if( newData == TRUE || sex == PM_NEUTRAL ){
+    p_param = NAMEIN_AllocParam(
+                heapID,
+                NAMEIN_FRIENDNAME,
+                NAMEIN_TRAINER_VIEW_UNKNOWN,
+                0,
+                NAMEIN_PERSON_LENGTH,
+                NULL,
+                misc );
+  // トレーナー表示
+  }else{
+    u32 view = WifiList_GetFriendInfo( list, pos, WIFILIST_FRIEND_UNION_GRA );
 
-	  p_param = NAMEIN_AllocParam(
-								heapID,
-								NAMEIN_FRIENDNAME,
-								view,
-								0,
-	              NAMEIN_PERSON_LENGTH,
-	              NULL,
-								misc );
-	}
+    p_param = NAMEIN_AllocParam(
+                heapID,
+                NAMEIN_FRIENDNAME,
+                view,
+                0,
+                NAMEIN_PERSON_LENGTH,
+                NULL,
+                misc );
+  }
 
   // 名前入力画面初期化dataチェック
   if( p_data->namein_init.init == TRUE ){
@@ -6538,8 +6537,8 @@ static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p
     }
     #endif
 */
-		// WBでは、名前入力画面で使用言語をチェックしてもらう
-		GFL_STR_SetStringCode( p_param->strbuf, p_data->namein_init.cp_str );
+    // WBでは、名前入力画面で使用言語をチェックしてもらう
+    GFL_STR_SetStringCode( p_param->strbuf, p_data->namein_init.cp_str );
     p_data->namein_init.init = FALSE;
   }
   return p_param;
@@ -6889,7 +6888,7 @@ static void MyCode_BackButtonDraw( WFNOTE_MYCODE* p_wk, WFNOTE_DRAW* p_draw ,BOO
 //-----------------------------------------------------------------------------
 static void FInfo_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
-  p_wk->frontier_draw = TRUE;		// 今回はフロンティアの表示がない
+  p_wk->frontier_draw = TRUE;   // 今回はフロンティアの表示がない
 
   FInfo_DrawInit( p_wk, p_data, p_draw, heapID );
 }
@@ -7276,9 +7275,9 @@ static u32 FInfo_Input( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRA
     p_wk->rep = FALSE;
   }
 */
-	if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == FALSE ){
-		return SEQ_FINFO_MAIN;
-	}
+  if( PRINTSYS_QUE_IsFinished( p_draw->printQue ) == FALSE ){
+    return SEQ_FINFO_MAIN;
+  }
 
   ret = FInfoInput_Touch(p_wk, p_data, p_draw, &touch_f);
   if(touch_f){
@@ -9487,18 +9486,18 @@ static void SetExitButtonAnime( WFNOTE_DRAW * p_draw )
 
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
-#define DISP_ACTIVE_BRIGHTNESS		( 0 )
-#define DISP_PASSIVE_BRIGHTNESS		( -8 )
+#define DISP_ACTIVE_BRIGHTNESS    ( 0 )
+#define DISP_PASSIVE_BRIGHTNESS   ( -8 )
 
 
 static void SetDispActive( BOOL flg )
 {
   if( flg == TRUE ){
-		G2_SetBlendBrightness(
-			GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ, DISP_ACTIVE_BRIGHTNESS );
+    G2_SetBlendBrightness(
+      GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ, DISP_ACTIVE_BRIGHTNESS );
   }else{
-		G2_SetBlendBrightness(
-			GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ, DISP_PASSIVE_BRIGHTNESS );
+    G2_SetBlendBrightness(
+      GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ, DISP_PASSIVE_BRIGHTNESS );
   }
 }
 

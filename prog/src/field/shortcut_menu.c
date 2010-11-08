@@ -21,6 +21,7 @@
 #include "field_oam_pal.h"
 #include "sound/pm_sndsys.h"
 
+
 //アーカイブ
 #include "arc_def.h"
 #include "font/font.naix"
@@ -1226,7 +1227,6 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
       NULL, //リストデータ
       NULL, //カーソル移動コールバック
       NULL, //一行ごとのコールバック
-      NULL, //BMPWIN
       0,    //リスト項目数
       LISTMOVE_Y_MAX,   //表示最大項目数
       0,    //ラベル表示X位置
@@ -1255,7 +1255,6 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
     header.count      = max;
     header.call_back  = Scroll_MoveCursorReqCallBack;//Scroll_MoveCursorCallBack; コールバックで行なうと転送待ちできないためリクエストフラグだけたてる
     header.icon       = NULL;
-    header.win        = p_wk->p_bmpwin;
     header.work       = p_wk;
     header.msgdata    = p_wk->p_msg;
     header.print_util = &p_wk->util;

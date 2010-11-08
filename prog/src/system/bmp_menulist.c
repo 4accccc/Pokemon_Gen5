@@ -81,8 +81,7 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode );
 static u8 ListMoveUpDownCheck( BMPMENULIST_WORK * lw, u8 print_f, u8 req_line, u8 mode );
 static void CallBackSet( BMPMENULIST_WORK * lw, u8 mode );
 
-static void BmpWinDataShift(
-  GFL_BMPWIN *bmpwin, u8 direct, u8 offset, u8 data, u16 size );
+static void BmpWinDataShift( GFL_BMPWIN *bmpwin, u8 direct, u8 offset, u8 data, u16 size );
 
 
 
@@ -157,10 +156,10 @@ BMPMENULIST_WORK * BmpMenuList_Set(
 //  BMPCURSOR_ChangeColor( lw->cursor,
 //    GF_PRINTCOLOR_MAKE(lw->hed.f_col,lw->hed.s_col,lw->hed.b_col) );
 
-  PRINT_UTIL_Setup( lw->hed.print_util, lw->hed.win );
+//  PRINT_UTIL_Setup( lw->hed.print_util, lw->hed.win ); ここでUTIL_SetupだとBMPWINが消せない
   
   // リストキャラデータ初期化
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.win), lw->hed.b_col );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.print_util->win), lw->hed.b_col );
   ListScreenPut( lw, lw->lp, 0, lw->hed.line, TRUE );   // 全体リスト描画
 //  ListCursorPut( lw );                // カーソル描画
 
@@ -299,7 +298,7 @@ void BmpMenuList_Exit(
 void BmpMenuList_Rewrite( BMPMENULIST_WORK * lw )
 {
   // リストキャラデータ初期化
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.win), lw->hed.b_col );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.print_util->win), lw->hed.b_col );
   ListScreenPut( lw, lw->lp, 0, lw->hed.line, TRUE ); // 全体リスト描画
   ListCursorPut( lw );              // カーソル描画
 //  GF_BGL_BmpWinOn( lw->hed.win );
@@ -612,11 +611,7 @@ u32 BmpListParamGet( BMPMENULIST_WORK * lw, u8 mode )
     ret = (u32)lw->hed.line_y;
     break;
   case BMPMENULIST_ID_LINE_YBLK:  //１行分シフト量取得(フォントの大きさ＋Ｙ間隔)
-#if 0
-    ret = (u32)FontHeaderGet( lw->hed.font, FONT_HEADER_SIZE_Y ) + lw->hed.line_spc;
-#else
     ret = lw->hed.font_size_y + lw->hed.line_spc;
-#endif
     break;
   case BMPMENULIST_ID_F_COL:    // 表示文字色
     ret = (u32)lw->hed.f_col;
@@ -642,9 +637,10 @@ u32 BmpListParamGet( BMPMENULIST_WORK * lw, u8 mode )
   case BMPMENULIST_ID_C_DISP_F: // ＢＧカーソル(allow)表示フラグ
     ret = (u32)lw->hed.c_disp_f;
     break;
-  case BMPMENULIST_ID_WIN:    // ウィンドウデータ
-    ret = (u32)lw->hed.win;
-    break;
+// PRINT_UTILの構造上このコマンドはまずいので処理を削除 by mori 2010/11/04
+//  case BMPMENULIST_ID_WIN:    // ウィンドウデータ
+//    ret = (u32)lw->hed.print_util->win;
+//    break;
   case BMPMENULIST_ID_WORK:   // ワーク
     ret = (u32)lw->hed.work;
     break;
@@ -717,9 +713,10 @@ void BmpMenuList_ParamSet( BMPMENULIST_WORK * lw, u8 mode, u32 param )
   case BMPMENULIST_ID_C_DISP_F: // ＢＧカーソル(allow)表示フラグ
     lw->hed.c_disp_f = (u8)param;
     break;
-  case BMPMENULIST_ID_WIN:    // ウィンドウデータ
-    lw->hed.win = (GFL_BMPWIN *)param;
-    break;
+// PRINT_UTILの構造上このコマンドはまずいので処理を削除 by mori 2010/11/04
+//  case BMPMENULIST_ID_WIN:    // ウィンドウデータ
+//    lw->hed.print_util->win = (GFL_BMPWIN *)param;
+//    break;
   case BMPMENULIST_ID_WORK:   // ワーク
     lw->hed.work = (void *)param;
     break;
@@ -746,9 +743,6 @@ void BmpMenuList_SetMenuListData(BMPMENULIST_WORK * lw, BMP_MENULIST_DATA* pList
 /*                                                                  */
 /*                                                                  */
 /********************************************************************/
-#if 0 //old dp
-#include "gflib/strbuf.h"
-#endif
 
 //------------------------------------------------------------------
 //    メッセージ表示
@@ -791,27 +785,6 @@ static void LocalMsgPrint( BMPMENULIST_WORK * lw, void * msg, u8 x, u8 y, BOOL i
   }
 }
 
-#if 0 //old dp
-static void LocalMsgPrint( BMPMENULIST_WORK * lw, void * msg, u8 x, u8 y )
-{
-    if(msg==NULL){
-        return;
-    }
-    
-  if( lw->tmp.sw )          // 一時変更スイッチ
-  {
-    GF_STR_PrintExpand( lw->hed.win, lw->tmp.font, msg, x, y, MSG_NO_PUT, 
-      GF_PRINTCOLOR_MAKE(lw->tmp.f_col, lw->tmp.s_col, lw->tmp.b_col),
-      lw->tmp.msg_spc, 0, NULL );
-  }
-  else
-  {
-    GF_STR_PrintExpand( lw->hed.win, lw->hed.font, msg, x, y, MSG_NO_PUT, 
-      GF_PRINTCOLOR_MAKE(lw->hed.f_col, lw->hed.s_col, lw->hed.b_col),
-      lw->hed.msg_spc, 0, NULL );
-  }
-}
-#endif
 
 //------------------------------------------------------------------
 //    リスト表示
@@ -822,11 +795,7 @@ static void ListScreenPut(
   int i;
   u8  x,y,yblk;
 
-#if 0 //old dp
-  yblk = FontHeaderGet(lw->hed.font,FONT_HEADER_SIZE_Y) + lw->hed.line_spc;
-#else
   yblk = lw->hed.font_size_y + lw->hed.line_spc;
-#endif
 
 #if 1 //余白にも書き込み
   if( print_p > 0 && up_write )
@@ -838,9 +807,9 @@ static void ListScreenPut(
       x = lw->hed.label_x;  // 描画Ｘオフセット
     }
 
-    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
+    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.print_util->win),
       0, 0,
-      GFL_BMPWIN_GetSizeX(lw->hed.win) * 8,
+      GFL_BMPWIN_GetSizeX(lw->hed.print_util->win) * 8,
       lw->hed.line_y + (line+1) * yblk*2, 
       lw->hed.b_col );
 
@@ -854,9 +823,9 @@ static void ListScreenPut(
     //この部分は余白に書き込むためにQUEを使っていません
     LocalMsgPrint( lw, (void*)lw->hed.list[print_p-1].str, x, y, FALSE );
 
-    BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_U, 
+    BmpWinDataShift( lw->hed.print_util->win, BMPWIN_SHIFT_U, 
       yblk, (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 
-      (yblk*2/8 * (GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(lw->hed.win))/8)) );   
+      (yblk*2/8 * (GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(lw->hed.print_util->win))/8)) );   
     
   }
   //後ろを１つ多めに書く
@@ -892,11 +861,8 @@ static void ListCursorPut( BMPMENULIST_WORK * lw )
 {
   u8  x,y,yblk;
 
-#if 0
-  yblk = FontHeaderGet(lw->hed.font,FONT_HEADER_SIZE_Y) + lw->hed.line_spc;
-#else
   yblk = lw->hed.font_size_y + lw->hed.line_spc;
-#endif
+
   x = lw->hed.cursor_x; //描画Ｘオフセット
   y = (u8)((lw->cp * yblk) + lw->hed.line_y);//描画Ｙオフセット
 
@@ -963,24 +929,11 @@ static void ListCursorCls( BMPMENULIST_WORK * lw, u16 p )
 
   switch(lw->hed.c_disp_f){
   case 0:
-#if 0 //old dp
-    yblk = FontHeaderGet(lw->hed.font,FONT_HEADER_SIZE_Y) + lw->hed.line_spc;
-#else
     yblk = lw->hed.font_size_y + lw->hed.line_spc;
-#endif
 
-#if 0 //old dp
-    GF_BGL_BmpWinFill(
-        lw->hed.win,            //表示ウインドウINDEX
-        (u8)lw->hed.b_col,          //背景色データ
-        lw->hed.cursor_x,         //Ｘ座標
-        (u16)(p * yblk + lw->hed.line_y), //Ｙ座標
-        8, 16 );
-#else
-    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
+    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.print_util->win),
         lw->hed.cursor_x, (u16)(p * yblk + lw->hed.line_y),
         lw->hed.font_size_x, lw->hed.font_size_y, lw->hed.b_col );
-#endif
     break;
   case 1:
   case 2:
@@ -1087,80 +1040,29 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode )
   u16 ypos;
 
   if( len >= lw->hed.line ){
-#if 0 //old dp
-    GF_BGL_BmpWinDataFill( lw->hed.win, lw->hed.b_col );
-#else
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.win), lw->hed.b_col );
-#endif
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.print_util->win), lw->hed.b_col );
     ListScreenPut( lw, lw->lp, 0, lw->hed.line, TRUE ); //ライン描画
     return;
   }
   //１行分シフト量取得(フォントの大きさ＋Ｙ間隔)
-#if 0 //old dp
-  yblk = FontHeaderGet( lw->hed.font, FONT_HEADER_SIZE_Y ) + lw->hed.line_spc;
-#else
   yblk = lw->hed.font_size_y + lw->hed.line_spc;
-#endif
 
 
   if( mode == LIST_UP ){
     //データシフト
-#if 0 //old dp
-    GF_BGL_BmpWinShift(
-      lw->hed.win, GF_BGL_BMPWIN_SHIFT_D,
-      (u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col) );
-#else
-    BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_D, 
+    BmpWinDataShift( lw->hed.print_util->win, BMPWIN_SHIFT_D, 
     (u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 0 );
-#endif
     ListScreenPut( lw, lw->lp, 0, len, TRUE );  //追加ライン描画
 
     ypos = (u16)( lw->hed.line * yblk + lw->hed.line_y );
 
-    //下部を消す
-#if 0
-    GF_BGL_BmpWinFill(
-      lw->hed.win,          //表示ウインドウINDEX
-      (u8)lw->hed.b_col,        //背景色データ
-      0, ypos,
-      (u16)(GF_BGL_BmpWinGet_SizeX( lw->hed.win ) * 8),
-      (u16)(GF_BGL_BmpWinGet_SizeY( lw->hed.win ) * 8 - ypos) );
-#else
-/*    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
-      0, ypos,
-      GFL_BMPWIN_GetPosX(lw->hed.win) * 8,
-      GFL_BMPWIN_GetPosY(lw->hed.win) * 8 - ypos,
-      lw->hed.b_col );
-*/#endif
   }else{
     //データシフト
-#if 0 //old dp
-    GF_BGL_BmpWinShift(
-        lw->hed.win, GF_BGL_BMPWIN_SHIFT_U,
-        (u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col) );
-#else //wb
-  BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_U, 
-    (u8)((len) * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 0 );
-#endif
+    BmpWinDataShift( lw->hed.print_util->win, BMPWIN_SHIFT_U, 
+                    (u8)((len) * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 0 );
     //追加ライン描画
     ListScreenPut(
       lw, (u16)(lw->lp + (lw->hed.line-len)), (u16)(lw->hed.line - len), (u16)len, FALSE );
-    //上部を消す
-#if 0 //old dp
-    GF_BGL_BmpWinFill(
-      lw->hed.win,
-      (u8)lw->hed.b_col,        //背景色データ
-      0, 0,
-      (u16)(GF_BGL_BmpWinGet_SizeX( lw->hed.win ) * 8),
-      (u16)lw->hed.line_y );
-#else
-/*    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
-      0, 0,
-      GFL_BMPWIN_GetPosX(lw->hed.win) * 8,
-      lw->hed.line_y, 
-      lw->hed.b_col );
-*/
-#endif
   }
 }
 
@@ -1204,11 +1106,7 @@ static u8 ListMoveUpDownCheck( BMPMENULIST_WORK * lw, u8 print_f, u8 req_line, u
       ListCursorCls( lw, cursor_bak );
       ListCursorPut( lw );
       CallBackSet( lw, 0 );
-#if 0 //old dp
-      GF_BGL_BmpWinOn( lw->hed.win );
-#else
-      GFL_BMPWIN_TransVramCharacter(lw->hed.win);
-#endif
+      GFL_BMPWIN_TransVramCharacter(lw->hed.print_util->win);
       break;
     //表示リスト移動 or リスト＋カーソル移動
     case 2:
@@ -1217,9 +1115,6 @@ static u8 ListMoveUpDownCheck( BMPMENULIST_WORK * lw, u8 print_f, u8 req_line, u
       ListScrollMoveUpDown( lw, linecount, mode );
       ListCursorPut( lw );
       CallBackSet( lw, 0 );
-#if 0 //old dp
-      GF_BGL_BmpWinOn( lw->hed.win );
-#endif
       break;
     }
   }
@@ -1256,16 +1151,9 @@ static void BmpWinDataShift16(
   int xsiz, rline;
   int i;
 
-#if 0
-  cgxram    = (u8 *)win->chrbuf;
-  blanch_chr  = (data<<24) | (data<<16) | (data<<8) | (data<<0);
-  over_offs = win->sizy * win->sizx * GFL_BG_1CHRDATASIZ;
-  xsiz    = win->sizx;
-#else
   cgxram    = GFL_BMP_GetCharacterAdrs( bmp );
   blanch_chr  = (data<<24) | (data<<16) | (data<<8) | (data<<0);
   xsiz    = GFL_BMP_GetSizeX( bmp ) / 8;
-#endif
 
   if( size == 0 )
   { 
@@ -1332,16 +1220,9 @@ static void BmpWinDataShift256(
   int xsiz, rline;
   int i;
 
-#if 0
-  cgxram    = (u8 *)win->chrbuf;
-  blanch_chr  = ( data << 24 ) | ( data << 16 ) | ( data << 8 ) | data;
-  over_offs = win->sizy * win->sizx * GF_BGL_8BITCHRSIZ;
-  xsiz    = win->sizx;
-#else
   cgxram    = GFL_BMP_GetCharacterAdrs( bmp );
   blanch_chr  = ( data << 24 ) | ( data << 16 ) | ( data << 8 ) | data;
   xsiz    = GFL_BMP_GetSizeX( bmp ) / 8;
-#endif
 
   if( size == 0 )
   { 

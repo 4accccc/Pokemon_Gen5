@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		intro_msg.c
- *	@brief  イントロ メッセージ処理
- *	@author	hosaka genya
- *	@data		2009.12.15
+ *  @file   intro_msg.c
+ *  @brief  イントロ メッセージ処理
+ *  @author hosaka genya
+ *  @data   2009.12.15
  *
  */
 //=============================================================================
@@ -39,7 +39,7 @@
 
 //=============================================================================
 /**
- *								定数定義
+ *                定数定義
  */
 //=============================================================================
 enum
@@ -53,22 +53,22 @@ enum
 
 //=============================================================================
 /**
- *								構造体定義
+ *                構造体定義
  */
 //=============================================================================
 
 //-------------------------------------
-///	リスト
+/// リスト
 //=====================================
 typedef struct 
 {
-	BMPMENULIST_WORK	*p_list;
-	BMP_MENULIST_DATA *p_list_data;
-	u32		select;
+  BMPMENULIST_WORK  *p_list;
+  BMP_MENULIST_DATA *p_list_data;
+  u32   select;
 } INTRO_LIST_WORK;
 
 //--------------------------------------------------------------
-///	メッセージ処理 メインワーク
+/// メッセージ処理 メインワーク
 //==============================================================
 struct _INTRO_MSG_WORK {
   // [PRIVATE]
@@ -95,30 +95,30 @@ struct _INTRO_MSG_WORK {
   STRBUF*   strbuf;
   STRBUF*   exp_strbuf;
 
-	// タイマーアイコン
-	TIMEICON_WORK * timeicon;
+  // タイマーアイコン
+  TIMEICON_WORK * timeicon;
 };
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
+ *              プロトタイプ宣言
  */
 //=============================================================================
 //static STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDATA *MsgManager, u32 strID, HEAPID heapID );
 
 //=============================================================================
 /**
- *								外部公開関数
+ *                外部公開関数
  */
 //=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ管理モジュール 生成
+ *  @brief  メッセージ管理モジュール 生成
  *
- *	@param	HEAPID heap_id ヒープID
+ *  @param  HEAPID heap_id ヒープID
  *
- *	@retval INTRO_MSG_WORK* wk メインワーク
+ *  @retval INTRO_MSG_WORK* wk メインワーク
  */
 //-----------------------------------------------------------------------------
 INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
@@ -159,24 +159,24 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   // ウィンドウカーソル初期化
   wk->cursor_work = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heap_id );
 
-	// タイマーアイコン初期設定
-	wk->timeicon = TIMEICON_CreateEz( wk->heap_id );
+  // タイマーアイコン初期設定
+  wk->timeicon = TIMEICON_CreateEz( wk->heap_id );
 
   return wk;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ管理モジュール 破棄
+ *  @brief  メッセージ管理モジュール 破棄
  *
- *	@param	INTRO_MSG_WORK* wk  メインワーク
+ *  @param  INTRO_MSG_WORK* wk  メインワーク
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 {
-	INTRO_MSG_ExitTimeIcon( wk );
+  INTRO_MSG_ExitTimeIcon( wk );
 
   APP_KEYCURSOR_Delete( wk->cursor_work );
 
@@ -215,13 +215,13 @@ void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージリソースをリロード
+ *  @brief  メッセージリソースをリロード
  *
- *	@param	INTRO_MSG_WORK* wk
- *	@param	type
- *	@param	msg_dat_id 
+ *  @param  INTRO_MSG_WORK* wk
+ *  @param  type
+ *  @param  msg_dat_id 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_LoadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id )
@@ -235,28 +235,28 @@ void INTRO_MSG_LoadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ管理モジュール 主処理
+ *  @brief  メッセージ管理モジュール 主処理
  *
- *	@param	INTRO_MSG_WORK* wk 
+ *  @param  INTRO_MSG_WORK* wk 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_Main( INTRO_MSG_WORK* wk )
 {
   GFL_TCBL_Main( wk->msg_tcblsys );
-	PRINTSYS_QUE_Main( wk->print_que );
+  PRINTSYS_QUE_Main( wk->print_que );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージプリント 開始
+ *  @brief  メッセージプリント 開始
  *
- *	@param	INTRO_MSG_WORK* wk　メインワーク
- *	@param	str_id メッセージID
- *	@param	win_id ウィンドウID
+ *  @param  INTRO_MSG_WORK* wk　メインワーク
+ *  @param  str_id メッセージID
+ *  @param  win_id ウィンドウID
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 //void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callback_func, void* callback_arg )
@@ -297,11 +297,11 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, int win_id )
   wk->print_stream = PRINTSYS_PrintStream( win, 4, 0, wk->exp_strbuf, wk->font, msgspeed,
                                            wk->msg_tcblsys, 0xffff, wk->heap_id, clear_color );
 
-	if( win_id == 0 ){
-		BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M );
-	}else{
-		BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_TALK_POS, PLTID_BG_TALK_WIN_M );
-	}
+  if( win_id == 0 ){
+    BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M );
+  }else{
+    BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_TALK_POS, PLTID_BG_TALK_WIN_M );
+  }
 
   // 転送
   GFL_BMPWIN_TransVramCharacter( win );
@@ -312,25 +312,25 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, int win_id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  イントロデモ メッセージウィンドウを消す
+ *  @brief  イントロデモ メッセージウィンドウを消す
  *
- *	@param	INTRO_MSG_WORK* wk 
+ *  @param  INTRO_MSG_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_ClearWindow( INTRO_MSG_WORK* wk )
 {
-	BmpWinFrame_Clear( wk->win_dispwin, WINDOW_TRANS_ON );
+  BmpWinFrame_Clear( wk->win_dispwin, WINDOW_TRANS_ON );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  イントロデモ プリントストリーム状態取得
+ *  @brief  イントロデモ プリントストリーム状態取得
  *
- *	@param	INTRO_MSG_WORK* wk 
+ *  @param  INTRO_MSG_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 PRINTSTREAM_STATE INTRO_MSG_GetPrintState( INTRO_MSG_WORK* wk )
@@ -350,11 +350,11 @@ PRINTSTREAM_STATE INTRO_MSG_GetPrintState( INTRO_MSG_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージプリント 終了待ち
+ *  @brief  メッセージプリント 終了待ち
  *
- *	@param	INTRO_MSG_WORK* wk 
+ *  @param  INTRO_MSG_WORK* wk 
  *
- *	@retval TRUE:終了
+ *  @retval TRUE:終了
  */
 //-----------------------------------------------------------------------------
 BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
@@ -408,7 +408,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
 
 //=============================================================================
 /**
- *								static関数
+ *                static関数
  */
 //=============================================================================
 
@@ -442,92 +442,91 @@ static STRBUF * MSGDAT_UTIL_AllocExpandString( const WORDSET *wordset, GFL_MSGDA
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	PRINT_UTILを設定し取得
+ *  @brief  PRINT_UTILを設定し取得
  *
- *	@param	MSG_WORK *wk	ワーク
- *	@param	BMPWIN
+ *  @param  MSG_WORK *wk  ワーク
+ *  @param  BMPWIN
  *
- *	@return	PRINT_UTIL
+ *  @return PRINT_UTIL
  */
 //-----------------------------------------------------------------------------
-static PRINT_UTIL * MSG_GetPrintUtil( INTRO_MSG_WORK *wk, GFL_BMPWIN*	p_bmpwin )
-{	
-	PRINT_UTIL_Setup( &wk->print_util, p_bmpwin );
-	return &wk->print_util;
+static PRINT_UTIL * MSG_GetPrintUtil( INTRO_MSG_WORK *wk, GFL_BMPWIN* p_bmpwin )
+{ 
+  PRINT_UTIL_Setup( &wk->print_util, p_bmpwin );
+  return &wk->print_util;
 }
 
 //=============================================================================
 /**
- *					LIST
+ *          LIST
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	リストシステム　初期化
+ *  @brief  リストシステム　初期化
  *
- *	@param	INTRO_LIST_WORK *wk	ワーク
- *	@param	*cp_tbl					設定テーブル
- *	@param	tbl_max					設定テーブル数
- *	@param  is_cansel       キャンセル
+ *  @param  INTRO_LIST_WORK *wk ワーク
+ *  @param  *cp_tbl         設定テーブル
+ *  @param  tbl_max         設定テーブル数
+ *  @param  is_cansel       キャンセル
  *
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u32 tbl_max, BOOL is_cansel )
-{	
+{ 
   INTRO_LIST_WORK* list = &wk->list;
   HEAPID heapID         = wk->heap_id;
   GFL_BMPWIN* p_bmpwin  = wk->win_list;
 
-	//クリア
-	GFL_STD_MemClear( list, sizeof(INTRO_LIST_WORK));
+  //クリア
+  GFL_STD_MemClear( list, sizeof(INTRO_LIST_WORK));
 
-	//LISTDATA create
-	{	
-		int i;
+  //LISTDATA create
+  { 
+    int i;
 
-		list->p_list_data	= BmpMenuWork_ListCreate( tbl_max, heapID );
+    list->p_list_data = BmpMenuWork_ListCreate( tbl_max, heapID );
 
-		for( i = 0; i < tbl_max; i++ )
-		{	
+    for( i = 0; i < tbl_max; i++ )
+    { 
       GFL_MSG_GetString( wk->msghandle, cp_tbl[i].str_id, wk->strbuf );
 
       BmpMenuWork_ListAddString( &list->p_list_data[i], wk->strbuf, cp_tbl[i].param, heapID );
-		}
-	}
+    }
+  }
 
-	//LIST create
-	{	
-		BMPMENULIST_HEADER	header;
+  //LIST create
+  { 
+    BMPMENULIST_HEADER  header;
 
-		GFL_STD_MemClear( &header, sizeof(BMPMENULIST_HEADER));
-		header.list				= list->p_list_data;
-		header.win				= p_bmpwin;
-		header.count			= tbl_max;
-		header.line				= 5;
-		header.label_x		= 0;
-		header.data_x			= 16;
-		header.cursor_x		= 0;
-		header.line_y			= 2;
-		header.f_col			= 1;
-		header.b_col			= 15;
-		header.s_col			= 2;
-		header.msg_spc		= 0;
-		header.line_spc		= 0;
-		header.page_skip	= BMPMENULIST_LRKEY_SKIP;
-		header.font				= 0;
-		header.c_disp_f		= 0;
-		header.work				= NULL;
-		header.font_size_x= 16;
-		header.font_size_y= 16;
-		header.msgdata		= NULL;
-		header.print_util	= MSG_GetPrintUtil( wk, p_bmpwin );
-		header.print_que	= wk->print_que;
-		header.font_handle= wk->font;
+    GFL_STD_MemClear( &header, sizeof(BMPMENULIST_HEADER));
+    header.list       = list->p_list_data;
+    header.count      = tbl_max;
+    header.line       = 5;
+    header.label_x    = 0;
+    header.data_x     = 16;
+    header.cursor_x   = 0;
+    header.line_y     = 2;
+    header.f_col      = 1;
+    header.b_col      = 15;
+    header.s_col      = 2;
+    header.msg_spc    = 0;
+    header.line_spc   = 0;
+    header.page_skip  = BMPMENULIST_LRKEY_SKIP;
+    header.font       = 0;
+    header.c_disp_f   = 0;
+    header.work       = NULL;
+    header.font_size_x= 16;
+    header.font_size_y= 16;
+    header.msgdata    = NULL;
+    header.print_util = MSG_GetPrintUtil( wk, p_bmpwin );
+    header.print_que  = wk->print_que;
+    header.font_handle= wk->font;
     header.arrow_wait = BMPMENULIST_ARROW_WAIT_MAX;
 
-		list->p_list	= BmpMenuList_Set( &header, 0, 0, heapID );
-		BmpMenuList_SetCursorBmp( list->p_list, heapID );
-	}
+    list->p_list  = BmpMenuList_Set( &header, 0, 0, heapID );
+    BmpMenuList_SetCursorBmp( list->p_list, heapID );
+  }
 
   GFL_BMPWIN_MakeTransWindow( p_bmpwin ); // スクリーン＆キャラ転送
   BmpWinFrame_Write( p_bmpwin, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M ); // 周りにフレームを書く
@@ -544,9 +543,9 @@ void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u3
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	リストシステム	破棄
+ *  @brief  リストシステム  破棄
  *
- *	@param	INTRO_LIST_WORK *wk		ワーク
+ *  @param  INTRO_LIST_WORK *wk   ワーク
  *
  */
 //-----------------------------------------------------------------------------
@@ -558,68 +557,68 @@ void INTRO_MSG_LIST_Finish( INTRO_MSG_WORK *wk )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリア
   GFL_BMPWIN_TransVramCharacter( wk->win_list ); // 転送
 
-	BmpMenuList_Exit( list->p_list, NULL, NULL );
-	BmpMenuWork_ListDelete( list->p_list_data );
-	GFL_STD_MemClear( list, sizeof(INTRO_LIST_WORK) );
+  BmpMenuList_Exit( list->p_list, NULL, NULL );
+  BmpMenuWork_ListDelete( list->p_list_data );
+  GFL_STD_MemClear( list, sizeof(INTRO_LIST_WORK) );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	リストシステム	メイン処理
+ *  @brief  リストシステム  メイン処理
  *
- *	@param	INTRO_LIST_WORK *wk		ワーク
+ *  @param  INTRO_LIST_WORK *wk   ワーク
  *
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_LIST_Main( INTRO_MSG_WORK *wk )
-{	
+{ 
   INTRO_LIST_WORK* list = &wk->list;
 
-	list->select	= BmpMenuList_Main(	list->p_list );
+  list->select  = BmpMenuList_Main( list->p_list );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	リスト決定待ち
+ *  @brief  リスト決定待ち
  *
- *	@param	const INTRO_LIST_WORK *cwk	ワーク
- *	@param	*p_select								リストのインデックス
+ *  @param  const INTRO_LIST_WORK *cwk  ワーク
+ *  @param  *p_select               リストのインデックス
  *
- *	@retval	TRUEならば決定
- *	@retval	FALSEならば選択中
+ *  @retval TRUEならば決定
+ *  @retval FALSEならば選択中
  */
 //-----------------------------------------------------------------------------
 INTRO_LIST_SELECT INTRO_MSG_LIST_IsDecide( INTRO_MSG_WORK *wk, u32 *p_select )
-{	
+{ 
   INTRO_LIST_WORK* list = &wk->list;
 
-	switch( list->select)
+  switch( list->select)
   { 
   case BMPMENULIST_NULL:
     return INTRO_LIST_SELECT_NONE;
 
-	case BMPMENULIST_CANCEL:
+  case BMPMENULIST_CANCEL:
     return INTRO_LIST_SELECT_CANCEL;
 
   default:
-		if( p_select )
-		{	
-			*p_select	= list->select;
-		}
-		return INTRO_LIST_SELECT_DECIDE;
+    if( p_select )
+    { 
+      *p_select = list->select;
+    }
+    return INTRO_LIST_SELECT_DECIDE;
   }
 
-	return INTRO_LIST_SELECT_NONE;
+  return INTRO_LIST_SELECT_NONE;
 }
 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  WORDSETへのポインタを取得
+ *  @brief  WORDSETへのポインタを取得
  *
- *	@param	INTRO_MSG_WORK* wk 
+ *  @param  INTRO_MSG_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 WORDSET* INTRO_MSG_GetWordSet( INTRO_MSG_WORK* wk )
@@ -630,31 +629,31 @@ WORDSET* INTRO_MSG_GetWordSet( INTRO_MSG_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  タイマーアイコンセット
+ *  @brief  タイマーアイコンセット
  *
- *	@param	INTRO_MSG_WORK* wk 
+ *  @param  INTRO_MSG_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_InitTimeIcon( INTRO_MSG_WORK* wk )
 {
-	TIMEICON_StartEz( wk->timeicon, GFUser_VIntr_GetTCBSYS(), wk->win_dispwin, 15, TIMEICON_DEFAULT_WAIT );
+  TIMEICON_StartEz( wk->timeicon, GFUser_VIntr_GetTCBSYS(), wk->win_dispwin, 15, TIMEICON_DEFAULT_WAIT );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  タイマーアイコン削除
+ *  @brief  タイマーアイコン削除
  *
- *	@param	INTRO_MSG_WORK* wk 
+ *  @param  INTRO_MSG_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void INTRO_MSG_ExitTimeIcon( INTRO_MSG_WORK* wk )
 {
-	if( wk->timeicon != NULL ){
-		TIMEICON_Exit( wk->timeicon );
-		wk->timeicon = NULL;
-	}
+  if( wk->timeicon != NULL ){
+    TIMEICON_Exit( wk->timeicon );
+    wk->timeicon = NULL;
+  }
 }

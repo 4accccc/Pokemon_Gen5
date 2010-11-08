@@ -1817,7 +1817,6 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
   }else{
     header.icon      = line_callback_waza;  // void  (*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
   }
-  header.win       = wk->win[SHOP_BUY_BMPWIN_LIST];
   
   header.count     = BmpMenuWork_GetListMax(wk->list);    //ƒŠƒXƒg€–Ú”
   header.line      = 7; //•\¦Å‘å€–Ú”

@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		d_hosaka.c
- *	@brief  保坂デバッグ用メニュー
- *	@author		hosaka genya
- *	@data		2010.05.28
+ *  @file   d_hosaka.c
+ *  @brief  保坂デバッグ用メニュー
+ *  @author   hosaka genya
+ *  @data   2010.05.28
  *
  */
 //=============================================================================
@@ -12,10 +12,10 @@
 
 //lib
 #include <gflib.h>
-#include <wchar.h>	//for wcslen
+#include <wchar.h>  //for wcslen
 
 //contant
-#include "system/main.h"	//HEAPID
+#include "system/main.h"  //HEAPID
 #include "system/gfl_use.h"
 
 //module
@@ -30,22 +30,22 @@
 
 //=============================================================================
 /**
- *								定数定義
+ *                定数定義
  */
 //=============================================================================
 
 //-------------------------------------
-///	
+/// 
 //=====================================
 typedef enum 
 {
-	PROC_TYPE_NONE,
-	PROC_TYPE_CALL,
-	PROC_TYPE_NEXT,
+  PROC_TYPE_NONE,
+  PROC_TYPE_CALL,
+  PROC_TYPE_NEXT,
 } PROC_TYPE;
 
 //--------------------------------------------------------------
-///	リスト
+/// リスト
 //==============================================================
 typedef enum
 {
@@ -56,82 +56,82 @@ typedef enum
 
 //=============================================================================
 /**
- *								構造体定義
+ *                構造体定義
  */
 //=============================================================================
 #define LISTDATA_STR_LENGTH (32)
 
 //-------------------------------------
-///	BG関係
+/// BG関係
 //=====================================
 typedef struct
 {
-	int dummy;
+  int dummy;
 } GRAPHIC_BG_WORK;
 //-------------------------------------
-///	描画関係
+/// 描画関係
 //=====================================
 typedef struct 
 {
-	GRAPHIC_BG_WORK		gbg;
-	BOOL							is_init;
+  GRAPHIC_BG_WORK   gbg;
+  BOOL              is_init;
 
 } GRAPHIC_WORK;
 
 //-------------------------------------
-///	リスト
+/// リスト
 //=====================================
 typedef struct 
 {
-	BMPMENULIST_WORK	*p_list;
-	BMP_MENULIST_DATA *p_list_data;
-	u32		select;
+  BMPMENULIST_WORK  *p_list;
+  BMP_MENULIST_DATA *p_list_data;
+  u32   select;
 } LIST_WORK;
 
 //-------------------------------------
-///	メッセージ
+/// メッセージ
 //=====================================
 typedef struct 
 {
-	GFL_FONT*				  p_font;
+  GFL_FONT*         p_font;
   PRINT_QUE*        p_print_que;
   PRINT_UTIL        print_util;
 } MSG_WORK;
 
 //--------------------------------------------------------------
-///	メインワーク
+/// メインワーク
 //==============================================================
 typedef struct
 { 
   GRAPHIC_WORK      grp;
-	MSG_WORK					msg;
+  MSG_WORK          msg;
   LIST_WORK         list;
-	GFL_BMPWIN				*p_bmpwin;
-	BOOL	is_temp_modules;
+  GFL_BMPWIN        *p_bmpwin;
+  BOOL  is_temp_modules;
   
   BOOL is_end;
-	PROC_TYPE	proc_type;
-	
+  PROC_TYPE proc_type;
+  
   //Proc切り替え用
-	FSOverlayID overlay_Id;
-	const GFL_PROC_DATA *p_procdata;
-	void	*p_proc_work;
+  FSOverlayID overlay_Id;
+  const GFL_PROC_DATA *p_procdata;
+  void  *p_proc_work;
 
 } D_HOSAKA_WORK;
 
 //-------------------------------------
-///	リスト設定テーブル
+/// リスト設定テーブル
 //=====================================
 typedef BOOL (*LISTFUNC)( D_HOSAKA_WORK *work , const int idx );
 typedef struct 
-{	
-	u16	str[LISTDATA_STR_LENGTH];
+{ 
+  u16 str[LISTDATA_STR_LENGTH];
   LISTFUNC func;
 } LIST_SETUP_TBL;
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
+ *              プロトタイプ宣言
  */
 //=============================================================================
 
@@ -151,15 +151,15 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk );
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
-static void LIST_Init( LIST_WORK *p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max, MSG_WORK *p_msg, GFL_BMPWIN*	p_bmpwin, HEAPID heapID );
+static void LIST_Init( LIST_WORK *p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max, MSG_WORK *p_msg, GFL_BMPWIN* p_bmpwin, HEAPID heapID );
 static void LIST_Exit( LIST_WORK *p_wk );
 static void LIST_Main( LIST_WORK *p_wk );
 static LIST_SELECT LIST_IsDecide( const LIST_WORK *cp_wk, u32 *p_select );
 static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID );
 static void MSG_Exit( MSG_WORK *p_wk );
 static BOOL MSG_Main( MSG_WORK *p_wk );
-static PRINT_UTIL * MSG_GetPrintUtil( MSG_WORK *p_wk, GFL_BMPWIN*	p_bmpwin );
-static GFL_FONT*	MSG_GetFont( const MSG_WORK *cp_wk );
+static PRINT_UTIL * MSG_GetPrintUtil( MSG_WORK *p_wk, GFL_BMPWIN* p_bmpwin );
+static GFL_FONT*  MSG_GetFont( const MSG_WORK *cp_wk );
 static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk );
 static BOOL TESTMODE_ITEM_SelectUNSelect( D_HOSAKA_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEnd( D_HOSAKA_WORK* work, const int idx );
@@ -176,36 +176,36 @@ static BOOL TESTMODE_ITEM_SelectPmsDouble( D_HOSAKA_WORK *work , const int idx )
 static BOOL TESTMODE_ITEM_SelectMicTest( D_HOSAKA_WORK *work , const int idx );
 
 //-------------------------------------
-///	外部参照PROCデータ
+/// 外部参照PROCデータ
 //=====================================
-const GFL_PROC_DATA	DHosakaMainProcData = 
+const GFL_PROC_DATA DHosakaMainProcData = 
 {
-	D_HOSAKA_PROC_Init,
-	D_HOSAKA_PROC_Main,
-	D_HOSAKA_PROC_Exit,
+  D_HOSAKA_PROC_Init,
+  D_HOSAKA_PROC_Main,
+  D_HOSAKA_PROC_Exit,
 };
 
 //-------------------------------------
-///	BGシステム
+/// BGシステム
 //=====================================
 typedef enum 
 {
-	GRAPHIC_BG_FRAME_TEXT,
-	GRAPHIC_BG_FRAME_MAX
+  GRAPHIC_BG_FRAME_TEXT,
+  GRAPHIC_BG_FRAME_MAX
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	GFL_BG_FRAME0_S,
+  GFL_BG_FRAME0_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	// GRAPHIC_BG_FRAME_TEXT
-	{
-		0, 0, 0x800, 0,
-		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-	},
+  // GRAPHIC_BG_FRAME_TEXT
+  {
+    0, 0, 0x800, 0,
+    GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+    GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+    GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+  },
 };
 
 // メニューリスト
@@ -232,20 +232,20 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
 
 //=============================================================================
 /**
- *								外部公開関数
+ *                外部公開関数
  */
 //=============================================================================
 //
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	GFL_PROC *p_proc
- *	@param	*p_seq
- *	@param	*p_parent
- *	@param	*p_work 
+ *  @param  GFL_PROC *p_proc
+ *  @param  *p_seq
+ *  @param  *p_parent
+ *  @param  *p_work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT D_HOSAKA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_parent, void *p_work )
@@ -263,14 +263,14 @@ static GFL_PROC_RESULT D_HOSAKA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	GFL_PROC *p_proc
- *	@param	*p_seq
- *	@param	*p_parent
- *	@param	*p_work 
+ *  @param  GFL_PROC *p_proc
+ *  @param  *p_seq
+ *  @param  *p_parent
+ *  @param  *p_work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT D_HOSAKA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_parent, void *p_work )
@@ -279,18 +279,18 @@ static GFL_PROC_RESULT D_HOSAKA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 
   DeleteTemporaryModules( p_wk );
   
-	if( p_wk->proc_type == PROC_TYPE_NEXT )
-	{	
-		//次のPROC予約
-		GFL_PROC_SysSetNextProc(
-				p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
-	}
+  if( p_wk->proc_type == PROC_TYPE_NEXT )
+  { 
+    //次のPROC予約
+    GFL_PROC_SysSetNextProc(
+        p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
+  }
   else if( p_wk->is_end )
   { 
 
-		//次のPROC予約
-		GFL_PROC_SysSetNextProc(
-				FS_OVERLAY_ID(title), &TitleProcData, NULL );
+    //次のPROC予約
+    GFL_PROC_SysSetNextProc(
+        FS_OVERLAY_ID(title), &TitleProcData, NULL );
   }
 
   GFL_PROC_FreeWork( p_proc );
@@ -300,53 +300,53 @@ static GFL_PROC_RESULT D_HOSAKA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	GFL_PROC *p_proc
- *	@param	*p_seq
- *	@param	*p_parent
- *	@param	*p_work 
+ *  @param  GFL_PROC *p_proc
+ *  @param  *p_seq
+ *  @param  *p_parent
+ *  @param  *p_work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT D_HOSAKA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_parent, void *p_work )
 {
-	enum
-	{	
-		SEQ_INIT,
-		SEQ_FADEOUT_START,
-		SEQ_FADEOUT_WAIT,
-		SEQ_MAIN,
-		SEQ_FADEIN_START,
-		SEQ_FADEIN_WAIT,
-		SEQ_EXIT,
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_MAIN,
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_EXIT,
 
-		SEQ_PROC_FADEIN_START,
-		SEQ_PROC_FADEIN_WAIT,
-		SEQ_CALL_PROC,
-		SEQ_RET_PROC,
-	};
+    SEQ_PROC_FADEIN_START,
+    SEQ_PROC_FADEIN_WAIT,
+    SEQ_CALL_PROC,
+    SEQ_RET_PROC,
+  };
 
   D_HOSAKA_WORK* p_wk = p_work;
 
   switch( *p_seq )
   {
-	 case SEQ_INIT:
-			*p_seq	= SEQ_MAIN;
-		break;
-	
+   case SEQ_INIT:
+      *p_seq  = SEQ_MAIN;
+    break;
+  
    case SEQ_FADEOUT_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-		*p_seq	= SEQ_FADEOUT_WAIT;
-		break;
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
 
-	case SEQ_FADEOUT_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= SEQ_MAIN;
-		}
-		break;
+  case SEQ_FADEOUT_WAIT:
+    if( !GFL_FADE_CheckFade() )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
+    break;
 
     case SEQ_MAIN :
       {
@@ -355,7 +355,7 @@ static GFL_PROC_RESULT D_HOSAKA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
         LIST_Main( &p_wk->list );
         select  = LIST_IsDecide( &p_wk->list, &idx );
         if( select == LIST_SELECT_DECIDE )
-        {	
+        { 
           LISTFUNC func = (LISTFUNC)idx;
           func( p_wk, NULL );
         }
@@ -366,66 +366,66 @@ static GFL_PROC_RESULT D_HOSAKA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 
         //終了判定
         if( p_wk->is_end )
-        {	
-          *p_seq	= SEQ_FADEIN_START;
+        { 
+          *p_seq  = SEQ_FADEIN_START;
         }
 
         //PROC判定
         switch( p_wk->proc_type )
-        {	
+        { 
         case PROC_TYPE_CALL:
-          p_wk->proc_type	= PROC_TYPE_NONE;
-          *p_seq	= SEQ_PROC_FADEIN_START;
+          p_wk->proc_type = PROC_TYPE_NONE;
+          *p_seq  = SEQ_PROC_FADEIN_START;
           break;
         case PROC_TYPE_NEXT:
-          *p_seq	= SEQ_FADEIN_START;
+          *p_seq  = SEQ_FADEIN_START;
           break;
         }
       }
       break;
 
-	case SEQ_PROC_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-		*p_seq	= SEQ_PROC_FADEIN_WAIT;
-		break;
+  case SEQ_PROC_FADEIN_START:
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    *p_seq  = SEQ_PROC_FADEIN_WAIT;
+    break;
 
-	case SEQ_PROC_FADEIN_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= SEQ_CALL_PROC;
-		}
-		break;
-	
+  case SEQ_PROC_FADEIN_WAIT:
+    if( !GFL_FADE_CheckFade() )
+    { 
+      *p_seq  = SEQ_CALL_PROC;
+    }
+    break;
+  
   case SEQ_CALL_PROC:
-		DeleteTemporaryModules( p_wk );
-		GFL_PROC_SysCallProc( p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
-		*p_seq	= SEQ_RET_PROC;
-		break;
-	
+    DeleteTemporaryModules( p_wk );
+    GFL_PROC_SysCallProc( p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
+    *p_seq  = SEQ_RET_PROC;
+    break;
+  
   case SEQ_RET_PROC:
     HOSAKA_Printf( "ret!\n" );
     if( p_wk->p_proc_work != NULL )
     {
       GFL_HEAP_FreeMemory( p_wk->p_proc_work );
     }
-		CreateTemporaryModules( p_wk, HEAPID_HOSAKA_DEBUG );
-		*p_seq	= SEQ_FADEOUT_START;
-		break;
+    CreateTemporaryModules( p_wk, HEAPID_HOSAKA_DEBUG );
+    *p_seq  = SEQ_FADEOUT_START;
+    break;
 
-	case SEQ_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-		*p_seq	= SEQ_FADEIN_WAIT;
-		break;
+  case SEQ_FADEIN_START:
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
 
-	case SEQ_FADEIN_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= SEQ_EXIT;
-		}
-		break;
-	
-	case SEQ_EXIT:
-		return GFL_PROC_RES_FINISH;
+  case SEQ_FADEIN_WAIT:
+    if( !GFL_FADE_CheckFade() )
+    { 
+      *p_seq  = SEQ_EXIT;
+    }
+    break;
+  
+  case SEQ_EXIT:
+    return GFL_PROC_RES_FINISH;
 
   default : GF_ASSERT(0);
   }
@@ -437,534 +437,533 @@ static GFL_PROC_RESULT D_HOSAKA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 
 //=============================================================================
 /**
- *								static関数
+ *                static関数
  */
 //=============================================================================
 
 //=============================================================================
 /**
- *		操作用
+ *    操作用
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	プロセス切り替え
+ *  @brief  プロセス切り替え
  *
- *	@param	D_HOSAKA_WORK * p_wk	ワーク
- *	@param	ov_id												オーバーレイID
- *	@param	GFL_PROC_DATA *p_procdata		プロセスデータ
- *	@param	*p_work											渡す情報
+ *  @param  D_HOSAKA_WORK * p_wk  ワーク
+ *  @param  ov_id                       オーバーレイID
+ *  @param  GFL_PROC_DATA *p_procdata   プロセスデータ
+ *  @param  *p_work                     渡す情報
  *
  */
 //-----------------------------------------------------------------------------
 static void D_HOSAKA_COMMAND_CallProc( D_HOSAKA_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work )
-{	
-	p_wk->overlay_Id	= ov_id;
-	p_wk->p_procdata	= p_procdata;
-	p_wk->p_proc_work	= p_work;
-//	p_wk->is_end	= TRUE;
+{ 
+  p_wk->overlay_Id  = ov_id;
+  p_wk->p_procdata  = p_procdata;
+  p_wk->p_proc_work = p_work;
+//  p_wk->is_end  = TRUE;
 
-	p_wk->proc_type	= PROC_TYPE_CALL;
+  p_wk->proc_type = PROC_TYPE_CALL;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	プロセス予約
+ *  @brief  プロセス予約
  *
- *	@param	D_HOSAKA_WORK * p_wk		ワーク
- *	@param	ov_id											オーバーレイID
- *	@param	GFL_PROC_DATA *p_procdata	プロセスデータ
- *	@param	*p_work										渡す情報
+ *  @param  D_HOSAKA_WORK * p_wk    ワーク
+ *  @param  ov_id                     オーバーレイID
+ *  @param  GFL_PROC_DATA *p_procdata プロセスデータ
+ *  @param  *p_work                   渡す情報
  */
 //-----------------------------------------------------------------------------
 static void D_HOSAKA_COMMAND_NextProc( D_HOSAKA_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work )
-{	
-	p_wk->overlay_Id	= ov_id;
-	p_wk->p_procdata	= p_procdata;
-	p_wk->p_proc_work	= p_work;
-//	p_wk->is_end	= TRUE;
+{ 
+  p_wk->overlay_Id  = ov_id;
+  p_wk->p_procdata  = p_procdata;
+  p_wk->p_proc_work = p_work;
+//  p_wk->is_end  = TRUE;
 
-	p_wk->proc_type	= PROC_TYPE_NEXT;
+  p_wk->proc_type = PROC_TYPE_NEXT;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	メニューを切り替え
+ *  @brief  メニューを切り替え
  *
- *	@param	D_HOSAKA_WORK * p_wk	ワーク
- *	@param	LIST_SETUP_TBL *cp_tbl			リスト用テーブル
- *	@param	tbl_max											リスト用テーブルの要素数
+ *  @param  D_HOSAKA_WORK * p_wk  ワーク
+ *  @param  LIST_SETUP_TBL *cp_tbl      リスト用テーブル
+ *  @param  tbl_max                     リスト用テーブルの要素数
  *
  */
 //-----------------------------------------------------------------------------
 static void D_HOSAKA_COMMAND_ChangeMenu( D_HOSAKA_WORK * p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max )
 {
-	LIST_Exit( &p_wk->list );
-	LIST_Init( &p_wk->list, cp_tbl, tbl_max, &p_wk->msg, p_wk->p_bmpwin, HEAPID_HOSAKA_DEBUG );
+  LIST_Exit( &p_wk->list );
+  LIST_Init( &p_wk->list, cp_tbl, tbl_max, &p_wk->msg, p_wk->p_bmpwin, HEAPID_HOSAKA_DEBUG );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	終了
+ *  @brief  終了
  *
- *	@param	D_HOSAKA_WORK *p_wk	ワーク
+ *  @param  D_HOSAKA_WORK *p_wk ワーク
  *
  */
 //-----------------------------------------------------------------------------
 static void D_HOSAKA_COMMAND_End( D_HOSAKA_WORK *p_wk )
-{	
-	p_wk->is_end	= TRUE;
+{ 
+  p_wk->is_end  = TRUE;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	一時的なモジュールを作成
+ *  @brief  一時的なモジュールを作成
  *
- *	@param	D_HOSAKA_WORK *p_wk	ワーク
- *	@param	heapID											ヒープID
+ *  @param  D_HOSAKA_WORK *p_wk ワーク
+ *  @param  heapID                      ヒープID
  *
  */
 //-----------------------------------------------------------------------------
 static void CreateTemporaryModules( D_HOSAKA_WORK *p_wk, HEAPID heapID )
-{	
-	GRAPHIC_Init( &p_wk->grp, heapID );
+{ 
+  GRAPHIC_Init( &p_wk->grp, heapID );
 
-	MSG_Init( &p_wk->msg, heapID );
+  MSG_Init( &p_wk->msg, heapID );
 
-	p_wk->p_bmpwin	= GFL_BMPWIN_Create( sc_bgcnt_frame[GRAPHIC_BG_FRAME_TEXT],
-			1, 1, 30, 10, 0, GFL_BMP_CHRAREA_GET_B );
-	GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(p_wk->p_bmpwin) );
+  p_wk->p_bmpwin  = GFL_BMPWIN_Create( sc_bgcnt_frame[GRAPHIC_BG_FRAME_TEXT],
+      1, 1, 30, 10, 0, GFL_BMP_CHRAREA_GET_B );
+  GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(p_wk->p_bmpwin) );
 
-	LIST_Init( &p_wk->list, sc_list_data_home, NELEMS(sc_list_data_home), 
-			&p_wk->msg, p_wk->p_bmpwin, heapID );
+  LIST_Init( &p_wk->list, sc_list_data_home, NELEMS(sc_list_data_home), 
+      &p_wk->msg, p_wk->p_bmpwin, heapID );
 
-	p_wk->is_temp_modules	= TRUE;
+  p_wk->is_temp_modules = TRUE;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	一時的なモジュールを破棄
+ *  @brief  一時的なモジュールを破棄
  *
- *	@param	D_HOSAKA_WORK *p_wk	ワーク
+ *  @param  D_HOSAKA_WORK *p_wk ワーク
  *
  */
 //-----------------------------------------------------------------------------
 static void DeleteTemporaryModules( D_HOSAKA_WORK *p_wk )
-{	
+{ 
 
-	LIST_Exit( &p_wk->list );
-	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
-	MSG_Exit( &p_wk->msg );
+  LIST_Exit( &p_wk->list );
+  GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+  MSG_Exit( &p_wk->msg );
   GRAPHIC_Exit( &p_wk->grp );
 
-	p_wk->is_temp_modules	= FALSE;
+  p_wk->is_temp_modules = FALSE;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	D_HOSAKA_WORK *p_wk 
+ *  @param  D_HOSAKA_WORK *p_wk 
  *
- *	@return
+ *  @return
  */
 //-----------------------------------------------------------------------------
 static void MainTemporaryModules( D_HOSAKA_WORK *p_wk )
-{	
-	if( p_wk->is_temp_modules )
-	{	
-		MSG_Main( &p_wk->msg );
-	}
+{ 
+  if( p_wk->is_temp_modules )
+  { 
+    MSG_Main( &p_wk->msg );
+  }
 }
 //=============================================================================
 /**
- *				GRAPHIC
+ *        GRAPHIC
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	描画関係初期化
+ *  @brief  描画関係初期化
  *
- *	@param	GRAPHIC_WORK* p_wk	ワーク
- *	@param	heapID					ヒープID
+ *  @param  GRAPHIC_WORK* p_wk  ワーク
+ *  @param  heapID          ヒープID
  *
  */
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 {
-	static const GFL_DISP_VRAM sc_vramSetTable =
-	{
-		GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_NONE,						// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_128K,		
-		GX_OBJVRAMMODE_CHAR_1D_128K,		
-	};
+  static const GFL_DISP_VRAM sc_vramSetTable =
+  {
+    GX_VRAM_BG_128_A,           // メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_128_C,       // サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_NONE,           // メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_0_D,            // テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_128K,    
+    GX_OBJVRAMMODE_CHAR_1D_128K,    
+  };
 
-	//ワーククリア
-	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
+  //ワーククリア
+  GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
 
-	//VRAMクリアー
-	GFL_DISP_ClearVRAM( 0 );
+  //VRAMクリアー
+  GFL_DISP_ClearVRAM( 0 );
 
-	// VRAMバンク設定
-	GFL_DISP_SetBank( &sc_vramSetTable );
-	GX_SetBankForLCDC(GX_VRAM_LCDC_B);	//Capture用
+  // VRAMバンク設定
+  GFL_DISP_SetBank( &sc_vramSetTable );
+  GX_SetBankForLCDC(GX_VRAM_LCDC_B);  //Capture用
 
-	// ディスプレイON
-	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
-	GFL_DISP_SetDispOn();
+  // ディスプレイON
+  GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
+  GFL_DISP_SetDispOn();
 
-	//表示
-	GFL_DISP_GX_InitVisibleControl();
+  //表示
+  GFL_DISP_GX_InitVisibleControl();
 
-	//	フォント初期化
-	GFL_FONTSYS_Init();
+  //  フォント初期化
+  GFL_FONTSYS_Init();
 
-	//描画モジュール
-	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
+  //描画モジュール
+  GRAPHIC_BG_Init( &p_wk->gbg, heapID );
 
-	p_wk->is_init	= TRUE;
+  p_wk->is_init = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	描画関係破棄
+ *  @brief  描画関係破棄
  *
- *	@param	GRAPHIC_WORK* p_wk	ワーク
+ *  @param  GRAPHIC_WORK* p_wk  ワーク
  *
  */
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
-	GF_ASSERT( p_wk->is_init );
+  GF_ASSERT( p_wk->is_init );
 
-	GRAPHIC_BG_Exit( &p_wk->gbg );
+  GRAPHIC_BG_Exit( &p_wk->gbg );
 
-	p_wk->is_init	= FALSE;
-	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
+  p_wk->is_init = FALSE;
+  GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
 }
 //=============================================================================
 /**
- *					GRAPHIC_BG
+ *          GRAPHIC_BG
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	BG描画	初期化
+ *  @brief  BG描画  初期化
  *
- *	@param	GRAPHIC_BG_WORK* p_wk	ワーク
- *	@param	heapID						ヒープID
+ *  @param  GRAPHIC_BG_WORK* p_wk ワーク
+ *  @param  heapID            ヒープID
  *
  */
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 {
-	int i;
+  int i;
 
-	//ＢＧシステム起動
-	GFL_BG_Init( heapID );
-	GFL_BMPWIN_Init( heapID );
+  //ＢＧシステム起動
+  GFL_BG_Init( heapID );
+  GFL_BMPWIN_Init( heapID );
 
-	//ＢＧモード設定
-	{
-		static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
-		{
-		//	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
-				GX_DISPMODE_VRAM_B,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
-		};	
-		GFL_BG_SetBGMode( &sc_bg_sys_header );
-	}
+  //ＢＧモード設定
+  {
+    static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
+    {
+    //  GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+        GX_DISPMODE_VRAM_B,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+    };  
+    GFL_BG_SetBGMode( &sc_bg_sys_header );
+  }
 
-	//ＢＧコントロール設定
-	{
-		int i;
+  //ＢＧコントロール設定
+  {
+    int i;
 
-		for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
-		{
-			GFL_BG_SetBGControl( sc_bgcnt_frame[i], &sc_bgcnt_data[i], GFL_BG_MODE_TEXT );
-			GFL_BG_ClearFrame( sc_bgcnt_frame[i] );
-			GFL_BG_SetVisible( sc_bgcnt_frame[i], VISIBLE_ON );
-		}
-	}
+    for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
+    {
+      GFL_BG_SetBGControl( sc_bgcnt_frame[i], &sc_bgcnt_data[i], GFL_BG_MODE_TEXT );
+      GFL_BG_ClearFrame( sc_bgcnt_frame[i] );
+      GFL_BG_SetVisible( sc_bgcnt_frame[i], VISIBLE_ON );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	BG描画	破棄
+ *  @brief  BG描画  破棄
  *
- *	@param	GRAPHIC_BG_WORK* p_wk	ワーク
+ *  @param  GRAPHIC_BG_WORK* p_wk ワーク
  *
  */
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
-{	
-	int i;
+{ 
+  int i;
 
-	// BGコントロール破棄
-	for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
-	{
-		GFL_BG_FreeBGControl( sc_bgcnt_frame[i] );
-	}
+  // BGコントロール破棄
+  for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
+  {
+    GFL_BG_FreeBGControl( sc_bgcnt_frame[i] );
+  }
 
-	// BGシステム破棄
-	GFL_BMPWIN_Exit();
-	GFL_BG_Exit();
+  // BGシステム破棄
+  GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
 }
 
 //=============================================================================
 /**
- *					LIST
+ *          LIST
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	リストシステム　初期化
+ *  @brief  リストシステム　初期化
  *
- *	@param	LIST_WORK *p_wk	ワーク
- *	@param	*p_tbl					設定テーブル
- *	@param	tbl_max					設定テーブル数
- *	@param	*p_msg					メッセージワーク
- *	@param	HEAPID heapID		ヒープID
+ *  @param  LIST_WORK *p_wk ワーク
+ *  @param  *p_tbl          設定テーブル
+ *  @param  tbl_max         設定テーブル数
+ *  @param  *p_msg          メッセージワーク
+ *  @param  HEAPID heapID   ヒープID
  *
  */
 //-----------------------------------------------------------------------------
-static void LIST_Init( LIST_WORK *p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max, MSG_WORK *p_msg, GFL_BMPWIN*	p_bmpwin, HEAPID heapID )
-{	
-	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(LIST_WORK));
+static void LIST_Init( LIST_WORK *p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max, MSG_WORK *p_msg, GFL_BMPWIN* p_bmpwin, HEAPID heapID )
+{ 
+  //クリア
+  GFL_STD_MemClear( p_wk, sizeof(LIST_WORK));
 
 
-	//LISTDATA create
-	{	
-		int i;
-		STRBUF	*p_strbuf;
-		STRCODE	str[128];
-		u16	strlen;
+  //LISTDATA create
+  { 
+    int i;
+    STRBUF  *p_strbuf;
+    STRCODE str[128];
+    u16 strlen;
 
-		p_wk->p_list_data	= BmpMenuWork_ListCreate( tbl_max, heapID );
+    p_wk->p_list_data = BmpMenuWork_ListCreate( tbl_max, heapID );
 
-		p_strbuf = GFL_STR_CreateBuffer( LISTDATA_STR_LENGTH+1, heapID);
+    p_strbuf = GFL_STR_CreateBuffer( LISTDATA_STR_LENGTH+1, heapID);
 
-		for( i = 0; i < tbl_max; i++ )
-		{	
-			//
-			strlen	= wcslen(cp_tbl[i].str);
-			GFL_STD_MemCopy(cp_tbl[i].str, str, strlen*2);
-			str[strlen]	= GFL_STR_GetEOMCode();
-			GFL_STR_SetStringCode( p_strbuf, str);
+    for( i = 0; i < tbl_max; i++ )
+    { 
+      //
+      strlen  = wcslen(cp_tbl[i].str);
+      GFL_STD_MemCopy(cp_tbl[i].str, str, strlen*2);
+      str[strlen] = GFL_STR_GetEOMCode();
+      GFL_STR_SetStringCode( p_strbuf, str);
 
-			BmpMenuWork_ListAddString( &p_wk->p_list_data[i], p_strbuf, (u32)cp_tbl[i].func, heapID );
-		}
+      BmpMenuWork_ListAddString( &p_wk->p_list_data[i], p_strbuf, (u32)cp_tbl[i].func, heapID );
+    }
 
-		GFL_STR_DeleteBuffer( p_strbuf );
-	}
+    GFL_STR_DeleteBuffer( p_strbuf );
+  }
 
-	//LIST create
-	{	
-		BMPMENULIST_HEADER	header;
+  //LIST create
+  { 
+    BMPMENULIST_HEADER  header;
 
-		GFL_STD_MemClear( &header, sizeof(BMPMENULIST_HEADER));
-		header.list				= p_wk->p_list_data;
-		header.win				= p_bmpwin;
-		header.count			= tbl_max;
-		header.line				= 5;
-		header.label_x		= 0;
-		header.data_x			= 16;
-		header.cursor_x		= 0;
-		header.line_y			= 2;
-		header.f_col			= 1;
-		header.b_col			= 15;
-		header.s_col			= 2;
-		header.msg_spc		= 0;
-		header.line_spc		= 0;
-		header.page_skip	= BMPMENULIST_LRKEY_SKIP;
-		header.font				= 0;
-		header.c_disp_f		= 0;
-		header.work				= NULL;
-		header.font_size_x= 16;
-		header.font_size_y= 16;
-		header.msgdata		= NULL;
-		header.print_util	= MSG_GetPrintUtil( p_msg, p_bmpwin );
-		header.print_que	= MSG_GetPrintQue( p_msg );
-		header.font_handle= MSG_GetFont( p_msg );
+    GFL_STD_MemClear( &header, sizeof(BMPMENULIST_HEADER));
+    header.list       = p_wk->p_list_data;
+    header.count      = tbl_max;
+    header.line       = 5;
+    header.label_x    = 0;
+    header.data_x     = 16;
+    header.cursor_x   = 0;
+    header.line_y     = 2;
+    header.f_col      = 1;
+    header.b_col      = 15;
+    header.s_col      = 2;
+    header.msg_spc    = 0;
+    header.line_spc   = 0;
+    header.page_skip  = BMPMENULIST_LRKEY_SKIP;
+    header.font       = 0;
+    header.c_disp_f   = 0;
+    header.work       = NULL;
+    header.font_size_x= 16;
+    header.font_size_y= 16;
+    header.msgdata    = NULL;
+    header.print_util = MSG_GetPrintUtil( p_msg, p_bmpwin );
+    header.print_que  = MSG_GetPrintQue( p_msg );
+    header.font_handle= MSG_GetFont( p_msg );
 
-		p_wk->p_list	= BmpMenuList_Set( &header, 0, 0, heapID );
-		BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
-	}
+    p_wk->p_list  = BmpMenuList_Set( &header, 0, 0, heapID );
+    BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
+  }
 
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	リストシステム	破棄
+ *  @brief  リストシステム  破棄
  *
- *	@param	LIST_WORK *p_wk		ワーク
+ *  @param  LIST_WORK *p_wk   ワーク
  *
  */
 //-----------------------------------------------------------------------------
 static void LIST_Exit( LIST_WORK *p_wk )
 {
-	BmpMenuList_Exit( p_wk->p_list, NULL, NULL );
-	BmpMenuWork_ListDelete( p_wk->p_list_data );
-	GFL_STD_MemClear( p_wk, sizeof(LIST_WORK) );
+  BmpMenuList_Exit( p_wk->p_list, NULL, NULL );
+  BmpMenuWork_ListDelete( p_wk->p_list_data );
+  GFL_STD_MemClear( p_wk, sizeof(LIST_WORK) );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	リストシステム	メイン処理
+ *  @brief  リストシステム  メイン処理
  *
- *	@param	LIST_WORK *p_wk		ワーク
+ *  @param  LIST_WORK *p_wk   ワーク
  *
  */
 //-----------------------------------------------------------------------------
 static void LIST_Main( LIST_WORK *p_wk )
-{	
-	p_wk->select	= BmpMenuList_Main(	p_wk->p_list );
+{ 
+  p_wk->select  = BmpMenuList_Main( p_wk->p_list );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	リスト決定
+ *  @brief  リスト決定
  *
- *	@param	const LIST_WORK *cp_wk	ワーク
- *	@param	*p_select								リストのデータ
+ *  @param  const LIST_WORK *cp_wk  ワーク
+ *  @param  *p_select               リストのデータ
  *
- *	@retval	TRUEならば決定
- *	@retval	FALSEならば選択中
+ *  @retval TRUEならば決定
+ *  @retval FALSEならば選択中
  */
 //-----------------------------------------------------------------------------
 static LIST_SELECT LIST_IsDecide( const LIST_WORK *cp_wk, u32 *p_select )
-{	
-	switch( cp_wk->select)
+{ 
+  switch( cp_wk->select)
   { 
   case BMPMENULIST_NULL:
     return LIST_SELECT_NONE;
 
-	case BMPMENULIST_CANCEL:
+  case BMPMENULIST_CANCEL:
     return LIST_SELECT_CANCEL;
 
   default:
-		if( p_select )
-		{	
-			*p_select	= cp_wk->select;
-		}
-		return LIST_SELECT_DECIDE;
+    if( p_select )
+    { 
+      *p_select = cp_wk->select;
+    }
+    return LIST_SELECT_DECIDE;
   }
 
-	return LIST_SELECT_NONE;
+  return LIST_SELECT_NONE;
 }
 
 //=============================================================================
 /**
- *					MSG
+ *          MSG
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	MSG関係を設定
+ *  @brief  MSG関係を設定
  *
- *	@param	MSG_WORK *p_wk	ワーク
- *	@param	heapID					ヒープID
+ *  @param  MSG_WORK *p_wk  ワーク
+ *  @param  heapID          ヒープID
  *
  */
 //-----------------------------------------------------------------------------
 static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID )
-{	
-	GFL_STD_MemClear( p_wk, sizeof(MSG_WORK) );
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MSG_WORK) );
 
-	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
+  p_wk->p_font  = GFL_FONT_Create( ARCID_FONT,
     NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
-	p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
+  p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
 
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, heapID );
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, heapID );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, heapID );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, heapID );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	MSG関係を破棄
+ *  @brief  MSG関係を破棄
  *
- *	@param	MSG_WORK *p_wk	ワーク
- *	
+ *  @param  MSG_WORK *p_wk  ワーク
+ *  
  */
 //-----------------------------------------------------------------------------
 static void MSG_Exit( MSG_WORK *p_wk )
-{	
-	PRINTSYS_QUE_Delete( p_wk->p_print_que );
+{ 
+  PRINTSYS_QUE_Delete( p_wk->p_print_que );
 
-	GFL_FONT_Delete( p_wk->p_font );
-	GFL_STD_MemClear( p_wk, sizeof(MSG_WORK) );
+  GFL_FONT_Delete( p_wk->p_font );
+  GFL_STD_MemClear( p_wk, sizeof(MSG_WORK) );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	MSG関係	メイン処理
+ *  @brief  MSG関係 メイン処理
  *
- *	@param	MSG_WORK *p_wk	ワーク
+ *  @param  MSG_WORK *p_wk  ワーク
  *
- * @retval  BOOL	処理が終了していればTRUE／それ以外はFALSE
+ * @retval  BOOL  処理が終了していればTRUE／それ以外はFALSE
  *
  */
 //-----------------------------------------------------------------------------
 static BOOL MSG_Main( MSG_WORK *p_wk )
-{	
-	if( PRINTSYS_QUE_Main( p_wk->p_print_que ) )
-	{
-		return PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_print_que );
-	}
+{ 
+  if( PRINTSYS_QUE_Main( p_wk->p_print_que ) )
+  {
+    return PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_print_que );
+  }
 
-	return FALSE;
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	PRINT_UTILを設定し取得
+ *  @brief  PRINT_UTILを設定し取得
  *
- *	@param	MSG_WORK *p_wk	ワーク
- *	@param	BMPWIN
+ *  @param  MSG_WORK *p_wk  ワーク
+ *  @param  BMPWIN
  *
- *	@return	PRINT_UTIL
+ *  @return PRINT_UTIL
  */
 //-----------------------------------------------------------------------------
-static PRINT_UTIL * MSG_GetPrintUtil( MSG_WORK *p_wk, GFL_BMPWIN*	p_bmpwin )
-{	
-	PRINT_UTIL_Setup( &p_wk->print_util, p_bmpwin );
-	return &p_wk->print_util;
+static PRINT_UTIL * MSG_GetPrintUtil( MSG_WORK *p_wk, GFL_BMPWIN* p_bmpwin )
+{ 
+  PRINT_UTIL_Setup( &p_wk->print_util, p_bmpwin );
+  return &p_wk->print_util;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	FONTを取得
+ *  @brief  FONTを取得
  *
- *	@param	const MSG_WORK *cp_wk		ワーク
+ *  @param  const MSG_WORK *cp_wk   ワーク
  *
- *	@return	FONT
+ *  @return FONT
  */
 //-----------------------------------------------------------------------------
-static GFL_FONT*	MSG_GetFont( const MSG_WORK *cp_wk )
-{	
-	return cp_wk->p_font;
+static GFL_FONT*  MSG_GetFont( const MSG_WORK *cp_wk )
+{ 
+  return cp_wk->p_font;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	PRINTQUEを取得
+ *  @brief  PRINTQUEを取得
  *
- *	@param	const MSG_WORK *cp_wk		ワーク
+ *  @param  const MSG_WORK *cp_wk   ワーク
  *
- *	@return	PRINTQUE
+ *  @return PRINTQUE
  */
 //-----------------------------------------------------------------------------
 static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk )
-{	
-	return cp_wk->p_print_que;
+{ 
+  return cp_wk->p_print_que;
 }
 
 

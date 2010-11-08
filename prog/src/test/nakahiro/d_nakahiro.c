@@ -144,7 +144,7 @@ const GFL_PROC_DATA DebugNakahiroMainProcData = {
 };
 
 static const BMPMENULIST_HEADER TopMenuListH = {
-  NULL, NULL, NULL, NULL,
+  NULL, NULL, NULL, 
   TOP_MENU_SIZ,   // リスト項目数
   6,    // 表示最大項目数
   0,    // ラベル表示Ｘ座標
@@ -610,6 +610,7 @@ static void TopMenuInit( NAKAHIRO_MAIN_WORK * wk )
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
   wk->que  = PRINTSYS_QUE_Create( wk->heapID );
   wk->win  = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 1, 1, 16, 12, 0, GFL_BMP_CHRAREA_GET_B );
+  PRINT_UTIL_Setup( &wk->util, wk->win );
 
   wk->ld = BmpMenuWork_ListCreate( TOP_MENU_SIZ, wk->heapID );
   for( i=0; i<TOP_MENU_SIZ; i++ ){
@@ -620,7 +621,6 @@ static void TopMenuInit( NAKAHIRO_MAIN_WORK * wk )
 
   lh = TopMenuListH;
   lh.list = wk->ld;
-  lh.win  = wk->win;
   lh.msgdata = wk->mman;      //表示に使用するメッセージバッファ
   lh.print_util = &wk->util;  //表示に使用するプリントユーティリティ
   lh.print_que  = wk->que;    //表示に使用するプリントキュー

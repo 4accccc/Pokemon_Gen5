@@ -674,7 +674,7 @@ static const EARTH_BMPLIST MenuList[] =
 
 static const BMPMENULIST_HEADER MenuListHeader = {
   /* 表示文字データポインタ(プログラム設定) */NULL,/* カーソル移動ごとのコールバック関数 */NULL,
-  /* 一列表示ごとのコールバック関数 */NULL,/* 対応ビットマップ(プログラム設定) */NULL,
+  /* 一列表示ごとのコールバック関数 */NULL,
   /* リスト項目数 */NELEMS(MenuList),/* 表示最大項目数 */NELEMS(MenuList),    
   /* ラベル表示Ｘ座標 */0,/* 項目表示Ｘ座標 */12,/* カーソル表示Ｘ座標 */0,/* 表示Ｙ座標 */0,
   /* 文字色 */FBMP_COL_BLACK,/* 背景色 */FBMP_COL_WHITE,/* 文字影色 */FBMP_COL_BLK_SDW,   
@@ -691,7 +691,7 @@ static const BMPMENULIST_HEADER MenuListHeader = {
 
 static const BMPMENULIST_HEADER PlaceListHeader = {
   /* 表示文字データポインタ(プログラム設定) */NULL,/* カーソル移動ごとのコールバック関数 */NULL,
-  /* 一列表示ごとのコールバック関数 */NULL,/* 対応ビットマップ(プログラム設定) */NULL,
+  /* 一列表示ごとのコールバック関数 */NULL,
   /* リスト項目数(プログラム設定) */0,/* 表示最大項目数 */7,
   /* ラベル表示Ｘ座標 */0,/* 項目表示Ｘ座標 */12,/* カーソル表示Ｘ座標 */0,/* 表示Ｙ座標 */0,
   /* 文字色 */FBMP_COL_BLACK,/* 背景色 */FBMP_COL_WHITE,/* 文字影色 */FBMP_COL_BLK_SDW,   
@@ -2164,7 +2164,6 @@ static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
   //メニュービットマップリストヘッダ作成
   listheader_tmp = *listheader;
   listheader_tmp.list = wk->bmplistdata;
-  listheader_tmp.win  = wk->listwin;
   listheader_tmp.call_back = Earth_BmpListMoveSeCall;
   listheader_tmp.font_size_x = 12;
   listheader_tmp.font_size_y = GFL_FONT_GetLineHeight( wk->fontHandle );
@@ -2194,7 +2193,6 @@ static void _set_bmplist( EARTH_DEMO_WORK *wk, const BMPMENULIST_HEADER *listhea
   listheader_tmp = *listheader;
   listheader_tmp.list = wk->bmplistdata;
   listheader_tmp.count = listcount; //1originのため補正
-  listheader_tmp.win  = wk->listwin;
   listheader_tmp.call_back = Earth_BmpListMoveSeCall;
   listheader_tmp.font_size_x = 12;
   listheader_tmp.font_size_y = GFL_FONT_GetLineHeight( wk->fontHandle );

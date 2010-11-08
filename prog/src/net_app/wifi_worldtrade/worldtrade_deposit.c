@@ -2021,7 +2021,6 @@ static const BMPMENULIST_HEADER MenuListHeader = {
     NULL,     // 表示文字データポインタ
     NULL,         // カーソル移動ごとのコールバック関数
     NULL,         // 一列表示ごとのコールバック関数
-    NULL,         // 
     DEPOSIT_HEADWORD_NUM, // リスト項目数
     DEPOSIT_Y_NUM,      // 表示最大項目数
     4,            // ラベル表示Ｘ座標
@@ -2050,7 +2049,7 @@ static const BMPMENULIST_HEADER MenuListHeader = {
 
 //==============================================================================
 /**
- * @brief   頭文字選択メニュー作成
+ * @brief   頭文字選択メニュー作成(未使用）
  *
  * @param  none
  *
@@ -2069,7 +2068,6 @@ BMPMENULIST_WORK *WorldTrade_WordheadBmpListMake( WORLDTRADE_WORK *wk, BMP_MENUL
 
     list_h       = MenuListHeader;
     list_h.list  = *menulist;
-    list_h.win   = win;
 
   // 枠描画
   BmpWinFrame_Write( win, WINDOW_TRANS_ON, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL );
@@ -2212,13 +2210,12 @@ BMPMENULIST_WORK *WorldTrade_PokeNameListMake( WORLDTRADE_WORK *wk, BMP_MENULIST
     list_h       = MenuListHeader;
     list_h.count = listnum;
     list_h.list  = *menulist;
-    list_h.win   = win;
 
   // 枠描画
   BmpWinFrame_Write( win, WINDOW_TRANS_ON, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL );
 
   // BMPメニュー開始
-    return BmpMenuList_Set(&list_h, wk->selectListPos.name_list[head],
+  return BmpMenuList_Set(&list_h, wk->selectListPos.name_list[head],
                    wk->selectListPos.name_pos[head], HEAPID_WORLDTRADE);
 
 }
@@ -2256,13 +2253,12 @@ BMPMENULIST_WORK *WorldTrade_SexSelectListMake( BMP_MENULIST_DATA **menulist, GF
     list_h       = MenuListHeader;
     list_h.count = 4;
     list_h.list  = *menulist;
-    list_h.win   = win;
 
   // 枠描画
   BmpWinFrame_Write( win, WINDOW_TRANS_ON, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL );
 
   // BMPメニュー開始
-    return BmpMenuList_Set(&list_h, 0, 0, HEAPID_WORLDTRADE);
+  return BmpMenuList_Set(&list_h, 0, 0, HEAPID_WORLDTRADE);
   
 }
 
@@ -2324,13 +2320,12 @@ BMPMENULIST_WORK *WorldTrade_LevelListMake(BMP_MENULIST_DATA **menulist, GFL_BMP
     list_h       = MenuListHeader;
     list_h.count = select_num;
     list_h.list  = *menulist;
-    list_h.win   = win;
 
   // 枠描画
   BmpWinFrame_Write( win, WINDOW_TRANS_ON, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL );
 
   // BMPメニュー開始
-    return BmpMenuList_Set(&list_h, 0, 0, HEAPID_WORLDTRADE);
+  return BmpMenuList_Set(&list_h, 0, 0, HEAPID_WORLDTRADE);
 
 }
 
@@ -2434,7 +2429,6 @@ BMPMENULIST_WORK *WorldTrade_CountryListMake(BMP_MENULIST_DATA **menulist, GFL_B
     list_h       = MenuListHeader;
     list_h.count = list_num;
     list_h.list  = *menulist;
-    list_h.win   = win;
 
   // 枠描画
   BmpWinFrame_Write( win, WINDOW_TRANS_OFF, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL );

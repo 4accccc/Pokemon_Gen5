@@ -39,8 +39,6 @@ typedef struct {
   BMPMENULIST_CURSOR_CALLBACK call_back;
   //一列表示ごとのコールバック関数
   BMPMENULIST_PRINT_CALLBACK icon;
-
-  GFL_BMPWIN *win;
   
   u16   count;      //リスト項目数
   u16   line;       //表示最大項目数
@@ -62,6 +60,8 @@ typedef struct {
   u16 font_size_y;  //文字サイズY(ドット
   GFL_MSGDATA *msgdata;  //表示に使用するメッセージバッファ
   PRINT_UTIL *print_util;//表示に使用するプリントユーティリティ
+                         // PRINT_UTILにはPRINT_UTIL_SetupでBMPWINが
+                         // 関連づいている必要アリ
   PRINT_QUE *print_que;  //表示に使用するプリントキュー
   GFL_FONT  *font_handle;//表示に使用するフォントハンドル
   u32   arrow_wait; //矢印カーソルが表示されるまでのウェイト

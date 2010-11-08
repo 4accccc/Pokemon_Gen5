@@ -28,7 +28,6 @@
 
 typedef struct {
   const BMPMENU_DATA * menu;
-  GFL_BMPWIN *win;
   u8  arrow_wait; // 矢印カーソルが表示されるまでのウェイト(0でも構わない)
   u8  x_max;      // 横方向項目最大数（必ず１以上）
   u8  y_max;      // 縦方向項目最大数（必ず１以上）

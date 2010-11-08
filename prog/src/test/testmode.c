@@ -383,7 +383,6 @@ static void TESTMODE_CreateMenu( TESTMODE_WORK *work , TESTMODE_MENU_LIST *menuL
         NULL,     //表示文字データポインタ
         NULL,     /* カーソル移動ごとのコールバック関数 */
         NULL,     /* 一列表示ごとのコールバック関数 */
-        NULL,     /* BMPウィンドウデータ */
         0,        /* リスト項目数 */
         LIST_DISP_MAX,  /* 表示最大項目数 */
         0,        /* ラベル表示Ｘ座標 */
@@ -408,7 +407,6 @@ static void TESTMODE_CreateMenu( TESTMODE_WORK *work , TESTMODE_MENU_LIST *menuL
       };
       menuHead.list = work->menuList_;
       menuHead.count = itemNum;
-      menuHead.win = work->bmpWin_;
       menuHead.print_que = work->printQue_;
       menuHead.print_util = &work->printUtil_;
       menuHead.font_handle = work->fontHandle_;
@@ -1006,11 +1004,11 @@ static BOOL TESTMODE_ITEM_SaveClear( TESTMODE_WORK *work , const int idx )
   void *temp_save;
   
   temp_save = GFL_HEAP_AllocMemory(GFL_HEAPID_APP, SAVEFLASH_SIZE);
-	GFL_STD_MemFill(temp_save, SAVEFLASH_INIT_PARAM, SAVEFLASH_SIZE);
-	DEBUG_BACKUP_FlashSave(0, temp_save, SAVEFLASH_SIZE);
-	GFL_HEAP_FreeMemory(temp_save);
+  GFL_STD_MemFill(temp_save, SAVEFLASH_INIT_PARAM, SAVEFLASH_SIZE);
+  DEBUG_BACKUP_FlashSave(0, temp_save, SAVEFLASH_SIZE);
+  GFL_HEAP_FreeMemory(temp_save);
 
-	OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
+  OS_ResetSystem(0);  //セーブ読み込み状況を更新する為、ソフトリセットする
   
   return TRUE;
 }
@@ -1020,14 +1018,14 @@ static BOOL TESTMODE_ITEM_BattleVideoSaveClear( TESTMODE_WORK *work , const int 
 {
   int i;
   
-	for( i=SAVE_EXTRA_ID_REC_MINE; i<=SAVE_EXTRA_ID_REC_DL_2; i++ ){
-		if( SaveControl_Extra_Load( work->saveControl_, i, GFL_HEAPID_APP ) == LOAD_RESULT_OK ){
-			SaveControl_Extra_Erase( work->saveControl_, i, GFL_HEAPID_APP );
-		}
-		SaveControl_Extra_Unload( work->saveControl_, i );
-	}
+  for( i=SAVE_EXTRA_ID_REC_MINE; i<=SAVE_EXTRA_ID_REC_DL_2; i++ ){
+    if( SaveControl_Extra_Load( work->saveControl_, i, GFL_HEAPID_APP ) == LOAD_RESULT_OK ){
+      SaveControl_Extra_Erase( work->saveControl_, i, GFL_HEAPID_APP );
+    }
+    SaveControl_Extra_Unload( work->saveControl_, i );
+  }
 
-	OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
+  OS_ResetSystem(0);  //セーブ読み込み状況を更新する為、ソフトリセットする
   
   return TRUE;
 }
