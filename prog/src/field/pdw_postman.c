@@ -236,7 +236,7 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
       FLDKEYWAITCURSOR_Write( iwew->piww->cursor_work, bmp, 0x0f );
       GFL_BMPWIN_TransVramCharacter( bmpwin );
     }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    if ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
     {
       PMSND_PlaySE( SEQ_SE_MESSAGE );
       (*seq) ++;
