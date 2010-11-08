@@ -81,7 +81,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -89,6 +89,8 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname).naix: $(targetname).naix
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
