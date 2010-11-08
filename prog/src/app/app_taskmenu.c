@@ -26,7 +26,7 @@
 #include "app_menu_common.naix"
 #else
 //DLq‹@ˆ—
-#include "multiboot/wb_sound_palpark.sadl"
+#include "multiboot/swan_sound_palpark.sadl"
 #include "app_menu_common_dl.naix"
 #endif //MULTI_BOOT_MAKE
 #include "sound/pm_sndsys.h"
