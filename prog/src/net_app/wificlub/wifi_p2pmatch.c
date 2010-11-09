@@ -3639,7 +3639,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     if(WIFI_STATUS_WAIT==status){  // 人の名前ー＞マッチングへ
       //相手の状態を確保 以後この状態をみるように変更 相手の動作をリアルタイムに追わない
       int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      PMSND_PlaySystemSE(SEQ_SE_MESSAGE);
       GFL_STD_MemCopy(WifiFriendMatchStatusGet( friendNo - 1 ), &wk->targetStatus, sizeof(WIFI_STATUS));
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT);
       WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
@@ -3788,7 +3788,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
     if(WIFI_STATUS_WAIT==status){  // 人の名前ー＞マッチングへ
       //相手の状態を確保 以後この状態をみるように変更 相手の動作をリアルタイムに追わない
       int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      PMSND_PlaySystemSE(SEQ_SE_MESSAGE);
       GFL_STD_MemCopy(WifiFriendMatchStatusGet( friendNo - 1 ), &wk->targetStatus, sizeof(WIFI_STATUS));
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT);
       WifiP2PMatch_UserDispOff_Any(wk, HEAPID_WIFIP2PMATCH); // した画面初期化
