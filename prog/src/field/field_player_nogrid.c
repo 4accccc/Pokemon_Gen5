@@ -197,7 +197,7 @@ static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, int key_cont,
 static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir, MAPATTR* p_attr );
 
 static void nogrid_KuruKuruMain( FIELD_PLAYER_NOGRID* p_player );
-
+static BOOL nogrid_CheckMoveStart( const FIELD_PLAYER_NOGRID* cp_player, u16 dir );
 
 //自機動作ビット
 static void nogrid_OnMoveBit(
@@ -540,6 +540,11 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 		debug_flag = TRUE;
 	}
 #endif
+
+  if( nogrid_CheckMoveStart( p_player, dir )  == FALSE )
+  {
+    return;
+  }
 
   FIELD_PLAYER_CORE_UpdateRequest( p_player->p_player_core );
 
@@ -1103,7 +1108,34 @@ static void nogrid_KuruKuruMain( FIELD_PLAYER_NOGRID* p_player )
   nogrid_KuruKuru_Main( &p_player->kurukuru, p_player->p_mmdl );
 }
 
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック
+ * @param player FIELD_PLAYER_NOGRID
+ * @param dir 移動方向 DIR_UP等
+ * @retval BOOL TRUE=移動開始 FALSE=移動不可
+ */
+//--------------------------------------------------------------
+static BOOL nogrid_CheckMoveStart( const FIELD_PLAYER_NOGRID* cp_player, u16 dir )
+{
+  MMDL *mmdl = cp_player->p_mmdl;
+  if( MMDL_CheckPossibleAcmd(mmdl) == TRUE )
+  {
+    return TRUE;
+  }
 
+  if( dir != DIR_NOT )
+  {
+    if( cp_player->move_state == PLAYER_MOVE_HITCH )
+    {
+      if( dir != MMDL_GetDirDisp(mmdl) ){
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
 
 
 
