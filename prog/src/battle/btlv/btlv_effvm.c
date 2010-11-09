@@ -479,14 +479,9 @@ static  void  TCB_EFFVM_LandingWait( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
-typedef enum
-{
-  DPD_TYPE_PARTICLE = 0,
-  DPD_TYPE_BG,
-}DPD_TYPE;
-
 //デバッグ用関数
-static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TYPE type );
+static  u32     BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int file_count );
+static  void*   BTLV_EFFVM_GetDPDResourceAdrs( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int file_count, int file_ofs );
 #endif
 
 //============================================================================================
@@ -1801,9 +1796,13 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
       bevw->ptc[ ptc_no ] = GFL_PTC_CreateEx( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, POLYID_FIX, POLYID_MIN, POLYID_MAX,
                                               GFL_HEAP_LOWID( bevw->heapID ) );
+#if 0
       ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
       ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
       resource = (void *)&bevw->dpd->adrs[ ofs ];
+#else
+      resource = BTLV_EFFVM_GetDPDResourceAdrs( bevw, datID, 1, 0 );
+#endif
       GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
       EFFVM_RegistSprMax( bevw, ptc_no, resource );
 //      BTLV_EFFECT_SetFieldAnmStopOnce();
@@ -3181,7 +3180,7 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     u32   ofs;
     u32*  ofs_p;
     void* resource;
-    int   dpd_no = BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_BG );
+    int   dpd_no = BTLV_EFFVM_GetDPDNo( bevw, datID, 3 );
     NNSG2dCharacterData* charData;
     NNSG2dScreenData* scrnData;
     NNSG2dPaletteData* palData;
@@ -8243,12 +8242,16 @@ void  BTLV_EFFVM_DebugSeEffect( VMHANDLE *vmh, int player, int type, int param, 
 /**
  * @brief DEBUG_PARTICLE_DATAの配列の添え字をARCDATIDから取得する
  *
- * @param[in] bevw  エフェクト管理構造体へのポインタ
- * @param[in] datID 取得するARCDATID
- * @param[in] type  読み込むARCDATIDのタイプ（タイプによって、読み込むファイル数が違う）
+ * @param[in] bevw        エフェクト管理構造体へのポインタ
+ * @param[in] datID       取得するARCDATID
+ * @param[in] file_count  読み込むファイル数
+ *
+ * ex)
+ * BGロードでは、NSCR、NCGR、NCLRの3ファイルが存在するので、
+ * datIDにNSCRを指定して、file_countは3にします
  */
 //============================================================================================
-static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TYPE type )
+static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int file_count )
 {
   int i;
 
@@ -8262,24 +8265,46 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TY
   if( i == bevw->dat_id_cnt )
   {
     GF_ASSERT( bevw->dat_id_cnt < PARTICLE_GLOBAL_MAX );
-    switch( type ){
-    case DPD_TYPE_PARTICLE:
-      bevw->dat_id[ i ] = datID;
-      bevw->dat_id_cnt++;
-      break;
-    case DPD_TYPE_BG:
+    GF_ASSERT( file_count > 0 );
+    {
+      int j;
+      for( j = 0 ; j < file_count ; j++ )
       {
-        int j;
-        for( j = 0 ; j < 3 ; j++ )
-        {
-          bevw->dat_id[ i + j ] = datID;
-          bevw->dat_id_cnt++;
-        }
+        bevw->dat_id[ i + j ] = datID;
+        bevw->dat_id_cnt++;
       }
-      break;
     }
   }
   return i;
+}
+
+//============================================================================================
+/**
+ * @brief DEBUG_PARTICLE_DATAの配列の添え字をARCDATIDから取得する
+ *
+ * @param[in] bevw        エフェクト管理構造体へのポインタ
+ * @param[in] datID       取得するARCDATID
+ * @param[in] file_count  読み込むファイル数
+ * @param[in] file_ofs    アドレスを取り出すファイルのオフセット
+ *
+ * ex)
+ * BGロードでは、NSCR、NCGR、NCLRの3ファイルが存在するので、
+ * datIDにNSCRを指定して、file_countは3にします
+ * NSCRのアドレスを取得するときは、file_ofsを0、
+ * NCGRのアドレスを取得するときは、file_ofsを1、
+ * NCLRのアドレスを取得するときは、file_ofsを2、
+ * にしてください
+ */
+//============================================================================================
+static  void*   BTLV_EFFVM_GetDPDResourceAdrs( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int file_count, int file_ofs )
+{ 
+  u32   ofs;
+  u32*  ofs_p;
+
+  ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
+  ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, file_count ) ];
+
+  return (void *)&bevw->dpd->adrs[ ofs + file_ofs ];
 }
 
 //============================================================================================
