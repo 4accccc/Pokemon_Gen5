@@ -520,7 +520,7 @@ u16 MMDL_ChangeDirAcmdCode( u16 dir, u16 code )
     tbl++;
   }while( (*tbl) != NULL );
 
-  GF_ASSERT( 0 && "MMDL_ChangeDirAcmdCode(未対応コード)" );
+  GF_ASSERT_MSG( 0, "MMDL_ChangeDirAcmdCode(未対応コード %04x)\n", code );
   return( code );
 }
 
