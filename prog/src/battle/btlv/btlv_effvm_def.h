@@ -248,6 +248,7 @@
 #define BTLEFF_EFFENDWAIT_SYSTEM              ( 15 )
 #define BTLEFF_EFFENDWAIT_VOICE               ( 16 )
 #define BTLEFF_EFFENDWAIT_WINDOW              ( 17 )
+#define BTLEFF_EFFENDWAIT_BG_PLTANM           ( 18 )
 
 //制御モード
 #define	BTLEFF_CONTROL_MODE_CONTINUE					( 0 )
@@ -1745,28 +1746,16 @@ ex)
 /**
  * @brief	BGのパレットアニメ
  *
- * #param_num	5
+ * #param_num	1
  * @param	datID     アニメ用パレットのアーカイブデータID
- * @param	trans_pal 送り先パレット
- * @param	col_count 送るカラー数
- * @param	offset		送り元パレットの更新オフセット
- * @param	wait		  ウエイト
  *
- * #param	VALUE_INT アニメ用パレットのアーカイブデータID
- * #param	VALUE_INT 送り先パレット
- * #param	VALUE_INT 送るカラー数
- * #param	VALUE_INT 送り元パレットの更新オフセット
- * #param	VALUE_INT ウエイト
+ * #param	FILE_DIALOG	.dat
  */
 //======================================================================
-  .macro  BG_PAL_ANM  datID, trans_pal, col_count, offset, wait
+  .macro  BG_PAL_ANM  datID
   .short  EC_BG_PAL_ANM
   .long   \datID
-  .long   \trans_pal
-  .long   \col_count
-  .long   \offset
-  .long   \wait
-  .endm
+   .endm
 
 //======================================================================
 /**
@@ -2217,8 +2206,8 @@ ex)
  * #param_num	1
  * @param	kind	終了待ちする種類
  *
- * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	アニメ  BG  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2 SEPLAY3 SEPLAY_PSG SEPLAY_SYSTEM  鳴き声  ウインドウ操作
- * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_ANIME BTLEFF_EFFENDWAIT_BG  BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2 BTLEFF_EFFENDWAIT_SE3 BTLEFF_EFFENDWAIT_PSG BTLEFF_EFFENDWAIT_SYSTEM  BTLEFF_EFFENDWAIT_VOICE BTLEFF_EFFENDWAIT_WINDOW
+ * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	アニメ  BG  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2 SEPLAY3 SEPLAY_PSG SEPLAY_SYSTEM  鳴き声  ウインドウ操作  BGパレットアニメ
+ * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_ANIME BTLEFF_EFFENDWAIT_BG  BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2 BTLEFF_EFFENDWAIT_SE3 BTLEFF_EFFENDWAIT_PSG BTLEFF_EFFENDWAIT_SYSTEM  BTLEFF_EFFENDWAIT_VOICE BTLEFF_EFFENDWAIT_WINDOW BTLEFF_EFFENDWAIT_BG_PLTANM
  */
 //======================================================================
 	.macro	EFFECT_END_WAIT	kind

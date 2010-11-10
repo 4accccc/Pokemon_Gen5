@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: batt_bg_planm.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BATT_BG_PLANM_NAIX_
+#define NARC_BATT_BG_PLANM_NAIX_
+
+enum {
+	NARC_batt_bg_planm_test_palanm_dat = 0,
+	NARC_batt_bg_planm_test_palanm_NCLR = 1
+};
+
+/* NARC_BATT_BG_PLANM_NAIX_ */
+#endif

@@ -609,6 +609,7 @@ end
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/sound/swan_sound_data.sadl\n")
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/wazaeffect/waza_eff_gra_def.h\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/wazaeffect/batt_bg_planm_def.h\n")
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/wazaeffect/btlv_effect_def.h\n")
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/wazaeffect/wazadata_def.h\n")
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/wazaeffect/battle_def.h\n")
@@ -668,6 +669,9 @@ end
       if( File::extname( bin_list_tmp[ tmp_num ] ) == ".NSCR" )
 			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NSCR" ) + ".NCGR"
 			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NSCR" ) + ".NCLR"
+      end
+      if( File::extname( bin_list_tmp[ tmp_num ] ) == ".dat" )
+			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".dat" ) + ".NCLR"
       end
 		end
 	}

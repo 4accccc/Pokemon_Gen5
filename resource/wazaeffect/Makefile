@@ -28,7 +28,7 @@ TARGETDIR	= $(PROJECT_ARCDIR)wazaeffect
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= graphic
+SUBDIRS	= graphic bg_palanm
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
