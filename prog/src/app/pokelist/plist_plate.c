@@ -77,6 +77,7 @@
 #define PLIST_PLATE_CELLNUM (6)
 #define PLIST_RENDER_MAIN (0)
 
+#define PLIT_PLATE_ICON_WAIT (10)   // 10フレームごとにポケアイコンが上下する
 //======================================================================
 //	enum
 //======================================================================
@@ -110,6 +111,8 @@ struct _PLIST_PLATE_WORK
   GFL_CLWK *itemIcon;
   GFL_CLWK *conditionIcon;
   
+  // ポケアイコン上下移動用に追加  ichiraku
+  u8  anm_frame;
 };
 //======================================================================
 //	proto
@@ -287,10 +290,23 @@ void PLIST_PLATE_UpdatePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
                                  PLIST_PLATE_POKE_ACTIVE_POS_X,
                                  PLIST_PLATE_POKE_ACTIVE_POS_Y,
                                  &cellPos );
-        if( GFL_CLACT_WK_GetAnmFrame(plateWork->pokeIcon) == 1 )
+        // update ichiraku 2010/11/11
+        // GFライブラリが変更されて、GFL_CLACT_WK_GetAnmFrameの戻り値がfx32型になった為
+        // if文が通らなくなった。それを修正
+        // if( GFL_CLACT_WK_GetAnmFrame(plateWork->pokeIcon) == 0x1000 )   // FX32_ONE * 7
+        // 訂正 アニメスピードが早すぎるため、自前でフレーム制御しました
+        if( plateWork->anm_frame >= PLIT_PLATE_ICON_WAIT )
         {
           cellPos.y -= 6;
+
+          // フレーム数が上限を超えると初期化
+          if( plateWork->anm_frame >= PLIT_PLATE_ICON_WAIT * 2 )
+          {
+            plateWork->anm_frame = 0;
+          }
         }
+        plateWork->anm_frame++;
+        
         GFL_CLACT_WK_SetPos( plateWork->pokeIcon , &cellPos , CLSYS_DRAW_MAIN );
       }
     }
@@ -841,6 +857,7 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
                                PLIST_PLATE_POKE_ACTIVE_POS_Y,
                                &cellPos );
       GFL_CLACT_WK_SetPos( plateWork->pokeIcon , &cellPos , CLSYS_DRAW_MAIN );
+      plateWork->anm_frame = 0;   // 初期化
     }
   }
   else
