@@ -43,6 +43,7 @@
 #include "event_wifi_bsubway.h"
 #include "event_bsubway.h"
 #include "scrcmd_bsubway.h"
+#include "net_app\wifi_country.h"
 
 //外部公開
 #include "event_debug_menu_ov_staff.h"
@@ -777,9 +778,20 @@ static GMEVENT_RESULT EV_debugMenu_WfbcDebug( GMEVENT *event, int *seq, void *wk
   return ( GMEVENT_RES_CONTINUE );
 }
 
+
+static void ichi_coutry_chekNG(u32 country_code, u32 local_code, u32 language)
+{
+    BOOL ret;
+    ret = WIFI_COUNTRY_CheckNG( country_code, local_code, language );
+    OS_Printf("ret %d ", ret);
+    OS_Printf("coutry %d ", country_code);
+    OS_Printf("local %d ", local_code);
+    OS_Printf("language %d\n", language);
+    return;
+}
+
 BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *wk )
 {
-  int sex;
   GAMESYS_WORK *gsys = wk->gmSys;
   GMEVENT *event = wk->gmEvent;
   HEAPID heapID = wk->heapID;
@@ -789,22 +801,39 @@ BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *wk )
   SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( wk->gdata );
   MYSTATUS *s_mystatus = SaveData_GetMyStatus( save );
 
-  // 性別をひっくり返す
-  sex = MyStatus_GetMySex( mystatus );
-  sex ^= 1;
-  MyStatus_SetMySex( mystatus, sex );
-  MyStatus_SetMySex( s_mystatus, sex );
+  // BUGFIX_COUNTRY_NGCHECK_20100806
+  // 自分でデータをいろいろ送って関数の単体テストをする
+  {
+    u32 country_code;
+    u32 local_code;
+    u32 language;
 
-  // ユニオン見た目もひっくり返す
-  MyStatus_SetTrainerView( mystatus,   sex*MYSTATUS_UNIONVIEW_MAX );
-  MyStatus_SetTrainerView( s_mystatus, sex*MYSTATUS_UNIONVIEW_MAX );
+    country_code  = MyStatus_GetMyNation(mystatus);
+    local_code    = MyStatus_GetMyArea(mystatus);
+    language      = MyStatus_GetRegionCode(mystatus);
 
+    ichi_coutry_chekNG( 0, 0, language );
+    ichi_coutry_chekNG( country_code, local_code, language );
+    ichi_coutry_chekNG( country_code, local_code, LANG_ENGLISH );
+    ichi_coutry_chekNG( country_code, 0, language );
+    ichi_coutry_chekNG( 138, 0, LANG_ENGLISH );
+    ichi_coutry_chekNG( 137, 0, LANG_ENGLISH );
+    ichi_coutry_chekNG( 186, 0, LANG_ENGLISH );
+    ichi_coutry_chekNG( 185, 0, LANG_ENGLISH );
+    ichi_coutry_chekNG( 138, 0, LANG_ENGLISH );
+    ichi_coutry_chekNG( 220, 0, LANG_ENGLISH );
+    ichi_coutry_chekNG( 220, 1, LANG_ENGLISH );
+    ichi_coutry_chekNG( 220, 2, LANG_ENGLISH );
+    ichi_coutry_chekNG( 220, 51, LANG_ENGLISH );
+    ichi_coutry_chekNG( 220, 52, LANG_ENGLISH );
+    ichi_coutry_chekNG( 227, 0, LANG_ENGLISH );
+    ichi_coutry_chekNG( 228, 0, LANG_ENGLISH );
+  }
   {
     GMEVENT * mapchange_event;
     mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldMap, zone_id );
     GMEVENT_ChangeEvent( event, mapchange_event );
   }
-
   return( TRUE );
 
 }
