@@ -927,7 +927,7 @@ gum_insect.c      1016行目
 //#define BUGFIX_AF_BTLVIDEO00_20100806
 
 //国、地域の不正チェックが足りていない
-//#define BUGFIX_COUNTRY_NGCHECK_20100806
+#define BUGFIX_COUNTRY_NGCHECK_20100806
 
 /**海外版に向け、ソースにコメント追記した所**/
 /*

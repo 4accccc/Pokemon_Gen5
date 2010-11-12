@@ -32,21 +32,33 @@ File.open(ARGV[1],"w"){|file|
 
 file.printf("//-----------------------------------------------------------------\n")
 file.printf("/*\n")
-file.printf("/* @file %s\n",ARGV[1])
+file.printf(" * @file %s\n",ARGV[1])
 file.printf(" */\n")
 file.printf("//-----------------------------------------------------------------\n")
 file.printf("#ifndef __%s__\n",ARGV[1].tr("a-z\.","A-Z_"))
 file.printf("#define __%s__\n",ARGV[1].tr("a-z\.","A-Z_"))
 
-file.printf("\n/// 登録可能国リスト（全ての国ではないことに注意）増やしたい場合は
+# update ichiraku
+# BUGFIX_COUNTRY_NGCHECK_20100806を有効にするために
+# rubyファイルにBUGFIXを切ることになった。
+# staticなので、ソースに書くことは出来なかった。
+file.printf("\n/// 登録可剥巣潟Xト（全ての国ではないことに注意）増やしたい場合は
 ///CountryList.xlsの５０音順の欄を変更してください。
-ALIGN4 static const int EnableCountryList[] = {\n");
+#ifdef BUGFIX_COUNTRY_NGCHECK_20100806  //常駐に配置するためコンバータを改造してu8で出力するように変更
+ALIGN4 const u8 EnableCountryList[] = {
+#else
+ALIGN4 static const int EnableCountryList[] = {
+#endif\n");
 countrylist.zip(countryname).each{|index,name|
 	file.printf("\t%s,\t// %s\n",index, name)
 }
 file.printf("};\n\n")
 
-file.printf("static const COUNTRY_ENABLE_MAX	= NELEMS(EnableCountryList);\n")
+file.printf("#ifdef BUGFIX_COUNTRY_NGCHECK_20100806
+const COUNTRY_ENABLE_MAX	= NELEMS(EnableCountryList);
+#else
+static const COUNTRY_ENABLE_MAX	= NELEMS(EnableCountryList);
+#endif  //BUGFIX_COUNTRY_NGCHECK_20100806\n\n")
 
 
 file.printf("#endif")
