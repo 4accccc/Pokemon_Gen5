@@ -292,6 +292,17 @@ GMEVENT * FLDSKILL_UseSkill( FLDSKILL_IDX idx,
 }
 
 //======================================================================
+/*
+ *  連れ歩き中使用不可チェック
+ */
+//======================================================================
+static BOOL SkillCheckCommon_PairCheck( const FLDSKILL_CHECK_WORK* scwk )
+{
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( scwk->gsys );
+  return EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gdata), SYS_FLAG_PAIR );
+}
+
+//======================================================================
 //  00 : いあいぎり
 //======================================================================
 //--------------------------------------------------------------
@@ -378,6 +389,10 @@ static FLDSKILL_RET SkillCheck_Naminori( const FLDSKILL_CHECK_WORK * scwk)
   }
   
   if( IsEnableSkill(scwk,FLDSKILL_IDX_NAMINORI) ){
+    //連れ歩き中
+    if( SkillCheckCommon_PairCheck( scwk )){
+      return FLDSKILL_RET_COMPANION;
+    }
     return FLDSKILL_RET_USE_OK;
   }
   
@@ -442,6 +457,10 @@ static GMEVENT_RESULT GMEVENT_Naminori(GMEVENT *event, int *seq, void *wk )
 static FLDSKILL_RET SkillCheck_Takinobori( const FLDSKILL_CHECK_WORK * scwk)
 {
   if( IsEnableSkill(scwk,FLDSKILL_IDX_TAKINOBORI) ){
+    //連れ歩き中
+    if( SkillCheckCommon_PairCheck( scwk )){
+      return FLDSKILL_RET_COMPANION;
+    }
     return FLDSKILL_RET_USE_OK;
   }
   
@@ -628,6 +647,10 @@ static GMEVENT * SkillUse_Sorawotobu(
 static FLDSKILL_RET SkillCheck_Sorawotobu( const FLDSKILL_CHECK_WORK * scwk)
 {
   if( IsEnableSkill(scwk,FLDSKILL_IDX_SORAWOTOBU) ){
+    //連れ歩き中
+    if( SkillCheckCommon_PairCheck( scwk )){
+      return FLDSKILL_RET_COMPANION;
+    }
     return FLDSKILL_RET_USE_OK;
   }
   
@@ -771,11 +794,14 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Anawohoru( const FLDSKILL_CHECK_WORK * scwk)
 {
+  //連れ歩き中
 	if (IsEnableSkill(scwk, FLDSKILL_IDX_ANAWOHORU)) {
+    if( SkillCheckCommon_PairCheck( scwk )){
+      return FLDSKILL_RET_COMPANION;
+    }
 		return FLDSKILL_RET_USE_OK;
-	} else {
-		return FLDSKILL_RET_USE_NG;
 	}
+  return FLDSKILL_RET_USE_NG;
 }
 
 //--------------------------------------------------------------
@@ -850,10 +876,13 @@ static GMEVENT_RESULT GMEVENT_Anawohoru(GMEVENT *event, int *seq, void *wk )
 static FLDSKILL_RET SkillCheck_Teleport( const FLDSKILL_CHECK_WORK * scwk)
 {
 	if (IsEnableSkill(scwk, FLDSKILL_IDX_TELEPORT)) {
+    //連れ歩き中
+    if( SkillCheckCommon_PairCheck( scwk )){
+      return FLDSKILL_RET_COMPANION;
+    }
 		return FLDSKILL_RET_USE_OK;
-	} else {
-		return FLDSKILL_RET_USE_NG;
 	}
+  return FLDSKILL_RET_USE_NG;
 }
 
 //--------------------------------------------------------------
@@ -923,10 +952,13 @@ static GMEVENT_RESULT GMEVENT_Diving( GMEVENT *event, int *seq, void *wk );
 static FLDSKILL_RET SkillCheck_Diving( const FLDSKILL_CHECK_WORK * scwk )
 {
 	if (IsEnableSkill(scwk, FLDSKILL_IDX_DIVING)) {
+    //連れ歩き中
+    if( SkillCheckCommon_PairCheck( scwk )){
+      return FLDSKILL_RET_COMPANION;
+    }
 		return FLDSKILL_RET_USE_OK;
-	} else {
-		return FLDSKILL_RET_USE_NG;
-  }
+	}
+	return FLDSKILL_RET_USE_NG;
 }
 
 //--------------------------------------------------------------

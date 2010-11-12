@@ -3147,6 +3147,9 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
 
   //フィールド技 マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, zone_id );
+
+  //連れ歩きフラグ強制破棄
+  EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_PAIR );
 }
 
 //--------------------------------------------------------------

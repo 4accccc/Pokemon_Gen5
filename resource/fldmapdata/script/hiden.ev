@@ -39,6 +39,7 @@ _EVENT_DATA ev_hiden_seatemple_3f
 _EVENT_DATA ev_hiden_takikudari
 _EVENT_DATA_END
 
+DEFINE_LOCAL  reg_return
 
 /**************************************************************/
 /**************************************************************/
@@ -46,9 +47,19 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
+/*　連れ歩き時チェック＆NGメッセージ                          */
+/**************************************************************/
+sub_hiden_pair_ng:
+{
+  _SYSWIN_MSG( msg_hiden_ng_pair, POS_DOWN )  
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+_RET
+
+/**************************************************************/
 /*　カットイン自機 */
 /**************************************************************/
-//ev_hiden_flag_change:
 
 //自機カットインポーズ
 _ANIME_LABEL  anm_hero_cutin
@@ -174,6 +185,8 @@ EVENT_START ev_hiden_naminori
   
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_naminori_ng
+  ELSIF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _CALL sub_hiden_pair_ng 
   ELSE
     _SYSWIN_MSG( msg_naminori_01 , POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
@@ -335,6 +348,8 @@ EVENT_START ev_hiden_takinobori
   
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_takinobori_ng
+  ELSIF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _CALL sub_hiden_pair_ng 
   ELSE
     _SYSWIN_MSG( msg_taki_01 , POS_DOWN )
 	  _YES_NO_WIN( SCWK_ANSWER )
@@ -455,7 +470,8 @@ EVENT_START ev_hiden_diving
     _SYSWIN_MSG( msg_diving_01, POS_DOWN )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
-
+  ELSIF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _CALL sub_hiden_pair_ng 
   ELSE
     _SYSWIN_MSG( msg_diving_02, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
@@ -544,3 +560,5 @@ EVENT_START ev_hiden_seatemple_3f
   ENDIF
 }
 EVENT_END
+
+

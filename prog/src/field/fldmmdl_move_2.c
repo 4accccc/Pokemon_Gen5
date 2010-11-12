@@ -345,7 +345,7 @@ static u32 Pair_JikiAcmdCodeGet( MMDL * mmdl )
 {
   u16 code;
   MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
-  code = MMDL_GetAcmdCode( mmdl );
+  code = MMDL_GetAcmdCode( jiki );
   
   switch( code ){
   case AC_DASH_U_4F: code = AC_WALK_U_4F; break;
@@ -374,8 +374,13 @@ static int Pair_JikiCheckAcmdSet( MMDL * mmdl )
   
   if( gx != jx || gz != jz ){
     u32 code = Pair_JikiAcmdCodeGet( mmdl );
-    int dir = MMDL_TOOL_GetRangeDir( gx, gz, jx, jz );
+    int dir;
+    if( code == MV_CODE_NOT){
+      return FALSE;
+    }
+    dir = MMDL_TOOL_GetRangeDir( gx, gz, jx, jz );
     code = MMDL_ChangeDirAcmdCode( dir, code );
+    IWASAWA_Printf("PairJikiCmdSet dir=%d, code=%02x\n",dir,code);
     MMDL_SetLocalAcmd( mmdl, code );
     return( TRUE );
   }

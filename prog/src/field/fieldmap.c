@@ -123,6 +123,8 @@
 
 #include "scrcmd_overlay.h"
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -2942,7 +2944,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   //エフェクトエンカウント破棄
   EFFECT_ENC_EffectDelete( fieldWork->encount );
-
+  //連れ歩きフラグ強制破棄
+  EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gdata), SYS_FLAG_PAIR );
+    
   LOCATION_Get3DPos( lc, &lc_pos );
 
   new_zone_id = MAP_MATRIX_GetVectorPosZoneID(

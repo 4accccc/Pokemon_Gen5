@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-07-07T12:01:33"/>
+	<create user="iwasawa" host="W00157" date="2010-11-11T18:00:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1632,7 +1632,7 @@ PP値上昇アイテムで技選択するとき</comment>
 [1:07:わざ名:1]を　覚えた！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5]</language>
 	</row>
 
-	<row id="mes_pokelist_09_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="mes_pokelist_09_01">
 		<comment>連れ歩きエラーメッセージ</comment>
 		<language name="JPN" font=" 1:small" width="216">つれあるいているときは
 つかえません！</language>

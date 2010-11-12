@@ -1286,7 +1286,11 @@ VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
   }
 
   if( player_pair ){
-    GF_ASSERT( 0 );
+    if( MMDL_CheckMoveBitMove(player_pair) == TRUE ){
+      SetStepWatchBit(PLAYER_PAIR_BIT);
+      MMDL_OffMoveBitMoveProcPause( player_pair );
+      IWASAWA_Printf("連れ歩き動作待ち\n");
+    }
   }
 
   if( other_pair ){
@@ -1357,6 +1361,29 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
 }
 #endif
 
+//--------------------------------------------------------------
+/**
+ * @brief	ペアOBJ動作終了待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitPairObj( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+
+	//自機の連れ歩き動作停止チェック
+  if( MMDL_CheckMoveBitMove(player_pair) == FALSE ){
+    MMDL_OnMoveBitMoveProcPause( player_pair );
+		return TRUE;  //移動動作が終了した
+	}
+
+	return FALSE;
+}
+
 VMCMD_RESULT SCRCMD_SUB_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work )
 {
   SCRIPT_WORK *sc;
@@ -1369,6 +1396,36 @@ VMCMD_RESULT SCRCMD_SUB_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work )
     MMDLSYS *fmmdlsys;
     fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
     MMDLSYS_PauseMoveProc( fmmdlsys );
+
+#if 1	//10.11.10 by iwasawa
+		//話しかけの対象がいないBGやPOSの時
+		//連れ歩きOBJの移動動作中かのチェックをしていない
+		//
+		//連れ歩きOBJに対して、
+		//スクリプトでアニメを発行すると、
+		//アニメが行われず終了待ちにいかないでループしてしまう
+
+		{
+      MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+
+			//連れ歩きがいて、移動動作中なら
+			if( player_pair != NULL && MMDL_CheckMoveBitMove(player_pair) == TRUE ) {	
+				//ペアの動作ポーズ解除
+        MMDL_OffMoveBitMoveProcPause( player_pair );
+
+				//移動動作の終了待ちをセット
+        VMCMD_SetWait( core, EvWaitPairObj );
+        return VMCMD_RESULT_SUSPEND;
+			}
+		}
+#endif
+    //プラチナ→金銀からの引継ぎ。スワンでも有効にしておく。
+    //これにより、ポーズがかかった場合、連れ歩きがグリッド中心にいることが保障される反面、
+    //連れ歩き動作終了まで、次のスクリプトが実行されないため、若干の待ち状態が発生する。
+    //仕様としてこの動作を嫌う場合は、
+    //グリッド中心まで移動しなくても、イベントを進行させてしまうようにするため
+		//ここの#if部分を削除する。ならびに、終了待ち関数EvWaitPairObjも必要なくなる
+
   }else{
     return( EvCmdTalkObjPauseAll(core,work) );
   }

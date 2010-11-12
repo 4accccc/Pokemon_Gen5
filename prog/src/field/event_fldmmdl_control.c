@@ -110,15 +110,10 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       }
 
       if( player_pair ){
-        #if 0 
-        if( SysFlag_PairCheck(SaveData_GetEventWork(fsys->savedata)) == 1
-            && FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
+        if( MMDL_CheckMoveBitMove(player_pair) == TRUE) {
           SetStepWatchBit(opaw, PLAYER_PAIR_BIT);
-          FieldOBJ_MovePauseClear( player_pair );
+          MMDL_OffMoveBitMoveProcPause( player_pair );
         }
-        #else
-        GF_ASSERT( 0 );
-        #endif
       }
       
       if( other_pair ){
@@ -135,7 +130,6 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       	MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
         MMDL *fmmdl = NULL;
         MMDL *player = MMDLSYS_SearchMMdlPlayer( fmmdlsys );
-        MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
         
      	//自機動作停止チェック
       if( CheckStepWatchBit(opaw, PLAYER_BIT) &&
@@ -586,138 +580,4 @@ BOOL CheckPlayerOneStepAnimeEnd( GFL_TCB* tcb )
   return FALSE;
 }
 
-
-#if 0
-//======================================================================
-//	動作モデル	
-//======================================================================
-static void EvAnmSetTCB(
-	SCRCMD_WORK *work, GFL_TCB *anm_tcb, MMDL_ACMD_LIST *list );
-
-//--------------------------------------------------------------
-/**
- * アニメーション
- * @param	core		仮想マシン制御構造体へのポインタ
- * @retval	"0"
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
-{
-	u8 *num;
-	VM_CODE *p;
-	GFL_TCB *anm_tcb;
-	MMDL *fmmdl; //対象のフィールドOBJのポインタ
-	SCRCMD_WORK *work = wk;
-	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 obj_id = SCRCMD_GetVMWorkValue(core,work); //obj ID
-	u32 pos = VMGetU32(core); //list pos
-	
-	fmmdl = FieldObjPtrGetByObjId( work, obj_id );
-	
-	//エラーチェック
-	if( fmmdl == NULL ){
-		GF_ASSERT_MSG( 0,
-        "対象のフィールドOBJのポインタ取得失敗 obj_id %d\n", obj_id );
-		return 0;				//08.06.12 プラチナで追加
-	}
-	
-	//アニメーションコマンドリストセット
-	p = (VM_CODE*)(core->adrs+pos);
-	anm_tcb = MMDL_SetAcmdList( fmmdl, (MMDL_ACMD_LIST*)p );
-	
-	//アニメーションの数を足す
-	num = SCRIPT_GetMemberWork( sc, ID_EVSCR_ANMCOUNT );
-	(*num)++;
-	
-	//TCBセット
-	EvAnmSetTCB( work, anm_tcb, NULL );
-	return 0;
-}
-
-//--------------------------------------------------------------
-/**
- * アニメーション終了待ち
- * @param	core		仮想マシン制御構造体へのポインタ
- * @retval	"1"
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdObjAnimeWait( VMHANDLE * core, void *wk )
-{
-	VMCMD_SetWait( core, EvObjAnimeWait );
-	return 1;
-}
-
-//return 1 = 終了
-static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
-{
-	SCRCMD_WORK *work = wk;
-	
-	if( SCRCMD_WORK_CheckMMdlAnmTCB(work) == FALSE ){
-		return 1;
-	}
-	
-	return 0;
-}
-
-//--------------------------------------------------------------
-/**
- * FIELD_OBJ_PTRを取得
- * @param	fsys	FIELDSYS_WORK型のポインタ
- * @param	obj_id	OBJID
- * @retval	"FIELD_OBJ_PTR"
- */
-//--------------------------------------------------------------
-static MMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
-{
-	MMDL *dummy;
-	MMDL *fmmdl;
-	MMDLSYS *fmmdlsys;
-	
-	fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
-	
-	//連れ歩きOBJ判別IDが渡された時
-	if( obj_id == SCR_OBJID_MV_PAIR ){
-		fmmdl = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
-	//透明ダミーOBJ判別IDが渡された時
-	}else if( obj_id == SCR_OBJID_DUMMY ){
-		SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-		dummy = SCRIPT_GetMemberWork( sc, ID_EVSCR_DUMMY_OBJ );
-	//対象のフィールドOBJのポインタ取得
-	}else{
-		fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, obj_id );
-	}
-	
-	return fmmdl;
-}
-
-//--------------------------------------------------------------
-/**
- * アニメ終了監視TCB セット
- * @param	fsys	FIELDSYS_WORK型のポインタ
- * @param	anm_tcb	TCB_PTR型
- * @retval	none
- */
-//--------------------------------------------------------------
-static void EvAnmSetTCB(
-	SCRCMD_WORK *work, GFL_TCB *anm_tcb, MMDL_ACMD_LIST *list )
-{
-#if 0
-	EV_ANM_WORK* wk = NULL;
-	wk = sys_AllocMemory(HEAPID_FIELD, sizeof(EV_ANM_WORK));
-
-	if( wk == NULL ){
-		GF_ASSERT( (0) && "scrcmd.c メモリ確保失敗！" );
-		return;
-	}
-
-	wk->fsys	= fsys;
-	wk->anm_tcb	= anm_tcb;
-	wk->list	= list;
-	wk->tcb		= TCB_Add( EvAnmMainTCB, wk, 0 );
-	return;
-#else
-	SCRCMD_WORK_SetMMdlAnmTCB( work, anm_tcb );
-#endif
-}
-#endif
 
