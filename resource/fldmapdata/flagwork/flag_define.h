@@ -2373,7 +2373,7 @@
 		/* not used  2405(0x0965) */
 #define SYS_FLAG_SPEXIT_REQUEST           2406 /* 0x0966 特殊接続リクエスト：これがONのとき、コンティニューは特殊接続から開始 */
 		/* not used  2407(0x0967) */
-		/* not used  2408(0x0968) */
+#define SYS_FLAG_PAIR                     2408 /* 0x0968 連れ歩きフラグ */
 #define SYS_FLAG_BIGFOUR_GHOSTWIN         2409 /* 0x0969 四天王(ゴースト)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 #define SYS_FLAG_BIGFOUR_EVILWIN          2410 /* 0x096a 四天王(悪)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 #define SYS_FLAG_BIGFOUR_FIGHTWIN         2411 /* 0x096b 四天王(格闘)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
