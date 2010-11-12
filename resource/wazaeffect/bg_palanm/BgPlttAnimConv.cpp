@@ -205,7 +205,7 @@ static void block_anim_read( FILE* fp )
 	{
 		fread( &g_cell_idx[i], 2, 1, fp );
 		fread( &g_cell_wait[i], 2, 1, fp );
-		g_cell_wait[i] /= 2; // バトルが 30FPS なので2で割る
+		//g_cell_wait[i] /= 2; // バトルが 30FPS なので2で割る
 		fseek( fp, 20, SEEK_CUR );
 	}
 
