@@ -3416,8 +3416,8 @@ static VMCMD_RESULT VMEC_BG_PAL_ANM( VMHANDLE *vmh, void *context_work )
     ICHI_Printf("--- wait --- \n");
     while( *p_dat_u16 != BG_PLANM_CELL_WAIT_END )
     {
-      ICHI_Printf("[%d]%d \n", cnt, *p_dat_u16);
-      p_beps->dat.wait[cnt] = *p_dat_u16;
+      p_beps->dat.wait[cnt] = (*p_dat_u16);
+      ICHI_Printf("[%d]%d \n", cnt, p_beps->dat.wait[cnt]);
       p_dat_u16++;
       cnt++;
     }
@@ -7258,6 +7258,39 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
   case BTLEFF_WORK_DEFENCE_POKEMON:
     ret = bevw->defence_pos;
     break;
+  case BTLEFF_WORK_POS_AA_N_POKE:
+  case BTLEFF_WORK_POS_BB_N_POKE:
+  case BTLEFF_WORK_POS_A_N_POKE:
+  case BTLEFF_WORK_POS_B_N_POKE:
+  case BTLEFF_WORK_POS_C_N_POKE:
+  case BTLEFF_WORK_POS_D_N_POKE:
+  case BTLEFF_WORK_POS_E_N_POKE:
+  case BTLEFF_WORK_POS_F_N_POKE:
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_N_POKE ) & BTLV_MCSS_STATUS_FLAG_N_POKE ) != 0 );
+    ICHI_Printf("Nポケフラグ %d ", ret);
+    ICHI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_N_POKE ) );
+    break;
+  case BTLEFF_WORK_ATTACK_N_POKE:
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_N_POKE ) != 0 );
+    ICHI_Printf("Nポケフラグ %d ", ret);
+    ICHI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) );
+    break;
+  case BTLEFF_WORK_POS_AA_NUSHI:
+  case BTLEFF_WORK_POS_BB_NUSHI:
+  case BTLEFF_WORK_POS_A_NUSHI:
+  case BTLEFF_WORK_POS_B_NUSHI:
+  case BTLEFF_WORK_POS_C_NUSHI:
+  case BTLEFF_WORK_POS_D_NUSHI:
+  case BTLEFF_WORK_POS_E_NUSHI:
+  case BTLEFF_WORK_POS_F_NUSHI:
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_NUSHI ) & BTLV_MCSS_STATUS_FLAG_NUSHI ) != 0 );
+    ICHI_Printf("主ポケフラグ %d ", ret);
+    ICHI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_NUSHI ) );
+    break;
+  case BTLEFF_WORK_ATTACK_NUSHI:
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_NUSHI ) != 0 );
+    ICHI_Printf("主ポケフラグ %d ", ret);
+    ICHI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) );
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
@@ -8179,7 +8212,9 @@ static  void  TCB_EFFVM_BG_PLANM( GFL_TCB* tcb, void* work )
         {
           palData = (NNSG2dPaletteData*)p_beps->bevw->unpack_info[ dpd_no ];
         }
-        //NNS_G2dPrintPaletteData ( palData );
+#if defined DEBUG_ONLY_FOR_ichiraku_katsuhiko
+        NNS_G2dPrintPaletteData ( palData );
+#endif
 
         // パレットセット
         PaletteWorkSet( BTLV_EFFECT_GetPfd(), &(((u16*)(palData->pRawData))[read_pos]), FADE_MAIN_BG, BTLV_EFFVM_BG_PAL * 16, 0x20 );
