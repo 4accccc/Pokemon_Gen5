@@ -17,6 +17,7 @@
 #include "app/itemuse.h"
 
 #include "field_comm/intrude_work.h"  //Intrude_CheckNetIsExit
+#include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
 
 #define ITEMCHECK_NONE  (0xFF)
 
@@ -28,11 +29,13 @@ typedef struct _FLD_ITEM_FUNCTION{
 //////////////////////////////////////////////////
 ///プロトタイプ
 //////////////////////////////////////////////////
-static BOOL itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
-static BOOL itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
-static BOOL itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
-static BOOL itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
-static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+static ITEMUSE_CODE itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+static ITEMUSE_CODE itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+static ITEMUSE_CODE itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+static ITEMUSE_CODE itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+static ITEMUSE_CODE itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+
+static BOOL isCompanion( GAMEDATA* gdata );
 
 //=============================================================================
 /**
@@ -79,13 +82,13 @@ static FLD_ITEM_FUNCTION const DATA_FldItemFunction[ EVENT_ITEMUSE_CALL_MAX ] =
  */
 //-------------------------------------
 static ItemUseCheckFunc const DATA_ItemUseCheckFunc[ITEMCHECK_MAX] = {
-  itemcheck_Cycle, // 自転車(乗っていない時はTRUEで乗れる、乗っている時はTRUEで降りれる)
+  itemcheck_Cycle, // 自転車(乗っていない時はOKで乗れる、乗っている時はOKで降りれる)
   NULL, // タウンマップ
   NULL, // ともだち手帳
   itemcheck_Ananukenohimo, // あなぬけのヒモ
   itemcheck_Amaimitu, // あまいミツ
   itemcheck_Turizao, // つりざお
-  itemcheck_DowsingMachine, // バトルレコーダー
+  itemcheck_DowsingMachine, // バトルレコーダー(ダウジングマシンの使用条件と同じなので、使いまわしている)
   NULL, // メール
   NULL, // スプレー
   itemcheck_DowsingMachine, // ダウジングマシン
@@ -116,6 +119,9 @@ void ITEMUSE_InitCheckWork( ITEMCHECK_WORK* icwk, GAMESYS_WORK* gsys, FIELDMAP_W
   }
   //自機フォルムチェック
   icwk->PlayerForm = PLAYERWORK_GetMoveForm( playerWork ); 
+  //連れ歩きチェック
+  icwk->Companion = isCompanion( gdata );
+
   // ( PlayerForm == PLAYER_MOVE_FORM_CYCLE );
 }
 
@@ -127,10 +133,10 @@ void ITEMUSE_InitCheckWork( ITEMCHECK_WORK* icwk, GAMESYS_WORK* gsys, FIELDMAP_W
  *  @param  *gsys       ゲームシステム
  *  @param  *field_wk   フィールド
  *
- *  @return イベント
+ *  @return ITEMUSE_CODE型  使えるかどうかのコード 
  */
 //-----------------------------------------------------------------------------
-BOOL ITEMUSE_UseCheckCall( ITEMCHECK_ENABLE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk )
+ITEMUSE_CODE ITEMUSE_UseCheckCall( ITEMCHECK_ENABLE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk )
 { 
   GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
   PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( gdata );
@@ -138,7 +144,7 @@ BOOL ITEMUSE_UseCheckCall( ITEMCHECK_ENABLE type, GAMESYS_WORK *gsys, FIELDMAP_W
   GF_ASSERT( type < ITEMCHECK_MAX );
   
   if( DATA_ItemUseCheckFunc[type] == NULL ){
-    return TRUE;  //無条件で使用していい
+    return ITEMUSE_OK;  //無条件で使用していい
   }
   return (DATA_ItemUseCheckFunc[ type ])( gdata, field_wk, playerWork );
 }
@@ -169,16 +175,15 @@ GMEVENT * EVENT_FieldItemUse( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, 
  *  @param  *gsys       ゲームシステム
  *  @param  *field_wk   フィールド
  *
- *  @retval TRUE：使用可
- *  @retval FALSE：使用不可
+ *  @return ITEMUSE_CODE型  使えるかどうかのコード 
  */
 //-----------------------------------------------------------------------------
-BOOL FieldItemUseCheck( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk )
+ITEMUSE_CODE FieldItemUseCheck( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk )
 { 
   GF_ASSERT( type < EVENT_ITEMUSE_CALL_MAX );
 
   if( DATA_FldItemFunction[ type ].checkID == ITEMCHECK_NONE ){
-    return TRUE;  //使用制限無し
+    return ITEMUSE_OK;  //使用制限無し
   }
   return ITEMUSE_UseCheckCall( DATA_FldItemFunction[type].checkID, gsys, field_wk );
 }
@@ -190,9 +195,17 @@ BOOL FieldItemUseCheck( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, FIELDM
 //-----------------------------------------------------------------------------
 
 /*
+ *  @brief  連れ歩きチェック
+ */
+static BOOL isCompanion( GAMEDATA* gdata )
+{
+  return EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gdata), SYS_FLAG_PAIR );
+}
+
+/*
  *  @brief  自転車使用チェック
  */
-static BOOL itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
+static ITEMUSE_CODE itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
 {
 //  PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( gdata );
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
@@ -202,84 +215,106 @@ static BOOL itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WO
 
   if( form == PLAYER_MOVE_FORM_CYCLE ){
     if( not_use_f ){
-      return FALSE;
+      return ITEMUSE_NG;
     }
-    return TRUE;  //降りれる
+    return ITEMUSE_OK;  //降りれる
   }
   //ゾーンチェック
   if( ZONEDATA_BicycleEnable( zone_id ) == FALSE ){
-    return FALSE;
+    return ITEMUSE_NG;
   }
 
   //フォルムチェック
   if( form != PLAYER_MOVE_FORM_NORMAL ){
-    return FALSE;
+    return ITEMUSE_NG;
   }
   //アトリビュートによるチェック
   if( not_use_f ){
-    return FALSE;
+    return ITEMUSE_NG;
   }
-  return TRUE;  //乗れる
+  //連れ歩きチェック
+  if( isCompanion( gdata ) ){
+    return ITEMUSE_NG_COMPANION;
+  }
+
+  return ITEMUSE_OK;  //乗れる
 }
 
 /*
  *  @brief  穴抜けの紐チェック
  */
-static BOOL itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
+static ITEMUSE_CODE itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
 {
 //  PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( gdata );
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
   
   //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
   if( ZONEDATA_CheckFieldSkillUse(zone_id) == FALSE){
-    return FALSE;
+    return ITEMUSE_NG;
   }
 
   if(!ZONEDATA_EscapeEnable( zone_id )){
-    return FALSE;
+    return ITEMUSE_NG;
   }
-  return TRUE;
+  //連れ歩きチェック
+  if( isCompanion( gdata ) ){
+    return ITEMUSE_NG_COMPANION;
+  }
+  return ITEMUSE_OK;
 }
 
 /*
  *  @brief  あまいみつチェック
  */
-static BOOL itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
+static ITEMUSE_CODE itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
 {
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
   //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
-  return ( ZONEDATA_CheckFieldSkillUse(zone_id));
+  if( !ZONEDATA_CheckFieldSkillUse(zone_id)){
+    return ITEMUSE_NG;
+  }
+  return ITEMUSE_OK;
 }
 
 /*
  *  @brief  釣竿使用チェック
  */
-static BOOL itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
+static ITEMUSE_CODE itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
 {
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
   //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
   if( ZONEDATA_CheckFieldSkillUse(zone_id) == FALSE){
-    return FALSE;
+    return ITEMUSE_NG;
   }
   //釣竿チェック
-  return FieldFishingCheckPos( gdata, field_wk, NULL );
+  if( !FieldFishingCheckPos( gdata, field_wk, NULL )){
+    return ITEMUSE_NG;
+  }
+  //連れ歩きチェック
+  if( isCompanion( gdata ) ){
+    return ITEMUSE_NG_COMPANION;
+  }
+  return ITEMUSE_OK;
 }
 
 /*
  *  @brief  ダウジングマシン使用チェック
  */
-static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
+static ITEMUSE_CODE itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
 {
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
   //遊覧船の中ではつかえない
   if ( ZONEDATA_IsPlBoat(zone_id) ) {
-    return FALSE;
+    return ITEMUSE_NG;
   }
   //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
-  return ( ZONEDATA_CheckFieldSkillUse(zone_id));
+  if( !ZONEDATA_CheckFieldSkillUse(zone_id) ){
+    return ITEMUSE_NG;
+  }
+  return ITEMUSE_OK;
 }
 
 //=============================================================================

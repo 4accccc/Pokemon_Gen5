@@ -19,7 +19,7 @@
 //============================================================================================
 
 /// バッグから抜けるときの動作
-enum BAG_NEXTPROC_ENUM
+typedef enum
 {
   BAG_NEXTPROC_EXIT,          // 終了
   BAG_NEXTPROC_RETURN,        // 手前に戻る
@@ -42,8 +42,7 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_MAILSET,       // メール作成
   BAG_NEXTPROC_MAILVIEW,      // メール閲覧
   BAG_NEXTPROC_DOWSINGMACHINE,// ダウジングマシン
-};
-
+}BAG_NEXTPROC_ENUM;
 
 // フィールドで使用・不使用チェックの収集に使用するID
 // ※新しく使用する道具が増えた場合はこのenum定義に新しい名前を追加する
@@ -65,8 +64,6 @@ typedef enum {
 } ITEMCHECK_ENABLE ;
 
 
-
-
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -86,9 +83,10 @@ typedef struct {
   u16 FrontAttr;  //　自機前方アトリビュート
   u16 NowAttr;  //　自機現在アトリビュート
   u16 SeedInfo; //使用可能なアイテム情報（きのみ関連）
-   GAMESYS_WORK * gsys;
-  u32 item_enable;   // 指定の道具の使用許可・不許可を指定するbitフィールド
-                     // (参照はenum ITEMCHECK_ENABLEから）
+  GAMESYS_WORK * gsys;
+
+  u8  itemuse[ITEMCHECK_MAX]; //指定の道具の使用許可・不許可を指定するコード配列
+                              // (参照はenum ITEMCHECK_ENABLEから）
 }ITEMCHECK_WORK;
 
 
@@ -107,17 +105,15 @@ enum {
 };
 
 // アイテム使用チェックの戻り値
-enum {
-  ITEMCHECK_TRUE = 0,       // 使用可能
+typedef enum {
+	ITEMUSE_OK = 0,				// 使用可能
 
-  ITEMCHECK_ERR_CYCLE_OFF,    // 自転車を降りれない
-  ITEMCHECK_ERR_COMPANION,    // 使用不可・連れ歩き
-  ITEMCHECK_ERR_DISGUISE,     // 使用不可・ロケット団変装中
+	ITEMUSE_NG_COMPANION,		// 使用不可・連れ歩き
+	ITEMUSE_NG_DISGUISE,			// 使用不可・ロケット団変装中
+	ITEMUSE_NG_CYCLE_OFF,		// 自転車を降りれない
 
-  ITEMCHECK_FALSE = 0xffffffff  // 使用不可・博士の言葉
-};
-
-
+	ITEMUSE_NG = 0xffffffff,	// 使用不可・博士の言葉
+} ITEMUSE_CODE;
 
 //============================================================================================
 //  プロトタイプ宣言
@@ -181,10 +177,10 @@ extern u32 ITEMUSE_GetUseFunc( u16 prm, u16 id );
  *
  * @param   param   BAG_PARAMのポインタ
  * @param   type    使う道具の種類（itemmenu.h内のenum定義ITEMCHECK_ENABLEから指定）
- * @param   check   0:使えない  1:使える
+ * @param   check   ITEMUSE_CODE
  *
  * @retval  none
  */
 //=============================================================================================
-extern void ITEMUSE_SetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type, BOOL check );
-extern BOOL ITEMUSE_GetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type );
+extern void ITEMUSE_SetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type, ITEMUSE_CODE check );
+extern ITEMUSE_CODE ITEMUSE_GetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type );

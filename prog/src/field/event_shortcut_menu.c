@@ -66,6 +66,12 @@ typedef enum
 	CALLTYPE_ITEM,
 } CALLTYPE;
 
+typedef enum{
+  MENUERR_NORMAL,     //通常エラーメッセージ
+  MENUERR_CYCLE,      //自転車降りられない
+  MENUERR_RIBON,      //リボン画面を開けない
+  MENUERR_COMPANION,  //連れ歩きエラー
+} MENUERR_TYPE;
 
 //=============================================================================
 /**
@@ -85,6 +91,7 @@ typedef struct
 	HEAPID								heapID;			//常駐ヒープID
 	BOOL									is_empty;		//メニューを空にしたフラグ
   u32                   seq;
+  ITEMUSE_CODE          itemuse_err;  //アイテム使用チェックコード受け渡し
 } EVENT_SHORTCUTMENU_WORK;
 
 //=============================================================================
@@ -108,7 +115,8 @@ static BOOL ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void 
 static BOOL ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 
 //アイテム使用NGメッセージ表示イベント生成
-static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type );
+static void ShortCutMenu_ItemuseNGMsgCall( GMEVENT *p_event, GAMESYS_WORK* gsys, EVENT_ITEMUSE_CALL_TYPE item, ITEMUSE_CODE err_code );
+static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, MENUERR_TYPE type );
 
 //リボン画面を開けるかチェック
 static BOOL ShortCutMenu_IsOpenRibbon( EVENT_SHORTCUTMENU_WORK	*p_wk );
@@ -299,26 +307,26 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			if( input == SHORTCUTMENU_INPUT_SELECT )
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
-				BOOL	item_use_err = FALSE;
         BOOL  ribbon_status_err = FALSE;
 				CALLTYPE	call_type;
 
 				BOOL reverse_use, check_item;
+
+        p_wk->itemuse_err = ITEMUSE_OK;
+
 				check_item = GetItemCheckEnable( shortcutID, &enable, &reverse_use );
 				call_type = ShortCutMenu_SetCallType( p_wk->p_link, shortcutID );
 
 				if(reverse_use == FALSE 
 				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE)
         {
-          item_use_err = TRUE;
+          p_wk->itemuse_err = ITEMUSE_NG;
         }
 				else if(check_item == TRUE)
         {
 					ITEMCHECK_WORK	icwk;
 					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
-					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
-						item_use_err = TRUE;
-					}
+					p_wk->itemuse_err = ITEMUSE_GetItemUseCheck( &icwk, enable );
 				}
 
         if( shortcutID == SHORTCUT_ID_PSTATUS_RIBBON )
@@ -329,7 +337,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
           }
         }
 
-				if( item_use_err == TRUE )
+				if( p_wk->itemuse_err != ITEMUSE_OK )
         {
           // 起動エラー
 					*p_seq = SEQ_ITEM_ERROR;
@@ -456,29 +464,13 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 
 	case SEQ_ITEM_ERROR:
 		{	
-			GMEVENT *p_item_event;
-			u32 item;
-
 			//MENU破棄
 			if( ShortCutMenu_ExitSeq( p_wk ) )
       {
-        //メモリ解放まえに情報を受け取る
-        item	= p_wk->p_link->select_param;
+        ShortCutMenu_ItemuseNGMsgCall( p_event, p_wk->p_gamesys, p_wk->p_link->select_param, p_wk->itemuse_err );
+        
         GFL_HEAP_FreeMemory( p_wk->p_link );
         p_wk->p_link	= NULL;
-
-        // アイテムコール
-        if( item == EVENT_ITEMUSE_CALL_CYCLE ){
-          PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(p_wk->p_gamesys) );
-          if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
-            p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 1 );
-          }else{
-            p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
-          }
-        }else{
-          p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
-        }
-        GMEVENT_CallEvent(p_event, p_item_event );
 
         *p_seq	= SEQ_ITEM_RETURN;
       }
@@ -504,7 +496,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
         p_wk->p_link	= NULL;
 
         //NGメッセージ表示
-        GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 2 ) );
+        GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, MENUERR_RIBON ) );
 
         *p_seq	= SEQ_RIBBON_RETURN;
       }
@@ -571,20 +563,19 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
-				BOOL	err = FALSE;
         BOOL  ribbon_status_err = FALSE;
 				BOOL reverse_use, check_item;
 				check_item = GetItemCheckEnable( shortcutID, &enable, &reverse_use );
+
+        p_wk->itemuse_err = ITEMUSE_OK;
 				if(reverse_use == FALSE
 				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE){
-          err = TRUE;
+          p_wk->itemuse_err = ITEMUSE_NG;
         }
 				else if(check_item == TRUE){
 					ITEMCHECK_WORK	icwk;
 					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
-					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
-						err = TRUE;
-					}
+          p_wk->itemuse_err = ITEMUSE_GetItemUseCheck( &icwk, enable );
 				}
         if( shortcutID == SHORTCUT_ID_PSTATUS_RIBBON )
         { 
@@ -594,7 +585,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
           }
         }
 				// 起動エラー
-				if( err == TRUE ){
+				if( p_wk->itemuse_err != ITEMUSE_OK ){
 					*p_seq = SEQ_ITEM_ERROR;
         }
         else if( ribbon_status_err == TRUE )
@@ -677,26 +668,10 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 
 	case SEQ_ITEM_ERROR:
 		{	
-			GMEVENT *p_item_event;
-			u32 item;
-
-			//メモリ解放まえに情報を受け取る
-			item	= p_wk->p_link->select_param;
-			GFL_HEAP_FreeMemory( p_wk->p_link );
-			p_wk->p_link	= NULL;
-
-			// アイテムコール
-			if( item == EVENT_ITEMUSE_CALL_CYCLE ){
-				PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(p_wk->p_gamesys) );
-				if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
-					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 1 );
-				}else{
-					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
-				}
-			}else{
-				p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
-			}
-			GMEVENT_CallEvent(p_event, p_item_event );
+      ShortCutMenu_ItemuseNGMsgCall( p_event, p_wk->p_gamesys, p_wk->p_link->select_param, p_wk->itemuse_err );
+        
+      GFL_HEAP_FreeMemory( p_wk->p_link );
+      p_wk->p_link	= NULL;
 
 			*p_seq	= SEQ_ITEM_RETURN;
 		}
@@ -717,7 +692,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
     p_wk->p_link	= NULL;
 
     //NGメッセージ表示
-    GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 2 ) );
+    GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, MENUERR_RIBON ) );
     *p_seq	= SEQ_RIBBON_RETURN;
     break;
 
@@ -1094,11 +1069,32 @@ static BOOL ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void
 }
 
 /*
+ *  @brief  ショートカットアイテム使用NGメッセージイベントコール
+ */
+static void ShortCutMenu_ItemuseNGMsgCall( GMEVENT *p_event, GAMESYS_WORK* gsys, EVENT_ITEMUSE_CALL_TYPE item, ITEMUSE_CODE err_code )
+{
+  MENUERR_TYPE err_type = MENUERR_NORMAL;
+
+  if( err_code == ITEMUSE_NG_COMPANION )
+  {
+    err_type = MENUERR_COMPANION; 
+  }
+  else if( item == EVENT_ITEMUSE_CALL_CYCLE )
+  {
+    PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(gsys) );
+		if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
+      err_type = MENUERR_CYCLE; 
+		}
+	}
+	GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( gsys, err_type) );
+}
+
+/*
  *  @brief  ショートカットアイテム使用NGメッセージイベント
  *
  *  @param  type    0:通常,1:自転車を降りられない,2リボン画面を開けない
  */
-static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type )
+static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, MENUERR_TYPE type )
 {
   GMEVENT* event;
   SCRIPT_WORK* sc;

@@ -273,7 +273,7 @@ struct _FIELD_ITEMMENU_PARAM {
 //  BOOL bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理)
   u32 bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理 1=表示, 2=非表示)
 
-  enum BAG_NEXTPROC_ENUM ret_code;  //バッグメニューを終わる際の次の動作
+  BAG_NEXTPROC_ENUM ret_code;  //バッグメニューを終わる際の次の動作
   int ret_code2;
   int ret_item;       ///< 選んだアイテム
   

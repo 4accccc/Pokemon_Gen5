@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-11T11:54:46"/>
+	<create user="iwasawa" host="W00157" date="2010-11-15T15:01:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1270,12 +1270,11 @@ const u8 str_konanoryou[]
 バッグから　えらんで　ください！</language>
 	</row>
 
-	<row id="msg_bag_err_pair" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="msg_bag_err_pair">
 		<comment>連れ歩きエラーメッセージ</comment>
 		<language name="JPN">つれあるいている　ときは
 つかえません！</language>
-		<language name="JPN_KANJI">つれあるいている　ときは
-つかえません！</language>
+		<language name="JPN_KANJI">連れ歩いている時は　使えません！</language>
 	</row>
 
 	<row id="msg_bag_err_disguise" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">

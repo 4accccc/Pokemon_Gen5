@@ -20,16 +20,16 @@
  *
  * @param   param   BAG_PARAMのポインタ
  * @param   type    使う道具の種類（itemmenu.h内のenum定義ITEMCHECK_ENABLEから指定）
- * @param   check   0:使えない  1:使える
+ * @param   check   ITEMUSE_CODE
  *
  * @retval  none
  */
 //=============================================================================================
-void ITEMUSE_SetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type, BOOL check )
+void ITEMUSE_SetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type, ITEMUSE_CODE check )
 {
   GF_ASSERT( type<ITEMCHECK_MAX );
 
-  icwk->item_enable |= (check<<type);
+  icwk->itemuse[type] = check;
 }
 
 
@@ -39,16 +39,14 @@ void ITEMUSE_SetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type, BOOL
  *
  * @param   param   BAG_PARAMのポインタ
  * @param   type    使う道具の種類（itemmenu.h内のenum定義ITEMCHECK_ENABLEから指定）
- * @param   check   0:使えない  1:使える
  *
- * @retval  none
+ * @retval  ITEMUSE_CODE  ITEMUSE_OK=0なら使える
  */
 //=============================================================================================
-BOOL ITEMUSE_GetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type )
+ITEMUSE_CODE ITEMUSE_GetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type )
 {
   GF_ASSERT( type<ITEMCHECK_MAX );
-//  return 1;
 
-  return (icwk->item_enable>>type)&1;
+  return (icwk->itemuse[type]);
 }
 

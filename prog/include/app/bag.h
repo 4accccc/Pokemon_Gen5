@@ -60,7 +60,7 @@ typedef struct {
   BAG_MODE            mode;         ///< バッグ呼び出しモード
   BOOL                cycle_flg;    ///< 自転車かどうか？
   // [OUT] 外部に返すメンバ
-  enum BAG_NEXTPROC_ENUM   next_proc; ///< バッグから抜けるときの動作
+  BAG_NEXTPROC_ENUM   next_proc; ///< バッグから抜けるときの動作
   int ret_item; ///< 選択したアイテム
   // なし
 } BAG_PARAM;

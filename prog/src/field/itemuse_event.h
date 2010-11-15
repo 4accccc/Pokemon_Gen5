@@ -14,15 +14,9 @@
 #include "gamesystem/gamesystem.h"
 #include "app/itemuse.h"
 
-typedef enum{
- ITEMUSE_OK,
- ITEMUSE_NG,
- ITEMUSE_CYCLE_GETOFF_NG,
-}ITEMUSE_CHECK_CODE;
-
 /// 共通化した呼び出し
 typedef GMEVENT* (*ItemUseEventFunc)(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys);
-typedef BOOL (*ItemUseCheckFunc)( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, PLAYER_WORK* playerWork );
+typedef ITEMUSE_CODE (*ItemUseCheckFunc)( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, PLAYER_WORK* playerWork );
 
 //=============================================================================
 /**
@@ -65,10 +59,10 @@ extern void ITEMUSE_InitCheckWork( ITEMCHECK_WORK* icwk, GAMESYS_WORK* gsys, FIE
  *  @param  *gsys       ゲームシステム
  *  @param  *field_wk   フィールド
  *
- *  @return イベント
+ *  @return ITEMUSE_CODE型  使えるかどうかのコード 
  */
 //-----------------------------------------------------------------------------
-extern BOOL ITEMUSE_UseCheckCall( ITEMCHECK_ENABLE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk );
+extern ITEMUSE_CODE ITEMUSE_UseCheckCall( ITEMCHECK_ENABLE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -91,12 +85,10 @@ extern GMEVENT * EVENT_FieldItemUse( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK 
  *  @param  *gsys       ゲームシステム
  *  @param  *field_wk   フィールド
  *
- *  @retval TRUE：使用可
- *  @retval FALSE：使用不可
+ *  @return ITEMUSE_CODE型  使えるかどうかのコード 
  */
 //-----------------------------------------------------------------------------
-extern BOOL FieldItemUseCheck( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk );
-
+extern ITEMUSE_CODE FieldItemUseCheck( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk );
 
 //=============================================================================
 /**
