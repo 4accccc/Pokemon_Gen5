@@ -38,6 +38,18 @@ typedef enum
   ZONEDATA_CHANGE_MAX,
 } ZONEDATA_CHANGE_ID;
 
+//-------------------------------------
+///	ZONEDATA_GetPlaceIconIdx関数で帰ってくるインデックス
+//  以下の値を足し込むことで、リソース番号になる
+//=====================================
+typedef enum
+{
+  ZONEDATA_PLACEICON_OFS_NANR,
+  ZONEDATA_PLACEICON_OFS_NCER,
+  ZONEDATA_PLACEICON_OFS_NCGR,
+  ZONEDATA_PLACEICON_OFS_NCLR,
+} ZONEDATA_PLACEICON_OFS;
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -261,6 +273,16 @@ extern u16 ZONEDATA_GetPlaceNameID(u16 zone_id);
 //  地名表示制御用フラグ取得
 //------------------------------------------------------------------
 extern BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id);
+
+//------------------------------------------------------------------
+//  場所アイコンインデックス取得
+//  @retval +0 NANRのARCDATID (ZONEDATA_PLACEICON_OFSの列挙型)
+//  @retval +1 NCERのARCDATID
+//  @retval +2 NCGRのARCDATID
+//  @retval +3 NCLRのARCDATID
+//  @note ARCIDはARCID_PLACE_NAMEです
+//------------------------------------------------------------------
+extern u16 ZONEDATA_GetPlaceIconIdx(u16 zone_id);
 
 //------------------------------------------------------------------
 //  指定ゾーンがフィールドマップのマトリックス指定かどうかを判定

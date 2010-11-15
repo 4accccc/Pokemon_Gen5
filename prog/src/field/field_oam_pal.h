@@ -33,5 +33,11 @@ typedef enum{
 
 	//‚¨‚µ‚á‚×‚è
 	FLDOAM_PALNO_FREE_OSYABERI_POKE = FLDOAM_PALNO_FREE_START,		///<ƒ|ƒPƒ‚ƒ“‚n‚a‚i
+
+//--------------------------------------------------------------
+//  ŒÅ’èƒGƒŠƒA
+//--------------------------------------------------------------
+  FLDOAM_PALNO_PLACENAME_PLACE_ICON = 13,
+  FLDOAM_PALNO_PLACENAME_SEAZON_ICON,
 }FLDOAM_PALNO;
 

@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "field_place_name.h"
 #include "place_name_letter.h"
+#include "system/main.h"
 
 #include "system/bmp_oam.h"
 #include "print/wordset.h"
@@ -31,6 +32,7 @@
 
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
+#define BACKOBJ_MOVE_UD 2
 
 //===================================================================================
 // ¡ƒfƒoƒbƒO
@@ -46,66 +48,49 @@ BOOL PlaceNameEnable = TRUE; // ’n–¼•\¦‚Ì—LŒøƒtƒ‰ƒO
 // ¡ ’è”Eƒ}ƒNƒ
 //=================================================================================== 
 #define MAX_STATE_COUNT (0xffff) // ó‘ÔƒJƒEƒ“ƒ^Å‘å’l
-//#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE) // Å‘å•¶š”
 #define MAX_NAME_LENGTH (28)
 // ªƒpƒŒƒXN“ü’†‚ÍN“ü‘Šè‚Ì–¼‘O‚ğ•\¦‚·‚é‚½‚ß, ‘å‚«‚ß‚Éİ’è‚·‚é.2010.05.11
 // Œ»“_‚ÌÅ‘å’·uƒzƒƒCƒgƒtƒHƒŒƒXƒgv+ –¼‘O5•¶š = 14•¶š 
 // ==> ƒ[ƒJƒ‰ƒCƒYl—¶‚Å 28•¶š
+#define MAX_BACK_OBJ  (2)//  ”wŒiOBJ”
 
 //-----------
 // •\¦İ’è
 //-----------
+// OBJ
+#define OBJ_CLUNIT_WK_NUM      (32)
 // BG
 #define BG_PALETTE_NO          (0) // BGƒpƒŒƒbƒg”Ô†
 #define BG_FRAME (GFL_BG_FRAME3_M) // g—p‚·‚éBGƒtƒŒ[ƒ€
 #define BG_FRAME_PRIORITY      (1) // BGƒtƒŒ[ƒ€‚Ìƒvƒ‰ƒCƒIƒŠƒeƒB
-// ƒtƒHƒ“ƒg
-#define	COLOR_NO_LETTER     (1) // •¶š–{‘Ì‚ÌƒJƒ‰[”Ô†
-#define	COLOR_NO_SHADOW     (2) // ‰e•”•ª‚ÌƒJƒ‰[”Ô†
-#define	COLOR_NO_BACKGROUND (0) // ”wŒi•”‚ÌƒJƒ‰[”Ô†
 // ƒ¿ƒuƒŒƒ“ƒh
 #define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3) // ƒ¿ƒuƒŒƒ“ƒh‚Ì‘æ1‘ÎÛ–Ê
 #define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ) // ƒ¿ƒuƒŒƒ“ƒh‚Ì‘æ2‘ÎÛ–Ê
-#define ALPHA_VALUE_1                     (16) // ‘æ1‘ÎÛ–Ê‚Ìƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒOŒW”
-#define ALPHA_VALUE_2                      (4) // ‘æ2‘ÎÛ–Ê‚Ìƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒOŒW”
-
+#define ALPHA_VALUE_1                     (14) // ‘æ1‘ÎÛ–Ê‚Ìƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒOŒW”
+#define ALPHA_VALUE_2                      (8) // ‘æ2‘ÎÛ–Ê‚Ìƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒOŒW”
 #define CHAR_SIZE                    (8) // 1ƒLƒƒƒ‰ = 8ƒhƒbƒg
-#define Y_CENTER_POS (CHAR_SIZE * 2 - 1) // ”wŒi‘Ñ‚Ì’†SyÀ•W
-
-//-----
-// BG 
-//-----
-#define NULL_CHAR_NO       ( 0)								// NULLƒLƒƒƒ‰”Ô†
-#define	BMPWIN_WIDTH_CHAR  (32)								// ƒEƒBƒ“ƒhƒE•(ƒLƒƒƒ‰ƒNƒ^’PˆÊ)
-#define BMPWIN_HEIGHT_CHAR ( 2)								// ƒEƒBƒ“ƒhƒE‚‚³(ƒLƒƒƒ‰ƒNƒ^’PˆÊ)
-#define BMPWIN_WIDTH_DOT   (BMPWIN_WIDTH_CHAR * CHAR_SIZE)	// ƒEƒBƒ“ƒhƒE•(ƒhƒbƒg’PˆÊ)
-#define BMPWIN_HEIGHT_DOT  (BMPWIN_HEIGHT_CHAR * CHAR_SIZE)	// ƒEƒBƒ“ƒhƒE‚‚³(ƒhƒbƒg’PˆÊ)
-#define BMPWIN_POS_X_CHAR  ( 0)								// ƒEƒBƒ“ƒhƒE‚ÌxÀ•W(ƒLƒƒƒ‰ƒNƒ^’PˆÊ)
-#define BMPWIN_POS_Y_CHAR  ( 1)								// ƒEƒBƒ“ƒhƒE‚ÌyÀ•W(ƒLƒƒƒ‰ƒNƒ^’PˆÊ)
 
 //-----------
 // “®ìİ’è
 //-----------
-#define LAUNCH_INTERVAL (3)	// •¶šƒIƒuƒWƒFƒNƒg‚Ì”­ËŠÔŠu[frame]
-
 // Šeó‘Ô‚Ì“®ìİ’è
-#define PROCESS_TIME_FADEIN  (10)
-#define PROCESS_TIME_WAIT_LAUNCH   (10)
-#define PROCESS_TIME_WAIT_FADEOUT   (30)
-#define PROCESS_TIME_FADEOUT (20)
+#define PROCESS_TIME_FADEIN  (7)
+#define PROCESS_TIME_WAIT_LAUNCH   (30)
+#define PROCESS_TIME_WAIT_FADEOUT   (20)
+#define PROCESS_TIME_FADEOUT (10)
 
 //--------------
 // ƒCƒ“ƒfƒbƒNƒX
 //--------------
 // ƒpƒŒƒbƒgƒŠƒ\[ƒX
 typedef enum {
-	PLTT_RES_LETTER,	// •¶šƒIƒuƒWƒFƒNƒg‚Åg—p‚·‚éƒpƒŒƒbƒg
+	PLTT_RES_PLATE,	// ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg‚Åg—p‚·‚éƒpƒŒƒbƒg
 	PLTT_RES_NUM      // ‘”
 } PLTT_RES_INDEX;
 
 // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
 typedef enum {
-	CLUNIT_LETTER, // •¶šƒIƒuƒWƒFƒNƒg
+	CLUNIT_PLATE, // ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg
 	CLUNIT_NUM,    // ‘”
 } CLUNIT_INDEX;
 
@@ -121,23 +106,16 @@ typedef enum {
 	SYSTEM_STATE_NUM,          // ‘”
 } SYSTEM_STATE; 
 
-// •¶šƒIƒuƒWƒFƒNƒg‚ÌƒZƒbƒgƒAƒbƒvƒpƒ‰ƒ[ƒ^
-static const PN_LETTER_SETUP_PARAM LetterSetupParam = 
+//ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg
+typedef enum
 {
-  256,                       // À•W
-  Y_CENTER_POS - ( 13 / 2 ), // 
-  -20,                       // ‘¬“x
-  0,                         // 
-  24,                        // –Ú•WˆÊ’u
-  Y_CENTER_POS - ( 13 / 2 ), // 
-  0,                         // –Ú•WˆÊ’u‚Å‚Ì‘¬“x
-  0,                         // 
-  NULL,                      // ƒtƒHƒ“ƒg
-  0,                         // •¶šƒR[ƒh
-};
+  PLATE_TOP,
+  PLATE_BOTTOM,
+  PLATE_MAX,
+} PLATE_INDEX;
 
 // BG ƒRƒ“ƒgƒ[ƒ‹
-GFL_BG_BGCNT_HEADER BGCntHeader = 
+static const GFL_BG_BGCNT_HEADER BGCntHeader = 
 {
   0, 0,					          // ‰Šú•\¦ˆÊ’u
   0x800,						      // ƒXƒNƒŠ[ƒ“ƒoƒbƒtƒ@ƒTƒCƒY
@@ -156,7 +134,7 @@ GFL_BG_BGCNT_HEADER BGCntHeader =
 
 // ƒŒƒ“ƒ_ƒ‰[‚ÌƒCƒ“ƒfƒbƒNƒX
 typedef enum {
-  RENDERER_LETTER, // •¶šƒIƒuƒWƒFƒNƒg—p
+  RENDERER_PLATE, // ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg—p
   RENDERER_NUM
 } RENDERER_INDEX;
 
@@ -172,9 +150,6 @@ static const GFL_REND_SURFACE_INIT RendererSurface[ RENDERER_NUM ] =
     CLSYS_REND_CULLING_TYPE_NOT_AFFINE, // ƒJƒŠƒ“ƒOƒ^ƒCƒv
   },
 };
-
-
-
 //===================================================================================
 // ¡’n–¼•\¦ƒVƒXƒeƒ€
 //===================================================================================
@@ -188,16 +163,18 @@ struct _FIELD_PLACE_NAME {
 	GFL_MSGDATA*  message;
   GFL_FONT*     font;
 
-	// ’n–¼
+	// ’n–¼E‹Gß
 	STRBUF* nameBuf; // •\¦’†‚Ì’n–¼•¶š—ñ
 	u8      nameLen; // •\¦’†‚Ì’n–¼•¶š”
+  u8      seasonID;
+  u16     zoneID;
 
 	// ‘Ñ
-	GFL_BMPWIN*   bmpWin;	     // ƒrƒbƒgƒ}ƒbƒvEƒEƒBƒ“ƒhƒE
-	GFL_BMP_DATA* bmpOrg;	     // •¶š‚ª‘‚«‚Ü‚ê‚Ä‚¢‚È‚¢ó‘Ô
   u32           nullCharPos; // NULLƒLƒƒƒ‰ƒNƒ^‚ÌƒLƒƒƒ‰No.
 
 	// OBJ
+  u32             resChar;
+  u32             resCell;
 	u32             resPltt[ PLTT_RES_NUM ]; // ƒpƒŒƒbƒgƒŠƒ\[ƒX
 	BMPOAM_SYS_PTR  bmpOamSys;               // BMPOAMƒVƒXƒeƒ€
 	GFL_CLUNIT*     clunit[ CLUNIT_NUM ];    // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
@@ -214,11 +191,8 @@ struct _FIELD_PLACE_NAME {
   BOOL dispFlag;      // •\¦ƒtƒ‰ƒO
   BOOL forceDispFlag; // ‹­§•\¦ƒtƒ‰ƒO
 
-  // •¶šƒIƒuƒWƒFƒNƒg
-  PN_LETTER* letters[ MAX_NAME_LENGTH ];
-  u8 setupLetterNum; // ƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚½•¶šƒIƒuƒWƒFƒNƒg‚Ì”
-	u8 launchLetterNum;// ”­ËÏ‚İ•¶š”
-  u8 writeLetterNum; // BG ‚É‘‚«‚ñ‚¾•¶š”
+  //ƒvƒŒ[ƒg
+  PN_PLATE* plate[PLATE_MAX];
 
   // BG ƒpƒŒƒbƒg
   void* BGPalBinary; // ƒoƒCƒiƒŠƒf[ƒ^
@@ -240,7 +214,6 @@ static void UnloadBGPaletteData( FIELD_PLACE_NAME* system ); // BG ƒpƒŒƒbƒgƒf[ƒ
 static void TransBGPalette( FIELD_PLACE_NAME* system ); // BG ƒpƒŒƒbƒg‚ğ“]‘—‚·‚é
 static void AllocBGNullCharArea( FIELD_PLACE_NAME* system ); // ‹ó”’ƒLƒƒƒ‰ƒGƒŠƒA‚ğŠm•Û‚·‚é
 static void FreeBGNullCharaArea( FIELD_PLACE_NAME* system ); // ‹ó”’ƒLƒƒƒ‰ƒGƒŠƒA‚ğ‰ğ•ú‚·‚é
-static void RecoverBlankBand( FIELD_PLACE_NAME* system ); // ‘Ñ‚ğ•¶š‚ª‘‚«‚Ü‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É•œ‹A‚·‚é
 // OBJ
 static void CreateClactRenderer( FIELD_PLACE_NAME* system ); // ƒZƒ‹ƒAƒNƒ^[‚ÌƒŒƒ“ƒ_ƒ‰[‚ğì¬‚·‚é
 static void DeleteClactRenderer( FIELD_PLACE_NAME* system ); // ƒZƒ‹ƒAƒNƒ^[‚ÌƒŒƒ“ƒ_ƒ‰[‚ğ”jŠü‚·‚é
@@ -251,17 +224,15 @@ static void DeleteBmpOamSystem( FIELD_PLACE_NAME* system ); // BMPOAM ƒVƒXƒeƒ€‚ğ
 static void CreateClactUnit( FIELD_PLACE_NAME* system ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ¶¬‚·‚é
 static void DeleteClactUnit( FIELD_PLACE_NAME* system ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ”jŠü‚·‚é
 static void SetUserRenderer( FIELD_PLACE_NAME* system, CLUNIT_INDEX unitIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ÉƒŒƒ“ƒ_ƒ‰[‚ğİ’è‚·‚é
-// •¶šƒIƒuƒWƒFƒNƒg
-static void SetupLetter_init( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ÌƒZƒbƒgƒAƒbƒv‚ğŠJn‚·‚é
-static void SetupLetter_main( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ‚P•¶š‚¸‚ÂƒZƒbƒgƒAƒbƒv‚·‚é
-static BOOL SetupLetter_check( const FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ÌƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
-static void HideLetters( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ”ñ•\¦‚É‚·‚é
-static void LaunchLetter( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ”­Ë‚·‚é
-static void MoveLetters( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ“®‚©‚·
-// BG, •¶šƒ†ƒjƒbƒg‚Ö‚Ì‘‚«‚İ
-static void PrintLetter_init( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚Ì‘‚«‚İ‚ğŠJn‚·‚é
-static void PrintLetter_main( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ‚P•¶š‚¸‚Âƒrƒbƒgƒ}ƒbƒvEƒEƒBƒ“ƒhƒE‚É‘‚«‚Ş
-static BOOL PrintLetter_check( const FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚Ì‘‚«‚İŠ®—¹‚ğƒ`ƒFƒbƒN‚·‚é
+// ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg
+static void CreatePlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒg‚ğì¬‚·‚é
+static void DeletePlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒg‚ğ”jŠü‚·‚é
+static void SetupPlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒg‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+static void HidePlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒg‘S‘Ì‚ğ”ñ•\¦‚É‚·‚é
+static void MovePlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg‚ğ“®‚©‚·
+static BOOL CheckPlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒg‚Ì“®ì‚ğƒ`ƒFƒbƒN
+static void EnterPlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒhoŒ»ŠJn
+static void OutPlate( FIELD_PLACE_NAME* system ); //ƒvƒŒ[ƒhoŒ»ŠJn
 // ó‘Ô‚Ì•ÏX
 static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state );
 static void Cancel( FIELD_PLACE_NAME* system ); 
@@ -291,17 +262,11 @@ static void DeletePNSystem( FIELD_PLACE_NAME* system ); // ’n–¼•\¦ƒVƒXƒeƒ€‚ğ”jŠ
 static void CreateWordset( FIELD_PLACE_NAME* system ); // ƒ[ƒhƒZƒbƒg‚ğ¶¬‚·‚é
 static void CreateMessageData( FIELD_PLACE_NAME* system ); // ƒƒbƒZ[ƒWƒf[ƒ^‚ğ¶¬‚·‚é
 static void CreatePlaceNameBuffer( FIELD_PLACE_NAME* system ); // ’n–¼ƒoƒbƒtƒ@‚ğ¶¬‚·‚é
-static void CreateBandBlankBitmap( FIELD_PLACE_NAME* system ); // ”’†‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒv‚ğ¶¬‚·‚é
-static void CreateBandBitmapWindow( FIELD_PLACE_NAME* system ); // ‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE‚ğ¶¬‚·‚é
-static void CreateLetters( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
 static void OpenDataHandle( FIELD_PLACE_NAME* system ); // ƒA[ƒJƒCƒuƒf[ƒ^ƒnƒ“ƒhƒ‹‚ğŠJ‚­
 // ”jŠü
 static void DeleteWordset( FIELD_PLACE_NAME* system ); // ƒ[ƒhƒZƒbƒg‚ğ”jŠü‚·‚é
 static void DeleteMessageData( FIELD_PLACE_NAME* system ); // ƒƒbƒZ[ƒWƒf[ƒ^‚ğ”jŠü‚·‚é
 static void DeletePlaceNameBuffer( FIELD_PLACE_NAME* system ); // ’n–¼ƒoƒbƒtƒ@‚ğ”jŠü‚·‚é
-static void DeleteBandBlankBitmap( FIELD_PLACE_NAME* system ); // ”’†‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒv‚ğ”jŠü‚·‚é
-static void DeleteBandBitmapWindow( FIELD_PLACE_NAME* system ); // ‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE‚ğ”jŠü‚·‚é
-static void DeleteLetters( FIELD_PLACE_NAME* system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ”jŠü‚·‚é
 static void CloseDataHandle( FIELD_PLACE_NAME* system ); // ƒA[ƒJƒCƒuƒf[ƒ^ƒnƒ“ƒhƒ‹‚ğ•Â‚¶‚é
 // ŠeíƒQƒbƒ^[ŠÖ”
 static HEAPID GetHeapID( const FIELD_PLACE_NAME* system ); // ƒq[ƒvID‚ğæ“¾‚·‚é
@@ -379,15 +344,12 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
   CreateClactRenderer( system );
 	LoadOBJResource( system );
 	CreateClactUnit( system );
-  SetUserRenderer( system, CLUNIT_LETTER );
+  SetUserRenderer( system, CLUNIT_PLATE );
   CreateBmpOamSystem( system ); 
-	CreateLetters( system );
-
+  CreatePlate( system );
   GFL_BG_SetBGControl( BG_FRAME, &BGCntHeader, GFL_BG_MODE_TEXT ); 
   LoadBGPaletteData( system );
   AllocBGNullCharArea( system );
-  CreateBandBlankBitmap( system );
-  CreateBandBitmapWindow( system );
 
 	ChangeState( system, SYSTEM_STATE_HIDE ); 
 
@@ -406,7 +368,8 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
   SaveNowZoneID( system );
 
   UnloadBGPaletteData( system ); 
-  DeleteLetters( system ); 
+
+  DeletePlate( system );
   DeletePlaceNameBuffer( system ); 
   DeleteBmpOamSystem( system ); 
   DeleteClactUnit( system );
@@ -414,8 +377,6 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
   DeleteClactRenderer( system );
   DeleteWordset( system );
   DeleteMessageData( system ); 
-  DeleteBandBitmapWindow( system );
-  DeleteBandBlankBitmap( system );
   FreeBGNullCharaArea( system ); 
   CloseDataHandle( system );
 
@@ -449,8 +410,8 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 
   IncStateCount( system ); // ó‘ÔƒJƒEƒ“ƒ^‚ğXV
 
+  //DEBUG_PrintSystemState( system );
 #ifdef TICK_TEST
-  DEBUG_PrintSystemState( system );
   OS_TFPrintf( 3, "[%d]: ", GetStateSeq(system) );
   start = OS_GetTick();
 #endif
@@ -466,8 +427,8 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
   case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( system );	    break;
 	}
 
-	// •¶šƒIƒuƒWƒFƒNƒg‚ğ“®‚©‚·
-  MoveLetters( system );
+	// ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg‚ğ“®‚©‚·
+  MovePlate( system );
 
 #ifdef TICK_TEST
   end = OS_GetTick();
@@ -594,7 +555,6 @@ void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* system )
 void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system )
 {
   ResetBG( system );
-  RecoverBlankBand( system );
 }
 
 
@@ -613,11 +573,6 @@ static void SetupBG( FIELD_PLACE_NAME* system )
 {
 	TransBGPalette( system ); 
   AllocBGNullCharArea( system );
-  CreateBandBlankBitmap( system );
-  CreateBandBitmapWindow( system );
-
-	// ƒrƒbƒgƒ}ƒbƒvEƒEƒBƒ“ƒhƒE‚Ìƒf[ƒ^‚ğVRAM‚É“]‘—
-	GFL_BMPWIN_MakeTransWindow( system->bmpWin ); 
 
   // BG•\¦İ’è
 	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
@@ -638,21 +593,19 @@ static void CleanBG( FIELD_PLACE_NAME* system )
 	GFL_BG_ClearFrame( BG_FRAME );
 
   FreeBGNullCharaArea( system ); 
-  DeleteBandBitmapWindow( system );
-  DeleteBandBlankBitmap( system );
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief BG‚ÌÄİ’è
  *
- * @param sys ’n–¼•\¦ƒVƒXƒeƒ€
+ * @param system ’n–¼•\¦ƒVƒXƒeƒ€
  */ 
 //-----------------------------------------------------------------------------------
-static void ResetBG( FIELD_PLACE_NAME* sys )
+static void ResetBG( FIELD_PLACE_NAME* system )
 { 
-  CleanBG( sys );
-  SetupBG( sys );
+  CleanBG( system );
+  SetupBG( system );
 }
 
 //------------------------------------------------------------------------------------
@@ -748,22 +701,6 @@ static void FreeBGNullCharaArea( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief ‘Ñ‚ğ•¶š‚ª‘‚«‚Ü‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É•œ‹A‚·‚é
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void RecoverBlankBand( FIELD_PLACE_NAME* system )
-{
-	GFL_BMP_DATA* src = system->bmpOrg;
-	GFL_BMP_DATA* dest = GFL_BMPWIN_GetBmp( system->bmpWin );
-
-	// •¶š‚ª‘‚«‚Ü‚ê‚Ä‚¢‚È‚¢ó‘Ô‚ğƒRƒs[
-	GFL_BMP_Copy( src, dest );	
-}
-
-//-----------------------------------------------------------------------------------
-/**
  * @brief ƒZƒ‹ƒAƒNƒ^[‚ÌƒŒƒ“ƒ_ƒ‰[‚ğì¬‚·‚é
  *
  * @param system 
@@ -809,10 +746,18 @@ static void LoadOBJResource( FIELD_PLACE_NAME* system )
   heapID = GetHeapID( system );
 	handle = GetArcHandle( system );
 
-	system->resPltt[ PLTT_RES_LETTER ] = 
+	system->resPltt[ PLTT_RES_PLATE ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
 				handle, NARC_place_name_place_name_string_NCLR,
 				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME * 32, 0, 1, heapID );
+
+	system->resChar = GFL_CLGRP_CGR_Register( 
+      handle, NARC_place_name_place_name_obj_NCGR, 
+      FALSE, CLSYS_DRAW_MAIN, heapID );
+
+	system->resCell = GFL_CLGRP_CELLANIM_Register( 
+      handle, NARC_place_name_place_name_obj_NCER, 
+      NARC_place_name_place_name_obj_NANR, heapID );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: LoadOBJResource\n" );
@@ -830,6 +775,8 @@ static void UnloadOBJResource( FIELD_PLACE_NAME* system )
 {
   int i;
 
+  GFL_CLGRP_CGR_Release( system->resChar );
+  GFL_CLGRP_CELLANIM_Release( system->resCell );
 	for( i=0; i<PLTT_RES_NUM; i++ )
 	{
 		GFL_CLGRP_PLTT_Release( system->resPltt[i] );
@@ -852,11 +799,11 @@ static void CreateClactUnit( FIELD_PLACE_NAME* system )
   HEAPID heapID;
 
   heapID = GetHeapID( system );
-	system->clunit[ CLUNIT_LETTER ] = 
-		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, heapID );
+	system->clunit[ CLUNIT_PLATE ] = 
+		GFL_CLACT_UNIT_Create( OBJ_CLUNIT_WK_NUM, BG_FRAME_PRIORITY, heapID );
 
 	// ‰Šúİ’è
-	GFL_CLACT_UNIT_SetDrawEnable( system->clunit[ CLUNIT_LETTER ], TRUE );
+	GFL_CLACT_UNIT_SetDrawEnable( system->clunit[ CLUNIT_PLATE ], TRUE );
   
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateClactUnit\n" );
@@ -905,50 +852,6 @@ static void SetUserRenderer( FIELD_PLACE_NAME* system, CLUNIT_INDEX unitIdx )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
- *
- * @param system 
- */
-//-----------------------------------------------------------------------------------
-static void CreateLetters( FIELD_PLACE_NAME* system )
-{
-	int i;
-
-	for( i=0; i<MAX_NAME_LENGTH; i++ )
-	{
-    system->letters[i] = PN_LETTER_Create( 
-        system->heapID, system->bmpOamSys, RENDERER_LETTER, 
-        system->resPltt[ PLTT_RES_LETTER ] );
-	} 
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateLetters\n" );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ğ”jŠü‚·‚é
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void DeleteLetters( FIELD_PLACE_NAME* system )
-{
-	int i;
-
-	for( i=0; i<MAX_NAME_LENGTH; i++ )
-	{
-    PN_LETTER_Delete( system->letters[i] );
-	} 
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteLetters\n" );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
  * @brief ƒA[ƒJƒCƒuƒf[ƒ^ƒnƒ“ƒhƒ‹‚ğŠJ‚­
  *
  * @param system
@@ -987,132 +890,185 @@ static void CloseDataHandle( FIELD_PLACE_NAME* system )
 #endif
 }
 
-//-----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ÌƒZƒbƒgƒAƒbƒv‚ğŠJn‚·‚é
+ *	@brief  ƒvƒŒ[ƒg‚ğ”jŠü‚·‚é
  *
- * @param system
+ *	@param	FIELD_PLACE_NAME* system 
  */
-//-----------------------------------------------------------------------------------
-static void SetupLetter_init( FIELD_PLACE_NAME* system )
+//-----------------------------------------------------------------------------
+static void CreatePlate( FIELD_PLACE_NAME* system )
 {
-  system->setupLetterNum = 0;
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ğ‚P•¶š‚¸‚ÂƒZƒbƒgƒAƒbƒv‚·‚é
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void SetupLetter_main( FIELD_PLACE_NAME* system )
-{
-  int i, idx;
-  STRCODE code[ MAX_NAME_LENGTH ];
-  PN_LETTER_SETUP_PARAM param;
-
-  idx = system->setupLetterNum;
-  GF_ASSERT( idx < GetPlaceNameLength(system) );
-
-  GFL_STR_GetStringCode( GetPlaceName(system), code, MAX_NAME_LENGTH );
-  param = LetterSetupParam;
-  param.font = system->font;
-  param.code = code[ idx ];
-
-  // –Ú•WˆÊ’u‚ğŒˆ’è
-  for( i=0; i<idx; i++ )
   {
-    param.dx += PN_LETTER_GetWidth( system->letters[i] );
-    param.dx += 1;
+    PN_PLATE_TOP_INIT_PARAM param;
+    GF_ASSERT( system->plate[PLATE_TOP] == NULL );
+
+    GFL_STD_MemClear( &param, sizeof(PN_PLATE_TOP_INIT_PARAM ) );
+    param.bmpOamSys       = system->bmpOamSys;
+    param.fontPlttRegIdx  = system->resPltt[ PLTT_RES_PLATE ];
+
+    system->plate[PLATE_TOP]  = PN_PLATE_Create(
+     GetHeapID( system ), 
+     PN_PLATE_TYPE_TOP, 
+     &param, 
+     system->clunit[ CLUNIT_PLATE ],
+     GetArcHandle( system ),
+     CLUNIT_PLATE,
+     system->resPltt[ PLTT_RES_PLATE ],
+     system->resChar,
+     system->resCell
+     );
   }
+  {
+    PN_PLATE_BOTTOM_INIT_PARAM param;
+    GF_ASSERT( system->plate[PLATE_BOTTOM] == NULL );
 
-  PN_LETTER_Setup( system->letters[ idx ], &param );
-  system->setupLetterNum++;
+    GFL_STD_MemClear( &param, sizeof(PN_PLATE_BOTTOM_INIT_PARAM ) );
 
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetupLetter_main[%d]\n", idx );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ÌƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
- *
- * @param system
- *
- * @return ‚·‚×‚Ä‚Ì•¶šƒIƒuƒWƒFƒNƒg‚ÌƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚Ä‚¢‚éê‡ TRUE
- *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
- */
-//-----------------------------------------------------------------------------------
-static BOOL SetupLetter_check( const FIELD_PLACE_NAME* system )
-{
-  if( GetPlaceNameLength(system) <= system->setupLetterNum ) {
-    return TRUE;
-  }
-  else {
-    return FALSE;
+    system->plate[PLATE_BOTTOM]  = PN_PLATE_Create(
+     GetHeapID( system ), 
+     PN_PLATE_TYPE_BOTTOM, 
+     &param, 
+     system->clunit[ CLUNIT_PLATE ],
+     GetArcHandle( system ),
+     CLUNIT_PLATE,
+     system->resPltt[ PLTT_RES_PLATE ],
+     system->resChar,
+     system->resCell
+     );
   }
 }
-
-//-----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ğ”ñ•\¦‚É‚·‚é
+ *	@brief  ƒvƒŒ[ƒg‚ğ”jŠü‚·‚é
  *
- * @param system
+ *	@param	FIELD_PLACE_NAME* system 
  */
-//-----------------------------------------------------------------------------------
-static void HideLetters( FIELD_PLACE_NAME* system )
+//-----------------------------------------------------------------------------
+static void DeletePlate( FIELD_PLACE_NAME* system )
 {
-	int i;
-	
-	for( i=0; i<MAX_NAME_LENGTH; i++ )
-	{
-    PN_LETTER_SetDrawEnable( system->letters[i], FALSE );
-	}
+  int i;
+  for( i = 0; i < PLATE_MAX; i++ )
+  {
+    if( system->plate[ i ] != NULL )
+    {
+      PN_PLATE_Delete( system->plate[ i ] );
+      system->plate[ i ]  = NULL;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ƒvƒŒ[ƒg‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+ *
+ *	@param	FIELD_PLACE_NAME* system 
+ */
+//-----------------------------------------------------------------------------
+static void SetupPlate( FIELD_PLACE_NAME* system )
+{
+  {
+    PN_PLATE_TOP_SETUP_PARAM  setup;
+    GFL_STD_MemClear( &setup, sizeof( PN_PLATE_TOP_SETUP_PARAM) );
+    setup.font      = GetFont( system );
+    setup.zoneID    = system->zoneID;
+    setup.placeName = GetPlaceName( system );
+    PN_PLATE_SetupReq( system->plate[ PLATE_TOP ], &setup );
+  }
+  {
+    PN_PLATE_BOTTOM_SETUP_PARAM setup;
+    GFL_STD_MemClear( &setup, sizeof( PN_PLATE_BOTTOM_SETUP_PARAM) );
+    setup.seasonID    = system->seasonID;
+    PN_PLATE_SetupReq( system->plate[ PLATE_BOTTOM ], &setup );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ƒvƒŒ[ƒg‚ğ”ñ•\¦‚É‚·‚é
+ *
+ *	@param	FIELD_PLACE_NAME* system 
+ */
+//-----------------------------------------------------------------------------
+static void HidePlate( FIELD_PLACE_NAME* system )
+{
+  int i;
+  for( i = 0; i < PLATE_MAX; i++ )
+  {
+    PN_PLATE_HideReq( system->plate[ i ] );
+  }
+  GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BG‚ğ”ñ•\¦‚É‚·‚é
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ğ”­Ë‚·‚é
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void LaunchLetter( FIELD_PLACE_NAME* system )
-{
-  int idx;
-
-  // ‚·‚Å‚É‘S‚Ä‚Ìƒ†ƒjƒbƒg”­ËÏ‚İ
-  GF_ASSERT( system->launchLetterNum < GetPlaceNameLength(system) );
-
-  // ”­Ë
-  idx = system->launchLetterNum++;
-  PN_LETTER_MoveStart( system->letters[ idx ] );
-  PN_LETTER_SetDrawEnable( system->letters[ idx ], TRUE );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: LaunchLetter[%d]\n", idx );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief ‚·‚×‚Ä‚Ì•¶šƒIƒuƒWƒFƒNƒg‚ğ“®‚©‚·
+ * @brief ƒvƒŒ[ƒgƒIƒuƒWƒFƒNƒg‚ğ“®‚©‚·
  *
  * @param system 
  */
 //-----------------------------------------------------------------------------------
-static void MoveLetters( FIELD_PLACE_NAME* system )
+static void MovePlate( FIELD_PLACE_NAME* system )
 {
   int i;
-  int len = GetPlaceNameLength( system );
-
-	for( i=0; i<len; i++ )
+	for( i=0; i<PLATE_MAX; i++ )
 	{
-    PN_LETTER_Main( system->letters[i] );
+    PN_PLATE_Main( system->plate[i] );
 	}
 } 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ƒvƒŒ[ƒg‚Ì“®ì‚ğƒ`ƒFƒbƒN
+ *
+ *	@param	FIELD_PLACE_NAME* system 
+ *
+ *	@retval TRUE  “®‚¢‚Ä‚¢‚È‚¢
+ *	@retval FALSE “®‚¢‚Ä‚¢‚é
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckPlate( FIELD_PLACE_NAME* system )
+{
+  BOOL moveFinish = TRUE;
+  int i;
+  for( i=0; i<PLATE_MAX; i++ )
+  {
+    if( !PN_PLATE_IsEnd( system->plate[i] ) ) 
+    {
+      moveFinish = FALSE;
+      break; 
+    }
+  }
+
+  return moveFinish;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  oŒ»ŠJn
+ *
+ *	@param	FIELD_PLACE_NAME* system 
+ */
+//-----------------------------------------------------------------------------
+static void EnterPlate( FIELD_PLACE_NAME* system )
+{
+  int i;
+  for( i = 0; i < PLATE_MAX; i++ )
+  {
+    PN_PLATE_EnterReq( system->plate[ i ], system->stateCount, PROCESS_TIME_FADEIN );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  o‚Äs‚­ˆ—ŠJn
+ *
+ *	@param	FIELD_PLACE_NAME* system 
+ */
+//-----------------------------------------------------------------------------
+static void OutPlate( FIELD_PLACE_NAME* system )
+{
+  int i;
+  for( i = 0; i < PLATE_MAX; i++ )
+  {
+    PN_PLATE_OutReq( system->plate[ i ], system->stateCount, PROCESS_TIME_WAIT_FADEOUT );
+  }
+}
 
 //-----------------------------------------------------------------------------------
 /**
@@ -1128,7 +1084,7 @@ static void CreateBmpOamSystem( FIELD_PLACE_NAME* system )
   GF_ASSERT( system->bmpOamSys == NULL );
 
   heapID = GetHeapID( system );
-	system->bmpOamSys = BmpOam_Init( heapID, system->clunit[ CLUNIT_LETTER ] );
+	system->bmpOamSys = BmpOam_Init( heapID, system->clunit[ CLUNIT_PLATE ] );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateBmpOamSystem\n" );
@@ -1152,72 +1108,6 @@ static void DeleteBmpOamSystem( FIELD_PLACE_NAME* system )
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteBmpOamSystem\n" );
 #endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚Ì‘‚«‚İ‚ğŠJn‚·‚é
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void PrintLetter_init( FIELD_PLACE_NAME* system )
-{
-  system->writeLetterNum = 0;
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief •¶šƒIƒuƒWƒFƒNƒg‚ğ‚P•¶š‚¸‚Âƒrƒbƒgƒ}ƒbƒvEƒEƒBƒ“ƒhƒE‚É‘‚«‚Ş
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void PrintLetter_main( FIELD_PLACE_NAME* system )
-{
-  int idx;
-	u16 dx, dy;
-  u16 width, height;
-  PN_LETTER* letter;
-	const GFL_BMP_DATA* sourceBMP = NULL;
-	GFL_BMP_DATA* destBMP = NULL;
-
-  idx = system->writeLetterNum;
-  GF_ASSERT( idx < GetPlaceNameLength(system) );
-
-  letter    = system->letters[idx];
-  sourceBMP = PN_LETTER_GetBitmap( letter );
-	destBMP   = GFL_BMPWIN_GetBmp( system->bmpWin );
-  dx        = PN_LETTER_GetLeft( letter ) - ( BMPWIN_POS_X_CHAR * CHAR_SIZE );
-  dy        = PN_LETTER_GetTop( letter )  - ( BMPWIN_POS_Y_CHAR * CHAR_SIZE );
-  width     = PN_LETTER_GetWidth( letter );
-  height    = PN_LETTER_GetHeight( letter );
-
-  GFL_BMP_Print( sourceBMP, destBMP, 0, 0, dx, dy, width, height, 0 );
-  system->writeLetterNum++;
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief ‚·‚×‚Ä‚Ì•¶šƒIƒuƒWƒFƒNƒg‚Ì‘‚«‚İ‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
- *
- * @param system
- *
- * @return ‚·‚×‚ÄŠ®—¹‚µ‚½ê‡ TRUE
- *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
- */
-//-----------------------------------------------------------------------------------
-static BOOL PrintLetter_check( const FIELD_PLACE_NAME* system )
-{
-  int len = GetPlaceNameLength( system ); 
-  int num = system->writeLetterNum;
-
-  if( len <= num ) {
-    return TRUE;
-  }
-  else {
-    return FALSE;
-  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1349,7 +1239,8 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
   }
 
   // N“üæ‚É‚¢‚é
-  if( CheckIntrudeField( system, zoneID ) ) {
+  if( CheckIntrudeField( system, zoneID ) ) 
+  {
     // N“üæ‚ÌƒvƒŒƒCƒ„[–¼‚ğ“WŠJ
     GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( system->gameSystem );
     INTRUDE_COMM_SYS_PTR intrudeComm= Intrude_Check_CommConnect( gameComm );
@@ -1361,12 +1252,15 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
     WORDSET_RegisterPlaceName( system->wordset, 1, strID );
     WORDSET_ExpandStr( system->wordset, system->nameBuf, strbuf );
     GFL_STR_DeleteBuffer( strbuf );
+    system->seasonID  = GAMEDATA_GetIntrudeSeasonID( system->gameData, intrudeNetID );
   }
   // ©•ª‚ÌƒtƒB[ƒ‹ƒh‚É‚¢‚é
   else {
     GFL_MSG_GetString( system->message,	strID, system->nameBuf );
+    system->seasonID  = GAMEDATA_GetSeasonID( system->gameData );
   }
   system->nameLen = GFL_STR_GetBufferLength( system->nameBuf );
+  system->zoneID  = zoneID;
 }
 
 //-----------------------------------------------------------------------------------
@@ -1426,8 +1320,7 @@ static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state )
 	// ‘JˆÚæ‚Ìó‘Ô‚É‰‚¶‚½‰Šú‰»
 	switch( next_state ) {
 		case SYSTEM_STATE_HIDE:	
-			GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BG‚ğ”ñ•\¦
-			HideLetters( system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ”ñ•\¦‚É‚·‚é
+			HidePlate( system );
 			break;
 	}
 }
@@ -1436,33 +1329,33 @@ static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state )
 /**
  * @brief ‹­§“I‚ÉƒEƒBƒ“ƒhƒE‚ğ‘Şo‚³‚¹‚é
  *
- * @param sys ó‘Ô‚ğXV‚·‚éƒVƒXƒeƒ€
+ * @param system ó‘Ô‚ğXV‚·‚éƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Cancel( FIELD_PLACE_NAME* sys )
+static void Cancel( FIELD_PLACE_NAME* system )
 {
 	SYSTEM_STATE next_state;
 	int   start_count;
 	float passed_rate;
 	
 	// Œ»İ‚Ìó‘Ô‚É‰‚¶‚½ˆ—
-	switch( sys->state ) {
+	switch( system->state ) {
   case SYSTEM_STATE_HIDE:	
   case SYSTEM_STATE_FADEOUT:
-  case SYSTEM_STATE_LAUNCH:
     return;
+  case SYSTEM_STATE_LAUNCH:
   case SYSTEM_STATE_WAIT_LAUNCH:
   case SYSTEM_STATE_WAIT_FADEOUT:
     next_state  = SYSTEM_STATE_WAIT_FADEOUT;
-    start_count = PROCESS_TIME_WAIT_FADEOUT;
+    start_count = 0;
     break;
   case SYSTEM_STATE_FADEIN:
-    next_state = SYSTEM_STATE_FADEOUT;
+    next_state  = SYSTEM_STATE_WAIT_FADEOUT;
     // Œo‰ßÏ‚İƒtƒŒ[ƒ€”‚ğZo
     // (stateCount‚©‚ç, •\¦ˆÊ’u‚ğZo‚µ‚Ä‚¢‚é‚½‚ß, 
     //  ‹­§‘Şo‚³‚¹‚½ê‡‚Í stateCount ‚ğ“KØ‚ÉŒvZ‚·‚é•K—v‚ª‚ ‚é)
-    passed_rate = sys->stateCount / (float)PROCESS_TIME_FADEIN;
-    start_count = (int)( (1.0f - passed_rate) * PROCESS_TIME_FADEOUT );
+    passed_rate = system->stateCount / (float)PROCESS_TIME_FADEIN;
+    start_count = (int)( (1.0f - passed_rate) * PROCESS_TIME_WAIT_FADEOUT );
     break;
   case SYSTEM_STATE_SETUP:
     next_state = SYSTEM_STATE_HIDE;
@@ -1471,8 +1364,8 @@ static void Cancel( FIELD_PLACE_NAME* sys )
 	}
 
 	// ó‘Ô‚ğXV
-	ChangeState( sys, next_state );
-	sys->stateCount = start_count;
+	ChangeState( system, next_state );
+	system->stateCount = start_count;
 }
 
 //-----------------------------------------------------------------------------------
@@ -1529,20 +1422,33 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
     break; 
 
   case 2:
-    RecoverBlankBand( system );
-    GFL_BMPWIN_MakeTransWindow( system->bmpWin ); 
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
+    GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
     GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
     GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
     G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
-    SetupLetter_init( system );
     IncStateSeq( system );
+    GX_SetVisibleWnd( GX_WNDMASK_OW );
+    G2_SetWndOBJInsidePlane(GX_WND_PLANEMASK_BG0
+        |GX_WND_PLANEMASK_BG1
+        |GX_WND_PLANEMASK_BG2
+        |GX_WND_PLANEMASK_BG3
+        |GX_WND_PLANEMASK_OBJ, TRUE );
+    G2_SetWndOutsidePlane(GX_WND_PLANEMASK_BG0
+        |GX_WND_PLANEMASK_BG1
+        |GX_WND_PLANEMASK_BG2
+        |GX_WND_PLANEMASK_OBJ, TRUE );
+
     break; 
 
   case 3:
-    SetupLetter_main( system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğƒZƒbƒgƒAƒbƒv
+    SetupPlate(system);
+    IncStateSeq( system );
+    break;
 
-    // ‘S‚Ä‚Ì•¶šƒIƒuƒWƒFƒNƒg‚ÌƒZƒbƒgƒAƒbƒv‚ªŠ®—¹
-    if( SetupLetter_check(system) ) {
+  case 4:
+    if( CheckPlate(system ) )
+    {
       ChangeState( system, SYSTEM_STATE_FADEIN );
     }
     break;
@@ -1562,12 +1468,16 @@ static void Process_FADEIN( FIELD_PLACE_NAME* system )
   case 0:
     Draw_FADEIN( system ); // ƒ¿’l‚ğ‰Šú‰»
     GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); // BG‚ğ•\¦
+
+    EnterPlate( system );
     IncStateSeq( system );
     break;
 
   case 1:
     // ˆê’èŠÔ‚ªŒo‰ß‚µ‚½‚ç, Ÿ‚Ìó‘Ô‚Ö
-    if( PROCESS_TIME_FADEIN < system->stateCount ) {
+
+    if( PROCESS_TIME_FADEIN < system->stateCount
+        && CheckPlate( system )) {
       ChangeState( system, SYSTEM_STATE_WAIT_LAUNCH );
     }
     break;
@@ -1601,21 +1511,11 @@ static void Process_LAUNCH( FIELD_PLACE_NAME* system )
 {
   switch( GetStateSeq(system) ) {
   case 0:
-		system->launchLetterNum = 0;	// ”­Ë•¶š”‚ğƒŠƒZƒbƒg
     IncStateSeq( system );
     break;
 
   case 1:
-    // ˆê’èŠÔŠu‚Å•¶š‚ğ”­Ë
-    if( system->stateCount % LAUNCH_INTERVAL == 0 ) {
-
-      LaunchLetter( system ); // ”­Ë
-
-      // ‚·‚×‚Ä‚Ì•¶š‚ğ”­Ë‚µ‚½‚ç, Ÿ‚Ìó‘Ô‚Ö
-      if( system->nameLen <= system->launchLetterNum ) {
-        ChangeState( system, SYSTEM_STATE_WAIT_FADEOUT );
-      }
-    }
+    ChangeState( system, SYSTEM_STATE_WAIT_FADEOUT );
     break;
   }
 }
@@ -1624,50 +1524,24 @@ static void Process_LAUNCH( FIELD_PLACE_NAME* system )
 /**
  * @brief ƒtƒF[ƒhƒAƒEƒg‘Ò‚¿ó‘Ô‚Ì“®ì
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* sys )
+static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* system )
 {
 	int i;
-  BOOL moveFinish = TRUE;
 
-  switch( GetStateSeq(sys) ) {
+  switch( GetStateSeq(system) ) {
   case 0:
-    // ‘S‚Ä‚Ì•¶š‚Ì’â~‘Ò‚¿
-    for( i=0; i<sys->nameLen; i++ )
-    {
-      if( PN_LETTER_IsMoving( sys->letters[i] ) ) { 
-        moveFinish = FALSE;
-        break; 
-      }
-    }
-    if( moveFinish ) {
-      PrintLetter_init( sys );
-      IncStateSeq( sys );
-    }
-    break;
-
-  case 1:
-    PrintLetter_main( sys );
-    // ‘S‚Ä‚Ì•¶š‚Ì‘‚«‚İŠ®—¹
-    if( PrintLetter_check(sys) ) {
-      IncStateSeq( sys );
-    }
-    break;
-  case 2:
-	  GFL_BMPWIN_TransVramCharacter( sys->bmpWin );
-    IncStateSeq( sys );
-    break; 
-  case 3:
-    HideLetters( sys ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ”ñ•\¦‚É‚·‚é
-    IncStateSeq( sys );
+    OutPlate( system );
+    IncStateSeq( system );
     break; 
 
-  case 4: 
+  case 1: 
     // ˆê’èŠÔ‚ªŒo‰ß
-    if( PROCESS_TIME_WAIT_FADEOUT < sys->stateCount ) { 
-      ChangeState( sys, SYSTEM_STATE_FADEOUT );
+   if( PROCESS_TIME_WAIT_FADEOUT < system->stateCount
+       && CheckPlate( system )) { 
+      ChangeState( system, SYSTEM_STATE_FADEOUT );
     }
   }
 }
@@ -1684,8 +1558,7 @@ static void Process_FADEOUT( FIELD_PLACE_NAME* system )
 	// ˆê’èŠÔ‚ªŒo‰ß‚µ‚½‚ç, Ÿ‚Ìó‘Ô‚Ö
 	if( PROCESS_TIME_FADEOUT < system->stateCount ) {
 		ChangeState( system, SYSTEM_STATE_HIDE );
-    GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BG‚ğ”ñ•\¦‚É‚·‚é
-    HideLetters( system ); // •¶šƒIƒuƒWƒFƒNƒg‚ğ”ñ•\¦‚É‚·‚é
+    HidePlate( system ); // ƒvƒŒ[ƒg‚ğ”ñ•\¦‚É‚·‚é
 	}
 }
 
@@ -1693,10 +1566,10 @@ static void Process_FADEOUT( FIELD_PLACE_NAME* system )
 /**
  * @brief ”ñ•\¦ó‘Ô‚Ì•`‰æˆ—
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Draw_HIDE( const FIELD_PLACE_NAME* sys )
+static void Draw_HIDE( const FIELD_PLACE_NAME* system )
 {
 }
 
@@ -1704,10 +1577,10 @@ static void Draw_HIDE( const FIELD_PLACE_NAME* sys )
 /**
  * @brief €”õó‘Ô‚Ì•`‰æˆ—
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Draw_SETUP( const FIELD_PLACE_NAME* sys )
+static void Draw_SETUP( const FIELD_PLACE_NAME* system )
 {
 }
 
@@ -1715,16 +1588,16 @@ static void Draw_SETUP( const FIELD_PLACE_NAME* sys )
 /**
  * @brief ƒtƒF[ƒhEƒCƒ“ó‘Ô‚Ì•`‰æˆ—
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Draw_FADEIN( const FIELD_PLACE_NAME* sys )
+static void Draw_FADEIN( const FIELD_PLACE_NAME* system )
 {
 	int val1, val2;
 	float rate;
 
 	// ƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒOŒW”‚ğXV
-	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADEIN;
+	rate  = (float)system->stateCount / (float)PROCESS_TIME_FADEIN;
 	val1 = (int)( ALPHA_VALUE_1 * rate );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * (1.0f - rate) );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
@@ -1734,10 +1607,10 @@ static void Draw_FADEIN( const FIELD_PLACE_NAME* sys )
 /**
  * @brief ‘Ò‹@ó‘Ô‚Ì•`‰æˆ—
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* sys )
+static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* system )
 {
 }
 
@@ -1745,10 +1618,10 @@ static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* sys )
 /**
  * @brief •¶š”­Ëó‘Ô‚Ì•`‰æˆ—
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Draw_LAUNCH( const FIELD_PLACE_NAME* sys )
+static void Draw_LAUNCH( const FIELD_PLACE_NAME* system )
 {
 }
 
@@ -1756,10 +1629,10 @@ static void Draw_LAUNCH( const FIELD_PLACE_NAME* sys )
 /**
  * @brief ‘Ò‹@ó‘Ô‚Ì•`‰æˆ—
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* sys )
+static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* system )
 {
 }
 
@@ -1767,16 +1640,16 @@ static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* sys )
 /**
  * @brief ƒtƒF[ƒhEƒAƒEƒgó‘Ô‚Ì•`‰æˆ—
  *
- * @param sys “®‚©‚·ƒVƒXƒeƒ€
+ * @param system “®‚©‚·ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------
-static void Draw_FADEOUT( const FIELD_PLACE_NAME* sys )
+static void Draw_FADEOUT( const FIELD_PLACE_NAME* system )
 {
 	int val1, val2;
 	float rate;
 	
 	// ƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒOŒW”‚ğXV
-	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADEOUT;
+	rate  = (float)system->stateCount / (float)PROCESS_TIME_FADEOUT;
 	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
@@ -1914,56 +1787,6 @@ static void CreatePlaceNameBuffer( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief ”’†‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒv‚ğ¶¬‚·‚é
- * 
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void CreateBandBlankBitmap( FIELD_PLACE_NAME* system )
-{
-  HEAPID heapID;
-  ARCHANDLE* handle;
-
-  GF_ASSERT( system->bmpOrg == NULL );
-
-  heapID = GetHeapID( system );
-  handle = GetArcHandle( system );
-
-  system->bmpOrg = 
-    GFL_BMP_LoadCharacterByHandle( 
-        handle, NARC_place_name_place_name_back_NCGR, FALSE, heapID ); 
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateBandBlankBitmap\n" );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief ‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE‚ğ¶¬‚·‚é
- * 
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void CreateBandBitmapWindow( FIELD_PLACE_NAME* system )
-{
-  HEAPID heapID;
-
-  GF_ASSERT( system->bmpWin == NULL );
-
-  heapID = GetHeapID( system );
-  system->bmpWin = GFL_BMPWIN_Create( BG_FRAME, 
-                                      BMPWIN_POS_X_CHAR, BMPWIN_POS_Y_CHAR, 
-                                      BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR, 
-                                      BG_PALETTE_NO, GFL_BMP_CHRAREA_GET_F ); 
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateBandBitmapWindow\n" );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
  * @brief ƒ[ƒhƒZƒbƒg‚ğ”jŠü‚·‚é
  *
  * @param system
@@ -2016,44 +1839,6 @@ static void DeletePlaceNameBuffer( FIELD_PLACE_NAME* system )
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeletePlaceNameBuffer\n" );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief ”’†‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒv‚ğ”jŠü‚·‚é
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void DeleteBandBlankBitmap( FIELD_PLACE_NAME* system )
-{
-  if( system->bmpOrg ) { 
-    GFL_BMP_Delete( system->bmpOrg ); 
-    system->bmpOrg = NULL;
-  }
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteBandBlankBitmap\n" );
-#endif
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief ‘Ñ‚Ìƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE‚ğ”jŠü‚·‚é
- *
- * @param system
- */
-//-----------------------------------------------------------------------------------
-static void DeleteBandBitmapWindow( FIELD_PLACE_NAME* system )
-{
-	if( system->bmpWin ) { 
-    GFL_BMPWIN_Delete( system->bmpWin ); 
-    system->bmpWin = NULL;
-  }
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteBandBitmapWindow\n" );
 #endif
 }
 

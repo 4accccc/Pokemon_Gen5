@@ -7,12 +7,13 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= obata_toshihiro toyama
+include users_def
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = place_name
+LISTFILE	= list.txt
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -22,7 +23,7 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= icon
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -32,13 +33,29 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 esources:=$(wildcard *.nce)
 ssources:=$(wildcard *.nsc)
-isources:=$(wildcard *.imd)
-icasources:=$(wildcard *.ica)
 
+# リソースが吐き出すファイルを自動でつくる
+lobjects = $(subst .ncl,.NCLR,$(lsources))
+gobjects = $(subst .ncg,.NCGR,$(gsources))
+sobjects = $(subst .nsc,.NSCR,$(ssources))
+eobjects = $(subst .nce,.NCER,$(esources))
+aobjects = $(subst .nce,.NANR,$(esources))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES:.spa.narc
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .spa.spt
+
+.ncl.NCLR:
+	g2dcvtr $<
+
+.ncg.NCGR:
+	g2dcvtr $< -bg
+
+.nsc.NSCR:
+	g2dcvtr $<
+
+.nce.NCER:
+	g2dcvtr $<
 
 endif
 
@@ -47,25 +64,28 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
 
 subdir:
 	@$(MAKE_SUBDIR)
 
-
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-# コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(esources) $(ssources) $(isources) $(icasources) *.bat makefile *.txt
-	cnv.bat
-	arc.bat
-	$(NAIXCUT) $(targetname).naix
-endif
-
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname).naix: $(targetname).naix
 	$(COPY) $(targetname).naix $(TARGETDIR) 
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
+	-ls icon/*.N*R > $(LISTFILE)
+	-ls *.N*R >> $(LISTFILE)
+	$(ARCLIST_MAKE) $(LISTFILE)
+	nnsarc -c -l -n -i $(targetname) -S $(LISTFILE)
+	$(NAIXCUT) $(targetname).naix
+endif
+
 #------------------------------------------------------------------------------
 #	make clean ルール
 #※生成ファイルを削除するように記述を変更してください
@@ -73,6 +93,13 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -f *.NCGR
+	rm -f *.NCLR
+	rm -f *.NSCR
+	rm -f *.NANR
+	rm -f *.NCER
+	rm -f *.narc
+	rm -f *.naix
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc

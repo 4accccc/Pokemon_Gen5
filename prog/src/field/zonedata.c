@@ -941,6 +941,22 @@ BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 }
 
 //------------------------------------------------------------------
+//  @brief 場所アイコンインデックス取得
+//  @param  zone_id ゾーン指定ID
+//  @retval +0 NANRのARCDATID
+//  @retval +1 NCERのARCDATID
+//  @retval +2 NCGRのARCDATID
+//  @retval +3 NCLRのARCDATID
+//  @note ARCIDはARCID_PLACE_NAMEです
+//------------------------------------------------------------------
+u16 ZONEDATA_GetPlaceIconIdx(u16 zone_id)
+{
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->place_icon;
+}
+
+//------------------------------------------------------------------
 /**
  * @brief 指定ゾーンがフィールドマップのマトリックス指定かどうかを判定
  * @param  zone_id 判定するゾーンのID

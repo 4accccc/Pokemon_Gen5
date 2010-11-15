@@ -10,46 +10,56 @@
 #include <gflib.h>
 #include "print/gf_font.h"  // for GFL_FONT
 #include "system/bmp_oam.h" // for BmpOam_xxxx
-
+//=========================================================================
+// ■地名表示オブジェクト（上部、下部のオブジェクト）
+//=========================================================================
+typedef struct _PN_PLATE PN_PLATE;
 
 //=========================================================================
-// ■不完全型
+// ■初期化パラメータ
 //=========================================================================
-typedef struct _PN_LETTER PN_LETTER;
+typedef struct 
+{
+  BMPOAM_SYS_PTR  bmpOamSys;
+  u16 fontPlttRegIdx;
+} PN_PLATE_TOP_INIT_PARAM;
 
-
+typedef struct 
+{
+  int dummy;
+} PN_PLATE_BOTTOM_INIT_PARAM;
 //=========================================================================
-// ■セットアップ・パラメータ
+// ■設定パラメータ
 //=========================================================================
-typedef struct {
+typedef struct 
+{
+  GFL_FONT      *font;            //フォント
+  u16           zoneID;           //ゾーンID
+  const STRBUF  *placeName;       //表示する地名
+} PN_PLATE_TOP_SETUP_PARAM;
 
-	float x;		// 座標
-	float y;		// 
-	float sx;		// 速度
-	float sy;		// 
-	float dx;		// 目標位置
-	float dy;		// 
-	float dsx;	// 目標位置での速度
-	float dsy;	// 
-
-  GFL_FONT* font; // フォント
-  STRCODE   code; // 文字
-
-} PN_LETTER_SETUP_PARAM;
-
+typedef struct 
+{
+  u32           seasonID;         //季節
+} PN_PLATE_BOTTOM_SETUP_PARAM;
+//=========================================================================
+// ■定数
+//=========================================================================
+typedef enum
+{
+  PN_PLATE_TYPE_TOP,    //上部のオブジェクト（道路情報）
+  PN_PLATE_TYPE_BOTTOM, //下部のオブジェクト（季節情報）
+  PN_PLATE_TYPE_MAX,
+}PN_PLATE_TYPE;
 
 //=========================================================================
 // ■public functions
 //=========================================================================
-extern PN_LETTER* PN_LETTER_Create( HEAPID heapID, BMPOAM_SYS_PTR bmpOamSys, u16 surface, u32 plttRegIdx );
-extern void PN_LETTER_Delete( PN_LETTER* letter );
-extern void PN_LETTER_Setup( PN_LETTER* letter, const PN_LETTER_SETUP_PARAM* param );
-extern void PN_LETTER_Main( PN_LETTER* letter );
-extern void PN_LETTER_MoveStart( PN_LETTER* letter );
-extern const GFL_BMP_DATA* PN_LETTER_GetBitmap( const PN_LETTER* letter );
-extern void PN_LETTER_SetDrawEnable( PN_LETTER* letter, BOOL enable );
-extern int PN_LETTER_GetWidth( const PN_LETTER* letter );
-extern int PN_LETTER_GetHeight( const PN_LETTER* letter );
-extern int PN_LETTER_GetLeft( const PN_LETTER* letter );
-extern int PN_LETTER_GetTop( const PN_LETTER* letter );
-extern BOOL PN_LETTER_IsMoving( const PN_LETTER* letter );
+extern PN_PLATE* PN_PLATE_Create( HEAPID heapID, PN_PLATE_TYPE type, const void *init_param, GFL_CLUNIT *unit, ARCHANDLE* arcHandle, u16 surface, u16 backobjPlttRegIdx, u16 backobjCgrRegIdx, u16 backobjCellRegIdx );
+extern void PN_PLATE_Delete( PN_PLATE *plate );
+extern void PN_PLATE_SetupReq( PN_PLATE *plate, const void *setup_param );
+extern void PN_PLATE_Main( PN_PLATE *plate );
+extern void PN_PLATE_EnterReq( PN_PLATE *plate, s16 start, s16 end );
+extern void PN_PLATE_OutReq( PN_PLATE *plate, s16 start, s16 end );
+extern void PN_PLATE_HideReq( PN_PLATE *plate );
+extern BOOL PN_PLATE_IsEnd( const PN_PLATE *plate );

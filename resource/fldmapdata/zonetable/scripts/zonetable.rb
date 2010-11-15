@@ -16,6 +16,9 @@ $KCODE="SJIS"
 # $zone_specの定義
 require "../../../tools/hash/zone_spec.rb"
 
+# naix読み込むの追加
+require "../../../tools/naixread.rb"
+
 class ZoneIDError < Exception; end
 #------------------------------------------------
 #------------------------------------------------
@@ -51,6 +54,7 @@ class ColumnID
   attr :cZONEGROUP, true
 	attr :cNAME, true
 	attr :cPLACENAMEFLAG, true
+  attr :cPLACEICON, true
 	attr :cCOMMENT, true
 
 	def initialize( column )
@@ -113,6 +117,8 @@ class ColumnID
 				@cNAME = c_count
 			when "PLACE_NAME_FLAG"
 				@cPLACENAMEFLAG = c_count
+      when "PLACE_ICON"
+        @cPLACEICON = c_count
 			when "備考"
 				@cCOMMENT = c_count
 			end
@@ -231,6 +237,11 @@ class ZoneDataFile < OutputFile
 		end
 	end
 
+  def naix2index( naixpath,  str, id )
+    readder = NAIXReader.read( naixpath )
+    return readder.getIndex( str )
+  end
+
 	#------------------------------------------------
 	#
 	#	ゾーンごとのデータ出力
@@ -305,7 +316,12 @@ class ZoneDataFile < OutputFile
 		fly_flag = ox2bool( column[@cl.cFLY], id )
     bgm_chg_flag = ox2bool( column[@cl.cBGM_CHG], id )
     palace_ok_flag = ox2bool( column[@cl.cPALACE_OK], id )
-
+    placeicon_idx = naix2index( "../../place_name/place_name.naix",
+                               column[@cl.cPLACEICON] + "_NANR", id )
+    if placeicon_idx == nil then
+      STDERR.puts "場所アイコン指定がおかしい！:#{column[@cl.cPLACEICON]}"
+      exit(1);
+    end
 
 	@fp.puts <<DOCUMENT
 	{//ZONE_ID_#{id.upcase} = #{linecount}
@@ -337,7 +353,7 @@ class ZoneDataFile < OutputFile
     #{bgm_chg_flag},
     #{palace_ok_flag},
 		#{camera_area}, // camera_area
-		0, // padding
+		#{placeicon_idx},   // padding > placeicon
 		#{column[@cl.cSX]},
 		#{column[@cl.cSY]},
 		#{column[@cl.cSZ]},
