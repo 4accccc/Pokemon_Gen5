@@ -5628,7 +5628,8 @@ static  void  SePlayDecide( BTLV_INPUT_WORK* biw )
   else
   {
     // 録画データ再生時に、とくせいウィンドウSEと音がかぶらないようにSEを替える
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );
+    // ->とくせいウィンドウSEを変えたのでここも通常の決定音にしました
+    PMSND_PlaySE( SEQ_SE_DECIDE2 );
   }
 }
 
