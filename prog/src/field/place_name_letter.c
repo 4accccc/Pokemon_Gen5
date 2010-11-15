@@ -26,10 +26,13 @@
 //#define DEBUG_MODE
 #define PRINT_TARGET (3) // 出力先
 
-//#define STRING_LENGTH_CHECK
+#define STRING_LENGTH_CHECK
 
 #endif //PM_DEBUG
 
+#ifdef STRING_LENGTH_CHECK
+extern BOOL PlaceNameLong;  //地名表示長い番の参照先
+#endif //STRING_LENGTH_CHECK
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //    地名表示上部オブジェクト
@@ -688,17 +691,20 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
 
       color = PRINTSYS_LSB_Make( COLOR_NO_LETTER, COLOR_NO_SHADOW, COLOR_NO_BACK );
 #ifdef STRING_LENGTH_CHECK
+      if( PlaceNameLong )
       {
         STRBUF  *strbuf = GFL_STR_CreateBuffer( 128, plate->heapID );
-        STRCODE code[29] = L"LOCALYZE STRING CHECK 28WORD";
-        code[28]  = GFL_STR_GetEOMCode();
+        STRCODE code[]  = L"あああああのホワイトフォレスト";
+        code[15]  = GFL_STR_GetEOMCode();
         GFL_STR_SetStringCodeOrderLength( strbuf, code, 128 );
         PRINTSYS_PrintColor( wk->bmp, 0, 0, strbuf, wk->setup_param.font, color );
         GFL_STR_DeleteBuffer( strbuf );
       }
-#else
-      PRINTSYS_PrintColor( wk->bmp, 0, 0, wk->setup_param.placeName, wk->setup_param.font, color );
+      else
 #endif
+      {
+        PRINTSYS_PrintColor( wk->bmp, 0, 0, wk->setup_param.placeName, wk->setup_param.font, color );
+      }
       BmpOam_ActorBmpTrans( wk->bmpOamActor );
     }
     (*seq)++;

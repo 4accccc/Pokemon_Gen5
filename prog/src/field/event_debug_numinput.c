@@ -163,6 +163,8 @@ static u32 DebugGetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 
 static void DebugSetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameLongString(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameLongString(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
@@ -1315,6 +1317,14 @@ static u32 DebugGetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32
 static void DebugSetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
 {
   PlaceNameEnable = value;
+}
+static u32 DebugGetPlaceNameLongString(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PlaceNameLong;
+}
+static void DebugSetPlaceNameLongString(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PlaceNameLong = value;
 }
 
 //--------------------------------------------------------------

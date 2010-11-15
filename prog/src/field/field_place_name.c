@@ -42,6 +42,7 @@
 
 #ifdef PM_DEBUG
 BOOL PlaceNameEnable = TRUE; // ’n–¼•\¦‚Ì—LŒøƒtƒ‰ƒO
+BOOL PlaceNameLong  = FALSE;  //’n–¼•\¦’·‚³ƒ`ƒFƒbƒNƒtƒ‰ƒO
 #endif
 
 //===================================================================================
@@ -304,7 +305,7 @@ static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system ); // ’n–¼‚ª•
 static void UpdatePlaceName( FIELD_PLACE_NAME* system ); // •\¦‚·‚é’n–¼‚ğXV‚·‚é
 static BOOL CheckIntrudeField( const FIELD_PLACE_NAME* system, u16 zoneID ); // N“üæ‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
 // ƒ†[ƒeƒBƒŠƒeƒB
-static BOOL CheckPlaceNameFlag( u16 zoneID ); // ’n–¼•\¦ƒtƒ‰ƒO‚ğƒ`ƒFƒbƒN‚·‚é
+static BOOL CheckPlaceNameFlag( u16 zoneID, BOOL isSaveRecovery ); // ’n–¼•\¦ƒtƒ‰ƒO‚ğæ“¾‚·‚é
 // ƒfƒoƒbƒO
 //#ifdef DEBUG_PRINT_ON
 static void DEBUG_PrintSystemState( const FIELD_PLACE_NAME* system ); // ƒVƒXƒeƒ€ó‘Ô–¼‚ğo—Í‚·‚é
@@ -477,7 +478,7 @@ void FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELD_PLACE_NAME* system, u32 zoneI
   SetNowZoneID( system, zoneID ); 
 
   // ’n–¼•\¦ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚È‚¢êŠ‚Å‚Í•\¦‚µ‚È‚¢
-  if( CheckPlaceNameFlag( zoneID ) == FALSE ) { return; }
+  if( CheckPlaceNameFlag( zoneID, FALSE ) == FALSE ) { return; }
 
   // •\¦’†‚ÌƒEƒBƒ“ƒhƒE‚ğ‘Şo‚³‚¹‚é
 	Cancel( system ); 
@@ -500,7 +501,30 @@ void FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( FIELD_PLACE_NAME* system, u32 zone
   SetNowZoneID( system, zoneID ); 
 
   // ’n–¼•\¦ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚È‚¢êŠ‚Å‚Í•\¦‚µ‚È‚¢
-  if( CheckPlaceNameFlag( zoneID ) == FALSE ) { return; }
+  if( CheckPlaceNameFlag( zoneID, FALSE ) == FALSE ) { return; }
+
+  // •\¦’†‚ÌƒEƒBƒ“ƒhƒE‚ğ‘Şo‚³‚¹‚é
+	Cancel( system ); 
+
+  // ‹­§“I‚É•\¦
+  SetForceDispFlag( system ); 
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief ƒZ[ƒu‚©‚ç‚Ì•œ‹A—p ’n–¼•\¦
+ *
+ * @param system
+ * @param zoneID ’n–¼‚ğ•\¦‚·‚éêŠ‚Ìƒ][ƒ“ID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLACE_NAME_DisplayContinue( FIELD_PLACE_NAME* system, u32 zoneID )
+{
+  // ƒŠƒNƒGƒXƒg‚Ì‚ ‚Á‚½ƒ][ƒ“ID‚ğXV
+  SetNowZoneID( system, zoneID ); 
+
+  // ’n–¼•\¦ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚È‚¢êŠ‚Å‚Í•\¦‚µ‚È‚¢
+  if( CheckPlaceNameFlag( zoneID, TRUE ) == FALSE ) { return; }
 
   // •\¦’†‚ÌƒEƒBƒ“ƒhƒE‚ğ‘Şo‚³‚¹‚é
 	Cancel( system ); 
@@ -2174,13 +2198,27 @@ static u8 GetPlaceNameLength( const FIELD_PLACE_NAME* system )
  * @brief ’n–¼•\¦ƒtƒ‰ƒO‚ğƒ`ƒFƒbƒN‚·‚é
  *
  * @param zoneID ƒ`ƒFƒbƒN‚·‚éƒ][ƒ“
+ * @param isSaveRecovery  ƒZ[ƒu•œ‹A‚µ‚½‚©‚Ç‚¤‚©
  *
  * @return w’è‚µ‚½ƒ][ƒ“‚Ì’n–¼•\¦ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚éê‡ TRUE
  */
 //-----------------------------------------------------------------------------------
-static BOOL CheckPlaceNameFlag( u16 zoneID )
+static BOOL CheckPlaceNameFlag( u16 zoneID, BOOL isSaveRecovery )
 {
-  return ZONEDATA_GetPlaceNameFlag( zoneID );
+  switch( ZONEDATA_GetPlaceNameFlag( zoneID ) )
+  {
+  case ZONEDATA_PLACENAME_FLAG_ALL_HIDE:
+    return FALSE;
+  case ZONEDATA_PLACENAME_FLAG_ALL_VIEW:
+    return TRUE;
+  case ZONEDATA_PLACENAME_FLAG_SAVE_VIEW:
+    return isSaveRecovery;
+  case ZONEDATA_PLACENAME_FLAG_INOUT_VIEW:
+    return !isSaveRecovery;
+  default:
+    GF_ASSERT(0);
+    return FALSE;
+  }
 }
 
 

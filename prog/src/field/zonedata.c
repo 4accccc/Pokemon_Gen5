@@ -930,10 +930,10 @@ u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 /**
  * @brief  地名表示制御用フラグ取得
  * @param  zoneid ゾーン指定ID
- * @return  BOOL
+ * @return  ZONEDATA_PLACENAME_FLAG
  */
 //------------------------------------------------------------------
-BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id)
+ZONEDATA_PLACENAME_FLAG ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 {
   ZONEDATA* zoneData;
   zoneData = loadZoneData( zone_id );

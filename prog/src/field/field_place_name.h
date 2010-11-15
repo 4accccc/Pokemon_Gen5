@@ -14,6 +14,7 @@
 
 #ifdef PM_DEBUG
 extern BOOL PlaceNameEnable; // FALSE Ç…Ç∑ÇÈÇ∆ìÆçÏÇµÇ»Ç≠Ç»ÇÈ
+extern BOOL PlaceNameLong;  //TRUEÇ…Ç∑ÇÈÇ∆å≈íËç≈ëÂï∂éöóÒ
 #endif 
 
 typedef struct _FIELD_PLACE_NAME FIELD_PLACE_NAME;
@@ -27,6 +28,7 @@ extern void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* system );
 // êßå‰
 extern void FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELD_PLACE_NAME* system, u32 zoneID );
 extern void FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( FIELD_PLACE_NAME* system, u32 zoneID );
+extern void FIELD_PLACE_NAME_DisplayContinue( FIELD_PLACE_NAME* system, u32 zoneID );
 extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID );
 extern void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* system );
 extern void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system );

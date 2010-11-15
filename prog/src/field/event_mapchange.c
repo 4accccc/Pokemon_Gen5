@@ -575,7 +575,7 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
     // ’n–¼‚ð•\Ž¦‚·‚é
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     if( FIELDMAP_GetPlaceNameSys(fieldmap) ) {
-      FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( FIELDMAP_GetPlaceNameSys(fieldmap), cmw->continue_zone_id );
+      FIELD_PLACE_NAME_DisplayContinue( FIELDMAP_GetPlaceNameSys(fieldmap), cmw->continue_zone_id );
     }
     return GMEVENT_RES_FINISH;
   }

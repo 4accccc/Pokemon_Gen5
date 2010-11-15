@@ -15,7 +15,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_bc10_bin,
     ZONE_ID_BC10,
 		MAPNAME_BC10,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -49,7 +49,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_bc10pcr0101_bin,
     ZONE_ID_BC10,
 		MAPNAME_BC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -83,7 +83,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_bc10r0101_bin,
     ZONE_ID_BC10,
 		MAPNAME_BC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -117,7 +117,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_bc10r0201_bin,
     ZONE_ID_BC10,
 		MAPNAME_BC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -151,7 +151,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_bc10r0301_bin,
     ZONE_ID_BC10,
 		MAPNAME_BC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -185,7 +185,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_bc10r0401_bin,
     ZONE_ID_BC10,
 		MAPNAME_BC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -219,7 +219,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -253,7 +253,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01gym0101_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -287,7 +287,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01pc0101_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -321,7 +321,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01r0101_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -355,7 +355,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01r0102_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -389,7 +389,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01r0201_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -423,7 +423,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01r0202_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -457,7 +457,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01r0301_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -491,7 +491,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01r0302_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -525,7 +525,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c01r0501_bin,
     ZONE_ID_C01,
 		MAPNAME_C1SANYOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -559,7 +559,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -593,7 +593,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02gym0101_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -627,7 +627,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02gym0201_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -661,7 +661,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02gym0202_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -695,7 +695,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02pc0101_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -729,7 +729,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02r0101_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -763,7 +763,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02r0201_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -797,7 +797,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02r0301_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -831,7 +831,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02r0401_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -865,7 +865,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02r0501_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -899,7 +899,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02r0601_bin,
     ZONE_ID_C02,
 		MAPNAME_C2SIPPOU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -933,7 +933,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c02r0701_bin,
     ZONE_ID_R03,
 		MAPNAME_GATE_C02,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -967,7 +967,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		2,        // camera id
@@ -1001,7 +1001,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03gym0101_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1035,7 +1035,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p01_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		7,        // camera id
@@ -1069,7 +1069,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p07_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		8,        // camera id
@@ -1103,7 +1103,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p08_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		13,        // camera id
@@ -1137,7 +1137,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p09_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		15,        // camera id
@@ -1171,7 +1171,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p10_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		14,        // camera id
@@ -1205,7 +1205,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p12_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		6,        // camera id
@@ -1239,7 +1239,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p13_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		25,        // camera id
@@ -1273,7 +1273,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p14_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		25,        // camera id
@@ -1307,7 +1307,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p15_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		25,        // camera id
@@ -1341,7 +1341,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p16_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		25,        // camera id
@@ -1375,7 +1375,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p17_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		25,        // camera id
@@ -1409,7 +1409,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03pc0101_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -1443,7 +1443,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0101_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1477,7 +1477,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0201_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1511,7 +1511,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0301_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1545,7 +1545,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0302_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1579,7 +1579,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0303_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1613,7 +1613,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0401_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1647,7 +1647,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0402_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1681,7 +1681,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0501_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1715,7 +1715,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0502_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1749,7 +1749,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0601_bin,
     ZONE_ID_R04,
 		MAPNAME_GATE_C03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1783,7 +1783,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0801_bin,
     ZONE_ID_C03,
 		MAPNAME_C03R08,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1817,7 +1817,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r0901_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1851,7 +1851,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1001_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1885,7 +1885,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1002_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1919,7 +1919,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1101_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1953,7 +1953,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1102_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -1987,7 +1987,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1201_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2021,7 +2021,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1202_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2055,7 +2055,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1301_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2089,7 +2089,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03r1302_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2123,7 +2123,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -2157,7 +2157,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04gym0101_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2191,7 +2191,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04p01_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -2225,7 +2225,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04pc0101_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -2259,7 +2259,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0101_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2293,7 +2293,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0102_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2327,7 +2327,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0103_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2361,7 +2361,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0104_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2395,7 +2395,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0105_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2429,7 +2429,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0106_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2463,7 +2463,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0107_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2497,7 +2497,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0108_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2531,7 +2531,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0109_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2565,7 +2565,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0110_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R0110,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2599,7 +2599,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0111_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R0110,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2633,7 +2633,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0201_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R02,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2667,7 +2667,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0202_bin,
     ZONE_ID_C04,
 		MAPNAME_C04R02,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2701,7 +2701,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0301_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2735,7 +2735,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0302_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2769,7 +2769,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0303_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2803,7 +2803,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0304_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2837,7 +2837,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0305_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2871,7 +2871,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0401_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2905,7 +2905,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0402_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2939,7 +2939,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0403_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -2973,7 +2973,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0404_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3007,7 +3007,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0501_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3041,7 +3041,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0502_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3075,7 +3075,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0601_bin,
     ZONE_ID_R04,
 		MAPNAME_GATE_C04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3109,7 +3109,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0701_bin,
     ZONE_ID_R05,
 		MAPNAME_GATE_C04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3143,7 +3143,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0801_bin,
     ZONE_ID_R16,
 		MAPNAME_GATE_C04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3177,7 +3177,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r0901_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3211,7 +3211,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r1001_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3245,7 +3245,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c04r1002_bin,
     ZONE_ID_C04,
 		MAPNAME_C4RAIMON,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3279,7 +3279,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -3313,7 +3313,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05gym0101_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		12,        // camera id
@@ -3347,7 +3347,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05gym0201_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3381,7 +3381,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05pc0101_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -3415,7 +3415,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05r0101_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3449,7 +3449,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05r0201_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3483,7 +3483,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05r0301_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3517,7 +3517,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05r0401_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3551,7 +3551,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05r0501_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3585,7 +3585,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05r0601_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -3619,7 +3619,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c05r0701_bin,
     ZONE_ID_C05,
 		MAPNAME_C5HODOMOE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3653,7 +3653,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c06_bin,
     ZONE_ID_C06,
 		MAPNAME_C6FUKIYOSE,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -3687,7 +3687,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c06gym0101_bin,
     ZONE_ID_C06,
 		MAPNAME_C6FUKIYOSE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3721,7 +3721,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c06pc0101_bin,
     ZONE_ID_C06,
 		MAPNAME_C6FUKIYOSE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -3755,7 +3755,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c06r0101_bin,
     ZONE_ID_C06,
 		MAPNAME_C6FUKIYOSE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3789,7 +3789,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c06r0201_bin,
     ZONE_ID_C06,
 		MAPNAME_C6FUKIYOSE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3823,7 +3823,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c06r0301_bin,
     ZONE_ID_C06,
 		MAPNAME_C6FUKIYOSE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3857,7 +3857,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c07_bin,
     ZONE_ID_C07,
 		MAPNAME_C7SEKKA,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -3891,7 +3891,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c07gym0101_bin,
     ZONE_ID_C07,
 		MAPNAME_C7SEKKA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		27,        // camera id
@@ -3925,7 +3925,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c07pc0101_bin,
     ZONE_ID_C07,
 		MAPNAME_C7SEKKA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -3959,7 +3959,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c07r0101_bin,
     ZONE_ID_C07,
 		MAPNAME_C7SEKKA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -3993,7 +3993,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c07r0201_bin,
     ZONE_ID_C07,
 		MAPNAME_C7SEKKA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4027,7 +4027,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c07r0301_bin,
     ZONE_ID_C07,
 		MAPNAME_C7SEKKA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4061,7 +4061,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c07r0401_bin,
     ZONE_ID_C07,
 		MAPNAME_C7SEKKA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4095,7 +4095,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -4129,7 +4129,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08gym0101_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		32,        // camera id
@@ -4163,7 +4163,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08pc0101_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -4197,7 +4197,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0101_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4231,7 +4231,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0102_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4265,7 +4265,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0201_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4299,7 +4299,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0202_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4333,7 +4333,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0301_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4367,7 +4367,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0302_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4401,7 +4401,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0401_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4435,7 +4435,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0402_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4469,7 +4469,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0501_bin,
     ZONE_ID_R09,
 		MAPNAME_GATE_C08,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4503,7 +4503,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0601_bin,
     ZONE_ID_R10,
 		MAPNAME_GATE_C08,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4537,7 +4537,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0701_bin,
     ZONE_ID_R11,
 		MAPNAME_GATE_C08,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4571,7 +4571,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0801_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4605,7 +4605,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c08r0802_bin,
     ZONE_ID_C08,
 		MAPNAME_C8SOURYU,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4639,7 +4639,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		5,        // camera id
@@ -4673,7 +4673,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09p01_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		20,        // camera id
@@ -4707,7 +4707,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09p02_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		21,        // camera id
@@ -4741,7 +4741,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09p03_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -4775,7 +4775,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09r0101_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		16,        // camera id
@@ -4809,7 +4809,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09r0201_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		17,        // camera id
@@ -4843,7 +4843,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09r0301_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		18,        // camera id
@@ -4877,7 +4877,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09r0401_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		19,        // camera id
@@ -4911,7 +4911,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09r0501_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4945,7 +4945,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09r0601_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -4979,7 +4979,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c09r0701_bin,
     ZONE_ID_C09,
 		MAPNAME_C09,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -5013,7 +5013,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c11_bin,
     ZONE_ID_C11,
 		MAPNAME_C11,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -5047,7 +5047,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c11r0101_bin,
     ZONE_ID_C11,
 		MAPNAME_C11,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5081,7 +5081,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c11r0201_bin,
     ZONE_ID_C11,
 		MAPNAME_C11,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5115,7 +5115,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_closseum_bin,
     ZONE_ID_UNION,
 		MAPNAME_NOTHING,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5149,7 +5149,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_closseum02_bin,
     ZONE_ID_UNION,
 		MAPNAME_NOTHING,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5183,7 +5183,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d01r0101_bin,
     ZONE_ID_D01R0101,
 		MAPNAME_D1,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -5217,7 +5217,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d01r0201_bin,
     ZONE_ID_D01R0101,
 		MAPNAME_D1,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5251,7 +5251,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d02_bin,
     ZONE_ID_D02,
 		MAPNAME_D2,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -5285,7 +5285,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d02r0101_bin,
     ZONE_ID_D02,
 		MAPNAME_D2,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -5319,7 +5319,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d02r0201_bin,
     ZONE_ID_D02,
 		MAPNAME_D02_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -5353,7 +5353,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d03_bin,
     ZONE_ID_D03,
 		MAPNAME_D3,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5387,7 +5387,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d03r0101_bin,
     ZONE_ID_D03,
 		MAPNAME_D3,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5421,7 +5421,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d03r0201_bin,
     ZONE_ID_D03,
 		MAPNAME_GATE_ROAD,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5455,7 +5455,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0101_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5489,7 +5489,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0201_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5523,7 +5523,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0301_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5557,7 +5557,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0401_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5591,7 +5591,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0501_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5625,7 +5625,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0601_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5659,7 +5659,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0701_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5693,7 +5693,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0801_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5727,7 +5727,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r0901_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5761,7 +5761,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1001_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5795,7 +5795,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1101_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5829,7 +5829,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1201_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5863,7 +5863,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1301_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5897,7 +5897,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1401_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5931,7 +5931,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1501_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5965,7 +5965,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1601_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -5999,7 +5999,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1701_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6033,7 +6033,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1801_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6067,7 +6067,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r1901_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6101,7 +6101,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2001_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6135,7 +6135,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2101_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6169,7 +6169,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2201_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6203,7 +6203,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2301_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6237,7 +6237,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2501_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6271,7 +6271,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2601_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6305,7 +6305,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2801_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6339,7 +6339,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r2901_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6373,7 +6373,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r3101_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6407,7 +6407,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r3201_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6441,7 +6441,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r3301_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6475,7 +6475,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d04r3401_bin,
     ZONE_ID_D04R0101,
 		MAPNAME_D4,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6509,7 +6509,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d05_bin,
     ZONE_ID_D05,
 		MAPNAME_D5,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6543,7 +6543,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d05r0101_bin,
     ZONE_ID_D05,
 		MAPNAME_D5,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6577,7 +6577,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d05r0201_bin,
     ZONE_ID_D05,
 		MAPNAME_D5,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6611,7 +6611,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d06_bin,
     ZONE_ID_D06,
 		MAPNAME_D6,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6645,7 +6645,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d06r0101_bin,
     ZONE_ID_D06,
 		MAPNAME_D6,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6679,7 +6679,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d06r0201_bin,
     ZONE_ID_D06,
 		MAPNAME_D6,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6713,7 +6713,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d06r0301_bin,
     ZONE_ID_D06,
 		MAPNAME_D6,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6747,7 +6747,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d07_bin,
     ZONE_ID_D07,
 		MAPNAME_D7,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6781,7 +6781,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d07r0101_bin,
     ZONE_ID_D07,
 		MAPNAME_D7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6815,7 +6815,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d07r0201_bin,
     ZONE_ID_D07,
 		MAPNAME_D7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6849,7 +6849,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d07r0301_bin,
     ZONE_ID_D07,
 		MAPNAME_D7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6883,7 +6883,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d07r0401_bin,
     ZONE_ID_D07,
 		MAPNAME_D7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6917,7 +6917,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d07r0501_bin,
     ZONE_ID_D07,
 		MAPNAME_D7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -6951,7 +6951,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d07r0701_bin,
     ZONE_ID_D07,
 		MAPNAME_D7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -6985,7 +6985,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7019,7 +7019,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0101_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7053,7 +7053,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0301_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7087,7 +7087,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0401_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7121,7 +7121,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0501_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7155,7 +7155,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0601_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7189,7 +7189,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0701_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7223,7 +7223,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0801_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7257,7 +7257,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d08r0901_bin,
     ZONE_ID_D08,
 		MAPNAME_D8,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -7291,7 +7291,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		11,        // camera id
@@ -7325,7 +7325,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0101_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7359,7 +7359,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0201_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7393,7 +7393,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0301_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7427,7 +7427,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0401_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7461,7 +7461,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0501_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7495,7 +7495,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0601_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7529,7 +7529,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0701_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7563,7 +7563,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0801_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7597,7 +7597,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r0901_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7631,7 +7631,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r1001_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7665,7 +7665,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r1101_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7699,7 +7699,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r1201_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7733,7 +7733,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r1301_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7767,7 +7767,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r1401_bin,
     ZONE_ID_D09,
 		MAPNAME_D9,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7801,7 +7801,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d09r1501_bin,
     ZONE_ID_D09,
 		MAPNAME_D9_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7835,7 +7835,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d10_bin,
     ZONE_ID_D10,
 		MAPNAME_D10,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7869,7 +7869,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d10r0101_bin,
     ZONE_ID_D10,
 		MAPNAME_D10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7903,7 +7903,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d10r0201_bin,
     ZONE_ID_D10,
 		MAPNAME_D10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -7937,7 +7937,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d10r0301_bin,
     ZONE_ID_D10,
 		MAPNAME_D10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SNOWSTORM,
     TRUE,
 		0,        // camera id
@@ -7971,7 +7971,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d10r0401_bin,
     ZONE_ID_D10,
 		MAPNAME_D10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8005,7 +8005,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d12_bin,
     ZONE_ID_D12,
 		MAPNAME_D12,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8039,7 +8039,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d12r0101_bin,
     ZONE_ID_D12,
 		MAPNAME_D12,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8073,7 +8073,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d12r0102_bin,
     ZONE_ID_D12,
 		MAPNAME_D12,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8107,7 +8107,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d13_bin,
     ZONE_ID_D13,
 		MAPNAME_D13,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_MIST,
     TRUE,
 		0,        // camera id
@@ -8141,7 +8141,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d13r0101_bin,
     ZONE_ID_D13,
 		MAPNAME_D13,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8175,7 +8175,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20_bin,
     ZONE_ID_D20,
 		MAPNAME_D20,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8209,7 +8209,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0101_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8243,7 +8243,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0201_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8277,7 +8277,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0301_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8311,7 +8311,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0401_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8345,7 +8345,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0501_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		34,        // camera id
@@ -8379,7 +8379,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0601_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		34,        // camera id
@@ -8413,7 +8413,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0701_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		34,        // camera id
@@ -8447,7 +8447,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d20r0801_bin,
     ZONE_ID_D20R0101,
 		MAPNAME_D20_01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		34,        // camera id
@@ -8481,7 +8481,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h01_bin,
     ZONE_ID_H01,
 		MAPNAME_H01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		1,        // camera id
@@ -8515,7 +8515,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h01p01_bin,
     ZONE_ID_H01,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		4,        // camera id
@@ -8549,7 +8549,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h01r0101_bin,
     ZONE_ID_H01,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8583,7 +8583,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h01r0201_bin,
     ZONE_ID_H01,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8617,7 +8617,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h02_bin,
     ZONE_ID_H02,
 		MAPNAME_H02,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		9,        // camera id
@@ -8651,7 +8651,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h03_bin,
     ZONE_ID_H03,
 		MAPNAME_H03,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		10,        // camera id
@@ -8685,7 +8685,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -8719,7 +8719,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04r0101_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8753,7 +8753,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04r0201_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8787,7 +8787,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04r0301_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8821,7 +8821,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04r0401_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8855,7 +8855,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04r0501_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8889,7 +8889,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04r0601_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8923,7 +8923,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h04r0701_bin,
     ZONE_ID_H04,
 		MAPNAME_H04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -8957,7 +8957,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_h05_bin,
     ZONE_ID_H05,
 		MAPNAME_H05,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		26,        // camera id
@@ -8991,7 +8991,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0101_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9025,7 +9025,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0201_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9059,7 +9059,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0202_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9093,7 +9093,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0203_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9127,7 +9127,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0204_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9161,7 +9161,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0301_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9195,7 +9195,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0302_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9229,7 +9229,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0303_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9263,7 +9263,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0304_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9297,7 +9297,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0401_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9331,7 +9331,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0402_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9365,7 +9365,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0403_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9399,7 +9399,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0404_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9433,7 +9433,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0501_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9467,7 +9467,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_n01r0502_bin,
     ZONE_ID_N01R0101,
 		MAPNAME_N01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9501,7 +9501,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace01_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -9535,7 +9535,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace02_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9569,7 +9569,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace03_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9603,7 +9603,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace04_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9637,7 +9637,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace05_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9671,7 +9671,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace06_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9705,7 +9705,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace07_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9739,7 +9739,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace08_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9773,7 +9773,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace09_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9807,7 +9807,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_palace10_bin,
     ZONE_ID_PALACE01,
 		MAPNAME_PALACE_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		35,        // camera id
@@ -9841,7 +9841,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plc04_bin,
     ZONE_ID_PLC04,
 		MAPNAME_P_C4RAIMON,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -9875,7 +9875,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plc05_bin,
     ZONE_ID_PLC05,
 		MAPNAME_P_C5HODOMOE,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -9909,7 +9909,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plc06_bin,
     ZONE_ID_PLC06,
 		MAPNAME_P_C6FUKIYOSE,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -9943,7 +9943,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plc07_bin,
     ZONE_ID_PLC07,
 		MAPNAME_P_C7SEKKA,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -9977,7 +9977,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plc08_bin,
     ZONE_ID_PLC08,
 		MAPNAME_P_C8SOURYU,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10011,7 +10011,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plc10_bin,
     ZONE_ID_PLC10,
 		MAPNAME_P_BC10,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10045,7 +10045,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plcw10_bin,
     ZONE_ID_PLCW10,
 		MAPNAME_P_WC10,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10079,7 +10079,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_pld05_bin,
     ZONE_ID_PLD05,
 		MAPNAME_P_D5,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10113,7 +10113,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_pld06_bin,
     ZONE_ID_PLD06,
 		MAPNAME_P_D6,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10147,7 +10147,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_pld07_bin,
     ZONE_ID_PLD07,
 		MAPNAME_P_D7,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10181,7 +10181,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_pld08_bin,
     ZONE_ID_PLD08,
 		MAPNAME_P_D8,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10215,7 +10215,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_pld10_bin,
     ZONE_ID_PLD10,
 		MAPNAME_P_D10,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10249,7 +10249,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plh02_bin,
     ZONE_ID_PLH02,
 		MAPNAME_P_H02,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		9,        // camera id
@@ -10283,7 +10283,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plh03_bin,
     ZONE_ID_PLH03,
 		MAPNAME_P_H03,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		10,        // camera id
@@ -10317,7 +10317,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plh05_bin,
     ZONE_ID_PLH05,
 		MAPNAME_P_H05,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		26,        // camera id
@@ -10351,7 +10351,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr05_bin,
     ZONE_ID_PLR05,
 		MAPNAME_P_R5,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10385,7 +10385,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr06_bin,
     ZONE_ID_PLR06,
 		MAPNAME_P_R6,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10419,7 +10419,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr07_bin,
     ZONE_ID_PLR07,
 		MAPNAME_P_R7,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10453,7 +10453,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr08_bin,
     ZONE_ID_PLR08,
 		MAPNAME_P_R8,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10487,7 +10487,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr09_bin,
     ZONE_ID_PLR09,
 		MAPNAME_P_R9,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10521,7 +10521,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr11_bin,
     ZONE_ID_PLR11,
 		MAPNAME_P_R11,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10555,7 +10555,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr12_bin,
     ZONE_ID_PLR12,
 		MAPNAME_P_R12,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10589,7 +10589,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr13_bin,
     ZONE_ID_PLR13,
 		MAPNAME_P_R13,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10623,7 +10623,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr14_bin,
     ZONE_ID_PLR14,
 		MAPNAME_P_R14,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10657,7 +10657,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr15_bin,
     ZONE_ID_PLR15,
 		MAPNAME_P_R15,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10691,7 +10691,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plr16_bin,
     ZONE_ID_PLR16,
 		MAPNAME_P_R16,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10725,7 +10725,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plt03_bin,
     ZONE_ID_PLT03,
 		MAPNAME_P_T03,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10759,7 +10759,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_plt04_bin,
     ZONE_ID_PLT04,
 		MAPNAME_P_T04,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10793,7 +10793,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r01_bin,
     ZONE_ID_R01,
 		MAPNAME_R1,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10827,7 +10827,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r01r0101_bin,
     ZONE_ID_R01,
 		MAPNAME_GATE_ROAD,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -10861,7 +10861,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r02_bin,
     ZONE_ID_R02,
 		MAPNAME_R2,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10895,7 +10895,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r02r0101_bin,
     ZONE_ID_R02,
 		MAPNAME_GATE_T02,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -10929,7 +10929,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r03_bin,
     ZONE_ID_R03,
 		MAPNAME_R3,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -10963,7 +10963,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r03r0101_bin,
     ZONE_ID_R03,
 		MAPNAME_R3,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -10997,7 +10997,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r03r0201_bin,
     ZONE_ID_R03,
 		MAPNAME_R3,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11031,7 +11031,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r03r0301_bin,
     ZONE_ID_R03R0301,
 		MAPNAME_D14,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11065,7 +11065,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r03r0302_bin,
     ZONE_ID_R03R0301,
 		MAPNAME_D14,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11099,7 +11099,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r04_bin,
     ZONE_ID_R04,
 		MAPNAME_R4,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11133,7 +11133,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r04r0101_bin,
     ZONE_ID_R04,
 		MAPNAME_R4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11167,7 +11167,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r04r0201_bin,
     ZONE_ID_R04,
 		MAPNAME_R4,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11201,7 +11201,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r05_bin,
     ZONE_ID_R05,
 		MAPNAME_R5,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11235,7 +11235,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r05r0101_bin,
     ZONE_ID_R05,
 		MAPNAME_R5,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11269,7 +11269,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r06_bin,
     ZONE_ID_R06,
 		MAPNAME_R6,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11303,7 +11303,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r06r0101_bin,
     ZONE_ID_R06,
 		MAPNAME_R6,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11337,7 +11337,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r06r0201_bin,
     ZONE_ID_R06R0201,
 		MAPNAME_D15,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11371,7 +11371,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r06r0202_bin,
     ZONE_ID_R06R0201,
 		MAPNAME_D15,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11405,7 +11405,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r06r0203_bin,
     ZONE_ID_R06R0201,
 		MAPNAME_D15_01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11439,7 +11439,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r06r0301_bin,
     ZONE_ID_R06,
 		MAPNAME_R6,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11473,7 +11473,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07_bin,
     ZONE_ID_R07,
 		MAPNAME_R7,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11507,7 +11507,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07r0101_bin,
     ZONE_ID_R07R0101,
 		MAPNAME_R07R01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		33,        // camera id
@@ -11541,7 +11541,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07r0102_bin,
     ZONE_ID_R07R0101,
 		MAPNAME_R07R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		33,        // camera id
@@ -11575,7 +11575,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07r0103_bin,
     ZONE_ID_R07R0101,
 		MAPNAME_R07R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		33,        // camera id
@@ -11609,7 +11609,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07r0104_bin,
     ZONE_ID_R07R0101,
 		MAPNAME_R07R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		33,        // camera id
@@ -11643,7 +11643,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07r0105_bin,
     ZONE_ID_R07R0101,
 		MAPNAME_R07R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11677,7 +11677,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07r0201_bin,
     ZONE_ID_R07,
 		MAPNAME_R7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11711,7 +11711,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r07r0301_bin,
     ZONE_ID_R07,
 		MAPNAME_R7,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11745,7 +11745,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r08_bin,
     ZONE_ID_R08,
 		MAPNAME_R8,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11779,7 +11779,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r08r0101_bin,
     ZONE_ID_R08R0101,
 		MAPNAME_R08R01,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11813,7 +11813,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r08r0201_bin,
     ZONE_ID_R08,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11847,7 +11847,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r09_bin,
     ZONE_ID_R09,
 		MAPNAME_R9,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -11881,7 +11881,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r09r0101_bin,
     ZONE_ID_R09,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11915,7 +11915,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r09r0201_bin,
     ZONE_ID_R09,
 		MAPNAME_R09R02,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11949,7 +11949,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r09r0202_bin,
     ZONE_ID_R09,
 		MAPNAME_R09R02,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -11983,7 +11983,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r09r0301_bin,
     ZONE_ID_R09R0301,
 		MAPNAME_R09R03,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12017,7 +12017,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r09r0302_bin,
     ZONE_ID_R09R0301,
 		MAPNAME_R09R03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12051,7 +12051,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r09r0303_bin,
     ZONE_ID_R09R0301,
 		MAPNAME_R09R03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12085,7 +12085,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12119,7 +12119,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0101_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12153,7 +12153,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0201_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12187,7 +12187,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0301_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12221,7 +12221,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0401_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12255,7 +12255,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0501_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12289,7 +12289,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0601_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12323,7 +12323,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0701_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12357,7 +12357,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0801_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12391,7 +12391,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r10r0901_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12425,7 +12425,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r11_bin,
     ZONE_ID_R11,
 		MAPNAME_R11,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12459,7 +12459,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r11r0101_bin,
     ZONE_ID_R11,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12493,7 +12493,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r11r0201_bin,
     ZONE_ID_R11,
 		MAPNAME_R11,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12527,7 +12527,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r12_bin,
     ZONE_ID_R12,
 		MAPNAME_R12,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12561,7 +12561,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r12r0101_bin,
     ZONE_ID_R12,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12595,7 +12595,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r13_bin,
     ZONE_ID_R13,
 		MAPNAME_R13,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12629,7 +12629,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r13r0101_bin,
     ZONE_ID_R13,
 		MAPNAME_R13,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12663,7 +12663,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r13r0201_bin,
     ZONE_ID_R13,
 		MAPNAME_GATE_T04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12697,7 +12697,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r13r0301_bin,
     ZONE_ID_R13,
 		MAPNAME_R13,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12731,7 +12731,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r14_bin,
     ZONE_ID_R14,
 		MAPNAME_R14,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12765,7 +12765,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r14r0101_bin,
     ZONE_ID_R14,
 		MAPNAME_GATE_BC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12799,7 +12799,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r14r0201_bin,
     ZONE_ID_R14R0201,
 		MAPNAME_D19,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12833,7 +12833,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r14r0202_bin,
     ZONE_ID_R14R0201,
 		MAPNAME_D19,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12867,7 +12867,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r15_bin,
     ZONE_ID_R15,
 		MAPNAME_R15,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12901,7 +12901,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r15r0101_bin,
     ZONE_ID_R15,
 		MAPNAME_GATE_BC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12935,7 +12935,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r15r0201_bin,
     ZONE_ID_R15,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -12969,7 +12969,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r15r0301_bin,
     ZONE_ID_R15R0301,
 		MAPNAME_R16R01,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13003,7 +13003,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r15r0401_bin,
     ZONE_ID_R15,
 		MAPNAME_R15,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13037,7 +13037,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r16_bin,
     ZONE_ID_R16,
 		MAPNAME_R16,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -13071,7 +13071,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r16r0101_bin,
     ZONE_ID_R16,
 		MAPNAME_GATE_BRIDGE,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13105,7 +13105,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r16r0201_bin,
     ZONE_ID_R16R0201,
 		MAPNAME_D21,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13139,7 +13139,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r16r0301_bin,
     ZONE_ID_R16R0201,
 		MAPNAME_D21,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13173,7 +13173,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r18_bin,
     ZONE_ID_R18,
 		MAPNAME_W18,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -13207,7 +13207,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_r18r0101_bin,
     ZONE_ID_R18,
 		MAPNAME_W18,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13241,7 +13241,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -13275,7 +13275,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01r0101_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13309,7 +13309,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01r0102_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13343,7 +13343,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01r0201_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13377,7 +13377,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01r0202_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13411,7 +13411,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01r0301_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13445,7 +13445,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01r0302_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13479,7 +13479,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t01r0401_bin,
     ZONE_ID_T01,
 		MAPNAME_T1KANOKO,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13513,7 +13513,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -13547,7 +13547,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02pc0101_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -13581,7 +13581,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02r0101_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13615,7 +13615,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02r0102_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13649,7 +13649,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02r0201_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13683,7 +13683,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02r0202_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13717,7 +13717,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02r0301_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13751,7 +13751,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02r0302_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13785,7 +13785,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t02r0401_bin,
     ZONE_ID_T02,
 		MAPNAME_T2KARAKUSA,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13819,7 +13819,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t03_bin,
     ZONE_ID_T03,
 		MAPNAME_T03,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -13853,7 +13853,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t03pc0101_bin,
     ZONE_ID_T03,
 		MAPNAME_T03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -13887,7 +13887,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t03r0101_bin,
     ZONE_ID_T03,
 		MAPNAME_T03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13921,7 +13921,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t03r0201_bin,
     ZONE_ID_T03,
 		MAPNAME_T03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13955,7 +13955,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t03r0301_bin,
     ZONE_ID_T03,
 		MAPNAME_T03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -13989,7 +13989,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t03r0401_bin,
     ZONE_ID_T03,
 		MAPNAME_T03,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14023,7 +14023,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t04_bin,
     ZONE_ID_T04,
 		MAPNAME_T04,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -14057,7 +14057,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t04pc0101_bin,
     ZONE_ID_T04,
 		MAPNAME_T04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -14091,7 +14091,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t04r0101_bin,
     ZONE_ID_T04,
 		MAPNAME_T04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14125,7 +14125,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t04r0201_bin,
     ZONE_ID_T04,
 		MAPNAME_T04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14159,7 +14159,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t04r0301_bin,
     ZONE_ID_T04,
 		MAPNAME_T04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14193,7 +14193,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t04r0401_bin,
     ZONE_ID_T04,
 		MAPNAME_T04,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14227,7 +14227,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t05_bin,
     ZONE_ID_T05,
 		MAPNAME_T05,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -14261,7 +14261,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t05r0101_bin,
     ZONE_ID_T05,
 		MAPNAME_T05,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14295,7 +14295,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t05r0201_bin,
     ZONE_ID_T05,
 		MAPNAME_T05,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14329,7 +14329,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_t05r0301_bin,
     ZONE_ID_T05,
 		MAPNAME_T05,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14363,7 +14363,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_union_bin,
     ZONE_ID_UNION,
 		MAPNAME_NOTHING,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
@@ -14397,7 +14397,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_w17_bin,
     ZONE_ID_W17,
 		MAPNAME_R17,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -14431,7 +14431,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_wc10_bin,
     ZONE_ID_WC10,
 		MAPNAME_WC10,
-		1,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -14465,7 +14465,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_wc10pcr0101_bin,
     ZONE_ID_WC10,
 		MAPNAME_WC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		3,        // camera id
@@ -14499,7 +14499,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_wc10r0101_bin,
     ZONE_ID_WC10,
 		MAPNAME_WC10,
-		0,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id

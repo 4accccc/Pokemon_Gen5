@@ -50,6 +50,20 @@ typedef enum
   ZONEDATA_PLACEICON_OFS_NCLR,
 } ZONEDATA_PLACEICON_OFS;
 
+//-------------------------------------
+//  地名表示方式
+///	WBのときはBOOLだったが、
+//  セーブ復帰時表示フラグと
+//  では入時表示フラグの２種類の意味があったため
+//  下記に拡張
+//=====================================
+typedef enum {
+  ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+  ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
+  ZONEDATA_PLACENAME_FLAG_SAVE_VIEW,
+  ZONEDATA_PLACENAME_FLAG_INOUT_VIEW,
+} ZONEDATA_PLACENAME_FLAG;
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -272,7 +286,7 @@ extern u16 ZONEDATA_GetPlaceNameID(u16 zone_id);
 //------------------------------------------------------------------
 //  地名表示制御用フラグ取得
 //------------------------------------------------------------------
-extern BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id);
+extern ZONEDATA_PLACENAME_FLAG ZONEDATA_GetPlaceNameFlag(u16 zone_id);
 
 //------------------------------------------------------------------
 //  場所アイコンインデックス取得

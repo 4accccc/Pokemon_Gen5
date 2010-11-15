@@ -242,6 +242,22 @@ class ZoneDataFile < OutputFile
     return readder.getIndex( str )
   end
 
+  def placenameFlagConv( str, id )
+    case str
+    when "OFF"
+      "ZONEDATA_PLACENAME_FLAG_ALL_HIDE"
+    when "ON"
+      "ZONEDATA_PLACENAME_FLAG_ALL_VIEW"
+    when "SAVE_ON"
+      "ZONEDATA_PLACENAME_FLAG_SAVE_VIEW"
+    when "INOUT_ON"
+      "ZONEDATA_PLACENAME_FLAG_INOUT_VIEW"
+    else
+			STDERR.puts "#{id}:#{str}:想定外の入力があります\n"
+      exit(1)
+    end
+  end
+
 	#------------------------------------------------
 	#
 	#	ゾーンごとのデータ出力
@@ -304,7 +320,7 @@ class ZoneDataFile < OutputFile
 			else
 				"enc_dummy"
 			end
-    placename_flag = if column[@cl.cPLACENAMEFLAG] == "○" then 1 else 0 end
+    placename_flag = placenameFlagConv( column[@cl.cPLACENAMEFLAG], id )
 
 		map_chg_type = column[@cl.cMAPCHGTYPE]
 		if !(map_chg_type =~ /^MC_TYPE_/) then
@@ -320,7 +336,7 @@ class ZoneDataFile < OutputFile
                                column[@cl.cPLACEICON] + "_NANR", id )
     if placeicon_idx == nil then
       STDERR.puts "場所アイコン指定がおかしい！:#{column[@cl.cPLACEICON]}"
-      exit(1);
+      exit(1)
     end
 
 	@fp.puts <<DOCUMENT
