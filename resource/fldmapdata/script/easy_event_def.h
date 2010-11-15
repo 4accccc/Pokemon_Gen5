@@ -564,3 +564,39 @@
   _POP_WORK  SCWK_PARAM0
   .endm
 
+//--------------------------------------------------------------
+/**
+ * トレーナー連れ歩き開始処理呼び出し
+ *
+ * @param obj_id_wk 連れ歩き対象にするOBJIDを格納したワーク
+ */
+//--------------------------------------------------------------
+  .macro _ASM_PAIR_TRAINER_SET obj_id_wk  
+  _PUSH_WORK  SCWK_PARAM0
+
+  _ASM_LDWKVAL  SCWK_PARAM0,\obj_id_wk
+  _CHG_COMMON_SCR SCRID_PAIR_TRAINER_SET_CALL
+  
+  _POP_WORK   SCWK_PARAM0
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * トレーナー連れ歩き終了処理呼び出し
+ *
+ * @param obj_id_wk   連れ歩き対象のOBJIDを格納したワーク
+ * @param move_code_wk 連れ歩き対象に設定する新しい動作コードを格納したワーク
+ */
+//--------------------------------------------------------------
+  .macro _ASM_PAIR_TRAINER_FREE obj_id_wk,move_code_wk  
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+
+  _ASM_LDWKVAL  SCWK_PARAM0,\obj_id_wk
+  _ASM_LDWKVAL  SCWK_PARAM1,\move_code_wk
+  _CHG_COMMON_SCR SCRID_PAIR_TRAINER_FREE_CALL
+  
+  _POP_WORK   SCWK_PARAM1
+  _POP_WORK   SCWK_PARAM0
+  .endm
+

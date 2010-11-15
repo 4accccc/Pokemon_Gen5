@@ -20,6 +20,7 @@
 #include "shop_scr_def.h"
 #include "item_get_scr_def.h"
 #include "btl_util_scr_def.h"
+#include "pair_scr_def.h"
 
 //動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
@@ -239,9 +240,14 @@
 //いあいぎりエフェクト表示開始から, OBJを消すまでの待ち時間
 #define EV_HIDEN_IAIGIRI_OBJDEL_WAIT (3)
 
+//======================================================================
+// 特殊OBJID再定義コード
+//======================================================================
 //T01-R01間で配置されるゾーンを跨ぐOBJ用ID
 #define T01_R01_RIVAL (MMDL_ID_T01_R01_RIVAL)
 #define T01_R01_SUPPORT (MMDL_ID_T01_R01_SUPPORT)
+//連れ歩き用
+#define PAIR_TRAINER_01 ( MMDL_ID_PAIR )
 
 //======================================================================
 // ショップの挨拶コード

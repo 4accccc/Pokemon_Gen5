@@ -1024,6 +1024,10 @@ sub_iwasawa_main:
     CASE SEQ_IWASAWA_MAIN_MENU THEN
       _CALL siwasawa_main_menu
       $i_seq = $reg_iwasawa_return
+    
+    CASE SEQ_IWASAWA_ADD_PAIR THEN
+      _CALL siwasawa_add_pair_menu
+      $i_seq = $reg_iwasawa_return
 
     CASE SEQ_IWASAWA_MV_POKE THEN
       _CALL siwasawa_mv_poke_menu
@@ -1047,12 +1051,33 @@ siwasawa_main_menu:
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 	//リスト追加
-	_BMPMENU_MAKE_LIST( msg_deb_iwasawa_main01, SEQ_IWASAWA_MV_POKE )	//いどうポケモン
+	_BMPMENU_MAKE_LIST( msg_deb_iwasawa_main01, SEQ_IWASAWA_ADD_PAIR )	//連れ歩き
+	_BMPMENU_MAKE_LIST( msg_deb_iwasawa_main02, SEQ_IWASAWA_MV_POKE )	//いどうポケモン
 	_BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
 
   $reg_iwasawa_return = $i_ret
+}
+_RET
+
+//連れ歩き追加メニュー
+siwasawa_add_pair_menu:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+  DEFINE_LOCAL  i_player_x
+  DEFINE_LOCAL  i_player_z
+  
+  $reg_iwasawa_return = SEQ_IWASAWA_EXIT
+
+  IF FLAG_ON( SYS_FLAG_PAIR) THEN
+    _RET
+  ENDIF
+ 
+  _PLAYER_POS_GET( i_player_x, i_player_z)
+  _OBJ_ADD_EX( i_player_x, i_player_z, DIR_DOWN, PAIR_TRAINER_01, SHIRONA, MV_PAIR )
+  _FLAG_SET( SYS_FLAG_PAIR )
 }
 _RET
 
