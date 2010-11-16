@@ -305,13 +305,13 @@ typedef struct
 {
   BTLV_EFFVM_WORK*  bevw;
   int               seq_no;
-	int               type;
-	int               horizon;
-	int               vertical;
+  int               type;
+  int               horizon;
+  int               vertical;
   int               in_out;
-	int               frame;
-	int               wait;
-	int               wait_tmp;
+  int               frame;
+  int               wait;
+  int               wait_tmp;
   BOOL              flag;
 }BTLV_EFFVM_WINDOW_MOVE;
 
@@ -517,6 +517,58 @@ static  u32     BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, DATID_TYPE datID_typ
 static  void*   BTLV_EFFVM_GetDPDResourceAdrs( BTLV_EFFVM_WORK *bevw, DATID_TYPE datID_type, ARCDATID datID, int file_count, int file_ofs );
 #endif
 
+#ifdef PM_DEBUG
+typedef struct{
+  u32 start;
+  u32 max;
+  u16 count;
+  u16 waza;
+}DEBUG_RESEARCH_VRAM;
+
+static DEBUG_RESEARCH_VRAM drv={0,0,0};
+
+static void cb_DumpLnkVramManager(u32 addr, u32 szByte, void* pUserData )
+{
+  // 合計サイズを計算
+  (*((u32*)pUserData)) += szByte;
+}
+#define BATTLE_VRAM_FREE_MAX  ( 256*1024 )
+
+
+
+static void DebugVramInfo_Init( waza )
+{
+  u32 work=0;
+  drv.max        = 0;
+  drv.waza       = waza;
+  NNS_GfdDumpLnkTexVramManagerEx( cb_DumpLnkVramManager,NULL, &work );
+  drv.start = BATTLE_VRAM_FREE_MAX - work;
+}
+
+static void DebugVramInfo_Main( void )
+{
+  u32 work=0,memory=0;
+  NNS_GfdDumpLnkTexVramManagerEx( cb_DumpLnkVramManager,NULL, &work );  
+  work = BATTLE_VRAM_FREE_MAX - work;
+
+  if(work>drv.max){
+    drv.max = work;
+  }
+}
+
+static void DebugVramInfo_Print(void)
+{
+//  OS_Printf( "==========================================================\n" );
+  OS_FPrintf( 1,"No.%03d,start=0x%x(%3.2f%),", drv.waza, 
+                                        drv.start, (float)(drv.start*100)/(256*1024));
+  OS_FPrintf( 1,"max=0x%05x(%3.2f%)",drv.max,   (float)(drv.max*100)/(256*1024));
+  OS_FPrintf( 1,"diff=%06d\n",drv.max-drv.start);
+//  OS_Printf( "==========================================================\n" );
+}
+
+#endif
+
+
 //============================================================================================
 /**
  *  データテーブル
@@ -693,6 +745,8 @@ VMHANDLE  *BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID )
   vmh = VM_Create( heapID, &vm_init );
   VM_Init( vmh, bevw );
 
+
+
   return vmh;
 }
 
@@ -707,6 +761,10 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
 {
   BOOL  ret = VM_Control( vmh );
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+#ifdef PM_DEBUG
+  DebugVramInfo_Main();
+#endif
 
   if( bevw->pause_flag )
   {
@@ -734,6 +792,7 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
     bevw->sequence = NULL;
   }
 
+
   return ret;
 }
 
@@ -751,6 +810,8 @@ void  BTLV_EFFVM_Exit( VMHANDLE *vmh )
   BTLV_EFFVM_Stop( vmh );
   GFL_HEAP_FreeMemory ( bevw );
   VM_Delete( vmh );
+
+
 }
 
 //============================================================================================
@@ -765,6 +826,11 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs;
   int table_ofs;
+
+#ifdef PM_DEBUG
+  DebugVramInfo_Init(waza);
+#endif
+
 
   GF_ASSERT_MSG( bevw->sequence == NULL, "すでにエフェクトが起動中です\neffno:%d\n", bevw->waza );
 //  GF_ASSERT( ( from < BTLV_MCSS_POS_MAX ) || ( from == BTLV_MCSS_POS_ERROR ) );
@@ -1777,7 +1843,7 @@ static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * @brief		カメラ現在位置をプッシュ
+ * @brief   カメラ現在位置をプッシュ
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -3562,7 +3628,7 @@ static VMCMD_RESULT VMEC_BG_VISIBLE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * @brief	ウインドウ操作
+ * @brief ウインドウ操作
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -3793,7 +3859,7 @@ static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * @brief	HPゲージ表示／非表示
+ * @brief HPゲージ表示／非表示
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -4733,7 +4799,7 @@ static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * @brief	シーケンスジャンプ
+ * @brief シーケンスジャンプ
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -4780,7 +4846,7 @@ static VMCMD_RESULT VMEC_SEQ_JUMP( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * @brief	着地演出待ち
+ * @brief 着地演出待ち
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -4808,7 +4874,7 @@ static VMCMD_RESULT VMEC_LANDING_WAIT( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
- * @brief	着地演出待ち
+ * @brief 着地演出待ち
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] context_work  コンテキストワークへのポインタ
@@ -4841,6 +4907,10 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   int i;
+
+#ifdef PM_DEBUG
+  DebugVramInfo_Print();
+#endif
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_SEQ_END\n");
@@ -6565,10 +6635,10 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
       break;
     }
 #endif
-    //src.x += MCSS_DEFAULT_Z	* ( cells_src / 2 );
-    src.z += MCSS_DEFAULT_Z	* cells_src;
-    //dst.x += MCSS_DEFAULT_Z	* ( cells_dst / 2 );
-    dst.z += MCSS_DEFAULT_Z	* cells_dst;
+    //src.x += MCSS_DEFAULT_Z * ( cells_src / 2 );
+    src.z += MCSS_DEFAULT_Z * cells_src;
+    //dst.x += MCSS_DEFAULT_Z * ( cells_dst / 2 );
+    dst.z += MCSS_DEFAULT_Z * cells_dst;
   }
 
   if( ( beeiw->ortho_mode == ORTHO_MODE_ON ) ||
