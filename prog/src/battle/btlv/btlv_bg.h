@@ -20,6 +20,6 @@ extern  void          BTLV_BG_MovePosition( BTLV_BG_WORK *bbw, int position, int
 extern  BOOL          BTLV_BG_CheckTCBExecute( BTLV_BG_WORK *bbw );
 
 // add ichiraku 2010/11/15
-extern  void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, int wait );
+extern  void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, int wait, int fade, int fade_frame );
 extern  BOOL  BTLV_BG_Raster_CheckTCBExecute( BTLV_BG_WORK *bbw );
 

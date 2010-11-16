@@ -3332,12 +3332,14 @@ static VMCMD_RESULT VMEC_BG_RASTER_SCROLL( VMHANDLE *vmh, void *context_work )
   fx32  radius  = ( fx32 )VMGetU32( vmh );
   int   line    = ( int )VMGetU32( vmh );
   int   wait    = ( int )VMGetU32( vmh );
+  int   fade    = ( int )VMGetU32( vmh );
+  int   fade_frame = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_BG_RASTER_SCROLL\n");
 #endif DEBUG_OS_PRINT
 
-  BTLV_BG_RasterScroll( BTLV_EFFECT_GetBGWork(), type, radius, line ,wait );
+  BTLV_BG_RasterScroll( BTLV_EFFECT_GetBGWork(), type, radius, line ,wait, fade, fade_frame );
 
   return bevw->control_mode;
 }

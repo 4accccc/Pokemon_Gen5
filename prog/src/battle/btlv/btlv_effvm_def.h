@@ -286,6 +286,11 @@
 #define	BTLEFF_BG_RASTER_SCROLL_H						  ( 0 )
 #define	BTLEFF_BG_RASTER_SCROLL_V						  ( 1 )
 
+#define	BTLEFF_BG_RASTER_SCROLL_FADE_NULL			( 0 )
+#define	BTLEFF_BG_RASTER_SCROLL_FADE_IN			  ( 1 )
+#define	BTLEFF_BG_RASTER_SCROLL_FADE_OUT			( 2 )
+#define	BTLEFF_BG_RASTER_SCROLL_FADE_INOUT		( 3 )
+
 //BGα値
 #define	BTLEFF_BG_ALPHA_DIRECT					      ( EFFTOOL_CALCTYPE_DIRECT )
 #define	BTLEFF_BG_ALPHA_INTERPOLATION		      ( EFFTOOL_CALCTYPE_INTERPOLATION )
@@ -1740,25 +1745,32 @@ ex)
 /**
  * @brief	BGのラスタースクロール
  *
- * #param_num	4
+ * #param_num	6
  * @param	type		ラスタータイプ
  * @param	radius  サインカーブの半径
  * @param	line	  サインカーブ1周を何ラインにするか
  * @param	wait		ウエイト
+ * @param fade    フェードタイプ
+ * @param fade_frame  何フレームかけてフェードするか(フェードタイプを指定のときのみ有効)
  *
  * #param	COMBOBOX_TEXT 横  縦
  * #param	COMBOBOX_VALUE  BTLEFF_BG_RASTER_SCROLL_H BTLEFF_BG_RASTER_SCROLL_V
  * #param VALUE_FX32  半径
  * #param	VALUE_INT   サインカーブ1周を何ラインにするか
  * #param	VALUE_INT   ウエイト
+ * #param	COMBOBOX_TEXT フェードなし  フェードイン フェードアウト フェード両方
+ * #param	COMBOBOX_VALUE  BTLEFF_BG_RASTER_SCROLL_FADE_NULL BTLEFF_BG_RASTER_SCROLL_FADE_IN BTLEFF_BG_RASTER_SCROLL_FADE_OUT BTLEFF_BG_RASTER_SCROLL_FADE_INOUT
+ * #param	VALUE_INT   フェードフレーム
  */
 //======================================================================
-  .macro  BG_RASTER_SCROLL  type, radius, line, wait
+  .macro  BG_RASTER_SCROLL  type, radius, line, wait fade fade_frame
   .short  EC_BG_RASTER_SCROLL
   .long   \type
   .long   \radius
   .long   \line
   .long   \wait
+  .long   \fade
+  .long   \fade_frame
   .endm
 
 //======================================================================

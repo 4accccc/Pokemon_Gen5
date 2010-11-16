@@ -65,11 +65,20 @@ typedef struct
 	GFL_TCB*			p_vblank;
 	GFL_TCB*			p_hblank;
 
+  //----------------------------
+  // 引数でもらってくるパラメータ
+  int   wait;
+  fx32  radius;   // 
+  int   line;     // 
+  int   fade;
+  int   fade_frame;
+
+  //----------------------------
   s16   scroll[256];
   s16   scroll_index;
-
-  int   wait;
   u32   limit;    // 256 or 192
+  u16   frame;    // 計算用
+  fx32  fade_spd; // 半径÷フェードフレーム数
 }BTLV_BG_RASTER_TCB_WORK;
 
 //============================================================================================
@@ -216,7 +225,7 @@ BOOL  BTLV_BG_CheckTCBExecute( BTLV_BG_WORK *bbw )
  * @param[in] wait      スクロールウエイト
  */
 //============================================================================================
-void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, int wait )
+void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, int wait, int fade, int fade_frame )
 {
   BTLV_BG_RASTER_TCB_WORK* bbrtw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bbw->heapID ), sizeof( BTLV_BG_RASTER_TCB_WORK ) );
 
@@ -224,7 +233,15 @@ void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, 
   // 初期化
   bbrtw->bbw  = bbw;
   bbrtw->wait = wait;
+  bbrtw->radius = radius;
+  bbrtw->line = line;
+  bbrtw->fade = fade;
+  bbrtw->fade_frame = fade_frame;
 
+  bbrtw->fade_spd = FX_Div( radius, FX_F32_TO_FX32(fade_frame) );
+  ICHI_Printf("fade_spd %x\n", bbrtw->fade_spd);
+
+  GF_ASSERT_MSG( (wait>fade_frame), "ウェイトよりフェードフレームのが大きい\n");
 
   //----------------
   // スクロールタイプ
@@ -401,9 +418,52 @@ static  void  TCB_BTLV_BG_RasterScroll( GFL_TCB *tcb, void *work )
 
   //ICHI_Printf("wait %d\n", bbrtw->wait);
 
-  bbrtw->wait--;
-  if( bbrtw->wait <= 0 ){
+  // フェード処理
+  switch( bbrtw->fade ){
+  case BTLEFF_BG_RASTER_SCROLL_FADE_NULL:
+    // フェードなし
+    break;
+  case BTLEFF_BG_RASTER_SCROLL_FADE_IN:
+  case BTLEFF_BG_RASTER_SCROLL_FADE_INOUT:
+    {
+      // フェードイン
+      if( bbrtw->frame < bbrtw->fade_frame )
+      {
+        fx32  r;  // 半径
+        r = FX_MUL( FX_F32_TO_FX32(bbrtw->frame), bbrtw->fade_spd );
 
+        // サインテーブルを再計算
+        LASTER_ScrollMakeSinTbl( bbrtw->scroll, bbrtw->limit, GFL_CALC_GET_ROTA_NUM(bbrtw->line), r );
+      }
+      // フェードインアウトの時は、フェードアウトも実行させる
+      else if( bbrtw->fade == BTLEFF_BG_RASTER_SCROLL_FADE_INOUT )
+      {
+        bbrtw->fade = BTLEFF_BG_RASTER_SCROLL_FADE_OUT;
+      }
+    }
+    break;
+  case BTLEFF_BG_RASTER_SCROLL_FADE_OUT:
+    {
+      // フェードアウト
+      // フレーム数が、ウェイト(全フレーム数)-フェードアウトフレーム数より大きい
+      if( bbrtw->frame > (bbrtw->wait - bbrtw->fade_frame) )
+      {
+        fx32  r;  // 半径
+        r = FX_MUL( FX_F32_TO_FX32(bbrtw->wait - bbrtw->frame), bbrtw->fade_spd );
+
+        // サインテーブルを再計算
+        LASTER_ScrollMakeSinTbl( bbrtw->scroll, bbrtw->limit, GFL_CALC_GET_ROTA_NUM(bbrtw->line), r );
+      }
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  // 終了処理
+  bbrtw->frame++;
+  if( bbrtw->frame >= bbrtw->wait )
+  {
     GFL_TCB_DeleteTask( bbrtw->p_hblank );
     GFL_TCB_DeleteTask( bbrtw->p_vblank );
 
@@ -456,6 +516,8 @@ static  void  TCB_BTLV_BG_RasterScroll_HBlank( GFL_TCB *tcb, void *work )
   BTLV_BG_RASTER_TCB_WORK* bbrtw = ( BTLV_BG_RASTER_TCB_WORK * )work;
 
   int v_c;
+  int scroll_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
+  int scroll_y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M );
 
   //-------------------------
   // ラスタースクロール処理
@@ -468,10 +530,10 @@ static  void  TCB_BTLV_BG_RasterScroll_HBlank( GFL_TCB *tcb, void *work )
   {
     switch( bbrtw->limit ){
     case RASTER_W_MAX:  // 横
-      G2_SetBG3Offset( 0, bbrtw->scroll[ v_c ] );
+      G2_SetBG3Offset( scroll_x, scroll_y + bbrtw->scroll[ v_c ] );
       break;
     case RASTER_H_MAX:  // 縦
-      G2_SetBG3Offset( bbrtw->scroll[ v_c ], 0 );
+      G2_SetBG3Offset( scroll_x + bbrtw->scroll[ v_c ], scroll_y );
       break;
     default:
       GF_ASSERT(0);
