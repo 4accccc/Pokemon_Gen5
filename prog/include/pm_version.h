@@ -60,8 +60,8 @@
 #define		VERSION_WHITE		20	///<	バージョン：DSホワイト
 #define		VERSION_BLACK		21	///<	バージョン：DSブラック
 
-#define		VERSION_W2			22	///<	バージョン：DSホワイト２
-#define		VERSION_B2			23	///<	バージョン：DSブラック２
+#define		VERSION_W2			20	///<	バージョン：DSホワイト２
+#define		VERSION_B2			21	///<	バージョン：DSブラック２
 
 //------------------------------------------------------------------
 //	言語コード指定
