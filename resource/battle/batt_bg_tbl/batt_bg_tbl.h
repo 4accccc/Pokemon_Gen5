@@ -12,7 +12,7 @@
 
 #define  ZONE_SPEC_ATTR_MAX  ( 17 )
 #define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )
-#define  BATT_BG_TBL_FILE_MAX  ( 4 )
+#define  BATT_BG_TBL_FILE_MAX  ( 8 )
 
 #define  BATT_BG_TBL_SEASON_MAX  ( 4 )
 
@@ -28,7 +28,7 @@ typedef struct
 {
 	u8 time_zone;
 	u8 season;
-	u8 bg_file[ ZONE_SPEC_ATTR_MAX ];
+	u8 bg_file[ ZONE_SPEC_ATTR_MAX];
 	u8 stage_file[ ZONE_SPEC_ATTR_MAX ];
 }BATT_BG_TBL_ZONE_SPEC_TABLE;
 

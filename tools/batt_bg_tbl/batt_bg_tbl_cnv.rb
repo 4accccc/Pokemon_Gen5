@@ -11,11 +11,15 @@
   FILE_ITA = 2
   FILE_IMA = 3
 
-  FILE_SPRING = 0
-  FILE_SUMMER = 1
-  FILE_AUTUMN = 2
-  FILE_WINTER = 3
-  DATA_EDGE_COLOR  = 4
+  FILE_SPRING     = 0
+  FILE_SPRING_MY  = 1
+  FILE_SUMMER     = 2
+  FILE_SUMMER_MY  = 3
+  FILE_AUTUMN     = 4
+  FILE_AUTUMN_MY  = 5
+  FILE_WINTER     = 6
+  FILE_WINTER_MY  = 7
+  DATA_EDGE_COLOR = 8
 
 #	É]Å[Éìï éwíËÉNÉâÉX
 class	ZoneSpec
@@ -140,8 +144,8 @@ end
 class GraFile
   def initialize( str )
     @table_name = str
-    @imd = []
-    @ica = []
+    @imd = [] #ÅyètÅz<ëäéËÅEé©ï™>ÅyâƒÅz<ëäéËÅEé©ï™>ÇÃèáÇ≈ãGêﬂï™
+    @ica = [] #
     @ita = []
     @ima = []
   end
@@ -156,6 +160,19 @@ class GraFile
       @ita[ season ] = str
     when FILE_IMA 
       @ima[ season ] = str
+    end
+  end
+
+  def set_file_name_side( str, kind, season, side )
+    case kind
+    when FILE_IMD 
+      @imd[ season*2+side ] = str
+    when FILE_ICA 
+      @ica[ season*2+side ] = str
+    when FILE_ITA 
+      @ita[ season*2+side ] = str
+    when FILE_IMA 
+      @ima[ season*2+side ] = str
     end
   end
 
@@ -290,7 +307,7 @@ end
     end
     cnt = stage.size - 1
     for i in FILE_SPRING..DATA_EDGE_COLOR
-      stage[ cnt ].set_file_name( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i )
+      stage[ cnt ].set_file_name_side( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i/2, i%2 )
     end
   end
 
@@ -315,7 +332,9 @@ end
     end
     cnt = bg.size - 1
     for i in 0..3
-      bg[ cnt ].set_file_name( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i )
+	  # îwåiÉÇÉfÉãÇ…ÇÕé©ï™ÅEëäéËÇÃãÊï ÇÕñ≥Ç¢ÇÃÇ≈ìØÇ∂ÉfÅ[É^Ç≈ñÑÇﬂÇƒÇ®Ç≠
+      bg[ cnt ].set_file_name_side( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i, 0 )
+      bg[ cnt ].set_file_name_side( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i, 1 )
     end
   end
 
@@ -348,7 +367,7 @@ end
         split_ec = edge_color.split(/:/)
         fp_stage.printf( "\t.long\t(%s<<10)|(%s<<5)|(%s)\n", split_ec[ 0 ], split_ec[ 1 ], split_ec[ 2 ] )
       end
-      for season in FILE_SPRING..FILE_WINTER
+      for season in FILE_SPRING..FILE_WINTER_MY
         if stage[ i ].get_file_name( kind, season ) == "Å~"
           fp_stage.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
         else
@@ -368,7 +387,7 @@ end
     fp_bg.printf( "//%s\n", bg[ i ].get_table_name )
     bg_hash[ bg[ i ].get_table_name ] = i
     for kind in FILE_IMD..FILE_IMA
-      for season in FILE_SPRING..FILE_WINTER
+      for season in FILE_SPRING..FILE_WINTER_MY
         if bg[ i ].get_file_name( kind, season ) == "Å~"
           fp_bg.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
         else
@@ -437,7 +456,7 @@ end
   fp_header.printf( "#pragma once\n\n" )
   fp_header.printf( "#define  ZONE_SPEC_ATTR_MAX  ( %d )\n", attribute.size )
   fp_header.printf( "#define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )\n" )
-  fp_header.printf( "#define  BATT_BG_TBL_FILE_MAX  ( 4 )\n\n" )
+  fp_header.printf( "#define  BATT_BG_TBL_FILE_MAX  ( 8 )\n\n" )
   fp_header.printf( "#define  BATT_BG_TBL_SEASON_MAX  ( 4 )\n\n" )
   fp_header.printf( "typedef enum\n" )
   fp_header.printf( "{\n" )
@@ -449,7 +468,7 @@ end
   fp_header.printf( "typedef struct\n{\n" )
   fp_header.printf( "\tu8 time_zone;\n" )
   fp_header.printf( "\tu8 season;\n" )
-  fp_header.printf( "\tu8 bg_file[ ZONE_SPEC_ATTR_MAX ];\n" )
+  fp_header.printf( "\tu8 bg_file[ ZONE_SPEC_ATTR_MAX];\n" )
   fp_header.printf( "\tu8 stage_file[ ZONE_SPEC_ATTR_MAX ];\n" )
   if padding != 0
     fp_header.printf( "\tu8 padding[ %d ];\n", padding )
