@@ -3328,14 +3328,16 @@ static VMCMD_RESULT VMEC_BG_SCROLL( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_BG_RASTER_SCROLL( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int type    = ( int )VMGetU32( vmh );
-  int radius  = ( int )VMGetU32( vmh );
-  int line    = ( int )VMGetU32( vmh );
-  int wait    = ( int )VMGetU32( vmh );
+  int   type    = ( int )VMGetU32( vmh );
+  fx32  radius  = ( fx32 )VMGetU32( vmh );
+  int   line    = ( int )VMGetU32( vmh );
+  int   wait    = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_BG_RASTER_SCROLL\n");
 #endif DEBUG_OS_PRINT
+
+  BTLV_BG_RasterScroll( BTLV_EFFECT_GetBGWork(), type, radius, line ,wait );
 
   return bevw->control_mode;
 }
@@ -5322,6 +5324,16 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
   { 
     if( bevw->bg_pltanm_wait_flag )
     { 
+      return FALSE;
+    }
+  }
+
+  // BGラスタースクロール
+  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_BG_RASTER ) )
+  {
+    if( BTLV_BG_Raster_CheckTCBExecute( BTLV_EFFECT_GetBGWork() ) == TRUE )
+    {
       return FALSE;
     }
   }
@@ -8265,6 +8277,7 @@ static  void  TCB_EFFVM_BG_PLANM_CB( GFL_TCB* tcb )
 
   GFL_HEAP_FreeMemory( p_beps );
 }
+
 
 //============================================================================================
 /**

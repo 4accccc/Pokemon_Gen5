@@ -18,3 +18,8 @@ extern  void          BTLV_BG_Exit( BTLV_BG_WORK *bbw );
 extern  void          BTLV_BG_SetPosition( BTLV_BG_WORK *bbw, int scr_x, int scr_y );
 extern  void          BTLV_BG_MovePosition( BTLV_BG_WORK *bbw, int position, int type, int scr_x, int scr_y, int frame, int wait, int count );
 extern  BOOL          BTLV_BG_CheckTCBExecute( BTLV_BG_WORK *bbw );
+
+// add ichiraku 2010/11/15
+extern  void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, int wait );
+extern  BOOL  BTLV_BG_Raster_CheckTCBExecute( BTLV_BG_WORK *bbw );
+

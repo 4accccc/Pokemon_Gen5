@@ -9,17 +9,23 @@
 //============================================================================================
 
 #include <gflib.h>
+#include <calctool.h>
 
 #include "system/gfl_use.h"
+#include "system/laster.h"    // ラスタースクロール用
 
 #include "btlv_effect.h"
 #include "btlv_bg.h"
+
 
 //============================================================================================
 /**
  *  定数宣言
  */
 //============================================================================================
+
+#define RASTER_H_MAX  ( 192 )     // 幅192
+#define RASTER_W_MAX  ( 256 )     // 高256
 
 //============================================================================================
 /**
@@ -30,7 +36,8 @@ struct _BTLV_BG_WORK
 {
   GFL_TCBSYS*     tcb_sys;
   u32             bg_tcb_move_execute :1;
-  u32                                 :31;
+  u32             bg_tcb_raster_execute :1;
+  u32                                 :30;
   HEAPID          heapID;
 };
 
@@ -47,6 +54,24 @@ typedef struct
   int scr_y;
 }BTLV_BG_SET_TCB_WORK;
 
+//-------------------------------------
+///	ラスタースクロール用タスクワーク
+//=====================================
+typedef struct
+{
+  BTLV_BG_WORK*     bbw;
+
+  // task
+	GFL_TCB*			p_vblank;
+	GFL_TCB*			p_hblank;
+
+  s16   scroll[256];
+  s16   scroll_index;
+
+  int   wait;
+  u32   limit;    // 256 or 192
+}BTLV_BG_RASTER_TCB_WORK;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -56,6 +81,11 @@ static  void  BTLV_BG_TCBInitialize( BTLV_BG_WORK *bbw, int type, VecFx32 *start
 static  void  TCB_BTLV_BG_Move( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_BG_CallbackFunc( GFL_TCB* tcb );
 static  void  TCB_BTLV_BG_Set( GFL_TCB *tcb, void *work );
+// add ichiraku 2010/11/15
+static  void  TCB_BTLV_BG_RasterScroll( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_BG_RasterScroll_CB( GFL_TCB *tcb );
+static  void  TCB_BTLV_BG_RasterScroll_VBlank( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_BG_RasterScroll_HBlank( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -174,6 +204,87 @@ BOOL  BTLV_BG_CheckTCBExecute( BTLV_BG_WORK *bbw )
   return ( bbw->bg_tcb_move_execute != 0 );
 }
 
+
+//============================================================================================
+/**
+ *  ラスタースクロール
+ *
+ * @param[in] bbw       BTLV_BG_WORK管理ワークへのポインタ
+ * @param[in] type      スクロールタイプ  横 or 縦
+ * @param[in] radius    サインカーブの半径
+ * @param[in] line      サインカーブ１周を何ラインにするか
+ * @param[in] wait      スクロールウエイト
+ */
+//============================================================================================
+void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, int wait )
+{
+  BTLV_BG_RASTER_TCB_WORK* bbrtw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bbw->heapID ), sizeof( BTLV_BG_RASTER_TCB_WORK ) );
+
+  //----------------
+  // 初期化
+  bbrtw->bbw  = bbw;
+  bbrtw->wait = wait;
+
+
+  //----------------
+  // スクロールタイプ
+  switch( type ){
+  case BTLEFF_BG_RASTER_SCROLL_H:   // 縦
+    bbrtw->limit = RASTER_H_MAX;
+    ICHI_Printf("横\n");
+    break;
+  case BTLEFF_BG_RASTER_SCROLL_V:   // 横
+    bbrtw->limit = RASTER_W_MAX;
+    ICHI_Printf("縦\n");
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+  
+  ICHI_Printf("type %d rad %x line %d wait %d\n", type, radius, line, wait);
+  
+  // サインテーブル
+  bbrtw->scroll_index = 0;
+  LASTER_ScrollMakeSinTbl( bbrtw->scroll, bbrtw->limit, GFL_CALC_GET_ROTA_NUM(line), radius );
+  
+
+  //----------------
+  // tcb追加
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bbw->tcb_sys, TCB_BTLV_BG_RasterScroll, bbrtw, 0 ), TCB_BTLV_BG_RasterScroll_CB, GROUP_DEFAULT );
+
+  // HBlankタスク
+  bbrtw->p_hblank = GFUser_HIntr_CreateTCB( TCB_BTLV_BG_RasterScroll_HBlank, bbrtw, 0 );
+  // VBlankタスク
+  bbrtw->p_vblank = GFUser_VIntr_CreateTCB( TCB_BTLV_BG_RasterScroll_VBlank, bbrtw, 10 );
+
+  bbw->bg_tcb_raster_execute = 1;
+
+#if 0
+  {
+    u8 i;
+    for( i=0; i < bbrtw->limit; i++ )
+    {
+      ICHI_Printf("sinTbl[%d]:%d\n", i, bbrtw->scroll[i]);
+    }
+  }
+#endif
+}
+
+//============================================================================================
+/**
+ *  タスクが起動中かチェック(ラスタースクロールTCB)
+ *
+ * @param[in] bbw    BTLV_CLACT_WORK管理ワークへのポインタ
+ *
+ * @retval: TRUE:起動中　FALSE:終了
+ */
+//============================================================================================
+BOOL  BTLV_BG_Raster_CheckTCBExecute( BTLV_BG_WORK *bbw )
+{
+  return ( bbw->bg_tcb_raster_execute != 0 );
+}
+
+
 //============================================================================================
 /**
  *  BG操作系タスク初期化処理
@@ -276,5 +387,95 @@ static  void  TCB_BTLV_BG_Set( GFL_TCB *tcb, void *work )
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bbstw->scr_x );
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bbstw->scr_y );
   BTLV_EFFECT_FreeTCB( tcb );
+}
+
+
+//=============================================================================
+/**
+ *  BGラスタースクロールタスク
+ */
+//=============================================================================
+static  void  TCB_BTLV_BG_RasterScroll( GFL_TCB *tcb, void *work )
+{
+  BTLV_BG_RASTER_TCB_WORK* bbrtw = ( BTLV_BG_RASTER_TCB_WORK * )work;
+
+  //ICHI_Printf("wait %d\n", bbrtw->wait);
+
+  bbrtw->wait--;
+  if( bbrtw->wait <= 0 ){
+
+    GFL_TCB_DeleteTask( bbrtw->p_hblank );
+    GFL_TCB_DeleteTask( bbrtw->p_vblank );
+
+    BTLV_EFFECT_FreeTCB( tcb );
+  }
+}
+
+//=============================================================================
+/**
+ *  BGラスタースクロールタスク  コールバック
+ */
+//=============================================================================
+static  void  TCB_BTLV_BG_RasterScroll_CB( GFL_TCB *tcb )
+{
+  BTLV_BG_RASTER_TCB_WORK* bbrtw = ( BTLV_BG_RASTER_TCB_WORK * )GFL_TCB_GetWork( tcb );
+
+  ICHI_Printf("BGラスタースクロールタスク コールバック\n");
+
+  bbrtw->bbw->bg_tcb_raster_execute = 0;
+
+  GFL_HEAP_FreeMemory( bbrtw );
+}
+
+//=============================================================================
+/**
+ *  BGラスタースクロールタスク  VBlank
+ */
+//=============================================================================
+static  void  TCB_BTLV_BG_RasterScroll_VBlank( GFL_TCB *tcb, void *work )
+{
+  BTLV_BG_RASTER_TCB_WORK* bbrtw = ( BTLV_BG_RASTER_TCB_WORK * )work;
+
+  bbrtw->scroll_index += 1;
+
+  if( bbrtw->scroll_index < 0 ){
+    bbrtw->scroll_index += bbrtw->limit;
+  }else{
+    bbrtw->scroll_index %= bbrtw->limit;
+  }
+  //ICHI_Printf("scroll_index %d\n", bbrtw->scroll_index);
+}
+
+//=============================================================================
+/**
+ *  BGラスタースクロールタスク  HBlank
+ */
+//=============================================================================
+static  void  TCB_BTLV_BG_RasterScroll_HBlank( GFL_TCB *tcb, void *work )
+{
+  BTLV_BG_RASTER_TCB_WORK* bbrtw = ( BTLV_BG_RASTER_TCB_WORK * )work;
+
+  int v_c;
+
+  //-------------------------
+  // ラスタースクロール処理
+  v_c = GX_GetVCount();
+
+  v_c += ( bbrtw->scroll_index + 1 );
+  v_c %= bbrtw->limit;
+
+  if( GX_IsHBlank() )
+  {
+    switch( bbrtw->limit ){
+    case RASTER_W_MAX:  // 横
+      G2_SetBG3Offset( 0, bbrtw->scroll[ v_c ] );
+      break;
+    case RASTER_H_MAX:  // 縦
+      G2_SetBG3Offset( bbrtw->scroll[ v_c ], 0 );
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+  }
 }
 
