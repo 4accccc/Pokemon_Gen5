@@ -302,7 +302,7 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
                                                                   GFL_HEAP_LOWID( bew->heapID ) );
     u8  season = 0;
 
-    if( bbtzst[ besp->bfs.bgType ].season )
+    if( bbtzst[ besp->bfs.bgType ].season*2 )
     {
       season = besp->bfs.season;
     }
@@ -507,6 +507,12 @@ void  BTLV_EFFECT_Main( void )
 
     GFL_G3D_DRAW_End();
   }
+#if PM_DEBUG
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG){
+    NNS_GfdDumpLnkTexVramManager();
+  }
+#endif
+
 }
 
 //============================================================================================
@@ -1090,7 +1096,7 @@ void BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ゲージモードを切り替える
+ *  @brief  ゲージモードを切り替える
  */
 //-----------------------------------------------------------------------------
 void BTLV_EFFECT_SwitchGaugeMode( void )
