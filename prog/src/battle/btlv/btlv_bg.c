@@ -227,7 +227,7 @@ BOOL  BTLV_BG_CheckTCBExecute( BTLV_BG_WORK *bbw )
 //============================================================================================
 void  BTLV_BG_RasterScroll( BTLV_BG_WORK *bbw, int type, fx32 radius, int line, int wait, int fade, int fade_frame )
 {
-  BTLV_BG_RASTER_TCB_WORK* bbrtw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bbw->heapID ), sizeof( BTLV_BG_RASTER_TCB_WORK ) );
+  BTLV_BG_RASTER_TCB_WORK* bbrtw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bbw->heapID ), sizeof( BTLV_BG_RASTER_TCB_WORK ) );
 
   //----------------
   // 初期化
@@ -432,6 +432,8 @@ static  void  TCB_BTLV_BG_RasterScroll( GFL_TCB *tcb, void *work )
         fx32  r;  // 半径
         r = FX_MUL( FX_F32_TO_FX32(bbrtw->frame), bbrtw->fade_spd );
 
+        ICHI_Printf("r:%x ", r);
+
         // サインテーブルを再計算
         LASTER_ScrollMakeSinTbl( bbrtw->scroll, bbrtw->limit, GFL_CALC_GET_ROTA_NUM(bbrtw->line), r );
       }
@@ -451,6 +453,7 @@ static  void  TCB_BTLV_BG_RasterScroll( GFL_TCB *tcb, void *work )
         fx32  r;  // 半径
         r = FX_MUL( FX_F32_TO_FX32(bbrtw->wait - bbrtw->frame), bbrtw->fade_spd );
 
+        ICHI_Printf("r:%x ", r);
         // サインテーブルを再計算
         LASTER_ScrollMakeSinTbl( bbrtw->scroll, bbrtw->limit, GFL_CALC_GET_ROTA_NUM(bbrtw->line), r );
       }
