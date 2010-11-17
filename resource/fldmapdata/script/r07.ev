@@ -48,7 +48,7 @@ INIT_EVENT_START	ev_zone_r07
 	
 	//バージョン別にトレーナーを表示
 	//★Blackの場合（ローテーション）
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	IF $LCW_VERSION == VERSION_B2 THEN
 		_FLAG_RESET ( FV_R07_TRAINER_B )
 	//★Whiteの場合（トリプル）
 	ELSE
@@ -475,7 +475,7 @@ EVENT_START   ev_scene_r07_movepoke_02
 	
 	//移動ポケモンOBJ生成
 	//★Blackの場合（カザカミ）
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	IF $LCW_VERSION == VERSION_B2 THEN
 		_OBJ_ADD_EX( 144, 244, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE2, MV_DMY )
 	//★Whiteの場合（ライカミ）
 	ELSE
@@ -488,7 +488,7 @@ EVENT_START   ev_scene_r07_movepoke_02
 	
 	//鳴き声再生
 	//★Blackの場合
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	IF $LCW_VERSION == VERSION_B2 THEN
 		_VOICE_PLAY(  MONSNO_649,  0 )
 		
 	//★Whiteの場合
@@ -518,7 +518,7 @@ EVENT_START   ev_scene_r07_movepoke_02
 	
 	//バージョンによって天気を替える
 	//★Blackの場合
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	IF $LCW_VERSION == VERSION_B2 THEN
 		_WEATHER_CHANGE_MOVEPOKE( WEATHER_NO_KAZAKAMI ) 
 	//★Whiteの場合
 	ELSE
@@ -527,7 +527,7 @@ EVENT_START   ev_scene_r07_movepoke_02
 	
 	//バージョンによって鳴き声を替える
 	//★Blackの場合
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	IF $LCW_VERSION == VERSION_B2 THEN
 		_VOICE_PLAY(  MONSNO_649,  0 )
 		_GIZAPLAINWIN_MSG_POS  (  msg_r07_pokemon_01b ,  POS_DOWN )
 		_VOICE_WAIT()
@@ -578,7 +578,7 @@ EVENT_START   ev_scene_r07_movepoke_02
 	
 	//移動ポケモン
 	//★Blackの場合（カザカミ）
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	IF $LCW_VERSION == VERSION_B2 THEN
 		_ADD_MOVE_POKEMON( MOVE_POKE_KAZAKAMI )
 	//★Whiteの場合（ライカミ）
 	ELSE

@@ -45,7 +45,7 @@ INIT_EVENT_START	ev_zone_r14r0201
 	IF $WK_SCENE_R14R0201_LEG == 0 || $WK_SCENE_R14R0201_LEG == 1 THEN
 		
 		//ホワイト：
-		IF $LCWK_VERSION == VERSION_WHITE THEN
+		IF $LCWK_VERSION == VERSION_W2 THEN
 			_GET_MOVE_POKEMON_STATUS( MOVE_POKE_RAIKAMI, LCWK_HOKAKU_CK ) 
 			
 			IF $LCWK_HOKAKU_CK == MVPOKE_STATE_GET THEN
@@ -474,7 +474,7 @@ EVENT_START   ev_bg_r14r0201_leg_01
 			$LCWK_KAZAKAMI_RET = 1
 			
 			//自分のバージョンに出現する移動ポケモンであったならオーナーチェックを行う
-			IF $LCWK_VERSION == VERSION_BLACK THEN
+			IF $LCWK_VERSION == VERSION_B2 THEN
 				_CHECK_POKE_OWNER ( LWK_OWNER_RET , LWK_COUNT_NUM )
 				
 				//オーナーが自分であったならチェック変数に++
@@ -490,7 +490,7 @@ EVENT_START   ev_bg_r14r0201_leg_01
 			$LCWK_RAIKAMI_RET = 1
 		
 			//自分のバージョンに出現する移動ポケモンであったならオーナーチェックを行う
-			IF $LCWK_VERSION == VERSION_WHITE THEN
+			IF $LCWK_VERSION == VERSION_W2 THEN
 				_CHECK_POKE_OWNER ( LWK_OWNER_RET , LWK_COUNT_NUM )
 				
 				//オーナーが自分であったならチェック変数に++

@@ -181,7 +181,7 @@ doc_battle:
       DEFINE_LOCAL  item1
       DEFINE_LOCAL  item2
       _GET_ROM_VERSION ( version )
-      IF $version == VERSION_BLACK THEN   //ブラック
+      IF $version == VERSION_B2 THEN   //ブラック
         $item1 = ITEM_INAZUMAKASETTO
         $item2 = ITEM_BUREIZUKASETTO
       ELSE                                //ホワイト

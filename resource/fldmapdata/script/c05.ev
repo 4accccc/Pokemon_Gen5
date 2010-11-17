@@ -770,7 +770,7 @@ EVENT_START	ev_c05_badrider_01
 	_GET_ROM_VERSION ( LCW_VERSION ) 
 	
 	//★Blackの場合ローテーションバトル
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	IF $LCW_VERSION == VERSION_B2 THEN
 		//初回話しかけ
 		IF $WK_SCENE_C05_BTLRIDER == 0 THEN
 			{
