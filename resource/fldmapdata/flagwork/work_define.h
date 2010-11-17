@@ -76,7 +76,7 @@
 		/* not used 16448(0x4040) */
 #define WK_SYS_SCENE_COMM                16449 /* 0x4041 通信部屋から出てくる時の処理用シーン制御ワーク */
 		/* not used 16450(0x4042) */
-		/* not used 16451(0x4043) */
+#define WK_SYS_PAIR_ID                   16451 /* 0x4043 連れ歩きペアID */
 		/* not used 16452(0x4044) */
 		/* not used 16453(0x4045) */
 		/* not used 16454(0x4046) */
