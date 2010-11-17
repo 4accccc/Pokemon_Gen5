@@ -465,6 +465,24 @@ extern void GAMEDATA_SetLastBattleResult( GAMEDATA * gamedata, u32 btl_result );
 //--------------------------------------------------------------
 extern u32 GAMEDATA_GetLastBattleResult( const GAMEDATA * gamedata );
 
+//--------------------------------------------------------------
+/**
+ * @brief バトルのカーソルモードをセット
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @param cursor_mode バトルのカーソルモード (src/battle/btlv/btlv_scd.cでのみ使用のはず)
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SetBattleCurosrMode( GAMEDATA * gamedata, u8 cursor_mode );
+
+//--------------------------------------------------------------
+/**
+ * @brief バトルのカーソルモードを取得
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @return  u8 バトルのカーソルモード (src/battle/btlv/btlv_scd.cでのみ使用のはず)
+ */
+//--------------------------------------------------------------
+extern u8 GAMEDATA_GetBattleCurosrMode( const GAMEDATA * gamedata );
+
 //==================================================================
 /**
  * 侵入接続人数取得

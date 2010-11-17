@@ -95,6 +95,7 @@ struct _GAMEDATA{
   FIELD_STATUS * fldstatus;  ///<フィールドマップ情報
 
   u32 last_battle_result;   ///<最新のバトルの結果
+  u8  battle_cursor_mode;   // バトルカーソルフラグ 0:非表示 1:表示 ichiraku
 
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
   u8 season_id;       ///<季節指定ID
@@ -921,6 +922,30 @@ u32 GAMEDATA_GetLastBattleResult( const GAMEDATA * gamedata )
 void GAMEDATA_SetLastBattleResult( GAMEDATA * gamedata, u32 btl_result )
 {
   gamedata->last_battle_result = btl_result;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief バトルのカーソルモードをセット
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @param cursor_mode バトルのカーソルモード (src/battle/btlv/btlv_scd.cでのみ使用のはず)
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SetBattleCurosrMode( GAMEDATA * gamedata, u8 cursor_mode )
+{
+  gamedata->battle_cursor_mode = cursor_mode;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief バトルのカーソルモードを取得
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @return  u8 バトルのカーソルモード (src/battle/btlv/btlv_scd.cでのみ使用のはず)
+ */
+//--------------------------------------------------------------
+u8 GAMEDATA_GetBattleCurosrMode( const GAMEDATA * gamedata )
+{
+  return gamedata->battle_cursor_mode;
 }
 
 //--------------------------------------------------------------

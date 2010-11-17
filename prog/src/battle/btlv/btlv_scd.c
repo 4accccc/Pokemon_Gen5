@@ -213,7 +213,14 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->forceQuitSeq = 0;
   wk->fForceQuitDoing = FALSE;
 
-  wk->cursor_flag = 0;
+  // ゲームデータにカーソルモードを保存しておくように変更した
+  // よって、そのデータを取得して、cursor_flagに設定する ichiraku
+  {
+    GAMEDATA*   gamedata;
+    gamedata = BTL_MAIN_GetGameData( wk->mainModule );
+    wk->cursor_flag = GAMEDATA_GetBattleCurosrMode( gamedata );
+    ICHI_Printf("----カーソルモード取得:%d-----------\n", wk->cursor_flag);
+  }
 
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
@@ -344,6 +351,14 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
     GFL_UI_DEBUG_OVERWRITE_SetCallBack( NULL );
   }
 #endif // DEBUG_ONLY_FOR_hudson
+
+  // カーソルモードをゲームデータに保存する ichiraku
+  {
+    GAMEDATA*   gamedata;
+    gamedata = BTL_MAIN_GetGameData( wk->mainModule );
+    GAMEDATA_SetBattleCurosrMode( gamedata, wk->cursor_flag );
+    ICHI_Printf("----カーソルモード設定:%d-----------\n", wk->cursor_flag);
+  }
 
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_STR_DeleteBuffer( wk->strbuf );

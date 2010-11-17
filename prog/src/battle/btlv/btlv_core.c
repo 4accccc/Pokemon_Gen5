@@ -517,6 +517,7 @@ typedef struct
 {
   GFL_MSGDATA*  msg;
   int           wait;
+  u8            battle_cursor_flag; // 保存用
 }CAPTURE_DEMO_WORK;
 
 enum
@@ -545,6 +546,17 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
       BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
       GFL_HEAP_FreeMemory( besp );
     }
+
+    // デモではカーソル非表示なので、バトル用のカーソルモードは保存しておく
+    // 終了時に戻す ichiraku
+    {
+      u8  *p_cursor_flag;
+      p_cursor_flag = BTLV_SCD_GetCursorFlagPtr(core->scrnD);
+      cdw->battle_cursor_flag = *p_cursor_flag;
+      *p_cursor_flag = 0;
+      ICHI_Printf("カーソルモード save:%d\n", cdw->battle_cursor_flag);
+    }
+
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Init( core->scrnD );
     cdw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_capturedemo_dat, core->heapID );
@@ -738,6 +750,13 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     }
     break;
   case 20:
+    {
+      // 保存しておいたカーソルモードを戻す ichiraku
+      u8  *p_cursor_flag;
+      p_cursor_flag = BTLV_SCD_GetCursorFlagPtr(core->scrnD);
+      *p_cursor_flag = cdw->battle_cursor_flag;
+      ICHI_Printf("カーソルモード save:%d\n", *p_cursor_flag);
+    }
     return TRUE;
     break;
   }
