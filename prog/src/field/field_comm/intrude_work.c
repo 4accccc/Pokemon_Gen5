@@ -306,6 +306,11 @@ WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm)
  * @param   game_comm		
  *
  * @retval  int		自分がいるROMのPM_VERSION
+ *
+ *
+ * @note この関数を使うときは、VERSIONが帰ってくるため、
+ * VERSION_BLACKorVERSION_WHITEのみで判定してはいけません。
+ * きちんと、B2,W2判定もしてください
  */
 //==================================================================
 u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
@@ -411,6 +416,8 @@ u8 Intrude_GetIntrudeRomVersion(u8 pm_version, u32 trainer_id)
       pm_version = VERSION_BLACK;
     }
   }
+  GF_ASSERT( pm_version == VERSION_BLACK
+      || pm_version == VERSION_WHITE );
   return pm_version;
 }
 
@@ -441,6 +448,7 @@ GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *
   }
   
   myst = GAMEDATA_GetMyStatusPlayer(gamedata, invasion_netid);
+  // 下記関数はVERSION_B2, W2は返さないVERSION_BLACKorVERSION_WHITEのみ
   pm_version = Intrude_GetIntrudeRomVersion(MyStatus_GetRomCode(myst), MyStatus_GetID(myst));
   switch(pm_version){
   case VERSION_WHITE:

@@ -716,8 +716,8 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
 
   static const u32 sc_version_tbl[sc_debug_data_max]  =
   { 
-    1<<VERSION_BLACK,
-    1<<VERSION_WHITE,
+    1<<VERSION_B2,
+    1<<VERSION_W2,
   };
   int i;
 
@@ -1079,13 +1079,13 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
 
   static const u32 sc_version_tbl[7]  =
   { 
-    1<<VERSION_WHITE,
-    1<<VERSION_WHITE,
-    1<<VERSION_WHITE,
-    1<<VERSION_WHITE,
-    1<<VERSION_BLACK,
-    1<<VERSION_BLACK,
-    1<<VERSION_BLACK,
+    1<<VERSION_W2,
+    1<<VERSION_W2,
+    1<<VERSION_W2,
+    1<<VERSION_W2,
+    1<<VERSION_B2,
+    1<<VERSION_B2,
+    1<<VERSION_B2,
   };
 
   int i;

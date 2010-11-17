@@ -59,6 +59,7 @@ extern MISSION_CHOICE_LIST * Intrude_GetChoiceList(INTRUDE_COMM_SYS_PTR intcomm,
 extern u8 Intrude_GetPalaceArea(const GAMEDATA *gamedata);
 extern BOOL Intrude_GetRecvWfbc(INTRUDE_COMM_SYS_PTR intcomm);
 extern WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm);
+//この関数を使うときは、VERSIONが帰ってくるため、VERSION_BLACKorVERSION_WHITEのみで判定してはいけません。きちんと、B2,W2判定もしてください
 extern u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm);
 extern u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm);
 extern BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata, u16 dir);

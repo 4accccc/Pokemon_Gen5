@@ -991,7 +991,7 @@ static void Graphic3DExit( BADGEVIEW_WORK *wk )
 // ジムリーダーパネル
 static const GFL_G3D_UTIL_RES res_table_gymleader[] = 
 {
-#if PM_VERSION == VERSION_BLACK  
+#if PM_VERSION == VERSION_B2  
   { ARCID_TRAINERCARD, NARC_trainer_case_gym_leader_b_NSBMD, GFL_G3D_UTIL_RESARC },
   { ARCID_TRAINERCARD, NARC_trainer_case_gym_leader_b_NSBCA, GFL_G3D_UTIL_RESARC },
 #else
@@ -1567,7 +1567,7 @@ static void CellActorPosSet( BADGEVIEW_WORK *wk, int id, int x, int y )
 
 
 // ジムリーダーのテキストをWBで対応させるためのテーブル
-#if PM_VERSION==VERSION_BLACK
+#if PM_VERSION==VERSION_B2
 static const u32 gymleader_text_tbl[]={
   MSG_BADGE_LEADER1_01,
   MSG_BADGE_LEADER2_01,
@@ -2323,7 +2323,7 @@ static void _trans_badge_pal( BADGEVIEW_WORK *wk, int no, int grade )
 // ８番目のジムリーダーB/Wで違うトレーナーになるので、
 // BLACKバージョンの場合は９列のパレットを適用する。
 static const pal_leader_table[] = {
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
   0,1,2,3,4,5,6,8,
 #else
   0,1,2,3,4,5,6,7,

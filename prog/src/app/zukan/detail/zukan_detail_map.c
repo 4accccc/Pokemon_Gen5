@@ -36,7 +36,7 @@
 
 #include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
 
-#if	PM_VERSION == VERSION_BLACK
+#if	PM_VERSION == VERSION_B2
 #include "../../../../../resource/zukan_data/zkn_area_b_zone_group.cdat"
 #else
 #include "../../../../../resource/zukan_data/zkn_area_w_zone_group.cdat"

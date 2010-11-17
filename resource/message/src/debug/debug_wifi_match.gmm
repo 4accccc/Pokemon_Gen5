@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-06-23T12:04:27"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-11-17T12:25:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1061" top="116" right="-356" bottom="744" maximized="no" rayout="Vertical2">
+	<dialog left="183" top="144" right="888" bottom="772" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -527,54 +527,62 @@
 	</row>
 
 	<row id="CASETTE_01">
-		<language name="JPN" width="256">ブラック</language>
+		<language name="JPN" width="256">ブラック２</language>
 	</row>
 
 	<row id="CASETTE_02">
-		<language name="JPN" width="256">ホワイト</language>
+		<language name="JPN" width="256">ホワイト２</language>
 	</row>
 
 	<row id="CASETTE_03">
-		<language name="JPN" width="256">Ｈゴールド</language>
+		<language name="JPN" width="256">ブラック</language>
 	</row>
 
 	<row id="CASETTE_04">
-		<language name="JPN" width="256">Ｓシルバー</language>
+		<language name="JPN" width="256">ホワイト</language>
 	</row>
 
 	<row id="CASETTE_05">
-		<language name="JPN" width="256">ダイヤ</language>
+		<language name="JPN" width="256">Ｈゴールド</language>
 	</row>
 
 	<row id="CASETTE_06">
-		<language name="JPN" width="256">パール</language>
+		<language name="JPN" width="256">Ｓシルバー</language>
 	</row>
 
 	<row id="CASETTE_07">
-		<language name="JPN" width="256">プラチナ</language>
+		<language name="JPN" width="256">ダイヤ</language>
 	</row>
 
 	<row id="CASETTE_08">
-		<language name="JPN" width="256">ルビー</language>
+		<language name="JPN" width="256">パール</language>
 	</row>
 
 	<row id="CASETTE_09">
-		<language name="JPN" width="256">サファイア</language>
+		<language name="JPN" width="256">プラチナ</language>
 	</row>
 
 	<row id="CASETTE_10">
-		<language name="JPN" width="256">エメラルド</language>
+		<language name="JPN" width="256">ルビー</language>
 	</row>
 
 	<row id="CASETTE_11">
-		<language name="JPN" width="256">Ｆレッド</language>
+		<language name="JPN" width="256">サファイア</language>
 	</row>
 
 	<row id="CASETTE_12">
-		<language name="JPN" width="256">Ｒグリーン</language>
+		<language name="JPN" width="256">エメラルド</language>
 	</row>
 
 	<row id="CASETTE_13">
+		<language name="JPN" width="256">Ｆレッド</language>
+	</row>
+
+	<row id="CASETTE_14">
+		<language name="JPN" width="256">Ｒグリーン</language>
+	</row>
+
+	<row id="CASETTE_15">
 		<language name="JPN" width="256">コロシアム</language>
 	</row>
 

@@ -1382,7 +1382,7 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   //à–¾
   if( work->mode == MPM_POKE_SHIFTER )
   {
-    if( GET_VERSION() == VERSION_BLACK )
+    if( GET_VERSION() == VERSION_B2 )
     {
       infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_B );
     }
@@ -1393,7 +1393,7 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   }
   else
   {
-    if( GET_VERSION() == VERSION_BLACK )
+    if( GET_VERSION() == VERSION_B2 )
     {
       infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_MOVIE_B );
     }
@@ -1681,7 +1681,7 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
     work->gameRegistry.romFilePathp = srlPath[1];
   }
   
-  if( GET_VERSION() == VERSION_BLACK )
+  if( GET_VERSION() == VERSION_B2 )
   {
     work->gameRegistry.iconCharPathp = charPath[1];
     work->gameRegistry.iconPalettePathp = plttPath[1];
@@ -2306,7 +2306,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
         MB_MSG_MessageCreateWordset( work->msgWork );
         //‚±‚±‚Å‚Ì•\Ž¦‚Í”é“`ž‚Ý
         MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num+hidenNum , 3 );
-        if( GET_VERSION() == VERSION_BLACK )
+        if( GET_VERSION() == VERSION_B2 )
         {
           MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_03_B , MSGSPEED_GetWait() );
         }

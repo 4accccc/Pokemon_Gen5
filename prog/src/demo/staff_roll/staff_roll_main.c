@@ -32,9 +32,9 @@
 //============================================================================================
 
 #ifdef PM_DEBUG
-#define	LOCAL_VERSION		( VERSION_BLACK )		// デバッグ用（コミット時はブラックにすること！）
+#define	LOCAL_VERSION		( VERSION_B2 )		// デバッグ用（コミット時はブラックにすること！）
 #else
-#define	LOCAL_VERSION		( VERSION_BLACK )		// 製品版はブラックを基本とする
+#define	LOCAL_VERSION		( VERSION_B2 )		// 製品版はブラックを基本とする
 #endif	// PM_DEBUG
 
 // 後方確保用ヒープＩＤ

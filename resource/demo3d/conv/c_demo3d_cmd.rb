@@ -11,7 +11,7 @@ $h_se_default = {"---"=>"DEMO3D_SE_PARAM_DEFAULT"}
 $h_brightness_disp = {"main"=>"MASK_MAIN_DISPLAY","sub"=>"MASK_SUB_DISPLAY","double"=>"MASK_DOUBLE_DISPLAY"}
 $h_bgm_chg_type = {"play"=>"DEMO3D_BGM_PLAY","stop"=>"DEMO3D_BGM_STOP","change"=>"DEMO3D_BGM_CHANGE","push"=>"DEMO3D_BGM_PUSH","pop"=>"DEMO3D_BGM_POP"}
 $h_bgm_fade_type = {"fadein"=>"0","fadeout"=>"1"}
-$h_pm_version = {"ver_all"=>"0xFF","ver_black"=>"VERSION_BLACK","ver_white"=>"VERSION_WHITE","ver_gray"=>"VERSION_WHITE+1"}
+$h_pm_version = {"ver_all"=>"0xFF","ver_b2"=>"VERSION_B2","ver_w2"=>"VERSION_W2"}
 
 #==============================================
 #プレフィックス・サフィックス定義

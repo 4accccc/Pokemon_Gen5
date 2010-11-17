@@ -42,7 +42,7 @@ class CGenerateEnc
     black_ct = 0
     File.open(f_path,"w"){ |file|
       file.print( $header_buf % [f_path])
-      file.print("#if PM_VERSION == VERSION_WHITE\n\n")
+      file.print("#if PM_VERSION == VERSION_W2\n\n")
 
       file.print("static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {\n")
       for n in @poke_list do
@@ -68,7 +68,7 @@ class CGenerateEnc
     File.open(header_path,"w"){ |file|
       file.print( $header_buf % [header_path])
     
-      file.print("#if PM_VERSION == VERSION_WHITE\n\n")
+      file.print("#if PM_VERSION == VERSION_W2\n\n")
       file.print(" #define GENERATE_ENC_POKE_MAX\t( %d )\n\n" % [white_ct])
       file.print("#else\n\n")
       file.print(" #define GENERATE_ENC_POKE_MAX\t( %d )\n\n" % [black_ct])

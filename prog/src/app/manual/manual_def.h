@@ -112,33 +112,33 @@ enum
 *  バージョン違いを吸収する
 */
 //=============================================================================
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
   #include "msg/msg_manual_text_b.h"
 #else
   #include "msg/msg_manual_text_w.h"
 #endif
 
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
   #include "manual_b.naix"
 #else
   #include "manual_w.naix"
 #endif
 
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
   #include "manual_image_b.naix"
 #else
   #include "manual_image_w.naix"
 #endif
 
 // リソースで生成したヘッダ
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
   #include "../../../../resource/manual/manual_data_def_b.h"
 #else
   #include "../../../../resource/manual/manual_data_def_w.h"
 #endif
 
 
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
 
 // manual_b.naix
 enum

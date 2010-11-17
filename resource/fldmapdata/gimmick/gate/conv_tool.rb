@@ -35,7 +35,7 @@ end
 #-------------------------------------------------------------------------------------
 # @brief バージョンを取得する
 # @param version "WB" or "W" or "B"
-# @return "W"=>VERSION_WHITE, "B"=>VERSION_BLACK, "WB"=>0
+# @return "W"=>VERSION_W2, "B"=>VERSION_B2, "WB"=>0
 #-------------------------------------------------------------------------------------
 def GetVersion( version )
 
@@ -44,8 +44,8 @@ def GetVersion( version )
 
   # ハッシュテーブル作成
   hash_table = Hash::new
-  hash_table["W"] = "VERSION_WHITE"
-  hash_table["B"] = "VERSION_BLACK" 
+  hash_table["W"] = "VERSION_W2"
+  hash_table["B"] = "VERSION_B2" 
   # 存在しないキーが指定された
   if hash_table.has_key?(version) == false then
     abort("バージョン指定[#{version}]は対応していません")

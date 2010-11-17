@@ -2220,6 +2220,7 @@ static BOOL personal_is_sex_fixed( const POKEMON_PARAM* pp )
  *  カセットバージョン（gmmのID順と同じにしておく）
  */
 static const u8 CasetteVer[] = {
+  VERSION_B2,       VERSION_W2,
   VERSION_BLACK,    VERSION_WHITE,    VERSION_GOLD,     VERSION_SILVER,
   VERSION_DIAMOND,  VERSION_PEARL,    VERSION_PLATINUM, VERSION_RUBY,
   VERSION_SAPPHIRE, VERSION_EMERALD,  VERSION_RED,      VERSION_GREEN,

@@ -14,7 +14,7 @@
 
 #define TITLE_RES_ARCID (ARCID_TITLE)
 
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
 
 #include "title_black.naix"
 

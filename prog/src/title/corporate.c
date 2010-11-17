@@ -14,7 +14,7 @@
 #include "arc_def.h"
 
 #include "corporate.h"
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
 #include "title_black.naix"
 #else
 #include "title_white.naix"
@@ -197,7 +197,7 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
     case SEQ_CORP1_FADEIN:
 	    {
-#if PM_VERSION==VERSION_BLACK
+#if PM_VERSION==VERSION_B2
 	      // ÉÅÉCÉìâÊñ 
 	      GFL_ARC_UTIL_TransVramBgCharacter
 	        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_lz_NCGR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);

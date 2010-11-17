@@ -12,8 +12,8 @@ USERS	= toru_nagihashi tetsuji_ohta kawada_koji shimoyamada
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = townmap_data
-targetname_b = $(targetname)_version_black
-targetname_w = $(targetname)_version_white
+targetname_b = $(targetname)_version_b2
+targetname_w = $(targetname)_version_w2
 targetname2	= townmap_replace.cdat
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）

@@ -34,8 +34,10 @@
 #error	PM_VERSION UNDEFINED!!
 #endif
 
-#if (PM_VERSION == VERSION_WHITE || PM_VERSION == VERSION_BLACK )
-/*WHITE or BLACK、問題なし */
+#if (PM_VERSION == VERSION_W2 || PM_VERSION == VERSION_B2 )
+/*W2 or B2、問題なし */
+#elif (PM_VERSION == VERSION_WHITE || PM_VERSION == VERSION_BLACK )
+#warning  PM_VERSION SYACHI COMPATIBLE!!  //VERSIONがシャチ互換版になっている
 #else
 /* 未定義バージョン、問題あり！ */
 #error!!
@@ -86,13 +88,13 @@ const u8 GetVersion( void )
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg( DEBUG_FLG_ReverseVersion ) == TRUE )
   {
-    if (CasetteVersion == VERSION_BLACK)
+    if (CasetteVersion == VERSION_B2)
     {
-      return VERSION_WHITE;
+      return VERSION_W2;
     }
     else
     {
-      return VERSION_BLACK;
+      return VERSION_B2;
     }
   }
 #endif  //PM_DEBUG

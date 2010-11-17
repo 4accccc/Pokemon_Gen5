@@ -1472,7 +1472,7 @@ static void LoadBgGraphic(void)
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 		FONT_PALETTE_S*0x20, 0x20, HEAPID_STARTMENU );
 
-#if PM_VERSION == VERSION_WHITE
+#if PM_VERSION == VERSION_W2
 	// ホワイトの場合は背景のパレットを変更
 	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME3_M, 0, 0, 32, 24, BGPAL_VER_WHITE );
 	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0, 32, 24, BGPAL_VER_WHITE );

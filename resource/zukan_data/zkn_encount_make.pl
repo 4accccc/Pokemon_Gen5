@@ -959,8 +959,8 @@ sub MakeLeadZonenameTableAndGroupToLeadZonenameHash()
   my $zone_col_no       = 0;  # あとで正しい値を代入する
   my $version_col_name  = "#version";
   my $version_col_no    = 0;  # あとで正しい値を代入する
-  my $version_word_w    = "VERSION_WHITE";
-  my $version_word_b    = "VERSION_BLACK";
+  my $version_word_w    = "VERSION_W2";
+  my $version_word_b    = "VERSION_B2";
   my $step              = 0;  # 0のとき$line_startまで
                               # 1のときデータ読み込み中で$line_endまで
                               # 2のとき$line_endから

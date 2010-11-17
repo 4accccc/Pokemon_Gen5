@@ -122,7 +122,7 @@ void ZONEDATA_Open( HEAPID heap_id )
     data_handle->zoneDataID = ZONE_ID_MAX;
 
     // ゾーンデータチェンジ初期セットアップ
-    if( GET_VERSION() == VERSION_WHITE ){
+    if( GET_VERSION() == VERSION_W2 ){
       ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_BC_WF_ID, TRUE );
       ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_PLC10_PLCW10_ID, TRUE );
     }
@@ -502,7 +502,7 @@ u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
   default:
     GF_ASSERT(season_id < PMSEASON_TOTAL);
   }
-  if (bgm_id == SEQ_BGM_C_08_B && GET_VERSION() == VERSION_WHITE )
+  if (bgm_id == SEQ_BGM_C_08_B && GET_VERSION() == VERSION_W2 )
   {
     bgm_id = SEQ_BGM_C_08_W;
   }
@@ -915,7 +915,7 @@ u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
   if( (zoneData->placename_id == MAPNAME_GATE_WF10) || 
       (zoneData->placename_id == MAPNAME_GATE_BC10) )
   {
-    if( GET_VERSION() == VERSION_WHITE ) {
+    if( GET_VERSION() == VERSION_W2 ) {
       return MAPNAME_GATE_WF10;
     }
     else {

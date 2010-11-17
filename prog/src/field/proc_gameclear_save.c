@@ -248,7 +248,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     {
       G2_BlendNone();
       GX_SetVisiblePlane( GX_PLANEMASK_BG0 );
-      if(GetVersion()==VERSION_BLACK){
+      if(GetVersion()==VERSION_B2){
         GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
       }else{
         GXS_LoadBGPltt( pal_white, 0, 2);
@@ -382,7 +382,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     break;
 
   case GAMECLEAR_SEQ_FADEOUT:
-    if(GetVersion()==VERSION_BLACK){
+    if(GetVersion()==VERSION_B2){
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
     }else{
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
@@ -577,7 +577,7 @@ static void setup_bg_sys( HEAPID heapID )
                                 0x20*GAMECLEAR_BMPWIN_PL, 0x20, heapID );
 
   // ブラックバージョンでは背景を黒に・ホワイトでは白に
-  if(GetVersion()== VERSION_WHITE){
+  if(GetVersion()== VERSION_W2){
     GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0xffff );
   }else{
     GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0 );

@@ -300,10 +300,24 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_HARD_CONNECT){
       if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
         GAMEDATA_SetIntrudeMyID(gamedata, GFL_NET_SystemGetCurrentID());
+#if 0   //syachi_origin
         {//é©ï™ÇÃNetIDÇÃâ”èäÇ…é©ï™ÇÃMyStatusÇÉRÉsÅ[ÇµÇƒÇ®Ç≠
           MYSTATUS *net_myst = GAMEDATA_GetMyStatusPlayer(gamedata, GFL_NET_SystemGetCurrentID());
           MyStatus_Copy(GAMEDATA_GetMyStatus(gamedata), net_myst);
         }
+#else
+        {
+          MYSTATUS net_myst = *GAMEDATA_GetMyStatusPlayer(gamedata, GFL_NET_SystemGetCurrentID());
+          NAGI_Printf( "profile 0x%x\n", net_myst.id);
+        #if PM_VERSION == VERSION_B2
+          net_myst.id |= ~(0 << 16);
+        #else
+          net_myst.id |= (1 << 16);
+        #endif
+          NAGI_Printf( "profile 0x%x\n", net_myst.id);
+          MyStatus_Copy(GAMEDATA_GetMyStatus(gamedata), &net_myst);
+        }
+#endif
         Intrude_SetMinePalaceArea(intcomm, GFL_NET_SystemGetCurrentID());
         intcomm->intrude_status_mine.pm_version = GET_VERSION();
         intcomm->intrude_status_mine.season = GAMEDATA_GetSeasonID(gamedata);

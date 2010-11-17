@@ -219,7 +219,8 @@ static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const
         {
           if( EVENTWORK_CheckEventFlag( p_evwork, sc_PALACE_WEATHER_DATA[i].sys_flag ) == FALSE )
           {
-            if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE ){
+            if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE
+              || Intrude_GetRomVersion( p_gamecomm ) == VERSION_W2 ){
               return WEATHER_NO_PALACE_WHITE_MIST_HIGH;
             }else{
               return WEATHER_NO_PALACE_BLACK_MIST_HIGH;
@@ -227,7 +228,8 @@ static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const
           }
           else
           {
-            if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE ){
+            if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE
+              || Intrude_GetRomVersion( p_gamecomm ) == VERSION_W2 ){
               return WEATHER_NO_PALACE_WHITE_MIST;
             }else{
               return WEATHER_NO_PALACE_BLACK_MIST;
@@ -245,7 +247,7 @@ static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const
     //パレス到着ON
     if( DEBUG_FLG_GetFlg(DEBUG_FLG_PalaceArrive) == TRUE )
     {
-      if( GET_VERSION() == VERSION_WHITE ){
+      if( GET_VERSION() == VERSION_W2 ){
         return WEATHER_NO_PALACE_WHITE_MIST;
       }else{
         return WEATHER_NO_PALACE_BLACK_MIST;
@@ -253,7 +255,7 @@ static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const
     }
     else
     {
-      if( GET_VERSION() == VERSION_WHITE ){
+      if( GET_VERSION() == VERSION_W2 ){
         return WEATHER_NO_PALACE_WHITE_MIST_HIGH;
       }else{
         return WEATHER_NO_PALACE_BLACK_MIST_HIGH;
@@ -289,7 +291,7 @@ static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_d
     {
       // BLACK = カザカミ
       // WHITE = ライカミ
-      if( GetVersion() == VERSION_BLACK ){
+      if( GetVersion() == VERSION_B2 ){
         return WEATHER_NO_KAZAKAMI;
       }
       return WEATHER_NO_RAIKAMI;

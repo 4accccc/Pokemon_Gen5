@@ -2205,8 +2205,8 @@ static void GetMovePokeWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 
   // ˆÚ“®ƒ|ƒPƒ‚ƒ“ID‚ðŒˆ’è
   switch( GetVersion() ) {
-  case VERSION_WHITE: movePokeID = MOVE_POKE_RAIKAMI;  break;
-  case VERSION_BLACK: movePokeID = MOVE_POKE_KAZAKAMI; break;
+  case VERSION_W2: movePokeID = MOVE_POKE_RAIKAMI;  break;
+  case VERSION_B2: movePokeID = MOVE_POKE_KAZAKAMI; break;
   default: GF_ASSERT(0);
   }
 

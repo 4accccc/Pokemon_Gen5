@@ -1,18 +1,18 @@
 /*****************************************************************************
 	Archive file index definition.
-	File: townmap_data_version_black.naix
+	File: townmap_data_version_b2.naix
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-05-28T11:36:15
+	Update:2010-11-17T13:02:41
  *****************************************************************************/
 
-#ifndef NARC_TOWNMAP_DATA_VERSION_BLACK_NAIX_
-#define NARC_TOWNMAP_DATA_VERSION_BLACK_NAIX_
+#ifndef NARC_TOWNMAP_DATA_VERSION_B2_NAIX_
+#define NARC_TOWNMAP_DATA_VERSION_B2_NAIX_
 
 enum {
-	NARC_townmap_data_version_black_townmap_data_version_black_dat = 0
+	NARC_townmap_data_version_b2_townmap_data_version_b2_dat = 0
 };
 
-/* NARC_TOWNMAP_DATA_VERSION_BLACK_NAIX_ */
+/* NARC_TOWNMAP_DATA_VERSION_B2_NAIX_ */
 #endif

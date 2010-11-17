@@ -308,7 +308,21 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WOR
   GAME_COMM_SYS_PTR commsys = GAMESYSTEM_GetGameCommSysPtr( gamesystem );
   
   offsets->season_pos = season = PMSEASON_GetConsiderCommSeason( gamesystem );
+#if 0
+  //origin
   offsets->version_pos = Intrude_GetRomVersion( commsys ) == VERSION_BLACK? 0 : 1;
+#else
+  //SWANでは相手からもらうコードがBLACK、もしくはB2の場合ブラックシティになる
+  if( Intrude_GetRomVersion( commsys ) == VERSION_BLACK
+      || Intrude_GetRomVersion( commsys ) == VERSION_B2 )
+  {
+    offsets->version_pos =  0;
+  }
+  else
+  {
+    offsets->version_pos =  1;
+  }
+#endif
   if (offsets->version_pos == 0 )
   {
     offsets->season_ver_pos = 0;

@@ -60,7 +60,7 @@
 #define POKE_LOOP_PART_FRAME  ( 5301 )
 
 // 黒・白で違う定義
-#if PM_VERSION==VERSION_BLACK
+#if PM_VERSION==VERSION_B2
 /// 黒：ポリゴンデモのループ終了フレームの指定
 #define POKE_LOOP_END_FRAME   ( 5619 )
 /// 黒：タイトル画面の鳴き声を出すポケモンの指定
@@ -416,7 +416,7 @@ static u32 delayVCount;
 static u32 delayVCountTotal;
 
 static const u16 pal_tbl[2]={
-#if PM_VERSION==VERSION_BLACK
+#if PM_VERSION==VERSION_B2
   0x0000, 0xffff
 #else
   0x0000, 0xffff
@@ -943,7 +943,7 @@ static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
   GFL_BG_SetScrollReq( FRAME_BACK, GFL_BG_SCROLL_X_SET, CG2d->scrol_work/2 );
 
   // BLACKは右にスクロール・WHITEは左にスクロール
-  if(GetVersion()==VERSION_BLACK){
+  if(GetVersion()==VERSION_B2){
     CG2d->scrol_work++;
   }else{
     CG2d->scrol_work--;
@@ -1010,7 +1010,7 @@ enum{
 };
 
 //読み込む3Dリソース
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
 // 黒：モデリングデータ
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbmd, GFL_G3D_UTIL_RESARC },

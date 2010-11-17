@@ -804,7 +804,18 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     }
     
     shotData->musVer = MUSICAL_VERSION;
+
+#if 0
+    //origin
     shotData->pmVersion = VERSION_BLACK;
+#else
+    //上記はBWの時点では未使用領域、
+    //もしもサーバー側でバージョン判定したい場合はそれぞれのバージョンをいれる必要があるが、今は使っていない。
+    //BWではBLACK固定だったため、現在はSWANでもB2固定としています。
+    //バージョン判定の必要があったときに再度修正してください
+    //有泉くんに聞き取り  nagihashi 10/11/17
+    shotData->pmVersion = VERSION_B2;
+#endif
     shotData->pmLang = LANG_JAPAN;
     shotData->player = evWork->selfIdx;
     

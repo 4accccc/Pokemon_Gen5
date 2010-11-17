@@ -183,7 +183,7 @@ u32 TRPOKE_AFTER_SV_GetTradeMonsNo( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SA
 {
   u32 monsno = MONSNO_533;
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
-  GF_ASSERT( (rom_version == VERSION_WHITE) || (rom_version == VERSION_BLACK) );
+  GF_ASSERT( (rom_version == VERSION_W2) || (rom_version == VERSION_B2) );
 
   if( type == TRPOKE_AFTER_SAVE_C05 )
   {
@@ -191,7 +191,7 @@ u32 TRPOKE_AFTER_SV_GetTradeMonsNo( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SA
   }
   else
   {
-    if( rom_version == VERSION_BLACK ){
+    if( rom_version == VERSION_B2 ){
       monsno = MONSNO_521;
     }else{
       monsno = MONSNO_517;

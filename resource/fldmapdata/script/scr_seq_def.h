@@ -4645,8 +4645,8 @@
 /**
  * @def _GET_ROM_VERSION
  * @brief ロムバージョンの取得
- * @retval  VERSION_WHITE ホワイトバージョン
- * @retval  VERSION_BLACK ブラックバージョン
+ * @retval  VERSION_W2
+ * @retval  VERSION_B2
  */
 //--------------------------------------------------------------
 #define _GET_ROM_VERSION( ret_wk )  \

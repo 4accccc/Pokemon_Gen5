@@ -1631,7 +1631,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
   
-  if( GET_VERSION() == VERSION_BLACK ){
+  if( GET_VERSION() == VERSION_B2 ){
     msg_id = msg_id_b;
   }
   

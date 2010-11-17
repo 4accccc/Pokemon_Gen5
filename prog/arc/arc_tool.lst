@@ -38,8 +38,8 @@
 # ARCID_MENU  "menu.narc" #メニュー画面
 #
 #ex) タイトル画面グラフィックを追加
-# $VERSION_BLACK  ARCID_TITLE "title_b.narc"  #ブラック版タイトル
-# $VERSION_WHITE  ARCID_TITLE "title_w.narc"  #ホワイト版タイトル
+# $VERSION_B2  ARCID_TITLE "title_b.narc"  #ブラック2版タイトル
+# $VERSION_W2  ARCID_TITLE "title_w.narc"  #ホワイト2版タイトル
 
 #ex) デバッグ情報付きマップデータを追加
 # $DEBUG_YES  ARCID_MAP "map_debug.narc"  #デバッグ情報有りマップデータ
@@ -75,8 +75,8 @@
   ARCID_FONT      "font/font.narc"    # フォントデータ
   ARCID_ITEMDATA    "item_data.narc"    # アイテムデータ
   ARCID_ITEMICON    "item_icon.narc"    # アイテムアイコン
-  $VERSION_BLACK  ARCID_TITLE "title_black.narc"  #ブラック版タイトル
-  $VERSION_WHITE  ARCID_TITLE "title_white.narc"  #ホワイト版タイトル
+  $VERSION_B2  ARCID_TITLE "title_black.narc"  #ブラック版タイトル
+  $VERSION_W2  ARCID_TITLE "title_white.narc"  #ホワイト版タイトル
   ARCID_CONFIG_GRA  "config_gra.narc"   #設定画面用データ
   ARCID_IRCBATTLE   "ircbattle.narc"           #赤外線マッチングバトル
   ARCID_CG_COMM  "cg_comm.narc"           #コミュニケーションギア 接続後
@@ -140,8 +140,8 @@
   ARCID_APP_MENU_COMMON   "app_menu_common.narc"   #共通素材ARC 
   ARCID_PLACE_NAME "place_name.narc"   #地名表示ウィンドウ
   ARCID_TOWNMAP_GRAPHIC "townmap_gra.narc"  #タウンマップアプリケーション用グラフィック
-  $VERSION_WHITE ARCID_TOWNMAP_DATA  "townmap_data_version_white.narc"   #ホワイト版タウンマップ用データ
-  $VERSION_BLACK ARCID_TOWNMAP_DATA  "townmap_data_version_black.narc"   #ブラック版タウンマップ用データ
+  $VERSION_W2 ARCID_TOWNMAP_DATA  "townmap_data_version_w2.narc"   #ホワイト版タウンマップ用データ
+  $VERSION_B2 ARCID_TOWNMAP_DATA  "townmap_data_version_b2.narc"   #ブラック版タウンマップ用データ
   ARCID_BGM_INFO "bgm_info.narc"   #BGMの情報
   ARCID_BAG "bag.narc"   # バッグ
   ARCID_UNION "unionroom.narc"   # ユニオンルーム
@@ -183,8 +183,8 @@
   ARCID_KOWAZA "kowaza.narc"  # 子技データ
   ARCID_WAZAOSHIE_GRA "waza_oshie_gra.narc"   # 技教え/思い出し画面グラフィック
   ARCID_FLD_EVENTDATA   "fieldmap\eventdata.narc" #フィールドイベントデータ
-  $VERSION_WHITE  ARCID_ENCOUNT "encount_data_w.narc" #ホワイト版エンカウントデータ
-  $VERSION_BLACK  ARCID_ENCOUNT "encount_data_b.narc" #ブラック版エンカウントデータ
+  $VERSION_W2  ARCID_ENCOUNT "encount_data_w.narc" #ホワイト版エンカウントデータ
+  $VERSION_B2  ARCID_ENCOUNT "encount_data_b.narc" #ブラック版エンカウントデータ
   ARCID_H03_GIMMICK "h03.narc" # H03ギミック
   ARCID_SHORTCUT_MENU_GRA "fld_shortcut_menu_gra.narc"  #フィールドショートカットメニュー用グラフィック
   ARCID_CAPTEX  "enceff_mdl.narc"  #キャプチャテクスチャデータ
@@ -237,8 +237,8 @@
   $DEBUG_YES ARCID_MIDI_DOWNLOAD "mididl.narc"  # MIDIファイルダウンロードテスト
   ARCID_BMODEL_TEXSET_OUTDOOR  "fieldmap/bmodel_texset_outdoor.narc"  #配置モデルテクスチャセットデータ（屋外）
   ARCID_BMODEL_TEXSET_INDOOR   "fieldmap/bmodel_texset_indoor.narc" #配置モデルテクスチャセットデータ（屋内）
-  $VERSION_WHITE  ARCID_ZUKAN_AREA "zukan_area_w.narc"  # 図鑑で使用するポケモンの分布データ
-  $VERSION_BLACK  ARCID_ZUKAN_AREA "zukan_area_b.narc"  # 図鑑で使用するポケモンの分布データ
+  $VERSION_W2  ARCID_ZUKAN_AREA "zukan_area_w.narc"  # 図鑑で使用するポケモンの分布データ
+  $VERSION_B2  ARCID_ZUKAN_AREA "zukan_area_b.narc"  # 図鑑で使用するポケモンの分布データ
   ARCID_ENTRANCE_CAMERA "entrance_camera.narc"  # 出入り口のカメラ演出データ
   ARCID_ENC_CI_FACE "enc_ci_face.narc"  # エンカウントカットインバストアップ画像データ
   ARCID_COMM_BTL_DEMO_GRA "comm_btl_demo.narc" " 通信バトルデモ
@@ -284,8 +284,8 @@
   $DEBUG_YES ARCID_DEBUG_REGCARD  "debug_regulation_card.narc" # ポケモンバトルレギュレーションデータデジタル選手証
   ARCID_PROF_WORD  "prof_word.narc"   # 不正文字列アーカイブ
   ARCID_R04D03_GMK "fieldmap/r04d03_gmk.narc" # R04D03ギミックアーカイブ
-  $VERSION_WHITE  ARCID_MANUAL "manual_w.narc" # ゲーム内マニュアルのグラフィックデータ
-  $VERSION_BLACK  ARCID_MANUAL "manual_b.narc" # ゲーム内マニュアルのグラフィックデータ
+  $VERSION_W2  ARCID_MANUAL "manual_w.narc" # ゲーム内マニュアルのグラフィックデータ
+  $VERSION_B2  ARCID_MANUAL "manual_b.narc" # ゲーム内マニュアルのグラフィックデータ
   ARCID_PALACE_PALETTE "palace_palette.narc" # パレスのグレースケール用テーブル
   ARCID_GF_LOGO_MOVIE   "gf_logo_movie.narc" # ゲームフリークロゴムービー
   ARCID_OP_DEMO2_MOVIE  "op_demo2.narc" # オープニングムービー２
@@ -293,8 +293,8 @@
   ARCID_T01_GMK "fieldmap/t01_gmk.narc" # T01ギミックアーカイブ
   ARCID_BMODEL_OUTDOOR_AREA  "fieldmap/buildmodel_outdoor_area.narc"  #配置モデルエリアデータ（屋外）
   ARCID_BMODEL_INDOOR_AREA   "fieldmap/buildmodel_indoor_area.narc" #配置モデルエリアデータ（屋内）
-  $VERSION_WHITE  ARCID_MANUAL_IMAGE "manual_image_w.narc" # ゲーム内マニュアルの説明画像データ
-  $VERSION_BLACK  ARCID_MANUAL_IMAGE "manual_image_b.narc" # ゲーム内マニュアルの説明画像データ
+  $VERSION_W2  ARCID_MANUAL_IMAGE "manual_image_w.narc" # ゲーム内マニュアルの説明画像データ
+  $VERSION_B2  ARCID_MANUAL_IMAGE "manual_image_b.narc" # ゲーム内マニュアルの説明画像データ
   $DEBUG_YES ARCID_DEBUG_HITCH_CHECK "debug/hitch_check.narc"  #当たり判定チェック（デバッグ用）
   $DEBUG_YES ARCID_DEBUG_MESSAGE  "debug_message.narc"  #デバッグ用メッセージデータ
   ARCID_ITEM_BATTLE_POCKET  "item_battle_pocket.narc" # アイテムの戦闘ポケットデータ

@@ -202,11 +202,11 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   TOMOYA_Printf( "WFBC_SETUP\n" );
   
   p_wk->data_in = TRUE;
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == VERSION_B2
   p_wk->type    = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
-#else   // PM_VERSION == VERSION_BLACK
+#else   // PM_VERSION == VERSION_B2
   p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST; 
-#endif  // PM_VERSION == VERSION_BLACK
+#endif  // PM_VERSION == VERSION_B2
 
   p_wk->random_no = MyStatus_GetID( cp_mystatus );
 
@@ -329,6 +329,7 @@ void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mysta
     trainerID   = MyStatus_GetID( cp_mystatus );
     
     // 不正データ 自分のROMコードに合わせる
+    // 下記関数はVERSION_B2, W2は返さないVERSION_BLACKorVERSION_WHITEのみ
     if( Intrude_GetIntrudeRomVersion( pm_version, trainerID ) == VERSION_BLACK ){
       p_wk->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
     }else{

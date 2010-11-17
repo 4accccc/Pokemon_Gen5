@@ -199,7 +199,7 @@ static GFL_PROC_RESULT TheEnd_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
 //  TheEnd_LogoInit(work);
 
   // ホワイトバージョンでは下画面を白くする
-  if(GetVersion()==VERSION_WHITE){
+  if(GetVersion()==VERSION_W2){
     GXS_LoadBGPltt( pal_white, 0, 2);
   }
 
@@ -407,7 +407,7 @@ static void TheEnd_BgInit( THE_END_WORK* work )
   }
 
   // 白バージョンの時は背景白の黒文字にする
-  if(GetVersion()== VERSION_WHITE){
+  if(GetVersion()== VERSION_W2){
     GFL_BG_ChangeScreenPalette( BG_FRAME_M_REAR, 0, 0, 32, 24, 1 );
   }
 
@@ -433,7 +433,7 @@ static void TheEnd_BgExit( THE_END_WORK* work )
 //----------------------------------------------------------------------------------
 static void TheEnd_LogoInit( THE_END_WORK* work )
 {
-  int version = GetVersion()-VERSION_WHITE;
+  int version = GetVersion()-VERSION_W2;
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, work->heap_id );
 
   // 共通
@@ -482,7 +482,7 @@ static void TheEnd_LogoInit( THE_END_WORK* work )
 //----------------------------------------------------------------------------------
 static void StartBrightnessFade( int start, int end, int fadetype )
 {
-  if(GetVersion()==VERSION_BLACK){
+  if(GetVersion()==VERSION_B2){
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, start, end, fadetype );
   }else{
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, start, end, fadetype );

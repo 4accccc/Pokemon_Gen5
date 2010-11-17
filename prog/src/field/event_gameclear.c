@@ -376,8 +376,8 @@ static u16 GetEndingDemoID( void )
 
   switch( GetVersion() ) {
   default: GF_ASSERT(0);
-  case VERSION_WHITE: demo_id = DEMO3D_ID_ENDING_W; break;
-  case VERSION_BLACK: demo_id = DEMO3D_ID_ENDING_B; break;
+  case VERSION_W2: demo_id = DEMO3D_ID_ENDING_W; break;
+  case VERSION_B2: demo_id = DEMO3D_ID_ENDING_B; break;
   }
 
   return demo_id;

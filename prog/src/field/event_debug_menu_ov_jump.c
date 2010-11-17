@@ -394,7 +394,7 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
         OS_Printf( "HUDSON: ALL MAP CHECK SUCCESS!!\n" ); // hudson 検出用
         //WFBCコアタイプを元に戻す
         {
-          if (PM_VERSION == VERSION_BLACK) p_core->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+          if (PM_VERSION == VERSION_B2) p_core->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
           else p_core->type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
         }
         return GMEVENT_RES_FINISH;

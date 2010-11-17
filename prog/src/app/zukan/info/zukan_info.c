@@ -45,7 +45,7 @@
 #include "msg/msg_zkn_type.h"
 #include "msg/msg_zkn_height.h"
 #include "msg/msg_zkn_weight.h"
-#if	PM_VERSION == VERSION_BLACK
+#if	PM_VERSION == VERSION_B2
   #include "msg/msg_zkn_comment_01.h"
 #else
   #include "msg/msg_zkn_comment_00.h"
@@ -373,7 +373,7 @@ static const u16 dat_id_for_md[MD_MAX] =
   NARC_message_zkn_type_dat,
   NARC_message_zkn_height_dat,
   NARC_message_zkn_weight_dat,
-#if	PM_VERSION == VERSION_BLACK
+#if	PM_VERSION == VERSION_B2
   NARC_message_zkn_comment_01_dat,
 #else
   NARC_message_zkn_comment_00_dat,

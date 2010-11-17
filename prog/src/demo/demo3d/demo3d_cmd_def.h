@@ -195,7 +195,7 @@ typedef enum
 /**
  *	@brief   BG一枚絵表示
  *
- *  @param  param[0]  適用する画面 < "ver_all"(0xFF),"ver_black"(VERSION_BLACK),"ver_white"(VERSION_WHITE),"ver_gray"(VERSION_WHITE+1) >
+ *  @param  param[0]  適用する画面 < "ver_all"(0xFF),"ver_black"(VERSION_BLACK),"ver_white"(VERSION_WHITE),"ver_b2"(VERSION_B2),"ver_w2"(VERSION_W2) >
  *	@param	param[1]  パレットアーカイブID 
  *	@param	param[2]  キャラクタアーカイブID
  *	@param	param[3]  スクリーンアーカイブID

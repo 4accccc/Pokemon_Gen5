@@ -1203,7 +1203,7 @@ static void getLegendFromBox( SCRCMD_WORK * work, u16 select_pos )
   /* ‚³‚ª‚· */
   {
     u16 monsno;
-    if ( GET_VERSION() == VERSION_WHITE ) {
+    if ( GET_VERSION() == VERSION_W2 ) {
       monsno = MONSNO_651;
     } else {
       monsno = MONSNO_650;
@@ -1345,7 +1345,7 @@ static int searchPartyLegend( GAMEDATA * gamedata )
   u32 my_id;
   u16 monsno;
 
-  if ( GET_VERSION() == VERSION_WHITE ) {
+  if ( GET_VERSION() == VERSION_W2 ) {
     monsno = MONSNO_651;
   } else {
     monsno = MONSNO_650;

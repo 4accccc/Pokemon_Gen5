@@ -105,7 +105,7 @@ static void FIELD_PALACE_LoadShadeTable( FIELD_PALACE_SYS* work , u16 zoneId , c
   {
     GAMEDATA *gameData = GAMESYSTEM_GetGameData( work->gameSys );
     u16 datId = 0xFFFF;
-    if( GET_VERSION() == VERSION_BLACK )
+    if( GET_VERSION() == VERSION_B2 )
     {
       if( DEBUG_FLG_GetFlg(DEBUG_FLG_PalaceArrive) == TRUE )
       {
@@ -117,7 +117,7 @@ static void FIELD_PALACE_LoadShadeTable( FIELD_PALACE_SYS* work , u16 zoneId , c
       }
     }
     else
-    if( GET_VERSION() == VERSION_WHITE )
+    if( GET_VERSION() == VERSION_W2 )
     {
       if( DEBUG_FLG_GetFlg(DEBUG_FLG_PalaceArrive) == TRUE )
       {

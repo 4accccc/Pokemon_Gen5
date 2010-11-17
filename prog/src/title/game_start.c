@@ -602,7 +602,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     msgman = GFL_MSG_Create( 
       GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, GFL_HEAPID_APP );
 #if 0
-  #if PM_VERSION == VERSION_BLACK
+  #if PM_VERSION == VERSION_B2
     namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );
   #else
     namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_WHITE );

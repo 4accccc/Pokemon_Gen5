@@ -300,8 +300,16 @@ int GDS_Profile_GetRomCode(const GDS_PROFILE_PTR gpp)
 	case VERSION_COLOSSEUM:
 	case VERSION_WHITE:
 	case VERSION_BLACK:
+  //case VERSION_B2:
+  //case VERSION_W2:
 		return gpp->version_code;
 	}
+  //B2,W2‚ðWHITE,BLACK‚Æ‚¾‚Ü‚·•K—v‚ª‚ ‚èAcase‚Å‚Ímake error‚É‚È‚é‚½‚ß
+  if( gpp->version_code == VERSION_B2
+    || gpp->version_code == VERSION_W2 )
+  {
+		return gpp->version_code;
+  }
 	return PM_VERSION;
 }
 

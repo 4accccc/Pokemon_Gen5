@@ -917,8 +917,9 @@ void MISSION_SetMissionClear(GAMEDATA *gamedata, INTRUDE_COMM_SYS_PTR intcomm, c
   MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gamedata, result->achieve_netid[0]);
   
   achieve_version = intcomm->intrude_status[result->achieve_netid[0]].pm_version;
+
+  // â∫ãLä÷êîÇÕVERSION_B2, W2ÇÕï‘Ç≥Ç»Ç¢VERSION_BLACKorVERSION_WHITEÇÃÇ›
   achieve_version = Intrude_GetIntrudeRomVersion(achieve_version, MyStatus_GetID(myst));
-  
   if(achieve_version == VERSION_WHITE){
     mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_WHITE;
   }
@@ -1050,6 +1051,8 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   occupy = Intrude_GetOccupyInfo(gamedata, palace_area);
   myst = Intrude_GetMyStatus(gamedata, palace_area);
   pm_version = MyStatus_GetRomCode( myst );
+
+  // â∫ãLä÷êîÇÕVERSION_B2, W2ÇÕï‘Ç≥Ç»Ç¢VERSION_BLACKorVERSION_WHITEÇÃÇ›
   pm_version = Intrude_GetIntrudeRomVersion(pm_version, MyStatus_GetID(myst));
   
   if(pm_version == VERSION_BLACK){

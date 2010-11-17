@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-10-22T18:36:15"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-11-16T15:16:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -603,54 +603,62 @@
 	</row>
 
 	<row id="DMPSTR_CASETTE_00">
-		<language name="JPN" width="256">ブラック</language>
+		<language name="JPN" width="256">ブラック２</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_01">
-		<language name="JPN" width="256">ホワイト</language>
+		<language name="JPN" width="256">ホワイト２</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_02">
-		<language name="JPN" width="256">Ｈゴールド</language>
+		<language name="JPN" width="256">ブラック</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_03">
-		<language name="JPN" width="256">Ｓシルバー</language>
+		<language name="JPN" width="256">ホワイト</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_04">
-		<language name="JPN" width="256">ダイヤ</language>
+		<language name="JPN" width="256">Ｈゴールド</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_05">
-		<language name="JPN" width="256">パール</language>
+		<language name="JPN" width="256">Ｓシルバー</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_06">
-		<language name="JPN" width="256">プラチナ</language>
+		<language name="JPN" width="256">ダイヤ</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_07">
-		<language name="JPN" width="256">ルビー</language>
+		<language name="JPN" width="256">パール</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_08">
-		<language name="JPN" width="256">サファイア</language>
+		<language name="JPN" width="256">プラチナ</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_09">
-		<language name="JPN" width="256">エメラルド</language>
+		<language name="JPN" width="256">ルビー</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_10">
-		<language name="JPN" width="256">Ｆレッド</language>
+		<language name="JPN" width="256">サファイア</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_11">
-		<language name="JPN" width="256">Ｒグリーン</language>
+		<language name="JPN" width="256">エメラルド</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_12">
+		<language name="JPN" width="256">Ｆレッド</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_13">
+		<language name="JPN" width="256">Ｒグリーン</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_14">
 		<language name="JPN" width="256">コロシアム</language>
 	</row>
 

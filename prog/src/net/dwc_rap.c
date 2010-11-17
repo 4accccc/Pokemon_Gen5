@@ -1738,9 +1738,6 @@ int mydwc_HandleError(void)
   }
   else if( ret != 0 ){
     GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, 0 );
-#ifdef BUGFIX_BTS7918_20100726
-  GetVersion();
-#endif //BUGFIX_BTS7918_20100726
   }
   return returnNo;
 }

@@ -42,7 +42,7 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
   shotData->player = 0;
   
   shotData->musVer = MUSICAL_VERSION;
-  shotData->pmVersion = VERSION_BLACK;
+  shotData->pmVersion = VERSION_B2;
   shotData->pmLang = LANG_JAPAN;
 
   shotData->spotBit = 1;

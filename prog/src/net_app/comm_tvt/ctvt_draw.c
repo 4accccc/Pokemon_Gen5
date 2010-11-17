@@ -210,7 +210,7 @@ CTVT_DRAW_WORK* CTVT_DRAW_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   drawWork->isBefStamp = FALSE;
 
   //バージョンで白黒を変える
-  if( GET_VERSION() == VERSION_BLACK )
+  if( GET_VERSION() == VERSION_B2 )
   {
     drawWork->penCol = 0x0000+0x8000;  //最上位ビットがα
   }
