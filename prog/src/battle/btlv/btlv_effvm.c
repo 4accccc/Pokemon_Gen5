@@ -321,11 +321,12 @@ typedef struct
 typedef struct {
   BTLV_EFFVM_WORK*    bevw;
 	BG_PLANM_CONV_DATA	dat;
-	u8					seq_num;
-	u8					pal_arc_idx;
-	u8					timer;
+	u8					seq_num;      // パレットアニメの総数
+	u8					pal_arc_idx;  // パレットのARCID
+	u8					timer;        // ウェイト計算用
 	u8					seq;
-	u8					pal_seq;
+	u8					pal_seq;      // 何本目のパレットか
+  u8          loop_count;   // ループする数
 } BTLV_EFFVM_PLANM_SYS;
 
 
@@ -3421,9 +3422,11 @@ static VMCMD_RESULT VMEC_BG_RASTER_SCROLL( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_BG_PAL_ANM( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_PLANM_SYS  *p_beps= GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_PLANM_SYS ));
+
   ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
-  BTLV_EFFVM_PLANM_SYS  *p_beps= GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_PLANM_SYS ));
-  void* p_arc;
+  int       count = ( int )VMGetU32( vmh );
+  void*     p_arc;
 
 
 #ifdef DEBUG_OS_PRINT
@@ -3436,6 +3439,7 @@ static VMCMD_RESULT VMEC_BG_PAL_ANM( VMHANDLE *vmh, void *context_work )
   // ---- 初期化 -----
   {
     p_beps->bevw = bevw;
+    p_beps->loop_count = count;
   }
 
 #ifdef PM_DEBUG
@@ -8322,9 +8326,15 @@ static  void  TCB_EFFVM_BG_PLANM( GFL_TCB* tcb, void* work )
 
       if( p_beps->pal_seq >= p_beps->seq_num-1 )
       {
-        p_beps->pal_seq = 0;	// ループ
-        ICHI_Printf("bg palanm tcb free\n");
-        BTLV_EFFECT_FreeTCB( tcb );
+        p_beps->pal_seq = 0;	// ループ有効時の為初期化
+
+        // ループ判定
+        // 0 or 1 だと 終了
+        if( p_beps->loop_count-- <= 1 )
+        {
+          ICHI_Printf("bg palanm tcb free\n");
+          BTLV_EFFECT_FreeTCB( tcb );
+        }
       }
       else
       {

@@ -1777,15 +1777,18 @@ ex)
 /**
  * @brief	BGのパレットアニメ
  *
- * #param_num	1
+ * #param_num	2
  * @param	datID     アニメ用パレットのアーカイブデータID
+ * @param loop_count     ループ数(数字を指定した時のみ有効)
  *
  * #param	FILE_DIALOG	.dat
+ * #param	VALUE_INT		ループ数
  */
 //======================================================================
-  .macro  BG_PAL_ANM  datID
+  .macro  BG_PAL_ANM  datID loop_count
   .short  EC_BG_PAL_ANM
   .long   \datID
+  .long   \loop_count
    .endm
 
 //======================================================================
