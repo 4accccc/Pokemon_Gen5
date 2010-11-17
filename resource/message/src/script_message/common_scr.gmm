@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-11-15T16:21:14"/>
+	<create user="iwasawa" host="W00157" date="2010-11-16T19:53:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -643,6 +643,9 @@ bag.gmm-&gt;msg_bag_057です。
 このメッセージを変更する時は、
 bag.gmmの変更も忘れないでください
 
+0:トレーナー名
+1:使おうとした道具名
+
 ※msg_common_itemuse_ng系は
 　ラベルの並びを変えないでください</comment>
 		<language name="JPN">アララギの　ことば……
@@ -684,11 +687,15 @@ bag.gmm-&gt;msg_bag_err_pairです。
 このメッセージを変更する時は、
 bag.gmmの変更も忘れないでください
 
+0:トレーナー名
+1:使おうとした道具名
+
 ※msg_common_itemuse_ng系は
 　ラベルの並びを変えないでください</comment>
-		<language name="JPN">つれあるいている　ときは
-つかえません！</language>
-		<language name="JPN_KANJI">連れ歩いている時は　使えません！</language>
+		<language name="JPN">ふたりで　いるときは
+[1:09:どうぐ名:1]は　つかえません！</language>
+		<language name="JPN_KANJI">二人で　いる時は
+[1:09:どうぐ名:1]は　使えません！</language>
 	</row>
 
 	<flowchart-group-list>

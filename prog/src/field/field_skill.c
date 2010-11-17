@@ -22,6 +22,7 @@
 #include "fskill_osyaberi.h"
 #include "field/eventwork.h"
 #include "field/zonedata.h"
+#include "field/pair_sys.h"
 #include "waza_tool/wazano_def.h"
 
 #include "script.h"
@@ -298,8 +299,7 @@ GMEVENT * FLDSKILL_UseSkill( FLDSKILL_IDX idx,
 //======================================================================
 static BOOL SkillCheckCommon_PairCheck( const FLDSKILL_CHECK_WORK* scwk )
 {
-  GAMEDATA* gdata = GAMESYSTEM_GetGameData( scwk->gsys );
-  return EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gdata), SYS_FLAG_PAIR );
+  return PAIRSYS_CheckPairFlag(GAMESYSTEM_GetGameData( scwk->gsys ));
 }
 
 //======================================================================

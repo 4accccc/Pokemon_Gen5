@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-11-15T15:01:24"/>
+	<create user="iwasawa" host="W00157" date="2010-11-17T11:53:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1270,11 +1270,22 @@ const u8 str_konanoryou[]
 バッグから　えらんで　ください！</language>
 	</row>
 
-	<row id="msg_bag_err_pair">
-		<comment>連れ歩きエラーメッセージ</comment>
-		<language name="JPN">つれあるいている　ときは
-つかえません！</language>
-		<language name="JPN_KANJI">連れ歩いている時は　使えません！</language>
+	<row id="msg_bag_err_pair" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,#80ffff,#80ffff,,,,,">
+		<comment>連れ歩きエラーメッセージ
+
+※ショートカットから道具を使う際のNGメッセージが
+script_message/common_scr.gmm
+ -&gt;msg_common_itemuse_ng_companionです。
+
+このメッセージを変更する時は、
+common_scr.gmmの変更も忘れないでください
+
+0:トレーナー名
+1:使おうとした道具名</comment>
+		<language name="JPN">ふたりで　いるときは
+[1:09:どうぐ名:1]は　つかえません！</language>
+		<language name="JPN_KANJI">二人で　いる時は
+[1:09:どうぐ名:1]は　使えません！</language>
 	</row>
 
 	<row id="msg_bag_err_disguise" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">

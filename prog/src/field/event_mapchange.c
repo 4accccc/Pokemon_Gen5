@@ -77,6 +77,7 @@
 #include "../../../resource/fldmapdata/flagwork/work_define.h"    // WK_SYS_SCENE_COMM 
 #include "../../../resource/fldmapdata/script/pokecen_scr_def.h"  // SCRID_POKECEN_ELEVATOR_OUT
 #include "sheimi_normalform.h"    //for SHEIMI_NFORM_ChangeNormal
+#include "pair_sys.h"
 
 #ifdef PM_DEBUG
 #include "../gamesystem/debug_data.h"
@@ -3148,8 +3149,8 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   //フィールド技 マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, zone_id );
 
-  //連れ歩きフラグ強制破棄
-  EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gamedata), SYS_FLAG_PAIR );
+  //連れ歩き強制パージ
+  PAIRSYS_PairFree( gamedata );
 }
 
 //--------------------------------------------------------------

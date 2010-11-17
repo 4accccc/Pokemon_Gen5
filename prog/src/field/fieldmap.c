@@ -2944,8 +2944,6 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   //エフェクトエンカウント破棄
   EFFECT_ENC_EffectDelete( fieldWork->encount );
-  //連れ歩きフラグ強制破棄
-  EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork(gdata), SYS_FLAG_PAIR );
     
   LOCATION_Get3DPos( lc, &lc_pos );
 

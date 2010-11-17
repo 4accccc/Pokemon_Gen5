@@ -1078,6 +1078,7 @@ siwasawa_add_pair_menu:
   _PLAYER_POS_GET( i_player_x, i_player_z)
   _OBJ_ADD_EX( i_player_x, i_player_z, DIR_DOWN, PAIR_TRAINER_01, SHIRONA, MV_PAIR )
   _FLAG_SET( SYS_FLAG_PAIR )
+	_OBJ_SET_NOT_DEL_ZONECHG( PAIR_TRAINER_01 )
 }
 _RET
 

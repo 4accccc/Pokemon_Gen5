@@ -15,9 +15,8 @@
 #include "fskill_amaikaori.h"
 #include "field/zonedata.h"
 #include "app/itemuse.h"
-
+#include "pair_sys.h"
 #include "field_comm/intrude_work.h"  //Intrude_CheckNetIsExit
-#include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
 
 #define ITEMCHECK_NONE  (0xFF)
 
@@ -34,8 +33,6 @@ static ITEMUSE_CODE itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* fie
 static ITEMUSE_CODE itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 static ITEMUSE_CODE itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 static ITEMUSE_CODE itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
-
-static BOOL isCompanion( GAMEDATA* gdata );
 
 //=============================================================================
 /**
@@ -120,7 +117,7 @@ void ITEMUSE_InitCheckWork( ITEMCHECK_WORK* icwk, GAMESYS_WORK* gsys, FIELDMAP_W
   //自機フォルムチェック
   icwk->PlayerForm = PLAYERWORK_GetMoveForm( playerWork ); 
   //連れ歩きチェック
-  icwk->Companion = isCompanion( gdata );
+  icwk->Companion = PAIRSYS_CheckPairFlag( gdata );
 
   // ( PlayerForm == PLAYER_MOVE_FORM_CYCLE );
 }
@@ -193,15 +190,6 @@ ITEMUSE_CODE FieldItemUseCheck( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys
 ///個別使用チェック関数
 //=============================================================================
 //-----------------------------------------------------------------------------
-
-/*
- *  @brief  連れ歩きチェック
- */
-static BOOL isCompanion( GAMEDATA* gdata )
-{
-  return EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork(gdata), SYS_FLAG_PAIR );
-}
-
 /*
  *  @brief  自転車使用チェック
  */
@@ -233,7 +221,7 @@ static ITEMUSE_CODE itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, P
     return ITEMUSE_NG;
   }
   //連れ歩きチェック
-  if( isCompanion( gdata ) ){
+  if( PAIRSYS_CheckPairFlag( gdata ) ){
     return ITEMUSE_NG_COMPANION;
   }
 
@@ -257,7 +245,7 @@ static ITEMUSE_CODE itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* fie
     return ITEMUSE_NG;
   }
   //連れ歩きチェック
-  if( isCompanion( gdata ) ){
+  if( PAIRSYS_CheckPairFlag( gdata ) ){
     return ITEMUSE_NG_COMPANION;
   }
   return ITEMUSE_OK;
@@ -293,7 +281,7 @@ static ITEMUSE_CODE itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk,
     return ITEMUSE_NG;
   }
   //連れ歩きチェック
-  if( isCompanion( gdata ) ){
+  if( PAIRSYS_CheckPairFlag( gdata ) ){
     return ITEMUSE_NG_COMPANION;
   }
   return ITEMUSE_OK;

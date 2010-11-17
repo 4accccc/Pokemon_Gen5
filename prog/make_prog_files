@@ -204,7 +204,8 @@ SRCS  +=    $(SOUNDSRC) \
 				poke_tool/poke_memo.c \
 				field/field_skill_check.c \
         system/save_error_warning.c \
-		title/title_control.c
+		    title/title_control.c \
+        field/pair_sys.c
 
 
 #================================================

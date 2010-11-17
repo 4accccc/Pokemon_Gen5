@@ -1220,6 +1220,7 @@ static void _check_ErrMsgReq( FIELD_ITEMMENU_WORK* pWork, int msg_id )
 {
   GFL_MSG_GetString( pWork->MsgManager, msg_id, pWork->pStrBuf );
   WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+  WORDSET_RegisterItemName( pWork->WordSet, 1, pWork->ret_item);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   // •¶Žš—ñ‚Ì‚ÝpExpStrBuf‚É—pˆÓ‚µ‚Ä‚¨‚«‘JˆÚæ‚Å•\Ž¦‚³‚¹‚é
   _CHANGE_STATE(pWork,_itemInnerUseError);
@@ -1336,7 +1337,7 @@ static int _check_Turizao( FIELD_ITEMMENU_WORK *pWork )
 {
   ITEMUSE_CODE code = ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_TURIZAO);
   if( code == ITEMUSE_OK){
-      pWork->ret_code = BAG_NEXTPROC_TURIZAO;  //‚Â‚è‚´‚¨
+    pWork->ret_code = BAG_NEXTPROC_TURIZAO;  //‚Â‚è‚´‚¨
     _CHANGE_STATE(pWork,NULL);
     return TRUE;
   }

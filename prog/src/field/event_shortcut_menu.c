@@ -43,7 +43,7 @@
 
 //外部参照
 #include "event_shortcut_menu.h"
-
+#include "item/itemsym.h"
 //-------------------------------------
 ///	
 //=====================================
@@ -116,7 +116,7 @@ static BOOL ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void
 
 //アイテム使用NGメッセージ表示イベント生成
 static void ShortCutMenu_ItemuseNGMsgCall( GMEVENT *p_event, GAMESYS_WORK* gsys, EVENT_ITEMUSE_CALL_TYPE item, ITEMUSE_CODE err_code );
-static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, MENUERR_TYPE type );
+static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, MENUERR_TYPE type, u16 item );
 
 //リボン画面を開けるかチェック
 static BOOL ShortCutMenu_IsOpenRibbon( EVENT_SHORTCUTMENU_WORK	*p_wk );
@@ -496,7 +496,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
         p_wk->p_link	= NULL;
 
         //NGメッセージ表示
-        GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, MENUERR_RIBON ) );
+        GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, MENUERR_RIBON, ITEM_DUMMY_DATA ) );
 
         *p_seq	= SEQ_RIBBON_RETURN;
       }
@@ -692,7 +692,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
     p_wk->p_link	= NULL;
 
     //NGメッセージ表示
-    GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, MENUERR_RIBON ) );
+    GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, MENUERR_RIBON, ITEM_DUMMY_DATA ) );
     *p_seq	= SEQ_RIBBON_RETURN;
     break;
 
@@ -1071,37 +1071,51 @@ static BOOL ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void
 /*
  *  @brief  ショートカットアイテム使用NGメッセージイベントコール
  */
-static void ShortCutMenu_ItemuseNGMsgCall( GMEVENT *p_event, GAMESYS_WORK* gsys, EVENT_ITEMUSE_CALL_TYPE item, ITEMUSE_CODE err_code )
+static void ShortCutMenu_ItemuseNGMsgCall( GMEVENT *p_event, GAMESYS_WORK* gsys, EVENT_ITEMUSE_CALL_TYPE type, ITEMUSE_CODE err_code )
 {
   MENUERR_TYPE err_type = MENUERR_NORMAL;
+  u16 item = ITEM_DUMMY_DATA;
 
   if( err_code == ITEMUSE_NG_COMPANION )
   {
     err_type = MENUERR_COMPANION; 
+    switch( type ){
+    case EVENT_ITEMUSE_CALL_CYCLE:
+      item = ITEM_ZITENSYA;
+      break;
+    case EVENT_ITEMUSE_CALL_ANANUKENOHIMO:
+      item = ITEM_ANANUKENOHIMO;
+      break;
+    case EVENT_ITEMUSE_CALL_TURIZAO:
+      item = ITEM_SUGOITURIZAO;
+      break;
+    }
   }
-  else if( item == EVENT_ITEMUSE_CALL_CYCLE )
+  else if( type == EVENT_ITEMUSE_CALL_CYCLE )
   {
     PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(gsys) );
 		if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
       err_type = MENUERR_CYCLE; 
 		}
 	}
-	GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( gsys, err_type) );
+
+	GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( gsys, err_type, item) );
 }
 
 /*
  *  @brief  ショートカットアイテム使用NGメッセージイベント
  *
- *  @param  type    0:通常,1:自転車を降りられない,2リボン画面を開けない
+ *  @param  type    MENUERR_TYPE  0:通常,1:自転車を降りられない,2リボン画面を開けない,3:連れ歩き
+ *  @param  item    アイテムNo
  */
-static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, MENUERR_TYPE type )
+static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, MENUERR_TYPE type, u16 item )
 {
   GMEVENT* event;
   SCRIPT_WORK* sc;
 
   event = SCRIPT_SetEventScript( gsys, SCRID_ITEMUSE_NG_MSG, NULL, HEAPID_FIELDMAP );
   sc = SCRIPT_GetScriptWorkFromEvent( event );
-  SCRIPT_SetScriptWorkParam( sc, type, 0, 0, 0 );
+  SCRIPT_SetScriptWorkParam( sc, type, item, 0, 0 );
   
   return event;
 }

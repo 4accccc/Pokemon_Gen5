@@ -334,6 +334,7 @@ ev_wireless_off_message:
 //  SCWK_PARAM0   0:博士NGメッセージ,
 //                1:自転車から降りられないメッセージ
 //                2:ステータスのリボン画面が開けないメッセージ
+//                3:連れ歩いている時は使えないメッセージ
 //--------------------------------------------------------------
 EVENT_START   ev_itemuse_ng_msg
 {
@@ -343,6 +344,7 @@ EVENT_START   ev_itemuse_ng_msg
   $i_msg += SCWK_PARAM0
 
   _PLAYER_NAME(0)
+  _ITEM_NAME( 1, SCWK_PARAM1 )
   _SYSWIN_MSG( i_msg, POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()

@@ -186,6 +186,7 @@ EVENT_START ev_hiden_naminori
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_naminori_ng
   ELSIF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _WAZA_NAME( 0, WAZANO_NAMINORI )
     _CALL sub_hiden_pair_ng 
   ELSE
     _SYSWIN_MSG( msg_naminori_01 , POS_DOWN )
@@ -349,6 +350,7 @@ EVENT_START ev_hiden_takinobori
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_takinobori_ng
   ELSIF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _WAZA_NAME( 0, WAZANO_TAKINOBORI )
     _CALL sub_hiden_pair_ng 
   ELSE
     _SYSWIN_MSG( msg_taki_01 , POS_DOWN )
@@ -471,6 +473,7 @@ EVENT_START ev_hiden_diving
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
   ELSIF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _WAZA_NAME( 0, WAZANO_DAIBINGU )
     _CALL sub_hiden_pair_ng 
   ELSE
     _SYSWIN_MSG( msg_diving_02, POS_DOWN )

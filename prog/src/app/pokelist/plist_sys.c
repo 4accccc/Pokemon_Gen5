@@ -124,6 +124,22 @@ enum PLIST_CURCOR_ANIME
   PCA_MENU,   //メニュー用
 };
 
+static const u16 DATA_FldSkillNo[] = {
+  WAZANO_IAIGIRI,     // メニュー 技：いあいぎり
+  WAZANO_NAMINORI,    // メニュー 技：なみのり
+  WAZANO_TAKINOBORI,  // メニュー 技：たきのぼり
+  WAZANO_KAIRIKI,     // メニュー 技：かいりき
+  WAZANO_SORAWOTOBU,  // メニュー 技：そらをとぶ
+  WAZANO_HURASSYU,       // メニュー 技：フラッシュ
+  WAZANO_TEREPOOTO,    // メニュー 技：テレポート
+  WAZANO_ANAWOHORU,   // メニュー 技：あなをほる
+  WAZANO_AMAIKAORI,   // メニュー 技：あまいかおり
+  WAZANO_OSYABERI,    // メニュー 技：おしゃべり
+  WAZANO_DAIBINGU,      // メニュー 技：ダイビング  //field_skillココまで
+  WAZANO_MIRUKUNOMI,    // メニュー 技：ミルクのみ
+  WAZANO_TAMAGOUMI,   // メニュー 技：タマゴうみ
+};
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -3419,7 +3435,10 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
           PLIST_MessageWaitInit( work , mes_pokelist_04_26 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
           break;
         case FLDSKILL_RET_COMPANION:    // 使用不可・連れ歩き
+          PLIST_MSG_CreateWordSet( work , work->msgWork );
+          PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 0 , DATA_FldSkillNo[selSkill-PL_RET_IAIGIRI] );
           PLIST_MessageWaitInit( work , mes_pokelist_09_01 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+          PLIST_MSG_DeleteWordSet( work , work->msgWork );
           break;
         case FLDSKILL_RET_PLAYER_SWIM:    // 使用不可・なみのり中
           PLIST_MessageWaitInit( work , mes_pokelist_04_42 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
