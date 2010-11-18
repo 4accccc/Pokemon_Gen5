@@ -31,6 +31,7 @@
 #include "fieldmap.h" //for FIELDMAP_～
 
 #include "event_field_fade.h"   //for EVENT_FlySkyBrightIn
+#include "system/brightness.h"  //for ChangeBrightnessRequest
 
 #include "system/main.h" //for HEAPID_FIELDMAP
 
@@ -61,7 +62,21 @@
 #define FLYSKY_SE_FRAME (24)      //空を飛ぶＳＥ再生タイミング
 #define CHAMP_FLYSKY_SE_FRAME (24)      //チャンピオン空を飛ぶＳＥ再生タイミング
 #endif
-#define CI_SE_NONE   (0xffffffff)
+#define CI_SE_NONE    (0xffffffff)
+#define CI_FADE_NONE  (0xffffffff)
+
+//フェードモード指定
+#define	CI_FADE_MASTER_BRIGHT_BLACKOUT_MAIN	(0x0001)	//マスター輝度ブラックアウト（メイン画面）
+#define	CI_FADE_MASTER_BRIGHT_BLACKOUT_SUB	(0x0002)	//マスター輝度ブラックアウト（サブ画面）
+#define	CI_FADE_MASTER_BRIGHT_BLACKOUT		  (0x0003)	//マスター輝度ブラックアウト（両画面）
+#define	CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN	(0x0004)	//マスター輝度ホワイトアウト（メイン画面）
+#define	CI_FADE_MASTER_BRIGHT_WHITEOUT_SUB	(0x0008)	//マスター輝度ホワイトアウト（サブ画面）
+#define	CI_FADE_MASTER_BRIGHT_WHITEOUT		  (0x000C)	//マスター輝度ホワイトアウト（両画面）
+
+#define	CI_FADE_MASTER_BRIGHT	(CI_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | \
+    CI_FADE_MASTER_BRIGHT_BLACKOUT_SUB | \
+    CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | \
+    CI_FADE_MASTER_BRIGHT_WHITEOUT_SUB)
 
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
 typedef BOOL (*MAIN_SEQ_FUNC)( GMEVENT* event, FLD3D_CI_PTR ptr );
@@ -71,6 +86,15 @@ typedef struct CI_SE_TBL_tag
   u32 Se;
   u32 Frame;
 }CI_SE_TBL;
+
+typedef struct CI_FADE_TBL_tag
+{
+  u32 Frame;
+  u16 mode;
+  s16 StartBright;
+  s16 EndBright;
+  u8  Sync;
+}CI_FADE_TBL;
 
 typedef struct NPC_FLY_WORK_tag
 {
@@ -99,6 +123,28 @@ typedef struct ENC_WORK_tag
   BOOL PlayerTrans;
 }ENC_WORK;
 
+//-------------------------------------
+/// カットイン用フェードワーク	
+//=====================================
+typedef struct {
+	int	mode;
+	int	now_evy;
+	int	end_evy;
+  u32 end_sync;
+  u32 now_sync;
+  fx32 fade_value;
+  GFL_TCB*  vblank_tcb;
+} CI_FADE_SYS;
+
+//-------------------------------------
+///  Vblank終了処理用ワーク
+//=====================================
+typedef struct {
+  BOOL DispSetEndFlg;
+  //int brightness_m; // マスター輝度メイン
+  //int brightness_s; // マスター輝度サブ
+} CI_END_VBLANK;
+
 typedef struct FLD3D_CI_tag
 {
   FLD_PRTCL_SYS_PTR PrtclSys;
@@ -121,7 +167,6 @@ typedef struct FLD3D_CI_tag
   GXPlaneMask Mask;
   u8 BgPriority[4];
   BOOL CapEndFlg;
-  BOOL DispSetEndFlg;
   BOOL Emit1;
   BOOL Emit2;
   BOOL Anm1Flg;
@@ -144,6 +189,13 @@ typedef struct FLD3D_CI_tag
   int SubSeq;
   u16 FrameCount;
   u16 SeTblIdx;
+  u16 FadeTblIdx;
+
+  // 画面終了用ワーク
+  CI_END_VBLANK DispEndWork;
+
+  // フェードシステム
+  CI_FADE_SYS *pFadeSys;
 }FLD3D_CI;
 
 //バイナリデータフォーマット
@@ -239,10 +291,19 @@ static void ChangeCapDatCol(void);
 static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work);
 
 static void PlaySE(FLD3D_CI_PTR ptr);
+static void StartFade(FLD3D_CI_PTR ptr);
 
 static void DispSetVTask( GFL_TCB *p_tcb, void *p_work );
 
-#if 0
+// CIフェード関数
+static CI_FADE_SYS* CI_FADE_Init( u32 heapID );
+static void CI_FADE_Main( GFL_TCB* tcb, void* wk );
+static void CI_FADE_MasterBrightAct(CI_FADE_SYS* fade_sys );
+static void	CI_FADE_SetMasterBrightReq(CI_FADE_SYS *fade_sys, int mode, int start_evy, int end_evy, int sync );
+static void CI_FADE_Exit(CI_FADE_SYS *fade_sys );
+static BOOL	CI_FADE_CheckFade(CI_FADE_SYS* fade_sys );
+
+#if 1
 #ifdef PM_DEBUG
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
 u32 DbgBefore;
@@ -257,7 +318,8 @@ u32 DbgAfterHeap;
 
 FS_EXTERN_OVERLAY(enc_cutin_no);
 
-#include "../../../resource/fld3d_ci_se/ci_se_tbl.cdat"
+#include "../../../resource/fld3d_ci_effect/ci_se_tbl.cdat"
+#include "../../../resource/fld3d_ci_effect/ci_fade_tbl.cdat"
 
 //※カットンが必要とするフィールドヒープのテーブル  リソースに依存しているので、変更があった場合は再調査が必要
 static const CutinUseFldHeapSize[FLDCIID_MAX] = {
@@ -526,6 +588,7 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   ptr->SubSeq = 0;
   ptr->FrameCount = 0;
   ptr->SeTblIdx = 0;
+  ptr->FadeTblIdx = 0;
   ptr->CutInNo = inCutInNo;
   //セットアップ後コールバックなしでセットする
   ptr->SetupCallBack = NULL;
@@ -535,11 +598,11 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
 
   //イベント作成
   {
-//#ifdef PM_DEBUG
-//    //ヒープ監視開始
-//    NOZOMU_Printf("-----------ヒープ監視開始------------\n");
-//    GFL_HEAP_DEBUG_StartPrint( HEAPID_FIELDMAP );
-//#endif
+#ifdef PM_DEBUG
+    //ヒープ監視開始
+    ONOUE_Printf("-----------ヒープ監視開始------------\n");
+    GFL_HEAP_DEBUG_StartPrint( HEAPID_FIELDMAP );
+#endif
     event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
     work = GMEVENT_GetEventWork(event);
     InitCutinEvtWork(ptr, work);
@@ -709,6 +772,10 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    // マスター輝度の保存
+    //ptr->DispEndWork.brightness_m = GX_GetMasterBrightness();
+    //ptr->DispEndWork.brightness_s = GXS_GetMasterBrightness();
+
     //ＯＢＪのポーズ
     if (evt_work->ObjPause)
     {
@@ -812,27 +879,32 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
         FIELD_FOG_SetFlag( fog, FALSE );
       }
       (*seq)++;
-//#ifdef PM_DEBUG
-//      DbgBefore = 0;
-//      DbgAfter = 0;
-//      //起動前ＶＲＡＭ量記憶
-//      NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &DbgBefore );
-//#endif
+#ifdef PM_DEBUG
+      DbgBefore = 0;
+      DbgAfter = 0;
+      //起動前ＶＲＡＭ量記憶
+      NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &DbgBefore );
+#endif
     }
     break;
   case 4:
-//#ifdef PM_DEBUG
-//    DbgBeforeHeap = GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
-//#endif    
+#ifdef PM_DEBUG
+    DbgBeforeHeap = GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+#endif    
     //リソースロード
     SetupResource(event, ptr, &evt_work->SetupDat, ptr->CutInNo);
-//#ifdef PM_DEBUG
-//    DbgAfterHeap = GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
-//    {
-//      u32 size = DbgBeforeHeap - DbgAfterHeap;
-//      OS_TFPrintf(3,"CUTIN_NO %d FieldAlloc::%x\n", ptr->CutInNo, size);
-//    }
-//#endif
+
+    // CIフェードセットアップ
+    ptr->pFadeSys = CI_FADE_Init( ptr->HeapID );
+
+#ifdef PM_DEBUG
+    DbgAfterHeap = GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+    {
+      u32 size = DbgBeforeHeap - DbgAfterHeap;
+      OS_TFPrintf(3,"CUTIN_NO %d FieldAlloc::%x\n", ptr->CutInNo, size);
+    }
+#endif
+
     //セットアップ終了したので3Ｄ面もオン
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
@@ -870,15 +942,15 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   case 6: //ＢＧＭロード完了待ち
     if ( PMSND_IsLoading() ) break;    //ロード中なら TRUE
 
-//#ifdef PM_DEBUG
-//    {
-//      int size;
-//      //起動後ＶＲＡＭ量記憶
-//      NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &DbgAfter );
-//      size = DbgBefore - DbgAfter;
-//      OS_TFPrintf(3,"CUTIN_NO %d size = %x\n", ptr->CutInNo , size);
-//    }
-//#endif    
+#ifdef PM_DEBUG
+    {
+      int size;
+      //起動後ＶＲＡＭ量記憶
+      NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &DbgAfter );
+      size = DbgBefore - DbgAfter;
+      OS_TFPrintf(3,"CUTIN_NO %d size = %x\n", ptr->CutInNo , size);
+    }
+#endif    
     
     (*seq)++;   //次のシーケンスへ
     //not break;
@@ -904,6 +976,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
       //ＳＥ再生
       PlaySE(ptr);
+      StartFade(ptr);
 
       main_rc = FALSE;
       if (ptr->MainSeqFunc != NULL) main_rc = ptr->MainSeqFunc(event, ptr);
@@ -916,12 +989,27 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 8:
+    {
+      // フェードを全て終了してからフェードを終了させる。
+      ptr->FrameCount++;
+      StartFade(ptr);
+
+      if( CI_FADE_CheckFade(ptr->pFadeSys) == FALSE )
+      {
+        (*seq)++;
+      }
+      break;
+    }
+  case 9:
     //フィールドモード戻し
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
     DeleteResource(ptr, &evt_work->SetupDat);
     NOZOMU_Printf("カットインリソースの解放終了\n");
     
+    // フェードシステム終了
+    CI_FADE_Exit( ptr->pFadeSys );
+
     //空を飛ぶフェードインの場合の処理
     if ( IsFlySkyIn(ptr->CutInNo) )
     {
@@ -956,21 +1044,21 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
     (*seq)++;
     break;
-  case 9:
+  case 10:
     //バックカラー設定
     {
       FIELD_LIGHT *light = FIELDMAP_GetFieldLight( fieldmap );
       FIELD_LIGHT_Reflect( light, TRUE );
 
       //タスク登録
-      ptr->DispSetEndFlg = FALSE;
-      GFUser_VIntr_CreateTCB(DispSetVTask, &ptr->DispSetEndFlg, 0 );
+      ptr->DispEndWork.DispSetEndFlg = FALSE;
+      GFUser_VIntr_CreateTCB(DispSetVTask, &ptr->DispEndWork, 0 );
       (*seq)++;
     }
     break;
-  case 10:
+  case 11:
     //タスクが終了していたら次のシーケンスを実行
-    if ( ptr->DispSetEndFlg == FALSE ) break;
+    if ( ptr->DispEndWork.DispSetEndFlg == FALSE ) break;
 
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
@@ -1033,12 +1121,12 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     
     (*seq)++;
     break;
-  case 11:
+  case 12:
     //終了
-//#ifdef PM_DEBUG
-//    GFL_HEAP_DEBUG_EndPrint();
-//    NOZOMU_Printf("-----------ヒープ監視終了------------\n");
-//#endif    
+#ifdef PM_DEBUG
+    GFL_HEAP_DEBUG_EndPrint();
+    ONOUE_Printf("-----------ヒープ監視終了------------\n");
+#endif    
     return GMEVENT_RES_FINISH;
   }
 
@@ -2531,6 +2619,39 @@ static void PlaySE(FLD3D_CI_PTR ptr)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェード再生
+ *
+ *	@param	ptr カットインポインタ
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void StartFade(FLD3D_CI_PTR ptr)
+{
+  u32 frame;
+  const CI_FADE_TBL * tbl = FadeTbl[ptr->CutInNo];
+  frame = tbl[ptr->FadeTblIdx].Frame;
+  if (frame != CI_FADE_NONE)
+  {
+    //フレーム監視
+    GF_ASSERT(tbl[ptr->FadeTblIdx].Frame > 0);
+    if ( tbl[ptr->FadeTblIdx].Frame == ptr->FrameCount )
+    {
+      // フェード呼び出し
+      CI_FADE_SetMasterBrightReq(ptr->pFadeSys,
+          tbl[ptr->FadeTblIdx].mode,
+          tbl[ptr->FadeTblIdx].StartBright,
+          tbl[ptr->FadeTblIdx].EndBright,
+          tbl[ptr->FadeTblIdx].Sync );
+
+      //インデックスインクリメント
+      ptr->FadeTblIdx++;
+    }
+  }
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * 復帰時Ｖタスク
@@ -2542,7 +2663,7 @@ static void PlaySE(FLD3D_CI_PTR ptr)
 //--------------------------------------------------------------------------------------------
 static void DispSetVTask( GFL_TCB *p_tcb, void *p_work )
 {
-  BOOL *end_flg = p_work;
+  CI_END_VBLANK* wk = p_work;
   
   //3D面をオン
   GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
@@ -2557,9 +2678,162 @@ static void DispSetVTask( GFL_TCB *p_tcb, void *p_work )
   }
 
   GFL_TCB_DeleteTask( p_tcb );
-  if (end_flg != NULL){
-    *end_flg = TRUE;
+  if (wk != NULL){
+    //GX_SetMasterBrightness( wk->brightness_m );
+    //GXS_SetMasterBrightness( wk->brightness_s );
+    wk->DispSetEndFlg = TRUE;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CIフェードシステム初期化
+ *
+ *	@param	heapID ヒープID
+ *
+ *	@retval 取得したメモリのアドレス
+ */
+//-----------------------------------------------------------------------------
+static CI_FADE_SYS* CI_FADE_Init(u32 heapID )
+{
+  CI_FADE_SYS *fade_sys;
+
+	fade_sys  = (CI_FADE_SYS *)GFL_HEAP_AllocMemory( heapID, sizeof(CI_FADE_SYS) );
+
+	GFL_STD_MemFill( fade_sys, 0, sizeof(CI_FADE_SYS) );
+
+  fade_sys->vblank_tcb = GFUser_VIntr_CreateTCB( CI_FADE_Main , fade_sys , 1 );
+
+  return fade_sys;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CIフェードシステムメイン
+ *
+ *	@param	tcb Vタスク
+ *	@param	wk  ワーク
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void CI_FADE_Main(GFL_TCB* tcb, void* wk )
+{
+  CI_FADE_SYS *fade_sys = (CI_FADE_SYS*)wk;
+
+	if( fade_sys == NULL ){
+		return;
+	}
+
+	if( fade_sys->mode & CI_FADE_MASTER_BRIGHT ){
+			fade_sys->now_evy += fade_sys->fade_value;
+			fade_sys->now_sync ++;
+
+      ONOUE_Printf("sync = %d\n",fade_sys->now_sync);
+
+			if( ( ( fade_sys->now_evy >= fade_sys->end_evy ) && ( fade_sys->fade_value >0 ) ) ||
+				( ( fade_sys->now_evy <= fade_sys->end_evy ) && ( fade_sys->fade_value <0 ) ) ||
+        ( fade_sys->now_sync >= fade_sys->end_sync  )){
+				fade_sys->now_evy = fade_sys->end_evy;
+			}
+			 
+			CI_FADE_MasterBrightAct( fade_sys );
+
+			if( ( fade_sys->now_evy == fade_sys->end_evy) ){
+				fade_sys->mode = 0;
+			}
+
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マスター輝度反映
+ *
+ *	@param	fade_sys フェードシステムワーク
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CI_FADE_MasterBrightAct(CI_FADE_SYS* fade_sys )
+{
+
+	if( fade_sys->mode & CI_FADE_MASTER_BRIGHT_BLACKOUT_MAIN){
+		GX_SetMasterBrightness( -FX_Whole(fade_sys->now_evy) );
+	}
+	if( fade_sys->mode & CI_FADE_MASTER_BRIGHT_BLACKOUT_SUB){
+		GXS_SetMasterBrightness( -FX_Whole(fade_sys->now_evy) );
+	}
+	if( fade_sys->mode & CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN){
+		GX_SetMasterBrightness( FX_Whole(fade_sys->now_evy) );
+	}
+	if( fade_sys->mode & CI_FADE_MASTER_BRIGHT_WHITEOUT_SUB){
+		GXS_SetMasterBrightness( FX_Whole(fade_sys->now_evy) );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マスター輝度フェードリクエスト
+ *
+ *	@param	mode      フェードモード
+ *	@param	start_evy 開始輝度(-16 to 16)
+ *	@param	end_evy   終了輝度(-16 to 16)
+ *	@param	sync      フェード時間
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void	CI_FADE_SetMasterBrightReq(CI_FADE_SYS *fade_sys, int mode, int start_evy, int end_evy, int sync )
+{
+  fx32 dif;
+  fade_sys->mode = mode;
+  fade_sys->now_evy = FX32_CONST(start_evy);
+  fade_sys->end_evy = FX32_CONST(end_evy);
+  fade_sys->end_sync = sync;
+  fade_sys->now_sync = 0;
+  
+  // 差分の取得
+  dif =FX32_CONST( GFL_STD_Abs( start_evy - end_evy ) );
+
+  // 1フレームの移動値を取得
+  fade_sys->fade_value = FX_Div( dif , FX32_CONST(sync) );
+
+  // 移動方向の決定
+	if( fade_sys->now_evy > fade_sys->end_evy ){
+		fade_sys->fade_value *= -1;
+  }
+
+  CI_FADE_MasterBrightAct( fade_sys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CIフェード終了処理
+ *
+ *	@param	*fade_sys フェードシステム
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CI_FADE_Exit(CI_FADE_SYS *fade_sys )
+{
+  GFL_TCB_DeleteTask( fade_sys->vblank_tcb );
+  GFL_HEAP_FreeMemory( fade_sys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CIフェード実行チェック
+ *
+ *	@param	fade_sys フェードシステム
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL	CI_FADE_CheckFade(CI_FADE_SYS* fade_sys )
+{
+	return ( fade_sys->mode !=0 );
 }
 
 #ifdef PM_DEBUG
@@ -2568,7 +2842,7 @@ static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
     // 合計サイズを計算。
     (*((u32*)pUserData)) += szByte;
     // 情報をデバックコンソールに出力
-    NOZOMU_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
-    NOZOMU_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
+    ONOUE_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
+    ONOUE_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
 }
 #endif

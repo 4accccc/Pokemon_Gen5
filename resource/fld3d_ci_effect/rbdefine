@@ -1,0 +1,46 @@
+
+# 読み飛ばし行数
+#
+RBDEF_NOGET_ROW_NUM = (2)
+
+# ID定義列
+#
+RBDEF_NUM_ROW_ID = (1)
+
+# コマンド定義列
+#
+RBDEF_NUM_ROW_CMD = (2)
+
+# フレーム定義列
+#
+RBDEF_NUM_ROW_FRAME = (3)
+
+# SEコマンドパラメータ(SEラベル)
+#
+RBDEF_NUM_ROW_SELABEL = (4)
+
+# FADEコマンドパラメータ(開始輝度)
+#
+RBDEF_NUM_ROW_START_EVY = (4)
+
+# FADEコマンドパラメータ(終了輝度)
+#
+RBDEF_NUM_ROW_END_EVY = (5)
+
+# FADEコマンドパラメータ(スピード)
+#
+RBDEF_NUM_ROW_WAIT = (6)
+
+# FADEコマンドパラメータ(BG面)
+#
+RBDEF_NUM_ROW_BG = (7)
+
+# SEコマンド
+#
+RBDEF_CMD_SE = "SE_PLAY"
+
+# FADEコマンド
+#
+RBDEF_CMD_BLACK_FADE = "BLACKOUT"
+RBDEF_CMD_WHITE_FADE = "WHITEOUT"
+

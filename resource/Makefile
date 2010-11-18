@@ -165,7 +165,7 @@ SUBDIRS	=	wmi \
 			dendou_pc \
 			btl_subway \
 			dendou_demo \
-			fld3d_ci_se \
+			fld3d_ci_effect \
 			profanity_word \
 			symbol \
 			manual_image \
