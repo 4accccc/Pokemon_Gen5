@@ -410,9 +410,11 @@ u8 Intrude_GetIntrudeRomVersion(u8 pm_version, u32 trainer_id)
 {
   if(pm_version != VERSION_BLACK && pm_version != VERSION_WHITE){
     if(trainer_id & (1 << 16)){
+      NAGI_Printf( "ホワイト VER=%d ID=0x%x\n", pm_version, trainer_id );
       pm_version = VERSION_WHITE;
     }
     else{
+      NAGI_Printf( "ブラック VER=%d ID=0x%x\n", pm_version, trainer_id );
       pm_version = VERSION_BLACK;
     }
   }
@@ -455,6 +457,8 @@ GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *
     return GRAYSCALE_TYPE_WHITE;
   case VERSION_BLACK:
     return GRAYSCALE_TYPE_BLACK;
+  default:
+    GF_ASSERT(0);
   }
   return GRAYSCALE_TYPE_NEXT;
 }
