@@ -7,7 +7,7 @@
 */
 #pragma once
 
-#if PM_VERSION == VERSION_WHITE
+#if PM_VERSION == VERSION_W2
 
 static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {
  { ZONE_ID_R01, 83,0, 15,55 },	//ÉJÉÇÉlÉM

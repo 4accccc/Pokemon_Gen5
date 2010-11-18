@@ -7,7 +7,7 @@
 */
 #pragma once
 
-#if PM_VERSION == VERSION_WHITE
+#if PM_VERSION == VERSION_W2
 
  #define GENERATE_ENC_POKE_MAX	( 17 )
 
