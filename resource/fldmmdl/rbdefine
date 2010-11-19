@@ -83,23 +83,106 @@ RBDEF_NUM_BBD_ANMID = (17)
 
 #リストファイル列　横幅サイズ
 #
-RBDEF_NUM_BBD_WIDTH_SIZE = (18)
+RBDEF_NUM_BBD_WIDTH_SIZE = (19)
 
 #リストファイル列　奥行サイズ
 #
-RBDEF_NUM_BBD_DEPTH_SIZE = (19)
+RBDEF_NUM_BBD_DEPTH_SIZE = (20)
 
 #リストファイル列　Xオフセット
 #
-RBDEF_NUM_BBD_OFFSET_X = (20)
+RBDEF_NUM_BBD_OFFSET_X = (21)
 
 #リストファイル列　Yオフセット
 #
-RBDEF_NUM_BBD_OFFSET_Y = (21)
+RBDEF_NUM_BBD_OFFSET_Y = (22)
 
 #リストファイル列　Zオフセット
 #
-RBDEF_NUM_BBD_OFFSET_Z = (22)
+RBDEF_NUM_BBD_OFFSET_Z = (23)
+
+#-----------------------------------------------
+#エクセル管理表 列番号 ポケモン
+#-----------------------------------------------
+#リストファイル列　番号
+#
+RBDEF_NUM_POKEMON_DATANUM = (0)
+
+#リストファイル列　完成
+#
+RBDEF_NUM_POKEMON_COMP = (1)
+
+#リストファイル列　参考画像
+#
+RBDEF_NUM_POKEMON_SAMPLE_PITC = (2)
+
+#リストファイル列　性別
+#
+RBDEF_NUM_POKEMON_SEX = (4)
+
+#リストファイル列　年代層
+#
+RBDEF_NUM_POKEMON_AGE = (5)
+
+#リストファイル列　表示コード
+#
+RBDEF_NUM_POKEMON_CODE = (7)
+
+#リストファイル列　リソースファイル名記述箇所 その１
+#
+RBDEF_NUM_POKEMON_RESFILE_NAME_0 = (9)
+
+#リストファイル列　リソースファイル名記述箇所 その２
+#
+RBDEF_NUM_POKEMON_RESFILE_NAME_1 = (10)
+
+#リストファイル列　処理関数
+#
+RBDEF_NUM_POKEMON_DRAWPROC = (11)
+
+#リストファイル列　影表示
+#
+RBDEF_NUM_POKEMON_SHADOW = (12)
+
+#リストファイル列　足跡表示
+#
+RBDEF_NUM_POKEMON_FOOTMARK = (13)
+
+#リストファイル列　映り込み
+#
+RBDEF_NUM_POKEMON_REFLECT = (14)
+
+#リストファイル列　モデルサイズ
+#
+RBDEF_NUM_POKEMON_MDLSIZE = (15)
+
+#リストファイル列　テクスチャサイズ
+#
+RBDEF_NUM_POKEMON_TEXSIZE = (16)
+
+#リストファイル列　アニメID
+#
+RBDEF_NUM_POKEMON_ANMID = (17)
+
+#リストファイル列　横幅サイズ
+#
+RBDEF_NUM_POKEMON_WIDTH_SIZE = (18)
+
+#リストファイル列　奥行サイズ
+#
+RBDEF_NUM_POKEMON_DEPTH_SIZE = (19)
+
+#リストファイル列　Xオフセット
+#
+RBDEF_NUM_POKEMON_OFFSET_X = (20)
+
+#リストファイル列　Yオフセット
+#
+RBDEF_NUM_POKEMON_OFFSET_Y = (21)
+
+#リストファイル列　Zオフセット
+#
+RBDEF_NUM_POKEMON_OFFSET_Z = (22)
 
 #-----------------------------------------------
 #エクセル管理表 列番号 モデル

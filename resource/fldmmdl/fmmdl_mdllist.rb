@@ -589,6 +589,193 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
 end
 
 #-----------------------------------------------------------------------
+#  動作モデルデータ一行コンバート　ポケモン
+#-----------------------------------------------------------------------
+def convert_line_pokemon( no, line, wfile, idxfile, file_symbol, flag_selres )
+  str = line.split( "," )
+  
+  #OBJコード 2
+  ary = Array( no )
+  wfile.write( ary.pack("S*") )
+  
+  #表示タイプ 1 (3)
+  word = str[RBDEF_NUM_DRAWTYPE]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR 表示タイプ異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #処理関数 1 (4)
+  word = str[RBDEF_NUM_POKEMON_DRAWPROC]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR 処理関数異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #影表示 1 (5)
+  word = str[RBDEF_NUM_POKEMON_SHADOW]
+  if( word != "○" )
+    ret = 0 
+  else
+    ret = 1
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #足跡種類 1 (6)
+  word = str[RBDEF_NUM_POKEMON_FOOTMARK]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR 足跡種類異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #映り込み 1 (7)
+  word = str[RBDEF_NUM_POKEMON_REFLECT]
+  if( word != "○" )
+    ret = 0
+  else
+    ret = 1
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #モデルサイズ 1 (8)
+  word = str[RBDEF_NUM_POKEMON_MDLSIZE]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR モデルサイズ異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #テクスチャサイズ 1 (9)
+  word = str[RBDEF_NUM_POKEMON_TEXSIZE]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR テクスチャサイズ異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #アニメID 1 (10)
+  word = str[RBDEF_NUM_POKEMON_ANMID]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR アニメID異常 _%s_\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #性別 1 (11)
+  word = str[RBDEF_NUM_POKEMON_SEX]
+  if( word == "男" )
+    ret = 0
+  elsif( word == "女" )
+    ret = 1
+  else
+    ret = 2
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #横幅サイズ 1 (12)
+  ret = 0
+  word = str[RBDEF_NUM_POKEMON_WIDTH_SIZE]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+
+  #奥行サイズ 1 (13)
+  ret = 0
+  word = str[RBDEF_NUM_POKEMON_DEPTH_SIZE]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+
+  #オフセットX 1 (14)
+  ret = 0
+  word = str[RBDEF_NUM_POKEMON_OFFSET_X]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
+
+  #オフセットY 1 (15)
+  ret = 0
+  word = str[RBDEF_NUM_POKEMON_OFFSET_Y]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
+
+  #オフセットZ 1 (16)
+  ret = 0
+  word = str[RBDEF_NUM_POKEMON_OFFSET_Z]
+  if( word != nil )
+    ret = word.to_i
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("c*") )
+  
+  #リソースインデックス 2 (17)
+  word = str[RBDEF_NUM_DRAWTYPE]
+  
+  if( word == RBSTR_DRAWTYPE_NON ) #表示タイプ　無し
+    ret = 0
+  else
+    xlsline = RBDEF_NUM_POKEMON_RESFILE_NAME_0
+    
+    if( flag_selres != "0" )
+      xlsline = RBDEF_NUM_POKEMON_RESFILE_NAME_1
+    end
+    
+    word = str[xlsline]
+    
+    #正規表現で文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
+    #/(\A.*[^\.imd])/ =~ word
+    #mdlname = $1
+    #
+    #代わりとしてgsubで".imd"を削除する。
+    #mdlname = word.gsub( "\.imd", "" )
+    
+    #imd -> nsbtx
+    mdlname = word.gsub( "\.imd", "_nsbtx" )
+    mdlname = sprintf( "_%s", mdlname ) #例 test_nsbtx -> _test_nsbtx
+    
+    ret = arcidx_search( idxfile, mdlname )
+    if( ret == RET_ERROR )
+      printf( "ERROR モデルファイル名異常 %s\n", word )
+      return RET_FALSE
+    end
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("S*") )
+  
+  #４ビット境界用ダミーデータ 10 (28)
+  file_write_filldata( wfile, 10, 0 )
+  
+  return RET_TRUE
+end
+
+#-----------------------------------------------------------------------
 #  動作モデルデータ一行コンバート　モデル
 #-----------------------------------------------------------------------
 def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
@@ -823,15 +1010,21 @@ end
 #-----------------------------------------------------------------------
 #  動作モデルデータ一行コンバート
 #-----------------------------------------------------------------------
-def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
+def convert_line( start_code , no, line, wfile, idxfile, file_symbol, flag_selres )
   ret = RET_FALSE
 
   str = line.split( "," )
   
   if( str[RBDEF_NUM_DRAWTYPE] == RBSTR_DRAWTYPE_NON ||
-      str[RBDEF_NUM_DRAWTYPE] == RBSTR_DRAWTYPE_BBD )
-    ret = convert_line_bbd(
-      no, line, wfile, idxfile, file_symbol, flag_selres )
+     str[RBDEF_NUM_DRAWTYPE] == RBSTR_DRAWTYPE_BBD )
+    if start_code == CODE_STARTNUM_BBD
+      ret = convert_line_bbd(
+        no, line, wfile, idxfile, file_symbol, flag_selres )
+    end
+    if start_code == CODE_STARTNUM_POKE
+      ret = convert_line_pokemon(
+        no, line, wfile, idxfile, file_symbol, flag_selres )
+    end
   elsif( str[RBDEF_NUM_DRAWTYPE] == RBSTR_DRAWTYPE_MDL )
     ret = convert_line_mdl(
       no, line, wfile, idxfile, file_symbol, flag_selres )
@@ -857,7 +1050,7 @@ def convert_code_param_main( start_code,
     end
     
     ret = convert_line(
-      no, line, file_bin, file_residx, file_symbol, flag_selres )
+      start_code , no, line, file_bin, file_residx, file_symbol, flag_selres )
     
     if( ret == RET_FALSE )
       return RET_ERROR #ERROR
