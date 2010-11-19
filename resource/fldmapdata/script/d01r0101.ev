@@ -27,6 +27,7 @@ _EVENT_DATA    ev_pos_d01r0101_support_04
 _EVENT_DATA    ev_d01r0101_item_01
 _EVENT_DATA    ev_init_d01r0101
 _EVENT_DATA    ev_pos_d01r0101_sage5_01
+_EVENT_DATA    ev_d01r0101_pair_test
 _EVENT_DATA_END
 
 
@@ -62,6 +63,20 @@ INIT_EVENT_START	ev_init_d01r0101
 
 INIT_EVENT_END
 
+/**************************************************************/
+/*   D01R0101　連れ歩き動作テスト            */
+/**************************************************************/
+EVENT_START   ev_d01r0101_pair_test
+{
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG(msg_d01r0101_girl_10, D01R0101_PAIR_TEST)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  //連れ歩き開始
+  _PAIR_TRAINER_SET( D01R0101_PAIR_TEST, PAIR_ID_01, PAIR_TYPE_CLOSE, TRID_NULL )
+}
+EVENT_END
 
 /**************************************************************/
 /*   D01R0101　ジムリーダー対策ポケモンくれるガール            */
