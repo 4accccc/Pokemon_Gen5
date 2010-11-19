@@ -742,7 +742,7 @@
 //--------------------------------------------------------------
 /**
  *  _FLAG_RESET フラグのリセット
- *  @param リセットするフラグナンバー
+ *  @param num リセットするフラグナンバー
  */
 //--------------------------------------------------------------
 #define _FLAG_RESET( num ) _ASM_FLAG_RESET num
@@ -756,8 +756,8 @@
 //--------------------------------------------------------------
 /**
  *  _FLAG_CHECK フラグチェック
- *  @param チェックするフラグナンバー
- *  @param 結果を格納するワーク
+ *  @param num  チェックするフラグナンバー
+ *  @param wk   結果を格納するワーク
  */
 //--------------------------------------------------------------
 #define _FLAG_CHECK( num, wk ) _ASM_FLAG_CHECK num,wk
@@ -1218,8 +1218,7 @@
  *  @def _GOLD_WIN_OPEN
  *  @brief 所持金ウィンドウを表示する　右詰表示
  *  @param x 表示x位置(キャラ単位)
- *  @param y 表示x位置(キャラ単位)
- *  @param none
+ *  @param y 表示y位置(キャラ単位)
  */
 //--------------------------------------------------------------
 #define _GOLD_WIN_OPEN( x, y ) \
@@ -1308,7 +1307,6 @@
 /**
  *  @def _PLAINWIN_CLOSE
  *  @brief プレーンウィンドウを閉じる
- *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
 #define _PLAINWIN_CLOSE() _ASM_PLAINWIN_CLOSE
@@ -1861,9 +1859,7 @@
 /**
  * @def _POS_PLAYER_TURN
  * @brief 自機の高さ変化演出
- * @param type  　動かす種類
- * @param frame   動かす長さ
- * @param length
+ * @param none
  */
 //--------------------------------------------------------------
 #define _POS_PLAYER_TURN() _ASM_POS_PLAYER_TURN
@@ -2072,7 +2068,7 @@
 /**
  *	技名を指定タグにセット
  *  @param idx セットするタグナンバー
- *  @param wazano 名前を取得する技番号
+ *  @param waza 名前を取得する技番号
  */
 //--------------------------------------------------------------
 #define _WAZA_NAME( idx, waza ) _ASM_WAZA_NAME idx,waza
@@ -2495,7 +2491,7 @@
  *  @def  _EYE_TRAINER_OBJ_ID_GET
  *  @brief  視線：トレーナーOBJID取得
  *  @param  pos     位置指定（SCR_EYE_TR_0 / SCR_EYE_TR_1 )
- *  @param  ret_wk
+ *  @param  ret_wk  取得したトレーナーOBJID
  *
  *  @note
  *  トレーナー視線スクリプトから呼ばれている。
@@ -2551,6 +2547,7 @@
  *  @brief  トレーナー戦闘呼び出し（特殊指定あり）
  *  @param tr_id_0 トレーナーID0
  *  @param tr_id_1 トレーナーID1
+ *  @param flags 特殊フラグ 0:特にモード指定なし
  *
  *  @note flagsにSCR_BATTLE_MODE_NOLOSEを指定した場合、戦闘後は必ず「勝利」で戻ってきます。
  *      　この場合も戦闘後に_TRAINER_WIN()は必要になります。
@@ -2731,7 +2728,7 @@
 //--------------------------------------------------------------
 /**
  * @def _TRAINER_ITEM_GET
- * @brief アイテムトレーナーのアイテムの種類を取得
+ * @brief 指定したトレーナーの贈呈するアイテムナンバーを取得
  * @param tr_id   トレーナーID
  * @param ret_wk  アイテムナンバーを受け取るワーク
  * @return  アイテムナンバー
@@ -2982,7 +2979,9 @@
  *  @def  _TRAINER_FLAG_CHECK
  *  @brief  トレーナーフラグチェック
  *  @param  tr_id   チェックするトレーナーID
- *  @param  ret_wk  値を受け取るワーク
+ *  @param  ret_wk  戻り値
+ *  @retval	"1 = フラグON"
+ *  @retval	"0 = フラグOFF"
  */
 //--------------------------------------------------------------
 #define _TRAINER_FLAG_CHECK( tr_id, ret_wk )  \
@@ -2999,7 +2998,7 @@
 //--------------------------------------------------------------
 /**
  *  @def  _OBJ_RAIL_SLIPDOWN
- *  @brief  動作もでるをレール上からすべりおろす
+ *  @brief  動作モデルをレール上からすべりおろす
  *  @param  objid   動かす動作オブジェ
  */
 //--------------------------------------------------------------
@@ -3093,9 +3092,9 @@
 
 //--------------------------------------------------------------
 /**
- *  _BGM_PLAY_CHECK ＢＧＭなっているかチェック
+ *  _BGM_PLAY_CHECK ＢＧＭ再生チェック
  *  @param  music   BGMナンバー
- *  @param  ret     TRUEなっている
+ *  @param  ret     TRUE:再生中
  */
 //--------------------------------------------------------------
 #define _BGM_PLAY_CHECK(music, ret) _ASM_BGM_PLAY_CHECK music, ret
@@ -3140,7 +3139,10 @@
 
 //--------------------------------------------------------------
 /**
- *  _BGM_WAIT 
+ *  @def  _BGM_WAIT 
+ *  @brief BGM終了待ち
+ *  
+ *  @param none
  */
 //--------------------------------------------------------------
 #define _BGM_WAIT() _ASM_BGM_WAIT
@@ -3190,7 +3192,7 @@
 /**
  * @def _START_EVENT_BGM
  * @brief スクリプト簡易マクロ：イベントBGM開始
- * @param bgmno
+ * @param bgmno BGM Number
  *
  * @note
  * 内部的には _BGM_PLAY()を呼んでいる
@@ -3581,7 +3583,7 @@
 
 //--------------------------------------------------------------
 /**
- *  _BMPMENU_MAKE_LIST BMPメニュー　リスト作成拡張版
+ *  _BMPMENU_MAKE_LIST_EX BMPメニュー　リスト作成拡張版
  *  @param msg_id メッセージID
  *  @param ex_msg_id  各項目の説明メッセージID
  *  @param param メッセージが選択された際に結果として返す値
@@ -3862,7 +3864,7 @@
 //--------------------------------------------------------------
 /**
  * @def _GET_POCKET_ID
- * @brief ポケットIDの取得する
+ * @brief ポケットIDを取得する
  * @param item_no   アイテムナンバー
  * @param ret_wk    結果を受け取るワーク
  *
@@ -4479,7 +4481,9 @@
 /**
  * @def _REPORT_CALL
  * @brief   セーブ機能呼び出し
- * @param ret_wk    結果を受け取るワーク
+ * @param ret_wk 戻り値
+ * @retval  TRUE:書き込み成功
+ *          FALSE:書き込み失敗
  *
  * 共通スクリプトのレポート機能呼び出しから利用されている。
  * 通常のスクリプトから直接呼び出すことはない。
@@ -4517,6 +4521,10 @@
  * @def _GET_FIELD_COMM_NO
  * @brief フィールドの通信状態を返す
  *
+ * @param ret_work  戻り値
+ *
+ * @retval  GAME_COMM_NO_XXX (game_comm.h参照)
+ *
  * コモン処理 _FIELD_COMM_EXIT_EVENT_CALL の中で使います
  * 原則として単体での呼び出しはせず、コモン処理を呼んでください
  */
@@ -4533,6 +4541,9 @@
 /**
  * @def _FIELD_COMM_EXIT
  * @brief フィールドマップの通信を終了する
+ *
+ * @param ret_work 戻り値
+ * @retval  SCR_FIELD_COMM_EXIT_XXX (script_def.h参照)
  *
  * コモン処理 _FIELD_COMM_EXIT_EVENT_CALL を作製してあります。
  * 原則として単体での呼び出しはせず、コモン処理を呼んでください
@@ -4716,7 +4727,7 @@
 /**
  * @def _GET_TIMEZONE
  * @brief 時間帯の取得
- * @param ret_wk    チェック結果を受け取るワーク
+ * @param ret_wk    結果を受け取るワーク
  *
  * 戻り値はprog/include/system/timezone.hを参照
  *
@@ -4870,7 +4881,9 @@
  * @def _GET_ZUKAN_COUNT
  * @brief ずかんフラグのカウント
  * @param zukan_count_type  ZUKANCTRL_MODE_SEE / ZUKANCTRL_MODE_GET
- * @param ret_wk    結果を受けるワーク
+ * @param ret_wk    戻り値
+ * @retval  typeがZUKANCTRL_MODE_SEE: 見た数
+ *          typeがZUKANCTRL_MODE_GET: 捕まえた数
  */
 //--------------------------------------------------------------
 #define _GET_ZUKAN_COUNT( zukan_count_type, ret_wk ) \
@@ -4905,6 +4918,7 @@
  * @brief ずかんフラグを取得する
  * @param zukan_count_type  ZUKANCTRL_MODE_SEE / ZUKANCTRL_MODE_GET
  * @param monsno    取得対象ポケモンのナンバー
+ * @param ret_wk    取得した図鑑フラグ TRUE:見た，捕獲済み FALSE:それ以外
  */
 //--------------------------------------------------------------
 #define _GET_ZUKAN_FLAG( zukan_count_type, monsno, ret_wk ) \
@@ -5215,7 +5229,7 @@
 /**
  * @def _GET_BOX_WALLPAPER
  * @brief ボックスの追加壁紙取得
- * @param wallpaper_flag  script_def.hのSCR_BOX_EX_WALLPAPER?を使用
+ * @param flag  script_def.hのSCR_BOX_EX_WALLPAPER?を使用
  */
 //--------------------------------------------------------------
 #define _GET_BOX_WALLPAPER( flag )  \
@@ -5712,8 +5726,8 @@
  * @def _GET_PARTY_POKE_PARAM
  * @brief 手持ちポケモンのパラメータ取得
  * @param ret_wk      結果を受け取るワーク
- * @param para_id     取得したいパラメータ指定ID（script_def.hのSCR_POKEPARA_～）
  * @param pos         モンスターナンバーを調べる手持ちポケモン番号
+ * @param para_id     取得したいパラメータ指定ID（script_def.hのSCR_POKEPARA_～）
  *
  * @note
  * SCR_POKEPARA_～のうち、ROもしくはRWと書かれているものを指定することができます。
@@ -5976,7 +5990,6 @@
  * @brief 手持ちポケモンのなつき度をセット
  * @param pos     なつき度を操作するポケモンの位置（０～５）
  * @param value   設定したいなつき度
- * @param mode    コマンドの呼び出しモード(0:セット,1:加算,2:減算)
  */
 //--------------------------------------------------------------
 #define _SET_TEMOTI_NATSUKI( pos, value ) \
@@ -5995,7 +6008,6 @@
  * @brief 手持ちポケモンのなつき度を加算
  * @param pos     なつき度を操作するポケモンの位置（０～５）
  * @param value   加算したい値
- * @param mode    コマンドの呼び出しモード(0:セット,1:加算,2:減算)
  */
 //--------------------------------------------------------------
 #define _ADD_TEMOTI_NATSUKI( pos, value ) \
@@ -6014,7 +6026,6 @@
  * @brief 手持ちポケモンのなつき度を減算
  * @param pos     なつき度を操作するポケモンの位置（０～５）
  * @param value   減算したい値
- * @param mode    コマンドの呼び出しモード(0:セット,1:加算,2:減算)
  */
 //--------------------------------------------------------------
 #define _SUB_TEMOTI_NATSUKI( pos, value ) \
@@ -6258,7 +6269,7 @@
 /**
  * @def _GET_TEMOTI_PARAM_EXP
  * @brief 手持ちポケモンの努力値合計を受け取る
- * @param ret_wk    チェック結果を受け取るワーク
+ * @param ret_wk    結果を受け取るワーク
  * @param pos     チェックするポケモンの位置（０～５）
  */
 //--------------------------------------------------------------
@@ -7422,8 +7433,7 @@
 /**
  * 育て屋に預けている2体のポケモンの相性をチェックする
  *
- * @param ret_wk 結果の格納先
- * @return 
+ * @param ret_wk 相性結果 タマゴができる確立[%](0,20,50,70)
  */
 //--------------------------------------------------------------
 #define _SODATEYA_LOVE_CHECK( ret_wk ) \
@@ -7558,7 +7568,7 @@
  * 手持ちポケモン選択画面を呼び出す
  *
  * @param ret_wk 選択結果の格納先
- * @retval u16   選択結果
+ * @retval u16   ポケモンパーティ内インデックス
  */
 //--------------------------------------------------------------
 #define _SODATEYA_SELECT_POKEMON( ret_wk ) \
@@ -7759,6 +7769,9 @@
  * @def _CALL_ZUKAN_AWARD
  * @brief   図鑑完成表彰状＆路線図表示アプリ呼び出し
  *
+ * @param demo_id 図鑑呼び出しID
+ * @param pattern 飾ってあるのを見るときは1 それ以外は0
+ *
  * 図鑑呼び出しID
  *  地方図鑑 SCR_ZUKAN_AWARD_CHIHOU
  *  全国図鑑 SCR_ZUKAN_AWARD_ZENKOKU
@@ -7782,7 +7795,10 @@
 /**
  * @def _CALL_FIRST_POKE_SELECT
  * @brief 最初の３体選択
- * @param ret_wk
+ * @param ret_wk  選択結果
+ * @retval  0: くさタイプ
+ *          1: ほのおタイプ
+ *          2: みずタイプ
  */
 //--------------------------------------------------------------
 #define _CALL_FIRST_POKE_SELECT( ret_wk ) \
@@ -7800,7 +7816,6 @@
 /**
  * @def _SHOP_CALL
  * @brief 簡易イベントコマンド：ショップイベント呼び出し
- * @param shop_id
  */
 //--------------------------------------------------------------
 #define _SHOP_CALL( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,SHOP_GREETING_NORMAL 
@@ -7809,7 +7824,6 @@
 /**
  * @def _SHOP_CALL_GREETING_LESS
  * @brief 簡易イベントコマンド：ショップイベント呼び出し
- * @param shop_id
  * _SHOP_CALLとの違いは話しかけ時の「いらっしゃいませ」の挨拶無し
  * ※固定ショップ、BPショップなど各ショップに挨拶無しバージョンが存在します。
  */
@@ -7820,7 +7834,7 @@
 /**
  * @def _FIX_SHOP_CALL
  * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
- * @param shop_id
+ * @param shop_id SCR_SHOPID_NULL を指定すると変動ショップ、それ以外なら固定ショップ
  */
 //--------------------------------------------------------------
 #define _FIX_SHOP_CALL( shop_id ) _ASM_SHOP_CALL shop_id,SHOP_GREETING_NORMAL
@@ -7867,6 +7881,10 @@
  * @def _CALL_SHOP_PROC_BUY
  * @brief ショップイベント呼び出し
  * @param shop_id SCR_SHOPID_NULL を指定すると変動ショップ、それ以外なら固定ショップ
+ * @param ret_mode 戻り値
+ *
+ * @retval  SCR_PROC_RETMODE_EXIT   一発終了
+ *          SCR_PROC_RETMODE_NORMAL 継続
  *
  * shop_scr.ev専用　ゾーンスクリプトから直接呼び出さないこと！
  */
@@ -8046,9 +8064,9 @@
  * フィールド技スクリプトと海底遺跡でのみ使用しています。
  * 他の箇所では使用しないでください。
  *
- *  param 上昇と下降  SCR_EV_DIVING_MAPCHANGE_DOWN　
- *                    SCR_EV_DIVING_MAPCHANGE_UP 
- *                    SCR_EV_DIVING_MAPCHANGE_KURUKURU_UP
+ * @param up_down   上昇:SCR_EV_DIVING_MAPCHANGE_DOWN　
+ *                  下降：SCR_EV_DIVING_MAPCHANGE_UP 
+ *                  くるくる上昇:SCR_EV_DIVING_MAPCHANGE_KURUKURU_UP
  */
 //--------------------------------------------------------------
 #define _DIVING( up_down ) _ASM_DIVING up_down
@@ -8877,6 +8895,8 @@
 /**
  * 侵入コマンド　今自分がいるパレスエリアが、自分のパレスエリアを基点(0)とした場合、何個目のパレスエリアにいるかを取得する
  * 
+ * @param ret_wk  戻り値:パレスエリアのオフセット値
+ *
  * 通信IDとイコールではなく、オフセットである事に注意
  *   ※0の場合は自分のパレスエリアにいる
  */
@@ -8950,6 +8970,11 @@
 //--------------------------------------------------------------
 /**
  * 侵入コマンド　パレスIN時の変装イベント
+ *
+ * @param ret_wk  戻り値
+ *
+ * @retval  TRUE:何か装備している
+ *          FALSE:何も装備していない
  */
 //--------------------------------------------------------------
 #define _CHECK_EQP_GPOWER( ret_wk ) _ASM_CHECK_EQP_GPOWER ret_wk
@@ -9230,7 +9255,7 @@
 /**
  * 遊覧船内トレーナ数取得
  * @param type　    検索タイプ  PL_TR_SEARCH_TYPE_～　pl_boat_def.h 参照
- * @param ret_wk    検索結トレーナー数
+ * @param ret_wk    検索結果トレーナー数
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
@@ -9277,7 +9302,7 @@
  * @param room_idx    部屋インデックス
  * @param info_kind   取得情報
  * @param param       情報取得パラメータ
- * @param ret_wk      格納バッファ
+ * @param ret_wk      格納バッファ(info_kindにより取得情報が異なる)
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
@@ -9316,7 +9341,9 @@
 //--------------------------------------------------------------
 /**
  * 遊覧船甲板デモコール
- * @param ret_wk
+ * @param ret_wk  デモの終わり方
+ * @retval  TRUE:プレーヤーがデモを終了させた
+ *          FALSE:デモが最後まで再生された
  * @note
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
@@ -9574,8 +9601,9 @@
 //--------------------------------------------------------------
 /**
  * @def _SET_REGULATION_OUT_POKE_NAME
- * @brief デモ呼び出し
- * @param demo_no   デモID指定ナンバー
+ * @brief 指定のレギュレーションで参加できないポケモン種名をタグ展開し、その数を返す
+ * @param regulation  レギュレーションID poke_tool/regulation_def.hに定義されたコード
+ * @param ret_wk    戻り値：参加できないポケモン数
  */
 //--------------------------------------------------------------
 #define _SET_REGULATION_OUT_POKE_NAME( regulation, ret_wk )  \
@@ -9594,7 +9622,6 @@
 /**
  * @def _LEAGUE_FRONT_LIFT_DOWN
  * @brief デモ呼び出し
- * @param demo_no   デモID指定ナンバー
  */
 //--------------------------------------------------------------
 #define _LEAGUE_FRONT_LIFT_DOWN() \
@@ -9992,7 +10019,7 @@
  *  _WFBC_GET_AUTO_NPC_MESSAGE
  *  @brief WFBC:自動配置人物のメッセージを取得する
  *  
- *  @param  ret     戻り値
+ *  @param  ret     戻り値:メッセージID
  *  @param  msg_idx メッセージのインデックス(1～4)
  */
 //--------------------------------------------------------------
@@ -10011,7 +10038,7 @@
 /**
  * @def _FEELING_NAME
  * @brief 相性診断イベント：名前をセット
- * @param idx
+ * @param idx セットする名前のバッファインデックス(基本0で良いはず)
  */
 //--------------------------------------------------------------
 #define _FEELING_NAME( idx )  \
@@ -10026,7 +10053,7 @@
 /**
  * @def _GET_FEELING_COUNT
  * @brief 相性診断イベント：相性診断した人数を取得
- * @param ret_wk
+ * @param ret_wk  ランクインしている人の数
  */
 //--------------------------------------------------------------
 #define _GET_FEELING_COUNT( ret_wk ) \
@@ -10201,7 +10228,7 @@
 //--------------------------------------------------------------
 /**
  * @brief ポケモンID検索　自分のIDと異なるIDの種類数を取得（最大50）
- * @param ret       検索結果
+ * @param ret 検索結果:数値
  */
 //--------------------------------------------------------------
 #define _SEARCH_POKEID_NUM( ret ) _ASM_SEARCH_POKEID_NUM ret
@@ -10469,7 +10496,7 @@
 /**
  * @def _SXY_MOVE_BG_EVENT
  * @brief BGイベントの位置を変更する
- * @param id  BGイベントを指定するためのID
+ * @param bg_id  BGイベントを指定するためのID
  * @param gx  X位置（グリッド単位）
  * @param gy  Y位置（グリッド単位）
  * @param gz  Z位置（グリッド単位）
@@ -10490,7 +10517,7 @@
 /**
  * @def _SXY_MOVE_EXIT_EVENT
  * @brief 出入口イベントの位置を変更する
- * @param id  出入口イベントを指定するためのID
+ * @param exit_id  出入口イベントを指定するためのID
  * @param gx  X位置（グリッド単位）
  * @param gy  Y位置（グリッド単位）
  * @param gz  Z位置（グリッド単位）
@@ -10536,10 +10563,12 @@
 //--------------------------------------------------------------
 /**
  * @brief 簡易会話アプリコール
- * @param mode
- * @param word1
- * @param word2
- * @param ret       結果　編集をやめた場合FALSE 編集した場合TRUE
+ * @param mode  簡易会話モード (src/field/easytalk_mode_def.h参照)
+ * @param word1 入力単語1
+ * @param word2 入力単語2 モードによっては使用されない
+ * @param ret 戻り値
+ * @retval  TRUE:編集した
+ *          FALSE:編集をやめた
  */
 //--------------------------------------------------------------
 #define _CALL_EASY_TALK_APP( mode, word1, word2, ret ) \
@@ -11594,7 +11623,12 @@
  * @def _REBATTLE_TRAINER_GET_RNDTR_INDEX
  * @brief 再戦トレーナー　ランダムNPC　抽選処理
  *
- * @param 
+ * @param ret_index0  抽選結果:トレーナーINDEX 1つめ
+ * @param ret_index1  抽選結果:トレーナーINDEX 2つめ
+ * @param ret_index2  抽選結果:トレーナーINDEX 3つめ
+ * @param ret_index3  抽選結果:トレーナーINDEX 4つめ
+ * @param ret_index4  抽選結果:トレーナーINDEX 5つめ
+ * @param ret_index5  抽選結果:トレーナーINDEX 6つめ
  */
 //--------------------------------------------------------------
 #define _REBATTLE_TRAINER_GET_RNDTR_INDEX( ret_index0, ret_index1, ret_index2, ret_index3, ret_index4, ret_index5 ) \
