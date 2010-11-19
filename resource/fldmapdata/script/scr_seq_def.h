@@ -3020,8 +3020,8 @@
  *  @brief  トレーナーフラグチェック
  *  @param  tr_id   チェックするトレーナーID
  *  @param  ret_wk  戻り値
- *  @retval	"1 = フラグON"
- *  @retval	"0 = フラグOFF"
+ *  @retval	1 フラグON
+ *  @retval	0 フラグOFF
  */
 //--------------------------------------------------------------
 #define _TRAINER_FLAG_CHECK( tr_id, ret_wk )  \
@@ -4522,8 +4522,8 @@
  * @def _REPORT_CALL
  * @brief   セーブ機能呼び出し
  * @param ret_wk 戻り値
- * @retval  TRUE:書き込み成功
- *          FALSE:書き込み失敗
+ * @retval  TRUE  書き込み成功
+ * @retval  FALSE 書き込み失敗
  *
  * 共通スクリプトのレポート機能呼び出しから利用されている。
  * 通常のスクリプトから直接呼び出すことはない。
@@ -4922,8 +4922,8 @@
  * @brief ずかんフラグのカウント
  * @param zukan_count_type  ZUKANCTRL_MODE_SEE / ZUKANCTRL_MODE_GET
  * @param ret_wk    戻り値
- * @retval  typeがZUKANCTRL_MODE_SEE: 見た数
- *          typeがZUKANCTRL_MODE_GET: 捕まえた数
+ * @retval  typeがZUKANCTRL_MODE_SEE  見た数を格納
+ * @retval  typeがZUKANCTRL_MODE_GET  捕まえた数を格納
  */
 //--------------------------------------------------------------
 #define _GET_ZUKAN_COUNT( zukan_count_type, ret_wk ) \
@@ -7835,10 +7835,12 @@
 /**
  * @def _CALL_FIRST_POKE_SELECT
  * @brief 最初の３体選択
+ *
  * @param ret_wk  選択結果
- * @retval  0: くさタイプ
- *          1: ほのおタイプ
- *          2: みずタイプ
+ *
+ * @retval  0 くさタイプ
+ * @retval  1 ほのおタイプ
+ * @retval  2 みずタイプ
  */
 //--------------------------------------------------------------
 #define _CALL_FIRST_POKE_SELECT( ret_wk ) \
@@ -7924,7 +7926,7 @@
  * @param ret_mode 戻り値
  *
  * @retval  SCR_PROC_RETMODE_EXIT   一発終了
- *          SCR_PROC_RETMODE_NORMAL 継続
+ * @retval  SCR_PROC_RETMODE_NORMAL 継続
  *
  * shop_scr.ev専用　ゾーンスクリプトから直接呼び出さないこと！
  */
@@ -8104,9 +8106,11 @@
  * フィールド技スクリプトと海底遺跡でのみ使用しています。
  * 他の箇所では使用しないでください。
  *
- * @param up_down   上昇:SCR_EV_DIVING_MAPCHANGE_DOWN　
- *                  下降：SCR_EV_DIVING_MAPCHANGE_UP 
- *                  くるくる上昇:SCR_EV_DIVING_MAPCHANGE_KURUKURU_UP
+ * @param up_down SCR_EV_XXX
+ *
+ * @retval  SCR_EV_DIVING_MAPCHANGE_DOWN  上昇
+ * @retval  SCR_EV_DIVING_MAPCHANGE_UP  下降
+ * @retval  SCR_EV_DIVING_MAPCHANGE_KURUKURU_UP  くるくる上昇
  */
 //--------------------------------------------------------------
 #define _DIVING( up_down ) _ASM_DIVING up_down
@@ -9016,8 +9020,8 @@
  *
  * @param ret_wk  戻り値
  *
- * @retval  TRUE:何か装備している
- *          FALSE:何も装備していない
+ * @retval  TRUE  何か装備している
+ * @retval  FALSE 何も装備していない
  */
 //--------------------------------------------------------------
 #define _CHECK_EQP_GPOWER( ret_wk ) _ASM_CHECK_EQP_GPOWER ret_wk
@@ -9385,8 +9389,8 @@
 /**
  * 遊覧船甲板デモコール
  * @param ret_wk  デモの終わり方
- * @retval  TRUE:プレーヤーがデモを終了させた
- *          FALSE:デモが最後まで再生された
+ * @retval  TRUE  プレーヤーがデモを終了させた
+ * @retval  FALSE デモが最後まで再生された
  * @note
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
@@ -10610,8 +10614,9 @@
  * @param word1 入力単語1
  * @param word2 入力単語2 モードによっては使用されない
  * @param ret 戻り値
- * @retval  TRUE:編集した
- *          FALSE:編集をやめた
+ *
+ * @retval  TRUE  編集した
+ * @retval  FALSE 編集をやめた
  */
 //--------------------------------------------------------------
 #define _CALL_EASY_TALK_APP( mode, word1, word2, ret ) \
