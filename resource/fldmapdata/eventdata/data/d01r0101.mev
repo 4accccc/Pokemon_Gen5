@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/14 15:03:15
+#save date:2010/11/15 18:05:26
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d01r0101.wms
 #hold event type:
 1
 #hold event number:
-23
+24
 #event number: 0
 #type
 1
@@ -723,6 +723,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 360 0 -88
+#event number: 23
+#type
+1
+#ID name
+D01R0101_PAIR_TEST
+#OBJ CODE Number
+SHIRONA
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D01R0101_PAIR_TEST
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

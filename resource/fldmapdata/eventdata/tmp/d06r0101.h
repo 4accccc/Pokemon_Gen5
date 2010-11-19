@@ -31,6 +31,7 @@
 #define D05R0101_FLD_ITEM_05              15
 #define D05R0101_FLD_ITEM_06              16
 #define TR_SCIENTISTM_04                  17
+#define D06R0101_PAIR                     18
 
 #endif //ZONE_D06R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
