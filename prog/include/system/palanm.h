@@ -181,6 +181,9 @@ extern void PaletteWorkSetEx_ArcHandle(PALETTE_FADE_PTR pfd, ARCHANDLE* handle, 
 extern void PaletteWorkSetEx_ArcWork(u32 fileIdx, u32 dataIdx, HEAPID heap, u32 trans_size,  u16 read_pos, void *dest);
 extern void PaletteFadeForceStop(PALETTE_FADE_PTR pfd);
 
+// çƒåvéZópÇÃä÷êîÇí«â¡ ichiraku
+extern void PaletteFadeCalc( PALETTE_FADE_PTR pfd, u16 id, FADEREQ req );
+
 /*
 
 extern PALETTE_FADE_PTR PALFADE_Init(int heap_id);

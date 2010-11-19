@@ -1463,4 +1463,27 @@ void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap
   GFL_HEAP_FreeMemory(arc_data);
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * 通常パレットのフェード計算
+ *
+ * @param   pfd   パレットフェードシステムワークへのポインタ
+ * @param   id    パレット番号（0-16）
+ * @param   req   
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void PaletteFadeCalc( PALETTE_FADE_PTR pfd, u16 id, FADEREQ req )
+{
+  u32 i;
+  u8  red, green, blue;
+  
+  u16*  def   = &pfd->dat[req].def_wk[id*NORMAL_COLOR_NUM];
+  u16*  trans = &pfd->dat[req].trans_wk[id*NORMAL_COLOR_NUM];
+  FADE_REQ_PARAM* wk = &pfd->dat[req].prm;
+
+  // カラー計算
+  FadeWorkSet( def, trans, wk, NORMAL_COLOR_NUM );
+}
 

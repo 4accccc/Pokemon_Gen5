@@ -8301,22 +8301,49 @@ static  void  TCB_EFFVM_BG_PLANM( GFL_TCB* tcb, void* work )
           palData = (NNSG2dPaletteData*)p_beps->bevw->unpack_info[ dpd_no ];
         }
 #if defined DEBUG_ONLY_FOR_ichiraku_katsuhiko
-        NNS_G2dPrintPaletteData ( palData );
+        //NNS_G2dPrintPaletteData ( palData );
 #endif
 
-        // パレットセット
-        PaletteWorkSet( BTLV_EFFECT_GetPfd(), &(((u16*)(palData->pRawData))[read_pos]), FADE_MAIN_BG, BTLV_EFFVM_BG_PAL * 16, 0x20 );
+        // パレットフェードと同時に処理できるようにする為、ここで計算する
+        // 下のPaletteWorkSetの代わり
+        {
+          u16*  p_def_wk = PaletteWorkDefaultWorkGet( BTLV_EFFECT_GetPfd(), FADE_MAIN_BG);
+          // def_wk 初期色に自分でコピー
+          MI_CpuCopy16( &(((u16*)(palData->pRawData))[read_pos]), &p_def_wk[ BTLV_EFFVM_BG_PAL*16 ], (u32)0x20 );
+          // 再計算
+          PaletteFadeCalc( BTLV_EFFECT_GetPfd(), BTLV_EFFVM_BG_PAL, FADE_MAIN_BG );
+        }
 
+        // パレットセット
+        //PaletteWorkSet( BTLV_EFFECT_GetPfd(), p_trans_wk, FADE_MAIN_BG, BTLV_EFFVM_BG_PAL * 16, 0x20 );
       }
 #endif
 
       if( p_beps->bevw->debug_flag != TRUE )
       {
+        NNSG2dPaletteData *palData;
+        void  *arc_data;
+
+        // パレット読み込み
+        arc_data = GFL_ARC_UTIL_LoadPalette(ARCID_BATT_BG_PLANM, p_beps->pal_arc_idx, &palData, GFL_HEAP_LOWID( p_beps->bevw->heapID ));
+        GF_ASSERT( arc_data != NULL );
+
+        // パレットフェードと同時に処理できるようにする為、ここで計算する
+        // PaletteWorkSetの代わり
+        {
+          u16*  p_def_wk = PaletteWorkDefaultWorkGet( BTLV_EFFECT_GetPfd(), FADE_MAIN_BG);
+          // def_wk 初期色に自分でコピー
+          MI_CpuCopy16( &(((u16*)(palData->pRawData))[read_pos]), &p_def_wk[ BTLV_EFFVM_BG_PAL*16 ], (u32)0x20 );
+          // 再計算
+          PaletteFadeCalc( BTLV_EFFECT_GetPfd(), BTLV_EFFVM_BG_PAL, FADE_MAIN_BG );
+        }
+
+        GFL_HEAP_FreeMemory(arc_data);
         // パレット切り替え
-        PaletteWorkSetEx_Arc(
-            BTLV_EFFECT_GetPfd(), ARCID_BATT_BG_PLANM, p_beps->pal_arc_idx,
-            GFL_HEAP_LOWID( p_beps->bevw->heapID ), FADE_MAIN_BG, 0x20,
-            BTLV_EFFVM_BG_PAL*16, read_pos );
+        //PaletteWorkSetEx_Arc(
+        //    BTLV_EFFECT_GetPfd(), ARCID_BATT_BG_PLANM, p_beps->pal_arc_idx,
+        //    GFL_HEAP_LOWID( p_beps->bevw->heapID ), FADE_MAIN_BG, 0x20,
+        //    BTLV_EFFVM_BG_PAL*16, read_pos );
       }
 
       ICHI_Printf( "pltt_arc_idx=%d ", p_beps->pal_arc_idx );
