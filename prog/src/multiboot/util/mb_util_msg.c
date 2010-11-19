@@ -140,7 +140,9 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
 #ifdef MB_TYPE_POKE_SHIFTER
   if( useTalkWin == TRUE )
   {
+  #ifndef MULTI_BOOT_MAKE  //í èÌéûèàóù 
     GFL_OVERLAY_Load( FS_OVERLAY_ID( fieldmap ) );
+  #endif //MULTI_BOOT_MAKE
     {
       TALKMSGWIN_SYS_SETUP setup;
       setup.heapID = heapId;
