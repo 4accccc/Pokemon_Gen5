@@ -906,6 +906,18 @@
   // NPC歩行経路の自動生成
   DEF_CMD( EvCmdObjAnimeAuto, EV_SEQ_OBJ_ANIME_AUTO )      
 
+  //連れ歩き関連コマンド
+  DEF_CMD( EvCmdPairTrainerParamSet, EV_SEQ_PAIR_TRAINER_PARAM_SET )
+  DEF_CMD( EvCmdPairTrainerParamFree, EV_SEQ_PAIR_TRAINER_PARAM_FREE )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   END_CMD
   //スクリプトコマンドテーブル終了

@@ -985,6 +985,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       FIELD_FLAGCONT_INIT_Teleport( gameData, work->loc_req.zone_id );
       break;
     }
+    if( work->mapchange_type != EV_MAPCHG_NORMAL ){
+      //連れ歩き強制パージ
+      PAIRSYS_PairFree( work->gameData );
+    }
 
 #ifdef AMPROTECT_FUNC
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(amprotect) );  
@@ -1001,6 +1005,9 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     (*seq) ++;
     break;
   case MAPCORE_SEQ_BGM_FADE_WAIT:
+    if( work->mapchange_type == EV_MAPCHG_NORMAL ){
+      PAIRSYS_PairMapChangeRecover( work->gameData );
+    }
     // BGM フェード完了待ち
     GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMFade(gameSystem) );
     (*seq) ++;
@@ -2059,7 +2066,7 @@ GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK*
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type = EXIT_TYPE_NONE;
   work->seasonUpdateEnable = TRUE; // 季節更新を有効にする
-
+  
   return event;
 }
 
@@ -2085,7 +2092,7 @@ GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK* gameSystem )
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type = EXIT_TYPE_NONE;
   work->seasonUpdateEnable = TRUE; // 季節更新を有効にする
-
+  
   return event;
 }
 
@@ -2117,7 +2124,7 @@ GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
   LOCATION_SetDefaultPos( &(work->loc_req), warp_zone_id );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
-
+  
   return event;
 }
 
@@ -2684,6 +2691,9 @@ static void MAPCHG_GameOver( GAMESYS_WORK * gsys )
 
   //ゲームオーバー時のフラグのクリア
   FIELD_FLAGCONT_INIT_GameOver( gamedata, loc_req.zone_id );
+  
+  //連れ歩き強制パージ
+  PAIRSYS_PairFree( gamedata );
 }
 
 
@@ -3148,9 +3158,6 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
 
   //フィールド技 マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, zone_id );
-
-  //連れ歩き強制パージ
-  PAIRSYS_PairFree( gamedata );
 }
 
 //--------------------------------------------------------------

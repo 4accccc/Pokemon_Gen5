@@ -12,6 +12,30 @@
 
 #include "pair_sys_def.h"
 
+typedef struct _PAIR_SYSTEM_WORK{
+  HEAPID  heapID;
+  u8  pair_id;
+  u8  pair_type;
+  u16 obj_id;
+  u16 obj_code;
+  u16 event_id;
+  u16 tr_id;
+}PAIR_SYSTEM_WORK;
+
+//---------------------------------------------------
+/*
+ *  @brief  連れ歩きシステムワーク確保
+ */
+//---------------------------------------------------
+extern PAIR_SYSTEM_WORK* PAIRSYS_AllocWork( HEAPID heapID );
+
+//---------------------------------------------------
+/*
+ *  @brief  連れ歩きシステムワークフリー
+ */
+//---------------------------------------------------
+extern void PAIRSYS_FreeWork( PAIR_SYSTEM_WORK* wk );
+
 //---------------------------------------------------
 /*
  *  @brief  連れ歩きフラグチェック
@@ -21,10 +45,34 @@ extern BOOL PAIRSYS_CheckPairFlag( GAMEDATA* gdata );
 
 //---------------------------------------------------
 /*
+ *  @brief  連れ歩きペア トレーナーセット
+ *
+ *  @param  gdata
+ *  @param  pair_id   連れ歩きペア識別ID( PAIR_ID_01～ pair_sys_def.h)
+ *  @param  pair_type 連れ歩きペアタイプID( PAIR_TYPE_CLOSE～ pair_sys_def.h)
+ *  @param  obj_id    連れ歩きペアのOBJID
+ *  @param  obj_code  連れ歩きペアのOBJコード
+ *  @param  event_id  連れ歩きペアのイベントID(関連付けないならSCRID_NULL)
+ *  @retval tr_id 連れ歩きペアのトレーナーID トレーナーデータ無しならTRID_NULL(定義はtr_tool/trno_def.h)
+ */
+//---------------------------------------------------
+extern BOOL PAIRSYS_PairSet( GAMEDATA* gdata, u8 pair_id, u8 pair_type, u16 obj_id, u16 obj_code, u16 event_id, u16 tr_id );
+
+//---------------------------------------------------
+/*
  *  @brief  連れ歩きリセット
  */
 //---------------------------------------------------
 extern void PAIRSYS_PairFree( GAMEDATA* gdata );
+
+//---------------------------------------------------
+/*
+ *  @brief  連れ歩きリセット マップチェンジ
+ *
+ *  @com  連れ歩きがマップチェンジOKタイプでないならフリー
+ */
+//---------------------------------------------------
+extern void PAIRSYS_PairFreeForMapChange( GAMEDATA* gdata );
 
 //---------------------------------------------------
 /*
@@ -46,6 +94,23 @@ extern u16 PAIRSYS_GetPairID( GAMEDATA* gdata );
 //---------------------------------------------------
 extern u16 PAIRSYS_GetPairTrainerID( GAMEDATA* gdata );
 
+//---------------------------------------------------
+/*
+ *  @brief  連れ歩きペア オリジナルOBJID取得
+ *
+ *  @retval 連れ歩きトレーナーの元のOBJID
+ */
+//---------------------------------------------------
+extern u16 PAIRSYS_GetPairTrainerOriginalObjID( GAMEDATA* gdata );
 
+//---------------------------------------------------
+/*
+ *  @brief  連れ歩きペア マップチェンジ後復帰
+ *  
+ *  @com  PAIR_SYS_WORKにセット済みのパラメータを使って初期化する
+ *  @param  gdata
+ */
+//---------------------------------------------------
+extern void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata );
 
 #endif  //__H_PAIR_SYS_H__

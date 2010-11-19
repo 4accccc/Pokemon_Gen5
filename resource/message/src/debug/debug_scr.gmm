@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-11-15T16:48:56"/>
+	<create user="iwasawa" host="W00157" date="2010-11-19T10:23:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -350,8 +350,8 @@
 	</row>
 
 	<row id="msg_deb_iwasawa_main01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">ＴＲつれあるきついか</language>
-		<language name="JPN_KANJI" width="256">ＴＲ連れ歩き追加</language>
+		<language name="JPN" width="256">つれあるきついか</language>
+		<language name="JPN_KANJI" width="256">連れ歩き追加</language>
 	</row>
 
 	<row id="msg_deb_iwasawa_main02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -367,6 +367,21 @@
 	<row id="msg_deb_iwasawa_mvp02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">カザカミ</language>
 		<language name="JPN_KANJI" width="256">カザカミ</language>
+	</row>
+
+	<row id="msg_deb_iwasawa_pair01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">ZoneOnlyStart</language>
+		<language name="JPN_KANJI" width="256">ZoneOnlyStart</language>
+	</row>
+
+	<row id="msg_deb_iwasawa_pair02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">MapChangeStart</language>
+		<language name="JPN_KANJI" width="256">MapChangeStart</language>
+	</row>
+
+	<row id="msg_deb_iwasawa_pair03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">MapChangeEnd</language>
+		<language name="JPN_KANJI" width="256">MapChangeEnd</language>
 	</row>
 
 	<row id="msg_debug_common_00">

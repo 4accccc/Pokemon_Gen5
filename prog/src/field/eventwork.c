@@ -131,6 +131,7 @@ void EVENTWORK_SetEventFlag( EVENTWORK * ev, u16 flag_no)
 void EVENTWORK_ResetEventFlag( EVENTWORK * ev, u16 flag_no)
 {
 	u8 * p = EVENTWORK_GetEventFlagAdrs( ev, flag_no );
+  IWASAWA_Printf("ClearEventFlag %d\n",flag_no);
 	if( p == NULL ){ return; }
 	*p &= ( 0xff ^ ( 1 << (flag_no % 8) ) );
 #if 0
@@ -153,6 +154,7 @@ void EVENTWORK_ClearEventFlags( EVENTWORK * ev, u16 start_no, u16 end_no )
 {
   int no;
 
+  IWASAWA_Printf("ClearEventFlag\n");
   GF_ASSERT( start_no < end_no );
   GF_ASSERT( ( end_no < SCFLG_START ) || ( SCFLG_START <= start_no ) );
 

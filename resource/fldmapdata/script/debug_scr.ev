@@ -1017,6 +1017,11 @@ sub_iwasawa_main:
 
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
+ 
+  _DEBUG_PRINT_WK( WK_SCENE_D06_PAIR )
+  IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _DEBUG_PRINT_WK( WK_SCENE_D06_PAIR )
+  ENDIF
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
@@ -1070,15 +1075,48 @@ siwasawa_add_pair_menu:
   DEFINE_LOCAL  i_player_z
   
   $reg_iwasawa_return = SEQ_IWASAWA_EXIT
+  
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+	  //メニュー作成
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  //リスト追加
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_pair01, 0 )
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_pair02, 1 )
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_pair03, 2 )
+	  _BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
+	  //メニュー表示
+	  _BMPMENU_START()
+    
+    $i_loop = FALSE
+    _PLAYER_POS_GET( i_player_x, i_player_z)
 
-  IF FLAG_ON( SYS_FLAG_PAIR) THEN
-    _RET
-  ENDIF
- 
-  _PLAYER_POS_GET( i_player_x, i_player_z)
-  _OBJ_ADD_EX( i_player_x, i_player_z, DIR_DOWN, PAIR_TRAINER_01, SHIRONA, MV_PAIR )
-  _FLAG_SET( SYS_FLAG_PAIR )
-	_OBJ_SET_NOT_DEL_ZONECHG( PAIR_TRAINER_01 )
+    SWITCH $i_ret
+    CASE 0 THEN
+      //連れ歩き開始
+      IF FLAG_OFF( SYS_FLAG_PAIR) THEN
+        _OBJ_ADD_EX( i_player_x, i_player_z, DIR_DOWN, PAIR_TRAINER_01, SHIRONA, MV_PAIR )
+        _PAIR_TRAINER_SET( PAIR_TRAINER_01, PAIR_ID_01, PAIR_TYPE_CLOSE, TRID_RIVAL_07 )
+      ENDIF
+    CASE 1 THEN
+      //連れ歩き開始
+      IF FLAG_OFF( SYS_FLAG_PAIR) THEN
+        _OBJ_ADD_EX( i_player_x, i_player_z, DIR_DOWN, PAIR_TRAINER_01, SHIRONA, MV_PAIR )
+        _PAIR_TRAINER_SET( PAIR_TRAINER_01, PAIR_ID_01, PAIR_TYPE_OPEN, TRID_RIVAL_07 )
+      ENDIF
+    CASE 2 THEN
+      //連れ歩き終了
+      IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+        _PAIR_TRAINER_FREE( MV_DMY )
+        _OBJ_DEL( PAIR_TRAINER_01 )
+      ENDIF
+    DEFAULT
+      $reg_iwasawa_return = SEQ_IWASAWA_MAIN_MENU
+    ENDSWITCH
+  ENDWHILE
+
+//  _FLAG_SET( SYS_FLAG_PAIR )
+//	_OBJ_SET_NOT_DEL_ZONECHG( PAIR_TRAINER_01 )
 }
 _RET
 

@@ -1519,7 +1519,7 @@
  *  @param obj_id アニメーションを行うOBJ ID
  *  @param target_x 指定位置のグリッドX座標 (マイナス座標不可)
  *  @param target_z 指定位置のグリッドZ座標（マイナス座標不可）
- *  @param force_type 障害物を無視して歩くフラグ (FORCE_TYPE_XXX) 
+ *  @param force_type 障害物を無視して歩くフラグ (FORCE_TYPE_NOT他 prog\include\field\field_dir.h) 
  *  @param ac_frame 1歩のフレーム数(32,16,12,8,7,6,4,3,2)
  *  @param first_line 動き出しをXとZどちらが先か(DIR_LR or DIR_UD)
  *
@@ -1999,6 +1999,46 @@
 .macro  _ASM_TURN_HERO_SITE
 .short  EV_SEQ_OBJ_TURN
 .endm
+
+//======================================================================
+//  連れ歩き関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  @def  _PAIR_TRAINER_PARAM_SET
+ *  @brief  連れ歩きトレーナーパラメータセット
+ *  @param obj_id 連れ歩きにするOBJのID
+ *  @param id     連れ歩きID (PAIR_ID_01 field/pair_sys_def.h)
+ *  @param type   連れ歩きタイプ( PAIR_TYPE_CLOSE他 field/pair_sys_def.h)
+ *  @param tr_id  連れ歩きトレーナーID(TRID_NULL可)
+ */
+//--------------------------------------------------------------
+#define _PAIR_TRAINER_PARAM_SET( obj_id, id, type, tr_id ) \
+  _ASM_PAIR_TRAINER_PARAM_SET obj_id, id, type, tr_id
+
+  .macro  _ASM_PAIR_TRAINER_PARAM_SET obj_id, id, type, tr_id
+  .short  EV_SEQ_PAIR_TRAINER_PARAM_SET
+  .short  \obj_id
+  .short  \id
+  .short  \type
+  .short  \tr_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def    _PAIR_TRAINER_PARAM_FREE
+ *  @brief  連れ歩きトレーナーパラメータ解放
+ *  @param  move_code 連れ歩いていたOBJに設定する新しい動作コード
+ */
+//--------------------------------------------------------------
+#define _PAIR_TRAINER_PARAM_FREE( move_code ) \
+  _ASM_PAIR_TRAINER_PARAM_FREE move_code
+
+  .macro  _ASM_PAIR_TRAINER_PARAM_FREE move_code
+  .short  EV_SEQ_PAIR_TRAINER_PARAM_FREE
+  .short  \move_code
+  .endm
+
 
 //======================================================================
 //  はい、いいえ　処理
@@ -8635,11 +8675,14 @@
 /**
  * @def _PAIR_TRAINER_SET
  * @brief  トレーナー連れ歩きセット 
- * @param obj_id  連れ歩きたいOBJのID
+ * @param obj_id    連れ歩きたいOBJのID
+ * @param pair_id   連れ歩きたいOBJのペアID( PAIR_ID_XXXX field/pair_sys_def.h)
+ * @param pair_type 連れ歩きタイプ( PAIR_TYPE_CLOSE他 field/pair_sys_def.h)
+ * @param tr_id     設定したいトレーナーID
  */
 //--------------------------------------------------------------
-#define _PAIR_TRAINER_SET( obj_id )  \
-    _ASM_PAIR_TRAINER_SET  obj_id
+#define _PAIR_TRAINER_SET( obj_id, pair_id, pair_type, tr_id )  \
+    _ASM_PAIR_TRAINER_SET  obj_id, pair_id, pair_type, tr_id
 
 //--------------------------------------------------------------
 /**

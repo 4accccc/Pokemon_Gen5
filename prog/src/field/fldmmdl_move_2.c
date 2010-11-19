@@ -346,12 +346,16 @@ static u32 Pair_JikiAcmdCodeGet( MMDL * mmdl )
   u16 code;
   MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
   code = MMDL_GetAcmdCode( jiki );
-  
+ 
   switch( code ){
   case AC_DASH_U_4F: code = AC_WALK_U_4F; break;
   case AC_DASH_D_4F: code = AC_WALK_D_4F; break;
   case AC_DASH_L_4F: code = AC_WALK_L_4F; break;
   case AC_DASH_R_4F: code = AC_WALK_R_4F; break;
+  case AC_DASH_U_6F: code = AC_WALK_U_6F; break;
+  case AC_DASH_D_6F: code = AC_WALK_D_6F; break;
+  case AC_DASH_L_6F: code = AC_WALK_L_6F; break;
+  case AC_DASH_R_6F: code = AC_WALK_R_6F; break;
   }
   
   return( code );

@@ -11,8 +11,11 @@
 #define __H_PAIR_SYS_DEF_H__
 
 #define PAIR_ID_01      (0)
-#define PAIR_ID_NATURAL (PAIR_ID_NATURAL)
-
+#define PAIR_ID_NATURAL (PAIR_ID_01)
+#define PAIR_ID_MAX     (PAIR_ID_01+1)
 #define PAIR_ID_NONE    (0xFFFF)
+
+#define PAIR_TYPE_CLOSE (0) //クローズマップ
+#define PAIR_TYPE_OPEN  (1) //オープンマップ
 
 #endif //__H_PAIR_SYS_DEF_H__

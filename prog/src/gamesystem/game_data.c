@@ -52,6 +52,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "field/fldmmdl.h"      //MMDLSYS
+#include "field/pair_sys.h" 
 #include "gamesystem/beacon_status.h"
 #include "savedata/gimmickwork_local.h"
 #include "savedata/gimmickwork.h"
@@ -138,7 +139,8 @@ struct _GAMEDATA{
   MUSICAL_SCRIPT_WORK *musicalScrWork;  //ミュージカルスクリプト用ワーク
 
   PLAYTIME* playtime; // プレイ時間
-
+  
+  PAIR_SYSTEM_WORK* pairSystem; //連れ歩きシステムワーク
   u32 scriptCommandOverlayID; //フィールドスクリプトコマンド用オーバーレイID
 };
 
@@ -278,6 +280,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //ミュージカル用スクリプトワーク NULL初期化
   gd->musicalScrWork = NULL;
 
+  //連れ歩きシステムワーク生成
+  gd->pairSystem = PAIRSYS_AllocWork( heapID );
+
   //スクリプトオーバーレイ初期化
   gd->scriptCommandOverlayID  = 0;
   return gd;
@@ -287,6 +292,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  PAIRSYS_FreeWork( gamedata->pairSystem );
   GFL_HEAP_FreeMemory( gamedata->playtime );
   CALENDER_Delete( gamedata->calender );
   BEACON_STATUS_Delete( gamedata->beacon_status );
@@ -2056,6 +2062,17 @@ PLAYTIME* GAMEDATA_GetPlayTimeWork(GAMEDATA *gamedata)
   return gamedata->playtime;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief 連れ歩きシステムワークへのポインタを取得する
+ * @param gamedata      GAMEDATAへのポインタ
+ * @return  PAIR_SYSTEM_WORK  連れ歩きシステムへのポインタ
+ */
+//------------------------------------------------------------------
+PAIR_SYSTEM_WORK * GAMEDATA_GetPairSystemWork(GAMEDATA * gamedata)
+{
+  return gamedata->pairSystem;
+}
 
 //----------------------------------------------------------------------------
 /**

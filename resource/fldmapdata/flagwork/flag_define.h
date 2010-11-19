@@ -920,7 +920,7 @@
 		/* not used   896(0x0380) */
 		/* not used   897(0x0381) */
 		/* not used   898(0x0382) */
-		/* not used   899(0x0383) */
+#define FV_D06R0101_PAIR                   899 /* 0x0383 “d‹CŒŠ‚Ì“´ŒA˜A‚ê•à‚« */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

@@ -571,12 +571,21 @@
  * @param obj_id_wk 連れ歩き対象にするOBJIDを格納したワーク
  */
 //--------------------------------------------------------------
-  .macro _ASM_PAIR_TRAINER_SET obj_id_wk  
+  .macro _ASM_PAIR_TRAINER_SET obj_id_wk, pair_id_wk, pair_type_wk, tr_id_wk
   _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _PUSH_WORK  SCWK_PARAM2
+  _PUSH_WORK  SCWK_PARAM3
 
   _ASM_LDWKVAL  SCWK_PARAM0,\obj_id_wk
+  _ASM_LDWKVAL  SCWK_PARAM1,\pair_id_wk
+  _ASM_LDWKVAL  SCWK_PARAM2,\pair_type_wk
+  _ASM_LDWKVAL  SCWK_PARAM3,\tr_id_wk
   _CHG_COMMON_SCR SCRID_PAIR_TRAINER_SET_CALL
   
+  _POP_WORK   SCWK_PARAM3
+  _POP_WORK   SCWK_PARAM2
+  _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
   .endm
 
@@ -588,15 +597,12 @@
  * @param move_code_wk 連れ歩き対象に設定する新しい動作コードを格納したワーク
  */
 //--------------------------------------------------------------
-  .macro _ASM_PAIR_TRAINER_FREE obj_id_wk,move_code_wk  
+  .macro _ASM_PAIR_TRAINER_FREE move_code_wk  
   _PUSH_WORK  SCWK_PARAM0
-  _PUSH_WORK  SCWK_PARAM1
 
-  _ASM_LDWKVAL  SCWK_PARAM0,\obj_id_wk
-  _ASM_LDWKVAL  SCWK_PARAM1,\move_code_wk
+  _ASM_LDWKVAL  SCWK_PARAM0,\move_code_wk
   _CHG_COMMON_SCR SCRID_PAIR_TRAINER_FREE_CALL
   
-  _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
   .endm
 

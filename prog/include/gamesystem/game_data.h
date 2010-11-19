@@ -32,6 +32,7 @@
 #include "system/shortcut_data.h"      //SHORTCUT_ID
 //#include "savedata/gimmickwork.h"
 #include "field/pleasure_boat_ptr.h"
+#include "field/pair_sys.h"
 #include "savedata/wifilist.h"
 #include "savedata/misc.h"
 #include "savedata/wifi_negotiation.h"
@@ -857,6 +858,15 @@ extern void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value);
  */
 //==================================================================
 extern PLAYTIME* GAMEDATA_GetPlayTimeWork(GAMEDATA *gamedata);
+
+//------------------------------------------------------------------
+/**
+ * @brief 連れ歩きシステムワークへのポインタを取得する
+ * @param gamedata      GAMEDATAへのポインタ
+ * @return  PAIR_SYSTEM_WORK  連れ歩きシステムへのポインタ
+ */
+//------------------------------------------------------------------
+extern PAIR_SYSTEM_WORK * GAMEDATA_GetPairSystemWork(GAMEDATA * gamedata);
 
 //----------------------------------------------------------------------------
 /**
