@@ -204,10 +204,46 @@ static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameEnable = {
 static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameLongString = {
  0, 1, DebugGetPlaceNameLongString, DebugSetPlaceNameLongString,
 };
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameMoveType = {
+ 0, 2, DebugGetPlaceNameMoveType, DebugSetPlaceNameMoveType,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameShakeFlag = {
+ 0, 1, DebugGetPlaceNameShakeFlag, DebugSetPlaceNameShakeFlag,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameAlphaFlag = {
+ 0, 1, DebugGetPlaceNameAlphaFlag, DebugSetPlaceNameAlphaFlag,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameEnterFrame = {
+ 1, 60, DebugGetPlaceNameEnterFrame, DebugSetPlaceNameEnterFrame,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameWaitFrame = {
+ 1, 60, DebugGetPlaceNameWaitFrame, DebugSetPlaceNameWaitFrame,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameOutFrame = {
+ 1, 60, DebugGetPlaceNameOutFrame, DebugSetPlaceNameOutFrame,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameAlphaBG = {
+ 0, 16, DebugGetPlaceNameAlphaBG, DebugSetPlaceNameAlphaBG,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameAlpha3D = {
+ 0, 16, DebugGetPlaceNameAlpha3D, DebugSetPlaceNameAlpha3D,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameVersion = {
+ 0, 1, DebugGetPlaceNameVersion, DebugSetPlaceNameVersion,
+};
 static const DEBUG_NUMINPUT_LIST DNI_PlaceNameList[] = {
   //gmm_id, param, dni_param
   { dni_place_name_01, 0, &DNP_PlaceNameEnable },
   { dni_place_name_02, 0, &DNP_PlaceNameLongString },
+  { dni_place_name_03, 0, &DNP_PlaceNameMoveType },
+  { dni_place_name_04, 0, &DNP_PlaceNameShakeFlag },
+  { dni_place_name_05, 0, &DNP_PlaceNameAlphaFlag },
+  { dni_place_name_06, 0, &DNP_PlaceNameEnterFrame },
+  { dni_place_name_07, 0, &DNP_PlaceNameWaitFrame },
+  { dni_place_name_08, 0, &DNP_PlaceNameOutFrame },
+  { dni_place_name_09, 0, &DNP_PlaceNameAlphaBG },
+  { dni_place_name_10, 0, &DNP_PlaceNameAlpha3D },
+  { dni_place_name_11, 0, &DNP_PlaceNameVersion },
 };
 
 //////////////////////////////////////////////////////

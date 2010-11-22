@@ -18,8 +18,10 @@ typedef enum{
 //  固定エリア
 //--------------------------------------------------------------
   FLDOAM_PALNO_WEATHER,       ///<天気
-  FLDOAM_PALNO_PLACENAME,     ///<地名表示
+  FLDOAM_PALNO_PLACENAME,     ///<地名表示  文字
   FLDOAM_PALNO_Y_MENU,        ///<Yボタンショートカットメニュー
+  FLDOAM_PALNO_PLACENAME_PLACE_ICON,  //地名表示  場所アイコン
+  FLDOAM_PALNO_PLACENAME_SEAZON_ICON, //地名表示  季節アイコン
   
 //--------------------------------------------------------------
 //  フリーエリア
@@ -34,10 +36,4 @@ typedef enum{
 	//おしゃべり
 	FLDOAM_PALNO_FREE_OSYABERI_POKE = FLDOAM_PALNO_FREE_START,		///<ポケモンＯＢＪ
 
-//--------------------------------------------------------------
-//  固定エリア
-//--------------------------------------------------------------
-  FLDOAM_PALNO_PLACENAME_PLACE_ICON = 13,
-  FLDOAM_PALNO_PLACENAME_SEAZON_ICON,
 }FLDOAM_PALNO;
-

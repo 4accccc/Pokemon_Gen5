@@ -32,6 +32,10 @@
 
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
+#ifdef PM_DEBUG
+#include "debug/debug_flg.h"
+#endif 
+
 #define BACKOBJ_MOVE_UD 2
 
 //===================================================================================
@@ -41,8 +45,17 @@
 #define DEBUG_PRINT_TARGET (3) // デバッグ出力先
 
 #ifdef PM_DEBUG
-BOOL PlaceNameEnable = TRUE; // 地名表示の有効フラグ
-BOOL PlaceNameLong  = FALSE;  //地名表示長さチェックフラグ
+BOOL PlaceNameEnable    = TRUE; // 地名表示の有効フラグ
+BOOL PlaceNameLong      = FALSE;  //地名表示長さチェックフラグ
+u32 PlaceNameMoveType   = 0;  //動きの種類 0,上下同時1,上、下2下、上
+BOOL PlaceNameShakeFlag = TRUE;  //動きの揺れ追加
+BOOL PlaceNameAlphaFlag = FALSE;  //アルファの種類  
+u32 PROCESS_TIME_FADEIN2  = 10; //入ってくるときの速度
+u32 PROCESS_TIME_WAIT_LAUNCH  = 30; //待つときの時間
+u32 PROCESS_TIME_WAIT_FADEOUT = 12; //出て行く時の速度
+u32 ALPHA_VALUE_1             = (14); // 第1対象面のαブレンディング係数
+u32 ALPHA_VALUE_2             = (8); // 第2対象面のαブレンディング係数
+BOOL  PlaceNameVersionFlag    = 0;    //0がブラック１がホワイト
 #endif
 
 //===================================================================================
@@ -67,18 +80,20 @@ BOOL PlaceNameLong  = FALSE;  //地名表示長さチェックフラグ
 // αブレンド
 #define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3) // αブレンドの第1対象面
 #define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ) // αブレンドの第2対象面
-#define ALPHA_VALUE_1                     (14) // 第1対象面のαブレンディング係数
-#define ALPHA_VALUE_2                      (8) // 第2対象面のαブレンディング係数
+//#define ALPHA_VALUE_1                     (14) // 第1対象面のαブレンディング係数
+//#define ALPHA_VALUE_2                      (8) // 第2対象面のαブレンディング係数
 #define CHAR_SIZE                    (8) // 1キャラ = 8ドット
 
 //-----------
 // 動作設定
 //-----------
 // 各状態の動作設定
-#define PROCESS_TIME_FADEIN  (7)
-#define PROCESS_TIME_WAIT_LAUNCH   (30)
-#define PROCESS_TIME_WAIT_FADEOUT   (20)
-#define PROCESS_TIME_FADEOUT (10)
+#define PROCESS_TIME_FADEIN1  (7)
+//#define PROCESS_TIME_FADEIN2  (10)
+//#define PROCESS_TIME_WAIT_LAUNCH   (30)
+//#define PROCESS_TIME_WAIT_FADEOUT   (12)
+#define PROCESS_TIME_FADEOUT (5)
+static int  PROCESS_TIME_FADEIN = PROCESS_TIME_FADEIN1;
 
 //--------------
 // インデックス
@@ -240,7 +255,9 @@ static void Cancel( FIELD_PLACE_NAME* system );
 // 各状態時の動作
 static void Process_HIDE( FIELD_PLACE_NAME* system );
 static void Process_SETUP( FIELD_PLACE_NAME* system );
-static void Process_FADEIN( FIELD_PLACE_NAME* system );
+static void Process_FADEIN_Both( FIELD_PLACE_NAME* system );
+static void Process_FADEIN_UpDown( FIELD_PLACE_NAME* system );
+static void Process_FADEIN_DownUp( FIELD_PLACE_NAME* system );
 static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* system );
 static void Process_LAUNCH( FIELD_PLACE_NAME* system );
 static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* system );
@@ -353,7 +370,6 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
   AllocBGNullCharArea( system );
 
 	ChangeState( system, SYSTEM_STATE_HIDE ); 
-
 	return system;
 }
 
@@ -417,16 +433,46 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
   start = OS_GetTick();
 #endif
 
-	// 状態に応じた動作
-	switch( GetState(system) ) {
-  case SYSTEM_STATE_HIDE:         Process_HIDE( system );		      break;
-  case SYSTEM_STATE_SETUP:        Process_SETUP( system );		    break;
-  case SYSTEM_STATE_FADEIN:       Process_FADEIN( system );	      break;
-  case SYSTEM_STATE_WAIT_LAUNCH:  Process_WAIT_LAUNCH( system );	break;
-  case SYSTEM_STATE_LAUNCH:       Process_LAUNCH( system );	      break;
-  case SYSTEM_STATE_WAIT_FADEOUT: Process_WAIT_FADEOUT( system );	break;
-  case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( system );	    break;
-	}
+#ifdef PM_DEBUG
+  {
+    if( PlaceNameShakeFlag )
+    {
+      PROCESS_TIME_FADEIN = PROCESS_TIME_FADEIN2;
+    }
+    else
+    {
+      PROCESS_TIME_FADEIN = PROCESS_TIME_FADEIN1;
+    }
+  }
+
+  if( PlaceNameAlphaFlag )
+  {
+    G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
+  }
+  else
+  {
+    G2_BlendNone();
+  }
+#endif 
+
+  {
+    static void (*Process_FADEIN[])( FIELD_PLACE_NAME* system ) =
+    {
+      Process_FADEIN_Both,
+      Process_FADEIN_UpDown,
+      Process_FADEIN_DownUp,
+    };
+    // 状態に応じた動作
+    switch( GetState(system) ) {
+    case SYSTEM_STATE_HIDE:         Process_HIDE( system );		      break;
+    case SYSTEM_STATE_SETUP:        Process_SETUP( system );		    break;
+    case SYSTEM_STATE_FADEIN:       Process_FADEIN[PlaceNameMoveType%NELEMS(Process_FADEIN)]( system );	      break;
+    case SYSTEM_STATE_WAIT_LAUNCH:  Process_WAIT_LAUNCH( system );	break;
+    case SYSTEM_STATE_LAUNCH:       Process_LAUNCH( system );	      break;
+    case SYSTEM_STATE_WAIT_FADEOUT: Process_WAIT_FADEOUT( system );	break;
+    case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( system );	    break;
+    }
+  }
 
 	// プレートオブジェクトを動かす
   MovePlate( system );
@@ -581,6 +627,20 @@ void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system )
   ResetBG( system );
 }
 
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ用にバージョン切り替え
+ *
+ *	@param	FIELD_PLACE_NAME* system 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLACE_NAME_DebugChangeVersion( FIELD_PLACE_NAME* system )
+{
+  TransBGPalette( system );
+}
+#endif
+
 
 //===================================================================================
 // ■非公開関数
@@ -657,6 +717,7 @@ static void LoadBGPaletteData( FIELD_PLACE_NAME* system )
   system->BGPalBinary = GFL_HEAP_AllocMemory( heapID, size );	// データバッファ確保
   GFL_ARC_LoadDataByHandle( handle, datID, system->BGPalBinary ); // データ取得
   NNS_G2dGetUnpackedPaletteData( system->BGPalBinary, &system->BGPalData ); // バイナリを展開
+
 }
 
 //------------------------------------------------------------------------------------
@@ -686,6 +747,33 @@ static void TransBGPalette( FIELD_PLACE_NAME* system )
 {
 	GFL_BG_LoadPalette( 
       BG_FRAME, system->BGPalData->pRawData, 0x20, BG_PALETTE_NO );
+
+#ifdef PM_DEBUG
+  if( PlaceNameVersionFlag == 1 )
+  {
+    static const GXRgb  debug_color[0x10] =
+    {
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+      GX_RGB(31,31,31),
+    };
+    GFL_BG_LoadPalette( BG_FRAME, (void*)debug_color, 0x20, BG_PALETTE_NO );
+  }
+#endif
+
 }
 
 //------------------------------------------------------------------------------------
@@ -1090,7 +1178,7 @@ static void OutPlate( FIELD_PLACE_NAME* system )
   int i;
   for( i = 0; i < PLATE_MAX; i++ )
   {
-    PN_PLATE_OutReq( system->plate[ i ], system->stateCount, PROCESS_TIME_WAIT_FADEOUT );
+    PN_PLATE_OutReq( system->plate[ i ], /*system->stateCount*/0, PROCESS_TIME_WAIT_FADEOUT );
   }
 }
 
@@ -1486,7 +1574,7 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
  * @param system 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_FADEIN( FIELD_PLACE_NAME* system )
+static void Process_FADEIN_Both( FIELD_PLACE_NAME* system )
 {
   switch( GetStateSeq(system) ) {
   case 0:
@@ -1502,6 +1590,60 @@ static void Process_FADEIN( FIELD_PLACE_NAME* system )
 
     if( PROCESS_TIME_FADEIN < system->stateCount
         && CheckPlate( system )) {
+      ChangeState( system, SYSTEM_STATE_WAIT_LAUNCH );
+    }
+    break;
+  }
+}
+static void Process_FADEIN_UpDown( FIELD_PLACE_NAME* system )
+{
+  switch( GetStateSeq(system) ) {
+  case 0:
+    Draw_FADEIN( system ); // α値を初期化
+    GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); // BGを表示
+
+    PN_PLATE_EnterReq( system->plate[ 0 ], 0, PROCESS_TIME_FADEIN );
+    IncStateSeq( system );
+    break;
+
+  case 1:
+    if( PN_PLATE_IsEnd( system->plate[0] ) ) {
+      PN_PLATE_EnterReq( system->plate[ 1 ], 0, PROCESS_TIME_FADEIN );
+      IncStateSeq( system );
+    }
+    break;
+
+  case 2:
+    // 一定時間が経過したら, 次の状態へ
+    if( PROCESS_TIME_FADEIN*2 < system->stateCount
+        && PN_PLATE_IsEnd( system->plate[1] ) ) {
+      ChangeState( system, SYSTEM_STATE_WAIT_LAUNCH );
+    }
+    break;
+  }
+}
+static void Process_FADEIN_DownUp( FIELD_PLACE_NAME* system )
+{
+  switch( GetStateSeq(system) ) {
+  case 0:
+    Draw_FADEIN( system ); // α値を初期化
+    GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); // BGを表示
+
+    PN_PLATE_EnterReq( system->plate[ 1 ], 0, PROCESS_TIME_FADEIN );
+    IncStateSeq( system );
+    break;
+
+  case 1:
+    if( PN_PLATE_IsEnd( system->plate[1] ) ) {
+      PN_PLATE_EnterReq( system->plate[ 0 ], 0, PROCESS_TIME_FADEIN );
+      IncStateSeq( system );
+    }
+    break;
+
+  case 2:
+    // 一定時間が経過したら, 次の状態へ
+    if( PROCESS_TIME_FADEIN*2 < system->stateCount
+        && PN_PLATE_IsEnd( system->plate[0] ) ) {
       ChangeState( system, SYSTEM_STATE_WAIT_LAUNCH );
     }
     break;
@@ -1617,14 +1759,22 @@ static void Draw_SETUP( const FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static void Draw_FADEIN( const FIELD_PLACE_NAME* system )
 {
+#if 0
 	int val1, val2;
 	float rate;
-
 	// αブレンディング係数を更新
-	rate  = (float)system->stateCount / (float)PROCESS_TIME_FADEIN;
+  if( PlaceNameMoveType == 0 )
+  {
+    rate  = (float)system->stateCount / (float)PROCESS_TIME_FADEIN;
+  }
+  else
+  {
+    rate  = (float)system->stateCount / (float)(PROCESS_TIME_FADEIN*2);
+  }
 	val1 = (int)( ALPHA_VALUE_1 * rate );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * (1.0f - rate) );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
+#endif 
 }
 
 //-----------------------------------------------------------------------------------
@@ -1669,6 +1819,7 @@ static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static void Draw_FADEOUT( const FIELD_PLACE_NAME* system )
 {
+#if 0
 	int val1, val2;
 	float rate;
 	
@@ -1677,6 +1828,7 @@ static void Draw_FADEOUT( const FIELD_PLACE_NAME* system )
 	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
+#endif
 } 
 
 

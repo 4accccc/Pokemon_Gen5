@@ -14,6 +14,9 @@
 #include "print/printsys.h"  // for PRINTSYSS_xxxx
 #include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
 
+#ifdef PM_DEBUG
+#include "debug/debug_flg.h"
+#endif 
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //    文字オブジェクト
@@ -32,6 +35,8 @@
 
 #ifdef STRING_LENGTH_CHECK
 extern BOOL PlaceNameLong;  //地名表示長い番の参照先
+extern BOOL PlaceNameShakeFlag;  //動きの揺れ追加
+extern BOOL  PlaceNameVersionFlag;    //0がブラック１がホワイト
 #endif //STRING_LENGTH_CHECK
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -74,39 +79,79 @@ typedef struct
 //===========================================================================
 // ■ 動作オブジェクト
 //===========================================================================
-#define PN_MOVE_LINER
 typedef struct
 {
   GFL_POINT init;       //初期座標
   GFL_POINT end;        //目標位置
-  GFL_POINT init_speed; //初速
-  GFL_POINT end_speed;  //終了時の速度
   s16 startFrame;
   s16 endFrame;
+}PN_LINER_INIT_PARAM;
+typedef struct
+{
+  s16 x;
+  s16 y;
+  s32 nowFrame;
+  PN_LINER_INIT_PARAM  param;
+}PN_LINER;
+static void PN_LINER_Init( PN_LINER *wk, const PN_LINER_INIT_PARAM *param );
+static void PN_LINER_Main( PN_LINER *wk );
+static BOOL PN_LINER_IsEnd( const PN_LINER *wk );
+static void PN_LINER_GetPos( const PN_LINER *wk, GFL_CLACTPOS *pos );
+
+typedef struct
+{
+  u16 startRot; //開始角度
+  u16 endRot;   //終了角度
+  s32 startFrame;
+  s32 endFrame;
+  s16 x;
+  s16 y;
+  s16 ofsX;
+  s16 ofsY;
+  s8  dir;      //回転方向
+  s8  dummy[3];
+}PN_SHAKE_INIT_PARAM;
+typedef struct
+{
+  fx32 nowValue;
+  s32  nowFrame;
+  PN_SHAKE_INIT_PARAM param;
+}PN_SHAKE;
+static void PN_SHAKE_Init( PN_SHAKE *wk, const PN_SHAKE_INIT_PARAM *param );
+static void PN_SHAKE_Main( PN_SHAKE *wk );
+static BOOL PN_SHAKE_IsEnd( const PN_SHAKE *wk );
+static void PN_SHAKE_GetPos( const PN_SHAKE *wk, GFL_CLACTPOS *pos );
+
+
+#define PN_MOVE_LINER_FRAME_RATE  (0.6f)
+#define PN_MOVE_SHAKE_FRAME_RATE  (0.4f)
+typedef struct
+{
+  GFL_POINT init;       //初期座標
+  GFL_POINT end;        //目標位置
+  u16 startRot;         //開始角度  はねるときのサイン開始角度
+  u16 endRot;           //終了角度  はねるときのサイン終了角度
+  s16 ofsX;             //はねるときのはば
+  s16 ofsY;             //はねるときの高さ
+  s16 dir;              //はねるときのサイン用角度方向
+  s16 startFrameLiner;  //直線動作開始フレーム
+  s16 endFrameLiner;    //直線動作終了フレーム
+  s16 startFrameShake;  //ゆれる動作開始フレーム
+  s16 endFrameShake;    //ゆれる動作終了フレーム
 }PN_MOVE_INIT_PARAM;
 typedef struct
 {
-#ifdef PN_MOVE_LINER
-  s16 x;
-  s16 y;
-  s32 now_frame;
   PN_MOVE_INIT_PARAM  param;
-#else
-  fx32 x;
-  fx32 y;
-  fx32 sx;
-  fx32 sy;
-  fx32 ax;
-  fx32 ay;
-  s32 tx;
-  s32 ty;
-#endif
+  PN_LINER  liner;
+  PN_SHAKE  shake;
+  u32       seq;
+  BOOL      isEnd;
 }PN_MOVE;
+
 static void PN_MOVE_Init( PN_MOVE *wk, const PN_MOVE_INIT_PARAM *param );
 static void PN_MOVE_Main( PN_MOVE *wk );
 static BOOL PN_MOVE_IsEnd( const PN_MOVE *wk );
 static void PN_MOVE_GetPos( const PN_MOVE *wk, GFL_CLACTPOS *pos );
-
 
 //===========================================================================
 // ■ 地名表示オブジェクト
@@ -135,21 +180,26 @@ typedef struct
   PN_PLATE_TOP_SETUP_PARAM    setup_param;  //設定情報
   BMPOAM_ACT_PTR  bmpOamActor;	            //BMPOAMアクター
   GFL_BMP_DATA*   bmp;		                  //ビットマップ
-  PN_MOVE         move;                     //移動計算
+  PN_MOVE         move;                     //複合移動
+  PN_SHAKE        shake;                    //揺れる動き
+  PN_LINER        liner;                    //直線移動
   GFL_CLWK*       placeIcon;                //場所アイコン
   u16             placeCgrIdx;              //場所アイコン用キャラ
   u16             placePltIdx;              //場所アイコン用パレット
   u16             placeCelIdx;              //場所アイコン用セル
   u16             placeIconIndex;           //ZoneTableから読み込んだ番号
+  GFL_CLACTPOS    pos;                      //現在の位置
 } PN_PLATE_TOP;
 typedef struct
 {
   PN_PLATE_BOTTOM_SETUP_PARAM setup_param;  //設定情報
-  PN_MOVE         move;                     //移動計算
+  PN_MOVE         move;                     //複合動作
+  PN_LINER        liner;                    //直線動作
   GFL_CLWK*       seasonIcon;               //季節アイコン
   u16             seasonCgrIdx;             //季節アイコン用キャラ
   u16             seasonPltIdx;             //季節アイコン用パレット
   u16             seasonCelIdx;             //季節アイコン用セル
+  GFL_CLACTPOS    pos;                      //現在の位置
 } PN_PLATE_BOTTOM;
 
 //===========================================================================
@@ -160,10 +210,13 @@ static void Pn_Plate_Top_Init( PN_PLATE *plate, void *wk_adrs, const void *param
 static void Pn_Plate_Top_Exit( PN_PLATE *plate, void *wk_adrs );
 static void Pn_Plate_Top_Setup( PN_PLATE *plate, void *wk_adrs, const void *setup_param );
 static BOOL Pn_Plate_Top_Update( PN_PLATE *plate, void *wk_adrs );
+static void Pn_Plate_Top_SetWldPos( PN_PLATE *plate, PN_PLATE_TOP *wk, const GFL_CLACTPOS *pos );
+
 static void Pn_Plate_Bottom_Init( PN_PLATE *plate, void *wk_adrs, const void *param_adrs );
 static void Pn_Plate_Bottom_Exit( PN_PLATE *plate, void *wk_adrs );
 static void Pn_Plate_Bottom_Setup( PN_PLATE *plate, void *wk_adrs, const void *setup_param );
 static BOOL Pn_Plate_Bottom_Update( PN_PLATE *plate, void *wk_adrs );
+static void Pn_Plate_Bottom_SetWldPos( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, const GFL_CLACTPOS *pos );
 
 //===========================================================================
 // ■data
@@ -189,7 +242,7 @@ static const PN_PLATE_INTERFACE sc_pn_plate_interface[PN_PLATE_TYPE_MAX ] =
   }
 };
 //上部が出現するときの動作
-static const PN_MOVE_INIT_PARAM sc_pn_plate_top_enter_param =
+static const PN_LINER_INIT_PARAM sc_pn_plate_top_enter_param =
 {
   //初期座標
   {
@@ -201,19 +254,33 @@ static const PN_MOVE_INIT_PARAM sc_pn_plate_top_enter_param =
     0,
     0,
   },
-  //初速
+};
+//上画面が出現するときの動作揺れる版
+static const PN_MOVE_INIT_PARAM sc_pn_plate_top_enter_param2  =
+{
+  //初期座標
   {
     0,
-    2
+    -32,
   },
-  //終了時の速度
+  //目標位置
   {
     0,
-    0
+    0,
   },
+  //開始角度  はねるときのサイン開始角度
+  0,
+  //終了角度  はねるときのサイン終了角度
+  0xFFFF/2,
+  //はねるときのはば
+  0,
+  //はねるときの高さ
+  -3,
+  //はねるときのサイン用角度方向
+  +1,
 };
 //上部が出て行くときの動作
-static const PN_MOVE_INIT_PARAM sc_pn_plate_top_out_param =
+static const PN_LINER_INIT_PARAM sc_pn_plate_top_out_param =
 {
   //初期座標
   {
@@ -225,19 +292,9 @@ static const PN_MOVE_INIT_PARAM sc_pn_plate_top_out_param =
     0,
     -56-8,
   },
-  //初速
-  {
-    0,
-    -2
-  },
-  //終了時の速度
-  {
-    0,
-    0
-  },
 };
 //下部が出現するときの動作
-static const PN_MOVE_INIT_PARAM sc_pn_plate_bottom_enter_param =
+static const PN_LINER_INIT_PARAM sc_pn_plate_bottom_enter_param =
 {
   //初期座標
   {
@@ -249,19 +306,33 @@ static const PN_MOVE_INIT_PARAM sc_pn_plate_bottom_enter_param =
     0,
     0,
   },
-  //初速
+};
+//下部が出現するときの動作揺れる版
+static const PN_MOVE_INIT_PARAM sc_pn_plate_bottom_enter_param2  =
+{
+  //初期座標
   {
     0,
-    -2
+    32,
   },
-  //終了時の速度
+  //目標位置
   {
     0,
-    0
+    0,
   },
+  //開始角度  はねるときのサイン開始角度
+  0,
+  //終了角度  はねるときのサイン終了角度
+  0xFFFF/2,
+  //はねるときのはば
+  0,
+  //はねるときの高さ
+  3,
+  //はねるときのサイン用角度方向
+  +1,
 };
 //下部がでていくときの動作
-static const PN_MOVE_INIT_PARAM sc_pn_plate_bottom_out_param =
+static const PN_LINER_INIT_PARAM sc_pn_plate_bottom_out_param =
 {
   //初期座標
   {
@@ -272,16 +343,6 @@ static const PN_MOVE_INIT_PARAM sc_pn_plate_bottom_out_param =
   {
     0,
     32
-  },
-  //初速
-  {
-    0,
-    -2
-  },
-  //終了時の速度
-  {
-    0,
-    0
   },
 };
 
@@ -303,13 +364,13 @@ static const GFL_CLACTPOS sc_pn_plate_name_pos =
   30,
   3,
 };
-//上画面場所アイコン
+//上画面場所アイコンのローカル座標
 static const GFL_CLACTPOS sc_pn_plate_icon_pos =
 {
   16,
   8,
 };
-//下画面季節アイコン
+//下画面季節アイコンのローカル座標
 static const GFL_CLACTPOS sc_pn_plate_season_pos =
 {
   256 - 30,
@@ -632,6 +693,7 @@ static void Pn_Plate_Top_Setup( PN_PLATE *plate, void *wk_adrs, const void *setu
 //-----------------------------------------------------------------------------
 static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq );
 static BOOL UpdateFunction_Top_Enter( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq );
+static BOOL UpdateFunction_Top_Enter2( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq );
 static BOOL UpdateFunction_Top_Out( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq );
 static BOOL UpdateFunction_Top_Hide( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq );
 static BOOL Pn_Plate_Top_Update( PN_PLATE *plate, void *wk_adrs )
@@ -645,10 +707,25 @@ static BOOL Pn_Plate_Top_Update( PN_PLATE *plate, void *wk_adrs )
     UpdateFunction_Top_Hide,      //PN_PLATE_REQ_HIDE      //隠れる
     UpdateFunction_Top_Setup,     //PN_PLATE_REQ_SETUP,   //（内部で使用）
   };
+  BOOL (*UpdateFunction2[])( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq ) =
+  {
+    NULL,   //PN_PLATE_REQ_NONE,  //リクエストなし
+    UpdateFunction_Top_Enter2,     //PN_PLATE_REQ_ENTER,   //出現
+    UpdateFunction_Top_Out,       //PN_PLATE_REQ_OUT,     //出て行く
+    UpdateFunction_Top_Hide,      //PN_PLATE_REQ_HIDE      //隠れる
+    UpdateFunction_Top_Setup,     //PN_PLATE_REQ_SETUP,   //（内部で使用）
+  };
 
   GF_ASSERT( plate->req < PN_PLATE_REQ_MAX );
   GF_ASSERT( UpdateFunction[ plate->req ] != NULL );
-  return UpdateFunction[ plate->req ]( plate, wk, &plate->seq );
+  if( PlaceNameShakeFlag )
+  {
+    return UpdateFunction2[ plate->req ]( plate, wk, &plate->seq );
+  }
+  else
+  {
+    return UpdateFunction[ plate->req ]( plate, wk, &plate->seq );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -690,6 +767,14 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
       GFL_BMP_Clear( wk->bmp, 0 );
 
       color = PRINTSYS_LSB_Make( COLOR_NO_LETTER, COLOR_NO_SHADOW, COLOR_NO_BACK );
+
+#ifdef PM_DEBUG
+      if( PlaceNameVersionFlag == 1 )
+      {
+        color = PRINTSYS_LSB_Make( 0xF, COLOR_NO_SHADOW, COLOR_NO_BACK );
+      }
+#endif
+
 #ifdef STRING_LENGTH_CHECK
       if( PlaceNameLong )
       {
@@ -773,12 +858,72 @@ static BOOL UpdateFunction_Top_Enter( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
   case SEQ_INIT:
     //移動計算初期化
     {
-      PN_MOVE_INIT_PARAM  param = sc_pn_plate_top_enter_param;
+      PN_LINER_INIT_PARAM  param = sc_pn_plate_top_enter_param;
       param.startFrame  = plate->startFrame;
       param.endFrame    = plate->endFrame;
-      PN_MOVE_Init( &wk->move, &param );
+      PN_LINER_Init( &wk->liner, &param );
     }
 
+    BmpOam_ActorSetDrawEnable( wk->bmpOamActor, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( plate->backobj, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->placeIcon, TRUE );
+    (*seq)++;
+    break;
+
+  case SEQ_MAIN:
+    //座標を計算
+    PN_LINER_Main( &wk->liner );
+    if( PN_LINER_IsEnd( &wk->liner ) )
+    {
+      (*seq)++;
+    }
+    break;
+
+  case SEQ_EXIT:
+    return FALSE;
+  }
+
+  //座標更新
+  {
+    PN_LINER_GetPos( &wk->liner, &wk->pos );
+    Pn_Plate_Top_SetWldPos( plate, wk, &wk->pos );
+  }
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  上部プレートの出現メイン処理  揺れる版
+ *
+ *	@param	PN_PLATE *plate   プレート共通ワーク
+ *	@param	*wk               上部プレート用ワーク
+ *	@param	*seq              シーケンス
+ *
+ *	@retval TRUE  処理続行
+ *	@retval FALSE 処理中断
+ */
+//-----------------------------------------------------------------------------
+static BOOL UpdateFunction_Top_Enter2( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+
+  switch( *seq )
+  {
+  case SEQ_INIT:
+    //移動計算初期化
+    {
+      PN_MOVE_INIT_PARAM  param = sc_pn_plate_top_enter_param2;
+      param.startFrameLiner  = plate->startFrame;
+      param.endFrameLiner    = (s16)(plate->endFrame  * PN_MOVE_LINER_FRAME_RATE);
+      param.startFrameShake  = plate->startFrame >= param.endFrameLiner ?
+                        plate->startFrame-param.endFrameLiner: plate->startFrame;
+      param.endFrameShake    = (s16)(plate->endFrame * PN_MOVE_SHAKE_FRAME_RATE);
+      PN_MOVE_Init( &wk->move, &param );
+    }
     BmpOam_ActorSetDrawEnable( wk->bmpOamActor, TRUE );
     GFL_CLACT_WK_SetDrawEnable( plate->backobj, TRUE );
     GFL_CLACT_WK_SetDrawEnable( wk->placeIcon, TRUE );
@@ -795,28 +940,13 @@ static BOOL UpdateFunction_Top_Enter( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
     break;
 
   case SEQ_EXIT:
-      return FALSE;
+    return FALSE;
   }
 
   //座標更新
   {
-    GFL_CLACTPOS  plate_pos = sc_pn_plate_top_bar_pos;
-    GFL_CLACTPOS  name_pos = sc_pn_plate_name_pos;
-    GFL_CLACTPOS  icon_pos  = sc_pn_plate_icon_pos;
-    GFL_CLACTPOS  now;
-    PN_MOVE_GetPos( &wk->move, &now );
-
-    plate_pos.x += now.x;
-    plate_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( plate->backobj, &plate_pos, plate->surface );
-
-    icon_pos.x += now.x;
-    icon_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( wk->placeIcon, &icon_pos, plate->surface );
-
-    name_pos.x  += now.x;
-    name_pos.y  += now.y;
-    BmpOam_ActorSetPos( wk->bmpOamActor, name_pos.x, name_pos.y );
+    PN_MOVE_GetPos( &wk->move, &wk->pos );
+    Pn_Plate_Top_SetWldPos( plate, wk, &wk->pos );
   }
   return TRUE;
 }
@@ -846,17 +976,19 @@ static BOOL UpdateFunction_Top_Out( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq 
   case SEQ_INIT:
     //移動計算初期化
     {
-      PN_MOVE_INIT_PARAM  param = sc_pn_plate_top_out_param;
+      PN_LINER_INIT_PARAM  param = sc_pn_plate_top_out_param;
+      param.init.x = wk->pos.x;  //出て行く時は途中退出があるため自分の座標を使う
+      param.init.y = wk->pos.y;  //出て行く時は途中退出があるため自分の座標を使う
       param.startFrame  = plate->startFrame;
       param.endFrame    = plate->endFrame;
-      PN_MOVE_Init( &wk->move, &param );
+      PN_LINER_Init( &wk->liner, &param );
     }
     (*seq)++;
     break;
   case SEQ_MAIN:
     //座標を計算
-    PN_MOVE_Main( &wk->move );
-    if( PN_MOVE_IsEnd( &wk->move ) )
+    PN_LINER_Main( &wk->liner );
+    if( PN_LINER_IsEnd( &wk->liner ) )
     {
       GFL_CLACT_WK_SetDrawEnable( plate->backobj, FALSE );
       GFL_CLACT_WK_SetDrawEnable( wk->placeIcon, FALSE );
@@ -870,23 +1002,8 @@ static BOOL UpdateFunction_Top_Out( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq 
 
   //座標更新
   {
-    GFL_CLACTPOS  plate_pos = sc_pn_plate_top_bar_pos;
-    GFL_CLACTPOS  name_pos = sc_pn_plate_name_pos;
-    GFL_CLACTPOS  icon_pos  = sc_pn_plate_icon_pos;
-    GFL_CLACTPOS  now;
-    PN_MOVE_GetPos( &wk->move, &now );
-
-    plate_pos.x += now.x;
-    plate_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( plate->backobj, &plate_pos, plate->surface );
-
-    icon_pos.x += now.x;
-    icon_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( wk->placeIcon, &icon_pos, plate->surface );
-
-    name_pos.x  += now.x;
-    name_pos.y  += now.y;
-    BmpOam_ActorSetPos( wk->bmpOamActor, name_pos.x, name_pos.y );
+    PN_LINER_GetPos( &wk->liner, &wk->pos );
+    Pn_Plate_Top_SetWldPos( plate, wk, &wk->pos );
   }
 
   return TRUE;
@@ -910,6 +1027,34 @@ static BOOL UpdateFunction_Top_Hide( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *seq
   BmpOam_ActorSetDrawEnable( wk->bmpOamActor, FALSE );
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワールド座標を設定
+ *
+ *	@param	PN_PLATE *plate   ワーク
+ *	@param	GFL_CLACTPOS *pos 位置
+ */
+//-----------------------------------------------------------------------------
+static void Pn_Plate_Top_SetWldPos( PN_PLATE *plate, PN_PLATE_TOP *wk, const GFL_CLACTPOS *pos )
+{
+  GFL_CLACTPOS  plate_pos = sc_pn_plate_top_bar_pos;
+  GFL_CLACTPOS  name_pos = sc_pn_plate_name_pos;
+  GFL_CLACTPOS  icon_pos  = sc_pn_plate_icon_pos;
+
+  plate_pos.x += pos->x;
+  plate_pos.y += pos->y;
+  GFL_CLACT_WK_SetPos( plate->backobj, &plate_pos, plate->surface );
+
+  icon_pos.x  += pos->x;
+  icon_pos.y  += pos->y;
+  GFL_CLACT_WK_SetPos( wk->placeIcon, &icon_pos, plate->surface );
+
+  name_pos.x  += pos->x;
+  name_pos.y  += pos->y;
+  BmpOam_ActorSetPos( wk->bmpOamActor, name_pos.x, name_pos.y );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  下部プレートの初期化処理
@@ -1005,6 +1150,7 @@ static void Pn_Plate_Bottom_Setup( PN_PLATE *plate, void *wk_adrs, const void *s
 //-----------------------------------------------------------------------------
 static BOOL UpdateFunction_Bottom_Setup( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq );
 static BOOL UpdateFunction_Bottom_Enter( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq );
+static BOOL UpdateFunction_Bottom_Enter2( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq );
 static BOOL UpdateFunction_Bottom_Out( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq );
 static BOOL UpdateFunction_Bottom_Hide( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq );
 static BOOL Pn_Plate_Bottom_Update( PN_PLATE *plate, void *wk_adrs )
@@ -1018,10 +1164,26 @@ static BOOL Pn_Plate_Bottom_Update( PN_PLATE *plate, void *wk_adrs )
     UpdateFunction_Bottom_Hide,     //PN_PLATE_REQ_HIDE     //隠れる
     UpdateFunction_Bottom_Setup,    //PN_PLATE_REQ_SETUP,   //設定
   };
+  BOOL (*UpdateFunction2[])( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq ) =
+  {
+    NULL,   //PN_PLATE_REQ_NONE,  //リクエストなし
+    UpdateFunction_Bottom_Enter2,    //PN_PLATE_REQ_ENTER,   //出現
+    UpdateFunction_Bottom_Out,      //PN_PLATE_REQ_OUT,     //出て行く
+    UpdateFunction_Bottom_Hide,     //PN_PLATE_REQ_HIDE     //隠れる
+    UpdateFunction_Bottom_Setup,    //PN_PLATE_REQ_SETUP,   //設定
+  };
 
   GF_ASSERT( plate->req < PN_PLATE_REQ_MAX );
   GF_ASSERT( UpdateFunction[ plate->req ] != NULL );
-  return UpdateFunction[ plate->req ]( plate, wk, &plate->seq );
+
+  if( PlaceNameShakeFlag )
+  {
+    return UpdateFunction2[ plate->req ]( plate, wk, &plate->seq );
+  }
+  else
+  {
+    return UpdateFunction[ plate->req ]( plate, wk, &plate->seq );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1070,9 +1232,67 @@ static BOOL UpdateFunction_Bottom_Enter( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u
   case SEQ_INIT:
     //移動計算初期化
     {
-      PN_MOVE_INIT_PARAM  param = sc_pn_plate_bottom_enter_param;
+      PN_LINER_INIT_PARAM  param = sc_pn_plate_bottom_enter_param;
       param.startFrame  = plate->startFrame;
       param.endFrame    = plate->endFrame;
+      PN_LINER_Init( &wk->liner, &param );
+    }
+    GFL_CLACT_WK_SetDrawEnable( plate->backobj, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->seasonIcon, TRUE );
+    (*seq)++;
+    break;
+  case SEQ_MAIN:
+    //座標を計算
+    PN_LINER_Main( &wk->liner );
+    if( PN_LINER_IsEnd( &wk->liner ) )
+    {
+      (*seq)++;
+    }
+    break;
+  case SEQ_EXIT:
+    return FALSE;
+  }
+
+  {
+    //座標を反映
+    PN_LINER_GetPos( &wk->liner, &wk->pos );
+    Pn_Plate_Bottom_SetWldPos( plate, wk, &wk->pos );
+  }
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  下部プレートの出現メイン処理  揺れる版
+ *
+ *	@param	PN_PLATE *plate   プレート共通ワーク
+ *	@param	*wk               下部プレート用ワーク
+ *	@param	*seq              シーケンス
+ *
+ *	@retval TRUE  処理続行
+ *	@retval FALSE 処理中断
+ */
+//-----------------------------------------------------------------------------
+static BOOL UpdateFunction_Bottom_Enter2( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+
+  switch( *seq )
+  {
+  case SEQ_INIT:
+    //移動計算初期化
+    {
+      PN_MOVE_INIT_PARAM  param = sc_pn_plate_bottom_enter_param2;
+      param.startFrameLiner  = plate->startFrame;
+      param.endFrameLiner    = (s16)(plate->endFrame  * PN_MOVE_LINER_FRAME_RATE);
+      param.startFrameShake  = plate->startFrame >= param.endFrameLiner ?
+                         plate->startFrame-param.endFrameLiner: plate->startFrame;
+      param.endFrameShake    = (s16)(plate->endFrame * PN_MOVE_SHAKE_FRAME_RATE);
       PN_MOVE_Init( &wk->move, &param );
     }
     GFL_CLACT_WK_SetDrawEnable( plate->backobj, TRUE );
@@ -1093,18 +1313,8 @@ static BOOL UpdateFunction_Bottom_Enter( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u
 
   {
     //座標を反映
-    GFL_CLACTPOS  plate_pos = sc_pn_plate_bottom_bar_pos;
-    GFL_CLACTPOS  season_pos  = sc_pn_plate_season_pos;
-    GFL_CLACTPOS  now;
-    PN_MOVE_GetPos( &wk->move, &now );
-
-    plate_pos.x += now.x;
-    plate_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( plate->backobj, &plate_pos, plate->surface );
-
-    season_pos.x += now.x;
-    season_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( wk->seasonIcon, &season_pos, plate->surface );
+    PN_MOVE_GetPos( &wk->move, &wk->pos );
+    Pn_Plate_Bottom_SetWldPos( plate, wk, &wk->pos );
   }
 
   return TRUE;
@@ -1135,17 +1345,19 @@ static BOOL UpdateFunction_Bottom_Out( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32
   case SEQ_INIT:
     //移動計算初期化
     {
-      PN_MOVE_INIT_PARAM  param = sc_pn_plate_bottom_out_param;
+      PN_LINER_INIT_PARAM  param = sc_pn_plate_bottom_out_param;
+      param.init.x = wk->pos.x;  //出て行く時は途中退出があるため自分の座標を使う
+      param.init.y = wk->pos.y;  //出て行く時は途中退出があるため自分の座標を使う
       param.startFrame  = plate->startFrame;
       param.endFrame    = plate->endFrame;
-      PN_MOVE_Init( &wk->move, &param );
+      PN_LINER_Init( &wk->liner, &param );
     }
     (*seq)++;
     break;
   case SEQ_MAIN:
     //座標を計算
-    PN_MOVE_Main( &wk->move );
-    if( PN_MOVE_IsEnd( &wk->move ) )
+    PN_LINER_Main( &wk->liner );
+    if( PN_LINER_IsEnd( &wk->liner ) )
     {
       GFL_CLACT_WK_SetDrawEnable( plate->backobj, FALSE );
       GFL_CLACT_WK_SetDrawEnable( wk->seasonIcon, FALSE );
@@ -1158,18 +1370,8 @@ static BOOL UpdateFunction_Bottom_Out( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32
 
   {
     //座標を反映
-    GFL_CLACTPOS  plate_pos = sc_pn_plate_bottom_bar_pos;
-    GFL_CLACTPOS  season_pos  = sc_pn_plate_season_pos;
-    GFL_CLACTPOS  now;
-    PN_MOVE_GetPos( &wk->move, &now );
-
-    plate_pos.x += now.x;
-    plate_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( plate->backobj, &plate_pos, plate->surface );
-
-    season_pos.x += now.x;
-    season_pos.y += now.y;
-    GFL_CLACT_WK_SetPos( wk->seasonIcon, &season_pos, plate->surface );
+    PN_LINER_GetPos( &wk->liner, &wk->pos );
+    Pn_Plate_Bottom_SetWldPos( plate, wk, &wk->pos );
   }
 
   return TRUE;
@@ -1194,132 +1396,261 @@ static BOOL UpdateFunction_Bottom_Hide( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u3
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  移動計算初期化
+ *	@brief  ワールド座標設定
  *
- *	@param	PN_MOVE *wk ワーク
- *	@param	PN_MOVE_INIT_PARAM *param 初期化パラメータ
+ *	@param	PN_PLATE *plate プレート共通ワーク
+ *	@param	*wk             下部プレート用ワーク
+ *	@param	GFL_CLACTPOS *pos   設定基準座標
  */
 //-----------------------------------------------------------------------------
-static void PN_MOVE_Init( PN_MOVE *wk, const PN_MOVE_INIT_PARAM *param )
+static void Pn_Plate_Bottom_SetWldPos( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, const GFL_CLACTPOS *pos )
 {
-  GFL_STD_MemClear( wk, sizeof(PN_MOVE) );
-#ifdef PN_MOVE_LINER
-  wk->now_frame = param->startFrame;
+  //座標を反映
+  GFL_CLACTPOS  plate_pos = sc_pn_plate_bottom_bar_pos;
+  GFL_CLACTPOS  season_pos  = sc_pn_plate_season_pos;
+
+  plate_pos.x += pos->x;
+  plate_pos.y += pos->y;
+  GFL_CLACT_WK_SetPos( plate->backobj, &plate_pos, plate->surface );
+
+  season_pos.x += pos->x;
+  season_pos.y += pos->y;
+  GFL_CLACT_WK_SetPos( wk->seasonIcon, &season_pos, plate->surface );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動計算初期化
+ *
+ *	@param	PN_LINER *wk ワーク
+ *	@param	PN_LINER_INIT_PARAM *param 初期化パラメータ
+ */
+//-----------------------------------------------------------------------------
+static void PN_LINER_Init( PN_LINER *wk, const PN_LINER_INIT_PARAM *param )
+{
+  GFL_STD_MemClear( wk, sizeof(PN_LINER) );
+  wk->nowFrame  = param->startFrame;
+  wk->x         = param->init.x;
+  wk->y         = param->init.y;
   wk->param = *param;
-
-  //wk->x,wk->yの初期化のため
-  PN_MOVE_Main( wk );
-#else
-  wk->x = FX32_CONST(param->init.x);
-  wk->y = FX32_CONST(param->init.y);
-  wk->sx  = FX32_CONST(param->init_speed.x);
-  wk->sy  = FX32_CONST(param->init_speed.y);
-
-  {
-    //距離
-    GFL_POINT d;
-    d.x  = param->end.x  - param->init.x;
-    d.y  = param->end.y  - param->init.y;
-
-    //加速度計算
-    if( d.x != 0 )
-    {
-      // v^2 -v0^2 = 2as より 
-      wk->ax  = FX_Div( 
-          ( FX32_CONST( param->end_speed.x * param->end_speed.x ) -
-            FX32_CONST( param->init_speed.x * param->init_speed.x ) ),
-          (2 * FX32_CONST(d.x) )
-          );
-    }
-    if( d.y != 0 )
-    {
-      wk->ay  = FX_Div(
-          ( FX32_CONST( param->end_speed.y * param->end_speed.y ) -
-            FX32_CONST( param->init_speed.y * param->init_speed.y ) ),
-          (2 * FX32_CONST(d.y) )
-          );
-    }
-
-    //移動回数計算
-    if( ( wk->ax >> FX32_SHIFT) != 0 )
-    {
-      wk->tx  = (param->end_speed.x - param->init_speed.x) / (wk->ax >> FX32_SHIFT);
-    }
-    if( (wk->ay >> FX32_SHIFT) != 0 )
-    {
-      wk->ty  = (param->end_speed.y - param->init_speed.y) / (wk->ay >> FX32_SHIFT);
-    }
-  }
-#endif
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  移動計算メイン
  *
- *	@param	PN_MOVE *wk ワーク
+ *	@param	PN_LINER *wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void PN_MOVE_Main( PN_MOVE *wk )
+static void PN_LINER_Main( PN_LINER *wk )
 {
-#ifdef PN_MOVE_LINER
-  if( wk->now_frame++ < wk->param.endFrame )
+  if( wk->nowFrame++ < wk->param.endFrame )
   {
-    wk->x = wk->param.init.x + (wk->param.end.x - wk->param.init.x) * wk->now_frame / wk->param.endFrame;
-    wk->y = wk->param.init.y + (wk->param.end.y - wk->param.init.y) * wk->now_frame / wk->param.endFrame;
+    wk->x = wk->param.init.x + (wk->param.end.x - wk->param.init.x) * wk->nowFrame / wk->param.endFrame;
+    wk->y = wk->param.init.y + (wk->param.end.y - wk->param.init.y) * wk->nowFrame / wk->param.endFrame;
   }
   else
   {
     wk->x = wk->param.end.x;
     wk->y = wk->param.end.y;
   }
-  NAGI_Printf( "x%d y%d\n", wk->x, wk->y );
-#else
-  if( wk->tx > 0 )
-  {
-    wk->x   += wk->sx;
-    wk->sx  += wk->ax;
-    wk->tx--;
-  }
-  if( wk->ty > 0 )
-  {
-    wk->y   += wk->sy;
-    wk->sy  += wk->ay;
-    wk->ty--;
-  }
-#endif
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  移動計算終了チェック
  *
- *	@param	const PN_MOVE *wk ワーク
+ *	@param	const PN_LINER *wk ワーク
  *	@retval TRUE  終了
  *	@retval TRUE  処理中
  */
 //-----------------------------------------------------------------------------
-static BOOL PN_MOVE_IsEnd( const PN_MOVE *wk )
+static BOOL PN_LINER_IsEnd( const PN_LINER *wk )
 {
-#ifdef PN_MOVE_LINER
-  return wk->now_frame > wk->param.endFrame;
-#else
-  return wk->tx <= 0 && wk->ty <= 0;
-#endif
+  return wk->nowFrame > wk->param.endFrame;
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  座標受け取り
  *
- *	@param	const PN_MOVE *wk ワーク
+ *	@param	const PN_LINER *wk ワーク
  *	@param	*pos              受け取り
+ */
+//-----------------------------------------------------------------------------
+static void PN_LINER_GetPos( const PN_LINER *wk, GFL_CLACTPOS *pos )
+{
+  pos->x  = wk->x;
+  pos->y  = wk->y;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  揺れる動きを初期化
+ *
+ *	@param	PN_SHAKE *wk  ワーク
+ *	@param	PN_SHAKE_INIT_PARAM *param  初期化値
+ */
+//-----------------------------------------------------------------------------
+static void PN_SHAKE_Init( PN_SHAKE *wk, const PN_SHAKE_INIT_PARAM *param )
+{
+  GFL_STD_MemClear( wk, sizeof(PN_SHAKE) );
+  wk->nowFrame  = wk->param.startFrame;
+  wk->nowValue  = FX_SinIdx( wk->param.startRot );
+  wk->param     = *param;
+
+  OS_Printf( "start=%d end=%d\n", param->startFrame, param->endFrame );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  揺れる動きメイン
+ *
+ *	@param	PN_SHAKE *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PN_SHAKE_Main( PN_SHAKE *wk )
+{
+  if( wk->nowFrame++ < wk->param.endFrame )
+  {
+    if( wk->param.dir > 0 )
+    {
+      wk->nowValue  = FX_SinIdx( wk->param.startRot + (wk->param.endRot - wk->param.startRot) * wk->nowFrame / wk->param.endFrame );
+    }
+    else
+    {
+      wk->nowValue  = FX_SinIdx( wk->param.startRot - ((0xFFFF - wk->param.endRot) + wk->param.startRot) * wk->nowFrame / wk->param.endFrame ); 
+    }
+  }
+  else
+  {
+    wk->nowValue  = FX_SinIdx( wk->param.endRot );
+  }
+  OS_Printf( "val%f\n", FX_FX32_TO_F32(wk->nowValue) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  揺れる動き終了検知
+ *
+ *	@param	const PN_SHAKE *wk ワーク
+ *
+ *	@retval TRUE終了
+ *	@retval FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL PN_SHAKE_IsEnd( const PN_SHAKE *wk )
+{
+  return wk->nowFrame > wk->param.endFrame;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  揺れる動き座標取得
+ *
+ *	@param	const PN_SHAKE *wk ワーク
+ *	@param	*pos  受け取り構造体
+ */
+//-----------------------------------------------------------------------------
+static void PN_SHAKE_GetPos( const PN_SHAKE *wk, GFL_CLACTPOS *pos )
+{
+  pos->x  = wk->param.x + ((wk->param.ofsX * wk->nowValue) >> FX32_SHIFT);
+  pos->y  = wk->param.y + ((wk->param.ofsY * wk->nowValue) >> FX32_SHIFT);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  複合動作初期化
+ *
+ *	@param	PN_MOVE *wk  ワーク
+ *	@param	PN_MOVE_INIT_PARAM *param  初期化値
+ */
+//-----------------------------------------------------------------------------
+static void PN_MOVE_Init( PN_MOVE *wk, const PN_MOVE_INIT_PARAM *param )
+{
+  GFL_STD_MemClear( wk, sizeof(PN_MOVE) );
+  wk->isEnd = FALSE;
+  wk->param = *param;
+  {
+    PN_LINER_INIT_PARAM linerParam;
+    GFL_STD_MemClear( &linerParam, sizeof(PN_LINER_INIT_PARAM) );
+    linerParam.init   = wk->param.init;
+    linerParam.end    = wk->param.end;
+    linerParam.startFrame = wk->param.startFrameLiner;
+    linerParam.endFrame   = wk->param.endFrameLiner;
+    PN_LINER_Init( &wk->liner, &linerParam );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  複合動作メイン
+ *
+ *	@param	PN_MOVE *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PN_MOVE_Main( PN_MOVE *wk )
+{
+  switch( wk->seq )
+  {
+  case 0:
+    PN_LINER_Main( &wk->liner );
+    if( PN_LINER_IsEnd( &wk->liner ) )
+    {
+      //次の動き初期化
+      PN_SHAKE_INIT_PARAM shakeParam;
+      GFL_STD_MemClear( &shakeParam, sizeof(PN_SHAKE_INIT_PARAM));
+      shakeParam.startRot   = wk->param.startRot;
+      shakeParam.endRot     = wk->param.endRot;
+      shakeParam.startFrame = wk->param.startFrameShake;
+      shakeParam.endFrame   = wk->param.endFrameShake;
+      shakeParam.x          = wk->param.end.x;
+      shakeParam.y          = wk->param.end.y;
+      shakeParam.ofsX       = wk->param.ofsX;
+      shakeParam.ofsY       = wk->param.ofsY;
+      shakeParam.dir        = wk->param.dir;
+      PN_SHAKE_Init( &wk->shake, &shakeParam );
+
+      wk->seq++;
+    }
+    break;
+
+  case 1:
+    PN_SHAKE_Main( &wk->shake );
+    if( PN_SHAKE_IsEnd( &wk->shake ) )
+    {
+      wk->seq++;
+    }
+    break;
+  default:
+    //動作終了
+    NAGI_Printf( "終了\n" );
+    wk->isEnd   = TRUE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  複合動作終了検知
+ *
+ *	@param	const PN_MOVE *wk ワーク
+ *
+ *	@retval TRUE終了
+ *	@retval FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL PN_MOVE_IsEnd( const PN_MOVE *wk )
+{
+  return wk->isEnd;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  複合動作位置取得
+ *
+ *	@param	const PN_MOVE *wk   動作ワーク
+ *	@param	*pos                受け取り構造体
  */
 //-----------------------------------------------------------------------------
 static void PN_MOVE_GetPos( const PN_MOVE *wk, GFL_CLACTPOS *pos )
 {
-#ifdef PN_MOVE_LINER
-  pos->x  = wk->x;
-  pos->y  = wk->y;
-#else
-  pos->x  = (wk->x >> FX32_SHIFT);
-  pos->y  = (wk->y >> FX32_SHIFT);
-#endif
+  switch( wk->seq )
+  {
+  case 0:
+    PN_LINER_GetPos( &wk->liner, pos );
+    break;
+  case 1:
+  default:
+    PN_SHAKE_GetPos( &wk->shake, pos );
+    break;
+  }
 }

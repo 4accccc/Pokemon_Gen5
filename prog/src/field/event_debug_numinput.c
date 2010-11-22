@@ -165,6 +165,25 @@ static u32 DebugGetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32
 static void DebugSetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetPlaceNameLongString(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetPlaceNameLongString(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameMoveType(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameMoveType(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+
+static u32 DebugGetPlaceNameShakeFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameShakeFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameAlphaFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameAlphaFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameEnterFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameEnterFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameWaitFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameWaitFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameOutFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameOutFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameAlphaBG(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameAlphaBG(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameAlpha3D(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameAlpha3D(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameVersion(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameVersion(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
@@ -1326,6 +1345,88 @@ static void DebugSetPlaceNameLongString(GAMESYS_WORK * gsys, GAMEDATA * gamedata
 {
   PlaceNameLong = value;
 }
+static u32 DebugGetPlaceNameMoveType(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PlaceNameMoveType;
+}
+static void DebugSetPlaceNameMoveType(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PlaceNameMoveType = value;
+}
+static u32 DebugGetPlaceNameShakeFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PlaceNameShakeFlag;
+}
+static void DebugSetPlaceNameShakeFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PlaceNameShakeFlag = value;
+}
+static u32 DebugGetPlaceNameAlphaFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PlaceNameAlphaFlag;
+}
+static void DebugSetPlaceNameAlphaFlag(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PlaceNameAlphaFlag = value;
+}
+static u32 DebugGetPlaceNameEnterFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PROCESS_TIME_FADEIN2;
+}
+static void DebugSetPlaceNameEnterFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PROCESS_TIME_FADEIN2 = value;
+}
+static u32 DebugGetPlaceNameWaitFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PROCESS_TIME_WAIT_LAUNCH;
+}
+static void DebugSetPlaceNameWaitFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PROCESS_TIME_WAIT_LAUNCH = value;
+}
+static u32 DebugGetPlaceNameOutFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PROCESS_TIME_WAIT_FADEOUT;
+}
+static void DebugSetPlaceNameOutFrame(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PROCESS_TIME_WAIT_FADEOUT = value;
+}
+static u32 DebugGetPlaceNameAlphaBG(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return ALPHA_VALUE_1;
+}
+static void DebugSetPlaceNameAlphaBG(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  ALPHA_VALUE_1 = value;
+}
+static u32 DebugGetPlaceNameAlpha3D(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return ALPHA_VALUE_2;
+}
+static void DebugSetPlaceNameAlpha3D(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  ALPHA_VALUE_2 = value;
+}
+static u32 DebugGetPlaceNameVersion(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return PlaceNameVersionFlag;
+}
+static void DebugSetPlaceNameVersion(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  if( PlaceNameVersionFlag != value )
+  {
+    PlaceNameVersionFlag  = value;
+
+    {
+      FIELDMAP_WORK *fldmap  = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_PLACE_NAME_DebugChangeVersion( FIELDMAP_GetPlaceNameSys(fldmap) );
+    }
+  }
+}
+
+
 
 //--------------------------------------------------------------
 /**
