@@ -310,7 +310,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
           MYSTATUS net_myst = *GAMEDATA_GetMyStatusPlayer(gamedata, GFL_NET_SystemGetCurrentID());
           NAGI_Printf( "profile 0x%x\n", net_myst.id);
         #if PM_VERSION == VERSION_B2
-          net_myst.id &= ~(0 << 16);
+          net_myst.id &= ~(1 << 16);
           NAGI_Printf( "ƒuƒ‰ƒbƒNVER=%d ID=0x%x\n", PM_VERSION, net_myst.id);
         #else
           net_myst.id |= (1 << 16);
