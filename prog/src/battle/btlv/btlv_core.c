@@ -1072,6 +1072,27 @@ BOOL BTLV_UI_WaitRestart( BTLV_CORE* core )
   return BTLV_SCD_WaitRestartUI( core->scrnD );
 }
 
+//=============================================================================================
+/**
+ * @brief 先の画面でSEを鳴らすかどうか
+ *
+ * @param   core    
+ *
+ * @retval  BOOL    TRUE:鳴らす FALSE:鳴らさない
+ */
+//=============================================================================================
+static BOOL _getSeFlag( BTLV_CORE *core )
+{
+  if(BTL_MAIN_GetCompetitor(core->mainModule) == BTL_COMPETITOR_COMM){
+    if(BTL_MAIN_GetMultiMode(core->mainModule) == BTL_MULTIMODE_PP_AA){
+      return TRUE;
+    }else{
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
 /**
  *  ポケモンリストパラメータ設定共通処理
  */
@@ -1111,7 +1132,7 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->pfd = BTLV_EFFECT_GetPfd();
   plist->gamedata = BTL_MAIN_GetGameData( wk->mainModule );
   plist->time_out_flg = FALSE;
-  plist->seFlag = !(BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_COMM);
+  plist->seFlag = _getSeFlag(wk);
   plist->comm_err_flg = FALSE;
   plist->end_flg = FALSE;
 

@@ -20,6 +20,7 @@
 extern BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk );
 extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );
 extern BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk );
+extern BtlMultiMode BTL_MAIN_GetMultiMode( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetPlayerBadgeCount( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsIrekaeMode( const BTL_MAIN_MODULE* wk );

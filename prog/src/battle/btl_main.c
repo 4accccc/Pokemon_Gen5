@@ -2592,6 +2592,21 @@ BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->competitor;
 }
+
+//=============================================================================================
+/**
+ * @brief 複数接続タイプを返す
+ *
+ * @param   wk    
+ *
+ * @retval  BtlMultiMode    
+ */
+//=============================================================================================
+BtlMultiMode BTL_MAIN_GetMultiMode( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->multiMode;
+}
+
 //=============================================================================================
 /**
  * 通信タイプを返す

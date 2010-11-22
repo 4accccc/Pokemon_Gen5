@@ -616,6 +616,8 @@ struct _BTLV_INPUT_WORK
   BOOL                  henshin_flag;
 
   u16                   bag_pal[ 0x10 ];    //バッグボタンパレットを退避しておく
+  BtlMultiMode          multiMode;          // 複数人数接続かどうか(BtlMultiModeを参照）
+  u8                    etc[3];
 
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
@@ -748,7 +750,7 @@ typedef struct
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                               BOOL main_loop_tcb_flag, HEAPID heapID );
+                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode,HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work );
@@ -869,7 +871,8 @@ static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw );
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, BBAG_MODE_NORMAL, FALSE, heapID );
+  return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, 
+                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, heapID );
 }
 
 //============================================================================================
@@ -883,14 +886,17 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, P
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  bagMdoe       バッグモード
+ *  @param[in]  multiMode     マルチ対戦の状態を表す（BtlMultiMode=BTL_MULTIMODE_NONE,BTL_MULTIMODE_PP_AAなど）
  *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, 
+                                   PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode, 
+                                   BtlMultiMode multiMode, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, heapID );
+  return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, multiMode, heapID );
 }
 
 //============================================================================================
@@ -904,6 +910,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  bagMdoe       バッグモード
+ *  @param[in]  multiMode     マルチ対戦の状態を表す（BtlMultiModeはbattle.hに定義）
  *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
@@ -911,7 +918,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                               BOOL main_loop_tcb_flag, HEAPID heapID )
+                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -924,6 +931,7 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->font     = font;
   biw->type     = type;
   biw->comp     = comp;
+  biw->multiMode = multiMode;
 
   biw->cursor_mode = cursor_flag;
 
@@ -5593,12 +5601,41 @@ static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw )
   return NARC_battgra_wb_battle_w_bg0a_NSCR;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief SE再生を行っても大丈夫か？（通信対戦中は×、バトルレコーダーも×）
+ *
+ * @param   biw   
+ *
+ * @retval  BOOL  TRUE:再生OK FALSE:再生不可
+ */
+//----------------------------------------------------------------------------------
+static BOOL _checkSePlay( BTLV_INPUT_WORK* biw )
+{
+  // バトルレコーダーじゃなくて
+  if( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ){
+    // 通信モード中で
+    if( biw->comp == BTL_COMPETITOR_COMM ){
+      if(biw->multiMode==BTL_MULTIMODE_PP_AA){
+        // 通信マルチサブウェイだったら効果音あり
+        return TRUE;
+      }else{
+        // こっちはプレヤーVSプレイヤーなので効果音OFF
+        return FALSE;
+      }
+    }
+  }
+  return TRUE;
+}
+
 //=============================================================================================
 //  オープン音再生
 //=============================================================================================
 static  void  SePlayOpen( BTLV_INPUT_WORK* biw )
 {
-  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+//  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+
+  if(_checkSePlay( biw ))
   {
     PMSND_PlaySE( SEQ_SE_OPEN2 );
   }
@@ -5609,7 +5646,8 @@ static  void  SePlayOpen( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  SePlaySelect( BTLV_INPUT_WORK* biw )
 {
-  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+//  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+  if(_checkSePlay( biw ))
   {
     PMSND_PlaySE( SEQ_SE_SELECT1 );
   }
@@ -5620,6 +5658,7 @@ static  void  SePlaySelect( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  SePlayDecide( BTLV_INPUT_WORK* biw )
 {
+#if 0
   if( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER )
   {
     if( ( biw->comp == BTL_COMPETITOR_COMM ) ){ return; }
@@ -5631,6 +5670,12 @@ static  void  SePlayDecide( BTLV_INPUT_WORK* biw )
     // ->とくせいウィンドウSEを変えたのでここも通常の決定音にしました
     PMSND_PlaySE( SEQ_SE_DECIDE2 );
   }
+#endif
+
+  if(_checkSePlay( biw )){
+    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  }
+
 }
 
 //=============================================================================================
@@ -5638,9 +5683,11 @@ static  void  SePlayDecide( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  SePlayCancel( BTLV_INPUT_WORK* biw )
 {
-  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+//  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
-  PMSND_PlaySE( SEQ_SE_CANCEL2 );
+  if(_checkSePlay( biw )){
+    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+  }
 }
 
 //=============================================================================================
@@ -5648,9 +5695,11 @@ static  void  SePlayCancel( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 {
-  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+//  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
-  PMSND_PlaySE( SEQ_SE_ROTATION_S );
+  if(_checkSePlay( biw )){
+    PMSND_PlaySE( SEQ_SE_ROTATION_S );
+  }
 }
 
 //=============================================================================================
@@ -5658,9 +5707,11 @@ static  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 {
-  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+//  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
-  PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  if(_checkSePlay( biw )){
+    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  }
 }
 
 //=============================================================================================
@@ -5668,9 +5719,11 @@ static  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  SePlayRotation( BTLV_INPUT_WORK* biw )
 {
-  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+//  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
-  PMSND_PlaySE( SEQ_SE_ROTATION_B );
+  if(_checkSePlay( biw )){
+    PMSND_PlaySE( SEQ_SE_ROTATION_B );
+  }
 }
 
 //=============================================================================================
@@ -5678,9 +5731,11 @@ static  void  SePlayRotation( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  SePlayBeep( BTLV_INPUT_WORK* biw )
 {
-  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+//  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
 
-  PMSND_PlaySE( SEQ_SE_BEEP );
+  if(_checkSePlay( biw )){
+    PMSND_PlaySE( SEQ_SE_BEEP );
+  }
 }
 
 #ifdef PM_DEBUG
