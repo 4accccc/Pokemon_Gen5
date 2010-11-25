@@ -143,8 +143,8 @@ extern FLDEFF_TASK * FLDEFF_CTRL_AddTask(
 extern void FLDEFF_CTRL_SetTaskParam( FLDEFF_CTRL *fectrl, u32 max );
 
 //FLDEFF_TASKSYS
-extern FLDEFF_TASKSYS * FLDEFF_TASKSYS_Init(
-    HEAPID heapID, GFL_TCBSYS *tcbsys, int max );
+FLDEFF_TASKSYS * FLDEFF_TASKSYS_Init(
+    HEAPID heapID, GFL_TCBSYS *tcbsys, int max, FLDEFF_CTRL* fectrl );
 extern void FLDEFF_TASKSYS_Delete( FLDEFF_TASKSYS *tasksys );
 extern void FLDEFF_TASKSYS_Draw( FLDEFF_TASKSYS *tasksys );
 extern FLDEFF_TASK * FLDEFF_TASKSYS_AddTask(
@@ -162,6 +162,8 @@ extern void FLDEFF_TASK_GetPos( const FLDEFF_TASK *task, VecFx32 *pos );
 extern void FLDEFF_TASK_SetPos( FLDEFF_TASK *task, const VecFx32 *pos );
 extern void * FLDEFF_TASK_GetWork( FLDEFF_TASK *task );
 extern HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task );
+extern FIELDMAP_WORK* FLDEFF_TASK_GetFieldMapWork( const FLDEFF_TASK *task );
+
 
 //グレースケール
 extern void FLDEFF_CTRL_SetGrayScaleParam( FLDEFF_CTRL *fectrl, u8 *scale );

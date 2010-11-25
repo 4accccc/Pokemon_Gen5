@@ -86,6 +86,8 @@ struct _TAG_FLDEFF_TASKSYS
   HEAPID heapID;
   FLDEFF_TASK *task_tbl;
   GFL_TCBSYS *tcbsys; //ユーザーから
+
+  FLDEFF_CTRL* fectrl;
 };
 
 //======================================================================
@@ -475,7 +477,7 @@ void FLDEFF_CTRL_SetTaskParam( FLDEFF_CTRL *fectrl, u32 max )
       fectrl->heapID, GFL_TCB_CalcSystemWorkSize(max) );
   fectrl->tcbsys = GFL_TCB_Init( max, fectrl->tcbsys_work );
   fectrl->tasksys = FLDEFF_TASKSYS_Init(
-      fectrl->heapID, fectrl->tcbsys, max );
+      fectrl->heapID, fectrl->tcbsys, max, fectrl );
 }
 
 //--------------------------------------------------------------
@@ -563,7 +565,7 @@ static void fectrl_DrawTaskParam( FLDEFF_CTRL *fectrl )
  */
 //--------------------------------------------------------------
 FLDEFF_TASKSYS * FLDEFF_TASKSYS_Init(
-    HEAPID heapID, GFL_TCBSYS *tcbsys, int max )
+    HEAPID heapID, GFL_TCBSYS *tcbsys, int max, FLDEFF_CTRL* fectrl )
 {
   FLDEFF_TASKSYS *tasksys;
    
@@ -573,6 +575,7 @@ FLDEFF_TASKSYS * FLDEFF_TASKSYS_Init(
   tasksys->task_tbl = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(FLDEFF_TASK)*max );
   tasksys->tcbsys = tcbsys;
+  tasksys->fectrl = fectrl;
   return( tasksys );
 }
 
@@ -860,6 +863,22 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
   
   GF_ASSERT( 0 );
   return( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト　タスク　FIELDMAP_WORKポインタ取得
+ * @param task FLDEFF_TASK
+ * @retval HEAPID
+ */
+//--------------------------------------------------------------
+FIELDMAP_WORK* FLDEFF_TASK_GetFieldMapWork( const FLDEFF_TASK *task )
+{
+  if( task == NULL ){
+    GF_ASSERT( 0 );
+    return NULL;
+  }
+  return( task->tasksys->fectrl->fieldMapWork );
 }
 
 //======================================================================
