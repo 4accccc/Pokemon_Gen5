@@ -63,7 +63,7 @@ typedef struct
 
 #define BTLV_FIELD_ANM_MAX        ( 0 )         //背景のアニメーション数
                                                 //（初期化関数から１の時は０を要求されているので実際は１）
-#define	BTLV_FIELD_ANM_WAIT       ( FX32_ONE )  //お盆のアニメーションウェイト
+#define BTLV_FIELD_ANM_WAIT       ( FX32_ONE )  //お盆のアニメーションウェイト
 
 //============================================================================================
 /**
@@ -91,9 +91,9 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
   bfw->heapID = heapID;
 
   //リソース読み込み
-  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
+  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season*2 ] != BATT_BG_TBL_NO_FILE )
   {
-    bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+    bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season*2 ] );
   }
   else
   {
@@ -107,9 +107,12 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
   {
     int i;
 
+    OS_Printf("bg index=%d,i=%d,season=%d No=%d\n", index,0,0,bbtbt[ index ].file[ 0 ][ 0 ]);
+
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     {
-      if( bbtbt[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+      OS_Printf("bg index=%d,i=%d,season=%d No=%d\n", index,i,season,bbtbt[ index ].file[ i ][ season*2 ]);
+      if( bbtbt[ index ].file[ i ][ season*2 ] != BATT_BG_TBL_NO_FILE )
       {
         bfw->anm_count++;
       }
@@ -131,10 +134,10 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     {
-      if( bbtbt[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+      if( bbtbt[ index ].file[ i ][ season*2 ] != BATT_BG_TBL_NO_FILE )
       {
         //ANIME生成
-        bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ i ][ season ] );
+        bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ i ][ season*2 ] );
         bfw->field_anm[ cnt ] = GFL_G3D_ANIME_Create( bfw->field_render, bfw->field_anm_resource[ cnt ], BTLV_FIELD_ANM_MAX );
         bfw->field_anm_work[ cnt ].anm_type = BTLV_FIELD_ANM_TYPE_LOOP;
         cnt++;
@@ -201,7 +204,7 @@ void  BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
       GFL_G3D_ANIME_Delete( bfw->field_anm[ i ] );
       GFL_G3D_DeleteResource( bfw->field_anm_resource[ i ] );
     }
-		GFL_HEAP_FreeMemory( bfw->field_anm_work );
+    GFL_HEAP_FreeMemory( bfw->field_anm_work );
     GFL_HEAP_FreeMemory( bfw->field_anm );
     GFL_HEAP_FreeMemory( bfw->field_anm_resource );
   }
@@ -232,7 +235,7 @@ void  BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw )
     return;
   }
   //アニメーション
-	if(	bfw->anm_count ){
+  if( bfw->anm_count ){
     int i;
     for( i = 0 ; i < bfw->anm_count ; i++ )
     { 
@@ -257,7 +260,7 @@ void  BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw )
         GFL_G3D_OBJECT_LoopAnimeFrame( bfw->field_obj, i, speed ); 
       }
     }
-	}
+  }
   //パレットフェード
   BTLV_EFFTOOL_CalcPaletteFade( &bfw->epfw );
 }

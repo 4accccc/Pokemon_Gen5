@@ -12,7 +12,9 @@
 
 #define  ZONE_SPEC_ATTR_MAX  ( 17 )
 #define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )
-#define  BATT_BG_TBL_FILE_MAX  ( 8 )
+#define  BATT_BG_TBL_FILE_MAX  ( 8 ) //敵IMD・自IMD・敵ICA・自ICA・敵ITA・自ITA・敵IMA・自IMAの順
+
+#define  BATT_FIELD_TBL_MAX    ( 4 ) // IMD・ICA・ITA・IMAの順
 
 #define  BATT_BG_TBL_SEASON_MAX  ( 4 )
 
@@ -40,8 +42,8 @@ typedef struct
 }BATT_BG_TBL_STAGE_TABLE;
 
 typedef struct
-{
-	ARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];
+{ // 最後のx2部分は春春夏夏秋秋冬冬と入っています
+	ARCDATID file[BATT_FIELD_TBL_MAX ][ BATT_BG_TBL_SEASON_MAX*2 ];
 }BATT_BG_TBL_BG_TABLE;
 
 typedef enum{
