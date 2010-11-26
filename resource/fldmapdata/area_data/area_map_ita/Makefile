@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tomoya_takahashi fuchino ohkubo_tomohiko lee_hyunjung fujiwara_maiko ibe_mana tanoue_reiko unno james_turner
+USERS	= tomoya_takahashi fuchino_hiroki ohkubo_tomohiko lee_hyunjung fujiwara_maiko ibe_mana tanoue_reiko unno james_turner
 				
 
 #------------------------------------------------------------------------------
