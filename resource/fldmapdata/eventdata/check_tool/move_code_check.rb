@@ -17,6 +17,11 @@ require "obj_event_parser.rb"
 outfile = File.open( ARGV[0] , "w" )
 spflg = ARGV[1] == "/sp"
 
+ALL_MOVE =  "ANMTYPE_MOVE"
+DIR_MOVE =  "ANMTYPE_DIR"
+STAY_MOVE=  "ANMTYPE_SP"
+SP_MOVE=    "ANMTYPE_NO_USE"
+
 if spflg == false
 header =<<EOS
 =========================================================
@@ -32,11 +37,11 @@ header =<<EOS
 =========================================================
 
   move_code調査結果(特殊アニメを抽出)
-  @ANMTYPE_ANYANMが設定されているもの全てを出力しています
+  %sが設定されているもの全てを出力しています
 
 =========================================================
 EOS
-outfile.puts header
+outfile.printf(header,SP_MOVE);
 
 end
 
@@ -61,6 +66,7 @@ all_mev.each{|filename|
   mev_files << mev_data
 }
 
+
 # MOVE_CODEを調べる
 mev_files.each{|mev_data|
   
@@ -71,12 +77,12 @@ mev_files.each{|mev_data|
 
     if spflg == false
       # 全方向移動可能
-      if $anm_type[event.OBJ_CODE_Number] == "ANMTYPE_MOVE"
+      if $anm_type[event.OBJ_CODE_Number] == ALL_MOVE
         # 全てのmove_codeが使えます。
       end
 
       # 4方向のみ(移動できない)
-      if $anm_type[event.OBJ_CODE_Number] == "ANMTYPE_DIR"
+      if $anm_type[event.OBJ_CODE_Number] == DIR_MOVE
         error = true
         anmtype_dir.each do |code|
           if event.MOVE_CODE_Number == code
@@ -93,7 +99,7 @@ mev_files.each{|mev_data|
       end
 
       # その場のみ
-      if $anm_type[event.OBJ_CODE_Number] == "ANMTYPE_STAY"
+      if $anm_type[event.OBJ_CODE_Number] == STAY_MOVE
         error = true
         dir_error = false
         anmtype_stay.each do |code|
@@ -131,7 +137,7 @@ mev_files.each{|mev_data|
     else
 
       # 特殊アニメ
-      if $anm_type[event.OBJ_CODE_Number] == "ANMTYPE_ANYANM"
+      if $anm_type[event.OBJ_CODE_Number] == SP_MOVE
         log << "evname    :"+event.ID_name+"\n"
         log << "対象OBJ   :"+event.OBJ_CODE_Number+"\n"
         log << "MOVE_CODE :"+event.MOVE_CODE_Number+"\n"

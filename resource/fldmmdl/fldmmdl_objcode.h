@@ -103,8 +103,8 @@
 #define BIGFOUR3 (0x5f) //95(95,total 95) 四天王３
 #define BIGFOUR4 (0x60) //96(96,total 96) 四天王４
 #define CHAMPION (0x61) //97(97,total 97) チャンピオン
-#define HAKAIM (0x62) //98(98,total 98) ハカイ団♂
-#define HAKAIW (0x63) //99(99,total 99) ハカイ団♀
+#define HAKAIM (0x62) //98(98,total 98) プラズマ団♂
+#define HAKAIW (0x63) //99(99,total 99) プラズマ団♀
 #define SAGE1 (0x64) //100(100,total 100) 7賢者１
 #define SAGE2 (0x65) //101(101,total 101) 7賢者２
 #define GODDESS1 (0x66) //102(102,total 102) ２女神１
@@ -216,18 +216,18 @@
 #define PRESENT (0xd0) //208(208,total 208) プレゼントボックス
 #define POKE24 (0xd1) //209(209,total 209) ポケモン２４
 #define ITEM_GRASS (0xd2) //210(210,total 210) アイテムカプセル２
-#define SHIN_A (0xd3) //211(211,total 211) シンＡ
-#define SHIN_B (0xd4) //212(212,total 212) シンＢ
-#define MU_A (0xd5) //213(213,total 213) ムＡ
-#define MU_B (0xd6) //214(214,total 214) ムＢ
+#define SHIN_A (0xd3) //211(211,total 211) レシラムＡ
+#define SHIN_B (0xd4) //212(212,total 212) レシラムＢ
+#define MU_A (0xd5) //213(213,total 213) ゼクロムＡ
+#define MU_B (0xd6) //214(214,total 214) ゼクロムＢ
 #define SHIRONA (0xd7) //215(215,total 215) シロナ
 #define ITEM_GRASS2 (0xd8) //216(216,total 216) アイテムカプセル３
 #define POKE25 (0xd9) //217(217,total 217) ポケモン２５
 #define POKE26 (0xda) //218(218,total 218) ポケモン２６
 #define POKE27 (0xdb) //219(219,total 219) ポケモン２７
 #define POKE28 (0xdc) //220(220,total 220) ポケモン２８
-#define SHIN_C (0xdd) //221(221,total 221) シンC
-#define MU_C (0xde) //222(222,total 222) ムC
+#define SHIN_C (0xdd) //221(221,total 221) レシラムC
+#define MU_C (0xde) //222(222,total 222) ゼクロムC
 #define OBJCODEEND_BBD (0xdf) //223(total 223) ビルボードコード終端
 #define OBJCODECOUNT_BBD (0xdf) //223 ビルボードコード数
 
