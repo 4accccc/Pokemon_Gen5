@@ -54,7 +54,8 @@ DEPFILES	= ../area_data/area_id.h \
 						../../message/script_message.naix \
 						../../encount/encount_data_w.naix \
 						../../../prog/include/field/weather_no.h \
-						tmp/map_matrix.h
+						tmp/map_matrix.h \
+						..\..\place_name\place_name.naix
 
 MATRIXDATA = ../map_matrix/map_matrix.xls
 MATRIXHEADER = $(WORKDIR)/map_matrix.h
