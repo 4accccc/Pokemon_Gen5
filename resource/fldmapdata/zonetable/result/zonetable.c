@@ -28,7 +28,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_BC, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		43,
 		0,
 		38,
@@ -62,7 +62,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -96,7 +96,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BCBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -130,7 +130,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BCBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -164,7 +164,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BCBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -198,7 +198,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BCMALL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -232,7 +232,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		781,
 		0,
 		589,
@@ -266,7 +266,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -300,7 +300,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -334,7 +334,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -368,7 +368,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_LABO02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -402,7 +402,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -436,7 +436,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -470,7 +470,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -504,7 +504,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -538,7 +538,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_SCHOOL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -572,7 +572,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		637,
 		0,
 		599,
@@ -606,7 +606,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -640,7 +640,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -674,7 +674,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -708,7 +708,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -742,7 +742,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_FURNITURE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -776,7 +776,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_WHOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -810,7 +810,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_WHOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -844,7 +844,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_WHOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -878,7 +878,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_WHOUSE02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -912,7 +912,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_CAFE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -946,7 +946,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -980,7 +980,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		3,
 		8,
 		1,
@@ -1014,7 +1014,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1048,7 +1048,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1082,7 +1082,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P07_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1116,7 +1116,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P08_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1150,7 +1150,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P09_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1184,7 +1184,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P10_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1218,7 +1218,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P12_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1252,7 +1252,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1286,7 +1286,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P14_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1320,7 +1320,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P15_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1354,7 +1354,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P16_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1388,7 +1388,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_C03P17_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -1422,7 +1422,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1456,7 +1456,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_LIVE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1490,7 +1490,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_ATELIER01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1524,7 +1524,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1558,7 +1558,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL05, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1592,7 +1592,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL06, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1626,7 +1626,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_ZBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1660,7 +1660,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL06, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1694,7 +1694,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1728,7 +1728,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL06, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1762,7 +1762,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1796,7 +1796,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_CABIN01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1830,7 +1830,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BAR01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1864,7 +1864,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1898,7 +1898,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL06, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1932,7 +1932,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -1966,7 +1966,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL06, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2000,7 +2000,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2034,7 +2034,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL05, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2068,7 +2068,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2102,7 +2102,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL05, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2136,7 +2136,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		406,
 		1,
 		469,
@@ -2170,7 +2170,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2204,7 +2204,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_RECREATION01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -2238,7 +2238,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2272,7 +2272,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GSTATION01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2306,7 +2306,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2340,7 +2340,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2374,7 +2374,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2408,7 +2408,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2442,7 +2442,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2476,7 +2476,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2510,7 +2510,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2544,7 +2544,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2578,7 +2578,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2612,7 +2612,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BSUBWAY02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2646,7 +2646,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_THEATER01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2680,7 +2680,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_THEATER02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2714,7 +2714,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_STADIUM01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2748,7 +2748,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_SEAT01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2782,7 +2782,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_FOOTBALL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2816,7 +2816,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BASEBALL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2850,7 +2850,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_SOCCER01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2884,7 +2884,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_STADIUM02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2918,7 +2918,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_SEAT02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2952,7 +2952,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_TENNIS01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -2986,7 +2986,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BASKET01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3020,7 +3020,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3054,7 +3054,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3088,7 +3088,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3122,7 +3122,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3156,7 +3156,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3190,7 +3190,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_TRYHOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3224,7 +3224,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3258,7 +3258,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3292,7 +3292,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		187,
 		0,
 		414,
@@ -3326,7 +3326,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3360,7 +3360,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3394,7 +3394,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3428,7 +3428,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3462,7 +3462,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3496,7 +3496,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3530,7 +3530,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3564,7 +3564,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_CHURCH01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3598,7 +3598,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_MARKET01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3632,7 +3632,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3666,7 +3666,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		108,
 		0,
 		306,
@@ -3700,7 +3700,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3734,7 +3734,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3768,7 +3768,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3802,7 +3802,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_AIRPORT01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3836,7 +3836,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3870,7 +3870,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		184,
 		3,
 		197,
@@ -3904,7 +3904,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3938,7 +3938,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -3972,7 +3972,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4006,7 +4006,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4040,7 +4040,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4074,7 +4074,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4108,7 +4108,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		425,
 		0,
 		174,
@@ -4142,7 +4142,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4176,7 +4176,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4210,7 +4210,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4244,7 +4244,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4278,7 +4278,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4312,7 +4312,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4346,7 +4346,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4380,7 +4380,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4414,7 +4414,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4448,7 +4448,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4482,7 +4482,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4516,7 +4516,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4550,7 +4550,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4584,7 +4584,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4618,7 +4618,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BBUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -4652,7 +4652,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     TRUE,
 		MATRIX_ID_PL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		19,
 		0,
 		49,
@@ -4686,7 +4686,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_C09P01_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		32,
 		0,
 		46,
@@ -4720,7 +4720,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_LEAGIN02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		30,
 		0,
 		83,
@@ -4754,7 +4754,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_LEAGIN03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		30,
 		0,
 		32,
@@ -4788,7 +4788,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -4822,7 +4822,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -4856,7 +4856,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -4890,7 +4890,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -4924,7 +4924,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_CHAMP01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -4958,7 +4958,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DENDO01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -4992,7 +4992,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PC02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -5026,7 +5026,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		395,
 		0,
 		748,
@@ -5060,7 +5060,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_UN01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5094,7 +5094,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_UN02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5128,7 +5128,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_CLOSSEUM01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5162,7 +5162,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_CLOSSEUM02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5196,7 +5196,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0101, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5230,7 +5230,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0102, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5264,7 +5264,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		592,
 		0,
 		599,
@@ -5298,7 +5298,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0201, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5332,7 +5332,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0202, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5366,7 +5366,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		371,
 		0,
 		499,
@@ -5400,7 +5400,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0301, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5434,7 +5434,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5468,7 +5468,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0401, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5502,7 +5502,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0402, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5536,7 +5536,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0403, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5570,7 +5570,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0404, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5604,7 +5604,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0405, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5638,7 +5638,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0406, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5672,7 +5672,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0407, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5706,7 +5706,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0408, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5740,7 +5740,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0408, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5774,7 +5774,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0408, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5808,7 +5808,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0408, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5842,7 +5842,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0409, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5876,7 +5876,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0409, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5910,7 +5910,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0409, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5944,7 +5944,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0409, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -5978,7 +5978,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0409, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6012,7 +6012,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0409, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6046,7 +6046,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0410, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6080,7 +6080,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0410, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6114,7 +6114,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0411, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6148,7 +6148,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0411, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6182,7 +6182,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0412, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6216,7 +6216,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0413, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6250,7 +6250,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0415, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6284,7 +6284,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0416, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6318,7 +6318,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0417, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6352,7 +6352,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0418, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6386,7 +6386,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0420, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6420,7 +6420,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0421, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6454,7 +6454,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0422, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6488,7 +6488,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0423, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6522,7 +6522,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		178,
 		0,
 		454,
@@ -6556,7 +6556,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0501, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6590,7 +6590,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_CONTAINER01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6624,7 +6624,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		106,
 		0,
 		345,
@@ -6658,7 +6658,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0601, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6692,7 +6692,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0602, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6726,7 +6726,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0603, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6760,7 +6760,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		145,
 		0,
 		210,
@@ -6794,7 +6794,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0701, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6828,7 +6828,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0702, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6862,7 +6862,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0703, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6896,7 +6896,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6930,7 +6930,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN0705, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6964,7 +6964,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_PH01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -6998,7 +6998,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		175,
 		0,
 		151,
@@ -7032,7 +7032,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     TRUE,
 		MATRIX_ID_DUN0808, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7066,7 +7066,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0801, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7100,7 +7100,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0802, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7134,7 +7134,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -7168,7 +7168,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0804, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7202,7 +7202,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -7236,7 +7236,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0806, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7270,7 +7270,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0807, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7304,7 +7304,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		5,
 		0,
@@ -7338,7 +7338,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0901, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7372,7 +7372,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0902, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -7406,7 +7406,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0903, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7440,7 +7440,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0904, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7474,7 +7474,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0905, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7508,7 +7508,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0906, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7542,7 +7542,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0907, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7576,7 +7576,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0908, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7610,7 +7610,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0909, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7644,7 +7644,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0910, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7678,7 +7678,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0911, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7712,7 +7712,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0912, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7746,7 +7746,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0913, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7780,7 +7780,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0914, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7814,7 +7814,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN0915, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7848,7 +7848,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		687,
 		0,
 		153,
@@ -7882,7 +7882,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN1001, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7916,7 +7916,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN1002, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7950,7 +7950,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN1003, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -7984,7 +7984,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN1004, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8018,7 +8018,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		302,
 		0,
 		756,
@@ -8052,7 +8052,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_D12H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8086,7 +8086,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_D12H02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8120,7 +8120,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		725,
 		0,
 		719,
@@ -8154,7 +8154,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_LABO03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8188,7 +8188,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		801,
 		0,
 		289,
@@ -8222,7 +8222,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2001, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		1,
 		3,
 		0,
@@ -8256,7 +8256,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2002, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		1,
 		3,
 		0,
@@ -8290,7 +8290,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2003, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		1,
 		3,
 		0,
@@ -8324,7 +8324,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2004, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		1,
 		3,
 		0,
@@ -8358,7 +8358,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2005, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8392,7 +8392,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2006, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8426,7 +8426,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2007, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8460,7 +8460,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2008, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8494,7 +8494,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     TRUE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		0,
 		0,
 		0,
@@ -8528,7 +8528,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01B, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		15,
 		0,
 		24,
@@ -8562,7 +8562,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GATE06, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8596,7 +8596,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GATE07, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8630,7 +8630,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     TRUE,
 		NARC_camera_scroll_original_H02_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		20,
 		0,
 		48,
@@ -8664,7 +8664,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     TRUE,
 		MATRIX_ID_H03A, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8698,7 +8698,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     TRUE,
 		MATRIX_ID_H04A, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8732,7 +8732,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8766,7 +8766,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8800,7 +8800,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8834,7 +8834,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8868,7 +8868,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8902,7 +8902,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8936,7 +8936,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_THOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -8970,7 +8970,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     TRUE,
 		MATRIX_ID_H05A, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9004,7 +9004,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -9038,7 +9038,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE05, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9072,7 +9072,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9106,7 +9106,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9140,7 +9140,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9174,7 +9174,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE07, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9208,7 +9208,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9242,7 +9242,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9276,7 +9276,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9310,7 +9310,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE05, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9344,7 +9344,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9378,7 +9378,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9412,7 +9412,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9446,7 +9446,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE08, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9480,7 +9480,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_NCASTLE06, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9514,7 +9514,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -9548,7 +9548,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -9582,7 +9582,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9616,7 +9616,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9650,7 +9650,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9684,7 +9684,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9718,7 +9718,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9752,7 +9752,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9786,7 +9786,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9820,7 +9820,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -9854,7 +9854,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		434,
 		0,
 		468,
@@ -9888,7 +9888,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		231,
 		0,
 		431,
@@ -9922,7 +9922,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		103,
 		0,
 		306,
@@ -9956,7 +9956,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		174,
 		0,
 		202,
@@ -9990,7 +9990,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		401,
 		0,
 		182,
@@ -10024,7 +10024,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_BC, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -10058,7 +10058,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_WF, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -10092,7 +10092,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		178,
 		0,
 		454,
@@ -10126,7 +10126,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		106,
 		0,
 		345,
@@ -10160,7 +10160,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		145,
 		0,
 		210,
@@ -10194,7 +10194,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		175,
 		0,
 		151,
@@ -10228,7 +10228,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		687,
 		0,
 		153,
@@ -10262,7 +10262,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_H02A, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		20,
 		0,
 		48,
@@ -10296,7 +10296,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_H03A, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -10330,7 +10330,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_H05A, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -10364,7 +10364,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		371,
 		0,
 		431,
@@ -10398,7 +10398,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		152,
 		0,
 		404,
@@ -10432,7 +10432,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		111,
 		0,
 		266,
@@ -10466,7 +10466,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		213,
 		0,
 		185,
@@ -10500,7 +10500,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		326,
 		0,
 		173,
@@ -10534,7 +10534,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		456,
 		0,
 		184,
@@ -10568,7 +10568,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		588,
 		0,
 		184,
@@ -10602,7 +10602,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		661,
 		0,
 		200,
@@ -10636,7 +10636,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		718,
 		0,
 		333,
@@ -10670,7 +10670,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		628,
 		0,
 		434,
@@ -10704,7 +10704,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		458,
 		0,
 		431,
@@ -10738,7 +10738,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		645,
 		0,
 		179,
@@ -10772,7 +10772,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_PALACEFIELD, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		724,
 		0,
 		307,
@@ -10806,7 +10806,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		787,
 		0,
 		731,
@@ -10840,7 +10840,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -10874,7 +10874,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		762,
 		0,
 		657,
@@ -10908,7 +10908,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -10942,7 +10942,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		750,
 		0,
 		566,
@@ -10976,7 +10976,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_NSCHOOL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11010,7 +11010,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GROW01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11044,7 +11044,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN1401, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11078,7 +11078,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN1402, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11112,7 +11112,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		430,
 		0,
 		595,
@@ -11146,7 +11146,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_PH01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11180,7 +11180,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_PH01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11214,7 +11214,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_R05_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		371,
 		0,
 		431,
@@ -11248,7 +11248,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_THOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11282,7 +11282,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		152,
 		0,
 		404,
@@ -11316,7 +11316,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_WLABO01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11350,7 +11350,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11384,7 +11384,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11418,7 +11418,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11452,7 +11452,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11486,7 +11486,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		111,
 		0,
 		266,
@@ -11520,7 +11520,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11554,7 +11554,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11588,7 +11588,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11622,7 +11622,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11656,7 +11656,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_DUN1705, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11690,7 +11690,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11724,7 +11724,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11758,7 +11758,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		213,
 		0,
 		185,
@@ -11792,7 +11792,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN1801, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11826,7 +11826,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GATE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11860,7 +11860,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_R09_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		326,
 		0,
 		173,
@@ -11894,7 +11894,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GATE03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11928,7 +11928,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_MALL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11962,7 +11962,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_MALL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -11996,7 +11996,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12030,7 +12030,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12064,7 +12064,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12098,7 +12098,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_R10_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		424,
 		0,
 		119,
@@ -12132,7 +12132,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		MATRIX_ID_BCGATE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12166,7 +12166,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0201_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12200,7 +12200,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0301_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12234,7 +12234,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0401_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12268,7 +12268,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0501_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12302,7 +12302,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0601_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12336,7 +12336,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0701_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12370,7 +12370,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0801_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12404,7 +12404,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
     FALSE,
 		NARC_camera_scroll_original_R10R0901_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		16,
 		0,
 		16,
@@ -12438,7 +12438,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_R11_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		456,
 		0,
 		184,
@@ -12472,7 +12472,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12506,7 +12506,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_THOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12540,7 +12540,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		588,
 		0,
 		184,
@@ -12574,7 +12574,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12608,7 +12608,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		661,
 		0,
 		200,
@@ -12642,7 +12642,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12676,7 +12676,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12710,7 +12710,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12744,7 +12744,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		718,
 		0,
 		333,
@@ -12778,7 +12778,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12812,7 +12812,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12846,7 +12846,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12880,7 +12880,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		608,
 		0,
 		427,
@@ -12914,7 +12914,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		camera_area_dummy, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12948,7 +12948,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GATE05, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -12982,7 +12982,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_PAL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13016,7 +13016,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_THOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13050,7 +13050,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		NARC_camera_scroll_original_R16_bin, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		458,
 		0,
 		431,
@@ -13084,7 +13084,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_GATE04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13118,7 +13118,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2101, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13152,7 +13152,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_THOUSE01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13186,7 +13186,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		662,
 		0,
 		758,
@@ -13220,7 +13220,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_PH01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13254,7 +13254,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		16,   // padding > placeicon
+		19,   // padding > placeicon
 		782,
 		0,
 		750,
@@ -13288,7 +13288,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_HH01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13322,7 +13322,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_HH02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		6,
@@ -13356,7 +13356,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_FHB01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13390,7 +13390,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_FHB02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13424,7 +13424,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_FHA01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13458,7 +13458,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_FHA02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13492,7 +13492,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_LABO01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13526,7 +13526,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		796,
 		0,
 		659,
@@ -13560,7 +13560,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13594,7 +13594,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13628,7 +13628,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		6,
@@ -13662,7 +13662,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13696,7 +13696,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13730,7 +13730,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13764,7 +13764,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_BUILL03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13798,7 +13798,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H02, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13832,7 +13832,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		660,
 		0,
 		186,
@@ -13866,7 +13866,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13900,7 +13900,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13934,7 +13934,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -13968,7 +13968,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14002,7 +14002,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H04, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14036,7 +14036,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		760,
 		0,
 		301,
@@ -14070,7 +14070,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14104,7 +14104,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_VILLA01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14138,7 +14138,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14172,7 +14172,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14206,7 +14206,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14240,7 +14240,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_T05, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14274,7 +14274,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14308,7 +14308,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14342,7 +14342,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H03, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14376,7 +14376,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_UNION01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14410,7 +14410,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		724,
 		0,
 		744,
@@ -14444,7 +14444,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WF, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		43,
 		0,
 		38,
@@ -14478,7 +14478,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_M_PC01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
@@ -14512,7 +14512,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     FALSE,
 		MATRIX_ID_H01, // camera_area
-		12,   // padding > placeicon
+		15,   // padding > placeicon
 		5,
 		0,
 		4,
