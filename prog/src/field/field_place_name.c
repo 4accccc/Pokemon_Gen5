@@ -225,6 +225,7 @@ struct _FIELD_PLACE_NAME {
 static void SetupBG( FIELD_PLACE_NAME* system );
 static void CleanBG( FIELD_PLACE_NAME* system );
 static void ResetBG( FIELD_PLACE_NAME* system );	
+static void SetAlpha( const FIELD_PLACE_NAME* system );
 static void LoadBGPaletteData( FIELD_PLACE_NAME* system, ARCDATID pltID ); // BG パレットデータを読み込む
 static void UnloadBGPaletteData( FIELD_PLACE_NAME* system ); // BG パレットデータを解放する
 static void TransBGPalette( FIELD_PLACE_NAME* system ); // BG パレットを転送する
@@ -444,15 +445,6 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
       PROCESS_TIME_FADEIN = PROCESS_TIME_FADEIN1;
     }
   }
-
-  if( PlaceNameAlphaFlag )
-  {
-    G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
-  }
-  else
-  {
-    G2_BlendNone();
-  }
 #endif 
 
   {
@@ -626,6 +618,24 @@ void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system )
 {
   ResetBG( system );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファを設定
+ *
+ *	@param	FIELD_PLACE_NAME* system 
+ */
+//-----------------------------------------------------------------------------
+static void SetAlpha( const FIELD_PLACE_NAME* system )
+{
+  if( PlaceNameAlphaFlag )
+  {
+    G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
+  }
+  else
+  {
+    G2_BlendNone();
+  }
+}
 
 #ifdef PM_DEBUG
 //----------------------------------------------------------------------------
@@ -677,7 +687,8 @@ static void SetupBG( FIELD_PLACE_NAME* system )
   // BG表示設定
 	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
 	GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
-	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
+
+  SetAlpha( system );
 }
 
 //-----------------------------------------------------------------------------------
@@ -1534,7 +1545,7 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
   }
     GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
     GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
-    G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
+    SetAlpha( system );
     IncStateSeq( system );
     GX_SetVisibleWnd( GX_WNDMASK_OW );
     G2_SetWndOBJInsidePlane(GX_WND_PLANEMASK_BG0
@@ -1769,8 +1780,8 @@ static void Draw_FADEIN( const FIELD_PLACE_NAME* system )
   }
 	val1 = (int)( ALPHA_VALUE_1 * rate );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * (1.0f - rate) );
-	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
 #endif 
+  SetAlpha( system );
 }
 
 //-----------------------------------------------------------------------------------
@@ -1823,8 +1834,8 @@ static void Draw_FADEOUT( const FIELD_PLACE_NAME* system )
 	rate  = (float)system->stateCount / (float)PROCESS_TIME_FADEOUT;
 	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
-	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
 #endif
+  SetAlpha( system );
 } 
 
 
