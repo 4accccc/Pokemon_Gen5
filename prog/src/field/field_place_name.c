@@ -225,7 +225,7 @@ struct _FIELD_PLACE_NAME {
 static void SetupBG( FIELD_PLACE_NAME* system );
 static void CleanBG( FIELD_PLACE_NAME* system );
 static void ResetBG( FIELD_PLACE_NAME* system );	
-static void LoadBGPaletteData( FIELD_PLACE_NAME* system ); // BG パレットデータを読み込む
+static void LoadBGPaletteData( FIELD_PLACE_NAME* system, ARCDATID pltID ); // BG パレットデータを読み込む
 static void UnloadBGPaletteData( FIELD_PLACE_NAME* system ); // BG パレットデータを解放する
 static void TransBGPalette( FIELD_PLACE_NAME* system ); // BG パレットを転送する
 static void AllocBGNullCharArea( FIELD_PLACE_NAME* system ); // 空白キャラエリアを確保する
@@ -366,7 +366,7 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
   CreateBmpOamSystem( system ); 
   CreatePlate( system );
   GFL_BG_SetBGControl( BG_FRAME, &BGCntHeader, GFL_BG_MODE_TEXT ); 
-  LoadBGPaletteData( system );
+  LoadBGPaletteData( system, NARC_place_name_place_name_back_NCLR );
   AllocBGNullCharArea( system );
 
 	ChangeState( system, SYSTEM_STATE_HIDE ); 
@@ -637,6 +637,22 @@ void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------
 void FIELD_PLACE_NAME_DebugChangeVersion( FIELD_PLACE_NAME* system )
 {
+  UnloadBGPaletteData( system );
+  if( PlaceNameVersionFlag == 1 )
+  {
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_w_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
+    GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_w_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
+
+    LoadBGPaletteData( system, NARC_place_name_place_name_back_w_NCLR );
+  }
+  else
+  {
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
+    GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
+    
+    LoadBGPaletteData( system, NARC_place_name_place_name_back_NCLR );
+  }
+
   TransBGPalette( system );
 }
 #endif
@@ -699,9 +715,8 @@ static void ResetBG( FIELD_PLACE_NAME* system )
  * @param system
  */
 //------------------------------------------------------------------------------------
-static void LoadBGPaletteData( FIELD_PLACE_NAME* system )
+static void LoadBGPaletteData( FIELD_PLACE_NAME* system, ARCDATID pltID )
 {
-  ARCDATID datID;
   ARCHANDLE* handle;
   HEAPID heapID;
   u32 size;
@@ -711,11 +726,10 @@ static void LoadBGPaletteData( FIELD_PLACE_NAME* system )
 
   heapID = GetHeapID( system ); 
   handle = GetArcHandle( system );
-  datID  = NARC_place_name_place_name_back_NCLR;
 
-  size = GFL_ARC_GetDataSizeByHandle( handle, datID ); // データサイズ取得
+  size = GFL_ARC_GetDataSizeByHandle( handle, pltID ); // データサイズ取得
   system->BGPalBinary = GFL_HEAP_AllocMemory( heapID, size );	// データバッファ確保
-  GFL_ARC_LoadDataByHandle( handle, datID, system->BGPalBinary ); // データ取得
+  GFL_ARC_LoadDataByHandle( handle, pltID, system->BGPalBinary ); // データ取得
   NNS_G2dGetUnpackedPaletteData( system->BGPalBinary, &system->BGPalData ); // バイナリを展開
 
 }
@@ -745,35 +759,8 @@ static void UnloadBGPaletteData( FIELD_PLACE_NAME* system )
 //------------------------------------------------------------------------------------
 static void TransBGPalette( FIELD_PLACE_NAME* system )
 {
-	GFL_BG_LoadPalette( 
+  GFL_BG_LoadPalette( 
       BG_FRAME, system->BGPalData->pRawData, 0x20, BG_PALETTE_NO );
-
-#ifdef PM_DEBUG
-  if( PlaceNameVersionFlag == 1 )
-  {
-    static const GXRgb  debug_color[0x10] =
-    {
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-      GX_RGB(31,31,31),
-    };
-    GFL_BG_LoadPalette( BG_FRAME, (void*)debug_color, 0x20, BG_PALETTE_NO );
-  }
-#endif
-
 }
 
 //------------------------------------------------------------------------------------
@@ -1534,8 +1521,17 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
     break; 
 
   case 2:
+
+  if( PlaceNameVersionFlag == 1 )
+  {
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_w_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
+    GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_w_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
+  }
+  else
+  {
     GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
     GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
+  }
     GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
     GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
     G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
