@@ -980,6 +980,8 @@ extern int MMDL_CheckStatusBitAttrGetOFF( const MMDL * mmdl );
 extern void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag );
 extern void MMDL_SetMoveBitNonCreateMoveEffect( MMDL *mmdl, BOOL flag );
 extern BOOL MMDL_CheckMoveBitNonCreateMoveEffect( const MMDL *mmdl );
+extern void MMDL_SetLightAttr( MMDL *mmdl, BOOL flag );
+extern BOOL MMDL_GetLightAttr( const MMDL *mmdl );
 
 extern BOOL MMDLSYS_SearchUseMMdl(
 	const MMDLSYS *fos, MMDL **mmdl, u32 *no );

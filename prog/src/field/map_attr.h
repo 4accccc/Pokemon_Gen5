@@ -34,6 +34,7 @@ typedef enum
   MAPATTR_FLAGBIT_GRASS = (1<<5), ///<草揺れフラグ ON=草
   MAPATTR_FLAGBIT_REFLECT = (1<<6), ///<映り込み表示フラグ ON=映り込み有り
   MAPATTR_FLAGBIT_SHADOW = (1<<7), ///<影表示フラグ ON=影表示有り
+  MAPATTR_FLAGBIT_LIGHT = (1<<8), ///<MMDLへのライトフラグ  ON=ライト有り
 }MAPATTR_FLAGBIT;
 
 //======================================================================

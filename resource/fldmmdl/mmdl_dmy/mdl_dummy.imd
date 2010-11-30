@@ -100,7 +100,7 @@
 
 <material_array size="3">
 	<material index="0" name="board_a"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="on" light1="off" light2="off" light3="on"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -124,7 +124,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="1" name="board_b"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="on" light1="off" light2="off" light3="on"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -148,7 +148,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="2" name="h_kage"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="on" light1="off" light2="off" light3="on"
 		face="front"
 		alpha="9"
 		wire_mode="off"

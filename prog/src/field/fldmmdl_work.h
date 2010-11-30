@@ -121,7 +121,8 @@ struct _TAG_MMDL
   s8 offset_y; ///<オフセットY
   
   s8 offset_z; ///<オフセットZ
-  u8 padding[3]; ///<4byte余り
+  u8 lightAttributeEnable; //ライトアトリビュートがONかOFFか
+  u8 padding[2]; ///<4byte余り
   
   GFL_TCB *pTCB;        ///<動作関数TCB*
   MMDLSYS *pMMdlSys;    ///<MMDLSYS*

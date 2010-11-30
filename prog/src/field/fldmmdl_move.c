@@ -129,6 +129,8 @@ static void MMdl_MapAttrBiriBiri_2( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrSEProc_1( MMDL *mmdl, ATTRDATA *data );
 
+static void MMdl_MapAttrLight( MMDL *mmdl, ATTRDATA *data );
+
 static BOOL MMdl_HitCheckMoveAttr(
   const MMDL * mmdl, u16 dir, const VecFx32 pos );
 
@@ -406,6 +408,7 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
       MMdl_MapAttrReflect_01( mmdl, &data );
     
       MMdl_MapAttrSEProc_1( mmdl, &data ); //描画関係ない?
+      MMdl_MapAttrLight( mmdl, &data );
     }
   }
 }
@@ -431,6 +434,7 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
       MMdl_MapAttrSplashProc_Jump1( mmdl, &data );
 
       MMdl_MapAttrSEProc_1( mmdl, &data );//描画関係ない?
+      MMdl_MapAttrLight( mmdl, &data );
     }
   }
 }
@@ -459,6 +463,7 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * mmdl )
       MMdl_MapAttrReflect_2( mmdl, &data );
       MMdl_MapAttrShadowProc_2( mmdl, &data );
       MMdl_MapAttrBiriBiri_2( mmdl, &data );
+      MMdl_MapAttrLight( mmdl, &data );
     }
   }
 }
@@ -488,6 +493,7 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * mmdl )
       MMdl_MapAttrGrassProc_Jump2( mmdl, &data );
       MMdl_MapAttrGroundSmokeProc_2( mmdl, &data );
       MMdl_MapAttrBiriBiri_2( mmdl, &data );
+      MMdl_MapAttrLight( mmdl, &data );
     }
   }
 }
@@ -1278,6 +1284,30 @@ static void MMdl_MapAttrBiriBiri_2( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrSEProc_1( MMDL *mmdl, ATTRDATA *data )
 {
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  陰用アトリビュートを見て、ライトをON,OFFする
+ *
+ *	@param	MMDL *mmdl  モデル
+ *	@param	*data       アトリビュート
+ */
+//-----------------------------------------------------------------------------
+static void MMdl_MapAttrLight( MMDL *mmdl, ATTRDATA *data )
+{
+  NAGI_Printf( "now0x%d old0x%d ID=%d\n", data->attr_flag_now, data->attr_flag_old,
+        MMDL_GetOBJID(mmdl));
+
+  if( data->attr_flag_now & MAPATTR_FLAGBIT_LIGHT )
+  {
+    MMDL_SetLightAttr( mmdl, TRUE );
+  }
+  else
+  {
+    MMDL_SetLightAttr( mmdl, FALSE );
+  }
 }
 
 //======================================================================

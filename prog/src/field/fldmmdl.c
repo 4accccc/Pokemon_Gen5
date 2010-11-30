@@ -3743,6 +3743,31 @@ BOOL MMDL_CheckMoveBitNonCreateMoveEffect( const MMDL *mmdl )
   
   return( FALSE );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュートから取得したライトフラグを設定
+ *
+ *	@param	MMDL *mmdl  モデル
+ *	@param	flag      TRUEでON, FALSEでOFF
+ */
+//-----------------------------------------------------------------------------
+void MMDL_SetLightAttr( MMDL *mmdl, BOOL flag )
+{
+  mmdl->lightAttributeEnable  = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュートから取得したライトフラグを取得
+ *
+ *	@param	const MMDL *mmdl  モデル
+ *
+ *	@return TRUE,FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL MMDL_GetLightAttr( const MMDL *mmdl )
+{
+  return mmdl->lightAttributeEnable;
+}
 
 //======================================================================
 //  MMDLSYS ツール

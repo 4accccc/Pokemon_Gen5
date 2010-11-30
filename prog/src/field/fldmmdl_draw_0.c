@@ -125,6 +125,8 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
 static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PARAM* obj_prm, VecFx32* outVec);
 static BOOL TsurePoke_CheckUpDown( DRAW_BLACT_POKE_WORK* work, u8 dir, const OBJCODE_PARAM* obj_prm );
 
+static void SetLightMask( GFL_BBDACT_SYS *actSys, MMDL* mmdl, DRAW_BLACT_WORK *work );
+
 //======================================================================
 //  描画処理　描画無し
 //======================================================================
@@ -325,6 +327,8 @@ static void DrawHero_Draw( MMDL *mmdl )
   blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
       GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+
+  SetLightMask( actSys, mmdl, work );
 }
 
 //--------------------------------------------------------------
@@ -507,6 +511,7 @@ static void DrawSwimHero_Draw( MMDL *mmdl )
   blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+  SetLightMask( actSys, mmdl, work );
 }
 
 //--------------------------------------------------------------
@@ -582,6 +587,8 @@ static void DrawBlAct_Draw( MMDL *mmdl )
   blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+
+  SetLightMask( actSys, mmdl, work );
 }
 
 //--------------------------------------------------------------
@@ -641,6 +648,8 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+
+  SetLightMask( actSys, mmdl, work );
 }
 
 //--------------------------------------------------------------
@@ -694,6 +703,8 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
   blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+
+  SetLightMask( actSys, mmdl, work );
 }
 
 //--------------------------------------------------------------
@@ -747,6 +758,8 @@ static void DrawBlAct_DrawActNonePause( MMDL *mmdl )
   blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+
+  SetLightMask( actSys, mmdl, work );
 }
 
 //--------------------------------------------------------------
@@ -1567,6 +1580,23 @@ static BOOL TsurePoke_CheckUpDown( DRAW_BLACT_POKE_WORK* work, u8 dir, const OBJ
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  共通処理  ビルボードにライティングを設定
+ *
+ *	@param	MMDL* mmdl  モデル
+ */
+//-----------------------------------------------------------------------------
+static void SetLightMask( GFL_BBDACT_SYS *actSys, MMDL* mmdl, DRAW_BLACT_WORK *work )
+{
+  GFL_BBD_LIGHTMASK lightMask = GFL_BBD_LIGHTMASK_0;
+  if( MMDL_GetLightAttr( mmdl ) )
+  {
+    lightMask = GFL_BBD_LIGHTMASK_3;
+  }
+  GFL_BBD_SetObjectLightMask( 
+      GFL_BBDACT_GetBBDSystem(actSys), work->actID, &lightMask );
+}
 //--------------------------------------------------------------
 /**
  * 描画処理　ビルボード　連れ歩きポケモン

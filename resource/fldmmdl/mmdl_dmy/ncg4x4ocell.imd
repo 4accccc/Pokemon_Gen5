@@ -83,7 +83,7 @@
 
 <material_array size="1">
 	<material index="0" name="obj"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="on" light1="off" light2="off" light3="on"
 		face="front"
 		alpha="31"
 		wire_mode="off"

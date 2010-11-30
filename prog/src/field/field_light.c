@@ -1544,7 +1544,7 @@ static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid )
       VEC_Fx16Normalize( &p_sys->data[i].light_vec[j], &p_sys->data[i].light_vec[j] );
     }
 
-#if 0
+#if 1
     // データのデバック表示
     OS_TPrintf( "data number %d\n", i );
     OS_TPrintf( "timezone %d\n", p_sys->data[i].timezone );

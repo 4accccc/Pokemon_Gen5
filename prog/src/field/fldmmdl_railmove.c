@@ -84,7 +84,8 @@ static void MMdl_MapAttrReflect_01(
 static void MMdl_MapAttrReflect_2(
 		MMDL * mmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
-
+static void MMdl_MapAttrLight( 
+    MMDL *mmdl, MATR now, MATR old, const OBJCODE_PARAM *prm);
 
 
 
@@ -408,7 +409,7 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
       MMdl_MapAttrFootMarkProc_1( mmdl, now, old, prm );
       MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
       MMdl_MapAttrReflect_01( mmdl, now, old, prm );
-      
+      MMdl_MapAttrLight( mmdl, now, old, prm );
     }
   }
 }
@@ -432,6 +433,7 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
 
       MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
       MMdl_MapAttrReflect_01( mmdl, now, old, prm );
+      MMdl_MapAttrLight( mmdl, now, old, prm );
     }
   }
 }
@@ -456,6 +458,7 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * mmdl )
       //終了　アトリビュート処理
       MMdl_MapAttrReflect_2( mmdl, now, old, prm );
       MMdl_MapAttrShadowProc_2( mmdl, now, old, prm );
+      MMdl_MapAttrLight( mmdl, now, old, prm );
     }
   }
 }
@@ -482,6 +485,7 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * mmdl )
       MMdl_MapAttrShadowProc_2( mmdl, now, old, prm );
       MMdl_MapAttrGrassProc_12( mmdl, now, old, prm );
       MMdl_MapAttrGroundSmokeProc_2( mmdl, now, old, prm );
+      MMdl_MapAttrLight( mmdl, now, old, prm );
     }
   }
 }
@@ -759,6 +763,30 @@ static void MMdl_MapAttrReflect_2(
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライトアトリビュートを見てシャドウをON、OFFする
+ *
+ * @param	mmdl	MMDL *
+ * @param	now			現在のアトリビュート
+ * @param	old			過去のアトリビュート
+ * @param	prm		OBJCODE_PARAM
+ */
+//-----------------------------------------------------------------------------
+static void MMdl_MapAttrLight( MMDL *mmdl, MATR now, MATR old, const OBJCODE_PARAM *prm)
+{
+  MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
+
+  NAGI_Printf( "flag=0x%x\n", flag );
+  if( flag & MAPATTR_FLAGBIT_LIGHT )
+  {
+    MMDL_SetLightAttr( mmdl, TRUE );
+  }
+  else
+  {
+    MMDL_SetLightAttr( mmdl, FALSE );
+  }
+}
 
 
 
