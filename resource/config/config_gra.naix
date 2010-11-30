@@ -11,25 +11,23 @@
 #define NARC_CONFIG_GRA_NAIX_
 
 enum {
-	NARC_config_gra_est_back_NCGR = 0,
-	NARC_config_gra_est_back_NSCR = 1,
-	NARC_config_gra_est_bar_01_NCGR = 2,
-	NARC_config_gra_est_bar_01_NCLR = 3,
-	NARC_config_gra_est_bar_01_NSCR = 4,
-	NARC_config_gra_est_obj_01_NANR = 5,
-	NARC_config_gra_est_obj_01_NCER = 6,
-	NARC_config_gra_est_obj_01_NCGR = 7,
-	NARC_config_gra_est_obj_01_NCLR = 8,
-	NARC_config_gra_est_uegamen_01_NCGR = 9,
-	NARC_config_gra_est_uegamen_01_NCLR = 10,
-	NARC_config_gra_est_uegamen_01_NSCR = 11,
-	NARC_config_gra_shita_bar_NANR = 12,
-	NARC_config_gra_shita_bar_NCER = 13,
-	NARC_config_gra_shita_bar_NCGR = 14,
-	NARC_config_gra_ue_bar_01_NCGR = 15,
-	NARC_config_gra_ue_bar_01_NSCR = 16,
-	NARC_config_gra_ue_bar_window_NCGR = 17,
-	NARC_config_gra_ue_flame_01_NCGR = 18
+	NARC_config_gra_est_bar_01_NCGR = 0,
+	NARC_config_gra_est_bar_01_NCLR = 1,
+	NARC_config_gra_est_bar_01_NSCR = 2,
+	NARC_config_gra_est_obj_01_NANR = 3,
+	NARC_config_gra_est_obj_01_NCER = 4,
+	NARC_config_gra_est_obj_01_NCGR = 5,
+	NARC_config_gra_est_obj_01_NCLR = 6,
+	NARC_config_gra_est_uegamen_01_NCGR = 7,
+	NARC_config_gra_est_uegamen_01_NCLR = 8,
+	NARC_config_gra_est_uegamen_01_NSCR = 9,
+	NARC_config_gra_shita_bar_NANR = 10,
+	NARC_config_gra_shita_bar_NCER = 11,
+	NARC_config_gra_shita_bar_NCGR = 12,
+	NARC_config_gra_ue_bar_01_NCGR = 13,
+	NARC_config_gra_ue_bar_01_NSCR = 14,
+	NARC_config_gra_ue_bar_window_NCGR = 15,
+	NARC_config_gra_ue_flame_01_NCGR = 16
 };
 
 /* NARC_CONFIG_GRA_NAIX_ */

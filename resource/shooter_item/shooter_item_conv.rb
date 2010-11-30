@@ -114,7 +114,7 @@ class HeaderBuilder
     @header_name
   end
 
-  def write_header( header_name, brief, date, author, note )
+  def write_header( header_name, brief, author, note )
     @header_name  = header_name.gsub(/\./,'_');
     write( "//============================================================================================\n" )
     write( "/**\n" )
@@ -122,11 +122,8 @@ class HeaderBuilder
     if brief != nil 
       write( " * @brief " + brief + "\n" )
     end
-    if date != nil 
-      write( " * @author " + author + "\n" )
-    end
     if author != nil 
-      write( " * @date " + date + "\n" )
+      write( " * @author " + author + "\n" )
     end
     if note != nil
       write( " * @note " + note + "\n" )
@@ -209,7 +206,7 @@ begin
   #ヘッダ書き込み
   header_build  = HeaderBuilder.new
   day = Time.now
-  header_build.write_header( CREATE_HEADER_NAME, "シューター用アイテム使用許可ビット", day.to_s, "toru=nagihashi", "このファイルは"+__FILE__+"にて自動生成されております" )
+  header_build.write_header( CREATE_HEADER_NAME, "シューター用アイテム使用許可ビット", "toru=nagihashi", "このファイルは"+__FILE__+"にて自動生成されております" )
   header_build.write( "\n" )
 
   #内容
@@ -230,7 +227,7 @@ begin
   #Cダット書き込み
   cdat_build  = HeaderBuilder.new
   day = Time.now
-  cdat_build.write_header( CREATE_CDAT_NAME, "シューター用アイテムからアイテムへの変換テーブル", day.to_s, "toru=nagihashi", "このファイルは"+__FILE__+"にて自動生成されております" )
+  cdat_build.write_header( CREATE_CDAT_NAME, "シューター用アイテムからアイテムへの変換テーブル", "toru=nagihashi", "このファイルは"+__FILE__+"にて自動生成されております" )
   cdat_build.write( "\n" )
 
   #内容

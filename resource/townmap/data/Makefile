@@ -60,9 +60,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 # コピー先のnarcが古い場合実行する
 $(targetname_b).narc: $(targetname_b).dat
 	nnsarc -r -l -n -i $(targetname_b) $^
+	$(NAIXCUT) $(targetname_b).naix
 
 $(targetname_w).narc: $(targetname_w).dat
 	nnsarc -r -l -n -i $(targetname_w) $^
+	$(NAIXCUT) $(targetname_w).naix
 
 $(targetname_w).dat $(targetname_b).dat $(targetname2): townmap_data.xls $(MESSAGE_GMM) $(ZONETABLE_XLS)
 	perl townmap_data_conv.pl townmap_data.xls

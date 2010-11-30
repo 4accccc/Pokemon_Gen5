@@ -88,6 +88,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
 	nnsarc -c -i -n $(targetname) -S worldtrade.script
+	$(NAIXCUT) $(targetname).naix
 endif
 
 #------------------------------------------------------------------------------
