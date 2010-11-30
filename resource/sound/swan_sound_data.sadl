@@ -5,6 +5,7 @@
 #define PLAYER_SE_PSG	4
 #define PLAYER_SE_3	5
 #define PLAYER_BGM2	6
+#define PLAYER_STRM	0
 #define WAVE_ARC_PV001	1
 #define WAVE_ARC_PV002	2
 #define WAVE_ARC_PV003	3
@@ -3940,4 +3941,5 @@
 #define BANK_SE_DP_SELECT	1985
 #define SEQ_SE_DP_SELECT	2075
 #define SEQ_SE_END	2076
+#define STRM_TITLE	0
 #define GROUP_GLOBAL	0
