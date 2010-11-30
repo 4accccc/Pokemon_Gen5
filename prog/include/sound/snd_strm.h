@@ -13,41 +13,11 @@
 #ifndef __SND_STRM_H__
 #define __SND_STRM_H__
 
-#include "snd_strm.naix"
-
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
-//-------------------------------------
-///	サウンドデータタイプ
-//=====================================
-typedef enum {
-	SND_STRM_PCM8,
-	SND_STRM_PCM16,
-
-	SND_STRM_TYPE_MAX,	// システム内で使用
-} SND_STRM_TYPE;
-
-//-------------------------------------
-///	周波数タイプ
-//=====================================
-typedef enum {
-	SND_STRM_8KHZ,		// 8.000KHz
-	SND_STRM_11KHZ,		// 11.025KHz
-	SND_STRM_22KHZ,		// 22.050KHz
-	SND_STRM_32KHZ,		// 32.000KHz
-
-	SND_STRM_HZMAX,		// システム内で使用
-} SND_STRM_HZ;
-
-//-------------------------------------
-///	ボリューム
-//=====================================
-#define SND_STRM_VOLUME_MIN	(-1023)
-#define SND_STRM_VOLUME_MAX	(0)
-
 
 //-----------------------------------------------------------------------------
 /**
@@ -58,42 +28,38 @@ typedef enum {
 //-----------------------------------------------------------------------------
 /**
  *					外部宣言
- *
- *					・使い方
- *
- *					初期読込み  SND_STRM_Setup
- *					読込み破棄  SND_STRM_Release
- *
- *					あとはPlayやStopを使って鳴らしてください。
 */
 //-----------------------------------------------------------------------------
-// システムで使用するもの
+// 初期化・破棄・メイン
+//  ストリームは使用箇所が限定されているため、
+//  この処理がmainで回っていません。
+//  各アプリごとに初期化・破棄・メイン処理を呼んでください
 extern void SND_STRM_Init( HEAPID heapID );
 extern void SND_STRM_Exit( void );
 extern void SND_STRM_Main( void );
 
-// 音楽情報の読み込み・破棄
-extern void SND_STRM_SetUp( ARCID arcid, ARCDATID dataid, HEAPID heapID );
-//Setupは基本、Exを使わないでください。Exでは本来の曲と違うヘルツやタイプを指定してしまう可能性があるためです。
-extern void SND_STRM_SetUpEx( ARCID arcid, ARCDATID dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, HEAPID heapID );
-extern void SND_STRM_Release( void );
-extern BOOL SND_STRM_CheckSetUp( void );
+// 事前読み込み
+//  事前読み込みをしなくてもPlayすることができますが、
+//  読み込みが発生するため、数フレーム遅れます。
+//  ぴったりのタイミングで鳴らし始めたい場合、
+//  事前にLoadしてからPlayして下さい。
+extern void SND_STRM_LoadEx( s32 strmNo, u32 offset );
+#define SND_STRM_Load( strmNo ) SND_STRM_LoadEx( strmNo, 0 )
 
 // 再生、停止処理
-extern void SND_STRM_Play( void );
+extern void SND_STRM_Play( s32 strmNo );
 extern void SND_STRM_Stop( void );
 extern BOOL SND_STRM_CheckPlay( void );
 
 // ボリューム操作
 extern void SND_STRM_Volume( int volume );
+extern void SND_STRM_FadeOut( int fade_frame );
 
-//デバッグ情報
-#ifdef PM_DEBUG
-extern STRBUF * SND_STRM_DEBUG_CreateString( ARCID arcid, ARCDATID dataid, HEAPID heapID );
-extern SND_STRM_HZ SND_STRM_DEBUG_GetHertz( ARCID arcid, ARCDATID dataid );
-extern SND_STRM_TYPE SND_STRM_DEBUG_GetType( ARCID arcid, ARCDATID dataid );
-extern u32  SND_STRM_DEBUG_GetSndStrmMax( void );
-#endif //PM_DEBUG
+//パンの設定やポーズ、スタートも可能ですが、
+//使うかわからないので現在はありません。
 
-#endif		// __SND_STRM_H__
+//長さ
+//  現在の曲の長さを取得します。Loadしてから使ってください
+extern u32 SND_STRM_GetMicroSeconds( void );
 
+#endif //__SND_STRM_H__

@@ -141,6 +141,7 @@ extern u32						PMSND_GetBGMplayerNoIdx( void );
 extern BOOL						PMSND_CheckOnReverb( void );
 extern u8							PMSND_GetBGMTrackVolume( int trackNo );
 extern BOOL           PMSND_IsLoading( void );  // ロード中かどうか
+extern NNSSndHeapHandle PMSND_GetSndHeap( void );  //STRM用に外部公開
 
 
 //----------------------------------------------------------------------------

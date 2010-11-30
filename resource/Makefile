@@ -170,8 +170,7 @@ SUBDIRS	=	wmi \
 			symbol \
 			manual_image \
 			pokeform \
-			assert_err \
-			snd_strm
+			assert_err
 
 
 include $(RESOURCE_MACRO)

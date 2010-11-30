@@ -402,6 +402,10 @@ BOOL PMSND_IsLoading( void )
   if(pSoundLoadThread == NULL){ return FALSE; }
   return OS_IsThreadTerminated(&soundLoadThread) == FALSE;
 }
+NNSSndHeapHandle PMSND_GetSndHeap( void )
+{
+  return PmSndHeapHandle;
+}
 
 
 //----------------------------------------------------------------------------

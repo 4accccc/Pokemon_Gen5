@@ -33,7 +33,6 @@
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
 #include "sound\pm_wb_voice.h"
-#include "sound\snd_strm.h"
 #ifdef PM_DEBUG
 #include "debug/debug_sd_print.h"
 #include "test/performance.h"
@@ -363,7 +362,6 @@ static  void  GameInit(void)
 
   //サウンドの設定
   PMSND_Init();
-  SND_STRM_Init( GFL_HEAPID_SYSTEM );
   //鳴き声システムの設定
   PMVOICE_Init(GFL_HEAPID_APP, PMV_GetVoiceWaveIdx, PMV_CustomVoiceWave);
 
@@ -401,7 +399,6 @@ static  void  GameMain(void)
   }
 #endif
   PMSND_Main();
-  SND_STRM_Main();
   PMVOICE_Main();
 
   GAMEBEACON_Update();
@@ -424,7 +421,6 @@ static  void  GameExit(void)
   GAMEBEACON_Exit();
   WIH_DWC_DeleteCFG();
   PMVOICE_Exit();
-  SND_STRM_Exit();
   PMSND_Exit();
 }
 

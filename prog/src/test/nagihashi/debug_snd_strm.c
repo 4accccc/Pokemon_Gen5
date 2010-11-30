@@ -85,11 +85,20 @@ typedef struct
 ///	プロセス
 //=====================================
 static GFL_PROC_RESULT DEBUG_SND_STRM_PROC_Init
-	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+{
+  return GFL_PROC_RES_FINISH;
+}
 static GFL_PROC_RESULT DEBUG_SND_STRM_PROC_Exit
-	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+{
+  return GFL_PROC_RES_FINISH;
+}
 static GFL_PROC_RESULT DEBUG_SND_STRM_PROC_Main
-	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+{
+  return GFL_PROC_RES_FINISH;
+}
 //-------------------------------------
 /// シーケンス
 //=====================================
@@ -116,7 +125,7 @@ const GFL_PROC_DATA DEBUG_SND_STRM_ProcData =
   DEBUG_SND_STRM_PROC_Main,
   DEBUG_SND_STRM_PROC_Exit
 };
-
+#if 0
 //=============================================================================
 /**
  *					PROC
@@ -512,4 +521,5 @@ static void UTIL_LIST_Delete( DEBUG_SND_STRM_WORK *p_wk )
     p_wk->p_list = NULL;
   }
 }
+#endif
 #endif
