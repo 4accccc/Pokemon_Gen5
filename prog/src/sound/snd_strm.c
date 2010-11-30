@@ -16,6 +16,12 @@
 
 #include "sound/snd_strm.h"
 
+#include "snd_strm_data.cdat"
+
+#ifdef PM_DEBUG
+#include "snd_strm_debug.cdat"
+#endif 
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -103,6 +109,9 @@ static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
 static void SND_STRM_StockWaveData( NNSSndStrmCallbackStatus status, int numChannels, void *buffer[], u32	len, NNSSndStrmFormat format, void *arg );
 static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size );
 
+static s32  Snd_Strm_Util_GetIndex( ARCID arcID, ARCDATID datID );
+static SND_STRM_HZ Snd_Strm_Util_GetHertz( ARCID arcID, ARCDATID datID );
+static SND_STRM_TYPE Snd_Strm_Util_GetType( ARCID arcID, ARCDATID datID );
 
 //----------------------------------------------------------------------------
 /**
@@ -169,7 +178,7 @@ void SND_STRM_Main( void )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void SND_STRM_SetUp( ARCID arcid, ARCDATID dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, HEAPID heapID )
+void SND_STRM_SetUpEx( ARCID arcid, ARCDATID dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, HEAPID heapID )
 {
 	GF_ASSERT( sp_STRM_WORK );
 
@@ -183,6 +192,22 @@ void SND_STRM_SetUp( ARCID arcid, ARCDATID dataid, SND_STRM_TYPE type, SND_STRM_
 	sp_STRM_WORK->seek_top	+= SWAV_HEAD_SIZE;
 	sp_STRM_WORK->type		= type;
 	sp_STRM_WORK->hz		= hz;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セットアップ
+ *
+ *	@param	ARCID arcid   アーカイブID
+ *	@param	dataid  データID
+ *	@param	heapID  読込みテンポラリヒープ
+ */
+//-----------------------------------------------------------------------------
+void SND_STRM_SetUp( ARCID arcid, ARCDATID dataid, HEAPID heapID )
+{
+  SND_STRM_HZ   hz    = Snd_Strm_Util_GetHertz( arcid, dataid );
+  SND_STRM_TYPE type  = Snd_Strm_Util_GetType( arcid, dataid );
+  SND_STRM_SetUpEx( arcid, dataid, type, hz, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -386,3 +411,150 @@ static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size )
 		}
 	}
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  snd_strm_dataのインデックスを取得
+ *
+ *	@param	ARCID arcID アーカイブID
+ *	@param	datID       データID
+ *
+ *	@return インデックス
+ */
+//-----------------------------------------------------------------------------
+static s32  Snd_Strm_Util_GetIndex( ARCID arcID, ARCDATID datID )
+{
+  int i;
+  
+  GF_ASSERT( arcID == ARCID_SOUND_STREAM );
+
+  for( i = 0; i < SND_STRM_MAX; i++ )
+  {
+    if( sc_snd_strm_data[i].dataID == datID )
+    {
+      return i;
+    }
+  }
+  GF_ASSERT( 0 );
+  return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘルツを取得
+ *
+ *	@param	ARCID arcID アーカイブID
+ *	@param	datID       データID
+ *	@return ヘルツ
+ */
+//-----------------------------------------------------------------------------
+static SND_STRM_HZ Snd_Strm_Util_GetHertz( ARCID arcID, ARCDATID datID )
+{
+  s32 idx = Snd_Strm_Util_GetIndex( arcID, datID );
+  return sc_snd_strm_data[ idx ].hz;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイプを取得
+ *
+ *	@param	ARCID arcID アーカイブID
+ *	@param	datID       データID
+ *	@return タイプ
+ */
+//-----------------------------------------------------------------------------
+static SND_STRM_TYPE Snd_Strm_Util_GetType( ARCID arcID, ARCDATID datID )
+{
+  s32 idx = Snd_Strm_Util_GetIndex( arcID, datID );
+  return sc_snd_strm_data[ idx ].pcm;
+}
+
+
+#ifdef PM_DEBUG
+#include <wchar.h>  //wcslen
+//-----------------------------------------------------------------------------
+/**
+ *			デバッグ用関数
+ */
+//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  名前を生成して返す
+ *
+ *	@param	ARCID arcid アーカイブID
+ *	@param	dataid      データID
+ *	@param	heapID      ヒープID
+ *
+ *	@return STRBUF      名前が入った文字列バッファ
+ */
+//-----------------------------------------------------------------------------
+STRBUF * SND_STRM_DEBUG_CreateString( ARCID arcid, ARCDATID dataid, HEAPID heapID )
+{
+  s32 idx = Snd_Strm_Util_GetIndex( arcid, dataid );
+  const u16 *p_str  = sc_snd_strm_debug_name[ idx ];
+
+  {
+    STRCODE *p_strcode;
+    STRBUF  *p_strbuf;
+    u16 strlen;
+
+    //長さを取得
+    strlen    = wcslen(p_str);
+
+    //STRCODE格納バッファを作成
+    p_strcode = GFL_HEAP_AllocMemory( heapID, (strlen+1)*sizeof(STRCODE) );
+
+    //STRCODEへ格納
+    GFL_STD_MemCopy(p_str, p_strcode, strlen*sizeof(STRCODE));
+    p_strcode[strlen] = GFL_STR_GetEOMCode();
+
+    //STRCODEをSTRBUFへ
+    p_strbuf = GFL_STR_CreateBuffer( strlen+1, heapID);
+    GFL_STR_SetStringCode( p_strbuf, p_strcode);
+
+    //使用済みSTRCODEを消去
+    GFL_HEAP_FreeMemory( p_strcode );
+
+    return p_strbuf;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘルツを取得
+ *
+ *	@param	ARCID arcID アーカイブID
+ *	@param	datID       データID
+ *	@return ヘルツ
+ */
+//-----------------------------------------------------------------------------
+SND_STRM_HZ SND_STRM_DEBUG_GetHertz( ARCID arcid, ARCDATID dataid )
+{
+  return Snd_Strm_Util_GetHertz( arcid, dataid );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイプを取得
+ *
+ *	@param	ARCID arcID アーカイブID
+ *	@param	datID       データID
+ *	@return タイプ
+ */
+//-----------------------------------------------------------------------------
+SND_STRM_TYPE SND_STRM_DEBUG_GetType( ARCID arcid, ARCDATID dataid )
+{
+  return Snd_Strm_Util_GetType( arcid, dataid );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アーカイブに入っている曲数を取得
+ *
+ *	@param	void 
+ *
+ *	@return 曲数
+ */
+//-----------------------------------------------------------------------------
+u32  SND_STRM_DEBUG_GetSndStrmMax( void )
+{
+  return SND_STRM_MAX;
+}
+#endif //PM_DEBUG

@@ -22,8 +22,6 @@
 #include "arc_def.h"
 #include "debug_message.naix"
 #include "font/font.naix"
-#include "debug/snd_strm.naix"
-#include "debug/snd_strm_data.cdat"
 #include "msg/debug/msg_d_nagihashi.h"
 
 //モジュール
@@ -149,8 +147,6 @@ static GFL_PROC_RESULT DEBUG_SND_STRM_PROC_Init
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_SND_STRM_WORK ));	
 
 
-  SND_STRM_Init( GFL_HEAPID_SYSTEM );
-
   //共通モジュールの初期化
   p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NAGI_DEBUG_SUB );
 	p_wk->p_que			= PRINTSYS_QUE_Create( HEAPID_NAGI_DEBUG_SUB );
@@ -224,7 +220,6 @@ static GFL_PROC_RESULT DEBUG_SND_STRM_PROC_Exit
   {
     SND_STRM_Release();
   }
-  SND_STRM_Exit();
 
   //プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -251,7 +246,6 @@ static GFL_PROC_RESULT DEBUG_SND_STRM_PROC_Main
 {
   DEBUG_SND_STRM_WORK  *p_wk     = p_wk_adrs;
 
-  SND_STRM_Main();
 
   //シーケンス
   DEBUG_SEQ_Main( p_wk->p_seq );
@@ -366,7 +360,9 @@ static void SEQFUNC_Select( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         {
           STRBUF *p_strbuf = GFL_STR_CreateBuffer( 128, HEAPID_NAGI_DEBUG_SUB );
           STRBUF *p_textstr = GFL_MSG_CreateString( p_wk->p_msg, STRM_STR_01 );
-          STRBUF *p_strmname  = DEBUG_STRING_CreateUTF16ToSTRBUF( sc_snd_strm_data[result].p_wchar, HEAPID_NAGI_DEBUG_SUB );
+          STRBUF *p_strmname  = SND_STRM_DEBUG_CreateString( ARCID_SOUND_STREAM, result, HEAPID_NAGI_DEBUG_SUB );
+          SND_STRM_HZ hz  =   SND_STRM_DEBUG_GetHertz( ARCID_SOUND_STREAM, result );
+          SND_STRM_TYPE type  = SND_STRM_DEBUG_GetType( ARCID_SOUND_STREAM, result );
 
           //単語登録
           WORDSET_RegisterWord( p_wk->p_word, 0, p_strmname, 0, FALSE, LANG_JAPAN );
@@ -375,7 +371,7 @@ static void SEQFUNC_Select( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
             {
               8,11,22,32,
             };
-            WORDSET_RegisterNumber( p_wk->p_word, 1, sc_hz_data[ sc_snd_strm_data[result].hz ], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+            WORDSET_RegisterNumber( p_wk->p_word, 1, sc_hz_data[ hz ], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
           }
           {
             static const int sc_pcm_data[] =
@@ -383,7 +379,7 @@ static void SEQFUNC_Select( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
               8,
               16
             };
-            WORDSET_RegisterNumber( p_wk->p_word, 2, sc_pcm_data[ sc_snd_strm_data[result].pcm ], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+            WORDSET_RegisterNumber( p_wk->p_word, 2, sc_pcm_data[ type ], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
           }
           WORDSET_ExpandStr( p_wk->p_word, p_strbuf, p_textstr );
 
@@ -400,10 +396,8 @@ static void SEQFUNC_Select( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         {
           SND_STRM_Stop();
         }
-        SND_STRM_SetUp( ARCID_DEBUG_SOUND_STREAM, 
-            sc_snd_strm_data[ result ].dataID,
-            sc_snd_strm_data[ result ].pcm, 
-            sc_snd_strm_data[ result ].hz, 
+        SND_STRM_SetUp( ARCID_SOUND_STREAM, 
+            result,
             DEBUG_TEXT_TYPE_STREAM );
         SND_STRM_Play();
 
@@ -483,18 +477,17 @@ static void UTIL_LIST_Create( DEBUG_SND_STRM_WORK *p_wk )
     setup.p_msg   = p_wk->p_msg;
     setup.p_font  = p_wk->p_font;
     setup.p_que   = p_wk->p_que;
-    setup.list_max  = SND_STRM_MAX;
+    setup.list_max  = SND_STRM_DEBUG_GetSndStrmMax();
     setup.frm       = BG_FRAME_TEXT_M;
     setup.font_plt  = PLT_BG_FONT_M;
     setup.frm_plt   = PLT_BG_FONT_M;
     setup.frm_chr   = 0;
 
-    GF_ASSERT( SND_STRM_MAX < DEBUG_LIST_WINDOW_MAX );
+    GF_ASSERT( SND_STRM_DEBUG_GetSndStrmMax() < DEBUG_LIST_WINDOW_MAX );
 
     for( i = 0; i < setup.list_max; i++ )
     {
-      setup.p_strbuf[i]  = DEBUG_STRING_CreateUTF16ToSTRBUF( 
-          sc_snd_strm_data[i].p_wchar, HEAPID_NAGI_DEBUG_SUB );
+      setup.p_strbuf[i] = SND_STRM_DEBUG_CreateString( ARCID_SOUND_STREAM, i, HEAPID_NAGI_DEBUG_SUB );
     }
     p_wk->p_list  = DEBUG_LIST_InitEx( &setup, 4, 2, 24, 12, 6, HEAPID_NAGI_DEBUG_SUB );
     for( i = 0; i < setup.list_max; i++ )

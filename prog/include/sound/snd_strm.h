@@ -13,6 +13,7 @@
 #ifndef __SND_STRM_H__
 #define __SND_STRM_H__
 
+#include "snd_strm.naix"
 
 //-----------------------------------------------------------------------------
 /**
@@ -56,16 +57,25 @@ typedef enum {
 
 //-----------------------------------------------------------------------------
 /**
- *					プロトタイプ宣言
+ *					外部宣言
+ *
+ *					・使い方
+ *
+ *					初期読込み  SND_STRM_Setup
+ *					読込み破棄  SND_STRM_Release
+ *
+ *					あとはPlayやStopを使って鳴らしてください。
 */
 //-----------------------------------------------------------------------------
-// システムの初期化
+// システムで使用するもの
 extern void SND_STRM_Init( HEAPID heapID );
 extern void SND_STRM_Exit( void );
 extern void SND_STRM_Main( void );
 
 // 音楽情報の読み込み・破棄
-extern void SND_STRM_SetUp( ARCID arcid, ARCDATID dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, HEAPID heapID );
+extern void SND_STRM_SetUp( ARCID arcid, ARCDATID dataid, HEAPID heapID );
+//Setupは基本、Exを使わないでください。Exでは本来の曲と違うヘルツやタイプを指定してしまう可能性があるためです。
+extern void SND_STRM_SetUpEx( ARCID arcid, ARCDATID dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, HEAPID heapID );
 extern void SND_STRM_Release( void );
 extern BOOL SND_STRM_CheckSetUp( void );
 
@@ -76,6 +86,14 @@ extern BOOL SND_STRM_CheckPlay( void );
 
 // ボリューム操作
 extern void SND_STRM_Volume( int volume );
+
+//デバッグ情報
+#ifdef PM_DEBUG
+extern STRBUF * SND_STRM_DEBUG_CreateString( ARCID arcid, ARCDATID dataid, HEAPID heapID );
+extern SND_STRM_HZ SND_STRM_DEBUG_GetHertz( ARCID arcid, ARCDATID dataid );
+extern SND_STRM_TYPE SND_STRM_DEBUG_GetType( ARCID arcid, ARCDATID dataid );
+extern u32  SND_STRM_DEBUG_GetSndStrmMax( void );
+#endif //PM_DEBUG
 
 #endif		// __SND_STRM_H__
 
