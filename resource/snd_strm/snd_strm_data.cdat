@@ -1,0 +1,22 @@
+//============================================================================================
+/**
+ * @file snd_strm_data.cdat
+ * @brief サウンドストリームのヘルツやPCM情報です
+ * @author Toru=Nagihashi
+ * @date Tue Nov 30 14:26:07 +0900 2010 
+ * @note snd_strm_data_conv.rbから自動生成されています。
+*/
+//============================================================================================
+static const struct {
+  u32 dataID;
+  u16 hz;
+  u16 pcm;
+} sc_snd_strm_data[] = 
+{
+ {
+    NARC_snd_strm_16bit_22k_s_strm,
+    2,
+    1,
+ },
+};
+#define SND_STRM_MAX NELEMS(sc_snd_strm_data )
