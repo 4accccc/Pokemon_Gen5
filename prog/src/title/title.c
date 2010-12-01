@@ -208,6 +208,8 @@ typedef struct {
   u32           totalWait;
   int           voiceIndex;
   int           scene_flag;
+
+  u32           bef_vcnt;
 }TITLE_WORK;
 
 //==============================================================================
@@ -257,6 +259,7 @@ static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID);
 static void releaseG2Dcontrol(G2D_CONTROL* CG2d);
 
 static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID);
+static void mainG3DUpdate(G3D_CONTROL* CG3d, HEAPID heapID);
 static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID);
 static void releaseG3Dcontrol(G3D_CONTROL* CG3d);
 static void setLegendPokeScene( G3D_CONTROL *CG3d, int anime_frame );
@@ -492,6 +495,8 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     //PMSND_PlayBGM_WideChannel( SEQ_BGM_POKEMON_THEME );
     SND_STRM_Play( STRM_TITLE );
 
+    tw->bef_vcnt  = OS_GetVBlankCount();
+
     break;
 
   case SEQ_FADEIN:
@@ -687,8 +692,21 @@ static void initVRAM(void)
 //----------------------------------------------------------------------------------
 static void MainFunc(TITLE_WORK* tw)
 {
+  //処理落ち対策
+  const u32 now_vcnt = OS_GetVBlankCount();
+  u32 delay_vcnt  = now_vcnt - tw->bef_vcnt;
+  tw->bef_vcnt  = now_vcnt;
+
   mainSystem(&tw->CSys, tw->heapID);
   mainG2Dcontrol(&tw->CG2d, tw->heapID);
+
+  //処理落ちした場合は１シンク進める
+  do
+  {
+    mainG3DUpdate(&tw->CG3d, tw->heapID);
+  }
+  while( --delay_vcnt > 0 );
+
   mainG3Dcontrol(&tw->CG3d, tw->heapID);
   mainOAMcontrol(&tw->COam, tw->heapID);
 }
@@ -1166,6 +1184,20 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief 3D更新メイン
+ *
+ * @param   CG3d    
+ * @param   heapID    
+ */
+//----------------------------------------------------------------------------------
+static void mainG3DUpdate(G3D_CONTROL* CG3d, HEAPID heapID)
+{
+  // ICAカメラ更新
+  ICA_ANIME_IncAnimeFrameNoLoop( CG3d->icaAnime, FX32_ONE );
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief 3D描画メイン
  *
  * @param   CG3d    
@@ -1178,9 +1210,6 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
   u16           objIdx;
 
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
-
-  // ICAカメラ更新
-  ICA_ANIME_IncAnimeFrameNoLoop( CG3d->icaAnime, FX32_ONE );
 
   // ICAカメラ座標を設定
   ICA_CAMERA_SetCameraStatus( CG3d->camera, CG3d->icaAnime );
