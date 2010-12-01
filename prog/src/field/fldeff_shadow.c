@@ -65,7 +65,6 @@ typedef struct
   MMDL *fmmdl;                  ///<影が追随する対象の動作モデルへのポインタ
   MMDL_CHECKSAME_DATA samedata; ///<動作モデル同一性チェック用ワーク
   int bbdUnitIdx;               ///<表示しているBBDACTのユニットインデックス
-  FIELD_PLAYER* player;
 }TASKWORK_SHADOW;
 
 //======================================================================
@@ -229,8 +228,6 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
     MMDLSYS* mmdlsys = MMDL_GetMMdlSys(work->fmmdl);
     GAMEDATA* gdata = MMDLSYS_GetGameData( mmdlsys );
     FIELDMAP_WORK* fieldWork = FLDEFF_TASK_GetFieldMapWork( task );
-
-    work->player = FIELDMAP_GetFieldPlayer( fieldWork );
   }
 
   MMDL_InitCheckSameData( head->fmmdl, &work->samedata );
@@ -419,7 +416,15 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
 static void shadow_RotationCalc( FLDEFF_TASK* task, TASKWORK_SHADOW *work, VecFx32* pos, BOOL force )
 {
   BOOL shadow_calc = FALSE;
-  FIELD_PLAYER_CORE* p_core = FIELD_PLAYER_GetCoreWk( work->player );
+  FIELD_PLAYER* player;
+  FIELD_PLAYER_CORE* p_core;
+  FIELDMAP_WORK* fieldWork = FLDEFF_TASK_GetFieldMapWork( task );
+
+  if( !FIELDMAP_CheckFieldPlayer( fieldWork ) ){
+    return;
+  }
+  player = FIELDMAP_GetFieldPlayer( fieldWork );
+  p_core = FIELD_PLAYER_GetCoreWk( player );
       
   if( work->fmmdl == FIELD_PLAYER_CORE_GetMMdl( p_core )){
     if( force ){
