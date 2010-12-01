@@ -210,7 +210,11 @@ static int PairMove_Init( MMDL * mmdl, MV_PAIR_WORK *work )
 {
   MMDL_OffMoveBitMove( mmdl );
   MMDL_OffMoveBitMoveEnd( mmdl );
-    
+  
+  if( MMDL_CheckStatusBitVanish( mmdl )){
+    return FALSE;
+  }
+
   if( Pair_JikiPosUpdateCheck(mmdl,work) == TRUE ){
     Pair_JikiPosSet( mmdl, work );
     

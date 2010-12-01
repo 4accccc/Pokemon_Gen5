@@ -57,6 +57,9 @@ typedef struct {
 
 } EVENT_WORK;
 
+typedef struct{
+  ENTRANCE_EVDATA* evdata;
+}EVWORK_OS_ANIME;
 
 //=======================================================================================
 // ■index
@@ -190,6 +193,102 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
   return GMEVENT_RES_CONTINUE;
 }
 
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 一歩移動アニメ タスクセット
+ */
+//---------------------------------------------------------------------------------------
+void EntranceEvent_OneStepAnmSet( ENTRANCE_EVDATA* evdata )
+{
+  MMDLSYS* mmdlsys = FIELDMAP_GetMMdlSys( evdata->fieldmap );
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( evdata->fieldmap );
+  MMDL*         player_mmdl   = FIELD_PLAYER_GetMMdl( player );
+  u16           player_dir = MMDL_GetDirDisp( player_mmdl );
+
+  evdata->oneStepTCB[ENTRANCE_ANM_PLAYER] = FldMMdlOneStepAnimeStart( player_mmdl, player_dir );
+
+  if( !PAIRSYS_CheckPairFlag( evdata->gameData )){
+    evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = NULL;
+    return;
+  }
+
+  //連れ歩きOBJを取得
+  {
+    MMDL_GRIDPOS pair_pos,player_pos;
+    MMDL* pair_mmdl = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PAIR );
+    u16 pair_dir = player_dir;
+
+    if( pair_mmdl == NULL ){
+      GF_ASSERT(0);
+      return;
+    }
+    MMDL_GetGridPos( pair_mmdl, &pair_pos );
+    MMDL_GetGridPos( player_mmdl, &player_pos );
+
+    if( player_dir == DIR_UP || player_dir == DIR_DOWN ){
+      if( pair_pos.gx < player_pos.gx ) {
+        pair_dir = DIR_RIGHT;
+      }else if( pair_pos.gx > player_pos.gx ){
+        pair_dir = DIR_LEFT;
+      }
+    }else{
+      if( pair_pos.gz < player_pos.gz ) {
+        pair_dir = DIR_DOWN;
+      }else if( pair_pos.gz > player_pos.gz ){
+        pair_dir = DIR_UP;
+      }
+    }
+    evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = FldMMdlOneStepAnimeStart( pair_mmdl, pair_dir );
+  }
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 一歩移動アニメ タスク待ち
+ */
+//---------------------------------------------------------------------------------------
+BOOL EntranceEvent_OneStepAnmWait( ENTRANCE_EVDATA* evdata )
+{
+  if( evdata->oneStepTCB[ENTRANCE_ANM_PAIR] != NULL ){
+    if( MMDL_CheckEndAcmdList(evdata->oneStepTCB[ENTRANCE_ANM_PAIR]) == FALSE ){
+      return FALSE;
+    }
+    MMDL_EndAcmdList( evdata->oneStepTCB[ENTRANCE_ANM_PAIR] );
+    evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = NULL;
+    return FALSE;
+  }
+  if( MMDL_CheckEndAcmdList(evdata->oneStepTCB[ENTRANCE_ANM_PLAYER]) == FALSE ){
+    return FALSE;
+  }
+  MMDL_EndAcmdList( evdata->oneStepTCB[ENTRANCE_ANM_PLAYER] );
+  evdata->oneStepTCB[ENTRANCE_ANM_PLAYER] = NULL;
+  return TRUE;
+}
+
+static GMEVENT_RESULT EVENTFUNC_OneStepAnime( GMEVENT * event, int *seq, void*work )
+{
+  EVWORK_OS_ANIME* wk = (EVWORK_OS_ANIME*)work;
+  
+  if( !EntranceEvent_OneStepAnmWait( wk->evdata )){
+    return GMEVENT_RES_CONTINUE;
+  }
+  return GMEVENT_RES_FINISH;
+}
+
+GMEVENT * EVENT_EntranceOneStepAnime( GAMESYS_WORK * gsys, ENTRANCE_EVDATA* evdata )
+{
+  GMEVENT* event;
+  EVWORK_OS_ANIME* wk;
+  EntranceEvent_OneStepAnmSet( evdata );
+  event = GMEVENT_Create( gsys, NULL, EVENTFUNC_OneStepAnime, sizeof(EVWORK_OS_ANIME) );
+ 
+  wk = GMEVENT_GetEventWork( event );
+  wk->evdata = evdata;
+
+  return event;
+}
+
 //---------------------------------------------------------------------------------------
 /**
  * @breif 階段の進入イベント
@@ -212,14 +311,16 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
     }
 
     // 自機の一歩移動アニメ開始
-    work->oneStepTCB = PlayerOneStepAnimeStart( fieldmap );
+    EntranceEvent_OneStepAnmSet( evdata );
+//    work->oneStepTCB = PlayerOneStepAnimeStart( fieldmap );
 
     (*seq)++;
     break;
 
   case 1:
     // 自機の一歩移動アニメが終了
-    if( CheckPlayerOneStepAnimeEnd( work->oneStepTCB ) ) {
+//    if( CheckPlayerOneStepAnimeEnd( work->oneStepTCB ) ) {
+    if( EntranceEvent_OneStepAnmWait( evdata ) ){
       // クロスフェードでなければ, SEを再生
       if( evdata->fadeout_type != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
       // 画面フェードアウト開始

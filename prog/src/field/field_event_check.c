@@ -161,6 +161,7 @@ typedef struct {
   u32 talkRequest:1; ///<話しかけキー操作があったかどうか
   u32 menuRequest:1; ///<メニューオープン操作があったかどうか
   u32 moveRequest:1; ///<一歩移動終了タイミングかどうか
+  u32 moveStartRequest:1; ///<一歩移動開始タイミングかどうか
   u32 stepRequest:1; ///<振り向きor一歩移動終了タイミングかどうか
   u32 dirPosRequest:1; ///<方向つきPOSイベントのチェックをするタイミングか？
   u32 pushRequest:1; ///<押し込み操作があったかどうか
@@ -172,9 +173,9 @@ typedef struct {
 
 #ifdef BUGFIX_GFBTS1975_100713
   u32 commRequest:1;  ///<通信エラー画面を呼び出していいタイミングか？
-  u32 req_dmy:21;
+  u32 req_dmy:20;
 #else
-  u32 req_dmy:22;
+  u32 req_dmy:21;
 #endif
 
 }EV_REQUEST;
@@ -1357,9 +1358,11 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   
   req->moveRequest = 0;
   req->exMoveRequest = 0;
+  req->moveStartRequest = 0;
 
   if( req->player_value == PLAYER_MOVE_VALUE_WALK ){
     req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
+    req->moveStartRequest = ((req->player_state == PLAYER_MOVE_STATE_START));
   }
   if(FIELD_PLAYER_EVREQUEST_GetExMove( req->field_player )){
     req->exMoveRequest = TRUE; 
@@ -1747,6 +1750,13 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork ); 
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
   GMEVENT*     event = NULL;
+
+  //連れ歩き復帰チェック
+  if( req->moveStartRequest ){
+    if( PAIRSYS_CheckPairFlag( gdata )){
+      PAIRSYS_PairViewRecover( gdata );
+    }
+  }
 
   //波乗り開始時等の特殊一歩移動も検出
   if( req->moveRequest || req->exMoveRequest ){

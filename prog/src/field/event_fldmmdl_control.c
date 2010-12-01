@@ -523,6 +523,35 @@ GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_sta
   return event;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief 指定オブジェの一歩移動アニメを即開始する
+ *
+ * @param mmdl  MMDL*
+ * @param dir   移動方向
+ *
+ * @return 一歩移動アニメのTCB
+ */
+//------------------------------------------------------------------
+GFL_TCB* FldMMdlOneStepAnimeStart( MMDL* mmdl, u16 dir )
+{
+  GFL_TCB* tcb;
+  const MMDL_ACMD_LIST * anm_table;
+
+  switch( dir ) {
+  case DIR_UP:    anm_table = anime_up_table;    break;
+  case DIR_DOWN:  anm_table = anime_down_table;  break;
+  case DIR_LEFT:  anm_table = anime_left_table;  break;
+  case DIR_RIGHT: anm_table = anime_right_table; break;
+  }
+
+  // アニメーションコマンドリストセット
+  MMDL_FreeAcmd( mmdl );
+  tcb = MMDL_SetAcmdList( mmdl, anm_table );
+
+  return tcb;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -537,25 +566,11 @@ GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_sta
 //------------------------------------------------------------------
 GFL_TCB* PlayerOneStepAnimeStart( FIELDMAP_WORK* fieldmap )
 {
-  GFL_TCB* tcb;
-  const MMDL_ACMD_LIST * anm_table;
-
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
   MMDL*         mmdl   = FIELD_PLAYER_GetMMdl( player );
   u16           dir    = MMDL_GetDirDisp( mmdl ); 
-  
-  switch( dir ) {
-  case DIR_UP:    anm_table = anime_up_table;    break;
-  case DIR_DOWN:  anm_table = anime_down_table;  break;
-  case DIR_LEFT:  anm_table = anime_left_table;  break;
-  case DIR_RIGHT: anm_table = anime_right_table; break;
-  }
 
-  // アニメーションコマンドリストセット
-  MMDL_FreeAcmd( mmdl );
-  tcb = MMDL_SetAcmdList( mmdl, anm_table );
-
-  return tcb;
+  return FldMMdlOneStepAnimeStart( mmdl, dir );
 }
 
 //------------------------------------------------------------------

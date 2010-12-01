@@ -15,6 +15,11 @@
 #include "field/location.h"          // for LOCATION
 #include "event_field_fade.h"        // for FIELD_FADE_TYPE
 
+typedef enum {
+  ENTRANCE_ANM_PLAYER,
+  ENTRANCE_ANM_PAIR,
+  ENTRANCE_ANM_MAX,
+}ENTRANCE_ANM_ID;
 
 typedef struct {
 
@@ -34,4 +39,11 @@ typedef struct {
   BOOL            BGM_standby_flag; // In イベントで BGM の変更準備を行ったかどうか
   BOOL            BGM_fadeout_flag; // In イベントで BGM のフェードアウトを行ったかどうか
 
+  GFL_TCB*        oneStepTCB[ENTRANCE_ANM_MAX];
 } ENTRANCE_EVDATA;
+
+
+extern void EntranceEvent_OneStepAnmSet( ENTRANCE_EVDATA* evdata );
+extern BOOL EntranceEvent_OneStepAnmWait( ENTRANCE_EVDATA* evdata );
+extern GMEVENT * EVENT_EntranceOneStepAnime( GAMESYS_WORK * gsys, ENTRANCE_EVDATA* evdata );
+

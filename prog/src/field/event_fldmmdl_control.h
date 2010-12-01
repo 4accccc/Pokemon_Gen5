@@ -17,6 +17,8 @@ extern GMEVENT * EVENT_PlayerOneStepAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 extern GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_start, const VecFx32* cp_end );
 
 
+// 指定オブジェの一歩移動アニメを即開始する
+extern GFL_TCB* FldMMdlOneStepAnimeStart( MMDL* mmdl, u16 dir );
 // 自機の一歩移動アニメを即開始する
 extern GFL_TCB* PlayerOneStepAnimeStart( FIELDMAP_WORK* fieldmap );
 // 自機の一歩移動アニメの終了を待つ

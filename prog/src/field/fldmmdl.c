@@ -2474,6 +2474,20 @@ void MMDL_SetInitGridPosZ( MMDL * mmdl, s16 z )
 
 //--------------------------------------------------------------
 /**
+ * MMDL 過去グリッド座標
+ * @param  mmdl  MMDL * 
+ * @retval  MMDL_GRIDPOS
+ */
+//--------------------------------------------------------------
+void MMDL_GetOldGridPos( const MMDL * mmdl, MMDL_GRIDPOS* pos )
+{
+  pos->gx = mmdl->gx_old;
+  pos->gy = mmdl->gy_old;
+  pos->gz = mmdl->gz_old;
+}
+
+//--------------------------------------------------------------
+/**
  * MMDL 過去座標　X座標取得
  * @param  mmdl  MMDL * 
  * @retval  s16    X座標

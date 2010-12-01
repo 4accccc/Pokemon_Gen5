@@ -568,7 +568,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
     // 自機の一歩移動アニメ開始
   case SEQ_DOORIN_PLAYER_STEP:
     EVENT_ENTRANCE_EFFECT_CancelPlayerAnime( fieldmap );
-    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime( gameSystem, fieldmap ) );
+//    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime( gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_EntranceOneStepAnime( gameSystem, evdata ) );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
     if( work->fastMode ) {

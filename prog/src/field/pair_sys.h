@@ -113,4 +113,13 @@ extern u16 PAIRSYS_GetPairTrainerOriginalObjID( GAMEDATA* gdata );
 //---------------------------------------------------
 extern void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata );
 
+//---------------------------------------------------
+/*
+ *  @brief  連れ歩きペア マップチェンジ後表示復帰
+ *  
+ *  @param  gdata
+ */
+//---------------------------------------------------
+extern void PAIRSYS_PairViewRecover( GAMEDATA* gdata );
+
 #endif  //__H_PAIR_SYS_H__

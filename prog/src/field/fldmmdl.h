@@ -882,6 +882,7 @@ extern s16 MMDL_GetInitGridPosY( const MMDL * mmdl );
 extern void MMDL_SetInitGridPosY( MMDL * mmdl, s16 y );
 extern s16 MMDL_GetInitGridPosZ( const MMDL * mmdl );
 extern void MMDL_SetInitGridPosZ( MMDL * mmdl, s16 z );
+extern void MMDL_GetOldGridPos( const MMDL * mmdl, MMDL_GRIDPOS* pos );
 extern s16 MMDL_GetOldGridPosX( const MMDL * mmdl );
 extern void MMDL_SetOldGridPosX( MMDL * mmdl, s16 x );
 extern s16 MMDL_GetOldGridPosY( const MMDL * mmdl );
