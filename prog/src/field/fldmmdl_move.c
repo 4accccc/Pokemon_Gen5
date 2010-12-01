@@ -1297,9 +1297,6 @@ static void MMdl_MapAttrSEProc_1( MMDL *mmdl, ATTRDATA *data )
 //-----------------------------------------------------------------------------
 static void MMdl_MapAttrLight( MMDL *mmdl, ATTRDATA *data )
 {
-  NAGI_Printf( "now0x%d old0x%d ID=%d\n", data->attr_flag_now, data->attr_flag_old,
-        MMDL_GetOBJID(mmdl));
-
   if( data->attr_flag_now & MAPATTR_FLAGBIT_LIGHT )
   {
     MMDL_SetLightAttr( mmdl, TRUE );

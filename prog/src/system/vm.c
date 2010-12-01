@@ -208,8 +208,6 @@ BOOL VM_Control( VMHANDLE * core )
 
 			code = VMGetU16( core );
 
-      NAGI_Printf( "scrcmd=%d\n", code );
-
       //もし通常テーブルより大きい場合は、拡張テーブルを使う。
 			if( code >= core->init_value.command_max ) {
 
