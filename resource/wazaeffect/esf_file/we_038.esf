@@ -1,7 +1,10 @@
 EFFSEQ
-$0002
+$0005
 c:\home\swan\resource\particle\wazaeffect\w_038.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_038_bashishi.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_038_kakusyuku_ani.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_038_kakusyuku_ani_p.dat
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_038_kakusyuku_ani_p.dat
 #001
 %00
 カメラ移動	追従	ZOOM_OUT（透視）	CM	0	CB
@@ -17,7 +20,7 @@ SE動的変化	SE1	追従	ボリューム	120	0	60	40:0:0
 BGのパレットフェード	お盆＋フィールド	0	16	1	0:0:0
 エフェクト終了待ち	すべて
 BGのパレットフェード	エフェクト面	16	0	1	0:0:0
-BGのロード	bg_038_bashishi
+BGのロード	bg_038_kakusyuku_ani
 BGの表示/非表示	エフェクト	表示
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	フィールド	非表示
@@ -26,6 +29,8 @@ BGの表示/非表示	フィールド	非表示
 SE再生	SEQ_SE_W121_01	SE1	防御側	0:0:120	0:0:0
 SE再生	SEQ_SE_W465_01	SE2	防御側	0:0:120	0:0:0
 制御モード変更	逐次
+BGの表示/非表示	エフェクト	表示
+BGのパレットアニメ	bg_038_kakusyuku_ani_p	4
 パーティクルデータロード	w_038
 パーティクル再生	w_038	W_038_038_BURN1	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_038	W_038_038_BURN2	防御側	方向無し	2:0:0	1:1:1	1
@@ -33,8 +38,6 @@ SE再生	SEQ_SE_W465_01	SE2	防御側	0:0:120	0:0:0
 パーティクル再生	w_038	W_038_038_HIT_MARK1	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_038	W_038_038_HIT_MARK2	防御側	方向無し	2:0:0	1:1:1	1
 ポケモンアニメ	防御側	アニメストップ
-BGの表示/非表示	エフェクト	表示
-BGのスクロール	往復	0	10	2	0	6
 ポケモン移動	防御側	往復	1	0	2	2	1
 ポケモン拡縮	防御側	往復	0.3	-0.3	4	2	1
 エフェクト終了待ち	すべて
