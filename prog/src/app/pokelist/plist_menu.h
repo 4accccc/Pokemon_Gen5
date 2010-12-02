@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	plist_menu.c
- * @brief	ポケモンリスト メニュー
- * @author	ariizumi
- * @data	09/06/18
+ * @file  plist_menu.c
+ * @brief ポケモンリスト メニュー
+ * @author  ariizumi
+ * @data  09/06/18
  *
  * モジュール名：PLIST_MENU
  */
@@ -18,7 +18,7 @@
 //※増やしたらPLIST_MENU_CreateMenuStrの配列も修正すること
 typedef enum
 {
-	
+  
   PMIT_STATSU,  //強さを見る
   PMIT_HIDEN,   //秘伝技。自動で個数分追加します
   PMIT_WAZA,    //PP回復用技リスト。自動で個数分追加します
@@ -48,7 +48,8 @@ typedef enum
   
   PMIT_RET_JOIN,      //参加する
   PMIT_JOIN_CANCEL,   //参加しない
-  
+
+  PMIT_MOVE_ITEM, // どうぐを移動する
   PMIT_MAX,
   
   PMIT_NONE,    //選択中

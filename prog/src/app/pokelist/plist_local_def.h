@@ -192,6 +192,7 @@ typedef enum
   PSMS_FADEOUT_FORCE, //強制終了
   PSMS_FADEOUT_WAIT,
 
+  PSMS_MOVE_ITEM,     // どうぐ移動
   PSMS_MAX,
 }PLIST_SYS_MAIN_SEQ;
 
@@ -321,19 +322,19 @@ struct _PLIST_WORK
   u16   barPalletAnmCnt;
   BOOL  isCallForceExit;
 
-	//taskmenuリソース
-	APP_TASKMENU_RES *taskres;
-	
-	//3D用(フォルムチェンジ演出用
+  //taskmenuリソース
+  APP_TASKMENU_RES *taskres;
+  
+  //3D用(フォルムチェンジ演出用
   GFL_G3D_CAMERA    *camera;
-	void*         effTempWork;
-	GFL_PTC_PTR		ptcWork;
-	PLIST_DEMO_TYPE demoType;
-	u8   demoCnt;
-	u8   demoChangeTimming;
-	BOOL demoIsChange;
-	BOOL demoIsPlayVoice;
-	u32  demoVoicePlayer;
+  void*         effTempWork;
+  GFL_PTC_PTR   ptcWork;
+  PLIST_DEMO_TYPE demoType;
+  u8   demoCnt;
+  u8   demoChangeTimming;
+  BOOL demoIsChange;
+  BOOL demoIsPlayVoice;
+  u32  demoVoicePlayer;
 
   //通信用
   BOOL isComm;

@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	plist_menu.c
- * @brief	ポケモンリスト メニュー
- * @author	ariizumi
- * @data	09/06/18
+ * @file  plist_menu.c
+ * @brief ポケモンリスト メニュー
+ * @author  ariizumi
+ * @data  09/06/18
  *
  * モジュール名：PLIST_MENU
  */
@@ -32,7 +32,7 @@
 #include "test/ariizumi/ari_debug.h"
 
 //======================================================================
-//	define
+//  define
 //======================================================================
 #pragma mark [> define
 
@@ -56,12 +56,12 @@
 #define PLIST_MENU_ANIME_E_G (25)
 #define PLIST_MENU_ANIME_E_B (30)
 //======================================================================
-//	enum
+//  enum
 //======================================================================
 #pragma mark [> enum
 
 //======================================================================
-//	typedef struct
+//  typedef struct
 //======================================================================
 #pragma mark [> struct
 struct _PLIST_MENU_WORK
@@ -78,7 +78,7 @@ struct _PLIST_MENU_WORK
   void *ncgRes; 
 };
 //======================================================================
-//	proto
+//  proto
 //======================================================================
 #pragma mark [> proto
 
@@ -91,7 +91,7 @@ static void PLIST_MENU_UpdateTP( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
 static void PLIST_MENU_SetActiveItem( PLIST_MENU_WORK *menuWork , const u8 idx , const BOOL isActive );
 
 //--------------------------------------------------------------
-//	メニューシステム初期化
+//  メニューシステム初期化
 //--------------------------------------------------------------
 PLIST_MENU_WORK* PLIST_MENU_CreateSystem( PLIST_WORK *work )
 {
@@ -106,7 +106,7 @@ PLIST_MENU_WORK* PLIST_MENU_CreateSystem( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	メニューシステム開放
+//  メニューシステム開放
 //--------------------------------------------------------------
 void PLIST_MENU_DeleteSystem( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 {
@@ -115,7 +115,7 @@ void PLIST_MENU_DeleteSystem( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 }
 
 //--------------------------------------------------------------
-//	メニュー開く
+//  メニュー開く
 //--------------------------------------------------------------
 void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_MENU_ITEM_TYPE *itemArr )
 {
@@ -138,7 +138,7 @@ void PLIST_MENU_OpenMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_M
 }
 
 //--------------------------------------------------------------
-//	メニュー開く(YesNo
+//  メニュー開く(YesNo
 //--------------------------------------------------------------
 void PLIST_MENU_OpenMenu_YesNo( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 {
@@ -162,7 +162,7 @@ void PLIST_MENU_OpenMenu_YesNo( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 }
 
 //--------------------------------------------------------------
-//	メニュー閉じる
+//  メニュー閉じる
 //--------------------------------------------------------------
 void PLIST_MENU_CloseMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 {
@@ -179,7 +179,7 @@ void PLIST_MENU_CloseMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 
 
 //--------------------------------------------------------------
-//	メニュー更新
+//  メニュー更新
 //--------------------------------------------------------------
 void PLIST_MENU_UpdateMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
 {
@@ -202,7 +202,7 @@ const PLIST_MENU_ITEM_TYPE PLIST_MENU_IsFinish( PLIST_WORK *work , PLIST_MENU_WO
 
 #pragma mark [>init func
 //--------------------------------------------------------------
-//	メニューの項目を作る
+//  メニューの項目を作る
 //--------------------------------------------------------------
 static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork , PLIST_MENU_ITEM_TYPE *itemArr )
 {
@@ -313,11 +313,17 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
       menuWork->itemArr[menuWork->itemNum] = PMIT_TAKE;
       menuWork->itemNum += 1;
       break;
+
+    case PMIT_MOVE_ITEM:  // どうぐを移動する
+      menuWork->itemArr[menuWork->itemNum] = PMIT_MOVE_ITEM;
+      menuWork->itemNum += 1;
+      break;
       
     case PMIT_ENTER:  //決定
       menuWork->itemArr[menuWork->itemNum] = PMIT_ENTER;
       menuWork->itemNum += 1;
       break;
+
 
     case PMIT_MAIL_READ:    //メールを読む
       menuWork->itemArr[menuWork->itemNum] = PMIT_MAIL_READ;
@@ -372,7 +378,7 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
 
 
 //--------------------------------------------------------------
-//	アイテムごとの文字の作成
+//  アイテムごとの文字の作成
 //--------------------------------------------------------------
 static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , const PLIST_MENU_ITEM_TYPE type )
 {
@@ -400,6 +406,7 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
     0 ,          //PMIT_WAZA_4,   //技スロット４
     mes_pokelist_05_10 ,  //PMIT_RET_JOIN,      //参加する
     mes_pokelist_05_11 ,  //PMIT_JOIN_CANCEL,   //参加しない
+    mes_pokelist_05_22 ,  //PMIT_MOVE_ITEM      //どうぐを移動する
   };
   STRBUF *str;
   
@@ -421,7 +428,7 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
 }
 
 //--------------------------------------------------------------
-//	バトル選択用に座標指定で出せるように
+//  バトル選択用に座標指定で出せるように
 //--------------------------------------------------------------
 APP_TASKMENU_WIN_WORK* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY , const BOOL isReturn )
 {

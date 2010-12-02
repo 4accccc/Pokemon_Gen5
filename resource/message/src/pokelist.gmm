@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-11-16T19:40:08"/>
+	<create user="mori" host="W00155" date="2010-12-01T19:19:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="258" top="218" right="963" bottom="846" maximized="no" rayout="Vertical2">
+	<dialog left="102" top="230" right="807" bottom="858" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="148" right="1280" bottom="547" visible="no"/>
+		<tag-palette left="807" top="148" right="1280" bottom="547" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -1103,6 +1103,31 @@ PP値上昇アイテムで技選択するとき</comment>
 [1:09:どうぐ名:1]を　持たせた！</language>
 	</row>
 
+	<row id="mes_pokelist_04_59_1">
+		<comment>道具を入れ替えたメッセージ
+0：最初に選択したポケモン名
+1：最初のポケモンが持っている道具
+2：次に選択したポケモン名
+3：次のポケモンが持っている道具</comment>
+		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+[1:09:どうぐ名:1]と[BE:01:ページ切り替え（クリア）]
+[1:02:ポケモンニックネーム:2]の
+[1:09:どうぐ名:3]を　いれかえた！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
+[1:09:どうぐ名:1]と[BE:01:ページ切り替え（クリア）]
+[1:02:ポケモンニックネーム:2]の
+[1:09:どうぐ名:3]を　入れ替えた！</language>
+	</row>
+
+	<row id="mes_pokelist_04_59_2">
+		<comment>ギラティナに道具移動ではっきんだまを移そうとして
+怒られたときに表示</comment>
+		<language name="JPN" width="216" line="2">はっきんだまを　ギラティナには
+わたせない！</language>
+		<language name="JPN_KANJI" width="216" line="2">はっきんだまを　ギラティナには
+渡せない！</language>
+	</row>
+
 	<row id="mes_pokelist_04_60_1" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>バトル施設で参加数を満たしていない状態
 １匹（追加 090722Ariizumi</comment>
@@ -1424,6 +1449,13 @@ PP値上昇アイテムで技選択するとき</comment>
 0：技名１</comment>
 		<language name="JPN" font=" 1:small" width="84">[1:07:わざ名:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="mes_pokelist_05_22" back-color=",,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<comment>サブメニュー項目
+道具を移動する</comment>
+		<language name="JPN" font=" 1:small" width="84">わたす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">わたす</language>
 	</row>
 
 	<row id="mes_pokelist_06_01">

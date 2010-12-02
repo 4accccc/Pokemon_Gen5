@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	plist_sys.c
- * @brief	ポケモンリスト メイン処理
- * @author	ariizumi
- * @data	09/06/10
+ * @file  plist_sys.c
+ * @brief ポケモンリスト メイン処理
+ * @author  ariizumi
+ * @data  09/06/10
  *
  * モジュール名：PLIST
  */
@@ -53,7 +53,7 @@
 #include "test/ariizumi/ari_debug.h"
 
 //======================================================================
-//	define
+//  define
 //======================================================================
 #pragma mark [> define
 
@@ -75,7 +75,7 @@
 #define PLIST_PLATE_ACTIVE_ANM_CNT_HALF (6)
 
 //======================================================================
-//	enum
+//  enum
 //======================================================================
 #pragma mark [> enum
 
@@ -141,12 +141,12 @@ static const u16 DATA_FldSkillNo[] = {
 };
 
 //======================================================================
-//	typedef struct
+//  typedef struct
 //======================================================================
 #pragma mark [> struct
 
 //======================================================================
-//	proto
+//  proto
 //======================================================================
 #pragma mark [> proto
 
@@ -184,6 +184,7 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work );
 static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work );
 static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work );
 static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work );
+static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work);
 static void PLIST_SelectPokeMain( PLIST_WORK *work );
 static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work );
 static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work );
@@ -241,7 +242,7 @@ static void PLIST_AddBagItem( PLIST_WORK *work , u16 itemNo );
 static void PLIST_InitDebug( PLIST_WORK *work );
 static void PLIST_TermDebug( PLIST_WORK *work );
 //--------------------------------------------------------------
-//	初期化
+//  初期化
 //--------------------------------------------------------------
 const BOOL PLIST_InitPokeList( PLIST_WORK *work )
 {
@@ -346,8 +347,8 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     }
   }
 
-	work->taskres	= APP_TASKMENU_RES_Create( PLIST_BG_MENU, PLIST_BG_PLT_MENU_ACTIVE,
-									work->fontHandle, work->printQue, work->heapId );
+  work->taskres = APP_TASKMENU_RES_Create( PLIST_BG_MENU, PLIST_BG_PLT_MENU_ACTIVE,
+                  work->fontHandle, work->printQue, work->heapId );
 
   //描画順の関係上ここで
   PLIST_InitCell( work );
@@ -384,7 +385,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	開放
+//  開放
 //--------------------------------------------------------------
 const BOOL PLIST_TermPokeList( PLIST_WORK *work )
 {
@@ -416,7 +417,7 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
     PLIST_PLATE_DeletePlate( work , work->plateWork[i] );
   }
 
-	APP_TASKMENU_RES_Delete( work->taskres );
+  APP_TASKMENU_RES_Delete( work->taskres );
 
   PLIST_TermMessage( work );
   if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
@@ -448,7 +449,7 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	更新
+//  更新
 //--------------------------------------------------------------
 const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 {
@@ -473,6 +474,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
     
   case PSMS_SELECT_POKE:
   case PSMS_CHANGE_POKE:  //基本は一緒だから同じ処理で
+  case PSMS_MOVE_ITEM:
   case PSMS_USE_POKE:
     PLIST_SelectPoke( work );
     break;
@@ -670,7 +672,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	選択中のパレットのフラッシュアニメ更新
+//  選択中のパレットのフラッシュアニメ更新
 //--------------------------------------------------------------
 static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
 {
@@ -766,7 +768,7 @@ static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	VBlankTcb
+//  VBlankTcb
 //--------------------------------------------------------------
 static void PLIST_VBlankFunc(GFL_TCB *tcb, void *wk )
 {
@@ -990,7 +992,7 @@ void PLIST_InitBG0_3DParticle( PLIST_WORK *work )
                     16 , 10 );
 
 
-	GFL_PTC_Init( work->heapId );
+  GFL_PTC_Init( work->heapId );
 
 }
 
@@ -1022,7 +1024,7 @@ void PLIST_TermBG0_2DMenu( PLIST_WORK *work )
 }
 void PLIST_TermBG0_3DParticle( PLIST_WORK *work )
 {
-	GFL_PTC_Exit();
+  GFL_PTC_Exit();
   GFL_G3D_CAMERA_Delete( work->camera );
   GFL_G3D_Exit();
 
@@ -2111,6 +2113,13 @@ static void PLIST_SelectPoke( PLIST_WORK *work )
     break;
     
   case PSSS_TERM:
+    switch(work->mainSeq){
+    case PSMS_CHANGE_POKE: PLIST_SelectPokeTerm_Change( work );   break;
+    case PSMS_USE_POKE:    PLIST_SelectPokeTerm_Use( work );      break;
+    case PSMS_MOVE_ITEM:   PLIST_SelectPokeTerm_MoveItem( work ); break;
+    default: PLIST_SelectPokeTerm( work );
+    }
+#if 0
     if( work->mainSeq == PSMS_CHANGE_POKE )
     {
       PLIST_SelectPokeTerm_Change( work );
@@ -2123,6 +2132,7 @@ static void PLIST_SelectPoke( PLIST_WORK *work )
     {
       PLIST_SelectPokeTerm( work );
     }
+#endif
     break;
   }
 }
@@ -2166,7 +2176,7 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
     if( work->pokeCursor <= PL_SEL_POS_POKE6 )
     {
       //通常時はTPはプレート非アクティブ。交換時はアクティブ
-      if( work->mainSeq == PSMS_CHANGE_POKE )
+      if( work->mainSeq == PSMS_CHANGE_POKE || work->mainSeq == PSMS_MOVE_ITEM)
       {
         PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
       }
@@ -2423,6 +2433,8 @@ static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work )
     PMSND_PlaySystemSE( PLIST_SND_CANCEL );
   }
 
+
+
 }
 
 //--------------------------------------------------------------------------
@@ -2503,6 +2515,80 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
     work->isDecideParty = TRUE;
 
     PMSND_PlaySystemSE( PLIST_SND_DECIDE );
+    
+  }
+}
+
+static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
+{
+  if( work->selectState == PSSEL_SELECT )
+  {
+    POKEMON_PARAM *srcPoke = PokeParty_GetMemberPointer(work->plData->pp, work->changeTarget);
+    POKEMON_PARAM *desPoke = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor);
+    u16 srcPokeNo = PP_Get( srcPoke, ID_PARA_monsno, NULL );
+    u16 desPokeNo = PP_Get( desPoke, ID_PARA_monsno, NULL );
+    const u16 srcItemNo = PP_Get( srcPoke , ID_PARA_item , NULL );
+    const u16 desItemNo = PP_Get( desPoke , ID_PARA_item , NULL );
+    OS_Printf("pokeC=%d, changeC=%d\n", work->pokeCursor, work->changeTarget);
+
+    PLIST_MSG_CloseWindow( work , work->msgWork );
+
+    // ギラティナにはっきんだまを移動させることはできない
+    if((desPokeNo==MONSNO_GIRATHINA && srcItemNo==ITEM_HAKKINDAMA) 
+    || (srcPokeNo==MONSNO_GIRATHINA && desItemNo==ITEM_HAKKINDAMA)){
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+      PLIST_MessageWaitInit( work , mes_pokelist_04_59_2 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+    }else{
+      // 通常移動処理
+      if(desItemNo==0){
+        PLIST_SetPokeItem( work , srcPoke , 0 );
+        PLIST_SetPokeItem( work , desPoke , srcItemNo );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , desPoke );
+       
+      }else{
+        // 両方道具を持っていたので入れ替え処理になった
+        PLIST_SetPokeItem( work , srcPoke , desItemNo );
+        PLIST_SetPokeItem( work , desPoke , srcItemNo );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , srcPoke );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 2 , desPoke );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 3 , desItemNo );
+      }
+      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->changeTarget] );
+
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+      if(desItemNo==0){
+        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+      }else{
+        PLIST_MessageWaitInit( work , mes_pokelist_04_59_1 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+      }
+    }
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    
+  }else{
+
+    PLIST_MSG_CloseWindow( work , work->msgWork );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
+    //キャンセル
+    work->selectPokePara = NULL;
+    work->mainSeq = PSMS_SELECT_POKE;
+
+    PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+    PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
+    PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+    work->useTarget = PL_SEL_POS_MAX;
+    work->plData->ret_sel = work->pokeCursor;
+
+    PLIST_InitMode_Select( work );
+    PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     
   }
 }
@@ -3073,7 +3159,7 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	メニュー初期化
+//  メニュー初期化
 //--------------------------------------------------------------
 static void PLIST_SelectMenuInit( PLIST_WORK *work )
 {
@@ -3100,7 +3186,7 @@ static void PLIST_SelectMenuInit( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	メニュー開放
+//  メニュー開放
 //--------------------------------------------------------------
 static void PLIST_SelectMenuTerm( PLIST_WORK *work )
 {
@@ -3133,7 +3219,7 @@ static void PLIST_SelectMenuTerm( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	メニュー戻り分岐
+//  メニュー戻り分岐
 //--------------------------------------------------------------
 static void PLIST_SelectMenuExit( PLIST_WORK *work )
 {
@@ -3168,12 +3254,25 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
 
   case PMIT_ITEM:
     {
-      PLIST_MENU_ITEM_TYPE itemArr[4] = {PMIT_GIVE,PMIT_TAKE,PMIT_CLOSE,PMIT_END_LIST};
+      POKEMON_PARAM *poke = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor);
+      u16 itemno = PP_Get( poke, ID_PARA_item, NULL);
+      u16 monsno = PP_Get( poke, ID_PARA_monsno, NULL);
+      PLIST_MENU_ITEM_TYPE itemArr[2][5] = {
+          {PMIT_GIVE,PMIT_TAKE,PMIT_MOVE_ITEM,PMIT_CLOSE,PMIT_END_LIST},
+          {PMIT_GIVE,PMIT_TAKE,PMIT_CLOSE,PMIT_END_LIST},
+      };
+
       PLIST_SelectMenuInit( work );
       //先にメニューを開くと、bmpの確保順がずれてゴミが見える・・・
       PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
       PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_02 );
-      PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
+
+      // ギラティナが持っている「はっきんだま」は「わたす」ができない
+      if(itemno==ITEM_HAKKINDAMA && monsno == MONSNO_GIRATHINA){
+        PLIST_MENU_OpenMenu( work , work->menuWork , itemArr[1] );
+      }else{
+        PLIST_MENU_OpenMenu( work , work->menuWork , itemArr[0] );
+      }
       GFL_BG_LoadScreenReq( PLIST_BG_MENU );  //一瞬見えるカーソルプレート対策
     }
     break;
@@ -3324,6 +3423,41 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
           }
           PLIST_MSG_DeleteWordSet( work , work->msgWork );
         }
+      }
+    }
+    break;
+  case PMIT_MOVE_ITEM:
+    {
+      const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+
+      //預かるので持たせるアイテム０
+      PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , 0 );
+      PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , 0 );
+      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+      
+      if( itemNo == 0 )
+      {
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_29 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      }else{
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , itemNo );
+
+        PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+        PLIST_SelectPokeSetCursor_Change( work , work->pokeCursor );
+        work->selectPokePara = NULL;
+        work->changeTarget = work->pokeCursor;
+        work->mainSeq = PSMS_MOVE_ITEM;
+        work->canExit = FALSE;
+        
+        PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+        PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_02 );
+        //ここはモード別処理ではなく、ただのセレクト初期化
+        PLIST_SelectPokeInit( work );
+      
       }
     }
     break;
@@ -3518,7 +3652,7 @@ static void PLIST_YesNoWaitInit( PLIST_WORK *work , PLIST_CallbackFuncYesNo yesN
 //入れ替えアニメ
 #pragma mark [>ChangeAnm
 //--------------------------------------------------------------
-//	入れ替えアニメ
+//  入れ替えアニメ
 //--------------------------------------------------------------
 static void PLIST_ChangeAnime( PLIST_WORK *work )
 {
@@ -3566,7 +3700,7 @@ static void PLIST_ChangeAnime( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	入れ替えアニメ初期化
+//  入れ替えアニメ初期化
 //--------------------------------------------------------------
 static void PLIST_ChangeAnimeInit( PLIST_WORK *work )
 {
@@ -3581,7 +3715,7 @@ static void PLIST_ChangeAnimeInit( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	入れ替えアニメ開放
+//  入れ替えアニメ開放
 //--------------------------------------------------------------
 static void PLIST_ChangeAnimeTerm( PLIST_WORK *work )
 {
@@ -3599,7 +3733,7 @@ static void PLIST_ChangeAnimeTerm( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	入れ替えアニメプレート更新
+//  入れ替えアニメプレート更新
 //--------------------------------------------------------------
 static void PLIST_ChangeAnimeUpdatePlate( PLIST_WORK *work )
 {
@@ -3607,7 +3741,7 @@ static void PLIST_ChangeAnimeUpdatePlate( PLIST_WORK *work )
 
 #pragma mark [>util
 //--------------------------------------------------------------
-//	指定技箇所にフィールド技があるか？
+//  指定技箇所にフィールド技があるか？
 //--------------------------------------------------------------
 u32 PLIST_UTIL_CheckFieldWaza( const POKEMON_PARAM *pp , const u8 wazaPos )
 {
@@ -3662,7 +3796,7 @@ u32 PLIST_UTIL_CheckFieldWaza( const POKEMON_PARAM *pp , const u8 wazaPos )
 }
 
 //--------------------------------------------------------------
-//	バトルの参加選択か？
+//  バトルの参加選択か？
 //--------------------------------------------------------------
 const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work )
 {
@@ -3675,7 +3809,7 @@ const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work )
   return FALSE;
 }
 //--------------------------------------------------------------
-//	バトルの参加選択で戻ることができるか？
+//  バトルの参加選択で戻ることができるか？
 //--------------------------------------------------------------
 const BOOL PLIST_UTIL_IsBattleMenu_CanReturn( const PLIST_WORK *work )
 {
@@ -3697,7 +3831,7 @@ const BOOL PLIST_UTIL_CanReturn( const PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------
-//	今渡されている技が覚えられるか？
+//  今渡されている技が覚えられるか？
 //--------------------------------------------------------------
 const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const POKEMON_PARAM *pp , const u8 idx )
 {
@@ -3803,7 +3937,7 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
 }
 
 //--------------------------------------------------------------
-//	指定アイテムで進化できるか(モンスターナンバー返し
+//  指定アイテムで進化できるか(モンスターナンバー返し
 //--------------------------------------------------------------
 const u16 PLIST_UTIL_CheckItemEvolution( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo )
 {
@@ -3811,7 +3945,7 @@ const u16 PLIST_UTIL_CheckItemEvolution( PLIST_WORK *work , POKEMON_PARAM *pp , 
 }
 
 //--------------------------------------------------------------
-//	文字の描画
+//  文字の描画
 //--------------------------------------------------------------
 void PLIST_UTIL_DrawStrFunc( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
                                       const u16 strId , const u16 posX , const u16 posY , const u16 col )
@@ -3841,7 +3975,7 @@ void PLIST_UTIL_DrawStrFuncDirect( PLIST_WORK *work , GFL_BMPWIN *bmpWin ,
   GFL_STR_DeleteBuffer( srcStr );
 }
 //--------------------------------------------------------------
-//	文字の描画(値用
+//  文字の描画(値用
 //--------------------------------------------------------------
 void PLIST_UTIL_DrawValueStrFunc( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col )
