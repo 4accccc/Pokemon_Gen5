@@ -44,19 +44,26 @@
 //#define DEBUG_PRINT_ON // デバッグ出力スイッチ
 #define DEBUG_PRINT_TARGET (3) // デバッグ出力先
 
+
+//デバッグではグローバル、製品版では定数にする
 #ifdef PM_DEBUG
-BOOL PlaceNameEnable    = TRUE; // 地名表示の有効フラグ
-BOOL PlaceNameLong      = FALSE;  //地名表示長さチェックフラグ
-u32 PlaceNameMoveType   = 0;  //動きの種類 0,上下同時1,上、下2下、上
-BOOL PlaceNameShakeFlag = TRUE;  //動きの揺れ追加
-BOOL PlaceNameAlphaFlag = FALSE;  //アルファの種類  
-u32 PROCESS_TIME_FADEIN2  = 10; //入ってくるときの速度
-u32 PROCESS_TIME_WAIT_LAUNCH  = 30; //待つときの時間
-u32 PROCESS_TIME_WAIT_FADEOUT = 12; //出て行く時の速度
-u32 ALPHA_VALUE_1             = (14); // 第1対象面のαブレンディング係数
-u32 ALPHA_VALUE_2             = (8); // 第2対象面のαブレンディング係数
-BOOL  PlaceNameVersionFlag    = 0;    //0がブラック１がホワイト
+#define DEBUG_GROBAL  /* nothing */ 
+#elif
+#define DEBUG_GROBAL  static const 
 #endif
+
+DEBUG_GROBAL BOOL PlaceNameEnable            = TRUE;     //地名表示の有効フラグ
+DEBUG_GROBAL BOOL PlaceNameLong              = FALSE;    //地名表示長さチェックフラグ
+DEBUG_GROBAL u32  PlaceNameMoveType          = 0;        //動きの種類 0,上下同時1,上、下2下、上
+DEBUG_GROBAL BOOL PlaceNameShakeFlag         = TRUE;     //動きの揺れ追加
+DEBUG_GROBAL BOOL PlaceNameAlphaFlag         = FALSE;    //アルファの種類  
+DEBUG_GROBAL u32  PROCESS_TIME_FADEIN2       = 10;       //入ってくるときの速度
+DEBUG_GROBAL int  PROCESS_TIME_FADEIN        = 10;       //入ってくるときの速度
+DEBUG_GROBAL u32  PROCESS_TIME_WAIT_LAUNCH   = 30;       //待つときの時間
+DEBUG_GROBAL u32  PROCESS_TIME_WAIT_FADEOUT  = 12;       //出て行く時の速度
+DEBUG_GROBAL u32  ALPHA_VALUE_1              = (14);     //第1対象面のαブレンディング係数
+DEBUG_GROBAL u32  ALPHA_VALUE_2              = (8);      //第2対象面のαブレンディング係数
+DEBUG_GROBAL BOOL PlaceNameVersionFlag       = 0;        //0がブラック１がホワイト
 
 //===================================================================================
 // ■ 定数・マクロ
@@ -93,7 +100,6 @@ BOOL  PlaceNameVersionFlag    = 0;    //0がブラック１がホワイト
 //#define PROCESS_TIME_WAIT_LAUNCH   (30)
 //#define PROCESS_TIME_WAIT_FADEOUT   (12)
 #define PROCESS_TIME_FADEOUT (5)
-static int  PROCESS_TIME_FADEIN = PROCESS_TIME_FADEIN1;
 
 //--------------
 // インデックス
@@ -1431,6 +1437,7 @@ static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state )
 	switch( next_state ) {
 		case SYSTEM_STATE_HIDE:	
 			HidePlate( system );
+      GX_SetVisibleWnd( GX_WNDMASK_NONE );
 			break;
 	}
 }
