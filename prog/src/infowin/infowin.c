@@ -383,7 +383,7 @@ void  INFOWIN_Update( void )
         INFOWIN_ResetBit(INFOWIN_IS_ANIME);
         infoWk->anmCnt = 0;
       }
-      if( netInit->gsid == WB_NET_PALACE_SERVICEID )
+      if( netInit->gsid == WB_NET_PALACE2_SERVICEID )
       {
         //ì_ñ≈ÉÇÅ[Éh
         INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);

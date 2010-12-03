@@ -208,7 +208,7 @@ extern u32 GFLR_NET_GetGGID(void);
 typedef enum  {
   WB_NET_NOP_SERVICEID = 0,
   WB_NET_BATTLE_SERVICEID,       ///< バトル用ID
-  WB_NET_PALACE_SERVICEID,       ///< パレス
+  WB_NET_PALACE_SERVICEID,       ///< パレス  SWANでは下位互換をきるため使わなくなった
   WB_NET_FIELDMOVE_SERVICEID,  ///< サンプルのフィールド移動
   WB_NET_MULTIBOOT_SERVICEID,  ///< ダウンロード通信のボックス取得
   WB_NET_DEBUG_OHNO_SERVICEID,
@@ -259,7 +259,9 @@ typedef enum  {
   WB_NET_PDW_ACC,  ///<GAMESYNCアカウント
   WB_NET_GTS_NEGO,  ///<GTSネゴシエーション
   WB_NET_WIFIRNDMATCH,  ///<WIFIランダムマッチ（ゲームサービスIDをレコードカウントのためWIFIMATCHとわけることになった）
-  
+  //ここからSWANのみのID
+  WB_NET_PALACE2_SERVICEID, ///< SWANでしか繋がらないハイリンク
+
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;
 
@@ -310,6 +312,8 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_BATTLE_EXAMINATION = (WB_NET_BATTLE_EXAMINATION<<8),  ///<バトル検定配信
   GFL_NET_CMD_WIFIP2P_SUB = (WB_NET_WIFIP2P_SUB<<8), ///< WIFIバトルの中間
   GFL_NET_CMD_IRC_REGULATION  = (WB_NET_IRC_REGULATION<<8),  ///<ライブ大会レギュレーション配信
+  //ここからSWANのみのID
+  GFL_NET_CMD_PALACE2 = (WB_NET_PALACE2_SERVICEID<<8),   ///< パレスのベース開始番号
 };
 
 

@@ -231,7 +231,7 @@ static u8 bFlip=FALSE;
 
 void NET_DEV_Main(void)
 {
-  if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+  if( WB_NET_PALACE2_SERVICEID==GFL_NET_GetGameServiceID() ){
     if(bFlip==FALSE){
       bFlip =GFL_NET_Main();
     }

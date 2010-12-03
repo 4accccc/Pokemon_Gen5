@@ -53,6 +53,7 @@ typedef struct{
 typedef struct _GAME_BEACON_SYS
 {
   GAMEDATA *gamedata;
+  GAME_COMM_SYS_PTR gamecomm; //ビーコンに接続不許可フラグを建てるため
   GBS_STATUS status;        ///<TRUE:初期化済み
   u8 fatal_err;   ///<TRUE:エラー発生
   u8 padding;
@@ -85,7 +86,7 @@ static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameSe
 static void GameBeacon_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void GameBeacon_DisconnectCallBack(void* pWork);
 static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a , const GBS_BEACON *beacon_b );
-static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata);
+static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata, GAME_COMM_SYS_PTR gamecomm);
 static void GameBeacon_ExitCallback_toInvasion(void *pWork, BOOL exit_pileup);
 
 
@@ -155,6 +156,7 @@ void * GameBeacon_Init(int *seq, void *pwk)
 	
 	gbs = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(GAME_BEACON_SYS));
 	gbs->gamedata = gamedata;
+  gbs->gamecomm = game_comm;
 	gbs->palace_check_zoneid = ZONE_ID_MAX;
 
   if(GameCommSys_GetLastCommNo(game_comm) == GAME_COMM_NO_INVASION
@@ -324,7 +326,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   if(target != NULL){ //対象が見つかった
 #endif
     switch(target->gsid){
-    case WB_NET_PALACE_SERVICEID:     //侵入(パレス)
+    case WB_NET_PALACE2_SERVICEID:     //侵入(パレス)
 //    case WB_NET_FIELDMOVE_SERVICEID:
       //蓋が開いている && パレス接続禁止フラグが立っていない && 表フィールド、なら繋ぎに行く
       if(PAD_DetectFold() == FALSE && GameCommSys_GetPalaceNotConnectFlag(gcsp) == FALSE
@@ -440,10 +442,10 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   
   for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
     id = GFL_NET_WLGetGameServiceID(i);
-    if(!((id==WB_NET_PALACE_SERVICEID) || (id == WB_NET_FIELDMOVE_SERVICEID) )){
+    if(!((id==WB_NET_PALACE2_SERVICEID) || (id == WB_NET_FIELDMOVE_SERVICEID) )){
       continue;
     }
-    if(id == WB_NET_PALACE_SERVICEID && gbs->error_wait > 0){
+    if(id == WB_NET_PALACE2_SERVICEID && gbs->error_wait > 0){
       continue; //エラータイマーが0になるまでパレスへは接続しない
     }
   	bcon_buff = GFL_NET_GetBeaconData(i);
@@ -488,7 +490,7 @@ static void* GameBeacon_GetBeaconData(void* pWork)
 {
   GAME_BEACON_SYS_PTR gbs = pWork;
   
-  GameBeacon_SetBeaconParam(&gbs->beacon_send_data, gbs->gamedata);
+  GameBeacon_SetBeaconParam(&gbs->beacon_send_data, gbs->gamedata, gbs->gamecomm );
   GAMEBEACON_SendDataCopy(&gbs->beacon_send_data.info);
   gbs->beacon_send_data.beacon_type = GBS_BEACONN_TYPE_INFO;
   return &gbs->beacon_send_data;
@@ -501,7 +503,7 @@ static void* GameBeacon_GetBeaconData(void* pWork)
  * @param   beacon		ビーコンパラメータ代入先
  */
 //==================================================================
-static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata)
+static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata, GAME_COMM_SYS_PTR gamecomm)
 {
   GFL_STD_MemClear(beacon, sizeof(GBS_BEACON));
   beacon->gsid = aGFLNetInit.gsid;
@@ -509,10 +511,12 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata)
   beacon->member_max = 3;
   beacon->error = GFL_NET_SystemGetErrorCode();
   beacon->beacon_type = GBS_BEACONN_TYPE_NONE;
+  beacon->intrude_ng  = GameCommSys_GetPalaceNotConnectFlag( gamecomm );
   beacon->trainer_id = MyStatus_GetID( GAMEDATA_GetMyStatus(gamedata) );
   beacon->isTwl = OS_IsRunOnTwl();
   beacon->restrictPhoto = FALSE;
-  beacon->pad_detect_fold = PAD_DetectFold();
+  beacon->pad_detect_fold = TRUE;
+  beacon->pad_detect_fold_swan  = !PAD_DetectFold();  //FALSEがふた閉じている TRUEがとじていない。とし、WBはFALSEになっている値なので、WBではふた閉じとして接続されなくなる。
   if(beacon->isTwl == TRUE){
   #ifdef SDK_TWL
     beacon->restrictPhoto = OS_IsRestrictPhotoExchange();

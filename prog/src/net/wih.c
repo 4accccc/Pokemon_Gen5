@@ -1198,7 +1198,7 @@ static BOOL WH_StateInStartParentMP(void)
     mode = WH_MP_FREQUENCY_PALACE;
 #else
     
-    if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+    if( WB_NET_PALACE2_SERVICEID==GFL_NET_GetGameServiceID() ){
       mode = WH_MP_FREQUENCY_PALACE;
     }
     else{
@@ -1262,7 +1262,7 @@ static void WH_StateOutStartParentMP(void *arg)
       mode = DATASHARING_DOUBLEMODE_PALACE;
 #else
 
-      if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+      if( WB_NET_PALACE2_SERVICEID==GFL_NET_GetGameServiceID() ){
         mode = DATASHARING_DOUBLEMODE_PALACE;
       }
       else{
@@ -2049,7 +2049,7 @@ static BOOL WH_StateInStartChildMP(void)
 #if 0 //DEBUG_ONLY_FOR_ohno
     mode = WH_MP_FREQUENCY_PALACE;
 #else  
-    if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+    if( WB_NET_PALACE2_SERVICEID==GFL_NET_GetGameServiceID() ){
       mode = WH_MP_FREQUENCY_PALACE;
     }
     else{
@@ -2135,7 +2135,7 @@ static void WH_StateOutStartChildMP(void *arg)
       mode = DATASHARING_DOUBLEMODE_PALACE;
 #else  
 
-      if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+      if( WB_NET_PALACE2_SERVICEID==GFL_NET_GetGameServiceID() ){
         mode = DATASHARING_DOUBLEMODE_PALACE;
       }
       else{

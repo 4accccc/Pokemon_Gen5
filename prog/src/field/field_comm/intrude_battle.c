@@ -174,14 +174,14 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     break;
   case SEQ_COMMAND_ADD_BEFORE_TIMING:
     GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
-      INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE, WB_NET_PALACE_SERVICEID, 
+      INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE, WB_NET_PALACE2_SERVICEID, 
       (1<<ibp->target_netid) | (1<<GFL_NET_SystemGetCurrentID()));
     OS_TPrintf("戦闘用通信コマンドAdd前の同期取り\n");
     (*seq)++;
     break;
   case SEQ_COMMAND_ADD_BEFORE_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
-        INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE, WB_NET_PALACE_SERVICEID) == TRUE){
+        INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE, WB_NET_PALACE2_SERVICEID) == TRUE){
       OS_TPrintf("戦闘用通信コマンドAdd前の同期取り完了\n");
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       ibs->overlay_load_battle = TRUE;
@@ -191,14 +191,14 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     break;
   case SEQ_COMMAND_ADD_AFTER_TIMING:
     GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
-      INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER, WB_NET_PALACE_SERVICEID, 
+      INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER, WB_NET_PALACE2_SERVICEID, 
       (1<<ibp->target_netid) | (1<<GFL_NET_SystemGetCurrentID()));
     OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
     (*seq) ++;
     break;
   case SEQ_COMMAND_ADD_AFTER_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
-        INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER, WB_NET_PALACE_SERVICEID) == TRUE){
+        INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER, WB_NET_PALACE2_SERVICEID) == TRUE){
       OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*seq) ++;
     }

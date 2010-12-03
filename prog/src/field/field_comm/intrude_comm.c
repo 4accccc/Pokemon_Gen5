@@ -116,7 +116,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
   FALSE,    // MP通信＝親子型通信モードかどうか
   GFL_NET_TYPE_WIRELESS,    //通信タイプの指定
   TRUE,   // 親が再度初期化した場合、つながらないようにする場合TRUE
-  WB_NET_PALACE_SERVICEID, //GameServiceID
+  WB_NET_PALACE2_SERVICEID, //GameServiceID
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
@@ -479,13 +479,13 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
   case SEQ_TIMING_START:
     intcomm->exit_wait = 0;
     GFL_NET_HANDLE_TimeSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT, WB_NET_PALACE_SERVICEID);
+      GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT, WB_NET_PALACE2_SERVICEID);
     (*seq)++;
     break;
   case SEQ_TIMING_WAIT:
     intcomm->exit_wait++;
     if(GFL_NET_HANDLE_IsTimeSync(
-        GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT, WB_NET_PALACE_SERVICEID) == TRUE
+        GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT, WB_NET_PALACE2_SERVICEID) == TRUE
         || intcomm->exit_wait > COMM_EXIT_WAIT_TIMEOUT){
       GFL_NET_SetNoChildErrorCheck(FALSE);  //切断許可
       OS_TPrintf("切断同期完了 timeout残り=%d\n", COMM_EXIT_WAIT_TIMEOUT - intcomm->exit_wait);
@@ -662,7 +662,9 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
 
   bcon_buff = GFL_NET_WLGetDirectGFBss(pBss, &id);
 
-  if(id == WB_NET_FIELDMOVE_SERVICEID && bcon_buff->pad_detect_fold == FALSE){
+  //調査レーダーだけ、侵入禁止をしており、メッセージ表示してしまうため
+  if(id == WB_NET_FIELDMOVE_SERVICEID && bcon_buff->pad_detect_fold_swan == TRUE
+      && bcon_buff->intrude_ng == FALSE ){
     int i;
     for(i = 0; i < intcomm->search_count; i++){
       if(intcomm->search_child_trainer_id[i] == bcon_buff->trainer_id){
@@ -824,7 +826,7 @@ static void * IntrudeComm_GetBeaconData(void* pWork)
 static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon, int max_member_num)
 {
   
-  beacon->gsid = WB_NET_PALACE_SERVICEID;
+  beacon->gsid = WB_NET_PALACE2_SERVICEID;
   beacon->member_num = GFL_NET_GetConnectNum();
   if(max_member_num != -1){
     beacon->member_max = max_member_num;

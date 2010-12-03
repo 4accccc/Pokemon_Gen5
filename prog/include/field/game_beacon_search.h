@@ -48,9 +48,10 @@ typedef struct
   u8 restrictPhoto:1;   ///<TRUE:写真データ交換に制限がかかっている
   u8 isTwl:1;           ///<TRUE:TWLモードで動作している
   
-  u8 intrude_ng:1;      ///<TRUE:乱入禁止
-  u8 pad_detect_fold:1; ///<TRUE:DSの蓋を閉じている(PAD_DetectFold)
-  u8 padding:6;
+  u8 intrude_ng:1;      ///<TRUE:乱入禁止 BWでは使用していなかったのをSWANで使用
+  u8 pad_detect_fold:1; ///<SWANでは常にFALSE（WBでの用途->TRUE:DSの蓋を閉じている(PAD_DetectFold)旧WB番。SWANとの互換性をきるために本来はGSIDで切っているが、橋の上で名前が出てしまうのを防止するため）
+  u8 pad_detect_fold_swan:1;///<TRUE:DSの蓋を閉じている(PAD_DetectFold) SWANではこちらを見ます
+  u8 padding:5;
   
   u32 trainer_id;
   

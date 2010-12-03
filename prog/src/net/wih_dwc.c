@@ -340,7 +340,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
   if(-1 != WIH_DWC_TVTCallCheck(list)){  //TVTは最優先
     retcode |= GAME_COMM_STATUS_BIT_WIRELESS_TR;
   }
-  if(aNetStruct->gsid == WB_NET_PALACE_SERVICEID){  //パレスでつながっている判定
+  if(aNetStruct->gsid == WB_NET_PALACE2_SERVICEID){  //パレスでつながっている判定
     if(GFL_NET_GetConnectNum()>1){
       retcode |= GAME_COMM_STATUS_BIT_WIRELESS;
     }
