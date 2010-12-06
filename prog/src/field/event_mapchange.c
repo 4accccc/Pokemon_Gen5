@@ -1005,9 +1005,11 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     (*seq) ++;
     break;
   case MAPCORE_SEQ_BGM_FADE_WAIT:
+#if 0
     if( work->mapchange_type == EV_MAPCHG_NORMAL ){
       PAIRSYS_PairMapChangeRecover( work->gameData );
     }
+#endif
     // BGM フェード完了待ち
     GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMFade(gameSystem) );
     (*seq) ++;
@@ -1189,6 +1191,8 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void
   case 1:
     // マップチェンジ・コア・イベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
+    //連れ歩きは強制パージ
+    PAIRSYS_PairFree( gameData );
     (*seq)++;
     break;
   case 2:

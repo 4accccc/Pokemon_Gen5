@@ -22,6 +22,11 @@ typedef struct _PAIR_SYSTEM_WORK{
   u16 tr_id;
 }PAIR_SYSTEM_WORK;
 
+typedef enum{
+  PAIR_RECOVER_NORMAL,
+  PAIR_RECOVER_FOLLOW,
+}PAIR_RECOVER_TYPE;
+
 //---------------------------------------------------
 /*
  *  @brief  連れ歩きシステムワーク確保
@@ -109,9 +114,10 @@ extern u16 PAIRSYS_GetPairTrainerOriginalObjID( GAMEDATA* gdata );
  *  
  *  @com  PAIR_SYS_WORKにセット済みのパラメータを使って初期化する
  *  @param  gdata
+ *  @param  PAIR_RECOVER_TYPE PAIR_RECOVER_NORMAL他
  */
 //---------------------------------------------------
-extern void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata );
+extern void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata, PAIR_RECOVER_TYPE type );
 
 //---------------------------------------------------
 /*

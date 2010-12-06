@@ -17,6 +17,7 @@
 #include "field/location.h" 
 #include "field/eventdata_sxy.h"
 #include "field/zonedata.h"            // for ZONEDATA_GetBGMID
+#include "field/pair_sys.h"            // for ZONEDATA_GetBGMID
 #include "sound/pm_sndsys.h"
 #include "sound/bgm_info.h"
 
@@ -94,7 +95,7 @@ GMEVENT* EVENT_EntranceOut( ENTRANCE_EVDATA* evdata )
   GMEVENT* event;
   EVENT_WORK* work; 
   EVENTFUNC_TYPE funcType;
-
+  
   // イベントテーブル
   const GMEVENT_FUNC eventFuncTable[ EVENTFUNC_TYPE_NUM ] = 
   {
@@ -125,6 +126,12 @@ GMEVENT* EVENT_EntranceOut( ENTRANCE_EVDATA* evdata )
   // イベント・ワークを初期化
   work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
   work->evdata = evdata;
+  
+  if( funcType == EVENTFUNC_TYPE_STEP ){
+    PAIRSYS_PairMapChangeRecover( evdata->gameData, PAIR_RECOVER_FOLLOW );
+  }else{
+    PAIRSYS_PairMapChangeRecover( evdata->gameData, PAIR_RECOVER_NORMAL );
+  }
 
   return event;
 }
@@ -218,6 +225,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
 
   case 2:
     // 自機の一歩移動アニメ
+//    GMEVENT_CallEvent( event, EVENT_EntranceOneStepAnime( gameSystem, evdata ));
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gameSystem, fieldmap) );
     (*seq)++;
     break;

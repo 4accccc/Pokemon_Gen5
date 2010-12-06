@@ -239,6 +239,14 @@ void EntranceEvent_OneStepAnmSet( ENTRANCE_EVDATA* evdata )
         pair_dir = DIR_UP;
       }
     }
+    {
+      MMDL_TOOL_AddDirGrid( player_dir, &player_pos.gx, &player_pos.gz, 1 );
+      if( pair_pos.gx == player_pos.gx && pair_pos.gz == player_pos.gz ){
+        //ˆÚ“®æ‚ª“¯ˆêÀ•W‚¾‚Á‚½‚çƒyƒA‚ÌˆÚ“®•ûŒü‚ð”½“]
+        pair_dir = MMDL_TOOL_FlipDir( player_dir );
+      }
+    }
+
     evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = FldMMdlOneStepAnimeStart( pair_mmdl, pair_dir );
   }
 }

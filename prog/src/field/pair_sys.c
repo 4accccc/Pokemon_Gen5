@@ -121,7 +121,7 @@ void PAIRSYS_PairFree( GAMEDATA* gdata )
   EVENTWORK* ev_wk = GAMEDATA_GetEventWork(gdata);
 
   if( !PAIRSYS_CheckPairFlag( gdata )){
-    GF_ASSERT_MSG(0,"Pair none\n");
+    OS_TPrintf("Pair none\n");
     return;
   }
   
@@ -164,9 +164,10 @@ void PAIRSYS_PairFreeForMapChange( GAMEDATA* gdata )
  *  
  *  @com  PAIR_SYS_WORKにセット済みのパラメータを使って初期化する
  *  @param  gdata
+ *  @param  PAIR_RECOVER_TYPE PAIR_RECOVER_NORMAL他
  */
 //---------------------------------------------------
-void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata )
+void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata, PAIR_RECOVER_TYPE type )
 {
   PAIR_SYSTEM_WORK* wk = GAMEDATA_GetPairSystemWork( gdata );
   EVENTWORK* ev_wk = GAMEDATA_GetEventWork(gdata);
@@ -182,14 +183,20 @@ void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata )
   }
   {
     MMDL* player = MMDLSYS_SearchMMdlPlayer( mmdlsys );
-    int gx = MMDL_GetGridPosX( player );
-    int gz = MMDL_GetGridPosZ( player );
+    s16 gx = MMDL_GetGridPosX( player );
+    s16 gz = MMDL_GetGridPosZ( player );
     int dir = MMDL_GetDirDisp( player );
     int zone = MMDL_GetZoneID( player );
+    int vanish = TRUE;
+
+    if( type == PAIR_RECOVER_FOLLOW ){
+      vanish = FALSE;
+      MMDL_TOOL_AddDirGrid( MMDL_TOOL_FlipDir(dir), &gx, &gz, 1 );
+    }
     mmdl = MMDLSYS_AddMMdlParam( mmdlsys, gx, gz, dir, MMDL_ID_PAIR, wk->obj_code, MV_PAIR, zone );
     MMDL_SetEventID( mmdl, wk->event_id );
     MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
-    MMDL_SetStatusBitVanish( mmdl, TRUE );  //いったん消しておく
+    MMDL_SetStatusBitVanish( mmdl, vanish );
   }
 }
 
@@ -213,6 +220,7 @@ void PAIRSYS_PairViewRecover( GAMEDATA* gdata )
   pair = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PAIR );
   if( pair == NULL ){
     GF_ASSERT(0);
+    PAIRSYS_PairFree( gdata );
     return;
   }
   if( !MMDL_CheckStatusBitVanish( pair )){
