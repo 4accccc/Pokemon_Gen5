@@ -53,6 +53,9 @@
 #include "net/dwc_rap.h"
 
 
+// 入力キー
+// メッセージ送りがどのボタンでも対応していたのを対処 add ichiraku
+#define GSYNC_COMMON_TRG_KEY (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)
 
 /*
 ■BGM■
@@ -381,7 +384,7 @@ static void _ErrorDisp3(G_SYNC_WORK* pWork)
 
 static void _ErrorDisp2(G_SYNC_WORK* pWork)
 {
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     
     if(pWork->bSaveDataAsync){
       GAMEDATA_SaveAsyncCancel( pWork->pGameData );
@@ -461,7 +464,7 @@ static void _wakeupActio10(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
 //  if(GFL_UI_KEY_GetTrg()){
     _CHANGE_STATE(_networkClose);
   }
@@ -512,7 +515,7 @@ static void _wakeupActio9(G_SYNC_WORK* pWork)
     PMSND_FadeInBGM(PMSND_FADE_FAST);
   }
   
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     _CHANGE_STATE(_wakeupActio92);
   }
 }
@@ -523,7 +526,7 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     if(pWork->lvup==0){
       _CHANGE_STATE(_wakeupActio92);
     }
@@ -1455,7 +1458,7 @@ static void _wakeupActionFailed1(G_SYNC_WORK* pWork)
  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     _CHANGE_STATE(_networkClose);
   }
 }
@@ -1480,7 +1483,7 @@ static void _wakeupActionBoxFailed1(G_SYNC_WORK* pWork)
  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     _CHANGE_STATE(_networkClose);
   }
 }
@@ -1661,7 +1664,7 @@ static void _wakeupAction1(G_SYNC_WORK* pWork)
 
 static void _accountCreateMessage3(G_SYNC_WORK* pWork)
 {
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     ///メッセージを見たのでフラグをON
     DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
@@ -1672,7 +1675,7 @@ static void _accountCreateMessage3(G_SYNC_WORK* pWork)
 
 static void _accountCreateMessage2(G_SYNC_WORK* pWork)
 {
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, GSYNC_029);
     GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,7, 14);
     _CHANGE_STATE(_accountCreateMessage3);
@@ -1760,7 +1763,7 @@ static void _createAccount(G_SYNC_WORK* pWork)
     }
   }
   else{
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
 //    if(GFL_UI_KEY_GetTrg()){
       _CHANGE_STATE(_createAccount2);
     }
@@ -1774,7 +1777,7 @@ static void _playingEnd1(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     _CHANGE_STATE( _wakeupAction1 );
   }
 }
@@ -1805,7 +1808,7 @@ static void _playingPlaying1(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     _CHANGE_STATE(_networkClose);
   }
 }
@@ -1975,7 +1978,7 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
     }
   }
   else{
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
 //    if(GFL_UI_KEY_GetTrg()){
       _CHANGE_STATE(_ghttpInfoWait1);
     }
@@ -1996,7 +1999,7 @@ static void _BoxNullMsg2(G_SYNC_WORK* pWork)
     return;
   }
 
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
 //  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
     pWork->pParent->selectType = GSYNC_RETURNMODE_BOXNULL;
     GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
@@ -2110,7 +2113,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
     }
   }
   else{
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
 //    if(GFL_UI_KEY_GetTrg()){
       _CHANGE_STATE(_ghttpPokemonListDownload1);
     }
@@ -2133,7 +2136,7 @@ static void _upeffectLoop8(G_SYNC_WORK* pWork)
   }
   pWork->zzzCount++;
 
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+  if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     _CHANGE_STATE(_networkClose);
   }
 }
