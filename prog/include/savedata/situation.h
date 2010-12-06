@@ -13,7 +13,7 @@
 #include "gamesystem/playerwork.h"
 #include "field/location.h"
 #include "field/field_status.h"
-
+#include "field/pair_sys.h"
 
 //==============================================================================
 //	型定義
@@ -34,6 +34,15 @@ typedef struct{
   u8 move_form;     ///< PLAYER_MOVE_FORM
 }PLAYERWORK_SAVE;
 
+///PAIR_SYSTEM_WORK構造体からセーブに必要なものだけをまとめた構造体
+typedef struct{
+  u8  pair_id;
+  u8  pair_type;
+  u8  obj_id;
+  u8  obj_code;
+  u16 event_id;
+  u16 tr_id;
+}PAIRSYS_WORK_SAVE;
 
 //==============================================================================
 //	外部関数宣言
@@ -58,6 +67,8 @@ extern void SaveData_SituationUpdateSeasonID(SITUATION * st, u8 season);
 extern void SaveData_SituationLoadSeasonID(SITUATION * st, u8 * season);
 extern void SaveData_SituationUpdateWeatherID(SITUATION * st, u8 weather);
 extern void SaveData_SituationLoadWeatherID(SITUATION * st, u8 * weather);
+extern void SaveData_SituationUpdatePair(SITUATION * st, const PAIR_SYSTEM_WORK* pw);
+extern void SaveData_SituationLoadPair(SITUATION * st, PAIR_SYSTEM_WORK* pw);
 
 extern void Situation_SetEggStepCount(SITUATION * st, u32 count);
 extern void Situation_GetEggStepCount(SITUATION * st, u32 * count);

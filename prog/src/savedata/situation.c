@@ -11,6 +11,7 @@
 #include "savedata/situation.h"
 #include "gamesystem/playerwork.h"
 #include "field/field_status_local.h"
+#include "field/pair_sys.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h" // for ZONE_ID_xxxx
 
 
@@ -38,6 +39,8 @@ struct _SITUATION {
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
+  //PAIR_SYSTEM_WORKzからセーブに必要なものだけを抜粋
+  PAIRSYS_WORK_SAVE pair_sv;
 };
 
 
@@ -286,6 +289,41 @@ void SaveData_SituationUpdateWeatherID(SITUATION * st, u8 weather)
 void SaveData_SituationLoadWeatherID(SITUATION * st, u8 * weather)
 {
   *weather = st->weather_id;
+}
+//--------------------------------------------------------------
+/**
+ * @brief   PAIR_SYSTEM_WORK構造体のデータを元にSITUATIONを更新する
+ *
+ * @param   sv		セーブデータ保持ワークへのポインタ
+ * @param   pw		PLAYER_DATA
+ */
+//--------------------------------------------------------------
+void SaveData_SituationUpdatePair(SITUATION* st, const PAIR_SYSTEM_WORK *pw)
+{
+  st->pair_sv.pair_id = pw->pair_id;
+  st->pair_sv.pair_type = pw->pair_type;
+  st->pair_sv.obj_id = pw->obj_code;
+  st->pair_sv.obj_code = pw->obj_code;
+  st->pair_sv.event_id = pw->event_id;
+  st->pair_sv.tr_id = pw->tr_id;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   セーブデータからPALYER_WORKが必要な情報をロードしてくる
+ *
+ * @param   sv		セーブデータ保持ワークへのポインタ
+ * @param   pw		PLAYER_DATA
+ */
+//--------------------------------------------------------------
+void SaveData_SituationLoadPair(SITUATION* st, PAIR_SYSTEM_WORK *pw)
+{
+  pw->pair_id = st->pair_sv.pair_id;
+  pw->pair_type = st->pair_sv.pair_type;
+  pw->obj_id = st->pair_sv.obj_id;
+  pw->obj_code = st->pair_sv.obj_code;
+  pw->event_id = st->pair_sv.event_id;
+  pw->tr_id = st->pair_sv.tr_id;
 }
 
 //----------------------------------------------------------------------------

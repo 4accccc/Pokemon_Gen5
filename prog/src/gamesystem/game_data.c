@@ -257,6 +257,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //ショートカット用カーソル初期化
   SHORTCUT_CURSOR_Init( &gd->shortcut_cursor );
 
+  //連れ歩きシステムワーク生成
+  gd->pairSystem = PAIRSYS_AllocWork( heapID );
+
   GAMEDATA_SaveDataLoad(gd);  //セーブデータから必要なものをロードしてくる
 
   //遊覧船ポインタをＮＵＬＬ初期化
@@ -279,9 +282,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //ミュージカル用スクリプトワーク NULL初期化
   gd->musicalScrWork = NULL;
-
-  //連れ歩きシステムワーク生成
-  gd->pairSystem = PAIRSYS_AllocWork( heapID );
 
   //スクリプトオーバーレイ初期化
   gd->scriptCommandOverlayID  = 0;
@@ -1437,6 +1437,7 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     SITUATION * situation = gamedata->situation;
     SaveData_SituationDataLoadStatus( situation, gamedata->fldstatus );
     SaveData_SituationLoadSeasonID( situation, &gamedata->season_id );
+    SaveData_SituationLoadPair( situation, gamedata->pairSystem );
   }
   { //WIFILIST
     WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
@@ -1498,6 +1499,7 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
     SITUATION * situation = gamedata->situation;
     SaveData_SituationDataUpdateStatus( situation, gamedata->fldstatus );
     SaveData_SituationUpdateSeasonID( situation, gamedata->season_id );
+    SaveData_SituationUpdatePair( situation, gamedata->pairSystem );
   }
   { //WIFILIST
     const WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
