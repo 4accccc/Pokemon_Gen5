@@ -397,6 +397,13 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 
   }
 
+  // パレットフェードの初期化を追加 add ichiraku
+  // BD面カラーを黒にする
+  {
+    u16 dat = 0;
+    PaletteWorkSet( BTLV_EFFECT_GetPfd(), &dat, FADE_MAIN_BG, 0, 2 );
+  }
+
 #if 0
   //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
   {
