@@ -78,6 +78,30 @@
     CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | \
     CI_FADE_MASTER_BRIGHT_WHITEOUT_SUB)
 
+// VSカットイン内のテクスチャ名(トレーナー)
+#define TRGRA_TEX_NAME_UP "trsw_lead01"
+#define TRGRA_TEX_NAME_DOWN "trsw_lead02"
+#define TRGRA_PAL_NAME_UP "lead01"
+#define TRGRA_PAL_NAME_DOWN "lead02"
+
+// VSカットイン内のテクスチャ名(主人公)
+#define HEROGRA_TEX_NAME_UP "trsw_hero01"
+#define HEROGRA_TEX_NAME_DOWN "trsw_hero02"
+#define HEROGRA_PAL_NAME_UP "hero01"
+#define HEROGRA_PAL_NAME_DOWN "hero02"
+
+// VSカットイン内のテクスチャ名（WBで使用されていた定義名）
+#define WB_TRGRA_TEX_NAME "trwb_face001"      // トレーナーテクスチャ
+#define WB_TRGRA_PAL_NAME "trwb_face001_pl"   // トレーナーパレット
+#define WB_HERO_TEX_NAME  "trwb_hero_ine"     // トレーナーテクスチャ
+#define WB_HERO_PAL_NAME "trwb_hero_ine_pl"   // トレーナーパレット
+
+// 名前テクスチャ名
+#define NAMEGRA_TEX_NAME_UP "name_up"
+#define NAMEGRA_PAL_NAME_UP "name_up_pl"
+#define NAMEGRA_TEX_NAME_DOWN "name_down"
+#define NAMEGRA_PAL_NAME_DOWN "name_down_pl"
+
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
 typedef BOOL (*MAIN_SEQ_FUNC)( GMEVENT* event, FLD3D_CI_PTR ptr );
 
@@ -118,8 +142,10 @@ typedef struct POKE_WORK_tag
 typedef struct ENC_WORK_tag
 {
   int MsgIdx;
-  int ChrArcIdx;
+  int ChrArc01Idx;
+  int ChrArc02Idx;
   int PltArcIdx;
+  int PanelType;
   BOOL PlayerTrans;
 }ENC_WORK;
 
@@ -281,7 +307,8 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const char *inTexName,
                           const char *inPlttName,
                           const int inChrArcID,
-                          const int inPltArcID );
+                          const int inPltArcID,
+                          const u8 palnum );
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 
 static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx );
@@ -736,8 +763,10 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
     ENC_WORK *wk;
     wk = (ENC_WORK*)ptr->Work;
     wk->MsgIdx = dat->MsgIdx;
-    wk->ChrArcIdx = dat->ChrArcIdx;
+    wk->ChrArc01Idx = dat->ChrArc01Idx;
+    wk->ChrArc02Idx = dat->ChrArc02Idx;
     wk->PltArcIdx = dat->PltArcIdx;
+    wk->PanelType = dat->PanelType;
     if ( dat->TransType == GRA_TRANS_ALL ) wk->PlayerTrans = TRUE;
     else wk->PlayerTrans = FALSE;
   }
@@ -2159,7 +2188,8 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const char *inTexName,
                           const char *inPlttName,
                           const int inChrArcID,
-                          const int inPltArcID )
+                          const int inPltArcID ,
+                          const u8 palnum )
 {
   u32 tex_adr;
   u32 pal_adr;
@@ -2183,6 +2213,12 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
     NOZOMU_Printf("key = %d %d\n",texkey, palkey);
     NOZOMU_Printf("adr = %x %x\n",tex_adr, pal_adr);
     NOZOMU_Printf("resid = %d\n",GFL_G3D_UTIL_GetUnitResIdx( ptr->Util,0 ) );
+    ONOUE_Printf("============================================\n");
+    ONOUE_Printf("txname = %s\n",inTexName);
+    ONOUE_Printf("plname = %s\n",inPlttName);
+    ONOUE_Printf("key = %d %d\n",texkey, palkey);
+    ONOUE_Printf("adr = %x %x\n",tex_adr, pal_adr);
+    ONOUE_Printf("============================================\n\n");
     
   }
 
@@ -2222,7 +2258,9 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
     GF_ASSERT(rc);
     src = ptr->plt->pRawData;
 		dst = pal_adr;
-    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, 32);
+
+    // パレット番号分ずらした値を参照する
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, ((u8*)src + 32*palnum) , 32);
     GF_ASSERT(rc);
   }
 
@@ -2302,48 +2340,100 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
   enc_wk = (ENC_WORK*)ptr->Work;
   switch(*seq){
   case 0:
-    //相手側の画像データ転送
-    ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
-    ReTransToGra( ptr, "trwb_face001", "trwb_face001_pl", enc_wk->ChrArcIdx, enc_wk->PltArcIdx);
-    (*seq)++;
+    if( enc_wk->PanelType == CI_PANEL_4 )
+    {
+      //相手側の画像データ転送（上）
+      ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
+      ReTransToGra( ptr, TRGRA_TEX_NAME_UP , TRGRA_PAL_NAME_UP , enc_wk->ChrArc01Idx, enc_wk->PltArcIdx , 0);
+      (*seq)++;
+    }
+    else
+    {
+      //相手側の画像データ転送（上）
+      ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
+      ReTransToGra( ptr, WB_TRGRA_TEX_NAME , WB_TRGRA_PAL_NAME , enc_wk->ChrArc01Idx, enc_wk->PltArcIdx , 0);
+      (*seq) = 2;    //下側は転送しない
+    }
     break;
   case 1:
     GFL_BMP_Delete(ptr->ImgBitmap);
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
-    //相手側の文字データ転送
-    SetFont2Tex(mystatus, ptr, "name_up", "name_up_pl", enc_wk->MsgIdx );
+    //相手側の画像データ転送(下)
+    ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
+    ReTransToGra( ptr, TRGRA_TEX_NAME_DOWN , TRGRA_PAL_NAME_DOWN , enc_wk->ChrArc02Idx, enc_wk->PltArcIdx, 1);
     (*seq)++;
     break;
   case 2:
-    if ( !enc_wk->PlayerTrans ) (*seq) = 4;    //終了
+    GFL_BMP_Delete(ptr->ImgBitmap);
+    GFL_HEAP_FreeMemory( ptr->chr_buf );
+    GFL_HEAP_FreeMemory( ptr->pal_buf );
+    //相手側の文字データ転送
+    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_UP, NAMEGRA_PAL_NAME_UP, enc_wk->MsgIdx );
+    (*seq)++;
+    break;
+  case 3:
+    if ( !enc_wk->PlayerTrans ) (*seq) = 6;    //終了
     else
     {
       int chr,plt;
-      //自分側の画像データ転送
+      //自分側の画像データ転送(上)
       ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
+      
       if ( MyStatus_GetMySex(mystatus) == PM_MALE){
-        chr = NARC_enc_ci_face_enc_hero_lz_bin;
+        chr = NARC_enc_ci_face_enc_hero_01_LZ_bin;
         plt = NARC_enc_ci_face_enc_hero_nclr;
       }
       else
       {
-        chr = NARC_enc_ci_face_enc_heroine_lz_bin;
+        chr = NARC_enc_ci_face_enc_heroine_01_LZ_bin;
         plt = NARC_enc_ci_face_enc_heroine_nclr;
       }
-      ReTransToGra( ptr, "trwb_hero_ine", "trwb_hero_ine_pl", chr, plt);
+
+      // ジム以外はBWと同じテクスチャ名、パレット名で読み込む 
+      if( enc_wk->PanelType == CI_PANEL_4 )
+      {
+        ReTransToGra( ptr, HEROGRA_TEX_NAME_UP, HEROGRA_PAL_NAME_UP, chr, plt , 0);
+        (*seq)++;
+      }
+      else
+      {
+        ReTransToGra( ptr, WB_HERO_TEX_NAME ,  WB_HERO_PAL_NAME  , chr, plt , 0);
+        (*seq) = 5;
+      }
+    }
+    break;
+  case 4:
+    {
+      int chr,plt;
+      GFL_BMP_Delete(ptr->ImgBitmap);
+      GFL_HEAP_FreeMemory( ptr->chr_buf );
+      GFL_HEAP_FreeMemory( ptr->pal_buf );
+
+      //自分側の画像データ転送(下)
+      ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
+      if ( MyStatus_GetMySex(mystatus) == PM_MALE){
+        chr = NARC_enc_ci_face_enc_hero_02_LZ_bin;
+        plt = NARC_enc_ci_face_enc_hero_nclr;
+      }
+      else
+      {
+        chr = NARC_enc_ci_face_enc_heroine_02_LZ_bin;
+        plt = NARC_enc_ci_face_enc_heroine_nclr;
+      }
+      ReTransToGra( ptr, HEROGRA_TEX_NAME_DOWN, HEROGRA_PAL_NAME_DOWN, chr, plt , 1);
       (*seq)++;
     }
     break;
-  case 3:
+  case 5:
     GFL_BMP_Delete(ptr->ImgBitmap);
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
     //自分側の文字データ転送
-    SetFont2Tex(mystatus, ptr, "name_down", "name_down_pl", SPTR_PLAYER );
+    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_DOWN , NAMEGRA_PAL_NAME_DOWN , SPTR_PLAYER );
     (*seq)++;
     break;
-  case 4:
+  case 6:
     //座標セット
     VEC_Set( &ptr->Status.trans, 0, 0, -(ENC_CUTIN_MDL_Z_OFS*FX32_ONE) );
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );

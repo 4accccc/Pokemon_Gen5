@@ -3,40 +3,69 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-06-05T17:56:31" source="rival_ci01_10.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-12-06T17:25:40" source="rival_ci01.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
 <mat_color_info
-	frame_size="111"
-	tool_start_frame="0"
-	tool_end_frame="110"
+	frame_size="200"
+	tool_start_frame="1"
+	tool_end_frame="200"
 	interpolation="frame"
-	compress_material="off" material_size="3 3"
+	compress_material="off" material_size="4 4"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="113">
+<mat_color_data size="402">
 	25 0 0 0 0 0 0 0 0 0
-	0 0 0 19 31 31 16 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 8 23
-	31 31 25 13 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
+	0 0 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0
+	0 0 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31
 </mat_color_data>
 
-<mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="white">
+<mat_color_anm_array size="2">
+	<mat_color_anm index="0" material_name="vs_line_a_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -49,7 +78,22 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="111" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="200" data_head="2"/>
+	</mat_color_anm>
+	<mat_color_anm index="1" material_name="vs_line_b_1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="200" data_head="202"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 

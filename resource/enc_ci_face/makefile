@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou ohmura unno
+USERS	=	saitou ohmura unno onoue_masayuki
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -84,13 +84,18 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 $(targetname).narc: $(ARC_TARGET) $(ARC_TARGET_DATA)
 	nnsarc -cl -l -n -i $(NARCNAME) -S arc_list.txt > arc_result.txt
 
-data/%_lz.bin: data/%.ncgr
-	ntrcomp -l 2 $<
+data/%_01_LZ.bin: data/%.ncgr
+	ntrcomp -l 2 data/$*_01.ncgr
+
+data/%_02_LZ.bin: data/%.ncgr
+	ntrcomp -l 2 data/$*_02.ncgr
 
 #3Dアニメコンバート
 data/%.ncgr: data/%.ncg
-	@g2dcvtr $< -bg
-
+	@g2dcvtr $< -bg -cr/0_0_16_16
+	mv data/$*.ncgr data/$*_01.ncgr
+	@g2dcvtr $< -bg -cr/0_16_16_16
+	mv data/$*.ncgr data/$*_02.ncgr
 data/%.nclr: data/%.ncl
 	@g2dcvtr $<
 

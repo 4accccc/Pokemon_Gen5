@@ -43,13 +43,21 @@ typedef enum {
   GRA_TRANS_ENEMY,  //相手のみ転送
 }GRA_TRANS_TYPE;
 
+typedef enum {
+  CI_PANEL_4, // 4面転送
+  CI_PANEL_2, // 2面転送(WBと同じシステム)
+  CI_PANEL_MAX,
+}CI_PANEL_TYPE;
+
 typedef struct ENC_CUTIN_DAT_tag
 {
   int CutinNo;      //カットインのナンバー
-  int ChrArcIdx;   //相手側のキャラ転送データアーカイブインデックス
+  int ChrArc01Idx;   //相手側のキャラ転送データアーカイブインデックス
+  int ChrArc02Idx;   //相手側のキャラ転送データアーカイブインデックス
   int PltArcIdx;    //相手側のパレット転送データアーカイブインデックス
   int MsgIdx;       //相手側の名前データインデックス
-  GRA_TRANS_TYPE TransType;    //転送データの種類
+  GRA_TRANS_TYPE TransType;     // 転送データの種類
+  CI_PANEL_TYPE  PanelType;     // 転送するパネルタイプ
 }ENC_CUTIN_DAT;
 
 /**

@@ -74,7 +74,7 @@ ARC_TARGET_DATA = \
 	rival_ci_b.nsbmd \
 	rival_ci_a.nsbca \
 	rival_ci_a.nsbma \
-	rival_ci_a.nsbva \
+	rival_ci_a.nsbta \
 	rival_ci_b.nsbca \
 	rival_ci_b.nsbma \
 	rival_ci_b.nsbta \

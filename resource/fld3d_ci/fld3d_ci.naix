@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-06-15T16:57:51
+	Update:2010-12-06T18:35:37
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -86,7 +86,7 @@ enum {
 	NARC_fld3d_ci_rival_ci_b_nsbmd = 72,
 	NARC_fld3d_ci_rival_ci_a_nsbca = 73,
 	NARC_fld3d_ci_rival_ci_a_nsbma = 74,
-	NARC_fld3d_ci_rival_ci_a_nsbva = 75,
+	NARC_fld3d_ci_rival_ci_a_nsbta = 75,
 	NARC_fld3d_ci_rival_ci_b_nsbca = 76,
 	NARC_fld3d_ci_rival_ci_b_nsbma = 77,
 	NARC_fld3d_ci_rival_ci_b_nsbta = 78,
