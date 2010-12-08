@@ -16190,7 +16190,11 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
       #if 1
       if( checkFreeFallUsing(bpp) )
       {
-        scproc_FreeFall_CheckRelease( wk, bpp, TRUE );
+        #ifdef FREEFALL_FIX_SAFE_REMOVAL
+          GFL_STD_MemComp(wk, bpp, 1);
+        #else
+          scproc_FreeFall_CheckRelease( wk, bpp, TRUE );
+        #endif
       }
       #endif
       fFall = TRUE;
