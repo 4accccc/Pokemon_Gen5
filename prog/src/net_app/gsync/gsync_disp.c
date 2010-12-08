@@ -101,6 +101,7 @@ typedef enum
   CELL_CUR_MU,
   CELL_CUR_KAGE_MU,
   CELL_CUR_KAGE_BED,
+  CELL_CUR_WAIT_TIME,   // add ichiraku
   CELL_CUR_POKE_PLAYER,
   CELL_CUR_HAND,
   CELL_CUR_HUTON,
@@ -221,6 +222,7 @@ static _GSYNCOBJPOS_STRUCT gsyncObjPosTable[]={
   {128,160,_SMOKE_CELL_PRI},   //NANR_gsync_obj_musha    7 //
   {128,160,_SHADOW_CELL_PRI},   //NANR_gsync_obj_musha_shadow    7 //
   {128,160,_SHADOW_CELL_PRI},   //NANR_gsync_obj_bed_shadow    7 //
+  {128,30,_ZZZ_CELL_PRI},   //NANR_gsync_obj_wait_time    7 // add ichiraku
 };
 
 

@@ -638,6 +638,10 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed_ani);
 
+  // add ichiraku waitAnime非表示 _upeffectLoop3 で表示のもの
+  GSYNC_DISP_ObjEnd(pWork->pDispWork, NANR_gsync_obj_wait_time);
+  ICHI_Printf("---Wait Time Anime 非表示----\n");
+
   {
     GFL_CLWK_ANM_CALLBACK cbwk;
     cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
@@ -1444,6 +1448,11 @@ static void _wakeupAction4(G_SYNC_WORK* pWork)
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani3,NANR_gsync_obj_rug_ani2);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed_shadow);
+  
+  // add ichiraku waitAnime表示
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_wait_time);
+  ICHI_Printf("---Wait Time Anime 場所:_wakeupAction4----\n");
+
   PMSND_PlaySE(SEQ_SE_SYS_24);
 
   _CHANGE_STATE(_wakeupActio4_2);
@@ -1710,7 +1719,13 @@ static void _createAccount2(G_SYNC_WORK* pWork)
         return;
       }
     }
+
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+      
+      // add ichiraku waitAnime非表示 _createAccount で表示のもの
+      GSYNC_DISP_ObjEnd(pWork->pDispWork, NANR_gsync_obj_wait_time);
+      ICHI_Printf("---Wait Time Anime 非表示----\n");
+      
       {
         gs_response* pEvent = (gs_response*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
@@ -1756,6 +1771,11 @@ static void _createAccount(G_SYNC_WORK* pWork)
       OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d %s\n",proid,STD_StrLen(pWork->tempbuffer),pWork->tempbuffer);
       NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap),
                             pWork->tempbuffer, 12 );
+
+
+      // add ichiraku waitAnime表示
+      GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_wait_time);
+      ICHI_Printf("---Wait Time Anime 場所:_createAccount----\n");
 
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
         _CHANGE_STATE(_createAccount2);
@@ -2182,6 +2202,11 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani3);
+
+  // add ichiraku waitAnime非表示 _wakeupAction4 で表示のもの
+  GSYNC_DISP_ObjEnd(pWork->pDispWork, NANR_gsync_obj_wait_time);
+  ICHI_Printf("---Wait Time Anime 非表示----\n");
+
   PMSND_PlaySE(SEQ_SE_SYS_25);
 
   _CHANGE_STATE(_upeffectLoop7);
@@ -2416,6 +2441,10 @@ static void _upeffectLoop3(G_SYNC_WORK* pWork)
     GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani2);
     GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed);
     GSYNC_DISP_ObjInit(pWork->pDispWork,NANR_gsync_obj_bed_shadow);
+
+    // add ichiraku
+    GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_wait_time);
+    ICHI_Printf("---Wait Time Anime 場所:_upeffectLoop3----\n");
 
     PMSND_PlaySE(SEQ_SE_SYS_24);
 
