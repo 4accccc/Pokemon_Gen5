@@ -125,7 +125,6 @@ extern void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk );
 extern void FIELD_FOG_DEBUG_PrintData( FIELD_FOG_WORK* p_wk, GFL_BMPWIN* p_win );
 #endif
 
-
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

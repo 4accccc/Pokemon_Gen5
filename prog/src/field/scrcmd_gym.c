@@ -41,57 +41,7 @@
 //--電気--
 //--------------------------------------------------------------
 /**
- * 電気ジムスイッチ押下
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymElec_PushSw( VMHANDLE *core, void *wk )
-{
-  u8 sw_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  sw_idx = VMGetU16( core );
-
-  call_event = GYM_ELEC_ChangePoint(gsys, sw_idx);
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );
-  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * 電気ジムカプセルトレーナー処理ご処理
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymElec_SetTrEncFlg( VMHANDLE *core, void *wk )
-{
-  u8 cap_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  cap_idx = VMGetU16( core );
-  GYM_ELEC_SetTrEncFlg(gsys, cap_idx);
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 電気ジム環境ＳＥ初期化
+ * @brief 電気ジム環境ＳＥ初期化
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
@@ -101,7 +51,78 @@ VMCMD_RESULT EvCmdGymElec_InitSe( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  GYM_ELEC_InitSe( gsys );
+  //GYM_ELEC_InitSe( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スポットライトを設定
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk )
+{
+  u8 sw_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  sw_idx = VMGetU16( core );
+
+  /*
+  call_event = GYM_ELEC_ChangePoint(gsys, sw_idx);
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );
+  */
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief フェードアウトイベントを開始
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymElec_CallFadeoutEvent( VMHANDLE *core, void *wk )
+{
+  u8 cap_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  cap_idx = VMGetU16( core );
+ // GYM_ELEC_SetTrEncFlg(gsys, cap_idx);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ショーアップイベントを開始
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymElec_CallShowupEvent( VMHANDLE *core, void *wk )
+{
+  u8 cap_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  cap_idx = VMGetU16( core );
+ // GYM_ELEC_SetTrEncFlg(gsys, cap_idx);
 
   return VMCMD_RESULT_CONTINUE;
 }

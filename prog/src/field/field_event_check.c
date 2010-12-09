@@ -2137,7 +2137,7 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
         req->heapID, ZONEDATA_GetMapRscID(req->map_id));
   }
 
-#if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_takahashi) | defined(DEBUG_ONLY_FOR_hozumi_yukiko) | defined(DEBUG_ONLY_FOR_iwao_kazumasa) | defined(DEBUG_ONLY_FOR_murakami_naoto) | defined(DEBUG_ONLY_FOR_nakamura_akira) | defined(DEBUG_ONLY_FOR_suginaka_katsunori)
+#if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_takahashi) | defined(DEBUG_ONLY_FOR_hozumi_yukiko) | defined(DEBUG_ONLY_FOR_iwao_kazumasa) | defined(DEBUG_ONLY_FOR_murakami_naoto) | defined(DEBUG_ONLY_FOR_nakamura_akira) | defined(DEBUG_ONLY_FOR_suginaka_katsunori) | defined(DEBUG_ONLY_FOR_toru_nagihashi)
   // レールエディタ起動
   if( (req->key_cont & railCont) == railCont )
   {
@@ -2474,7 +2474,7 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
       {
         if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_ELEC) )
         { //電気ジム
-          return GYM_ELEC_CreateMoveEvt(gsys);
+//          return GYM_ELEC_CreateMoveEvt(gsys);
         }
         else if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_FLY) )
         { //飛行ジム

@@ -6707,30 +6707,44 @@
 
 //--------------------------------------------------------------
 /**
- * ジムコマンド　電気ジムスイッチ
- * @param sw_idx   スイッチインデックス0～3
+ * ジムコマンド　 スポットライト設定
+ *  @param  on_off  TRUEならばスポットライトON,  FALSEならばスポットライトOFF
+ *  @param  objID   スポットライトをあてるobjID
  */
 //--------------------------------------------------------------
-#define _GYM_ELEC_PUSH_SW( sw_idx ) \
-    _ASM_GYM_ELEC_PUSH_SW sw_idx 
+#define _GYM_ELEC_SET_SPOTLIGHT( on_off, objID ) \
+    _ASM_GYM_ELEC_SET_SPOTLIGHT on_off, objID 
 
-  .macro  _ASM_GYM_ELEC_PUSH_SW sw_idx
-  .short  EV_SEQ_GYM_ELEC_PUSH_SW
-  .short  \sw_idx
+  .macro  _ASM_GYM_ELEC_SET_SPOTLIGHT on_off, objID
+  .short  EV_SEQ_GYM_ELEC_SET_SPOT_LIGHT
+  .short  \on_off
+  .short  \objID
   .endm
 
 //--------------------------------------------------------------
 /**
- * ジムコマンド　電気ジムカプセルトレーナー戦勝利後処理
- * @param cap_idx   一人目に勝利のとき：1　二人目に勝利のとき：2
+ * @brief ジムコマンド　影のフェードアウトイベント開始
+ * @param  phase  一人目に勝利のとき：1　二人目に勝利のとき：2
  */
 //--------------------------------------------------------------
-#define _GYM_ELEC_SET_TR_ENC_FLG( cap_idx ) \
-    _ASM_GYM_ELEC_SET_TR_ENC_FLG cap_idx 
+#define _GYM_ELEC_CALL_FADEOUT_EVENT( phase ) \
+    _ASM_GYM_ELEC_CALL_FADEOUT_EVENT phase
 
-  .macro  _ASM_GYM_ELEC_SET_TR_ENC_FLG cap_idx
-  .short  EV_SEQ_GYM_ELEC_SET_TR_ENC_FLG
-  .short  \cap_idx
+  .macro  _ASM_GYM_ELEC_CALL_FADEOUT_EVENT phase
+  .short  EV_SEQ_GYM_ELEC_CALL_FADEOUT_EVENT
+  .short  \phase
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ジムコマンド　カミツレ用ショーアップイベント開始
+ */
+//--------------------------------------------------------------
+#define _GYM_ELEC_CALL_SHOWUP_EVENT() \
+    _ASM_GYM_ELEC_CALL_SHOWUP_EVENT
+
+  .macro  _ASM_GYM_ELEC_CALL_SHOWUP_EVENT
+  .short  EV_SEQ_GYM_ELEC_CALL_SHOWUP_EVENT
   .endm
 
 //--------------------------------------------------------------

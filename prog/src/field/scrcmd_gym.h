@@ -11,9 +11,10 @@
 //  extern 
 //======================================================================
 extern VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdGymElec_PushSw( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdGymElec_SetTrEncFlg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymElec_InitSe( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymElec_CallFadeoutEvent( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymElec_CallShowupEvent( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymNormal_Unrock( VMHANDLE *core, void *wk );

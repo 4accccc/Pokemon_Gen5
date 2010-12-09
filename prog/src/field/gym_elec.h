@@ -10,12 +10,11 @@
 #pragma once
 #include "field/fieldmap_proc.h"  //for FIELDMAP_WORK
 
-extern void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork);
-extern void GYM_ELEC_End(FIELDMAP_WORK *fieldWork);
-extern void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork);
+extern void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap);
+extern void GYM_ELEC_End(FIELDMAP_WORK *p_fieldmap);
+extern void GYM_ELEC_Move(FIELDMAP_WORK *p_fieldmap);
 
-extern void GYM_ELEC_InitSe( GAMESYS_WORK *gsys );
-
-extern GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx);
-extern GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys);
-extern void GYM_ELEC_SetTrEncFlg(GAMESYS_WORK *gsys, const int inCapIdx);
+extern void GYM_ELEC_InitSe( GAMESYS_WORK *p_gamesys );
+extern GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys );
+extern GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, s16 phase );
+extern void GYM_ELEC_SetSpotLight( FIELDMAP_WORK *p_fieldmap, BOOL is_visible, u16 objID );

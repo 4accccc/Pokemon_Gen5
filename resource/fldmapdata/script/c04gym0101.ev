@@ -324,7 +324,7 @@ ev_trainer_disp_02:
 //ジムギミックposイベント：スタート地点（逆Ｌ字）
 EVENT_START	ev_pos_c04gym0101_sw1
 	//LOCALWORK11==0で起動
-	_GYM_ELEC_PUSH_SW(0)
+	//_GYM_ELEC_PUSH_SW(0)
 	//システムメッセージ呼び出し：コースが変わった！
 	_CALL	ev_swich_message
 EVENT_END
@@ -333,7 +333,7 @@ EVENT_END
 //ジムギミックposイベント：第２地点（逆コの字）
 EVENT_START	ev_pos_c04gym0101_sw2
 	//LOCALWORK12==0で起動
-	_GYM_ELEC_PUSH_SW(1)
+	//_GYM_ELEC_PUSH_SW(1)
 	_CALL	ev_swich_message
 EVENT_END
 
@@ -341,7 +341,7 @@ EVENT_END
 //ジムギミックposイベント：第３地点（一の字）
 EVENT_START	ev_pos_c04gym0101_sw3
 	//LOCALWORK13==0で起動
-	_GYM_ELEC_PUSH_SW(2)
+	//_GYM_ELEC_PUSH_SW(2)
 	_CALL	ev_swich_message
 EVENT_END
 
@@ -349,7 +349,7 @@ EVENT_END
 //ジムギミックposイベント：リーダー前（逆Ｔ字）
 EVENT_START	ev_pos_c04gym0101_sw4
 	//LOCALWORK14==0で起動
-	_GYM_ELEC_PUSH_SW(3)
+	//_GYM_ELEC_PUSH_SW(3)
 	_CALL	ev_swich_message
 EVENT_END
 
@@ -444,14 +444,14 @@ EVENT_START	ev_prg_c04gym0101_scr02
 		_CALL		ev_trainer_btl_01
 
 		//トレーナー戦後のプログラム処理へ（１人目）
-		_GYM_ELEC_SET_TR_ENC_FLG( 1 )
+		//_GYM_ELEC_SET_TR_ENC_FLG( 1 )
 
 	ELSE
 		//２台目なら
 		_CALL		ev_trainer_btl_02
 
 		//トレーナー戦後のプログラム処理へ（２人目）
-		_GYM_ELEC_SET_TR_ENC_FLG( 2 )
+		//_GYM_ELEC_SET_TR_ENC_FLG( 2 )
 
 	ENDIF
 

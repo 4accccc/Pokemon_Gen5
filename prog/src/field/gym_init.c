@@ -64,13 +64,6 @@ void GYM_INIT_Elec(GAMESYS_WORK *gsys, const u16 inEvtFlgBtl1, const u16 inEvtFl
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
 
-  //トレーナー戦進捗状況をセット
-  if (inEvtFlgBtl1){
-    gmk_sv_work->EvtFlg[0] = 1;
-  }
-  if (inEvtFlgBtl2){
-    gmk_sv_work->EvtFlg[1] = 1;
-  }
 }
 
 //--------------------------------------------------------------

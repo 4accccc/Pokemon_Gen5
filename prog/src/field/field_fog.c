@@ -675,6 +675,8 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
 {
   s32 offset = FIELD_FOG_GetOffset(p_wk);
   s32 slope = FIELD_FOG_GetSlope(p_wk);
+  s32 alpha = FIELD_FOG_GetColorA(p_wk);
+  GXRgb rgb = FIELD_FOG_GetColorRgb(p_wk);
 
   // FOGON
   FIELD_FOG_SetFlag( p_wk, TRUE );
@@ -740,7 +742,79 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
     }
   }
 
-  if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_X) )
+  //RGB
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    u8  r = (rgb & GX_RGB_R_MASK) >> GX_RGB_R_SHIFT;
+    u8  g = (rgb & GX_RGB_G_MASK) >> GX_RGB_G_SHIFT;
+    u8  b = (rgb & GX_RGB_B_MASK) >> GX_RGB_B_SHIFT;
+    
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      if( (r + 1) < 31 )
+      {
+        r++;
+      }
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      if( (g + 1) < 31 )
+      {
+        g++;
+      }
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      if( (b + 1) < 31 )
+      {
+        b++;
+      }
+    }
+
+    rgb = GX_RGB( r,g,b);
+
+    if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+    {
+      FIELD_FOG_SetColorRgb( p_wk, rgb );
+    }
+  }  
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    u8  r = (rgb & GX_RGB_R_MASK) >> GX_RGB_R_SHIFT;
+    u8  g = (rgb & GX_RGB_G_MASK) >> GX_RGB_G_SHIFT;
+    u8  b = (rgb & GX_RGB_B_MASK) >> GX_RGB_B_SHIFT;
+    
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      if( (r - 1) >= 0 )
+      {
+        r--;
+      }
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      if( (g - 1) >= 0 )
+      {
+        g--;
+      }
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      if( (b - 1) >= 0 )
+      {
+        b--;
+      }
+    }
+
+    rgb = GX_RGB( r,g,b);
+
+    if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+    {
+      FIELD_FOG_SetColorRgb( p_wk, rgb );
+    }
+  }
+  //スロープ
+  else if( GFL_UI_KEY_GetTrg() == (PAD_BUTTON_A) )
   {
     if( (slope + 1) < FIELD_FOG_SLOPE_MAX )
     {
@@ -751,7 +825,7 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
       FIELD_FOG_SetSlope( p_wk, slope );
     }
   }
-  else if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_B|PAD_BUTTON_Y) )
+  else if( GFL_UI_KEY_GetTrg() == (PAD_BUTTON_B) )
   {
     if( (slope - 1) >= 0 )
     {
@@ -760,6 +834,43 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
     if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
     {
       FIELD_FOG_SetSlope( p_wk, slope );
+    }
+  }
+  //アルファ
+  else if( GFL_UI_KEY_GetTrg() == (PAD_BUTTON_Y) )
+  {
+    if( (alpha + 1) < 31 )
+    {
+      alpha ++;
+    }
+    if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+    {
+      FIELD_FOG_SetColorA( p_wk, alpha );
+    }
+  }
+  else if( GFL_UI_KEY_GetTrg() == (PAD_BUTTON_X) )
+  {
+    if( (alpha - 1) >= 0 )
+    {
+      alpha --;
+    }
+    if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+    {
+      FIELD_FOG_SetColorA( p_wk, alpha );
+    }
+  } 
+  //テーブルのデバッグ出力
+  else if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START )
+  {
+    int i;
+      OS_Printf( "▼fog table=\n" );
+    for( i = 0; i < FIELD_FOG_TBL_MAX; i++ )
+    {
+      OS_Printf( "0x%x,", p_wk->fog_tbl[ i ] );
+      if( (i+1) % 8 == 0 )
+      {
+        OS_Printf("\n");
+      }
     }
   }
 
@@ -832,6 +943,27 @@ void FIELD_FOG_DEBUG_PrintData( FIELD_FOG_WORK* p_wk, GFL_BMPWIN* p_win )
   {
     GFL_BMP_Fill( GFL_BMPWIN_GetBmp( p_win ), 16 + (p_wk->fog_tbl[i]/3), 48 + i, 1, 1, 0xf );
   }
+
+
+
+  //カラーを表示
+  {
+    GXRgb rgb = FIELD_FOG_GetColorRgb(p_wk);
+    u8  r = (rgb & GX_RGB_R_MASK) >> GX_RGB_R_SHIFT;
+    u8  g = (rgb & GX_RGB_G_MASK) >> GX_RGB_G_SHIFT;
+    u8  b = (rgb & GX_RGB_B_MASK) >> GX_RGB_B_SHIFT;
+    WORDSET_RegisterNumber( p_wk->p_debug_wordset, 2, r, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( p_wk->p_debug_wordset, 3, g, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( p_wk->p_debug_wordset, 4, b, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  }
+
+  //アルファを表示
+  WORDSET_RegisterNumber( p_wk->p_debug_wordset, 5, FIELD_FOG_GetColorA(p_wk), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+  GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_FOG_COLOR, p_wk->p_debug_strbuff_tmp );
+
+  WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 80, p_wk->p_debug_strbuff, p_wk->p_debug_font );
 
   GFL_BMPWIN_TransVramCharacter( p_win );
 }
