@@ -266,10 +266,13 @@ struct _MODEL
 ///	データ
 //=====================================
 static const GFL_G3D_UTIL_SETUP Setup = {
+  0
+  /*
   g3Dutil_resTbl,				//リソーステーブル
 	NELEMS(g3Dutil_resTbl),		//リソース数
 	g3Dutil_objTbl,				//オブジェクト設定テーブル
 	NELEMS(g3Dutil_objTbl),		//オブジェクト数
+  */
 };
 
 //----------------------------------------------------------------------------
@@ -287,7 +290,7 @@ static MODEL * MODEL_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID )
   MODEL *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(MODEL));
   p_wk->p_ex_obj  = p_ex_obj;
 
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, MODEL_FLD_EXP_OBJ_UNIT_ID );
+  FLD_EXP_OBJ_AddUnit(p_wk->p_ex_obj, &Setup, MODEL_FLD_EXP_OBJ_UNIT_ID );
   return p_wk;
 }
 //----------------------------------------------------------------------------
