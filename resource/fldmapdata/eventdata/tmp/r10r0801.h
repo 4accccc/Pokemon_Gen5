@@ -10,7 +10,6 @@
 #ifndef ZONE_R10R0801_EVC_H
 #define ZONE_R10R0801_EVC_H
 
-#define R10R0801_VETERANM                  0
 
 #endif //ZONE_R10R0801_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r10r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

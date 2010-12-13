@@ -5,10 +5,6 @@
 #define _D06_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D06_STOPPER_01 (1)
-#define SCRID_INIT_D06 (2)
-#define SCRID_RECOVER_D06 (3)
-#define SCRID_ZONE_D06 (4)
-#define SCRID_BG_D06_SIGN1_01 (5)
+#define SCRID_BG_D06_SIGN1_01 (1)
 
 #endif //_D06_DEF_H_

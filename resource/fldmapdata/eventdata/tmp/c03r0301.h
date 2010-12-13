@@ -9,9 +9,6 @@
 #ifndef ZONE_C03R0301_EVC_H
 #define ZONE_C03R0301_EVC_H
 
-#define C03R0301_INFOMATIONW_01            0
-#define C03R0301_CLEANINGM_01              1
-#define C03R0301_BUSINESSMAN_01            2
 
 #endif //ZONE_C03R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

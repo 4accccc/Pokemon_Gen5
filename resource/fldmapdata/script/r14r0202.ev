@@ -19,21 +19,4 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r14r0202_cleaningm_01
 _EVENT_DATA_END
-
-
-/**************************************************************/
-/*POLICEMAN                                             */
-/**************************************************************/
-EVENT_START   ev_r14r0202_cleaningm_01
-
-	IF FLAG_ON( FE_R14R0201_LEG_MEET ) THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0202_oldman_03 )
-	ELSIF $WK_SCENE_R14R0201_LEG == 2 THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0202_oldman_02 )
-	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0202_oldman_01 )
-	ENDIF
-	
-EVENT_END

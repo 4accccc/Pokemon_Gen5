@@ -717,245 +717,245 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_debug_murakami
-
-		DEFINE_LOCAL	LWK_POSX
-		DEFINE_LOCAL	LWK_POSZ
-		
-		//メニュー作成
-		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
-		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_01, 1 )	//C02ストーン入手イベント
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_03, 2 )	//デンチュラの巣を破壊
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_06, 3 )	//電気石の洞穴_Nとの対戦
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_02, 4 )	//リュウラセン最初から
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_05, 5 )	//リュウラセン塔を揺らす
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_04, 6 )	//リュウラセンシンムデモ
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_07, 7 )	//C02博物館盗難イベント(博物館内)
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_08, 8 )	//C02博物館盗難イベント(博物館外)
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_09, 9 )	//C02ライバル　ポケセン誘導
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_10, 10 )	//C02　N戦
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_11, 11 )	//R02ランニングシューズ入手
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_12, 12 )	//R02のサポート戦
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_14, 13 )	//電気石の洞穴/ダークトリニティ
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_13, 14 )	//電気石の洞穴/ダークトリニティとN
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_15, 15 )	//電気石の洞穴/サポート博士①
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_16, 16 )	//リュウラセンの塔が揺れる１階
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_17, 17 )	//８番道路のサポート戦
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_18, 18 )	//C02盗難イベント
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_19, 19 )	//テスト用
-		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
-		//メニュー表示
-		_BMPMENU_START()
-		
-		//C02　ストーン入手イベント
-		IF $SCWK_TEMP1 == 1 THEN
-
-			//C02の博士（父、娘）、チャンピオン、ジムリーダー、サポートを表示
-			_FLAG_RESET(FV_C02_STONEEVENT_01)
-			_FLAG_RESET(FV_C02_STONEEVENT_02)	
-					
-			_OBJ_ADD( C02_CHAMPION_01 ) 
-			_OBJ_ADD( C02_HAKASE1_01 ) 
-			_OBJ_ADD( C02_HAKASE2_01 ) 
-			_OBJ_ADD( C02_SUPPORT_02 ) 
-			_OBJ_ADD( C02_LEADER02_01 ) 
-	
-			//C02でのライトストーン、ダークストーンのイベント有効
-			$WK_SCENE_C02 = 6
-			  
-			_MAP_CHANGE( ZONE_ID_C02, 644, 587, DIR_UP )
-		
-
-		//デンチュラの巣を破壊する		
-		ELSIF $SCWK_TEMP1 == 2 THEN
-			
-			//フラグ操作：D06電気洞窟前のPOSイベント起動（電気洞窟ストッパー解除）
-			$WK_SCENE_D06 = 1
-			_FLAG_RESET(FV_D06_STOPPER_01)
-			_OBJ_ADD( D06_STOPPER_01 )
-
-			_MAP_CHANGE( ZONE_ID_D06, 107, 343, DIR_UP )
-/*
-			_TIME_WAIT(90)
-			
-			//ヤーコンのポケモンが出現
-			_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE17, MV_DMY )
-			
-			//ポケモンが巣に向かう
-			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
-			_OBJ_ANIME_WAIT()
-			
-			//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
-			//ポケモンがわざを出したような処理
-			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
-			_OBJ_ANIME_WAIT()
-										
-			_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
-			_OBJ_ANIME_WAIT()
-			
-			_OBJ_DEL( D06_STOPPER_01 )
-*/		
-		//電気石の洞穴_Nとの対戦	
-		ELSIF $SCWK_TEMP1 == 3  THEN
-			//POSを踏むホワイトを表示する。
-			//POSを踏む博士2を表示する。
-			_FLAG_RESET(FV_D06R0101_FRIENDS)
-			_FLAG_RESET(FV_D06R0201_BOSS_01)
-			
-			$WK_SCENE_D06R0101 = 4			
-			
-			_MAP_CHANGE( ZONE_ID_D06R0101, 63, 13, DIR_LEFT)
-
-		//リュウラセンイベント最初から
-		ELSIF $SCWK_TEMP1 == 4 THEN
-			
-			//イベント関係者を表示
-			_FLAG_RESET(FV_D08R0901_BOSS_01)
-			_FLAG_RESET(FV_D08R0801_EVENT_01)
-			_FLAG_RESET(FV_D08R0901_EVENT_01)
-			_FLAG_RESET(FV_D08R0601_EVENT_01)
-			_FLAG_RESET(FV_D08_HAKASE1_01)
-			_FLAG_RESET(FV_D08_RIVAL_01)
-			
-			//d08r0101のマップを入り口が破壊されたマップに差し替える
-			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
-			
-			_MAP_CHANGE( ZONE_ID_D08, 180, 148, DIR_UP )
-			$WK_SCENE_D08_LEGEND = 1
-		
-		//リュウラセン/6F/塔揺れるデモ	
-		ELSIF $SCWK_TEMP1 == 5 THEN
-			
-			$WK_SCENE_D08_LEGEND  = 6
-			_MAP_CHANGE( ZONE_ID_D08R0801, 15, 27, DIR_UP )
-		
-		//リュウラセン/シンムデモ・アニメ	
-		ELSIF $SCWK_TEMP1 == 6 THEN
-		
-			$WK_SCENE_D08_LEGEND  = 8
-			_FLAG_RESET(FV_D08R0901_BOSS_01)
-			_FLAG_RESET(FV_D08_HAKASE1_01)
-			_OBJ_ADD(D08R0901_BOSS_01)
-			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
-		
-		//C02GYM0101盗難イベント（博物館内）	
-		ELSIF $SCWK_TEMP1 == 7 THEN
-//			_FLAG_RESET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
+//
+//		DEFINE_LOCAL	LWK_POSX
+//		DEFINE_LOCAL	LWK_POSZ
+//		
+//		//メニュー作成
+//		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
+//		//リスト追加
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_01, 1 )	//C02ストーン入手イベント
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_03, 2 )	//デンチュラの巣を破壊
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_06, 3 )	//電気石の洞穴_Nとの対戦
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_02, 4 )	//リュウラセン最初から
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_05, 5 )	//リュウラセン塔を揺らす
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_04, 6 )	//リュウラセンシンムデモ
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_07, 7 )	//C02博物館盗難イベント(博物館内)
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_08, 8 )	//C02博物館盗難イベント(博物館外)
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_09, 9 )	//C02ライバル　ポケセン誘導
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_10, 10 )	//C02　N戦
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_11, 11 )	//R02ランニングシューズ入手
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_12, 12 )	//R02のサポート戦
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_14, 13 )	//電気石の洞穴/ダークトリニティ
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_13, 14 )	//電気石の洞穴/ダークトリニティとN
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_15, 15 )	//電気石の洞穴/サポート博士①
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_16, 16 )	//リュウラセンの塔が揺れる１階
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_17, 17 )	//８番道路のサポート戦
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_18, 18 )	//C02盗難イベント
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_19, 19 )	//テスト用
+//		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
+//		//メニュー表示
+//		_BMPMENU_START()
+//		
+//		//C02　ストーン入手イベント
+//		IF $SCWK_TEMP1 == 1 THEN
+//
+//			//C02の博士（父、娘）、チャンピオン、ジムリーダー、サポートを表示
+//			_FLAG_RESET(FV_C02_STONEEVENT_01)
+//			_FLAG_RESET(FV_C02_STONEEVENT_02)	
+//					
+//			_OBJ_ADD( C02_CHAMPION_01 ) 
+//			_OBJ_ADD( C02_HAKASE1_01 ) 
+//			_OBJ_ADD( C02_HAKASE2_01 ) 
+//			_OBJ_ADD( C02_SUPPORT_02 ) 
+//			_OBJ_ADD( C02_LEADER02_01 ) 
+//	
+//			//C02でのライトストーン、ダークストーンのイベント有効
+//			$WK_SCENE_C02 = 6
+//			  
+//			_MAP_CHANGE( ZONE_ID_C02, 644, 587, DIR_UP )
+//		
+//
+//		//デンチュラの巣を破壊する		
+//		ELSIF $SCWK_TEMP1 == 2 THEN
+//			
+//			//フラグ操作：D06電気洞窟前のPOSイベント起動（電気洞窟ストッパー解除）
+//			$WK_SCENE_D06 = 1
+//			_FLAG_RESET(FV_D06_STOPPER_01)
+//			_OBJ_ADD( D06_STOPPER_01 )
+//
+//			_MAP_CHANGE( ZONE_ID_D06, 107, 343, DIR_UP )
+///*
+//			_TIME_WAIT(90)
+//			
+//			//ヤーコンのポケモンが出現
+//			_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE17, MV_DMY )
+//			
+//			//ポケモンが巣に向かう
+//			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
+//			_OBJ_ANIME_WAIT()
+//			
+//			//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
+//			//ポケモンがわざを出したような処理
+//			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
+//			_OBJ_ANIME_WAIT()
+//										
+//			_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
+//			_OBJ_ANIME_WAIT()
+//			
+//			_OBJ_DEL( D06_STOPPER_01 )
+//*/		
+//		//電気石の洞穴_Nとの対戦	
+//		ELSIF $SCWK_TEMP1 == 3  THEN
+//			//POSを踏むホワイトを表示する。
+//			//POSを踏む博士2を表示する。
+//			_FLAG_RESET(FV_D06R0101_FRIENDS)
+//			_FLAG_RESET(FV_D06R0201_BOSS_01)
+//			
+//			$WK_SCENE_D06R0101 = 4			
+//			
+//			_MAP_CHANGE( ZONE_ID_D06R0101, 63, 13, DIR_LEFT)
+//
+//		//リュウラセンイベント最初から
+//		ELSIF $SCWK_TEMP1 == 4 THEN
+//			
+//			//イベント関係者を表示
+//			_FLAG_RESET(FV_D08R0901_BOSS_01)
+//			_FLAG_RESET(FV_D08R0801_EVENT_01)
+//			_FLAG_RESET(FV_D08R0901_EVENT_01)
+//			_FLAG_RESET(FV_D08R0601_EVENT_01)
+//			_FLAG_RESET(FV_D08_HAKASE1_01)
+//			_FLAG_RESET(FV_D08_RIVAL_01)
+//			
+//			//d08r0101のマップを入り口が破壊されたマップに差し替える
+//			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+//			
+//			_MAP_CHANGE( ZONE_ID_D08, 180, 148, DIR_UP )
+//			$WK_SCENE_D08_LEGEND = 1
+//		
+//		//リュウラセン/6F/塔揺れるデモ	
+//		ELSIF $SCWK_TEMP1 == 5 THEN
+//			
+//			$WK_SCENE_D08_LEGEND  = 6
+//			_MAP_CHANGE( ZONE_ID_D08R0801, 15, 27, DIR_UP )
+//		
+//		//リュウラセン/シンムデモ・アニメ	
+//		ELSIF $SCWK_TEMP1 == 6 THEN
+//		
+//			$WK_SCENE_D08_LEGEND  = 8
+//			_FLAG_RESET(FV_D08R0901_BOSS_01)
+//			_FLAG_RESET(FV_D08_HAKASE1_01)
+//			_OBJ_ADD(D08R0901_BOSS_01)
+//			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
+//		
+//		//C02GYM0101盗難イベント（博物館内）	
+//		ELSIF $SCWK_TEMP1 == 7 THEN
+////			_FLAG_RESET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
+////			_FLAG_RESET(FV_C02_POSEVENT_01)
+//
+//			//盗難イベント開始
+//			_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
+//			_FLAG_SET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
+//			_FLAG_RESET( FV_D02R0101_LEADER3 )	//盗難イベント用アーティ表示
+//			_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除	
+//			_FLAG_RESET( FV_D02_LEADER3 )	//D02のジムリーダー3を表示	
+//			_FLAG_SET( FE_ELBOARD_C02GYMWIN )	//電光掲示板のニュースをセット
+//			_FLAG_RESET(FV_C02GYM0101_HAKAI)	//博物館のプラズマ団を表示
+//			_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
+//			_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
+//			_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
+//			_FLAG_RESET(FV_MUSEUM_TOUNAN)	//骨を表示
+//			
+//			//盗難事件のPOSイベントを有効にする
+//			//C02gym0101のイベント
+//			$WK_SCENE_C02GYM0101  = 2 
+//			
+//			//D02のイベント
+//			$WK_SCENE_D02 = 1
+//			
+//			//C02のイベント
+//			$WK_SCENE_C02 = 3
+//			
+//			//マップチェンジ
+//			_MAP_CHANGE( ZONE_ID_C02GYM0101, 12, 3, DIR_DOWN )
+//		
+//		//C02博物館盗難イベント（博物館外）
+//		ELSIF $SCWK_TEMP1 == 8 THEN
+//		
+//			//盗難イベント開始
+//			_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
+//			_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
+//			_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
+//			_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
+//			_FLAG_RESET(FV_MUSEUM_TOUNAN)	//骨を表示
+//			
+//			//D02のイベント
+//			$WK_SCENE_D02 = 1
+//			
+//			//C02のイベント
+//			$WK_SCENE_C02 = 3
+//			
+//			//マップチェンジ
+//			_MAP_CHANGE( ZONE_ID_C02GYM0101, 12,27, DIR_DOWN )
+//
+//		ELSIF $SCWK_TEMP1 == 9 THEN
+//			//POSイベントを有効に
+//			$WK_SCENE_C02 = 0
+//			//ライバル・サポート・アーティを消す
 //			_FLAG_RESET(FV_C02_POSEVENT_01)
-
-			//盗難イベント開始
-			_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
-			_FLAG_SET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
-			_FLAG_RESET( FV_D02R0101_LEADER3 )	//盗難イベント用アーティ表示
-			_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除	
-			_FLAG_RESET( FV_D02_LEADER3 )	//D02のジムリーダー3を表示	
-			_FLAG_SET( FE_ELBOARD_C02GYMWIN )	//電光掲示板のニュースをセット
-			_FLAG_RESET(FV_C02GYM0101_HAKAI)	//博物館のプラズマ団を表示
-			_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
-			_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
-			_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
-			_FLAG_RESET(FV_MUSEUM_TOUNAN)	//骨を表示
-			
-			//盗難事件のPOSイベントを有効にする
-			//C02gym0101のイベント
-			$WK_SCENE_C02GYM0101  = 2 
-			
-			//D02のイベント
-			$WK_SCENE_D02 = 1
-			
-			//C02のイベント
-			$WK_SCENE_C02 = 3
-			
-			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_C02GYM0101, 12, 3, DIR_DOWN )
-		
-		//C02博物館盗難イベント（博物館外）
-		ELSIF $SCWK_TEMP1 == 8 THEN
-		
-			//盗難イベント開始
-			_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
-			_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
-			_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
-			_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
-			_FLAG_RESET(FV_MUSEUM_TOUNAN)	//骨を表示
-			
-			//D02のイベント
-			$WK_SCENE_D02 = 1
-			
-			//C02のイベント
-			$WK_SCENE_C02 = 3
-			
-			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_C02GYM0101, 12,27, DIR_DOWN )
-
-		ELSIF $SCWK_TEMP1 == 9 THEN
-			//POSイベントを有効に
-			$WK_SCENE_C02 = 0
-			//ライバル・サポート・アーティを消す
-			_FLAG_RESET(FV_C02_POSEVENT_01)
-			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_C02, 668, 599, DIR_LEFT )
-		
-		ELSIF $SCWK_TEMP1 == 10 THEN
-			//POSイベントを有効に
-			$WK_SCENE_C02 = 1
-			//ライバル・サポート・アーティを消す
-			_FLAG_RESET(FV_C02_POSEVENT_01)
-			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_C02, 644, 586, DIR_UP )
-			
-		ELSIF $SCWK_TEMP1 == 11 THEN
-			//R02のランニングシューズイベントを有効にする
-			$WK_SCENE_R02 = 0
-			_MAP_CHANGE( ZONE_ID_R02, 760, 648, DIR_LEFT)
-
-		ELSIF $SCWK_TEMP1 == 12 THEN
-			//R02のサポートイベントを有効にする
-			$WK_SCENE_R02 = 1
-
-		ELSIF $SCWK_TEMP1 == 13 THEN
-			//電気石ダークトリニティのイベント②
-			$WK_SCENE_D06R0101 = 3
-			_OBJ_ADD(D06R0101_NINJA_01)
-			_OBJ_ADD(D06R0101_NINJA_02)
-			_OBJ_ADD(D06R0101_NINJA_03)
-			
-		ELSIF $SCWK_TEMP1 == 14 THEN
-			//電気石ダークトリニティのイベント①
-			$WK_SCENE_D06R0101 = 0
-			
-			_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)	
-
-		ELSIF $SCWK_TEMP1 == 15 THEN
-			$WK_SCENE_D06R0101 = 1
-			//博士とサポートを出現
-			_FLAG_RESET(FV_D06R0101_FRIENDS)
-			_OBJ_ADD( D06R0101_HEROINE_01 )
-			_OBJ_ADD( D06R0101_HAKASE2_01 )		
-
-		ELSIF $SCWK_TEMP1 == 16 THEN
-			//リュウラセンの塔が揺れる1回目
-			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_D08R0301, 25,5, DIR_UP )
-			$WK_SCENE_D08_LEGEND = 2
-
-		ELSIF $SCWK_TEMP1 == 17 THEN
-		
-			$WK_SCENE_R08 = 0
-		
-
-		ELSIF $SCWK_TEMP1 == 18 THEN		
-			_MAP_CHANGE( ZONE_ID_C02GYM0202, 5, 14, DIR_UP )
-
-		//テスト用
-		ELSIF $SCWK_TEMP1 == 19 THEN
-//			$WK_SCENE_R06R0202 = 0
-//			_MAP_CHANGE( ZONE_ID_R06R0202, 18, 17, DIR_UP )
-//			$WK_SCENE_R09 = 0
-			_FLAG_RESET(FV_D05R0201_SAGE7)
-		ELSE
-		ENDIF
-		
+//			//マップチェンジ
+//			_MAP_CHANGE( ZONE_ID_C02, 668, 599, DIR_LEFT )
+//		
+//		ELSIF $SCWK_TEMP1 == 10 THEN
+//			//POSイベントを有効に
+//			$WK_SCENE_C02 = 1
+//			//ライバル・サポート・アーティを消す
+//			_FLAG_RESET(FV_C02_POSEVENT_01)
+//			//マップチェンジ
+//			_MAP_CHANGE( ZONE_ID_C02, 644, 586, DIR_UP )
+//			
+//		ELSIF $SCWK_TEMP1 == 11 THEN
+//			//R02のランニングシューズイベントを有効にする
+//			$WK_SCENE_R02 = 0
+//			_MAP_CHANGE( ZONE_ID_R02, 760, 648, DIR_LEFT)
+//
+//		ELSIF $SCWK_TEMP1 == 12 THEN
+//			//R02のサポートイベントを有効にする
+//			$WK_SCENE_R02 = 1
+//
+//		ELSIF $SCWK_TEMP1 == 13 THEN
+//			//電気石ダークトリニティのイベント②
+//			$WK_SCENE_D06R0101 = 3
+//			_OBJ_ADD(D06R0101_NINJA_01)
+//			_OBJ_ADD(D06R0101_NINJA_02)
+//			_OBJ_ADD(D06R0101_NINJA_03)
+//			
+//		ELSIF $SCWK_TEMP1 == 14 THEN
+//			//電気石ダークトリニティのイベント①
+//			$WK_SCENE_D06R0101 = 0
+//			
+//			_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)	
+//
+//		ELSIF $SCWK_TEMP1 == 15 THEN
+//			$WK_SCENE_D06R0101 = 1
+//			//博士とサポートを出現
+//			_FLAG_RESET(FV_D06R0101_FRIENDS)
+//			_OBJ_ADD( D06R0101_HEROINE_01 )
+//			_OBJ_ADD( D06R0101_HAKASE2_01 )		
+//
+//		ELSIF $SCWK_TEMP1 == 16 THEN
+//			//リュウラセンの塔が揺れる1回目
+//			//マップチェンジ
+//			_MAP_CHANGE( ZONE_ID_D08R0301, 25,5, DIR_UP )
+//			$WK_SCENE_D08_LEGEND = 2
+//
+//		ELSIF $SCWK_TEMP1 == 17 THEN
+//		
+//			$WK_SCENE_R08 = 0
+//		
+//
+//		ELSIF $SCWK_TEMP1 == 18 THEN		
+//			_MAP_CHANGE( ZONE_ID_C02GYM0202, 5, 14, DIR_UP )
+//
+//		//テスト用
+//		ELSIF $SCWK_TEMP1 == 19 THEN
+////			$WK_SCENE_R06R0202 = 0
+////			_MAP_CHANGE( ZONE_ID_R06R0202, 18, 17, DIR_UP )
+////			$WK_SCENE_R09 = 0
+//			_FLAG_RESET(FV_D05R0201_SAGE7)
+//		ELSE
+//		ENDIF
+//		
 EVENT_END
 //--------------------------------------------------------------------
 //  パッケージポケモン： Nを乗せて飛ぶ              

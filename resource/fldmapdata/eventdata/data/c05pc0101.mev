@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c01pc0101.wms
 #hold event type:
 1
 #hold event number:
-9
+7
 #event number: 0
 #type
 1
@@ -76,68 +76,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05PC0101_MIDDLEWOMAN1
-#OBJ CODE Number
-MIDDLEWOMAN1
-#MOVE CODE Number
-MV_DIR_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C05PC0101_MIDDLEWOMAN1
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 72
-#event number: 3
-#type
-1
-#ID name
-C05PC0101_GIRL1
-#OBJ CODE Number
-GIRL1
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C05PC0101_GIRL1
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--232 48 152
-#event number: 4
-#type
-1
-#ID name
 C05PC0101_CONNECT_00
 #OBJ CODE Number
 PCWOMAN2
@@ -165,7 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -184 48 184
-#event number: 5
+#event number: 3
 #type
 1
 #ID name
@@ -196,7 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -88 48 184
-#event number: 6
+#event number: 4
 #type
 1
 #ID name
@@ -227,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -136 48 184
-#event number: 7
+#event number: 5
 #type
 1
 #ID name
@@ -258,7 +196,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -40
-#event number: 8
+#event number: 6
 #type
 1
 #ID name

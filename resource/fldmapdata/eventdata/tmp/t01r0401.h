@@ -9,12 +9,6 @@
 #ifndef ZONE_T01R0401_EVC_H
 #define ZONE_T01R0401_EVC_H
 
-#define T01R0401_HAKASE2_01                0
-#define T01R0401_SUPPORT_01                1
-#define T01R0401_RIVAL_01                  2
-#define T01R0401_HAKASE1_01                3
-#define T01R0401_POKEMON_01                4
-#define T01R0401_SUPPORT_02                5
 
 #endif //ZONE_T01R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t01r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

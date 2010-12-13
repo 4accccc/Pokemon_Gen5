@@ -10,9 +10,6 @@
 #ifndef ZONE_C04R0801_EVC_H
 #define ZONE_C04R0801_EVC_H
 
-#define C04R0801_TRAINERW_01               0
-#define C04R0801_INFORMATIONW_01           1
-#define C04R0801_BASEBALLM_01              2
 
 #endif //ZONE_C04R0801_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0801.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

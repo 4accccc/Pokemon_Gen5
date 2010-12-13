@@ -11,14 +11,11 @@
 
 #define C02PC0101_SHOPM1_01                0
 #define C02PC0101_PCWOMAN                  1
-#define C02PC0101_GIRL2                    2
-#define C02PC0101_BACKPACKERM              3
-#define C02PC0101_CONNECT_00               4
-#define C02PC0101_CONNECT_01               5
-#define C02PC0101_CONNECT_02               6
-#define C02PC0101_SHOPM1_02                7
-#define C02PC0101_DELIVERY                 8
-#define C02PC0101_BOY1_01                  9
+#define C02PC0101_CONNECT_00               2
+#define C02PC0101_CONNECT_01               3
+#define C02PC0101_CONNECT_02               4
+#define C02PC0101_SHOPM1_02                5
+#define C02PC0101_DELIVERY                 6
 
 #endif //ZONE_C02PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

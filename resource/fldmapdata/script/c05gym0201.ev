@@ -20,104 +20,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05gym0201_startlift_01
-_EVENT_DATA    ev_reserve_c05gym0201_gymback_01
-_EVENT_DATA    ev_c05gym0201_sunglasses_01
 _EVENT_DATA    ev_bg_c05gym0201_statue_01
 _EVENT_DATA    ev_bg_c05gym0201_lift_01
-_EVENT_DATA    ev_c05gym0201_informationw_01
 _EVENT_DATA_END
-
-
-/************************************************************/
-/*			ジムフロアから戻ってくる演出					*/
-/************************************************************/
-EVENT_START	ev_reserve_c05gym0201_gymback_01
-  //リフトと自機の位置をセット
-  _GYM_GROUND_ENT_SET_ENTER_POS()
-  //マップブラックイン
-	_MAP_FADE_BLACK_IN_SLOW()
-	//ジムからリフトが戻ってくる演出（引数0 = 上昇アニメ）
-	_GYM_GROUND_ENT_EXIT_LIFT( 0 )
-  //マップフェード待ち
-	_MAP_FADE_END_CHECK()
-
-EVENT_END
-
-
-
-/************************************************************/
-/*			ジムフロアへ降りるリフトのスイッチ				*/
-/************************************************************/
-EVENT_START	ev_c05gym0201_startlift_01
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
-
-	//スイッチの下側から話しかけた場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP THEN
-		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
-		_SE_WAIT()
-
-	  //マップブラックアウト
-    _MAP_FADE_BLACK_OUT_SLOW()
-
-		//リフトを下降させる（1 = 下降アニメ）
-		_GYM_GROUND_ENT_EXIT_LIFT( 1 )
-		
-		_MAP_FADE_END_CHECK()
-
-		//予約スクリプト マップチェンジ後、リフトが降りるスクリプトを起動する
-		_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0101_GYMSTART_01 )
-
-		//マップチェンジ
-		_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0101, 17, 50, 25, DIR_UP )
-
-	ENDIF
-
-EVENT_END
-
-/************************************************************/
-/*						ジムガイド							*/
-/************************************************************/
-EVENT_START	ev_c05gym0201_sunglasses_01
-	_TALK_OBJ_START()
-
-	//バッジフラグ取得
-	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )
-
-	//バッジフラグで分岐
-	IF $SCWK_TEMP0 == 0 THEN
-		//バッジ入手前の処理
-
-		//アイテム入手フラグで分岐
-		IF FLAG_OFF( FE_C05GYM_ITEM ) THEN
-			//アイテム未入手なら、おいしいみず入手イベント
-			_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0201_glasses_01 )
-			_BALLOONWIN_CLOSE()
-			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0201_glasses_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-
-			_FLAG_SET( FE_C05GYM_ITEM )			//アイテム入手フラグをセット
-
-		ELSE
-			//入手済みならメッセージのみ
-			_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0201_glasses_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		ENDIF
-
-	ELSE
-		//バッジ入手後の処理
-
-		//思い出してほしいっすね
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0201_glasses_03 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-
-	ENDIF
-
-EVENT_END
 
 
 /************************************************************/
@@ -166,13 +71,3 @@ EVENT_START	ev_bg_c05gym0201_lift_01
 	_MSGWIN_CLOSE()
 
 EVENT_END
-
-
-/**************************************************************/
-/* 						受付								  */
-/**************************************************************/
-EVENT_START		ev_c05gym0201_informationw_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_infomationw_01 )
-EVENT_END
-
-

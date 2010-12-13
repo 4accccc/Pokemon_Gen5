@@ -9,14 +9,6 @@
 #ifndef ZONE_C05R0501_EVC_H
 #define ZONE_C05R0501_EVC_H
 
-#define C05R0501_VETERANM_01               0
-#define C05R0501_OLDWOMAN_01               1
-#define C05R0501_GIRL2_01                  2
-#define C05R0501_MOUNTAIN_01               3
-#define C05R0501_WOMAN2_01                 4
-#define C05R0501_MAN1_01                   5
-#define C05R0501_GENTLEMAN_01              6
-#define C05R0501_VETERANW_01               7
 
 #endif //ZONE_C05R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

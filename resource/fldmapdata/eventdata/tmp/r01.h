@@ -9,16 +9,6 @@
 #ifndef ZONE_R01_EVC_H
 #define ZONE_R01_EVC_H
 
-#define R01_GIRL1_01                       0
-#define R01_MAN1_01                        1
-#define R01_HAKASE2_01                     2
-#define R01_RIVEL_02                       3
-#define R01_SUPPORT_02                     4
-#define TR_RANGERW_10                      5
-#define TR_FISHING_11                      6
-#define TR_RANGERM_10                      7
-#define R01_FLD_ITEM_01                    8
-#define R01_FLD_ITEM_02                    9
 
 #endif //ZONE_R01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -11,8 +11,6 @@
 #ifndef ZONE_D09R0901_EVC_H
 #define ZONE_D09R0901_EVC_H
 
-#define TR_KARATE_07                       0
-#define D09R0901_FLD_ITEM_01               1
 
 #endif //ZONE_D09R0901_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r0901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

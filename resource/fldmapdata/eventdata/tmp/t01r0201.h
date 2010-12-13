@@ -10,9 +10,6 @@
 #ifndef ZONE_T01R0201_EVC_H
 #define ZONE_T01R0201_EVC_H
 
-#define T01R0201_MIDDLEMAN1_01             0
-#define T01R0201_MIDDLEWOMAN1_01           1
-#define T01R0201_SUPPORT_01                2
 
 #endif //ZONE_T01R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t01r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

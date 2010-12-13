@@ -5,6 +5,5 @@
 #define _D20_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_RESERVE_D20 (1)
 
 #endif //_D20_DEF_H_

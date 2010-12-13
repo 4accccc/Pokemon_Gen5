@@ -9,9 +9,6 @@
 #ifndef ZONE_C01R0202_EVC_H
 #define ZONE_C01R0202_EVC_H
 
-#define C01R0202_DANCER_01                 0
-#define C01R0202_GENTLEMAN_01              1
-#define C01R0202_WOMAN3_01                 2
 
 #endif //ZONE_C01R0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

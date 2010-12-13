@@ -15,21 +15,6 @@
 #ifndef ZONE_C01_EVC_H
 #define ZONE_C01_EVC_H
 
-#define C01_BADMAN_01                      0
-#define C01_BOY2_01                        1
-#define C01_CLEANINGM_01                   2
-#define C01_WOMAN2_01                      3
-#define C01_BREEDERW_01                    4
-#define C01_WOMAN2A_01                     5
-#define C01_OLDMAN1_01                     6
-#define C01_GLASSES_01                     7
-#define C01_LEADER_01                      8
-#define C01_INVENTOR_01                    9
-#define C01_FISING_01                     10
-#define C01_BABYGIRL1_01                  11
-#define C01_BADMAN1_01                    12
-#define C01_FLD_ITEM_01                   13
-#define C01_FLD_ITEM_02                   14
 
 #endif //ZONE_C01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

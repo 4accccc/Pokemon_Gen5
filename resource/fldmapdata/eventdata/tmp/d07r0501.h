@@ -9,7 +9,6 @@
 #ifndef ZONE_D07R0501_EVC_H
 #define ZONE_D07R0501_EVC_H
 
-#define D07R0501_FLD_ITEM_01               0
 
 #endif //ZONE_D07R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

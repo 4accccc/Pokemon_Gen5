@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c04pc0101.wms
 #hold event type:
 1
 #hold event number:
-10
+7
 #event number: 0
 #type
 1
@@ -45,37 +45,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C04PC0101_GENTLEMAN_01
-#OBJ CODE Number
-GENTLEMAN
-#MOVE CODE Number
-MV_RND_DL
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C04PC0101_GENTLEMAN_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--232 48 168
-#event number: 2
-#type
-1
-#ID name
 C04PC0101_SHOPM1_01
 #OBJ CODE Number
 SHOPM1
@@ -103,7 +72,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -8
-#event number: 3
+#event number: 2
 #type
 1
 #ID name
@@ -134,69 +103,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -40
-#event number: 4
-#type
-1
-#ID name
-C04PC0101_GIRL4_01
-#OBJ CODE Number
-GIRL4
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C04PC0101_GIRL4_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--184 0 8
-#event number: 5
-#type
-1
-#ID name
-C04PC0101_POKEMON_01
-#OBJ CODE Number
-POKE19
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C04PC0101_POKEMON_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--200 0 8
-#event number: 6
+#event number: 3
 #type
 1
 #ID name
@@ -227,7 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -184 48 184
-#event number: 7
+#event number: 4
 #type
 1
 #ID name
@@ -258,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -88 48 184
-#event number: 8
+#event number: 5
 #type
 1
 #ID name
@@ -289,7 +196,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -136 48 184
-#event number: 9
+#event number: 6
 #type
 1
 #ID name

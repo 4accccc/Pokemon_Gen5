@@ -9,8 +9,6 @@
 #ifndef ZONE_D06_EVC_H
 #define ZONE_D06_EVC_H
 
-#define D06_STOPPER_01                     0
-#define D06_LEADER5_01                     1
 
 #endif //ZONE_D06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

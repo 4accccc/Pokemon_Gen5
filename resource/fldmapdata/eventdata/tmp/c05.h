@@ -21,35 +21,6 @@
 #ifndef ZONE_C05_EVC_H
 #define ZONE_C05_EVC_H
 
-#define C05_WOMAN2                         0
-#define C05_WORKMAN                        1
-#define C05_BADMAN                         2
-#define C05_BABYGIRL1                      3
-#define C05_TRAINERM                       4
-#define C05_TRAINERM_01                    5
-#define C05_SAGE_01                        6
-#define C05_HAKAI_01                       7
-#define C05_HAKAI_02                       8
-#define C05_GYMLEADER_02                   9
-#define C05_SAGE_02                       10
-#define C05_RIVAL_02                      11
-#define C05_GYMLEADER_01                  12
-#define C05_RIVAL_01                      13
-#define C05_BUSINESSMAN_01                14
-#define C05_BOY2_01                       15
-#define C05_RANGERW_01                    16
-#define C05_MOUNTAIN_01                   17
-#define C05_HAKAI_03                      18
-#define C05_HAKAI_04                      19
-#define C05_HAKAI_05                      20
-#define C05_HAKAI_06                      21
-#define C05_HAKAI_07                      22
-#define C05_HAKAI_08                      23
-#define C05_HAKAI_09                      24
-#define C05_MAN2_01                       25
-#define C05_FLD_ITEM_01                   26
-#define C05_FLD_ITEM_02                   27
-#define C05_BADRIDER_01                   28
 
 #endif //ZONE_C05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

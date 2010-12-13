@@ -9,11 +9,6 @@
 #ifndef ZONE_PLT04_EVC_H
 #define ZONE_PLT04_EVC_H
 
-#define PLT04_MAN01_01                     0
-#define PLT04_MAN02_01                     1
-#define PLT04_STOPPER_01                   2
-#define PLT04_STOPPER_PC                   3
-#define PLT04_STOPPER_02                   4
 
 #endif //ZONE_PLT04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/plt04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

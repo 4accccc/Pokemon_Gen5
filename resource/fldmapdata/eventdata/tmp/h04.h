@@ -17,26 +17,6 @@
 #ifndef ZONE_H04_EVC_H
 #define ZONE_H04_EVC_H
 
-#define H04_MAN1_01                        0
-#define H04_POKE17_01                      1
-#define H04_POKE20_01                      2
-#define H04_POKE19_01                      3
-#define H04_PIKACHU_01                     4
-#define H04_GIRL2_01                       5
-#define H04_WOMAN1_01                      6
-#define H04_MAN3_01                        7
-#define H04_OLDMAN1_01                     8
-#define H04_BOY1_01                        9
-#define H04_FLD_ITEM_01                   10
-#define H04_FLD_ITEM_03                   11
-#define TR_SCHOOLG_08                     12
-#define TR_SCIENTISTW_09                  13
-#define H04_BAKER_01                      14
-#define H04_LEADSINGER_01                 15
-#define H04_BACKPACKERW_01                16
-#define H04_VOICE_01                      17
-#define H04_GUITAR_01                     18
-#define H04_GRASSSOUND_01                 19
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

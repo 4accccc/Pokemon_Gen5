@@ -9,8 +9,6 @@
 #ifndef ZONE_D13_EVC_H
 #define ZONE_D13_EVC_H
 
-#define TR_SCIENTISTM_10                   0
-#define D13_FLD_ITEM_01                    1
 
 #endif //ZONE_D13_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d13.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

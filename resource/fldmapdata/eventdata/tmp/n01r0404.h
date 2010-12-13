@@ -9,8 +9,6 @@
 #ifndef ZONE_N01R0404_EVC_H
 #define ZONE_N01R0404_EVC_H
 
-#define N01R0404_HAKAIW1_01                0
-#define N01R0404_HAKAIW2_01                1
 
 #endif //ZONE_N01R0404_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0404.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -12,16 +12,6 @@
 #ifndef ZONE_R09_EVC_H
 #define ZONE_R09_EVC_H
 
-#define TR_BADRIDER_01                     0
-#define TR_BADRIDER_02                     1
-#define TR_BADTEAM_01                      2
-#define TR_HEADS_01                        3
-#define TR_HEADS_02                        4
-#define TR_BADTEAM_01_2                    5
-#define R09_FLD_ITEM_01                    6
-#define R09_FLD_ITEM_02                    7
-#define R09_BASEBALLM_01                   8
-#define R09_FIGHTERM_01                    9
 
 #endif //ZONE_R09_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -9,8 +9,6 @@
 #ifndef ZONE_D12R0102_EVC_H
 #define ZONE_D12R0102_EVC_H
 
-#define D12R0102_HAKAIM_01                 0
-#define D12R0102_POKE14_01                 1
 
 #endif //ZONE_D12R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d12r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

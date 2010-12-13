@@ -5,6 +5,5 @@
 #define _PLH05_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_PLH05 (1)
 
 #endif //_PLH05_DEF_H_

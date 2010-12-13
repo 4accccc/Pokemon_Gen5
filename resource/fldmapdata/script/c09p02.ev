@@ -34,5 +34,3 @@ EVENT_START	ev_bg_c09p02_elevator_01
 	_MSGWIN_CLOSE()
 	
 EVENT_END
-
-

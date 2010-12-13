@@ -9,9 +9,6 @@
 #ifndef ZONE_C07R0101_EVC_H
 #define ZONE_C07R0101_EVC_H
 
-#define C07R0101_OLDMAN_01                 0
-#define C07R0101_BABYGIRL1_01              1
-#define C07R0101_MIDDLEWOMAN1_01           2
 
 #endif //ZONE_C07R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -5,6 +5,5 @@
 #define _C09P03_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C09P03 (1)
 
 #endif //_C09P03_DEF_H_

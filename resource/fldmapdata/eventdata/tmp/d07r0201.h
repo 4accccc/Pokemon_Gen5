@@ -17,14 +17,6 @@
 #ifndef ZONE_D07R0201_EVC_H
 #define ZONE_D07R0201_EVC_H
 
-#define TR_WORKER2_07                      0
-#define TR_MOUNT_04                        1
-#define TR_BATTLEG_02                      2
-#define D07R0201_FLD_ITEM_01               3
-#define D07R0201_LEADER5_01                4
-#define D07R0201_RIVAL_01                  5
-#define D07R0201_TR_GROUND_01              6
-#define D07R0201_TR_GROUND_02              7
 
 #endif //ZONE_D07R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

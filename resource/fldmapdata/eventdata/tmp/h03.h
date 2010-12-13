@@ -10,17 +10,6 @@
 #ifndef ZONE_H03_EVC_H
 #define ZONE_H03_EVC_H
 
-#define H03_FIGHTERW_01                    0
-#define H03_MIDDLEWOMAN1_01                1
-#define H03_BADRIDER1_04                   2
-#define H03_BADRIDER1_05                   3
-#define H03_BADRIDER1_03                   4
-#define H03_BADRIDER1_02                   5
-#define H03_SAGE1_01                       6
-#define H03_NINJA_01                       7
-#define H03_NINJA_02                       8
-#define H03_NINJA_03                       9
-#define H03_BADRIDER1_01                  10
 
 #endif //ZONE_H03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

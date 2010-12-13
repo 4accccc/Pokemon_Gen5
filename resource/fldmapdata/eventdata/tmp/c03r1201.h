@@ -9,13 +9,6 @@
 #ifndef ZONE_C03R1201_EVC_H
 #define ZONE_C03R1201_EVC_H
 
-#define C03R1201_BUSINESSMAN1_01           0
-#define C03R1201_BUSINESSMAN2_01           1
-#define C03R1201_ASSISTANTM1_01            2
-#define C03R1201_MAN1_01                   3
-#define C03R1201_POKEMON_01                4
-#define C03R1201_WOMAN1_01                 5
-#define C03R1201_OLDMAN1_01                6
 
 #endif //ZONE_C03R1201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r1201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

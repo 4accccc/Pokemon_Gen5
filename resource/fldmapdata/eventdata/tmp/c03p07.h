@@ -12,17 +12,6 @@
 #ifndef ZONE_C03P07_EVC_H
 #define ZONE_C03P07_EVC_H
 
-#define C03P07_VETERANM_01                 0
-#define C03P07_TRAINERW_01                 1
-#define C03P07_HAKAIM_01                   2
-#define C03P07_HAKAIM_02                   3
-#define C03P07_HAKAIW_01                   4
-#define C03P07_LEADER3_01                  5
-#define C03P07_SUPPORT_01                  6
-#define C03P07_LEADER8W_01                 7
-#define C03P07_BUSINESSMAN1_01             8
-#define C03P07_BUSINESSMAN2_01             9
-#define C03P07_OL1_01                     10
 
 #endif //ZONE_C03P07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

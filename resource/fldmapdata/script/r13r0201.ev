@@ -19,9 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_r13r0201_informationw_01
 _EVENT_DATA 	ev_bg_r13r0201_board_01
-_EVENT_DATA		ev_r13r0201_dancer_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -37,18 +35,4 @@ EVENT_START   ev_bg_r13r0201_board_01
 
 	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
 
-EVENT_END
-
-/**************************************************************/
-/*			R13R0201	INFORMATIONW						  */
-/**************************************************************/
-EVENT_START		ev_r13r0201_informationw_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r13r0201_infomationw_01 )
-EVENT_END
-
-/**************************************************************/
-/*			R13R0201	DANCER								  */
-/**************************************************************/
-EVENT_START		ev_r13r0201_dancer_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r13r0201_dancer_01 )
 EVENT_END

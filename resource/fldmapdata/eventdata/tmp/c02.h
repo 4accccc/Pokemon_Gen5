@@ -20,21 +20,6 @@
 #ifndef ZONE_C02_EVC_H
 #define ZONE_C02_EVC_H
 
-#define C02_ACCORDION_01                   0
-#define C02_BACKPACKER_01                  1
-#define C02_WOMAN2_01                      2
-#define C02_MAN2_01                        3
-#define C02_MIDDLEWOMAN2_01                4
-#define C02_LEADER02_01                    5
-#define C02_LEADER3_01                     6
-#define C02_RIVAL_02                       7
-#define C02_SUPPORT_01                     8
-#define C02_HAKASE2_01                     9
-#define C02_HAKASE1_01                    10
-#define C02_CHAMPION_01                   11
-#define C02_SUPPORT_02                    12
-#define C02_LEADER02_02                   13
-#define C02_DUMMY_01                      14
 
 #endif //ZONE_C02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

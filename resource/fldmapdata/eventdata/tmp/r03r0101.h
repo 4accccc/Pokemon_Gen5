@@ -11,12 +11,6 @@
 #ifndef ZONE_R03R0101_EVC_H
 #define ZONE_R03R0101_EVC_H
 
-#define R03R0101_MIDDLEWOMAN2              0
-#define R03R0101_BABYBOY1A                 1
-#define R03R0101_BABYBOY1B                 2
-#define R03R0101_WOMAN3_01                 3
-#define R03R0101_BABYGIRL1                 4
-#define R03R0101_WOMAN3_02                 5
 
 #endif //ZONE_R03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -10,30 +10,11 @@
 #ifndef ZONE_R14R0201_EVC_H
 #define ZONE_R14R0201_EVC_H
 
-#define R14R0201_BOY2_01                   0
-#define R14R0201_BOY1_01                   1
-#define R14R0201_GIRL1_01                  2
-#define R14R0201_POKE9_01                  3
-#define R014_FLD_ITEM_02                   4
-#define R014_FLD_ITEM_04                   5
-#define R014_FLD_ITEM_06                   6
-#define R014_FLD_ITEM_07                   7
-#define R014_FLD_ITEM_09                   8
-#define TR_TANPAN_17                       9
-#define TR_TANPAN_16                      10
-#define TR_MINI_13                        11
-#define TR_MINI_12                        12
 
 #endif //ZONE_R14R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_R14R0201_EVB_H
 #define ZONE_R14R0201_EVB_H
 
-#define BG_R14R0201_LEG_01                0
-#define R14R0201_HIDE_ITEM_01             1
-#define R14R0201_HIDE_ITEM_03             2
-#define R14R0201_HIDE_ITEM_04             3
-#define R14R0201_HIDE_ITEM_05             4
-#define R14R0201_HIDE_ITEM_02             5
 
 #endif //ZONE_R14R0201_EVB_H

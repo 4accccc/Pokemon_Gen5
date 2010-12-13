@@ -5,6 +5,5 @@
 #define _PLR12_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_PLR12 (1)
 
 #endif //_PLR12_DEF_H_

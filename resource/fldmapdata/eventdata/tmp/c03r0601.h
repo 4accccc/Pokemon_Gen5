@@ -10,8 +10,6 @@
 #ifndef ZONE_C03R0601_EVC_H
 #define ZONE_C03R0601_EVC_H
 
-#define C03R0601_MIDDLEMAN2_01             0
-#define C03R0601_INFOMATIONW_01            1
 
 #endif //ZONE_C03R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

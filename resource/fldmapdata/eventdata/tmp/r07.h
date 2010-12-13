@@ -11,22 +11,6 @@
 #ifndef ZONE_R07_EVC_H
 #define ZONE_R07_EVC_H
 
-#define TR_TANPAN_07                       0
-#define TR_BACKPACKERW_03                  1
-#define TR_BACKPACKERM_04                  2
-#define TR_RANGERM_04                      3
-#define TR_RANGERW_04                      4
-#define TR_TANPAN_08                       5
-#define R07_FIGHTREW_01                    6
-#define R07_FLD_ITEM_01                    7
-#define R07_FLD_ITEM_02                    8
-#define R07_FLD_ITEM_03                    9
-#define R07_FLD_ITEM_04                   10
-#define TR_JUGGLING_08                    11
-#define TR_JUGGLING_09                    12
-#define R07_FIGHTREW_02                   13
-#define TR_ELITEM_24                      14
-#define TR_ELITEM_23                      15
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

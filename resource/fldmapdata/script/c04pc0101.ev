@@ -19,9 +19,6 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c04pc0101_gentleman_01
-_EVENT_DATA    ev_c04pc0101_girl4_01
-_EVENT_DATA    ev_c04pc0101_pokemon_01
 _EVENT_DATA    ev_c04pc0101_shop
 _EVENT_DATA		ev_c04pc0101_fix_shop
 _EVENT_DATA_END
@@ -43,29 +40,3 @@ EVENT_START ev_c04pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL_GREETING_WAZA( C04_FS )
 EVENT_END
-
-
-/************************************************************/
-/*							紳士							*/
-/************************************************************/
-EVENT_START	ev_c04pc0101_gentleman_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04pc0101_gentleman_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							お嬢様							*/
-/************************************************************/
-EVENT_START	ev_c04pc0101_girl4_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04pc0101_girl4_01 )
-EVENT_END
-
-
-/************************************************************/
-/*					ポケモン（お嬢様の隣）					*/
-/************************************************************/
-EVENT_START	ev_c04pc0101_pokemon_01
-	_EASY_TALK_POKEVOICE( MONSNO_533, msg_c04pc0101_girl4_02 )
-EVENT_END
-
-

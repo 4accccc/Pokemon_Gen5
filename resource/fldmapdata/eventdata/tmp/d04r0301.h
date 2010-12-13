@@ -10,10 +10,6 @@
 #ifndef ZONE_D04R0301_EVC_H
 #define ZONE_D04R0301_EVC_H
 
-#define D04R0301_FLD_ITEM_01               0
-#define TR_HAKAIM1_06                      1
-#define TR_HAKAIW1_01                      2
-#define D04R0301_FLD_ITEM_02               3
 
 #endif //ZONE_D04R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d04r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

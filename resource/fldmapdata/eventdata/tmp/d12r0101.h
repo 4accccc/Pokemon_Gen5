@@ -10,8 +10,6 @@
 #ifndef ZONE_D12R0101_EVC_H
 #define ZONE_D12R0101_EVC_H
 
-#define D12R0101_POLICEMAN_01              0
-#define TR_HAKAIM_01                       1
 
 #endif //ZONE_D12R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d12r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

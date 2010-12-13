@@ -10,9 +10,6 @@
 #ifndef ZONE_H01R0101_EVC_H
 #define ZONE_H01R0101_EVC_H
 
-#define H01R0101_INFORMATIONW_01           0
-#define H01R0101_MOUNTAIN_01               1
-#define H01R0101_OL_01                     2
 
 #endif //ZONE_H01R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

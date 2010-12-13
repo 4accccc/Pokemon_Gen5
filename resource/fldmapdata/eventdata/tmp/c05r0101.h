@@ -9,9 +9,6 @@
 #ifndef ZONE_C05R0101_EVC_H
 #define ZONE_C05R0101_EVC_H
 
-#define C05R0101_POKEMON                   0
-#define C05R0101_WOMAN1                    1
-#define C05R0101_BOY1                      2
 
 #endif //ZONE_C05R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

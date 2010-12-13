@@ -11,8 +11,6 @@
 #ifndef ZONE_C09_EVC_H
 #define ZONE_C09_EVC_H
 
-#define C09_VETERANM_01                    0
-#define C09_VETERANM_02                    1
 
 #endif //ZONE_C09_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

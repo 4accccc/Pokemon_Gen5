@@ -10,7 +10,6 @@
 #ifndef ZONE_D10R0401_EVC_H
 #define ZONE_D10R0401_EVC_H
 
-#define D10R0401_POKE10_01                 0
 
 #endif //ZONE_D10R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d10r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

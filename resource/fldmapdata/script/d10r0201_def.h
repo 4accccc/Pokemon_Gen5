@@ -5,6 +5,5 @@
 #define _D10R0201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_POS_D10R0201_LEGEND (1)
 
 #endif //_D10R0201_DEF_H_

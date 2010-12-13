@@ -11,11 +11,6 @@
 #ifndef ZONE_D04R0101_EVC_H
 #define ZONE_D04R0101_EVC_H
 
-#define TR_ESPW_01                         0
-#define TR_ESPM_01                         1
-#define D04R0101_STOP_01                   2
-#define D04R0101_BACKPACKERW_01            3
-#define D04R0101_ASSISTANTM_01             4
 
 #endif //ZONE_D04R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d04r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

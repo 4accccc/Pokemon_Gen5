@@ -11,34 +11,6 @@
 #ifndef ZONE_D03R0101_EVC_H
 #define ZONE_D03R0101_EVC_H
 
-#define D03R0101_FIGHTERM_01               0
-#define D03R0101_SUNGLASSES_01             1
-#define D03R0101_RIVAL_01                  2
-#define D03R0101_RIVAL_02                  3
-#define D03R0101_CHAMPION_01               4
-#define D03R0101_DARUMA_01                 5
-#define D03R0101_DARUMA_02                 6
-#define D03R0101_DARUMA_03                 7
-#define D03R0101_DARUMA_04                 8
-#define D03R0101_DARUMA_05                 9
-#define D03R0101_BACKPACKERM_01           10
-#define D03R0101_FLD_ITEM_01              11
-#define D03R0101_FLD_ITEM_02              12
-#define TR_BACKPACKERM_05                 13
-#define TR_BACKPACKERW_05                 14
-#define TR_ESPW_04                        15
-#define TR_BACKPACKERW_06                 16
-#define TR_ESPM_04                        17
-#define TR_BACKPACKERM_06                 18
-#define TR_ESPM_05                        19
-#define D03R0101_FLD_ITEM_03              20
-#define D03R0101_FLD_ITEM_04              21
-#define D03R0101_FLD_ITEM_05              22
-#define D03R0101_FLD_ITEM_7               23
-#define D03R0101_FLD_ITEM_06              24
-#define TR_RANGERM_11                     25
-#define TR_RANGERW_11                     26
-#define TR_DOCTOR_05                      27
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

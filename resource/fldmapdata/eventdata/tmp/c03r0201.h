@@ -9,9 +9,6 @@
 #ifndef ZONE_C03R0201_EVC_H
 #define ZONE_C03R0201_EVC_H
 
-#define C03R0201_SUNGLASSES_01             0
-#define C03R0201_LADY_01                   1
-#define C03R0201_CLOWN_01                  2
 
 #endif //ZONE_C03R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

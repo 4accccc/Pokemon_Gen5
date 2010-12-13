@@ -19,61 +19,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_r06_mountain_01
-_EVENT_DATA		ev_r06_woman2_01
-_EVENT_DATA		ev_r06_oldman1_01
 _EVENT_DATA		ev_bg_r06_sign1_01
 _EVENT_DATA		ev_bg_r06_sign2_01
 _EVENT_DATA		ev_bg_r06_sign4_01
 _EVENT_DATA_END
-
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r06_flag_change:
-//  _END
-
-/**************************************************************/
-/*  R06 mountain_01のイベントスクリプト*/
-/**************************************************************/
-EVENT_START  ev_r06_mountain_01
-	
-	//地面バッジを持っているかで分岐
-	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )
-	IF $SCWK_TEMP0 == 0 THEN	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_mountain_01 )
-
-	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_mountain_02 )
-		
-	ENDIF
-	
-EVENT_END
-
-/**************************************************************/
-/*  R06 oldman1_01のイベントスクリプト*/
-/**************************************************************/
-EVENT_START  ev_r06_oldman1_01
-	
-	//R06R0203でアトスと戦ったかどうかで分岐
-	IF FLAG_OFF(FE_LEGEND1_BATTLE) THEN	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_oldman1_01 )
-
-	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_oldman1_02 )
-		
-	ENDIF
-	
-EVENT_END
-/**************************************************************/
-/*  R06 WOMEN2の会話のイベントスクリプト*/
-/**************************************************************/
-EVENT_START  ev_r06_woman2_01
-		
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06_sportsw_01_01)
-
-EVENT_END
 /**************************************************************/
 /*  R06 看板1のイベントスクリプト*/
 /**************************************************************/

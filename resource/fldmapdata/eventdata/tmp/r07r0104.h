@@ -10,10 +10,6 @@
 #ifndef ZONE_R07R0104_EVC_H
 #define ZONE_R07R0104_EVC_H
 
-#define TR_ELITEM_09                       0
-#define TR_ELITEW_09                       1
-#define R07R0104_FLD_ITEM_01               2
-#define R07R0104_FLD_ITEM_02               3
 
 #endif //ZONE_R07R0104_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0104.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

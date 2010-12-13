@@ -20,8 +20,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   ev_bg_r11r0101_board_01
-_EVENT_DATA   ev_r11r0101_informationw_01
-_EVENT_DATA   ev_r11r0101_man3_01
 _EVENT_DATA_END
 
 
@@ -39,22 +37,3 @@ EVENT_START   ev_bg_r11r0101_board_01
 	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
 
 EVENT_END
-
-/**************************************************************/
-/*  会話のイベントスクリプト*/
-/**************************************************************/
-EVENT_START  ev_r11r0101_informationw_01
-		
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r11r0101_infomationw_01)
-
-EVENT_END
-
-/**************************************************************/
-/*  会話のイベントスクリプト*/
-/**************************************************************/
-EVENT_START  ev_r11r0101_man3_01
-		
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r11r0101_man3_01)
-
-EVENT_END
-

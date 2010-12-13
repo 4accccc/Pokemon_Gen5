@@ -10,14 +10,6 @@
 #ifndef ZONE_D08R0101_EVC_H
 #define ZONE_D08R0101_EVC_H
 
-#define TR_ELITEM_04                       0
-#define TR_ELITEW_04                       1
-#define D08R0101_NONE_01                   2
-#define D08R0101_NONE_02                   3
-#define D08R0101_NONE_03                   4
-#define D08R0101_NONE_04                   5
-#define D08R0101_HAKAIM_01                 6
-#define D08R0101_FLD_ITEM_01               7
 
 #endif //ZONE_D08R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d08r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

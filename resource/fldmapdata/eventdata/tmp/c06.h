@@ -14,21 +14,6 @@
 #ifndef ZONE_C06_EVC_H
 #define ZONE_C06_EVC_H
 
-#define C06_GIRL2_01                       0
-#define C06_BOY3_01                        1
-#define C06_PILOT_01                       2
-#define C06_WORKMAN_01                     3
-#define C06_WOMAN1_01                      4
-#define C06_RANGERW_01                     5
-#define C06_LEADER6_01                     6
-#define C06_HAKASE1_01                     7
-#define C06_MONSTERBALL_01                 8
-#define C06_BOY2_01                        9
-#define C06_BABYGIRL1_01                  10
-#define C06_SUNGLASSES_01                 11
-#define C06_FLD_ITEM_02                   12
-#define C06_BOSS_01                       13
-#define C06_OLDMAN1_01                    14
 
 #endif //ZONE_C06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

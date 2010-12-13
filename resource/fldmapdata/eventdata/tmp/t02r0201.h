@@ -10,8 +10,6 @@
 #ifndef ZONE_T02R0201_EVC_H
 #define ZONE_T02R0201_EVC_H
 
-#define T02R0201_MIDDLEWOMAN1_01           0
-#define T02R0201_BABYGIRL1_01              1
 
 #endif //ZONE_T02R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t02r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

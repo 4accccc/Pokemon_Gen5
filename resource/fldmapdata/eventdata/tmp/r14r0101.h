@@ -10,8 +10,6 @@
 #ifndef ZONE_R14R0101_EVC_H
 #define ZONE_R14R0101_EVC_H
 
-#define R14R0101_INFORMATIONW_01           0
-#define R14R0101_MAN1_01                   1
 
 #endif //ZONE_R14R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r14r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

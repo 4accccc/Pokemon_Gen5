@@ -10,10 +10,6 @@
 #ifndef ZONE_C02R0401_EVC_H
 #define ZONE_C02R0401_EVC_H
 
-#define C02R0401_FIGHTREM_01               0
-#define C02R0401_FIGHTREM_02               1
-#define C02R0401_BOY2_01                   2
-#define C02R0401_SHOPM1_01                 3
 
 #endif //ZONE_C02R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

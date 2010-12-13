@@ -11,7 +11,6 @@
 #ifndef ZONE_D04R2201_EVC_H
 #define ZONE_D04R2201_EVC_H
 
-#define D04R2201_SAGE4_01                  0
 
 #endif //ZONE_D04R2201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r2201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

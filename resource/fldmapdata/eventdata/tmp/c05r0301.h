@@ -9,8 +9,6 @@
 #ifndef ZONE_C05R0301_EVC_H
 #define ZONE_C05R0301_EVC_H
 
-#define C05R0301_TRAINERM_01               0
-#define C05R0301_WOMAN2_01                 1
 
 #endif //ZONE_C05R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

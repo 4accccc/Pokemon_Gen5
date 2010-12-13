@@ -9,10 +9,6 @@
 #ifndef ZONE_R07R0301_EVC_H
 #define ZONE_R07R0301_EVC_H
 
-#define R07R0301_OLDWOMAN_01               0
-#define R07R0301_OLDMAN_01                 1
-#define R07R0301_BOY1_01                   2
-#define R07R0301_WOMAN3_01                 3
 
 #endif //ZONE_R07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

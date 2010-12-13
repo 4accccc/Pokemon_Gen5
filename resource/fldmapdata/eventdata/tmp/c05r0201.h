@@ -9,8 +9,6 @@
 #ifndef ZONE_C05R0201_EVC_H
 #define ZONE_C05R0201_EVC_H
 
-#define C05R0201_OLDMAN1_01                0
-#define C05R0201_BOY2_01                   1
 
 #endif //ZONE_C05R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

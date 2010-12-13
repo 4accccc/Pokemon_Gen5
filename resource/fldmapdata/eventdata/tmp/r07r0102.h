@@ -10,12 +10,6 @@
 #ifndef ZONE_R07R0102_EVC_H
 #define ZONE_R07R0102_EVC_H
 
-#define TR_MIDLLEWOMAN_01                  0
-#define TR_MIDLLEMAN_01                    1
-#define TR_ESPW_02                         2
-#define TR_MINI_04                         3
-#define R07R0102_FLD_ITEM_01               4
-#define R07R0102_FLD_ITEM_02               5
 
 #endif //ZONE_R07R0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

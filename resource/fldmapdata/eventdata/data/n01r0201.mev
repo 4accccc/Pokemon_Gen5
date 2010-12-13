@@ -29,24 +29,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\n01r0201.wms
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Pos Event Label
-POS_N01R0201_GUIDE_01
-#Pos Script Name
-SCRID_POS_N01R0201_GUIDE_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_N01R0201
-#Event Trigger Work Value
 0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 40
-#size
-1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

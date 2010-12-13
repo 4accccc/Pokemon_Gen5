@@ -21,66 +21,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_c09p01_elevator_01
-_EVENT_DATA    ev_zone_c09p01
-_EVENT_DATA    ev_init_c09p01
-_EVENT_DATA    ev_c09p01_close_gate
 _EVENT_DATA_END
-
-
-DEFINE_LOCAL	BM_ANIME_ID1
-
-//------------------------------注意--------------------------------//
-//																	//
-//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。		//
-//				LOCALWORK15⇒ストッパーPOS 常時0で発動	//
-//																	//
-//------------------------------------------------------------------//
-
-
-/************************************************************/
-/*					ZONE_CHANGE_SCRIPT						*/
-/************************************************************/
-INIT_EVENT_START	ev_zone_c09p01
-
-  //全滅時の戻り先設定：ポケモンリーグ手前の休息所から復帰するようにする。N城で負けた場合の復帰もココになる。
-  _SET_WARP_ID( WARP_ID_C09 )
-
-INIT_EVENT_END
-
-/************************************************************/
-/*					FIELD_INIT_SCRIPT						*/
-/************************************************************/
-INIT_EVENT_START	ev_init_c09p01
-
-  _FLAG_CHECK( FE_C09P01_GATE_OPEN, SCWK_ANSWER )
-
-  // ゲートが開いている場合
-  IF $SCWK_ANSWER == TRUE THEN 
-    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 31, 50, FALSE ) // ゲートを隠す
-    _RESERVE_SCRIPT( SCRID_C09P01_CLOSE_GATE ) // ゲートを閉じるスクリプトを予約
-  ENDIF
-
-INIT_EVENT_END
-
-
-/************************************************************/
-/*					ゲートを閉じる            */
-/************************************************************/
-EVENT_START ev_c09p01_close_gate
-{ 
-  _FLAG_RESET( FE_C09P01_GATE_OPEN ) // OPEN フラグをリセット
-
-  // ゲートを表示
-  _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 31, 50, TRUE )
-
-  // 閉じるアニメーション再生
-  _BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 31, 50 )
-  _BMODEL_ANIME_SET( BM_ANIME_ID1, SCR_BMANM_DOOR_OPEN )
-  _BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
-  _BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
-  _SE_PLAY( SEQ_SE_FLD_118 )
-}
-EVENT_END
 
 
 /************************************************************/
@@ -108,4 +49,3 @@ EVENT_START	ev_bg_c09p01_elevator_01
   ENDIF
 }
 EVENT_END
-

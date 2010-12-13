@@ -9,38 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r10r0801.wms
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#type
-1
-#ID name
-R10R0801_VETERANM
-#OBJ CODE Number
-VETERANM
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
 0
-#Event Script Name
-SCRID_R10R0801_VETERANM_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-1
-#Move Limit Z Number
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 0 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -60,24 +29,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Pos Event Label
-POS_R10R0801_LIMITTER_01
-#Pos Script Name
-SCRID_POS_R10R0801_LIMITTER_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK0
-#Event Trigger Work Value
 0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 120
-#size
-5 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -11,7 +11,6 @@
 #ifndef ZONE_D04R0801_EVC_H
 #define ZONE_D04R0801_EVC_H
 
-#define D04R0801_HAKAIM_01                 0
 
 #endif //ZONE_D04R0801_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

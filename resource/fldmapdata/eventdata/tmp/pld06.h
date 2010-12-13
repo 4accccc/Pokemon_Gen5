@@ -9,7 +9,6 @@
 #ifndef ZONE_PLD06_EVC_H
 #define ZONE_PLD06_EVC_H
 
-#define PLD06_STOPPER_01                   0
 
 #endif //ZONE_PLD06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/pld06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

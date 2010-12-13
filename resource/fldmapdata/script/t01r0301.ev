@@ -15,48 +15,4 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0301_middleman2_01
-_EVENT_DATA    ev_t01r0301_middlewoman2_01
 _EVENT_DATA_END
-
-
-/************************************************************/
-/*						ライバル父							*/
-/************************************************************/
-EVENT_START   ev_t01r0301_middleman2_01
-	_TALK_OBJ_START()
-
-	_PLAYER_NAME( 0 )
-
-	//図鑑入手後かで分岐
-	IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) THEN
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middleman2_02 )
-	ELSE
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middleman2_01 )
-	ENDIF
-	
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-EVENT_END
-
-/************************************************************/
-/*						ライバル母							*/
-/************************************************************/
-EVENT_START   ev_t01r0301_middlewoman2_01
-	_TALK_OBJ_START()
-
-	_PLAYER_NAME( 0 )
-
-	//図鑑入手後かで分岐
-	IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) THEN
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middlewoman2_02 )
-	ELSE
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middlewoman2_01 )
-	ENDIF
-
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-EVENT_END
-

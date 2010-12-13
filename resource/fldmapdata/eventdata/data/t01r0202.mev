@@ -4,7 +4,7 @@
 C:\home\swan\resource\fldmapdata\eventdata\data\t01r0202.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/29 12:06:09
+#save date:
 2
 #hold event type:
 1
@@ -35,7 +35,7 @@ SCRID_BG_T01R0202_PC_01
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/29 12:06:09
+#save date:
 2
 #hold event type:
 1

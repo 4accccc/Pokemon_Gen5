@@ -15,8 +15,6 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01pc0101_man2_01
-_EVENT_DATA    ev_c01pc0101_middleman2_01
 _EVENT_DATA    ev_c01pc0101_shop
 _EVENT_DATA    ev_c01pc0101_fix_shop
 _EVENT_DATA_END
@@ -52,18 +50,4 @@ EVENT_END
 EVENT_START ev_c01pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C01_FS )
-EVENT_END
-
-//=============================================================
-//  C01PC0101 MAN2の会話用イベントスクリプト
-//=============================================================
-EVENT_START   ev_c01pc0101_man2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01pc0101_man2_01 )
-EVENT_END
-
-//=============================================================
-//  C01PC0101 MIDDLEMAN2の会話用イベントスクリプト
-//=============================================================
-EVENT_START   ev_c01pc0101_middleman2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01pc0101_middleman2_01 )
 EVENT_END

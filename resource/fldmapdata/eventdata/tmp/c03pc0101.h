@@ -9,17 +9,13 @@
 #ifndef ZONE_C03PC0101_EVC_H
 #define ZONE_C03PC0101_EVC_H
 
-#define C03PC0101_WOMAN1_01                0
-#define C03PC0101_BUSINESSMAN_01           1
-#define C03PC0101_CONNECT_00               2
-#define C03PC0101_CONNECT_01               3
-#define C03PC0101_CONNECT_02               4
-#define C03PC0101_PCWOMAN                  5
-#define C03PC0101_SHOPM1_01                6
-#define C03PC0101_SHOPM1_02                7
-#define C03PC0101_DELIVERY                 8
-#define C03PC0101_SUNGLASSES_01            9
-#define C03PC0101_TENNISW_01              10
+#define C03PC0101_CONNECT_00               0
+#define C03PC0101_CONNECT_01               1
+#define C03PC0101_CONNECT_02               2
+#define C03PC0101_PCWOMAN                  3
+#define C03PC0101_SHOPM1_01                4
+#define C03PC0101_SHOPM1_02                5
+#define C03PC0101_DELIVERY                 6
 
 #endif //ZONE_C03PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

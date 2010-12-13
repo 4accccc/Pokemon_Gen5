@@ -5,7 +5,5 @@
 #define _C06R0301_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C06R0301_WOMAN3_01 (1)
-#define SCRID_C06R0301_BOY1_01 (2)
 
 #endif //_C06R0301_DEF_H_

@@ -10,10 +10,6 @@
 #ifndef ZONE_C09R0501_EVC_H
 #define ZONE_C09R0501_EVC_H
 
-#define C09R0501_N_01                      0
-#define C09R0501_CHAMPION_01               1
-#define C09R0501_CHAMPION_02               2
-#define C09R0501_RIVAL_01                  3
 
 #endif //ZONE_C09R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c09r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

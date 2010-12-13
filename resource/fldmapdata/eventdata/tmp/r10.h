@@ -10,25 +10,6 @@
 #ifndef ZONE_R10_EVC_H
 #define ZONE_R10_EVC_H
 
-#define R10_RIVAL_01                       0
-#define TR_BATTLEG_01                      1
-#define TR_KARATE_01                       2
-#define TR_MOUNT_01                        3
-#define TR_ELITEM_01                       4
-#define TR_ELITEW_01                       5
-#define TR_VETERANM_01                     6
-#define TR_VETERANW_01                     7
-#define R10_SUPPORT_01                     8
-#define R10_FLDMONS_03                     9
-#define R10_FLD_ITEM_02                   10
-#define R010_FLD_ITEM_03                  11
-#define R10_VETERANM_01                   12
-#define R010_FLD_ITEM_01                  13
-#define R10_FLDMONS_01                    14
-#define R10_FLDMONS_02                    15
-#define R10_FLD_ITEM_05                   16
-#define R010_FLD_ITEM_04                  17
-#define R10_FLDMONS_04                    18
 
 #endif //ZONE_R10_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

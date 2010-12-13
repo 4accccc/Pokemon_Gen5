@@ -9,13 +9,6 @@
 #ifndef ZONE_R09R0303_EVC_H
 #define ZONE_R09R0303_EVC_H
 
-#define TR_VETERANW_03                     0
-#define TR_VETERANM_03                     1
-#define R09R0303_FLD_ITEM_01               2
-#define R09R0303_FLD_ITEM_03               3
-#define R09R0303_FLD_ITEM_07               4
-#define R09R0303_FLD_ITEM_05               5
-#define R09R0303_FLD_ITEM_02               6
 
 #endif //ZONE_R09R0303_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09r0303.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

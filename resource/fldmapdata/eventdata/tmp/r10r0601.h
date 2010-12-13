@@ -11,7 +11,6 @@
 #ifndef ZONE_R10R0601_EVC_H
 #define ZONE_R10R0601_EVC_H
 
-#define R10R0601_VETERANM                  0
 
 #endif //ZONE_R10R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r10r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

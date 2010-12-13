@@ -9,10 +9,6 @@
 #ifndef ZONE_C03R1001_EVC_H
 #define ZONE_C03R1001_EVC_H
 
-#define C03R1001_WOMAN3_01                 0
-#define C03R1001_MOUNTAIN_01               1
-#define C03R1001_POKE_01                   2
-#define C03R1001_MAN3_01                   3
 
 #endif //ZONE_C03R1001_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

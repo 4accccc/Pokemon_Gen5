@@ -5,6 +5,5 @@
 #define _R11R0201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R11R0201_RANGERW_01 (1)
 
 #endif //_R11R0201_DEF_H_
