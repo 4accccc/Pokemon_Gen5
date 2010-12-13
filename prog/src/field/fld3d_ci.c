@@ -146,6 +146,7 @@ typedef struct ENC_WORK_tag
   int ChrArc02Idx;
   int PltArcIdx;
   int PanelType;
+  u16 color[2];   // カラー(フォントに使用するカラー)
   BOOL PlayerTrans;
 }ENC_WORK;
 
@@ -311,7 +312,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const u8 palnum );
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 
-static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx );
+static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx ,const u16 fontcol1 , const u16 fontcol2 );
 
 //static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr);
 static void ChangeCapDatCol(void);
@@ -767,6 +768,8 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
     wk->ChrArc02Idx = dat->ChrArc02Idx;
     wk->PltArcIdx = dat->PltArcIdx;
     wk->PanelType = dat->PanelType;
+    wk->color[0] = dat->fontcolor1;
+    wk->color[1] = dat->fontcolor2;
     if ( dat->TransType == GRA_TRANS_ALL ) wk->PlayerTrans = TRUE;
     else wk->PlayerTrans = FALSE;
   }
@@ -2369,7 +2372,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
     //相手側の文字データ転送
-    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_UP, NAMEGRA_PAL_NAME_UP, enc_wk->MsgIdx );
+    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_UP, NAMEGRA_PAL_NAME_UP, enc_wk->MsgIdx , enc_wk->color[0] , enc_wk->color[1] );
     (*seq)++;
     break;
   case 3:
@@ -2430,7 +2433,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
     //自分側の文字データ転送
-    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_DOWN , NAMEGRA_PAL_NAME_DOWN , SPTR_PLAYER );
+    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_DOWN , NAMEGRA_PAL_NAME_DOWN , SPTR_PLAYER , enc_wk->color[0] , enc_wk->color[1] );
     (*seq)++;
     break;
   case 6:
@@ -2511,7 +2514,7 @@ void SetResName(NNSG3dResName *outName,const char *inName)
 	}
 }
 
-static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx )
+static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx ,const u16 fontcol1 , const u16 fontcol2 )
 {
   F2T_WORK f2t_work;
   GFL_MSGDATA* msg; // メッセージデータ
@@ -2548,8 +2551,8 @@ static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexN
     {
       u16 *col;
       col = (u16*)plt;
-      col[1] = 0x7fff;    //白（文字）
-      col[2] = 0x0000;    //黒（影）
+      col[1] = fontcol1;    //白（文字）
+      col[2] = fontcol2;    //黒（影）
     }
 
     F2T_CopyString(res, inTexName, plt, inPltName, strbuf, 0, 0, lsb, heapID, &f2t_work );

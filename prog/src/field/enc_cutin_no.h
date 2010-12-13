@@ -58,6 +58,8 @@ typedef struct ENC_CUTIN_DAT_tag
   int MsgIdx;       //相手側の名前データインデックス
   GRA_TRANS_TYPE TransType;     // 転送データの種類
   CI_PANEL_TYPE  PanelType;     // 転送するパネルタイプ
+  u16 fontcolor1;     // 文字色
+  u16 fontcolor2;     // 文字影色
 }ENC_CUTIN_DAT;
 
 /**
