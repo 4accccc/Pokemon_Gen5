@@ -394,6 +394,8 @@ struct _FIELDMAP_WORK
 #ifdef  PM_DEBUG
 	FIELD_DEBUG_WORK *debugWork;
 #endif
+
+  FIELD_GOOUT_EFFECT  *goout_eff;
 };
 
 //--------------------------------------------------------------
@@ -893,6 +895,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     // 天気晴れ
     FIELD_WEATHER_Set(
         fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_WEATHER );
+
+    //外出エフェクト
+    fieldWork->goout_eff  = FIELD_GOOUT_EFFECT_Init( fieldWork->ExpObjCntPtr, fieldWork->heapID );
     
     SET_CHECK("setup: gimmick setup");  //デバッグ：処理負荷計測
     //フィールドギミックセットアップ
@@ -1377,6 +1382,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   //ギミック終了
   FLDGMK_EndFieldGimmick(fieldWork);
+
+  //外出エフェクト
+  FIELD_GOOUT_EFFECT_Exit( fieldWork->goout_eff );
 
   //拡張3Ｄオブジェクトモジュール破棄
   FLD_EXP_OBJ_Delete(fieldWork->ExpObjCntPtr);
@@ -2484,6 +2492,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
   FIELD_ZONEFOGLIGHT_Update( fieldWork->zonefog, fieldWork->heapID ); 
 	
 	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_WEATHER );
+  FIELD_GOOUT_EFFECT_Main( fieldWork->goout_eff, fieldWork->camera_control );
 	FIELD_FOG_Main( fieldWork->fog );
 	FIELD_LIGHT_Main( fieldWork->light, GFL_RTC_GetTimeBySecond() );
 
@@ -3974,6 +3983,19 @@ FIELD_CROWD_PEOPLE * FIELDMAP_GetCrowdPeopleSys( const FIELDMAP_WORK * fieldWork
   return fieldWork->crowdpeople;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  外出ワークの取得
+ *
+ *	@param	const FIELDMAP_WORK * fieldWork フィールドワーク
+ *
+ *	@return 外出ワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_GOOUT_EFFECT * FIELDMAP_GetGooutEffect( const FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->goout_eff;
+}
 
 //==================================================================
 /**

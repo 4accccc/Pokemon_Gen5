@@ -28,6 +28,7 @@
 #include "event_fieldmap_control.h" // for EVENT_FieldFadeOut
 #include "event_fldmmdl_control.h"  // for EVENT_PlayerOneStepAnime
 
+#include "field_goout_effect.h"
 
 
 //============================================================================================
@@ -41,6 +42,7 @@
 enum {
   SEQ_DOOROUT_INIT = 0,
   SEQ_DOOROUT_EFFECT_START,
+  SEQ_GOOUT_EFFECT_START,
   SEQ_DOOROUT_OPEN_ANIME_START,
   SEQ_DOOROUT_OPEN_ANIME_WAIT,
   SEQ_DOOROUT_PLAYER_STEP,
@@ -207,6 +209,7 @@ static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
     case DIR_DOWN: // 下向き
       work->seq[idx++] = SEQ_DOOROUT_INIT;
       work->seq[idx++] = SEQ_DOOROUT_EFFECT_START;
+      work->seq[idx++] = SEQ_GOOUT_EFFECT_START;
       work->seq[idx++] = SEQ_DOOROUT_CAMERA_ACT_START;
       work->seq[idx++] = SEQ_DOOROUT_OPEN_ANIME_START;
       work->seq[idx++] = SEQ_DOOROUT_OPEN_ANIME_WAIT;
@@ -219,6 +222,7 @@ static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
     case DIR_RIGHT: // 右向き
       work->seq[idx++] = SEQ_DOOROUT_INIT;
       work->seq[idx++] = SEQ_DOOROUT_EFFECT_START;
+      work->seq[idx++] = SEQ_GOOUT_EFFECT_START;
       work->seq[idx++] = SEQ_DOOROUT_OPEN_ANIME_START;
       work->seq[idx++] = SEQ_DOOROUT_OPEN_ANIME_WAIT;
       work->seq[idx++] = SEQ_DOOROUT_PLAYER_STEP;
@@ -235,6 +239,7 @@ static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
     if( EXIT_TYPE_IsSpExit(evdata->exit_type_out) ) {
       work->seq[idx++] = SEQ_DOOROUT_INIT;
       work->seq[idx++] = SEQ_DOOROUT_EFFECT_START;
+      work->seq[idx++] = SEQ_GOOUT_EFFECT_START;
       work->seq[idx++] = SEQ_DOOROUT_PLAYER_STEP;
       work->seq[idx++] = SEQ_DOOROUT_CAMERA_ACT_START;
       work->seq[idx++] = SEQ_DOOROUT_END; 
@@ -247,6 +252,7 @@ static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
       case DIR_DOWN: // 下向き
         work->seq[idx++] = SEQ_DOOROUT_INIT;
         work->seq[idx++] = SEQ_DOOROUT_EFFECT_START;
+        work->seq[idx++] = SEQ_GOOUT_EFFECT_START;
         work->seq[idx++] = SEQ_DOOROUT_CAMERA_ACT_START;
         work->seq[idx++] = SEQ_DOOROUT_PLAYER_STEP;
         work->seq[idx++] = SEQ_DOOROUT_END; 
@@ -255,6 +261,7 @@ static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
       case DIR_RIGHT: // 右向き
         work->seq[idx++] = SEQ_DOOROUT_INIT;
         work->seq[idx++] = SEQ_DOOROUT_EFFECT_START;
+        work->seq[idx++] = SEQ_GOOUT_EFFECT_START;
         work->seq[idx++] = SEQ_DOOROUT_PLAYER_STEP;
         work->seq[idx++] = SEQ_DOOROUT_CAMERA_ACT_START;
         work->seq[idx++] = SEQ_DOOROUT_END; 
@@ -280,6 +287,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   FIELD_CAMERA *          camera     = FIELDMAP_GetFieldCamera( fieldmap ); 
   FIELD_TASK_MAN *        task_man   = FIELDMAP_GetTaskManager( fieldmap );
   u16                     zone_id    = FIELDMAP_GetZoneID( fieldmap );
+  FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( fieldmap );
 
   switch( *seq ) {
   // イベント初期設定
@@ -311,8 +319,17 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   // 演出開始
   case SEQ_DOOROUT_EFFECT_START:
     ENTRANCE_CAMERA_Setup( work->ECamWork, &work->ECamParam ); // カメラ演出をセットアップ
+
+    FIELD_GOOUT_EFFECT_Setup( p_goout );  //外出表現表示
     FSND_PlayStartBGM( fieldSound, gameData ); // BGM 再生開始
     StartFadeInEvent( event, work ); // 画面フェードイン開始
+    *seq = GetNextSeq( work );
+    FinishCurrentSeq( work );
+    break;
+
+  // 外出エフェクト再生
+  case SEQ_GOOUT_EFFECT_START:
+    FIELD_GOOUT_EFFECT_Start( p_goout );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
     break;

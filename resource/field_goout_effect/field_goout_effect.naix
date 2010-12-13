@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_goout_effect.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_GOOUT_EFFECT_NAIX_
+#define NARC_FIELD_GOOUT_EFFECT_NAIX_
+
+enum {
+	NARC_field_goout_effect_d_effect_nsbca = 0,
+	NARC_field_goout_effect_d_effect_nsbma = 1,
+	NARC_field_goout_effect_d_effect_nsbmd = 2,
+	NARC_field_goout_effect_d_effect_z_nsbca = 3,
+	NARC_field_goout_effect_d_effect_z_nsbma = 4,
+	NARC_field_goout_effect_d_effect_z_nsbmd = 5
+};
+
+/* NARC_FIELD_GOOUT_EFFECT_NAIX_ */
+#endif

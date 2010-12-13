@@ -303,3 +303,4 @@
   ARCID_ASSERT_ERR   "assert_err.narc"          #製品版でのASSERT_HEAVYエラー画面
   $DEBUG_YES ARCID_DEBUG_MMDL_OBJCODESTR "fieldmap/fldmmdl_objcodestr.narc" #動作モデル 名前
   ARCID_BATT_BG_PLANM "wazaeffect/batt_bg_planm.narc" # BGパレットアニメデータ
+  ARCID_FIELD_GOOUT_EFFECT "field_goout_effect.narc" #外出表現用アニメデータ
