@@ -24,7 +24,7 @@
 #include  "message.naix"
 
 #ifdef PM_DEBUG
-#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_nishino | defined DEBUG_ONLY_FOR_nakatsui
+#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_nishino | defined DEBUG_ONLY_FOR_nakatsui | defined DEBUG_ONLY_FOR_toru_nagihashi
 #define SEIKAKU_PRINT
 #endif
 #endif
@@ -653,7 +653,38 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
     }
   }
 #ifdef SEIKAKU_PRINT
-  OS_TPrintf("tr_id:%d mons_no:%d seikaku:%d\n",tr_id,PP_Get(pp,ID_PARA_monsno,NULL),PP_Get(pp,ID_PARA_seikaku,NULL));
+  {
+    static const char * scp_seikaku[PTL_SEIKAKU_MAX] =
+    {
+      "‚ª‚ñ‚Î‚è‚â",
+      "‚³‚Ý‚µ‚ª‚è",
+      "‚ä‚¤‚©‚ñ",
+      "‚¢‚¶‚Á‚Ï‚è",
+      "‚â‚ñ‚¿‚á",
+      "‚¸‚Ô‚Æ‚¢",
+      "‚·‚È‚¨",
+      "‚Ì‚ñ‚«",
+      "‚í‚ñ‚Ï‚­",
+      "‚Ì‚¤‚Ä‚ñ‚«",
+      "‚¨‚­‚Ñ‚å‚¤",
+      "‚¹‚Á‚©‚¿",
+      "‚Ü‚¶‚ß",
+      "‚æ‚¤‚«",
+      "‚Þ‚¶‚á‚«",
+      "‚Ð‚©‚¦‚ß",
+      "‚¨‚Á‚Æ‚è",
+      "‚ê‚¢‚¹‚¢",
+      "‚Ä‚ê‚â",
+      "‚¤‚Á‚©‚è‚â",
+      "‚¨‚¾‚â‚©",
+      "‚¨‚Æ‚È‚µ‚¢",
+      "‚È‚Ü‚¢‚«",
+      "‚µ‚ñ‚¿‚å‚¤",
+      "‚«‚Ü‚®‚ê",
+    };
+
+    OS_TPrintf("tr_id:%d mons_no:%d seikaku:%s\n",tr_id,PP_Get(pp,ID_PARA_monsno,NULL),scp_seikaku[PP_Get(pp,ID_PARA_seikaku,NULL)]);
+  }
 #endif
 }
 
