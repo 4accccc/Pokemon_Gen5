@@ -59,6 +59,8 @@ trmsgtbl.narc: trmsgtbl.bin
 	$(TOOLDIR)trtblmk trmsgtbl.bin trmsgtblofs.bin
 	nnsarc -c -l -n -i trmsgtbl.narc trmsgtbl.bin
 	nnsarc -c -l -n -i trmsgtblofs.narc trmsgtblofs.bin
+	$(NAIXCUT) trmsgtbl.naix
+	$(NAIXCUT) trmsgtblofs.naix
 
 trmsgtbl.bin: trmsgtbl.s
 	$(MWAS) $< -o $*.o
