@@ -50,12 +50,11 @@ static const u8 InsWall[INSECT_WALL_MAX-1][INSECT_CHK_MAX] = {
  * 電気ジム初期化
  * @param   gsys            ゲームシステムポインタ
  * @param   inEvtFlgBtl1    イベントフラグ状況　トレーナー戦1を終えたか？　1で終了
- * @param   inEvtFlgBtl2    イベントフラグ状況　トレーナー戦2を終えたか？　1で終了
  *
  * @return  none
  */
 //--------------------------------------------------------------
-void GYM_INIT_Elec(GAMESYS_WORK *gsys, const u16 inEvtFlgBtl1, const u16 inEvtFlgBtl2)
+void GYM_INIT_Elec(GAMESYS_WORK *gsys, u16 seq)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
   {
@@ -63,7 +62,8 @@ void GYM_INIT_Elec(GAMESYS_WORK *gsys, const u16 inEvtFlgBtl1, const u16 inEvtFl
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
-
+  //初期シーケンスを設定
+  //gmk_sv_work->event_seq  = seq;
 }
 
 //--------------------------------------------------------------

@@ -94,16 +94,22 @@ VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymElec_CallFadeoutEvent( VMHANDLE *core, void *wk )
 {
-  u8 cap_idx;
-  GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u8 phase  = VMGetU16( core );
+  GMEVENT *event  = GYM_ELEC_CreateFadeoutEvent( gsys, phase );
 
-  cap_idx = VMGetU16( core );
- // GYM_ELEC_SetTrEncFlg(gsys, cap_idx);
-
-  return VMCMD_RESULT_CONTINUE;
+  if( event == NULL )
+  {
+    return VMCMD_RESULT_SUSPEND;
+  }
+  else
+  {
+    SCRIPT_CallEvent( sc, event );
+    //イベントコールするので、一度制御を返す
+    return VMCMD_RESULT_SUSPEND;
+  }
 }
 
 //--------------------------------------------------------------
