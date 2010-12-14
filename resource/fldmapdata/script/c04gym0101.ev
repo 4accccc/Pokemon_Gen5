@@ -21,27 +21,22 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c04gym0101_leader4_01
 _EVENT_DATA		ev_zone_c04gym0101
-_EVENT_DATA		ev_pos_c04gym0101_sw1
-_EVENT_DATA		ev_pos_c04gym0101_sw2
-_EVENT_DATA		ev_pos_c04gym0101_sw3
-_EVENT_DATA		ev_pos_c04gym0101_sw4
-_EVENT_DATA		ev_prg_c04gym0101_scr01
-_EVENT_DATA		ev_prg_c04gym0101_scr02
+_EVENT_DATA		ev_pos_c04gym0101_show1
+_EVENT_DATA		ev_pos_c04gym0101_show2
+_EVENT_DATA		ev_pos_c04gym0101_show3
 _EVENT_DATA		ev_c04gym0101_trainer_01
 _EVENT_DATA		ev_c04gym0101_trainer_02
+_EVENT_DATA		ev_c04gym0101_trainer_03
 _EVENT_DATA		ev_c04gym0101_guide_01
 _EVENT_DATA		ev_bg_c04gym0101_statue_01
-_EVENT_DATA   ev_prg_c04gym0101_capsule_in
-_EVENT_DATA   ev_prg_c04gym0101_capsule_out
-_EVENT_DATA   ev_prg_c04gym0101_tr_disp_on
-_EVENT_DATA		ev_init_c04gym0101			//対戦後のコースタートレーナーをどかす
-_EVENT_DATA		ev_recover_c04gym0101		//環境ＳＥ初期化（セーブ復帰用）
+//_EVENT_DATA		ev_init_c04gym0101			//対戦後のコースタートレーナーをどかす
+//_EVENT_DATA		ev_recover_c04gym0101		//環境ＳＥ初期化（セーブ復帰用）
 _EVENT_DATA_END
 
 
 //------------------------！注意！------------------------------//
 //																//
-//		LOCALWORK11～14までをジムギミックの制御に使用			//
+//		LOCALWORK11～13までをジムギミックの制御に使用			//
 //		ゾーン内での使用を禁止します							//
 //																//
 //--------------------------------------------------------------//
@@ -51,59 +46,29 @@ _EVENT_DATA_END
 /*					ジムギミック初期化						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c04gym0101
-	//イベントフラグの値を格納するワークを定義
-	DEFINE_LOCAL	TR_SW1
-	DEFINE_LOCAL	TR_SW2
-
-	//コースタートレーナーとの対戦フラグをワークに格納
-
-	//１人目のチェック
-	IF FLAG_ON( FE_C04GYM0101_TRBTL1 ) THEN
-		$TR_SW1 = 1		//対戦済みなら1を代入
-	ELSE
-		$TR_SW1 = 0		//対戦前なら0を代入
-	ENDIF
-
-	//２人目のチェック
-	IF FLAG_ON( FE_C04GYM0101_TRBTL2 ) THEN
-		$TR_SW2 = 1		//対戦済みなら1を代入
-	ELSE
-		$TR_SW2 = 0		//対戦前なら0を代入
-	ENDIF
-
 	//ジムギミック初期化コマンド　引数(0)ならトレーナー対戦前(1)なら対戦後
-	_GYM_ELEC_INIT( TR_SW1, TR_SW2 )
-
+  //_GYM_ELEC_INIT( TR_SW1, TR_SW2 )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
 INIT_EVENT_END
 
 
 /************************************************************/
 /*				対戦後トレーナーの位置変更					*/
 /************************************************************/
-INIT_EVENT_START	ev_init_c04gym0101
+//INIT_EVENT_START	ev_init_c04gym0101
 
-	//コースター乗車トレーナー（１人目）と対戦済みなら乗車口横に移動
-	IF FLAG_ON( FE_C04GYM0101_TRBTL1 ) THEN
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 17, 2, 17, DIR_LEFT )
-	ENDIF
-
-	//コースター乗車トレーナー（２人目）と対戦済みなら乗車口横に移動
-	IF FLAG_ON( FE_C04GYM0101_TRBTL2 ) THEN
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 51, 2, 42, DIR_LEFT )
-	ENDIF
-
-INIT_EVENT_END
+//INIT_EVENT_END
 
 /************************************************************/
 /*				環境ＳＥ初期化（セーブ復帰用）					*/
 /************************************************************/
-INIT_EVENT_START	ev_recover_c04gym0101
+//INIT_EVENT_START	ev_recover_c04gym0101
   //セーブ復帰なら実行
-  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
-  IF $SCWK_ANSWER == TRUE THEN
-    _GYM_ELEC_INIT_SE()
-  ENDIF
-INIT_EVENT_END
+//  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
+//  IF $SCWK_ANSWER == TRUE THEN
+//    _GYM_ELEC_INIT_SE()
+//  ENDIF
+//INIT_EVENT_END
 
 
 /************************************************************/
@@ -252,109 +217,42 @@ ev_leader4_btl:
 
 
 /************************************************************/
-/*			ジムギミック　プレーヤーがカプセルに乗る		*/
+/*				ジムギミック　ショーイベント						*/
 /************************************************************/
-EVENT_START	ev_prg_c04gym0101_capsule_in
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ride_01 )
-	_OBJ_ANIME_WAIT()
-EVENT_END
-
-//--------------------------------------------------------------------
-//主人公：乗車
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_ride_01
-	_ANIME_DATA	AC_JUMP_U_2G_16F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-
-/************************************************************/
-/*			ジムギミック　プレーヤーがカプセルに降りる		*/
-/************************************************************/
-EVENT_START	ev_prg_c04gym0101_capsule_out
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_getoff_01 )
-	_OBJ_ANIME_WAIT()
-EVENT_END
-
-//--------------------------------------------------------------------
-//主人公：降車
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_getoff_01
-	_ANIME_DATA	AC_JUMP_D_2G_16F,1
-	_ANIME_DATA	ACMD_END,0
-
-/************************************************************/
-/*			ジムギミック　カプセル内トレーナーを表示状態にする	*/
-/************************************************************/
-EVENT_START	ev_prg_c04gym0101_tr_disp_on
-  //ローカル変数定義
-	{
-    DEFINE_LOCAL  POSX
-    DEFINE_LOCAL  POSZ
-
-	//主人公位置で分岐（位置からコースターの種類を識別します）
-	_PLAYER_POS_GET( POSX, POSZ )
-	IF $POSX == 16 THEN
-		//１台目のトレーナー有りコースターの乗車口なら
-		_CALL		ev_trainer_disp_01
-	ELSE
-		//２台目なら
-		_CALL		ev_trainer_disp_02
-	ENDIF
-	}
-EVENT_END
-
-//トレーナーの入っているコースター１台目
-ev_trainer_disp_01:
-	//トレーナー表示
-	_FLAG_RESET( FV_C04GYM0101_TR_01 )
-	_OBJ_ADD( C04GYM0101_TRAINER_01 )
-	_RET
-
-//トレーナーの入っているコースター2台目
-ev_trainer_disp_02:
-	//トレーナー表示
-	_FLAG_RESET( FV_C04GYM0101_TR_02 )
-	_OBJ_ADD( C04GYM0101_TRAINER_02 )
-	_RET
-
-/************************************************************/
-/*				ジムギミック　スイッチ						*/
-/************************************************************/
-//ジムギミックposイベント：スタート地点（逆Ｌ字）
-EVENT_START	ev_pos_c04gym0101_sw1
+//ジムギミックposイベント：ショー開始POS１
+EVENT_START	ev_pos_c04gym0101_show1
 	//LOCALWORK11==0で起動
-	//_GYM_ELEC_PUSH_SW(0)
-	//システムメッセージ呼び出し：コースが変わった！
-	_CALL	ev_swich_message
+
+  //影フェードアウトイベントを行う
+  _GYM_ELEC_CALL_FADEOUT_EVENT( 1 )
+
+  //このPOSの起動をさせなくする
+  $LOCALWORK11 = 1
 EVENT_END
 
 
-//ジムギミックposイベント：第２地点（逆コの字）
-EVENT_START	ev_pos_c04gym0101_sw2
+//ジムギミックposイベント：ショー開始POS２
+EVENT_START	ev_pos_c04gym0101_show2
 	//LOCALWORK12==0で起動
-	//_GYM_ELEC_PUSH_SW(1)
-	_CALL	ev_swich_message
+
+  //影フェードアウトイベントを行う
+  _GYM_ELEC_CALL_FADEOUT_EVENT( 2 )
+
+  //このPOSの起動をさせなくする
+  $LOCALWORK12 = 1
 EVENT_END
 
 
-//ジムギミックposイベント：第３地点（一の字）
-EVENT_START	ev_pos_c04gym0101_sw3
+//ジムギミックposイベント：ショー開始POS３
+EVENT_START	ev_pos_c04gym0101_show3
 	//LOCALWORK13==0で起動
-	//_GYM_ELEC_PUSH_SW(2)
-	_CALL	ev_swich_message
-EVENT_END
-
-
-//ジムギミックposイベント：リーダー前（逆Ｔ字）
-EVENT_START	ev_pos_c04gym0101_sw4
-	//LOCALWORK14==0で起動
-	//_GYM_ELEC_PUSH_SW(3)
+  //ここは後にカミツレショーアップイベントを呼ぶコマンドを書く
 	_CALL	ev_swich_message
 EVENT_END
 
 
 //スイッチを踏んだ時のシステムメッセージ（共通）
+//いらないけれど、POS踏んだときの確認用メッセージとして使用
 ev_swich_message:
 	_PLAYER_NAME( 0 )
 	//コースが変わった！
@@ -363,242 +261,26 @@ ev_swich_message:
 	_SYSWIN_CLOSE()
 	_RET
 
-
-/************************************************************/
-/*				ジムギミック　トレーナー登場				*/
-/************************************************************/
-//カプセル内トレーナーと自機のアニメーション
-EVENT_START	ev_prg_c04gym0101_scr01
-
-	//主人公：！マーク
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_gyoe )
-	_OBJ_ANIME_WAIT()
-
-	//ローカル変数定義
-	{
-    DEFINE_LOCAL  POSX
-    DEFINE_LOCAL  POSZ
-
-	//主人公位置で分岐（位置からコースターの種類を識別します）
-	_PLAYER_POS_GET( POSX, POSZ )
-	IF $POSX == 16 THEN
-		//１台目のトレーナー有りコースターの乗車口なら
-		_CALL		ev_trainer_appear_01
-
-	ELSE
-		//２台目なら
-		_CALL		ev_trainer_appear_02
-
-	ENDIF
-	}
-
-EVENT_END
-
-
-//トレーナーの入っているコースター１台目
-ev_trainer_appear_01:
-	//主人公：後ずさり
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
-	//トレーナー：登場
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_trainer_move_01 )
-	_OBJ_ANIME_WAIT()
-
-	//トレーナー：登場メッセージ　メッセージ無し
-	_BALLOONWIN_OBJMSG( msg_c04gym0101_prince1_01 , C04GYM0101_TRAINER_01 )
-	_BALLOONWIN_CLOSE()
-
-	_RET
-
-
-//トレーナーの入っているコースター２台目
-ev_trainer_appear_02:
-	//主人公：後ずさり
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
-	//トレーナー：登場
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_trainer_move_01 )
-	_OBJ_ANIME_WAIT()
-
-	//トレーナー：登場メッセージ　メッセージ無し
-	_BALLOONWIN_OBJMSG( msg_c04gym0101_princess1_01 , C04GYM0101_TRAINER_02 )
-	_BALLOONWIN_CLOSE()
-
-	_RET
-
-
-/************************************************************/
-/*															*/
-/*				ジムギミック　トレーナー戦					*/
-/*			ev_prg_c04gym0101_scr01の後、					*/
-/*			コースターのドアが閉まるのを待って起動			*/
-/************************************************************/
-EVENT_START	ev_prg_c04gym0101_scr02
-	//ローカル変数定義
-	{
-    DEFINE_LOCAL  POSX
-    DEFINE_LOCAL  POSZ
-
-	//主人公位置で分岐（位置からコースターの種類を識別します）
-	_PLAYER_POS_GET( POSX, POSZ )
-	IF $POSX == 16 THEN
-		//１台目のトレーナー有りコースターの乗車口なら
-		_CALL		ev_trainer_btl_01
-
-		//トレーナー戦後のプログラム処理へ（１人目）
-		//_GYM_ELEC_SET_TR_ENC_FLG( 1 )
-
-	ELSE
-		//２台目なら
-		_CALL		ev_trainer_btl_02
-
-		//トレーナー戦後のプログラム処理へ（２人目）
-		//_GYM_ELEC_SET_TR_ENC_FLG( 2 )
-
-	ENDIF
-
-	}
-
-EVENT_END
-
-//トレーナーの入っているコースター１台目
-ev_trainer_btl_01:
-
-	//視線曲を再生
-	_TRAINER_BGM_SET( TRID_PRINCE_02 )
-
-	//トレーナー：主人公前へ
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_trainer_move_02 )
-	_OBJ_ANIME_WAIT()
-
-	//トレーナー：戦闘前メッセージ
-	_BALLOONWIN_OBJMSG( msg_c04gym0101_prince1_02 , C04GYM0101_TRAINER_01 )
-	_BALLOONWIN_CLOSE()
-
-	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_PRINCE_02, 0 )
-	//敗戦チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-	ELSE
-		//GFBTS2018：海外版バグ対処
-		//コースタートレーナーを非表示に戻す
-		_FLAG_SET( FV_C04GYM0101_TR_01 )
-		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-	ENDIF
-
-	//トレーナー：戦闘後メッセージ
-	_BALLOONWIN_OBJMSG( msg_c04gym0101_prince1_03 , C04GYM0101_TRAINER_01 )
-	_BALLOONWIN_CLOSE()
-
-	//トレーナー：退く
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_trainer_move_03 )
-	_OBJ_ANIME_WAIT()
-
-	//コースター（１台目）のトレーナー戦終了
-	_FLAG_SET( FE_C04GYM0101_TRBTL1 )
-
-	_RET
-
-
-//トレーナーの入っているコースター２台目
-ev_trainer_btl_02:
-	//視線曲を再生
-	_TRAINER_BGM_SET( TRID_PRINCESS_02 )
-
-	//トレーナー：主人公前へ
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_trainer_move_02 )
-	_OBJ_ANIME_WAIT()
-
-	//トレーナー：戦闘前メッセージ
-	_BALLOONWIN_OBJMSG( msg_c04gym0101_princess1_02 , C04GYM0101_TRAINER_02 )
-	_BALLOONWIN_CLOSE()
-
-	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_PRINCESS_02, 0 )
-	//敗戦チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-	ELSE
-		//GFBTS2018：海外版バグ対処
-		//コースタートレーナーを非表示に戻す
-		_FLAG_SET( FV_C04GYM0101_TR_02 )
-		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-	ENDIF
-
-	//トレーナー：戦闘後メッセージ
-	_BALLOONWIN_OBJMSG( msg_c04gym0101_princess1_03 , C04GYM0101_TRAINER_02 )
-	_BALLOONWIN_CLOSE()
-
-	//トレーナー：退く
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_trainer_move_03 )
-	_OBJ_ANIME_WAIT()
-
-	//コースター（２台目）のトレーナー戦終了
-	_FLAG_SET( FE_C04GYM0101_TRBTL2 )
-
-
-
-	_RET
-
-//--------------------------------------------------------------------
-//！マーク
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_obj_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//トレーナー：出現
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_trainer_move_01
-	_ANIME_DATA	AC_JUMP_D_2G_16F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//主人公：後ずさり
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_back_01
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_D_4F,2
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//トレーナー：主人公前へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_trainer_move_02
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//トレーナー：退く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_trainer_move_03
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	ACMD_END,0
-
-
 /************************************************************/
 /*					トレーナー♂（再会話）					*/
 /************************************************************/
-//カプセル内トレーナー：戦闘後の話しかけイベント
 EVENT_START	ev_c04gym0101_trainer_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_prince1_04 )
 EVENT_END
 
-
 /************************************************************/
 /*					トレーナー♀（再会話）					*/
 /************************************************************/
-//カプセル内トレーナー：戦闘後の話しかけイベント
 EVENT_START	ev_c04gym0101_trainer_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_princess1_04 )
 EVENT_END
 
+/************************************************************/
+/*					トレーナー♀（再会話）					*/
+/************************************************************/
+EVENT_START	ev_c04gym0101_trainer_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_princess1_04 )
+EVENT_END
 
 /************************************************************/
 /*						ジムガイド							*/

@@ -2149,10 +2149,10 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_c04gym0101_bin,
 		NARC_script_seq_sp_c04gym0101_bin,	//NARC_script_seq_sp_c04gym0101_bin,
 		NARC_script_message_c04gym0101_dat,
-		SEQ_BGM_GYM,
-		SEQ_BGM_GYM,
-		SEQ_BGM_GYM,
-		SEQ_BGM_GYM,
+		SEQ_BGM_ERECTRIC_GYM_01,
+		SEQ_BGM_ERECTRIC_GYM_01,
+		SEQ_BGM_ERECTRIC_GYM_01,
+		SEQ_BGM_ERECTRIC_GYM_01,
 		enc_dummy,
 		NARC_eventdata_c04gym0101_bin,
     ZONE_ID_C04,
@@ -2160,7 +2160,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
-		0,        // camera id
+		38,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,

@@ -9,12 +9,11 @@
 #ifndef ZONE_C04GYM0101_EVC_H
 #define ZONE_C04GYM0101_EVC_H
 
-#define C04GYM0101_TRAINER_02              0
+#define C04GYM0101_TRAINER_03              0
 #define C04GYM0101_GUIDE_01                1
-#define TR_PRINCESS_01                     2
-#define TR_PRINCE_01                       3
-#define C04GYM0101_TRAINER_01              4
-#define C04GYM0101_LEADER4_01              5
+#define C04GYM0101_TRAINER_01              2
+#define C04GYM0101_TRAINER_02              3
+#define C04GYM0101_LEADER4_01              4
 
 #endif //ZONE_C04GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
