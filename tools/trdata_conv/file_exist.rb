@@ -78,15 +78,15 @@
           fp_r.close
           fp_w.close
         end
-        #com = sprintf( "svn add %s%s%s", ARGV[ ARGV_COPY_DIR ], split_data[ 0 ], ext[ j ] )
-        #system( com )
-        #com = sprintf( "svn commit %s%s%s -m \"仮素材追加\"", ARGV[ ARGV_COPY_DIR ], split_data[ 0 ], ext[ j ] )
-        #system( com )
+        com = sprintf( "svn add %s%s%s", ARGV[ ARGV_COPY_DIR ], split_data[ 0 ], ext[ j ] )
+        system( com )
+        com = sprintf( "svn commit %s%s%s -m \"仮素材追加\"", ARGV[ ARGV_COPY_DIR ], split_data[ 0 ], ext[ j ] )
+        system( com )
       }
     end
   }
   if exist_flag != 0
-    #system( "svn commit trfgra_wb.scr -m \"仮素材追加\"" )
+    system( "svn commit trfgra_wb.scr -m \"仮素材追加\"" )
 #    system( "ipmsg /MSG /SEAL W00205 トレーナーグラフィック仮素材をコミットしました　コンバートお願いします" )
 #    system( "ipmsg /MSG localhost トレーナーグラフィック仮素材があります　大村君からの返答を待ってください" )
   end
