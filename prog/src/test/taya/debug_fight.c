@@ -41,6 +41,7 @@
 #include "field\zonedata.h"
 #include "fieldmap\zone_id.h"
 #include "system\net_err.h"
+#include "tr_tool\trtype_def.h"
 
 // local includes ---------------------
 #include "msg\debug\msg_debug_fight.h"
@@ -192,6 +193,7 @@ typedef enum {
   SELITEM_SKIP_BTLIN,
   SELITEM_AI_CTRL,
   SELITEM_SHOOTER_MODE,
+  SELITEM_TRAINER_TYPE,
   SELITEM_LIMIT_GAME_MIN,
   SELITEM_LIMIT_GAME_SEC,
   SELITEM_LIMIT_COMMAND,
@@ -298,6 +300,7 @@ enum {
   LAYOUT_LABEL_SKIP_BTLIN_X     = 4,
   LAYOUT_LABEL_AI_CTRL_X        = 4,
   LAYOUT_LABEL_SHOOTERMODE_X    = 4,
+  LAYOUT_LABEL_TRAINER_TYPE_X   = 4,
 
 
   LAYOUT_LABEL_LIMITTIME_X       = 160,
@@ -321,6 +324,7 @@ enum {
   LAYOUT_LABEL_SKIP_BTLIN_Y     = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*8,
   LAYOUT_LABEL_AI_CTRL_Y        = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*9,
   LAYOUT_LABEL_SHOOTERMODE_Y    = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*10,
+  LAYOUT_LABEL_TRAINER_TYPE_Y   = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*11,
 
   // --- PAGE 3
   LAYOUT_LABEL_PAGE3_X = 4,
@@ -405,6 +409,7 @@ static const LABEL_LAYOUT LabelLayout_Page2[] = {
   { DBGF_LABEL_SKIP_IN,        LAYOUT_LABEL_SKIP_BTLIN_X,    LAYOUT_LABEL_SKIP_BTLIN_Y    },
   { DBGF_LABEL_AI_CTRL,        LAYOUT_LABEL_AI_CTRL_X,       LAYOUT_LABEL_AI_CTRL_Y       },
   { DBGF_LABEL_SHOOTER_MODE,   LAYOUT_LABEL_SHOOTERMODE_X,   LAYOUT_LABEL_SHOOTERMODE_Y   },
+  { DBGF_LABEL_TRAINER_ID,     LAYOUT_LABEL_TRAINER_TYPE_X,  LAYOUT_LABEL_TRAINER_TYPE_Y  },
   { DBGF_LABEL_LIMIT_TIME,     LAYOUT_LABEL_LIMITTIME_X,     LAYOUT_LABEL_LIMITTIME_Y     },
   { DBGF_LABEL_LIMIT_GAME_MIN, LAYOUT_LABEL_LIMITGAME_X,     LAYOUT_LABEL_LIMITGAME_Y     },
   { DBGF_LABEL_LIMIT_GAME_SEC, LAYOUT_LABEL_LIMITGSEC_X,     LAYOUT_LABEL_LIMITGSEC_Y     },
@@ -512,6 +517,7 @@ static const ITEM_LAYOUT ItemLayout_Page2[] = {
   { SELITEM_SKIP_BTLIN,     LAYOUT_LABEL_SKIP_BTLIN_X    +68, LAYOUT_LABEL_SKIP_BTLIN_Y     },
   { SELITEM_AI_CTRL,        LAYOUT_LABEL_AI_CTRL_X       +68, LAYOUT_LABEL_AI_CTRL_Y        },
   { SELITEM_SHOOTER_MODE,   LAYOUT_LABEL_SHOOTERMODE_X   +68, LAYOUT_LABEL_SHOOTERMODE_Y    },
+  { SELITEM_TRAINER_TYPE,   LAYOUT_LABEL_TRAINER_TYPE_X  +68, LAYOUT_LABEL_TRAINER_TYPE_Y   },
   { SELITEM_LIMIT_GAME_MIN, LAYOUT_LABEL_LIMITGAME_X     +64, LAYOUT_LABEL_LIMITGAME_Y      },
   { SELITEM_LIMIT_GAME_SEC, LAYOUT_LABEL_LIMITGSEC_X     +64, LAYOUT_LABEL_LIMITGSEC_Y      },
   { SELITEM_LIMIT_COMMAND,  LAYOUT_LABEL_LIMITCMD_X      +64, LAYOUT_LABEL_LIMITCMD_Y       },
@@ -639,6 +645,7 @@ typedef struct {
   u32  fSubway       : 1;
   u32  fAICtrl       : 1;
   u32  fShooterMode  : 1;
+  u16  trainerType;
 
 
   u16  LimitTimeCommand;
@@ -660,6 +667,7 @@ struct _DEBUG_BTL_WORK {
   GFL_BMPWIN*     win;
   GFL_BMP_DATA*   bmp;
   GFL_MSGDATA*    mm;
+  GFL_MSGDATA*    mmTrainerType;
   GFL_MSGDATA*    mmMonsName;
   STRBUF*         strbuf;
   GFL_FONT*       fontHandle;
@@ -715,6 +723,7 @@ static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk 
 static void setMainProc( DEBUG_BTL_WORK* wk, pMainProc nextProc );
 static inline BOOL selItem_IsPoke( u16 itemID );
 static inline BOOL selItem_IsLimitTime( u16 itemID );
+static inline BOOL selItem_IsTrainerID( u16 itemID );
 static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue );
 static int loopValue( int value, int min, int max );
 static BOOL btltype_IsComm( BtlType type );
@@ -736,6 +745,7 @@ static void printItem_LandForm( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_Season( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_Weather( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
+static void printItem_TrainerType( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printClipMark( DEBUG_BTL_WORK* wk );
 static void clearClipMark( DEBUG_BTL_WORK* wk );
 static void printSaveMark( DEBUG_BTL_WORK* wk );
@@ -996,7 +1006,8 @@ static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID )
   wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   wk->mm  = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_fight_dat, heapID );
-  wk->mmMonsName  = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
+  wk->mmTrainerType = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_trtype_dat, heapID );
+  wk->mmMonsName    = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
   wk->strbuf = GFL_STR_CreateBuffer( 1024, heapID );
 
   GFL_BMP_Clear( wk->bmp, 0xff );
@@ -1026,6 +1037,7 @@ static void deleteTemporaryModules( DEBUG_BTL_WORK* wk )
   GFL_FONT_Delete( wk->fontHandle );
 
   GFL_STR_DeleteBuffer( wk->strbuf );
+  GFL_MSG_Delete( wk->mmTrainerType );
   GFL_MSG_Delete( wk->mmMonsName );
   GFL_MSG_Delete( wk->mm );
   GFL_BMPWIN_Delete( wk->win );
@@ -1269,6 +1281,10 @@ static inline BOOL selItem_IsLimitTime( u16 itemID )
 {
   return ( (itemID==SELITEM_LIMIT_GAME_MIN) || (itemID==SELITEM_LIMIT_GAME_SEC) || (itemID==SELITEM_LIMIT_COMMAND) );
 }
+static inline BOOL selItem_IsTrainerType( u16 itemID )
+{
+  return ( itemID==SELITEM_TRAINER_TYPE );
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -1375,6 +1391,10 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_SHOOTER_MODE:
     save->fShooterMode ^= 1;
     break;
+  case SELITEM_TRAINER_TYPE:
+    save->trainerType = loopValue( save->trainerType + incValue, 0, TRTYPE_MAX -1 );
+    break;
+
 
 
   case SELITEM_AI0:   save->fAI_0 ^= 1; break;
@@ -1570,6 +1590,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_SKIP_BTLIN:    printItem_Flag( wk, wk->saveData.fSkipBtlIn, wk->strbuf ); break;
         case SELITEM_AI_CTRL:       printItem_Flag( wk, wk->saveData.fAICtrl, wk->strbuf ); break;
         case SELITEM_SHOOTER_MODE:  printItem_Flag( wk, wk->saveData.fShooterMode, wk->strbuf ); break;
+        case SELITEM_TRAINER_TYPE:  printItem_TrainerType( wk, wk->strbuf ); break;
 
         case SELITEM_AI0: printItem_Flag( wk, wk->saveData.fAI_0,    wk->strbuf ); break;
         case SELITEM_AI1: printItem_Flag( wk, wk->saveData.fAI_1,    wk->strbuf ); break;
@@ -1662,6 +1683,10 @@ static void printItem_Weather( DEBUG_BTL_WORK* wk, STRBUF* buf )
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, strID, buf );
+}
+static void printItem_TrainerType( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mmTrainerType, wk->saveData.trainerType , buf );
 }
 static void printClipMark( DEBUG_BTL_WORK* wk )
 {
@@ -1803,7 +1828,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_SAVE,           SELITEM_BTL_RULE,      SELITEM_POKE_SELF_1,   SELITEM_BADGE,         SELITEM_LOAD          },
       { SELITEM_LOAD,           SELITEM_BTL_RULE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,            Left-Item */
-      { SELITEM_MUST_TUIKA,     SELITEM_SHOOTER_MODE,  SELITEM_MUST_TOKU,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
+      { SELITEM_MUST_TUIKA,     SELITEM_TRAINER_TYPE,  SELITEM_MUST_TOKU,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_MUST_TOKU,      SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_MUST_ITEM,      SELITEM_MUST_TOKU,     SELITEM_MUST_CRITICAL, SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_MUST_CRITICAL,  SELITEM_MUST_ITEM,     SELITEM_HP_CONST,      SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
@@ -1813,7 +1838,8 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_DMG_RAND_OFF,   SELITEM_HIT_100PER,    SELITEM_SKIP_BTLIN,    SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_SKIP_BTLIN,     SELITEM_DMG_RAND_OFF,  SELITEM_AI_CTRL,       SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_AI_CTRL,        SELITEM_SKIP_BTLIN,    SELITEM_SHOOTER_MODE,  SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
-      { SELITEM_SHOOTER_MODE,   SELITEM_AI_CTRL,       SELITEM_MUST_TUIKA,    SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
+      { SELITEM_SHOOTER_MODE,   SELITEM_AI_CTRL,       SELITEM_TRAINER_TYPE,  SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
+      { SELITEM_TRAINER_TYPE,   SELITEM_SHOOTER_MODE,  SELITEM_MUST_TUIKA,    SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_LIMIT_GAME_MIN, SELITEM_LIMIT_COMMAND, SELITEM_LIMIT_GAME_SEC,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_GAME_SEC, SELITEM_LIMIT_GAME_MIN,SELITEM_LIMIT_COMMAND, SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_COMMAND,  SELITEM_LIMIT_GAME_SEC,SELITEM_LIMIT_GAME_MIN,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
@@ -1962,10 +1988,22 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
+    if( selItem_IsTrainerType(wk->selectItem) )
+    {
+      selItem_Increment( wk, wk->selectItem, 10 );
+      PrintItem( wk, wk->selectItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
   }
   else if( key & PAD_BUTTON_Y )
   {
     if( selItem_IsLimitTime(wk->selectItem) )
+    {
+      selItem_Increment( wk, wk->selectItem, -10 );
+      PrintItem( wk, wk->selectItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
+    if( selItem_IsTrainerType(wk->selectItem) )
     {
       selItem_Increment( wk, wk->selectItem, -10 );
       PrintItem( wk, wk->selectItem, TRUE );
@@ -2353,6 +2391,8 @@ FS_EXTERN_OVERLAY(battle);
           &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
+        wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->tr_type = wk->saveData.trainerType;
+        OS_Printf("トレーナータイプ：%d\n",wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->tr_type);
         break;
       case BTL_RULE_DOUBLE:
         switch( btltype_GetMultiType(wk->saveData.btlType) ){
