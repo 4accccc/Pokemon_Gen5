@@ -16,8 +16,8 @@ SUBDIRS	= mmdl_pokedata
 .PHONY: do-build clean
 
 do-build:
-ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	$(MAKE) -f $(MKFILE_ANMLIST)
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	$(MAKE) -f $(MKFILE_RESLIST)
 	$(MAKE) -f $(MKFILE_NCGIMD)
 endif
@@ -31,8 +31,8 @@ clean:
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	$(MAKE) -f $(MKFILE_NCGIMD) clean
 	$(MAKE) -f $(MKFILE_RESLIST) clean
-	$(MAKE) -f $(MKFILE_ANMLIST) clean
 endif
+	$(MAKE) -f $(MKFILE_ANMLIST) clean
 	@$(MAKE_SUBDIR)
 
 dmyres:
@@ -48,8 +48,8 @@ endif
 	$(MAKE) -f $(MKFILE_RESARC)
 
 list:
-ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	$(MAKE) -f $(MKFILE_ANMLIST)
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	$(MAKE) -f $(MKFILE_RESLIST)
 	$(MAKE) -f $(MKFILE_NCGIMD)
 endif
