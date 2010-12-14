@@ -31,7 +31,7 @@
 		use_fld_cngc="0"
 		polygonID_fixed="0"
 		child_polygonID_fixed="0"
-		gen_num="16384"
+		gen_num="40960"
 		radius="0"
 		length="0"
 		axis_x="0"
@@ -45,7 +45,7 @@
 		pos_z="-914"
 		init_vel_pos="2284"
 		init_vel_axis="327"
-		base_scl="5324"
+		base_scl="3276"
 		aspect="4096"
 		start_offset="0"
 		rtt_min="0"
@@ -71,7 +71,7 @@
 		offset_pos="0"
 		dpol_center="0"
 		usr_flag="0"
-		tex_name="ball_red.spt"
+		tex_name="rival.spt"
 	/>
 	<scl_anm
 		scl_s="487"

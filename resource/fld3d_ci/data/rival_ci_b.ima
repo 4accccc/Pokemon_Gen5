@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-12-06T17:25:40" source="rival_ci01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-12-13T15:31:57" source="rival_ci01.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,16 +11,16 @@
 <body>
 
 <mat_color_info
-	frame_size="200"
+	frame_size="170"
 	tool_start_frame="1"
-	tool_end_frame="200"
+	tool_end_frame="170"
 	interpolation="frame"
 	compress_material="off" material_size="4 4"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="402">
+<mat_color_data size="342">
 	25 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -38,15 +38,9 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
 	31 31 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -78,7 +72,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="200" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="170" data_head="2"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="vs_line_b_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -93,7 +87,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="200" data_head="202"/>
+		<polygon_alpha frame_step="1" data_size="170" data_head="172"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
