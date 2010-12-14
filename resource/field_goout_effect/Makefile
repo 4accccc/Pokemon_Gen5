@@ -40,8 +40,6 @@ IMAFILE = $(wildcard *.ima)
 ITPFILE = $(wildcard *.itp)
 ITAFILE = $(wildcard *.ita)
 
-TXTFILE = $(wildcard *.txt)
-
 ##########################################
 #ターゲットファイル
 ##########################################
@@ -51,7 +49,7 @@ NCERFILE = $(NCEFILE:.nce=.NCER)
 NSCRFILE = $(NSCFILE:.nsc=.NSCR)
 	
 #3D
-NSBTXFILE = $(IMDFILE:.imd=.nsbtx)
+NSBMDFILE = $(IMDFILE:.imd=.nsbmd)
 NSBCAFILE = $(ICAFILE:.ica=.nsbca)
 NSBVAFILE = $(IVAFILE:.iva=.nsbva)
 NSBMAFILE = $(IMAFILE:.ima=.nsbma)
@@ -60,9 +58,8 @@ NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
 LIST_FILE 	= list.txt
 OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
-			  $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) \
-			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) \
-			  $(DATFILE)
+			  $(NSBMDFILE) $(NSBCAFILE) $(NSBVAFILE) \
+			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE)
 
 
 
@@ -86,7 +83,7 @@ ifeq	($(CONVERTUSER),true)
 	g2dcvtr $<
 
 #3d
-.imd.nsbtx:
+.imd.nsbmd:
 	g3dcvtr $<
 
 .ica.nsbca:
@@ -127,8 +124,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(OBJ_FILE) $(TXTFILE)
-	-ls *.nsb* >> $(LIST_FILE)
+$(targetname).narc: $(OBJ_FILE)
+	-ls *.nsb* > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
