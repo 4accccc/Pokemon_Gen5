@@ -388,6 +388,9 @@ static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL
 
 //-------------------------------------
 ///	グローバル
+//    実体はdebug/debug_nagihashi.cにあります。
+//    （staticにしてしまうとマップ遷移のとき情報が消えてしまうので
+//    常駐にあります。）
 //=====================================
 extern int g_debug_use_flag;
 extern int g_debug_force_visible;
