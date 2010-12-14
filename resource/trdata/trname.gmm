@@ -3473,6 +3473,26 @@
 		<language name="JPN_KANJI" width="216">ジョニー</language>
 	</row>
 
+	<row id="princess_08">
+		<language name="JPN" width="216">ニコラ</language>
+		<language name="JPN_KANJI" width="216">ニコラ</language>
+	</row>
+
+	<row id="princess_09">
+		<language name="JPN" width="216">フレミング</language>
+		<language name="JPN_KANJI" width="216">フレミング</language>
+	</row>
+
+	<row id="princess_10">
+		<language name="JPN" width="216">アンペール</language>
+		<language name="JPN_KANJI" width="216">アンペール</language>
+	</row>
+
+	<row id="leader4_02">
+		<language name="JPN" width="216">カミツレ</language>
+		<language name="JPN_KANJI" width="216">カミツレ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
