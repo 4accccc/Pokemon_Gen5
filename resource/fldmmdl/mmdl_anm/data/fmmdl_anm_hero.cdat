@@ -438,9 +438,9 @@ static const GFL_BBDACT_ANM DATA_BlActHero_WalkR12F[] = {
 };
 
 //============================================
-// dash8
+// dash4
 //============================================
-static const GFL_BBDACT_ANM DATA_BlActHero_DashU8F[] = {
+static const GFL_BBDACT_ANM DATA_BlActHero_DashU4F[] = {
   { 13, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 14, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
@@ -451,7 +451,7 @@ static const GFL_BBDACT_ANM DATA_BlActHero_DashU8F[] = {
 //============================================
 // 
 //============================================
-static const GFL_BBDACT_ANM DATA_BlActHero_DashD8F[] = {
+static const GFL_BBDACT_ANM DATA_BlActHero_DashD4F[] = {
   { 16, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 15, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 17, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
@@ -462,7 +462,7 @@ static const GFL_BBDACT_ANM DATA_BlActHero_DashD8F[] = {
 //============================================
 // 
 //============================================
-static const GFL_BBDACT_ANM DATA_BlActHero_DashL8F[] = {
+static const GFL_BBDACT_ANM DATA_BlActHero_DashL4F[] = {
   { 19, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 18, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 20, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
@@ -473,7 +473,51 @@ static const GFL_BBDACT_ANM DATA_BlActHero_DashL8F[] = {
 //============================================
 // 
 //============================================
-static const GFL_BBDACT_ANM DATA_BlActHero_DashR8F[] = {
+static const GFL_BBDACT_ANM DATA_BlActHero_DashR4F[] = {
+  { 22, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 21, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 23, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 21, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// dash6
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActHero_DashU6F[] = {
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActHero_DashD6F[] = {
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 17, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActHero_DashL6F[] = {
+  { 19, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 18, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 20, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 18, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActHero_DashR6F[] = {
   { 22, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 21, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 23, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
@@ -523,9 +567,13 @@ static const GFL_BBDACT_ANM * const DATA_BlActHeroTbl[DRAW_ANMNO_HERO_MAX] =
   DATA_BlActHero_WalkD12F,
   DATA_BlActHero_WalkL12F,
   DATA_BlActHero_WalkR12F,
-  DATA_BlActHero_DashU8F,
-  DATA_BlActHero_DashD8F,
-  DATA_BlActHero_DashL8F,
-  DATA_BlActHero_DashR8F,
+  DATA_BlActHero_DashU4F,
+  DATA_BlActHero_DashD4F,
+  DATA_BlActHero_DashL4F,
+  DATA_BlActHero_DashR4F,
+  DATA_BlActHero_DashU6F,
+  DATA_BlActHero_DashD6F,
+  DATA_BlActHero_DashL6F,
+  DATA_BlActHero_DashR6F,
 };
 
