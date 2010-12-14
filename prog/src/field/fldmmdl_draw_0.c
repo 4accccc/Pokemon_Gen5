@@ -1686,18 +1686,18 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
   status = MMDL_GetDrawStatus( mmdl );
   
   if( code == SHIN_A || code == MU_A || code == POKE10 ){
-    u16 anm_idx = DRAW_STA_SHINMU_A_ANMNO_STOP;
+    u16 anm_idx = DRAW_ANMNO_SHINMU_A_STOP;
     
     if( status != work->anmcnt.set_anm_status ){
       switch( status ){
       case DRAW_STA_SHINMU_A_GUTARI:
-        anm_idx = DRAW_STA_SHINMU_A_ANMNO_GUTARI;
+        anm_idx = DRAW_ANMNO_SHINMU_A_GUTARI;
         break;
       case DRAW_STA_SHINMU_A_FLY_UP:
-        anm_idx = DRAW_STA_SHINMU_A_ANMNO_FLY_UP;
+        anm_idx = DRAW_ANMNO_SHINMU_A_FLYUP;
         break;
       case DRAW_STA_SHINMU_A_FLY:
-        anm_idx = DRAW_STA_SHINMU_A_ANMNO_FLY;
+        anm_idx = DRAW_ANMNO_SHINMU_A_FLY;
         break;
       }
       
@@ -1707,15 +1707,15 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
     }
   }else if( code == SHIN_B || code == MU_B ){ //B
     u16 dir = blact_GetDrawDir( mmdl );
-    u16 anm_idx = DRAW_STA_SHINMU_B_ANMNO_STOP_U;
+    u16 anm_idx = DRAW_ANMNO_SHINMU_B_STOPU;
     
     if( status < DRAW_STA_MAX ){ //Šî–{Œ`
       if( dir != work->anmcnt.set_anm_dir ||
           status != work->anmcnt.set_anm_status ){
         if( dir == DIR_UP ){
-          anm_idx = DRAW_STA_SHINMU_B_ANMNO_STOP_U;
+          anm_idx = DRAW_ANMNO_SHINMU_B_STOPU;
         }else if( dir == DIR_DOWN ){
-          anm_idx = DRAW_STA_SHINMU_B_ANMNO_STOP_D;
+          anm_idx = DRAW_ANMNO_SHINMU_B_STOPD;
         }
         
         work->anmcnt.set_anm_dir = dir;
@@ -1727,10 +1727,10 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
       if( status != work->anmcnt.set_anm_status ){
         switch( status ){
         case DRAW_STA_SHINMU_B_HOERU:
-          anm_idx = DRAW_STA_SHINMU_B_ANMNO_HOERU;
+          anm_idx = DRAW_ANMNO_SHINMU_B_HOERU;
           break;
         case DRAW_STA_SHINMU_B_TURN:
-          anm_idx = DRAW_STA_SHINMU_B_ANMNO_TURN;
+          anm_idx = DRAW_ANMNO_SHINMU_B_TURN;
           break;
         }
         
@@ -1741,7 +1741,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
     }
   }else{ //C
     if( status != work->anmcnt.set_anm_status ){
-      u16 anm_idx = DRAW_STA_SHINMU_C_ANMNO_FLY;
+      u16 anm_idx = DRAW_ANMNO_SHINMU_C_FLYUP;
       
       work->anmcnt.set_anm_status = status;
       GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
@@ -1941,16 +1941,16 @@ static void DrawBlActMelodyer_Draw( MMDL *mmdl )
     
     switch( status ){
     case DRAW_STA_MELODYER_SPIN:
-      anm_idx = DRAW_STA_MELODYER_ANMNO_SPIN;
+      anm_idx = DRAW_ANMNO_MELODYER_SPIN;
       break;
     case DRAW_STA_MELODYER_SPIN_POSE:
-      anm_idx = DRAW_STA_MELODYER_ANMNO_SPIN_POSE;
+      anm_idx = DRAW_ANMNO_MELODYER_SPINPOSE;
       break;
     case DRAW_STA_MELODYER_SHAKE:
-      anm_idx = DRAW_STA_MELODYER_ANMNO_SHAKE;
+      anm_idx = DRAW_ANMNO_MELODYER_SHAKE;
       break;
     default:
-      anm_idx = DRAW_STA_MELODYER_ANMNO_STOP;
+      anm_idx = DRAW_ANMNO_MELODYER_STOP;
     }
     
     work->anmcnt.set_anm_status = status;

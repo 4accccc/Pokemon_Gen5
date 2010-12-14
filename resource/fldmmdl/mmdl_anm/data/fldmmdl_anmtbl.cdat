@@ -1,0 +1,106 @@
+//=========================================================================
+/**
+ * @file	mmdl_anm/data/fldmmdl_anmtbl.cdat
+ * @brief	各アニメテーブルを統合。resource/fldmmdl/anmlist.txtから自動生成
+ * @autor	miyuki iwasawa
+ * @note	このファイルはresource/fldmmdl/tool/fmmdl_anm_list.rbによって自動生成されたものです。
+ */
+//=========================================================================
+#ifndef __D_FLDMMDL_ANMTBL_D__
+#define __D_FLDMMDL_ANMTBL_D__
+
+#include "fmmdl_anm_hero.cdat"
+#include "fmmdl_anm_flip.cdat"
+#include "fmmdl_anm_nonflip.cdat"
+#include "fmmdl_anm_onecell.cdat"
+#include "fmmdl_anm_swimhero.cdat"
+#include "fmmdl_anm_cyclehero.cdat"
+#include "fmmdl_anm_gethero.cdat"
+#include "fmmdl_anm_pchero.cdat"
+#include "fmmdl_anm_savehero.cdat"
+#include "fmmdl_anm_fishinghero.cdat"
+#include "fmmdl_anm_cutinhero.cdat"
+#include "fmmdl_anm_yurehero.cdat"
+#include "fmmdl_anm_poke_flip.cdat"
+#include "fmmdl_anm_poke_nonflip.cdat"
+#include "fmmdl_anm_flip_pcwoman.cdat"
+#include "fmmdl_anm_nonflip_rival.cdat"
+#include "fmmdl_anm_nonflip_support.cdat"
+#include "fmmdl_anm_nonflip_boss_n.cdat"
+#include "fmmdl_anm_nonflip_sage1.cdat"
+#include "fmmdl_anm_nonflip_ninja.cdat"
+#include "fmmdl_anm_nonflip_champion.cdat"
+#include "fmmdl_anm_spider.cdat"
+#include "fmmdl_anm_melodyer.cdat"
+#include "fmmdl_anm_shinmu_a.cdat"
+#include "fmmdl_anm_shinmu_b.cdat"
+#include "fmmdl_anm_shinmu_c.cdat"
+#include "fmmdl_anm_nonflip_swleader4.cdat"
+
+
+//===========================================
+//ビルボードアクター　アニメーションテーブル
+//===========================================
+
+const MMDL_BBDACT_ANMTBL DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX] =
+{
+  //MMDL_BLACT_ANMTBLNO_NON
+  { NULL, 0 },  ///<ダミー
+  //MMDL_BLACT_ANMTBLNO_HERO
+  { DATA_BlActHeroTbl, DRAW_ANMNO_HERO_MAX },  ///<自機基本アニメ
+  //MMDL_BLACT_ANMTBLNO_FLIP
+  { DATA_BlActFlipTbl, DRAW_ANMNO_FLIP_MAX },  ///<汎用人型　フリップ有アニメ
+  //MMDL_BLACT_ANMTBLNO_NONFLIP
+  { DATA_BlActNonFlipTbl, DRAW_ANMNO_NONFLIP_MAX },  ///<汎用人型　ノンフリップアニメ
+  //MMDL_BLACT_ANMTBLNO_ONECELL
+  { DATA_BlActOneCellTbl, DRAW_ANMNO_ONECELL_MAX },  ///<ワンセルアニメ　同一ファイル内継承
+  //MMDL_BLACT_ANMTBLNO_SWIMHERO
+  { DATA_BlActSwimHeroTbl, DRAW_ANMNO_SWIMHERO_MAX },  ///<自機波乗りアニメ
+  //MMDL_BLACT_ANMTBLNO_CYCLEHERO
+  { DATA_BlActCycleHeroTbl, DRAW_ANMNO_CYCLEHERO_MAX },  ///<自機自転車アニメ
+  //MMDL_BLACT_ANMTBLNO_GETHERO
+  { DATA_BlActGetHeroTbl, DRAW_ANMNO_GETHERO_MAX },  ///<自機アイテムゲットアニメ
+  //MMDL_BLACT_ANMTBLNO_PCHERO
+  { DATA_BlActPCHeroTbl, DRAW_ANMNO_PCHERO_MAX },  ///<自機ポケセン預けアニメ
+  //MMDL_BLACT_ANMTBLNO_SAVEHERO
+  { DATA_BlActSaveHeroTbl, DRAW_ANMNO_SAVEHERO_MAX },  ///<自機セーブアニメ
+  //MMDL_BLACT_ANMTBLNO_FISHINGHERO
+  { DATA_BlActFishingHeroTbl, DRAW_ANMNO_FISHINGHERO_MAX },  ///<自機釣りアニメ
+  //MMDL_BLACT_ANMTBLNO_CUTINHERO
+  { DATA_BlActCutInHeroTbl, DRAW_ANMNO_CUTINHERO_MAX },  ///<自機カットインアニメ
+  //MMDL_BLACT_ANMTBLNO_YUREHERO
+  { DATA_BlActYureHeroTbl, DRAW_ANMNO_YUREHERO_MAX },  ///<自機ゆらゆらアニメ
+  //MMDL_BLACT_ANMTBLNO_POKE_FLIP
+  { DATA_BlActPoke_FlipTbl, DRAW_ANMNO_POKE_FLIP_MAX },  ///<連れ歩きポケモンフリップ有アニメ
+  //MMDL_BLACT_ANMTBLNO_POKE_NONFLIP
+  { DATA_BlActPoke_NonFlipTbl, DRAW_ANMNO_POKE_NONFLIP_MAX },  ///<連れ歩きポケモンフリップ無しアニメ
+  //MMDL_BLACT_ANMTBLNO_FLIP_PCWOMAN
+  { DATA_BlActFlip_PCWomanTbl, DRAW_ANMNO_FLIP_PCWOMAN_MAX },  ///<ポケセン受付嬢おじぎアニメ　汎用人型　フリップ有アニメを継承
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_RIVAL
+  { DATA_BlActNonFlip_RivalTbl, DRAW_ANMNO_NONFLIP_RIVAL_MAX },  ///<汎用人型　フリップ無しアニメ＋ライバル芝居
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_SUPPORT
+  { DATA_BlActNonFlip_SupportTbl, DRAW_ANMNO_NONFLIP_SUPPORT_MAX },  ///<汎用人型　フリップ無しアニメ＋サポート芝居
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_BOSS_N
+  { DATA_BlActNonFlip_Boss_NTbl, DRAW_ANMNO_NONFLIP_BOSS_N_MAX },  ///<ボスN　フリップ無しアニメ＋ボスＮ芝居
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_SAGE1
+  { DATA_BlActNonFlip_Sage1Tbl, DRAW_ANMNO_NONFLIP_SAGE1_MAX },  ///<汎用人型　フリップ無しアニメ＋七賢人ゲーチス芝居
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_NINJA
+  { DATA_BlActNonFlip_NinjaTbl, DRAW_ANMNO_NONFLIP_NINJA_MAX },  ///<汎用人型　フリップ無しアニメ＋ダークトリニティ芝居(通常アニメ2倍速)
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_CHAMPION
+  { DATA_BlActNonFlip_ChampionTbl, DRAW_ANMNO_NONFLIP_CHAMPION_MAX },  ///<汎用人型　フリップ無しアニメ＋チャンピオンアデク芝居
+  //MMDL_BLACT_ANMTBLNO_SPIDER
+  { DATA_BlActSpiderTbl, DRAW_ANMNO_SPIDER_MAX },  ///<蜘蛛の巣アニメ
+  //MMDL_BLACT_ANMTBLNO_MELODYER
+  { DATA_BlActMelodyerTbl, DRAW_ANMNO_MELODYER_MAX },  ///<メロディアアニメ
+  //MMDL_BLACT_ANMTBLNO_SHINMU_A
+  { DATA_BlActShinMu_ATbl, DRAW_ANMNO_SHINMU_A_MAX },  ///<ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
+  //MMDL_BLACT_ANMTBLNO_SHINMU_B
+  { DATA_BlActShinMu_BTbl, DRAW_ANMNO_SHINMU_B_MAX },  ///<ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
+  //MMDL_BLACT_ANMTBLNO_SHINMU_C
+  { DATA_BlActShinMu_CTbl, DRAW_ANMNO_SHINMU_C_MAX },  ///<ゼクレシキュレムアニメ　上昇
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_SWLEADER4
+  { DATA_BlActNonFlip_SWLeader4Tbl, DRAW_ANMNO_NONFLIP_SWLEADER4_MAX },  ///<スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+};
+
+#endif //__D_FLDMMDL_ANMTBL_D__
+

@@ -314,15 +314,12 @@
 //--------------------------------------------------------------
 //１種類
 #define DRAW_STA_ACT0 (DRAW_STA_MAX)
-#define DRAW_STA_ACT0_ANMNO_MAX ((DRAW_STA_MAX*DIR_MAX4)+1)
 
 //２種類
 #define DRAW_STA_ACT1 (DRAW_STA_ACT0+1)
-#define DRAW_STA_ACT1_ANMNO_MAX (DRAW_STA_ACT0_ANMNO_MAX+1)
 
 //３種類
 #define DRAW_STA_ACT2 (DRAW_STA_ACT0+2)
-#define DRAW_STA_ACT2_ANMNO_MAX (DRAW_STA_ACT0_ANMNO_MAX+2)
 
 //--------------------------------------------------------------
 ///  PC受付専用ステータス
@@ -368,18 +365,6 @@
 #define DRAW_STA_HERO_DIR4_MAX (DRAW_STA_HERO_MAX*DIR_MAX4)
 
 //--------------------------------------------------------------
-/// フィールド動作モデル 自転車自機専用描画ステータス
-//--------------------------------------------------------------
-#if 0 //wb null
-///自機　ジャンプ台
-#define DRAW_STA_TAKE_OFF_16F  (DRAW_STA_MAX)
-///自機　ジャンプ台
-#define DRAW_STA_TAKE_OFF_8F  (DRAW_STA_MAX+1)
-///描画ステータス最大　自機
-#define DRAW_STA_MAX_CYCLEHERO  (DRAW_STA_TAKE_OFF_8F+1)
-#endif
-
-//--------------------------------------------------------------
 ///  フィールド動作モデル 自機釣り専用描画ステータス
 //--------------------------------------------------------------
 #define DRAW_STA_FISH_START   0x00
@@ -392,15 +377,6 @@
 #define DRAW_STA_FISH_DIR4_MAX (DRAW_STA_FISH_MAX*DIR_MAX4)
 
 //--------------------------------------------------------------
-///  フィールド動作モデル 自機万歳専用描画ステータス
-//--------------------------------------------------------------
-#if 0 //wb null
-#define DRAW_STA_BANZAI   0x00
-#define DRAW_STA_BANZAI_UKE  0x01
-#define DRAW_STA_MAX_BANZAI (DRAW_STA_BANZAI_UKE+1)
-#endif
-
-//--------------------------------------------------------------
 ///  フィールド動作モデル シン・ム描画ステータス
 //--------------------------------------------------------------
 #define DRAW_STA_SHINMU_A_STOP_DOWN 0x00
@@ -409,28 +385,13 @@
 #define DRAW_STA_SHINMU_A_FLY (DRAW_STA_MAX+2)
 #define DRAW_STA_SHINMU_A_MAX (DRAW_STA_MAX+3)
 
-#define DRAW_STA_SHINMU_A_ANMNO_STOP   0x00
-#define DRAW_STA_SHINMU_A_ANMNO_GUTARI 0x01
-#define DRAW_STA_SHINMU_A_ANMNO_FLY_UP 0x02
-#define DRAW_STA_SHINMU_A_ANMNO_FLY    0x03
-#define DRAW_STA_SHINMU_A_ANMNO_MAX    0x04
-
 #define DRAW_STA_SHINMU_B_STOP 0x00
 #define DRAW_STA_SHINMU_B_HOERU     (DRAW_STA_MAX)
 #define DRAW_STA_SHINMU_B_TURN      (DRAW_STA_MAX+1)
 #define DRAW_STA_SHINMU_B_MAX (DRAW_STA_MAX+2)
 
-#define DRAW_STA_SHINMU_B_ANMNO_STOP_U   0x00
-#define DRAW_STA_SHINMU_B_ANMNO_STOP_D   0x01
-#define DRAW_STA_SHINMU_B_ANMNO_HOERU    0x02
-#define DRAW_STA_SHINMU_B_ANMNO_TURN     0x03
-#define DRAW_STA_SHINMU_B_ANMNO_MAX      0x04
-
 #define DRAW_STA_SHINMU_C_STOP 0x00
 #define DRAW_STA_SHINMU_C_FLY  (DRAW_STA_MAX)
-
-#define DRAW_STA_SHINMU_C_ANMNO_FLY    0x00
-#define DRAW_STA_SHINMU_C_ANMNO_MAX    0x01
 
 //--------------------------------------------------------------
 ///  フィールド動作モデル くもの巣専用描画ステータス
@@ -447,12 +408,6 @@
 #define DRAW_STA_MELODYER_SPIN_POSE (DRAW_STA_MAX+1)
 #define DRAW_STA_MELODYER_SHAKE (DRAW_STA_MAX+2)
 #define DRAW_STA_MELODYER_MAX (DRAW_STA_MAX+3)
-
-#define DRAW_STA_MELODYER_ANMNO_STOP 0x00
-#define DRAW_STA_MELODYER_ANMNO_SPIN 0x01
-#define DRAW_STA_MELODYER_ANMNO_SPIN_POSE 0x02
-#define DRAW_STA_MELODYER_ANMNO_SHAKE 0x03
-#define DRAW_STA_MELODYER_ANMNO_MAX 0x04
 
 //======================================================================
 //  フィールド動作モデル アニメーションコマンドコード
@@ -657,12 +612,13 @@
 
 //芝居系　判り易い名前で置き換え
 #define AC_PC_BOW (AC_ACT0_STOP) ///<PCお辞儀
-#define AC_RIVEL_ACT0 (AC_ACT0_LOOP) ///<ライバル専用 つま先アニメ
+#define AC_RIVAL_ACT0 (AC_ACT0_LOOP) ///<ライバル専用 つま先アニメ
 #define AC_SUPPORT_ACT0 (AC_ACT0_STOP) ///<サポート専用 帽子アニメ
 #define AC_N_ACT0 (AC_ACT0_STOP) ///<N専用 両手アニメ
 #define AC_N_ACT1 (AC_ACT1_STOP) ///<N専用 首アニメ
-#define AC_SAGE1_ACT0 (AC_ACT0_STOP) ///<SAGE1専用 両手アニメ
-#define AC_CHAMPION_ACT0 (AC_ACT0_STOP) ///<CHAMPION専用 加味揺れアニメ
 #define AC_N_ACT2 (AC_ACT2_LOOP) ///<N専用 腕アニメ
+#define AC_SAGE1_ACT0 (AC_ACT0_STOP) ///<SAGE1専用 両手アニメ
+#define AC_CHAMPION_ACT0 (AC_ACT0_STOP) ///<CHAMPION専用 髪揺れアニメ
+#define AC_SWLEADER4_ACT0 (AC_ACT0_STOP) ///<SWLEADER4(スワンカミツレ)専用 振り返りアニメ
 
 #endif //MMDL_CODE_H_FILE

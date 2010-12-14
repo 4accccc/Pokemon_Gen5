@@ -1,0 +1,68 @@
+//=========================================================================
+/**
+ * @file	fmmdl_anm_shinmu_b.cdat
+ * @brief	ANMID_SHINMU_B -> ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
+ * @autor	miyuki iwasawa
+ * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
+ * 
+ * original = fmmdl_anm_shinmu_b.xls  pattern_num = 15
+ */
+//=========================================================================
+
+//============================================
+// 待機正面
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_B_StopU[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 待機背面
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_B_StopD[] = {
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 吼える
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_B_Hoeru[] = {
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<4コマ目
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 4 },
+};
+
+//============================================
+// 振り向き
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_B_Turn[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF, 13 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActShinMu_BTbl[DRAW_ANMNO_SHINMU_B_MAX] = 
+{
+  DATA_BlActShinMu_B_StopU,
+  DATA_BlActShinMu_B_StopD,
+  DATA_BlActShinMu_B_Hoeru,
+  DATA_BlActShinMu_B_Turn,
+};
+

@@ -108,36 +108,34 @@
 #define TEXSIZE_MAX 64
 
 //ANMID アニメIDで指定するシンボルです。
-#define ANMID_NON 0 //アニメ無し
-#define ANMID_HERO 1 //自機専用
-#define ANMID_BLACT 2 //汎用ビルボードアクター用 旧
-#define ANMID_CYCLEHERO_OLD 3 //自転車自機専用 旧
-#define ANMID_SWIMHERO 4 //波乗り自機専用
-#define ANMID_BLACT_FLIP 5 //人物汎用 反転使用
-#define ANMID_BLACT_NONFLIP 6 //人物汎用 反転未使用
-#define ANMID_CYCLEHERO 7 //自転車自機専用
-#define ANMID_ONECELL 8 //一パターン絵専用
-#define ANMID_ITEMGET 9 //自機アイテムゲット
-#define ANMID_PCAZUKE 10 //自機ポケセン預け
-#define ANMID_SAVE 11 //自機レポート
-#define ANMID_PCWOMAN 12 //PC姉
-#define ANMID_POKE_FLIP 13 //ポケモン　反転使用
-#define ANMID_POKE_NONFLIP 14 //ポケモン　反転未使用
-#define ANMID_FISHINGHERO 15 //自機釣り
-#define ANMID_CUTINHERO 16 //カットイン自機
-#define ANMID_YUREHERO 17 //尾瀬揺れ自機
-#define ANMID_SHIN_MU_A 18 //ポケモン　シン・ム　その１
-#define ANMID_SPIDER 19 //くもの巣
-#define ANMID_ACT0 20 //人物汎用 反転未使用+演技
-#define ANMID_MELODYER 21 //ポケモン メロディア
-#define ANMID_SHIN_MU_B 22 //ポケモン　シン・ム　その２
-#define ANMID_RIVEL 23 //ライバル
-#define ANMID_SUPPORT 24 //サポート
-#define ANMID_BOSS_N 25 ///N
-#define ANMID_SAGE1 26 //SAGE1
-#define ANMID_NINJA 27 //NINJA
-#define ANMID_CHAMPION 28 //CHAMPION
-#define ANMID_SHIN_MU_C 29
+#define ANMID_NON 0 //ダミー
+#define ANMID_HERO 1 //自機基本アニメ
+#define ANMID_FLIP 2 //汎用人型　フリップ有アニメ
+#define ANMID_NONFLIP 3 //汎用人型　ノンフリップアニメ
+#define ANMID_ONECELL 4 //ワンセルアニメ　同一ファイル内継承
+#define ANMID_SWIMHERO 5 //自機波乗りアニメ
+#define ANMID_CYCLEHERO 6 //自機自転車アニメ
+#define ANMID_GETHERO 7 //自機アイテムゲットアニメ
+#define ANMID_PCHERO 8 //自機ポケセン預けアニメ
+#define ANMID_SAVEHERO 9 //自機セーブアニメ
+#define ANMID_FISHINGHERO 10 //自機釣りアニメ
+#define ANMID_CUTINHERO 11 //自機カットインアニメ
+#define ANMID_YUREHERO 12 //自機ゆらゆらアニメ
+#define ANMID_POKE_FLIP 13 //連れ歩きポケモンフリップ有アニメ
+#define ANMID_POKE_NONFLIP 14 //連れ歩きポケモンフリップ無しアニメ
+#define ANMID_FLIP_PCWOMAN 15 //ポケセン受付嬢おじぎアニメ　汎用人型　フリップ有アニメを継承
+#define ANMID_NONFLIP_RIVAL 16 //汎用人型　フリップ無しアニメ＋ライバル芝居
+#define ANMID_NONFLIP_SUPPORT 17 //汎用人型　フリップ無しアニメ＋サポート芝居
+#define ANMID_NONFLIP_BOSS_N 18 //ボスN　フリップ無しアニメ＋ボスＮ芝居
+#define ANMID_NONFLIP_SAGE1 19 //汎用人型　フリップ無しアニメ＋七賢人ゲーチス芝居
+#define ANMID_NONFLIP_NINJA 20 //汎用人型　フリップ無しアニメ＋ダークトリニティ芝居(通常アニメ2倍速)
+#define ANMID_NONFLIP_CHAMPION 21 //汎用人型　フリップ無しアニメ＋チャンピオンアデク芝居
+#define ANMID_SPIDER 22 //蜘蛛の巣アニメ
+#define ANMID_MELODYER 23 //メロディアアニメ
+#define ANMID_SHINMU_A 24 //ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
+#define ANMID_SHINMU_B 25 //ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
+#define ANMID_SHINMU_C 26 //ゼクレシキュレムアニメ　上昇
+#define ANMID_NONFLIP_SWLEADER4 27 //スワンカミツレ　フリップ無しアニメ＋芝居1パターン
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

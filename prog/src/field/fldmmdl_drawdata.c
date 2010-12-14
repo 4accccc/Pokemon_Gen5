@@ -46,6 +46,33 @@ const MMDL_DRAW_PROC_LIST * const
 };
 
 //======================================================================
+//  ビルボードアクター　モデルサイズ [size][x,y]
+//======================================================================
+const u16 DATA_MMDL_BLACT_MdlSize[MMDL_BLACT_MDLSIZE_MAX][2] =
+{
+  {32,32}, //MMDL_BLACT_MDLSIZE_32x32
+  {16,16}, //MMDL_BLACT_MDLSIZE_16x16
+  {64,64}, //MMDL_BLACT_MDLSIZE_64x64
+};
+
+//--------------------------------------------------------------
+/// モデルサイズ別描画サイズ
+//--------------------------------------------------------------
+#define MMDL_BBD_DRAW_SIZE_16 (FX16_ONE*1)
+#define MMDL_BBD_DRAW_SIZE_32 (FX16_ONE*2)
+#define MMDL_BBD_DRAW_SIZE_64 (FX16_ONE*4)
+
+const u16 DATA_MMDL_BLACT_MdlSizeDrawSize[MMDL_BLACT_MDLSIZE_MAX][2] =
+{
+  {MMDL_BBD_DRAW_SIZE_32,MMDL_BBD_DRAW_SIZE_32}, //MMDL_BLACT_MDLSIZE_32x32
+  {MMDL_BBD_DRAW_SIZE_16,MMDL_BBD_DRAW_SIZE_16}, //MMDL_BLACT_MDLSIZE_16x16
+  {MMDL_BBD_DRAW_SIZE_64,MMDL_BBD_DRAW_SIZE_64}, //MMDL_BLACT_MDLSIZE_64x64
+};
+
+#include "fmmdl_anm/fldmmdl_anmtbl.cdat"
+
+#if 0
+//======================================================================
 //  ビルボードアニメデータ　自機アニメ
 //======================================================================
 enum
@@ -2838,32 +2865,28 @@ const MMDL_BBDACT_ANMTBL
   {NULL,0},
   //MMDL_BLACT_ANMTBLNO_HERO
   {DATA_BlActHeroTbl,DRAW_STA_HERO_DIR4_MAX},
-  //MMDL_BLACT_ANMTBLNO_BLACT 廃止
-  {NULL,0},
-  //MMDL_BLACT_ANMTBLNO_CYCLEHERO_OLD 廃止
-  {NULL,0},
   //MMDL_BLACT_ANMTBLNO_SWIMHERO
   {DATA_BlActSwimHeroTbl,DRAW_STA_SWIMHERO_MAX},
   //MMDL_BLACT_ANMTBLNO_FLIP
-  {DATA_BlActAnmFlipTbl,DRAW_STA_DIR4_MAX},
+  {DATA_BlActFlipTbl,DRAW_STA_DIR4_MAX},
   //MMDL_BLACT_ANMTBLNO_FLIP
-  {DATA_BlActAnmNonFlipTbl,DRAW_STA_DIR4_MAX},
+  {DATA_BlActNonFlipTbl,DRAW_STA_DIR4_MAX},
   //MMDL_BLACT_ANMTBLNO_CYCLEHERO
-  {DATA_BlActAnmHeroCycleTbl,DRAW_STA_DIR4_MAX},
+  {DATA_BlActCycleHeroTbl,DRAW_STA_DIR4_MAX},
   //MMDL_BLACT_ANMTBLNO_ONECELL
-  {DATA_BlActOneCellAnmTbl,DRAW_STA_DIR4_MAX},
+  {DATA_BlActOneCellTbl,DRAW_STA_DIR4_MAX},
   //MMDL_BLACT_ANMTBLNO_ITEMGET
-  {DATA_BlActItemGet,DRAW_STA_ITEMGET_MAX},
+  {DATA_BlActGetHeroTbl,DRAW_STA_ITEMGET_MAX},
   //MMDL_BLACT_ANMTBLNO_PCAZUKE
-  {DATA_BlActPCAzuke,DRAW_STA_PCAZUKE_MAX},
+  {DATA_BlActPCHeroTbl,DRAW_STA_PCAZUKE_MAX},
   //MMDL_BLACT_ANMTBLNO_SAVE
-  {DATA_BlActSaveHero,DRAW_STA_SAVEHERO_MAX},
+  {DATA_BlActSaveHeroTbl,DRAW_STA_SAVEHERO_MAX},
   //MMDL_BLACT_ANMTBLNO_PCWOMAN
-  {DATA_BlActAnmPcwomanTbl,DRAW_STA_PCWOMAN_DIR4_MAX},
+  {DATA_BlActFlip_PCWomanTbl,DRAW_STA_PCWOMAN_DIR4_MAX},
   //MMDL_BLACT_ANMTBLNO_POKE_FLIP
-  {DATA_BlActTPokeFlipTbl,4},
+  {DATA_BlActPokeFlipTbl,4},
   //MMDL_BLACT_ANMTBLNO_POKE_NONFLIP
-  {DATA_BlActTPokeNonFlipTbl,4},
+  {DATA_BlActPokeNonFlipTbl,4},
   //MMDL_BLACT_ANMTBLNO_FISHINGHERO
   {DATA_BlActFishingHeroTbl,DRAW_STA_FISH_DIR4_MAX},
   //MMDL_BLACT_ANMTBLNO_CUTINHERO
@@ -2875,47 +2898,26 @@ const MMDL_BBDACT_ANMTBL
   //MMDL_BLACT_ANMTBLNO_SPIDER
   {DATA_BlActSpiderTbl,DRAW_STA_SPIDER_MAX},
   //MMDL_BLACT_ANMTBLNO_NFLIP_ACT0
-  {DATA_BlActAnmNonFlipAct0Tbl,DRAW_STA_ACT0_ANMNO_MAX},
+  {DATA_BlActNonFlip_Act0Tbl,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_MELODYER
-  {DATA_BlActMerodyerTbl,DRAW_STA_MELODYER_ANMNO_MAX},
+  {DATA_BlActMelodyerTbl,DRAW_STA_MELODYER_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_SHIN_MU_B
-  {DATA_BlActShinMuBTbl,DRAW_STA_SHINMU_B_ANMNO_MAX},
+  {DATA_BlActShinMu_BTbl,DRAW_STA_SHINMU_B_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_RIVEL
-  {DATA_BlActAnmNonFlipRivelTbl,DRAW_STA_ACT0_ANMNO_MAX},
+  {DATA_BlActNonFlip_RivalTbl,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_SUPPORT
-  {DATA_BlActAnmNonFlipSupportTbl,DRAW_STA_ACT0_ANMNO_MAX},
+  {DATA_BlActNonFlip_SupportTbl,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_BOSS_N
-  {DATA_BlActAnmNonFlipBossN,DRAW_STA_ACT2_ANMNO_MAX},
+  {DATA_BlActNonFlip_BossNTbl,DRAW_STA_ACT2_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_SAGE1
-  {DATA_BlActAnmNonFlipSage1,DRAW_STA_ACT0_ANMNO_MAX},
+  {DATA_BlActNonFlip_Sage1Tbl,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_NINJA
-  {DATA_BlActAnmNonFlipNinja,DRAW_STA_ACT1_ANMNO_MAX},
+  {DATA_BlActNonFlip_NinjaTbl,DRAW_STA_ACT1_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_CHAMPION
-  {DATA_BlActAnmNonFlipChampion,DRAW_STA_ACT0_ANMNO_MAX},
+  {DATA_BlActNonFlip_ChampionTbl,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_SHIN_MU_C
   {DATA_BlActShinMuCTbl,DRAW_STA_SHINMU_C_ANMNO_MAX},
 };
 
-//======================================================================
-//  ビルボードアクター　モデルサイズ [size][x,y]
-//======================================================================
-const u16 DATA_MMDL_BLACT_MdlSize[MMDL_BLACT_MDLSIZE_MAX][2] =
-{
-  {32,32}, //MMDL_BLACT_MDLSIZE_32x32
-  {16,16}, //MMDL_BLACT_MDLSIZE_16x16
-  {64,64}, //MMDL_BLACT_MDLSIZE_64x64
-};
+#endif
 
-//--------------------------------------------------------------
-/// モデルサイズ別描画サイズ
-//--------------------------------------------------------------
-#define MMDL_BBD_DRAW_SIZE_16 (FX16_ONE*1)
-#define MMDL_BBD_DRAW_SIZE_32 (FX16_ONE*2)
-#define MMDL_BBD_DRAW_SIZE_64 (FX16_ONE*4)
-
-const u16 DATA_MMDL_BLACT_MdlSizeDrawSize[MMDL_BLACT_MDLSIZE_MAX][2] =
-{
-  {MMDL_BBD_DRAW_SIZE_32,MMDL_BBD_DRAW_SIZE_32}, //MMDL_BLACT_MDLSIZE_32x32
-  {MMDL_BBD_DRAW_SIZE_16,MMDL_BBD_DRAW_SIZE_16}, //MMDL_BLACT_MDLSIZE_16x16
-  {MMDL_BBD_DRAW_SIZE_64,MMDL_BBD_DRAW_SIZE_64}, //MMDL_BLACT_MDLSIZE_64x64
-};

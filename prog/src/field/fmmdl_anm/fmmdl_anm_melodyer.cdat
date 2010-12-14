@@ -1,0 +1,68 @@
+//=========================================================================
+/**
+ * @file	fmmdl_anm_melodyer.cdat
+ * @brief	ANMID_MELODYER -> メロディアアニメ
+ * @autor	miyuki iwasawa
+ * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
+ * 
+ * original = fmmdl_anm_melodyer.xls  pattern_num = 20
+ */
+//=========================================================================
+
+//============================================
+// 待機正面
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActMelodyer_Stop[] = {
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// スピン
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActMelodyer_Spin[] = {
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// スピンポーズ
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActMelodyer_SpinPose[] = {
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// シェイク
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActMelodyer_Shake[] = {
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { 17, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { 18, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { 19, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActMelodyerTbl[DRAW_ANMNO_MELODYER_MAX] = 
+{
+  DATA_BlActMelodyer_Stop,
+  DATA_BlActMelodyer_Spin,
+  DATA_BlActMelodyer_SpinPose,
+  DATA_BlActMelodyer_Shake,
+};
+

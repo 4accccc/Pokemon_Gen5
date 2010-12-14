@@ -1,0 +1,81 @@
+//=========================================================================
+/**
+ * @file	fmmdl_anm_shinmu_a.cdat
+ * @brief	ANMID_SHINMU_A -> ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
+ * @autor	miyuki iwasawa
+ * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
+ * 
+ * original = fmmdl_anm_shinmu_a.xls  pattern_num = 15
+ */
+//=========================================================================
+
+//============================================
+// 待機正面
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_A_Stop[] = {
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// ぐったり
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_A_Gutari[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 飛び立ち上昇
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_A_FlyUp[] = {
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<17コマ目 上昇開始
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 17 },
+};
+
+//============================================
+// 飛行
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActShinMu_A_Fly[] = {
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActShinMu_ATbl[DRAW_ANMNO_SHINMU_A_MAX] = 
+{
+  DATA_BlActShinMu_A_Stop,
+  DATA_BlActShinMu_A_Gutari,
+  DATA_BlActShinMu_A_FlyUp,
+  DATA_BlActShinMu_A_Fly,
+};
+

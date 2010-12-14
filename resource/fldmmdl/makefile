@@ -9,7 +9,7 @@ MKFILE_RESLIST = mkfile_reslist
 MKFILE_NCGIMD = mkfile_ncgimd
 MKFILE_RESARC = mkfile_resarc
 MKFILE_MDLLIST = mkfile_mdllist
-
+MKFILE_ANMLIST = mkfile_anmlist
 
 SUBDIRS	= mmdl_pokedata
 
@@ -17,6 +17,7 @@ SUBDIRS	= mmdl_pokedata
 
 do-build:
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	$(MAKE) -f $(MKFILE_ANMLIST)
 	$(MAKE) -f $(MKFILE_RESLIST)
 	$(MAKE) -f $(MKFILE_NCGIMD)
 endif
@@ -30,10 +31,35 @@ clean:
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	$(MAKE) -f $(MKFILE_NCGIMD) clean
 	$(MAKE) -f $(MKFILE_RESLIST) clean
+	$(MAKE) -f $(MKFILE_ANMLIST) clean
 endif
 	@$(MAKE_SUBDIR)
 
 dmyres:
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	$(MAKE) -f $(MKFILE_ANMLIST)
 	$(MAKE) -f $(MKFILE_RESLIST) dmyres
 endif
+
+ncg:
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	$(MAKE) -f $(MKFILE_NCGIMD)
+endif
+	$(MAKE) -f $(MKFILE_RESARC)
+
+list:
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	$(MAKE) -f $(MKFILE_ANMLIST)
+	$(MAKE) -f $(MKFILE_RESLIST)
+	$(MAKE) -f $(MKFILE_NCGIMD)
+endif
+	$(MAKE) -f $(MKFILE_RESARC)
+	$(MAKE) -f $(MKFILE_MDLLIST)
+	@$(MAKE_SUBDIR)
+
+#アニメ定義のみコンバート
+anm:
+	$(MAKE) -f $(MKFILE_ANMLIST)
+
+clean_anm:
+	$(MAKE) -f $(MKFILE_ANMLIST) clean

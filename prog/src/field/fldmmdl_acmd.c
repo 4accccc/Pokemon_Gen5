@@ -3372,7 +3372,7 @@ static int AC_HeroWaitAnmFrame_1( MMDL *mmdl )
 //--------------------------------------------------------------
 static int AC_HeroBanzai_0( MMDL * mmdl )
 {
-  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM0, 40 );
+  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM0, DRAW_ANMFRM_PCHERO_ANM0 );
   MMDL_IncAcmdSeq( mmdl );
   return( FALSE );
 }
@@ -3386,7 +3386,7 @@ static int AC_HeroBanzai_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_HeroBanzaiUke_0( MMDL * mmdl )
 {
-  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM1, 40 );
+  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM1, DRAW_ANMFRM_PCHERO_ANM1 );
   MMDL_IncAcmdSeq( mmdl );
   return( FALSE );
 }
@@ -3400,7 +3400,7 @@ static int AC_HeroBanzaiUke_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_HeroCutIn_0( MMDL * mmdl )
 {
-  AC_InitHeroWaitAnmWork( mmdl, 0, 12 );
+  AC_InitHeroWaitAnmWork( mmdl, 0, DRAW_ANMFRM_CUTINHERO_ANM );
   MMDL_IncAcmdSeq( mmdl );
   return( FALSE );
 }
@@ -3460,7 +3460,7 @@ static int AC_HeroItemGet_1( MMDL * mmdl )
 
   work->frame++;
 
-  if( work->frame >= 20 ){
+  if( work->frame >= DRAW_ANMFRM_GETHERO_ANM ){
     MMDL_IncAcmdSeq( mmdl );
   }
 
@@ -4420,7 +4420,7 @@ static int AC_SpiderRemove_1( MMDL * mmdl )
 
   work->frame++;
 
-  if( work->frame >= 22 ){
+  if( work->frame >= DRAW_ANMFRM_SPIDER_REMOVE ){
     MMDL_IncAcmdSeq( mmdl );
   }
 
@@ -4557,7 +4557,7 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
   KAGAYA_Printf( "FrameNo = %d\n", anmFrmIdx );
 
   if( MMDL_GetOBJCode(mmdl) == SHIN_A ){
-    if( anmIdx == DRAW_STA_SHINMU_A_ANMNO_FLY_UP ){ //shin ‰H‚Î‚½‚«‰¹
+    if( anmIdx == DRAW_ANMNO_SHINMU_A_FLYUP ){ //shin ‰H‚Î‚½‚«‰¹
       if( work->setAnmFrmIdx != anmFrmIdx ){
         work->setAnmFrmIdx = anmFrmIdx;
         KAGAYA_Printf( "XV‚³‚ê%d‚É‚È‚è‚Ü‚µ‚½\n", anmFrmIdx );
@@ -4736,7 +4736,7 @@ static int AC_ShinMuC_Fly1( MMDL * mmdl )
   GF_ASSERT( (s16)anmFrmIdx >= 0 );
 
   if( MMDL_GetOBJCode(mmdl) == SHIN_C ){
-    if( anmIdx == DRAW_STA_SHINMU_C_ANMNO_FLY ){ //shin ‰H‚Î‚½‚«‰¹
+    if( anmIdx == DRAW_ANMNO_SHINMU_C_FLYUP ){ //shin ‰H‚Î‚½‚«‰¹
       if( work->setAnmFrmIdx != anmFrmIdx ){
         work->setAnmFrmIdx = anmFrmIdx;
 

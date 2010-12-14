@@ -1,0 +1,34 @@
+#======================================================================
+#	anmlist.txt
+#	動作モデル　アニメパターン定義
+#======================================================================
+#コンバート対象のアニメ定義エクセルリスト
+#
+ANMFILE_LIST =	fmmdl_anm_hero.xls \
+				fmmdl_anm_flip.xls \
+				fmmdl_anm_nonflip.xls \
+				fmmdl_anm_onecell.xls \
+				fmmdl_anm_swimhero.xls \
+				fmmdl_anm_cyclehero.xls \
+				fmmdl_anm_gethero.xls \
+				fmmdl_anm_pchero.xls \
+				fmmdl_anm_savehero.xls \
+				fmmdl_anm_fishinghero.xls \
+				fmmdl_anm_cutinhero.xls \
+				fmmdl_anm_yurehero.xls \
+				fmmdl_anm_poke_flip.xls \
+				fmmdl_anm_poke_nonflip.xls \
+				fmmdl_anm_flip_pcwoman.xls \
+				fmmdl_anm_nonflip_rival.xls \
+				fmmdl_anm_nonflip_support.xls \
+				fmmdl_anm_nonflip_boss_n.xls \
+				fmmdl_anm_nonflip_sage1.xls \
+				fmmdl_anm_nonflip_ninja.xls \
+				fmmdl_anm_nonflip_champion.xls \
+				fmmdl_anm_spider.xls \
+				fmmdl_anm_melodyer.xls \
+				fmmdl_anm_shinmu_a.xls \
+				fmmdl_anm_shinmu_b.xls \
+				fmmdl_anm_shinmu_c.xls \
+				fmmdl_anm_nonflip_swleader4.xls
+

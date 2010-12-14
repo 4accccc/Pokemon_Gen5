@@ -1,0 +1,122 @@
+//NCG変換対応IMD,,
+ANMID,パラメータ0,パラメータ1,パラメータ2
+ANMID_NON,,
+ANMID_HERO,MDLSIZE_32x32:4:4:32:ncg4x4hero.imd:ncg4x4hero:mmdl_anm/tmp/fmmdl_anm_hero.csv,
+ANMID_FLIP,MDLSIZE_32x32:4:4:7:ncg4x4flip.imd:ncg4x4flip:mmdl_anm/tmp/fmmdl_anm_flip.csv,
+ANMID_NONFLIP,MDLSIZE_32x32:4:4:12:ncg4x4nflip.imd:ncg4x4nflip:mmdl_anm/tmp/fmmdl_anm_nonflip.csv,
+ANMID_ONECELL,MDLSIZE_32x32:4:4:1:ncg4x4ocell.imd:ncg4x4ocell:mmdl_anm/tmp/fmmdl_anm_onecell.csv,MDLSIZE_16x16:2:2:1:ncg2x2ocell.imd:ncg2x2ocell:mmdl_anm/tmp/fmmdl_anm_onecell.csv,
+ANMID_SWIMHERO,MDLSIZE_32x32:4:4:4:ncg4x4swim.imd:ncg4x4swim:mmdl_anm/tmp/fmmdl_anm_swimhero.csv,
+ANMID_CYCLEHERO,MDLSIZE_32x32:4:4:32:ncg4x4cycle.imd:ncg4x4cycle:mmdl_anm/tmp/fmmdl_anm_cyclehero.csv,
+ANMID_GETHERO,MDLSIZE_32x32:4:4:2:ncg4x4gethero.imd:ncg4x4gethero:mmdl_anm/tmp/fmmdl_anm_gethero.csv,
+ANMID_PCHERO,MDLSIZE_32x32:4:4:5:ncg4x4pchero.imd:ncg4x4pchero:mmdl_anm/tmp/fmmdl_anm_pchero.csv,
+ANMID_SAVEHERO,MDLSIZE_32x32:4:4:2:ncg4x4reporthero.imd:ncg4x4reporthero:mmdl_anm/tmp/fmmdl_anm_savehero.csv,
+ANMID_FISHINGHERO,MDLSIZE_32x32:4:4:12:ncg4x4fishhero.imd:ncg4x4fishhero:mmdl_anm/tmp/fmmdl_anm_fishinghero.csv,MDLSIZE_64x64:8:8:12:ncg8x8fishgirl.imd:ncg8x8fishgirl:mmdl_anm/tmp/fmmdl_anm_fishinghero.csv,
+ANMID_CUTINHERO,MDLSIZE_32x32:4:4:4:ncg4x4cutinhero.imd:ncg4x4cutinhero:mmdl_anm/tmp/fmmdl_anm_cutinhero.csv,
+ANMID_YUREHERO,MDLSIZE_32x32:4:4:16:ncg4x4hurahero.imd:ncg4x4hurahero:mmdl_anm/tmp/fmmdl_anm_yurehero.csv,
+ANMID_POKE_FLIP,MDLSIZE_32x32:4:4:6:ncg4x4pokeflip.imd:ncg4x4pokeflip:mmdl_anm/tmp/fmmdl_anm_poke_flip.csv,MDLSIZE_64x64:8:8:6:ncg8x8pokeflip.imd:ncg8x8pokeflip:mmdl_anm/tmp/fmmdl_anm_poke_flip.csv,
+ANMID_POKE_NONFLIP,MDLSIZE_32x32:4:4:8:ncg4x4pokenflip.imd:ncg4x4pokenflip:mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv,MDLSIZE_64x64:8:8:8:ncg8x8pokenflip.imd:ncg8x8pokenflip:mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv,
+ANMID_FLIP_PCWOMAN,MDLSIZE_32x32:4:4:9:ncg4x4pcwoman.imd:ncg4x4pcwoman:mmdl_anm/tmp/fmmdl_anm_flip_pcwoman.csv,
+ANMID_NONFLIP_RIVAL,MDLSIZE_32x32:4:4:14:ncg4x4x14.imd:ncg4x4x14:mmdl_anm/tmp/fmmdl_anm_nonflip_rival.csv,
+ANMID_NONFLIP_SUPPORT,MDLSIZE_32x32:4:4:15:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_support.csv,
+ANMID_NONFLIP_BOSS_N,MDLSIZE_32x32:4:4:22:ncg4x4x22.imd:ncg4x4x22:mmdl_anm/tmp/fmmdl_anm_nonflip_boss_n.csv,
+ANMID_NONFLIP_SAGE1,MDLSIZE_32x32:4:4:20:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_sage1.csv,
+ANMID_NONFLIP_NINJA,MDLSIZE_32x32:4:4:16:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_ninja.csv,
+ANMID_NONFLIP_CHAMPION,MDLSIZE_32x32:4:4:14:ncg4x4x14.imd:ncg4x4x14:mmdl_anm/tmp/fmmdl_anm_nonflip_champion.csv,
+ANMID_SPIDER,MDLSIZE_32x32:4:4:4:ncg4x4spider.imd:ncg4x4spider:mmdl_anm/tmp/fmmdl_anm_spider.csv,
+ANMID_MELODYER,MDLSIZE_32x32:4:4:20:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_melodyer.csv,
+ANMID_SHINMU_A,MDLSIZE_64x64:8:8:15:ncg8x8x15poke.imd:ncg8x8x15poke:mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv,
+ANMID_SHINMU_B,MDLSIZE_64x64:8:8:15:ncg8x8x15poke.imd:ncg8x8x15poke:mmdl_anm/tmp/fmmdl_anm_shinmu_b.csv,
+ANMID_SHINMU_C,MDLSIZE_64x64:8:8:15:ncg8x8x15poke.imd:ncg8x8x15poke:mmdl_anm/tmp/fmmdl_anm_shinmu_c.csv,
+ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:20:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_swleader4.csv,
+#END,,
+
+パラメータ内訳：対応モデル:横キャラ数:縦キャラ数:総パターン数:対応imd名:対応ダミーncg&nclファイル名:アニメ定義ファイルcsv
+
+//fldmmdl_list_symbol.hコピペ用フィールド
+#define ANMID_NON 0 //ダミー
+#define ANMID_HERO 1 //自機基本アニメ
+#define ANMID_FLIP 2 //汎用人型　フリップ有アニメ
+#define ANMID_NONFLIP 3 //汎用人型　ノンフリップアニメ
+#define ANMID_ONECELL 4 //ワンセルアニメ　同一ファイル内継承
+#define ANMID_SWIMHERO 5 //自機波乗りアニメ
+#define ANMID_CYCLEHERO 6 //自機自転車アニメ
+#define ANMID_GETHERO 7 //自機アイテムゲットアニメ
+#define ANMID_PCHERO 8 //自機ポケセン預けアニメ
+#define ANMID_SAVEHERO 9 //自機セーブアニメ
+#define ANMID_FISHINGHERO 10 //自機釣りアニメ
+#define ANMID_CUTINHERO 11 //自機カットインアニメ
+#define ANMID_YUREHERO 12 //自機ゆらゆらアニメ
+#define ANMID_POKE_FLIP 13 //連れ歩きポケモンフリップ有アニメ
+#define ANMID_POKE_NONFLIP 14 //連れ歩きポケモンフリップ無しアニメ
+#define ANMID_FLIP_PCWOMAN 15 //ポケセン受付嬢おじぎアニメ　汎用人型　フリップ有アニメを継承
+#define ANMID_NONFLIP_RIVAL 16 //汎用人型　フリップ無しアニメ＋ライバル芝居
+#define ANMID_NONFLIP_SUPPORT 17 //汎用人型　フリップ無しアニメ＋サポート芝居
+#define ANMID_NONFLIP_BOSS_N 18 //ボスN　フリップ無しアニメ＋ボスＮ芝居
+#define ANMID_NONFLIP_SAGE1 19 //汎用人型　フリップ無しアニメ＋七賢人ゲーチス芝居
+#define ANMID_NONFLIP_NINJA 20 //汎用人型　フリップ無しアニメ＋ダークトリニティ芝居(通常アニメ2倍速)
+#define ANMID_NONFLIP_CHAMPION 21 //汎用人型　フリップ無しアニメ＋チャンピオンアデク芝居
+#define ANMID_SPIDER 22 //蜘蛛の巣アニメ
+#define ANMID_MELODYER 23 //メロディアアニメ
+#define ANMID_SHINMU_A 24 //ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
+#define ANMID_SHINMU_B 25 //ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
+#define ANMID_SHINMU_C 26 //ゼクレシキュレムアニメ　上昇
+#define ANMID_NONFLIP_SWLEADER4 27 //スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+
+
+//fldmmdl_list.xls <説明タブ>コピペ用フィールド
+ANMID_NON
+ANMID_HERO
+ANMID_FLIP
+ANMID_NONFLIP
+ANMID_ONECELL
+ANMID_SWIMHERO
+ANMID_CYCLEHERO
+ANMID_GETHERO
+ANMID_PCHERO
+ANMID_SAVEHERO
+ANMID_FISHINGHERO
+ANMID_CUTINHERO
+ANMID_YUREHERO
+ANMID_POKE_FLIP
+ANMID_POKE_NONFLIP
+ANMID_FLIP_PCWOMAN
+ANMID_NONFLIP_RIVAL
+ANMID_NONFLIP_SUPPORT
+ANMID_NONFLIP_BOSS_N
+ANMID_NONFLIP_SAGE1
+ANMID_NONFLIP_NINJA
+ANMID_NONFLIP_CHAMPION
+ANMID_SPIDER
+ANMID_MELODYER
+ANMID_SHINMU_A
+ANMID_SHINMU_B
+ANMID_SHINMU_C
+ANMID_NONFLIP_SWLEADER4
+//ダミー
+//パターン数 32 自機基本アニメ
+//パターン数 7 汎用人型　フリップ有アニメ
+//パターン数 12 汎用人型　ノンフリップアニメ
+//パターン数 1 ワンセルアニメ　同一ファイル内継承
+//パターン数 4 自機波乗りアニメ
+//パターン数 32 自機自転車アニメ
+//パターン数 2 自機アイテムゲットアニメ
+//パターン数 5 自機ポケセン預けアニメ
+//パターン数 2 自機セーブアニメ
+//パターン数 12 自機釣りアニメ
+//パターン数 4 自機カットインアニメ
+//パターン数 16 自機ゆらゆらアニメ
+//パターン数 6 連れ歩きポケモンフリップ有アニメ
+//パターン数 8 連れ歩きポケモンフリップ無しアニメ
+//パターン数 9 ポケセン受付嬢おじぎアニメ　汎用人型　フリップ有アニメを継承
+//パターン数 14 汎用人型　フリップ無しアニメ＋ライバル芝居
+//パターン数 15 汎用人型　フリップ無しアニメ＋サポート芝居
+//パターン数 22 ボスN　フリップ無しアニメ＋ボスＮ芝居
+//パターン数 20 汎用人型　フリップ無しアニメ＋七賢人ゲーチス芝居
+//パターン数 16 汎用人型　フリップ無しアニメ＋ダークトリニティ芝居(通常アニメ2倍速)
+//パターン数 14 汎用人型　フリップ無しアニメ＋チャンピオンアデク芝居
+//パターン数 4 蜘蛛の巣アニメ
+//パターン数 20 メロディアアニメ
+//パターン数 15 ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
+//パターン数 15 ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
+//パターン数 15 ゼクレシキュレムアニメ　上昇
+//パターン数 20 スワンカミツレ　フリップ無しアニメ＋芝居1パターン

@@ -261,29 +261,32 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 
             if( key_cont & PAD_BUTTON_A ){
               switch( param->anm_id ){
-              case MMDL_BLACT_ANMTBLNO_PCWOMAN:
+              case MMDL_BLACT_ANMTBLNO_FLIP_PCWOMAN:
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_PC_BOW;
                 break;
-              case MMDL_BLACT_ANMTBLNO_RIVEL:
-                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_RIVEL_ACT0;
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_RIVAL:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_RIVAL_ACT0;
                 break;
-              case MMDL_BLACT_ANMTBLNO_SUPPORT:
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_SUPPORT:
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SUPPORT_ACT0;
                 break;
-              case MMDL_BLACT_ANMTBLNO_BOSS_N:
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_BOSS_N:
                 ac_act_u = AC_N_ACT0;
                 ac_act_d = AC_N_ACT1;
                 ac_act_l = ac_act_r = AC_N_ACT2;
                 break;
-              case MMDL_BLACT_ANMTBLNO_SAGE1:
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_SAGE1:
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SAGE1_ACT0;
                 break;
-              case MMDL_BLACT_ANMTBLNO_NINJA:
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_NINJA:
                 ac_act_u = ac_act_d = AC_NINJA_ACT0;
                 ac_act_l = ac_act_r = AC_NINJA_ACT1;
                 break;
-              case MMDL_BLACT_ANMTBLNO_CHAMPION:
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_CHAMPION:
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_CHAMPION_ACT0;
+                break;
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_SWLEADER4:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWLEADER4_ACT0;
                 break;
               }
             }

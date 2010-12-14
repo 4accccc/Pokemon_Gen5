@@ -1,0 +1,99 @@
+//=========================================================================
+/**
+ * @file	fmmdl_anm_nonflip_boss_n.cdat
+ * @brief	ANMID_NONFLIP_BOSS_N -> ボスN　フリップ無しアニメ＋ボスＮ芝居
+ * @autor	miyuki iwasawa
+ * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
+ * 
+ * original = fmmdl_anm_nonflip_boss_n.xls  pattern_num = 22
+ */
+//=========================================================================
+
+//============================================
+// ボスＮ芝居１
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActNonFlip_Boss_N_Act0[] = {
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// ボスＮ芝居２
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActNonFlip_Boss_N_Act1[] = {
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 17, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 18, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 17, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// ボスＮ芝居３
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActNonFlip_Boss_N_Act2[] = {
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 21, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 19, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 20, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActNonFlip_Boss_NTbl[DRAW_ANMNO_NONFLIP_BOSS_N_MAX] = 
+{
+  DATA_BlActNonFlip_StopU,
+  DATA_BlActNonFlip_StopD,
+  DATA_BlActNonFlip_StopL,
+  DATA_BlActNonFlip_StopR,
+  DATA_BlActNonFlip_WalkU32F,
+  DATA_BlActNonFlip_WalkD32F,
+  DATA_BlActNonFlip_WalkL32F,
+  DATA_BlActNonFlip_WalkR32F,
+  DATA_BlActNonFlip_WalkU16F,
+  DATA_BlActNonFlip_WalkD16F,
+  DATA_BlActNonFlip_WalkL16F,
+  DATA_BlActNonFlip_WalkR16F,
+  DATA_BlActNonFlip_WalkU8F,
+  DATA_BlActNonFlip_WalkD8F,
+  DATA_BlActNonFlip_WalkL8F,
+  DATA_BlActNonFlip_WalkR8F,
+  DATA_BlActNonFlip_WalkU4F,
+  DATA_BlActNonFlip_WalkD4F,
+  DATA_BlActNonFlip_WalkL4F,
+  DATA_BlActNonFlip_WalkR4F,
+  DATA_BlActNonFlip_WalkU2F,
+  DATA_BlActNonFlip_WalkD2F,
+  DATA_BlActNonFlip_WalkL2F,
+  DATA_BlActNonFlip_WalkR2F,
+  DATA_BlActNonFlip_WalkU6F,
+  DATA_BlActNonFlip_WalkD6F,
+  DATA_BlActNonFlip_WalkL6F,
+  DATA_BlActNonFlip_WalkR6F,
+  DATA_BlActNonFlip_WalkU3F,
+  DATA_BlActNonFlip_WalkD3F,
+  DATA_BlActNonFlip_WalkL3F,
+  DATA_BlActNonFlip_WalkR3F,
+  DATA_BlActNonFlip_WalkU7F,
+  DATA_BlActNonFlip_WalkD7F,
+  DATA_BlActNonFlip_WalkL7F,
+  DATA_BlActNonFlip_WalkR7F,
+  DATA_BlActNonFlip_WalkU12F,
+  DATA_BlActNonFlip_WalkD12F,
+  DATA_BlActNonFlip_WalkL12F,
+  DATA_BlActNonFlip_WalkR12F,
+  DATA_BlActNonFlip_Boss_N_Act0,
+  DATA_BlActNonFlip_Boss_N_Act1,
+  DATA_BlActNonFlip_Boss_N_Act2,
+};
+

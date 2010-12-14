@@ -302,7 +302,7 @@ def ncgparam_get( listfile, mdlstr, anmstr )
       if( str[0] == anmstr )
         i = 1
         while data = str[i]
-          param = data.split( "/" )
+          param = data.split( ":" )
         
           if( param[0] != nil )
             param[0] = param[0].strip
@@ -314,6 +314,7 @@ def ncgparam_get( listfile, mdlstr, anmstr )
               h.store( "str_count", param[3] )
               h.store( "str_imdfile", param[4] )
               h.store( "str_flag_dummy", param[5] )
+              h.store( "str_anm_xls", param[6] )
               return h
             end
           end
@@ -462,8 +463,8 @@ def conv_drawtype_blact(
   
   file_make_ncgimd.printf( "#%s\n", imdname )
   file_make_ncgimd.printf(
-    "%s: %s %s %s %s\n\t@echo convert ncg_imd %s\n\t@ruby %s %s %s %s %s %s %s\n\n",
-    imdpath, ncgpath, nclpath, dmyimdpath, fname_listcsv,
+    "%s: %s %s %s %s %s\n\t@echo convert ncg_imd %s\n\t@ruby %s %s %s %s %s %s %s\n\n",
+    imdpath, ncgpath, nclpath, dmyimdpath, fname_listcsv, param['str_anm_xls'],
     name,
     path_conv_ncgimd, ncgpath, dir_res, dmyimdpath, 
     param['str_width'], param['str_height'], param['str_count'] )

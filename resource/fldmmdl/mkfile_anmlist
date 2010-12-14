@@ -1,0 +1,104 @@
+#======================================================================
+#	mkfile_anmlist
+#	動作モデル　アニメーションパターンファイル　リスト作成
+#======================================================================
+include mkdefine
+include $(PROJECT_RSCDIR)/macro_define
+
+TOOLDIR = tool/
+ANMDIR = mmdl_anm/
+DATDIR = $(ANMDIR)data/
+TMPDIR = $(ANMDIR)tmp/
+MMDL_ANM_DIR	= $(PROJECT_PROGDIR)src/field/fmmdl_anm/
+
+anm_list = $(ANMDIR)anmlist.txt
+anm_header = $(DATDIR)fldmmdl_anmtbl.h
+anm_data = $(DATDIR)fldmmdl_anmtbl.cdat
+anm_convert_list = $(NCG_CONV_LIST_TXT)
+
+include $(anm_list)
+
+ANMFILE_XLS = $(addprefix $(ANMDIR),$(ANMFILE_LIST))
+ANMFILE_CSV = $(addprefix $(TMPDIR),$(ANMFILE_LIST:.xls=.csv))
+ANMFILE_DAT = $(addprefix $(DATDIR),$(ANMFILE_LIST:.xls=.cdat))
+ANMFILE_H = $(addprefix $(DATDIR),$(ANMFILE_LIST:.xls=.h))
+
+TARGET_ANMFILE_DAT = $(addprefix $(MMDL_ANM_DIR),$(notdir $(ANMFILE_DAT)))
+TARGET_ANMFILE_H = $(addprefix $(MMDL_ANM_DIR),$(notdir $(ANMFILE_H)))
+target_anm_header = $(addprefix $(MMDL_ANM_DIR),$(notdir $(anm_header)))
+target_anm_data = $(addprefix $(MMDL_ANM_DIR),$(notdir $(anm_data)))
+
+#自動削除して欲しくない中間ファイル
+.PRECIOUS: $(ANMFILE_CSV) $(ANMFILE_DAT) $(ANMFILE_H)
+
+#---------------------------------------------------------------
+# ツールパス	
+#---------------------------------------------------------------
+RUBY_DAT_RES = $(TOOLDIR)fmmdl_anm_dat.rb
+RUBY_DAT_LIST = $(TOOLDIR)fmmdl_anm_list.rb
+EXCELCONV = ../../tools/exceltool/ExcelSeetConv.exe
+NCGIMDCONV = ../../tools/fld_char2imd/ncg2imd.rb
+CSVCONV = ../../tools/exceltool/xls2xml/tab_out_direct.rb
+
+
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+.PHONY: do-build clean
+
+#---------------------------------------------------------------
+#	build
+#---------------------------------------------------------------
+do-build: $(TARGET_ANMFILE_H) $(TARGET_ANMFILE_DAT) $(target_anm_header) $(target_anm_data) $(anm_convert_list)
+#do-build: $(ANMFILE_CSV)  $(anm_pat_list)
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+
+######################################
+#シーンデータコンバート
+$(TMPDIR)%.csv: $(ANMDIR)%.xls
+	@echo $@ $<
+#	$(RUBY) $(CSVCONV) $< -s > $@
+	$(EXCELCONV) -o $@ -p 1 -s csv $<
+
+$(DATDIR)%.h: $(TMPDIR)%.csv 
+	@echo $@ $<
+	ruby $(RUBY_DAT_RES) $< $(DATDIR)
+	unix2dos -D $@
+
+$(DATDIR)%.cdat: $(TMPDIR)%.csv
+	ruby $(RUBY_DAT_RES) $< $(DATDIR)
+	unix2dos -D $@
+
+$(anm_header): $(anm_list)
+	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(TMPDIR) $(ANMFILE_XLS)
+
+$(anm_data): $(anm_list)
+	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(TMPDIR) $(ANMFILE_XLS)
+
+$(anm_convert_list): $(anm_list) $(ANMFILE_CSV)
+	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(TMPDIR) $(ANMFILE_XLS)
+
+endif
+
+#リソースとヘッダのコピー
+$(MMDL_ANM_DIR)%.h: $(DATDIR)%.h
+	$(COPY) -f $< $@
+
+$(MMDL_ANM_DIR)%.cdat: $(DATDIR)%.cdat
+	$(COPY) -f $< $@
+
+#------------------------------------------------------------------------------
+#	make clean ルール
+#※生成ファイルを削除するように記述を変更してください
+#------------------------------------------------------------------------------
+clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -f $(TMPDIR)*.*
+	rm -f $(DATDIR)*.*
+	rm -f $(anm_convert_list)
+endif
+	@echo $(MMDL_ANM_DIR)
+	rm -f $(MMDL_ANM_DIR)*.h
+	rm -f $(MMDL_ANM_DIR)*.cdat
+

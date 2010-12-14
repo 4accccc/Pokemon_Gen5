@@ -1,0 +1,55 @@
+//=========================================================================
+/**
+ * @file	fmmdl_anm_pchero.cdat
+ * @brief	ANMID_PCHERO -> 自機ポケセン預けアニメ
+ * @autor	miyuki iwasawa
+ * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
+ * 
+ * original = fmmdl_anm_pchero.xls  pattern_num = 5
+ */
+//=========================================================================
+
+//============================================
+// 預け制止ポーズ
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActPCHero_Stop[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// 預けアニメ
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActPCHero_Anm0[] = {
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// 引き取りアニメ
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActPCHero_Anm1[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActPCHeroTbl[DRAW_ANMNO_PCHERO_MAX] = 
+{
+  DATA_BlActPCHero_Stop,
+  DATA_BlActPCHero_Anm0,
+  DATA_BlActPCHero_Anm1,
+};
+

@@ -1,0 +1,483 @@
+//=========================================================================
+/**
+ * @file	fmmdl_anm_cyclehero.cdat
+ * @brief	ANMID_CYCLEHERO -> 自機自転車アニメ
+ * @autor	miyuki iwasawa
+ * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
+ * 
+ * original = fmmdl_anm_cyclehero.xls  pattern_num = 32
+ */
+//=========================================================================
+
+//============================================
+// 上向き基本姿勢
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopU[] = {
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// 下向き基本姿勢
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopD[] = {
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// 左向き基本姿勢
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopL[] = {
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// 右向き基本姿勢
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_StopR[] = {
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// walk32
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU32F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD32F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL32F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR32F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk16
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU16F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD16F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL16F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR16F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk8
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU8F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD8F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL8F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR8F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk4
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU4F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD4F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL4F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR4F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk2 2Fアニメ早すぎとの事で、4Fを当てる -> 更に遅くとの事で8Fを当てる
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU2F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD2F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL2F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR2F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk6
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU6F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD6F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL6F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR6F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk3
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU3F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD3F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL3F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR3F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk7
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU7F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD7F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL7F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR7F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// walk12
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkU12F[] = {
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkD12F[] = {
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkL12F[] = {
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+//============================================
+// 
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR12F[] = {
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActCycleHeroTbl[DRAW_ANMNO_CYCLEHERO_MAX] = 
+{
+  DATA_BlActCycleHero_StopU,
+  DATA_BlActCycleHero_StopD,
+  DATA_BlActCycleHero_StopL,
+  DATA_BlActCycleHero_StopR,
+  DATA_BlActCycleHero_WalkU32F,
+  DATA_BlActCycleHero_WalkD32F,
+  DATA_BlActCycleHero_WalkL32F,
+  DATA_BlActCycleHero_WalkR32F,
+  DATA_BlActCycleHero_WalkU16F,
+  DATA_BlActCycleHero_WalkD16F,
+  DATA_BlActCycleHero_WalkL16F,
+  DATA_BlActCycleHero_WalkR16F,
+  DATA_BlActCycleHero_WalkU8F,
+  DATA_BlActCycleHero_WalkD8F,
+  DATA_BlActCycleHero_WalkL8F,
+  DATA_BlActCycleHero_WalkR8F,
+  DATA_BlActCycleHero_WalkU4F,
+  DATA_BlActCycleHero_WalkD4F,
+  DATA_BlActCycleHero_WalkL4F,
+  DATA_BlActCycleHero_WalkR4F,
+  DATA_BlActCycleHero_WalkU2F,
+  DATA_BlActCycleHero_WalkD2F,
+  DATA_BlActCycleHero_WalkL2F,
+  DATA_BlActCycleHero_WalkR2F,
+  DATA_BlActCycleHero_WalkU6F,
+  DATA_BlActCycleHero_WalkD6F,
+  DATA_BlActCycleHero_WalkL6F,
+  DATA_BlActCycleHero_WalkR6F,
+  DATA_BlActCycleHero_WalkU3F,
+  DATA_BlActCycleHero_WalkD3F,
+  DATA_BlActCycleHero_WalkL3F,
+  DATA_BlActCycleHero_WalkR3F,
+  DATA_BlActCycleHero_WalkU7F,
+  DATA_BlActCycleHero_WalkD7F,
+  DATA_BlActCycleHero_WalkL7F,
+  DATA_BlActCycleHero_WalkR7F,
+  DATA_BlActCycleHero_WalkU12F,
+  DATA_BlActCycleHero_WalkD12F,
+  DATA_BlActCycleHero_WalkL12F,
+  DATA_BlActCycleHero_WalkR12F,
+};
+

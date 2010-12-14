@@ -1,0 +1,68 @@
+//=========================================================================
+/**
+ * @file	fmmdl_anm_flip_pcwoman.cdat
+ * @brief	ANMID_FLIP_PCWOMAN -> ポケセン受付嬢おじぎアニメ　汎用人型　フリップ有アニメを継承
+ * @autor	miyuki iwasawa
+ * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
+ * 
+ * original = fmmdl_anm_flip_pcwoman.xls  pattern_num = 9
+ */
+//=========================================================================
+
+//============================================
+// おじぎ
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActFlip_PCWoman_PCBow[] = {
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  7, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActFlip_PCWomanTbl[DRAW_ANMNO_FLIP_PCWOMAN_MAX] = 
+{
+  DATA_BlActFlip_StopU,
+  DATA_BlActFlip_StopD,
+  DATA_BlActFlip_StopL,
+  DATA_BlActFlip_StopR,
+  DATA_BlActFlip_WalkU32F,
+  DATA_BlActFlip_WalkD32F,
+  DATA_BlActFlip_WalkL32F,
+  DATA_BlActFlip_WalkR32F,
+  DATA_BlActFlip_WalkU16F,
+  DATA_BlActFlip_WalkD16F,
+  DATA_BlActFlip_WalkL16F,
+  DATA_BlActFlip_WalkR16F,
+  DATA_BlActFlip_WalkU8F,
+  DATA_BlActFlip_WalkD8F,
+  DATA_BlActFlip_WalkL8F,
+  DATA_BlActFlip_WalkR8F,
+  DATA_BlActFlip_WalkU4F,
+  DATA_BlActFlip_WalkD4F,
+  DATA_BlActFlip_WalkL4F,
+  DATA_BlActFlip_WalkR4F,
+  DATA_BlActFlip_WalkU2F,
+  DATA_BlActFlip_WalkD2F,
+  DATA_BlActFlip_WalkL2F,
+  DATA_BlActFlip_WalkR2F,
+  DATA_BlActFlip_WalkU6F,
+  DATA_BlActFlip_WalkD6F,
+  DATA_BlActFlip_WalkL6F,
+  DATA_BlActFlip_WalkR6F,
+  DATA_BlActFlip_WalkU3F,
+  DATA_BlActFlip_WalkD3F,
+  DATA_BlActFlip_WalkL3F,
+  DATA_BlActFlip_WalkR3F,
+  DATA_BlActFlip_WalkU7F,
+  DATA_BlActFlip_WalkD7F,
+  DATA_BlActFlip_WalkL7F,
+  DATA_BlActFlip_WalkR7F,
+  DATA_BlActFlip_WalkU12F,
+  DATA_BlActFlip_WalkD12F,
+  DATA_BlActFlip_WalkL12F,
+  DATA_BlActFlip_WalkR12F,
+  DATA_BlActFlip_PCWoman_PCBow,
+};
+

@@ -28,9 +28,16 @@ DIR_DUMMY = ./mmdl_dmy
 #DRAWTYPE_MDLコンバートソースimd格納ディレクトリ
 DIR_MDLSRC = ./mmdl_mdl
 
+#anmリストディレクトリ
+DIR_ANM = ./mmdl_anm
+
 #テンポラリディレクトリ
 #
 DIR_TMP = ./mmdl_tmp
+
+#ツールディレクトリ
+DIR_TOOL = ./tool
+DIR_TOOL_TMP = ./tmp
 
 #管理表
 #
@@ -38,19 +45,19 @@ FMMDLLIST_XLS = fldmmdl_list.xls
 
 #管理表テキストファイル
 #
-FMMDLLIST_CSV = fldmmdl_list.csv
-
-#管理表ncg対応ファイル
-#
-FMMDLNCGLIST_CSV = fldmmdl_ncglist.csv
+FMMDLLIST_CSV = $(DIR_TOOL_TMP)/fldmmdl_list.csv
 
 #ポケモン管理表テキストファイル
 #
-FMMDLPOKELIST_CSV = fldmmdl_poke_list.csv
+FMMDLPOKELIST_CSV = $(DIR_TOOL_TMP)/fldmmdl_poke_list.csv
 
 #モデル管理表テキストファイル
 #
-FMMDLMDLLIST_CSV = fldmmdl_mdl_list.csv
+FMMDLMDLLIST_CSV = $(DIR_TOOL_TMP)/fldmmdl_mdl_list.csv
+
+#管理表ncg対応ファイル
+#
+NCG_CONV_LIST_TXT = $(DIR_ANM)/ncg_convert_list.txt
 
 #管理表から生成されるリソース一覧
 #
