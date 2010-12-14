@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-12-09T10:55:59" source="dooreffect_test10.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-12-14T13:01:28" source="d_effect.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -21,10 +21,10 @@
 />
 
 <mat_color_data size="35">
-	25 31 0 25 25 25 25 25 24 22
-	21 18 16 13 10 7 5 2 0 20
-	19 18 16 15 14 12 11 9 8 7
-	5 4 3 1 0
+	25 31 0 25 25 25 25 23 21 19
+	17 15 13 11 8 6 4 2 0 21
+	21 20 20 19 19 18 18 17 17 16
+	16 16 10 5 0
 </mat_color_data>
 
 <mat_color_anm_array size="2">
@@ -38,9 +38,9 @@
 		<specular_r frame_step="1" data_size="1" data_head="2"/>
 		<specular_g frame_step="1" data_size="1" data_head="2"/>
 		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="1"/>
-		<emission_g frame_step="1" data_size="1" data_head="1"/>
-		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
 		<polygon_alpha frame_step="1" data_size="16" data_head="3"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="de_test06_1">
@@ -53,9 +53,9 @@
 		<specular_r frame_step="1" data_size="1" data_head="2"/>
 		<specular_g frame_step="1" data_size="1" data_head="2"/>
 		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="1"/>
-		<emission_g frame_step="1" data_size="1" data_head="1"/>
-		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
 		<polygon_alpha frame_step="1" data_size="16" data_head="19"/>
 	</mat_color_anm>
 </mat_color_anm_array>
