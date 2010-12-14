@@ -24,7 +24,7 @@
 #include  "message.naix"
 
 #ifdef PM_DEBUG
-#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_nishino
+#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_nishino | defined DEBUG_ONLY_FOR_nakatsui
 #define SEIKAKU_PRINT
 #endif
 #endif
