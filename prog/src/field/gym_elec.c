@@ -110,7 +110,7 @@ static void SPOT_LIGHT_SET_UnRegister( SPOT_LIGHT_SET *p_wk, u16 objID );
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
 //=====================================
-static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog );
+static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow );
 
 //-------------------------------------
 ///	フェードアウト(影がなくなる演出)
@@ -308,8 +308,7 @@ GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys )
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
 
- // return SHOWUP_CreateEvent( p_gamesys, FOG_SHADOW *p_fog );
-  return NULL;
+  return SHOWUP_CreateEvent( p_gamesys, p_tmp->p_fog_shadow );
 }
 //----------------------------------------------------------------------------
 /**
@@ -669,9 +668,8 @@ static const u8 sc_start_fog_table[FIELD_FOG_TBL_MAX]  =
 {
   0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,
   0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,
-  0x40,0x40,0x40,0x40,0x40,0x40,0x40,0x40,
-  0x40,0x40,0x40,0x40,0x40,0x40,0x40,0x40,
-
+  0x68,0x68,0x68,0x68,0x68,0x68,0x68,0x68,
+  0x68,0x68,0x68,0x68,0x68,0x68,0x68,0x68,
 };
 
 //----------------------------------------------------------------------------
@@ -1000,6 +998,10 @@ static void SPOT_LIGHT_SET_Register( SPOT_LIGHT_SET *p_wk, u16 objID )
 
     Spot_Light_Register( p_light, MMDLSYS_SearchOBJID( p_wk->cp_mmdlsys, objID ) );
   }
+  else
+  {
+    GF_ASSERT_MSG( 0, "ライトの数が足りません。現在の最大=%d", p_wk->light_max );
+  }
 
 }
 //----------------------------------------------------------------------------
@@ -1138,7 +1140,8 @@ static void Spot_Light_UnRegister( SPOT_LIGHT *p_wk )
 //=====================================
 typedef struct
 {
-  FOG_SHADOW * p_fog;
+  FOG_SHADOW    *p_fog_shadow;
+  FIELD_CAMERA  *p_camera;
 }SHOWUP_EVENT_WORK;
 
 //-------------------------------------
@@ -1156,12 +1159,16 @@ static GMEVENT_RESULT Showup_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adr
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog )
+static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow )
 {
   GMEVENT * p_event = GMEVENT_Create( p_gamesys, NULL, Showup_Event, sizeof(SHOWUP_EVENT_WORK) );
   SHOWUP_EVENT_WORK *p_wk = GMEVENT_GetEventWork(p_event);
 
-  p_wk->p_fog = p_fog;
+  p_wk->p_fog_shadow   = p_fog_shadow;
+  {
+    FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+    p_wk->p_camera  = FIELDMAP_GetFieldCamera( p_fieldmap );
+  }
 
   return p_event;
 }
@@ -1181,15 +1188,123 @@ static GMEVENT_RESULT Showup_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adr
 {
   enum
   {
-    SEQ_,
+    SEQ_CAMERA_INIT_START,
+    SEQ_CAMERA_INIT_WAIT,
+    SEQ_CAMERA_GO_START,
+    SEQ_CAMERA_GO_WAIT,
+
+    SEQ_CALL_SCRIPT,
+
+    SEQ_FADE_START,
+    SEQ_FADE_WAIT,
+
+    SEQ_CAMERA_COME_START,
+    SEQ_CAMERA_COME_WAIT,
+    SEQ_CAMERA_END,
+
+    SEQ_END,
   };
 
   SHOWUP_EVENT_WORK *p_wk = p_wk_adrs;
 
   switch( *p_seq )
   {
-  case 0:
+  //カメラ使用初期化
+  case SEQ_CAMERA_INIT_START:
+    //トレースをOFF
+    FIELD_CAMERA_StopTraceRequest(p_wk->p_camera);
+    (*p_seq)++;
     break;
+
+  case SEQ_CAMERA_INIT_WAIT:
+    if( FIELD_CAMERA_CheckTrace(p_wk->p_camera) == FALSE )
+    {
+      FIELD_CAMERA_SetRecvCamParam(p_wk->p_camera);
+      FIELD_CAMERA_FreeTarget(p_wk->p_camera);
+      (*p_seq)++;
+    }
+    break;
+
+  //カメラカミツレへ
+  case SEQ_CAMERA_GO_START:
+    {
+
+      FLD_CAM_MV_PARAM param;
+      param.Core.AnglePitch = 0x2561;
+      param.Core.AngleYaw   = 0x0;
+      param.Core.Distance   = 0xe9*FX32_ONE;
+      param.Core.TrgtPos.x  = 0xF8*FX32_ONE;
+      param.Core.TrgtPos.y  = 0x48*FX32_ONE;
+      param.Core.TrgtPos.z  = 0x2b*FX32_ONE;
+      param.Chk.Shift = FALSE;
+      param.Chk.Pitch = TRUE;
+      param.Chk.Yaw   = TRUE;
+      param.Chk.Dist  = TRUE;
+      param.Chk.Fovy  = FALSE;
+      param.Chk.Pos   = TRUE;
+      FIELD_CAMERA_SetLinerParam(p_wk->p_camera, &param, 60);
+    }
+    (*p_seq)++;
+    break;
+
+  case SEQ_CAMERA_GO_WAIT:
+    if( FIELD_CAMERA_CheckMvFunc(p_wk->p_camera ) == FALSE )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  //カミツレ芝居
+  case SEQ_CALL_SCRIPT:
+    (*p_seq)++;
+    break;
+    
+  //フェードイベント
+  case SEQ_FADE_START:
+    FOG_SHADOW_FadeOutRequest( p_wk->p_fog_shadow, FOG_SHADOW_FADE_SYNC );
+    (*p_seq)++;
+    break;
+
+  case SEQ_FADE_WAIT:
+    if( FOG_SHADOW_IsFadeEnd( p_wk->p_fog_shadow ) )
+    {
+      FOG_SHADOW_SetVisible( p_wk->p_fog_shadow, FALSE );
+      (*p_seq)++;
+    }
+    break;
+
+  //カメラ主人公位置へ
+  case SEQ_CAMERA_COME_START:
+    {
+
+      FLD_CAM_MV_PARAM_CHK chk;
+      chk.Shift = TRUE;
+      chk.Pitch = TRUE;
+      chk.Yaw = TRUE;
+      chk.Dist = TRUE;
+      chk.Fovy = TRUE;
+      chk.Pos = TRUE;
+      FIELD_CAMERA_RecvLinerParam(p_wk->p_camera, &chk, 60);
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CAMERA_COME_WAIT:
+    if( FIELD_CAMERA_CheckMvFunc(p_wk->p_camera ) == FALSE )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  //カメラ使用終了
+  case SEQ_CAMERA_END:
+    FIELD_CAMERA_ClearRecvCamParam(p_wk->p_camera);
+    FIELD_CAMERA_BindDefaultTarget(p_wk->p_camera);
+    FIELD_CAMERA_RestartTrace(p_wk->p_camera);
+    (*p_seq)++;
+    break;
+
+  case SEQ_END:
+    return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE;
