@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c04gym0101_leader4_01
 _EVENT_DATA		ev_zone_c04gym0101
+_EVENT_DATA		ev_init_c04gym0101
 _EVENT_DATA		ev_pos_c04gym0101_show1
 _EVENT_DATA		ev_pos_c04gym0101_show2
 _EVENT_DATA		ev_pos_c04gym0101_show3
@@ -46,30 +47,84 @@ _EVENT_DATA_END
 /*					ジムギミック初期化						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c04gym0101
-	//ジムギミック初期化コマンド　引数(0)ならトレーナー対戦前(1)なら対戦後
-  //_GYM_ELEC_INIT( TR_SW1, TR_SW2 )
-  _DEBUG_PRINT_WK( SCWK_ANSWER )
+/*
+	//【仮】進行状況によってジムギミックを初期化（参照する変数が仮）
+	//クリア時
+	IF $LOCALWORK11 == 4 THEN
+		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_START )
+	
+	//トレーナーを一人も倒していない
+	ELSIF $LOCALWORK11 == 0 THEN
+		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_START )
+	
+	//トレーナーを一人倒した
+	ELSIF $LOCALWORK11 == 1 THEN
+		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_TR01_BTL_END )
+	
+	//トレーナーを二人倒した
+	ELSIF $LOCALWORK11 == 2 THEN
+		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_TR02_BTL_END )
+	
+	//トレーナーを三人倒した
+	ELSIF $LOCALWORK11 == 3 THEN
+		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
+	
+	//例外は初期状態に
+	ELSE
+		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_START  )
+	ENDIF
+*/
+  	_DEBUG_PRINT_WK( SCWK_ANSWER )
 INIT_EVENT_END
 
-
 /************************************************************/
-/*				対戦後トレーナーの位置変更					*/
+/*					FIELD_INIT_LABEL						*/
 /************************************************************/
-//INIT_EVENT_START	ev_init_c04gym0101
+INIT_EVENT_START	ev_init_c04gym0101
+	
+	//【仮】進行状況によってOBJを移動（参照する変数が仮）
+	
+	//クリア時
+	IF $LOCALWORK11 == 4 THEN
+		//全員初期位置
+		
+	//トレーナーを一人も倒していない
+	ELSIF $LOCALWORK11 == 0 THEN
+		//全員初期位置
+	
+	//トレーナーを一人倒した
+	ELSIF $LOCALWORK11 == 1 THEN
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
+	
+	//トレーナーを二人倒した
+	ELSIF $LOCALWORK11 == 2 THEN
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 14, 6, 2, DIR_DOWN )
+	
+	//トレーナーを三人倒した
+	ELSIF $LOCALWORK11 == 3 THEN
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 14, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 14, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 6, 2, DIR_DOWN )
+	
+	//例外は初期状態に
+	ELSE
+		//全員初期位置
+	ENDIF
 
-//INIT_EVENT_END
+INIT_EVENT_END
 
 /************************************************************/
 /*				環境ＳＥ初期化（セーブ復帰用）					*/
 /************************************************************/
-//INIT_EVENT_START	ev_recover_c04gym0101
-  //セーブ復帰なら実行
-//  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
-//  IF $SCWK_ANSWER == TRUE THEN
-//    _GYM_ELEC_INIT_SE()
-//  ENDIF
-//INIT_EVENT_END
-
+INIT_EVENT_START	ev_recover_c04gym0101
+	//セーブ復帰なら実行
+	_CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
+	IF $SCWK_ANSWER == TRUE THEN
+		_GYM_ELEC_RECOVER()
+	ENDIF
+	INIT_EVENT_END
 
 /************************************************************/
 /*						ジムリーダー						*/
@@ -217,37 +272,332 @@ ev_leader4_btl:
 
 
 /************************************************************/
-/*				ジムギミック　ショーイベント						*/
+/*						POS：モデル（１）					*/
 /************************************************************/
 //ジムギミックposイベント：ショー開始POS１
 EVENT_START	ev_pos_c04gym0101_show1
-	//LOCALWORK11==0で起動
+	
+	{
+	//【仮】起動条件
+	IF $LOCALWORK11 == 0 THEN
+		
+		//【仮】スポットライトON
+		//_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_01 )
+		
+		//戦闘を既に終えているかチェック
+		DEFINE_LOCAL LWK_TRAINER_FLAG
+		_TRAINER_FLAG_CHECK( TRID_PRINCESS_08 , LWK_TRAINER_FLAG )
+		
+		//まだ勝利していない
+		IF $LWK_TRAINER_FLAG == FALSE THEN
+		
+			//視線曲再生・[!]アイコン表示
+			_OBJ_ANIME( C04GYM0101_TRAINER_01,anm_tr_gyoe )
+			_OBJ_ANIME_WAIT()
+			_TRAINER_BGM_SET( TRID_PRINCESS_08 )
+		
+		ENDIF
 
-  //影フェードアウトイベントを行う
-  _GYM_ELEC_CALL_FADEOUT_EVENT( 1 )
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+		DEFINE_LOCAL  LCW_POSZ
+		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-  //このPOSの起動をさせなくする
-  $LOCALWORK11 = 1
+		//プレイヤーが通る4グリッド分を用意
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+		
+		//まだ勝利していない
+		IF $LWK_TRAINER_FLAG == FALSE THEN
+		
+			//【仮】メッセージラベルが仮
+			_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_prince1_04 , C04GYM0101_TRAINER_01 , POS_DEFAULT)
+			_BALLOONWIN_CLOSE()
+		
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_PRINCESS_08, 0 )
+		
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				//【仮】スポットライトオフ
+				//_GYM_ELEC_SET_SPOTLIGHT( FALSE , C04GYM0101_TRAINER_01 )
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+		
+		ENDIF
+
+		//影フェードアウトイベントを行う
+		_GYM_ELEC_CALL_FADEOUT_EVENT( 1 )
+		
+		//トレーナー退場
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+		
+		//OBJをカミツレのそばにワープさせる
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
+		
+		//========================================//
+		//このPOSの起動をさせなくする
+		$LOCALWORK11 = 1
+		//========================================//
+	ENDIF
+	}
+
 EVENT_END
 
-
+/************************************************************/
+/*						POS：モデル（２）					*/
+/************************************************************/
 //ジムギミックposイベント：ショー開始POS２
 EVENT_START	ev_pos_c04gym0101_show2
-	//LOCALWORK12==0で起動
+	{
+	
+	//【仮】起動条件
+	IF $LOCALWORK12 == 0 THEN
+		
+		//【仮】スポットライトON
+		//_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_02 )
+		
+		//戦闘を既に終えているかチェック
+		DEFINE_LOCAL LWK_TRAINER_FLAG
+		_TRAINER_FLAG_CHECK( TRID_PRINCESS_09 , LWK_TRAINER_FLAG )
+		
+		//まだ勝利していない
+		IF $LWK_TRAINER_FLAG == FALSE THEN
+		
+			//視線曲再生・[!]アイコン表示
+			_OBJ_ANIME( C04GYM0101_TRAINER_02,anm_tr_gyoe )
+			_OBJ_ANIME_WAIT()
+			_TRAINER_BGM_SET( TRID_PRINCESS_09 )
+		
+		ENDIF
 
-  //影フェードアウトイベントを行う
-  _GYM_ELEC_CALL_FADEOUT_EVENT( 2 )
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+		DEFINE_LOCAL  LCW_POSZ
+		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-  //このPOSの起動をさせなくする
-  $LOCALWORK12 = 1
+		//プレイヤーが通る4グリッド分を用意
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+		
+		//まだ勝利していない
+		IF $LWK_TRAINER_FLAG == FALSE THEN
+		
+			//【仮】メッセージラベルが仮
+			_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_prince1_04 , C04GYM0101_TRAINER_02 , POS_DEFAULT)
+			_BALLOONWIN_CLOSE()
+		
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_PRINCESS_09, 0 )
+		
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				//【仮】スポットライトオフ
+				//_GYM_ELEC_SET_SPOTLIGHT( FALSE , C04GYM0101_TRAINER_01 )
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+		
+		ENDIF
+
+		//影フェードアウトイベントを行う
+		_GYM_ELEC_CALL_FADEOUT_EVENT( 2 )
+		
+		//トレーナー退場
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+		
+		//OBJをカミツレのそばにワープさせる
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
+		
+		//========================================//
+		//このPOSの起動をさせなくする
+		$LOCALWORK12 = 1
+		//========================================//
+	ENDIF
+	
+	}
+
 EVENT_END
 
 
+/************************************************************/
+/*						POS：モデル（３）					*/
+/************************************************************/
 //ジムギミックposイベント：ショー開始POS３
 EVENT_START	ev_pos_c04gym0101_show3
-	//LOCALWORK13==0で起動
-  //ここは後にカミツレショーアップイベントを呼ぶコマンドを書く
-	_CALL	ev_swich_message
+	{
+	
+	//【仮】起動条件
+	IF $LOCALWORK13 == 0 THEN
+		
+		//【仮】スポットライトON
+		//_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_01 )
+		
+		//戦闘を既に終えているかチェック
+		DEFINE_LOCAL LWK_TRAINER_FLAG
+		_TRAINER_FLAG_CHECK( TRID_PRINCESS_10 , LWK_TRAINER_FLAG )
+		
+		//まだ勝利していない
+		IF $LWK_TRAINER_FLAG == FALSE THEN
+		
+			//視線曲再生・[!]アイコン表示
+			_OBJ_ANIME( C04GYM0101_TRAINER_03,anm_tr_gyoe )
+			_OBJ_ANIME_WAIT()
+			_TRAINER_BGM_SET( TRID_PRINCESS_10 )
+		
+		ENDIF
+
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+		DEFINE_LOCAL  LCW_POSZ
+		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+		//プレイヤーが通る4グリッド分を用意
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+		
+		//まだ勝利していない
+		IF $LWK_TRAINER_FLAG == FALSE THEN
+		
+			//【仮】メッセージラベルが仮
+			_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_prince1_04 , C04GYM0101_TRAINER_03 , POS_DEFAULT)
+			_BALLOONWIN_CLOSE()
+		
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_PRINCESS_10, 0 )
+		
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				//【仮】スポットライトオフ
+				//_GYM_ELEC_SET_SPOTLIGHT( FALSE , C04GYM0101_TRAINER_03 )
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+		
+		ENDIF
+
+		//【仮】カミツレショーアップ演出
+		_CALL	ev_swich_message
+		
+		//トレーナー退場
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+		
+		//OBJをカミツレのそばにワープさせる
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
+		
+		//========================================//
+		//このPOSの起動をさせなくする
+		$LOCALWORK13 = 1
+		//========================================//
+	ENDIF
+	}
+	
 EVENT_END
 
 
@@ -260,6 +610,91 @@ ev_swich_message:
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
 	_RET
+
+//--------------------------------------------------------------
+//	トレーナー[!]マーク
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー接近(左）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_com_left
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー接近(中央）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_com_center
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー接近(右）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_com_right
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー去る(左）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_bye_left
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー去る(中央）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_bye_center
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー去る(右）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_bye_right
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*					トレーナー♂（再会話）					*/
