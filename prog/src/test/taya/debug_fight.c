@@ -289,18 +289,19 @@ enum {
   LAYOUT_SAVEMARK_HEIGHT = 12,
 
   // --- PAGE 2
-  LAYOUT_LABEL_MUST_TUIKA_X     = 4,
-  LAYOUT_LABEL_MUST_TOKU_X      = 4,
-  LAYOUT_LABEL_MUST_ITEM_X      = 4,
-  LAYOUT_LABEL_MUST_CRITICAL_X  = 4,
-  LAYOUT_LABEL_HP_CONST_X       = 4,
-  LAYOUT_LABEL_PP_CONST_X       = 4,
-  LAYOUT_LABEL_HIT_100PER_X     = 4,
-  LAYOUT_LABEL_DMG_RAND_OFF_X   = 4,
-  LAYOUT_LABEL_SKIP_BTLIN_X     = 4,
-  LAYOUT_LABEL_AI_CTRL_X        = 4,
-  LAYOUT_LABEL_SHOOTERMODE_X    = 4,
-  LAYOUT_LABEL_TRAINER_TYPE_X   = 4,
+  LAYOUT_LABEL_MUST_TUIKA_X           = 4,
+  LAYOUT_LABEL_MUST_TOKU_X            = 4,
+  LAYOUT_LABEL_MUST_ITEM_X            = 4,
+  LAYOUT_LABEL_MUST_CRITICAL_X        = 4,
+  LAYOUT_LABEL_HP_CONST_X             = 4,
+  LAYOUT_LABEL_PP_CONST_X             = 4,
+  LAYOUT_LABEL_HIT_100PER_X           = 4,
+  LAYOUT_LABEL_DMG_RAND_OFF_X         = 4,
+  LAYOUT_LABEL_SKIP_BTLIN_X           = 4,
+  LAYOUT_LABEL_AI_CTRL_X              = 4,
+  LAYOUT_LABEL_SHOOTERMODE_X          = 4,
+  LAYOUT_LABEL_TRAINER_TYPE_X         = 4,
+  LAYOUT_LABEL_TRAINER_TYPE_SUBSTR_X  = 90,
 
 
   LAYOUT_LABEL_LIMITTIME_X       = 160,
@@ -409,7 +410,7 @@ static const LABEL_LAYOUT LabelLayout_Page2[] = {
   { DBGF_LABEL_SKIP_IN,        LAYOUT_LABEL_SKIP_BTLIN_X,    LAYOUT_LABEL_SKIP_BTLIN_Y    },
   { DBGF_LABEL_AI_CTRL,        LAYOUT_LABEL_AI_CTRL_X,       LAYOUT_LABEL_AI_CTRL_Y       },
   { DBGF_LABEL_SHOOTER_MODE,   LAYOUT_LABEL_SHOOTERMODE_X,   LAYOUT_LABEL_SHOOTERMODE_Y   },
-  { DBGF_LABEL_TRAINER_ID,     LAYOUT_LABEL_TRAINER_TYPE_X,  LAYOUT_LABEL_TRAINER_TYPE_Y  },
+  { DBGF_LABEL_TRAINER_TYPE,   LAYOUT_LABEL_TRAINER_TYPE_X,  LAYOUT_LABEL_TRAINER_TYPE_Y  },
   { DBGF_LABEL_LIMIT_TIME,     LAYOUT_LABEL_LIMITTIME_X,     LAYOUT_LABEL_LIMITTIME_Y     },
   { DBGF_LABEL_LIMIT_GAME_MIN, LAYOUT_LABEL_LIMITGAME_X,     LAYOUT_LABEL_LIMITGAME_Y     },
   { DBGF_LABEL_LIMIT_GAME_SEC, LAYOUT_LABEL_LIMITGSEC_X,     LAYOUT_LABEL_LIMITGSEC_Y     },
@@ -645,7 +646,9 @@ typedef struct {
   u32  fSubway       : 1;
   u32  fAICtrl       : 1;
   u32  fShooterMode  : 1;
-  u16  trainerType;
+
+  u16         trainerType;
+  TrainerID   trainerID;
 
 
   u16  LimitTimeCommand;
@@ -668,8 +671,10 @@ struct _DEBUG_BTL_WORK {
   GFL_BMP_DATA*   bmp;
   GFL_MSGDATA*    mm;
   GFL_MSGDATA*    mmTrainerType;
+  GFL_MSGDATA*    mmTrainerName;
   GFL_MSGDATA*    mmMonsName;
   STRBUF*         strbuf;
+  STRBUF*         strbufSub;
   GFL_FONT*       fontHandle;
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil[1];
@@ -688,6 +693,7 @@ struct _DEBUG_BTL_WORK {
   pMainProc       mainProc;
   int             mainSeq;
   u8              prevItemStrWidth[ SELITEM_MAX ];
+  u8              prevItemStrSubWidth[ SELITEM_MAX ];
   PROCPARAM_DEBUG_MAKEPOKE  makePokeParam;
   BATTLE_SETUP_PARAM  setupParam;
   BTL_FIELD_SITUATION fieldSit;
@@ -745,7 +751,7 @@ static void printItem_LandForm( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_Season( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_Weather( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
-static void printItem_TrainerType( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_TrainerType( DEBUG_BTL_WORK* wk, STRBUF* buf_m, STRBUF* buf_s );
 static void printClipMark( DEBUG_BTL_WORK* wk );
 static void clearClipMark( DEBUG_BTL_WORK* wk );
 static void printSaveMark( DEBUG_BTL_WORK* wk );
@@ -774,6 +780,7 @@ static void comm_dummy_callback(void* pWork);
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void btlAutoConnectCallback( void* pWork );
 static void btlExitConnectCallback( void* pWork );
+static TrainerID SearchTrainerData(u16 kindType, HEAPID heapID );
 
 /*--------------------------------------------------------------------------*/
 /* Menu Table                                                               */
@@ -1007,8 +1014,10 @@ static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID )
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   wk->mm  = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_fight_dat, heapID );
   wk->mmTrainerType = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_trtype_dat, heapID );
+  wk->mmTrainerName = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_trname_dat, heapID );
   wk->mmMonsName    = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
   wk->strbuf = GFL_STR_CreateBuffer( 1024, heapID );
+  wk->strbufSub = GFL_STR_CreateBuffer( 1024, heapID );
 
   GFL_BMP_Clear( wk->bmp, 0xff );
 
@@ -1037,6 +1046,8 @@ static void deleteTemporaryModules( DEBUG_BTL_WORK* wk )
   GFL_FONT_Delete( wk->fontHandle );
 
   GFL_STR_DeleteBuffer( wk->strbuf );
+  GFL_STR_DeleteBuffer( wk->strbufSub );
+  GFL_MSG_Delete( wk->mmTrainerName );
   GFL_MSG_Delete( wk->mmTrainerType );
   GFL_MSG_Delete( wk->mmMonsName );
   GFL_MSG_Delete( wk->mm );
@@ -1179,6 +1190,8 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->fld_hour = 0;
   saveData->fld_minute = 0;
 
+  saveData->trainerType = 0;
+  saveData->trainerID = 0;
 
   for(i=0; i<POKEPARA_MAX; ++i){
     pp = savework_GetPokeParaArea( saveData, i );
@@ -1544,6 +1557,9 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
       u16 x = itemTable[i].x;
       u16 y = itemTable[i].y;
 
+      // サブバッファーはクリアしておく
+      GFL_STR_ClearBuffer( wk->strbufSub );
+
       if( fSelect ){
         GFL_FONTSYS_SetColor( 3, 4, 0x0f );
       }else{
@@ -1552,6 +1568,10 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
 
       if( wk->prevItemStrWidth[itemID] ){
         GFL_BMP_Fill( wk->bmp, x, y, wk->prevItemStrWidth[itemID], GFL_FONT_GetLineHeight(wk->fontHandle), 0xff );
+      }
+
+      if( wk->prevItemStrSubWidth[itemID] ){
+        GFL_BMP_Fill( wk->bmp, x+LAYOUT_LABEL_TRAINER_TYPE_SUBSTR_X, y, wk->prevItemStrSubWidth[itemID], GFL_FONT_GetLineHeight(wk->fontHandle), 0xff );
       }
 
       if( selItem_IsPoke(itemID) ){
@@ -1590,7 +1610,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_SKIP_BTLIN:    printItem_Flag( wk, wk->saveData.fSkipBtlIn, wk->strbuf ); break;
         case SELITEM_AI_CTRL:       printItem_Flag( wk, wk->saveData.fAICtrl, wk->strbuf ); break;
         case SELITEM_SHOOTER_MODE:  printItem_Flag( wk, wk->saveData.fShooterMode, wk->strbuf ); break;
-        case SELITEM_TRAINER_TYPE:  printItem_TrainerType( wk, wk->strbuf ); break;
+        case SELITEM_TRAINER_TYPE:  printItem_TrainerType( wk, wk->strbuf, wk->strbufSub ); break;
 
         case SELITEM_AI0: printItem_Flag( wk, wk->saveData.fAI_0,    wk->strbuf ); break;
         case SELITEM_AI1: printItem_Flag( wk, wk->saveData.fAI_1,    wk->strbuf ); break;
@@ -1616,6 +1636,12 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
       }
       PRINTSYS_Print( wk->bmp, x, y, wk->strbuf, wk->fontHandle );
       wk->prevItemStrWidth[ itemID ] = PRINTSYS_GetStrWidth( wk->strbuf, wk->fontHandle, 0 );
+
+      // itemIDは必ずしもselectItemとは異なる点に注意
+      if( itemID==SELITEM_TRAINER_TYPE ){
+        PRINTSYS_Print( wk->bmp, x + LAYOUT_LABEL_TRAINER_TYPE_SUBSTR_X, y, wk->strbufSub, wk->fontHandle );
+        wk->prevItemStrSubWidth[ itemID ] = PRINTSYS_GetStrWidth( wk->strbufSub, wk->fontHandle, 0 );
+      }
       break;
     }
   }
@@ -1684,9 +1710,13 @@ static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, strID, buf );
 }
-static void printItem_TrainerType( DEBUG_BTL_WORK* wk, STRBUF* buf )
+static void printItem_TrainerType( DEBUG_BTL_WORK* wk, STRBUF* buf_m, STRBUF* buf_s )
 {
-  GFL_MSG_GetString( wk->mmTrainerType, wk->saveData.trainerType , buf );
+  // トレーナータイプを表示
+  GFL_MSG_GetString( wk->mmTrainerName , wk->saveData.trainerID , buf_s );
+
+  // トレーナータイプをバッファーに表示
+  GFL_MSG_GetString( wk->mmTrainerType, wk->saveData.trainerType , buf_m );
 }
 static void printClipMark( DEBUG_BTL_WORK* wk )
 {
@@ -1967,6 +1997,13 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     }
     else{
       selItem_Increment( wk, wk->selectItem, 1 );
+       
+      // トレーナーIDの再選択
+      if( selItem_IsTrainerType(wk->selectItem) )
+      {
+        wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
+      }
+
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
@@ -1976,6 +2013,13 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     if( !selItem_IsPoke(wk->selectItem) )
     {
       selItem_Increment( wk, wk->selectItem, -1 );
+      
+      // トレーナーIDの再選択
+      if( selItem_IsTrainerType(wk->selectItem) )
+      {
+        wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
+      }
+
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
@@ -1991,8 +2035,11 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     if( selItem_IsTrainerType(wk->selectItem) )
     {
       selItem_Increment( wk, wk->selectItem, 10 );
+      // トレーナーIDの再選択
+      wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
+      
     }
   }
   else if( key & PAD_BUTTON_Y )
@@ -2006,6 +2053,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     if( selItem_IsTrainerType(wk->selectItem) )
     {
       selItem_Increment( wk, wk->selectItem, -10 );
+      wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
@@ -2382,8 +2430,11 @@ FS_EXTERN_OVERLAY(battle);
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
 
-      TrainerID  trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
-//      TrainerID  trID = TRID_SAGE1_01;
+      TrainerID  trID = wk->saveData.trainerID;
+      if( trID == 0 )
+      {
+        trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+      }
 
       switch( rule ){
       case BTL_RULE_SINGLE:
@@ -2391,8 +2442,6 @@ FS_EXTERN_OVERLAY(battle);
           &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
-        wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->tr_type = wk->saveData.trainerType;
-        OS_Printf("トレーナータイプ：%d\n",wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->tr_type);
         break;
       case BTL_RULE_DOUBLE:
         switch( btltype_GetMultiType(wk->saveData.btlType) ){
@@ -2915,4 +2964,44 @@ static void btlExitConnectCallback( void* pWork )
   DEBUG_BTL_WORK* wk = pWork;
   wk->fNetConnect = FALSE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特定のトレーナータイプを持っているトレーナーデータを取得する
+ *
+ *	@param	kindType  取得したいトレーナータイプ
+ *	@param	heapID    ヒープＩＤ
+ *
+ *	@retval トレーナーID
+ */
+//-----------------------------------------------------------------------------
+static TrainerID SearchTrainerData(u16 kindType, HEAPID heapID )
+{
+  ARCHANDLE*    handle;
+  TRAINER_DATA  data;
+  u16         ofs   = 0;
+  u32         tr_id = 0;
+
+
+  // アーカイブハンドルの取得
+  handle = GFL_ARC_OpenDataHandle( ARCID_TRDATA , heapID );
+
+  while( tr_id != TRID_MAX ){
+    GFL_ARC_LoadDataOfsByHandle( handle,  tr_id, 0, sizeof(data), &data );
+    
+    // トレーナータイプが一致するまで続ける
+    if( data.tr_type == kindType )
+    {
+      return tr_id;
+    }
+
+    // トレーナーIDとデータのIDは基本一致している
+    tr_id++;
+  }
+  GFL_ARC_CloseDataHandle( handle );
+
+  return 0;
+}
+
 #endif //PM_DEBUG
