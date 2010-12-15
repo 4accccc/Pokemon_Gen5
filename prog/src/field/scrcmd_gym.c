@@ -41,17 +41,18 @@
 //--電気--
 //--------------------------------------------------------------
 /**
- * @brief 電気ジム環境ＳＥ初期化
+ * @brief 電気ジム環境リカバリー
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymElec_InitSe( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymElec_Recover( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 
-  //GYM_ELEC_InitSe( gsys );
+  GYM_ELEC_Recover( fieldWork );
 
   return VMCMD_RESULT_CONTINUE;
 }

@@ -57,13 +57,16 @@ static const u8 InsWall[INSECT_WALL_MAX-1][INSECT_CHK_MAX] = {
 void GYM_INIT_Elec(GAMESYS_WORK *gsys, u16 seq)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
+
+  GF_ASSERT_MSG( seq < GYM_ELEC_EVENT_SEQ_MAX, "初期化シーケンスの値が不正ですseq=%d\n",seq );
+
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
   //初期シーケンスを設定
-  //gmk_sv_work->event_seq  = seq;
+  gmk_sv_work->event_seq  = seq;
 }
 
 //--------------------------------------------------------------

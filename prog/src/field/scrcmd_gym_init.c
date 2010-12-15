@@ -49,10 +49,9 @@ VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   evt1 = SCRCMD_GetVMWork( core, work );
-  evt2 = SCRCMD_GetVMWork( core, work );
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
-  //GYM_INIT_Elec(gsys, *evt1, *evt2);
+  GYM_INIT_Elec(gsys, *evt1 );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;

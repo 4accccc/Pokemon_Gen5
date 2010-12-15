@@ -922,7 +922,7 @@
 
   //“d‹CƒWƒ€
   DEF_CMD( EvCmdGymElec_Init, EV_SEQ_GYM_ELEC_INIT )
-  DEF_CMD( EvCmdGymElec_InitSe, EV_SEQ_GYM_ELEC_INIT_SE )
+  DEF_CMD( EvCmdGymElec_Recover, EV_SEQ_GYM_ELEC_RECOVER )
   DEF_CMD( EvCmdGymElec_SetSpotLight, EV_SEQ_GYM_ELEC_SET_SPOT_LIGHT )
   DEF_CMD( EvCmdGymElec_CallFadeoutEvent, EV_SEQ_GYM_ELEC_CALL_FADEOUT_EVENT )
   DEF_CMD( EvCmdGymElec_CallShowupEvent, EV_SEQ_GYM_ELEC_CALL_SHOWUP_EVENT )

@@ -2,23 +2,41 @@
 /**
  * @file  gym_elec_sv.h
  * @brief  電気ジムセーブデータ
- * @author  Saito
+ * @author  Toru=Nagihashi
+ * @note    evで読み込んでいます。
  */
 //======================================================================
 #pragma once
 
-typedef enum
-{
-  GYM_ELEC_EVENT_SEQ_START,
-  GYM_ELEC_EVENT_SEQ_TR01_BTL_END,
-  GYM_ELEC_EVENT_SEQ_TR02_BTL_END,
-  GYM_ELEC_EVENT_SEQ_TR03_BTL_END,
-  GYM_ELEC_EVENT_SEQ_BOSS_BTL_END,
-} GYM_ELEC_EVENT_SEQ;
+//=============================================================================
+/**
+ *    スクリプト、ソース共通定義
+ */
+//=============================================================================
+//-------------------------------------
+///	_GYM_ELEC_INITにいれる値及びプログラム中に使う値
+//=====================================
+#define GYM_ELEC_EVENT_SEQ_START        (0) //初期状態
+#define GYM_ELEC_EVENT_SEQ_TR01_BTL_END (1) //一人目に勝った
+#define GYM_ELEC_EVENT_SEQ_TR02_BTL_END (2) //二人目に勝った
+#define GYM_ELEC_EVENT_SEQ_TR03_BTL_END (3) //三人目に勝った
+#define GYM_ELEC_EVENT_SEQ_BOSS_BTL_END (4) //ジムリーダーに勝った
+#define GYM_ELEC_EVENT_SEQ_MAX          (5) //スクリプトでは使用禁止
 
-//電気ジムセーブワーク
+//=============================================================================
+/**
+ *    ソース用、定義
+ */
+//=============================================================================
+#ifndef __ASM_NO_DEF_
+//-------------------------------------
+///	電気ジムセーブワーク
+//=====================================
 typedef struct GYM_ELEC_SV_WORK_tag
 {
-  GYM_ELEC_EVENT_SEQ  event_seq;
+   u16 event_seq; //GYM_ELEC_EVENT_SEQ_～の値
+   u16 dummy;
 }GYM_ELEC_SV_WORK;
+
+#endif //__ASM_NO_DEF_
 

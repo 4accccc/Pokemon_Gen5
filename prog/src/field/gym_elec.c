@@ -71,6 +71,7 @@ static void FOG_SHADOW_Main( FOG_SHADOW* p_wk );
 static void FOG_SHADOW_FadeOutRequest( FOG_SHADOW* p_wk, s16 sync );
 static BOOL FOG_SHADOW_IsFadeEnd( const FOG_SHADOW* cp_wk );
 static void FOG_SHADOW_SetPhaseRequest( FOG_SHADOW* p_wk, s32 phase );
+static void FOG_SHADOW_SetVisible( FOG_SHADOW* p_wk, BOOL is_visible );
 
 static void FOG_SHADOW_DEBUG_SetSetupTbl( FOG_SHADOW *p_wk, const FOG_SHADOW_INIT_SETUP_TBL *cp_tbl );
 static void FOG_SHADOW_DEBUG_SetMoveFlag( FOG_SHADOW *p_wk, BOOL is_move );
@@ -98,11 +99,18 @@ static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog 
 //=====================================
 static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, s16 phase );
 
+//-------------------------------------
+///	セーブ情報
+//=====================================
+//GYM_ELEC_SV_WORK
+static void GYM_ELEC_SV_SetEventSeq( GYM_ELEC_SV_WORK *p_wk, u16 seq );
+static u16 GYM_ELEC_SV_GetEventSeq( const GYM_ELEC_SV_WORK *cp_wk );
+
 #ifdef GYM_ELEC_DEBUG_MENU
 //-------------------------------------
 ///	デバッグメニュー
 //=====================================
-static void DEBUGMENU_Init( FOG_SHADOW *p_fog_shadow, HEAPID heapID );
+static void DEBUGMENU_Init( void *p_tmp_adrs, HEAPID heapID );
 static void DEBUGMENU_Exit( void );
 #endif //GYM_ELEC_DEBUG_MENU
 
@@ -121,16 +129,18 @@ static void DEBUGMENU_Exit( void );
 //=====================================
 typedef struct 
 {
-  FOG_SHADOW  *p_fog_shadow;
-  SPOT_LIGHT  *p_spot_light;
+  FOG_SHADOW      *p_fog_shadow;  //フォグ影
+  SPOT_LIGHT      *p_spot_light;  //スポットライト管理
+  MODEL           *p_model;       //モデル管理
+  ISS_SWITCH_SYS  *p_iss_switch;  //スイッチiss
+  GYM_ELEC_SV_WORK *p_sv;         //ギミックセーブワーク
 }GYM_ELEC_TMP;
 
 //-------------------------------------
 ///	private
 //=====================================
-//ギミック
 static GYM_ELEC_SV_WORK * Gym_Elec_GetSaveWork( FIELDMAP_WORK *p_fieldmap );
-
+static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK *cp_sv );
 //=============================================================================
 /**
  *    data
@@ -173,25 +183,40 @@ static const FOG_SHADOW_INIT_SETUP_TBL  sc_fogshadow_init_tbl[] =
 //--------------------------------------------------------------
 void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
 {
-  GYM_ELEC_TMP *p_tmp;
-  FLD_EXP_OBJ_CNT_PTR p_ex_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-  GYM_ELEC_SV_WORK *p_sv = Gym_Elec_GetSaveWork( p_fieldmap );
-  HEAPID heapID = FIELDMAP_GetHeapID(p_fieldmap);
+  const HEAPID heapID = FIELDMAP_GetHeapID(p_fieldmap);
 
   //汎用ワーク確保
-  p_tmp  = GMK_TMP_WK_AllocWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID, 
+  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_AllocWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID, 
       heapID, sizeof(GYM_ELEC_TMP));
+
+  //ギミックセーブワークを保存
+  p_tmp->p_sv = Gym_Elec_GetSaveWork( p_fieldmap );
+
+  //ISSを保存
+  {
+    ISS_SYS *p_iss  = GAMESYSTEM_GetIssSystem( FIELDMAP_GetGameSysWork(p_fieldmap) );
+    p_tmp->p_iss_switch  = ISS_SYS_GetIssSwitchSystem( p_iss );
+  }
+
+  //モデル管理作成
+  {
+    FLD_EXP_OBJ_CNT_PTR p_ex_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+    p_tmp->p_model  = MODEL_Init( p_ex_obj, heapID );
+  }
 
   //フォグ影作成
   {
     FIELD_FOG_WORK  *p_fog  = FIELDMAP_GetFieldFog(p_fieldmap);
     const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer(p_fieldmap);
-    p_tmp->p_fog_shadow = FOG_SHADOW_Init( p_fog, cp_player, sc_fogshadow_init_tbl, NELEMS(sc_fogshadow_init_tbl), 0/*p_sv->seq*/, heapID );
+    p_tmp->p_fog_shadow = FOG_SHADOW_Init( p_fog, cp_player, sc_fogshadow_init_tbl, NELEMS(sc_fogshadow_init_tbl), 0, heapID );
   }
+
+  //セーブワークの状態に環境を整える
+  Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
 
 #ifdef GYM_ELEC_DEBUG_MENU
   //デバッグ作成
-  DEBUGMENU_Init( p_tmp->p_fog_shadow, heapID );
+  DEBUGMENU_Init( p_tmp, heapID );
 #endif 
 }
 //--------------------------------------------------------------
@@ -203,8 +228,6 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
 //--------------------------------------------------------------
 void GYM_ELEC_End(FIELDMAP_WORK *p_fieldmap)
 {
-  FLD_EXP_OBJ_CNT_PTR p_ex_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-  GYM_ELEC_SV_WORK *p_sv = Gym_Elec_GetSaveWork( p_fieldmap );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
 
 #ifdef GYM_ELEC_DEBUG_MENU
@@ -214,6 +237,9 @@ void GYM_ELEC_End(FIELDMAP_WORK *p_fieldmap)
 
   //フォグ影破棄
   FOG_SHADOW_Exit( p_tmp->p_fog_shadow );
+
+  //モデル管理破棄
+  MODEL_Exit( p_tmp->p_model );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
@@ -229,12 +255,13 @@ void GYM_ELEC_End(FIELDMAP_WORK *p_fieldmap)
 //--------------------------------------------------------------
 void GYM_ELEC_Move(FIELDMAP_WORK *p_fieldmap)
 {
-  FLD_EXP_OBJ_CNT_PTR p_ex_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-  GYM_ELEC_SV_WORK *p_sv = Gym_Elec_GetSaveWork( p_fieldmap );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
 
-  //メイン
+  //フォグ影メイン
   FOG_SHADOW_Main( p_tmp->p_fog_shadow );
+
+  //モデル管理メイン
+  MODEL_Main( p_tmp->p_model );
 }
 
 //----------------------------------------------------------------------------
@@ -249,7 +276,6 @@ void GYM_ELEC_Move(FIELDMAP_WORK *p_fieldmap)
 GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
-  GYM_ELEC_SV_WORK *p_sv = Gym_Elec_GetSaveWork( p_fieldmap );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
 
  // return SHOWUP_CreateEvent( p_gamesys, FOG_SHADOW *p_fog );
@@ -266,10 +292,24 @@ GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys )
 GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, s16 phase )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
-  GYM_ELEC_SV_WORK *p_sv = Gym_Elec_GetSaveWork( p_fieldmap );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
+  u16  event_seq = GYM_ELEC_SV_GetEventSeq( p_tmp->p_sv );
 
-  return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, phase );
+  GF_ASSERT_MSG( phase == 1 || phase == 2, "phaseは1か2じゃないとだめです%d\n",phase );
+
+  //一人目と二人目に勝ったときしかこのイベントは反映しない
+  if( event_seq < GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
+  {
+    //現在のフェイズを保存
+    GYM_ELEC_SV_SetEventSeq( p_tmp->p_sv, phase );
+
+    //イベント作成
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, phase );
+  }
+  else
+  {
+    return NULL;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -281,6 +321,16 @@ GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, s16 phase )
  */
 //-----------------------------------------------------------------------------
 void GYM_ELEC_SetSpotLight( FIELDMAP_WORK *p_fieldmap, BOOL is_visible, u16 objID )
+{
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  電気ジム  復帰処理
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ */
+//-----------------------------------------------------------------------------
+void GYM_ELEC_Recover( FIELDMAP_WORK *p_fieldmap )
 {
 }
 //=============================================================================
@@ -302,6 +352,46 @@ static GYM_ELEC_SV_WORK * Gym_Elec_GetSaveWork( FIELDMAP_WORK *p_fieldmap )
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( p_fieldmap ) );
   GIMMICKWORK *p_gmkwork = GAMEDATA_GetGimmickWork(p_gamedata);
   return GIMMICKWORK_Get( p_gmkwork, FLD_GIMMICK_GYM_ELEC );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境設定
+ *
+ *	@param	GYM_ELEC_TMP *p_tmp       テンポラリワーク
+ *	@param	GYM_ELEC_SV_WORK *cp_sv   セーブワーク
+ */
+//-----------------------------------------------------------------------------
+static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK *cp_sv )
+{
+  u16  seq = GYM_ELEC_SV_GetEventSeq( cp_sv );
+
+  switch( seq )
+  {
+  case GYM_ELEC_EVENT_SEQ_START:
+    FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
+    FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 0 );
+    break;
+  case GYM_ELEC_EVENT_SEQ_TR01_BTL_END:
+    FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
+    FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 1 );
+    ISS_SWITCH_SYS_SwitchOn( p_tmp->p_iss_switch, SWITCH_01 );
+    break;
+  case GYM_ELEC_EVENT_SEQ_TR02_BTL_END:
+    FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
+    FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 2 );
+    ISS_SWITCH_SYS_SwitchOn( p_tmp->p_iss_switch, SWITCH_02 );
+    break;
+  case GYM_ELEC_EVENT_SEQ_TR03_BTL_END:
+    FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
+    /* カミツレイベントが起動した後になる */
+    break;
+  case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
+    FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -349,7 +439,7 @@ static MODEL * MODEL_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID )
   MODEL *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(MODEL));
   p_wk->p_ex_obj  = p_ex_obj;
 
-  FLD_EXP_OBJ_AddUnit(p_wk->p_ex_obj, &Setup, MODEL_FLD_EXP_OBJ_UNIT_ID );
+  //FLD_EXP_OBJ_AddUnit(p_wk->p_ex_obj, &Setup, MODEL_FLD_EXP_OBJ_UNIT_ID );
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -361,7 +451,7 @@ static MODEL * MODEL_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void MODEL_Exit( MODEL *p_wk )
 {
-  FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MODEL_FLD_EXP_OBJ_UNIT_ID );
+  //FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MODEL_FLD_EXP_OBJ_UNIT_ID );
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -375,7 +465,6 @@ static void MODEL_Main( MODEL *p_wk )
 {
   FLD_EXP_OBJ_PlayAnime( p_wk->p_ex_obj );
 }
-
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *    フォグでの影
@@ -414,24 +503,10 @@ struct _FOG_SHADOW
 //フォグ初期濃度
 static const u8 sc_start_fog_table[FIELD_FOG_TBL_MAX]  =
 {
-  /*
-  0x7,0x9,0xb,0xe,0x10,0x12,0x15,0x17,
-  0x1a,0x1d,0x20,0x23,0x26,0x29,0x2c,0x2e,
-  0x31,0x34,0x37,0x3a,0x3d,0x40,0x43,0x47,
-  0x4b,0x50,0x54,0x59,0x5d,0x61,0x66,0x67,
-  */
-
-  /*
-  0x15,0x17,0x19,0x1b,0x1d,0x1f,0x20,0x22,
-  0x24,0x26,0x28,0x2a,0x2c,0x2e,0x30,0x32,
-  0x34,0x36,0x39,0x3b,0x3d,0x3f,0x41,0x43,
-  0x46,0x48,0x4b,0x4d,0x4f,0x53,0x58,0x5a,
-*/
-  
-  0x9,0xb,0xd,0xf,0x11,0x13,0x14,0x16,
-  0x18,0x19,0x1b,0x1c,0x1e,0x20,0x21,0x23,
-  0x24,0x26,0x28,0x2b,0x2d,0x30,0x33,0x36,
-  0x38,0x3b,0x40,0x48,0x4f,0x57,0x64,0x70,
+  0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,
+  0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,
+  0x40,0x40,0x40,0x40,0x40,0x40,0x40,0x40,
+  0x40,0x40,0x40,0x40,0x40,0x40,0x40,0x40,
 
 };
 
@@ -466,9 +541,9 @@ static FOG_SHADOW* FOG_SHADOW_Init( FIELD_FOG_WORK* p_fog, const FIELD_PLAYER* c
 
   //フォグ初期設定
   FIELD_FOG_SetBlendMode( p_wk->p_fog, FIELD_FOG_BLEND_COLOR_ALPHA );
-  FIELD_FOG_SetSlope( p_wk->p_fog, FIELD_FOG_SLOPE_0x0020 );
+  FIELD_FOG_SetSlope( p_wk->p_fog, FIELD_FOG_SLOPE_0x0040 );
   FIELD_FOG_SetOffset( p_wk->p_fog, 0 );
-  FIELD_FOG_SetColorRgb( p_wk->p_fog, GX_RGB( 0,0,0 ) );
+  FIELD_FOG_SetColorRgb( p_wk->p_fog, GX_RGB( 0,0,0 ) );  //色はzonelightで設定される
   FIELD_FOG_SetTblAll( p_wk->p_fog, p_wk->fog_table );
   FIELD_FOG_SetFlag( p_wk->p_fog, TRUE );
 
@@ -596,6 +671,19 @@ static void FOG_SHADOW_SetPhaseRequest( FOG_SHADOW* p_wk, s32 phase )
   p_wk->is_next_phase = TRUE;
   p_wk->phase         = phase;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォグ影  影の表示設定
+ *
+ *	@param	FOG_SHADOW* p_wk  ワーク
+ *	@param	is_visible        TRUE表示  FALSE非表示
+ */
+//-----------------------------------------------------------------------------
+static void FOG_SHADOW_SetVisible( FOG_SHADOW* p_wk, BOOL is_visible )
+{
+  FIELD_FOG_SetFlag( p_wk->p_fog, is_visible );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  フォグ影デバッグ用  現在の設定テーブルを上書きセット
@@ -864,6 +952,7 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
   switch( *p_seq )
   {
   case SEQ_FADE_START:
+    ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, p_wk->phase );
     FOG_SHADOW_FadeOutRequest( p_wk->p_fog_shadow, FOG_SHADOW_FADE_SYNC );
     (*p_seq)++;
     break;
@@ -885,6 +974,37 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
 
   return GMEVENT_RES_CONTINUE;
 }
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *    セーブ情報
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントシーケンスを設定
+ *
+ *	@param	GYM_ELEC_SV_WORK *p_wk  ワーク
+ *	@param	seq   イベントシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void GYM_ELEC_SV_SetEventSeq( GYM_ELEC_SV_WORK *p_wk, u16 seq )
+{
+  p_wk->event_seq = seq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントシーケンスを取得
+ *
+ *	@param	const GYM_ELEC_SV_WORK *cp_wk   ワーク
+ *
+ *	@return イベントシーケンス
+ */
+//-----------------------------------------------------------------------------
+static u16 GYM_ELEC_SV_GetEventSeq( const GYM_ELEC_SV_WORK *cp_wk )
+{
+  return  cp_wk->event_seq;
+}
 #ifdef GYM_ELEC_DEBUG_MENU
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -895,20 +1015,23 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
 ///	const
 //=====================================
 #define DEBUGWIN_GYM_ELEC (4)
+#define DEBUGWIN_GYM_ELEC_SHADOW (5)
 
 //-------------------------------------
 ///	global
 //=====================================
-static int s_fog_move_flag  = 1;
+static int s_fog_move_flag    = 1;
 static int s_player_start_pos = 0;
-static int s_player_end_pos = 0;
+static int s_player_end_pos   = 0;
 static int s_fog_start_offset = 0;
-static int s_fog_end_offset = 0;
+static int s_fog_end_offset   = 0;
 
 //-------------------------------------
 ///	private
 //=====================================
 static BOOL DebugWin_Util_ChangeData( int *p_param, int min, int max );
+static void DebugWin_Update_EventSeq( void* userWork , DEBUGWIN_ITEM* item );
+static void DebugWin_Draw_EventSeq( void* userWork , DEBUGWIN_ITEM* item );
 static void DebugWin_Update_FogMoveFlag( void* userWork , DEBUGWIN_ITEM* item );
 static void DebugWin_Draw_FogMoveFlag( void* userWork , DEBUGWIN_ITEM* item );
 static void DebugWin_Update_PlayerStartPos( void* userWork , DEBUGWIN_ITEM* item );
@@ -923,16 +1046,18 @@ static void DebugWin_Draw_FogEndOffset( void* userWork , DEBUGWIN_ITEM* item );
 //----------------------------------------------------------------------------
 /**
  *	@brief  R+Yにデバッグメニュー追加
- *  @param  p_fog_shadow  フォグ影
+ *  @param  p_tmp         ギミックテンポラリワーク
  *	@param	HEAPID heapID 
  */
 //-----------------------------------------------------------------------------
-static void DEBUGMENU_Init( FOG_SHADOW *p_fog_shadow, HEAPID heapID )
+static void DEBUGMENU_Init( void *p_tmp_adrs, HEAPID heapID )
 {
+  GYM_ELEC_TMP  *p_tmp  = p_tmp_adrs;
+
   //フォグ影現在値を取得
   {
     FOG_SHADOW_INIT_SETUP_TBL setup;
-    FOG_SHADOW_DEBUG_GetSetupTbl( p_fog_shadow, &setup );
+    FOG_SHADOW_DEBUG_GetSetupTbl( p_tmp->p_fog_shadow, &setup );
     s_player_start_pos  = setup.player_start_pos;
     s_player_end_pos    = setup.player_end_pos;
     s_fog_start_offset  = setup.fog_start_offset;
@@ -941,36 +1066,43 @@ static void DEBUGMENU_Init( FOG_SHADOW *p_fog_shadow, HEAPID heapID )
 
   //デバッグメニューグループを追加
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GYM_ELEC , "でんきジム", heapID );
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GYM_ELEC_SHADOW, "かげ", DEBUGWIN_GYM_ELEC, heapID );
 
+  //シーケンス
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Update_EventSeq, 
+                                DebugWin_Draw_EventSeq, 
+                                p_tmp, 
+                                DEBUGWIN_GYM_ELEC, 
+                                heapID );
   //フォグ影移動フラグ
   DEBUGWIN_AddItemToGroupEx( DebugWin_Update_FogMoveFlag , 
                                 DebugWin_Draw_FogMoveFlag , 
-                                p_fog_shadow, 
-                                DEBUGWIN_GYM_ELEC, 
+                                p_tmp->p_fog_shadow, 
+                                DEBUGWIN_GYM_ELEC_SHADOW, 
                                 heapID );
   //フォグ影プレイヤー開始位置
   DEBUGWIN_AddItemToGroupEx( DebugWin_Update_PlayerStartPos , 
                                 DebugWin_Draw_PlayerStartPos , 
-                                p_fog_shadow, 
-                                DEBUGWIN_GYM_ELEC, 
+                                p_tmp->p_fog_shadow, 
+                                DEBUGWIN_GYM_ELEC_SHADOW, 
                                 heapID );
   //フォグ影プレイヤー終了位置
   DEBUGWIN_AddItemToGroupEx( DebugWin_Update_PlayerEndPos , 
                                 DebugWin_Draw_PlayerEndPos , 
-                                p_fog_shadow, 
-                                DEBUGWIN_GYM_ELEC, 
+                                p_tmp->p_fog_shadow, 
+                                DEBUGWIN_GYM_ELEC_SHADOW, 
                                 heapID );
   //フォグ影フォグ開始位置
   DEBUGWIN_AddItemToGroupEx( DebugWin_Update_FogStartOffset , 
                                 DebugWin_Draw_FogStartOffset , 
-                                p_fog_shadow, 
-                                DEBUGWIN_GYM_ELEC, 
+                                p_tmp->p_fog_shadow, 
+                                DEBUGWIN_GYM_ELEC_SHADOW, 
                                 heapID );
   //フォグ影フォグ終了位置
   DEBUGWIN_AddItemToGroupEx( DebugWin_Update_FogEndOffset , 
                                 DebugWin_Draw_FogEndOffset , 
-                                p_fog_shadow, 
-                                DEBUGWIN_GYM_ELEC, 
+                                p_tmp->p_fog_shadow, 
+                                DEBUGWIN_GYM_ELEC_SHADOW, 
                                 heapID );
 }
 
@@ -1034,7 +1166,49 @@ static BOOL DebugWin_Util_ChangeData( int *p_param, int min, int max )
     return FALSE;
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントシーケンス更新
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_EventSeq( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GYM_ELEC_TMP *p_tmp  = userWork;
+  int event_seq  = GYM_ELEC_SV_GetEventSeq( p_tmp->p_sv );
+  if( DebugWin_Util_ChangeData( &event_seq, 0, GYM_ELEC_EVENT_SEQ_MAX-1 ) )
+  {
+    GYM_ELEC_SV_SetEventSeq( p_tmp->p_sv, event_seq );
 
+    Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントシーケンス描画
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_EventSeq( void* userWork , DEBUGWIN_ITEM* item )
+{
+  static const char* sc_label[GYM_ELEC_EVENT_SEQ_MAX] =
+  {
+    "しょき",
+    "１かった",
+    "２かった",
+    "３かった",
+    "ボスかった",
+  };
+
+  GYM_ELEC_TMP *p_tmp  = userWork;
+  int event_seq  = GYM_ELEC_SV_GetEventSeq( p_tmp->p_sv );
+  DEBUGWIN_ITEM_SetNameV( item , "じょうたい[%s]", sc_label[event_seq] );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  フォグ影  動作フラグ更新

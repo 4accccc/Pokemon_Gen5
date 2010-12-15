@@ -6694,15 +6694,21 @@
 //--------------------------------------------------------------
 /**
  * ジムコマンド　電気ジム初期化
+ * @param seqには以下の定義を入れてください
+ * GYM_ELEC_EVENT_SEQ_START        //初期状態
+ * GYM_ELEC_EVENT_SEQ_TR01_BTL_END //一人目に勝った
+ * GYM_ELEC_EVENT_SEQ_TR02_BTL_END //二人目に勝った
+ * GYM_ELEC_EVENT_SEQ_TR03_BTL_END //三人目に勝った
+ * GYM_ELEC_EVENT_SEQ_BOSS_BTL_END //ジムリーダーに勝った
+ * GYM_ELEC_EVENT_SEQ_MAX          //スクリプトでは使用禁止
  */
 //--------------------------------------------------------------
-#define _GYM_ELEC_INIT( evt1, evt2 ) \
-    _ASM_GYM_ELEC_INIT evt1, evt2
+#define _GYM_ELEC_INIT( seq ) \
+    _ASM_GYM_ELEC_INIT seq
 
-  .macro  _ASM_GYM_ELEC_INIT evt1, evt2
+  .macro  _ASM_GYM_ELEC_INIT seq
   .short  EV_SEQ_GYM_ELEC_INIT
-  .short  \evt1
-  .short  \evt2
+  .short  \seq
   .endm
 
 //--------------------------------------------------------------
@@ -6724,7 +6730,8 @@
 //--------------------------------------------------------------
 /**
  * @brief ジムコマンド　影のフェードアウトイベント開始
- * @param  phase  一人目に勝利のとき：1　二人目に勝利のとき：2
+ * @param  phase  一人目に勝利のとき：1
+ *                二人目に勝利のとき：2
  */
 //--------------------------------------------------------------
 #define _GYM_ELEC_CALL_FADEOUT_EVENT( phase ) \
@@ -6749,14 +6756,14 @@
 
 //--------------------------------------------------------------
 /**
- * ジムコマンド　電気ジム環境ＳＥ初期化（セーブ復帰用）
+ * ジムコマンド　電気ジムセーブ復帰処理
  */
 //--------------------------------------------------------------
-#define _GYM_ELEC_INIT_SE() \
-    _ASM_GYM_ELEC_INIT_SE
+#define _GYM_ELEC_RECOVER() \
+    _ASM_GYM_ELEC_RECOVER
 
-  .macro  _ASM_GYM_ELEC_INIT_SE
-  .short  EV_SEQ_GYM_ELEC_INIT_SE
+  .macro  _ASM_GYM_ELEC_RECOVER
+  .short  EV_SEQ_GYM_ELEC_RECOVER
   .endm
  
 //--------------------------------------------------------------
