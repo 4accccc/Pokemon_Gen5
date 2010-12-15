@@ -45,13 +45,13 @@ FS_EXTERN_OVERLAY(field_gym_init);
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
 {
-  u16 *evt1,*evt2;
+  u16 seq;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  evt1 = SCRCMD_GetVMWork( core, work );
+  seq = SCRCMD_GetVMWorkValue( core, work );
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
-  GYM_INIT_Elec(gsys, *evt1 );
+  GYM_INIT_Elec(gsys, seq );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;

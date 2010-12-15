@@ -46,9 +46,15 @@
 //=====================================
 typedef enum
 {
-  MODELID_SPOTLIGHT,
+  MODELID_SPOTLIGHT_START,
+  MODELID_SPOTLIGHT_00  = MODELID_SPOTLIGHT_START,
+  MODELID_SPOTLIGHT_01,
+  MODELID_SPOTLIGHT_02,
+  MODELID_SPOTLIGHT_END = MODELID_SPOTLIGHT_02,
 
-  MODELID_MAX
+  MODELID_MAX,
+
+  MODELID_SPOTLIGHT_NUM = MODELID_SPOTLIGHT_END - MODELID_SPOTLIGHT_START + 1,
 }MODELID;
 
 typedef struct _MODEL_MANAGER MODEL_MANAGER;
@@ -92,15 +98,14 @@ static void FOG_SHADOW_DEBUG_GetSetupTbl( const FOG_SHADOW *cp_wk, FOG_SHADOW_IN
 //-------------------------------------
 ///	スポットライト
 //=====================================
-typedef struct _SPOT_LIGHT SPOT_LIGHT;
+typedef struct _SPOT_LIGHT_SET SPOT_LIGHT_SET;
 
-static SPOT_LIGHT* SPOT_LIGHT_Init( const MMDLSYS *cp_mmdlsys, MODEL_MANAGER *p_model_man, HEAPID heapID );
-static void SPOT_LIGHT_Exit( SPOT_LIGHT* p_wk );
-static void SPOT_LIGHT_Main( SPOT_LIGHT* p_wk );
+static SPOT_LIGHT_SET* SPOT_LIGHT_SET_Init( u16 light_max, const MMDLSYS *cp_mmdlsys, MODEL_MANAGER *p_model_man, u16 start_idx, HEAPID heapID );
+static void SPOT_LIGHT_SET_Exit( SPOT_LIGHT_SET* p_wk );
+static void SPOT_LIGHT_SET_Main( SPOT_LIGHT_SET* p_wk );
 
-static void SPOT_LIGHT_SetVisible( SPOT_LIGHT *p_wk, BOOL is_visible );
-static void SPOT_LIGHT_SetTarget( SPOT_LIGHT *p_wk, u16 objID );
-static void SPOT_LIGHT_ResetTarget( SPOT_LIGHT *p_wk );
+static void SPOT_LIGHT_SET_Register( SPOT_LIGHT_SET *p_wk, u16 objID );
+static void SPOT_LIGHT_SET_UnRegister( SPOT_LIGHT_SET *p_wk, u16 objID );
 
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
@@ -143,7 +148,7 @@ static void DEBUGMENU_Exit( void );
 typedef struct 
 {
   FOG_SHADOW      *p_fog_shadow;  //フォグ影
-  SPOT_LIGHT      *p_spot_light;  //スポットライト管理
+  SPOT_LIGHT_SET      *p_spot_light;  //スポットライト管理
   MODEL_MANAGER   *p_model_man;   //モデル管理
   ISS_SWITCH_SYS  *p_iss_switch;  //スイッチiss
   GYM_ELEC_SV_WORK *p_sv;         //ギミックセーブワーク
@@ -227,7 +232,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
   //スポットライト作成
   {
     const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys(p_fieldmap);
-    p_tmp->p_spot_light = SPOT_LIGHT_Init( cp_mmdlsys, p_tmp->p_model_man, heapID );
+    p_tmp->p_spot_light = SPOT_LIGHT_SET_Init( MODELID_SPOTLIGHT_NUM, cp_mmdlsys, p_tmp->p_model_man, MODELID_SPOTLIGHT_START, heapID );
   }
 
   //セーブワークの状態に環境を整える
@@ -254,7 +259,7 @@ void GYM_ELEC_End(FIELDMAP_WORK *p_fieldmap)
   DEBUGMENU_Exit();
 #endif 
   //スポットライト破棄
-  SPOT_LIGHT_Exit( p_tmp->p_spot_light );
+  SPOT_LIGHT_SET_Exit( p_tmp->p_spot_light );
 
   //フォグ影破棄
   FOG_SHADOW_Exit( p_tmp->p_fog_shadow );
@@ -282,7 +287,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *p_fieldmap)
   FOG_SHADOW_Main( p_tmp->p_fog_shadow );
 
   //スポットライトメイン
-  SPOT_LIGHT_Main( p_tmp->p_spot_light );
+  SPOT_LIGHT_SET_Main( p_tmp->p_spot_light );
 
   //モデル管理メイン
   MODEL_MANAGER_Main( p_tmp->p_model_man );
@@ -351,15 +356,12 @@ void GYM_ELEC_SetSpotLight( FIELDMAP_WORK *p_fieldmap, BOOL is_visible, u16 objI
 
   if( is_visible )
   {
-    SPOT_LIGHT_SetTarget( p_tmp->p_spot_light, objID );
+    SPOT_LIGHT_SET_Register( p_tmp->p_spot_light, objID );
   }
   else
   {
-    SPOT_LIGHT_ResetTarget( p_tmp->p_spot_light );
+    SPOT_LIGHT_SET_UnRegister( p_tmp->p_spot_light, objID );
   }
-
-  SPOT_LIGHT_SetVisible( p_tmp->p_spot_light, is_visible );
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -491,7 +493,23 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
 //3Dオブジェクト設定
 static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
 {
-  //MODELID_SPOTLIGHT トレーナー用スポットライト
+  //MODELID_SPOTLIGHT_00 トレーナー用スポットライト
+  {
+    MODEL_RESID_SPOTLIGHT01_IMD, 	//モデルリソースID
+		0, 							              //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_SPOTLIGHT01_IMD, 	//テクスチャリソースID
+		NULL,			                    //アニメテーブル(複数指定のため)
+		0,	                          //アニメリソース数
+  },
+  //MODELID_SPOTLIGHT_01 トレーナー用スポットライト
+  {
+    MODEL_RESID_SPOTLIGHT01_IMD, 	//モデルリソースID
+		0, 							              //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_SPOTLIGHT01_IMD, 	//テクスチャリソースID
+		NULL,			                    //アニメテーブル(複数指定のため)
+		0,	                          //アニメリソース数
+  },
+  //MODELID_SPOTLIGHT_02 トレーナー用スポットライト
   {
     MODEL_RESID_SPOTLIGHT01_IMD, 	//モデルリソースID
 		0, 							              //モデルデータID(リソース内部INDEX)
@@ -875,33 +893,64 @@ static void FOG_SHADOW_DEBUG_SetMoveFlag( FOG_SHADOW *p_wk, BOOL is_move )
 //-------------------------------------
 ///	定数
 //=====================================
+typedef struct
+{
+  const MMDL    *cp_target;
+  MODEL         *p_model;
+  BOOL          is_use;
+} SPOT_LIGHT;
 
 //-------------------------------------
 ///	ワーク
 //=====================================
-struct _SPOT_LIGHT
+struct _SPOT_LIGHT_SET
 {
   const MMDLSYS *cp_mmdlsys;
-  const MMDL    *cp_target;
-  MODEL         *p_spotlight;
+  u16 search_idx;
+  u16 light_max;
+  SPOT_LIGHT  light[0];
 };
+
+//-------------------------------------
+///	private
+//=====================================
+//スポットライトを取得
+static SPOT_LIGHT * Spot_Light_Set_SearchByObjID( SPOT_LIGHT_SET *p_wk, u16 objID );
+static SPOT_LIGHT * Spot_Light_Set_SearchEmpty( SPOT_LIGHT_SET *p_wk );
+
+//スポットライト操作
+static void Spot_Light_Init( SPOT_LIGHT *p_wk, MODEL *p_model );
+static void Spot_Light_Main( SPOT_LIGHT *p_wk );
+static void Spot_Light_Register( SPOT_LIGHT *p_wk, const MMDL *cp_target );
+static void Spot_Light_UnRegister( SPOT_LIGHT *p_wk );
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  スポットライト  作成
- *
+ *  
+ *  @param  light_max       ライト最大数
  *	@param	MMDLSYS         *p_mmdlsys  モデルシステム
  *	@param  MODEL_MANAGER   *p_model_man  ギミック用モデル管理
+ *	@param  start_idx       ギミック用モデルに登録されているライトの開始位置（そこからライト最大数分読み込みます）
  *	@param	heapID          ヒープID
  *
  *	@return ワークハンドル
  */
 //-----------------------------------------------------------------------------
-static SPOT_LIGHT* SPOT_LIGHT_Init( const MMDLSYS *cp_mmdlsys, MODEL_MANAGER *p_model_man, HEAPID heapID )
+static SPOT_LIGHT_SET* SPOT_LIGHT_SET_Init( u16 light_max, const MMDLSYS *cp_mmdlsys, MODEL_MANAGER *p_model_man, u16 start_idx, HEAPID heapID )
 {
-  SPOT_LIGHT  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(SPOT_LIGHT) );
+  SPOT_LIGHT_SET  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(SPOT_LIGHT_SET) + sizeof(SPOT_LIGHT)*light_max );
   p_wk->cp_mmdlsys  = cp_mmdlsys;
-  p_wk->p_spotlight = MODEL_MANAGER_GetModel( p_model_man, MODELID_SPOTLIGHT );
+  p_wk->light_max   = light_max;
+  {
+    int i;
+    for( i = 0; i < light_max; i++ )
+    {
+      SPOT_LIGHT *p_light  = &p_wk->light[i];
+      MODEL *p_model  = MODEL_MANAGER_GetModel( p_model_man, MODELID_SPOTLIGHT_00+i );
+      Spot_Light_Init( p_light, p_model );
+    }
+  }
 
   return p_wk;
 }
@@ -909,10 +958,10 @@ static SPOT_LIGHT* SPOT_LIGHT_Init( const MMDLSYS *cp_mmdlsys, MODEL_MANAGER *p_
 /**
  *	@brief  スポットライト  破棄
  *
- *	@param	SPOT_LIGHT* p_wk ワーク
+ *	@param	SPOT_LIGHT_SET* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void SPOT_LIGHT_Exit( SPOT_LIGHT* p_wk )
+static void SPOT_LIGHT_SET_Exit( SPOT_LIGHT_SET* p_wk )
 {
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -920,52 +969,159 @@ static void SPOT_LIGHT_Exit( SPOT_LIGHT* p_wk )
 /**
  *	@brief  スポットライト  メイン処理
  *
- *	@param	SPOT_LIGHT* p_wk ワーク
+ *	@param	SPOT_LIGHT_SET* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void SPOT_LIGHT_Main( SPOT_LIGHT* p_wk )
+static void SPOT_LIGHT_SET_Main( SPOT_LIGHT_SET* p_wk )
+{
+  int i;
+  for( i = 0; i < p_wk->light_max; i++ )
+  {
+    SPOT_LIGHT *p_light  = &p_wk->light[i];
+    Spot_Light_Main( p_light );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スポットライト  登録
+ *
+ *	@param	SPOT_LIGHT_SET *p_wk  ワーク
+ *	@param	objID   オブジェクトID
+ */
+//-----------------------------------------------------------------------------
+static void SPOT_LIGHT_SET_Register( SPOT_LIGHT_SET *p_wk, u16 objID )
+{
+  SPOT_LIGHT *p_light = Spot_Light_Set_SearchByObjID( p_wk, objID );
+
+  //登録済みがなかったら登録
+  if( p_light == NULL )
+  {
+    p_light = Spot_Light_Set_SearchEmpty( p_wk );
+
+    Spot_Light_Register( p_light, MMDLSYS_SearchOBJID( p_wk->cp_mmdlsys, objID ) );
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スポットライト  解除
+ *
+ *	@param	SPOT_LIGHT_SET *p_wk  ワーク
+ *	@param	objID   オブジェクトID
+ */
+//-----------------------------------------------------------------------------
+static void SPOT_LIGHT_SET_UnRegister( SPOT_LIGHT_SET *p_wk, u16 objID )
+{
+  SPOT_LIGHT *p_light = Spot_Light_Set_SearchByObjID( p_wk, objID );
+
+  //登録済みがあったら登録解除
+  if( p_light != NULL )
+  {
+    Spot_Light_UnRegister( p_light );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  objIDからスポットライトを取得
+ *
+ *	@param	SPOT_LIGHT_SET *p_wk  ワーク
+ *	@param	objID   オブジェクトID
+ *
+ *	@return スポットライト
+ */
+//-----------------------------------------------------------------------------
+static SPOT_LIGHT * Spot_Light_Set_SearchByObjID( SPOT_LIGHT_SET *p_wk, u16 objID )
+{
+  int i;
+  for( i = 0; i < p_wk->light_max; i++ )
+  {
+    SPOT_LIGHT  *p_light  = &p_wk->light[i];
+    if( p_light->cp_target != NULL && MMDL_GetOBJID( p_light->cp_target ) == objID )
+    {
+      return p_light;
+    }
+  }
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空のスポットライトを取得
+ *
+ *	@param	SPOT_LIGHT_SET *p_wk  ワーク
+ *
+ *	@return スポットライト
+ */
+//-----------------------------------------------------------------------------
+static SPOT_LIGHT * Spot_Light_Set_SearchEmpty( SPOT_LIGHT_SET *p_wk )
+{
+  int i;
+  for( i = 0; i < p_wk->light_max; i++ )
+  {
+    SPOT_LIGHT  *p_light  = &p_wk->light[i];
+    if( p_light->is_use == FALSE )
+    {
+      return p_light;
+    }
+  }
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライト初期化
+ *
+ *	@param	SPOT_LIGHT *p_wk  ワーク
+ *	@param	*p_model          ライトで使用するモデル
+ */
+//-----------------------------------------------------------------------------
+static void Spot_Light_Init( SPOT_LIGHT *p_wk, MODEL *p_model )
+{
+  GFL_STD_MemClear( p_wk, sizeof(SPOT_LIGHT) );
+  p_wk->p_model = p_model;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライトメイン処理
+ *
+ *	@param	SPOT_LIGHT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Spot_Light_Main( SPOT_LIGHT *p_wk )
 {
   if( p_wk->cp_target != NULL )
   {
     VecFx32 pos;
     MMDL_GetVectorPos( p_wk->cp_target, &pos );
-    MODEL_SetTrans( p_wk->p_spotlight, &pos );
+    MODEL_SetTrans( p_wk->p_model, &pos );
   }
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  スポットライト  表示設定
+ *	@brief  ターゲットを登録
  *
  *	@param	SPOT_LIGHT *p_wk  ワーク
- *	@param	visible           TRUE表示ON　  FALSE表示OFF
+ *	@param	MMDL *cp_target   ターゲット  (NULLでもOK)
  */
 //-----------------------------------------------------------------------------
-static void SPOT_LIGHT_SetVisible( SPOT_LIGHT *p_wk, BOOL is_visible )
+static void Spot_Light_Register( SPOT_LIGHT *p_wk, const MMDL *cp_target )
 {
-  MODEL_SetVisible( p_wk->p_spotlight, is_visible );
+  p_wk->cp_target = cp_target;
+  p_wk->is_use  = TRUE;
+  MODEL_SetVisible( p_wk->p_model, TRUE );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  スポットライト  スポットライトをあてるOBJIDを設定
- *
- *	@param	SPOT_LIGHT *p_wk  ワーク
- *	@param	objID             スポットライトを当てるターゲットOBJID
- */
-//-----------------------------------------------------------------------------
-static void SPOT_LIGHT_SetTarget( SPOT_LIGHT *p_wk, u16 objID )
-{
-  p_wk->cp_target  = MMDLSYS_SearchOBJID( p_wk->cp_mmdlsys, objID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  スポットライト  スポットライトを当てるターゲットを消去
+ *	@brief  登録解除
  *
  *	@param	SPOT_LIGHT *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void SPOT_LIGHT_ResetTarget( SPOT_LIGHT *p_wk )
+static void Spot_Light_UnRegister( SPOT_LIGHT *p_wk )
 {
+  MODEL_SetVisible( p_wk->p_model, FALSE );
   p_wk->cp_target = NULL;
+  p_wk->is_use    = FALSE;
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
