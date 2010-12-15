@@ -65,25 +65,18 @@ VMCMD_RESULT EvCmdGymElec_Recover( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk )
 {
-  u8 sw_idx;
+  u16 on_off;
+  u16 objID;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 
-  sw_idx = VMGetU16( core );
+  on_off  = VMGetU16( core );
+  objID   = VMGetU16( core );
 
-  /*
-  call_event = GYM_ELEC_ChangePoint(gsys, sw_idx);
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );
-  */
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
+  GYM_ELEC_SetSpotLight( fieldWork, on_off, objID );
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -96,7 +89,6 @@ VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdGymElec_CallFadeoutEvent( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   u8 phase  = VMGetU16( core );
   GMEVENT *event  = GYM_ELEC_CreateFadeoutEvent( gsys, phase );
@@ -107,6 +99,7 @@ VMCMD_RESULT EvCmdGymElec_CallFadeoutEvent( VMHANDLE *core, void *wk )
   }
   else
   {
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     SCRIPT_CallEvent( sc, event );
     //イベントコールするので、一度制御を返す
     return VMCMD_RESULT_SUSPEND;

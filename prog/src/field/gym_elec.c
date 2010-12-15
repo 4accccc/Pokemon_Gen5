@@ -38,17 +38,29 @@
 
 //=============================================================================
 /**
- *    前方宣言
+ *    クラス前方宣言
  */
 //=============================================================================
 //-------------------------------------
 ///	モデル管理
 //=====================================
+typedef enum
+{
+  MODELID_SPOTLIGHT,
+
+  MODELID_MAX
+}MODELID;
+
+typedef struct _MODEL_MANAGER MODEL_MANAGER;
 typedef struct _MODEL MODEL;
 
-static MODEL * MODEL_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID );
-static void MODEL_Exit( MODEL *p_wk );
-static void MODEL_Main( MODEL *p_wk );
+static MODEL_MANAGER * MODEL_MANAGER_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID );
+static void MODEL_MANAGER_Exit( MODEL_MANAGER *p_wk );
+static void MODEL_MANAGER_Main( MODEL_MANAGER *p_wk );
+
+static MODEL * MODEL_MANAGER_GetModel( MODEL_MANAGER *p_wk, MODELID modelID );
+static void MODEL_SetVisible( MODEL *p_wk, BOOL is_visible );
+static void MODEL_SetTrans( MODEL *p_wk, const VecFx32 * cp_trans );
 
 //-------------------------------------
 ///	フォグでの影管理
@@ -82,12 +94,13 @@ static void FOG_SHADOW_DEBUG_GetSetupTbl( const FOG_SHADOW *cp_wk, FOG_SHADOW_IN
 //=====================================
 typedef struct _SPOT_LIGHT SPOT_LIGHT;
 
-static SPOT_LIGHT* SPOT_LIGHT_Init( const MMDLSYS *cp_mmdlsys, HEAPID heapID );
+static SPOT_LIGHT* SPOT_LIGHT_Init( const MMDLSYS *cp_mmdlsys, MODEL_MANAGER *p_model_man, HEAPID heapID );
 static void SPOT_LIGHT_Exit( SPOT_LIGHT* p_wk );
 static void SPOT_LIGHT_Main( SPOT_LIGHT* p_wk );
 
-static void SPOT_LIGHT_SetVisible( SPOT_LIGHT *p_wk, BOOL visible );
+static void SPOT_LIGHT_SetVisible( SPOT_LIGHT *p_wk, BOOL is_visible );
 static void SPOT_LIGHT_SetTarget( SPOT_LIGHT *p_wk, u16 objID );
+static void SPOT_LIGHT_ResetTarget( SPOT_LIGHT *p_wk );
 
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
@@ -131,7 +144,7 @@ typedef struct
 {
   FOG_SHADOW      *p_fog_shadow;  //フォグ影
   SPOT_LIGHT      *p_spot_light;  //スポットライト管理
-  MODEL           *p_model;       //モデル管理
+  MODEL_MANAGER   *p_model_man;   //モデル管理
   ISS_SWITCH_SYS  *p_iss_switch;  //スイッチiss
   GYM_ELEC_SV_WORK *p_sv;         //ギミックセーブワーク
 }GYM_ELEC_TMP;
@@ -150,16 +163,16 @@ static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK
 static const FOG_SHADOW_INIT_SETUP_TBL  sc_fogshadow_init_tbl[] =
 {
   {
-    680,
-    600,
+    968,
+    872,
     32647,
     32624,
   },
   {
+    872,
     600,
-    456,
-    32665,
-    32628,
+    32690,
+    32631,
   },
   {
     456,
@@ -201,7 +214,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
   //モデル管理作成
   {
     FLD_EXP_OBJ_CNT_PTR p_ex_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-    p_tmp->p_model  = MODEL_Init( p_ex_obj, heapID );
+    p_tmp->p_model_man  = MODEL_MANAGER_Init( p_ex_obj, heapID );
   }
 
   //フォグ影作成
@@ -209,6 +222,12 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
     FIELD_FOG_WORK  *p_fog  = FIELDMAP_GetFieldFog(p_fieldmap);
     const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer(p_fieldmap);
     p_tmp->p_fog_shadow = FOG_SHADOW_Init( p_fog, cp_player, sc_fogshadow_init_tbl, NELEMS(sc_fogshadow_init_tbl), 0, heapID );
+  }
+
+  //スポットライト作成
+  {
+    const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys(p_fieldmap);
+    p_tmp->p_spot_light = SPOT_LIGHT_Init( cp_mmdlsys, p_tmp->p_model_man, heapID );
   }
 
   //セーブワークの状態に環境を整える
@@ -234,12 +253,14 @@ void GYM_ELEC_End(FIELDMAP_WORK *p_fieldmap)
   //デバッグ破棄
   DEBUGMENU_Exit();
 #endif 
+  //スポットライト破棄
+  SPOT_LIGHT_Exit( p_tmp->p_spot_light );
 
   //フォグ影破棄
   FOG_SHADOW_Exit( p_tmp->p_fog_shadow );
 
   //モデル管理破棄
-  MODEL_Exit( p_tmp->p_model );
+  MODEL_MANAGER_Exit( p_tmp->p_model_man );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
@@ -260,8 +281,12 @@ void GYM_ELEC_Move(FIELDMAP_WORK *p_fieldmap)
   //フォグ影メイン
   FOG_SHADOW_Main( p_tmp->p_fog_shadow );
 
+  //スポットライトメイン
+  SPOT_LIGHT_Main( p_tmp->p_spot_light );
+
   //モデル管理メイン
-  MODEL_Main( p_tmp->p_model );
+  MODEL_MANAGER_Main( p_tmp->p_model_man );
+
 }
 
 //----------------------------------------------------------------------------
@@ -322,6 +347,19 @@ GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, s16 phase )
 //-----------------------------------------------------------------------------
 void GYM_ELEC_SetSpotLight( FIELDMAP_WORK *p_fieldmap, BOOL is_visible, u16 objID )
 {
+  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
+
+  if( is_visible )
+  {
+    SPOT_LIGHT_SetTarget( p_tmp->p_spot_light, objID );
+  }
+  else
+  {
+    SPOT_LIGHT_ResetTarget( p_tmp->p_spot_light );
+  }
+
+  SPOT_LIGHT_SetVisible( p_tmp->p_spot_light, is_visible );
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -402,26 +440,74 @@ static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK
 //-------------------------------------
 ///	定数
 //=====================================
-#define MODEL_FLD_EXP_OBJ_UNIT_ID (0)
+#define MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID (0)
+
+enum
+{
+  MODEL_RESID_SPOTLIGHT01_IMD,
+  MODEL_RESID_MAX,
+};
+
+enum
+{
+  MODEL_ANMID_MAX,
+};
 
 //-------------------------------------
 ///	ワーク
 //=====================================
+//モデル操作ワーク
 struct _MODEL
 {
+  s32                 unitID;
+  MODELID             modelID;
+  EXP_OBJ_ANM_CNT_PTR p_anm_cnt;
   FLD_EXP_OBJ_CNT_PTR p_ex_obj;
+};
+//モデル管理ワーク
+struct _MODEL_MANAGER
+{
+  FLD_EXP_OBJ_CNT_PTR p_ex_obj;
+  MODEL model[MODELID_MAX];
 };
 //-------------------------------------
 ///	データ
 //=====================================
-static const GFL_G3D_UTIL_SETUP Setup = {
-  0
-  /*
-  g3Dutil_resTbl,				//リソーステーブル
-	NELEMS(g3Dutil_resTbl),		//リソース数
-	g3Dutil_objTbl,				//オブジェクト設定テーブル
-	NELEMS(g3Dutil_objTbl),		//オブジェクト数
-  */
+//リソース設定
+static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
+{
+  //MODEL_RESID_SPOTLIGHT01_IMD  トレーナー用スポットライトモデル
+  {
+    ARCID_GYM_ELEC, NARC_gym_elec_c4g_spot01_nsbmd, GFL_G3D_UTIL_RESARC
+  },
+};
+
+//アニメ設定
+//今はない
+/*static const GFL_G3D_UTIL_ANM g3Dutil sc_g3d_util_anm[] = 
+{
+}*/
+
+//3Dオブジェクト設定
+static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
+{
+  //MODELID_SPOTLIGHT トレーナー用スポットライト
+  {
+    MODEL_RESID_SPOTLIGHT01_IMD, 	//モデルリソースID
+		0, 							              //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_SPOTLIGHT01_IMD, 	//テクスチャリソースID
+		NULL,			                    //アニメテーブル(複数指定のため)
+		0,	                          //アニメリソース数
+  },
+};
+
+//全情報設定
+static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
+{
+  sc_g3d_util_res,  //リソーステーブル
+  MODEL_RESID_MAX,  //リソース最大数
+  sc_g3d_util_obj,  //オブジェクトテーブル
+  MODELID_MAX,      //オブジェクト数
 };
 
 //----------------------------------------------------------------------------
@@ -434,36 +520,96 @@ static const GFL_G3D_UTIL_SETUP Setup = {
  *	@return ワークハンドル
  */
 //-----------------------------------------------------------------------------
-static MODEL * MODEL_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID )
+static MODEL_MANAGER * MODEL_MANAGER_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID )
 {
-  MODEL *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(MODEL));
+  MODEL_MANAGER *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(MODEL_MANAGER));
   p_wk->p_ex_obj  = p_ex_obj;
 
-  //FLD_EXP_OBJ_AddUnit(p_wk->p_ex_obj, &Setup, MODEL_FLD_EXP_OBJ_UNIT_ID );
+  //読込み
+  FLD_EXP_OBJ_AddUnit(p_wk->p_ex_obj, &sc_g3d_util_setup, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
+  
+  //モデル初期化
+  {
+    int i;
+    for( i = 0; i < MODELID_MAX; i++ )
+    {
+      MODEL *p_model    = MODEL_MANAGER_GetModel( p_wk, i );
+      p_model->unitID   = MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID;
+      p_model->modelID  = i;
+      p_model->p_ex_obj = p_ex_obj;
+    }
+  }
+
+
   return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  モデル管理  破棄
  *
- *	@param	MODEL *p_wk ワーク
+ *	@param	MODEL_MANAGER *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void MODEL_Exit( MODEL *p_wk )
+static void MODEL_MANAGER_Exit( MODEL_MANAGER *p_wk )
 {
-  //FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MODEL_FLD_EXP_OBJ_UNIT_ID );
+  //破棄
+  FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
+
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  モデル管理  メイン処理
  *
- *	@param	MODEL *p_wk ワーク
+ *	@param	MODEL_MANAGER *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void MODEL_Main( MODEL *p_wk )
+static void MODEL_MANAGER_Main( MODEL_MANAGER *p_wk )
 {
   FLD_EXP_OBJ_PlayAnime( p_wk->p_ex_obj );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル管理  モデル１つを取得
+ *
+ *	@param	MODEL_MANAGER *p_wk   管理ワーク
+ *	@param	modelID               モデルID
+ *
+ *	@return モデル
+ */
+//-----------------------------------------------------------------------------
+static MODEL * MODEL_MANAGER_GetModel( MODEL_MANAGER *p_wk, MODELID modelID )
+{
+  GF_ASSERT( modelID < MODELID_MAX );
+  return &p_wk->model[ modelID ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル操作  表示設定
+ *
+ *	@param	MODEL *p_wk ワーク
+ *	@param	is_visible  TRUEで表示FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_SetVisible( MODEL *p_wk, BOOL is_visible )
+{
+  FLD_EXP_OBJ_SetVanish( p_wk->p_ex_obj,
+      p_wk->unitID, p_wk->modelID, !is_visible );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル操作  位置設定
+ *
+ *	@param	MODEL *p_wk ワーク
+ *	@param	VecFx32 * cp_trans  表示位置
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_SetTrans( MODEL *p_wk, const VecFx32 * cp_trans )
+{
+  GFL_G3D_OBJSTATUS *p_status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_ex_obj,
+                                                p_wk->unitID,
+                                                p_wk->modelID );
+  p_status->trans = *cp_trans;
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -606,7 +752,7 @@ static void FOG_SHADOW_Main( FOG_SHADOW* p_wk )
       * (cp_info->fog_start_offset - cp_info->fog_end_offset)
       / (cp_info->player_start_pos - cp_info->player_end_pos);
 
-    offset  = MATH_IMax( offset, 0 );
+    offset  = MATH_CLAMP( offset, 0, 0x7FFF );
 
     FIELD_FOG_SetOffset( p_wk->p_fog, offset );
   }
@@ -736,23 +882,26 @@ static void FOG_SHADOW_DEBUG_SetMoveFlag( FOG_SHADOW *p_wk, BOOL is_move )
 struct _SPOT_LIGHT
 {
   const MMDLSYS *cp_mmdlsys;
-  MMDL * p_target;
+  const MMDL    *cp_target;
+  MODEL         *p_spotlight;
 };
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  スポットライト  作成
  *
- *	@param	MMDLSYS *p_mmdlsys  モデルシステム
- *	@param	heapID              ヒープID
+ *	@param	MMDLSYS         *p_mmdlsys  モデルシステム
+ *	@param  MODEL_MANAGER   *p_model_man  ギミック用モデル管理
+ *	@param	heapID          ヒープID
  *
  *	@return ワークハンドル
  */
 //-----------------------------------------------------------------------------
-static SPOT_LIGHT* SPOT_LIGHT_Init( const MMDLSYS *cp_mmdlsys, HEAPID heapID )
+static SPOT_LIGHT* SPOT_LIGHT_Init( const MMDLSYS *cp_mmdlsys, MODEL_MANAGER *p_model_man, HEAPID heapID )
 {
   SPOT_LIGHT  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(SPOT_LIGHT) );
   p_wk->cp_mmdlsys  = cp_mmdlsys;
+  p_wk->p_spotlight = MODEL_MANAGER_GetModel( p_model_man, MODELID_SPOTLIGHT );
 
   return p_wk;
 }
@@ -776,8 +925,11 @@ static void SPOT_LIGHT_Exit( SPOT_LIGHT* p_wk )
 //-----------------------------------------------------------------------------
 static void SPOT_LIGHT_Main( SPOT_LIGHT* p_wk )
 {
-  if( p_wk->p_target != NULL )
+  if( p_wk->cp_target != NULL )
   {
+    VecFx32 pos;
+    MMDL_GetVectorPos( p_wk->cp_target, &pos );
+    MODEL_SetTrans( p_wk->p_spotlight, &pos );
   }
 }
 //----------------------------------------------------------------------------
@@ -788,8 +940,9 @@ static void SPOT_LIGHT_Main( SPOT_LIGHT* p_wk )
  *	@param	visible           TRUE表示ON　  FALSE表示OFF
  */
 //-----------------------------------------------------------------------------
-static void SPOT_LIGHT_SetVisible( SPOT_LIGHT *p_wk, BOOL visible )
+static void SPOT_LIGHT_SetVisible( SPOT_LIGHT *p_wk, BOOL is_visible )
 {
+  MODEL_SetVisible( p_wk->p_spotlight, is_visible );
 }
 //----------------------------------------------------------------------------
 /**
@@ -801,7 +954,18 @@ static void SPOT_LIGHT_SetVisible( SPOT_LIGHT *p_wk, BOOL visible )
 //-----------------------------------------------------------------------------
 static void SPOT_LIGHT_SetTarget( SPOT_LIGHT *p_wk, u16 objID )
 {
-  p_wk->p_target  = MMDLSYS_SearchOBJID( p_wk->cp_mmdlsys, objID );
+  p_wk->cp_target  = MMDLSYS_SearchOBJID( p_wk->cp_mmdlsys, objID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スポットライト  スポットライトを当てるターゲットを消去
+ *
+ *	@param	SPOT_LIGHT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SPOT_LIGHT_ResetTarget( SPOT_LIGHT *p_wk )
+{
+  p_wk->cp_target = NULL;
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
