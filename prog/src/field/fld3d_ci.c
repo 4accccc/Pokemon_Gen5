@@ -260,6 +260,7 @@ typedef struct {
   RES_SETUP_DAT SetupDat;
   BOOL ObjPause;
   BOOL IsWhiteOut;
+  BOOL FogFlag;
 }FLD3D_CI_EVENT_WORK;
 
 static void SetupResource(GMEVENT* event, FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
@@ -908,6 +909,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       //フォグをオフにする
       {
         FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( fieldmap );
+        evt_work->FogFlag = FIELD_FOG_GetFlag( fog );
         FIELD_FOG_SetFlag( fog, FALSE );
       }
       (*seq)++;
@@ -1071,7 +1073,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //フォグをオン
     {
       FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( fieldmap );
-      FIELD_FOG_SetFlag( fog, TRUE );
+      FIELD_FOG_SetFlag( fog, evt_work->FogFlag );
     }
 
     (*seq)++;
