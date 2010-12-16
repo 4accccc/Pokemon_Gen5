@@ -71,8 +71,6 @@ static void MODEL_SetTrans( MODEL *p_wk, const VecFx32 * cp_trans );
 //-------------------------------------
 ///	フォグでの影管理
 //=====================================
-#define FOG_SHADOW_FADE_SYNC  (60)
-
 typedef struct 
 {
   s32 player_start_pos;
@@ -83,7 +81,7 @@ typedef struct
 
 typedef struct _FOG_SHADOW FOG_SHADOW;
 
-static FOG_SHADOW* FOG_SHADOW_Init( FIELD_FOG_WORK* p_fog, const FIELD_PLAYER* cp_player, const FOG_SHADOW_INIT_SETUP_TBL *cp_tbl, s32 tbl_max, s32 phase, HEAPID heapID );
+static FOG_SHADOW* FOG_SHADOW_Init( FIELD_FOG_WORK* p_fog, const FIELD_CAMERA* cp_camera, const FOG_SHADOW_INIT_SETUP_TBL *cp_tbl, s32 tbl_max, s32 phase, HEAPID heapID );
 static void FOG_SHADOW_Exit( FOG_SHADOW* p_wk );
 static void FOG_SHADOW_Main( FOG_SHADOW* p_wk );
 static void FOG_SHADOW_FadeOutRequest( FOG_SHADOW* p_wk, s16 sync );
@@ -110,12 +108,18 @@ static void SPOT_LIGHT_SET_UnRegister( SPOT_LIGHT_SET *p_wk, u16 objID );
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
 //=====================================
-static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow );
+//static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow );
 
 //-------------------------------------
 ///	フェードアウト(影がなくなる演出)
 //=====================================
-static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, s16 phase );
+typedef enum
+{
+  FADEOUT_PHASE_FRONT,  //手前が消えて、中間が出現
+  FADEOUT_PHASE_MIDDLE, //中間が消えて、奥が出現
+  FADEOUT_PHASE_BACK,   //奥が消える
+}FADEOUT_PHASE;
+static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FADEOUT_PHASE phase );
 
 //-------------------------------------
 ///	セーブ情報
@@ -225,8 +229,8 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
   //フォグ影作成
   {
     FIELD_FOG_WORK  *p_fog  = FIELDMAP_GetFieldFog(p_fieldmap);
-    const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer(p_fieldmap);
-    p_tmp->p_fog_shadow = FOG_SHADOW_Init( p_fog, cp_player, sc_fogshadow_init_tbl, NELEMS(sc_fogshadow_init_tbl), 0, heapID );
+    const FIELD_CAMERA* cp_camera = FIELDMAP_GetFieldCamera(p_fieldmap);
+    p_tmp->p_fog_shadow = FOG_SHADOW_Init( p_fog, cp_camera, sc_fogshadow_init_tbl, NELEMS(sc_fogshadow_init_tbl), 0, heapID );
   }
 
   //スポットライト作成
@@ -308,35 +312,42 @@ GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys )
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
 
-  return SHOWUP_CreateEvent( p_gamesys, p_tmp->p_fog_shadow );
+  //return SHOWUP_CreateEvent( p_gamesys, p_tmp->p_fog_shadow );
+  return NULL;
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  影フェードアウトイベント作成
  *
  *	@param	GAMESYS_WORK *gsys ゲームシステム
- *	@param  phase 影のフェイズ
+ *	@param  event_seq イベントシーケンス
  */
 //-----------------------------------------------------------------------------
-GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, s16 phase )
+GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, u16 event_seq )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
-  u16  event_seq = GYM_ELEC_SV_GetEventSeq( p_tmp->p_sv );
 
-  GF_ASSERT_MSG( phase == 1 || phase == 2, "phaseは1か2じゃないとだめです%d\n",phase );
-
-  //一人目と二人目に勝ったときしかこのイベントは反映しない
-  if( event_seq < GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
-  {
     //現在のフェイズを保存
-    GYM_ELEC_SV_SetEventSeq( p_tmp->p_sv, phase );
+  GYM_ELEC_SV_SetEventSeq( p_tmp->p_sv, event_seq );
 
-    //イベント作成
-    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, phase );
-  }
-  else
+  //よりイベントシーケンスを設定
+  switch( event_seq )
   {
+  case GYM_ELEC_EVENT_SEQ_START:
+    OS_TPrintf( "開始時はフェードしません\n" );
+    return NULL;
+  case GYM_ELEC_EVENT_SEQ_TR01_BTL_END:
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, FADEOUT_PHASE_FRONT );
+  case GYM_ELEC_EVENT_SEQ_TR02_BTL_END:
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, FADEOUT_PHASE_MIDDLE );
+  case GYM_ELEC_EVENT_SEQ_TR03_BTL_END:
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, FADEOUT_PHASE_BACK );
+  case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
+    OS_TPrintf( "ボス終了時はフェードしません\n" );
+    return NULL;
+  default:
+    GF_ASSERT( 0 );
     return NULL;
   }
 }
@@ -355,6 +366,7 @@ void GYM_ELEC_SetSpotLight( FIELDMAP_WORK *p_fieldmap, BOOL is_visible, u16 objI
 
   if( is_visible )
   {
+    PMSND_PlaySE( GYM_ELEC_SE_SPOTON );
     SPOT_LIGHT_SET_Register( p_tmp->p_spot_light, objID );
   }
   else
@@ -371,6 +383,8 @@ void GYM_ELEC_SetSpotLight( FIELDMAP_WORK *p_fieldmap, BOOL is_visible, u16 objI
 //-----------------------------------------------------------------------------
 void GYM_ELEC_Recover( FIELDMAP_WORK *p_fieldmap )
 {
+  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
+  Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
 }
 //=============================================================================
 /**
@@ -421,11 +435,12 @@ static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK
     ISS_SWITCH_SYS_SwitchOn( p_tmp->p_iss_switch, SWITCH_02 );
     break;
   case GYM_ELEC_EVENT_SEQ_TR03_BTL_END:
-    FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
-    /* カミツレイベントが起動した後になる */
+    FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
+    PMSND_PlayBGM( GYM_ELEC_BGM_BOSSAPPER );
     break;
   case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
+    PMSND_PlayBGM( GYM_ELEC_BGM_BOSSAPPER );
     break;
   default:
     GF_ASSERT( 0 );
@@ -643,7 +658,7 @@ static void MODEL_SetTrans( MODEL *p_wk, const VecFx32 * cp_trans )
 struct _FOG_SHADOW
 {
   FIELD_FOG_WORK* p_fog;
-  const FIELD_PLAYER* cp_player;
+  const FIELD_CAMERA* cp_camera;
 
   BOOL  is_fog_move;
   s32   phase;
@@ -658,6 +673,8 @@ struct _FOG_SHADOW
 
   const FOG_SHADOW_INIT_SETUP_TBL *cp_tbl;
   s32 tbl_max;
+
+  fx32  offset;
 };
 
 //-------------------------------------
@@ -677,7 +694,7 @@ static const u8 sc_start_fog_table[FIELD_FOG_TBL_MAX]  =
  *	@brief  フォグ影  作成
  *
  *  @param  p_fog   フォグ管理システム
- *  @param  cp_player プレイヤー情報
+ *  @param  cp_camera カメラ情報
  *	@param	const FOG_SHADOW_INIT_SETUP_TBL *cp_tbl 初期化構造体(メモリ勿体ないのでアドレスのみしか保存しません)
  *	@param	tbl_max 構造体の数
  *	@param	phase   開始フェーズ
@@ -686,13 +703,13 @@ static const u8 sc_start_fog_table[FIELD_FOG_TBL_MAX]  =
  *	@return ワークハンドル
  */
 //-----------------------------------------------------------------------------
-static FOG_SHADOW* FOG_SHADOW_Init( FIELD_FOG_WORK* p_fog, const FIELD_PLAYER* cp_player, const FOG_SHADOW_INIT_SETUP_TBL *cp_tbl, s32 tbl_max, s32 phase, HEAPID heapID )
+static FOG_SHADOW* FOG_SHADOW_Init( FIELD_FOG_WORK* p_fog, const FIELD_CAMERA* cp_camera, const FOG_SHADOW_INIT_SETUP_TBL *cp_tbl, s32 tbl_max, s32 phase, HEAPID heapID )
 {
   FOG_SHADOW  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FOG_SHADOW) );
 
   //使用モジュールの登録
   p_wk->p_fog     = p_fog;
-  p_wk->cp_player = cp_player;
+  p_wk->cp_camera = cp_camera;
 
   //設定情報の登録
   p_wk->cp_tbl  = cp_tbl;
@@ -752,7 +769,7 @@ static void FOG_SHADOW_Main( FOG_SHADOW* p_wk )
     p_wk->is_next_phase   = FALSE;
   }
 
-  //フォグがプレイヤーに合わせて動く処理
+  //フォグがカメラに合わせて動く処理
   if( p_wk->is_fog_move )
   {
     const FOG_SHADOW_INIT_SETUP_TBL *cp_info  = &p_wk->now_move_info;
@@ -760,11 +777,11 @@ static void FOG_SHADOW_Main( FOG_SHADOW* p_wk )
     VecFx32 target_pos;
     s32 offset;
 
-    FIELD_PLAYER_GetPos( p_wk->cp_player, &target_pos );
+    FIELD_CAMERA_GetTargetPos( p_wk->cp_camera, &target_pos);
     
-    //プレイヤー座標からオフセットを算出
+    //カメラターゲット座標からオフセットを算出
     offset  = cp_info->fog_start_offset
-      - ( cp_info->player_start_pos - (target_pos.z >> FX32_SHIFT))
+      - ( cp_info->player_start_pos - ((target_pos.z) >> FX32_SHIFT))
       * (cp_info->fog_start_offset - cp_info->fog_end_offset)
       / (cp_info->player_start_pos - cp_info->player_end_pos);
 
@@ -1126,6 +1143,7 @@ static void Spot_Light_UnRegister( SPOT_LIGHT *p_wk )
   p_wk->is_use    = FALSE;
 }
 
+#if 0
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *    ショーアップ
@@ -1141,7 +1159,6 @@ static void Spot_Light_UnRegister( SPOT_LIGHT *p_wk )
 typedef struct
 {
   FOG_SHADOW    *p_fog_shadow;
-  FIELD_CAMERA  *p_camera;
 }SHOWUP_EVENT_WORK;
 
 //-------------------------------------
@@ -1165,10 +1182,6 @@ static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_
   SHOWUP_EVENT_WORK *p_wk = GMEVENT_GetEventWork(p_event);
 
   p_wk->p_fog_shadow   = p_fog_shadow;
-  {
-    FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
-    p_wk->p_camera  = FIELDMAP_GetFieldCamera( p_fieldmap );
-  }
 
   return p_event;
 }
@@ -1188,20 +1201,6 @@ static GMEVENT_RESULT Showup_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adr
 {
   enum
   {
-    SEQ_CAMERA_INIT_START,
-    SEQ_CAMERA_INIT_WAIT,
-    SEQ_CAMERA_GO_START,
-    SEQ_CAMERA_GO_WAIT,
-
-    SEQ_CALL_SCRIPT,
-
-    SEQ_FADE_START,
-    SEQ_FADE_WAIT,
-
-    SEQ_CAMERA_COME_START,
-    SEQ_CAMERA_COME_WAIT,
-    SEQ_CAMERA_END,
-
     SEQ_END,
   };
 
@@ -1209,106 +1208,13 @@ static GMEVENT_RESULT Showup_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adr
 
   switch( *p_seq )
   {
-  //カメラ使用初期化
-  case SEQ_CAMERA_INIT_START:
-    //トレースをOFF
-    FIELD_CAMERA_StopTraceRequest(p_wk->p_camera);
-    (*p_seq)++;
-    break;
-
-  case SEQ_CAMERA_INIT_WAIT:
-    if( FIELD_CAMERA_CheckTrace(p_wk->p_camera) == FALSE )
-    {
-      FIELD_CAMERA_SetRecvCamParam(p_wk->p_camera);
-      FIELD_CAMERA_FreeTarget(p_wk->p_camera);
-      (*p_seq)++;
-    }
-    break;
-
-  //カメラカミツレへ
-  case SEQ_CAMERA_GO_START:
-    {
-
-      FLD_CAM_MV_PARAM param;
-      param.Core.AnglePitch = 0x2561;
-      param.Core.AngleYaw   = 0x0;
-      param.Core.Distance   = 0xe9*FX32_ONE;
-      param.Core.TrgtPos.x  = 0xF8*FX32_ONE;
-      param.Core.TrgtPos.y  = 0x48*FX32_ONE;
-      param.Core.TrgtPos.z  = 0x2b*FX32_ONE;
-      param.Chk.Shift = FALSE;
-      param.Chk.Pitch = TRUE;
-      param.Chk.Yaw   = TRUE;
-      param.Chk.Dist  = TRUE;
-      param.Chk.Fovy  = FALSE;
-      param.Chk.Pos   = TRUE;
-      FIELD_CAMERA_SetLinerParam(p_wk->p_camera, &param, 60);
-    }
-    (*p_seq)++;
-    break;
-
-  case SEQ_CAMERA_GO_WAIT:
-    if( FIELD_CAMERA_CheckMvFunc(p_wk->p_camera ) == FALSE )
-    {
-      (*p_seq)++;
-    }
-    break;
-
-  //カミツレ芝居
-  case SEQ_CALL_SCRIPT:
-    (*p_seq)++;
-    break;
-    
-  //フェードイベント
-  case SEQ_FADE_START:
-    FOG_SHADOW_FadeOutRequest( p_wk->p_fog_shadow, FOG_SHADOW_FADE_SYNC );
-    (*p_seq)++;
-    break;
-
-  case SEQ_FADE_WAIT:
-    if( FOG_SHADOW_IsFadeEnd( p_wk->p_fog_shadow ) )
-    {
-      FOG_SHADOW_SetVisible( p_wk->p_fog_shadow, FALSE );
-      (*p_seq)++;
-    }
-    break;
-
-  //カメラ主人公位置へ
-  case SEQ_CAMERA_COME_START:
-    {
-
-      FLD_CAM_MV_PARAM_CHK chk;
-      chk.Shift = TRUE;
-      chk.Pitch = TRUE;
-      chk.Yaw = TRUE;
-      chk.Dist = TRUE;
-      chk.Fovy = TRUE;
-      chk.Pos = TRUE;
-      FIELD_CAMERA_RecvLinerParam(p_wk->p_camera, &chk, 60);
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_CAMERA_COME_WAIT:
-    if( FIELD_CAMERA_CheckMvFunc(p_wk->p_camera ) == FALSE )
-    {
-      (*p_seq)++;
-    }
-    break;
-
-  //カメラ使用終了
-  case SEQ_CAMERA_END:
-    FIELD_CAMERA_ClearRecvCamParam(p_wk->p_camera);
-    FIELD_CAMERA_BindDefaultTarget(p_wk->p_camera);
-    FIELD_CAMERA_RestartTrace(p_wk->p_camera);
-    (*p_seq)++;
-    break;
-
   case SEQ_END:
     return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE;
 }
+#endif
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -1326,8 +1232,7 @@ typedef struct
 {
   FOG_SHADOW      *p_fog_shadow;
   ISS_SWITCH_SYS  *p_iss_switch;
-  s16 phase;
-  s16 dummy;
+  FADEOUT_PHASE   phase;
 }FADEOUT_EVENT_WORK;
 
 //-------------------------------------
@@ -1347,7 +1252,7 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, s16 phase )
+static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FADEOUT_PHASE phase )
 {
   GMEVENT * p_event = GMEVENT_Create( p_gamesys, NULL, Fadeout_Event, sizeof(FADEOUT_EVENT_WORK) );
   FADEOUT_EVENT_WORK *p_wk = GMEVENT_GetEventWork(p_event);
@@ -1387,18 +1292,46 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
   switch( *p_seq )
   {
   case SEQ_FADE_START:
-    ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, p_wk->phase );
-    FOG_SHADOW_FadeOutRequest( p_wk->p_fog_shadow, FOG_SHADOW_FADE_SYNC );
+    PMSND_PlaySE( GYM_ELEC_SE_CHEER );
+    switch( p_wk->phase )
+    {
+    case FADEOUT_PHASE_FRONT:
+      ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, SWITCH_01 );
+      break;
+    case FADEOUT_PHASE_MIDDLE:
+      ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, SWITCH_02 );
+      break;
+    case FADEOUT_PHASE_BACK:
+      PMSND_PlayBGM( GYM_ELEC_BGM_BOSSAPPER );
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+    FOG_SHADOW_FadeOutRequest( p_wk->p_fog_shadow, FOG_SHADOW_FADE_FRAME );
     (*p_seq)++;
     break;
   case SEQ_FADE_WAIT:
-    if( FOG_SHADOW_IsFadeEnd( p_wk->p_fog_shadow ) )
+    if( FOG_SHADOW_IsFadeEnd( p_wk->p_fog_shadow ) && !PMSND_CheckPlayingSEIdx(GYM_ELEC_SE_CHEER ) )
     {
       (*p_seq)++;
     }
     break;
   case SEQ_FADE_RESET:
-    FOG_SHADOW_SetPhaseRequest( p_wk->p_fog_shadow, p_wk->phase );
+    switch( p_wk->phase )
+    {
+    case FADEOUT_PHASE_FRONT:
+      FOG_SHADOW_SetPhaseRequest( p_wk->p_fog_shadow, 1 );
+      break;
+    case FADEOUT_PHASE_MIDDLE:
+      FOG_SHADOW_SetPhaseRequest( p_wk->p_fog_shadow, 2 );
+      break;
+    case FADEOUT_PHASE_BACK:
+      //最後だけ次の影を呼ばず、影を完全に消す
+      FOG_SHADOW_SetVisible( p_wk->p_fog_shadow, FALSE );
+      break;
+    default:
+      GF_ASSERT(0);
+    }
     (*p_seq)++;
     break;
   case SEQ_END:
@@ -1550,7 +1483,6 @@ static void DEBUGMENU_Exit( void )
 {
   DEBUGWIN_RemoveGroup(DEBUGWIN_GYM_ELEC);
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  デバッグ数値入力汎用関数

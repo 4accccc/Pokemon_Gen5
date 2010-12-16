@@ -8,11 +8,8 @@
 //======================================================================
 #pragma once
 
-#define GYM_ELEC_SE_PUSH_SW  (SEQ_SE_FLD_24)  //スイッチ切り替え
-#define GYM_ELEC_SE_DRIVE  (SEQ_SE_FLD_25)    //走っているとき
-#define GYM_ELEC_SE_RISE  (SEQ_SE_FLD_26)     //昇り
-#define GYM_ELEC_SE_DROP  (SEQ_SE_FLD_27)     //下り
-#define GYM_ELEC_SE_CAP_OC  (SEQ_SE_FLD_22)   //カプセル開閉
-#define GYM_ELEC_SE_SPEED  (SEQ_SE_FLD_76)   //カプセル加速のときの音
-#define GYM_ELEC_SE_LOOP  (SEQ_SE_FLD_67)   //カプセル宙返り
+#define GYM_ELEC_SE_CHEER  (SEQ_SE_GYM_E01)  //歓声音
+#define GYM_ELEC_SE_CAMFLUSH  (SEQ_SE_GYM_E02)  //カメラフラッシュ音
+#define GYM_ELEC_SE_SPOTON  (SEQ_SE_GYM_E03)  //スポットライトON音
 
+#define GYM_ELEC_BGM_BOSSAPPER  (SEQ_BGM_ERECTRIC_GYM_02) //ボス登場

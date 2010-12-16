@@ -6730,8 +6730,14 @@
 //--------------------------------------------------------------
 /**
  * @brief ジムコマンド　影のフェードアウトイベント開始
- * @param  phase  一人目に勝利のとき：1
- *                二人目に勝利のとき：2
+ * @param  phase  以下の定義をいれてください。
+ *  GYM_ELEC_EVENT_SEQ_TR01_BTL_END //手前の影が消え、中間の影が出現
+ *  GYM_ELEC_EVENT_SEQ_TR02_BTL_END //中間の影が消え、奥の影が出現
+ *  GYM_ELEC_EVENT_SEQ_TR03_BTL_END //奥の影が消える（すべての影がなくなる）
+ *  
+ *  それ以外の以下の定義をいれても動作しません
+ * GYM_ELEC_EVENT_SEQ_START
+ * GYM_ELEC_EVENT_SEQ_BOSS_BTL_END
  */
 //--------------------------------------------------------------
 #define _GYM_ELEC_CALL_FADEOUT_EVENT( phase ) \
