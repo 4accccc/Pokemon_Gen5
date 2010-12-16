@@ -102,6 +102,7 @@ static void effReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id );
 static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haihu_f );
 static void effReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk );
 static void effReq_PopupMsgGPowerSpecial( BEACON_VIEW_PTR wk, GPOWER_ID sp_gpower_id );
+static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs );
 
 static void printReq_BmpwinPrint( BEACON_VIEW_PTR wk, BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct );
@@ -1932,7 +1933,10 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
 
   case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:
     return effReq_PopupMsgGPower( wk, info, TRUE );
-  
+
+  case GAMEBEACON_ACTION_FEST_MISSION:
+    return effReq_PopupMsgFMission( wk, info );
+
   case GAMEBEACON_ACTION_THANKYOU:
     //御礼を受けた回数インクリメント
     GAMEBEACON_Set_ThankyouOver( MISC_CrossComm_IncThanksRecvCount( wk->misc_sv ) );
@@ -2296,6 +2300,167 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     break;
   }
   BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
+  
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  メッセージウィンドウ フェスタミッション参加確認 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_WIN_FMISSION{
+  u8  seq;
+  u8  seq_next;
+  u8  wait;
+  u8  type;
+  u8  cancel_f;
+  u8  ret;
+  int child_task;
+
+  FEST_MISSION  mission;
+  GPOWER_ID  g_power;
+  u16 item_num;
+  u16 item_use;
+  u16 mypower_use;
+  u16 mypower_min;
+  u16 mypower_sec;
+  BEACON_VIEW_PTR bvp;
+  int* task_ct;
+}TASKWK_WIN_FMISSION;
+
+static void taskAdd_WinFMission( BEACON_VIEW_PTR wk, FEST_MISSION* fmwk, int* task_ct );
+static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* work);
+
+static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
+{
+  FEST_MISSION mission;
+  BOOL ret;
+
+  //セキュリティ
+  ret = GAMEBEACON_Get_Action_FestMission(info,&mission);
+  if( ret == FALSE ){
+    return FALSE;
+  }
+  //なにか別のミッションに参加中ならスルーする
+  if( FEST_MISSION_IsEntry( wk->fmwk ) ){
+    return FALSE;
+  }
+
+  GAMEBEACON_InfoWordset( info, wk->wordset, wk->tmpHeapID );
+  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
+  taskAdd_WinFMission( wk, &mission, &wk->eff_task_ct);
+  return TRUE;
+}
+
+/*
+ *  @brief  メッセージウィンドウ フェスタミッション参加確認タスク登録
+ */
+static void taskAdd_WinFMission( BEACON_VIEW_PTR wk, FEST_MISSION* fmwk, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_WIN_FMISSION* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinFMissionEntryCheck, sizeof(TASKWK_WIN_FMISSION), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_WIN_FMISSION ));
+
+  FEST_MISSION_Clear( &wk->ctrl.mission );
+
+  twk->bvp = wk;
+  twk->wait = POPUP_WAIT;
+  twk->mission = *fmwk; //ワークの中身コピー
+
+  BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
+  BeaconView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_OFF );
+  BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_OFF );
+  BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_OFF );
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_FMISSION* twk = (TASKWK_WIN_FMISSION*)tcb_wk;
+  BEACON_VIEW_PTR bvp = twk->bvp;
+  if( twk->child_task > 0 ){
+    return;
+  }
+
+  switch( twk->seq ){
+  case 0:
+    print_GetMsgToBuf( bvp, msg_sys_fmission_check );
+    print_PopupWindow( bvp, bvp->str_expand, &twk->child_task );
+    twk->seq++;
+    return;
+  case 1:
+    taskAdd_MsgUpdown( bvp, SCROLL_UP, &twk->child_task );
+    twk->seq++;
+    return;
+  case 2:
+    BeaconView_PrintQueLimmitUpSet( bvp, TRUE );
+    tmenu_Create( bvp, TMENU_ID_YESNO );
+    draw_ClearMenuWindow( bvp );
+    obj_MenuIconVisibleSet( bvp, FALSE );
+    twk->seq++;
+    return;
+  case 3: //選択待ち
+    {
+      int ret = tmenu_Update( bvp, TMENU_ID_YESNO );
+      if( ret < 0 ){
+        return;
+      }
+      twk->ret = ret;
+
+      switch( twk->ret){
+      case TMENU_YN_CHECK:
+        //ミッション内容を覚えておく
+        bvp->ctrl.mission = twk->mission;
+        BEACON_VIEW_SUB_EventReserve( bvp, EV_FMISSION_CHECK );
+        twk->seq = 3;
+        break;
+      case TMENU_YN_YES:
+        //ミッション内容を覚えておく
+        bvp->ctrl.mission = twk->mission;
+        BEACON_VIEW_SUB_EventReserve( bvp, EV_FMISSION_START );
+        twk->seq = 4;
+        break;
+      case TMENU_YN_NO:
+        twk->seq = 5;
+        break;
+      }
+    }
+    return;
+  case 4: //使うイベント待ち
+    if( bvp->ctrl.mission.id != FEST_MISSION_NULL ) {
+      //途中キャンセルされていたら、選択しなおし
+      FEST_MISSION_Clear( &bvp->ctrl.mission );
+      twk->seq = 3;
+    }else{
+      //正常に使えていれば、メニューを終了させる
+      tmenu_YnEnd( bvp );
+      twk->seq = 6;
+    }
+    return;
+  case 5: //キャンセル決定アニメ待ち
+    if( tmenu_YnEndWait( bvp, twk->ret )){
+      twk->seq++;
+    }
+    return;
+  case 6:
+    draw_MenuWindow( bvp, msg_sys_now_record, &twk->child_task );
+    obj_MenuIconVisibleSet( bvp, TRUE );
+    taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  default:
+    break;
+  }
+  BeaconView_MenuBarViewSet( bvp, MENU_ALL, MENU_ST_ON );
+  BeaconView_PrintQueLimmitUpSet( bvp, FALSE );
   
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);

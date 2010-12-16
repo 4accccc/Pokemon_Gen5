@@ -784,18 +784,16 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
             ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       case MENU_MISSION_START:
-        FEST_MISSION_Start( wk->fest_mission, FEST_MISSION_WILDBTL_WIN, MyStatus_GetID( wk->my_status ), 1,0,  1);
         {
-          OS_Printf("FldMsgBg %08x\n",FIELDMAP_GetFldMsgBG( wk->fieldmap ));
-        }
-        {
-          GMEVENT* mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
-            FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, wk->fieldmap );
+          GMEVENT* mission_ev;
+          FEST_MISSION mission;
+
+          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, MyStatus_GetID( wk->my_status ), 3, 1,0, 1);
+
+          mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
+            FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );
           
           GMEVENT_ChangeEvent(event, mission_ev);
-        }
-        {
-          OS_Printf("FldMsgBg %08x\n",FIELDMAP_GetFldMsgBG( wk->fieldmap ));
         }
         dmenu_WorkRelease( wk );
         return GMEVENT_RES_CONTINUE;

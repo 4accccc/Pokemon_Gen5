@@ -25,6 +25,7 @@
 #include "field/event_subscreen.h"
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
+#include "field/event_festmission.h"
 
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
@@ -143,6 +144,8 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   wk->fld_vreq = FIELDMAP_GetFldVReq(wk->fieldWork);
+  wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
+  wk->fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
   wk->subscreen = subscreen;
  
   wk->heap_sID = HEAPID_FIELD_SUBSCREEN;
@@ -365,6 +368,21 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     call_event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
               NAMEIN_FREE_WORD, BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status ) );
     event = event_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_HELLO );
+    break;
+  
+  case EV_FMISSION_START:
+    {
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &wk->ctrl.mission );
+    }
+    event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_YES].work) );
+    FEST_MISSION_Clear( &wk->ctrl.mission );
+    break;
+  
+  case EV_FMISSION_CHECK:
+    call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+        FS_OVERLAY_ID( event_fmission), EVENT_FestMissionCheck, &wk->ctrl.mission );
+    event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_CHECK].work) );
     break;
 
 #ifdef PM_DEBUG

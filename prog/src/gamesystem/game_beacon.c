@@ -1480,6 +1480,7 @@ void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* mission )
   info->action.fmission.reward = mission->reward;
   info->action.fmission.key = mission->key;
   info->action.fmission.my_score = mission->my_score;
+  info->action.fmission.life = mission->life;
 
   {
     int i;

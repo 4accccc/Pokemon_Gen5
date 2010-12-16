@@ -74,35 +74,43 @@ typedef struct FMISSIN_EVWORK{
   POWER_CONV_DATA* p_data;
 
   LINK_FESTIVAL* fest_sys;
-  FEST_MISSION* mission;
+  FEST_MISSION mission;
 
+  BOOL result;
   STRBUF* s_buf;
   STRBUF* s_tmp;
 }FMISSIN_EVWORK;
 
 static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, void * work);
 static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void * work);
+static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, void * work);
 static void sub_InitFMissionWork( FMISSIN_EVWORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap );
 static void sub_ReleaseFMissionWork( FMISSIN_EVWORK* wk );
 static void sub_FMissionParamDraw( FMISSIN_EVWORK* wk, STRBUF* str, u8 line );
 static void sub_FMissionStartParamDraw( FMISSIN_EVWORK* wk );
 static void sub_FMissionEndParamDraw( FMISSIN_EVWORK* wk );
+static void sub_FMissionCheckParamDraw( FMISSIN_EVWORK* wk );
 
 /*
  *  @brief  フェスタミッション発動イベント
  *
- *  @param  work  FIELDMAP_WORK*
+ *  @param  work  FEST_MISSION*
  */
 GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   FMISSIN_EVWORK* wk;
-  FIELDMAP_WORK* fieldmap = (FIELDMAP_WORK*)work;
+  const FEST_MISSION* fmwk = (FEST_MISSION*)work;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
   event = GMEVENT_Create(gsys, NULL, event_FestMissionStartMain, sizeof(FMISSIN_EVWORK));
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
+
+  //ミッションパラメータ取得
+  wk->mission = *fmwk; 
+
   return event;
 }
 
@@ -121,6 +129,37 @@ GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work )
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
+
+  //現ミッションパラメータを取得
+  {
+    FEST_MISSION* fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
+    wk->mission = *fmwk;
+
+    wk->result = FEST_MISSION_IsSuccess( fmwk );
+  }
+  return event;
+}
+
+/*
+ *  @brief  フェスタミッション内容確認イベント
+ *
+ *  @param  work  FEST_MISSION*
+ */
+GMEVENT* EVENT_FestMissionCheck( GAMESYS_WORK * gsys, void* work )
+{
+  GMEVENT* event;
+  FMISSIN_EVWORK* wk;
+  const FEST_MISSION* fmwk = (FEST_MISSION*)work;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  event = GMEVENT_Create(gsys, NULL, event_FestMissionCheckMain, sizeof(FMISSIN_EVWORK));
+  wk = GMEVENT_GetEventWork(event);
+
+  sub_InitFMissionWork( wk, gsys, fieldmap );
+  
+  //ミッションパラメータ取得
+  wk->mission = *fmwk; 
+
   return event;
 }
 
@@ -136,7 +175,6 @@ static void sub_InitFMissionWork( FMISSIN_EVWORK* wk, GAMESYS_WORK * gsys, FIELD
   wk->mmdl_sys = FIELDMAP_GetMMdlSys( wk->fieldmap );
 
   wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
-  wk->mission = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
 
   wk->p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
   wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
@@ -203,6 +241,8 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
     }
     break;
   default:
+    FEST_MISSION_Start( LINK_FESTIVAL_GetMissionWork( wk->fest_sys ), (const FEST_MISSION*)&wk->mission );
+
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
     sub_ReleaseFMissionWork( wk );
@@ -213,7 +253,7 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
 
 //-----------------------------------------------------------------
 /*
- *  @brief  フェスタミッション発動メイン
+ *  @brief  フェスタミッション終了メイン
  */
 //-----------------------------------------------------------------
 static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void * work)
@@ -245,7 +285,7 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
     }
     break;
   default:
-    FEST_MISSION_End( wk->mission );
+    FEST_MISSION_End( LINK_FESTIVAL_GetMissionWork( wk->fest_sys ) );
 
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
@@ -257,16 +297,70 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
 
 //-----------------------------------------------------------------
 /*
+ *  @brief  フェスタミッション　パラメータチェックメイン
+ */
+//-----------------------------------------------------------------
+static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, void * work)
+{
+  FMISSIN_EVWORK* wk = work;
+
+  switch (*seq) {
+  case 0:
+    wk->winStream = FLDSYSWIN_STREAM_Add( wk->fmb, wk->msgData, SYSMSG_WIN_SX );
+    FLDSYSWIN_STREAM_PrintStart( wk->winStream, 0, 0, msg_fmission_check );
+    (*seq)++;
+    break;
+  case 1:
+    if( !FLDSYSWIN_STREAM_Print( wk->winStream )){
+      break;
+    }
+    FLDSYSWIN_STREAM_Delete( wk->winStream );
+    (*seq)++;
+    break;
+  case 2:
+    wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
+    FLDSYSWIN_ClearWindow( wk->win );
+    sub_FMissionCheckParamDraw( wk );
+    (*seq)++;
+    break;
+  case 3:
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)){
+      (*seq)++;
+    }
+    break;
+  default:
+    FLDSYSWIN_ClearWindow( wk->win );
+    FLDSYSWIN_Delete( wk->win );
+    sub_ReleaseFMissionWork( wk );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------
+/*
+ *  @brief  ミッションパラメータ　ワードセット展開
+ */
+//-----------------------------------------------------------------
+static void sub_FMissionParamWordExpand( FMISSIN_EVWORK* wk )
+{
+//  IWASAWA_Printf("GPower %d Life = %d\n",g_power,time);
+  WORDSET_RegisterNumber( wk->wset, 0, wk->mission.time, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 1, wk->mission.prm[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 2, wk->mission.prm[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 3, wk->mission.reward, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 4, wk->mission.life/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 5, wk->mission.life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 6, /*wk->mission.my_score*/1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+}
+
+//-----------------------------------------------------------------
+/*
  *  @brief  ミッションパラメータ描画
  */
 //-----------------------------------------------------------------
 static void sub_FMissionParamDraw( FMISSIN_EVWORK* wk, STRBUF* str, u8 line )
 {
-//  IWASAWA_Printf("GPower %d Life = %d\n",g_power,time);
-  WORDSET_RegisterNumber( wk->wset, 0, wk->mission->time, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 1, wk->mission->prm[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 2, wk->mission->prm[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
   WORDSET_ExpandStr( wk->wset, wk->s_tmp, str );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX02, CWIN_STR_OY*line, wk->s_tmp );
 }
@@ -278,13 +372,22 @@ static void sub_FMissionParamDraw( FMISSIN_EVWORK* wk, STRBUF* str, u8 line )
 //-----------------------------------------------------------------
 static void sub_FMissionStartParamDraw( FMISSIN_EVWORK* wk )
 {
+  sub_FMissionParamWordExpand( wk );
+  
   //タイトル
   GFL_MSG_GetString( wk->msgData, msg_fmission_start_title, wk->s_buf );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
-  
+
   //パラメータ
-  GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission->id, wk->s_buf );
+  GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission.id, wk->s_buf );
   sub_FMissionParamDraw( wk, wk->s_buf, 2 );
+  
+  //残り時間
+  GFL_MSG_GetString( wk->msgData, msg_fmission_life, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 5 );
+  //報酬
+  GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 6 );
 }
 
 //-----------------------------------------------------------------
@@ -294,15 +397,48 @@ static void sub_FMissionStartParamDraw( FMISSIN_EVWORK* wk )
 //-----------------------------------------------------------------
 static void sub_FMissionEndParamDraw( FMISSIN_EVWORK* wk )
 {
+  sub_FMissionParamWordExpand( wk );
+  
   //タイトル
   GFL_MSG_GetString( wk->msgData, msg_fmission_end_title, wk->s_buf );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
   
-  GFL_MSG_GetString( wk->msgData, msg_fmission_success, wk->s_buf );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*2, wk->s_buf );
+  GFL_MSG_GetString( wk->msgData, msg_fmission_failed+wk->result, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 2 );
+  GFL_MSG_GetString( wk->msgData, msg_fmission_score, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 3 );
   
   //パラメータ
-  GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission->id, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 4 );
+  GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission.id, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 5 );
+  //報酬
+  GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 7 );
 }
+
+//-----------------------------------------------------------------
+/*
+ *  @brief  フェスタミッションパラメータ確認時　パラメータ描画
+ */
+//-----------------------------------------------------------------
+static void sub_FMissionCheckParamDraw( FMISSIN_EVWORK* wk )
+{
+  sub_FMissionParamWordExpand( wk );
+  
+  //タイトル
+  GFL_MSG_GetString( wk->msgData, msg_fmission_check_title, wk->s_buf );
+  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
+  
+  //パラメータ
+  GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission.id, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 2 );
+  
+  //残り時間
+  GFL_MSG_GetString( wk->msgData, msg_fmission_life, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 5 );
+  //報酬
+  GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, 6 );
+}
+
 

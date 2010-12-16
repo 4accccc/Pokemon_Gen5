@@ -16,6 +16,7 @@
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/g_power.h"
+#include "gamesystem/fest_mission.h"
 #include "net_app\union\union_beacon_tool.h"
 
 #include "app/townmap_data.h"
@@ -1189,6 +1190,39 @@ u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info)
   }
   GF_ASSERT(0);
   return GPOWER_ID_SOUGUU_INC_A;
+}
+
+//==================================================================
+/**
+ * フェスタミッションパラメータ取得：
+ * @param   info	ビーコン情報へのポインタ
+ * @param  FEST_MISSION*		データを格納するフェスタミッション構造体型ワークへのポインタ
+ *
+ * @retval  TRUE  データ取得成功
+ * @retval  FALSE データ取得失敗
+ */
+//==================================================================
+BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_MISSION* fmwk )
+{
+  int i;
+
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_FEST_MISSION:
+    FEST_MISSION_Clear(fmwk);
+    fmwk->id = info->action.fmission.id;
+    fmwk->time = info->action.fmission.time;
+    fmwk->key = info->action.fmission.key;
+    fmwk->life = info->action.fmission.life;
+    fmwk->my_score = info->action.fmission.my_score;
+    fmwk->reward = info->action.fmission.reward;
+  
+    for(i = 0;i < FMISSION_PARAM_MAX;i++){
+      fmwk->prm[i] = info->action.fmission.prm[i];
+    }
+    return TRUE;
+  }
+  GF_ASSERT(0);
+  return FALSE;
 }
 
 //==================================================================

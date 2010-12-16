@@ -35,10 +35,10 @@ void FEST_MISSION_Clear( FEST_MISSION* fmwk )
 
 //---------------------------------------------------------
 /*
- * @brief ミッション開始処理
+ * @brief ミッションパラメータセット
  */
 //---------------------------------------------------------
-void FEST_MISSION_Start( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 key, u16 param1, u16 param2, u32 time )
+void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 key, u32 reward, u16 param1, u16 param2, u32 time )
 {
   FEST_MISSION_Clear( fmwk );
   fmwk->id = id;
@@ -46,11 +46,26 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 key, u16 pa
   fmwk->time = time;
   fmwk->prm[0] = param1;
   fmwk->prm[1] = param2;
-  fmwk->reward = 3; //今適当な固定値
+  fmwk->reward = reward; //今適当な固定値
   fmwk->life = fmwk->time*60*60;
-
-  OS_TPrintf("フェスミッションスタート id=%d, key = %08x, prm1=%d, prm2=%d, time=%dmin\n",
+  
+  OS_TPrintf("フェスミッション パラメータセット id=%d, key = %08x, prm1=%d, prm2=%d, time=%dmin\n",
     id, key, param1, param2, time);
+}
+
+
+//---------------------------------------------------------
+/*
+ * @brief ミッション開始処理
+ */
+//---------------------------------------------------------
+void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src )
+{
+  FEST_MISSION_Clear( fmwk );
+  *fmwk = *src;
+
+  OS_TPrintf("フェスミッション スタート id=%d, key = %08x, prm1=%d, prm2=%d, time=%d min life=%d sec\n",
+    fmwk->id, fmwk->key, fmwk->prm[0], fmwk->prm[1], fmwk->time, fmwk->life/60);
 }
 
 //---------------------------------------------------------
@@ -117,6 +132,34 @@ BOOL FEST_MISSION_IsLive( FEST_MISSION* fmwk )
   return TRUE;
 }
 
+//---------------------------------------------------------
+/*
+ * @brief ミッションに参加しているか？
+ *
+ * @retval  TRUE   ミッション中
+ * @retval  FALSE  ミッション中でない
+ */
+//---------------------------------------------------------
+BOOL FEST_MISSION_IsEntry( FEST_MISSION* fmwk )
+{
+  return fmwk->id != FEST_MISSION_NULL;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief ミッションを達成したか？
+ *
+ * @retval  TRUE   成功 
+ * @retval  FALSE  失敗
+ */
+//---------------------------------------------------------
+BOOL FEST_MISSION_IsSuccess( FEST_MISSION* fmwk )
+{
+  if( fmwk->id == FEST_MISSION_NULL ){
+    return FALSE;
+  }
+  return ( fmwk->my_score >= fmwk->prm[0]);
+}
 
 //=================================================
 //以下デバッグルーチン

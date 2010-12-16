@@ -20,14 +20,19 @@ FS_EXTERN_OVERLAY( event_fmission );
 
 /*
  *  @brief  フェスタミッション発動イベント
- *
- *  @param  g_power 発動するフェスタミッションID
- *  @param  mine    自分のフェスタミッションかどうか？
+ *  @param  work  FEST_MISSION*
  */
 extern GMEVENT* EVENT_FestMissionStart(GAMESYS_WORK * gsys, void* work );
 
 /*
  *  @brief  フェスタミッション効果終了イベント
+ *  @param  work  FIELDMAP_WORK*
  */
 extern GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work );
+
+/*
+ *  @brief  フェスタミッション内容確認イベント
+ *  @param  work  FEST_MISSION*
+ */
+extern GMEVENT* EVENT_FestMissionCheck( GAMESYS_WORK * gsys, void* work );
 

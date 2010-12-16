@@ -12,6 +12,8 @@
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/beacon_status.h"
 #include "gamesystem/g_power.h"
+#include "gamesystem/link_festival.h"
+#include "gamesystem/fest_mission.h"
 #include "net/wih_dwc.h"
 #include "field/field_comm/intrude_work.h"
 #include "field/fld_vreq.h"
@@ -119,6 +121,7 @@ typedef struct _LOG_CTRL{
 
   u8  g_power;
   u8  mine_power_f;
+  FEST_MISSION mission; //フェスタミッション
 }LOG_CTRL;
 
 /*
@@ -144,6 +147,8 @@ typedef struct _BEACON_VIEW{
   MYITEM_PTR item_sv;
   GAME_COMM_SYS_PTR game_comm;
   WIFI_LIST*  wifi_list;
+  LINK_FESTIVAL*  fest_sys;
+  FEST_MISSION*  fmwk;
   POWER_CONV_DATA* gpower_data;
 
   ////////////////////////////////////////

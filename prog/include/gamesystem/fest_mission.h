@@ -38,10 +38,17 @@ extern void FEST_MISSION_Clear( FEST_MISSION* fmwk );
 
 //---------------------------------------------------------
 /*
+ * @brief ミッションパラメータセット
+ */
+//---------------------------------------------------------
+extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 key, u32 reward, u16 param1, u16 param2, u32 time );
+
+//---------------------------------------------------------
+/*
  * @brief ミッション開始処理
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_Start( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 key, u16 param1, u16 param2, u32 life );
+extern void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src );
 
 //---------------------------------------------------------
 /*
@@ -77,6 +84,24 @@ extern BOOL FEST_MISSION_IsEnd( FEST_MISSION* fmwk );
 //---------------------------------------------------------
 extern BOOL FEST_MISSION_IsLive( FEST_MISSION* fmwk );
 
+/*
+ * @brief ミッションに参加しているか？
+ *
+ * @retval  TRUE   ミッション中
+ * @retval  FALSE  ミッション中でない
+ */
+//---------------------------------------------------------
+extern BOOL FEST_MISSION_IsEntry( FEST_MISSION* fmwk );
+
+//---------------------------------------------------------
+/*
+ * @brief ミッションを達成したか？
+ *
+ * @retval  TRUE   成功 
+ * @retval  FALSE  失敗
+ */
+//---------------------------------------------------------
+extern BOOL FEST_MISSION_IsSuccess( FEST_MISSION* fmwk );
 
 //=================================================
 //以下デバッグルーチン

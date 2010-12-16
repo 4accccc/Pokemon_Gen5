@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-12-15T22:52:15"/>
+	<create user="iwasawa" host="W00157" date="2010-12-16T20:16:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -289,11 +289,7 @@
 
 
 	<row id="msg_fmission_start">
-		<comment>Ｇパワー使用時のメッセージ
-この後画面フラッシュ
-
-0：プレイヤー名
-1：デルパワー名</comment>
+		<comment>ミッション開始時プレメッセージ</comment>
 		<language name="JPN" width="256">フェスタミッションを　かいし　します[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">フェスタミッションを　開始します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -303,6 +299,14 @@
 じかんに　なりました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">フェスタミッションの　終了時間に
 なりました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_fmission_check">
+		<comment>ミッション内容確認時プレメッセージ</comment>
+		<language name="JPN" width="256">フェスタミッションの　ないようを
+かくにん　します[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フェスタミッションの　内容を
+確認します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_fmission_start_title">
@@ -320,14 +324,34 @@
 		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスタミッション終了</language>
 	</row>
 
-	<row id="msg_fmission_success">
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ミッションクリア</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ミッションクリア</language>
+	<row id="msg_fmission_check_title">
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]フェスタミッション　ないよう</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスタミッション内容</language>
 	</row>
 
 	<row id="msg_fmission_failed">
 		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ミッションしっぱい</language>
 		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ミッションしっぱい</language>
+	</row>
+
+	<row id="msg_fmission_success">
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ミッションクリア</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ミッションクリア</language>
+	</row>
+
+	<row id="msg_fmission_reward">
+		<language name="JPN" width="256">ほうしゅう　デルダマ[2:03:４桁:3]こ</language>
+		<language name="JPN_KANJI" width="256">報酬　デルダマ[2:03:４桁:3]こ</language>
+	</row>
+
+	<row id="msg_fmission_life">
+		<language name="JPN" width="256">のこりじかん　[2:03:４桁:4]ふん[2:01:２桁:5]びょう</language>
+		<language name="JPN_KANJI" width="256">残り時間　[2:03:４桁:4]分[2:01:２桁:5]秒</language>
+	</row>
+
+	<row id="msg_fmission_score">
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]スコア　[2:01:２桁:6]</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]スコア　[2:01:２桁:6]</language>
 	</row>
 
 	<row id="msg_fmission_exp00">
@@ -345,159 +369,6 @@
 ポケモンを　たおせ！</language>
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]分以内に　[2:01:２桁:1]匹の
 ポケモンを　倒せ！</language>
-	</row>
-
-	<row id="msg_fmission_01">
-		<comment>Ｇパワー使用時のメッセージ
-この後画面フラッシュ
-
-0：プレイヤー名
-1：デルパワー名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　デルパワー
-「[1:1C:簡易会話単語:2]」をつかった！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　デルパワー
-「[1:1C:簡易会話単語:2]」を使った！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_fmission_02_00">
-		<comment>一定時間たち、効果が切れたときのメッセージ
-同時に切れるパワーがもうない時
-
-0：プレイヤー名
-1：デルパワー名</comment>
-		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
-こうかが　きれた</language>
-		<language name="JPN_KANJI" width="256">「[1:1C:簡易会話単語:2]」の
-効果が　切れた</language>
-	</row>
-
-	<row id="msg_fmission_02_01">
-		<comment>一定時間たち、効果が切れたときのメッセージ
-同時に切れるパワーがまだあるとき
-
-0：プレイヤー名
-1：デルパワー名</comment>
-		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
-こうかが　きれた[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">「[1:1C:簡易会話単語:2]」の
-効果が　切れた[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_fmission_check_start" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>Gパワーの状態確認メッセージ</comment>
-		<language name="JPN" width="256">デルパワーの　じょうたいを
-かくにん　します[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">デルパワーの　状態を　確認します[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_fmission_check_label01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>Gパワーの状態確認ウィンドウメッセージ</comment>
-		<language name="JPN" width="256">[FF:00:色:2]せっていしているデルパワー</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:2]設定しているデルパワー</language>
-	</row>
-
-	<row id="msg_fmission_check_label02" back-color="#80ff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
-		<language name="JPN" width="256">[FF:00:色:2]はつどうちゅうのデルパワー</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:2]発動中のデルパワー</language>
-	</row>
-
-	<row id="msg_fmission_check_list01" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>0：デルパワー名
-</comment>
-		<language name="JPN" width="256">[1:1C:簡易会話単語:0]</language>
-		<language name="JPN_KANJI" width="256">[1:1C:簡易会話単語:0]</language>
-	</row>
-
-	<row id="msg_fmission_check_list02" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>0：デルパワー名
-1：効果残り時間(分)　0～59
-2：効果残り時間(秒)　0～59</comment>
-		<language name="JPN" width="256">[1:1C:簡易会話単語:0][BD:03:Ｘ右寄せ:0][2:01:２桁:1]：[2:01:２桁:2]</language>
-		<language name="JPN_KANJI" width="256">[1:1C:簡易会話単語:0][BD:03:Ｘ右寄せ:0][2:01:２桁:1]：[2:01:２桁:2]</language>
-	</row>
-
-	<row id="msg_fmission_effect_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンに
-そうぐうしやすくなった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンに
-遭遇しやすくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンに
-そうぐうしづらくなった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンに
-遭遇しづらくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">ポケモンが　タマゴから
-かえりやすくなった！</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　タマゴから
-かえりやすくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
-なつきやすくなった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
-なつきやすくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">フレンドリィショップで
-やすうりが　はじまった！</language>
-		<language name="JPN_KANJI" width="256">フレンドリィショップで
-安売りが　開始された！</language>
-	</row>
-
-	<row id="msg_fmission_effect_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
-たいりょくが　かいふくした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
-体力が　回復した！</language>
-	</row>
-
-	<row id="msg_fmission_effect_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
-ＰＰが　かいふくした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
-ＰＰが　回復した！</language>
-	</row>
-
-	<row id="msg_fmission_effect_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
-けいけんちを　もらいやすくなった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
-経験値を　もらいやすくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
-けいけんちを　もらいづらくなった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
-経験値を　もらいづらくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_10" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　おこづかいを
-もらいやすくなった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　おこづかいを
-もらいやすくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_11" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンを
-つかまえやすくなった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンを
-捕まえやすくなった！</language>
-	</row>
-
-	<row id="msg_fmission_effect_12" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
-みんな　げんきに　なった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
-みんな　元気に　なった！</language>
 	</row>
 
 	<flowchart-group-list>
