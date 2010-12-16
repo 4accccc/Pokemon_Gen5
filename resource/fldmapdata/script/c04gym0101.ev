@@ -31,6 +31,7 @@ _EVENT_DATA		ev_c04gym0101_trainer_03
 _EVENT_DATA		ev_c04gym0101_guide_01
 _EVENT_DATA		ev_bg_c04gym0101_statue_01
 _EVENT_DATA		ev_pos_c04gym0101_last
+_EVENT_DATA		ev_recover_c04gym0101
 _EVENT_DATA_END
 
 
@@ -105,19 +106,20 @@ INIT_EVENT_START	ev_init_c04gym0101
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
-		_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 6, 4, DIR_DOWN )
 	
 	//ジムクリア退場演出前
 	ELSIF $WK_SCENE_C04GYM0101_SHOW == 4 THEN
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
-		_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 6, 4, DIR_DOWN )
 	
 	//例外は初期状態に
 	ELSE
 		//全員初期位置
 	ENDIF
+	
 
 INIT_EVENT_END
 
@@ -195,13 +197,19 @@ ev_leader4_btl:
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		
+		//【仮】勝利したので演出をENDに
+		//_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
+	
+		//モデル達は全員下を向く
 		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_dir_d )
 		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_dir_d )
 		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_dir_d )
 		_OBJ_ANIME_WAIT()
-		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		
+		_TRAINER_WIN()
 	ELSE
-		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		_TRAINER_LOSE()
 	ENDIF
 
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
@@ -568,14 +576,8 @@ EVENT_START	ev_pos_c04gym0101_show3
 	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
 	
 	//========================================//
-	//【仮】このPOSの起動をさせなくする
+	//このPOSの起動をさせなくする
 	$WK_SCENE_C04GYM0101_SHOW = 3
-	//========================================//
-	
-	
-	//========================================//
-	//【仮】退場時のPOSを起動
-	$LOCALWORK15 = 1
 	//========================================//
 }
 
@@ -697,6 +699,7 @@ ev_swleader04_show:
 	//カミツレ一歩前に出て演技
 	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_show_anime )
 	_OBJ_ANIME_WAIT()
+	
 	
 	//影フェードアウトイベントを行う
 	_GYM_ELEC_CALL_FADEOUT_EVENT(  GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
