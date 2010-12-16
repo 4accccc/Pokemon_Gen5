@@ -10,6 +10,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
+#include "gamesystem/fest_mission.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
@@ -1450,6 +1451,45 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
   BEACONINFO_Set_Details_IntroductionPms(&GameBeaconSys->send.info, pms);
 }
 
+//==================================================================
+/**
+ * 送信ビーコンセット：フェスタミッション配布
+ *
+ * @param   FEST_MISSION		ミッションパラメータ
+ */
+//==================================================================
+void GAMEBEACON_Set_FestMission( FEST_MISSION* mission )
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FEST_MISSION) == FALSE){ return; };
+  BEACONINFO_Set_FestMission(&GameBeaconSys->send.info, mission);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：フェスタミッション配布
+ *
+ * @param   FEST_MISSION		ミッションパラメータ
+ */
+//==================================================================
+void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* mission )
+{
+  info->action.action_no = GAMEBEACON_ACTION_FEST_MISSION;
+  info->action.fmission.id = mission->id;
+  info->action.fmission.time = mission->time;
+  info->action.fmission.reward = mission->reward;
+  info->action.fmission.key = mission->key;
+  info->action.fmission.my_score = mission->my_score;
+
+  {
+    int i;
+
+    for(i = 0;i < FMISSION_PARAM_MAX;i++){
+      info->action.fmission.prm[i] = mission->prm[i];
+    }
+  }
+  BEACONINFO_Set_Details_Walk(info);
+}
 
 // 赤外線検出用
 #ifdef AMPROTECT_FUNC

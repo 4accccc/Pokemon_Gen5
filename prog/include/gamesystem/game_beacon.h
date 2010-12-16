@@ -10,6 +10,7 @@
 
 #include "buflen.h"
 #include "gamesystem/gamedata_def.h"
+#include "gamesystem/fest_mission.h"
 #include "print/wordset.h"
 #include "field/gpower_id.h"
 #include "gamesystem/playerwork.h"  //typedef ZONEID
@@ -90,10 +91,9 @@ typedef enum{
   GAMEBEACON_ACTION_OTHER_GPOWER_USE,         ///<他人のGパワーを使用                   48
   GAMEBEACON_ACTION_FREEWORD,                 ///<一言メッセージ                        49
   GAMEBEACON_ACTION_DISTRIBUTION_GPOWER,      ///<Gパワー配布                           50
-  
-//  GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
-//  GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
-//  GAMEBEACON_ACTION_ENCOUNT_DOWN,         ///<エンカウント率ダウン
+ 
+  //スワンで追加されたビーコン
+  GAMEBEACON_ACTION_FEST_MISSION,             ///<フェスタミッション受信                51
   
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
@@ -188,6 +188,9 @@ extern void GAMEBEACON_Set_Musical(const STRBUF *nickname);
 extern void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id);
 extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
 extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word);
+
+extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );
+
 
 //=====詳細パラメータセット
 extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata);

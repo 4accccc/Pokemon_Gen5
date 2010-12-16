@@ -74,8 +74,9 @@ NETWORKSRC =  net/net_icondata.c \
 				net/net_save.c \
 				net_app/pdw_account/pdwacc_mainproc.c \
         net_app/gds/gds_main.c \
-        gamesystem/g_power.c
-
+        gamesystem/g_power.c \
+        gamesystem/link_festival.c \
+        gamesystem/fest_mission.c
 
 #ica_anime camera はポケモン交換で使っていますので常駐においてあります k.ohno
 #常駐プログラム
@@ -1167,6 +1168,14 @@ SRCS_OVERLAY_FLD_FACEUP = field/fld_faceup.c
 # Gパワー関連イベント 
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_EVENT_GPOWER = field/event_gpower.c
+
+# フェスタミッション関連イベント 
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_EVENT_FMISSION = field/event_festmission.c
+
+#D_LINKFESTライブラリ
+#===> SRCS_OVERLAY_EVENT_FMISSION
+SRCS_OVERLAY_D_LINKFEST = field/event_debug_linkfest.c
 
 # サウンドデバッグ画面
 #===> GROUP_OVERLAY_UNION_INTRUDE

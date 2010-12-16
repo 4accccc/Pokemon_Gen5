@@ -10,7 +10,7 @@
 
 #include "gamesystem/game_beacon.h"
 #include "savedata/questionnaire_save.h"
-
+#include "gamesystem/fest_mission.h"
 
 //==============================================================================
 //  定数定義
@@ -68,7 +68,7 @@ typedef struct{
                                  //し、結果的に構造体全体のサイズを縮めている
 
   //action_noによってセットされるものが変わる
-  union{
+  union{  //最大20byteまで
     u16 tr_no;                              ///<トレーナー番号
     u16 itemno;                             ///<アイテム番号
     u16 wazano;                             ///<技番号
@@ -91,6 +91,15 @@ typedef struct{
       u16 target_trainer_id;                ///<対象相手のトレーナーID(下位16ビット)
     }thanks;
     STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
+    struct{ //4*5=20byte
+      u8  id;
+      u8  time;
+      u16 reward;
+      u16 prm[FMISSION_PARAM_MAX];
+      u32 key;
+      u32 life;
+      u32 my_score;
+    }fmission;
   };
 }GAMEBEACON_INFO_ACTION;
 

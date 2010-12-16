@@ -23,6 +23,7 @@ extern BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk );
 extern BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk );
 extern BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk );
+extern BOOL debugMenu_LinkFestival( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk );
 extern BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk );

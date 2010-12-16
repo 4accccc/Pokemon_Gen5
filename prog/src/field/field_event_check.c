@@ -31,6 +31,7 @@
 #include "event_battle.h"         //EVENT_Battle
 #include "event_beacon_detail.h"         //EVENT_BeaconDetail
 #include "event_gpower.h"         //EVENT_CheckGPower
+#include "event_festmission.h"         //EVENT_FestMissionEnd
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
 #include "rail_editor.h"
@@ -198,6 +199,7 @@ static GMEVENT* CheckSodateya(
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys );
+static GMEVENT* CheckFestMissionEnd( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork );
 static u8 getHatchCountUpdateValue( POKEPARTY* party );
 static void updateEggHatchCount( POKEPARTY* party );
 static void updatePartyEgg( GAMEDATA * gamedata, POKEPARTY* party );
@@ -692,6 +694,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 
 #ifdef BUGFIX_GFBTS1975_100713
   if( req.subscreenRequest && WIPE_SYS_EndCheck() ){
+    //フェスタミッション終了チェック
+    event = CheckFestMissionEnd( gsys, fieldWork );
+    if( event != NULL ){
+      return event;
+    }
     //Gパワー効果終了チェック
     event = CheckGPowerEffectEnd( gsys );
     if( event != NULL ){
@@ -699,6 +706,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
   }
 #else
+  //フェスタミッション終了チェック
+  event = CheckFestMissionEnd( gsys, fieldWork );
+  if( event != NULL ){
+    return event;
+  }
   //Gパワー効果終了チェック
   event = CheckGPowerEffectEnd( gsys );
   if( event != NULL ){
@@ -2085,6 +2097,22 @@ static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys )
     return NULL;
   }
   return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_gpower), EVENT_GPowerEffectEnd, NULL );
+}
+
+//--------------------------------------------------------------
+/**
+ * リアルタイムクロックによるフェスタミッション終了チェック
+ */
+//--------------------------------------------------------------
+static GMEVENT* CheckFestMissionEnd( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork )
+{
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
+  FEST_MISSION* mission = LINK_FESTIVAL_GetMissionWork( fest_sys );
+
+  if( FEST_MISSION_IsEnd( mission ) == FALSE ){
+    return NULL;
+  }
+  return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionEnd, fieldWork );
 }
 
 //======================================================================

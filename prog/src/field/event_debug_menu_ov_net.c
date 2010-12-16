@@ -44,6 +44,7 @@
 #include "event_debug_menu.h"
 #include "field_debug.h" 
 #include "event_debug_livecomm.h"
+#include "event_debug_linkfest.h"
 #include "event_debug_beacon.h"
 #include "event_debug_menu_intrude.h"   // for DEBUG_EVENT_FLDMENU_Intrude
 
@@ -362,6 +363,22 @@ BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　リンクフェスティバルデバッグ 
+ * @param wk  DEBUG_MENU_EVENT_WORK*  ワーク
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+BOOL debugMenu_LinkFestival( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT* event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( d_linkfest ), DEBUG_EVENT_LinkFestFromField, NULL );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  return TRUE;
+}
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー　ミッションリスト再作成

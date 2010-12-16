@@ -17,6 +17,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/iss_sys.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/link_festival.h"
 
 #include "gamesystem/game_init.h"
 
@@ -421,7 +422,8 @@ struct _GAMESYS_WORK {
   void * comm_infowin;    ///<INFOWIN通信ワーク
 
   ISS_SYS * iss_sys;    // ISSシステム
-  
+  LINK_FESTIVAL* fest_sys;  ///<リンクフェスティバルシステム
+
   u8 field_comm_error_req;      ///<TRUE:フィールドでの通信エラー画面表示リクエスト
   u8 do_event;    ///< イベント動作チェック
   u8 comm_off_event_flag;     ///<通信不許可イベントフラグ
@@ -452,6 +454,7 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
   gsys->game_comm = GameCommSys_Alloc(gsys->heapID, gsys->gamedata);
   gsys->comm_infowin = NULL;
   gsys->iss_sys = ISS_SYS_Create( gsys->gamedata, heapID );
+  gsys->fest_sys = LINK_FESTIVAL_Create( heapID, gsys );
 
   //通信不許可イベントフラグOFFで初期化
   gsys->comm_off_event_flag = FALSE;
@@ -467,6 +470,7 @@ static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
   GameSystem_ResetNotSleepCallback( gsys );
   GameSystem_ResetBatt10SleepCallback( gsys );
+  LINK_FESTIVAL_Delete( gsys->fest_sys );
   ISS_SYS_Delete(gsys->iss_sys);
   GAMEDATA_Delete(gsys->gamedata);
   GameCommSys_Free(gsys->game_comm);
@@ -533,6 +537,9 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 
   //プレイ時間　カウントアップ
   PLAYTIMECTRL_Countup( gsys->gamedata );
+
+  //リンクフェスティバル状態アップデート
+  LINK_FESTIVAL_Update( gsys->fest_sys );
 
   if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
   {
@@ -733,6 +740,14 @@ BOOL GAMESYSTEM_CheckFieldMapWork( const GAMESYS_WORK *gsys )
     return TRUE;
   }
   return FALSE;
+}
+
+//------------------------------------------------------------------
+//  リンクフェスティバルワーク取得
+//------------------------------------------------------------------
+LINK_FESTIVAL* GAMESYSTEM_GetLinkFestivalWork( GAMESYS_WORK * gsys )
+{
+  return gsys->fest_sys;
 }
 
 //==================================================================

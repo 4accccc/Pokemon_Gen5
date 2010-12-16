@@ -10,6 +10,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#include <gamesystem/gamesystem.h>
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_accessor.h"
@@ -105,7 +106,10 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
   BEACON_WSET_NICKNAME,	  BEACON_ICON_INFO,	      ///<MUSICAL ミュージカル挑戦中 47
   BEACON_WSET_GPOWER,	    BEACON_ICON_GPOWER,	    ///<OTHER_GPOWER_USE 他人のGパワーを使用 48
   BEACON_WSET_FREEWORD,	  BEACON_ICON_MSG,	      ///<FREEWORD 一言メッセージ 49
-  BEACON_WSET_HAIHU_GPOWER,	  BEACON_ICON_GPOWER,     ///<DISTRIBUTION_GPOWER Gパワー配布中 50 
+  BEACON_WSET_HAIHU_GPOWER,	  BEACON_ICON_GPOWER,     ///<DISTRIBUTION_GPOWER Gパワー配布中 50
+
+  //スワンで追加されたビーコン
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FEST_MISSION, フェスタミッションをサーチしました！ 1
 };
 
 typedef BOOL (*BEACON_INFO_ERROR_CHECK_FUNC)(const GAMEBEACON_INFO* info );

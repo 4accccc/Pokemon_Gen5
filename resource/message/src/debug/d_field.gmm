@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00240" date="2010-10-14T15:48:34"/>
+	<create user="iwasawa" host="W00157" date="2010-12-15T15:24:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2099,6 +2099,11 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_LIVE_COMM">
 		<language name="JPN" width="240">ライブつうしん</language>
 		<language name="JPN_KANJI" width="240">ライブ通信</language>
+	</row>
+
+	<row id="DEBUG_FIELD_LINK_FESTIVAL">
+		<language name="JPN" width="240">リンクフェスティバル</language>
+		<language name="JPN_KANJI" width="240">リンクフェスティバル</language>
 	</row>
 
 	<row id="DEBUG_FIELD_MISSION_RESET">

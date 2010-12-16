@@ -35,6 +35,7 @@ typedef struct _GAMESYS_WORK GAMESYS_WORK;
 //------------------------------------------------------------------
 typedef struct _GMEVENT_CONTROL GMEVENT;
 
+#include "gamesystem/link_festival.h"
 
 //============================================================================================
 //============================================================================================
@@ -147,6 +148,11 @@ extern FIELDMAP_WORK * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys);
  */
 //------------------------------------------------------------------
 extern void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
+
+//------------------------------------------------------------------
+//  リンクフェスティバルワーク取得
+//------------------------------------------------------------------
+extern LINK_FESTIVAL* GAMESYSTEM_GetLinkFestivalWork( GAMESYS_WORK * gsys );
 
 //------------------------------------------------------------------
 /**
