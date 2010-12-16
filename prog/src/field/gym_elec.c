@@ -108,7 +108,7 @@ static void SPOT_LIGHT_SET_UnRegister( SPOT_LIGHT_SET *p_wk, u16 objID );
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
 //=====================================
-//static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow );
+static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow );
 
 //-------------------------------------
 ///	フェードアウト(影がなくなる演出)
@@ -174,20 +174,20 @@ static const FOG_SHADOW_INIT_SETUP_TBL  sc_fogshadow_init_tbl[] =
   {
     968,
     872,
-    32647,
-    32624,
+    32650,
+    32623,
   },
   {
     872,
-    600,
-    32690,
-    32631,
+    632,
+    32692,
+    32623,
   },
   {
-    456,
-    328,
-    32661,
-    32628,
+    632,
+    392,
+    32687,
+    32623,
   },
 };
 
@@ -312,8 +312,7 @@ GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys )
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
 
-  //return SHOWUP_CreateEvent( p_gamesys, p_tmp->p_fog_shadow );
-  return NULL;
+  return SHOWUP_CreateEvent( p_gamesys, p_tmp->p_fog_shadow );
 }
 //----------------------------------------------------------------------------
 /**
@@ -569,6 +568,7 @@ static MODEL_MANAGER * MODEL_MANAGER_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID 
       p_model->unitID   = MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID;
       p_model->modelID  = i;
       p_model->p_ex_obj = p_ex_obj;
+      MODEL_SetVisible( p_model, FALSE );
     }
   }
 
@@ -1143,7 +1143,6 @@ static void Spot_Light_UnRegister( SPOT_LIGHT *p_wk )
   p_wk->is_use    = FALSE;
 }
 
-#if 0
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *    ショーアップ
@@ -1182,7 +1181,6 @@ static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_
   SHOWUP_EVENT_WORK *p_wk = GMEVENT_GetEventWork(p_event);
 
   p_wk->p_fog_shadow   = p_fog_shadow;
-
   return p_event;
 }
 
@@ -1214,7 +1212,6 @@ static GMEVENT_RESULT Showup_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adr
 
   return GMEVENT_RES_CONTINUE;
 }
-#endif
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
