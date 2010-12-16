@@ -329,7 +329,7 @@ EVENT_START   ev_debug_mizuguchi
 				$WK_SCENE_C05 = 4
 		ELSIF $SCWK_TEMP2 == 6 THEN
 			//C04R0101‚Å‚ñ‚«ƒWƒ€ŽÀŒ±
-			$LOCALWORK15 = 1
+			$WK_SCENE_C04GYM0101_SHOWEND = 1
 			//D05
 			//$WK_SCENE_D05 = 0
 			//$WK_SCENE_D05_PLASMA = 0

@@ -226,6 +226,8 @@
 #define WK_SCENE_H05_GIRL                16614 /* 0x40e6 ワンダーブリッジ：消える少女イベント用ワーク */
 #define WK_SCENE_R07                     16615 /* 0x40e7 7番道路：ライブキャスターイベント用ワーク */
 #define WK_SCENE_D06_PAIR                16616 /* 0x40e8 電気穴の洞窟　連れ歩きイベント制御 */
+#define WK_SCENE_C04GYM0101_SHOW         16617 /* 0x40e9 スワンでんきジム：ジム進行状況管理ワーク */
+#define WK_SCENE_C04GYM0101_SHOWEND      16618 /* 0x40ea スワンでんきジム：ジム退場演出用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
