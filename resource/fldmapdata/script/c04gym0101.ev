@@ -594,6 +594,12 @@ EVENT_START	ev_pos_c04gym0101_show3
 		//【仮】このPOSの起動をさせなくする
 		$LOCALWORK13 = 1
 		//========================================//
+		
+		
+		//========================================//
+		//【仮】退場時のPOSを起動
+		$LOCALWORK15 = 1
+		//========================================//
 	ENDIF
 	}
 	
@@ -720,7 +726,7 @@ ev_swleader04_show:
 	_BGM_VOLUME_RECOVER( BGM_FADE_MIDDLE )
 	
 	//自機にカメラを戻す
-	_CAMERA_DEF_MOVE (40) 
+	_CAMERA_DEF_MOVE (90) 
 	_CAMERA_WAIT_MOVE()
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
@@ -789,7 +795,7 @@ ev_swleader04_end:
 		
 	CASE 15 THEN
 	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_gymend_come_playar02_center )
-	_TIME_WAIT( 16 )
+	_TIME_WAIT( 24 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gymend_center )
 	_OBJ_ANIME_WAIT()
 		
@@ -801,7 +807,7 @@ ev_swleader04_end:
 		
 	DEFAULT //正面に立った時と同じ処理
 	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_gymend_come_playar02_left )
-	_TIME_WAIT( 16 )
+	_TIME_WAIT( 24 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gymend_left )
 	_OBJ_ANIME_WAIT()
 	
@@ -856,7 +862,7 @@ ev_swleader04_end:
 	
 	//========================================//
 	//【仮】このPOSの起動をさせなくする
-	$LOCALWORK15 = 1
+	$LOCALWORK15 = 2
 	//========================================//
 	}
 _RET
@@ -899,6 +905,7 @@ _ANIME_LABEL	anm_swleader04_gymend_come_playar02_right
 _ANIME_LABEL	anm_swleader04_gymend_come_playar02_center
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_swleader04_gymend_come_playar02_left
