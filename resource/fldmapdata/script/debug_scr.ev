@@ -328,7 +328,8 @@ EVENT_START   ev_debug_mizuguchi
 				//***ワーク操作：C05のPOSを起動***
 				$WK_SCENE_C05 = 4
 		ELSIF $SCWK_TEMP2 == 6 THEN
-			
+			//C04R0101でんきジム実験
+			$LOCALWORK15 = 1
 			//D05
 			//$WK_SCENE_D05 = 0
 			//$WK_SCENE_D05_PLASMA = 0
@@ -449,8 +450,8 @@ EVENT_START   ev_debug_mizuguchi
 			*/
 			
 			//C08演説
-			_FLAG_RESET( FV_C08_SAGE1_01 )
-			$WK_SCENE_C08 = 0
+			//_FLAG_RESET( FV_C08_SAGE1_01 )
+			//$WK_SCENE_C08 = 0
 			
 			//$WK_SCENE_D07_RIVAL_01 = 1
 	

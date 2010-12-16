@@ -30,8 +30,7 @@ _EVENT_DATA		ev_c04gym0101_trainer_02
 _EVENT_DATA		ev_c04gym0101_trainer_03
 _EVENT_DATA		ev_c04gym0101_guide_01
 _EVENT_DATA		ev_bg_c04gym0101_statue_01
-//_EVENT_DATA		ev_init_c04gym0101			//対戦後のコースタートレーナーをどかす
-//_EVENT_DATA		ev_recover_c04gym0101		//環境ＳＥ初期化（セーブ復帰用）
+_EVENT_DATA		ev_pos_c04gym0101_last
 _EVENT_DATA_END
 
 
@@ -47,7 +46,7 @@ _EVENT_DATA_END
 /*					ジムギミック初期化						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c04gym0101
-/*
+
 	//【仮】進行状況によってジムギミックを初期化（参照する変数が仮）
 	//クリア時
 	IF $LOCALWORK11 == 4 THEN
@@ -73,7 +72,7 @@ INIT_EVENT_START	ev_zone_c04gym0101
 	ELSE
 		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_START  )
 	ENDIF
-*/
+
   	_DEBUG_PRINT_WK( SCWK_ANSWER )
 INIT_EVENT_END
 
@@ -185,7 +184,7 @@ ev_leader4_btl:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_LEADER4_01, 0 )
+	_TRAINER_BTL_SET( TRID_LEADER4_02, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -303,7 +302,7 @@ EVENT_START	ev_pos_c04gym0101_show1
 		DEFINE_LOCAL  LCW_POSZ
 		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-		//プレイヤーが通る4グリッド分を用意
+		//プレイヤーが通る3グリッド分を用意
 		SWITCH $LCW_POSX
 		CASE 14 THEN
 		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_left )
@@ -372,7 +371,7 @@ EVENT_START	ev_pos_c04gym0101_show1
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
 		
 		//========================================//
-		//このPOSの起動をさせなくする
+		//【仮】このPOSの起動をさせなくする
 		$LOCALWORK11 = 1
 		//========================================//
 	ENDIF
@@ -412,7 +411,7 @@ EVENT_START	ev_pos_c04gym0101_show2
 		DEFINE_LOCAL  LCW_POSZ
 		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-		//プレイヤーが通る4グリッド分を用意
+		//プレイヤーが通る3グリッド分を用意
 		SWITCH $LCW_POSX
 		CASE 14 THEN
 		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_left )
@@ -481,7 +480,7 @@ EVENT_START	ev_pos_c04gym0101_show2
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
 		
 		//========================================//
-		//このPOSの起動をさせなくする
+		//【仮】このPOSの起動をさせなくする
 		$LOCALWORK12 = 1
 		//========================================//
 	ENDIF
@@ -502,7 +501,7 @@ EVENT_START	ev_pos_c04gym0101_show3
 	IF $LOCALWORK13 == 0 THEN
 		
 		//【仮】スポットライトON
-		//_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_01 )
+		//_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_03 )
 		
 		//戦闘を既に終えているかチェック
 		DEFINE_LOCAL LWK_TRAINER_FLAG
@@ -523,7 +522,7 @@ EVENT_START	ev_pos_c04gym0101_show3
 		DEFINE_LOCAL  LCW_POSZ
 		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-		//プレイヤーが通る4グリッド分を用意
+		//プレイヤーが通る3グリッド分を用意
 		SWITCH $LCW_POSX
 		CASE 14 THEN
 		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_left )
@@ -566,7 +565,7 @@ EVENT_START	ev_pos_c04gym0101_show3
 		ENDIF
 
 		//【仮】カミツレショーアップ演出
-		_CALL	ev_swich_message
+		_CALL	ev_swleader04_show
 		
 		//トレーナー退場
 		SWITCH $LCW_POSX
@@ -592,7 +591,7 @@ EVENT_START	ev_pos_c04gym0101_show3
 		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
 		
 		//========================================//
-		//このPOSの起動をさせなくする
+		//【仮】このPOSの起動をさせなくする
 		$LOCALWORK13 = 1
 		//========================================//
 	ENDIF
@@ -694,6 +693,262 @@ ev_swich_message:
 	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*CALL：カミツレショーアップ						*/
+/************************************************************/
+ev_swleader04_show:
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//【仮】BGMをカメラ操作と同時に音量を0に（現在は音を戻している）
+	_BGM_VOLUME_DOWN( 0 , BGM_FADE_LONG )
+	
+	//【仮】カメラ操作 カミツレにズーム（カメラ移動の時間を要調整）
+	_CAMERA_MOVE( 9688,0,970752,1015808,196655,159744,60 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//カミツレにスポットライトが当たる
+	
+	//カミツレ一歩前に出て演技
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_show_anime )
+	_OBJ_ANIME_WAIT()
+	
+	//【仮】BGMを完全バージョンに差し替え（現在はただ音を戻している）
+	_BGM_VOLUME_RECOVER( BGM_FADE_MIDDLE )
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (40) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+_RET
+
+//--------------------------------------------------------------------
+//	ジム勝利：カミツレ演技
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader04_show_anime
+	_ANIME_DATA	AC_WALK_D_8F,1
+	//_ANIME_DATA	AC_SWLEADER4_ACT0,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	//_ANIME_DATA	AC_ACT0_STOP,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*POS：カミツレと退場						*/
+/************************************************************/
+EVENT_START	ev_pos_c04gym0101_last
+	_CALL ev_swleader04_end
+EVENT_END
+/************************************************************/
+/*CALL：ジム勝利でカミツレと退場						*/
+/************************************************************/
+ev_swleader04_end:
+	{
+	//勝った直後からずっと連れ歩きはくどいので
+	//出口手前のPOSから開始
+	
+	//カミツレとモデル全員ワープ
+	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 3, 35, DIR_DOWN )
+	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 3, 35, DIR_DOWN )
+	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 3, 35, DIR_DOWN )
+	_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 3, 37, DIR_DOWN )
+	
+	//カミツレ歩いて来る
+	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_swleader04_gymend_come_playar01 )
+	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_swleader04_gymend_come_playar01 )
+	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_swleader04_gymend_come_playar01 )
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_gymend_come_playar01 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公振り向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_up )
+	_OBJ_ANIME_WAIT()
+	
+	//【仮】カミツレひとこと（メッセージラベルが仮）
+	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_prince1_04 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
+	_BALLOONWIN_CLOSE()
+	
+	//
+	//主人公の座標を見て移動
+	DEFINE_LOCAL  LCW_POSX
+	DEFINE_LOCAL  LCW_POSZ
+	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+	//プレイヤーが通る3グリッド分を用意
+	SWITCH $LCW_POSX
+	CASE 14 THEN
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_gymend_come_playar02_right )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gymend_right )
+	_OBJ_ANIME_WAIT()
+		
+	CASE 15 THEN
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_gymend_come_playar02_center )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gymend_center )
+	_OBJ_ANIME_WAIT()
+		
+	CASE 16 THEN
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_gymend_come_playar02_right )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gymend_right )
+	_OBJ_ANIME_WAIT()
+		
+	DEFAULT //正面に立った時と同じ処理
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_gymend_come_playar02_left )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gymend_left )
+	_OBJ_ANIME_WAIT()
+	
+	ENDSWITCH
+	
+	//【仮】拍手SE再生（本来はここから鳴り続ける）
+	_SE_PLAY( SEQ_SE_GYM_E01  )
+	_SE_WAIT()
+	
+	//モデル達も一歩前へ
+	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_girls_gymend_come_down )
+	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_girls_gymend_come_down )
+	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_girls_gymend_come_down )
+	_OBJ_ANIME_WAIT()
+	
+	//全員退場
+	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_all_gymend_goto_down )
+	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_all_gymend_goto_down )
+	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_all_gymend_goto_down )
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_all_gymend_goto_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_gymend_goto_down )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレと主人公向き合う
+	//プレイヤーが通る3グリッド分を用意
+	SWITCH $LCW_POSX
+	CASE 14 THEN
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_staystep_left )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_right )
+	_OBJ_ANIME_WAIT()
+		
+	CASE 15 THEN
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_staystep_right )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_left )
+	_OBJ_ANIME_WAIT()
+		
+	CASE 16 THEN
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_staystep_right )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_left )
+	_OBJ_ANIME_WAIT()
+		
+	DEFAULT //正面に立った時と同じ処理
+	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_staystep_right )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_left )
+	_OBJ_ANIME_WAIT()
+	
+	ENDSWITCH
+	
+	//【仮】カミツレひとこと（メッセージラベルが仮）
+	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_prince1_04 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
+	_BALLOONWIN_CLOSE()
+	
+	//========================================//
+	//【仮】このPOSの起動をさせなくする
+	$LOCALWORK15 = 1
+	//========================================//
+	}
+_RET
+
+//--------------------------------------------------------------------
+//	ジム勝利：カミツレ主人公を送りに歩いて来る
+//--------------------------------------------------------------------
+
+_ANIME_LABEL	anm_swleader04_gymend_come_playar01
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//	ジム勝利：主人公真ん中へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_gymend_right
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_gymend_center
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_gymend_left
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ジム勝利：カミツレ主人公を真ん中へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader04_gymend_come_playar02_right
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swleader04_gymend_come_playar02_center
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swleader04_gymend_come_playar02_left
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ジム勝利：後ろのモデルも一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_girls_gymend_come_down
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	ジム勝利：みんな入り口へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_all_gymend_goto_down
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き上
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き右
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き下
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き左
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
