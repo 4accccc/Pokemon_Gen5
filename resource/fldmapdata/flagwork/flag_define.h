@@ -2402,7 +2402,7 @@
 #define SYS_FLAG_BGM_T01R0102             2434 /* 0x0982 自宅２F：３匹選択のBGM変更フラグ */
 #define SYS_FLAG_BGM_C03R0402             2435 /* 0x0983 ヒウンビル（ゲームフリーク）：サウンドクリエイターのＢＧＭ変更イベント */
 #define SYS_FLAG_BGM_R03R0301PLASMA       2436 /* 0x0984 BGM変更フラグ：地下水脈プラズマ団イベント時にBGMを変更する */
-#define SYS_FLAG_BGM_C04GYM0101_SHOW      2437 /* 0x0985 BGM変更フラグ：ジム曲変更フラグ */
+#define SYS_FLAG_BGM_C04GYM0101_SHOW      2437 /* 0x0985 BGM変更フラグ：スワンでんきジム曲変更フラグ */
 		/* not used  2438(0x0986) */
 		/* not used  2439(0x0987) */
 		/* not used  2440(0x0988) */

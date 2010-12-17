@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_BG_C04P01_SIGN_01 (1)
+#define SCRID_ZONE_C04P01 (2)
 
 #endif //_C04P01_DEF_H_
