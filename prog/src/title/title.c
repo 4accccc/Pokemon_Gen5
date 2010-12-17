@@ -49,7 +49,7 @@
 //  定数定義
 //==============================================================================
 /// タイトル画面の長さ
-#define TOTAL_WAIT      (60*114)
+#define TOTAL_WAIT      (60*78)//(60*114)
 
 /// 上下画面を入れ替えるフレーム
 #define TITLE_FLIP_WAIT   ( 678-12 )
@@ -334,6 +334,7 @@ static void _timewait_func( TITLE_WORK *tw )
     if(ICA_ANIME_GetNowFrame( tw->CG3d.icaAnime )==POKE_LOOP_END_FRAME*FX32_ONE){
       setLegendPokeScene( &tw->CG3d, POKE_LOOP_PART_FRAME );
       OS_Printf("ループ開始フレームへ戻った\n");
+
     }
   }
 
@@ -529,7 +530,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     tw->seq = SEQ_FADEOUT;
     MainFunc(tw);
     //PMSND_FadeOutBGM( 16 );
-    SND_STRM_FadeOut( 16 );
+    SND_STRM_FadeOut( 60 );
     break;
 
   case SEQ_FADEOUT:
