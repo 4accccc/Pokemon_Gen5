@@ -29,7 +29,24 @@ C:\home\swan\resource\fldmapdata\eventdata\data\palace03.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_PALACE03_ENT_DOWN
+#Pos Script Name
+SCRID_POS_SYMBOLMAP_ENTRANCE_DOWN
+#Pos Check Type
+POS_CHECK_TYPE_DOWN
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -136
+#size
+2 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

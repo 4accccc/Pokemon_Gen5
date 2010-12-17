@@ -10,6 +10,8 @@
 #ifndef ZONE_PLR16_EVC_H
 #define ZONE_PLR16_EVC_H
 
+#define PLR16_STOPPER_01                   0
+#define PLR16_STOPPER_02                   1
 
 #endif //ZONE_PLR16_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plr16.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

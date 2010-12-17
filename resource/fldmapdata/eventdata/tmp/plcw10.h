@@ -10,6 +10,9 @@
 #ifndef ZONE_PLCW10_EVC_H
 #define ZONE_PLCW10_EVC_H
 
+#define PLCW10_STOPPER_01                  0
+#define PLCW10_STOPPER_PC                  1
+#define PLCW10_STOPPER_02                  2
 
 #endif //ZONE_PLCW10_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/plcw10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

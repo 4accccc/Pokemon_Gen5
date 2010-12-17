@@ -5,5 +5,6 @@
 #define _PLD06_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_PLD06 (1)
 
 #endif //_PLD06_DEF_H_

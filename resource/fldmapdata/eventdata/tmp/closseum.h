@@ -8,6 +8,7 @@
 #ifndef ZONE_CLOSSEUM_EVC_H
 #define ZONE_CLOSSEUM_EVC_H
 
+#define CLOSSEUM_GUIDE_01                  0
 
 #endif //ZONE_CLOSSEUM_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/closseum.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

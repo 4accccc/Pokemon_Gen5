@@ -9,6 +9,11 @@
 #ifndef ZONE_PLC05_EVC_H
 #define ZONE_PLC05_EVC_H
 
+#define PLC05_MAN01_01                     0
+#define PLC05_MAN02_01                     1
+#define PLC05_STOPPER_01                   2
+#define PLC05_STOPPER_02                   3
+#define PLC05_STOPPER_PC                   4
 
 #endif //ZONE_PLC05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/plc05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

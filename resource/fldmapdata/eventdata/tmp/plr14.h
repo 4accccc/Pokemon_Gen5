@@ -9,6 +9,8 @@
 #ifndef ZONE_PLR14_EVC_H
 #define ZONE_PLR14_EVC_H
 
+#define PLR14_STOPPER_01                   0
+#define PLR14_STOPPER_02                   1
 
 #endif //ZONE_PLR14_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plr14.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

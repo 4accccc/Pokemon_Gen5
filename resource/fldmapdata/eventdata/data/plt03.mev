@@ -9,7 +9,100 @@ C:\home\swan\resource\fldmapdata\eventdata\data\plt03.wms
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#type
+1
+#ID name
+PLT03_MAN01_01
+#OBJ CODE Number
+BABYBOY1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_PLT03_MAN01_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 48 -56
+#event number: 1
+#type
+1
+#ID name
+PLT03_MAN02_01
+#OBJ CODE Number
+MAID
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_PLT03_MAN02_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -152
+#event number: 2
+#type
+1
+#ID name
+PLT03_STOPPER_PC
+#OBJ CODE Number
+STOPPER
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+1
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -55,7 +148,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_PLT03_DUMMY_PC
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -152
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

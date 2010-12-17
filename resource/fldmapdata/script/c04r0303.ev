@@ -20,4 +20,297 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_c04r0303
+_EVENT_DATA    ev_c04r0303_footballm_01
+_EVENT_DATA    ev_c04r0303_footballm_02
+_EVENT_DATA    ev_c04r0303_footballm_03
+_EVENT_DATA    ev_c04r0303_footballm_04
+_EVENT_DATA    ev_c04r0303_footballm_05
+_EVENT_DATA    ev_c04r0303_footballm_06
+_EVENT_DATA    ev_c04r0303_footballm_07
+_EVENT_DATA    ev_c04r0303_footballm_08
+_EVENT_DATA    ev_c04r0303_footballm_09
+_EVENT_DATA    ev_c04r0303_footballm_10
+_EVENT_DATA    ev_c04r0303_footballm_11
+_EVENT_DATA    ev_c04r0303_footballm_12
+_EVENT_DATA    ev_c04r0303_footballm_13
+_EVENT_DATA    ev_c04r0303_footballm_14
+_EVENT_DATA    ev_c04r0303_footballm_15
+_EVENT_DATA    ev_c04r0303_gentleman_01
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c04r0303
+	{
+	DEFINE_LOCAL	lwk_badge_chk
+	
+	//ランダム配置トレーナーのセーブワークが初期化されているなら抽選を行う（６人分）
+	IF $WK_OTHER_SPORTS_RND_TR0 == 0 || $WK_OTHER_SPORTS_RND_TR1 == 0 || $WK_OTHER_SPORTS_RND_TR2 == 0 || $WK_OTHER_SPORTS_RND_TR3 == 0 || $WK_OTHER_SPORTS_RND_TR4 == 0 || $WK_OTHER_SPORTS_RND_TR5 == 0 THEN
+		_REBATTLE_TRAINER_START()
+		_REBATTLE_TRAINER_GET_RNDTR_INDEX( WK_OTHER_SPORTS_RND_TR0, WK_OTHER_SPORTS_RND_TR1, WK_OTHER_SPORTS_RND_TR2, WK_OTHER_SPORTS_RND_TR3, WK_OTHER_SPORTS_RND_TR4, WK_OTHER_SPORTS_RND_TR5 )
+		_REBATTLE_TRAINER_END()
+	ENDIF
+	
+	//レベル２以降の全トレーナーを非表示にする
+	_FLAG_SET( FV_STADIUM_TRAINER_02 )
+	_FLAG_SET( FV_STADIUM_TRAINER_03 )
+	_FLAG_SET( FV_STADIUM_FAN_01 )
+	_FLAG_SET( FV_STADIUM_FAN_02 )
+	_FLAG_SET( FV_STADIUM_RANDOM_01 )
+	_FLAG_SET( FV_STADIUM_RANDOM_02 )
+	_FLAG_SET( FV_STADIUM_RANDOM_03 )
+	
+	
+//---------シナリオ進行度によってトレーナーを追加表示する------------
+
+	//レベル２
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
+	IF $lwk_badge_chk == TRUE THEN
+		_FLAG_RESET( FV_STADIUM_FAN_01 )		//ファン１人目を追加
+	ENDIF
+	
+	//レベル３
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_07 )
+	IF $lwk_badge_chk == TRUE THEN
+		_FLAG_RESET( FV_STADIUM_TRAINER_02 )	//選手２人目を追加
+	ENDIF
+
+	//レベル４（シナリオクリア後なら）
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_FLAG_RESET( FV_STADIUM_TRAINER_03 )	//選手３人目を追加
+		_FLAG_RESET( FV_STADIUM_FAN_02 )		//ファン２人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_01 )		//ランダム１人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_02 )		//ランダム２人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_03 )		//ランダム３人目を追加
+	ENDIF
+	
+	
+//--------シナリオ進行度によってトレーナーIDを書き換える--------------
+
+	_REBATTLE_TRAINER_START()	// トレーナ情報を確保
+	
+	_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 1 )
+	
+	//レベル２
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
+	IF $lwk_badge_chk == TRUE THEN
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 2 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 2 )
+	ENDIF
+	
+	//レベル３
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_07 )
+	IF $lwk_badge_chk == TRUE THEN
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 3 )
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT2, C04R0303_TRAINER_02, 3 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 3 )
+	ENDIF
+	
+	//レベル４（シナリオクリア後なら）
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 4 )
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT2, C04R0303_TRAINER_02, 4 )
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT3, C04R0303_TRAINER_03, 4 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 4 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_2, C04R0303_FAN_02, C04R0303_FAN_02_2, 4 )
+		//ランダムトレーナーの見た目とスクリプトラベルをセット
+		_REBATTLE_TRAINER_SETUP_RND_TR( C04R0303_RANDOM_01, C04R0303_RANDOM_02, C04R0303_RANDOM_03, WK_OTHER_SPORTS_RND_TR0, WK_OTHER_SPORTS_RND_TR1, WK_OTHER_SPORTS_RND_TR2 )
+	ENDIF
+	
+	_REBATTLE_TRAINER_END() //トレーナ情報の破棄
+	
+	}
+INIT_EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_01
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm1_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手２						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_02
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手３						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_03
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm3_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手４						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_04
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm4_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手５						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_05
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm5_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手６						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_06
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm6_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手７						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_07
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm7_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手８						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_08
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm8_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手９						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_09
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm9_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１０					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_10
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm10_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１１					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_11
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm11_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１２					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_12
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm12_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１３					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_13
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm13_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１４					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_14
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm14_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１５					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_15
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm15_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							オーナー						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_gentleman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_gentleman_01 )
+EVENT_END
+
+

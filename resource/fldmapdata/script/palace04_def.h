@@ -5,5 +5,6 @@
 #define _PALACE04_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_PALACE04 (1)
 
 #endif //_PALACE04_DEF_H_
