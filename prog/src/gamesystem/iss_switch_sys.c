@@ -21,7 +21,18 @@
 #define PRINT_DEST           (1) // デバッグ情報の出力先
 #define TRACK_NUM           (16) // トラック数
 #define TRACKBIT_ALL    (0xffff) // 全トラック指定
+#define RESERVE_MAX     (3)  //予約数
 
+//===============================================================================
+// ■ISS-S予約
+//===============================================================================
+typedef struct
+{
+  BOOL          is_use;
+  BOOL          is_on;
+  u32           bgm;
+  SWITCH_INDEX  switchIdx;
+}ISS_SWITCH_RESERVE;
 
 //===============================================================================
 // ■ISS-Sシステム
@@ -32,6 +43,8 @@ struct _ISS_SWITCH_SYS
   u8               switchSetNum; // スイッチセットの数
   ISS_SWITCH_SET** switchSet;    // スイッチセット
   ISS_SWITCH_SET*  curSwitchSet; // 操作中のスイッチセット
+
+  ISS_SWITCH_RESERVE  reserveData[RESERVE_MAX]; //予約情報
 };
 
 
@@ -59,7 +72,12 @@ static void BootSystem( ISS_SWITCH_SYS* system ); // システムを起動する
 static void StopSystem( ISS_SWITCH_SYS* system ); // システムを終了する
 static void ZoneChange( ISS_SWITCH_SYS* system, u16 nextZoneID ); // ゾーン変更処理
 static void ResetCurrentSwitchSet( ISS_SWITCH_SYS* system ); // 現在のスイッチセットをリセットする
+static void ReserveSwitchSet( ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx, BOOL is_on, u16 bgm );//スイッチを予約する
 
+static void ISS_SWITCH_RESERVE_Set( ISS_SWITCH_RESERVE *wk, SWITCH_INDEX switchIdx, BOOL is_on, u16 bgm );
+static void ISS_SWITCH_RESERVE_Clear( ISS_SWITCH_RESERVE *wk );
+static void ISS_SWITCH_RESERVE_Main( ISS_SWITCH_RESERVE *wk, ISS_SWITCH_SYS* system );
+static BOOL ISS_SWITCH_RESERVE_IsUse( const ISS_SWITCH_RESERVE *wk );
 
 //===============================================================================
 // ■public method
@@ -110,6 +128,18 @@ void ISS_SWITCH_SYS_Update( ISS_SWITCH_SYS* system )
   // 停止中
   if( CheckSystemBoot(system) == FALSE ) { return; }
   
+  {
+    int i;
+    for( i= 0; i < RESERVE_MAX; i++ )
+    {
+      ISS_SWITCH_RESERVE *wk  = &system->reserveData[ i ];
+      if( ISS_SWITCH_RESERVE_IsUse( wk ) )
+      {
+        ISS_SWITCH_RESERVE_Main( wk, system );
+      }
+    }
+  }
+
   SystemMain( system );
   SetBGMVolume( system );
 }
@@ -226,6 +256,21 @@ void ISS_SWITCH_SYS_ResetSwitch( ISS_SWITCH_SYS* system )
   ResetCurrentSwitchSet( system );
 }
 
+//-------------------------------------------------------------------------------
+/**
+ * @brief スイッチのOn,OFFを予約する
+ *
+ * @param system
+ * @param switchIdx 予約するスイッチ番号
+ * @param is_on     TRUEでONを予約  FALSEでOFFを予約
+ * @param bgm       予約先のBGM番号
+ */
+//-------------------------------------------------------------------------------
+void ISS_SWITCH_SYS_ReserveSwitch( ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx, BOOL is_on, u16 bgm )
+{
+  ReserveSwitchSet( system, switchIdx, is_on, bgm );
+}
+
 
 //===============================================================================
 // ■private method
@@ -244,6 +289,14 @@ static void InitializeSystem( ISS_SWITCH_SYS* system )
   system->switchSetNum  = 0;
   system->switchSet     = NULL;
   system->curSwitchSet  = NULL;
+
+  {
+    int i;
+    for( i = 0; i < RESERVE_MAX; i++ )
+    {
+      ISS_SWITCH_RESERVE_Clear( &system->reserveData[i] );
+    }
+  }
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: init system\n" );
@@ -689,4 +742,107 @@ static void ResetCurrentSwitchSet( ISS_SWITCH_SYS* system )
   if( set ) {
     ISS_SWITCH_SET_ResetSwitch( set );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スイッチの予約
+ *	        BOOTしていないときや、BGM変更前のときにON,OFFを事前設定する
+ *
+ *  @param system
+ *  @param switchIdx 予約するスイッチ番号
+ *  @param is_on     TRUEでONを予約  FALSEでOFFを予約
+ *  @param bgm       予約先のBGM番号
+ */
+//-----------------------------------------------------------------------------
+static void ReserveSwitchSet( ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx, BOOL is_on, u16 bgm )
+{
+  int i;
+  for( i = 0; i < RESERVE_MAX; i++ )
+  {
+    ISS_SWITCH_RESERVE *wk  = &system->reserveData[ i ];
+    if( ISS_SWITCH_RESERVE_IsUse( wk ) == FALSE )
+    {
+      ISS_SWITCH_RESERVE_Set( wk, switchIdx, is_on, bgm );
+      return;
+    }
+  }
+
+  GF_ASSERT_MSG( 0, "予約できませんでした\n" );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  予約設定
+ *
+ *	@param  wk          予約ワーク	
+ *	@param  switchIdx   予約するスイッチ
+ *  @param  is_on       予約する操作
+ *  @param  bgm         BGM
+ */
+//-----------------------------------------------------------------------------
+static void ISS_SWITCH_RESERVE_Set( ISS_SWITCH_RESERVE *wk, SWITCH_INDEX switchIdx, BOOL is_on, u16 bgm )
+{
+  ISS_SWITCH_RESERVE_Clear( wk );
+  wk->switchIdx = switchIdx;
+  wk->is_on     = is_on;
+  wk->bgm       = bgm;
+  wk->is_use    = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  予約ワークをクリア
+ *
+ *	@param	ISS_SWITCH_RESERVE *wk 予約
+ */
+//-----------------------------------------------------------------------------
+static void ISS_SWITCH_RESERVE_Clear( ISS_SWITCH_RESERVE *wk )
+{
+  GFL_STD_MemClear( wk, sizeof(ISS_SWITCH_RESERVE) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  予約メイン
+ *
+ *	@param	ISS_SWITCH_RESERVE *wk  予約ワーク
+ *	@param	system                  システムワーク
+ */
+//-----------------------------------------------------------------------------
+static void ISS_SWITCH_RESERVE_Main( ISS_SWITCH_RESERVE *wk, ISS_SWITCH_SYS* system )
+{
+  ISS_SWITCH_SET* set;
+
+  if( wk->is_use == FALSE )
+  {
+    return;
+  }
+
+  set = GetCurrentSwitchSet( system );
+  if( set )
+  {
+    if( wk->bgm == GetCurrentBGM() )
+    {
+      if( wk->is_on )
+      {
+        ISS_SWITCH_SYS_SwitchOn( system, wk->switchIdx );
+      }
+      else
+      {
+        ISS_SWITCH_SYS_SwitchOff( system, wk->switchIdx );
+      }
+      ISS_SWITCH_RESERVE_Clear( wk );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  使用フラグを設定
+ *
+ *	@param	const ISS_SWITCH_RESERVE *wk ワーク
+ *
+ *	@return TRUE使用  FALSE不使用
+ */
+//-----------------------------------------------------------------------------
+static BOOL ISS_SWITCH_RESERVE_IsUse( const ISS_SWITCH_RESERVE *wk )
+{
+  return wk->is_use;
 }

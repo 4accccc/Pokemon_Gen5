@@ -47,3 +47,7 @@ extern void ISS_SWITCH_SYS_SwitchOff( ISS_SWITCH_SYS* system, SWITCH_INDEX switc
 extern BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx );
 // スイッチのリセット
 extern void ISS_SWITCH_SYS_ResetSwitch( ISS_SWITCH_SYS* system );
+
+// スイッチの予約
+// BOOTしていないときや、BGM変更前のときにON,OFFを事前設定する
+extern void ISS_SWITCH_SYS_ReserveSwitch( ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx, BOOL is_on, u16 bgm );

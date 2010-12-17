@@ -29,6 +29,9 @@
 #include "gym_elec_sv.h"
 #include "gym_elec.h"
 
+
+#include "field_g3d_mapper.h"
+
 //-------------------------------------
 ///	デバッグ
 //=====================================
@@ -104,6 +107,15 @@ static void SPOT_LIGHT_SET_Main( SPOT_LIGHT_SET* p_wk );
 
 static void SPOT_LIGHT_SET_Register( SPOT_LIGHT_SET *p_wk, u16 objID );
 static void SPOT_LIGHT_SET_UnRegister( SPOT_LIGHT_SET *p_wk, u16 objID );
+
+//-------------------------------------
+///	フロアのライト
+//=====================================
+typedef struct _FLOOR_LIGHT FLOOR_LIGHT;
+
+static FLOOR_LIGHT* FLOOR_LIGHT_Init( HEAPID heapID );
+static void FLOOR_LIGHT_Exit( FLOOR_LIGHT *p_wk );
+static void FLOOR_LIGHT_Main( FLOOR_LIGHT *p_wk );
 
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
@@ -241,6 +253,8 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
 
   //セーブワークの状態に環境を整える
   Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
+
+
 
 #ifdef GYM_ELEC_DEBUG_MENU
   //デバッグ作成
@@ -409,15 +423,13 @@ static GYM_ELEC_SV_WORK * Gym_Elec_GetSaveWork( FIELDMAP_WORK *p_fieldmap )
 /**
  *	@brief  環境設定
  *
- *	@param	GYM_ELEC_TMP *p_tmp       テンポラリワーク
+ *	@param	GYM_ELEC_TMP *p_tmp     ギミックワーク
  *	@param	GYM_ELEC_SV_WORK *cp_sv   セーブワーク
  */
 //-----------------------------------------------------------------------------
 static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK *cp_sv )
 {
-  u16  seq = GYM_ELEC_SV_GetEventSeq( cp_sv );
-
-  switch( seq )
+  switch( GYM_ELEC_SV_GetEventSeq( cp_sv ) )
   {
   case GYM_ELEC_EVENT_SEQ_START:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
@@ -426,25 +438,24 @@ static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK
   case GYM_ELEC_EVENT_SEQ_TR01_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
     FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 1 );
-    ISS_SWITCH_SYS_SwitchOn( p_tmp->p_iss_switch, SWITCH_01 );
+    //本来ISS_SWITCH_SYS_SwitchOnを使うべきですが、Recoverでも予備、ISS_SWITCH_SYSが起動していないため、予約の方を使う
+    ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_01, TRUE, GYM_ELEC_BGM_NORMAL );
     break;
   case GYM_ELEC_EVENT_SEQ_TR02_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
     FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 2 );
-    ISS_SWITCH_SYS_SwitchOn( p_tmp->p_iss_switch, SWITCH_02 );
+    ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_01, TRUE, GYM_ELEC_BGM_NORMAL );
+    ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_02, TRUE, GYM_ELEC_BGM_NORMAL );
     break;
   case GYM_ELEC_EVENT_SEQ_TR03_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
-    PMSND_PlayBGM( GYM_ELEC_BGM_BOSSAPPER );
     break;
   case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
-    PMSND_PlayBGM( GYM_ELEC_BGM_BOSSAPPER );
     break;
   default:
     GF_ASSERT( 0 );
   }
-
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -1230,6 +1241,7 @@ typedef struct
   FOG_SHADOW      *p_fog_shadow;
   ISS_SWITCH_SYS  *p_iss_switch;
   FADEOUT_PHASE   phase;
+  GAMESYS_WORK    *p_gamesys;
 }FADEOUT_EVENT_WORK;
 
 //-------------------------------------
@@ -1259,6 +1271,7 @@ static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog
     p_wk->p_iss_switch  = ISS_SYS_GetIssSwitchSystem( p_iss );
   }
   p_wk->phase         = phase;
+  p_wk->p_gamesys     = p_gamesys;
 
   return p_event;
 }
@@ -1299,7 +1312,10 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
       ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, SWITCH_02 );
       break;
     case FADEOUT_PHASE_BACK:
-      PMSND_PlayBGM( GYM_ELEC_BGM_BOSSAPPER );
+      {
+        GMEVENT* p_subevent = EVENT_FSND_ChangeBGM( p_wk->p_gamesys, GYM_ELEC_BGM_BOSSAPPER, 0, 0 );
+        GMEVENT_CallEvent( p_event, p_subevent );
+      }
       break;
     default:
       GF_ASSERT(0);

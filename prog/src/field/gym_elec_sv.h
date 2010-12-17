@@ -16,11 +16,11 @@
 //-------------------------------------
 ///	_GYM_ELEC_INITにいれる値及びプログラム中に使う値
 //=====================================
-#define GYM_ELEC_EVENT_SEQ_START        (0) //初期状態
-#define GYM_ELEC_EVENT_SEQ_TR01_BTL_END (1) //一人目に勝った
-#define GYM_ELEC_EVENT_SEQ_TR02_BTL_END (2) //二人目に勝った
-#define GYM_ELEC_EVENT_SEQ_TR03_BTL_END (3) //三人目に勝った
-#define GYM_ELEC_EVENT_SEQ_BOSS_BTL_END (4) //ジムリーダーに勝った
+#define GYM_ELEC_EVENT_SEQ_START        (0) //初期状態              影手前　曲０段階
+#define GYM_ELEC_EVENT_SEQ_TR01_BTL_END (1) //一人目に勝った        影中間  曲１段階
+#define GYM_ELEC_EVENT_SEQ_TR02_BTL_END (2) //二人目に勝った        影奥    曲２段階
+#define GYM_ELEC_EVENT_SEQ_TR03_BTL_END (3) //三人目に勝った        影なし  曲完成
+#define GYM_ELEC_EVENT_SEQ_BOSS_BTL_END (4) //ジムリーダーに勝った  影なし  曲完成
 #define GYM_ELEC_EVENT_SEQ_MAX          (5) //スクリプトでは使用禁止
 
 //=============================================================================
