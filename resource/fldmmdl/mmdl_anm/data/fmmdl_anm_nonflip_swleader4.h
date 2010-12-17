@@ -18,7 +18,7 @@
 
 
 ///ƒtƒŒ[ƒ€”’è‹`
-#define DRAW_ANMFRM_NONFLIP_SWLEADER4_ACT0  ( 12 )
+#define DRAW_ANMFRM_NONFLIP_SWLEADER4_ACT0  ( 67 )
 
 
 #endif //__H_FMMDL_ANM_NONFLIP_SWLEADER4_H__

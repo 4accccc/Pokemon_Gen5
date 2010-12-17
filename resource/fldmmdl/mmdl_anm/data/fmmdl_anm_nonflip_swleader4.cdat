@@ -13,9 +13,13 @@
 // é≈ãèÇP
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWLeader4_Act0[] = {
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
-  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF, 30 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 
