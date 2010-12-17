@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-12-15T23:12:17"/>
+	<create user="iwasawa" host="W00157" date="2010-12-17T15:01:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,13 +306,13 @@
 	</columns>
 
 	<dialog left="183" top="144" right="888" bottom="772" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="yes"/>
 		<tag-palette left="799" top="128" right="1269" bottom="735" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -521,6 +521,11 @@
 	<row id="dlc_beacon_req_param14" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">fword=[1:1C:簡易会話単語:3]</language>
 		<language name="JPN_KANJI" width="256">fword=[1:1C:簡易会話単語:3]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param15" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">score=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">score=[2:04:５桁:0]</language>
 	</row>
 
 	<row id="dlc_fake_tr_id" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
