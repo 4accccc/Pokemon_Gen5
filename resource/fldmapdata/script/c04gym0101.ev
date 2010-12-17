@@ -51,9 +51,16 @@ INIT_EVENT_START	ev_zone_c04gym0101
 	//進行状況によってジムギミックを初期化
 	//クリア時
 	IF FLAG_ON( FE_C04GYM0101_CLEAR ) THEN
-		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_START )
+		
+		//================================================//
+		//ゾーンBGM変更フラグをリセット
+		_FLAG_RESET( SYS_FLAG_BGM_C04GYM0101_SHOW )
+		
+		//POSを初期化
 		$WK_SCENE_C04GYM0101_SHOW = 0
-	
+		//================================================//
+		
+		_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_START )
 	//未クリア時は進行状況に合わせてジムギミックを変更
 	ELSE
 		//入室時初期状態
@@ -197,9 +204,6 @@ ev_leader4_btl:
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		
-		//【仮】勝利したので演出をENDに
-		//_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
 	
 		//モデル達は全員下を向く
 		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_dir_d )
@@ -578,6 +582,10 @@ EVENT_START	ev_pos_c04gym0101_show3
 	//========================================//
 	//このPOSの起動をさせなくする
 	$WK_SCENE_C04GYM0101_SHOW = 3
+	
+	//ゾーンBGM変更フラグをセット
+	_FLAG_SET( SYS_FLAG_BGM_C04GYM0101_SHOW )
+
 	//========================================//
 }
 
