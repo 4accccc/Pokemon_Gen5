@@ -12,7 +12,25 @@
 
 #include "fest_mission.h"
 
+#define LINKFEST_LOG_MAX  (100) //フェスタミッションログMax
+
 typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
+
+//フェスタログデータ構造体
+typedef struct _LINKFEST_LOG{
+  u32 tr_id;
+  u32 score;
+}LINKFEST_LOG;
+
+//フェスタログ受け渡し構造体
+typedef struct _LINKFEST_LOG_PARAM{
+  u8  id;
+  u32 key;
+  LINKFEST_LOG log;
+}LINKFEST_LOG_PARAM;
+
+
+
 
 //---------------------------------------------------------
 /*
@@ -42,6 +60,46 @@ extern void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk );
 //---------------------------------------------------------
 extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
 
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
+ *
+ * @param u32* スコアを取得するu32のワークポインタ
+ * @retval  TRUE    ミッション成功
+ * @retval  FALSE   ミッション失敗
+ */
+//---------------------------------------------------------
+extern BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル スコア加算
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, u32 value );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ログストア
+ *
+ * @param log 情報を格納したLINKFEST_LOG_PARAM構造体型ワークへのポインタ
+ */
+//---------------------------------------------------------
+extern BOOL LINK_FESTIVAL_LogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ログ構造体クリア
+ */
+//---------------------------------------------------------
+extern void LINKFEST_LOG_Clear( LINKFEST_LOG* log );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ログパラメータ構造体クリア
+ */
+//---------------------------------------------------------
+extern void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* prm );
 
 #endif //__H_LINK_FESTIVAL_H__
 

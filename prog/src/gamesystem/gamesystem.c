@@ -485,6 +485,7 @@ static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param)
 {
   GAMESYS_WORK_Init(gsys, heapID, init_param);
+  GAMEBEACON_SetGameSystemWork(gsys);
   GAMEBEACON_Setting(gsys->gamedata);
   PLAYTIMECTRL_Init(); //プレイ時間カウント処理を初期化
 }

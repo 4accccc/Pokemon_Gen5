@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
@@ -59,6 +60,7 @@ GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
 //==============================================================================
 static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
+static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
@@ -103,6 +105,21 @@ void GAMEBEACON_Exit(void)
   
   GFL_HEAP_FreeMemory(GameBeaconSys);
 }
+
+//==================================================================
+/**
+ * ゲームビーコン管理
+ */
+//==================================================================
+void GAMEBEACON_SetGameSystemWork( GAMESYS_WORK* gsys )
+{
+  GAMEBEACON_SYSTEM *bsys;
+  GF_ASSERT_HEAVY(GameBeaconSys != NULL);
+  bsys = GameBeaconSys;
+
+  bsys->gsys = gsys;
+}
+
 
 //==================================================================
 /**
@@ -321,6 +338,36 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * 受信ビーコンからフェスタミッションログを取得する
+ *
+ * @param   bsys		
+ * @param   GAMEBEACON_INFO *
+ */
+//--------------------------------------------------------------
+static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
+{
+  LINK_FESTIVAL*  fest_sys;
+  LINKFEST_LOG_PARAM prm;
+  
+  if( info->action.action_no != GAMEBEACON_ACTION_FEST_MISSION ){
+    return;
+  }
+  if( bsys->gsys == NULL ){
+    GF_ASSERT(0);
+    return;
+  }
+  fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
+  LINKFEST_LOG_PARAM_Clear( &prm );
+  prm.id = info->action.fmission.id;
+  prm.key = info->action.fmission.key;
+  prm.log.tr_id = info->trainer_id;
+  prm.log.score = info->action.fmission.my_score;
+
+  LINK_FESTIVAL_LogStore( fest_sys, &prm );
+}
+
 //==================================================================
 /**
  * 受信ビーコンをセット
@@ -405,6 +452,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       return FALSE; //マジックキー不一致の為、受け取り拒否
     }
   }
+  BeaconInfo_SetFestMissionLog( bsys, info );
   
   if(same_player == TRUE){
     bsys->log[i].info = *info;
@@ -420,6 +468,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
 
   return TRUE;
 }
+
 
 //--------------------------------------------------------------
 /**
@@ -1481,14 +1530,8 @@ void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* mission )
   info->action.fmission.key = mission->key;
   info->action.fmission.my_score = mission->my_score;
   info->action.fmission.life = mission->life;
-
-  {
-    int i;
-
-    for(i = 0;i < FMISSION_PARAM_MAX;i++){
-      info->action.fmission.prm[i] = mission->prm[i];
-    }
-  }
+  info->action.fmission.target = mission->target;
+  info->action.fmission.param = mission->param;
   BEACONINFO_Set_Details_Walk(info);
 }
 

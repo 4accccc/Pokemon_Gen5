@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "gamesystem/gamesystem.h"
 
 //==============================================================================
 //  構造体定義
@@ -32,6 +33,7 @@ typedef struct{
 
 ///ゲームビーコン管理システムのポインタ
 typedef struct{
+  GAMESYS_WORK* gsys;
   GAMEDATA *gamedata;
   GAMEBEACON_SEND_MANAGER send;       ///<送信ビーコン管理
   GAMEBEACON_LOG log[GAMEBEACON_SYSTEM_LOG_MAX]; ///<ログ(チェーンバッファ)

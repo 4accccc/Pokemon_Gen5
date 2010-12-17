@@ -38,19 +38,19 @@ void FEST_MISSION_Clear( FEST_MISSION* fmwk )
  * @brief ミッションパラメータセット
  */
 //---------------------------------------------------------
-void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 key, u32 reward, u16 param1, u16 param2, u32 time )
+void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 reward, u16 target, u16 param, u32 time )
 {
   FEST_MISSION_Clear( fmwk );
   fmwk->id = id;
-  fmwk->key = key;
+  fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
   fmwk->time = time;
-  fmwk->prm[0] = param1;
-  fmwk->prm[1] = param2;
-  fmwk->reward = reward; //今適当な固定値
+  fmwk->target = target;
+  fmwk->param = param;
+  fmwk->reward = reward;
   fmwk->life = fmwk->time*60*60;
   
-  OS_TPrintf("フェスミッション パラメータセット id=%d, key = %08x, prm1=%d, prm2=%d, time=%dmin\n",
-    id, key, param1, param2, time);
+  OS_TPrintf("フェスミッション パラメータセット id=%d, key = %08x, target=%d, param=%d, time=%dmin\n",
+    id, fmwk->key, target, param, time);
 }
 
 
@@ -64,8 +64,8 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src )
   FEST_MISSION_Clear( fmwk );
   *fmwk = *src;
 
-  OS_TPrintf("フェスミッション スタート id=%d, key = %08x, prm1=%d, prm2=%d, time=%d min life=%d sec\n",
-    fmwk->id, fmwk->key, fmwk->prm[0], fmwk->prm[1], fmwk->time, fmwk->life/60);
+  OS_TPrintf("フェスミッション スタート id=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",
+    fmwk->id, fmwk->key, fmwk->target, fmwk->param, fmwk->time, fmwk->life/60);
 }
 
 //---------------------------------------------------------
@@ -147,18 +147,18 @@ BOOL FEST_MISSION_IsEntry( FEST_MISSION* fmwk )
 
 //---------------------------------------------------------
 /*
- * @brief ミッションを達成したか？
- *
- * @retval  TRUE   成功 
- * @retval  FALSE  失敗
+ * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-BOOL FEST_MISSION_IsSuccess( FEST_MISSION* fmwk )
+void FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, FMISSION_TYPE_ID type, u32 value )
 {
-  if( fmwk->id == FEST_MISSION_NULL ){
-    return FALSE;
+  if( FEST_MISSION_IsLive( fmwk ) == FALSE ){
+    return;
   }
-  return ( fmwk->my_score >= fmwk->prm[0]);
+  if( type == FMISSION_TYPE_WILDBTL_WIN ){
+    fmwk->my_score += value;
+    OS_TPrintf("ミッション id=%d key=%08x スコア加算 %d ノルマ %d\n",fmwk->id, fmwk->key, fmwk->my_score, fmwk->target );
+  }
 }
 
 //=================================================

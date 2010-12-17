@@ -95,7 +95,8 @@ typedef struct{
       u8  id;
       u8  time;
       u16 reward;
-      u16 prm[FMISSION_PARAM_MAX];
+      u16 target;
+      u16 param;
       u32 key;
       u32 life;
       u32 my_score;

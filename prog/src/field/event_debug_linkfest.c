@@ -788,7 +788,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           GMEVENT* mission_ev;
           FEST_MISSION mission;
 
-          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, MyStatus_GetID( wk->my_status ), 3, 1,0, 1);
+          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, 3, 1,0, 3);
 
           mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
             FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );

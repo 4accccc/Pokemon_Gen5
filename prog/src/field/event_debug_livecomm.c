@@ -50,6 +50,7 @@
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/game_beacon_local.h" //許可なく他でinclude禁止
+#include "gamesystem/link_festival.h" //許可なく他でinclude禁止
 #include "field/beacon_view.h"
 #include "field/field_comm/beacon_view_local.h"
 #include "event_debug_livecomm.h"
@@ -151,6 +152,7 @@ typedef enum{
  BEACON_PSET_GPOWER,      //Gパワー名
  BEACON_PSET_ID,          //プレイヤーID
  BEACON_PSET_FREEWORD,    //フリーワード8文字
+ BEACON_PSET_SCORE,       //ミッションスコア
  BEACON_PSET_MAX,
 }BEACON_PSET_TYPE;
 
@@ -165,6 +167,7 @@ typedef enum{
  BEACON_ARG_FWORD,
  BEACON_ARG_GPOWER,
  BEACON_ARG_FWAZA,
+ BEACON_ARG_FMISSION,
 }BEACON_ARG_TYPE;
 
 typedef void (*BEACON_SET_FUNC_NONE)(void);
@@ -176,6 +179,7 @@ typedef void (*BEACON_SET_FUNC_U16_STR)(u16,const STRBUF*);
 typedef void (*BEACON_SET_FUNC_GDATA_U32)(GAMEDATA* gdata,u32);
 typedef void (*BEACON_SET_FUNC_GDATA_STR)(GAMEDATA* gdata, const STRBUF*);
 typedef void (*BEACON_SET_FUNC_GPOWER)(GPOWER_ID);
+typedef void (*BEACON_SET_FUNC_FMISSION)( FEST_MISSION* mission );
 
 //======================================================================
 //
@@ -224,6 +228,7 @@ typedef struct _DMENU_LIVE_COMM{
   MYITEM_PTR item_sv;
   MISC* misc_sv;
   MYSTATUS* my_status;
+  LINK_FESTIVAL* fest_sys;
 
   BEACON_VIEW*    view_wk;
   BEACON_STATUS* b_status;
@@ -418,7 +423,7 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   ///<DISTRIBUTION_GPOWER Gパワー配布中 50 
   { GAMEBEACON_Set_DistributionGPower,    BEACON_PSET_GPOWER, 	  BEACON_ARG_GPOWER,	},
   ///<FEST_MISSION フェスタミッション配布 51 
-  { GAMEBEACON_Set_DistributionGPower,    BEACON_PSET_GPOWER, 	  BEACON_ARG_GPOWER,	},
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
 };
 
 static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
@@ -436,6 +441,7 @@ static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
  { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
  { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_ID,     プレイヤーID
  { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_FREEWORD,    フリーワード8文字
+ { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_SCORE,    ミッションスコア
 };
 
 static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
@@ -518,6 +524,7 @@ GMEVENT* DEBUG_EVENT_LiveComm( GAMESYS_WORK* gsys, void* parent_work )
   wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
   wk->misc_sv = (MISC*)SaveData_GetMiscConst( wk->save );
   wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
+  wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
 
   wk->view_wk = (BEACON_VIEW*)parent_work;
 
@@ -1672,6 +1679,18 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
   case	BEACON_ARG_FWAZA:
     GF_ASSERT( value >= 0 );
     ((BEACON_SET_FUNC_U16)evwk->b_prm->func)( (u16)DATA_FieldWazaTbl[value] );
+    break;
+  case	BEACON_ARG_FMISSION:
+    {
+      FEST_MISSION* fmwk;
+      FEST_MISSION mission;
+      fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
+      if( FEST_MISSION_IsLive( fmwk ) ){
+        mission = *fmwk;
+        mission.my_score = value;
+        ((BEACON_SET_FUNC_FMISSION)evwk->b_prm->func)( &mission );
+      }
+    }
     break;
   }
   DEBUG_SendBeaconPriorityEgnoreFlagSet( FALSE );

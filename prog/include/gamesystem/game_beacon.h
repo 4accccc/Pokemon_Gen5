@@ -9,6 +9,7 @@
 #pragma once
 
 #include "buflen.h"
+#include "gamesystem/gamesystem_def.h"
 #include "gamesystem/gamedata_def.h"
 #include "gamesystem/fest_mission.h"
 #include "print/wordset.h"
@@ -114,6 +115,7 @@ typedef struct _GAMEBEACON_INFO_TBL GAMEBEACON_INFO_TBL;
 //==============================================================================
 extern void GAMEBEACON_Init(HEAPID heap_id);
 extern void GAMEBEACON_Exit(void);
+extern void GAMEBEACON_SetGameSystemWork( GAMESYS_WORK* gsys );
 extern void GAMEBEACON_Update(void);
 extern void GAMEBEACON_Setting(GAMEDATA *gamedata);
 extern void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info);

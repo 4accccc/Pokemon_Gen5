@@ -76,7 +76,9 @@ typedef struct FMISSIN_EVWORK{
   LINK_FESTIVAL* fest_sys;
   FEST_MISSION mission;
 
-  BOOL result;
+  BOOL  result;
+  u32   res_score;
+
   STRBUF* s_buf;
   STRBUF* s_tmp;
 }FMISSIN_EVWORK;
@@ -86,7 +88,7 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
 static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, void * work);
 static void sub_InitFMissionWork( FMISSIN_EVWORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap );
 static void sub_ReleaseFMissionWork( FMISSIN_EVWORK* wk );
-static void sub_FMissionParamDraw( FMISSIN_EVWORK* wk, STRBUF* str, u8 line );
+static void sub_FMissionParamDraw( FMISSIN_EVWORK* wk, STRBUF* str, u8 px, u8 line );
 static void sub_FMissionStartParamDraw( FMISSIN_EVWORK* wk );
 static void sub_FMissionEndParamDraw( FMISSIN_EVWORK* wk );
 static void sub_FMissionCheckParamDraw( FMISSIN_EVWORK* wk );
@@ -135,7 +137,7 @@ GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work )
     FEST_MISSION* fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
     wk->mission = *fmwk;
 
-    wk->result = FEST_MISSION_IsSuccess( fmwk );
+    wk->result = LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->res_score );
   }
   return event;
 }
@@ -345,13 +347,13 @@ static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, vo
 static void sub_FMissionParamWordExpand( FMISSIN_EVWORK* wk )
 {
 //  IWASAWA_Printf("GPower %d Life = %d\n",g_power,time);
-  WORDSET_RegisterNumber( wk->wset, 0, wk->mission.time, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 1, wk->mission.prm[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 2, wk->mission.prm[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 3, wk->mission.reward, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 4, wk->mission.life/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 5, wk->mission.life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 6, /*wk->mission.my_score*/1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 0, wk->mission.time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 1, wk->mission.target, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 2, wk->mission.param, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 3, wk->mission.reward, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 4, wk->mission.life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 5, (wk->mission.life/60)%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 6, wk->res_score, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
 
 //-----------------------------------------------------------------
@@ -359,10 +361,10 @@ static void sub_FMissionParamWordExpand( FMISSIN_EVWORK* wk )
  *  @brief  ミッションパラメータ描画
  */
 //-----------------------------------------------------------------
-static void sub_FMissionParamDraw( FMISSIN_EVWORK* wk, STRBUF* str, u8 line )
+static void sub_FMissionParamDraw( FMISSIN_EVWORK* wk, STRBUF* str, u8 px, u8 line )
 {
   WORDSET_ExpandStr( wk->wset, wk->s_tmp, str );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX02, CWIN_STR_OY*line, wk->s_tmp );
+  FLDSYSWIN_PrintStrBuf( wk->win, px, CWIN_STR_OY*line, wk->s_tmp );
 }
 
 //-----------------------------------------------------------------
@@ -380,14 +382,14 @@ static void sub_FMissionStartParamDraw( FMISSIN_EVWORK* wk )
 
   //パラメータ
   GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission.id, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 2 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   
   //残り時間
   GFL_MSG_GetString( wk->msgData, msg_fmission_life, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 5 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 5 );
   //報酬
   GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 6 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 6 );
 }
 
 //-----------------------------------------------------------------
@@ -404,16 +406,16 @@ static void sub_FMissionEndParamDraw( FMISSIN_EVWORK* wk )
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
   
   GFL_MSG_GetString( wk->msgData, msg_fmission_failed+wk->result, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 2 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   GFL_MSG_GetString( wk->msgData, msg_fmission_score, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 3 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 3 );
   
   //パラメータ
   GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission.id, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 5 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 5 );
   //報酬
   GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 7 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 7 );
 }
 
 //-----------------------------------------------------------------
@@ -431,14 +433,14 @@ static void sub_FMissionCheckParamDraw( FMISSIN_EVWORK* wk )
   
   //パラメータ
   GFL_MSG_GetString( wk->msgData, msg_fmission_exp00+wk->mission.id, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 2 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   
   //残り時間
   GFL_MSG_GetString( wk->msgData, msg_fmission_life, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 5 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 5 );
   //報酬
   GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, 6 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 6 );
 }
 
 
