@@ -10,6 +10,8 @@
 #ifndef __H_FEST_MISSION_H__
 #define __H_FEST_MISSION_H__
 
+#define OSPRINT_LINKFEST_PAGE (2) //OS_FPrintf出力ページ指定
+
 typedef enum{
  FEST_MISSION_NULL,
  FEST_MISSION_WILDBTL_WIN,

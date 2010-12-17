@@ -114,10 +114,10 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score )
   *score += wk->mission.my_score;
 
   if( *score >= wk->mission.target){
-    OS_TPrintf("ミッションノルマ達成 %d/%d\n",*score,wk->mission.target );
+    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.target );
     return TRUE;
   }
-  OS_TPrintf("ミッションノルマ未達成 %d/%d\n",*score,wk->mission.target );
+  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.target );
   return FALSE;
 }
 
@@ -162,18 +162,18 @@ BOOL LINK_FESTIVAL_LogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
 
     if( log->tr_id == src->log.tr_id ){ //上書き
       log->score = src->log.score;
-      OS_TPrintf("フェスミッション ログ%dを上書き tr_id=%d, score=%d\n",i, log->tr_id,log->score );
+      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション ログ%dを上書き tr_id=%d, score=%d\n",i, log->tr_id,log->score );
       return TRUE;
     }
   }
   if( wk->log_num >= LINKFEST_LOG_MAX ){
-    OS_TPrintf("フェスミッション ログバッファがいっぱいです\n");
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション ログバッファがいっぱいです\n");
     return FALSE; //もう入らない
   }
   //新規
   log = &wk->log[wk->log_num];
   *log = src->log;
-  OS_TPrintf("フェスミッション 新規ログ%d tr_id=%d, score=%d\n",wk->log_num, log->tr_id,log->score );
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 新規ログ%d tr_id=%d, score=%d\n",wk->log_num, log->tr_id,log->score );
   ++wk->log_num;
   return TRUE;
 }

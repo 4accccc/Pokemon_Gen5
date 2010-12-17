@@ -49,7 +49,7 @@ void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 reward, 
   fmwk->reward = reward;
   fmwk->life = fmwk->time*60*60;
   
-  OS_TPrintf("フェスミッション パラメータセット id=%d, key = %08x, target=%d, param=%d, time=%dmin\n",
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション パラメータセット id=%d, key = %08x, target=%d, param=%d, time=%dmin\n",
     id, fmwk->key, target, param, time);
 }
 
@@ -64,7 +64,7 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src )
   FEST_MISSION_Clear( fmwk );
   *fmwk = *src;
 
-  OS_TPrintf("フェスミッション スタート id=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート id=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",
     fmwk->id, fmwk->key, fmwk->target, fmwk->param, fmwk->time, fmwk->life/60);
 }
 
@@ -76,7 +76,7 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src )
 void FEST_MISSION_End( FEST_MISSION* fmwk )
 {
   FEST_MISSION_Clear( fmwk );
-  OS_TPrintf("フェスミッション終了\n");
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション終了\n");
 }
 
 //---------------------------------------------------------
@@ -92,7 +92,7 @@ void FEST_MISSION_Update( FEST_MISSION* fmwk )
   if( fmwk->life ){
     --fmwk->life;
     if( fmwk->life == 0 ){
-      OS_TPrintf("フェスミッション %d key = %08x 時間切れ\n", fmwk->id, fmwk->key );
+      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 時間切れ\n", fmwk->id, fmwk->key );
     }
   }
 }
@@ -157,7 +157,7 @@ void FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, FMISSION_TYPE_ID type, u32 valu
   }
   if( type == FMISSION_TYPE_WILDBTL_WIN ){
     fmwk->my_score += value;
-    OS_TPrintf("ミッション id=%d key=%08x スコア加算 %d ノルマ %d\n",fmwk->id, fmwk->key, fmwk->my_score, fmwk->target );
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション id=%d key=%08x スコア加算 %d ノルマ %d\n",fmwk->id, fmwk->key, fmwk->my_score, fmwk->target );
   }
 }
 
@@ -176,7 +176,7 @@ void FEST_MISSION_DEBUG_KillMission( FEST_MISSION* fmwk )
     return;
   }
   fmwk->life = 0;
-  OS_TPrintf("フェスミッション %d key = %08x 寿命強制破棄\n", fmwk->id, fmwk->key );
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 寿命強制破棄\n", fmwk->id, fmwk->key );
 }
 
 #endif  //PM_DEBUG
