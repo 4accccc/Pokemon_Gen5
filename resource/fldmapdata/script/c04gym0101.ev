@@ -53,9 +53,6 @@ INIT_EVENT_START	ev_zone_c04gym0101
 	IF FLAG_ON( FE_C04GYM0101_CLEAR ) THEN
 		
 		//================================================//
-		//ゾーンBGM変更フラグをリセット
-		_FLAG_RESET( SYS_FLAG_BGM_C04GYM0101_SHOW )
-		
 		//POSを初期化
 		$WK_SCENE_C04GYM0101_SHOW = 0
 		//================================================//
@@ -504,51 +501,54 @@ EVENT_START	ev_pos_c04gym0101_show3
 		_OBJ_ANIME_WAIT()
 		_TRAINER_BGM_SET( TRID_PRINCESS_10 )
 	
-	ENDIF
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+		DEFINE_LOCAL  LCW_POSZ
+		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-	//主人公の座標を見て移動
-	DEFINE_LOCAL  LCW_POSX
-	DEFINE_LOCAL  LCW_POSZ
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-
-	//プレイヤーが通る3グリッド分を用意
-	SWITCH $LCW_POSX
-	CASE 14 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_left )
-	_OBJ_ANIME_WAIT()
+		//プレイヤーが通る3グリッド分を用意
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
 		
-	CASE 15 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_center )
-	_OBJ_ANIME_WAIT()
+		ENDSWITCH
 		
-	CASE 16 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_right )
-	_OBJ_ANIME_WAIT()
+		//まだ勝利していない
+		IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
 		
-	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_com_center )
-	_OBJ_ANIME_WAIT()
-	
-	ENDSWITCH
-	
-	//まだ勝利していない
-	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
-	
-		//メッセージラベルが仮
-		_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_princess3_01 , C04GYM0101_TRAINER_03 , POS_DEFAULT)
-		_BALLOONWIN_CLOSE()
-	
-		//戦闘処理
-		_TRAINER_BTL_SET( TRID_PRINCESS_10, 0 )
-	
-		//結果チェック
-		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			_TRAINER_WIN()
-		ELSE
-			_TRAINER_LOSE()
+			//メッセージラベルが仮
+			_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_princess3_01 , C04GYM0101_TRAINER_03 , POS_DEFAULT)
+			_BALLOONWIN_CLOSE()
+		
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_PRINCESS_10, 0 )
+		
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+		
 		ENDIF
 	
+	ELSE
+		
+		
 	ENDIF
 	
 	//スポットライトオフ
@@ -582,11 +582,16 @@ EVENT_START	ev_pos_c04gym0101_show3
 	//========================================//
 	//このPOSの起動をさせなくする
 	$WK_SCENE_C04GYM0101_SHOW = 3
-	
-	//ゾーンBGM変更フラグをセット
-	_FLAG_SET( SYS_FLAG_BGM_C04GYM0101_SHOW )
 
 	//========================================//
+	
+	//未クリア時
+	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
+		//========================================//
+		//ゾーンBGM変更フラグをセット
+		_FLAG_SET( SYS_FLAG_BGM_C04GYM0101_SHOW )
+		//========================================//
+	ENDIF
 }
 
 EVENT_END
@@ -687,6 +692,50 @@ ev_swich_message:
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	クリア時：トレーナー去る01,02(中央）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_bye_clear_center01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア時：トレーナー来る03(中央）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_come_clear_center02
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
 /************************************************************/
 /*CALL：カミツレショーアップ						*/
 /************************************************************/
@@ -718,6 +767,15 @@ ev_swleader04_show:
 	_CAMERA_WAIT_MOVE()
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
+	
+	//クリア時
+	IF FLAG_ON( FE_C04GYM0101_CLEAR ) THEN
+		//================================================//
+		//ゾーンBGM変更フラグをリセット
+		_FLAG_RESET( SYS_FLAG_BGM_C04GYM0101_SHOW )
+	
+		//================================================//
+	ENDIF
 
 _RET
 
@@ -852,7 +910,10 @@ ev_swleader04_end:
 	//========================================//
 	//このPOSの起動をさせなくする
 	$WK_SCENE_C04GYM0101_SHOWEND = 2
-	//========================================//
+	//ゾーンBGM変更フラグをリセット
+	_FLAG_RESET( SYS_FLAG_BGM_C04GYM0101_SHOW )
+	//================================================//
+
 	}
 _RET
 
