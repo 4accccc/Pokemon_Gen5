@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-12-16T17:18:42"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-12-17T18:56:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -505,11 +505,15 @@ princess_01</attribute>
 		<language name="JPN" width="256">このジム　さいしょすごく　くらいと
 おもいませんでしたか？▼
 ライトアップされると　とっても
-ビューティフルなんです！</language>
+ビューティフルなんです！▼
+ライトアップに　てらされる
+ポケモンたちも　ビューティフル！</language>
 		<language name="JPN_KANJI" width="256">このジム　さいしょすごく　くらいと
 おもいませんでしたか？▼
 ライトアップされると　とっても
-ビューティフルなんです！</language>
+ビューティフルなんです！▼
+ライトアップに　てらされる
+ポケモンたちも　ビューティフル！</language>
 	</row>
 
 	<row id="msg_c04gym0101_princess1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -760,6 +764,27 @@ princess_03</attribute>
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
 チェレン[BE:00:ページ切り替え（行送り）]
 ベル</language>
+	</row>
+
+	<row id="msg_c04gym0101_crowd_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>退場イベント</comment>
+		<attribute name="キャラ指定">観客</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！</language>
+	</row>
+
+	<row id="msg_c04gym0101_crowd_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>退場イベント</comment>
+		<attribute name="キャラ指定">観客</attribute>
+		<language name="JPN" width="256">かっこいい…！</language>
+		<language name="JPN_KANJI" width="256">かっこいい…！</language>
+	</row>
+
+	<row id="msg_c04gym0101_crowd_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>退場イベント</comment>
+		<attribute name="キャラ指定">観客</attribute>
+		<language name="JPN" width="256">シビれるー！</language>
+		<language name="JPN_KANJI" width="256">シビれるー！</language>
 	</row>
 
 	<flowchart-group-list>

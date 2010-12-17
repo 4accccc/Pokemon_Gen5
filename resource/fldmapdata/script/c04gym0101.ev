@@ -99,25 +99,25 @@ INIT_EVENT_START	ev_init_c04gym0101
 	
 	//トレーナーを一人倒した
 	ELSIF $WK_SCENE_C04GYM0101_SHOW == 1 THEN
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 9, 6, 2, DIR_RIGHT )
 	
 	//トレーナーを二人倒した
 	ELSIF $WK_SCENE_C04GYM0101_SHOW == 2 THEN
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 9, 6, 2, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 9, 6, 3, DIR_RIGHT )
 	
 	//トレーナーを三人倒した
 	ELSIF $WK_SCENE_C04GYM0101_SHOW == 3 THEN
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 9, 6, 2, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 9, 6, 3, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 21, 6, 2, DIR_LEFT )
 		_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 6, 4, DIR_DOWN )
 	
 	//ジムクリア退場演出前
 	ELSIF $WK_SCENE_C04GYM0101_SHOW == 4 THEN
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
-		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 9, 6, 2, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 9, 6, 3, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 21, 6, 2, DIR_LEFT )
 		_OBJ_POS_CHANGE( C04GYM0101_LEADER4_01, 15, 6, 4, DIR_DOWN )
 	
 	//例外は初期状態に
@@ -203,10 +203,10 @@ ev_leader4_btl:
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 	
-		//モデル達は全員下を向く
-		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_dir_d )
-		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_dir_d )
-		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_dir_d )
+		//モデル達はカミツレの方を向く
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_dir_r )
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_dir_r )
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_dir_l )
 		_OBJ_ANIME_WAIT()
 		
 		_TRAINER_WIN()
@@ -288,7 +288,7 @@ EVENT_START	ev_pos_c04gym0101_show1
 	_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_01 )
 	_TIME_WAIT( 16 )
 	
-	//まだ勝利していない
+	//まだジムをクリアしてしていない
 	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
 	
 		//視線曲再生・[!]アイコン表示
@@ -296,35 +296,31 @@ EVENT_START	ev_pos_c04gym0101_show1
 		_OBJ_ANIME_WAIT()
 		_TRAINER_BGM_SET( TRID_PRINCESS_08 )
 	
-	ENDIF
 
-	//主人公の座標を見て移動
-	DEFINE_LOCAL  LCW_POSX
-	DEFINE_LOCAL  LCW_POSZ
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+		DEFINE_LOCAL  LCW_POSZ
+		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-	//プレイヤーが通る3グリッド分を用意
-	SWITCH $LCW_POSX
-	CASE 14 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_left )
-	_OBJ_ANIME_WAIT()
+		//プレイヤーが通る3グリッド分を用意
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
 		
-	CASE 15 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_center )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 16 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_right )
-	_OBJ_ANIME_WAIT()
-		
-	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_center )
-	_OBJ_ANIME_WAIT()
-	
-	ENDSWITCH
-	
-	//まだ勝利していない
-	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
+		ENDSWITCH
 	
 		//メッセージラベルが仮
 		_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_princess1_01 , C04GYM0101_TRAINER_01 , POS_DEFAULT)
@@ -341,6 +337,12 @@ EVENT_START	ev_pos_c04gym0101_show1
 			_TRAINER_LOSE()
 		ENDIF
 	
+	//ジムクリア済み演出
+	ELSE
+	
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_com_center_end )
+		_OBJ_ANIME_WAIT()
+	
 	ENDIF
 	
 	//スポットライトオフ
@@ -348,28 +350,39 @@ EVENT_START	ev_pos_c04gym0101_show1
 	//影フェードアウトイベントを行う
 	_GYM_ELEC_CALL_FADEOUT_EVENT( GYM_ELEC_EVENT_SEQ_TR01_BTL_END )
 	
-	//トレーナー退場
-	SWITCH $LCW_POSX
-	CASE 14 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_left )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 15 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_center )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 16 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_right )
-	_OBJ_ANIME_WAIT()
-		
-	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_center )
-	_OBJ_ANIME_WAIT()
+	//まだジムをクリアしてしていない
+	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
 	
-	ENDSWITCH
+		//トレーナー退場
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+	
+	//ジムクリア済み演出
+	ELSE
+		
+		_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
 	
 	//OBJをカミツレのそばにワープさせる
-	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 14, 6, 2, DIR_DOWN )
+	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_01, 9, 6, 2, DIR_RIGHT )
 	
 	//========================================//
 	//このPOSの起動をさせなくする
@@ -390,43 +403,38 @@ EVENT_START	ev_pos_c04gym0101_show2
 	_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_02 )
 	_TIME_WAIT( 16 )
 	
-	//まだ勝利していない
+	//まだジムをクリアしていない
 	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
 	
 		//視線曲再生・[!]アイコン表示
 		_OBJ_ANIME( C04GYM0101_TRAINER_02,anm_tr_gyoe )
 		_OBJ_ANIME_WAIT()
 		_TRAINER_BGM_SET( TRID_PRINCESS_09 )
-	
-	ENDIF
 
-	//主人公の座標を見て移動
-	DEFINE_LOCAL  LCW_POSX
-	DEFINE_LOCAL  LCW_POSZ
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+		DEFINE_LOCAL  LCW_POSZ
+		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-	//プレイヤーが通る3グリッド分を用意
-	SWITCH $LCW_POSX
-	CASE 14 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_left )
-	_OBJ_ANIME_WAIT()
+		//プレイヤーが通る3グリッド分を用意
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_center )
+		_OBJ_ANIME_WAIT()
 		
-	CASE 15 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_center )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 16 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_right )
-	_OBJ_ANIME_WAIT()
-		
-	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_center )
-	_OBJ_ANIME_WAIT()
-	
-	ENDSWITCH
-	
-	//まだ勝利していない
-	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
+		ENDSWITCH
 	
 		//メッセージラベルが仮
 		_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_princess2_01 , C04GYM0101_TRAINER_02 , POS_DEFAULT)
@@ -442,6 +450,11 @@ EVENT_START	ev_pos_c04gym0101_show2
 		ELSE
 			_TRAINER_LOSE()
 		ENDIF
+		
+	//ジムクリア済み演出
+	ELSE
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_com_center_end )
+		_OBJ_ANIME_WAIT()
 	
 	ENDIF
 
@@ -450,28 +463,38 @@ EVENT_START	ev_pos_c04gym0101_show2
 	//影フェードアウトイベントを行う
 	_GYM_ELEC_CALL_FADEOUT_EVENT( GYM_ELEC_EVENT_SEQ_TR02_BTL_END )
 	
-	//トレーナー退場
-	SWITCH $LCW_POSX
-	CASE 14 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_left )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 15 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_center )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 16 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_right )
-	_OBJ_ANIME_WAIT()
-		
-	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_center )
-	_OBJ_ANIME_WAIT()
+	//まだジムをクリアしていない
+	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
 	
-	ENDSWITCH
+		//トレーナー退場
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+	
+	//ジムクリア済み演出
+	ELSE
+		_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
 	
 	//OBJをカミツレのそばにワープさせる
-	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 15, 6, 2, DIR_DOWN )
+	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_02, 9, 6, 3, DIR_RIGHT )
 	
 	//========================================//
 	//このPOSの起動をさせなくする
@@ -494,7 +517,7 @@ EVENT_START	ev_pos_c04gym0101_show3
 	_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_TRAINER_03 )
 	_TIME_WAIT( 16 )
 	
-	//まだ勝利していない
+	//まだジムをクリアしていない
 	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
 	
 		//視線曲再生・[!]アイコン表示
@@ -527,58 +550,55 @@ EVENT_START	ev_pos_c04gym0101_show3
 		
 		ENDSWITCH
 		
-		//まだ勝利していない
-		IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
-		
-			//メッセージラベルが仮
-			_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_princess3_01 , C04GYM0101_TRAINER_03 , POS_DEFAULT)
-			_BALLOONWIN_CLOSE()
-		
-			//戦闘処理
-			_TRAINER_BTL_SET( TRID_PRINCESS_10, 0 )
-		
-			//結果チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_TRAINER_WIN()
-			ELSE
-				_TRAINER_LOSE()
-			ENDIF
-		
-		ENDIF
+		//メッセージラベルが仮
+		_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_princess3_01 , C04GYM0101_TRAINER_03 , POS_DEFAULT)
+		_BALLOONWIN_CLOSE()
 	
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_PRINCESS_10, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+		
+		//トレーナー退場
+		SWITCH $LCW_POSX
+		CASE 14 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_left )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 15 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+			
+		CASE 16 THEN
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_right )
+		_OBJ_ANIME_WAIT()
+			
+		DEFAULT //正面に立った時と同じ処理
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_center )
+		_OBJ_ANIME_WAIT()
+		
+		ENDSWITCH
+		
+	//ジムクリア済み演出（３人目のみ別のアニメにしている）
 	ELSE
-		
-		
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr03_com_center_en )
+		_OBJ_ANIME_WAIT()
 	ENDIF
 	
 	//スポットライトオフ
 	_GYM_ELEC_SET_SPOTLIGHT( FALSE , C04GYM0101_TRAINER_03 )
-	//【仮】カミツレショーアップ演出
-	_CALL	ev_swleader04_show
-	
-	//トレーナー退場
-	SWITCH $LCW_POSX
-	CASE 14 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_left )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 15 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_center )
-	_OBJ_ANIME_WAIT()
-		
-	CASE 16 THEN
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_right )
-	_OBJ_ANIME_WAIT()
-		
-	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr_bye_center )
-	_OBJ_ANIME_WAIT()
-	
-	ENDSWITCH
 	
 	//OBJをカミツレのそばにワープさせる
-	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 16, 6, 2, DIR_DOWN )
+	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 21, 6, 2, DIR_LEFT )
+
+	//【仮】カミツレショーアップ演出
+	_CALL	ev_swleader04_show
 	
 	//========================================//
 	//このPOSの起動をさせなくする
@@ -619,6 +639,15 @@ ev_swich_message:
 //	トレーナー接近(左）
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_tr_com_left
+	_ANIME_DATA	AC_DIR_L,1	//回転開始
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
@@ -628,13 +657,75 @@ ev_swich_message:
 //	トレーナー接近(中央）
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_tr_com_center
+	_ANIME_DATA	AC_DIR_L,1	//回転開始
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー接近(中央）ジムクリア
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr_com_center_end
+	_ANIME_DATA	AC_DIR_L,1	//回転開始
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー接近(中央）ジムクリア（３）
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_tr03_com_center_en
+	_ANIME_DATA	AC_DIR_L,1	//回転開始
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_DIR_R,1	//回転開始
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	トレーナー接近(右）
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_tr_com_right
+	_ANIME_DATA	AC_DIR_L,1	//回転開始
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
@@ -646,15 +737,20 @@ ev_swich_message:
 	_ANIME_LABEL	anm_tr_bye_left
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_D,1	//回転開始
 	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
@@ -663,15 +759,20 @@ ev_swich_message:
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_tr_bye_center
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_D,1	//回転開始
 	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
@@ -681,61 +782,23 @@ ev_swich_message:
 	_ANIME_LABEL	anm_tr_bye_right
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_D,1	//回転開始
 	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	クリア時：トレーナー去る01,02(中央）
-//--------------------------------------------------------------
-	_ANIME_LABEL	anm_tr_bye_clear_center01
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WALK_U_8F,7
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	クリア時：トレーナー来る03(中央）
-//--------------------------------------------------------------
-	_ANIME_LABEL	anm_tr_come_clear_center02
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*CALL：カミツレショーアップ						*/
@@ -749,7 +812,7 @@ ev_swleader04_show:
 	_START_EVENT_BGM_SILENT( BGM_FADE_LONG )
 	
 	//【仮】カメラ操作 カミツレにズーム（カメラ移動の時間を要調整）
-	_CAMERA_MOVE( 9688,0,970752,1015808,196655,159744,60 )
+	_CAMERA_MOVE( 4568,0,970752,1015808,196655,-139264,70 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//カミツレにスポットライトが当たる
@@ -777,8 +840,6 @@ _RET
 _ANIME_LABEL	anm_swleader04_show_anime
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_SWLEADER4_ACT0,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_ACT0_STOP,1
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -853,6 +914,19 @@ ev_swleader04_end:
 	
 	//【仮】拍手SE再生（本来はここから鳴り続ける）
 	_SE_PLAY( SEQ_SE_GYM_E01  )
+	
+	//観客から歓声があがる
+	_SUBWIN_MSG( msg_c04gym0101_crowd_01 , 3 , 5 , 1 ) 
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c04gym0101_crowd_02 , 19 , 8 , 2 )
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c04gym0101_crowd_03 , 2 , 15 , 3 )
+	_TIME_WAIT( 30 )
+	_SUBWIN_CLOSE( 1 )
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 2 )
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 3 )
 	_SE_WAIT()
 	
 	//モデル達も一歩前へ
@@ -964,7 +1038,7 @@ _ANIME_LABEL	anm_girls_gymend_come_down
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
-//	ジム勝利：みんな入り口へ
+//	ジム勝利：カミツレと主人公入り口へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_all_gymend_goto_down
 	_ANIME_DATA	AC_WALK_D_8F,7
@@ -973,9 +1047,22 @@ _ANIME_LABEL	anm_all_gymend_goto_down
 //--------------------------------------------------------------------
 //	☆共通処理：方向転換
 //--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_dir_d
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：その場歩き上
