@@ -687,14 +687,15 @@ ev_swleader04_show:
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
-	//【仮】BGMをカメラ操作と同時に音量を0に（現在は音を戻している）
-	_BGM_VOLUME_DOWN( 0 , BGM_FADE_LONG )
+	//BGMをカメラ操作と同時に無音
+	_START_EVENT_BGM_SILENT( BGM_FADE_LONG )
 	
 	//【仮】カメラ操作 カミツレにズーム（カメラ移動の時間を要調整）
 	_CAMERA_MOVE( 9688,0,970752,1015808,196655,159744,60 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//カミツレにスポットライトが当たる
+  _GYM_ELEC_CALL_SHOWUP_EVENT()
 	
 	//カミツレ一歩前に出て演技
 	_OBJ_ANIME( C04GYM0101_LEADER4_01, anm_swleader04_show_anime )
@@ -703,9 +704,6 @@ ev_swleader04_show:
 	
 	//影フェードアウトイベントを行う
 	_GYM_ELEC_CALL_FADEOUT_EVENT(  GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
-	
-	//【仮】BGMを完全バージョンに差し替え（現在はただ音を戻している）
-	_BGM_VOLUME_RECOVER( BGM_FADE_MIDDLE )
 	
 	//自機にカメラを戻す
 	_CAMERA_DEF_MOVE (90) 
