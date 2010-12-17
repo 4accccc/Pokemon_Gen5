@@ -67,6 +67,7 @@ VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk )
 {
   u16 on_off;
   u16 objID;
+  u16 type;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -74,8 +75,9 @@ VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk )
 
   on_off  = VMGetU16( core );
   objID   = VMGetU16( core );
+  type    = VMGetU16( core );
 
-  GYM_ELEC_SetSpotLight( fieldWork, on_off, objID );
+  GYM_ELEC_SetSpotLight( fieldWork, on_off, objID, type );
   return VMCMD_RESULT_CONTINUE;
 }
 

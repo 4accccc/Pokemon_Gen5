@@ -23,6 +23,15 @@
 #define GYM_ELEC_EVENT_SEQ_BOSS_BTL_END (4) //ジムリーダーに勝った  影なし  曲完成
 #define GYM_ELEC_EVENT_SEQ_MAX          (5) //スクリプトでは使用禁止
 
+//-------------------------------------
+///_GYM_ELEC_SET_SPOTLIGHTにいれる値及びプログラム中に使う値
+//=====================================
+#define GYM_ELEC_SPOTLIGHT_NORMAL   (0) //通常ライト
+#define GYM_ELEC_SPOTLIGHT_LEFT     (1) //左から当たるライト
+#define GYM_ELEC_SPOTLIGHT_RIGHT    (2) //右から当たるライト
+#define GYM_ELEC_SPOTLIGHT_CENTER   (3) //上から当たるライト
+#define GYM_ELEC_SPOTLIGHT_MAX      (4) //スクリプトでは使用禁止
+
 //=============================================================================
 /**
  *    ソース用、定義

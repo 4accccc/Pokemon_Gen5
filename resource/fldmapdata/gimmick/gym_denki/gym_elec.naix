@@ -11,13 +11,27 @@
 #define NARC_GYM_ELEC_NAIX_
 
 enum {
-	NARC_gym_elec_c4g_spot01_nsbmd = 0,
-	NARC_gym_elec_stage_light01_nsbmd = 1,
-	NARC_gym_elec_stage_light01_nsbta = 2,
-	NARC_gym_elec_stage_light02_nsbmd = 3,
-	NARC_gym_elec_stage_light02_nsbta = 4,
-	NARC_gym_elec_stage_light03_nsbmd = 5,
-	NARC_gym_elec_stage_light03_nsbta = 6
+	NARC_gym_elec_c4g_flash01_nsbca = 0,
+	NARC_gym_elec_c4g_flash01_nsbmd = 1,
+	NARC_gym_elec_c4g_spot01_nsbmd = 2,
+	NARC_gym_elec_c4g_spot02a_nsbmd = 3,
+	NARC_gym_elec_c4g_spot02b_nsbmd = 4,
+	NARC_gym_elec_c4g_spot02c_nsbmd = 5,
+	NARC_gym_elec_display_boy_nsbca = 6,
+	NARC_gym_elec_display_boy_nsbmd = 7,
+	NARC_gym_elec_display_boy_nsbta = 8,
+	NARC_gym_elec_display_girl_nsbca = 9,
+	NARC_gym_elec_display_girl_nsbmd = 10,
+	NARC_gym_elec_display_girl_nsbta = 11,
+	NARC_gym_elec_display_kami_nsbca = 12,
+	NARC_gym_elec_display_kami_nsbmd = 13,
+	NARC_gym_elec_display_kami_nsbta = 14,
+	NARC_gym_elec_stage_light01_nsbmd = 15,
+	NARC_gym_elec_stage_light01_nsbta = 16,
+	NARC_gym_elec_stage_light02_nsbmd = 17,
+	NARC_gym_elec_stage_light02_nsbta = 18,
+	NARC_gym_elec_stage_light03_nsbmd = 19,
+	NARC_gym_elec_stage_light03_nsbta = 20
 };
 
 /* NARC_GYM_ELEC_NAIX_ */

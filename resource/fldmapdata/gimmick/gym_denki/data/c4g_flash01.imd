@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2010-12-17T16:21:34" source="c4g_flash01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<original_create user="fuchino_hiroki" host="W00252" date="2010-12-17T16:21:34" source="c4g_flash01.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+
+<model_info
+	pos_scale="1"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="0" xyz="0.000000 0.000000 0.000000" whd="0.000000 0.000000 0.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="c4g_flash01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="a3i5"
+		palette_name="c4g_flash01_pl"
+		path="C:/home/swan_data3d/gimmick/gym_denki/flash/tex/c4g_flash01.tga"
+	>
+		<bitmap size="128">
+			0000 0000 2000 2020 2040 0020 0000 0000
+			0000 2000 2120 4121 4161 2021 0020 0000
+			0000 2120 4141 4242 4262 4141 2021 0000
+			2000 4121 4242 6242 4262 4242 2141 0020
+			2000 4241 6242 6363 6383 4262 4142 0020
+			2120 4241 6362 6363 6383 6263 4142 0021
+			4120 4242 6363 8363 6383 6363 4242 2021
+			6140 6262 8383 8383 8383 6363 4262 2041
+			4120 6242 6363 8383 8383 8383 6262 4061
+			4120 4242 6363 8363 6383 6363 4242 2041
+			2120 4241 6362 8363 6363 6263 4142 2021
+			2000 4241 6242 8363 6363 4262 4142 0020
+			2000 4121 4242 6242 4262 4242 2141 0020
+			0000 2120 4141 6242 4242 4141 2021 0000
+			0000 2000 2120 6141 4141 2021 0020 0000
+			0000 0000 2000 4020 2020 0020 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="c4g_flash01_pl" color_size="8">
+		7b94 7bd4 7bd9 7bde 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="lambert13"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="5"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.500000 -4.500000 0.000000"
+		volume_max="4.500000 4.500000 0.000000"
+		volume_r="6.364014"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="16.000000 16.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="4.500000 -4.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xy xy="4.500000 4.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.500000 4.500000"/>
+					<tex st="0.000000 16.000000"/>
+					<pos_xy xy="-4.500000 -4.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pPlane28" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="on"
+		scale="0.000000 0.000000 0.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.500000 -4.500000 0.000000"
+		volume_max="4.500000 4.500000 0.000000"
+		volume_r="6.364014"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>

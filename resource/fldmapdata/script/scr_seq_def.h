@@ -6716,15 +6716,21 @@
  * ジムコマンド　 スポットライト設定
  *  @param  on_off  TRUEならばスポットライトON,  FALSEならばスポットライトOFF
  *  @param  objID   スポットライトをあてるobjID
- */
+ *  @param  type    以下の値を入れてください
+ *    GYM_ELEC_SPOTLIGHT_NORMAL   //通常ライト(通常トレーナー用)
+ *    GYM_ELEC_SPOTLIGHT_LEFT     //左から当たるライト（カミツレ用）
+ *    GYM_ELEC_SPOTLIGHT_RIGHT    //右から当たるライト（カミツレ用）
+ *    GYM_ELEC_SPOTLIGHT_CENTER   //上から当たるライト（カミツレ用）
+*/
 //--------------------------------------------------------------
-#define _GYM_ELEC_SET_SPOTLIGHT( on_off, objID ) \
-    _ASM_GYM_ELEC_SET_SPOTLIGHT on_off, objID 
+#define _GYM_ELEC_SET_SPOTLIGHT( on_off, objID, type ) \
+    _ASM_GYM_ELEC_SET_SPOTLIGHT on_off, objID, type
 
-  .macro  _ASM_GYM_ELEC_SET_SPOTLIGHT on_off, objID
+  .macro  _ASM_GYM_ELEC_SET_SPOTLIGHT on_off, objID, type
   .short  EV_SEQ_GYM_ELEC_SET_SPOT_LIGHT
   .short  \on_off
   .short  \objID
+  .short  \type
   .endm
 
 //--------------------------------------------------------------

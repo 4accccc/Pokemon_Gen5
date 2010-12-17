@@ -271,6 +271,22 @@ void ISS_SWITCH_SYS_ReserveSwitch( ISS_SWITCH_SYS* system, SWITCH_INDEX switchId
   ReserveSwitchSet( system, switchIdx, is_on, bgm );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ó\ñÒê›íËÇÉNÉäÉA
+ *
+ *	@param	ISS_SWITCH_SYS* system 
+ */
+//-----------------------------------------------------------------------------
+void ISS_SWITCH_SYS_ClearReserve( ISS_SWITCH_SYS* system )
+{
+  int i;
+  for( i = 0; i < RESERVE_MAX; i++ )
+  {
+    ISS_SWITCH_RESERVE *wk  = &system->reserveData[ i ];
+    ISS_SWITCH_RESERVE_Clear( wk );
+  }
+}
 
 //===============================================================================
 // Å°private method

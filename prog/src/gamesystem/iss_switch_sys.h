@@ -51,3 +51,8 @@ extern void ISS_SWITCH_SYS_ResetSwitch( ISS_SWITCH_SYS* system );
 // スイッチの予約
 // BOOTしていないときや、BGM変更前のときにON,OFFを事前設定する
 extern void ISS_SWITCH_SYS_ReserveSwitch( ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx, BOOL is_on, u16 bgm );
+
+// スイッチの予約を全クリア
+// 上記予約を使っていて、反映されないまま残ってしまうと
+// 別な場所にいったときに予約できないため
+extern void ISS_SWITCH_SYS_ClearReserve( ISS_SWITCH_SYS* system );
