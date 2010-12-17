@@ -4,14 +4,20 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-12-16T13:36:52
+
  *****************************************************************************/
 
 #ifndef NARC_GYM_ELEC_NAIX_
 #define NARC_GYM_ELEC_NAIX_
 
 enum {
-	NARC_gym_elec_c4g_spot01_nsbmd = 0
+	NARC_gym_elec_c4g_spot01_nsbmd = 0,
+	NARC_gym_elec_stage_light01_nsbmd = 1,
+	NARC_gym_elec_stage_light01_nsbta = 2,
+	NARC_gym_elec_stage_light02_nsbmd = 3,
+	NARC_gym_elec_stage_light02_nsbta = 4,
+	NARC_gym_elec_stage_light03_nsbmd = 5,
+	NARC_gym_elec_stage_light03_nsbta = 6
 };
 
 /* NARC_GYM_ELEC_NAIX_ */
