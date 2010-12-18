@@ -17,11 +17,11 @@ REM ##################################################
 REM		ディレクトリパス定義
 REM ##################################################
 SET WBLIBDIR=%PROJECT_ROOT%lib
-SET CWFolder_NITRO=C:\Program Files\Freescale\CW for NINTENDO DSi V1.2\
-SET CWFOLDER_TWL=C:\Program Files\Freescale\CW for NINTENDO DSi V1.2\
+SET CWFolder_NITRO=%ProgramFiles%\Freescale\CW for NINTENDO DSi V1.2\
+SET CWFOLDER_TWL=%ProgramFiles%\Freescale\CW for NINTENDO DSi V1.2\
 SET CW_NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET CW_TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
-SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DSi V1.2\license.dat
+SET LM_LICENSE_FILE=%ProgramFiles%\Freescale\CW for NINTENDO DSi V1.2\license.dat
 SET NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET NITROSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET NITRODWC_ROOT=%WBLIBDIR%\TwlDWC
