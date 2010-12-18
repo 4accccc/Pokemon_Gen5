@@ -9,6 +9,9 @@ SET PROJECT_RSCDIR=%PROJECT_ROOT%resource/
 SET WBLIBDIR=C:\home\pokemon_wb\lib
 SET TAGFILE=c:\home\pokemon_wb\tags
 
+SET PROGRAM_FILES=C:\Program Files
+IF %PROCESSOR_ARCHITECTURE%==AMD64 SET PROGRAM_FILES=C:\Program Files (x86)
+
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
 REM SET PATH=%AGBDIR%/bin;%PATH%
@@ -17,11 +20,11 @@ REM ##################################################
 REM		ディレクトリパス定義
 REM ##################################################
 SET WBLIBDIR=%PROJECT_ROOT%lib
-SET CWFolder_NITRO=%ProgramFiles%\Freescale\CW for NINTENDO DSi V1.2\
-SET CWFOLDER_TWL=%ProgramFiles%\Freescale\CW for NINTENDO DSi V1.2\
+SET CWFolder_NITRO=%PROGRAM_FILES%\Freescale\CW for NINTENDO DSi V1.2\
+SET CWFOLDER_TWL=%PROGRAM_FILES%\Freescale\CW for NINTENDO DSi V1.2\
 SET CW_NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET CW_TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
-SET LM_LICENSE_FILE=%ProgramFiles%\Freescale\CW for NINTENDO DSi V1.2\license.dat
+SET LM_LICENSE_FILE=%PROGRAM_FILES%\Freescale\CW for NINTENDO DSi V1.2\license.dat
 SET NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET NITROSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET NITRODWC_ROOT=%WBLIBDIR%\TwlDWC
