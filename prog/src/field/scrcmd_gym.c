@@ -132,6 +132,27 @@ VMCMD_RESULT EvCmdGymElec_CallShowupEvent( VMHANDLE *core, void *wk )
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief 観客演出を設定
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymElec_SetFanEffect( VMHANDLE *core, void *wk )
+{
+  u16 type;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  type  = VMGetU16( core );
+
+  GYM_ELEC_SetFanEffect( fieldWork, type );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--ノーマル--
 //--------------------------------------------------------------
 /**

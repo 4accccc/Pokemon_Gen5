@@ -9,6 +9,7 @@
 #pragma once
 
 #define GYM_ELEC_SE_CHEER       (SEQ_SE_GYM_E01)  //歓声音
+#define GYM_ELEC_SE_CHEER_LOOP  (SEQ_SE_GYM_E04)  //歓声音ループ
 #define GYM_ELEC_SE_CAMFLUSH    (SEQ_SE_GYM_E02)  //カメラフラッシュ音
 #define GYM_ELEC_SE_SPOTON      (SEQ_SE_GYM_E03)  //スポットライトON音
 

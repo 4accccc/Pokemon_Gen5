@@ -926,7 +926,7 @@
   DEF_CMD( EvCmdGymElec_SetSpotLight, EV_SEQ_GYM_ELEC_SET_SPOT_LIGHT )
   DEF_CMD( EvCmdGymElec_CallFadeoutEvent, EV_SEQ_GYM_ELEC_CALL_FADEOUT_EVENT )
   DEF_CMD( EvCmdGymElec_CallShowupEvent, EV_SEQ_GYM_ELEC_CALL_SHOWUP_EVENT )
-  NO_CMD()
+  DEF_CMD( EvCmdGymElec_SetFanEffect, EV_SEQ_GYM_ELEC_SET_FAN_EFFECT)
   NO_CMD()
   NO_CMD()
 

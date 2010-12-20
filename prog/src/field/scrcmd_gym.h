@@ -15,6 +15,7 @@ extern VMCMD_RESULT EvCmdGymElec_Recover( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymElec_SetSpotLight( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymElec_CallFadeoutEvent( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymElec_CallShowupEvent( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymElec_SetFanEffect( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymNormal_Unrock( VMHANDLE *core, void *wk );

@@ -32,6 +32,14 @@
 #define GYM_ELEC_SPOTLIGHT_CENTER   (3) //上から当たるライト
 #define GYM_ELEC_SPOTLIGHT_MAX      (4) //スクリプトでは使用禁止
 
+//-------------------------------------
+///_GYM_ELEC_SET_FANEFFECTにいれる値及びプログラム中に使う値
+//=====================================
+#define GYM_ELEC_FAN_EFFECT_NORMAL  (0) //通常アニメ
+#define GYM_ELEC_FAN_EFFECT_TR_END  (1) //トレーナー撃破
+#define GYM_ELEC_FAN_EFFECT_BOSS_END (2) //ボス撃破
+#define GYM_ELEC_FAN_EFFECT_MAX     (3) //スクリプトでは使用禁止
+
 //=============================================================================
 /**
  *    ソース用、定義

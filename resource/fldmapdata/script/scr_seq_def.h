@@ -6768,6 +6768,24 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief ジムコマンド　観客のアニメを設定
+ * @param  type  以下の定義をいれてください
+ *      GYM_ELEC_FAN_EFFECT_NORMAL  通常アニメ(初期はこの状態)
+ *      GYM_ELEC_FAN_EFFECT_TR_END  トレーナー撃破のアニメ＋カメラフラッシュ
+ *      GYM_ELEC_FAN_EFFECT_BOSS_END  ボス撃破後のアニメ＋カメラフラッシュ
+ *
+ */
+//--------------------------------------------------------------
+#define _GYM_ELEC_SET_FAN_EFFECT( type ) \
+    _ASM_GYM_ELEC_SET_FAN_EFFECT type
+
+  .macro  _ASM_GYM_ELEC_SET_FAN_EFFECT type
+  .short  EV_SEQ_GYM_ELEC_SET_FAN_EFFECT
+  .short  \type
+  .endm
+
+//--------------------------------------------------------------
+/**
  * ジムコマンド　電気ジムセーブ復帰処理
  */
 //--------------------------------------------------------------
