@@ -52,6 +52,7 @@ struct _BTLV_FIELD_WORK
   u32                   vanish_flag   :1;
   u32                   anm_stop_once :1;   //背景アニメを1フレーム停止
   u32                                 :30;
+  int                   field_index;
   HEAPID                heapID;
 };
 
@@ -71,6 +72,8 @@ typedef struct
  */
 //============================================================================================
 
+static void _field_anime_delete( BTLV_FIELD_WORK *bfw );
+
 //============================================================================================
 /**
  *  システム初期化
@@ -88,12 +91,13 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
   BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin,
                                                        GFL_HEAP_LOWID( heapID ) );
 
-  bfw->heapID = heapID;
+  bfw->heapID      = heapID;
+  bfw->field_index = index;
 
-  //リソース読み込み
-  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season*2 ] != BATT_BG_TBL_NO_FILE )
+  //IMDデータ読み込み
+  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
   {
-    bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season*2 ] );
+    bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
   }
   else
   {
@@ -104,6 +108,7 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
 
   bfw->anm_count = 0;
 
+  // 適用させるモデリングアニメを数え上げる
   {
     int i;
 
@@ -111,8 +116,8 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     {
-      OS_Printf("bg index=%d,i=%d,season=%d No=%d\n", index,i,season,bbtbt[ index ].file[ i ][ season*2 ]);
-      if( bbtbt[ index ].file[ i ][ season*2 ] != BATT_BG_TBL_NO_FILE )
+      OS_Printf("bg index=%d,i=%d,season=%d No=%d\n", index,i,season,bbtbt[ index ].file[ i ][ season ]);
+      if( bbtbt[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
       {
         bfw->anm_count++;
       }
@@ -124,20 +129,18 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
 
   if( bfw->anm_count )
   {
-    int i, cnt;
+    int i, cnt=0;
 
     bfw->field_anm_resource = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
     bfw->field_anm = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
     bfw->field_anm_work = GFL_HEAP_AllocClearMemory( bfw->heapID, sizeof( BTLV_FIELD_ANM_WORK ) * bfw->anm_count );
 
-    cnt = 0;
-
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     {
-      if( bbtbt[ index ].file[ i ][ season*2 ] != BATT_BG_TBL_NO_FILE )
+      if( bbtbt[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
       {
         //ANIME生成
-        bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ i ][ season*2 ] );
+        bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ i ][ season ] );
         bfw->field_anm[ cnt ] = GFL_G3D_ANIME_Create( bfw->field_render, bfw->field_anm_resource[ cnt ], BTLV_FIELD_ANM_MAX );
         bfw->field_anm_work[ cnt ].anm_type = BTLV_FIELD_ANM_TYPE_LOOP;
         cnt++;
@@ -184,14 +187,91 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
   return bfw;
 }
 
-//============================================================================================
+static const u8 field_anime_tbl[]={0,4,5,6,7,};
+
+//=============================================================================================
 /**
- *  システム終了
+ * @brief 背景モデリングアニメ切替
+ *        季節指定の背景モデルはアニメ切替は呼ばない（はず）と思って作成している
+ *        （理由）季節×アニメの種類とか作るとデザイナーさんの作業がシャレにならないから
  *
- * @param[in] bfw BTLV_FIELD管理ワークへのポインタ
+ * @param   bfw   
+ * @param   anime   
  */
-//============================================================================================
-void  BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
+//=============================================================================================
+void BTLV_FIELD_ChangeAnime( BTLV_FIELD_WORK *bfw, int anime )
+{
+  BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin,
+                                                       GFL_HEAP_LOWID( bfw->heapID ) );
+  GF_ASSERT( bfw->anm_count );
+
+  // もともと適用していたアニメーションを破棄する
+  _field_anime_delete( bfw );
+  // レンダーOBJの解放
+  GFL_G3D_RENDER_Delete( bfw->field_render );
+
+  //RENDER生成
+  bfw->field_render = GFL_G3D_RENDER_Create( bfw->field_resource, 0, bfw->field_resource );
+
+  // モデリングアニメを読み替える
+  if( bfw->anm_count )
+  {
+    int i, cnt=0;
+    bfw->field_anm_resource = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
+    bfw->field_anm = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
+    bfw->field_anm_work = GFL_HEAP_AllocClearMemory( bfw->heapID, sizeof( BTLV_FIELD_ANM_WORK ) * bfw->anm_count );
+
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
+    {
+      int file_id = bbtbt[ bfw->field_index ].file[ i ][ field_anime_tbl[anime] ];
+      if( file_id != BATT_BG_TBL_NO_FILE )
+      {
+        //ANIME生成
+        bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, file_id );
+        bfw->field_anm[ cnt ] = GFL_G3D_ANIME_Create( bfw->field_render, bfw->field_anm_resource[ cnt ], BTLV_FIELD_ANM_MAX );
+        bfw->field_anm_work[ cnt ].anm_type = BTLV_FIELD_ANM_TYPE_LOOP;
+        cnt++;
+        OS_Printf("file_id = %d\n", file_id);
+      }
+    }
+
+    GF_ASSERT_MSG( bfw->anm_count==cnt, "読み替える前と後で適用させるアニメの数が違う\n" );
+
+    //OBJ生成
+    bfw->field_obj = GFL_G3D_OBJECT_Create( bfw->field_render, bfw->field_anm, bfw->anm_count );
+    //ANIME起動
+    for( i = 0 ; i < bfw->anm_count ; i++ )
+    {
+      GFL_G3D_OBJECT_EnableAnime( bfw->field_obj, i );
+    }
+  }
+  else
+  {
+    bfw->field_obj = GFL_G3D_OBJECT_Create( bfw->field_render, NULL, 0 );
+  }
+
+  bfw->field_status.trans.x = 0;
+  bfw->field_status.trans.y = 0;
+  bfw->field_status.trans.z = 0;
+  bfw->field_status.scale.x = FX32_ONE;
+  bfw->field_status.scale.y = FX32_ONE;
+  bfw->field_status.scale.z = FX32_ONE;
+  MTX_Identity33( &bfw->field_status.rotate );
+
+
+  GFL_HEAP_FreeMemory( bbtbt );
+  
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 戦闘背景モデリングデータアニメOBJワークの解放
+ *
+ * @param   bfw   
+ */
+//----------------------------------------------------------------------------------
+static void _field_anime_delete( BTLV_FIELD_WORK *bfw )
 {
   GFL_G3D_OBJECT_Delete( bfw->field_obj );
 
@@ -209,9 +289,25 @@ void  BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
     GFL_HEAP_FreeMemory( bfw->field_anm_resource );
   }
 
+}
+
+//============================================================================================
+/**
+ *  システム終了
+ *
+ * @param[in] bfw BTLV_FIELD管理ワークへのポインタ
+ */
+//============================================================================================
+void  BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
+{
+  // アニメーション管理ワークの解放
+  _field_anime_delete( bfw );
+
+  // renderOBJの解放
   GFL_G3D_RENDER_Delete( bfw->field_render );
   GFL_G3D_DeleteResource( bfw->field_resource );
-
+  
+  // パレットワークの解放
   GFL_HEAP_FreeMemory( bfw->epfw.pData_dst[ 0 ] );
   GFL_HEAP_FreeMemory( bfw->epfw.pData_dst );
   GFL_HEAP_FreeMemory( bfw->epfw.g3DRES );

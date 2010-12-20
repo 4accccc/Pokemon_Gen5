@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ima version="1.6.0">
+
+<head>
+	<create user="yoshida" host="W00210" date="2010-12-15T13:21:26" source="batt_gym01.mb"/>
+	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<mat_color_info
+	frame_size="1601"
+	tool_start_frame="0"
+	tool_end_frame="1600"
+	interpolation="frame"
+	compress_material="on" material_size="9 9"
+	frame_step_mode="1"
+	tolerance_color="2"
+/>
+
+</body>
+
+</ima>

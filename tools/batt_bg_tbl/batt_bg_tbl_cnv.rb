@@ -21,6 +21,16 @@
   FILE_WINTER_MY  = 7
   DATA_EDGE_COLOR = 8
 
+  FILE_FLD_SPRING     = 0
+  FILE_FLD_SUMMER     = 1
+  FILE_FLD_AUTUMN     = 2
+  FILE_FLD_WINTER     = 3
+  FILE_FLD_ANIME0     = 4
+  FILE_FLD_ANIME1     = 5
+  FILE_FLD_ANIME2     = 6
+  FILE_FLD_ANIME3     = 7
+
+
 #	É]Å[Éìï éwíËÉNÉâÉX
 class	ZoneSpec
 	def initialize
@@ -331,10 +341,9 @@ end
       bg << GraFile.new( split_data[ ATTR_NAME ] )
     end
     cnt = bg.size - 1
-    for i in 0..3
+    for i in 0..7
 	  # îwåiÉÇÉfÉãÇ…ÇÕé©ï™ÅEëäéËÇÃãÊï ÇÕñ≥Ç¢ÇÃÇ≈ìØÇ∂ÉfÅ[É^Ç≈ñÑÇﬂÇƒÇ®Ç≠
-      bg[ cnt ].set_file_name_side( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i, 0 )
-      bg[ cnt ].set_file_name_side( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i, 1 )
+      bg[ cnt ].set_file_name( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i )
     end
   end
 
@@ -387,12 +396,12 @@ end
     fp_bg.printf( "//%s\n", bg[ i ].get_table_name )
     bg_hash[ bg[ i ].get_table_name ] = i
     for kind in FILE_IMD..FILE_IMA
-      for season in FILE_SPRING..FILE_WINTER_MY
+      for season in FILE_FLD_SPRING..FILE_FLD_ANIME3
         if bg[ i ].get_file_name( kind, season ) == "Å~"
           fp_bg.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
         else
-          fp_bg.printf( "\t.long\t%s_%s\n", bg[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
-          fp_scr.printf( "\"%s.%s\"\n", bg[ i ].get_file_name( FILE_IMD, season ), ext_table[ kind ] )
+          fp_bg.printf( "\t.long\t%s_%s\n", bg[ i ].get_file_name( kind, season ).upcase, ext_table[ kind ] )
+          fp_scr.printf( "\"%s.%s\"\n", bg[ i ].get_file_name( kind, season ), ext_table[ kind ] )
         end
       end
     end
@@ -456,9 +465,13 @@ end
   fp_header.printf( "#pragma once\n\n" )
   fp_header.printf( "#define  ZONE_SPEC_ATTR_MAX  ( %d )\n", attribute.size )
   fp_header.printf( "#define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )\n" )
-  fp_header.printf( "#define  BATT_BG_TBL_FILE_MAX  ( 8 ) //ìGIMDÅEé©IMDÅEìGICAÅEé©ICAÅEìGITAÅEé©ITAÅEìGIMAÅEé©IMAÇÃèá\n\n" )
+  fp_header.printf( "#define  BATT_BG_TBL_FILE_MAX  ( 8 ) //ìGIMDÅEé©IMDÅEìGICAÅEé©ICAÅEìGITAÅEé©ITAÅEìGIMAÅEé©IMAÇÃèá\n" )
+  fp_header.printf( "#define  BATT_BG_TBL_SEASON_MAX  ( 4 ) // ëOÇSÇ¬Ç™ãGêﬂï™\n\n" )
   fp_header.printf( "#define  BATT_FIELD_TBL_MAX    ( 4 ) // IMDÅEICAÅEITAÅEIMAÇÃèá\n\n" )
-  fp_header.printf( "#define  BATT_BG_TBL_SEASON_MAX  ( 4 )\n\n" )
+  fp_header.printf( "#define  BATT_FIELD_TBL_SEASON_MAX  ( 4 ) // ëOÇSÇ¬Ç™ãGêﬂï™\n" )
+  fp_header.printf( "#define  BATT_FIELD_TBL_ANIME_MAX   ( 4 ) // å„ÇÎÇSÇ¬Ç™êÿë÷ÉAÉjÉÅï™\n")
+
+
   fp_header.printf( "typedef enum\n" )
   fp_header.printf( "{\n" )
   fp_header.printf( "\tBATT_BG_TBL_FILE_NSBMD = 0,\n" )
@@ -481,7 +494,7 @@ end
   fp_header.printf( "\tARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_STAGE_TABLE;\n\n" )
   fp_header.printf( "typedef struct\n{ // ç≈å„ÇÃx2ïîï™ÇÕètètâƒâƒèHèHì~ì~Ç∆ì¸Ç¡ÇƒÇ¢Ç‹Ç∑\n" )
-  fp_header.printf( "\tARCDATID file[BATT_FIELD_TBL_MAX ][ BATT_BG_TBL_SEASON_MAX*2 ];\n" )
+  fp_header.printf( "\tARCDATID file[BATT_FIELD_TBL_MAX ][ BATT_FIELD_TBL_SEASON_MAX+BATT_FIELD_TBL_ANIME_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_BG_TABLE;\n\n" )
 
   fp_header.printf( "typedef enum{\n" )

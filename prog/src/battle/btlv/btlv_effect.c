@@ -419,6 +419,8 @@ void  BTLV_EFFECT_Exit( void )
 
 }
 
+static int debug_anime = 1;
+
 //============================================================================================
 /**
  *  @brief  システムメイン
@@ -475,6 +477,11 @@ void  BTLV_EFFECT_Main( void )
   camera_work_check();
 
   GFL_TCB_Main( bew->tcb_sys );
+
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG){
+    BTLV_FIELD_ChangeAnime( bew->bfw, debug_anime );
+    if(++debug_anime>2){ debug_anime=0; }
+  }
 
   BTLV_MCSS_Main( bew->bmw );
   BTLV_STAGE_Main( bew->bsw );
@@ -1811,6 +1818,9 @@ void  BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no )
   {
     BTLV_GAUGE_SetTrainerBGMChangeFlag( bew->bgw, 1 );
   }
+
+  // テストで場面転換を入れる
+  BTLV_FIELD_ChangeAnime( bew->bfw, 1 );
 }
 
 //============================================================================================
