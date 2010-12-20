@@ -837,13 +837,18 @@ static void ISS_SWITCH_RESERVE_Main( ISS_SWITCH_RESERVE *wk, ISS_SWITCH_SYS* sys
   {
     if( wk->bgm == GetCurrentBGM() )
     {
+      ISS_SWITCH_SET* set = GetCurrentSwitchSet( system );
       if( wk->is_on )
       {
-        ISS_SWITCH_SYS_SwitchOn( system, wk->switchIdx );
+        if( set ) { 
+          ISS_SWITCH_SET_SwitchOnForce( set, wk->switchIdx  );
+        }
       }
       else
       {
-        ISS_SWITCH_SYS_SwitchOff( system, wk->switchIdx );
+        if( set ) { 
+          ISS_SWITCH_SET_SwitchOffForce( set, wk->switchIdx  );
+        }
       }
       ISS_SWITCH_RESERVE_Clear( wk );
     }

@@ -160,6 +160,26 @@ void ISS_SWITCH_SET_SwitchOn( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx )
   SwitchOn( set, swIdx );
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief スイッチセットを押す(即時反映)
+ *
+ * @param set
+ * @param swIdx 押すスイッチを指定
+ */
+//-----------------------------------------------------------------------------
+void ISS_SWITCH_SET_SwitchOnForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx )
+{
+  ISS_SWITCH* sw;
+
+  GF_ASSERT( set );
+  GF_ASSERT( idx != SWITCH_00 );
+  GF_ASSERT( idx <= SWITCH_MAX );
+
+  sw = GetSwitch( set, idx );
+  ISS_SWITCH_ForceOn( sw );
+}
+
 //-------------------------------------------------------------------------------
 /**
  * @brief スイッチセットを離す
@@ -174,7 +194,25 @@ void ISS_SWITCH_SET_SwitchOff( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx )
 
   SwitchOff( set, swIdx );
 }
+//----------------------------------------------------------------------------
+/**
+ * @brief スイッチセットを離す(即時反映)
+ *
+ * @param set
+ * @param swIdx 押すスイッチを指定
+ */
+//-----------------------------------------------------------------------------
+void ISS_SWITCH_SET_SwitchOffForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx )
+{
+  ISS_SWITCH* sw;
 
+  GF_ASSERT( set );
+  GF_ASSERT( idx != SWITCH_00 );
+  GF_ASSERT( idx <= SWITCH_MAX );
+
+  sw = GetSwitch( set, idx );
+  ISS_SWITCH_ForceOff( sw );
+}
 //-------------------------------------------------------------------------------
 /**
  * @brief スイッチセットをリセットする

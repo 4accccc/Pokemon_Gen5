@@ -49,6 +49,10 @@ extern void ISS_SWITCH_SET_Main( ISS_SWITCH_SET* set );
 extern void ISS_SWITCH_SET_SwitchOn( ISS_SWITCH_SET* set, SWITCH_INDEX idx );
 // スイッチセットを離す
 extern void ISS_SWITCH_SET_SwitchOff( ISS_SWITCH_SET* set, SWITCH_INDEX idx );
+// スイッチセットを押す（即時反映）
+extern void ISS_SWITCH_SET_SwitchOnForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx );
+// スイッチセットを離す（即時反映）
+extern void ISS_SWITCH_SET_SwitchOffForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx );
 // スイッチセットをリセットする
 extern void ISS_SWITCH_SET_ResetSwitch( ISS_SWITCH_SET* set );
 // 対応するシーケンス番号を取得する

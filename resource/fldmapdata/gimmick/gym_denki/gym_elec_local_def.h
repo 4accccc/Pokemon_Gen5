@@ -9,3 +9,5 @@
 
 //定義一覧
 #define FOG_SHADOW_FADE_FRAME (60)	//影がフェードアウトするフレーム
+#define CAMERA_FLASH_FRAME_MIN (4)	//カメラフラッシュの最小フレーム
+#define CAMERA_FLASH_FRAME_MAX (8)	//カメラフラッシュの最大フレーム

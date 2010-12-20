@@ -4,9 +4,23 @@
  * @brief   SWAN電気ジム
  * @author  Toru=Nagihashi
  * @date    10.12.08
+ *
+ *  GYM_ELEC_Setup, GYM_ELEC_Move, GYM_ELEC_Endがギミックのメイン処理です。
+ *  各関数の中でクラスが生成、動作しています。
+ *
+ *  上記以外のGYM_ELEC_～関数がスクリプトコマンドから呼ばれる関数です。
+ *  こちらでクラスへのリクエスト処理をしています。
+ *
+ *  電気ジムでは、これらのリクエスト処理をうけて、クラスが動作
+ *  するようになっています。
+ *  GYM_ELEC_Move等で、プレイヤーやキーを見て勝手に動作するようなことはしていません。
+ *
+ *
  */
 //======================================================================
 //field
+#include <gflib.h>
+#include "system/gfl_use.h"
 #include "fieldmap.h"
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 #include "field_gimmick_def.h"
@@ -65,7 +79,10 @@ typedef enum
   MODELID_DISPLAY_BOY,        //画面  男
   MODELID_DISPLAY_GIRL,       //画面  女
 
-  MODELID_FLASH,              //カメラフラッシュ
+  MODELID_FLASH_00,           //カメラフラッシュ０番目
+  MODELID_FLASH_01,           //カメラフラッシュ１番目
+  MODELID_FLASH_02,           //カメラフラッシュ２番目
+  MODELID_FLASH_03,           //カメラフラッシュ３番目
 
   MODELID_MAX,
 }MODELID;
@@ -102,7 +119,7 @@ typedef enum
   ANIMEID_DISPLAY_GIRL_ITA,
   ANIMEID_DISPLAY_GIRL_MAX,
 
-  //MODELID_FLASH用アニメID
+  //MODELID_FLASH_00～03用アニメID
   ANIMEID_FLASH_ICA           = ANIMEID_START,
   ANIMEID_FLASH_MAX,
 
@@ -124,6 +141,8 @@ static void MODEL_StartAnime( MODEL *p_wk, ANIMEID anmID );
 static BOOL MODEL_IsAnimeStop( const MODEL *cp_wk, ANIMEID anmID );
 static void MODEL_StartAnimeAll( MODEL *p_wk );
 static BOOL MODEL_IsAnimeStopAll( const MODEL *cp_wk );
+static void MODEL_SetLoopAnimeAll( MODEL *p_wk, BOOL is_loop );
+static void MODEL_SetLastFrameAll( MODEL *p_wk );
 
 static const VecFx32 * MODEL_DEBUG_GetPosPointer( const MODEL *cp_wk );
 
@@ -192,17 +211,27 @@ static void FLOOR_LIGHT_Exit( FLOOR_LIGHT *p_wk );
 static void FLOOR_LIGHT_Main( FLOOR_LIGHT *p_wk );
 
 static void FLOOR_LIGHT_Enable( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID );
+static void FLOOR_LIGHT_Start( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID );
 
 //-------------------------------------
 ///	カミツレの後ろにある、画面
 //=====================================
 typedef struct _DISPLAY DISPLAY;
 
-static DISPLAY* DISPLAY_Init( MODEL_MANAGER*p_model_man, HEAPID heapID );
+static DISPLAY* DISPLAY_Init( MODEL_MANAGER *p_model_man, HEAPID heapID );
 static void DISPLAY_Exit( DISPLAY *p_wk );
 static void DISPLAY_Main( DISPLAY *p_wk );
 
-//static void DISPLAY_
+//-------------------------------------
+///	観客&カメラ
+//=====================================
+typedef struct _AUDIENCE  AUDIENCE;
+
+static AUDIENCE* AUDIENCE_Init( MODEL_MANAGER *p_model_man, HEAPID heapID );
+static void AUDIENCE_Exit( AUDIENCE *p_wk );
+static void AUDIENCE_Main( AUDIENCE *p_wk );
+
+static void AUDIENCE_StartExcitingEffect( AUDIENCE *p_wk, const VecFx32 *cp_player_pos, s32 sync );
 
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
@@ -218,7 +247,7 @@ typedef enum
   FADEOUT_PHASE_MIDDLE, //中間が消えて、奥が出現
   FADEOUT_PHASE_BACK,   //奥が消える
 }FADEOUT_PHASE;
-static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, FADEOUT_PHASE phase );
+static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, AUDIENCE *p_audience, const VecFx32 *cp_player_pos, FADEOUT_PHASE phase );
 
 //-------------------------------------
 ///	セーブ情報
@@ -256,6 +285,7 @@ typedef struct
   ISS_SWITCH_SYS  *p_iss_switch;  //スイッチiss
   FLOOR_LIGHT     *p_floor_light; //通路ライト
   DISPLAY         *p_display;     //背後の巨大画面
+  AUDIENCE        *p_audience;    //観客
   GYM_ELEC_SV_WORK *p_sv;         //ギミックセーブワーク
 }GYM_ELEC_TMP;
 
@@ -346,6 +376,9 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
   //画面の作成
   p_tmp->p_display  = DISPLAY_Init( p_tmp->p_model_man, heapID );
 
+  //観客の作成
+  p_tmp->p_audience = AUDIENCE_Init( p_tmp->p_model_man, heapID );
+
   //セーブワークの状態に環境を整える
   Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
 
@@ -372,6 +405,9 @@ void GYM_ELEC_End(FIELDMAP_WORK *p_fieldmap)
 
   //反映されず残っている予約設定を全削除
   ISS_SWITCH_SYS_ClearReserve( p_tmp->p_iss_switch );
+
+  //観客の破棄
+  AUDIENCE_Exit( p_tmp->p_audience );
 
   //画面破棄
   DISPLAY_Exit( p_tmp->p_display );
@@ -416,6 +452,9 @@ void GYM_ELEC_Move(FIELDMAP_WORK *p_fieldmap)
   //画面メイン
   DISPLAY_Main( p_tmp->p_display );
 
+  //観客メイン
+  AUDIENCE_Main( p_tmp->p_audience );
+
   //モデル管理メイン
   MODEL_MANAGER_Main( p_tmp->p_model_man );
 }
@@ -448,9 +487,14 @@ GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, u16 event_seq )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
+  const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  VecFx32 player_pos;
 
-    //現在のフェイズを保存
+  //現在のフェイズを保存
   GYM_ELEC_SV_SetEventSeq( p_tmp->p_sv, event_seq );
+
+  //プレイヤー座標を取得
+  FIELD_PLAYER_GetPos( cp_player, &player_pos );
 
   //よりイベントシーケンスを設定
   switch( event_seq )
@@ -459,11 +503,11 @@ GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, u16 event_seq )
     OS_TPrintf( "開始時はフェードしません\n" );
     return NULL;
   case GYM_ELEC_EVENT_SEQ_TR01_BTL_END:
-    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, FADEOUT_PHASE_FRONT );
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, &player_pos, FADEOUT_PHASE_FRONT );
   case GYM_ELEC_EVENT_SEQ_TR02_BTL_END:
-    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, FADEOUT_PHASE_MIDDLE );
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, &player_pos, FADEOUT_PHASE_MIDDLE );
   case GYM_ELEC_EVENT_SEQ_TR03_BTL_END:
-    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, FADEOUT_PHASE_BACK );
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, &player_pos, FADEOUT_PHASE_BACK );
   case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
     OS_TPrintf( "ボス終了時はフェードしません\n" );
     return NULL;
@@ -542,24 +586,35 @@ static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK
   case GYM_ELEC_EVENT_SEQ_START:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
     FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 0 );
+    ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_01, FALSE, GYM_ELEC_BGM_NORMAL );
+    ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_02, FALSE, GYM_ELEC_BGM_NORMAL );
     break;
   case GYM_ELEC_EVENT_SEQ_TR01_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
     FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 1 );
     //本来ISS_SWITCH_SYS_SwitchOnを使うべきですが、Recoverでも予備、ISS_SWITCH_SYSが起動していないため、予約の方を使う
     ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_01, TRUE, GYM_ELEC_BGM_NORMAL );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_FRONT );
     break;
   case GYM_ELEC_EVENT_SEQ_TR02_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, TRUE );
     FOG_SHADOW_SetPhaseRequest( p_tmp->p_fog_shadow, 2 );
     ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_01, TRUE, GYM_ELEC_BGM_NORMAL );
     ISS_SWITCH_SYS_ReserveSwitch( p_tmp->p_iss_switch, SWITCH_02, TRUE, GYM_ELEC_BGM_NORMAL );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_FRONT );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_MIDDLE );
     break;
   case GYM_ELEC_EVENT_SEQ_TR03_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_FRONT );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_MIDDLE );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BACK );
     break;
   case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_FRONT );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_MIDDLE );
+    FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BACK );
     break;
   default:
     GF_ASSERT( 0 );
@@ -835,7 +890,31 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
     NULL,//sc_g3d_display_girl_anm,        //アニメテーブル(複数指定のため)
     0//ANIMEID_DISPLAY_GIRL_MAX,       //アニメリソース数
   },
-  //MODELID_FLASH,              //カメラフラッシュ
+  //MODELID_FLASH_00,              //カメラフラッシュ
+  {
+    MODEL_RESID_FLASH_IMD,          //モデルリソースID
+    0,                              //モデルデータID(リソース内部INDEX)
+    MODEL_RESID_FLASH_IMD,          //テクスチャリソースID
+    sc_g3d_flash_anm,               //アニメテーブル(複数指定のため)
+    ANIMEID_FLASH_MAX,              //アニメリソース数
+  },
+  //MODELID_FLASH_01,              //カメラフラッシュ
+  {
+    MODEL_RESID_FLASH_IMD,          //モデルリソースID
+    0,                              //モデルデータID(リソース内部INDEX)
+    MODEL_RESID_FLASH_IMD,          //テクスチャリソースID
+    sc_g3d_flash_anm,               //アニメテーブル(複数指定のため)
+    ANIMEID_FLASH_MAX,              //アニメリソース数
+  },
+  //MODELID_FLASH_02,              //カメラフラッシュ
+  {
+    MODEL_RESID_FLASH_IMD,          //モデルリソースID
+    0,                              //モデルデータID(リソース内部INDEX)
+    MODEL_RESID_FLASH_IMD,          //テクスチャリソースID
+    sc_g3d_flash_anm,               //アニメテーブル(複数指定のため)
+    ANIMEID_FLASH_MAX,              //アニメリソース数
+  },
+  //MODELID_FLASH_03,              //カメラフラッシュ
   {
     MODEL_RESID_FLASH_IMD,          //モデルリソースID
     0,                              //モデルデータID(リソース内部INDEX)
@@ -1059,6 +1138,44 @@ static BOOL MODEL_IsAnimeStopAll( const MODEL *cp_wk )
     }
   }
   return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル操作  アニメをループアニメにするかどうか
+ *
+ *  @param	MODEL *p_wk ワーク
+ *	@param	is_loop   TRUEループアニメ  FALSE１回再生でストップ
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_SetLoopAnimeAll( MODEL *p_wk, BOOL is_loop )
+{
+  int i;
+  for( i = 0; i < sc_g3d_util_obj[ p_wk->modelID ].anmCount; i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR p_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID,  i );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( p_anm, is_loop );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル操作  最後のフレームに設定
+ *
+ *	@param	MODEL *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_SetLastFrameAll( MODEL *p_wk )
+{
+  int i;
+  for( i = 0; i < sc_g3d_util_obj[ p_wk->modelID ].anmCount; i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR p_anm;
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, 
+      i, TRUE);
+    p_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID,  i );
+    FLD_EXP_OBJ_ChgAnmStopFlg( p_anm, TRUE);
+    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, i,
+                                FLD_EXP_OBJ_GetAnimeLastFrame(p_anm) );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1620,19 +1737,29 @@ static const struct
   //FLOOR_LIGHT_ID_FRONT,   //手前
   {
     MODELID_FLOORLIGHT_FRONT,
-    {
+    { //m_gym_0401_00_01と同じ位置
       FX32_CONST(256),
-      FX32_CONST(24),
-      FX32_CONST(799),
+      FX32_CONST(0),
+      FX32_CONST(768),
     }
   },
   //FLOOR_LIGHT_ID_MIDDLE,  //中
   {
     MODELID_FLOORLIGHT_MIDDLE,
+    { //m_gym_0401_00_00と同じ位置
+      FX32_CONST(256),
+      FX32_CONST(0),
+      FX32_CONST(256),
+    }
   },
   //FLOOR_LIGHT_ID_BACK,    //奥
   {
     MODELID_FLOORLIGHT_BACK,
+    { //m_gym_0401_00_00と同じ位置
+      FX32_CONST(256),
+      FX32_CONST(0),
+      FX32_CONST(256),
+    }
   }
 };
 
@@ -1656,6 +1783,7 @@ static FLOOR_LIGHT* FLOOR_LIGHT_Init( MODEL_MANAGER *p_model_man, HEAPID heapID 
     {
       p_wk->p_model[i]  = MODEL_MANAGER_GetModel( p_model_man, sc_floor_model_tbl[i].modelID );
       MODEL_SetTrans( p_wk->p_model[i], &sc_floor_model_tbl[i].init_pos );
+      MODEL_SetLoopAnimeAll( p_wk->p_model[i], FALSE );
       MODEL_SetVisible( p_wk->p_model[i], TRUE );
     }
   }
@@ -1685,13 +1813,27 @@ static void FLOOR_LIGHT_Main( FLOOR_LIGHT *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  通路ライト管理  ライト点灯
+ *	@brief  通路ライト管理  ライトすでにつき終わっている
  *
  *	@param	FLOOR_LIGHT *p_wk   ワーク
  *	@param	floorID             フロアーID
  */
 //-----------------------------------------------------------------------------
 static void FLOOR_LIGHT_Enable( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID )
+{
+  GF_ASSERT( floorID < FLOOR_LIGHT_ID_MAX );
+  MODEL_SetVisible( p_wk->p_model[ floorID ], TRUE );
+  MODEL_SetLastFrameAll( p_wk->p_model[ floorID ] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通路ライト管理  ライト点灯開始
+ *
+ *	@param	FLOOR_LIGHT *p_wk   ワーク
+ *	@param	floorID             フロアーID
+ */
+//-----------------------------------------------------------------------------
+static void FLOOR_LIGHT_Start( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID )
 {
   GF_ASSERT( floorID < FLOOR_LIGHT_ID_MAX );
   MODEL_SetVisible( p_wk->p_model[ floorID ], TRUE );
@@ -1750,6 +1892,371 @@ static void DISPLAY_Exit( DISPLAY *p_wk )
 static void DISPLAY_Main( DISPLAY *p_wk )
 {
 }
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *    観客
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	定数
+//=====================================
+//観客の数
+enum
+{
+  AUDIENCE_ID_LEFT,
+  AUDIENCE_ID_RIGHT,
+  AUDIENCE_ID_MAX,
+};
+
+//フラッシュの数
+#define CAMERA_FLASH_MAX  (2)
+
+//同時にたくフラッシュの数
+#define CAMERA_FLASH_SAME_MAX  (2)
+
+//フラッシュの点滅シンク
+#define FLASH_FRAME  ( CAMERA_FLASH_FRAME_MIN + GFUser_GetPublicRand0( CAMERA_FLASH_FRAME_MAX - CAMERA_FLASH_FRAME_MIN ) )
+
+//-------------------------------------
+///	フラッシュワーク
+//    同時に２つのフラッシュがたかれます
+//=====================================
+typedef struct 
+{
+  MODEL *p_flash[CAMERA_FLASH_SAME_MAX];
+  BOOL  is_update;
+  s32   seq;
+  VecFx32 trans[CAMERA_FLASH_SAME_MAX];
+}FLASH;
+
+static void FLASH_Init( FLASH *p_wk, MODEL *p_model1, MODEL *p_model2 );
+static void FLASH_Exit( FLASH *p_wk );
+static void FLASH_Main( FLASH *p_wk );
+static void FLASH_Start( FLASH *p_wk, const VecFx32 * cp_pos1, const VecFx32 *cp_pos2 );
+static BOOL FLASH_IsStart( const FLASH *cp_wk );
+
+//-------------------------------------
+///	ワーク
+//=====================================
+struct _AUDIENCE
+{
+  MODEL *p_audience[AUDIENCE_ID_MAX];
+  FLASH flash[ CAMERA_FLASH_MAX];
+
+  VecFx32 player_pos;
+
+  BOOL  is_update;
+  s32   seq;
+  s32   sync_now;
+  s32   sync_max;
+  s32   flash_sync;
+};
+static void Audience_StartFlash( AUDIENCE* p_wk );
+
+//-------------------------------------
+///	data
+//=====================================
+//フラッシュが移される領域
+//x,zの値はプレイヤーからのオフセット
+static const struct
+{
+  fx32 x;
+  fx32 z;
+  fx32 w;
+  fx32 h;
+} sc_flash_rect[] =
+{
+  //左側
+  {
+    FX32_CONST(-112),
+    FX32_CONST(-109),
+    FX32_CONST(40),
+    FX32_CONST(194),
+  },
+  //右側
+  {
+    FX32_CONST(70),
+    FX32_CONST(-109),
+    FX32_CONST(40),
+    FX32_CONST(192),
+  },
+};
+#define FLASH_Y FX32_CONST(85)
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  観客  作成
+ *
+ *	@param	MODEL_MANAGER *p_model_man  モデル管理
+ *	@param	heapID                      ヒープID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+static AUDIENCE* AUDIENCE_Init( MODEL_MANAGER *p_model_man, HEAPID heapID )
+{
+  AUDIENCE* p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(AUDIENCE) );
+
+  {
+    int i;
+    int idx;
+    MODEL *p_model1;
+    MODEL *p_model2;
+    FLASH *p_flash;
+    for( i = 0; i < CAMERA_FLASH_MAX; i++ )
+    {
+      idx = i * CAMERA_FLASH_SAME_MAX;
+      p_model1 = MODEL_MANAGER_GetModel( p_model_man, MODELID_FLASH_00 + idx );
+      p_model2 = MODEL_MANAGER_GetModel( p_model_man, MODELID_FLASH_00 + idx + 1 );
+      p_flash = &p_wk->flash[i];
+      FLASH_Init( p_flash, p_model1, p_model2 );
+    }
+  }
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  観客  破棄
+ *
+ *	@param	AUDIENCE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void AUDIENCE_Exit( AUDIENCE *p_wk )
+{
+  {
+    int i;
+    FLASH *p_flash;
+    for( i = 0; i < CAMERA_FLASH_MAX; i++ )
+    {
+      p_flash = &p_wk->flash[i];
+      FLASH_Exit( p_flash );
+    }
+  }
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  観客  メイン処理
+ *
+ *	@param	AUDIENCE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void AUDIENCE_Main( AUDIENCE *p_wk )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+  };
+
+  if( p_wk->is_update )
+  {
+    switch( p_wk->seq )
+    {
+    case SEQ_INIT:
+      p_wk->flash_sync  = FLASH_FRAME;
+      Audience_StartFlash( p_wk );
+      p_wk->seq++;
+      break;
+
+    case SEQ_MAIN:
+      if( p_wk->flash_sync-- <= 0 )
+      {
+        p_wk->seq = SEQ_INIT;
+      }
+      break;
+    }
+
+    //終了チェック
+    if( p_wk->sync_now++ > p_wk->sync_max )
+    {
+      p_wk->is_update = FALSE;
+    }
+  }
+
+  //カメラフラッシュ  メイン処理
+  {
+    int i;
+    FLASH *p_flash;
+    for( i = 0; i < CAMERA_FLASH_MAX; i++ )
+    {
+      p_flash = &p_wk->flash[i];
+      FLASH_Main( p_flash );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  観客  盛り上がる演出開始
+ *
+ *	@param	AUDIENCE *p_wk  ワーク
+ *	@param  cp_player_pos   プレイヤーの位置
+ *	@param  sync            盛り上がっているシンク
+ */
+//-----------------------------------------------------------------------------
+static void AUDIENCE_StartExcitingEffect( AUDIENCE *p_wk, const VecFx32 *cp_player_pos, s32 sync )
+{
+  p_wk->is_update = TRUE;
+  p_wk->player_pos  = *cp_player_pos;
+  p_wk->sync_now    = 0;
+  p_wk->sync_max    = sync;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラッシュ開始
+ *
+ *	@param	AUDIENCE* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Audience_StartFlash( AUDIENCE* p_wk )
+{
+  int i;
+  VecFx32 pos[CAMERA_FLASH_SAME_MAX];
+  for( i = 0; i < CAMERA_FLASH_MAX; i++ )
+  {
+    FLASH *p_flash  = &p_wk->flash[ i ];
+    if( !FLASH_IsStart( p_flash ) )
+    {
+      //ランダム位置
+      pos[0].x = sc_flash_rect[0].x  + GFUser_GetPublicRand0( sc_flash_rect[0].w );
+      pos[0].z = sc_flash_rect[0].z  + GFUser_GetPublicRand0( sc_flash_rect[0].h );
+      pos[0].y = 0;
+
+      VEC_Add( &p_wk->player_pos, &pos[0], &pos[0] );
+      pos[0].y = FLASH_Y;
+
+      //ランダム位置
+      pos[1].x = sc_flash_rect[1].x  + GFUser_GetPublicRand0( sc_flash_rect[1].w );
+      pos[1].z = sc_flash_rect[1].z  + GFUser_GetPublicRand0( sc_flash_rect[1].h );
+      pos[1].y = 0;
+
+      VEC_Add( &p_wk->player_pos, &pos[1], &pos[1] );
+      pos[1].y = FLASH_Y;
+
+      //フラッシュ開始
+      FLASH_Start( p_flash, &pos[0], &pos[1] );
+      return;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラフラッシュ  初期化
+ *
+ *	@param	FLASH *p_wk ワーク
+ *	@param	*p_model    フラッシュ用モデル1
+ *	@param	*p_model    フラッシュ用モデル2
+ */
+//-----------------------------------------------------------------------------
+static void FLASH_Init( FLASH *p_wk, MODEL *p_model1, MODEL *p_model2 )
+{
+  GFL_STD_MemClear( p_wk, sizeof(FLASH) );
+  p_wk->p_flash[0] = p_model1;
+  p_wk->p_flash[1] = p_model2;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラフラッシュ  破棄
+ *
+ *	@param	FLASH *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FLASH_Exit( FLASH *p_wk )
+{
+  GFL_STD_MemClear( p_wk, sizeof(FLASH) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラフラッシュ  メイン処理
+ *
+ *	@param	FLASH *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FLASH_Main( FLASH *p_wk )
+{
+  enum
+  {
+    SEQ_START,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+  int i;
+
+  if( p_wk->is_update )
+  {
+    switch( p_wk->seq )
+    {
+    case SEQ_START:
+      PMSND_PlaySE( GYM_ELEC_SE_CAMFLUSH );
+      for( i = 0; i < CAMERA_FLASH_SAME_MAX; i++ )
+      {
+        MODEL_SetTrans( p_wk->p_flash[i], &p_wk->trans[i] );
+        MODEL_SetVisible( p_wk->p_flash[i], TRUE );
+        MODEL_StartAnimeAll( p_wk->p_flash[i] );
+      }
+      p_wk->seq++;
+      break;
+    case SEQ_MAIN:
+      {
+        BOOL is_end = TRUE;
+        for( i = 0; i < CAMERA_FLASH_SAME_MAX; i++ )
+        {
+          if( MODEL_IsAnimeStopAll( p_wk->p_flash[i] ) )
+          {
+            MODEL_SetVisible( p_wk->p_flash[i], FALSE );
+          }
+          else
+          {
+            is_end = FALSE;
+          }
+        }
+
+        if( is_end )
+        {
+          p_wk->seq++;
+        }
+      }
+      break;
+    case SEQ_EXIT:
+      p_wk->is_update = FALSE;
+      break;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラフラッシュ  開始
+ *
+ *	@param	FLASH *p_wk ワーク
+ *	@param  cp_pos      表示位置
+ */
+//-----------------------------------------------------------------------------
+static void FLASH_Start( FLASH *p_wk, const VecFx32 * cp_pos1, const VecFx32 *cp_pos2 )
+{
+  p_wk->is_update = TRUE;
+  p_wk->seq       = 0;
+  p_wk->trans[0]     = *cp_pos1;
+  p_wk->trans[1]     = *cp_pos2;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラフラッシュ  開始しているかチェック
+ *
+ *	@param	FLASH *p_wk ワーク
+ *
+ *	@return TRUE開始中  FALSE開始前
+ */
+//-----------------------------------------------------------------------------
+static BOOL FLASH_IsStart( const FLASH *cp_wk )
+{
+  return cp_wk->is_update;
+}
+
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *    ショーアップ
@@ -1837,8 +2344,10 @@ typedef struct
   FOG_SHADOW      *p_fog_shadow;
   ISS_SWITCH_SYS  *p_iss_switch;
   FLOOR_LIGHT     *p_floor_light;
+  AUDIENCE        *p_audience;
   GAMESYS_WORK    *p_gamesys;
   FADEOUT_PHASE   phase;
+  VecFx32         player_pos;
 }FADEOUT_EVENT_WORK;
 
 //-------------------------------------
@@ -1854,12 +2363,14 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
  *	@param	GAMESYS_WORK *p_gamesys ゲームシステム
  *	@param	*p_fog    フォグ影
  *	@param  *p_floor  通路ライト
+ *	@param  *p_audience 観客
+ *  @param  cp_player_pos プレイヤー位置
  *	@param  phase     フェイズ
  *
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, FADEOUT_PHASE phase )
+static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, AUDIENCE *p_audience, const VecFx32 *cp_player_pos, FADEOUT_PHASE phase )
 {
   GMEVENT * p_event = GMEVENT_Create( p_gamesys, NULL, Fadeout_Event, sizeof(FADEOUT_EVENT_WORK) );
   FADEOUT_EVENT_WORK *p_wk = GMEVENT_GetEventWork(p_event);
@@ -1871,6 +2382,8 @@ static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog
   p_wk->phase         = phase;
   p_wk->p_gamesys     = p_gamesys;
   p_wk->p_floor_light = p_floor_light;
+  p_wk->p_audience    = p_audience;
+  p_wk->player_pos    = *cp_player_pos;
 
   return p_event;
 }
@@ -1906,23 +2419,24 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
     {
     case FADEOUT_PHASE_FRONT:
       ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, SWITCH_01 );
-      FLOOR_LIGHT_Enable( p_wk->p_floor_light, FLOOR_LIGHT_ID_FRONT );
+      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_FRONT );
       break;
     case FADEOUT_PHASE_MIDDLE:
       ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, SWITCH_02 );
-      FLOOR_LIGHT_Enable( p_wk->p_floor_light, FLOOR_LIGHT_ID_MIDDLE );
+      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_MIDDLE );
       break;
     case FADEOUT_PHASE_BACK:
       {
         GMEVENT* p_subevent = EVENT_FSND_ChangeBGM( p_wk->p_gamesys, GYM_ELEC_BGM_BOSSAPPER, 0, 0 );
         GMEVENT_CallEvent( p_event, p_subevent );
       }
-      FLOOR_LIGHT_Enable( p_wk->p_floor_light, FLOOR_LIGHT_ID_BACK );
+      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_BACK );
       break;
     default:
       GF_ASSERT(0);
     }
     FOG_SHADOW_FadeOutRequest( p_wk->p_fog_shadow, FOG_SHADOW_FADE_FRAME );
+    AUDIENCE_StartExcitingEffect( p_wk->p_audience, &p_wk->player_pos, FOG_SHADOW_FADE_FRAME );
     (*p_seq)++;
     break;
   case SEQ_FADE_WAIT:
@@ -2000,6 +2514,7 @@ static u16 GYM_ELEC_SV_GetEventSeq( const GYM_ELEC_SV_WORK *cp_wk )
 #define DEBUGWIN_GYM_ELEC (4)
 #define DEBUGWIN_GYM_ELEC_SHADOW (5)
 #define DEBUGWIN_GYM_ELEC_MODEL  (6)
+#define DEBUGWIN_GYM_ELEC_SOUND  (7)
 
 //-------------------------------------
 ///	global
@@ -2045,6 +2560,13 @@ static void DebugWin_Update_ModelIndex( void* userWork , DEBUGWIN_ITEM* item );
 static void DebugWin_Draw_ModelIndex( void* userWork , DEBUGWIN_ITEM* item );
 static void DebugWin_Update_ModelAnime( void* userWork , DEBUGWIN_ITEM* item );
 static void DebugWin_Draw_ModelAnime( void* userWork , DEBUGWIN_ITEM* item );
+//サウンド
+static void DebugWin_Update_BgmNo( void* userWork , DEBUGWIN_ITEM* item );
+static void DebugWin_Draw_BgmNo( void* userWork , DEBUGWIN_ITEM* item );
+static void DebugWin_Update_IssSwitch1( void* userWork , DEBUGWIN_ITEM* item );
+static void DebugWin_Draw_IssSwtch1( void* userWork , DEBUGWIN_ITEM* item );
+static void DebugWin_Update_IssSwitch2( void* userWork , DEBUGWIN_ITEM* item );
+static void DebugWin_Draw_IssSwtch2( void* userWork , DEBUGWIN_ITEM* item );
 
 //モデル操作イベント
 static GMEVENT_RESULT DebugMenu_ModelControl( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
@@ -2060,7 +2582,8 @@ static void DebugMenu_CallModelControllEvent( GAMESYS_WORK *p_gamesys );
 //-----------------------------------------------------------------------------
 static void DEBUGMENU_Init( void *p_tmp_adrs, FIELDMAP_WORK *p_fieldmap, HEAPID heapID )
 {
-  GYM_ELEC_TMP  *p_tmp  = p_tmp_adrs;
+  GYM_ELEC_TMP  *p_tmp      = p_tmp_adrs;
+  GAMESYS_WORK  *p_gamesys  = FIELDMAP_GetGameSysWork( p_fieldmap );
 
   //フォグ影現在値を取得
   {
@@ -2080,6 +2603,7 @@ static void DEBUGMENU_Init( void *p_tmp_adrs, FIELDMAP_WORK *p_fieldmap, HEAPID 
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GYM_ELEC , "でんきジム", heapID );
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GYM_ELEC_SHADOW, "かげ", DEBUGWIN_GYM_ELEC, heapID );
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GYM_ELEC_MODEL, "モデル", DEBUGWIN_GYM_ELEC, heapID );
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GYM_ELEC_SOUND, "サウンド", DEBUGWIN_GYM_ELEC, heapID );
 
   //シーケンス
   DEBUGWIN_AddItemToGroupEx( DebugWin_Update_EventSeq, 
@@ -2134,6 +2658,26 @@ static void DEBUGMENU_Init( void *p_tmp_adrs, FIELDMAP_WORK *p_fieldmap, HEAPID 
                                 DebugWin_Draw_ModelAnime,
                                 NULL,
                                 DEBUGWIN_GYM_ELEC_MODEL, 
+                                heapID );
+
+  //現在のBGMをみる
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Update_BgmNo,
+                                DebugWin_Draw_BgmNo,
+                                p_gamesys,
+                                DEBUGWIN_GYM_ELEC_SOUND,
+                                heapID );
+
+  //ISSを操作
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Update_IssSwitch1,
+                                DebugWin_Draw_IssSwtch1,
+                                p_tmp->p_iss_switch,
+                                DEBUGWIN_GYM_ELEC_SOUND,
+                                heapID );
+  //ISSを操作
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Update_IssSwitch2,
+                                DebugWin_Draw_IssSwtch2,
+                                p_tmp->p_iss_switch,
+                                DEBUGWIN_GYM_ELEC_SOUND,
                                 heapID );
 }
 
@@ -2477,7 +3021,24 @@ static void DebugWin_Update_ModelIndex( void* userWork , DEBUGWIN_ITEM* item )
 //-----------------------------------------------------------------------------
 static void DebugWin_Draw_ModelIndex( void* userWork , DEBUGWIN_ITEM* item )
 {
-  DEBUGWIN_ITEM_SetNameV( item , "そうさモデル[%d]", s_model_wk.index );
+  static const char *sc_label[MODELID_MAX] =
+  {
+    "ライトふつう",//MODELID_SPOTLIGHT_NORMAL  = GYM_ELEC_SPOTLIGHT_NORMAL, //通常ライト
+    "ライトひだり",//MODELID_SPOTLIGHT_LEFT    = GYM_ELEC_SPOTLIGHT_LEFT,   //左から当たるライト
+    "ライトみぎ",//MODELID_SPOTLIGHT_RIGHT   = GYM_ELEC_SPOTLIGHT_RIGHT,  //右から当たるライト
+    "ライトなか",//MODELID_SPOTLIGHT_CENTER  = GYM_ELEC_SPOTLIGHT_CENTER, //上から当たるライト
+    "つうろてまえ",//MODELID_FLOORLIGHT_FRONT,  //通路ライト手前
+    "つうろなか",//MODELID_FLOORLIGHT_MIDDLE,  //通路ライト真ん中
+    "つうろおく",//MODELID_FLOORLIGHT_BACK,    //通路ライト奥
+    "がめんカミツレ",//MODELID_DISPLAY_BOSS,       //画面  カミツレ
+    "がめんおとこ",//MODELID_DISPLAY_BOY,        //画面  男
+    "がめんおんな",//MODELID_DISPLAY_GIRL,       //画面  女
+    "フラッシュ１",//MODELID_FLASH_00,           //カメラフラッシュ０番目
+    "フラッシュ２",//MODELID_FLASH_01,           //カメラフラッシュ１番目
+    "フラッシュ３",//MODELID_FLASH_02,           //カメラフラッシュ２番目
+    "フラッシュ４",//MODELID_FLASH_03,           //カメラフラッシュ３番目
+  };
+  DEBUGWIN_ITEM_SetNameV( item , "モデル[%s]", sc_label[s_model_wk.index] );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2621,4 +3182,139 @@ static void DebugMenu_CallModelControllEvent( GAMESYS_WORK *p_gamesys )
   GAMESYSTEM_SetEvent( p_gamesys, p_event );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンド  BGM設定 更新
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_BgmNo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMESYS_WORK  *p_gamesys  = userWork;
+  GAMEDATA *p_gamedata      = GAMESYSTEM_GetGameData( p_gamesys );
+  u32 bgm = FSND_GetLastBGM( p_gamedata );
+  int index;
+
+  if( bgm == GYM_ELEC_BGM_NORMAL )
+  {
+    index = 0;
+  }
+  else
+  {
+    index = 1;
+  }
+
+  if( DebugWin_Util_ChangeData( &index, 0, 1 ) )
+  {
+  
+    if( index == 0 )
+    {
+      bgm = GYM_ELEC_BGM_NORMAL;
+    }
+    else
+    {
+      bgm = GYM_ELEC_BGM_BOSSAPPER;
+    }
+
+    {
+      GMEVENT* p_event = EVENT_FSND_ChangeBGM( p_gamesys, bgm, 0, 0 );
+      GAMESYSTEM_SetEvent( p_gamesys, p_event );
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンド  BGM設定 描画
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_BgmNo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMESYS_WORK  *p_gamesys  = userWork;
+  GAMEDATA *p_gamedata      = GAMESYSTEM_GetGameData( p_gamesys );
+  u32 bgm = FSND_GetLastBGM( p_gamedata );
+
+  DEBUGWIN_ITEM_SetNameV( item , "BGM[%d]", bgm );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンド  スイッチ１を操作  更新
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_IssSwitch1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  ISS_SWITCH_SYS  *p_iss_switch = userWork;
+  int index = ISS_SWITCH_SYS_IsSwitchOn( p_iss_switch, SWITCH_01 );
+  if( DebugWin_Util_ChangeData( &index, 0, 1 ) )
+  {
+    if( index == 1 )
+    {
+      ISS_SWITCH_SYS_SwitchOn( p_iss_switch, SWITCH_01 );
+    }
+    else
+    {
+      ISS_SWITCH_SYS_SwitchOff( p_iss_switch, SWITCH_01 );
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンド  スイッチ１を操作  描画
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_IssSwtch1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  ISS_SWITCH_SYS  *p_iss_switch = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "スイッチ１[%d]", ISS_SWITCH_SYS_IsSwitchOn(p_iss_switch, SWITCH_01 ) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンド  スイッチ１を操作  描画
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_IssSwitch2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  ISS_SWITCH_SYS  *p_iss_switch = userWork;
+  int index = ISS_SWITCH_SYS_IsSwitchOn( p_iss_switch, SWITCH_02 );
+  if( DebugWin_Util_ChangeData( &index, 0, 1 ) )
+  {
+    if( index == 1 )
+    {
+      ISS_SWITCH_SYS_SwitchOn( p_iss_switch, SWITCH_02 );
+    }
+    else
+    {
+      ISS_SWITCH_SYS_SwitchOff( p_iss_switch, SWITCH_02 );
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンド  スイッチ１を操作  更新
+ *
+ *	@param	void* userWork  ワーク
+ *	@param	item            アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_IssSwtch2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  ISS_SWITCH_SYS  *p_iss_switch = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "スイッチ２[%d]", ISS_SWITCH_SYS_IsSwitchOn(p_iss_switch, SWITCH_02 ) );
+}
 #endif //GYM_ELEC_DEBUG_MENU
