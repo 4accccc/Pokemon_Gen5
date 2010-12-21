@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="iwasawa" host="W00107" date="2010-04-05T18:56:26" source="t4x4flip_anm.mb"/>
+	<create user="iwasawa" host="W00107" date="2010-04-05T18:56:26" source="t4x4x7_anm.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
 </head>
@@ -18,14 +18,14 @@
 />
 
 <tex_pattern_list_data image_size="7" palette_size="1">
-	<image_name index="0" name="t4x4flip.1"/>
-	<image_name index="1" name="t4x4flip.2"/>
-	<image_name index="2" name="t4x4flip.3"/>
-	<image_name index="3" name="t4x4flip.4"/>
-	<image_name index="4" name="t4x4flip.5"/>
-	<image_name index="5" name="t4x4flip.6"/>
-	<image_name index="6" name="t4x4flip.7"/>
-	<palette_name index="0" name="t4x4flip"/>
+	<image_name index="0" name="t4x4x7.0"/>
+	<image_name index="1" name="t4x4x7.1"/>
+	<image_name index="2" name="t4x4x7.2"/>
+	<image_name index="3" name="t4x4x7.3"/>
+	<image_name index="4" name="t4x4x7.4"/>
+	<image_name index="5" name="t4x4x7.5"/>
+	<image_name index="6" name="t4x4x7.6"/>
+	<palette_name index="0" name="t4x4x7"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>

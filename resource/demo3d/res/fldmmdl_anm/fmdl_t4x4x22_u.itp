@@ -18,28 +18,28 @@
 />
 
 <tex_pattern_list_data image_size="22" palette_size="1">
-	<image_name index="0" name="t4x4x22.1"/>
-	<image_name index="1" name="t4x4x22.10"/>
-	<image_name index="2" name="t4x4x22.11"/>
-	<image_name index="3" name="t4x4x22.12"/>
-	<image_name index="4" name="t4x4x22.13"/>
-	<image_name index="5" name="t4x4x22.14"/>
-	<image_name index="6" name="t4x4x22.15"/>
-	<image_name index="7" name="t4x4x22.16"/>
-	<image_name index="8" name="t4x4x22.17"/>
-	<image_name index="9" name="t4x4x22.18"/>
-	<image_name index="10" name="t4x4x22.19"/>
-	<image_name index="11" name="t4x4x22.2"/>
-	<image_name index="12" name="t4x4x22.20"/>
-	<image_name index="13" name="t4x4x22.21"/>
-	<image_name index="14" name="t4x4x22.22"/>
-	<image_name index="15" name="t4x4x22.3"/>
-	<image_name index="16" name="t4x4x22.4"/>
-	<image_name index="17" name="t4x4x22.5"/>
-	<image_name index="18" name="t4x4x22.6"/>
-	<image_name index="19" name="t4x4x22.7"/>
-	<image_name index="20" name="t4x4x22.8"/>
-	<image_name index="21" name="t4x4x22.9"/>
+	<image_name index="0" name="t4x4x22.0"/>
+	<image_name index="1" name="t4x4x22.1"/>
+	<image_name index="2" name="t4x4x22.2"/>
+	<image_name index="3" name="t4x4x22.3"/>
+	<image_name index="4" name="t4x4x22.4"/>
+	<image_name index="5" name="t4x4x22.5"/>
+	<image_name index="6" name="t4x4x22.6"/>
+	<image_name index="7" name="t4x4x22.7"/>
+	<image_name index="8" name="t4x4x22.8"/>
+	<image_name index="9" name="t4x4x22.9"/>
+	<image_name index="10" name="t4x4x22.10"/>
+	<image_name index="11" name="t4x4x22.11"/>
+	<image_name index="12" name="t4x4x22.12"/>
+	<image_name index="13" name="t4x4x22.13"/>
+	<image_name index="14" name="t4x4x22.14"/>
+	<image_name index="15" name="t4x4x22.15"/>
+	<image_name index="16" name="t4x4x22.16"/>
+	<image_name index="17" name="t4x4x22.17"/>
+	<image_name index="18" name="t4x4x22.18"/>
+	<image_name index="19" name="t4x4x22.19"/>
+	<image_name index="20" name="t4x4x22.20"/>
+	<image_name index="21" name="t4x4x22.21"/>
 	<palette_name index="0" name="t4x4x22"/>
 </tex_pattern_list_data>
 

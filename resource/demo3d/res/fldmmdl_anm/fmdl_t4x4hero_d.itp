@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="iwasawa" host="W00107" date="2010-04-05T18:56:26" source="t4x4hero_anm.mb"/>
+	<create user="iwasawa" host="W00107" date="2010-04-05T18:56:26" source="t4x4x24_anm.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
 </head>
@@ -17,40 +17,32 @@
 	compress_material="off" material_size="1 1"
 />
 
-<tex_pattern_list_data image_size="32" palette_size="1">
-	<image_name index="0" name="t4x4hero.1"/>
-	<image_name index="1" name="t4x4hero.2"/>
-	<image_name index="2" name="t4x4hero.3"/>
-	<image_name index="3" name="t4x4hero.4"/>
-	<image_name index="4" name="t4x4hero.5"/>
-	<image_name index="5" name="t4x4hero.6"/>
-	<image_name index="6" name="t4x4hero.7"/>
-	<image_name index="7" name="t4x4hero.8"/>
-	<image_name index="8" name="t4x4hero.9"/>
-	<image_name index="9" name="t4x4hero.10"/>
-	<image_name index="10" name="t4x4hero.11"/>
-	<image_name index="11" name="t4x4hero.12"/>
-	<image_name index="12" name="t4x4hero.13"/>
-	<image_name index="13" name="t4x4hero.14"/>
-	<image_name index="14" name="t4x4hero.15"/>
-	<image_name index="15" name="t4x4hero.16"/>
-	<image_name index="16" name="t4x4hero.17"/>
-	<image_name index="17" name="t4x4hero.18"/>
-	<image_name index="18" name="t4x4hero.19"/>
-	<image_name index="19" name="t4x4hero.20"/>
-	<image_name index="20" name="t4x4hero.21"/>
-	<image_name index="21" name="t4x4hero.22"/>
-	<image_name index="22" name="t4x4hero.23"/>
-	<image_name index="23" name="t4x4hero.24"/>
-	<image_name index="24" name="t4x4hero.25"/>
-	<image_name index="25" name="t4x4hero.26"/>
-	<image_name index="26" name="t4x4hero.27"/>
-	<image_name index="27" name="t4x4hero.28"/>
-	<image_name index="28" name="t4x4hero.29"/>
-	<image_name index="29" name="t4x4hero.30"/>
-	<image_name index="30" name="t4x4hero.31"/>
-	<image_name index="31" name="t4x4hero.32"/>
-	<palette_name index="0" name="t4x4hero"/>
+<tex_pattern_list_data image_size="24" palette_size="1">
+	<image_name index="0" name="t4x4x24.0"/>
+	<image_name index="1" name="t4x4x24.1"/>
+	<image_name index="2" name="t4x4x24.2"/>
+	<image_name index="3" name="t4x4x24.3"/>
+	<image_name index="4" name="t4x4x24.4"/>
+	<image_name index="5" name="t4x4x24.5"/>
+	<image_name index="6" name="t4x4x24.6"/>
+	<image_name index="7" name="t4x4x24.7"/>
+	<image_name index="8" name="t4x4x24.8"/>
+	<image_name index="9" name="t4x4x24.9"/>
+	<image_name index="10" name="t4x4x24.10"/>
+	<image_name index="11" name="t4x4x24.11"/>
+	<image_name index="12" name="t4x4x24.12"/>
+	<image_name index="13" name="t4x4x24.13"/>
+	<image_name index="14" name="t4x4x24.14"/>
+	<image_name index="15" name="t4x4x24.15"/>
+	<image_name index="16" name="t4x4x24.16"/>
+	<image_name index="17" name="t4x4x24.17"/>
+	<image_name index="18" name="t4x4x24.18"/>
+	<image_name index="19" name="t4x4x24.19"/>
+	<image_name index="20" name="t4x4x24.20"/>
+	<image_name index="21" name="t4x4x24.21"/>
+	<image_name index="22" name="t4x4x24.22"/>
+	<image_name index="23" name="t4x4x24.23"/>
+	<palette_name index="0" name="t4x4x24"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
