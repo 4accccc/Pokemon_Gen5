@@ -92,6 +92,8 @@ typedef enum
   MODELID_FLASH_01,           //カメラフラッシュ１番目
   MODELID_FLASH_02,           //カメラフラッシュ２番目
   MODELID_FLASH_03,           //カメラフラッシュ３番目
+  MODELID_FLASH_04,           //カメラフラッシュ４番目
+  MODELID_FLASH_05,           //カメラフラッシュ５番目
 
   MODELID_WINLIGHT_01,        //勝利後ライトアップ一人目
   MODELID_WINLIGHT_02,        //勝利後ライトアップ二人目
@@ -135,7 +137,7 @@ typedef enum
   ANIMEID_DISPLAY_GIRL_ITA,
   ANIMEID_DISPLAY_GIRL_MAX,
 
-  //MODELID_FLASH_00～03用アニメID
+  //MODELID_FLASH_00～05用アニメID
   ANIMEID_FLASH_ICA           = ANIMEID_START,
   ANIMEID_FLASH_MAX,
 
@@ -174,9 +176,11 @@ static void MODEL_GetTrans( const MODEL *cp_wk, VecFx32 * p_trans );
 static void MODEL_StartAnime( MODEL *p_wk, ANIMEID anmID );
 static BOOL MODEL_IsAnimeStop( const MODEL *cp_wk, ANIMEID anmID );
 static void MODEL_StartAnimeAll( MODEL *p_wk );
+static void MODEL_StopAnimeAll( MODEL *p_wk );
 static BOOL MODEL_IsAnimeStopAll( const MODEL *cp_wk );
 static void MODEL_SetLoopAnimeAll( MODEL *p_wk, BOOL is_loop );
 static void MODEL_SetLastFrameAll( MODEL *p_wk );
+static GFL_G3D_OBJ *MODEL_GetG3dObj( MODEL *p_wk );
 
 static const VecFx32 * MODEL_DEBUG_GetPosPointer( const MODEL *cp_wk );
 
@@ -249,6 +253,7 @@ static void FLOOR_LIGHT_Main( FLOOR_LIGHT *p_wk );
 
 static void FLOOR_LIGHT_Enable( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID );
 static void FLOOR_LIGHT_Start( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID );
+static void FLOOR_LIGHT_StartAlpha( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID, u16 sync );
 
 //-------------------------------------
 ///	カミツレの後ろにある、画面
@@ -269,7 +274,7 @@ static void DISPLAY_Main( DISPLAY *p_wk );
 static void DISPLAY_Set( DISPLAY *p_wk, DISPLAY_ID displayID );
 
 //-------------------------------------
-///	観客&カメラ
+///	観客&カメラフラッシュ
 //=====================================
 typedef enum
 {
@@ -281,11 +286,11 @@ typedef enum
 
 typedef struct _AUDIENCE  AUDIENCE;
 
-static AUDIENCE* AUDIENCE_Init( MODEL_MANAGER *p_model_man, HEAPID heapID );
+static AUDIENCE* AUDIENCE_Init( MODEL_MANAGER *p_model_man, const FIELD_PLAYER *cp_player, HEAPID heapID );
 static void AUDIENCE_Exit( AUDIENCE *p_wk );
 static void AUDIENCE_Main( AUDIENCE *p_wk );
 
-static void AUDIENCE_SetExcitingEffect( AUDIENCE *p_wk, AUDIENCE_EXCITE_TYPE type, const VecFx32 *cp_player_pos );
+static void AUDIENCE_SetExcitingEffect( AUDIENCE *p_wk, AUDIENCE_EXCITE_TYPE type );
 
 //-------------------------------------
 ///	ショーアップ（カミツレショーアップ演出）
@@ -431,7 +436,10 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
   p_tmp->p_display  = DISPLAY_Init( p_tmp->p_model_man, heapID );
 
   //観客の作成
-  p_tmp->p_audience = AUDIENCE_Init( p_tmp->p_model_man, heapID );
+  {
+    const FIELD_PLAYER *cp_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+    p_tmp->p_audience = AUDIENCE_Init( p_tmp->p_model_man, cp_player, heapID );
+  }
 
   //セーブワークの状態に環境を整える
   Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
@@ -531,7 +539,7 @@ GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys )
 
   //とりあえず今は仮でイベントではなく、勝った後の演出を開始している
 
-  FLOOR_LIGHT_Start( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BOSS_WIN );
+  FLOOR_LIGHT_StartAlpha( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BOSS_WIN, 60 );
 
   {
     const FIELD_PLAYER  *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
@@ -628,9 +636,7 @@ void GYM_ELEC_SetFanEffect( FIELDMAP_WORK *p_fieldmap, u16 type )
   const FIELD_PLAYER  *cp_player = FIELDMAP_GetFieldPlayer(p_fieldmap);
   VecFx32 player_pos;
 
-  FIELD_PLAYER_GetPos( cp_player, &player_pos );
-
-  AUDIENCE_SetExcitingEffect( p_tmp->p_audience, type, &player_pos );
+  AUDIENCE_SetExcitingEffect( p_tmp->p_audience, type );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1100,6 +1106,22 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
     sc_g3d_flash_anm,               //アニメテーブル(複数指定のため)
     ANIMEID_FLASH_MAX,              //アニメリソース数
   },
+  //MODELID_FLASH_04,              //カメラフラッシュ
+  {
+    MODEL_RESID_FLASH_IMD,          //モデルリソースID
+    0,                              //モデルデータID(リソース内部INDEX)
+    MODEL_RESID_FLASH_IMD,          //テクスチャリソースID
+    sc_g3d_flash_anm,               //アニメテーブル(複数指定のため)
+    ANIMEID_FLASH_MAX,              //アニメリソース数
+  },
+  //MODELID_FLASH_05,              //カメラフラッシュ
+  {
+    MODEL_RESID_FLASH_IMD,          //モデルリソースID
+    0,                              //モデルデータID(リソース内部INDEX)
+    MODEL_RESID_FLASH_IMD,          //テクスチャリソースID
+    sc_g3d_flash_anm,               //アニメテーブル(複数指定のため)
+    ANIMEID_FLASH_MAX,              //アニメリソース数
+  },
   //MODELID_WINLIGHT_01,        //勝利後ライトアップ一人目
   {
     MODEL_RESID_WINLIGHT_01_IMD,    //モデルリソースID
@@ -1338,6 +1360,22 @@ static void MODEL_StartAnimeAll( MODEL *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  モデル操作  アニメストップ
+ *
+ *	@param	MODEL *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_StopAnimeAll( MODEL *p_wk )
+{
+  int i;
+  for( i = 0; i < sc_g3d_util_obj[ p_wk->modelID ].anmCount; i++ )
+  {
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, 
+      i, FALSE);
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  モデル操作  全アニメ終了検知
  *
  *	@param	const MODEL *cp_wk  ワーク
@@ -1394,6 +1432,19 @@ static void MODEL_SetLastFrameAll( MODEL *p_wk )
     FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, i,
                                 FLD_EXP_OBJ_GetAnimeLastFrame(p_anm) );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GFL_G3D_OBJを取得する
+ *
+ *	@param	MODEL *p_wk ワーク
+ *
+ *	@return GFL_G3D_OBJ
+ */
+//-----------------------------------------------------------------------------
+static GFL_G3D_OBJ *MODEL_GetG3dObj( MODEL *p_wk )
+{
+  return FLD_EXP_OBJ_GetUnitObj(p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID);
 }
 //----------------------------------------------------------------------------
 /**
@@ -1936,21 +1987,40 @@ static BOOL Spot_Light_IsUse( const SPOT_LIGHT *cp_wk )
 //-------------------------------------
 ///	const
 //=====================================
+#define FLOOR_LIGHT_ALPHA_WK_MAX  (2)
+
 //-------------------------------------
 ///	struct
 //=====================================
+//アルファしながらでてくるためのワーク
+typedef struct
+{
+  BOOL  is_use;
+  MODEL *p_model;
+  u16   sync_now;
+  u16   sync_max;
+  int   target_alpha;
+} LIGHT_ALPHA_WORK;
+static void Light_Alpha_Init( LIGHT_ALPHA_WORK *p_wk, MODEL *p_model, u16 sync_max );
+static void Light_Alpha_Exit( LIGHT_ALPHA_WORK *p_wk );
+static void Light_Alpha_Main( LIGHT_ALPHA_WORK *p_wk );
+static BOOL Light_Alpha_IsUse( const LIGHT_ALPHA_WORK *cp_wk );
+
+
+//通路ライトメインワーク
 struct _FLOOR_LIGHT
 {
   MODEL *p_model[FLOOR_LIGHT_ID_MAX];
+  LIGHT_ALPHA_WORK alpha_work[FLOOR_LIGHT_ALPHA_WK_MAX];
 };
 //-------------------------------------
 ///	data
 //=====================================
 static const struct
 {
-  MODELID modelID;
-  VecFx32 init_pos;
-  BOOL    is_loop;
+  MODELID modelID;        //モデルID
+  VecFx32 init_pos;       //初期値
+  BOOL    is_loop;        //アニメループするか
 }  sc_floor_model_tbl[FLOOR_LIGHT_ID_MAX]  =
 {
   //FLOOR_LIGHT_ID_FRONT,   //手前
@@ -1961,7 +2031,7 @@ static const struct
       FX32_CONST(0),
       FX32_CONST(768),
     },
-    FALSE
+    FALSE,
   },
   //FLOOR_LIGHT_ID_MIDDLE,  //中
   {
@@ -1971,7 +2041,7 @@ static const struct
       FX32_CONST(0),
       FX32_CONST(256),
     },
-    FALSE
+    FALSE,
   },
   //FLOOR_LIGHT_ID_BACK,    //奥
   {
@@ -1981,7 +2051,7 @@ static const struct
       FX32_CONST(0),
       FX32_CONST(256),
     },
-    FALSE
+    FALSE,
   },
   //FLOOR_LIGHT_ID_TR01_WIN,  //トレーナー一人目勝利
   {
@@ -1991,7 +2061,7 @@ static const struct
       FX32_CONST(0),
       FX32_CONST(256),
     },
-    TRUE
+    TRUE,
   },
   //FLOOR_LIGHT_ID_TR02_WIN,  //トレーナー二人目勝利
   {
@@ -2001,7 +2071,7 @@ static const struct
       FX32_CONST(0),
       FX32_CONST(256),
     },
-    TRUE
+    TRUE,
   },
   //FLOOR_LIGHT_ID_BOSS_WIN,  //カミツレ勝利
   {
@@ -2011,7 +2081,7 @@ static const struct
       FX32_CONST(0),
       FX32_CONST(256),
     },
-    TRUE
+    TRUE,
   },
 };
 
@@ -2061,6 +2131,14 @@ static void FLOOR_LIGHT_Exit( FLOOR_LIGHT *p_wk )
 //-----------------------------------------------------------------------------
 static void FLOOR_LIGHT_Main( FLOOR_LIGHT *p_wk )
 {
+  int i;
+  for( i = 0; i < FLOOR_LIGHT_ALPHA_WK_MAX; i++ )
+  {
+    if( Light_Alpha_IsUse( &p_wk->alpha_work[i] ) )
+    {
+      Light_Alpha_Main( &p_wk->alpha_work[i] );
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -2089,6 +2167,113 @@ static void FLOOR_LIGHT_Start( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID )
   GF_ASSERT( floorID < FLOOR_LIGHT_ID_MAX );
   MODEL_SetVisible( p_wk->p_model[ floorID ], TRUE );
   MODEL_StartAnimeAll( p_wk->p_model[ floorID ] );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通路ライト管理  ライト点灯開始  アルファしながら出てくる版
+ *
+ *	@param	FLOOR_LIGHT *p_wk ワーク
+ *	@param	floorID   開始するID
+ *	@param	sync      アルファが終わるシンク
+ */
+//-----------------------------------------------------------------------------
+static void FLOOR_LIGHT_StartAlpha( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID, u16 sync )
+{
+  {
+    int i;
+    for( i = 0; i < FLOOR_LIGHT_ALPHA_WK_MAX; i++ )
+    {
+      if( Light_Alpha_IsUse( &p_wk->alpha_work[i] ) == FALSE )
+      {
+        Light_Alpha_Init( &p_wk->alpha_work[i], p_wk->p_model[ floorID ], sync );
+        break;
+      }
+    }
+  }
+  FLOOR_LIGHT_Start( p_wk, floorID );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファしながらアニメ開始する  初期化
+ *
+ *	@param	LIGHT_ALPHA_WORK *p_wk  ワーク
+ *	@param	*p_model                モデル
+ *	@param	sync_max                アルファするシンク
+ */
+//-----------------------------------------------------------------------------
+static void Light_Alpha_Init( LIGHT_ALPHA_WORK *p_wk, MODEL *p_model, u16 sync_max )
+{
+  GFL_STD_MemClear( p_wk, sizeof(LIGHT_ALPHA_WORK ) );
+  p_wk->p_model = p_model;
+  p_wk->sync_max  = sync_max;
+
+  {
+    GFL_G3D_RND*  p_g3d_rnd     = GFL_G3D_OBJECT_GetG3Drnd( MODEL_GetG3dObj(p_model) );
+    NNSG3dRenderObj *p_rend_obj = GFL_G3D_RENDER_GetRenderObj( p_g3d_rnd );
+    NNSG3dResMdl    *p_res_mdl  = NNS_G3dRenderObjGetResMdl( p_rend_obj );
+    p_wk->target_alpha  = NNS_G3dMdlGetMdlAlpha( p_res_mdl, 0 );
+
+    NNS_G3dMdlSetMdlAlpha( p_res_mdl, 0, 0 );
+  }
+
+  p_wk->is_use  = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファしながらアニメ開始する  破棄
+ *
+ *	@param	LIGHT_ALPHA_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Light_Alpha_Exit( LIGHT_ALPHA_WORK *p_wk )
+{
+  GFL_STD_MemClear( p_wk, sizeof(LIGHT_ALPHA_WORK ) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファしながらアニメ開始する  メイン処理
+ *
+ *	@param	LIGHT_ALPHA_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Light_Alpha_Main( LIGHT_ALPHA_WORK *p_wk )
+{
+  int alpha;
+
+  if( p_wk->is_use == FALSE ){ return; }
+
+  alpha = p_wk->target_alpha * p_wk->sync_now / p_wk->sync_max;
+
+  {
+    GFL_G3D_RND*  p_g3d_rnd     = GFL_G3D_OBJECT_GetG3Drnd( MODEL_GetG3dObj(p_wk->p_model) );
+    NNSG3dRenderObj *p_rend_obj = GFL_G3D_RENDER_GetRenderObj( p_g3d_rnd );
+    NNSG3dResMdl    *p_res_mdl  = NNS_G3dRenderObjGetResMdl( p_rend_obj );
+
+    NNS_G3dMdlSetMdlAlpha( p_res_mdl, 0, alpha );
+  }
+
+  if( p_wk->sync_now++ > p_wk->sync_max )
+  {
+    p_wk->is_use  = FALSE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファしながらアニメ開始する  使用しているかどうか
+ *
+ *	@param	const LIGHT_ALPHA_WORK *cp_wk   ワーク
+ *
+ *	@return TRUE使用中  FALSE使用していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Light_Alpha_IsUse( const LIGHT_ALPHA_WORK *cp_wk )
+{
+  return cp_wk->is_use;
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -2210,7 +2395,6 @@ static void DISPLAY_Set( DISPLAY *p_wk, DISPLAY_ID displayID )
   MODEL_SetVisible( p_wk->p_display[ displayID ], TRUE );
   MODEL_StartAnimeAll( p_wk->p_display[ displayID ] );
 }
-
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *    観客
@@ -2231,7 +2415,7 @@ enum
 #define CAMERA_FLASH_MAX  (2)
 
 //同時にたくフラッシュの数
-#define CAMERA_FLASH_SAME_MAX  (2)
+#define CAMERA_FLASH_SAME_MAX  (3)
 
 //フラッシュの点滅シンク
 #define FLASH_FRAME_TR  ( CAMERA_FLASH_TR_FRAME_MIN + GFUser_GetPublicRand0( CAMERA_FLASH_TR_FRAME_MAX - CAMERA_FLASH_TR_FRAME_MIN ) )
@@ -2245,14 +2429,15 @@ typedef struct
 {
   MODEL *p_flash[CAMERA_FLASH_SAME_MAX];
   BOOL  is_update;
-  s32   seq;
+  s16   seq;
+  s16   flash_num;
   VecFx32 trans[CAMERA_FLASH_SAME_MAX];
 }FLASH;
 
-static void FLASH_Init( FLASH *p_wk, MODEL *p_model1, MODEL *p_model2 );
+static void FLASH_Init( FLASH *p_wk, MODEL *p_model1, MODEL *p_model2, MODEL *p_model3 );
 static void FLASH_Exit( FLASH *p_wk );
-static void FLASH_Main( FLASH *p_wk );
-static void FLASH_Start( FLASH *p_wk, const VecFx32 * cp_pos1, const VecFx32 *cp_pos2 );
+static void FLASH_Main( FLASH *p_wk, const VecFx32 *cp_player_pos );
+static void FLASH_Start( FLASH *p_wk, const VecFx32 * cp_pos_tbl, u32 flash_num );
 static BOOL FLASH_IsStart( const FLASH *cp_wk );
 
 //-------------------------------------
@@ -2263,10 +2448,12 @@ struct _AUDIENCE
   MODEL *p_fan[FAN_ID_MAX];
   FLASH flash[CAMERA_FLASH_MAX];
 
-  VecFx32 player_pos;
+  const FIELD_PLAYER  *cp_player;
   s32     seq;
   s32     flash_sync;
   void    (*EffectFunc)(AUDIENCE *);
+
+  s32     flash_num_cnt;
 };
 static void Audience_StartFlash( AUDIENCE* p_wk );
 static void Audience_NormalEffect( AUDIENCE *p_wk );
@@ -2327,21 +2514,26 @@ static const struct
     FX32_CONST(192),
   },
 };
+
 #define FLASH_Y FX32_CONST(85)
+#define FLASH_RANGE_Z_MIN (FX32_CONST(160))
+#define FLASH_RANGE_Z_MAX (FX32_CONST(900))
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  観客  作成
  *
  *	@param	MODEL_MANAGER *p_model_man  モデル管理
+ *	@param  FIELD_PLAYER  *p_player     プレイヤー
  *	@param	heapID                      ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-static AUDIENCE* AUDIENCE_Init( MODEL_MANAGER *p_model_man, HEAPID heapID )
+static AUDIENCE* AUDIENCE_Init( MODEL_MANAGER *p_model_man, const FIELD_PLAYER *cp_player, HEAPID heapID )
 {
   AUDIENCE* p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(AUDIENCE) );
+  p_wk->cp_player = cp_player;
 
   //ファンの設定
   {
@@ -2360,19 +2552,21 @@ static AUDIENCE* AUDIENCE_Init( MODEL_MANAGER *p_model_man, HEAPID heapID )
     int idx;
     MODEL *p_model1;
     MODEL *p_model2;
+    MODEL *p_model3;
     FLASH *p_flash;
     for( i = 0; i < CAMERA_FLASH_MAX; i++ )
     {
       idx = i * CAMERA_FLASH_SAME_MAX;
       p_model1 = MODEL_MANAGER_GetModel( p_model_man, MODELID_FLASH_00 + idx );
       p_model2 = MODEL_MANAGER_GetModel( p_model_man, MODELID_FLASH_00 + idx + 1 );
+      p_model3 = MODEL_MANAGER_GetModel( p_model_man, MODELID_FLASH_00 + idx + 2 );
       p_flash = &p_wk->flash[i];
-      FLASH_Init( p_flash, p_model1, p_model2 );
+      FLASH_Init( p_flash, p_model1, p_model2, p_model3 );
     }
   }
 
   //初期演出設定
-  AUDIENCE_SetExcitingEffect( p_wk, AUDIENCE_EXCITE_TYPE_NORMAL, NULL );
+  AUDIENCE_SetExcitingEffect( p_wk, AUDIENCE_EXCITE_TYPE_NORMAL );
 
   return p_wk;
 }
@@ -2412,10 +2606,15 @@ static void AUDIENCE_Main( AUDIENCE *p_wk )
   {
     int i;
     FLASH *p_flash;
+  
+    VecFx32 player_pos;
+
+    FIELD_PLAYER_GetPos( p_wk->cp_player, &player_pos );
+
     for( i = 0; i < CAMERA_FLASH_MAX; i++ )
     {
       p_flash = &p_wk->flash[i];
-      FLASH_Main( p_flash );
+      FLASH_Main( p_flash, &player_pos );
     }
   }
 }
@@ -2426,15 +2625,10 @@ static void AUDIENCE_Main( AUDIENCE *p_wk )
  *
  *	@param	AUDIENCE *p_wk  ワーク
  *	@param  BOOL is_exciting    TRUEで盛り上がり中  FALSEで通常
- *	@param  cp_player_pos   プレイヤーの位置
  */
 //-----------------------------------------------------------------------------
-static void AUDIENCE_SetExcitingEffect( AUDIENCE *p_wk, AUDIENCE_EXCITE_TYPE type, const VecFx32 *cp_player_pos )
+static void AUDIENCE_SetExcitingEffect( AUDIENCE *p_wk, AUDIENCE_EXCITE_TYPE type )
 {
-  if( cp_player_pos != NULL )
-  {
-    p_wk->player_pos  = *cp_player_pos;
-  }
   p_wk->seq         = 0;
 
   switch( type )
@@ -2462,31 +2656,64 @@ static void AUDIENCE_SetExcitingEffect( AUDIENCE *p_wk, AUDIENCE_EXCITE_TYPE typ
 //-----------------------------------------------------------------------------
 static void Audience_StartFlash( AUDIENCE* p_wk )
 {
+  static const s8 s_flash_num_tbl[] =
+  {
+    3,2,1,3,2,3,1,3,2
+  };
+
   int i;
-  VecFx32 pos[CAMERA_FLASH_SAME_MAX];
+  VecFx32 pos_tbl[CAMERA_FLASH_SAME_MAX];
+
+
   for( i = 0; i < CAMERA_FLASH_MAX; i++ )
   {
     FLASH *p_flash  = &p_wk->flash[ i ];
     if( !FLASH_IsStart( p_flash ) )
     {
-      //ランダム位置
-      pos[0].x = sc_flash_rect[0].x  + GFUser_GetPublicRand0( sc_flash_rect[0].w );
-      pos[0].z = sc_flash_rect[0].z  + GFUser_GetPublicRand0( sc_flash_rect[0].h );
-      pos[0].y = 0;
+      s8  flash_num = s_flash_num_tbl[ p_wk->flash_num_cnt++ % NELEMS(s_flash_num_tbl) ];
+      s8  rnd_idx   = GFUser_GetPublicRand0( 1 );
 
-      VEC_Add( &p_wk->player_pos, &pos[0], &pos[0] );
-      pos[0].y = FLASH_Y;
+      switch( flash_num )
+      {
+      case 1: //１つフラッシュは完全ランダム位置
+        pos_tbl[0].x = sc_flash_rect[rnd_idx].x  + GFUser_GetPublicRand0( sc_flash_rect[rnd_idx].w );
+        pos_tbl[0].z = sc_flash_rect[rnd_idx].z  + GFUser_GetPublicRand0( sc_flash_rect[rnd_idx].h );
+        pos_tbl[0].y = 0;
+        break;
+      case 2: //２つフラッシュは左側と右側
+        //左側ランダム位置
+        pos_tbl[0].x = sc_flash_rect[0].x  + GFUser_GetPublicRand0( sc_flash_rect[0].w );
+        pos_tbl[0].z = sc_flash_rect[0].z  + GFUser_GetPublicRand0( sc_flash_rect[0].h );
+        pos_tbl[0].y = 0;
 
-      //ランダム位置
-      pos[1].x = sc_flash_rect[1].x  + GFUser_GetPublicRand0( sc_flash_rect[1].w );
-      pos[1].z = sc_flash_rect[1].z  + GFUser_GetPublicRand0( sc_flash_rect[1].h );
-      pos[1].y = 0;
+        //右側ランダム位置
+        pos_tbl[1].x = sc_flash_rect[1].x  + GFUser_GetPublicRand0( sc_flash_rect[1].w );
+        pos_tbl[1].z = sc_flash_rect[1].z  + GFUser_GetPublicRand0( sc_flash_rect[1].h );
+        pos_tbl[1].y = 0;
+        break;
 
-      VEC_Add( &p_wk->player_pos, &pos[1], &pos[1] );
-      pos[1].y = FLASH_Y;
+      default:
+        flash_num = 3;
+      case 3: //３つフラッシュは左側と右側とランダム
+        //左側ランダム位置
+        pos_tbl[0].x = sc_flash_rect[0].x  + GFUser_GetPublicRand0( sc_flash_rect[0].w );
+        pos_tbl[0].z = sc_flash_rect[0].z  + GFUser_GetPublicRand0( sc_flash_rect[0].h );
+        pos_tbl[0].y = 0;
+
+        //右側ランダム位置
+        pos_tbl[1].x = sc_flash_rect[1].x  + GFUser_GetPublicRand0( sc_flash_rect[1].w );
+        pos_tbl[1].z = sc_flash_rect[1].z  + GFUser_GetPublicRand0( sc_flash_rect[1].h );
+        pos_tbl[1].y = 0;
+
+        //ランダム位置
+        pos_tbl[2].x = sc_flash_rect[rnd_idx].x  + GFUser_GetPublicRand0( sc_flash_rect[rnd_idx].w );
+        pos_tbl[2].z = sc_flash_rect[rnd_idx].z  + GFUser_GetPublicRand0( sc_flash_rect[rnd_idx].h );
+        pos_tbl[2].y = 0;
+        break;
+      }
 
       //フラッシュ開始
-      FLASH_Start( p_flash, &pos[0], &pos[1] );
+      FLASH_Start( p_flash, pos_tbl, flash_num );
       return;
     }
   }
@@ -2512,6 +2739,7 @@ static void Audience_NormalEffect( AUDIENCE *p_wk )
   case SEQ_INIT:
     for( i = 0; i < FAN_ID_MAX; i++ )
     {
+      MODEL_StopAnimeAll( p_wk->p_fan[i] );
       MODEL_StartAnime( p_wk->p_fan[i], ANIMEID_FAN_NORMAL_ITA );
     }
     p_wk->seq++;
@@ -2548,6 +2776,7 @@ static void Audience_TrEndEffect( AUDIENCE *p_wk )
     PMSND_PlaySE( GYM_ELEC_SE_CHEER );
     for( i = 0; i < FAN_ID_MAX; i++ )
     {
+      MODEL_StopAnimeAll( p_wk->p_fan[i] );
       MODEL_StartAnime( p_wk->p_fan[i], ANIMEID_FAN_TR_END_ITA );
     }
     p_wk->seq++;
@@ -2590,6 +2819,7 @@ static void Audience_BossEndEffect( AUDIENCE *p_wk )
     PMSND_PlaySE( GYM_ELEC_SE_CHEER_LOOP );
     for( i = 0; i < FAN_ID_MAX; i++ )
     {
+      MODEL_StopAnimeAll( p_wk->p_fan[i] );
       MODEL_StartAnime( p_wk->p_fan[i], ANIMEID_FAN_BOSS_END_ITA );
     }
     p_wk->seq++;
@@ -2619,11 +2849,12 @@ static void Audience_BossEndEffect( AUDIENCE *p_wk )
  *	@param	*p_model    フラッシュ用モデル2
  */
 //-----------------------------------------------------------------------------
-static void FLASH_Init( FLASH *p_wk, MODEL *p_model1, MODEL *p_model2 )
+static void FLASH_Init( FLASH *p_wk, MODEL *p_model1, MODEL *p_model2, MODEL *p_model3 )
 {
   GFL_STD_MemClear( p_wk, sizeof(FLASH) );
-  p_wk->p_flash[0] = p_model1;
-  p_wk->p_flash[1] = p_model2;
+  p_wk->p_flash[0]  = p_model1;
+  p_wk->p_flash[1]  = p_model2;
+  p_wk->p_flash[2]  = p_model3;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2641,9 +2872,10 @@ static void FLASH_Exit( FLASH *p_wk )
  *	@brief  カメラフラッシュ  メイン処理
  *
  *	@param	FLASH *p_wk ワーク
+ *	@param  cp_player_pos プレイヤー座標
  */
 //-----------------------------------------------------------------------------
-static void FLASH_Main( FLASH *p_wk )
+static void FLASH_Main( FLASH *p_wk, const VecFx32 *cp_player_pos )
 {
   enum
   {
@@ -2651,17 +2883,24 @@ static void FLASH_Main( FLASH *p_wk )
     SEQ_MAIN,
     SEQ_EXIT,
   };
-  int i;
 
   if( p_wk->is_update )
   {
+    int i;
+    VecFx32 pos;
+
     switch( p_wk->seq )
     {
     case SEQ_START:
       PMSND_PlaySE( GYM_ELEC_SE_CAMFLUSH );
-      for( i = 0; i < CAMERA_FLASH_SAME_MAX; i++ )
+      for( i = 0; i < p_wk->flash_num; i++ )
       {
-        MODEL_SetTrans( p_wk->p_flash[i], &p_wk->trans[i] );
+        //座標をプレイヤーから算出
+        VEC_Add( &p_wk->trans[i], cp_player_pos, &pos );
+        pos.y = FLASH_Y;
+        pos.z  = MATH_CLAMP( pos.z, FLASH_RANGE_Z_MIN, FLASH_RANGE_Z_MAX );
+
+        MODEL_SetTrans( p_wk->p_flash[i], &pos );
         MODEL_SetVisible( p_wk->p_flash[i], TRUE );
         MODEL_StartAnimeAll( p_wk->p_flash[i] );
       }
@@ -2670,7 +2909,7 @@ static void FLASH_Main( FLASH *p_wk )
     case SEQ_MAIN:
       {
         BOOL is_end = TRUE;
-        for( i = 0; i < CAMERA_FLASH_SAME_MAX; i++ )
+        for( i = 0; i < p_wk->flash_num; i++ )
         {
           if( MODEL_IsAnimeStopAll( p_wk->p_flash[i] ) )
           {
@@ -2699,15 +2938,25 @@ static void FLASH_Main( FLASH *p_wk )
  *	@brief  カメラフラッシュ  開始
  *
  *	@param	FLASH *p_wk ワーク
- *	@param  cp_pos      表示位置
+ *	@param  cp_pos      表示位置のテーブル
+ *	@param  flash_num   フラッシュする数最大CAMERA_FLASH_SAME_MAXつ
  */
 //-----------------------------------------------------------------------------
-static void FLASH_Start( FLASH *p_wk, const VecFx32 * cp_pos1, const VecFx32 *cp_pos2 )
+static void FLASH_Start( FLASH *p_wk, const VecFx32 * cp_pos_tbl, u32 flash_num )
 {
+  GF_ASSERT( flash_num <= CAMERA_FLASH_SAME_MAX );
+
   p_wk->is_update = TRUE;
   p_wk->seq       = 0;
-  p_wk->trans[0]     = *cp_pos1;
-  p_wk->trans[1]     = *cp_pos2;
+  p_wk->flash_num = flash_num;
+
+  {
+    int i;
+    for( i = 0; i < p_wk->flash_num; i++ )
+    {
+      p_wk->trans[i]  = cp_pos_tbl[i];
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -2884,20 +3133,17 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
     {
     case FADEOUT_PHASE_FRONT:
       ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, SWITCH_01 );
-      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_FRONT );
-      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_TR01_WIN );
+      FLOOR_LIGHT_StartAlpha( p_wk->p_floor_light, FLOOR_LIGHT_ID_TR01_WIN, FOG_SHADOW_FADE_FRAME );
       break;
     case FADEOUT_PHASE_MIDDLE:
       ISS_SWITCH_SYS_SwitchOn( p_wk->p_iss_switch, SWITCH_02 );
-      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_MIDDLE );
-      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_TR02_WIN );
+      FLOOR_LIGHT_StartAlpha( p_wk->p_floor_light, FLOOR_LIGHT_ID_TR02_WIN, FOG_SHADOW_FADE_FRAME );
       break;
     case FADEOUT_PHASE_BACK:
       {
         GMEVENT* p_subevent = EVENT_FSND_ChangeBGM( p_wk->p_gamesys, GYM_ELEC_BGM_BOSSAPPER, 0, 0 );
         GMEVENT_CallEvent( p_event, p_subevent );
       }
-      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_BACK );
       break;
     default:
       GF_ASSERT(0);
@@ -2915,12 +3161,15 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
     switch( p_wk->phase )
     {
     case FADEOUT_PHASE_FRONT:
+      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_FRONT );
       FOG_SHADOW_SetPhaseRequest( p_wk->p_fog_shadow, 1 );
       break;
     case FADEOUT_PHASE_MIDDLE:
+      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_MIDDLE );
       FOG_SHADOW_SetPhaseRequest( p_wk->p_fog_shadow, 2 );
       break;
     case FADEOUT_PHASE_BACK:
+      FLOOR_LIGHT_Start( p_wk->p_floor_light, FLOOR_LIGHT_ID_BACK );
       //最後だけ次の影を呼ばず、影を完全に消す
       FOG_SHADOW_SetVisible( p_wk->p_fog_shadow, FALSE );
       break;
@@ -3503,6 +3752,8 @@ static void DebugWin_Draw_ModelIndex( void* userWork , DEBUGWIN_ITEM* item )
     "フラッシュ２",//MODELID_FLASH_01,           //カメラフラッシュ１番目
     "フラッシュ３",//MODELID_FLASH_02,           //カメラフラッシュ２番目
     "フラッシュ４",//MODELID_FLASH_03,           //カメラフラッシュ３番目
+    "フラッシュ５",//MODELID_FLASH_04,           //カメラフラッシュ４番目
+    "フラッシュ６",//MODELID_FLASH_05,           //カメラフラッシュ５番目
     "しょうり１",//MODELID_WINLIGHT_01,        //勝利後ライトアップ一人目
     "しょうり２",//MODELID_WINLIGHT_02,        //勝利後ライトアップ二人目
     "しょうりボス",//MODELID_WINLIGHT_BOSS,      //勝利後ライトアップボス後
