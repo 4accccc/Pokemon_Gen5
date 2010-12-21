@@ -87,9 +87,9 @@ static const GFL_BBDACT_ANM DATA_BlActFishingHero_EndL[] = {
 // 釣りアニメ右向き　竿を戻す
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFishingHero_EndR[] = {
-  {  8, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
-  {  9, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
   { 10, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
+  {  8, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 
@@ -163,9 +163,9 @@ static const GFL_BBDACT_ANM DATA_BlActFishingHero_HitL[] = {
 // 釣りアニメ右向き　ヒット
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFishingHero_HitR[] = {
-  {  8, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
-  {  9, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
   { 10, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
+  {  9, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
+  {  8, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 

@@ -43,19 +43,19 @@ static const GFL_BBDACT_ANM DATA_BlActYureHero_Down[] = {
   {  4, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   {  6, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   {  7, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
-  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<18
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<18
   {  4, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
   {  5, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
   {  4, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
   {  6, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
   {  7, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
-  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<18{12
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<18{12
   {  4, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   {  5, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   {  4, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   {  6, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   {  7, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  {  8, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<30{6
+  {  6, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<30{6
   { GFL_BBDACT_ANMCOM_JMP,0,0, 12 },
 };
 
