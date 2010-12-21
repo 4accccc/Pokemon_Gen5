@@ -33,12 +33,14 @@
 #define GYM_ELEC_SPOTLIGHT_MAX      (4) //スクリプトでは使用禁止
 
 //-------------------------------------
-///_GYM_ELEC_SET_FANEFFECTにいれる値及びプログラム中に使う値
+///_GYM_ELEC_SET_EFFECTにいれる値及びプログラム中に使う値
 //=====================================
-#define GYM_ELEC_FAN_EFFECT_NORMAL  (0) //通常アニメ
-#define GYM_ELEC_FAN_EFFECT_TR_END  (1) //トレーナー撃破
-#define GYM_ELEC_FAN_EFFECT_BOSS_END (2) //ボス撃破
-#define GYM_ELEC_FAN_EFFECT_MAX     (3) //スクリプトでは使用禁止
+#define GYM_ELEC_EFFECT_FAN_NORMAL  (0) //観客が通常アニメをする
+#define GYM_ELEC_EFFECT_FAN_TR_END  (1) //観客が盛り上がりアニメする＋カメラフラッシュをする
+#define GYM_ELEC_EFFECT_FAN_BOSS_END (2) //観客が大きく盛り上がりアニメする＋カメラフラッシュを多くする
+#define GYM_ELEC_EFFECT_DISPLAY_BOSS  (3) //ディスプレイをカミツレにする
+#define GYM_ELEC_EFFECT_DISPLAY_HERO  (4) //ディスプレイを主人公にする
+#define GYM_ELEC_EFFECT_LIGHTUP_BOSS  (5) //カミツレ勝利後のライトアップを付ける
 
 //=============================================================================
 /**

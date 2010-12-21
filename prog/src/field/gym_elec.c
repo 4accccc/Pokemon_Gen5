@@ -19,7 +19,7 @@
  *  
  *  スクリプトコマンド
  *    ↓
- *  GYM_ELEC_SetSpotLight関数やGYM_ELEC_CreateShowupEvent関数等
+ *  GYM_ELEC_SetSpotLight関数GYM_ELEC_SetDisplay等
  *    ↓
  *  クラスでのリクエスト
  *    ↓
@@ -271,17 +271,17 @@ static DISPLAY* DISPLAY_Init( MODEL_MANAGER *p_model_man, HEAPID heapID );
 static void DISPLAY_Exit( DISPLAY *p_wk );
 static void DISPLAY_Main( DISPLAY *p_wk );
 
-static void DISPLAY_Set( DISPLAY *p_wk, DISPLAY_ID displayID );
+static void DISPLAY_Change( DISPLAY *p_wk, DISPLAY_ID displayID );
 
 //-------------------------------------
 ///	観客&カメラフラッシュ
 //=====================================
 typedef enum
 {
-  AUDIENCE_EXCITE_TYPE_NORMAL = GYM_ELEC_FAN_EFFECT_NORMAL,      //通常
-  AUDIENCE_EXCITE_TYPE_TR_END = GYM_ELEC_FAN_EFFECT_TR_END,      //トレーナー倒した後
-  AUDIENCE_EXCITE_TYPE_BOSS_END = GYM_ELEC_FAN_EFFECT_BOSS_END,   //カミツレ倒した後
-  AUDIENCE_EXCITE_TYPE_MAX    = GYM_ELEC_FAN_EFFECT_MAX,
+  AUDIENCE_EXCITE_TYPE_NORMAL = GYM_ELEC_FAN_NORMAL,      //通常
+  AUDIENCE_EXCITE_TYPE_TR_END = GYM_ELEC_FAN_TR_END,      //トレーナー倒した後
+  AUDIENCE_EXCITE_TYPE_BOSS_END = GYM_ELEC_FAN_BOSS_END,    //カミツレ倒した後
+  AUDIENCE_EXCITE_TYPE_MAX  = GYM_ELEC_FAN_MAX,
 }AUDIENCE_EXCITE_TYPE;
 
 typedef struct _AUDIENCE  AUDIENCE;
@@ -293,12 +293,7 @@ static void AUDIENCE_Main( AUDIENCE *p_wk );
 static void AUDIENCE_SetExcitingEffect( AUDIENCE *p_wk, AUDIENCE_EXCITE_TYPE type );
 
 //-------------------------------------
-///	ショーアップ（カミツレショーアップ演出）
-//=====================================
-static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow );
-
-//-------------------------------------
-///	フェードアウト(影がなくなる演出)
+///	フェードアウトイベント(影がなくなる演出)
 //=====================================
 typedef enum
 {
@@ -520,44 +515,6 @@ void GYM_ELEC_Move(FIELDMAP_WORK *p_fieldmap)
   //モデル管理メイン
   MODEL_MANAGER_Main( p_tmp->p_model_man );
 }
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ショーアップイベント作成
- *
- *	@param	GAMESYS_WORK *gsys  ゲームシステム
- *
- *	@return イベント
- */
-//-----------------------------------------------------------------------------
-GMEVENT * GYM_ELEC_CreateShowupEvent( GAMESYS_WORK *p_gamesys )
-{
-  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
-  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
-
- // return SHOWUP_CreateEvent( p_gamesys, p_tmp->p_fog_shadow );
-
-  //とりあえず今は仮でイベントではなく、勝った後の演出を開始している
-
-  FLOOR_LIGHT_StartAlpha( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BOSS_WIN, 60 );
-
-  {
-    const FIELD_PLAYER  *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
-
-    int sex =  FIELD_PLAYER_GetSex( cp_player );
-
-    if( sex == PTL_SEX_MALE )
-    {
-      DISPLAY_Set( p_tmp->p_display, DISPLAY_ID_BOY );
-    }
-    else
-    {
-      DISPLAY_Set( p_tmp->p_display, DISPLAY_ID_GIRL );
-    }
-  }
-
-  return NULL;
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  影フェードアウトイベント作成
@@ -630,13 +587,56 @@ void GYM_ELEC_SetSpotLight( FIELDMAP_WORK *p_fieldmap, BOOL is_visible, u16 objI
  *	@param	type 
  */
 //-----------------------------------------------------------------------------
-void GYM_ELEC_SetFanEffect( FIELDMAP_WORK *p_fieldmap, u16 type )
+void GYM_ELEC_SetFanEffect( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_FAN type )
 {
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
-  const FIELD_PLAYER  *cp_player = FIELDMAP_GetFieldPlayer(p_fieldmap);
-  VecFx32 player_pos;
-
   AUDIENCE_SetExcitingEffect( p_tmp->p_audience, type );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ディスプレイを設定
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmapフィールドマップ
+ *	@param	type  変更先タイプ
+ */
+//-----------------------------------------------------------------------------
+void GYM_ELEC_SetDisplay( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_DISPLAY type )
+{
+  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
+  switch( type )
+  {
+  case GYM_ELEC_DISPLAY_BOSS:
+    DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_BOSS );
+    break;
+  case GYM_ELEC_DISPLAY_BOY:
+    DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_BOY );
+    break;
+  case GYM_ELEC_DISPLAY_GIRL:
+    DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_GIRL );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライトを設定
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmapフィールドマップ
+ *	@param	type  変更先タイプ
+ */
+//-----------------------------------------------------------------------------
+void GYM_ELEC_SetFloorLight( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_FLOORLIGHT type )
+{
+  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
+  switch( type )
+  {
+  case GYM_ELEC_FLOORLIGHT_BOSS:
+    FLOOR_LIGHT_StartAlpha( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BOSS_WIN, 60 );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -2351,7 +2351,7 @@ static DISPLAY* DISPLAY_Init( MODEL_MANAGER *p_model_man, HEAPID heapID )
 
   //初期はBOSSディスプレイをオン
   MODEL_SetVisible( p_wk->p_display[DISPLAY_ID_BOSS ], TRUE );
-  MODEL_StartAnimeAll( p_wk->p_display[DISPLAY_ID_BOSS ] );
+  MODEL_StopAnimeAll( p_wk->p_display[DISPLAY_ID_BOSS ] );
 
   return p_wk;
 }
@@ -2384,7 +2384,7 @@ static void DISPLAY_Main( DISPLAY *p_wk )
  *	@param	displayID     帰るディスプレイID
  */
 //-----------------------------------------------------------------------------
-static void DISPLAY_Set( DISPLAY *p_wk, DISPLAY_ID displayID )
+static void DISPLAY_Change( DISPLAY *p_wk, DISPLAY_ID displayID )
 {
   int i;
   for( i = 0; i < DISPLAY_ID_MAX; i++ )
@@ -2971,77 +2971,6 @@ static BOOL FLASH_IsStart( const FLASH *cp_wk )
 {
   return cp_wk->is_update;
 }
-
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-/**
- *    ショーアップ
- */
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-//-------------------------------------
-///	定数
-//=====================================
-
-//-------------------------------------
-///	ワーク
-//=====================================
-typedef struct
-{
-  FOG_SHADOW    *p_fog_shadow;
-}SHOWUP_EVENT_WORK;
-
-//-------------------------------------
-///	private
-//=====================================
-static GMEVENT_RESULT Showup_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ショーアップイベント作成
- *
- *	@param	GAMESYS_WORK *p_gamesys イベント作成用ゲームシステム
- *	@param	*p_fog                  フォグ影システム
- *
- *	@return イベント
- */
-//-----------------------------------------------------------------------------
-static GMEVENT * SHOWUP_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow )
-{
-  GMEVENT * p_event = GMEVENT_Create( p_gamesys, NULL, Showup_Event, sizeof(SHOWUP_EVENT_WORK) );
-  SHOWUP_EVENT_WORK *p_wk = GMEVENT_GetEventWork(p_event);
-
-  p_wk->p_fog_shadow   = p_fog_shadow;
-  return p_event;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ショーアップ  メインイベント
- *
- *	@param	GMEVENT* p_event  イベント
- *	@param	p_seq       シーケンス
- *	@param	p_wk_adrs   ワーク
- *
- *	@return イベント終了値
- */
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT Showup_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
-{
-  enum
-  {
-    SEQ_END,
-  };
-
-  SHOWUP_EVENT_WORK *p_wk = p_wk_adrs;
-
-  switch( *p_seq )
-  {
-  case SEQ_END:
-    return GMEVENT_RES_FINISH;
-  }
-
-  return GMEVENT_RES_CONTINUE;
-}
-
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *    フェードアウト

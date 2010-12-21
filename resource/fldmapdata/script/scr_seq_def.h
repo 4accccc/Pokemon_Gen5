@@ -6768,19 +6768,21 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ジムコマンド　観客のアニメを設定
+ * @brief ジムコマンド　色々な演出を設定
  * @param  type  以下の定義をいれてください
- *      GYM_ELEC_FAN_EFFECT_NORMAL  通常アニメ(初期はこの状態)
- *      GYM_ELEC_FAN_EFFECT_TR_END  トレーナー撃破のアニメ＋カメラフラッシュ
- *      GYM_ELEC_FAN_EFFECT_BOSS_END  ボス撃破後のアニメ＋カメラフラッシュ
- *
+ *      GYM_ELEC_EFFECT_FAN_NORMAL    観客が通常アニメをする
+ *      GYM_ELEC_EFFECT_FAN_TR_END    観客が盛り上がりアニメ＋カメラフラッシュをする
+ *      GYM_ELEC_EFFECT_FAN_BOSS_END  観客が大きく盛り上がりアニメ＋多くカメラフラッシュをする
+ *      GYM_ELEC_EFFECT_DISPLAY_BOSS  ディスプレイにカミツレを写す
+ *      GYM_ELEC_EFFECT_DISPLAY_HERO  ディスプレイに主人公を写す
+ *      GYM_ELEC_EFFECT_LIGHTUP_BOSS  カミツレ勝利後のライトアップを付ける
  */
 //--------------------------------------------------------------
-#define _GYM_ELEC_SET_FAN_EFFECT( type ) \
-    _ASM_GYM_ELEC_SET_FAN_EFFECT type
+#define _GYM_ELEC_SET_EFFECT( type ) \
+    _ASM_GYM_ELEC_SET_EFFECT type
 
-  .macro  _ASM_GYM_ELEC_SET_FAN_EFFECT type
-  .short  EV_SEQ_GYM_ELEC_SET_FAN_EFFECT
+  .macro  _ASM_GYM_ELEC_SET_EFFECT type
+  .short  EV_SEQ_GYM_ELEC_SET_EFFECT
   .short  \type
   .endm
 

@@ -30,6 +30,7 @@
 
 #include "gym_init.h"
 #include "gym_elec.h"
+#include "gym_elec_sv.h"
 #include "gym_normal.h"
 #include "gym_anti.h"
 #include "gym_insect.h"
@@ -109,37 +110,12 @@ VMCMD_RESULT EvCmdGymElec_CallFadeoutEvent( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief ショーアップイベントを開始
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymElec_CallShowupEvent( VMHANDLE *core, void *wk )
-{
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( wk );
-  GMEVENT *event  = GYM_ELEC_CreateShowupEvent( gsys );
-
-  if( event == NULL )
-  {
-    return VMCMD_RESULT_CONTINUE;
-  }
-  else
-  {
-    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( wk );
-    SCRIPT_CallEvent( sc, event );
-    //イベントコールするので、一度制御を返す
-    return VMCMD_RESULT_SUSPEND;
-  }
-}
-
-//--------------------------------------------------------------
-/**
  * @brief 観客演出を設定
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymElec_SetFanEffect( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymElec_SetEffect( VMHANDLE *core, void *wk )
 {
   u16 type;
   GMEVENT *call_event;
@@ -149,7 +125,39 @@ VMCMD_RESULT EvCmdGymElec_SetFanEffect( VMHANDLE *core, void *wk )
 
   type  = VMGetU16( core );
 
-  GYM_ELEC_SetFanEffect( fieldWork, type );
+  switch( type )
+  {
+  case GYM_ELEC_EFFECT_FAN_NORMAL:
+    GYM_ELEC_SetFanEffect( fieldWork, GYM_ELEC_FAN_NORMAL );
+    break;
+  case GYM_ELEC_EFFECT_FAN_TR_END:
+    GYM_ELEC_SetFanEffect( fieldWork, GYM_ELEC_FAN_TR_END );
+    break;
+  case GYM_ELEC_EFFECT_FAN_BOSS_END:
+    GYM_ELEC_SetFanEffect( fieldWork, GYM_ELEC_FAN_BOSS_END );
+    break;
+  case GYM_ELEC_EFFECT_DISPLAY_BOSS:
+    GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_BOSS );
+    break;
+  case GYM_ELEC_EFFECT_DISPLAY_HERO:
+    {
+      const FIELD_PLAYER *cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      if( FIELD_PLAYER_GetSex(cp_player) == PTL_SEX_MALE )
+      {
+        GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_BOY );
+      }
+      else
+      {
+        GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_GIRL );
+      }
+    }
+    break;
+  case GYM_ELEC_EFFECT_LIGHTUP_BOSS:
+    GYM_ELEC_SetFloorLight( fieldWork, GYM_ELEC_FLOORLIGHT_BOSS );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
