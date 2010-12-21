@@ -52,10 +52,10 @@ close( FILEIN );
 ##
 # 情報のインデックス
 ##
-$IDX_TAG        = 3;
-$IDX_NO         = 6;
-$IDX_OBJCODE    = 7;
-$IDX_SIZE       = 15;
+$IDX_TAG        = 1;
+$IDX_NO         = 3;
+$IDX_OBJCODE    = 4;
+$IDX_SIZE       = 12;
 
 
 ##

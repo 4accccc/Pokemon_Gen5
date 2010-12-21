@@ -8,15 +8,15 @@
 #-----------------------------------------------
 #リストファイル列　名称
 #
-RBDEF_NUM_CODENAME = (3)
+RBDEF_NUM_CODENAME = (1)
 
 #リストファイル列　表示タイプ
 #
-RBDEF_NUM_DRAWTYPE = (8)
+RBDEF_NUM_DRAWTYPE = (5)
 
 #リストファイル列　コメント
 #
-RBDEF_NUM_COMMENT = (6)
+RBDEF_NUM_COMMENT = (3)
 
 #-----------------------------------------------
 #エクセル管理表 列番号 ビルボード、ポケモン
@@ -25,85 +25,73 @@ RBDEF_NUM_COMMENT = (6)
 #
 RBDEF_NUM_BBD_DATANUM = (0)
 
-#リストファイル列　完成
-#
-RBDEF_NUM_BBD_COMP = (1)
-
-#リストファイル列　参考画像
-#
-RBDEF_NUM_BBD_SAMPLE_PITC = (2)
-
 #リストファイル列　性別
 #
-RBDEF_NUM_BBD_SEX = (4)
-
-#リストファイル列　年代層
-#
-RBDEF_NUM_BBD_AGE = (5)
+RBDEF_NUM_BBD_SEX = (2)
 
 #リストファイル列　表示コード
 #
-RBDEF_NUM_BBD_CODE = (7)
+RBDEF_NUM_BBD_CODE = (4)
 
 #リストファイル列　リソースファイル名記述箇所 その１
 #
-RBDEF_NUM_BBD_RESFILE_NAME_0 = (9)
+RBDEF_NUM_BBD_RESFILE_NAME_0 = (6)
 
 #リストファイル列　リソースファイル名記述箇所 その２
 #
-RBDEF_NUM_BBD_RESFILE_NAME_1 = (10)
+RBDEF_NUM_BBD_RESFILE_NAME_1 = (7)
 
 #リストファイル列　処理関数
 #
-RBDEF_NUM_BBD_DRAWPROC = (11)
+RBDEF_NUM_BBD_DRAWPROC = (8)
 
 #リストファイル列　影表示
 #
-RBDEF_NUM_BBD_SHADOW = (12)
+RBDEF_NUM_BBD_SHADOW = (9)
 
 #リストファイル列　足跡表示
 #
-RBDEF_NUM_BBD_FOOTMARK = (13)
+RBDEF_NUM_BBD_FOOTMARK = (10)
 
 #リストファイル列　映り込み
 #
-RBDEF_NUM_BBD_REFLECT = (14)
+RBDEF_NUM_BBD_REFLECT = (11)
 
 #リストファイル列　モデルサイズ
 #
-RBDEF_NUM_BBD_MDLSIZE = (15)
+RBDEF_NUM_BBD_MDLSIZE = (12)
 
 #リストファイル列　テクスチャサイズ
 #
-RBDEF_NUM_BBD_TEXSIZE = (16)
+RBDEF_NUM_BBD_TEXSIZE = (13)
 
 #リストファイル列　アニメID
 #
-RBDEF_NUM_BBD_ANMID = (17)
+RBDEF_NUM_BBD_ANMID = (14)
 
 #リストファイル列　アニメタイプ
 #
-RBDEF_NUM_BBD_ANMTYPE = (18)
+RBDEF_NUM_BBD_ANMTYPE = (15)
 
 #リストファイル列　横幅サイズ
 #
-RBDEF_NUM_BBD_WIDTH_SIZE = (19)
+RBDEF_NUM_BBD_WIDTH_SIZE = (16)
 
 #リストファイル列　奥行サイズ
 #
-RBDEF_NUM_BBD_DEPTH_SIZE = (20)
+RBDEF_NUM_BBD_DEPTH_SIZE = (17)
 
 #リストファイル列　Xオフセット
 #
-RBDEF_NUM_BBD_OFFSET_X = (21)
+RBDEF_NUM_BBD_OFFSET_X = (18)
 
 #リストファイル列　Yオフセット
 #
-RBDEF_NUM_BBD_OFFSET_Y = (22)
+RBDEF_NUM_BBD_OFFSET_Y = (19)
 
 #リストファイル列　Zオフセット
 #
-RBDEF_NUM_BBD_OFFSET_Z = (23)
+RBDEF_NUM_BBD_OFFSET_Z = (20)
 
 #-----------------------------------------------
 #エクセル管理表 列番号 ポケモン
@@ -112,81 +100,69 @@ RBDEF_NUM_BBD_OFFSET_Z = (23)
 #
 RBDEF_NUM_POKEMON_DATANUM = (0)
 
-#リストファイル列　完成
-#
-RBDEF_NUM_POKEMON_COMP = (1)
-
-#リストファイル列　参考画像
-#
-RBDEF_NUM_POKEMON_SAMPLE_PITC = (2)
-
 #リストファイル列　性別
 #
-RBDEF_NUM_POKEMON_SEX = (4)
-
-#リストファイル列　年代層
-#
-RBDEF_NUM_POKEMON_AGE = (5)
+RBDEF_NUM_POKEMON_SEX = (2)
 
 #リストファイル列　表示コード
 #
-RBDEF_NUM_POKEMON_CODE = (7)
+RBDEF_NUM_POKEMON_CODE = (4)
 
 #リストファイル列　リソースファイル名記述箇所 その１
 #
-RBDEF_NUM_POKEMON_RESFILE_NAME_0 = (9)
+RBDEF_NUM_POKEMON_RESFILE_NAME_0 = (6)
 
 #リストファイル列　リソースファイル名記述箇所 その２
 #
-RBDEF_NUM_POKEMON_RESFILE_NAME_1 = (10)
+RBDEF_NUM_POKEMON_RESFILE_NAME_1 = (7)
 
 #リストファイル列　処理関数
 #
-RBDEF_NUM_POKEMON_DRAWPROC = (11)
+RBDEF_NUM_POKEMON_DRAWPROC = (8)
 
 #リストファイル列　影表示
 #
-RBDEF_NUM_POKEMON_SHADOW = (12)
+RBDEF_NUM_POKEMON_SHADOW = (9)
 
 #リストファイル列　足跡表示
 #
-RBDEF_NUM_POKEMON_FOOTMARK = (13)
+RBDEF_NUM_POKEMON_FOOTMARK = (10)
 
 #リストファイル列　映り込み
 #
-RBDEF_NUM_POKEMON_REFLECT = (14)
+RBDEF_NUM_POKEMON_REFLECT = (11)
 
 #リストファイル列　モデルサイズ
 #
-RBDEF_NUM_POKEMON_MDLSIZE = (15)
+RBDEF_NUM_POKEMON_MDLSIZE = (12)
 
 #リストファイル列　テクスチャサイズ
 #
-RBDEF_NUM_POKEMON_TEXSIZE = (16)
+RBDEF_NUM_POKEMON_TEXSIZE = (13)
 
 #リストファイル列　アニメID
 #
-RBDEF_NUM_POKEMON_ANMID = (17)
+RBDEF_NUM_POKEMON_ANMID = (14)
 
 #リストファイル列　横幅サイズ
 #
-RBDEF_NUM_POKEMON_WIDTH_SIZE = (18)
+RBDEF_NUM_POKEMON_WIDTH_SIZE = (15)
 
 #リストファイル列　奥行サイズ
 #
-RBDEF_NUM_POKEMON_DEPTH_SIZE = (19)
+RBDEF_NUM_POKEMON_DEPTH_SIZE = (16)
 
 #リストファイル列　Xオフセット
 #
-RBDEF_NUM_POKEMON_OFFSET_X = (20)
+RBDEF_NUM_POKEMON_OFFSET_X = (17)
 
 #リストファイル列　Yオフセット
 #
-RBDEF_NUM_POKEMON_OFFSET_Y = (21)
+RBDEF_NUM_POKEMON_OFFSET_Y = (18)
 
 #リストファイル列　Zオフセット
 #
-RBDEF_NUM_POKEMON_OFFSET_Z = (22)
+RBDEF_NUM_POKEMON_OFFSET_Z = (19)
 
 #-----------------------------------------------
 #エクセル管理表 列番号 モデル
@@ -195,85 +171,73 @@ RBDEF_NUM_POKEMON_OFFSET_Z = (22)
 #
 RBDEF_NUM_MDL_DATANUM = (0)
 
-#リストファイル列　完成
-#
-RBDEF_NUM_MDL_COMP = (1)
-
-#リストファイル列　参考画像
-#
-RBDEF_NUM_MDL_SAMPLE_PITC = (2)
-
 #リストファイル列　性別
 #
-RBDEF_NUM_MDL_SEX = (4)
-
-#リストファイル列　年代層
-#
-RBDEF_NUM_MDL_AGE = (5)
+RBDEF_NUM_MDL_SEX = (2)
 
 #リストファイル列　表示コード
 #
-RBDEF_NUM_MDL_CODE = (7)
+RBDEF_NUM_MDL_CODE = (4)
 
 #リストファイル列　表示タイプ
 #
-RBDEF_NUM_MDL_DRAWTYPE = (8)
+RBDEF_NUM_MDL_DRAWTYPE = (5)
 
 #リストファイル列　リソースファイル名記述箇所 imd
 #
-RBDEF_NUM_MDL_RESFILE_NAME_IMD = (9)
+RBDEF_NUM_MDL_RESFILE_NAME_IMD = (6)
 
 #リストファイル列　リソースファイル名記述箇所 tex
 #
-RBDEF_NUM_MDL_RESFILE_NAME_TEX = (10)
+RBDEF_NUM_MDL_RESFILE_NAME_TEX = (7)
 
 #リストファイル列　リソースファイル名記述箇所 anime 0
 #
-RBDEF_NUM_MDL_RESFILE_NAME_ANM0 = (11)
+RBDEF_NUM_MDL_RESFILE_NAME_ANM0 = (8)
 
 #リストファイル列　リソースファイル名記述箇所 anime 1
 #
-RBDEF_NUM_MDL_RESFILE_NAME_ANM1 = (12)
+RBDEF_NUM_MDL_RESFILE_NAME_ANM1 = (9)
 
 #リストファイル列　リソースファイル名記述箇所 anime 2
 #
-RBDEF_NUM_MDL_RESFILE_NAME_ANM2 = (13)
+RBDEF_NUM_MDL_RESFILE_NAME_ANM2 = (10)
 
 #リストファイル列　処理関数
 #
-RBDEF_NUM_MDL_DRAWPROC = (14)
+RBDEF_NUM_MDL_DRAWPROC = (11)
 
 #リストファイル列　影表示
 #
-RBDEF_NUM_MDL_SHADOW = (15)
+RBDEF_NUM_MDL_SHADOW = (12)
 
 #リストファイル列　足跡表示
 #
-RBDEF_NUM_MDL_FOOTMARK = (16)
+RBDEF_NUM_MDL_FOOTMARK = (13)
 
 #リストファイル列　モデルサイズ
 #
-RBDEF_NUM_MDL_MDLSIZE = (17)
+RBDEF_NUM_MDL_MDLSIZE = (14)
 
 #リストファイル列　横幅サイズ
 #
-RBDEF_NUM_MDL_WIDTH_SIZE = (18)
+RBDEF_NUM_MDL_WIDTH_SIZE = (15)
 
 #リストファイル列　奥行サイズ
 #
-RBDEF_NUM_MDL_DEPTH_SIZE = (19)
+RBDEF_NUM_MDL_DEPTH_SIZE = (16)
 
 #リストファイル列　Xオフセット
 #
-RBDEF_NUM_MDL_OFFSET_X = (20)
+RBDEF_NUM_MDL_OFFSET_X = (17)
 
 #リストファイル列　Yオフセット
 #
-RBDEF_NUM_MDL_OFFSET_Y = (21)
+RBDEF_NUM_MDL_OFFSET_Y = (18)
 
 #リストファイル列　Zオフセット
 #
-RBDEF_NUM_MDL_OFFSET_Z = (22)
+RBDEF_NUM_MDL_OFFSET_Z = (19)
 
 #-----------------------------------------------
 # 表示タイプ
