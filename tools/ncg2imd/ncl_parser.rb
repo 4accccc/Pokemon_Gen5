@@ -1,11 +1,16 @@
+
+class NCL_HEADER
+  attr_accessor :FormatID, :ByteOrderMark, :FormatVersion, :FileSize, :HeaderSize, :DataBlocks
+end
+
+class PAL_DATA
+  attr_accessor :BlockType, :BlockSize, :PalColorNum, :PaletteNumber, :PaletteData
+end
+
 class NCL_STRUCT
 	def initialize(type)
-		temp_h = Struct.new("NCL_HEADER",:FormatID, :ByteOrderMark, :FormatVersion,
-					  :FileSize, :HeaderSize, :DataBlocks)
-		@Header = temp_h.new
-		temp_p = Struct.new("PAL_DATA",:BlockType, :BlockSize, :PalColorNum,
-					  :PaletteNumber, :PaletteData )
-		@PalData = temp_p.new
+		@Header = NCL_HEADER.new
+		@PalData = PAL_DATA.new
 		@PalType = type
 	end
 

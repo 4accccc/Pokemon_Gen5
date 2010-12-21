@@ -1,0 +1,36 @@
+#======================================================================
+#	makefile
+#	スクリプター向け動作モデルリストコンバート
+#======================================================================
+include mkdefine
+include $(PROJECT_RSCDIR)/macro_define
+
+#================================
+# リソース
+#================================
+RUBY_MMDLLIST_RES = $(DIR_TOOL)/fmmdl_scripter_mdllist.rb
+CUTPOS_XLS        = $(DIR_TOOL)/fmmdl_cut_pos.xls
+CUTPOS_CSV        = $(DIR_TOOL)/fmmdl_cut_pos.csv
+XLSCONV           = ../../tools/exceltool/xls2xml/tab_out.rb
+
+.PHONY: do-build clean
+
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+.PHONY: do-build clean
+#自動削除して欲しくない中間ファイル
+.PRECIOUS: $(FMMDLLIST_CSV) $(FMMDLPOKELIST_CSV) $(FMMDLMDLLIST_CSV)
+
+#---------------------------------------------------------------
+#	build
+#---------------------------------------------------------------
+do-build:
+	@ruby $(XLSCONV) -c $(CUTPOS_XLS) > $(CUTPOS_CSV)
+	@ruby $(RUBY_MMDLLIST_RES) $(FMMDLLIST_CSV) $(CUTPOS_CSV)
+
+clean:
+	rm -f $(FMMDLMDLLIST_CSV)
+	rm -f $(FMMDLPOKELIST_CSV)
+	rm -f $(FMMDLLIST_CSV)
+	rm -f $(FMMDLLIST_RES)

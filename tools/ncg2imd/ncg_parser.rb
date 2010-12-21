@@ -1,14 +1,24 @@
 #! /usr/local/bin/ruby
+
+class NCG_HEADER
+    attr_accessor :FormatID , :ByteOrderMark ,:FormatVersion , :FileSize , :HeaderSize , :DataBlocks
+end
+
+class CHAR_DATA
+    attr_accessor :BlockType, :BlockSize, :CharWidth, :CharHeight, :BitMode, :CharData
+end
+
+class LINK_DATA
+    attr_accessor :BlockType, :BlockSize, :PalFileName
+end
+
 class NCG_STRUCT
 	def initialize
-		temp_h = Struct.new("NCG_HEADER",:FormatID, :ByteOrderMark, :FormatVersion,
-					  :FileSize, :HeaderSize, :DataBlocks)
-		@Header = temp_h.new
-		temp_c = Struct.new("CHAR_DATA",:BlockType, :BlockSize, :CharWidth,
-					  :CharHeight, :BitMode, :CharData )
-		@CharData = temp_c.new
-		temp_l = Struct.new("LINK_DATA",:BlockType, :BlockSize, :PalFileName )
-		@LinkData = temp_l.new
+    
+    # データを定義
+    @Header = NCG_HEADER.new
+		@CharData = CHAR_DATA.new
+		@LinkData = LINK_DATA.new
 	end
 
 	def Pars(inFileName)
