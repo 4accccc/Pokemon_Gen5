@@ -5,7 +5,7 @@
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
- * original = fmmdl_anm_cyclehero.xls  pattern_num = 32
+ * original = fmmdl_anm_cyclehero.xls  pattern_num = 16
  */
 //=========================================================================
 

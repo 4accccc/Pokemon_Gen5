@@ -78,10 +78,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL32F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR32F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF, 16 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF, 16 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF, 16 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF, 16 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF, 16 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -122,10 +122,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL16F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR16F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  8 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  8 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  8 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  8 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -166,10 +166,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL8F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR8F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -210,10 +210,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL4F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR4F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  2 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  2 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  2 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  2 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -254,10 +254,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL2F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR2F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  1 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  1 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  1 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  1 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -298,10 +298,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL6F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR6F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  3 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  3 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  3 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  3 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -342,10 +342,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL3F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR3F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  2 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  1 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  2 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  1 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -386,10 +386,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL7F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR7F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  3 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  3 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
@@ -430,10 +430,10 @@ static const GFL_BBDACT_ANM DATA_BlActFlip_WalkL12F[] = {
 // 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_WalkR12F[] = {
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  5, ANMFLIP_ON, ANMFLIP_OFF,  6 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  6 },  ///<
   {  6, ANMFLIP_ON, ANMFLIP_OFF,  6 },  ///<
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF,  6 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 

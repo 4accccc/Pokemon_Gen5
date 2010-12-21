@@ -5,7 +5,7 @@
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
- * original = fmmdl_anm_nonflip_champion.xls  pattern_num = 14
+ * original = fmmdl_anm_nonflip_champion.xls  pattern_num = 15
  */
 //=========================================================================
 

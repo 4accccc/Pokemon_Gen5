@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2010-04-05T18:39:04' host='W00154A' user='lee_hyunjung' source='ncg4x4x14.mb'/>
+	<create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x15.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2010-04-05T18:39:04' host='W00154A' user='lee_hyunjung' source='ncg4x4x14.mb'/>
+<original_create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x15.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
-<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='merge' material_size='1 1' vertex_style='direct' compress_material='on' output_texture='used' node_size='2 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
+<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='14'>
-	<tex_image name='t4x4x14.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.1.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+<tex_image_array size='15'>
+	<tex_image name='t4x4x15.0' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.0.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.2.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.1' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.1.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 5550 0555 0000 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 0000 0ff0 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.3.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.2' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.2.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 5000 5555 0005 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 0ff0 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.4.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.3' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.3.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +160,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.5.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.4' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.4.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 5555 0005 0000 0000 
@@ -196,7 +196,7 @@
 			0000 0000 0000 00ff 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.6.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.5' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.5.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 5550 0555 0000 0000 
@@ -232,7 +232,7 @@
 			0000 0000 0000 0000 ff00 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.7.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.6' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.6.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -268,7 +268,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.8.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.7' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.7.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 5000 5555 0000 0000 0000 
@@ -304,7 +304,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.9.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.8' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.8.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 5555 0055 0000 0000 
@@ -340,7 +340,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.10.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.9' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.9.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -376,7 +376,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.11.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.10' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.10.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 5555 0005 0000 0000 0000 
@@ -412,7 +412,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.12.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.11' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.11.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 5500 5555 0000 0000 0000 0000 
@@ -448,7 +448,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.13' format='palette16' original_width='32' original_height='32' index='12' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.13.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.12' format='palette16' original_width='32' original_height='32' index='12' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.12.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -484,7 +484,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.14' format='palette16' original_width='32' original_height='32' index='13' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.14.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x15.13' format='palette16' original_width='32' original_height='32' index='13' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.13.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -520,17 +520,53 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
+	<tex_image name='t4x4x15.14' format='palette16' original_width='32' original_height='32' index='14' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x15.14.tga' palette_name='t4x4x15' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 5550 0555 0000 0000 
+			0000 0000 5000 5000 8885 5888 0000 0000 
+			0000 0000 8500 8505 8688 0588 0000 0000 
+			0000 0000 8509 8855 8666 5558 0000 0000 
+			0000 9000 8858 6885 8666 5858 0000 0000 
+			0000 9000 6858 6688 6666 5865 5555 0000 
+			0000 8f00 6588 6668 6666 8566 8888 0009 
+			0000 8f00 6688 6656 6566 6666 9886 0000 
+			0000 9000 9668 65b6 6b56 6669 8886 0009 
+			0000 f000 b568 5bb9 9bb5 665b 9988 0000 
+			0000 5000 b598 bbbb bbbb 895b 0098 0000 
+			0000 0000 25b9 bbba abbb 9b52 0005 0000 
+			0000 0000 a5b9 bb22 22bb 9b5a 0009 0000 
+			0000 9000 ba98 b2ec ce2b 89ab 0098 0000 
+			0000 0000 b96f bbfc cfbb 669b 000f 0000 
+			0000 0000 af50 bbbb bbbb 55fa 0000 0000 
+			0000 0000 f310 bbab babb 013f 0000 0000 
+			0000 0000 3431 ab9f f9ba 1343 0000 0000 
+			0000 0000 344f 1127 7211 f443 0000 0000 
+			0000 1000 6434 917c c719 4346 0001 0000 
+			0000 6100 5444 173d d371 4445 0016 0000 
+			0000 f100 4466 1733 3371 6644 001f 0000 
+			0000 9000 655f 173c c371 f556 0009 0000 
+			0000 0000 5fa9 172d d271 9af5 0000 0000 
+			0000 0000 fef0 1732 2371 0fef 0000 0000 
+			0000 0000 def0 131e e131 0fed 0000 0000 
+			0000 0000 d200 1fed def1 002d 0000 0000 
+			0000 0000 1f00 f0f1 1f0f 00f1 0000 0000 
+			0000 0000 f000 000f f000 000f 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='t4x4x14' color_size='16' index='0'>
+	<tex_palette name='t4x4x15' color_size='16' index='0'>
 		4330 14a5 1ce7 16f9 47fb 0056 20dd 19df 
 		1a9f 190d 2619 471e 7fff 6f15 4e51 0000 
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size='1'>
-	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='on' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='repeat repeat' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='0 0 0' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='clamp clamp' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
 </material_array>
 
 <matrix_array size='1'>

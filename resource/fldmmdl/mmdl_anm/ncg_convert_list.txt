@@ -1,33 +1,33 @@
 //NCG変換対応IMD,,
 ANMID,パラメータ0,パラメータ1,パラメータ2
 ANMID_NON,,
-ANMID_HERO,MDLSIZE_32x32:4:4:32:ncg4x4hero.imd:ncg4x4hero:mmdl_anm/tmp/fmmdl_anm_hero.csv,
-ANMID_FLIP,MDLSIZE_32x32:4:4:7:ncg4x4flip.imd:ncg4x4flip:mmdl_anm/tmp/fmmdl_anm_flip.csv,
-ANMID_NONFLIP,MDLSIZE_32x32:4:4:12:ncg4x4nflip.imd:ncg4x4nflip:mmdl_anm/tmp/fmmdl_anm_nonflip.csv,
-ANMID_ONECELL,MDLSIZE_32x32:4:4:1:ncg4x4ocell.imd:ncg4x4ocell:mmdl_anm/tmp/fmmdl_anm_onecell.csv,MDLSIZE_16x16:2:2:1:ncg2x2ocell.imd:ncg2x2ocell:mmdl_anm/tmp/fmmdl_anm_onecell.csv,
-ANMID_SWIMHERO,MDLSIZE_32x32:4:4:4:ncg4x4swim.imd:ncg4x4swim:mmdl_anm/tmp/fmmdl_anm_swimhero.csv,
-ANMID_CYCLEHERO,MDLSIZE_32x32:4:4:32:ncg4x4cycle.imd:ncg4x4cycle:mmdl_anm/tmp/fmmdl_anm_cyclehero.csv,
-ANMID_GETHERO,MDLSIZE_32x32:4:4:2:ncg4x4gethero.imd:ncg4x4gethero:mmdl_anm/tmp/fmmdl_anm_gethero.csv,
-ANMID_PCHERO,MDLSIZE_32x32:4:4:5:ncg4x4pchero.imd:ncg4x4pchero:mmdl_anm/tmp/fmmdl_anm_pchero.csv,
-ANMID_SAVEHERO,MDLSIZE_32x32:4:4:2:ncg4x4reporthero.imd:ncg4x4reporthero:mmdl_anm/tmp/fmmdl_anm_savehero.csv,
-ANMID_FISHINGHERO,MDLSIZE_32x32:4:4:12:ncg4x4fishhero.imd:ncg4x4fishhero:mmdl_anm/tmp/fmmdl_anm_fishinghero.csv,MDLSIZE_64x64:8:8:12:ncg8x8fishgirl.imd:ncg8x8fishgirl:mmdl_anm/tmp/fmmdl_anm_fishinghero.csv,
-ANMID_CUTINHERO,MDLSIZE_32x32:4:4:4:ncg4x4cutinhero.imd:ncg4x4cutinhero:mmdl_anm/tmp/fmmdl_anm_cutinhero.csv,
-ANMID_YUREHERO,MDLSIZE_32x32:4:4:16:ncg4x4hurahero.imd:ncg4x4hurahero:mmdl_anm/tmp/fmmdl_anm_yurehero.csv,
-ANMID_POKE_FLIP,MDLSIZE_32x32:4:4:6:ncg4x4pokeflip.imd:ncg4x4pokeflip:mmdl_anm/tmp/fmmdl_anm_poke_flip.csv,MDLSIZE_64x64:8:8:6:ncg8x8pokeflip.imd:ncg8x8pokeflip:mmdl_anm/tmp/fmmdl_anm_poke_flip.csv,
-ANMID_POKE_NONFLIP,MDLSIZE_32x32:4:4:8:ncg4x4pokenflip.imd:ncg4x4pokenflip:mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv,MDLSIZE_64x64:8:8:8:ncg8x8pokenflip.imd:ncg8x8pokenflip:mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv,
-ANMID_FLIP_PCWOMAN,MDLSIZE_32x32:4:4:9:ncg4x4pcwoman.imd:ncg4x4pcwoman:mmdl_anm/tmp/fmmdl_anm_flip_pcwoman.csv,
-ANMID_NONFLIP_RIVAL,MDLSIZE_32x32:4:4:14:ncg4x4x14.imd:ncg4x4x14:mmdl_anm/tmp/fmmdl_anm_nonflip_rival.csv,
-ANMID_NONFLIP_SUPPORT,MDLSIZE_32x32:4:4:15:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_support.csv,
-ANMID_NONFLIP_BOSS_N,MDLSIZE_32x32:4:4:22:ncg4x4x22.imd:ncg4x4x22:mmdl_anm/tmp/fmmdl_anm_nonflip_boss_n.csv,
-ANMID_NONFLIP_SAGE1,MDLSIZE_32x32:4:4:20:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_sage1.csv,
-ANMID_NONFLIP_NINJA,MDLSIZE_32x32:4:4:16:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_ninja.csv,
-ANMID_NONFLIP_CHAMPION,MDLSIZE_32x32:4:4:14:ncg4x4x14.imd:ncg4x4x14:mmdl_anm/tmp/fmmdl_anm_nonflip_champion.csv,
-ANMID_SPIDER,MDLSIZE_32x32:4:4:4:ncg4x4spider.imd:ncg4x4spider:mmdl_anm/tmp/fmmdl_anm_spider.csv,
-ANMID_MELODYER,MDLSIZE_32x32:4:4:20:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_melodyer.csv,
-ANMID_SHINMU_A,MDLSIZE_64x64:8:8:15:ncg8x8x15poke.imd:ncg8x8x15poke:mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv,
-ANMID_SHINMU_B,MDLSIZE_64x64:8:8:15:ncg8x8x15poke.imd:ncg8x8x15poke:mmdl_anm/tmp/fmmdl_anm_shinmu_b.csv,
-ANMID_SHINMU_C,MDLSIZE_64x64:8:8:15:ncg8x8x15poke.imd:ncg8x8x15poke:mmdl_anm/tmp/fmmdl_anm_shinmu_c.csv,
-ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:20:ncg4x4x20.imd:ncg4x4x20:mmdl_anm/tmp/fmmdl_anm_nonflip_swleader4.csv,
+ANMID_HERO,MDLSIZE_32x32:4:4:24:t4x4x24.imd:t4x4x24:mmdl_anm/tmp/fmmdl_anm_hero.csv,
+ANMID_FLIP,MDLSIZE_32x32:4:4:7:t4x4x7.imd:t4x4x7:mmdl_anm/tmp/fmmdl_anm_flip.csv,
+ANMID_NONFLIP,MDLSIZE_32x32:4:4:12:t4x4x12.imd:t4x4x12:mmdl_anm/tmp/fmmdl_anm_nonflip.csv,
+ANMID_ONECELL,MDLSIZE_32x32:4:4:1:t4x4x1.imd:t4x4x1:mmdl_anm/tmp/fmmdl_anm_onecell.csv,MDLSIZE_16x16:2:2:1:t2x2x1.imd:t2x2x1:mmdl_anm/tmp/fmmdl_anm_onecell.csv,
+ANMID_SWIMHERO,MDLSIZE_32x32:4:4:4:t4x4x4.imd:t4x4x4:mmdl_anm/tmp/fmmdl_anm_swimhero.csv,
+ANMID_CYCLEHERO,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_cyclehero.csv,
+ANMID_GETHERO,MDLSIZE_32x32:4:4:2:t4x4x2.imd:t4x4x2:mmdl_anm/tmp/fmmdl_anm_gethero.csv,
+ANMID_PCHERO,MDLSIZE_32x32:4:4:5:t4x4x5.imd:t4x4x5:mmdl_anm/tmp/fmmdl_anm_pchero.csv,
+ANMID_SAVEHERO,MDLSIZE_32x32:4:4:2:t4x4x2.imd:t4x4x2:mmdl_anm/tmp/fmmdl_anm_savehero.csv,
+ANMID_FISHINGHERO,MDLSIZE_32x32:4:4:12:t4x4x12.imd:t4x4x12:mmdl_anm/tmp/fmmdl_anm_fishinghero.csv,MDLSIZE_64x64:8:8:12:t8x8x12.imd:t8x8x12:mmdl_anm/tmp/fmmdl_anm_fishinghero.csv,
+ANMID_CUTINHERO,MDLSIZE_32x32:4:4:4:t4x4x4.imd:t4x4x4:mmdl_anm/tmp/fmmdl_anm_cutinhero.csv,
+ANMID_YUREHERO,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_yurehero.csv,
+ANMID_POKE_FLIP,MDLSIZE_32x32:4:4:6:t4x4x6.imd:t4x4x6:mmdl_anm/tmp/fmmdl_anm_poke_flip.csv,MDLSIZE_64x64:8:8:6:t8x8x6.imd:t8x8x6:mmdl_anm/tmp/fmmdl_anm_poke_flip.csv,
+ANMID_POKE_NONFLIP,MDLSIZE_32x32:4:4:8:t4x4x8.imd:t4x4x8:mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv,MDLSIZE_64x64:8:8:8:t8x8x8.imd:t8x8x8:mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv,
+ANMID_FLIP_PCWOMAN,MDLSIZE_32x32:4:4:9:t4x4x9.imd:t4x4x9:mmdl_anm/tmp/fmmdl_anm_flip_pcwoman.csv,
+ANMID_NONFLIP_RIVAL,MDLSIZE_32x32:4:4:14:t4x4x14.imd:t4x4x14:mmdl_anm/tmp/fmmdl_anm_nonflip_rival.csv,
+ANMID_NONFLIP_SUPPORT,MDLSIZE_32x32:4:4:15:t4x4x15.imd:t4x4x15:mmdl_anm/tmp/fmmdl_anm_nonflip_support.csv,
+ANMID_NONFLIP_BOSS_N,MDLSIZE_32x32:4:4:22:t4x4x22.imd:t4x4x22:mmdl_anm/tmp/fmmdl_anm_nonflip_boss_n.csv,
+ANMID_NONFLIP_SAGE1,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_sage1.csv,
+ANMID_NONFLIP_NINJA,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_ninja.csv,
+ANMID_NONFLIP_CHAMPION,MDLSIZE_32x32:4:4:15:t4x4x15.imd:t4x4x15:mmdl_anm/tmp/fmmdl_anm_nonflip_champion.csv,
+ANMID_SPIDER,MDLSIZE_32x32:4:4:4:t4x4x4.imd:t4x4x4:mmdl_anm/tmp/fmmdl_anm_spider.csv,
+ANMID_MELODYER,MDLSIZE_32x32:4:4:20:t4x4x20.imd:t4x4x20:mmdl_anm/tmp/fmmdl_anm_melodyer.csv,
+ANMID_SHINMU_A,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv,
+ANMID_SHINMU_B,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_b.csv,
+ANMID_SHINMU_C,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_c.csv,
+ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_swleader4.csv,
 #END,,
 
 パラメータ内訳：対応モデル:横キャラ数:縦キャラ数:総パターン数:対応imd名:対応ダミーncg&nclファイル名:アニメ定義ファイルcsv
@@ -93,12 +93,12 @@ ANMID_SHINMU_B
 ANMID_SHINMU_C
 ANMID_NONFLIP_SWLEADER4
 //ダミー
-//パターン数 32 自機基本アニメ
+//パターン数 24 自機基本アニメ
 //パターン数 7 汎用人型　フリップ有アニメ
 //パターン数 12 汎用人型　ノンフリップアニメ
 //パターン数 1 ワンセルアニメ　同一ファイル内継承
 //パターン数 4 自機波乗りアニメ
-//パターン数 32 自機自転車アニメ
+//パターン数 16 自機自転車アニメ
 //パターン数 2 自機アイテムゲットアニメ
 //パターン数 5 自機ポケセン預けアニメ
 //パターン数 2 自機セーブアニメ
@@ -111,12 +111,12 @@ ANMID_NONFLIP_SWLEADER4
 //パターン数 14 汎用人型　フリップ無しアニメ＋ライバル芝居
 //パターン数 15 汎用人型　フリップ無しアニメ＋サポート芝居
 //パターン数 22 ボスN　フリップ無しアニメ＋ボスＮ芝居
-//パターン数 20 汎用人型　フリップ無しアニメ＋七賢人ゲーチス芝居
+//パターン数 16 汎用人型　フリップ無しアニメ＋七賢人ゲーチス芝居
 //パターン数 16 汎用人型　フリップ無しアニメ＋ダークトリニティ芝居(通常アニメ2倍速)
-//パターン数 14 汎用人型　フリップ無しアニメ＋チャンピオンアデク芝居
+//パターン数 15 汎用人型　フリップ無しアニメ＋チャンピオンアデク芝居
 //パターン数 4 蜘蛛の巣アニメ
 //パターン数 20 メロディアアニメ
 //パターン数 15 ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
 //パターン数 15 ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
 //パターン数 15 ゼクレシキュレムアニメ　上昇
-//パターン数 20 スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+//パターン数 16 スワンカミツレ　フリップ無しアニメ＋芝居1パターン

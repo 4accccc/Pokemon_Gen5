@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-10-20T17:51:20' host='W00154A' user='lee_hyunjung' source='bigman.mb'/>
+	<create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x2.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-10-20T17:51:20' host='W00154A' user='lee_hyunjung' source='bigman.mb'/>
+<original_create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x2.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
@@ -16,7 +16,7 @@
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
 <tex_image_array size='2'>
-	<tex_image name='t4x4reporthero.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='t4x4reporthero.1.tga' palette_name='t4x4reporthero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x2.0' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x2.0.tga' palette_name='t4x4x2' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4reporthero.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='t4x4reporthero.2.tga' palette_name='t4x4reporthero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x2.1' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x2.1.tga' palette_name='t4x4x2' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -91,7 +91,7 @@
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='t4x4reporthero' color_size='16' index='0'>
+	<tex_palette name='t4x4x2' color_size='16' index='0'>
 		2e47 296f 1d0c 61e8 4d47 4d7d 4158 3110 
 		1ca8 7779 3a7a 192f 5f5f 7fff 6af5 0000 
 	</tex_palette>
