@@ -365,7 +365,7 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   log.prm.score.tr_id = info->trainer_id;
   log.prm.score.value = info->action.fmission.my_score;
 
-  LINK_FESTIVAL_LogStore( fest_sys, &log );
+  LINK_FESTIVAL_ScoreLogStore( fest_sys, &log );
 }
 
 //==================================================================

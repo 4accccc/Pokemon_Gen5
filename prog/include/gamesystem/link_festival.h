@@ -15,6 +15,7 @@
 #include "fest_mission.h"
 
 #define LINKFEST_LOG_MAX  (100) //フェスタミッションログMax
+#define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスタミッションログEndIndex
 
 typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
 
@@ -125,7 +126,26 @@ extern int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk );
  * @param log 情報を格納したLINKFEST_LOG_PARAM構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-extern BOOL LINK_FESTIVAL_LogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src );
+extern BOOL LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　無視したミッションのログをストア
+ *
+ * @param fmwk ミッション情報を格納したFEST_MISSION構造体型ワークへのポインタ
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　無視するミッションかチェック
+ *
+ * @param fmwk ミッション情報を格納したFEST_MISSION構造体型ワークへのポインタ
+ */
+//---------------------------------------------------------
+extern BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
+
 
 //---------------------------------------------------------
 /*

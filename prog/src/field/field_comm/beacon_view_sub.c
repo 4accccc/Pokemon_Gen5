@@ -1456,7 +1456,10 @@ static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
   if( FEST_MISSION_IsEntry( wk->fmwk ) ){
     return FALSE;
   }
-
+  //無視対象のミッションはスルーする
+  if( LINK_FESTIVAL_IsEgnoreMission( wk->fest_sys, (const FEST_MISSION*)&mission )){
+    return FALSE;
+  }
   GAMEBEACON_InfoWordset( info, wk->wordset, wk->tmpHeapID );
   WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
   taskAdd_WinFMission( wk, &mission, &wk->eff_task_ct);
@@ -1538,6 +1541,8 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
         twk->seq = 4;
         break;
       case TMENU_YN_NO:
+        //無視ミッション登録しておく
+        LINK_FESTIVAL_EgnoreLogStore( bvp->fest_sys, (const FEST_MISSION*)&twk->mission);
         twk->seq = 5;
         break;
       }

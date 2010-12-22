@@ -31,13 +31,19 @@ struct _LINK_FESTIVAL{
   u32 beacon_wait;  ///frame
   u32 beacon_timer; //frame
 
-  int log_num;
+  u16 log_num;
+  u16 log_idx;
   LINKFEST_LOG  log[LINKFEST_LOG_MAX];
-  LINKFEST_LOG  last_mission;  //最後のミッションログ
+  LINKFEST_LOG  last;  //最後のミッションログ
 };
 
 static void lnkfes_BeaconSend( LINK_FESTIVAL* wk );
-static void lnkfes_LogClearAll( LINK_FESTIVAL* wk );
+static void log_ClearAll( LINK_FESTIVAL* wk );
+static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
+static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
+static void log_mission_LogStore( LINKFEST_LOG* log, const FEST_MISSION* fmwk );
+static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_MISSION* fmwk );
+
 
 static void festlog_Clear( LINKFEST_LOG* log );
 
@@ -53,7 +59,7 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
 
   FEST_MISSION_Clear( &wk->mission );
   //ログクリア
-  lnkfes_LogClearAll( wk );
+  log_ClearAll( wk );
 
   wk->beacon_wait = 10*60;
   return wk;
@@ -99,9 +105,12 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission )
 {
-  lnkfes_LogClearAll( wk );
+  log_ClearAll( wk );
 
   FEST_MISSION_Start( &wk->mission, mission );
+
+  //最後のミッションを覚えておく
+  log_LastMissionLogStore( wk, mission );
 }
 
 //---------------------------------------------------------
@@ -113,7 +122,7 @@ void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
 {
   FEST_MISSION_End( &wk->mission );
 
-  lnkfes_LogClearAll( wk );
+  log_ClearAll( wk );
 }
 
 //---------------------------------------------------------
@@ -198,7 +207,7 @@ int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk )
  * @param log 情報を格納したLINKFEST_LOG構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-BOOL LINK_FESTIVAL_LogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
+BOOL LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
 {
   int i;
   LINKFEST_LOG* log;
@@ -229,6 +238,73 @@ BOOL LINK_FESTIVAL_LogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 新規ログ%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
   ++wk->log_num;
   return TRUE;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　無視したミッションのログをストア
+ *
+ * @param fmwk ミッション情報を格納したFEST_MISSION構造体型ワークへのポインタ
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
+{
+  int i;
+  LINKFEST_LOG* log;
+
+  if( FEST_MISSION_IsEntry( &wk->mission )){
+    return;
+  }
+  //同じログがあるか？
+  if( log_CheckEgnoreLog( wk, fmwk )){
+    return;
+  }
+  //新規
+  log = &wk->log[wk->log_idx];
+  log_mission_LogStore( log, fmwk );
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 新規無視ログ%d num=%d, id=%d, key=%08x, param=%d\n",
+    wk->log_idx, wk->log_num, fmwk->id, fmwk->key, fmwk->param );
+
+  wk->log_idx = (wk->log_idx + 1)%LINKFEST_LOG_MAX;
+  if( wk->log_num < LINKFEST_LOG_MAX ){
+    ++wk->log_num;
+  }
+  return;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　無視するミッションかチェック
+ *
+ * @param fmwk ミッション情報を格納したFEST_MISSION構造体型ワークへのポインタ
+ */
+//---------------------------------------------------------
+BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
+{
+  int i;
+  LINKFEST_LOG* log;
+
+  //最後のミッションと同一か？
+  if( wk->last.mission.id != FEST_MISSION_NULL &&
+      log_mission_IsSame( &wk->last, fmwk ))
+  {
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 最後のミッションと同一なので無視 id=%d, key=%08x, param=%d\n",
+      fmwk->id, fmwk->key, fmwk->param );
+    return TRUE;
+  }
+  //無視ログ登録されているか？
+  if( log_CheckEgnoreLog( wk, fmwk )){
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 無視ログ登録されているので無視 id=%d, key=%08x, param=%d\n",
+      fmwk->id, fmwk->key, fmwk->param );
+    return TRUE;
+  }
+  //残り時間が一定以上か？
+  if( fmwk->life/60 < 30 ){
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 残り時間が30秒未満なので無視 id=%d, key=%08x, param=%d life=%dsec\n",
+      fmwk->id, fmwk->key, fmwk->param, fmwk->life/60 );
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //---------------------------------------------------------
@@ -279,7 +355,7 @@ static void lnkfes_BeaconSend( LINK_FESTIVAL* wk )
  * @brief リンクフェスティバル　ログクリア
  */
 //---------------------------------------------------------
-static void lnkfes_LogClearAll( LINK_FESTIVAL* wk )
+static void log_ClearAll( LINK_FESTIVAL* wk )
 {
   int i;
 
@@ -287,7 +363,65 @@ static void lnkfes_LogClearAll( LINK_FESTIVAL* wk )
     LINKFEST_LOG_Clear( &wk->log[i]);
   }
   wk->log_num = 0;
+  wk->log_idx = 0;
   wk->beacon_timer = 0; 
 }
 
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ラストミッションログストア
+ */
+//---------------------------------------------------------
+static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
+{
+  LINKFEST_LOG_Clear( &wk->last );
+  log_mission_LogStore( &wk->last, fmwk );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　指定ミッションが無視ログ内にあるかチェック
+ */
+//---------------------------------------------------------
+static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
+{
+  int i,idx;
+
+  idx = ((int)wk->log_idx+LINKFEST_LOG_END)%LINKFEST_LOG_MAX;
+  for(i = 0;i < wk->log_num;i++){
+    if( log_mission_IsSame( &wk->log[idx], fmwk )){
+      return TRUE;
+    }
+    idx = (idx+LINKFEST_LOG_END)%LINKFEST_LOG_MAX;
+  }
+  return FALSE;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ミッションログストア
+ */
+//---------------------------------------------------------
+static void log_mission_LogStore( LINKFEST_LOG* log, const FEST_MISSION* fmwk )
+{
+  log->mission.id = fmwk->id;
+  log->mission.key = fmwk->key;
+  log->mission.param = fmwk->param;
+}
+
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ミッションログと同じミッションか？
+ */
+//---------------------------------------------------------
+static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_MISSION* fmwk )
+{
+  if( log->mission.key != fmwk->key ||
+      log->mission.id != fmwk->id ||
+      log->mission.param != fmwk->param ){
+      return FALSE; //違うミッション
+  }
+  return TRUE;
+}
 
