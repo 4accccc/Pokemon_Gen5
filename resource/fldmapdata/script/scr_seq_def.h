@@ -6775,7 +6775,8 @@
  *      GYM_ELEC_EFFECT_FAN_BOSS_END  観客が大きく盛り上がりアニメ＋多くカメラフラッシュをする
  *      GYM_ELEC_EFFECT_DISPLAY_BOSS  ディスプレイにカミツレを写す
  *      GYM_ELEC_EFFECT_DISPLAY_HERO  ディスプレイに主人公を写す
- *      GYM_ELEC_EFFECT_LIGHTUP_BOSS  カミツレ勝利後のライトアップを付ける
+ *      GYM_ELEC_EFFECT_LIGHTUP_BOSS_START  カミツレ勝利後のライトアップを付ける（アルファあり用）
+ *      GYM_ELEC_EFFECT_LIGHTUP_BOSS_RECOVERカミツレ勝利後のライトアップを付ける（復帰処理用）
  */
 //--------------------------------------------------------------
 #define _GYM_ELEC_SET_EFFECT( type ) \

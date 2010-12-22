@@ -650,8 +650,11 @@ void GYM_ELEC_SetFloorLight( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_FLOORLIGHT type
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
   switch( type )
   {
-  case GYM_ELEC_FLOORLIGHT_BOSS:
+  case GYM_ELEC_FLOORLIGHT_BOSS_START:
     FLOOR_LIGHT_StartAlpha( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BOSS_WIN, 60 );
+    break;
+  case GYM_ELEC_FLOORLIGHT_BOSS_RECOVER:
+    FLOOR_LIGHT_Start( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BOSS_WIN );
     break;
   default:
     GF_ASSERT(0);

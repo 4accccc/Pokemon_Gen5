@@ -135,7 +135,7 @@ INIT_EVENT_START	ev_init_c04gym0101
 INIT_EVENT_END
 
 /************************************************************/
-/*				セーブ復帰用                            					*/
+/*				復帰用                            					*/
 /************************************************************/
 INIT_EVENT_START	ev_recover_c04gym0101
 	//セーブ復帰なら実行
@@ -147,7 +147,7 @@ INIT_EVENT_START	ev_recover_c04gym0101
   //クリア後はカミツレショーアップ時に緑ビームがでるので復帰処理
 	IF $WK_SCENE_C04GYM0101_SHOW == 3 THEN
 	  IF FLAG_ON( FE_C04GYM0101_CLEAR ) THEN
-      _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_LIGHTUP_BOSS )
+      _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_LIGHTUP_BOSS_RECOVER )
     ENDIF
   ENDIF
 
@@ -237,7 +237,7 @@ ev_leader4_btl:
 
   //勝ち演出
   _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_DISPLAY_HERO )
-  _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_LIGHTUP_BOSS )
+  _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_LIGHTUP_BOSS_START )
 
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
 	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_leader_02 , C04GYM0101_LEADER4_01 , POS_DOWN)
@@ -1078,7 +1078,7 @@ ev_swleader04_show:
 	
   //もしも戦っていた場合は、ライトアップ演出を出す
 	IF FLAG_ON( FE_C04GYM0101_CLEAR ) THEN
-    _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_LIGHTUP_BOSS )
+    _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_LIGHTUP_BOSS_START )
   ENDIF
 
 	//影フェードアウトイベントを行う

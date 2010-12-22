@@ -40,7 +40,8 @@
 #define GYM_ELEC_EFFECT_FAN_BOSS_END (2) //観客が大きく盛り上がりアニメする＋カメラフラッシュを多くする
 #define GYM_ELEC_EFFECT_DISPLAY_BOSS  (3) //ディスプレイをカミツレにする
 #define GYM_ELEC_EFFECT_DISPLAY_HERO  (4) //ディスプレイを主人公にする
-#define GYM_ELEC_EFFECT_LIGHTUP_BOSS  (5) //カミツレ勝利後のライトアップを付ける
+#define GYM_ELEC_EFFECT_LIGHTUP_BOSS_START  (5) //カミツレ勝利後のライトアップを付ける(アルファ有り版)
+#define GYM_ELEC_EFFECT_LIGHTUP_BOSS_RECOVER  (6) //カミツレ勝利後のライトアップを付ける（復帰版）
 
 //=============================================================================
 /**

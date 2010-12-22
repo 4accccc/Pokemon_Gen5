@@ -142,8 +142,11 @@ VMCMD_RESULT EvCmdGymElec_SetEffect( VMHANDLE *core, void *wk )
   case GYM_ELEC_EFFECT_DISPLAY_HERO:
     GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_HERO );
     break;
-  case GYM_ELEC_EFFECT_LIGHTUP_BOSS:
-    GYM_ELEC_SetFloorLight( fieldWork, GYM_ELEC_FLOORLIGHT_BOSS );
+  case GYM_ELEC_EFFECT_LIGHTUP_BOSS_START:
+    GYM_ELEC_SetFloorLight( fieldWork, GYM_ELEC_FLOORLIGHT_BOSS_START );
+    break;
+  case GYM_ELEC_EFFECT_LIGHTUP_BOSS_RECOVER:
+    GYM_ELEC_SetFloorLight( fieldWork, GYM_ELEC_FLOORLIGHT_BOSS_RECOVER );
     break;
   default:
     GF_ASSERT(0);
