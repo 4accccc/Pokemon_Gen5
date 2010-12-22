@@ -215,11 +215,35 @@ typedef enum{
 #define BMP_LOGNUM_SY (2)
 #define BMP_LOGNUM_FRM (FRM_BACK)
 #define BMP_LOGNUM_PAL (FONT_PAL_LOGNUM)
+//ミッション内容表示ウィンドウ
+#define BMP_FMISSION_PX (4)
+#define BMP_FMISSION_PY (2)
+#define BMP_FMISSION_SX (24)   //
+#define BMP_FMISSION_SY (6)
+#define BMP_FMISSION_FRM (FRM_BACK)
+#define BMP_FMISSION_PAL (FONT_PAL_LOGNUM)
+//ミッションスコア表示ウィンドウ
+#define BMP_FMSCORE_PX (2)
+#define BMP_FMSCORE_PY (9)
+#define BMP_FMSCORE_SX (28)   //
+#define BMP_FMSCORE_SY (2)
+#define BMP_FMSCORE_FRM (FRM_BACK)
+#define BMP_FMSCORE_PAL (FONT_PAL_LOGNUM)
+//ミッションタイム表示ウィンドウ
+#define BMP_FMTIME_PX (16)
+#define BMP_FMTIME_PY (12)
+#define BMP_FMTIME_SX (14)   //
+#define BMP_FMTIME_SY (2)
+#define BMP_FMTIME_FRM (FRM_BACK)
+#define BMP_FMTIME_PAL (FONT_PAL_LOGNUM)
 
 enum{
  WIN_POPUP,
  WIN_MENU,
  WIN_LOGNUM,
+ WIN_FMISSION,
+ WIN_FMSCORE,
+ WIN_FMTIME,
  WIN_MAX,
 };
 
@@ -363,8 +387,11 @@ enum{
 #define ACT_MENU_OX (4*8)
 #define ACT_MENU_OY (0)
 #define ACT_MENU_NUM  (4)
+#define ACT_MENU_FMISSION_NUM  (3)
 #define ACT_MENU_SX (24)
 #define ACT_MENU_SY (24)
+#define ACT_MENU_FMISSION_PX (ACT_MENU_PX+ACT_MENU_OX)
+
 
 #define ACT_UP_PX (26*8)
 #define ACT_UP_PY (1*8)

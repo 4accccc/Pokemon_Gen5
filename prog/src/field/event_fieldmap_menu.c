@@ -143,6 +143,9 @@ GMEVENT * EVENT_FieldMapMenu(
   case FIELD_SUBSCREEN_BEACON_VIEW:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_BEACON_VIEW;
     break;
+  case FIELD_SUBSCREEN_FMISSION_VIEW:
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_FMISSION_VIEW;
+    break;
   default:
     mwk->return_subscreen_mode = 
       FIELD_SUBSCREEN_CGearCheck( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL );

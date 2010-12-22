@@ -23,6 +23,14 @@ ntrcomp -lex -A4 -o bstatus_bg01_lz.NSCR bstatus_bg01.NSCR
 ntrcomp -lex -A4 -o bstatus_bg02_lz.NSCR bstatus_bg02.NSCR
 ntrcomp -lex -A4 -o bstatus_bg03_lz.NSCR bstatus_bg03.NSCR
 
+g2dcvtr fmission_bg01.nsc -bg -pcm
+g2dcvtr fmission_bg02.nsc -bg -pcm
+g2dcvtr fmission_bg03.nsc -bg -pcm
+ntrcomp -lex -A4 -o fmission_bg_lz.NCGR fmission_bg.NCGR
+ntrcomp -lex -A4 -o fmission_bg01_lz.NSCR fmission_bg01.NSCR
+ntrcomp -lex -A4 -o fmission_bg02_lz.NSCR fmission_bg02.NSCR
+ntrcomp -lex -A4 -o fmission_bg03_lz.NSCR fmission_bg03.NSCR
+
 g2dcvtr bstatus_obj.nce -br
 g2dcvtr bstatus_icon01.nce -br
 g2dcvtr bstatus_icon02.nce -br

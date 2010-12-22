@@ -10,6 +10,8 @@
 #ifndef __H_LINK_FESTIVAL_H__
 #define __H_LINK_FESTIVAL_H__
 
+#include "gamesystem/gamesystem_def.h"
+#include "print/wordset.h"
 #include "fest_mission.h"
 
 #define LINKFEST_LOG_MAX  (100) //フェスタミッションログMax
@@ -77,6 +79,20 @@ extern BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score );
  */
 //---------------------------------------------------------
 extern void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, u32 value );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションパラメータワードセット
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionParamWordset( WORDSET* wset, FEST_MISSION* fmwk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッション参加人数取得
+ */
+//---------------------------------------------------------
+extern int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

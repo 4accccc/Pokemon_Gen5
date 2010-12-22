@@ -5276,7 +5276,7 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
     p_cevent= EVENT_ResearchRadar( pWork->pGameSys, fieldWork );
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
-    p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
+    p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BeaconViewCheck(pWork->subscreen));
     break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
     {

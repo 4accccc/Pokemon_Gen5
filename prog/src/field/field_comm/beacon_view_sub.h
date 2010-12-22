@@ -33,11 +33,6 @@ extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
 extern BOOL BeaconView_CheckCommEvent( BEACON_VIEW_PTR wk );
 
 /*
- *  @brief  特殊ポップアップ起動チェック 
- */
-extern BOOL BeaconView_CheckSpecialPopup( BEACON_VIEW_PTR wk );
-
-/*
  *  @brief  特殊Gパワー発動ポップアップ起動チェック 
  */
 extern BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk );
@@ -47,10 +42,6 @@ extern BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk );
  */
 extern BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk );
 
-/*
- *  @brief  アクティブ・パッシブ切替
- */
-extern void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
 
 //---------------------------------------------------
 /*
@@ -59,40 +50,18 @@ extern void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
 //---------------------------------------------------
 extern void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk );
 
-//---------------------------------------------------
-/*
- *  @brief  プリントキュー　処理スピードアップリクエスト
- *
- *  処理分割数を減らし、処理負荷を上げる代わりに、
- *  プリント処理終了までのスピードをアップする
- */
-//---------------------------------------------------
-extern void BeaconView_PrintQueLimmitUpSet( BEACON_VIEW_PTR wk, BOOL flag );
 
 /*
  *  @brief  サブシーケンス　Newログエントリーメイン
  */
 extern BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk );
 
-/*
- *  @brief  サブシーケンス　GPower使用メイン
- */
-extern BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk );
 
 /*
  *  @brief  サブシーケンス　御礼メイン
  */
 extern int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk );
 
-/*
- *  @brief  メニューバーアニメセット
- */
-extern void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state );
-
-/*
- *  @brief  メニューバーアニメウェイト
- */
-extern BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id );
 
 /*
  *  @brief  スクロールボタンアニメセット

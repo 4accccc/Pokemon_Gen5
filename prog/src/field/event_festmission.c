@@ -26,6 +26,7 @@
 #include "field/field_msgbg.h"
 #include "./event_fieldmap_control.h"
 #include "./event_festmission.h"
+#include "./event_subscreen.h"
 
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
@@ -242,11 +243,19 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
       (*seq)++;
     }
     break;
-  default:
+  case 4:
     FEST_MISSION_Start( LINK_FESTIVAL_GetMissionWork( wk->fest_sys ), (const FEST_MISSION*)&wk->mission );
 
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
+
+    {
+      GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_FMISSION_VIEW );
+      GMEVENT_CallEvent( event, call_ev );
+    }
+    (*seq)++;
+    break;
+  default:
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
@@ -286,11 +295,18 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
       (*seq)++;
     }
     break;
-  default:
+  case 4:
     FEST_MISSION_End( LINK_FESTIVAL_GetMissionWork( wk->fest_sys ) );
 
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
+    {
+      GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_NORMAL );
+      GMEVENT_CallEvent( event, call_ev );
+    }
+    (*seq)++;
+    break;
+  default:
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
@@ -347,12 +363,7 @@ static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, vo
 static void sub_FMissionParamWordExpand( FMISSIN_EVWORK* wk )
 {
 //  IWASAWA_Printf("GPower %d Life = %d\n",g_power,time);
-  WORDSET_RegisterNumber( wk->wset, 0, wk->mission.time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 1, wk->mission.target, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 2, wk->mission.param, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 3, wk->mission.reward, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 4, wk->mission.life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 5, (wk->mission.life/60)%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  LINK_FESTIVAL_MissionParamWordset( wk->wset, &wk->mission );
   WORDSET_RegisterNumber( wk->wset, 6, wk->res_score, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
 

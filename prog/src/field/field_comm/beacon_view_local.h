@@ -33,6 +33,11 @@
 
 #include "beacon_view_def.h"
 
+typedef enum{
+  VIEW_MODE_NORMAL,
+  VIEW_MODE_FMISSION,
+}BEACON_VIEW_MODE;
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -121,6 +126,11 @@ typedef struct _LOG_CTRL{
 
   u8  g_power;
   u8  mine_power_f;
+
+  u8  fm_entry;
+  u32 fm_my_score;
+  u32 fm_score;
+  u32 fm_sec;
   FEST_MISSION mission; //フェスタミッション
 }LOG_CTRL;
 
@@ -153,7 +163,8 @@ typedef struct _BEACON_VIEW{
 
   ////////////////////////////////////////
   MY_DATA               my_data;
-  
+ 
+  BEACON_VIEW_MODE      mode;
   BEACON_STATUS* b_status;
   GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
@@ -218,6 +229,7 @@ typedef struct _BEACON_VIEW{
 
   WORDSET *wordset;
   GFL_MSGDATA *mm_status;
+  GFL_MSGDATA *mm_fmission;
   STRBUF *str_tmp;
   STRBUF *str_expand;
   STRBUF *str_popup;  //ポップアップ用テンポラリ
@@ -244,13 +256,4 @@ typedef struct _BEACON_VIEW{
 
 }BEACON_VIEW;
 
-/*
- *  @brief  イベントリクエスト
- */
-extern void BEACON_VIEW_SUB_EventReserve( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
-
-/*
- *  @brief  イベントリクエストリセット
- */
-extern void BEACON_VIEW_SUB_EventReserveReset( BEACON_VIEW_PTR wk );
-
+#include "beacon_view_setup.h"

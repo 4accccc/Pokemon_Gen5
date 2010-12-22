@@ -12,6 +12,7 @@
 
 #include <gflib.h>
 #include "system/main.h"
+#include "gamesystem/link_festival.h"
 #include "field_subscreen.h"
 
 #include "system/wipe.h"
@@ -144,6 +145,12 @@ static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActi
 static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
 
+static void init_fmission_view_subscreen(FIELD_SUBSCREEN_WORK * pWork,FIELD_SUBSCREEN_MODE prevMode);
+static void exit_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static void draw_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static GMEVENT* evcheck_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
+
 static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -270,6 +277,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     NULL,
     exit_cgear_power_subscreen,
     NULL,
+  },
+  { // フェスミッション画面
+    FIELD_SUBSCREEN_FMISSION_VIEW,  
+    init_fmission_view_subscreen,
+    update_fmission_view_subscreen,
+    draw_fmission_view_subscreen ,
+    evcheck_fmission_view_subscreen,
+    exit_fmission_view_subscreen,
+    NULL ,
   },
 #if PM_DEBUG
   { // デバッグライト制御パネル
@@ -528,6 +544,24 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIE
   return new_mode;
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief           フェスミッション中かチェックし、下画面を切り替えます
+ * @param pWork     FIELD_SUBSCREEN_WORK
+ * @param new_mode    切り替えるモード
+ * @return  mode    切り替わるモード
+ */
+//----------------------------------------------------------------------------
+FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_BeaconViewCheck( FIELD_SUBSCREEN_WORK* pWork )
+{
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
+
+  if(FEST_MISSION_IsEntry( LINK_FESTIVAL_GetMissionWork( fest_sys ))){
+    return FIELD_SUBSCREEN_FMISSION_VIEW;
+  }
+  return FIELD_SUBSCREEN_BEACON_VIEW;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1006,6 +1040,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
       prevMode == FIELD_SUBSCREEN_UNION ||
       prevMode == FIELD_SUBSCREEN_INTRUDE ||
       prevMode == FIELD_SUBSCREEN_BEACON_VIEW ||
+      prevMode == FIELD_SUBSCREEN_FMISSION_VIEW ||
       prevMode == FIELD_SUBSCREEN_DOWSING )
   {
     isScrollIn = TRUE;
@@ -1333,6 +1368,65 @@ static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive
 static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
 {
   return BEACON_VIEW_EventCheck(pWork->beaconViewWork, bEvReqOK );
+}
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フェスミッションログ画面の初期化
+ *  @param  heapID  ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_fmission_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode)
+{
+  // Overlay
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view) );
+  pWork->beaconViewWork = FMISSION_VIEW_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フェスミッションログ画面の破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  FMISSION_VIEW_Exit(pWork->beaconViewWork);
+
+  // Overlay
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フェスミッションログ画面の更新
+ */
+//-----------------------------------------------------------------------------
+static void update_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+  FMISSION_VIEW_Update(pWork->beaconViewWork, bActive);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フェスミッションログ画面の描画
+ */
+//-----------------------------------------------------------------------------
+static void draw_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+  FMISSION_VIEW_Draw(pWork->beaconViewWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フェスミッションログ画面の描画
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* evcheck_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
+{
+  return FMISSION_VIEW_EventCheck(pWork->beaconViewWork, bEvReqOK );
 }
 
 //=============================================================================
