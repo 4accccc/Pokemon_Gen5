@@ -235,6 +235,8 @@ typedef struct
   int                   focus;
   int                   mepachi;
 
+  int                   anmseq;
+
   void*                 resource_data[ RESOURCE_MAX ][ BTLV_MCSS_POS_MAX ];
 }POKEMON_VIEWER_WORK;
 
@@ -638,6 +640,28 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
       }
     }
   }
+
+  // アニメーション操作
+  if( pvw->mcs_enable )
+  {
+    if( trg & PAD_BUTTON_A )
+    {
+      BOOL ret = FALSE;
+      BTLV_MCSS_WORK* bmw = BTLV_EFFECT_GetMcssWork();
+      MCSS_WORK* mcss = BTLV_MCSS_GetMcssWork(bmw , BTLV_MCSS_POS_BB );
+
+      pvw->anmseq ++;
+      ret = BTLV_MCSS_SetAnime( bmw , BTLV_MCSS_POS_BB , pvw->anmseq );
+      
+      // 失敗した場合はシーケンスを0に戻す
+      if( ret == FALSE )
+      {
+        pvw->anmseq = 0;
+        ret = BTLV_MCSS_SetAnime( bmw , BTLV_MCSS_POS_BB , pvw->anmseq );
+      }
+    }
+  }
+
 #if 0
   if( (trg & PAD_BUTTON_SELECT ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) )
   {
