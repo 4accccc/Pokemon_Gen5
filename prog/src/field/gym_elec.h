@@ -32,8 +32,7 @@ extern void GYM_ELEC_SetFanEffect( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_FAN type 
 typedef enum
 {
   GYM_ELEC_DISPLAY_BOSS,
-  GYM_ELEC_DISPLAY_BOY,
-  GYM_ELEC_DISPLAY_GIRL,
+  GYM_ELEC_DISPLAY_HERO,
 }GYM_ELEC_DISPLAY;
 extern void GYM_ELEC_SetDisplay( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_DISPLAY type );
 

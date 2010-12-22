@@ -19,7 +19,7 @@
  *  
  *  スクリプトコマンド
  *    ↓
- *  GYM_ELEC_SetSpotLight関数GYM_ELEC_SetDisplay等
+ *  GYM_ELEC_SetSpotLight関数等
  *    ↓
  *  クラスでのリクエスト
  *    ↓
@@ -359,7 +359,7 @@ typedef struct
 ///	private
 //=====================================
 static GYM_ELEC_SV_WORK * Gym_Elec_GetSaveWork( FIELDMAP_WORK *p_fieldmap );
-static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK *cp_sv );
+static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK *cp_sv, FIELDMAP_WORK *p_fieldmap );
 //=============================================================================
 /**
  *    data
@@ -449,7 +449,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *p_fieldmap)
   }
 
   //セーブワークの状態に環境を整える
-  Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
+  Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv, p_fieldmap );
 
 #ifdef GYM_ELEC_DEBUG_MENU
   //デバッグ作成
@@ -620,11 +620,18 @@ void GYM_ELEC_SetDisplay( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_DISPLAY type )
   case GYM_ELEC_DISPLAY_BOSS:
     DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_BOSS );
     break;
-  case GYM_ELEC_DISPLAY_BOY:
-    DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_BOY );
-    break;
-  case GYM_ELEC_DISPLAY_GIRL:
-    DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_GIRL );
+  case GYM_ELEC_DISPLAY_HERO:
+    {
+      const FIELD_PLAYER *cp_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+      if( FIELD_PLAYER_GetSex(cp_player) == PTL_SEX_MALE )
+      {
+        DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_BOY );
+      }
+      else
+      {
+        DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_GIRL );
+      }
+    }
     break;
   default:
     GF_ASSERT(0);
@@ -660,7 +667,7 @@ void GYM_ELEC_SetFloorLight( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_FLOORLIGHT type
 void GYM_ELEC_Recover( FIELDMAP_WORK *p_fieldmap )
 {
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
-  Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
+  Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv, p_fieldmap );
 }
 //=============================================================================
 /**
@@ -688,9 +695,10 @@ static GYM_ELEC_SV_WORK * Gym_Elec_GetSaveWork( FIELDMAP_WORK *p_fieldmap )
  *
  *	@param	GYM_ELEC_TMP *p_tmp     ギミックワーク
  *	@param	GYM_ELEC_SV_WORK *cp_sv   セーブワーク
+ *	@param  FIELDMAP_WORK           フィールド
  */
 //-----------------------------------------------------------------------------
-static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK *cp_sv )
+static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK *cp_sv, FIELDMAP_WORK *p_fieldmap )
 {
   switch( GYM_ELEC_SV_GetEventSeq( cp_sv ) )
   {
@@ -724,6 +732,7 @@ static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK
     FLOOR_LIGHT_Enable( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BACK );
     FLOOR_LIGHT_Start( p_tmp->p_floor_light, FLOOR_LIGHT_ID_TR01_WIN );
     FLOOR_LIGHT_Start( p_tmp->p_floor_light, FLOOR_LIGHT_ID_TR02_WIN );
+    DISPLAY_Change( p_tmp->p_display, DISPLAY_ID_BOSS );
     break;
   case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
     FOG_SHADOW_SetVisible( p_tmp->p_fog_shadow, FALSE );
@@ -733,6 +742,7 @@ static void Gym_Elec_SetEnvironment( GYM_ELEC_TMP *p_tmp, const GYM_ELEC_SV_WORK
     FLOOR_LIGHT_Start( p_tmp->p_floor_light, FLOOR_LIGHT_ID_TR01_WIN );
     FLOOR_LIGHT_Start( p_tmp->p_floor_light, FLOOR_LIGHT_ID_TR02_WIN );
     FLOOR_LIGHT_Start( p_tmp->p_floor_light, FLOOR_LIGHT_ID_BOSS_WIN );
+    GYM_ELEC_SetDisplay( p_fieldmap, GYM_ELEC_DISPLAY_HERO );
     break;
   default:
     GF_ASSERT( 0 );
@@ -3420,7 +3430,7 @@ static void DEBUGMENU_Init( void *p_tmp_adrs, FIELDMAP_WORK *p_fieldmap, HEAPID 
   //シーケンス
   DEBUGWIN_AddItemToGroupEx( DebugWin_Update_EventSeq, 
                                 DebugWin_Draw_EventSeq, 
-                                p_tmp, 
+                                p_fieldmap, 
                                 DEBUGWIN_GYM_ELEC, 
                                 heapID );
   //フォグ影移動フラグ
@@ -3562,13 +3572,14 @@ static BOOL DebugWin_Util_ChangeData( int *p_param, int min, int max )
 //-----------------------------------------------------------------------------
 static void DebugWin_Update_EventSeq( void* userWork , DEBUGWIN_ITEM* item )
 {
-  GYM_ELEC_TMP *p_tmp  = userWork;
+  FIELDMAP_WORK *p_fieldmap = userWork;
+  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
   int event_seq  = GYM_ELEC_SV_GetEventSeq( p_tmp->p_sv );
   if( DebugWin_Util_ChangeData( &event_seq, 0, GYM_ELEC_EVENT_SEQ_MAX-1 ) )
   {
     GYM_ELEC_SV_SetEventSeq( p_tmp->p_sv, event_seq );
 
-    Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv );
+    Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv, p_fieldmap );
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -3591,7 +3602,8 @@ static void DebugWin_Draw_EventSeq( void* userWork , DEBUGWIN_ITEM* item )
     "ボスかった",
   };
 
-  GYM_ELEC_TMP *p_tmp  = userWork;
+  FIELDMAP_WORK *p_fieldmap = userWork;
+  GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
   int event_seq  = GYM_ELEC_SV_GetEventSeq( p_tmp->p_sv );
   DEBUGWIN_ITEM_SetNameV( item , "じょうたい[%s]", sc_label[event_seq] );
 }

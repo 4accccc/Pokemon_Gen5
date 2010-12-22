@@ -140,17 +140,7 @@ VMCMD_RESULT EvCmdGymElec_SetEffect( VMHANDLE *core, void *wk )
     GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_BOSS );
     break;
   case GYM_ELEC_EFFECT_DISPLAY_HERO:
-    {
-      const FIELD_PLAYER *cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
-      if( FIELD_PLAYER_GetSex(cp_player) == PTL_SEX_MALE )
-      {
-        GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_BOY );
-      }
-      else
-      {
-        GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_GIRL );
-      }
-    }
+    GYM_ELEC_SetDisplay( fieldWork, GYM_ELEC_DISPLAY_HERO );
     break;
   case GYM_ELEC_EFFECT_LIGHTUP_BOSS:
     GYM_ELEC_SetFloorLight( fieldWork, GYM_ELEC_FLOORLIGHT_BOSS );
