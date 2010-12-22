@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2010-12-20T18:59:00"/>
+	<create user="fuchino_hiroki" host="W00252" date="2010-12-22T16:20:02"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="11">
+<tex_image_array size="12">
 	<tex_image index="0" name="c4g_kabe01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
@@ -197,7 +197,21 @@
 			8898 6878 4858 3038 2020 1018 0810 1008
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="c4g_saku01"
+	<tex_image index="4" name="c4g_mat"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="c4g_mat_pl"
+		path="C:/home/swan_data3d/field/in23/chip/tex/c4g_mat.tga"
+	>
+		<bitmap size="32">
+			0000 0000 5555 1555 aaaa 1aaa ffff 1bff
+			aaaa 1baa 5555 1b95 5555 1b95 5555 1b95
+			5555 1b95 5555 1b95 5555 1b95 5555 1b95
+			5555 1b95 5555 1b95 5555 1b95 5555 1b95
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="c4g_saku01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -215,7 +229,7 @@
 			5534 5534 5534 5534 5534 5534 5534 5534
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="c4g_stage1"
+	<tex_image index="6" name="c4g_stage1"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -233,7 +247,7 @@
 			3332 3333 3333 1333 1111 1111 1111 0111
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="c4g_stage1b"
+	<tex_image index="7" name="c4g_stage1b"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -251,7 +265,7 @@
 			0001 5420 0245 1000 0001 4320 0234 1000
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="c4g_stage1c"
+	<tex_image index="8" name="c4g_stage1c"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -262,7 +276,7 @@
 			155a 155a 155a 155a 155a 155a 155a 155a
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="c4g_tou01"
+	<tex_image index="9" name="c4g_tou01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -280,7 +294,7 @@
 			1211 1111 1111 1121 1211 1111 1111 1121
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="c4g_yuka01"
+	<tex_image index="10" name="c4g_yuka01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -306,7 +320,7 @@
 			5555 1555 5556 5555 5555 1555 5556 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="c4g_yuka02"
+	<tex_image index="11" name="c4g_yuka02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -322,7 +336,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="11">
+<tex_palette_array size="12">
 	<tex_palette index="0" name="c4g_kabe01_pl" color_size="4">
 		0421 0842 0c63 1084
 	</tex_palette>
@@ -337,25 +351,28 @@
 	<tex_palette index="3" name="c4g_light02_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="c4g_saku01_pl" color_size="8">
+	<tex_palette index="4" name="c4g_mat_pl" color_size="4">
+		1494 18b8 1d9a 269d
+	</tex_palette>
+	<tex_palette index="5" name="c4g_saku01_pl" color_size="8">
 		7c1f 2cc0 24a0 1084 0c63 0842 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="c4g_stage1_pl" color_size="8">
+	<tex_palette index="6" name="c4g_stage1_pl" color_size="8">
 		5ad6 6318 6f7b 739c 7bde 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="6" name="c4g_stage1b_pl" color_size="8">
+	<tex_palette index="7" name="c4g_stage1b_pl" color_size="8">
 		18c6 1ce7 318c 39ce 4631 5294 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="c4g_stage1c_pl" color_size="4">
+	<tex_palette index="8" name="c4g_stage1c_pl" color_size="4">
 		0000 0842 0c63 7fff
 	</tex_palette>
-	<tex_palette index="8" name="c4g_tou01_pl" color_size="8">
+	<tex_palette index="9" name="c4g_tou01_pl" color_size="8">
 		7c1f 0c63 0842 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="9" name="c4g_yuka01_pl" color_size="4">
+	<tex_palette index="10" name="c4g_yuka01_pl" color_size="4">
 		0842 0c63 1084 7fff
 	</tex_palette>
-	<tex_palette index="10" name="c4g_yuka02_pl" color_size="4">
+	<tex_palette index="11" name="c4g_yuka02_pl" color_size="4">
 		0842 0c63 1084 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -465,7 +482,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="11">
+	<ex_tex_image_array size="12">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -477,8 +494,9 @@
 		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="11" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="11">
+	<ex_tex_palette_array size="12">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -490,6 +508,7 @@
 		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="11" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
