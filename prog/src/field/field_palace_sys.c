@@ -167,10 +167,6 @@ static void FIELD_PALACE_LoadShadeTable( FIELD_PALACE_SYS* work , u16 zoneId , c
           datId = NARC_palace_palette_shade_white_fog_bin;
         }
       }
-      else
-      {
-        GF_ASSERT_MSG( 0, "fog type unknown %d\n", type );
-      }
       if( datId != 0xFFFF )
       {
         const u8 season = Intrude_GetSeasonID( gameComm );
