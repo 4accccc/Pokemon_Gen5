@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2010-12-22T18:06:06" source="livecaster_test_003.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2010-12-22T18:47:31" source="livecaster_test_003.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2010-12-22T18:06:06" source="livecaster_test_003.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2010-12-22T18:47:31" source="livecaster_test_003.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -774,7 +774,7 @@
 					<pos_xy xy="-0.778809 -1.567383"/>
 					<clr rgb="30 28 3"/>
 					<pos_yz yz="-1.268066 0.955322"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-1.663574 0.783691 0.590332"/>
 					<clr rgb="30 28 3"/>
 					<pos_xyz xyz="-1.437744 0.721924 1.004883"/>
@@ -796,7 +796,7 @@
 					<pos_diff xyz="-0.065674 0.019043 -0.060547"/>
 					<pos_yz yz="-0.783691 0.590332"/>
 					<pos_xyz xyz="-1.478516 -0.650879 1.004395"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-1.663574 0.783691 0.590332"/>
 					<clr rgb="30 28 3"/>
 					<pos_yz yz="0.299316 0.955322"/>
@@ -805,7 +805,7 @@
 					<pos_xyz xyz="-1.272217 1.078613 0.812500"/>
 					<clr rgb="30 29 15"/>
 					<pos_yz yz="1.333252 0.000000"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_xy xy="-1.663574 0.968750"/>
 					<pos_yz yz="0.783691 0.590332"/>
 					<clr rgb="30 29 15"/>
@@ -825,12 +825,12 @@
 					<pos_xy xy="-1.663574 0.299316"/>
 					<pos_xyz xyz="-1.915039 0.157471 0.502197"/>
 					<pos_xyz xyz="-1.663574 0.299316 0.955322"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_yz yz="0.783691 0.590332"/>
 					<pos_xyz xyz="-1.915039 0.412109 0.310303"/>
 					<clr rgb="30 28 3"/>
 					<pos_yz yz="0.157471 0.502197"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-1.663574 0.783691 0.590332"/>
 					<pos_yz yz="0.968750 0.000000"/>
 					<pos_xy xy="-1.915039 0.509277"/>
@@ -842,7 +842,7 @@
 					<pos_xyz xyz="-1.663574 -0.783691 -0.590332"/>
 					<pos_xy xy="-1.663574 0.783691"/>
 					<pos_xyz xyz="-1.915039 0.412109 -0.310303"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_yz yz="0.509277 0.000000"/>
 					<pos_xy xy="-1.663574 0.968750"/>
 					<clr rgb="30 29 15"/>
@@ -916,7 +916,7 @@
 					<pos_xyz xyz="-1.915039 0.412109 -0.310303"/>
 					<pos_xy xy="-1.915039 0.412109"/>
 					<pos_xyz xyz="-2.001709 0.000000 0.000000"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_xy xy="-1.915039 0.509277"/>
 					<clr rgb="30 29 15"/>
 					<pos_xy xy="2.001709 0.000000"/>
@@ -935,7 +935,7 @@
 					<pos_xyz xyz="-1.915039 -0.157471 0.502197"/>
 					<pos_xy xy="-1.915039 0.157471"/>
 					<pos_xy xy="-1.915039 0.157471"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_yz yz="0.412109 0.310303"/>
 					<clr rgb="30 29 15"/>
 					<pos_xyz xyz="-2.001709 0.000000 0.000000"/>
@@ -985,7 +985,7 @@
 					<pos_yz yz="0.651123 0.466309"/>
 					<clr rgb="30 28 3"/>
 					<pos_xyz xyz="1.218262 0.987305 0.743652"/>
-					<clr rgb="31 30 26"/>
+					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-1.915039 0.412109 0.310303"/>
 					<pos_yz yz="0.509277 0.000000"/>
 					<clr rgb="30 29 15"/>
