@@ -244,7 +244,7 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
     }
     break;
   case 4:
-    FEST_MISSION_Start( LINK_FESTIVAL_GetMissionWork( wk->fest_sys ), (const FEST_MISSION*)&wk->mission );
+    LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission );
 
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
@@ -296,7 +296,7 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
     }
     break;
   case 4:
-    FEST_MISSION_End( LINK_FESTIVAL_GetMissionWork( wk->fest_sys ) );
+    LINK_FESTIVAL_MissionEnd( wk->fest_sys );
 
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );

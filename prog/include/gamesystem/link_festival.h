@@ -20,15 +20,25 @@ typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
 
 //フェスタログデータ構造体
 typedef struct _LINKFEST_LOG{
-  u32 tr_id;
-  u32 score;
+  union{  //8byteのログ領域
+    struct{ //スコアログ
+      u32 tr_id;
+      u32 value;
+    }score;
+
+    struct{ //受信ミッションログ
+      u8  id;
+      u16 param;
+      u32 key;
+    }mission;
+  };
 }LINKFEST_LOG;
 
 //フェスタログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
   u8  id;
   u32 key;
-  LINKFEST_LOG log;
+  LINKFEST_LOG prm;
 }LINKFEST_LOG_PARAM;
 
 
@@ -61,6 +71,20 @@ extern void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk );
  */
 //---------------------------------------------------------
 extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションスタート
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッション終了
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

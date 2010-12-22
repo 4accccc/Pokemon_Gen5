@@ -33,6 +33,7 @@ struct _LINK_FESTIVAL{
 
   int log_num;
   LINKFEST_LOG  log[LINKFEST_LOG_MAX];
+  LINKFEST_LOG  last_mission;  //最後のミッションログ
 };
 
 static void lnkfes_BeaconSend( LINK_FESTIVAL* wk );
@@ -93,6 +94,30 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル ミッションスタート
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission )
+{
+  lnkfes_LogClearAll( wk );
+
+  FEST_MISSION_Start( &wk->mission, mission );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッション終了
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
+{
+  FEST_MISSION_End( &wk->mission );
+
+  lnkfes_LogClearAll( wk );
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
  *
  * @param u32* スコアを取得するu32のワークポインタ
@@ -109,7 +134,7 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score )
     return FALSE;
   }
   for(i = 0;i < wk->log_num;i++){
-    *score += wk->log[i].score;
+    *score += wk->log[i].score.value;
   }
   *score += wk->mission.my_score;
 
@@ -188,9 +213,9 @@ BOOL LINK_FESTIVAL_LogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
   for(i = 0;i < wk->log_num; i++){
     log = &wk->log[i];
 
-    if( log->tr_id == src->log.tr_id ){ //上書き
-      log->score = src->log.score;
-      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション ログ%dを上書き tr_id=%d, score=%d\n",i, log->tr_id,log->score );
+    if( log->score.tr_id == src->prm.score.tr_id ){ //上書き
+      log->score.value = src->prm.score.value;
+      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション ログ%dを上書き tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
       return TRUE;
     }
   }
@@ -200,8 +225,8 @@ BOOL LINK_FESTIVAL_LogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
   }
   //新規
   log = &wk->log[wk->log_num];
-  *log = src->log;
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 新規ログ%d tr_id=%d, score=%d\n",wk->log_num, log->tr_id,log->score );
+  (*log).score = src->prm.score;
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 新規ログ%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
   ++wk->log_num;
   return TRUE;
 }
@@ -221,10 +246,10 @@ void LINKFEST_LOG_Clear( LINKFEST_LOG* log )
  * @brief リンクフェスティバル　ログパラメータ構造体クリア
  */
 //---------------------------------------------------------
-void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* prm )
+void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* log_prm )
 {
-  MI_CpuClear8( prm, sizeof(LINKFEST_LOG_PARAM) );
-  LINKFEST_LOG_Clear( &prm->log );
+  MI_CpuClear8( log_prm, sizeof(LINKFEST_LOG_PARAM) );
+  LINKFEST_LOG_Clear( &log_prm->prm );
 }
 
 //=========================================================================

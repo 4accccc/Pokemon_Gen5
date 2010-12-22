@@ -349,7 +349,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
 static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
 {
   LINK_FESTIVAL*  fest_sys;
-  LINKFEST_LOG_PARAM prm;
+  LINKFEST_LOG_PARAM log;
   
   if( info->action.action_no != GAMEBEACON_ACTION_FEST_MISSION ){
     return;
@@ -359,13 +359,13 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
     return;
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
-  LINKFEST_LOG_PARAM_Clear( &prm );
-  prm.id = info->action.fmission.id;
-  prm.key = info->action.fmission.key;
-  prm.log.tr_id = info->trainer_id;
-  prm.log.score = info->action.fmission.my_score;
+  LINKFEST_LOG_PARAM_Clear( &log );
+  log.id = info->action.fmission.id;
+  log.key = info->action.fmission.key;
+  log.prm.score.tr_id = info->trainer_id;
+  log.prm.score.value = info->action.fmission.my_score;
 
-  LINK_FESTIVAL_LogStore( fest_sys, &prm );
+  LINK_FESTIVAL_LogStore( fest_sys, &log );
 }
 
 //==================================================================
