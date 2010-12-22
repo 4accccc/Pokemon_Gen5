@@ -1932,6 +1932,8 @@ SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
 			net_app/comm_tvt/ctvt_mic.c \
 			net_app/comm_tvt/ctvt_draw.c \
 			net_app/comm_tvt/ctvt_call.c \
+			net_app/comm_tvt/ctvt_game.c \
+			net_app/comm_tvt/ctvt_game_balloon.c \
 			net_app/comm_tvt/comm_tvt_sys.c
 
 

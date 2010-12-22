@@ -45,6 +45,7 @@
 #define CTVT_PAL_BG_MAIN_BG    (1) //1本
 #define CTVT_PAL_BG_MAIN_WINFRAME (9) //1本
 #define CTVT_PAL_BG_MAIN_FONT   (10) //1本
+#define CTVT_PAL_BG_MAIN_GAME   (11) //4本
 
 #define CTVT_PAL_BG_SUB_BG    (0) //6本
 #define CTVT_PAL_BG_BUTTON_NONE (1)
@@ -55,12 +56,15 @@
 #define CTVT_PAL_BG_SUB_TASKMENU   (7) //2本
 #define CTVT_PAL_BG_SUB_WINFRAME   (9) //1本
 #define CTVT_PAL_BG_SUB_FONT   (10) //1本
+#define CTVT_PAL_BG_SUB_GAME   (11) //4本
 
 #define CTVT_PAL_OBJ_MAIN_COMMON (0) //7本
 #define CTVT_PAL_OBJ_MAIN_BARICON  (7) //3本
+#define CTVT_PAL_OBJ_MAIN_GAME  (10)  // 5本
 
 #define CTVT_PAL_OBJ_SUB_COMMON  (0) //7本
 #define CTVT_PAL_OBJ_SUB_BARICON  (7) //3本
+#define CTVT_PAL_OBJ_SUB_GAME  (10)  // 5本
 
 #define CTVT_BUTTON_TALK (PAD_BUTTON_A|PAD_BUTTON_R)
 #define CTVT_BUTTON_DRAW (PAD_BUTTON_X)
@@ -110,6 +114,7 @@ typedef enum
   CTM_TALK, //会話
   CTM_CALL, //呼び出し
   CTM_DRAW, //落書き
+  CTM_GAME, //ミニゲーム add ichiraku
 
   CTM_END,
   CTM_ERROR,
@@ -225,6 +230,9 @@ typedef struct _CTVT_MIC_WORK CTVT_MIC_WORK;
 typedef struct _CTVT_TALK_WORK CTVT_TALK_WORK;
 typedef struct _CTVT_DRAW_WORK CTVT_DRAW_WORK;
 typedef struct _CTVT_CALL_WORK CTVT_CALL_WORK;
+typedef struct _CTVT_GAME_WORK CTVT_GAME_WORK;  // add ichiraku
+typedef struct _CTVT_GAME_SEND_DATA CTVT_GAME_SEND_DATA;  // add ichiraku
+typedef struct _CTVT_GAME_SEND_SCORE CTVT_GAME_SEND_SCORE;  // add ichiraku
 
 //======================================================================
 //	proto
@@ -237,6 +245,8 @@ extern CTVT_COMM_WORK* COMM_TVT_GetCommWork( COMM_TVT_WORK *work );
 extern CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work );
 extern CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work );
 extern DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work );
+// add ichiraku
+extern CTVT_GAME_WORK* COMM_TVT_GetGameWork( COMM_TVT_WORK *work );
 
 extern const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work );
 
@@ -253,6 +263,8 @@ extern GFL_FONT* COMM_TVT_GetFontHandle( COMM_TVT_WORK *work );
 extern GFL_MSGDATA* COMM_TVT_GetMegHandle( COMM_TVT_WORK *work );
 extern PRINT_QUE* COMM_TVT_GetPrintQue( COMM_TVT_WORK *work );
 
+// add ichiraku
+extern u8 COMM_TVT_GetMode( const COMM_TVT_WORK *work );
 
 extern const u8   COMM_TVT_GetConnectNum( const COMM_TVT_WORK *work );
 extern void   COMM_TVT_SetConnectNum( COMM_TVT_WORK *work , const u8 num);

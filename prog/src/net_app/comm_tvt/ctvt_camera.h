@@ -12,6 +12,8 @@
 #pragma once
 
 #include "comm_tvt_local_def.h"
+
+#include "system/camera_system.h" // CAMERA_SYSTEM_WORKç\ë¢ëÃéÊìæÇÃÇΩÇﬂ
 //======================================================================
 //	define
 //======================================================================
@@ -58,3 +60,7 @@ extern void CTVT_CAMERA_SetCameraEffect( COMM_TVT_WORK *work , CTVT_CAMERA_WORK 
 
 extern void CTVT_CAMERA_PlayStartSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
 extern void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
+
+// add ichiraku
+extern CAMERA_SYSTEM_WORK* CTVT_CAMERA_GetCamSys( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
+

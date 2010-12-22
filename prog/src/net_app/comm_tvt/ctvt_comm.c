@@ -27,6 +27,7 @@
 #include "ctvt_talk.h"
 #include "ctvt_mic.h"
 #include "enc_adpcm.h"
+#include "ctvt_game.h"  // add ichiraku
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -55,6 +56,7 @@
 
 //ビーコンのデータの生存時間(呼び出し時間
 #define CTVT_COMM_BEACON_CALL_TIME (CTVT_CALL_TIME)
+
 
 //======================================================================
 //	enum
@@ -104,6 +106,11 @@ typedef enum
 #if CTVT_COMM_SHARE_DRAW_BUFF
   CCST_SEND_DRAW_BUFF,
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
+  // add ichiraku
+  CCST_SEND_GAME_FLG,   // ゲーム専用フラグ送信
+  CCST_SEND_GAME_DATA,  // ゲームデータ送信
+  CCST_SEND_GAME_SCORE, // ゲームスコア送信
+
   CCST_MAX,
 }CTVT_COMM_SEND_TYPE;
 
@@ -164,6 +171,16 @@ struct _CTVT_COMM_WORK
   DRAW_SYS_PEN_INFO   drawBuf[CTVT_COMM_DRAW_BUF_NUM];
   //親機から子機へ共有する処理
   u8  talkMember;
+
+  // add ichiraku
+  // ゲーム用
+  u16   sendGameFlg;        // ゲームフラグ送信
+  CTVT_GAME_SEND_DATA sendGameData;
+  CTVT_GAME_SEND_SCORE sendGameScore;
+  BOOL  reqSendGameFlg;     // 送信リクエスト
+  BOOL  reqSendGameData;    // 送信リクエスト
+  BOOL  reqSendGameScore;   // 送信リクエスト
+
   
   //親機専用処理
   BOOL updateReqTalk;
@@ -224,6 +241,26 @@ static void CTVT_COMM_PostDrawBuff( const int netID, const int size , const void
 static u8*  CTVT_COMM_Post_DrawBuff_Buff( int netID, void* pWork , int size );
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
 
+// add ichiraku
+// ゲーム専用通信更新
+static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+// ゲーム専用フラグ送信
+static const BOOL CTVT_COMM_SendGameFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+// ゲーム専用フラグ受信
+static void CTVT_COMM_PostGameFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+
+// ゲームデータ送信
+static const BOOL CTVT_COMM_SendGameData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+// ゲームデータ受信
+static void CTVT_COMM_PostGameData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+
+// ゲームスコア送信
+static const BOOL CTVT_COMM_SendGameScore( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+// ゲームスコア受信
+static void CTVT_COMM_PostGameScore( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+
+
+
 static const NetRecvFuncTable CTVT_COMM_RecvTable[] = 
 {
   { CTVT_COMM_PostFlg   ,NULL  },
@@ -233,6 +270,10 @@ static const NetRecvFuncTable CTVT_COMM_RecvTable[] =
 #if CTVT_COMM_SHARE_DRAW_BUFF
   { CTVT_COMM_PostDrawBuff   , CTVT_COMM_Post_DrawBuff_Buff },
 #endif CTVT_COMM_SHARE_DRAW_BUFF
+  // add ichiraku
+  { CTVT_COMM_PostGameFlg, NULL  },     // CCST_SEND_GAME_FLG
+  { CTVT_COMM_PostGameData,NULL  },     // CCST_SEND_GAME_DATA
+  { CTVT_COMM_PostGameScore,NULL },     // CCST_SEND_GAME_SCORE
 };
 
 //--------------------------------------------------------------
@@ -298,6 +339,11 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->reqPermitSendWaveBuf = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
   
+  commWork->reqSendGameFlg = FALSE;
+  commWork->reqSendGameData = FALSE;
+  commWork->reqSendGameScore = FALSE;
+
+
   {
     //ビーコンの初期化
     u8 i,j;
@@ -475,7 +521,15 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     
   case CCS_CONNECT:
     {
-      CTVT_COMM_UpdateComm( work , commWork );
+      // ゲームモードの時は通信更新を専用の使用  ichiraku
+      if( COMM_TVT_GetMode( work ) == CTM_GAME )
+      {
+        CTVT_COMM_UpdateGameComm( work , commWork );
+      }else
+      {
+        CTVT_COMM_UpdateComm( work , commWork );
+      }
+
       if( commWork->mode != commWork->nextMode )
       {
         commWork->state = CCS_DISCONNECT;
@@ -1184,7 +1238,7 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
                             0 );
       CTVT_CAMERA_SetRefreshFlg( work , camWork , idx );
       state->state = CCSU_REQ_PHOTO;
-      //CTVT_TPrintf("Post[%d]!!\n",idx);
+      CTVT_TPrintf("Post[%d]!!\n",idx);
     }
     break;
   case CCSU_POST_PHOTO:
@@ -1636,6 +1690,342 @@ static u8*  CTVT_COMM_Post_DrawBuff_Buff( int netID, void* pWork , int size )
 }
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
 
+
+// << add ichiraku
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード専用 通信更新メイン
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*commWork 
+ */
+//-----------------------------------------------------------------------------
+static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  
+#if 0   // いらないかも
+  // 接続人数の更新
+  {
+    const u8 connectNum = GFL_NET_GetConnectNum();
+    if( commWork->connectNum != connectNum )
+    {
+      CTVT_COMM_RefureshCommState( work , commWork );
+      
+      commWork->connectNum = connectNum;
+      commWork->beacon.connectNum = connectNum;
+    }
+  }
+#endif
+
+  //自身の更新
+  {
+    if( commWork->connectNum > 1 )
+    {
+
+      // フラグ送信フラグ
+      if( commWork->reqSendGameFlg == TRUE )
+      {
+        const BOOL ret = CTVT_COMM_SendGameFlg( work , commWork );
+        if( ret == TRUE )
+        {
+          commWork->reqSendGameFlg = FALSE;
+        }
+      }
+
+      // ゲームデータ送信フラグ
+      if( commWork->reqSendGameData == TRUE )
+      {
+        const BOOL ret = CTVT_COMM_SendGameData( work , commWork );
+        if( ret == TRUE )
+        {
+          commWork->reqSendGameData = FALSE;
+        }
+      }
+
+      // ゲームスコア送信フラグ
+      if( commWork->reqSendGameScore == TRUE )
+      {
+        const BOOL ret = CTVT_COMM_SendGameScore( work , commWork );
+        if( ret == TRUE )
+        {
+          commWork->reqSendGameScore = FALSE;
+        }
+      }
+    }
+  }
+
+  //親機の処理
+  if( selfId == 0 )
+  {
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　フラグ送信リクエスト
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*commWork 
+ *	@param	void*   キャプチャのアドレス
+ */
+//-----------------------------------------------------------------------------
+void CTVT_COMM_SendGameReq_Flg( COMM_TVT_WORK *work, CTVT_COMM_WORK *commWork, const u16 flg )
+{
+  // 送信リクエスト
+  commWork->reqSendGameFlg = TRUE;
+
+  // フラグ設定
+  commWork->sendGameFlg = flg;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　フラグ送信
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*commWork
+ *
+ *	@retval TRUE 送信成功(送信だけで、相手が受信したかではない)
+ *	@retval FALSE 送信失敗
+ */
+//-----------------------------------------------------------------------------
+static const BOOL CTVT_COMM_SendGameFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  u16 *p_send = &commWork->sendGameFlg;
+
+  ICHI_Printf("Send GameFlg ");
+  ICHI_Printf("%d \n", *p_send);
+
+  // 送信
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+        CCST_SEND_GAME_FLG , sizeof(u16) , 
+        (void*)p_send , TRUE , FALSE , FALSE );
+
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send GameFlg failue!\n");
+    }
+    return ret;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　フラグ受信
+ *
+ *	@param	const int netID   送信者のNetID
+ *	@param	int size          受信したデータのサイズ
+ *	@param	void* pData       受信したデータ
+ *	@param	pWork             設定したワーク
+ *	@param	*pNetHandle       送信者のハンドル
+ */
+//-----------------------------------------------------------------------------
+static void CTVT_COMM_PostGameFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork(commWork->parentWork);
+  const u16 *p_flg = pData;
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+  // 受信データ出力
+  ICHI_Printf("Post GameFlg ");
+  ICHI_Printf("Flg %d\n", *p_flg);
+
+  // フラグ分岐
+  switch( *p_flg ){
+  case CCGF_BALLOON_APPEAR:   // 風船を出現させる
+    CTVT_GAME_BalloonAppear( gameWork );
+    break;
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　データ送信リクエスト
+ *
+ *	@param	CTVT_COMM_WORK *commWork
+ *	@param	data        送信データ
+ *	@param	data_type   送信データ種類  CCGDT_XXX
+ */
+//-----------------------------------------------------------------------------
+void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA data, u8 data_type )
+{
+  // 送信リクエスト
+  commWork->reqSendGameData = TRUE;
+
+  // ゲームデータ更新
+  commWork->sendGameData = data;
+  // 何のデータ送信？ ↑より後に処理しないと上書きされる 当たり前だけど
+  commWork->sendGameData.data_type = data_type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　データ送信
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*commWork
+ *
+ *	@retval TRUE 送信成功(送信だけで、相手が受信したかではない)
+ *	@retval FALSE 送信失敗
+ */
+//-----------------------------------------------------------------------------
+static const BOOL CTVT_COMM_SendGameData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  CTVT_GAME_SEND_DATA *p_send = &commWork->sendGameData;
+
+  ICHI_Printf("Send GameData type%d\n", p_send->data_type);
+
+  // 送信
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+        CCST_SEND_GAME_DATA , sizeof(CTVT_GAME_SEND_DATA) , 
+        (void*)p_send , TRUE , TRUE , FALSE );
+
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send GameData failue!\n");
+    }
+    return ret;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　データ受信
+ *
+ *	@param	const int netID   送信者のNetID
+ *	@param	int size          受信したデータのサイズ
+ *	@param	void* pData       受信したデータ
+ *	@param	pWork             設定したワーク
+ *	@param	*pNetHandle       送信者のハンドル
+ */
+//-----------------------------------------------------------------------------
+static void CTVT_COMM_PostGameData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork(commWork->parentWork);
+  const CTVT_GAME_SEND_DATA *p_recv = pData;
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+  // 受信データ出力
+  ICHI_Printf("Post GameData type%d\n", p_recv->data_type);
+
+  // 受信データ種類判別
+  switch( p_recv->data_type ){
+  case CCGDT_RND:   // 乱数シード値
+    // 親のデータのみ受信
+    if( netID == 0 )
+    {
+      // 受信データセット
+      CTVT_GAME_CommDataSet( gameWork, p_recv );
+    }
+    break;
+  case CCGDT_TP:    // TP座標
+    // 誰のデータでも受信するが、親のみ更新する
+    if( selfId == 0 )
+    {
+      CTVT_GAME_CommDataSet_TP( commWork, gameWork, p_recv, netID );
+    }
+    break;
+  case CCGDT_BURST: // 風船割れた
+    // 内部でスコア計算して、風船を消している
+    CTVT_GAME_BalloonDestroy( gameWork, p_recv->burst_idx, p_recv->burst_netID );
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　スコア送信リクエスト
+ *
+ *	@param	CTVT_COMM_WORK *commWork
+ *	@param	score        送信データ
+ */
+//-----------------------------------------------------------------------------
+void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE score )
+{
+  // 送信リクエスト
+  commWork->reqSendGameScore = TRUE;
+
+  // ゲームデータ更新
+  commWork->sendGameScore = score;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　スコア送信
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*commWork
+ *
+ *	@retval TRUE 送信成功(送信だけで、相手が受信したかではない)
+ *	@retval FALSE 送信失敗
+ */
+//-----------------------------------------------------------------------------
+static const BOOL CTVT_COMM_SendGameScore( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  CTVT_GAME_SEND_SCORE *p_send = &commWork->sendGameScore;
+
+  ICHI_Printf("Send GameScore\n");
+
+  // 送信
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+        CCST_SEND_GAME_SCORE , sizeof(CTVT_GAME_SEND_SCORE) , 
+        (void*)p_send , TRUE , TRUE , FALSE );
+
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send GameScore failue!\n");
+    }
+    return ret;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームモード　データ受信
+ *
+ *	@param	const int netID   送信者のNetID
+ *	@param	int size          受信したデータのサイズ
+ *	@param	void* pData       受信したデータ
+ *	@param	pWork             設定したワーク
+ *	@param	*pNetHandle       送信者のハンドル
+ */
+//-----------------------------------------------------------------------------
+static void CTVT_COMM_PostGameScore( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork(commWork->parentWork);
+  const CTVT_GAME_SEND_SCORE *p_recv = pData;
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+  // 受信データ出力
+  ICHI_Printf("Post GameScore\n");
+
+  // 親からのみ受信
+  if( netID == 0 )
+  {
+    // 受信データセット
+    CTVT_GAME_CommScoreSet( gameWork, p_recv );
+  }
+}
+
+// >>
+
 #pragma mark [>timing func
 void CTVT_COMM_SendTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 number )
 {
@@ -1722,7 +2112,7 @@ DRAW_SYS_PEN_INFO* CTVT_COMM_GetDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
     *isFull = FALSE;
     return &commWork->drawBuf[commWork->drawBufSetPos];
   }
-  
+
 }
 
 //お絵描きバッファ追加通知

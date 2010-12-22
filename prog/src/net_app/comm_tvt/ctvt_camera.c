@@ -187,6 +187,7 @@ void CTVT_CAMERA_Term( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
   u8 i;
+  
   if( camWork->isWaitAllRefresh == FALSE )
   {
     for( i=0;i<CTVT_MEMBER_NUM;i++ )
@@ -252,6 +253,12 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
   const COMM_TVT_DISP_MODE mode = COMM_TVT_GetDispMode( work );
   const BOOL isDouble = COMM_TVT_IsDoubleMode( work );
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+
+  if( COMM_TVT_GetMode( work ) == CTM_GAME )
+  {
+    // ミニゲームは更新させない
+    //return;
+  }
 
   if( COMM_TVT_GetConnectNum(work) < 2 )
   {
@@ -507,7 +514,7 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
   if( camWork->isUpdateBit & (1<<idx) )
   {
     //CTVT_TPrintf("BufferIsBusy![%d][%d]\n",camWork->isUpdateBit,1<<idx);
-    CTVT_TPrintf("!");
+    //CTVT_TPrintf("!");
     return;
   }
   
@@ -926,7 +933,9 @@ void CTVT_CAMERA_PlayStartSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
   if( COMM_TVT_CanUseCamera() == TRUE )
   {
+#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
     CAMERA_SYS_PlayStartSe( camWork->camSys );
+#endif
     camWork->isPlayStartSe = TRUE;
   }
 }
@@ -937,8 +946,26 @@ void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     if( camWork->isPlayStartSe == TRUE &&
         camWork->isPlayStopSe == FALSE )
     {
+#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
       CAMERA_SYS_PlayStopSe( camWork->camSys );
+#endif
       camWork->isPlayStopSe = TRUE;
     }
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラシステム取得
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*camWork 
+ *
+ *	@return カメラシステムへのポインタ
+ */
+//-----------------------------------------------------------------------------
+CAMERA_SYSTEM_WORK* CTVT_CAMERA_GetCamSys( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  return camWork->camSys;
+}
+

@@ -464,7 +464,8 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     {
       if( talkWork->subState == CTSS_GO_DRAW )
       {
-        return CTM_DRAW;
+        //return CTM_DRAW;
+        return CTM_GAME;
       }
       else
       {

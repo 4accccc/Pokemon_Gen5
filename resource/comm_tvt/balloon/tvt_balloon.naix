@@ -1,0 +1,35 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: tvt_balloon.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TVT_BALLOON_NAIX_
+#define NARC_TVT_BALLOON_NAIX_
+
+enum {
+	NARC_tvt_balloon_tv_game_bg_l_NCLR = 0,
+	NARC_tvt_balloon_tv_game_bg_u_NCLR = 1,
+	NARC_tvt_balloon_tv_game_obj_NCLR = 2,
+	NARC_tvt_balloon_tv_game_bg_l_NCGR = 3,
+	NARC_tvt_balloon_tv_game_bg_u_NCGR = 4,
+	NARC_tvt_balloon_tv_game_obj_NCGR = 5,
+	NARC_tvt_balloon_tv_game_bg_l_NSCR = 6,
+	NARC_tvt_balloon_tv_game_bg_u_NSCR = 7,
+	NARC_tvt_balloon_tv_game_obj_NCER = 8,
+	NARC_tvt_balloon_tv_game_obj_NANR = 9,
+	NARC_tvt_balloon_balloon1_nsbmd = 10,
+	NARC_tvt_balloon_balloon2_nsbmd = 11,
+	NARC_tvt_balloon_balloon3_nsbmd = 12,
+	NARC_tvt_balloon_balloon4_nsbmd = 13,
+	NARC_tvt_balloon_balloon1_nsbca = 14,
+	NARC_tvt_balloon_balloon2_nsbca = 15,
+	NARC_tvt_balloon_balloon3_nsbca = 16,
+	NARC_tvt_balloon_balloon4_nsbca = 17
+};
+
+/* NARC_TVT_BALLOON_NAIX_ */
+#endif

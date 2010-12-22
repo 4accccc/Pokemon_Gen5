@@ -132,3 +132,13 @@ extern const BOOL CTVT_COMM_CanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK
 extern void CTVT_COMM_SetCanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const BOOL flg );
 
 extern const BOOL CTVT_COMM_CheckCallingAddress( CTVT_COMM_BEACON *beacon , u8 *address );
+
+// add ichiraku
+// ゲームデータ送信リクエスト
+
+// フラグ送信リクエスト
+extern void CTVT_COMM_SendGameReq_Flg( COMM_TVT_WORK *work, CTVT_COMM_WORK *commWork, const u16 flg );
+// ゲームデータ送信リクエスト
+extern void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA data, u8 data_type );
+// ゲームスコア送信リクエスト
+extern void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE score );

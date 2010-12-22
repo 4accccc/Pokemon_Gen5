@@ -33,6 +33,7 @@
 #include "ctvt_talk.h"
 #include "ctvt_draw.h"
 #include "ctvt_call.h"
+#include "ctvt_game.h"  // add ichiraku  ミニゲーム用
 #include "comm_tvt_local_def.h"
 
 //======================================================================
@@ -105,6 +106,7 @@ struct _COMM_TVT_WORK
   CTVT_TALK_WORK   *talkWork;
   CTVT_DRAW_WORK   *drawWork;
   CTVT_CALL_WORK   *callWork;
+  CTVT_GAME_WORK   *gameWork; // add ichiraku
 
   DRAW_SYS_WORK   *drawSys;
 
@@ -159,7 +161,6 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->selfIdx = 0;
   work->isDouble = FALSE;
 
-
   COMM_TVT_InitGraphic( work );
   COMM_TVT_LoadResource( work );
   COMM_TVT_InitMessage( work );
@@ -169,13 +170,14 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
                                                work->fontHandle ,
                                                work->printQue , 
                                                work->heapId );
-  
   work->camWork = CTVT_CAMERA_Init( work , work->heapId );
   work->commWork = CTVT_COMM_InitSystem( work , work->heapId );
   
   work->talkWork = CTVT_TALK_InitSystem( work , work->heapId );
   work->drawWork = CTVT_DRAW_InitSystem( work , work->heapId );
   work->callWork = CTVT_CALL_InitSystem( work , work->heapId );
+  // add ichiraku
+  work->gameWork = CTVT_GAME_InitSystem( work, work->heapId );
   
   {
     DRAW_SYS_INIT_WORK initWork;
@@ -192,7 +194,6 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   }
   
   work->vBlankTcb = GFUser_VIntr_CreateTCB( COMM_TVT_VBlankFunc , work , 8 );
-
   work->mode = CTM_NONE;
   work->palAnmCnt = 0;
   work->palAnmIdx = 0;
@@ -267,7 +268,6 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   //PMSND_FadeOutBGM( PMSND_FADE_FAST );
   //PMSND_ChangeBGMVolume( 0xFFFF , 0 );
   PMSND_PlayBGM( SEQ_BGM_SILENCE_FIELD );
-
 }
 
 //--------------------------------------------------------------
@@ -289,6 +289,8 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
   CTVT_CALL_TermSystem( work , work->callWork );
   CTVT_DRAW_TermSystem( work , work->drawWork );
   CTVT_TALK_TermSystem( work , work->talkWork );
+  // add ichiraku
+  CTVT_GAME_TermSystem( work, work->gameWork );
 
   CTVT_COMM_TermSystem( work , work->commWork );
   CTVT_CAMERA_Term( work , work->camWork );
@@ -317,6 +319,9 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     break;
   case CTM_DRAW: //落書き
     work->nextMode = CTVT_DRAW_Main( work , work->drawWork );
+    break;
+  case CTM_GAME:  // ミニゲーム add ichiraku
+    work->nextMode = CTVT_GAME_Main( work, work->gameWork );
     break;
   case CTM_END:
     {
@@ -355,15 +360,22 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     COMM_TVT_ChangeMode( work );
   }
   
+  // ミニゲームだと以降の処理は必要ないはず
+  if( work->mode == CTM_GAME )
+  {
+    return FALSE;
+  }
+
+
   CTVT_CAMERA_Main( work , work->camWork );
-  
+
   DRAW_SYS_UpdateSystem( work->drawSys );
 
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
   PRINTSYS_QUE_Main( work->printQue );
-  
+
   COMM_TVT_UpdateUpperName( work );
 
   //フェード
@@ -386,8 +398,8 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     {
       work->palAnmIdx = anmIdx;
       NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
-                                          (CTVT_PAL_BG_SUB_BG+2) * 32,
-                                          &work->palAnmData[anmIdx] , 32 );
+          (CTVT_PAL_BG_SUB_BG+2) * 32,
+          &work->palAnmData[anmIdx] , 32 );
     }
   }
 
@@ -396,6 +408,24 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   //上画面ノイズ
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
+
+#ifdef DEBUG_ONLY_FOR_ichiraku_katsuhiko
+  // デバッグで表示したい
+  {
+    // ヒープの空き容量
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+    {
+      u32 free = GFL_HEAP_GetHeapFreeSize( HEAPID_COMM_TVT );
+      ICHI_Printf("heap free size %x\n", free);
+    }
+    // BGのサイズ
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
+    {
+      u32 free = GX_GetSizeOfBG();
+      ICHI_Printf("メイン2DエンジンBGのサイズ %x\n", free);
+    }
+  }
+#endif
 
   return FALSE;
 }
@@ -406,13 +436,18 @@ static void COMM_TVT_VBlankFunc(GFL_TCB *tcb, void *wk )
 {
   COMM_TVT_WORK *work = wk;
 
+  if( work->mode == CTM_GAME )
+  {
+    return;
+  }
+
   //上画面の更新
   CTVT_CAMERA_VBlank( work , work->camWork );
   //OBJの更新
   GFL_CLACT_SYS_VBlankFunc();
   //お絵描きの更新
   DRAW_SYS_UpdateSystemVBlank( work->drawSys );
-  
+
   CTVT_TALK_Main_VBlank( work , work->talkWork );
 }
 
@@ -432,7 +467,7 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
   WIPE_ResetWndMask(WIPE_DISP_SUB);
   G2_BlendNone();
   G2S_BlendNone();
-  
+
   GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
   GFL_DISP_SetBank( &vramBank );
   //BG系の初期化
@@ -442,7 +477,7 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
   //Vram割り当ての設定
   {
     static const GFL_BG_SYS_HEADER sys_data = {
-        GX_DISPMODE_GRAPHICS, GX_BGMODE_5, GX_BGMODE_0, GX_BG0_AS_2D,
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_5, GX_BGMODE_0, GX_BG0_AS_2D,
     };
 
     // BG0 MSG (文字
@@ -490,7 +525,7 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     };
 
     GFL_BG_SetBGMode( &sys_data );
-    
+
     COMM_TVT_SetupBgFunc( &header_main0 , CTVT_FRAME_MAIN_MSG  , GFL_BG_MODE_TEXT );
     COMM_TVT_SetupBgFunc( &header_main1 , CTVT_FRAME_MAIN_BG  , GFL_BG_MODE_TEXT );
 
@@ -498,7 +533,7 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     COMM_TVT_SetupBgFunc( &header_sub1 , CTVT_FRAME_SUB_BAR  , GFL_BG_MODE_TEXT );
     COMM_TVT_SetupBgFunc( &header_sub2 , CTVT_FRAME_SUB_MISC , GFL_BG_MODE_TEXT );
     COMM_TVT_SetupBgFunc( &header_sub3 , CTVT_FRAME_SUB_BG   , GFL_BG_MODE_TEXT );
-    
+
     //ダイレクトBMPにGFLが対応してないのでべた書き
 
     G2_SetBG2ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x10000);
@@ -511,20 +546,20 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     G2_SetBG3Priority(2);
     GFL_BG_SetVisible( CTVT_FRAME_MAIN_DRAW, VISIBLE_ON );
     GFL_BG_SetVisible( CTVT_FRAME_MAIN_CAMERA, VISIBLE_ON );
-    
+
   }
   //OBJ系の初期化
   {
     GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
-    
+
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 
     work->cellUnit = GFL_CLACT_UNIT_Create( 64 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }
-  
+
   //Window(倍角表示時更新用
   {
     GX_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
@@ -579,94 +614,94 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
   if( MyStatus_GetMySex( myStatus ) == PM_MALE )
   {
     GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg2_NCLR , 
-                      PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
+        PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
   }
   else
   {
     GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
-                      PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
+        PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
   }
   GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
-                    CTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+      CTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_comm_tvt_tv_t_common_bg_NSCR , 
-                    CTVT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+      CTVT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BG );
 
   //上画面
   GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_noise_bg_NCLR , 
-                    PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_BG*32 , 32*1 , work->heapId );
+      PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_BG*32 , 32*1 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_noise_bg_NCGR ,
-                    CTVT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
+      CTVT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_comm_tvt_noise_bg_NSCR , 
-                    CTVT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
+      CTVT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
   GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_BG );
 
   //下画面 BGMisc(キャラは共通なの先読み
   //各々で読むように変更
-//  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
-//                    CTVT_FRAME_SUB_MISC , 0 , 0, FALSE , work->heapId );
-//  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
-//                    CTVT_FRAME_SUB_MSG , 0 , 0, FALSE , work->heapId );
+  //  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+  //                    CTVT_FRAME_SUB_MISC , 0 , 0, FALSE , work->heapId );
+  //  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+  //                    CTVT_FRAME_SUB_MSG , 0 , 0, FALSE , work->heapId );
 
   //OBJ
   work->cellResIdx[CTOR_COMMON_M_PLT] = GFL_CLGRP_PLTT_RegisterComp( work->arcHandle , 
-        NARC_comm_tvt_tv_t_obj_NCLR , CLSYS_DRAW_MAIN , 
-        CTVT_PAL_OBJ_MAIN_COMMON*32 , work->heapId  );
+      NARC_comm_tvt_tv_t_obj_NCLR , CLSYS_DRAW_MAIN , 
+      CTVT_PAL_OBJ_MAIN_COMMON*32 , work->heapId  );
   work->cellResIdx[CTOR_COMMON_M_NCG] = GFL_CLGRP_CGR_Register( work->arcHandle , 
-        NARC_comm_tvt_tv_t_upper_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+      NARC_comm_tvt_tv_t_upper_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellResIdx[CTOR_COMMON_M_ANM] = GFL_CLGRP_CELLANIM_Register( work->arcHandle , 
-        NARC_comm_tvt_tv_t_upper_obj_NCER , NARC_comm_tvt_tv_t_upper_obj_NANR, work->heapId  );
+      NARC_comm_tvt_tv_t_upper_obj_NCER , NARC_comm_tvt_tv_t_upper_obj_NANR, work->heapId  );
 
   work->cellResIdx[CTOR_COMMON_S_PLT] = GFL_CLGRP_PLTT_RegisterComp( work->arcHandle , 
-        NARC_comm_tvt_tv_t_obj_NCLR , CLSYS_DRAW_SUB , 
-        CTVT_PAL_OBJ_MAIN_COMMON*32 , work->heapId  );
+      NARC_comm_tvt_tv_t_obj_NCLR , CLSYS_DRAW_SUB , 
+      CTVT_PAL_OBJ_MAIN_COMMON*32 , work->heapId  );
   work->cellResIdx[CTOR_COMMON_S_NCG] = GFL_CLGRP_CGR_Register( work->arcHandle , 
-        NARC_comm_tvt_tv_t_lower_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+      NARC_comm_tvt_tv_t_lower_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
   work->cellResIdx[CTOR_COMMON_S_ANM] = GFL_CLGRP_CELLANIM_Register( work->arcHandle , 
-        NARC_comm_tvt_tv_t_lower_obj_NCER , NARC_comm_tvt_tv_t_lower_obj_NANR, work->heapId  );
+      NARC_comm_tvt_tv_t_lower_obj_NCER , NARC_comm_tvt_tv_t_lower_obj_NANR, work->heapId  );
 
   //共通素材
   {
     ARCHANDLE *commonArcHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
-    
+
     //BG
     GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
-                      PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_BAR*32 , 32 , work->heapId );
+        PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_BAR*32 , 32 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( commonArcHandle , APP_COMMON_GetBarCharArcIdx() ,
-                      CTVT_FRAME_MAIN_MSG , 0 , 0, FALSE , work->heapId );
+        CTVT_FRAME_MAIN_MSG , 0 , 0, FALSE , work->heapId );
     //GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
     //                  CTVT_FRAME_MAIN_MSG ,  0 , 0, FALSE , work->heapId );
     //GFL_BG_ChangeScreenPalette( CTVT_FRAME_MAIN_MSG , 0 , 21 , 32 , 3 , CTVT_PAL_BG_MAIN_BAR );
     //GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_BAR );
 
     GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
-                      PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BAR*32 , 32 , work->heapId );
+        PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BAR*32 , 32 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( commonArcHandle , APP_COMMON_GetBarCharArcIdx() ,
-                      CTVT_FRAME_SUB_BAR , 0 , 0, FALSE , work->heapId );
+        CTVT_FRAME_SUB_BAR , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
-                      CTVT_FRAME_SUB_BAR ,  0 , 0, FALSE , work->heapId );
+        CTVT_FRAME_SUB_BAR ,  0 , 0, FALSE , work->heapId );
     GFL_BG_ChangeScreenPalette( CTVT_FRAME_SUB_BAR , 0 , 21 , 32 , 3 , CTVT_PAL_BG_SUB_BAR );
     GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BAR );
-    
+
     //OBJ
     work->cellResIdx[CTOR_BAR_BUTTON_M_PLT] = GFL_CLGRP_PLTT_RegisterEx( commonArcHandle , 
-          APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_MAIN , 
-          CTVT_PAL_OBJ_MAIN_BARICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
+        APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_MAIN , 
+        CTVT_PAL_OBJ_MAIN_BARICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
     work->cellResIdx[CTOR_BAR_BUTTON_M_NCG] = GFL_CLGRP_CGR_Register( commonArcHandle , 
-          APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+        APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
 
     work->cellResIdx[CTOR_BAR_BUTTON_S_PLT] = GFL_CLGRP_PLTT_RegisterEx( commonArcHandle , 
-          APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_SUB , 
-          CTVT_PAL_OBJ_SUB_BARICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
+        APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_SUB , 
+        CTVT_PAL_OBJ_SUB_BARICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
     work->cellResIdx[CTOR_BAR_BUTTON_S_NCG] = GFL_CLGRP_CGR_Register( commonArcHandle , 
-          APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+        APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_SUB , work->heapId  );
     work->cellResIdx[CTOR_BAR_BUTTON_ANM] = GFL_CLGRP_CELLANIM_Register( commonArcHandle , 
-          APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
-          APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
-    
+        APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+        APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+
     GFL_ARC_CloseDataHandle( commonArcHandle );
   }
-  
+
   //会話アイコン
   {
     GFL_CLWK_DATA cellInitData;
@@ -677,10 +712,10 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
     cellInitData.bgpri = 0;
 
     work->clwkRec = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
-              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
-              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
-              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
-              &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+        COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+        COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+        COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+        &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( work->clwkRec , FALSE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkRec , TRUE );
   }
@@ -697,9 +732,9 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
     {
       resData = GFL_ARCHDL_UTIL_LoadPalette(work->arcHandle,NARC_comm_tvt_tv_t_tuuwa_bg_NCLR, &palData, work->heapId );
     }
-    
+
     GFL_STD_MemCopy32( (void*)((u32)palData->pRawData+32*(16-COMM_TVT_PAL_ANM_NUM)) ,
-                       work->palAnmData , 32*COMM_TVT_PAL_ANM_NUM );
+        work->palAnmData , 32*COMM_TVT_PAL_ANM_NUM );
     GFL_HEAP_FreeMemory( resData );
   }
 
@@ -711,9 +746,9 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
 static void COMM_TVT_ReleaseResource( COMM_TVT_WORK *work )
 {
   u8 i;
-  
+
   GFL_CLACT_WK_Remove( work->clwkRec );
-  
+
   for( i=CTOR_PLT_TOP;i<CTOR_NCG_TOP;i++ )
   {
     GFL_CLGRP_PLTT_Release( work->cellResIdx[i] );
@@ -746,9 +781,9 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
   GFL_FONTSYS_SetDefaultColor();
 
   BmpWinFrame_GraphicSet( CTVT_FRAME_SUB_MSG , CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME ,
-                          0 , work->heapId );
+      0 , work->heapId );
   BmpWinFrame_GraphicSet( CTVT_FRAME_MAIN_MSG , CTVT_BMPWIN_CGX_MAIN , CTVT_PAL_BG_MAIN_WINFRAME ,
-                          0 , work->heapId );
+      0 , work->heapId );
   work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 1 , 0 );
   work->timeIcon = NULL;
 }
@@ -788,11 +823,14 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
   case CTM_DRAW: //落書き
     CTVT_DRAW_TermMode( work , work->drawWork );
     break;
+  case CTM_GAME: // ミニゲーム add ichiraku
+    CTVT_GAME_TermMode( work, work->gameWork );
+    break;
   }
 
 
   work->mode = work->nextMode;
-  
+
   //初期化
   switch( work->nextMode )
   {
@@ -804,6 +842,9 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     break;
   case CTM_DRAW: //落書き
     CTVT_DRAW_InitMode( work , work->drawWork );
+    break;
+  case CTM_GAME: // ミニゲーム add ichiraku
+    CTVT_GAME_InitMode( work, work->gameWork );
     break;
   case CTM_ERROR: //終了
     WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
@@ -826,25 +867,25 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
 {
   u8 i;
   BOOL isUpdate = FALSE;
-  if( work->mode == CTM_DRAW )
+  if( work->mode == CTM_DRAW || work->mode == CTM_GAME )
   {
     //落書き中は更新しない
     return;
   }
   /*
-  if( COMM_TVT_GetConnectNum(work) < 2 )
+     if( COMM_TVT_GetConnectNum(work) < 2 )
+     {
+  //一人の時は参照場所が違う
+  if( CTVT_COMM_IsEnableMember( work , work->commWork , COMM_TVT_GetSelfIdx(work) ) == TRUE )
   {
-    //一人の時は参照場所が違う
-    if( CTVT_COMM_IsEnableMember( work , work->commWork , COMM_TVT_GetSelfIdx(work) ) == TRUE )
-    {
-      if( work->nameDrawBit == 0 )
-      {
-        CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetSelfMemberData( work , work->commWork );
-        COMM_TVT_UpdateUpperNameFunc( work , (MYSTATUS*)memData->myStatusBuff , work->nameWin[2] );
-        work->nameDrawBit = 1;
-        work->nameWinUpdateBit = 1<<2;
-      }
-    }
+  if( work->nameDrawBit == 0 )
+  {
+  CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetSelfMemberData( work , work->commWork );
+  COMM_TVT_UpdateUpperNameFunc( work , (MYSTATUS*)memData->myStatusBuff , work->nameWin[2] );
+  work->nameDrawBit = 1;
+  work->nameWinUpdateBit = 1<<2;
+  }
+  }
   }
   else
   */
@@ -875,13 +916,13 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
           bmpIdx = i;
         }
         COMM_TVT_UpdateUpperNameFunc( work , (MYSTATUS*)memData->myStatusBuff , work->nameWin[bmpIdx] );
-        
+
         work->nameDrawBit += (1<<i);
         work->nameWinUpdateBit += 1<<bmpIdx;
       }
     }
   }
-  
+
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
   {
     if( (1<<i) & work->nameWinUpdateBit )
@@ -907,26 +948,26 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
 static void COMM_TVT_UpdateUpperNameFunc( COMM_TVT_WORK *work , MYSTATUS *myStatus , GFL_BMPWIN *bmpWin )
 {
   //名前書く
-  
+
   STRBUF *str = MyStatus_CreateNameString( myStatus , work->heapId );
   const u8 nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
 
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
-                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2+1 , 1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+      ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2+1 , 1 , str ,
+      work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
-                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2-1 , 1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+      ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2-1 , 1 , str ,
+      work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
-                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1+1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+      ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1+1 , str ,
+      work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
-                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1-1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+      ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1-1 , str ,
+      work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
 
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
-                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+      ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1 , str ,
+      work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
 
 
   //    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
@@ -937,25 +978,29 @@ static void COMM_TVT_UpdateUpperNameFunc( COMM_TVT_WORK *work , MYSTATUS *myStat
 }
 
 #pragma mark [>outer func (system
-CTVT_CAMERA_WORK* COMM_TVT_GetCameraWork( COMM_TVT_WORK *work )
+    CTVT_CAMERA_WORK* COMM_TVT_GetCameraWork( COMM_TVT_WORK *work )
+    {
+    return work->camWork;
+    }
+    CTVT_COMM_WORK* COMM_TVT_GetCommWork( COMM_TVT_WORK *work )
+    {
+    return work->commWork;
+    }
+    CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work )
+    {
+    return work->talkWork;
+    }
+    CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work )
+    {
+    return CTVT_TALK_GetMicWork( work , work->talkWork );
+    }
+    DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work )
+    {
+    return work->drawSys;
+    }
+CTVT_GAME_WORK* COMM_TVT_GetGameWork( COMM_TVT_WORK *work )
 {
-  return work->camWork;
-}
-CTVT_COMM_WORK* COMM_TVT_GetCommWork( COMM_TVT_WORK *work )
-{
-  return work->commWork;
-}
-CTVT_TALK_WORK* COMM_TVT_GetTalkWork( COMM_TVT_WORK *work )
-{
-  return work->talkWork;
-}
-CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work )
-{
-  return CTVT_TALK_GetMicWork( work , work->talkWork );
-}
-DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work )
-{
-  return work->drawSys;
+  return work->gameWork;
 }
 const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work )
 {
@@ -963,26 +1008,26 @@ const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work )
 }
 
 #pragma mark [>outer func (value
-//--------------------------------------------------------------------------
-//  システムっぽいもの
-//--------------------------------------------------------------------------
-const HEAPID COMM_TVT_GetHeapId( const COMM_TVT_WORK *work )
-{
-  return work->heapId;
-}
-ARCHANDLE* COMM_TVT_GetArcHandle( const COMM_TVT_WORK *work )
-{
-  return work->arcHandle;
-}
-const u32 COMM_TVT_GetObjResIdx( const COMM_TVT_WORK *work , const COMM_TVT_OBJ_RES resIdx )
-{
-  return work->cellResIdx[resIdx];
-}
-GFL_CLUNIT* COMM_TVT_GetCellUnit( const COMM_TVT_WORK *work )
-{
-  return work->cellUnit;
-}
-const BOOL COMM_TVT_GetUpperFade( const COMM_TVT_WORK *work )
+    //--------------------------------------------------------------------------
+    //  システムっぽいもの
+    //--------------------------------------------------------------------------
+    const HEAPID COMM_TVT_GetHeapId( const COMM_TVT_WORK *work )
+    {
+    return work->heapId;
+    }
+    ARCHANDLE* COMM_TVT_GetArcHandle( const COMM_TVT_WORK *work )
+    {
+    return work->arcHandle;
+    }
+    const u32 COMM_TVT_GetObjResIdx( const COMM_TVT_WORK *work , const COMM_TVT_OBJ_RES resIdx )
+    {
+    return work->cellResIdx[resIdx];
+    }
+    GFL_CLUNIT* COMM_TVT_GetCellUnit( const COMM_TVT_WORK *work )
+    {
+    return work->cellUnit;
+    }
+    const BOOL COMM_TVT_GetUpperFade( const COMM_TVT_WORK *work )
 {
   return work->isUpperFade;
 }
@@ -1011,6 +1056,12 @@ APP_TASKMENU_RES* COMM_TVT_GetTaskMenuRes( COMM_TVT_WORK *work )
 }
 
 
+u8 COMM_TVT_GetMode( const COMM_TVT_WORK *work )
+{
+  return work->mode;
+}
+
+
 //--------------------------------------------------------------------------
 //  モードとか人数
 //--------------------------------------------------------------------------
@@ -1029,13 +1080,13 @@ const COMM_TVT_DISP_MODE COMM_TVT_GetDispMode( const COMM_TVT_WORK *work )
   if( num == 1 )
   {
     return CTDM_DOUBLE;
-//    return CTDM_SINGLE;
+    //    return CTDM_SINGLE;
   }
   else
-  if( num == 2 )
-  {
-    return CTDM_DOUBLE;
-  }
+    if( num == 2 )
+    {
+      return CTDM_DOUBLE;
+    }
   return CTDM_FOUR;
 }
 
@@ -1166,11 +1217,11 @@ const BOOL COMM_TVT_CanUseCamera( void )
   if( DS_SYSTEM_IsRunOnTwl() == TRUE &&
       DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
 #else
-  if( FALSE )
+    if( FALSE )
 #endif
-  {
-    return TRUE;
-  }
+    {
+      return TRUE;
+    }
   return FALSE;
 }
 
@@ -1182,14 +1233,14 @@ APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work )
   APP_TASKMENU_WORK *menuWork;
   APP_TASKMENU_INITWORK initWork = {0};
   APP_TASKMENU_ITEMWORK itemWork[2] = {0};
-  
+
   itemWork[0].str = GFL_MSG_CreateString( work->msgHandle , COMM_TVT_SYS_03 );
   itemWork[1].str = GFL_MSG_CreateString( work->msgHandle , COMM_TVT_SYS_04 );
   itemWork[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   itemWork[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-  
+
   initWork.heapId = work->heapId;
   initWork.itemNum = 2;
   initWork.itemWork = itemWork;
@@ -1200,10 +1251,10 @@ APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work )
   initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
 
   menuWork = APP_TASKMENU_OpenMenu( &initWork , work->taskMenuRes );
-  
+
   GFL_STR_DeleteBuffer( itemWork[0].str );
   GFL_STR_DeleteBuffer( itemWork[1].str );
-  
+
   return menuWork;
 }
 
@@ -1258,7 +1309,7 @@ void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx )
         pos = 3;
       }
     }
-    
+
     if( CTVT_COMM_IsEnableMember( work , work->commWork , idx ) == TRUE &&
         CTVT_COMM_IsEnableMemberData( work , work->commWork , idx ) == TRUE )
     {
@@ -1273,10 +1324,10 @@ void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx )
       const u8 nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
       GFL_STR_DeleteBuffer( str );
 
-      
+
       cellPos.x = posX[pos] + nameLen/2 ;
       cellPos.y = posY[pos];
-      
+
       GFL_CLACT_WK_SetPos( work->clwkRec , &cellPos , CLSYS_DRAW_MAIN );
       GFL_CLACT_WK_SetDrawEnable( work->clwkRec , TRUE );
       GFL_CLACT_WK_ResetAnm( work->clwkRec );
@@ -1293,9 +1344,9 @@ void COMM_TVT_RegistPerson( COMM_TVT_WORK *work , MYSTATUS *myStatus )
 {
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( work->initWork->gameData );
   ETC_SAVE_WORK *etcSave = SaveData_GetEtc( svWork );
-  
+
   const u32 id = MyStatus_GetID( myStatus );
-  
+
   EtcSave_SetAcquaintance( etcSave, id );
   CTVT_TPrintf("set person[%8x(%5d)]\n",id,(id&0x0000FFFF));
 }
@@ -1337,9 +1388,9 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
 {
   COMM_TVT_WORK *work;
   COMM_TVT_INIT_WORK *initWork = pwk;
-  
+
   CTVT_TPrintf("Least heap[%x]\n",GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
-//  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x100000 );
+  //  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x100000 );
   if( pwk != NULL && 
       initWork->mode == CTM_WIFI )
   {
@@ -1347,9 +1398,10 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
   }
   else
   {
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
+    //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x180000 );
   }
-  
+
   work = GFL_PROC_AllocWork( proc, sizeof(COMM_TVT_WORK), HEAPID_COMM_TVT );
   work->heapId = HEAPID_COMM_TVT;
   if( pwk == NULL )
@@ -1372,7 +1424,7 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
     work->initWork = pwk;
   }
   work->isCommError = FALSE;
-  
+
   COMM_TVT_Init( work );
   return GFL_PROC_RES_FINISH;
 }
@@ -1383,7 +1435,7 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
 static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   COMM_TVT_WORK *work = mywk;
-  
+
   COMM_TVT_Term( work );
 
   if( pwk == NULL )
