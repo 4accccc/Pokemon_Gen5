@@ -624,17 +624,18 @@ EVENT_START	ev_pos_c04gym0101_show3
 		
 	//ジムクリア済み演出（３人目のみ別のアニメにしている）
 	ELSE
-		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr03_com_center )
+		_OBJ_ANIME( C04GYM0101_TRAINER_03, anm_tr03_com_center_end )
 		_OBJ_ANIME_WAIT()
 	ENDIF
 	
 	//スポットライトオフ
 	_GYM_ELEC_SET_SPOTLIGHT( FALSE , C04GYM0101_TRAINER_03, GYM_ELEC_SPOTLIGHT_NORMAL )
 	
+
 	//OBJをカミツレのそばにワープさせる
 	_OBJ_POS_CHANGE( C04GYM0101_TRAINER_03, 21, 6, 2, DIR_LEFT )
 
-	//【仮】カミツレショーアップ演出
+	//カミツレショーアップ演出
 	_CALL	ev_swleader04_show
 	
 	//========================================//
