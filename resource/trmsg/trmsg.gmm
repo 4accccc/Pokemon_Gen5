@@ -14772,17 +14772,17 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_LEADER4_02_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">ドラマチックに　かつには
-ピンチが　ひつよう　なのよ</language>
-		<language name="JPN_KANJI" width="216">ドラマチックに　勝つには
-ピンチが　必要なのよ</language>
+		<language name="JPN" width="216">……こんな　ピンチでこそ
+ポケモンも　ひとも　かがやく！</language>
+		<language name="JPN_KANJI" width="216">……こんな　ピンチでこそ
+ポケモンも　人も　輝く！</language>
 	</row>
 
 	<row id="TRID_LEADER4_02_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">クラクラさせる　つもりが
-あなたに　しびれさせられたのね</language>
-		<language name="JPN_KANJI" width="216">クラクラさせる　つもりが
-あなたに　しびれさせられたのね</language>
+		<language name="JPN" width="216">あなたたちの　かがやき……
+まさに　シャイニング　ビューティ！</language>
+		<language name="JPN_KANJI" width="216">あなたたちの　かがやき……
+まさに　シャイニング　ビューティ！</language>
 	</row>
 
 	<flowchart-group-list>
