@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00210" date="2010-12-15T13:21:26" source="batt_gym01.mb"/>
+	<create user="toyama" host="W00153" date="2010-12-22T21:13:24" source="batt_field_test_stop.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,14 +11,66 @@
 <body>
 
 <mat_color_info
-	frame_size="1601"
+	frame_size="201"
 	tool_start_frame="0"
-	tool_end_frame="1600"
+	tool_end_frame="200"
 	interpolation="frame"
-	compress_material="on" material_size="9 9"
+	compress_material="on" material_size="5 5"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
+
+<mat_color_data size="4">
+	25 0 31 21
+</mat_color_data>
+
+<mat_color_anm_array size="3">
+	<mat_color_anm index="0" material_name="cylinderlight">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="1"/>
+	</mat_color_anm>
+	<mat_color_anm index="1" material_name="spotlight1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="1"/>
+	</mat_color_anm>
+	<mat_color_anm index="2" material_name="spotlight2">
+		<diffuse_r frame_step="1" data_size="1" data_head="3"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="3"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="3"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="1"/>
+	</mat_color_anm>
+</mat_color_anm_array>
 
 </body>
 
