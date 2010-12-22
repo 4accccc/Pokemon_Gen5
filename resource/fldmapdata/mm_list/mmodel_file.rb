@@ -5,6 +5,7 @@
 #
 ###############################################################
 
+load "rbdefine"
 FIELDOBJ_CODE_HEADER	=	"../../fldmmdl/fldmmdl_objcode.h"
 
 #---------------------------------------------------
@@ -109,7 +110,7 @@ def MakeMdlList(ary)
 		  break
 	  end
     column = line.split ","
-    ary << column[7]
+    ary << column[RBDEF_NUM_BBD_CODE]
   end
   file.close
 
@@ -122,7 +123,7 @@ def MakeMdlList(ary)
 		  break
 	  end
     column = line.split ","
-    ary << column[7]
+    ary << column[RBDEF_NUM_POKEMON_CODE]
   end
   file.close
   
@@ -135,7 +136,7 @@ def MakeMdlList(ary)
 		  break
 	  end
     column = line.split ","
-    ary << column[7]
+    ary << column[RBDEF_NUM_MDL_CODE]
   end
   file.close
 end

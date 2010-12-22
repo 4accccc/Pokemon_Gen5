@@ -34,7 +34,8 @@ FMMDLHEAD = $(PROJECT_ROOT)/resource/fldmmdl/fldmmdl_objcode.h
 CSV_LIST = fldmmdl_list.csv
 CSV_POKE = fldmmdl_poke_list.csv
 CSV_MDL = fldmmdl_mdl_list.csv
-MMDL_XLS = fldmmdl_list.xls
+MMDL_XLS 		= fldmmdl_list.xls
+MMDL_RB_DEF = rbdefine
 PRM_BIN	= ../../fldmmdl/fldmmdl_mdlparam.bin
 
 MMLIST = movemodel_list.txt
@@ -113,6 +114,7 @@ $(MMDL_XLS): ../../fldmmdl/$(MMDL_XLS)
 	@echo エクセル処理･･･終了
 
 $(ARCLIST): $(RSCTXT) $(FMMDLHEAD) $(MMDL_XLS) $(PRM_BIN)
+	@$(COPY)  ../../fldmmdl/$(MMDL_RB_DEF) $(MMDL_RB_DEF)
 	@echo エリア別データ生成処理･･･
 	@$(TXT2ASM)  $(RSCTXT) $(ARCLIST) $(ARCHEAD)
 	@echo 個別アセンブラファイルコンパイル･･･
