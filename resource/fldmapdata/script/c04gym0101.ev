@@ -224,7 +224,6 @@ ev_leader4_btl:
   //勝ち演出
   _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_DISPLAY_HERO )
   _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_LIGHTUP_BOSS )
-  _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_BOSS_END )
 
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
 	_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_02 )
@@ -256,6 +255,9 @@ ev_leader4_btl:
 	_ME_WAIT()
 		
 	}
+	
+	//ファン盛り上がり演出（興奮）
+	_GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_BOSS_END )
 
 	//～～はボルトバッジを入手した！
 	_PLAYER_NAME( 0 )
@@ -265,10 +267,16 @@ ev_leader4_btl:
 	//ボルトバッジがあれば！
 	_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_04 )
 	_BALLOONWIN_CLOSE()
+	
+	//ファン盛り上がり（普通）
+	_GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_NORMAL )
 
 	//わざマシン入手処理
 	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN72, 1 )
-
+	
+	//ファン盛り上がり演出（興奮）
+	_GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_BOSS_END )
+	
 	//リーダー：わざマシンの解説
 	_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_05 )
 
@@ -283,7 +291,8 @@ ev_leader4_btl:
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
 
-  _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_NORMAL )
+	//ファン盛り上がり（普通）
+	_GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_NORMAL )
 
 	//================================================//
 
@@ -640,17 +649,6 @@ EVENT_START	ev_pos_c04gym0101_show3
 }
 
 EVENT_END
-
-
-//スイッチを踏んだ時のシステムメッセージ（共通）
-//いらないけれど、POS踏んだときの確認用メッセージとして使用
-ev_swich_message:
-	_PLAYER_NAME( 0 )
-	//コースが変わった！
-	_SYSWIN_MSG( msg_c04gym0101_point_01 , POS_DOWN )
-	_LAST_KEYWAIT()
-	_SYSWIN_CLOSE()
-	_RET
 
 //--------------------------------------------------------------
 //	トレーナー[!]マーク
@@ -1052,7 +1050,7 @@ ev_swleader04_show:
 	_OBJ_ANIME_WAIT()
 
   //ディスプレイにカミツレを写す
-  _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_DISPLAY_BOSS )
+	_GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_DISPLAY_BOSS )
 	_TIME_WAIT( 32 )
 	
   //スポットライトをけす
@@ -1061,9 +1059,9 @@ ev_swleader04_show:
 	_GYM_ELEC_SET_SPOTLIGHT( FALSE, C04GYM0101_LEADER4_01, GYM_ELEC_SPOTLIGHT_RIGHT )
 	
 	//影フェードアウトイベントを行う
-  _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_TR_END )
+	_GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_TR_END )
 	_GYM_ELEC_CALL_FADEOUT_EVENT(  GYM_ELEC_EVENT_SEQ_TR03_BTL_END )
-  _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_NORMAL )
+	_GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_NORMAL )
 	
 	//自機にカメラを戻す
 	_CAMERA_DEF_MOVE (90) 
@@ -1118,7 +1116,7 @@ ev_swleader04_end:
 	_OBJ_ANIME_WAIT()
 	
 	//【仮】カミツレひとこと（メッセージラベルが仮）
-	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_prince1_04 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
+	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_crowd_03 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//
@@ -1155,7 +1153,7 @@ ev_swleader04_end:
 	
 	ENDSWITCH
 	
-	//【仮】拍手SE再生（本来はここから鳴り続ける）
+	//拍手演出再生
   _GYM_ELEC_SET_EFFECT( GYM_ELEC_EFFECT_FAN_BOSS_END )
 	
 	//観客から歓声があがる
@@ -1228,7 +1226,7 @@ ev_swleader04_end:
 	ENDSWITCH
 
 	//【仮】カミツレひとこと（メッセージラベルが仮）
-	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_prince1_04 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
+	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_crowd_03 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 
   //終わる

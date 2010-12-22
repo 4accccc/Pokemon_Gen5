@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-12-21T15:36:48"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-12-22T10:39:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="882" top="283" right="1575" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="882" top="283" right="1280" bottom="911" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="518"/>
+		<band id="0" index="1" style="0000" width="445"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="531"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="685"/>
+		<band id="2" index="3" style="0000" width="223"/>
+		<band id="3" index="4" style="0000" width="390"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -428,58 +428,6 @@
 おもしろいけど　難しいのよね……</language>
 	</row>
 
-	<row id="msg_c04gym0101_prince1_01" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>♂
-・トレーナー登場メッセージ</comment>
-		<attribute name="キャラ指定">トレーナー
-prince_01</attribute>
-		<language name="JPN" width="256">ジェットコースターの
-のりごこちは　どうだった？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ジェットコースターの
-乗り心地は　どうだった？[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04gym0101_prince1_02" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>♂
-・トレーナー戦闘前メッセージ</comment>
-		<attribute name="キャラ指定">トレーナー
-prince_01</attribute>
-		<language name="JPN" width="256">コースターに　のったときの
-めくるめく　スピード！[BE:01:ページ切り替え（クリア）]
-それにまけない　ポケモンしょうぶで
-きみを　クラクラさせるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">コースターに　のったときの
-めくるめく　スピード！[BE:01:ページ切り替え（クリア）]
-それに負けない　ポケモン勝負で
-きみを　クラクラさせるよ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04gym0101_prince1_03" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>♂
-・トレーナー戦闘後メッセージ</comment>
-		<attribute name="キャラ指定">トレーナー
-prince_01</attribute>
-		<language name="JPN" width="256">きみの　たたかいかた
-カミツレさまに　みおとり　しないな！[BE:00:ページ切り替え（行送り）]
-まさに　エレガントで　ゴージャスだ▼</language>
-		<language name="JPN_KANJI" width="256">きみの　戦い方
-カミツレさまに　見劣りしないな！[BE:00:ページ切り替え（行送り）]
-まさに　エレガントで　ゴージャスだ▼</language>
-	</row>
-
-	<row id="msg_c04gym0101_prince1_04" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>♂
-・トレーナー再会話メッセージ</comment>
-		<attribute name="キャラ指定">トレーナー
-prince_01</attribute>
-		<language name="JPN" width="256">ポイントを　きりかえれば
-ジェットコースターの[BE:00:ページ切り替え（行送り）]
-すすむ　ルートも　かわるのさ</language>
-		<language name="JPN_KANJI" width="256">ポイントを　切り替えれば
-ジェットコースターの[BE:00:ページ切り替え（行送り）]
-進む　ルートも　変わるのさ</language>
-	</row>
-
 	<row id="msg_c04gym0101_princess1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・トレーナー登場メッセージ</comment>
@@ -527,36 +475,6 @@ princess_01</attribute>
 		<language name="JPN_KANJI" width="256">あなたと　あなたのポケモン
 とっても　シャイニング！▼
 わたしも　みならわなきゃ！</language>
-	</row>
-
-	<row id="msg_c04gym0101_princess1_04" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・トレーナー再会話メッセージ</comment>
-		<attribute name="キャラ指定">トレーナー
-princess_01</attribute>
-		<language name="JPN" width="256">ジムの　ギミックに　おどろかず
-いつもどおり　れいせいで　いれば[BE:01:ページ切り替え（クリア）]
-カミツレさま　だけでなく
-どんな　トレーナーにも　かてますわ</language>
-		<language name="JPN_KANJI" width="256">ジムの　ギミックに　驚かず
-いつもどおり　冷静で　いれば[BE:01:ページ切り替え（クリア）]
-カミツレさま　だけでなく
-どんな　トレーナーにも　勝てますわ</language>
-	</row>
-
-	<row id="msg_c04gym0101_point_01" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>BGメッセージ（共通）
-・はい選択時
-・ME終了後にメッセージ表示</comment>
-		<attribute name="キャラ指定">ポイント切替機</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ポイントを　きりかえた！[BE:01:ページ切り替え（クリア）]
-ジェットコースターの
-すすむ　ルートが　かわった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ポイントを　切り替えた！[BE:01:ページ切り替え（クリア）]
-ジェットコースターの
-進む　ルートが　変わった！</language>
 	</row>
 
 	<row id="msg_c04gym0101_princess2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -776,8 +694,8 @@ princess_03</attribute>
 	<row id="msg_c04gym0101_crowd_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント</comment>
 		<attribute name="キャラ指定">観客</attribute>
-		<language name="JPN" width="256">かっこいい…！</language>
-		<language name="JPN_KANJI" width="256">かっこいい…！</language>
+		<language name="JPN" width="256">かっこいい……！</language>
+		<language name="JPN_KANJI" width="256">かっこいい……！</language>
 	</row>
 
 	<row id="msg_c04gym0101_crowd_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -804,8 +722,8 @@ princess_03</attribute>
 	<row id="msg_c04gym0101_crowd_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント</comment>
 		<attribute name="キャラ指定">観客</attribute>
-		<language name="JPN" width="256">ステキ…！</language>
-		<language name="JPN_KANJI" width="256">ステキ…！</language>
+		<language name="JPN" width="256">ステキ……！</language>
+		<language name="JPN_KANJI" width="256">ステキ……！</language>
 	</row>
 
 	<flowchart-group-list>
