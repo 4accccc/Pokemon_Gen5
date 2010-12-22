@@ -31,18 +31,20 @@ enum {
 	NARC_gym_elec_display_kami_nsbca = 17,
 	NARC_gym_elec_display_kami_nsbmd = 18,
 	NARC_gym_elec_display_kami_nsbta = 19,
-	NARC_gym_elec_stage_light01_nsbmd = 20,
-	NARC_gym_elec_stage_light01_nsbta = 21,
-	NARC_gym_elec_stage_light02_nsbmd = 22,
-	NARC_gym_elec_stage_light02_nsbta = 23,
-	NARC_gym_elec_stage_light03_nsbmd = 24,
-	NARC_gym_elec_stage_light03_nsbta = 25,
-	NARC_gym_elec_win_light01_nsbmd = 26,
-	NARC_gym_elec_win_light01_nsbta = 27,
-	NARC_gym_elec_win_light02_nsbmd = 28,
-	NARC_gym_elec_win_light02_nsbta = 29,
-	NARC_gym_elec_win_light03_nsbmd = 30,
-	NARC_gym_elec_win_light03_nsbta = 31
+	NARC_gym_elec_rtm_light01_nsbmd = 20,
+	NARC_gym_elec_rtm_light01_nsbta = 21,
+	NARC_gym_elec_stage_light01_nsbmd = 22,
+	NARC_gym_elec_stage_light01_nsbta = 23,
+	NARC_gym_elec_stage_light02_nsbmd = 24,
+	NARC_gym_elec_stage_light02_nsbta = 25,
+	NARC_gym_elec_stage_light03_nsbmd = 26,
+	NARC_gym_elec_stage_light03_nsbta = 27,
+	NARC_gym_elec_win_light01_nsbmd = 28,
+	NARC_gym_elec_win_light01_nsbta = 29,
+	NARC_gym_elec_win_light02_nsbmd = 30,
+	NARC_gym_elec_win_light02_nsbta = 31,
+	NARC_gym_elec_win_light03_nsbmd = 32,
+	NARC_gym_elec_win_light03_nsbta = 33
 };
 
 /* NARC_GYM_ELEC_NAIX_ */

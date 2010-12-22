@@ -102,6 +102,8 @@ typedef enum
   MODELID_FAN_BACK,           //観客奥
   MODELID_FAN_FRONT,          //観客手前
 
+  MODELID_RYTHEMLIGHT_00,     //リズムライト
+
   MODELID_MAX,
 }MODELID;
 
@@ -158,6 +160,10 @@ typedef enum
   ANIMEID_FAN_TR_END_ITA,
   ANIMEID_FAN_BOSS_END_ITA,
   ANIMEID_FAN_MAX,
+  
+  //MODELID_RYTHEMLIGHT_00用アニメID
+  ANIMEID_RYTHEMLIGHT_00_ITA  = ANIMEID_START,
+  ANIMEID_RYTHEMLIGHT_00_MAX,
 
 }ANIMEID;
 
@@ -174,12 +180,16 @@ static BOOL MODEL_GetVisible( const MODEL *cp_wk );
 static void MODEL_SetTrans( MODEL *p_wk, const VecFx32 * cp_trans );
 static void MODEL_GetTrans( const MODEL *cp_wk, VecFx32 * p_trans );
 static void MODEL_StartAnime( MODEL *p_wk, ANIMEID anmID );
+static void MODEL_StartAnimeFrame( MODEL *p_wk, ANIMEID anmID, fx32 frame );
+static void MODEL_Pause( MODEL *p_wk, ANIMEID anmID, BOOL is_pause );
 static BOOL MODEL_IsAnimeStop( const MODEL *cp_wk, ANIMEID anmID );
 static void MODEL_StartAnimeAll( MODEL *p_wk );
+static void MODEL_StartAnimeFrameAll( MODEL *p_wk, fx32 frame );
 static void MODEL_StopAnimeAll( MODEL *p_wk );
 static BOOL MODEL_IsAnimeStopAll( const MODEL *cp_wk );
 static void MODEL_SetLoopAnimeAll( MODEL *p_wk, BOOL is_loop );
 static void MODEL_SetLastFrameAll( MODEL *p_wk );
+static fx32 MODEL_GetAnimeFrame( const MODEL *cp_wk, ANIMEID anmID );
 static GFL_G3D_OBJ *MODEL_GetG3dObj( MODEL *p_wk );
 
 static const VecFx32 * MODEL_DEBUG_GetPosPointer( const MODEL *cp_wk );
@@ -242,6 +252,7 @@ typedef enum
   FLOOR_LIGHT_ID_TR01_WIN,  //トレーナー一人目勝利
   FLOOR_LIGHT_ID_TR02_WIN,  //トレーナー二人目勝利
   FLOOR_LIGHT_ID_BOSS_WIN,  //カミツレ処理人目勝利
+  FLOOR_LIGHT_ID_RYTHEM,    //リズム連動
   FLOOR_LIGHT_ID_MAX,
 }FLOOR_LIGHT_ID;
 
@@ -253,6 +264,7 @@ static void FLOOR_LIGHT_Main( FLOOR_LIGHT *p_wk );
 
 static void FLOOR_LIGHT_Enable( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID );
 static void FLOOR_LIGHT_Start( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID );
+static void FLOOR_LIGHT_StartFrame( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID, fx32 frame );
 static void FLOOR_LIGHT_StartAlpha( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID, u16 sync );
 
 //-------------------------------------
@@ -771,6 +783,8 @@ enum
   MODEL_RESID_FAN_NORMAL_ITA,       //観客通常アニメ
   MODEL_RESID_FAN_TR_END_ITA,       //観客トレーナー撃破アニメ
   MODEL_RESID_FAN_BOSS_END_ITA,     //観客リーダー撃破アニメ
+  MODEL_RESID_RYTHEMLIGHT_00_IMD,   //リズムライトモデル
+  MODEL_RESID_RYTHEMLIGHT_00_ITA,   //リズムライトアニメ
 
   MODEL_RESID_MAX,
 };
@@ -790,8 +804,11 @@ struct _MODEL
 //モデル管理ワーク
 struct _MODEL_MANAGER
 {
+  GFL_G3D_OBJ *p_rythem_obj;  //BGMと連動して動くOBJ
   FLD_EXP_OBJ_CNT_PTR p_ex_obj;
   MODEL model[MODELID_MAX];
+  u32 pre_rythem_vcnt;
+  u32 store_rythem_vcnt;
 };
 //-------------------------------------
 ///	データ
@@ -927,6 +944,14 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
   {
     ARCID_GYM_ELEC, NARC_gym_elec_c4g_fan_03_nsbta, GFL_G3D_UTIL_RESARC
   },
+  //MODEL_RESID_RYTHEMLIGHT_00_IMD,   //リズムライトモデル
+  {
+    ARCID_GYM_ELEC, NARC_gym_elec_rtm_light01_nsbmd, GFL_G3D_UTIL_RESARC
+  },
+  //MODEL_RESID_RYTHEMLIGHT_00_ITA,   //リズムライトアニメ
+  {
+    ARCID_GYM_ELEC, NARC_gym_elec_rtm_light01_nsbta, GFL_G3D_UTIL_RESARC
+  },
 };
 
 //アニメ設定
@@ -989,6 +1014,11 @@ static const GFL_G3D_UTIL_ANM sc_g3d_fan_anm[ANIMEID_FAN_MAX] =
   { MODEL_RESID_FAN_NORMAL_ITA, 0 },
   { MODEL_RESID_FAN_TR_END_ITA, 0 },
   { MODEL_RESID_FAN_BOSS_END_ITA, 0 },
+};
+//リズムライト
+static const GFL_G3D_UTIL_ANM sc_g3d_rythemlight_anm[ANIMEID_RYTHEMLIGHT_00_MAX] =
+{
+  { MODEL_RESID_RYTHEMLIGHT_00_ITA, 0 },
 };
 
 //3Dオブジェクト設定
@@ -1162,6 +1192,14 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
     sc_g3d_fan_anm,                 //アニメテーブル(複数指定のため)
     ANIMEID_FAN_MAX,                //アニメリソース数
   },
+  //MODELID_RYTHEMLIGHT_00,     //リズムライト
+  {
+    MODEL_RESID_RYTHEMLIGHT_00_IMD, //モデルリソースID
+    0,                              //モデルデータID（リソース内部INDEX）
+    MODEL_RESID_RYTHEMLIGHT_00_IMD, //テクスチャリソースID
+    sc_g3d_rythemlight_anm,         //アニメテーブル（複数指定のため）
+    ANIMEID_RYTHEMLIGHT_00_MAX,     //アニメリソース数
+  }
 };
 
 //全情報設定
@@ -1187,6 +1225,7 @@ static MODEL_MANAGER * MODEL_MANAGER_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID 
 {
   MODEL_MANAGER *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(MODEL_MANAGER));
   p_wk->p_ex_obj  = p_ex_obj;
+  p_wk->pre_rythem_vcnt = OS_GetVBlankCount();
 
   //読込み
   FLD_EXP_OBJ_AddUnit(p_wk->p_ex_obj, &sc_g3d_util_setup, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
@@ -1204,6 +1243,23 @@ static MODEL_MANAGER * MODEL_MANAGER_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID 
     }
   }
 
+  //BGM連動OBJを取得
+  {
+    MODEL *p_model  = MODEL_MANAGER_GetModel( p_wk, MODELID_RYTHEMLIGHT_00 );
+    p_wk->p_rythem_obj  = MODEL_GetG3dObj( p_model );
+
+    //アニメ開始
+    {
+      //120bpm　48分解能
+      static const int sc_tick_max  = 120*48*2;
+      u32 tick  = PMSND_GetBgmTick();
+      tick  %= sc_tick_max;
+      MODEL_StartAnimeFrameAll( p_model, FX32_CONST( 30 * tick / sc_tick_max ) );
+    }
+
+    //ただしSTOPをかけて、FLD_EXP_OBJでは更新処理をかけない
+    MODEL_Pause( p_model, ANIMEID_RYTHEMLIGHT_00_ITA, TRUE );
+  }
 
   return p_wk;
 }
@@ -1230,6 +1286,31 @@ static void MODEL_MANAGER_Exit( MODEL_MANAGER *p_wk )
 //-----------------------------------------------------------------------------
 static void MODEL_MANAGER_Main( MODEL_MANAGER *p_wk )
 {
+  //BGMと連動して動くモデル
+  {
+    u32 vcnt  = OS_GetVBlankCount();
+    u32 diff;
+    p_wk->store_rythem_vcnt += (vcnt - p_wk->pre_rythem_vcnt);
+
+    diff  = p_wk->store_rythem_vcnt / 2;
+    p_wk->store_rythem_vcnt %= 2;
+
+    //NAGI_Printf( "now=%d pre=%d diff=%d\n",  vcnt, p_wk->pre_rythem_vcnt, diff );
+    
+    for( ; diff > 0; diff--)
+    {
+      GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_rythem_obj, 0, FX32_ONE );
+    }
+    p_wk->pre_rythem_vcnt = vcnt;
+
+    {
+
+      MODEL *p_model  = MODEL_MANAGER_GetModel( p_wk, MODELID_RYTHEMLIGHT_00 );
+      MODEL_SetVisible( p_model, TRUE );
+    }
+  }
+
+  //通常のギミックモデル
   FLD_EXP_OBJ_PlayAnime( p_wk->p_ex_obj );
 }
 //----------------------------------------------------------------------------
@@ -1314,6 +1395,19 @@ static void MODEL_GetTrans( const MODEL *cp_wk, VecFx32 * p_trans )
 //-----------------------------------------------------------------------------
 static void MODEL_StartAnime( MODEL *p_wk, ANIMEID anmID )
 {
+  MODEL_StartAnimeFrame( p_wk, anmID, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル操作  アニメ開始  フレーム指定版
+ *
+ *	@param	MODEL *p_wk ワーク
+ *	@param	anmID       アニメ番号
+ *	@param	frame       フレーム
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_StartAnimeFrame( MODEL *p_wk, ANIMEID anmID, fx32 frame )
+{
   GF_ASSERT( anmID < sc_g3d_util_obj[ p_wk->modelID ].anmCount );
 
   FLD_EXP_OBJ_ValidCntAnm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, 
@@ -1323,7 +1417,21 @@ static void MODEL_StartAnime( MODEL *p_wk, ANIMEID anmID )
     EXP_OBJ_ANM_CNT_PTR p_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, anmID );
     FLD_EXP_OBJ_ChgAnmStopFlg( p_anm, FALSE);
   }
-  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, anmID, 0 );
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, anmID, frame );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  再生処理を一時停止する
+ *
+ *	@param	MODEL *p_wk ワーク
+ *	@param	is_pause    TRUEで停止  FALSEで再開
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_Pause( MODEL *p_wk, ANIMEID anmID, BOOL is_pause )
+{
+  EXP_OBJ_ANM_CNT_PTR p_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, anmID );
+  FLD_EXP_OBJ_ChgAnmStopFlg( p_anm, is_pause );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1356,6 +1464,21 @@ static void MODEL_StartAnimeAll( MODEL *p_wk )
   for( i = 0; i < sc_g3d_util_obj[ p_wk->modelID ].anmCount; i++ )
   {
     MODEL_StartAnime( p_wk, i );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル操作  全アニメ開始フレーム指定
+ *
+ *	@param	MODEL *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MODEL_StartAnimeFrameAll( MODEL *p_wk, fx32 frame )
+{
+  int i;
+  for( i = 0; i < sc_g3d_util_obj[ p_wk->modelID ].anmCount; i++ )
+  {
+    MODEL_StartAnimeFrame( p_wk, i, frame );
   }
 }
 //----------------------------------------------------------------------------
@@ -1432,6 +1555,20 @@ static void MODEL_SetLastFrameAll( MODEL *p_wk )
     FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_ex_obj, p_wk->unitID, p_wk->modelID, i,
                                 FLD_EXP_OBJ_GetAnimeLastFrame(p_anm) );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル操作  アニメフレームを取得
+ *
+ *	@param	const MODEL *cp_wk  ワーク
+ *	@param  anmID アニメID
+ *
+ *	@return フレーム
+ */
+//-----------------------------------------------------------------------------
+static fx32 MODEL_GetAnimeFrame( const MODEL *cp_wk, ANIMEID anmID )
+{
+  return FLD_EXP_OBJ_GetObjAnmFrm( cp_wk->p_ex_obj, cp_wk->unitID, cp_wk->modelID, anmID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2083,6 +2220,16 @@ static const struct
     },
     TRUE,
   },
+  //FLOOR_LIGHT_ID_RYTHEM   //リズム連動
+  {
+    MODELID_RYTHEMLIGHT_00,
+    { //m_gym_0401_00_00と同じ位置
+      FX32_CONST(256),
+      FX32_CONST(0),
+      FX32_CONST(256),
+    },
+    TRUE,
+  },
 };
 
 //----------------------------------------------------------------------------
@@ -2167,6 +2314,21 @@ static void FLOOR_LIGHT_Start( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID )
   GF_ASSERT( floorID < FLOOR_LIGHT_ID_MAX );
   MODEL_SetVisible( p_wk->p_model[ floorID ], TRUE );
   MODEL_StartAnimeAll( p_wk->p_model[ floorID ] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通路ライト管理  ライト点灯開始  フレーム指定版
+ *
+ *	@param	FLOOR_LIGHT *p_wk
+ *	@param	floorID
+ *	@param	frame 
+ */
+//-----------------------------------------------------------------------------
+static void FLOOR_LIGHT_StartFrame( FLOOR_LIGHT *p_wk, FLOOR_LIGHT_ID floorID, fx32 frame )
+{
+  GF_ASSERT( floorID < FLOOR_LIGHT_ID_MAX );
+  MODEL_SetVisible( p_wk->p_model[ floorID ], TRUE );
+  MODEL_StartAnimeFrameAll( p_wk->p_model[ floorID ], frame );
 }
 
 //----------------------------------------------------------------------------
@@ -2634,6 +2796,10 @@ static void AUDIENCE_SetExcitingEffect( AUDIENCE *p_wk, AUDIENCE_EXCITE_TYPE typ
   switch( type )
   {
   case AUDIENCE_EXCITE_TYPE_NORMAL:
+    if( PMSND_CheckPlayingSEIdx( GYM_ELEC_SE_CHEER_LOOP ) )
+    {
+      PMSND_StopSE();
+    }
     p_wk->EffectFunc  = Audience_NormalEffect;
     break;
   case AUDIENCE_EXCITE_TYPE_TR_END:
@@ -3069,10 +3235,12 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
       FLOOR_LIGHT_StartAlpha( p_wk->p_floor_light, FLOOR_LIGHT_ID_TR02_WIN, FOG_SHADOW_FADE_FRAME );
       break;
     case FADEOUT_PHASE_BACK:
+#if 0
       {
         GMEVENT* p_subevent = EVENT_FSND_ChangeBGM( p_wk->p_gamesys, GYM_ELEC_BGM_BOSSAPPER, 0, 0 );
         GMEVENT_CallEvent( p_event, p_subevent );
       }
+#endif
       break;
     default:
       GF_ASSERT(0);
@@ -3686,6 +3854,9 @@ static void DebugWin_Draw_ModelIndex( void* userWork , DEBUGWIN_ITEM* item )
     "しょうり１",//MODELID_WINLIGHT_01,        //勝利後ライトアップ一人目
     "しょうり２",//MODELID_WINLIGHT_02,        //勝利後ライトアップ二人目
     "しょうりボス",//MODELID_WINLIGHT_BOSS,      //勝利後ライトアップボス後
+    "かんきゃくおく",// MODELID_FAN_BACK,           //観客奥
+    "かんきゃくてまえ",//MODELID_FAN_FRONT,          //観客手前
+    "リズムライト",//MODELID_RYTHEMLIGHT_00,     //リズムライト
   };
   DEBUGWIN_ITEM_SetNameV( item , "モデル[%s]", sc_label[s_model_wk.index] );
 }

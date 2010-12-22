@@ -782,8 +782,6 @@ static void ReserveSwitchSet( ISS_SWITCH_SYS* system, SWITCH_INDEX switchIdx, BO
       return;
     }
   }
-
-  GF_ASSERT_MSG( 0, "—\–ñ‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½\n" );
 }
 
 //----------------------------------------------------------------------------
