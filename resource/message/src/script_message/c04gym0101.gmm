@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-12-22T10:39:10"/>
+	<create user="matsumiya" host="W00224" date="2010-12-22T20:29:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="882" top="283" right="1280" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1712" top="72" right="2545" bottom="699" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="445"/>
+		<band id="0" index="1" style="0000" width="658"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="223"/>
-		<band id="3" index="4" style="0000" width="390"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="600"/>
+		<band id="4" index="0" style="0000" width="825"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,34 +292,40 @@
 	</lock>
 
 
-	<row id="msg_c04gym0101_leader_01">
+	<row id="msg_c04gym0101_leader_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">……あまりの　スピードに
-クラクラ　してない？[BE:01:ページ切り替え（クリア）]
-つぎは　いとしの　ポケモンたちで
-あなたを　クラクラ　させちゃうけど[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……あまりの　スピードに
-クラクラ　してない？[BE:01:ページ切り替え（クリア）]
-次は　愛しの　ポケモンたちで
-あなたを　クラクラ　させちゃうけど[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">……ようこそ
+この　ステージへ▼
+わたしの　いとしの　ポケモンたちと
+あなたの　ポケモン……▼
+どちらの　かがやきが　ほんものか
+ここで　くらべるから▼</language>
+		<language name="JPN_KANJI" width="256">……ようこそ
+この　ステージへ▼
+わたしの　愛しの　ポケモンたちと
+あなたの　ポケモン……▼
+どちらの　輝きが　本物か
+ここで　競うから▼</language>
 	</row>
 
-	<row id="msg_c04gym0101_leader_02">
+	<row id="msg_c04gym0101_leader_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">ステキ……
-ホレボレしちゃう　ファイトスタイル[BE:01:ページ切り替え（クリア）]
-あなた　いい　トレーナーね
-なんだか　かんげき……[BE:00:ページ切り替え（行送り）]
-これを……！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ステキ……
-ホレボレしちゃう　ファイトスタイル[BE:01:ページ切り替え（クリア）]
-あなた　いい　トレーナーね
-なんだか　感激……[BE:00:ページ切り替え（行送り）]
-これを……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もう……▼
+あなたってば　よそういじょうに
+ステキな　トレーナー▼
+ホレボレしちゃう　ファイトスタイルに
+なんだか　かんげき　したわ……▽
+これを……！▼</language>
+		<language name="JPN_KANJI" width="256">もう……▼
+あなたってば　予想以上に
+ステキな　トレーナー▼
+ホレボレしちゃう　ファイトスタイルに
+なんだか　感激したわ……▽
+これを……！▼</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_03">
@@ -371,29 +377,21 @@
 そのまま　だけどね▼</language>
 	</row>
 
-	<row id="msg_c04gym0101_leader_06">
+	<row id="msg_c04gym0101_leader_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・msg_c04gym0101_leader_05
 　表示後に再度会話</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">あなた……　つぎは
-ホドモエシティには　いくの？▼
-だって　あそこにも
-ポケモンジムが　あるもの▼
-アッ……▼
-でも　いけないわね　きっと▼
-そうね……
-わたしが　わたれるようにするわ▽
-５ばんどうろで　まっていて</language>
-		<language name="JPN_KANJI" width="256">あなた……　次は
-ホドモエシティには　行くの？▼
-だって　あそこにも
-ポケモンジムが　あるもの▼
-アッ……▼
-でも　行けないわね　きっと▼
-そうね……
-わたしが　渡れるようにするわ▽
-５番道路で　待っていて</language>
+		<language name="JPN" width="256">ポケモンと　ひとが
+ステキな　かんけいで　むすびつくと▽
+ともに　かがやきを　ましていくの！▼
+さあ　これからも　ともに　あゆみ
+おたがいを　てらしあうと　いいよね！</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　人が
+ステキな　関係で　結びつくと▽
+ともに　輝きを　増していくの！▼
+さあ　これからも　ともに　歩み
+お互いを　照らしあうと　いいよね！</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_07">
@@ -428,7 +426,7 @@
 おもしろいけど　難しいのよね……</language>
 	</row>
 
-	<row id="msg_c04gym0101_princess1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c04gym0101_princess1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・トレーナー登場メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
@@ -447,21 +445,17 @@ princess_01</attribute>
 
 	<row id="msg_c04gym0101_princess1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
-・トレーナー戦闘前メッセージ</comment>
+・トレーナー戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
 princess_01</attribute>
-		<language name="JPN" width="256">このジム　さいしょすごく　くらいと
-おもいませんでしたか？▼
-ライトアップされると　とっても
-ビューティフルなんです！▼
+		<language name="JPN" width="256">ライトアップされた　ジムって
+とっても　ビューティフルでしょ！▼
 ライトアップで　てらされる
-ポケモンたちも　ビューティフル！</language>
-		<language name="JPN_KANJI" width="256">このジム　さいしょすごく　くらいと
-おもいませんでしたか？▼
-ライトアップされると　とっても
-ビューティフルなんです！▼
-ライトアップで　てらされる
-ポケモンたちも　ビューティフル！</language>
+ポケモンたちも　ビューティフル！！</language>
+		<language name="JPN_KANJI" width="256">ライトアップされた　ジムって
+とっても　ビューティフルでしょ！▼
+ライトアップで　照らされる
+ポケモンたちも　ビューティフル！！</language>
 	</row>
 
 	<row id="msg_c04gym0101_princess1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -474,10 +468,10 @@ princess_01</attribute>
 わたしも　みならわなきゃ！</language>
 		<language name="JPN_KANJI" width="256">あなたと　あなたのポケモン
 とっても　シャイニング！▼
-わたしも　みならわなきゃ！</language>
+わたしも　見習わなきゃ！</language>
 	</row>
 
-	<row id="msg_c04gym0101_princess2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04gym0101_princess2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・トレーナー登場メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
@@ -520,7 +514,7 @@ princess_02</attribute>
 つよさが　うつくしさの　いちぶね</language>
 	</row>
 
-	<row id="msg_c04gym0101_princess3_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c04gym0101_princess3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・トレーナー登場メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
@@ -540,14 +534,14 @@ princess_03</attribute>
 ・トレーナー戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
 princess_03</attribute>
-		<language name="JPN" width="256">カミツレさまと
-ちょうせんしゃとの　たたかい▼
-なんど　おそばで　みても
-ムネが　たかなります……</language>
-		<language name="JPN_KANJI" width="256">カミツレさまと
-ちょうせんしゃとの　たたかい▼
-なんど　おそばで　みても
-ムネが　たかなります……</language>
+		<language name="JPN" width="256">ジムリーダーである　カミツレさまと
+チャレンジャーとの　たたかい▼
+こんな　ちかくで　みることで
+わたくしたちも　かがやくのです！</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーである　カミツレさまと
+チャレンジャーとの　戦い▼
+こんな　近くで　みることで
+わたくしたちも　輝くのです！</language>
 	</row>
 
 	<row id="msg_c04gym0101_princess3_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
@@ -560,7 +554,7 @@ princess_03</attribute>
 みていて　ウットリして　しまいました
 とても　すばらしい　ショーでしたわ！</language>
 		<language name="JPN_KANJI" width="256">あなたと　カミツレさまとで　おりなす
-うつくしい　ポケモンしょうぶ▼
+美しい　ポケモン勝負▼
 みていて　ウットリして　しまいました
 とても　すばらしい　ショーでしたわ！</language>
 	</row>
@@ -570,19 +564,23 @@ princess_03</attribute>
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
-・No030「おいしいみず」入手</comment>
+・No030「おいしいみず」入手
+
+・スワンでメッセージ修正</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">どうっすか？
-おどろいたでしょう！？[BE:01:ページ切り替え（クリア）]
-このジムは　みてのとおり
-ジェットコースター　なんすよね！！[BE:01:ページ切り替え（クリア）]
+おどろいたでしょう！？▼
+このジムは　はっきりいって
+きらめく　ファッションショーの▽
+まばゆい　ステージ　なんすよね！！▼
 まあ　とりあえずは
 これを　さしあげるっす！▼</language>
 		<language name="JPN_KANJI" width="256">どうっすか？
-驚いたでしょう！？[BE:01:ページ切り替え（クリア）]
-このジムは　見てのとおり
-ジェットコースター　なんすよね！！[BE:01:ページ切り替え（クリア）]
+驚いたでしょう！？▼
+このジムは　はっきりいって
+きらめく　ファッションショーの▽
+まばゆい　ステージ　なんすよね！！▼
 まあ　とりあえずは
 これを　さしあげるっす！▼</language>
 	</row>
@@ -590,54 +588,58 @@ princess_03</attribute>
 	<row id="msg_c04gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
-・ジムバッジ取得まで繰り返し</comment>
+・ジムバッジ取得まで繰り返し
+
+・スワンでメッセージ修正</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">この　ジェットコースター　ジムは
-まず　コースターに　のる！[BE:01:ページ切り替え（クリア）]
-つぎに　プラットフォーム……
-あしばですね！　そこで[BE:00:ページ切り替え（行送り）]
-ポイントを　きりかえる[BE:01:ページ切り替え（クリア）]
-ときとして　たおした　あいての
-コースターにも　のってすすむ！[BE:01:ページ切り替え（クリア）]
-そうやって　ジムリーダーの　いる
-ばしょを　めざしてくださいっす！▼
+		<language name="JPN" width="256">この　ファッションショー　ジムは
+ステージの　うえで　まちかまえる▼
+モデルの　トレーナーに　しょうりして
+さきに　すすんでいくだけっす！▼
 ちなみに　でんきタイプの
 ポケモンは　じめんタイプの▽
-わざが　にがて　なんすよ……</language>
-		<language name="JPN_KANJI" width="256">この　ジェットコースター　ジムは
-まず　コースターに　乗る！[BE:01:ページ切り替え（クリア）]
-つぎに　プラットフォーム……
-足場ですね！　そこで[BE:00:ページ切り替え（行送り）]
-ポイントを　切り替える[BE:01:ページ切り替え（クリア）]
-ときとして　倒した　相手の
-コースターにも　乗り　進む！[BE:01:ページ切り替え（クリア）]
-そうやって　ジムリーダーの　いる
-場所を　目指してくださいっす！▼
+わざが　にがて　なんすよ……▼
+あっ！　だけどですよ▼
+エモンガって　ポケモンは
+じめんタイプの　わざが　きかないので▽
+ようちゅうい　してくださいっす！</language>
+		<language name="JPN_KANJI" width="256">この　ファッションショー　ジムは
+ステージ上で　待ち構える▼
+モデルの　トレーナーに　勝利して
+先に　進んでいくだけっす！▼
 ちなみに　でんきタイプの
 ポケモンは　じめんタイプの▽
-技が　苦手なんすよ……</language>
+技が　苦手なんすよ……▼
+あっ！　だけどですよ▼
+エモンガって　ポケモンは
+じめんタイプの　技が　効かないので▽
+要注意してくださいっす！</language>
 	</row>
 
 	<row id="msg_c04gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後
-※ジェットコースタームービー
-　ローラーコースタームービー</comment>
+
+・スワンでメッセージ修正</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">カミツレさんの　まぶしく
-かれいな　でんきこうげき！[BE:01:ページ切り替え（クリア）]
+かれいな　でんきこうげき！▼
 それを　うわまわった　あんたと
-ポケモンとの　コンビネーション！[BE:01:ページ切り替え（クリア）]
+ポケモンとの　コンビネーション！▼
 まさに　まさに
-ジェットコースター　ムービー　っすよ！</language>
+スーパーモデル 　っすよ！▼
+じゃなかった！　とびっきりの
+ポケモンと　ポケモントレーナー　っすね！</language>
 		<language name="JPN_KANJI" width="256">カミツレさんの　まぶしく
-華麗な　電気攻撃！[BE:01:ページ切り替え（クリア）]
+華麗な　電気攻撃！▼
 それを　上回った　あんたと
-ポケモンとの　コンビネーション！[BE:01:ページ切り替え（クリア）]
+ポケモンとの　コンビネーション！▼
 まさに　まさに
-ジェットコースター　ムービー　っすよ！</language>
+スーパーモデル 　っすよ！▼
+じゃなかった！　とびっきりの
+ポケモンと　ポケモントレーナー　っすね！</language>
 	</row>
 
 	<row id="msg_c04gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -685,42 +687,50 @@ princess_03</attribute>
 	</row>
 
 	<row id="msg_c04gym0101_crowd_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>退場イベント</comment>
+		<comment>退場イベント
+・0＝主人公名前
+・スワンでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！</language>
 	</row>
 
 	<row id="msg_c04gym0101_crowd_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>退場イベント</comment>
+		<comment>退場イベント
+・スワンでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">かっこいい……！</language>
 		<language name="JPN_KANJI" width="256">かっこいい……！</language>
 	</row>
 
 	<row id="msg_c04gym0101_crowd_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>退場イベント</comment>
+		<comment>退場イベント
+・スワンでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">シビれるー！</language>
 		<language name="JPN_KANJI" width="256">シビれるー！</language>
 	</row>
 
 	<row id="msg_c04gym0101_crowd_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>退場イベント</comment>
+		<comment>退場イベント
+・スワンでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">ブラボー！</language>
 		<language name="JPN_KANJI" width="256">ブラボー！</language>
 	</row>
 
 	<row id="msg_c04gym0101_crowd_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>退場イベント</comment>
+		<comment>退場イベント
+・0＝主人公名前
+・スワンでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さーん！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さーん！</language>
 	</row>
 
 	<row id="msg_c04gym0101_crowd_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>退場イベント</comment>
+		<comment>退場イベント
+・スワンでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">ステキ……！</language>
 		<language name="JPN_KANJI" width="256">ステキ……！</language>
