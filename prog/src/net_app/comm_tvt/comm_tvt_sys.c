@@ -176,8 +176,13 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->talkWork = CTVT_TALK_InitSystem( work , work->heapId );
   work->drawWork = CTVT_DRAW_InitSystem( work , work->heapId );
   work->callWork = CTVT_CALL_InitSystem( work , work->heapId );
+  if ( OS_IsRunOnTwl() )
+  {
   // add ichiraku
-  work->gameWork = CTVT_GAME_InitSystem( work, work->heapId );
+    work->gameWork = CTVT_GAME_InitSystem( work, work->heapId );
+  } else {
+    work->gameWork = NULL;
+  }
   
   {
     DRAW_SYS_INIT_WORK initWork;
@@ -290,7 +295,10 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
   CTVT_DRAW_TermSystem( work , work->drawWork );
   CTVT_TALK_TermSystem( work , work->talkWork );
   // add ichiraku
-  CTVT_GAME_TermSystem( work, work->gameWork );
+  if (OS_IsRunOnTwl() )
+  {
+    CTVT_GAME_TermSystem( work, work->gameWork );
+  }
 
   CTVT_COMM_TermSystem( work , work->commWork );
   CTVT_CAMERA_Term( work , work->camWork );
@@ -321,7 +329,10 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     work->nextMode = CTVT_DRAW_Main( work , work->drawWork );
     break;
   case CTM_GAME:  // ミニゲーム add ichiraku
-    work->nextMode = CTVT_GAME_Main( work, work->gameWork );
+    if ( OS_IsRunOnTwl() )
+    {
+      work->nextMode = CTVT_GAME_Main( work, work->gameWork );
+    }
     break;
   case CTM_END:
     {
@@ -824,7 +835,10 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     CTVT_DRAW_TermMode( work , work->drawWork );
     break;
   case CTM_GAME: // ミニゲーム add ichiraku
-    CTVT_GAME_TermMode( work, work->gameWork );
+    if ( OS_IsRunOnTwl() )
+    {
+      CTVT_GAME_TermMode( work, work->gameWork );
+    }
     break;
   }
 
@@ -844,7 +858,10 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     CTVT_DRAW_InitMode( work , work->drawWork );
     break;
   case CTM_GAME: // ミニゲーム add ichiraku
-    CTVT_GAME_InitMode( work, work->gameWork );
+    if ( OS_IsRunOnTwl() )
+    {
+      CTVT_GAME_InitMode( work, work->gameWork );
+    }
     break;
   case CTM_ERROR: //終了
     WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
@@ -1399,7 +1416,16 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
   else
   {
     //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x180000 );
+    if ( OS_IsRunOnTwl() )
+    {
+      OS_Printf( " Is Run On TWL!!\n" );
+    }
+    if ( OS_IsRunOnTwl() )
+    {
+      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x180000 );
+    } else {
+      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
+    }
   }
 
   work = GFL_PROC_AllocWork( proc, sizeof(COMM_TVT_WORK), HEAPID_COMM_TVT );
