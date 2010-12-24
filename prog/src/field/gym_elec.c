@@ -313,7 +313,7 @@ typedef enum
   FADEOUT_PHASE_MIDDLE, //中間が消えて、奥が出現
   FADEOUT_PHASE_BACK,   //奥が消える
 }FADEOUT_PHASE;
-static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, AUDIENCE *p_audience, const VecFx32 *cp_player_pos, FADEOUT_PHASE phase );
+static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, AUDIENCE *p_audience, FADEOUT_PHASE phase );
 
 //-------------------------------------
 ///	セーブ情報
@@ -540,26 +540,22 @@ GMEVENT * GYM_ELEC_CreateFadeoutEvent( GAMESYS_WORK *p_gamesys, u16 event_seq )
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
   const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
-  VecFx32 player_pos;
 
   //現在のフェイズを保存
   GYM_ELEC_SV_SetEventSeq( p_tmp->p_sv, event_seq );
 
-  //プレイヤー座標を取得
-  FIELD_PLAYER_GetPos( cp_player, &player_pos );
-
-  //よりイベントシーケンスを設定
+  //フェード開始
   switch( event_seq )
   {
   case GYM_ELEC_EVENT_SEQ_START:
     OS_TPrintf( "開始時はフェードしません\n" );
     return NULL;
   case GYM_ELEC_EVENT_SEQ_TR01_BTL_END:
-    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, &player_pos, FADEOUT_PHASE_FRONT );
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, FADEOUT_PHASE_FRONT );
   case GYM_ELEC_EVENT_SEQ_TR02_BTL_END:
-    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, &player_pos, FADEOUT_PHASE_MIDDLE );
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, FADEOUT_PHASE_MIDDLE );
   case GYM_ELEC_EVENT_SEQ_TR03_BTL_END:
-    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, &player_pos, FADEOUT_PHASE_BACK );
+    return FADEOUT_CreateEvent( p_gamesys, p_tmp->p_fog_shadow, p_tmp->p_floor_light, p_tmp->p_audience, FADEOUT_PHASE_BACK );
   case GYM_ELEC_EVENT_SEQ_BOSS_BTL_END:
     OS_TPrintf( "ボス終了時はフェードしません\n" );
     return NULL;
@@ -3170,7 +3166,6 @@ typedef struct
   AUDIENCE        *p_audience;
   GAMESYS_WORK    *p_gamesys;
   FADEOUT_PHASE   phase;
-  VecFx32         player_pos;
 }FADEOUT_EVENT_WORK;
 
 //-------------------------------------
@@ -3187,13 +3182,12 @@ static GMEVENT_RESULT Fadeout_Event( GMEVENT* p_event, int* p_seq, void* p_wk_ad
  *	@param	*p_fog    フォグ影
  *	@param  *p_floor  通路ライト
  *	@param  *p_audience 観客
- *  @param  cp_player_pos プレイヤー位置
  *	@param  phase     フェイズ
  *
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, AUDIENCE *p_audience, const VecFx32 *cp_player_pos, FADEOUT_PHASE phase )
+static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog_shadow, FLOOR_LIGHT *p_floor_light, AUDIENCE *p_audience, FADEOUT_PHASE phase )
 {
   GMEVENT * p_event = GMEVENT_Create( p_gamesys, NULL, Fadeout_Event, sizeof(FADEOUT_EVENT_WORK) );
   FADEOUT_EVENT_WORK *p_wk = GMEVENT_GetEventWork(p_event);
@@ -3206,7 +3200,6 @@ static GMEVENT * FADEOUT_CreateEvent( GAMESYS_WORK *p_gamesys, FOG_SHADOW *p_fog
   p_wk->p_gamesys     = p_gamesys;
   p_wk->p_floor_light = p_floor_light;
   p_wk->p_audience    = p_audience;
-  p_wk->player_pos    = *cp_player_pos;
 
   return p_event;
 }
