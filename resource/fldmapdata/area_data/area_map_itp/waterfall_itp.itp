@@ -3,9 +3,9 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-02-11T17:50:39" source="waterfall_itp.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-12-24T00:13:19" source="waterfall_itp.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>

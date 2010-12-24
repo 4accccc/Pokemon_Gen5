@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-25T22:08:23" source="hana01_anim.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-12-12T21:07:19" source="hana01_anim.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-10-25T22:08:23" source="hana01_anim.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-12-12T21:07:19" source="hana01_anim.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="4"
@@ -35,17 +35,17 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="hana01.1_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/hana01.1.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_spring/hana01.1.tga"
 	>
 		<bitmap size="64">
-			0000 7770 0000 0000 7700 6567 0007 0000
-			5670 5555 0007 0000 5570 5333 1276 0000
-			5670 5434 1275 0000 5721 5555 0276 0000
-			6721 7765 0127 0000 7210 2777 7022 0077
-			1000 2222 6777 0765 0000 7000 5556 1755
-			0000 7000 3355 7653 0000 7221 3456 7554
-			0000 2221 5557 7655 0000 2210 6567 0777
-			0000 2100 7772 0012 0000 0000 1221 0000
+			0000 3330 0000 0000 3300 4543 0003 0000
+			5430 5555 0003 0000 5530 5666 1234 0000
+			5430 5767 1235 0000 5321 5555 0234 0000
+			4321 3345 0123 0000 3210 2333 3022 0033
+			1000 2222 4333 0345 0000 3000 5554 1355
+			0000 3000 6655 3456 0000 3222 6754 3557
+			0000 2221 5553 3455 0000 2210 4543 0333
+			0000 2100 3332 0012 0000 0000 1221 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="hana01.2"
@@ -53,17 +53,17 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="hana01.2_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/hana01.2.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_spring/hana01.2.tga"
 	>
 		<bitmap size="64">
-			0000 0777 0000 0000 7770 7656 0000 0000
-			5567 7555 0000 0000 3557 6533 1227 0000
-			4567 5543 1227 0000 5571 6555 0227 0000
-			5671 7776 0122 0000 7710 2277 7722 0007
-			1000 7222 5677 0076 0000 6700 5555 1275
-			0000 5700 3335 2765 0000 6721 4345 2755
-			0000 7221 5555 1765 0000 7210 7656 0177
-			0000 2100 2777 0012 0000 0000 1221 0000
+			0000 0333 0000 0000 3330 3454 0000 0000
+			5543 3555 0000 0000 6553 4566 1223 0000
+			7543 5576 1223 0000 5531 4555 0223 0000
+			5431 3334 0122 0000 3310 2233 3322 0003
+			1000 3222 5433 0034 0000 4300 5555 1235
+			0000 5300 6665 2345 0000 4321 7675 2355
+			0000 3221 5555 1345 0000 3210 3454 0133
+			0000 2100 2333 0012 0000 0000 1221 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="hana01.3"
@@ -71,17 +71,17 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="hana01.3_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/hana01.3.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_spring/hana01.3.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 0000 0000 0777 0000 0000
-			7770 7656 0000 0000 5567 7555 1227 0000
-			3557 6533 1227 0000 4567 5543 0227 0000
-			5571 6555 0122 0000 5670 7776 7772 0000
-			7700 7777 6567 0007 0000 5670 5555 1227
-			0000 5570 5333 2276 0000 5671 5434 2275
-			0000 5721 5555 1276 0000 6710 7765 0127
-			0000 7100 2277 0012 0000 0000 1221 0000
+			0000 0000 0000 0000 0000 0333 0000 0000
+			3330 3454 0000 0000 5543 3555 1223 0000
+			6553 4566 1223 0000 7543 5576 0223 0000
+			5531 4555 0122 0000 5430 3334 3332 0000
+			3300 3333 4543 0003 0000 5430 5555 1223
+			0000 5530 5666 2234 0000 5431 5767 2235
+			0000 5321 5555 1234 0000 4310 3345 0123
+			0000 3100 2233 0012 0000 0000 1221 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="hana01.4"
@@ -89,33 +89,33 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="hana01.4_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/hana01.4.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_spring/hana01.4.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 0000 0000 7700 0007 0000
-			7000 5677 0076 0000 6700 5555 1275 0000
-			5700 3335 1765 0000 6721 4345 0755 0000
-			7221 5555 0765 0000 7210 7656 0077 0000
-			1000 7777 7722 0007 0000 0000 5677 1276
-			0000 6700 5555 2275 0000 5721 3335 2765
-			0000 6721 4345 1755 0000 7210 5555 0765
-			0000 7100 7656 0077 0000 0000 1777 0000
+			0000 0000 0000 0000 0000 3300 0003 0000
+			3000 5433 0034 0000 4300 5555 1235 0000
+			5300 6665 1345 0000 4321 7675 0355 0000
+			3221 5555 0345 0000 3210 3454 0033 0000
+			1000 3333 3322 0003 0000 0000 5433 1234
+			0000 4300 5555 2235 0000 5321 6665 2345
+			0000 4321 7675 1355 0000 3210 5555 0345
+			0000 3100 3454 0033 0000 0000 1333 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="4">
 	<tex_palette index="0" name="hana01.1_pl" color_size="8">
-		7c1f 434f 3f0e 433f 577f 7fff 77bd 6b5a
+		7fff 434f 3f0e 47be 5bde 67df 433f 577f
 	</tex_palette>
 	<tex_palette index="1" name="hana01.2_pl" color_size="8">
-		7c1f 434f 3f0e 433f 577f 7fff 77bd 6b5a
+		7fff 434f 3f0e 47be 5bde 67df 433f 577f
 	</tex_palette>
 	<tex_palette index="2" name="hana01.3_pl" color_size="8">
-		7c1f 434f 3f0e 433f 577f 7fff 77bd 6b5a
+		7fff 434f 3f0e 47be 5bde 67df 433f 577f
 	</tex_palette>
 	<tex_palette index="3" name="hana01.4_pl" color_size="8">
-		7c1f 434f 3f0e 433f 577f 7fff 77bd 6b5a
+		7fff 434f 3f0e 47be 5bde 67df 433f 577f
 	</tex_palette>
 </tex_palette_array>
 
