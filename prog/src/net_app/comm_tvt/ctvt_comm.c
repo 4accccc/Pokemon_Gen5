@@ -1758,6 +1758,7 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   //e‹@‚Ìˆ—
   if( selfId == 0 )
   {
+    // §ŒÀŠÔ‚ğ‘—M
   }
 }
 

@@ -83,7 +83,7 @@ void CTVT_BALLOON_Destroy( BALLOON_WORK*  p_wk )
   // タスク削除
   if( p_wk->tcb != NULL )
   {
-    ICHI_Printf("風船破棄 %d\n", p_wk->tcb);
+    //ICHI_Printf("風船破棄 %d\n", p_wk->tcb);
     GFL_TCB_DeleteTask( p_wk->tcb );
   }
 
@@ -123,6 +123,7 @@ static const u8 yura_action_tbl[][2] =
 //-----------------------------------------------------------------------------
 void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
 {
+#if 0
   // ゆらゆら処理
   fx32  vx;   // X軸移動距離
   vx = yura_tbl[ yura_action_tbl[p_wk->yura_tbl_index][p_wk->yura_tbl_cnt] ][ p_wk->yura_move_index ];
@@ -149,6 +150,7 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
       //p_wk->status.trans.x += vx ;
     }
   }
+#endif
 
   // HIT時は移動しない
   if( p_wk->type == BALLOON_HIT )
@@ -215,7 +217,7 @@ void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk )
   u16   head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
 
   // 3つあるからどれ使うかtypeで指定
-  obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx*p_wk->unit_idx + p_wk->type);
+  obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx + p_wk->type);
   mdl = NNS_G3dRenderObjGetResMdl
     (GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(obj)) );
 

@@ -17,7 +17,7 @@
 //======================================================================
 #pragma mark [> define
 
-#define CTVT_GAME_MEMBER_NUM    (2)     // ミニゲーム参加人数
+#define CTVT_GAME_MEMBER_NUM    (4)     // ミニゲーム参加人数
 
 // ミニゲーム用 タイミングコマンド
 #define CTVT_COMM_GAME_CAMERA_INIT_SYNC (20)    // カメラ開始同期

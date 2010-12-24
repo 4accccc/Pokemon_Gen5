@@ -31,6 +31,7 @@
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
 #include "ctvt_snd_def.h"
+#include "ctvt_game_balloon_tbl.cdat"
 
 //debug
 #include "debug/debug_str_conv.h"
@@ -176,6 +177,10 @@ struct _CTVT_GAME_WORK
   u8            balloon_rnd_v;                // 風船出現調整
   u8            balloon_z_cnt;                // 風船出現調整
   void          *direct_tex[CTVT_GAME_MEMBER_NUM];    // 128x128を64x64に変換した移動先
+  u8            balloon_tbl_idx;              // 風船出現にどのテーブルを使用するか
+  u8            balloon_tbl_cnt;              // テーブルの要素カウンタ
+  u16           bonus_tbl[CTVT_GAME_MEMBER_NUM][5]; // ボーナス風船の出現フレームのテーブル
+  u8            bonus_tbl_idx[CTVT_GAME_MEMBER_NUM];
   BOOL          isBalloonAppear;              // 風船を出現させてもよいか？
 
   CTVT_GAME_SEND_DATA   sendData;   // 通信データ
@@ -208,7 +213,7 @@ struct _CTVT_GAME_WORK
   GFL_CLWK    *clwkTime[2];             // 制限時間
   GFL_CLWK    *clwkText;                // 文字 TIMEやRANK
   GFL_CLWK    *clwkScoreText;           // SCORE 文字
-  GFL_CLWK    *clwkScore[3];            // SCORE 数字
+  GFL_CLWK    *clwkScore[4];            // SCORE 数字
 
   // 3D
   GFL_G3D_UTIL    *g3dUtil;
@@ -227,8 +232,8 @@ struct _CTVT_GAME_WORK
   fx32  debug_size; // 風船:サイズ変更
   fx32  debug_v;    // 風船:速さ変更
   u16   debug_wait; // 風船:個数変更(出現タイミング)
+  u16   debug_b_cnt[4]; // どれだけ風船がでたか数える
 #endif
-
 };
 
 //======================================================================
@@ -278,8 +283,12 @@ static void disp_message( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 *
 
 
 // balloon
+// 風船設定
 static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  unit_idx );
+// 全ての風船が終了しているか？
 static BOOL balloon_end_check( CTVT_GAME_WORK *p_wk );
+// 誰の風船を出すか計算して求める
+static u8   balloon_find_idx( CTVT_GAME_WORK *p_wk );
 
 // タスクに設定するタスク関数(風船用)
 static void TaskFunc( GFL_TCB* p_tcb, void* p_work );
@@ -288,6 +297,8 @@ static void TaskFunc( GFL_TCB* p_tcb, void* p_work );
 static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_idx );
 // タスクに登録されている風船同士の距離判定
 static void balloon_collision_check( CTVT_GAME_WORK *p_wk );
+// 2点の距離の壁判定処理(移動も自動)
+static void collision_vec( fx32* x1, fx32* y1, fx32* x2, fx32* y2, fx32 dir, u8 avoid );
 // レイと球の交差判定
 static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32 *cp_rayWay, const GFL_COLLISION3D_CIRCLE *cp_circle );
 
@@ -403,9 +414,9 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   COMM_TVT_EraseTalkIcon( work );
 
   gameWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
-                                        1 , 1 , 30 , 4 ,
-                                        CTVT_PAL_BG_SUB_FONT ,
-                                        GFL_BMP_CHRAREA_GET_B );
+      1 , 1 , 30 , 4 ,
+      CTVT_PAL_BG_SUB_FONT ,
+      GFL_BMP_CHRAREA_GET_B );
 
 
   ICHI_Printf("----CTVT_GAME_InitMode END----\n");
@@ -706,8 +717,8 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
 
       if( p_wk->balloon_wk[i].tcb != NULL )
       {
-        // 誰の風船かはとりあえずランダムで出す
-        u8  idx = GFL_STD_MtRand(CTVT_GAME_MEMBER_NUM);
+        // 誰の風船か
+        u8  idx = balloon_find_idx( p_wk );
 
         // 風船出現位置調整
         {
@@ -737,12 +748,47 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
 
           // Zをずらす為の調整用
           p_wk->balloon_z_cnt++;
-          p_wk->balloon_z_cnt %= BALLOON_MAX;
+          p_wk->balloon_z_cnt %= 3;
         }
 
         // 風船出現
         balloon_set( p_wk, &p_wk->balloon_wk[i], p_wk->unit_idx[idx] );
         p_wk->balloon_wk[i].parent_g3dUtil = p_wk->g3dUtil;
+        // ボーナス風船判定
+        {
+          if( p_wk->bonus_tbl[idx][ p_wk->bonus_tbl_idx[idx] ] > p_wk->timeLimit )
+          {
+            p_wk->balloon_wk[i].type = BALLOON_BONUS;
+            p_wk->bonus_tbl[idx][ p_wk->bonus_tbl_idx[idx] ] = 0;
+            p_wk->bonus_tbl_idx[idx]++;
+            p_wk->bonus_tbl_idx[idx] %= 5;
+            ICHI_Printf("ボーナス風船出現 %d \n", idx);
+          }
+          else
+          {
+            p_wk->balloon_wk[i].type = BALLOON_NORMAL;
+          }
+        }
+
+        // 出現した風船が他の風船と重なっているかチェック
+        {
+          u8  j;
+          for( j=0; j<BALLOON_MAX; j++ )
+          {
+            // 違う風船 かつ サイズが同じ かつ 表示している
+            // ならチェックする
+            if( ( j != i ) && ( p_wk->balloon_wk[i].size == p_wk->balloon_wk[j].size ) && ( p_wk->balloon_wk[j].visible == TRUE ) )
+            {
+              // 壁判定
+              collision_vec( 
+                  &p_wk->balloon_wk[i].status.trans.x, &p_wk->balloon_wk[i].status.trans.y,
+                  &p_wk->balloon_wk[j].status.trans.x, &p_wk->balloon_wk[j].status.trans.y,
+                  p_wk->balloon_wk[i].status.scale.x * 140, 1 );
+
+            }
+          }
+        }
+
         return TRUE;
       }
     }
@@ -827,6 +873,13 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
       p_wk->score[ netId ] += 2;
       ICHI_Printf("NetID %d score +2\n", netId);
     }
+    // 自分だけ鳴らす
+    if( selfId == netId )
+    {
+      // SE再生
+      PMSND_PlaySystemSE( SEQ_SE_DECIDE4 );
+      //PMSND_PlaySystemSE( SEQ_SE_LCG_01 );
+    }
   }
   // ポイント減算
   else
@@ -842,6 +895,14 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
       // 通常風船
       p_wk->score[ netId ] -= 2;
       ICHI_Printf("NetID %d score -2\n", netId);
+    }
+
+    // 自分だけ鳴らす
+    if( selfId == netId )
+    {
+      // SE再生
+      PMSND_PlaySystemSE( SEQ_SE_BEEP );
+      //PMSND_PlaySystemSE( SEQ_SE_LCG_01 );
     }
   }
 
@@ -862,10 +923,12 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
 
     // 得点表示
     score = GFL_STD_Abs(score); // 絶対値
+    // 百の位
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[1], CGOAM_NUM_0 + (score/100));
     // 十の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[1], CGOAM_NUM_0 + (score/10));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[2], CGOAM_NUM_0 + (score/10));
     // 一の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[2], CGOAM_NUM_0 + (score%10));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[3], CGOAM_NUM_0 + (score%10));
 
   }
 
@@ -874,8 +937,6 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
   // 風船をHit時に変える -> 消去まで自動で行う
   p_wk->balloon_wk[ idx ].type = BALLOON_HIT;
 
-  // SE再生
-  PMSND_PlaySystemSE( CTVT_SND_TOUCH );
 }
 
 //----------------------------------------------------------------------------
@@ -955,9 +1016,10 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // 低優先度送信システムにカメラ受信バッファを渡す
       {
         const u8 selfIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+        const u8 connectNum = GFL_NET_GetConnectNum();
         u8 netID;       // netID
         u8 bufIdx =0;    // bufIdx
-        for( netID=0;netID<CTVT_GAME_MEMBER_NUM;netID++ )
+        for( netID=0;netID<connectNum;netID++ )
         {
           ICHI_Printf("create post buf selfID %d netID %d \n", selfIdx, netID);
 
@@ -1039,9 +1101,10 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       {
         u8    i;
         BOOL  ret = TRUE;   // 次シーケンスへいってよいか判定用
+        const u8 connectNum = GFL_NET_GetConnectNum();
 
         // ゲーム人数分回す
-        for( i=0;i<CTVT_GAME_MEMBER_NUM;i++ )
+        for( i=0;i<connectNum;i++ )
         {
           // 送信したNetIDのみチェック
           if( gameWork->CaptureBufUseBit & (1<<i) )
@@ -1097,6 +1160,7 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     }
     break;
   case SEQ_NEXT:
+#if (defined(SDK_TWL))
     {
       BOOL prev = OS_GetPrintBlockingMode();
       OS_SetPrintBlockingMode( TRUE );
@@ -1107,6 +1171,7 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // 他のコンポーネントと共存できない
       DSP_UnloadG711();
     }
+#endif
     gameWork->seq = 0;    // 次モードの為、初期化
     return  TRUE;
   }
@@ -1208,6 +1273,7 @@ static void CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CTVT_COMM_GAME_BEFORE_SYNC , WB_NET_COMM_TVT ) == TRUE )
       {
         gameWork->seq = SEQ_MAIN;
+        PMSND_PlaySystemSE( SEQ_SE_LCG_03 );    // スタートのホイッスル音
         ICHI_Printf("ゲーム開始同期完了\n");
       }
     }
@@ -1354,6 +1420,8 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 {
   u8  i;
   const HEAPID heapID = gameWork->heapId;
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  const u8 connectNum = GFL_NET_GetConnectNum();
 
   // 乱数初期化
   GFL_STD_MtRandInit( gameWork->sendData.rnd_seed );
@@ -1365,10 +1433,11 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   {
     gameWork->direct_tex[i] = GFL_NET_Align32Alloc( gameWork->heapId, 64*64*2);
   }
+
+#if (defined(SDK_TWL))
   // DSPグラフィックを使用して、画像サイズを変更する
   // ※DSPを使うとプログラムの常駐サイズが増える
   {
-    const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
     u8  cap_cnt = 0;
 
     FSFile  file[1];
@@ -1379,7 +1448,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
       GF_PANIC("can't allocate WRAM Slot");
     }
 
-    for(i=0; i<CTVT_GAME_MEMBER_NUM; i++ )
+    for(i=0; i<connectNum; i++ )
     {
       void  *src;   // 変換元
       void  *dst;   // 変換先
@@ -1413,7 +1482,9 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     // DSP アンロード
     DSP_UnloadGraphics( );
   }
+#endif
 
+#if (defined(SDK_TWL))
   // 3Dにカメラキャプチャを貼り付ける
   {
     BOOL  rc;
@@ -1422,8 +1493,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     u32   size;   // 転送サイズ
     u8    type;   // 貼り付ける写真 3枚ある
 
-#if 1
-    for(i=0; i<CTVT_GAME_MEMBER_NUM; i++ )
+    for(i=0; i<connectNum; i++ )
     {
       // ほんとはループ3回だが、今はボーナス風船をわかりやすくするため2回
       for( type=0; type<2; type++ )
@@ -1445,8 +1515,8 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
         }
       }
     }
-#endif
   }
+#endif
 
   // ゲーム用のリソース
   // BGロード
@@ -1575,6 +1645,13 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
         gameWork->cellResIdx[CGOR_COMMON_S_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[2], FALSE );
+    cellInitData.pos_x = 224;
+    gameWork->clwkScore[3] = GFL_CLACT_WK_Create( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
+        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
+        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        &cellInitData ,CLSYS_DRAW_SUB, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[3], FALSE );
   }
 
   // 風船用タスク作成
@@ -1600,19 +1677,41 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   gameWork->isBalloonAppear = TRUE;   // 風船を出現させてもよい
   gameWork->balloon_flg   = 0;
   gameWork->balloon_wait  = 0;
+  gameWork->balloon_tbl_idx = 0;
+  gameWork->balloon_tbl_cnt = 0;
   gameWork->timeLimit     = CTVT_GAME_TIME_LIMIT;
   gameWork->timeCnt       = 0;
   gameWork->befVCount     = 0;
 
+  // ボーナス風船をいつ出すかきめる
+  for( i=0; i<CTVT_GAME_MEMBER_NUM; i++ )
+  {
+    ICHI_Printf("player %d ");
+
+    gameWork->bonus_tbl_idx[i] = 0;
+    gameWork->bonus_tbl[i][0] = ( GFL_STD_MtRand(10) + 40 ); // 50～40
+    gameWork->bonus_tbl[i][1] = ( GFL_STD_MtRand(10) + 30 ); // 40～30
+    gameWork->bonus_tbl[i][2] = ( GFL_STD_MtRand(5) + 15 );  // 20～10
+    gameWork->bonus_tbl[i][3] = ( GFL_STD_MtRand(5) + 10 );  // 10～5
+    gameWork->bonus_tbl[i][4] = ( GFL_STD_MtRand(5) + 5 );   // 5～0
+
+    ICHI_Printf("%d ", gameWork->bonus_tbl[i][0]);
+    ICHI_Printf("%d ", gameWork->bonus_tbl[i][1]);
+    ICHI_Printf("%d ", gameWork->bonus_tbl[i][2]);
+    ICHI_Printf("%d ", gameWork->bonus_tbl[i][3]);
+    ICHI_Printf("%d \n", gameWork->bonus_tbl[i][4]);
+  }
+
 #ifdef PM_DEBUG
   gameWork->debug_r    = 0x45;    // 半径計算用 サイズに掛ける割合 0x45は目安
   gameWork->debug_size = 0x200;   // サイズに掛ける値
-  gameWork->debug_v    = 0x1800;  // ベクトルに掛ける値 
-  gameWork->debug_wait = 25;      // 風船出現間隔(フレーム)
+  gameWork->debug_v    = 0x2000;  // ベクトルに掛ける値 
+  gameWork->debug_wait = 20;      // 風船出現間隔(フレーム)
+  GFL_STD_MemFill( gameWork->debug_b_cnt, 0, sizeof(u16)*4 );
 #endif
 
   // BGM
-  PMSND_PlayBGM( SEQ_BGM_OPENING_TITLE_B );
+  PMSND_PlayBGM( SEQ_BGM_LCG_01 );
 
   ICHI_Printf("ゲーム初期化完了\n");
 }
@@ -1642,6 +1741,7 @@ static BOOL game_update_seq_title( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[0], TRUE );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[1], TRUE );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[2], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[3], TRUE );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScoreText, TRUE );
     return TRUE;
   }
@@ -1971,6 +2071,7 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
       OS_Printf("debug_wait %d \n", gameWork->debug_wait);
     }
   }
+
   // 制限時間早める処理
   // デバッグ 制限時間早める
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
@@ -1998,7 +2099,7 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 #ifdef PM_DEBUG
       gameWork->balloon_wait = gameWork->debug_wait;
 #else
-      gameWork->balloon_wait = 60;
+      gameWork->balloon_wait = 20;
 #endif
     }
     else
@@ -2030,16 +2131,17 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
       ICHI_Printf("---Time %d----------------\n", gameWork->timeLimit);
     }
 
-    // ↓は残り20秒で風船が早くなる
-    if( gameWork->timeLimit <= 20 )
+    if( gameWork->timeLimit == 0 )
     {
-      gameWork->debug_v = 0x3000;
+      // 終了のホイッスル音
+      PMSND_PlaySystemSE( SEQ_SE_LCG_04 );    // スタートのホイッスル音
     }
   }
   else if( gameWork->timeLimit == 0 )
   {
+    // 終了だけど風船の数を一定にするまで出現させる
     // 終了時に親ならスコア送信
-    if( GFL_NET_SystemGetCurrentID() == 0 )
+    if( GFL_NET_SystemGetCurrentID() == 0 && gameWork->balloon_tbl_cnt == 0 )
     {
       CTVT_GAME_SEND_SCORE score;
       u8  i;
@@ -2057,6 +2159,13 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     gameWork->isBalloonAppear = FALSE;
 
     return TRUE; // 終了
+  }
+
+  if( gameWork->timeLimit == 20 )
+  {
+    // 元々のテンポをratio/256倍する
+    PMSND_SetStatusBGM( 285, 85, PMSND_NOEFFECT );
+    //PMSND_SetStatusBGM( 285, PMSND_NOEFFECT, PMSND_NOEFFECT );
   }
 
   // 描画
@@ -2077,10 +2186,11 @@ static void game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
 {
   u8  i;
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  const u8 connectNum = GFL_NET_GetConnectNum();
   u8  rank = 1; // 順位
 
   ICHI_Printf("--SCORE------------------\n");
-  for( i=0; i<CTVT_GAME_MEMBER_NUM; i++ )
+  for( i=0; i<connectNum; i++ )
   {
     ICHI_Printf("NetID %d SCORE %d \n", i, gameWork->score[i]);
 
@@ -2090,6 +2200,13 @@ static void game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
       rank++;
     }
   }
+
+#ifdef PM_DEBUG
+  ICHI_Printf("風船個数 プレイヤー0 %d \n", gameWork->debug_b_cnt[ 0 ]);
+  ICHI_Printf("風船個数 プレイヤー1 %d \n", gameWork->debug_b_cnt[ 1 ]);
+  ICHI_Printf("風船個数 プレイヤー2 %d \n", gameWork->debug_b_cnt[ 2 ]);
+  ICHI_Printf("風船個数 プレイヤー3 %d \n", gameWork->debug_b_cnt[ 3 ]);
+#endif
 
   // ランク表示
   GFL_CLACT_WK_SetAnmSeq( gameWork->clwkText, CGOAM_RANK );
@@ -2137,6 +2254,7 @@ static void game_update_seq_exit( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   GFL_CLACT_WK_Remove( gameWork->clwkScore[0] );
   GFL_CLACT_WK_Remove( gameWork->clwkScore[1] );
   GFL_CLACT_WK_Remove( gameWork->clwkScore[2] );
+  GFL_CLACT_WK_Remove( gameWork->clwkScore[3] );
 
   // テクスチャ用メモリ破棄
   for( i=0;i<CTVT_GAME_MEMBER_NUM;i++ )
@@ -2701,6 +2819,22 @@ static const GFL_G3D_UTIL_RES res_3d_table2[] =
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon2_nsbmd, GFL_G3D_UTIL_RESARC },  // ボーナス
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon2_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
 };
+// プレイヤー3
+static const GFL_G3D_UTIL_RES res_3d_table3[] =
+{
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon3_nsbmd, GFL_G3D_UTIL_RESARC },  // 通常
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon3_nsbmd, GFL_G3D_UTIL_RESARC },  // 驚き
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon3_nsbmd, GFL_G3D_UTIL_RESARC },  // ボーナス
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon3_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
+};
+// プレイヤー4
+static const GFL_G3D_UTIL_RES res_3d_table4[] =
+{
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon4_nsbmd, GFL_G3D_UTIL_RESARC },  // 通常
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon4_nsbmd, GFL_G3D_UTIL_RESARC },  // 驚き
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon4_nsbmd, GFL_G3D_UTIL_RESARC },  // ボーナス
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon4_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
+};
 
 // ANIME
 static const GFL_G3D_UTIL_ANM anm_3d_table[] =
@@ -2748,6 +2882,8 @@ static const GFL_G3D_UTIL_SETUP G3DUtilSetup[] =
 {
   { res_3d_table1, NELEMS(res_3d_table1), obj_3d_table, NELEMS(obj_3d_table) },
   { res_3d_table2, NELEMS(res_3d_table2), obj_3d_table, NELEMS(obj_3d_table) },
+  { res_3d_table3, NELEMS(res_3d_table3), obj_3d_table, NELEMS(obj_3d_table) },
+  { res_3d_table4, NELEMS(res_3d_table4), obj_3d_table, NELEMS(obj_3d_table) },
 };
 
 //----------------------------------------------------------------------------
@@ -2920,7 +3056,8 @@ static void disp_message( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 *
 static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  unit_idx )
 {
   // サイズ決定 
-  p_wk->size  = GFL_STD_MtRand(3) + 1;  // 1～3;
+  //p_wk->size  = GFL_STD_MtRand(3) + 1;  // 1～3;
+  p_wk->size  = p_game_wk->balloon_z_cnt + 1;
 
   p_wk->unit_idx    = unit_idx;   // モデル指定
   p_wk->visible     = TRUE;       // フラグON
@@ -2932,19 +3069,9 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
   p_wk->yura_tbl_index  = 0;
   p_wk->yura_tbl_cnt    = 0;
 
-  {
-    // ボーナス風船抽選 1/4の確立
-    if(  !(GFL_STD_MtRand(4)) )
-    {
-      p_wk->type = BALLOON_BONUS;
-    }
-    else
-    {
-      p_wk->type = BALLOON_NORMAL;
-    }
-  }
 
-  ICHI_Printf("風船出現 %d unit %d ", p_wk->tcb, unit_idx);
+
+  //ICHI_Printf("風船出現 %d unit %d ", p_wk->tcb, unit_idx);
 
   {
     // 風船の初期位置
@@ -2962,8 +3089,8 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
       x = FX32_CONST(-128) + FX32_ONE * tmp;
     }
 
-    // Y軸乱数( -10 ～ 0 )
-    y = FX32_ONE * ( GFL_STD_MtRand(10) - 200 );
+    // Y軸乱数
+    y = FX32_ONE * ( -240 );
 
     // Z軸乱数( -100,-200,-300 )
     //z = 0;
@@ -2971,7 +3098,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
     z = FX32_CONST(-80) * (4 - p_wk->size);
 
     VEC_Set( &p_wk->status.trans, x, y, z );
-    ICHI_Printf("pos%d:%d:%d ", FX_Whole(x), FX_Whole(y), FX_Whole(z));
+    //ICHI_Printf("pos%d:%d:%d ", FX_Whole(x), FX_Whole(y), FX_Whole(z));
   }
 
   {
@@ -2984,7 +3111,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 
     size += 0x700;  // デフォルト値を足す
     VEC_Set( &p_wk->status.scale, size, size, size );
-    ICHI_Printf("size%x ", size);
+    //ICHI_Printf("size%x ", size);
   }
   // 風船の初期ベクトル
   {
@@ -2992,8 +3119,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
     MtxFx33 rot;
     u16     ang;
     u16     rate = 60 / BALLOON_RND_V_MAX;   // 60はてきとう
-    //vx = 0x100 * ( GFL_STD_MtRand(20) - 10 );
-    //vy = 0x200 * ( GFL_STD_MtRand(8) + 10 );
+    fx32    vy =  ( GFL_STD_MtRand(2) + 1) * FX32_ONE;
 
     VEC_Set( &vec, 0, FX32_ONE, 0 );    // 上へのベクトル
 
@@ -3004,10 +3130,20 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 
     MTX_MultVec33( &vec, &rot, &p_wk->vec );    // 角度ベクトル
     VEC_Normalize( &p_wk->vec, &p_wk->vec );
+
+    // 残り20秒ではやくなる
+    if( p_game_wk->timeLimit <= 20 )
+    {
 #ifdef PM_DEBUG
-    GFL_CALC3D_VEC_MulScalar( &p_wk->vec, p_game_wk->debug_v, &p_wk->vec );
+      vy += p_game_wk->debug_v;
+#else
+      vy += FX32_ONE;
 #endif
-    OS_Printf("ang %d vec %f:%f \n",ang, (float)((float)p_wk->vec.x/FX32_ONE), (float)((float)p_wk->vec.y/FX32_ONE));
+    }
+
+    // 速さをきめる
+    GFL_CALC3D_VEC_MulScalar( &p_wk->vec, vy, &p_wk->vec );
+    //OS_Printf("ang %d vec %f:%f \n",ang, (float)((float)p_wk->vec.x/FX32_ONE), (float)((float)p_wk->vec.y/FX32_ONE));
   }
 }
 
@@ -3034,6 +3170,43 @@ static BOOL balloon_end_check( CTVT_GAME_WORK *p_wk )
   }
 
   return TRUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  誰の風船を出すか計算して返す
+ *
+ *	@param	CTVT_GAME_WORK *p_wk 
+ *
+ *	@return u8  出すプレイヤー番号 0からの連番
+ */
+//-----------------------------------------------------------------------------
+static u8 balloon_find_idx( CTVT_GAME_WORK *p_wk )
+{
+  u8  idx = p_wk->balloon_tbl_idx;
+  u8  cnt = p_wk->balloon_tbl_cnt;
+  u8  ret_idx;
+
+  GF_ASSERT( idx<BALLOON_TBL_MAX );
+  GF_ASSERT( cnt<CTVT_GAME_MEMBER_NUM );
+  ret_idx = balloon_tbl[ idx ][ cnt ];
+
+  // 次へ
+  p_wk->balloon_tbl_cnt++;
+  if( p_wk->balloon_tbl_cnt >= CTVT_GAME_MEMBER_NUM )
+  {
+    p_wk->balloon_tbl_cnt = 0;
+
+    // 次のテーブルを求める
+    p_wk->balloon_tbl_idx = GFL_STD_MtRand( BALLOON_TBL_MAX );
+  }
+
+#ifdef PM_DEBUG
+  p_wk->debug_b_cnt[ ret_idx ]++;
+#endif
+
+  return ret_idx;
 }
 
 // タスクに設定するタスク関数(風船用)
@@ -3075,35 +3248,23 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_
   BOOL      ret = FALSE;        // 返り値用
   u8        save_size = 0;      // 当たったやつのサイズ保存しておく
 
-  GFL_G3D_OBJ*    obj;
-  GFL_G3D_RND*    g3Drnd;
-  NNSG3dRenderObj*  renderObj;
-  NNSG3dResMdl*   mdl;
-  NNSG3dResMdlInfo*	modelInfo;		// モデルデータからのボックステスト用パラメータ取得用
-
   // スクリーン座標からレイ取得
   GFL_CALC3D_VEC_Get2DPosTo3DRay( &rayPos, &rayWay, tpx, tpy );
-  OS_Printf("レイ座標%f:%f:%f レイ方向%f:%f:%f \n",(float)((float)rayPos.x/FX32_ONE),(float)((float)rayPos.y/FX32_ONE),(float)((float)rayPos.z/FX32_ONE),(float)((float)rayWay.x/FX32_ONE), (float)((float)rayWay.y/FX32_ONE), (float)((float)rayWay.z/FX32_ONE));
+  //OS_Printf("レイ座標%f:%f:%f レイ方向%f:%f:%f \n",(float)((float)rayPos.x/FX32_ONE),(float)((float)rayPos.y/FX32_ONE),(float)((float)rayPos.z/FX32_ONE),(float)((float)rayWay.x/FX32_ONE), (float)((float)rayWay.y/FX32_ONE), (float)((float)rayWay.z/FX32_ONE));
 
 
   for( i=0; i<BALLOON_MAX; i++ )
   {
     BOOL  b_hit = FALSE;
 
-    if( p_wk->balloon_wk[i].visible == FALSE )
+    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type == BALLOON_HIT )
     {
       // 表示されていないならスキップ
       continue;
     }
 
-    OS_Printf("モデル座標 %.2f:%.2f:%.2f\n", (float)((float)p_wk->balloon_wk[i].status.trans.x/FX32_ONE), (float)((float)p_wk->balloon_wk[i].status.trans.y/FX32_ONE),(float)((float)p_wk->balloon_wk[i].status.trans.z/FX32_ONE) );
+    //OS_Printf("モデル座標 %.2f:%.2f:%.2f\n", (float)((float)p_wk->balloon_wk[i].status.trans.x/FX32_ONE), (float)((float)p_wk->balloon_wk[i].status.trans.y/FX32_ONE),(float)((float)p_wk->balloon_wk[i].status.trans.z/FX32_ONE) );
 
-
-    obj = GFL_G3D_UTIL_GetObjHandle( p_wk->g3dUtil, p_wk->balloon_wk[i].unit_idx );
-    g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( obj );
-    renderObj = GFL_G3D_RENDER_GetRenderObj( g3Drnd );
-    mdl = NNS_G3dRenderObjGetResMdl(renderObj);
-    modelInfo = NNS_G3dGetMdlInfo( mdl );
 
     // 球設定
     // 半径はサイズによって変わるので、割合を掛けている FX_MULは使用しない
@@ -3113,7 +3274,7 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_
 #endif
     VEC_Set( &center, p_wk->balloon_wk[i].status.trans.x, p_wk->balloon_wk[i].status.trans.y, p_wk->balloon_wk[i].status.trans.z );
 
-    OS_Printf("w %.2f PosScale %.2f 半径 %.2f size %x \n", (float)((float)modelInfo->boxW/FX32_ONE),(float)((float)modelInfo->posScale/FX32_ONE),(float)((float)r/FX32_ONE), p_wk->balloon_wk[i].status.scale.x );
+    //OS_Printf("w %.2f PosScale %.2f 半径 %.2f size %x \n", (float)((float)modelInfo->boxW/FX32_ONE),(float)((float)modelInfo->posScale/FX32_ONE),(float)((float)r/FX32_ONE), p_wk->balloon_wk[i].status.scale.x );
 
     GFL_COLLISION3D_CIRCLE_SetData( &circle, &center, r );
 
@@ -3176,40 +3337,94 @@ static void balloon_collision_check( CTVT_GAME_WORK *p_wk )
       if( p_wk->balloon_wk[i].size == p_wk->balloon_wk[j].size
           && p_wk->balloon_wk[j].visible == TRUE )
       {
-        VecFx32 v1;   // 風船1
-        VecFx32 v2;   // 風船2
-        fx32    dist; // 風船間の距離
-        fx32    r;
-        
-        // Z軸は同じなので2次元で設定
-        VEC_Set( &v1, p_wk->balloon_wk[i].status.trans.x, p_wk->balloon_wk[i].status.trans.y, 0 );
-        VEC_Set( &v2, p_wk->balloon_wk[j].status.trans.x, p_wk->balloon_wk[j].status.trans.y, 0 );
-        
-        dist = VEC_Distance( &v1, &v2 );
-        // 半径は大きくしておく 140は目安
-        r = p_wk->balloon_wk[i].status.scale.x * 140;
-
-        // 衝突している
-        if( dist < r )
-        {
-          // とりあえずX軸をよける
-          if( v1.x < v2.x )
-          {
-            // 風船1が左 風船2が右
-            p_wk->balloon_wk[i].status.trans.x -= (r-dist);
-            p_wk->balloon_wk[j].status.trans.x += (r-dist);
-          }
-          else
-          {
-            // 風船2が左 風船1が右
-            p_wk->balloon_wk[j].status.trans.x -= (r-dist);
-            p_wk->balloon_wk[i].status.trans.x += (r-dist);
-          }
-        }
+        // 壁判定
+        collision_vec( 
+            &p_wk->balloon_wk[i].status.trans.x, &p_wk->balloon_wk[i].status.trans.y,
+            &p_wk->balloon_wk[j].status.trans.x, &p_wk->balloon_wk[j].status.trans.y,
+            p_wk->balloon_wk[i].status.scale.x * 140, 0 );
       }
     }
   }
+}
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  2点間の距離判定を行い 衝突していると移動する
+ *	        壁判定の処理
+ *	        ※避けるのはX座標だけ
+ *
+ *	@param	fx32* x1  点1のX座標
+ *	@param	fx32* y1  点1のY座標
+ *	@param	fx32* x2  点2のX座標
+ *	@param	fx32* y2  点2のY座標
+ *	@param	fx32  dir 衝突の距離 
+ *	@param  u8    avoid 避け方 0:両方避ける 1:点1が避ける 2:点2が避ける
+ */
+//-----------------------------------------------------------------------------
+static void collision_vec( fx32* x1, fx32* y1, fx32* x2, fx32* y2, fx32 dir, u8 avoid )
+{
+  VecFx32 v1;   // ベクトル1
+  VecFx32 v2;   // ベクトル2
+  fx32    dist; // ベクトル間の距離
+
+  VEC_Set( &v1, *x1, *y1, 0 );
+  VEC_Set( &v2, *x2, *y2, 0 );
+
+  // 距離取得
+  dist = VEC_Distance( &v1, &v2 );
+
+  // 衝突している
+  if( dist < dir )
+  {
+    fx32  sub;
+    fx32  *right, *left;
+
+    sub = dir - dist;   // 避ける長さ
+    //ICHI_Printf("直径 %x ", dir);
+    //ICHI_Printf("避ける長さ %x \n", sub);
+
+    // 右にある点と左にある点判別
+    if( *x1 < *x2 )
+    {
+      left  = x1;
+      right = x2;
+    }
+    else
+    {
+      left  = x2;
+      right = x1;
+    }
+
+    // 避け方判別
+    switch( avoid ){
+    case 0:   // 両方避ける
+      *right  += FX_Div(sub, 0x4800);
+      *left   -= FX_Div(sub, 0x4800);
+      break;
+    case 1:   // 点1が避ける
+      if( right == x1 )
+      {
+        *x1 += sub;
+      }
+      else if( left == x1 )
+      {
+        *x1 -= sub;
+      }
+      *y1 -= sub;   // 関数の意味とはことなるが風船の見た目のために入れた
+      break;
+    case 2:   // 点2が避ける
+      if( right == x2 )
+      {
+        *x2 += sub;
+      }
+      else if( left == x2 )
+      {
+        *x2 -= sub;
+      }
+      break;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3251,18 +3466,18 @@ static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32
   VEC_Subtract( cp_rayPos, &cp_circle->center, &m );
   // 
   c = VEC_DotProduct( &m, &m ) - FX_MUL( cp_circle->r, cp_circle->r);
-  OS_Printf("c %.2f \n", (float)((float)c/FX32_ONE));
+  //OS_Printf("c %.2f \n", (float)((float)c/FX32_ONE));
 
   // 少なくとも1つの実数解が存在している場合、交差している
   if( c <= 0 ) return TRUE;
 
   b = VEC_DotProduct( &m, cp_rayWay );
-  OS_Printf("b %.2f \n", (float)((float)b/FX32_ONE));
+  //OS_Printf("b %.2f \n", (float)((float)b/FX32_ONE));
   // レイの原点が球の外側にあり、レイが球から離れた方向を指している場合には早期に終了
   if( b > 0 ) return FALSE;
 
   disc = FX_Mul( b, b ) - c;
-  OS_Printf("d %.2f \n", (float)((float)disc/FX32_ONE));
+  //OS_Printf("d %.2f \n", (float)((float)disc/FX32_ONE));
 
   // 負の判別式はレイが球を外れていることに一致
   if( disc < 0 ) return FALSE;
