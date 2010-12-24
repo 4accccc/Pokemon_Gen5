@@ -211,7 +211,7 @@ static const struct{
 		20 * 60,		//life
 	},
 	{	//51  フェスタミッション配布(GAMEBEACON_ACTION_FEST_MISSION)
-		5,		//priority
+		2,		//priority
 		5 * 60,		//life
 	},
 };
