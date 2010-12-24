@@ -7,11 +7,9 @@
 //======================================================================
 #pragma once
 
-#define WALL_NUM_MAX (3)
-
 //氷ジムセーブワーク
 typedef struct GYM_ICE_SV_WORK_tag
 {
-  BOOL WallMoved[WALL_NUM_MAX]; //基準位置から動いたか　FALSEで基準位置
+  u32 dummy;
 }GYM_ICE_SV_WORK;
 

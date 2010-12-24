@@ -2434,17 +2434,6 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
   
   setFrontPos(req, &front_pos);
   
-  //ギミックが割り当てられているかを調べて、
-  //ジムソースのオーバレイがなされていることを確認する
-  if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_INSECT) )
-  {
-    //虫ジム
-    int x,z;
-    x =front_pos.x / FIELD_CONST_GRID_FX32_SIZE;
-    z =front_pos.z / FIELD_CONST_GRID_FX32_SIZE;
-    return GYM_INSECT_CreatePushWallEvt(gsys, x, z);
-  }
-  
   //D06電気洞窟
   if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0101) ||
       FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0201) ||
@@ -2488,25 +2477,6 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
               }
             }
           }
-        }
-      }
-    }
-    
-    //壁の場合、電気ジムかを調べる
-    //ギミックが割り当てられているかを調べて、
-    //ジムソースのオーバレイがなされていることを確認する
-    {
-      idx = getConnectID(req, &front_pos);
-      
-      if( idx == EXIT_ID_NONE )
-      {
-        if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_ELEC) )
-        { //電気ジム
-//          return GYM_ELEC_CreateMoveEvt(gsys);
-        }
-        else if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_FLY) )
-        { //飛行ジム
-          return GYM_FLY_CreateShotEvt(gsys);
         }
       }
     }

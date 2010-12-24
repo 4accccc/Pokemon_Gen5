@@ -5,6 +5,5 @@
 #define _C07GYM0101_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_BG_C07GYM0101_STATUE_01 (1)
 
 #endif //_C07GYM0101_DEF_H_

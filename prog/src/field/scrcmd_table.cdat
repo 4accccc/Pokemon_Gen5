@@ -517,46 +517,47 @@
   DEF_CMD( EvCmdLookElboard, EV_SEQ_LOOK_ELBOARD )
 
   //ジムギミック関連
-  //電気  WB用ジム命令とSWAN用ジム命令が点在してしまうので、WB用ジム命令は消します
+  //WB用ジム命令とSWAN用ジム命令が点在してしまうので、WB用ジム命令は消します。
+  //新たにSWAN用に下部にジム命令を切ってください。
   NO_CMD() //DEF_CMD( EvCmdGymElec_Init, EV_SEQ_GYM_ELEC_INIT )
   NO_CMD() //DEF_CMD( EvCmdGymElec_PushSw, EV_SEQ_GYM_ELEC_PUSH_SW )
   NO_CMD() //DEF_CMD( EvCmdGymElec_SetTrEncFlg, EV_SEQ_GYM_ELEC_SET_TR_ENC_FLG )
 
-  DEF_CMD( EvCmdGymNormal_Init, EV_SEQ_GYM_NORMAL_INIT )
-  DEF_CMD( EvCmdGymNormal_Unrock, EV_SEQ_GYM_NORMAL_UNROCK )
-  DEF_CMD( EvCmdGymNormal_CheckUnrock, EV_SEQ_GYM_NORMAL_CHK_UNROCK )
-  DEF_CMD( EvCmdGymNormal_MoveWall, EV_SEQ_GYM_NORMAL_MOVE_WALL )
+  NO_CMD() //DEF_CMD( EvCmdGymNormal_Init, EV_SEQ_GYM_NORMAL_INIT )
+  NO_CMD() //DEF_CMD( EvCmdGymNormal_Unrock, EV_SEQ_GYM_NORMAL_UNROCK )
+  NO_CMD() //DEF_CMD( EvCmdGymNormal_CheckUnrock, EV_SEQ_GYM_NORMAL_CHK_UNROCK )
+  NO_CMD() //DEF_CMD( EvCmdGymNormal_MoveWall, EV_SEQ_GYM_NORMAL_MOVE_WALL )
 
-  DEF_CMD( EvCmdGymAnti_Init, EV_SEQ_GYM_ANTI_INIT )
-  DEF_CMD( EvCmdGymAnti_SwOn, EV_SEQ_GYM_ANTI_SW_ON )
-  DEF_CMD( EvCmdGymAnti_OpenDoor, EV_SEQ_GYM_ANTI_OPEN_DOOR )
-  DEF_CMD( EvCmdGymAnti_SwOff, EV_SEQ_GYM_ANTI_SW_OFF )
+  NO_CMD() //DEF_CMD( EvCmdGymAnti_Init, EV_SEQ_GYM_ANTI_INIT )
+  NO_CMD() //DEF_CMD( EvCmdGymAnti_SwOn, EV_SEQ_GYM_ANTI_SW_ON )
+  NO_CMD() //DEF_CMD( EvCmdGymAnti_OpenDoor, EV_SEQ_GYM_ANTI_OPEN_DOOR )
+  NO_CMD() //DEF_CMD( EvCmdGymAnti_SwOff, EV_SEQ_GYM_ANTI_SW_OFF )
 
-  DEF_CMD( EvCmdGymGround_SetEnterPos, EV_SEQ_GYM_GROUND_SET_ENTER_POS )
-  DEF_CMD( EvCmdGymGroundEnt_SetEnterPos, EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS )
+  NO_CMD() //DEF_CMD( EvCmdGymGround_SetEnterPos, EV_SEQ_GYM_GROUND_SET_ENTER_POS )
+  NO_CMD() //DEF_CMD( EvCmdGymGroundEnt_SetEnterPos, EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS )
 
   //虫ジム
-  DEF_CMD( EvCmdGymInsect_SwOn, EV_SEQ_GYM_INSECT_SW_ON )
-  DEF_CMD( EvCmdGymInsect_PoleOn, EV_SEQ_GYM_INSECT_PL_ON )
-  DEF_CMD( EvCmdGymInsect_TrTrapOn, EV_SEQ_GYM_INSECT_TR_TRAP_ON )
-  DEF_CMD( EvCmdGymInsect_Init, EV_SEQ_GYM_INSECT_INIT )
+  NO_CMD() //DEF_CMD( EvCmdGymInsect_SwOn, EV_SEQ_GYM_INSECT_SW_ON )
+  NO_CMD() //DEF_CMD( EvCmdGymInsect_PoleOn, EV_SEQ_GYM_INSECT_PL_ON )
+  NO_CMD() //DEF_CMD( EvCmdGymInsect_TrTrapOn, EV_SEQ_GYM_INSECT_TR_TRAP_ON )
+  NO_CMD() //DEF_CMD( EvCmdGymInsect_Init, EV_SEQ_GYM_INSECT_INIT )
 
   //地面ジム
-  DEF_CMD( EvCmdGymGround_MvLift, EV_SEQ_GYM_GROUND_MV_LIFT )
-  DEF_CMD( EvCmdGymGround_ExitLift, EV_SEQ_GYM_GROUND_EXIT_LIFT )
-  DEF_CMD( EvCmdGymGroundEnt_ExitLift, EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT )
+  NO_CMD() //DEF_CMD( EvCmdGymGround_MvLift, EV_SEQ_GYM_GROUND_MV_LIFT )
+  NO_CMD() //DEF_CMD( EvCmdGymGround_ExitLift, EV_SEQ_GYM_GROUND_EXIT_LIFT )
+  NO_CMD() //DEF_CMD( EvCmdGymGroundEnt_ExitLift, EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT )
 
   // 氷ジム
-  DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
-  DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
-  DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
+  NO_CMD() //DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
+  NO_CMD() //DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
+  NO_CMD() //DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
 
   //ドラゴンジム
-  DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
-  DEF_CMD( EvCmdGymDragon_CallGmk, EV_SEQ_GYM_DRAGON_CALL_GMK )
-  DEF_CMD( EvCmdGymDragon_JumpDown, EV_SEQ_GYM_DRAGON_JUMP_DOWN )
-  DEF_CMD( EvCmdGymDragon_MoveHead, EV_SEQ_GYM_DRAGON_MOVE_HEAD )
-  DEF_CMD( EvCmdGymDragon_MoveArm, EV_SEQ_GYM_DRAGON_MOVE_ARM )
+  NO_CMD() //DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
+  NO_CMD() //DEF_CMD( EvCmdGymDragon_CallGmk, EV_SEQ_GYM_DRAGON_CALL_GMK )
+  NO_CMD() //DEF_CMD( EvCmdGymDragon_JumpDown, EV_SEQ_GYM_DRAGON_JUMP_DOWN )
+  NO_CMD() //DEF_CMD( EvCmdGymDragon_MoveHead, EV_SEQ_GYM_DRAGON_MOVE_HEAD )
+  NO_CMD() //DEF_CMD( EvCmdGymDragon_MoveArm, EV_SEQ_GYM_DRAGON_MOVE_ARM )
   
 
   //CGear関連

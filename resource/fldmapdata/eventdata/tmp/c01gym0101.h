@@ -15,7 +15,5 @@
 #ifndef ZONE_C01GYM0101_EVB_H
 #define ZONE_C01GYM0101_EVB_H
 
-#define C01GYM0101_POKEZOU_01             0
-#define C01GYM0101_POKEZOU_02             1
 
 #endif //ZONE_C01GYM0101_EVB_H

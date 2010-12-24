@@ -10,6 +10,6 @@
 //飛行ジムセーブワーク
 typedef struct GYM_FLY_SV_WORK_tag
 {
-  u8 dummy[4];
+  u32 dummy;
 }GYM_FLY_SV_WORK;
 

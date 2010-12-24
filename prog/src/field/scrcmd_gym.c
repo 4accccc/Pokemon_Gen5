@@ -155,89 +155,36 @@ VMCMD_RESULT EvCmdGymElec_SetEffect( VMHANDLE *core, void *wk )
 }
 
 //--ノーマル--
+#if 0
 //--------------------------------------------------------------
 /**
- * ノーマルジムギミックロック解除
+ * ノーマルジムギミック 
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymNormal_Unrock( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymNormal_( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 
-  GYM_NORMAL_Unrock(fieldWork);
-
   return VMCMD_RESULT_CONTINUE;
 }
-
-//--------------------------------------------------------------
-/**
- * ノーマルジムギミックロック解除チェック
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymNormal_CheckUnrock( VMHANDLE *core, void *wk )
-{
-  u16 *ret;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-
-  ret = SCRCMD_GetVMWork( core, work );
-
-  if ( GYM_NORMAL_CheckRock(fieldWork) ){
-    *ret = 1;
-  }else{
-    *ret = 0;
-  }
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * ノーマルジムギミック本棚移動
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymNormal_MoveWall( VMHANDLE *core, void *wk )
-{
-  u8 wall_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  wall_idx = VMGetU16( core );
-
-  call_event = GYM_NORMAL_MoveWall(gsys, wall_idx);
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );
-  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-
-}
+#endif
 
 //--アンチ--
+
+#if 0
 //--------------------------------------------------------------
 /**
- * アンチジムギミック　床スイッチオン
+ * アンチジムギミック 
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymAnti_SwOn( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymAnti_( VMHANDLE *core, void *wk )
 {
   u8 sw_idx;
   GMEVENT *call_event;
@@ -245,86 +192,21 @@ VMCMD_RESULT EvCmdGymAnti_SwOn( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  sw_idx = VMGetU16( core );
-  call_event = GYM_ANTI_SwOnOff(gsys, sw_idx, 1);
-  
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 
 }
-
-//--------------------------------------------------------------
-/**
- * アンチジムギミック　床スイッチオフ
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymAnti_SwOff( VMHANDLE *core, void *wk )
-{
-  u8 sw_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  sw_idx = VMGetU16( core );
-  call_event = GYM_ANTI_SwOnOff(gsys, sw_idx, 0);
-  
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-
-}
-
-//--------------------------------------------------------------
-/**
- * アンチジムギミック　ドアオープン
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymAnti_OpenDoor( VMHANDLE *core, void *wk )
-{
-  u8 door_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  door_idx = VMGetU16( core );
-  call_event = GYM_ANTI_OpenDoor(gsys, door_idx);
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-
-}
+#endif
 
 //--虫--
+#if 0
 //--------------------------------------------------------------
 /**
- * 虫ジムギミック　床スイッチオン
+ * 虫ジムギミック　
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymInsect_SwOn( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymInsect_( VMHANDLE *core, void *wk )
 {
   u16 *sw_idx;
   GMEVENT *call_event;
@@ -332,78 +214,12 @@ VMCMD_RESULT EvCmdGymInsect_SwOn( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  sw_idx = SCRCMD_GetVMWork( core, work );
-  call_event = GYM_INSECT_CreateSwitchEvt(gsys, *sw_idx);
-  
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
-
-//--------------------------------------------------------------
-/**
- * 虫ジムギミック　ポールアニメ起動
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymInsect_PoleOn( VMHANDLE *core, void *wk )
-{
-  u16 *pl_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  pl_idx = SCRCMD_GetVMWork( core, work );
-  call_event = GYM_INSECT_CreatePoleEvt(gsys, *pl_idx);
-  
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * 虫ジムギミック　トレーナートラップ起動
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymInsect_TrTrapOn( VMHANDLE *core, void *wk )
-{
-  u16 tr_evt_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  tr_evt_idx = VMGetU16( core );
-
-  GF_ASSERT( tr_evt_idx < 2 );
-  call_event = GYM_INSECT_CreateTrTrapEvt(gsys, tr_evt_idx);
-  
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
+#endif
 
 //--地面--
+#if 0
 //--------------------------------------------------------------
 /**
  * 地面ジムギミック　リフト移動
@@ -411,7 +227,7 @@ VMCMD_RESULT EvCmdGymInsect_TrTrapOn( VMHANDLE *core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymGround_( VMHANDLE *core, void *wk )
 {
   u16 lift_idx;
   GMEVENT *call_event;
@@ -419,126 +235,20 @@ VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  lift_idx = VMGetU16( core );
-
-  call_event = GYM_GROUND_CreateLiftMoveEvt(gsys, lift_idx);
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
-
-//--------------------------------------------------------------
-/**
- * 地面ジムギミック　出口リフト移動
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk )
-{
-  u16 exit;
-  BOOL exit_flg;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  exit = VMGetU16( core );
-
-  if (exit) exit_flg = TRUE;
-  else exit_flg = FALSE;
-
-  call_event = GYM_GROUND_CreateExitLiftMoveEvt(gsys, exit_flg);
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * 地面ジムエントランスギミック　出口リフト移動
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk )
-{
-  u16 exit;
-  BOOL exit_flg;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  exit = VMGetU16( core );
-
-  if (exit) exit_flg = TRUE;
-  else exit_flg = FALSE;
-
-  call_event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(gsys, exit_flg);
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * 地面ジム 入り口位置にリフトと自機をセット　
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymGround_SetEnterPos( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  GYM_GROUND_SetEnterPos(gsys);
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 地面ジム 入り口位置にリフトと自機をセット　
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymGroundEnt_SetEnterPos( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  GYM_GROUND_ENT_SetEnterPos(gsys);
-  return VMCMD_RESULT_CONTINUE;
-}
-
-
+#endif
 
 //--氷--
+#if 0
 //--------------------------------------------------------------
 /**
- * 氷ジムギミック　スイッチアニメ起動
+ * 氷ジムギミック　
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymIce_SwAnm( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymIce_( VMHANDLE *core, void *wk )
 {
   u16 idx;
   GMEVENT *call_event;
@@ -546,74 +256,20 @@ VMCMD_RESULT EvCmdGymIce_SwAnm( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  idx = VMGetU16( core );
-  call_event = GYM_ICE_CreateSwEvt(gsys, idx);
-  
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
+#endif
 
+//--ドラゴン--
+#if 0
 //--------------------------------------------------------------
 /**
- * 氷ジムギミック　壁アニメ起動
+ * ドラゴンジムギミック　
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymIce_WallAnm( VMHANDLE *core, void *wk )
-{
-  u16 idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  idx = VMGetU16( core );
-  call_event = GYM_ICE_CreateWallEvt(gsys, idx);
-  
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );  
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * 氷ジムギミック　レール切り替え
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymIce_ChgRail( VMHANDLE *core, void *wk )
-{
-  u16 idx;
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  idx = VMGetU16( core );
-  GYM_ICE_ChangeRailMap(gsys, idx);
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * ドラゴンジムギミック　ギミックイベントコール
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymDragon_CallGmk( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymDragon_( VMHANDLE *core, void *wk )
 {
   u16 head;
   u16 arm;
@@ -636,92 +292,5 @@ VMCMD_RESULT EvCmdGymDragon_CallGmk( VMHANDLE *core, void *wk )
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
+#endif
 
-//--------------------------------------------------------------
-/**
- * ドラゴンジムギミック　自機飛び降りイベント
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymDragon_JumpDown( VMHANDLE *core, void *wk )
-{
-  u16 dir;
-  
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  dir = VMGetU16( core );
-  
-  call_event = GYM_DRAGON_CreateJumpDownEvt(gsys, dir);
-
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * ドラゴンジムギミック　腕ギミックイベントコール
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymDragon_MoveArm( VMHANDLE *core, void *wk )
-{
-  u16 head,arm;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  head = SCRCMD_GetVMWorkValue( core, work );
-  arm = SCRCMD_GetVMWorkValue( core, work );
-
-  call_event = GYM_DRAGON_CreateArmMoveEvt(gsys, head, arm);
-
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * ドラゴンジムギミック　首ギミックイベントコール
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymDragon_MoveHead( VMHANDLE *core, void *wk )
-{
-  u16 head;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  head = SCRCMD_GetVMWorkValue( core, work );
-
-  call_event = GYM_DRAGON_CreateHeadMoveEvt(gsys, head);
-
-  if (call_event == NULL){
-    GF_ASSERT(0);
-    return VMCMD_RESULT_SUSPEND;
-  }
-
-  SCRIPT_CallEvent( sc, call_event );
-  //イベントコールするので、一度制御を返す
-  return VMCMD_RESULT_SUSPEND;
-}

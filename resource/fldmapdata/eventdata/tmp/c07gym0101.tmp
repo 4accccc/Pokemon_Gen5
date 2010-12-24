@@ -1,5 +1,5 @@
 #../data/c07gym0101.mev
-../tmp/c07gym0101.bin:../data/c07gym0101.mev ../../script/sp_c07gym0101.bin $(UNIQ_SCRIPTHEADER) ../tmp/c07gym0101.h ../../zonetable/zone_id.h ../tmp/c07.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../script/C07GYM0101_def.h 
+../tmp/c07gym0101.bin:../data/c07gym0101.mev ../../script/sp_c07gym0101.bin $(UNIQ_SCRIPTHEADER) ../tmp/c07gym0101.h ../../zonetable/zone_id.h ../tmp/c07.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
 	@echo ../data/c07gym0101.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c07gym0101.h ../../zonetable/zone_id.h ../tmp/c07.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../script/C07GYM0101_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c07gym0101.h ../../zonetable/zone_id.h ../tmp/c07.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
 

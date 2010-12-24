@@ -11,23 +11,11 @@
 #ifndef ZONE_C08GYM0101_EVC_H
 #define ZONE_C08GYM0101_EVC_H
 
-#define TR_C08GYM0101_F1_02                0
-#define TR_C08GYM0101_F1_03                1
-#define TR_C08GYM0101_F1_04                2
-#define TR_C08GYM0101_F1_06                3
-#define C08GYM0101_WKOBJCODE00_01          4
-#define TR_C08GYM0101_F2_01                5
-#define TR_C08GYM0101_F2_04                6
-#define TR_C08GYM0101_F1_05                7
-#define C08GYM0101_SUNGLASSES_01           8
-#define TR_C08GYM0101_F2_03                9
 
 #endif //ZONE_C08GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C08GYM0101_EVB_H
 #define ZONE_C08GYM0101_EVB_H
 
-#define BG_C08GYM0101_STATUE_01           0
-#define BG_C08GYM0101_STATUE_02           1
 
 #endif //ZONE_C08GYM0101_EVB_H

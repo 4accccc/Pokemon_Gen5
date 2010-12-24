@@ -58,6 +58,7 @@ VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
 }
 
 //--ノーマル--
+#if 0
 //--------------------------------------------------------------
 /**
  * ノーマルジム初期化
@@ -78,8 +79,10 @@ VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
 
 //--アンチ--
+#if 0
 //--------------------------------------------------------------
 /**
  * アンチジム初期化
@@ -99,8 +102,10 @@ VMCMD_RESULT EvCmdGymAnti_Init( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
 
 //--虫--
+#if 0
 //--------------------------------------------------------------
 /**
  * 虫ジム初期化
@@ -127,8 +132,10 @@ VMCMD_RESULT EvCmdGymInsect_Init( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
 
 //--ドラゴン--
+#if 0
 //--------------------------------------------------------------
 /**
  * ドラゴンジム初期化
@@ -146,3 +153,4 @@ VMCMD_RESULT EvCmdGymDragon_Init( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
