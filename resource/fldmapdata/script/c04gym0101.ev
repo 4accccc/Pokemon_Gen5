@@ -88,8 +88,6 @@ INIT_EVENT_START	ev_zone_c04gym0101
 			_GYM_ELEC_INIT( GYM_ELEC_EVENT_SEQ_START  )
 		ENDIF
 	ENDIF
-
-  	_DEBUG_PRINT_WK( SCWK_ANSWER )
 INIT_EVENT_END
 
 /************************************************************/
