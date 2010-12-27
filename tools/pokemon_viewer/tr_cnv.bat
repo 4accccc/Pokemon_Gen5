@@ -41,7 +41,7 @@ REM ##################################################
 cd C:\home\swan\tools\pokemon_viewer
 set PERL_DIR=..\..\..\swan\tools\pokegra\
 
-del p*.n*
+del t*.n*
 
 perl %PERL_DIR%nmc.pl %1.nmc ./
 perl %PERL_DIR%nce.pl %1.nce ./

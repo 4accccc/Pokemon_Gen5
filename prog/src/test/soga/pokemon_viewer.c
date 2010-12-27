@@ -648,7 +648,6 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     {
       BOOL ret = FALSE;
       BTLV_MCSS_WORK* bmw = BTLV_EFFECT_GetMcssWork();
-      MCSS_WORK* mcss = BTLV_MCSS_GetMcssWork(bmw , BTLV_MCSS_POS_BB );
 
       pvw->anmseq ++;
       ret = BTLV_MCSS_SetAnime( bmw , BTLV_MCSS_POS_BB , pvw->anmseq );
@@ -1545,6 +1544,9 @@ static  void  PokemonViewerAddPokemon( POKEMON_VIEWER_WORK *pvw )
     madw.ncec = pvw->resource_data[ RESOURCE_NCEC ][ pvw->read_position ];
 
     BTLV_EFFECT_SetPokemonDebug( &madw, pvw->read_position );
+
+    // シーケンスを0番にリセットする
+    BTLV_MCSS_SetAnime( BTLV_EFFECT_GetMcssWork() , pvw->read_position , 0 );
   }
 }
 
