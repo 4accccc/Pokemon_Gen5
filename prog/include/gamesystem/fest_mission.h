@@ -15,6 +15,8 @@
 typedef enum{
  FEST_MISSION_NULL,
  FEST_MISSION_WILDBTL_WIN,
+ FEST_MISSION_ID_MAX,
+ FEST_MISSION_ID_END = FEST_MISSION_ID_MAX-1,
 }FEST_MISSION_ID;
 
 typedef enum{
@@ -23,10 +25,17 @@ typedef enum{
 }FMISSION_TYPE_ID;
 
 typedef struct{
+  u8  time;
+  u8  reward;
+  u16 quota;  //ノルマ 
+  u16 param;
+}FEST_MISSION_PARAM;
+
+typedef struct{
   u8  id;     ///<ミッションID
   u8  time;   ///<設定時間(分)
   u16 reward; ///<報酬
-  u16 target; ///<ノルマ
+  u16 quota; ///<ノルマ
   u16 param;  ///<ミッション汎用パラメータ
   u32 key;    ///<ミッション固有マジックナンバー
 
@@ -47,7 +56,7 @@ extern void FEST_MISSION_Clear( FEST_MISSION* fmwk );
  * @brief ミッションパラメータセット
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 reward, u16 param1, u16 param2, u32 time );
+extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 reward, u16 quota, u16 param, u32 time );
 
 //---------------------------------------------------------
 /*
@@ -104,7 +113,14 @@ extern BOOL FEST_MISSION_IsEntry( FEST_MISSION* fmwk );
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, FMISSION_TYPE_ID type, u32 value );
+extern void FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, FMISSION_TYPE_ID type, u32 param, u32 value );
+
+//---------------------------------------------------------
+/*
+ * @brief ミッションパラメータ取得
+ */
+//---------------------------------------------------------
+extern void FEST_MISSION_ParamDataGet( FEST_MISSION_ID id, FEST_MISSION* dest );
 
 //=================================================
 //以下デバッグルーチン

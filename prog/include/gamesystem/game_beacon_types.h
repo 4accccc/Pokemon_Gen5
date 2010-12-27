@@ -95,7 +95,7 @@ typedef struct{
       u8  id;
       u8  time;
       u16 reward;
-      u16 target;
+      u16 quota;
       u16 param;
       u32 key;
       u32 life;

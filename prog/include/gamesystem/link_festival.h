@@ -103,7 +103,7 @@ extern BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score );
  * @brief リンクフェスティバル スコア加算
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, u32 value );
+extern void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, u32 param, u32 value );
 
 //---------------------------------------------------------
 /*
@@ -160,6 +160,25 @@ extern void LINKFEST_LOG_Clear( LINKFEST_LOG* log );
  */
 //---------------------------------------------------------
 extern void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* prm );
+
+
+//====================================================
+//デバッグルーチン
+//====================================================
+#ifdef PM_DEBUG
+
+/*
+ *  @brief  ビーコン送信インターバル取得
+ */
+extern int DEB_LINKFEST_GetBeaconWait( LINK_FESTIVAL* wk );
+
+/*
+ *  @brief  ビーコン送信インターバル設定
+ */
+extern void DEB_LINKFEST_SetBeaconWait( LINK_FESTIVAL* wk, int wait );
+
+#endif  //PM_DEBUG
+
 
 #endif //__H_LINK_FESTIVAL_H__
 

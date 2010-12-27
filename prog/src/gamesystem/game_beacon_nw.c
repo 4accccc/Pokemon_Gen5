@@ -57,7 +57,7 @@ void GAMEBEACON_Set_BattlePokeStart(u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_BattlePokeVictory(u16 monsno)
 {
-  LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, FMISSION_TYPE_WILDBTL_WIN, 1 );
+  LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, FMISSION_TYPE_WILDBTL_WIN, monsno, 1 );
 
   if( GAMEBEACON_SUB_PokeBeaconTypeIsSpecial( monsno )){
     GAMEBEACON_Set_BattleSpPokeVictory(monsno);

@@ -1215,7 +1215,7 @@ BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_MISSION
     fmwk->life = info->action.fmission.life;
     fmwk->my_score = info->action.fmission.my_score;
     fmwk->reward = info->action.fmission.reward;
-    fmwk->target = info->action.fmission.target;
+    fmwk->quota = info->action.fmission.quota;
     fmwk->param = info->action.fmission.param;
     return TRUE;
   }

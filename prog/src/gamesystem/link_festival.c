@@ -19,24 +19,11 @@
 #include "poke_tool/status_rcv.h"
 
 #include "gamesystem/link_festival.h"
-
+#include "gamesystem/link_festival_local.h"
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
-///リンクフェスティバル　管理領域
-struct _LINK_FESTIVAL{
-  FEST_MISSION  mission;  //現ミッションデータ
-
-  u32 beacon_wait;  ///frame
-  u32 beacon_timer; //frame
-
-  u16 log_num;
-  u16 log_idx;
-  LINKFEST_LOG  log[LINKFEST_LOG_MAX];
-  LINKFEST_LOG  last;  //最後のミッションログ
-};
-
 static void lnkfes_BeaconSend( LINK_FESTIVAL* wk );
 static void log_ClearAll( LINK_FESTIVAL* wk );
 static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
@@ -147,11 +134,11 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score )
   }
   *score += wk->mission.my_score;
 
-  if( *score >= wk->mission.target){
-//    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.target );
+  if( *score >= wk->mission.quota){
+//    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.quota );
     return TRUE;
   }
-//  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.target );
+//  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.quota );
   return FALSE;
 }
 
@@ -160,7 +147,7 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score )
  * @brief リンクフェスティバル スコア加算
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, u32 value )
+void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, u32 param, u32 value )
 {
   LINK_FESTIVAL* wk;
 
@@ -169,7 +156,7 @@ void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, 
     return;
   }
   wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
-  FEST_MISSION_ScoreCalc( &wk->mission, type, value );
+  FEST_MISSION_ScoreCalc( &wk->mission, type, param, value );
 }
 
 //---------------------------------------------------------
@@ -180,7 +167,7 @@ void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, 
 void LINK_FESTIVAL_MissionParamWordset( WORDSET* wset, FEST_MISSION* fmwk )
 {
   WORDSET_RegisterNumber( wset, 0, fmwk->time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 1, fmwk->target, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 1, fmwk->quota, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 2, fmwk->param, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 3, fmwk->reward, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 4, fmwk->life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );

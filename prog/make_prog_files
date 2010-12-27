@@ -1179,7 +1179,8 @@ SRCS_OVERLAY_EVENT_FMISSION = field/event_festmission.c
 
 #D_LINKFESTライブラリ
 #===> SRCS_OVERLAY_EVENT_FMISSION
-SRCS_OVERLAY_D_LINKFEST = field/event_debug_linkfest.c
+SRCS_OVERLAY_D_LINKFEST = field/event_debug_linkfest.c \
+  gamesystem/link_festival_debug.c
 
 # サウンドデバッグ画面
 #===> GROUP_OVERLAY_UNION_INTRUDE

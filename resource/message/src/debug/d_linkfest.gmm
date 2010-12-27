@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-12-15T15:51:57"/>
+	<create user="iwasawa" host="W00157" date="2010-12-24T20:24:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1451" top="270" right="2156" bottom="898" maximized="no" rayout="Vertical2">
+	<dialog left="1688" top="203" right="2393" bottom="823" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="799" top="128" right="1269" bottom="735" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -399,6 +399,16 @@
 		<language name="JPN_KANJI" width="256">ミッション強制終了</language>
 	</row>
 
+	<row id="dlf_fldmenu_03" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ミッションリクエスト</language>
+		<language name="JPN_KANJI" width="256">ミッションリクエスト</language>
+	</row>
+
+	<row id="dlf_fldmenu_04" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ミッションビーコンかんかく</language>
+		<language name="JPN_KANJI" width="256">ミッションビーコン間隔</language>
+	</row>
+
 	<row id="dlf_menu_exit" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
@@ -441,25 +451,20 @@
 		<language name="JPN_KANJI" width="256">[FF:00:色:1][2:01:２桁:0]：なし</language>
 	</row>
 
-	<row id="dlf_beacon_req_trainer01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="dlf_mission_req_type01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ビーコンリクエスト</comment>
-		<language name="JPN" width="256">ビーコンタイプ　じぶん</language>
-		<language name="JPN_KANJI" width="256">ビーコンタイプ　じぶん</language>
+		<language name="JPN" width="256">ミッションタイプ　デフォ</language>
+		<language name="JPN_KANJI" width="256">ミッションタイプ　デフォ</language>
 	</row>
 
-	<row id="dlf_beacon_req_trainer02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ビーコンタイプ　なりすまし</language>
-		<language name="JPN_KANJI" width="256">ビーコンタイプ　なりすまし</language>
+	<row id="dlf_mission_req_type02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ミッションタイプ　カスタム</language>
+		<language name="JPN_KANJI" width="256">ミッションタイプ　カスタム</language>
 	</row>
 
-	<row id="dlf_beacon_req_trainer03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ビーコンタイプ　ランダム</language>
-		<language name="JPN_KANJI" width="256">ビーコンタイプ　ランダム</language>
-	</row>
-
-	<row id="dlf_beacon_req_action" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">action=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
-		<language name="JPN_KANJI" width="256">action=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
+	<row id="dlf_mprm_req_id" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">m_id=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" width="256">m_id=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
 	</row>
 
 	<row id="dlf_beacon_req_param01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,,,,,,#ff78ff,,,,,,">
@@ -533,40 +538,30 @@
 		<language name="JPN_KANJI" width="256">fword=[1:1C:簡易会話単語:3]</language>
 	</row>
 
-	<row id="dlf_fake_tr_id" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="dlf_mprm_id" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>フェイクパラメータ</comment>
 		<language name="JPN" width="256">Fake tr_id=[2:04:５桁:0]  mine_id=[2:04:５桁:1]</language>
 		<language name="JPN_KANJI" width="256">Fake tr_id=[2:04:５桁:0]  mine_id=[2:04:５桁:1]</language>
 	</row>
 
-	<row id="dlf_fake_name" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256"> name=[2:02:３桁:0] [1:00:トレーナー名:2] m=[2:02:３桁:1] [1:00:トレーナー名:3]</language>
-		<language name="JPN_KANJI" width="256"> name=[2:03:４桁:0]　[1:00:トレーナー名:1]</language>
+	<row id="dlf_mprm_time" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">time=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">time=[2:04:５桁:0]</language>
 	</row>
 
-	<row id="dlf_fake_zone" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256"> zone=[2:03:４桁:0] [1:05:マップ名:2]</language>
-		<language name="JPN_KANJI" width="256"> zone=[2:03:４桁:0] [1:05:マップ名:2]</language>
+	<row id="dlf_mprm_quata" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">quata=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">quata=[2:04:５桁:0]</language>
 	</row>
 
-	<row id="dlf_fake_sex" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256"> sex=[2:00:１桁:0] [1:1C:簡易会話単語:2] mine=[2:00:１桁:1] [1:1C:簡易会話単語:3]</language>
-		<language name="JPN_KANJI" width="256"> sex=[2:00:１桁:0] [1:1C:簡易会話単語:2] mine=[2:00:１桁:1] [1:1C:簡易会話単語:3]</language>
+	<row id="dlf_mprm_param" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">param=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">param=[2:04:５桁:0]</language>
 	</row>
 
-	<row id="dlf_fake_version" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256"> ver=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
-		<language name="JPN_KANJI" width="256"> ver=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
-	</row>
-
-	<row id="dlf_fake_lang" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256"> lang=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
-		<language name="JPN_KANJI" width="256"> lang=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
-	</row>
-
-	<row id="dlf_fake_color" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256"> color=[2:01:２桁:0]  mine=[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" width="256"> color=[2:01:２桁:0]  mine=[2:01:２桁:1]</language>
+	<row id="dlf_mprm_reward" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">reward=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">reward=[2:04:５桁:0]</language>
 	</row>
 
 	<row id="dlf_sex_male" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -647,8 +642,8 @@
 	</row>
 
 	<row id="dlf_action_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">Random Action &amp; param</language>
-		<language name="JPN_KANJI" width="256">Random Action &amp; param</language>
+		<language name="JPN" width="256">やせいポケモンをたおせ</language>
+		<language name="JPN_KANJI" width="256">野生ポケモンを倒せ</language>
 	</row>
 
 	<row id="dlf_action_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">

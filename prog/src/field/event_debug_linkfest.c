@@ -81,6 +81,8 @@ enum{
  MENU_MY_GPOWER,
  MENU_MISSION_START,
  MENU_MISSION_END,
+ MENU_MISSION_REQ,
+ MENU_MISSION_BEACON_WAIT,
  MENU_EXIT,
 };
 
@@ -110,18 +112,15 @@ enum{
 typedef enum{
  TR_PAT_MINE,
  TR_PAT_FAKE,
- TR_PAT_RND,
  TR_PAT_MAX,
 }TR_PATTERN;
 
 typedef enum{
   FAKE_ID,
-  FAKE_NAME,
-  FAKE_ZONE,
-  FAKE_SEX,
-  FAKE_VERSION,
-  FAKE_LANG,
-  FAKE_COLOR,
+  FAKE_TIME,
+  FAKE_QUATA,
+  FAKE_PARAM,
+  FAKE_REWARD,
   FAKE_DATA_MAX,
 }FAKE_DATA_ID;
 
@@ -134,7 +133,7 @@ typedef enum{
   BPRM_WSET_FWAZA,
   BPRM_WSET_GPOWER,
   BPRM_WSET_ACTION,
-  BPRM_WSET_BEACON_REQ_TRAINER,
+  BPRM_WSET_MISSION_REQ_TYPE,
   BPRM_WSET_SEX,
   BPRM_WSET_VERSION,
   BPRM_WSET_LANG,
@@ -142,22 +141,25 @@ typedef enum{
 }BPRM_WSET_TYPE;
 
 typedef enum{
- BEACON_PSET_DEFAULT,     //デフォルト(トレーナー名)  
- BEACON_PSET_TR_ID,      //対戦相手名
- BEACON_PSET_MONSNO,    //ポケモン種族名
- BEACON_PSET_NICKNAME,    //ポケモンニックネーム
- BEACON_PSET_ITEM,        //アイテム名
- BEACON_PSET_PTIME,       //プレイタイム
- BEACON_PSET_SURETIGAI_CT,//リンクフェスタ回数
- BEACON_PSET_THANKS,      //御礼回数
- BEACON_PSET_WAZA,        //技名
- BEACON_PSET_VICTORY,     //サブウェイ挑戦中の連勝数1-7
- BEACON_PSET_TH_RANK,     //トライアルハウスランク
- BEACON_PSET_GPOWER,      //Gパワー名
- BEACON_PSET_ID,          //プレイヤーID
- BEACON_PSET_FREEWORD,    //フリーワード8文字
- BEACON_PSET_MAX,
-}BEACON_PSET_TYPE;
+ MISSION_PSET_DEFAULT,     //デフォルト(トレーナー名)  
+ MISSION_PSET_TR_ID,      //対戦相手名
+ MISSION_PSET_MONSNO,    //ポケモン種族名
+ MISSION_PSET_NICKNAME,    //ポケモンニックネーム
+ MISSION_PSET_ITEM,        //アイテム名
+ MISSION_PSET_PTIME,       //プレイタイム
+ MISSION_PSET_SURETIGAI_CT,//リンクフェスタ回数
+ MISSION_PSET_THANKS,      //御礼回数
+ MISSION_PSET_WAZA,        //技名
+ MISSION_PSET_VICTORY,     //サブウェイ挑戦中の連勝数1-7
+ MISSION_PSET_TH_RANK,     //トライアルハウスランク
+ MISSION_PSET_GPOWER,      //Gパワー名
+ MISSION_PSET_ID,          //プレイヤーID
+ MISSION_PSET_FREEWORD,    //フリーワード8文字
+ MISSION_PSET_MISSION_ID,    //ミッションID
+ MISSION_PSET_MISSION_PRM,    //ミッションID
+ MISSION_PSET_MONSNO_ZERO,    //モンスターナンバー0可
+ MISSION_PSET_MAX,
+}MISSION_PSET_TYPE;
 
 typedef enum{
  BEACON_ARG_NONE,
@@ -171,6 +173,12 @@ typedef enum{
  BEACON_ARG_GPOWER,
  BEACON_ARG_FWAZA,
 }BEACON_ARG_TYPE;
+
+typedef enum{
+ NINPUT_STACK_CHECK_THROW,
+ NINPUT_GPOWER,
+ NINPUT_MISSION_BEACON_WAIT,
+}NINPUT_ID;
 
 typedef void (*BEACON_SET_FUNC_NONE)(void);
 typedef void (*BEACON_SET_FUNC_U8)(u8);
@@ -190,9 +198,13 @@ typedef void (*BEACON_SET_FUNC_GPOWER)(GPOWER_ID);
 
 typedef struct _D_BEACON_PARAM{
   void* func;
-  BEACON_PSET_TYPE  prm_type; //パラメータタイプ
+  MISSION_PSET_TYPE  prm_type; //パラメータタイプ
   BEACON_ARG_TYPE   arg_type; //引数の型タイプ
 }D_BEACON_PARAM;
+
+typedef struct _D_MISSION_PARAM{
+  MISSION_PSET_TYPE  prm_type;
+}D_MISSION_PARAM;
 
 typedef struct _D_FAKE_PRM_SET{
   BPRM_WSET_TYPE  wset_type;
@@ -200,10 +212,10 @@ typedef struct _D_FAKE_PRM_SET{
   int min,max;
 }D_FAKE_PRM_SET;
 
-typedef struct _D_BEACON_PRM_SET{
+typedef struct _D_MISSION_PRM_SET{
   int min,max;   //パラメータのmix,max
   BPRM_WSET_TYPE wset_type;
-}D_BEACON_PRM_SET;
+}D_MISSION_PRM_SET;
 
 typedef struct _D_BEACON_REQ{
   TR_PATTERN  trainer;  ///トレーナーのパターン
@@ -247,7 +259,7 @@ typedef struct _DMENU_LINK_FEST{
  
   FLDMENUFUNC *menuFunc;
 
-  int               beacon_prm[BEACON_PSET_MAX];
+  int               mission_prm[MISSION_PSET_MAX];
   int               fake_prm[TR_PAT_MAX][FAKE_DATA_MAX];
   STRBUF*           beacon_nickname;
   STRBUF*           beacon_fword;
@@ -294,6 +306,8 @@ static const DEBUG_MENU_LIST DATA_DebugLinkFestFromFieldMenuList[] =
 {
   { dlf_fldmenu_01, (void*)MENU_MISSION_START, GFL_OVERLAY_BLANK_ID },
   { dlf_fldmenu_02, (void*)MENU_MISSION_END, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_03, (void*)MENU_MISSION_REQ, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_04, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
@@ -316,134 +330,41 @@ static const DEBUG_MENU_INITIALIZER DebugLinkFestFromFieldMenuData = {
   NULL
 };
 
-
 /*
- *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
+ *
  */
-static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
-  ///<GAMEBEACON_ACTION_NULL  ///<データ無し 0
-  { NULL,                                 BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-
-  ///<XXさんをサーチしました！ 1
-  { NULL,                                 BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE, }, 
-  ///<BATTLE_WILD_POKE_START 野生のポケモンと対戦を開始しました！2
-  { GAMEBEACON_Set_BattlePokeStart,   BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
-  ///<BATTLE_WILD_POKE_VICTORY 野生のポケモンに勝利しました！3
-  { GAMEBEACON_Set_BattlePokeVictory, BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
-  ///<BATTLE_SP_POKE_START 特別なポケモンと対戦を開始しました！ 4
-  { GAMEBEACON_Set_BattlePokeStart,     BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
-  ///<BATTLE_SP_POKE_VICTORY 特別なポケモンに勝利しました！5
-  { GAMEBEACON_Set_BattlePokeVictory,   BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
-  ///<BATTLE_TRAINER_START トレーナーと対戦を開始しました！6
-  { GAMEBEACON_Set_BattleTrainerStart,    BEACON_PSET_TR_ID,	    BEACON_ARG_U16,	},
-  ///<BATTLE_TRAINER_VICTORY トレーナーに勝利しました！7
-  { GAMEBEACON_Set_BattleTrainerVictory,  BEACON_PSET_TR_ID,	    BEACON_ARG_U16,	},
-  ///<BATTLE_LEADER_START  ジムリーダーと対戦を開始しました！ 8
-  { GAMEBEACON_Set_BattleLeaderStart,     BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
-  ///<BATTLE_LEADER_VICTORY ジムリーダーに勝利しました！9
-  { GAMEBEACON_Set_BattleLeaderVictory,   BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
-  ///<BATTLE_BIGFOUR_START  四天王と対戦を開始しました！10
-  { GAMEBEACON_Set_BattleSpTrainerStart,  BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
-  ///<BATTLE_BIGFOUR_VICTORY 四天王に勝利しました！11
-  { GAMEBEACON_Set_BattleSpTrainerVictory,BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
-  ///<BATTLE_CHAMPION_START チャンピオンと対戦を開始しました！12
-  { GAMEBEACON_Set_BattleSpTrainerStart,  BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
-  ///<BATTLE_CHAMPION_VICTORY チャンピオンに勝利しました！13
-  { GAMEBEACON_Set_BattleSpTrainerVictory,BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
-  ///<POKE_GET ポケモン捕獲 14
-  { GAMEBEACON_Set_PokemonGet,        BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
-  ///<SP_POKE_GET 特別なポケモン捕獲 15
-  { GAMEBEACON_Set_PokemonGet,     BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
-  ///<POKE_LVUP ポケモンレベルアップ 16
-  { GAMEBEACON_Set_PokemonLevelUp,        BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<POKE_EVOLUTION ポケモン進化 17
-  { GAMEBEACON_Set_PokemonEvolution,      BEACON_PSET_MONSNO, 	  BEACON_ARG_U16_STR,	},
-  ///<GPOWER Gパワー発動 18
-  { GAMEBEACON_Set_GPower,                BEACON_PSET_GPOWER,	  BEACON_ARG_GPOWER,	},
-  ///<SP_ITEM_GET 貴重品ゲット 19
-  { GAMEBEACON_Set_SpItemGet,             BEACON_PSET_ITEM,	      BEACON_ARG_U16,	},
-  ///<PLAYTIME  一定のプレイ時間を越えた 20
-  { GAMEBEACON_Set_PlayTime,              BEACON_PSET_PTIME,	    BEACON_ARG_U32,	},
-  ///<ZUKAN_COMPLETE 図鑑完成 21
-  { GAMEBEACON_Set_ZukanComplete,         BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<THANKYOU_OVER お礼を受けた回数が規定数を超えた 22
-  { GAMEBEACON_Set_ThankyouOver,          BEACON_PSET_THANKS,	    BEACON_ARG_U32,	},
-  ///<UNION_IN ユニオンルームに入った 23
-  { GAMEBEACON_Set_UnionIn,               BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<THANKYOU ありがとう！24
-  { GAMEBEACON_Set_Thankyou,              BEACON_PSET_ID,	        BEACON_ARG_GDATA_U32,	},
-  ///<DISTRIBUTION_POKE ポケモン配布中 25
-  { GAMEBEACON_Set_DistributionPoke,      BEACON_PSET_MONSNO,	    BEACON_ARG_U16,	},
-  ///<DISTRIBUTION_ITEM アイテム配布中 26
-  { GAMEBEACON_Set_DistributionItem,      BEACON_PSET_ITEM,	      BEACON_ARG_U16,	},
-  ///<DISTRIBUTION_ETC  その他配布中 27
-  { GAMEBEACON_Set_DistributionEtc,       BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<CRITICAL_HIT 急所に攻撃を当てた 28
-  { GAMEBEACON_Set_CriticalHit,           BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<CRITICAL_DAMAGE 急所に攻撃を受けた 29
-  { GAMEBEACON_Set_CriticalDamage,        BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<ESCAPE 戦闘から逃げ出した 30
-  { GAMEBEACON_Set_Escape,                BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<HP_LITTLE HPが残り少ない 31
-  { GAMEBEACON_Set_HPLittle,              BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<PP_LITTLE PPが残り少ない 32
-  { GAMEBEACON_Set_PPLittle,              BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<DYING 先頭のポケモンが瀕死 33
-  { GAMEBEACON_Set_Dying,                 BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<STATE_IS_ABNORMAL 先頭のポケモンが状態異常 34
-  { GAMEBEACON_Set_StateIsAbnormal,       BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<USE_ITEM アイテムを使用 35
-  { GAMEBEACON_Set_UseItem,               BEACON_PSET_ITEM,	      BEACON_ARG_U16,	},
-  ///<FIELD_SKILL フィールド技を使用 36
-  { GAMEBEACON_Set_FieldSkill,            BEACON_PSET_WAZA,	      BEACON_ARG_FWAZA,	},
-  ///<SODATEYA_EGG 育て屋から卵を引き取った 37
-  { GAMEBEACON_Set_SodateyaEgg,           BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<EGG_HATCH タマゴが孵化した 38
-  { GAMEBEACON_Set_EggHatch,              BEACON_PSET_MONSNO,	    BEACON_ARG_U16,	},
-  ///<SHOPING 買い物中 39
-  { GAMEBEACON_Set_Shoping,               BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<SUBWAY バトルサブウェイ挑戦中 40
-  { GAMEBEACON_Set_Subway,                BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<SUBWAY_STRAIGHT_VICTORIES バトルサブウェイ連勝中 41
-  { GAMEBEACON_Set_SubwayStraightVictories, BEACON_PSET_VICTORY,  BEACON_ARG_U32,	},
-  ///<SUBWAY_TROPHY_GET バトルサブウェイトロフィーを貰った 42
-  { GAMEBEACON_Set_SubwayTrophyGet,       BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<TRIALHOUSE トライアルハウスに挑戦中 43
-  { GAMEBEACON_Set_TrialHouse,            BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<TRIALHOUSE_RANK トライアルハウスでランク確定 44
-  { GAMEBEACON_Set_TrialHouseRank,        BEACON_PSET_TH_RANK,	  BEACON_ARG_U8,	},
-  ///<FERRIS_WHEEL 観覧車に乗った 45
-  { GAMEBEACON_Set_FerrisWheel,           BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<POKESHIFTER ポケシフターに入った 46
-  { GAMEBEACON_Set_PokeShifter,           BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
-  ///<MUSICAL ミュージカル挑戦中 47
-  { GAMEBEACON_Set_Musical,               BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
-  ///<OTHER_GPOWER_USE 他人のGパワーを使用 48
-  { GAMEBEACON_Set_OtherGPowerUse,        BEACON_PSET_GPOWER,	    BEACON_ARG_GPOWER,	},
-  ///<FREEWORD 一言メッセージ 49
-  { GAMEBEACON_Set_FreeWord,              BEACON_PSET_FREEWORD,	  BEACON_ARG_FWORD,	},
-  ///<DISTRIBUTION_GPOWER Gパワー配布中 50 
-  { GAMEBEACON_Set_DistributionGPower,    BEACON_PSET_GPOWER, 	  BEACON_ARG_GPOWER,	},
+static const D_MISSION_PARAM DATA_DebugMissionParam[FEST_MISSION_ID_MAX] = {
+  { 0 },
+  { MISSION_PSET_MONSNO_ZERO },
 };
 
-static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
- { -1, -1, BPRM_WSET_NONE,}, //BEACON_PSET_DEFAULT, デフォルト(トレーナー名)  
- { 1, TRID_MAX-1, BPRM_WSET_TRNAME }, //BEACON_PSET_TR_ID,      対戦相手名
- { MONSNO_HUSIGIDANE, MONSNO_END, BPRM_WSET_MONSNAME }, //BEACON_PSET_MONSNO,    ポケモン種族名
- { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_NICKNAME,    ポケモンニックネーム
- { ITEM_MASUTAABOORU, ITEM_DATA_MAX, BPRM_WSET_ITEMNAME }, //BEACON_PSET_ITEM,        アイテム名
- { 0, 999, BPRM_WSET_NONE }, //BEACON_PSET_PTIME,       プレイタイム
- { 0, CROSS_COMM_SURETIGAI_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_SURETIGAI_CT, リンクフェスタ回数
- { 0, CROSS_COMM_THANKS_RECV_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_THANKS, 御礼回数
- { 0, BREQ_FWAZA_MAX-1, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
- { 1, 7, BPRM_WSET_NONE }, //BEACON_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
- { 0, 5, BPRM_WSET_NONE }, //BEACON_PSET_TH_RANK,     トライアルハウスランク
- { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
- { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_ID,     プレイヤーID
- { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_FREEWORD,    フリーワード8文字
+static const  D_MISSION_PRM_SET DATA_DebugMissionParamSet[MISSION_PSET_MAX] = {
+ { -1, -1, BPRM_WSET_NONE,}, //MISSION_PSET_DEFAULT, デフォルト(トレーナー名)  
+ { 1, TRID_MAX-1, BPRM_WSET_TRNAME }, //MISSION_PSET_TR_ID,      対戦相手名
+ { MONSNO_HUSIGIDANE, MONSNO_END, BPRM_WSET_MONSNAME }, //MISSION_PSET_MONSNO,    ポケモン種族名
+ { -1, -1, BPRM_WSET_NONE }, //MISSION_PSET_NICKNAME,    ポケモンニックネーム
+ { ITEM_MASUTAABOORU, ITEM_DATA_MAX, BPRM_WSET_ITEMNAME }, //MISSION_PSET_ITEM,        アイテム名
+ { 0, 999, BPRM_WSET_NONE }, //MISSION_PSET_PTIME,       プレイタイム
+ { 0, CROSS_COMM_SURETIGAI_COUNT_MAX, BPRM_WSET_NONE }, //MISSION_PSET_SURETIGAI_CT, リンクフェスタ回数
+ { 0, CROSS_COMM_THANKS_RECV_COUNT_MAX, BPRM_WSET_NONE }, //MISSION_PSET_THANKS, 御礼回数
+ { 0, BREQ_FWAZA_MAX-1, BPRM_WSET_FWAZA }, //MISSION_PSET_WAZA,        技名
+ { 1, 7, BPRM_WSET_NONE }, //MISSION_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
+ { 0, 5, BPRM_WSET_NONE }, //MISSION_PSET_TH_RANK,     トライアルハウスランク
+ { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //MISSION_PSET_GPOWER,      Gパワー名
+ { 0, 65535, BPRM_WSET_NONE }, //MISSION_PSET_ID,     プレイヤーID
+ { -1, -1, BPRM_WSET_NONE }, //MISSION_PSET_FREEWORD,    フリーワード8文字
+ { 1, FEST_MISSION_ID_END, BPRM_WSET_NONE }, //MISSION_PSET_MISSION_ID,    
+ { 1, 65535, BPRM_WSET_NONE }, //MISSION_PSET_MISSION_PRM,    
+ { 0, MONSNO_END, BPRM_WSET_MONSNAME }, //MISSION_PSET_MONSNO_ZERO,    ポケモン種族名
 };
 
 static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
   { BPRM_WSET_TRNAME_EX, 3, 0, TRID_MAX-1,}, //FAKE_NAME,
   { BPRM_WSET_ZONE, 3, 0, ZONE_ID_MAX-1,}, //FAKE_ZONE,
@@ -484,12 +405,12 @@ static void sub_BmpWinAdd( BMP_WIN* bmpwin, u8 px, u8 py, u8 sx, u8 sy );
 static void sub_BmpWinDel( BMP_WIN* bmpwin );
 static void sub_GetMsgToBuf( DMENU_LINK_FEST* wk, u8 msg_id );
 static inline void sub_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str );
-static void sub_BeaconParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type );
+static void sub_MissionParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type );
 
 static GMEVENT* event_CreateEventNumInput( DMENU_LINK_FEST* wk, int key, int min, int max, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func );
 static GMEVENT* event_CreateEventNumInputRetWork( DMENU_LINK_FEST* wk, int key, int min, int max, int* ret_wk, BPRM_WSET_TYPE wset_type );
 static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk, GAMEBEACON_INFO_TBL* info_tbl );
-static GMEVENT* event_CreateEventBeaconReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk );
+static GMEVENT* event_CreateEventMissionReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk );
 
 static int ninput_GetMiscCount( DMENU_LINK_FEST* wk, int param );
 static void ninput_SetMiscCount( DMENU_LINK_FEST* wk, int param, int value );
@@ -583,7 +504,7 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
 
   wk->wset = WORDSET_CreateEx( 16,64,wk->heapID );
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-      ARCID_DEBUG_MESSAGE, NARC_debug_message_d_livecomm_dat, wk->heapID );
+      ARCID_DEBUG_MESSAGE, NARC_debug_message_d_linkfest_dat, wk->heapID );
   
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
@@ -609,10 +530,10 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
     GFL_STR_SetStringCodeOrderLength( wk->beacon_fword,
       MISC_CrossComm_GetSelfIntroduction( wk->misc_sv ), 8+EOM_SIZE );
 
-    for(i = 0;i < BEACON_PSET_MAX;i++){
-      const D_BEACON_PRM_SET* prm_set = &DATA_DebugBeaconParamSet[i];
+    for(i = 0;i < MISSION_PSET_MAX;i++){
+      const D_MISSION_PRM_SET* prm_set = &DATA_DebugMissionParamSet[i];
       if( prm_set->min >= 0 ){
-        wk->beacon_prm[ i ] = prm_set->min;
+        wk->mission_prm[ i ] = prm_set->min;
       }
     }
   }
@@ -624,19 +545,15 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
     OS_GetOwnerInfo(&owner_info);
  
     fake[FAKE_ID] = MyStatus_GetID_Low( wk->my_status );
-    fake[FAKE_NAME] = 0;
-    fake[FAKE_ZONE] = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork( wk->gdata ));
-    fake[FAKE_SEX] = MyStatus_GetMySex( wk->my_status );
-    fake[FAKE_VERSION] = GET_VERSION();  //PM_VERSION;
-    fake[FAKE_LANG] = PM_LANG;
-    fake[FAKE_COLOR] = owner_info.favoriteColor;
+    fake[FAKE_TIME] = 3;
+    fake[FAKE_QUATA] = 10;
+    fake[FAKE_PARAM] = 0;
+    fake[FAKE_REWARD] = 3;
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
     //IDだけはずらしておく
     wk->fake_prm[TR_PAT_FAKE][FAKE_ID] = GFUser_GetPublicRand0( 0xFFFF );
-    wk->fake_prm[TR_PAT_FAKE][FAKE_NAME] = 1; //GFUser_GetPublicRand0( 0xFFFF );
-    MI_CpuCopy8( &(wk->fake_prm[TR_PAT_FAKE][0]), &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
   }
   
   //送信バッファを初期化しておく
@@ -700,11 +617,11 @@ static GMEVENT_RESULT event_LinkFestMain( GMEVENT * event, int *seq, void * work
       }
       switch( ret ){
       case MENU_UPDATE_STOP:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 0, 0, 1,
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_STACK_CHECK_THROW, 0, 1,
             ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       case MENU_BEACON_REQ:
-        GMEVENT_CallEvent( event, event_CreateEventBeaconReq( wk->gsys, wk ) );
+        GMEVENT_CallEvent( event, event_CreateEventMissionReq( wk->gsys, wk ) );
         break;
       case MENU_STACK_CHECK:
         GMEVENT_CallEvent( event, event_CreateEventStackCheck( wk->gsys, wk, wk->view_wk->infoStack ) );
@@ -780,7 +697,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         DEBUG_RecvBeaconBufferClear();
         break;
       case MENU_MY_GPOWER:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 1, 0, GPOWER_ID_CAPTURE_S+1,
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_GPOWER, 0, GPOWER_ID_CAPTURE_S+1,
             ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       case MENU_MISSION_START:
@@ -788,7 +705,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           GMEVENT* mission_ev;
           FEST_MISSION mission;
 
-          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, 3, 1,0, 3);
+          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, 3, 10,0, 3);
 
           mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
             FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );
@@ -799,6 +716,13 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         return GMEVENT_RES_CONTINUE;
       case MENU_MISSION_END:
         FEST_MISSION_DEBUG_KillMission( wk->fest_mission );
+        break;
+      case MENU_MISSION_REQ:
+        GMEVENT_CallEvent( event, event_CreateEventMissionReq( wk->gsys, wk ) );
+        break;
+      case MENU_MISSION_BEACON_WAIT:
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_BEACON_WAIT, 3, 60, 
+            ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       }
       *seq = SEQ_MENU_INIT; 
@@ -885,7 +809,7 @@ static void sub_GetZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf 
  *  @brief  指定パラメータワード展開
  */
 //----------------------------------------------------------
-static void sub_BeaconParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type )
+static void sub_MissionParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type )
 {
   switch( type ){
   case BPRM_WSET_TRNAME:
@@ -914,8 +838,8 @@ static void sub_BeaconParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM
   case BPRM_WSET_ACTION:
     GFL_MSG_GetString( wk->msgman, dlf_action_00+value, wk->str_tmp );
     break;
-  case BPRM_WSET_BEACON_REQ_TRAINER:
-    GFL_MSG_GetString( wk->msgman, dlf_beacon_req_trainer01+value, wk->str_tmp );
+  case BPRM_WSET_MISSION_REQ_TYPE:
+    GFL_MSG_GetString( wk->msgman, dlf_mission_req_type01+value, wk->str_tmp );
     break;
   case BPRM_WSET_SEX:
     GFL_MSG_GetString( wk->msgman, dlf_sex_male+value, wk->str_tmp );
@@ -967,7 +891,7 @@ static void sub_BeaconInfoSet( DMENU_LINK_FEST* wk, TR_PATTERN pat )
   u8  old_detail;
   GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
   int* fake = &wk->fake_prm[pat][0]; 
-
+#if 0
   //直前のdetail_noだけは引き継ぐ
   old_detail = info->details.details_no;
   GAMEBEACON_Setting( wk->gdata );
@@ -987,15 +911,12 @@ static void sub_BeaconInfoSet( DMENU_LINK_FEST* wk, TR_PATTERN pat )
       fake[i] = (GFUser_GetPublicRand0( range ))+f_prm->min;
     }
     info->trainer_view = GFUser_GetPublicRand0( 8 );
-    if( wk->fake_prm[TR_PAT_FAKE][FAKE_LANG] == 6 ){ //無効値にしていると言語バージョン固定
-      fake[FAKE_LANG] = wk->fake_prm[TR_PAT_MINE][FAKE_LANG];
-    }
     break;
   }
   //id
   info->trainer_id = (u16)fake[FAKE_ID];
   //name
-  sub_BeaconParamWordset( wk, 7, fake[FAKE_NAME], BPRM_WSET_TRNAME_EX );
+  sub_MissionParamWordset( wk, 7, fake[FAKE_NAME], BPRM_WSET_TRNAME_EX );
   sub_GetMsgToBuf( wk, dlf_tmp_buf );
   sub_GetStringCode( wk->str_expand, info->name, PERSON_NAME_SIZE);
   //zone
@@ -1009,6 +930,7 @@ static void sub_BeaconInfoSet( DMENU_LINK_FEST* wk, TR_PATTERN pat )
   info->language = fake[FAKE_LANG];
   //color
   info->favorite_color_index = fake[FAKE_COLOR];
+#endif
 }
 
 //===================================================================================
@@ -1180,7 +1102,7 @@ static void ninput_PrintNumWin( DMENU_LINK_FEST* wk, EVWK_NINPUT* evwk, BMP_WIN*
   if( evwk->wset_type == BPRM_WSET_NONE ){
     sub_GetMsgToBuf( wk, dlf_num_input01 );
   }else{
-    sub_BeaconParamWordset( wk, 1, num, evwk->wset_type );
+    sub_MissionParamWordset( wk, 1, num, evwk->wset_type );
     sub_GetMsgToBuf( wk, dlf_num_input02 );
   }
 
@@ -1424,58 +1346,58 @@ static void scheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_STACK_CHECK* evwk, u8 pag
 }
 
 //===================================================================================
-//ビーコン送信ユーティリティイベント
+//ミッションリクエストユーティリティイベント
 //===================================================================================
-typedef struct _EVWK_BEACON_REQ{
+typedef struct _EVWK_MISSION_REQ{
   DMENU_LINK_FEST* dlf_wk;
 
   u8      line;
   int     type;
   int     action;
 
-  const D_BEACON_PARAM* b_prm;
-  const D_BEACON_PRM_SET* b_prm_set;
+  const D_MISSION_PARAM* m_prm;
+  const D_MISSION_PRM_SET* m_prm_set;
 
   BMP_WIN win_main;
   BMP_WIN win_line;
-}EVWK_BEACON_REQ;
+}EVWK_MISSION_REQ;
 
-static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * work);
-static void breq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, u8 line );
-static void breq_PrintLine( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, u8 line, STRBUF* str );
-static void breq_DrawBeaconType( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk );
-static void breq_DrawAction( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk );
-static void breq_DrawFake( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk );
-static void breq_BeaconSend( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, u8 direct_mode );
+static GMEVENT_RESULT event_MissionReqMain( GMEVENT * event, int *seq, void * work);
+static void mreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 line );
+static void mreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 line, STRBUF* str );
+static void mreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk );
+static void mreq_DrawMissionID( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk );
+static void mreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk );
+static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 direct_mode, GMEVENT* parent );
 
 //--------------------------------------------------------------
 /**
- * ビーコン送信イベント生成
+ * ミッションリクエストイベント生成
  * @param wk  DEBUG_MENU_EVENT_WORK*
  */
 //--------------------------------------------------------------
-static GMEVENT* event_CreateEventBeaconReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk )
+static GMEVENT* event_CreateEventMissionReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk )
 {
-  EVWK_BEACON_REQ* evwk;
+  EVWK_MISSION_REQ* evwk;
   GMEVENT* event;
 
-  event = GMEVENT_Create( gsys, NULL, event_BeaconReqMain, sizeof(EVWK_BEACON_REQ) );
+  event = GMEVENT_Create( gsys, NULL, event_MissionReqMain, sizeof(EVWK_MISSION_REQ) );
 
   evwk = GMEVENT_GetEventWork( event );
   evwk->dlf_wk = wk; 
 
-  evwk->action = GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
+  evwk->action = 1; //GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
   return event;
 }
 
 //--------------------------------------------------------------
 /*
- *  @brief  ビーコン送信イベント
+ *  @brief  ミッションリクエストイベント
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT event_MissionReqMain( GMEVENT * event, int *seq, void * work)
 {
-  EVWK_BEACON_REQ* evwk = (EVWK_BEACON_REQ*)work;
+  EVWK_MISSION_REQ* evwk = (EVWK_MISSION_REQ*)work;
   DMENU_LINK_FEST* wk = evwk->dlf_wk;
 
   switch(*seq)
@@ -1483,15 +1405,15 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
   case 0:
     sub_BmpWinAdd( &evwk->win_main, 1, 0, 31, 22 );
     sub_BmpWinAdd( &evwk->win_line, 0, 0, 1, 22 );
-    breq_PrintCursor( wk, evwk, evwk->line );
+    mreq_PrintCursor( wk, evwk, evwk->line );
     (*seq)++;
     break;
   case 1:
-    evwk->b_prm = &DATA_DebugBeaconParam[ evwk->action ];
-    evwk->b_prm_set = &DATA_DebugBeaconParamSet[ evwk->b_prm->prm_type ];
-    breq_DrawBeaconType( wk, evwk );
-    breq_DrawAction( wk, evwk );
-    breq_DrawFake( wk, evwk );
+    evwk->m_prm = &DATA_DebugMissionParam[ evwk->action ];
+    evwk->m_prm_set = &DATA_DebugMissionParamSet[ evwk->m_prm->prm_type ];
+    mreq_DrawMissionType( wk, evwk );
+    mreq_DrawMissionID( wk, evwk );
+    mreq_DrawFake( wk, evwk );
     (*seq)++;
     break;
   case 2:
@@ -1502,18 +1424,17 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
         break;
       }else if( trg & PAD_KEY_UP ){
         evwk->line = (evwk->line+(BREQ_LINE_MAX-1))%BREQ_LINE_MAX;
-        breq_PrintCursor( wk, evwk, evwk->line );
+        mreq_PrintCursor( wk, evwk, evwk->line );
         break;
       }else if( trg & PAD_KEY_DOWN ){
         evwk->line = (evwk->line+1)%BREQ_LINE_MAX;
-        breq_PrintCursor( wk, evwk, evwk->line );
+        mreq_PrintCursor( wk, evwk, evwk->line );
         break;
       }else if( trg & PAD_BUTTON_START ){
-        breq_BeaconSend( wk, evwk, FALSE );
-        break;
-      }else if( trg & PAD_BUTTON_SELECT ){
-        breq_BeaconSend( wk, evwk, TRUE );
-        break;
+        mreq_MissionStart( wk, evwk, FALSE, event );
+        sub_BmpWinDel( &evwk->win_line );
+        sub_BmpWinDel( &evwk->win_main );
+        return GMEVENT_RES_CONTINUE;
       }
 
       if( (trg & PAD_BUTTON_A) == 0 ){
@@ -1521,19 +1442,19 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
       }
       switch( evwk->line ){
       case 0:
-        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 0, 2,
-            &evwk->type, BPRM_WSET_BEACON_REQ_TRAINER));
+        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 0, TR_PAT_MAX-1,
+            &evwk->type, BPRM_WSET_MISSION_REQ_TYPE));
         break;
       case 1:
         GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            0, GAMEBEACON_ACTION_MAX-1,
+            1, FEST_MISSION_ID_END,
             &evwk->action, BPRM_WSET_ACTION ));
         break;
       case 2:
-        if( evwk->b_prm_set->min >= 0 ){
+        if( evwk->m_prm_set->min >= 0 ){
           GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            evwk->b_prm_set->min, evwk->b_prm_set->max,
-            &wk->beacon_prm[evwk->b_prm->prm_type], evwk->b_prm_set->wset_type ));
+            evwk->m_prm_set->min, evwk->m_prm_set->max,
+            &wk->mission_prm[evwk->m_prm->prm_type], evwk->m_prm_set->wset_type ));
         }
         break;
       default:
@@ -1559,7 +1480,7 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
   return GMEVENT_RES_CONTINUE;
 }
 
-static void breq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, u8 line )
+static void mreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 line )
 {
   GFL_BMP_Clear( evwk->win_line.bmp, FCOL_WIN_BASE );
   GFL_MSG_GetString( wk->msgman, dlf_cursor, wk->str_tmp );
@@ -1567,42 +1488,42 @@ static void breq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, u8 lin
 	GFL_BMPWIN_TransVramCharacter( evwk->win_line.win );
 }
 
-static void breq_PrintLine( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, u8 line, STRBUF* str )
+static void mreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 line, STRBUF* str )
 {
   GFL_BMP_Fill( evwk->win_main.bmp, 0, line*16, BREQ_WIN_MAIN_SX*8, 16, FCOL_WIN_BASE );
 	PRINTSYS_PrintColor( evwk->win_main.bmp, 0, line*16, str, wk->fontHandle, FCOL_WIN_W );
 	GFL_BMPWIN_TransVramCharacter( evwk->win_main.win );
 }
 
-static void breq_DrawBeaconType( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk )
+static void mreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk )
 {
-  GFL_MSG_GetString( wk->msgman, dlf_beacon_req_trainer01+evwk->type, wk->str_tmp );
-  breq_PrintLine( wk, evwk, 0, wk->str_tmp );
+  GFL_MSG_GetString( wk->msgman, dlf_mission_req_type01+evwk->type, wk->str_tmp );
+  mreq_PrintLine( wk, evwk, 0, wk->str_tmp );
 }
 
-static void breq_DrawAction( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk )
+static void mreq_DrawMissionID( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk )
 {
   int value;
 
   WORDSET_RegisterNumber( wk->wset, 0, evwk->action, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-  sub_BeaconParamWordset( wk, 1, evwk->action, BPRM_WSET_ACTION );
+  sub_MissionParamWordset( wk, 1, evwk->action, BPRM_WSET_ACTION );
 
-  sub_GetMsgToBuf( wk, dlf_beacon_req_action );
-  breq_PrintLine( wk, evwk, 1, wk->str_expand );
+  sub_GetMsgToBuf( wk, dlf_mprm_req_id );
+  mreq_PrintLine( wk, evwk, 1, wk->str_expand );
 
   //パラメータプリント
-  value = wk->beacon_prm[evwk->b_prm->prm_type];
+  value = wk->mission_prm[evwk->m_prm->prm_type];
 
   WORDSET_RegisterNumber( wk->wset, 0, value,  5, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
   sub_FreeWordset( wk->wset, 2, wk->beacon_nickname );
   sub_FreeWordset( wk->wset, 3, wk->beacon_fword );
 
-  sub_BeaconParamWordset( wk, 1, value, evwk->b_prm_set->wset_type );
-  sub_GetMsgToBuf( wk, dlf_beacon_req_param01+evwk->b_prm->prm_type );
-  breq_PrintLine( wk, evwk, 2, wk->str_expand );
+  sub_MissionParamWordset( wk, 1, value, evwk->m_prm_set->wset_type );
+  sub_GetMsgToBuf( wk, dlf_beacon_req_param01+evwk->m_prm->prm_type );
+  mreq_PrintLine( wk, evwk, 2, wk->str_expand );
 }
 
-static void breq_DrawFakeLine( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, FAKE_DATA_ID fake_id )
+static void mreq_DrawFakeLine( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, FAKE_DATA_ID fake_id )
 {
   u8 line = 3+fake_id;
   int* mine = &wk->fake_prm[ TR_PAT_MINE ][0];
@@ -1611,109 +1532,39 @@ static void breq_DrawFakeLine( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, FAKE_
 
   WORDSET_RegisterNumber(wk->wset, 0, fake[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   WORDSET_RegisterNumber(wk->wset, 1, mine[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-  sub_BeaconParamWordset( wk, 2, fake[fake_id], f_prm->wset_type );
-  sub_BeaconParamWordset( wk, 3, mine[fake_id], f_prm->wset_type );
+  sub_MissionParamWordset( wk, 2, fake[fake_id], f_prm->wset_type );
+  sub_MissionParamWordset( wk, 3, mine[fake_id], f_prm->wset_type );
   
-  sub_GetMsgToBuf( wk, dlf_fake_tr_id+fake_id );
-  breq_PrintLine( wk, evwk, line, wk->str_expand );
+  sub_GetMsgToBuf( wk, dlf_mprm_id+fake_id );
+  mreq_PrintLine( wk, evwk, line, wk->str_expand );
 }
 
-static void breq_DrawFake( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk )
+static void mreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk )
 {
   int i;
   
   for(i = 0;i < FAKE_DATA_MAX;i++){
-    breq_DrawFakeLine( wk, evwk, i );
+    mreq_DrawFakeLine( wk, evwk, i );
   }
-//  MI_CpuCopy8( &(wk->fake_prm[TR_PAT_FAKE][0]), &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
 }
 
-static void breq_BeaconSend( DMENU_LINK_FEST* wk, EVWK_BEACON_REQ* evwk, u8 direct_mode )
+static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 direct_mode, GMEVENT* parent )
 {
   int value = -1;
+  int* fake = &wk->fake_prm[evwk->type][0]; 
+  GMEVENT* mission_ev;
+  FEST_MISSION mission;
 
-  sub_BeaconInfoSet( wk, evwk->type );
-
-  if( evwk->b_prm_set->max >= 0 ){
-    value = wk->beacon_prm[ evwk->b_prm->prm_type ];
+  OS_Printf("type=%d\n",evwk->type);
+  if( evwk->m_prm_set->max >= 0 ){
+    value = wk->mission_prm[ evwk->m_prm->prm_type ];
   }
+  FEST_MISSION_ParamSet( &mission, evwk->action, fake[FAKE_REWARD], fake[FAKE_QUATA], fake[FAKE_PARAM], fake[FAKE_TIME] );
 
-  if( evwk->action < 2 ){ //ランダム
-    int action,range;
-    
-    range = GAMEBEACON_ACTION_MAX-GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
-    action = GFUser_GetPublicRand0( 0xFFFF )%range+GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
-    evwk->b_prm = &DATA_DebugBeaconParam[ action ];
-    evwk->b_prm_set = &DATA_DebugBeaconParamSet[ evwk->b_prm->prm_type ];
-
-    if( evwk->b_prm_set->max >= 0 ){
-      if( evwk->action == 0 ){
-        value = wk->beacon_prm[ evwk->b_prm->prm_type ];
-      }else{
-        range = (evwk->b_prm_set->max-evwk->b_prm_set->min)+1;
-        value = GFUser_GetPublicRand0( 0xFFFF )%range+evwk->b_prm_set->min;
-      }
-    }
-    OS_Printf("RandomAction = %d, param = %d\n", action, value );
-  }else{
-    OS_Printf("SetAction = %d, param = %d\n", evwk->action, value );
-  }
-  DEBUG_SendBeaconPriorityEgnoreFlagSet( TRUE );
-
-  switch( evwk->b_prm->arg_type ) {
-  case	BEACON_ARG_NONE:
-    ((BEACON_SET_FUNC_NONE)evwk->b_prm->func)();
-    break;
-  case	BEACON_ARG_U8:
-    GF_ASSERT( value >= 0 );
-    ((BEACON_SET_FUNC_U8)evwk->b_prm->func)( (u8)value );
-    break;
-  case	BEACON_ARG_U16:
-    GF_ASSERT( value >= 0 );
-    ((BEACON_SET_FUNC_U16)evwk->b_prm->func)( (u16)value );
-    break;
-  case	BEACON_ARG_U32:
-    GF_ASSERT( value >= 0 );
-    ((BEACON_SET_FUNC_U32)evwk->b_prm->func)( (u32)value );
-    break;
-  case	BEACON_ARG_STR:
-    ((BEACON_SET_FUNC_STR)evwk->b_prm->func)( wk->beacon_nickname );
-    break;
-  case	BEACON_ARG_U16_STR:
-    GF_ASSERT( value >= 0 );
-    ((BEACON_SET_FUNC_U16_STR)evwk->b_prm->func)( (u16)value, wk->beacon_nickname );
-    break;
-  case	BEACON_ARG_GDATA_U32:
-    GF_ASSERT( value >= 0 );
-    ((BEACON_SET_FUNC_GDATA_U32)evwk->b_prm->func)( wk->gdata, (u32)value );
-    break;
-  case	BEACON_ARG_FWORD:
-    ((BEACON_SET_FUNC_STR)evwk->b_prm->func)( wk->beacon_fword );
-    break;
-  case	BEACON_ARG_GPOWER:
-    GF_ASSERT( value >= 0 );
-    ((BEACON_SET_FUNC_GPOWER)evwk->b_prm->func)( (GPOWER_ID)value );
-    break;
-  case	BEACON_ARG_FWAZA:
-    GF_ASSERT( value >= 0 );
-    ((BEACON_SET_FUNC_U16)evwk->b_prm->func)( (u16)DATA_FieldWazaTbl[value] );
-    break;
-  }
-  DEBUG_SendBeaconPriorityEgnoreFlagSet( FALSE );
-
-  if(direct_mode){  //ビーコンを飛ばすと同時に直接自分のスタックに積む
-    RTCTime recv_time;
-    u16 time;
-    GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
-
-    GFL_RTC_GetTime(&recv_time);
-    time = (recv_time.hour << 8) | recv_time.minute;
-
-    GAMEBEACON_InfoTbl_SetBeacon(
-      wk->view_wk->infoStack, info, time, FALSE);
-
-//    DEBUG_SendBeaconCancel(); //送信キャンセル
-  }
+  mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
+    FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );
+          
+  GMEVENT_ChangeEvent(parent, mission_ev);
 }
 
 //===========================================================================
@@ -1745,7 +1596,7 @@ static void ninput_SetMiscCount( DMENU_LINK_FEST* wk, int param, int value )
   switch(param){
   case 0:
     MISC_CrossComm_SetSuretigaiCount( wk->misc_sv, value );
-    DEBUG_BEACON_VIEW_SuretigaiCountSet( wk->view_wk, value );
+ //   DEBUG_BEACON_VIEW_SuretigaiCountSet( wk->view_wk, value );
     break;
   case 1:
     MISC_CrossComm_SetThanksRecvCount( wk->misc_sv, value );
@@ -1761,9 +1612,9 @@ static void ninput_SetMiscCount( DMENU_LINK_FEST* wk, int param, int value )
 static int ninput_GetDebugParam( DMENU_LINK_FEST* wk, int param )
 {
   switch(param){
-  case 0:
+  case NINPUT_STACK_CHECK_THROW:
     return DEBUG_BEACON_STATUS_GetStackCheckThrowFlag( wk->b_status );
-  case 1:
+  case NINPUT_GPOWER:
     {
       INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(wk->save);
       GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(int_sv);
@@ -1774,7 +1625,9 @@ static int ninput_GetDebugParam( DMENU_LINK_FEST* wk, int param )
       }
     }
     break;
-
+  case NINPUT_MISSION_BEACON_WAIT:
+    return DEB_LINKFEST_GetBeaconWait( wk->fest_sys )/60;
+    break;
   }
   return 0;
 }
@@ -1787,10 +1640,10 @@ static int ninput_GetDebugParam( DMENU_LINK_FEST* wk, int param )
 static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
 {
   switch(param){
-  case 0:
+  case NINPUT_STACK_CHECK_THROW:
     DEBUG_BEACON_STATUS_SetStackCheckThrowFlag( wk->b_status, value );
     break;
-  case 1:
+  case NINPUT_GPOWER:
     {
       INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(wk->save);
       if( value == 0 ){
@@ -1801,7 +1654,9 @@ static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
       ISC_SAVE_SetGPowerID( int_sv, value );
     }
     break;
-
+  case NINPUT_MISSION_BEACON_WAIT:
+    DEB_LINKFEST_SetBeaconWait( wk->fest_sys, value*60 );
+    break;
   }
 }
 
