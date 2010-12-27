@@ -14,7 +14,7 @@ if ENV['PROJECT_DOC_ROOT'] == nil then
   ENV['PROJECT_DOC_ROOT'] = "C:/home/swan_doc/"
 end
 
-XLS_FILENAME  = ENV['PROJECT_DOC_ROOT']+'仕様書/フィールド/動作モデル一覧.xls'
+XLS_FILENAME  = ENV['PROJECT_DOC_ROOT']+'企画・仕様/フィールド/動作モデル/動作モデル一覧.xls'
 PIC_DIR       = ENV['PROJECT_ROOT']+'resource/fldmmdl/mmdl_pict/'
 CHARA_DIR     = ENV['PROJECT_ROOT']+'resource/fldmmdl/mmdl_nchara/'
 POS_DATA_COM  = 3 # ポスデータに使用されているコメント行の数
