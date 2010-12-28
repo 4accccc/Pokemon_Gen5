@@ -1,0 +1,5 @@
+#../data/r23.mev
+../tmp/r23.bin:../data/r23.mev ../../script/sp_r23.bin $(UNIQ_SCRIPTHEADER) ../tmp/r23.h 
+	@echo ../data/r23.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r23.h 
+

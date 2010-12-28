@@ -1,0 +1,5 @@
+#../data/h06.mev
+../tmp/h06.bin:../data/h06.mev ../../script/sp_h06.bin $(UNIQ_SCRIPTHEADER) ../tmp/h06.h 
+	@echo ../data/h06.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/h06.h 
+

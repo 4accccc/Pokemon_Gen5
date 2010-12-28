@@ -1,0 +1,5 @@
+#../data/w21.mev
+../tmp/w21.bin:../data/w21.mev ../../script/sp_w21.bin $(UNIQ_SCRIPTHEADER) ../tmp/w21.h 
+	@echo ../data/w21.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/w21.h 
+

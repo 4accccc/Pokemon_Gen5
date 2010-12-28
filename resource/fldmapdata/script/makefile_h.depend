@@ -1422,6 +1422,201 @@ wc10pcr0101_def.h: wc10pcr0101.ev
 wc10r0101_def.h: wc10r0101.ev
 	$(EV_DEF) wc10r0101.ev $(SCR_OFFS_ID_H)
 
+c12_def.h: c12.ev
+	$(EV_DEF) c12.ev $(SCR_OFFS_ID_H)
+
+c12r0101_def.h: c12r0101.ev
+	$(EV_DEF) c12r0101.ev $(SCR_OFFS_ID_H)
+
+c12r0201_def.h: c12r0201.ev
+	$(EV_DEF) c12r0201.ev $(SCR_OFFS_ID_H)
+
+c12r0202_def.h: c12r0202.ev
+	$(EV_DEF) c12r0202.ev $(SCR_OFFS_ID_H)
+
+c12r0301_def.h: c12r0301.ev
+	$(EV_DEF) c12r0301.ev $(SCR_OFFS_ID_H)
+
+c12r0302_def.h: c12r0302.ev
+	$(EV_DEF) c12r0302.ev $(SCR_OFFS_ID_H)
+
+c12r0401_def.h: c12r0401.ev
+	$(EV_DEF) c12r0401.ev $(SCR_OFFS_ID_H)
+
+c12r0402_def.h: c12r0402.ev
+	$(EV_DEF) c12r0402.ev $(SCR_OFFS_ID_H)
+
+c12pc0101_def.h: c12pc0101.ev
+	$(EV_DEF) c12pc0101.ev $(SCR_OFFS_ID_H)
+
+c12gym0101_def.h: c12gym0101.ev
+	$(EV_DEF) c12gym0101.ev $(SCR_OFFS_ID_H)
+
+c12p01_def.h: c12p01.ev
+	$(EV_DEF) c12p01.ev $(SCR_OFFS_ID_H)
+
+r19_def.h: r19.ev
+	$(EV_DEF) r19.ev $(SCR_OFFS_ID_H)
+
+r19r0101_def.h: r19r0101.ev
+	$(EV_DEF) r19r0101.ev $(SCR_OFFS_ID_H)
+
+t06_def.h: t06.ev
+	$(EV_DEF) t06.ev $(SCR_OFFS_ID_H)
+
+t06r0101_def.h: t06r0101.ev
+	$(EV_DEF) t06r0101.ev $(SCR_OFFS_ID_H)
+
+t06r0201_def.h: t06r0201.ev
+	$(EV_DEF) t06r0201.ev $(SCR_OFFS_ID_H)
+
+t06r0301_def.h: t06r0301.ev
+	$(EV_DEF) t06r0301.ev $(SCR_OFFS_ID_H)
+
+t06pc0101_def.h: t06pc0101.ev
+	$(EV_DEF) t06pc0101.ev $(SCR_OFFS_ID_H)
+
+d22_def.h: d22.ev
+	$(EV_DEF) d22.ev $(SCR_OFFS_ID_H)
+
+d22r0101_def.h: d22r0101.ev
+	$(EV_DEF) d22r0101.ev $(SCR_OFFS_ID_H)
+
+r20_def.h: r20.ev
+	$(EV_DEF) r20.ev $(SCR_OFFS_ID_H)
+
+r20r0101_def.h: r20r0101.ev
+	$(EV_DEF) r20r0101.ev $(SCR_OFFS_ID_H)
+
+c13_def.h: c13.ev
+	$(EV_DEF) c13.ev $(SCR_OFFS_ID_H)
+
+c13r0101_def.h: c13r0101.ev
+	$(EV_DEF) c13r0101.ev $(SCR_OFFS_ID_H)
+
+c13r0201_def.h: c13r0201.ev
+	$(EV_DEF) c13r0201.ev $(SCR_OFFS_ID_H)
+
+c13r0301_def.h: c13r0301.ev
+	$(EV_DEF) c13r0301.ev $(SCR_OFFS_ID_H)
+
+c13r0401_def.h: c13r0401.ev
+	$(EV_DEF) c13r0401.ev $(SCR_OFFS_ID_H)
+
+c13r0501_def.h: c13r0501.ev
+	$(EV_DEF) c13r0501.ev $(SCR_OFFS_ID_H)
+
+c13pc0101_def.h: c13pc0101.ev
+	$(EV_DEF) c13pc0101.ev $(SCR_OFFS_ID_H)
+
+c13gym0101_def.h: c13gym0101.ev
+	$(EV_DEF) c13gym0101.ev $(SCR_OFFS_ID_H)
+
+d23_def.h: d23.ev
+	$(EV_DEF) d23.ev $(SCR_OFFS_ID_H)
+
+d23r0101_def.h: d23r0101.ev
+	$(EV_DEF) d23r0101.ev $(SCR_OFFS_ID_H)
+
+t07_def.h: t07.ev
+	$(EV_DEF) t07.ev $(SCR_OFFS_ID_H)
+
+t07r0101_def.h: t07r0101.ev
+	$(EV_DEF) t07r0101.ev $(SCR_OFFS_ID_H)
+
+t07pc0101_def.h: t07pc0101.ev
+	$(EV_DEF) t07pc0101.ev $(SCR_OFFS_ID_H)
+
+d24_def.h: d24.ev
+	$(EV_DEF) d24.ev $(SCR_OFFS_ID_H)
+
+d25r0101_def.h: d25r0101.ev
+	$(EV_DEF) d25r0101.ev $(SCR_OFFS_ID_H)
+
+w21_def.h: w21.ev
+	$(EV_DEF) w21.ev $(SCR_OFFS_ID_H)
+
+w21r0101_def.h: w21r0101.ev
+	$(EV_DEF) w21r0101.ev $(SCR_OFFS_ID_H)
+
+h06_def.h: h06.ev
+	$(EV_DEF) h06.ev $(SCR_OFFS_ID_H)
+
+c14_def.h: c14.ev
+	$(EV_DEF) c14.ev $(SCR_OFFS_ID_H)
+
+c14r0101_def.h: c14r0101.ev
+	$(EV_DEF) c14r0101.ev $(SCR_OFFS_ID_H)
+
+c14r0201_def.h: c14r0201.ev
+	$(EV_DEF) c14r0201.ev $(SCR_OFFS_ID_H)
+
+c14r0301_def.h: c14r0301.ev
+	$(EV_DEF) c14r0301.ev $(SCR_OFFS_ID_H)
+
+c14r0401_def.h: c14r0401.ev
+	$(EV_DEF) c14r0401.ev $(SCR_OFFS_ID_H)
+
+c14r0501_def.h: c14r0501.ev
+	$(EV_DEF) c14r0501.ev $(SCR_OFFS_ID_H)
+
+c14r0601_def.h: c14r0601.ev
+	$(EV_DEF) c14r0601.ev $(SCR_OFFS_ID_H)
+
+c14pc0101_def.h: c14pc0101.ev
+	$(EV_DEF) c14pc0101.ev $(SCR_OFFS_ID_H)
+
+c14gym0101_def.h: c14gym0101.ev
+	$(EV_DEF) c14gym0101.ev $(SCR_OFFS_ID_H)
+
+r22_def.h: r22.ev
+	$(EV_DEF) r22.ev $(SCR_OFFS_ID_H)
+
+r22r0101_def.h: r22r0101.ev
+	$(EV_DEF) r22r0101.ev $(SCR_OFFS_ID_H)
+
+r23_def.h: r23.ev
+	$(EV_DEF) r23.ev $(SCR_OFFS_ID_H)
+
+r23r0101_def.h: r23r0101.ev
+	$(EV_DEF) r23r0101.ev $(SCR_OFFS_ID_H)
+
+r23r0201_def.h: r23r0201.ev
+	$(EV_DEF) r23r0201.ev $(SCR_OFFS_ID_H)
+
+d27_def.h: d27.ev
+	$(EV_DEF) d27.ev $(SCR_OFFS_ID_H)
+
+d31r0101_def.h: d31r0101.ev
+	$(EV_DEF) d31r0101.ev $(SCR_OFFS_ID_H)
+
+d31r0201_def.h: d31r0201.ev
+	$(EV_DEF) d31r0201.ev $(SCR_OFFS_ID_H)
+
+d31r0301_def.h: d31r0301.ev
+	$(EV_DEF) d31r0301.ev $(SCR_OFFS_ID_H)
+
+d31r0401_def.h: d31r0401.ev
+	$(EV_DEF) d31r0401.ev $(SCR_OFFS_ID_H)
+
+d31r0501_def.h: d31r0501.ev
+	$(EV_DEF) d31r0501.ev $(SCR_OFFS_ID_H)
+
+d31r0601_def.h: d31r0601.ev
+	$(EV_DEF) d31r0601.ev $(SCR_OFFS_ID_H)
+
+d31r0701_def.h: d31r0701.ev
+	$(EV_DEF) d31r0701.ev $(SCR_OFFS_ID_H)
+
+d31r0801_def.h: d31r0801.ev
+	$(EV_DEF) d31r0801.ev $(SCR_OFFS_ID_H)
+
+d31r0901_def.h: d31r0901.ev
+	$(EV_DEF) d31r0901.ev $(SCR_OFFS_ID_H)
+
+d31r1001_def.h: d31r1001.ev
+	$(EV_DEF) d31r1001.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
