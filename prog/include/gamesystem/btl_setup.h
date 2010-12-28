@@ -115,6 +115,9 @@ extern void BTL_SETUP_SetRecordPlayMode( BATTLE_SETUP_PARAM* dst );
 extern void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata,
   const POKEPARTY* partyEnemy, const BTL_FIELD_SITUATION* sit, const BtlRule rule, HEAPID heapID );
 
+extern void BTL_SETUP_WildMulti( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
+  const POKEPARTY* partyEnemy, TrainerID trID, const BTL_FIELD_SITUATION* sit, HEAPID heapID );
+
 extern void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID );
 

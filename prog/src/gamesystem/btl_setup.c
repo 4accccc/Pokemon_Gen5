@@ -433,6 +433,56 @@ void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
 
 //=============================================================================================
 /**
+ * @brief 野生AIマルチ戦コモンパラメータセット
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   heapID
+ * @param   rule
+ * @param   partyEnemy
+ * @param   sit
+ *
+ * @li  内部でメモリの確保を行います。
+ *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
+ */
+//=============================================================================================
+void BTL_SETUP_WildMulti( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
+  const POKEPARTY* partyEnemy, TrainerID trID, const BTL_FIELD_SITUATION* sit, HEAPID heapID )
+{
+  BATTLE_PARAM_Init( bp );
+  setup_common( bp, gameData, (BTL_FIELD_SITUATION*)sit );
+  setup_player_param( bp, gameData, heapID );
+
+  //パートナーセット
+  setup_trainer_param( bp, gameData, BTL_CLIENT_PARTNER, &bp->party[ BTL_CLIENT_PARTNER ], trID, heapID );
+
+  //エネミーセット
+  bp->party[ BTL_CLIENT_ENEMY1 ] = PokeParty_AllocPartyWork( heapID );
+  if( partyEnemy != NULL ){
+    PokeParty_Copy( partyEnemy, bp->party[ BTL_CLIENT_ENEMY1 ] );
+  }
+
+  bp->competitor = BTL_COMPETITOR_WILD;
+  bp->rule = BTL_RULE_DOUBLE;
+  bp->multiMode = BTL_MULTIMODE_PA_A;
+
+  // ボックス＆手持ち満杯フラグ
+  if( PokeParty_GetPokeCount(bp->party[BTL_CLIENT_PLAYER]) == PokeParty_GetPokeCountMax(bp->party[BTL_CLIENT_PLAYER]) )
+  {
+    BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( gameData );
+    int tray_num=0, box_pos=0;
+
+    // tray_num, box_pos を取得する必要は無いが、
+    // こちらの方が動作が速そう＆バトル後に空き位置を探すために同関数が使われるので
+    // 同じ関数で空きの有無をチェックしている… taya
+    if( !BOXDAT_GetEmptyTrayNumberAndPos(boxman, &tray_num, &box_pos) ){
+      BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_BOXFULL );
+    }
+  }
+}
+
+//=============================================================================================
+/**
  * ゲーム内トレーナー対戦コモン
  *
  * @param   dst

@@ -205,6 +205,8 @@ typedef enum {
   BTL_MULTIMODE_PA_AA,    ///< プレイヤー１人＆AI１人 vs AI２人（AIマルチ）
   BTL_MULTIMODE_P_AA,     ///< プレイヤー１人 VS AI２人（AIタッグ）
 
+  //スワン追加
+  BTL_MULTIMODE_PA_A,     ///< (プレイヤー 1 + AI 1) VS AI(AIダブル、人物連れ歩き時野生2v2)
 }BtlMultiMode_tag;
 
 typedef u8 BtlMultiMode;

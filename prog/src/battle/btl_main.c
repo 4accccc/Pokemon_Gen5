@@ -1080,6 +1080,11 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
     wk->posCoverClientID[BTL_POS_2ND_1] = BTL_CLIENT_ENEMY2;
     wk->numClients = 3;
     break;
+
+  case BTL_MULTIMODE_PA_A:  // AIƒ_ƒuƒ‹
+    wk->posCoverClientID[BTL_POS_1ST_1] = BTL_CLIENT_PARTNER;
+    wk->numClients = 3;
+    break;
   }
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
