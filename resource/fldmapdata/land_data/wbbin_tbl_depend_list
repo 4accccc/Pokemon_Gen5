@@ -1282,6 +1282,62 @@ $(DIR_WBTMP)/map17_02.tbl: $(DIR_RES)/map17_02.bin
 	@echo create_bintbl map17_02
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map17_02.bin
 
+$(DIR_WBTMP)/h06_a00_00.tbl: $(DIR_RES)/h06_a00_00.bin
+	@echo create_bintbl h06_a00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a00_00.bin
+
+$(DIR_WBTMP)/h06_a00_01.tbl: $(DIR_RES)/h06_a00_01.bin
+	@echo create_bintbl h06_a00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a00_01.bin
+
+$(DIR_WBTMP)/h06_a00_02.tbl: $(DIR_RES)/h06_a00_02.bin
+	@echo create_bintbl h06_a00_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a00_02.bin
+
+$(DIR_WBTMP)/h06_a00_03.tbl: $(DIR_RES)/h06_a00_03.bin
+	@echo create_bintbl h06_a00_03
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a00_03.bin
+
+$(DIR_WBTMP)/h06_a00_04.tbl: $(DIR_RES)/h06_a00_04.bin
+	@echo create_bintbl h06_a00_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a00_04.bin
+
+$(DIR_WBTMP)/h06_a00_05.tbl: $(DIR_RES)/h06_a00_05.bin
+	@echo create_bintbl h06_a00_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a00_05.bin
+
+$(DIR_WBTMP)/h06_a00_06.tbl: $(DIR_RES)/h06_a00_06.bin
+	@echo create_bintbl h06_a00_06
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a00_06.bin
+
+$(DIR_WBTMP)/h06_a01_00.tbl: $(DIR_RES)/h06_a01_00.bin
+	@echo create_bintbl h06_a01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_00.bin
+
+$(DIR_WBTMP)/h06_a01_01.tbl: $(DIR_RES)/h06_a01_01.bin
+	@echo create_bintbl h06_a01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_01.bin
+
+$(DIR_WBTMP)/h06_a01_02.tbl: $(DIR_RES)/h06_a01_02.bin
+	@echo create_bintbl h06_a01_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_02.bin
+
+$(DIR_WBTMP)/h06_a01_03.tbl: $(DIR_RES)/h06_a01_03.bin
+	@echo create_bintbl h06_a01_03
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_03.bin
+
+$(DIR_WBTMP)/h06_a01_04.tbl: $(DIR_RES)/h06_a01_04.bin
+	@echo create_bintbl h06_a01_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_04.bin
+
+$(DIR_WBTMP)/h06_a01_05.tbl: $(DIR_RES)/h06_a01_05.bin
+	@echo create_bintbl h06_a01_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_05.bin
+
+$(DIR_WBTMP)/h06_a01_06.tbl: $(DIR_RES)/h06_a01_06.bin
+	@echo create_bintbl h06_a01_06
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_06.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
