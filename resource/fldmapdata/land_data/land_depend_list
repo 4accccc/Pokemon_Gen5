@@ -278,6 +278,37 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/autumn24_21.3dppack \
 	$(DIR_OUTPUT)/winter24_22.3dppack \
 	$(DIR_OUTPUT)/winter24_21.3dppack \
+	$(DIR_OUTPUT)/map01_23.3dppack \
+	$(DIR_OUTPUT)/map01_22.3dppack \
+	$(DIR_OUTPUT)/map01_21.3dppack \
+	$(DIR_OUTPUT)/map02_21.3dppack \
+	$(DIR_OUTPUT)/map03_21.3dppack \
+	$(DIR_OUTPUT)/map03_20.3dppack \
+	$(DIR_OUTPUT)/map04_19.3dppack \
+	$(DIR_OUTPUT)/map04_20.3dppack \
+	$(DIR_OUTPUT)/map05_20.3dppack \
+	$(DIR_OUTPUT)/map04_21.3dppack \
+	$(DIR_OUTPUT)/map05_21.3dppack \
+	$(DIR_OUTPUT)/autumn04_20.3dppack \
+	$(DIR_OUTPUT)/autumn05_20.3dppack \
+	$(DIR_OUTPUT)/autumn04_21.3dppack \
+	$(DIR_OUTPUT)/autumn05_21.3dppack \
+	$(DIR_OUTPUT)/map06_20.3dppack \
+	$(DIR_OUTPUT)/map07_20.3dppack \
+	$(DIR_OUTPUT)/map06_21.3dppack \
+	$(DIR_OUTPUT)/map19_09.3dppack \
+	$(DIR_OUTPUT)/map20_09.3dppack \
+	$(DIR_OUTPUT)/map24_06.3dppack \
+	$(DIR_OUTPUT)/map24_05.3dppack \
+	$(DIR_OUTPUT)/map24_04.3dppack \
+	$(DIR_OUTPUT)/map23_04.3dppack \
+	$(DIR_OUTPUT)/map22_04.3dppack \
+	$(DIR_OUTPUT)/map20_04.3dppack \
+	$(DIR_OUTPUT)/map20_03.3dppack \
+	$(DIR_OUTPUT)/map20_02.3dppack \
+	$(DIR_OUTPUT)/map19_02.3dppack \
+	$(DIR_OUTPUT)/map18_02.3dppack \
+	$(DIR_OUTPUT)/map17_02.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -486,6 +517,12 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun2007_00_01.3dppack \
 	$(DIR_OUTPUT)/m_dun2007_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2007_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2201_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2201_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2201_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2201_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2301_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2301_00_01.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
@@ -634,6 +671,22 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_labo03_00_01.3dppack \
 	$(DIR_OUTPUT)/m_hh03_00_00.3dppack \
 	$(DIR_OUTPUT)/m_zbuill01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_swanhh01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_swanrh01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_adc01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_seahouse01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_h05_00_00.3dppack \
+	$(DIR_OUTPUT)/m_buill07_00_00.3dppack \
+	$(DIR_OUTPUT)/m_h06_00_00.3dppack \
+	$(DIR_OUTPUT)/m_h07_00_00.3dppack \
+	$(DIR_OUTPUT)/m_Wbt01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_Wbt02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_wbuill03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_wbuill04_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bbuill03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bbuill04_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gate09_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gate10_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

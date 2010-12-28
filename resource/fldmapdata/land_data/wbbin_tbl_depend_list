@@ -1158,6 +1158,130 @@ $(DIR_WBTMP)/winter24_21.tbl: $(DIR_RES)/winter24_21.bin
 	@echo create_bintbl winter24_21
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/winter24_21.bin
 
+$(DIR_WBTMP)/map01_23.tbl: $(DIR_RES)/map01_23.bin
+	@echo create_bintbl map01_23
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map01_23.bin
+
+$(DIR_WBTMP)/map01_22.tbl: $(DIR_RES)/map01_22.bin
+	@echo create_bintbl map01_22
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map01_22.bin
+
+$(DIR_WBTMP)/map01_21.tbl: $(DIR_RES)/map01_21.bin
+	@echo create_bintbl map01_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map01_21.bin
+
+$(DIR_WBTMP)/map02_21.tbl: $(DIR_RES)/map02_21.bin
+	@echo create_bintbl map02_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map02_21.bin
+
+$(DIR_WBTMP)/map03_21.tbl: $(DIR_RES)/map03_21.bin
+	@echo create_bintbl map03_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map03_21.bin
+
+$(DIR_WBTMP)/map03_20.tbl: $(DIR_RES)/map03_20.bin
+	@echo create_bintbl map03_20
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map03_20.bin
+
+$(DIR_WBTMP)/map04_19.tbl: $(DIR_RES)/map04_19.bin
+	@echo create_bintbl map04_19
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map04_19.bin
+
+$(DIR_WBTMP)/map04_20.tbl: $(DIR_RES)/map04_20.bin
+	@echo create_bintbl map04_20
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map04_20.bin
+
+$(DIR_WBTMP)/map05_20.tbl: $(DIR_RES)/map05_20.bin
+	@echo create_bintbl map05_20
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map05_20.bin
+
+$(DIR_WBTMP)/map04_21.tbl: $(DIR_RES)/map04_21.bin
+	@echo create_bintbl map04_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map04_21.bin
+
+$(DIR_WBTMP)/map05_21.tbl: $(DIR_RES)/map05_21.bin
+	@echo create_bintbl map05_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map05_21.bin
+
+$(DIR_WBTMP)/autumn04_20.tbl: $(DIR_RES)/autumn04_20.bin
+	@echo create_bintbl autumn04_20
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn04_20.bin
+
+$(DIR_WBTMP)/autumn05_20.tbl: $(DIR_RES)/autumn05_20.bin
+	@echo create_bintbl autumn05_20
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn05_20.bin
+
+$(DIR_WBTMP)/autumn04_21.tbl: $(DIR_RES)/autumn04_21.bin
+	@echo create_bintbl autumn04_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn04_21.bin
+
+$(DIR_WBTMP)/autumn05_21.tbl: $(DIR_RES)/autumn05_21.bin
+	@echo create_bintbl autumn05_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn05_21.bin
+
+$(DIR_WBTMP)/map06_20.tbl: $(DIR_RES)/map06_20.bin
+	@echo create_bintbl map06_20
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map06_20.bin
+
+$(DIR_WBTMP)/map07_20.tbl: $(DIR_RES)/map07_20.bin
+	@echo create_bintbl map07_20
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map07_20.bin
+
+$(DIR_WBTMP)/map06_21.tbl: $(DIR_RES)/map06_21.bin
+	@echo create_bintbl map06_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map06_21.bin
+
+$(DIR_WBTMP)/map19_09.tbl: $(DIR_RES)/map19_09.bin
+	@echo create_bintbl map19_09
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map19_09.bin
+
+$(DIR_WBTMP)/map20_09.tbl: $(DIR_RES)/map20_09.bin
+	@echo create_bintbl map20_09
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map20_09.bin
+
+$(DIR_WBTMP)/map24_06.tbl: $(DIR_RES)/map24_06.bin
+	@echo create_bintbl map24_06
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map24_06.bin
+
+$(DIR_WBTMP)/map24_05.tbl: $(DIR_RES)/map24_05.bin
+	@echo create_bintbl map24_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map24_05.bin
+
+$(DIR_WBTMP)/map24_04.tbl: $(DIR_RES)/map24_04.bin
+	@echo create_bintbl map24_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map24_04.bin
+
+$(DIR_WBTMP)/map23_04.tbl: $(DIR_RES)/map23_04.bin
+	@echo create_bintbl map23_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map23_04.bin
+
+$(DIR_WBTMP)/map22_04.tbl: $(DIR_RES)/map22_04.bin
+	@echo create_bintbl map22_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map22_04.bin
+
+$(DIR_WBTMP)/map20_04.tbl: $(DIR_RES)/map20_04.bin
+	@echo create_bintbl map20_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map20_04.bin
+
+$(DIR_WBTMP)/map20_03.tbl: $(DIR_RES)/map20_03.bin
+	@echo create_bintbl map20_03
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map20_03.bin
+
+$(DIR_WBTMP)/map20_02.tbl: $(DIR_RES)/map20_02.bin
+	@echo create_bintbl map20_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map20_02.bin
+
+$(DIR_WBTMP)/map19_02.tbl: $(DIR_RES)/map19_02.bin
+	@echo create_bintbl map19_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map19_02.bin
+
+$(DIR_WBTMP)/map18_02.tbl: $(DIR_RES)/map18_02.bin
+	@echo create_bintbl map18_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map18_02.bin
+
+$(DIR_WBTMP)/map17_02.tbl: $(DIR_RES)/map17_02.bin
+	@echo create_bintbl map17_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map17_02.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
@@ -2054,6 +2178,30 @@ $(DIR_WBTMP)/m_dun2007_01_01.tbl: $(DIR_RES)/m_dun2007_01_01.bin
 	@echo create_bintbl m_dun2007_01_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2007_01_01.bin
 
+$(DIR_WBTMP)/m_dun2201_00_00.tbl: $(DIR_RES)/m_dun2201_00_00.bin
+	@echo create_bintbl m_dun2201_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2201_00_00.bin
+
+$(DIR_WBTMP)/m_dun2201_00_01.tbl: $(DIR_RES)/m_dun2201_00_01.bin
+	@echo create_bintbl m_dun2201_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2201_00_01.bin
+
+$(DIR_WBTMP)/m_dun2201_01_00.tbl: $(DIR_RES)/m_dun2201_01_00.bin
+	@echo create_bintbl m_dun2201_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2201_01_00.bin
+
+$(DIR_WBTMP)/m_dun2201_01_01.tbl: $(DIR_RES)/m_dun2201_01_01.bin
+	@echo create_bintbl m_dun2201_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2201_01_01.bin
+
+$(DIR_WBTMP)/m_dun2301_00_00.tbl: $(DIR_RES)/m_dun2301_00_00.bin
+	@echo create_bintbl m_dun2301_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2301_00_00.bin
+
+$(DIR_WBTMP)/m_dun2301_00_01.tbl: $(DIR_RES)/m_dun2301_00_01.bin
+	@echo create_bintbl m_dun2301_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2301_00_01.bin
+
 $(DIR_WBTMP)/m_ruin01_00_00.tbl: $(DIR_RES)/m_ruin01_00_00.bin
 	@echo create_bintbl m_ruin01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ruin01_00_00.bin
@@ -2661,4 +2809,68 @@ $(DIR_WBTMP)/m_hh03_00_00.tbl: $(DIR_RES)/m_hh03_00_00.bin
 $(DIR_WBTMP)/m_zbuill01_00_00.tbl: $(DIR_RES)/m_zbuill01_00_00.bin
 	@echo create_bintbl m_zbuill01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_zbuill01_00_00.bin
+
+$(DIR_WBTMP)/m_swanhh01_00_00.tbl: $(DIR_RES)/m_swanhh01_00_00.bin
+	@echo create_bintbl m_swanhh01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_swanhh01_00_00.bin
+
+$(DIR_WBTMP)/m_swanrh01_00_00.tbl: $(DIR_RES)/m_swanrh01_00_00.bin
+	@echo create_bintbl m_swanrh01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_swanrh01_00_00.bin
+
+$(DIR_WBTMP)/m_adc01_00_00.tbl: $(DIR_RES)/m_adc01_00_00.bin
+	@echo create_bintbl m_adc01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_adc01_00_00.bin
+
+$(DIR_WBTMP)/m_seahouse01_00_00.tbl: $(DIR_RES)/m_seahouse01_00_00.bin
+	@echo create_bintbl m_seahouse01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_seahouse01_00_00.bin
+
+$(DIR_WBTMP)/m_h05_00_00.tbl: $(DIR_RES)/m_h05_00_00.bin
+	@echo create_bintbl m_h05_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_h05_00_00.bin
+
+$(DIR_WBTMP)/m_buill07_00_00.tbl: $(DIR_RES)/m_buill07_00_00.bin
+	@echo create_bintbl m_buill07_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_buill07_00_00.bin
+
+$(DIR_WBTMP)/m_h06_00_00.tbl: $(DIR_RES)/m_h06_00_00.bin
+	@echo create_bintbl m_h06_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_h06_00_00.bin
+
+$(DIR_WBTMP)/m_h07_00_00.tbl: $(DIR_RES)/m_h07_00_00.bin
+	@echo create_bintbl m_h07_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_h07_00_00.bin
+
+$(DIR_WBTMP)/m_Wbt01_00_00.tbl: $(DIR_RES)/m_Wbt01_00_00.bin
+	@echo create_bintbl m_Wbt01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_Wbt01_00_00.bin
+
+$(DIR_WBTMP)/m_Wbt02_00_00.tbl: $(DIR_RES)/m_Wbt02_00_00.bin
+	@echo create_bintbl m_Wbt02_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_Wbt02_00_00.bin
+
+$(DIR_WBTMP)/m_wbuill03_00_00.tbl: $(DIR_RES)/m_wbuill03_00_00.bin
+	@echo create_bintbl m_wbuill03_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_wbuill03_00_00.bin
+
+$(DIR_WBTMP)/m_wbuill04_00_00.tbl: $(DIR_RES)/m_wbuill04_00_00.bin
+	@echo create_bintbl m_wbuill04_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_wbuill04_00_00.bin
+
+$(DIR_WBTMP)/m_bbuill03_00_00.tbl: $(DIR_RES)/m_bbuill03_00_00.bin
+	@echo create_bintbl m_bbuill03_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_bbuill03_00_00.bin
+
+$(DIR_WBTMP)/m_bbuill04_00_00.tbl: $(DIR_RES)/m_bbuill04_00_00.bin
+	@echo create_bintbl m_bbuill04_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_bbuill04_00_00.bin
+
+$(DIR_WBTMP)/m_gate09_00_00.tbl: $(DIR_RES)/m_gate09_00_00.bin
+	@echo create_bintbl m_gate09_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gate09_00_00.bin
+
+$(DIR_WBTMP)/m_gate10_00_00.tbl: $(DIR_RES)/m_gate10_00_00.bin
+	@echo create_bintbl m_gate10_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gate10_00_00.bin
 

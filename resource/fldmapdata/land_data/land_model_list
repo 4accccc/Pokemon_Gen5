@@ -278,6 +278,37 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/autumn24_21.nsbmd \
 	$(DIR_TEMP)/winter24_22.nsbmd \
 	$(DIR_TEMP)/winter24_21.nsbmd \
+	$(DIR_TEMP)/map01_23.nsbmd \
+	$(DIR_TEMP)/map01_22.nsbmd \
+	$(DIR_TEMP)/map01_21.nsbmd \
+	$(DIR_TEMP)/map02_21.nsbmd \
+	$(DIR_TEMP)/map03_21.nsbmd \
+	$(DIR_TEMP)/map03_20.nsbmd \
+	$(DIR_TEMP)/map04_19.nsbmd \
+	$(DIR_TEMP)/map04_20.nsbmd \
+	$(DIR_TEMP)/map05_20.nsbmd \
+	$(DIR_TEMP)/map04_21.nsbmd \
+	$(DIR_TEMP)/map05_21.nsbmd \
+	$(DIR_TEMP)/autumn04_20.nsbmd \
+	$(DIR_TEMP)/autumn05_20.nsbmd \
+	$(DIR_TEMP)/autumn04_21.nsbmd \
+	$(DIR_TEMP)/autumn05_21.nsbmd \
+	$(DIR_TEMP)/map06_20.nsbmd \
+	$(DIR_TEMP)/map07_20.nsbmd \
+	$(DIR_TEMP)/map06_21.nsbmd \
+	$(DIR_TEMP)/map19_09.nsbmd \
+	$(DIR_TEMP)/map20_09.nsbmd \
+	$(DIR_TEMP)/map24_06.nsbmd \
+	$(DIR_TEMP)/map24_05.nsbmd \
+	$(DIR_TEMP)/map24_04.nsbmd \
+	$(DIR_TEMP)/map23_04.nsbmd \
+	$(DIR_TEMP)/map22_04.nsbmd \
+	$(DIR_TEMP)/map20_04.nsbmd \
+	$(DIR_TEMP)/map20_03.nsbmd \
+	$(DIR_TEMP)/map20_02.nsbmd \
+	$(DIR_TEMP)/map19_02.nsbmd \
+	$(DIR_TEMP)/map18_02.nsbmd \
+	$(DIR_TEMP)/map17_02.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -486,6 +517,12 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_dun2007_00_01.nsbmd \
 	$(DIR_TEMP)/m_dun2007_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun2007_01_01.nsbmd \
+	$(DIR_TEMP)/m_dun2201_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2201_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun2201_01_00.nsbmd \
+	$(DIR_TEMP)/m_dun2201_01_01.nsbmd \
+	$(DIR_TEMP)/m_dun2301_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2301_00_01.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \
@@ -634,6 +671,22 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_labo03_00_01.nsbmd \
 	$(DIR_TEMP)/m_hh03_00_00.nsbmd \
 	$(DIR_TEMP)/m_zbuill01_00_00.nsbmd \
+	$(DIR_TEMP)/m_swanhh01_00_00.nsbmd \
+	$(DIR_TEMP)/m_swanrh01_00_00.nsbmd \
+	$(DIR_TEMP)/m_adc01_00_00.nsbmd \
+	$(DIR_TEMP)/m_seahouse01_00_00.nsbmd \
+	$(DIR_TEMP)/m_h05_00_00.nsbmd \
+	$(DIR_TEMP)/m_buill07_00_00.nsbmd \
+	$(DIR_TEMP)/m_h06_00_00.nsbmd \
+	$(DIR_TEMP)/m_h07_00_00.nsbmd \
+	$(DIR_TEMP)/m_Wbt01_00_00.nsbmd \
+	$(DIR_TEMP)/m_Wbt02_00_00.nsbmd \
+	$(DIR_TEMP)/m_wbuill03_00_00.nsbmd \
+	$(DIR_TEMP)/m_wbuill04_00_00.nsbmd \
+	$(DIR_TEMP)/m_bbuill03_00_00.nsbmd \
+	$(DIR_TEMP)/m_bbuill04_00_00.nsbmd \
+	$(DIR_TEMP)/m_gate09_00_00.nsbmd \
+	$(DIR_TEMP)/m_gate10_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
