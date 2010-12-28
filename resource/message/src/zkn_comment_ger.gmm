@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-06-10T16:03:45"/>
+	<create user="shimoyamada" host="W00184" date="2010-12-13T14:54:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5435,15 +5435,15 @@ einem Eisberg, Felsen und Magma
 nach seinem Abbild geschaffen.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_GER_00_487" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="ZKN_COMMENT_GER_00_487" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>ギラティナ
 ・シンオウ図鑑プラチナ版</comment>
-		<language name="JPN">In Nächten mit zunehmendem Mond
-streckt sich das Licht von seinem
-Schweif und wellt sich wunderschön.</language>
-		<language name="JPN_KANJI">In Nächten mit zunehmendem Mond
-streckt sich das Licht von seinem
-Schweif und wellt sich wunderschön.</language>
+		<language name="JPN">Es wurde aufgrund seines Verhal-
+tens verbannt. Aus der Zerrwelt
+schaut es auf die alte Welt.</language>
+		<language name="JPN_KANJI">Es wurde aufgrund seines Verhal-
+tens verbannt. Aus der Zerrwelt
+schaut es auf die alte Welt.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_GER_00_488">
