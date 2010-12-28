@@ -167,7 +167,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     outEfp->enc_force_f = TRUE;
   }
 
-  outEfp->companion_f = FALSE;
+  outEfp->companion_f = PAIRSYS_CheckPairFlag( (GAMEDATA*)gdata );
   outEfp->enc_double_f = FALSE;
 
   //ダブルエンカウントチェック
@@ -175,6 +175,9 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     if(PokeParty_GetPokeCountBattleEnable( party ) >= 2 && eps_GetPercentRand() < 40) {
       outEfp->enc_double_f = TRUE;
     }
+  }
+  if( outEfp->companion_f ){
+    outEfp->enc_double_f = TRUE;
   }
   //スプレー及び低レベルエンカウント回避チェックに用いるレベルを取得
   if( outEfp->spa_low_lv_rm || outEfp->spray_f){

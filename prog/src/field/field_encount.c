@@ -37,6 +37,7 @@
 #include "script_def.h"
 #include "debug/debug_flg.h"
 #include "sound/swan_sound_data.sadl"
+#include "tr_tool/trno_def.h"
 
 #include "enceffno.h"
 
@@ -215,6 +216,10 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     }
     if( fld_spa.enc_double_f && enc_num == 1 ){
       //ダブル抽選に漏れたら、シングルエンカウントにする
+
+      if( fld_spa.companion_f ){
+        return NULL;  //連れ歩き時は絶対ダブル
+      }
       fld_spa.enc_double_f = FALSE;
       fld_spa.enc_poke_num = enc_num;
     }
@@ -650,7 +655,12 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
     }
 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
-    BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE+efp->enc_double_f, heapID );
+
+    if( efp->companion_f ){
+      BTL_SETUP_WildMulti( bsp, enc->gdata, partyEnemy, TRID_RIVAL_07, &sit, heapID );
+    }else{
+      BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE+efp->enc_double_f, heapID );
+    }
 
     if( efp->location == ENC_LOCATION_GROUND_H ){
       BATTLE_PARAM_SetBtlStatusFlag( bsp, BTL_STATUS_FLAG_HIGH_LV_ENC );

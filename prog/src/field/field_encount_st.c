@@ -51,7 +51,7 @@ ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID )
     wp->effect_encount.deb_ofsx = 1;
     wp->effect_encount.deb_ofsz = 1;
     wp->effect_encount.deb_prob_fix = 1;
-    DEBUG_FLG_FlgOn( DEBUG_FLG_DisableEncount );
+//    DEBUG_FLG_FlgOn( DEBUG_FLG_DisableEncount );
 
   #else
     wp->effect_encount.deb_interval = EFFENC_NORMAL_INTERVAL;
