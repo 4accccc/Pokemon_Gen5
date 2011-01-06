@@ -97,7 +97,7 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res_tbl[RES_ID_MAX] =
 {
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbma, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbma, GFL_G3D_UTIL_RESARC }, //ITA
