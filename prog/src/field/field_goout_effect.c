@@ -88,6 +88,8 @@ enum
   RES_ID_Z_MDL,
   RES_ID_Z_ICA,
   RES_ID_Z_ITA,
+  RES_ID_NORMAL_ITP,
+  RES_ID_NORMAL_IVA,
   RES_ID_MAX
 };
 //読み込む3Dリソース
@@ -99,22 +101,19 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res_tbl[RES_ID_MAX] =
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
   { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbma, GFL_G3D_UTIL_RESARC }, //ITA
-};
-
-enum
-{
-  ANM_ID_ICA,
-  ANM_ID_ITA,
-  ANM_ID_MAX
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbva, GFL_G3D_UTIL_RESARC }, //IVA
 };
 
 //3Dアニメ
-static const GFL_G3D_UTIL_ANM sc_g3d_util_normal_anm_tbl[ANM_ID_MAX] = 
+static const GFL_G3D_UTIL_ANM sc_g3d_util_normal_anm_tbl[] = 
 {
 	{ RES_ID_NORMAL_ICA, 0 },
   { RES_ID_NORMAL_ITA, 0 },
+  { RES_ID_NORMAL_ITP, 0 },
+  { RES_ID_NORMAL_IVA, 0 },
 };
-static const GFL_G3D_UTIL_ANM sc_g3d_util_z_anm_tbl[ANM_ID_MAX] = 
+static const GFL_G3D_UTIL_ANM sc_g3d_util_z_anm_tbl[] = 
 {
 	{ RES_ID_Z_ICA, 0 },
   { RES_ID_Z_ITA, 0 },
@@ -134,14 +133,14 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_tbl[OBJ_ID_MAX] = {
 		0, 							          //モデルデータID(リソース内部INDEX)
 		RES_ID_NORMAL_MDL, 	      //テクスチャリソースID
 		sc_g3d_util_normal_anm_tbl,			//アニメテーブル(複数指定のため)
-		ANM_ID_MAX,	//アニメリソース数
+		NELEMS(sc_g3d_util_normal_anm_tbl),	//アニメリソース数
 	},
 	{
 		RES_ID_Z_MDL, 	      //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
 		RES_ID_Z_MDL, 	      //テクスチャリソースID
 		sc_g3d_util_z_anm_tbl,			//アニメテーブル(複数指定のため)
-		ANM_ID_MAX,	//アニメリソース数
+		NELEMS(sc_g3d_util_z_anm_tbl),	//アニメリソース数
 	},
 };
 
@@ -246,7 +245,7 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
       {
         int i;
         EXP_OBJ_ANM_CNT_PTR p_anm_cnt;
-        for( i = 0; i < ANM_ID_MAX; i++ )
+        for( i = 0; i < sc_g3d_util_obj_tbl[p_wk->use_obj_id].anmCount; i++ )
         {
           FLD_EXP_OBJ_ValidCntAnm(p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i, TRUE);
           p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i);
@@ -270,7 +269,7 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
       {
         int i;
         EXP_OBJ_ANM_CNT_PTR p_anm_cnt;
-        for( i = 0; i < ANM_ID_MAX; i++ )
+        for( i = 0; i < sc_g3d_util_obj_tbl[p_wk->use_obj_id].anmCount; i++ )
         {
           p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i);
           FLD_EXP_OBJ_ChgAnmStopFlg(p_anm_cnt, 0);
@@ -282,7 +281,7 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
       {
         int i;
         BOOL result = TRUE;
-        for( i = 0; i < ANM_ID_MAX; i++ )
+        for( i = 0; i < sc_g3d_util_obj_tbl[p_wk->use_obj_id].anmCount; i++ )
         {
           EXP_OBJ_ANM_CNT_PTR p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i);
 
