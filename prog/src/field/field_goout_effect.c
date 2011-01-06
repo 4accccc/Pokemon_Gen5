@@ -85,24 +85,32 @@ enum
   RES_ID_NORMAL_MDL = 0,
   RES_ID_NORMAL_ICA,
   RES_ID_NORMAL_ITA,
+  RES_ID_NORMAL_IMA,
   RES_ID_Z_MDL,
   RES_ID_Z_ICA,
-  RES_ID_Z_ITA,
+  RES_ID_Z_IMA,
   RES_ID_NORMAL_ITP,
-  RES_ID_NORMAL_IVA,
+  RES_ID_AUTUMN_IMD,
+  RES_ID_AUTUMN_ICA,
+  RES_ID_AUTUMN_ITA,
+  RES_ID_AUTUMN_IMA,
   RES_ID_MAX
 };
 //読み込む3Dリソース
 static const GFL_G3D_UTIL_RES sc_g3d_util_res_tbl[RES_ID_MAX] = 
 {
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbma, GFL_G3D_UTIL_RESARC }, //ITA
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbva, GFL_G3D_UTIL_RESARC }, //IVA
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbmd, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_MDL
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbca, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_ICA,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbta, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_ITA,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbma, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_IMA,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbmd, GFL_G3D_UTIL_RESARC },    //RES_ID_Z_MDL,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbca, GFL_G3D_UTIL_RESARC },    //RES_ID_Z_ICA,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbma, GFL_G3D_UTIL_RESARC },    //RES_ID_Z_IMA,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbtp, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_ITP,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbmd, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_IMD,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbca, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_ICA,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbta, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_ITA,
+  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbma, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_IMA,
 };
 
 //3Dアニメ
@@ -111,18 +119,25 @@ static const GFL_G3D_UTIL_ANM sc_g3d_util_normal_anm_tbl[] =
 	{ RES_ID_NORMAL_ICA, 0 },
   { RES_ID_NORMAL_ITA, 0 },
   { RES_ID_NORMAL_ITP, 0 },
-  { RES_ID_NORMAL_IVA, 0 },
+  { RES_ID_NORMAL_IMA, 0 },
 };
 static const GFL_G3D_UTIL_ANM sc_g3d_util_z_anm_tbl[] = 
 {
 	{ RES_ID_Z_ICA, 0 },
-  { RES_ID_Z_ITA, 0 },
+  { RES_ID_Z_IMA, 0 },
+};
+static const GFL_G3D_UTIL_ANM sc_g3d_util_autumn_anm_tbl[] = 
+{
+	{ RES_ID_AUTUMN_ICA, 0 },
+  { RES_ID_AUTUMN_ITA, 0 },
+  { RES_ID_AUTUMN_IMA, 0 },
 };
 
 enum
 {
   OBJ_ID_NORMAL,
   OBJ_ID_Z,
+  OBJ_ID_AUTUMN,
   OBJ_ID_MAX,
 };
 
@@ -142,6 +157,13 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_tbl[OBJ_ID_MAX] = {
 		sc_g3d_util_z_anm_tbl,			//アニメテーブル(複数指定のため)
 		NELEMS(sc_g3d_util_z_anm_tbl),	//アニメリソース数
 	},
+  {
+    RES_ID_AUTUMN_IMD,
+    0,
+    RES_ID_AUTUMN_IMD,
+    sc_g3d_util_autumn_anm_tbl,
+    NELEMS(sc_g3d_util_autumn_anm_tbl),
+  },
 };
 
 static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
@@ -650,7 +672,8 @@ static void Goout_Debug_Draw_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   static const char * sc_label[OBJ_ID_MAX]  =
   {
     "げんてん",
-    "Zずらし"
+    "Zずらし",
+    "あき",
   };
   DEBUGWIN_ITEM_SetNameV( p_item , "モデル[%s]", sc_label[g_debug_use_obj_id] );
 }
