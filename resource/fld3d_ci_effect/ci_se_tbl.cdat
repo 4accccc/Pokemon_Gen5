@@ -102,42 +102,61 @@ const CI_SE_TBL Tbl10[] = {
 };
 
 const CI_SE_TBL Tbl11[] = {
+	{ SEQ_SE_FLD_01, 24 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl12[] = {
+	{ SEQ_SE_FLD_172, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl13[] = {
+	{ SEQ_SE_ROTATION_B, 10 },
+	{ SEQ_SE_SHDEMO_04, 38 },
+	{ SEQ_SE_TDEMO_003, 91 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl14[] = {
+	{ SEQ_SE_W009_01, 1 },
+	{ SEQ_SE_FLD_164, 22 },
+	{ SEQ_SE_SHDEMO_04, 46 },
+	{ SEQ_SE_FLD_127, 117 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl15[] = {
+	{ SEQ_SE_FLD_164, 9 },
+	{ SEQ_SE_FLD_164, 15 },
+	{ SEQ_SE_TDEMO_006, 30 },
+	{ SEQ_SE_W009_01, 49 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl16[] = {
+	{ SEQ_SE_FLD_166, 1 },
+	{ SEQ_SE_SYS_89, 38 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl17[] = {
+	{ SEQ_SE_FLD_01, 24 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl18[] = {
+	{ SEQ_SE_FLD_01, 24 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl19[] = {
+	{ SEQ_SE_FLD_172, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl20[] = {
+	{ SEQ_SE_FLD_157, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
@@ -150,14 +169,24 @@ const CI_SE_TBL Tbl22[] = {
 };
 
 const CI_SE_TBL Tbl23[] = {
+	{ SEQ_SE_FLD_164, 2 },
+	{ SEQ_SE_NDEMO_01, 12 },
+	{ SEQ_SE_SDEMO_03, 21 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl24[] = {
+	{ SEQ_SE_W010_01, 10 },
+	{ SEQ_SE_W010_01, 27 },
+	{ SEQ_SE_W010_01, 41 },
+	{ SEQ_SE_W043_01, 52 },
+	{ SEQ_SE_SYS_89, 75 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl25[] = {
+	{ SEQ_SE_FLD_152, 16 },
+	{ SEQ_SE_SDEMO_03, 32 },
 	{ CI_SE_NONE, 0 },
 };
 
