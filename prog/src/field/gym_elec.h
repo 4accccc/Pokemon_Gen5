@@ -42,3 +42,5 @@ typedef enum
   GYM_ELEC_FLOORLIGHT_BOSS_RECOVER,
 }GYM_ELEC_FLOORLIGHT;
 extern void GYM_ELEC_SetFloorLight( FIELDMAP_WORK *p_fieldmap, GYM_ELEC_FLOORLIGHT type );
+
+extern void GYM_ELEC_SetBrightness( FIELDMAP_WORK *p_fieldmap, u16 brightness );

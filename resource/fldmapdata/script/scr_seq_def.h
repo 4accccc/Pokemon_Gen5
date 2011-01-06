@@ -6777,6 +6777,8 @@
  *      GYM_ELEC_EFFECT_DISPLAY_HERO  ディスプレイに主人公を写す
  *      GYM_ELEC_EFFECT_LIGHTUP_BOSS_START  カミツレ勝利後のライトアップを付ける（アルファあり用）
  *      GYM_ELEC_EFFECT_LIGHTUP_BOSS_RECOVERカミツレ勝利後のライトアップを付ける（復帰処理用）
+ *      GYM_ELEC_EFFECT_FLASH_WHITE   画面を輝度を白にする
+ *      GYM_ELEC_EFFECT_FLASH_NORMAL  画面の輝度をもとに戻す
  */
 //--------------------------------------------------------------
 #define _GYM_ELEC_SET_EFFECT( type ) \

@@ -42,6 +42,8 @@
 #define GYM_ELEC_EFFECT_DISPLAY_HERO  (4) //ディスプレイを主人公にする
 #define GYM_ELEC_EFFECT_LIGHTUP_BOSS_START  (5) //カミツレ勝利後のライトアップを付ける(アルファ有り版)
 #define GYM_ELEC_EFFECT_LIGHTUP_BOSS_RECOVER  (6) //カミツレ勝利後のライトアップを付ける（復帰版）
+#define GYM_ELEC_EFFECT_FLASH_WHITE   (7) //画面を輝度を白にする
+#define GYM_ELEC_EFFECT_FLASH_NORMAL  (8) //画面の輝度をもとに戻す
 
 //=============================================================================
 /**

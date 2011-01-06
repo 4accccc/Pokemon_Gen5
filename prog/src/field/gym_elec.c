@@ -668,6 +668,18 @@ void GYM_ELEC_Recover( FIELDMAP_WORK *p_fieldmap )
   GYM_ELEC_TMP *p_tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_ELEC_TMP_ASSIGN_ID);
   Gym_Elec_SetEnvironment( p_tmp, p_tmp->p_sv, p_fieldmap );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  輝度を変更
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *	@param	brightness  輝度
+ */
+//-----------------------------------------------------------------------------
+void GYM_ELEC_SetBrightness( FIELDMAP_WORK *p_fieldmap, u16 brightness )
+{
+  GX_SetMasterBrightness( brightness );
+}
 //=============================================================================
 /**
  *  ギミックプライベート

@@ -148,6 +148,12 @@ VMCMD_RESULT EvCmdGymElec_SetEffect( VMHANDLE *core, void *wk )
   case GYM_ELEC_EFFECT_LIGHTUP_BOSS_RECOVER:
     GYM_ELEC_SetFloorLight( fieldWork, GYM_ELEC_FLOORLIGHT_BOSS_RECOVER );
     break;
+  case GYM_ELEC_EFFECT_FLASH_WHITE:
+    GYM_ELEC_SetBrightness( fieldWork, 8 );
+    break;
+  case GYM_ELEC_EFFECT_FLASH_NORMAL:
+    GYM_ELEC_SetBrightness( fieldWork, 0 );
+    break;
   default:
     GF_ASSERT(0);
   }
