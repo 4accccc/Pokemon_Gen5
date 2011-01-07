@@ -68,8 +68,8 @@ void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork
     EVENTWORK *eventwork = GAMEDATA_GetEventWork( gdata );
     EVENTWORK_ResetEventFlag( eventwork, SYS_FLAG_KAIRIKI );
   }
-  //エフェクトエンカウントの発生インターバルと確率をセット
-  ENCOUNT_WORK_MapWalkStepOverUpdate( fieldWork );
+  //エンカウント率補整値リセット＆エフェクトエンカウントの発生インターバルと確率をセット
+  ENCOUNT_WORK_MapWalkStepOverUpdate( gdata, fieldWork );
 
 /* PLATUNUM
 	//--冒険ノート用更新処理

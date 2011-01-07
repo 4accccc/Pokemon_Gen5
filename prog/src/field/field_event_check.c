@@ -366,6 +366,9 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   SET_CHECK("ev_check:move event");
 //☆☆☆一歩移動チェックがここから
   //歩数をカウント
+  if( req.stepRequest ){
+    FIELD_ENCOUNT_EncountProbCalc( FIELDMAP_GetEncount(fieldWork), req.moveRequest, req.exMoveRequest );
+  }
   if( req.moveRequest )
   {
     incWalkCount( req.gamedata );
@@ -2587,7 +2590,6 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
-  ENCOUNT_TYPE enc_type;
   
 #ifdef PM_DEBUG
   if( req->debugRequest ){
@@ -2605,9 +2607,7 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
     FIELD_WFBC * p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
     return (GMEVENT*)FIELD_ENCOUNT_CheckWfbcEncount(encount, p_wfbc );
   }
-  
-  enc_type = ENC_TYPE_NORMAL; //(ZONEDATA_IsBingo( req->map_id ) == TRUE) ? ENC_TYPE_BINGO : ENC_TYPE_NORMAL;
-  return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, enc_type);
+  return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, ENC_TYPE_NORMAL );
 }
 
 //--------------------------------------------------------------

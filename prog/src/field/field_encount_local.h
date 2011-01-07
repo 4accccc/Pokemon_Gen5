@@ -19,8 +19,11 @@ typedef struct _EWK_PLAYER{
   u16 pos_x;    //最後にエンカウントしたプレイヤーグリッドポジション
   u16 pos_y;
   u16 pos_z;
-  u16 move_f;   //
+  u8  step;     //ステップ
+  u8  move_f;   //
   u32 walk_ct;
+  MAPATTR o_attr; //一歩前のアトリビュート
+  u16 n_prob;   //現在のエンカウント率
 }EWK_PLAYER;
 
 /////////////////////////////////////////////////////
@@ -68,5 +71,11 @@ struct _TAG_ENCOUNT_WORK
   EWK_EFFECT_ENCOUNT  effect_encount;
 };
 
-
+///エンカウント率補整パターンデータ
+typedef struct _ENCPROB_PATTERN{
+  u16 up:4;
+  u16 interval:4;
+  u16 max:6;
+  u16 safety:2;
+}ENCPROB_PATTERN;
 

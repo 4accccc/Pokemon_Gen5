@@ -41,7 +41,7 @@ typedef struct _TAG_ENCOUNT_WORK ENCOUNT_WORK;
 extern ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata );
 
 /////////////////////////////////////////////////////////////
-//通常エンカウント系 field_encount.c
+//通常エンカウント系 field_encount_st.c
 
 //生成、削除
 extern FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork );
@@ -49,10 +49,15 @@ extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
 extern ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID );
 extern void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp );
 
-extern void ENCOUNT_WORK_MapWalkStepOverUpdate( FIELDMAP_WORK* fieldWork );
+extern void ENCOUNT_WORK_MapWalkStepOverUpdate( GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
 extern void ENCOUNT_WORK_SpMapJumpUpdate( GAMEDATA* gdata );
+extern void ENCOUNT_WORK_MapJumpUpdate( GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
+extern void ENCOUNT_WORK_EncountProbReset( ENCOUNT_WORK* ewk, MAPATTR attr );
 
+/////////////////////////////////////////////////////////////
+//通常エンカウント系 field_encount.c
 //チェック
+extern void FIELD_ENCOUNT_EncountProbCalc( FIELD_ENCOUNT* enc, BOOL move_f, BOOL ev_move_f );
 extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 extern void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags );
 extern void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );

@@ -48,15 +48,32 @@
 
 #define FIRST_STEP_ENCOUNT_PER  (1) //最初の一歩目のエンカウント率
 
+static const ENCPROB_PATTERN DATA_EncProbPattern[] = {
+ //up,interval,max, safety
+ { 2, 1, 19, 2},
+ { 4, 1, 39, 2},
+ { 1, 3, 5, 2},
+ { 1, 2, 10, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+ { 2, 1, 19, 2},
+};
+
 //--------------------------------------------------------------
 /// エンカウントデータ要素
 //--------------------------------------------------------------
 //======================================================================
 //  proto
 //======================================================================
-static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type, u8* prob_rev );
-static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location, u8 prob_rev );
-static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, const u32 per );
+static ENCOUNT_LOCATION enc_GetLocation( MAPATTR attr, ENCOUNT_TYPE enc_type );
+static const ENCPROB_PATTERN* enc_GetEncProbPattern( FIELD_ENCOUNT* enc, ENCOUNT_LOCATION loc );
+static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, const u32 per, ENCOUNT_LOCATION loc);
 static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
 static BOOL enc_CheckEncountWfbc( ENCOUNT_WORK* ewk, const FIELD_WFBC* cp_wfbc );
 
@@ -77,6 +94,8 @@ static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
 static void encwork_AddPlayerWalkCount( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player);
 static u32 encwork_GetPlayerWalkCount( ENCOUNT_WORK* ewk );
 
+static void encwork_CheckProbReset( ENCOUNT_WORK* ewk, MAPATTR attr );
+static void encwork_AddWalkCountAndProb( FIELD_ENCOUNT* enc, ENCOUNT_WORK* ewk, MAPATTR attr );
 
 //======================================================================
 //  フィールドエンカウント
@@ -127,6 +146,35 @@ void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
 //======================================================================
 //  フィールドエンカウント　チェック
 //======================================================================
+
+/*
+ *  @brief  エンカウント率計算
+ */
+void FIELD_ENCOUNT_EncountProbCalc( FIELD_ENCOUNT* enc, BOOL move_f, BOOL ev_move_f )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  FIELD_PLAYER *player = FIELDMAP_GetFieldPlayer( enc->fwork );
+  MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
+  MAPATTR attr = FIELD_PLAYER_GetMapAttr( player );
+  
+  //エンカウントデータが有効かチェック
+  if( enc->encdata == NULL || enc->encdata->enable_f == FALSE ){
+    return;
+  }
+
+  if( move_f || ev_move_f ){
+    encwork_CheckProbReset( ewk, attr );
+  }
+  if( ewk->player.move_f ){ //一歩移動済み
+    encwork_AddWalkCountAndProb( enc, ewk, attr );
+  }
+  if( !move_f ){  //最後にエンカウントしたグリッドでの方向転換とイベント一歩は歩数に数えない
+    return;
+  }
+  encwork_AddWalkCountAndProb( enc, ewk, attr );
+  ewk->player.move_f = TRUE;  //最初の一歩目フラグ
+}
+
 //--------------------------------------------------------------
 /**
  * エンカウントチェック(通常用)
@@ -151,9 +199,6 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   ewk = GAMEDATA_GetEncountWork(enc->gdata);
   if( enc_type == ENC_TYPE_FORCE || enc_type == ENC_TYPE_EFFECT ){
     force_f = TRUE;
-  }else{
-    //最後のエンカウントからのプレイヤーの歩数を加算
-    encwork_AddPlayerWalkCount( ewk, fplayer);
   }
   
   //エンカウントデータが有効かチェック
@@ -170,10 +215,8 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 
   //ロケーションチェック
   {
-    u8 prob_rev = 0;
-    enc_loc = enc_GetLocation( enc, enc_type, &prob_rev );
-    per = enc_GetLocationPercent( enc, enc_loc, prob_rev );
-    if( enc_loc == ENC_LOCATION_NONE || per == 0){
+    enc_loc = enc_GetLocation( FIELD_PLAYER_GetMapAttr( fplayer ), enc_type );
+    if( enc_loc >= ENC_LOCATION_MAX || enc->encdata->prob[enc_loc] == 0){
       return NULL;
     }
   }
@@ -185,9 +228,9 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   if( !force_f )
   {
     //道具＆特性によるエンカウント率変動
-    per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
+    per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, ewk->player.n_prob );
 
-    if( enc_CheckEncount(enc,ewk,per) == FALSE ){ //エンカウントチェック
+    if( enc_CheckEncount(enc,ewk,per, enc_loc) == FALSE ){ //エンカウントチェック
       return NULL;
     }
   }
@@ -334,7 +377,7 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   }else{
     enc_loc = ENC_LOCATION_FISHING;
   }
-  per = enc_GetLocationPercent( enc, enc_loc, 0 );
+  per = enc->encdata->prob[enc_loc];
   if( per <= 0 ){
     return( NULL ); //確率0
   }
@@ -415,10 +458,7 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_w
   }
 
   //ロケーションチェック
-  {
-    u8 prob_rev = 0;
-    enc_loc = enc_GetLocation( enc, ENC_TYPE_WFBC, &prob_rev );
-  }
+  enc_loc = enc_GetLocation( FIELD_PLAYER_GetMapAttr( fplayer ), ENC_TYPE_WFBC );
 
   //ENCPOKE_FLD_PARAM作成
   ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_WFBC,
@@ -483,16 +523,10 @@ void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA*
  * @retval
  */
 //--------------------------------------------------------------
-static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type ,u8* prob_rev)
+static ENCOUNT_LOCATION enc_GetLocation( MAPATTR attr, ENCOUNT_TYPE enc_type )
 {
-  MAPATTR attr;
-  VecFx32 pos;
-  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
-  FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( enc->fwork );
   MAPATTR_FLAG attr_flag;
 
-  *prob_rev = 0;
-  attr = FIELD_PLAYER_GetMapAttr( fplayer );
   if(MAPATTR_IsEnable(attr) == FALSE){
     return ENC_LOCATION_NONE;
   }
@@ -509,10 +543,6 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   {
     MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue(attr);
 
-    //アトリビュートによるエンカウント率補正取得
-    if( MAPATTR_VALUE_CheckLongGrass( attr_value )){
-      *prob_rev += 10;
-    }
     //水チェック
     if(attr_flag & MAPATTR_FLAGBIT_WATER){
       if( enc_type == ENC_TYPE_EFFECT ) return ENC_LOCATION_WATER_SP;
@@ -529,36 +559,36 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   return ENC_LOCATION_GROUND_L;
 }
 
-//--------------------------------------------------------------
-/**
- * エンカウント率をロケーションから取得
- * @param enc FIELD_ENCOUNT*
- * @param location ENCOUNT_LOCATION
- * @param prov_rev アトリビュートによるエンカウント率補正値
- * @retval u32 エンカウント率 0=エンカウント無し
- */
-//--------------------------------------------------------------
-static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location, u8 prob_rev )
-{
-  s32 per = 0;
-
-  if(location >= ENC_LOCATION_MAX){
-    return 0;
-  }
-  per = enc->encdata->prob[location];
-
-  if( per > 0){ //元の確率0は0のまま
-    per += prob_rev;
-  }
-  if( per < 0){
-    return 0;
-  }
-  return per;
-}
-
 //======================================================================
 //  サブ　エンカウントチェック
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * エンカウント率パターンチェック
+ * @param enc FIELD_ENCOUNT
+ */
+//--------------------------------------------------------------
+static const ENCPROB_PATTERN* enc_GetEncProbPattern( FIELD_ENCOUNT* enc, ENCOUNT_LOCATION loc )
+{
+  u8 idx;
+  static const u8 DATA_ProbPatIdx[ENC_LOCATION_FISHING] = {
+    ENC_LOCATION_GROUND_L,
+    ENC_LOCATION_GROUND_H,
+    ENC_LOCATION_GROUND_L,
+    ENC_LOCATION_WATER,
+    ENC_LOCATION_WATER,
+  }; 
+  if( loc >= ENC_LOCATION_FISHING ){  //釣りはパターンデータを持たない
+    return NULL;
+  }
+  idx = enc->encdata->prob[DATA_ProbPatIdx[loc]]-1; //1オリジン
+  if( idx >= NELEMS(DATA_EncProbPattern) ){
+    idx = 0;
+    GF_ASSERT(0);
+  }
+  return &DATA_EncProbPattern[idx];
+}
+
 //--------------------------------------------------------------
 /**
  * エンカウントチェック
@@ -568,20 +598,21 @@ static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location,
  * @retval BOOL TRUE=エンカウントした
  */
 //--------------------------------------------------------------
-static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
+static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per, ENCOUNT_LOCATION loc )
 {
-  u32 calc_per,next_per;
+  const ENCPROB_PATTERN* dat = enc_GetEncProbPattern( enc, loc );
 
+  if( dat == NULL ){
+    return FALSE; //エンカウントデータ無し
+  }
   if( per > 100 ){ //100%
     per = 100;
   }
   //移動歩数によるエンカウント率補正
   {
     u32 walk_ct = encwork_GetPlayerWalkCount( ewk );
-    if(walk_ct == 0){
+    if(walk_ct <= dat->safety){ //セーフティ内はエンカウント無し
       return FALSE;
-    }else if(walk_ct == 1){
-      per = FIRST_STEP_ENCOUNT_PER;  //最初の一歩目は強制で1%
     }
   }
 
@@ -812,6 +843,51 @@ static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
   ewk->player.pos_x = MMDL_GetGridPosX( mmdl );
   ewk->player.pos_y = MMDL_GetGridPosY( mmdl );
   ewk->player.pos_z = MMDL_GetGridPosZ( mmdl );
+  
+  //補整値クリア
+  ENCOUNT_WORK_EncountProbReset( ewk, FIELD_PLAYER_GetMapAttr( player ) );
+}
+
+/*
+ *  @brief  エンカウントアトリビュートチェック
+ */
+static void encwork_CheckProbReset( ENCOUNT_WORK* ewk, MAPATTR attr )
+{
+  if( ewk->player.o_attr == attr ){
+    return; //同じエンカウントフィールド内の移動
+  }
+  //異なるフィールドに移動したので、エンカウト率補整値クリア
+  ENCOUNT_WORK_EncountProbReset( ewk, attr );
+}
+
+static void encwork_AddWalkCountAndProb( FIELD_ENCOUNT* enc, ENCOUNT_WORK* ewk, MAPATTR attr )
+{
+  ENCOUNT_LOCATION loc = enc_GetLocation( attr, ENC_TYPE_NORMAL );
+  const ENCPROB_PATTERN* dat = enc_GetEncProbPattern( enc, loc );
+
+  if(dat == NULL){
+    return;
+  }
+  // 【ホワイトフォレストの草むら、水上でエンカウントしなくなることがあった】
+  // enc_CheckEncountWfbc関数内の計算で桁をオーバーフローしないようにカウントストップ
+  if( ewk->player.walk_ct >= 0xA000 ){
+    return;
+  }
+  if( loc == ENC_LOCATION_NONE ){
+    return;
+  }
+  ++ewk->player.walk_ct;
+  ewk->player.step += ewk->player.move_f;
+  if( ewk->player.step < dat->interval ){
+    return;
+  }
+  ewk->player.step = 0;
+  if( (ewk->player.n_prob + dat->up) > dat->max ){
+    ewk->player.n_prob = dat->max;
+  }else{
+    ewk->player.n_prob += dat->up;
+  }
+  OS_FPrintf(3,"EncPerUp step=%d add=%d, n=%d\n", dat->interval, dat->up, ewk->player.n_prob);
 }
 
 /*
@@ -821,17 +897,14 @@ static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
 static void encwork_AddPlayerWalkCount( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
 {
   MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
+  MAPATTR attr = FIELD_PLAYER_GetMapAttr( player );
 
   if(ewk->player.move_f){
-#ifndef BUGFIX_BTS7926_20100726
-    ++ewk->player.walk_ct;
-#else
     // 【ホワイトフォレストの草むら、水上でエンカウントしなくなることがあった】
     // enc_CheckEncountWfbc関数ないの計算で桁をオーバーフローしないようにカウントストップ
     if( ewk->player.walk_ct < 0xA000 ){
       ++ewk->player.walk_ct;
     }
-#endif // BUGFIX_BTS7926_20100726
     return;
   }
   if( MMDL_GetGridPosX( mmdl ) == ewk->player.pos_x &&
@@ -839,7 +912,7 @@ static void encwork_AddPlayerWalkCount( ENCOUNT_WORK* ewk, const FIELD_PLAYER* p
       MMDL_GetGridPosZ( mmdl ) == ewk->player.pos_z ){
     return;
   }
-  ewk->player.move_f = TRUE;
+  ewk->player.move_f = TRUE;  //最初の一歩目フラグ
   ++ewk->player.walk_ct;
 }
 

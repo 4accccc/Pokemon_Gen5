@@ -40,6 +40,8 @@ $table_num = [GROUND_MONS_NUM,GROUND_MONS_NUM,GROUND_MONS_NUM,WATER_MONS_NUM,WAT
 $season_list = ["春","夏","秋","冬"]
 #アイテムテーブル名リスト
 $item_tbl_list = ["なし","洞窟","橋"]
+#エンカウント率パターンテーブル(FMの値リストと一致している必要アリ)
+$enc_prob_list = ["弱草Lv1","弱草Lv2","強草Lv1","強草Lv2","弱長草Lv1","強長草Lv1","洞窟Lv1","洞窟Lv2","砂漠Lv1","水上Lv1","水上Lv2","沼地Lv1"]
 
 #エンカウントテーブル
 class CEncTable
@@ -138,7 +140,7 @@ class CEncTable
       end
     }
     column.slice!(0..(data_num-1))
-    print "\n"
+    print("\n\n")
   end
 
   #エンカウントデータ出力 4byte
@@ -175,18 +177,32 @@ class CMapData
     }
   end
 
+  #エンカウント率パターン取得
+  def get_enc_prob key, name
+    if key == "" then
+      return 0
+    end
+    idx = $enc_prob_list.index(key)
+    if idx == nil then
+      print("#{@zone_name} エンカウント率パターン指定が無効 #{name}->#{key}\n")
+      return 1
+    end
+    return idx+1
+  end
+
   #1マップのデータパース
   def perse column
-    print(column.join(",")) 
+    print(column.join(","))
+    print("\n")
     #アイテムテーブルindex取得
     @item_idx = $item_tbl_list.index(column[COL_ZONE_OFS_ITEM_TABLE])
     if @item_idx == nil then
       @item_idx = 0
     end
     #エンカウント率取得
-    @enc_prob[IDX_GROUND_L] = column[COL_ZONE_OFS_PROB_GROUND_L] == "" ? 0 : column[COL_ZONE_OFS_PROB_GROUND_L].to_i
-    @enc_prob[IDX_GROUND_H] = column[COL_ZONE_OFS_PROB_GROUND_H] == "" ? 0 : column[COL_ZONE_OFS_PROB_GROUND_H].to_i
-    @enc_prob[IDX_WATER] = column[COL_ZONE_OFS_PROB_WATER] == "" ? 0 : column[COL_ZONE_OFS_PROB_WATER].to_i
+    @enc_prob[IDX_GROUND_L] = get_enc_prob( column[COL_ZONE_OFS_PROB_GROUND_L], "GroundLow" )
+    @enc_prob[IDX_GROUND_H] = get_enc_prob( column[COL_ZONE_OFS_PROB_GROUND_H],"GroundHigh")
+    @enc_prob[IDX_WATER] = get_enc_prob( column[COL_ZONE_OFS_PROB_WATER],"Water")
     @enc_prob[IDX_FISHING] = column[COL_ZONE_OFS_PROB_FISHING] == "" ? 0 : column[COL_ZONE_OFS_PROB_FISHING].to_i
     
     #配列の要素削除
@@ -200,6 +216,7 @@ class CMapData
 =end
     print("\n->"+@zone_name+" データサーチ開始 確率 "+@enc_prob.join(",")+"\n")
     print(column.join(",")) 
+    print("\n")
     #グランドデータvalueパース
     @table[IDX_GROUND_L].perse_ground_val(column,@enc_prob[IDX_GROUND_L],"通常1")
     @table[IDX_GROUND_H].perse_ground_val(column,@enc_prob[IDX_GROUND_H],"通常2")

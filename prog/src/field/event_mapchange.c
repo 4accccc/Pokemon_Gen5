@@ -1010,6 +1010,8 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       PAIRSYS_PairMapChangeRecover( work->gameData );
     }
 #endif
+    ENCOUNT_WORK_MapJumpUpdate( gameData, GAMESYSTEM_GetFieldMapWork(gameSystem) );
+
     // BGM フェード完了待ち
     GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMFade(gameSystem) );
     (*seq) ++;
