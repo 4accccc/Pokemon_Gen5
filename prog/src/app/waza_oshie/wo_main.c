@@ -1173,8 +1173,18 @@ static void WO_BmpWinSet( WO_WORK * wk )
 
   GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[WIN_ABTN] );
 
+/*
+ * SYSTEM 177：【テキストをタッチで送ると、送りカーソルが残る】
+ * →ローカライズ作業の際に発見されました。
+ *   日本語版では行送りタグが使用されていないため、発生しません。
+ *   またポケモンリスト・技思い出し画面でも発生するとの事で一緒に修正します。
+ */
+
+#ifdef BUGFIX_AF_SYSTEM177_20110107
+  wk->printCursor = APP_KEYCURSOR_Create( 15, TRUE, TRUE, HEAPID_WAZAOSHIE );
+#else
   wk->printCursor = APP_KEYCURSOR_Create( 15, TRUE, FALSE, HEAPID_WAZAOSHIE );
-  
+#endif  
 
 }
 

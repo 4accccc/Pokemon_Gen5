@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	plist_message.c
- * @brief	ポケモンリスト メッセージ
- * @author	ariizumi
- * @data	09/06/17
+ * @file  plist_message.c
+ * @brief ポケモンリスト メッセージ
+ * @author  ariizumi
+ * @data  09/06/17
  *
  * モジュール名：PLIST_MSG
  */
@@ -28,7 +28,7 @@
 #include "test/ariizumi/ari_debug.h"
 
 //======================================================================
-//	define
+//  define
 //======================================================================
 #pragma mark [> define
 //各bmpwinのサイズ
@@ -53,12 +53,12 @@
 #define PLIST_MSG_FULLWIN_HEIGHT ( 4)
 
 //======================================================================
-//	enum
+//  enum
 //======================================================================
 #pragma mark [> enum
 
 //======================================================================
-//	typedef struct
+//  typedef struct
 //======================================================================
 #pragma mark [> struct
 struct _PLIST_MSG_WORK
@@ -85,14 +85,14 @@ struct _PLIST_MSG_WORK
   TIMEICON_WORK *timeIcon;
 };
 //======================================================================
-//	proto
+//  proto
 //======================================================================
 #pragma mark [> proto
 static void PLIST_MSG_ClearWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  );
 static BOOL PLSIT_MSG_PrintStreamCallBack(u32 value);
 
 //--------------------------------------------------------------
-//	メッセージシステム初期化
+//  メッセージシステム初期化
 //  この時点でのメッセージウィンドウの作成はしません
 //--------------------------------------------------------------
 PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work )
@@ -110,13 +110,25 @@ PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work )
   msgWork->wordSet = NULL;
   msgWork->timeIcon = NULL;
   msgWork->reqDispTimerIcon = FALSE;
+
+/*
+ * SYSTEM 177：【テキストをボタンで送ると、送りカーソルが残る】
+ * →ローカライズ作業の際に発見されました。
+ *   日本語版では行送りタグが使用されていないため、発生しません。
+ *   またポケモンリスト・技思い出し画面でも発生するとの事で一緒に修正します。
+ */
+
+#ifdef BUGFIX_AF_SYSTEM177_20110107
+  msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , TRUE , TRUE , work->heapId );
+#else
   msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , work->heapId );
+#endif
   msgWork->printQueMsg = PRINTSYS_QUE_Create( work->heapId );
   return msgWork;
 }
 
 //--------------------------------------------------------------
-//	メッセージシステム開放
+//  メッセージシステム開放
 //--------------------------------------------------------------
 void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
@@ -142,7 +154,7 @@ void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 }
 
 //--------------------------------------------------------------
-//	メッセージシステム更新
+//  メッセージシステム更新
 //--------------------------------------------------------------
 void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
@@ -230,7 +242,7 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 }
 
 //--------------------------------------------------------------
-//	メッセージ ウィンド開く
+//  メッセージ ウィンド開く
 //--------------------------------------------------------------
 void PLIST_MSG_OpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const PLIST_MSGWIN_TYPE winType)
 {
@@ -275,7 +287,7 @@ void PLIST_MSG_OpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const PL
 }
 
 //--------------------------------------------------------------
-//	メッセージ ウィンド閉じる
+//  メッセージ ウィンド閉じる
 //--------------------------------------------------------------
 void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
@@ -302,7 +314,7 @@ void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 }
 
 //--------------------------------------------------------------
-//	メッセージ ウィンドウ開閉確認
+//  メッセージ ウィンドウ開閉確認
 //--------------------------------------------------------------
 const BOOL PLIST_MSG_IsOpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
@@ -315,7 +327,7 @@ const BOOL PLIST_MSG_IsOpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 }
 
 //--------------------------------------------------------------
-//	メッセージ 描画(瞬間表示
+//  メッセージ 描画(瞬間表示
 //--------------------------------------------------------------
 void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const u32 msgId )
 {
@@ -354,7 +366,7 @@ void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
 }
 
 //--------------------------------------------------------------
-//	メッセージ 描画(ストリーム
+//  メッセージ 描画(ストリーム
 //--------------------------------------------------------------
 void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const u32 msgId , const BOOL isWait )
 {
@@ -388,7 +400,7 @@ void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
 }
 
 //--------------------------------------------------------------
-//	メッセージ終了待ち
+//  メッセージ終了待ち
 //--------------------------------------------------------------
 const BOOL PLIST_MSG_IsFinishMessage( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
@@ -401,7 +413,7 @@ const BOOL PLIST_MSG_IsFinishMessage( PLIST_WORK *work , PLIST_MSG_WORK *msgWork
 }
 
 //--------------------------------------------------------------
-//	ストリーム用コールバック
+//  ストリーム用コールバック
 //--------------------------------------------------------------
 static BOOL PLSIT_MSG_PrintStreamCallBack(u32 value)
 {
@@ -504,7 +516,7 @@ void PLIST_MSG_AddWordSet_Word( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 
 
 #pragma mark [> util
 //--------------------------------------------------------------
-//	ウィンドウクリア
+//  ウィンドウクリア
 //--------------------------------------------------------------
 static void PLIST_MSG_ClearWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
 {
@@ -515,7 +527,7 @@ static void PLIST_MSG_ClearWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
 
 
 //--------------------------------------------------------------
-//	ウィンドウ枠の再読み込み
+//  ウィンドウ枠の再読み込み
 //--------------------------------------------------------------
 void PLIST_MSG_ReloadWinFrame( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
 {
@@ -524,7 +536,7 @@ void PLIST_MSG_ReloadWinFrame( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
 }
 
 //--------------------------------------------------------------
-//	タイマーアイコン表示
+//  タイマーアイコン表示
 //--------------------------------------------------------------
 void PLIST_MSG_DispTimerIcon( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
@@ -532,7 +544,7 @@ void PLIST_MSG_DispTimerIcon( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 }
 
 //--------------------------------------------------------------
-//	キー送りクリア
+//  キー送りクリア
 //--------------------------------------------------------------
 void PLIST_MSG_ClearKeyCursor( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
 {

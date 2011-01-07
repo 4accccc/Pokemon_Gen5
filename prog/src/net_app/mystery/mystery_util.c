@@ -615,7 +615,19 @@ static void MYSTERY_TEXT_PrintInner( MYSTERY_TEXT_WORK* p_wk, MYSTERY_TEXT_TYPE 
   case MYSTERY_TEXT_TYPE_STREAM:  //ストリームを使う
 
     APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
+
+/*
+ * SYSTEM 177：【テキストをタッチで送ると、送りカーソルが残る】
+ * →ローカライズ作業の際に発見されました。
+ *   日本語版では行送りタグが使用されていないため、発生しません。
+ *   またポケモンリスト・技思い出し画面でも発生するとの事で一緒に修正します。
+ */
+
+#ifdef BUGFIX_AF_SYSTEM177_20110107
+    p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, TRUE, p_wk->heapID );
+#else
     p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, p_wk->heapID );
+#endif
     p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
         p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
     p_wk->print_update  = MYSTERY_TEXT_TYPE_STREAM;
