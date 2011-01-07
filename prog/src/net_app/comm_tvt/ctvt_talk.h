@@ -42,6 +42,18 @@ extern void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 
 extern CTVT_MIC_WORK* CTVT_TALK_GetMicWork( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 
+// add ichiraku
+// 通信で内部フラグを変更する用
+extern void CTVT_TALK_SetIsReqGame( CTVT_TALK_WORK *talkWork, const BOOL flg );
+extern void CTVT_TALK_SetIsCancelGame( CTVT_TALK_WORK *talkWork, const BOOL flg );
+extern void CTVT_TALK_SetIsExitGame( CTVT_TALK_WORK *talkWork, const BOOL flg );
+extern void CTVT_TALK_SetIsStartGame( CTVT_TALK_WORK *talkWork, const BOOL flg );
+extern void CTVT_TALK_SetIsStartGame2( CTVT_TALK_WORK *talkWork, const BOOL flg );
+extern void CTVT_TALK_SetAcceptBit( CTVT_TALK_WORK *talkWork, const u8 NetId );
+extern void CTVT_TALK_SetAcceptBit2( CTVT_TALK_WORK *talkWork, const u8 NetId );
+extern const BOOL CTVT_TALK_IsAcceptNum( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork );
+extern const BOOL CTVT_TALK_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork );
+
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------

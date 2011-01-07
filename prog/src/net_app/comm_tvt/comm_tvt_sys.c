@@ -1275,6 +1275,61 @@ APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work )
   return menuWork;
 }
 
+APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu_XY( COMM_TVT_WORK *work, u8 charPosX, u8 charPosY )
+{
+  APP_TASKMENU_WORK *menuWork;
+  APP_TASKMENU_INITWORK initWork = {0};
+  APP_TASKMENU_ITEMWORK itemWork[2] = {0};
+
+  itemWork[0].str = GFL_MSG_CreateString( work->msgHandle , COMM_TVT_SYS_03 );
+  itemWork[1].str = GFL_MSG_CreateString( work->msgHandle , COMM_TVT_SYS_04 );
+  itemWork[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  itemWork[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
+  initWork.heapId = work->heapId;
+  initWork.itemNum = 2;
+  initWork.itemWork = itemWork;
+  initWork.posType = ATPT_LEFT_UP;
+  initWork.charPosX = charPosX;
+  initWork.charPosY = charPosY;
+  initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
+
+  menuWork = APP_TASKMENU_OpenMenu( &initWork , work->taskMenuRes );
+
+  GFL_STR_DeleteBuffer( itemWork[0].str );
+  GFL_STR_DeleteBuffer( itemWork[1].str );
+
+  return menuWork;
+}
+
+APP_TASKMENU_WORK* COMM_TVT_OpenCancelMenu( COMM_TVT_WORK *work, u8 charPosX, u8 charPosY )
+{
+  APP_TASKMENU_WORK *menuWork;
+  APP_TASKMENU_INITWORK initWork = {0};
+  APP_TASKMENU_ITEMWORK itemWork = {0};
+
+  itemWork.str = GFL_MSG_CreateString( work->msgHandle , COMM_TVT_GAME_22 );
+  itemWork.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  itemWork.type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
+  initWork.heapId = work->heapId;
+  initWork.itemNum = 1;
+  initWork.itemWork = &itemWork;
+  initWork.posType = ATPT_LEFT_UP;
+  initWork.charPosX = charPosX;
+  initWork.charPosY = charPosY;
+  initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
+
+  menuWork = APP_TASKMENU_OpenMenu( &initWork , work->taskMenuRes );
+
+  GFL_STR_DeleteBuffer( itemWork.str );
+
+  return menuWork;
+}
 
 //--------------------------------------------------------------------------
 //  –¼‘O‚ğ‘‚«’¼‚·

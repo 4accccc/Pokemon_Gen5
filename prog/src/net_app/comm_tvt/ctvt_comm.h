@@ -48,6 +48,16 @@ typedef enum
   CCFT_FINISH_TALK,  //会話終了通知
   CCFT_CANCEL_TALK,  //会話取り消し通知 //何かしらうまくいかなかったとき
 
+  // add ichiraku
+  // ミニゲーム参加受付用
+  CCFT_REQ_GAME,        // 参加要求通知
+  CCFT_DECIDE_GAME,     // 参加決定
+  CCFT_CANCEL_GAME,     // 参加拒否
+  CCFT_START_GAME,      // 開始要求
+  CCFT_EXIT_GAME,       // 終了通知
+  CCFT_DECIDE_GAME2,    // 参加決定 確認用
+  CCFT_START_GAME2,     // 開始要求 確認用
+
   CCFT_FINISH_PARENT,  //親が終了を要求する
   
   CCFT_MAX,
@@ -102,6 +112,8 @@ extern const BOOL CTVT_COMM_IsInitNet( COMM_TVT_WORK *work , CTVT_COMM_WORK *com
 
 extern const void CTVT_COMM_SendFlgReq_Double( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const BOOL flg );
 extern const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value );
+// add ichiraku
+extern const BOOL CTVT_COMM_SendFlg_Repeat( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value );
 extern const BOOL CTVT_COMM_SendWave( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , void* sendData );
 
 extern void CTVT_COMM_SendTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 number );

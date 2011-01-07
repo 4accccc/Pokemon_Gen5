@@ -297,6 +297,8 @@ extern void COMM_TVT_SetUseSelfBuffer( COMM_TVT_WORK *work , const BOOL flg );
 extern const BOOL COMM_TVT_IsTwlMode( void );
 extern const BOOL COMM_TVT_CanUseCamera( void );
 extern APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work );
+extern APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu_XY( COMM_TVT_WORK *work, u8 charPosX, u8 charPosY );
+extern APP_TASKMENU_WORK* COMM_TVT_OpenCancelMenu( COMM_TVT_WORK *work, u8 charPosX, u8 charPosY );
 extern void COMM_TVT_RedrawName( COMM_TVT_WORK *work );
 extern void COMM_TVT_ClearName( COMM_TVT_WORK *work );
 extern void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx );

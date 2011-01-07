@@ -1291,6 +1291,27 @@ const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , c
   }
   
 }
+// 低優先度送信版 add ichiraku
+const BOOL CTVT_COMM_SendFlg_Repeat( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  CTVT_COMM_FLG_PACKET pkt;
+  pkt.flg = flg;
+  pkt.value = value;
+    
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+      CCST_SEND_FLG , sizeof( CTVT_COMM_FLG_PACKET ) , 
+      (void*)&pkt , TRUE , TRUE , FALSE );
+    
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send Flg failue!\n");
+    }
+    return ret;
+  }
+  
+}
 
 //--------------------------------------------------------------
 // フラグ受信
@@ -1405,6 +1426,78 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     COMM_TVT_EraseTalkIcon( commWork->parentWork );
     break;
     
+    // add ichiraku
+    // ミニゲーム用
+  case CCFT_REQ_GAME:        // 参加要求通知
+    // 子のみ受信する
+    if( selfId != 0 )
+    {
+      // 子に対して参加「はい」「いいえ」選択へ移動するフラグをたてる
+      CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      CTVT_TALK_SetIsReqGame( talkWork, TRUE );
+    }
+    break;
+  case CCFT_DECIDE_GAME:     // 参加決定
+    // 親のみ受信
+    // 受信したNetIDのビットを立てる
+    if( selfId == 0 )
+    {
+      CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      CTVT_TALK_SetAcceptBit( talkWork, netID );
+    }
+    break;
+  case CCFT_CANCEL_GAME:     // 参加拒否
+    // 親のみ受信
+    if( selfId == 0 )
+    {
+      CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      // 参加拒否フラグを立てる
+      // 常時終了チェックでみてる
+      CTVT_TALK_SetIsCancelGame( talkWork, TRUE );
+    }
+
+    break;
+  case CCFT_START_GAME:      // 開始要求
+    // 子のみ受信する
+    if( selfId != 0 )
+    {
+      CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      // 開始フラグを立てる
+      CTVT_TALK_SetIsStartGame( talkWork, TRUE );
+    }
+
+    break;
+  case CCFT_EXIT_GAME:       // 終了通知
+    // 子のみ受信する
+    if( selfId != 0 )
+    {
+      CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      // ミニゲーム受付中止フラグを立てる
+      // 常時終了チェックでみてる
+      CTVT_TALK_SetIsExitGame( talkWork, TRUE );
+    }
+
+    break;
+  case CCFT_DECIDE_GAME2:    // 参加決定 確認用
+    // 親のみ受信する
+    // 受信したNetIDのビットを立てる
+    if( selfId == 0 )
+    {
+      CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      CTVT_TALK_SetAcceptBit2( talkWork, netID );
+    }
+
+    break;
+  case CCFT_START_GAME2:     // 開始要求 確認用
+    // 子のみ受信する
+    if( selfId != 0 )
+    {
+      CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      // 開始 確認用フラグを立てる
+      CTVT_TALK_SetIsStartGame2( talkWork, TRUE );
+    }
+
+    break;
   case CCFT_FINISH_PARENT:
     COMM_TVT_SetFinishReq( commWork->parentWork , TRUE );
     break;
