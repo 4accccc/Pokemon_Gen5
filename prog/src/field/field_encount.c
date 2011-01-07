@@ -40,6 +40,7 @@
 #include "tr_tool/trno_def.h"
 
 #include "enceffno.h"
+#include "encprob_data.cdat"
 
 //======================================================================
 //  define
@@ -47,23 +48,6 @@
 #define HEAPID_BTLPARAM (HEAPID_PROC) ///<バトルパラメタ用HEAPID
 
 #define FIRST_STEP_ENCOUNT_PER  (1) //最初の一歩目のエンカウント率
-
-static const ENCPROB_PATTERN DATA_EncProbPattern[] = {
- //up,interval,max, safety
- { 2, 1, 19, 2},
- { 4, 1, 39, 2},
- { 1, 3, 5, 2},
- { 1, 2, 10, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
- { 2, 1, 19, 2},
-};
 
 //--------------------------------------------------------------
 /// エンカウントデータ要素

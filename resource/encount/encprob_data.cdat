@@ -1,0 +1,25 @@
+/*
+	@file	encprob_data.cdat
+	@brief	エンカウント率制御パターンデータテーブル
+	@author	このファイルはコンバータから出力されています
+
+	from resource/encount/encprob_conv.rb
+*/
+#pragma once
+
+static const ENCPROB_PATTERN DATA_EncProbPattern[] = {
+ //up, interval, max, safety
+ { 2, 1, 19, 2 },  //弱草Lv1
+ { 2, 1, 19, 2 },  //弱草Lv2
+ { 2, 1, 19, 2 },  //強草Lv1
+ { 2, 1, 19, 2 },  //強草Lv2
+ { 4, 1, 39, 2 },  //弱長草Lv1
+ { 4, 1, 39, 2 },  //強長草Lv1
+ { 1, 3, 5, 2 },  //洞窟Lv1
+ { 1, 3, 5, 2 },  //洞窟Lv2
+ { 2, 1, 19, 2 },  //砂漠Lv1
+ { 1, 2, 10, 2 },  //水上Lv1
+ { 2, 1, 19, 2 },  //水上Lv2
+ { 2, 1, 19, 2 },  //沼地Lv1
+};
+

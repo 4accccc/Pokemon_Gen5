@@ -29,11 +29,16 @@ GENERATE_DAT = generate_enc.cdat
 GENERATE_SRC = $(GENERATE_DAT:.cdat=.csv)
 GENERATE_HEADER = $(subst .cdat,_def.h,$(GENERATE_DAT))
 
+ENCPROB_DAT = encprob_data.cdat
+ENCPROB_SRC = $(ENCPROB_DAT:.cdat=.xls)
+ENCPROB_TMP = $(ENCPROB_DAT:.cdat=.csv)
+
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)
 GENERATE_DIR = $(PROJECT_ARCDIR)../src/field
+ENCPROB_DIR = $(PROJECT_ARCDIR)../src/field
 
 #中間ファイル出力先
 BIN_DIR_W	 = $(subst $(DQ),,$(WFBIN_DIR))
@@ -55,12 +60,14 @@ NNSARC_DEPEND_FILES = $(SRC_TEXT) $(MONSNO_HASH) encount_common.def
 SUBDIRS		=
 
 #Makeで生成される*.bin,*.datはmake cleanの削除対象にする
-CLEANFILES	= $(BIN_DIR_W)/*.* $(BIN_DIR_B)/*.* $(GENERATE_DAT) $(GENERATE_HEADER)
+CLEANFILES	= $(BIN_DIR_W)/*.* $(BIN_DIR_B)/*.* $(GENERATE_DAT) $(GENERATE_HEADER) $(ENCPROB_DAT)
 
 vpath %bin $(BIN_DIR_W) $(BIN_DIR_B)
 vpath %dat $(BIN_DIR_W) $(BIN_DIR_B)
 
 .PHONY: do-build clean
+
+XLS2CSV = ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -c
 
 #----------------------------------------------------------------------------
 #
@@ -68,7 +75,8 @@ vpath %dat $(BIN_DIR_W) $(BIN_DIR_B)
 #
 #----------------------------------------------------------------------------
 do-build: $(TARGETDIR)/$(NARCNAME_W) $(TARGETDIR)/$(NARCNAME_B) \
-					$(GENERATE_DIR)/$(GENERATE_DAT) $(GENERATE_DIR)/$(GENERATE_HEADER)
+					$(GENERATE_DIR)/$(GENERATE_DAT) $(GENERATE_DIR)/$(GENERATE_HEADER) \
+					$(ENCPROB_DIR)/$(ENCPROB_DAT)
 
 $(TARGETDIR)/$(NARCNAME_W): $(NARCNAME_W)
 	$(COPY) $(NARCNAME_W) $(TARGETDIR)
@@ -78,6 +86,8 @@ $(GENERATE_DIR)/$(GENERATE_DAT): $(GENERATE_DAT)
 	$(COPY) $(GENERATE_DAT) $(GENERATE_DIR)
 $(GENERATE_DIR)/$(GENERATE_HEADER): $(GENERATE_HEADER)
 	$(COPY) $(GENERATE_HEADER) $(GENERATE_DIR)
+$(ENCPROB_DIR)/$(ENCPROB_DAT): $(ENCPROB_DAT)
+	$(COPY) $(ENCPROB_DAT) $(ENCPROB_DIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 
@@ -99,12 +109,17 @@ $(GENERATE_DAT): $(GENERATE_SRC)
 $(GENERATE_HEADER): $(GENERATE_SRC)
 	ruby generate_conv.rb $(GENERATE_SRC) $(GENERATE_DAT)
 
+$(ENCPROB_TMP): $(ENCPROB_SRC)
+	@$(XLS2CSV) $(ENCPROB_SRC) > $(ENCPROB_TMP)
+
+$(ENCPROB_DAT): $(ENCPROB_TMP)
+	ruby encprob_conv.rb $(ENCPROB_TMP) $(ENCPROB_DAT)
 endif
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
-	@-rm $(TARGETDIR)/$(NARCNAME_W) $(TARGETDIR)/$(NARCNAME_B) $(GENERATE_DIR)/$(GENERATE_DAT) $(GENERATE_DIR)/$(GENERATE_HEADER)
+	@-rm $(TARGETDIR)/$(NARCNAME_W) $(TARGETDIR)/$(NARCNAME_B) $(GENERATE_DIR)/$(GENERATE_DAT) $(GENERATE_DIR)/$(GENERATE_HEADER) $(ENCPROB_DIR)/$(ENCPROB_DAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 	@-rm $(NARCNAME_W) $(ARCW_LIST_FILE) $(NAIXNAME_W)
 	@-rm $(NARCNAME_B) $(ARCB_LIST_FILE)

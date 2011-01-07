@@ -73,9 +73,9 @@ struct _TAG_ENCOUNT_WORK
 
 ///エンカウント率補整パターンデータ
 typedef struct _ENCPROB_PATTERN{
-  u16 up:4;
+  u16 up:3;
   u16 interval:4;
   u16 max:6;
-  u16 safety:2;
+  u16 safety:3;
 }ENCPROB_PATTERN;
 
