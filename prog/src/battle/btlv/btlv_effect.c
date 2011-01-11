@@ -991,6 +991,25 @@ void  BTLV_EFFECT_DelTrainer( int position )
   bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
 }
 
+
+//=============================================================================================
+/**
+ * @brief 指定された立ち位置のトレーナーのアニメースピードを変更する
+ *        スワンで追加しました。 mori by 2011/01/11
+ *
+ * @param   position  A,B,C,D,AA,BB
+ * @param   speed     0かFX32_ONEが入る
+ */
+//=============================================================================================
+void BTLV_EFFECT_SetTrainerAnimeSpeed( int position, u32 speed )
+{
+  GF_ASSERT_MSG( ( position - BTLV_MCSS_POS_MAX ) >= 0, "position:%d\n", position );
+  GF_ASSERT( position - BTLV_MCSS_POS_MAX < BTLV_MCSS_POS_MAX );
+  GF_ASSERT_MSG( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
+  
+  BTLV_MCSS_SetAnmSpeed( bew->bmw, position, speed );
+}
+
 //============================================================================================
 /**
  * @brief  指定された位置にゲージをセット

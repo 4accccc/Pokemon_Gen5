@@ -955,6 +955,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
 
       u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
       BTLV_EFFECT_SetTrainer( trType, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+      BTLV_EFFECT_SetTrainerAnimeSpeed( BTLV_MCSS_POS_TR_BB, 0 );   // swanで追加 mori by 2011/01/11
 
       subwk->viewPos = VPOS;
       subwk->clientID = clientID;
@@ -965,7 +966,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 1:
+  case 1: //トレーナー登場シーケンス再生
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
@@ -973,7 +974,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 2:
+  case 2: // 「○○の▼▼があらわれた！」
     if( !BTLV_EFFECT_CheckExecute() )
     {
       BTLV_BALL_GAUGE_PARAM bbgp;
@@ -985,7 +986,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 3:
+  case 3: // メッセージ待ち＆ウインドウ消去待ち
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_2 );
@@ -993,7 +994,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 4:
+  case 4: // ▼▼は■■をだしてきた
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
@@ -1002,7 +1003,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 5:
+  case 5: // メッセージ待ち＆ポケモン登場シーケンス再生
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
@@ -1012,7 +1013,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 6:
+  case 6: 
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
@@ -1637,6 +1638,7 @@ static BOOL btlinEffSub_OpponentTrainerIn1( BTLV_SCU* wk, int* seq, u8 clientID 
       trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
 
       BTLV_EFFECT_SetTrainer( trType, subwk->vpos, 0, 0, 0 );
+      BTLV_EFFECT_SetTrainerAnimeSpeed( subwk->vpos, 0 );    // swanで追加 mori by 2011/01/11
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
@@ -1711,8 +1713,11 @@ static BOOL btlinEffSub_OpponentTrainerIn2( BTLV_SCU* wk, int* seq, u8 clientID_
 
       trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID_1 );
       BTLV_EFFECT_SetTrainer( trType, subwk->vpos_1, 0, 0, 0 );
+      BTLV_EFFECT_SetTrainerAnimeSpeed( subwk->vpos_1, 0 );    // swanで追加 mori by 2011/01/11
+
       trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID_2 );
       BTLV_EFFECT_SetTrainer( trType, subwk->vpos_2, 0, 0, 0 );
+      BTLV_EFFECT_SetTrainerAnimeSpeed( subwk->vpos_2, 0 );    // swanで追加 mori by 2011/01/11
 
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;

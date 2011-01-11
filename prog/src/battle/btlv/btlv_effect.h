@@ -370,6 +370,9 @@ extern  int               BTLV_EFFECT_GetLookTokusei( BtlvMcssPos pos );
 extern  void              BTLV_EFFECT_StopAllPMVoice( void );
 extern  void              BTLV_EFFECT_ClearOldStatusEffectBuffer( void );
 
+extern void               BTLV_EFFECT_SetTrainerAnimeSpeed( int position, u32 speed );
+
+
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
 extern  void        BTLV_EFFECT_SetBtlRule( BtlRule rule );

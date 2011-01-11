@@ -316,16 +316,16 @@ typedef struct
 }BTLV_EFFVM_WINDOW_MOVE;
 
 //--------------------------------------------------------------
-///	背景切り替え技のBGパレットアニメワーク
+/// 背景切り替え技のBGパレットアニメワーク
 //==============================================================
 typedef struct {
   BTLV_EFFVM_WORK*    bevw;
-	BG_PLANM_CONV_DATA	dat;
-	u8					seq_num;      // パレットアニメの総数
-	u8					pal_arc_idx;  // パレットのARCID
-	u8					timer;        // ウェイト計算用
-	u8					seq;
-	u8					pal_seq;      // 何本目のパレットか
+  BG_PLANM_CONV_DATA  dat;
+  u8          seq_num;      // パレットアニメの総数
+  u8          pal_arc_idx;  // パレットのARCID
+  u8          timer;        // ウェイト計算用
+  u8          seq;
+  u8          pal_seq;      // 何本目のパレットか
   u8          loop_count;   // ループする数
 } BTLV_EFFVM_PLANM_SYS;
 
@@ -3188,6 +3188,12 @@ static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
   wait     = ( int )VMGetU32( vmh );
   count    = ( int )VMGetU32( vmh );
 
+  // トレーナー移動は１番で移動する Add by Mori 2011/01/16
+  if( BTLV_MCSS_SetAnime( BTLV_EFFECT_GetMcssWork(), position, 1 ) == TRUE )
+  { 
+    BTLV_MCSS_SetAnimeEndCheck( BTLV_EFFECT_GetMcssWork(), position );
+  }
+
   BTLV_MCSS_MovePosition( BTLV_EFFECT_GetMcssWork(), position, type, &move_pos, frame, wait, count );
 
   return bevw->control_mode;
@@ -3227,6 +3233,10 @@ static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work )
 
   if( BTLV_MCSS_SetAnime( BTLV_EFFECT_GetMcssWork(), position, anm_no ) == TRUE )
   { 
+    // swanはトレーナーがアニメーションが「止まった状態」登場するので、アニメ切替時に
+    // アニメスピードを元に戻す処理を追加する。swanで追加 mori by 2011/01/11
+    BTLV_MCSS_SetAnmSpeed( BTLV_EFFECT_GetMcssWork(), position, FX32_ONE );
+
     BTLV_MCSS_SetAnimeEndCheck( BTLV_EFFECT_GetMcssWork(), position );
   }
 
@@ -8241,7 +8251,7 @@ static  void  TCB_EFFVM_ParticleLoad( GFL_TCB* tcb, void* work )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  BGパレットアニメ
+ *  @brief  BGパレットアニメ
  */
 //-----------------------------------------------------------------------------
 static  void  TCB_EFFVM_BG_PLANM( GFL_TCB* tcb, void* work )
@@ -8258,7 +8268,7 @@ static  void  TCB_EFFVM_BG_PLANM( GFL_TCB* tcb, void* work )
   case 0:
     //if( PaletteFadeCheck(BTLV_EFFECT_GetPfd()) == 0 )
     {
-      p_beps->timer = 255;	// 初回はいきなりロード
+      p_beps->timer = 255;  // 初回はいきなりロード
       p_beps->seq++;
     }
     /* fallthru */
@@ -8353,7 +8363,7 @@ static  void  TCB_EFFVM_BG_PLANM( GFL_TCB* tcb, void* work )
 
       if( p_beps->pal_seq >= p_beps->seq_num-1 )
       {
-        p_beps->pal_seq = 0;	// ループ有効時の為初期化
+        p_beps->pal_seq = 0;  // ループ有効時の為初期化
 
         // ループ判定
         // 0 or 1 だと 終了
