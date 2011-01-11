@@ -1953,7 +1953,11 @@ SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
-		app/local_tvt/local_tvt_chara.c 
+		app/local_tvt/local_tvt_chara.c \
+    app/local_tvt/local_tvt_script.c \
+    app/local_tvt/local_tvt_graphic.c \
+    app/local_tvt/local_tvt_message.c \
+    app/local_tvt/local_tvt_util.c
 
 # WIFIバトルマッチングフロー周り＋WIFネット部分
 #===> SRCS_OVERLAY_DPW_COMMON

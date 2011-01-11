@@ -1201,6 +1201,7 @@ static int _check_TownMap( FIELD_ITEMMENU_WORK *pWork );
 static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork );
 static int _check_DowsingMachine( FIELD_ITEMMENU_WORK *pWork );
 static int _check_AnanukenoHimo( FIELD_ITEMMENU_WORK *pWork );
+static int _check_LiveCaster( FIELD_ITEMMENU_WORK *pWork );
 
 // アララギ博士のどうぐ使えないよメッセージ
 #define MSGID_ITEMUSE_ERROR_ARARAGI   ( msg_bag_059 )
@@ -1396,6 +1397,19 @@ static int _check_AnanukenoHimo( FIELD_ITEMMENU_WORK *pWork )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライブキャスター使用チェック
+ *
+ *	@param	FIELD_ITEMMENU_WORK *pWork 
+ *
+ *	@return int
+ */
+//-----------------------------------------------------------------------------
+static int _check_LiveCaster( FIELD_ITEMMENU_WORK *pWork )
+{
+  return _check_Common( pWork, ITEMCHECK_LIVECASTER, BAG_NEXTPROC_LIVECASTER, FALSE );
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -1440,6 +1454,14 @@ static const ITEMUSE_FUNC_DATA ItemUseFuncTable[]={
   { // あなぬけのヒモ
     ITEM_ANANUKENOHIMO,  1,
     _check_AnanukenoHimo,
+  },
+  { // ライブキャスター男用
+    ITEM_RAIBUKYASUTAA, 1,
+    _check_LiveCaster,
+  },
+  { // ライブキャスター女用
+    ITEM_RAIBUKYASUTAA_1, 1,
+    _check_LiveCaster,
   },
 };
 

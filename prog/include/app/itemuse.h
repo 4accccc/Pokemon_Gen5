@@ -42,6 +42,7 @@ typedef enum
   BAG_NEXTPROC_MAILSET,       // メール作成
   BAG_NEXTPROC_MAILVIEW,      // メール閲覧
   BAG_NEXTPROC_DOWSINGMACHINE,// ダウジングマシン
+  BAG_NEXTPROC_LIVECASTER,    // ライブキャスター
 }BAG_NEXTPROC_ENUM;
 
 // フィールドで使用・不使用チェックの収集に使用するID
@@ -59,6 +60,7 @@ typedef enum {
   ITEMCHECK_MAIL,           // メール
   ITEMCHECK_SPLAY,          // スプレー
   ITEMCHECK_DOWSINGMACHINE, // ダウジングマシン
+  ITEMCHECK_LIVECASTER,     // ライブキャスター
   ITEMCHECK_MAX,
 
 } ITEMCHECK_ENABLE ;

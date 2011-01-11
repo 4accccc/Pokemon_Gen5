@@ -39,6 +39,7 @@
 #include "demo/shinka_demo.h" //進化デモ
 #include "net_app/battle_recorder.h"  //バトルレコーダー
 #include "report_event.h"
+#include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 
 //アーカイブ
 #include "message.naix"
@@ -59,6 +60,7 @@ FS_EXTERN_OVERLAY(wifinote);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(app_mail);
 FS_EXTERN_OVERLAY(battle_recorder);
+FS_EXTERN_OVERLAY(local_tvt);
 
 //-------------------------------------
 /// デバッグ
@@ -226,6 +228,10 @@ static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param
 //バトルレコーダー
 static void * FMenuCallProc_BattleRecorder(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_BattleRecorder(PROCLINK_WORK* wk,void* param_adrs);
+//ライブキャスター
+static void * FMenuCallProc_LiveCaster(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
+static RETURNFUNC_RESULT FMenuReturnProc_LiveCaster(PROCLINK_WORK* wk,void* param_adrs);
+
 
 //呼び出しワークが単純な構造体だった時の共通解放処理
 static void FMenuReleaseProc_ReleaseSimpleWork( void *param_adrs );
@@ -372,6 +378,15 @@ static const struct
     &BattleRecorder_ProcData,
     FMenuCallProc_BattleRecorder,
     FMenuReturnProc_BattleRecorder,
+    NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
+  },
+  //EVENT_PROCLINK_CALL_LIVECASTER
+  {
+    FS_OVERLAY_ID(local_tvt),
+    &LocalTvt_ProcData,
+    FMenuCallProc_LiveCaster,
+    FMenuReturnProc_LiveCaster,
     NULL,
     FMenuReleaseProc_ReleaseSimpleWork,
   },
@@ -1541,6 +1556,9 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
   case BAG_NEXTPROC_BATTLERECORDER:
     wk->next_type = EVENT_PROCLINK_CALL_BTLRECORDER;
     return RETURNFUNC_RESULT_NEXT;
+  case BAG_NEXTPROC_LIVECASTER:
+    wk->next_type = EVENT_PROCLINK_CALL_LIVECASTER;
+    return RETURNFUNC_RESULT_NEXT;
   case BAG_NEXTPROC_MAILVIEW:
     wk->next_type = EVENT_PROCLINK_CALL_MAIL;
     return RETURNFUNC_RESULT_NEXT;
@@ -2266,6 +2284,83 @@ static RETURNFUNC_RESULT FMenuReturnProc_BattleRecorder(PROCLINK_WORK* wk,void* 
       GF_ASSERT(0);
       return RETURNFUNC_RESULT_RETURN;
     }
+  }
+}
+//-------------------------------------
+/// ライブキャスター画面
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CALL関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param   起動時引数
+ *  @param  pre     一つ前のプロック
+ *  @param  void* pre_param_adrs  一つ前のプロックパラメータ
+ *
+ *  @return プロセスパラメータ
+ */
+//-----------------------------------------------------------------------------
+static void * FMenuCallProc_LiveCaster(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
+{ 
+  LOCAL_TVT_INIT_WORK * tvt_param = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(LOCAL_TVT_INIT_WORK) );
+  tvt_param->mode     = LOCAL_TVT_MODE_APP;
+  tvt_param->scriptId = 4;
+  tvt_param->gameData = GAMESYSTEM_GetGameData(wk->param->gsys);
+
+  return tvt_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  RETURN関数
+ *
+ *  @param  wk      メインワーク
+ *  @param  param_adrs  自分のプロックパラメータ
+ *
+ *  @return   RETURNFUNC_RESULT_RETURN,     //メニューに戻る
+ *            RETURNFUNC_RESULT_EXIT,       //メニューも抜けて歩ける状態まで戻る
+ *            RETURNFUNC_RESULT_USE_SKILL,    //メニューを抜けて技を使う
+ *            RETURNFUNC_RESULT_USE_ITEM,   //メニュを抜けてアイテムを使う
+ *            RETURNFUNC_RESULT_NEXT,       //次のプロセスへ行く
+ */ 
+//-----------------------------------------------------------------------------
+static RETURNFUNC_RESULT FMenuReturnProc_LiveCaster(PROCLINK_WORK* wk,void* param_adrs)
+{ 
+  LOCAL_TVT_INIT_WORK * p_param = param_adrs;
+
+  if( wk->param->call == EVENT_PROCLINK_CALL_LIVECASTER )
+  { 
+/*
+    switch( p_param->result )
+    { 
+    case BR_RESULT_RETURN:
+      return RETURNFUNC_RESULT_RETURN;
+    case RETURNFUNC_RESULT_EXIT:
+      return RETURNFUNC_RESULT_EXIT;
+    default:
+      GF_ASSERT(0);
+      return RETURNFUNC_RESULT_RETURN;
+    }
+*/
+    return RETURNFUNC_RESULT_RETURN;
+  }
+  else
+  {
+    /*
+    switch( p_param->result )
+    { 
+    case BR_RESULT_RETURN:
+      wk->next_type = EVENT_PROCLINK_CALL_BAG;
+      return RETURNFUNC_RESULT_NEXT;
+    case RETURNFUNC_RESULT_EXIT:
+      return RETURNFUNC_RESULT_EXIT;
+    default:
+      GF_ASSERT(0);
+      return RETURNFUNC_RESULT_RETURN;
+    }
+    */
+    wk->next_type = EVENT_PROCLINK_CALL_BAG;
+    return RETURNFUNC_RESULT_NEXT;
   }
 }
 

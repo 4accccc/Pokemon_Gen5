@@ -12,10 +12,14 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 
-#include "local_tvt.naix"
+#include "arc_def.h"
+#include "message.naix"
+#include "local_tvt_graphic.naix"
+#include "comm_tvt.naix"
 
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
+#include "local_tvt_graphic.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -23,6 +27,9 @@
 //	define
 //======================================================================
 #pragma mark [> define
+
+#define LTVT_CHARA_SCREEN_WIDTH (16)
+#define LTVT_CHARA_SCREEN_HEIGHT (24)
 
 #define LTVT_CHARA_UPDATE_CNT (40)
 
@@ -33,6 +40,19 @@
 #define LTVT_CHARA_LIP_DELAY_CNT (70)
 #define LTVT_CHARA_OFFSET (7)
 #define LTVT_CHARA_OFFSET_SIZE (LTVT_CHARA_OFFSET*16*0x40)
+
+typedef enum
+{
+  LTCR_PLT,
+  LTCR_NCG,
+  LTCR_ANM,
+
+  LTCR_MAX,
+  
+}LOCAL_TVT_CELL_RES;
+
+const u8 LOCAL_TVT_CHARA_BASE_POS[LOCAL_TVT_MEMBER_MAX][2] = {{0,0},{16,0},{0,12},{16,12}};
+
 //======================================================================
 //	enum
 //======================================================================
@@ -48,10 +68,39 @@ typedef enum
   
 }LOCAL_TVT_CHARA_TRANS_STATE;
 
+typedef enum
+{
+  LTTS_CHARA1,
+  LTTS_CHARA2,
+  LTTS_CHARA3,
+  LTTS_CHARA4,
+  LTTS_TRANS_WAIT,
+  
+  LTTS_MAX,
+}LOCAL_TVT_TRANS_STATE;
+
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+
+struct _LOCAL_TVT_CHARA_SYS
+{
+  LOCAL_TVT_CHARA_SYS_PARAM param;
+  s32 bufNo;
+  s32 transCnt;
+  LOCAL_TVT_TRANS_STATE transState;
+  LOCAL_TVT_CHARA *charaWork[LOCAL_TVT_MEMBER_MAX];
+  LOCAL_TVT_CHARA *transChara;
+  GFL_MSGDATA     *msgHandle;
+  LOCAL_TVT_MEMBER member;
+  ARCHANDLE *arcHandle;
+
+  u32 cellRes[LTCR_MAX];
+  GFL_CLWK    *clwkRecIcon;
+  HEAPID heapID;
+};
+
 struct _LOCAL_TVT_CHARA
 {
   u8 charaIdx;
@@ -79,22 +128,26 @@ struct _LOCAL_TVT_CHARA
   u16 eyeBlinkCnt;
   BOOL isLipSync;
   u16  lipDelayCnt;
+
+  LOCAL_TVT_CHARA_SYS *sys;
+
+  HEAPID heapID;
 };
 
 static const u8 charaResList[LTCT_MAX][3] = {
-    { NARC_local_tvt_chara_player_m_NCLR , NARC_local_tvt_chara_player_m_1_NCGR , NARC_local_tvt_obj_player_m_NCLR },
-    { NARC_local_tvt_chara_rival_NCLR    , NARC_local_tvt_chara_rival_1_NCGR    , NARC_local_tvt_obj_rival_NCLR },
-    { NARC_local_tvt_chara_support_NCLR  , NARC_local_tvt_chara_support_1_NCGR  , NARC_local_tvt_obj_support_NCLR },
-    { NARC_local_tvt_chara_doctor_d_NCLR , NARC_local_tvt_chara_doctor_d_1_NCGR , NARC_local_tvt_obj_doctor_d_NCLR },
-    { NARC_local_tvt_chara_mother_NCLR   , NARC_local_tvt_chara_mother_1_NCGR   , NARC_local_tvt_obj_mother_NCLR },
+    { NARC_local_tvt_graphic_chara_player_m_NCLR , NARC_local_tvt_graphic_chara_player_m_1_NCGR , NARC_local_tvt_graphic_obj_player_m_NCLR },
+    { NARC_local_tvt_graphic_chara_rival_NCLR    , NARC_local_tvt_graphic_chara_rival_1_NCGR    , NARC_local_tvt_graphic_obj_rival_NCLR },
+    { NARC_local_tvt_graphic_chara_support_NCLR  , NARC_local_tvt_graphic_chara_support_1_NCGR  , NARC_local_tvt_graphic_obj_support_NCLR },
+    { NARC_local_tvt_graphic_chara_doctor_d_NCLR , NARC_local_tvt_graphic_chara_doctor_d_1_NCGR , NARC_local_tvt_graphic_obj_doctor_d_NCLR },
+    { NARC_local_tvt_graphic_chara_mother_NCLR   , NARC_local_tvt_graphic_chara_mother_1_NCGR   , NARC_local_tvt_graphic_obj_mother_NCLR },
     //主人公分岐用・主人公(女)素材
-    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR , NARC_local_tvt_obj_player_f_NCLR },
+    { NARC_local_tvt_graphic_chara_player_f_NCLR , NARC_local_tvt_graphic_chara_player_f_1_NCGR , NARC_local_tvt_graphic_obj_player_f_NCLR },
 };
 
 
 static const u8 bgResList[][2] = {
-    { NARC_local_tvt_back_01a_NCLR , NARC_local_tvt_back_01a_01_NCGR },
-    { NARC_local_tvt_back_02a_NCLR , NARC_local_tvt_back_02a_01_NCGR },
+    { NARC_local_tvt_graphic_back_01a_NCLR , NARC_local_tvt_graphic_back_01a_01_NCGR },
+    { NARC_local_tvt_graphic_back_02a_NCLR , NARC_local_tvt_graphic_back_02a_01_NCGR },
 };
 
 //======================================================================
@@ -102,28 +155,347 @@ static const u8 bgResList[][2] = {
 //======================================================================
 #pragma mark [> proto
 
-static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
-static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
-static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , ARCDATID datId );
-static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , const u32 topOfs , const u32 transOfs , const u32 transSize );
-static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
+static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys,  u8 charaType, u8 bgType, LOCAL_TVT_CHARA_POS pos, HEAPID heapID );
+static void LOCAL_TVT_CHARA_Term( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA *charaWork );
+static void LOCAL_TVT_CHARA_Main( LOCAL_TVT_CHARA *charaWork );
+static const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_CHARA *charaWork );
+static void LOCAL_TVT_CHARA_RedrawName( LOCAL_TVT_CHARA *charaWork );
+static void LOCAL_TVT_CHARA_LoadResource( LOCAL_TVT_CHARA *charaWork , const u8 bufNo);
 
-//--------------------------------------------------------------
-//	初期化
-//--------------------------------------------------------------
-LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx )
+
+static void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg );
+static void LOCAL_TVT_CHARA_LipSyncForceStop( LOCAL_TVT_CHARA *charaWork );
+static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, HEAPID heapID );
+static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, HEAPID heapID );
+static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_CHARA *charaWork , ARCHANDLE *arcHandle, ARCDATID datId, HEAPID heapID );
+static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_CHARA *charaWork , const u32 topOfs , const u32 transOfs , const u32 transSize );
+static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, HEAPID heapID );
+static const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork );
+
+static void LOCAL_TVT_RECICON_Load( LOCAL_TVT_CHARA_SYS *sys );
+static void LOCAL_TVT_RECICON_UnLoad( LOCAL_TVT_CHARA_SYS *sys );
+static void LOCAL_TVT_RECICON_Visible( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA_POS pos );
+static void LOCAL_TVT_RECICON_Hide( LOCAL_TVT_CHARA_SYS *sys );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラシステム  初期化
+ *
+ *	@param	const LOCAL_TVT_CHARA_SYS_PARAM *param  引数
+ *	@param	heapID  ヒープID 
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+LOCAL_TVT_CHARA_SYS * LOCAL_TVT_CHARA_SYS_Init( const LOCAL_TVT_CHARA_SYS_PARAM *param , HEAPID heapID )
 {
-  if( work->scriptHead->chara[charaIdx] == 0xFF )
+  LOCAL_TVT_CHARA_SYS *sys = GFL_HEAP_AllocClearMemory( heapID, sizeof( LOCAL_TVT_CHARA_SYS ) );
+  sys->param  = *param;
+  sys->transCnt = 0;
+  sys->bufNo = 1;
+  sys->transState = LTTS_CHARA1;
+  sys->heapID = heapID;
+  
+
+  sys->arcHandle  = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT_GRAPHIC, sys->heapID );
+  sys->msgHandle  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_system_dat , sys->heapID );
+
+  LOCAL_TVT_RECICON_Load(sys );
+
+  return sys;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラシステム破棄
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys ワーク
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_SYS_Term( LOCAL_TVT_CHARA_SYS *sys )
+{
+  int i;
+
+  LOCAL_TVT_RECICON_UnLoad(sys );
+
+  GFL_MSG_Delete( sys->msgHandle );
+  GFL_ARC_CloseDataHandle( sys->arcHandle );
+
+  for( i=0 ; i<sys->member ; i++ )
   {
-    return NULL;
+    if( sys->charaWork[i] != NULL )
+    {
+      LOCAL_TVT_CHARA_Term( sys, sys->charaWork[i] );
+    }
+  }
+
+  GFL_HEAP_FreeMemory( sys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラシステムメイン処理
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  ワーク
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys )
+{
+  int i;
+  //フリップタイミング
+  if( sys->transCnt < LTVT_TRANS_COUNT_MAX )
+  {
+    sys->transCnt++;
+  }
+  //else
+  {
+    if( sys->transChara == NULL &&
+        sys->transState == LTTS_TRANS_WAIT )
+    {
+      GXBGCharBase charaBaseAdr;
+      GXBGCharBase bgBaseAdr;
+      if( sys->bufNo == 0 )
+      {
+        charaBaseAdr = GX_BG_CHARBASE_0x10000;
+        bgBaseAdr = GX_BG_CHARBASE_0x28000;
+      }
+      else
+      {
+        charaBaseAdr = GX_BG_CHARBASE_0x1c000;
+        bgBaseAdr = GX_BG_CHARBASE_0x34000;
+      }
+      G2_SetBG2Control256x16Affine( GX_BG_SCRSIZE_256x16PLTT_256x256 , 
+                                    GX_BG_AREAOVER_REPEAT ,
+                                    GX_BG_SCRBASE_0x6800 ,
+                                    charaBaseAdr );
+      G2_SetBG3Control256x16Affine( GX_BG_SCRSIZE_256x16PLTT_256x256 , 
+                                    GX_BG_AREAOVER_REPEAT ,
+                                    GX_BG_SCRBASE_0x7000 ,
+                                    bgBaseAdr );
+      sys->bufNo = !sys->bufNo;
+      sys->transState = LTTS_CHARA1;
+      sys->transCnt = 0;
+    }
+  }
+  
+  //絵の転送
+  if( sys->transChara != NULL )
+  {
+    if( LOCAL_TVT_CHARA_isFinishTrans( sys->transChara ) == TRUE )
+    {
+      sys->transChara = NULL;
+    }
+  }
+  
+  if( sys->transChara == NULL )
+  {
+    switch( sys->transState )
+    {
+    case LTTS_CHARA1:
+    case LTTS_CHARA2:
+    case LTTS_CHARA3:
+    case LTTS_CHARA4:
+      {
+        const u8 charaNo = sys->transState - LTTS_CHARA1;
+        if( sys->charaWork[charaNo] != NULL )
+        {
+          LOCAL_TVT_CHARA_LoadResource( sys->charaWork[charaNo] , sys->bufNo );
+          sys->transChara = sys->charaWork[charaNo];
+          if( sys->member == LTM_2_MEMBER &&
+              sys->transState == LTTS_CHARA2 )
+          {
+            sys->transState = LTTS_TRANS_WAIT;
+          }
+          else
+          {
+            sys->transState++;
+          }
+        }
+        else
+        {
+          sys->transState++;
+        }
+      }
+      break;
+    }
+  }
+
+  for( i=0 ; i<sys->member ; i++ )
+  {
+    if( sys->charaWork[i] != NULL )
+    {
+      LOCAL_TVT_CHARA_Main( sys->charaWork[i] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラクター読込み  初期化直後に呼ぶこと
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys
+ *	@param	LOCAL_TVT_CHARA_PARAM *cp_setup_tbl 
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CHARA_PARAM *cp_setup_tbl, LOCAL_TVT_MEMBER member )
+{
+  sys->member = member;
+
+  {
+    u32 datId;
+    if( sys->member == LTM_2_MEMBER )
+    {
+      datId = NARC_local_tvt_graphic_local_tvt_scr_2_NSCR;
+    }
+    else
+    {
+      datId = NARC_local_tvt_graphic_local_tvt_scr_4_NSCR;
+    }
+
+    GFL_ARCHDL_UTIL_TransVramScreen( sys->arcHandle , 
+        datId ,
+        LTVT_FRAME_CHARA ,
+        0,0,FALSE,sys->heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( sys->arcHandle , 
+        datId ,
+        LTVT_FRAME_BG ,
+        0,0,FALSE,sys->heapID );
+  }
+
+
+  {
+    int i;
+    for( i=0 ; i<sys->member ; i++ )
+    {
+      const LOCAL_TVT_CHARA_PARAM *chara_param  = &cp_setup_tbl[i];
+      if( chara_param->charaType != 0xFF )
+      {
+        sys->charaWork[i] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, i, sys->heapID );
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワークを取得
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  システム
+ *	@param	pos   位置
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_SYS_GetWork( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA_POS pos )
+{
+  GF_ASSERT( pos < sys->member );
+  return sys->charaWork[ pos ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラクター全員の名前を再描画
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys システム
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_SYS_RedrawName( LOCAL_TVT_CHARA_SYS *sys )
+{
+  int i;
+  for( i=0 ; i<sys->member; i++ )
+  {
+    LOCAL_TVT_CHARA *charaWork  = LOCAL_TVT_CHARA_SYS_GetWork( sys, i );
+    if( charaWork != NULL )
+    {
+      LOCAL_TVT_CHARA_RedrawName( charaWork );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  話開始
+ *
+ *	@param	LOCAL_TVT_CHARA *charaWork  キャラ
+ *	@param	*p_msg  メッセージデータ
+ *	@param	msgID   メッセージID
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, GFL_MSGDATA *p_msg, u16 msgID )
+{
+  LOCAL_TVT_MSG_POS pos;
+
+  //ウィンドウ位置を決める
+  if( charaWork->charaIdx < 2 )
+  {
+    pos = LTMP_DOWN;
   }
   else
   {
-    LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( LOCAL_TVT_CHARA ) );
+    pos = LTMP_UP;
+  }
+
+  //ウィンドウON
+  LOCAL_TVT_MSGWIN_OpenWindow( charaWork->sys->param.message, pos );
+
+  
+  //音声アイコン表示
+  LOCAL_TVT_RECICON_Visible( charaWork->sys, charaWork->charaIdx );
+
+  //メッセージON
+  LOCAL_TVT_MSGWIN_DispMessage( charaWork->sys->param.message, p_msg, msgID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  話処理中
+ *
+ *	@param	LOCAL_TVT_CHARA *charaWork  キャラ
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  キャラシステム
+ *
+ *	@return TRUE話終了  FALSE話中
+ */
+//-----------------------------------------------------------------------------
+BOOL LOCAL_TVT_CHARA_WaitTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys )
+{
+  if( LOCAL_TVT_MSGWIN_IsFinish( charaWork->sys->param.message ) )
+  {
+    //ウィンドウOFF
+    LOCAL_TVT_MSGWIN_CloseWindow( charaWork->sys->param.message );
+
+    //音声アイコン非表示
+    LOCAL_TVT_RECICON_Hide( charaWork->sys );
+
+    //名前表示
+    LOCAL_TVT_CHARA_SYS_RedrawName( sys );
+    //口を閉じる
+    LOCAL_TVT_CHARA_LipSyncForceStop( charaWork );
+    return TRUE;
+  }
+  else
+  {
+    //文字が流れているならば口パクする
+    if( LOCAL_TVT_MSGWIN_IsPause( charaWork->sys->param.message ) )
+    {
+      LOCAL_TVT_CHARA_SetLipSync( charaWork, FALSE );
+    }
+    else
+    {
+      LOCAL_TVT_CHARA_SetLipSync( charaWork, TRUE );
+    }
+    return FALSE;
+  }
+}
+//--------------------------------------------------------------
+//	初期化
+//--------------------------------------------------------------
+static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 charaType, u8 bgType, LOCAL_TVT_CHARA_POS pos, HEAPID heapID )
+{
+  {
+    LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocClearMemory( heapID, sizeof( LOCAL_TVT_CHARA ) );
     
-    charaWork->charaIdx = charaIdx;
-    charaWork->charaType = work->scriptHead->chara[charaIdx];
-    charaWork->bgType = work->scriptHead->back[charaIdx];
+    charaWork->sys    = sys;
+    charaWork->heapID = heapID;
+    charaWork->charaIdx = pos;
+    charaWork->charaType = charaType;
+    charaWork->bgType = bgType;
     charaWork->charaAnmIdx = 0;
     charaWork->bgAnmIdx = 0;
     charaWork->isUpdateQue = FALSE;
@@ -132,19 +504,19 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
 
     if( charaWork->charaType == LTCT_PLAYER_M )
     {
-      MYSTATUS *mystatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
+      MYSTATUS *mystatus = sys->param.mystatus;
       if( MyStatus_GetMySex(mystatus) == PM_FEMALE )
       {
         charaWork->charaType = LTCT_PLAYER_F;
       }
     }
 
-    ARI_TPrintf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
+    NAGI_Printf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
     
-    LOCAL_TVT_CHARA_LoadCharaResource( work , charaWork );
-    LOCAL_TVT_CHARA_LoadCommonResource( work , charaWork );
+    LOCAL_TVT_CHARA_LoadCharaResource( charaWork, sys, heapID );
+    LOCAL_TVT_CHARA_LoadCommonResource( charaWork, sys, heapID );
 
-    LOCAL_TVT_CHARA_DispName( work , charaWork );
+    LOCAL_TVT_CHARA_DispName( charaWork, sys, heapID );
     
     charaWork->state = LTCTS_WAIT_REQ;
     charaWork->resData = NULL;
@@ -159,7 +531,7 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
 //--------------------------------------------------------------
 //	開放
 //--------------------------------------------------------------
-void LOCAL_TVT_CHARA_Term( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+static void LOCAL_TVT_CHARA_Term( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA *charaWork )
 {
   GFL_CLACT_WK_Remove( charaWork->clwkEye );
   GFL_CLACT_WK_Remove( charaWork->clwkMouth );
@@ -180,11 +552,11 @@ void LOCAL_TVT_CHARA_Term( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 //--------------------------------------------------------------
 //	更新
 //--------------------------------------------------------------
-void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+static void LOCAL_TVT_CHARA_Main( LOCAL_TVT_CHARA *charaWork )
 {
-  const u32 charSize = (work->mode == LTM_2_MEMBER?0x6000:0x3000);
-  const u32 bufOfs = (work->bufNo==0?0:LTVT_VRAM_PAGE_SIZE);
-  const u32 transOfs = (work->mode == LTM_2_MEMBER?0:LTVT_CHARA_OFFSET_SIZE);
+  const u32 charSize = (charaWork->sys->member == LTM_2_MEMBER?0x6000:0x3000);
+  const u32 bufOfs = (charaWork->sys->bufNo==0?0:LTVT_VRAM_PAGE_SIZE);
+  const u32 transOfs = (charaWork->sys->member == LTM_2_MEMBER?0:LTVT_CHARA_OFFSET_SIZE);
 
   switch( charaWork->state )
   {
@@ -192,11 +564,11 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_CHARA1:
     charaWork->transIdx = 0;
-    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , charaResList[charaWork->charaType][1] + charaWork->charaAnmIdx );
+    LOCAL_TVT_CHARA_LoadNcgResource( charaWork , charaWork->sys->arcHandle, charaResList[charaWork->charaType][1] + charaWork->charaAnmIdx, charaWork->heapID );
     charaWork->state = LTCTS_CHARA2;
     break;
   case LTCTS_CHARA2:
-    LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
+    LOCAL_TVT_CHARA_TransNcgResource( charaWork ,
                                       charaWork->transIdx * LTVT_TRANS_SIZE + transOfs,
                                       LTVT_VRAM_ADR_CHARA + charSize * charaWork->charaIdx + charaWork->transIdx * LTVT_TRANS_SIZE + bufOfs ,
                                       LTVT_TRANS_SIZE );
@@ -210,11 +582,11 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_BG1:
     charaWork->transIdx = 0;
-    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] + charaWork->bgAnmIdx + (work->timeZone*2) );
+    LOCAL_TVT_CHARA_LoadNcgResource( charaWork , charaWork->sys->arcHandle, bgResList[charaWork->bgType][1] + charaWork->bgAnmIdx + (charaWork->sys->param.timeZone*2), charaWork->heapID );
     charaWork->state = LTCTS_BG2;
     break;
   case LTCTS_BG2:
-    LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
+    LOCAL_TVT_CHARA_TransNcgResource( charaWork ,
                                       charaWork->transIdx * LTVT_TRANS_SIZE + transOfs,
                                       LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx + charaWork->transIdx * LTVT_TRANS_SIZE + bufOfs ,
                                       LTVT_TRANS_SIZE );
@@ -241,11 +613,15 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
       charaWork->bgAnmIdx = !charaWork->bgAnmIdx;
     }
   }
-  if( charaWork->isUpdateQue == TRUE &&
-      PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
   {
-    GFL_BMPWIN_TransVramCharacter( charaWork->nameWin );
-    charaWork->isUpdateQue = FALSE;
+
+    PRINT_QUE *printQue   = LOCAL_TVT_MESSAGE_GetPrintQue( charaWork->sys->param.message );
+    if( charaWork->isUpdateQue == TRUE &&
+        PRINTSYS_QUE_IsFinished( printQue ) == TRUE )
+    {
+      GFL_BMPWIN_TransVramCharacter( charaWork->nameWin );
+      charaWork->isUpdateQue = FALSE;
+    }
   }
   
   //目パチ
@@ -285,14 +661,14 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 //--------------------------------------------------------------
 //	絵の読み込み要求
 //--------------------------------------------------------------
-void LOCAL_TVT_CHARA_LoadChara( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , const u8 bufNo)
+static void LOCAL_TVT_CHARA_LoadResource( LOCAL_TVT_CHARA *charaWork , const u8 bufNo)
 {
   charaWork->state = LTCTS_CHARA1;
 }
 //--------------------------------------------------------------
 //	絵の読み込み完了チェック
 //--------------------------------------------------------------
-const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_CHARA *charaWork )
 {
   if( charaWork->state == LTCTS_WAIT_TRANS )
   {
@@ -304,10 +680,10 @@ const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA
 //--------------------------------------------------------------
 //	絵の読み込み(パレット・スクリーン
 //--------------------------------------------------------------
-static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, HEAPID heapID )
 {
   u8  screenHeight;
-  if( work->mode == LTM_2_MEMBER )
+  if( sys->member == LTM_2_MEMBER )
   {
     screenHeight = LTVT_CHARA_SCREEN_HEIGHT;
   }
@@ -316,20 +692,20 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
     screenHeight = LTVT_CHARA_SCREEN_HEIGHT/2;
   }
   
-  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->arcHandle , 
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( sys->arcHandle , 
                                       charaResList[charaWork->charaType][0] ,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x4000 ,
                                       (2*16*16) ,
-                                      work->heapId );
-  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->arcHandle , 
-                                      bgResList[charaWork->bgType][0] + work->timeZone,
+                                      heapID );
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( sys->arcHandle , 
+                                      bgResList[charaWork->bgType][0] + sys->param.timeZone,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x6000 ,
                                       (2*16*16) ,
-                                      work->heapId );
+                                      heapID );
 
   GFL_BG_ChangeScreenPalette( LTVT_FRAME_CHARA , 
                               charaWork->charaIdx%2 * LTVT_CHARA_SCREEN_WIDTH,
@@ -352,11 +728,11 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
 //--------------------------------------------------------------
 //	絵の読み込み(キャラ
 //--------------------------------------------------------------
-static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, HEAPID heapID )
 {
   u32 charSize;
   u32 transOfs;
-  if( work->mode == LTM_2_MEMBER )
+  if( sys->member == LTM_2_MEMBER )
   {
     charSize = 0x6000;
     transOfs = 0;
@@ -367,29 +743,29 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
     transOfs = LTVT_CHARA_OFFSET_SIZE;
   }
 
-  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , charaResList[charaWork->charaType][1] );
-  LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
+  LOCAL_TVT_CHARA_LoadNcgResource( charaWork , sys->arcHandle, charaResList[charaWork->charaType][1], heapID );
+  LOCAL_TVT_CHARA_TransNcgResource( charaWork ,
                                     transOfs ,
                                     LTVT_VRAM_ADR_CHARA + charSize * charaWork->charaIdx ,
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
   
-  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] + (work->timeZone*2) );
-  LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
+  LOCAL_TVT_CHARA_LoadNcgResource( charaWork , sys->arcHandle, bgResList[charaWork->bgType][1] + (sys->param.timeZone*2), heapID );
+  LOCAL_TVT_CHARA_TransNcgResource( charaWork ,
                                     transOfs ,
                                     LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx ,
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
 
   //目パチ口パク素材
-  charaWork->cellRes[0] = GFL_CLGRP_PLTT_RegisterComp( work->arcHandle , 
+  charaWork->cellRes[0] = GFL_CLGRP_PLTT_RegisterComp( sys->arcHandle , 
         charaResList[charaWork->charaType][2] , CLSYS_DRAW_MAIN , 
-        (LTVT_PLT_OBJ_CHARA+(charaWork->charaIdx*2))*32 , work->heapId  );
-  charaWork->cellRes[1] = GFL_CLGRP_CGR_Register( work->arcHandle , 
-        charaResList[charaWork->charaType][2]+1 , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  charaWork->cellRes[2] = GFL_CLGRP_CELLANIM_Register( work->arcHandle , 
+        (LTVT_PLT_OBJ_CHARA+(charaWork->charaIdx*2))*32 , heapID  );
+  charaWork->cellRes[1] = GFL_CLGRP_CGR_Register( sys->arcHandle , 
+        charaResList[charaWork->charaType][2]+1 , FALSE , CLSYS_DRAW_MAIN , heapID  );
+  charaWork->cellRes[2] = GFL_CLGRP_CELLANIM_Register( sys->arcHandle , 
         charaResList[charaWork->charaType][2]+2 , 
-        charaResList[charaWork->charaType][2]+3, work->heapId  );
+        charaResList[charaWork->charaType][2]+3, heapID  );
   
   {
     GFL_CLWK_DATA cellInitData;
@@ -397,41 +773,41 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
     cellInitData.bgpri = 1;
     cellInitData.pos_x = 64 + (charaWork->charaIdx%2)*128;
     cellInitData.pos_y = 48 + (charaWork->charaIdx/2)*96;
-    if( work->mode == LTM_2_MEMBER )
+    if( sys->member == LTM_2_MEMBER )
     {
       cellInitData.pos_y += LTVT_CHARA_OFFSET*8;
     }
     cellInitData.anmseq = 0;
 
-    charaWork->clwkEye = GFL_CLACT_WK_Create( work->cellUnit ,
+    charaWork->clwkEye = GFL_CLACT_WK_Create( sys->param.cellUnit ,
               charaWork->cellRes[1],
               charaWork->cellRes[0],
               charaWork->cellRes[2],
-              &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+              &cellInitData ,CLSYS_DRAW_MAIN , heapID );
     GFL_CLACT_WK_SetDrawEnable( charaWork->clwkEye , TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( charaWork->clwkEye , TRUE );
     GFL_CLACT_WK_StopAnm( charaWork->clwkEye );
 
     cellInitData.anmseq = 1;
-    charaWork->clwkMouth = GFL_CLACT_WK_Create( work->cellUnit ,
+    charaWork->clwkMouth = GFL_CLACT_WK_Create( sys->param.cellUnit ,
               charaWork->cellRes[1],
               charaWork->cellRes[0],
               charaWork->cellRes[2],
-              &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+              &cellInitData ,CLSYS_DRAW_MAIN , heapID );
     GFL_CLACT_WK_SetDrawEnable( charaWork->clwkMouth , TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( charaWork->clwkMouth , TRUE );
     GFL_CLACT_WK_StopAnm( charaWork->clwkMouth );
   }
 }
 
-static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , ARCDATID datId )
+static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_CHARA *charaWork , ARCHANDLE *arcHandle, ARCDATID datId, HEAPID heapID )
 {
   //ARI_TPrintf("[%d]L\n",charaWork->charaIdx);
-  charaWork->resData = GFL_ARCHDL_UTIL_LoadBGCharacter( work->arcHandle , 
+  charaWork->resData = GFL_ARCHDL_UTIL_LoadBGCharacter( arcHandle, 
                                    datId ,
                                    FALSE ,
                                    &charaWork->charaData ,
-                                   work->heapId );
+                                   heapID );
 //  DC_FlushAll();
 //  DC_FlushRange( charaWork->charaData->pRawData , charaWork->charaData->szByte );
 }
@@ -440,7 +816,7 @@ static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CH
 //--------------------------------------------------------------
 //	絵の読み込み機能部(キャラ
 //--------------------------------------------------------------
-static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork ,
+static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_CHARA *charaWork ,
                                                    const u32 topOfs , const u32 transOfs , const u32 transSize )
 {
   //ARI_TPrintf("[%d]T\n",charaWork->charaIdx);
@@ -451,7 +827,7 @@ static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_C
 //--------------------------------------------------------------
 //	名前表示
 //--------------------------------------------------------------
-static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, HEAPID heapID )
 {
   {
     //BMPWINの作成
@@ -471,14 +847,16 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
   
   {
     //名前書く
-    STRBUF *str = GFL_MSG_CreateString( work->msgHandle , charaWork->charaType );
+    STRBUF *str = GFL_MSG_CreateString( sys->msgHandle , charaWork->charaType );
+    GFL_FONT  *fontHandle = LOCAL_TVT_MESSAGE_GetFont( sys->param.message );
+    PRINT_QUE *printQue   = LOCAL_TVT_MESSAGE_GetPrintQue( sys->param.message );
     if( charaWork->charaType == LTCT_PLAYER_M ||
         charaWork->charaType == LTCT_PLAYER_F )
     {
       WORDSET *wordSet;
-      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , work->heapId );
-      MYSTATUS *mystatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
-      wordSet = WORDSET_Create( work->heapId );
+      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , heapID );
+      MYSTATUS *mystatus = sys->param.mystatus;
+      wordSet = WORDSET_Create( heapID );
       
       WORDSET_RegisterPlayerName( wordSet , 0 , mystatus );
       WORDSET_ExpandStr( wordSet , msgWorkStr , str );
@@ -488,29 +866,29 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
       
       str = msgWorkStr;
     }
-    charaWork->nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
+    charaWork->nameLen = PRINTSYS_GetStrWidth( str , fontHandle , 0 );
 
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2+1 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+                            fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2-1 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+                            fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1+1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+                            fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1-1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+                            fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
 
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
 
 
-//    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+//    PRINTSYS_PrintQueColor( sys->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
 //                            ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 0 , str ,
-//                            work->fontHandle , PRINTSYS_LSB_Make( 1,0xf,0 ) );
+//                            sys->fontHandle , PRINTSYS_LSB_Make( 1,0xf,0 ) );
     
     GFL_STR_DeleteBuffer( str );
     charaWork->isUpdateQue = TRUE;
@@ -518,18 +896,18 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
   }
 }
 
-void LOCAL_TVT_CHARA_RedrawName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+static void LOCAL_TVT_CHARA_RedrawName( LOCAL_TVT_CHARA *charaWork )
 {
   GFL_BMPWIN_MakeScreen( charaWork->nameWin );
   GFL_BG_LoadScreenV_Req(LTVT_FRAME_NAME);
 }
 
-const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork )
+static const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork )
 {
   return charaWork->nameLen;
 }
 
-void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg )
+static void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg )
 {
   if( charaWork->isLipSync == TRUE &&
       flg == FALSE )
@@ -539,8 +917,95 @@ void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg )
   charaWork->isLipSync = flg;
 }
 
-void LOCAL_TVT_CHARA_LipSyncForceStop( LOCAL_TVT_CHARA *charaWork )
+static void LOCAL_TVT_CHARA_LipSyncForceStop( LOCAL_TVT_CHARA *charaWork )
 {
   charaWork->lipDelayCnt = 0;
   charaWork->isLipSync = FALSE;
+}
+
+//======================================================================
+//	録音アイコン
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  録音アイコン読込み
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys システム
+ */
+//-----------------------------------------------------------------------------
+static void LOCAL_TVT_RECICON_Load( LOCAL_TVT_CHARA_SYS *sys )
+{
+  {
+    ARCHANDLE *ctvtArcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA , sys->heapID );
+    sys->cellRes[LTCR_PLT] = GFL_CLGRP_PLTT_RegisterComp( ctvtArcHandle , 
+        NARC_comm_tvt_tv_t_obj_NCLR , CLSYS_DRAW_MAIN , 
+        LTVT_PLT_OBJ_MAIN*32 , sys->heapID  );
+    sys->cellRes[LTCR_NCG] = GFL_CLGRP_CGR_Register( ctvtArcHandle , 
+        NARC_comm_tvt_tv_t_upper_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , sys->heapID  );
+    sys->cellRes[LTCR_ANM] = GFL_CLGRP_CELLANIM_Register( ctvtArcHandle , 
+        NARC_comm_tvt_tv_t_upper_obj_NCER , NARC_comm_tvt_tv_t_upper_obj_NANR, sys->heapID  );
+    GFL_ARC_CloseDataHandle( ctvtArcHandle );
+  }
+
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+
+    sys->clwkRecIcon = GFL_CLACT_WK_Create( sys->param.cellUnit ,
+              sys->cellRes[LTCR_NCG],
+              sys->cellRes[LTCR_PLT],
+              sys->cellRes[LTCR_ANM],
+              &cellInitData ,CLSYS_DRAW_MAIN , sys->heapID );
+    GFL_CLACT_WK_SetDrawEnable( sys->clwkRecIcon , FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( sys->clwkRecIcon , TRUE );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  録音アイコン破棄
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys システム
+ */
+//-----------------------------------------------------------------------------
+static void LOCAL_TVT_RECICON_UnLoad( LOCAL_TVT_CHARA_SYS *sys )
+{
+  GFL_CLACT_WK_Remove( sys->clwkRecIcon );
+
+  GFL_CLGRP_PLTT_Release( sys->cellRes[LTCR_PLT] );
+  GFL_CLGRP_CGR_Release( sys->cellRes[LTCR_NCG] );
+  GFL_CLGRP_CELLANIM_Release( sys->cellRes[LTCR_ANM] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  録音アイコン表示
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  システム
+ *	@param	LOCAL_TVT_CHARA_POS       表示場所
+ */
+//-----------------------------------------------------------------------------
+static void LOCAL_TVT_RECICON_Visible( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA_POS pos )
+{
+  LOCAL_TVT_CHARA *charaWork  = LOCAL_TVT_CHARA_SYS_GetWork( sys, pos );
+  const u8 nameLen = LOCAL_TVT_CHARA_GetNameLen( charaWork);
+  GFL_CLACTPOS clpos;
+  clpos.x = LOCAL_TVT_CHARA_BASE_POS[pos][0]*8 + 64 + nameLen/2 + 16;
+  clpos.y = LOCAL_TVT_CHARA_BASE_POS[pos][1]*8 + 16;
+  GFL_CLACT_WK_SetPos( sys->clwkRecIcon , &clpos , CLSYS_DRAW_MAIN );
+  GFL_CLACT_WK_SetDrawEnable( sys->clwkRecIcon , TRUE );
+  GFL_CLACT_WK_ResetAnm( sys->clwkRecIcon );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  録音アイコン非表示
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys システム
+ */
+//-----------------------------------------------------------------------------
+static void LOCAL_TVT_RECICON_Hide( LOCAL_TVT_CHARA_SYS *sys )
+{
+  GFL_CLACT_WK_SetDrawEnable( sys->clwkRecIcon , FALSE );
 }

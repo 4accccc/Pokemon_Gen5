@@ -5769,15 +5769,6 @@
 最新型トランシーバー。</language>
 	</row>
 
-	<row id="ITEMINFO_627">
-		<language name="JPN" width="256">かくとくした　メダルを
-たくさん　しゅうのうできる
-とくべつな　いれもの。</language>
-		<language name="JPN_KANJI" width="256">かくとくした　メダルを
-たくさん　しゅうのうできる
-とくべつな　いれもの。</language>
-	</row>
-
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

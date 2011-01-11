@@ -46,9 +46,8 @@ typedef enum
 	SHORTCUT_ID_TRCARD_BACK,			//トレーナーカード＞うらめん
   SHORTCUT_ID_TRCARD_BADGE,     //トレーナーカード＞バッジ
 	SHORTCUT_ID_CONFIG,						//せってい
+  SHORTCUT_ID_LIVECASTER,       //ライブキャスター
 
-
-  //１つだけなら増やせる
 	SHORTCUT_ID_MAX,
 	SHORTCUT_ID_NULL	= SHORTCUT_ID_MAX,	//データなし
 } SHORTCUT_ID;

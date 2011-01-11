@@ -10,33 +10,65 @@
 //======================================================================
 #pragma once
 
+#include "local_tvt_message.h"
+#include "local_tvt_util.h"
 //======================================================================
 //	define
 //======================================================================
 #pragma mark [> define
 
+extern const u8 LOCAL_TVT_CHARA_BASE_POS[LOCAL_TVT_MEMBER_MAX][2];
+
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+  LOCAL_TVT_CHARA_POS_LEFTUP,
+  LOCAL_TVT_CHARA_POS_RIGHTUP,
+  LOCAL_TVT_CHARA_POS_LEFTDOWN,
+  LOCAL_TVT_CHARA_POS_RIGHTDOWN,
+  LOCAL_TVT_CHARA_POS_MAX,
+}LOCAL_TVT_CHARA_POS;
 
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+typedef struct _LOCAL_TVT_CHARA_SYS LOCAL_TVT_CHARA_SYS;
+typedef struct _LOCAL_TVT_CHARA LOCAL_TVT_CHARA;
 
 //======================================================================
-//	proto
+//	system
 //======================================================================
-#pragma mark [> proto
+typedef struct
+{
+  u16  charaType;
+  u16  bgType;
+}LOCAL_TVT_CHARA_PARAM;
+typedef struct
+{
+  GFL_CLUNIT          *cellUnit;
+  MYSTATUS            *mystatus;
+  LOCAL_TVT_MESSAGE   *message;
+  LOCAL_TVT_TIME_ZONE timeZone;
+}LOCAL_TVT_CHARA_SYS_PARAM;
 
-extern LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 idx );
-extern void LOCAL_TVT_CHARA_Term( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
-extern void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
+extern LOCAL_TVT_CHARA_SYS * LOCAL_TVT_CHARA_SYS_Init( const LOCAL_TVT_CHARA_SYS_PARAM *param , HEAPID heapID );
+extern void LOCAL_TVT_CHARA_SYS_Term( LOCAL_TVT_CHARA_SYS *sys );
+extern void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys );
 
-extern void LOCAL_TVT_CHARA_LoadChara( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , const u8 bufNo);
-extern const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
-extern const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork );
-extern void LOCAL_TVT_CHARA_RedrawName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork );
-extern void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg );
-extern void LOCAL_TVT_CHARA_LipSyncForceStop( LOCAL_TVT_CHARA *charaWork );
+extern void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CHARA_PARAM *cp_setup_tbl, LOCAL_TVT_MEMBER member );
+
+extern LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_SYS_GetWork( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA_POS pos );
+
+extern void LOCAL_TVT_CHARA_SYS_RedrawName( LOCAL_TVT_CHARA_SYS *sys );
+
+//======================================================================
+//	work
+//======================================================================
+
+extern void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, GFL_MSGDATA *p_msg, u16 msgID );
+extern BOOL LOCAL_TVT_CHARA_WaitTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys );
+

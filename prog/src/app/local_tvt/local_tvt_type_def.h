@@ -44,26 +44,3 @@ typedef struct _LOCAL_TVT_WORK LOCAL_TVT_WORK;
 //======================================================================
 #pragma mark [> proto
 
-
-
-//======================================================================
-//	スクリプト系
-//======================================================================
-#pragma mark [>script
-typedef enum
-{
-  LCL_FINISH,
-  LCL_DISP_MESSAGE,
-  LCL_WAIT,
-
-  LCL_MAX,
-}LTVT_COMMAND_LIST;
-
-typedef void (*LTVT_SCRIPT_INIT_FUNC)( LOCAL_TVT_WORK *work );
-typedef const BOOL (*LTVT_SCRIPT_MAIN_FUNC)( LOCAL_TVT_WORK *work );
-typedef struct
-{
-  LTVT_SCRIPT_INIT_FUNC initFunc;
-  LTVT_SCRIPT_MAIN_FUNC mainFunc;
-}LTVT_SCRIPT_COMMAND_TABLE;
-

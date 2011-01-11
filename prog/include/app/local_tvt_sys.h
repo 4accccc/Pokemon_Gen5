@@ -30,6 +30,12 @@ typedef enum
   LTM_4_MEMBER = 4,
   
   LTM_MAX,
+}LOCAL_TVT_MEMBER;
+
+typedef enum
+{
+  LOCAL_TVT_MODE_SCRIPT,  //スクリプト制御モード
+  LOCAL_TVT_MODE_APP,     //アプリケーションモード
 }LOCAL_TVT_MODE;
 
 //======================================================================
@@ -38,8 +44,9 @@ typedef enum
 #pragma mark [> struct
 typedef struct
 {
-  u16 scriptId;
-  GAMEDATA *gameData;
+  LOCAL_TVT_MODE  mode;     //アプリ起動モード
+  u16             scriptId; //スクリプト制御モード時につかうスクリプト番号
+  GAMEDATA        *gameData;//ゲームデータ
 }LOCAL_TVT_INIT_WORK;
 
 

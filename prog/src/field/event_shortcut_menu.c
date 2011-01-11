@@ -819,6 +819,9 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 	case SHORTCUT_ID_CONFIG:						//せってい
 		p_param->call = EVENT_PROCLINK_CALL_CONFIG;
 		return CALLTYPE_PROC;
+  case SHORTCUT_ID_LIVECASTER:        //ライブキャスター
+		p_param->call = EVENT_PROCLINK_CALL_LIVECASTER;
+    return CALLTYPE_PROC;
   default:
 		GF_ASSERT(0);
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
