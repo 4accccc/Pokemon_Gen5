@@ -1,7 +1,9 @@
 EFFSEQ
-$0002
+$0004
 C:\home\swan\resource\particle\wazaeffect\w_094.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_094_psycho.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_094_psychokinesis.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_094_psychokinesis.NSCR
 #001
 %00
 カメラ移動	追従	防御側	16	0	12
@@ -9,8 +11,9 @@ C:\home\swan\resource\wazaeffect\graphic\bg_094_psycho.NSCR
 BGのパレットフェード	お盆＋フィールド	0	16	0	0:0:0
 エフェクト終了待ち	すべて
 BGのパレットフェード	エフェクト面	16	0	1	0:0:0
-BGのロード	bg_094_psycho
-BGのスクロール	常に	0	22	80	1	0
+BGのロード	bg_094_psychokinesis
+BGのスクロール	追従	0	40	40	1	0
+BGのラスタースクロール	縦	1.5	16	60	フェードなし	0
 BGの表示/非表示	エフェクト	表示
 BGの表示/非表示	フィールド	非表示
 BGの表示/非表示	お盆	非表示
@@ -20,11 +23,12 @@ SE再生	SEQ_SE_W095_01	SE1	防御側	40:0:110	0:0:0
 SE再生	SEQ_SE_W050_01	SE2	防御側	40:200:100	0:0:0
 制御モード変更	逐次
 ポケモン移動	防御側	往復	0.3	0	1	2	3
-タイマーによるウエイト	36
+タイマーによるウエイト	20
 ポケモン拡縮	防御側	往復	0.2	0.2	4	1	1
 ポケモンパレットフェード	防御側	12	0	1	31:31:31
+タイマーによるウエイト	20
 BGのパレットフェード	エフェクト面	0	16	0	0:0:0
-タイマーによるウエイト	24
+タイマーによるウエイト	10
 BGのパレットフェード	お盆＋フィールド	16	0	0	0:0:0
 BGの表示/非表示	フィールド	表示
 BGの表示/非表示	お盆	表示
