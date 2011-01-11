@@ -599,6 +599,7 @@ BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk )
 
   //–¼‘O“ü—Íƒ[ƒNÝ’è
   p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_MYNAME, MyStatus_GetMySex(p_mystatus), 0, NAMEIN_PERSON_LENGTH, p_ev_wk->p_default_str, NULL );
+  p_ev_wk->p_param->prof_flag  = NAMEIN_PROF_ALL_ENABLE;
 
   return TRUE;
 }

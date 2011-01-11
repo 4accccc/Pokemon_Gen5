@@ -5206,24 +5206,30 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         }
 
         //不正文字チェック
-        if( PROF_WORD_CheckProfanityWordCode( p_wk->p_prof, 
-              p_wk->strinput.input_str, 
-              HEAPID_NAME_INPUT ) )
-        { 
-          PMSND_PlaySE( NAMEIN_SE_BEEP );
-          break;
+        if( ( p_wk->p_param->prof_flag & NAMEIN_PROF_STRING_ENABLE ) == 0 )
+        {
+          if( PROF_WORD_CheckProfanityWordCode( p_wk->p_prof, 
+                p_wk->strinput.input_str, 
+                HEAPID_NAME_INPUT ) )
+          { 
+            PMSND_PlaySE( NAMEIN_SE_BEEP );
+            break;
+          }
         }
 
         //不正数値チェック
-        if( PROF_WORD_CheckProfanityNumberCode(
-              p_wk->strinput.input_str,
-              p_wk->strinput.input_idx,
-              HEAPID_NAME_INPUT ) )
-        { 
-          PMSND_PlaySE( NAMEIN_SE_BEEP );
-          MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_009 );
-          p_wk->is_illegal_msg  = TRUE;
-          break;
+        if( ( p_wk->p_param->prof_flag & NAMEIN_PROF_NUMBER_ENABLE ) == 0 )
+        {
+          if( PROF_WORD_CheckProfanityNumberCode(
+                p_wk->strinput.input_str,
+                p_wk->strinput.input_idx,
+                HEAPID_NAME_INPUT ) )
+          { 
+            PMSND_PlaySE( NAMEIN_SE_BEEP );
+            MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_009 );
+            p_wk->is_illegal_msg  = TRUE;
+            break;
+          }
         }
 
 

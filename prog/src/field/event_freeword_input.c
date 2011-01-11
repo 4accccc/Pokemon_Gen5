@@ -84,6 +84,7 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
 
   wk->param.wordmax = DATA_WordLength[ mode - NAMEIN_GREETING_WORD ];
   wk->param.strbuf = GFL_STR_CreateBuffer( wk->param.wordmax+EOM_SIZE, wk->heapID );
+  wk->param.prof_flag = NAMEIN_PROF_DISABLE;
 
   switch( mode ){
   case NAMEIN_GREETING_WORD: // ‚·‚ê‚¿‚ª‚¢ˆ¥ŽAŒ¾—t param1Ž©•ª‚Ì«•Ê

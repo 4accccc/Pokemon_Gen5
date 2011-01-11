@@ -44,6 +44,19 @@ typedef enum
 }NAMEIN_MODE;
 
 //-------------------------------------
+///	不正文字列許可モード
+//=====================================
+typedef enum
+{
+  NAMEIN_PROF_DISABLE       = 0,  //通常、許可しない（特別な仕様がない限りこちらを使うこと！）
+  NAMEIN_PROF_NUMBER_ENABLE = 1<<0,  //数字を許可
+  NAMEIN_PROF_STRING_ENABLE = 1<<1,  //文字を許可
+  NAMEIN_PROF_ALL_ENABLE  = NAMEIN_PROF_NUMBER_ENABLE | NAMEIN_PROF_STRING_ENABLE,     //全て許可
+
+} NAMEIN_PROF_FLAG;
+
+
+//-------------------------------------
 ///	入力文字数
 //    以下EOM含まない長さです
 //=====================================
@@ -144,6 +157,8 @@ typedef struct
 
   MISC              *p_misc;    //  [in]内部でキーボードタイプを保存するためのセーブデータ NULLを渡すとセーブしません
                                                                                           //※NULLを渡して良いのはイントロだけです
+
+  NAMEIN_PROF_FLAG  prof_flag;
 
 } NAMEIN_PARAM;
 

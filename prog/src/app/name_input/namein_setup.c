@@ -59,6 +59,7 @@ NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, in
   p_param->param1 = param1;
   p_param->param2 = param2;
   p_param->p_misc = p_misc;
+  p_param->prof_flag  = NAMEIN_PROF_DISABLE;
 
   //バッファ作成
   p_param->strbuf = GFL_STR_CreateBuffer( NAMEIN_STR_BUFFER_LENGTH + 1, heapId );
@@ -92,6 +93,7 @@ NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *
   p_param->wordmax  = wordmax;
   p_param->pp       = pp;
   p_param->p_misc = p_misc;
+  p_param->prof_flag  = NAMEIN_PROF_DISABLE;
 
   //PPの場合引数を設定
   if( p_param->pp )
