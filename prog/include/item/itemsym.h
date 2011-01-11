@@ -616,8 +616,9 @@
 #define ITEM_HAITATUBUTU2		( 624 )		// はいたつぶつ２
 #define ITEM_HAITATUBUTU3		( 625 )		// はいたつぶつ３
 #define ITEM_RAIBUKYASUTAA_1		( 626 )		// ライブキャスター
+#define ITEM_MEDARUBOKKUSU		( 627 )		// メダルボックス
 
-#define ITEM_DATA_MAX		( 626 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 627 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
