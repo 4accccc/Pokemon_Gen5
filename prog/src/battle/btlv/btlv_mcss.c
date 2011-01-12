@@ -664,16 +664,17 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 
   // SWAN追加 ichiraku
   // Nポケかどうか？
-  //if( PP_CheckRare( pp ) == TRUE )  ここをNポケ判定に変更する
+  if( PP_Get( pp, ID_PARA_n_poke_flag, NULL ) == TRUE )
   {
     bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_N_POKE;
   }
+#if 0
   // 主ポケかどうか？
   //if( PP_CheckRare( pp ) == TRUE )  ここを主ポケ判定に変更する
   {
     bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_NUSHI;
   }
-
+#endif
   BTLV_MCSS_MakeMAW( bmw, pp, &bmw->btlv_mcss[ index ].maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->btlv_mcss[ index ].maw );
@@ -1893,16 +1894,17 @@ void  BTLV_MCSS_SetHengeParam( BTLV_MCSS_WORK *bmw, int position, const POKEMON_
   
   // SWAN追加 ichiraku
   // Nポケかどうか？
-  //if( PP_CheckRare( pp ) == TRUE )  ここをNポケ判定に変更する
+  if( PP_Get( pp, ID_PARA_n_poke_flag, NULL ) == TRUE )
   {
     bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_N_POKE;
   }
+#if 0
   // 主ポケかどうか？
   //if( PP_CheckRare( pp ) == TRUE )  ここを主ポケ判定に変更する
   {
     bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_NUSHI;
   }
-
+#endif
   //登場時のHPバーカラーを取得
   { 
     int hp    = PP_Get( pp, ID_PARA_hp, NULL );

@@ -137,6 +137,7 @@ enum{
   BTLEFF_ZOOM_IN_RESET,                       //ズームインをリセット（初期位置に戻す）
   BTLEFF_BENCH_RECOVERY,                      //控えの回復エフェクト
 
+  BTLEFF_N_POKE,
   BTLEFF_STATUS_EFFECT_END,
 };
 
