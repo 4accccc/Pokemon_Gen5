@@ -1,9 +1,17 @@
 EFFSEQ
-$0004
+$0012
 C:\home\swan\resource\particle\wazaeffect\w_425.spa
 C:\home\swan\resource\particle\wazaeffect\w_424.spa
 C:\home\swan\resource\particle\wazaeffect\w_224.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_025_firework.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_224_megahorn.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_224_megahorn_p.dat
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_224_megahorn_p.dat
+C:\home\swan\resource\wazaeffect\graphic\bg_224_megahorn.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_224_megahorn.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_224_megahorn_p.dat
+C:\home\swan\resource\wazaeffect\graphic\bg_224_megahorn.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_224_megahorn_p.dat
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	12
@@ -28,8 +36,8 @@ BGのパレットフェード	お盆＋フィールド	0	13	1	0:0:0
 エミッタ移動	w_224	W_224_224_MEGA_SHOOT1	直線	攻撃側	防御側	2:16:0	1:1:0
 エミッタ移動	w_224	W_224_224_MEGA_SHOOT2	直線	攻撃側	防御側	2:16:0	1:1:0
 タイマーによるウエイト	16
-BGのロード	bg_025_firework
-BGのスクロール	往復	0	4	1	1	16
+BGのロード	bg_224_megahorn
+BGのパレットアニメ	bg_224_megahorn_p	2
 BGの表示/非表示	エフェクト	表示
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	フィールド	非表示
