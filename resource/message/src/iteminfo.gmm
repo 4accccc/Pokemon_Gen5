@@ -5770,12 +5770,12 @@
 	</row>
 
 	<row id="ITEMINFO_627">
-		<language name="JPN" width="256">かくとくした　メダルを
-たくさん　しゅうのうできる
-とくべつな　いれもの。</language>
-		<language name="JPN_KANJI" width="256">獲得した　メダルを
-たくさん　収納できる
-特別な　入れ物。</language>
+		<language name="JPN" width="256">かくとくした　メダルを　しゅうのうし
+メダルに　かんけいのある　じょうほうを
+きろくする　べんりな　どうぐ。</language>
+		<language name="JPN_KANJI" width="256">獲得した　メダルを　収納し
+メダルに　関係のある　情報を
+記録する　便利な　道具。</language>
 	</row>
 
 
