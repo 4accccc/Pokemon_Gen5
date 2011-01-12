@@ -171,7 +171,8 @@ SUBDIRS	=	wmi \
 			manual_image \
 			pokeform \
 			assert_err \
-			field_goout_effect
+			field_goout_effect \
+			medal
 
 
 include $(RESOURCE_MACRO)

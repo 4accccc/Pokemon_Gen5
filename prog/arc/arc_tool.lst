@@ -306,3 +306,4 @@
   ARCID_FIELD_GOOUT_EFFECT "field_goout_effect.narc" #外出表現用アニメデータ
   ARCID_TVT_BALLOON "tvt_balloon.narc" #ライブキャスターミニゲーム バルーン
   ARCID_LOCAL_TVT_SCRIPT "local_tvt_script.narc" # ローカルTVトランシーバー
+  ARCID_MEDALDATA "medal_data.narc" # メダルデータ

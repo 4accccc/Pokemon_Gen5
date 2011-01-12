@@ -1,0 +1,66 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: medal_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MEDAL_DATA_NAIX_
+#define NARC_MEDAL_DATA_NAIX_
+
+enum {
+	NARC_medal_data_medal_000_bin = 0,
+	NARC_medal_data_medal_001_bin = 1,
+	NARC_medal_data_medal_002_bin = 2,
+	NARC_medal_data_medal_003_bin = 3,
+	NARC_medal_data_medal_004_bin = 4,
+	NARC_medal_data_medal_005_bin = 5,
+	NARC_medal_data_medal_006_bin = 6,
+	NARC_medal_data_medal_007_bin = 7,
+	NARC_medal_data_medal_008_bin = 8,
+	NARC_medal_data_medal_009_bin = 9,
+	NARC_medal_data_medal_010_bin = 10,
+	NARC_medal_data_medal_011_bin = 11,
+	NARC_medal_data_medal_012_bin = 12,
+	NARC_medal_data_medal_013_bin = 13,
+	NARC_medal_data_medal_014_bin = 14,
+	NARC_medal_data_medal_015_bin = 15,
+	NARC_medal_data_medal_016_bin = 16,
+	NARC_medal_data_medal_017_bin = 17,
+	NARC_medal_data_medal_018_bin = 18,
+	NARC_medal_data_medal_019_bin = 19,
+	NARC_medal_data_medal_020_bin = 20,
+	NARC_medal_data_medal_021_bin = 21,
+	NARC_medal_data_medal_022_bin = 22,
+	NARC_medal_data_medal_023_bin = 23,
+	NARC_medal_data_medal_024_bin = 24,
+	NARC_medal_data_medal_025_bin = 25,
+	NARC_medal_data_medal_026_bin = 26,
+	NARC_medal_data_medal_027_bin = 27,
+	NARC_medal_data_medal_028_bin = 28,
+	NARC_medal_data_medal_029_bin = 29,
+	NARC_medal_data_medal_030_bin = 30,
+	NARC_medal_data_medal_031_bin = 31,
+	NARC_medal_data_medal_032_bin = 32,
+	NARC_medal_data_medal_033_bin = 33,
+	NARC_medal_data_medal_034_bin = 34,
+	NARC_medal_data_medal_035_bin = 35,
+	NARC_medal_data_medal_036_bin = 36,
+	NARC_medal_data_medal_037_bin = 37,
+	NARC_medal_data_medal_038_bin = 38,
+	NARC_medal_data_medal_039_bin = 39,
+	NARC_medal_data_medal_040_bin = 40,
+	NARC_medal_data_medal_041_bin = 41,
+	NARC_medal_data_medal_042_bin = 42,
+	NARC_medal_data_medal_043_bin = 43,
+	NARC_medal_data_medal_044_bin = 44,
+	NARC_medal_data_medal_045_bin = 45,
+	NARC_medal_data_medal_046_bin = 46,
+	NARC_medal_data_medal_047_bin = 47,
+	NARC_medal_data_medal_048_bin = 48
+};
+
+/* NARC_MEDAL_DATA_NAIX_ */
+#endif

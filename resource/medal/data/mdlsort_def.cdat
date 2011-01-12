@@ -1,0 +1,64 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+//
+//
+//   @file		mdlsort_def.cdat
+//   @brief   medalsortファイル(メダル名あいうえお順)
+//   @author	Masayuki Onoue
+//   @date		2011.01.07
+//
+//  **{ /resource/medal/converter/medal_converter.rbが出力したデータです }**
+//
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+u32 MedalSortList[] = {
+    MDLID_CHAMPION_AQUA,	//あくあちゃんぷ
+    MDLID_CYCLE_LV2,	//いーじーらいだー
+    MDLID_CHAMPION_INSECT,	//いんせくとちゃんぷ
+    MDLID_CHAMPION_AERIAL,	//えありあるちゃんぷ
+    MDLID_CHAMPION_ESPER,	//えすぱーちゃんぷ
+    MDLID_CHAMPION_ELECTRO,	//えれくとろちゃんぷ
+    MDLID_MUSICALWIN_LV1,	//かけだしすたー
+    MDLID_WAZA_MUKOU,	//からぶりめいじん
+    MDLID_REPORT_LV4,	//きせきのぺんさき
+    MDLID_CHAMPION_COOL,	//くーるちゃんぷ
+    MDLID_CHAMPION_GROUND,	//ぐらうんどちゃんぷ
+    MDLID_WAZA_HANERU,	//こいきんぐあわーど
+    MDLID_MAIL_WRITE_MAX,	//ことばのまじゅつし
+    MDLID_CHAMPION_GHOST,	//ごーすとちゃんぷ
+    MDLID_REPORT_LV3,	//すらすられぽーたー
+    MDLID_TAMAGO_MAX,	//せいめいのしんぴ
+    MDLID_REPORT_LV2,	//せかせかれぽーたー
+    MDLID_TAMAGO_LV3,	//たまごあすりーと
+    MDLID_TAMAGO_LV1,	//たまごびぎなー
+    MDLID_TAMAGO_LV2,	//たまごぶりーだー
+    MDLID_REPORT_LV1,	//ちまちまれぽーたー
+    MDLID_MUSICALWIN_LV2,	//ちゅうけんすたー
+    MDLID_CHAMPION_DRAGON,	//どらごんちゃんぷ
+    MDLID_WAZA_WARUAGAKI,	//ねばーぎぶあっぷ
+    MDLID_CHAMPION_NORMAL,	//のーまるちゃんぷ
+    MDLID_CYCLE_LV3,	//はーどらいだー
+    MDLID_CYCLE_MAX,	//はしるでんせつ
+    MDLID_ALL_BATTLE_LV1,	//ばとるししょう
+    MDLID_ALL_BATTLE_LV1,	//ばとるしはんだい
+    MDLID_ALL_BATTLE__LV1,	//ばとるもんかせい
+    MDLID_CYCLE_LV1,	//びぎなーらいだー
+    MDLID_CHAMPION_VICIOUS,	//びしゃすちゃんぷ
+    MDLID_CHAMPION_FIGHT,	//ふぁいとちゃんぷ
+    MDLID_CHAMPION_FLORAL,	//ふろーらるちゃんぷ
+    MDLID_CHAMPION_BLAZE,	//ぶれいずちゃんぷ
+    MDLID_WALK_LV3,	//へびーうぉーかー
+    MDLID_MUSICALWIN_LV3,	//べてらんすたー
+    MDLID_HOMESICK,	//ほーむしっく
+    MDLID_POKECEN,	//ぽけせんふりーく
+    MDLID_WALK_LV2,	//みどるうぉーかー
+    MDLID_MUSICALWIN_MAX,	//みゅーじかるぷりま
+    MDLID_MAIL_WRITE_LV3,	//めーるしょくにん
+    MDLID_MAIL_WRITE_LV1,	//めーるしょしんしゃ
+    MDLID_MAIL_WRITE_LV2,	//めーるだいすきっこ
+    MDLID_WALK_MAX,	//めいよのあしあと
+    MDLID_CHAMPION_METAL,	//めたるちゃんぷ
+    MDLID_WALK_LV1,	//らいとうぉーかー
+    MDLID_ALL_BATTLE_LV1,	//れきせんのもさ
+    MDLID_CHAMPION_ROCK,	//ろっくちゃんぷ
+}
