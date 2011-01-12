@@ -305,6 +305,9 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 指定されたワークを見て条件分岐	POS_AA_RARE	==	0	NO_RARE_AA
 サブルーチンコール	BTLEFF_RARE	POS_AA	POS_AA
 ラベル	NO_RARE_AA
+指定されたワークを見て条件分岐	POS_AA_N_POKE	==	0	NO_N_POKE_AA
+サブルーチンコール	BTLEFF_N_POKE	POS_AA	POS_AA
+ラベル	NO_N_POKE_AA
 ポケモンアニメ	POS_AA	アニメスタート
 ポケモン影バニッシュ	POS_AA	バニッシュオフ
 ラベル	NO_EXIST_AA_6
@@ -312,6 +315,9 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 指定されたワークを見て条件分岐	POS_A_RARE	==	0	NO_RARE_A
 サブルーチンコール	BTLEFF_RARE	POS_A	POS_A
 ラベル	NO_RARE_A
+指定されたワークを見て条件分岐	POS_A_N_POKE	==	0	NO_N_POKE_A
+サブルーチンコール	BTLEFF_N_POKE	POS_A	POS_A
+ラベル	NO_N_POKE_A
 ポケモンアニメ	POS_A	アニメスタート
 ポケモン影バニッシュ	POS_A	バニッシュオフ
 ラベル	NO_EXIST_A_6
@@ -319,6 +325,9 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 指定されたワークを見て条件分岐	POS_C_RARE	==	0	NO_RARE_C
 サブルーチンコール	BTLEFF_RARE	POS_C	POS_C
 ラベル	NO_RARE_C
+指定されたワークを見て条件分岐	POS_C_N_POKE	==	0	NO_N_POKE_C
+サブルーチンコール	BTLEFF_N_POKE	POS_C	POS_C
+ラベル	NO_N_POKE_C
 ポケモンアニメ	POS_C	アニメスタート
 ポケモン影バニッシュ	POS_C	バニッシュオフ
 ラベル	NO_EXIST_C_6
@@ -326,6 +335,9 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 指定されたワークを見て条件分岐	POS_E_RARE	==	0	NO_RARE_E
 サブルーチンコール	BTLEFF_RARE	POS_E	POS_E
 ラベル	NO_RARE_E
+指定されたワークを見て条件分岐	POS_E_N_POKE	==	0	NO_N_POKE_E
+サブルーチンコール	BTLEFF_N_POKE	POS_E	POS_E
+ラベル	NO_N_POKE_E
 ポケモンアニメ	POS_E	アニメスタート
 ポケモン影バニッシュ	POS_E	バニッシュオフ
 ラベル	NO_EXIST_E_6
