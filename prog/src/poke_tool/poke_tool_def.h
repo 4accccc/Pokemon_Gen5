@@ -137,8 +137,9 @@ struct pokemon_paso_param2
 	u8	sex				:2;					//   	ポケモンの性別
 	u8	form_no			:5;					//19h	形状ナンバー（アンノーン、デオキシス、ミノメスなど用）
 	u8	seikaku;							//1ah	性格
-  u16 tokusei_3_flag  :1;     //1ch 第3特性フラグ
-  u16                 :15;
+  u16 tokusei_3_flag :1;     //1ch 第3特性フラグ
+  u16 n_poke_flag    :1;     //1ch 特殊野性Ｎポケフラグ SWANで追加
+  u16                :14;
 	u32	dummy_p2_3;							//20h	あまり
 };
 	

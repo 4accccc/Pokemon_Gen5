@@ -452,6 +452,9 @@ enum{
   ID_PARA_spedef_deb_exp,               //特防努力値(デバッグ用にリミットオーバーチェックしないver)
 #endif  //PM_DEBUG
 
+  //以下スワンで追加
+  ID_PARA_n_poke_flag,         //特殊野性ポケモン(Nポケ,主ポケ)フラグ
+
   ID_PARA_end                 //パラメータを追加するときは、ここから上に追加
 };
 

@@ -2924,6 +2924,9 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_tokusei_3_flag:
       ret = ppp2->tokusei_3_flag;
       break;
+    case ID_PARA_n_poke_flag:
+      ret = ppp2->n_poke_flag;
+      break;
     case ID_PARA_dummy_p2_3:
       ret = ppp2->dummy_p2_3;
       break;
@@ -3406,6 +3409,9 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       break;
     case ID_PARA_tokusei_3_flag:
       ppp2->tokusei_3_flag = arg;
+      break;
+    case ID_PARA_n_poke_flag:
+      ppp2->n_poke_flag = arg;
       break;
     case ID_PARA_dummy_p2_3:
       ppp2->dummy_p2_3 = arg;
