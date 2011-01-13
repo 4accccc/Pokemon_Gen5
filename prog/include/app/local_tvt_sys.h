@@ -55,4 +55,4 @@ typedef struct
 //======================================================================
 #pragma mark [> proto
 
-extern GFL_PROC_DATA LocalTvt_ProcData;
+extern const GFL_PROC_DATA LocalTvt_ProcData;

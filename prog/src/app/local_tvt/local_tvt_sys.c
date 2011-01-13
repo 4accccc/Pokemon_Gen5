@@ -15,7 +15,8 @@
 #include "local_tvt_util.h"
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
-#include "local_tvt_script.h"
+#include "local_tvt_scriptmode.h"
+#include "local_tvt_callmode.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_message.h"
 
@@ -27,37 +28,51 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
+
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-typedef struct
-{
-  u8 chara[LOCAL_TVT_MEMBER_MAX];
-  u8 back[LOCAL_TVT_MEMBER_MAX];
-}LOCAL_TVT_SCRIPT_HEADER;
-
 struct _LOCAL_TVT_WORK
 {
   HEAPID heapId;
   LOCAL_TVT_SCRIPT        *script_wk;
+  LOCAL_TVT_CALL        *call_wk;
   LOCAL_TVT_INIT_WORK     *initWork;
   LOCAL_TVT_GRAPHIC_WORK  *graphic;
   LOCAL_TVT_CHARA_SYS     *chara_sys;
   LOCAL_TVT_MESSAGE       *message;
-};
+  LOCAL_TVT_BG            *bg;
 
+  void (*InitMode)( LOCAL_TVT_WORK * );
+  BOOL (*MainMode)( LOCAL_TVT_WORK * );
+  void (*ExitMode)( LOCAL_TVT_WORK * );
+};
 
 //======================================================================
 //	proto
 //======================================================================
-#pragma mark [> proto
 #pragma mark [>proc func
 static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT LOCAL_TVT_ProcMain( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT LOCAL_TVT_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 
-GFL_PROC_DATA LocalTvt_ProcData =
+#pragma mark [> proto
+static void Local_Tvt_SetMode( LOCAL_TVT_WORK *work, LOCAL_TVT_MODE mode );
+
+static void Local_Tvt_ScriptMode_Init( LOCAL_TVT_WORK *work );
+static BOOL Local_Tvt_ScriptMode_Main( LOCAL_TVT_WORK *work );
+static void Local_Tvt_ScriptMode_Exit( LOCAL_TVT_WORK *work );
+
+static void Local_Tvt_CallMode_Init( LOCAL_TVT_WORK *work );
+static BOOL Local_Tvt_CallMode_Main( LOCAL_TVT_WORK *work );
+static void Local_Tvt_CallMode_Exit( LOCAL_TVT_WORK *work );
+
+
+//======================================================================
+//	data
+//======================================================================
+const GFL_PROC_DATA LocalTvt_ProcData =
 {
   LOCAL_TVT_ProcInit,
   LOCAL_TVT_ProcMain,
@@ -92,6 +107,9 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   work->heapId = HEAPID_LOCAL_TVT;
   work->initWork = initWork;
 
+  //モード設定
+  Local_Tvt_SetMode( work, initWork->mode );
+
   //グラフィック設定
   work->graphic = LOCAL_TVT_GRAPHIC_Init(GX_DISP_SELECT_MAIN_SUB, work->heapId );
   
@@ -112,11 +130,11 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     /* ここは初期化のみで実際の人物設定はそれぞれのモード内から行う */
   }
 
-  //スクリプトモード
-  {
-    GFL_CLUNIT  *clunit = LOCAL_TVT_GRAPHIC_GetClunit( work->graphic );
-    work->script_wk = LOCAL_TVT_SCRIPT_Init( work->heapId, initWork->gameData, initWork->scriptId, work->chara_sys );
-  }
+  //共通BG読込み
+  work->bg  = LOCAL_TVT_BG_Load( initWork->gameData, work->heapId );
+
+  //モード初期化
+  work->InitMode( work );
 
 
   GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
@@ -131,7 +149,10 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
 {
   LOCAL_TVT_WORK *work = mywk;
   
-  LOCAL_TVT_SCRIPT_Term( work->script_wk );
+  //モード破棄
+  work->ExitMode( work );
+
+  LOCAL_TVT_BG_UnLoad( work->bg );
 
   LOCAL_TVT_CHARA_SYS_Term( work->chara_sys );
   LOCAL_TVT_MESSAGE_Exit( work->message );
@@ -154,8 +175,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
 static GFL_PROC_RESULT LOCAL_TVT_ProcMain( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   LOCAL_TVT_WORK *work = mywk;
-  const BOOL ret = LOCAL_TVT_SCRIPT_Main( work->script_wk );
-  
+  const BOOL ret = work->MainMode( work );
 
   LOCAL_TVT_MESSAGE_Main( work->message );
   LOCAL_TVT_CHARA_SYS_Main( work->chara_sys );
@@ -165,4 +185,107 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcMain( GFL_PROC * proc, int * seq , void *pw
     return GFL_PROC_RES_FINISH;
   }
   return GFL_PROC_RES_CONTINUE;
+}
+
+//=============================================================================
+/**
+ *  private
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モード設定
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ *	@param  mode                  モード
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_SetMode( LOCAL_TVT_WORK *work, LOCAL_TVT_MODE mode )
+{
+  switch( mode )
+  {
+  case LOCAL_TVT_MODE_SCRIPT:  //スクリプト制御モード
+    work->InitMode  = Local_Tvt_ScriptMode_Init;
+    work->MainMode  = Local_Tvt_ScriptMode_Main;
+    work->ExitMode  = Local_Tvt_ScriptMode_Exit;
+    break;
+
+  case LOCAL_TVT_MODE_APP:     //アプリケーションモード
+    work->InitMode  = Local_Tvt_CallMode_Init;
+    work->MainMode  = Local_Tvt_CallMode_Main;
+    work->ExitMode  = Local_Tvt_CallMode_Exit;
+    break;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトモード  初期化
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_ScriptMode_Init( LOCAL_TVT_WORK *work )
+{
+  work->script_wk = LOCAL_TVT_SCRIPT_Init( work->heapId, work->initWork->gameData, work->initWork->scriptId, work->chara_sys );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトモード  メイン処理
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL Local_Tvt_ScriptMode_Main( LOCAL_TVT_WORK *work )
+{
+  return LOCAL_TVT_SCRIPT_Main( work->script_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトモード  破棄
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_ScriptMode_Exit( LOCAL_TVT_WORK *work )
+{
+  LOCAL_TVT_SCRIPT_Term( work->script_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  呼び出しモード  初期化
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_CallMode_Init( LOCAL_TVT_WORK *work )
+{
+  work->call_wk = LOCAL_TVT_CALL_Init( work->heapId, work->initWork->gameData, work->chara_sys );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  呼び出しモード  メイン処理
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL Local_Tvt_CallMode_Main( LOCAL_TVT_WORK *work )
+{
+  return LOCAL_TVT_CALL_Main( work->call_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  呼び出しモード  破棄
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_CallMode_Exit( LOCAL_TVT_WORK *work )
+{
+  LOCAL_TVT_CALL_Exit( work->call_wk );
 }

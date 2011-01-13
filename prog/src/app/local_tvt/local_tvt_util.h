@@ -29,4 +29,7 @@ extern LOCAL_TVT_TIME_ZONE LOCAL_TVT_UTIL_GetTimeZone( const GAMEDATA *cp_gameda
  *					îwåiëfçﬁ
 */
 //=============================================================================
-extern void LOCAL_TVT_UTIL_LoadBg( GAMEDATA *p_gamedata, HEAPID heapID );
+typedef struct _LOCAL_TVT_BG LOCAL_TVT_BG;
+
+extern LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID );
+extern void LOCAL_TVT_BG_UnLoad( LOCAL_TVT_BG *p_wk );

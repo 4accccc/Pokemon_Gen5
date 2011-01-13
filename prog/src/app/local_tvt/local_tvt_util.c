@@ -68,6 +68,19 @@ LOCAL_TVT_TIME_ZONE LOCAL_TVT_UTIL_GetTimeZone( const GAMEDATA *cp_gamedata )
  *					îwåiëfçﬁ
 */
 //=============================================================================
+//-------------------------------------
+///	BGä«óùÉèÅ[ÉN
+//=====================================
+struct _LOCAL_TVT_BG
+{
+  GFL_TCB *vBlankTcb;
+} ;
+
+//-------------------------------------
+///	private
+//=====================================
+static void LOCAL_TVT_BG_VBlankFunc(GFL_TCB *tcb, void *wk_adrs );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  îwåiëfçﬁì«çûÇ›
@@ -75,10 +88,13 @@ LOCAL_TVT_TIME_ZONE LOCAL_TVT_UTIL_GetTimeZone( const GAMEDATA *cp_gamedata )
  *	@param	const GAMEDATA *p_gamedata   ÉQÅ[ÉÄÉfÅ[É^
  */
 //-----------------------------------------------------------------------------
-void LOCAL_TVT_UTIL_LoadBg( GAMEDATA *p_gamedata, HEAPID heapID )
+LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID )
 {
-  MYSTATUS *myStatus = GAMEDATA_GetMyStatus( p_gamedata );
-  ARCHANDLE *ctvtArcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA, heapID );
+ LOCAL_TVT_BG *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_BG ) ); 
+
+  {
+    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( p_gamedata );
+    ARCHANDLE *ctvtArcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA, heapID );
 
     if( MyStatus_GetMySex( myStatus ) == PM_MALE )
     {
@@ -106,5 +122,38 @@ void LOCAL_TVT_UTIL_LoadBg( GAMEDATA *p_gamedata, HEAPID heapID )
     GFL_BG_LoadScreenReq( LTVT_FRAME_NOIZE_BG );
 
     GFL_ARC_CloseDataHandle( ctvtArcHandle );
+  }
 
+  p_wk->vBlankTcb = GFUser_VIntr_CreateTCB( LOCAL_TVT_BG_VBlankFunc, p_wk, 8 );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  îjä¸
+ *
+ *	@param	LOCAL_TVT_BG *p_bg BGÉèÅ[ÉN
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_BG_UnLoad( LOCAL_TVT_BG *p_wk )
+{
+  GFL_TCB_DeleteTask( p_wk->vBlankTcb );
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGëÄçÏóp  VBLANKèàóù
+ *
+ *	@param	*tcb
+ *	@param	*wk_adrs 
+ */
+//-----------------------------------------------------------------------------
+static void LOCAL_TVT_BG_VBlankFunc(GFL_TCB *tcb, void *wk_adrs )
+{
+  //è„âÊñ ÉmÉCÉY
+  GFL_BG_SetScroll( LTVT_FRAME_NOIZE_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
+  GFL_BG_SetScroll( LTVT_FRAME_NOIZE_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
 }

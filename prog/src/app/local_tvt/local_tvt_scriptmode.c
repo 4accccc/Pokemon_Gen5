@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		local_tvt_script.h
+ *	@file		local_tvt_scriptmode.h
  *	@brief  ローカルライブキャスタースクリプトモードでの動作（WBまでのローカルライブキャスターの処理）
  *	@author	Toru=Nagihashi
  *	@data		2011.01.07
@@ -23,7 +23,7 @@
 
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
-#include "local_tvt_script.h"
+#include "local_tvt_scriptmode.h"
 #include "local_tvt_graphic.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -73,7 +73,6 @@ typedef struct
 struct _LOCAL_TVT_SCRIPT
 {
   HEAPID heapId;
-  GFL_TCB *vBlankTcb;
 
   LOCAL_TVT_MEMBER member;
 
@@ -100,7 +99,6 @@ struct _LOCAL_TVT_SCRIPT
  *					プロトタイプ宣言
 */
 //=============================================================================
-static void LOCAL_TVT_VBlankFunc(GFL_TCB *tcb, void *wk );
 
 static void LOCAL_TVT_LoadScript( LOCAL_TVT_SCRIPT *work );
 static void LOCAL_TVT_InitGraphic( LOCAL_TVT_SCRIPT *work );
@@ -141,9 +139,6 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
 
   LOCAL_TVT_LoadScript( work );
 
-  LOCAL_TVT_UTIL_LoadBg( gamedata, work->heapId );
-
-
   //スクリプトから使用メッセージデータ作成
   work->talkMsgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_01_dat + (scriptID-1) , work->heapId );
 
@@ -161,7 +156,6 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
     LOCAL_TVT_CHARA_SYS_LoadChara( work->chara_sys, chara_param, work->member );
   }
 
-  work->vBlankTcb = GFUser_VIntr_CreateTCB( LOCAL_TVT_VBlankFunc , work , 8 );
   
   work->state = LTS_FADEIN;
 
@@ -184,8 +178,6 @@ void LOCAL_TVT_SCRIPT_Term( LOCAL_TVT_SCRIPT *work )
 {
   u8 i;
 
-  GFL_TCB_DeleteTask( work->vBlankTcb );
-  
   GFL_MSG_Delete( work->talkMsgHandle );
   GFL_ARC_CloseDataHandle( work->arcHandle );
   
@@ -249,15 +241,6 @@ BOOL LOCAL_TVT_SCRIPT_Main( LOCAL_TVT_SCRIPT *work )
 }
 
 
-//--------------------------------------------------------------
-//	VBlankTcb
-//--------------------------------------------------------------
-static void LOCAL_TVT_VBlankFunc(GFL_TCB *tcb, void *wk )
-{
-  //上画面ノイズ
-  GFL_BG_SetScroll( LTVT_FRAME_NOIZE_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
-  GFL_BG_SetScroll( LTVT_FRAME_NOIZE_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
-}
 //--------------------------------------------------------------
 //  グラフィック系初期化
 //--------------------------------------------------------------
