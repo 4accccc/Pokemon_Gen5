@@ -58,7 +58,7 @@ $(TARGETDIR)/$(ENC_H): $(ENC_H)
 
 ifeq ($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 
-$(ENC_CSV): $(ARC_LIST_FILE)
+$(ENC_CSV): $(NNSARC_DEPEND_FILES)
 	@$(XLS2CSV) $(ENC_SRC) > $(ENC_CSV)
 
 $(ENC_DAT): $(ENC_CSV)
