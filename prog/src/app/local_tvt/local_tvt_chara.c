@@ -46,12 +46,27 @@ typedef enum
   LTCR_PLT,
   LTCR_NCG,
   LTCR_ANM,
-
   LTCR_MAX,
   
 }LOCAL_TVT_CELL_RES;
 
 const u8 LOCAL_TVT_CHARA_BASE_POS[LOCAL_TVT_MEMBER_MAX][2] = {{0,0},{16,0},{0,12},{16,12}};
+
+static const GFL_CLACTPOS sc_weather_pos[LOCAL_TVT_MEMBER_MAX] =
+{
+  {
+    128,96
+  },
+  {
+    256,96,
+  },
+  {
+    128,192
+  },
+  {
+    256,192
+  },
+};
 
 //======================================================================
 //	enum
@@ -78,6 +93,15 @@ typedef enum
   
   LTTS_MAX,
 }LOCAL_TVT_TRANS_STATE;
+
+typedef enum
+{
+  LOCAL_TVT_WEATHER_RAIN,
+  LOCAL_TVT_WEATHER_SAND,
+  LOCAL_TVT_WEATHER_SNOW,
+  LOCAL_TVT_WEATHER_MAX,
+  LOCAL_TVT_WEATHER_SUNNY = LOCAL_TVT_WEATHER_MAX,
+}LOCAL_TVT_WEATHER;
 
 //======================================================================
 //	typedef struct
@@ -130,8 +154,11 @@ struct _LOCAL_TVT_CHARA
   u16  lipDelayCnt;
 
   LOCAL_TVT_CHARA_SYS *sys;
-
   HEAPID heapID;
+
+
+  GFL_CLWK    *weather;
+  u32 weatherCellRes[LTCR_MAX];
 };
 
 static const u8 charaResList[LTCT_MAX][3] = {
@@ -150,12 +177,33 @@ static const u8 bgResList[][2] = {
     { NARC_local_tvt_graphic_back_02a_NCLR , NARC_local_tvt_graphic_back_02a_01_NCGR },
 };
 
+static const struct
+{
+  u8  nclr;
+  u8  ncgr;
+  u8  ncer;
+  u8  nanr;
+}weatherResList[LOCAL_TVT_WEATHER_MAX][2]  ={
+  {
+    {NARC_local_tvt_graphic_weather_rain_NCLR,NARC_local_tvt_graphic_weather_rain2_NCGR,NARC_local_tvt_graphic_weather_rain2_NCER,NARC_local_tvt_graphic_weather_rain2_NANR},
+    {NARC_local_tvt_graphic_weather_rain_NCLR,NARC_local_tvt_graphic_weather_rain4_NCGR,NARC_local_tvt_graphic_weather_rain4_NCER,NARC_local_tvt_graphic_weather_rain4_NANR},
+  },
+  {
+    {NARC_local_tvt_graphic_weather_sand_NCLR,NARC_local_tvt_graphic_weather_sand2_NCGR,NARC_local_tvt_graphic_weather_sand2_NCER,NARC_local_tvt_graphic_weather_sand2_NANR},
+    {NARC_local_tvt_graphic_weather_sand_NCLR,NARC_local_tvt_graphic_weather_sand4_NCGR,NARC_local_tvt_graphic_weather_sand4_NCER,NARC_local_tvt_graphic_weather_sand4_NANR},
+  },
+  {
+    {NARC_local_tvt_graphic_weather_snow_NCLR,NARC_local_tvt_graphic_weather_snow2_NCGR,NARC_local_tvt_graphic_weather_snow2_NCER,NARC_local_tvt_graphic_weather_snow2_NANR},
+    {NARC_local_tvt_graphic_weather_snow_NCLR,NARC_local_tvt_graphic_weather_snow4_NCGR,NARC_local_tvt_graphic_weather_snow4_NCER,NARC_local_tvt_graphic_weather_snow4_NANR},
+  },
+};
+
 //======================================================================
 //	proto
 //======================================================================
 #pragma mark [> proto
 
-static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys,  u8 charaType, u8 bgType, LOCAL_TVT_CHARA_POS pos, HEAPID heapID );
+static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 charaType, u8 bgType, LOCAL_TVT_WEATHER weather, LOCAL_TVT_CHARA_POS pos, HEAPID heapID );
 static void LOCAL_TVT_CHARA_Term( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA *charaWork );
 static void LOCAL_TVT_CHARA_Main( LOCAL_TVT_CHARA *charaWork );
 static const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_CHARA *charaWork );
@@ -171,6 +219,8 @@ static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_CHARA *charaWork , ARCHAN
 static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_CHARA *charaWork , const u32 topOfs , const u32 transOfs , const u32 transSize );
 static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, HEAPID heapID );
 static const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork );
+static const void LOCAL_TVT_CHARA_LoadWeather( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_WEATHER weather, LOCAL_TVT_MEMBER member, HEAPID heapID );
+static const void LOCAL_TVT_CHARA_UnLoadWeather( LOCAL_TVT_CHARA *charaWork);
 
 static void LOCAL_TVT_RECICON_Load( LOCAL_TVT_CHARA_SYS *sys );
 static void LOCAL_TVT_RECICON_UnLoad( LOCAL_TVT_CHARA_SYS *sys );
@@ -370,7 +420,7 @@ void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CH
       const LOCAL_TVT_CHARA_PARAM *chara_param  = &cp_setup_tbl[i];
       if( chara_param->charaType != 0xFF )
       {
-        sys->charaWork[i] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, i, sys->heapID );
+        sys->charaWork[i] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, chara_param->weatherType, i, sys->heapID );
       }
     }
   }
@@ -486,7 +536,7 @@ BOOL LOCAL_TVT_CHARA_WaitTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
-static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 charaType, u8 bgType, LOCAL_TVT_CHARA_POS pos, HEAPID heapID )
+static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 charaType, u8 bgType, LOCAL_TVT_WEATHER weather, LOCAL_TVT_CHARA_POS pos, HEAPID heapID )
 {
   {
     LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocClearMemory( heapID, sizeof( LOCAL_TVT_CHARA ) );
@@ -501,6 +551,9 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
     charaWork->isUpdateQue = FALSE;
     charaWork->isLipSync = FALSE;
     charaWork->eyeBlinkCnt = GFUser_GetPublicRand0(LTVT_CHARA_EYE_BLINK_CNT/2);
+    charaWork->weatherCellRes[LTCR_PLT] =  0xFF;
+    charaWork->weatherCellRes[LTCR_NCG] =  0xFF;
+    charaWork->weatherCellRes[LTCR_ANM] =  0xFF;
 
     if( charaWork->charaType == LTCT_PLAYER_M )
     {
@@ -517,6 +570,7 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
     LOCAL_TVT_CHARA_LoadCommonResource( charaWork, sys, heapID );
 
     LOCAL_TVT_CHARA_DispName( charaWork, sys, heapID );
+    LOCAL_TVT_CHARA_LoadWeather( charaWork, sys, weather, sys->member, heapID );
     
     charaWork->state = LTCTS_WAIT_REQ;
     charaWork->resData = NULL;
@@ -533,6 +587,8 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
 //--------------------------------------------------------------
 static void LOCAL_TVT_CHARA_Term( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA *charaWork )
 {
+
+  LOCAL_TVT_CHARA_UnLoadWeather( charaWork );
   GFL_CLACT_WK_Remove( charaWork->clwkEye );
   GFL_CLACT_WK_Remove( charaWork->clwkMouth );
   GFL_CLGRP_PLTT_Release( charaWork->cellRes[0] );
@@ -921,6 +977,87 @@ static void LOCAL_TVT_CHARA_LipSyncForceStop( LOCAL_TVT_CHARA *charaWork )
 {
   charaWork->lipDelayCnt = 0;
   charaWork->isLipSync = FALSE;
+}
+static const void LOCAL_TVT_CHARA_LoadWeather( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_WEATHER weather, LOCAL_TVT_MEMBER member, HEAPID heapID )
+{
+  if( weather == LOCAL_TVT_WEATHER_SUNNY )
+  {
+    return;
+  }
+
+  //リソース読込み
+  {
+    u8 nclr;
+    u8 ncgr;
+    u8 ncer;
+    u8 nanr;
+
+    if( member  == LTM_2_MEMBER )
+    {
+      nclr  = weatherResList[weather][0].nclr;
+      ncgr  = weatherResList[weather][0].ncgr;
+      ncer  = weatherResList[weather][0].ncer;
+      nanr  = weatherResList[weather][0].nanr;
+    }
+    else
+    {
+      nclr  = weatherResList[weather][1].nclr;
+      ncgr  = weatherResList[weather][1].ncgr;
+      ncer  = weatherResList[weather][1].ncer;
+      nanr  = weatherResList[weather][1].nanr;
+    }
+
+    charaWork->weatherCellRes[LTCR_PLT] = GFL_CLGRP_PLTT_RegisterComp( sys->arcHandle, 
+        nclr, CLSYS_DRAW_MAIN , (12+charaWork->charaIdx)*32 , heapID  );
+    charaWork->weatherCellRes[LTCR_NCG] = GFL_CLGRP_CGR_Register( sys->arcHandle, 
+        ncgr, FALSE , CLSYS_DRAW_MAIN , heapID  );
+    charaWork->weatherCellRes[LTCR_ANM] = GFL_CLGRP_CELLANIM_Register( sys->arcHandle,  ncer, nanr, heapID  );
+  }
+
+  //ワーク作成
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 2;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+    cellInitData.pos_x = sc_weather_pos[charaWork->charaIdx].x;
+    cellInitData.pos_y = sc_weather_pos[charaWork->charaIdx].y;
+
+    charaWork->weather = GFL_CLACT_WK_Create( sys->param.cellUnit ,
+              charaWork->weatherCellRes[LTCR_NCG],
+              charaWork->weatherCellRes[LTCR_PLT],
+              charaWork->weatherCellRes[LTCR_ANM],
+              &cellInitData ,CLSYS_DRAW_MAIN , heapID );
+    GFL_CLACT_WK_SetDrawEnable( charaWork->weather, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( charaWork->weather, TRUE );
+    GFL_CLACT_WK_SetAnmFrame( charaWork->weather, GFUser_GetPublicRand0(FX32_ONE*4) );
+  }
+}
+static const void LOCAL_TVT_CHARA_UnLoadWeather( LOCAL_TVT_CHARA *charaWork)
+{
+  if( charaWork->weather != NULL )
+  {
+    GFL_CLACT_WK_Remove( charaWork->weather );
+    charaWork->weather  = NULL;
+  }
+
+  if( charaWork->weatherCellRes[LTCR_PLT] != 0xFF )
+  {
+    GFL_CLGRP_PLTT_Release( charaWork->weatherCellRes[LTCR_PLT] );
+    charaWork->weatherCellRes[LTCR_PLT] = 0xFF;
+  }
+  if( charaWork->weatherCellRes[LTCR_NCG] != 0xFF )
+  {
+    GFL_CLGRP_CGR_Release( charaWork->weatherCellRes[LTCR_NCG] );
+    charaWork->weatherCellRes[LTCR_NCG] = 0xFF;
+  }
+  if( charaWork->weatherCellRes[LTCR_ANM] != 0xFF )
+  {
+    GFL_CLGRP_CELLANIM_Release( charaWork->weatherCellRes[LTCR_ANM] );
+    charaWork->weatherCellRes[LTCR_ANM] = 0xFF;
+  }
 }
 
 //======================================================================

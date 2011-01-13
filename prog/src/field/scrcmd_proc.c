@@ -515,6 +515,7 @@ VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
   LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
+  param->mode     = LOCAL_TVT_MODE_SCRIPT;
   param->scriptId = demo_id;
   param->gameData = SCRCMD_WORK_GetGameData( work );
   EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param, NULL, NULL );

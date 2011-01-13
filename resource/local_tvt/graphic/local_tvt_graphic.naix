@@ -73,7 +73,28 @@ enum {
 	NARC_local_tvt_graphic_obj_support_NCLR = 59,
 	NARC_local_tvt_graphic_obj_support_NCGR = 60,
 	NARC_local_tvt_graphic_obj_support_NCER = 61,
-	NARC_local_tvt_graphic_obj_support_NANR = 62
+	NARC_local_tvt_graphic_obj_support_NANR = 62,
+	NARC_local_tvt_graphic_weather_rain_NCLR = 63,
+	NARC_local_tvt_graphic_weather_rain2_NCGR = 64,
+	NARC_local_tvt_graphic_weather_rain2_NCER = 65,
+	NARC_local_tvt_graphic_weather_rain2_NANR = 66,
+	NARC_local_tvt_graphic_weather_rain4_NCGR = 67,
+	NARC_local_tvt_graphic_weather_rain4_NCER = 68,
+	NARC_local_tvt_graphic_weather_rain4_NANR = 69,
+	NARC_local_tvt_graphic_weather_sand_NCLR = 70,
+	NARC_local_tvt_graphic_weather_sand2_NCGR = 71,
+	NARC_local_tvt_graphic_weather_sand2_NCER = 72,
+	NARC_local_tvt_graphic_weather_sand2_NANR = 73,
+	NARC_local_tvt_graphic_weather_sand4_NCGR = 74,
+	NARC_local_tvt_graphic_weather_sand4_NCER = 75,
+	NARC_local_tvt_graphic_weather_sand4_NANR = 76,
+	NARC_local_tvt_graphic_weather_snow_NCLR = 77,
+	NARC_local_tvt_graphic_weather_snow2_NCGR = 78,
+	NARC_local_tvt_graphic_weather_snow2_NCER = 79,
+	NARC_local_tvt_graphic_weather_snow2_NANR = 80,
+	NARC_local_tvt_graphic_weather_snow4_NCGR = 81,
+	NARC_local_tvt_graphic_weather_snow4_NCER = 82,
+	NARC_local_tvt_graphic_weather_snow4_NANR = 83
 };
 
 /* NARC_LOCAL_TVT_GRAPHIC_NAIX_ */

@@ -44,8 +44,10 @@ typedef struct _LOCAL_TVT_CHARA LOCAL_TVT_CHARA;
 //======================================================================
 typedef struct
 {
-  u16  charaType;
-  u16  bgType;
+  u16 charaType;
+  u16 bgType;
+  u16 weatherType;
+  u16 dummy;
 }LOCAL_TVT_CHARA_PARAM;
 typedef struct
 {

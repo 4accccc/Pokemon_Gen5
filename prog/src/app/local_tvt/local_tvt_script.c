@@ -156,6 +156,7 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
     {
       chara_param[i].charaType  = work->scriptHead->chara[i];
       chara_param[i].bgType     = work->scriptHead->back[i];
+      chara_param[i].weatherType= i;  //TODO
     }
     LOCAL_TVT_CHARA_SYS_LoadChara( work->chara_sys, chara_param, work->member );
   }
