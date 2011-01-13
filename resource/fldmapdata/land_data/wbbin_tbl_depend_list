@@ -2970,3 +2970,47 @@ $(DIR_WBTMP)/m_gate10_00_00.tbl: $(DIR_RES)/m_gate10_00_00.bin
 	@echo create_bintbl m_gate10_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gate10_00_00.bin
 
+$(DIR_WBTMP)/m_mugen01_00_00.tbl: $(DIR_RES)/m_mugen01_00_00.bin
+	@echo create_bintbl m_mugen01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen01_00_00.bin
+
+$(DIR_WBTMP)/m_mugen02_00_00.tbl: $(DIR_RES)/m_mugen02_00_00.bin
+	@echo create_bintbl m_mugen02_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen02_00_00.bin
+
+$(DIR_WBTMP)/m_mugen02_00_00.tbl: $(DIR_RES)/m_mugen02_00_00.bin
+	@echo create_bintbl m_mugen02_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen02_00_00.bin
+
+$(DIR_WBTMP)/m_mugen03_00_00.tbl: $(DIR_RES)/m_mugen03_00_00.bin
+	@echo create_bintbl m_mugen03_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen03_00_00.bin
+
+$(DIR_WBTMP)/m_mugen04_00_00.tbl: $(DIR_RES)/m_mugen04_00_00.bin
+	@echo create_bintbl m_mugen04_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen04_00_00.bin
+
+$(DIR_WBTMP)/m_mugen05_00_00.tbl: $(DIR_RES)/m_mugen05_00_00.bin
+	@echo create_bintbl m_mugen05_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen05_00_00.bin
+
+$(DIR_WBTMP)/m_mugen06_00_00.tbl: $(DIR_RES)/m_mugen06_00_00.bin
+	@echo create_bintbl m_mugen06_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen06_00_00.bin
+
+$(DIR_WBTMP)/m_mugen07_00_00.tbl: $(DIR_RES)/m_mugen07_00_00.bin
+	@echo create_bintbl m_mugen07_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen07_00_00.bin
+
+$(DIR_WBTMP)/m_mugen08_00_00.tbl: $(DIR_RES)/m_mugen08_00_00.bin
+	@echo create_bintbl m_mugen08_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen08_00_00.bin
+
+$(DIR_WBTMP)/m_mugen09_00_00.tbl: $(DIR_RES)/m_mugen09_00_00.bin
+	@echo create_bintbl m_mugen09_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen09_00_00.bin
+
+$(DIR_WBTMP)/m_mugen10_00_00.tbl: $(DIR_RES)/m_mugen10_00_00.bin
+	@echo create_bintbl m_mugen10_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen10_00_00.bin
+

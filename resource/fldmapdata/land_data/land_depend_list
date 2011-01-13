@@ -711,6 +711,17 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_bbuill04_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate09_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate10_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen04_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen05_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen06_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen07_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen08_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen09_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen10_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

@@ -711,6 +711,17 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_bbuill04_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate09_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate10_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen01_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen02_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen02_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen03_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen04_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen05_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen06_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen07_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen08_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen09_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen10_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \

@@ -271,6 +271,7 @@
 "bbuill04.bin"
 "gate09.bin"
 "gate10.bin"
+"H06A.bin"
 "DUN1101.bin"
 "DUN1102.bin"
 "DUN1103.bin"
