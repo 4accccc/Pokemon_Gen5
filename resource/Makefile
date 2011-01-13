@@ -50,6 +50,7 @@ SUBDIRS	=	wmi \
 			message\
 			fldmmdl \
 			encount \
+			encount_ex \
 			rebattle_trainer \
 			fld3d_ci \
 			fldmapdata\
