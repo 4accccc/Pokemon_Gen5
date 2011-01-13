@@ -905,6 +905,9 @@ static u16 GetWildSingleEncountStrID( BTLV_SCU* wk )
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_MOVE_POKE) ){
     return BTL_STRID_STD_Encount_Wild_Move;
   }
+  if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_N_POKE) ){
+    return BTL_STRID_STD_Encount_Wild_NPoke;
+  }
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_WILD_TALK) ){
     return BTL_STRID_STD_Encount_Wild_Talk;
   }

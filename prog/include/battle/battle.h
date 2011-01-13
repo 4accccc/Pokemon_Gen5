@@ -165,6 +165,7 @@ typedef enum {
   BTL_STATUS_FLAG_CAMERA_WCS = 0x0400,    ///< WCS用カメラモード
   BTL_STATUS_FLAG_CAMERA_OFF = 0x0800,    ///< カメラ動作オフ
   BTL_STATUS_FLAG_CONFIG_SHARE = 0x1000,  ///< コンフィグ設定を親機のもので行う
+  BTL_STATUS_FLAG_N_POKE = 0x2000,        ///<ＮポケモンとのエンカウントならTRUE
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
