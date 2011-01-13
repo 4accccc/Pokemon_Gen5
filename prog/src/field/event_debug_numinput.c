@@ -231,6 +231,8 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_other_work = {
 
 static const DEBUG_NUMINPUT_INITIALIZER DATA_eff_enc = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_EffectEncountList ), DNI_EffectEncountList, };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_npoke_enc = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_NPokeList ), DNI_NPokeList, };
 
 static const DEBUG_NUMINPUT_INITIALIZER DATA_Initializer[D_NUMINPUT_MODE_MAX] = { 
   { D_NINPUT_DATA_LIST,   NELEMS( DNI_EffectEncountList ), DNI_EffectEncountList, },
@@ -312,6 +314,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_other_work, (void*)&DATA_other_work, GFL_OVERLAY_BLANK_ID },
   { dni_top_fadespeed, (void*)&DATA_DebugFadeSpeed, GFL_OVERLAY_BLANK_ID },
   { dni_top_effect_encount, (void*)&DATA_eff_enc, GFL_OVERLAY_BLANK_ID },
+  { dni_top_npoke_encount, (void*)&DATA_npoke_enc, GFL_OVERLAY_BLANK_ID },
   { dni_top_scenario, (void*)NULL, GFL_OVERLAY_BLANK_ID },
   { dni_top_united_nations, (void*)&DATA_united, GFL_OVERLAY_BLANK_ID },
   { dni_top_fortune, (void*)&DATA_Fortune, GFL_OVERLAY_BLANK_ID },

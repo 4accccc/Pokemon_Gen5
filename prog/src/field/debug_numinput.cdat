@@ -34,6 +34,30 @@ static const DEBUG_NUMINPUT_LIST DNI_EffectEncountList[] = {
  { dni_effenc_pos_check, EFFENC_DNI_POSITION, &enceff_pos_param },
  { dni_effenc_add_delete, EFFENC_DNI_ADD_DELETE, &enceff_prob_fix_param },
 };
+//////////////////////////////////////////////////////
+///Ｎポケエンカウント関連
+static const DEBUG_NUMINPUT_PARAM npoke_enc_capture_flag = {
+ 0, 1, FLDENC_DEB_NumInputNPokeGet, FLDENC_DEB_NumInputNPokeSet,
+};
+static const DEBUG_NUMINPUT_PARAM npoke_enc_prob = {
+ 0, 101, FLDENC_DEB_NumInputNPokeGet, FLDENC_DEB_NumInputNPokeSet,
+};
+static const DEBUG_NUMINPUT_LIST DNI_NPokeList[] = {
+  //gmm_id, param, dni_param
+ { dni_npoke_enc_prob, FLDENC_DNI_NPOKE_ENC_PROB, &npoke_enc_prob },
+ { dni_npoke_flag01, 0, &npoke_enc_capture_flag },
+ { dni_npoke_flag02, 1, &npoke_enc_capture_flag },
+ { dni_npoke_flag03, 2, &npoke_enc_capture_flag },
+ { dni_npoke_flag04, 3, &npoke_enc_capture_flag },
+ { dni_npoke_flag05, 4, &npoke_enc_capture_flag },
+ { dni_npoke_flag06, 5, &npoke_enc_capture_flag },
+ { dni_npoke_flag07, 6, &npoke_enc_capture_flag },
+ { dni_npoke_flag08, 7, &npoke_enc_capture_flag },
+ { dni_npoke_flag09, 8, &npoke_enc_capture_flag },
+ { dni_npoke_flag10, 9, &npoke_enc_capture_flag },
+ { dni_npoke_flag11, 10, &npoke_enc_capture_flag },
+ { dni_npoke_flag12, 11, &npoke_enc_capture_flag },
+};
 
 //////////////////////////////////////////////////////
 ///国コード関連

@@ -72,4 +72,13 @@ extern void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GA
 //エフェクトエンカウント系 effect_encount.c
 extern void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc);
 
+/////////////////////////////////////////////////////////////////////////
+//デバッグ用ルーチン
+#ifdef PM_DEBUG
+#define FLDENC_DNI_NPOKE_ENC_PROB (255)
+
+extern u32 FLDENC_DEB_NumInputNPokeGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
+extern void FLDENC_DEB_NumInputNPokeSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
+
+#endif  //PM_DEBUG
 

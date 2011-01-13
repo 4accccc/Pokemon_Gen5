@@ -13,6 +13,7 @@
 #include "map_attr.h"
 
 #include "encount_data.h"
+#include "field_encount_local.h"
 #include "field_encount.h"
 
 #include "battle/battle.h"
@@ -351,7 +352,12 @@ u8 ENCPOKE_CheckNPokeEncount( ENCPOKE_FLD_PARAM* efp, u16 zone_id )
       per = 400;  
     }
 #ifdef PM_DEBUG
-    per = 1000;
+    {
+      ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( (GAMEDATA*)efp->gdata );
+      if( ewk->deb_npoke_enc_prob != 0 ){
+        per = ewk->deb_npoke_enc_prob*10;
+      }
+    }
 #endif  //PM_DEBUG
     if( GFUser_GetPublicRand0(1000) >= per){
       return ENC_N_POKE_NONE;

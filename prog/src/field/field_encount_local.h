@@ -69,6 +69,10 @@ struct _TAG_ENCOUNT_WORK
 {
   EWK_PLAYER player;
   EWK_EFFECT_ENCOUNT  effect_encount;
+
+#ifdef PM_DEBUG
+  u16  deb_npoke_enc_prob;
+#endif
 };
 
 ///エンカウント率補整パターンデータ

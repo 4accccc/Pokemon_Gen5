@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-11-22T20:55:16"/>
+	<create user="iwasawa" host="W00157" date="2011-01-13T18:52:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-736" top="126" right="-31" bottom="746" maximized="no" rayout="Vertical2">
+	<dialog left="1480" top="360" right="2185" bottom="980" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -398,6 +398,13 @@
 　エフェクトエンカウント関連メニュー</comment>
 		<language name="JPN" width="240">エフェクトエンカウント</language>
 		<language name="JPN_KANJI" width="240">エフェクトエンカウント</language>
+	</row>
+
+	<row id="dni_top_npoke_encount">
+		<comment>トップメニュー
+　Ｎポケエンカウント関連メニュー</comment>
+		<language name="JPN" width="240">Ｎポケエンカウント</language>
+		<language name="JPN_KANJI" width="240">Ｎポケエンカウント</language>
 	</row>
 
 	<row id="dni_top_scenario">
@@ -471,6 +478,97 @@
 　エフェクトを強制追加＆削除</comment>
 		<language name="JPN" width="240">Add/Del Force</language>
 		<language name="JPN_KANJI" width="240">Add/Del Force</language>
+	</row>
+
+	<row id="dni_npoke_enc_prob" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケエンカウント率</comment>
+		<language name="JPN" width="240">エンカウントりつ(0:むこう)</language>
+		<language name="JPN_KANJI" width="240">エンカウント率(0:無効)</language>
+	</row>
+
+	<row id="dni_npoke_flag01" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">R02チョロネコ</language>
+		<language name="JPN_KANJI" width="240">R02チョロネコ</language>
+	</row>
+
+	<row id="dni_npoke_flag02" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D02マメパト</language>
+		<language name="JPN_KANJI" width="240">D02マメパト</language>
+	</row>
+
+	<row id="dni_npoke_flag03" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D02オタマロ</language>
+		<language name="JPN_KANJI" width="240">D02オタマロ</language>
+	</row>
+
+	<row id="dni_npoke_flag04" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D03R0101ドッコラー</language>
+		<language name="JPN_KANJI" width="240">D03R0101ドッコラー</language>
+	</row>
+
+	<row id="dni_npoke_flag05" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D03R0101メグロコ</language>
+		<language name="JPN_KANJI" width="240">D03R0101メグロコ</language>
+	</row>
+
+	<row id="dni_npoke_flag06" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D03R0101ダルマッカ</language>
+		<language name="JPN_KANJI" width="240">D03R0101ダルマッカ</language>
+	</row>
+
+	<row id="dni_npoke_flag07" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D03R0101シンボラー</language>
+		<language name="JPN_KANJI" width="240">D03R0101シンボラー</language>
+	</row>
+
+	<row id="dni_npoke_flag08" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D03R0101ズルッグ</language>
+		<language name="JPN_KANJI" width="240">D03R0101ズルッグ</language>
+	</row>
+
+	<row id="dni_npoke_flag09" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D06R0101～3ガントル</language>
+		<language name="JPN_KANJI" width="240">D06R0101～3ガントル</language>
+	</row>
+
+	<row id="dni_npoke_flag10" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D06R0101～3テッシード</language>
+		<language name="JPN_KANJI" width="240">D06R0101～3テッシード</language>
+	</row>
+
+	<row id="dni_npoke_flag11" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D06R0101～3バチュル</language>
+		<language name="JPN_KANJI" width="240">D06R0101～3バチュル</language>
+	</row>
+
+	<row id="dni_npoke_flag12" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</comment>
+		<language name="JPN" width="240">D06R0101～3ギアル</language>
+		<language name="JPN_KANJI" width="240">D06R0101～3ギアル</language>
 	</row>
 
 	<row id="dni_number_string" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

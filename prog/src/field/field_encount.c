@@ -953,3 +953,51 @@ static void encwork_PlayerStatusClear( ENCOUNT_WORK* ewk )
 {
   MI_CpuClear8( &ewk->player, sizeof(EWK_PLAYER) );
 }
+
+/////////////////////////////////////////////////////////////////////////
+//デバッグ用ルーチン
+#ifdef PM_DEBUG
+
+/**
+ *  @brief  デバッグ数値入力　Nポケエンカウント用
+ */
+u32 FLDENC_DEB_NumInputNPokeGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param )
+{
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( gamedata );
+  ENC_SV_PTR enc_save = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork((GAMEDATA*)gamedata));
+
+  if( param < ENC_N_POKE_MAX ){
+    return EncDataSave_CheckNPokeCaptureFlag( enc_save,param );
+  }
+  switch(param){
+  case FLDENC_DNI_NPOKE_ENC_PROB:
+    return ewk->deb_npoke_enc_prob;
+    break;
+  }
+  return 0;
+}
+
+///値を設定するための関数
+void FLDENC_DEB_NumInputNPokeSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value )
+{
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( gamedata );
+  ENC_SV_PTR enc_save = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork((GAMEDATA*)gamedata));
+
+  if( param < ENC_N_POKE_MAX ){
+    if( value ){
+      EncDataSave_SetNPokeCaptureFlag( enc_save,param );
+    }else{
+      EncDataSave_ResetNPokeCaptureFlag( enc_save,param );
+    }
+  }
+  switch(param){
+  case FLDENC_DNI_NPOKE_ENC_PROB:
+    ewk->deb_npoke_enc_prob = value;
+    break;
+  }
+}
+
+#endif  //PM_DEBUG
+
