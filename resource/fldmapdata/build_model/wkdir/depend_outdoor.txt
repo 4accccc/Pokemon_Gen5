@@ -303,4 +303,19 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/r01_a_winter.nsbmd \
 	$(RESDIR)/r01_b_winter.nsbmd \
 	$(RESDIR)/h04_ligth2.nsbmd \
+	$(RESDIR)/c12_build_01.nsbmd \
+	$(RESDIR)/c12_house_01.nsbmd \
+	$(RESDIR)/c12_house_02.nsbmd \
+	$(RESDIR)/c12_gym_01.nsbmd \
+	$(RESDIR)/t06_house_01.nsbmd \
+	$(RESDIR)/t06_house_02.nsbmd \
+	$(RESDIR)/t06_ctower_01.nsbmd \
+	$(RESDIR)/t06_house_03.nsbmd \
+	$(RESDIR)/d22_farm_01.nsbmd \
+	$(RESDIR)/c13_house_01.nsbmd \
+	$(RESDIR)/c13_house_02.nsbmd \
+	$(RESDIR)/c13_house_03.nsbmd \
+	$(RESDIR)/c13_house_04.nsbmd \
+	$(RESDIR)/c13_gym_01.nsbmd \
+	$(RESDIR)/c13_ship_01.nsbmd \
 

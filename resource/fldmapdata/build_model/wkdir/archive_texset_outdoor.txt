@@ -50,5 +50,17 @@
 "texset/outdoor050.nsbtx"
 "texset/outdoor051.nsbtx"
 "texset/outdoor052.nsbtx"
+"texset/outdoor053.nsbtx"
+"texset/outdoor054.nsbtx"
+"texset/outdoor055.nsbtx"
+"texset/outdoor056.nsbtx"
+"texset/outdoor057.nsbtx"
+"texset/outdoor058.nsbtx"
+"texset/outdoor059.nsbtx"
+"texset/outdoor060.nsbtx"
+"texset/outdoor061.nsbtx"
+"texset/outdoor062.nsbtx"
+"texset/outdoor063.nsbtx"
+"texset/outdoor064.nsbtx"
 
 
