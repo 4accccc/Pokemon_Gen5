@@ -8,6 +8,8 @@
 #ifndef __H_ENCOUNT_DATA_H__
 #define __H_ENCOUNT_DATA_H__
 
+#include "encount_data_ex_def.h"  //Ｎポケモン用定義
+
 #define ENC_DATA_INVALID_ID (0xFFFF)  ///<無効エンカウトデータID
 
 #define ENC_MONS_NUM_GROUND_L   (12)   ///<通常エンカウント(ロークラス)
@@ -90,6 +92,18 @@ typedef struct _ENCOUNT_DATA{
 typedef struct _ENCOUNT_TABLE{
   ENCOUNT_DATA  enc_tbl[4];
 }ENCOUNT_TABLE;
+
+//Ｎポケモン用エンカウントデータ
+typedef struct _ENCOUNT_DATA_N_POKE
+{
+  u16 zone_id:14;
+  u16 zone_num:2;
+  u16 mons_no;
+  u8  level;
+  u8  seikaku;
+  u8  sex;
+  u8  tokusei;
+}ENCOUNT_DATA_N_POKE;
 
 //------------------------------------------------------------------
 /*
