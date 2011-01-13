@@ -1,0 +1,15 @@
+/*
+	@file	encount_data_ex.cdat
+	@brief	特殊エンカウント(Nポケ)データテーブル
+	@author	このファイルはコンバータから出力されています
+
+	from resource/encount_ex/encount_ex_conv.rb
+*/
+#pragma once
+
+static const ENCOUNT_DATA_N_POKE DATA_EncountDataNPoke[] = {
+ //zone, zone_num, monsno, lv, char, sex, tokusei
+ { ZONE_ID_R02, 1, 509, 7, 10, PM_MALE, 0 },  //チョロネコ, おくびょう, かるわざ
+ { ZONE_ID_D02, 1, 519, 13, 22, PM_MALE, 1 },  //マメパト, なまいき, 
+};
+
