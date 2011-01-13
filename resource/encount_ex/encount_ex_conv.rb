@@ -15,7 +15,7 @@ $output_f = arg[1]
 ##############################################
 #構造体定義
 $_enc_poke = Struct.new("EncPoke", :no, :zone, :zone_num, :mons_no, :mons_name, :lv, :char, :char_name, :sex, :tokusei, :comment, :tokusei_com )
-$_oya_prm = Struct.new("OyaParam", :id, :sex, :pow_rnd)
+$_oya_prm = Struct.new("OyaParam", :id, :sex, :pow_rnd, :natsuki )
 
 ##############################################
 #グローバル変数定義
@@ -63,7 +63,8 @@ class CEncDataEx
       file.print("//Ｎポケモン共通パラメータ\n")
       file.print("#define N_POKE_OYA_ID\t( 0x%08x )\n" % [@oya_prm.id])
       file.print("#define N_POKE_OYA_SEX\t( %s )\n" % [@oya_prm.sex])
-      file.print("#define N_POKE_POW_RND\t( %d )\n\n" % [@oya_prm.pow_rnd])
+      file.print("#define N_POKE_POW_RND\t( %d )\n" % [@oya_prm.pow_rnd])
+      file.print("#define N_POKE_NATSUKI\t( %d )\n\n" % [@oya_prm.natsuki])
     }
   end
 
@@ -93,6 +94,7 @@ class CEncDataEx
      @oya_prm.id = work[1].to_i
      @oya_prm.sex = sex_conv(work[2])
      @oya_prm.pow_rnd = work[3].to_i
+     @oya_prm.natsuki = work[4].to_i
 
      #ポケモン情報取得
      file.gets  #2行読み飛ばし

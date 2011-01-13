@@ -14,4 +14,5 @@
 #define N_POKE_OYA_ID	( 0x00000002 )
 #define N_POKE_OYA_SEX	( PM_MALE )
 #define N_POKE_POW_RND	( 30 )
+#define N_POKE_NATSUKI	( 255 )
 
