@@ -13,13 +13,7 @@
 #include "system/gfl_use.h"
 #include "field/move_pokemon_def.h"
 #include "field/generate_enc_def.h"
-
-//自機のゾーン足跡
-typedef struct PLAYER_ZONE_HIST_tag
-{
-	u16 beforeZone;	//前回ゾーン
-	u16 oldZone;	  //前々回ゾーン
-}PLAYER_ZONE_HIST;
+#include "field/encount_data_ex_def.h"
 
 //移動ポケモンデータ(20)
 typedef struct MV_POKE_DATA_tag{
@@ -44,14 +38,17 @@ typedef struct MV_POKE_DATA_tag{
 
 typedef struct ENC_SV_DATA_tag
 {
-	PLAYER_ZONE_HIST	PlayerZoneHist;	//ゾーン履歴
+	u32 dummy;  //PLAYER_ZONE_HIST	PlayerZoneHist;	旧ゾーン履歴(WBで未使用なのでスワンで使える空き領域として確保)
 	MV_POKE_DATA	MovePokeData[MOVE_POKE_MAX];	//移動ポケモンデータ
 	u8 MovePokeZoneIdx[MOVE_POKE_MAX];	//移動ポケモン現在ゾーンインデックス
 	u8 MovePokeStatus[MOVE_POKE_MAX];	//移動ポケモン捕獲状況
 	u8 GenerateZoneIdx;					//大量発生発動フラグ
 	u8 SprayCount;						//スプレー有効歩数(最大250歩)
-	
+  u16 NPokeGetFlags;        //Ｎポケモン捕獲済みビットフィールド	
 }ENC_SV_DATA;
+
+SDK_COMPILER_ASSERT( sizeof(ENC_SV_DATA)==52);
+SDK_COMPILER_ASSERT( ENC_N_POKE_MAX < 16 );  //このアサートが出たらNPokeGetFlagsメンバサイズの拡張が必要
 
 //----------------------------------------------------------
 /**
@@ -140,39 +137,6 @@ void EncDataSave_UpdateGenerate( SAVE_CONTROL_WORK * sv )
 u8 EncDataSave_GetGenerateZoneIdx( ENC_SV_PTR inEncData )
 {
 	return inEncData->GenerateZoneIdx;
-}
-
-//==============================================================================
-/**
- * 主人公のゾーン履歴の更新
- *
- * @param	outEncData			エンカウント関連セーブポインタ
- * @param	inzoneID			ゾーンＩＤ
- */
-//==============================================================================
-void EncDataSave_UpdatePlayerZoneHist(ENC_SV_PTR ioEncData, const int inzoneID)
-{
-	if (ioEncData->PlayerZoneHist.beforeZone != inzoneID){
-		ioEncData->PlayerZoneHist.oldZone = ioEncData->PlayerZoneHist.beforeZone;
-		ioEncData->PlayerZoneHist.beforeZone = inzoneID;
-	}
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_ENCOUNT)
-	SVLD_SetCrc(GMDATA_ID_ENCOUNT);
-#endif //CRC_LOADCHECK
-}
-
-//==============================================================================
-/**
- * 主人公の前々回いたゾーンを取得
- *
- * @param	inEncData		エンカウント関連セーブポインタ
- *
- * @return	int				ゾーンＩＤ
- */
-//==============================================================================
-int EncDataSave_GetPlayerOldZone(ENC_SV_PTR inEncData)
-{
-	return inEncData->PlayerZoneHist.oldZone;
 }
 
 //==============================================================================
@@ -455,5 +419,72 @@ BOOL EncDataSave_CanUseSpray(ENC_SV_PTR inEncData)
 	}else{
 		return FALSE;
 	}
+}
+
+//==============================================================================
+/**
+ * Ｎポケモン捕獲済み数取得
+ *
+ * @param	inEncData		エンカウント関連セーブポインタ
+ * @param	inIdx	      Ｎポケモン登録ID
+ */
+//==============================================================================
+int EncDataSave_GetNPokeCaptureNum(ENC_SV_PTR inEncData)
+{
+  int i,num = 0;
+
+  for(i = 0;i < ENC_N_POKE_MAX;i++){
+    num += (inEncData->NPokeGetFlags & (1<<i));
+  }
+  return num;
+}
+
+
+//==============================================================================
+/**
+ * Ｎポケモン捕獲済みフラグチェック
+ *
+ * @param	inEncData		エンカウント関連セーブポインタ
+ * @param	inIdx	      Ｎポケモン登録ID
+ *
+ * @retval  TRUE 捕獲済み
+ * @retval  FALSE 未捕獲
+ */
+//==============================================================================
+BOOL EncDataSave_CheckNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx)
+{
+	GF_ASSERT(inIdx<ENC_N_POKE_MAX);
+	return inEncData->NPokeGetFlags & (1<<inIdx);
+}
+
+//==============================================================================
+/**
+ * Ｎポケモン捕獲済みフラグセット
+ *
+ * @param	inEncData		エンカウント関連セーブポインタ
+ * @param	inIdx	      Ｎポケモン登録ID
+ *
+ * @retval  TRUE 捕獲済み
+ * @retval  FALSE 未捕獲
+ */
+//==============================================================================
+void EncDataSave_SetNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx)
+{
+	GF_ASSERT(inIdx<ENC_N_POKE_MAX);
+	inEncData->NPokeGetFlags |= (1<<inIdx);
+}
+
+//==============================================================================
+/**
+ * Ｎポケモン捕獲済みフラグリセット（たぶんデバッグOnly）
+ *
+ * @param	inEncData		エンカウント関連セーブポインタ
+ * @param	inIdx	      Ｎポケモン登録ID
+ */
+//==============================================================================
+void EncDataSave_ResetNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx)
+{
+	GF_ASSERT(inIdx<ENC_N_POKE_MAX);
+	inEncData->NPokeGetFlags &= (0xFFFF^(1<<inIdx));
 }
 

@@ -31,9 +31,6 @@ extern void EncDataSave_Init(ENC_SV_PTR outEncData);
 extern void EncDataSave_UpdateGenerate( SAVE_CONTROL_WORK * sv );
 extern u8 EncDataSave_GetGenerateZoneIdx( ENC_SV_PTR inEncData );
 
-extern void EncDataSave_UpdatePlayerZoneHist(ENC_SV_PTR ioEncData, const int inZoneID);
-extern int EncDataSave_GetPlayerOldZone(ENC_SV_PTR inEncData);
-
 extern u8 EncDataSave_GetMovePokeState(ENC_SV_PTR inEncData, const u8 inTargetPoke);
 extern void EncDataSave_SetMovePokeState(ENC_SV_PTR inEncData, const u8 inTargetPoke,u8 status);
 
@@ -52,4 +49,9 @@ extern void EncDataSave_SetMovePokeDataParam(	MPD_PTR outMPData,
 extern void EncDataSave_SetSprayCnt(ENC_SV_PTR inEncData,u8 count);
 extern BOOL EncDataSave_DecSprayCnt(ENC_SV_PTR inEncData);
 extern BOOL EncDataSave_CanUseSpray(ENC_SV_PTR inEncData);
+
+extern int EncDataSave_GetNPokeCaptureNum(ENC_SV_PTR inEncData);
+extern BOOL EncDataSave_CheckNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx);
+extern void EncDataSave_SetNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx);
+extern void EncDataSave_ResetNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx);
 

@@ -58,7 +58,6 @@ void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork
 	{
 		ENC_SV_PTR data;
 		data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
-		MP_UpdatePlayerZoneHist(data, FIELDMAP_GetZoneID( fieldWork ));		//ゾーン履歴を更新
     
     //歩いて移動した場合は移動ポケモンの移動処理
 		MP_MovePokemonNeighboring( gdata );//移動ポケモン隣接移動
@@ -113,7 +112,6 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 	{
 		ENC_SV_PTR data;
 		data = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
-		MP_UpdatePlayerZoneHist(data, zone_id);		//ゾーン履歴を更新
 	  //移動ポケモン全部ジャンプ
 	  MP_JumpMovePokemonAll( gdata );
 	}

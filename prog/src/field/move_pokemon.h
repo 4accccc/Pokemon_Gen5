@@ -21,7 +21,6 @@ extern void MP_RecoverMovePoke( GAMEDATA* gdata );
 extern u16 MP_GetMovePokeZoneID( ENC_SV_PTR inEncData, const u8 inTarget);
 extern u16 MP_MovePokeZoneIdx2ID( const u8 inZoneIdx );
 extern BOOL MP_CheckMovePoke(ENC_SV_PTR inEncData );
-extern void MP_UpdatePlayerZoneHist(ENC_SV_PTR inEncData, const int inZone);
 extern void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp);
 extern u16 MP_CheckMovePokeWeather( GAMEDATA * gdata, u16 zone_id );
 extern BOOL MP_CheckMovePokeValid( GAMEDATA* gdata );

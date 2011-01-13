@@ -236,24 +236,6 @@ BOOL MP_CheckMovePoke(ENC_SV_PTR inEncData)
 
 //--------------------------------------------------------------------------------------------
 /**
- * 主人公ゾーン履歴の更新
- *
- * @param	inEncData		エンカウント関連セーブデータポインタ
- * @param	inZone			更新ゾーン
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void MP_UpdatePlayerZoneHist(ENC_SV_PTR inEncData, const int inZone)
-{
-	if (MP_CheckMovePoke(inEncData)){
-		//履歴更新
-		EncDataSave_UpdatePlayerZoneHist( inEncData, inZone );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * 指定移動ポケモンを登録
  *
  * @param	sv					セーブデータ
