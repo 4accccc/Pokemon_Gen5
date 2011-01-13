@@ -108,7 +108,7 @@ class CEncDataEx
 
        cp.no = work[0].to_i
        cp.mons_name = work[1]
-       cp.mons_no = $monsno_hash.fetch( cp.mons_name )
+       cp.mons_no = $monsno_hash.fetch( cp.mons_name, nil )
        if cp.mons_no == nil then
          print("ERROR! モンスター名が不正です -> #{cp.mons_name}\n")
          exit 1
@@ -117,7 +117,7 @@ class CEncDataEx
        cp.zone_num = work[3].to_i
        cp.lv = work[4].to_i
        cp.char_name = work[5]
-       cp.char = $seikaku_hash.fetch( cp.char_name )
+       cp.char = $seikaku_hash.fetch( cp.char_name, nil )
        if cp.char == nil then
          print("ERROR! 性格名が不正です -> #{cp.char_name}\n")
          exit 1
