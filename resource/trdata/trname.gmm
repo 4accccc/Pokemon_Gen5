@@ -3479,8 +3479,8 @@
 	</row>
 
 	<row id="princess_09">
-		<language name="JPN" width="216">フレミング</language>
-		<language name="JPN_KANJI" width="216">フレミング</language>
+		<language name="JPN" width="216">フレミー</language>
+		<language name="JPN_KANJI" width="216">フレミー</language>
 	</row>
 
 	<row id="princess_10">
@@ -3491,6 +3491,26 @@
 	<row id="leader4_02">
 		<language name="JPN" width="216">カミツレ</language>
 		<language name="JPN_KANJI" width="216">カミツレ</language>
+	</row>
+
+	<row id="leader3_02">
+		<language name="JPN" width="216">アーティ</language>
+		<language name="JPN_KANJI" width="216">アーティ</language>
+	</row>
+
+	<row id="leader6_02">
+		<language name="JPN" width="216">フウロ</language>
+		<language name="JPN_KANJI" width="216">フウロ</language>
+	</row>
+
+	<row id="leader2_02">
+		<language name="JPN" width="216">どく</language>
+		<language name="JPN_KANJI" width="216">どく</language>
+	</row>
+
+	<row id="leader1_02">
+		<language name="JPN" width="216">ノーマル</language>
+		<language name="JPN_KANJI" width="216">ノーマル</language>
 	</row>
 
 	<flowchart-group-list>
