@@ -7,7 +7,7 @@
 */
 #pragma once
 
-#define ENC_N_POKE_MAX	( 2 )
+#define ENC_N_POKE_MAX	( 12 )
 #define ENC_N_POKE_NONE	( 0xFF )
 
 //Ｎポケモン共通パラメータ
