@@ -912,6 +912,8 @@ static void update_dst( DMP_MAINWORK* wk )
     break;
   }
   
+  //Ｎポケフラグ
+  PP_Put( wk->dst, ID_PARA_n_poke_flag, box_getvalue(wk,INPUTBOX_ID_NPOKE));
 
   {
     u32 i;

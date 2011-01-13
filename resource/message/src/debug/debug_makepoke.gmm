@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-11-16T15:16:46"/>
+	<create user="iwasawa" host="W00157" date="2011-01-13T17:43:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -744,6 +744,10 @@
 
 	<row id="DMPSTR_TOKUSEIRND_FLAG">
 		<language name="JPN" width="256">個体乱数優先</language>
+	</row>
+
+	<row id="DMPSTR_NPOKE_FLAG">
+		<language name="JPN" width="256">Ｎポケ</language>
 	</row>
 
 	<row id="DMPSTR_EGG_NAME" text-color=",,,#ff0000,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
