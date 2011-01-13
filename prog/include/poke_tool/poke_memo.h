@@ -59,6 +59,7 @@ typedef enum
   POKE_MEMO_EGG_FIRST,    //初めて手入れたタマゴ(育てや・ゲーム内イベント・外部配布
   POKE_MEMO_EGG_TRADE,    //もらったタマゴ(通信交換・ぐるぐる交換・ゲーム内交換
                           //placeにはPOKE_MEMO_PLACE_GAME_TRADEかPOKE_MEMO_PLACE_HUMAN_TRADEをセットしてください。
+  POKE_MEMO_SET_N_POKE_CAPTURE,    //Ｎポケモン捕獲時
 }POKE_MEMO_SET_TYPE;
 
 //イベントポケチェック用種類

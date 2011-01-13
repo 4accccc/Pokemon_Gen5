@@ -598,6 +598,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
   u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
   u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
+  u32 isNPoke = PPP_Get( ppp , ID_PARA_n_poke_flag , NULL );
   const u32 perRand = PPP_Get( ppp , ID_PARA_personal_rnd , NULL );
   //場所はポケシフター対応で書き換える可能性あり。
   u32 place1  = PPP_Get( ppp , ID_PARA_get_place , NULL );
@@ -741,7 +742,12 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
         {
           if( place1 == 0 )
           {
-            if( place2 == POKE_MEMO_PLACE_GAME_TRADE )
+            if( isNPoke )
+            {
+              //Ｎポケモン
+              memoId = trmemo_02_17_01;
+            
+            }else if( place2 == POKE_MEMO_PLACE_GAME_TRADE )
             {
               //ゲーム内交換
               memoId = trmemo_02_02_01;
@@ -784,6 +790,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       
       
       if( isParent == FALSE &&
+          isNPoke == FALSE && 
           !(place2 >= POKE_MEMO_PLACE_SEREBIXI_BEFORE && 
             place2 <= POKE_MEMO_PLACE_ENRAISUI_AFTER) )
       {
@@ -833,6 +840,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
     WORDSET_RegisterNumber( wordSet , 7 , day1 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterWord(   wordSet , 8 , placeStr1 , 0,TRUE,PM_LANG );
 
+    IWASAWA_Printf("TrainerMemo =%d\n",memoId);
     srcStr = GFL_MSG_CreateString( infoWork->msgMemo , memoId ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 

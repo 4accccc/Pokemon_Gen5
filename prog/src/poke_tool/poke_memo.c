@@ -16,7 +16,11 @@
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_memo.h"
 
+#include "field/encount_data_ex_def.h"  //Nポケモン固定パラメータ定義参照
+
+#include "arc/arc_def.h"
 #include "message.naix"
+#include "msg/msg_trainermemo.h"
 
 //======================================================================
 //	define
@@ -43,6 +47,7 @@ typedef enum
 //	proto
 //======================================================================
 #pragma mark [> proto
+static void POKE_MEMO_SetTrainerMemoNPoke( POKEMON_PASO_PARAM *ppp, const u32 place, const HEAPID heapId );
 static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE setType );
 static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , const POKE_MEMO_DATA_TYPE setType );
 static void POKE_MEMO_SetPlaceTimeEx( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day , const POKE_MEMO_DATA_TYPE setType );
@@ -101,15 +106,6 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
     }
     break;
 
-  case POKE_MEMO_POKE_SHIFTER: //ポケシフター(過去作転送
-    GF_ASSERT_MSG(FALSE,"専用関数使って！\n")
-    //POKE_MEMO_SetTrainerMemoPokeShifter( ppp );
-    break;
-
-  case POKE_MEMO_DISTRIBUTION: //配布
-    GF_ASSERT_MSG(FALSE,"専用関数使って！\n")
-    break;
-    
   case POKE_MEMO_EGG_FIRST:
     POKE_MEMO_SetPlaceTime( ppp , place , PMDT_1 );
     POKE_MEMO_SetMyStatus( ppp , my , heapId );
@@ -119,7 +115,17 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
   case POKE_MEMO_EGG_TRADE:
     POKE_MEMO_SetPlaceTime( ppp , place , PMDT_2 );
     break;
-    
+  
+  case POKE_MEMO_SET_N_POKE_CAPTURE: //Ｎポケモン捕獲時
+    POKE_MEMO_SetTrainerMemoNPoke( ppp, place, heapId );
+    break; 
+  
+  case POKE_MEMO_POKE_SHIFTER: //ポケシフター(過去作転送
+    //POKE_MEMO_SetTrainerMemoPokeShifter( ppp );
+  case POKE_MEMO_DISTRIBUTION: //配布
+    //POKE_MEMO_SetTrainerMemoPokeDistribution();
+    GF_ASSERT_MSG(FALSE,"専用関数使用\n")
+    break;
   }
   PPP_FastModeOff(ppp,fastFlg);
 }
@@ -177,6 +183,33 @@ void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u
 
   PPP_Put( ppp , ID_PARA_event_get_flag , 1 );
 }
+
+//----------------------------------------------------------------
+/*
+ *  @brief  Ｎポケモン捕獲時
+ */
+//----------------------------------------------------------------
+static void POKE_MEMO_SetTrainerMemoNPoke( POKEMON_PASO_PARAM *ppp, const u32 place, const HEAPID heapId )
+{
+  POKE_MEMO_ClearPlaceTime( ppp , PMDT_1 );
+  POKE_MEMO_SetPlaceTime( ppp , place , PMDT_2 );
+  POKE_MEMO_SetGetLevel( ppp );
+  POKE_MEMO_SetRomVersion( ppp );
+ 
+  //Nが親情報のセット
+  {
+    GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trainermemo_dat, heapId );
+    STRBUF *name  = GFL_MSG_CreateString( man, trmemo_n_poke_oyaname );
+
+    PPP_Put( ppp , ID_PARA_oyaname , (u32)name );
+    PPP_Put( ppp , ID_PARA_oyasex , N_POKE_OYA_SEX );
+    PPP_Put( ppp , ID_PARA_id_no , N_POKE_OYA_ID );
+
+    GFL_STR_DeleteBuffer( name );
+    GFL_MSG_Delete(man);
+  }
+}
+
 
 static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE setType )
 {
