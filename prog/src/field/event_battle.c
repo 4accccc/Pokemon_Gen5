@@ -59,6 +59,9 @@
 
 #include "amprotect.h"
 
+#include "savedata/encount_sv.h"
+#include "encount_data_ex_def.h"
+
 FS_EXTERN_OVERLAY(amprotect);
 
 #ifdef AMPROTECT_FUNC
@@ -178,7 +181,8 @@ static void debug_FieldDebugFlagSet( BATTLE_SETUP_PARAM* bp )
 typedef struct {
   GAMESYS_WORK * gsys;
   BATTLE_SETUP_PARAM * bp;
-  BOOL sub_event_f;
+  u8  sub_event_f;
+  u8  n_poke_id;
   ENCOUNT_TYPE EncType;
 }WILD_BATTLE_EVENT_WORK;
 
@@ -200,7 +204,6 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
       bew = GMEVENT_GetEventWork( battle_main_event );
       BEW_Initialize( bew, gsys, wbew->bp );
       bew->is_sub_event = TRUE; //このイベントが存在する以上、常にバトルはサブイベント
-      //bew->is_sub_event = wbew->sub_event_f;
 
       //バトルセットアップパラムから戦闘するポケモンを取得
       {
@@ -219,26 +222,34 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
     break;
 
   case 1:
-    //このイベント自体がサブイベントの場合、何もせずに戻る
-    if ( wbew->sub_event_f == TRUE )
     {
-      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
-      return GMEVENT_RES_FINISH;
-    }
+      u32 btl_result = GAMEDATA_GetLastBattleResult(gamedata);
+      //Ｎポケモン捕獲チェック
+      if( btl_result == BTL_RESULT_CAPTURE && wbew->n_poke_id != ENC_N_POKE_NONE){
+        ENC_SV_PTR enc_save = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork(gamedata) );
+        EncDataSave_SetNPokeCaptureFlag( enc_save, wbew->n_poke_id );
+      }
+      //このイベント自体がサブイベントの場合、何もせずに戻る
+      if ( wbew->sub_event_f == TRUE )
+      {
+        COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
+        return GMEVENT_RES_FINISH;
+      }
 
-    //このイベントがトップのイベントの場合、戦闘後処理を行う
-    if (FIELD_BATTLE_IsLoseResult(GAMEDATA_GetLastBattleResult(gamedata), BTL_COMPETITOR_WILD) == TRUE)
-    {
-      //負けた場合は敗北処理へ
-      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
-      GMEVENT_ChangeEvent( event, EVENT_NormalLose(gsys) );
-    }
-    else
-    {
-      //負けていない場合はフェードイン
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black(gsys, GAMESYSTEM_GetFieldMapWork(gsys), FIELD_FADE_WAIT);
-      GMEVENT_CallEvent(event, fade_event);
+      //このイベントがトップのイベントの場合、戦闘後処理を行う
+      if (FIELD_BATTLE_IsLoseResult( btl_result, BTL_COMPETITOR_WILD) == TRUE)
+      {
+        //負けた場合は敗北処理へ
+        COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
+        GMEVENT_ChangeEvent( event, EVENT_NormalLose(gsys) );
+      }
+      else
+      {
+        //負けていない場合はフェードイン
+        GMEVENT* fade_event;
+        fade_event = EVENT_FieldFadeIn_Black(gsys, GAMESYSTEM_GetFieldMapWork(gsys), FIELD_FADE_WAIT);
+        GMEVENT_CallEvent(event, fade_event);
+      }
     }
     (*seq) ++;
     break;
@@ -270,10 +281,12 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
  * @param bp
  * @param sub_event
  * @param enc_type
+ * @param n_poke_id 未指定の場合ENC_N_POKE_NONE 
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f, ENCOUNT_TYPE enc_type )
+GMEVENT * EVENT_WildPokeBattleEx( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp,
+    BOOL sub_event_f, ENCOUNT_TYPE enc_type, u8 n_poke_id )
 {
   GMEVENT * event = GMEVENT_Create( gsys, NULL, wildBattleEvent, sizeof(WILD_BATTLE_EVENT_WORK) );
   WILD_BATTLE_EVENT_WORK * wbew = GMEVENT_GetEventWork( event );
@@ -281,6 +294,7 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
   wbew->bp = bp;
   wbew->sub_event_f = sub_event_f;
   wbew->EncType = enc_type;
+  wbew->n_poke_id = n_poke_id;
 
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );
@@ -295,6 +309,12 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;
+}
+
+GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp,
+    BOOL sub_event_f, ENCOUNT_TYPE enc_type )
+{
+  return EVENT_WildPokeBattleEx( gsys, fieldmap, bp, sub_event_f, enc_type, ENC_N_POKE_NONE );
 }
 
 //--------------------------------------------------------------

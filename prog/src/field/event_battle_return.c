@@ -250,10 +250,11 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         wk->pp = PokeParty_GetMemberPointer(
                                 param->btlResult->party[ BTL_CLIENT_ENEMY1 ], param->btlResult->capturedPokeIdx );
 
+#if 0   //下のトレーナーメモセット処理POKE_MEMO_SetTrainerMemoPP()でセットされるので、この処理は要らない 11.01.12
         // 親名セットしてるけど、本来はエンカウント前にフィールド側で設定すべき？
         MyStatus_CopyNameString( myStatus, wk->strbuf );
         PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
-
+#endif
         // 手持ちかボックスに置くか
         if( !( PokeParty_GetPokeCount(party) < PokeParty_GetPokeCountMax(party) ) )
         {
@@ -281,12 +282,12 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         // トレーナーメモ
         {
           PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gameData );
-          POKE_MEMO_SetTrainerMemoPP(
-              wk->pp,
-              POKE_MEMO_SET_CAPTURE,
-              myStatus,
-              ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
-              wk->heapID );
+          POKE_MEMO_SET_TYPE type = POKE_MEMO_SET_CAPTURE; 
+          if( PP_Get( wk->pp, ID_PARA_n_poke_flag, NULL ) ){
+            type = POKE_MEMO_SET_N_POKE_CAPTURE;
+          }
+          POKE_MEMO_SetTrainerMemoPP( wk->pp, type,
+              myStatus, ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk )), wk->heapID );
         }
 
         // 全国図鑑か否か

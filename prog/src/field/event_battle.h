@@ -26,6 +26,8 @@
 //======================================================================
 //  extern
 //======================================================================
+extern GMEVENT * EVENT_WildPokeBattleEx( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp,
+    BOOL sub_event_f, ENCOUNT_TYPE enc_type, u8 n_poke_id );
 extern GMEVENT * EVENT_WildPokeBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f, ENCOUNT_TYPE enc_type );
 

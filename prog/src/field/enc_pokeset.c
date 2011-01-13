@@ -24,6 +24,7 @@
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/poke_personal.h"
+#include "poke_tool/poke_memo.h"
 #include "tr_tool/tr_tool.h"
 #include "item/itemsym.h"
 #include "savedata/encount_sv.h"
@@ -31,12 +32,13 @@
 #include "move_pokemon.h"
 #include "enc_pokeset.h"
 
+#include "arc/fieldmap/zone_id.h"
+#include "encount_data_ex.cdat"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //======================================================================
 //  struct
 //======================================================================
-
 ///大量発生ポケモンデータテーブル型
 typedef struct GENERATE_ENCOUNT{
   u16 zone_id;
@@ -295,7 +297,7 @@ int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PA
  * @return  変動後の確率
  */
 //--------------------------------------------------------------
-MPD_PTR ENCPOKE_GetMovePokeEncountData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, u16 zone_id )
+MPD_PTR ENCPOKE_GetMovePokeEncountData( ENCPOKE_FLD_PARAM* efp, u16 zone_id )
 {
 	MPD_PTR temp[MOVE_POKE_MAX];
 	u8 i, enc_count;
@@ -322,6 +324,65 @@ MPD_PTR ENCPOKE_GetMovePokeEncountData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_
 		return NULL;
 	}
 	
+  //ランダムで選出
+	return temp[ GFUser_GetPublicRand0(enc_count) ];
+}
+
+//--------------------------------------------------------------
+/**
+ * Ｎポケモンエンカウト抽選
+ *
+ * @param efp       エンカウント情報構造体ポインタ
+ * @param zone_id   今のゾーンID
+ * @return エンカウントするＮポケID 
+ */
+//--------------------------------------------------------------
+u8 ENCPOKE_CheckNPokeEncount( ENCPOKE_FLD_PARAM* efp, u16 zone_id )
+{
+  u8 temp[ENC_N_POKE_MAX];
+	u8 i,j,enc_count;
+
+  //確率判定
+  {
+    int per = 10;
+    int num = EncDataSave_GetNPokeCaptureNum( efp->enc_save );
+
+    if(num == 0){
+      per = 400;  
+    }
+#ifdef PM_DEBUG
+    per = 1000;
+#endif  //PM_DEBUG
+    if( GFUser_GetPublicRand0(1000) >= per){
+      return ENC_N_POKE_NONE;
+    }
+  }
+  //同じ場所にいる特殊ポケモンを取得
+	enc_count = 0;
+	for( i = 0; i < ENC_N_POKE_MAX; i++){
+    const ENCOUNT_DATA_N_POKE* sp = &DATA_EncountDataNPoke[i];
+
+		if( EncDataSave_CheckNPokeCaptureFlag( efp->enc_save,i) ){ //捕獲済み？
+      continue;
+    }
+    //ゾーンチェック
+    for(j = 0; j < sp->zone_num;j++){
+      if(zone_id == sp->zone_id+j ){
+        break;
+      }
+    }
+    if( j == sp->zone_num ){
+      continue;
+    }
+    if( encpoke_CheckEncountAvoid( efp, sp->level)){  //虫除けスプレー等チェック
+      continue;
+    }
+		temp[enc_count++] = i;
+	}
+
+	if (enc_count == 0){
+    return ENC_N_POKE_NONE;
+	}
   //ランダムで選出
 	return temp[ GFUser_GetPublicRand0(enc_count) ];
 }
@@ -498,6 +559,25 @@ void ENCPOKE_PPSetupMovePoke(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, MPD
 	PP_Put( pp, ID_PARA_seikaku, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_SEIKAKU) );		// 性格
 	PP_Put( pp, ID_PARA_condition, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_COND) );		// コンディション
 	PP_Put( pp, ID_PARA_hp, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_HP) );		// HP
+  
+  PP_Renew( pp );
+}
+
+/*
+ *  @brief  エンカウントＮポケモン　POKEPARA生成
+ */
+void ENCPOKE_PPSetupNPoke(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, u8 n_poke_id )
+{
+  const ENCOUNT_DATA_N_POKE* prm = &DATA_EncountDataNPoke[n_poke_id];
+  {
+	  u32 pow_rnd = PTL_SETUP_POW_PACK( N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND );
+	  u32 per_rnd = POKETOOL_CalcPersonalRandEx( N_POKE_OYA_ID, prm->mons_no, 0, prm->sex, prm->tokusei, FALSE );
+
+    PP_SetupEx( pp, prm->mons_no, prm->level, N_POKE_OYA_ID, pow_rnd, per_rnd );
+  }
+	PP_Put( pp, ID_PARA_seikaku, prm->seikaku );		// 性格
+	PP_Put( pp, ID_PARA_friend, N_POKE_NATSUKI );		// 初期なつき度
+	PP_Put( pp, ID_PARA_n_poke_flag, TRUE );		// Ｎポケフラグを立てる
   
   PP_Renew( pp );
 }
