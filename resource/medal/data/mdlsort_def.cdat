@@ -12,17 +12,17 @@
 #pragma once
 
 u32 MedalSortList[] = {
-    MDLID_CHAMPION_AQUA,	//あくあちゃんぷ
+    MDLID_CHAMPION_MIZU,	//あくあちゃんぷ
     MDLID_CYCLE_LV2,	//いーじーらいだー
-    MDLID_CHAMPION_INSECT,	//いんせくとちゃんぷ
-    MDLID_CHAMPION_AERIAL,	//えありあるちゃんぷ
+    MDLID_CHAMPION_MUSHI,	//いんせくとちゃんぷ
+    MDLID_CHAMPION_HIKOU,	//えありあるちゃんぷ
     MDLID_CHAMPION_ESPER,	//えすぱーちゃんぷ
-    MDLID_CHAMPION_ELECTRO,	//えれくとろちゃんぷ
+    MDLID_CHAMPION_DENKI,	//えれくとろちゃんぷ
     MDLID_MUSICALWIN_LV1,	//かけだしすたー
     MDLID_WAZA_MUKOU,	//からぶりめいじん
     MDLID_REPORT_LV4,	//きせきのぺんさき
-    MDLID_CHAMPION_COOL,	//くーるちゃんぷ
-    MDLID_CHAMPION_GROUND,	//ぐらうんどちゃんぷ
+    MDLID_CHAMPION_KOORI,	//くーるちゃんぷ
+    MDLID_CHAMPION_JIMEN,	//ぐらうんどちゃんぷ
     MDLID_WAZA_HANERU,	//こいきんぐあわーど
     MDLID_MAIL_WRITE_MAX,	//ことばのまじゅつし
     MDLID_CHAMPION_GHOST,	//ごーすとちゃんぷ
@@ -39,14 +39,14 @@ u32 MedalSortList[] = {
     MDLID_CHAMPION_NORMAL,	//のーまるちゃんぷ
     MDLID_CYCLE_LV3,	//はーどらいだー
     MDLID_CYCLE_MAX,	//はしるでんせつ
-    MDLID_ALL_BATTLE_LV1,	//ばとるししょう
-    MDLID_ALL_BATTLE_LV1,	//ばとるしはんだい
-    MDLID_ALL_BATTLE__LV1,	//ばとるもんかせい
+    MDLID_ALL_BATTLE_LV3,	//ばとるししょう
+    MDLID_ALL_BATTLE_LV2,	//ばとるしはんだい
+    MDLID_ALL_BATTLE_LV1,	//ばとるもんかせい
     MDLID_CYCLE_LV1,	//びぎなーらいだー
-    MDLID_CHAMPION_VICIOUS,	//びしゃすちゃんぷ
-    MDLID_CHAMPION_FIGHT,	//ふぁいとちゃんぷ
-    MDLID_CHAMPION_FLORAL,	//ふろーらるちゃんぷ
-    MDLID_CHAMPION_BLAZE,	//ぶれいずちゃんぷ
+    MDLID_CHAMPION_AKU,	//びしゃすちゃんぷ
+    MDLID_CHAMPION_KAKUTOU,	//ふぁいとちゃんぷ
+    MDLID_CHAMPION_KUSA,	//ふろーらるちゃんぷ
+    MDLID_CHAMPION_HONOO,	//ぶれいずちゃんぷ
     MDLID_WALK_LV3,	//へびーうぉーかー
     MDLID_MUSICALWIN_LV3,	//べてらんすたー
     MDLID_HOMESICK,	//ほーむしっく
@@ -57,8 +57,8 @@ u32 MedalSortList[] = {
     MDLID_MAIL_WRITE_LV1,	//めーるしょしんしゃ
     MDLID_MAIL_WRITE_LV2,	//めーるだいすきっこ
     MDLID_WALK_MAX,	//めいよのあしあと
-    MDLID_CHAMPION_METAL,	//めたるちゃんぷ
+    MDLID_CHAMPION_HAGANE,	//めたるちゃんぷ
     MDLID_WALK_LV1,	//らいとうぉーかー
-    MDLID_ALL_BATTLE_LV1,	//れきせんのもさ
-    MDLID_CHAMPION_ROCK,	//ろっくちゃんぷ
+    MDLID_ALL_BATTLE_LV4,	//れきせんのもさ
+    MDLID_CHAMPION_IWA,	//ろっくちゃんぷ
 }
