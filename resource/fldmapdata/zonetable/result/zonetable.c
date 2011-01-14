@@ -15847,7 +15847,7 @@ static const ZONEDATA ZoneData[] = {
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
 		AREA_ID_OUT62,
-		MATRIX_ID_H06,
+		MATRIX_ID_H06A,
 		NARC_script_seq_h06_bin,
 		NARC_script_seq_sp_h06_bin,	//NARC_script_seq_sp_h06_bin,
 		NARC_script_message_h06_dat,
@@ -15862,7 +15862,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		39,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		0,
 		TRUE,
@@ -15871,7 +15871,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_H06, // camera_area
+		MATRIX_ID_H06A, // camera_area
 		15,   // padding > placeicon
 		5,
 		0,
