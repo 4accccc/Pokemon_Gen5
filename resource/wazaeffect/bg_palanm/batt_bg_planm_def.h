@@ -9,9 +9,11 @@
 #define	BG_224_MEGAHORN_P_NCLR		(5)
 #define	BG_276_BAKA_STRONG_P_DAT	(6)
 #define	BG_276_BAKA_STRONG_P_NCLR	(7)
-#define	BG_543_AFRO_P_DAT			(8)
-#define	BG_543_AFRO_P_NCLR			(9)
-#define	TEST_PALANM_DAT				(10)
-#define	TEST_PALANM_NCLR			(11)
+#define	BG_315_OVERHEAT_P_DAT		(8)
+#define	BG_315_OVERHEAT_P_NCLR		(9)
+#define	BG_543_AFRO_P_DAT			(10)
+#define	BG_543_AFRO_P_NCLR			(11)
+#define	TEST_PALANM_DAT				(12)
+#define	TEST_PALANM_NCLR			(13)
 
 #endif
