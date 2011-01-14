@@ -89,7 +89,23 @@ enum {
 	NARC_box_gra_box_pokeicon_lz_NCGR = 75,
 	NARC_box_gra_box_itemicon_lz_NCGR = 76,
 	NARC_box_gra_box_itemicon_NCER = 77,
-	NARC_box_gra_box_itemicon_NANR = 78
+	NARC_box_gra_box_itemicon_NANR = 78,
+	NARC_box_gra_boxsearchbase_bgd_1_NSCR = 79,
+	NARC_box_gra_boxsearchbase_bgd_2_off_NSCR = 80,
+	NARC_box_gra_boxsearchbase_bgd_2_on_NSCR = 81,
+	NARC_box_gra_boxsearchbase_bgu_NSCR = 82,
+	NARC_box_gra_boxsearch_bgd_NCGR = 83,
+	NARC_box_gra_boxsearch_bgd_NCLR = 84,
+	NARC_box_gra_boxsearch_bgu_NCGR = 85,
+	NARC_box_gra_boxsearch_bgu_NCLR = 86,
+	NARC_box_gra_boxsearch_buton_bgd_NSCR = 87,
+	NARC_box_gra_boxsearch_frame_1_NSCR = 88,
+	NARC_box_gra_boxsearch_frame_2_NSCR = 89,
+	NARC_box_gra_boxsearch_frame_bgu_NSCR = 90,
+	NARC_box_gra_boxsearch_obj_NCER = 91,
+	NARC_box_gra_boxsearch_obj_NANR = 92,
+	NARC_box_gra_boxsearch_obj_NCGR = 93,
+	NARC_box_gra_boxsearch_obj_NCLR = 94
 };
 
 /* NARC_BOX_GRA_NAIX_ */
