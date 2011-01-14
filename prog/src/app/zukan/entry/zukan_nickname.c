@@ -102,6 +102,7 @@ ZUKAN_NICKNAME_STEP;
 typedef enum 
 {
   BSS_STATE_STANDBY_START,
+  BSS_STATE_YES_NO_THROW,
   BSS_STATE_YES_NO_INIT,
   BSS_STATE_YES_NO_WAIT,
   BSS_STATE_STANDBY_END,
@@ -145,6 +146,8 @@ struct _ZUKAN_NICKNAME_WORK
   ZUKAN_NICKNAME_STEP        step;
   ZUKAN_NICKNAME_SELECT      select;
   u32                        last_wait_count;
+
+  u8                         n_poke_f; //Nポケモンかどうかのフラグ(Nポケはニックネームつけるか聞かない)
 
   // VBlank中TCB
   GFL_TCB*                   vblank_tcb;
@@ -223,6 +226,7 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     work->step              = ZUKAN_NICKNAME_STEP_WAIT;
     work->select            = ZUKAN_NICKNAME_SELECT_SELECT;
     work->last_wait_count   = 0;
+    work->n_poke_f = PP_Get( work->pp, ID_PARA_n_poke_flag, NULL );
   }
 
   // 上画面文字
@@ -239,7 +243,7 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
       wordset = WORDSET_Create( work->heap_id );
       WORDSET_RegisterPokeMonsName( wordset, 0, work->pp );
       msg_handle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_dat, work->heap_id );
-      tmp_strbuf = GFL_MSG_CreateString( msg_handle, ZKN_POKEGET_NICKNAME );
+      tmp_strbuf = GFL_MSG_CreateString( msg_handle, ZKN_POKEGET_NICKNAME+work->n_poke_f );
       work->msg_strbuf = GFL_STR_CreateBuffer( 64, work->heap_id );  // buflen.h
       WORDSET_ExpandStr( wordset, work->msg_strbuf, tmp_strbuf );
 
@@ -348,7 +352,11 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
       if( state == PRINTSTREAM_STATE_DONE )
       {
         work->step = ZUKAN_NICKNAME_STEP_SELECT;
-        work->bss_state = BSS_STATE_YES_NO_INIT;
+        if( work->n_poke_f ){
+          work->bss_state = BSS_STATE_YES_NO_THROW;
+        }else{
+          work->bss_state = BSS_STATE_YES_NO_INIT;
+        }
       }
       else
       {
@@ -655,6 +663,26 @@ static void Zukan_Nickname_BssMain( ZUKAN_NICKNAME_WORK* work )
   {
   case BSS_STATE_STANDBY_START:
     {
+    }
+    break;
+  case BSS_STATE_YES_NO_THROW:  //Ｎポケ用、選択肢を出さずにキャンセルしたことにする
+    {
+      BOOL b_input = FALSE;
+      if( GFL_UI_KEY_GetCont() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
+        b_input = TRUE;
+      }
+      else if( GFL_UI_TP_GetCont() )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+        b_input = TRUE;
+      }
+      if( b_input ){
+        PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+        work->select = ZUKAN_NICKNAME_SELECT_NO;
+        work->bss_state = BSS_STATE_STANDBY_END;
+      }
     }
     break;
   case BSS_STATE_YES_NO_INIT:

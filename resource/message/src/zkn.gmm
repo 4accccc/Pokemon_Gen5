@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-09-03T15:55:41"/>
+	<create user="iwasawa" host="W00157" date="2011-01-14T15:13:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1333,12 +1333,30 @@
 		<language name="JPN_KANJI" font=" 1:small" width="48">リストに　もどります</language>
 	</row>
 
-	<row id="ZKN_POKEGET_NICKNAME" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>ポケモン捕獲後の図鑑画面</comment>
+	<row id="ZKN_POKEGET_NICKNAME" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>ポケモン捕獲後の図鑑画面
+
+※
+ZKN_POKEGET_NICKNAMEと
+ZKN_POKEGET_NICKNAME_NPOKEは
+連番にしておくこと！</comment>
 		<language name="JPN" font=" 1:small" width="216">つかまえた　[1:01:ポケモン種族名:0]に
 ニックネームを　つけますか？</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">捕まえた　[1:01:ポケモン種族名:0]に
 ニックネームを　つけますか？</language>
+	</row>
+
+	<row id="ZKN_POKEGET_NICKNAME_NPOKE" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>ポケモン捕獲後の図鑑画面
+
+※
+ZKN_POKEGET_NICKNAMEと
+ZKN_POKEGET_NICKNAME_NPOKEは
+連番にしておくこと！</comment>
+		<language name="JPN" font=" 1:small" width="216">つかまえた　[1:01:ポケモン種族名:0]には
+べつの　おやが　いるみたい？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">捕まえた　[1:01:ポケモン種族名:0]には
+別の親が　いるみたい？</language>
 	</row>
 
 	<row id="ZKN_POKEGET_BOX_01" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
