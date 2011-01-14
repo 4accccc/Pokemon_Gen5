@@ -1,7 +1,10 @@
 EFFSEQ
-$0002
+$0005
 C:\home\swan\resource\particle\wazaeffect\w_223.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_025_firework.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_177_spiral_ani.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_224_megahorn.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_223_bomb_punch.NSCR
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
@@ -16,7 +19,7 @@ SE再生	SEQ_SE_W121_01	SE1	防御側	40:0:100	0:0:0
 SE再生	SEQ_SE_W121_01	SE1	防御側	50:0:100	0:0:0
 SE再生	SEQ_SE_W121_01	SE1	防御側	60:0:100	0:0:0
 制御モード変更	逐次
-BGのロード	bg_025_firework
+BGのロード	bg_223_bomb_punch
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_223
 パーティクル再生	w_223	W_223_223_PUNCH_IN	防御側	方向無し	2:0:0	1:1:1	1
