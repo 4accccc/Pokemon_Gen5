@@ -3511,7 +3511,9 @@ static  void  BTLV_MCSS_AnmEndCheck( u32 data, fx32 currentFrame )
 { 
   BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
 
-  bmw->btlv_mcss[ data ].anm_execute_flag = FALSE;
+  bmw->btlv_mcss[ data ].anm_execute_flag = FALSE;      // 起動フラグをOFF
+  MCSS_SetAnimeFrame( bmw->btlv_mcss[ data ].mcss, 0 ); // トレーナーアニメのシーケンスが
+                                                        // 進まないようにする mori by 2011/01/12
 }
 
 //============================================================================================
