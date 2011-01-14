@@ -161,7 +161,7 @@ static void shadow_InitResource( FLDEFF_SHADOW *sd )
   {
     GFL_BBDACT_G3DRESDATA data;
     data.g3dres = g3d_res;
-    data.texFmt = GFL_BBD_TEXFMT_PAL4;
+    data.texFmt = GFL_BBD_TEXFMT_A3I5;//GFL_BBD_TEXFMT_PAL4;
     data.texSiz = GFL_BBD_TEXSIZ_16x16;
     data.celSizX = 16;
     data.celSizY = 16;
@@ -237,7 +237,7 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
     actData.resID = 0;  //ResUnit内オフセット指定
     actData.sizX = FX32_ONE;
     actData.sizY = FX32_ONE;
-    actData.alpha = 19;
+    actData.alpha = 31;
     actData.drawEnable = TRUE;
     actData.lightMask = GFL_BBD_LIGHTMASK_0;
     actData.trans = (VecFx32){ 0, 0, 0 };
@@ -445,6 +445,7 @@ static void shadow_RotationCalc( FLDEFF_TASK* task, TASKWORK_SHADOW *work, VecFx
   
   {
     u16 rotZ;
+    fx16  sx,sy;
     FLDMAPPER_GRIDINFODATA gridData;
     FIELDMAP_WORK* fieldWork = FLDEFF_TASK_GetFieldMapWork( task );
     const FLDMAPPER *pG3DMapper = MMDLSYS_GetG3DMapper( MMDL_GetMMdlSys(work->fmmdl) );
@@ -452,13 +453,23 @@ static void shadow_RotationCalc( FLDEFF_TASK* task, TASKWORK_SHADOW *work, VecFx
     FLDMAPPER_GetGridData(pG3DMapper,pos,&gridData);
  
     if( gridData.vecN.x < 0 ){
-      rotZ = FX_DEG_TO_IDX(FX32_CONST(-45));
+      rotZ = FX_DEG_TO_IDX(FX32_CONST(-20));
     }else if( gridData.vecN.x > 0 ){
-      rotZ = FX_DEG_TO_IDX(FX32_CONST(45));
+      rotZ = FX_DEG_TO_IDX(FX32_CONST(20));
     }else{
       rotZ = 0;
     }
     GFL_BBD_SetObjectRotate( work->eff_shadow->bbdsys, work->bbdUnitIdx+0, &rotZ);  //現状Unit内データが一つなので+0
+
+    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) == 0 && 
+        rotZ != 0){
+      sx = FX16_CONST(1.3);
+      sy = FX16_CONST(1.3);
+    }else{
+      sx = FX16_CONST(1.0);
+      sy = FX16_CONST(1.0);
+    }
+    GFL_BBD_SetObjectSiz( work->eff_shadow->bbdsys, work->bbdUnitIdx+0, &sx,&sy);  //現状Unit内データが一つなので+0
   }
 }
 
