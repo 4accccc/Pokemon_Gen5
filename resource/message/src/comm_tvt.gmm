@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00241" date="2011-01-06T13:21:43"/>
+	<create user="nakamura_akira" host="W00161" date="2011-01-16T19:10:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -594,46 +594,46 @@ Ariizumi 100506</comment>
 
 	<row id="COMM_TVT_GAME_01">
 		<comment>ライブキャスター画面　ゲーム実行前</comment>
-		<language name="JPN">ただいま　『バルーン』の
+		<language name="JPN">ただいま　『[1:1C:簡易会話単語:0]』の
 さんかしゃを　ぼしゅうちゅうです！
 しめきりまで　あと[2:01:２桁:0]びょうです！</language>
-		<language name="JPN_KANJI">ただいま　『バルーン』の
+		<language name="JPN_KANJI">ただいま　『[1:1C:簡易会話単語:0]』の
 参加者を　募集中です！
 締め切りまで　あと[2:01:２桁:0]秒です！</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_02">
 		<comment>ライブキャスター画面　ゲーム実行前</comment>
-		<language name="JPN">『バルーン』の
+		<language name="JPN">『[1:1C:簡易会話単語:0]』の
 かいしまで　しばらくおまちください</language>
-		<language name="JPN_KANJI">『バルーン』の
+		<language name="JPN_KANJI">『[1:1C:簡易会話単語:0]』の
 開始まで　しばらくおまちください</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_03">
 		<comment>ライブキャスター画面　ゲーム実行前</comment>
-		<language name="JPN">『バルーン』が
+		<language name="JPN">『[1:1C:簡易会話単語:0]』が
 ちゅうし　されました</language>
-		<language name="JPN_KANJI">『バルーン』が
+		<language name="JPN_KANJI">『[1:1C:簡易会話単語:0]』が
 中止　されました</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_04">
 		<comment>ライブキャスター画面　ゲーム実行前</comment>
 		<language name="JPN">[1:00:トレーナー名:0]さんから
-『バルーン』の　おさそいが
+『[1:1C:簡易会話単語:0]』の　おさそいが
 きています　さんかしますか？</language>
 		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんから
-『バルーン』の　お誘いが
+『[1:1C:簡易会話単語:0]』の　お誘いが
 来ています　参加しますか？</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_05">
 		<comment>ライブキャスター画面　ゲーム実行前</comment>
-		<language name="JPN">『バルーン』の
+		<language name="JPN">『[1:1C:簡易会話単語:0]』の
 さんかを　ことわりました
 ゲームを　ちゅうし　します</language>
-		<language name="JPN_KANJI">『バルーン』の
+		<language name="JPN_KANJI">『[1:1C:簡易会話単語:0]』の
 参加を　断りました
 ゲームを　中止　します</language>
 	</row>
@@ -713,66 +713,33 @@ Ariizumi 100506</comment>
 	</row>
 
 	<row id="COMM_TVT_GAME_15">
-		<comment>バルーン　ゲーム中</comment>
-		<language name="JPN">『バルーン』は　がめんしたから
-とんでくる　ふうせんを　タッチして
-わるゲームです</language>
-		<language name="JPN_KANJI">『バルーン』は　画面下から
-飛んでくる　風船を　タッチして
-割るゲームです</language>
+		<comment>ふうせんわり！　説明画面</comment>
+		<language name="JPN">○○○いろの　ふうせんを　タッチして
+たくさん　ふうせんを　わろう！
+ほかのいろを　わると　げんてんだぞ！</language>
+		<language name="JPN_KANJI">○○○色の　風船を　タッチして
+沢山　風船を　割ろう！
+他の色を　割ると　減点だぞ！</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_16">
-		<comment>バルーン　ゲーム中</comment>
-		<language name="JPN">じぶんの　かおの　ふうせんを
-わると　とくてんを　にゅうしゅ！</language>
-		<language name="JPN_KANJI">自分の　顔の　風船を
-割ると　得点を　入手！</language>
+		<comment>ふうせんわりⅡ！　説明画面</comment>
+		<language name="JPN">くうきいれを　なんども　タッチして
+たくさん　ふうせんを　はれつさせろ！
+タイミングも　じゅうようだぞ！</language>
+		<language name="JPN_KANJI">空気入れを　何度も　タッチして
+沢山　風船を　破裂させろ！
+タイミングも　重要だぞ！</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_17">
-		<comment>バルーン　ゲーム中</comment>
-		<language name="JPN">でも　ほかの　ひとの　ふうせんを
-わると　げんてんに　なるので
-ようちゅうい！　</language>
-		<language name="JPN_KANJI">でも　他の　人の　風船を
-割ると　減点に　なるので
-要注意！　</language>
-	</row>
-
-	<row id="COMM_TVT_GAME_18">
-		<comment>バルーン　ゲーム中</comment>
-		<language name="JPN">とけいゲージが　なくなるまでに
-たくさんの　ふうせんを　わって
-こうとくてんを　めざしましょう！</language>
-		<language name="JPN_KANJI">時計ゲージが　なくなるまでに
-沢山の　風船を　割って
-高得点を　目指しましょう！</language>
-	</row>
-
-	<row id="COMM_TVT_GAME_19">
-		<comment>ゲーム中　共通</comment>
-		<language name="JPN">リーダーが　こうもくを　
-せんたくちゅうです
-しばらく　おまちください</language>
-		<language name="JPN_KANJI">リーダーが　項目を　選択中です
-しばらく　お待ちください</language>
-	</row>
-
-	<row id="COMM_TVT_GAME_20">
-		<comment>全共通</comment>
-		<language name="JPN">リーダーが　しゅうりょうしたので
-かいさん　します</language>
-		<language name="JPN_KANJI">リーダーが　終了したので
-解散します</language>
-	</row>
-
-	<row id="COMM_TVT_GAME_21">
-		<comment>全共通</comment>
-		<language name="JPN">さんかしゃが　ぜんいん
-しゅうりょうしたので　かいさんします</language>
-		<language name="JPN_KANJI">参加者が　全員
-終了したので　解散します</language>
+		<comment>共通再プレイ時</comment>
+		<language name="JPN">もういちど
+『[1:1C:簡易会話単語:0]』を　
+あそびますか？</language>
+		<language name="JPN_KANJI">もう一度
+『[1:1C:簡易会話単語:0]』を　
+遊びますか？</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_22">
