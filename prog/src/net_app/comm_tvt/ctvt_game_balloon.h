@@ -83,9 +83,7 @@ typedef struct {
   //========================
   // 風船の動きに関するもの
   VecFx32           vec;              // 移動ベクトル
-  u16               yura_move_index;  // 揺れるテーブルのインデックス
-  u16               yura_tbl_index;   // ↑のどのテーブルを使用するかのインデックス
-  u8                yura_tbl_cnt;     // 0,1のカウント
+  u16               save_frame;       // 出現したときのフレームの値
 
 } BALLOON_WORK;
 

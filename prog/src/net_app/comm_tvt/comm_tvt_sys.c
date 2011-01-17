@@ -150,6 +150,27 @@ static const GFL_DISP_VRAM vramBank = {
   GX_OBJVRAMMODE_CHAR_1D_128K
 };
 
+
+//------------------------------------------------------------------
+//  処理時間AVERAGE
+//------------------------------------------------------------------
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
+
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave;      // AVERAGE
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0; // カウンタ
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount =0;    // 16000Over
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max =0;    // 16000Over
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME  ( 120 )
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void );
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
+#endif
+
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -1545,12 +1566,68 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Main( GFL_PROC * proc, int * seq , void *pw
     NetErr_App_ReqErrorDisp();
     work->isCommError = TRUE;
   }
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_StartFunc();
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
   if( COMM_TVT_Main( work ) == TRUE )
   {
     return GFL_PROC_RES_FINISH;
   }
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_EndFunc();
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
   return GFL_PROC_RES_CONTINUE;
 }
 
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
+{
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start = OS_GetTick(); 
+}
+
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
+{
+  OSTick now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_End = OS_GetTick(); 
+
+  now_time = OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End - DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start);
+
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
+  if( now_time > 16000 ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
+#if DEBUG_MAIN_TIME_AVERAGE
+    OS_TPrintf( " Proc Main : " );
+    OS_TPrintf( " over tick %ld", now_time );
+    OS_TPrintf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count) );
+#endif
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
+
+#if DEBUG_MAIN_TIME_AVERAGE
+    OS_TPrintf( " Proc Main : " );
+    OS_TPrintf( " ave tick %d", 
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
+    OS_TPrintf( " Over 120::%d",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
+    OS_TPrintf( " Max %d\n",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
+#endif
+
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max       = 0;
+  }
+}
+
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 

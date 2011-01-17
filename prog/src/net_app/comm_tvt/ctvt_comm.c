@@ -276,6 +276,26 @@ static const NetRecvFuncTable CTVT_COMM_RecvTable[] =
   { CTVT_COMM_PostGameScore,NULL },     // CCST_SEND_GAME_SCORE
 };
 
+//------------------------------------------------------------------
+//  処理時間AVERAGE
+//------------------------------------------------------------------
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
+
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave;      // AVERAGE
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0; // カウンタ
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount =0;    // 16000Over
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max =0;    // 16000Over
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME  ( 120 )
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void );
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
+#endif
+
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -427,6 +447,11 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     }
   }
 #endif //DEBUG_ONLY_FOR_ariizumi_nobuhiko
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_StartFunc();
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
   switch( commWork->state )
   {
   case CCS_NONE:
@@ -620,6 +645,11 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       commWork->beacon.isCalling = 0;
     }
   }
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_EndFunc();
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
 }
 
 #pragma mark [>comm system
@@ -1795,21 +1825,57 @@ static u8*  CTVT_COMM_Post_DrawBuff_Buff( int netID, void* pWork , int size )
 //-----------------------------------------------------------------------------
 static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
+  CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  BOOL  isSendGameData = FALSE;
   
-#if 0   // いらないかも
+#if 1   // いらないかも
   // 接続人数の更新
   {
     const u8 connectNum = GFL_NET_GetConnectNum();
     if( commWork->connectNum != connectNum )
     {
-      CTVT_COMM_RefureshCommState( work , commWork );
-      
+      u8 i;
+      u8 connectNum = 0;
+      BOOL isUpdateState = FALSE;
+      const u8 selfIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+      const HEAPID heapId = COMM_TVT_GetHeapId( work );
+
+      for( i=0;i<CTVT_MEMBER_NUM;i++ )
+      {
+        if( GFL_NET_IsConnectMember(i) == TRUE )
+        {
+          if( commWork->member[i].isEnable == FALSE )
+          {
+            commWork->member[i].isEnable = TRUE;
+          }
+          connectNum++;
+        }
+        else
+        {
+          if( commWork->member[i].isEnable == TRUE )
+          {
+            commWork->member[i].isEnable = FALSE;
+            CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[i] );
+          }
+        }
+      }
+
+      COMM_TVT_SetConnectNum( work , connectNum );
       commWork->connectNum = connectNum;
       commWork->beacon.connectNum = connectNum;
     }
   }
 #endif
+
+  // ゲームがメインかどうか？
+  // （メインでフレーム数を増やしているから0以上だとメイン状態）
+  if( selfId == 0 && CTVT_GAME_GetOyaFrame( gameWork ) > 0 )
+  {
+    // 経過フレーム数更新
+    // 送信より前に行わないと、frameにはゴミ値が入っている
+    commWork->sendGameData.frame = CTVT_GAME_GetOyaFrame( gameWork );
+  }
 
   //自身の更新
   {
@@ -1833,6 +1899,7 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
         if( ret == TRUE )
         {
           commWork->reqSendGameData = FALSE;
+          isSendGameData = TRUE;
         }
       }
 
@@ -1851,7 +1918,16 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   //親機の処理
   if( selfId == 0 )
   {
-    // 制限時間を送信
+    // ゲームがメインかどうか？（メインでフレーム数を増やしている為）
+    if( CTVT_GAME_GetOyaFrame( gameWork ) > 0 )
+    {
+      // 送信データがなかったら、フレームのみ送る
+      if( isSendGameData == FALSE )
+      {
+        commWork->sendGameData.data_type = CCGDT_FRAME;
+        CTVT_COMM_SendGameData( work , commWork );
+      }
+    }
   }
 }
 
@@ -1889,8 +1965,8 @@ static const BOOL CTVT_COMM_SendGameFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   u16 *p_send = &commWork->sendGameFlg;
 
-  ICHI_Printf("Send GameFlg ");
-  ICHI_Printf("%d \n", *p_send);
+  //ICHI_Printf("Send GameFlg ");
+  //ICHI_Printf("%d \n", *p_send);
 
   // 送信
   {
@@ -1927,13 +2003,14 @@ static void CTVT_COMM_PostGameFlg( const int netID, const int size , const void*
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
   // 受信データ出力
-  ICHI_Printf("Post GameFlg ");
-  ICHI_Printf("Flg %d\n", *p_flg);
+  //ICHI_Printf("Post GameFlg ");
+  //ICHI_Printf("Flg %d\n", *p_flg);
 
   // フラグ分岐
   switch( *p_flg ){
-  case CCGF_BALLOON_APPEAR:   // 風船を出現させる
-    CTVT_GAME_BalloonAppear( gameWork );
+  case CCGF_NULL:   // 
+    {
+    }
     break;
   }
 
@@ -1975,7 +2052,8 @@ static const BOOL CTVT_COMM_SendGameData( COMM_TVT_WORK *work , CTVT_COMM_WORK *
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   CTVT_GAME_SEND_DATA *p_send = &commWork->sendGameData;
 
-  ICHI_Printf("Send GameData type%d\n", p_send->data_type);
+  //ICHI_Printf("Send GameData type%d\n", p_send->data_type);
+  //ICHI_Printf("送信フレーム %d ", p_send->frame);
 
   // 送信
   {
@@ -2012,17 +2090,30 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
   // 受信データ出力
-  ICHI_Printf("Post GameData type%d\n", p_recv->data_type);
+  //ICHI_Printf("Post GameData type%d\n", p_recv->data_type);
+
+  // 親からのフレームのみ更新
+  if( netID == 0 )
+  {
+    //ICHI_Printf("受信フレーム %d ", p_recv->frame);
+    // フレーム更新
+    CTVT_GAME_CommFrameSet( gameWork, p_recv->frame );
+  }
 
   // 受信データ種類判別
   switch( p_recv->data_type ){
+  case CCGDT_BALOON_APPEAR:   // 風船出現
+    CTVT_GAME_BalloonAppear( gameWork );
+    break;
   case CCGDT_RND:   // 乱数シード値
     // 親のデータのみ受信
     if( netID == 0 )
     {
       // 受信データセット
-      CTVT_GAME_CommDataSet( gameWork, p_recv );
+      CTVT_GAME_CommRndSeedSet( gameWork, p_recv->rnd_seed );
     }
+    break;
+  case CCGDT_FRAME:
     break;
   case CCGDT_TP:    // TP座標
     // 誰のデータでも受信するが、親のみ更新する
@@ -2241,3 +2332,53 @@ void CTVT_COMM_SetCanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 {
   commWork->canSendWaveBuf = flg;
 }
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
+{
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start = OS_GetTick(); 
+}
+
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
+{
+  OSTick now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_End = OS_GetTick(); 
+
+  now_time = OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End - DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start);
+
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
+  if( now_time > 16000 ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
+#if DEBUG_MAIN_TIME_AVERAGE
+    OS_TPrintf( " Func Comm : " );
+    OS_TPrintf( " over tick %ld", now_time );
+    OS_TPrintf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count) );
+#endif
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
+
+#if DEBUG_MAIN_TIME_AVERAGE
+    OS_TPrintf( " Func Comm : " );
+    OS_TPrintf( " ave tick %d", 
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
+    OS_TPrintf( " Over 120::%d",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
+    OS_TPrintf( " Max %d\n",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
+#endif
+
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max       = 0;
+  }
+
+}
+
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+

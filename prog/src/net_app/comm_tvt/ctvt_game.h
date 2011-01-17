@@ -17,6 +17,34 @@
 //======================================================================
 #pragma mark [> define
 
+// 下画面
+#define CTVT_GAME_FRAME_M_3D      (GFL_BG_FRAME0_M)
+#define CTVT_GAME_FRAME_M_MSG     (GFL_BG_FRAME1_M)
+#define CTVT_GAME_FRAME_M_BG      (GFL_BG_FRAME2_M)
+#define CTVT_GAME_FRAME_M_CAMERA  (GFL_BG_FRAME3_M)
+
+// 上画面
+#define CTVT_GAME_FRAME_S_MSG     (GFL_BG_FRAME0_S)
+#define CTVT_GAME_FRAME_S_NONE1   (GFL_BG_FRAME1_S)
+#define CTVT_GAME_FRAME_S_NONE2   (GFL_BG_FRAME2_S)
+#define CTVT_GAME_FRAME_S_BG      (GFL_BG_FRAME3_S)
+
+// パレット
+#define CTVT_GAME_PAL_BG_M_BG       (0) // 5本
+#define CTVT_GAME_PAL_BG_M_WINFRAME (5) // 1本
+#define CTVT_GAME_PAL_BG_M_FONT     (6) // 1本
+
+#define CTVT_GAME_PAL_BG_S_BG       (0) // 5本
+#define CTVT_GAME_PAL_BG_S_WINFRAME (5) // 1本
+#define CTVT_GAME_PAL_BG_S_FONT     (6) // 1本
+
+#define CTVT_GAME_PAL_OBJ_COMMON         (0) // 
+#define CTVT_GAME_PAL_OBJ_PLAY           (5) // 
+
+// フレームを読みこんだキャラ位置
+#define CTVT_GAME_BMPWIN_CGX_MAIN (1)
+#define CTVT_GAME_BMPWIN_CGX (1)
+
 #define CTVT_GAME_MEMBER_NUM    (4)     // ミニゲーム参加人数
 
 // ミニゲーム用 タイミングコマンド
@@ -27,6 +55,7 @@
 #define CTVT_COMM_GAME_SCORE_SYNC       (24)    // スコア同期
 #define CTVT_COMM_GAME_END_SYNC         (25)    // ゲーム終了同期
 
+
 //======================================================================
 //	enum
 //======================================================================
@@ -34,12 +63,14 @@
 
 // ゲーム専用通信フラグ
 typedef enum {
-  CCGF_BALLOON_APPEAR,      // 風船出現
+  CCGF_NULL,      // 
 } CTVT_COMM_GAME_FLAG;
 
 // ゲーム送信データの種類
 typedef enum {
+  CCGDT_BALOON_APPEAR,  // 風船出現
   CCGDT_RND,        // 乱数シード値
+  CCGDT_FRAME,      // 毎フレーム送信
   CCGDT_TP,         // タッチ座標
   CCGDT_BURST,      // 風船割れた
 } CTVT_COMM_GAME_DATA_TYPE;
@@ -54,14 +85,17 @@ typedef enum {
 //=====================================
 struct _CTVT_GAME_SEND_DATA{
 
-  u8  data_type;    // 送信データの種類
-
   u32 rnd_seed;     // 乱数シード値
 
-  u32 tpx, tpy;     // TP座標
+  u8  data_type;    // 送信データの種類
 
-  u16 burst_idx;    // 割れた風船IDX
+  u8 tpx;           // TP座標
+  u8 tpy;           // TP座標
+
+  u8  burst_idx;    // 割れた風船IDX
   u8  burst_netID;  // 割った人がいる場合その人のNetID
+
+  u16 frame;        // 親の経過フレーム数
 };
 
 //-------------------------------------
@@ -107,13 +141,45 @@ extern BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  通信から送られてくるゲーム情報を格納
+ *	@brief  通信から送られてくる乱数シード値を格納
  *
  *	@param	p_wk    ゲーム管理構造体
- *	        data    設定するゲーム情報
+ *	        rnd_seed    乱数シード値
  */
 //-----------------------------------------------------------------------------
-extern void CTVT_GAME_CommDataSet( CTVT_GAME_WORK *p_wk, const CTVT_GAME_SEND_DATA *data );
+extern void CTVT_GAME_CommRndSeedSet( CTVT_GAME_WORK *p_wk, const u32 rnd_seed );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信から送られてくるフレーム経過数を格納
+ *
+ *	@param	p_wk    ゲーム管理構造体
+ *	        frame   受信したフレーム
+ */
+//-----------------------------------------------------------------------------
+extern void CTVT_GAME_CommFrameSet( CTVT_GAME_WORK *p_wk, const u16 frame );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  経過フレーム取得
+ *
+ *	@param	CTVT_GAME_WORK  *gameWork 
+ *
+ *	@return u16 経過フレーム
+ */
+//-----------------------------------------------------------------------------
+extern u16 CTVT_GAME_GetFrame( CTVT_GAME_WORK *gameWork );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  親のフレーム取得
+ *
+ *	@param	CTVT_GAME_WORK  *gameWork 
+ *
+ *	@return u16 経過フレーム
+ */
+//-----------------------------------------------------------------------------
+extern u16 CTVT_GAME_GetOyaFrame( CTVT_GAME_WORK *gameWork );
 
 
 //----------------------------------------------------------------------------

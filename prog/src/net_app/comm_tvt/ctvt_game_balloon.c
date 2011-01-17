@@ -12,6 +12,7 @@
 #include <gflib.h>
 
 #include "ctvt_game_balloon.h"
+#include "ctvt_game.h"
 
 //=============================================================================
 /**
@@ -57,9 +58,6 @@ void CTVT_BALLOON_Init( BALLOON_WORK* p_wk )
   p_wk->visible = FALSE;
 
   // 初期化
-  p_wk->yura_move_index = 0;
-  p_wk->yura_tbl_index  = 0;
-  p_wk->yura_tbl_cnt    = 0;
   p_wk->unit_idx = 0;
   p_wk->color = COLOR_R;
   p_wk->type  = BALLOON_NORMAL;
@@ -93,27 +91,6 @@ void CTVT_BALLOON_Destroy( BALLOON_WORK*  p_wk )
   CTVT_BALLOON_Init( p_wk );
 }
 
-
-// 風船がゆれる移動テーブル
-static const fx32 yura_tbl[][16] = 
-{
-  // 右に揺れる(開始)
-  { 0x800, 0x800, 0x500, 0x400, 0x400, 0x350, 0x350, 0x300, 0x300, 0x200, 0x200, 0x100, 0x50, 0x50, YURA_END},
-  // 右に揺れる(終了)
-  { 0x50, 0x50, 0x100, 0x200, 0x200, 0x300, 0x300, 0x350, 0x350, 0x400, 0x400, 0x500, 0x800, 0x800, YURA_END},
-  // 左に揺れる(開始)
-  { -0x800, -0x800, -0x500, -0x400, -0x400, -0x350, -0x350, -0x300, -0x300, -0x200, -0x200, -0x100, -0x50, -0x50, YURA_END},
-  // 左に揺れる(終了)
-  { -0x50, -0x50, -0x100, -0x200, -0x200, -0x300, -0x300, -0x350, -0x350, -0x400, -0x400, -0x500, -0x800, -0x800, YURA_END},
-};
-
-// ゆれるテーブルのどれを使うかのテーブル
-static const u8 yura_action_tbl[][2] =
-{
-  { 0, 1 },   // 右左と基本的な動き1
-  { 2, 3 },   // 左右と基本的な動き2
-};
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  風船更新
@@ -123,43 +100,15 @@ static const u8 yura_action_tbl[][2] =
 //-----------------------------------------------------------------------------
 void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
 {
-#if 0
-  // ゆらゆら処理
-  fx32  vx;   // X軸移動距離
-  vx = yura_tbl[ yura_action_tbl[p_wk->yura_tbl_index][p_wk->yura_tbl_cnt] ][ p_wk->yura_move_index ];
-
-  p_wk->yura_move_index++;
-  if( vx == YURA_END )
-  {
-    // 次のアクションテーブルに
-    p_wk->yura_move_index = 0;
-    p_wk->yura_tbl_cnt++;
-
-    // 次に使うアクションテーブルを決める
-    if( p_wk->yura_tbl_cnt > 1 )
-    {
-      p_wk->yura_tbl_cnt = 0;
-      p_wk->yura_tbl_index = 0; // 仮
-    }
-  }
-  else
-  {
-    // X移動
-    if(GFL_UI_KEY_GetCont()&PAD_KEY_DOWN){
-      //ICHI_Printf("vx %x m_i %d t_c %d t_i %d\n", vx, p_wk->yura_move_index, p_wk->yura_tbl_cnt, p_wk->yura_tbl_index);
-      //p_wk->status.trans.x += vx ;
-    }
-  }
-#endif
 
   // HIT時は移動しない
   if( p_wk->type == BALLOON_HIT )
   {
     // 当たったときのエフェクト
     p_wk->alpha -= 2;
-    if( p_wk->alpha <= 12 )
+    if( p_wk->alpha <= 10 )
     {
-      p_wk->alpha = 31;
+      p_wk->alpha = 30;
       p_wk->alpha_cnt--;
 
       if( p_wk->alpha_cnt <= 0 )
@@ -172,7 +121,24 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
   else
   {
     // 移動
-    VEC_Add( &p_wk->status.trans, &p_wk->vec, &p_wk->status.trans );
+    //VEC_Add( &p_wk->status.trans, &p_wk->vec, &p_wk->status.trans );
+
+#if 1
+    // 経過フレーム数で移動するように変更
+    s16   def;  // マイナスになる可能性がある
+    u8    i;
+    def = CTVT_GAME_GetFrame( p_wk->p_game_wk ) - p_wk->save_frame;
+
+    if( def > 0 )
+    {
+      p_wk->save_frame = CTVT_GAME_GetFrame( p_wk->p_game_wk );
+      for( i=0; i<def; i++ )
+      {
+        VEC_Add( &p_wk->status.trans, &p_wk->vec, &p_wk->status.trans );
+      }
+    }
+    //GFL_CALC3D_VEC_MulScalar( &p_wk->vec, mul, &p_wk->status.trans );
+#endif
   }
 
   // 画面外判定
@@ -185,21 +151,23 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
 
     //ICHI_Printf("風船SCR_POS  %d:%d  ret:%d \n", x, y, ret);
 
-#if 0
-    // 画面外
-    if( ( y <= 0 || x<=0 || x>= 256 )
-        && ret == 0  )
+#if 1
+    // 画面外 両端のみ
+    if( ( x<-64 || x>320 ) && ret == 0  )
     {
       CTVT_BALLOON_Destroy( p_wk );
+      return;
     }
 #endif
 
+#if 1
     // 3D画面外判定　(曖昧)
     if( p_wk->status.trans.y > FX32_CONST(150) )
     {
       CTVT_BALLOON_Destroy( p_wk );
       return;
     }
+#endif
   }
 }
 

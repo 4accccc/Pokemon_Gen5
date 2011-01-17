@@ -68,16 +68,9 @@ typedef enum
   CGS_CAMERA, // 顔を撮るモード
   CGS_GAME,   // メイン
   
-  //親のリクエストによる終了
-  CGS_END_PARENT_REQ_INIT,
-  CGS_END_PARENT_REQ,
-
-  //WIFIのリクエストによる終了
-  CGS_END_WIFI_REQ_SEND,
-  CGS_END_WIFI_REQ_INIT_DISP,
-  CGS_END_WIFI_REQ_DISP,
-  CGS_END_WIFI_REQ_INIT,
-  CGS_END_WIFI_REQ,
+  //親がいなくなったことによる終了
+  CGS_END_PARENT_NONE_INIT,
+  CGS_END_PARENT_NONE,
 
   //一人になったので終了
   CGS_END_MEMBER_NONE_INIT,
@@ -91,48 +84,55 @@ typedef enum
 //=====================================
 typedef enum {
   CGOR_CAMERA_PLT,      // カメラ撮影モード
-  CGOR_COMMON_M_PLT,    // ゲーム共通
-  CGOR_COMMON_S_PLT,    // 
+  CGOR_COMMON_PLT,      // ゲーム共通
+  CGOR_PLAY_PLT,        // ゲームプレイ中
 
   CGOR_CAMERA_NCG,      // カメラ撮影モード
-  CGOR_COMMON_M_NCG,    // ゲーム共通
-  CGOR_COMMON_S_NCG,    // 
+  CGOR_COMMON_NCG,      // ゲーム共通
+  CGOR_PLAY_NCG,        // ゲームプレイ中
 
   CGOR_CAMERA_ANM,      // カメラ撮影モード
-  CGOR_COMMON_M_ANM,    // ゲーム共通
-  CGOR_COMMON_S_ANM,    // 
+  CGOR_COMMON_ANM,      // ゲーム共通
+  CGOR_PLAY_ANM,        // ゲームプレイ中
   
   CGOR_MAX,   // 最大値
 } CTVT_GAME_OBJ_RES;
-#define CGOR_PLT_TOP  ( CGOR_COMMON_M_PLT )   // パレットTOP
-#define CGOR_NCG_TOP  ( CGOR_COMMON_M_NCG )   // キャラクタTOP
-#define CGOR_ANM_TOP  ( CGOR_COMMON_M_ANM )   // セルアニメTOP
+#define CGOR_PLT_TOP  ( CGOR_CAMERA_PLT )   // パレットTOP
+#define CGOR_NCG_TOP  ( CGOR_CAMERA_NCG )   // キャラクタTOP
+#define CGOR_ANM_TOP  ( CGOR_CAMERA_ANM )   // セルアニメTOP
 
 //-------------------------------------
-///	セルアニメインデックス
+///	セルアニメインデックス 共通
 //=====================================
 typedef enum {
-  //CGOAM_FRAME,    // カメラの枠 -> 別リソースにした。
-  CGOAM_TITLE,    // タイトル
-  CGOAM_NUM_0,    // 数字 0
-  CGOAM_NUM_1,    // 数字 1
-  CGOAM_NUM_2,    // 数字 2
-  CGOAM_NUM_3,    // 数字 3
-  CGOAM_NUM_4,    // 数字 4
-  CGOAM_NUM_5,    // 数字 5
-  CGOAM_NUM_6,    // 数字 6
-  CGOAM_NUM_7,    // 数字 7
-  CGOAM_NUM_8,    // 数字 8
-  CGOAM_NUM_9,    // 数字 9
-  CGOAM_NUM_P,    // 数字 +
-  CGOAM_NUM_M,    // 数字 -
-  CGOAM_TIME,     // 文字 TIME
-  CGOAM_RANK,     // 文字 RANK
-  CGOAM_SCORE,    // 文字 SCORE
-  GCOAM_START,    // 文字 はじめる
-  GCOAM_SETSUMEI, // 文字 説明
-  GCOAM_END,      // 文字 おわり
-} CTVT_GAME_OBJ_ANM_MAIN;
+  CCOA_TITLE,     // タイトル
+  CCOA_START,     // 文字 はじめる
+  CCOA_SETSUMEI,  // 文字 説明
+  CCOA_END,       // 文字 おわり
+
+  CCOA_MAX,
+} CTVT_COMMON_OBJ_ANM;
+
+//-------------------------------------
+///	セルアニメインデックス  プレイ中
+//=====================================
+typedef enum {
+  CPOA_NUM_0,    // 数字 0
+  CPOA_NUM_1,    // 数字 1
+  CPOA_NUM_2,    // 数字 2
+  CPOA_NUM_3,    // 数字 3
+  CPOA_NUM_4,    // 数字 4
+  CPOA_NUM_5,    // 数字 5
+  CPOA_NUM_6,    // 数字 6
+  CPOA_NUM_7,    // 数字 7
+  CPOA_NUM_8,    // 数字 8
+  CPOA_NUM_9,    // 数字 9
+  CPOA_NUM_P,    // 数字 +
+  CPOA_NUM_M,    // 数字 -
+  CPOA_TIME,     // 文字 TIME
+  CPOA_SCORE,    // 文字 SCORE
+} CTVT_PLAY_OBJ_ANM;
+
 
 
 //======================================================================
@@ -160,8 +160,6 @@ struct _CTVT_GAME_WORK
   BOOL isFinish;
   BOOL reqStopCamera;
 
-  u16        wifiExitCnt;  //Wifiの終了リクエストの自動切断
-
   //=====================================
   // カメラ関係
   //-------------------------------------
@@ -188,16 +186,22 @@ struct _CTVT_GAME_WORK
   u16           bonus_tbl[CTVT_GAME_MEMBER_NUM][5]; // ボーナス風船の出現フレームのテーブル
   u8            bonus_tbl_idx[CTVT_GAME_MEMBER_NUM];
 
-  CTVT_GAME_SEND_DATA   sendData;   // 通信データ
-
-  GFL_BMPWIN    *msgWin;        // メッセージ
-  BOOL          isUpdateMsgWin; // メッセージ更新
+  // メッセージ系
+  GFL_BMPWIN    *msgWinMain;        // 下画面
+  BOOL          isUpdateMsgMain;    // メッセージ更新
+  GFL_BMPWIN    *msgWinSub;         // 上画面
+  BOOL          isUpdateMsgSub;     // メッセージ更新
   // 制限時間管理
   u16           timeLimit;      // 制限時間 (秒)
-  u8            timeCnt;        // フレーム差
-  u32           befVCount;      // Vブランクカウンタ保存用
+  u32           befFrameCnt;    // フレームカウンタ保存用
 
+  //===============================
+  // 通信
+  u32   rnd_seed;         // 乱数シード値
+  u16   frame;            // 通信で受信したフレーム
+  BOOL  isRecvFrame;      // フレーム受信したか
   // 以下親のみ
+  u16   oya_frame;        // 親のフレーム経過数
   s16   balloon_wait;     // 風船出現待ち時間
   u8    balloon_flg;      // 風船出現フラグ
   s32   score[CTVT_GAME_MEMBER_NUM];    // スコア
@@ -213,9 +217,12 @@ struct _CTVT_GAME_WORK
   // セル関係
   u32         cellResIdx[ CGOR_MAX ];   // セルリソースインデックス
   GFL_CLUNIT  *cellUnit;                // セルアクターシステム
+  // カメラモード
   GFL_CLWK    *clwkCam;                 // カメラモードでのセル関係
+  // 共通（ゲームプレイ中以外）
   GFL_CLWK    *clwkTitle;               // タイトル文字
   GFL_CLWK    *clwkTitleItem[3];        // タイトル項目
+  // ゲームプレイ中
   GFL_CLWK    *clwkTime[2];             // 制限時間
   GFL_CLWK    *clwkText;                // 文字 TIMEやRANK
   GFL_CLWK    *clwkScoreText;           // SCORE 文字
@@ -284,7 +291,8 @@ static void RESOURCE_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE* arcHa
 static void RESOURCE_Exit( CTVT_GAME_WORK* p_wk );
 
 // message
-static void disp_message( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 *cp_str, u16 x, u16 y );
+static void disp_message_main( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 msgId );
+static void disp_message_sub( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 msgId );
 
 
 
@@ -317,6 +325,28 @@ static const GFL_UI_TP_HITTBL BALLOON_HitTitleButton[4] =
   { 108,132 , 92, 164 },  // おわる
   {GFL_UI_TP_HIT_END,0,0,0}
 };
+
+//------------------------------------------------------------------
+//  処理時間AVERAGE
+//------------------------------------------------------------------
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
+#define DEBUG_AVERAGE_MAX (10)
+
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start[DEBUG_AVERAGE_MAX];    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End[DEBUG_AVERAGE_MAX];    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave[DEBUG_AVERAGE_MAX];      // AVERAGE
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count[DEBUG_AVERAGE_MAX]; // カウンタ
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount[DEBUG_AVERAGE_MAX];    // 16000Over
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max[DEBUG_AVERAGE_MAX];    // 16000Over
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME  ( 120 )
+
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY  ( PAD_BUTTON_R )
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( u8 id );
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( u8 id );
+#endif
 
 //--------------------------------------------------------------
 //	初期化
@@ -368,6 +398,25 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     GFL_ARC_CloseDataHandle( arcHandle );
   }
 
+  // メッセージ系初期化
+  {
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr,
+        PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_FONT*0x20, 16*2, heapID );
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr,
+        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_FONT*0x20, 16*2, heapID );
+
+    //gameWork->msgWinMain = GFL_BMPWIN_Create( CTVT_GAME_FRAME_M_MSG , 
+    //    1, 1, 30, 4, CTVT_GAME_PAL_BG_M_FONT, GFL_BMP_CHRAREA_GET_B );
+    gameWork->msgWinSub = GFL_BMPWIN_Create( CTVT_GAME_FRAME_S_MSG , 
+        1, 15, 30, 4, CTVT_GAME_PAL_BG_S_FONT, GFL_BMP_CHRAREA_GET_B );
+
+    //BmpWinFrame_GraphicSet( CTVT_GAME_FRAME_M_MSG, CTVT_GAME_BMPWIN_CGX_MAIN,
+    //    CTVT_GAME_PAL_BG_M_WINFRAME, 0, heapID );
+    BmpWinFrame_GraphicSet( CTVT_GAME_FRAME_S_MSG, CTVT_GAME_BMPWIN_CGX,
+        CTVT_GAME_PAL_BG_S_WINFRAME, 0, heapID );
+
+  }
+
   // OBJ作成
   {
     GFL_CLWK_DATA cellInitData;
@@ -375,7 +424,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     cellInitData.pos_y = 96;
     cellInitData.anmseq = 0;
     cellInitData.softpri = 0;
-    cellInitData.bgpri = 2;
+    cellInitData.bgpri = 0;
 
     gameWork->clwkCam = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_CAMERA_PLT],
@@ -397,10 +446,8 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   }
 
 
-  // カメラキャプチャ送信用に低優先度通信のシステムを作成
-  // 
+  // 会話モードの低優先度システムは破棄
   GFL_NET_LDATA_ExitSystem();
-  GFL_NET_LDATA_InitSystem( heapID , FALSE );
 
   // 構造体初期化
   gameWork->state = CGS_FADEIN;
@@ -412,11 +459,6 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 
   gameWork->capBuf = GFL_NET_Align32Alloc( heapID, CTVT_CAPTURE_SIZE);
 
-  // 送信データ初期化
-  gameWork->sendData.burst_idx = 0;
-  gameWork->sendData.burst_netID = 0;
-
-
   for( i=0;i<CTVT_GAME_MEMBER_NUM-1;i++ )
   {
     gameWork->postCaptureBuf[i] = GFL_NET_Align32Alloc( heapID, CTVT_CAPTURE_SIZE);
@@ -427,11 +469,6 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 
   //上画面の会話アイコンを消す
   COMM_TVT_EraseTalkIcon( work );
-
-  gameWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
-      1 , 1 , 30 , 4 ,
-      CTVT_PAL_BG_SUB_FONT ,
-      GFL_BMP_CHRAREA_GET_B );
 
 
   ICHI_Printf("----CTVT_GAME_InitMode END----\n");
@@ -450,14 +487,19 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   GFL_NET_ReloadIconTopOrBottom(FALSE , heapId );
 
 
-  // 低優先度通信終わり
-  GFL_NET_LDATA_ExitSystem();
+  // 会話モードの低優先度システム作成
   GFL_NET_LDATA_InitSystem( heapId , FALSE );
   // ↑の後に通信のリフレッシュを行う必要あり
   //
 
   // OBJ破棄
   GFL_CLACT_WK_Remove( gameWork->clwkCam );
+
+  // メッセージ系破棄
+  GFL_BMPWIN_ClearTransWindow( gameWork->msgWinMain );
+  GFL_BMPWIN_ClearTransWindow( gameWork->msgWinSub );
+  GFL_BMPWIN_Delete( gameWork->msgWinMain );
+  GFL_BMPWIN_Delete( gameWork->msgWinSub );
 
   // リソース破棄
   RESOURCE_Exit( gameWork );
@@ -485,9 +527,9 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
   GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , TRUE );
 #endif
-  GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+  //GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
 
-  COMM_TVT_RedrawName( work );
+  //COMM_TVT_RedrawName( work );
 }
 
 //--------------------------------------------------------------
@@ -498,6 +540,11 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
   const HEAPID heapId = gameWork->heapId;
 
   int i;
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_StartFunc(0);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
 
   switch( gameWork->state )
   {
@@ -563,13 +610,13 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     break;
 
     //親のリクエストによる終了
-  case CGS_END_PARENT_REQ_INIT:
+  case CGS_END_PARENT_NONE_INIT:
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       CTVT_COMM_ExitComm( work , commWork );
 
       COMM_TVT_SetSusspend( work , TRUE );
-      gameWork->state = CGS_END_PARENT_REQ;
+      gameWork->state = CGS_END_PARENT_NONE;
       {
         CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
         CTVT_CAMERA_PlayStopSe(work,camWork);
@@ -577,7 +624,7 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
       }
     }
     break;
-  case CGS_END_PARENT_REQ:
+  case CGS_END_PARENT_NONE:
     if( GFL_UI_TP_GetTrg() == TRUE ||
         GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
     {
@@ -592,64 +639,6 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     }
     break;
 
-    //WIFIのリクエストによる終了
-  case CGS_END_WIFI_REQ_SEND:
-    {
-      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_FINISH_PARENT , 0 );
-      if( ret == TRUE )
-      {
-        gameWork->state = CGS_END_WIFI_REQ_INIT_DISP;
-      }
-    }
-    break;
-  case CGS_END_WIFI_REQ_INIT_DISP:
-    {
-      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      CTVT_COMM_ExitComm( work , commWork );
-
-      COMM_TVT_SetSusspend( work , TRUE );
-      gameWork->state = CGS_END_WIFI_REQ_DISP;
-      gameWork->wifiExitCnt = 0;
-      {
-        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-        CTVT_CAMERA_PlayStopSe(work,camWork);
-        gameWork->reqStopCamera = TRUE;
-      }
-    }
-    break;
-  case CGS_END_WIFI_REQ_DISP:
-    gameWork->wifiExitCnt++;
-    if( GFL_UI_TP_GetTrg() == TRUE ||
-        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ||
-        gameWork->wifiExitCnt >= CTVT_WIFI_WIFITCNT )
-    {
-      gameWork->state = CGS_END_WIFI_REQ_INIT;
-    }
-    break;
-  case CGS_END_WIFI_REQ_INIT:
-    {
-      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      CTVT_COMM_SendTimingCommnad( work , commWork , CTVT_COMM_TIMING_END );
-      gameWork->state = CGS_END_WIFI_REQ;
-    }
-    break;
-  case CGS_END_WIFI_REQ:
-    {
-      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      if( CTVT_COMM_CheckTimingCommnad( work , commWork , CTVT_COMM_TIMING_END ) == TRUE )
-      {
-        gameWork->isFinish = TRUE;
-        gameWork->state = CGS_FADEOUT;
-        COMM_TVT_SetSusspend( work , TRUE );
-        {
-          CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-          CTVT_CAMERA_StopCapture( work , camWork );
-          gameWork->reqStopCamera = TRUE;
-        }
-      }
-    }
-    break;
     //一人になったので終了
   case CGS_END_MEMBER_NONE_INIT:
     {
@@ -684,6 +673,10 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
   // COMM_TVT_Mainからコピーしてきた
   GFL_CLACT_SYS_Main();
   PRINTSYS_QUE_Main( COMM_TVT_GetPrintQue(work) );
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_EndFunc(0);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
   return CTM_GAME;
 }
@@ -771,7 +764,7 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
             p_wk->bonus_tbl[idx][ p_wk->bonus_tbl_idx[idx] ] = 0;
             p_wk->bonus_tbl_idx[idx]++;
             p_wk->bonus_tbl_idx[idx] %= 5;
-            ICHI_Printf("ボーナス風船出現 %d \n", idx);
+            //ICHI_Printf("ボーナス風船出現 %d \n", idx);
           }
           else
           {
@@ -808,17 +801,58 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  通信から送られてくるゲーム情報を格納
+ *	@brief  通信から送られてくる乱数シード値を格納
  *
  *	@param	p_wk    ゲーム管理構造体
  *	        data    設定するゲーム情報
  */
 //-----------------------------------------------------------------------------
-void CTVT_GAME_CommDataSet( CTVT_GAME_WORK *p_wk, const CTVT_GAME_SEND_DATA *data )
+void CTVT_GAME_CommRndSeedSet( CTVT_GAME_WORK *p_wk, const u32 rnd_seed )
 {
   // 受信データを更新
-  p_wk->sendData = *data;
+  p_wk->rnd_seed = rnd_seed;
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信から送られてくるフレーム経過数を格納
+ *
+ *	@param	p_wk    ゲーム管理構造体
+ *	        frame   受信したフレーム
+ */
+//-----------------------------------------------------------------------------
+void CTVT_GAME_CommFrameSet( CTVT_GAME_WORK *p_wk, const u16 frame )
+{
+  p_wk->frame = frame;
+  p_wk->isRecvFrame = TRUE;   // 受信したフラグを立てる
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  経過フレーム取得
+ *
+ *	@param	CTVT_GAME_WORK  *gameWork 
+ *
+ *	@return u16 経過フレーム
+ */
+//-----------------------------------------------------------------------------
+u16 CTVT_GAME_GetFrame( CTVT_GAME_WORK *gameWork )
+{
+  return gameWork->frame;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  親のフレーム取得
+ *
+ *	@param	CTVT_GAME_WORK  *gameWork 
+ *
+ *	@return u16 経過フレーム
+ */
+//-----------------------------------------------------------------------------
+u16 CTVT_GAME_GetOyaFrame( CTVT_GAME_WORK *gameWork )
+{
+  return gameWork->oya_frame;
 }
 
 //----------------------------------------------------------------------------
@@ -874,13 +908,13 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     {
       // ボーナス風船
       p_wk->score[ netId ] += 4;
-      ICHI_Printf("NetID %d score +4\n", netId);
+      //ICHI_Printf("NetID %d score +4\n", netId);
     }
     else
     {
       // 通常風船
       p_wk->score[ netId ] += 2;
-      ICHI_Printf("NetID %d score +2\n", netId);
+      //ICHI_Printf("NetID %d score +2\n", netId);
     }
     // 自分だけ鳴らす
     if( selfId == netId )
@@ -897,13 +931,13 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     {
       // ボーナス風船
       p_wk->score[ netId ] -= 4;
-      ICHI_Printf("NetID %d score -4\n", netId);
+      //ICHI_Printf("NetID %d score -4\n", netId);
     }
     else
     {
       // 通常風船
       p_wk->score[ netId ] -= 2;
-      ICHI_Printf("NetID %d score -2\n", netId);
+      //ICHI_Printf("NetID %d score -2\n", netId);
     }
 
     // 自分だけ鳴らす
@@ -923,21 +957,21 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     // + or -
     if( score < 0 )
     {
-      GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[0], CGOAM_NUM_M );
+      GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[0], CPOA_NUM_M );
     }
     else
     {
-      GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[0], CGOAM_NUM_P );
+      GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[0], CPOA_NUM_P );
     }
 
     // 得点表示
     score = GFL_STD_Abs(score); // 絶対値
     // 百の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[1], CGOAM_NUM_0 + (score/100));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[1], CPOA_NUM_0 + (score/100));
     // 十の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[2], CGOAM_NUM_0 + (score/10));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[2], CPOA_NUM_0 + (score/10));
     // 一の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[3], CGOAM_NUM_0 + (score%10));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkScore[3], CPOA_NUM_0 + (score%10));
 
   }
 
@@ -1015,8 +1049,8 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     break;
   case SEQ_INIT:
     {
-      GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+      GFL_BG_SetVisible( CTVT_GAME_FRAME_M_CAMERA, VISIBLE_ON );
+      GFL_BG_SetVisible( CTVT_GAME_FRAME_S_BG,     VISIBLE_ON );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCam, TRUE );
 
       // カメラ撮影用のリソース
@@ -1024,22 +1058,25 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       {
         // 上画面
         GFL_ARC_UTIL_TransVramPalette( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_camera_bg_NCLR , 
-            PALTYPE_SUB_BG, 0, 0, gameWork->heapId );
+            PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*5, gameWork->heapId );
         GFL_ARC_UTIL_TransVramBgCharacter( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_camera_bg_NCGR,
-            CTVT_FRAME_SUB_BG, 0, 0, FALSE, gameWork->heapId );
+            CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, gameWork->heapId );
         GFL_ARC_UTIL_TransVramScreen( ARCID_COMM_TVT_GRA , NARC_comm_tvt_tv_camera_bg_NSCR, 
-            CTVT_FRAME_SUB_BG,  0, 0, FALSE, gameWork->heapId );
+            CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, gameWork->heapId );
 
-        GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BG );
+        GFL_BG_LoadScreenReq( CTVT_GAME_FRAME_S_BG );
       }
 
       CAMERA_SYS_StartCapture( camSys );
       gameWork->isCamCapture = TRUE;
 
+      // カメラキャプチャ送信用に低優先度通信のシステムを作成
+      GFL_NET_LDATA_InitSystem( gameWork->heapId, FALSE );
+
       // 低優先度送信システムにカメラ受信バッファを渡す
       {
         const u8 selfIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-        const u8 connectNum = GFL_NET_GetConnectNum();
+        const u8 connectNum = COMM_TVT_GetConnectNum( work );
         u8 netID;       // netID
         u8 bufIdx =0;    // bufIdx
         for( netID=0;netID<connectNum;netID++ )
@@ -1124,7 +1161,7 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       {
         u8    i;
         BOOL  ret = TRUE;   // 次シーケンスへいってよいか判定用
-        const u8 connectNum = GFL_NET_GetConnectNum();
+        const u8 connectNum = COMM_TVT_GetConnectNum( work );
 
         // ゲーム人数分回す
         for( i=0;i<connectNum;i++ )
@@ -1175,8 +1212,12 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     break;
   case SEQ_EXIT:
     {
-      GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+      // 低優先度通信終わり
+      GFL_NET_LDATA_ExitSystem();
+
+      GFL_BG_SetVisible( CTVT_GAME_FRAME_M_CAMERA, VISIBLE_OFF );
+      GFL_BG_ClearFrame( CTVT_GAME_FRAME_M_CAMERA );
+      GFL_BG_ClearFrame( CTVT_GAME_FRAME_S_BG );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCam, FALSE );
 
       gameWork->seq = SEQ_NEXT; // 次のシーケンスへ
@@ -1210,6 +1251,7 @@ static void CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 {
   CTVT_CAMERA_WORK  *camWork  = COMM_TVT_GetCameraWork(work);
   CTVT_COMM_WORK    *commWork = COMM_TVT_GetCommWork( work );
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
   // シーケンス管理
   enum{
@@ -1234,7 +1276,7 @@ static void CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   switch( gameWork->seq ){
   case SEQ_INIT_RND:
     // 親なら乱数Seed値送信
-    if( GFL_NET_SystemGetCurrentID() == 0 )
+    if( selfId == 0 )
     {
       CTVT_GAME_SEND_DATA data;
 
@@ -1310,12 +1352,19 @@ static void CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   case SEQ_SCORE_SYNC_INIT:  // スコア同期
     {
       // 風船だけ更新
-      GRAPHIC_Draw( gameWork );
+      {
+        // 経過フレーム数をインクリメント
+        // 親、子関係なくしないと、子が止まる可能性がある
+        gameWork->frame++;
+
+        GRAPHIC_Draw( gameWork );
+      }
       // 全ての風船の終了まで待つ
       if( balloon_end_check( gameWork ) == TRUE )
       {
         GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
         GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_GAME_SCORE_SYNC, WB_NET_COMM_TVT );
+        gameWork->oya_frame = 0;    // 0以上だと通信メインで自動送信してしまう
         gameWork->seq = SEQ_SCORE_SYNC_WAIT;
 
         ICHI_Printf("スコア同期待ち\n");
@@ -1369,22 +1418,33 @@ static void CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     return;
   }
 
-
+  // =========================
+  // メッセージ
 #if 0
-  // メッセージ　デバッグ用なので後で消す
-  if( gameWork->isUpdateMsgWin == TRUE )
+  if( gameWork->isUpdateMsgMain == TRUE )
   {
     PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
-    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( gameWork->msgWin )) == FALSE )
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( gameWork->msgWinMain )) == FALSE )
     {
-      ICHI_Printf("=====メッセージ描画=============\n");
-      GFL_BMPWIN_TransVramCharacter( gameWork->msgWin );
-      GFL_BMPWIN_MakeScreen( gameWork->msgWin );
-      GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
-      gameWork->isUpdateMsgWin = FALSE;
+      GFL_BMPWIN_TransVramCharacter( gameWork->msgWinMain );
+      GFL_BMPWIN_MakeScreen( gameWork->msgWinMain );
+      GFL_BG_LoadScreenReq(CTVT_GAME_FRAME_M_MSG);
+      gameWork->isUpdateMsgMain = FALSE;
     }
   }
 #endif
+
+  if( gameWork->isUpdateMsgSub == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( gameWork->msgWinSub )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( gameWork->msgWinSub );
+      GFL_BMPWIN_MakeScreen( gameWork->msgWinSub );
+      GFL_BG_LoadScreenReq(CTVT_GAME_FRAME_S_MSG);
+      gameWork->isUpdateMsgSub = FALSE;
+    }
+  }
 
 #if 0
   // デバッグカメラ
@@ -1444,11 +1504,12 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   u8  i;
   const HEAPID heapID = gameWork->heapId;
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  const u8 connectNum = GFL_NET_GetConnectNum();
+  const u8 connectNum = COMM_TVT_GetConnectNum( work );
 
   // 乱数初期化
-  GFL_STD_MtRandInit( gameWork->sendData.rnd_seed );
-  ICHI_Printf("乱数Seed値 %d \n", gameWork->sendData.rnd_seed);
+  GFL_STD_MtRandInit( gameWork->rnd_seed );
+  ICHI_Printf("乱数Seed値 %d \n", gameWork->rnd_seed);
+  ICHI_Printf("送信データサイズ:%d \n", sizeof(CTVT_GAME_SEND_DATA));
 
   // カメラキャプチャ128x128を
   // 64x64に変化し、それをテクスチャとして張る
@@ -1544,32 +1605,31 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   // ゲーム用のリソース
   // BGロード
   {
-    u32   size;
 
-#if 1
     // 下画面
     GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l_NCLR , 
-        PALTYPE_MAIN_BG, 0*32, 32*4, heapID );
-    size = GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l_NCGR,
-        CTVT_FRAME_MAIN_BG, 0, 0, FALSE, heapID );
+        PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*5, heapID );
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l_NCGR,
+        CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, heapID );
     GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l_NSCR, 
-        CTVT_FRAME_MAIN_BG, 0, 0, FALSE, heapID );
+        CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, heapID );
 
-    ICHI_Printf("road size %d\n", size);
-#endif
-#if 1
     // 上画面
     GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCLR , 
-        PALTYPE_SUB_BG, 0*32, 32*4, heapID );
-    size = GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCGR,
-        CTVT_FRAME_SUB_BG, 0, 0, FALSE, heapID );
-    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON , NARC_tvt_balloon_tv_game_bg_u_NSCR, 
-        CTVT_FRAME_SUB_BG,  0, 0, FALSE, heapID );
-    ICHI_Printf("road size %d\n", size);
-#endif
+        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*5, heapID );
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCGR,
+        CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, heapID );
+    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NSCR, 
+        CTVT_GAME_FRAME_S_BG,  0, 0, FALSE, heapID );
 
-    GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_BG );
-    GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BG );
+    GFL_BG_SetVisible( CTVT_GAME_FRAME_M_3D,    VISIBLE_ON );
+    //GFL_BG_SetVisible( CTVT_GAME_FRAME_M_MSG,   VISIBLE_ON );
+    GFL_BG_SetVisible( CTVT_GAME_FRAME_M_BG,    VISIBLE_ON );
+    GFL_BG_SetVisible( CTVT_GAME_FRAME_S_MSG,   VISIBLE_ON );
+    GFL_BG_SetVisible( CTVT_GAME_FRAME_S_BG,    VISIBLE_ON );
+
+    GFL_BG_LoadScreenReq( CTVT_GAME_FRAME_M_BG );
+    GFL_BG_LoadScreenReq( CTVT_GAME_FRAME_S_BG );
   }
   // OBJ作成
   {
@@ -1578,14 +1638,14 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     // タイトル
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 96;
-    cellInitData.anmseq = CGOAM_TITLE;
+    cellInitData.anmseq = CCOA_TITLE;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
 
     gameWork->clwkTitle = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_COMMON_PLT],
+        gameWork->cellResIdx[CGOR_COMMON_NCG],
+        gameWork->cellResIdx[CGOR_COMMON_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle , TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle , TRUE );
@@ -1595,11 +1655,11 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     {
       cellInitData.pos_x = 128;
       cellInitData.pos_y = 80 + (i*16);
-      cellInitData.anmseq = GCOAM_START + i;
+      cellInitData.anmseq = CCOA_START + i;
       gameWork->clwkTitleItem[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-          gameWork->cellResIdx[CGOR_COMMON_M_PLT],
-          gameWork->cellResIdx[CGOR_COMMON_M_NCG],
-          gameWork->cellResIdx[CGOR_COMMON_M_ANM],
+          gameWork->cellResIdx[CGOR_COMMON_PLT],
+          gameWork->cellResIdx[CGOR_COMMON_NCG],
+          gameWork->cellResIdx[CGOR_COMMON_ANM],
           &cellInitData ,CLSYS_DRAW_MAIN, heapID );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitleItem[i] , TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitleItem[i] , TRUE );
@@ -1609,84 +1669,84 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     // 制限時間の数字
     cellInitData.pos_x = 126;
     cellInitData.pos_y = 96;
-    cellInitData.anmseq = CGOAM_NUM_6;
+    cellInitData.anmseq = CPOA_NUM_6;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
 
     gameWork->clwkTime[0] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTime[0], FALSE );
 
     cellInitData.pos_x = 142;
-    cellInitData.anmseq = CGOAM_NUM_0;
+    cellInitData.anmseq = CPOA_NUM_0;
     gameWork->clwkTime[1] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTime[1], FALSE );
 
     // TIME文字
     cellInitData.pos_x = 72;
     cellInitData.pos_y = 96;
-    cellInitData.anmseq = CGOAM_TIME;
+    cellInitData.anmseq = CPOA_TIME;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
 
     gameWork->clwkText = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkText, FALSE );
 
     // SCORE
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 158;
-    cellInitData.anmseq = CGOAM_SCORE;
+    cellInitData.anmseq = CPOA_SCORE;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
 
     gameWork->clwkScoreText = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScoreText, FALSE );
 
     // 得点
     cellInitData.pos_x = 176;
-    cellInitData.anmseq = CGOAM_NUM_P;
+    cellInitData.anmseq = CPOA_NUM_P;
     gameWork->clwkScore[0] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[0], FALSE );
 
     cellInitData.pos_x = 192;
-    cellInitData.anmseq = CGOAM_NUM_0;
+    cellInitData.anmseq = CPOA_NUM_0;
     gameWork->clwkScore[1] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[1], FALSE );
     cellInitData.pos_x = 208;
     gameWork->clwkScore[2] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[2], FALSE );
     cellInitData.pos_x = 224;
     gameWork->clwkScore[3] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_S_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_S_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_S_ANM],
+        gameWork->cellResIdx[CGOR_PLAY_PLT],
+        gameWork->cellResIdx[CGOR_PLAY_NCG],
+        gameWork->cellResIdx[CGOR_PLAY_ANM],
         &cellInitData ,CLSYS_DRAW_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkScore[3], FALSE );
   }
@@ -1716,8 +1776,11 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   gameWork->balloon_tbl_idx = 0;
   gameWork->balloon_tbl_cnt = 0;
   gameWork->timeLimit     = CTVT_GAME_TIME_LIMIT;
-  gameWork->timeCnt       = 0;
-  gameWork->befVCount     = 0;
+  gameWork->befFrameCnt   = 0;
+  gameWork->rnd_seed      = 0;
+  gameWork->frame         = 0;
+  gameWork->oya_frame     = 0;
+  gameWork->isRecvFrame   = FALSE;
 
   // ボーナス風船をいつ出すかきめる
   for( i=0; i<CTVT_GAME_MEMBER_NUM; i++ )
@@ -1786,6 +1849,17 @@ static BOOL game_update_seq_title( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     return TRUE;
   }
 
+#if 1
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A)
+  {
+    //disp_message_main( work, gameWork, COMM_TVT_SYS_05 );
+  }
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_B)
+  {
+    disp_message_sub( work, gameWork, COMM_TVT_SYS_05 );
+  }
+#endif
+
   return FALSE;
 }
 
@@ -1801,263 +1875,7 @@ static BOOL game_update_seq_title( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
 static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork )
 {
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-
-  // タッチペンの座標を送信する
-  {
-    u32 tpx,tpy;
-    const BOOL isTrg = GFL_UI_TP_GetPointTrg( &tpx,&tpy );
-
-    if( isTrg == TRUE )
-    {
-      // 通信データ送信
-      {
-        CTVT_GAME_SEND_DATA data;
-        data.tpx = tpx;
-        data.tpy = tpy;
-        CTVT_COMM_SendGameReq( commWork, data, CCGDT_TP );
-      }
-
-
-      // 実験
-      // 3D物体との当たり判定
-      //
-      // 試し1
-      // OBBとレイとの当たり判定をしてみる
-#if 0
-      {
-        GFL_COLLISION3D_OBB obb;   // OBB構造体
-        VecFx32   center;             // ボックス中心座標
-        MtxFx33   rot;                // ボックス回転行列
-        VecFx32   width;              // ボックス各軸方向のサイズの半分
-
-        VecFx32   rayPos;             // レイ開始座標
-        VecFx32   rayWay;             // レイ方向
-        int       tp_ret;
-        BOOL      ret;
-        fx32      dist;
-
-
-        // 初期化
-        //VEC_Set( &center, gameWork->status[2].trans.x, gameWork->status[2].trans.y, gameWork->status[2].trans.z );
-        GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &rot );
-        VEC_Set( &width, FX32_ONE*50, FX32_ONE*50, 0 );
-        // OBBに値設定
-        GFL_COLLISION3D_OBB_SetData( &obb, &center, &rot, &width );
-
-        ICHI_Printf("OBB 座標%x:%x:%x \n",center.x, center.y, center.z );
-
-        // TP座標からNearクリップ面上の座標を取得
-        // これをレイの開始座標にする
-        //tp_ret = NNS_G3dScrPosToWorldLine( tpx, tpy, &rayPos, NULL );
-        //if( tp_ret == 0 )
-        //{
-        //ICHI_Printf("TP座標%d:%d → ワールド(レイ)座標%x:%x:%x\n", tpx, tpy, rayPos.x, rayPos.y, rayPos.z);
-        //}
-
-        GFL_CALC3D_VEC_Get2DPosTo3DRay( &rayPos, &rayWay, tpx, tpy );
-
-        ICHI_Printf("レイ座標%x:%x:%x レイ方向%x:%x:%x \n",rayPos.x,rayPos.y,rayPos.z,rayWay.x, rayWay.y, rayWay.z);
-        // レイ方向はカメラ方向でいい？
-        //VEC_Set( &rayWay, 0,0,FX32_ONE );
-
-
-        // OBBとレイとの当たり判定
-        ret = GFL_COLLISION3D_OBB_CheckRay( &obb, &rayPos, &rayWay, &dist );
-        if( ret == TRUE )
-        {
-          ICHI_Printf("当たった！\n");
-        }
-
-        //ICHI_Printf("3Dの角度x:%d\n", gameWork->status[0].rotate._00);
-
-      }
-#endif
-
-#if 0
-      // 試し2
-      // レイと円の当たり判定
-      //
-      {
-        GFL_COLLISION3D_CIRCLE    circle;
-        VecFx32   center;   // 中心座標
-        fx32      r;        // 半径
-
-        VecFx32   rayPos;             // レイ開始座標
-        VecFx32   rayWay;             // レイ方向
-        BOOL      ret;
-
-        GFL_G3D_OBJ*    obj;
-        GFL_G3D_RND*    g3Drnd;
-        NNSG3dRenderObj*  renderObj;
-        NNSG3dResMdl*   mdl;
-        NNSG3dResMdlInfo*	modelInfo;		// モデルデータからのボックステスト用パラメータ取得用
-
-        // スクリーン座標からレイ取得
-        GFL_CALC3D_VEC_Get2DPosTo3DRay( &rayPos, &rayWay, tpx, tpy );
-        OS_Printf("レイ座標%f:%f:%f レイ方向%f:%f:%f \n",(float)((float)rayPos.x/FX32_ONE),(float)((float)rayPos.y/FX32_ONE),(float)((float)rayPos.z/FX32_ONE),(float)((float)rayWay.x/FX32_ONE), (float)((float)rayWay.y/FX32_ONE), (float)((float)rayWay.z/FX32_ONE));
-        OS_Printf("モデル座標 %f:%f:%f ", (float)((float)gameWork->balloon_wk[0].status.trans.x/FX32_ONE), (float)((float)gameWork->balloon_wk[0].status.trans.y/FX32_ONE),(float)((float)gameWork->balloon_wk[0].status.trans.x/FX32_ONE) );
-
-
-        obj = GFL_G3D_UTIL_GetObjHandle( gameWork->g3dUtil, gameWork->unit_idx );
-        g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( obj );
-        renderObj = GFL_G3D_RENDER_GetRenderObj( g3Drnd );
-        mdl = NNS_G3dRenderObjGetResMdl(renderObj);
-        modelInfo = NNS_G3dGetMdlInfo( mdl );
-
-        // 球設定
-        r = FX_Mul( gameWork->balloon_wk[0].status.scale.x, modelInfo->posScale);
-        VEC_Set( &center, gameWork->balloon_wk[0].status.trans.x, gameWork->balloon_wk[0].status.trans.y, gameWork->balloon_wk[0].status.trans.z );
-
-        OS_Printf("PosScale %f 半径 %f \n", (float)((float)modelInfo->posScale/FX32_ONE),(float)((float)r/FX32_ONE) );
-
-        GFL_COLLISION3D_CIRCLE_SetData( &circle, &center, r );
-        //
-        // 当たり判定
-        ret = collision3d_sphere_checkRay( &rayPos, &rayWay, &circle );
-        if( ret == TRUE )
-        {
-          ICHI_Printf("当たった！\n");
-        }
-      }
-#endif
-
-
-#if 0
-      // 試し3　正射影でのタッチ判定
-      {
-        int x, y;
-        int ret;
-
-        fx32  w;
-
-        GFL_G3D_OBJ*    obj;
-        GFL_G3D_RND*    g3Drnd;
-        NNSG3dRenderObj*  renderObj;
-        NNSG3dResMdl*   mdl;
-        NNSG3dResMdlInfo*	modelInfo;		// モデルデータからのボックステスト用パラメータ取得用
-
-        // スクリーン座標からレイ取得
-        ret = NNS_G3dWorldPosToScrPos( &gameWork->balloon_wk[0].status.trans, &x, &y );
-
-        OS_Printf("モデル座標 %.2f:%.2f:%.2f TP座標 %d:%d \n", (float)((float)gameWork->balloon_wk[0].status.trans.x/FX32_ONE), (float)((float)gameWork->balloon_wk[0].status.trans.y/FX32_ONE),(float)((float)gameWork->balloon_wk[0].status.trans.z/FX32_ONE), x, y );
-
-
-        obj = GFL_G3D_UTIL_GetObjHandle( gameWork->g3dUtil, gameWork->unit_idx[0] );
-        g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( obj );
-        renderObj = GFL_G3D_RENDER_GetRenderObj( g3Drnd );
-        mdl = NNS_G3dRenderObjGetResMdl(renderObj);
-        modelInfo = NNS_G3dGetMdlInfo( mdl );
-
-        // モデルの幅 半径
-        w = FX_Mul( modelInfo->boxPosScale, modelInfo->boxW );
-        ICHI_Printf("boxPosScale %d  posScale %d width %d 半径 %d", FX_Whole(modelInfo->boxPosScale), FX_Whole(modelInfo->posScale),FX_Whole(modelInfo->boxW),FX_Whole(w) );
-
-        {
-          GFL_UI_TP_HITTBL tbl[] =
-          {
-            { GFL_UI_TP_USE_CIRCLE, 0, 0, 0 },
-            { GFL_UI_TP_HIT_END, 0, 0, 0 },
-          };
-
-          tbl[0].circle.x = x;
-          tbl[0].circle.y = y;
-          tbl[0].circle.r = FX_Whole(w) / 2;
-
-          ret = GFL_UI_TP_HitTrg( tbl );
-
-          if( ret != GFL_UI_TP_HIT_NONE )
-          {
-            ICHI_Printf("当たった！\n");
-          }
-        }
-      }
-#endif
-
-      // 試し4　レイと点の当たり判定
-      // 未完成
-#if 0
-      {
-        VecFx32   near;   // [out/in]ニアクリップ面の座標
-        VecFx32   way;    // [out/in]方向ベクトル
-        VecFx32   target; // [in]当たり判定したい座標
-        VecFx32   vecN;   // [in]法線ベクトル
-        VecFx32   dest;   // [out]交点の位置
-
-        GFL_COLLISION3D_RESULT  result;
-
-        // 2D座標から3D上での方向ベクトルを求める
-        GFL_CALC3D_VEC_Get2DPosTo3DRay( &near, &way, tpx, tpy );
-        ICHI_Printf("ニアクリップ %x:%x:%x", near.x, near.y, near.z);
-        ICHI_Printf("方向ベクトル %x:%x:%x", way.x, way.y, way.z);
-
-        // 仮
-        VEC_Set( &target, 0, 0, 0 );
-        // 仮
-        VEC_Set( &vecN, 0, FX32_ONE, 0 );
-
-        // レイトレース計算
-        result = GFL_COLLISION3D_GetClossPointRayPlane(
-            &near, &way, &target, &vecN, &dest, FX32_ONE*5);
-
-        ICHI_Printf("レイトレース結果 %d \n", result);
-      }
-#endif
-    }
-  }
-
-  // <<実験 
-  // カメラキャプチャをテクスチャとして貼り付ける
-  {
-    BOOL  rc;
-    u32   dst;    // 転送先の実アドレス
-    void* src;    // 転送元データ
-    u32   size;   // 転送サイズ
-
-#if 0
-    // 方法1　
-    // カメラバッファをそのまま転送する
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y)
-    {
-      GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( gameWork->g3dUtil, gameWork->unit_idx[0] );
-      NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
-      u32 tex_adr = NNS_GfdGetTexKeyAddr(texkey);
-
-      ICHI_Printf("テクスチャ貼り付け\n");
-      // 転送
-      {
-        dst = tex_adr;
-        //src = gameWork->capBuf;   // もう１つバッファ用意してそっちに保存したほうがいいかも
-        //src = postCaptureBuf[0];
-        src = gameWork->direct_tex[0];
-        //size = (CTVT_CAPTURE_SIZE);
-        size = (64*64*2);
-        rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
-        GF_ASSERT(rc);
-        ICHI_Printf("dst %d src %d size %d \n", dst, src, size);
-      }
-    }
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X)
-    {
-      GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( gameWork->g3dUtil, gameWork->unit_idx[1] );
-      NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
-      u32 tex_adr = NNS_GfdGetTexKeyAddr(texkey);
-
-      ICHI_Printf("テクスチャ貼り付け\n");
-      // 転送
-      {
-        dst = tex_adr;
-        //src = gameWork->postCaptureBuf[0];
-        src = gameWork->direct_tex[1];
-        //size = (CTVT_CAPTURE_SIZE);
-        size = (64*64*2);
-        rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
-        GF_ASSERT(rc);
-        ICHI_Printf("dst %d src %d size %d \n", dst, src, size);
-      }
-    }
-#endif
-  }
-  // >> 
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
 #ifdef PM_DEBUG
   // Rボタン押しながらでデバッグ
@@ -2114,15 +1932,16 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 
   // 制限時間早める処理
   // デバッグ 制限時間早める
-  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
+  if( selfId == 0 && GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
   {
-    gameWork->timeCnt += 5;
+    gameWork->oya_frame += 5;
   }
   // ↑までデバッグ
 #endif
 
-  // 風船出現管理(親だけ)
-  if( GFL_NET_SystemGetCurrentID() == 0 )
+
+    // 風船出現管理(親だけ)
+  if( selfId == 0 )
   {
     // 待ち時間が終わると出現フラグON
     if( gameWork->balloon_wait <= 0 )
@@ -2134,7 +1953,12 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     if( gameWork->balloon_flg == 1 )
     {
       // 風船出現させる
-      CTVT_COMM_SendGameReq_Flg( work, commWork, CCGF_BALLOON_APPEAR );
+      {
+        // 通信データ送信
+        CTVT_GAME_SEND_DATA data = {0,};
+        CTVT_COMM_SendGameReq( commWork, data, CCGDT_BALOON_APPEAR );
+      }
+      
       gameWork->balloon_flg = 0;
 #ifdef PM_DEBUG
       gameWork->balloon_wait = gameWork->debug_wait;
@@ -2148,27 +1972,51 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     }
   }
 
+  // タッチペンの座標を送信する
+  {
+    u32 tpx,tpy;
+    const BOOL isTrg = GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+
+    if( isTrg == TRUE )
+    {
+      // 通信データ送信
+      CTVT_GAME_SEND_DATA data;
+      data.tpx = tpx;
+      data.tpy = tpy;
+      CTVT_COMM_SendGameReq( commWork, data, CCGDT_TP );
+      //ICHI_Printf("touch!\n");
+    }
+  }
+
+  // 受信していない場合
+  // TRUEで受信していると、frameの値は更新されている
+  if( gameWork->isRecvFrame == FALSE )
+  {
+    gameWork->frame++;
+  }
+  gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
+
+  if( selfId == 0 )
+  {
+    gameWork->oya_frame++;
+  }
+  //ICHI_Printf("フレーム %d\n", gameWork->frame);
+
   // 制限時間処理
   if( gameWork->timeLimit > 0 )
   {
-    const u32 vCount = OS_GetVBlankCount();
-    gameWork->timeCnt += vCount - gameWork->befVCount;
-    gameWork->befVCount = vCount;
-    if( gameWork->timeCnt > 60 )
+    if( ( gameWork->frame - gameWork->befFrameCnt ) > 60 )
     {
+      gameWork->befFrameCnt = gameWork->frame;
       gameWork->timeLimit--;
-      gameWork->timeCnt -= 60;
 
       // OBJ変更
       {
         // 十秒
-        GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTime[0], CGOAM_NUM_0 + (gameWork->timeLimit/10));
+        GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTime[0], CPOA_NUM_0 + (gameWork->timeLimit/10));
         // 秒
-        GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTime[1], CGOAM_NUM_0 + (gameWork->timeLimit%10));
+        GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTime[1], CPOA_NUM_0 + (gameWork->timeLimit%10));
       }
-      //デバッグ表示
-      //disp_message( work, gameWork, L"タイム", 32, 32 );
-      ICHI_Printf("---Time %d----------------\n", gameWork->timeLimit);
     }
 
     if( gameWork->timeLimit == 0 )
@@ -2183,7 +2031,7 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     if( gameWork->balloon_tbl_cnt == 0 )
     {
       // 終了時に親ならスコア送信
-      if( GFL_NET_SystemGetCurrentID() == 0 )
+      if( selfId == 0 )
       {
         CTVT_GAME_SEND_SCORE score;
         u8  i;
@@ -2197,6 +2045,7 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 
         CTVT_COMM_SendGameReq_Score( commWork, score );
       }
+      gameWork->oya_frame = 0;    // 0以上だと通信メインで自動送信してしまう
 
       return TRUE; // 終了
     }
@@ -2208,8 +2057,8 @@ static BOOL game_update_seq_main( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     PMSND_SetStatusBGM( 285, 85, PMSND_NOEFFECT );
     //PMSND_SetStatusBGM( 285, PMSND_NOEFFECT, PMSND_NOEFFECT );
   }
-
-  // 描画
+  
+  // 風船の更新 & 描画
   GRAPHIC_Draw( gameWork );
 
   return FALSE;
@@ -2227,7 +2076,7 @@ static void game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
 {
   u8  i;
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  const u8 connectNum = GFL_NET_GetConnectNum();
+  const u8 connectNum = COMM_TVT_GetConnectNum( work );
   u8  rank = 1; // 順位
 
   ICHI_Printf("--SCORE------------------\n");
@@ -2249,21 +2098,21 @@ static void game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     // + or -
     if( score < 0 )
     {
-      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[0], CGOAM_NUM_M );
+      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[0], CPOA_NUM_M );
     }
     else
     {
-      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[0], CGOAM_NUM_P );
+      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[0], CPOA_NUM_P );
     }
 
     // 得点表示
     score = GFL_STD_Abs(score); // 絶対値
     // 百の位
-    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[1], CGOAM_NUM_0 + (score/100));
+    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[1], CPOA_NUM_0 + (score/100));
     // 十の位
-    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[2], CGOAM_NUM_0 + (score/10));
+    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[2], CPOA_NUM_0 + (score/10));
     // 一の位
-    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[3], CGOAM_NUM_0 + (score%10));
+    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkScore[3], CPOA_NUM_0 + (score%10));
   }
 
 #ifdef PM_DEBUG
@@ -2274,9 +2123,8 @@ static void game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
 #endif
 
   // ランク表示
-  GFL_CLACT_WK_SetAnmSeq( gameWork->clwkText, CGOAM_RANK );
   GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTime[0], FALSE );
-  GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTime[1], CGOAM_NUM_0 + rank );
+  GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTime[1], CPOA_NUM_0 + rank );
 }
 
 //----------------------------------------------------------------------------
@@ -2337,25 +2185,21 @@ static void game_update_seq_exit( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 //--------------------------------------------------------------
 static const BOOL CTVT_GAME_CheckFinishReq( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 {
-  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+
+  // 子で、親がいなくなった
+  if( COMM_TVT_GetSelfIdx( work ) != 0 && CTVT_COMM_IsEnableMember( work, commWork, 0 ) == FALSE )
   {
-    CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-    if( CTVT_COMM_GetMode( work , commWork ) == CCIM_CONNECTED )
-    {
-      //Wifiのリクエストによる終了
-      gameWork->state = CGS_END_WIFI_REQ_INIT_DISP;
-    }
-    else
-    {
-      //親のリクエストによる終了
-      gameWork->state = CGS_END_PARENT_REQ_INIT;
-    }
+    gameWork->state = CGS_END_PARENT_NONE_INIT;
+    OS_Printf("強制終了：親がいなくなった\n");
     return TRUE;
   }
+
   if( COMM_TVT_GetConnectNum( work ) <= 1 )
   {
     //誰も居なくなった。
     gameWork->state = CGS_END_MEMBER_NONE_INIT;
+    OS_Printf("強制終了：誰もいなくなった\n");
     return TRUE;
   }
   return FALSE;
@@ -2539,8 +2383,15 @@ static void GRAPHIC_Draw( CTVT_GAME_WORK* p_wk )
     }
 
 
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_StartFunc(1);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     // 風船タスクメイン
     GFL_TCB_Main( p_wk->task );
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_EndFunc(1);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
     // 風船同士の当たり判定
     balloon_collision_check( p_wk );
 
@@ -2568,7 +2419,7 @@ static void VBlankFunc( GFL_TCB *p_tcb, void *p_work )
   {
     // カメラキャプチャ転送
     DC_FlushRange( p_wk->scrBuf , CTVT_BUFFER_SCR_SIZE );
-    GX_LoadBG3Bmp( p_wk->scrBuf , 0 , CTVT_BUFFER_SCR_SIZE );
+    GX_LoadBG3Bmp( p_wk->scrBuf , 0, CTVT_BUFFER_SCR_SIZE );
     p_wk->isUpdateCapture = FALSE;
   }
 
@@ -2602,7 +2453,7 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
   // BGモード設定
   { 
     GFL_BG_SYS_HEADER sysh = {
-      GX_DISPMODE_GRAPHICS, GX_BGMODE_5, GX_BGMODE_0, GX_BG0_AS_3D,
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_3D,
     };
     GFL_BG_SetBGMode( &sysh );
   }
@@ -2610,11 +2461,18 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
   // 個別フレーム設定
   {
     //Main
-    // BG0 MSG (文字
-    static const GFL_BG_BGCNT_HEADER header_main0 = {
+    // BG1 MSG (文字
+    static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG2 BG (背景
+    static const GFL_BG_BGCNT_HEADER header_main2 = {
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000,GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // Sub
@@ -2629,13 +2487,14 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x08000,GFL_BG_CHRSIZ_256x256,
+      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000,GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
-    GRAPHIC_BG_SetupBgFunc( &header_main0, CTVT_FRAME_MAIN_BG, GFL_BG_MODE_TEXT );
-    GRAPHIC_BG_SetupBgFunc( &header_sub0, CTVT_FRAME_SUB_MSG, GFL_BG_MODE_TEXT );
-    GRAPHIC_BG_SetupBgFunc( &header_sub3, CTVT_FRAME_SUB_BG, GFL_BG_MODE_TEXT );
+    //GRAPHIC_BG_SetupBgFunc( &header_main1, CTVT_GAME_FRAME_M_MSG, GFL_BG_MODE_TEXT );
+    GRAPHIC_BG_SetupBgFunc( &header_main1, CTVT_GAME_FRAME_M_BG, GFL_BG_MODE_TEXT );
+    GRAPHIC_BG_SetupBgFunc( &header_sub0, CTVT_GAME_FRAME_S_MSG, GFL_BG_MODE_TEXT );
+    GRAPHIC_BG_SetupBgFunc( &header_sub3, CTVT_GAME_FRAME_S_BG, GFL_BG_MODE_TEXT );
 
     // カメラキャプチャのBG
     // gflibが対応していないので直書き
@@ -2643,26 +2502,31 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
     //GX_SetBGScrOffset ( GX_BGSCROFFSET_0x00000);
 
     G2_SetBG3ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
-    GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*sizeof(u16) );
+    GFL_STD_MemClear( G2_GetBG3ScrPtr(), CTVT_BUFFER_SCR_SIZE );
 
   }
 
   // ブレンド
   G2_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2,
+      GX_BLEND_PLANEMASK_BG0,
       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
       0, 16 );
   // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
   // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
 
 
-  // ポリゴン面のBGプライオリティを設定
-  G2_SetBG0Priority( 0 );
+  // BGプライオリティを設定
+  GFL_BG_SetPriority( CTVT_GAME_FRAME_M_3D, 2 ); 
+  //GFL_BG_SetPriority( CTVT_GAME_FRAME_M_MSG, 0 ); 
+  GFL_BG_SetPriority( CTVT_GAME_FRAME_M_BG, 3 ); 
+  GFL_BG_SetPriority( CTVT_GAME_FRAME_M_CAMERA, 3 ); 
 
-  GFL_BG_SetVisible( CTVT_FRAME_MAIN_BG, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
-  GFL_BG_SetVisible( CTVT_FRAME_SUB_MSG, VISIBLE_ON );
-  GFL_BG_SetVisible( CTVT_FRAME_SUB_BG, VISIBLE_ON );
+  GFL_BG_SetVisible( CTVT_GAME_FRAME_M_3D,    VISIBLE_OFF );
+  //GFL_BG_SetVisible( CTVT_GAME_FRAME_M_MSG,   VISIBLE_OFF );
+  GFL_BG_SetVisible( CTVT_GAME_FRAME_M_BG,    VISIBLE_OFF );
+  GFL_BG_SetVisible( CTVT_GAME_FRAME_M_CAMERA,VISIBLE_OFF );
+  GFL_BG_SetVisible( CTVT_GAME_FRAME_S_MSG,   VISIBLE_OFF );
+  GFL_BG_SetVisible( CTVT_GAME_FRAME_S_BG,    VISIBLE_OFF );
 }
 
 //----------------------------------------------------------------------------
@@ -2677,6 +2541,7 @@ static void GRAPHIC_BG_Exit( CTVT_GAME_WORK* p_wk )
   // ミニゲームの設定から会話の設定に戻す？
   // ↓COMM_TVT_InitGraphicの中から必要なものをコピーしてきた
 
+#if 0
   static const GFL_DISP_VRAM vramBank = {
     GX_VRAM_BG_256_AB,             // メイン2DエンジンのBG
     GX_VRAM_BGEXTPLTT_NONE,       // メイン2DエンジンのBG拡張パレット
@@ -2774,6 +2639,7 @@ static void GRAPHIC_BG_Exit( CTVT_GAME_WORK* p_wk )
     GFL_BG_SetVisible( CTVT_FRAME_MAIN_CAMERA, VISIBLE_ON );
 
   }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2965,22 +2831,6 @@ static void RESOURCE_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE* arcHa
 {
   u8  i;
 
-#if 0
-  {
-    //MSGと共用なのでここでスクリーンを読む
-    ARCHANDLE *commonArcHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , heapID );
-    GFL_BG_ClearScreen( CTVT_FRAME_SUB_MSG );
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
-        CTVT_FRAME_SUB_MSG , 32*3 , 0 , 0x2*32*24, FALSE , heapID );
-    GFL_BG_ChangeScreenPalette( CTVT_FRAME_SUB_MSG , 0 , 21 , 32 , 3 , CTVT_PAL_BG_SUB_BG );
-    GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MSG );
-
-    GFL_BG_SetScroll( CTVT_FRAME_SUB_MSG , GFL_BG_SCROLL_Y_SET , 0 );
-
-    GFL_ARC_CloseDataHandle( commonArcHandle );
-  }
-#endif
-
   // OBJ
   // カメラ撮影用
   {
@@ -2997,24 +2847,23 @@ static void RESOURCE_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE* arcHa
 
 
   // OBJ
-  // MAIN
-  p_wk->cellResIdx[CGOR_COMMON_M_PLT] = GFL_CLGRP_PLTT_RegisterComp( arcHandle , 
-      NARC_tvt_balloon_tv_game_obj_NCLR , CLSYS_DRAW_MAIN , 
-      CTVT_PAL_OBJ_MAIN_GAME*32 , heapID  );
-  p_wk->cellResIdx[CGOR_COMMON_M_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
-      NARC_tvt_balloon_tv_game_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , heapID  );
-  p_wk->cellResIdx[CGOR_COMMON_M_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-      NARC_tvt_balloon_tv_game_obj_NCER , NARC_tvt_balloon_tv_game_obj_NANR, heapID  );
-  ICHI_Printf("MAIN OBJ 読み込み\n");
-  // SUB
-  p_wk->cellResIdx[CGOR_COMMON_S_PLT] = GFL_CLGRP_PLTT_RegisterComp( arcHandle , 
-      NARC_tvt_balloon_tv_game_obj_NCLR , CLSYS_DRAW_SUB , 
-      CTVT_PAL_OBJ_SUB_GAME*32 , heapID  );
-  p_wk->cellResIdx[CGOR_COMMON_S_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
-      NARC_tvt_balloon_tv_game_obj_NCGR , FALSE , CLSYS_DRAW_SUB , heapID  );
-  p_wk->cellResIdx[CGOR_COMMON_S_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-      NARC_tvt_balloon_tv_game_obj_NCER , NARC_tvt_balloon_tv_game_obj_NANR, heapID  );
-  ICHI_Printf("SUB OBJ 読み込み\n");
+  // 共通
+  p_wk->cellResIdx[CGOR_COMMON_PLT] = GFL_CLGRP_PLTT_RegisterComp( arcHandle , 
+      NARC_tvt_balloon_game_common_obj_NCLR, CLSYS_DRAW_MAX, 
+      CTVT_GAME_PAL_OBJ_COMMON*32, heapID  );
+  p_wk->cellResIdx[CGOR_COMMON_NCG] = GFL_CLGRP_CGR_Register( arcHandle, 
+      NARC_tvt_balloon_game_common_obj_NCGR, FALSE , CLSYS_DRAW_MAX, heapID  );
+  p_wk->cellResIdx[CGOR_COMMON_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle, 
+      NARC_tvt_balloon_game_common_obj_NCER, NARC_tvt_balloon_game_common_obj_NANR, heapID  );
+
+  // プレイ中
+  p_wk->cellResIdx[CGOR_PLAY_PLT] = GFL_CLGRP_PLTT_RegisterComp( arcHandle , 
+      NARC_tvt_balloon_game_play_obj_NCLR, CLSYS_DRAW_MAX, 
+      CTVT_GAME_PAL_OBJ_PLAY*32, heapID  );
+  p_wk->cellResIdx[CGOR_PLAY_NCG] = GFL_CLGRP_CGR_Register( arcHandle, 
+      NARC_tvt_balloon_game_play_obj_NCGR, FALSE , CLSYS_DRAW_MAX, heapID  );
+  p_wk->cellResIdx[CGOR_PLAY_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle, 
+      NARC_tvt_balloon_game_play_obj_NCER, NARC_tvt_balloon_game_play_obj_NANR, heapID  );
 
   // 3Dリソース
   {
@@ -3092,36 +2941,64 @@ static void RESOURCE_Exit( CTVT_GAME_WORK* p_wk )
   GFL_G3D_UTIL_Delete( p_wk->g3dUtil );
 }
 
-// メッセージ表示用　デバッグ
-static void disp_message( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 *cp_str, u16 x, u16 y )
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ表示 下画面
+ *
+ *	@param	COMM_TVT_WORK *work
+ *	@param	p_wk
+ *	@param	u16 msgId 
+ */
+//-----------------------------------------------------------------------------
+static void disp_message_main( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 msgId )
 {
   GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
   GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+  STRBUF *str;
 
-  STRBUF	*p_strbuf;
-  STRCODE	str[128];
-  u16	strlen;
+  PRINTSYS_QUE_Clear( printQue );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->msgWinMain), 0xF );
+  str = GFL_MSG_CreateString( msgHandle, msgId );
+  PRINTSYS_PrintQueColor( printQue, GFL_BMPWIN_GetBmp( p_wk->msgWinMain ) , 
+      0, 0, str, fontHandle,CTVT_FONT_COLOR_BLACK );
+  GFL_STR_DeleteBuffer( str );
+  GFL_BMPWIN_TransVramCharacter( p_wk->msgWinMain );
+  GFL_BMPWIN_MakeScreen( p_wk->msgWinMain );
 
-  //STRBUF用に変換
-  strlen	= wcslen(cp_str);
-  GFL_STD_MemCopy(cp_str, str, strlen*2);
-  str[strlen]	= GFL_STR_GetEOMCode();
+  BmpWinFrame_Write( p_wk->msgWinMain, WINDOW_TRANS_ON_V, 
+      CTVT_GAME_BMPWIN_CGX_MAIN, CTVT_GAME_PAL_BG_M_WINFRAME );
+  p_wk->isUpdateMsgMain = TRUE;
+}
 
-  //STRBUFに転送
-  p_strbuf	= GFL_STR_CreateBuffer( strlen*2, p_wk->heapId );
-  GFL_STR_SetStringCode( p_strbuf, str);
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ表示 上画面
+ *
+ *	@param	COMM_TVT_WORK *work
+ *	@param	p_wk
+ *	@param	u16 msgId 
+ */
+//-----------------------------------------------------------------------------
+static void disp_message_sub( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 msgId )
+{
+  GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+  GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+  PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+  STRBUF *str;
 
+  PRINTSYS_QUE_Clear( printQue );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->msgWinSub), 0xF );
+  str = GFL_MSG_CreateString( msgHandle, msgId );
+  PRINTSYS_PrintQueColor( printQue, GFL_BMPWIN_GetBmp( p_wk->msgWinSub ) , 
+      0, 0, str, fontHandle, CTVT_FONT_COLOR_BLACK );
+  GFL_STR_DeleteBuffer( str );
+  GFL_BMPWIN_TransVramCharacter( p_wk->msgWinSub );
+  GFL_BMPWIN_MakeScreen( p_wk->msgWinSub );
 
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->msgWin), 0xC );
-
-  PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( p_wk->msgWin ) , 
-      x , y , p_strbuf , fontHandle ,CTVT_FONT_COLOR_WHITE );
-
-  //破棄
-  GFL_STR_DeleteBuffer( p_strbuf );
-
-  p_wk->isUpdateMsgWin = TRUE;
+  BmpWinFrame_Write( p_wk->msgWinSub, WINDOW_TRANS_ON_V, 
+      CTVT_GAME_BMPWIN_CGX, CTVT_GAME_PAL_BG_S_WINFRAME );
+  p_wk->isUpdateMsgSub = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -3136,6 +3013,7 @@ static void disp_message( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 *
 //-----------------------------------------------------------------------------
 static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  unit_idx )
 {
+  p_wk->p_game_wk = p_game_wk;
   // サイズ決定 
   //p_wk->size  = GFL_STD_MtRand(3) + 1;  // 1～3;
   p_wk->size  = p_game_wk->balloon_z_cnt + 1;
@@ -3146,10 +3024,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
   p_wk->alpha = 31;
   p_wk->alpha_cnt = 5;
 
-  p_wk->yura_move_index = 0;
-  p_wk->yura_tbl_index  = 0;
-  p_wk->yura_tbl_cnt    = 0;
-
+  p_wk->save_frame = p_game_wk->frame;
 
 
   //ICHI_Printf("風船出現 %d unit %d ", p_wk->tcb, unit_idx);
@@ -3218,7 +3093,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 #ifdef PM_DEBUG
       vy += p_game_wk->debug_v;
 #else
-      vy += FX32_ONE;
+      vy += 0x2000;
 #endif
     }
 
@@ -3297,8 +3172,22 @@ static void TaskFunc( GFL_TCB* p_tcb, void* p_work )
 
   if( p_wk->visible == TRUE )
   {
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_StartFunc(2);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     CTVT_BALLOON_Update( p_wk );
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_EndFunc(2);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_StartFunc(3);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     CTVT_BALLOON_Draw( p_wk );
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+    DEBUG_MAIN_TIME_AVERAGE_EndFunc(3);
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
   }
 }
 
@@ -3363,7 +3252,7 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_
     b_hit = collision3d_sphere_checkRay( &rayPos, &rayWay, &circle );
     if( b_hit == TRUE )
     {
-      ICHI_Printf("当たった！\n");
+      //ICHI_Printf("当たった！\n");
 
       // Hitデータ保存
       ret = TRUE;
@@ -3407,7 +3296,8 @@ static void balloon_collision_check( CTVT_GAME_WORK *p_wk )
   {
 
     // 表示していない風船はスキップ
-    if( p_wk->balloon_wk[i].visible == FALSE )
+    // 割れている風船もスキップ
+    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type == BALLOON_HIT )
     {
       continue;
     }
@@ -3566,3 +3456,51 @@ static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32
   return TRUE;
 }
 
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( u8 id )
+{
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start[id] = OS_GetTick(); 
+}
+
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( u8 id )
+{
+  OSTick now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_End[id] = OS_GetTick(); 
+
+  now_time = OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End[id] - DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start[id]);
+
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave[id] += now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count[id] ++;
+  if( now_time > 16000 ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount[id] ++;
+#if DEBUG_MAIN_TIME_AVERAGE
+    OS_TPrintf( " id %d : ", id );
+    OS_TPrintf( " over tick %ld", now_time );
+    OS_TPrintf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave[id] / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count[id]) );
+#endif
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max[id] < now_time ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max[id] = now_time;
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count[id] >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
+
+#if DEBUG_MAIN_TIME_AVERAGE
+    OS_TPrintf( " id %d : ", id );
+    OS_TPrintf( " ave tick %d", 
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave[id] / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count[id] );
+    OS_TPrintf( " Over 120::%d",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount[id] );
+    OS_TPrintf( " Max %d\n",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max[id] );
+#endif
+
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave[id] = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count[id] = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount[id] = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max[id]       = 0;
+  }
+
+}
+
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON

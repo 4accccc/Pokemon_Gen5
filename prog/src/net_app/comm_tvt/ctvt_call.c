@@ -1194,6 +1194,12 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
                   registNo = mem;
                 }
               }
+              // ìoò^Ç≥ÇÍÇƒÇ¢ÇÈÇØÇ«ÅAëäéËÇ™ÉQÅ[ÉÄíÜÇæÇ∆éQâ¡Ç≈Ç´Ç»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+              // add ichiraku
+              if( 0 )
+              {
+                callWork->memberData[mem].isLost = TRUE;
+              }
               break;
             }
           }
@@ -1204,6 +1210,12 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             {
               registNo = mem;
             }
+            // ëäéËÇ™ÉQÅ[ÉÄíÜÇæÇ∆ÅAìoò^ÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+            // add ichiraku
+            // if( 0 )
+            // {
+            // registNo = 0xFF;
+            // }
           }
         }
         

@@ -11,24 +11,28 @@
 #define NARC_TVT_BALLOON_NAIX_
 
 enum {
-	NARC_tvt_balloon_tv_game_bg_l_NCLR = 0,
-	NARC_tvt_balloon_tv_game_bg_u_NCLR = 1,
-	NARC_tvt_balloon_tv_game_obj_NCLR = 2,
-	NARC_tvt_balloon_tv_game_bg_l_NCGR = 3,
-	NARC_tvt_balloon_tv_game_bg_u_NCGR = 4,
-	NARC_tvt_balloon_tv_game_obj_NCGR = 5,
-	NARC_tvt_balloon_tv_game_bg_l_NSCR = 6,
-	NARC_tvt_balloon_tv_game_bg_u_NSCR = 7,
-	NARC_tvt_balloon_tv_game_obj_NCER = 8,
-	NARC_tvt_balloon_tv_game_obj_NANR = 9,
-	NARC_tvt_balloon_balloon1_nsbmd = 10,
-	NARC_tvt_balloon_balloon2_nsbmd = 11,
-	NARC_tvt_balloon_balloon3_nsbmd = 12,
-	NARC_tvt_balloon_balloon4_nsbmd = 13,
-	NARC_tvt_balloon_balloon1_nsbca = 14,
-	NARC_tvt_balloon_balloon2_nsbca = 15,
-	NARC_tvt_balloon_balloon3_nsbca = 16,
-	NARC_tvt_balloon_balloon4_nsbca = 17
+	NARC_tvt_balloon_game_common_obj_NCLR = 0,
+	NARC_tvt_balloon_game_play_obj_NCLR = 1,
+	NARC_tvt_balloon_tv_game_bg_l_NCLR = 2,
+	NARC_tvt_balloon_tv_game_bg_u_NCLR = 3,
+	NARC_tvt_balloon_game_common_obj_NCGR = 4,
+	NARC_tvt_balloon_game_play_obj_NCGR = 5,
+	NARC_tvt_balloon_tv_game_bg_l_NCGR = 6,
+	NARC_tvt_balloon_tv_game_bg_u_NCGR = 7,
+	NARC_tvt_balloon_tv_game_bg_l_NSCR = 8,
+	NARC_tvt_balloon_tv_game_bg_u_NSCR = 9,
+	NARC_tvt_balloon_game_common_obj_NCER = 10,
+	NARC_tvt_balloon_game_play_obj_NCER = 11,
+	NARC_tvt_balloon_game_common_obj_NANR = 12,
+	NARC_tvt_balloon_game_play_obj_NANR = 13,
+	NARC_tvt_balloon_balloon1_nsbmd = 14,
+	NARC_tvt_balloon_balloon2_nsbmd = 15,
+	NARC_tvt_balloon_balloon3_nsbmd = 16,
+	NARC_tvt_balloon_balloon4_nsbmd = 17,
+	NARC_tvt_balloon_balloon1_nsbca = 18,
+	NARC_tvt_balloon_balloon2_nsbca = 19,
+	NARC_tvt_balloon_balloon3_nsbca = 20,
+	NARC_tvt_balloon_balloon4_nsbca = 21
 };
 
 /* NARC_TVT_BALLOON_NAIX_ */

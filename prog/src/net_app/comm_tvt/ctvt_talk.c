@@ -1818,11 +1818,16 @@ static void CTVT_TALK_AcceptMsg_Main( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkW
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Main) , 0xF );
   //str = GFL_MSG_CreateString( msgHandle , msgId );
   GFL_MSG_GetString( msgHandle, msgId, talkWork->str_tmp);
-  // •b”
+  // ƒQ[ƒ€–¼ ‚Æ •b”
   {
-    WORDSET_RegisterNumber( wordSet, 0, timeLimit, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    STRBUF *gameName = GFL_MSG_CreateString( msgHandle, COMM_TVT_GAME_18 );
+
+    WORDSET_RegisterWord( wordSet, 0, gameName, 0, TRUE, PM_LANG );
+    WORDSET_RegisterNumber( wordSet, 1, timeLimit, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordSet , talkWork->str_expand , talkWork->str_tmp );
+    GFL_STR_DeleteBuffer( gameName );
   }
+
   PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Main ) , 
       0 , 0 , talkWork->str_expand , fontHandle ,CTVT_FONT_COLOR_BLACK );
   WORDSET_Delete( wordSet );
@@ -1841,21 +1846,30 @@ static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
   GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
   GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
-  WORDSET *wordSet = WORDSET_Create( heapId );
-  STRBUF *str;
+  WORDSET *wordSet= WORDSET_Create( heapId );
+  STRBUF *tempStr = GFL_STR_CreateBuffer( 64 , heapId );
+  u32     bufID = 0;
+  STRBUF  *str;
 
   PRINTSYS_QUE_Clear( printQue );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Sub) , 0xF );
   str = GFL_MSG_CreateString( msgHandle , msgId );
-  // –¼‘O
+  // –¼‘O ‚ ‚éê‡‚Ì‚Ý
   if( name != NULL){
-    STRBUF *tempName = GFL_STR_CreateBuffer( 64 , heapId );
     //ƒvƒŒƒCƒ„[–¼“WŠJ
-    WORDSET_RegisterWord( wordSet, 0, name, sex, TRUE, PM_LANG );
-    WORDSET_ExpandStr( wordSet , tempName , str );
-    GFL_STR_DeleteBuffer( str );
-    str = tempName;
+    WORDSET_RegisterWord( wordSet, bufID, name, sex, TRUE, PM_LANG );
+    bufID += 1;
   }
+  // ƒQ[ƒ€–¼
+  {
+    STRBUF *gameName = GFL_MSG_CreateString( msgHandle, COMM_TVT_GAME_18 );
+    WORDSET_RegisterWord( wordSet, bufID, gameName, sex, TRUE, PM_LANG );
+    GFL_STR_DeleteBuffer( gameName );
+  }
+  WORDSET_ExpandStr( wordSet, tempStr, str );
+  GFL_STR_DeleteBuffer( str );
+  str = tempStr;
+  
   PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Sub ) , 
       0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
   GFL_STR_DeleteBuffer( str );

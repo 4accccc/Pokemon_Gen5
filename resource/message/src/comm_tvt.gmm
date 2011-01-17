@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2011-01-16T19:10:53"/>
+	<create user="ichiraku_katsuhiko" host="W00241" date="2011-01-17T12:06:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,9 +317,9 @@
 		</language>
 	</columns>
 
-	<dialog left="217" top="14" right="922" bottom="642" maximized="no" rayout="Vertical2">
+	<dialog left="110" top="192" right="815" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="788" top="346" right="1261" bottom="744" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -596,10 +596,10 @@ Ariizumi 100506</comment>
 		<comment>ライブキャスター画面　ゲーム実行前</comment>
 		<language name="JPN">ただいま　『[1:1C:簡易会話単語:0]』の
 さんかしゃを　ぼしゅうちゅうです！
-しめきりまで　あと[2:01:２桁:0]びょうです！</language>
+しめきりまで　あと[2:01:２桁:1]びょうです！</language>
 		<language name="JPN_KANJI">ただいま　『[1:1C:簡易会話単語:0]』の
 参加者を　募集中です！
-締め切りまで　あと[2:01:２桁:0]秒です！</language>
+締め切りまで　あと[2:01:２桁:1]秒です！</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_02">
@@ -621,10 +621,10 @@ Ariizumi 100506</comment>
 	<row id="COMM_TVT_GAME_04">
 		<comment>ライブキャスター画面　ゲーム実行前</comment>
 		<language name="JPN">[1:00:トレーナー名:0]さんから
-『[1:1C:簡易会話単語:0]』の　おさそいが
+『[1:1C:簡易会話単語:1]』の　おさそいが
 きています　さんかしますか？</language>
 		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんから
-『[1:1C:簡易会話単語:0]』の　お誘いが
+『[1:1C:簡易会話単語:1]』の　お誘いが
 来ています　参加しますか？</language>
 	</row>
 
@@ -657,25 +657,25 @@ Ariizumi 100506</comment>
 	<row id="COMM_TVT_GAME_08">
 		<comment>写真撮影画面</comment>
 		<language name="JPN">すました　おかおで……
-[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]</language>
+[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
 		<language name="JPN_KANJI">すました　お顔で……
-[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]</language>
+[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_09">
 		<comment>写真撮影画面</comment>
 		<language name="JPN">えがおで　スマイル……
-[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]</language>
+[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
 		<language name="JPN_KANJI">笑顔で　スマイル……
-[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]</language>
+[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_10">
 		<comment>写真撮影画面</comment>
 		<language name="JPN">びっくり　おどろきがおで……
-[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]</language>
+[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
 		<language name="JPN_KANJI">びっくり　驚き顔で……
-[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]　[2:00:１桁:0]</language>
+[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_11">
@@ -740,6 +740,13 @@ Ariizumi 100506</comment>
 		<language name="JPN_KANJI">もう一度
 『[1:1C:簡易会話単語:0]』を　
 遊びますか？</language>
+	</row>
+
+	<row id="COMM_TVT_GAME_18">
+		<comment>ゲーム名1
+ichiraku 110117</comment>
+		<language name="JPN">ふうせんわり</language>
+		<language name="JPN_KANJI">風船わり</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_22">
