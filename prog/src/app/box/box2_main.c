@@ -1966,8 +1966,9 @@ static BOOL PokeDropCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
 {
   POKEMON_PARAM * pp;
 
-  if( BOX2MAIN_PokeParaGet( syswk, put_pos, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-//    OS_Printf( "置けない : 配置位置にポケモンがいます\n" );
+  // スワンではボックスが埋まっているかどうかをチェックするように変更 mori by 2011/01/14
+  if( BOXDAT_GetEmptySpaceTray(syswk->dat->sv_box, syswk->tray)==0 ){
+//    OS_Printf( "置けない : トレイが３０匹分埋まっている\n" );
     return FALSE;
   }
 
@@ -2392,6 +2393,7 @@ static void PokeIconDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_po
   u32 get;
   u32 ppcnt;
   u32 i;
+  int tray,pos;
 
   work = syswk->app->vfunk.work;
   dat  = work->dat;
@@ -2419,6 +2421,12 @@ static void PokeIconDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_po
     PokeIconMoveParamMake( syswk, &dat[0] );
     return;
   }
+
+  // 開いている場所を探す
+  tray = syswk->tray;
+  pos  = put_pos;
+  BOXDAT_GetEmptyTrayNumberAndPos( syswk->dat->sv_box, &tray, &pos );
+  put_pos = pos;  // put_posが空きであればそのまま返ってくるはず
 
   work->get_pos = get_pos;
   work->put_pos = put_pos;
@@ -2478,9 +2486,10 @@ static void PokeIconPartyDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 p
     dat[i].flg    = 0;
   }
 
-  // 配置エリア外 or 配置位置にポケモンがいる
-  if( put_pos == BOX2MAIN_GETPOS_NONE ||
-    BOX2MAIN_PokeParaGet( syswk, put_pos, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
+  ppcnt = PokeParty_GetPokeCount( syswk->dat->pokeparty );
+
+  // 配置エリア外 or 手持ちがいっぱい
+  if( put_pos == BOX2MAIN_GETPOS_NONE || ppcnt==BOX2OBJ_TRAYICON_MAX){
     work->get_pos = BOX2MAIN_GETPOS_NONE;
     work->put_pos = BOX2MAIN_GETPOS_NONE;
     dat[0].df_pos = BOX2OBJ_POKEICON_GET_POS;
@@ -2495,10 +2504,13 @@ static void PokeIconPartyDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 p
     return;
   }
 
+  // 既に手持ちがある場所の場合は開いている場所に補正
+  if(put_pos<=(ppcnt+BOX2OBJ_POKEICON_TRAY_MAX-1)){
+    put_pos = ppcnt+BOX2OBJ_POKEICON_TRAY_MAX;
+  }
+
   work->get_pos = get_pos;
   work->put_pos = put_pos;
-
-  ppcnt = PokeParty_GetPokeCount( syswk->dat->pokeparty );
 
   PokeIconChgDataMeke( syswk, get_pos, ppcnt+BOX2OBJ_POKEICON_TRAY_MAX );
 }
@@ -5027,14 +5039,18 @@ int BOX2MAIN_GetTrayPokeMoveDrop( BOX2_SYS_WORK * syswk )
     break;
 
   case TSURETEIKU_SEQ_ICON_GET:   // アイコン取得中
+    // ポケモン離した
     if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == FALSE ){
 
       put_pos = BOX2MAIN_GETPOS_NONE;
+
+      // メニューが出ているか
       if( BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == TRUE ){
         put_pos = PartyPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy, PartyPokeAreaRight );
       }
       PokeIconPartyDropDataMake( syswk, syswk->get_pos, put_pos );
 
+      // メニューが完全に出現しているか
       if( BOX2BGWFRM_PokeMenuOpenPutCheck( syswk->app->wfrm ) == FALSE ){
         BOX2OBJ_PokeCursorVanish( syswk, FALSE );
       }
@@ -5051,6 +5067,7 @@ int BOX2MAIN_GetTrayPokeMoveDrop( BOX2_SYS_WORK * syswk )
         vf->seq = TSURETEIKU_SEQ_MOVE_CANCEL1;
       }
 
+    // ポケモンドラッグ中
     }else{
       if( menu_mv == FALSE && party_mv == FALSE &&
           BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == FALSE ){
