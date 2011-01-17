@@ -47,9 +47,8 @@ enum {
   RSC_GRID_H04 = 18,     // グリッド　H04 スクロールなし動作
   RSC_GRID_DEF_TAILDRAW = 19,
   RSC_GRID_LEAGIN02 = 20, //グリッド　リーグフロント２専用
+  RSC_GRID_H06 = 21,      //グリッド　H06専用
 
-	//NO_GRID_SAMPLE = 2,
-	//GRID_GS_SAMPLE = 3,
 	RSC_TYPE_END
 };
 #include "zone_id.h"
