@@ -713,6 +713,11 @@
 	@echo convert ncg_imd fiddle
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fiddle.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
+#guitar.imd
+./mmdl_res/guitar.imd: ./mmdl_nchara/guitar.ncg ./mmdl_nchara/guitar.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd guitar
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/guitar.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
 #babyboy2.imd
 ./mmdl_res/babyboy2.imd: ./mmdl_nchara/babyboy2.ncg ./mmdl_nchara/babyboy2.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
 	@echo convert ncg_imd babyboy2

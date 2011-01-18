@@ -142,6 +142,7 @@ FMMDL_RESLIST_NCGIMD = \
 	pipe.imd \
 	grasssound.imd \
 	fiddle.imd \
+	guitar.imd \
 	babyboy2.imd \
 	babygirl2.imd \
 	workman2.imd \
