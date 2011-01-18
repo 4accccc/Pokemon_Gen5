@@ -6,7 +6,8 @@
 #------------------------------------------------------------------------------
 
 EXCELCONV = ../../../tools/exceltool/ExcelSeetConv.exe
-MEDALLIST_CSV = medal_data.csv
+MEDALLIST_CSV 		= medal_data.csv
+MEDALDATA_DEF_CSV = data_def.csv
 MEDALLIST_XLS = medal_data.xls
 MEDALLIST_H		= medal_data.h
 MEDAL_ID_H  	= mdlid_def.h
@@ -20,7 +21,8 @@ MEDALHELP_GMM = medalhelp.gmm
 RECORD_H			= record.h
 RECORD_H_PATH = ../../../prog/include/savedata/
 RECORDRBDEF		= recorddef.rb
-RECORDRBDEF_PATH		= recorddef.rb
+
+GRATYPERBDEF			= gratypeddef.rb
 
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
@@ -39,7 +41,10 @@ NAIXNAME	= $(MEDALDATANARC).naix
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)
 GMMDIR	= ../../message/src/
-CONVERTERDIR = ../converter/
+INCLUDE_DIR	= ../../../prog/include/app/
+INCLUDE_TOOL_DIR	= ../../../prog/include/medal_tool/
+SRC_DIR	= ../../../prog/src/app/medal_box/
+CONVERTERDIR	= ../converter/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -57,7 +62,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM)
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(MEDALRECID_H) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += $(NARCNAME) $(NAIXNAME) $(DATADIR)* $(MEDAL_SORT_CDAT) $(MEDAL_ID_H) $(MEDALRECID_H) $(MEDALNAME_GMM) $(MEDALEX_GMM) $(MEDALHELP_GMM) $(RECORD_H) $(CONVERTERDIR)$(RECORDRBDEF)
 endif
@@ -74,6 +79,8 @@ $(CONVERTERDIR)$(RECORDRBDEF) : $(RECORD_H_PATH)$(RECORD_H)
 
 $(DATADIR)$(MEDALLIST_CSV): $(MEDALLIST_XLS) $(RECORD_H_PATH)$(RECORD_H)
 	@$(EXCELCONV) -o $(DATADIR)$(MEDALLIST_CSV) -p 1 -s csv $(MEDALLIST_XLS)
+	@$(EXCELCONV) -o $(DATADIR)$(MEDALDATA_DEF_CSV) -p 2 -s csv $(MEDALLIST_XLS)
+	ruby $(CONVERTERDIR)gratype_data_maker.rb $(CONVERTERDIR)$(GRATYPERBDEF) $(DATADIR)$(MEDALDATA_DEF_CSV)
 	ruby $(CONVERTERDIR)medal_converter.rb $(DATADIR)$(MEDALLIST_CSV) $(MEDAL_ID_H) $(MEDALRECID_H) $(MEDAL_SORT_CDAT) $(TMPGMM) $(MEDALNAME_GMM) $(MEDALEX_GMM) $(MEDALHELP_GMM) $(DATADIR)
 
 $(NARCNAME) : $(MEDALLIST_XLS)
@@ -85,7 +92,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM)
+do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(MEDALRECID_H) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 
@@ -100,4 +107,10 @@ $(GMMDIR)/$(MEDALEX_GMM):	$(MEDALEX_GMM)
 
 $(GMMDIR)/$(MEDALHELP_GMM):	$(MEDALHELP_GMM)
 	$(COPY)	$(MEDALHELP_GMM) $(GMMDIR)
+
+$(INCLUDE_DIR)/$(MEDAL_ID_H):	$(MEDAL_ID_H)
+	$(COPY)	$(MEDAL_ID_H) $(INCLUDE_DIR)
+
+$(SRC_DIR)/$(MEDAL_SORT_CDAT):	$(MEDAL_SORT_CDAT)
+	$(COPY)	$(MEDAL_SORT_CDAT) $(SRC_DIR)
 

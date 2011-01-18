@@ -61,6 +61,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/battlematch_savedata.c \
         savedata/dendou_save.c \
 				savedata/etc_save.c \
+				savedata/medalbox.c \
         field/fldmmdl_save.c
 
 

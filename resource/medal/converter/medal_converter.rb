@@ -15,6 +15,7 @@ require "csv"
 require File.dirname(__FILE__) + '/rbdef.rb'
 require File.dirname(__FILE__) + '/../../../tools/gmm_make/gmm_make'
 require File.dirname(__FILE__) + '/recorddef.rb'
+require File.dirname(__FILE__) + '/gratypeddef.rb'
 
 class MEDAL_DATA
   attr_accessor :no ,:id ,:medal_name ,:record_id ,:count ,:hint_condition ,:hint_level ,:graphic_type ,:graphic_id ,:explanation_kana ,:explanation_kanzi ,:hint_kana ,:hint_kanzi ,:comment
@@ -24,8 +25,9 @@ end
 # グラフィック名からIDを取得する
 # =====================================
 def GetGraphicID( name )
-  if MDL_GRAPHIC_ID.key?(name) then
-    return MDL_GRAPHIC_ID[name]
+  if GRAPHICTYPE_HASH.key?(name) then
+    puts name + "-" +GRAPHICTYPE_HASH[name].to_s
+    return GRAPHICTYPE_HASH[name]
   else
     raise "未定義のグラフィックIDが使用されています->"+name
     return nil
@@ -99,6 +101,14 @@ medal_csv.each { |item|
   medal_data_list << medal_data
 }
 
+# ======================================================
+# エラーチェック
+# ======================================================
+
+# 重複チェック
+
+# 大文字チェック
+
 #=======================================================
 #
 # タイプヘッダファイル生成
@@ -110,8 +120,8 @@ medal_data_list.each_with_index{ |item,index|
   # indexを3桁で表示している=>%03d"%index
   medal_type_def.puts '#define ' + item.id + "\t("+ index.to_s + ')' + "\t// " + item.medal_name
 }
-medal_type_def.puts '#define MEDAL_ID_MAX'  + "\t("+ medal_data_list.size.to_s + ')' + "\t// メダル最大数"
-medal_type_def.puts ""
+medal_type_def.puts '#define MDLID_MAX'  + "\t("+ medal_data_list.size.to_s + ')' + "\t// メダル最大数"
+medal_type_def.puts MDLREC_CMT_END
 medal_type_def.close
 
 #=======================================================
@@ -121,7 +131,8 @@ medal_type_def.close
 #=======================================================
 medal_rec_id_def = open( MDLREC_FILE_NAME ,"w")
 medal_rec_id_def.puts MDLREC_CMT % MDLREC_FILE_NAME
-no_define_cnt = RECORD_H_HASH["SMALL_REC_MAX"] + 10000 # 未定義レコードID数
+no_define_cnt = 10000 # 未定義レコードID数
+medal_rec_id_def.puts "#define\tMDLRECID_START\t( " + no_define_cnt.to_s + " )"
 medal_data_list.each_with_index{ |item,index|
   unless RECORD_H_HASH.key?(item.record_id) then
     medal_rec_id_def.puts "#define\t" + item.record_id + "\t( " + no_define_cnt.to_s + " )"
@@ -175,18 +186,20 @@ medal_data_list.each_with_index{ |item,index|
   #=====================
   # データの書き込み
   medal_bin << [ item.count.to_i ].pack( "I" )  # 目標数
-  if item.record_id.include?("RECID_") then
-    medal_bin << [ 0 ].pack( "C" )              # 比較データタイプ 
-  else
-    medal_bin << [ 1 ].pack( "C" )              # 比較データタイプ 
-  end
-
+  
   # ハッシュデータに存在するか判断
   unless RECORD_H_HASH.key?(item.record_id) then
     raise "ハッシュに定義されていないレコードIDが登録されています:"+item.record_id
   end
-  medal_bin << [ RECORD_H_HASH[item.record_id] ].pack( "I" )  # レコードIDを解析した値を入れる必要がある
-  medal_bin << [ item.graphic_type.to_i ].pack( "C" ) # メダルグラフィックタイプ
+  medal_bin << [ RECORD_H_HASH[item.record_id] ].pack( "i" )  # レコードIDを解析した値を入れる必要がある
+
+  if item.record_id.include?("MDLRECID_") then
+    medal_bin << [ 1 ].pack( "C" )              # 比較データタイプ 
+  else
+    medal_bin << [ 0 ].pack( "C" )              # 比較データタイプ 
+  end
+
+  medal_bin << [ item.graphic_id ].pack( "C" ) # メダルグラフィックID
   medal_bin << [ GetHintConditionID(item.hint_condition) ].pack( "C" ) # ヒント開示条件
   medal_bin << [ item.hint_level.to_i ].pack( "C" ) # ヒントレベル
   medal_bin.close

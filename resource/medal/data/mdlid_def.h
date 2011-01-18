@@ -60,5 +60,9 @@
 #define MDLID_CHAMPION_ESPER	(46)	// エスパーチャンプ
 #define MDLID_CHAMPION_DRAGON	(47)	// ドラゴンチャンプ
 #define MDLID_CHAMPION_AKU	(48)	// ビシャスチャンプ
-#define MEDAL_ID_MAX	(49)	// メダル最大数
+#define MDLID_MAX	(49)	// メダル最大数
+
+#ifndef __ASM_NO_DEF_  //これ以降はアセンブラでは無視
+typedef  int MedalID;
+#endif __ASM_NO_DEF_
 

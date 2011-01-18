@@ -14,33 +14,10 @@ COL_HINT_KANA         = 10
 COL_HINT_KANZI        = 11 
 COL_HINT_COMMENT      = 12
 
-# グラフィックID定義
-MDL_GRAPHIC_ID = Hash.new
-MDL_GRAPHIC_ID["FIELD_LV1"]       = 0
-MDL_GRAPHIC_ID["FIELD_LV2"]       = 1
-MDL_GRAPHIC_ID["FIELD_LV3"]       = 2
-MDL_GRAPHIC_ID["FIELD_LV4"]       = 3
-MDL_GRAPHIC_ID["BATTLE_LV1"]      = 4
-MDL_GRAPHIC_ID["BATTLE_LV2"]      = 5
-MDL_GRAPHIC_ID["BATTLE_LV3"]      = 6
-MDL_GRAPHIC_ID["BATTLE_LV4"]      = 7
-MDL_GRAPHIC_ID["APPLICATION_LV1"] = 8
-MDL_GRAPHIC_ID["APPLICATION_LV2"] = 9
-MDL_GRAPHIC_ID["APPLICATION_LV3"] = 10
-MDL_GRAPHIC_ID["APPLICATION_LV4"] = 11
-MDL_GRAPHIC_ID["MISSION_LV1"]     = 12
-MDL_GRAPHIC_ID["MISSION_LV2"]     = 13
-MDL_GRAPHIC_ID["MISSION_LV3"]     = 14
-MDL_GRAPHIC_ID["MISSION_LV4"]     = 15
-MDL_GRAPHIC_ID["SPECIAL_LV1"]     = 16
-MDL_GRAPHIC_ID["SPECIAL_LV2"]     = 17
-MDL_GRAPHIC_ID["SPECIAL_LV3"]     = 18
-MDL_GRAPHIC_ID["SPECIAL_LV4"]     = 19
-
 # ヒントタイプ定義(プログラム内で直接記述しているので未使用)
 MDL_HINT_CONDITION = Hash.new
-MDL_HINT_CONDITION["なし"]                 = "HINT_CONDITION_NONE"
-MDL_HINT_CONDITION["最初から"]             = "HINT_CONDITION_FIRST"
+MDL_HINT_CONDITION["なし"]                 = "MEDALDATA_HINT_NONE"
+MDL_HINT_CONDITION["最初から"]             = "MEDALDATA_HINT_FIRST"
 MDL_HINT_CONDITION["ヒントレベルから計算"] = "HINT_CONDITION_HINT_LEVEL"
 MDL_HINT_CONDITION["プログラム側で開示"]   = "HINT_CONDITION_PROGRAM"
 
@@ -80,10 +57,19 @@ MDLREC_CMT = <<-EOS
 //   @date		2011.01.07
 //
 //  **{ /resource/medal/converter/medal_converter.rbが出力したデータです }**
-//  record.hに定義されている、SMALL_REC_MAX+10000からナンバリングしている
+//  record.hに定義されている、10000からナンバリングしている
 //
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
+
+EOS
+
+# メダルレコードフッター部コメント
+MDLREC_CMT_END = <<-EOS
+
+#ifndef __ASM_NO_DEF_  //これ以降はアセンブラでは無視
+typedef  int MedalID;
+#endif __ASM_NO_DEF_
 
 EOS
 
@@ -122,4 +108,23 @@ RECRBDEF_CMT = <<-EOS
 ##]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 RECORD_H_HASH = {
+EOS
+
+
+# レコード定義ファイルコメント
+GRATYPE_CMT = <<-EOS
+#[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+##
+##
+##   @file		%s
+##   @brief   グラフィックタイプ定義ファイル 
+##   @author	Masayuki Onoue
+##   @date		2011.01.14
+##
+##  **{ /resource/medal/converter/gratype_hash_maker.rbが出力したデータです }**
+##  
+##
+##]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+GRAPHICTYPE_HASH = {
 EOS
