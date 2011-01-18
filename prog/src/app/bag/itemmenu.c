@@ -1411,6 +1411,20 @@ static int _check_LiveCaster( FIELD_ITEMMENU_WORK *pWork )
   return _check_Common( pWork, ITEMCHECK_LIVECASTER, BAG_NEXTPROC_LIVECASTER, FALSE );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックス使用チェック
+ *
+ *	@param	*pWork 
+ *
+ *	@retval int
+ */
+//-----------------------------------------------------------------------------
+static int _check_MedalBox( FIELD_ITEMMENU_WORK *pWork )
+{
+  return _check_Common( pWork, ITEMCHECK_MEDALBOX, BAG_NEXTPROC_MEDALBOX, FALSE );
+}
+
 //----------------------------------------------------------------------------------
 /**
  *
@@ -1462,6 +1476,10 @@ static const ITEMUSE_FUNC_DATA ItemUseFuncTable[]={
   { // ライブキャスター女用
     ITEM_RAIBUKYASUTAA_1, 1,
     _check_LiveCaster,
+  },
+  { // メダルボックス
+    ITEM_MEDARUBOKKUSU, 1,
+    _check_MedalBox,
   },
 };
 

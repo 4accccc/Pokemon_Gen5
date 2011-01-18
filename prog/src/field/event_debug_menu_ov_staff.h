@@ -24,3 +24,4 @@ extern BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
 extern BOOL debugMenu_WfbcDebug( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *p_wk );
 extern BOOL debugMenuCallProc_DebugTest_Onoue( DEBUG_MENU_EVENT_WORK *wk );
+extern BOOL debugMenuCallProc_MedalBox( DEBUG_MENU_EVENT_WORK *wk );

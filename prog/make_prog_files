@@ -1138,6 +1138,11 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 											 app/townmap/townmap_grh.c \
 											 app/townmap/townmap_data_sys.c
 
+# メダルボックス
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_MEDALBOX = app/medal_box/medalbox_sys.c \
+                        app/medal_box/medalbox_data_sys.c
+
 # エンカウントエフェクト
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_ENCEFF_CI = field/enceff_ci.c

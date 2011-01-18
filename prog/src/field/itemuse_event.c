@@ -90,6 +90,7 @@ static ItemUseCheckFunc const DATA_ItemUseCheckFunc[ITEMCHECK_MAX] = {
   NULL, // スプレー
   itemcheck_DowsingMachine, // ダウジングマシン
   itemcheck_DowsingMachine, // ライブキャスター(ダウジングマシンの使用条件と同じなので、使いまわしている)
+  itemcheck_DowsingMachine, // メダルボックス(ダウジングマシンの使用条件と同じなので、使いまわしている)
 };
 
 

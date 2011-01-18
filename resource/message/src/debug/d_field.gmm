@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-12-15T15:24:45"/>
+	<create user="onoue_masayuki" host="W00240" date="2011-01-14T19:45:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="237"/>
+		<id position="0" width="286"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="438" top="88" right="1143" bottom="716" maximized="no" rayout="Vertical2">
+	<dialog left="23" top="97" right="728" bottom="725" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="0" top="168" right="528" bottom="690" visible="yes"/>
+		<tag-palette left="752" top="215" right="1280" bottom="737" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -2195,6 +2195,46 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_TEST_ONOUE">
 		<language name="JPN" width="240">おのうえテスト</language>
 		<language name="JPN_KANJI" width="240">おのうえテスト</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_01">
+		<language name="JPN" width="240">メダルボックス</language>
+		<language name="JPN_KANJI" width="240">メダルボックス</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_OPEN">
+		<language name="JPN" width="240">タイトルメダルぜんかいほう</language>
+		<language name="JPN_KANJI" width="240">タイトルメダル全開放</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_OPEN">
+		<language name="JPN" width="240">ヒントメダルぜんかいほう</language>
+		<language name="JPN_KANJI" width="240">ヒントメダル全開放</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_ACHIVE">
+		<language name="JPN" width="240">タイトルメダルぜんたっせい</language>
+		<language name="JPN_KANJI" width="240">タイトルメダル全達成</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_ACHIVE">
+		<language name="JPN" width="240">ヒントメダルぜんたっせい</language>
+		<language name="JPN_KANJI" width="240">ヒントメダル全達成</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_MENU_OUTDATA">
+		<language name="JPN" width="240">メダルデータをデバッグプリント</language>
+		<language name="JPN_KANJI" width="240">メダルデータをデバッグ出力</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_MENU_OUTSAVE">
+		<language name="JPN" width="240">メダルセーブをデバッグプリント</language>
+		<language name="JPN_KANJI" width="240">メダルセーブをデバッグプリント</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDALBOX_MENU_RANDOMSET">
+		<language name="JPN" width="240">メダルセーブをランダムセット</language>
+		<language name="JPN_KANJI" width="240">メダルセーブをランダムセット</language>
 	</row>
 
 	<flowchart-group-list>

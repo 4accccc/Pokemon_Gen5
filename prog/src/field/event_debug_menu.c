@@ -191,6 +191,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   // ためしにデバック機能追加してみた
   { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi, FS_OVERLAY_ID(debugmenu_staff) },    // いちらくテスト
   { DEBUG_FIELD_TEST_ONOUE, debugMenuCallProc_DebugTest_Onoue, FS_OVERLAY_ID(debugmenu_staff) },    // おのうえテスト
+  { DEBUG_FIELD_MEDALBOX_01 , debugMenuCallProc_MedalBox , FS_OVERLAY_ID(debugmenu_staff) },    // メダルボックス
 };
 
 //------------------------------------------------------------------------
