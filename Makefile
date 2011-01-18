@@ -206,6 +206,12 @@ eventdata:
 	$(MAKE) -C $(RESOURCE_DIR)/fldmapdata/eventdata clean
 	$(MAKE)
 
+# トレーナーグラフィック更新用 resource/trgra/convの削除
+#--------------------------------------------------------------------
+trgra_clean:
+	$(MAKE) -C $(RESOURCE_DIR)/trgra/conv clean
+	$(MAKE) -C $(RESOURCE_DIR)/trgra clean
+
 #----------------------------------------------------------------------------
 #	make後、日時を表示
 #----------------------------------------------------------------------------
