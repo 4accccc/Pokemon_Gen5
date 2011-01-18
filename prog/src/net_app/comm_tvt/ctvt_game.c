@@ -1057,14 +1057,14 @@ static BOOL CTVT_GAME_Camera( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // BGƒ[ƒh
       {
         // ã‰æ–Ê
-        GFL_ARC_UTIL_TransVramPalette( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_camera_bg_NCLR , 
-            PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*5, gameWork->heapId );
-        GFL_ARC_UTIL_TransVramBgCharacter( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_camera_bg_NCGR,
-            CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, gameWork->heapId );
-        GFL_ARC_UTIL_TransVramScreen( ARCID_COMM_TVT_GRA , NARC_comm_tvt_tv_camera_bg_NSCR, 
-            CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, gameWork->heapId );
-
-        GFL_BG_LoadScreenReq( CTVT_GAME_FRAME_S_BG );
+//        GFL_ARC_UTIL_TransVramPalette( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_camera_bg_NCLR , 
+//            PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*5, gameWork->heapId );
+//        GFL_ARC_UTIL_TransVramBgCharacter( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_camera_bg_NCGR,
+//            CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, gameWork->heapId );
+//        GFL_ARC_UTIL_TransVramScreen( ARCID_COMM_TVT_GRA , NARC_comm_tvt_tv_camera_bg_NSCR, 
+//            CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, gameWork->heapId );
+//
+//        GFL_BG_LoadScreenReq( CTVT_GAME_FRAME_S_BG );
       }
 
       CAMERA_SYS_StartCapture( camSys );
