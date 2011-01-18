@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: local_tvt_call.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_LOCAL_TVT_CALL_NAIX_
+#define NARC_LOCAL_TVT_CALL_NAIX_
+
+enum {
+	NARC_local_tvt_call_local_tvt_call_dat = 0
+};
+
+/* NARC_LOCAL_TVT_CALL_NAIX_ */
+#endif

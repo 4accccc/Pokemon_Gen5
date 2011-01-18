@@ -8,7 +8,8 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 
 SUBDIRS	=	graphic \
-					script
+					script \
+					call
 
 include $(RESOURCE_MACRO)
 
