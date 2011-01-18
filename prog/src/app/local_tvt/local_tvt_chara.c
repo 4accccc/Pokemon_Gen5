@@ -315,6 +315,7 @@ void LOCAL_TVT_CHARA_SYS_Term( LOCAL_TVT_CHARA_SYS *sys )
     if( sys->charaWork[i] != NULL )
     {
       LOCAL_TVT_CHARA_Term( sys, sys->charaWork[i] );
+      sys->charaWork[i] = NULL;
     }
   }
 
@@ -459,16 +460,27 @@ void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CH
 
   {
     int i;
+    BOOL is_load  = FALSE;
+  
+    for( i=0; i< LTM_4_MEMBER; i++ )
+    {
+      if( sys->charaWork[i] != NULL )
+      {
+        LOCAL_TVT_CHARA_Term( sys, sys->charaWork[i] );
+        sys->charaWork[i] = NULL;
+        is_load = TRUE;
+      }
+      if( is_load )
+      {
+        GFL_BG_LoadScreenReq(LTVT_FRAME_NAME);
+      }
+    }
+
     for( i=0 ; i<sys->member ; i++ )
     {
       const LOCAL_TVT_CHARA_PARAM *chara_param  = &cp_setup_tbl[i];
       if( chara_param->charaType != 0xFF )
       {
-        if( sys->charaWork[i] != NULL )
-        {
-          LOCAL_TVT_CHARA_Term( sys, sys->charaWork[i] );
-        }
-
         sys->charaWork[i] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, chara_param->weatherType, i, sys->heapID );
       }
     }
@@ -684,7 +696,6 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
 //--------------------------------------------------------------
 static void LOCAL_TVT_CHARA_Term( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA *charaWork )
 {
-
   LOCAL_TVT_CHARA_UnLoadWeather( charaWork );
   GFL_CLACT_WK_Remove( charaWork->clwkEye );
   GFL_CLACT_WK_Remove( charaWork->clwkMouth );
@@ -692,6 +703,7 @@ static void LOCAL_TVT_CHARA_Term( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA *cha
   GFL_CLGRP_CGR_Release( charaWork->cellRes[1] );
   GFL_CLGRP_CELLANIM_Release( charaWork->cellRes[2] );
 
+  GFL_BMPWIN_ClearScreen( charaWork->nameWin );
   GFL_BMPWIN_Delete( charaWork->nameWin );
   if( charaWork->resData != NULL )
   {
