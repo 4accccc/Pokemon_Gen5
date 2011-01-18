@@ -36,15 +36,18 @@ enum {
 	NARC_comm_tvt_tv_t_tuuwa_bg_NSCR = 22,
 	NARC_comm_tvt_tv_t_yobidashi_bg_NSCR = 23,
 	NARC_comm_tvt_tv_camera_obj_NCER = 24,
-	NARC_comm_tvt_tv_t_lower_obj_NCER = 25,
-	NARC_comm_tvt_tv_t_upper_obj_NCER = 26,
-	NARC_comm_tvt_tv_camera_obj_NANR = 27,
-	NARC_comm_tvt_tv_t_lower_obj_NANR = 28,
-	NARC_comm_tvt_tv_t_upper_obj_NANR = 29,
-	NARC_comm_tvt_tv_t_lower_obj_NCGR = 30,
-	NARC_comm_tvt_tv_t_upper_obj_NCGR = 31,
-	NARC_comm_tvt_tv_t_ds_mode_ntft = 32,
-	NARC_comm_tvt_tv_t_ds_mode_double_ntft = 33
+	NARC_comm_tvt_tv_t_call_obj_NCER = 25,
+	NARC_comm_tvt_tv_t_lower_obj_NCER = 26,
+	NARC_comm_tvt_tv_t_upper_obj_NCER = 27,
+	NARC_comm_tvt_tv_camera_obj_NANR = 28,
+	NARC_comm_tvt_tv_t_call_obj_NANR = 29,
+	NARC_comm_tvt_tv_t_lower_obj_NANR = 30,
+	NARC_comm_tvt_tv_t_upper_obj_NANR = 31,
+	NARC_comm_tvt_tv_t_call_obj_NCGR = 32,
+	NARC_comm_tvt_tv_t_lower_obj_NCGR = 33,
+	NARC_comm_tvt_tv_t_upper_obj_NCGR = 34,
+	NARC_comm_tvt_tv_t_ds_mode_ntft = 35,
+	NARC_comm_tvt_tv_t_ds_mode_double_ntft = 36
 };
 
 /* NARC_COMM_TVT_NAIX_ */

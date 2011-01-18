@@ -94,15 +94,6 @@ typedef enum
   LTTS_MAX,
 }LOCAL_TVT_TRANS_STATE;
 
-typedef enum
-{
-  LOCAL_TVT_WEATHER_RAIN,
-  LOCAL_TVT_WEATHER_SAND,
-  LOCAL_TVT_WEATHER_SNOW,
-  LOCAL_TVT_WEATHER_MAX,
-  LOCAL_TVT_WEATHER_SUNNY = LOCAL_TVT_WEATHER_MAX,
-}LOCAL_TVT_WEATHER;
-
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -136,6 +127,8 @@ struct _LOCAL_TVT_CHARA
   u8 bgAnmIdx;
   u8 anmCnt;
   u8 nameLen;
+
+  u32 weatherType;
   
   LOCAL_TVT_CHARA_TRANS_STATE state;
 
@@ -149,9 +142,9 @@ struct _LOCAL_TVT_CHARA
   GFL_CLWK *clwkEye;
   GFL_CLWK *clwkMouth;
   
+  u16  lipDelayCnt;
   u16 eyeBlinkCnt;
   BOOL isLipSync;
-  u16  lipDelayCnt;
 
   LOCAL_TVT_CHARA_SYS *sys;
   HEAPID heapID;
@@ -172,9 +165,53 @@ static const u8 charaResList[LTCT_MAX][3] = {
 };
 
 
-static const u8 bgResList[][2] = {
-    { NARC_local_tvt_graphic_back_01a_NCLR , NARC_local_tvt_graphic_back_01a_01_NCGR },
-    { NARC_local_tvt_graphic_back_02a_NCLR , NARC_local_tvt_graphic_back_02a_01_NCGR },
+static const struct
+{
+  u16 nclr;
+  u16 ncgr;
+} bgResList[LOCAL_TVT_BACK_MAX][LTTZ_MAX] = {
+  //部屋
+  {
+    { NARC_local_tvt_graphic_back_01_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
+    { NARC_local_tvt_graphic_back_01_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
+    { NARC_local_tvt_graphic_back_01_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
+  },
+  //洞窟
+  {
+    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
+    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
+    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
+  },
+  //街
+  {
+    { NARC_local_tvt_graphic_back_03a_NCLR,NARC_local_tvt_graphic_back_03a_NCGR },
+    { NARC_local_tvt_graphic_back_03b_NCLR,NARC_local_tvt_graphic_back_03b_NCGR },
+    { NARC_local_tvt_graphic_back_03c_NCLR,NARC_local_tvt_graphic_back_03c_NCGR },
+  },
+  //平野
+  {
+    { NARC_local_tvt_graphic_back_04a_NCLR,NARC_local_tvt_graphic_back_04a_NCGR },
+    { NARC_local_tvt_graphic_back_04b_NCLR,NARC_local_tvt_graphic_back_04b_NCGR },
+    { NARC_local_tvt_graphic_back_04c_NCLR,NARC_local_tvt_graphic_back_04c_NCGR },
+  },
+  //山
+  {
+    { NARC_local_tvt_graphic_back_05a_NCLR,NARC_local_tvt_graphic_back_05a_NCGR },
+    { NARC_local_tvt_graphic_back_05b_NCLR,NARC_local_tvt_graphic_back_05b_NCGR },
+    { NARC_local_tvt_graphic_back_05c_NCLR,NARC_local_tvt_graphic_back_05c_NCGR },
+  },
+  //海
+  {
+    { NARC_local_tvt_graphic_back_06a_NCLR,NARC_local_tvt_graphic_back_06a_NCGR },
+    { NARC_local_tvt_graphic_back_06b_NCLR,NARC_local_tvt_graphic_back_06b_NCGR },
+    { NARC_local_tvt_graphic_back_06c_NCLR,NARC_local_tvt_graphic_back_06c_NCGR },
+  },
+  //砂漠
+  {
+    { NARC_local_tvt_graphic_back_07a_NCLR,NARC_local_tvt_graphic_back_07a_NCGR },
+    { NARC_local_tvt_graphic_back_07b_NCLR,NARC_local_tvt_graphic_back_07b_NCGR },
+    { NARC_local_tvt_graphic_back_07c_NCLR,NARC_local_tvt_graphic_back_07c_NCGR },
+  },
 };
 
 static const struct
@@ -209,6 +246,9 @@ static void LOCAL_TVT_CHARA_Main( LOCAL_TVT_CHARA *charaWork );
 static const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_CHARA *charaWork );
 static void LOCAL_TVT_CHARA_RedrawName( LOCAL_TVT_CHARA *charaWork );
 static void LOCAL_TVT_CHARA_LoadResource( LOCAL_TVT_CHARA *charaWork , const u8 bufNo);
+static u8 LOCAL_TVT_CHARA_GetCharaType( const LOCAL_TVT_CHARA *charaWork );
+static u8 LOCAL_TVT_CHARA_GetBgType( const LOCAL_TVT_CHARA *charaWork );
+static u32 LOCAL_TVT_CHARA_GetWeatherType( const LOCAL_TVT_CHARA *charaWork );
 
 
 static void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg );
@@ -389,6 +429,10 @@ void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys )
 void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CHARA_PARAM *cp_setup_tbl, LOCAL_TVT_MEMBER member )
 {
   sys->member = member;
+  sys->transCnt = 0;
+  sys->bufNo = 1;
+  sys->transState = LTTS_CHARA1;
+  sys->transChara = NULL;
 
   {
     u32 datId;
@@ -420,6 +464,11 @@ void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CH
       const LOCAL_TVT_CHARA_PARAM *chara_param  = &cp_setup_tbl[i];
       if( chara_param->charaType != 0xFF )
       {
+        if( sys->charaWork[i] != NULL )
+        {
+          LOCAL_TVT_CHARA_Term( sys, sys->charaWork[i] );
+        }
+
         sys->charaWork[i] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, chara_param->weatherType, i, sys->heapID );
       }
     }
@@ -459,6 +508,53 @@ void LOCAL_TVT_CHARA_SYS_RedrawName( LOCAL_TVT_CHARA_SYS *sys )
       LOCAL_TVT_CHARA_RedrawName( charaWork );
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイムゾーン再設定
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  システム
+ *	@param	timeZone タイムゾーン
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_SYS_SetTimeZone( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_TIME_ZONE timeZone )
+{
+  sys->param.timeZone = timeZone;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイムゾーン受け取り
+ *
+ *	@param	const LOCAL_TVT_CHARA_SYS *sys  システム
+ *
+ *	@return タイムゾーン
+ */
+//-----------------------------------------------------------------------------
+LOCAL_TVT_TIME_ZONE LOCAL_TVT_CHARA_SYS_GetTimeZone( const LOCAL_TVT_CHARA_SYS *sys )
+{
+  return sys->param.timeZone;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  引数受けとり
+ *
+ *	@param	const LOCAL_TVT_CHARA_SYS *sys  システム
+ *	@param	*p_param  引数受け取りワーク
+ *	@param	*p_member メンバー受け取りワーク
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_SYS_GetLoadParam( const LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA_PARAM *p_param, LOCAL_TVT_MEMBER *p_member )
+{
+  int i; 
+  for( i = 0; i < sys->member; i++ )
+  {
+    p_param[i].bgType       = LOCAL_TVT_CHARA_GetBgType(sys->charaWork[i]);
+    p_param[i].weatherType  = LOCAL_TVT_CHARA_GetWeatherType( sys->charaWork[i]);
+    p_param[i].charaType    = LOCAL_TVT_CHARA_GetCharaType(sys->charaWork[i]);
+  }
+
+
+  *p_member = sys->member;
 }
 //----------------------------------------------------------------------------
 /**
@@ -546,6 +642,7 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
     charaWork->charaIdx = pos;
     charaWork->charaType = charaType;
     charaWork->bgType = bgType;
+    charaWork->weatherType  = weather;
     charaWork->charaAnmIdx = 0;
     charaWork->bgAnmIdx = 0;
     charaWork->isUpdateQue = FALSE;
@@ -638,7 +735,7 @@ static void LOCAL_TVT_CHARA_Main( LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_BG1:
     charaWork->transIdx = 0;
-    LOCAL_TVT_CHARA_LoadNcgResource( charaWork , charaWork->sys->arcHandle, bgResList[charaWork->bgType][1] + charaWork->bgAnmIdx + (charaWork->sys->param.timeZone*2), charaWork->heapID );
+    LOCAL_TVT_CHARA_LoadNcgResource( charaWork , charaWork->sys->arcHandle, bgResList[charaWork->bgType][charaWork->sys->param.timeZone].ncgr, charaWork->heapID );
     charaWork->state = LTCTS_BG2;
     break;
   case LTCTS_BG2:
@@ -721,6 +818,19 @@ static void LOCAL_TVT_CHARA_LoadResource( LOCAL_TVT_CHARA *charaWork , const u8 
 {
   charaWork->state = LTCTS_CHARA1;
 }
+
+static u8 LOCAL_TVT_CHARA_GetCharaType( const LOCAL_TVT_CHARA *charaWork )
+{
+  return charaWork->charaType;
+}
+static u8 LOCAL_TVT_CHARA_GetBgType( const LOCAL_TVT_CHARA *charaWork )
+{
+  return charaWork->bgType;
+}
+static u32 LOCAL_TVT_CHARA_GetWeatherType( const LOCAL_TVT_CHARA *charaWork )
+{
+  return charaWork->weatherType;
+}
 //--------------------------------------------------------------
 //	絵の読み込み完了チェック
 //--------------------------------------------------------------
@@ -756,7 +866,7 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_CHARA *charaWork, LOCA
                                       (2*16*16) ,
                                       heapID );
   GFL_ARCHDL_UTIL_TransVramPaletteEx( sys->arcHandle , 
-                                      bgResList[charaWork->bgType][0] + sys->param.timeZone,
+                                      bgResList[charaWork->bgType][charaWork->sys->param.timeZone].nclr,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x6000 ,
@@ -806,7 +916,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_CHARA *charaWork, LOCAL
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
   
-  LOCAL_TVT_CHARA_LoadNcgResource( charaWork , sys->arcHandle, bgResList[charaWork->bgType][1] + (sys->param.timeZone*2), heapID );
+  LOCAL_TVT_CHARA_LoadNcgResource( charaWork , sys->arcHandle, bgResList[charaWork->bgType][sys->param.timeZone].ncgr, heapID );
   LOCAL_TVT_CHARA_TransNcgResource( charaWork ,
                                     transOfs ,
                                     LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx ,

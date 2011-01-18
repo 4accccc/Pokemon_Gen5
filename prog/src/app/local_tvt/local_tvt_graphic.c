@@ -157,11 +157,44 @@ static const struct
   },
 	//SUB---------------------------
 	{	
+		LTVT_FRAME_SUB_MSG,	//設定するフレーム
+		{
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    },
+		GFL_BG_MODE_TEXT,//BGの種類
+		TRUE,	//初期表示
+	},
+	{	
+		LTVT_FRAME_SUB_BAR,	//設定するフレーム
+		{
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x05000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    },
+		GFL_BG_MODE_TEXT,//BGの種類
+		TRUE,	//初期表示
+	},
+	{	
+		LTVT_FRAME_SUB_MISC,	//設定するフレーム
+		{
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    },
+		GFL_BG_MODE_TEXT,//BGの種類
+		TRUE,	//初期表示
+	},
+	{	
 		LTVT_FRAME_SUB_BG,	//設定するフレーム
 		{
-       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x08000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     },
 		GFL_BG_MODE_TEXT,//BGの種類
@@ -205,7 +238,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	ワーク作成最大数
 //=====================================
-#define GRAPHIC_OBJ_CLWK_CREATE_MAX	(16)
+#define GRAPHIC_OBJ_CLWK_CREATE_MAX	(32)
 
 #endif //GRAPHIC_OBJ_USE
 //=============================================================================

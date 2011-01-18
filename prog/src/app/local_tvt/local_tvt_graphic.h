@@ -15,23 +15,42 @@
  *					定数宣言
 */
 //=============================================================================
+//BG面
 enum
 {
-  LTVT_FRAME_MESSAGE  = (GFL_BG_FRAME0_M),
-  LTVT_FRAME_NAME = (GFL_BG_FRAME0_M),  //背景確保のため統合
-  LTVT_FRAME_NOIZE_BG = (GFL_BG_FRAME1_M),
-  LTVT_FRAME_CHARA  = (GFL_BG_FRAME2_M),
-  LTVT_FRAME_BG = (GFL_BG_FRAME3_M),
-  LTVT_FRAME_SUB_BG = (GFL_BG_FRAME3_S),
+  LTVT_FRAME_MESSAGE    = (GFL_BG_FRAME0_M),
+  LTVT_FRAME_NAME       = (GFL_BG_FRAME0_M),  //背景確保のため統合
+  LTVT_FRAME_NOIZE_BG   = (GFL_BG_FRAME1_M),
+  LTVT_FRAME_CHARA      = (GFL_BG_FRAME2_M),
+  LTVT_FRAME_BG         = (GFL_BG_FRAME3_M),
+  LTVT_FRAME_SUB_MSG    = (GFL_BG_FRAME0_S),
+  LTVT_FRAME_SUB_BAR    = (GFL_BG_FRAME1_S),
+  LTVT_FRAME_SUB_MISC   = (GFL_BG_FRAME2_S),
+  LTVT_FRAME_SUB_BG     = (GFL_BG_FRAME3_S),
 };
 
-
+//メインBGのパレット
 #define LTVT_PLT_MAIN_NOIZE    (11)
 #define LTVT_PLT_MAIN_FONT     (12)
 #define LTVT_PLT_MAIN_WINFRAME (13)
 
+//メインOBJのパレット
 #define LTVT_PLT_OBJ_MAIN     (0)
 #define LTVT_PLT_OBJ_CHARA     (4)  //2*4本
+
+//サブOBJのパレット
+#define LTVT_PLT_S_OBJ        (0)
+#define LTVT_PLT_OBJ_SUB_POKEMON    (9)  //3本
+#define LTVT_PLT_OBJ_SUB_BARICON   (12) //3本
+
+//サブBGのパレット
+#define LTVT_PLT_BG_SUB_BAR   (6) //1本
+#define LTVT_PLT_BG_SUB_TASKMENU   (7) //2本
+#define LTVT_PLT_BG_SUB_WINFRAME  (9) //1本
+#define LTVT_PLT_BG_SUB_BACK     (12)
+#define LTVT_PLT_BG_SUB_LIST     (13)
+#define LTVT_PLT_BG_SUB_LIST_ON  (14)
+#define LTVT_PLT_BG_SUB_FONT     (15)
 
 //拡張BGは面ごとに持つので両方0からでOK
 #define LTVT_PLT_CHARA (0)

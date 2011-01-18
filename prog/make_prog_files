@@ -1964,7 +1964,11 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
     app/local_tvt/local_tvt_callmode.c \
     app/local_tvt/local_tvt_graphic.c \
     app/local_tvt/local_tvt_message.c \
-    app/local_tvt/local_tvt_util.c
+    app/local_tvt/local_tvt_util.c \
+    app/local_tvt/local_tvt_callselect.c \
+    app/local_tvt/local_tvt_person.c \
+    app/local_tvt/local_tvt_person_support.c \
+    app/local_tvt/local_tvt_debug.c
 
 # WIFIバトルマッチングフロー周り＋WIFネット部分
 #===> SRCS_OVERLAY_DPW_COMMON

@@ -19,6 +19,9 @@
 #include "local_tvt_callmode.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_message.h"
+#include "local_tvt_debug.h"
+
+#include "app/local_tvt_sys.h"
 
 //======================================================================
 //	define
@@ -33,7 +36,7 @@
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-struct _LOCAL_TVT_WORK
+typedef struct _LOCAL_TVT_WORK
 {
   HEAPID heapId;
   LOCAL_TVT_SCRIPT        *script_wk;
@@ -44,10 +47,10 @@ struct _LOCAL_TVT_WORK
   LOCAL_TVT_MESSAGE       *message;
   LOCAL_TVT_BG            *bg;
 
-  void (*InitMode)( LOCAL_TVT_WORK * );
-  BOOL (*MainMode)( LOCAL_TVT_WORK * );
-  void (*ExitMode)( LOCAL_TVT_WORK * );
-};
+  void (*InitMode)( struct _LOCAL_TVT_WORK * );
+  BOOL (*MainMode)( struct _LOCAL_TVT_WORK * );
+  void (*ExitMode)( struct _LOCAL_TVT_WORK * );
+}LOCAL_TVT_WORK;
 
 //======================================================================
 //	proto
@@ -139,6 +142,18 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 
   GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
   
+
+  //デバッグ
+#ifdef PM_DEBUG
+  {
+    LOCAL_TVT_DEBUG_PARAM param;
+    GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_DEBUG_PARAM) );
+    param.p_font      = LOCAL_TVT_MESSAGE_GetFont( work->message );
+    param.p_chara_sys = work->chara_sys;
+    LOCAL_TVT_DEBUG_Init( &param, work->heapId );
+  }
+#endif
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -148,6 +163,11 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 static GFL_PROC_RESULT LOCAL_TVT_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   LOCAL_TVT_WORK *work = mywk;
+
+  //デバッグ
+#ifdef PM_DEBUG
+  LOCAL_TVT_DEBUG_Exit();
+#endif
   
   //モード破棄
   work->ExitMode( work );
@@ -180,6 +200,10 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcMain( GFL_PROC * proc, int * seq , void *pw
   LOCAL_TVT_MESSAGE_Main( work->message );
   LOCAL_TVT_CHARA_SYS_Main( work->chara_sys );
   LOCAL_TVT_GRAPHIC_2D_Draw( work->graphic );
+
+#ifdef PM_DEBUG
+  LOCAL_TVT_DEBUG_Main();
+#endif //PM_DEBUG
   if( ret == TRUE )
   {
     return GFL_PROC_RES_FINISH;
@@ -265,7 +289,14 @@ static void Local_Tvt_ScriptMode_Exit( LOCAL_TVT_WORK *work )
 //-----------------------------------------------------------------------------
 static void Local_Tvt_CallMode_Init( LOCAL_TVT_WORK *work )
 {
-  work->call_wk = LOCAL_TVT_CALL_Init( work->heapId, work->initWork->gameData, work->chara_sys );
+  LOCAL_TVT_CALL_PARAM  param;
+  GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_CALL_PARAM) );
+  param.p_gamedata  = work->initWork->gameData;
+  param.p_chara_sys = work->chara_sys;
+  param.p_message   = work->message;
+  param.p_clunit    = LOCAL_TVT_GRAPHIC_GetClunit( work->graphic );
+
+  work->call_wk = LOCAL_TVT_CALL_Init( &param, work->heapId );
 }
 //----------------------------------------------------------------------------
 /**
