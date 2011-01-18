@@ -24,6 +24,7 @@
 #define ITEMUSE_FLD_GRASHIDEA		 	( 24 )	// フィールド：グラシデアのはな
 #define ITEMUSE_FLD_DOWSING_MACHINE		 	( 25 )	// フィールド：ダウジングマシン
 #define ITEMUSE_FLD_LIVECASTER		 	( 26 )	// フィールド：ライブキャスター
+#define ITEMUSE_FLD_MEDALBOX		 	  ( 27 )	// フィールド：メダルボックス
 
 #define	ITEMUSE_BTL_BALL		( 1 )	// バトル：ボール
 #define	ITEMUSE_BTL_RECOVER		( 2 )	// バトル：回復
