@@ -62,7 +62,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(MEDALRECID_H) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += $(NARCNAME) $(NAIXNAME) $(DATADIR)* $(MEDAL_SORT_CDAT) $(MEDAL_ID_H) $(MEDALRECID_H) $(MEDALNAME_GMM) $(MEDALEX_GMM) $(MEDALHELP_GMM) $(RECORD_H) $(CONVERTERDIR)$(RECORDRBDEF)
 endif
@@ -92,7 +92,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(MEDALRECID_H) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
+do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 
