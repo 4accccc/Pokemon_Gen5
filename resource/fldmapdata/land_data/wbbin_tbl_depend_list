@@ -2430,6 +2430,10 @@ $(DIR_WBTMP)/m_gym0301_00_00.tbl: $(DIR_RES)/m_gym0301_00_00.bin
 	@echo create_bintbl m_gym0301_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0301_00_00.bin
 
+$(DIR_WBTMP)/m_gym0301_00_00_ex.tbl: $(DIR_RES)/m_gym0301_00_00_ex.bin
+	@echo create_bintbl m_gym0301_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0301_00_00_ex.bin
+
 $(DIR_WBTMP)/m_gym0401_00_00.tbl: $(DIR_RES)/m_gym0401_00_00.bin
 	@echo create_bintbl m_gym0401_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0401_00_00.bin

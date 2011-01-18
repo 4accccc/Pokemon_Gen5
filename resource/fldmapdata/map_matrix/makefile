@@ -9,7 +9,7 @@
 #---------------------------------------------------------------
 #コンバート対象ユーザー
 #
-USERS = kagaya tamada nakatsui tomoya_takahashi obata_toshihiro
+USERS = kagaya tamada nakatsui tomoya_takahashi obata_toshihiro iwasawa
 
 #共通ルールファイルのインクルード
 #
