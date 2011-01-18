@@ -16,8 +16,7 @@
 #include "field_effect.h"
 #include "fldmmdl.h"
 #include "fldeff_shadow.h"
-#include "field_player.h"
-#include "field_player_core.h"
+
 #include "debug/debug_flg.h" //DEBUG_FLG_～
 //======================================================================
 //	define
@@ -72,8 +71,6 @@ typedef struct
 //======================================================================
 static void shadow_InitResource( FLDEFF_SHADOW *sd );
 static void shadow_DeleteResource( FLDEFF_SHADOW *sd );
-
-static void shadow_RotationCalc( FLDEFF_TASK* task, TASKWORK_SHADOW *work, VecFx32* pos, BOOL force );
 
 static const FLDEFF_TASK_HEADER DATA_shadowTaskHeader;
 
@@ -161,7 +158,7 @@ static void shadow_InitResource( FLDEFF_SHADOW *sd )
   {
     GFL_BBDACT_G3DRESDATA data;
     data.g3dres = g3d_res;
-    data.texFmt = GFL_BBD_TEXFMT_A3I5;//GFL_BBD_TEXFMT_PAL4;
+    data.texFmt = GFL_BBD_TEXFMT_PAL4;
     data.texSiz = GFL_BBD_TEXSIZ_16x16;
     data.celSizX = 16;
     data.celSizY = 16;
@@ -202,7 +199,7 @@ void FLDEFF_SHADOW_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
   sd = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_SHADOW );
   head.eff_shadow = sd;
   head.fmmdl = fmmdl;
- 
+  
   FLDEFF_CTRL_AddTask(
       fectrl, &DATA_shadowTaskHeader, NULL, 0, &head, 0 );
 }
@@ -223,13 +220,6 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
   head = FLDEFF_TASK_GetAddPointer( task );
   work->eff_shadow = head->eff_shadow;
   work->fmmdl = head->fmmdl;
-
-  {
-    MMDLSYS* mmdlsys = MMDL_GetMMdlSys(work->fmmdl);
-    GAMEDATA* gdata = MMDLSYS_GetGameData( mmdlsys );
-    FIELDMAP_WORK* fieldWork = FLDEFF_TASK_GetFieldMapWork( task );
-  }
-
   MMDL_InitCheckSameData( head->fmmdl, &work->samedata );
 
   {
@@ -237,7 +227,7 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
     actData.resID = 0;  //ResUnit内オフセット指定
     actData.sizX = FX32_ONE;
     actData.sizY = FX32_ONE;
-    actData.alpha = 31;
+    actData.alpha = 19;
     actData.drawEnable = TRUE;
     actData.lightMask = GFL_BBD_LIGHTMASK_0;
     actData.trans = (VecFx32){ 0, 0, 0 };
@@ -259,12 +249,6 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
   }
   
   FLDEFF_TASK_CallUpdate( task ); //即、座標を反映する
-
-  {
-    VecFx32 pos;
-    MMDL_GetVectorPos( work->fmmdl, &pos );
-    shadow_RotationCalc( task, work, &pos, TRUE );
-  }
 }
 
 //--------------------------------------------------------------
@@ -336,10 +320,10 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
  
   if( work->vanish_flag == FALSE ){
     int flag = TRUE;
-    VecFx32 pos,o_pos,offs;
-    MMDL_GetVectorPos( work->fmmdl, &o_pos );
+    VecFx32 pos,offs;
+    MMDL_GetVectorPos( work->fmmdl, &pos );
     MMDL_GetControlOffsetPos( work->fmmdl, &offs );
-    VEC_Add( &o_pos, &offs, &pos );
+    VEC_Add( &pos, &offs, &pos );
   
     /*
      * ハイリンクの森のシンボルポケのための調整
@@ -358,118 +342,12 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
       VEC_Add( &pos, &offs, &pos );
     }
 
-    //影の傾斜計算
-    shadow_RotationCalc( task, work, &o_pos, FALSE );
-
-#if 0
-    {
-      BOOL shadow_calc = FALSE;
-      FIELD_PLAYER_CORE* p_core = FIELD_PLAYER_GetCoreWk( work->player );
-      
-      if( work->fmmdl == FIELD_PLAYER_CORE_GetMMdl( p_core )){
-        shadow_calc = (FIELD_PLAYER_CORE_GetMoveState( p_core ) != PLAYER_MOVE_STATE_OFF);
-      }else{
-        shadow_calc = FALSE;  //!MMDL_CheckPossibleAcmd( work->fmmdl );
-      }
-      if( shadow_calc ){
-        shadow_RotationCalc( task, work, &o_pos );
-      }
-    }
-#if 0
-    {
-      FIELD_PLAYER_CORE* p_core = FIELD_PLAYER_GetCoreWk( work->player );
-      if( work->fmmdl == FIELD_PLAYER_CORE_GetMMdl( p_core )){
-        u16 rotZ = FX_DEG_TO_IDX(FX32_CONST(FIELD_PLAYER_CORE_GetShadowR(p_core)));
-//        IWASAWA_Printf("rotZ = %d\n",rotZ);
-        GFL_BBD_SetObjectRotate( work->eff_shadow->bbdsys, bbdIdx, &rotZ);
-      }
-    }
-#else
-    if( !MMDL_CheckPossibleAcmd( work->fmmdl ))
-    {
-      u16 rotZ;
-      FLDMAPPER_GRIDINFODATA gridData;
-      FIELDMAP_WORK* fieldWork = FLDEFF_TASK_GetFieldMapWork( task );
-      const FLDMAPPER *pG3DMapper = MMDLSYS_GetG3DMapper( MMDL_GetMMdlSys(work->fmmdl) );
-      FLDMAPPER_GetGridData(pG3DMapper,&o_pos,&gridData);
-    
-      if( gridData.vecN.x < 0 ){
-        rotZ = FX_DEG_TO_IDX(FX32_CONST(-45));
-      }else if( gridData.vecN.x > 0 ){
-        rotZ = FX_DEG_TO_IDX(FX32_CONST(45));
-      }else{
-        rotZ = 0;
-      }
-      GFL_BBD_SetObjectRotate( work->eff_shadow->bbdsys, bbdIdx, &rotZ);
-    }
-#endif
-#endif
     GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, bbdIdx, &flag );
     pos.y += FX32_CONST(+1);
     GFL_BBD_SetObjectTrans( work->eff_shadow->bbdsys, bbdIdx, &pos );
   } else {
     int flag = FALSE;
     GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, bbdIdx, &flag );
-  }
-}
-
-static void shadow_RotationCalc( FLDEFF_TASK* task, TASKWORK_SHADOW *work, VecFx32* pos, BOOL force )
-{
-  BOOL shadow_calc = FALSE;
-  FIELD_PLAYER* player;
-  FIELD_PLAYER_CORE* p_core;
-  FIELDMAP_WORK* fieldWork = FLDEFF_TASK_GetFieldMapWork( task );
-
-  if( !FIELDMAP_CheckFieldPlayer( fieldWork ) ){
-    return;
-  }
-  player = FIELDMAP_GetFieldPlayer( fieldWork );
-  p_core = FIELD_PLAYER_GetCoreWk( player );
-      
-  if( work->fmmdl == FIELD_PLAYER_CORE_GetMMdl( p_core )){
-    if( force ){
-      shadow_calc = TRUE;
-    }else{
-      shadow_calc = (FIELD_PLAYER_CORE_GetMoveState( p_core ) != PLAYER_MOVE_STATE_OFF);
-    }
-  }else{
-    if( force ){
-      shadow_calc = FALSE;  //TRUE;
-    }else{
-      shadow_calc = FALSE;  //!MMDL_CheckPossibleAcmd( work->fmmdl );
-    }
-  }
-  if( !shadow_calc ){
-    return;
-  }
-  
-  {
-    u16 rotZ;
-    fx16  sx,sy;
-    FLDMAPPER_GRIDINFODATA gridData;
-    FIELDMAP_WORK* fieldWork = FLDEFF_TASK_GetFieldMapWork( task );
-    const FLDMAPPER *pG3DMapper = MMDLSYS_GetG3DMapper( MMDL_GetMMdlSys(work->fmmdl) );
-
-    FLDMAPPER_GetGridData(pG3DMapper,pos,&gridData);
- 
-    if( gridData.vecN.x < 0 ){
-      rotZ = FX_DEG_TO_IDX(FX32_CONST(-20));
-    }else if( gridData.vecN.x > 0 ){
-      rotZ = FX_DEG_TO_IDX(FX32_CONST(20));
-    }else{
-      rotZ = 0;
-    }
-    GFL_BBD_SetObjectRotate( work->eff_shadow->bbdsys, work->bbdUnitIdx+0, &rotZ);  //現状Unit内データが一つなので+0
-
-    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) == 0 && 
-        rotZ != 0){
-      sx = FX16_CONST(1.3);
-      sy = FX16_CONST(1.3);
-    }else{
-      sx = FX16_CONST(1.0);
-      sy = FX16_CONST(1.0);
-    }
-    GFL_BBD_SetObjectSiz( work->eff_shadow->bbdsys, work->bbdUnitIdx+0, &sx,&sy);  //現状Unit内データが一つなので+0
   }
 }
 
