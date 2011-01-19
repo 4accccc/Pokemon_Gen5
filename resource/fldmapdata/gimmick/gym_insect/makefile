@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	fujiwara_maiko ohmori
+USERS	= iwasawa ibe_mana	
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -47,6 +47,7 @@ INCPATH	= -I$(NITROSDK_ROOT)/include
 #ツール
 #------------------------------------------------------------------------------
 
+ICA_CNV = ../../../../tools/ica/ica_converter.rb
 DEF_MAKE = ../def_write.rb
 XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
@@ -78,25 +79,20 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #.SUFFIXES:	.nsbmd .imd
 #imdデータからの生成ルール
-%.nsbmd:	data/%.imd
+%.nsbmd:	data/cannon/%.imd
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbca:	data/%.ica
+%.nsbca:	data/cannon/%.ica
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbma:	data/%.ima
+%.nsbma:	data/cannon/%.ima
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbta:	data/%.ita
-#	@echo $<をコンバート
-	@g3dcvtr $<
-
-%.nsbtp:	data/%.itp
-#	@echo $<をコンバート
-	@g3dcvtr $<
+%.bin:	data/null/%.ica
+	@ruby $(ICA_CNV) -t $< $@
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)

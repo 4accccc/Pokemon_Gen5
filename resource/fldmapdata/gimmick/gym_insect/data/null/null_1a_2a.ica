@@ -3,19 +3,19 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-17T12:57:56" source="c03_pole2.mb"/>
+	<create user="iwasawa" host="W00157" date="2011-01-19T21:41:08" source="camera_1a_2a.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
 <node_anm_info
-	frame_size="33"
+	frame_size="48"
 	scaling_rule="standard"
 	magnify="1.000000"
-	tool_start_frame="0"
-	tool_end_frame="32"
+	tool_start_frame="1"
+	tool_end_frame="48"
 	interpolation="frame"
 	compress_node="merge" node_size="1 1"
 	frame_step_mode="1"
@@ -32,8 +32,12 @@
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="1">
-	0.000000
+<node_translate_data size="50">
+	8.000000 0.000000 5.517334 11.034424 16.551758 22.068848 27.586182 33.103516 38.620605 44.137939
+	49.655273 55.172363 60.689697 66.206787 71.724121 77.241455 82.758545 88.275879 93.793213 99.310303
+	104.827637 110.344727 115.862061 121.379395 126.896484 132.413818 137.931152 143.448242 148.965576 154.482666
+	160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 160.000000
+	160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 160.000000 -72.000000
 </node_translate_data>
 
 <node_anm_array size="1">
@@ -45,8 +49,8 @@
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
-		<translate_y frame_step="1" data_size="1" data_head="0"/>
-		<translate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="48" data_head="1"/>
+		<translate_z frame_step="1" data_size="1" data_head="49"/>
 	</node_anm>
 </node_anm_array>
 

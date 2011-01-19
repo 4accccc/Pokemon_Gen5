@@ -73,7 +73,7 @@
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_～
 #include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
 #include "gym_fly.h"     //for GYM_FLY_CreateShotEvt
-#include "gym_insect.h"     //for GYM_INSECT_CreatePushWallEvt
+#include "gym_insect.h"     //for GYM_INSECT_CreateGateInEvent
 #include "field_gimmick_d06.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -2432,9 +2432,10 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
-  int idx;
   VecFx32 front_pos;
-  
+  MAPATTR attr;
+  MAPATTR_FLAG attr_flag;
+
   setFrontPos(req, &front_pos);
   
   //D06電気洞窟
@@ -2447,44 +2448,55 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
   
   { //進入禁止アトリビュートがあるか
     FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
-    MAPATTR attr = MAPATTR_GetAttribute( g3Dmapper, &front_pos );
-    MAPATTR_FLAG attr_flag =  MAPATTR_GetAttrFlag( attr );
+    attr = MAPATTR_GetAttribute( g3Dmapper, &front_pos );
+    attr_flag =  MAPATTR_GetAttrFlag( attr );
     
     if( !(attr_flag & MAPATTR_FLAGBIT_HITCH) )
     {
       return NULL; //前方進入禁止アトリビュート無し
     }
-    
-    { //波乗り状態での滝下りチェック
-      PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( req->field_player );
+  } 
+  
+  { //波乗り状態での滝下りチェック
+    PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( req->field_player );
       
-      if( form == PLAYER_MOVE_FORM_SWIM )
+    if( form == PLAYER_MOVE_FORM_SWIM )
+    {
+      if( checkPokeWazaGroup(req->gamedata,WAZANO_TAKINOBORI) != 6 )
       {
-        if( checkPokeWazaGroup(req->gamedata,WAZANO_TAKINOBORI) != 6 )
+        MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue( attr );
+      
+        if( MAPATTR_VALUE_CheckWaterFall(attr_value) == TRUE )
         {
-          MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue( attr );
-        
-          if( MAPATTR_VALUE_CheckWaterFall(attr_value) == TRUE )
-          {
-            fx32 t_height;
-            VecFx32 t_pos = front_pos;
-            MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
-            MMDL_TOOL_AddDirVector( req->player_dir, &t_pos, GRID_FX32 );
+          fx32 t_height;
+          VecFx32 t_pos = front_pos;
+          MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
+          MMDL_TOOL_AddDirVector( req->player_dir, &t_pos, GRID_FX32 );
           
-            if( MMDL_GetMapPosHeight(mmdl,&t_pos,&t_height) == TRUE )
+          if( MMDL_GetMapPosHeight(mmdl,&t_pos,&t_height) == TRUE )
+          {
+            if( front_pos.y > t_height ) //下りなら滝下りイベント
             {
-              if( front_pos.y > t_height ) //下りなら滝下りイベント
-              {
-                return SCRIPT_SetEventScript(
-                    req->gsys, SCRID_HIDEN_TAKIKUDARI, NULL, req->heapID );
-              }
+              return SCRIPT_SetEventScript(
+                  req->gsys, SCRID_HIDEN_TAKIKUDARI, NULL, req->heapID );
             }
           }
         }
       }
     }
   }
-  
+ 
+  { //ジムギミックチェック
+    int idx = getConnectID(req, &front_pos);
+     
+    if( idx == EXIT_ID_NONE )
+    {
+      if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_INSECT) )
+      { //虫ジム
+        return GYM_INSECT_CreateGateInEvent(gsys);
+      }
+    }
+  }
   return NULL;
 }
 

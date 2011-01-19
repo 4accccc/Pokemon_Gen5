@@ -38,8 +38,20 @@ typedef struct FLOOR_RECT_tag
   u8 z;
   u8 w;
   u8 h;
+  u32 attr;
   fx32 height;
 }FLOOR_RECT;
+
+typedef struct POINT_tag{
+  u8  x,y,z;
+}POINT;
+
+///繭ゲート座標
+typedef struct GATE_PARAM_tag{
+  u8  arc_id;
+  u8  dir;
+  POINT point;
+}GATE_PARAM;
 
 //ジム内部中の一時ワーク
 typedef struct GYM_INSECT_TMP_tag
@@ -51,14 +63,26 @@ typedef struct GYM_INSECT_TMP_tag
 
   FLD_EXP_OBJ_CNT_PTR exp_obj;
   FIELD_PLAYER *f_player;
+  MMDL* p_mmdl;
 
+  HEAPID  heapID;
+  HEAPID  heapLowID;
 }GYM_INSECT_TMP;
 
+typedef struct EVWORK_GATE_IN_tag{
+  GYM_INSECT_TMP* git;
+  u8  gate_id;
+}EVWORK_GATE_IN;
 
 #include "gym_insect.cdat"
 
 ///=======================================================
 //プロトタイプ
+
+///イベント
+static GMEVENT* event_GateInCreate( GYM_INSECT_TMP* wk, u8 gate_id );
+
+///サブルーチン
 static void sub_SetExHeight( FIELDMAP_WORK* fieldWork );
 
 #ifdef PM_DEBUG
@@ -90,6 +114,7 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
 
   wk->exp_obj = FIELDMAP_GetExpObjCntPtr( fieldWork );
   wk->f_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  wk->p_mmdl = FIELD_PLAYER_GetMMdl( wk->f_player );
 
   //拡張高さセット
   sub_SetExHeight( fieldWork );
@@ -119,7 +144,6 @@ void GYM_INSECT_End(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
 {
-  GYM_INSECT_SV_WORK *gmk_sv_work;
   GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
 
 #ifdef PM_DEBUG
@@ -128,11 +152,92 @@ void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
 
 }
 
+//--------------------------------------------------------------
+/**
+ * 繭ゲートPushイベント作成 
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
+{
+  GMEVENT * event;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
 
+  {
+    int id;
+    u8 dir;
+    MMDL_GRIDPOS pos;
+
+    MMDL_GetGridPos( wk->p_mmdl, &pos );
+    dir = MMDL_GetDirDisp( wk->p_mmdl );
+ 
+    for(id = 0;id < GATE_PARAM_NUM;id++){
+      const GATE_PARAM* gp = &DATA_GateParam[id];
+      
+      if( gp->dir != dir ||
+          gp->point.x != pos.gx ||
+          gp->point.y != pos.gy ||
+          gp->point.z != pos.gz){
+        continue;
+      }
+      break;
+    }
+    if( id < GATE_PARAM_NUM ){
+      //イベントコール
+      return event_GateInCreate( wk, id );
+    }
+  }
+  return NULL;  //ゲートが見つからない
+}
+
+
+//===============================================================
+///ゲートインイベント
+//===============================================================
+static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work );
+
+//--------------------------------------------------------------
+//ゲートインイベント　生成
+//--------------------------------------------------------------
+GMEVENT* event_GateInCreate( GYM_INSECT_TMP* wk, u8 gate_id )
+{
+  GMEVENT* event = GMEVENT_Create( wk->gsys, NULL, event_GateInMain, sizeof(EVWORK_GATE_IN));
+  EVWORK_GATE_IN* evwk = GMEVENT_GetEventWork( event );
+
+  evwk->git = wk;
+  evwk->gate_id = gate_id; 
+  return event;
+}
+
+//--------------------------------------------------------------
+//ゲートインイベント　メイン
+//--------------------------------------------------------------
+static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
+{
+  EVWORK_GATE_IN* evwk = (EVWORK_GATE_IN*)work;
+  GYM_INSECT_TMP* wk = evwk->git;
+
+  switch(*seq){
+  case 0:
+    (*seq)++;
+    break;
+  default:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
 
 //===============================================================
 ///サブルーチン
 //===============================================================
+
+//-----------------------------------------------------
+/*
+ *  @brief  拡張高さデータセット
+ */
+//-----------------------------------------------------
 static void sub_SetExHeight( FIELDMAP_WORK* fieldWork )
 {
   int i;
@@ -143,7 +248,7 @@ static void sub_SetExHeight( FIELDMAP_WORK* fieldWork )
     EXH_SetUpHeightData( i,
       DATA_FloorRect[i].x, DATA_FloorRect[i].z,
       DATA_FloorRect[i].w, DATA_FloorRect[i].h,
-			DATA_FloorRect[i].height, FLOOR_RECT_ATTR, exHeightPtr );
+			DATA_FloorRect[i].height, DATA_FloorRect[i].attr, exHeightPtr );
   }
 }
 
