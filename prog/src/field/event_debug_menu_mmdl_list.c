@@ -362,6 +362,45 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
 }
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+static void sortBmpMenuListData( BMP_MENULIST_DATA * list )
+{
+  const STRCODE eom = GFL_STR_GetEOMCode();
+  u32 count, i, j;
+
+  //list全体の長さを測る
+  for ( count = 0; list[count].str != NULL; count ++ ) { /* */ }
+
+  for ( i = 0; i < count - 1; i ++ )
+  {
+    BMP_MENULIST_DATA * list_a = list + i;
+    for ( j = i + 1; j < count; j ++ )
+    {
+      BMP_MENULIST_DATA * list_b = list + j;
+      const STRCODE * str_a = GFL_STR_GetStringCodePointer( (const STRBUF*)list_a->str );
+      const STRCODE * str_b = GFL_STR_GetStringCodePointer( (const STRBUF*)list_b->str );
+      while ( TRUE )
+      {
+        if ( *str_a == eom || *str_a < *str_b )
+        {
+          break;
+        }
+        else if ( *str_a > *str_b || *str_b == eom )
+        { //swap
+          BMP_MENULIST_DATA list_temp;
+          list_temp = *list_a;
+          *list_a = *list_b;
+          *list_b = list_temp;
+          break;
+        }
+        str_a ++;
+        str_b ++;
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
 /**
  * 動作モデルリスト用BMP_MENULIST_DATAセット
  * @param list  セット先BMP_MENULIST_DATA
@@ -383,6 +422,7 @@ static void DEBUG_SetMenuWorkMMdlList(
     GFL_HEAP_FreeMemory( str );
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
+  sortBmpMenuListData( (BMP_MENULIST_DATA *)list );
 
   for( id = OBJCODESTART_TPOKE; id < OBJCODEEND_TPOKE; id++ ){
     GFL_STR_ClearBuffer( strBuf );
@@ -426,7 +466,7 @@ static const DEBUG_MENU_INITIALIZER DebugDisguiseListData = {
 
 //--------------------------------------------------------------
 /**
- * イベント：MMDL LIST
+ * イベント：変装MMDL LIST
  * @param gsys
  * @param wk DEBUG_MENU_EVENT_WORK*
  * @return GMEVENT*
