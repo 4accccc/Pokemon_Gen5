@@ -1,5 +1,5 @@
 EFFSEQ
-$0010
+$0011
 c:\home\swan\resource\particle\wazaeffect\w_001.spa
 C:\home\swan\resource\particle\wazaeffect\w_555.spa
 C:\home\swan\resource\particle\wazaeffect\w_554.spa
@@ -10,10 +10,11 @@ C:\home\swan\resource\particle\wazaeffect\w_545.spa
 C:\home\swan\resource\particle\wazaeffect\w_545.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_025_firework.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_025_firework.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_545_kaen.NSCR
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
-BGのロード	bg_025_firework
+BGのロード	bg_545_kaen
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	16	1	0:0:0
 タイマーによるウエイト	10
@@ -47,7 +48,7 @@ SE再生	SEQ_SE_FLD_127	SE1	防御側	50:0:127	0:0:0
 制御モード変更	逐次
 ポケモン拡縮	攻撃側	往復	0.4	-0.4	8	0	1
 ポケモンアニメ	防御側	アニメストップ
-パーティクル再生	w_545	W_545_545_FIRE_BOMB	防御側	方向無し	1.5:0:0	1:1:1	1
+パーティクル再生	w_545	W_545_545_CONV_BALL	防御側	方向無し	1.5:0:0	1:1:1	1
 タイマーによるウエイト	10
 ポケモンパレットフェード	防御側	0	10	3	31:0:0
 ポケモン拡縮	防御側	往復	0.3	-0.3	4	0	9
