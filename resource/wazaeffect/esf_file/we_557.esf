@@ -1,16 +1,17 @@
 EFFSEQ
-$0006
+$0007
 c:\home\swan\resource\particle\wazaeffect\w_001.spa
 C:\home\swan\resource\particle\wazaeffect\w_557.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_120_smallbang.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_264_supernova2.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_120_smallbang.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_557_v_fire.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_557_v_generate.NSCR
 #001
 %00
 ポケモン影バニッシュ	すべて	バニッシュオン
 カメラ移動	追従	攻撃側	16	0	8
-BGのロード	bg_557_v_fire
+BGのロード	bg_557_v_generate
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	10	2	0:0:0
 エフェクト終了待ち	すべて
