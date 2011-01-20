@@ -59,7 +59,25 @@ enum {
 	NARC_medal_data_medal_045_bin = 45,
 	NARC_medal_data_medal_046_bin = 46,
 	NARC_medal_data_medal_047_bin = 47,
-	NARC_medal_data_medal_048_bin = 48
+	NARC_medal_data_medal_048_bin = 48,
+	NARC_medal_data_medal_049_bin = 49,
+	NARC_medal_data_medal_050_bin = 50,
+	NARC_medal_data_medal_051_bin = 51,
+	NARC_medal_data_medal_052_bin = 52,
+	NARC_medal_data_medal_053_bin = 53,
+	NARC_medal_data_medal_054_bin = 54,
+	NARC_medal_data_medal_055_bin = 55,
+	NARC_medal_data_medal_056_bin = 56,
+	NARC_medal_data_medal_057_bin = 57,
+	NARC_medal_data_medal_058_bin = 58,
+	NARC_medal_data_medal_059_bin = 59,
+	NARC_medal_data_medal_060_bin = 60,
+	NARC_medal_data_medal_061_bin = 61,
+	NARC_medal_data_medal_062_bin = 62,
+	NARC_medal_data_medal_063_bin = 63,
+	NARC_medal_data_medal_064_bin = 64,
+	NARC_medal_data_medal_065_bin = 65,
+	NARC_medal_data_medal_066_bin = 66
 };
 
 /* NARC_MEDAL_DATA_NAIX_ */

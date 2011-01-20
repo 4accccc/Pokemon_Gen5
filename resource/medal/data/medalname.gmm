@@ -503,6 +503,26 @@
 		<language name="JPN_KANJI" width="216">れきせんのもさ</language>
 	</row>
 
+	<row id="MDL_NAME_FIELD_019">
+		<language name="JPN" width="216">ボロのつりびと</language>
+		<language name="JPN_KANJI" width="216">ボロのつりびと</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_020">
+		<language name="JPN" width="216">いいつりびと</language>
+		<language name="JPN_KANJI" width="216">いいつりびと</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_021">
+		<language name="JPN" width="216">すごいつりびと</language>
+		<language name="JPN_KANJI" width="216">すごいつりびと</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_022">
+		<language name="JPN" width="216">いれぐいフィッシャー</language>
+		<language name="JPN_KANJI" width="216">いれぐいフィッシャー</language>
+	</row>
+
 	<row id="MDL_NAME_BATTLE_005">
 		<language name="JPN" width="216">コイキングアワード</language>
 		<language name="JPN_KANJI" width="216">コイキングアワード</language>
@@ -558,82 +578,152 @@
 		<language name="JPN_KANJI" width="216">ミュージカルプリマ</language>
 	</row>
 
+	<row id="MDL_NAME_FIELD_023">
+		<language name="JPN" width="216">わざマシニスト</language>
+		<language name="JPN_KANJI" width="216">わざマシニスト</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_024">
+		<language name="JPN" width="216">わざマシンナリー</language>
+		<language name="JPN_KANJI" width="216">わざマシンナリー</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_025">
+		<language name="JPN" width="216">わざまじん</language>
+		<language name="JPN_KANJI" width="216">わざまじん</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_026">
+		<language name="JPN" width="216">ディスクコレクター</language>
+		<language name="JPN_KANJI" width="216">ディスクコレクター</language>
+	</row>
+
 	<row id="MDL_NAME_MISSION_001">
+		<language name="JPN" width="216">めんきょかいでん</language>
+		<language name="JPN_KANJI" width="216">めんきょかいでん</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_002">
+		<language name="JPN" width="216">エースパイロット</language>
+		<language name="JPN_KANJI" width="216">エースパイロット</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_003">
+		<language name="JPN" width="216">ウェーブライダー</language>
+		<language name="JPN_KANJI" width="216">ウェーブライダー</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_004">
+		<language name="JPN" width="216">ハッスルマッスル</language>
+		<language name="JPN_KANJI" width="216">ハッスルマッスル</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_005">
+		<language name="JPN" width="216">とうりゅうもん</language>
+		<language name="JPN_KANJI" width="216">とうりゅうもん</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_006">
+		<language name="JPN" width="216">すもぐりめいじん</language>
+		<language name="JPN_KANJI" width="216">すもぐりめいじん</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_007">
+		<language name="JPN" width="216">アンダーグラウンダー</language>
+		<language name="JPN_KANJI" width="216">アンダーグラウンダー</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_008">
+		<language name="JPN" width="216">ライトスタッフ</language>
+		<language name="JPN_KANJI" width="216">ライトスタッフ</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_009">
+		<language name="JPN" width="216">スイートタクティクス</language>
+		<language name="JPN_KANJI" width="216">スイートタクティクス</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_010">
+		<language name="JPN" width="216">ガサいれのたつじん</language>
+		<language name="JPN_KANJI" width="216">ガサいれのたつじん</language>
+	</row>
+
+	<row id="MDL_NAME_MISSION_011">
 		<language name="JPN" width="216">ノーマルチャンプ</language>
 		<language name="JPN_KANJI" width="216">ノーマルチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_002">
+	<row id="MDL_NAME_MISSION_012">
 		<language name="JPN" width="216">ファイトチャンプ</language>
 		<language name="JPN_KANJI" width="216">ファイトチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_003">
+	<row id="MDL_NAME_MISSION_013">
 		<language name="JPN" width="216">グラウンドチャンプ</language>
 		<language name="JPN_KANJI" width="216">グラウンドチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_004">
+	<row id="MDL_NAME_MISSION_014">
 		<language name="JPN" width="216">エアリアルチャンプ</language>
 		<language name="JPN_KANJI" width="216">エアリアルチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_005">
+	<row id="MDL_NAME_MISSION_015">
 		<language name="JPN" width="216">インセクトチャンプ</language>
 		<language name="JPN_KANJI" width="216">インセクトチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_006">
+	<row id="MDL_NAME_MISSION_016">
 		<language name="JPN" width="216">ロックチャンプ</language>
 		<language name="JPN_KANJI" width="216">ロックチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_007">
+	<row id="MDL_NAME_MISSION_017">
 		<language name="JPN" width="216">ゴーストチャンプ</language>
 		<language name="JPN_KANJI" width="216">ゴーストチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_008">
+	<row id="MDL_NAME_MISSION_018">
 		<language name="JPN" width="216">メタルチャンプ</language>
 		<language name="JPN_KANJI" width="216">メタルチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_009">
+	<row id="MDL_NAME_MISSION_019">
 		<language name="JPN" width="216">ブレイズチャンプ</language>
 		<language name="JPN_KANJI" width="216">ブレイズチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_010">
+	<row id="MDL_NAME_MISSION_020">
 		<language name="JPN" width="216">アクアチャンプ</language>
 		<language name="JPN_KANJI" width="216">アクアチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_011">
+	<row id="MDL_NAME_MISSION_021">
 		<language name="JPN" width="216">エレクトロチャンプ</language>
 		<language name="JPN_KANJI" width="216">エレクトロチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_012">
+	<row id="MDL_NAME_MISSION_022">
 		<language name="JPN" width="216">フローラルチャンプ</language>
 		<language name="JPN_KANJI" width="216">フローラルチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_013">
+	<row id="MDL_NAME_MISSION_023">
 		<language name="JPN" width="216">クールチャンプ</language>
 		<language name="JPN_KANJI" width="216">クールチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_014">
+	<row id="MDL_NAME_MISSION_024">
 		<language name="JPN" width="216">エスパーチャンプ</language>
 		<language name="JPN_KANJI" width="216">エスパーチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_015">
+	<row id="MDL_NAME_MISSION_025">
 		<language name="JPN" width="216">ドラゴンチャンプ</language>
 		<language name="JPN_KANJI" width="216">ドラゴンチャンプ</language>
 	</row>
 
-	<row id="MDL_NAME_MISSION_016">
+	<row id="MDL_NAME_MISSION_026">
 		<language name="JPN" width="216">ビシャスチャンプ</language>
 		<language name="JPN_KANJI" width="216">ビシャスチャンプ</language>
 	</row>

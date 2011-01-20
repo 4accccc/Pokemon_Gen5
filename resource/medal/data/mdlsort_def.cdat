@@ -13,19 +13,28 @@
 
 u32 MedalSortList[] = {
     MDLID_CHAMPION_MIZU,	//あくあちゃんぷ
+    MDLID_ANAWOHORU,	//あんだーぐらうんだー
     MDLID_CYCLE_LV2,	//いーじーらいだー
+    MDLID_FISHING_LV2,	//いいつりびと
+    MDLID_FISHING_MAX,	//いれぐいふぃっしゃー
     MDLID_CHAMPION_MUSHI,	//いんせくとちゃんぷ
+    MDLID_NAMINORI,	//うぇーぶらいだー
+    MDLID_SORAWOTOBU,	//えーすぱいろっと
     MDLID_CHAMPION_HIKOU,	//えありあるちゃんぷ
     MDLID_CHAMPION_ESPER,	//えすぱーちゃんぷ
     MDLID_CHAMPION_DENKI,	//えれくとろちゃんぷ
     MDLID_MUSICALWIN_LV1,	//かけだしすたー
     MDLID_WAZA_MUKOU,	//からぶりめいじん
-    MDLID_REPORT_LV4,	//きせきのぺんさき
+    MDLID_GOMIBAKO_LV1,	//がさいれのたつじん
+    MDLID_REPORT_MAX,	//きせきのぺんさき
     MDLID_CHAMPION_KOORI,	//くーるちゃんぷ
     MDLID_CHAMPION_JIMEN,	//ぐらうんどちゃんぷ
     MDLID_WAZA_HANERU,	//こいきんぐあわーど
     MDLID_MAIL_WRITE_MAX,	//ことばのまじゅつし
     MDLID_CHAMPION_GHOST,	//ごーすとちゃんぷ
+    MDLID_AMAIKAORI,	//すいーとたくてぃくす
+    MDLID_FISHING_LV3,	//すごいつりびと
+    MDLID_DIVING,	//すもぐりめいじん
     MDLID_REPORT_LV3,	//すらすられぽーたー
     MDLID_TAMAGO_MAX,	//せいめいのしんぴ
     MDLID_REPORT_LV2,	//せかせかれぽーたー
@@ -34,11 +43,14 @@ u32 MedalSortList[] = {
     MDLID_TAMAGO_LV2,	//たまごぶりーだー
     MDLID_REPORT_LV1,	//ちまちまれぽーたー
     MDLID_MUSICALWIN_LV2,	//ちゅうけんすたー
+    MDLID_WAZAMACHINE_MAX,	//でぃすくこれくたー
+    MDLID_TAKINOBORI,	//とうりゅうもん
     MDLID_CHAMPION_DRAGON,	//どらごんちゃんぷ
     MDLID_WAZA_WARUAGAKI,	//ねばーぎぶあっぷ
     MDLID_CHAMPION_NORMAL,	//のーまるちゃんぷ
     MDLID_CYCLE_LV3,	//はーどらいだー
     MDLID_CYCLE_MAX,	//はしるでんせつ
+    MDLID_KAIRIKI,	//はっするまっする
     MDLID_ALL_BATTLE_LV3,	//ばとるししょう
     MDLID_ALL_BATTLE_LV2,	//ばとるしはんだい
     MDLID_ALL_BATTLE_LV1,	//ばとるもんかせい
@@ -50,6 +62,7 @@ u32 MedalSortList[] = {
     MDLID_WALK_LV3,	//へびーうぉーかー
     MDLID_MUSICALWIN_LV3,	//べてらんすたー
     MDLID_HOMESICK,	//ほーむしっく
+    MDLID_FISHING_LV1,	//ぼろのつりびと
     MDLID_POKECEN,	//ぽけせんふりーく
     MDLID_WALK_LV2,	//みどるうぉーかー
     MDLID_MUSICALWIN_MAX,	//みゅーじかるぷりま
@@ -58,7 +71,12 @@ u32 MedalSortList[] = {
     MDLID_MAIL_WRITE_LV2,	//めーるだいすきっこ
     MDLID_WALK_MAX,	//めいよのあしあと
     MDLID_CHAMPION_HAGANE,	//めたるちゃんぷ
+    MDLID_IAIGIRI,	//めんきょかいでん
     MDLID_WALK_LV1,	//らいとうぉーかー
+    MDLID_FLASH,	//らいとすたっふ
     MDLID_ALL_BATTLE_LV4,	//れきせんのもさ
     MDLID_CHAMPION_IWA,	//ろっくちゃんぷ
+    MDLID_WAZAMACHINE_LV1,	//わざましにすと
+    MDLID_WAZAMACHINE_LV2,	//わざましんなりー
+    MDLID_WAZAMACHINE_LV3,	//わざまじん
 }

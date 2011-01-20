@@ -30,26 +30,31 @@ enum{
   MEDAL_STATE_HINT_GET,     // ヒント取得
   MEDAL_STATE_TITLE_ACHIVE, // タイトル達成
   MEDAL_STATE_TITLE_GET,    // タイトル取得
+  MEDAL_STATE_MAX,
 };
 
 // ===========================
 // ボックスランク
 // ===========================
-#define MEDALBOX_RANK_IRON    0
-#define MEDALBOX_RANK_COPPER  1
-#define MEDALBOX_RANK_SILVER  2
-#define MEDALBOX_RANK_GOLD    3
-#define MEDALBOX_RANK_BW      4
-#define MEDALBOX_RANK_MAX     5
+enum{
+  MEDALBOX_RANK_IRON,
+  MEDALBOX_RANK_COPPER,
+  MEDALBOX_RANK_SILVER,
+  MEDALBOX_RANK_GOLD,
+  MEDALBOX_RANK_BW,
+  MEDALBOX_RANK_MAX,
+};
 
 // ===========================
 // ボックスランク毎のメダル最大数
 // ===========================
-#define MEDALBOX_RANK_IRON_MAX    49
-#define MEDALBOX_RANK_COPPER_MAX  99
-#define MEDALBOX_RANK_SILVER_MAX  149
-#define MEDALBOX_RANK_GOLD_MAX    199
-#define MEDALBOX_RANK_BW_MAX      200
+enum{
+  MEDALBOX_RANK_IRON_MAX    = 49,
+  MEDALBOX_RANK_COPPER_MAX  = 99,
+  MEDALBOX_RANK_SILVER_MAX  = 149,
+  MEDALBOX_RANK_GOLD_MAX    = 199,
+  MEDALBOX_RANK_BW_MAX      = 200,
+};
 
 //=============================================================================
 /**

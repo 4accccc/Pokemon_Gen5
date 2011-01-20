@@ -31,7 +31,7 @@ FS_EXTERN_OVERLAY(medalbox);
 //=====================================
 typedef struct _MEDALBOXSYS_PARAM
 {
-  GAMEDATA*         gamedata;           ///< [in,out]  GAMEDATA
+  GAMEDATA*         p_gamedata;           ///< [in,out]  GAMEDATA
 }
 MEDALBOXSYS_PARAM;
 

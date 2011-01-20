@@ -307,3 +307,4 @@
   ARCID_TVT_BALLOON "tvt_balloon.narc" #ライブキャスターミニゲーム バルーン
   ARCID_LOCAL_TVT_SCRIPT "local_tvt_script.narc" # ローカルTVトランシーバー
   ARCID_MEDALDATA "medal_data.narc" # メダルデータ
+  ARCID_MEDALGRA "medalbox_gra.narc" # メダルボックスグラフィック

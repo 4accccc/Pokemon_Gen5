@@ -1,0 +1,35 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: medalbox_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MEDALBOX_GRA_NAIX_
+#define NARC_MEDALBOX_GRA_NAIX_
+
+enum {
+	NARC_medalbox_gra_medal_bgd_NCLR = 0,
+	NARC_medalbox_gra_medal_bgu_NCLR = 1,
+	NARC_medalbox_gra_medal_obj1_NCLR = 2,
+	NARC_medalbox_gra_medal_obj2_NCLR = 3,
+	NARC_medalbox_gra_medal_bgd_NCGR = 4,
+	NARC_medalbox_gra_medal_bgu_NCGR = 5,
+	NARC_medalbox_gra_medal_obj1_NCGR = 6,
+	NARC_medalbox_gra_medal_obj2_NCGR = 7,
+	NARC_medalbox_gra_medal_bgd1_NSCR = 8,
+	NARC_medalbox_gra_medal_bgd2_NSCR = 9,
+	NARC_medalbox_gra_medal_bgd3_NSCR = 10,
+	NARC_medalbox_gra_medal_bgu1_NSCR = 11,
+	NARC_medalbox_gra_medal_bgu2_NSCR = 12,
+	NARC_medalbox_gra_medal_bgu3_NSCR = 13,
+	NARC_medalbox_gra_medal_obj1_NCER = 14,
+	NARC_medalbox_gra_medal_obj2_NCER = 15,
+	NARC_medalbox_gra_medal_obj1_NANR = 16,
+	NARC_medalbox_gra_medal_obj2_NANR = 17
+};
+
+/* NARC_MEDALBOX_GRA_NAIX_ */
+#endif

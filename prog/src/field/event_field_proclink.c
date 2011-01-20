@@ -2400,7 +2400,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_LiveCaster(PROCLINK_WORK* wk,void* para
 static void * FMenuCallProc_MedalBox(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
 { 
   MEDALBOXSYS_PARAM * mdlbox_param = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(MEDALBOXSYS_PARAM) );
-  mdlbox_param->gamedata = GAMESYSTEM_GetGameData(wk->param->gsys);
+  mdlbox_param->p_gamedata = GAMESYSTEM_GetGameData(wk->param->gsys);
 
   return mdlbox_param;
 }
