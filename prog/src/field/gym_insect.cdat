@@ -87,16 +87,18 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 #define GATE_1A_2A_PX (16)
 #define GATE_1A_2A_PY (0)
 #define GATE_1A_2A_PZ (13)
-#define GATE_1A_2A_DIR (DIR_UP)
+#define GATE_1A_2A_IN_DIR (DIR_UP)
+#define GATE_1A_2A_OUT_DIR (DIR_DOWN)
 
 #define GATE_2B_3A_PX (3)
 #define GATE_2B_3A_PY (10)
 #define GATE_2B_3A_PZ (5)
-#define GATE_2B_3A_DIR (DIR_UP)
+#define GATE_2B_3A_IN_DIR (DIR_UP)
+#define GATE_2B_3A_OUT_DIR (DIR_DOWN)
 
 static const GATE_PARAM DATA_GateParam[] = {
-  { NARC_gym_insect_null_1a_2a_bin, GATE_1A_2A_DIR, { GATE_1A_2A_PX, GATE_1A_2A_PY, GATE_1A_2A_PZ } },
-  { NARC_gym_insect_null_2b_3a_bin, GATE_2B_3A_DIR, { GATE_2B_3A_PX, GATE_2B_3A_PY, GATE_2B_3A_PZ } },
+  { NARC_gym_insect_null_1a_2a_bin, GATE_1A_2A_IN_DIR, GATE_1A_2A_OUT_DIR, { GATE_1A_2A_PX, GATE_1A_2A_PY, GATE_1A_2A_PZ } },
+  { NARC_gym_insect_null_2b_3a_bin, GATE_2B_3A_IN_DIR, GATE_2B_3A_OUT_DIR, { GATE_2B_3A_PX, GATE_2B_3A_PY, GATE_2B_3A_PZ } },
 };
 
 #define GATE_PARAM_NUM  (NELEMS(DATA_GateParam))

@@ -18,6 +18,7 @@
 #include "map_attr.h"
 #include "arc/fieldmap/gym_insect.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
+#include "system/ica_anime.h"
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_～
 
@@ -49,7 +50,8 @@ typedef struct POINT_tag{
 ///繭ゲート座標
 typedef struct GATE_PARAM_tag{
   u8  arc_id;
-  u8  dir;
+  u8  in_dir;
+  u8  out_dir;
   POINT point;
 }GATE_PARAM;
 
@@ -64,14 +66,22 @@ typedef struct GYM_INSECT_TMP_tag
   FLD_EXP_OBJ_CNT_PTR exp_obj;
   FIELD_PLAYER *f_player;
   MMDL* p_mmdl;
+  FIELD_CAMERA *camera;
 
   HEAPID  heapID;
   HEAPID  heapLowID;
+
+
 }GYM_INSECT_TMP;
 
 typedef struct EVWORK_GATE_IN_tag{
   GYM_INSECT_TMP* git;
   u8  gate_id;
+  const GATE_PARAM* gate_prm;
+
+  ICA_ANIME* ica_anm;
+  u16 ica_anm_frm_idx;
+  u16 ica_anm_frm_max;
 }EVWORK_GATE_IN;
 
 #include "gym_insect.cdat"
@@ -112,9 +122,12 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   wk->gmkwork = GAMEDATA_GetGimmickWork( wk->gdata );
   wk->gmk_sv = GIMMICKWORK_Get( wk->gmkwork, FLD_GIMMICK_GYM_INSECT );
 
+  wk->heapID = HEAPID_FIELDMAP;
+  wk->heapLowID = GFL_HEAP_LOWID(HEAPID_FIELDMAP);
   wk->exp_obj = FIELDMAP_GetExpObjCntPtr( fieldWork );
   wk->f_player = FIELDMAP_GetFieldPlayer( fieldWork );
   wk->p_mmdl = FIELD_PLAYER_GetMMdl( wk->f_player );
+  wk->camera = FIELDMAP_GetFieldCamera( fieldWork );
 
   //拡張高さセット
   sub_SetExHeight( fieldWork );
@@ -176,7 +189,7 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
     for(id = 0;id < GATE_PARAM_NUM;id++){
       const GATE_PARAM* gp = &DATA_GateParam[id];
       
-      if( gp->dir != dir ||
+      if( gp->in_dir != dir ||
           gp->point.x != pos.gx ||
           gp->point.y != pos.gy ||
           gp->point.z != pos.gz){
@@ -198,6 +211,10 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
 //===============================================================
 static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work );
 
+static void gatein_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk );
+static void gatein_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk );
+static BOOL gatein_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk );
+
 //--------------------------------------------------------------
 //ゲートインイベント　生成
 //--------------------------------------------------------------
@@ -207,7 +224,8 @@ GMEVENT* event_GateInCreate( GYM_INSECT_TMP* wk, u8 gate_id )
   EVWORK_GATE_IN* evwk = GMEVENT_GetEventWork( event );
 
   evwk->git = wk;
-  evwk->gate_id = gate_id; 
+  evwk->gate_id = gate_id;
+  evwk->gate_prm = &DATA_GateParam[gate_id];
   return event;
 }
 
@@ -221,12 +239,61 @@ static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
 
   switch(*seq){
   case 0:
+    //自機繭に入る
+    SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_IN, NULL, NULL, wk->heapLowID );
+    (*seq)++;
+    break;
+  case 1:
+    //自機移動開始
+    gatein_IcaAnmSet( wk, evwk );
+    (*seq)++;
+    break;
+  case 2:
+    if( gatein_IcaAnmWait( wk, evwk ) == FALSE){
+      break;
+    }
+    gatein_IcaAnmFree( wk, evwk );
+
+    //自機繭から出る
+    {
+      SCRIPT_WORK* sc = SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_OUT, NULL, NULL, wk->heapLowID );
+      SCRIPT_SetScriptWorkParam( sc, evwk->gate_prm->out_dir, 0, 0, 0 );
+    }
     (*seq)++;
     break;
   default:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+static void gatein_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
+{
+  evwk->ica_anm = ICA_ANIME_CreateAlloc( wk->heapLowID, ARCID_GYM_INSECT, evwk->gate_prm->arc_id );
+  GF_ASSERT( evwk->ica_anm != NULL);
+  evwk->ica_anm_frm_max = ICA_ANIME_GetMaxFrame( evwk->ica_anm );
+  evwk->ica_anm_frm_idx = 0;
+}
+static void gatein_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
+{
+  ICA_ANIME_Delete( evwk->ica_anm );
+}
+static BOOL gatein_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
+{
+  VecFx32 vec = {0,0,0};
+
+  //座標取得
+  if ( ICA_ANIME_GetTranslateAt( evwk->ica_anm, &vec, evwk->ica_anm_frm_idx ) ){
+    //自機座標セット
+    vec.x += FX32_CONST(16*16);
+    vec.z += FX32_CONST(16*16);
+    FIELD_PLAYER_SetPos( wk->f_player, &vec );
+//    OS_Printf("%f,%f,%f\n", FX_FX32_TO_F32(vec.x), FX_FX32_TO_F32(vec.y), FX_FX32_TO_F32(vec.z));
+  }
+  if( ++evwk->ica_anm_frm_idx >= evwk->ica_anm_frm_max ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //===============================================================

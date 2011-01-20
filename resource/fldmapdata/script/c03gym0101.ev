@@ -19,4 +19,107 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA ev_prog_c03gym0101_gate_in
+_EVENT_DATA ev_prog_c03gym0101_gate_out
 _EVENT_DATA_END
+
+//==============================================================
+///プログラム呼び出し
+//==============================================================
+
+/***************************************************************/
+/*
+  ゲートイン/アウト
+*/
+/***************************************************************/
+EVENT_START ev_prog_c03gym0101_gate_in
+{
+  DEFINE_LOCAL  i_player_dir
+
+	//自機方向取得
+	_PLAYER_DIR_GET( i_player_dir )
+
+  SWITCH $i_player_dir
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_u )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_l )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_r )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+  //自機隠す
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_on )
+  _OBJ_ANIME_WAIT()
+
+//  _CAMERA_START()		//カメラ操作開始
+//	_CAMERA_PURGE()		//カメラのバインドを解く
+}
+EVENT_END
+
+EVENT_START ev_prog_c03gym0101_gate_out
+{
+  DEFINE_LOCAL  i_player_dir
+
+	//自機方向取得
+  $i_player_dir = $SCWK_PARAM0
+ 
+  //自機表示
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_off )
+  _OBJ_ANIME_WAIT()
+
+  SWITCH $i_player_dir
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_u )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_d )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_l )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_r )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
+//	_CAMERA_BIND()	//カメラのバインドを復活
+//  _CAMERA_END()		//カメラ操作開始
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//ゲートインアニメ
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_player_gatein_u
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gatein_d
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gatein_l
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gatein_r
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------
+//主人公表示非表示アニメ
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_player_vanish_on
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_vanish_off
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA ACMD_END,0
+
+//==============================================================
+///イベント呼び出し
+//==============================================================
+
+
+
+
+

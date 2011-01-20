@@ -5,5 +5,7 @@
 #define _C03GYM0101_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_PROG_C03GYM0101_GATE_IN (1)
+#define SCRID_PROG_C03GYM0101_GATE_OUT (2)
 
 #endif //_C03GYM0101_DEF_H_
