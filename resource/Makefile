@@ -47,6 +47,7 @@ SUBDIRS	=	wmi \
 			fld_trade \
             staff_roll \
 			manual \
+			medal\
 			message\
 			fldmmdl \
 			encount \
@@ -172,8 +173,7 @@ SUBDIRS	=	wmi \
 			manual_image \
 			pokeform \
 			assert_err \
-			field_goout_effect \
-			medal
+			field_goout_effect
 
 
 include $(RESOURCE_MACRO)
