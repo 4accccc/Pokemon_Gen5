@@ -984,5 +984,11 @@ SCRIPTFILES += \
 	sp_d31r0901.ev \
 	d31r1001.ev \
 	sp_d31r1001.ev \
+	d26.ev \
+	sp_d26.ev \
+	c03gym0201.ev \
+	sp_c03gym0201.ev \
+	c12gym0201.ev \
+	sp_c12gym0201.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö

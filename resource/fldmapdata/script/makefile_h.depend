@@ -1617,6 +1617,15 @@ d31r0901_def.h: d31r0901.ev
 d31r1001_def.h: d31r1001.ev
 	$(EV_DEF) d31r1001.ev $(SCR_OFFS_ID_H)
 
+d26_def.h: d26.ev
+	$(EV_DEF) d26.ev $(SCR_OFFS_ID_H)
+
+c03gym0201_def.h: c03gym0201.ev
+	$(EV_DEF) c03gym0201.ev $(SCR_OFFS_ID_H)
+
+c12gym0201_def.h: c12gym0201.ev
+	$(EV_DEF) c12gym0201.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
