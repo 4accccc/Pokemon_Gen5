@@ -78,20 +78,16 @@ DUMMY_STRING
 
 
 HEADER_DUMMY_STRING = <<DUMMY_STRING
-//======================================================================
-//                ZONEIDSYMBOL_def.h
-//
-//    スクリプトヘッダファイル：ZONEIDSYMBOL用
-//
-//======================================================================
-#ifndef __ZONEIDSYMBOL_DEF_H__
-#define __ZONEIDSYMBOL_DEF_H__
+//ZONEIDSYMBOL_def.h
+//このファイルはコンバータによって作成されました
+
+#ifndef _ZONEIDSYMBOLUPCASE_DEF_H_
+#define _ZONEIDSYMBOLUPCASE_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_ZONEIDSYMBOL_DATA_MAX   (0)   /* 最大数 */
+#define SCRID_ZONEIDSYMBOLUPCASE  (1)
 
-#endif  /* __ZONEIDSYMBOL_DEF_H__ */
-
+#endif //_ZONEIDSYMBOLUPCASE_DEF_H_
 DUMMY_STRING
 
 
@@ -103,7 +99,7 @@ def make_dummy(path, sym, content)
     puts "スクリプトファイル#{path} が見つかりません。"
     #puts "scripts for #{sym} not found!!"
     File.open(path, "w"){|file|
-      file.puts "#{content.gsub(/ZONEIDSYMBOL/,sym)}"
+      file.puts "#{content.gsub(/ZONEIDSYMBOLUPCASE/,sym.upcase).gsub(/ZONEIDSYMBOL/,sym)}"
     }
     system( "dos2unix -D #{path}" )
     puts "スクリプトファイル#{path} を生成しました！！！."
