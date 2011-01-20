@@ -931,6 +931,10 @@
   NO_CMD()
   NO_CMD()
 
+  //人物状態
+  DEF_CMD( EvCmdPersonState_SetState, EV_SEQ_PERSON_STATE_SET )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

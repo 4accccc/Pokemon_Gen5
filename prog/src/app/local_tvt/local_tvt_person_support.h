@@ -27,4 +27,4 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern void LOCAL_TVT_SUPPORT_SetPerson( LOCAL_TVT_PERSON *p_person, GFL_MSGDATA *p_msg, GAMEDATA *p_gamedata, HEAPID heapID );
+extern void LOCAL_TVT_SUPPORT_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *cp_msg, GAMEDATA *p_gamedata, HEAPID heapID );

@@ -72,12 +72,13 @@ COL_STATE   = 2   #列2：状態定義
 COL_ZONEID  = 3   #列3：ゾーンID
 COL_PLACE   = 4   #列4：場所
 COL_CALLFLAG= 5   #列4：電話フラグ
-COL_MSGID   = 6   #列4：メッセージID
-COL_TALK    = 7   #列4：会話タイプ
-COL_END     = 8   #列最後
+COL_GREET_MSGID = 6   #列4：メッセージID
+COL_TALK_MSGID  = 7   #列4：メッセージID
+COL_BYE_MSGID   = 8   #列4：メッセージID
+COL_END     = 9   #列最後
 def convertLocalTvtCallData( csv, data, header, msg, zone )
 
-  @HashPerson = {"DOCTOR"=>0, "RIVAL"=>1, "CHELEN"=>2, "BELL"=>3, "MOTHER"=>4 }
+  @HashPerson = {"DOCTOR"=>0, "RIVAL"=>1, "CHELEN"=>2, "BELL"=>3, "MOTHER"=>4, "SECRET"=>5 }
   @HashPlace  = {"FIELD"=>0, "ROOM"=>1, "DUNGEON"=>2 }
   @HashSelect = {"YES"=>1, "NO"=>0}
 
@@ -95,8 +96,9 @@ def convertLocalTvtCallData( csv, data, header, msg, zone )
     place   = @HashPlace[ csv.get( i, COL_PLACE ) ]
     zoneid  = csv.get( i, COL_ZONEID )
     call    = @HashSelect[ csv.get( i, COL_CALLFLAG ) ]
-    msgid   = csv.get( i, COL_MSGID )
-    talk    = csv.get( i, COL_TALK )
+    greet_msgid = csv.get( i, COL_GREET_MSGID )
+    talk_msgid  = csv.get( i, COL_TALK_MSGID )
+    bye_msgid   = csv.get( i, COL_BYE_MSGID )
     index   = cnt[person]
     cnt[person] += 1
 
@@ -109,20 +111,24 @@ def convertLocalTvtCallData( csv, data, header, msg, zone )
       data.write_u16(0)
     end
     data.write_u16(call)
-    data.write_u16( msgdata.search( msgid, "" ) )
-    data.write_u16(talk)
-    data.write_u16(0) #4バイトアライメント用ダミー
+    data.write_u16( msgdata.search( greet_msgid, "" ) )
+    data.write_u16( msgdata.search( talk_msgid, "" ) )
+    data.write_u16( msgdata.search( bye_msgid, "" ) )
   end
 
   #ヘッダの作成
+  header.write( "//データ定義\n" )
+  header.write( "#define LOCAL_TVT_CALLDATA_MAX (#{i})\n" )
   header.write( "//人物定義\n" )
   @HashPerson.each{ |k,v|
     header.write( "#define LOCAL_TVT_PERSON_#{k} (#{v})\n" )
   }
+  header.write( "#define LOCAL_TVT_PERSON_MAX (#{@HashPerson.size})\n" )
   header.write( "//場所定義\n" )
   @HashPlace.each{ |k,v|
     header.write( "#define LOCAL_TVT_PLACE_#{k} (#{v})\n" )
   }
+  header.write( "#define LOCAL_TVT_PLACE_MAX (#{@HashPlace.size})\n" )
   header.write( "//状態定義\n" )
   cnt = [0,0,0,0,0,0,0,0,0,0,0,]
   for i in ROW_START..csv.row_length-1
@@ -213,10 +219,10 @@ class TextBuilder
     if author != nil 
       write( " * @author " + author + "\n" )
     end
-    write( " * @date #{Time.now} \n" )
     write( " * @note #{File.basename(__FILE__)}から自動生成されています。\n" )
     write( "*/\n" )
     write( "//============================================================================================\n" )
+    write( "#pragma once\n" )
     #write( "#ifndef __" + @header_name.upcase + "__\n" )
     #write( "#define __" + @header_name.upcase + "__\n" )
   end

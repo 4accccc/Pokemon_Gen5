@@ -45,8 +45,9 @@ typedef struct
 {
   LOCAL_TVT_MESSAGE *p_message;
   GFL_CLUNIT        *p_clunit;
-  GFL_MSGDATA       *p_msgdata;
+  const GFL_MSGDATA *p_msgdata;
   int               msgID[LOCAL_TVT_CALLSELECT_SELECT_MAX];
+  int               is_select[LOCAL_TVT_CALLSELECT_SELECT_MAX];
   int               max;
 }LOCAL_TVT_CALLSELECT_PARAM;
 

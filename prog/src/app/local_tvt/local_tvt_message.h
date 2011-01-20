@@ -11,6 +11,7 @@
 #pragma once
 #include "print/gf_font.h"
 #include "print/printsys.h"
+#include "msg/msg_tvt_call.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -48,8 +49,9 @@ extern void LOCAL_TVT_MESSAGE_Main( LOCAL_TVT_MESSAGE *p_wk );
 //メッセージ関係の取得
 extern GFL_FONT *LOCAL_TVT_MESSAGE_GetFont( const LOCAL_TVT_MESSAGE *cp_wk );
 extern PRINT_QUE *LOCAL_TVT_MESSAGE_GetPrintQue( const LOCAL_TVT_MESSAGE *cp_wk );
-extern GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetSystemMsgData( const LOCAL_TVT_MESSAGE *cp_wk );
-extern GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetListMsgData( const LOCAL_TVT_MESSAGE *cp_wk );
+extern const GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetSystemMsgData( const LOCAL_TVT_MESSAGE *cp_wk );
+extern const GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetCallMsgData( const LOCAL_TVT_MESSAGE *cp_wk );
+extern const GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetListMsgData( const LOCAL_TVT_MESSAGE *cp_wk );
 
 //書き込み
 extern void LOCAL_TVT_MESSAGE_SetPrintColor( LOCAL_TVT_MESSAGE *p_wk, PRINTSYS_LSB color );
@@ -71,11 +73,14 @@ extern void LOCAL_TVT_MESSAGE_ClearFrame( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p
 
 //単語登録
 extern void LOCAL_TVT_MESSAGE_RegisterPlayerName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_gamedata );
+extern void LOCAL_TVT_MESSAGE_RegisterPokeNickName( LOCAL_TVT_MESSAGE *p_wk, const POKEMON_PARAM *cp_pp, u16 buffID );
+extern void LOCAL_TVT_MESSAGE_RegisterWord( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, u16 msgID, u16 buffID );
+extern void LOCAL_TVT_MESSAGE_RegisterPlaceName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_gamedata, u16 buffID );
 
 //メッセージウィンドウ処理
 extern void LOCAL_TVT_MSGWIN_OpenWindow( LOCAL_TVT_MESSAGE *p_wk, LOCAL_TVT_MSG_POS pos );
 extern void LOCAL_TVT_MSGWIN_CloseWindow( LOCAL_TVT_MESSAGE *p_wk );
-extern void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, GFL_MSGDATA *p_msg, const u16 msgId );
+extern void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, const u16 msgId );
 extern BOOL LOCAL_TVT_MSGWIN_IsFinish( const LOCAL_TVT_MESSAGE *cp_wk );
 extern BOOL LOCAL_TVT_MSGWIN_IsPause( const LOCAL_TVT_MESSAGE *cp_wk );
 
@@ -84,4 +89,8 @@ extern BOOL LOCAL_TVT_MSGWIN_IsPause( const LOCAL_TVT_MESSAGE *cp_wk );
 static inline void LOCAL_TVT_MESSAGE_PrintMsgSys( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_bmpwin, const u16 msgId )
 {
   LOCAL_TVT_MESSAGE_PrintMsg( p_wk, p_bmpwin, LOCAL_TVT_MESSAGE_GetSystemMsgData(p_wk), msgId );
+}
+static inline void LOCAL_TVT_MESSAGE_PrintMsgCall( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_bmpwin, const u16 msgId )
+{
+  LOCAL_TVT_MESSAGE_PrintMsg( p_wk, p_bmpwin, LOCAL_TVT_MESSAGE_GetCallMsgData(p_wk), msgId );
 }

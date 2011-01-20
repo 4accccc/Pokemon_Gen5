@@ -18,6 +18,7 @@
 #include "print/wordset.h"
 #include "app/app_keycursor.h"
 #include "app/app_printsys_common.h"
+#include "field/zonedata.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -49,9 +50,10 @@
 //=============================================================================
 struct _LOCAL_TVT_MESSAGE
 {
-  GFL_TCBLSYS *p_tcblsys;
-  APP_KEYCURSOR_WORK  *p_cursor;
-  APP_PRINTSYS_COMMON_WORK print_wk;
+  GFL_TCBLSYS               *p_tcblsys;
+  APP_KEYCURSOR_WORK        *p_cursor;
+  APP_PRINTSYS_COMMON_WORK  print_wk;
+  HEAPID          heapID;
   STRBUF          *p_str;
   WORDSET         *p_wordset;
   PRINT_QUE       *p_que;
@@ -59,8 +61,8 @@ struct _LOCAL_TVT_MESSAGE
   GFL_FONT        *p_font;
   GFL_FONT        *p_font_num;
   PRINT_STREAM    *p_stream;
-  HEAPID          heapID;
   GFL_MSGDATA     *p_msgdata_sys;
+  GFL_MSGDATA     *p_msgdata_call;
   GFL_MSGDATA     *p_msgdata_pokelist;
 
   PRINT_UTIL      print_util[LTVT_MSG_PRINT_MAX];
@@ -93,7 +95,8 @@ LOCAL_TVT_MESSAGE * LOCAL_TVT_MESSAGE_Init( HEAPID heapID )
   p_wk->heapID =  heapID;
 
   //メッセージデータ読込み
-  p_wk->p_msgdata_sys = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_system_dat, heapID );
+  p_wk->p_msgdata_sys = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_tvt_event_system_dat, heapID );
+  p_wk->p_msgdata_call  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_tvt_call_dat, heapID );
   p_wk->p_msgdata_pokelist  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pokelist_dat, heapID );
 
   //フォント読み込み
@@ -137,28 +140,26 @@ LOCAL_TVT_MESSAGE * LOCAL_TVT_MESSAGE_Init( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_MESSAGE_Exit( LOCAL_TVT_MESSAGE *p_wk )
 {
-  APP_KEYCURSOR_Delete( p_wk->p_cursor );
-  PRINTSYS_QUE_Delete( p_wk->p_que );
   if( p_wk->p_stream != NULL )
   {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
-  }
-  GFL_STR_DeleteBuffer( p_wk->p_str );
-  if( p_wk->p_wordset != NULL )
-  {
-    WORDSET_Delete( p_wk->p_wordset );
   }
   if( p_wk->p_msgwin != NULL )
   {
     GFL_BMPWIN_Delete( p_wk->p_msgwin );
   }
+  APP_KEYCURSOR_Delete( p_wk->p_cursor );
+  PRINTSYS_QUE_Delete( p_wk->p_que );
+  WORDSET_Delete( p_wk->p_wordset );
+  GFL_STR_DeleteBuffer( p_wk->p_str );
+  GFL_TCBL_Exit( p_wk->p_tcblsys );
+
   GFL_FONT_Delete( p_wk->p_font_num );
   GFL_FONT_Delete( p_wk->p_font );
 
   GFL_MSG_Delete( p_wk->p_msgdata_pokelist );
+  GFL_MSG_Delete( p_wk->p_msgdata_call );
   GFL_MSG_Delete( p_wk->p_msgdata_sys );
-
-  GFL_TCBL_Exit( p_wk->p_tcblsys );
 
   GFL_FONTSYS_SetDefaultColor();
 
@@ -174,21 +175,9 @@ void LOCAL_TVT_MESSAGE_Exit( LOCAL_TVT_MESSAGE *p_wk )
 void LOCAL_TVT_MESSAGE_Main( LOCAL_TVT_MESSAGE *p_wk )
 {
   GFL_TCBL_Main( p_wk->p_tcblsys );
-  if( p_wk->p_stream != NULL  )
+  if( p_wk->p_stream != NULL && p_wk->p_msgwin != NULL  )
   {
     APP_KEYCURSOR_Main( p_wk->p_cursor , p_wk->p_stream , p_wk->p_msgwin );
-    /*
-    LOCAL_TVT_CHARA *charaWork  = LOCAL_TVT_CHARA_SYS_GetWork( p_wk->chara_sys, p_wk->talkCharaNo );
-
-    if( PRINTSYS_PrintStreamGetState( p_wk->p_stream ) != PRINTSTREAM_STATE_RUNNING )
-    {
-      LOCAL_TVT_CHARA_SetLipSync( charaWork, FALSE );
-    }
-    else
-    {
-      LOCAL_TVT_CHARA_SetLipSync( charaWork, TRUE );
-    }
-    */
     if( APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->print_wk, p_wk->p_stream ) == TRUE )
     {
       PRINTSYS_PrintStreamDelete( p_wk->p_stream );
@@ -241,9 +230,22 @@ PRINT_QUE *LOCAL_TVT_MESSAGE_GetPrintQue( const LOCAL_TVT_MESSAGE *cp_wk )
  *	@return メッセージデータ
  */
 //-----------------------------------------------------------------------------
-GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetSystemMsgData( const LOCAL_TVT_MESSAGE *cp_wk )
+const GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetSystemMsgData( const LOCAL_TVT_MESSAGE *cp_wk )
 {
   return cp_wk->p_msgdata_sys;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  呼び出しモード用メッセージデータを取得
+ *
+ *	@param	const LOCAL_TVT_MESSAGE *cp_wk  ワーク
+ *
+ *	@return メッセージデータ
+ */
+//-----------------------------------------------------------------------------
+const GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetCallMsgData( const LOCAL_TVT_MESSAGE *cp_wk )
+{
+  return cp_wk->p_msgdata_call;
 }
 //----------------------------------------------------------------------------
 /**
@@ -254,7 +256,7 @@ GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetSystemMsgData( const LOCAL_TVT_MESSAGE *cp_wk 
  *	@return メッセージデータ
  */
 //-----------------------------------------------------------------------------
-GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetListMsgData( const LOCAL_TVT_MESSAGE *cp_wk )
+const GFL_MSGDATA *LOCAL_TVT_MESSAGE_GetListMsgData( const LOCAL_TVT_MESSAGE *cp_wk )
 {
   return cp_wk->p_msgdata_pokelist;
 }
@@ -421,11 +423,11 @@ void LOCAL_TVT_MESSAGE_PrintPokeStatus( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_b
     {
     case PTL_SEX_MALE:
       GFL_MSG_GetString( p_wk->p_msgdata_pokelist, mes_pokelist_01_28, p_wk->p_str );
-      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 13*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_BLUE );
+      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 12*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_BLUE );
       break;
     case PTL_SEX_FEMALE:
       GFL_MSG_GetString( p_wk->p_msgdata_pokelist, mes_pokelist_01_29, p_wk->p_str );
-      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 13*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_RED );
+      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 12*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_RED );
       break;
     }
   }
@@ -479,6 +481,52 @@ void LOCAL_TVT_MESSAGE_RegisterPlayerName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ポケモンニックネームを登録
+ *
+ *	@param	LOCAL_TVT_MESSAGE *p_wk ワーク
+ *	@param	POKEMON_PARAM *cp_pp    ポケモンぱらむ
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_MESSAGE_RegisterPokeNickName( LOCAL_TVT_MESSAGE *p_wk, const POKEMON_PARAM *cp_pp, u16 buffID )
+{
+  WORDSET_RegisterPokeNickName( p_wk->p_wordset , buffID, cp_pp );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字列を登録
+ *
+ *	@param	LOCAL_TVT_MESSAGE *p_wk ワーク
+ *	@param	GFL_MSGDATA *cp_msg メッセージ
+ *	@param	msgID ID
+ *	@param	buffID  バッファ
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_MESSAGE_RegisterWord( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, u16 msgID, u16 buffID )
+{
+  STRBUF  *p_str  = GFL_MSG_CreateString( cp_msg, msgID );
+  WORDSET_RegisterWord( p_wk->p_wordset, buffID, p_str, PTL_SEX_UNKNOWN, TRUE, LANG_JAPAN );
+  GFL_STR_DeleteBuffer( p_str );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地名を登録
+ *
+ *	@param	LOCAL_TVT_MESSAGE *p_wk ワーク
+ *	@param	*p_gamedata ゲームデータ
+ *	@param	buffID  バッファID
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_MESSAGE_RegisterPlaceName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_gamedata, u16 buffID )
+{
+
+  PLAYER_WORK *p_player = GAMEDATA_GetMyPlayerWork( p_gamedata );
+  u16 zoneID  = PLAYERWORK_getZoneID(p_player);
+  u16 placeID = ZONEDATA_GetPlaceNameID(zoneID);
+  WORDSET_RegisterPlaceName( p_wk->p_wordset, buffID, placeID );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  メッセージウィンドウを開く（キャラの名前を書き潰すので注意）
  *
  *	@param	LOCAL_TVT_MESSAGE *p_wk  ワーク
@@ -487,35 +535,31 @@ void LOCAL_TVT_MESSAGE_RegisterPlayerName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_MSGWIN_OpenWindow( LOCAL_TVT_MESSAGE *p_wk, LOCAL_TVT_MSG_POS pos )
 {
-  if( p_wk->p_msgwin != NULL )
+  if( p_wk->p_msgwin == NULL )
   {
-    BmpWinFrame_Clear( p_wk->p_msgwin , WINDOW_TRANS_ON_V );
-    GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->p_msgwin );
-    GFL_BMPWIN_Delete( p_wk->p_msgwin );
-    p_wk->p_msgwin = NULL;
-  }
+
+    if( pos == LTMP_UP )
+    {
+      p_wk->p_msgwin = GFL_BMPWIN_Create( LTVT_FRAME_MESSAGE , 
+          1 , 1 , 30 , 4 , 
+          LTVT_PLT_MAIN_FONT ,
+          GFL_BMP_CHRAREA_GET_B );
+    }
+    else if( pos == LTMP_DOWN )
+    {
+      p_wk->p_msgwin = GFL_BMPWIN_Create( LTVT_FRAME_MESSAGE , 
+          1 , 19 , 30 , 4 , 
+          LTVT_PLT_MAIN_FONT ,
+          GFL_BMP_CHRAREA_GET_B );
+    }
   
-  if( pos == LTMP_UP )
-  {
-    p_wk->p_msgwin = GFL_BMPWIN_Create( LTVT_FRAME_MESSAGE , 
-                                      1 , 1 , 30 , 4 , 
-                                      LTVT_PLT_MAIN_FONT ,
-                                      GFL_BMP_CHRAREA_GET_B );
+    BmpWinFrame_Write( p_wk->p_msgwin , WINDOW_TRANS_ON_V , LTVT_FRAME_MAIN_CGX, LTVT_PLT_MAIN_WINFRAME );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_msgwin ) , 0x0f );
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_msgwin );
+    GFL_BMPWIN_MakeScreen( p_wk->p_msgwin );
+    GFL_BG_LoadScreenV_Req( LTVT_FRAME_MESSAGE );
   }
-  else
-  if( pos == LTMP_DOWN )
-  {
-    p_wk->p_msgwin = GFL_BMPWIN_Create( LTVT_FRAME_MESSAGE , 
-                                      1 , 19 , 30 , 4 , 
-                                      LTVT_PLT_MAIN_FONT ,
-                                      GFL_BMP_CHRAREA_GET_B );
-  }
-  
-  BmpWinFrame_Write( p_wk->p_msgwin , WINDOW_TRANS_ON_V , LTVT_FRAME_MAIN_CGX, LTVT_PLT_MAIN_WINFRAME );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_msgwin ) , 0x0f );
-  GFL_BMPWIN_TransVramCharacter( p_wk->p_msgwin );
-  GFL_BMPWIN_MakeScreen( p_wk->p_msgwin );
-  GFL_BG_LoadScreenV_Req( LTVT_FRAME_MESSAGE );
+
   APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->print_wk, APP_PRINTSYS_COMMON_TYPE_BOTH );
 }
 //----------------------------------------------------------------------------
@@ -540,9 +584,6 @@ void LOCAL_TVT_MSGWIN_CloseWindow( LOCAL_TVT_MESSAGE *p_wk )
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
     p_wk->p_stream = NULL;
   }
-/*
-   LOCAL_TVT_CHARA_SYS_RedrawName( p_wk->chara_sys )
-*/
 }
 //----------------------------------------------------------------------------
 /**
@@ -553,7 +594,7 @@ void LOCAL_TVT_MSGWIN_CloseWindow( LOCAL_TVT_MESSAGE *p_wk )
  *	@param	u16 msgId               メッセージ番号
  */
 //-----------------------------------------------------------------------------
-void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, GFL_MSGDATA *p_msg, const u16 msgId )
+void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, const u16 msgId )
 {
   if( p_wk->p_stream != NULL )
   {
@@ -564,11 +605,11 @@ void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, GFL_MSGDATA *p_msg, 
   {
     
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_msgwin ) , 0xf );
-    p_wk->p_str = GFL_MSG_CreateString( p_msg, msgId );
+    GFL_MSG_GetString( cp_msg, msgId, p_wk->p_str );
     
     if( p_wk->p_wordset != NULL )
     {
-      STRBUF *msgWorkStr = GFL_MSG_CreateString( p_msg, msgId );
+      STRBUF *msgWorkStr = GFL_MSG_CreateString( cp_msg, msgId );
       WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, msgWorkStr );
       GFL_STR_DeleteBuffer( msgWorkStr );
     }

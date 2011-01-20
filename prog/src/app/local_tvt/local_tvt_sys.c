@@ -40,7 +40,7 @@ typedef struct _LOCAL_TVT_WORK
 {
   HEAPID heapId;
   LOCAL_TVT_SCRIPT        *script_wk;
-  LOCAL_TVT_CALL        *call_wk;
+  LOCAL_TVT_CALL          *call_wk;
   LOCAL_TVT_INIT_WORK     *initWork;
   LOCAL_TVT_GRAPHIC_WORK  *graphic;
   LOCAL_TVT_CHARA_SYS     *chara_sys;

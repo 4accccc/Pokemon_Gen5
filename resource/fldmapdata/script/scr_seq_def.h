@@ -11748,3 +11748,72 @@
   .short \ret_index5
   .endm
   
+//--------------------------------------------------------------
+/**
+ * @brief 人物状態  アララギ博士
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_SET_DOCTOR( state ) \
+    _ASM_PERSON_STATE_SET_DOCTOR state
+
+  .macro _ASM_PERSON_STATE_SET_DOCTOR
+  .short EV_SEQ_PERSON_STATE_SET
+  .short \LOCAL_TVT_PERSON_DOCTOR
+  .short \state
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 人物状態  ライバル
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_SET_RIVAL( state ) \
+    _ASM_PERSON_STATE_SET_RIVAL state
+
+  .macro _ASM_PERSON_STATE_SET_RIVAL
+  .short EV_SEQ_PERSON_STATE_SET
+  .short \LOCAL_TVT_PERSON_RIVAL
+  .short \state
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 人物状態  チェレン
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_SET_CHELEN( state ) \
+    _ASM_PERSON_STATE_SET_CHELEN state
+
+  .macro _ASM_PERSON_STATE_SET_CHELEN
+  .short EV_SEQ_PERSON_STATE_SET
+  .short \LOCAL_TVT_PERSON_CHELEN
+  .short \state
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 人物状態  ベル
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_SET_BELL( state ) \
+    _ASM_PERSON_STATE_SET_BELL state
+
+  .macro _ASM_PERSON_STATE_SET_BELL
+  .short EV_SEQ_PERSON_STATE_SET
+  .short \LOCAL_TVT_PERSON_BELL
+  .short \state
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 人物状態  ママ
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_SET_MOTHER( state ) \
+    _ASM_PERSON_STATE_SET_MOTHER state
+
+  .macro _ASM_PERSON_STATE_SET_MOTHER
+  .short EV_SEQ_PERSON_STATE_SET
+  .short \LOCAL_TVT_PERSON_MOTHER
+  .short \state
+  .endm

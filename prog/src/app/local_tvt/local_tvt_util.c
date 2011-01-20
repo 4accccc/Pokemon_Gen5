@@ -85,6 +85,7 @@ static void LIST_UI_Exit( LIST_UI *p_wk );
 static void LIST_UI_Main( LIST_UI *p_wk );
 
 static BOOL LIST_UI_IsDecide( const LIST_UI *cp_wk );
+static void LIST_UI_ReStart( LIST_UI *p_wk );
 
 
 //=============================================================================
@@ -296,11 +297,12 @@ LOCAL_TVT_TOUCHBAR * LOCAL_TVT_TOUCHBAR_Init( GFL_CLUNIT *p_clunit, HEAPID heapI
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_TOUCHBAR_Exit( LOCAL_TVT_TOUCHBAR *p_wk )
 {
-  BARICON_Exit( &p_wk->bar_icon );
 
   GFL_BG_FreeCharacterArea(LTVT_FRAME_SUB_BAR,
                            GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->bg),
                            GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->bg));
+
+  BARICON_Exit( &p_wk->bar_icon );
 
   //BGクリア
   GFL_BG_ClearFrame( LTVT_FRAME_SUB_BAR );
@@ -334,7 +336,20 @@ void LOCAL_TVT_TOUCHBAR_Main( LOCAL_TVT_TOUCHBAR *p_wk )
     };
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
 
-    if( ret == 0 || GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    BOOL is_decide = FALSE;
+
+    if( ret == 0 )
+    {
+      GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+      is_decide = TRUE;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+      is_decide = TRUE;
+    }
+
+    if( is_decide )
     {
       GFL_CLACT_WK_SetAnmSeq( BARICON_GetClwk( &p_wk->bar_icon ), APP_COMMON_BARICON_RETURN_ON );
       PMSND_PlaySystemSE( CTVT_SND_CANCEL );
@@ -422,8 +437,7 @@ LOCAL_TVT_SEQ * LOCAL_TVT_SEQ_Init( void *p_wk_adrs, LOCAL_TVT_SEQ_FUNCTION seq_
   LOCAL_TVT_SEQ *p_wk;
 
   //作成
-  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(LOCAL_TVT_SEQ) );
-  GFL_STD_MemClear( p_wk, sizeof(LOCAL_TVT_SEQ) );
+  p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_SEQ) );
 
   //初期化
   p_wk->p_wk_adrs = p_wk_adrs;
@@ -602,7 +616,7 @@ LOCAL_TVT_LIST * LOCAL_TVT_LIST_Init( const LOCAL_TVT_LIST_PARAM *cp_param, HEAP
       //文字
       LOCAL_TVT_MESSAGE_SetPrintColor( p_wk->param.p_message, PRINTSYS_MACRO_LSB(0xf,0xE,2) );
       LOCAL_TVT_MESSAGE_SetPrintPos( p_wk->param.p_message, 0, 0, LOCAL_TVT_MESSAGE_POS_CENTER );
-      LOCAL_TVT_MESSAGE_PrintMsg( p_wk->param.p_message, p_wk->p_selectwin[i], p_wk->param.p_msgdata, p_wk->param.msgID[i] );
+      LOCAL_TVT_MESSAGE_PrintMsg( p_wk->param.p_message, p_wk->p_selectwin[i], p_wk->param.cp_msgdata, p_wk->param.msgID[i] );
       GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_selectwin[i] );
       BmpWinFrame_Write( p_wk->p_selectwin[i], WINDOW_TRANS_ON_V, 1, LTVT_PLT_BG_SUB_LIST );
     }
@@ -1028,6 +1042,7 @@ struct _LOCAL_TVT_POKELIST
   s32   cursor_pos;
   u16   anm_frame;
   u16   anm_cnt;
+  BOOL  is_active;
   LIST_UI ui;
   GFL_BMPWIN  *p_bmpwin[6];
   GFL_CLWK    *p_clwk_poke[6];
@@ -1055,6 +1070,7 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
   LOCAL_TVT_POKELIST *p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_POKELIST));
   p_wk->param   = *cp_param;
   p_wk->cursor_pos  = 0;
+  p_wk->is_active = TRUE;
 
   //リソース読み込み
   {
@@ -1178,7 +1194,6 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
   {
     int i;
 
-    GFL_MSGDATA *p_msg  = LOCAL_TVT_MESSAGE_GetListMsgData( p_wk->param.p_message );
     for( i = 0; i < PokeParty_GetPokeCount(p_wk->param.p_party); i++ )
     {
       u8  x = POKELIST_X(i)+1;
@@ -1204,8 +1219,10 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
   G2S_SetWnd0Position( 0, 192-24, 255, 192 );
   G2S_SetWnd1Position( 1, 192-24, 256, 192 );
   G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG1|
+                          GX_WND_PLANEMASK_BG2|
                           GX_WND_PLANEMASK_OBJ, FALSE );
   G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_BG1|
+                          GX_WND_PLANEMASK_BG2|
                           GX_WND_PLANEMASK_OBJ, FALSE );
   G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0|
                           GX_WND_PLANEMASK_BG1|
@@ -1292,6 +1309,11 @@ void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk )
     SEQ_CANCEL_ANM,
     SEQ_END,
   };
+
+  if( p_wk->is_active == FALSE )
+  {
+    return;
+  }
 
   switch( p_wk->seq )
   {
@@ -1389,6 +1411,20 @@ void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk )
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_POKELIST_SetActive( LOCAL_TVT_POKELIST *p_wk, BOOL is_active )
 {
+  p_wk->is_active = is_active;
+  if( p_wk->is_active )
+  {
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 ); 
+    G2S_SetWnd0Position( 0, 192-24, 255, 192 );
+    G2S_SetWnd1Position( 1, 192-24, 256, 192 );
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2, 13, 3 );
+  }
+  else
+  {
+    G2S_SetWnd0Position( 256-16, 0, 256, 16 );
+    G2S_SetWnd1Position( 256-16, 0, 256, 16 );
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_OBJ , 8 ); 
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1401,6 +1437,8 @@ void LOCAL_TVT_POKELIST_ReStart( LOCAL_TVT_POKELIST *p_wk )
 {
   p_wk->seq = 0;
   p_wk->result  = LOCAL_TVT_POKELIST_RESULT_NONE;
+
+  LIST_UI_ReStart( &p_wk->ui );
 }
 
 //----------------------------------------------------------------------------
@@ -1425,12 +1463,12 @@ LOCAL_TVT_POKELIST_RESULT LOCAL_TVT_POKELIST_GetResult( const LOCAL_TVT_POKELIST
  *
  *	@param	const LOCAL_TVT_POKELIST *cp_wk   ワーク  
  *
- *	@return 選んだインデックス
+ *	@return 選んだポケモンパラメータ
  */
 //-----------------------------------------------------------------------------
-s32 LOCAL_TVT_POKELIST_GetSelect( const LOCAL_TVT_POKELIST *cp_wk )
+const POKEMON_PARAM * LOCAL_TVT_POKELIST_GetSelect( const LOCAL_TVT_POKELIST *cp_wk )
 {
-  return cp_wk->cursor_pos;
+  return PokeParty_GetMemberPointer( cp_wk->param.p_party, cp_wk->cursor_pos );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1789,6 +1827,7 @@ static void BARICON_Exit( BARICON *p_wk )
   GFL_CLGRP_CGR_Release( p_wk->res[RESID_OBJ_NCG] );
   GFL_CLGRP_CELLANIM_Release( p_wk->res[RESID_OBJ_ANM] );
 
+  GFL_STD_MemClear( p_wk, sizeof(BARICON));
 }
 //----------------------------------------------------------------------------
 /**
@@ -1896,6 +1935,20 @@ static BOOL LIST_UI_IsDecide( const LIST_UI *cp_wk )
   return cp_wk->is_decide;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  UI操作  再初期化
+ *
+ *	@param	LIST_UI *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LIST_UI_ReStart( LIST_UI *p_wk )
+{
+  p_wk->is_decide = FALSE;
+  p_wk->touch_or_key  = GFL_UI_CheckTouchOrKey();
+  //切り替えを最初の初期化としても使う
+  List_Ui_Change( p_wk );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  タッチ入力仮想関数呼び出し

@@ -42,15 +42,12 @@
 //=====================================
 struct _LOCAL_TVT_PERSON_SYS
 {
-  HEAPID              heapID;
-  GFL_CLUNIT          *p_clunit;
-  LOCAL_TVT_PERSON    person;
-  LOCAL_TVT_MESSAGE   *p_message;
-  LOCAL_TVT_CHARA_SYS *p_chara_sys;
-  LOCAL_TVT_SEQ       *p_seq;
-  LOCAL_TVT_LIST      *p_list;
-
-  u32                 select;
+  HEAPID                      heapID;
+  LOCAL_TVT_PERSON            person;
+  LOCAL_TVT_PERSON_SYS_PARAM  param;
+  LOCAL_TVT_SEQ               *p_seq;
+  LOCAL_TVT_LIST              *p_list;
+  u32                         select;
 };
 
 //=============================================================================
@@ -70,22 +67,18 @@ static void LOCAL_TVT_SEQ_Talking( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_w
  *	@brief  人物システム  初期化
  *
  *	@param	const LOCAL_TVT_PERSON *cp_person キャラ実装型
- *	@param	*p_message    メッセージシステム
- *	@param	*p_chara_sys  キャラシステム
- *	@param  p_clunit      CLユニット
+ *	@param	LOCAL_TVT_PERSON_SYS_PARAM *cp_param  引数
  *	@param	heapID  ヒープID 
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-LOCAL_TVT_PERSON_SYS * LOCAL_TVT_PERSON_SYS_Init( const LOCAL_TVT_PERSON *cp_person, LOCAL_TVT_MESSAGE *p_message , LOCAL_TVT_CHARA_SYS *p_chara_sys, GFL_CLUNIT *p_clunit, HEAPID heapID )
+LOCAL_TVT_PERSON_SYS * LOCAL_TVT_PERSON_SYS_Init( const LOCAL_TVT_PERSON *cp_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, HEAPID heapID )
 {
   LOCAL_TVT_PERSON_SYS *p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_PERSON_SYS) );
-  p_wk->heapID      = heapID;
-  p_wk->p_message   = p_message;
-  p_wk->p_chara_sys = p_chara_sys;
-  p_wk->p_clunit    = p_clunit;
-  p_wk->person      = *cp_person;
+  p_wk->heapID  = heapID;
+  p_wk->person  = *cp_person;
+  p_wk->param   = *cp_param;
 
   //シーケンス管理
   p_wk->p_seq = LOCAL_TVT_SEQ_Init( p_wk, LOCAL_TVT_SEQ_Greeting, heapID );
@@ -104,7 +97,10 @@ void LOCAL_TVT_PERSON_SYS_Exit( LOCAL_TVT_PERSON_SYS *p_wk )
   //シーケンス破棄
   LOCAL_TVT_SEQ_Exit( p_wk->p_seq );
 
-  GFL_HEAP_FreeMemory( p_wk->person.p_wk_adrs );
+  if( p_wk->person.ExitFunction )
+  {
+    p_wk->person.ExitFunction( p_wk, &p_wk->param, p_wk->person.p_wk_adrs );
+  }
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -143,46 +139,6 @@ void LOCAL_TVT_PERSON_End( LOCAL_TVT_PERSON_SYS *p_wk )
 {
   LOCAL_TVT_SEQ_End( p_wk->p_seq );
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  メッセージを取得
- *
- *	@param	const LOCAL_TVT_PERSON_SYS *cp_wk ワーク
- *
- *	@return メッセージ
- */
-//-----------------------------------------------------------------------------
-LOCAL_TVT_MESSAGE * LOCAL_TVT_PERSON_GetMessage( const LOCAL_TVT_PERSON_SYS *cp_wk )
-{
-  return cp_wk->p_message;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  キャラ管理を取得
- *
- *	@param	const LOCAL_TVT_PERSON_SYS *cp_wk ワーク
- *
- *	@return キャラ管理
- */
-//-----------------------------------------------------------------------------
-LOCAL_TVT_CHARA_SYS * LOCAL_TVT_PERSON_GetCharaSys( const LOCAL_TVT_PERSON_SYS *cp_wk )
-{
-  return cp_wk->p_chara_sys;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  CLUNIT取得
- *
- *	@param	const LOCAL_TVT_PERSON_SYS *cp_wk   ワーク
- *
- *	@return CLUNIT
- */
-//-----------------------------------------------------------------------------
-GFL_CLUNIT * LOCAL_TVT_PERSON_GetClunit( const LOCAL_TVT_PERSON_SYS *cp_wk )
-{
-  return cp_wk->p_clunit;
-}
 
 //=============================================================================
 /**
@@ -211,7 +167,7 @@ static void LOCAL_TVT_SEQ_Greeting( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_
   switch( *p_seq )
   {
   case SEQ_GREET:
-    if( p_wk->person.greetingFunction( p_wk, p_wk->person.p_wk_adrs ) )
+    if( p_wk->person.greetingFunction( p_wk, &p_wk->param, p_wk->person.p_wk_adrs ) )
     {
       (*p_seq)++;
     }
@@ -251,9 +207,9 @@ static void LOCAL_TVT_SEQ_SelectTalk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *
       int i;
       LOCAL_TVT_LIST_PARAM  param;
       GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_LIST_PARAM) );
-      param.p_message = p_wk->p_message;
-      param.p_clunit  = p_wk->p_clunit;
-      param.p_msgdata = p_wk->person.p_list_msg_data;
+      param.p_message = p_wk->param.p_message;
+      param.p_clunit  = p_wk->param.p_clunit;
+      param.cp_msgdata = p_wk->person.cp_list_msg_data;
       param.max       = p_wk->person.list_num;
       for( i = 0; i < p_wk->person.list_num; i++ )
       {
@@ -304,7 +260,7 @@ static void LOCAL_TVT_SEQ_Talking( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   {
   case SEQ_TALK:
-    if( p_wk->person.selectFunction[p_wk->select]( p_wk, p_wk->person.p_wk_adrs ) )
+    if( p_wk->person.selectFunction[p_wk->select]( p_wk, &p_wk->param, p_wk->person.p_wk_adrs ) )
     {
       (*p_seq)++;
     }

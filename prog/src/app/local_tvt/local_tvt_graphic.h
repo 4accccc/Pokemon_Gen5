@@ -36,12 +36,13 @@ enum
 
 //メインOBJのパレット
 #define LTVT_PLT_OBJ_MAIN     (0)
-#define LTVT_PLT_OBJ_CHARA     (4)  //2*4本
+#define LTVT_PLT_OBJ_CHARA     (3)  //2*4本
+#define LTVT_PLT_OBJ_WEATEHER  (12)  //1*4本
 
 //サブOBJのパレット
 #define LTVT_PLT_S_OBJ        (0)
-#define LTVT_PLT_OBJ_SUB_POKEMON    (9)  //3本
-#define LTVT_PLT_OBJ_SUB_BARICON   (12) //3本
+#define LTVT_PLT_OBJ_SUB_POKEMON    (8)  //3本
+#define LTVT_PLT_OBJ_SUB_BARICON   (11) //3本
 
 //サブBGのパレット
 #define LTVT_PLT_BG_SUB_BAR   (6) //1本

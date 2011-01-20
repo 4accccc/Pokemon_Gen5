@@ -87,7 +87,7 @@ typedef struct
 {
   LOCAL_TVT_MESSAGE *p_message;
   GFL_CLUNIT        *p_clunit;
-  GFL_MSGDATA       *p_msgdata;
+  const GFL_MSGDATA       *cp_msgdata;
   u32 msgID[LOCAL_TVT_LIST_WINDOW_MAX];
   u32 max;
   u32 cursor_pos;
@@ -126,7 +126,7 @@ extern void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk );
 extern void LOCAL_TVT_POKELIST_SetActive( LOCAL_TVT_POKELIST *p_wk, BOOL is_active );
 extern void LOCAL_TVT_POKELIST_ReStart( LOCAL_TVT_POKELIST *p_wk );
 extern LOCAL_TVT_POKELIST_RESULT LOCAL_TVT_POKELIST_GetResult( const LOCAL_TVT_POKELIST *cp_wk );
-extern s32 LOCAL_TVT_POKELIST_GetSelect( const LOCAL_TVT_POKELIST *cp_wk );
+extern const POKEMON_PARAM * LOCAL_TVT_POKELIST_GetSelect( const LOCAL_TVT_POKELIST *cp_wk );
 
 
 //=============================================================================

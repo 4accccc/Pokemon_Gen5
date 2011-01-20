@@ -77,6 +77,7 @@ extern void LOCAL_TVT_CHARA_SYS_GetLoadParam( const LOCAL_TVT_CHARA_SYS *sys, LO
 //	work
 //======================================================================
 
-extern void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, GFL_MSGDATA *p_msg, u16 msgID );
+extern void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, const GFL_MSGDATA *cp_msg, u16 msgID );
 extern BOOL LOCAL_TVT_CHARA_WaitTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys );
+extern void LOCAL_TVT_CHARA_EndTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys );
 

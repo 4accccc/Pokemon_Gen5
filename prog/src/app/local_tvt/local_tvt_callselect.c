@@ -400,9 +400,9 @@ static void LOCAL_TVT_CALLSELECT_UnLoadResource( LOCAL_TVT_CALLSELECT *p_wk )
   GFL_BG_ClearScreen( LTVT_FRAME_SUB_MSG );
   GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_MSG );
 
-  GFL_CLGRP_PLTT_Release( p_wk->res[RESID_OBJ_PLT] );
-  GFL_CLGRP_CGR_Release( p_wk->res[RESID_OBJ_NCG] );
   GFL_CLGRP_CELLANIM_Release( p_wk->res[RESID_OBJ_ANM] );
+  GFL_CLGRP_CGR_Release( p_wk->res[RESID_OBJ_NCG] );
+  GFL_CLGRP_PLTT_Release( p_wk->res[RESID_OBJ_PLT] );
 }
 
 //----------------------------------------------------------------------------
@@ -416,6 +416,9 @@ static void LOCAL_TVT_CALLSELECT_UnLoadResource( LOCAL_TVT_CALLSELECT *p_wk )
 static void BARSET_Init( BARSET *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPID heapID )
 {
   int i;
+
+  GF_ASSERT( cp_sys->param.max <= LOCAL_TVT_CALLSELECT_SELECT_MAX );
+
   GFL_STD_MemClear( p_wk, sizeof(BARSET));
   p_wk->max = cp_sys->param.max;
 
@@ -425,6 +428,11 @@ static void BARSET_Init( BARSET *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPI
     STRBUF  *p_str  = GFL_MSG_CreateString( cp_sys->param.p_msgdata, cp_sys->param.msgID[i] );
     BAR_Init( &p_wk->bar[i], cp_sys, cp_sys->param.p_clunit, i, p_str, cp_sys->param.p_message, heapID );
     GFL_STR_DeleteBuffer( p_str );
+
+    if( cp_sys->param.is_select[i] == FALSE )
+    {
+      BAR_SetActibe( &p_wk->bar[i], FALSE );
+    }
   }
 
   //文字面の設定
@@ -451,6 +459,7 @@ static void BARSET_Exit( BARSET *p_wk )
   {
     BAR_Exit( &p_wk->bar[i] );
   }
+  GFL_STD_MemClear( p_wk, sizeof(BARSET));
 }
 //----------------------------------------------------------------------------
 /**
@@ -1013,10 +1022,9 @@ static void DECIDE_Init( DECIDE *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPI
 
   //メッセージを取得
   {
-    GFL_MSGDATA *p_msg  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_comm_tvt_dat , heapID );
-    p_wk->p_btnstr  = GFL_MSG_CreateString( p_msg, 0 );
-    p_wk->p_msgstr  = GFL_MSG_CreateString( p_msg, 1 );
-    GFL_MSG_Delete( p_msg );
+    const GFL_MSGDATA *cp_msg  = LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->p_message );
+    p_wk->p_btnstr  = GFL_MSG_CreateString( cp_msg, CALL_STR_02 );
+    p_wk->p_msgstr  = GFL_MSG_CreateString( cp_msg, CALL_STR_01 );
   }
 
   LOCAL_TVT_MESSAGE_SetPrintColor( p_wk->p_message, LOCAL_TVT_MSG_COLOR_BLACK );
@@ -1042,8 +1050,8 @@ static void DECIDE_Exit( DECIDE *p_wk )
 
   //メッセージ破棄
   {
-    GFL_STR_DeleteBuffer( p_wk->p_btnstr );
     GFL_STR_DeleteBuffer( p_wk->p_msgstr );
+    GFL_STR_DeleteBuffer( p_wk->p_btnstr );
   }
 
   //下ウィンドウ破棄
@@ -1053,6 +1061,8 @@ static void DECIDE_Exit( DECIDE *p_wk )
   GFL_BG_SetScrollReq( LTVT_FRAME_SUB_MSG, GFL_BG_SCROLL_Y_SET , 0 );
 
   APP_TASKMENU_RES_Delete( p_wk->p_menures );
+
+  GFL_STD_MemClear( p_wk, sizeof(DECIDE) );
 }
 //----------------------------------------------------------------------------
 /**

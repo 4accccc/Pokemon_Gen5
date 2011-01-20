@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-18T22:10:00"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-01-20T20:49:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,15 +365,15 @@
 		</language>
 	</columns>
 
-	<dialog left="67" top="223" right="772" bottom="851" maximized="no" rayout="Vertical2">
+	<dialog left="237" top="215" right="942" bottom="843" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="657" top="66" right="1130" bottom="464" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -393,68 +393,299 @@
 	</lock>
 
 
-	<row id="TEST_STR_01">
-		<language name="JPN" width="256">しんきさくせいようのテンプレートです。</language>
-		<language name="JPN_KANJI" width="256">新規作成用のテンプレートです。</language>
+	<row id="CALL_STR_01">
+		<language name="JPN" width="256">ともだちを　えらんでください</language>
+		<language name="JPN_KANJI" width="256">友達を　選んでください</language>
 	</row>
 
-	<row id="TEST_STR_02">
-		<language name="JPN" width="256">このファイルをリネームしてつかってください。</language>
-		<language name="JPN_KANJI" width="256">このファイルをリネームして使ってください。</language>
+	<row id="CALL_STR_02">
+		<language name="JPN" width="256">ともだちを　よびだす</language>
+		<language name="JPN_KANJI" width="256">友達を　呼び出す</language>
 	</row>
 
-	<row id="TEST_STR_03">
-		<language name="JPN" width="256">もじれつ　を　へんしゅう　した　あとで
-「てきよう」を　おすと、つかえない　もじが
-ふくまれていた　ばあいに　けいこくが　でます。</language>
-		<language name="JPN_KANJI" width="256">文字列を編集した後で
-「適用」をおすと、使えない文字が
-ふくまれていた場合に、警告が出ます。</language>
+	<row id="CALL_STR_03">
+		<language name="JPN" width="256">ともだちを　よびだしちゅう！</language>
+		<language name="JPN_KANJI" width="256">友達を　呼び出し中！</language>
 	</row>
 
-	<row id="TEST_STR_04">
-		<language name="JPN" width="256">とくに　「かんじ」は　ちゅうがっこうまでに
-ならうものしか　つかえません。</language>
-		<language name="JPN_KANJI" width="256">特に漢字は、中学校までに
-習うものしか　使えません。</language>
+	<row id="CALL_CHARA_01">
+		<language name="JPN" width="256">アララギはかせ</language>
+		<language name="JPN_KANJI" width="256">アララギ博士</language>
 	</row>
 
-	<row id="TEST_STR_05">
-		<language name="JPN" width="256">この「かんじ」は　つかえるのかな？　ということを
-わざわざ　しらべなくても
-へんしゅうしながら　たしかめられます。
-</language>
-		<language name="JPN_KANJI" width="256">この漢字は使えるのかな？　ということを、
-わざわざ調べなくても、
-編集しながら確かめられます。
-</language>
+	<row id="CALL_CHARA_02">
+		<language name="JPN" width="256">ライバル</language>
+		<language name="JPN_KANJI" width="256">ライバル</language>
 	</row>
 
-	<row id="TEST_STR_06">
-		<language name="JPN" width="256">「かんじ」を　つかう　ひつようが　ない　ばあいは
-JPN_KANJI　の　れつ　を　けすことも　できます。
-</language>
-		<language name="JPN_KANJI" width="256">漢字を使う必要がない場合は、
-JPN_KANJI　の列を消すこともできます。
-</language>
+	<row id="CALL_CHARA_03">
+		<language name="JPN" width="256">チェレン</language>
+		<language name="JPN_KANJI" width="256">チェレン</language>
 	</row>
 
-	<row id="TEST_STR_07">
-		<language name="JPN" width="256">メニューバーから
-プロジェクト
-→こうもくせってい
-→げんごのついか／さくじょ
-です。</language>
-		<language name="JPN_KANJI" width="256">メニューバーから
-プロジェクト
-→項目設定
-→言語の追加／削除
-です。</language>
+	<row id="CALL_CHARA_04">
+		<language name="JPN" width="256">ベル</language>
+		<language name="JPN_KANJI" width="256">ベル</language>
 	</row>
 
-	<row id="TEST_STR_08">
-		<language name="JPN" width="256">よろしくおねがいします。</language>
-		<language name="JPN_KANJI" width="256">よろしくお願いします。</language>
+	<row id="CALL_CHARA_05">
+		<language name="JPN" width="256">ママ</language>
+		<language name="JPN_KANJI" width="256">ママ</language>
+	</row>
+
+	<row id="CALL_CHARA_06" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,#ffff00,#ffff00,,,,,">
+		<comment>仮</comment>
+		<language name="JPN" width="256">かくしキャラ</language>
+		<language name="JPN_KANJI" width="256">かくしキャラ</language>
+	</row>
+
+	<row id="CALL_DOCTOR_01">
+		<language name="JPN" width="256">はなす</language>
+		<language name="JPN_KANJI" width="256">話す</language>
+	</row>
+
+	<row id="CALL_DOCTOR_02">
+		<language name="JPN" width="256">しんかを　おしえて</language>
+		<language name="JPN_KANJI" width="256">進化を　教えて</language>
+	</row>
+
+	<row id="CALL_DOCTOR_03">
+		<language name="JPN" width="256">ずかんチェック</language>
+		<language name="JPN_KANJI" width="256">図鑑チェック</language>
+	</row>
+
+	<row id="CALL_DOCTOR_04">
+		<language name="JPN" width="256">さよなら</language>
+		<language name="JPN_KANJI" width="256">さよなら</language>
+	</row>
+
+	<row id="CALL_DOCTOR_SHINKA_01">
+		<language name="JPN" width="256">どのこの　しんかを　しりたいの？</language>
+		<language name="JPN_KANJI" width="256">どのこの　進化を　知りたいの？</language>
+	</row>
+
+	<row id="CALL_DOCTOR_SHINKA_02">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="CALL_RIVAL_01">
+		<language name="JPN" width="256">はなす</language>
+		<language name="JPN_KANJI" width="256">話す</language>
+	</row>
+
+	<row id="CALL_RIVAL_02">
+		<language name="JPN" width="256">どこにいるの？</language>
+		<language name="JPN_KANJI" width="256">どこにいるの？</language>
+	</row>
+
+	<row id="CALL_RIVAL_03">
+		<language name="JPN" width="256">さよなら</language>
+		<language name="JPN_KANJI" width="256">さよなら</language>
+	</row>
+
+	<row id="CALL_CHELEN_01">
+		<language name="JPN" width="256">はなす</language>
+		<language name="JPN_KANJI" width="256">はなす</language>
+	</row>
+
+	<row id="CALL_CHELEN_02">
+		<language name="JPN" width="256">タイプを　おしえて</language>
+		<language name="JPN_KANJI" width="256">タイプを　教えて</language>
+	</row>
+
+	<row id="CALL_CHELEN_03">
+		<language name="JPN" width="256">とくせいを　おしえて</language>
+		<language name="JPN_KANJI" width="256">特性を　教えて</language>
+	</row>
+
+	<row id="CALL_CHELEN_04">
+		<language name="JPN" width="256">さよなら</language>
+		<language name="JPN_KANJI" width="256">さよなら</language>
+	</row>
+
+	<row id="CALL_CHELEN_TYPE_01">
+		<language name="JPN" width="256">どのこの　タイプが　しりたいの？</language>
+		<language name="JPN_KANJI" width="256">どのこの　タイプが　知りたいの？</language>
+	</row>
+
+	<row id="CALL_CHELEN_TOKUSEI_01">
+		<language name="JPN" width="256">どのこの　とくせいが　しりたいの？</language>
+		<language name="JPN_KANJI" width="256">どのこの　特性が　知りたいの？</language>
+	</row>
+
+	<row id="CALL_BELL_01">
+		<language name="JPN" width="256">はなす</language>
+		<language name="JPN_KANJI" width="256">話す</language>
+	</row>
+
+	<row id="CALL_BELL_02">
+		<language name="JPN" width="256">なかよしか　みて</language>
+		<language name="JPN_KANJI" width="256">仲良しか　見て</language>
+	</row>
+
+	<row id="CALL_BELL_03">
+		<language name="JPN" width="256">がんばりを　みて</language>
+		<language name="JPN_KANJI" width="256">頑張りを　見て</language>
+	</row>
+
+	<row id="CALL_BELL_04">
+		<language name="JPN" width="256">さよなら</language>
+		<language name="JPN_KANJI" width="256">さよなら</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_00">
+		<comment>ポケモン選択時</comment>
+		<language name="JPN" width="256">どのこと　なかよしか　しりたいの？</language>
+		<language name="JPN_KANJI" width="256">どのこと　仲良しか　知りたいの？</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_01">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+すごく　なかが　わるいんだね[BE:01:ページ切り替え（クリア）]
+いっしょにいるのが　つらそうだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+すごく　仲が　悪いんだね[BE:01:ページ切り替え（クリア）]
+一緒にいるのが　辛そうだよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_02">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+なかが　わるいんだね[BE:01:ページ切り替え（クリア）]
+なんか　いやそうな　かおしてるよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+仲が　悪いんだね[BE:01:ページ切り替え（クリア）]
+なんか　嫌そうな　顔してるよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_03">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+まだまだ　これからって　かんじだね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+まだまだ　これからって　感じだね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_04">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+すこし　なかよく　なってきたね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+少し　仲良く　なってきたね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_05">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+なかよし　なんだね[BE:01:ページ切り替え（クリア）]
+なんだか　うれしそうだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+仲良し　なんだね[BE:01:ページ切り替え（クリア）]
+なんだか　嬉しそうだよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_06">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+けっこう　なかよし　なんだね[BE:01:ページ切り替え（クリア）]
+いっしょに　いるのが　たのしいみたい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+結構　仲良し　なんだね[BE:01:ページ切り替え（クリア）]
+一緒に　いるのが　楽しいみたい[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_NATSUKI_07">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+とっても　なかよし　なんだね[BE:01:ページ切り替え（クリア）]
+みてると　なんだか　やけちゃうなぁ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:02:ポケモンニックネーム:1]って……
+とっても　仲良し　なんだね[BE:01:ページ切り替え（クリア）]
+見てると　なんだか　やけちゃうなぁ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_00">
+		<comment>ポケモン選択時</comment>
+		<language name="JPN" width="256">どのこの　がんばりが　みたいの？</language>
+		<language name="JPN_KANJI" width="256">どのこの　頑張りが　見たいの？</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_01">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の[1:02:ポケモンニックネーム:1]……
+まだまだ　がんばれるって　かんじだね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の[1:02:ポケモンニックネーム:1]……
+まだまだ　頑張れるって　感じだね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_02">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の[1:02:ポケモンニックネーム:1]……
+ものすごく　がんばったね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の[1:02:ポケモンニックネーム:1]……
+ものすごく　頑張ったね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_03">
+		<language name="JPN" width="256">とくに　[1:0D:ステータス名:0]は
+ほんとうに　がんばったと　おもうよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">とくに　[1:0D:ステータス名:0]は
+本当に　頑張ったと　思うよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_04">
+		<language name="JPN" width="256">とくに　[1:0D:ステータス名:0]と　[1:0D:ステータス名:1]は
+ほんとうに　がんばったと　おもうよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">とくに　[1:0D:ステータス名:0]と　[1:0D:ステータス名:1]は
+本当に　頑張ったと　思うよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_05">
+		<language name="JPN" width="256">HP</language>
+		<language name="JPN_KANJI" width="256">HP</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_06">
+		<language name="JPN" width="256">こうげき</language>
+		<language name="JPN_KANJI" width="256">こうげき</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_07">
+		<language name="JPN" width="256">ぼうぎょ</language>
+		<language name="JPN_KANJI" width="256">ぼうぎょ</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_08">
+		<language name="JPN" width="256">すばやさ</language>
+		<language name="JPN_KANJI" width="256">すばやさ</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_09">
+		<language name="JPN" width="256">とくこう</language>
+		<language name="JPN_KANJI" width="256">とくこう</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_10">
+		<language name="JPN" width="256">とくぼう</language>
+		<language name="JPN_KANJI" width="256">とくぼう</language>
+	</row>
+
+	<row id="CALL_MOTHER_01">
+		<language name="JPN" width="256">はなす</language>
+		<language name="JPN_KANJI" width="256">話す</language>
+	</row>
+
+	<row id="CALL_MOTHER_02">
+		<language name="JPN" width="256">[1:05:マップ名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]</language>
+	</row>
+
+	<row id="CALL_MOTHER_03">
+		<language name="JPN" width="256">さよなら</language>
+		<language name="JPN_KANJI" width="256">さよなら</language>
+	</row>
+
+	<row id="CALL_SECRET_01">
+		<language name="JPN" width="256">はなす</language>
+		<language name="JPN_KANJI" width="256">話す</language>
+	</row>
+
+	<row id="CALL_SECRET_02">
+		<language name="JPN" width="256">さよなら</language>
+		<language name="JPN_KANJI" width="256">さよなら</language>
 	</row>
 
 	<flowchart-group-list>

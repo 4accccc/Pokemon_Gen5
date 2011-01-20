@@ -577,7 +577,7 @@ void LOCAL_TVT_CHARA_SYS_GetLoadParam( const LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT
  *	@param	msgID   メッセージID
  */
 //-----------------------------------------------------------------------------
-void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, GFL_MSGDATA *p_msg, u16 msgID )
+void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, const GFL_MSGDATA *cp_msg, u16 msgID )
 {
   LOCAL_TVT_MSG_POS pos;
 
@@ -599,7 +599,7 @@ void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, GFL_MSGDATA *p_msg, 
   LOCAL_TVT_RECICON_Visible( charaWork->sys, charaWork->charaIdx );
 
   //メッセージON
-  LOCAL_TVT_MSGWIN_DispMessage( charaWork->sys->param.message, p_msg, msgID );
+  LOCAL_TVT_MSGWIN_DispMessage( charaWork->sys->param.message, cp_msg, msgID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -615,14 +615,8 @@ BOOL LOCAL_TVT_CHARA_WaitTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *
 {
   if( LOCAL_TVT_MSGWIN_IsFinish( charaWork->sys->param.message ) )
   {
-    //ウィンドウOFF
-    LOCAL_TVT_MSGWIN_CloseWindow( charaWork->sys->param.message );
-
     //音声アイコン非表示
     LOCAL_TVT_RECICON_Hide( charaWork->sys );
-
-    //名前表示
-    LOCAL_TVT_CHARA_SYS_RedrawName( sys );
     //口を閉じる
     LOCAL_TVT_CHARA_LipSyncForceStop( charaWork );
     return TRUE;
@@ -640,6 +634,23 @@ BOOL LOCAL_TVT_CHARA_WaitTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *
     }
     return FALSE;
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  話終了（ウィンドウがきえる）
+ *
+ *	@param	LOCAL_TVT_CHARA *charaWork  キャラ
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  キャラシステム
+ *
+ *	@note   ウィンドウを消したくなければこれを呼ばず、続けてStartTalkをしてよい
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_EndTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys )
+{
+  //ウィンドウOFF
+  LOCAL_TVT_MSGWIN_CloseWindow( charaWork->sys->param.message );
+  //名前表示
+  LOCAL_TVT_CHARA_SYS_RedrawName( sys );
 }
 //--------------------------------------------------------------
 //	初期化
@@ -1130,7 +1141,7 @@ static const void LOCAL_TVT_CHARA_LoadWeather( LOCAL_TVT_CHARA *charaWork, LOCAL
     }
 
     charaWork->weatherCellRes[LTCR_PLT] = GFL_CLGRP_PLTT_RegisterComp( sys->arcHandle, 
-        nclr, CLSYS_DRAW_MAIN , (12+charaWork->charaIdx)*32 , heapID  );
+        nclr, CLSYS_DRAW_MAIN , (LTVT_PLT_OBJ_WEATEHER+charaWork->charaIdx)*32 , heapID  );
     charaWork->weatherCellRes[LTCR_NCG] = GFL_CLGRP_CGR_Register( sys->arcHandle, 
         ncgr, FALSE , CLSYS_DRAW_MAIN , heapID  );
     charaWork->weatherCellRes[LTCR_ANM] = GFL_CLGRP_CELLANIM_Register( sys->arcHandle,  ncer, nanr, heapID  );

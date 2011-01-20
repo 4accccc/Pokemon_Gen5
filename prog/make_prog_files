@@ -62,7 +62,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/dendou_save.c \
 				savedata/etc_save.c \
 				savedata/medalbox.c \
-        field/fldmmdl_save.c
+        field/fldmmdl_save.c \
+        savedata/person_state.c
 
 
 #通信の常駐
@@ -482,7 +483,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         system/font2tex.c \
         field/field_comm/monolith_tool_notwifi.c \
         field/pair_sys.c \
-        field/scrcmd_pair.c
+        field/scrcmd_pair.c \
+        field/scrcmd_person.c
 
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
@@ -1968,6 +1970,10 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
     app/local_tvt/local_tvt_callselect.c \
     app/local_tvt/local_tvt_person.c \
     app/local_tvt/local_tvt_person_support.c \
+    app/local_tvt/local_tvt_person_mother.c \
+    app/local_tvt/local_tvt_person_doctor.c \
+    app/local_tvt/local_tvt_person_chelen.c \
+    app/local_tvt/local_tvt_calldata.c \
     app/local_tvt/local_tvt_debug.c
 
 # WIFIバトルマッチングフロー周り＋WIFネット部分

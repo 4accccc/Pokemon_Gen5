@@ -25,7 +25,7 @@ zonename		= ..\..\fldmapdata\zonetable\zone_id.h
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
-TARGETDIR_H = $(PROJECT_ARCDIR)
+TARGETDIR_H = ..\..\..\prog\src\app\local_tvt
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -41,10 +41,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
-
-subdir:
-	@$(MAKE_SUBDIR)
+do-build:	$(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix $(TARGETDIR_H)/$(targetname).h
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
@@ -74,7 +71,9 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -f *.data
+	rm -f *.dat
+	rm -f *.h
+	rm -f *.csv
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
