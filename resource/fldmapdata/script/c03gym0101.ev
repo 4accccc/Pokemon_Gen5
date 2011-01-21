@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA ev_prog_c03gym0101_gate_in
 _EVENT_DATA ev_prog_c03gym0101_gate_out
+_EVENT_DATA ev_prog_c03gym0101_gate_out_exit
 _EVENT_DATA_END
 
 //==============================================================
@@ -32,6 +33,7 @@ _EVENT_DATA_END
   ゲートイン/アウト
 */
 /***************************************************************/
+//
 EVENT_START ev_prog_c03gym0101_gate_in
 {
   DEFINE_LOCAL  i_player_dir
@@ -59,10 +61,13 @@ EVENT_END
 
 EVENT_START ev_prog_c03gym0101_gate_out
 {
+  DEFINE_LOCAL  i_gate_id
   DEFINE_LOCAL  i_player_dir
 
-	//自機方向取得
-  $i_player_dir = $SCWK_PARAM0
+  $i_gate_id = $SCWK_PARAM0
+	
+  //自機方向取得
+  $i_player_dir = $SCWK_PARAM1
  
   //自機表示
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_off )
@@ -82,6 +87,14 @@ EVENT_START ev_prog_c03gym0101_gate_out
 
 //	_CAMERA_BIND()	//カメラのバインドを復活
 //  _CAMERA_END()		//カメラ操作開始
+
+}
+EVENT_END
+
+EVENT_START ev_prog_c03gym0101_gate_out_exit
+{
+  //ジムリーダー部屋に移動
+  _MAP_CHANGE( ZONE_ID_C03GYM0201, 14,16, DIR_UP )
 }
 EVENT_END
 

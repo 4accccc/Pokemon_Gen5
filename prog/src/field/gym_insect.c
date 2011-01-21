@@ -256,8 +256,8 @@ static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
 
     //©‹@–š‚©‚ço‚é
     {
-      SCRIPT_WORK* sc = SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_OUT, NULL, NULL, wk->heapLowID );
-      SCRIPT_SetScriptWorkParam( sc, evwk->gate_prm->out_dir, 0, 0, 0 );
+      SCRIPT_WORK* sc = SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_OUT+(evwk->gate_id==GATE_ID_3D_4A), NULL, NULL, wk->heapLowID );
+      SCRIPT_SetScriptWorkParam( sc, evwk->gate_id, evwk->gate_prm->out_dir, 0, 0 );
     }
     (*seq)++;
     break;
