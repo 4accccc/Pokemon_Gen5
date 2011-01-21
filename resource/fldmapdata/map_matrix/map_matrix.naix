@@ -284,7 +284,8 @@ enum {
 	NARC_map_matrix_bbuill04_mat_bin = 270,
 	NARC_map_matrix_gate09_mat_bin = 271,
 	NARC_map_matrix_gate10_mat_bin = 272,
-	NARC_map_matrix_h06a_mat_bin = 273
+	NARC_map_matrix_h06a_mat_bin = 273,
+	NARC_map_matrix_gym0302_mat_bin = 274
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
