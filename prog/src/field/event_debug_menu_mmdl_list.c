@@ -186,11 +186,12 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 
         jiki = MMDLSYS_SearchOBJID(
           work->fldmmdlsys, MMDL_ID_PLAYER );
+        MMDL_SetStatusBitVanish( jiki, TRUE );
 
         head.id = 250;
 
         MMDLHEADER_SetGridPos( &head,
-            MMDL_GetGridPosX( jiki ) + 2,
+            MMDL_GetGridPosX( jiki ),
             MMDL_GetGridPosZ( jiki ),
             MMDL_GetVectorPosY( jiki ) );
 
@@ -217,6 +218,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         
         if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
           if( (key_cont & PAD_BUTTON_B) ){
+            MMDL_SetStatusBitVanish( MMDLSYS_SearchOBJID( work->fldmmdlsys, MMDL_ID_PLAYER ), FALSE );
             MMDL_Delete( work->fmmdl );
             (*seq) = 1;
             return GMEVENT_RES_CONTINUE;
