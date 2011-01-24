@@ -11,6 +11,11 @@
 //ライブラリ
 #include <gflib.h>
 
+//システム
+#include "savedata/save_control.h"
+#include "savedata/save_tbl.h"
+#include "savedata/etc_save.h"
+
 //外部公開
 #include "savedata/person_state.h"
 //=============================================================================
@@ -29,10 +34,16 @@
 //-------------------------------------
 ///	セーブワーク
 //=====================================
+/*
 struct _PERSON_STATE
 {
-  u8  state[LOCAL_TVT_PERSON_MAX];
+  u8  state[PERSON_STATE_MAX];
+  u8  is_ltvt[PERSON_STATE_MAX];
 };
+*/
+
+//使用分と保存分が正しいか
+SDK_COMPILER_ASSERT( LOCAL_TVT_PERSON_MAX <= PERSON_STATE_MAX );
 
 //=============================================================================
 /**
@@ -71,10 +82,8 @@ void PERSON_STATE_Init( void *p_wk_adrs )
 //-----------------------------------------------------------------------------
 PERSON_STATE* PERSON_STATE_GetWork( SAVE_CONTROL_WORK *p_sv )
 {
-#warning TODO
-  static PERSON_STATE todo;
-  return &todo;
- // return SaveControl_DataPtrGet(p_sv, GMDATA_ID_PERSON_STATE);
+  ETC_SAVE_WORK *p_etc  = SaveControl_DataPtrGet(p_sv, GMDATA_ID_ETC);
+  return EtcSave_GetPersonStatePtr( p_etc );
 }
 
 //----------------------------------------------------------------------------
@@ -116,4 +125,30 @@ void PERSON_STATE_SetState( PERSON_STATE* p_wk, u16 person, u16 state )
 u16 PERSON_STATE_GetState( const PERSON_STATE* cp_wk, u16 person )
 {
   return cp_wk->state[ person ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ローカルライブキャスター  電話かけフラグON
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	person              人物ID
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person )
+{
+  p_wk->is_ltvt[ person ] = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ローカルライブキャスター  電話フラグ取得
+ *
+ *	@param	const PERSON_STATE *cp_wk ワーク
+ *	@param	person                    人物ID
+ *
+ *	@return TRUE電話かけられる  FALSE電話かけられない
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_GetLocalTvtCall( const PERSON_STATE *cp_wk, u16 person )
+{
+  return cp_wk->is_ltvt[ person ];
 }

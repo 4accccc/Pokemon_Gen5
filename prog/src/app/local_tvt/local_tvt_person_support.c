@@ -88,7 +88,8 @@ void LOCAL_TVT_SUPPORT_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA 
   p_person->selectFunction[3] = LOCAL_TVT_SUPPORT_Farewell;
   p_person->list_msgID[3]     = CALL_BELL_04;
   p_person->list_num  = 4;
-  p_person->cp_list_msg_data = cp_msg;
+  p_person->list_start_msgID  = CALL_BELL_SELECT_01;
+  p_person->cp_list_msg_data  = cp_msg;
 }
 
 //=============================================================================

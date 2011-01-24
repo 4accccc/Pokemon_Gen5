@@ -186,7 +186,7 @@ LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID )
     GFL_ARC_CloseDataHandle( ctvtArcHandle );
   }
 
-  p_wk->vBlankTcb = GFUser_VIntr_CreateTCB( LOCAL_TVT_BG_VBlankFunc, p_wk, 8 );
+  p_wk->vBlankTcb = GFUser_VIntr_CreateTCB( LOCAL_TVT_BG_VBlankFunc, p_wk, 0 );
 
   return p_wk;
 }
@@ -356,6 +356,19 @@ void LOCAL_TVT_TOUCHBAR_Main( LOCAL_TVT_TOUCHBAR *p_wk )
       p_wk->is_trg  = TRUE;
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示設定
+ *
+ *	@param	LOCAL_TVT_TOUCHBAR *p_wk  ワーク
+ *	@param	is_visible                TRUEで表示、FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_TOUCHBAR_SetVisible( LOCAL_TVT_TOUCHBAR *p_wk, BOOL is_visible )
+{
+  GFL_CLACT_WK_SetDrawEnable( BARICON_GetClwk( &p_wk->bar_icon ), is_visible );
+  GFL_BG_SetVisible( LTVT_FRAME_SUB_BAR, is_visible );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1047,6 +1060,8 @@ struct _LOCAL_TVT_POKELIST
   GFL_BMPWIN  *p_bmpwin[6];
   GFL_CLWK    *p_clwk_poke[6];
   u16   res[POKELIST_RESID_NCG_MAX];
+  GFL_TCB    *p_set_visible_tcb;
+  BOOL is_visible_req;
 };
 
 static void Local_Tvt_Pokelist_GetRowColIndex( u32 cursor_pos, s16 *p_row, s16 *p_col );
@@ -1054,6 +1069,7 @@ static void Local_Tvt_Pokelist_GetRowColIndexMax( u32 cursor_pos, u32 cursor_max
 static BOOL Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs );
 static BOOL Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs );
 static void Local_Tvt_Pokelist_Change( void *p_wk_adrs, int touch_or_key );
+static void Local_Tvt_Pokelist_SetVisibleVBlank( GFL_TCB *p_tcb, void *p_wk_adrs );
 
 //----------------------------------------------------------------------------
 /**
@@ -1071,6 +1087,10 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
   p_wk->param   = *cp_param;
   p_wk->cursor_pos  = 0;
   p_wk->is_active = TRUE;
+
+  GFL_BG_SetVisible( LTVT_FRAME_SUB_BAR, FALSE );
+  GFL_BG_SetVisible( LTVT_FRAME_SUB_MISC, FALSE );
+  GFL_BG_SetVisible( LTVT_FRAME_SUB_MSG, FALSE );
 
   //リソース読み込み
   {
@@ -1137,6 +1157,7 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
   
   //タッチバー作成
   p_wk->p_touchbar  = LOCAL_TVT_TOUCHBAR_Init( p_wk->param.p_clunit, heapID );
+  LOCAL_TVT_TOUCHBAR_SetVisible( p_wk->p_touchbar, FALSE );
 
   //UI
   {
@@ -1185,6 +1206,7 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
           heapID
           );
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk_poke[i], plt, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_poke[i], FALSE );
     }
 
     GFL_ARC_CloseDataHandle( p_handle );
@@ -1212,25 +1234,8 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
     GFL_BG_LoadScreenV_Req( LTVT_FRAME_SUB_MSG );
   }
 
-  //ポケモンリストのプレートにアルファをかける
-  //ただしバーと共通のBG面なのでバーにはかけないようにするためウィンドウマスク
-  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2, 13, 3 );
-  GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
-  G2S_SetWnd0Position( 0, 192-24, 255, 192 );
-  G2S_SetWnd1Position( 1, 192-24, 256, 192 );
-  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG1|
-                          GX_WND_PLANEMASK_BG2|
-                          GX_WND_PLANEMASK_OBJ, FALSE );
-  G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_BG1|
-                          GX_WND_PLANEMASK_BG2|
-                          GX_WND_PLANEMASK_OBJ, FALSE );
-  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0|
-                          GX_WND_PLANEMASK_BG1|
-                          GX_WND_PLANEMASK_BG2|
-                          GX_WND_PLANEMASK_BG3|
-                          GX_WND_PLANEMASK_OBJ,
-                          TRUE );
-
+  p_wk->p_set_visible_tcb  = GFUser_VIntr_CreateTCB(Local_Tvt_Pokelist_SetVisibleVBlank, p_wk, 0);
+  p_wk->is_visible_req = TRUE;
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -1242,6 +1247,7 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_POKELIST_Exit( LOCAL_TVT_POKELIST *p_wk )
 {
+  GFL_TCB_DeleteTask( p_wk->p_set_visible_tcb );
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   G2S_BlendNone();
 
@@ -1698,6 +1704,55 @@ static void Local_Tvt_Pokelist_Change( void *p_wk_adrs, int touch_or_key )
     GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR,
         x, y, w, h, LTVT_PLT_BG_SUB_LIST_ON );
     GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_BAR );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  VBlankにて表示を設定する関数
+ *
+ *	@param	GFL_TCB *p_tcb  TCB
+ *	@param	*p_wk_adrs      ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_Pokelist_SetVisibleVBlank( GFL_TCB *p_tcb, void *p_wk_adrs )
+{
+  LOCAL_TVT_POKELIST  *p_wk = p_wk_adrs;
+  if( p_wk->is_visible_req )
+  {
+    int i;
+    for( i = 0; i < 6; i++ )
+    {
+      if( p_wk->p_clwk_poke[i] )
+      {
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_poke[i], TRUE );
+      }
+    }
+
+    p_wk->is_visible_req  = FALSE;
+
+    LOCAL_TVT_TOUCHBAR_SetVisible( p_wk->p_touchbar, TRUE );
+    GFL_BG_SetVisible( LTVT_FRAME_SUB_BAR, TRUE );
+    GFL_BG_SetVisible( LTVT_FRAME_SUB_MISC, TRUE );
+    GFL_BG_SetVisible( LTVT_FRAME_SUB_MSG, TRUE );
+
+    //ポケモンリストのプレートにアルファをかける
+    //ただしバーと共通のBG面なのでバーにはかけないようにするためウィンドウマスク
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2, 13, 3 );
+    GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
+    G2S_SetWnd0Position( 0, 192-24, 255, 192 );
+    G2S_SetWnd1Position( 1, 192-24, 256, 192 );
+    G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG1|
+        GX_WND_PLANEMASK_BG2|
+        GX_WND_PLANEMASK_OBJ, FALSE );
+    G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_BG1|
+        GX_WND_PLANEMASK_BG2|
+        GX_WND_PLANEMASK_OBJ, FALSE );
+    G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0|
+        GX_WND_PLANEMASK_BG1|
+        GX_WND_PLANEMASK_BG2|
+        GX_WND_PLANEMASK_BG3|
+        GX_WND_PLANEMASK_OBJ,
+        TRUE );
   }
 }
 

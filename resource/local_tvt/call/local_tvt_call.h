@@ -29,3 +29,10 @@
 #define BELL_STATE_INIT (0)
 #define MOTHER_STATE_INIT (0)
 #define SECRET_STATE_INIT (0)
+//äeèÛë‘ç≈ëÂêî
+#define CHELEN_STATE_MAX (1)
+#define MOTHER_STATE_MAX (1)
+#define BELL_STATE_MAX (1)
+#define SECRET_STATE_MAX (1)
+#define DOCTOR_STATE_MAX (1)
+#define RIVAL_STATE_MAX (1)

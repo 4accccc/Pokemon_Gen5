@@ -63,6 +63,8 @@ extern void LOCAL_TVT_CHARA_SYS_Term( LOCAL_TVT_CHARA_SYS *sys );
 extern void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys );
 
 extern void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CHARA_PARAM *cp_setup_tbl, LOCAL_TVT_MEMBER member );
+extern BOOL LOCAL_TVT_CHARA_SYS_IsLoadEnd( const LOCAL_TVT_CHARA_SYS *sys );
+extern void LOCAL_TVT_CHARA_SYS_SetVisible( LOCAL_TVT_CHARA_SYS *sys, BOOL is_visible );
 
 extern LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_SYS_GetWork( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA_POS pos );
 

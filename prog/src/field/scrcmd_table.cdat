@@ -933,7 +933,7 @@
 
   //人物状態
   DEF_CMD( EvCmdPersonState_SetState, EV_SEQ_PERSON_STATE_SET )
-  NO_CMD()
+  DEF_CMD( EvCmdPersonState_SetLTvtCall, EV_SEQ_PERSON_TVT_CALL_SET )
 
   END_CMD
   //スクリプトコマンドテーブル終了

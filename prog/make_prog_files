@@ -1968,12 +1968,13 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
     app/local_tvt/local_tvt_message.c \
     app/local_tvt/local_tvt_util.c \
     app/local_tvt/local_tvt_callselect.c \
+    app/local_tvt/local_tvt_calldata.c \
     app/local_tvt/local_tvt_person.c \
     app/local_tvt/local_tvt_person_support.c \
     app/local_tvt/local_tvt_person_mother.c \
     app/local_tvt/local_tvt_person_doctor.c \
     app/local_tvt/local_tvt_person_chelen.c \
-    app/local_tvt/local_tvt_calldata.c \
+    app/local_tvt/local_tvt_person_rival.c \
     app/local_tvt/local_tvt_debug.c
 
 # WIFIバトルマッチングフロー周り＋WIFネット部分

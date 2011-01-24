@@ -54,6 +54,7 @@ typedef struct
   void  (*ExitFunction)( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs ); //ワーク解放時に呼ばれる関数
   u32   list_msgID[LOCAL_TVT_PERSON_SELECT_FUNCTION]; //選択肢に表示する文字ID
   u32   list_num; //選択肢の数
+  u32   list_start_msgID; //選択肢前メッセージ
   const GFL_MSGDATA *cp_list_msg_data; //選択肢に表示するメッセージデータ
 } LOCAL_TVT_PERSON;
 

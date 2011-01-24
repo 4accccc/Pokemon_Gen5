@@ -607,5 +607,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (604)
   { FALSE, FALSE, FALSE }, // NO_CMD (605)
   { TRUE, TRUE, TRUE }, // _PERSON_STATE_SET_MOTHER (606)
-  { FALSE, FALSE, FALSE }, // NO_CMD (607)
+  { TRUE, TRUE, TRUE }, // _PERSON_TVT_CALL_SET_MOTHER (607)
 };

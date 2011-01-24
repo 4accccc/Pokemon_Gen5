@@ -11817,3 +11817,68 @@
   .short \LOCAL_TVT_PERSON_MOTHER
   .short \state
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ライブキャスター電話OK設定  アララギ博士
+ */
+//--------------------------------------------------------------
+#define _PERSON_TVT_CALL_SET_DOCTOR() \
+    _ASM_PERSON_TVTL_CALL_SET_DOCTOR
+
+  .macro _ASM_PERSON_TVTL_CALL_SET_DOCTOR
+  .short EV_SEQ_PERSON_TVT_CALL_SET
+  .short \LOCAL_TVT_PERSON_DOCTOR
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ライブキャスター電話OK設定  ライバル
+ */
+//--------------------------------------------------------------
+#define _PERSON_TVT_CALL_SET_RIVAL() \
+    _ASM_PERSON_TVTL_CALL_SET_RIVAL
+
+  .macro _ASM_PERSON_TVTL_CALL_SET_RIVAL
+  .short EV_SEQ_PERSON_TVT_CALL_SET
+  .short \LOCAL_TVT_PERSON_RIVAL
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ライブキャスター電話OK設定  チェレン
+ */
+//--------------------------------------------------------------
+#define _PERSON_TVT_CALL_SET_CHELEN() \
+    _ASM_PERSON_TVTL_CALL_SET_CHELEN
+
+  .macro _ASM_PERSON_TVTL_CALL_SET_CHELEN
+  .short EV_SEQ_PERSON_TVT_CALL_SET
+  .short \LOCAL_TVT_PERSON_CHELEN
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ライブキャスター電話OK設定  ベル
+ */
+//--------------------------------------------------------------
+#define _PERSON_TVT_CALL_SET_BELL() \
+    _ASM_PERSON_TVTL_CALL_SET_BELL
+
+  .macro _ASM_PERSON_TVTL_CALL_SET_BELL
+  .short EV_SEQ_PERSON_TVT_CALL_SET
+  .short \LOCAL_TVT_PERSON_BELL
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ライブキャスター電話OK設定  ママ
+ */
+//--------------------------------------------------------------
+#define _PERSON_TVT_CALL_SET_MOTHER() \
+    _ASM_PERSON_TVTL_CALL_SET_MOTHER
+
+  .macro _ASM_PERSON_TVTL_CALL_SET_MOTHER
+  .short EV_SEQ_PERSON_TVT_CALL_SET
+  .short \LOCAL_TVT_PERSON_MOTHER
+  .endm

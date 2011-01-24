@@ -42,6 +42,7 @@ extern void LOCAL_TVT_TOUCHBAR_Main( LOCAL_TVT_TOUCHBAR *p_wk );
 extern BOOL LOCAL_TVT_TOUCHBAR_IsTrg( const LOCAL_TVT_TOUCHBAR *cp_wk );
 extern BOOL LOCAL_TVT_TOUCHBAR_IsEnd( const LOCAL_TVT_TOUCHBAR *cp_wk );
 extern void LOCAL_TVT_TOUCHBAR_SetActive( LOCAL_TVT_TOUCHBAR *p_wk, BOOL is_active);
+extern void LOCAL_TVT_TOUCHBAR_SetVisible( LOCAL_TVT_TOUCHBAR *p_wk, BOOL is_visible );
 
 //=============================================================================
 /**

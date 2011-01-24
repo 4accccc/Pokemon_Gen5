@@ -32,6 +32,7 @@
 #include "local_tvt_person_mother.h"
 #include "local_tvt_person_doctor.h"
 #include "local_tvt_person_chelen.h"
+#include "local_tvt_person_rival.h"
 
 //外部参照
 #include "local_tvt_callmode.h"
@@ -116,6 +117,13 @@ LOCAL_TVT_CALL * LOCAL_TVT_CALL_Init( const LOCAL_TVT_CALL_PARAM *cp_param, HEAP
 
   //シーケンス管理
   p_wk->p_seq = LOCAL_TVT_SEQ_Init( p_wk, LOCAL_TVT_SEQ_FadeIn, heapID );
+
+  {
+    LOCAL_TVT_CALLSELECT_PARAM  param;
+    Local_Tvt_SetCallSelect( p_wk, &param );
+    p_wk->p_callselect  = LOCAL_TVT_CALLSELECT_Init( &param, p_wk->heapID );
+    GFL_NET_ReloadIconTopOrBottom(FALSE , p_wk->heapID );
+  }
 
   return p_wk;
 }
@@ -264,10 +272,13 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
     LOCAL_TVT_DOCTOR_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
     break;
   case LOCAL_TVT_PERSON_RIVAL:
-    LOCAL_TVT_SUPPORT_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
+    param[0].charaType    = LTCT_RIVAL;
+    param[0].bgType       = LOCAL_TVT_CALLDATA_GetBack( p_wk->p_data, LOCAL_TVT_PERSON_RIVAL );
+    param[0].weatherType  = LOCAL_TVT_CALLDATA_GetWeather( p_wk->p_data, LOCAL_TVT_PERSON_RIVAL );
+    LOCAL_TVT_RIVAL_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
     break;
   case LOCAL_TVT_PERSON_CHELEN:
-    param[0].charaType    = LTCT_RIVAL;
+    param[0].charaType    = LTCT_CHELEN;
     param[0].bgType       = LOCAL_TVT_CALLDATA_GetBack( p_wk->p_data, LOCAL_TVT_PERSON_CHELEN );
     param[0].weatherType  = LOCAL_TVT_CALLDATA_GetWeather( p_wk->p_data, LOCAL_TVT_PERSON_CHELEN );
     LOCAL_TVT_CHELEN_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
@@ -366,6 +377,7 @@ static void LOCAL_TVT_SEQ_CallSelect( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *
   switch( *p_seq )
   {
   case SEQ_INIT:
+    if( p_wk->p_callselect == NULL )
     {
       LOCAL_TVT_CALLSELECT_PARAM  param;
       Local_Tvt_SetCallSelect( p_wk, &param );
@@ -397,6 +409,7 @@ static void LOCAL_TVT_SEQ_CallSelect( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *
 
   case SEQ_CALCEL_EXIT:
     LOCAL_TVT_CALLSELECT_Exit( p_wk->p_callselect );
+    p_wk->p_callselect = NULL;
     LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_FadeOut );
     break;
 
@@ -462,6 +475,7 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
   enum
   {
     SEQ_INIT,
+    SEQ_LOAD_WAIT,
     SEQ_MAIN,
     SEQ_EXIT,
   };
@@ -475,7 +489,7 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
       LOCAL_TVT_PERSON person;
       LOCAL_TVT_PERSON_SYS_PARAM  param;
       Local_Tvt_SetPerson( p_wk, &person );
-      
+
       GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_PERSON_SYS_PARAM));
       param.p_message   = p_wk->param.p_message;
       param.p_chara_sys = p_wk->param.p_chara_sys;
@@ -484,6 +498,14 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
       p_wk->p_person  = LOCAL_TVT_PERSON_SYS_Init( &person, &param, p_wk->heapID );
     }
     (*p_seq)++;
+    break;
+    
+  case SEQ_LOAD_WAIT:
+    if( LOCAL_TVT_CHARA_SYS_IsLoadEnd( p_wk->param.p_chara_sys ) )
+    {
+      LOCAL_TVT_CHARA_SYS_SetVisible( p_wk->param.p_chara_sys, TRUE );
+      (*p_seq)++;
+    }
     break;
 
   case SEQ_MAIN:

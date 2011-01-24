@@ -37,6 +37,7 @@
 #pragma mark [> define
 typedef enum
 {
+  LTS_LOAD_WAIT,
   LTS_FADEIN,
   LTS_FADEIN_WAIT,
   LTS_FADEOUT,
@@ -157,7 +158,7 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
   }
 
   
-  work->state = LTS_FADEIN;
+  work->state = 0;
 
   work->isFirstCommand = TRUE;
   work->scriptIdx = 0;
@@ -201,6 +202,13 @@ BOOL LOCAL_TVT_SCRIPT_Main( LOCAL_TVT_SCRIPT *work )
   
   switch( work->state )
   {
+  case LTS_LOAD_WAIT:
+    if( LOCAL_TVT_CHARA_SYS_IsLoadEnd( work->chara_sys) )
+    {
+      LOCAL_TVT_CHARA_SYS_SetVisible( work->chara_sys, TRUE );
+      work->state = LTS_FADEIN;
+    }
+    break;
   case LTS_FADEIN:
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );

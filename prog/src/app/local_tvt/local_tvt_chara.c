@@ -114,6 +114,10 @@ struct _LOCAL_TVT_CHARA_SYS
   u32 cellRes[LTCR_MAX];
   GFL_CLWK    *clwkRecIcon;
   HEAPID heapID;
+  BOOL  is_visible;
+  BOOL  is_visible_req;
+  GFL_TCB *p_set_visible_tcb;
+  BOOL  is_load;
 };
 
 struct _LOCAL_TVT_CHARA
@@ -156,6 +160,7 @@ struct _LOCAL_TVT_CHARA
 
 static const u8 charaResList[LTCT_MAX][3] = {
     { NARC_local_tvt_graphic_chara_player_m_NCLR , NARC_local_tvt_graphic_chara_player_m_1_NCGR , NARC_local_tvt_graphic_obj_player_m_NCLR },
+    { NARC_local_tvt_graphic_chara_rival_NCLR    , NARC_local_tvt_graphic_chara_rival_1_NCGR    , NARC_local_tvt_graphic_obj_rival_NCLR },
     { NARC_local_tvt_graphic_chara_rival_NCLR    , NARC_local_tvt_graphic_chara_rival_1_NCGR    , NARC_local_tvt_graphic_obj_rival_NCLR },
     { NARC_local_tvt_graphic_chara_support_NCLR  , NARC_local_tvt_graphic_chara_support_1_NCGR  , NARC_local_tvt_graphic_obj_support_NCLR },
     { NARC_local_tvt_graphic_chara_doctor_d_NCLR , NARC_local_tvt_graphic_chara_doctor_d_1_NCGR , NARC_local_tvt_graphic_obj_doctor_d_NCLR },
@@ -261,12 +266,14 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHAR
 static const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork );
 static const void LOCAL_TVT_CHARA_LoadWeather( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_WEATHER weather, LOCAL_TVT_MEMBER member, HEAPID heapID );
 static const void LOCAL_TVT_CHARA_UnLoadWeather( LOCAL_TVT_CHARA *charaWork);
+static void LOCAL_TVT_CHARA_SetVisible( LOCAL_TVT_CHARA *charaWork, BOOL is_visible );
 
 static void LOCAL_TVT_RECICON_Load( LOCAL_TVT_CHARA_SYS *sys );
 static void LOCAL_TVT_RECICON_UnLoad( LOCAL_TVT_CHARA_SYS *sys );
 static void LOCAL_TVT_RECICON_Visible( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA_POS pos );
 static void LOCAL_TVT_RECICON_Hide( LOCAL_TVT_CHARA_SYS *sys );
 
+static void Local_Tvt_SetVisibleVBlank( GFL_TCB *p_tcb, void *p_wk_adrs );
 //----------------------------------------------------------------------------
 /**
  *	@brief  キャラシステム  初期化
@@ -285,13 +292,17 @@ LOCAL_TVT_CHARA_SYS * LOCAL_TVT_CHARA_SYS_Init( const LOCAL_TVT_CHARA_SYS_PARAM 
   sys->bufNo = 1;
   sys->transState = LTTS_CHARA1;
   sys->heapID = heapID;
-  
 
   sys->arcHandle  = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT_GRAPHIC, sys->heapID );
   sys->msgHandle  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_system_dat , sys->heapID );
 
   LOCAL_TVT_RECICON_Load(sys );
 
+  GFL_BG_SetVisible( LTVT_FRAME_NAME, FALSE );
+  GFL_BG_SetVisible( LTVT_FRAME_BG, FALSE );
+  GFL_BG_SetVisible( LTVT_FRAME_CHARA, FALSE );
+
+  sys->p_set_visible_tcb  = GFUser_VIntr_CreateTCB(Local_Tvt_SetVisibleVBlank, sys, 0);
   return sys;
 }
 //----------------------------------------------------------------------------
@@ -304,6 +315,7 @@ LOCAL_TVT_CHARA_SYS * LOCAL_TVT_CHARA_SYS_Init( const LOCAL_TVT_CHARA_SYS_PARAM 
 void LOCAL_TVT_CHARA_SYS_Term( LOCAL_TVT_CHARA_SYS *sys )
 {
   int i;
+  GFL_TCB_DeleteTask( sys->p_set_visible_tcb );
 
   LOCAL_TVT_RECICON_UnLoad(sys );
 
@@ -374,6 +386,10 @@ void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys )
     if( LOCAL_TVT_CHARA_isFinishTrans( sys->transChara ) == TRUE )
     {
       sys->transChara = NULL;
+      if( sys->transState >= LTTS_CHARA4  )
+      {
+        sys->is_load  = TRUE;
+      }
     }
   }
   
@@ -485,6 +501,33 @@ void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CH
       }
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  転送終了検知
+ *
+ *	@param	const LOCAL_TVT_CHARA_SYS *sys システム
+ *
+ *	@return TRUE転送終了  FALSE転送中
+ */
+//-----------------------------------------------------------------------------
+BOOL LOCAL_TVT_CHARA_SYS_IsLoadEnd( const LOCAL_TVT_CHARA_SYS *sys )
+{
+  return sys->is_load;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  上画面キャラ表示設定
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  システム
+ *	@param	is_visible  TRUE表示  FALSE非表示
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_SYS_SetVisible( LOCAL_TVT_CHARA_SYS *sys, BOOL is_visible )
+{
+  sys->is_visible = is_visible;
+  sys->is_visible_req = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -973,7 +1016,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_CHARA *charaWork, LOCAL
               charaWork->cellRes[0],
               charaWork->cellRes[2],
               &cellInitData ,CLSYS_DRAW_MAIN , heapID );
-    GFL_CLACT_WK_SetDrawEnable( charaWork->clwkEye , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( charaWork->clwkEye , FALSE );
     GFL_CLACT_WK_SetAutoAnmFlag( charaWork->clwkEye , TRUE );
     GFL_CLACT_WK_StopAnm( charaWork->clwkEye );
 
@@ -983,7 +1026,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_CHARA *charaWork, LOCAL
               charaWork->cellRes[0],
               charaWork->cellRes[2],
               &cellInitData ,CLSYS_DRAW_MAIN , heapID );
-    GFL_CLACT_WK_SetDrawEnable( charaWork->clwkMouth , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( charaWork->clwkMouth , FALSE );
     GFL_CLACT_WK_SetAutoAnmFlag( charaWork->clwkMouth , TRUE );
     GFL_CLACT_WK_StopAnm( charaWork->clwkMouth );
   }
@@ -1163,7 +1206,7 @@ static const void LOCAL_TVT_CHARA_LoadWeather( LOCAL_TVT_CHARA *charaWork, LOCAL
               charaWork->weatherCellRes[LTCR_PLT],
               charaWork->weatherCellRes[LTCR_ANM],
               &cellInitData ,CLSYS_DRAW_MAIN , heapID );
-    GFL_CLACT_WK_SetDrawEnable( charaWork->weather, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( charaWork->weather, FALSE );
     GFL_CLACT_WK_SetAutoAnmFlag( charaWork->weather, TRUE );
     GFL_CLACT_WK_SetAnmFrame( charaWork->weather, GFUser_GetPublicRand0(FX32_ONE*4) );
   }
@@ -1191,6 +1234,23 @@ static const void LOCAL_TVT_CHARA_UnLoadWeather( LOCAL_TVT_CHARA *charaWork)
     GFL_CLGRP_CELLANIM_Release( charaWork->weatherCellRes[LTCR_ANM] );
     charaWork->weatherCellRes[LTCR_ANM] = 0xFF;
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示設定
+ *
+ *	@param	LOCAL_TVT_CHARA *charaWork  キャラ
+ *	@param	is_visible  TRUEで表示  FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+static void LOCAL_TVT_CHARA_SetVisible( LOCAL_TVT_CHARA *charaWork, BOOL is_visible )
+{
+  if( charaWork->weather )
+  {
+    GFL_CLACT_WK_SetDrawEnable( charaWork->weather , is_visible );
+  }
+  GFL_CLACT_WK_SetDrawEnable( charaWork->clwkEye, is_visible );
+  GFL_CLACT_WK_SetDrawEnable( charaWork->clwkMouth , is_visible );
 }
 
 //======================================================================
@@ -1278,4 +1338,42 @@ static void LOCAL_TVT_RECICON_Visible( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA
 static void LOCAL_TVT_RECICON_Hide( LOCAL_TVT_CHARA_SYS *sys )
 {
   GFL_CLACT_WK_SetDrawEnable( sys->clwkRecIcon , FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  VBlankにて表示を設定する関数
+ *
+ *	@param	GFL_TCB *p_tcb  TCB
+ *	@param	*p_wk_adrs      ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_SetVisibleVBlank( GFL_TCB *p_tcb, void *p_wk_adrs )
+{
+  LOCAL_TVT_CHARA_SYS *sys  = p_wk_adrs;
+
+  if( sys->is_visible_req )
+  {
+    sys->is_visible_req = FALSE;
+
+
+    GFL_BG_SetVisible( LTVT_FRAME_NAME, sys->is_visible );
+    GFL_BG_SetVisible( LTVT_FRAME_BG, sys->is_visible );
+    GFL_BG_SetVisible( LTVT_FRAME_CHARA, sys->is_visible );
+
+    {
+      int i;
+      for( i = 0 ; i < sys->member; i++ )
+      {
+        if( sys->charaWork[i] != NULL )
+        {
+          LOCAL_TVT_CHARA_SetVisible( sys->charaWork[i], sys->is_visible );
+        }
+      }
+    }
+
+    if( sys->is_visible == FALSE )
+    {
+      LOCAL_TVT_RECICON_Hide( sys );
+    }
+  }
 }

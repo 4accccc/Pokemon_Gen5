@@ -61,3 +61,23 @@ VMCMD_RESULT EvCmdPersonState_SetState( VMHANDLE *p_vm, void *p_wk_adrs )
 
   return VMCMD_RESULT_CONTINUE;
 }
+//----------------------------------------------------------------------------
+/**
+ * @brief ローカルライブキャスターの呼び出し設定をONに
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPersonState_SetLTvtCall( VMHANDLE *p_vm, void *p_wk_adrs )
+{
+  SCRCMD_WORK   *p_wk = p_wk_adrs;
+  GAMESYS_WORK  *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  u16 person    = VMGetU16( p_vm );
+
+  PERSON_STATE *p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
+
+  PERSON_STATE_SetLocalTvtCall( p_person_state, person );
+
+  return VMCMD_RESULT_CONTINUE;
+}

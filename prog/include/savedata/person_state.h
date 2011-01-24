@@ -36,6 +36,17 @@
 //=====================================
 typedef struct _PERSON_STATE PERSON_STATE;
 
+//現在はMISCへ統合するため公開しています。
+//セーブが開いたら隠す予定
+#define PERSON_STATE_MAX  (8)
+struct _PERSON_STATE
+{
+  u8  state[PERSON_STATE_MAX];
+  u8  is_ltvt[PERSON_STATE_MAX];
+};
+
+#define PERSON_STATE_WORK_SIZE  (16)
+
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -48,3 +59,5 @@ extern const PERSON_STATE* PERSON_STATE_GetWorkConst( const SAVE_CONTROL_WORK *c
 
 extern void PERSON_STATE_SetState( PERSON_STATE* p_wk, u16 person, u16 state );
 extern u16  PERSON_STATE_GetState( const PERSON_STATE* cp_wk, u16 person );
+extern void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person );
+extern BOOL PERSON_STATE_GetLocalTvtCall( const PERSON_STATE *cp_wk, u16 person );

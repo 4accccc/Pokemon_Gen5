@@ -16,6 +16,7 @@
 //システム
 #include "system/gfl_use.h"
 #include "debug/debugwin_sys.h"
+#include "savedata/person_state.h"
 
 //自分のモジュール
 #include "local_tvt_local_def.h"
@@ -33,6 +34,7 @@
 //=============================================================================
 #define DEBUGWIN_GROUP_LTVT (10)
 #define DEBUGWIN_GROUP_GRAPHIC (11)
+#define DEBUGWIN_GROUP_CALLMODE (12)
 
 //=============================================================================
 /**
@@ -45,6 +47,8 @@ static LOCAL_TVT_CHARA_PARAM  s_chara[LTM_4_MEMBER];
 static int  s_chara_idx = 0;
 static BOOL s_is_chara_load_req  = FALSE;
 static LOCAL_TVT_DEBUG_PARAM s_param  = {0};
+static u8 s_debug_flag[LOCAL_TVT_DEBUG_FLAG_MAX]  = {0};
+static u8 s_debug_state[LOCAL_TVT_PERSON_MAX]     = {0};
 
 //=============================================================================
 /**
@@ -53,19 +57,49 @@ static LOCAL_TVT_DEBUG_PARAM s_param  = {0};
 //=============================================================================
 static BOOL DebugWin_Util_ChangeValue( int *p_param, int min, int max );
 
+//グラフィック系
 static void Ltvt_Debug_Update_Member( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_Member( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Update_TimeZone( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_TimeZone( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Update_CharaIndex( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_CharaIndex( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-
 static void Ltvt_Debug_Update_Back( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_Back( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Update_Weather( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_Weather( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Update_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+
+//呼び出しモード系
+static void Ltvt_Debug_Update_DoctorState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_DoctorState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Update_RivalState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_RivalState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Update_ChelenState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_ChelenState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Update_BellState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_BellState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Update_MotherState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_MotherState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Update_SecretState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_SecretState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Update_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+
+//=============================================================================
+/**
+ *    データ
+ */
+//=============================================================================
+//-------------------------------------
+///	共通ラベル
+//=====================================
+static const char * scp_yesno_label[] =
+{
+  "NO",
+  "YES",
+};
 
 //----------------------------------------------------------------------------
 /**
@@ -125,6 +159,52 @@ void LOCAL_TVT_DEBUG_Init( const LOCAL_TVT_DEBUG_PARAM *cp_param, HEAPID heapID 
                                 DEBUGWIN_GROUP_GRAPHIC,
                                 heapID );
   }
+
+  //呼び出しモード
+  {
+    int i;
+    const PERSON_STATE  *cp_sv  = PERSON_STATE_GetWorkConst( GAMEDATA_GetSaveControlWorkConst(cp_param->p_gamedata) );
+    for( i = 0; i < LOCAL_TVT_PERSON_MAX; i++ )
+    {
+      s_debug_state[i]  = PERSON_STATE_GetState( cp_sv, i );
+    }
+    DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_CALLMODE, "よびだしモード", DEBUGWIN_GROUP_LTVT, heapID );
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_DoctorState, 
+                                Ltvt_Debug_Draw_DoctorState, 
+                                NULL, 
+                                DEBUGWIN_GROUP_CALLMODE,
+                                heapID ); 
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_RivalState, 
+                                Ltvt_Debug_Draw_RivalState, 
+                                NULL, 
+                                DEBUGWIN_GROUP_CALLMODE,
+                                heapID ); 
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_ChelenState, 
+                                Ltvt_Debug_Draw_ChelenState, 
+                                NULL, 
+                                DEBUGWIN_GROUP_CALLMODE,
+                                heapID ); 
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_BellState, 
+                                Ltvt_Debug_Draw_BellState, 
+                                NULL, 
+                                DEBUGWIN_GROUP_CALLMODE,
+                                heapID ); 
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_MotherState, 
+                                Ltvt_Debug_Draw_MotherState, 
+                                NULL, 
+                                DEBUGWIN_GROUP_CALLMODE,
+                                heapID ); 
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_SecretState, 
+                                Ltvt_Debug_Draw_SecretState, 
+                                NULL, 
+                                DEBUGWIN_GROUP_CALLMODE,
+                                heapID ); 
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_CheckZukanFlag, 
+                                Ltvt_Debug_Draw_CheckZukanFlag, 
+                                NULL, 
+                                DEBUGWIN_GROUP_CALLMODE,
+                                heapID ); 
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -134,6 +214,7 @@ void LOCAL_TVT_DEBUG_Init( const LOCAL_TVT_DEBUG_PARAM *cp_param, HEAPID heapID 
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_DEBUG_Exit( void )
 {
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_CALLMODE );
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_GRAPHIC );
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_LTVT );
   DEBUGWIN_ExitProc();
@@ -150,7 +231,22 @@ void LOCAL_TVT_DEBUG_Main( void )
   {
     LOCAL_TVT_CHARA_SYS_LoadChara( s_param.p_chara_sys, s_chara, s_member );
     s_is_chara_load_req = FALSE;
+
+    LOCAL_TVT_CHARA_SYS_SetVisible( s_param.p_chara_sys, TRUE );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグフラグ取得
+ *
+ *	@param	LOCAL_TVT_DEBUG_FLAG flag   フラグ
+ *
+ *	@return デバッグフラグ
+ */
+//-----------------------------------------------------------------------------
+BOOL LOCAL_TVT_DEBUG_IsFlagOn( LOCAL_TVT_DEBUG_FLAG flag )
+{
+  return s_debug_flag[ flag ];
 }
 
 //----------------------------------------------------------------------------
@@ -432,6 +528,217 @@ static void Ltvt_Debug_Draw_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 
   int chara  = s_chara[ s_chara_idx ].charaType;
   DEBUGWIN_ITEM_SetNameV( p_item , "%dの キャラ[%s]", s_chara_idx, scp_label[ chara ] );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_DoctorState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_DOCTOR ];
+  if( DebugWin_Util_ChangeValue( &state, 0, DOCTOR_STATE_MAX-1 ) )
+  {
+    s_debug_state[ LOCAL_TVT_PERSON_DOCTOR ]  = state;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_DoctorState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_DOCTOR ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "はかせ じょうたい[%d]", state );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_RivalState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_RIVAL ];
+  if( DebugWin_Util_ChangeValue( &state, 0, RIVAL_STATE_MAX-1 ) )
+  {
+    s_debug_state[ LOCAL_TVT_PERSON_RIVAL ]  = state;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_RivalState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_RIVAL ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "ライバル じょうたい[%d]", state );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_ChelenState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_CHELEN ];
+  if( DebugWin_Util_ChangeValue( &state, 0, CHELEN_STATE_MAX-1 ) )
+  {
+    s_debug_state[ LOCAL_TVT_PERSON_CHELEN ]  = state;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_ChelenState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_CHELEN ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "チェレン じょうたい[%d]", state );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_BellState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_BELL ];
+  if( DebugWin_Util_ChangeValue( &state, 0, BELL_STATE_MAX-1 ) )
+  {
+    s_debug_state[ LOCAL_TVT_PERSON_BELL ]  = state;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_BellState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_BELL ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "ベル じょうたい[%d]", state );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_MotherState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_MOTHER ];
+  if( DebugWin_Util_ChangeValue( &state, 0, MOTHER_STATE_MAX-1 ) )
+  {
+    s_debug_state[ LOCAL_TVT_PERSON_MOTHER ]  = state;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_MotherState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_MOTHER ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "ママ じょうたい[%d]", state );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_SecretState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_SECRET ];
+  if( DebugWin_Util_ChangeValue( &state, 0, SECRET_STATE_MAX-1 ) )
+  {
+    s_debug_state[ LOCAL_TVT_PERSON_SECRET ]  = state;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_SecretState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int state  = s_debug_state[ LOCAL_TVT_PERSON_SECRET ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "かくし じょうたい[%d]", state );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  図鑑チェックフラグ  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int flag  = s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON ];
+  if( DebugWin_Util_ChangeValue( &flag, 0, 1 ) )
+  {
+    s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON ]  = flag;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  図鑑チェックフラグ  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int flag  = s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "ずかんチェック[%s]", scp_yesno_label[ flag ] );
 }
 
 #endif //PM_DEBUG

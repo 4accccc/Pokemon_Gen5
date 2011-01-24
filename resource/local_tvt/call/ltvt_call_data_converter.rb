@@ -67,15 +67,16 @@ end
 #=====================================
 ROW_START   = 1   #行開始位置
 COL_START   = 0   #列開始位置
-COL_PERSON  = 1   #列1：人物
-COL_STATE   = 2   #列2：状態定義
-COL_ZONEID  = 3   #列3：ゾーンID
-COL_PLACE   = 4   #列4：場所
-COL_CALLFLAG= 5   #列4：電話フラグ
-COL_GREET_MSGID = 6   #列4：メッセージID
-COL_TALK_MSGID  = 7   #列4：メッセージID
-COL_BYE_MSGID   = 8   #列4：メッセージID
-COL_END     = 9   #列最後
+COL_PERSON  = 1   #列：人物
+COL_STATE   = 2   #列：状態定義
+COL_ZONEID  = 3   #列：ゾーンID
+COL_PLACE   = 4   #列：場所
+COL_CALLFLAG= 5   #列：電話フラグ
+COL_GREET_MSGID = 6   #列：メッセージID
+COL_TALK_MSGID  = 7   #列：メッセージID
+COL_BYE_MSGID   = 8   #列：メッセージID
+COL_SP_MSGID   = 9   #列：メッセージID
+COL_END     = 10   #列最後
 def convertLocalTvtCallData( csv, data, header, msg, zone )
 
   @HashPerson = {"DOCTOR"=>0, "RIVAL"=>1, "CHELEN"=>2, "BELL"=>3, "MOTHER"=>4, "SECRET"=>5 }
@@ -99,6 +100,7 @@ def convertLocalTvtCallData( csv, data, header, msg, zone )
     greet_msgid = csv.get( i, COL_GREET_MSGID )
     talk_msgid  = csv.get( i, COL_TALK_MSGID )
     bye_msgid   = csv.get( i, COL_BYE_MSGID )
+    sp_msgid   = csv.get( i, COL_SP_MSGID )
     index   = cnt[person]
     cnt[person] += 1
 
@@ -106,14 +108,44 @@ def convertLocalTvtCallData( csv, data, header, msg, zone )
     data.write_u16(index)
     data.write_u16(place)
     if place == 0 #フィールドなのでゾーンIDを検索しいれる
-      data.write_u16( zonedata.search( zoneid, "" ) )
+      begin
+      data.write_u16( zonedata.search( "ZONE_ID_#{zoneid}", "#{ARGV[0]}" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
     else
       data.write_u16(0)
     end
     data.write_u16(call)
-    data.write_u16( msgdata.search( greet_msgid, "" ) )
-    data.write_u16( msgdata.search( talk_msgid, "" ) )
-    data.write_u16( msgdata.search( bye_msgid, "" ) )
+    begin
+      value = msgdata.search( "#{greet_msgid}", "#{ARGV[0]}の#{i}行#{COL_GREET_MSGID}列" )
+      data.write_u16( value )
+    rescue HeaderSearchError
+        exit(1)
+    end
+    begin
+      value = msgdata.search( "#{talk_msgid}", "#{ARGV[0]}の#{i}行#{COL_TALK_MSGID}列" )
+      data.write_u16( value )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    begin
+      value = msgdata.search( "#{bye_msgid}", "#{ARGV[0]}の#{i}行#{COL_BYE_MSGID}列" )
+      data.write_u16( value )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    begin
+      if sp_msgid == nil && person != @HashPerson["RIVAL"]
+      value = 0
+      else
+      value = msgdata.search( "#{sp_msgid}", "#{ARGV[0]}の#{i}行#{COL_SP_MSGID}列" )
+      end
+      data.write_u16( value )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    data.write_u16(0) #4バイトアライメントにするためのダミー
   end
 
   #ヘッダの作成
@@ -138,6 +170,10 @@ def convertLocalTvtCallData( csv, data, header, msg, zone )
     header.write( "#define #{person}_STATE_#{state} (#{cnt[index]})\n" )
     cnt[index]+=1
   end
+  header.write( "//各状態最大数\n" )
+  @HashPerson.each{ |k,v|
+    header.write( "#define #{k}_STATE_MAX (#{cnt[v]})\n" )
+  }
 
 end
 
@@ -281,7 +317,7 @@ begin
 
   #引数チェック
   unless checkArgument
-    exit(0)
+    exit(1)
   end
 
   #csv読込み

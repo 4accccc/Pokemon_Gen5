@@ -42,6 +42,7 @@ extern LOCAL_TVT_WEATHER LOCAL_TVT_CALLDATA_GetWeather( const LOCAL_TVT_CALLDATA
 extern u16 LOCAL_TVT_CALLDATA_GetGreetingMsgID( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
 extern u16 LOCAL_TVT_CALLDATA_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
 extern u16 LOCAL_TVT_CALLDATA_GetFarewellMsgID( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
+extern u16 LOCAL_TVT_CALLDATA_GetSpecialMsgID( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
 extern BOOL LOCAL_TVT_CALLDATA_IsCall( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
 extern BOOL LOCAL_TVT_CALLDATA_IsSelect( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
 

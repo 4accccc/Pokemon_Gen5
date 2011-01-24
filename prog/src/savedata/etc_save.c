@@ -10,6 +10,7 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/etc_save.h"
+#include "savedata/person_state.h"
 
 
 
@@ -30,9 +31,10 @@ struct _ETC_SAVE_WORK{
   u32 acquaintance_trainer_id[ACQUAINTANCE_ID_MAX];
   u32 acquaintance_occ_num;   ///<acquaintance_trainer_idの何番目までデータが入っているか
   
-  u32 manual_flag[MANUAL_FLAG_WORK_MAX]; ///< ゲーム内マニュアルの項目を読んだかどうか(1bit単位）
+  u32 manual_flag[MANUAL_FLAG_WORK_MAX]; ///< ゲーム内マニュアルの項目を読んだかどうか(1bit単位
   
-  u8 dummy[88];    ///<将来用に1ブロック分のアライメント全てを確保
+  PERSON_STATE  person_state; //16byte
+  u8 dummy[88-PERSON_STATE_WORK_SIZE];    ///<将来用に1ブロック分のアライメント全てを確保
 };
 
 
@@ -219,6 +221,22 @@ BOOL EtcSave_GetManualFlag( const ETC_SAVE_WORK *etcsave, int id )
 
   return (etcsave->manual_flag[sector]>>bit)&1; 
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物状態セーブデータ取得
+ *
+ *	@param	ETC_SAVE_WORK *etcsave セーブデータ
+ *
+ *	@return 人物状態セーブデータワーク
+ *
+ *	@note TODO セーブデータが空き次第、ETCとPERSON_STATEは分離する
+ */
+//-----------------------------------------------------------------------------
+extern void *EtcSave_GetPersonStatePtr( ETC_SAVE_WORK *etcsave )
+{
+  return (void *)&etcsave->person_state;
 }
 
 //=============================================================================================

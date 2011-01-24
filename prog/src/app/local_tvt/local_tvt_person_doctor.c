@@ -18,16 +18,20 @@
 #include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
 #include "waza_tool/wazano_def.h"
+#include "savedata/zukan_savedata.h"
 
 //アーカイブ
 #include "arc_def.h"
 #include "message.naix"
 #include "msg/msg_tvt_shinka.h"
+#include "script_message.naix"
+#include "msg/script/msg_hyouka_scr.h"
 
 //自分のモジュール
 #include "local_tvt_local_def.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_util.h"
+#include "local_tvt_debug.h"
 
 //外部公開
 #include "local_tvt_person_doctor.h"
@@ -54,6 +58,16 @@ typedef struct
 }SHINKA_DATA;
 
 //-------------------------------------
+///	評価データ
+//=====================================
+typedef struct 
+{
+  u16 range;
+  u16 msgID;
+} ZUKAN_HYOUKA_DATA;
+
+
+//-------------------------------------
 ///	博士用ワーク
 //=====================================
 typedef struct 
@@ -62,6 +76,7 @@ typedef struct
   LOCAL_TVT_POKELIST *p_pokelist;
   GAMEDATA            *p_gamedata;
   GFL_MSGDATA         *p_msgdata_evo;
+  GFL_MSGDATA         *p_msgdata_hyouka;
   ARCHANDLE           *p_evo_handle;
   HEAPID              heapID;
 } LOCAL_TVT_DOCTOR;
@@ -82,8 +97,14 @@ static BOOL LOCAL_TVT_DOCTOR_CheckEvolution( LOCAL_TVT_PERSON_SYS *p_person, con
 static BOOL LOCAL_TVT_DOCTOR_CheckZukan( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 static BOOL LOCAL_TVT_DOCTOR_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 
+//進化チェック
 static u16 Shinka_GetMsgID( ARCHANDLE *p_handle, u16 monsNO );
 static BOOL ShinkaData_Search( const SHINKA_DATA *cp_data_tbl, u32 len, u16 param, u16 *p_msgID );
+
+//図鑑チェック
+static u16 ZukanCheck_GetMsgID( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID );
+static u16 ZukanCheck_GetMe( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID );
+static BOOL ZukanData_Search( const ZUKAN_HYOUKA_DATA *cp_data_tbl, u32 len, u16 param, u16 *p_msgID );
 
 //=============================================================================
 /**
@@ -263,6 +284,40 @@ static const SHINKA_DATA sc_pokemon_data[]=
     SHINKA_STR_064,
   },
 };
+//-------------------------------------
+///	図鑑評価メッセージデータ
+//=====================================
+static const ZUKAN_HYOUKA_DATA sc_zukan_hyouka_data[] = 
+{
+  {  39, msg_hyouka_z01 },
+  {  79, msg_hyouka_z02 },
+  { 119, msg_hyouka_z03 },
+  { 159, msg_hyouka_z04 },
+  { 199, msg_hyouka_z05 },
+  { 249, msg_hyouka_z06 },
+  { 299, msg_hyouka_z07 },
+  { 349, msg_hyouka_z08 },
+  { 399, msg_hyouka_z09 },
+  { 449, msg_hyouka_z10 },
+  { 499, msg_hyouka_z11 },
+  { 549, msg_hyouka_z12 },
+  { 599, msg_hyouka_z13 },
+  { 614, msg_hyouka_z14 },
+  { 629, msg_hyouka_z15 },
+  { 633, msg_hyouka_z16 },
+};
+
+//-------------------------------------
+///	図鑑評価MEデータ
+//=====================================
+static const ZUKAN_HYOUKA_DATA sc_zukan_hyouka_me_data[] = 
+{
+  { 159, SEQ_ME_HYOUKA1 },
+  { 349, SEQ_ME_HYOUKA2 },
+  { 499, SEQ_ME_HYOUKA3 },
+  { 549, SEQ_ME_HYOUKA4 },
+  { 633, SEQ_ME_HYOUKA5 },
+};
 
 //----------------------------------------------------------------------------
 /**
@@ -284,9 +339,11 @@ void LOCAL_TVT_DOCTOR_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
   p_person->selectFunction[1] = LOCAL_TVT_DOCTOR_CheckEvolution;
   p_person->list_msgID[1]     = CALL_DOCTOR_02;
 
+#if 0
   {
     const ZUKAN_SAVEDATA *cp_zukan  = GAMEDATA_GetZukanSave( p_gamedata );
-    if( ZUKANSAVE_GetZenkokuZukanFlag(cp_zukan) )
+    if( ZUKANSAVE_GetZenkokuZukanFlag(cp_zukan)
+        || LOCAL_TVT_DEBUG_IsFlagOn(LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON) )
     {
       //TODO
       //図鑑チェックはクリア後
@@ -304,7 +361,15 @@ void LOCAL_TVT_DOCTOR_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
       p_person->list_num          = 3;
     }
   }
-  p_person->cp_list_msg_data = cp_msg;
+#else
+  p_person->selectFunction[2] = LOCAL_TVT_DOCTOR_CheckZukan;
+  p_person->list_msgID[2]     = CALL_DOCTOR_03;
+  p_person->selectFunction[3] = LOCAL_TVT_DOCTOR_Farewell;
+  p_person->list_msgID[3]     = CALL_DOCTOR_04;
+  p_person->list_num          = 4;
+#endif
+  p_person->list_start_msgID  = CALL_DOCTOR_SELECT_01;
+  p_person->cp_list_msg_data  = cp_msg;
 }
 
 //=============================================================================
@@ -327,6 +392,7 @@ static LOCAL_TVT_DOCTOR *LOCAL_TVT_DOCTOR_Init( GAMEDATA *p_gamedata, HEAPID hea
   p_wk->heapID      = heapID;
   p_wk->p_gamedata  = p_gamedata;
   p_wk->p_msgdata_evo = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_tvt_shinka_dat, heapID );
+  p_wk->p_msgdata_hyouka = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE , NARC_script_message_hyouka_scr_dat, heapID );
   p_wk->p_evo_handle  = SHINKA_GetArcHandle( heapID );
   return p_wk;
 }
@@ -344,6 +410,7 @@ static void LOCAL_TVT_DOCTOR_Exit( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
 {
   LOCAL_TVT_DOCTOR *p_wk       = p_wk_adrs;
   GFL_ARC_CloseDataHandle( p_wk->p_evo_handle );
+  GFL_MSG_Delete( p_wk->p_msgdata_hyouka );
   GFL_MSG_Delete( p_wk->p_msgdata_evo );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -368,7 +435,7 @@ static BOOL LOCAL_TVT_DOCTOR_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     SEQ_END,
   };
   LOCAL_TVT_DOCTOR *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_doctor = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
@@ -376,13 +443,13 @@ static BOOL LOCAL_TVT_DOCTOR_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u16 msgID = LOCAL_TVT_CALLDATA_GetGreetingMsgID( cp_param->p_data, LOCAL_TVT_PERSON_DOCTOR );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_doctor, cp_msg, msgID );
     }
     p_wk->seq++;
     break;
 
   case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -419,7 +486,7 @@ static BOOL LOCAL_TVT_DOCTOR_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
     SEQ_END,
   };
   LOCAL_TVT_DOCTOR *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_doctor = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
@@ -427,13 +494,13 @@ static BOOL LOCAL_TVT_DOCTOR_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u16 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_param->p_data, LOCAL_TVT_PERSON_DOCTOR );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_doctor, cp_msg, msgID );
     }
     p_wk->seq++;
     break;
 
   case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -473,19 +540,19 @@ static BOOL LOCAL_TVT_DOCTOR_CheckEvolution( LOCAL_TVT_PERSON_SYS *p_person, con
     SEQ_RESULT_WAIT,
   };
   LOCAL_TVT_DOCTOR *p_wk = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_doctor = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
   case SEQ_MSG_INIT:
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, CALL_DOCTOR_SHINKA_01 );
+      LOCAL_TVT_CHARA_StartTalk( p_doctor, cp_msg, CALL_DOCTOR_SHINKA_01 );
     }
     p_wk->seq++;
     break;
  case SEQ_MSG_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -535,12 +602,12 @@ static BOOL LOCAL_TVT_DOCTOR_CheckEvolution( LOCAL_TVT_PERSON_SYS *p_person, con
 
       LOCAL_TVT_MESSAGE_RegisterPlayerName( cp_param->p_message, p_wk->p_gamedata );
       LOCAL_TVT_MESSAGE_RegisterPokeNickName( cp_param->p_message, cp_pp, 1 );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, p_wk->p_msgdata_evo, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_evo, msgID );
       p_wk->seq++;
     }
     break;
   case SEQ_RESULT_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq = SEQ_MSG_INIT;
     }
@@ -566,125 +633,71 @@ static BOOL LOCAL_TVT_DOCTOR_CheckZukan( LOCAL_TVT_PERSON_SYS *p_person, const L
 {
   enum
   {
-    SEQ_MSG_INIT,
-    SEQ_MSG_WAIT,
-    SEQ_POKE_INIT,
-    SEQ_POKE_MAIN,
-    SEQ_POKE_END,
+    SEQ_NUM_INIT,
+    SEQ_NUM_MAIN,
+    SEQ_ME_INIT,
+    SEQ_ME_WAIT,
     SEQ_RESULT_INIT,
-    SEQ_RESULT_WAIT,
+    SEQ_RESULT_MAIN,
+    SEQ_END,
   };
-  LOCAL_TVT_DOCTOR *p_wk = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_DOCTOR *p_wk       = p_wk_adrs;
+  LOCAL_TVT_CHARA* p_doctor = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
-  case SEQ_MSG_INIT:
+  case SEQ_NUM_INIT:
     {
-      const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, CALL_BELL_NATSUKI_00 );
+      const ZUKAN_SAVEDATA *cp_zukan_sv  = GAMEDATA_GetZukanSave( p_wk->p_gamedata );
+      u16 num = ZUKANSAVE_GetZukanPokeGetCount( cp_zukan_sv, p_wk->heapID );
+      LOCAL_TVT_MESSAGE_RegisterNumber( cp_param->p_message, num, 3, 0 );
+      LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_hyouka, msg_hyouka_hakase_02 );
     }
     p_wk->seq++;
     break;
- case SEQ_MSG_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+  case SEQ_NUM_MAIN:
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
     break;
-  case SEQ_POKE_INIT:
-    if( p_wk->p_pokelist != NULL )
+  case SEQ_ME_INIT:
     {
-      //作成してるなら再スタート
-      LOCAL_TVT_POKELIST_SetActive( p_wk->p_pokelist, TRUE );
-      LOCAL_TVT_POKELIST_ReStart( p_wk->p_pokelist );
-    }
-    else 
-    {
-      //作成してないなら作成
-      LOCAL_TVT_POKELIST_PARAM  param;
-      GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_POKELIST_PARAM));
-      param.p_message = cp_param->p_message;
-      param.p_clunit  = cp_param->p_clunit;
-      param.p_party   = GAMEDATA_GetMyPokemon( p_wk->p_gamedata );
-
-      p_wk->p_pokelist  = LOCAL_TVT_POKELIST_Init( &param, p_wk->heapID );
+      const ZUKAN_SAVEDATA *p_zukan_sv  = GAMEDATA_GetZukanSave( p_wk->p_gamedata );
+      u16 me = ZukanCheck_GetMe( p_zukan_sv, p_wk->heapID );
+      PMSND_PushBGM();
+      PMSND_PlayBGM( me );
     }
     p_wk->seq++;
     break;
-  case SEQ_POKE_MAIN:
-    LOCAL_TVT_POKELIST_Main( p_wk->p_pokelist );
-    switch( LOCAL_TVT_POKELIST_GetResult( p_wk->p_pokelist ) )
+  case SEQ_ME_WAIT:
+    if( !PMSND_CheckPlayBGM() )
     {
-    case LOCAL_TVT_POKELIST_RESULT_DECIDE:
-      LOCAL_TVT_POKELIST_SetActive( p_wk->p_pokelist, FALSE );
-      p_wk->seq = SEQ_RESULT_INIT;
-      break;
-    case LOCAL_TVT_POKELIST_RESULT_CANCEL:
-      p_wk->seq = SEQ_POKE_END;
+      PMSND_PopBGM();
+      p_wk->seq++;
     }
     break;
-  case SEQ_POKE_END:
-    LOCAL_TVT_POKELIST_Exit( p_wk->p_pokelist );
-    p_wk->p_pokelist  = NULL;
-    p_wk->seq = 0;
-    return TRUE;
   case SEQ_RESULT_INIT:
     {
-      const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
-      const POKEMON_PARAM *cp_pp = LOCAL_TVT_POKELIST_GetSelect( p_wk->p_pokelist );
-      const u32 natsuki = PP_Get( cp_pp, ID_PARA_friend, NULL );
-      u16 msgID;
-
-      //なつきにより文章変化
-      if( natsuki == 0 )
-      {
-        msgID = CALL_BELL_NATSUKI_01;
-      }
-      else if( 1 <= natsuki && natsuki <= 49 )
-      {
-        msgID = CALL_BELL_NATSUKI_02;
-      }
-      else if( 50 <= natsuki && natsuki <= 99 )
-      {
-        msgID = CALL_BELL_NATSUKI_03;
-      }
-      else if( 100 <= natsuki && natsuki <= 149 )
-      {
-        msgID = CALL_BELL_NATSUKI_04;
-      }
-      else if( 150 <= natsuki && natsuki <= 199 )
-      {
-        msgID = CALL_BELL_NATSUKI_05;
-      }
-      else if( 200 <= natsuki && natsuki <= 254 )
-      {
-        msgID = CALL_BELL_NATSUKI_06;
-      }
-      else if( natsuki == PTL_FRIEND_MAX )
-      {
-        msgID = CALL_BELL_NATSUKI_07;
-      }
-      else
-      {
-        GF_ASSERT(0);
-        msgID = CALL_BELL_NATSUKI_07;
-      }
-
-      LOCAL_TVT_MESSAGE_RegisterPlayerName( cp_param->p_message, p_wk->p_gamedata );
-      LOCAL_TVT_MESSAGE_RegisterPokeNickName( cp_param->p_message, cp_pp, 1 );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, msgID );
+      const ZUKAN_SAVEDATA *p_zukan_sv  = GAMEDATA_GetZukanSave( p_wk->p_gamedata );
+      u16 msgID = ZukanCheck_GetMsgID( p_zukan_sv, p_wk->heapID );
+      LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_hyouka, msgID );
+    }
+    p_wk->seq++;
+    break;
+  case SEQ_RESULT_MAIN:
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
+    {
       p_wk->seq++;
     }
     break;
-  case SEQ_RESULT_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
-    {
-      p_wk->seq = SEQ_MSG_INIT;
-    }
-    break;
+
+  case SEQ_END:
+    p_wk->seq = 0;
+    return TRUE;
+
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT(0);
   }
 
   return FALSE;
@@ -710,7 +723,7 @@ static BOOL LOCAL_TVT_DOCTOR_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     SEQ_END,
   };
   LOCAL_TVT_DOCTOR *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_doctor = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
@@ -718,13 +731,13 @@ static BOOL LOCAL_TVT_DOCTOR_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u16 msgID = LOCAL_TVT_CALLDATA_GetFarewellMsgID( cp_param->p_data, LOCAL_TVT_PERSON_DOCTOR );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_doctor, cp_msg, msgID );
     }
     p_wk->seq++;
     break;
 
   case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -818,4 +831,84 @@ static BOOL ShinkaData_Search( const SHINKA_DATA *cp_data_tbl, u32 len, u16 para
 
   *p_msgID  = SHINKA_STR_001;
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  図鑑チェックメッセージを取得
+ *
+ *	@param	const ZUKAN_SAVEDATA *p_zukan_sv  図鑑セーブ
+ *	@param	heapID  ヒープID
+ *
+ *	@return メッセージ
+ */
+//-----------------------------------------------------------------------------
+static u16 ZukanCheck_GetMsgID( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID )
+{
+  u16 count = ZUKANSAVE_GetZukanPokeGetCount( p_zukan_sv, heapID );
+  u16 msgID = msg_hyouka_z01;
+
+  if ( ZUKANSAVE_CheckZenkokuComp( p_zukan_sv ) )
+  {
+    msgID = msg_hyouka_z17;
+  }
+  else
+  {
+    ZukanData_Search( sc_zukan_hyouka_data, NELEMS(sc_zukan_hyouka_data), count, &msgID );
+  }
+
+  return msgID;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  図鑑チェックMEを取得
+ *
+ *	@param	const ZUKAN_SAVEDATA *p_zukan_sv  図鑑セーブ
+ *	@param	heapID  ヒープID
+ *
+ *	@return ME
+ */
+//-----------------------------------------------------------------------------
+static u16 ZukanCheck_GetMe( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID )
+{
+  u16 count = ZUKANSAVE_GetZukanPokeGetCount( p_zukan_sv, heapID );
+  u16 me = SEQ_ME_HYOUKA1;
+
+  if ( ZUKANSAVE_CheckZenkokuComp( p_zukan_sv ) )
+  {
+    me = SEQ_ME_HYOUKA6;
+  }
+  else
+  {
+    ZukanData_Search( sc_zukan_hyouka_me_data, NELEMS(sc_zukan_hyouka_me_data), count, &me );
+  }
+
+  return me;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを検索する
+ *
+ *	@param	const ZUKAN_HYOUKA_DATA *cp_data  データ
+ *	@param	len       データ長さ
+ *	@param  param     検索キー
+ *	@param	*p_msgID  メッセージID
+ *
+ *	@return TRUEで検索完了
+ */
+//-----------------------------------------------------------------------------
+static BOOL ZukanData_Search( const ZUKAN_HYOUKA_DATA *cp_data_tbl, u32 len, u16 param, u16 *p_msgID )
+{
+  int i;
+
+  *p_msgID  = cp_data_tbl[0].msgID;
+  for( i = 0; i < len; i ++ )
+  {
+    if( param <= cp_data_tbl[i].range )
+    {
+      *p_msgID  = cp_data_tbl[i].msgID;
+      return TRUE;
+    }
+  }
+  return FALSE; 
 }

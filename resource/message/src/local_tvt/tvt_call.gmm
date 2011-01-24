@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-20T20:49:47"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-01-21T18:48:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,7 +334,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="157"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -464,9 +464,9 @@
 		<language name="JPN_KANJI" width="256">どのこの　進化を　知りたいの？</language>
 	</row>
 
-	<row id="CALL_DOCTOR_SHINKA_02">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="CALL_DOCTOR_SELECT_01">
+		<language name="JPN" width="256">どうしたの？</language>
+		<language name="JPN_KANJI" width="256">どうしたの？</language>
 	</row>
 
 	<row id="CALL_RIVAL_01">
@@ -482,6 +482,11 @@
 	<row id="CALL_RIVAL_03">
 		<language name="JPN" width="256">さよなら</language>
 		<language name="JPN_KANJI" width="256">さよなら</language>
+	</row>
+
+	<row id="CALL_RIVAL_SELECT_01">
+		<language name="JPN" width="256">どうしたんだ？</language>
+		<language name="JPN_KANJI" width="256">どうしたんだ？</language>
 	</row>
 
 	<row id="CALL_CHELEN_01">
@@ -512,6 +517,11 @@
 	<row id="CALL_CHELEN_TOKUSEI_01">
 		<language name="JPN" width="256">どのこの　とくせいが　しりたいの？</language>
 		<language name="JPN_KANJI" width="256">どのこの　特性が　知りたいの？</language>
+	</row>
+
+	<row id="CALL_CHELEN_SELECT_01">
+		<language name="JPN" width="256">どうしたんだ？</language>
+		<language name="JPN_KANJI" width="256">どうしたんだ？</language>
 	</row>
 
 	<row id="CALL_BELL_01">
@@ -663,6 +673,11 @@
 		<language name="JPN_KANJI" width="256">とくぼう</language>
 	</row>
 
+	<row id="CALL_BELL_SELECT_01">
+		<language name="JPN" width="256">どうしたの？</language>
+		<language name="JPN_KANJI" width="256">どうしたの？</language>
+	</row>
+
 	<row id="CALL_MOTHER_01">
 		<language name="JPN" width="256">はなす</language>
 		<language name="JPN_KANJI" width="256">話す</language>
@@ -678,6 +693,11 @@
 		<language name="JPN_KANJI" width="256">さよなら</language>
 	</row>
 
+	<row id="CALL_MOTHER_SELECT_01">
+		<language name="JPN" width="256">どうしたの？</language>
+		<language name="JPN_KANJI" width="256">どうしたの？</language>
+	</row>
+
 	<row id="CALL_SECRET_01">
 		<language name="JPN" width="256">はなす</language>
 		<language name="JPN_KANJI" width="256">話す</language>
@@ -686,6 +706,116 @@
 	<row id="CALL_SECRET_02">
 		<language name="JPN" width="256">さよなら</language>
 		<language name="JPN_KANJI" width="256">さよなら</language>
+	</row>
+
+	<row id="CALL_SECRET_SELECT_01">
+		<language name="JPN" width="256">どうしたの？</language>
+		<language name="JPN_KANJI" width="256">どうしたの？</language>
+	</row>
+
+	<row id="CALL_LABEL_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>↑ここまでシステム↑</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="CALL_DOCTOR_GREET_01">
+		<language name="JPN" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_DOCTOR_TALK_01">
+		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">今日は　いい天気ね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_DOCTOR_BYE_01">
+		<language name="JPN" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_RIVAL_GREET_01">
+		<language name="JPN" width="256">よお！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よお！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_RIVAL_TALK_01">
+		<language name="JPN" width="256">つよくなってやるぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">つよくなってやるぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_RIVAL_BYE_01">
+		<language name="JPN" width="256">じゃあなー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃあなー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_RIVAL_SP_01">
+		<language name="JPN" width="256">ヒウンシティは　すごいとかいだぜ！
+おまえも　はやくこいよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティは　すごい都会だぜ！
+おまえも　早くこいよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_CHELEN_GREET_01">
+		<language name="JPN" width="256">よお！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よお！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_CHELEN_TALK_01">
+		<language name="JPN" width="256">モンスターボールは　つねに
+きらさない　ように　しておけよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">モンスターボールは　つねに
+きらさない　ように　しておけよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_CHELEN_BYE_01">
+		<language name="JPN" width="256">じゃあなー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃあなー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_GREET_01">
+		<language name="JPN" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_TALK_01">
+		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">今日は　いい天気ね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_BYE_01">
+		<language name="JPN" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_MOTHER_GREET_01">
+		<language name="JPN" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_MOTHER_TALK_01">
+		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">今日は　いい天気ね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_MOTHER_BYE_01">
+		<language name="JPN" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_GREET_01">
+		<language name="JPN" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_01">
+		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">今日は　いい天気ね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_BYE_01">
+		<language name="JPN" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃあねー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

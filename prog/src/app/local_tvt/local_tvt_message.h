@@ -76,6 +76,7 @@ extern void LOCAL_TVT_MESSAGE_RegisterPlayerName( LOCAL_TVT_MESSAGE *p_wk, GAMED
 extern void LOCAL_TVT_MESSAGE_RegisterPokeNickName( LOCAL_TVT_MESSAGE *p_wk, const POKEMON_PARAM *cp_pp, u16 buffID );
 extern void LOCAL_TVT_MESSAGE_RegisterWord( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, u16 msgID, u16 buffID );
 extern void LOCAL_TVT_MESSAGE_RegisterPlaceName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_gamedata, u16 buffID );
+extern void LOCAL_TVT_MESSAGE_RegisterNumber( LOCAL_TVT_MESSAGE *p_wk, u32 num, u32 keta, u16 buffID );
 
 //メッセージウィンドウ処理
 extern void LOCAL_TVT_MSGWIN_OpenWindow( LOCAL_TVT_MESSAGE *p_wk, LOCAL_TVT_MSG_POS pos );

@@ -150,6 +150,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_DEBUG_PARAM) );
     param.p_font      = LOCAL_TVT_MESSAGE_GetFont( work->message );
     param.p_chara_sys = work->chara_sys;
+    param.p_gamedata  = initWork->gameData;
     LOCAL_TVT_DEBUG_Init( &param, work->heapId );
   }
 #endif

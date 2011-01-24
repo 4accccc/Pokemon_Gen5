@@ -111,12 +111,14 @@ static BOOL App_PrintSys_IsTrg( APP_PRINTSYS_COMMON_TYPE type )
   //キーの場合
   if( type & APP_PRINTSYS_COMMON_TYPE_KEY ){ 
     if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       is_trg  = TRUE;
     }
   }
   //タッチの場合
   if( type & APP_PRINTSYS_COMMON_TYPE_TOUCH ){ 
     if( GFL_UI_TP_GetTrg() ){ 
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
       is_trg  = TRUE;
     }
   }

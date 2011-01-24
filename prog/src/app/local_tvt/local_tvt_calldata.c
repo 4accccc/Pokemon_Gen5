@@ -24,23 +24,25 @@
 
 //外部
 #include "local_tvt_calldata.h"
+//=============================================================================
+/**
+ *					定数宣言
+*/
+//=============================================================================
+#ifdef PM_DEBUG
+#define DEBUG_CALL_FLAG_ALL_ON
+//#define DEBUG_SELECT_FLAG_ALL_ON
+#endif //PM_DEBUG
 
 //バトルBGに追加があったらワーニングを出す
 #if BATTLE_BG_TYPE_MAX != (19)
-#warning add battle bg
+//#warning add battle bg
 #endif
 
 //天気に追加があったらワーニングを出す
 #if WEATHER_NO_NUM != (15)
 #warning add weather
 #endif
-
-//=============================================================================
-/**
- *					定数宣言
-*/
-//=============================================================================
-
 //=============================================================================
 /**
  *					構造体宣言
@@ -58,6 +60,8 @@ typedef struct {
   u16 greet_msgid;
   u16 talk_msgid;
   u16 bye_msgid;
+  u16 sp_msgid;
+  u16 dummy;
 } LOCAL_TVT_BINARY;
 
 //-------------------------------------
@@ -91,7 +95,6 @@ LOCAL_TVT_CALLDATA * LOCAL_TVT_CALLDATA_Init( GAMEDATA *p_gamedata, HEAPID heapI
 {
   LOCAL_TVT_CALLDATA  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_CALLDATA ) );
 
-  OS_TPrintf( "バトル背景数 %d\n", BATTLE_BG_TYPE_MAX );
   p_wk->p_calender  = GAMEDATA_GetCalender( p_gamedata );
   p_wk->cp_person_state  = PERSON_STATE_GetWorkConst( GAMEDATA_GetSaveControlWorkConst(p_gamedata) );
   p_wk->p_data      = GFL_ARC_UTIL_Load( ARCID_LOCAL_TVT_CALLDATA, NARC_local_tvt_call_local_tvt_call_dat, FALSE, heapID );
@@ -203,6 +206,21 @@ u16 LOCAL_TVT_CALLDATA_GetFarewellMsgID( const LOCAL_TVT_CALLDATA *cp_wk, u16 pe
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  文字ID取得
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_wk ワーク
+ *	@param	person  人物 LOCAL_TVT_PERSON_xxxxxx
+ *
+ *	@return 文字ID
+ */
+//-----------------------------------------------------------------------------
+u16 LOCAL_TVT_CALLDATA_GetSpecialMsgID( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
+{
+  const LOCAL_TVT_BINARY *cp_data = Local_Tvt_Calldata_GetData( cp_wk, person );
+  return cp_data->sp_msgid;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  電話フラグ取得
  *
  *	@param	const LOCAL_TVT_CALLDATA *cp_wk ワーク
@@ -213,8 +231,10 @@ u16 LOCAL_TVT_CALLDATA_GetFarewellMsgID( const LOCAL_TVT_CALLDATA *cp_wk, u16 pe
 //-----------------------------------------------------------------------------
 BOOL LOCAL_TVT_CALLDATA_IsCall( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 {
-  const LOCAL_TVT_BINARY *cp_data = Local_Tvt_Calldata_GetData( cp_wk, person );
-  return cp_data->call;
+#ifdef DEBUG_CALL_FLAG_ALL_ON
+  return TRUE;
+#endif
+  return PERSON_STATE_GetLocalTvtCall( cp_wk->cp_person_state, person );
 }
 //----------------------------------------------------------------------------
 /**
@@ -229,6 +249,9 @@ BOOL LOCAL_TVT_CALLDATA_IsCall( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 BOOL LOCAL_TVT_CALLDATA_IsSelect( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 {
   const LOCAL_TVT_BINARY *cp_data = Local_Tvt_Calldata_GetData( cp_wk, person );
+#ifdef DEBUG_SELECT_FLAG_ALL_ON
+  return TRUE;
+#endif
   return cp_data->call;
 }
 

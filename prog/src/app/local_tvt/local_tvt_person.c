@@ -193,24 +193,38 @@ static void LOCAL_TVT_SEQ_SelectTalk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *
 {
   enum
   {
+    SEQ_MSG_INIT,
+    SEQ_MSG_WAIT,
     SEQ_INIT,
     SEQ_MAIN,
     SEQ_END,
   };
 
   LOCAL_TVT_PERSON_SYS  *p_wk = p_wk_adrs;
+  LOCAL_TVT_CHARA* p_chara = LOCAL_TVT_CHARA_SYS_GetWork( p_wk->param.p_chara_sys, 0 );
 
   switch( *p_seq )
   {
+  case SEQ_MSG_INIT:
+    LOCAL_TVT_CHARA_StartTalk( p_chara, p_wk->person.cp_list_msg_data, p_wk->person.list_start_msgID );
+    (*p_seq)++;
+    break;
+  case SEQ_MSG_WAIT:
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chara, p_wk->param.p_chara_sys ) )
+    {
+      (*p_seq)++;
+    }
+    break;
   case SEQ_INIT:
     {
       int i;
       LOCAL_TVT_LIST_PARAM  param;
       GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_LIST_PARAM) );
-      param.p_message = p_wk->param.p_message;
-      param.p_clunit  = p_wk->param.p_clunit;
-      param.cp_msgdata = p_wk->person.cp_list_msg_data;
-      param.max       = p_wk->person.list_num;
+      param.p_message   = p_wk->param.p_message;
+      param.p_clunit    = p_wk->param.p_clunit;
+      param.cp_msgdata  = p_wk->person.cp_list_msg_data;
+      param.max         = p_wk->person.list_num;
+      param.cursor_pos  = p_wk->select;
       for( i = 0; i < p_wk->person.list_num; i++ )
       {
         param.msgID[i]  = p_wk->person.list_msgID[i];

@@ -527,6 +527,20 @@ void LOCAL_TVT_MESSAGE_RegisterPlaceName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_g
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  数値登録
+ *
+ *	@param	LOCAL_TVT_MESSAGE *p_wk ワーク
+ *	@param  num     数値
+ *	@param  keta    桁
+ *	@param	buffID  バッファID
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_MESSAGE_RegisterNumber( LOCAL_TVT_MESSAGE *p_wk, u32 num, u32 keta, u16 buffID )
+{
+  WORDSET_RegisterNumber( p_wk->p_wordset, buffID, num, keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  メッセージウィンドウを開く（キャラの名前を書き潰すので注意）
  *
  *	@param	LOCAL_TVT_MESSAGE *p_wk  ワーク

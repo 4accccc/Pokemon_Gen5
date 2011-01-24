@@ -96,6 +96,7 @@ void LOCAL_TVT_CHELEN_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
   p_person->selectFunction[3] = LOCAL_TVT_CHELEN_Farewell;
   p_person->list_msgID[3]     = CALL_CHELEN_04;
   p_person->list_num  = 4;
+  p_person->list_start_msgID  = CALL_CHELEN_SELECT_01;
   p_person->cp_list_msg_data = cp_msg;
 }
 
@@ -160,7 +161,7 @@ static BOOL LOCAL_TVT_CHELEN_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     SEQ_END,
   };
   LOCAL_TVT_CHELEN *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_chelen = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
@@ -168,13 +169,13 @@ static BOOL LOCAL_TVT_CHELEN_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u16 msgID = LOCAL_TVT_CALLDATA_GetGreetingMsgID( cp_param->p_data, LOCAL_TVT_PERSON_CHELEN );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_chelen, cp_msg, msgID );
     }
     p_wk->seq++;
     break;
 
   case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -211,7 +212,7 @@ static BOOL LOCAL_TVT_CHELEN_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
     SEQ_END,
   };
   LOCAL_TVT_CHELEN *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_chelen = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
@@ -219,13 +220,13 @@ static BOOL LOCAL_TVT_CHELEN_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u16 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_param->p_data, LOCAL_TVT_PERSON_CHELEN );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_chelen, cp_msg, msgID );
     }
     p_wk->seq++;
     break;
 
   case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -266,19 +267,19 @@ static BOOL LOCAL_TVT_CHELEN_CheckType( LOCAL_TVT_PERSON_SYS *p_person, const LO
     SEQ_RESULT_WAIT,
   };
   LOCAL_TVT_CHELEN *p_wk = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_chelen = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
   case SEQ_MSG_INIT:
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, CALL_CHELEN_TYPE_01 );
+      LOCAL_TVT_CHARA_StartTalk( p_chelen, cp_msg, CALL_CHELEN_TYPE_01 );
     }
     p_wk->seq++;
     break;
  case SEQ_MSG_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -327,12 +328,12 @@ static BOOL LOCAL_TVT_CHELEN_CheckType( LOCAL_TVT_PERSON_SYS *p_person, const LO
 
       LOCAL_TVT_MESSAGE_RegisterPlayerName( cp_param->p_message, p_wk->p_gamedata );
       LOCAL_TVT_MESSAGE_RegisterPokeNickName( cp_param->p_message, cp_pp, 1 );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, p_wk->p_msgdata_type, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_chelen, p_wk->p_msgdata_type, msgID );
       p_wk->seq++;
     }
     break;
   case SEQ_RESULT_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
     {
       p_wk->seq = SEQ_MSG_INIT;
     }
@@ -367,19 +368,19 @@ static BOOL LOCAL_TVT_CHELEN_CheckTokusei( LOCAL_TVT_PERSON_SYS *p_person, const
     SEQ_RESULT_WAIT,
   };
   LOCAL_TVT_CHELEN *p_wk = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_chelen = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
   case SEQ_MSG_INIT:
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, CALL_CHELEN_TOKUSEI_01 );
+      LOCAL_TVT_CHARA_StartTalk( p_chelen, cp_msg, CALL_CHELEN_TOKUSEI_01 );
     }
     p_wk->seq++;
     break;
  case SEQ_MSG_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
@@ -428,12 +429,12 @@ static BOOL LOCAL_TVT_CHELEN_CheckTokusei( LOCAL_TVT_PERSON_SYS *p_person, const
 
       LOCAL_TVT_MESSAGE_RegisterPlayerName( cp_param->p_message, p_wk->p_gamedata );
       LOCAL_TVT_MESSAGE_RegisterPokeNickName( cp_param->p_message, cp_pp, 1 );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, p_wk->p_msgdata_tokusei, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_chelen, p_wk->p_msgdata_tokusei, msgID );
       p_wk->seq++;
     }
     break;
   case SEQ_RESULT_WAIT:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
     {
       p_wk->seq = SEQ_MSG_INIT;
     }
@@ -464,7 +465,7 @@ static BOOL LOCAL_TVT_CHELEN_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     SEQ_END,
   };
   LOCAL_TVT_CHELEN *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_bell = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+  LOCAL_TVT_CHARA* p_chelen = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
@@ -472,13 +473,13 @@ static BOOL LOCAL_TVT_CHELEN_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u16 msgID = LOCAL_TVT_CALLDATA_GetFarewellMsgID( cp_param->p_data, LOCAL_TVT_PERSON_CHELEN );
-      LOCAL_TVT_CHARA_StartTalk( p_bell, cp_msg, msgID );
+      LOCAL_TVT_CHARA_StartTalk( p_chelen, cp_msg, msgID );
     }
     p_wk->seq++;
     break;
 
   case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
