@@ -293,8 +293,8 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	NO_RARE_BB
 指定されたワークを見て条件分岐	POS_BB_N_POKE	==	0	NO_N_POKE_BB
 サブルーチンコール	BTLEFF_N_POKE	POS_BB	POS_BB
-ポケモンアニメ	POS_BB	アニメスタート
 ラベル	NO_N_POKE_BB
+ポケモンアニメ	POS_BB	アニメスタート
 ポケモン影バニッシュ	POS_BB	バニッシュオフ
 ラベル	NO_EXIST_BB_6
 立ち位置チェック	POS_B	いない	NO_EXIST_B_6
