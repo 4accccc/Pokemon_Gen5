@@ -59,35 +59,6 @@ static void BARICON_Init( BARICON *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID );
 static void BARICON_Exit( BARICON *p_wk );
 static GFL_CLWK * BARICON_GetClwk( const BARICON *cp_wk );
 
-
-//-------------------------------------
-///	リストをカーソルとタッチで操作するシステム
-//=====================================
-typedef struct
-{
-  void *p_wk_adrs;
-  BOOL (*UpdateTouch)( void *p_wk_adrs );
-  BOOL (*UpdateKey)( void *p_wk_adrs );
-  void (*Change)( void *p_wk_adrs, int touch_or_key );
-}LIST_UI_PARAM;
-
-typedef struct 
-{
-  u16   select_max;
-  int   touch_or_key;
-  BOOL  is_decide;
-
-  LIST_UI_PARAM param;
-} LIST_UI;
-
-static void LIST_UI_Init( LIST_UI *p_wk, const LIST_UI_PARAM *cp_param, HEAPID heapID );
-static void LIST_UI_Exit( LIST_UI *p_wk );
-static void LIST_UI_Main( LIST_UI *p_wk );
-
-static BOOL LIST_UI_IsDecide( const LIST_UI *cp_wk );
-static void LIST_UI_ReStart( LIST_UI *p_wk );
-
-
 //=============================================================================
 /**
  *					タイムゾーン
@@ -548,11 +519,11 @@ struct _LOCAL_TVT_LIST
   u16                   anm_frame;
 
   BARICON               bar_icon;
-  LIST_UI               ui;
+  LIST_UI               *p_ui;
 };
 
-static BOOL Local_Tvt_List_IsTouch( void *p_wk_adrs );
-static BOOL Local_Tvt_List_IsKey( void *p_wk_adrs );
+static LIST_UI_RESULT Local_Tvt_List_IsTouch( void *p_wk_adrs );
+static LIST_UI_RESULT Local_Tvt_List_IsKey( void *p_wk_adrs );
 static void Local_Tvt_List_Change( void *p_wk_adrs, int touch_or_key );
 
 //----------------------------------------------------------------------------
@@ -644,7 +615,7 @@ LOCAL_TVT_LIST * LOCAL_TVT_LIST_Init( const LOCAL_TVT_LIST_PARAM *cp_param, HEAP
     param.UpdateKey   = Local_Tvt_List_IsKey;
     param.Change      = Local_Tvt_List_Change;
 
-    LIST_UI_Init( &p_wk->ui, &param, heapID );
+    p_wk->p_ui  = LIST_UI_Init( &param, heapID );
   }
 
   return p_wk;
@@ -659,7 +630,7 @@ LOCAL_TVT_LIST * LOCAL_TVT_LIST_Init( const LOCAL_TVT_LIST_PARAM *cp_param, HEAP
 void LOCAL_TVT_LIST_Exit( LOCAL_TVT_LIST *p_wk )
 {
   //UI
-  LIST_UI_Exit( &p_wk->ui );
+  LIST_UI_Exit( p_wk->p_ui );
     
   //BMPWIN破棄
   {
@@ -698,10 +669,10 @@ void LOCAL_TVT_LIST_Main( LOCAL_TVT_LIST *p_wk )
   case SEQ_MAIN:
     {
       //UIメイン処理
-      LIST_UI_Main( &p_wk->ui );
+      LIST_UI_Main( p_wk->p_ui );
 
       //決定のとき
-      if( LIST_UI_IsDecide( &p_wk->ui ) )
+      if( LIST_UI_IsDecide( p_wk->p_ui ) )
       {
         p_wk->anm_cnt     = 0;
         p_wk->anm_frame   = 0;
@@ -810,10 +781,10 @@ s32 LOCAL_TVT_LIST_GetSelect( const LOCAL_TVT_LIST *cp_wk )
  *	@param	const LOCAL_TVT_LIST *cp_wk ワーク
  *	@param	*p_index  インデックス
  *
- *	@return TRUEでタッチ
+ *	@return 結果
  */
 //-----------------------------------------------------------------------------
-static BOOL Local_Tvt_List_IsTouch( void *p_wk_adrs )
+static LIST_UI_RESULT Local_Tvt_List_IsTouch( void *p_wk_adrs )
 {
   LOCAL_TVT_LIST *p_wk  = p_wk_adrs;
   //戻るボタン
@@ -842,10 +813,10 @@ static BOOL Local_Tvt_List_IsTouch( void *p_wk_adrs )
   if( ret != GFL_UI_TP_HIT_NONE && ret < p_wk->param.max )
   {
     p_wk->cursor_pos  = ret;
-    return TRUE;
+    return LIST_UI_RESULT_DECIDE;
   }
 
-  return FALSE;
+  return LIST_UI_RESULT_NONE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -853,10 +824,10 @@ static BOOL Local_Tvt_List_IsTouch( void *p_wk_adrs )
  *
  *	@param	void *p_wk_adrs ワーク
  *
- *	@return TRUEでタッチ
+ *	@return 結果
  */
 //-----------------------------------------------------------------------------
-static BOOL Local_Tvt_List_IsKey( void *p_wk_adrs )
+static LIST_UI_RESULT Local_Tvt_List_IsKey( void *p_wk_adrs )
 {
   LOCAL_TVT_LIST *p_wk  = p_wk_adrs;
   BOOL is_key_move  = FALSE;
@@ -929,9 +900,16 @@ static BOOL Local_Tvt_List_IsKey( void *p_wk_adrs )
   //終了
   if( is_decide )
   {
-    return TRUE;
+    return LIST_UI_RESULT_DECIDE;
   }
-  return FALSE;
+  else if( is_key_move )
+  {
+    return LIST_UI_RESULT_MOVE;
+  }
+  else
+  {
+    return LIST_UI_RESULT_NONE;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1056,7 +1034,7 @@ struct _LOCAL_TVT_POKELIST
   u16   anm_frame;
   u16   anm_cnt;
   BOOL  is_active;
-  LIST_UI ui;
+  LIST_UI *p_ui;
   GFL_BMPWIN  *p_bmpwin[6];
   GFL_CLWK    *p_clwk_poke[6];
   u16   res[POKELIST_RESID_NCG_MAX];
@@ -1066,8 +1044,8 @@ struct _LOCAL_TVT_POKELIST
 
 static void Local_Tvt_Pokelist_GetRowColIndex( u32 cursor_pos, s16 *p_row, s16 *p_col );
 static void Local_Tvt_Pokelist_GetRowColIndexMax( u32 cursor_pos, u32 cursor_max, s16 *p_row, s16 *p_col );
-static BOOL Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs );
-static BOOL Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs );
+static LIST_UI_RESULT Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs );
+static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs );
 static void Local_Tvt_Pokelist_Change( void *p_wk_adrs, int touch_or_key );
 static void Local_Tvt_Pokelist_SetVisibleVBlank( GFL_TCB *p_tcb, void *p_wk_adrs );
 
@@ -1167,7 +1145,7 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
     param.UpdateTouch = Local_Tvt_Pokelist_TouchUpdate;
     param.UpdateKey   = Local_Tvt_Pokelist_KeyUpdate;
     param.Change      = Local_Tvt_Pokelist_Change;
-    LIST_UI_Init( &p_wk->ui, &param, heapID );
+    p_wk->p_ui        = LIST_UI_Init( &param, heapID );
   }
 
   //ポケモンアイコン
@@ -1280,7 +1258,7 @@ void LOCAL_TVT_POKELIST_Exit( LOCAL_TVT_POKELIST *p_wk )
 
 
   //UI
-  LIST_UI_Exit( &p_wk->ui );
+  LIST_UI_Exit( p_wk->p_ui );
 
   //タッチバー終了
   LOCAL_TVT_TOUCHBAR_Exit( p_wk->p_touchbar );
@@ -1324,10 +1302,10 @@ void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk )
   switch( p_wk->seq )
   {
   case SEQ_MAIN:
-    LIST_UI_Main( &p_wk->ui );
+    LIST_UI_Main( p_wk->p_ui );
     LOCAL_TVT_TOUCHBAR_Main( p_wk->p_touchbar );
 
-    if( LIST_UI_IsDecide( &p_wk->ui ) )
+    if( LIST_UI_IsDecide( p_wk->p_ui ) )
     {
       p_wk->anm_cnt     = 0;
       p_wk->anm_frame   = 0;
@@ -1444,7 +1422,7 @@ void LOCAL_TVT_POKELIST_ReStart( LOCAL_TVT_POKELIST *p_wk )
   p_wk->seq = 0;
   p_wk->result  = LOCAL_TVT_POKELIST_RESULT_NONE;
 
-  LIST_UI_ReStart( &p_wk->ui );
+  LIST_UI_ReStart( p_wk->p_ui );
 }
 
 //----------------------------------------------------------------------------
@@ -1541,19 +1519,19 @@ static void Local_Tvt_Pokelist_GetRowColIndexMax( u32 cursor_pos, u32 cursor_max
  *
  *	@param	void *p_wk_adrs   ワークアドレス
  *
- *	@return TRUEでタッチ  FALSEでタッチしていない
+ *	@return 更新
  */
 //-----------------------------------------------------------------------------
-static BOOL Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs )
+static LIST_UI_RESULT Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs )
 {
   LOCAL_TVT_POKELIST  *p_wk = p_wk_adrs;
   int ret = GFL_UI_TP_HitTrg( sc_pokelist_hit_tbl );
   if( ret != GFL_UI_TP_HIT_NONE && ret < PokeParty_GetPokeCount( p_wk->param.p_party ) )
   {
     p_wk->cursor_pos  = ret;
-    return TRUE;
+    return LIST_UI_RESULT_DECIDE;
   }
-  return FALSE;
+  return LIST_UI_RESULT_NONE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1561,10 +1539,10 @@ static BOOL Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs )
  *
  *	@param	void *p_wk_adrs   ワークアドレス
  *
- *	@return TRUEで決定  FALSEで決定していない
+ *	@return 更新
  */
 //-----------------------------------------------------------------------------
-static BOOL Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
+static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
 {
   LOCAL_TVT_POKELIST  *p_wk = p_wk_adrs;
   BOOL is_key_move  = FALSE;
@@ -1660,10 +1638,16 @@ static BOOL Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   //終了
   if( is_decide )
   {
-    return TRUE;
+    return LIST_UI_RESULT_DECIDE;
   }
-
-  return FALSE;
+  else if( is_key_move )
+  {
+    return LIST_UI_RESULT_MOVE;
+  }
+  else
+  {
+    return LIST_UI_RESULT_NONE;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1903,26 +1887,39 @@ static GFL_CLWK * BARICON_GetClwk( const BARICON *cp_wk )
  *	リストをカーソルとタッチで操作するシステム
  */
 //=============================================================================
-static BOOL List_Ui_UpdateTouch( LIST_UI *p_wk );
-static BOOL List_Ui_UpdateKey( LIST_UI *p_wk );
+struct _LIST_UI
+{
+  u16   select_max;
+  u16   dummy;
+  int   touch_or_key;
+  BOOL  is_decide;
+
+  LIST_UI_PARAM param;
+};
+
+static LIST_UI_RESULT List_Ui_UpdateTouch( LIST_UI *p_wk );
+static LIST_UI_RESULT List_Ui_UpdateKey( LIST_UI *p_wk );
 static void List_Ui_Change( LIST_UI *p_wk );
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  UI操作  初期化
  *
- *	@param	LIST_UI *p_wk           ワーク
  *	@param	LIST_UI_PARAM *cp_param 引数
  *	@param	heapID                  ヒープID
+ *
+ *	@retval   ワーク
  */
 //-----------------------------------------------------------------------------
-static void LIST_UI_Init( LIST_UI *p_wk, const LIST_UI_PARAM *cp_param, HEAPID heapID )
+LIST_UI * LIST_UI_Init( const LIST_UI_PARAM *cp_param, HEAPID heapID )
 {
-  GFL_STD_MemClear( p_wk, sizeof(LIST_UI) );
+  LIST_UI *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LIST_UI ) );
   p_wk->param         = *cp_param;
   p_wk->touch_or_key  = GFL_UI_CheckTouchOrKey();
   //切り替えを最初の初期化としても使う
   List_Ui_Change( p_wk );
+
+  return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1931,9 +1928,9 @@ static void LIST_UI_Init( LIST_UI *p_wk, const LIST_UI_PARAM *cp_param, HEAPID h
  *	@param	LIST_UI *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void LIST_UI_Exit( LIST_UI *p_wk )
+void LIST_UI_Exit( LIST_UI *p_wk )
 {
-  GFL_STD_MemClear( p_wk, sizeof(LIST_UI) );
+  GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1942,7 +1939,7 @@ static void LIST_UI_Exit( LIST_UI *p_wk )
  *	@param	LIST_UI *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void LIST_UI_Main( LIST_UI *p_wk )
+void LIST_UI_Main( LIST_UI *p_wk )
 {
   if( p_wk->touch_or_key == GFL_APP_END_TOUCH )
   {
@@ -1952,26 +1949,42 @@ static void LIST_UI_Main( LIST_UI *p_wk )
       p_wk->touch_or_key = GFL_APP_END_KEY;
       List_Ui_Change( p_wk );
     }
-    else if( List_Ui_UpdateTouch( p_wk ) )
+    else 
     {
-      //タッチモードでタッチしたら終了
-      GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
-      p_wk->is_decide = TRUE;
+      if( LIST_UI_RESULT_DECIDE == List_Ui_UpdateTouch( p_wk ) )
+      {
+        //タッチモードでタッチしたら終了
+        GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+        p_wk->is_decide = TRUE;
+      }
     }
   }
   else
   {
-    if( List_Ui_UpdateTouch( p_wk ) )
+    switch( List_Ui_UpdateTouch( p_wk ) )
     {
-      //キーモードでタッチしたら終了
+    case LIST_UI_RESULT_DECIDE:
+      //キーモードでタッチ決定したら終了
       GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       p_wk->is_decide = TRUE;
-    }
-    else if( List_Ui_UpdateKey( p_wk ) )
-    {
-      //キーモードでキー入力したら終了
-      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
-      p_wk->is_decide = TRUE;
+      break;
+    case LIST_UI_RESULT_MOVE:
+      //キーモードでタッチ入力したらタッチモードへいく
+      p_wk->touch_or_key = GFL_APP_END_TOUCH;
+      List_Ui_Change( p_wk );
+      break;
+    case LIST_UI_RESULT_NONE:
+      //何もないときにキーを動かす
+      if( LIST_UI_RESULT_DECIDE == List_Ui_UpdateKey( p_wk ) )
+      {
+        //キーモードでキー入力したら終了
+        GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+        p_wk->is_decide = TRUE;
+      }
+      break;
+
+    default:
+      GF_ASSERT( 0 );
     }
   }
 }
@@ -1985,7 +1998,7 @@ static void LIST_UI_Main( LIST_UI *p_wk )
  *	@return TRUE決定  FALSE決定していない
  */
 //-----------------------------------------------------------------------------
-static BOOL LIST_UI_IsDecide( const LIST_UI *cp_wk )
+BOOL LIST_UI_IsDecide( const LIST_UI *cp_wk )
 {
   return cp_wk->is_decide;
 }
@@ -1997,7 +2010,7 @@ static BOOL LIST_UI_IsDecide( const LIST_UI *cp_wk )
  *	@param	LIST_UI *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void LIST_UI_ReStart( LIST_UI *p_wk )
+void LIST_UI_ReStart( LIST_UI *p_wk )
 {
   p_wk->is_decide = FALSE;
   p_wk->touch_or_key  = GFL_UI_CheckTouchOrKey();
@@ -2011,16 +2024,13 @@ static void LIST_UI_ReStart( LIST_UI *p_wk )
  *	@param	LIST_UI *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL List_Ui_UpdateTouch( LIST_UI *p_wk )
+static LIST_UI_RESULT List_Ui_UpdateTouch( LIST_UI *p_wk )
 {
   if( p_wk->param.UpdateTouch != NULL )
   {
-    if( p_wk->param.UpdateTouch( p_wk->param.p_wk_adrs ) )
-    {
-      return TRUE;
-    }
+    return p_wk->param.UpdateTouch( p_wk->param.p_wk_adrs );
   }
-  return FALSE;
+  return LIST_UI_RESULT_NONE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2029,16 +2039,13 @@ static BOOL List_Ui_UpdateTouch( LIST_UI *p_wk )
  *	@param	LIST_UI *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL List_Ui_UpdateKey( LIST_UI *p_wk )
+static LIST_UI_RESULT List_Ui_UpdateKey( LIST_UI *p_wk )
 {
   if( p_wk->param.UpdateKey != NULL )
   {
-    if( p_wk->param.UpdateKey( p_wk->param.p_wk_adrs ) )
-    {
-      return TRUE;
-    }
+    return p_wk->param.UpdateKey( p_wk->param.p_wk_adrs );
   }
-  return FALSE;
+  return LIST_UI_RESULT_NONE;
 }
 
 //----------------------------------------------------------------------------

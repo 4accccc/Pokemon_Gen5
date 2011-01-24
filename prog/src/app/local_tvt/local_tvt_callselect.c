@@ -53,6 +53,7 @@ enum
   ANMID_SCROLL_BAR,
   ANMID_SCROLL_BAR_PUSH,
   ANMID_BAR_PUSH,
+  ANMID_BAR_SELECT,
 };
 
 //バー位置
@@ -63,6 +64,7 @@ enum
 #define CTVT_CALL_SEARCH_NUM (15) //画面分
 
 #define CTVT_CALL_SCROLL_LEN (CTVT_CALL_BAR_HEIGHT*CTVT_CALL_SEARCH_NUM-20*8)
+#define CTVT_CALL_SCROLL_SPEED  (8)
 
 #define CTVT_CALL_CHECK_X (18)
 #define CTVT_CALL_CAMERA_X (200)
@@ -85,8 +87,8 @@ enum
 //=====================================
 typedef struct 
 {
-  BOOL  is_touch;
   BOOL  is_check;
+  BOOL  is_select;
   BOOL  is_active;
   
   GFL_CLWK *p_clwk_bar;
@@ -105,8 +107,11 @@ typedef struct
 {
   BOOL        is_use;
   BOOL        is_hold_scroll;
+  BOOL        is_update;
+  BOOL        is_target_update;
   GFL_CLWK    *p_clwk_scrollbar;
   s32         scroll_bar_pos;
+  s32         scroll_bar_next;
 } SCROLLBAR;
 
 //-------------------------------------
@@ -122,6 +127,7 @@ typedef struct
   STRBUF                  *p_msgstr;
   HEAPID                  heapID;
   BOOL                    is_visible;
+  BOOL                    is_select;
 } DECIDE;
 
 //-------------------------------------
@@ -131,7 +137,12 @@ typedef struct
 {
   u16     scroll_ofs;
   u16     max;
+  s32     cursor_pos;
+  s32     is_key_trg_update;
   BAR     bar[LOCAL_TVT_CALLSELECT_SELECT_MAX];
+
+  SCROLLBAR   scroll_bar;
+  DECIDE      decide;
 } BARSET;
 
 //-------------------------------------
@@ -144,11 +155,10 @@ struct _LOCAL_TVT_CALLSELECT
   LOCAL_TVT_CALLSELECT_RESULT result;
 
   LOCAL_TVT_CALLSELECT_PARAM  param;
-  SCROLLBAR   scroll_bar;
-  DECIDE      decide;
   BARSET      barset;
 
   LOCAL_TVT_TOUCHBAR  *p_touchbar;
+  LIST_UI             *p_ui;
 };
 
 //=============================================================================
@@ -160,29 +170,45 @@ struct _LOCAL_TVT_CALLSELECT
 static void LOCAL_TVT_CALLSELECT_LoadResource( LOCAL_TVT_CALLSELECT *p_wk, HEAPID heapID );
 static void LOCAL_TVT_CALLSELECT_UnLoadResource( LOCAL_TVT_CALLSELECT *p_wk );
 
+//UI
+static LIST_UI_RESULT UI_UpdateTouch( void *p_wk_adrs );
+static LIST_UI_RESULT UI_UpdateKey( void *p_wk_adrs );
+static void UI_Change( void *p_wk_adrs, int touch_or_key );
+
 //barset
 static void BARSET_Init( BARSET *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPID heapID );
 static void BARSET_Exit( BARSET *p_wk );
 static void BARSET_Main( BARSET *p_wk );
-static void BARSET_Scroll( BARSET *p_wk, const SCROLLBAR *cp_scrollbar );
-static BOOL BARSET_GetTouchBarIndex( const BARSET *cp_wk, s32 *p_bar_idx );
+static void BARSET_AnimeMain( BARSET *p_wk );
+static BOOL BARSET_Touch( BARSET *p_wk );
+static BOOL BARSET_Key( BARSET *p_wk );
 static s32  BARSET_GetSelectIdx( const BARSET *cp_wk ); 
 static BOOL BARSET_IsSelect( const BARSET *cp_wk ); 
+static void BARSET_SetUIMode( BARSET *p_wk, int touch_or_key );
+static BOOL BARSET_IsTrg( const BARSET *cp_wk );
+static BOOL BARSET_IsEnd( const BARSET *cp_wk );
+static BOOL BARSET_IsMoveScrollbar( const BARSET *cp_wk );
 
 //bar
 static void BAR_Init( BAR *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, GFL_CLUNIT *p_clunit, u32 bar_idx, const STRBUF *cp_name, LOCAL_TVT_MESSAGE *p_message, HEAPID heapID);
 static void BAR_Exit( BAR *p_wk );
 static void BAR_Move( BAR *p_wk, s32 scroll_ofs );
-static BOOL BAR_Touch( BAR *p_wk );
+static BOOL BAR_SetCheck( BAR *p_wk, BOOL is_check );
+static void BAR_StartBlink( BAR *p_wk );
+static BOOL BAR_IsCheck( const BAR *cp_wk );
 static void BAR_SetActibe( BAR *p_wk, BOOL is_active );
 static BOOL BAR_IsActibe( const BAR *cp_wk );
+static void BAR_SetSelect( BAR *p_wk, BOOL is_select );
 static BOOL BAR_IsSelect( const BAR *cp_wk );
 
 //scroll_bar
 static void SCROLLBAR_Init( SCROLLBAR *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPID heapID );
 static void SCROLLBAR_Exit( SCROLLBAR *p_wk );
 static void SCROLLBAR_Main( SCROLLBAR *p_wk );
+static BOOL SCROLLBAR_Touch( SCROLLBAR *p_wk );
+static BOOL SCROLLBAR_IsMove( const SCROLLBAR *cp_wk );
 static BOOL SCROLLBAR_IsDrag( const SCROLLBAR *cp_wk );
+static void SCROLLBAR_SetScrollRate( SCROLLBAR *p_wk, fx32 rate );
 static fx32 SCROLLBAR_GetScrollRate( const SCROLLBAR *cp_wk );
 
 //decide
@@ -190,7 +216,10 @@ static void DECIDE_Init( DECIDE *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPI
 static void DECIDE_Exit( DECIDE *p_wk );
 static void DECIDE_Main( DECIDE *p_wk );
 static void DECIDE_FlipMain( DECIDE *p_wk, const BARSET *cp_barset );
-static void DECIDE_SetVisibleBtn( DECIDE *p_wk, BOOL is_visible );
+static void DECIDE_SetTrg( DECIDE *p_wk );
+static void DECIDE_SetSelect( DECIDE *p_wk, BOOL is_select );
+static BOOL DECIDE_IsSelect( const DECIDE *cp_wk );
+static BOOL DECIDE_IsButton( const DECIDE *cp_wk );
 static BOOL DECIDE_IsTrg( const DECIDE *cp_wk );
 static BOOL DECIDE_IsEnd( const DECIDE *cp_wk );
 
@@ -218,11 +247,16 @@ LOCAL_TVT_CALLSELECT * LOCAL_TVT_CALLSELECT_Init( const LOCAL_TVT_CALLSELECT_PAR
   //バーの初期化
   BARSET_Init( &p_wk->barset, p_wk, heapID );
 
-  //スクロールバーの初期化
-  SCROLLBAR_Init( &p_wk->scroll_bar, p_wk, heapID );
-
-  //決定の初期化
-  DECIDE_Init( &p_wk->decide, p_wk, heapID );
+  //UIシステム
+  {
+    LIST_UI_PARAM param;
+    GFL_STD_MemClear( &param, sizeof(LIST_UI_PARAM) );
+    param.UpdateTouch = UI_UpdateTouch;
+    param.UpdateKey   = UI_UpdateKey;
+    param.Change      = UI_Change;
+    param.p_wk_adrs   = p_wk;
+    p_wk->p_ui  = LIST_UI_Init( &param ,heapID );
+  }
 
   return p_wk;
 }
@@ -235,11 +269,8 @@ LOCAL_TVT_CALLSELECT * LOCAL_TVT_CALLSELECT_Init( const LOCAL_TVT_CALLSELECT_PAR
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_CALLSELECT_Exit( LOCAL_TVT_CALLSELECT *p_wk )
 {
-  //決定の破棄
-  DECIDE_Exit( &p_wk->decide );
-
-  //スクロールバーの破棄
-  SCROLLBAR_Exit( &p_wk->scroll_bar );
+  //UIの破棄
+  LIST_UI_Exit( p_wk->p_ui );
 
   //バーの破棄
   BARSET_Exit( &p_wk->barset );
@@ -272,23 +303,21 @@ void LOCAL_TVT_CALLSELECT_Main( LOCAL_TVT_CALLSELECT *p_wk )
   switch( p_wk->seq )
   {
   case SEQ_MAIN:
-    //スクロールバーのメイン
-    SCROLLBAR_Main( &p_wk->scroll_bar );
-
-    //バーの動作処理
+    //バーのメイン処理
     BARSET_Main( &p_wk->barset );
 
-    //バーのスクロール処理
-    BARSET_Scroll( &p_wk->barset, &p_wk->scroll_bar );
+    //スクロールバー移動中は操作を受け付けない
+    if( !BARSET_IsMoveScrollbar( &p_wk->barset ) )
+    {
+      //UIのメイン
+      LIST_UI_Main( p_wk->p_ui );
 
-    //決定の切り替え処理
-    DECIDE_FlipMain( &p_wk->decide, &p_wk->barset );
-
-    //タッチバー動作
-    LOCAL_TVT_TOUCHBAR_Main( p_wk->p_touchbar );
+      //タッチバー動作
+      LOCAL_TVT_TOUCHBAR_Main( p_wk->p_touchbar );
+    }
 
     //バーを決定
-    if( DECIDE_IsTrg( &p_wk->decide ) )
+    if( LIST_UI_IsDecide( p_wk->p_ui ) )
     {
       p_wk->seq= SEQ_DECIDEANM;
     }
@@ -302,7 +331,7 @@ void LOCAL_TVT_CALLSELECT_Main( LOCAL_TVT_CALLSELECT *p_wk )
 
   case SEQ_DECIDEANM:
     //決定アニメまち
-    if( DECIDE_IsEnd( &p_wk->decide ) )
+    if( BARSET_IsEnd( &p_wk->barset ) )
     {
       p_wk->result  = LOCAL_TVT_CALLSELECT_RESULT_DECIDE;
       p_wk->seq= SEQ_END;
@@ -322,9 +351,7 @@ void LOCAL_TVT_CALLSELECT_Main( LOCAL_TVT_CALLSELECT *p_wk )
     break;
   }
 
-  //決定のメイン
-  DECIDE_Main( &p_wk->decide );
-  
+  BARSET_AnimeMain( &p_wk->barset );
 }
 //----------------------------------------------------------------------------
 /**
@@ -407,6 +434,81 @@ static void LOCAL_TVT_CALLSELECT_UnLoadResource( LOCAL_TVT_CALLSELECT *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  タッチの操作
+ *
+ *	@param	void *p_wk_adrs   わーく
+ *
+ *	@return 結果
+ */
+//-----------------------------------------------------------------------------
+static LIST_UI_RESULT UI_UpdateTouch( void *p_wk_adrs )
+{
+  LOCAL_TVT_CALLSELECT *p_wk  = p_wk_adrs;
+
+  LIST_UI_RESULT  result  = LIST_UI_RESULT_NONE;
+
+  //バーのタッチ処理
+  if( BARSET_Touch( &p_wk->barset ) )
+  {
+    result  = LIST_UI_RESULT_MOVE;
+  }
+
+  if( BARSET_IsTrg( &p_wk->barset ) )
+  {
+    result  = LIST_UI_RESULT_DECIDE;
+  }
+
+  return result;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キーの操作
+ *
+ *	@param	void *p_wk_adrs   わーく
+ *
+ *	@return 結果
+ */
+//-----------------------------------------------------------------------------
+static LIST_UI_RESULT UI_UpdateKey( void *p_wk_adrs )
+{
+  LOCAL_TVT_CALLSELECT *p_wk  = p_wk_adrs;
+  LIST_UI_RESULT  result  = LIST_UI_RESULT_NONE;
+
+  if( BARSET_Key( &p_wk->barset ) )
+  {
+    result  = LIST_UI_RESULT_MOVE;
+  }
+  
+  if( BARSET_IsTrg( &p_wk->barset ) )
+  {
+    result = LIST_UI_RESULT_DECIDE;
+  }
+
+  return result;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	void *p_wk_adrs わーｋ
+ *	@param  touch_or_key  キーに切り替えたかタッチに切り替えたか
+ */
+//-----------------------------------------------------------------------------
+static void UI_Change( void *p_wk_adrs, int touch_or_key )
+{
+  LOCAL_TVT_CALLSELECT *p_wk  = p_wk_adrs;
+
+  BARSET_SetUIMode( &p_wk->barset, touch_or_key );
+}
+
+//=============================================================================
+/**
+ *  バー初期化
+ */
+//=============================================================================
+static BOOL Barset_GetTouchBarIndex( const BARSET *cp_wk, s32 *p_bar_idx );
+//----------------------------------------------------------------------------
+/**
  *	@brief  バーの初期化
  *
  *	@param	LOCAL_TVT_CALLSELECT *p_wk  ワーク
@@ -421,6 +523,12 @@ static void BARSET_Init( BARSET *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPI
 
   GFL_STD_MemClear( p_wk, sizeof(BARSET));
   p_wk->max = cp_sys->param.max;
+
+  //スクロールバーの初期化
+  SCROLLBAR_Init( &p_wk->scroll_bar, cp_sys, heapID );
+
+  //決定の初期化
+  DECIDE_Init( &p_wk->decide, cp_sys, heapID );
 
   //バーの初期化処理
   for( i = 0; i < p_wk->max; i++ )
@@ -459,85 +567,71 @@ static void BARSET_Exit( BARSET *p_wk )
   {
     BAR_Exit( &p_wk->bar[i] );
   }
+
+  //決定の破棄
+  DECIDE_Exit( &p_wk->decide );
+
+  //スクロールバーの破棄
+  SCROLLBAR_Exit( &p_wk->scroll_bar );
+
   GFL_STD_MemClear( p_wk, sizeof(BARSET));
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  バーの更新処理
+ *	@brief  バーのメイン処理
  *
- *	@param	LOCAL_TVT_CALLSELECT *p_wk ワーク
+ *	@param	LOCAL_TVT_CALLSELECT *p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void BARSET_Main( BARSET *p_wk )
 {
-  //タッチ処理
-  int i;
-  u32 tpx,tpy;
-  if( GFL_UI_TP_GetPointTrg( &tpx,&tpy ) )
-  {
-    s32 bar_idx;
+  BOOL is_update_bar_pos  = FALSE;
 
-    //押したバーを取得
-    if( BARSET_GetTouchBarIndex( p_wk, &bar_idx ) )
+  //決定の切り替え処理
+  DECIDE_FlipMain( &p_wk->decide, p_wk );
+  
+  //スクロール
+  if( SCROLLBAR_IsDrag( &p_wk->scroll_bar ) )
+  {
+    const u32 max_len = (p_wk->max-5) * CTVT_CALL_BAR_HEIGHT;
+    p_wk->scroll_ofs = FX_Whole( max_len * SCROLLBAR_GetScrollRate( &p_wk->scroll_bar ) );
+    is_update_bar_pos = TRUE;
+  }
+
+  //スクロールバーのメイン処理
+  SCROLLBAR_Main( &p_wk->scroll_bar );
+
+  //押されたときの判定
+  if( p_wk->is_key_trg_update )
+  {
+    p_wk->is_key_trg_update = FALSE;
+    //規定の数押されたら、それ以外はアクティブじゃなくなる
+    //もし何もおされていないならば、すべてノンアクティブ
+    if( BARSET_IsSelect( p_wk ) == FALSE )
     {
-      //1個までしかONにできない
-      //OFFにはできる
-      
-      if( BAR_IsSelect( &p_wk->bar[ bar_idx ] ) )
+      int i;
+      for( i = 0; i < p_wk->max; i++ )
       {
-        //すでに押されていたので解除
-        if( BAR_Touch( &p_wk->bar[ bar_idx ] ) )
+        if( BAR_IsActibe(&p_wk->bar[ i ]) == FALSE )
         {
-          //ノンアクティブのものをアクティブに
-          for( i = 0; i < p_wk->max; i++ )
-          {
-            if( BAR_IsActibe(&p_wk->bar[ i ]) == FALSE )
-            {
-              BAR_SetActibe( &p_wk->bar[ i ], TRUE );
-            }
-          }
+          BAR_SetActibe( &p_wk->bar[ i ], TRUE );
         }
       }
-      else
+    }
+    else
+    {    
+      int i;
+      for( i = 0; i < p_wk->max; i++ )
       {
-        //押した
-        if( BAR_Touch( &p_wk->bar[ bar_idx ] ) )
+        if( i != BARSET_GetSelectIdx( p_wk ) )
         {
-          //このバー以外をノンアクティブに
-          for( i = 0; i < p_wk->max; i++ )
-          {
-            if( i != bar_idx )
-            {
-              BAR_SetActibe( &p_wk->bar[ i ], FALSE );
-            }
-          }
+          BAR_SetActibe( &p_wk->bar[ i ], FALSE );
         }
       }
     }
   }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  バーのスクロール処理
- *
- *	@param	LOCAL_TVT_CALLSELECT *p_wk  ワーク
- *	@param	SCROLLBAR *cp_scrollbar
- */
-//-----------------------------------------------------------------------------
-static void BARSET_Scroll( BARSET *p_wk, const SCROLLBAR *cp_scrollbar )
-{
-  BOOL is_update_bar_pos  = FALSE;
 
-  //スクロール
-  if( SCROLLBAR_IsDrag( cp_scrollbar ) )
-  {
-    const u32 max_len = (p_wk->max-5) * CTVT_CALL_BAR_HEIGHT;
-    p_wk->scroll_ofs = FX_Whole( max_len * SCROLLBAR_GetScrollRate( cp_scrollbar ) );
-    is_update_bar_pos = TRUE;
-  }
-
-  //動作処理
-  if( is_update_bar_pos )
+  //バーのメイン処理
   {
     int i;
     //バーの位置処理
@@ -545,12 +639,202 @@ static void BARSET_Scroll( BARSET *p_wk, const SCROLLBAR *cp_scrollbar )
     {
       BAR_Move( &p_wk->bar[i], p_wk->scroll_ofs );
     }
-
+  }
+  //動作処理
+  if( is_update_bar_pos )
+  {
     //文字面の設定
     GFL_BG_SetScrollReq( LTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , p_wk->scroll_ofs );
 
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ処理
+ *
+ *	@param	BARSET *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BARSET_AnimeMain( BARSET *p_wk )
+{
+  //決定のメイン
+  DECIDE_Main( &p_wk->decide );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バーのタッチ処理
+ *
+ *	@param	LOCAL_TVT_CALLSELECT *p_wk ワーク
+ *	@retval   TRUEタッチした  FALSE操作していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BARSET_Touch( BARSET *p_wk )
+{
+  //バーへのタッチ処理
+  int i;
+  u32 tpx,tpy;
+  if( GFL_UI_TP_GetPointTrg( &tpx,&tpy ) )
+  {
+    //押したバーを取得
+    if( Barset_GetTouchBarIndex( p_wk, &p_wk->cursor_pos ) )
+    {
+      //1個までしかONにできない
+      //OFFにはできる
+      
+      if( BAR_IsCheck( &p_wk->bar[ p_wk->cursor_pos ] ) )
+      {
+        //すでに押されていたので解除
+        if( BAR_SetCheck( &p_wk->bar[ p_wk->cursor_pos ], FALSE ) )
+        {
+          BAR_StartBlink( &p_wk->bar[ p_wk->cursor_pos ] );
+          p_wk->is_key_trg_update = TRUE;
+          return   TRUE;
+        }
+      }
+      else
+      {
+        //押した
+        if( BAR_SetCheck( &p_wk->bar[ p_wk->cursor_pos ], TRUE ) )
+        {
+          BAR_StartBlink( &p_wk->bar[ p_wk->cursor_pos ] );
+          p_wk->is_key_trg_update = TRUE;
+          return   TRUE;
+        }
+      }
+    }
+  }
+
+  //スクロールバーのタッチメイン
+  if( SCROLLBAR_Touch( &p_wk->scroll_bar ) )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バーのキー操作処理
+ *
+ *	@param	BARSET *p_wk  ワーク
+ *
+ *	@return TRUEキー操作した  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BARSET_Key( BARSET *p_wk )
+{
+  BOOL is_select  = BARSET_IsSelect( p_wk );
+  s32  select = 0;
+  BOOL is_update  = FALSE;
+  BOOL is_decide  = FALSE;
+
+  u32 max = p_wk->max;
+  if( DECIDE_IsButton( &p_wk->decide ) )
+  {
+    max++;
+  }
+
+  //現在選択されているものを取得
+  if( is_select )
+  {
+    select  = BARSET_GetSelectIdx( p_wk ); 
+  }
+
+  //キー操作
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+  {
+    p_wk->cursor_pos--;
+    if( p_wk->cursor_pos < 0 )
+    {
+      p_wk->cursor_pos  = max-1;
+    }
+
+    is_update = TRUE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+  {
+    p_wk->cursor_pos++;
+    p_wk->cursor_pos  %= max;
+
+    is_update = TRUE;
+  }
+  else if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_A )
+  {
+    int i;
+
+    if( p_wk->cursor_pos  == p_wk->max )
+    {
+      DECIDE_SetTrg( &p_wk->decide );
+      is_update = TRUE;
+      is_decide = TRUE;
+      p_wk->is_key_trg_update = TRUE;
+    }
+    else
+    {
+      BOOL is_check = BAR_IsCheck(&p_wk->bar[ p_wk->cursor_pos ]);
+      if( BAR_SetCheck( &p_wk->bar[ p_wk->cursor_pos ], !is_check ) )
+      {
+        int i;
+        for( i = 0; i < p_wk->max; i++ )
+        {
+          if( p_wk->cursor_pos != i )
+          {
+            BAR_SetCheck( &p_wk->bar[ i ], FALSE );
+          }
+        }
+
+        BAR_StartBlink( &p_wk->bar[ p_wk->cursor_pos ] );
+        is_update = TRUE;
+        is_decide = TRUE;
+        p_wk->is_key_trg_update = TRUE;
+      }
+    }
+  }
+
+  //操作による処理
+  if( is_update )
+  {
+    int i;
+    //バーの選択処理
+    for( i = 0; i < p_wk->max; i++ )
+    {
+      if( p_wk->cursor_pos == i )
+      {
+        BAR_SetSelect( &p_wk->bar[i], TRUE );
+      }
+      else
+      {
+        BAR_SetSelect( &p_wk->bar[i], FALSE );
+      }
+    }
+
+    //スクロール
+    if( LOCAL_TVT_CALLSELECT_SELECT_MAX >= p_wk->max )
+    {
+      if( p_wk->cursor_pos <= 0 )
+      {
+        SCROLLBAR_SetScrollRate( &p_wk->scroll_bar, 0 );
+      }
+      else if( p_wk->cursor_pos >= 5 )
+      {
+        SCROLLBAR_SetScrollRate( &p_wk->scroll_bar, FX32_ONE );
+      }
+    }
+
+    //決定ボタンの選択処理
+    if( p_wk->cursor_pos == p_wk->max )
+    {
+      DECIDE_SetSelect( &p_wk->decide, TRUE );
+    }
+    else
+    {
+      DECIDE_SetSelect( &p_wk->decide, FALSE );
+    }
+  }
+
+  return is_decide;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  タッチしたかどうか
@@ -561,7 +845,7 @@ static void BARSET_Scroll( BARSET *p_wk, const SCROLLBAR *cp_scrollbar )
  *	@return TRUEでタッチ  FALSEで触っていない
  */
 //-----------------------------------------------------------------------------
-static BOOL BARSET_GetTouchBarIndex( const BARSET *cp_wk, s32 *p_bar_idx )
+static BOOL Barset_GetTouchBarIndex( const BARSET *cp_wk, s32 *p_bar_idx )
 {
   u32 tpx, tpy;
 
@@ -595,7 +879,7 @@ static s32  BARSET_GetSelectIdx( const BARSET *cp_wk )
   int cnt = 0;
   for( i = 0; i < cp_wk->max; i++ )
   {
-    if( BAR_IsSelect( &cp_wk->bar[i] ) )
+    if( BAR_IsCheck( &cp_wk->bar[i] ) )
     {
       return i;
     }
@@ -619,13 +903,108 @@ static BOOL BARSET_IsSelect( const BARSET *cp_wk )
   int cnt = 0;
   for( i = 0; i < cp_wk->max; i++ )
   {
-    if( BAR_IsSelect( &cp_wk->bar[i] ) )
+    if( BAR_IsCheck( &cp_wk->bar[i] ) )
     {
       return TRUE;
     }
   }
 
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バー集合  UIモードを設定
+ *
+ *	@param	BARSET *p_wk
+ *	@param	touch_or_key 
+ */
+//-----------------------------------------------------------------------------
+static void BARSET_SetUIMode( BARSET *p_wk, int touch_or_key )
+{
+  if( touch_or_key == GFL_APP_END_TOUCH )
+  {
+    int i;
+    for( i = 0; i < p_wk->max; i++ )
+    {
+      BAR_SetSelect( &p_wk->bar[i], FALSE );
+    }
+  }
+  else
+  {
+    int i;
+    for( i = 0; i < p_wk->max; i++ )
+    {
+      if( p_wk->cursor_pos == i )
+      {
+        BAR_SetSelect( &p_wk->bar[i], TRUE );
+      }
+      else
+      {
+        BAR_SetSelect( &p_wk->bar[i], FALSE );
+      }
+    }
+
+    if( p_wk->cursor_pos == p_wk->max )
+    {
+      DECIDE_SetSelect( &p_wk->decide, TRUE );
+    }
+    else
+    {
+      DECIDE_SetSelect( &p_wk->decide, FALSE );
+    }
+
+    //スクロール
+    if( LOCAL_TVT_CALLSELECT_SELECT_MAX >= p_wk->max )
+    {
+      if( p_wk->cursor_pos <= 0 )
+      {
+        SCROLLBAR_SetScrollRate( &p_wk->scroll_bar, 0 );
+      }
+      else if( p_wk->cursor_pos >= 5 )
+      {
+        SCROLLBAR_SetScrollRate( &p_wk->scroll_bar, FX32_ONE );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンを押したかどうか
+ *
+ *	@param	const BARSET *cp_wk ワーク
+ *
+ *	@return TRUE  ボタンを押した  FALSEボタンを押していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BARSET_IsTrg( const BARSET *cp_wk )
+{
+  return DECIDE_IsTrg( &cp_wk->decide );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン演出が終了したか
+ *
+ *	@param	const BARSET *cp_wk ワーク
+ *
+ *	@return TRUE終了した  FALSE終了していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BARSET_IsEnd( const BARSET *cp_wk )
+{
+  return DECIDE_IsEnd( &cp_wk->decide );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールバー移動をしているか
+ *
+ *	@param	const BARSET *cp_wk ワーク
+ *
+ *	@return TRUEスクロールバーが移動中  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BARSET_IsMoveScrollbar( const BARSET *cp_wk )
+{
+  return SCROLLBAR_IsMove( &cp_wk->scroll_bar );
 }
 //----------------------------------------------------------------------------
 /**
@@ -729,6 +1108,17 @@ static void BAR_Exit( BAR *p_wk )
 //-----------------------------------------------------------------------------
 static void BAR_Move( BAR *p_wk, s32 scroll_ofs )
 {
+  //アニメ
+  if( GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk_bar) == FALSE )
+  {
+    static const u8 sc_bar_anmID[] =
+    {
+      ANMID_BAR,
+      ANMID_BAR_SELECT
+    };
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk_bar, sc_bar_anmID[p_wk->is_select] );
+  }
+
   //位置
   {
     s16 pos_y = p_wk->bar_idx*CTVT_CALL_BAR_HEIGHT - scroll_ofs;
@@ -751,25 +1141,35 @@ static void BAR_Move( BAR *p_wk, s32 scroll_ofs )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  バーをタッチ
+ *	@brief  バー選択時の点滅開始
  *
  *	@param	BAR *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BAR_StartBlink( BAR *p_wk )
+{
+  //バーの点滅開始
+  GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk_bar, ANMID_BAR_PUSH );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バーのチェックボックスを設定
+ *
+ *	@param	BAR *p_wk ワーク
+ *	@param  is_check  TRUEチェックON, FALSEチェックOFF
  *	@retval TRUEでタッチできた  FALSEでタッチできなかった
  */
 //-----------------------------------------------------------------------------
-static BOOL BAR_Touch( BAR *p_wk )
+static BOOL BAR_SetCheck( BAR *p_wk, BOOL is_check )
 {
   //ノンアクティブのときは押せない
-  if( p_wk->is_active ==FALSE )
+  //設定するチェックと内部が同じなら押せない
+  if( p_wk->is_active ==FALSE || p_wk->is_check == is_check )
   {
     return  FALSE;
   }
 
-  p_wk->is_touch  = TRUE;
-  p_wk->is_check      ^= 1;
-
-  //バーの点滅開始
-  GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk_bar, ANMID_BAR_PUSH );
+  p_wk->is_check  = is_check;
 
   //チェックボックス変更
   BAR_SetActibe( p_wk, TRUE );
@@ -784,6 +1184,19 @@ static BOOL BAR_Touch( BAR *p_wk )
   }
 
   return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バーの選択状況を取得
+ *
+ *	@param	const BAR *cp_wk ワーク
+ *
+ *	@return TRUE選択中  FALSE選択していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BAR_IsCheck( const BAR *cp_wk )
+{
+  return cp_wk->is_check;
 }
 //----------------------------------------------------------------------------
 /**
@@ -830,16 +1243,39 @@ static BOOL BAR_IsActibe( const BAR *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  バーの選択状況を取得
+ *	@brief  バーの選択設定
  *
- *	@param	const BAR *cp_wk ワーク
+ *	@param	BAR *p_wk ワーク
+ *	@param	is_select TRUE選択  FALSE選択していない
+ */
+//-----------------------------------------------------------------------------
+static void BAR_SetSelect( BAR *p_wk, BOOL is_select )
+{
+  p_wk->is_select = is_select;
+
+  //アニメ中でなければアニメ変更
+  if( GFL_CLACT_WK_GetAnmSeq(p_wk->p_clwk_bar) != ANMID_BAR_PUSH )
+  {
+    static const u8 sc_bar_anmID[] =
+    {
+      ANMID_BAR,
+      ANMID_BAR_SELECT
+    };
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk_bar, sc_bar_anmID[p_wk->is_select] );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バーが選択されているかどうか
+ *
+ *	@param	const BAR *cp_wk  ワーク
  *
  *	@return TRUE選択中  FALSE選択していない
  */
 //-----------------------------------------------------------------------------
 static BOOL BAR_IsSelect( const BAR *cp_wk )
 {
-  return cp_wk->is_check;
+  return cp_wk->is_select;
 }
 //=============================================================================
 /**
@@ -903,17 +1339,81 @@ static void SCROLLBAR_Exit( SCROLLBAR *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  スクロールバーメイン処理
+ *	@brief  スクロールバーメイン
  *
- *	@param	SCROLLBAR *p_wk ワーク
+ *	@param	SCROLLBAR *p_wk   ワーク
  */
 //-----------------------------------------------------------------------------
 static void SCROLLBAR_Main( SCROLLBAR *p_wk )
 {
-  //使用不可ならば何もしない
   if( !p_wk->is_use )
   {
     return;
+  }
+
+  //更新
+  if( p_wk->is_update )
+  {
+    p_wk->is_update = FALSE;
+
+    //バー動作
+    {
+      GFL_CLACTPOS pos;
+      pos.x = CTVT_CALL_SCROLL_X;
+      pos.y = CTVT_CALL_SCROLL_Y + p_wk->scroll_bar_pos;
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk_scrollbar, &pos , CLSYS_DRAW_SUB );
+    }
+  }
+
+  //移動更新
+  if( p_wk->is_target_update )
+  {
+    if( p_wk->scroll_bar_pos > p_wk->scroll_bar_next )
+    {
+      if( p_wk->scroll_bar_pos - p_wk->scroll_bar_next < CTVT_CALL_SCROLL_SPEED )
+      {
+        p_wk->scroll_bar_pos  = p_wk->scroll_bar_next;
+      }
+      else
+      {
+        p_wk->scroll_bar_pos  -= CTVT_CALL_SCROLL_SPEED;
+      }
+    }
+    else if( p_wk->scroll_bar_pos < p_wk->scroll_bar_next )
+    {
+      if( p_wk->scroll_bar_next - p_wk->scroll_bar_pos < CTVT_CALL_SCROLL_SPEED )
+      {
+        p_wk->scroll_bar_pos  = p_wk->scroll_bar_next;
+      }
+      else
+      {
+        p_wk->scroll_bar_pos  += CTVT_CALL_SCROLL_SPEED;
+      }
+    }
+
+    if(p_wk->scroll_bar_next == p_wk->scroll_bar_pos )
+    {
+      p_wk->is_target_update  = FALSE;
+    }
+
+    p_wk->is_update = TRUE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールバータッチ処理
+ *
+ *	@param	SCROLLBAR *p_wk ワーク
+ *
+ *	@retval TRUEタッチした  FALSEまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL SCROLLBAR_Touch( SCROLLBAR *p_wk )
+{
+  //使用不可ならば何もしない
+  if( !p_wk->is_use )
+  {
+    return FALSE;
   }
 
   {
@@ -930,6 +1430,7 @@ static void SCROLLBAR_Main( SCROLLBAR *p_wk )
       p_wk->is_hold_scroll  = TRUE;
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk_scrollbar, ANMID_SCROLL_BAR_PUSH );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+      return TRUE;
     }
     else if( is_hold && p_wk->is_hold_scroll )
     {
@@ -941,12 +1442,9 @@ static void SCROLLBAR_Main( SCROLLBAR *p_wk )
         s32 scroll_ofs  = holdy - CTVT_CALL_SCROLL_Y;
         p_wk->scroll_bar_pos  = MATH_CLAMP( scroll_ofs, 0, CTVT_CALL_SCROLLBAR_LEN );
 
-        {
-          GFL_CLACTPOS pos;
-          pos.x = CTVT_CALL_SCROLL_X;
-          pos.y = CTVT_CALL_SCROLL_Y + p_wk->scroll_bar_pos;
-          GFL_CLACT_WK_SetPos( p_wk->p_clwk_scrollbar, &pos , CLSYS_DRAW_SUB );
-        }
+        p_wk->is_update = TRUE;
+
+        return TRUE;
       }
     }
     else
@@ -956,6 +1454,20 @@ static void SCROLLBAR_Main( SCROLLBAR *p_wk )
     }
   }
 
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動中かどうか取得
+ *
+ *	@param	const SCROLLBAR *cp_wk  ワーク
+ *
+ *	@return TRUEで自動移動中  FALSEでしていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL SCROLLBAR_IsMove( const SCROLLBAR *cp_wk )
+{
+  return cp_wk->is_target_update;
 }
 
 //----------------------------------------------------------------------------
@@ -969,7 +1481,7 @@ static void SCROLLBAR_Main( SCROLLBAR *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL SCROLLBAR_IsDrag( const SCROLLBAR *cp_wk )
 {
-  return cp_wk->is_hold_scroll;
+  return cp_wk->is_update;
 }
 //----------------------------------------------------------------------------
 /**
@@ -984,12 +1496,25 @@ static fx32 SCROLLBAR_GetScrollRate( const SCROLLBAR *cp_wk )
 {
   return cp_wk->scroll_bar_pos * FX32_ONE / CTVT_CALL_SCROLLBAR_LEN;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールバーの移動割合を設定
+ *
+ *	@param	SCROLLBAR *p_wk ワーク
+ *	@param	rate  バーの割合
+ */
+//-----------------------------------------------------------------------------
+static void SCROLLBAR_SetScrollRate( SCROLLBAR *p_wk, fx32 rate )
+{
+  p_wk->scroll_bar_next  = FX_Whole( CTVT_CALL_SCROLLBAR_LEN * rate );
+  p_wk->is_target_update  = TRUE;
+}
 //=============================================================================
 /**
  *  決定ボタン＆メッセージ
  */
 //=============================================================================
-
+static void Decide_SetVisibleBtn( DECIDE *p_wk, BOOL is_visible );
 //----------------------------------------------------------------------------
 /**
  *	@brief  決定ボタン＆メッセージ初期化
@@ -1102,8 +1627,19 @@ static void DECIDE_FlipMain( DECIDE *p_wk, const BARSET *cp_barset )
   {
     p_wk->is_visible  = is_select;
 
-    DECIDE_SetVisibleBtn( p_wk, p_wk->is_visible );
+    Decide_SetVisibleBtn( p_wk, p_wk->is_visible );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  決定
+ *
+ *	@param	DECIDE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void DECIDE_SetTrg( DECIDE *p_wk )
+{
+  APP_TASKMENU_WIN_SetDecide( p_wk->p_menuwin, TRUE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1113,7 +1649,7 @@ static void DECIDE_FlipMain( DECIDE *p_wk, const BARSET *cp_barset )
  *	@param	is_visible    ボタン表示ON  ボタン表示OFF
  */
 //-----------------------------------------------------------------------------
-static void DECIDE_SetVisibleBtn( DECIDE *p_wk, BOOL is_visible )
+static void Decide_SetVisibleBtn( DECIDE *p_wk, BOOL is_visible )
 {
   if( is_visible )
   {
@@ -1150,6 +1686,48 @@ static void DECIDE_SetVisibleBtn( DECIDE *p_wk, BOOL is_visible )
   }
 
   GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_MSG );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  選択設定
+ *
+ *	@param	DECIDE *p_wk  ワーク
+ *	@param	is_select   TRUE選択  FALSE選択していない
+ */
+//-----------------------------------------------------------------------------
+static void DECIDE_SetSelect( DECIDE *p_wk, BOOL is_select )
+{
+  if( DECIDE_IsButton( p_wk ) )
+  {
+    p_wk->is_select = is_select;
+    APP_TASKMENU_WIN_SetActive( p_wk->p_menuwin, p_wk->is_select);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  選択中を取得
+ *
+ *	@param	const DECIDE *cp_wk   ワーク
+ *
+ *	@return TRUE選択中  FALSE選択していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL DECIDE_IsSelect( const DECIDE *cp_wk )
+{
+  return cp_wk->is_select;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン状態かウィンドウ状態か
+ *
+ *	@param	const DECIDE *cp_wk   ワーク
+ *
+ *	@return TRUE  ボタン状態  FALSEウィンドウ状態
+ */
+//-----------------------------------------------------------------------------
+static BOOL DECIDE_IsButton( const DECIDE *cp_wk )
+{
+  return cp_wk->p_menuwin != NULL;
 }
 //----------------------------------------------------------------------------
 /**

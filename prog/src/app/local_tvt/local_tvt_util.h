@@ -129,6 +129,37 @@ extern void LOCAL_TVT_POKELIST_ReStart( LOCAL_TVT_POKELIST *p_wk );
 extern LOCAL_TVT_POKELIST_RESULT LOCAL_TVT_POKELIST_GetResult( const LOCAL_TVT_POKELIST *cp_wk );
 extern const POKEMON_PARAM * LOCAL_TVT_POKELIST_GetSelect( const LOCAL_TVT_POKELIST *cp_wk );
 
+//=============================================================================
+/**
+ *					リストをカーソルとタッチで操作するシステム
+*/
+//=============================================================================
+typedef enum
+{
+  LIST_UI_RESULT_NONE,    //何もおこらない
+  LIST_UI_RESULT_MOVE,    //キーやタッチをした
+  LIST_UI_RESULT_DECIDE,  //決定をした
+}LIST_UI_RESULT;
+
+//-------------------------------------
+///	リストをカーソルとタッチで操作するシステム
+//=====================================
+typedef struct
+{
+  void *p_wk_adrs;
+  LIST_UI_RESULT (*UpdateTouch)( void *p_wk_adrs );
+  LIST_UI_RESULT (*UpdateKey)( void *p_wk_adrs );
+  void (*Change)( void *p_wk_adrs, int touch_or_key );
+}LIST_UI_PARAM;
+
+typedef struct _LIST_UI LIST_UI;
+
+extern LIST_UI * LIST_UI_Init( const LIST_UI_PARAM *cp_param, HEAPID heapID );
+extern void LIST_UI_Exit( LIST_UI *p_wk );
+extern void LIST_UI_Main( LIST_UI *p_wk );
+
+extern BOOL LIST_UI_IsDecide( const LIST_UI *cp_wk );
+extern void LIST_UI_ReStart( LIST_UI *p_wk );
 
 //=============================================================================
 /**
