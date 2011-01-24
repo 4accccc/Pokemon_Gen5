@@ -145,4 +145,6 @@ DEP_INDOOR	=	\
 	$(RESDIR)/cabin_door_r.nsbmd \
 	$(RESDIR)/monitor01.nsbmd \
 	$(RESDIR)/c04_gtrain_01.nsbmd \
+	$(RESDIR)/m_gym03_mayu01.nsbmd \
+	$(RESDIR)/m_gym03_mayu02.nsbmd \
 
