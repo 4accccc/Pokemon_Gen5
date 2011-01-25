@@ -2,6 +2,7 @@
 #	非通信テレビトランシーバー スクリプト変換スクリプト
 #===========================================================
 
+require "../../../tools/headerdata.rb"
 require 'win32ole'
 $KCODE = "SJIS"
 
@@ -22,6 +23,11 @@ xl = WIN32OLE.new('Excel.Application')
 book = xl.Workbooks.Open(filename)
 
 begin
+
+  #データの作成
+  zonedata = HeaderDataArray.new
+  zonedata.load( ARGV[0] )
+
   book.Worksheets.each do |sheet|
 
     sheet.extend Worksheet
@@ -45,14 +51,34 @@ begin
           outFile.write( ary.pack("C") )
           ary = Array( sheet.Range('M6').Value.to_i )
           outFile.write( ary.pack("C") )
-          ary = Array( sheet.Range('N3').Value.to_i )
-          outFile.write( ary.pack("C") )
-          ary = Array( sheet.Range('N4').Value.to_i )
-          outFile.write( ary.pack("C") )
-          ary = Array( sheet.Range('N5').Value.to_i )
-          outFile.write( ary.pack("C") )
-          ary = Array( sheet.Range('N6').Value.to_i )
-          outFile.write( ary.pack("C") )
+          value = sheet.Range('L3').Value.to_s
+          if value != ""
+            ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
+            outFile.write( ary.pack("S") )
+          else
+            outFile.write([0].pack("S"))
+          end
+          value = sheet.Range('L4').Value.to_s
+          if value != ""
+            ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
+            outFile.write( ary.pack("S") )
+          else
+            outFile.write([0].pack("S"))
+          end
+          value = sheet.Range('L5').Value.to_s
+          if value != ""
+            ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
+            outFile.write( ary.pack("S") )
+          else
+            outFile.write([0].pack("S"))
+          end
+          value = sheet.Range('L6').Value.to_s
+          if value != ""
+            ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
+            outFile.write( ary.pack("S") )
+          else
+            outFile.write([0].pack("S"))
+          end
           
           loopFlg = TRUE
           idx = 0

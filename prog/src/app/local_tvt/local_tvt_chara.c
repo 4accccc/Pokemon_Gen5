@@ -727,7 +727,7 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
       }
     }
 
-    NAGI_Printf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
+    NAGI_Printf("[%d][%d:%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType,charaWork->weatherType);
     
     LOCAL_TVT_CHARA_LoadCharaResource( charaWork, sys, heapID );
     LOCAL_TVT_CHARA_LoadCommonResource( charaWork, sys, heapID );

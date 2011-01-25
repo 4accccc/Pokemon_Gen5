@@ -13,6 +13,7 @@ USERS	= ariizumi_nobuhiko ohmura matsumiya toyama unno toru_nagihashi	ohtani_may
 #------------------------------------------------------------------------------
 targetname = local_tvt_script
 
+zonename		= ..\..\fldmapdata\zonetable\zone_id.h
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 tvt_script_01.bin:tvt_script.xls
-	ruby tvt_script_conv.rb
+	ruby tvt_script_conv.rb $(zonename)
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc

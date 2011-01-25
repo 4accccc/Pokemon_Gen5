@@ -26,7 +26,11 @@
 //======================================================================
 //	define
 //======================================================================
-#pragma mark [> define
+#ifdef PM_DEBUG
+#define LTVT_DEBUG_USE_DEBUGWIN //デバッグウィンドウ使用
+#define LTVT_DEBUG_MODE_CHANGE  //ボタン長押しでモード切替
+#endif //PM_DEBUG
+
 //======================================================================
 //	enum
 //======================================================================
@@ -107,18 +111,31 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   {
     initWork = pwk;
   }
+
   work->heapId = HEAPID_LOCAL_TVT;
   work->initWork = initWork;
 
+#ifdef LTVT_DEBUG_MODE_CHANGE
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    work->initWork->mode     = LOCAL_TVT_MODE_SCRIPT;
+    work->initWork->scriptId = 1;
+  }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    work->initWork->mode = LOCAL_TVT_MODE_APP;
+  }
+#endif
+
   //モード設定
-  Local_Tvt_SetMode( work, initWork->mode );
+  Local_Tvt_SetMode( work, work->initWork->mode );
 
   //グラフィック設定
   work->graphic = LOCAL_TVT_GRAPHIC_Init(GX_DISP_SELECT_MAIN_SUB, work->heapId );
   
   //メッセージ管理
   work->message = LOCAL_TVT_MESSAGE_Init( work->heapId );
-  LOCAL_TVT_MESSAGE_RegisterPlayerName( work->message, initWork->gameData );
+  LOCAL_TVT_MESSAGE_RegisterPlayerName( work->message, work->initWork->gameData );
 
   //キャラ画像管理
   {
@@ -144,7 +161,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   
 
   //デバッグ
-#ifdef PM_DEBUG
+#ifdef LTVT_DEBUG_USE_DEBUGWIN
   {
     LOCAL_TVT_DEBUG_PARAM param;
     GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_DEBUG_PARAM) );
@@ -166,7 +183,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
   LOCAL_TVT_WORK *work = mywk;
 
   //デバッグ
-#ifdef PM_DEBUG
+#ifdef LTVT_DEBUG_USE_DEBUGWIN
   LOCAL_TVT_DEBUG_Exit();
 #endif
   
@@ -202,9 +219,9 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcMain( GFL_PROC * proc, int * seq , void *pw
   LOCAL_TVT_CHARA_SYS_Main( work->chara_sys );
   LOCAL_TVT_GRAPHIC_2D_Draw( work->graphic );
 
-#ifdef PM_DEBUG
+#ifdef LTVT_DEBUG_USE_DEBUGWIN
   LOCAL_TVT_DEBUG_Main();
-#endif //PM_DEBUG
+#endif
   if( ret == TRUE )
   {
     return GFL_PROC_RES_FINISH;

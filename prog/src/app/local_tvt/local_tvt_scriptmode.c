@@ -25,6 +25,7 @@
 #include "local_tvt_chara.h"
 #include "local_tvt_scriptmode.h"
 #include "local_tvt_graphic.h"
+#include "local_tvt_calldata.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -57,7 +58,7 @@ typedef enum
 typedef struct
 {
   u8 chara[LOCAL_TVT_MEMBER_MAX];
-  u8 back[LOCAL_TVT_MEMBER_MAX];
+  u16 back[LOCAL_TVT_MEMBER_MAX];
 }LOCAL_TVT_SCRIPT_HEADER;
 
 typedef struct
@@ -146,14 +147,19 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
   //スクリプトからキャラ設定
   {
     int i;
+    LOCAL_TVT_CALLDATA *p_data  = LOCAL_TVT_CALLDATA_Init( gamedata, heapID );
+
     LOCAL_TVT_CHARA_PARAM chara_param[LOCAL_TVT_MEMBER_MAX];
     GFL_STD_MemClear( chara_param, sizeof(LOCAL_TVT_CHARA_PARAM)*LOCAL_TVT_MEMBER_MAX );
     for( i = 0; i < work->member; i++ )
     {
+      ZONEID  zoneID  = work->scriptHead->back[i];
       chara_param[i].charaType  = work->scriptHead->chara[i];
-      chara_param[i].bgType     = work->scriptHead->back[i];
-      chara_param[i].weatherType= i;  //TODO
+      chara_param[i].bgType     = LOCAL_TVT_CALLDATA_GetBackByZoneID( p_data, zoneID );
+      chara_param[i].weatherType= LOCAL_TVT_CALLDATA_GetWeatherByZoneID( p_data, zoneID );
     }
+    LOCAL_TVT_CALLDATA_Exit( p_data );
+
     LOCAL_TVT_CHARA_SYS_LoadChara( work->chara_sys, chara_param, work->member );
   }
 

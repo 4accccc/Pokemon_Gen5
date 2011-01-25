@@ -520,6 +520,7 @@ static void Ltvt_Debug_Draw_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   static const char * scp_label[] =
   {
     "プレイヤー",
+    "ライバル",
     "チェレン",
     "ベル",
     "はかせ",

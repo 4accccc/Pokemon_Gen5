@@ -129,6 +129,14 @@ LOCAL_TVT_MESSAGE * LOCAL_TVT_MESSAGE_Init( HEAPID heapID )
 
   p_wk->p_cursor = APP_KEYCURSOR_Create( 0xf , TRUE , TRUE , p_wk->heapID );
   GFL_FONTSYS_SetColor( 1,2,0xf );
+
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0 , 
+                    GX_BLEND_PLANEMASK_OBJ|
+                    GX_BLEND_PLANEMASK_BG3|
+                    GX_BLEND_PLANEMASK_BG2|
+                    GX_BLEND_PLANEMASK_BG1 , 
+                    16 , 4 );
+
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -140,6 +148,8 @@ LOCAL_TVT_MESSAGE * LOCAL_TVT_MESSAGE_Init( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_MESSAGE_Exit( LOCAL_TVT_MESSAGE *p_wk )
 {
+  G2_BlendNone();
+
   if( p_wk->p_stream != NULL )
   {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
@@ -184,6 +194,7 @@ void LOCAL_TVT_MESSAGE_Main( LOCAL_TVT_MESSAGE *p_wk )
       p_wk->p_stream = NULL;
     }
   }
+
   PRINTSYS_QUE_Main( p_wk->p_que );
 
   {
