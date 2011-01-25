@@ -182,7 +182,17 @@ enum {
 	NARC_app_menu_common_tr2dgra_dummy_128k_NCER = 168,
 	NARC_app_menu_common_tr2dgra_dummy_32k_NANR = 169,
 	NARC_app_menu_common_tr2dgra_dummy_64k_NANR = 170,
-	NARC_app_menu_common_tr2dgra_dummy_128k_NANR = 171
+	NARC_app_menu_common_tr2dgra_dummy_128k_NANR = 171,
+	NARC_app_menu_common_search_button_NCGR = 172,
+	NARC_app_menu_common_search_button_128k_NANR = 173,
+	NARC_app_menu_common_search_button_128k_NCER = 174,
+	NARC_app_menu_common_search_button_128k_NCGR = 175,
+	NARC_app_menu_common_search_button_32k_NANR = 176,
+	NARC_app_menu_common_search_button_32k_NCER = 177,
+	NARC_app_menu_common_search_button_32k_NCGR = 178,
+	NARC_app_menu_common_search_button_64k_NANR = 179,
+	NARC_app_menu_common_search_button_64k_NCER = 180,
+	NARC_app_menu_common_search_button_64k_NCGR = 181
 };
 
 /* NARC_APP_MENU_COMMON_NAIX_ */
