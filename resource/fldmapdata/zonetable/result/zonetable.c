@@ -15159,9 +15159,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		15,   // padding > placeicon
-		592,
+		135,
 		0,
-		599,
+		630,
 	},
 	{//ZONE_ID_D22R0101 = 446
 		RSC_GRID_DEFAULT,
@@ -15227,9 +15227,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		15,   // padding > placeicon
-		762,
+		176,
 		0,
-		657,
+		665,
 	},
 	{//ZONE_ID_R20R0101 = 448
 		RSC_GRID_NOSCROLL,
@@ -15295,9 +15295,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		15,   // padding > placeicon
-		781,
+		234,
 		0,
-		589,
+		665,
 	},
 	{//ZONE_ID_C13R0101 = 450
 		RSC_GRID_NOSCROLL,
