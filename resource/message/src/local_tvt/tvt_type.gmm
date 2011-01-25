@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-20T18:27:36"/>
+	<create user="nishino" host="W00221" date="2011-01-25T12:34:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,9 +365,9 @@
 		</language>
 	</columns>
 
-	<dialog left="237" top="215" right="942" bottom="843" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="657" top="66" right="1130" bottom="464" visible="no"/>
+	<dialog left="272" top="591" right="977" bottom="1219" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="66" right="1024" bottom="464" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -731,8 +731,18 @@
 
 	<row id="TYPE_STR_057">
 		<comment>どく　くさ</comment>
-		<language name="JPN" width="256">どく　くさ</language>
-		<language name="JPN_KANJI" width="256">どく　くさ</language>
+		<language name="JPN" width="256">どく　くさ　タイプか…▼
+ほのお　こおり
+ひこう　エスパー　タイプの▽
+こうげきに　よわいな▼
+このタイプの　ポケモンと
+たたかうときは　ちゅういするんだね▼</language>
+		<language name="JPN_KANJI" width="256">どく　くさ　タイプか…▼
+ほのお　こおり
+ひこう　エスパー　タイプの▽
+攻撃に　弱いな▼
+このタイプの　ポケモンと
+戦う時は　注意するんだね▼</language>
 	</row>
 
 	<row id="TYPE_STR_058">
@@ -1145,8 +1155,16 @@
 
 	<row id="TYPE_STR_126">
 		<comment>みず　みず</comment>
-		<language name="JPN" width="256">みず　みず</language>
-		<language name="JPN_KANJI" width="256">みず　みず</language>
+		<language name="JPN" width="256">みず　タイプか…▼
+でんき　くさ　タイプの
+こうげきに　よわいな▼
+このタイプの　ポケモンと
+たたかうときは　ちゅういするんだね▼</language>
+		<language name="JPN_KANJI" width="256">みず　タイプか…▼
+でんき　くさ　タイプの
+攻撃に　弱いな▼
+このタイプの　ポケモンと
+戦う時は　注意するんだね▼</language>
 	</row>
 
 	<row id="TYPE_STR_127">
@@ -1205,8 +1223,18 @@
 
 	<row id="TYPE_STR_136">
 		<comment>くさ　こおり</comment>
-		<language name="JPN" width="256">くさ　こおり</language>
-		<language name="JPN_KANJI" width="256">くさ　こおり</language>
+		<language name="JPN" width="256">くさ　こおり　タイプか…▼
+ほのお　かくとう　どく　ひこう
+むし　いわ　はがね　タイプの▽
+こうげきに　よわいな▼
+このタイプの　ポケモンと
+たたかうときは　ちゅういするんだね▼</language>
+		<language name="JPN_KANJI" width="256">くさ　こおり　タイプか…▼
+ほのお　かくとう　どく　ひこう
+むし　いわ　はがね　タイプの▽
+攻撃に　弱いな▼
+このタイプの　ポケモンと
+戦う時は　注意するんだね▼</language>
 	</row>
 
 	<row id="TYPE_STR_137">
@@ -1253,8 +1281,16 @@
 
 	<row id="TYPE_STR_144">
 		<comment>エスパー　エスパー</comment>
-		<language name="JPN" width="256">エスパー　エスパー</language>
-		<language name="JPN_KANJI" width="256">エスパー　エスパー</language>
+		<language name="JPN" width="256">エスパー　タイプか…▼
+むし　ゴースト　あく　タイプの
+こうげきに　よわいな▼
+このタイプの　ポケモンと
+たたかうときは　ちゅういするんだね▼</language>
+		<language name="JPN_KANJI" width="256">エスパー　タイプか…▼
+むし　ゴースト　あく　タイプの
+攻撃に　弱いな▼
+このタイプの　ポケモンと
+戦う時は　注意するんだね▼</language>
 	</row>
 
 	<row id="TYPE_STR_145">
@@ -1295,8 +1331,16 @@
 
 	<row id="TYPE_STR_151">
 		<comment>ドラゴン　ドラゴン</comment>
-		<language name="JPN" width="256">ドラゴン　ドラゴン</language>
-		<language name="JPN_KANJI" width="256">ドラゴン　ドラゴン</language>
+		<language name="JPN" width="256">ドラゴン　タイプか…▼
+こおり　ドラゴン　タイプの
+こうげきに　よわいな▼
+このタイプの　ポケモンと
+たたかうときは　ちゅういするんだね▼</language>
+		<language name="JPN_KANJI" width="256">ドラゴン　タイプか…▼
+こおり　ドラゴン　タイプの
+攻撃に　弱いな▼
+このタイプの　ポケモンと
+戦う時は　注意するんだね▼</language>
 	</row>
 
 	<row id="TYPE_STR_152">

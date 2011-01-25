@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-20T19:51:01"/>
+	<create user="nishino" host="W00221" date="2011-01-25T15:19:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,9 +365,9 @@
 		</language>
 	</columns>
 
-	<dialog left="237" top="215" right="942" bottom="843" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="657" top="66" right="1130" bottom="464" visible="no"/>
+	<dialog left="285" top="346" right="990" bottom="974" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="66" right="1024" bottom="464" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -395,8 +395,10 @@
 
 	<row id="SHINKA_STR_001">
 		<comment>進化しない</comment>
-		<language name="JPN" width="256">進化しない</language>
-		<language name="JPN_KANJI" width="256">進化しない</language>
+		<language name="JPN" width="256">このこの　しんかの　ほうほうは
+まだ　はっけんされて　いないわね▼</language>
+		<language name="JPN_KANJI" width="256">このこの　進化の　方法は
+まだ　発見されて　いないわね▼</language>
 	</row>
 
 	<row id="SHINKA_STR_002">
@@ -419,8 +421,10 @@
 
 	<row id="SHINKA_STR_005">
 		<comment>レベルアップ</comment>
-		<language name="JPN" width="256">レベルアップ</language>
-		<language name="JPN_KANJI" width="256">レベルアップ</language>
+		<language name="JPN" width="256">このこは　レベルアップの　ときに
+しんかすることが　あるわね▼</language>
+		<language name="JPN_KANJI" width="256">このこは　レベルアップの　時に
+進化する事が　あるわね▼</language>
 	</row>
 
 	<row id="SHINKA_STR_006">

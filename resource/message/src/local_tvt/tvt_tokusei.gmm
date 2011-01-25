@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-20T21:39:29"/>
+	<create user="nishino" host="W00221" date="2011-01-25T12:32:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,14 +365,14 @@
 		</language>
 	</columns>
 
-	<dialog left="502" top="213" right="1207" bottom="841" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="657" top="66" right="1130" bottom="464" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+	<dialog left="327" top="308" right="849" bottom="936" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="66" right="1024" bottom="464" visible="no"/>
+		<band id="0" index="0" style="0000" width="514"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="347"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -538,8 +538,18 @@
 
 	<row id="TOKUSEI_STR_024">
 		<comment>さめはだ</comment>
-		<language name="JPN" width="256">さめはだ</language>
-		<language name="JPN_KANJI" width="256">さめはだ</language>
+		<language name="JPN" width="256">さめはだ　か…▼
+この　とくせいは
+ちょくせつ　こうげき　された　ときに▽
+あいてにも　ダメージを　あたえるんだ▼
+だげきわざの　とくいな　あいてなら
+ガンガン　つかっていくと　いい▼</language>
+		<language name="JPN_KANJI" width="256">さめはだ　か…▼
+この　とくせいは
+直接攻撃　された　時に▽
+相手にも　ダメージを　与えるんだ▼
+打撃技の　得意な　相手なら
+ガンガン　使っていくと　いい▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_025">
@@ -556,8 +566,20 @@
 
 	<row id="TOKUSEI_STR_027">
 		<comment>ほうし</comment>
-		<language name="JPN" width="256">ほうし</language>
-		<language name="JPN_KANJI" width="256">ほうし</language>
+		<language name="JPN" width="256">ほうし　か…▼
+この　とくせいは
+ちょくせつ　こうげき　されたときに▽
+あいてを　どく　まひ　ねむりの▽
+どれかに　してしまうんだ▼
+だげきわざの　とくいな　あいてなら
+ガンガン　つかっていくと　いい▼</language>
+		<language name="JPN_KANJI" width="256">ほうし　か…▼
+この　とくせいは
+直接　攻撃　された時に▽
+相手を　どく　まひ　ねむりの▽
+どれかに　してしまうんだ▼
+打撃技の　得意な　相手なら
+ガンガン　使っていくと　いい▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_028">
@@ -796,8 +818,16 @@
 
 	<row id="TOKUSEI_STR_067">
 		<comment>げきりゅう</comment>
-		<language name="JPN" width="256">げきりゅう</language>
-		<language name="JPN_KANJI" width="256">げきりゅう</language>
+		<language name="JPN" width="256">げきりゅう　か…▼
+この　とくせいは
+たいりょくが　へって　ピンチになると▽
+みずタイプの　いりょくが　あがるんだ▼
+ピンチに　なっても　あきらめるなよ▼</language>
+		<language name="JPN_KANJI" width="256">げきりゅう　か…▼
+この　とくせいは
+体力が　減って　ピンチになると▽
+みずタイプの　威力が　上がるんだ▼
+ピンチに　なっても　あきらめるなよ▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_068">
@@ -1234,8 +1264,21 @@
 
 	<row id="TOKUSEI_STR_140">
 		<comment>テレパシー</comment>
-		<language name="JPN" width="256">テレパシー</language>
-		<language name="JPN_KANJI" width="256">テレパシー</language>
+		<language name="JPN" width="256">テレパシー　か…▼
+この　とくせいは
+みかたの　こうどうを　よみとって▽
+こうげきを　よけることが　できる▼
+シングルバトルでは　いみがないが
+ダブルや　トリプルの　バトルでは▽
+じゅうような　やくわりを　もつだろう▼
+</language>
+		<language name="JPN_KANJI" width="256">テレパシー　か…▼
+この　とくせいは
+味方の　行動を　読み取って▽
+攻撃を　避ける事が　出来る▼
+シングルバトルでは　意味が無いが
+ダブルや　トリプルの　バトルでは▽
+重要な　役割を　持つだろう▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_141">

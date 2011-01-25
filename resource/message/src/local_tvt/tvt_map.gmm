@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-20T18:40:35"/>
+	<create user="nishino" host="W00221" date="2011-01-25T12:45:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -366,13 +366,13 @@
 	</columns>
 
 	<dialog left="237" top="215" right="942" bottom="843" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="657" top="66" right="1130" bottom="464" visible="no"/>
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="66" right="1024" bottom="464" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -420,8 +420,12 @@
 
 	<row id="MAP_STR_005">
 		<comment>カノコタウン</comment>
-		<language name="JPN" width="256">カノコタウン</language>
-		<language name="JPN_KANJI" width="256">カノコタウン</language>
+		<language name="JPN" width="256">カノコタウンに　いるの？▼
+なら　かえっていらっしゃいよ
+あって　はなしが　ききたいわ▼</language>
+		<language name="JPN_KANJI" width="256">カノコタウンに　いるの？▼
+なら　帰っていらっしゃいよ
+会って　話しが　聞きたいわ▼</language>
 	</row>
 
 	<row id="MAP_STR_006">
