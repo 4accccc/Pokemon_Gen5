@@ -533,7 +533,17 @@ BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val )
 {
   return( val == MATTR_POOL_01 );
 }
-
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 水たまり(映り込み無し)
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckPool02( const MAPATTR_VALUE val )
+{
+  return( val == MATTR_POOL_02 );
+}
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー チェック 浅瀬
