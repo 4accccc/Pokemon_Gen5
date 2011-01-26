@@ -107,6 +107,7 @@ struct _COMM_TVT_WORK
   CTVT_DRAW_WORK   *drawWork;
   CTVT_CALL_WORK   *callWork;
   CTVT_GAME_WORK   *gameWork; // add ichiraku
+  BOOL             isGame;    // add ichiraku ゲームに入ったかフラグ
 
   DRAW_SYS_WORK   *drawSys;
 
@@ -119,6 +120,8 @@ struct _COMM_TVT_WORK
 #pragma mark [> proto
 static void COMM_TVT_Init( COMM_TVT_WORK *work );
 static void COMM_TVT_Term( COMM_TVT_WORK *work );
+static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work );
+static void COMM_TVT_Term_ForGame2( COMM_TVT_WORK *work );
 static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work );
 static void COMM_TVT_VBlankFunc(GFL_TCB *tcb, void *wk );
 
@@ -231,6 +234,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->isReqFinish = FALSE;
   work->isReqDispWarn = FALSE;
   work->isUseSelfBUffer = FALSE;
+  work->isGame = FALSE; // add ichiraku
 
   if( DS_SYSTEM_IsRestrictPhotoExchange() == TRUE )
   {
@@ -319,8 +323,9 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
   if (OS_IsRunOnTwl() )
   {
     CTVT_GAME_TermSystem( work, work->gameWork );
-  }
+  } 
 
+  GFL_NET_LDATA_ExitSystem();
   CTVT_COMM_TermSystem( work , work->commWork );
   CTVT_CAMERA_Term( work , work->camWork );
 
@@ -329,6 +334,48 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
   COMM_TVT_TermMessage( work );
   COMM_TVT_ReleaseResource( work );
   COMM_TVT_TermGraphic( work );
+}
+// モード途中の終了時の開放
+static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work )
+{
+  u8 i;
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    GFL_BMPWIN_Delete( work->nameWin[i] );
+  }
+
+  GFL_TCB_DeleteTask( work->vBlankTcb );
+
+  APP_TASKMENU_RES_Delete( work->taskMenuRes );
+
+  if( work->timeIcon != NULL )
+  {
+    TIMEICON_Exit( work->timeIcon );
+    work->timeIcon = NULL;
+  } 
+
+  GFL_NET_LDATA_ExitSystem();
+  COMM_TVT_ReleaseResource( work );
+  COMM_TVT_TermGraphic( work );
+}
+// LC終了時の開放
+static void COMM_TVT_Term_ForGame2( COMM_TVT_WORK *work )
+{
+  
+  DRAW_SYS_DeleteSystem( work->drawSys );
+  CTVT_CALL_TermSystem( work , work->callWork );
+  CTVT_DRAW_TermSystem( work , work->drawWork );
+  CTVT_TALK_TermSystem( work , work->talkWork );
+  // add ichiraku
+  if (OS_IsRunOnTwl() )
+  {
+    CTVT_GAME_TermSystem( work, work->gameWork );
+  } 
+
+  CTVT_COMM_TermSystem( work , work->commWork );
+  CTVT_CAMERA_Term( work , work->camWork );
+
+  COMM_TVT_TermMessage( work );
 }
 
 //--------------------------------------------------------------
@@ -393,7 +440,7 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   }
   
   // ミニゲームだと以降の処理は必要ないはず
-  if( work->mode == CTM_GAME )
+  if( work->mode == CTM_GAME || work->isGame == TRUE )
   {
     return FALSE;
   }
@@ -830,6 +877,7 @@ static void COMM_TVT_TermMessage( COMM_TVT_WORK *work )
     TIMEICON_Exit( work->timeIcon );
     work->timeIcon = NULL;
   }
+  GFL_TCBL_DeleteAll( work->tcblSys );
   GFL_TCBL_Exit( work->tcblSys );
   PRINTSYS_QUE_Clear( work->printQue );
   PRINTSYS_QUE_Delete( work->printQue );
@@ -881,7 +929,11 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
   case CTM_GAME: // ミニゲーム add ichiraku
     if ( OS_IsRunOnTwl() )
     {
+      // 初期化の前にLC自体の終了処理をしておく
+      COMM_TVT_Term_ForGame1( work );
+
       CTVT_GAME_InitMode( work, work->gameWork );
+      work->isGame = TRUE;
     }
     break;
   case CTM_ERROR: //終了
@@ -1500,7 +1552,8 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
     {
       GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x180000 );
     } else {
-      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
+      //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
+      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xfa000 );
     }
   }
 
@@ -1538,7 +1591,14 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pw
 {
   COMM_TVT_WORK *work = mywk;
 
-  COMM_TVT_Term( work );
+  if( work->isGame == FALSE )
+  {
+    COMM_TVT_Term( work );
+  }
+  else
+  {
+    COMM_TVT_Term_ForGame2( work );
+  }
 
   if( pwk == NULL )
   {

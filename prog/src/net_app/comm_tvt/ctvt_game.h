@@ -19,37 +19,34 @@
 
 // 下画面
 #define CTVT_GAME_FRAME_M_3D      (GFL_BG_FRAME0_M)
-#define CTVT_GAME_FRAME_M_MSG     (GFL_BG_FRAME1_M)
-#define CTVT_GAME_FRAME_M_BG      (GFL_BG_FRAME2_M)
-#define CTVT_GAME_FRAME_M_CAMERA  (GFL_BG_FRAME3_M)
+#define CTVT_GAME_FRAME_M_BG      (GFL_BG_FRAME1_M)
+#define CTVT_GAME_FRAME_M_MSG     (GFL_BG_FRAME2_M)
+#define CTVT_GAME_FRAME_M_NONE    (GFL_BG_FRAME3_M)
 
 // 上画面
-#define CTVT_GAME_FRAME_S_MSG     (GFL_BG_FRAME0_S)
-#define CTVT_GAME_FRAME_S_NONE1   (GFL_BG_FRAME1_S)
-#define CTVT_GAME_FRAME_S_NONE2   (GFL_BG_FRAME2_S)
-#define CTVT_GAME_FRAME_S_BG      (GFL_BG_FRAME3_S)
+#define CTVT_GAME_FRAME_S_BG      (GFL_BG_FRAME0_S)
+#define CTVT_GAME_FRAME_S_PLATE   (GFL_BG_FRAME1_S)
+#define CTVT_GAME_FRAME_S_NONE1   (GFL_BG_FRAME2_S)
+#define CTVT_GAME_FRAME_S_NONE2   (GFL_BG_FRAME3_S)
 
 // パレット
 #define CTVT_GAME_PAL_BG_M_BG       (0) // 5本
-#define CTVT_GAME_PAL_BG_M_WINFRAME (5) // 1本
-#define CTVT_GAME_PAL_BG_M_FONT     (6) // 1本
+#define CTVT_GAME_PAL_BG_M_WINFRAME (14) // 1本
+#define CTVT_GAME_PAL_BG_M_FONT     (15) // 1本
 
 #define CTVT_GAME_PAL_BG_S_BG       (0) // 5本
-#define CTVT_GAME_PAL_BG_S_WINFRAME (5) // 1本
-#define CTVT_GAME_PAL_BG_S_FONT     (6) // 1本
+#define CTVT_GAME_PAL_BG_S_WINFRAME (14) // 1本
+#define CTVT_GAME_PAL_BG_S_FONT     (15) // 1本
 
-#define CTVT_GAME_PAL_OBJ_COMMON         (0) // 
-#define CTVT_GAME_PAL_OBJ_PLAY           (5) // 
+#define CTVT_GAME_PAL_OBJ_COMMON    (0)  // 
+#define CTVT_GAME_PAL_OBJ_COMM      (14) // 通信アイコン用 
+#define CTVT_GAME_PAL_OBJ_LOCALIZE  (15) // ローカライズ用
 
 // フレームを読みこんだキャラ位置
 #define CTVT_GAME_BMPWIN_CGX_MAIN (1)
 #define CTVT_GAME_BMPWIN_CGX (1)
 
-#define CTVT_GAME_MEMBER_NUM    (4)     // ミニゲーム参加人数
-
 // ミニゲーム用 タイミングコマンド
-#define CTVT_COMM_GAME_CAMERA_INIT_SYNC (20)    // カメラ開始同期
-#define CTVT_COMM_GAME_CAMERA_END_SYNC  (21)    // カメラ終了同期
 #define CTVT_COMM_GAME_TITLE_SYNC       (22)    // タイトル同期
 #define CTVT_COMM_GAME_BEFORE_SYNC      (23)    // ゲーム開始同期
 #define CTVT_COMM_GAME_SCORE_SYNC       (24)    // スコア同期
@@ -102,7 +99,7 @@ struct _CTVT_GAME_SEND_DATA{
 ///	送信データ ゲームスコア
 //=====================================
 struct _CTVT_GAME_SEND_SCORE{
-  s32 score[ CTVT_GAME_MEMBER_NUM ];
+  s32 score[ CTVT_MEMBER_NUM ];
 };
 
 
@@ -115,17 +112,6 @@ extern void CTVT_GAME_TermSystem( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork
 extern const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 extern void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 extern void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラキャプチャ中フラグ取得
- *
- *	@param	CTVT_GAME_WORK  *gameWork 
- *
- *	@return TRUE:カメラキャプチャ中
- */
-//-----------------------------------------------------------------------------
-extern BOOL CTVT_GAME_GetIsCamCapture( CTVT_GAME_WORK *gameWork );
 
 //----------------------------------------------------------------------------
 /**

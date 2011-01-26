@@ -94,13 +94,14 @@
 #define CTVT_CALL_TIME (20*60)
 #define CTVT_WIFI_WIFITCNT (5*60)
 
+#define CTVT_CHARACTER_NUM  (4)     // カメラ撮影 DS時に選ぶキャラクター数のMAX
 
 //------------------------------------------------------------------
 //  処理時間AVERAGE ON・OFF
 //------------------------------------------------------------------
 #ifdef PM_DEBUG
 
-//#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 #endif
 

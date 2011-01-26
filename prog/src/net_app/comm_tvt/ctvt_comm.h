@@ -114,6 +114,8 @@ extern const void CTVT_COMM_SendFlgReq_Double( COMM_TVT_WORK *work , CTVT_COMM_W
 extern const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value );
 // add ichiraku
 extern const BOOL CTVT_COMM_SendFlg_Repeat( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value );
+// add ichiraku
+extern const BOOL CTVT_COMM_SendFlg_CharID( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u8 *char_id );
 extern const BOOL CTVT_COMM_SendWave( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , void* sendData );
 
 extern void CTVT_COMM_SendTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 number );
@@ -121,6 +123,9 @@ extern const BOOL CTVT_COMM_CheckTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_
 
 extern const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern const u8 CTVT_COMM_GetTalkMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+// add ichiraku
+// カメラ撮影時に使うキャラクターのID取得
+extern const u8 CTVT_COMM_GetCharId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
 extern const BOOL CTVT_COMM_GetCommWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern const BOOL CTVT_COMM_ReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
@@ -147,7 +152,6 @@ extern const BOOL CTVT_COMM_CheckCallingAddress( CTVT_COMM_BEACON *beacon , u8 *
 
 // add ichiraku
 // ゲームデータ送信リクエスト
-
 // フラグ送信リクエスト
 extern void CTVT_COMM_SendGameReq_Flg( COMM_TVT_WORK *work, CTVT_COMM_WORK *commWork, const u16 flg );
 // ゲームデータ送信リクエスト

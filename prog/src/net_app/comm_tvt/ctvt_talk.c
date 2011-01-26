@@ -699,11 +699,41 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       // 子が全員参加したかチェック
       if( CTVT_TALK_IsAcceptNum( work, talkWork ) )
       {
-        // 開始要求を送信し、確認待ちへ移行
-        const BOOL ret = CTVT_COMM_SendFlg( work, commWork, CCFT_START_GAME, 0 );
-        if( ret == TRUE )
+        // ここで、カメラ撮影時に使うキャラクターIDを送信する
+        u8  char_id[CTVT_MEMBER_NUM];
         {
-          talkWork->state = CTS_START_GAME;
+          u8  i;
+          u8  tbl[CTVT_MEMBER_NUM];
+
+          // 0～ 順番に入れる
+          for( i=0; i<CTVT_MEMBER_NUM; i++ ){ tbl[i] = i; }
+
+          // 順番入れ替えを何回か行う
+          for( i=0; i<10; i++ )
+          {
+            u8  tmp_rnd1 = GFL_STD_MtRand( CTVT_CHARACTER_NUM );
+            u8  tmp_rnd2 = GFL_STD_MtRand( CTVT_CHARACTER_NUM );
+            u8  tmp;
+
+            tmp = tbl[ tmp_rnd1 ];
+            tbl[ tmp_rnd1 ] = tbl[ tmp_rnd2 ];
+            tbl[ tmp_rnd2 ] = tmp;
+          }
+          // 入れ替えたものを設定
+          for( i=0; i<CTVT_MEMBER_NUM; i++ )
+          {
+            char_id[i] = tbl[i];
+            ICHI_Printf("%d: %d\n", i, char_id[i]);
+          }
+        }
+
+        // 開始要求を送信し、確認待ちへ移行
+        {
+          const BOOL ret = CTVT_COMM_SendFlg_CharID( work, commWork, CCFT_START_GAME, char_id );
+          if( ret == TRUE )
+          {
+            talkWork->state = CTS_START_GAME;
+          }
         }
       }
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00241" date="2011-01-17T12:06:54"/>
+	<create user="ichiraku_katsuhiko" host="W00241" date="2011-01-21T18:07:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -641,9 +641,9 @@ Ariizumi 100506</comment>
 	<row id="COMM_TVT_GAME_06">
 		<comment>写真撮影画面</comment>
 		<language name="JPN">ゲームに　しようする　しゃしんを
-[2:00:１桁:0]まい　さつえいします</language>
+3まい　さつえいします</language>
 		<language name="JPN_KANJI">ゲームに　使用する　写真を
-[2:00:１桁:0]枚　撮影します</language>
+3枚　撮影します</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_07">
@@ -656,26 +656,20 @@ Ariizumi 100506</comment>
 
 	<row id="COMM_TVT_GAME_08">
 		<comment>写真撮影画面</comment>
-		<language name="JPN">すました　おかおで……
-[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
-		<language name="JPN_KANJI">すました　お顔で……
-[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
+		<language name="JPN">すました　おかおで……</language>
+		<language name="JPN_KANJI">すました　お顔で……</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_09">
 		<comment>写真撮影画面</comment>
-		<language name="JPN">えがおで　スマイル……
-[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
-		<language name="JPN_KANJI">笑顔で　スマイル……
-[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
+		<language name="JPN">えがおで　スマイル……</language>
+		<language name="JPN_KANJI">笑顔で　スマイル……</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_10">
 		<comment>写真撮影画面</comment>
-		<language name="JPN">びっくり　おどろきがおで……
-[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
-		<language name="JPN_KANJI">びっくり　驚き顔で……
-[2:00:１桁:0]　[2:00:１桁:1]　[2:00:１桁:2]　[2:00:１桁:3]</language>
+		<language name="JPN">びっくり　おどろきがおで……</language>
+		<language name="JPN_KANJI">びっくり　驚き顔で……</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_11">

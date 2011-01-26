@@ -181,6 +181,7 @@ struct _CTVT_COMM_WORK
   BOOL  reqSendGameData;    // 送信リクエスト
   BOOL  reqSendGameScore;   // 送信リクエスト
 
+  u8    char_id[ CTVT_MEMBER_NUM ]; // 人数分のキャラクターID
   
   //親機専用処理
   BOOL updateReqTalk;
@@ -413,7 +414,7 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   u8 i;
   
-  GFL_NET_LDATA_ExitSystem();
+  //GFL_NET_LDATA_ExitSystem();
   GFL_HEAP_FreeMemory( commWork->decodeWaveBuf );
   GFL_HEAP_FreeMemory( commWork->postWaveBuf );
   GFL_NET_Align32Free( commWork->encBuffer );
@@ -428,7 +429,6 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     }
   }
   GFL_HEAP_FreeMemory( commWork );
-  
 }
 
 //--------------------------------------------------------------
@@ -1290,7 +1290,11 @@ const void CTVT_COMM_SendFlgReq_Double( COMM_TVT_WORK *work , CTVT_COMM_WORK *co
 
 typedef struct
 {
-  u32 value;
+  // 共用体に変更 ichiraku
+  union{
+    u32 value;
+    u8  char_id[CTVT_MEMBER_NUM];   // DSのカメラ撮影に使用
+  };
   u8 flg;
 }CTVT_COMM_FLG_PACKET;
 //--------------------------------------------------------------
@@ -1333,6 +1337,27 @@ const BOOL CTVT_COMM_SendFlg_Repeat( COMM_TVT_WORK *work , CTVT_COMM_WORK *commW
     const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
       CCST_SEND_FLG , sizeof( CTVT_COMM_FLG_PACKET ) , 
       (void*)&pkt , TRUE , TRUE , FALSE );
+    
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send Flg failue!\n");
+    }
+    return ret;
+  }
+  
+}
+// フラグと一緒に人数分のキャラクターIDも送信する
+const BOOL CTVT_COMM_SendFlg_CharID( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u8 *char_id )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  CTVT_COMM_FLG_PACKET pkt;
+  pkt.flg = flg;
+  GFL_STD_MemCopy( char_id, pkt.char_id, sizeof(u8)*CTVT_MEMBER_NUM);
+  
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+      CCST_SEND_FLG , sizeof( CTVT_COMM_FLG_PACKET ) , 
+      (void*)&pkt , TRUE , FALSE , FALSE );
     
     if( ret == FALSE )
     {
@@ -1494,6 +1519,11 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
       CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
       // 開始フラグを立てる
       CTVT_TALK_SetIsStartGame( talkWork, TRUE );
+    }
+    // このフラグのみ、親からはデータも送られてきている
+    if( netID == 0 )
+    {
+      GFL_STD_MemCopy( pkt->char_id, commWork->char_id, sizeof(u8)*CTVT_MEMBER_NUM );
     }
 
     break;
@@ -2232,6 +2262,12 @@ const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork 
 const u8 CTVT_COMM_GetTalkMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   return commWork->talkMember;
+}
+// add ichiraku
+// カメラ撮影時に使うキャラクターのID取得
+const u8 CTVT_COMM_GetCharId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )
+{
+  return commWork->char_id[ idx ];
 }
 const BOOL CTVT_COMM_GetCommWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
