@@ -826,12 +826,12 @@
 	</row>
 
 	<row id="MDL_EXP_MISSION_008">
-		<language name="JPN" width="216">くらい　ほらあなで
-てきせつに　フラッシュを　つかい
-やみをてらした　あかしの　メダル。</language>
-		<language name="JPN_KANJI" width="216">暗い　洞穴で
-適切に　フラッシュを　使い
-闇を照らした　証しの　メダル。</language>
+		<language name="JPN" width="216">フラッシュを　つかい
+くらい　ほらあなを　すみからすみまで
+あかるくてらした　あかしの　メダル。</language>
+		<language name="JPN_KANJI" width="216">フラッシュを　使い
+暗い　洞穴を　すみからすみまで
+明るく照らした　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_MISSION_009">
