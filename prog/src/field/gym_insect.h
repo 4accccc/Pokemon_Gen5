@@ -14,3 +14,5 @@ extern void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork);
 
 extern GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys);
 
+extern void GYM_INSECT_CocconOpen( FIELDMAP_WORK* fieldWork, u8 coccon_idx );
+

@@ -7,6 +7,7 @@
  */
 //======================================================================
 
+
 #include "fieldmap.h"
 #include "gym_insect_sv.h"
 #include "gym_insect.h"
@@ -17,20 +18,40 @@
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 #include "map_attr.h"
 #include "arc/fieldmap/gym_insect.naix"
+#include "arc/fieldmap/zone_id.h"
+#include "sound/pm_sndsys.h"
+
 #include "system/main.h"    //for HEAPID_FIELDMAP
 #include "system/ica_anime.h"
-#include "script.h"     //for SCRIPT_CallScript
-#include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_～
 
+#include "script.h"     //for SCRIPT_CallScript
+#include "script_local.h"
+#include "script_def.h"
+#include "scrcmd.h"
+#include "scrcmd_work.h"
+
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
+#include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_～
 #include "../../../resource/fldmapdata/gimmick/gym_insect/gym_insect_local_def.h"
 
-#include "sound/pm_sndsys.h"
 #include "gym_insect_se_def.h"
 
 #include "event_fldmmdl_control.h"  //for EVENT_ObjAnime
 
-#define GYM_INSECT_UNIT_IDX (0)
 #define GYM_INSECT_TMP_ASSIGN_ID  (1)
+
+enum{
+  OBJ_COCCON_1C,
+  OBJ_COCCON_3B,
+  OBJ_COCCON_MAX,
+};
+
+enum{
+  MAP_NORMAL,
+  MAP_LEADER,
+};
 
 //フロア矩形
 typedef struct FLOOR_RECT_tag
@@ -52,6 +73,7 @@ typedef struct GATE_PARAM_tag{
   u8  arc_id;
   u8  in_dir;
   u8  out_dir;
+  u8  reverse;
   POINT point;
 }GATE_PARAM;
 
@@ -71,17 +93,21 @@ typedef struct GYM_INSECT_TMP_tag
   HEAPID  heapID;
   HEAPID  heapLowID;
 
+  u8  coccon_open[OBJ_COCCON_MAX];
+  u8  map_id;
 
 }GYM_INSECT_TMP;
 
 typedef struct EVWORK_GATE_IN_tag{
   GYM_INSECT_TMP* git;
-  u8  gate_id;
   const GATE_PARAM* gate_prm;
 
   ICA_ANIME* ica_anm;
   u16 ica_anm_frm_idx;
   u16 ica_anm_frm_max;
+  s8  ica_anm_frm_dif;
+  u8  gate_id;
+  u8  se_player;
 }EVWORK_GATE_IN;
 
 #include "gym_insect.cdat"
@@ -94,6 +120,9 @@ static GMEVENT* event_GateInCreate( GYM_INSECT_TMP* wk, u8 gate_id );
 
 ///サブルーチン
 static void sub_SetExHeight( FIELDMAP_WORK* fieldWork );
+static void sub_ExpObjSet( GYM_INSECT_TMP* wk );
+static void sub_ExpObjDell( GYM_INSECT_TMP* wk );
+static void sub_ExpObjMain( GYM_INSECT_TMP* wk );
 
 #ifdef PM_DEBUG
 static void deb_Move( GYM_INSECT_TMP* wk, FIELDMAP_WORK* fieldWork );
@@ -129,8 +158,19 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   wk->p_mmdl = FIELD_PLAYER_GetMMdl( wk->f_player );
   wk->camera = FIELDMAP_GetFieldCamera( fieldWork );
 
+  wk->map_id = (FIELDMAP_GetZoneID( fieldWork ) == ZONE_ID_C03GYM0201);
+  {
+    int i;
+    EVENTWORK* evwork = GAMEDATA_GetEventWork( wk->gdata );
+
+    for(i = 0;i < OBJ_COCCON_MAX;i++ ){
+      wk->coccon_open[i] = EVENTWORK_CheckEventFlag( evwork, FE_C03GYM0101_COCCON_01+i );
+    }
+  }
+
   //拡張高さセット
   sub_SetExHeight( fieldWork );
+  sub_ExpObjSet( wk );
 }
 
 //--------------------------------------------------------------
@@ -144,6 +184,7 @@ void GYM_INSECT_End(FIELDMAP_WORK *fieldWork)
 {
   GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
 
+  sub_ExpObjDell( wk );
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
 }
@@ -158,6 +199,8 @@ void GYM_INSECT_End(FIELDMAP_WORK *fieldWork)
 void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
 {
   GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+
+  sub_ExpObjMain( wk );
 
 #ifdef PM_DEBUG
   deb_Move( wk, fieldWork );
@@ -205,6 +248,29 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
   return NULL;  //ゲートが見つからない
 }
 
+//===============================================================
+///スクリプトコマンド
+//===============================================================
+//--------------------------------------------------------------
+/**
+ * @brief   繭オープンアニメコール 
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+void GYM_INSECT_CocconOpen( FIELDMAP_WORK* fieldWork, u8 coccon_idx )
+{
+  GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+  u16 idx = OBJ_COCCON_1C+coccon_idx;
+
+  {
+    int i;
+    for(i = 0;i < OBJ_COCCON_ANM_MAX;i++){
+      EXP_OBJ_ANM_CNT_PTR anm = FLD_EXP_OBJ_GetAnmCnt( wk->exp_obj, GYM_INSECT_UNIT_IDX, idx, i);
+      FLD_EXP_OBJ_ChgAnmStopFlg( anm, FALSE ); //アニメ再生開始
+    }
+  }
+}
 
 //===============================================================
 ///ゲートインイベント
@@ -267,15 +333,44 @@ static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
   return GMEVENT_RES_CONTINUE;
 }
 
+static u16 gatein_SePitchCalc( EVWORK_GATE_IN* evwk )
+{
+  u16 next_frm;
+  fx32 len;
+  VecFx32 v1,v2,v3;
+  next_frm = evwk->ica_anm_frm_idx+evwk->ica_anm_frm_dif;
+  if( next_frm < 0){
+    next_frm = 0;
+  }else if( (evwk->ica_anm_frm_max-1) > next_frm ){
+    next_frm = evwk->ica_anm_frm_max-1;
+  }
+  ICA_ANIME_GetTranslateAt( evwk->ica_anm, &v1, evwk->ica_anm_frm_idx );
+  ICA_ANIME_GetTranslateAt( evwk->ica_anm, &v2, next_frm  );
+
+  VEC_Subtract( &v2, &v1, &v3);
+  len = VEC_Mag(&v3);
+
+  return 0;
+}
+
 static void gatein_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
 {
   evwk->ica_anm = ICA_ANIME_CreateAlloc( wk->heapLowID, ARCID_GYM_INSECT, evwk->gate_prm->arc_id );
   GF_ASSERT( evwk->ica_anm != NULL);
   evwk->ica_anm_frm_max = ICA_ANIME_GetMaxFrame( evwk->ica_anm );
-  evwk->ica_anm_frm_idx = 0;
+  if( evwk->gate_prm->reverse ){
+    evwk->ica_anm_frm_idx = evwk->ica_anm_frm_max-1;
+    evwk->ica_anm_frm_dif = -1;
+  }else{
+    evwk->ica_anm_frm_idx = 0;
+    evwk->ica_anm_frm_dif = 1;
+  }
+  PMSND_PlaySE(GYM_INSECT_SE_DRIVE);
+  evwk->se_player = PMSND_GetSE_DefaultPlayerID( GYM_INSECT_SE_DRIVE );
 }
 static void gatein_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
 {
+  PMSND_StopSE();
   ICA_ANIME_Delete( evwk->ica_anm );
 }
 static BOOL gatein_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
@@ -290,8 +385,15 @@ static BOOL gatein_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
     FIELD_PLAYER_SetPos( wk->f_player, &vec );
 //    OS_Printf("%f,%f,%f\n", FX_FX32_TO_F32(vec.x), FX_FX32_TO_F32(vec.y), FX_FX32_TO_F32(vec.z));
   }
-  if( ++evwk->ica_anm_frm_idx >= evwk->ica_anm_frm_max ){
-    return TRUE;
+  evwk->ica_anm_frm_idx += evwk->ica_anm_frm_dif;
+  if( evwk->ica_anm_frm_dif < 0 ){
+    if( evwk->ica_anm_frm_idx <= 0 ){
+      return TRUE;
+    }
+  }else{
+    if( evwk->ica_anm_frm_idx >= evwk->ica_anm_frm_max ){
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -319,7 +421,61 @@ static void sub_SetExHeight( FIELDMAP_WORK* fieldWork )
   }
 }
 
+//-----------------------------------------------------
+/*
+ *  @brief  拡張配置モデルデータセット
+ */
+//-----------------------------------------------------
+static void sub_ExpObjSet( GYM_INSECT_TMP* wk )
+{
+  int i,j;
 
+  if( wk->map_id != MAP_NORMAL ){
+    return;
+  }
+  //必要なリソースの用意
+  FLD_EXP_OBJ_AddUnitByHandle( wk->exp_obj, &g3Dutil_Setup, GYM_INSECT_UNIT_IDX);
+
+  for(i = 0;i < OBJ_COCCON_MAX;i++){
+    u8 idx = OBJ_COCCON_1C+i;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( wk->exp_obj, GYM_INSECT_UNIT_IDX, idx);
+
+    //カリングする
+    FLD_EXP_OBJ_SetCulling( wk->exp_obj, GYM_INSECT_UNIT_IDX, idx, TRUE);
+
+    //座標セット
+    status->trans.x = FX32_CONST( DATA_ObjCocconPosTbl[i].x*16 )+FX32_CONST(8);
+    status->trans.y = FX32_CONST( DATA_ObjCocconPosTbl[i].y*16 );
+    status->trans.z = FX32_CONST( DATA_ObjCocconPosTbl[i].z*16 )+FX32_CONST(8);
+    
+    for(j = 0;j < OBJ_COCCON_ANM_MAX;j++){
+      EXP_OBJ_ANM_CNT_PTR anm = FLD_EXP_OBJ_GetAnmCnt( wk->exp_obj, GYM_INSECT_UNIT_IDX, idx, j);
+      FLD_EXP_OBJ_ValidCntAnm( wk->exp_obj,GYM_INSECT_UNIT_IDX,idx,j,TRUE);
+
+      FLD_EXP_OBJ_ChgAnmLoopFlg( anm, FALSE );  //1回再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( anm, TRUE ); //アニメ止めとく
+
+      //フラグで再生状態を変更
+      FLD_EXP_OBJ_SetObjAnmFrm( wk->exp_obj, GYM_INSECT_UNIT_IDX, idx, j,
+        FLD_EXP_OBJ_GetAnimeLastFrame( anm )*wk->coccon_open[i] );
+    }
+  }
+}
+static void sub_ExpObjDell( GYM_INSECT_TMP* wk )
+{
+  if( wk->map_id != MAP_NORMAL ){
+    return;
+  }
+  FLD_EXP_OBJ_DelUnit( wk->exp_obj, GYM_INSECT_UNIT_IDX );
+}
+static void sub_ExpObjMain( GYM_INSECT_TMP* wk )
+{
+  if( wk->map_id != MAP_NORMAL ){
+    return;
+  }
+  //アニメーション再生
+  FLD_EXP_OBJ_PlayAnime( wk->exp_obj );
+}
 
 //===============================================================
 ///デバッグルーチン

@@ -30,8 +30,7 @@ extern VMCMD_RESULT EvCmdGymElec_SetEffect( VMHANDLE *core, void *wk );
 //extern VMCMD_RESULT EvCmdGymAnti_( VMHANDLE *core, void *wk );
 
 //’Ž
-//extern VMCMD_RESULT EvCmdGymInsect_Init( VMHANDLE *core, void *wk );
-//extern VMCMD_RESULT EvCmdGymInsect_( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymInsect_CocconOpen( VMHANDLE * core, void *wk );
 
 //’n–Ê
 //extern VMCMD_RESULT EvCmdGymGround_( VMHANDLE *core, void *wk );

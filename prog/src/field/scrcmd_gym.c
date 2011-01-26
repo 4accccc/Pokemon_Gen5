@@ -204,25 +204,24 @@ VMCMD_RESULT EvCmdGymAnti_( VMHANDLE *core, void *wk )
 #endif
 
 //--虫--
-#if 0
 //--------------------------------------------------------------
 /**
- * 虫ジムギミック　
+ * @brief   虫ジムギミック 繭オープンアニメコール 
  * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
+ * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymInsect_( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymInsect_CocconOpen( VMHANDLE * core, void *wk )
 {
-  u16 *sw_idx;
-  GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  return VMCMD_RESULT_SUSPEND;
+  u16 idx = SCRCMD_GetVMWorkValue(core,work);
+  GYM_INSECT_CocconOpen( fieldWork, idx );
+
+  return VMCMD_RESULT_CONTINUE;
 }
-#endif
 
 //--地面--
 #if 0

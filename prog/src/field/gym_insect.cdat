@@ -85,32 +85,160 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 //ゲート座標パラメータ
 ///=================================================================
 #define GATE_ID_1A_2A  (0)
-#define GATE_ID_2B_3A  (1)
-#define GATE_ID_3D_4A  (2)
+#define GATE_ID_1A_2B  (1)
+#define GATE_ID_2B_3A  (2)
+#define GATE_ID_3D_4A  (3)
 
+//0
 #define GATE_1A_2A_PX (16)
 #define GATE_1A_2A_PY (0)
 #define GATE_1A_2A_PZ (13)
 #define GATE_1A_2A_IN_DIR (DIR_UP)
 #define GATE_1A_2A_OUT_DIR (DIR_DOWN)
-
-#define GATE_2B_3A_PX (3)
-#define GATE_2B_3A_PY (10)
-#define GATE_2B_3A_PZ (5)
-#define GATE_2B_3A_IN_DIR (DIR_UP)
-#define GATE_2B_3A_OUT_DIR (DIR_DOWN)
-
+//1
+#define GATE_2A_1A_PX (16)
+#define GATE_2A_1A_PY (10)
+#define GATE_2A_1A_PZ (13)
+#define GATE_2A_1A_IN_DIR (DIR_UP)
+#define GATE_2A_1A_OUT_DIR (DIR_DOWN)
+//2
+#define GATE_1A_2B_PX (GATE_1A_2A_PX+2)
+#define GATE_1A_2B_PY (GATE_1A_2A_PY)
+#define GATE_1A_2B_PZ (GATE_1A_2A_PZ-2)
+#define GATE_1A_2B_IN_DIR (DIR_LEFT)
+#define GATE_1A_2B_OUT_DIR (DIR_DOWN)
+//3
+#define GATE_2B_1A_PX (3)
+#define GATE_2B_1A_PY (10)
+#define GATE_2B_1A_PZ (5)
+#define GATE_2B_1A_IN_DIR (DIR_UP)
+#define GATE_2B_1A_OUT_DIR (DIR_RIGHT)
+//4
+#define GATE_2C_3A_PX (28)
+#define GATE_2C_3A_PY (10)
+#define GATE_2C_3A_PZ (5)
+#define GATE_2C_3A_IN_DIR (DIR_UP)
+#define GATE_2C_3A_OUT_DIR (DIR_DOWN)
+//5
+#define GATE_3A_2C_PX (20)
+#define GATE_3A_2C_PY (20)
+#define GATE_3A_2C_PZ (7)
+#define GATE_3A_2C_IN_DIR (DIR_UP)
+#define GATE_3A_2C_OUT_DIR (DIR_DOWN)
+//6
+#define GATE_3B_1B_PX (25)
+#define GATE_3B_1B_PY (20)
+#define GATE_3B_1B_PZ (17)
+#define GATE_3B_1B_IN_DIR (DIR_UP)
+#define GATE_3B_1B_OUT_DIR (DIR_DOWN)
+//7
+#define GATE_1B_3B_PX (26)
+#define GATE_1B_3B_PY (0)
+#define GATE_1B_3B_PZ (5)
+#define GATE_1B_3B_IN_DIR (DIR_UP)
+#define GATE_1B_3B_OUT_DIR (DIR_DOWN)
+//8
+#define GATE_1B_3C_PX (GATE_1B_3B_PX+2)
+#define GATE_1B_3C_PY (GATE_1B_3B_PY)
+#define GATE_1B_3C_PZ (GATE_1B_3B_PZ-2)
+#define GATE_1B_3C_IN_DIR (DIR_LEFT)
+#define GATE_1B_3C_OUT_DIR (DIR_DOWN)
+//9
+#define GATE_3C_1B_PX (11)
+#define GATE_3C_1B_PY (0)
+#define GATE_3C_1B_PZ (5)
+#define GATE_3C_1B_IN_DIR (DIR_UP)
+#define GATE_3C_1B_OUT_DIR (DIR_LEFT)
+//10
 #define GATE_3D_4A_PX (4)
 #define GATE_3D_4A_PY (20)
 #define GATE_3D_4A_PZ (16)
 #define GATE_3D_4A_IN_DIR (DIR_UP)
 #define GATE_3D_4A_OUT_DIR (DIR_UP)
+//11
+#define GATE_3D_2B_PX (GATE_3D_4A_PX+2)
+#define GATE_3D_2B_PY (GATE_3D_4A_PY)
+#define GATE_3D_2B_PZ (GATE_3D_4A_PZ-2)
+#define GATE_3D_2B_IN_DIR (DIR_LEFT)
+#define GATE_3D_2B_OUT_DIR (DIR_RIGHT)
 
 static const GATE_PARAM DATA_GateParam[] = {
-  { NARC_gym_insect_null_1a_2a_bin, GATE_1A_2A_IN_DIR, GATE_1A_2A_OUT_DIR, { GATE_1A_2A_PX, GATE_1A_2A_PY, GATE_1A_2A_PZ } },
-  { NARC_gym_insect_null_2b_3a_bin, GATE_2B_3A_IN_DIR, GATE_2B_3A_OUT_DIR, { GATE_2B_3A_PX, GATE_2B_3A_PY, GATE_2B_3A_PZ } },
-  { NARC_gym_insect_null_3d_4a_bin, GATE_3D_4A_IN_DIR, GATE_3D_4A_OUT_DIR, { GATE_3D_4A_PX, GATE_3D_4A_PY, GATE_3D_4A_PZ } },
+  { NARC_gym_insect_null_1a_2a_bin, GATE_1A_2A_IN_DIR, GATE_1A_2A_OUT_DIR, FALSE, { GATE_1A_2A_PX, GATE_1A_2A_PY, GATE_1A_2A_PZ } },
+  { NARC_gym_insect_null_1a_2a_bin, GATE_2A_1A_IN_DIR, GATE_2A_1A_OUT_DIR, TRUE,  { GATE_2A_1A_PX, GATE_2A_1A_PY, GATE_2A_1A_PZ } },
+  
+  { NARC_gym_insect_null_1a_2b_bin, GATE_1A_2B_IN_DIR, GATE_1A_2B_OUT_DIR, FALSE, { GATE_1A_2B_PX, GATE_1A_2B_PY, GATE_1A_2B_PZ } },
+  { NARC_gym_insect_null_1a_2b_bin, GATE_2B_1A_IN_DIR, GATE_2B_1A_OUT_DIR, TRUE,  { GATE_2B_1A_PX, GATE_2B_1A_PY, GATE_2B_1A_PZ } },
+  
+  { NARC_gym_insect_null_2c_3a_bin, GATE_2C_3A_IN_DIR, GATE_2C_3A_OUT_DIR, FALSE, { GATE_2C_3A_PX, GATE_2C_3A_PY, GATE_2C_3A_PZ } },
+  { NARC_gym_insect_null_2c_3a_bin, GATE_3A_2C_IN_DIR, GATE_3A_2C_OUT_DIR, TRUE,  { GATE_3A_2C_PX, GATE_3A_2C_PY, GATE_3A_2C_PZ } },
+
+  { NARC_gym_insect_null_1b_3b_bin, GATE_3B_1B_IN_DIR, GATE_3B_1B_OUT_DIR, TRUE,  { GATE_3B_1B_PX, GATE_3B_1B_PY, GATE_3B_1B_PZ } },
+  { NARC_gym_insect_null_1b_3b_bin, GATE_1B_3B_IN_DIR, GATE_1B_3B_OUT_DIR, FALSE, { GATE_1B_3B_PX, GATE_1B_3B_PY, GATE_1B_3B_PZ } },
+  
+  { NARC_gym_insect_null_1b_3c_bin, GATE_1B_3C_IN_DIR, GATE_1B_3C_OUT_DIR, FALSE, { GATE_1B_3C_PX, GATE_1B_3C_PY, GATE_1B_3C_PZ } },
+  { NARC_gym_insect_null_1b_3c_bin, GATE_3C_1B_IN_DIR, GATE_3C_1B_OUT_DIR, TRUE,  { GATE_3C_1B_PX, GATE_3C_1B_PY, GATE_3C_1B_PZ } },
+
+  { NARC_gym_insect_null_3d_4a_bin, GATE_3D_4A_IN_DIR, GATE_3D_4A_OUT_DIR, FALSE, { GATE_3D_4A_PX, GATE_3D_4A_PY, GATE_3D_4A_PZ } },
+
+  { NARC_gym_insect_null_2b_3d_bin, GATE_3D_2B_IN_DIR, GATE_3D_2B_OUT_DIR, FALSE, { GATE_3D_2B_PX, GATE_3D_2B_PY, GATE_3D_2B_PZ } },
 };
 
 #define GATE_PARAM_NUM  (NELEMS(DATA_GateParam))
+
+///=================================================================
+//3Dリソースパラメータ
+///=================================================================
+#define GYM_INSECT_UNIT_IDX (0)
+
+#define OBJ_COCCON_1C_GX (8)
+#define OBJ_COCCON_1C_GY (0)
+#define OBJ_COCCON_1C_GZ (4)
+#define OBJ_COCCON_3B_GX (GATE_3B_1B_PX)
+#define OBJ_COCCON_3B_GY (GATE_3B_1B_PY)
+#define OBJ_COCCON_3B_GZ (GATE_3B_1B_PZ-2)
+
+static const POINT DATA_ObjCocconPosTbl[] = {
+ { OBJ_COCCON_1C_GX, OBJ_COCCON_1C_GY, OBJ_COCCON_1C_GZ },
+ { OBJ_COCCON_3B_GX, OBJ_COCCON_3B_GY, OBJ_COCCON_3B_GZ },
+};
+
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {  
+	{ ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネル　
+  { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbca, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
+  { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbma, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
+  { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbta, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
+};
+static const GFL_G3D_UTIL_ANM g3Dutil_CocconAnmTbl[] = {
+	{ 1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+	{ 2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+	{ 3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+#define OBJ_COCCON_ANM_MAX  (NELEMS(g3Dutil_CocconAnmTbl))
+
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+  //繭出口パネル1
+  {
+		0, 	//モデルリソースID
+		0, //モデルデータID(リソース内部INDEX)
+		0, 	//テクスチャリソースID
+		g3Dutil_CocconAnmTbl,			//アニメテーブル(複数指定のため)
+		OBJ_COCCON_ANM_MAX,	//アニメリソース数
+  },
+  //繭出口パネル2
+  {
+		0, 	//モデルリソースID
+		0, //モデルデータID(リソース内部INDEX)
+		0, 	//テクスチャリソースID
+		g3Dutil_CocconAnmTbl,			//アニメテーブル(複数指定のため)
+		OBJ_COCCON_ANM_MAX,	//アニメリソース数
+  },
+};
+static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
+  g3Dutil_resTbl,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl),		//リソース数
+	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl),		//オブジェクト数
+};
 

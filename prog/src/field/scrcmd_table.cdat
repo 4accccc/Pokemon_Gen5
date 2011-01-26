@@ -934,6 +934,17 @@
   //人物状態
   DEF_CMD( EvCmdPersonState_SetState, EV_SEQ_PERSON_STATE_SET )
   DEF_CMD( EvCmdPersonState_SetLTvtCall, EV_SEQ_PERSON_TVT_CALL_SET )
+ 
+  //虫ジム
+  DEF_CMD( EvCmdGymInsect_CocconOpen, EV_SEQ_GYM_INSECT_COCCON_OPEN)
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   END_CMD
   //スクリプトコマンドテーブル終了

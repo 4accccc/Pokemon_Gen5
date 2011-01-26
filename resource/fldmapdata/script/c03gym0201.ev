@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03gym0201.h"
-  //.include  "c03gym0201.h"
+  .include  "c03gym0201.h"
+  .include  "c03gym0101_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +20,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03gym0201
+_EVENT_DATA   pos_c03gym0201_exit_4a_3d
+_EVENT_DATA   pos_c03gym0201_exit_4b_1c
 _EVENT_DATA_END
 
 
@@ -30,9 +32,24 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  出入り口POS                                               */
 /**************************************************************/
-ev_c03gym0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START pos_c03gym0201_exit_4a_3d
+  //3Fに移動
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  
+  //スクリプトリザーブ
+  _RESERVE_SCRIPT( SCRID_RESERVE_C03GYM0101_GATEOUT_3D )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 4, 20, 13, DIR_DOWN )
+EVENT_END
+
+EVENT_START pos_c03gym0201_exit_4b_1c
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  //1Fに移動
+  _RESERVE_SCRIPT( SCRID_RESERVE_C03GYM0101_GATEOUT_1C )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 8, 0, 4, DIR_DOWN )
+EVENT_END
+
 

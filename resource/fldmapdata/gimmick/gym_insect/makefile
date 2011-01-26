@@ -79,15 +79,23 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #.SUFFIXES:	.nsbmd .imd
 #imdデータからの生成ルール
-%.nsbmd:	data/cannon/%.imd
+%.nsbmd:	data/anm/%.imd
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbca:	data/cannon/%.ica
+%.nsbca:	data/anm/%.ica
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbma:	data/cannon/%.ima
+%.nsbma:	data/anm/%.ima
+#	@echo $<をコンバート
+	@g3dcvtr $<
+
+%.nsbtp:	data/anm/%.itp
+#	@echo $<をコンバート
+	@g3dcvtr $<
+
+%.nsbta:	data/anm/%.ita
 #	@echo $<をコンバート
 	@g3dcvtr $<
 

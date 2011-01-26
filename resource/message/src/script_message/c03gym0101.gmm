@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-23T11:56:00"/>
+	<create user="iwasawa" host="W00157" date="2011-01-24T18:45:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="177"/>
+		<id position="0" width="206"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,147 +292,33 @@
 	</lock>
 
 
-	<row id="msg_c03gym0101_leader_01">
-		<comment>♂
-・戦闘前メッセージ</comment>
-		<attribute name="キャラ指定">LEADER3
-アーティ</attribute>
-		<language name="JPN" width="256">さっきは　ありがとー！▼
-ボクの　むしポケモンが　きみと
-たたかいたいって　さわいでさ[BE:01:ページ切り替え（クリア）]
-ではでは
-さっそくだけど　しょうぶ　だね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さっきは　ありがとー！▼
-ボクの　むしポケモンが　きみと
-戦いたいって　騒いでさ[BE:01:ページ切り替え（クリア）]
-ではでは
-早速だけど　勝負だね[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c03gym0101_leader_02">
-		<comment>♂
-・戦闘後メッセージ</comment>
-		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">あうう
-まけちゃったよ……[BE:01:ページ切り替え（クリア）]
-それにしても　きみ
-すっごく　つよいんだねえ[BE:01:ページ切り替え（クリア）]
-これ　ジムバッジ！
-ボクに　かったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あうう
-負けちゃったよ……[BE:01:ページ切り替え（クリア）]
-それにしても　きみ
-すっごく　強いんだねえ[BE:01:ページ切り替え（クリア）]
-これ　ジムバッジ！
-ボクに　勝ったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c03gym0101_leader_03">
-		<comment>ファンファーレ＋バッジ入手処理</comment>
-		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アーティから
-ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　アーティから
-ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c03gym0101_leader_04">
-		<comment>♂
-・アイテム入手処理
-　No403「むしのていこう」</comment>
-		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">ビートルバッジ
-かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
-それに　バッジを　３コ　もっていれば
-レベル４０までの　ポケモンは▽
-いうことを　きいてくれるしね▼
-えーっと　そうだ
-これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ビートルバッジ
-かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
-それに　バッジを　３個　持っていれば
-レベル４０までの　ポケモンは▽
-いうことを　きいてくれるしね▼
-えーっと　そうだ
-これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c03gym0101_leader_05">
-		<comment>♂
-・アイテム入手処理後</comment>
-		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">「むしのていこう」は
-ダメージを　あたえた　あいての▽
-とくこうも　さげるんだよね▼
-そういう　なんでもないような　ことが
-だいじ　だったり　するからさ</language>
-		<language name="JPN_KANJI" width="256">「むしのていこう」は
-ダメージを　与えた　相手の▽
-特攻も　さげるんだよね▼
-そういう　なんでもないような　ことが
-大事だったり　するからさ</language>
-	</row>
-
-	<row id="msg_c03gym0101_leader_06">
-		<comment>♂
-・leader_05表示後</comment>
-		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">きみは　たびに　でてから
-どれだけの　はっけんを　した？▼
-ボクはね　こどものころに
-むしポケモンの　うつくしさに▽
-じゅんじょうハートを　うばわれ▼
-えをかいたり　しょうぶしたりを
-ずっと　くりかえして……　それでも▽
-いまだに　はっけんが　あるんだ▼
-ポケモンと　くらす　せかいは
-ほんと ふしぎで　みちているんだー</language>
-		<language name="JPN_KANJI" width="256">きみは　旅に　でてから
-どれだけの　発見を　した？▼
-ボクはね　子供のころに
-むしポケモンの　美しさに▽
-純情ハートを　奪われ▼
-絵を描いたり　勝負したりを
-ずっと　繰り返して……　それでも▽
-いまだに　発見が　あるんだ▼
-ポケモンと　暮らす　世界は
-ほんと 不思議で　満ちているんだー</language>
-	</row>
-
-	<row id="msg_c03gym0101_leader_end_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・クリア後</comment>
-		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">アーティ『やあ▼
-さいきんは　ポケモンを　そだて……
-そだてた　ポケモンを　モチーフに▽
-えを　かいて……の　くりかえし▼
-やりたいことが　あるのは
-なんて　ステキな　ことなんだろーなー</language>
-		<language name="JPN_KANJI" width="256">アーティ『やあ▼
-最近は　ポケモンを　育てて……
-育てた　ポケモンを　モチーフに▽
-絵を　描いて……の　繰り返し▼
-やりたいことが　あるのは
-なんて　ステキな　ことなんだろーなー</language>
-	</row>
-
-	<row id="msg_c03gym0101_jugglimg_05_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>♂
 ・戦闘前メッセージ（登場時）</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
-		<language name="JPN" width="256">スイッチを　ふんだら
+		<language name="JPN" width="256">まゆが　やぶれて
 とびだすのは　ミーでした！▼
 さあ　というわけで
 ミーと　しょうぶ　してくれよ！▼</language>
-		<language name="JPN_KANJI" width="256">スイッチを　踏んだら
+		<language name="JPN_KANJI" width="256">繭が　破れて
 飛びだすのは　ミーでした！▼
 さあ　というわけで
 ミーと　勝負してくれよ！▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_jugglimg_05_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♂
+・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_05</attribute>
+		<language name="JPN" width="256">かくれていると
+しょうぶの　カンが　にぶるんだよ▼</language>
+		<language name="JPN_KANJI" width="256">隠れていると
+勝負の　カンが　鈍るんだよ▼</language>
+	</row>
+
+	<row id="msg_c03gym0101_trainer_gate_3b_03" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
 		<comment>♂
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
@@ -441,19 +327,6 @@ jugglimg_05</attribute>
 しょうぶの　カンが　にぶるんだよ</language>
 		<language name="JPN_KANJI" width="256">隠れていると
 勝負の　カンが　鈍るんだよ</language>
-	</row>
-
-	<row id="msg_c03gym0101_jugglimg_05_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・2回目以降</comment>
-		<attribute name="キャラ指定">トレーナー
-jugglimg_05</attribute>
-		<language name="JPN" width="256">だーかーら！▼
-この　スイッチを　ふんでも
-ミーが　とびだすだけだぞ！？</language>
-		<language name="JPN_KANJI" width="256">だーかーら！▼
-この　スイッチを　踏んでも
-ミーが　飛びだすだけだぞ！？</language>
 	</row>
 
 	<row id="msg_c03gym0101_jugglimg_06_01">

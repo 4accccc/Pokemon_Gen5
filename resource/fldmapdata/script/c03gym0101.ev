@@ -11,17 +11,21 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03gym0101.h"
   .include  "c03gym0101.h"
+  .include  "../gimmick/gym_insect/gym_insect_local_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
-
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA ev_prog_c03gym0101_gate_in
 _EVENT_DATA ev_prog_c03gym0101_gate_out
 _EVENT_DATA ev_prog_c03gym0101_gate_out_exit
+_EVENT_DATA ev_reserve_c03gym0101_gateout_1c
+_EVENT_DATA ev_reserve_c03gym0101_gateout_3d
+_EVENT_DATA ev_pos_c03gym0101_gate_3b
+_EVENT_DATA ev_c03gym0101_trainer_gate_3b
 _EVENT_DATA_END
 
 //==============================================================
@@ -93,10 +97,23 @@ EVENT_END
 
 EVENT_START ev_prog_c03gym0101_gate_out_exit
 {
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+
   //ジムリーダー部屋に移動
-  _MAP_CHANGE( ZONE_ID_C03GYM0201, 14,16, DIR_UP )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0201, 14, -1, 16, DIR_UP )
+
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_exit )
+  _OBJ_ANIME_WAIT()
 }
 EVENT_END
+
+_ANIME_LABEL anm_player_gateout_exit
+  _ANIME_DATA AC_JUMP_U_1G_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------
 //ゲートインアニメ
@@ -132,7 +149,134 @@ _ANIME_LABEL  anm_player_vanish_off
 ///イベント呼び出し
 //==============================================================
 
+/***************************************************************/
+/*
+  ゲート1C ゲートアウトイベント
+*/
+/***************************************************************/
+EVENT_START ev_reserve_c03gym0101_gateout_1c
+{
+  //マップフェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  IF FLAG_OFF(FE_C03GYM0101_COCCON_01) THEN
+    _SE_PLAY( SEQ_SE_BDEMO_01 ) //繭が破れる音
+    _GYM_INSECT_COCCON_OPEN( COCCON_ID_1C )
+    _TIME_WAIT(30)
+	  _FLAG_SET( FE_C03GYM0101_COCCON_01 )
+  ENDIF
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _OBJ_ANIME_WAIT()
+}
+EVENT_END
+
+/***************************************************************/
+/*
+  ゲート3D ゲートアウトイベント
+*/
+/***************************************************************/
+EVENT_START ev_reserve_c03gym0101_gateout_3d
+{
+  //マップフェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _OBJ_ANIME_WAIT()
+}
+EVENT_END
+
+_ANIME_LABEL  anm_player_gateout_map_change
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA ACMD_END,0
 
 
+/***************************************************************/
+/*
+  ゲート3B POSイベント
+*/
+/***************************************************************/
+EVENT_START ev_pos_c03gym0101_gate_3b
+{
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_turn_u )
+  _OBJ_ANIME_WAIT()
+  
+  _SE_PLAY( SEQ_SE_BDEMO_01 ) //繭が破れる音
+  _GYM_INSECT_COCCON_OPEN( COCCON_ID_3B )
+  _FLAG_SET( FE_C03GYM0101_COCCON_02 )
+  _TIME_WAIT(30)
 
+  //視線曲を再生
+	_TRAINER_BGM_SET( TRID_PRINCE_02 )
+	//トレーナー：主人公前へ
+	_OBJ_ANIME( C03R0101_TRAINER_GATE_3B, anm_trainer_gate_3b_walk_d )
+	_OBJ_ANIME_WAIT()
+
+	//トレーナー：戦闘前メッセージ
+	_BALLOONWIN_OBJMSG( msg_c03gym0101_trainer_gate_3b_01 , C03R0101_TRAINER_GATE_3B )
+	_BALLOONWIN_CLOSE()
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_PRINCE_02, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+  	_FLAG_RESET( FE_C03GYM0101_COCCON_02 )
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+
+	//トレーナー：戦闘後メッセージ
+	_BALLOONWIN_OBJMSG( msg_c03gym0101_trainer_gate_3b_02 , C03R0101_TRAINER_GATE_3B )
+	_BALLOONWIN_CLOSE()
+
+	//トレーナー：退く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_move_r )
+	_OBJ_ANIME( C03R0101_TRAINER_GATE_3B, anm_trainer_gate_3b_move )
+	_OBJ_ANIME_WAIT()
+
+  //トレーナー戦終了
+  $WK_SCENE_C03GYM0101_GATE_3B = 1
+}
+EVENT_END
+
+_ANIME_LABEL  anm_player_gate_3b_turn_u
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gate_3b_move_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_trainer_gate_3b_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_trainer_gate_3b_move
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+
+/***************************************************************/
+/*
+  ゲート3B トレーナー戦後イベント
+*/
+/***************************************************************/
+EVENT_START ev_c03gym0101_trainer_gate_3b
+{
+  _TALK_OBJ_START()
+	//トレーナー：戦闘後メッセージ
+	_BALLOONWIN_OBJMSG( msg_c03gym0101_trainer_gate_3b_03 , C03R0101_TRAINER_GATE_3B )
+  _LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+}
+EVENT_END
 

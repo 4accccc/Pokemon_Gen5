@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2011/01/21 18:11:09
 # linked worldmap file name
-C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0201.wms
+C:\home\swan\resource\fldmapdata\eventdata\data\c03gym0201.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0201.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -24,17 +24,51 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0201.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#Pos Event Label
+POSID_C03GYM0201_EXIT_4A_3D
+#Pos Script Name
+SCRID_POS_C03GYM0201_EXIT_4A_3D
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
 0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 -8
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POSID_C03GYM0201_EXIT_4B_1C
+#Pos Script Name
+SCRID_POS_C03GYM0201_EXIT_4B_1C
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 120
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1

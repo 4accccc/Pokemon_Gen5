@@ -5,6 +5,7 @@
 #define _C03GYM0201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C03GYM0201 (1)
+#define SCRID_POS_C03GYM0201_EXIT_4A_3D (1)
+#define SCRID_POS_C03GYM0201_EXIT_4B_1C (2)
 
 #endif //_C03GYM0201_DEF_H_
