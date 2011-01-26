@@ -3513,6 +3513,26 @@
 		<language name="JPN_KANJI" width="216">ノーマル</language>
 	</row>
 
+	<row id="juggling_10">
+		<language name="JPN" width="216">キハチ</language>
+		<language name="JPN_KANJI" width="216">キハチ</language>
+	</row>
+
+	<row id="juggling_11">
+		<language name="JPN" width="216">ベルモンド</language>
+		<language name="JPN_KANJI" width="216">ベルモンド</language>
+	</row>
+
+	<row id="juggling_12">
+		<language name="JPN" width="216">フェデリコ</language>
+		<language name="JPN_KANJI" width="216">フェデリコ</language>
+	</row>
+
+	<row id="juggling_13">
+		<language name="JPN" width="216">アキオ</language>
+		<language name="JPN_KANJI" width="216">アキオ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

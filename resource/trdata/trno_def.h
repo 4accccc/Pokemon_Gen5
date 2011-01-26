@@ -634,7 +634,11 @@
 #define	TRID_LEADER6_02   ( 621 ) 
 #define	TRID_LEADER2_02   ( 622 ) 
 #define	TRID_LEADER1_02   ( 623 ) 
-#define TRID_MAX  ( 624 )
+#define	TRID_JUGGLING_10   ( 624 ) 
+#define	TRID_JUGGLING_11   ( 625 ) 
+#define	TRID_JUGGLING_12   ( 626 ) 
+#define	TRID_JUGGLING_13   ( 627 ) 
+#define TRID_MAX  ( 628 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
