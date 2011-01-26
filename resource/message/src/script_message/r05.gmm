@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-01-26T18:34:25"/>
+	<create user="matsumiya" host="W00224" date="2011-01-26T18:46:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="136" right="705" bottom="764" maximized="no" rayout="Vertical2">
+	<dialog left="1562" top="131" right="2267" bottom="759" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -296,19 +296,19 @@
 		<comment>♀
 ・1日1種類のきのみが5コ買える
 ・道具は以下からランダムで選択
-　No169「ザロクのみ」　４０円
-　No170「ネコブのみ」　４０円
-　No171「タポルのみ」　４０円
-　No172「ロメのみ」　４０円
-　No173「ウブのみ」　４０円
-　No174「マトマのみ」　４０円
-※すべて努力値を減らす
+　No169「ザロクのみ」
+　No170「ネコブのみ」
+　No171「タポルのみ」
+　No172「ロメのみ」
+　No173「ウブのみ」
+　No174「マトマのみ」
+・すべて１個４０円
 
 ・はい/いいえの選択肢表示
-・はい選択→breederw_03
-・はい選択、バッグが一杯→breederw_04
-・はい選択、お金がない→breederw_05
-・いいえ</comment>
+・はい→breederw_03
+・はい、バッグが一杯→breederw_04
+・はい、お金がない→breederw_05
+・いいえ→breederw_02</comment>
 		<attribute name="キャラ指定">BREEDERW</attribute>
 		<language name="JPN" width="256">トレーナーさん！　あたしが
 あつめた　きのみを　かわない？▼
@@ -326,7 +326,7 @@
 		<comment>♀
 ・いいえ選択
 　日が変わる前に再度会話したとき
-　→</comment>
+　→breederw_07</comment>
 		<attribute name="キャラ指定">BREEDERW</attribute>
 		<language name="JPN" width="256">ぶーぶー！！
 せっかく　あつめた　きのみ　なのに</language>
