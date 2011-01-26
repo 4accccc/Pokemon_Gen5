@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2011-01-25T15:32:08"/>
+	<create user="nishino" host="W00221" date="2011-01-26T15:39:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -510,13 +510,13 @@
 	</row>
 
 	<row id="CALL_CHELEN_TYPE_01">
-		<language name="JPN" width="256">どいつの　タイプが　しりたいんだ？</language>
-		<language name="JPN_KANJI" width="256">どいつの　タイプが　知りたいんだ？</language>
+		<language name="JPN" width="256">どの　タイプが　しりたいんだい？</language>
+		<language name="JPN_KANJI" width="256">どの　タイプが　知りたいんだい？</language>
 	</row>
 
 	<row id="CALL_CHELEN_TOKUSEI_01">
-		<language name="JPN" width="256">どいつの　とくせいが　しりたいんだ？</language>
-		<language name="JPN_KANJI" width="256">どいつの　とくせいが　知りたいんだ？</language>
+		<language name="JPN" width="256">どの　とくせいが　しりたいんだい？</language>
+		<language name="JPN_KANJI" width="256">どの　とくせいが　知りたいんだい？</language>
 	</row>
 
 	<row id="CALL_CHELEN_SELECT_01">
@@ -546,8 +546,8 @@
 
 	<row id="CALL_BELL_NATSUKI_00">
 		<comment>ポケモン選択時</comment>
-		<language name="JPN" width="256">どのこと　なかよしか　しりたいの？</language>
-		<language name="JPN_KANJI" width="256">どのこと　仲良しか　知りたいの？</language>
+		<language name="JPN" width="256">どのことの　なかを　しりたいの？</language>
+		<language name="JPN_KANJI" width="256">どのことの　仲を　知りたいの？</language>
 	</row>
 
 	<row id="CALL_BELL_NATSUKI_01">
@@ -763,9 +763,9 @@
 
 	<row id="CALL_CHELEN_TALK_01">
 		<language name="JPN" width="256">モンスターボールは　つねに
-きらさない　ように　しておけよ[BE:01:ページ切り替え（クリア）]</language>
+きらさない　ように　すること[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">モンスターボールは　つねに
-きらさない　ように　しておけよ[BE:01:ページ切り替え（クリア）]</language>
+きらさない　ように　すること[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_CHELEN_BYE_01">

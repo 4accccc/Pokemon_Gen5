@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2011-01-25T12:32:01"/>
+	<create user="nishino" host="W00221" date="2011-01-26T16:01:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="327" top="308" right="849" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="137" top="232" right="659" bottom="860" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="66" right="1024" bottom="464" visible="no"/>
 		<band id="0" index="0" style="0000" width="514"/>
@@ -543,13 +543,13 @@
 ちょくせつ　こうげき　された　ときに▽
 あいてにも　ダメージを　あたえるんだ▼
 だげきわざの　とくいな　あいてなら
-ガンガン　つかっていくと　いい▼</language>
+ガンガン　つかっていくと　いいよ▼</language>
 		<language name="JPN_KANJI" width="256">さめはだ　か…▼
 この　とくせいは
 直接攻撃　された　時に▽
 相手にも　ダメージを　与えるんだ▼
 打撃技の　得意な　相手なら
-ガンガン　使っていくと　いい▼</language>
+ガンガン　使っていくと　いいよ▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_025">
@@ -572,20 +572,32 @@
 あいてを　どく　まひ　ねむりの▽
 どれかに　してしまうんだ▼
 だげきわざの　とくいな　あいてなら
-ガンガン　つかっていくと　いい▼</language>
+ガンガン　つかっていくと　いいよ▼</language>
 		<language name="JPN_KANJI" width="256">ほうし　か…▼
 この　とくせいは
 直接　攻撃　された時に▽
 相手を　どく　まひ　ねむりの▽
 どれかに　してしまうんだ▼
 打撃技の　得意な　相手なら
-ガンガン　使っていくと　いい▼</language>
+ガンガン　使っていくと　いいよ▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_028">
 		<comment>シンクロ</comment>
-		<language name="JPN" width="256">シンクロ</language>
-		<language name="JPN_KANJI" width="256">シンクロ</language>
+		<language name="JPN" width="256">シンクロ　か…▼
+この　とくせいは
+どく　まひ　やけどに　されると▽
+あいても　おなじに　してしまうんだ▼
+また　てもちの　せんとうに　いると
+おなじ　せいかくの　ポケモンと▽
+であいやすくなる　こうかもあるよ▼</language>
+		<language name="JPN_KANJI" width="256">シンクロ　か…▼
+この　とくせいは
+どく　まひ　やけどに　されると▽
+相手も　同じに　してしまうんだ▼
+また　手持ちの　先頭に　いると
+同じ　性格の　ポケモンと▽
+出会いやすくなる　効果もあるよ▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_029">
@@ -822,12 +834,12 @@
 この　とくせいは
 たいりょくが　へって　ピンチになると▽
 みずタイプの　いりょくが　あがるんだ▼
-ピンチに　なっても　あきらめるなよ▼</language>
+ピンチでも　あきらめたら　ダメだよ▼</language>
 		<language name="JPN_KANJI" width="256">げきりゅう　か…▼
 この　とくせいは
 体力が　減って　ピンチになると▽
 みずタイプの　威力が　上がるんだ▼
-ピンチに　なっても　あきらめるなよ▼</language>
+ピンチでも　あきらめたら　ダメだよ▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_068">
@@ -1174,8 +1186,18 @@
 
 	<row id="TOKUSEI_STR_125">
 		<comment>ちからずく</comment>
-		<language name="JPN" width="256">ちからずく</language>
-		<language name="JPN_KANJI" width="256">ちからずく</language>
+		<language name="JPN" width="256">ちからずく　か…▼
+この　とくせいは
+わざの　いりょくが　あがる　かわりに▽
+ついかこうかが　でなく　なるんだ▼
+くりだす　わざに　よっては
+かなりの　はかいりょくが　えられるよ▼</language>
+		<language name="JPN_KANJI" width="256">ちからずく　か…▼
+この　とくせいは
+技の　威力が　上がる　代わりに▽
+追加効果が　出なく　なるんだ▼
+繰り出す　技に　よっては
+かなりの　破壊力が　得られるよ▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_126">
@@ -1267,18 +1289,17 @@
 		<language name="JPN" width="256">テレパシー　か…▼
 この　とくせいは
 みかたの　こうどうを　よみとって▽
-こうげきを　よけることが　できる▼
-シングルバトルでは　いみがないが
+どうしうちを　おこらなく　させるんだ▼
+シングルバトルでは　いみがないけど
 ダブルや　トリプルの　バトルでは▽
-じゅうような　やくわりを　もつだろう▼
-</language>
+じゅうような　とくせいだね▼</language>
 		<language name="JPN_KANJI" width="256">テレパシー　か…▼
 この　とくせいは
 味方の　行動を　読み取って▽
-攻撃を　避ける事が　出来る▼
-シングルバトルでは　意味が無いが
+同士討ちを　起こらなく　させるんだ▼
+シングルバトルでは　意味が無いけど
 ダブルや　トリプルの　バトルでは▽
-重要な　役割を　持つだろう▼</language>
+重要な　とくせいだね。▼</language>
 	</row>
 
 	<row id="TOKUSEI_STR_141">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2011-01-25T12:34:06"/>
+	<create user="nishino" host="W00221" date="2011-01-25T19:16:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -734,15 +734,15 @@
 		<language name="JPN" width="256">どく　くさ　タイプか…▼
 ほのお　こおり
 ひこう　エスパー　タイプの▽
-こうげきに　よわいな▼
+こうげきに　よわいね▼
 このタイプの　ポケモンと
-たたかうときは　ちゅういするんだね▼</language>
+たたかうときは　ちゅういすること▼</language>
 		<language name="JPN_KANJI" width="256">どく　くさ　タイプか…▼
 ほのお　こおり
 ひこう　エスパー　タイプの▽
-攻撃に　弱いな▼
+攻撃に　弱いね▼
 このタイプの　ポケモンと
-戦う時は　注意するんだね▼</language>
+戦う時は　注意すること▼</language>
 	</row>
 
 	<row id="TYPE_STR_058">
@@ -1157,14 +1157,14 @@
 		<comment>みず　みず</comment>
 		<language name="JPN" width="256">みず　タイプか…▼
 でんき　くさ　タイプの
-こうげきに　よわいな▼
+こうげきに　よわいね▼
 このタイプの　ポケモンと
-たたかうときは　ちゅういするんだね▼</language>
+たたかうときは　ちゅういすること▼</language>
 		<language name="JPN_KANJI" width="256">みず　タイプか…▼
 でんき　くさ　タイプの
-攻撃に　弱いな▼
+攻撃に　弱いね▼
 このタイプの　ポケモンと
-戦う時は　注意するんだね▼</language>
+戦う時は　注意すること▼</language>
 	</row>
 
 	<row id="TYPE_STR_127">
@@ -1226,15 +1226,15 @@
 		<language name="JPN" width="256">くさ　こおり　タイプか…▼
 ほのお　かくとう　どく　ひこう
 むし　いわ　はがね　タイプの▽
-こうげきに　よわいな▼
+こうげきに　よわいね▼
 このタイプの　ポケモンと
-たたかうときは　ちゅういするんだね▼</language>
+たたかうときは　ちゅういすること▼</language>
 		<language name="JPN_KANJI" width="256">くさ　こおり　タイプか…▼
 ほのお　かくとう　どく　ひこう
 むし　いわ　はがね　タイプの▽
-攻撃に　弱いな▼
+攻撃に　弱いね▼
 このタイプの　ポケモンと
-戦う時は　注意するんだね▼</language>
+戦う時は　注意すること▼</language>
 	</row>
 
 	<row id="TYPE_STR_137">
@@ -1283,14 +1283,14 @@
 		<comment>エスパー　エスパー</comment>
 		<language name="JPN" width="256">エスパー　タイプか…▼
 むし　ゴースト　あく　タイプの
-こうげきに　よわいな▼
+こうげきに　よわいね▼
 このタイプの　ポケモンと
-たたかうときは　ちゅういするんだね▼</language>
+たたかうときは　ちゅういすること▼</language>
 		<language name="JPN_KANJI" width="256">エスパー　タイプか…▼
 むし　ゴースト　あく　タイプの
-攻撃に　弱いな▼
+攻撃に　弱いね▼
 このタイプの　ポケモンと
-戦う時は　注意するんだね▼</language>
+戦う時は　注意すること▼</language>
 	</row>
 
 	<row id="TYPE_STR_145">
@@ -1333,14 +1333,14 @@
 		<comment>ドラゴン　ドラゴン</comment>
 		<language name="JPN" width="256">ドラゴン　タイプか…▼
 こおり　ドラゴン　タイプの
-こうげきに　よわいな▼
+こうげきに　よわいね▼
 このタイプの　ポケモンと
-たたかうときは　ちゅういするんだね▼</language>
+たたかうときは　ちゅういすること▼</language>
 		<language name="JPN_KANJI" width="256">ドラゴン　タイプか…▼
 こおり　ドラゴン　タイプの
-攻撃に　弱いな▼
+攻撃に　弱いね▼
 このタイプの　ポケモンと
-戦う時は　注意するんだね▼</language>
+戦う時は　注意すること▼</language>
 	</row>
 
 	<row id="TYPE_STR_152">
