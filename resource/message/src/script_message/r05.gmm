@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-07T21:14:35"/>
+	<create user="matsumiya" host="W00224" date="2011-01-26T18:34:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="136" right="705" bottom="764" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -291,6 +291,102 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_r05_breederw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・1日1種類のきのみが5コ買える
+・道具は以下からランダムで選択
+　No169「ザロクのみ」　４０円
+　No170「ネコブのみ」　４０円
+　No171「タポルのみ」　４０円
+　No172「ロメのみ」　４０円
+　No173「ウブのみ」　４０円
+　No174「マトマのみ」　４０円
+※すべて努力値を減らす
+
+・はい/いいえの選択肢表示
+・はい選択→breederw_03
+・はい選択、バッグが一杯→breederw_04
+・はい選択、お金がない→breederw_05
+・いいえ</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">トレーナーさん！　あたしが
+あつめた　きのみを　かわない？▼
+きょう　もっているのは
+[1:09:どうぐ名:0]が　５コ　よ！▽
+ねっ　ほしいでしょ？　かうでしょ？</language>
+		<language name="JPN_KANJI" width="256">トレーナーさん！　あたしが
+集めた　きのみを　買わない？▼
+今日　持っているのは
+[1:09:どうぐ名:0]が　５コ　よ！▽
+ねっ　ほしいでしょ？　買うでしょ？</language>
+	</row>
+
+	<row id="msg_r05_breederw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・いいえ選択
+　日が変わる前に再度会話したとき
+　→</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">ぶーぶー！！
+せっかく　あつめた　きのみ　なのに</language>
+		<language name="JPN_KANJI" width="256">ぶーぶー！！
+せっかく　集めた　きのみ　なのに</language>
+	</row>
+
+	<row id="msg_r05_breederw_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・はい選択
+　続けてアイテム入手処理</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　５コで　２００円！
+あなた　かいものじょうず　よね！！▼</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　５コで　２００円！
+あなた　買い物上手　よね！！▼</language>
+	</row>
+
+	<row id="msg_r05_breederw_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・はい選択、バッグが一杯</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">あっ！　でも
+バッグが　いっぱいだよね！</language>
+		<language name="JPN_KANJI" width="256">あっ！　でも
+バッグが　いっぱいだよね！</language>
+	</row>
+
+	<row id="msg_r05_breederw_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・はい選択、お金がない</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">あっ！　でも
+おかねが　たりないよね！</language>
+		<language name="JPN_KANJI" width="256">あっ！　でも
+お金が　たりないよね！</language>
+	</row>
+
+	<row id="msg_r05_breederw_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・購入後
+・日が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">また　きのみを　あつめておくから
+よかったら　あした　かいにきてね！</language>
+		<language name="JPN_KANJI" width="256">また　きのみを　集めておくから
+よかったら　明日　買いにきてね！</language>
+	</row>
+
+	<row id="msg_r05_breederw_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・msg_r05_breederw_02表示後に会話</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">あたしが　もっている　きのみは
+[1:09:どうぐ名:0]　５コが　よ！▽
+ねっ　ほしいでしょ？　かうでしょ？</language>
+		<language name="JPN_KANJI" width="256">あたしが　持っている　きのみは
+[1:09:どうぐ名:0]　５コが　よ！▽
+ねっ　ほしいでしょ？　買うでしょ？</language>
+	</row>
 
 	<row id="msg_r05_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
