@@ -85,9 +85,17 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 //ゲート座標パラメータ
 ///=================================================================
 #define GATE_ID_1A_2A  (0)
-#define GATE_ID_1A_2B  (1)
-#define GATE_ID_2B_3A  (2)
-#define GATE_ID_3D_4A  (3)
+#define GATE_ID_2A_1A  (1)
+#define GATE_ID_1A_2B  (2)
+#define GATE_ID_2B_1A  (3)
+#define GATE_ID_2C_3A  (4)
+#define GATE_ID_3A_2C  (5)
+#define GATE_ID_3B_1B  (6)
+#define GATE_ID_1B_3B  (7)
+#define GATE_ID_1B_3C  (8)
+#define GATE_ID_3C_1B  (9)
+#define GATE_ID_3D_4A  (10)
+#define GATE_ID_3D_2B  (11)
 
 //0
 #define GATE_1A_2A_PX (16)

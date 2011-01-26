@@ -280,6 +280,7 @@ static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work );
 static void gatein_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk );
 static void gatein_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk );
 static BOOL gatein_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk );
+static s16 gatein_SePitchCalc( EVWORK_GATE_IN* evwk );
 
 //--------------------------------------------------------------
 //ゲートインイベント　生成
@@ -333,24 +334,41 @@ static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
   return GMEVENT_RES_CONTINUE;
 }
 
-static u16 gatein_SePitchCalc( EVWORK_GATE_IN* evwk )
+static s16 gatein_SePitchCalc( EVWORK_GATE_IN* evwk )
 {
+  s16 pitch = 0;
   u16 next_frm;
   fx32 len;
   VecFx32 v1,v2,v3;
+
   next_frm = evwk->ica_anm_frm_idx+evwk->ica_anm_frm_dif;
   if( next_frm < 0){
     next_frm = 0;
-  }else if( (evwk->ica_anm_frm_max-1) > next_frm ){
+  }else if( next_frm > (evwk->ica_anm_frm_max-1) ){
     next_frm = evwk->ica_anm_frm_max-1;
   }
+  OS_Printf("now_frm = %d, next=%d\n",evwk->ica_anm_frm_idx, next_frm );
   ICA_ANIME_GetTranslateAt( evwk->ica_anm, &v1, evwk->ica_anm_frm_idx );
   ICA_ANIME_GetTranslateAt( evwk->ica_anm, &v2, next_frm  );
+  OS_Printf("now(%f,%f,%f), next(%f,%f,%f)\n",
+      FX_FX32_TO_F32(v1.x),
+      FX_FX32_TO_F32(v1.y),
+      FX_FX32_TO_F32(v1.z),
+      FX_FX32_TO_F32(v2.x),
+      FX_FX32_TO_F32(v2.y),
+      FX_FX32_TO_F32(v2.z)
+      );
 
   VEC_Subtract( &v2, &v1, &v3);
   len = VEC_Mag(&v3);
 
-  return 0;
+  {
+    fx32 step = len-FX32_CONST(5);
+    OS_Printf("vec_len=%f, step=%f ",FX_FX32_TO_F32(len),FX_FX32_TO_F32(step));
+    pitch = FX_Whole(FX_Mul(step,FX32_CONST(50)));
+    OS_Printf("pitch=%d\n\n",pitch);
+  }
+  return pitch;
 }
 
 static void gatein_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
@@ -365,8 +383,9 @@ static void gatein_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
     evwk->ica_anm_frm_idx = 0;
     evwk->ica_anm_frm_dif = 1;
   }
-  PMSND_PlaySE(GYM_INSECT_SE_DRIVE);
   evwk->se_player = PMSND_GetSE_DefaultPlayerID( GYM_INSECT_SE_DRIVE );
+  PMSND_PlaySE(GYM_INSECT_SE_DRIVE);
+  PMSND_SetStatusSE_byPlayerID( evwk->se_player, PMSND_NOEFFECT, gatein_SePitchCalc(evwk), PMSND_NOEFFECT);
 }
 static void gatein_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
 {
@@ -384,6 +403,7 @@ static BOOL gatein_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_IN* evwk )
     vec.z += FX32_CONST(16*16);
     FIELD_PLAYER_SetPos( wk->f_player, &vec );
 //    OS_Printf("%f,%f,%f\n", FX_FX32_TO_F32(vec.x), FX_FX32_TO_F32(vec.y), FX_FX32_TO_F32(vec.z));
+    PMSND_SetStatusSE_byPlayerID( evwk->se_player, PMSND_NOEFFECT, gatein_SePitchCalc(evwk), PMSND_NOEFFECT);
   }
   evwk->ica_anm_frm_idx += evwk->ica_anm_frm_dif;
   if( evwk->ica_anm_frm_dif < 0 ){
