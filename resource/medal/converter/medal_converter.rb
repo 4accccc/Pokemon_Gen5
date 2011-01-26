@@ -226,6 +226,9 @@ medal_data_list.each_with_index{ |item,index|
   # GMMに書き込み
   gmm.make_row_index_kanji( "MDL_NAME_" + mdl_type + "_",type_cnt[mdl_type], item.medal_name , item.medal_name )
 }
+# ヒントメダル名を最後に出力
+gmm.make_row_index_kanji( "MDL_NAME_HINT_",0, "ヒントメダル" , "ヒントメダル" )
+
 gmm.close_gmm
 
 #=======================================================

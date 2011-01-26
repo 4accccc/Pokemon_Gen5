@@ -410,6 +410,7 @@ u16 MEDALBOX_GetMedalCount( MEDALBOX *p_mdlbox , BOOL is_hint_count )
 MEDALBOX* SaveData_GetMedalBox( SAVE_CONTROL_WORK * p_sv )
 {
   static MEDALBOX tentative_medal_box_save;
+  tentative_medal_box_save.medal[8].medal_state = MEDAL_STATE_TITLE_GET;
   return &tentative_medal_box_save;
 }
 

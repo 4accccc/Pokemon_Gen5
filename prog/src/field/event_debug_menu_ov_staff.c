@@ -1215,14 +1215,22 @@ static void debugMenuMedalDataRandomSet( DEBUG_MEDALBOX_WORK* wk )
     u32 rand;
 
     // 乱数の取得
-    rand = GFL_STD_MtRand( 3 );
+    rand = GFL_STD_MtRand( 10 );
+    
+    medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
+
+    // 設定されていないもののみランダムにせっていする
+    if( medal_state != MEDAL_STATE_NONE )
+    {
+      continue;
+    }
 
     switch( rand )
     {
     case 0:
       {
+
         // 設定前のメダルIDと開放状況を表示
-        medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
         OS_Printf("タイトル開放 %d: %u ->",medal_id , medal_state);
 
         // タイトルメダルを開放
@@ -1237,7 +1245,6 @@ static void debugMenuMedalDataRandomSet( DEBUG_MEDALBOX_WORK* wk )
     case 1:
       {
         // 設定前のメダルIDと開放状況を表示
-        medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
         OS_Printf("ヒント開放   %d: %u ->",medal_id , medal_state);
 
         // ヒントメダルを開放
