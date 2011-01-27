@@ -8,6 +8,8 @@
  */
 //============================================================================================
 
+
+
 #include <gflib.h>
 
 #include "system/main.h"
@@ -30,6 +32,9 @@
 #include "batt_bg_tbl.naix"
 
 #include "debug/debug_hudson.h"
+
+//#define DEBUG_DUMP_TEXVRAM      // デバッグボタンを押すとTEX-VRAMのデバッグプリントが出る
+//#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
 
 //============================================================================================
 /**
@@ -419,7 +424,9 @@ void  BTLV_EFFECT_Exit( void )
 
 }
 
+#ifdef DEBUG_BG_ANIME_CHANGE
 static int debug_anime = 1;
+#endif
 
 //============================================================================================
 /**
@@ -478,10 +485,12 @@ void  BTLV_EFFECT_Main( void )
 
   GFL_TCB_Main( bew->tcb_sys );
 
+#ifdef DEBUG_BG_ANIME_CHANGE
   if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG){
     BTLV_FIELD_ChangeAnime( bew->bfw, debug_anime );
     if(++debug_anime>2){ debug_anime=0; }
   }
+#endif
 
   BTLV_MCSS_Main( bew->bmw );
   BTLV_STAGE_Main( bew->bsw );
@@ -514,7 +523,7 @@ void  BTLV_EFFECT_Main( void )
 
     GFL_G3D_DRAW_End();
   }
-#if PM_DEBUG
+#ifdef DEBUG_DUMP_TEXVRAM
   if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG){
     NNS_GfdDumpLnkTexVramManager();
   }
