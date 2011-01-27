@@ -73,6 +73,11 @@ typedef enum
   CGS_FADEOUT, //両方フェード
   CGS_FADEOUT_WAIT,
 
+  CGS_FADEIN_CAMERA,      // カメラ用
+  CGS_FADEIN_WAIT_CAMERA, // カメラ用
+  CGS_FADEOUT_CAMERA,     // カメラ用
+  CGS_FADEOUT_WAIT_CAMERA,// カメラ用
+
   CGS_CAMERA_INIT,  // カメラ撮影
   CGS_CAMERA_MAIN,  // カメラ撮影
   CGS_CAMERA_EXIT,  // カメラ撮影
@@ -487,7 +492,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   //GFL_BG_Exit();
 
   // 構造体初期化
-  gameWork->state = CGS_FADEIN;
+  gameWork->state = CGS_CAMERA_INIT;
   gameWork->isFinish = FALSE;
 
   GFL_NET_ReloadIconTopOrBottom(TRUE , heapID );
@@ -568,29 +573,23 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
   switch( gameWork->state )
   {
   case CGS_FADEIN:
-    if( COMM_TVT_GetUpperFade( work ) == TRUE )
-    {
-      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-          WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
-    }
-    else
-    {
-      WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-          WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
-    }
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+        WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
     gameWork->state = CGS_FADEIN_WAIT;
     break;
+
   case CGS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      gameWork->state = CGS_CAMERA_INIT;
+      gameWork->state = CGS_GAME_MAIN;
     }
     break;
 
   case CGS_FADEOUT:
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-      if( CTVT_CAMERA_IsStopCapture( work , camWork ) == TRUE )
+      //StopCaptureは停止音待ち
+      //if( CTVT_CAMERA_IsStopCapture( work , camWork ) == TRUE )
       {
         WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
             WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
@@ -613,15 +612,50 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     }
     break;
 
+  case CGS_FADEIN_CAMERA:      // カメラ用
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
+        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
+    gameWork->state = CGS_FADEIN_WAIT_CAMERA;
+    break;
+
+  case CGS_FADEIN_WAIT_CAMERA: // カメラ用
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      gameWork->state = CGS_CAMERA_MAIN;
+    }
+    break;
+
+  case CGS_FADEOUT_CAMERA:     // カメラ用
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+      //StopCaptureは停止音待ち
+      //if( CTVT_CAMERA_IsStopCapture( work , camWork ) == TRUE )
+      {
+        WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+            WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
+        gameWork->state = CGS_FADEOUT_WAIT_CAMERA;
+      }
+    }
+    break;
+
+  case CGS_FADEOUT_WAIT_CAMERA:// カメラ用
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+      CTVT_CAMERA_StopCapture( work, camWork );
+      gameWork->state = CGS_CAMERA_EXIT;
+    }
+    break;
+
   case CGS_CAMERA_INIT:  // カメラ撮影
     gameWork->p_cam_wk = CTVT_GAME_CAM_Init( gameWork->p_cam_param, heapId );
-    gameWork->state = CGS_CAMERA_MAIN;
+    gameWork->state = CGS_FADEIN_CAMERA;
     break;
 
   case CGS_CAMERA_MAIN:  // カメラ撮影
     if( CTVT_GAME_CAM_Main( gameWork->p_cam_wk ) )
     {
-      gameWork->state = CGS_CAMERA_EXIT;
+      gameWork->state = CGS_FADEOUT_CAMERA;
     }
     break;
 
@@ -632,7 +666,7 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
 
   case CGS_GAME_INIT:
     CTVT_GAME_Init( work, gameWork );
-    gameWork->state = CGS_GAME_MAIN;
+    gameWork->state = CGS_FADEIN;
     break;
 
   case CGS_GAME_MAIN:
@@ -649,6 +683,12 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
   case CGS_GAME_EXIT:
     CTVT_GAME_Exit( work, gameWork );
     gameWork->state = CGS_FADEOUT;
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+      COMM_TVT_SetSusspend( work , TRUE );
+      CTVT_CAMERA_StopCapture( work , camWork );
+      CTVT_CAMERA_PlayStopSe(work,camWork);
+    }
     break;
 
     //親のリクエストによる終了
@@ -1327,8 +1367,14 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 #endif
 
   // COMM_TVT_Mainからコピーしてきた
-  GFL_CLACT_SYS_Main();
-  PRINTSYS_QUE_Main( COMM_TVT_GetPrintQue(work) );
+  if( !(GFL_UI_KEY_GetCont()&PAD_BUTTON_START) )
+  {
+    GFL_CLACT_SYS_Main();
+  }
+  if( !(GFL_UI_KEY_GetCont()&PAD_BUTTON_SELECT) )
+  {
+    PRINTSYS_QUE_Main( COMM_TVT_GetPrintQue(work) );
+  }
 
   return FALSE;
 }
@@ -1531,7 +1577,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
           gameWork->cellResIdx[CGOR_COMMON_ANM],
           &cellInitData ,CLSYS_DEFREND_SUB, heapID );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOme[i], FALSE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOme[i], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOme[i], FALSE );
     }
   }
   // OBJ作成  倍角を使っているのでaffineで。
@@ -1559,7 +1605,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
         gameWork->cellResIdx[CGOR_COMMON_ANM],
         &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_M[0], FALSE );
-    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_M[0], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_M[0], FALSE );
 
     cellAffineData.clwkdata.pos_x  = 150;
     cellAffineData.clwkdata.pos_y  = 150;
@@ -1572,7 +1618,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
         gameWork->cellResIdx[CGOR_COMMON_ANM],
         &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_M[1], FALSE );
-    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_M[1], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_M[1], FALSE );
 
     // 雲 2
     cellAffineData.clwkdata.pos_x  = 150;
@@ -1586,7 +1632,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
         gameWork->cellResIdx[CGOR_COMMON_ANM],
         &cellAffineData ,CLSYS_DEFREND_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_S[0], FALSE );
-    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_S[0], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_S[0], FALSE );
 
     cellAffineData.clwkdata.pos_x  = 50;
     cellAffineData.clwkdata.pos_y  = 150;
@@ -1599,7 +1645,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
         gameWork->cellResIdx[CGOR_COMMON_ANM],
         &cellAffineData ,CLSYS_DEFREND_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_S[1], FALSE );
-    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_S[1], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_S[1], FALSE );
   }
 
   // プレート作成
@@ -1703,8 +1749,9 @@ static BOOL game_update_seq_title( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     u8 i;
     for( i=0; i<3; i++ )
     {
-      // タイトル非表示
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i], FALSE );
+      // タイトル 削除
+      //GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i], FALSE );
+      GFL_CLACT_WK_Remove( gameWork->clwkTitle[i] );
     }
 
     // タイムゲージ表示
@@ -1715,8 +1762,8 @@ static BOOL game_update_seq_title( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
       // 雲表示
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_M[i], TRUE );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_S[i], TRUE );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkCloud_M[i] );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkCloud_S[i] );
+      //GFL_CLACT_WK_ResetAnm( gameWork->clwkCloud_M[i] );
+      //GFL_CLACT_WK_ResetAnm( gameWork->clwkCloud_S[i] );
     }
 
     // プレート表示
@@ -2062,7 +2109,6 @@ static void game_update_seq_exit( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   // OBJ破棄
   for( i=0; i<3; i++ )
   {
-    GFL_CLACT_WK_Remove( gameWork->clwkTitle[i] );
     GFL_CLACT_WK_Remove( gameWork->clwkOme[i] );
   }
   for( i=0; i<2; i++ )

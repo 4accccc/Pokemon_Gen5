@@ -933,9 +933,9 @@ void CTVT_CAMERA_PlayStartSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
   if( COMM_TVT_CanUseCamera() == TRUE )
   {
-#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
-    CAMERA_SYS_PlayStartSe( camWork->camSys );
-#endif
+//#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
+    //CAMERA_SYS_PlayStartSe( camWork->camSys );
+//#endif
     camWork->isPlayStartSe = TRUE;
   }
 }
@@ -946,9 +946,9 @@ void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     if( camWork->isPlayStartSe == TRUE &&
         camWork->isPlayStopSe == FALSE )
     {
-#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
-      CAMERA_SYS_PlayStopSe( camWork->camSys );
-#endif
+//#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
+      //CAMERA_SYS_PlayStopSe( camWork->camSys );
+//#endif
       camWork->isPlayStopSe = TRUE;
     }
   }

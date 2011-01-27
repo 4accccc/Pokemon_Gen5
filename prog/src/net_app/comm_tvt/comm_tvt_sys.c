@@ -370,7 +370,7 @@ static void COMM_TVT_Term_ForGame2( COMM_TVT_WORK *work )
   if (OS_IsRunOnTwl() )
   {
     CTVT_GAME_TermSystem( work, work->gameWork );
-  } 
+  }
 
   CTVT_COMM_TermSystem( work , work->commWork );
   CTVT_CAMERA_Term( work , work->camWork );
@@ -442,6 +442,15 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   // ミニゲームだと以降の処理は必要ないはず
   if( work->mode == CTM_GAME || work->isGame == TRUE )
   {
+    if( work->mode == CTM_END || work->mode == CTM_ERROR )
+    {
+      if( COMM_TVT_CanUseCamera() == TRUE )
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CAMERA_SYSTEM_WORK *camSys = CTVT_CAMERA_GetCamSys( work, camWork );
+        CAMERA_SYS_UpdateCameta( camSys );
+      }
+    }
     return FALSE;
   }
 

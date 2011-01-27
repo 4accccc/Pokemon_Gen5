@@ -284,6 +284,7 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, CLWKID clwkID );
 static void MSGWND_Init( MSGWND_WORK *p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, WORDSET *p_word, HEAPID heapID );
 static void MGSWND_Exit( MSGWND_WORK *p_wk );
 static void MSGWND_Print( MSGWND_WORK *p_wk, u32 msgID );
+static void MSGWND_PrintNumber( MSGWND_WORK *p_wk, u8 number, u32 msgID );
 static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
 
 //-------------------------------------
@@ -291,7 +292,7 @@ static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
 //=====================================
 static void PS_Init( PS_WORK *p_wk, HEAPID heapID );
 static void PS_Exit( PS_WORK *p_wk );
-static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, HEAPID heapID );
+static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, HEAPID heapID );
 
 //-------------------------------------
 ///	INFO 上画面写真
@@ -333,8 +334,6 @@ static void SEQ_End( SEQ_WORK *p_wk );
 //-------------------------------------
 ///	SEQFUNC
 //=====================================
-static void SEQFUNC_FadeOut( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
-static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 
 // 通信同期
@@ -444,6 +443,9 @@ BOOL CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk )
 
   // プリント
   PRINTSYS_QUE_Main( p_wk->p_que );
+
+  // カメラ
+  CAMERA_SYS_UpdateCameta( p_wk->p_param->p_cam_sys );
 
   // 終了
   if( SEQ_IsEnd( &p_wk->seq ) && COMM_IsEnd(&p_wk->comm) )
@@ -855,6 +857,19 @@ static void MSGWND_Print( MSGWND_WORK *p_wk, u32 msgID )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  メッセージウィンドウ  数字入力
+ *
+ *	@param	MSGWND_WORK *p_wk
+ *	@param	number
+ *	@param	msgID 
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintNumber( MSGWND_WORK *p_wk, u8 number, u32 msgID )
+{
+
+}
+//----------------------------------------------------------------------------
+/**
  *  @brief  メッセージウィンドウ  QUEの描画待ち
  *
  *  @param  const MSGWND_WORK* cp_wk  ワーク
@@ -920,7 +935,7 @@ static void PS_Exit( PS_WORK *p_wk )
  *	@param	heapID        ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, HEAPID heapID )
+static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, HEAPID heapID )
 {
 
   // 設定をクリア
@@ -936,10 +951,8 @@ static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, HEAPID heapID )
       p_msgwnd->p_font, MSGSPEED_GetWait(),
       p_wk->p_tcblsys, 2, heapID, p_msgwnd->clear_chr );
 
-  //PRINTSYS_PrintStream_StopTempSpeedMode
-
   // その他設定
-  p_wk->next_seq_function = SEQFUNC_TWL_Main;
+  p_wk->next_seq_function = next_seq_function;
   p_wk->wait_max  = 60;
   p_wk->wait_count= 0;
 }
@@ -1534,94 +1547,6 @@ static void SEQ_End( SEQ_WORK *p_wk )
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *  @brief  フェードOUT
- *
- *  @param  SEQ_WORK *p_seqwk シーケンスワーク
- *  @param  *p_seq          シーケンス
- *  @param  *p_param        ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_FadeOut( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
-{ 
-  enum
-  { 
-    SEQ_FADEOUT_START,
-    SEQ_FADEOUT_WAIT,
-    SEQ_END,
-  };
-
-  CTVT_GAME_CAM_WORK *p_wk = p_param;
-
-  switch( *p_seq )
-  { 
-  case SEQ_FADEOUT_START:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-    *p_seq  = SEQ_FADEOUT_WAIT;
-    break;
-
-  case SEQ_FADEOUT_WAIT:
-    if( !GFL_FADE_CheckFade() )
-    { 
-      *p_seq  = SEQ_END;
-    }
-    break;
-
-  case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_SYNC_Init );
-    break;
-
-  default:
-    GF_ASSERT(0);
-  }
-  
-}
-//----------------------------------------------------------------------------
-/**
- *  @brief  フェードIN
- *
- *  @param  SEQ_WORK *p_seqwk シーケンスワーク
- *  @param  *p_seq          シーケンス
- *  @param  *p_param        ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
-{
-  enum
-  {
-    SEQ_FADEIN_START,
-    SEQ_FADEIN_WAIT,
-    SEQ_EXIT,
-  };  
-
-  CTVT_GAME_CAM_WORK *p_wk = p_param;
-
-  switch( *p_seq )
-  { 
-  case SEQ_FADEIN_START:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-    *p_seq  = SEQ_FADEIN_WAIT;
-    break;
-
-  case SEQ_FADEIN_WAIT:
-    if( !GFL_FADE_CheckFade() )
-    { 
-      *p_seq  = SEQ_EXIT;
-    }
-    break;
-
-  case SEQ_EXIT:
-    SEQ_SetNext( p_seqwk, SEQFUNC_SYNC_End );
-    break;
-
-  default:
-    GF_ASSERT(0);
-  }
-
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  シーケンス終了
  *
  *	@param	SEQ_WORK *p_seqwk シーケンスワーク
@@ -1865,8 +1790,7 @@ static void SEQFUNC_TWL_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   // 最初の説明メッセージ
   // プリントストリームは3つで1セット
   MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_06 );
-  PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, p_wk->heapID );
-  //PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->ps.p_stream, 7 );
+  PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, p_wk->heapID );
   SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
 
 #if 1
@@ -1902,7 +1826,6 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   enum
   {
-    SEQ_READY_MSG,    // 説明メッセージ表示
     SEQ_CAPTURE_MSG,  // 写真撮影メッセージ表示
     SEQ_CAPTURE,      // 写真撮影
     SEQ_SEND,         // 送信する
@@ -1914,10 +1837,6 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
   switch( *p_seq ){
-  case SEQ_READY_MSG:    // 説明メッセージ表示
-    //MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_06 );
-    *p_seq = SEQ_CAPTURE_MSG;
-    break;
   case SEQ_CAPTURE_MSG:
     MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_08 );
     // カウントダウン開始
@@ -1925,7 +1844,7 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     GFL_CLACT_WK_ResetAnm( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ) );
     *p_seq = SEQ_CAPTURE;
     break;
-  case SEQ_CAPTURE:     // 写真変換
+  case SEQ_CAPTURE:     // 写真撮影
     if( GFL_CLACT_WK_CheckAnmActive( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ) ) == FALSE )
     {
       void* tmp = COMM_GetSendBuf( &p_wk->comm );
@@ -1959,7 +1878,7 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
       // プリントストリームでメッセージ表示
       MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_06 );
-      PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, p_wk->heapID );
+      PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, p_wk->heapID );
       SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
     }
     else
@@ -1975,7 +1894,6 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   // メイン処理
   MSGWND_PrintMain( &p_wk->msgwnd );
-  CAMERA_SYS_UpdateCameta( p_wk->p_param->p_cam_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -1995,7 +1913,8 @@ static void SEQFUNC_TWL_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   // カメラのキャプチャはSTOP
   CAMERA_SYS_StopCapture( p_wk->p_param->p_cam_sys );
 
-  if( CAMERA_SYS_IsStopCapture( p_wk->p_param->p_cam_sys ) == TRUE )
+  //// StopCaptureは停止音待ち
+  //if( CAMERA_SYS_IsStopCapture( p_wk->p_param->p_cam_sys ) == TRUE )
   {
     // カメラモジュール破棄
     CAM_Exit( &p_wk->camera );
