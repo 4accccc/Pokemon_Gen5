@@ -79,13 +79,13 @@ EVENT_START ev_prog_c03gym0101_gate_out
 
   SWITCH $i_player_dir
   CASE DIR_UP THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_u )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_u )
   CASE DIR_DOWN THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_d )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_d )
   CASE DIR_LEFT THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_l )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_l )
   CASE DIR_RIGHT THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_r )
   ENDSWITCH
   _OBJ_ANIME_WAIT()
 
@@ -119,7 +119,21 @@ _ANIME_LABEL anm_player_gateout_exit
 //ÉQÅ[ÉgÉCÉìÉAÉjÉÅ
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_player_gatein_u
-  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA AC_ANM_PAUSE_ON,1
+  _ANIME_DATA AC_WALK_U_2F,2
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA AC_ANM_PAUSE_OFF,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gatein_d
@@ -127,11 +141,44 @@ _ANIME_LABEL  anm_player_gatein_d
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gatein_l
-  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA AC_ANM_PAUSE_ON,1
+  _ANIME_DATA AC_WALK_L_2F,2
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA AC_ANM_PAUSE_OFF,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gatein_r
   _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gateout_u
+  _ANIME_DATA AC_WALK_U_2F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gateout_d
+  _ANIME_DATA AC_JUMP_D_2G_16F,1
+//  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gateout_l
+  _ANIME_DATA AC_JUMP_L_2G_16F,1
+//  _ANIME_DATA AC_WALK_L_2F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gateout_r
+  _ANIME_DATA AC_JUMP_R_2G_16F,1
+//  _ANIME_DATA AC_WALK_R_8F,2
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------
@@ -163,7 +210,7 @@ EVENT_START ev_reserve_c03gym0101_gateout_1c
   IF FLAG_OFF(FE_C03GYM0101_COCCON_01) THEN
     _SE_PLAY( SEQ_SE_BDEMO_01 ) //ñöÇ™îjÇÍÇÈâπ
     _GYM_INSECT_COCCON_OPEN( COCCON_ID_1C )
-    _TIME_WAIT(30)
+    _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
 	  _FLAG_SET( FE_C03GYM0101_COCCON_01 )
   ENDIF
 
@@ -206,7 +253,7 @@ EVENT_START ev_pos_c03gym0101_gate_3b
   _SE_PLAY( SEQ_SE_BDEMO_01 ) //ñöÇ™îjÇÍÇÈâπ
   _GYM_INSECT_COCCON_OPEN( COCCON_ID_3B )
   _FLAG_SET( FE_C03GYM0101_COCCON_02 )
-  _TIME_WAIT(30)
+  _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
 
   //éãê¸ã»Ççƒê∂
 	_TRAINER_BGM_SET( TRID_PRINCE_02 )

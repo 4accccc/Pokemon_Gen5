@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2011-01-26T17:29:26
+	Update:2011-01-27T15:16:12
  *****************************************************************************/
 
 #ifndef NARC_GYM_INSECT_NAIX_
@@ -21,7 +21,8 @@ enum {
 	NARC_gym_insect_coccon_nsbmd = 7,
 	NARC_gym_insect_coccon_nsbca = 8,
 	NARC_gym_insect_coccon_nsbma = 9,
-	NARC_gym_insect_coccon_nsbta = 10
+	NARC_gym_insect_coccon_nsbta = 10,
+	NARC_gym_insect_sphere_nsbmd = 11
 };
 
 /* NARC_GYM_INSECT_NAIX_ */

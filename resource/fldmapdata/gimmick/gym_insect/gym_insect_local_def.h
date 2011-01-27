@@ -10,3 +10,4 @@
 //スイッチのグリッド位置座標
 #define COCCON_ID_1C (0)	//繭ID 1C
 #define COCCON_ID_3B (1)	//繭ID 3B
+#define COCCON_OPEN_ANM_WAIT (70)

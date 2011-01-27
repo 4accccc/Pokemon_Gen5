@@ -9,6 +9,7 @@ DATA_LIST = \
      coccon.nsbmd \
      coccon.nsbca \
      coccon.nsbma \
-     coccon.nsbta
+     coccon.nsbta \
+     sphere.nsbmd
 
 

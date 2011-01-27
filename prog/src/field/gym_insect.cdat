@@ -10,8 +10,8 @@
 #pragma once
 
 #define FLOOR_RECT_HEIGHT (FIELD_CONST_GRID_FX32_SIZE*20)
-#define FLOOR_RECT_ATTR   ((MAPATTR_FLAGBIT_SHADOW<<16)|MATTR_NORMAL)
-#define FLOOR_HRECT_ATTR   (((MAPATTR_FLAGBIT_SHADOW|MAPATTR_FLAGBIT_HITCH)<<16)|MATTR_NOT_MOVE)
+#define FLOOR_RECT_ATTR   (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL)
+#define FLOOR_HRECT_ATTR   (((MAPATTR_FLAGBIT_SHADOW|MAPATTR_FLAGBIT_HITCH|MAPATTR_FLAGBIT_LIGHT)<<16)|MATTR_NOT_MOVE)
 
 #define FLOOR_HRECT01_PX (3)
 #define FLOOR_HRECT01_PZ (13)
@@ -142,7 +142,7 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 //7
 #define GATE_1B_3B_PX (26)
 #define GATE_1B_3B_PY (0)
-#define GATE_1B_3B_PZ (5)
+#define GATE_1B_3B_PZ (6)
 #define GATE_1B_3B_IN_DIR (DIR_UP)
 #define GATE_1B_3B_OUT_DIR (DIR_DOWN)
 //8
@@ -215,6 +215,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbca, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
   { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbma, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
   { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbta, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
+	{ ARCID_GYM_INSECT, NARC_gym_insect_sphere_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　繭玉
 };
 static const GFL_G3D_UTIL_ANM g3Dutil_CocconAnmTbl[] = {
 	{ 1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
@@ -241,6 +242,14 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		0, 	//テクスチャリソースID
 		g3Dutil_CocconAnmTbl,			//アニメテーブル(複数指定のため)
 		OBJ_COCCON_ANM_MAX,	//アニメリソース数
+  },
+  //繭玉
+  {
+		4, 	//モデルリソースID
+		0, //モデルデータID(リソース内部INDEX)
+		4, 	//テクスチャリソースID
+		NULL,			//アニメテーブル(複数指定のため)
+		0,	//アニメリソース数
   },
 };
 static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
