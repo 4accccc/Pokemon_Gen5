@@ -46,7 +46,6 @@
  *					定数宣言
 */
 //=============================================================================
-#define CTVT_CALL_MSG_SE_CNT (240)
 //=============================================================================
 /**
  *					構造体宣言
@@ -60,7 +59,8 @@ typedef struct
   GFL_BMPWIN        *p_msgwin;
   TIMEICON_WORK     *p_timeicon;
   LOCAL_TVT_MESSAGE *p_message;
-  u32               call_cnt;
+  u16               call_cnt;
+  u16               is_end;
 } CALLMSG;
 
 
@@ -661,6 +661,7 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
     if( LOCAL_TVT_CHARA_SYS_IsLoadEnd( p_wk->param.p_chara_sys ) )
     {
       LOCAL_TVT_CHARA_SYS_SetVisible( p_wk->param.p_chara_sys, TRUE );
+      PMSND_PlaySE( LOCAL_TVT_SE_CALL_ANSWER );
       (*p_seq)++;
     }
     break;
@@ -729,6 +730,7 @@ static void LOCAL_TVT_SEQ_FadeOut( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_w
  *    呼び出しメッセージ
  */
 //=============================================================================
+#define CALLMSG_CALL_CNT  (240)
 //----------------------------------------------------------------------------
 /**
  *	@brief  呼び出しメッセージ初期化
@@ -793,9 +795,20 @@ static void CALLMSG_Exit( CALLMSG *p_wk )
 //-----------------------------------------------------------------------------
 static void CALLMSG_Main( CALLMSG *p_wk )
 {
-  if( p_wk->call_cnt++ > CTVT_CALL_MSG_SE_CNT )
+  if( p_wk->is_end )
+  {
+    return;
+  }
+      
+  if( p_wk->call_cnt == CALLMSG_CALL_CNT/2 )
+  {
+    PMSND_PlaySE_byPlayerID( LOCAL_TVT_SE_TEL_CALL, SEPLAYER_SE2 );
+  }
+
+  if( p_wk->call_cnt++ >= CALLMSG_CALL_CNT )
   {
     PMSND_StopSE();
+    p_wk->is_end  = TRUE;
   }
 }
 //----------------------------------------------------------------------------
@@ -809,10 +822,5 @@ static void CALLMSG_Main( CALLMSG *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL CALLMSG_IsEnd( const CALLMSG *cp_wk )
 {
-  if( cp_wk->call_cnt > CTVT_CALL_MSG_SE_CNT )
-  {
-    return TRUE;
-  }
-
-  return FALSE;
+  return cp_wk->is_end;
 }

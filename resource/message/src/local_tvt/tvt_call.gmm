@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-27T11:44:30"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-01-27T17:33:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="320" top="78" right="1025" bottom="706" maximized="no" rayout="Vertical2">
+	<dialog left="425" top="92" right="1130" bottom="720" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="657" top="66" right="1130" bottom="464" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -805,708 +805,824 @@
 
 	<row id="CALL_SECRET_GREET_R_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。１段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひまか？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひまか？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_R_02" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。２段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひまか？　２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひまか？　２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_R_03" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。３段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひまか？　３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひまか？　３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_R_04" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。４段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひまか？　４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひまか？　４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_S_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。１段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">やあ！　どうしたんだ？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やあ！　どうしたんだ？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_S_02" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。２段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">やあ！　どうしたんだ？　２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やあ！　どうしたんだ？　２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_S_03" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。３段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">やあ！　どうしたんだ？　３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やあ！　どうしたんだ？　３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_S_04" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。４段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">やあ！　どうしたんだ？　４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やあ！　どうしたんだ？　４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１回目　　　　趣味について聞かれます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきですね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">今日は　いい天気ですね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　しゅみ　なんだ！１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　しゅみ　なんだ！１[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_01_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>１回目　　　　趣味：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_02" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２回目　　　　特技について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　とくぎ　なんだ！２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　とくぎ　なんだ！２[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_02_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>２回目　　　　特技：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_03" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３回目　　　　すきな色について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきないろ　なんだ！３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきないろ　なんだ！３[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_03_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>３回目　　　　すきな色：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_04" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>４回目　　　　好きなスポーツについて聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきなスポーツ　なんだ！４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきなスポーツ　なんだ！４[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_04_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>４回目　　　　好きなスポーツアンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_05" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>５回目　　　　好きな食べ物について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきなたべもの　なんだ！５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきなたべもの　なんだ！５[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_05_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>５回目　　　　好きな食べ物：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_06" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>６回目　　　　苦手な事について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　にがて　なんだ！６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　にがて　なんだ！６[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_06_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>６回目　　　　苦手な事：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_07" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>７回目　　　　好きな場所について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきなばしょ　なんだ！７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきなばしょ　なんだ！７[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_07_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>７回目　　　　好きな場所：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_08" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>８回目　　　　好きなポケモンについて聞かれます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　
+すきなポケモン　なんだ！８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　
+すきなポケモン　なんだ！８[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_08_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>８回目　　　　好きなポケモン：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきだな　８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_09" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>９回目　　　　家族構成について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_10" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１０回目　　　受け渡しの約束が発生。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_11" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１１回目　　　趣味について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_12" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１２回目　　　特技について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_13" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１３回目　　　すきな色について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_14" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１４回目　　　好きなスポーツについて話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_15" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１５回目　　　好きな食べ物について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_16" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１６回目　　　苦手な事について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_17" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１７回目　　　好きな場所について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_18" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１８回目　　　好きなポケモンについて話してきます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_19" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１９回目　　　家族構成について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　１９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　１９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_20" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２０回目　　　主人公との会話（が楽しい事）について話してきます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_21" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２１回目　　　悩み相談１。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_22" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２２回目　　　悩み相談２。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_23" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２３回目　　　悩み相談３。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_24" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２４回目　　　悩み相談４。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_25" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２５回目　　　悩み相談５。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_26" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２６回目　　　悩み相談６。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_27" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２７回目　　　悩み相談７。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_28" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２８回目　　　悩み相談８。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_29" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２９回目　　　悩み相談９。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　２９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　２９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_30" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３０回目　　　デートの約束が発生。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_31" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_32" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_33" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_34" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_35" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_36" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_37" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_38" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_39" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　３９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　３９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_40" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>４０回目　　　仕事の合間にライブキャスター。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_41" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_42" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_43" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_44" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_45" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_46" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_47" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_48" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_49" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　４９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　４９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_50" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>５０回目　　　素顔でライブキャスター。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきだな　５０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　５０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="CALL_SECRET_BYE_01">
-		<language name="JPN" width="256">さよなら…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さよなら…[BE:01:ページ切り替え（クリア）]</language>
+	<row id="CALL_SECRET_BYE_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">さよならだな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さよならだな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FR_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。１段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひま？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FR_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。２段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひま？　２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？　２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FR_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。３段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひま？　３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？　３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FR_04" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。４段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">もしもし！　いま　ひま？　４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？　４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FS_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。１段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">こんにちは！　どうしたの？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FS_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。２段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">こんにちは！　どうしたの？　２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？　２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FS_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。３段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">こんにちは！　どうしたの？　３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？　３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FS_04" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。４段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">こんにちは！　どうしたの？　４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？　４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１回目　　　　趣味について聞かれます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　しゅみ　なんですね！１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　しゅみ　なんですね！１[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_01_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>１回目　　　　趣味：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２回目　　　　特技について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　とくぎ　なんですね！２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　とくぎ　なんですね！２[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_02_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>２回目　　　　特技：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３回目　　　　すきな色について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきないろ　なんですね！３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきないろ　なんですね！３[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_03_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>３回目　　　　すきな色：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_04" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>４回目　　　　好きなスポーツについて聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきなスポーツ　なんですね！４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきなスポーツ　なんですね！４[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_04_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>４回目　　　　好きなスポーツアンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_05" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>５回目　　　　好きな食べ物について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきなたべもの　なんですね！５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきなたべもの　なんですね！５[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_05_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>５回目　　　　好きな食べ物：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_06" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>６回目　　　　苦手な事について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　にがて　なんですね！６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　にがて　なんですね！６[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_06_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>６回目　　　　苦手な事：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_07" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>７回目　　　　好きな場所について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が
+すきなばしょ　なんですね！７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が
+すきなばしょ　なんですね！７[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_07_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>７回目　　　　好きな場所：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_08" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>８回目　　　　好きなポケモンについて聞かれます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:13:アンケート回答:0]が　
+すきなポケモン　なんですね！８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　
+すきなポケモン　なんですね！８[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_08_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>８回目　　　　好きなポケモン：アンケなし</comment>
+		<language name="JPN" width="256">きょうは　いいてんきですね　８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_09" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>９回目　　　　家族構成について聞かれます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_10" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１０回目　　　受け渡しの約束が発生。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_11" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１１回目　　　趣味について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_12" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１２回目　　　特技について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_13" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１３回目　　　すきな色について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_14" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１４回目　　　好きなスポーツについて話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_15" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１５回目　　　好きな食べ物について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_16" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１６回目　　　苦手な事について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_17" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１７回目　　　好きな場所について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_18" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１８回目　　　好きなポケモンについて話してきます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_19" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１９回目　　　家族構成について話してきます。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　１９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　１９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_20" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２０回目　　　主人公との会話（が楽しい事）について話してきます。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_21" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２１回目　　　悩み相談１。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_22" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２２回目　　　悩み相談２。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_23" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２３回目　　　悩み相談３。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_24" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２４回目　　　悩み相談４。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_25" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２５回目　　　悩み相談５。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_26" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２６回目　　　悩み相談６。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_27" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２７回目　　　悩み相談７。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_28" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２８回目　　　悩み相談８。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_29" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２９回目　　　悩み相談９。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　２９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　２９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_30" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３０回目　　　デートの約束が発生。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_31" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_32" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_33" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_34" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_35" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_36" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_37" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_38" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_39" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　３９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　３９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_40" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>４０回目　　　仕事の合間にライブキャスター。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_41" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_42" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_43" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４３[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４３[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_44" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４４[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４４[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_45" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４５[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４５[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_46" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４６[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４６[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_47" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４７[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４７[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_48" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４８[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４８[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_49" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>３１回目～　　日常会話（会話内容を複数用意してランダムで表示するようにします）。　</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　４９[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　４９[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_TALK_F_50" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>５０回目　　　素顔でライブキャスター。</comment>
-		<language name="JPN" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きょうは　いいてんきね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きょうは　いいてんきですね　５０[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　５０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="CALL_SECRET_BYE_F_01">
-		<language name="JPN" width="256">さよなら…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さよなら…[BE:01:ページ切り替え（クリア）]</language>
+	<row id="CALL_SECRET_BYE_F_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">さよならですね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さよならですね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

@@ -494,6 +494,19 @@ void LOCAL_TVT_MESSAGE_RegisterPlayerName( LOCAL_TVT_MESSAGE *p_wk, GAMEDATA *p_
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  アンケートを登録
+ *
+ *	@param	LOCAL_TVT_MESSAGE *p_wk   ワーク
+ *	@param  buffID  バッファID
+ *	@param  answerID  回答番号  
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_MESSAGE_RegisterQuestionnaire( LOCAL_TVT_MESSAGE *p_wk, u16 buffID, u16 answerID )
+{
+  WORDSET_RegisterAnswerName( p_wk->p_wordset, buffID, answerID );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  ポケモンニックネームを登録
  *
  *	@param	LOCAL_TVT_MESSAGE *p_wk ワーク

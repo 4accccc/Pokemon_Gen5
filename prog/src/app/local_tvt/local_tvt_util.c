@@ -598,7 +598,7 @@ LOCAL_TVT_LIST * LOCAL_TVT_LIST_Init( const LOCAL_TVT_LIST_PARAM *cp_param, HEAP
           x, y, w, h, LTVT_PLT_BG_SUB_LIST, GFL_BG_CHRAREA_GET_B );
 
       //文字
-      LOCAL_TVT_MESSAGE_SetPrintColor( p_wk->param.p_message, PRINTSYS_MACRO_LSB(0xf,0xE,2) );
+      LOCAL_TVT_MESSAGE_SetPrintColor( p_wk->param.p_message, PRINTSYS_MACRO_LSB(0xf,0xE,3) );
       LOCAL_TVT_MESSAGE_SetPrintPos( p_wk->param.p_message, 0, 0, LOCAL_TVT_MESSAGE_POS_CENTER );
       LOCAL_TVT_MESSAGE_PrintMsg( p_wk->param.p_message, p_wk->p_selectwin[i], p_wk->param.cp_msgdata, p_wk->param.msgID[i] );
       GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_selectwin[i] );
@@ -1033,6 +1033,7 @@ struct _LOCAL_TVT_POKELIST
   GFL_ARCUTIL_TRANSINFO plate_bg;
   u16   plt_normal[0x10];
   u16   plt_decide[0x10];
+  u16   plt_nopush[0x10];
   u16   plt_buff[0x10];
   u32   seq;
   s32   cursor_pos;
@@ -1046,6 +1047,7 @@ struct _LOCAL_TVT_POKELIST
   GFL_TCB    *p_set_visible_tcb;
   BOOL is_visible_req;
 };
+static void Local_Tvt_Pokelist_ClearList( LOCAL_TVT_POKELIST *p_wk, BOOL is_cursor );
 
 static void Local_Tvt_Pokelist_GetRowColIndex( u32 cursor_pos, s16 *p_row, s16 *p_col );
 static void Local_Tvt_Pokelist_GetRowColIndexMax( u32 cursor_pos, u32 cursor_max, s16 *p_row, s16 *p_col );
@@ -1090,9 +1092,11 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
       cp_plt_adrs = p_plt_data->pRawData;
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->plt_normal, sizeof(u16) * 0x10 );
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 1 * 0x20, p_wk->plt_decide, sizeof(u16) * 0x10 );
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 2 * 0x20, p_wk->plt_nopush, sizeof(u16) * 0x10 );
 
       GFL_BG_LoadPalette( LTVT_FRAME_SUB_BAR, p_wk->plt_normal, sizeof(u16)*0x10, LTVT_PLT_BG_SUB_LIST * 32 );
       GFL_BG_LoadPalette( LTVT_FRAME_SUB_BAR, p_wk->plt_decide, sizeof(u16)*0x10, LTVT_PLT_BG_SUB_LIST_ON * 32 );
+      GFL_BG_LoadPalette( LTVT_FRAME_SUB_BAR, p_wk->plt_nopush, sizeof(u16)*0x10, LTVT_PLT_BG_SUB_LIST_OFF * 32 );
 
       GFL_HEAP_FreeMemory( p_plt_buff );
     }
@@ -1105,25 +1109,8 @@ LOCAL_TVT_POKELIST * LOCAL_TVT_POKELIST_Init( const LOCAL_TVT_POKELIST_PARAM *cp
         GFL_ARCUTIL_TRANSINFO_GetPos( p_wk->plate_bg ),
         0, FALSE, heapID );
 
-    {
-      //ポケモンがいないときは消す
-      int i;
-
-      for( i = PokeParty_GetPokeCount( p_wk->param.p_party );  
-          i < PokeParty_GetPokeCountMax( p_wk->param.p_party );
-          i++ )
-      {
-        u8  x = POKELIST_X(i);
-        u8  y = POKELIST_Y(i);
-        u8  w = POKELIST_W(i);
-        u8  h = POKELIST_H(i);
-        GFL_BG_FillScreen( LTVT_FRAME_SUB_BAR, 
-            0, x, y, w, h, GFL_BG_SCRWRT_PALNL );
-      }
-    }
-
-    GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR , 0 , 0, 32 , 21, LTVT_PLT_BG_SUB_LIST );
-    GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_BAR );
+    //初期リスト設定
+    Local_Tvt_Pokelist_ClearList( p_wk, FALSE );
 
     //背景
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_local_tvt_graphic_back_pokelist_NCLR, 
@@ -1320,18 +1307,7 @@ void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk )
       GFL_BG_LoadPalette( LTVT_FRAME_SUB_BAR, p_wk->plt_decide, sizeof(u16)*0x10, LTVT_PLT_BG_SUB_LIST_ON * 32 );
 
       //いったん全部選択解除
-      {
-        int i;
-        for( i = 0; i < PokeParty_GetPokeCount(p_wk->param.p_party); i++ )
-        {
-          u8  x = POKELIST_X(i);
-          u8  y = POKELIST_Y(i);
-          u8  w = POKELIST_W(i);
-          u8  h = POKELIST_H(i);
-          GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR,
-              x, y, w, h, LTVT_PLT_BG_SUB_LIST );
-        }
-      }
+      Local_Tvt_Pokelist_ClearList( p_wk, FALSE );
       break;
     }
     else if( LOCAL_TVT_TOUCHBAR_IsTrg( p_wk->p_touchbar ) )
@@ -1347,7 +1323,12 @@ void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk )
     {
       p_wk->anm_frame += 0x400;
     }
-      LOCAL_TVT_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_SUB, p_wk->plt_buff, p_wk->anm_frame, LTVT_PLT_BG_SUB_LIST_ON, p_wk->plt_normal, p_wk->plt_decide );
+    {
+      const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->param.p_party, p_wk->cursor_pos );
+      BOOL is_egg = PP_Get( cp_pp, ID_PARA_tamago_flag, NULL );
+      u16 * p_plt = is_egg ? p_wk->plt_nopush: p_wk->plt_normal;
+      LOCAL_TVT_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_SUB, p_wk->plt_buff, p_wk->anm_frame, LTVT_PLT_BG_SUB_LIST_ON, p_plt, p_wk->plt_decide );
+    }
     break;
 
   case SEQ_DECIDE_ANM:
@@ -1461,6 +1442,57 @@ const POKEMON_PARAM * LOCAL_TVT_POKELIST_GetSelect( const LOCAL_TVT_POKELIST *cp
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  リストをクリア
+ *
+ *	@param	LOCAL_TVT_POKELIST *p_wk ワーク
+ *	@param  BOOL  is_cursor TRUEでカーソルの箇所は決定色で塗る
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_Pokelist_ClearList( LOCAL_TVT_POKELIST *p_wk, BOOL is_cursor )
+{
+  int i;
+  for( i = 0; i < PokeParty_GetPokeCountMax( p_wk->param.p_party ); i++ )
+  {
+
+    u8  x = POKELIST_X(i);
+    u8  y = POKELIST_Y(i);
+    u8  w = POKELIST_W(i);
+    u8  h = POKELIST_H(i);
+
+    const POKEMON_PARAM *cp_pp  = NULL;
+    
+    if( i < PokeParty_GetPokeCount( p_wk->param.p_party ) )
+    {
+      cp_pp = PokeParty_GetMemberPointer( p_wk->param.p_party, i );
+    }
+
+    if( cp_pp == NULL || PP_Get( cp_pp, ID_PARA_poke_exist, NULL ) == FALSE )
+    {
+      GFL_BG_FillScreen( LTVT_FRAME_SUB_BAR, 
+          0, x, y, w, h, GFL_BG_SCRWRT_PALNL );
+    }
+    else if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) )
+    {
+      GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR , x , y, w, h, LTVT_PLT_BG_SUB_LIST_OFF );
+    }
+    else
+    {
+      GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR , x , y, w, h, LTVT_PLT_BG_SUB_LIST );
+    }
+
+    if( is_cursor )
+    {
+      if( i == p_wk->cursor_pos )
+      {
+        GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR , x , y, w, h, LTVT_PLT_BG_SUB_LIST_ON);
+      }
+    }
+  }
+
+  GFL_BG_LoadScreenV_Req( LTVT_FRAME_SUB_BAR );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  たて横のインデックスを取得
  *
  *	@param	u32 cursor_pos  カーソル位置
@@ -1531,11 +1563,22 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs )
 {
   LOCAL_TVT_POKELIST  *p_wk = p_wk_adrs;
   int ret = GFL_UI_TP_HitTrg( sc_pokelist_hit_tbl );
+
   if( ret != GFL_UI_TP_HIT_NONE && ret < PokeParty_GetPokeCount( p_wk->param.p_party ) )
   {
-    PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
-    p_wk->cursor_pos  = ret;
-    return LIST_UI_RESULT_DECIDE;
+    const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->param.p_party, ret );
+    if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) )
+    {
+      //卵は押せない
+      PMSND_PlaySE( LOCAL_TVT_SE_ERROR );
+      return LIST_UI_RESULT_NONE;
+    }
+    else
+    {
+      PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
+      p_wk->cursor_pos  = ret;
+      return LIST_UI_RESULT_DECIDE;
+    }
   }
   return LIST_UI_RESULT_NONE;
 }
@@ -1607,7 +1650,6 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   //決定
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
-    PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
     is_decide =TRUE;
   }
 
@@ -1616,28 +1658,22 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   {
     p_wk->cursor_pos  = sc_pokelist_pos[now_row][now_col];
 
-    //選択を変更
     {
-      int i;
-      u8 plt;
-      for( i = 0; i < PokeParty_GetPokeCount(p_wk->param.p_party); i++ )
+
+      const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->param.p_party, p_wk->cursor_pos );
+      if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) )
       {
-        u8  x = POKELIST_X(i);
-        u8  y = POKELIST_Y(i);
-        u8  w = POKELIST_W(i);
-        u8  h = POKELIST_H(i);
-        if( i == p_wk->cursor_pos )
-        {
-          plt = LTVT_PLT_BG_SUB_LIST_ON;
-        }
-        else
-        {
-          plt = LTVT_PLT_BG_SUB_LIST;
-        }
-        GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR,
-            x, y, w, h, plt );
+        PMSND_PlaySE( LOCAL_TVT_SE_ERROR );
+        is_decide = FALSE;
+      }
+      else
+      {
+        PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
       }
     }
+
+    //選択を変更
+    Local_Tvt_Pokelist_ClearList( p_wk, TRUE );
 
     //アニメを最初からにする
     p_wk->anm_frame = 0;
@@ -1674,30 +1710,12 @@ static void Local_Tvt_Pokelist_Change( void *p_wk_adrs, int touch_or_key )
   if( touch_or_key == GFL_APP_END_TOUCH )
   {
     //タッチモードになった
-
-    int i;
-    for( i = 0; i < PokeParty_GetPokeCount(p_wk->param.p_party); i++ )
-    {
-      u8  x = POKELIST_X(i);
-      u8  y = POKELIST_Y(i);
-      u8  w = POKELIST_W(i);
-      u8  h = POKELIST_H(i);
-      GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR,
-          x, y, w, h, LTVT_PLT_BG_SUB_LIST );
-    }
-    GFL_BG_LoadScreenV_Req( LTVT_FRAME_SUB_BAR );
+    Local_Tvt_Pokelist_ClearList( p_wk, FALSE );
   }
   else
   {
     //キーモードになった
-    u8  x = POKELIST_X(p_wk->cursor_pos);
-    u8  y = POKELIST_Y(p_wk->cursor_pos);
-    u8  w = POKELIST_W(p_wk->cursor_pos);
-    u8  h = POKELIST_H(p_wk->cursor_pos);
-
-    GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR,
-        x, y, w, h, LTVT_PLT_BG_SUB_LIST_ON );
-    GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_BAR );
+    Local_Tvt_Pokelist_ClearList( p_wk, TRUE );
   }
 }
 //----------------------------------------------------------------------------

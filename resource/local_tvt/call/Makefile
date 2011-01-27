@@ -59,8 +59,8 @@ $(targetname).narc $(targetname).naix: $(targetname).dat
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 
-$(targetname).dat $(targetname).h: $(xlsname).xls
-	ruby ../../../tools/exceltool/xls2xml/tab_out_sheet.rb -n 0 -c $^ > $(xlsname).csv
+$(targetname).dat $(targetname).h: $(xlsname).xls $(msgname) $(zonename)
+	ruby ../../../tools/exceltool/xls2xml/tab_out_sheet.rb -n 0 -c $(xlsname).xls > $(xlsname).csv
 	ruby ltvt_call_data_converter.rb $(xlsname).csv $(typename) $(msgname) $(zonename) $(targetname)
 endif
 

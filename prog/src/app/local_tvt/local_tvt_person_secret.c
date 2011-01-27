@@ -14,6 +14,10 @@
 //システム
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
+#include "gamesystem/game_data.h"
+#include "savedata/questionnaire_save.h"
+#include "app/research_radar/question_id.h"
+#include "app/research_radar/answer_id.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -47,10 +51,10 @@ typedef enum
 }LOCAL_TVT_SECRET_STATE;
 
 //女性の場合メッセージIDに足す数
-#define SECRET_MSGID_FEMALE_ADD   (57)
+#define SECRET_MSGID_FEMALE_ADD   (CALL_SECRET_GREET_FR_01-CALL_SECRET_GREET_R_01)
 
 //主人公からかけた場合IDに足す数
-#define SECRET_MSGID_RECIVE_ADD   (4)
+#define SECRET_MSGID_RECIVE_ADD   (CALL_SECRET_GREET_R_04-CALL_SECRET_GREET_R_01)
 
 //=============================================================================
 /**
@@ -63,10 +67,11 @@ typedef enum
 typedef struct 
 {
   s32 seq;
-  LOCAL_TVT_POKELIST    *p_pokelist;
-  GAMEDATA              *p_gamedata;
-  LOCAL_TVT_SECRET_MODE mode;
-  HEAPID                heapID;
+  LOCAL_TVT_POKELIST        *p_pokelist;
+  GAMEDATA                  *p_gamedata;
+  LOCAL_TVT_SECRET_MODE     mode;
+  HEAPID                    heapID;
+  const QUESTIONNAIRE_ANSWER_WORK *cp_quest; //アンケート質問
 } LOCAL_TVT_SECRET;
 
 
@@ -166,6 +171,11 @@ static LOCAL_TVT_SECRET *LOCAL_TVT_SECRET_Init( GAMEDATA *p_gamedata, LOCAL_TVT_
   LOCAL_TVT_SECRET *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_SECRET));
   p_wk->heapID      = heapID;
   p_wk->p_gamedata  = p_gamedata;
+  {
+
+    QUESTIONNAIRE_SAVE_WORK *p_q_sv = SaveData_GetQuestionnaire(GAMEDATA_GetSaveControlWork(p_wk->p_gamedata));
+    p_wk->cp_quest     = Questionnaire_GetAnswerWork(p_q_sv);
+  }
   p_wk->mode        = mode;
 
   return p_wk;
@@ -288,6 +298,31 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
         else
         {
           msgID = CALL_SECRET_TALK_41 + GFUser_GetPublicRand( 9 );
+        }
+      }
+      else if( CALL_SECRET_TALK_01 <= msgID && msgID <= CALL_SECRET_TALK_08 )
+      {
+        static const int sc_quest_tbl[] =
+        {
+          QUESTION_ID_HOBBY,
+          QUESTION_ID_STRONG_CLASS,
+          QUESTION_ID_COLOR,
+          QUESTION_ID_SPORTS,
+          QUESTION_ID_FOOD,
+          QUESTION_ID_WEAK_CLASS,
+          QUESTION_ID_PLACE,
+          QUESTION_ID_FAVORITE_POKEMON,
+        };
+        u32 answerID  = QuestionnaireAnswer_ReadBit( p_wk->cp_quest, sc_quest_tbl[state] );
+        GF_ASSERT( state < NELEMS(sc_quest_tbl) );
+        //１～８問目まではアンケートの結果を話す
+        if( ANSWER_ID_000 == answerID )
+        {
+          msgID++;
+        }
+        else
+        {
+          LOCAL_TVT_MESSAGE_RegisterQuestionnaire( cp_param->p_message, 0, answerID );
         }
       }
 
