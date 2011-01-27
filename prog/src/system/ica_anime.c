@@ -471,6 +471,9 @@ BOOL ICA_ANIME_GetTranslateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int fra
 //-----------------------------------------------------------------------------------
 BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame )
 {
+  if( !anime->haveRotate ){
+    return FALSE;
+  }
   // 指定フレームをループさせる
   frame = frame % anime->frameSize;
 
@@ -500,6 +503,9 @@ BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame 
 //-----------------------------------------------------------------------------------
 BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame )
 {
+  if( !anime->haveScale ){
+    return FALSE;
+  }
   // 指定フレームをループさせる
   frame = frame % anime->frameSize;
 
