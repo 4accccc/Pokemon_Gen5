@@ -365,7 +365,7 @@ static s16 gatein_SePitchCalc( EVWORK_GATE_IN* evwk )
   {
     fx32 step = len-FX32_CONST(5);
     OS_Printf("vec_len=%f, step=%f ",FX_FX32_TO_F32(len),FX_FX32_TO_F32(step));
-    pitch = FX_Whole(FX_Mul(step,FX32_CONST(50)));
+    pitch = FX_Whole(FX_Mul(step,FX32_CONST(100)));
     OS_Printf("pitch=%d\n\n",pitch);
   }
   return pitch;

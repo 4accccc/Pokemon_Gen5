@@ -1,5 +1,5 @@
 #event data
-#save date:2011/01/21 18:11:09
+#save date:2011/01/27 12:32:49
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -44,7 +44,7 @@ POS_CHECK_TYPE_NORMAL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -8
+-24 -16 -8
 #size
 1 1
 #event number: 1
@@ -61,7 +61,7 @@ POS_CHECK_TYPE_NORMAL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 120
+-72 -16 120
 #size
 1 1
 #Map Event List Data End

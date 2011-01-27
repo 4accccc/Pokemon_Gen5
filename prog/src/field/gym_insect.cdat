@@ -153,7 +153,7 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 #define GATE_1B_3C_OUT_DIR (DIR_DOWN)
 //9
 #define GATE_3C_1B_PX (11)
-#define GATE_3C_1B_PY (0)
+#define GATE_3C_1B_PY (20)
 #define GATE_3C_1B_PZ (5)
 #define GATE_3C_1B_IN_DIR (DIR_UP)
 #define GATE_3C_1B_OUT_DIR (DIR_LEFT)
@@ -188,7 +188,7 @@ static const GATE_PARAM DATA_GateParam[] = {
 
   { NARC_gym_insect_null_3d_4a_bin, GATE_3D_4A_IN_DIR, GATE_3D_4A_OUT_DIR, FALSE, { GATE_3D_4A_PX, GATE_3D_4A_PY, GATE_3D_4A_PZ } },
 
-  { NARC_gym_insect_null_2b_3d_bin, GATE_3D_2B_IN_DIR, GATE_3D_2B_OUT_DIR, FALSE, { GATE_3D_2B_PX, GATE_3D_2B_PY, GATE_3D_2B_PZ } },
+  { NARC_gym_insect_null_2b_3d_bin, GATE_3D_2B_IN_DIR, GATE_3D_2B_OUT_DIR, TRUE, { GATE_3D_2B_PX, GATE_3D_2B_PY, GATE_3D_2B_PZ } },
 };
 
 #define GATE_PARAM_NUM  (NELEMS(DATA_GateParam))
