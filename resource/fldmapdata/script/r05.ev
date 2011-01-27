@@ -23,6 +23,7 @@
 _EVENT_DATA    ev_bg_r05_board_01
 _EVENT_DATA    ev_bg_r05_board_02
 _EVENT_DATA    ev_bg_r05_board_03
+_EVENT_DATA		ev_r05_breederw_01
 _EVENT_DATA_END
 
 
@@ -48,3 +49,208 @@ EVENT_END
 EVENT_START	ev_bg_r05_board_03
 	_EASY_BGWIN_MSG( msg_r05_sign4_01, TYPE_INFO )
 EVENT_END
+
+/**************************************************************/
+/*		R05		きのみ販売イベント							  */
+/**************************************************************/
+EVENT_START		ev_r05_breederw_01
+
+
+//初会話の場合
+IF FLAG_OFF( TMFLG_R05_KINOMI ) THEN
+
+	//乱数で0～5のうち１つ選んで格納する。
+	_GET_RND( WK_OTHER_R05_KINOMI,5 )
+
+ENDIF
+
+//まだきのみを購入していないか？
+//購入フラグをみる
+IF FLAG_OFF ( TMFLG_R05_KINOMI_BUY ) THEN
+	_TALK_OBJ_START()
+	_CALL ev_r05_kinomi_buy
+
+//購入済みの場合
+ELSE
+
+	//よかったら　あした　かいにきてね！
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_breederw_06 )
+
+ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		きのみの購入処理									  */
+/**************************************************************/
+ev_r05_kinomi_buy:
+
+DEFINE_LOCAL	LWK_KINOMI_GOLD
+DEFINE_LOCAL	LWK_GOLD_CHK
+DEFINE_LOCAL	LWK_BAG_CHK
+
+//きのみの金額を指定
+$LWK_KINOMI_GOLD = 200
+
+//所持金の表示
+_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+//きのみを割り当てる
+SWITCH $WK_OTHER_R05_KINOMI
+CASE 0 THEN
+	//ザロクのみをどうぐ名に格納
+	_ITEM_NAME( 0, ITEM_ZAROKUNOMI )
+CASE 1 THEN
+	//ネコブのみをどうぐ名に格納
+	_ITEM_NAME( 0, ITEM_NEKOBUNOMI )
+CASE 2 THEN
+	//タポルのみをどうぐ名に格納
+	_ITEM_NAME( 0, ITEM_TAPORUNOMI)
+CASE 3 THEN
+	//ロメのみをどうぐ名に格納
+	_ITEM_NAME( 0, ITEM_ROMENOMI )
+CASE 4 THEN
+	//ウブのみをどうぐ名に格納
+	_ITEM_NAME( 0, ITEM_UBUNOMI )
+CASE 5 THEN
+	//マトマのみをどうぐ名に格納
+	_ITEM_NAME( 0, ITEM_MATOMANOMI )
+ENDSWITCH
+
+//タイムフラグをみる
+//初会話の場合
+IF FLAG_OFF( TMFLG_R05_KINOMI ) THEN
+
+	//トレーナーさん！　あたしが集めた　きのみを　買わない？
+	_BALLOONWIN_OBJMSG_POS( msg_r05_breederw_01 , R05_BREEDERW_01, POS_DOWN )
+
+//会話済の場合
+ELSE
+
+	//あたしが　もっている　きのみは　
+	_BALLOONWIN_OBJMSG_POS( msg_r05_breederw_07 , R05_BREEDERW_01, POS_DOWN )
+
+ENDIF
+
+//はい・いいえ選択表示
+_YES_NO_WIN( SCWK_ANSWER )
+
+//はいの場合
+IF $SCWK_ANSWER ==  SCR_YES THEN
+
+	//バッグの空きチェック
+	SWITCH $WK_OTHER_R05_KINOMI
+	CASE 0 THEN
+		//ザロクのみ　バッグの空きチェック
+		_ADD_ITEM_CHK( ITEM_ZAROKUNOMI,5,LWK_BAG_CHK )
+	CASE 1 THEN
+		//ネコブのみ　バッグの空きチェック
+		_ADD_ITEM_CHK( ITEM_NEKOBUNOMI,5,LWK_BAG_CHK )
+	CASE 2 THEN
+		//タポルのみ　バッグの空きチェック
+		_ADD_ITEM_CHK( ITEM_TAPORUNOMI,5,LWK_BAG_CHK )
+	CASE 3 THEN
+		//ロメのみ　バッグの空きチェック
+		_ADD_ITEM_CHK( ITEM_ROMENOMI,5,LWK_BAG_CHK )
+	CASE 4 THEN
+		//ウブのみ　バッグの空きチェック
+		_ADD_ITEM_CHK( ITEM_UBUNOMI,5,LWK_BAG_CHK )
+	CASE 5 THEN
+		//マトマのみ　バッグの空きチェック
+		_ADD_ITEM_CHK( ITEM_MATOMANOMI,5,LWK_BAG_CHK )
+	ENDSWITCH
+	
+	//金額チェック
+	_CHECK_GOLD( LWK_GOLD_CHK, LWK_KINOMI_GOLD )
+
+	//バッグがいっぱいの場合
+	IF $LWK_BAG_CHK == FALSE THEN
+		
+		_GOLD_WIN_CLOSE()
+		
+		//バッグが　いっぱいだよね！
+		_BALLOONWIN_OBJMSG_POS( msg_r05_breederw_04 , R05_BREEDERW_01, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	//所持金が足りない場合
+	ELSIF $LWK_GOLD_CHK == FALSE THEN
+	
+		_GOLD_WIN_CLOSE()
+	
+		//お金が　たりないよね！
+		_BALLOONWIN_OBJMSG_POS( msg_r05_breederw_05 , R05_BREEDERW_01, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	//購入条件を満たしている場合
+	ELSE
+		
+		//レジ音再生
+		_SE_PLAY( SEQ_SE_SYS_22 )		
+		_SUBTRACT_GOLD( LWK_KINOMI_GOLD )
+		_GOLD_WIN_UPDATE()
+		_SE_WAIT()
+		
+		//～～５コで　２００円！　あなた　かいものじょうず　よね！
+		_BALLOONWIN_OBJMSG_POS( msg_r05_breederw_03 , R05_BREEDERW_01, POS_DOWN )
+		_MSGWIN_CLOSE()	
+		_GOLD_WIN_CLOSE()
+
+		//きのみの入手
+		SWITCH $WK_OTHER_R05_KINOMI
+		CASE 0 THEN
+			//ザロクのみ　５コ入手
+			_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_ZAROKUNOMI, 5 )
+		CASE 1 THEN
+			//ネコブのみ　バッグの空きチェック
+			_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_NEKOBUNOMI, 5 )
+		CASE 2 THEN
+			//タポルのみ　バッグの空きチェック
+			_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_TAPORUNOMI, 5 )
+		CASE 3 THEN
+			//ロメのみ　バッグの空きチェック
+			_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_ROMENOMI, 5 )
+		CASE 4 THEN
+			//ウブのみ　バッグの空きチェック
+			_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_UBUNOMI, 5 )
+		CASE 5 THEN
+			//マトマのみ　バッグの空きチェック
+			_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MATOMANOMI, 5 )
+		ENDSWITCH
+
+		//よかったら　あした　かいにきてね！
+		_BALLOONWIN_OBJMSG_POS( msg_r05_breederw_06 , R05_BREEDERW_01, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()	
+		_GOLD_WIN_CLOSE()
+
+		//========================================/
+		
+		//購入フラグをONにする
+		_FLAG_SET( TMFLG_R05_KINOMI_BUY )
+		
+		//========================================/
+
+	ENDIF
+
+//いいえの場合
+ELSE
+
+_GOLD_WIN_CLOSE()
+
+//せっかく　あつめた　きのみ　なのに
+_BALLOONWIN_OBJMSG_POS( msg_r05_breederw_02 , R05_BREEDERW_01, POS_DOWN )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+ENDIF
+
+//========================================/
+
+//タイムフラグON
+_FLAG_SET( TMFLG_R05_KINOMI )
+
+//========================================/
+
+_RET

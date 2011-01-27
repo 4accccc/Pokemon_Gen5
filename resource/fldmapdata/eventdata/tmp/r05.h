@@ -11,6 +11,7 @@
 #ifndef ZONE_R05_EVC_H
 #define ZONE_R05_EVC_H
 
+#define R05_BREEDERW_01                    0
 
 #endif //ZONE_R05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
