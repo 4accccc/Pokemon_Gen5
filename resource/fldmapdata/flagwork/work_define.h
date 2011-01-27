@@ -263,7 +263,7 @@
 		/* not used 16679(0x4127) */
 		/* not used 16680(0x4128) */
 		/* not used 16681(0x4129) */
-		/* not used 16682(0x412a) */
+#define WK_OTHER_R05_KINOMI              16682 /* 0x412a ƒXƒƒ“5”Ô“¹˜H–Ø‚ÌÀ”Ì”„ */
 		/* not used 16683(0x412b) */
 		/* not used 16684(0x412c) */
 		/* not used 16685(0x412d) */

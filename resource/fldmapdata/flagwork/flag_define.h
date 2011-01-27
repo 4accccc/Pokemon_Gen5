@@ -2536,8 +2536,8 @@
 #define TMFLG_D07R0401_FOSSIL             2762 /* 0x0aca ネジ山：クリア後１日１回カセキ入手イベント */
 #define TMFLG_T04R0401_SHIRONA_TALK       2763 /* 0x0acb サザナミタウン：シロナの春の１日の初回会話フラグ */
 #define TMFLG_R08_STONE_GET               2764 /* 0x0acc ８番道路：天候石入手イベント（１日１回入手） */
-		/* not used  2765(0x0acd) */
-		/* not used  2766(0x0ace) */
+#define TMFLG_R05_KINOMI                  2765 /* 0x0acd スワン：5番道路：木の実購入イベント確定フラグ */
+#define TMFLG_R05_KINOMI_BUY              2766 /* 0x0ace スワン：5番道路：木の実購入イベント済みフラグ */
 		/* not used  2767(0x0acf) */
 		/* not used  2768(0x0ad0) */
 		/* not used  2769(0x0ad1) */
