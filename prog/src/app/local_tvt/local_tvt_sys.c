@@ -71,7 +71,8 @@ static void Local_Tvt_ScriptMode_Init( LOCAL_TVT_WORK *work );
 static BOOL Local_Tvt_ScriptMode_Main( LOCAL_TVT_WORK *work );
 static void Local_Tvt_ScriptMode_Exit( LOCAL_TVT_WORK *work );
 
-static void Local_Tvt_CallMode_Init( LOCAL_TVT_WORK *work );
+static void Local_Tvt_CallMode_InitSend( LOCAL_TVT_WORK *work );
+static void Local_Tvt_CallMode_InitReceive( LOCAL_TVT_WORK *work );
 static BOOL Local_Tvt_CallMode_Main( LOCAL_TVT_WORK *work );
 static void Local_Tvt_CallMode_Exit( LOCAL_TVT_WORK *work );
 
@@ -253,8 +254,14 @@ static void Local_Tvt_SetMode( LOCAL_TVT_WORK *work, LOCAL_TVT_MODE mode )
     work->ExitMode  = Local_Tvt_ScriptMode_Exit;
     break;
 
-  case LOCAL_TVT_MODE_APP:     //アプリケーションモード
-    work->InitMode  = Local_Tvt_CallMode_Init;
+  case LOCAL_TVT_MODE_APP:     //アプリケーションモード 電話をかける
+    work->InitMode  = Local_Tvt_CallMode_InitSend;
+    work->MainMode  = Local_Tvt_CallMode_Main;
+    work->ExitMode  = Local_Tvt_CallMode_Exit;
+    break;
+
+  case LOCAL_TVT_MODE_APP_SECRET_CALL:  //アプリケーションモード、電話がかかってくる
+    work->InitMode  = Local_Tvt_CallMode_InitReceive;
     work->MainMode  = Local_Tvt_CallMode_Main;
     work->ExitMode  = Local_Tvt_CallMode_Exit;
     break;
@@ -300,12 +307,12 @@ static void Local_Tvt_ScriptMode_Exit( LOCAL_TVT_WORK *work )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  呼び出しモード  初期化
+ *	@brief  呼び出しモード電話をかける  初期化
  *
  *	@param	LOCAL_TVT_WORK *work ワーク
  */
 //-----------------------------------------------------------------------------
-static void Local_Tvt_CallMode_Init( LOCAL_TVT_WORK *work )
+static void Local_Tvt_CallMode_InitSend( LOCAL_TVT_WORK *work )
 {
   LOCAL_TVT_CALL_PARAM  param;
   GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_CALL_PARAM) );
@@ -313,6 +320,26 @@ static void Local_Tvt_CallMode_Init( LOCAL_TVT_WORK *work )
   param.p_chara_sys = work->chara_sys;
   param.p_message   = work->message;
   param.p_clunit    = LOCAL_TVT_GRAPHIC_GetClunit( work->graphic );
+  param.mode        = LOCAL_TVT_CALL_MODE_SEND;
+
+  work->call_wk = LOCAL_TVT_CALL_Init( &param, work->heapId );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  呼び出しモード電話をうける  初期化
+ *
+ *	@param	LOCAL_TVT_WORK *work ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_CallMode_InitReceive( LOCAL_TVT_WORK *work )
+{
+  LOCAL_TVT_CALL_PARAM  param;
+  GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_CALL_PARAM) );
+  param.p_gamedata  = work->initWork->gameData;
+  param.p_chara_sys = work->chara_sys;
+  param.p_message   = work->message;
+  param.p_clunit    = LOCAL_TVT_GRAPHIC_GetClunit( work->graphic );
+  param.mode        = LOCAL_TVT_CALL_MODE_RECEIVE;
 
   work->call_wk = LOCAL_TVT_CALL_Init( &param, work->heapId );
 }

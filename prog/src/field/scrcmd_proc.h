@@ -123,3 +123,5 @@ extern VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdCallPsel( VMHANDLE *core, void *wk );
+
+extern VMCMD_RESULT EvCmdCallTVTSecret( VMHANDLE *core, void *wk );

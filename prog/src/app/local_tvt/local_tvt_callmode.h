@@ -15,6 +15,12 @@
  *					定数宣言
 */
 //=============================================================================
+//呼び出しモード
+typedef enum
+{
+  LOCAL_TVT_CALL_MODE_SEND,      //電話をかける
+  LOCAL_TVT_CALL_MODE_RECEIVE,   //電話がかかってくる
+}LOCAL_TVT_CALL_MODE;
 
 //=============================================================================
 /**
@@ -31,6 +37,7 @@ typedef struct
   LOCAL_TVT_CHARA_SYS *p_chara_sys;
   LOCAL_TVT_MESSAGE   *p_message;
   GFL_CLUNIT          *p_clunit;
+  LOCAL_TVT_CALL_MODE mode;
 }LOCAL_TVT_CALL_PARAM;
 
 //=============================================================================

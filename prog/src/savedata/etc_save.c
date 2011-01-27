@@ -33,7 +33,7 @@ struct _ETC_SAVE_WORK{
   
   u32 manual_flag[MANUAL_FLAG_WORK_MAX]; ///< ゲーム内マニュアルの項目を読んだかどうか(1bit単位
   
-  PERSON_STATE  person_state; //16byte
+  PERSON_STATE  person_state;
   u8 dummy[88-PERSON_STATE_WORK_SIZE];    ///<将来用に1ブロック分のアライメント全てを確保
 };
 

@@ -49,9 +49,11 @@
 
 #include "app/name_input.h"
 #include "app/dendou_pc.h"
+#include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 
 static void callback_BoxProc( void* work );
 static void CallBackFunc_byHelloMsgIn( void* wk );
+static void CallBackFunc_FreeMemory( void* p_wk_adrs );
 
 //--------------------------------------------------------------
 /**
@@ -342,4 +344,77 @@ VMCMD_RESULT EvCmdCallGameManual( VMHANDLE *core, void *wk )
   SCRIPT_CallEvent( script, event );
 
   return VMCMD_RESULT_SUSPEND;
+}
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   TVトランシーバーデモ呼び出し
+ * @param core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
+{
+  GMEVENT *event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *script = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
+  LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
+  param->mode     = LOCAL_TVT_MODE_SCRIPT;
+  param->scriptId = demo_id;
+  param->gameData = SCRCMD_WORK_GetGameData( work );
+
+  event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap,
+		                               FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param,
+                                   CallBackFunc_FreeMemory, param );
+  SCRIPT_CallEvent( script, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   TVトランシーバー隠しキャラから掛かってくる呼び出し
+ * @param core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallTVTSecret( VMHANDLE *core, void *wk )
+{
+  GMEVENT *event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *script = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
+  param->mode     = LOCAL_TVT_MODE_APP_SECRET_CALL;
+  param->gameData = SCRCMD_WORK_GetGameData( work );
+
+  event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap,
+		                               FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param,
+                                   CallBackFunc_FreeMemory, param );
+  SCRIPT_CallEvent( script, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  EVENT_FieldSubProcNoFade_Callbackに渡すコールバック関数
+ *
+ *	@param	void* p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void CallBackFunc_FreeMemory( void* p_wk_adrs )
+{
+  GFL_HEAP_FreeMemory( p_wk_adrs );
 }

@@ -934,6 +934,10 @@
   //êlï®èÛë‘
   DEF_CMD( EvCmdPersonState_SetState, EV_SEQ_PERSON_STATE_SET )
   DEF_CMD( EvCmdPersonState_SetLTvtCall, EV_SEQ_PERSON_TVT_CALL_SET )
+  DEF_CMD( EvCmdPersonState_CheckSecretCalled, EV_SEQ_PERSON_CHECK_SECRET )
+  DEF_CMD( EvCmdCallTVTSecret, EV_SEQ_CALL_TVT_SECRET )
+  NO_CMD()
+  NO_CMD()
  
   //íéÉWÉÄ
   DEF_CMD( EvCmdGymInsect_CocconOpen, EV_SEQ_GYM_INSECT_COCCON_OPEN)

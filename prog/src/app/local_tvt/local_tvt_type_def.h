@@ -21,6 +21,9 @@ typedef enum
   LTCT_SUPPORT,
   LTCT_DOCTOR_D,
   LTCT_MOTHER,
+  LTCT_SECRET_M,  //隠しキャラ男
+  LTCT_SECRET_F,  //隠しキャラ女
+  LTCT_SOUNDONLY, //音声のみ
 
   LTCT_PLAYER_F,  //主人公だった場合分岐させる
   

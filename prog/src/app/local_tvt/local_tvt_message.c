@@ -417,6 +417,7 @@ void LOCAL_TVT_MESSAGE_PrintPokeStatus( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_b
   }
 
   //LEVEL
+  if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) == FALSE )
   {
     STRBUF  *p_str_lv  = GFL_MSG_CreateString( p_wk->p_msgdata_pokelist, mes_pokelist_01_03 );
     u32 level = PP_Get(cp_pp,ID_PARA_level,NULL);
@@ -428,6 +429,7 @@ void LOCAL_TVT_MESSAGE_PrintPokeStatus( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_b
   }
 
   //ê´ï 
+  if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) == FALSE )
   {
     //sex
     switch( PP_Get(cp_pp,ID_PARA_sex,NULL) )

@@ -142,6 +142,8 @@ struct _GAMEDATA{
   
   PAIR_SYSTEM_WORK* pairSystem; //連れ歩きシステムワーク
   u32 scriptCommandOverlayID; //フィールドスクリプトコマンド用オーバーレイID
+
+  BOOL  is_livecaster_secret_call;  //隠しキャラに電話できるかどうかフラグ
 };
 
 //==============================================================================
@@ -2136,4 +2138,29 @@ u32 GAMEDATA_GetFieldScriptCommandOverlayID( const GAMEDATA *gamedata )
 void GAMEDATA_SetFieldScriptCommandOverlayID( GAMEDATA *gamedata, u32 scrCmdID )
 {
   gamedata->scriptCommandOverlayID  = scrCmdID;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param  電話かけてよいかのフラグ
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetLiveCasterSecretCallFlag( GAMEDATA *gamedata, BOOL is_call )
+{
+  gamedata->is_livecaster_secret_call = is_call;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return 電話かけてよいかのフラグ
+ */
+//-----------------------------------------------------------------------------
+BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata )
+{
+  return gamedata->is_livecaster_secret_call;
 }

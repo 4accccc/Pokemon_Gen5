@@ -48,9 +48,10 @@ enum
 #define LTVT_PLT_BG_SUB_BAR   (6) //1ñ{
 #define LTVT_PLT_BG_SUB_TASKMENU   (7) //2ñ{
 #define LTVT_PLT_BG_SUB_WINFRAME  (9) //1ñ{
-#define LTVT_PLT_BG_SUB_BACK     (12)
-#define LTVT_PLT_BG_SUB_LIST     (13)
-#define LTVT_PLT_BG_SUB_LIST_ON  (14)
+#define LTVT_PLT_BG_SUB_BACK     (11)
+#define LTVT_PLT_BG_SUB_LIST     (12)
+#define LTVT_PLT_BG_SUB_LIST_ON  (13)
+#define LTVT_PLT_BG_SUB_LIST_OFF (14)
 #define LTVT_PLT_BG_SUB_FONT     (15)
 
 //ägí£BGÇÕñ Ç≤Ç∆Ç…éùÇ¬ÇÃÇ≈óºï˚0Ç©ÇÁÇ≈OK

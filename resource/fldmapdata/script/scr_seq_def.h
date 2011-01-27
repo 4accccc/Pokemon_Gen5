@@ -9539,6 +9539,19 @@
   .short  \demo_no
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CALL_TVT_SECRET
+ * @brief 隠しキャラからのデモ呼び出し
+ */
+//--------------------------------------------------------------
+#define _CALL_TVT_SECRET()  \
+    _ASM_CALL_TVT_SECRET
+
+  .macro  _ASM_CALL_TVT_SECRET
+  .short  EV_SEQ_CALL_TVT_SECRET
+  .endm
+
 //======================================================================
 //  移動ポケモン
 //======================================================================
@@ -11728,7 +11741,7 @@
 #define _PERSON_STATE_SET_DOCTOR( state ) \
     _ASM_PERSON_STATE_SET_DOCTOR state
 
-  .macro _ASM_PERSON_STATE_SET_DOCTOR
+  .macro _ASM_PERSON_STATE_SET_DOCTOR state
   .short EV_SEQ_PERSON_STATE_SET
   .short \LOCAL_TVT_PERSON_DOCTOR
   .short \state
@@ -11742,7 +11755,7 @@
 #define _PERSON_STATE_SET_RIVAL( state ) \
     _ASM_PERSON_STATE_SET_RIVAL state
 
-  .macro _ASM_PERSON_STATE_SET_RIVAL
+  .macro _ASM_PERSON_STATE_SET_RIVAL state
   .short EV_SEQ_PERSON_STATE_SET
   .short \LOCAL_TVT_PERSON_RIVAL
   .short \state
@@ -11756,7 +11769,7 @@
 #define _PERSON_STATE_SET_CHELEN( state ) \
     _ASM_PERSON_STATE_SET_CHELEN state
 
-  .macro _ASM_PERSON_STATE_SET_CHELEN
+  .macro _ASM_PERSON_STATE_SET_CHELEN state
   .short EV_SEQ_PERSON_STATE_SET
   .short \LOCAL_TVT_PERSON_CHELEN
   .short \state
@@ -11770,7 +11783,7 @@
 #define _PERSON_STATE_SET_BELL( state ) \
     _ASM_PERSON_STATE_SET_BELL state
 
-  .macro _ASM_PERSON_STATE_SET_BELL
+  .macro _ASM_PERSON_STATE_SET_BELL state
   .short EV_SEQ_PERSON_STATE_SET
   .short \LOCAL_TVT_PERSON_BELL
   .short \state
@@ -11784,7 +11797,7 @@
 #define _PERSON_STATE_SET_MOTHER( state ) \
     _ASM_PERSON_STATE_SET_MOTHER state
 
-  .macro _ASM_PERSON_STATE_SET_MOTHER
+  .macro _ASM_PERSON_STATE_SET_MOTHER state
   .short EV_SEQ_PERSON_STATE_SET
   .short \LOCAL_TVT_PERSON_MOTHER
   .short \state
@@ -11840,6 +11853,20 @@
   .macro _ASM_PERSON_TVTL_CALL_SET_BELL
   .short EV_SEQ_PERSON_TVT_CALL_SET
   .short \LOCAL_TVT_PERSON_BELL
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ライブキャスター隠しキャラからの電話
+ * @param ret_wk  TRUEのとき隠しキャラからの電話
+ */
+//--------------------------------------------------------------
+#define _PERSON_TVT_CHECK_SECRET_CALL( ret_wk ) \
+    _ASM__PERSON_TVT_CHECK_SECRET_CALL ret_wk
+
+  .macro _ASM__PERSON_TVT_CHECK_SECRET_CALL ret_wk
+  .short EV_SEQ_PERSON_CHECK_SECRET
+  .short \ret_wk
   .endm
 
 //--------------------------------------------------------------

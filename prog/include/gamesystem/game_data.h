@@ -888,3 +888,22 @@ extern u32 GAMEDATA_GetFieldScriptCommandOverlayID( const GAMEDATA *gamedata );
  */
 //-----------------------------------------------------------------------------
 extern void GAMEDATA_SetFieldScriptCommandOverlayID( GAMEDATA *gamedata, u32 scrCmdID );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param  電話かけてよいかのフラグ
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetLiveCasterSecretCallFlag( GAMEDATA *gamedata, BOOL is_call );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return 電話かけてよいかのフラグ
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata );

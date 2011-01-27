@@ -27,7 +27,7 @@
 #include "msg/msg_pokelist.h"
 
 //自分のモジュール
-#include "local_tvt_local_def.h"
+#include "local_tvt_snd.h"
 #include "local_tvt_graphic.h"
 
 //外部公開
@@ -323,7 +323,7 @@ void LOCAL_TVT_TOUCHBAR_Main( LOCAL_TVT_TOUCHBAR *p_wk )
     if( is_decide )
     {
       GFL_CLACT_WK_SetAnmSeq( BARICON_GetClwk( &p_wk->bar_icon ), APP_COMMON_BARICON_RETURN_ON );
-      PMSND_PlaySystemSE( CTVT_SND_CANCEL );
+      PMSND_PlaySE( LOCAL_TVT_SE_CANCEL );
       p_wk->is_trg  = TRUE;
     }
   }
@@ -812,6 +812,7 @@ static LIST_UI_RESULT Local_Tvt_List_IsTouch( void *p_wk_adrs )
 
   if( ret != GFL_UI_TP_HIT_NONE && ret < p_wk->param.max )
   {
+    PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
     p_wk->cursor_pos  = ret;
     return LIST_UI_RESULT_DECIDE;
   }
@@ -841,7 +842,7 @@ static LIST_UI_RESULT Local_Tvt_List_IsKey( void *p_wk_adrs )
     {
       p_wk->cursor_pos  = p_wk->param.max-1;
     }
-
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
@@ -849,16 +850,20 @@ static LIST_UI_RESULT Local_Tvt_List_IsKey( void *p_wk_adrs )
     p_wk->cursor_pos++;
     p_wk->cursor_pos  %= p_wk->param.max;
 
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
   }
 
   //決定
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
+
+    PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
     is_decide = TRUE;
   }
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
+    PMSND_PlaySE( LOCAL_TVT_SE_CANCEL );
     is_decide = TRUE;
     p_wk->cursor_pos  = p_wk->param.max-1;
   }
@@ -1528,6 +1533,7 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs )
   int ret = GFL_UI_TP_HitTrg( sc_pokelist_hit_tbl );
   if( ret != GFL_UI_TP_HIT_NONE && ret < PokeParty_GetPokeCount( p_wk->param.p_party ) )
   {
+    PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
     p_wk->cursor_pos  = ret;
     return LIST_UI_RESULT_DECIDE;
   }
@@ -1567,7 +1573,7 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
     {
       now_row = max_row-1;
     }
-
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
@@ -1575,6 +1581,7 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
     now_row++;
     now_row  %= max_row;
 
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
@@ -1585,6 +1592,7 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
       now_col = max_col-1;
     }
 
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
@@ -1592,12 +1600,14 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
     now_col++;
     now_col  %= max_col;
 
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
   }
 
   //決定
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
+    PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
     is_decide =TRUE;
   }
 
@@ -1945,6 +1955,7 @@ void LIST_UI_Main( LIST_UI *p_wk )
   {
     if( GFL_UI_KEY_GetTrg() != 0 )
     {
+      PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
       //タッチモードでキー入力したらキーモードへいく
       p_wk->touch_or_key = GFL_APP_END_KEY;
       List_Ui_Change( p_wk );

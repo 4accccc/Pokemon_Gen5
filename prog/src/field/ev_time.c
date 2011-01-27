@@ -34,6 +34,7 @@
 #include "savedata/gametime.h"
 #include "savedata/encount_sv.h"
 #include "savedata/wifihistory.h"
+#include "savedata/person_state.h"
 
 #include "poke_tool/pokerus.h"
 #include "field/eventwork.h"
@@ -314,6 +315,22 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
   //フィーリングチェック：１日１回チェックを消す
   IRC_COMPATIBLE_SV_ClearDayFlag( IRC_COMPATIBLE_SV_GetSavedata(save) );
   
+  //ローカルライブキャスター
+  {
+    PERSON_STATE* p_person_state  = PERSON_STATE_GetWork(save);
+    const RTCDate *cp_rtc = EVTIME_GetRTCDate( gdata );
+
+    //ローカルライブキャスター１日１回電話フラグを消す
+    PERSON_STATE_SetSecretOnceDayCallFlag( p_person_state, FALSE );
+    //ローカルライブキャスターデート待ち合わせすっぽかしチェック
+    if( PERSON_STATE_CheckSecretDataEventLater( p_person_state, cp_rtc ) )
+    {
+      //デートの約束を取り消し、不機嫌になる
+      PERSON_STATE_ClearSecretDateEvent( p_person_state );
+      PERSON_STATE_SetSecretDispleased( p_person_state, TRUE );
+    }
+  }
+
   if(!is_penalty){  //ペナルティタイムでないときだけ処理する
   }
 }

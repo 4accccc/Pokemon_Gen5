@@ -22,9 +22,9 @@
 #include "comm_tvt.naix"
 
 //自分のモジュール
-#include "local_tvt_local_def.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_util.h"
+#include "local_tvt_snd.h"
 
 //外部参照
 #include "local_tvt_callselect.h"
@@ -749,6 +749,7 @@ static BOOL BARSET_Key( BARSET *p_wk )
       p_wk->cursor_pos  = max-1;
     }
 
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_update = TRUE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
@@ -756,6 +757,7 @@ static BOOL BARSET_Key( BARSET *p_wk )
     p_wk->cursor_pos++;
     p_wk->cursor_pos  %= max;
 
+    PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_update = TRUE;
   }
   else if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_A )
@@ -1176,11 +1178,11 @@ static BOOL BAR_SetCheck( BAR *p_wk, BOOL is_check )
 
   if( p_wk->is_check )
   {
-    PMSND_PlaySystemSE( CTVT_SND_CALLBAR_TOUCH );
+    PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_TOUCH );
   }
   else
   {
-    PMSND_PlaySystemSE( CTVT_SND_CALLBAR_CANCEL );
+    PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_CANCEL );
   }
 
   return TRUE;
@@ -1429,7 +1431,7 @@ static BOOL SCROLLBAR_Touch( SCROLLBAR *p_wk )
     {
       p_wk->is_hold_scroll  = TRUE;
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk_scrollbar, ANMID_SCROLL_BAR_PUSH );
-      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+      PMSND_PlaySE( LOCAL_TVT_SE_TOUCH );
       return TRUE;
     }
     else if( is_hold && p_wk->is_hold_scroll )
@@ -1605,6 +1607,7 @@ static void DECIDE_Main( DECIDE *p_wk )
     {
       if( APP_TASKMENU_WIN_IsTrg( p_wk->p_menuwin ) == TRUE )
       {
+        PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
         APP_TASKMENU_WIN_SetDecide( p_wk->p_menuwin, TRUE );
       }
     }
@@ -1639,6 +1642,7 @@ static void DECIDE_FlipMain( DECIDE *p_wk, const BARSET *cp_barset )
 //-----------------------------------------------------------------------------
 static void DECIDE_SetTrg( DECIDE *p_wk )
 {
+  PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
   APP_TASKMENU_WIN_SetDecide( p_wk->p_menuwin, TRUE );
 }
 //----------------------------------------------------------------------------

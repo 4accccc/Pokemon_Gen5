@@ -47,7 +47,6 @@
 #include "field\field_comm\intrude_mission.h"
 
 #include "event_demo3d.h"
-#include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 #include "app/chihou_zukan_award.h"
 #include "app/zenkoku_zukan_award.h"
 #include "app/subway_map.h"
@@ -498,32 +497,6 @@ VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_SUSPEND;
 }
-
-
-//======================================================================
-//======================================================================
-//--------------------------------------------------------------
-/**
- * @brief   TVトランシーバーデモ呼び出し
- * @param core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
-  LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
-  param->mode     = LOCAL_TVT_MODE_SCRIPT;
-  param->scriptId = demo_id;
-  param->gameData = SCRCMD_WORK_GetGameData( work );
-  EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param, NULL, NULL );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-
-
 
 //======================================================================
 //======================================================================

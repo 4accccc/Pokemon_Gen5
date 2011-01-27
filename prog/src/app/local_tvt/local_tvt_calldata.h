@@ -48,3 +48,8 @@ extern BOOL LOCAL_TVT_CALLDATA_IsSelect( const LOCAL_TVT_CALLDATA *cp_wk, u16 pe
 
 extern LOCAL_TVT_BACK LOCAL_TVT_CALLDATA_GetBackByZoneID( const LOCAL_TVT_CALLDATA *cp_wk, ZONEID zoneID );
 extern LOCAL_TVT_WEATHER LOCAL_TVT_CALLDATA_GetWeatherByZoneID( const LOCAL_TVT_CALLDATA *cp_wk, ZONEID zoneID );
+
+extern u16 LOCAL_TVT_CALLDATA_GetState( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
+extern u32 LOCAL_TVT_CALLDATA_GetSecretSex( const LOCAL_TVT_CALLDATA *cp_wk );
+
+extern void LOCAL_TVT_CALLDATA_AddState( LOCAL_TVT_CALLDATA *p_wk, u16 person, u16 max );

@@ -165,6 +165,11 @@ static const u8 charaResList[LTCT_MAX][3] = {
     { NARC_local_tvt_graphic_chara_support_NCLR  , NARC_local_tvt_graphic_chara_support_1_NCGR  , NARC_local_tvt_graphic_obj_support_NCLR },
     { NARC_local_tvt_graphic_chara_doctor_d_NCLR , NARC_local_tvt_graphic_chara_doctor_d_1_NCGR , NARC_local_tvt_graphic_obj_doctor_d_NCLR },
     { NARC_local_tvt_graphic_chara_mother_NCLR   , NARC_local_tvt_graphic_chara_mother_1_NCGR   , NARC_local_tvt_graphic_obj_mother_NCLR },
+    //âBÇµÉLÉÉÉâ
+    { NARC_local_tvt_graphic_chara_rival_NCLR    , NARC_local_tvt_graphic_chara_rival_1_NCGR    , NARC_local_tvt_graphic_obj_rival_NCLR },
+    { NARC_local_tvt_graphic_chara_support_NCLR  , NARC_local_tvt_graphic_chara_support_1_NCGR  , NARC_local_tvt_graphic_obj_support_NCLR },
+    //âπê∫ÇÃÇ›
+    { NARC_local_tvt_graphic_chara_soundonly_NCLR    , NARC_local_tvt_graphic_chara_soundonly_1_NCGR, NARC_local_tvt_graphic_obj_soundonly_NCLR },
     //éÂêlåˆï™äÚópÅEéÂêlåˆ(èó)ëfçﬁ
     { NARC_local_tvt_graphic_chara_player_f_NCLR , NARC_local_tvt_graphic_chara_player_f_1_NCGR , NARC_local_tvt_graphic_obj_player_f_NCLR },
 };
@@ -183,9 +188,9 @@ static const struct
   },
   //ì¥åA
   {
-    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
-    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
-    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_01_NCGR },
+    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_02_NCGR },
+    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_02_NCGR },
+    { NARC_local_tvt_graphic_back_02_NCLR , NARC_local_tvt_graphic_back_02_NCGR },
   },
   //äX
   {

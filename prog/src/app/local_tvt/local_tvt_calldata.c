@@ -31,7 +31,7 @@
 //=============================================================================
 #ifdef PM_DEBUG
 #define DEBUG_CALL_FLAG_ALL_ON
-//#define DEBUG_SELECT_FLAG_ALL_ON
+#define DEBUG_SELECT_FLAG_ALL_ON
 #endif //PM_DEBUG
 
 //バトルBGに追加があったらワーニングを出す
@@ -69,9 +69,10 @@ typedef struct {
 //=====================================
 struct _LOCAL_TVT_CALLDATA
 {
-  LOCAL_TVT_BINARY  *p_data;
-  CALENDER          *p_calender;
-  const PERSON_STATE      *cp_person_state;
+  GAMEDATA            *p_gamedata;
+  LOCAL_TVT_BINARY    *p_data;
+  CALENDER            *p_calender;
+  PERSON_STATE        *p_person_state;
 };
 
 //=============================================================================
@@ -94,9 +95,9 @@ static const LOCAL_TVT_BINARY * Local_Tvt_Calldata_GetData( const LOCAL_TVT_CALL
 LOCAL_TVT_CALLDATA * LOCAL_TVT_CALLDATA_Init( GAMEDATA *p_gamedata, HEAPID heapID )
 {
   LOCAL_TVT_CALLDATA  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_CALLDATA ) );
-
+  p_wk->p_gamedata  = p_gamedata;
   p_wk->p_calender  = GAMEDATA_GetCalender( p_gamedata );
-  p_wk->cp_person_state  = PERSON_STATE_GetWorkConst( GAMEDATA_GetSaveControlWorkConst(p_gamedata) );
+  p_wk->p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
   p_wk->p_data      = GFL_ARC_UTIL_Load( ARCID_LOCAL_TVT_CALLDATA, NARC_local_tvt_call_local_tvt_call_dat, FALSE, heapID );
 
   return p_wk;
@@ -234,7 +235,30 @@ BOOL LOCAL_TVT_CALLDATA_IsCall( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 #ifdef DEBUG_CALL_FLAG_ALL_ON
   return TRUE;
 #endif
-  return PERSON_STATE_GetLocalTvtCall( cp_wk->cp_person_state, person );
+  //隠しキャラのみ特別分岐
+  if( person == LOCAL_TVT_PERSON_SECRET )
+  {
+    BOOL is_once  = PERSON_STATE_GetSecretOnceDayCallFlag( cp_wk->p_person_state );
+    BOOL is_date  = PERSON_STATE_GetSecretDateEvent( cp_wk->p_person_state );
+    BOOL is_data  = PERSON_STATE_GetLocalTvtCall( cp_wk->p_person_state, LOCAL_TVT_PERSON_SECRET );
+    BOOL is_rnd = GAMEDATA_GetLiveCasterSecretCallFlag( cp_wk->p_gamedata );
+
+    //かけられる条件
+    //・デートを約束していない
+    //・１日１回だけ
+    //・設定データでかけてよい状態になっている
+    //・こちらからかけるときは乱数でOKになっている
+    if( !is_date && !is_once && is_data && is_rnd )
+    {
+      return TRUE;
+    }
+    
+    return FALSE;    
+  }
+  else
+  {
+    return PERSON_STATE_GetLocalTvtCall( cp_wk->p_person_state, person );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -252,7 +276,7 @@ BOOL LOCAL_TVT_CALLDATA_IsSelect( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 #ifdef DEBUG_SELECT_FLAG_ALL_ON
   return TRUE;
 #endif
-  return cp_data->call;
+  return GAMEDATA_GetLiveCasterSecretCallFlag( cp_wk->p_gamedata );
 }
 
 //----------------------------------------------------------------------------
@@ -341,6 +365,62 @@ LOCAL_TVT_WEATHER LOCAL_TVT_CALLDATA_GetWeatherByZoneID( const LOCAL_TVT_CALLDAT
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  隠しキャラの顔を隠しているかチェック
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_wk   ワーク
+ *
+ *	@return TRUE  顔を隠す  FALSE顔を隠さない
+ */
+//-----------------------------------------------------------------------------
+u16 LOCAL_TVT_CALLDATA_GetState( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
+{
+  return PERSON_STATE_GetState( cp_wk->p_person_state, person );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの性別を取得
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_wk ワーク
+ *
+ *	@return 性別を取得
+ */
+//-----------------------------------------------------------------------------
+u32 LOCAL_TVT_CALLDATA_GetSecretSex( const LOCAL_TVT_CALLDATA *cp_wk )
+{
+  u32 sex = MyStatus_GetMySex( GAMEDATA_GetMyStatus(cp_wk->p_gamedata) );
+
+  //主人公の反対の性別
+  if( sex == PTL_SEX_MALE )
+  {
+    return PTL_SEX_FEMALE;
+  }
+  else
+  {
+    return PTL_SEX_MALE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラの状態を加算
+ *
+ *	@param	LOCAL_TVT_CALLDATA *p_wk  ワーク
+ *	@param	person  キャラ
+ *	@param  max     最大値
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CALLDATA_AddState( LOCAL_TVT_CALLDATA *p_wk, u16 person, u16 max )
+{
+  u16 state = PERSON_STATE_GetState( p_wk->p_person_state, person );
+  if( state < max )
+  {
+    state++;
+    PERSON_STATE_SetState( p_wk->p_person_state, person, state );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  人物と状態に対応したデータを取得
  *
  *	@param	LOCAL_TVT_CALLDATA *p_wk  ワーク
@@ -354,7 +434,7 @@ static const LOCAL_TVT_BINARY * Local_Tvt_Calldata_GetData( const LOCAL_TVT_CALL
   int i;
 
   LOCAL_TVT_BINARY  *p_data = NULL;
-  u16 state = PERSON_STATE_GetState( cp_wk->cp_person_state, person );
+  u16 state = PERSON_STATE_GetState( cp_wk->p_person_state, person );
 
   for( i = 0; i < LOCAL_TVT_CALLDATA_MAX; i++ )
   {

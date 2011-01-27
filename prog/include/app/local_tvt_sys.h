@@ -34,8 +34,9 @@ typedef enum
 
 typedef enum
 {
-  LOCAL_TVT_MODE_SCRIPT,  //スクリプト制御モード
-  LOCAL_TVT_MODE_APP,     //アプリケーションモード
+  LOCAL_TVT_MODE_SCRIPT,          //スクリプト制御モード
+  LOCAL_TVT_MODE_APP,             //アプリケーションモード
+  LOCAL_TVT_MODE_APP_SECRET_CALL, //隠しキャラ呼び出しモード
 }LOCAL_TVT_MODE;
 
 //======================================================================

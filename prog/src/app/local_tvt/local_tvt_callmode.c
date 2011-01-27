@@ -19,9 +19,11 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
+#include "msg/msg_tvt_event_system.h"
 
 //自分のモジュール
-#include "local_tvt_local_def.h"
+#include "app/local_tvt_sys.h"
+#include "local_tvt_snd.h"
 #include "local_tvt_chara.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_util.h"
@@ -33,6 +35,7 @@
 #include "local_tvt_person_doctor.h"
 #include "local_tvt_person_chelen.h"
 #include "local_tvt_person_rival.h"
+#include "local_tvt_person_secret.h"
 
 //外部参照
 #include "local_tvt_callmode.h"
@@ -43,7 +46,7 @@
  *					定数宣言
 */
 //=============================================================================
-#define CTVT_CALL_MSG_SE_CNT (120)
+#define CTVT_CALL_MSG_SE_CNT (240)
 //=============================================================================
 /**
  *					構造体宣言
@@ -81,11 +84,13 @@ struct _LOCAL_TVT_CALL
  *					プロトタイプ宣言
 */
 //=============================================================================
+static void Local_Tvt_Call_SetMode( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALL_MODE mode );
 static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_PARAM *p_param );
 static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_person );
 
 //シーケンス関数
-static void LOCAL_TVT_SEQ_FadeIn( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void LOCAL_TVT_SEQ_FadeInSendMode( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void LOCAL_TVT_SEQ_FadeInReceiveMode( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void LOCAL_TVT_SEQ_CallSelect( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void LOCAL_TVT_SEQ_Calling( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -116,14 +121,10 @@ LOCAL_TVT_CALL * LOCAL_TVT_CALL_Init( const LOCAL_TVT_CALL_PARAM *cp_param, HEAP
   p_wk->p_data  = LOCAL_TVT_CALLDATA_Init( p_wk->param.p_gamedata, heapID );
 
   //シーケンス管理
-  p_wk->p_seq = LOCAL_TVT_SEQ_Init( p_wk, LOCAL_TVT_SEQ_FadeIn, heapID );
+  p_wk->p_seq = LOCAL_TVT_SEQ_Init( p_wk, NULL, heapID );
 
-  {
-    LOCAL_TVT_CALLSELECT_PARAM  param;
-    Local_Tvt_SetCallSelect( p_wk, &param );
-    p_wk->p_callselect  = LOCAL_TVT_CALLSELECT_Init( &param, p_wk->heapID );
-    GFL_NET_ReloadIconTopOrBottom(FALSE , p_wk->heapID );
-  }
+  //モード別設定
+  Local_Tvt_Call_SetMode( p_wk, p_wk->param.mode );
 
   return p_wk;
 }
@@ -172,6 +173,33 @@ BOOL LOCAL_TVT_CALL_Main( LOCAL_TVT_CALL *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  モード設定
+ *
+ *	@param	LOCAL_TVT_CALL *p_wk  ワーク
+ *	@param	mode                  モード
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_Call_SetMode( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALL_MODE mode )
+{
+  switch( mode )
+  {
+  default:
+    GF_ASSERT(0);
+  case LOCAL_TVT_CALL_MODE_SEND:
+    LOCAL_TVT_SEQ_SetNext( p_wk->p_seq, LOCAL_TVT_SEQ_FadeInSendMode );
+    break;
+
+  case LOCAL_TVT_CALL_MODE_RECEIVE:
+    //誰から掛かってきたのか設定
+    p_wk->call_list[0]  = LOCAL_TVT_PERSON_SECRET;
+    p_wk->call_no = 0;
+    LOCAL_TVT_SEQ_SetNext( p_wk->p_seq, LOCAL_TVT_SEQ_FadeInReceiveMode );
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  呼び出し設定
  *
  *	@param	LOCAL_TVT_CALL *p_wk  メインワーク
@@ -183,7 +211,7 @@ static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_
   GFL_STD_MemClear( p_param, sizeof(LOCAL_TVT_CALLSELECT_PARAM));
   p_param->p_message = p_wk->param.p_message;
   p_param->p_clunit  = p_wk->param.p_clunit;
-  p_param->p_msgdata = LOCAL_TVT_MESSAGE_GetCallMsgData(p_wk->param.p_message);
+  p_param->p_msgdata = LOCAL_TVT_MESSAGE_GetSystemMsgData(p_wk->param.p_message);
 
   //それぞれの呼び出し設定
   {
@@ -191,44 +219,63 @@ static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_
     {
       u16 person;
       u16 msgid;
-    } sc_call_data[LOCAL_TVT_PERSON_MAX] =
+    } sc_call_data[] =
     {
       {
         LOCAL_TVT_PERSON_DOCTOR,
-        CALL_CHARA_01,
+        LOCAL_TVT_CHARA_04,
       },
       {
         LOCAL_TVT_PERSON_RIVAL,
-        CALL_CHARA_02,
+        LOCAL_TVT_CHARA_01,
       },
       {
         LOCAL_TVT_PERSON_CHELEN,
-        CALL_CHARA_03,
+        LOCAL_TVT_CHARA_02,
       },
       {
         LOCAL_TVT_PERSON_BELL,
-        CALL_CHARA_04,
+        LOCAL_TVT_CHARA_03,
       },
       {
         LOCAL_TVT_PERSON_MOTHER,
-        CALL_CHARA_05,
+        LOCAL_TVT_CHARA_05,
       },
-      {
+      { //隠しキャラのみ分岐する
         LOCAL_TVT_PERSON_SECRET,
-        CALL_CHARA_06,
+        LOCAL_TVT_CHARA_06,
       },
     };
 
     int i;
     int cnt = 0;
-
-    for( i = 0; i < LOCAL_TVT_PERSON_MAX; i++ )
+    u32 sex = LOCAL_TVT_CALLDATA_GetSecretSex( p_wk->p_data );
+    u16 person  = 0;
+    u16 msgid   = 0;
+    for( i = 0; i < NELEMS(sc_call_data) && cnt < LOCAL_TVT_CALLSELECT_SELECT_MAX; i++ )
     {
       if( LOCAL_TVT_CALLDATA_IsCall( p_wk->p_data, sc_call_data[i].person ) )
       {
-        p_wk->call_list[cnt]    = sc_call_data[i].person;
-        p_param->msgID[cnt]     = sc_call_data[i].msgid;
-        p_param->is_select[cnt] = LOCAL_TVT_CALLDATA_IsSelect( p_wk->p_data, sc_call_data[i].person );
+        if( i == LOCAL_TVT_PERSON_SECRET )
+        {
+          person  = LOCAL_TVT_PERSON_SECRET;
+          if( sex == PTL_SEX_MALE )
+          {
+            msgid = LOCAL_TVT_CHARA_06;
+          }
+          else
+          {
+            msgid = LOCAL_TVT_CHARA_07;
+          }
+        }
+        else
+        {
+          person  = sc_call_data[i].person;
+          msgid   = sc_call_data[i].msgid;
+        }
+        p_wk->call_list[cnt]    = person;
+        p_param->msgID[cnt]     = msgid;
+        p_param->is_select[cnt] = LOCAL_TVT_CALLDATA_IsSelect( p_wk->p_data, person );
         cnt++;
       }
     }
@@ -296,7 +343,36 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
     LOCAL_TVT_MOTHER_SetPerson( p_person, p_wk->param.p_message, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
     break;
   case LOCAL_TVT_PERSON_SECRET:
-    LOCAL_TVT_SUPPORT_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
+    switch( LOCAL_TVT_SECRET_GetFace( p_wk->p_data ) )
+    {
+    default:
+      GF_ASSERT(0);
+    case LOCAL_TVT_SECRET_FACE_INVISIBLE:
+      param[0].charaType    = LTCT_SOUNDONLY;
+      break;
+    case LOCAL_TVT_SECRET_FACE_HIDE_M:
+      param[0].charaType    = LTCT_SECRET_M;
+      break;
+    case LOCAL_TVT_SECRET_FACE_HIDE_F:
+      param[0].charaType    = LTCT_SECRET_F;
+      break;
+    case LOCAL_TVT_SECRET_FACE_VISIBLE_M:
+      param[0].charaType    = LTCT_SECRET_M;
+      break;
+    case LOCAL_TVT_SECRET_FACE_VISIBLE_F:
+      param[0].charaType    = LTCT_SECRET_F;
+      break;
+    }
+    param[0].bgType       = LOCAL_TVT_CALLDATA_GetBack( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
+    param[0].weatherType  = LOCAL_TVT_CALLDATA_GetWeather( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
+    {
+      LOCAL_TVT_SECRET_MODE mode  = LOCAL_TVT_SECRET_MODE_RECIVE;
+      if( p_wk->param.mode == LOCAL_TVT_MODE_APP_SECRET_CALL )
+      {
+        mode = LOCAL_TVT_SECRET_MODE_SEND;
+      }
+      LOCAL_TVT_SECRET_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, mode, p_wk->heapID );
+    }
     break;
   default:
     LOCAL_TVT_SUPPORT_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
@@ -314,14 +390,14 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  フェードイン
+ *	@brief  フェードイン  送信モード
  *
  *	@param	LOCAL_TVT_SEQ *p_seqwk  シーケンスワーク
  *	@param	*p_seq      関数内シーケンス
  *	@param	*p_wk_adrs  ワークアドレス
  */
 //-----------------------------------------------------------------------------
-static void LOCAL_TVT_SEQ_FadeIn( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void LOCAL_TVT_SEQ_FadeInSendMode( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs )
 {
   enum
   {
@@ -329,10 +405,18 @@ static void LOCAL_TVT_SEQ_FadeIn( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk
     SEQ_WAIT,
     SEQ_END,
   };
+  LOCAL_TVT_CALL  *p_wk = p_wk_adrs;
 
   switch( *p_seq )
   {
   case SEQ_START:
+    {
+      LOCAL_TVT_CALLSELECT_PARAM  param;
+      Local_Tvt_SetCallSelect( p_wk, &param );
+      p_wk->p_callselect  = LOCAL_TVT_CALLSELECT_Init( &param, p_wk->heapID );
+      GFL_NET_ReloadIconTopOrBottom(FALSE , p_wk->heapID );
+    }
+
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
     (*p_seq)++;
     break;
@@ -346,6 +430,74 @@ static void LOCAL_TVT_SEQ_FadeIn( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk
 
   case SEQ_END:
     LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_CallSelect );
+    break;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードイン  送信モード
+ *
+ *	@param	LOCAL_TVT_SEQ *p_seqwk  シーケンスワーク
+ *	@param	*p_seq      関数内シーケンス
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void LOCAL_TVT_SEQ_FadeInReceiveMode( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_LOAD_INIT,
+    SEQ_LOAD_WAIT,
+    SEQ_INIT,
+    SEQ_WAIT,
+    SEQ_END,
+  };
+  LOCAL_TVT_CALL  *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_LOAD_INIT:
+    {
+      LOCAL_TVT_PERSON person;
+      LOCAL_TVT_PERSON_SYS_PARAM  param;
+      Local_Tvt_SetPerson( p_wk, &person );
+
+      GFL_STD_MemClear( &param, sizeof(LOCAL_TVT_PERSON_SYS_PARAM));
+      param.p_message   = p_wk->param.p_message;
+      param.p_chara_sys = p_wk->param.p_chara_sys;
+      param.p_clunit    = p_wk->param.p_clunit;
+      param.p_data      = p_wk->p_data;
+      p_wk->p_person  = LOCAL_TVT_PERSON_SYS_Init( &person, &param, p_wk->heapID );
+    }
+    (*p_seq)++;
+    break;
+
+  case SEQ_LOAD_WAIT:
+    if( LOCAL_TVT_CHARA_SYS_IsLoadEnd( p_wk->param.p_chara_sys ) )
+    {
+      LOCAL_TVT_CHARA_SYS_SetVisible( p_wk->param.p_chara_sys, TRUE );
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_INIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    (*p_seq)++;
+    break;
+
+  case SEQ_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_END:
+    LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_Talk );
     break;
 
   default:
@@ -485,6 +637,7 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
   switch( *p_seq )
   {
   case SEQ_INIT:
+    if( p_wk->p_person == NULL )
     {
       LOCAL_TVT_PERSON person;
       LOCAL_TVT_PERSON_SYS_PARAM  param;
@@ -496,8 +649,12 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
       param.p_clunit    = p_wk->param.p_clunit;
       param.p_data      = p_wk->p_data;
       p_wk->p_person  = LOCAL_TVT_PERSON_SYS_Init( &person, &param, p_wk->heapID );
+      (*p_seq)++;
     }
-    (*p_seq)++;
+    else
+    {
+      (*p_seq)  = SEQ_MAIN;
+    }
     break;
     
   case SEQ_LOAD_WAIT:
@@ -518,6 +675,7 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_EXIT:
     LOCAL_TVT_PERSON_SYS_Exit( p_wk->p_person );
+    p_wk->p_person = NULL;
     LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_FadeOut );
     break;
 
@@ -606,7 +764,7 @@ static void CALLMSG_Init( CALLMSG *p_wk, LOCAL_TVT_MESSAGE *p_message, HEAPID he
 
   GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_MSG );
 
-  PMSND_PlaySE_byPlayerID( CTVT_SND_TEL_CALL , SEPLAYER_SE2 );
+  PMSND_PlaySE_byPlayerID( LOCAL_TVT_SE_TEL_CALL, SEPLAYER_SE2 );
 }
 //----------------------------------------------------------------------------
 /**

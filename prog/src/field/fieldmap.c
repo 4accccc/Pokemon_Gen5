@@ -474,6 +474,7 @@ static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 static BOOL zonedata_GetShadowUse( u16 zone_id );
 
 static BOOL zonedata_IsEnvSE( u16 zone_id );
+static void setupLiveCaster( GAMEDATA *gdata, u32 zone_id );
 
 
 //data
@@ -947,6 +948,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       SODATEYA_WORK* work = SODATEYA_WORK_GetSodateyaWork( scw );
       fieldWork->sodateya = SODATEYA_Create( fieldWork->heapID, fieldWork, work );
     }
+
+    //ライブキャスターのセットアップ
+    setupLiveCaster( gdata, fieldWork->map_id );
     
     // scenearea
     {
@@ -4095,3 +4099,19 @@ static BOOL zonedata_IsEnvSE( u16 zone_id )
   return FALSE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライブキャスター用情報をセットアップする
+ *
+ *	@param	GAMEDATA *gdata ゲームデータ
+ *	@param	zone_id         ゾーンID
+ */
+//-----------------------------------------------------------------------------
+static void setupLiveCaster( GAMEDATA *gdata, u32 zone_id )
+{
+  //2%の確率で電話をかけることができる。
+  u32 rnd = GFUser_GetPublicRand0(100);
+  BOOL is_call  = rnd < 2? TRUE: FALSE;
+  GAMEDATA_SetLiveCasterSecretCallFlag( gdata, is_call );
+}

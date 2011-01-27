@@ -150,5 +150,133 @@ void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person )
 //-----------------------------------------------------------------------------
 BOOL PERSON_STATE_GetLocalTvtCall( const PERSON_STATE *cp_wk, u16 person )
 {
-  return cp_wk->is_ltvt[ person ];
+  return TRUE;//cp_wk->is_ltvt[ person ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラとのデートイベント設定
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	const RTCDate *cp_date  デートの日
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, const RTCDate *cp_date )
+{
+  p_wk->is_secret_date_event  = TRUE;
+  p_wk->secret_date = GFDATE_RTCDate2GFDate( cp_date );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラとのデートイベント消去
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_ClearSecretDateEvent( PERSON_STATE *p_wk )
+{
+  p_wk->is_secret_date_event  = FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  今日がデートの日時かチェック
+ *
+ *	@param	const PERSON_STATE *cp_wk ワーク
+ *	@param	RTCDate *cp_date          日時
+ *
+ *	@return TRUEならば今日がデートの日  FALSEならば違う
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_CheckSecretDataEventToday( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
+{
+  if( cp_wk->is_secret_date_event )
+  {
+    GFDATE today  = GFDATE_RTCDate2GFDate( cp_date );
+    return today == cp_wk->secret_date;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デートの日時を過ぎたかチェック
+ *
+ *	@param	const PERSON_STATE *cp_wk ワーク
+ *	@param	RTCDate *cp_date          日時
+ *
+ *	@return TRUEならば過ぎてしまった  FALSEならば違う
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_CheckSecretDataEventLater( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
+{
+  if( cp_wk->is_secret_date_event )
+  {
+    GFDATE today  = GFDATE_RTCDate2GFDate( cp_date );
+    return today > cp_wk->secret_date;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラとのデートイベント取得
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@retval	TRUEでデートイベントON,　FALSEでOFF
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_GetSecretDateEvent( const PERSON_STATE *cp_wk )
+{
+  return cp_wk->is_secret_date_event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの不機嫌フラグ設定
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	enable              TRUEで不機嫌,　FALSEで正常
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetSecretDispleased( PERSON_STATE *p_wk, BOOL enable )
+{
+  p_wk->is_secret_displeased  = enable;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの不機嫌フラグ取得
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@retval TRUEで不機嫌,　FALSEで正常
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_GetSecretDispleased( const PERSON_STATE *cp_wk )
+{
+  return cp_wk->is_secret_displeased;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの１日１回電話フラグ設定
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	enable              TRUEですでに電話した,　FALSEでまだ電話していない
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetSecretOnceDayCallFlag( PERSON_STATE *p_wk, BOOL enable )
+{
+  p_wk->is_secret_once_day_call = enable;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの１日１回電話フラグ取得
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@retval TRUEですでに電話した,　FALSEでまだ電話していない
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_GetSecretOnceDayCallFlag( const PERSON_STATE *cp_wk )
+{
+  return cp_wk->is_secret_once_day_call;
 }

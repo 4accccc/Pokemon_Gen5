@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-21T14:23:34"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-01-26T20:52:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,6 +365,22 @@
 	<row id="LOCAL_TVT_CHARA_05">
 		<language name="JPN" width="256">ママ</language>
 		<language name="JPN_KANJI" width="256">ママ</language>
+	</row>
+
+	<row id="LOCAL_TVT_CHARA_06">
+		<language name="JPN" width="256">かくしおとこ</language>
+		<language name="JPN_KANJI" width="256">かくしおとこ</language>
+	</row>
+
+	<row id="LOCAL_TVT_CHARA_07">
+		<language name="JPN" width="256">かくしおんな</language>
+		<language name="JPN_KANJI" width="256">かくしおんな</language>
+	</row>
+
+	<row id="LOCAL_TVT_CHARA_08">
+		<attribute name="キャラ指定">SOUND ONLY</attribute>
+		<language name="JPN" width="256">？？？？</language>
+		<language name="JPN_KANJI" width="256">？？？？</language>
 	</row>
 
 	<row id="LOCAL_TVT_CHARA_99">
