@@ -91,6 +91,7 @@ extern BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckPool01( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckPool02( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShoal( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckWaterFall( const MAPATTR_VALUE val );

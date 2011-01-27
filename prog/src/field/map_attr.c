@@ -529,7 +529,7 @@ BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val )
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckPool01( const MAPATTR_VALUE val )
 {
   return( val == MATTR_POOL_01 );
 }
@@ -544,6 +544,18 @@ BOOL MAPATTR_VALUE_CheckPool02( const MAPATTR_VALUE val )
 {
   return( val == MATTR_POOL_02 );
 }
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 水たまりの波紋が出るアトリビュートかどうか？
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val )
+{
+  return ((val == MATTR_POOL_01) || ( val == MATTR_POOL_02 ));
+}
+
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー チェック 浅瀬
