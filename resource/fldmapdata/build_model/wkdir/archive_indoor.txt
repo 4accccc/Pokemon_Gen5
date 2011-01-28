@@ -146,3 +146,4 @@
 "nsbmdfiles/c04_gtrain_01.nsbmd"
 "nsbmdfiles/m_gym03_mayu01.nsbmd"
 "nsbmdfiles/m_gym03_mayu02.nsbmd"
+"nsbmdfiles/m_gym03_mayu03.nsbmd"

@@ -147,4 +147,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/c04_gtrain_01.nsbmd \
 	$(RESDIR)/m_gym03_mayu01.nsbmd \
 	$(RESDIR)/m_gym03_mayu02.nsbmd \
+	$(RESDIR)/m_gym03_mayu03.nsbmd \
 
