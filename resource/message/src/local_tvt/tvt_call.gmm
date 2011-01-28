@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2011-01-28T15:22:34"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-01-28T15:35:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,7 +339,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="246"/>
+		<comment position="1" width="195"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="425" top="92" right="1024" bottom="720" maximized="no" rayout="Vertical2">
+	<dialog left="496" top="82" right="1095" bottom="710" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="66" right="1024" bottom="464" visible="no"/>
 		<band id="0" index="0" style="0000" width="591"/>
@@ -671,6 +671,20 @@
 	<row id="CALL_BELL_DORYOKU_10">
 		<language name="JPN" width="256">とくぼう</language>
 		<language name="JPN_KANJI" width="256">とくぼう</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_11">
+		<language name="JPN" width="256">でも　[1:0D:ステータス名:0]は
+がんばったと　おもうよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">でも　[1:0D:ステータス名:0]は
+頑張ったと　思うよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_BELL_DORYOKU_12">
+		<language name="JPN" width="256">でも　[1:0D:ステータス名:0]と　[1:0D:ステータス名:1]は
+がんばったと　おもうよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">でも　[1:0D:ステータス名:0]と　[1:0D:ステータス名:1]は
+頑張ったと　思うよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_BELL_SELECT_01">

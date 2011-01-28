@@ -90,7 +90,8 @@ typedef enum
 typedef struct 
 {
   s32   seq;
-  BOOL  is_state_set;
+  BOOL  is_talk;
+  u32   talk_msgID;
   LOCAL_TVT_POKELIST        *p_pokelist;
   GAMEDATA                  *p_gamedata;
   LOCAL_TVT_SECRET_MODE     mode;
@@ -226,7 +227,6 @@ static LOCAL_TVT_SECRET *LOCAL_TVT_SECRET_Init( GAMEDATA *p_gamedata, LOCAL_TVT_
     p_wk->cp_quest     = Questionnaire_GetAnswerWork(p_q_sv);
   }
   p_wk->mode        = mode;
-
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -334,7 +334,14 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
-      u32 msgID = Local_Tvt_Secret_GetTalkMsgID( p_wk->cp_quest, cp_param->p_data, cp_param->p_message );
+      u32 msgID;
+
+      if( p_wk->is_talk == FALSE )
+      {
+        //何回も変わらないように最初の１回だけ受け取る
+        p_wk->talk_msgID = Local_Tvt_Secret_GetTalkMsgID( p_wk->cp_quest, cp_param->p_data, cp_param->p_message );
+      }
+      msgID = p_wk->talk_msgID;
 
       //女性の場合は会話番号を足す
       if( sex == PTL_SEX_FEMALE )
@@ -354,30 +361,8 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
     break;
 
   case SEQ_END:
-    //話しかけたので状態変更
-    if( p_wk->is_state_set == FALSE )
-    {
-      //何回話しかけても状態は１回しか変わらない
-      p_wk->is_state_set  = TRUE;
-
-      //約束をしたならば、フラグを立てる
-      {
-        LOCAL_TVT_SECRET_EVENT  event = Local_Tvt_Secret_GetNowEvent( cp_param->p_data );
-        switch( event )
-        {
-        case LOCAL_TVT_SECRET_EVENT_PHASE1_DATE:
-          LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, PERSON_STATE_SECRET_DATE_FIRST );
-          break;
-        case LOCAL_TVT_SECRET_EVENT_PHASE3_DATE:
-        case LOCAL_TVT_SECRET_EVENT_PHASE4_DATE:
-          LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, PERSON_STATE_SECRET_DATE_REGULAR );
-          break;
-        }
-      }
-
-      //話しかけたので好感度アップ
-      LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
-    }
+    //話しかけた
+    p_wk->is_talk = TRUE;
 
     p_wk->seq = 0;
     return TRUE;
@@ -437,6 +422,28 @@ static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
   case SEQ_END:
     p_wk->seq = 0;
   
+    //話しかけた場合は状態変更
+    if( p_wk->is_talk )
+    {
+      //約束をしたならば、フラグを立てる
+      {
+        LOCAL_TVT_SECRET_EVENT  event = Local_Tvt_Secret_GetNowEvent( cp_param->p_data );
+        switch( event )
+        {
+        case LOCAL_TVT_SECRET_EVENT_PHASE1_DATE:
+          LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, PERSON_STATE_SECRET_DATE_FIRST );
+          break;
+        case LOCAL_TVT_SECRET_EVENT_PHASE3_DATE:
+        case LOCAL_TVT_SECRET_EVENT_PHASE4_DATE:
+          LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, PERSON_STATE_SECRET_DATE_REGULAR );
+          break;
+        }
+      }
+
+      //話しかけたので好感度アップ
+      LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
+    }
+
     //１日１回会話ON
     LOCAL_TVT_CALLDATA_SetSecretOnceCall( cp_param->p_data );
 

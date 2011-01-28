@@ -145,6 +145,8 @@ VMCMD_RESULT EvCmdPersonState_GetDateType( VMHANDLE *p_vm, void *p_wk_adrs )
   PERSON_STATE *p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
 
   *p_ret_wk = PERSON_STATE_GetSecretDateEvent( p_person_state );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -162,4 +164,6 @@ VMCMD_RESULT EvCmdPersonState_SetDateEnd( VMHANDLE *p_vm, void *p_wk_adrs )
 
   PERSON_STATE_SetSeasonDateFlag( p_person_state, TRUE );
   PERSON_STATE_ClearSecretDateEvent( p_person_state );
+
+  return VMCMD_RESULT_CONTINUE;
 }

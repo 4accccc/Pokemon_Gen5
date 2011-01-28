@@ -459,7 +459,7 @@ static BOOL LOCAL_TVT_SUPPORT_CheckEffort( LOCAL_TVT_PERSON_SYS *p_person, const
         u32 exp_max = 0;
         for( i = 0; i < PTL_ABILITY_MAX; i++ )
         {
-          exp_max += PP_Get( cp_pp, ID_PARA_hp_exp+i, NULL );;
+          exp_max += PP_Get( cp_pp, ID_PARA_hp_exp+i, NULL );
         }
         if( exp_max == 510 )
         {
@@ -492,10 +492,12 @@ static BOOL LOCAL_TVT_SUPPORT_CheckEffort( LOCAL_TVT_PERSON_SYS *p_person, const
       {
         int i;
         u32 max_num = 0;
+        u32 exp_max = 0;
         for( i = 0; i < PTL_ABILITY_MAX; i++ )
         {
           const u32 exp   = PP_Get( cp_pp, ID_PARA_hp_exp+i, NULL );
           const u32 msgID = CALL_BELL_DORYOKU_05+i;
+          exp_max += exp;
           if( exp >= 252 )
           {
             LOCAL_TVT_MESSAGE_RegisterWord( cp_param->p_message, cp_msg, msgID, max_num );
@@ -504,11 +506,25 @@ static BOOL LOCAL_TVT_SUPPORT_CheckEffort( LOCAL_TVT_PERSON_SYS *p_person, const
         }
         if( max_num == 1 )
         {
-          msgID = CALL_BELL_DORYOKU_03;
+          if( exp_max == 510 )
+          {
+            msgID = CALL_BELL_DORYOKU_03;
+          }
+          else
+          {
+            msgID = CALL_BELL_DORYOKU_11;
+          }
         }
         else if( max_num == 2 )
         {
-          msgID = CALL_BELL_DORYOKU_04;
+          if( exp_max == 510 )
+          {
+            msgID = CALL_BELL_DORYOKU_04;
+          }
+          else
+          {
+            msgID = CALL_BELL_DORYOKU_12;
+          }
         }
         else
         {
