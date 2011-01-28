@@ -44,29 +44,10 @@
 #include "event_field_fade.h" //FIELD_FADE_DEFAULT_WAIT
 
 #include "field_place_name.h" // for FIELD_PLACE_NAME_DisplayForce
-
-typedef enum {
-  FADE_IN,
-  FADE_OUT,
-  FADE_IN_SLOW,
-  FADE_OUT_SLOW,
-}FADE_IO;
-
-typedef struct BRIGHT_CNT_WORK_tag
-{
-  GAMESYS_WORK* gsys;
-  FIELDMAP_WORK* fieldmap;
-	FIELD_FADE_TYPE fade_type;
-  FIELD_FADE_WAIT_FLAG wait_flag;
-  FADE_IO   fade_io;
-  int Seq;
-}BRIGHT_CNT_WORK;
+#include "field_fade.h"
 
 static BOOL EvWaitDispFade( VMHANDLE *core, void *wk );
 static BOOL EvWaitMapFade( VMHANDLE *core, void *wk );
-static void CreateBrightFadeTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FADE_IO fade_io,
-                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_FLAG wait );
-static void BrightCntTcb( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
 extern BOOL MapFadeReqFlg;  //マップフェードリクエストフラグ  宣言元　script.c
@@ -176,7 +157,7 @@ VMCMD_RESULT EvCmdMapFade_BlackIn_Force( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   //GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
   MapFadeReqFlg = FALSE;
@@ -197,7 +178,7 @@ VMCMD_RESULT EvCmdMapFade_BlackIn( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
   MapFadeReqFlg = FALSE;
@@ -219,7 +200,7 @@ VMCMD_RESULT EvCmdMapFade_BlackOut( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_OUT, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
   MapFadeReqFlg = TRUE;
@@ -241,7 +222,7 @@ VMCMD_RESULT EvCmdMapFade_WhiteIn( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_IN, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
   MapFadeReqFlg = FALSE;
@@ -263,7 +244,7 @@ VMCMD_RESULT EvCmdMapFade_WhiteOut( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_OUT, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
   MapFadeReqFlg = TRUE;
@@ -285,7 +266,7 @@ VMCMD_RESULT EvCmdMapFade_BlackInSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_IN_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
   MapFadeReqFlg = FALSE;
@@ -307,7 +288,7 @@ VMCMD_RESULT EvCmdMapFade_BlackOutSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_OUT_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
   MapFadeReqFlg = TRUE;
@@ -329,7 +310,7 @@ VMCMD_RESULT EvCmdMapFade_WhiteInSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_IN_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
   MapFadeReqFlg = FALSE;
@@ -351,7 +332,7 @@ VMCMD_RESULT EvCmdMapFade_WhiteOutSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  CreateBrightFadeTask( gsys, fieldWork, FADE_OUT_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
   MapFadeReqFlg = TRUE;
@@ -853,107 +834,6 @@ static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk )
 
 //======================================================================
 //======================================================================
-//------------------------------------------------------------------
-/**
- * @brief	ブライトネスフェードタスク生成
- * @param	gsys		  GAMESYS_WORKへのポインタ
- * @param	fieldmap  フィールドマップワークへのポインタ
- * @param fade_io   イン　or アウト
- * @param	type		  フェードの種類指定
- * @param wait      フェード完了を待つかどうか
- * @return	none
- */
-//------------------------------------------------------------------
-static void CreateBrightFadeTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FADE_IO fade_io,
-                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_FLAG wait )
-{
-  BRIGHT_CNT_WORK *task_wk;
-  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
-  //ワーク作成
-  task_wk = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(BRIGHT_CNT_WORK) );
-  // TCBを追加
-  GFL_TCB_AddTask( tcbsys, BrightCntTcb, task_wk, 0 );
-  
-  //リクエストフラグ立てる
-  FIELDMAP_SetMapFadeReqFlg( fieldmap, TRUE );
-
-  task_wk->Seq  = 0;
-  task_wk->gsys      = gsys;
-  task_wk->fieldmap  = fieldmap;
-	task_wk->fade_type = type;
-  task_wk->wait_flag = wait;
-  task_wk->fade_io = fade_io;
-}
-
-//--------------------------------------------------------------
-/**
- * ブライトネスフェードタスク
- * @param   tcb        タスクポインタ
- * @param   work      ワーク 
- * @retval  none
- */
-//--------------------------------------------------------------
-static void BrightCntTcb( GFL_TCB* tcb, void* work )
-{
-  BRIGHT_CNT_WORK *wk = work;
-  switch(wk->Seq){
-  case 0:
-    {
-      int mode;
-      int start, end;
-      int fade_speed;
-
-      if ( (wk->fade_io == FADE_IN)||(wk->fade_io == FADE_OUT) ) fade_speed = FIELD_FADE_DEFAULT_WAIT;
-      else fade_speed = FIELD_FADE_SLOW_WAIT;
-
-      if ( (wk->fade_io == FADE_IN)||(wk->fade_io == FADE_IN_SLOW) )
-      {
-        //フェードインのときはＢＧ初期化する
-        
-        start = 16;
-        end = 0;
-        
-        // BGモード設定と表示設定の復帰
-        {
-          int mv = GFL_DISP_GetMainVisible();
-          FIELDMAP_InitBGMode();
-          GFL_DISP_GX_SetVisibleControlDirect( mv );
-        }
-        FIELDMAP_InitBG(wk->fieldmap);
-      }
-      else
-      {
-        start = 0;
-        end = 16;
-      }
-
-      if ( wk->fade_type ==  FIELD_FADE_BLACK)
-      {
-        mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
-      }
-      else
-      {
-        mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
-      }
-      GFL_FADE_SetMasterBrightReq(mode, start, end, fade_speed);
-    }
-    wk->Seq++;
-    break;
-  case 1:
-    {
-      BOOL rc = FALSE;
-      if( wk->wait_flag == FIELD_FADE_NO_WAIT ) rc = TRUE;
-		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE;
-
-      if (rc) { //フェード終了
-        FIELDMAP_SetMapFadeReqFlg( wk->fieldmap, FALSE ); //リクエスト落す
-        GFL_TCB_DeleteTask( tcb );
-        GFL_HEAP_FreeMemory( work );
-      }
-    }
-		break;
-  }
-}
 
 //--------------------------------------------------------------
 /**
