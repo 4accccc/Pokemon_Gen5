@@ -45,6 +45,7 @@ static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 static void DEBUG_MyPokeAdd_Tamada( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
 static void DEBUG_MyPokeAdd_Matsuda( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
 static void DEBUG_MyPokeAdd_Saito( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
+static void DEBUG_MyPokeAdd_Nagi( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus , HEAPID heapId );
 
 //============================================================================================
 // デバック用　手持ちポケモン　振り分け　
@@ -77,6 +78,8 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
 #elif defined(DEBUG_ONLY_FOR_unno)
   DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
+#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+  DEBUG_MyPokeAdd_Nagi( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus, heapID );
 #else
 
   // デフォルトの設定。
@@ -227,7 +230,54 @@ static void DEBUG_MyPokeAdd_Saito( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 
 }
+static void DEBUG_MyPokeAdd_Nagi( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus , HEAPID heapId )
+{
+  u64 personal_rnd;
+	PP_Setup(pp, MONSNO_629, 99, MyStatus_GetID( mystatus ));
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_DORAGONKUROO , 0 );
+  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 1 );
+  PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
+  PP_SetWazaPos( pp , WAZANO_SORAWOTOBU , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
 
+  personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_557, 0, PTL_SEX_FEMALE );
+	PP_SetupEx(pp, MONSNO_557, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_ANAWOHORU , 0 );
+  PP_SetWazaPos( pp , WAZANO_NAMINORI , 1 );
+  PP_SetWazaPos( pp , WAZANO_DAIBINGU , 2 );
+  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_620, 0, PTL_SEX_MALE );
+	PP_SetupEx(pp, MONSNO_620, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_SAIKOKINESISU , 0 );
+  PP_SetWazaPos( pp , WAZANO_AMAGOI , 1 );
+  PP_SetWazaPos( pp , WAZANO_HURASSYU, 2 );
+  PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_581, 0, PTL_SEX_FEMALE );
+	PP_SetupEx(pp, MONSNO_581, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
+  PP_SetWazaPos( pp , WAZANO_GIGADOREIN , 0 );
+  PP_SetWazaPos( pp , WAZANO_IKARINOKONA , 1 );
+  PP_SetWazaPos( pp , WAZANO_KINOKONOHOUSI , 2 );
+  PP_SetWazaPos( pp , WAZANO_AMAIKAORI , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_529, 0, PTL_SEX_FEMALE );
+	PP_SetupEx(pp, MONSNO_529, 1, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
+  PP_Put( pp, ID_PARA_tamago_flag, TRUE );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+}
 
 
 
@@ -295,6 +345,8 @@ static const ITEM_ST DebugItem[] = {
   { ITEM_KODAWARIHATIMAKI,  5},  // こだわりハチマキ
   {ITEM_OMAMORIKOBAN, 5}, // おまもりこばん
   {ITEM_DAUZINGUMASIN, 1}, // ダウジングマシン
+  { ITEM_RAIBUKYASUTAA,  1},  // ライブキャスター
+  { ITEM_MEDARUBOKKUSU,  1},  // メダルボックス
 
   { ITEM_WAZAMASIN01,  328},		// わざマシン０１
   {  ITEM_WAZAMASIN02	, 329 },		// わざマシン０２
