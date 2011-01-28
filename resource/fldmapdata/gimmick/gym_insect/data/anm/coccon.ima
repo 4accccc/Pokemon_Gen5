@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-01-25T12:07:01" source="coccon.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-01-28T20:10:57" source="coccon.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -35,7 +35,7 @@
 </mat_color_data>
 
 <mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="lambert11">
+	<mat_color_anm index="0" material_name="coccon04_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
