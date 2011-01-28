@@ -118,6 +118,7 @@
 #include "calender.h"
 
 #include "savedata/record.h"
+#include "savedata/person_state.h"
 
 #include "pleasure_boat.h"    //for PL_BOAT_
 
@@ -4111,7 +4112,20 @@ static BOOL zonedata_IsEnvSE( u16 zone_id )
 static void setupLiveCaster( GAMEDATA *gdata, u32 zone_id )
 {
   //2%の確率で電話をかけることができる。
-  u32 rnd = GFUser_GetPublicRand0(100);
-  BOOL is_call  = rnd < 2? TRUE: FALSE;
-  GAMEDATA_SetLiveCasterSecretCallFlag( gdata, is_call );
+  {
+    u32 rnd = GFUser_GetPublicRand0(100);
+    BOOL is_call  = rnd < 2? TRUE: FALSE;
+    GAMEDATA_SetLiveCasterSecretCallFlag( gdata, is_call );
+  }
+
+  //季節が変化していたら、デート可能にする
+  {
+    u16 prev, next;
+    if( PMSEASON_GetNextSeason( gdata, &prev, &next ) )
+    {
+      PERSON_STATE *p_sv  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(gdata) );
+      PERSON_STATE_SetSeasonDateFlag( p_sv, FALSE );
+    } 
+  }
+
 }

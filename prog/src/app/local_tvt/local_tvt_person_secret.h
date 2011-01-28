@@ -32,7 +32,7 @@ typedef enum
   LOCAL_TVT_SECRET_MODE_RECIVE, //このキャラが電話を受けた
   LOCAL_TVT_SECRET_MODE_SEND,   //主人公から電話をかけた
 }LOCAL_TVT_SECRET_MODE;
-extern void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *cp_msg, GAMEDATA *p_gamedata, LOCAL_TVT_SECRET_MODE mode,HEAPID heapID );
+extern void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *cp_msg, GAMEDATA *p_gamedata, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_SECRET_MODE mode, HEAPID heapID );
 
 typedef enum
 {

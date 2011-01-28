@@ -28,7 +28,7 @@
 //======================================================================
 #ifdef PM_DEBUG
 #define LTVT_DEBUG_USE_DEBUGWIN //デバッグウィンドウ使用
-#define LTVT_DEBUG_MODE_CHANGE  //ボタン長押しでモード切替
+//#define LTVT_DEBUG_MODE_CHANGE  //ボタン長押しでモード切替
 #endif //PM_DEBUG
 
 //======================================================================

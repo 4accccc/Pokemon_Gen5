@@ -936,8 +936,8 @@
   DEF_CMD( EvCmdPersonState_SetLTvtCall, EV_SEQ_PERSON_TVT_CALL_SET )
   DEF_CMD( EvCmdPersonState_CheckSecretCalled, EV_SEQ_PERSON_CHECK_SECRET )
   DEF_CMD( EvCmdCallTVTSecret, EV_SEQ_CALL_TVT_SECRET )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdPersonState_GetDateType, EV_SEQ_PERSON_CHECK_SECRET_DATE )
+  DEF_CMD( EvCmdPersonState_SetDateEnd, EV_SEQ_PERSON_SET_SECRET_DATE_END )
  
   //’ŽƒWƒ€
   DEF_CMD( EvCmdGymInsect_CocconOpen, EV_SEQ_GYM_INSECT_COCCON_OPEN)

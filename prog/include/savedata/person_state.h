@@ -26,6 +26,13 @@
  *					定数宣言
 */
 //=============================================================================
+//隠しキャラのデートの状態
+typedef enum
+{
+  PERSON_STATE_SECRET_DATE_NONE,      //なし
+  PERSON_STATE_SECRET_DATE_FIRST,     //最初のデート
+  PERSON_STATE_SECRET_DATE_REGULAR,   //定期デート
+}PERSON_STATE_SECRET_DATE;
 
 //=============================================================================
 /**
@@ -45,9 +52,9 @@ struct _PERSON_STATE
   u8  state[PERSON_STATE_MAX];
   u8  is_ltvt[PERSON_STATE_MAX];
   u8  is_secret_displeased;   //不機嫌かどうか
-  u8  is_secret_date_event;   //デートイベントフラグ→ONのときはサブイベント発生まち、電話できない
+  u8  secret_date_event;   //デートイベント状態→ONのときはサブイベント発生まち、電話できない PERSON_STATE_SECRET_DATEの値
   u8  is_secret_once_day_call;//１日１回電話フラグ
-  u8  dummy;
+  u8  is_season_date;         //１季節に１回のデートフラグ
   GFDATE  secret_date;        //デートの日
 };
 
@@ -68,20 +75,26 @@ extern void PERSON_STATE_SetState( PERSON_STATE* p_wk, u16 person, u16 state );
 extern u16  PERSON_STATE_GetState( const PERSON_STATE* cp_wk, u16 person );
 
 //各キャラのローカルライブキャスター電話設定
-extern void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person );
+extern void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person, BOOL is_ltvt );
 extern BOOL PERSON_STATE_GetLocalTvtCall( const PERSON_STATE *cp_wk, u16 person );
 
-//ローカルライブキャスター隠しキャラとのデートイベントフラグ
-extern void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, const RTCDate *cp_date );
+
+//ローカルライブキャスター隠しキャラ
+extern void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, PERSON_STATE_SECRET_DATE date, const RTCDate *cp_date );
 extern void PERSON_STATE_ClearSecretDateEvent( PERSON_STATE *p_wk );
 extern BOOL PERSON_STATE_CheckSecretDataEventToday( const PERSON_STATE *cp_wk, const RTCDate *cp_date );
 extern BOOL PERSON_STATE_CheckSecretDataEventLater( const PERSON_STATE *cp_wk, const RTCDate *cp_date );
-extern BOOL PERSON_STATE_GetSecretDateEvent( const PERSON_STATE *cp_wk );
+extern PERSON_STATE_SECRET_DATE PERSON_STATE_GetSecretDateEvent( const PERSON_STATE *cp_wk );
 
-//ローカルライブキャスター隠しキャラの不機嫌フラグ
 extern void PERSON_STATE_SetSecretDispleased( PERSON_STATE *p_wk, BOOL enable );
 extern BOOL PERSON_STATE_GetSecretDispleased( const PERSON_STATE *cp_wk );
 
-//ローカルライブキャスター隠しキャラ１日１回電話したフラグ
 extern void PERSON_STATE_SetSecretOnceDayCallFlag( PERSON_STATE *p_wk, BOOL enable );
 extern BOOL PERSON_STATE_GetSecretOnceDayCallFlag( const PERSON_STATE *cp_wk );
+
+extern void PERSON_STATE_SetSeasonDateFlag( PERSON_STATE *p_wk, BOOL enable );
+extern BOOL PERSON_STATE_GetSeasonDateFlag( const PERSON_STATE *cp_wk );
+
+#ifdef PM_DEBUG
+extern void DEBUG_PERSON_STATE_GetDate( const PERSON_STATE *cp_wk, RTCDate *p_date );
+#endif //PM_DEBUG

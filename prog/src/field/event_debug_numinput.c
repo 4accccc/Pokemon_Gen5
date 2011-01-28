@@ -53,6 +53,10 @@
 #include "savedata/save_tbl.h"
 #include "savedata/perapvoice.h"
 
+#include "savedata/person_state.h"
+#include "app/local_tvt/local_tvt_call.h"
+#include "debug/debug_flg.h"
+
 //======================================================================
 //======================================================================
 ///項目選択用データの定義
@@ -197,6 +201,28 @@ static void DebugSetViewOffs03(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 par
 static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
+//ローカルライブキャスター
+static u32 DebugGetLivecasterState( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterState(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterCall( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterCall(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretDispleased( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretDispleased(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretSeason( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretSeason(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretOnceCall( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretOnceCall(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretDateType( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretDateType(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretDateYear( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretDateYear(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretDateMonth( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretDateMonth(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretDateDay( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretDateDay(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetLivecasterSecretNotRnd( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetLivecasterSecretNotRnd(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -279,6 +305,11 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_ViewOffsets = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_PalaceTime = {
   D_NINPUT_DATA_LIST,   NELEMS( DNI_PalaceTime ), DNI_PalaceTime, };
 
+static const DEBUG_NUMINPUT_INITIALIZER DATA_LocalLivecaster  =
+{
+  D_NINPUT_DATA_LIST, NELEMS( DNI_Livecaster ), DNI_Livecaster
+};
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -328,6 +359,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_wifi_friend_00, (void*)&DATA_WifiFriend, GFL_OVERLAY_BLANK_ID },
   { dni_view_offset_00, (void*)&DATA_ViewOffsets, GFL_OVERLAY_BLANK_ID },
   { dni_palace_time_00, (void*)&DATA_PalaceTime, GFL_OVERLAY_BLANK_ID },
+  { dni_ltvt_00, (void*)&DATA_LocalLivecaster, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1572,6 +1604,154 @@ static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param,
 
   total_sec = RTC_ConvertDateTimeToSecond( &date, &time ); // 秒に戻す
   ISC_SAVE_SetPalaceSojournTime( intrude, total_sec ); 
+}
+//=============================================================================
+/**
+ *    ライブキャスター
+ */
+//=============================================================================
+static u32 DebugGetLivecasterState( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  return PERSON_STATE_GetState( p_person, param );
+}
+static void DebugSetLivecasterState(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SetState( p_person, param, value );
+}
+static u32 DebugGetLivecasterCall( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  return PERSON_STATE_GetLocalTvtCall( p_person, param );
+}
+static void DebugSetLivecasterCall(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SetLocalTvtCall( p_person, param, value );
+}
+static u32 DebugGetLivecasterSecretDispleased( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  return PERSON_STATE_GetSecretDispleased( p_person );
+}
+static void DebugSetLivecasterSecretDispleased(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SetSecretDispleased( p_person, value );
+}
+static u32 DebugGetLivecasterSecretSeason( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  return PERSON_STATE_GetSeasonDateFlag( p_person );
+}
+static void DebugSetLivecasterSecretSeason(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SetSeasonDateFlag( p_person, value );
+}
+static u32 DebugGetLivecasterSecretOnceCall( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  return PERSON_STATE_GetSecretOnceDayCallFlag( p_person );
+}
+static void DebugSetLivecasterSecretOnceCall(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SetSecretOnceDayCallFlag( p_person, value );
+}
+static u32 DebugGetLivecasterSecretDateType( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  return PERSON_STATE_GetSecretDateEvent( p_person );
+}
+static void DebugSetLivecasterSecretDateType(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  RTCDate date;
+  DEBUG_PERSON_STATE_GetDate( p_person, &date );
+  PERSON_STATE_SetSecretDateEvent( p_person, value, &date );
+}
+static u32 DebugGetLivecasterSecretDateYear( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  RTCDate date;
+  DEBUG_PERSON_STATE_GetDate( p_person, &date );
+  return date.year;
+}
+static void DebugSetLivecasterSecretDateYear(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SECRET_DATE type = PERSON_STATE_GetSecretDateEvent( p_person );
+  RTCDate date;
+  DEBUG_PERSON_STATE_GetDate( p_person, &date );
+  date.year = value;
+  PERSON_STATE_SetSecretDateEvent( p_person, type, &date );
+}
+static u32 DebugGetLivecasterSecretDateMonth( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  RTCDate date;
+  DEBUG_PERSON_STATE_GetDate( p_person, &date );
+  return date.month;
+}
+static void DebugSetLivecasterSecretDateMonth(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SECRET_DATE type = PERSON_STATE_GetSecretDateEvent( p_person );
+  RTCDate date;
+  DEBUG_PERSON_STATE_GetDate( p_person, &date );
+  date.month = value;
+  PERSON_STATE_SetSecretDateEvent( p_person, type, &date );
+}
+static u32 DebugGetLivecasterSecretDateDay( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  RTCDate date;
+  DEBUG_PERSON_STATE_GetDate( p_person, &date );
+  return date.day;
+}
+static void DebugSetLivecasterSecretDateDay(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  PERSON_STATE  *p_person = PERSON_STATE_GetWork( p_sv );
+  PERSON_STATE_SECRET_DATE type = PERSON_STATE_GetSecretDateEvent( p_person );
+  RTCDate date;
+  DEBUG_PERSON_STATE_GetDate( p_person, &date );
+  date.day = value;
+  PERSON_STATE_SetSecretDateEvent( p_person, type, &date );
+}
+static u32 DebugGetLivecasterSecretNotRnd( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  return DEBUG_FLG_GetFlg( DEBUG_FLG_LTvtSecretNotRnd );
+}
+static void DebugSetLivecasterSecretNotRnd(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  if( value == 0 )
+  {
+    DEBUG_FLG_FlgOff( DEBUG_FLG_LTvtSecretNotRnd );
+  }
+  else
+  {
+    DEBUG_FLG_FlgOn( DEBUG_FLG_LTvtSecretNotRnd );
+  }
 }
 
 

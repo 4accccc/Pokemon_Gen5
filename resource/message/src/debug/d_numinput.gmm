@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2011-01-13T18:52:28"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-01-28T00:00:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1480" top="360" right="2185" bottom="980" maximized="no" rayout="Vertical2">
+	<dialog left="-1102" top="43" right="-397" bottom="671" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -938,6 +938,111 @@
 	<row id="dni_palace_time_06" back-color="#404040,,,,,,#404040,,,#404040,,,#404040,,,#404040,,">
 		<language name="JPN" width="240">パレス滞在時間&lt;秒&gt;</language>
 		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;秒&gt;</language>
+	</row>
+
+	<row id="dni_ltvt_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">ローカルライブキャスター</language>
+		<language name="JPN_KANJI" width="240">ローカルライブキャスター</language>
+	</row>
+
+	<row id="dni_ltvt_01" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">はかせ状態</language>
+		<language name="JPN_KANJI" width="240">はかせ状態</language>
+	</row>
+
+	<row id="dni_ltvt_02" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">ライバル状態</language>
+		<language name="JPN_KANJI" width="240">ライバル状態</language>
+	</row>
+
+	<row id="dni_ltvt_03" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">チェレン状態</language>
+		<language name="JPN_KANJI" width="240">チェレン状態</language>
+	</row>
+
+	<row id="dni_ltvt_04" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">ベル状態</language>
+		<language name="JPN_KANJI" width="240">ベル状態</language>
+	</row>
+
+	<row id="dni_ltvt_05" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">ママ状態</language>
+		<language name="JPN_KANJI" width="240">ママ状態</language>
+	</row>
+
+	<row id="dni_ltvt_06" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラ状態</language>
+		<language name="JPN_KANJI" width="240">隠しキャラ状態</language>
+	</row>
+
+	<row id="dni_ltvt_07" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">はかせ電話フラグ</language>
+		<language name="JPN_KANJI" width="240">はかせ電話フラグ</language>
+	</row>
+
+	<row id="dni_ltvt_08" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">ライバル電話フラグ</language>
+		<language name="JPN_KANJI" width="240">ライバル電話フラグ</language>
+	</row>
+
+	<row id="dni_ltvt_09" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">チェレン電話フラグ</language>
+		<language name="JPN_KANJI" width="240">チェレン電話フラグ</language>
+	</row>
+
+	<row id="dni_ltvt_10" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">ベル電話フラグ</language>
+		<language name="JPN_KANJI" width="240">ベル電話フラグ</language>
+	</row>
+
+	<row id="dni_ltvt_11" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">ママ電話フラグ</language>
+		<language name="JPN_KANJI" width="240">ママ電話フラグ</language>
+	</row>
+
+	<row id="dni_ltvt_12" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラ電話フラグ</language>
+		<language name="JPN_KANJI" width="240">隠しキャラ電話フラグ</language>
+	</row>
+
+	<row id="dni_ltvt_13" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラ不機嫌フラグ</language>
+		<language name="JPN_KANJI" width="240">隠しキャラ不機嫌フラグ</language>
+	</row>
+
+	<row id="dni_ltvt_14" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラ１ヶ月１回デート</language>
+		<language name="JPN_KANJI" width="240">隠しキャラ１ヶ月１回デート</language>
+	</row>
+
+	<row id="dni_ltvt_15" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラ１日１回電話</language>
+		<language name="JPN_KANJI" width="240">隠しキャラ１日１回電話</language>
+	</row>
+
+	<row id="dni_ltvt_16" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラデートのタイプ</language>
+		<language name="JPN_KANJI" width="240">隠しキャラデートのタイプ</language>
+	</row>
+
+	<row id="dni_ltvt_17" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラデート約束年</language>
+		<language name="JPN_KANJI" width="240">隠しキャラデート約束年</language>
+	</row>
+
+	<row id="dni_ltvt_18" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラデート約束月</language>
+		<language name="JPN_KANJI" width="240">隠しキャラデート約束月</language>
+	</row>
+
+	<row id="dni_ltvt_19" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラデート約束日</language>
+		<language name="JPN_KANJI" width="240">隠しキャラデート約束日</language>
+	</row>
+
+	<row id="dni_ltvt_20" back-color="#ff78ff,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="240">隠しキャラ乱数なし</language>
+		<language name="JPN_KANJI" width="240">隠しキャラ乱数なし</language>
 	</row>
 
 	<flowchart-group-list>

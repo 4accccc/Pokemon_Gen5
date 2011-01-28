@@ -50,6 +50,7 @@ SDK_COMPILER_ASSERT( LOCAL_TVT_PERSON_MAX <= PERSON_STATE_MAX );
  *					プロトタイプ宣言
 */
 //=============================================================================
+static s32 Person_State_GetSecretDiffDay( const PERSON_STATE *cp_wk, const RTCDate *cp_date );
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物状態ワークサイズ取得
@@ -134,9 +135,9 @@ u16 PERSON_STATE_GetState( const PERSON_STATE* cp_wk, u16 person )
  *	@param	person              人物ID
  */
 //-----------------------------------------------------------------------------
-void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person )
+void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person, BOOL is_ltvt )
 {
-  p_wk->is_ltvt[ person ] = TRUE;
+  p_wk->is_ltvt[ person ] = is_ltvt;
 }
 //----------------------------------------------------------------------------
 /**
@@ -150,19 +151,20 @@ void PERSON_STATE_SetLocalTvtCall( PERSON_STATE *p_wk, u16 person )
 //-----------------------------------------------------------------------------
 BOOL PERSON_STATE_GetLocalTvtCall( const PERSON_STATE *cp_wk, u16 person )
 {
-  return TRUE;//cp_wk->is_ltvt[ person ];
+  return cp_wk->is_ltvt[ person ];
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  隠しキャラとのデートイベント設定
  *
  *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param  date                デートタイプ
  *	@param	const RTCDate *cp_date  デートの日
  */
 //-----------------------------------------------------------------------------
-void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, const RTCDate *cp_date )
+void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, PERSON_STATE_SECRET_DATE date, const RTCDate *cp_date )
 {
-  p_wk->is_secret_date_event  = TRUE;
+  p_wk->secret_date_event  = date;
   p_wk->secret_date = GFDATE_RTCDate2GFDate( cp_date );
 }
 //----------------------------------------------------------------------------
@@ -174,7 +176,7 @@ void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, const RTCDate *cp_date
 //-----------------------------------------------------------------------------
 void PERSON_STATE_ClearSecretDateEvent( PERSON_STATE *p_wk )
 {
-  p_wk->is_secret_date_event  = FALSE;
+  p_wk->secret_date_event  = PERSON_STATE_SECRET_DATE_NONE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -188,15 +190,15 @@ void PERSON_STATE_ClearSecretDateEvent( PERSON_STATE *p_wk )
 //-----------------------------------------------------------------------------
 BOOL PERSON_STATE_CheckSecretDataEventToday( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
 {
-  if( cp_wk->is_secret_date_event )
+  if( cp_wk->secret_date_event != PERSON_STATE_SECRET_DATE_NONE)
   {
-    GFDATE today  = GFDATE_RTCDate2GFDate( cp_date );
-    return today == cp_wk->secret_date;
+    if( Person_State_GetSecretDiffDay( cp_wk, cp_date ) )
+    {
+      return TRUE;
+    }
   }
-  else
-  {
-    return FALSE;
-  }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -210,27 +212,27 @@ BOOL PERSON_STATE_CheckSecretDataEventToday( const PERSON_STATE *cp_wk, const RT
 //-----------------------------------------------------------------------------
 BOOL PERSON_STATE_CheckSecretDataEventLater( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
 {
-  if( cp_wk->is_secret_date_event )
+  if( cp_wk->secret_date_event !=  PERSON_STATE_SECRET_DATE_NONE)
   {
-    GFDATE today  = GFDATE_RTCDate2GFDate( cp_date );
-    return today > cp_wk->secret_date;
+    if( Person_State_GetSecretDiffDay( cp_wk, cp_date ) > 0 )
+    {
+      return TRUE;
+    }
   }
-  else
-  {
-    return FALSE;
-  }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  隠しキャラとのデートイベント取得
  *
  *	@param	PERSON_STATE *p_wk  ワーク
- *	@retval	TRUEでデートイベントON,　FALSEでOFF
+ *	@retval	デートイベント
  */
 //-----------------------------------------------------------------------------
-BOOL PERSON_STATE_GetSecretDateEvent( const PERSON_STATE *cp_wk )
+extern PERSON_STATE_SECRET_DATE PERSON_STATE_GetSecretDateEvent( const PERSON_STATE *cp_wk )
 {
-  return cp_wk->is_secret_date_event;
+  return cp_wk->secret_date_event;
 }
 //----------------------------------------------------------------------------
 /**
@@ -280,3 +282,65 @@ BOOL PERSON_STATE_GetSecretOnceDayCallFlag( const PERSON_STATE *cp_wk )
 {
   return cp_wk->is_secret_once_day_call;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの１季節１回デートフラグを設定
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	enable  TRUEでデートした  FALSEでデートしていない
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetSeasonDateFlag( PERSON_STATE *p_wk, BOOL enable )
+{
+  p_wk->is_season_date  = enable;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの１季節１回デートフラグを設定
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@retval	TRUEでデートした  FALSEでデートしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_GetSeasonDateFlag( const PERSON_STATE *cp_wk )
+{
+  return cp_wk->is_season_date;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  約束の期日チェック
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param  cp_date             日
+ *
+ *	@return 0で当日 正の数で過ぎた  負の数で前
+ */
+//-----------------------------------------------------------------------------
+static s32 Person_State_GetSecretDiffDay( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
+{
+  //約束した日を保存しているので、
+  //約束した日の次の日が今日ならばデートの日
+  RTCDate date;
+  int now_days;
+  int promise_days;
+
+  GFDATE_GFDate2RTCDate( cp_wk->secret_date, &date );
+  now_days      = GFL_RTC_GetDaysOffset( cp_date );
+  promise_days  = GFL_RTC_GetDaysOffset( &date );
+
+  return now_days - (promise_days+1);
+}
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ用  デート日付取得
+ *
+ *	@param	const PERSON_STATE *cp_wk ワーク
+ *	@param	*p_date   日付
+ */
+//-----------------------------------------------------------------------------
+void DEBUG_PERSON_STATE_GetDate( const PERSON_STATE *cp_wk, RTCDate *p_date )
+{
+  GFDATE_GFDate2RTCDate( cp_wk->secret_date, p_date );
+}
+#endif //PM_DEBUG

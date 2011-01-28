@@ -371,7 +371,7 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
       {
         mode = LOCAL_TVT_SECRET_MODE_SEND;
       }
-      LOCAL_TVT_SECRET_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, mode, p_wk->heapID );
+      LOCAL_TVT_SECRET_SetPerson( p_person, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->p_data, mode, p_wk->heapID );
     }
     break;
   default:

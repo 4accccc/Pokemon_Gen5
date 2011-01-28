@@ -15,7 +15,6 @@
 #include "field/calender.h"
 #include "field/zonedata.h"
 #include "battle/battle_bg_def.h"
-#include "savedata/person_state.h"
 #include "gamesystem/game_data.h"
 
 //アーカイブ
@@ -24,14 +23,17 @@
 
 //外部
 #include "local_tvt_calldata.h"
+
+//デバッグ
+#include "debug/debug_flg.h"
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
 #ifdef PM_DEBUG
-#define DEBUG_CALL_FLAG_ALL_ON
-#define DEBUG_SELECT_FLAG_ALL_ON
+//#define DEBUG_CALL_FLAG_ALL_ON
+//#define DEBUG_SELECT_FLAG_ALL_ON
 #endif //PM_DEBUG
 
 //バトルBGに追加があったらワーニングを出す
@@ -239,16 +241,21 @@ BOOL LOCAL_TVT_CALLDATA_IsCall( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
   if( person == LOCAL_TVT_PERSON_SECRET )
   {
     BOOL is_once  = PERSON_STATE_GetSecretOnceDayCallFlag( cp_wk->p_person_state );
-    BOOL is_date  = PERSON_STATE_GetSecretDateEvent( cp_wk->p_person_state );
+    BOOL is_date  = (PERSON_STATE_GetSecretDateEvent( cp_wk->p_person_state ) == PERSON_STATE_SECRET_DATE_NONE);
     BOOL is_data  = PERSON_STATE_GetLocalTvtCall( cp_wk->p_person_state, LOCAL_TVT_PERSON_SECRET );
     BOOL is_rnd = GAMEDATA_GetLiveCasterSecretCallFlag( cp_wk->p_gamedata );
-
+#ifdef PM_DEBUG
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_LTvtSecretNotRnd ) )
+  {
+    is_rnd = TRUE;
+  }
+#endif
     //かけられる条件
     //・デートを約束していない
     //・１日１回だけ
     //・設定データでかけてよい状態になっている
     //・こちらからかけるときは乱数でOKになっている
-    if( !is_date && !is_once && is_data && is_rnd )
+    if( is_date && !is_once && is_data && is_rnd )
     {
       return TRUE;
     }
@@ -276,7 +283,7 @@ BOOL LOCAL_TVT_CALLDATA_IsSelect( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 #ifdef DEBUG_SELECT_FLAG_ALL_ON
   return TRUE;
 #endif
-  return GAMEDATA_GetLiveCasterSecretCallFlag( cp_wk->p_gamedata );
+  return cp_data->call != 0;
 }
 
 //----------------------------------------------------------------------------
@@ -421,6 +428,60 @@ void LOCAL_TVT_CALLDATA_AddState( LOCAL_TVT_CALLDATA *p_wk, u16 person, u16 max 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  隠しキャラの不機嫌フラグを取得
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_wk ワーク
+ *
+ *	@return TRUEで不機嫌  FALSEで普通
+ */
+//-----------------------------------------------------------------------------
+BOOL LOCAL_TVT_CALLDATA_GetSecretDispleased( const LOCAL_TVT_CALLDATA *cp_wk )
+{
+  return PERSON_STATE_GetSecretDispleased( cp_wk->p_person_state );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠しキャラの不機嫌フラグ設定
+ *
+ *	@param	LOCAL_TVT_CALLDATA *p_wk  ワーク
+ *	@param	enable TRUEで不機嫌  FALSEで普通
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CALLDATA_SetSecretDispleased( LOCAL_TVT_CALLDATA *p_wk, BOOL enable )
+{
+  PERSON_STATE_SetSecretDispleased( p_wk->p_person_state, enable );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  約束設定
+ *
+ *	@param	LOCAL_TVT_CALLDATA *p_wk  ワーク
+ *	@param	type  約束タイプ
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CALLDATA_SetSecretDateEvent( LOCAL_TVT_CALLDATA *p_wk, PERSON_STATE_SECRET_DATE type )
+{
+  RTCDate date;
+  GFL_RTC_GetDate( &date );
+  PERSON_STATE_SetSecretDateEvent( p_wk->p_person_state, type, &date );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  １季節１回デートフラグを取得
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_wk   ワーク
+ *
+ *	@return TRUE定期イベントが可能  FALSE不可能
+ */
+//-----------------------------------------------------------------------------
+BOOL LOCAL_TVT_CALLDATA_GetSecretSeasonDate( const LOCAL_TVT_CALLDATA *cp_wk )
+{
+  return PERSON_STATE_GetSeasonDateFlag( cp_wk->p_person_state );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  人物と状態に対応したデータを取得
  *
  *	@param	LOCAL_TVT_CALLDATA *p_wk  ワーク
@@ -448,3 +509,15 @@ static const LOCAL_TVT_BINARY * Local_Tvt_Calldata_GetData( const LOCAL_TVT_CALL
   GF_ASSERT( 0 );
   return NULL;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  １日１回電話フラグON
+ *
+ *	@param	LOCAL_TVT_CALLDATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CALLDATA_SetSecretOnceCall( LOCAL_TVT_CALLDATA *p_wk )
+{
+  PERSON_STATE_SetSecretOnceDayCallFlag( p_wk->p_person_state, TRUE );
+}
+

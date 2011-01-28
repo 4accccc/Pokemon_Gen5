@@ -90,6 +90,7 @@ typedef struct
   BOOL  is_check;
   BOOL  is_select;
   BOOL  is_active;
+  BOOL  is_no_push; //押せない
   
   GFL_CLWK *p_clwk_bar;
   GFL_CLWK *p_clwk_check;
@@ -190,7 +191,7 @@ static BOOL BARSET_IsEnd( const BARSET *cp_wk );
 static BOOL BARSET_IsMoveScrollbar( const BARSET *cp_wk );
 
 //bar
-static void BAR_Init( BAR *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, GFL_CLUNIT *p_clunit, u32 bar_idx, const STRBUF *cp_name, LOCAL_TVT_MESSAGE *p_message, HEAPID heapID);
+static void BAR_Init( BAR *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, GFL_CLUNIT *p_clunit, u32 bar_idx, const STRBUF *cp_name, LOCAL_TVT_MESSAGE *p_message, BOOL is_no_push, HEAPID heapID);
 static void BAR_Exit( BAR *p_wk );
 static void BAR_Move( BAR *p_wk, s32 scroll_ofs );
 static BOOL BAR_SetCheck( BAR *p_wk, BOOL is_check );
@@ -534,15 +535,9 @@ static void BARSET_Init( BARSET *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPI
   for( i = 0; i < p_wk->max; i++ )
   {
     STRBUF  *p_str  = GFL_MSG_CreateString( cp_sys->param.p_msgdata, cp_sys->param.msgID[i] );
-    BAR_Init( &p_wk->bar[i], cp_sys, cp_sys->param.p_clunit, i, p_str, cp_sys->param.p_message, heapID );
+    BAR_Init( &p_wk->bar[i], cp_sys, cp_sys->param.p_clunit, i, p_str, cp_sys->param.p_message, !cp_sys->param.is_select[i], heapID );
     GFL_STR_DeleteBuffer( p_str );
-
-    if( cp_sys->param.is_select[i] == FALSE )
-    {
-      BAR_SetActibe( &p_wk->bar[i], FALSE );
-    }
   }
-
   //文字面の設定
   GFL_BG_SetScrollReq( LTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , p_wk->scroll_ofs );
 }
@@ -811,7 +806,7 @@ static BOOL BARSET_Key( BARSET *p_wk )
     }
 
     //スクロール
-    if( LOCAL_TVT_CALLSELECT_SELECT_MAX >= p_wk->max )
+    if( p_wk->max >= LOCAL_TVT_CALLSELECT_SELECT_MAX )
     {
       if( p_wk->cursor_pos <= 0 )
       {
@@ -956,7 +951,7 @@ static void BARSET_SetUIMode( BARSET *p_wk, int touch_or_key )
     }
 
     //スクロール
-    if( LOCAL_TVT_CALLSELECT_SELECT_MAX >= p_wk->max )
+    if( p_wk->max >= LOCAL_TVT_CALLSELECT_SELECT_MAX )
     {
       if( p_wk->cursor_pos <= 0 )
       {
@@ -1018,13 +1013,15 @@ static BOOL BARSET_IsMoveScrollbar( const BARSET *cp_wk )
  *	@param  u32  バーインデックス
  *	@param  cp_name 表示名前
  *	@param  p_message 文字表示システム
+ *	@param  is_no_push  押せないフラグ
  *	@param	heapID  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BAR_Init( BAR *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, GFL_CLUNIT *p_clunit, u32 bar_idx, const STRBUF *cp_name, LOCAL_TVT_MESSAGE *p_message, HEAPID heapID)
+static void BAR_Init( BAR *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, GFL_CLUNIT *p_clunit, u32 bar_idx, const STRBUF *cp_name, LOCAL_TVT_MESSAGE *p_message, BOOL is_no_push, HEAPID heapID)
 {
   GFL_STD_MemClear( p_wk, sizeof(BAR) );
-  p_wk->bar_idx = bar_idx;
+  p_wk->bar_idx     = bar_idx;
+  p_wk->is_no_push  = is_no_push;
 
   //CLWK作成
   {
@@ -1078,7 +1075,6 @@ static void BAR_Init( BAR *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, GFL_CLUNIT 
     LOCAL_TVT_MESSAGE_PrintStr( p_message, p_wk->p_str_win, cp_name );
     GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_str_win );
   }
-
 
   BAR_SetActibe( p_wk, TRUE );
 }
@@ -1212,7 +1208,7 @@ static void BAR_SetActibe( BAR *p_wk, BOOL is_active )
 {
   p_wk->is_active = is_active;
 
-  if( p_wk->is_active )
+  if( p_wk->is_active && !p_wk->is_no_push )
   {
     //アクティブの時はチェックボックスになる
     if( p_wk->is_check )

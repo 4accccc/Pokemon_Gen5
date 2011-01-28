@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-27T17:33:03"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-01-27T22:35:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1209,6 +1209,18 @@
 		<language name="JPN_KANJI" width="256">きょうは　いいてんきだな　５０[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
+	<row id="CALL_SECRET_TALK_SP_00" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>１シーズンに１回のデートを誘うときのセリフ</comment>
+		<language name="JPN" width="256">デートしようぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">デートしようぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_SP_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
+		<comment>不機嫌なときのセリフ</comment>
+		<language name="JPN" width="256">ふきげんだな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ふきげんだな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
 	<row id="CALL_SECRET_BYE_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">さよならだな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さよならだな[BE:01:ページ切り替え（クリア）]</language>
@@ -1618,6 +1630,18 @@
 		<comment>５０回目　　　素顔でライブキャスター。</comment>
 		<language name="JPN" width="256">きょうは　いいてんきですね　５０[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">きょうは　いいてんきですね　５０[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_SP_00" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>１シーズンに１回のデートを誘うときのセリフ</comment>
+		<language name="JPN" width="256">デートしようよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">デートしようよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="CALL_SECRET_TALK_F_SP_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>不機嫌なときのセリフ</comment>
+		<language name="JPN" width="256">ふきげんです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ふきげんです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_BYE_F_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">

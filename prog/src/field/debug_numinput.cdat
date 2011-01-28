@@ -331,4 +331,61 @@ static const DEBUG_NUMINPUT_LIST DNI_PalaceTime[] = {
   { dni_palace_time_06, 5, &DNP_Record_PalaceTime_Minute }, // パレス滞在時間<秒>
 };
 
+//////////////////////////////////////////////////////
+///ローカルライブキャスタ
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterState = { 
+  0, 999, DebugGetLivecasterState, DebugSetLivecasterState, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterCall = { 
+  0, 1, DebugGetLivecasterCall, DebugSetLivecasterCall, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDispleased = { 
+  0, 1, DebugGetLivecasterSecretDispleased, DebugSetLivecasterSecretDispleased, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretSeason = { 
+  0, 1, DebugGetLivecasterSecretSeason, DebugSetLivecasterSecretSeason, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretOnceCall = { 
+  0, 1, DebugGetLivecasterSecretOnceCall, DebugSetLivecasterSecretOnceCall 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateType = { 
+  0, 2, DebugGetLivecasterSecretDateType, DebugSetLivecasterSecretDateType, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateYear = { 
+  00, 99, DebugGetLivecasterSecretDateYear, DebugSetLivecasterSecretDateYear, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateMonth = { 
+  0, 12, DebugGetLivecasterSecretDateMonth, DebugSetLivecasterSecretDateMonth, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateDay = { 
+  0, 31, DebugGetLivecasterSecretDateDay, DebugSetLivecasterSecretDateDay,
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretNotRnd  =
+{
+  0,  1, DebugGetLivecasterSecretNotRnd, DebugSetLivecasterSecretNotRnd,
+};
+static const DEBUG_NUMINPUT_LIST DNI_Livecaster[] = { 
+  //gmm_id, param, dni_param
+  { dni_ltvt_01, LOCAL_TVT_PERSON_DOCTOR, &DNI_LivecasterState }, //博士状態
+  { dni_ltvt_02, LOCAL_TVT_PERSON_RIVAL, &DNI_LivecasterState }, //ライバル状態
+  { dni_ltvt_03, LOCAL_TVT_PERSON_CHELEN, &DNI_LivecasterState }, //チェレン状態
+  { dni_ltvt_04, LOCAL_TVT_PERSON_BELL, &DNI_LivecasterState }, //ベル状態
+  { dni_ltvt_05, LOCAL_TVT_PERSON_MOTHER, &DNI_LivecasterState }, //ママ状態
+  { dni_ltvt_06, LOCAL_TVT_PERSON_SECRET, &DNI_LivecasterState }, //隠し状態
+  { dni_ltvt_07, LOCAL_TVT_PERSON_DOCTOR, &DNI_LivecasterCall }, //博士電話
+  { dni_ltvt_08, LOCAL_TVT_PERSON_RIVAL, &DNI_LivecasterCall }, //ライバル電話
+  { dni_ltvt_09, LOCAL_TVT_PERSON_CHELEN, &DNI_LivecasterCall }, //チェレン電話
+  { dni_ltvt_10, LOCAL_TVT_PERSON_BELL, &DNI_LivecasterCall }, //ベル電話
+  { dni_ltvt_11, LOCAL_TVT_PERSON_MOTHER, &DNI_LivecasterCall }, //ママ電話
+  { dni_ltvt_12, LOCAL_TVT_PERSON_SECRET, &DNI_LivecasterCall }, //隠し電話
+  { dni_ltvt_13, 0, &DNI_LivecasterSecretDispleased }, //隠し不機嫌
+  { dni_ltvt_14, 0, &DNI_LivecasterSecretSeason }, //隠し１ヶ月１回デート
+  { dni_ltvt_15, 0, &DNI_LivecasterSecretOnceCall }, //隠し１日１回電話
+  { dni_ltvt_16, 0, &DNI_LivecasterSecretDateType }, //隠しデートタイプ
+  { dni_ltvt_17, 0, &DNI_LivecasterSecretDateYear }, //隠しデート年
+  { dni_ltvt_18, 0, &DNI_LivecasterSecretDateMonth }, //隠しデート月
+  { dni_ltvt_19, 0, &DNI_LivecasterSecretDateDay }, //隠しデート日
+  { dni_ltvt_20, 0, &DNI_LivecasterSecretNotRnd }, //隠し乱数なし
+};
+
 #endif  //PM_DEBUG

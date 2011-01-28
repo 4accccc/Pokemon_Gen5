@@ -11881,3 +11881,28 @@
   .short EV_SEQ_PERSON_TVT_CALL_SET
   .short \LOCAL_TVT_PERSON_MOTHER
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 隠しキャラとのデートがあるかチェック
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_CHECK_SECRET_DATE( ret_wk ) \
+    _ASM__PERSON_STATE_CHECK_SECRET_DATE ret_wk
+
+  .macro _ASM__PERSON_STATE_CHECK_SECRET_DATE ret_wk
+  .short EV_SEQ_PERSON_CHECK_SECRET_DATE
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 隠しキャラとのデート終了
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_SET_SECRET_DATE_END() \
+    _ASM_PERSON_STATE_SET_SECRET_DATE_END
+
+  .macro _ASM_PERSON_STATE_SET_SECRET_DATE_END
+  .short EV_SEQ_PERSON_SET_SECRET_DATE_END
+  .endm

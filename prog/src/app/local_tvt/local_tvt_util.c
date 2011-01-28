@@ -1567,10 +1567,15 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs )
   if( ret != GFL_UI_TP_HIT_NONE && ret < PokeParty_GetPokeCount( p_wk->param.p_party ) )
   {
     const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->param.p_party, ret );
+
+    //一旦全部選択解除
+    Local_Tvt_Pokelist_ClearList( p_wk, FALSE );
     if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) )
     {
       //卵は押せない
       PMSND_PlaySE( LOCAL_TVT_SE_ERROR );
+      p_wk->cursor_pos  = ret;
+      //アニメを最初からにする
       return LIST_UI_RESULT_NONE;
     }
     else
@@ -1658,20 +1663,6 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   {
     p_wk->cursor_pos  = sc_pokelist_pos[now_row][now_col];
 
-    {
-
-      const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->param.p_party, p_wk->cursor_pos );
-      if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) )
-      {
-        PMSND_PlaySE( LOCAL_TVT_SE_ERROR );
-        is_decide = FALSE;
-      }
-      else
-      {
-        PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
-      }
-    }
-
     //選択を変更
     Local_Tvt_Pokelist_ClearList( p_wk, TRUE );
 
@@ -1684,7 +1675,19 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   //終了
   if( is_decide )
   {
-    return LIST_UI_RESULT_DECIDE;
+    const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->param.p_party, p_wk->cursor_pos );
+    if( PP_Get( cp_pp, ID_PARA_tamago_flag, NULL ) )
+    {
+      PMSND_PlaySE( LOCAL_TVT_SE_ERROR );
+      //アニメを最初からにする
+      p_wk->anm_frame = 0;
+      return LIST_UI_RESULT_NONE;
+    }
+    else
+    {
+      PMSND_PlaySE( LOCAL_TVT_SE_DECIDE );
+      return LIST_UI_RESULT_DECIDE;
+    }
   }
   else if( is_key_move )
   {
