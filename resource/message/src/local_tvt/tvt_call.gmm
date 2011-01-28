@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-27T22:35:15"/>
+	<create user="nishino" host="W00221" date="2011-01-28T15:22:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,13 +365,13 @@
 		</language>
 	</columns>
 
-	<dialog left="425" top="92" right="1130" bottom="720" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="657" top="66" right="1130" bottom="464" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+	<dialog left="425" top="92" right="1024" bottom="720" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="66" right="1024" bottom="464" visible="no"/>
+		<band id="0" index="0" style="0000" width="591"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="424"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -611,8 +611,8 @@
 
 	<row id="CALL_BELL_DORYOKU_00">
 		<comment>ポケモン選択時</comment>
-		<language name="JPN" width="256">どのこの　がんばりが　みたいの？</language>
-		<language name="JPN_KANJI" width="256">どのこの　頑張りが　見たいの？</language>
+		<language name="JPN" width="256">どのこの　がんばりが　しりたいの？</language>
+		<language name="JPN_KANJI" width="256">どのこの　頑張りが　知りたいの？</language>
 	</row>
 
 	<row id="CALL_BELL_DORYOKU_01">
@@ -709,7 +709,7 @@
 	</row>
 
 	<row id="CALL_SECRET_SELECT_01">
-		<language name="JPN" width="256">どうしたの？</language>
+		<language name="JPN" width="256">……　……</language>
 		<language name="JPN_KANJI" width="256">どうしたの？</language>
 	</row>
 
@@ -805,7 +805,7 @@
 
 	<row id="CALL_SECRET_GREET_R_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。１段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひまか？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">…なにかな？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">もしもし！　いま　ひまか？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -829,7 +829,7 @@
 
 	<row id="CALL_SECRET_GREET_S_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。１段階目</comment>
-		<language name="JPN" width="256">やあ！　どうしたんだ？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">…ちょっと　いいかな？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">やあ！　どうしたんだ？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -853,7 +853,8 @@
 
 	<row id="CALL_SECRET_TALK_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>１回目　　　　趣味について聞かれます。</comment>
-		<language name="JPN" width="256">[1:13:アンケート回答:0]が　しゅみ　なんだ！１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">へぇ…
+[1:13:アンケート回答:0]が　しゅみ　なんだ…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　しゅみ　なんだ！１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -865,7 +866,8 @@
 
 	<row id="CALL_SECRET_TALK_02" back-color=",,,#8080ff,,,,,,,,,,,,,,">
 		<comment>２回目　　　　特技について聞かれます。　</comment>
-		<language name="JPN" width="256">[1:13:アンケート回答:0]が　とくぎ　なんだ！２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">へぇ…
+[1:13:アンケート回答:0]が　とくぎ　なんだ…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　とくぎ　なんだ！２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1222,13 +1224,13 @@
 	</row>
 
 	<row id="CALL_SECRET_BYE_01" back-color=",,,#8080ff,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">さよならだな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">…さよなら[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さよならだな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="CALL_SECRET_GREET_FR_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>このキャラが電話を受けた場合。１段階目</comment>
-		<language name="JPN" width="256">もしもし！　いま　ひま？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">…なんでしょう？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">もしもし！　いま　ひま？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1252,7 +1254,7 @@
 
 	<row id="CALL_SECRET_GREET_FS_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>主人公から電話をかけた場合。１段階目</comment>
-		<language name="JPN" width="256">こんにちは！　どうしたの？　１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">…ちょっと　いいですか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">こんにちは！　どうしたの？　１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1276,7 +1278,8 @@
 
 	<row id="CALL_SECRET_TALK_F_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>１回目　　　　趣味について聞かれます。</comment>
-		<language name="JPN" width="256">[1:13:アンケート回答:0]が　しゅみ　なんですね！１[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">はぁ…
+[1:13:アンケート回答:0]が　しゅみ　なんですか…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　しゅみ　なんですね！１[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1288,7 +1291,8 @@
 
 	<row id="CALL_SECRET_TALK_F_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>２回目　　　　特技について聞かれます。　</comment>
-		<language name="JPN" width="256">[1:13:アンケート回答:0]が　とくぎ　なんですね！２[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">はぁ…
+[1:13:アンケート回答:0]が　とくぎ　なんですか…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]が　とくぎ　なんですね！２[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1645,7 +1649,7 @@
 	</row>
 
 	<row id="CALL_SECRET_BYE_F_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">さよならですね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">…さよなら[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さよならですね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
