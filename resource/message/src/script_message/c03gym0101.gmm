@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-01-29T17:43:33"/>
+	<create user="matsumiya" host="W00224" date="2011-01-29T17:56:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c03gym0101_trainer_gate_3b_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_01" back-color="#ffffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・戦闘前メッセージ（登場時）
-
-※SWANでは削除予定</comment>
+・戦闘前メッセージ（登場時）</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
 		<language name="JPN" width="256">まゆが　やぶれて
@@ -309,11 +307,9 @@ jugglimg_05</attribute>
 ミーと　勝負してくれよ！▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_trainer_gate_3b_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>♂
-・戦闘後メッセージ
-
-※SWANでは削除予定</comment>
+・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
 		<language name="JPN" width="256">かくれていると
@@ -322,11 +318,9 @@ jugglimg_05</attribute>
 勝負の　カンが　鈍るんだよ▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_trainer_gate_3b_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>♂
-・戦闘後メッセージ
-
-※SWANでは削除予定</comment>
+・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
 		<language name="JPN" width="256">かくれていると
