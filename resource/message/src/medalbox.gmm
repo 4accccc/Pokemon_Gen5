@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ito_hiroto" host="W00178" date="2011-01-28T21:04:02"/>
+	<create user="ito_hiroto" host="W00178" date="2011-01-29T11:44:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="627" top="278" right="1206" bottom="906" maximized="no" rayout="Vertical2">
+	<dialog left="1108" top="354" right="1687" bottom="982" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="67" top="235" right="540" bottom="633" visible="yes"/>
 		<band id="0" index="0" style="0000" width="571"/>
@@ -395,56 +395,32 @@
 
 	<row id="MSG_MEDALBOX_01">
 		<comment>上画面</comment>
-		<language name="JPN" width="256">もくひょうタイトルメダル</language>
-		<language name="JPN_KANJI" width="256">目標タイトルメダル</language>
-	</row>
-
-	<row id="MSG_MEDALBOX_01_01">
-		<comment>上画面・目標タイトルメダル</comment>
-		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
+		<language name="JPN" width="256">メダルかくとくすう　もくひょう</language>
+		<language name="JPN_KANJI" width="256">メダル獲得数　目標</language>
 	</row>
 
 	<row id="MSG_MEDALBOX_02">
 		<comment>上画面</comment>
-		<language name="JPN" width="256">かくとくタイトルメダル</language>
-		<language name="JPN_KANJI" width="256">獲得タイトルメダル</language>
-	</row>
-
-	<row id="MSG_MEDALBOX_02_01">
-		<comment>上画面・獲得タイトルメダル</comment>
-		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
+		<language name="JPN" width="256">かくとくした　メダル</language>
+		<language name="JPN_KANJI" width="256">獲得した　メダル</language>
 	</row>
 
 	<row id="MSG_MEDALBOX_03">
 		<comment>上画面</comment>
-		<language name="JPN" width="256">ヒントメダル</language>
-		<language name="JPN_KANJI" width="256">ヒントメダル</language>
-	</row>
-
-	<row id="MSG_MEDALBOX_03_01">
-		<comment>上画面・ヒントメダル</comment>
-		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
+		<language name="JPN" width="256">もっている　ヒントメダル</language>
+		<language name="JPN_KANJI" width="256">持っている　ヒントメダル</language>
 	</row>
 
 	<row id="MSG_MEDALBOX_04">
-		<comment>上画面・スラッシュ</comment>
-		<language name="JPN" width="256">／</language>
-		<language name="JPN_KANJI" width="256">／</language>
+		<comment>上画面・数字</comment>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
 	</row>
 
 	<row id="MSG_MEDALBOX_04_01">
-		<comment>上画面・分子</comment>
-		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
-	</row>
-
-	<row id="MSG_MEDALBOX_04_02">
-		<comment>上画面・分母</comment>
-		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]</language>
+		<comment>上画面・数字（スラッシュつき）</comment>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]／[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24][2:02:３桁:0]／[2:02:３桁:1]</language>
 	</row>
 
 	<row id="MSG_MEDALBOX_05">
@@ -528,20 +504,14 @@
 		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24]獲得した　日付</language>
 	</row>
 
-	<row id="MSG_MEDALBOX_16_01">
-		<comment>上画面・タイトル日付</comment>
-		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24]20[2:01:２桁:0]年　[2:01:２桁:1]月　[2:01:２桁:2]日</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24]20[2:01:２桁:0]年　[2:01:２桁:1]月　[2:01:２桁:2]日</language>
-	</row>
-
 	<row id="MSG_MEDALBOX_17">
 		<comment>上画面・ヒント日付</comment>
 		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24]もらった　ひづけ</language>
 		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24]もらった　日付</language>
 	</row>
 
-	<row id="MSG_MEDALBOX_17_01">
-		<comment>上画面・ヒント日付</comment>
+	<row id="MSG_MEDALBOX_18">
+		<comment>上画面・日付</comment>
 		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:24]20[2:01:２桁:0]年　[2:01:２桁:1]月　[2:01:２桁:2]日</language>
 		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:24]20[2:01:２桁:0]年　[2:01:２桁:1]月　[2:01:２桁:2]日</language>
 	</row>
