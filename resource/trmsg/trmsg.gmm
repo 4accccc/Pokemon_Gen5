@@ -14785,6 +14785,137 @@ può accadere ancora di tutto!</language>
 まさに　シャイニング　ビューティ！</language>
 	</row>
 
+	<row id="TRID_JUGGLING_10_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">どうだい？　この　ポケモンジム▼
+なんというか　ちょっと　ありえない
+あやしげな　みりょく　たっぷりだろ▼</language>
+		<language name="JPN_KANJI" width="216">どうだい？　この　ポケモンジム▼
+なんというか　ちょっと　ありえない
+怪しげな　魅力　たっぷりだろ▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ポケモンジムに　まけずおとらず
+きみも　みりょく　たっぷり　だな！</language>
+		<language name="JPN_KANJI" width="216">ポケモンジムに　負けず劣らず
+きみも　魅力たっぷり　だな！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_10_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">マユから　いとが　どっちに
+のびているのか　よく　みてごらん▼
+いとが　つながっている　さき……
+それこそが　すすむ　ほうこうなのさ！</language>
+		<language name="JPN_KANJI" width="216">マユから　糸が　どっちに
+のびているのか　よく　みてごらん▼
+糸が　つながっている　先……
+それこそが　進む　方向なのさ！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_11_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">マユに　くるまれ　せいしんとういつ！▼
+おだやかな　きもちの　ぼくは
+ひとあじも　ふたあじも　ちがうよ！▼</language>
+		<language name="JPN_KANJI" width="216">マユに　くるまれ　精神統一！▼
+おだやかな　気持ちの　ぼくは
+ひと味も　ふた味も　違うよ！▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_11_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……そうなんだよ
+マユに　くるまれ　ねていたんだよ　</language>
+		<language name="JPN_KANJI" width="216">……そうなんだよ
+マユに　くるまれ　寝ていたんだよ　</language>
+	</row>
+
+	<row id="TRID_JUGGLING_11_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">マユの　なかで　ポケモンは
+いちど　どろどろに　なって▽
+からだを　つくりなおすらしい……▼
+ほんとうかなあ？</language>
+		<language name="JPN_KANJI" width="216">マユの　中で　ポケモンは
+一度　どろどろに　なって▽
+体を　つくりなおすらしい……▼
+本当かなあ？</language>
+	</row>
+
+	<row id="TRID_JUGGLING_12_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">いきどまり……▼
+と　みせかけて
+とおせんぼ　やー！▼</language>
+		<language name="JPN_KANJI" width="216">行き止まり……▼
+と　みせかけて
+とおせんぼ　やー！▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_12_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ありゃりゃりゃ
+あんさん　つよすぎやない？</language>
+		<language name="JPN_KANJI" width="216">ありゃりゃりゃ
+あんさん　強すぎやない？</language>
+	</row>
+
+	<row id="TRID_JUGGLING_12_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ここだけの　ヒミツ……▼
+マユに　はいる　むきによって
+どこに　すすむのか　ちがうんよ</language>
+		<language name="JPN_KANJI" width="216">ここだけの　ヒミツ……▼
+マユに　入る　向きによって
+どこに　進むのか　違うんよ</language>
+	</row>
+
+	<row id="TRID_JUGGLING_13_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">あと　いっぽで！
+アーティさんと　しょうぶ　できる！▼
+だーけーどー　そのまえに
+ミーが　たちはだかっちゃうのよー！▼</language>
+		<language name="JPN_KANJI" width="216">あと　一歩で！
+アーティさんと　勝負できる！▼
+だーけーどー　その前に
+ミーが　立ちはだかっちゃうのよー！▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_13_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">その　たたかいかた……
+アーティさんぐらい　げいじゅつてき！</language>
+		<language name="JPN_KANJI" width="216">その　戦い方……
+アーティさんぐらい　芸術的！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_13_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">アーティさんは　マユに　くるまる
+ポケモンの　きもちを　しるために▽
+ポケモンジムを　かいぞう　したのさ▼
+……そのせいで　ミーたち
+いっつも　まよっちゃうんだけどね</language>
+		<language name="JPN_KANJI" width="216">アーティさんは　マユに　くるまる
+ポケモンの　気持ちを　理解するために▽
+ポケモンジムを　改造したのさ▼
+……そのせいで　ミーたち
+いっつも　迷っちゃうんだけどね</language>
+	</row>
+
+	<row id="TRID_LEADER3_02_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ビシィッ！！
+スイッチ　はいったよ！！</language>
+		<language name="JPN_KANJI" width="216">ビシィッ！！
+スイッチ　入ったよ！！</language>
+	</row>
+
+	<row id="TRID_LEADER3_02_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">まさに　むしのいき……　だね
+いやいや　そんなことないよ！</language>
+		<language name="JPN_KANJI" width="216">まさに　むしのいき……　だね
+いやいや　そんなことないよ！</language>
+	</row>
+
+	<row id="TRID_LEADER3_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ぬうん……！？
+ひょっとして　おわり！？</language>
+		<language name="JPN_KANJI" width="216">ぬうん……！？
+ひょっとして　終わり！？</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
