@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2011-01-24T18:45:16"/>
+	<create user="matsumiya" host="W00224" date="2011-01-29T17:43:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1305" top="202" right="2010" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,9 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c03gym0101_trainer_gate_3b_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・戦闘前メッセージ（登場時）</comment>
+・戦闘前メッセージ（登場時）
+
+※SWANでは削除予定</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
 		<language name="JPN" width="256">まゆが　やぶれて
@@ -307,9 +309,11 @@ jugglimg_05</attribute>
 ミーと　勝負してくれよ！▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_trainer_gate_3b_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・戦闘後メッセージ</comment>
+・戦闘後メッセージ
+
+※SWANでは削除予定</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
 		<language name="JPN" width="256">かくれていると
@@ -318,9 +322,11 @@ jugglimg_05</attribute>
 勝負の　カンが　鈍るんだよ▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_trainer_gate_3b_03" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="msg_c03gym0101_trainer_gate_3b_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・戦闘後メッセージ</comment>
+・戦闘後メッセージ
+
+※SWANでは削除予定</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
 		<language name="JPN" width="256">かくれていると
@@ -329,9 +335,11 @@ jugglimg_05</attribute>
 勝負の　カンが　鈍るんだよ</language>
 	</row>
 
-	<row id="msg_c03gym0101_jugglimg_06_01">
+	<row id="msg_c03gym0101_jugglimg_06_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・戦闘前メッセージ（登場時）</comment>
+・戦闘前メッセージ（登場時）
+
+※SWANでは削除予定</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_06</attribute>
 		<language name="JPN" width="256">イヤッホウー！　わざわざ
@@ -346,9 +354,11 @@ jugglimg_06</attribute>
 きみに　届けさせて　もらうよ！▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_jugglimg_06_02">
+	<row id="msg_c03gym0101_jugglimg_06_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・戦闘後メッセージ</comment>
+・戦闘後メッセージ
+
+※SWANでは削除予定</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_06</attribute>
 		<language name="JPN" width="256">きみが　スイッチを　ふんでくれないと
@@ -361,9 +371,11 @@ jugglimg_06</attribute>
 トレーナーを　むしするってこと……</language>
 	</row>
 
-	<row id="msg_c03gym0101_jugglimg_06_03">
+	<row id="msg_c03gym0101_jugglimg_06_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・2回目以降</comment>
+・2回目以降
+
+※SWANでは削除予定</comment>
 		<attribute name="キャラ指定">トレーナー
 jugglimg_06</attribute>
 		<language name="JPN" width="256">こうやって　ゆかに　かくれて
@@ -372,6 +384,36 @@ jugglimg_06</attribute>
 		<language name="JPN_KANJI" width="256">こうやって　床に　隠れて
 身を　潜めていると▽
 むしポケモンの　気持ちが　わかるんだ</language>
+	</row>
+
+	<row id="msg_c03gym0101_jugglimg_11_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘前メッセージ（登場時）
+※SWANで新規追加</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_11</attribute>
+		<language name="JPN" width="256">マユに　くるまれ　せいしんとういつ！▼
+おだやかな　きもちの　ぼくは
+ひとあじも　ふたあじも　ちがうよ！▼</language>
+		<language name="JPN_KANJI" width="256">マユに　くるまれ　精神統一！▼
+おだやかな　気持ちの　ぼくは
+ひと味も　ふた味も　違うよ！▼</language>
+	</row>
+
+	<row id="msg_c03gym0101_jugglimg_11_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ
+※SWANで新規追加</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_11</attribute>
+		<language name="JPN" width="256">マユの　なかで　ポケモンは
+いちど　どろどろに　なって▽
+からだを　つくりなおすらしい……▼
+ほんとうかなあ？</language>
+		<language name="JPN_KANJI" width="256">マユの　中で　ポケモンは
+一度　どろどろに　なって▽
+体を　つくりなおすらしい……▼
+本当かなあ？</language>
 	</row>
 
 	<row id="msg_c03gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -396,26 +438,27 @@ jugglimg_06</attribute>
 これを　さしあげるっす！▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
-・ジムバッジ取得まで繰り返し</comment>
+・ジムバッジ取得まで繰り返し
+※SWANで内容変更</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">この　ジムはですね
-かべを　つきぬけるのが　テーマっす！▼
-いっけん　とおれそうに　ない
-ミツの　かべ　ですけど▽
-がんばれば　なんとか　なるっす！▼
-なんとか　ならないときは
-ゆかの　スイッチを　ふんでください！</language>
+まさに　マユが　テーマっす！▼
+マユの　なかに　はいり
+いとを　つたわって▽
+どんどん　うえに　むかってくださいっす！▼
+マユと　いとは　かならず
+アーティさんに　つながっています！</language>
 		<language name="JPN_KANJI" width="256">この　ジムはですね
-壁を　突き抜けるのが　テーマっす！▼
-一見　通れそうに　ない
-ミツの　壁ですけど▽
-がんばれば　なんとか　なるっす！▼
-なんとか　ならないときは
-床の　スイッチを　踏んでください！</language>
+まさに　マユが　テーマっす！▼
+マユの　中に　入り
+糸を　伝わって▽
+どんどん　上に　向かってくださいっす！▼
+マユと　糸は　必ず
+アーティさんに　つながっています！</language>
 	</row>
 
 	<row id="msg_c03gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -471,39 +514,42 @@ jugglimg_06</attribute>
 よければ　探して　きてください▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03gym0101_statue_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・ジムバッジ取得前</comment>
+・ジムバッジ取得前
+※SWANで内容変更</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 にんてい　トレーナー！▽
-チェレン</language>
+？？？？？</language>
 		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 認定　トレーナー！▽
-チェレン</language>
+？？？？？</language>
 	</row>
 
-	<row id="msg_c03gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03gym0101_statue_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・ジムバッジ取得後</comment>
+・ジムバッジ取得後
+※SWANで内容変更</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-チェレン▽
+？？？？？▽
 [1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
-チェレン▽
+？？？？？▽
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c03gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>BGメッセージ
-・c04でのプラズマ団イベント発生時</comment>
+・c04でのプラズマ団イベント発生時
+※SWANでは削除予定</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
