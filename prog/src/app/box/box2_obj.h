@@ -1,926 +1,945 @@
 //============================================================================================
 /**
- * @file		box2_obj.h
- * @brief		ボックス画面 OBJ関連
- * @author	Hiroyuki Nakamura
- * @date		09.10.05
+ * @file    box2_obj.h
+ * @brief   ボックス画面 OBJ関連
+ * @author  Hiroyuki Nakamura
+ * @date    09.10.05
  */
 //============================================================================================
-#pragma	once
+#pragma once
 
 
 //============================================================================================
-//	定数定義
+//  定数定義
 //============================================================================================
+
+#include "box2_outline.h"
 
 // アニメID
 enum {
-	BOX2OBJ_ANM_TRAY_CURSOR = 0,	// トレイカーソル
-	BOX2OBJ_ANM_L_ARROW_OFF,			// 左矢印（非選択）
-	BOX2OBJ_ANM_L_ARROW_ON,				// 左矢印（選択）
-	BOX2OBJ_ANM_R_ARROW_OFF,			// 右矢印（非選択）
-	BOX2OBJ_ANM_R_ARROW_ON,				// 右矢印（選択）
-	BOX2OBJ_ANM_TRAY_NAME,				// トレイ名
-	BOX2OBJ_ANM_HAND_NORMAL,			// 手カーソル：通常
-	BOX2OBJ_ANM_HAND_OPEN,				// 手カーソル：開く
-	BOX2OBJ_ANM_HAND_CLOSE,				// 手カーソル：閉じる
-	BOX2OBJ_ANM_HAND_SHADOW,			// 手カーソル：影
-	BOX2OBJ_ANM_HAND2_NORMAL,			// 便利モード手カーソル：通常
-	BOX2OBJ_ANM_HAND2_OPEN,				// 便利モード手カーソル：開く
-	BOX2OBJ_ANM_HAND2_CLOSE,			// 便利モード手カーソル：閉じる
-	BOX2OBJ_ANM_CONV_BLUE,				// 便利モードボタン：青
-	BOX2OBJ_ANM_CONV_RED,					// 便利モードボタン：赤
+  BOX2OBJ_ANM_TRAY_CURSOR = 0,  // トレイカーソル
+  BOX2OBJ_ANM_L_ARROW_OFF,      // 左矢印（非選択）
+  BOX2OBJ_ANM_L_ARROW_ON,       // 左矢印（選択）
+  BOX2OBJ_ANM_R_ARROW_OFF,      // 右矢印（非選択）
+  BOX2OBJ_ANM_R_ARROW_ON,       // 右矢印（選択）
+  BOX2OBJ_ANM_TRAY_NAME,        // トレイ名
+  BOX2OBJ_ANM_HAND_NORMAL,      // 手カーソル：通常
+  BOX2OBJ_ANM_HAND_OPEN,        // 手カーソル：開く
+  BOX2OBJ_ANM_HAND_CLOSE,       // 手カーソル：閉じる
+  BOX2OBJ_ANM_HAND_SHADOW,      // 手カーソル：影
+  BOX2OBJ_ANM_HAND2_NORMAL,     // 便利モード手カーソル：通常
+  BOX2OBJ_ANM_HAND2_OPEN,       // 便利モード手カーソル：開く
+  BOX2OBJ_ANM_HAND2_CLOSE,      // 便利モード手カーソル：閉じる
+  BOX2OBJ_ANM_CONV_BLUE,        // 便利モードボタン：青
+  BOX2OBJ_ANM_CONV_RED,         // 便利モードボタン：赤
+  BOX2OBJ_ANM_MULTI_NORMAL,     // 複数選択カーソル通常
+  BOX2OBJ_ANM_MULTI_OPEN,       // 複数選択カーソルつかむ
+  BOX2OBJ_ANM_MULTI_CLOSE,      // 複数選択カーソルはなす
+  BOX2OBJ_ANM_CONV0_OFF,        // 通常モードボタンＯＮ
+  BOX2OBJ_ANM_CONV0_ON,         // 通常モードボタンＯＦＦ
+  BOX2OBJ_ANM_CONV1_OFF,        // 単数移動モードＯＮ
+  BOX2OBJ_ANM_CONV1_ON,         // 単数移動モードＯＦＦ
+  BOX2OBJ_ANM_CONV2_OFF,        // 複数選択モードボタンＯＮ
+  BOX2OBJ_ANM_CONV2_ON,         // 複数選択モードボタンＯＦＦ
+  BOX2OBJ_ANM_MULTI_TRAY,       // 複数選択状態を示すトレイアイコン
+  BOX2OBJ_ANM_BORDER_DOT,       // 複数選択範囲に使うドットＯＢＪ
 };
 
-#define	BOX2OBJ_TRAYPOKE_PX		( 24 )		// トレイのポケモンアイコン表示開始Ｘ座標
-#define	BOX2OBJ_TRAYPOKE_PY		( 48 )		// トレイのポケモンアイコン表示開始Ｙ座標
-#define	BOX2OBJ_TRAYPOKE_SX		( 24 )		// トレイのポケモンアイコンＸサイズ
-#define	BOX2OBJ_TRAYPOKE_SY		( 24 )		// トレイのポケモンアイコンＹサイズ
+#define BOX2OBJ_TRAYPOKE_PX   ( 24 )    // トレイのポケモンアイコン表示開始Ｘ座標
+#define BOX2OBJ_TRAYPOKE_PY   ( 48 )    // トレイのポケモンアイコン表示開始Ｙ座標
+#define BOX2OBJ_TRAYPOKE_SX   ( 24 )    // トレイのポケモンアイコンＸサイズ
+#define BOX2OBJ_TRAYPOKE_SY   ( 24 )    // トレイのポケモンアイコンＹサイズ
 
 // ポケモンアイコンプライオィテイ切り替え定義
 enum {
-	BOX2OBJ_POKEICON_PRI_CHG_GET = 0,		// 取得
-	BOX2OBJ_POKEICON_PRI_CHG_PUT,			// 配置
+  BOX2OBJ_POKEICON_PRI_CHG_GET = 0,   // 取得
+  BOX2OBJ_POKEICON_PRI_CHG_PUT,     // 配置
 };
 
-#define	BOX2OBJ_BLENDTYPE_TRAYPOKE	( 0x01 )	// トレイのポケモンアイコンに半透明設定
-#define	BOX2OBJ_BLENDTYPE_PARTYPOKE	( 0x02 )	// 手持ちのポケモンアイコンに半透明設定
+#define BOX2OBJ_BLENDTYPE_TRAYPOKE  ( 0x01 )  // トレイのポケモンアイコンに半透明設定
+#define BOX2OBJ_BLENDTYPE_PARTYPOKE ( 0x02 )  // 手持ちのポケモンアイコンに半透明設定
 // アイテムを持っているポケモンに設定するフラグ
-#define	BOX2OBJ_BLENDTYPE_ITEM		( 0x80 )	// トレイのポケモンアイコンに半透明設定
+#define BOX2OBJ_BLENDTYPE_ITEM    ( 0x80 )  // トレイのポケモンアイコンに半透明設定
 // トレイの持ち物を持っていないポケモンアイコンに半透明設定
-#define	BOX2OBJ_BLENDTYPE_TRAYITEM	( BOX2OBJ_BLENDTYPE_ITEM | BOX2OBJ_BLENDTYPE_TRAYPOKE )
+#define BOX2OBJ_BLENDTYPE_TRAYITEM  ( BOX2OBJ_BLENDTYPE_ITEM | BOX2OBJ_BLENDTYPE_TRAYPOKE )
 // 手持ちの持ち物を持っていないポケモンアイコンに半透明設定
-#define	BOX2OBJ_BLENDTYPE_PARTYITEM	( BOX2OBJ_BLENDTYPE_ITEM | BOX2OBJ_BLENDTYPE_PARTYPOKE )
+#define BOX2OBJ_BLENDTYPE_PARTYITEM ( BOX2OBJ_BLENDTYPE_ITEM | BOX2OBJ_BLENDTYPE_PARTYPOKE )
 
-#define	BOX2OBJ_FNTOAM_BOXNAME_SX	( 12 )	// OAMフォント：ボックス名Ｘサイズ
-#define	BOX2OBJ_FNTOAM_BOXNAME_SY	( 2 )		// OAMフォント：ボックス名Ｙサイズ
-#define	BOX2OBJ_FNTOAM_BOXNUM_SX	( 2 )		// OAMフォント：格納数Ｘサイズ
-#define	BOX2OBJ_FNTOAM_BOXNUM_SY	( 1 )		// OAMフォント：格納数Ｙサイズ
+#define BOX2OBJ_FNTOAM_BOXNAME_SX ( 12 )  // OAMフォント：ボックス名Ｘサイズ
+#define BOX2OBJ_FNTOAM_BOXNAME_SY ( 2 )   // OAMフォント：ボックス名Ｙサイズ
+#define BOX2OBJ_FNTOAM_BOXNUM_SX  ( 2 )   // OAMフォント：格納数Ｘサイズ
+#define BOX2OBJ_FNTOAM_BOXNUM_SY  ( 1 )   // OAMフォント：格納数Ｙサイズ
 
 // タッチーバーに表示されているボタンの状態
 enum {
-	BOX2OBJ_TB_ICON_ON = 0,		// 表示
-	BOX2OBJ_TB_ICON_OFF,			// 非表示
-	BOX2OBJ_TB_ICON_PASSIVE,	// パッシブ
+  BOX2OBJ_TB_ICON_ON = 0,   // 表示
+  BOX2OBJ_TB_ICON_OFF,      // 非表示
+  BOX2OBJ_TB_ICON_PASSIVE,  // パッシブ
 };
 
 
+
+
 //============================================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //============================================================================================
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＯＢＪ初期化
+ * @brief   ＯＢＪ初期化
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_Init( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＯＢＪ解放
+ * @brief   ＯＢＪ解放
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_Exit( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターアニメメイン
+ * @brief   セルアクターアニメメイン
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_AnmMain( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターアニメ設定
+ * @brief   セルアクターアニメ設定
  *
- * @param		appwk	ボックス画面アプリワーク
- * @param		id		OBJ ID
- * @param		anm		アニメ番号
+ * @param   appwk ボックス画面アプリワーク
+ * @param   id    OBJ ID
+ * @param   anm   アニメ番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_AnmSet( BOX2_APP_WORK * appwk, u32 id, u32 anm );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターオートアニメ設定
+ * @brief   セルアクターオートアニメ設定
  *
- * @param		appwk	ボックス画面アプリワーク
- * @param		id		OBJ ID
- * @param		anm		アニメ番号
+ * @param   appwk ボックス画面アプリワーク
+ * @param   id    OBJ ID
+ * @param   anm   アニメ番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_AutoAnmSet( BOX2_APP_WORK * appwk, u32 id, u32 anm );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターアニメ取得
+ * @brief   セルアクターアニメ取得
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
  *
- * @return	アニメ番号
+ * @return  アニメ番号
  */
 //--------------------------------------------------------------------------------------------
 extern u32 BOX2OBJ_AnmGet( BOX2_APP_WORK * appwk, u32 id );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターアニメ状態取得
+ * @brief   セルアクターアニメ状態取得
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
  *
- * @retval	"TRUE = アニメ中"
- * @retval	"FALSE = それ以外"
+ * @retval  "TRUE = アニメ中"
+ * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2OBJ_AnmCheck( BOX2_APP_WORK * appwk, u32 id );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクター表示切り替え
+ * @brief   セルアクター表示切り替え
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
- * @param		flg			表示フラグ
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
+ * @param   flg     表示フラグ
  *
- * @return	none
+ * @return  none
  *
- * @li	flg = TRUE : 表示
- * @li	flg = FALSE : 非表示
+ * @li  flg = TRUE : 表示
+ * @li  flg = FALSE : 非表示
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_Vanish( BOX2_APP_WORK * appwk, u32 id, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクター表示チェック
+ * @brief   セルアクター表示チェック
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
  *
- * @retval	"TRUE = 表示"
- * @retval	"FALSE = 非表示"
+ * @retval  "TRUE = 表示"
+ * @retval  "FALSE = 非表示"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2OBJ_VanishCheck( BOX2_APP_WORK * appwk, u32 id );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターBGプライオリティ変更
+ * @brief   セルアクターBGプライオリティ変更
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
- * @param		pri			プライオリティ
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
+ * @param   pri     プライオリティ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_BgPriChange( BOX2_APP_WORK * appwk, u32 id, int pri );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターのOBJ同士のプライオリティ変更
+ * @brief   セルアクターのOBJ同士のプライオリティ変更
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
- * @param		pri			プライオリティ
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
+ * @param   pri     プライオリティ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ObjPriChange( BOX2_APP_WORK * appwk, u32 id, int pri );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクター半透明設定
+ * @brief   セルアクター半透明設定
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
- * @param		flg			ON/OFFフラグ
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
+ * @param   flg     ON/OFFフラグ
  *
- * @return	none
+ * @return  none
  *
- * @li	flg : TRUE = ON, FALSE = OFF
+ * @li  flg : TRUE = ON, FALSE = OFF
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_BlendModeSet( BOX2_APP_WORK * appwk, u32 id, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクター座標設定
+ * @brief   セルアクター座標設定
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
- * @param		x				Ｘ座標
- * @param		y				Ｙ座標
- * @param		setsf		表示画面
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
+ * @param   x       Ｘ座標
+ * @param   y       Ｙ座標
+ * @param   setsf   表示画面
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_SetPos( BOX2_APP_WORK * appwk, u32 id, s16 x, s16 y, u16 setsf );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクター座標取得
+ * @brief   セルアクター座標取得
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
- * @param		x				Ｘ座標
- * @param		y				Ｙ座標
- * @param		setsf		表示画面
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
+ * @param   x       Ｘ座標
+ * @param   y       Ｙ座標
+ * @param   setsf   表示画面
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_GetPos( BOX2_APP_WORK * appwk, u32 id, s16 * x, s16 * y, u16 setsf );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターパレット変更
+ * @brief   セルアクターパレット変更
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		id			OBJ ID
- * @param		pal			パレット番号
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   id      OBJ ID
+ * @param   pal     パレット番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ChgPltt( BOX2_APP_WORK * appwk, u32 id, u32 pal );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンのキャラデータをワークに展開
+ * @brief   ポケモンアイコンのキャラデータをワークに展開
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		tray		トレイ番号
+ * @param   syswk   ボックス画面システムワーク
+ * @param   tray    トレイ番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconBufLoad( BOX2_SYS_WORK * syswk, u32 tray );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコン変更
+ * @brief   ポケモンアイコン変更
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		tray		トレイ番号
- * @param		pos			ポケモン位置
- * @param		id			OBJ ID
+ * @param   syswk   ボックス画面システムワーク
+ * @param   tray    トレイ番号
+ * @param   pos     ポケモン位置
+ * @param   id      OBJ ID
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconChange( BOX2_SYS_WORK * syswk, u32 tray, u32 pos, u32 id );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイのポケモンアイコンを変更
+ * @brief   トレイのポケモンアイコンを変更
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayPokeIconChange( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手持ちのポケモンアイコンを変更
+ * @brief   手持ちのポケモンアイコンを変更
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PartyPokeIconChange( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンのデフォルト座標取得
+ * @brief   ポケモンアイコンのデフォルト座標取得
  *
- * @param		pos		位置
- * @param		x			Ｘ座標格納場所
- * @param		y			Ｙ座標格納場所
- * @param		mode	ポケモンアイコン移動モード
+ * @param   pos   位置
+ * @param   x     Ｘ座標格納場所
+ * @param   y     Ｙ座標格納場所
+ * @param   mode  ポケモンアイコン移動モード
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconDefaultPosGet( u32 pos, s16 * x, s16 * y, u32 mode );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンにデフォルト座標を設定
+ * @brief   ポケモンアイコンにデフォルト座標を設定
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		pos			位置
- * @param		id			OBJ ID
+ * @param   syswk   ボックス画面システムワーク
+ * @param   pos     位置
+ * @param   id      OBJ ID
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconDefaultPosSet( BOX2_SYS_WORK * syswk, u32 pos, u32 objID );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手持ちポケモンアイコンをフレームイン前の座標に移動（左）
+ * @brief   手持ちポケモンアイコンをフレームイン前の座標に移動（左）
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		get			1 = 取得中
+ * @param   syswk   ボックス画面システムワーク
+ * @param   get     1 = 取得中
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PartyPokeIconFrmInSet( BOX2_SYS_WORK * syswk, u32 get );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手持ちポケモンアイコンをフレームイン前の座標に移動（右）
+ * @brief   手持ちポケモンアイコンをフレームイン前の座標に移動（右）
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PartyPokeIconFrmInSetRight( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手持ちポケモンアイコンをフレームイン後の座標に移動
+ * @brief   手持ちポケモンアイコンをフレームイン後の座標に移動
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PartyPokeIconFrmSet( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手持ちポケモンアイコンをフレームイン後の座標に移動（右）
+ * @brief   手持ちポケモンアイコンをフレームイン後の座標に移動（右）
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PartyPokeIconFrmSetRight( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンのプライオリティを変更
+ * @brief   ポケモンアイコンのプライオリティを変更
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		pos			位置
- * @param		flg			取得か配置か
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   pos     位置
+ * @param   flg     取得か配置か
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconPriChg( BOX2_APP_WORK * appwk, u32 pos, u32 flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンのプライオリティを変更（位置拡張版）
+ * @brief   ポケモンアイコンのプライオリティを変更（位置拡張版）
  *
- * @param		appwk			ボックス画面アプリワーク
- * @param		icon_pos	アイコンバッファの位置
- * @param		put_pos		配置位置
- * @param		flg				取得か配置か
+ * @param   appwk     ボックス画面アプリワーク
+ * @param   icon_pos  アイコンバッファの位置
+ * @param   put_pos   配置位置
+ * @param   flg       取得か配置か
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconPriChg2( BOX2_APP_WORK * appwk, u32 icon_pos, u32 put_pos, u32 flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンのプライオリティを変更（掴んだ手持ちをトレイに落とすとき）
+ * @brief   ポケモンアイコンのプライオリティを変更（掴んだ手持ちをトレイに落とすとき）
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		dp			掴んだ位置
- * @param		mp			配置する位置
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   dp      掴んだ位置
+ * @param   mp      配置する位置
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconPriChgDrop( BOX2_APP_WORK * appwk, u32 dp, u32 mp );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイのポケモンアイコンスクロール処理
+ * @brief   トレイのポケモンアイコンスクロール処理
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		mv			移動量
+ * @param   syswk   ボックス画面システムワーク
+ * @param   mv      移動量
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mv );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手持ちのポケモンアイコンスクロール処理
+ * @brief   手持ちのポケモンアイコンスクロール処理
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PartyPokeIconScroll( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンを逃がす：ポケモンアイコン動作初期化
+ * @brief   ポケモンを逃がす：ポケモンアイコン動作初期化
  *
- * @param		wk		逃がすワーク
+ * @param   wk    逃がすワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconFreeStart( BOX2MAIN_POKEFREE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンを逃がす：ポケモンアイコン縮小処理
+ * @brief   ポケモンを逃がす：ポケモンアイコン縮小処理
  *
- * @param		wk		逃がすワーク
+ * @param   wk    逃がすワーク
  *
- * @retval	"TRUE = 処理中"
- * @retval	"FALSE = それ以外"
+ * @retval  "TRUE = 処理中"
+ * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2OBJ_PokeIconFreeMove( BOX2MAIN_POKEFREE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンを逃がす：ポケモンアイコン拡大処理
+ * @brief   ポケモンを逃がす：ポケモンアイコン拡大処理
  *
- * @param		wk		逃がすワーク
+ * @param   wk    逃がすワーク
  *
- * @retval	"TRUE = 処理中"
- * @retval	"FALSE = それ以外"
+ * @retval  "TRUE = 処理中"
+ * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2OBJ_PokeIconFreeErrorMove( BOX2MAIN_POKEFREE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンを逃がす：ポケモンアイコン終了設定
+ * @brief   ポケモンを逃がす：ポケモンアイコン終了設定
  *
- * @param		wk		逃がすワーク
+ * @param   wk    逃がすワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconFreeEnd( BOX2MAIN_POKEFREE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンを逃がす：ポケモンアイコンエラー終了設定
+ * @brief   ポケモンを逃がす：ポケモンアイコンエラー終了設定
  *
- * @param		wk		逃がすワーク
+ * @param   wk    逃がすワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconFreeErrorEnd( BOX2MAIN_POKEFREE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンに半透明設定（全体）
+ * @brief   ポケモンアイコンに半透明設定（全体）
  *
- * @param		syswk	ボックス画面システムワーク
- * @param		type	アイコン位置
- * @param		flg		ON/OFFフラグ
+ * @param   syswk ボックス画面システムワーク
+ * @param   type  アイコン位置
+ * @param   flg   ON/OFFフラグ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconBlendSetAll( BOX2_SYS_WORK * syswk, u32 type, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンに半透明設定
+ * @brief   ポケモンアイコンに半透明設定
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		pos			アイコン位置
- * @param		flg			ON/OFFフラグ
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   pos     アイコン位置
+ * @param   flg     ON/OFFフラグ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconBlendSet( BOX2_APP_WORK * appwk, u32 pos, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンに半透明設定（持ち物整理のトレイスクロール用）
+ * @brief   ポケモンアイコンに半透明設定（持ち物整理のトレイスクロール用）
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		pos			アイコン位置
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   pos     アイコン位置
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconBlendSetItem( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンを取得したときのＯＢＪいれかえ
+ * @brief   ポケモンアイコンを取得したときのＯＢＪいれかえ
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		pos			アイコン位置
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   pos     アイコン位置
+ * @param   w       選択したポケモンの横の数
+ * @param   h       選択したポケモンの縦の数
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_GetPokeIcon( BOX2_APP_WORK * appwk, u32 pos );
+extern void BOX2OBJ_GetPokeIcon( BOX2_APP_WORK * appwk, u32 pos, int w, int h );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコンを配置したときのＯＢＪいれかえ
+ * @brief   ポケモンアイコンを配置したときのＯＢＪいれかえ
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		pos			アイコン位置
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   pos     アイコン位置
+ * @param   w       入れ替えるポケモンアイコンの横列数
+ * @param   h       入れ替えるポケモンアイコンの縦列数
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PutPokeIcon( BOX2_APP_WORK * appwk, u32 pos );
+extern void BOX2OBJ_PutPokeIcon( BOX2_APP_WORK * appwk, u32 pos, int w, int h );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンアイコン取得状態の移動
+ * @brief   ポケモンアイコン取得状態の移動
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモングラフィック切り替え
+ * @brief   ポケモングラフィック切り替え
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		info		表示データ
- * @param		id			OBJ ID
+ * @param   syswk   ボックス画面システムワーク
+ * @param   info    表示データ
+ * @param   id      OBJ ID
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeGraChange( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32 id );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		タイプアイコン切り替え
+ * @brief   タイプアイコン切り替え
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		info		表示データ
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   info    表示データ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TypeIconChange( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アイテムグラフィック切り替え
+ * @brief   アイテムグラフィック切り替え
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		item		アイテム番号
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   item    アイテム番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconChange( BOX2_APP_WORK * appwk, u16 item );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アイテムアイコン拡縮設定
+ * @brief   アイテムアイコン拡縮設定
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		flg			TRUE = 拡縮, FALSE = 通常
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   flg     TRUE = 拡縮, FALSE = 通常
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconAffineSet( BOX2_APP_WORK * appwk, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アイテムアイコン座標設定
+ * @brief   アイテムアイコン座標設定
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		x				Ｘ座標
- * @param		y				Ｙ座標
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   x       Ｘ座標
+ * @param   y       Ｙ座標
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconPosSet( BOX2_APP_WORK * appwk, s16 x, s16 y );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アイテムアイコン移動
+ * @brief   アイテムアイコン移動
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		mx			Ｘ座標移動量
- * @param		my			Ｙ座標移動量
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   mx      Ｘ座標移動量
+ * @param   my      Ｙ座標移動量
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconMove( BOX2_APP_WORK * appwk, s16 mx, s16 my );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		指定ポケモンアイコンの位置にアイテムアイコンをセット
+ * @brief   指定ポケモンアイコンの位置にアイテムアイコンをセット
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		poke		ポケモンアイコン位置
- * @param		mode		ポケモンアイコン表示モード
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   poke    ポケモンアイコン位置
+ * @param   mode    ポケモンアイコン表示モード
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconPokePut( BOX2_APP_WORK * appwk, u32 poke, u32 mode );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		指定ポケモンアイコンの位置にアイテムアイコンの掴んだ位置をセット
+ * @brief   指定ポケモンアイコンの位置にアイテムアイコンの掴んだ位置をセット
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		poke		ポケモンアイコン位置
- * @param		mode		ポケモンアイコン表示モード
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   poke    ポケモンアイコン位置
+ * @param   mode    ポケモンアイコン表示モード
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconPokePutHand( BOX2_APP_WORK * appwk, u32 poke, u32 mode );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アイテムアイコンのアウトラインカーソルを追加
+ * @brief   アイテムアイコンのアウトラインカーソルを追加
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconCursorAdd( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アイテムアイコンのアウトラインカーソルを表示
+ * @brief   アイテムアイコンのアウトラインカーソルを表示
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconCursorOn( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アイテムアイコンのアウトラインカーソル移動
+ * @brief   アイテムアイコンのアウトラインカーソル移動
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ItemIconCursorMove( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		便利モードボタン表示
+ * @brief   便利モードボタン表示
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		anm			アニメ番号
- * @param		flg			TRUE = 表示, FALSE = 非表示
+ * @param   syswk   ボックス画面システムワーク
+ * @param   index   どのボタンが有効になるか( BOX2OBJ_ID_CONV_BUTTON - BOX2OBJ_ID_CONV_BUTTON3 )
+ * @param   flg     TRUE = 表示, FALSE = 非表示
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, u32 anm, BOOL flg );
+extern void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, int index, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手カーソルアニメセット
+ * @brief   手カーソルアニメセット
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		anm			アニメ番号
+ * @param   syswk   ボックス画面システムワーク
+ * @param   anm     アニメ番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_SetHandCursorAnm( BOX2_SYS_WORK * syswk, u32 anm );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手カーソル表示切り替え
+ * @brief   手カーソル表示切り替え
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		flg			表示フラグ TRUE = 表示
+ * @param   syswk   ボックス画面システムワーク
+ * @param   flg     表示フラグ TRUE = 表示
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_SetHandCursorOnOff( BOX2_SYS_WORK * syswk, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アウトラインカーソル追加
+ * @brief   アウトラインカーソル追加
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アウトラインカーソル追加（位置指定）
+ * @brief   アウトラインカーソル追加（位置指定）
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		pos			表示位置
+ * @param   syswk   ボックス画面システムワーク
+ * @param   pos     表示位置
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeCursorAdd2( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アウトラインカーソル表示切り替え
+ * @brief   アウトラインカーソル表示切り替え
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		flg			表示フラグ
+ * @param   syswk   ボックス画面システムワーク
+ * @param   flg     表示フラグ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アウトラインカーソル表示プライオリティ切り替え
+ * @brief   アウトラインカーソル表示プライオリティ切り替え
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		pos			ポケモンアイコンの位置
+ * @param   syswk   ボックス画面システムワーク
+ * @param   pos     ポケモンアイコンの位置
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ChgPokeCursorPriority( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		アウトラインカーソル移動
+ * @brief   アウトラインカーソル移動
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		pos			ポケモンアイコンの位置
+ * @param   syswk   ボックス画面システムワーク
+ * @param   pos     ポケモンアイコンの位置
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeCursorMove( BOX2_APP_WORK * appwk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイ切り替え矢印表示切替
+ * @brief   トレイ切り替え矢印表示切替
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		flg			ON/OFFフラグ
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   flg     ON/OFFフラグ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayMoveArrowVanish( BOX2_APP_WORK * appwk, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		マーキングＯＢＪ移動
+ * @brief   マーキングＯＢＪ移動
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_MarkingScroll( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ボックス移動：各ＯＢＪを初期化
+ * @brief   ボックス移動：各ＯＢＪを初期化
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_BoxMoveObjInit( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ボックス移動：各ＯＢＪをスクロール
+ * @brief   ボックス移動：各ＯＢＪをスクロール
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		mv			移動量
+ * @param   syswk   ボックス画面システムワーク
+ * @param   mv      移動量
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_BoxMoveFrmScroll( BOX2_SYS_WORK * syswk, s16 mv );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		カーソルを初期位置へ
+ * @brief   カーソルを初期位置へ
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_InitBoxMoveCursorPos( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイアイコンを初期座標へ移動
+ * @brief   トレイアイコンを初期座標へ移動
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_InitTrayIconScroll( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイアイコンの座標を取得
+ * @brief   トレイアイコンの座標を取得
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		pos			トレイ表示位置
- * @param		x				Ｘ座標格納場所
- * @param		y				Ｙ座標格納場所
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   pos     トレイ表示位置
+ * @param   x       Ｘ座標格納場所
+ * @param   y       Ｙ座標格納場所
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconPosGet( BOX2_APP_WORK * appwk, u32 pos, s16 * x, s16 * y );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイアイコンのキャラデータ作成（個別）
+ * @brief   トレイアイコンのキャラデータ作成（個別）
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		tray		トレイ番号
+ * @param   syswk   ボックス画面システムワーク
+ * @param   tray    トレイ番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconCgxMake( BOX2_SYS_WORK * syswk, u32 tray );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイアイコンのキャラデータ作成（全部）
+ * @brief   トレイアイコンのキャラデータ作成（全部）
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconCgxMakeAll( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイアイコンのキャラデータ切り替え
+ * @brief   トレイアイコンのキャラデータ切り替え
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconChange( BOX2_SYS_WORK * syswk );
@@ -929,12 +948,12 @@ extern void BOX2OBJ_TrayIconChange( BOX2_SYS_WORK * syswk );
 /**
  * トレイアイコンのキャラを転送
  *
- * @param	syswk	ボックス画面システムワーク
- * @param	tray	トレイ番号
+ * @param syswk ボックス画面システムワーク
+ * @param tray  トレイ番号
  *
- * @return	none
+ * @return  none
  *
- * @li	指定トレイとアイコンが一致しない場合は転送しない
+ * @li  指定トレイとアイコンが一致しない場合は転送しない
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconCgxTrans( BOX2_SYS_WORK * syswk, u32 tray );
@@ -943,13 +962,13 @@ extern void BOX2OBJ_TrayIconCgxTrans( BOX2_SYS_WORK * syswk, u32 tray );
 /**
  * トレイアイコンのキャラを転送（個別・ＯＢＪ指定）
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		tray		トレイ番号
- * @param		idx			OBJ index
+ * @param   syswk   ボックス画面システムワーク
+ * @param   tray    トレイ番号
+ * @param   idx     OBJ index
  *
- * @return	none
+ * @return  none
  *
- * @li	指定トレイとアイコンが一致しない場合は転送しない
+ * @li  指定トレイとアイコンが一致しない場合は転送しない
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconCgxTransIdx( BOX2_SYS_WORK * syswk, u32 tray, u32 idx );
@@ -958,171 +977,180 @@ extern void BOX2OBJ_TrayIconCgxTransIdx( BOX2_SYS_WORK * syswk, u32 tray, u32 id
 /**
  * トレイアイコンのキャラを転送（個別・表示位置指定）
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		tray		トレイ番号
- * @param		pos			表示位置
+ * @param   syswk   ボックス画面システムワーク
+ * @param   tray    トレイ番号
+ * @param   pos     表示位置
  *
- * @return	none
+ * @return  none
  *
- * @li	指定トレイとアイコンが一致しない場合は転送しない
+ * @li  指定トレイとアイコンが一致しない場合は転送しない
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconCgxTransPos( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイアイコン移動
+ * @brief   トレイアイコン移動
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		mv			移動量
+ * @param   syswk   ボックス画面システムワーク
+ * @param   mv      移動量
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconScroll( BOX2_SYS_WORK * syswk, s16 mv );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイカーソルをスクロール初期位置へ
+ * @brief   トレイカーソルをスクロール初期位置へ
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		mv			移動方向
+ * @param   syswk   ボックス画面システムワーク
+ * @param   mv      移動方向
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_InitTrayCursorScroll( BOX2_SYS_WORK * syswk, s32 mv );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイカーソルスクロール終了後の処理
+ * @brief   トレイカーソルスクロール終了後の処理
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_EndTrayCursorScroll( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイ名配置
+ * @brief   トレイ名配置
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		pos			位置
+ * @param   syswk   ボックス画面システムワーク
+ * @param   pos     位置
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_SetTrayNamePos( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		トレイ表示切り替え
+ * @brief   トレイ表示切り替え
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		pos			位置
- * @param		flg			TRUE = 表示, FALSE = 非表示
+ * @param   syswk   ボックス画面システムワーク
+ * @param   pos     位置
+ * @param   flg     TRUE = 表示, FALSE = 非表示
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_ChangeTrayName( BOX2_SYS_WORK * syswk, u32 pos, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		タッチバー上のボタン表示切り替え
+ * @brief   タッチバー上のボタン表示切り替え
  *
- * @param		syswk		ボックス画面システムワーク
- * @param		ret			戻るボタン
- * @param		exit		終了ボタン
- * @param		status	ステータスボタン
+ * @param   syswk   ボックス画面システムワーク
+ * @param   ret     戻るボタン
+ * @param   exit    終了ボタン
+ * @param   status  ステータスボタン
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		タッチバー上のボタンを非表示
+ * @brief   タッチバー上のボタンを非表示
  *
- * @param		syswk		ボックス画面システムワーク
+ * @param   syswk   ボックス画面システムワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_VanishTouchBarButton( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＯＡＭフォント初期化
+ * @brief   ＯＡＭフォント初期化
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＯＡＭフォント削除
+ * @brief   ＯＡＭフォント削除
  *
- * @param		appwk		ボックス画面アプリワーク
+ * @param   appwk   ボックス画面アプリワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_FontOamExit( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＯＡＭフォント表示切り替え
+ * @brief   ＯＡＭフォント表示切り替え
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		idx			ＯＡＭフォントインデックス
- * @param		flg			TRUE = 表示, FALSE = 非表示
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   idx     ＯＡＭフォントインデックス
+ * @param   flg     TRUE = 表示, FALSE = 非表示
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_FontOamVanish( BOX2_APP_WORK * appwk, u32 idx, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＯＡＭフォント表示チェック
+ * @brief   ＯＡＭフォント表示チェック
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		idx			ＯＡＭフォントインデックス
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   idx     ＯＡＭフォントインデックス
  *
- * @retval	"TRUE = 表示中"
- * @retval	"FALSE = それ以外"
+ * @retval  "TRUE = 表示中"
+ * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2OBJ_CheckFontOamVanish( BOX2_APP_WORK * appwk, u32 idx );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ボックス名をスクロール位置開始へ配置
+ * @brief   ボックス名をスクロール位置開始へ配置
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		idx			ＯＡＭフォントインデックス
- * @param		mv			スクロール方向
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   idx     ＯＡＭフォントインデックス
+ * @param   mv      スクロール方向
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_SetBoxNamePos( BOX2_APP_WORK * appwk, u32 idx, u32 mv );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ボックス名をスクロール
+ * @brief   ボックス名をスクロール
  *
- * @param		appwk		ボックス画面アプリワーク
- * @param		mv			移動量
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   mv      移動量
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_BoxNameScroll( BOX2_APP_WORK * appwk, s8 mv );
+
+extern void BOX2OBJ_DrawMultiSelectOutline( BOX2_SYS_WORK *syswk );
+extern void BOX2OBJ_DisplayMultiSelectOutline( BOX2_SYS_WORK *syswk, int flag );
+extern void BOX2OBJ_InitMultiSelectOutline( BOX2_SYS_WORK *syswk );
+extern void BOX2OBJ_SetPosMultiSelectOutline( BOX2_SYS_WORK *syswk, int x1, int y1, int x2, int y2 );
+extern void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end );
+extern void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height );
+extern int BOX2OBJ_GetMultiSelectMinPos( int start, int end );
+extern void BOX2OBJ_VanishMultiSelectIcon( BOX2_SYS_WORK *syswk, int flag );

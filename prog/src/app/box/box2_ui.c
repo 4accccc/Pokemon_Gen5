@@ -323,7 +323,9 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
   { 212, 112-4, 0, 0, 39, 41, 40, 40, { 112, 135, 168, 255 } }, // 40: にがす
   { 212, 136-4, 0, 0, 40, 36, 41, 41, { 136, 159, 168, 255 } }, // 41: とじる
 
-  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 120, 136 } },   // 42: 便利モード
+  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 8, 56    } },   // 42: 通常モードボタン
+  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 64, 112  } },   // 43: 移動モードボタン
+  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 120, 168 } },   // 44: 複数選択モードボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -1558,7 +1560,7 @@ u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
   u32 ret = CURSORMOVE_MainCont( syswk->app->cmwk );
   u32 x,y;
   GFL_UI_TP_GetPointCont( &x, &y );
-  OS_Printf("touch=%d: x=%d,y=%d\n", ret, x, y);
+//  OS_Printf("touch=%d: x=%d,y=%d\n", ret, x, y);
 
   if( ret == CURSORMOVE_NONE ){
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){

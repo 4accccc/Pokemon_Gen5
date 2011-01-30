@@ -278,6 +278,8 @@ static const u16 PokeFreeCheckWazaTable[] = {
 };
 #endif  // BOX_FREE_WAZA_CHECK
 
+static void _ChangePokeData( BOX2_SYS_WORK * syswk, int get_pos, int put_pos );
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -1292,9 +1294,32 @@ static void PokeDataMoveParty( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * p
   }
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ポケモンを移動させる[サブ]
+ *
+ * @param   syswk   
+ * @param   getTray   
+ * @param   getPos    
+ * @param   putPos    
+ */
+//----------------------------------------------------------------------------------
+static int _move_tray2tray( BOX2_SYS_WORK * syswk, u32 getTray, u32 getPos, u32 putPos )
+{
+  POKEMON_PASO_PARAM * ppp;
+  int tray;
+  
+  ppp  = BOX2MAIN_PPPGet( syswk, getTray, getPos );
+  tray = MoveBoxGet( syswk, putPos );
+  BOXDAT_PutPokemonBox( syswk->dat->sv_box, tray, ppp );
+  BOXDAT_ClearPokemon( syswk->dat->sv_box, getTray, getPos );
+
+  return tray;
+}
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   ボックスのデータを他のボックスへ
+ * @brief   ボックスのデータを他のボックスへ(範囲選択対応）
  *
  * @param   syswk     ボックス画面システムワーク
  * @param   box       ボックスポケモンの移動データ
@@ -1307,14 +1332,27 @@ static void PokeDataMoveParty( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * p
 //--------------------------------------------------------------------------------------------
 static void PokeDataBoxMoveBox( BOX2_SYS_WORK * syswk, u32 getTray, u32 getPos, u32 putPos )
 {
-  POKEMON_PASO_PARAM * ppp;
-  u32 tray;
+  // 引数だけではなく結局appwkから数値を取得している(multi_w,multi_h,multi_pokemon_idなど）
+  int tray=-1;
+  
+  // 掴んでいるは１匹
+  if(syswk->app->multi_w==1 && syswk->app->multi_h==1){
+    tray = _move_tray2tray( syswk, getTray, getPos, putPos );
 
-  ppp  = BOX2MAIN_PPPGet( syswk, getTray, getPos );
-  tray = MoveBoxGet( syswk, putPos );
-  BOXDAT_PutPokemonBox( syswk->dat->sv_box, tray, ppp );
-  BOXDAT_ClearPokemon( syswk->dat->sv_box, getTray, getPos );
-
+  // 複数匹掴んでいる場合
+  }else{
+    int x,y;
+    for(y=0;y<syswk->app->multi_w;y++){
+      for(x=0;x<syswk->app->multi_h;x++){
+        int n = y*BOX_MAX_COLUMN + x;
+        if(syswk->app->multi_pokemon_id[n]==1){
+          tray = _move_tray2tray( syswk, getTray, getPos+n, putPos );
+        }
+      }
+    }
+  }
+  GF_ASSERT(tray>=0); // 起きないはず（一度の移動が発生しなかった事になる）
+  
   // トレイアイコン更新
   BOX2OBJ_TrayIconCgxMake( syswk, getTray );
   BOX2OBJ_TrayIconCgxTrans( syswk, getTray );
@@ -1398,7 +1436,8 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
   if( work->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
     if( work->put_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
       // ボックス同士の入れ替え
-      BOXDAT_ChangePokeData( syswk->dat->sv_box, syswk->get_tray, work->get_pos, syswk->tray, work->put_pos );
+//      BOXDAT_ChangePokeData( syswk->dat->sv_box, syswk->get_tray, work->get_pos, syswk->tray, work->put_pos );
+      _ChangePokeData( syswk, work->get_pos, work->put_pos );
       // トレイアイコン更新
       BOX2OBJ_TrayIconCgxMake( syswk, syswk->tray );
       BOX2OBJ_TrayIconCgxTrans( syswk, syswk->tray );
@@ -1700,6 +1739,23 @@ BOOL BOX2MAIN_CheckSleep( BOX2_SYS_WORK * syswk, u32 pos )
 //  ポケモンアイコン
 //============================================================================================
 
+
+static void PokeIconObjMoveSub( BOX2_SYS_WORK *syswk, BOX2MAIN_POKEMOVE_DATA *dat, int cnt, int yoko, int tate)
+{
+  s16 px, py;
+  int mvID;
+  // 移動させるOBJIDの取得
+  mvID = syswk->app->pokeicon_id[dat->df_pos + tate*6 + yoko];
+
+  // 移動補間処理
+  px = dat->dx + ( ( dat->mx * cnt ) >> 16 ) * dat->vx + yoko*BOX2OBJ_TRAYPOKE_SX;
+  py = dat->dy + ( ( dat->my * cnt ) >> 16 ) * dat->vy + tate*BOX2OBJ_TRAYPOKE_SY;
+  // 座標適用
+  BOX2OBJ_SetPos( syswk->app, mvID, px, py, CLSYS_DEFREND_MAIN );
+  BOX2OBJ_PokeIconPriChg( syswk->app, dat->df_pos, BOX2OBJ_POKEICON_PRI_CHG_GET );
+
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   ポケモンアイコン入れ替え動作
@@ -1717,14 +1773,37 @@ static BOOL PokeIconObjMove( BOX2_SYS_WORK * syswk )
   u32 i;
   u32 mvID;
   s16 px, py;
+  int tate,yoko;
 
   work = syswk->app->vfunk.work;
   dat  = work->dat;
 
-  if( work->cnt == POKEICON_MOVE_CNT ){
+  // アニメ中
+  if( work->cnt < POKEICON_MOVE_CNT ){
+    work->cnt++;
     for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX+1; i++ ){
+      // チェックフラグがついていないものはスルー
+      if( dat[i].flg == 0){ continue; }
+
+      // 範囲選択されている分のポケモンアイコンを全て動かす
+      for(tate=0;tate<syswk->app->multi_h;tate++){
+        for(yoko=0;yoko<syswk->app->multi_w;yoko++){
+          PokeIconObjMoveSub(syswk, &dat[i], work->cnt, yoko, tate);
+        }
+      }
+      
+    }
+    BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
+    BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+
+  // アニメ終了時
+  }else if( work->cnt == POKEICON_MOVE_CNT ){
+    for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX+1; i++ ){
+      // チェックフラグがついていないものはスルー
       if( dat[i].flg == 0 ){ continue; }
       BOX2OBJ_PokeIconPriChg2( syswk->app, dat[i].df_pos, dat[i].mv_pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
+
+      // 移動させるOBJIDの取得
       mvID = syswk->app->pokeicon_id[dat[i].df_pos];
       if( dat[i].mv_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
         BOX2OBJ_PokeIconDefaultPosGet( dat[i].mv_pos, &px, &py, syswk->move_mode );
@@ -1754,18 +1833,6 @@ static BOOL PokeIconObjMove( BOX2_SYS_WORK * syswk )
     BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
     BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
     return FALSE;
-  }else{
-    work->cnt++;
-    for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX+1; i++ ){
-      if( dat[i].flg == 0 ){ continue; }
-      mvID = syswk->app->pokeicon_id[dat[i].df_pos];
-      px = dat[i].dx + ( ( dat[i].mx * work->cnt ) >> 16 ) * dat[i].vx;
-      py = dat[i].dy + ( ( dat[i].my * work->cnt ) >> 16 ) * dat[i].vy;
-      BOX2OBJ_SetPos( syswk->app, mvID, px, py, CLSYS_DEFREND_MAIN );
-      BOX2OBJ_PokeIconPriChg( syswk->app, dat[i].df_pos, BOX2OBJ_POKEICON_PRI_CHG_GET );
-    }
-    BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
-    BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
   }
   return TRUE;
 }
@@ -2626,8 +2693,9 @@ static void PokeIconBufPosChange( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA 
     }
   }
 
+  // 入れ替えてないポケモンが残ったら書き換える
   if( gmp != 0xffff ){
-    BOX2OBJ_PutPokeIcon( syswk->app, gmp );
+    BOX2OBJ_PutPokeIcon( syswk->app, gmp, syswk->app->multi_w, syswk->app->multi_h );
   }
 
   // 全体のプライオリティを再設定する
@@ -5245,6 +5313,7 @@ int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk )
 {
   BOX2_IRQWK * vf;
   s16 x, y;
+  int tate,yoko;
 
   vf = &syswk->app->vfunk;
 
@@ -5275,10 +5344,21 @@ int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk )
     }
     BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
     BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
-    {
-      u8  icon = syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS ];
-      BOX2OBJ_GetPos( syswk->app, icon, &x, &y, CLSYS_DEFREND_MAIN );
-      BOX2OBJ_SetPos( syswk->app, icon, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
+
+//      {
+//        u8  icon = syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS + tate*6 + yoko];
+//        BOX2OBJ_GetPos( syswk->app, icon, &x, &y, CLSYS_DEFREND_MAIN );
+//        BOX2OBJ_SetPos( syswk->app, icon, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
+//      }
+
+    // ポケモンアイコン持ち上げる
+    for(tate=0;tate<syswk->app->multi_h;tate++){
+      for(yoko=0;yoko<syswk->app->multi_w;yoko++)
+      {
+        u8  icon = syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS + tate*6 + yoko];
+        BOX2OBJ_GetPos( syswk->app, icon, &x, &y, CLSYS_DEFREND_MAIN );
+        BOX2OBJ_SetPos( syswk->app, icon, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
+      }
     }
     BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
     vf->cnt++;
@@ -6825,4 +6905,85 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
   }
 
   return 1;
+}
+
+//=============================================================================================
+/**
+ * @brief 現在の選択範囲のポケモンの状態を保存
+ *
+ * @param syswk
+ */
+//=============================================================================================
+void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk )
+{
+  int x,y;
+  int state;
+  GFL_STD_MemClear( syswk->app->multi_pokemon_id, 30 );
+  
+  for(y=0;y<syswk->app->multi_h;y++){
+    for(x=0;x<syswk->app->multi_w;x++){
+      state = BOXDAT_PokeParaGet( syswk->dat->sv_box, syswk->get_tray, 
+                                  syswk->get_pos + y*BOX_MAX_COLUMN+x, 
+                                  ID_PARA_poke_exist, NULL );
+      syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] = state;
+    }
+  }
+}
+
+//=============================================================================================
+/**
+ * @brief カーソルのある場所に選択範囲のポケモンを置けるかチェックする
+ *
+ * @param   syswk   
+ * @param   tray    トレイ番号
+ * @param   pos     場所番号（0-29)
+ */
+//=============================================================================================
+int BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
+{
+  int x,y;
+  int state;
+
+  // 元の場所か?
+  if(syswk->get_tray==tray && syswk->get_pos==pos){
+    return TRUE;
+  }
+
+  // ポケモンが重なっていないかチェック
+  if(tray<BOX_MAX_TRAY){
+    for(y=0;y<syswk->app->multi_h;y++){
+      for(x=0;x<syswk->app->multi_w;x++){
+        state = BOXDAT_PokeParaGet( syswk->dat->sv_box, tray, pos + y*BOX_MAX_COLUMN+x,
+                                    ID_PARA_poke_exist, NULL );
+        // 衝突しているかどうか
+        if(syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 1 && state==1 ){
+          return FALSE;
+        }
+      }
+    }
+  }else{
+  
+  }
+  return TRUE;
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ポケモンデータを入れ替える（範囲選択分の複数ポケモン対応版）
+ *
+ * @param   syswk   
+ */
+//----------------------------------------------------------------------------------
+static void _ChangePokeData( BOX2_SYS_WORK * syswk, int get_pos, int put_pos )
+{
+  int x,y;
+  for(y=0;y<syswk->app->multi_h;y++){
+    for(x=0;x<syswk->app->multi_w;x++){
+      BOXDAT_ChangePokeData( syswk->dat->sv_box, 
+                              syswk->get_tray, get_pos+y*BOX_MAX_COLUMN+x,
+                              syswk->tray, put_pos+y*BOX_MAX_COLUMN+x );
+    }
+  }
 }

@@ -62,7 +62,9 @@ enum {
   BOX2UI_ARRANGE_MAIN_FREE,     // 40: にがす
   BOX2UI_ARRANGE_MAIN_CLOSE,    // 41: やめる
 
-  BOX2UI_ARRANGE_MAIN_CONV,     // 42: 便利モード
+  BOX2UI_ARRANGE_MAIN_NORMAL,   // 42: 通常モードボタン
+  BOX2UI_ARRANGE_MAIN_MOVE,     // 43: 移動モードボタン
+  BOX2UI_ARRANGE_MAIN_MULTI,    // 44: 複数選択モードボタン
 
   // ボックス整理・「つかむ」トレイ移動
   BOX2UI_ARRANGE_PGT_POKE1 = 0, // 00: ポケモン
