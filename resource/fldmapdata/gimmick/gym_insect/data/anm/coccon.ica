@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-01-28T20:10:57" source="coccon.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-01-31T22:12:27" source="coccon.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -17,7 +17,7 @@
 	tool_start_frame="1"
 	tool_end_frame="100"
 	interpolation="frame"
-	compress_node="merge" node_size="6 6"
+	compress_node="merge" node_size="7 7"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
@@ -116,7 +116,7 @@
 	16.589844 16.589844 4.000000
 </node_translate_data>
 
-<node_anm_array size="6">
+<node_anm_array size="7">
 	<node_anm index="0">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
@@ -173,6 +173,17 @@
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 	<node_anm index="5">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="100" data_head="101"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="602"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="6">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
