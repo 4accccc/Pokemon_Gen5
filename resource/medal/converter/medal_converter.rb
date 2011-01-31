@@ -161,7 +161,7 @@ sort_list = kana_data_list.sort_by{|item| item.medal_name }
 sort_list.each_with_index{ |item,index|
   medal_sort_def.puts "    " + item.id + ",\t//" + item.medal_name
 }
-medal_sort_def.puts "}"
+medal_sort_def.puts "};"
 medal_sort_def.close
 
 #=======================================================
@@ -275,7 +275,7 @@ medal_data_list.each_with_index{ |item,index|
   type_cnt[mdl_type] += 1
 
   # GMM‚É‘‚«‚İ
-  gmm.make_row_index_kanji( "MDL_HINT_" + mdl_type + "_",type_cnt[mdl_type], item.hint_kana ,item.hint_kana )
+  gmm.make_row_index_kanji( "MDL_HINT_" + mdl_type + "_",type_cnt[mdl_type], item.hint_kana ,item.hint_kanzi )
 }
 gmm.close_gmm
 

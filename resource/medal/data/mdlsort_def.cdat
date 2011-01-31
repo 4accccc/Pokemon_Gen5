@@ -79,4 +79,4 @@ u32 MedalSortList[] = {
     MDLID_WAZAMACHINE_LV1,	//ÇÌÇ¥Ç‹ÇµÇ…Ç∑Ç∆
     MDLID_WAZAMACHINE_LV2,	//ÇÌÇ¥Ç‹ÇµÇÒÇ»ÇËÅ[
     MDLID_WAZAMACHINE_LV3,	//ÇÌÇ¥Ç‹Ç∂ÇÒ
-}
+};

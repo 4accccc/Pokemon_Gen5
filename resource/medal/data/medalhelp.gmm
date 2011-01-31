@@ -397,18 +397,18 @@
 		<language name="JPN" width="216">ふるさとの　ふうけいが
 なつかしくなったのなら
 わがやのとびらを　たたけばいいさ</language>
-		<language name="JPN_KANJI" width="216">ふるさとの　ふうけいが
+		<language name="JPN_KANJI" width="216">故郷の　風景が
 なつかしくなったのなら
-わがやのとびらを　たたけばいいさ</language>
+我が家の扉を　たたけばいいさ</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_002">
 		<language name="JPN" width="216">オレンジいろの　やねが
 おなじみの　いこいのば
 じょうれんになると　いいことあるかも</language>
-		<language name="JPN_KANJI" width="216">オレンジいろの　やねが
-おなじみの　いこいのば
-じょうれんになると　いいことあるかも</language>
+		<language name="JPN_KANJI" width="216">オレンジ色の　屋根が
+おなじみの　いこいの場
+常連になると　いいことあるかも</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_003">
@@ -535,17 +535,17 @@
 		<language name="JPN" width="216">なにもおこらない　ということが
 とても　とくべつな　ことだと
 おしえてくれる　わざがあります</language>
-		<language name="JPN_KANJI" width="216">なにもおこらない　ということが
-とても　とくべつな　ことだと
-おしえてくれる　わざがあります</language>
+		<language name="JPN_KANJI" width="216">何も起こらない　ということが
+とても　特別な　ことだと
+教えてくれる　技があります</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_006">
 		<language name="JPN" width="216">すべてのわざを　つかいきったら
 うつてがない　なんてことは
 ありません</language>
-		<language name="JPN_KANJI" width="216">すべてのわざを　つかいきったら
-うつてがない　なんてことは
+		<language name="JPN_KANJI" width="216">すべての技を　使い切ったら
+打つ手がない　なんてことは
 ありません</language>
 	</row>
 
@@ -554,8 +554,8 @@
 ちょっと　むずかしい
 まちがうことも　けいけんです</language>
 		<language name="JPN_KANJI" width="216">ポケモンの　タイプは
-ちょっと　むずかしい
-まちがうことも　けいけんです</language>
+ちょっと　難しい
+間違うことも　経験です</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_001">
@@ -622,89 +622,89 @@
 		<language name="JPN" width="216">きって
 きって
 きりまくれ！</language>
-		<language name="JPN_KANJI" width="216">きって
-きって
-きりまくれ！</language>
+		<language name="JPN_KANJI" width="216">切って
+切って
+切りまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_002">
 		<language name="JPN" width="216">とんで
 とんで
 とびまくれ！</language>
-		<language name="JPN_KANJI" width="216">とんで
-とんで
-とびまくれ！</language>
+		<language name="JPN_KANJI" width="216">飛んで
+飛んで
+飛びまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_003">
 		<language name="JPN" width="216">およいで
 およいで
 およぎまくれ！</language>
-		<language name="JPN_KANJI" width="216">およいで
-およいで
-およぎまくれ！</language>
+		<language name="JPN_KANJI" width="216">泳いで
+泳いで
+泳ぎまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_004">
 		<language name="JPN" width="216">おして
 おして
 おしまくれ！</language>
-		<language name="JPN_KANJI" width="216">おして
-おして
-おしまくれ！</language>
+		<language name="JPN_KANJI" width="216">押して
+押して
+押しまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_005">
 		<language name="JPN" width="216">のぼって
 のぼって
 のぼりまくれ！</language>
-		<language name="JPN_KANJI" width="216">のぼって
-のぼって
-のぼりまくれ！</language>
+		<language name="JPN_KANJI" width="216">登って
+登って
+登りまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_006">
 		<language name="JPN" width="216">もぐって
 もぐって
 もぐりまくれ！</language>
-		<language name="JPN_KANJI" width="216">もぐって
-もぐって
-もぐりまくれ！</language>
+		<language name="JPN_KANJI" width="216">潜って
+潜って
+潜りまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_007">
 		<language name="JPN" width="216">ほって
 ほって
 ほりまくれ！</language>
-		<language name="JPN_KANJI" width="216">ほって
-ほって
-ほりまくれ！</language>
+		<language name="JPN_KANJI" width="216">掘って
+掘って
+掘りまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_008">
 		<language name="JPN" width="216">てらして
 てらして
 てらしまくれ！</language>
-		<language name="JPN_KANJI" width="216">てらして
-てらして
-てらしまくれ！</language>
+		<language name="JPN_KANJI" width="216">照らして
+照らして
+照らしまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_009">
 		<language name="JPN" width="216">かおって
 かおって
 かおりまくれ！</language>
-		<language name="JPN_KANJI" width="216">かおって
-かおって
-かおりまくれ！</language>
+		<language name="JPN_KANJI" width="216">香って
+香って
+香りまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_010">
 		<language name="JPN" width="216">いっけん　カラッポにみえるが
 ゆめと　ロマンに
 あふれている　かもしれない。</language>
-		<language name="JPN_KANJI" width="216">いっけん　カラッポにみえるが
-ゆめと　ロマンに
+		<language name="JPN_KANJI" width="216">一見　カラッポに見えるが
+夢と　ロマンに
 あふれている　かもしれない。</language>
 	</row>
 
@@ -713,8 +713,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">ノーマルタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_012">
@@ -722,8 +722,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">かくとうタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_013">
@@ -731,8 +731,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">じめんタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_014">
@@ -740,8 +740,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">ひこうタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_015">
@@ -749,8 +749,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">むしタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_016">
@@ -758,8 +758,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">いわタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_017">
@@ -767,8 +767,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">ゴーストタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_018">
@@ -776,8 +776,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">はがねタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_019">
@@ -785,8 +785,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">ほのおタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_020">
@@ -794,8 +794,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">みずタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_021">
@@ -803,8 +803,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">でんきタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_022">
@@ -812,8 +812,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">くさタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_023">
@@ -821,8 +821,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">こおりタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_024">
@@ -830,8 +830,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">エスパータイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_025">
@@ -839,8 +839,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">ドラゴンタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<row id="MDL_HINT_MISSION_026">
@@ -848,8 +848,8 @@
 してんのうと　チャンピオンに　かち
 でんどういりを　はたせ！</language>
 		<language name="JPN_KANJI" width="216">あくタイプの　ポケモンだけで
-してんのうと　チャンピオンに　かち
-でんどういりを　はたせ！</language>
+してんのうと　チャンピオンに　勝ち
+殿堂入りを　果たせ！</language>
 	</row>
 
 	<flowchart-group-list>
