@@ -26,6 +26,8 @@ _EVENT_DATA ev_reserve_c03gym0101_gateout_1c
 _EVENT_DATA ev_reserve_c03gym0101_gateout_3d
 _EVENT_DATA ev_pos_c03gym0101_gate_3b
 _EVENT_DATA ev_c03gym0101_trainer_gate_3b
+_EVENT_DATA ev_c03gym0101_sunglasses_01  //サングラス
+_EVENT_DATA ev_bg_c03gym0101_statue_01  //石像
 _EVENT_DATA_END
 
 //==============================================================
@@ -256,7 +258,7 @@ EVENT_START ev_pos_c03gym0101_gate_3b
   _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
 
   //視線曲を再生
-	_TRAINER_BGM_SET( TRID_PRINCE_02 )
+	_TRAINER_BGM_SET( TRID_JUGGLING_11 )
 	//トレーナー：主人公前へ
 	_OBJ_ANIME( C03R0101_TRAINER_GATE_3B, anm_trainer_gate_3b_walk_d )
 	_OBJ_ANIME_WAIT()
@@ -266,7 +268,7 @@ EVENT_START ev_pos_c03gym0101_gate_3b
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_PRINCE_02, 0 )
+	_TRAINER_BTL_SET( TRID_JUGGLING_11, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -327,3 +329,91 @@ EVENT_START ev_c03gym0101_trainer_gate_3b
 }
 EVENT_END
 
+/************************************************************/
+/*				サングラスのスクリプトイベント				*/
+/************************************************************/
+EVENT_START	ev_c03gym0101_sunglasses_01
+
+	IF $WK_SCENE_C03GYM0101 == 0 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_stop_01 )
+		
+	ELSE
+		
+		_TALK_OBJ_START()
+		
+		//バッジフラグ取得
+		_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
+
+		//バッジフラグで分岐
+		IF $SCWK_TEMP0 == 0 THEN
+		//バッジ入手前の処理
+
+			//アイテム入手フラグで分岐
+			IF FLAG_OFF( FE_C03GYM_ITEM ) THEN
+				//アイテム未入手なら、おいしいみず入手イベント
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_01 )
+				_BALLOONWIN_CLOSE()
+				_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+
+				_FLAG_SET( FE_C03GYM_ITEM )			//アイテム入手フラグをセット
+
+			ELSE
+				//入手済みならメッセージのみ
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
+
+		ELSE
+			//バッジ入手後の処理
+
+			//さすがっすよ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_03 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+		ENDIF
+	
+	ENDIF
+
+EVENT_END
+
+/************************************************************/
+/*				石像のスクリプトイベント					*/
+/************************************************************/
+EVENT_START	ev_bg_c03gym0101_statue_01
+_TALK_START_SE_PLAY()
+	//ジムバッジを持っているのかを判定
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
+
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+		_PLAYER_NAME( 0 )
+		_PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_01 )
+	
+	//ジムバッジを取得している場合
+	ELSE
+		//【仮】C04プラズマ団イベント発生前（メッセージ分岐条件がBW版）
+		IF $WK_SCENE_C04 == 0 THEN
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
+			
+		//C04プラズマ団イベント後
+		ELSE
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_03 )
+		
+		ENDIF
+		
+	ENDIF
+	
+	_LAST_KEYWAIT()	
+	_PLAINWIN_CLOSE()
+	
+EVENT_END

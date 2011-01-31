@@ -8,6 +8,7 @@
 #ifndef ZONE_C03GYM0201_EVC_H
 #define ZONE_C03GYM0201_EVC_H
 
+#define C03GYM0201_LEADER3_01              0
 
 #endif //ZONE_C03GYM0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03gym0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

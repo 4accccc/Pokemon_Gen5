@@ -10,6 +10,10 @@
 #define ZONE_C03GYM0101_EVC_H
 
 #define C03R0101_TRAINER_GATE_3B           0
+#define C03GYM_JUGGLING_01                 1
+#define C03GYM_JUGGLING_03                 2
+#define C03GYM_JUGGLING_04                 3
+#define C03GYM0101_SUNGLASSES_01           4
 
 #endif //ZONE_C03GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
