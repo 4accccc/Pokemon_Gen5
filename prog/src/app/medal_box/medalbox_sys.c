@@ -155,6 +155,8 @@ FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 #define UP_MEDAL_POS_X                  (44)      // 上画面に表示するメダルの位置
 #define UP_MEDAL_POS_Y                  (70)      // 上画面に表示するメダルの位置
 
+#define POLISH_EFFECT_SCROLL_SPEED      (10)      // 光沢エフェクトのスクロールスピード
+
 #define DIR_KEY_SCROLL_SPEED  (0x7000)    // ページスクロールスピード
 #define DIR_KEY_SCROLL_COUNT  (1)         // 方向キーでスクロールするページ数
 #define LR_KEY_SCROLL_SPEED   (0x20000)   // ページスクロールスピード
@@ -217,12 +219,13 @@ typedef enum
 //=====================================
 typedef enum
 {
-  MEDALBOXSYS_BG_PRIORITY_ETC_M       = 0,
+  MEDALBOXSYS_BG_PRIORITY_ETC_M         = 0,
   MEDALBOXSYS_BG_PRIORITY_FONT_M,
   MEDALBOXSYS_BG_PRIORITY_FONTBORD_M,
   MEDALBOXSYS_BG_PRIORITY_PAGEUNIT_M,
+  MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC  = 2,  // エフェクト面として動作している時のプライオリティー
 
-  MEDALBOXSYS_BG_PRIORITY_EFFECTS_S   = 0,
+  MEDALBOXSYS_BG_PRIORITY_EFFECTS_S     = 0,
   MEDALBOXSYS_BG_PRIORITY_FONT_S,
   MEDALBOXSYS_BG_PRIORITY_MONITOR_S,
   MEDALBOXSYS_BG_PRIORITY_BACK_S,
@@ -234,6 +237,7 @@ typedef enum
 typedef enum
 {
   MEDALBOXSYS_OBJ_PRIORITY_UI         = 2,
+  MEDALBOXSYS_OBJ_PRIORITY_EFFECT     = 3,
   MEDALBOXSYS_OBJ_PRIORITY_MEDAL      = 3,
   MEDALBOXSYS_OBJ_PRIORITY_NEWEFFETC  = 3,
   MEDALBOXSYS_OBJ_PRIORITY_CURSOR     = 3,
@@ -301,9 +305,37 @@ typedef enum
   MEDALBOXSYS_OBJ_CLWK_CURSOR_RIGHT,
 	MEDALBOXSYS_OBJ_CLWK_EXIT,
 	MEDALBOXSYS_OBJ_CLWK_SEARCH,
+
+  MEDALBOXSYS_OBJ_CLWK_MEDAL1_OBJWIN,
+  MEDALBOXSYS_OBJ_CLWK_MEDAL2_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL3_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL4_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL5_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL6_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL7_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL8_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL9_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL10_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL11_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL12_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL13_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL14_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL15_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL16_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL17_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL18_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL19_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL20_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL21_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL22_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL23_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL24_OBJWIN,
+	MEDALBOXSYS_OBJ_CLWK_MEDAL25_OBJWIN,
+
 	MEDALBOXSYS_OBJ_CLWK_UPMEDAL,         // 上画面用メダルOBJ
 	MEDALBOXSYS_OBJ_CLWK_MAX,
 	MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX      = MEDALBOXSYS_OBJ_CLWK_MEDAL25 + 1 ,// メダルのセルID最大数
+	MEDALBOXSYS_OBJ_MEDAL_OBJWIN_MAX    = MEDALBOXSYS_OBJ_CLWK_MEDAL25_OBJWIN - MEDALBOXSYS_OBJ_CLWK_MEDAL1_OBJWIN + 1 ,// OBJウィンドウの最大値
 	MEDALBOXSYS_OBJ_UI_CLWK_MAX         = MEDALBOXSYS_OBJ_CLWK_CAP + 1,    // UIセルワークの管理ID
 	MEDALBOXSYS_OBJ_COMMON_CLWK_MAX     = MEDALBOXSYS_OBJ_CLWK_EXIT + 1,    // コモンUIセルワークの管理ID
 }MEDALBOXSYS_GRAPHIC_OBJ_CLWK ;
@@ -785,6 +817,8 @@ static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 unit_pos , BOOL is_draw_medal_name);
 static void MDLSYS_GetDrawMedalPos( int num , GFL_CLACTPOS* p_pos );
 static void MDLSYS_GetDrawPushMedalButtonPos( int num , GFL_CLACTPOS* p_pos );
+static s32  MDLSYS_GetMedalObjWindID( int num );
+static void MDLSYS_PolishEffectScrollMain( MEDALBOXSYS_WORK *p_wk );
 
 //=============================================================================
 // デバッグ関数
@@ -966,7 +1000,10 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
     proc_ret = GFL_PROC_RES_FINISH;
     break;
   }
-  
+
+  // 光沢エフェクトスクロールメイン
+  MDLSYS_PolishEffectScrollMain( p_wk );
+
   // セルの更新
 	GFL_CLACT_SYS_Main();
   
@@ -1110,8 +1147,15 @@ static void MDLSYS_GraphicInit( MEDALBOXSYS_WORK *p_wk )
   //レジスタ初期化
   G2_BlendNone();
   G2S_BlendNone();	
-  GX_SetVisibleWnd( GX_WNDMASK_NONE );
-  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+  
+  // ウィンドウマスク設定ON
+  {
+    G2_SetWndOBJInsidePlane( GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|GX_WND_PLANEMASK_OBJ, TRUE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|GX_WND_PLANEMASK_OBJ, TRUE );
+    GX_SetVisibleWnd( GX_WNDMASK_OW );
+    GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+  }
+
 
   //VRAMクリアー
   GFL_DISP_ClearVRAM( 0 );
@@ -1151,6 +1195,11 @@ static void MDLSYS_GraphicInit( MEDALBOXSYS_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void MDLSYS_GraphicDelete( MEDALBOXSYS_WORK *p_wk )
 {
+  // OBJウィンドウを停止
+  {
+    GX_SetVisibleWnd( GX_WNDMASK_NONE );
+    GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1260,6 +1309,11 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 ,
         (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ) ,
         15, 15 );
+  }
+
+  {
+    // エフェクト面としてのプライオリティーを設定
+    GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
   }
 
   // 位置設定
@@ -1524,7 +1578,37 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , APP_COMMON_BARICON_SEARCH);
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH], TRUE );
     }
-    
+
+    // OBJWinの作成
+    {
+      int i;
+      GFL_CLACTPOS pos;
+      GFL_CLWK_DATA cldata;
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+      for( i = MEDALBOXSYS_OBJ_CLWK_MEDAL1_OBJWIN; i <= MEDALBOXSYS_OBJ_CLWK_MEDAL25_OBJWIN; i++ )
+      {	
+        // 位置データの書き込み
+        MDLSYS_GetDrawMedalPos( i - MEDALBOXSYS_OBJ_CLWK_MEDAL1_OBJWIN , &pos );
+        cldata.pos_x = pos.x;
+        cldata.pos_y = pos.y;
+
+        // プライオリティー
+        cldata.bgpri = MEDALBOXSYS_OBJ_PRIORITY_MEDAL;
+        cldata.softpri = MEDALBOXSYS_OBJ_SOFT_PRIORITY_BOTTOM;
+
+        // ワークの作成
+        p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit,
+            p_wk->obj_res[OBJRESID_MEDAL_CGR],
+            p_wk->obj_res[OBJRESID_MEDAL_PLTT],
+            p_wk->obj_res[OBJRESID_MEDAL_CELLANM],
+            &cldata, CLSYS_DEFREND_MAIN, heapID );
+        GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i] , 0 );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+        GFL_CLACT_WK_SetObjMode( p_wk->p_clwk[i], GX_OAM_MODE_OBJWND );
+        ONOUE_Printf("OBJWIN:%d\n",i);
+      }
+    }
+
     // ======================================
     // 上画面
     // ======================================
@@ -1900,13 +1984,27 @@ static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 uni
       }
 
       // メダル画像を表示する
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[draw_pos], TRUE );
+      {
+        s32 obj_win_id;
+        obj_win_id = MDLSYS_GetMedalObjWindID( draw_pos );
+        // メダルOBJの表示
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[draw_pos], TRUE );
+        // ウィンドウマスクを表示
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[obj_win_id], TRUE );
+      }
     }
     else
     {
-      // 表示しない
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[draw_pos], FALSE );
-      
+      // メダル画像を表示しない
+      {
+        s32 obj_win_id;
+        obj_win_id = MDLSYS_GetMedalObjWindID( draw_pos );
+        // メダルOBJの表示
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[draw_pos], FALSE );
+        // ウィンドウマスクを表示
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[obj_win_id], FALSE );
+      }
+
       // ページユニットに0番を書き込み
       {
         int n;
@@ -1960,6 +2058,50 @@ static void MDLSYS_GetDrawPushMedalButtonPos( int num , GFL_CLACTPOS* p_pos )
 {
   p_pos->x = sc_ichioshi_pos[num].x;
   p_pos->y = sc_ichioshi_pos[num].y;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルに対応するOBJWINのセルIDを取得する
+ *
+ *	@param	num メダルのOBJID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static s32  MDLSYS_GetMedalObjWindID( int num )
+{
+  return num+MEDALBOXSYS_OBJ_CLWK_MEDAL1_OBJWIN;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  光沢エフェクトメイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MDLSYS_PolishEffectScrollMain( MEDALBOXSYS_WORK *p_wk )
+{
+  // シーケンスごとにスクロールするかどうかを決定
+  switch( p_wk->now_seq )
+  {
+  case SEQ_MDLBOX_INIT:
+  case SEQ_MDLBOX_MAIN:
+  case SEQ_MDLBOX_SCROLLPAGE:
+  case SEQ_MDLBOX_SCROLL_BUTTON:
+  case SEQ_MDLBOX_MODE_CHANGE:
+  case SEQ_MDLBOX_RETURN:
+  case SEQ_MDLBOX_EXIT:
+  case SEQ_MDLBOX_SORT:
+    {
+      // エフェクト面をスクロールさせる
+      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_DEC , POLISH_EFFECT_SCROLL_SPEED );
+    }
+    return;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2110,7 +2252,7 @@ static GFL_PROC_RESULT MDLSYS_MAIN_Main( MEDALBOXSYS_WORK *p_wk )
  
   // カーソル点滅アニメ
   BLINKPALANM_Main( p_wk->p_blinkanm_wk );
- 
+
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -2722,13 +2864,20 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
   // 位置データの書き込み
   for( i = 0 ; i < MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX ; i++ )
   {
+    s32 obj_win_id;
     // 移動後の位置を計算
     MDLSYS_GetDrawMedalPos( i , &pos );
     pos.x -= offset;
 
     // メダルユニットはページ1枚左にはみ出している
     GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) ,GFL_BG_SCROLL_X_SET , offset + PAGE_WIDTH );
+
+    // メダルOBJの移動
     GFL_CLACT_WK_SetPos( p_wk->p_clwk[i] , &pos , CLSYS_DEFREND_MAIN );
+
+    // OBJウィンドウも同時に移動
+    obj_win_id = MDLSYS_GetMedalObjWindID( i );
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk[obj_win_id] , &pos , CLSYS_DEFREND_MAIN );
   }
 
   return scroll_end;
@@ -3625,8 +3774,12 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
       // 決定音
       PMSND_PlaySE( SEQ_SE_DECIDE1 );
 
+      // 光沢を消す
+			GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
+      
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , APP_COMMON_BARICON_ON_PASSIVE );
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , TRUE);
+      
       p_wk->sub_seq++;
     }
     break;
@@ -3640,11 +3793,22 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
     break;
   case 2:
     {
+      // OBJウィンドウは無効化
+      GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
+      // メニュ面としてのプライオリティーを設定
+      GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M );
+
+      // エフェクト面の位置を元に戻しておく
+      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
+
       G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ , -8 );
 
       // メニューを開く
       GFL_BG_ClearFrame( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) );
       OpenSearchMenu( p_wk );
+			GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
+      
       p_wk->sub_seq++;
     }
     break;
@@ -3679,6 +3843,14 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
 
         // メニュー数の初期化
         p_wk->menu_cnt = 0;
+      
+        {
+          // OBJウィンドウを有効化
+          GX_SetVisibleWnd( GX_WNDMASK_OW );
+
+          // エフェクト面としてのプライオリティーを設定
+          GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
+        }
 
         //　シーケンスを進める
         p_wk->sub_seq++;
@@ -4006,6 +4178,21 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
   {
   case 0:
     {
+      // 光沢を消す
+      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
+      // OBJウィンドウは無効化
+      GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
+      // メニュ面としてのプライオリティーを設定
+      GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M );
+
+      // エフェクト面の位置を元に戻しておく
+      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
       STRBUF * str;
       
       // 登録音
@@ -4057,11 +4244,12 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       // ページのリフレッシュ
       PageRefresh( p_wk ,FALSE);
 
+      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
       p_wk->tmp_frame =0;
       p_wk->sub_seq++;
     }
     break;
-  case 1:
+  case 2:
     {
       int i;
       // 待機
@@ -4076,13 +4264,22 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       }
     }
     break;
-  case 2:
+  case 3:
     {
       // ビットマップウィンドウの削除
       GFL_BMPWIN_Delete( p_wk->p_menu_win );
 
       // エフェクトの読み込み
       MDLSYS_EFFETC_ReLoad( p_wk );
+
+
+      {
+        // OBJウィンドウを有効化
+        GX_SetVisibleWnd( GX_WNDMASK_OW );
+
+        // エフェクト面としてのプライオリティーを設定
+        GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
+      }
 
       MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
       p_wk->sub_seq++;
@@ -4282,6 +4479,7 @@ static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk )
 static void DBEG_MDLSYS_DebugInit( MEDALBOXSYS_WORK *p_wk )
 {
 //  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP], FALSE );
+
 }
 
 static void DBEG_MDLSYS_DebugMain( MEDALBOXSYS_WORK *p_wk )
