@@ -46,6 +46,8 @@
  *					’è”éŒ¾
 */
 //=============================================================================
+#define CALLMODE_END_WAIT (30)
+
 //=============================================================================
 /**
  *					\‘¢‘ÌéŒ¾
@@ -78,6 +80,7 @@ struct _LOCAL_TVT_CALL
   CALLMSG               callmsg;
   u16                   call_list[LOCAL_TVT_CALLSELECT_SELECT_MAX];
   s32                   call_no;
+  u32                   cnt;
 };
 //=============================================================================
 /**
@@ -630,6 +633,7 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
     SEQ_LOAD_WAIT,
     SEQ_MAIN,
     SEQ_EXIT,
+    SEQ_END_WAIT,
   };
 
   LOCAL_TVT_CALL  *p_wk = p_wk_adrs;
@@ -677,7 +681,16 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_EXIT:
     LOCAL_TVT_PERSON_SYS_Exit( p_wk->p_person );
     p_wk->p_person = NULL;
-    LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_FadeOut );
+    p_wk->cnt = 0;
+    (*p_seq)++;
+    break;
+
+  case SEQ_END_WAIT:
+    if( p_wk->cnt++ > CALLMODE_END_WAIT )
+    {
+      PMSND_PlaySE( LOCAL_TVT_SE_CALL_ANSWER );
+      LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_FadeOut );
+    }
     break;
 
   default:

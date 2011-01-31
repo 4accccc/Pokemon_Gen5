@@ -54,7 +54,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $<
 
 .nce.NCER:
-	g2dcvtr $< -pcm
+	g2dcvtr $< -pcm -ncn
 
 endif
 

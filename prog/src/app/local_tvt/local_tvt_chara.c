@@ -85,6 +85,11 @@ typedef enum
 
 typedef enum
 {
+  LTTS_CHARA1_NONE,
+  LTTS_CHARA1_INIT,
+  LTTS_CHARA2_INIT,
+  LTTS_CHARA3_INIT,
+  LTTS_CHARA4_INIT,
   LTTS_CHARA1,
   LTTS_CHARA2,
   LTTS_CHARA3,
@@ -101,6 +106,7 @@ typedef enum
 
 struct _LOCAL_TVT_CHARA_SYS
 {
+  LOCAL_TVT_CHARA_PARAM chara_param[LOCAL_TVT_MEMBER_MAX];
   LOCAL_TVT_CHARA_SYS_PARAM param;
   s32 bufNo;
   s32 transCnt;
@@ -295,7 +301,7 @@ LOCAL_TVT_CHARA_SYS * LOCAL_TVT_CHARA_SYS_Init( const LOCAL_TVT_CHARA_SYS_PARAM 
   sys->param  = *param;
   sys->transCnt = 0;
   sys->bufNo = 1;
-  sys->transState = LTTS_CHARA1;
+  sys->transState = LTTS_CHARA1_NONE;
   sys->heapID = heapID;
 
   sys->arcHandle  = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT_GRAPHIC, sys->heapID );
@@ -402,6 +408,21 @@ void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys )
   {
     switch( sys->transState )
     {
+    case LTTS_CHARA1_INIT:
+    case LTTS_CHARA2_INIT:
+    case LTTS_CHARA3_INIT:
+    case LTTS_CHARA4_INIT:
+      {
+        const u8 charaNo = sys->transState - LTTS_CHARA1_INIT;
+        const LOCAL_TVT_CHARA_PARAM *chara_param  = &sys->chara_param[charaNo];
+        if( chara_param->charaType != LTCT_NONE )
+        {
+          GF_ASSERT( sys->charaWork[charaNo] == NULL );
+          sys->charaWork[charaNo] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, chara_param->weatherType, charaNo, sys->heapID );
+        }
+        sys->transState++;
+      }
+      break;
     case LTTS_CHARA1:
     case LTTS_CHARA2:
     case LTTS_CHARA3:
@@ -450,10 +471,11 @@ void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys )
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CHARA_PARAM *cp_setup_tbl, LOCAL_TVT_MEMBER member )
 {
+  sys->is_load  = FALSE;
   sys->member = member;
   sys->transCnt = 0;
   sys->bufNo = 1;
-  sys->transState = LTTS_CHARA1;
+  sys->transState = LTTS_CHARA1_INIT;
   sys->transChara = NULL;
 
   {
@@ -491,20 +513,23 @@ void LOCAL_TVT_CHARA_SYS_LoadChara( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CH
         sys->charaWork[i] = NULL;
         is_load = TRUE;
       }
-      if( is_load )
-      {
-        GFL_BG_LoadScreenReq(LTVT_FRAME_NAME);
-      }
+    }
+    if( is_load )
+    {
+      GFL_BG_LoadScreenReq(LTVT_FRAME_NAME);
     }
 
+#if 0
     for( i=0 ; i<sys->member ; i++ )
     {
       const LOCAL_TVT_CHARA_PARAM *chara_param  = &cp_setup_tbl[i];
-      if( chara_param->charaType != 0xFF )
+      if( chara_param->charaType != LTCT_NONE )
       {
         sys->charaWork[i] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, chara_param->weatherType, i, sys->heapID );
       }
     }
+#endif
+    GFL_STD_MemCopy( cp_setup_tbl, sys->chara_param, sizeof(LOCAL_TVT_CHARA_PARAM)*LOCAL_TVT_MEMBER_MAX );
   }
 }
 //----------------------------------------------------------------------------

@@ -144,6 +144,7 @@ typedef struct
 
   SCROLLBAR   scroll_bar;
   DECIDE      decide;
+  BOOL    is_decide_req;  //FlipMainを待つために１フレ遅らせるためリクエスト処理
 } BARSET;
 
 //-------------------------------------
@@ -675,26 +676,30 @@ static BOOL BARSET_Touch( BARSET *p_wk )
     {
       //1個までしかONにできない
       //OFFにはできる
+      BOOL is_check = BAR_IsCheck(&p_wk->bar[ p_wk->cursor_pos ]);
       
-      if( BAR_IsCheck( &p_wk->bar[ p_wk->cursor_pos ] ) )
+      if( BAR_SetCheck( &p_wk->bar[ p_wk->cursor_pos ], !is_check ) )
       {
-        //すでに押されていたので解除
-        if( BAR_SetCheck( &p_wk->bar[ p_wk->cursor_pos ], FALSE ) )
+        int i;
+        for( i = 0; i < p_wk->max; i++ )
         {
-          BAR_StartBlink( &p_wk->bar[ p_wk->cursor_pos ] );
-          p_wk->is_key_trg_update = TRUE;
-          return   TRUE;
+          if( p_wk->cursor_pos != i )
+          {
+            BAR_SetCheck( &p_wk->bar[ i ], FALSE );
+          }
         }
-      }
-      else
-      {
-        //押した
-        if( BAR_SetCheck( &p_wk->bar[ p_wk->cursor_pos ], TRUE ) )
+        if( !is_check )
         {
-          BAR_StartBlink( &p_wk->bar[ p_wk->cursor_pos ] );
-          p_wk->is_key_trg_update = TRUE;
-          return   TRUE;
+          PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_TOUCH );
         }
+        else
+        {
+          PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_CANCEL );
+        }
+
+        BAR_StartBlink( &p_wk->bar[ p_wk->cursor_pos ] );
+        p_wk->is_key_trg_update = TRUE;
+        return TRUE;
       }
     }
   }
@@ -734,6 +739,15 @@ static BOOL BARSET_Key( BARSET *p_wk )
   {
     select  = BARSET_GetSelectIdx( p_wk ); 
   }
+
+  //決定リクエスト
+  if( p_wk->is_decide_req )
+  {
+    p_wk->is_decide_req = FALSE;
+    p_wk->cursor_pos  = p_wk->max;
+    is_update = TRUE;
+  }
+
 
   //キー操作
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
@@ -781,6 +795,17 @@ static BOOL BARSET_Key( BARSET *p_wk )
         }
 
         BAR_StartBlink( &p_wk->bar[ p_wk->cursor_pos ] );
+        if( !is_check )
+        {
+          //決定選択にいく
+          p_wk->is_decide_req = TRUE;
+          PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_TOUCH );
+        }
+        else
+        {
+          PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_CANCEL );
+        }
+
         is_update = TRUE;
         is_decide = TRUE;
         p_wk->is_key_trg_update = TRUE;
@@ -1160,9 +1185,9 @@ static void BAR_StartBlink( BAR *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL BAR_SetCheck( BAR *p_wk, BOOL is_check )
 {
-  //ノンアクティブのときは押せない
+  //教えてはいけないときは押せない
   //設定するチェックと内部が同じなら押せない
-  if( p_wk->is_active ==FALSE || p_wk->is_check == is_check )
+  if( p_wk->is_no_push == TRUE || p_wk->is_check == is_check )
   {
     return  FALSE;
   }
@@ -1171,16 +1196,6 @@ static BOOL BAR_SetCheck( BAR *p_wk, BOOL is_check )
 
   //チェックボックス変更
   BAR_SetActibe( p_wk, TRUE );
-
-  if( p_wk->is_check )
-  {
-    PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_TOUCH );
-  }
-  else
-  {
-    PMSND_PlaySE( LOCAL_TVT_SE_CALLBAR_CANCEL );
-  }
-
   return TRUE;
 }
 //----------------------------------------------------------------------------

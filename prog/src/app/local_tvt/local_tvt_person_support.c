@@ -14,6 +14,9 @@
 //システム
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
+#include "gamesystem/game_data.h"
+#include "field/eventwork.h"
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -22,6 +25,7 @@
 #include "local_tvt_local_def.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_util.h"
+#include "local_tvt_debug.h"
 
 //外部公開
 #include "local_tvt_person_support.h"
@@ -31,7 +35,6 @@
  *					定数宣言
 */
 //=============================================================================
-
 //=============================================================================
 /**
  *					構造体宣言
@@ -42,7 +45,8 @@
 //=====================================
 typedef struct 
 {
-  s32 seq;
+  s32                 seq;
+  u32                 cnt;
   LOCAL_TVT_POKELIST *p_pokelist;
   GAMEDATA            *p_gamedata;
   HEAPID              heapID;
@@ -83,11 +87,26 @@ void LOCAL_TVT_SUPPORT_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA 
   p_person->list_msgID[0]     = CALL_BELL_01;
   p_person->selectFunction[1] = LOCAL_TVT_SUPPORT_CheckFriend;
   p_person->list_msgID[1]     = CALL_BELL_02;
-  p_person->selectFunction[2] = LOCAL_TVT_SUPPORT_CheckEffort;
-  p_person->list_msgID[2]     = CALL_BELL_03;
-  p_person->selectFunction[3] = LOCAL_TVT_SUPPORT_Farewell;
-  p_person->list_msgID[3]     = CALL_BELL_04;
-  p_person->list_num  = 4;
+
+
+  {
+    EVENTWORK *p_ev = GAMEDATA_GetEventWork( p_gamedata );
+    if(EVENTWORK_CheckEventFlag(p_ev, SYS_FLAG_GAME_CLEAR) || LOCAL_TVT_DEBUG_IsFlagOn(LOCAL_TVT_DEBUG_FLAG_CHECK_DORYOKU_ON) )
+    {
+      //クリア後
+      p_person->selectFunction[2] = LOCAL_TVT_SUPPORT_CheckEffort;
+      p_person->list_msgID[2]     = CALL_BELL_03;
+      p_person->selectFunction[3] = LOCAL_TVT_SUPPORT_Farewell;
+      p_person->list_msgID[3]     = CALL_BELL_04;
+      p_person->list_num  = 4;
+    }
+    else
+    {
+      p_person->selectFunction[2] = LOCAL_TVT_SUPPORT_Farewell;
+      p_person->list_msgID[2]     = CALL_BELL_04;
+      p_person->list_num  = 3;
+    }
+  }
   p_person->list_start_msgID  = CALL_BELL_SELECT_01;
   p_person->cp_list_msg_data  = cp_msg;
 }
@@ -247,6 +266,7 @@ static BOOL LOCAL_TVT_SUPPORT_CheckFriend( LOCAL_TVT_PERSON_SYS *p_person, const
   {
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_WAIT,
     SEQ_POKE_INIT,
     SEQ_POKE_MAIN,
     SEQ_POKE_END,
@@ -265,8 +285,15 @@ static BOOL LOCAL_TVT_SUPPORT_CheckFriend( LOCAL_TVT_PERSON_SYS *p_person, const
     }
     p_wk->seq++;
     break;
- case SEQ_MSG_WAIT:
+  case SEQ_MSG_WAIT:
     if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_WAIT:
+    if( p_wk->cnt++ > POKELIST_DRAW_CNT )
     {
       p_wk->seq++;
     }
@@ -385,6 +412,7 @@ static BOOL LOCAL_TVT_SUPPORT_CheckEffort( LOCAL_TVT_PERSON_SYS *p_person, const
   {
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_WAIT,
     SEQ_POKE_INIT,
     SEQ_POKE_MAIN,
     SEQ_POKE_END,
@@ -407,6 +435,13 @@ static BOOL LOCAL_TVT_SUPPORT_CheckEffort( LOCAL_TVT_PERSON_SYS *p_person, const
     break;
  case SEQ_MSG_WAIT:
     if( LOCAL_TVT_CHARA_WaitTalk( p_bell, cp_param->p_chara_sys ) )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_WAIT:
+    if( p_wk->cnt++ > POKELIST_DRAW_CNT )
     {
       p_wk->seq++;
     }

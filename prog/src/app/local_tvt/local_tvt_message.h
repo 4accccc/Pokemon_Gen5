@@ -86,7 +86,6 @@ extern void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSG
 extern BOOL LOCAL_TVT_MSGWIN_IsFinish( const LOCAL_TVT_MESSAGE *cp_wk );
 extern BOOL LOCAL_TVT_MSGWIN_IsPause( const LOCAL_TVT_MESSAGE *cp_wk );
 
-
 //ï÷óòä÷êî
 static inline void LOCAL_TVT_MESSAGE_PrintMsgSys( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_bmpwin, const u16 msgId )
 {

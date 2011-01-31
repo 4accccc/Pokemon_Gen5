@@ -45,6 +45,7 @@ static LOCAL_TVT_MEMBER     s_member;
 static LOCAL_TVT_TIME_ZONE  s_timezone;
 static LOCAL_TVT_CHARA_PARAM  s_chara[LTM_4_MEMBER];
 static int  s_chara_idx = 0;
+static int  s_debug_seq = 0;
 static BOOL s_is_chara_load_req  = FALSE;
 static LOCAL_TVT_DEBUG_PARAM s_param  = {0};
 static u8 s_debug_flag[LOCAL_TVT_DEBUG_FLAG_MAX]  = {0};
@@ -87,6 +88,8 @@ static void Ltvt_Debug_Draw_SecretState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 static void Ltvt_Debug_Update_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 
+//その他共通
+static void Ltvt_Debug_ModifyParam( LOCAL_TVT_CHARA_PARAM *p_param_tbl, LOCAL_TVT_MEMBER member );
 //=============================================================================
 /**
  *    データ
@@ -120,7 +123,7 @@ void LOCAL_TVT_DEBUG_Init( const LOCAL_TVT_DEBUG_PARAM *cp_param, HEAPID heapID 
 
   //グラフィック系デバッグ
   {
-    LOCAL_TVT_CHARA_SYS_GetLoadParam( cp_param->p_chara_sys, s_chara, &s_member );
+    //LOCAL_TVT_CHARA_SYS_GetLoadParam( cp_param->p_chara_sys, s_chara, &s_member );
     s_member  = s_member == 0 ?LTM_2_MEMBER:LTM_4_MEMBER;
     s_timezone  = LOCAL_TVT_CHARA_SYS_GetTimeZone( cp_param->p_chara_sys );
 
@@ -227,12 +230,37 @@ void LOCAL_TVT_DEBUG_Exit( void )
 //-----------------------------------------------------------------------------
 void LOCAL_TVT_DEBUG_Main( void )
 {
-  if( s_is_chara_load_req )
+  enum
   {
-    LOCAL_TVT_CHARA_SYS_LoadChara( s_param.p_chara_sys, s_chara, s_member );
-    s_is_chara_load_req = FALSE;
+    SEQ_NORMAL,
+    SEQ_CHARA_LOAD,
+    SEQ_CHARA_VISIBLE,
+  };
 
-    LOCAL_TVT_CHARA_SYS_SetVisible( s_param.p_chara_sys, TRUE );
+  switch( s_debug_seq )
+  {
+  case SEQ_NORMAL:
+    //読み込むリクエストがかかった
+    if( s_is_chara_load_req )
+    {
+      s_is_chara_load_req = FALSE;
+      s_debug_seq = SEQ_CHARA_LOAD;
+    }
+    break;
+
+  case SEQ_CHARA_LOAD:
+    Ltvt_Debug_ModifyParam( s_chara, s_member );
+    LOCAL_TVT_CHARA_SYS_LoadChara( s_param.p_chara_sys, s_chara, s_member );
+    s_debug_seq = SEQ_CHARA_VISIBLE;
+    break;
+
+  case SEQ_CHARA_VISIBLE:
+    if( LOCAL_TVT_CHARA_SYS_IsLoadEnd( s_param.p_chara_sys ) )
+    {
+      LOCAL_TVT_CHARA_SYS_SetVisible( s_param.p_chara_sys, TRUE );
+      s_debug_seq = SEQ_NORMAL;
+    }
+    break;
   }
 }
 //----------------------------------------------------------------------------
@@ -383,7 +411,7 @@ static void Ltvt_Debug_Draw_TimeZone( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 //-----------------------------------------------------------------------------
 static void Ltvt_Debug_Update_CharaIndex( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
-  if( DebugWin_Util_ChangeValue( &s_chara_idx, 0, s_member ) )
+  if( DebugWin_Util_ChangeValue( &s_chara_idx, 0, s_member-1 ) )
   {
     DEBUGWIN_RefreshScreen();
   }
@@ -499,8 +527,16 @@ static void Ltvt_Debug_Update_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 {
   LOCAL_TVT_CHARA_SYS *p_chara_sys  = p_wk_adrs;
   int chara  = s_chara[ s_chara_idx ].charaType;
-  if( DebugWin_Util_ChangeValue( &chara, 0, LTCT_PLAYER_F-1 ) )
+  if( chara == LTCT_NONE )
   {
+    chara = LTCT_PLAYER_F;
+  }
+  if( DebugWin_Util_ChangeValue( &chara, 0, LTCT_PLAYER_F ) )
+  {
+    if( chara == LTCT_PLAYER_F )
+    {
+      chara = LTCT_NONE;
+    }
     s_chara[ s_chara_idx ].charaType  = chara;
     s_is_chara_load_req = TRUE;
 
@@ -525,10 +561,23 @@ static void Ltvt_Debug_Draw_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
     "ベル",
     "はかせ",
     "ママ",
+    "かくしおとこ",
+    "かくしおんな",
+    "おんせい",
   };
+  static const char * scp_label_sp = "なし";
 
+  const char *cp_l = NULL;
   int chara  = s_chara[ s_chara_idx ].charaType;
-  DEBUGWIN_ITEM_SetNameV( p_item , "%dの キャラ[%s]", s_chara_idx, scp_label[ chara ] );
+  if( chara == LTCT_NONE )
+  {
+    cp_l  = scp_label_sp;
+  }
+  else
+  {
+    cp_l  = scp_label[ chara ];
+  }
+  DEBUGWIN_ITEM_SetNameV( p_item , "%dの キャラ[%s]", s_chara_idx, cp_l );
 }
 
 //----------------------------------------------------------------------------
@@ -721,10 +770,10 @@ static void Ltvt_Debug_Draw_SecretState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 //-----------------------------------------------------------------------------
 static void Ltvt_Debug_Update_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
-  int flag  = s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON ];
+  int flag  = s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_DORYOKU_ON ];
   if( DebugWin_Util_ChangeValue( &flag, 0, 1 ) )
   {
-    s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON ]  = flag;
+    s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_DORYOKU_ON ]  = flag;
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -738,8 +787,38 @@ static void Ltvt_Debug_Update_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_
 //-----------------------------------------------------------------------------
 static void Ltvt_Debug_Draw_CheckZukanFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
-  int flag  = s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON ];
-  DEBUGWIN_ITEM_SetNameV( p_item , "ずかんチェック[%s]", scp_yesno_label[ flag ] );
+  int flag  = s_debug_flag[ LOCAL_TVT_DEBUG_FLAG_CHECK_DORYOKU_ON ];
+  DEBUGWIN_ITEM_SetNameV( p_item , "どりょくちチェック[%s]", scp_yesno_label[ flag ] );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  引数の中が正統かチェックして修正する
+ *
+ *	@param	LOCAL_TVT_CHARA_PARAM *p_param ぱらむ
+ *	@param  member  メンバーの数
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_ModifyParam( LOCAL_TVT_CHARA_PARAM *p_param_tbl, LOCAL_TVT_MEMBER member )
+{
+  int i;
+  for( i = 0; i < LTM_4_MEMBER; i++ )
+  {
+    LOCAL_TVT_CHARA_PARAM *p_param  = &p_param_tbl[i];
+    if( member == LTM_2_MEMBER )
+    {
+      if( i == 2 || i == 3 )
+      {
+        p_param->charaType  = LTCT_NONE;
+      }
+    }
+    else if( member == LTM_4_MEMBER )
+    {
+      if( p_param->charaType == LTCT_NONE )
+      {
+        p_param->charaType  = 0;
+      }
+    }
+  }
+}
 #endif //PM_DEBUG

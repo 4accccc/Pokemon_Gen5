@@ -48,6 +48,7 @@ struct _LOCAL_TVT_PERSON_SYS
   LOCAL_TVT_SEQ               *p_seq;
   LOCAL_TVT_LIST              *p_list;
   u32                         select;
+  u32                         cnt;
 };
 
 //=============================================================================
@@ -195,6 +196,7 @@ static void LOCAL_TVT_SEQ_SelectTalk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *
   {
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_WAIT,
     SEQ_INIT,
     SEQ_MAIN,
     SEQ_END,
@@ -211,6 +213,13 @@ static void LOCAL_TVT_SEQ_SelectTalk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *
     break;
   case SEQ_MSG_WAIT:
     if( LOCAL_TVT_CHARA_WaitTalk( p_chara, p_wk->param.p_chara_sys ) )
+    {
+      p_wk->cnt = 0;
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_WAIT:
+    if(p_wk->cnt++>LIST_DRAW_CNT) 
     {
       (*p_seq)++;
     }

@@ -1349,13 +1349,16 @@ void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk )
       }
       GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR,
           x, y, w, h, plt );
-      GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_BAR );
 
       if( p_wk->anm_cnt++ > 16 )
       {
+        GFL_BG_ChangeScreenPalette( LTVT_FRAME_SUB_BAR,
+          x, y, w, h, LTVT_PLT_BG_SUB_LIST_ON );
+
         p_wk->result  = LOCAL_TVT_POKELIST_RESULT_DECIDE;
         p_wk->seq = SEQ_END;
       }
+      GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_BAR );
     }
     break;
 

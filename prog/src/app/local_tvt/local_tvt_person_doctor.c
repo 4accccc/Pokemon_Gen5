@@ -72,8 +72,9 @@ typedef struct
 //=====================================
 typedef struct 
 {
-  s32 seq;
-  LOCAL_TVT_POKELIST *p_pokelist;
+  s32                 seq;
+  u32                 cnt;
+  LOCAL_TVT_POKELIST  *p_pokelist;
   GAMEDATA            *p_gamedata;
   GFL_MSGDATA         *p_msgdata_evo;
   GFL_MSGDATA         *p_msgdata_hyouka;
@@ -338,36 +339,11 @@ void LOCAL_TVT_DOCTOR_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
   p_person->list_msgID[0]     = CALL_DOCTOR_01;
   p_person->selectFunction[1] = LOCAL_TVT_DOCTOR_CheckEvolution;
   p_person->list_msgID[1]     = CALL_DOCTOR_02;
-
-#if 0
-  {
-    const ZUKAN_SAVEDATA *cp_zukan  = GAMEDATA_GetZukanSave( p_gamedata );
-    if( ZUKANSAVE_GetZenkokuZukanFlag(cp_zukan)
-        || LOCAL_TVT_DEBUG_IsFlagOn(LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON) )
-    {
-      //TODO
-      //図鑑チェックはクリア後
-      p_person->selectFunction[2] = LOCAL_TVT_DOCTOR_CheckZukan;
-      p_person->list_msgID[2]     = CALL_DOCTOR_03;
-      p_person->selectFunction[3] = LOCAL_TVT_DOCTOR_Farewell;
-      p_person->list_msgID[3]     = CALL_DOCTOR_04;
-      p_person->list_num          = 4;
-    }
-    else
-    { 
-      //クリア前
-      p_person->selectFunction[2] = LOCAL_TVT_DOCTOR_Farewell;
-      p_person->list_msgID[2]     = CALL_DOCTOR_04;
-      p_person->list_num          = 3;
-    }
-  }
-#else
   p_person->selectFunction[2] = LOCAL_TVT_DOCTOR_CheckZukan;
   p_person->list_msgID[2]     = CALL_DOCTOR_03;
   p_person->selectFunction[3] = LOCAL_TVT_DOCTOR_Farewell;
   p_person->list_msgID[3]     = CALL_DOCTOR_04;
   p_person->list_num          = 4;
-#endif
   p_person->list_start_msgID  = CALL_DOCTOR_SELECT_01;
   p_person->cp_list_msg_data  = cp_msg;
 }
@@ -533,6 +509,7 @@ static BOOL LOCAL_TVT_DOCTOR_CheckEvolution( LOCAL_TVT_PERSON_SYS *p_person, con
   {
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_WAIT,
     SEQ_POKE_INIT,
     SEQ_POKE_MAIN,
     SEQ_POKE_END,
@@ -551,8 +528,15 @@ static BOOL LOCAL_TVT_DOCTOR_CheckEvolution( LOCAL_TVT_PERSON_SYS *p_person, con
     }
     p_wk->seq++;
     break;
- case SEQ_MSG_WAIT:
+  case SEQ_MSG_WAIT:
     if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_WAIT:
+    if( p_wk->cnt++ > POKELIST_DRAW_CNT )
     {
       p_wk->seq++;
     }

@@ -20,7 +20,9 @@
 #include "font/font.naix"
 
 #include "system/ds_system.h"
+#include "sound/pm_sndsys.h"
 
+#include "local_tvt_snd.h"
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
 #include "local_tvt_scriptmode.h"
@@ -41,11 +43,14 @@ typedef enum
   LTS_LOAD_WAIT,
   LTS_FADEIN,
   LTS_FADEIN_WAIT,
+  LTS_END,
   LTS_FADEOUT,
   LTS_FADEOUT_WAIT,
 
   LTS_MAIN,
 }LOCAL_TVT_STATE;
+
+#define SCRIPTMODE_END_WAIT (30)
 
 //=============================================================================
 /**
@@ -83,6 +88,7 @@ struct _LOCAL_TVT_SCRIPT
   GAMEDATA  *gamedata;
   u16 scriptID;
   u8 state;
+  u8 sysCnt;
   ARCHANDLE *arcHandle;
   
   BOOL isFirstCommand;
@@ -226,6 +232,15 @@ BOOL LOCAL_TVT_SCRIPT_Main( LOCAL_TVT_SCRIPT *work )
       work->state = LTS_MAIN;
     }
     break;
+
+  case LTS_END:
+    if( work->sysCnt++ > SCRIPTMODE_END_WAIT )
+    {
+      PMSND_PlaySE( LOCAL_TVT_SE_CALL_ANSWER );
+      work->state = LTS_FADEOUT;
+    }
+    break;
+
   case LTS_FADEOUT:
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
@@ -369,7 +384,8 @@ static void LOCAL_TVT_ScriptMain( LOCAL_TVT_SCRIPT *work )
       }
       else
       {
-        work->state = LTS_FADEOUT;
+        work->sysCnt  = 0;
+        work->state = LTS_END;
       }
     }
   }

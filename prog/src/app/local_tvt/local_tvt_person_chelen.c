@@ -47,7 +47,8 @@
 //=====================================
 typedef struct 
 {
-  s32 seq;
+  s32                 seq;
+  u32                 cnt;
   LOCAL_TVT_POKELIST *p_pokelist;
   GAMEDATA            *p_gamedata;
   HEAPID              heapID;
@@ -260,6 +261,7 @@ static BOOL LOCAL_TVT_CHELEN_CheckType( LOCAL_TVT_PERSON_SYS *p_person, const LO
   {
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_WAIT,
     SEQ_POKE_INIT,
     SEQ_POKE_MAIN,
     SEQ_POKE_END,
@@ -278,8 +280,15 @@ static BOOL LOCAL_TVT_CHELEN_CheckType( LOCAL_TVT_PERSON_SYS *p_person, const LO
     }
     p_wk->seq++;
     break;
- case SEQ_MSG_WAIT:
+  case SEQ_MSG_WAIT:
     if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_WAIT:
+    if( p_wk->cnt++ > POKELIST_DRAW_CNT )
     {
       p_wk->seq++;
     }
@@ -361,6 +370,7 @@ static BOOL LOCAL_TVT_CHELEN_CheckTokusei( LOCAL_TVT_PERSON_SYS *p_person, const
   {
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_WAIT,
     SEQ_POKE_INIT,
     SEQ_POKE_MAIN,
     SEQ_POKE_END,
@@ -379,8 +389,15 @@ static BOOL LOCAL_TVT_CHELEN_CheckTokusei( LOCAL_TVT_PERSON_SYS *p_person, const
     }
     p_wk->seq++;
     break;
- case SEQ_MSG_WAIT:
+  case SEQ_MSG_WAIT:
     if( LOCAL_TVT_CHARA_WaitTalk( p_chelen, cp_param->p_chara_sys ) )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_WAIT:
+    if( p_wk->cnt++ > POKELIST_DRAW_CNT )
     {
       p_wk->seq++;
     }

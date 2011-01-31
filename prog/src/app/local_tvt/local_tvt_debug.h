@@ -22,7 +22,7 @@
 //=====================================
 typedef enum
 {
-  LOCAL_TVT_DEBUG_FLAG_CHECK_ZUKAN_ON,
+  LOCAL_TVT_DEBUG_FLAG_CHECK_DORYOKU_ON,
   LOCAL_TVT_DEBUG_FLAG_MAX
 }LOCAL_TVT_DEBUG_FLAG;
 
