@@ -1011,23 +1011,30 @@ static void debugMenuAllHintMedalOpen( DEBUG_MEDALBOX_WORK* wk )
 
   for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
   {
-      // 設定前のメダルIDと開放状況を表示
-    medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
-
-    if( medal_state < MEDAL_STATE_HINT_GET )
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MEDALDATA , wk->heapID );
+    MEDALDATA medal_data;
+    GFL_ARC_LoadDataByHandle( p_handle , medal_id ,&medal_data );
+    GFL_ARC_CloseDataHandle(p_handle);
+    if( medal_data.hint_type != 0 )
     {
-      OS_Printf("MEDALID %d: %u ->",medal_id , medal_state);
-
-      // ヒントメダルを開放
-      if( medal_state < MEDAL_STATE_HINT_ACHIVE )
-      {
-        MEDALBOX_SetHintMedalAchive( medal_box , medal_id );
-      }
-      MEDALBOX_SetHintMedalGetFlg( medal_box , medal_id );
-
-      // 設定後の開放状況を表示
+      // 設定前のメダルIDと開放状況を表示
       medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
-      OS_Printf(" %u\n",medal_state);
+
+      if( medal_state < MEDAL_STATE_HINT_GET )
+      {
+        OS_Printf("MEDALID %d: %u ->",medal_id , medal_state);
+
+        // ヒントメダルを開放
+        if( medal_state < MEDAL_STATE_HINT_ACHIVE )
+        {
+          MEDALBOX_SetHintMedalAchive( medal_box , medal_id );
+        }
+        MEDALBOX_SetHintMedalGetFlg( medal_box , medal_id , GFL_STD_MtRand( 99 ) + 1 , GFL_STD_MtRand( 12 ) + 1 , GFL_STD_MtRand( 31 ) + 1 );
+
+        // 設定後の開放状況を表示
+        medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
+        OS_Printf(" %u\n",medal_state);
+      }
     }
   }
 }
@@ -1135,6 +1142,7 @@ static void debugMenuMedalDataOutPut( DEBUG_MEDALBOX_WORK* wk )
     OS_Printf( "hint_type : %u\n" ,medal_data.hint_type );
     OS_Printf( "hint_level : %u\n" ,medal_data.hint_level );
   }
+  GFL_ARC_CloseDataHandle(p_handle);
 }
 
 //----------------------------------------------------------------------------
@@ -1215,7 +1223,7 @@ static void debugMenuMedalDataRandomSet( DEBUG_MEDALBOX_WORK* wk )
     u32 rand;
 
     // 乱数の取得
-    rand = GFL_STD_MtRand( 10 );
+    rand = GFL_STD_MtRand( 5 );
     
     medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
 
@@ -1244,16 +1252,23 @@ static void debugMenuMedalDataRandomSet( DEBUG_MEDALBOX_WORK* wk )
       break;
     case 1:
       {
-        // 設定前のメダルIDと開放状況を表示
-        OS_Printf("ヒント開放   %d: %u ->",medal_id , medal_state);
+        ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MEDALDATA , wk->heapID );
+        MEDALDATA medal_data;
+        GFL_ARC_LoadDataByHandle( p_handle , medal_id ,&medal_data );
+        GFL_ARC_CloseDataHandle(p_handle);
+        if( medal_data.hint_type != 0 )
+        {
+          // 設定前のメダルIDと開放状況を表示
+          OS_Printf("ヒント開放   %d: %u ->",medal_id , medal_state);
 
-        // ヒントメダルを開放
-        MEDALBOX_SetHintMedalAchive( medal_box , medal_id );
-        MEDALBOX_SetHintMedalGetFlg( medal_box , medal_id );
+          // ヒントメダルを開放
+          MEDALBOX_SetHintMedalAchive( medal_box , medal_id );
+          MEDALBOX_SetHintMedalGetFlg( medal_box , medal_id , GFL_STD_MtRand( 99 ) + 1 , GFL_STD_MtRand( 12 ) + 1 , GFL_STD_MtRand( 31 ) + 1 );
 
-        // 設定後の開放状況を表示
-        medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
-        OS_Printf(" %u\n",medal_state);
+          // 設定後の開放状況を表示
+          medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
+          OS_Printf(" %u\n",medal_state);
+        }
       }
       break;
     default:
