@@ -78,7 +78,7 @@ extern void MEDALBOX_SetHintMedalAchive( MEDALBOX * p_mdlbox, MedalID medal_id )
 
 // メダル獲得関数
 extern void MEDALBOX_SetTitleMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id, u8 year, u8 month, u8 day );
-extern void MEDALBOX_SetHintMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id );
+extern void MEDALBOX_SetHintMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id , u8 year, u8 month, u8 day);
 
 // 新着フラグ
 extern void MEDALBOX_SetNewMedalFlgOff( MEDALBOX *p_mdlbox, MedalID medal_id );

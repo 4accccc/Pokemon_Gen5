@@ -144,6 +144,9 @@ void MEDALBOX_SetHintMedalAchive( MEDALBOX *p_mdlbox, MedalID medal_id )
 {
   MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
 
+  // 新品フラグを立てる
+  p_medal_st->is_new = TRUE;
+ 
   SetMedalState( p_medal_st , MEDAL_STATE_HINT_ACHIVE );
 }
 
@@ -171,6 +174,9 @@ void MEDALBOX_SetTitleMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id, u8 year
   GF_ASSERT( p_medal_st->medal_state == MEDAL_STATE_TITLE_ACHIVE );
   SetMedalState( p_medal_st , MEDAL_STATE_TITLE_GET );
 
+  // 新品フラグを立てる
+  p_medal_st->is_new = TRUE;
+  
   p_medal_st->get_year      = year;
   p_medal_st->get_month     = month;
   p_medal_st->get_day       = day;
@@ -186,14 +192,21 @@ void MEDALBOX_SetTitleMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id, u8 year
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void MEDALBOX_SetHintMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id )
+void MEDALBOX_SetHintMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id , u8 year, u8 month, u8 day)
 {
   MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+
+  GF_ASSERT( year <= 99 );
+  GF_ASSERT( month <= 12 );
+  GF_ASSERT( day <= 31 );
 
   GF_ASSERT( p_medal_st->medal_state == MEDAL_STATE_HINT_ACHIVE );
   
   SetMedalState( p_medal_st , MEDAL_STATE_HINT_GET );
 
+  p_medal_st->get_year      = year;
+  p_medal_st->get_month     = month;
+  p_medal_st->get_day       = day;
 }
 
 //----------------------------------------------------------------------------
@@ -225,8 +238,8 @@ void MEDALBOX_SetNewMedalFlgOff( MEDALBOX *p_mdlbox, MedalID medal_id )
 void MEDALBOX_SetPushMedalID( MEDALBOX *p_mdlbox , MedalID medal_id )
 {
   // u8制限
-  GF_ASSERT( medal_id < 255 );
-  GF_ASSERT( medal_id > 0 );
+  GF_ASSERT( medal_id <= 255 );
+  GF_ASSERT( medal_id >= 0 );
   p_mdlbox->push_medal = (u8)medal_id;
 }
 
