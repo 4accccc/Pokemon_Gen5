@@ -158,10 +158,6 @@ VMCMD_RESULT EvCmdMapFade_BlackIn_Force( VMHANDLE *core, void *wk )
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
   FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
-#ifdef PM_DEBUG
-  //GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
-  MapFadeReqFlg = FALSE;
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------
@@ -178,11 +174,10 @@ VMCMD_RESULT EvCmdMapFade_BlackIn( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
-  MapFadeReqFlg = FALSE;
 #endif
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -200,11 +195,10 @@ VMCMD_RESULT EvCmdMapFade_BlackOut( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
-  MapFadeReqFlg = TRUE;
 #endif  
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -222,11 +216,10 @@ VMCMD_RESULT EvCmdMapFade_WhiteIn( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
-  MapFadeReqFlg = FALSE;
 #endif  
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -244,11 +237,10 @@ VMCMD_RESULT EvCmdMapFade_WhiteOut( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
-  MapFadeReqFlg = TRUE;
 #endif  
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -266,11 +258,10 @@ VMCMD_RESULT EvCmdMapFade_BlackInSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
-  MapFadeReqFlg = FALSE;
 #endif
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -288,11 +279,10 @@ VMCMD_RESULT EvCmdMapFade_BlackOutSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
-  MapFadeReqFlg = TRUE;
 #endif  
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -310,11 +300,10 @@ VMCMD_RESULT EvCmdMapFade_WhiteInSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
-  MapFadeReqFlg = FALSE;
 #endif  
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_IN_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -332,11 +321,10 @@ VMCMD_RESULT EvCmdMapFade_WhiteOutSlow( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
 #ifdef PM_DEBUG
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
-  MapFadeReqFlg = TRUE;
 #endif  
+  FIELDMAP_CreateMapFadeReqTask( gsys, fieldWork, FMAP_FADE_OUT_SLOW, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
   return VMCMD_RESULT_CONTINUE;
 }
 

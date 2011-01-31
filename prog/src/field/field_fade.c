@@ -15,6 +15,10 @@
 
 #include "field_fade.h"
 
+#ifdef PM_DEBUG
+extern BOOL MapFadeReqFlg;  //マップフェードリクエストフラグ  宣言元　script.c
+#endif
+
 typedef struct BRIGHT_CNT_WORK_tag
 {
   GAMESYS_WORK* gsys;
@@ -43,6 +47,11 @@ void FIELDMAP_CreateMapFadeReqTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap
 {
   BRIGHT_CNT_WORK *task_wk;
   GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
+
+#ifdef PM_DEBUG
+  MapFadeReqFlg = ((fade_io ==  FMAP_FADE_OUT) || (fade_io == FMAP_FADE_OUT_SLOW));
+#endif  //PM_DEBUG
+
   //ワーク作成
   task_wk = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(BRIGHT_CNT_WORK) );
   // TCBを追加
