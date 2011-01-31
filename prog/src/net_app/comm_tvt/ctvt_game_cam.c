@@ -1838,7 +1838,7 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   switch( *p_seq ){
   case SEQ_CAPTURE_MSG:
-    MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_08 );
+    MSGWND_Print( &p_wk->msgwnd, (COMM_TVT_GAME_08 + p_wk->camera.cnt) );
     // カウントダウン開始
     GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ), TRUE );
     GFL_CLACT_WK_ResetAnm( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ) );

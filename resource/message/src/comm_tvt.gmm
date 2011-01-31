@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00241" date="2011-01-21T18:07:27"/>
+	<create user="ichiraku_katsuhiko" host="W00241" date="2011-01-31T13:25:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,13 +317,13 @@
 		</language>
 	</columns>
 
-	<dialog left="110" top="192" right="815" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="96" top="169" right="800" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="346" right="1261" bottom="744" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -662,14 +662,14 @@ Ariizumi 100506</comment>
 
 	<row id="COMM_TVT_GAME_09">
 		<comment>写真撮影画面</comment>
-		<language name="JPN">えがおで　スマイル……</language>
-		<language name="JPN_KANJI">笑顔で　スマイル……</language>
+		<language name="JPN">びっくり　おどろきがおで……</language>
+		<language name="JPN_KANJI">びっくり　驚き顔で……</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_10">
 		<comment>写真撮影画面</comment>
-		<language name="JPN">びっくり　おどろきがおで……</language>
-		<language name="JPN_KANJI">びっくり　驚き顔で……</language>
+		<language name="JPN">えがおで　スマイル……</language>
+		<language name="JPN_KANJI">笑顔で　スマイル……</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_11">
@@ -743,11 +743,30 @@ ichiraku 110117</comment>
 		<language name="JPN_KANJI">風船わり</language>
 	</row>
 
+	<row id="COMM_TVT_GAME_19">
+		<comment>ゲーム名2</comment>
+		<language name="JPN">ふうせんわり2</language>
+		<language name="JPN_KANJI">風船わり2</language>
+	</row>
+
+	<row id="COMM_TVT_GAME_20">
+		<comment>ゲーム説明画像</comment>
+		<language name="JPN">ゲームルール</language>
+		<language name="JPN_KANJI">ゲームルール</language>
+	</row>
+
 	<row id="COMM_TVT_GAME_22">
 		<comment>開始中止ボタン
 ichiraku 110106</comment>
 		<language name="JPN">ちゅうし</language>
 		<language name="JPN_KANJI">中止</language>
+	</row>
+
+	<row id="COMM_TVT_GAME_23">
+		<comment>ゲーム中スコア
+ichiraku 110129</comment>
+		<language name="JPN">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI">[2:02:３桁:0]</language>
 	</row>
 
 	<flowchart-group-list>

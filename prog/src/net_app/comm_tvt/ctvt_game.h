@@ -21,12 +21,12 @@
 #define CTVT_GAME_FRAME_M_3D      (GFL_BG_FRAME0_M)
 #define CTVT_GAME_FRAME_M_BG      (GFL_BG_FRAME1_M)
 #define CTVT_GAME_FRAME_M_MSG     (GFL_BG_FRAME2_M)
-#define CTVT_GAME_FRAME_M_NONE    (GFL_BG_FRAME3_M)
+#define CTVT_GAME_FRAME_M_PLATE   (GFL_BG_FRAME3_M)
 
 // 上画面
 #define CTVT_GAME_FRAME_S_BG      (GFL_BG_FRAME0_S)
 #define CTVT_GAME_FRAME_S_PLATE   (GFL_BG_FRAME1_S)
-#define CTVT_GAME_FRAME_S_NONE1   (GFL_BG_FRAME2_S)
+#define CTVT_GAME_FRAME_S_TIMEBAR (GFL_BG_FRAME2_S)
 #define CTVT_GAME_FRAME_S_NONE2   (GFL_BG_FRAME3_S)
 
 // パレット
@@ -35,10 +35,11 @@
 #define CTVT_GAME_PAL_BG_M_FONT     (15) // 1本
 
 #define CTVT_GAME_PAL_BG_S_BG       (0) // 5本
+#define CTVT_GAME_PAL_BG_S_TIMEBAR  (13) // 1本
 #define CTVT_GAME_PAL_BG_S_WINFRAME (14) // 1本
 #define CTVT_GAME_PAL_BG_S_FONT     (15) // 1本
 
-#define CTVT_GAME_PAL_OBJ_COMMON    (0)  // 
+#define CTVT_GAME_PAL_OBJ_COMMON    (0)  // 12本
 #define CTVT_GAME_PAL_OBJ_COMM      (14) // 通信アイコン用 
 #define CTVT_GAME_PAL_OBJ_LOCALIZE  (15) // ローカライズ用
 
@@ -52,6 +53,7 @@
 #define CTVT_COMM_GAME_SCORE_SYNC       (24)    // スコア同期
 #define CTVT_COMM_GAME_END_SYNC         (25)    // ゲーム終了同期
 
+#define CTVT_UNIT_IDX_EFFECT  (4)   // エフェクトのユニットID
 
 //======================================================================
 //	enum
@@ -112,6 +114,8 @@ extern void CTVT_GAME_TermSystem( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork
 extern const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 extern void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 extern void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
+
+extern GFL_G3D_UTIL* CTVT_GAME_GetgG3DUtil( CTVT_GAME_WORK *gameWork );
 
 //----------------------------------------------------------------------------
 /**
