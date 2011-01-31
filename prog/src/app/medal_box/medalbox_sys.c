@@ -38,6 +38,8 @@
 #include "app/app_taskmenu.h"     // アプリケーションタスクメニュー
 #include "system/bmp_winframe.h"  // BMPウィンドウフレーム
 
+#include "system/blink_palanm.h"  // カーソルアニメーション
+
 FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 
 //============================================================================
@@ -171,6 +173,7 @@ FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 #define PUSUMEDAL_INFO_FRAME  (60*3)      // イチオシ登録確認メッセージの表示時間
 #define NEW_EFFECT_RANGE      (26)        // 新品エフェクトの出る範囲
 #define NEW_EFFECT_FREQUENTLY (1)         // 新エフェクトの出る頻度(大きいほど出にくい)
+#define CURSOR_BRINK_SPEED    (4)         // カーソルが点滅している時の速度
 
 //-------------------------------------
 ///	VRAM設定
@@ -589,6 +592,8 @@ typedef struct {
   s32               before_x;             // 1フレーム前のｘ座標
   s32               slide_length;         // スライド量
   BOOL              is_slide_touch;       // 画面をタッチしてのスライド中
+
+  BLINKPALANM_WORK  *p_blinkanm_wk;        // カーソル点滅アニメーション           
 #ifdef PM_DEBUG
   // デバッグ
   u8              debgu_seq;
@@ -687,6 +692,7 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcTerm( GFL_PROC * p_proc, int * seq , void
 static void MDLSYS_MakeCommonData( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_DeleteCommonData( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_GraphicInit( MEDALBOXSYS_WORK *p_wk );
+static void MDLSYS_GraphicDelete( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_BGDelete( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_EFFETC_ReLoad( MEDALBOXSYS_WORK *p_wk );
@@ -848,12 +854,23 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcInit( GFL_PROC * p_proc, int * seq , void
   // メダルの初期化
   MDLSYS_MedalInit( p_wk );
 
-  // 終了方法を調べてカーソルを表示する
-  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+  // カーソル点滅アニメ
   {
-    SetCursor( p_wk , 0 );
+    ARCHANDLE	*p_handle;
+
+    p_wk->p_blinkanm_wk = BLINKPALANM_Create( MEDALOBJ_PALETTENUM_MEDAL*16  , 16 , BLINKPALANM_MODE_MAIN_OBJ, p_wk->heapID );
+
+    // グラフィックへのハンドル
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_MEDALGRA , p_wk->heapID );
+
+    // パレットアニメデータの作成
+    BLINKPALANM_SetPalBufferArcHDL(
+        p_wk->p_blinkanm_wk, p_handle, NARC_medalbox_gra_medal_obj2_NCLR, 0*16, 1*16 );
+		
+    // アーカイブハンドルを閉じる
+    GFL_ARC_CloseDataHandle( p_handle );
   }
-  
+
 #ifdef PM_DEBUG
   DBEG_MDLSYS_DebugInit( p_wk );
 #endif
@@ -974,6 +991,9 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcTerm( GFL_PROC * p_proc, int * seq , void
   
   MEDALDATASYS_SaveMedalData( &p_wk->medal_data , p_wk->p_param->p_gamedata , p_wk->heapID );
 
+  // 点滅アニメ終了
+  BLINKPALANM_Exit( p_wk->p_blinkanm_wk );
+  
   // VBLANKTask消去
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
@@ -985,6 +1005,9 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcTerm( GFL_PROC * p_proc, int * seq , void
 
   // BGデータ開放
   MDLSYS_BGDelete( p_wk );
+
+  // グラフィックを開放
+  MDLSYS_GraphicDelete( p_wk );
 
   // 共通データ開放
   MDLSYS_DeleteCommonData( p_wk );
@@ -1115,6 +1138,19 @@ static void MDLSYS_GraphicInit( MEDALBOXSYS_WORK *p_wk )
   // 描画用Vブランクタスクを登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB( MDLSYS_Graphic_VBlankTask , p_wk , 0 );
   
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グラフィックを開放する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MDLSYS_GraphicDelete( MEDALBOXSYS_WORK *p_wk )
+{
 }
 
 //----------------------------------------------------------------------------
@@ -2041,6 +2077,11 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk )
       // 次のシーケンスへ移動
       if( cap_scroll_end && monitor_scroll_end )
       {
+        // 終了方法を調べてカーソルを表示する
+        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+        {
+          SetCursor( p_wk , 0 );
+        }
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
       }
     }
@@ -2066,7 +2107,10 @@ static GFL_PROC_RESULT MDLSYS_MAIN_Main( MEDALBOXSYS_WORK *p_wk )
 
   // 新品エフェクト生成メイン
   NewEffectMain( p_wk );
-  
+ 
+  // カーソル点滅アニメ
+  BLINKPALANM_Main( p_wk->p_blinkanm_wk );
+ 
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -2898,14 +2942,14 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       
       if(p_medal_st->medal_state == MEDAL_STATE_TITLE_GET)
       {
-        WORDSET_RegisterNumber( p_word_set , 0 , title_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
-        WORDSET_RegisterNumber( p_word_set , 1 , get_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
+        WORDSET_RegisterNumber( p_word_set , 0 , title_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
+        WORDSET_RegisterNumber( p_word_set , 1 , get_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
         WORDSET_ExpandStr( p_word_set, str_num , str  );
       }
       else
       {
-        WORDSET_RegisterNumber( p_word_set , 0 , get_cnt - title_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
-        WORDSET_RegisterNumber( p_word_set , 1 , get_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
+        WORDSET_RegisterNumber( p_word_set , 0 , get_cnt - title_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
+        WORDSET_RegisterNumber( p_word_set , 1 , get_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
         WORDSET_ExpandStr( p_word_set, str_num , str  );
       }
 
@@ -2962,9 +3006,9 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       
       str_ymd  = GFL_STR_CreateBuffer( 30, p_wk->heapID ); 
 
-      WORDSET_RegisterNumber( p_word_set , 0 , p_medal_st->year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_HANKAKU);
-      WORDSET_RegisterNumber( p_word_set , 1 , p_medal_st->month , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_HANKAKU);
-      WORDSET_RegisterNumber( p_word_set , 2 , p_medal_st->day , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_HANKAKU);
+      WORDSET_RegisterNumber( p_word_set , 0 , p_medal_st->year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( p_word_set , 1 , p_medal_st->month , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( p_word_set , 2 , p_medal_st->day , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_ZENKAKU);
 
       if(p_medal_st->medal_state == MEDAL_STATE_TITLE_GET)
       {
@@ -4019,11 +4063,16 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
     break;
   case 1:
     {
+      int i;
       // 待機
       p_wk->tmp_frame++;
       if( p_wk->tmp_frame >= PUSUMEDAL_INFO_FRAME )
       {
         p_wk->sub_seq++;
+      }
+      for( i = 0; i <  CURSOR_BRINK_SPEED ; i++ )
+      {
+        BLINKPALANM_Main( p_wk->p_blinkanm_wk );
       }
     }
     break;
