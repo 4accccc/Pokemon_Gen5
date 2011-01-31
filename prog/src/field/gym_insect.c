@@ -97,6 +97,7 @@ typedef struct GYM_INSECT_TMP_tag
   FIELD_PLAYER *f_player;
   MMDL* p_mmdl;
   FIELD_CAMERA *camera;
+  EVENTWORK *ev_work;
 
   HEAPID  heapID;
   HEAPID  heapLowID;
@@ -174,6 +175,7 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   wk->f_player = FIELDMAP_GetFieldPlayer( fieldWork );
   wk->p_mmdl = FIELD_PLAYER_GetMMdl( wk->f_player );
   wk->camera = FIELDMAP_GetFieldCamera( fieldWork );
+  wk->ev_work = GAMEDATA_GetEventWork( wk->gdata );
 
   wk->map_id = (FIELDMAP_GetZoneID( fieldWork ) == ZONE_ID_C03GYM0201);
   {
@@ -190,11 +192,11 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   sub_ExpObjSet( wk );
 
   //フォグセット
-  {
+  if(wk->map_id == MAP_NORMAL){
     FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( fieldWork );
     
     FIELD_FOG_SetBlendMode( fog, FIELD_FOG_BLEND_COLOR_ALPHA );
-//    FIELD_FOG_SetColorRgb( fog, GX_RGB(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B) );
+//    FIELD_FOG_SetColorRgb( fog, GX_RGB(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B) );  //カラーはfield_light/in_c3gym.xlsで設定
     FIELD_FOG_SetColorA( fog, FOG_COLOR_A );
     FIELD_FOG_SetTblAll( fog, DATA_FogTable );
 		FIELD_FOG_SetSlope( fog, FOG_SLOPE );
@@ -256,15 +258,21 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
   {
     int id;
     u8 dir;
-    MMDL_GRIDPOS pos;
+    MMDL_GRIDPOS pos,f_pos;
 
-    MMDL_GetGridPos( wk->p_mmdl, &pos );
     dir = MMDL_GetDirDisp( wk->p_mmdl );
+    
+    MMDL_GetGridPos( wk->p_mmdl, &pos );
+    f_pos = pos;
+    MMDL_TOOL_AddDirGrid( dir, &f_pos.gx, &f_pos.gz, 1);
 
     for(id = 0;id < GATE_PARAM_NUM;id++){
       const GATE_PARAM* gp = &DATA_GateParam[id];
     
       if( wk->map_id != gp->map_id ){
+        continue;
+      }
+      if( id == GATE_ID_1C_4B && !EVENTWORK_CheckEventFlag( wk->ev_work, FE_C03GYM0101_COCCON_01 )){
         continue;
       }
       if( gp->in_dir != DIR_NOT ){
@@ -276,11 +284,9 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
         }
         break;
       }else{
-        MMDL_TOOL_AddDirGrid( dir, &pos.gx, &pos.gz, 1);
-      
-       if(  gp->point.x != pos.gx ||
-            gp->point.y != pos.gy ||
-            gp->point.z != pos.gz){
+       if(  gp->point.x != f_pos.gx ||
+            gp->point.y != f_pos.gy ||
+            gp->point.z != f_pos.gz){
           continue;
         }
         break;
@@ -373,7 +379,8 @@ static GMEVENT_RESULT event_GateInNormalMain( GMEVENT * event, int *seq, void *w
     break;
   case 2:
 #if 1
-    if( evwk->gate_prm->scr_ofs && evwk->ica_anm_frm_idx == (evwk->ica_anm_frm_max-10) ){
+//    if( evwk->gate_prm->scr_ofs && evwk->ica_anm_frm_idx == (evwk->ica_anm_frm_max-GATE_IN_FADE_FRM_KEY) ){
+    if( evwk->gate_prm->scr_ofs && evwk->ica_anm_frm_idx == GATE_IN_FADE_FRM_KEY ){
       FIELDMAP_CreateMapFadeReqTask( wk->gsys, wk->fwork, FMAP_FADE_OUT_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
     }
 #endif
