@@ -404,81 +404,81 @@
 
 	<row id="MDL_EXP_FIELD_002">
 		<language name="JPN" width="216">ポケモンセンターで　ポケモンを
-100かいも　やすませた
+１００かいも　やすませた
 じょうれんきゃくのための　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケモンセンターで　ポケモンを
-100回も　休ませた
+１００回も　休ませた
 常連客のための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_003">
-		<language name="JPN" width="216">レポートを　10かい　かいた
+		<language name="JPN" width="216">レポートを　１０かい　かいた
 ういういしい　ふでづかいを
 ひょうかする　メダル。</language>
-		<language name="JPN_KANJI" width="216">レポートを　10回　書いた
+		<language name="JPN_KANJI" width="216">レポートを　１０回　書いた
 初々しい　筆づかいを
 評価する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_004">
-		<language name="JPN" width="216">レポートを　50かい　かいた
+		<language name="JPN" width="216">レポートを　５０かい　かいた
 いっしょうけんめいな　ふでづかいを
 ひょうかする　メダル。</language>
-		<language name="JPN_KANJI" width="216">レポートを　50回　書いた
+		<language name="JPN_KANJI" width="216">レポートを　５０回　書いた
 一生懸命な　筆づかいを
 評価する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_005">
-		<language name="JPN" width="216">レポートを　100かい　かいた
+		<language name="JPN" width="216">レポートを　１００かい　かいた
 こなれた　ふでづかいを
 ひょうかする　メダル。</language>
-		<language name="JPN_KANJI" width="216">レポートを　100回　書いた
+		<language name="JPN_KANJI" width="216">レポートを　１００回　書いた
 こなれた　筆づかいを
 評価する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_006">
-		<language name="JPN" width="216">レポートを　1000かい　かいた
+		<language name="JPN" width="216">レポートを　１０００かい　かいた
 おどろくべき　ふでづかいを
 ひょうかする　メダル。</language>
-		<language name="JPN_KANJI" width="216">レポートを　1000回　書いた
+		<language name="JPN_KANJI" width="216">レポートを　１０００回　書いた
 驚くべき　筆づかいを
 評価する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_007">
-		<language name="JPN" width="216">イッシュの　だいちを　10000かい
+		<language name="JPN" width="216">イッシュの　だいちを　１００００かい
 ふみしめた　そこそこの
 けんきゃくを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">イッシュの　大地を　10000回
+		<language name="JPN_KANJI" width="216">イッシュの　大地を　１００００回
 踏みしめた　そこそこの
 健脚を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_008">
-		<language name="JPN" width="216">イッシュの　だいちを　20000かい
+		<language name="JPN" width="216">イッシュの　だいちを　２００００かい
 ふみしめた　なかなかの
 けんきゃくを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">イッシュの　大地を　20000回
+		<language name="JPN_KANJI" width="216">イッシュの　大地を　２００００回
 踏みしめた　なかなかの
 健脚を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_009">
-		<language name="JPN" width="216">イッシュの　だいちを　50000かい
+		<language name="JPN" width="216">イッシュの　だいちを　５００００かい
 ふみしめた　かなりの
 けんきゃくを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">イッシュの　大地を　50000回
+		<language name="JPN_KANJI" width="216">イッシュの　大地を　５００００回
 踏みしめた　かなりの
 健脚を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_010">
-		<language name="JPN" width="216">イッシュの　だいちを　100000かい
+		<language name="JPN" width="216">イッシュの　だいちを　１０００００かい
 ふみしめた　きゅうきょくの
 けんきゃくを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">イッシュの　大地を　100000回
+		<language name="JPN_KANJI" width="216">イッシュの　大地を　１０００００回
 踏みしめた　究極の
 健脚を　称える　メダル。</language>
 	</row>
@@ -493,28 +493,28 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_012">
-		<language name="JPN" width="216">ポケモンの　タマゴを　10かい
+		<language name="JPN" width="216">ポケモンの　タマゴを　１０かい
 ふかさせた　それなりの
 ぼせいの　あかしとなる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケモンの　タマゴを　10回
+		<language name="JPN_KANJI" width="216">ポケモンの　タマゴを　１０回
 ふかさせた　それなりの
 母性の　証しとなる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_013">
-		<language name="JPN" width="216">ポケモンの　タマゴを　50かい
+		<language name="JPN" width="216">ポケモンの　タマゴを　５０かい
 ふかさせた　ぐんをぬく
 ぼせいの　あかしとなる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケモンの　タマゴを　50回
+		<language name="JPN_KANJI" width="216">ポケモンの　タマゴを　５０回
 ふかさせた　群を抜く
 母性の　証しとなる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_014">
-		<language name="JPN" width="216">ポケモンの　タマゴを　100かい
+		<language name="JPN" width="216">ポケモンの　タマゴを　１００かい
 ふかさせた　そこなしの
 ぼせいの　あかしとなる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケモンの　タマゴを　100回
+		<language name="JPN_KANJI" width="216">ポケモンの　タマゴを　１００回
 ふかさせた　底なしの
 母性の　証しとなる　メダル。</language>
 	</row>
@@ -529,64 +529,64 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_016">
-		<language name="JPN" width="216">じてんしゃに　20かい　のった
+		<language name="JPN" width="216">じてんしゃに　２０かい　のった
 さっそうとした　ライダーだましいを
 もつものに　おくられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">じてんしゃに　20回　乗った
+		<language name="JPN_KANJI" width="216">じてんしゃに　２０回　乗った
 さっそうとした　ライダー魂を
 持つ者に　贈られる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_017">
-		<language name="JPN" width="216">じてんしゃに　50かい　のった
+		<language name="JPN" width="216">じてんしゃに　５０かい　のった
 はげしいまでの　ライダーだましいを
 もつものに　おくられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">じてんしゃに　50回　乗った
+		<language name="JPN_KANJI" width="216">じてんしゃに　５０回　乗った
 激しいまでの　ライダー魂を
 持つ者に　贈られる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_018">
-		<language name="JPN" width="216">じてんしゃに　100かい　のった
+		<language name="JPN" width="216">じてんしゃに　１００かい　のった
 てんちをゆるがす　ライダーだましいを
 もつものに　おくられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">じてんしゃに　100回　乗った
+		<language name="JPN_KANJI" width="216">じてんしゃに　１００回　乗った
 天地を揺るがす　ライダー魂を
 持つ者に　贈られる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_001">
-		<language name="JPN" width="216">100かいもの　せんとうを
+		<language name="JPN" width="216">１００かいもの　せんとうを
 かいくぐった　わかわかしい
 ゆうきを　しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">100回もの　戦闘を
+		<language name="JPN_KANJI" width="216">１００回もの　戦闘を
 かいくぐった　若々しい
 勇気を　証明する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_002">
-		<language name="JPN" width="216">500かいもの　せんとうを
+		<language name="JPN" width="216">５００かいもの　せんとうを
 かいくぐった　たけだけしい
 ゆうきを　しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">500回もの　戦闘を
+		<language name="JPN_KANJI" width="216">５００回もの　戦闘を
 かいくぐった　猛々しい
 勇気を　証明する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_003">
-		<language name="JPN" width="216">1000かいもの　せんとうを
+		<language name="JPN" width="216">１０００かいもの　せんとうを
 かいくぐった　すさまじい
 ゆうきを　しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">1000回もの　戦闘を
+		<language name="JPN_KANJI" width="216">１０００回もの　戦闘を
 かいくぐった　すさまじい
 勇気を　証明する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_004">
-		<language name="JPN" width="216">10000かいもの　せんとうを
+		<language name="JPN" width="216">１００００かいもの　せんとうを
 かいくぐった　てんかむそうの
 ゆうきを　しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">10000回もの　戦闘を
+		<language name="JPN_KANJI" width="216">１００００回もの　戦闘を
 かいくぐった　天下無双の
 勇気を　証明する　メダル。</language>
 	</row>
@@ -601,28 +601,28 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_020">
-		<language name="JPN" width="216">ポケモンを　10ひき　つりあげた
+		<language name="JPN" width="216">ポケモンを　１０ひき　つりあげた
 ちゅうけんクラスの　つりびとに
 さずけられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　10匹　釣り上げた
+		<language name="JPN_KANJI" width="216">ポケモンを　１０匹　釣り上げた
 熟達した　釣り人に
 授けられる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_021">
-		<language name="JPN" width="216">ポケモンを　20ひき　つりあげた
+		<language name="JPN" width="216">ポケモンを　２０ひき　つりあげた
 じゅくたつした　つりびとに
 さずけられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　20匹　釣り上げた
+		<language name="JPN_KANJI" width="216">ポケモンを　２０匹　釣り上げた
 中堅クラスの　釣り人に
 授けられる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_022">
-		<language name="JPN" width="216">ポケモンを　100ひき　つりあげた
+		<language name="JPN" width="216">ポケモンを　１００ひき　つりあげた
 でんせつてきな　つりびとに
 さずけられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　100匹　釣り上げた
+		<language name="JPN_KANJI" width="216">ポケモンを　１００匹　釣り上げた
 伝説的な　釣り人に
 授けられる　メダル。</language>
 	</row>
@@ -664,28 +664,28 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_002">
-		<language name="JPN" width="216">10つうも　メールを　かいた
+		<language name="JPN" width="216">１０つうも　メールを　かいた
 しんしんきえいの　ぶんさいを
 きねんする　メダル。</language>
-		<language name="JPN_KANJI" width="216">10通も　メールを　書いた
+		<language name="JPN_KANJI" width="216">１０通も　メールを　書いた
 新進気鋭の　文才を
 記念する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_003">
-		<language name="JPN" width="216">50つうも　メールを　かいた
+		<language name="JPN" width="216">５０つうも　メールを　かいた
 オリジナリティあふれる　ぶんさいを
 きねんする　メダル。</language>
-		<language name="JPN_KANJI" width="216">50通も　メールを　書いた
+		<language name="JPN_KANJI" width="216">５０通も　メールを　書いた
 オリジナリティあふれる　文才を
 記念する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_004">
-		<language name="JPN" width="216">100つうも　メールを　かいた
+		<language name="JPN" width="216">１００つうも　メールを　かいた
 れきしに　きざまれるべき　ぶんさいを
 きねんする　メダル。</language>
-		<language name="JPN_KANJI" width="216">100通も　メールを　書いた
+		<language name="JPN_KANJI" width="216">１００通も　メールを　書いた
 歴史に　刻まれるべき　文才を
 記念する　メダル。</language>
 	</row>
@@ -701,54 +701,54 @@
 
 	<row id="MDL_EXP_APPLICATION_006">
 		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-10かい　もらった　はなばなしい
+１０かい　もらった　はなばなしい
 かつやくの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-10回　もらった　華々しい
+１０回　もらった　華々しい
 活躍の　証しとなる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_007">
 		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-20かい　もらった　かがやかしい
+２０かい　もらった　かがやかしい
 かつやくの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-20回　もらった　輝かしい
+２０回　もらった　輝かしい
 活躍の　証しとなる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_008">
 		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-100かい　もらった　セレブリティな
+１００かい　もらった　セレブリティな
 かつやくの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-100回　もらった　セレブリティな
+１００回　もらった　セレブリティな
 活躍の　証しとなる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_023">
-		<language name="JPN" width="216">わざマシンを　10こ　あつめた
+		<language name="JPN" width="216">わざマシンを　１０こ　あつめた
 はじまりの　コレクターだましいを
 しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">わざマシンを　10個　集めた
+		<language name="JPN_KANJI" width="216">わざマシンを　１０個　集めた
 始まりの　コレクター魂を
 証明する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_024">
-		<language name="JPN" width="216">わざマシンを　40こ　あつめた
+		<language name="JPN" width="216">わざマシンを　4０こ　あつめた
 やむことのない　コレクターだましいを
 しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">わざマシンを　40個　集めた
+		<language name="JPN_KANJI" width="216">わざマシンを　4０個　集めた
 止むことのない　コレクター魂を
 証明する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_025">
-		<language name="JPN" width="216">わざマシンを　70こ　あつめた
+		<language name="JPN" width="216">わざマシンを　７０こ　あつめた
 るいをみない　コレクターだましいを
 しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">わざマシンを　70個　集めた
+		<language name="JPN_KANJI" width="216">わざマシンを　７０個　集めた
 類を見ない　コレクター魂を
 証明する　メダル。</language>
 	</row>
