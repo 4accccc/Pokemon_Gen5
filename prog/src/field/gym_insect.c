@@ -24,6 +24,9 @@
 #include "system/main.h"    //for HEAPID_FIELDMAP
 #include "system/ica_anime.h"
 
+#include "fieldmap_tcb.h"
+#include "field_camera_local.h"
+#include "field_fade.h"
 #include "script.h"     //for SCRIPT_CallScript
 #include "script_local.h"
 #include "script_def.h"
@@ -34,6 +37,7 @@
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 
 #include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_～
+#include "../../../resource/fldmapdata/script/c03gym0201_def.h"  //for SCRID_～
 #include "../../../resource/fldmapdata/gimmick/gym_insect/gym_insect_local_def.h"
 
 #include "gym_insect_se_def.h"
@@ -72,9 +76,11 @@ typedef struct POINT_tag{
 ///繭ゲート座標
 typedef struct GATE_PARAM_tag{
   u8  arc_id;
-  u8  in_dir;
-  u8  out_dir;
-  u8  reverse;
+  u8  in_dir:4;
+  u8  out_dir:4;
+  u8  map_id:1;
+  u8  reverse:1;
+  u8  scr_ofs:6;
   POINT point;
 }GATE_PARAM;
 
@@ -83,6 +89,7 @@ typedef struct GYM_INSECT_TMP_tag
 {
   GAMESYS_WORK* gsys;
   GAMEDATA* gdata;
+  FIELDMAP_WORK* fwork;
   GIMMICKWORK* gmkwork;
   GYM_INSECT_SV_WORK* gmk_sv;
 
@@ -109,7 +116,15 @@ typedef struct EVWORK_GATE_MOVE_tag{
   s8  ica_anm_frm_dif;
   u8  gate_id;
   u8  se_player;
+  u8  wait;
 }EVWORK_GATE_MOVE;
+
+typedef struct TASKWK_PLAYER_HOLLIN_tag{
+  u8  dir;
+  u16 frame;
+  VecFx32  dv,sv,ev;
+  MMDL* p_mmdl;
+}TASKWK_PLAYER_HOLLIN;
 
 #include "gym_insect.cdat"
 
@@ -118,7 +133,6 @@ typedef struct EVWORK_GATE_MOVE_tag{
 
 ///イベント
 static GMEVENT* event_GateInCreate( GYM_INSECT_TMP* wk, u8 gate_id );
-static GMEVENT* event_GateOutCreate( GYM_INSECT_TMP* wk, u8 gate_id );
 
 ///サブルーチン
 static void sub_SetExHeight( FIELDMAP_WORK* fieldWork );
@@ -150,6 +164,7 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
  
   wk->gsys = FIELDMAP_GetGameSysWork( fieldWork );
   wk->gdata = GAMESYSTEM_GetGameData( wk->gsys );
+  wk->fwork = fieldWork;
   wk->gmkwork = GAMEDATA_GetGimmickWork( wk->gdata );
   wk->gmk_sv = GIMMICKWORK_Get( wk->gmkwork, FLD_GIMMICK_GYM_INSECT );
 
@@ -173,6 +188,21 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   //拡張高さセット
   sub_SetExHeight( fieldWork );
   sub_ExpObjSet( wk );
+
+  //フォグセット
+  {
+    FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( fieldWork );
+    
+    FIELD_FOG_SetBlendMode( fog, FIELD_FOG_BLEND_COLOR_ALPHA );
+//    FIELD_FOG_SetColorRgb( fog, GX_RGB(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B) );
+    FIELD_FOG_SetColorA( fog, FOG_COLOR_A );
+    FIELD_FOG_SetTblAll( fog, DATA_FogTable );
+		FIELD_FOG_SetSlope( fog, FOG_SLOPE );
+		FIELD_FOG_SetOffset( fog, FOG_OFFSET );
+		FIELD_FOG_SetFlag( fog, TRUE );
+
+    FIELD_FOG_Reflect( fog );
+  }
 }
 
 //--------------------------------------------------------------
@@ -230,17 +260,31 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
 
     MMDL_GetGridPos( wk->p_mmdl, &pos );
     dir = MMDL_GetDirDisp( wk->p_mmdl );
- 
+
     for(id = 0;id < GATE_PARAM_NUM;id++){
       const GATE_PARAM* gp = &DATA_GateParam[id];
-      
-      if( gp->in_dir != dir ||
-          gp->point.x != pos.gx ||
-          gp->point.y != pos.gy ||
-          gp->point.z != pos.gz){
+    
+      if( wk->map_id != gp->map_id ){
         continue;
       }
-      break;
+      if( gp->in_dir != DIR_NOT ){
+        if( gp->in_dir != dir ||
+            gp->point.x != pos.gx ||
+            gp->point.y != pos.gy ||
+            gp->point.z != pos.gz){
+          continue;
+        }
+        break;
+      }else{
+        MMDL_TOOL_AddDirGrid( dir, &pos.gx, &pos.gz, 1);
+      
+       if(  gp->point.x != pos.gx ||
+            gp->point.y != pos.gy ||
+            gp->point.z != pos.gz){
+          continue;
+        }
+        break;
+      }
     }
     if( id < GATE_PARAM_NUM ){
       //イベントコール
@@ -248,22 +292,6 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
     }
   }
   return NULL;  //ゲートが見つからない
-}
-//--------------------------------------------------------------
-/**
- * 繭ゲート 出口イベント作成 
- * @param	      fieldWork     フィールドワークポインタ
- * @return      none
- */
-//--------------------------------------------------------------
-GMEVENT *GYM_INSECT_CreateGateOutEvent(GAMESYS_WORK *gsys,u8 gate_id)
-{
-  GMEVENT * event;
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
-
-  //イベントコール
-  return event_GateInCreate( wk, gate_id );
 }
 
 //===============================================================
@@ -293,11 +321,12 @@ void GYM_INSECT_CocconOpen( FIELDMAP_WORK* fieldWork, u8 coccon_idx )
 //===============================================================
 ///ゲートイン・アウトイベント
 //===============================================================
-static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work );
-static GMEVENT_RESULT event_GateOutMain( GMEVENT * event, int *seq, void *work );
+static GMEVENT_RESULT event_GateInNormalMain( GMEVENT * event, int *seq, void *work );
+static GMEVENT_RESULT event_GateInLeaderMain( GMEVENT * event, int *seq, void *work );
 
 static void gatemv_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk );
 static void gatemv_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk );
+static void gatemv_IcaAnmPosSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk );
 static BOOL gatemv_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk );
 static s16 gatemv_SePitchCalc( EVWORK_GATE_MOVE* evwk );
 
@@ -306,9 +335,16 @@ static s16 gatemv_SePitchCalc( EVWORK_GATE_MOVE* evwk );
 //--------------------------------------------------------------
 GMEVENT* event_GateInCreate( GYM_INSECT_TMP* wk, u8 gate_id )
 {
-  GMEVENT* event = GMEVENT_Create( wk->gsys, NULL, event_GateInMain, sizeof(EVWORK_GATE_MOVE));
-  EVWORK_GATE_MOVE* evwk = GMEVENT_GetEventWork( event );
+  GMEVENT* event;
+  EVWORK_GATE_MOVE* evwk;
 
+  if( DATA_GateParam[gate_id].map_id == MAP_NORMAL ){
+    event = GMEVENT_Create( wk->gsys, NULL, event_GateInNormalMain, sizeof(EVWORK_GATE_MOVE));
+  }else{
+    event = GMEVENT_Create( wk->gsys, NULL, event_GateInLeaderMain, sizeof(EVWORK_GATE_MOVE));
+  }
+
+  evwk = GMEVENT_GetEventWork( event );
   evwk->git = wk;
   evwk->gate_id = gate_id;
   evwk->gate_prm = &DATA_GateParam[gate_id];
@@ -318,7 +354,7 @@ GMEVENT* event_GateInCreate( GYM_INSECT_TMP* wk, u8 gate_id )
 //--------------------------------------------------------------
 //ゲートインイベント　メイン
 //--------------------------------------------------------------
-static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
+static GMEVENT_RESULT event_GateInNormalMain( GMEVENT * event, int *seq, void *work )
 {
   EVWORK_GATE_MOVE* evwk = (EVWORK_GATE_MOVE*)work;
   GYM_INSECT_TMP* wk = evwk->git;
@@ -331,19 +367,45 @@ static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
     break;
   case 1:
     //自機移動開始
+    FIELDMAP_TCB_AddTask_CameraZoom( wk->fwork, CAMERA_ZOOM_IN_FRAME, FX32_CONST(CAMERA_ZOOM_DISTANCE));
     gatemv_IcaAnmSet( wk, evwk );
     (*seq)++;
     break;
   case 2:
+#if 1
+    if( evwk->gate_prm->scr_ofs && evwk->ica_anm_frm_idx == (evwk->ica_anm_frm_max-10) ){
+      FIELDMAP_CreateMapFadeReqTask( wk->gsys, wk->fwork, FMAP_FADE_OUT_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+    }
+#endif
     if( gatemv_IcaAnmWait( wk, evwk ) == FALSE){
       break;
     }
     gatemv_IcaAnmFree( wk, evwk );
-
+    (*seq)++;
+    break;
+  case 3:
+    if( evwk->gate_prm->scr_ofs){
+      if( FIELDMAP_CheckMapFadeReqFlg( wk->fwork )){
+        break;
+      }
+      (*seq) = 0xFF;  //終了
+    }else{
+      (*seq)++;
+    }
     //自機繭から出る
     {
-      SCRIPT_WORK* sc = SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_OUT+(evwk->gate_id==GATE_ID_3D_4A), NULL, NULL, wk->heapLowID );
+      SCRIPT_WORK* sc = SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_OUT+evwk->gate_prm->scr_ofs, NULL, NULL, wk->heapLowID );
       SCRIPT_SetScriptWorkParam( sc, evwk->gate_id, evwk->gate_prm->out_dir, 0, 0 );
+    }
+    break;
+  case 4:
+    FIELDMAP_TCB_AddTask_CameraZoom_Sharp( wk->fwork, CAMERA_ZOOM_OUT_FRAME, FX32_CONST(-CAMERA_ZOOM_DISTANCE));
+    evwk->wait = CAMERA_ZOOM_OUT_FRAME;
+    (*seq)++;
+    break;
+  case 5:
+    if( --evwk->wait > 0 ){
+      break;
     }
     (*seq)++;
     break;
@@ -354,45 +416,45 @@ static GMEVENT_RESULT event_GateInMain( GMEVENT * event, int *seq, void *work )
 }
 
 //--------------------------------------------------------------
-//ゲートアウトイベント　生成
+//ゲートインイベント02(リーダー部屋)　メイン
 //--------------------------------------------------------------
-GMEVENT* event_GateOutCreate( GYM_INSECT_TMP* wk, u8 gate_id )
-{
-  GMEVENT* event = GMEVENT_Create( wk->gsys, NULL, event_GateOutMain, sizeof(EVWORK_GATE_MOVE));
-  EVWORK_GATE_MOVE* evwk = GMEVENT_GetEventWork( event );
-
-  evwk->git = wk;
-  evwk->gate_id = gate_id;
-  evwk->gate_prm = &DATA_GateParam[gate_id];
-  return event;
-}
-
-//--------------------------------------------------------------
-//ゲートアウトイベント　メイン
-//--------------------------------------------------------------
-static GMEVENT_RESULT event_GateOutMain( GMEVENT * event, int *seq, void *work )
+static GMEVENT_RESULT event_GateInLeaderMain( GMEVENT * event, int *seq, void *work )
 {
   EVWORK_GATE_MOVE* evwk = (EVWORK_GATE_MOVE*)work;
   GYM_INSECT_TMP* wk = evwk->git;
 
   switch(*seq){
   case 0:
-    //自機移動開始
-    gatemv_IcaAnmSet( wk, evwk );
+    //自機　ゲートに入る～マップチェンジまで
+    SCRIPT_CallScript( event, SCRID_PROG_C03GYM0201_GATE_IN_4A+evwk->gate_prm->scr_ofs, NULL, NULL, wk->heapLowID );
     (*seq)++;
     break;
   case 1:
+    //自機移動開始
+    MMDL_SetStatusBitVanish( wk->p_mmdl, TRUE );
+    gatemv_IcaAnmSet( wk, evwk );
+//  FIELD_CAMERA_LOCAL_ControlParameter( wk->camera, 0 );
+//  FIELD_CAMERA_BindTarget( wk->camera, MMDL_GetVectorPosAddress(wk->p_mmdl));
+    FIELD_CAMERA_StopTraceNow( wk->camera );
+    FIELD_CAMERA_Main( wk->camera, 0 );
+    FIELD_CAMERA_RestartTrace( wk->camera );
+
+    //フェードインリクエスト
+    FIELDMAP_CreateMapFadeReqTask( wk->gsys, wk->fwork, FMAP_FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+    (*seq)++;
+    break;
+  case 2:
     if( gatemv_IcaAnmWait( wk, evwk ) == FALSE){
       break;
     }
     gatemv_IcaAnmFree( wk, evwk );
-#if 0
-    //自機繭から出る
-    {
-      SCRIPT_WORK* sc = SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_OUT+(evwk->gate_id==GATE_ID_3D_4A), NULL, NULL, wk->heapLowID );
-      SCRIPT_SetScriptWorkParam( sc, evwk->gate_id, evwk->gate_prm->out_dir, 0, 0 );
+    (*seq)++;
+    break;
+  case 3:
+    if( FIELDMAP_CheckMapFadeReqFlg( wk->fwork )){
+      break;
     }
-#endif
+    SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_OUT_1C+evwk->gate_prm->scr_ofs, NULL, NULL, wk->heapLowID );
     (*seq)++;
     break;
   default:
@@ -442,6 +504,7 @@ static void gatemv_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
 {
   evwk->ica_anm = ICA_ANIME_CreateAlloc( wk->heapLowID, ARCID_GYM_INSECT, evwk->gate_prm->arc_id );
   GF_ASSERT( evwk->ica_anm != NULL);
+
   evwk->ica_anm_frm_max = ICA_ANIME_GetMaxFrame( evwk->ica_anm );
   if( evwk->gate_prm->reverse ){
     evwk->ica_anm_frm_idx = evwk->ica_anm_frm_max-1;
@@ -455,6 +518,9 @@ static void gatemv_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
   PMSND_SetStatusSE_byPlayerID( evwk->se_player, PMSND_NOEFFECT, gatemv_SePitchCalc(evwk), PMSND_NOEFFECT);
   
   FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, FALSE );
+  
+  //初期座標セット
+  gatemv_IcaAnmPosSet( wk, evwk );
 }
 static void gatemv_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
 {
@@ -462,7 +528,7 @@ static void gatemv_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
   FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, TRUE );
   ICA_ANIME_Delete( evwk->ica_anm );
 }
-static BOOL gatemv_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
+static void gatemv_IcaAnmPosSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
 {
   VecFx32 vec = {0,0,0};
 
@@ -490,6 +556,13 @@ static BOOL gatemv_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
       }
     }
   }
+}
+
+static BOOL gatemv_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
+{
+  //座標取得
+  gatemv_IcaAnmPosSet( wk, evwk );
+  
   evwk->ica_anm_frm_idx += evwk->ica_anm_frm_dif;
   if( evwk->ica_anm_frm_dif < 0 ){
     if( evwk->ica_anm_frm_idx <= 0 ){
@@ -502,6 +575,46 @@ static BOOL gatemv_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
   }
   return FALSE;
 }
+
+//===============================================================
+///ゲートイン自機移動イベント
+//===============================================================
+static void tcb_PlayerHoleIn( GFL_TCB* tcb, void* work );
+#if 0
+//--------------------------------------------------------------
+//ゲートイン自機移動タスク　生成
+//--------------------------------------------------------------
+void GYM_INSECT_PlayerHoleInTaskAdd( FIELDMAP_WORK* fieldWork, u8 dir, u16 frame )
+{
+  GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldWork );
+  TASKWK_PLAYER_HOLLIN* twk = GFL_HEAP_AllocClearMemoryLo( FIELDMAP_GetHeapID(fieldWork), sizeof( TASKWK_PLAYER_HOLLIN ) ); 
+
+  twk->frame = frame;
+  twk->p_mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
+  {
+    VecFx32 sv;
+    fx32  fx_frame = FX32_CONST(frame);
+    MMDL_GetVectorPos(twk->p_mmdl,sv);
+    twk->ev = sv;
+    MMDL_TOOL_AddDirVector( dir, &twk->ev, FX32_CONST(unit) );
+    twk->dv.x = FX_Div((twk->ev.x-sv.x),FX32_CONST(frame));
+    twk->dv.z = FX_Div((twk->ev.z-sv.z),FX32_CONST(frame));
+  }
+  GFL_TCB_AddTask( tcbsys, twk, 0);
+}
+
+static void tcb_PlayerHoleIn( GFL_TCB* tcb, void* work )
+{
+  TASKWK_PLAYER_HOLLIN* twk = work;
+
+  if( --twk->frame == 0 )
+  {
+    GFL_HEAP_FreeMemory( work );  // ワークを破棄
+    GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
+  }
+}
+#endif
 
 //===============================================================
 ///サブルーチン

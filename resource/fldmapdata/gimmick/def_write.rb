@@ -27,7 +27,7 @@ while line = csv_file.gets
     next
   end
 
-  cdat_file.printf("#define %s (%d)", column[0], column[1].to_i)
+  cdat_file.printf("#define %s (%s)", column[0], column[1])
   if column[2].index("//") == 0 then
     cdat_file.printf("\t%s\n", column[2])
   else

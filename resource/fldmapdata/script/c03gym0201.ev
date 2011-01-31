@@ -13,6 +13,7 @@
   .include  "c03gym0201.h"
   .include  "c03gym0101_def.h"
 
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,8 +21,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA   pos_c03gym0201_exit_4a_3d
-_EVENT_DATA   pos_c03gym0201_exit_4b_1c
+_EVENT_DATA   prog_c03gym0201_gate_in_4a
+_EVENT_DATA   prog_c03gym0201_gate_in_4b
 _EVENT_DATA   c03gym0201_leader3_01
 _EVENT_DATA_END
 
@@ -31,6 +32,66 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_zone_c03gym0201:
 //  _END
+
+/**************************************************************/
+/*  出入り口                                               */
+/**************************************************************/
+EVENT_START prog_c03gym0201_gate_in_4a
+  _CALL sub_gatein_anm
+
+  //3Fに移動
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 4, 20, 13, DIR_DOWN )
+EVENT_END
+
+EVENT_START prog_c03gym0201_gate_in_4b
+  _CALL sub_gatein_anm
+  
+  //1Fに移動
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 8, 0, 4, DIR_DOWN )
+EVENT_END
+
+sub_gatein_anm:
+{
+  DEFINE_LOCAL  i_player_dir
+
+  _PLAYER_DIR_GET( i_player_dir ) 
+  SWITCH $i_player_dir
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_u )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_d )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_l )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_r )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+  
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+}
+_RET
+
+_ANIME_LABEL  anm_player_gatein_u
+  _ANIME_DATA AC_JUMP_U_1G_8F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gatein_d
+  _ANIME_DATA AC_JUMP_D_1G_8F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gatein_l
+  _ANIME_DATA AC_JUMP_L_1G_8F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gatein_r
+  _ANIME_DATA AC_JUMP_R_1G_8F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
 
 /************************************************************/
 /*			ジムリーダー戦のスクリプトイベント				*/
@@ -149,26 +210,4 @@ ev_leader3_btl:
 
 	
 _RET
-
-/**************************************************************/
-/*  出入り口POS                                               */
-/**************************************************************/
-EVENT_START pos_c03gym0201_exit_4a_3d
-  //3Fに移動
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-  
-  //スクリプトリザーブ
-  _RESERVE_SCRIPT( SCRID_RESERVE_C03GYM0101_GATEOUT_3D )
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 4, 20, 13, DIR_DOWN )
-EVENT_END
-
-EVENT_START pos_c03gym0201_exit_4b_1c
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-  //1Fに移動
-  _RESERVE_SCRIPT( SCRID_RESERVE_C03GYM0101_GATEOUT_1C )
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 8, 0, 4, DIR_DOWN )
-EVENT_END
-
 

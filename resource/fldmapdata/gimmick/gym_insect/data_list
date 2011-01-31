@@ -3,8 +3,9 @@ DATA_LIST = \
      null_1a_2b.bin \
      null_1b_3b.bin \
      null_1b_3c.bin \
-     null_2b_3d.bin \
+     null_1c_4b.bin \
      null_2c_3a.bin \
+     null_3c_3d.bin \
      null_3d_4a.bin \
      coccon.nsbmd \
      coccon.nsbca \

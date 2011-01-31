@@ -6914,26 +6914,6 @@
 
 //--------------------------------------------------------------
 /**
- * ジムコマンド　虫ジム初期化
- */
-//--------------------------------------------------------------
-#define _GYM_INSECT_INIT(sw0, sw1 ,sw2, sw3, sw4, sw5, sw6, sw7) \
-    _ASM_GYM_INSECT_INIT sw0, sw1 ,sw2, sw3, sw4, sw5, sw6, sw7
-
-  .macro  _ASM_GYM_INSECT_INIT sw0, sw1 ,sw2, sw3, sw4, sw5, sw6, sw7
-  .short  EV_SEQ_GYM_INSECT_INIT
-  .short  \sw0
-  .short  \sw1
-  .short  \sw2
-  .short  \sw3
-  .short  \sw4
-  .short  \sw5
-  .short  \sw6
-  .short  \sw7
-  .endm
-
-//--------------------------------------------------------------
-/**
  * ジムコマンド　虫ジム 繭オープン
  * @param coccon_idx
  */

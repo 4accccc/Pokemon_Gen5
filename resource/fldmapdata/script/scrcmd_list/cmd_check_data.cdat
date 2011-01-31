@@ -616,8 +616,4 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (613)
   { FALSE, FALSE, FALSE }, // NO_CMD (614)
   { FALSE, FALSE, FALSE }, // NO_CMD (615)
-  { FALSE, FALSE, FALSE }, // NO_CMD (616)
-  { FALSE, FALSE, FALSE }, // NO_CMD (617)
-  { FALSE, FALSE, FALSE }, // NO_CMD (618)
-  { FALSE, FALSE, FALSE }, // NO_CMD (619)
 };

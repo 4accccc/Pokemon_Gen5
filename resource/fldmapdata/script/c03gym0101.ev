@@ -21,9 +21,9 @@
 //--------------------------------------------------------------
 _EVENT_DATA ev_prog_c03gym0101_gate_in
 _EVENT_DATA ev_prog_c03gym0101_gate_out
-_EVENT_DATA ev_prog_c03gym0101_gate_out_exit
-_EVENT_DATA ev_reserve_c03gym0101_gateout_1c
-_EVENT_DATA ev_reserve_c03gym0101_gateout_3d
+_EVENT_DATA ev_prog_c03gym0101_gate_out_4x
+_EVENT_DATA ev_prog_c03gym0101_gate_out_1c
+_EVENT_DATA ev_prog_c03gym0101_gate_out_3d
 _EVENT_DATA ev_pos_c03gym0101_gate_3b
 _EVENT_DATA ev_c03gym0101_trainer_gate_3b
 _EVENT_DATA ev_c03gym0101_sunglasses_01  //サングラス
@@ -80,8 +80,6 @@ EVENT_START ev_prog_c03gym0101_gate_out
   _OBJ_ANIME_WAIT()
 
   SWITCH $i_player_dir
-  CASE DIR_UP THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_u )
   CASE DIR_DOWN THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_d )
   CASE DIR_LEFT THEN
@@ -97,40 +95,60 @@ EVENT_START ev_prog_c03gym0101_gate_out
 }
 EVENT_END
 
-EVENT_START ev_prog_c03gym0101_gate_out_exit
+EVENT_START ev_prog_c03gym0101_gate_out_4x
 {
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
+  DEFINE_LOCAL  i_gate_id
+  DEFINE_LOCAL  i_player_dir
 
+  $i_gate_id = $SCWK_PARAM0
+  
   //ジムリーダー部屋に移動
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0201, 14, -1, 16, DIR_UP )
+  IF $i_gate_id == GATE_ID_3D_4A THEN
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0201, 15, -1, 20, DIR_UP )
+  ELSE
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0201, 9, -1, 13, DIR_UP )
+  ENDIF
 
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
   
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_exit )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_4x )
   _OBJ_ANIME_WAIT()
 }
 EVENT_END
 
-_ANIME_LABEL anm_player_gateout_exit
-  _ANIME_DATA AC_JUMP_U_1G_8F,1
-  _ANIME_DATA ACMD_END,0
+EVENT_START ev_prog_c03gym0101_gate_out_1c
+{
+  //自機表示
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_off )
+  _OBJ_ANIME_WAIT()
+  
+  IF FLAG_OFF(FE_C03GYM0101_COCCON_01) THEN
+    _SE_PLAY( SEQ_SE_BDEMO_01 ) //繭が破れる音
+    _GYM_INSECT_COCCON_OPEN( COCCON_ID_1C )
+    _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
+	  _FLAG_SET( FE_C03GYM0101_COCCON_01 )
+  ENDIF
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _OBJ_ANIME_WAIT()
+}
+EVENT_END
+
+EVENT_START ev_prog_c03gym0101_gate_out_3d
+{
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _OBJ_ANIME_WAIT()
+}
+EVENT_END
+
 
 //--------------------------------------------------------------
 //ゲートインアニメ
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_player_gatein_u
-  _ANIME_DATA AC_DIR_R,1
-  _ANIME_DATA AC_DIR_D,1
-  _ANIME_DATA AC_DIR_L,1
-  _ANIME_DATA AC_DIR_U,1
-  _ANIME_DATA AC_DIR_R,1
-  _ANIME_DATA AC_DIR_D,1
-  _ANIME_DATA AC_DIR_L,1
-  _ANIME_DATA AC_DIR_U,1
-  _ANIME_DATA AC_DIR_R,1
-  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_STAY_WALK_U_2F,2
   _ANIME_DATA AC_DIR_PAUSE_ON,1
   _ANIME_DATA AC_ANM_PAUSE_ON,1
   _ANIME_DATA AC_WALK_U_2F,2
@@ -138,21 +156,9 @@ _ANIME_LABEL  anm_player_gatein_u
   _ANIME_DATA AC_ANM_PAUSE_OFF,1
   _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL  anm_player_gatein_d
-  _ANIME_DATA AC_WALK_D_8F,2
-  _ANIME_DATA ACMD_END,0
-
 _ANIME_LABEL  anm_player_gatein_l
-  _ANIME_DATA AC_DIR_U,1
-  _ANIME_DATA AC_DIR_R,1
-  _ANIME_DATA AC_DIR_D,1
-  _ANIME_DATA AC_DIR_L,1
-  _ANIME_DATA AC_DIR_U,1
-  _ANIME_DATA AC_DIR_R,1
-  _ANIME_DATA AC_DIR_D,1
-  _ANIME_DATA AC_DIR_L,1
-  _ANIME_DATA AC_DIR_U,1
-  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_STAY_WALK_L_2F,2
   _ANIME_DATA AC_DIR_PAUSE_ON,1
   _ANIME_DATA AC_ANM_PAUSE_ON,1
   _ANIME_DATA AC_WALK_L_2F,2
@@ -161,26 +167,34 @@ _ANIME_LABEL  anm_player_gatein_l
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gatein_r
-  _ANIME_DATA AC_WALK_R_8F,2
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_player_gateout_u
-  _ANIME_DATA AC_WALK_U_2F,2
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_STAY_WALK_R_2F,2
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA AC_ANM_PAUSE_ON,1
+  _ANIME_DATA AC_WALK_R_2F,2
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA AC_ANM_PAUSE_OFF,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gateout_d
   _ANIME_DATA AC_JUMP_D_2G_16F,1
-//  _ANIME_DATA AC_WALK_D_8F,2
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gateout_l
   _ANIME_DATA AC_JUMP_L_2G_16F,1
-//  _ANIME_DATA AC_WALK_L_2F,2
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gateout_r
   _ANIME_DATA AC_JUMP_R_2G_16F,1
-//  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_player_gateout_4x
+  _ANIME_DATA AC_JUMP_U_1G_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gateout_map_change
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_JUMP_D_2G_16F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------
@@ -197,50 +211,6 @@ _ANIME_LABEL  anm_player_vanish_off
 //==============================================================
 ///イベント呼び出し
 //==============================================================
-
-/***************************************************************/
-/*
-  ゲート1C ゲートアウトイベント
-*/
-/***************************************************************/
-EVENT_START ev_reserve_c03gym0101_gateout_1c
-{
-  //マップフェードイン
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-
-  IF FLAG_OFF(FE_C03GYM0101_COCCON_01) THEN
-    _SE_PLAY( SEQ_SE_BDEMO_01 ) //繭が破れる音
-    _GYM_INSECT_COCCON_OPEN( COCCON_ID_1C )
-    _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
-	  _FLAG_SET( FE_C03GYM0101_COCCON_01 )
-  ENDIF
-
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
-  _OBJ_ANIME_WAIT()
-}
-EVENT_END
-
-/***************************************************************/
-/*
-  ゲート3D ゲートアウトイベント
-*/
-/***************************************************************/
-EVENT_START ev_reserve_c03gym0101_gateout_3d
-{
-  //マップフェードイン
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-  
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
-  _OBJ_ANIME_WAIT()
-}
-EVENT_END
-
-_ANIME_LABEL  anm_player_gateout_map_change
-  _ANIME_DATA AC_WALK_D_8F,2
-  _ANIME_DATA ACMD_END,0
-
 
 /***************************************************************/
 /*

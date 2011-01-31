@@ -940,16 +940,11 @@
   DEF_CMD( EvCmdPersonState_SetDateEnd, EV_SEQ_PERSON_SET_SECRET_DATE_END )
  
   //虫ジム
-  DEF_CMD( EvCmdGymInsect_CocconOpen, EV_SEQ_GYM_INSECT_COCCON_OPEN)
+  DEF_CMD( EvCmdGymInsect_CocconOpen, EV_SEQ_GYM_INSECT_COCCON_OPEN )
   NO_CMD()
   NO_CMD()
   NO_CMD()
   
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
   END_CMD
   //スクリプトコマンドテーブル終了
 
