@@ -52,6 +52,11 @@ typedef enum
 	APP_COMMON_BARICON_CHECK_ON_PASSIVE,
 
   APP_COMMON_BARICON_MAX,
+
+  // 検索ボタンは別リソースになっています
+  APP_COMMON_BARICON_SEARCH     = 0,
+  APP_COMMON_BARICON_ON_PASSIVE,
+
 }APP_COMMON_BARICON;
 
 //バーのボタンのパレット本数

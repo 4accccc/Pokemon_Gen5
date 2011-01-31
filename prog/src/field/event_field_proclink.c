@@ -2424,13 +2424,35 @@ static RETURNFUNC_RESULT FMenuReturnProc_MedalBox(PROCLINK_WORK* wk,void* param_
 
   if( wk->param->call == EVENT_PROCLINK_CALL_MEDALBOX )
   { 
-    return RETURNFUNC_RESULT_RETURN;
+    //直接呼ばれた
+    switch( p_param->result )
+    { 
+    case MB_RESULT_RETURN: //何もせず戻る
+      return RETURNFUNC_RESULT_RETURN;
+    case MB_RESULT_EXIT:    //何もせず終了する
+      return RETURNFUNC_RESULT_EXIT;
+    default:
+      GF_ASSERT(0);
+      return RETURNFUNC_RESULT_EXIT;
+    }
   }
-  else
-  {
-    wk->next_type = EVENT_PROCLINK_CALL_BAG;
-    return RETURNFUNC_RESULT_NEXT;
+  else if( wk->param->call == EVENT_PROCLINK_CALL_BAG )
+  { 
+    //バッグから呼ばれた
+    switch( p_param->result )
+    { 
+    case MB_RESULT_RETURN: //何もせず戻る
+      wk->next_type = EVENT_PROCLINK_CALL_BAG;
+      return RETURNFUNC_RESULT_NEXT;
+    case MB_RESULT_EXIT:    //何もせず終了する
+      return RETURNFUNC_RESULT_EXIT;
+    default:
+      GF_ASSERT(0);
+      return RETURNFUNC_RESULT_EXIT;
+    }
   }
+
+  return RETURNFUNC_RESULT_RETURN;
 }
 
 

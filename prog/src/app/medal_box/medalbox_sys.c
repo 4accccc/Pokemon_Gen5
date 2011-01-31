@@ -19,9 +19,9 @@
 
 #include "sound/pm_sndsys.h"      // サウンド
 
-#include "print/printsys.h"
 #include "print/gf_font.h"        // フォント
 #include "font/font.naix"         // フォント
+#include "print/wordset.h"        // ワードセット
 
 #include "medalbox_gra.naix"      // グラフィックアーカイブ
 
@@ -29,10 +29,14 @@
 #include "app/app_menu_common.h"  // 共通素材
 
 #include "msg/msg_medalname.h"    // for MDL_NAME_HINT_000
+#include "msg/msg_medalbox.h"     // for MSG_MEDALBOX_～
 
 #include "app/medalbox_sys.h"
 #include "medalbox_data_sys.h"
 #include "medalbox_sys_local.h"
+
+#include "app/app_taskmenu.h"     // アプリケーションタスクメニュー
+#include "system/bmp_winframe.h"  // BMPウィンドウフレーム
 
 FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 
@@ -50,20 +54,20 @@ FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 //-------------------------------------
 ///	リソース初期位置
 //=====================================
-#define UI_SCROLBER_POS_X (24*2+7*8+12)
+#define UI_SCROLBER_POS_X (122)
 #define UI_SCROLBER_POS_Y (180)
 
 #define UI_SCROLBTN_POS_X (UI_SCROLBER_POS_X - 7*8)
 #define UI_SCROLBTN_POS_Y (180)
 
-#define UI_HUTA_POS_X     (256/2)
-#define UI_HUTA_POS_Y     (192/2)
+#define UI_CAP_POS_X     (256/2)
+#define UI_CAP_POS_Y     (192/2)
 
-#define UI_EXIT_POS_X     (256-24)
-#define UI_EXIT_POS_Y     (192-24)
+#define UI_RETURN_POS_X     (256-24)
+#define UI_RETURN_POS_Y     (192-24)
 
-#define UI_RETURN_POS_X   (256-24*2)
-#define UI_RETURN_POS_Y   (192-24)
+#define UI_EXIT_POS_X   (256-24*2)
+#define UI_EXIT_POS_Y   (192-24)
 
 #define UI_CURSOR_RIGHT_POS_X (256-24*3)
 #define UI_CURSOR_RIGHT_POS_Y (192-24)
@@ -74,6 +78,9 @@ FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 #define UI_SEARCH_POS_X   (0)
 #define UI_SEARCH_POS_Y   (192-24)
 
+#define FONTBORD_SCROLL_SPEED   (0x5000)
+#define CAP_SCROLL_SPEED        (0x5000)
+#define MONITORE_SCROLL_SPEED   (0x5000)
 
 //-------------------------------------
 ///	パレット定義
@@ -81,6 +88,18 @@ FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 #define MEDALOBJ_PALETTENUM_MEDAL       (6)       // メダルOBJのパレット使用本数
 #define MEDALOBJ_PALETTENUM_UI          (4)       // UIOBJのパレット使用本数
 #define MEDALOBJ_PALETTENUM_COMMON_UI   (4)       // COMMONUIOBJのパレット使用本数
+#define PAGEUNIT_PAL                    (0)       // ページユニットのデフォルトパレット
+#define PUSSHMEDAL_NUMBER_PAL           (8)       // イチオシボタン時の文字色変更用パレット
+
+// MAIN
+#define SYSTEM_FONT_PAL                 (11)      // フォント用パレット
+#define APP_WINFRAME_USE_PALETE         (12)      // ウィンドウフレーム用パレット
+#define APP_TASKMENU_USE_PALETE         (13)      // アプリケーションタスクメニューが使用するパレット(2本)
+#define MEDAL_NAME_BMPWIN_PAL_NUM       (15)      // メダル名BMPWIN用パレットナンバー
+
+// SUB
+#define MEDAL_INFO_BMPWIN_PAL_NUM       (15)      // メダル情報BMPWIN用パレットナンバー
+
 
 //-------------------------------------
 ///	アプリ設定
@@ -88,20 +107,43 @@ FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 #define MEDALBOX_DRAW_PAGE_NUM_LIST     (5)       // ボックスモードが一覧の時に表示するページ数
 #define MEDALBOX_DRAW_PAGE_NUM_NORMAL   (3)       // ボックスモードがノーマルに表示するページ数
 
-#define HUTA_WIDTH                      (80)      // フタの幅
+#define FONTBORD_WIDTH                  (184)     // 文字盤の幅
+#define CAP_WIDTH                       (80)      // フタの幅
 #define PAGE_WIDTH                      (80)      // ページの幅
+#define MONITOR_HEIGHT                  (192)     // モニター全体の高さ
+#define MONITOR_TOP_HEIGHT              (32)      // モニターの飛び出している部分の高さ
 
 #define NAME_BMPWIN_MAX                 (5)       // メダル名表示用BMPWINの数
 #define MEDAL_NAME_BMPWIN_SIZE_W        (15)      // メダル名表示領域の幅（キャラクタ単位)
 #define MEDAL_NAME_BMPWIN_SIZE_H        (3)       // メダル名表示領域の高さ（キャラクタ単位)
-#define MEDAL_NAME_BMPWIN_PAL_NUM       (15)       // メダル名BMPWIN用パレットナンバー
 #define MEDAL_NAME_BMPWIN_STR_COL_L     (2)       // 文字(Letter)
-#define MEDAL_NAME_BMPWIN_STR_COL_S     (3)       // 影(Shadow)、
+#define MEDAL_NAME_BMPWIN_STR_COL_S     (3)       // 影(Shadow)
 #define MEDAL_NAME_BMPWIN_STR_COL_B     (1)       // 背景色(Background)
 
-#define MEDAL_INFO_BMPWIN_PAL_NUM       (15)      // メダル名BMPWIN用パレットナンバー
+#define MEDAL_INFO_TITLE_DRAW_X         (8)       // タイトル表示位置X
+#define MEDAL_INFO_TITLE_DRAW_Y         (8)       // タイトル表示位置Y
+
 #define MEDAL_INFO_INFO_DRAW_X          (20)      // 説明文表示位置X
 #define MEDAL_INFO_INFO_DRAW_Y          (128)     // 説明文表示位置Y
+
+#define MEDAL_INFO_GETTYPE_DRAW_X       (232)     // 取得タイプ表示位置
+#define MEDAL_INFO_GETTYPE_DRAW_Y       (80)      // 取得タイプ表示位置
+
+#define MEDAL_INFO_DAYTE_DRAW_X         (232)     // 日付
+#define MEDAL_INFO_DAYTE_DRAW_Y         (96)      // 日付
+
+#define MEDAL_INFO_NUMERATOR_DRAW_X     (232-32)  // 分子
+#define MEDAL_INFO_NUMERATOR_DRAW_Y     (8)      // 分子
+
+#define MEDAL_INFO_SLASH_DRAW_X         (232-24)  // スラッシュ
+#define MEDAL_INFO_SLASH_DRAW_Y         (8)      // スラッシュ
+
+#define MEDAL_INFO_DENOMINATOR_DRAW_X   (232)     // 分母
+#define MEDAL_INFO_DENOMINATOR_DRAW_Y   (8)      // 分母
+
+#define MEDAL_INFO_NAME_DRAW_X          (232)     // メダル名表示位置X
+#define MEDAL_INFO_NAME_DRAW_Y          (48)      // メダル名表示位置Y
+
 #define MEDAL_INFO_BMPWIN_STR_COL_L     (1)       // 文字(Letter)
 #define MEDAL_INFO_BMPWIN_STR_COL_S     (2)       // 影(Shadow)、
 #define MEDAL_INFO_BMPWIN_STR_COL_B     (0)       // 背景色(Background)
@@ -111,18 +153,31 @@ FS_EXTERN_OVERLAY(ui_common);     // オーバーレイ
 #define UP_MEDAL_POS_X                  (44)      // 上画面に表示するメダルの位置
 #define UP_MEDAL_POS_Y                  (70)      // 上画面に表示するメダルの位置
 
-#define DIR_KEY_SCROLL_SPEED  (0x7000)  // ページスクロールスピード
-#define DIR_KEY_SCROLL_COUNT  (1)     // 方向キーでスクロールするページ数
-#define LR_KEY_SCROLL_SPEED   (0x20000)  // ページスクロールスピード
-#define LR_KEY_SCROLL_COUNT   (3)     // LRキーでスクロールするページ数
-#define MEDAL_HIT_RADIUS      (16)    // メダルの半径（当たり判定に使用)
+#define DIR_KEY_SCROLL_SPEED  (0x7000)    // ページスクロールスピード
+#define DIR_KEY_SCROLL_COUNT  (1)         // 方向キーでスクロールするページ数
+#define LR_KEY_SCROLL_SPEED   (0x20000)   // ページスクロールスピード
+#define LR_KEY_SCROLL_COUNT   (3)         // LRキーでスクロールするページ数
+#define MEDAL_HIT_RADIUS      (16)        // メダルの半径（当たり判定に使用)
+
+#define AUTO_SCROLL_SPEED     (0x20000)   // ページスクロールスピード
+#define SCROLLBAR_LENGTH      (112)       // スクロールバーの長さ
+
+#define MENU_NO_USE           (msg_medalbox_max)       // 使用しないメニュー用ID
+#define SEARCH_MENU_MAX       (8)         // メニューの最大数(ソートのタイプ＋やめる、モードチェンジ)
+
+#define PUSHMEDAL_BUTTON_MAX  (5)         // 一押し登録ボタンの数
+#define PUSHMEDAL_BUTTON_H    (32)        // 一押しボタンの高さ
+#define PUSHMEDAL_BUTTON_W    (32)        // 一押しボタンの幅
+#define PUSUMEDAL_INFO_FRAME  (60*3)      // イチオシ登録確認メッセージの表示時間
+#define NEW_EFFECT_RANGE      (26)        // 新品エフェクトの出る範囲
+#define NEW_EFFECT_FREQUENTLY (1)         // 新エフェクトの出る頻度(大きいほど出にくい)
 
 //-------------------------------------
 ///	VRAM設定
 //=====================================
 static const GFL_DISP_VRAM sc_vramSetTable =
 {
-	GX_VRAM_BG_128_A,					// メイン2DエンジンのBG
+	GX_VRAM_BG_128_A,					  // メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 	GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
 	GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
@@ -159,9 +214,9 @@ typedef enum
 //=====================================
 typedef enum
 {
-  MEDALBOXSYS_BG_PRIORITY_FONT_M     = 0,
+  MEDALBOXSYS_BG_PRIORITY_ETC_M       = 0,
+  MEDALBOXSYS_BG_PRIORITY_FONT_M,
   MEDALBOXSYS_BG_PRIORITY_FONTBORD_M,
-  MEDALBOXSYS_BG_PRIORITY_ETC_M,
   MEDALBOXSYS_BG_PRIORITY_PAGEUNIT_M,
 
   MEDALBOXSYS_BG_PRIORITY_EFFECTS_S   = 0,
@@ -175,8 +230,11 @@ typedef enum
 //=====================================
 typedef enum
 {
-  MEDALBOXSYS_OBJ_PRIORITY_UI         = 0,
-  MEDALBOXSYS_OBJ_PRIORITY_MEDAL      = 2,
+  MEDALBOXSYS_OBJ_PRIORITY_UI         = 2,
+  MEDALBOXSYS_OBJ_PRIORITY_MEDAL      = 3,
+  MEDALBOXSYS_OBJ_PRIORITY_NEWEFFETC  = 3,
+  MEDALBOXSYS_OBJ_PRIORITY_CURSOR     = 3,
+  MEDALBOXSYS_OBJ_PRIORITY_UP_MEDAL   = 1,
 }MEDALBOXSYS_OBJ_PRIORITY;
 
 
@@ -224,8 +282,17 @@ typedef enum
 	MEDALBOXSYS_OBJ_CLWK_SCROLBER,
 	MEDALBOXSYS_OBJ_CLWK_CURSOR,
 	MEDALBOXSYS_OBJ_CLWK_ICHIOSHI,
-	MEDALBOXSYS_OBJ_CLWK_KIRAKIRA,
-	MEDALBOXSYS_OBJ_CLWK_HUTA,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_1,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_2,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_3,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_4,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_5,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_6,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_7,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_8,
+	MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_9,
+	MEDALBOXSYS_OBJ_CLWK_CAP,
 	MEDALBOXSYS_OBJ_CLWK_RETURN,
   MEDALBOXSYS_OBJ_CLWK_CURSOR_LEFT,
   MEDALBOXSYS_OBJ_CLWK_CURSOR_RIGHT,
@@ -234,10 +301,11 @@ typedef enum
 	MEDALBOXSYS_OBJ_CLWK_UPMEDAL,         // 上画面用メダルOBJ
 	MEDALBOXSYS_OBJ_CLWK_MAX,
 	MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX      = MEDALBOXSYS_OBJ_CLWK_MEDAL25 + 1 ,// メダルのセルID最大数
-	MEDALBOXSYS_OBJ_UI_CLWK_MAX         = MEDALBOXSYS_OBJ_CLWK_HUTA + 1,    // UIセルワークの管理ID
+	MEDALBOXSYS_OBJ_UI_CLWK_MAX         = MEDALBOXSYS_OBJ_CLWK_CAP + 1,    // UIセルワークの管理ID
 	MEDALBOXSYS_OBJ_COMMON_CLWK_MAX     = MEDALBOXSYS_OBJ_CLWK_EXIT + 1,    // コモンUIセルワークの管理ID
 }MEDALBOXSYS_GRAPHIC_OBJ_CLWK ;
 
+#define NEW_EFFETC_MAX      (MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_9-MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+1) // 新品エフェクトの最大数
 #define MEDAL_HIT_TABLE_MAX (MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX+1-PAGE_MEDAL_MAX-PAGE_MEDAL_MAX)  // 当たり判定テーブルの数(最初の5枚と最後の5枚には当たり判定がない)
 
 //-------------------------------------
@@ -276,7 +344,7 @@ static const struct
 		{
 			0, 0, 0x1000, 0,
 			GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x128,
+			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
 			GX_BG_EXTPLTT_01, MEDALBOXSYS_BG_PRIORITY_ETC_M, 0, 0, FALSE
 		},
 		GFL_BG_MODE_TEXT
@@ -298,7 +366,7 @@ static const struct
 		{
 			0, 0, 0x1000, 0,
 			GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,
 			GX_BG_EXTPLTT_01, MEDALBOXSYS_BG_PRIORITY_FONT_M, 0, 0, FALSE
 		},
 		GFL_BG_MODE_TEXT
@@ -310,7 +378,7 @@ static const struct
 		GFL_BG_FRAME0_S,
 		{
 			0, 0, 0x1000, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x128,
 			GX_BG_EXTPLTT_01, MEDALBOXSYS_BG_PRIORITY_MONITOR_S, 0, 0, FALSE
 		},
@@ -379,9 +447,9 @@ static const struct
 }	sc_ichioshi_pos[PAGE_MEDAL_MAX]	=
 {
   { 224      , 24       },
-  { 224 + 24 , 24 + 32  },
+  { 224 + 16 , 24 + 32  },
   { 224      , 24 + 64  },
-  { 224 + 24 , 24 + 96  },
+  { 224 + 16 , 24 + 96  },
   { 224      , 24 + 128 },
 };
 
@@ -445,19 +513,19 @@ static const GFL_UI_TP_HITTBL sc_ui_hittbl_trg[UI_HIT_TABLE_TRG_MAX] =
 };
 
 // ========================
-// UI用当たり判定テーブル(トリガーボタン)
+// ユニット上の数字位地（一桁目・キャラ単位)
 // ========================
-static const GFL_UI_TP_HITTBL sc_ui_hittbl_cont[UI_HIT_TABLE_CONT_MAX] =
+static const struct
 {
-  // UI_HIT_TABLE_CONT_SCROLL_BUTTON
-  { 
-    UI_SCROLBTN_POS_Y ,
-    UI_SCROLBTN_POS_Y + 24 ,
-    UI_SCROLBTN_POS_X ,
-    UI_SCROLBTN_POS_X +24, 
-  }, 
-  // 終了コード
-  { GFL_UI_TP_HIT_END , 0 , 0 , 0 },
+  s32 x;
+  s32 y;
+}	sc_unit_number_pos[PAGE_MEDAL_MAX]	=
+{
+  { 8 , 2 },
+  { 2 , 6 },
+  { 8 , 10 },
+  { 2 , 14 },
+  { 8 , 18 },
 };
 
 //=============================================================================
@@ -479,12 +547,14 @@ typedef struct {
   u32							  obj_res[OBJRESID_MAX];
   GFL_BMPWIN        *p_name_win;
   GFL_BMPWIN        *p_info_win;
+  GFL_BMPWIN        *p_menu_win;
 
   // メッセージ関連
-	GFL_FONT			*p_font;
-	GFL_MSGDATA		*p_mdlname_msg;
-	GFL_MSGDATA		*p_mdlinfo_msg;
-	GFL_MSGDATA		*p_mdlhelp_msg;
+	GFL_FONT			    *p_font;
+	GFL_MSGDATA		    *p_app_msg;    // 共通
+	GFL_MSGDATA		    *p_mdlname_msg;   // メダル
+	GFL_MSGDATA		    *p_mdlinfo_msg;
+	GFL_MSGDATA		    *p_mdlhelp_msg;
 
   // アプリ関連
   u8                sub_seq;
@@ -496,19 +566,111 @@ typedef struct {
   SCROLL_DIR        scroll_dir;     // スクロール方向
   s32               scroll_count;   // スクロール回数
   u32               scroll_speed;   // スクロールスピード
-  KEY_MODE          key_mode;       // キーモード
   PAGEDATA          page[ MEDALBOX_DRAW_PAGE_NUM_LIST ];   // 表示しているページデータ
   u8                cursor_pos;         // カーソル位置
   CURSOR_STATE      cursor_state;       // カーソル状態
   CURSOR_STATE      cursor_state_tmp;   // カーソル状態テンポラリ
-  
+  PRINT_QUE         *p_print_que;       // プリントキュー
+
   fx32              scroll_button_pos;  // スクロールバーの位置(初期座標からのオフセット)
+  APP_TASKMENU_RES  *p_taskmenu_res;        // タスクメニュー用リソース
+  APP_TASKMENU_ITEMWORK menulist[SEARCH_MENU_MAX];
+  APP_TASKMENU_WORK *p_menu_wk;
+  s32               menu_cnt;                 // メニューの数
+
+  fx32              cap_offset;           // フォントボードの表示位置
+  fx32              monitor_offset;       // フォントボードの表示位置
+  fx32              fontbord_offset;      // フォントボードの表示位置
+
+  u32               tmp_frame;            // サブシーケンス用フレーム数テンポラリ
+
+  PUSHMEDAL_TYPE    pushmedal_set_type;   // イチオシボタンの設定方法
+
+  s32               before_x;             // 1フレーム前のｘ座標
+  s32               slide_length;         // スライド量
+  BOOL              is_slide_touch;       // 画面をタッチしてのスライド中
 #ifdef PM_DEBUG
   // デバッグ
   u8              debgu_seq;
 #endif
 
 }MEDALBOXSYS_WORK;
+
+//-------------------------------------
+///	BG面設定
+//=====================================
+static const struct 
+{
+  u32 msgid[SEARCH_MENU_MAX];
+}	sc_menu_data[SORT_MODE_MAX]	=
+{
+  // SORT_MODE_DEFAULT
+  {
+    MENU_MSG_MODE_CHANGE,
+    MENU_MSG_ONLY_TITLE,
+    MENU_MSG_ONLY_HINT,
+    MENU_MSG_TYPE,
+    MENU_MSG_NAME,
+    MENU_MSG_NEW,
+    MENU_MSG_CANCEL,
+    MENU_NO_USE,
+  },
+  // SORT_MODE_NEW
+  {
+    MENU_MSG_MODE_CHANGE,
+    MENU_MSG_ONLY_TITLE,
+    MENU_MSG_ONLY_HINT,
+    MENU_MSG_TYPE,
+    MENU_MSG_NAME,
+    MENU_MSG_DEFAULT,
+    MENU_MSG_CANCEL,
+    MENU_NO_USE,
+  },
+  // SORT_MODE_TITLE_ONLY
+  {
+    MENU_MSG_MODE_CHANGE,
+    MENU_MSG_ONLY_HINT,
+    MENU_MSG_TYPE,
+    MENU_MSG_NAME,
+    MENU_MSG_NEW,
+    MENU_MSG_DEFAULT,
+    MENU_MSG_CANCEL,
+    MENU_NO_USE,
+  },  
+  // SORT_MODE_HINT_ONLY
+  {
+    MENU_MSG_MODE_CHANGE,
+    MENU_MSG_ONLY_TITLE,
+    MENU_MSG_TYPE,
+    MENU_MSG_NAME,
+    MENU_MSG_NEW,
+    MENU_MSG_DEFAULT,
+    MENU_MSG_CANCEL,
+    MENU_NO_USE,
+  },  
+  // SORT_MODE_NAME
+  {
+    MENU_MSG_MODE_CHANGE,
+    MENU_MSG_ONLY_TITLE,
+    MENU_MSG_ONLY_HINT,
+    MENU_MSG_TYPE,
+    MENU_MSG_NEW,
+    MENU_MSG_DEFAULT,
+    MENU_MSG_CANCEL,
+    MENU_NO_USE,
+  },  
+  // SORT_MODE_TYPE
+  {
+    MENU_MSG_MODE_CHANGE,
+    MENU_MSG_ONLY_TITLE,
+    MENU_MSG_ONLY_HINT,
+    MENU_MSG_NAME,
+    MENU_MSG_NEW,
+    MENU_MSG_DEFAULT,
+    MENU_MSG_CANCEL,
+    MENU_NO_USE,
+  },  
+};
 
 //=============================================================================
 /**
@@ -527,6 +689,7 @@ static void MDLSYS_DeleteCommonData( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_GraphicInit( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_BGDelete( MEDALBOXSYS_WORK *p_wk );
+static void MDLSYS_EFFETC_ReLoad( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_OBJDelete( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_UI_Init( MEDALBOXSYS_WORK *p_wk );
@@ -547,21 +710,25 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk );
 static GFL_PROC_RESULT MDLSYS_MAIN_Main( MEDALBOXSYS_WORK *p_wk );
 static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk );
 static void MakeMedalHitTbl( MEDALBOXSYS_WORK *p_wk ,GFL_UI_TP_HITTBL medal_hittbl[] );
+static void MakePushMedalButtonHitTbl( MEDALBOXSYS_WORK *p_wk ,GFL_UI_TP_HITTBL button_hittbl[] );
 static void GetCursorPos( MEDALBOXSYS_WORK *p_wk , u8 cursor_pos , GFL_CLACTPOS *p_pos );
 static void SetCursor( MEDALBOXSYS_WORK *p_wk , u8 cursor_pos );
 static void SetCursorState( MEDALBOXSYS_WORK *p_wk , CURSOR_STATE state );
+static void NewEffectMain( MEDALBOXSYS_WORK *p_wk );
+static void SlideTouchCheck( MEDALBOXSYS_WORK *p_wk );
+static BOOL SlideTouchMain( MEDALBOXSYS_WORK *p_wk );
 
 //=============================================================================
 // ページ切替シーケンスメイン
 //=============================================================================
 static GFL_PROC_RESULT MDLSYS_SCROLLPAGE_Main( MEDALBOXSYS_WORK *p_wk );
 static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed );
-static void PageRefresh( MEDALBOXSYS_WORK *p_wk );
+static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name );
 static void SetScrollDirection( MEDALBOXSYS_WORK *p_wk , SCROLL_DIR dir );
 static void DrawMedalName( MEDALBOXSYS_WORK *p_wk , MedalID medal_id , u8 DrawPos );
 static void ClearMedalName( MEDALBOXSYS_WORK *p_wk );
 static void TransMedalName( MEDALBOXSYS_WORK *p_wk );
-static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st );
+static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , INFOTYPE info_type );
 static PRINTSYS_LSB GetMedalNameFontColor( void );
 static PRINTSYS_LSB GetMedalInfoFontColor( void );
 static u8 GetCursolSelectUnitPos( MEDALBOXSYS_WORK *p_wk );
@@ -575,14 +742,41 @@ static void SetScrollSpeed( MEDALBOXSYS_WORK *p_wk , u32 speed );
 static GFL_PROC_RESULT MDLSYS_SCROLLBUTTON_Main( MEDALBOXSYS_WORK *p_wk );
 
 //=============================================================================
+// 一押しボタン登録メイン
+//=============================================================================
+static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk );
+static void SetPushMedalData( MEDALBOXSYS_WORK *p_wk ,MedalID medal_id , PUSHMEDAL_TYPE set_type );
+
+//=============================================================================
+// モードチェンジ
+//=============================================================================
+static GFL_PROC_RESULT MDLSYS_MODECHANGE_Main( MEDALBOXSYS_WORK *p_wk );
+
+//=============================================================================
+// 戻るボタンシーケンス
+//=============================================================================
+static GFL_PROC_RESULT MDLSYS_RETURNBUTTON_Main( MEDALBOXSYS_WORK *p_wk );
+
+//=============================================================================
 // 終了ボタンシーケンス
 //=============================================================================
 static GFL_PROC_RESULT MDLSYS_EXITBUTTON_Main( MEDALBOXSYS_WORK *p_wk );
 
 //=============================================================================
+// メニューシーーケンス
+//=============================================================================
+static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk );
+static void OpenSearchMenu( MEDALBOXSYS_WORK *p_wk );
+
+//=============================================================================
+// メニューシーーケンス
+//=============================================================================
+static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk );
+
+//=============================================================================
 // メダルシステム
 //=============================================================================
-static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 unit_pos);
+static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 unit_pos , BOOL is_draw_medal_name);
 static void MDLSYS_GetDrawMedalPos( int num , GFL_CLACTPOS* p_pos );
 static void MDLSYS_GetDrawPushMedalButtonPos( int num , GFL_CLACTPOS* p_pos );
 
@@ -654,6 +848,12 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcInit( GFL_PROC * p_proc, int * seq , void
   // メダルの初期化
   MDLSYS_MedalInit( p_wk );
 
+  // 終了方法を調べてカーソルを表示する
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+  {
+    SetCursor( p_wk , 0 );
+  }
+  
 #ifdef PM_DEBUG
   DBEG_MDLSYS_DebugInit( p_wk );
 #endif
@@ -683,10 +883,10 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
   // デバッグ関数
   DBEG_MDLSYS_DebugMain( p_wk );
   
-  if( trg & PAD_BUTTON_START )
-  {
-    return GFL_PROC_RES_FINISH;
-  }
+//  if( trg & PAD_BUTTON_START )
+//  {
+//    return GFL_PROC_RES_FINISH;
+//  }
 
 #endif
 
@@ -712,11 +912,35 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
     proc_ret = MDLSYS_SCROLLBUTTON_Main( p_wk );
     break;
 
+  // モードチェンジシーケンス
+  case SEQ_MDLBOX_MODE_CHANGE:
+    proc_ret = MDLSYS_MODECHANGE_Main( p_wk );
+    break;
+
+  // 戻るボタン
+  case SEQ_MDLBOX_RETURN:
+    proc_ret = MDLSYS_RETURNBUTTON_Main( p_wk );
+    break;
+
   // 終了シーケンス
   case SEQ_MDLBOX_EXIT:
     proc_ret = MDLSYS_EXITBUTTON_Main( p_wk );
     break;
 
+  // メニュー用シーケンス
+  case SEQ_MDLBOX_MENU:
+    proc_ret = MDLSYS_MENU_Main( p_wk );
+    break;
+
+  // ソートシーケンス
+  case SEQ_MDLBOX_SORT:
+    proc_ret = MDLSYS_SORT_Main( p_wk );
+    break;
+
+  // 一押しメダル登録シーケンス
+  case SEQ_PUSUMEDALBUTTON:
+    proc_ret = MDLSYS_PUSHMEDALBUTTON_Main( p_wk );
+    break;
 
   default:
     {
@@ -747,6 +971,8 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
 static GFL_PROC_RESULT MEDALBOXSYS_ProcTerm( GFL_PROC * p_proc, int * seq , void *p_param_adrs, void *p_wk_adrs )
 {
   MEDALBOXSYS_WORK *p_wk = p_wk_adrs;
+  
+  MEDALDATASYS_SaveMedalData( &p_wk->medal_data , p_wk->p_param->p_gamedata , p_wk->heapID );
 
   // VBLANKTask消去
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
@@ -791,6 +1017,9 @@ static void MDLSYS_MakeCommonData( MEDALBOXSYS_WORK *p_wk )
 	// フォント
 	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
+  // アプリケーション用メッセージ
+  p_wk->p_app_msg =GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_medalbox_dat, heapID );
+
 	// メダル名メッセージデータ
 	p_wk->p_mdlname_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_medalname_dat, heapID );
 
@@ -802,8 +1031,15 @@ static void MDLSYS_MakeCommonData( MEDALBOXSYS_WORK *p_wk )
 
   // メダルデータの生成
   MEDALDATASYS_InitMedalData( &p_wk->medal_data , p_wk->p_param->p_gamedata , p_wk->heapID );
+  
+  // デフォルトの並び順に設定
+  MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_DEFAULT );
 
+  // プリントキューの作成
+  p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
 
+  // スクロールデータの初期化
+  p_wk->monitor_offset = FX32_CONST((-MONITOR_HEIGHT) + MONITOR_TOP_HEIGHT);
 }
 
 //----------------------------------------------------------------------------
@@ -817,10 +1053,18 @@ static void MDLSYS_MakeCommonData( MEDALBOXSYS_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void MDLSYS_DeleteCommonData( MEDALBOXSYS_WORK *p_wk )
 {
+  PRINTSYS_QUE_Delete( p_wk->p_print_que );
+
+  // プリントキューの開放
+  PRINTSYS_QUE_Clear( p_wk->p_print_que );
+  PRINTSYS_QUE_Delete( p_wk->p_print_que );
+  p_wk->p_print_que = NULL;
+
   // メダルデータ
   MEDALDATASYS_DeleteMedalData( &p_wk->medal_data );
 
   // メッセージ
+  GFL_MSG_Delete( p_wk->p_app_msg );
 	GFL_MSG_Delete( p_wk->p_mdlhelp_msg );
 	GFL_MSG_Delete( p_wk->p_mdlinfo_msg );
 	GFL_MSG_Delete( p_wk->p_mdlname_msg );
@@ -884,6 +1128,7 @@ static void MDLSYS_GraphicInit( MEDALBOXSYS_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 {
+  int i;
   HEAPID heapID = p_wk->heapID;
 
 	//初期化
@@ -921,23 +1166,27 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 
     // キャラクターデータ（下画面共通)
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_medalbox_gra_medal_bgd_NCGR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
+        GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
 
     // ページユニット
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd1_NSCR,
 				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 0, 0, FALSE, heapID );
 
+    // メダルユニットはページ1枚左にはみ出している
+    GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) ,GFL_BG_SCROLL_X_SET , PAGE_WIDTH );
+
     // 文字盤
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd2_NSCR,
 				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
-    // 使用パレットの書き換え
-    //GFL_BG_ChangeScreenPalette( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0 , 0 , 32 , 32 , p_wk->medal_data.boxrank + 1 ); 
-    //GFL_BG_LoadScreenReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) );
+
+    // キャラクターデータ（光沢演出用)
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_medalbox_gra_medal_bgd_NCGR,
+        GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, heapID );
 
     // 光沢
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd3_NSCR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, heapID );
-
+        GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, heapID );
+ 
     // ====================================
 		// 上画面(サブ)
     // ====================================
@@ -964,14 +1213,51 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 
 	}
 
+  // フォント用パレットの読み込み
+  {
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+        0x20*SYSTEM_FONT_PAL, 0x20, p_wk->heapID);
+  }
+
   // ブレンド設定
   {
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 ,
-        (GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG3) ,
+        (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ) ,
         15, 15 );
+  }
+
+  // 位置設定
+  {
+    GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+    GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エフェクトリソースをロードする
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MDLSYS_EFFETC_ReLoad( MEDALBOXSYS_WORK *p_wk )
+{
+  ARCHANDLE	*p_handle;
+  p_handle	= GFL_ARC_OpenDataHandle( ARCID_MEDALGRA , p_wk->heapID );
+
+  // キャラクターデータ（光沢演出用)
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_medalbox_gra_medal_bgd_NCGR,
+      GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, p_wk->heapID );
+
+  // 光沢
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd3_NSCR,
+      GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, p_wk->heapID );
+
+  GFL_ARC_CloseDataHandle( p_handle );
+
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -998,6 +1284,11 @@ static void MDLSYS_BGDelete( MEDALBOXSYS_WORK *p_wk )
 			GFL_BG_FreeBGControl( sc_bgsetup[i].frame );
 		}
 	}
+
+  // ブレンド設定
+  {
+    G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,GX_BLEND_PLANEMASK_NONE,31,0);
+  }
 
 	//終了
 	GFL_BMPWIN_Exit();
@@ -1100,6 +1391,9 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
     obj_res[ OBJRESID_COMMONUI_SEARCH_CGR ]     = GFL_CLGRP_CGR_Register( p_handle[ARC_TYPE_COMMON_BUTTON_GRA],
         NARC_app_menu_common_search_button_128k_NCGR , FALSE, CLSYS_DRAW_MAIN, heapID );
     
+    obj_res[ OBJRESID_COMMONUI_SEARCH_CELLANM ] = GFL_CLGRP_CELLANIM_Register( p_handle[ARC_TYPE_COMMON_BUTTON_GRA],
+        NARC_app_menu_common_search_button_128k_NCER, NARC_app_menu_common_search_button_128k_NANR , heapID );
+
     // ======================================
     // アーカイブハンドルの開放
     // ======================================
@@ -1132,6 +1426,7 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
 
         // プライオリティー
         cldata.bgpri = MEDALBOXSYS_OBJ_PRIORITY_MEDAL;
+        cldata.softpri = MEDALBOXSYS_OBJ_SOFT_PRIORITY_BOTTOM;
 
         // ワークの作成
         p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit,
@@ -1188,9 +1483,9 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
       p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH]	= GFL_CLACT_WK_Create( p_wk->p_clunit,
           p_wk->obj_res[OBJRESID_COMMONUI_SEARCH_CGR],
           p_wk->obj_res[OBJRESID_COMMONUI_PLTT],
-          p_wk->obj_res[OBJRESID_COMMONUI_CELLANM],
+          p_wk->obj_res[OBJRESID_COMMONUI_SEARCH_CELLANM],
           &cldata, CLSYS_DEFREND_MAIN, heapID );
-      GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , 0 );
+      GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , APP_COMMON_BARICON_SEARCH);
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH], TRUE );
     }
     
@@ -1202,6 +1497,7 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
       // 位置データの書き込み
       cldata.pos_x = UP_MEDAL_POS_X;
       cldata.pos_y = UP_MEDAL_POS_Y;
+      cldata.bgpri = MEDALBOXSYS_OBJ_PRIORITY_UP_MEDAL;
 
       // ワークの作成
       p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_UPMEDAL]	= GFL_CLACT_WK_Create( p_wk->p_clunit,
@@ -1262,6 +1558,7 @@ static void MDLSYS_OBJDelete( MEDALBOXSYS_WORK *p_wk )
     // 検索ボタン
     {
       GFL_CLGRP_CGR_Release( p_wk->obj_res[OBJRESID_COMMONUI_SEARCH_CGR] );
+      GFL_CLGRP_CELLANIM_Release( p_wk->obj_res[OBJRESID_COMMONUI_SEARCH_CELLANM] );
     }
   }
 
@@ -1288,6 +1585,7 @@ static void MDLSYS_OBJDelete( MEDALBOXSYS_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void MDLSYS_UI_Init( MEDALBOXSYS_WORK *p_wk )
 {
+  int i;
   GFL_CLACTPOS pos;
   GFL_CLWK **p_clwk = p_wk->p_clwk;
 
@@ -1307,6 +1605,7 @@ static void MDLSYS_UI_Init( MEDALBOXSYS_WORK *p_wk )
   GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR] , &pos , CLSYS_DEFREND_MAIN );
   GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR] , 2 );
   SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT );
+  GFL_CLACT_WK_SetBgPri( p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR], MEDALBOXSYS_OBJ_PRIORITY_CURSOR );
 
   // イチオシ
   MDLSYS_GetDrawPushMedalButtonPos( 0 , &pos);
@@ -1316,15 +1615,22 @@ static void MDLSYS_UI_Init( MEDALBOXSYS_WORK *p_wk )
   // キラキラ
   pos.x = 0;
   pos.y = 0;
-  GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_KIRAKIRA] , &pos , CLSYS_DEFREND_MAIN );
-  GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_KIRAKIRA] , 4 );
-   
+  // 新品エフェクト
+  for( i=0 ; i<NEW_EFFETC_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , &pos , CLSYS_DEFREND_MAIN );
+    GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , 4 );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , FALSE );
+    GFL_CLACT_WK_SetBgPri( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i], MEDALBOXSYS_OBJ_PRIORITY_NEWEFFETC );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , TRUE);
+  }
+
   // フタ
-  pos.x = UI_HUTA_POS_X;
-  pos.y = UI_HUTA_POS_Y;
-  GFL_CLACT_WK_SetSoftPri( p_clwk[MEDALBOXSYS_OBJ_CLWK_HUTA] , MEDALBOXSYS_OBJ_SOFT_PRIORITY_TOP );
-  GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_HUTA] , &pos , CLSYS_DEFREND_MAIN );
-  GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_HUTA] , 5 );
+  pos.x = UI_CAP_POS_X;
+  pos.y = UI_CAP_POS_Y;
+  GFL_CLACT_WK_SetSoftPri( p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , MEDALBOXSYS_OBJ_SOFT_PRIORITY_TOP );
+  GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , &pos , CLSYS_DEFREND_MAIN );
+  GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , 5 );
 
    
   // 検索
@@ -1356,7 +1662,7 @@ static void MDLSYS_UI_Init( MEDALBOXSYS_WORK *p_wk )
   pos.y = UI_CURSOR_LEFT_POS_Y;
   GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR_LEFT] , &pos , CLSYS_DEFREND_MAIN );
   GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR_LEFT] , APP_COMMON_BARICON_CURSOR_LEFT );
-
+  
 }
 
 //----------------------------------------------------------------------------
@@ -1444,7 +1750,7 @@ static void MDLSYS_Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs )
 static void MDLSYS_MedalInit( MEDALBOXSYS_WORK *p_wk )
 {
   // ページのリフレッシュ
-  PageRefresh( p_wk );
+  PageRefresh( p_wk ,TRUE);
 }
 
 //----------------------------------------------------------------------------
@@ -1454,12 +1760,14 @@ static void MDLSYS_MedalInit( MEDALBOXSYS_WORK *p_wk )
  *	@param	*p_wk 
  *	@param	draw_page  表示するページ番号 
  *	@param	unit_pos  ページユニットの位置（0~4）
+ *	@param	is_draw_medal_name  メダル名を描画するか
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 unit_pos)
+static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 unit_pos , BOOL is_draw_medal_name)
 {
+  BOOL is_push_medal_draw = FALSE;
   int i;
   PAGEDATA *p_page = &p_wk->page[ unit_pos ];
   MY_MEDALDATA *p_medal_data = &p_wk->medal_data;
@@ -1488,16 +1796,70 @@ static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 uni
         break;
       }
 
-      // メダル名の描画
+      // 左端のみデータを表示する
       if( unit_pos == MEDAL_NAME_DRAW_PAGE )
       {
-        if( p_page->p_medal_st[i]->medal_state == MEDAL_STATE_TITLE_GET )
+        if( p_wk->box_mode == BOXMODE_NORMAL )
         {
-          DrawMedalName( p_wk , p_page->p_medal_st[i]->medal_id , draw_pos % PAGE_MEDAL_MAX ) ;
+          if( is_draw_medal_name == TRUE )
+          {
+
+            // メダル名の描画
+            if( p_page->p_medal_st[i]->medal_state == MEDAL_STATE_TITLE_GET )
+            {
+              DrawMedalName( p_wk , p_page->p_medal_st[i]->medal_id , draw_pos % PAGE_MEDAL_MAX ) ;
+            }
+            else
+            {
+              DrawMedalName( p_wk , MDL_NAME_HINT_000 , draw_pos % PAGE_MEDAL_MAX ) ;
+            }
+
+          }
+          // 一押しボタンの表示
+          if( p_page->p_medal_st[i]->medal_id == p_wk->medal_data.push_medalid && p_wk->box_mode == BOXMODE_NORMAL )
+          {
+            GFL_CLACTPOS pos;
+            MDLSYS_GetDrawPushMedalButtonPos( draw_pos % PAGE_MEDAL_MAX , &pos);
+            GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI] , &pos , CLSYS_DEFREND_MAIN );
+            GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], TRUE );
+            is_push_medal_draw = TRUE;
+          }
         }
-        else
+      }
+
+      // ページユニットに番号を書き込みを書き込み
+      {
+        int draw_num = draw_page*PAGE_MEDAL_MAX + draw_pos % PAGE_MEDAL_MAX + 1; // 1からスタート
+        int n;
+        int dim = 100;
+        for( n=0 ; n < 3 ; n++ ) 
         {
-          DrawMedalName( p_wk , MDL_NAME_HINT_000 , draw_pos % PAGE_MEDAL_MAX ) ;
+          int number = draw_num / dim;
+          s32 x = sc_unit_number_pos[i].x + (PAGE_WIDTH/8)*unit_pos - (2-n); // ページ幅をキャラ単位に直して、桁ごとに移動
+          s32 y = sc_unit_number_pos[i].y;
+          u8  pal_number;
+
+          if( p_page->p_medal_st[i]->medal_id == p_wk->medal_data.push_medalid )
+          {
+            pal_number = PUSSHMEDAL_NUMBER_PAL;
+          }
+          else
+          {
+            pal_number = PAGEUNIT_PAL;
+          }
+          if( number == 0)
+          {
+            // 0は10番目にに配置されている
+            GFL_BG_FillScreen( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 10 , x , y , 1, 1, pal_number );
+          }
+          else
+          {
+            GFL_BG_FillScreen( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), number , x , y , 1, 1, pal_number );
+          }
+
+          // 桁数を下げる
+          draw_num -= (number * dim);
+          dim /= 10;
         }
       }
 
@@ -1508,8 +1870,28 @@ static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 uni
     {
       // 表示しない
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[draw_pos], FALSE );
+      
+      // ページユニットに0番を書き込み
+      {
+        int n;
+        for( n=0 ; n < 3 ; n++ ) 
+        {
+          s32 x = sc_unit_number_pos[i].x + (PAGE_WIDTH/8)*unit_pos - (2-n); // ページ幅をキャラ単位に直して、桁ごとに移動
+          s32 y = sc_unit_number_pos[i].y;
+          
+          GFL_BG_FillScreen( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 10 , x , y , 1, 1, PAGEUNIT_PAL );
+        }
+      }
     }
   }
+   
+  // イチオシボタンを消す
+  if( (is_push_medal_draw == FALSE) && (p_wk->box_mode == BOXMODE_NORMAL) && (unit_pos == MEDAL_NAME_DRAW_PAGE) )
+  {
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
+  }
+
+  GFL_BG_LoadScreenV_Req( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) );
 }
 
 //----------------------------------------------------------------------------
@@ -1585,14 +1967,80 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk )
     {
       // ブラックアウトの開始
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+
+      {
+        GFL_CLACTPOS pos;
+        pos.x = UP_MEDAL_POS_X;
+        pos.y = UP_MEDAL_POS_Y - FX_Whole(p_wk->monitor_offset);
+
+        // 上画面のスクロール
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_UPMEDAL] , &pos , CLSYS_DEFREND_SUB);
+      }
+
       p_wk->sub_seq++;
     }
     break;
   case 1:
     {
+      // フェードの終了待ち
       if( !GFL_FADE_CheckFade() )
       {
         PMSND_PlaySE( SEQ_SE_MD_04 );
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    {
+      BOOL          cap_scroll_end        = FALSE;
+      BOOL          monitor_scroll_end    = FALSE;
+      GFL_CLACTPOS  cap_pos;
+
+      // フタ部分のスクロール
+      p_wk->cap_offset -= CAP_SCROLL_SPEED;
+
+      // フタの位置を設定
+      cap_pos.x = UI_CAP_POS_X + FX_Whole(p_wk->cap_offset);
+      cap_pos.y = UI_CAP_POS_Y;
+
+      // 移動範囲制限
+      if( cap_pos.x < -CAP_WIDTH)
+      {
+        p_wk->cap_offset = FX32_CONST(-CAP_WIDTH);
+        cap_scroll_end = TRUE;
+      }
+
+      p_wk->monitor_offset += MONITORE_SCROLL_SPEED;
+      if( p_wk->monitor_offset > 0 )
+      {
+        p_wk->monitor_offset = 0;
+        monitor_scroll_end = TRUE;
+      }
+
+      // ページユニットのスクロール
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , &cap_pos , CLSYS_DEFREND_MAIN );
+
+      // 上画面のスクロール
+      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+
+      {
+        GFL_CLACTPOS pos;
+        pos.x = UP_MEDAL_POS_X;
+        pos.y = UP_MEDAL_POS_Y - FX_Whole(p_wk->monitor_offset);
+
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_UPMEDAL] , &pos , CLSYS_DEFREND_SUB );
+        
+      }
+ 
+      // 次のシーケンスへ移動
+      if( cap_scroll_end && monitor_scroll_end )
+      {
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
       }
     }
@@ -1616,6 +2064,9 @@ static GFL_PROC_RESULT MDLSYS_MAIN_Main( MEDALBOXSYS_WORK *p_wk )
   // メインキー入力処理
   MainKeyStateCheck( p_wk );
 
+  // 新品エフェクト生成メイン
+  NewEffectMain( p_wk );
+  
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -1636,6 +2087,36 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
   int tp_hit;
 
   // ==========================
+  // タッチスライドでのページ送り判定
+  // ==========================
+  SlideTouchCheck( p_wk );
+
+  // スライド移動量計算
+  SlideTouchMain( p_wk );
+
+  // スクロール移動量でスクロール処理を行う
+  if( p_wk->slide_length < -20 )
+  {
+    SetScrollSpeed( p_wk , DIR_KEY_SCROLL_SPEED );
+    SetScrollCount( p_wk , DIR_KEY_SCROLL_COUNT );
+    SetScrollDirection( p_wk , SCROLL_DIR_LEFT );
+    MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
+    p_wk->slide_length = 0;
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+  }
+
+  // スクロール移動量でスクロール処理を行う
+  if( p_wk->slide_length > 20 )
+  {
+    SetScrollSpeed( p_wk , DIR_KEY_SCROLL_SPEED );
+    SetScrollCount( p_wk , DIR_KEY_SCROLL_COUNT );
+    SetScrollDirection( p_wk , SCROLL_DIR_RIGHT );
+    MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
+    p_wk->slide_length = 0;
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+  }
+
+  // ==========================
   // メダルタッチでのカーソル移動
   // ==========================
   {
@@ -1647,13 +2128,101 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     // ヒットデータの取得
     tp_hit = GFL_UI_TP_HitTrg( medal_hittbl );
 
-    // 当たっていない時と、テーブルエンドのときは判定をしない
+    // 当たっていない時
     if( (tp_hit != GFL_UI_TP_HIT_NONE) )
     {
-      p_wk->key_mode = KEYMODE_TP;
+      GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
       SetCursor( p_wk , tp_hit );
       return;
     }
+  }
+
+  // ==========================
+  // イチオシボタン登録
+  // ==========================
+  {
+    if( p_wk->box_mode == BOXMODE_NORMAL )
+    {
+      GFL_UI_TP_HITTBL button_hittbl[PUSHMEDAL_BUTTON_MAX+1];
+
+      // 一押しボタン登録テーブル
+      MakePushMedalButtonHitTbl( p_wk , button_hittbl );
+
+      // ヒットデータの取得
+      tp_hit = GFL_UI_TP_HitTrg( button_hittbl );
+
+      // 当たっていない時
+      if( (tp_hit != GFL_UI_TP_HIT_NONE) )
+      {
+        u8 unit_pos   = GetCursolSelectUnitPos( p_wk ); // カーソルがどのユニット位置にいるか
+        // メダルがあるかどうかの判定
+        if( p_wk->page[unit_pos].medal_max > tp_hit )
+        {
+          MY_MEDAL_ST *p_medal_st = p_wk->page[unit_pos].p_medal_st[tp_hit];
+          if( p_medal_st->medal_state == MEDAL_STATE_TITLE_GET )
+          {
+            MedalID medal_id = p_medal_st->medal_id;
+            if( medal_id != p_wk->medal_data.push_medalid )
+            {
+              SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_SET );
+            }
+            else
+            {
+              SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_REMOVE );
+            }
+            MDLSYS_SetNextSeq( p_wk , SEQ_PUSUMEDALBUTTON );
+            GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+            return;
+          }
+        }
+        PMSND_PlaySE( SEQ_SE_BEEP );
+      }
+    }
+
+    // イチオシ登録
+    if( trg & PAD_BUTTON_A )
+    {
+      u8 unit_pos   = GetCursolSelectUnitPos( p_wk ); // カーソルがどのユニット位置にいるか
+      u8 curpos_in_page = GetCursolSelectMedalPos( p_wk );
+      // メダルがあるかどうかの判定
+      if( p_wk->page[unit_pos].medal_max > curpos_in_page )
+      {
+        MY_MEDAL_ST *p_medal_st = p_wk->page[unit_pos].p_medal_st[curpos_in_page];
+        if( p_medal_st->medal_state == MEDAL_STATE_TITLE_GET )
+        {
+          MedalID medal_id = p_medal_st->medal_id;
+          if( medal_id != p_wk->medal_data.push_medalid )
+          {
+            SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_SET );
+          }
+          else
+          {
+            SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_REMOVE );
+          }
+          MDLSYS_SetNextSeq( p_wk , SEQ_PUSUMEDALBUTTON );
+          GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+          return;
+        }
+        else
+        {
+          PMSND_PlaySE( SEQ_SE_BEEP );
+        }
+      }
+    }
+  }
+
+  // キャンセル
+  if( trg & PAD_BUTTON_X )
+  {
+    MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_EXIT );
+    GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+  }
+
+  // 戻る
+  if( trg & PAD_BUTTON_B )
+  {
+    MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_RETURN );
+    GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
   }
 
   // ==========================
@@ -1666,6 +2235,8 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     case UI_HIT_TABLE_TRG_SEARCH:
       {
         ONOUE_Printf("UI_HIT_TABLE_TRG_SEARCH\n");
+        MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MENU );
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
       }
       return;
     case UI_HIT_TABLE_TRG_CURSOR_LEFT:
@@ -1675,7 +2246,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
         SetScrollCount( p_wk , DIR_KEY_SCROLL_COUNT );
         SetScrollDirection( p_wk , SCROLL_DIR_LEFT );
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
-        p_wk->key_mode = KEYMODE_TP;
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
       }
       return;
     case UI_HIT_TABLE_TRG_CURSOR_RIGHT:
@@ -1685,29 +2256,50 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
         SetScrollCount( p_wk , DIR_KEY_SCROLL_COUNT );
         SetScrollDirection( p_wk , SCROLL_DIR_RIGHT );
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
-        p_wk->key_mode = KEYMODE_TP;
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
       }
       return;
     case UI_HIT_TABLE_TRG_RETURN:
       {
         ONOUE_Printf("UI_HIT_TABLE_TRG_RETURN\n");
+        MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_RETURN );
+        GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       }
       return;
     case UI_HIT_TABLE_TRG_EXIT:
       {
         ONOUE_Printf("UI_HIT_TABLE_TRG_EXIT\n");
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_EXIT );
-        p_wk->key_mode = KEYMODE_TP;
+        GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       }
       return;
     }
   }
   
   // ==========================
-  // タッチでのUI操作(トリガー)
+  // タッチでのUI操作(べた入力)
   // ==========================
   {
-    tp_hit = GFL_UI_TP_HitCont( sc_ui_hittbl_cont );
+    // ========================
+    // UI用当たり判定テーブル(トリガーボタン)
+    GFL_UI_TP_HITTBL ui_hittbl_cont[UI_HIT_TABLE_CONT_MAX] =
+    {
+      // UI_HIT_TABLE_CONT_SCROLL_BUTTON
+      { 
+        UI_SCROLBTN_POS_Y ,
+        UI_SCROLBTN_POS_Y + 24,
+        UI_SCROLBTN_POS_X ,
+        UI_SCROLBTN_POS_X +24, 
+      }, 
+      // 終了コード
+      { GFL_UI_TP_HIT_END , 0 , 0 , 0 },
+    };
+
+    // スクロールバーの位置に移動させる
+    ui_hittbl_cont[UI_HIT_TABLE_CONT_SCROLL_BUTTON].rect.left += p_wk->scroll_button_pos ;
+    ui_hittbl_cont[UI_HIT_TABLE_CONT_SCROLL_BUTTON].rect.right += p_wk->scroll_button_pos ;
+
+    tp_hit = GFL_UI_TP_HitCont( ui_hittbl_cont );
 
     switch( tp_hit )
     {
@@ -1715,10 +2307,20 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
       {
         ONOUE_Printf("UI_HIT_TABLE_CONT_SCROLL_BUTTON\n");
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLL_BUTTON );
-        p_wk->key_mode = KEYMODE_TP;
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
       }
       return;
     }
+  }
+
+  // ==========================
+  // メニューを開く
+  // ==========================
+  if( trg & PAD_BUTTON_START )
+  {
+    MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MENU );
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+    return;
   }
 
 
@@ -1739,6 +2341,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     {
       if( (trg & PAD_KEY_UP) || (trg & PAD_KEY_DOWN) )
       {
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
         SetCursor( p_wk , 0 );
         return;
       }
@@ -1747,7 +2350,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     {
 
       // 上へ移動
-      if( trg & PAD_KEY_UP )
+      if( rep & PAD_KEY_UP )
       {
         // 一番上を選択しているかを判定
         if( curpos_in_page == 0 )
@@ -1758,13 +2361,13 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
         {
           cursor_tmp--;
         }
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
         SetCursor( p_wk , cursor_tmp );
-        p_wk->key_mode = KEYMODE_KEY;
         return;
       }
 
       // 下へ移動
-      if( trg & PAD_KEY_DOWN )
+      if( rep & PAD_KEY_DOWN )
       {
         // 一番下の場合は一番上に
         if( cursor_tmp == (PAGE_MEDAL_MAX-1) )
@@ -1780,8 +2383,8 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
         {
           cursor_tmp++;
         }
+        GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
         SetCursor( p_wk , cursor_tmp );
-        p_wk->key_mode = KEYMODE_KEY;
         return;
       }
     }
@@ -1794,7 +2397,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     SetScrollCount( p_wk , DIR_KEY_SCROLL_COUNT );
     SetScrollDirection( p_wk , SCROLL_DIR_RIGHT );
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
-    p_wk->key_mode = KEYMODE_KEY;
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
     return;
   }
   
@@ -1805,7 +2408,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     SetScrollCount( p_wk , DIR_KEY_SCROLL_COUNT );
     SetScrollDirection( p_wk , SCROLL_DIR_LEFT );
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
-    p_wk->key_mode = KEYMODE_KEY;
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
     return;
   }
    
@@ -1816,7 +2419,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     SetScrollCount( p_wk , LR_KEY_SCROLL_COUNT );
     SetScrollDirection( p_wk , SCROLL_DIR_RIGHT );
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
-    p_wk->key_mode = KEYMODE_KEY;
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
     return;
   }
 
@@ -1827,9 +2430,82 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     SetScrollCount( p_wk , LR_KEY_SCROLL_COUNT );
     SetScrollDirection( p_wk , SCROLL_DIR_LEFT );
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
-    p_wk->key_mode = KEYMODE_KEY;
+    GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
     return;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スライドタッチでのページ移動開始判定
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SlideTouchCheck( MEDALBOXSYS_WORK *p_wk )
+{
+  u32 x,y;
+  if( GFL_UI_TP_GetPointTrg( &x , &y) )
+  {
+    // スライドチェック中は開始判定を行わない
+    if( p_wk->is_slide_touch == FALSE)
+    {
+      if( p_wk->box_mode == BOXMODE_NORMAL )
+      {
+
+        // キャップ幅以下
+        if( x < CAP_WIDTH )
+        {
+          p_wk->is_slide_touch = TRUE;
+          p_wk->before_x = x;
+        }
+      }
+      else
+      {
+        p_wk->is_slide_touch = TRUE;
+        p_wk->before_x = x;
+      }
+    }
+  }
+  if( GFL_UI_TP_GetCont() == FALSE )
+  {
+    p_wk->is_slide_touch = FALSE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スライドタッチメイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SlideTouchMain( MEDALBOXSYS_WORK *p_wk )
+{
+  if( p_wk->is_slide_touch )
+  {
+    u32 x,y;
+    if( GFL_UI_TP_GetPointCont( &x , &y) )
+    {
+      p_wk->slide_length += p_wk->before_x - (s32)x;
+      p_wk->before_x = (s32)x;
+
+      if( p_wk->box_mode == BOXMODE_NORMAL )
+      {
+        // キャップ幅以下
+        if( x > CAP_WIDTH )
+        {
+          p_wk->is_slide_touch = FALSE;
+        }
+      }
+    }
+  }
+  
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1884,51 +2560,57 @@ static GFL_PROC_RESULT MDLSYS_SCROLLPAGE_Main( MEDALBOXSYS_WORK *p_wk )
       {
         // カウンタデクリメント
         p_wk->scroll_count--;
-
+   
         // メインシーケンスへの移動
-       if( p_wk->scroll_count <= 0 )
-       {
-         u8            unit_pos;
-         u8            medal_pos;
+        if( p_wk->scroll_count <= 0 )
+        {
+          // サブシーケンスを進める
+          p_wk->sub_seq++;
+        }
+        else
+        {
+          PMSND_PlaySE( SEQ_SE_MD_02 ); // ページ送り音
+        }
+      }
+    }
+    break;
+  case 2:
+    {
+      u8            unit_pos;
+      u8            medal_pos;
 
-         // ユニット上の位置
-         unit_pos = GetCursolSelectUnitPos( p_wk );
-         medal_pos = GetCursolSelectMedalPos( p_wk );
+      // ユニット上の位置
+      unit_pos = GetCursolSelectUnitPos( p_wk );
+      medal_pos = GetCursolSelectMedalPos( p_wk );
 
-         // カーソル位置にメダルが存在する
-         if( p_wk->page[unit_pos].p_medal_st[medal_pos] )
-         {
-           // カーソルをセットしなおす
-           SetCursor( p_wk , p_wk->cursor_pos );
-         }
-         else
-         {
-           // メダルが存在しない場合
-           if( p_wk->page[unit_pos].medal_max == 0 )
-           {
-             SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT );
-           }
-           // 存在する中でも一番下に移動
-           else
-           {
-             SetCursor( p_wk , p_wk->page[unit_pos].medal_max-1 );
-           }
-         }
-
-         // スクロールカウントを初期化
-         p_wk->scroll_count = 1;
-
-         // メダル名の転送
-         TransMedalName( p_wk );
-
-         // メインシーケンスに返す
-         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
-       }
+      // カーソル位置にメダルが存在する
+      if( p_wk->page[unit_pos].p_medal_st[medal_pos] )
+      {
+        // カーソルをセットしなおす
+        SetCursor( p_wk , p_wk->cursor_pos );
       }
       else
       {
-        PMSND_PlaySE( SEQ_SE_MD_02 ); // ページ送り音
+        // メダルが存在しない場合
+        if( p_wk->page[unit_pos].medal_max == 0 )
+        {
+          SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT );
+        }
+        // 存在する中でも一番下に移動
+        else
+        {
+          SetCursor( p_wk , p_wk->page[unit_pos].medal_max-1 );
+        }
       }
+
+      // スクロールカウントを初期化
+      p_wk->scroll_count = 1;
+
+      // メダル名の転送
+      TransMedalName( p_wk );
+
+      // メインシーケンスに返す
+      MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
     }
     break;
   }
@@ -1988,7 +2670,7 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
     offset = 0;
 
     // ページのリフレッシュ
-    PageRefresh( p_wk );
+    PageRefresh( p_wk , TRUE );
 
     scroll_end = TRUE;
   }
@@ -2018,7 +2700,7 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void PageRefresh( MEDALBOXSYS_WORK *p_wk )
+static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name )
 {
   int i;
   u8 refresh_num;
@@ -2034,30 +2716,38 @@ static void PageRefresh( MEDALBOXSYS_WORK *p_wk )
   }
  
   // メダル名を非表示に
-  ClearMedalName( p_wk );
-  
+  if( is_draw_medal_name )
+  {
+    ClearMedalName( p_wk );
+  }
+
+  // イチオシボタンを消す
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
+
   for( i =0 ; i < refresh_num ; i++ )
   {
     int draw_page = p_wk->top_page_num + i -1;
     // 最初のページにループ
     if( draw_page < 0)
     {
-      MDLSYS_PageMedalDraw( p_wk , p_wk->medal_data.page_max-1 , i );
+      MDLSYS_PageMedalDraw( p_wk , p_wk->medal_data.page_max-1 , i , is_draw_medal_name);
     }
     // ページの最大数を超えている場合は最初のページへ
     else if( draw_page >= p_wk->medal_data.page_max )
     {
-      MDLSYS_PageMedalDraw( p_wk , 0 , i );
+      MDLSYS_PageMedalDraw( p_wk , draw_page%p_wk->medal_data.page_max , i , is_draw_medal_name);
     }
     else
     {
       // 左端は-1ページ前を表示
-      MDLSYS_PageMedalDraw( p_wk , p_wk->top_page_num + i -1 , i );
+      MDLSYS_PageMedalDraw( p_wk , p_wk->top_page_num + i -1 , i ,is_draw_medal_name);
     }
   }
- 
   // メダル名の転送
-  TransMedalName( p_wk );
+  if( is_draw_medal_name )
+  {
+    TransMedalName( p_wk );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2124,10 +2814,11 @@ static void TransMedalName( MEDALBOXSYS_WORK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st )
+static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , INFOTYPE info_type )
 {
   STRBUF * str;
   PRINTSYS_LSB font_colro = GetMedalInfoFontColor();
+  WORDSET *p_word_set = WORDSET_Create( p_wk->heapID ); 
 
   GF_ASSERT( p_wk );
   GF_ASSERT( p_medal_st );
@@ -2136,19 +2827,194 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st )
   // メダル画像変更
   // =======================================
   {
-    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_UPMEDAL] , p_medal_st->graphic_type );
-    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_UPMEDAL], TRUE );
+    GFL_CLWK  *p_clwk =  p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_UPMEDAL];
+    if( p_medal_st->medal_state == MEDAL_STATE_TITLE_GET )
+    {
+      GFL_CLACT_WK_SetAnmSeq( p_clwk , p_medal_st->graphic_type );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( p_clwk , GFL_CLACT_WK_GetAnmSeqNum(p_clwk) -1 );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+    }
+  }
+
+  // ウィンドウの塗りつぶし
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_info_win) , PRINTSYS_LSB_GetB(font_colro) );
+
+  // =======================================
+  // タイトルの表示
+  // =======================================
+  {
+    switch( info_type )
+    {
+    case INFOTYPE_TARGET:
+      {
+      str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_01 );
+      }
+      break;
+    case INFOTYPE_GET:
+      {
+        if( p_medal_st->medal_state == MEDAL_STATE_TITLE_GET )
+        {
+          str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_02 );
+        }
+        else
+        {
+          str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_03 );
+        }
+      }
+      break;
+    }
+
+    // 文字列を直接描画
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+        MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y,
+        str , p_wk->p_font ,
+        font_colro );
+
+    // バッファーの消去 
+    GFL_STR_DeleteBuffer( str );
+  }
+
+  // =======================================
+  // 数値の表示
+  // =======================================
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+    MEDALBOX* p_medal_box = SaveData_GetMedalBox( p_sv );
+    STRBUF * str_num;
+
+    u16 title_cnt;  // タイトル取得数
+    u16 get_cnt;    // 総取得数
+    title_cnt = MEDALBOX_GetMedalCount( p_medal_box , FALSE);
+    get_cnt = MEDALBOX_GetMedalCount( p_medal_box , TRUE);
+
+    // スラッシュ表示
+    {
+      str_num = GFL_STR_CreateBuffer( 20, p_wk->heapID );
+      str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_04_01 );
+      
+      if(p_medal_st->medal_state == MEDAL_STATE_TITLE_GET)
+      {
+        WORDSET_RegisterNumber( p_word_set , 0 , title_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
+        WORDSET_RegisterNumber( p_word_set , 1 , get_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
+        WORDSET_ExpandStr( p_word_set, str_num , str  );
+      }
+      else
+      {
+        WORDSET_RegisterNumber( p_word_set , 0 , get_cnt - title_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
+        WORDSET_RegisterNumber( p_word_set , 1 , get_cnt , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_HANKAKU);
+        WORDSET_ExpandStr( p_word_set, str_num , str  );
+      }
+
+      // 文字列を直接描画
+      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+          MEDAL_INFO_NUMERATOR_DRAW_X, MEDAL_INFO_NUMERATOR_DRAW_Y,
+          str_num , p_wk->p_font ,
+          font_colro );
+
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+      GFL_STR_DeleteBuffer( str_num );
+    }
+  }
+
+  // =======================================
+  // メダル名表示
+  // =======================================
+  {
+    if( info_type == INFOTYPE_GET )
+    {
+      u32 width;
+      if(p_medal_st->medal_state == MEDAL_STATE_TITLE_GET)
+      {
+        str = GFL_MSG_CreateString( p_wk->p_mdlname_msg , p_medal_st->medal_id );
+      }
+      else
+      {
+        str = GFL_MSG_CreateString( p_wk->p_mdlname_msg , MDL_NAME_HINT_000 );
+      }
+
+      // 幅の計算
+      width = PRINTSYS_GetStrWidth( str , p_wk->p_font , 0);
+
+      // 文字列を直接描画
+      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+          MEDAL_INFO_NAME_DRAW_X - width, MEDAL_INFO_NAME_DRAW_Y,
+          str , p_wk->p_font ,
+          font_colro );
+
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+
+    }
+  }
+
+  // =======================================
+  // 取得日
+  // =======================================
+  {
+    if( info_type == INFOTYPE_GET )
+    {
+      STRBUF *str_ymd;
+      
+      str_ymd  = GFL_STR_CreateBuffer( 30, p_wk->heapID ); 
+
+      WORDSET_RegisterNumber( p_word_set , 0 , p_medal_st->year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_HANKAKU);
+      WORDSET_RegisterNumber( p_word_set , 1 , p_medal_st->month , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_HANKAKU);
+      WORDSET_RegisterNumber( p_word_set , 2 , p_medal_st->day , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_HANKAKU);
+
+      if(p_medal_st->medal_state == MEDAL_STATE_TITLE_GET)
+      {
+        str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_16 ); // 獲得した日付
+      }
+      else
+      {
+        str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_17 );
+      }
+
+      // 文字列を直接描画
+      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+          MEDAL_INFO_GETTYPE_DRAW_X , MEDAL_INFO_GETTYPE_DRAW_Y,
+          str , p_wk->p_font ,
+          font_colro );
+
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+
+      // 日付
+      str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_18 );
+
+      WORDSET_ExpandStr( p_word_set, str_ymd , str  );
+      
+      // 文字列を直接描画
+      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+          MEDAL_INFO_DAYTE_DRAW_X , MEDAL_INFO_DAYTE_DRAW_Y,
+          str_ymd , p_wk->p_font ,
+          font_colro );
+
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+      GFL_STR_DeleteBuffer( str_ymd );
+    }
   }
 
   // =======================================
   // メダルの説明文表示
   // =======================================
   {
-    // メダルの説明文取得
-    str = GFL_MSG_CreateString( p_wk->p_mdlinfo_msg , p_medal_st->medal_id );
-
-    // ウィンドウの塗りつぶし
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_info_win) , PRINTSYS_LSB_GetB(font_colro) );
+    
+    if(p_medal_st->medal_state == MEDAL_STATE_TITLE_GET)
+    {
+      // メダルの説明文取得
+      str = GFL_MSG_CreateString( p_wk->p_mdlinfo_msg , p_medal_st->medal_id );
+    }
+    else
+    {
+      str = GFL_MSG_CreateString( p_wk->p_mdlhelp_msg , p_medal_st->medal_id );
+    }
 
     // 文字列を直接描画
     PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
@@ -2158,13 +3024,24 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st )
 
     // バッファーの消去 
     GFL_STR_DeleteBuffer( str );
-
-    // 転送
-    GFL_BMPWIN_TransVramCharacter( p_wk->p_info_win );
-
-    // 転送リクエスト
-    GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
   }
+
+  // 転送
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_info_win );
+
+  // 転送リクエスト
+  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
+
+  // ワードセットの開放
+  WORDSET_Delete( p_word_set );
+
+  // 情報を表示した時に新着フラグを落とす
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+    MEDALBOX* p_medal_box = SaveData_GetMedalBox( p_sv );
+    MEDALBOX_SetNewMedalFlgOff( p_medal_box , p_medal_st->medal_id  );
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -2251,6 +3128,36 @@ static void MakeMedalHitTbl( MEDALBOXSYS_WORK *p_wk ,GFL_UI_TP_HITTBL medal_hitt
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  イチオシボタン用当たり判定テーブル
+ *
+ *	@param	*p_wk 
+ *	@param	button_hittbl[] 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MakePushMedalButtonHitTbl( MEDALBOXSYS_WORK *p_wk ,GFL_UI_TP_HITTBL button_hittbl[] )
+{
+  u8 i;
+  GFL_CLACTPOS pos;
+  for( i=0; i < PUSHMEDAL_BUTTON_MAX ; i++ )
+  {
+    // カーソルの位置を取得
+    MDLSYS_GetDrawPushMedalButtonPos( i , &pos );
+    button_hittbl[i].rect.top   = pos.y - PUSHMEDAL_BUTTON_H/2;
+    button_hittbl[i].rect.bottom= pos.y + PUSHMEDAL_BUTTON_H/2;
+    button_hittbl[i].rect.left  = pos.x - PUSHMEDAL_BUTTON_W/2;
+    button_hittbl[i].rect.right = pos.x + PUSHMEDAL_BUTTON_W/2;
+  }
+
+  button_hittbl[i].circle.code = GFL_UI_TP_HIT_END;
+  button_hittbl[i].circle.x    = 0;
+  button_hittbl[i].circle.y    = 0;
+  button_hittbl[i].circle.r    = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  カーソルの位置を取得する
  *
  *	@param	cursor_pos  カーソルの場所
@@ -2316,7 +3223,7 @@ static void SetCursor( MEDALBOXSYS_WORK *p_wk , u8 cursor_pos )
     GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR] , &pos , CLSYS_DEFREND_MAIN );
 
     // メダル情報を表示する
-    DrawMedalInfo( p_wk , p_st );
+    DrawMedalInfo( p_wk , p_st , INFOTYPE_GET );
 
     // カーソルを選択状態にする
     SetCursorState( p_wk , CURSOR_STATE_SELECT );
@@ -2362,6 +3269,61 @@ static void SetCursorState( MEDALBOXSYS_WORK *p_wk , CURSOR_STATE state )
     }
     break;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  新品エフェクト生成メイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void NewEffectMain( MEDALBOXSYS_WORK *p_wk )
+{
+  int i;
+  GFL_CLACTPOS pos;
+  GFL_CLWK **p_clwk = p_wk->p_clwk;
+
+  // 新品エフェクト
+  for( i=0 ; i<NEW_EFFETC_MAX; i++ )
+  {
+    if( GFL_STD_MtRand( NEW_EFFECT_FREQUENTLY ) == 0 )
+    {
+      if( GFL_CLACT_WK_CheckAnmActive(p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i]) == FALSE )
+      {
+        u8        page_num = GFL_STD_MtRand( MEDALBOX_DRAW_PAGE_NUM_LIST-1 ) +1; // 0ページ目には出さない
+        PAGEDATA  *p_page = &p_wk->page[ page_num ];
+        u8        medal_pos = GFL_STD_MtRand( PAGE_MEDAL_MAX );
+
+        // 範囲外には出さない
+        if( p_page->medal_max > medal_pos )
+        {
+          // 新着のみに出す
+          if( p_page->p_medal_st[ medal_pos ]->new_state != MDL_NO_NEW )
+          {
+            MDLSYS_GetDrawMedalPos( page_num*PAGE_MEDAL_MAX + medal_pos , &pos );
+            pos.x -=p_wk->page_offset + (GFL_STD_MtRand( NEW_EFFECT_RANGE )-NEW_EFFECT_RANGE/2);
+            pos.y -=p_wk->page_offset + (GFL_STD_MtRand( NEW_EFFECT_RANGE )-NEW_EFFECT_RANGE/2);
+            GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , ANMSEQ_NEWEFFECT );
+            GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , &pos , CLSYS_DEFREND_MAIN );
+            GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , TRUE );
+            GFL_CLACT_WK_SetAutoAnmFlag( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , TRUE);
+          }
+        }
+        else
+        {
+          // 表示しない場合もアニメーションは進行させ、メダル数が少ない場合に頻度が上がらないようにする
+          GFL_CLACT_WK_SetAnmSeq( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , ANMSEQ_NEWEFFECT );
+          GFL_CLACT_WK_SetPos( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , &pos , CLSYS_DEFREND_MAIN );
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , FALSE );
+          GFL_CLACT_WK_SetAutoAnmFlag( p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+i] , TRUE);
+        }
+      }
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -2436,6 +3398,7 @@ static void SetScrollSpeed( MEDALBOXSYS_WORK *p_wk , u32 speed )
 static GFL_PROC_RESULT MDLSYS_EXITBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
 {
   GFL_CLWK *p_button_clwk = p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_EXIT];
+
   // 終了ボタンシーケンス
   switch( p_wk->sub_seq )
   {
@@ -2465,6 +3428,58 @@ static GFL_PROC_RESULT MDLSYS_EXITBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
     break;
   case 3:
     if( !GFL_FADE_CheckFade() ){
+      p_wk->p_param->result = MB_RESULT_EXIT;
+      return GFL_PROC_RES_FINISH;
+    }
+    break;
+  }
+
+  return GFL_PROC_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  戻るボタンシーケンス(SEQ_MDLBOX_RETURN)
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT MDLSYS_RETURNBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
+{
+  GFL_CLWK *p_button_clwk = p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_RETURN];
+
+  // 終了ボタンシーケンス
+  switch( p_wk->sub_seq )
+  {
+  case 0:
+    {
+      // 終了ボタンアニメーション
+      GFL_CLACT_WK_SetAnmSeq( p_button_clwk , APP_COMMON_BARICON_RETURN_ON );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_button_clwk , TRUE);
+      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      if( GFL_CLACT_WK_CheckAnmActive(p_button_clwk) == FALSE )
+      {
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // ブラックアウトの開始
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+      p_wk->sub_seq++;
+    }
+    break;
+  case 3:
+    if( !GFL_FADE_CheckFade() ){
+      p_wk->p_param->result = MB_RESULT_RETURN;
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -2488,15 +3503,42 @@ static GFL_PROC_RESULT MDLSYS_SCROLLBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
   if( GFL_UI_TP_GetPointCont( &tp_x ,&tp_y ) )
   {
     GFL_CLACTPOS pos;
-//    if( tp_x > (UI_SCROLBTN_POS_X + p_wk->scroll_button_pos) )
-//    {
-//      p_wk->scroll_button_pos = tp_x - UI_SCROLBTN_POS_X;
-//    }
-//    else if( tp_x < (UI_SCROLBTN_POS_X + p_wk->scroll_button_pos) )
-//    {
-//      p_wk->scroll_button_pos--;
-//    }
-    p_wk->scroll_button_pos = tp_x - UI_SCROLBTN_POS_X;
+    
+    // スクロールバーの範囲制限
+    if( tp_x < UI_SCROLBTN_POS_X )
+    {
+      p_wk->scroll_button_pos = 0;
+    }
+    else if( (tp_x - UI_SCROLBTN_POS_X) > SCROLLBAR_LENGTH )
+    {
+      p_wk->scroll_button_pos = SCROLLBAR_LENGTH;
+    }
+    else
+    {
+      p_wk->scroll_button_pos = tp_x - UI_SCROLBTN_POS_X;
+    }
+
+    {
+      fx32 page_ratio = FX_Div( (p_wk->scroll_button_pos<< FX32_SHIFT) ,  (SCROLLBAR_LENGTH<< FX32_SHIFT));
+      fx32 fx_page_pos = FX_Mul( ((p_wk->medal_data.page_max-1) << FX32_SHIFT) ,  page_ratio );
+
+      // 現在のページ番号と比べどちらの方向にあるか調べる
+      if( FX_Whole(fx_page_pos) < p_wk->top_page_num )
+      {
+        SetScrollSpeed( p_wk , AUTO_SCROLL_SPEED );
+        SetScrollDirection( p_wk , SCROLL_DIR_LEFT );
+        ScrollPage( p_wk , p_wk->scroll_speed * p_wk->scroll_dir );
+      }
+      else if( FX_Whole(fx_page_pos) > p_wk->top_page_num )
+      {
+        SetScrollSpeed( p_wk , AUTO_SCROLL_SPEED );
+        SetScrollDirection( p_wk , SCROLL_DIR_RIGHT );
+        ScrollPage( p_wk , p_wk->scroll_speed * p_wk->scroll_dir );
+      }
+
+    }
+
+    // スクロールボタンの位置を設定
     pos.x = UI_SCROLBTN_POS_X + p_wk->scroll_button_pos;
     pos.y = UI_SCROLBTN_POS_Y;
     GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SCROLBTN] , &pos , CLSYS_DEFREND_MAIN );
@@ -2504,10 +3546,681 @@ static GFL_PROC_RESULT MDLSYS_SCROLLBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
   }
   else
   {
-    MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+    // スクロールしきっていない場合はスクロールシーケンスに移動
+    if( p_wk->page_offset != 0 )
+    {
+      MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
+    }
+    else
+    {
+      MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+    }
   }
 
   return GFL_PROC_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メニュー用シーケンス(SEQ_MDLBOX_MENU)
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
+{
+  s32 ret; // RETURNボタン
+
+  switch( p_wk->sub_seq )
+  {
+  // 検索ボタンアニメーション
+  case 0:
+    {
+      // 決定音
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );
+
+      GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , APP_COMMON_BARICON_ON_PASSIVE );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , TRUE);
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      if( GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH]) == FALSE )
+      {
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    {
+      G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+      // メニューを開く
+      GFL_BG_ClearFrame( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) );
+      OpenSearchMenu( p_wk );
+      p_wk->sub_seq++;
+    }
+    break;
+  case 3:
+    {
+      int i;
+
+      // タスクメニューのアップデート
+      APP_TASKMENU_UpdateMenu( p_wk->p_menu_wk );
+
+      // 終了判定
+      if(APP_TASKMENU_IsFinish(p_wk->p_menu_wk))
+      {
+        ret = APP_TASKMENU_GetCursorPos(p_wk->p_menu_wk); // カーソル位置取得
+
+        // メニュー終了
+        APP_TASKMENU_CloseMenu(p_wk->p_menu_wk);             // メニュー終了
+
+        // ウィンドウのクリアー
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_menu_win), 0 );
+
+        // タスクメニュー用リソース開放
+        APP_TASKMENU_RES_Delete( p_wk->p_taskmenu_res );
+
+        // ビットマップウィンドウの削除
+        GFL_BMPWIN_Delete( p_wk->p_menu_win );
+
+        // エフェクトの読み込み
+        MDLSYS_EFFETC_ReLoad( p_wk );
+
+        G2_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE , 0 );
+
+        // メニュー数の初期化
+        p_wk->menu_cnt = 0;
+
+        //　シーケンスを進める
+        p_wk->sub_seq++;
+
+        // 次の動作を選択する
+        {
+          u32 msg_id = sc_menu_data[p_wk->medal_data.sort_mode].msgid[ret];
+
+          switch( msg_id )
+          {
+          case MENU_MSG_MODE_CHANGE:
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MODE_CHANGE );
+            break;
+          case MENU_MSG_ONLY_TITLE:
+            MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_TITLE_ONLY );
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SORT );
+            break;
+          case MENU_MSG_ONLY_HINT:
+            MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_HINT_ONLY );
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SORT );
+            break;
+          case MENU_MSG_TYPE:
+            MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_TYPE );
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SORT );
+            break;
+          case MENU_MSG_NEW:
+            MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_NEW );
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SORT );
+            break;
+          case MENU_MSG_NAME:
+            MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_NAME );
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SORT );
+            break;
+          case MENU_MSG_DEFAULT:
+            MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_DEFAULT );
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SORT );
+            break;
+
+          // デフォルトとキャンセルは同じ処理を行う
+          default:
+          case MENU_MSG_CANCEL:
+            MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+            break;
+          }
+        }
+
+      }
+    }
+    break;
+  }
+
+  return GFL_PROC_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  検索ボタンメニューを開く
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void OpenSearchMenu( MEDALBOXSYS_WORK *p_wk )
+{
+  APP_TASKMENU_INITWORK wk;
+  s32 i;
+  SORT_MODE sort_mode = p_wk->medal_data.sort_mode;
+  STRBUF * str;
+  PRINTSYS_LSB font_colro = GetMedalInfoFontColor();
+  
+  // メニュー数の初期化
+  p_wk->menu_cnt = 0;
+
+  // メニューデータ
+  for( i = 0; i < SEARCH_MENU_MAX ; i++)
+  {
+    if( sc_menu_data[sort_mode].msgid[i] !=MENU_NO_USE )
+    {
+      p_wk->menulist[p_wk->menu_cnt].str      = GFL_MSG_CreateString( p_wk->p_app_msg, sc_menu_data[sort_mode].msgid[i] );
+      p_wk->menulist[p_wk->menu_cnt].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+      p_wk->menulist[p_wk->menu_cnt].type     = APP_TASKMENU_WIN_TYPE_NORMAL;
+      p_wk->menu_cnt++;
+    }
+  }
+
+  // 最後には戻るアイコンを追加
+  p_wk->menulist[p_wk->menu_cnt-1].type = APP_TASKMENU_WIN_TYPE_RETURN;
+
+  wk.heapId   = p_wk->heapID;
+  wk.itemNum  = p_wk->menu_cnt;
+  wk.itemWork = p_wk->menulist;
+  wk.posType  = ATPT_RIGHT_DOWN;
+  wk.charPosX = 32;
+  wk.charPosY = 24;
+  wk.w        = APP_TASKMENU_PLATE_WIDTH;
+  wk.h        = APP_TASKMENU_PLATE_HEIGHT;
+
+  
+  // アプリケーションタスクメニュー用リソース作成
+  p_wk->p_taskmenu_res = APP_TASKMENU_RES_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M),
+      APP_TASKMENU_USE_PALETE , p_wk->p_font, p_wk->p_print_que , p_wk->heapID );
+
+  // メニューワーク
+  p_wk->p_menu_wk = APP_TASKMENU_OpenMenu( &wk, p_wk->p_taskmenu_res );
+
+  // メニュー用BMPWIN作成
+  p_wk->p_menu_win = GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
+      1   , 24-5   ,
+      17  , 4  ,
+      SYSTEM_FONT_PAL , GFL_BMP_CHRAREA_GET_B );
+
+  // スクリーンの作成
+  GFL_BMPWIN_MakeScreen( p_wk->p_menu_win );
+ 
+  // フレーム用グラフィックをセットする
+  BmpWinFrame_GraphicSet( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
+
+  // ウィンドウ枠の表示
+  BmpWinFrame_Write( p_wk->p_menu_win , WINDOW_TRANS_ON_V, 1, APP_WINFRAME_USE_PALETE );
+
+  // 説明文の作成
+  str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_07 );
+ 
+  // ウィンドウのクリアー
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_menu_win), 15 );
+
+  // 転送
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
+
+  // 文字列を直接描画
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_menu_win) , 0 , 0 , str , p_wk->p_font );
+
+  // 転送
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
+     
+  // 転送リクエスト
+  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
+
+  // バッファーの消去 
+  GFL_STR_DeleteBuffer( str );
+
+  // 文字バッファーの開放
+  for( i = 0; i < p_wk->menu_cnt ; i++ )
+  {
+    GFL_STR_DeleteBuffer( p_wk->menulist[i].str );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モードチェンジシーケンス(SEQ_MDLBOX_MODE_CHANGE)
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT MDLSYS_MODECHANGE_Main( MEDALBOXSYS_WORK *p_wk )
+{
+  switch( p_wk->sub_seq )
+  {
+  case 0:
+     
+    // 移動音
+    PMSND_PlaySE( SEQ_SE_MD_04 );
+
+    // メダル名を非表示に
+    ClearMedalName( p_wk );
+
+    // 一押しボタンを非表示に
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
+
+    p_wk->sub_seq++;
+    // 次のフレームをそのまま実行
+  case 1:
+    {
+      BOOL          cap_scroll_end        = FALSE;
+      BOOL          fontbord_scroll_end   = TRUE;
+      GFL_CLACTPOS  cap_pos;
+
+      // ==================================
+      // フタ部分のスクロール
+      p_wk->cap_offset += CAP_SCROLL_SPEED;
+
+      // フタの位置を設定
+      cap_pos.x = UI_CAP_POS_X + FX_Whole(p_wk->cap_offset);
+      cap_pos.y = UI_CAP_POS_Y;
+
+      // 移動範囲制限
+      if( cap_pos.x > UI_CAP_POS_X)
+      {
+        p_wk->cap_offset = 0;
+        cap_scroll_end = TRUE;
+      }
+
+      // フタのスクロールイン
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , &cap_pos , CLSYS_DEFREND_MAIN );
+
+   
+      // ==================================
+      // リストモードのときは文字盤を閉じる
+      if( p_wk->box_mode == BOXMODE_LIST )
+      {
+        fontbord_scroll_end = FALSE;
+
+        // 文字盤の移動
+        p_wk->fontbord_offset += FONTBORD_SCROLL_SPEED;
+        if( FX_Whole(p_wk->fontbord_offset) > 0 )
+        {
+          p_wk->fontbord_offset = 0;
+          fontbord_scroll_end = TRUE;
+        }
+
+        // 上画面のスクロール
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+
+      }
+
+      // 次のシーケンスへ移動
+      if( cap_scroll_end && fontbord_scroll_end )
+      {
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // ==================================
+      // モード切替
+      if( p_wk->box_mode == BOXMODE_NORMAL )
+      {
+        p_wk->box_mode =  BOXMODE_LIST;
+      }
+      else
+      {
+        p_wk->box_mode =  BOXMODE_NORMAL;
+      }
+
+      // ページをリフレッシュ
+      PageRefresh( p_wk , FALSE );
+
+      // メダル名を非表示に
+      ClearMedalName( p_wk );
+ 
+      // 一押しボタンを非表示に
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
+
+      p_wk->sub_seq++;
+    }
+    break;
+  case 3:
+    {
+      BOOL          cap_scroll_end        = FALSE;
+      BOOL          fontbord_scroll_end   = TRUE;
+      GFL_CLACTPOS  cap_pos;
+
+      // ==================================
+      // フタ部分のスクロール
+      p_wk->cap_offset -= CAP_SCROLL_SPEED;
+
+      // フタの位置を設定
+      cap_pos.x = UI_CAP_POS_X + FX_Whole(p_wk->cap_offset);
+      cap_pos.y = UI_CAP_POS_Y;
+
+      // 移動範囲制限
+      if( cap_pos.x < -CAP_WIDTH)
+      {
+        p_wk->cap_offset = FX32_CONST(-CAP_WIDTH);
+        cap_scroll_end = TRUE;
+      }
+
+      // ==================================
+      // 文字盤のスクロール
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , &cap_pos , CLSYS_DEFREND_MAIN );
+
+
+      // リストの時はフタをあける
+      if( p_wk->box_mode == BOXMODE_LIST )
+      {
+        fontbord_scroll_end = FALSE;
+
+        // 文字盤の移動
+        p_wk->fontbord_offset -= FONTBORD_SCROLL_SPEED;
+
+        if( FX_Whole(p_wk->fontbord_offset) < -FONTBORD_WIDTH )
+        {
+          p_wk->fontbord_offset = FX32_CONST(-FONTBORD_WIDTH);
+          fontbord_scroll_end = TRUE;
+        }
+
+        // 上画面のスクロール
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+      }
+
+      // 次のシーケンスへ移動
+      if( cap_scroll_end && fontbord_scroll_end )
+      {
+        // メダル名を表示するためにリフレッシュ
+        PageRefresh( p_wk , TRUE);
+        MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+      }
+    }
+    break;
+  }
+
+  return GFL_PROC_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一押しボタン登録メイン(SEQ_PUSUMEDALBUTTON)
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
+{
+
+  switch( p_wk->sub_seq )
+  {
+  case 0:
+    {
+      STRBUF * str;
+      
+      // 登録音
+      PMSND_PlaySE( SEQ_SE_SAVE );
+
+      // メニュー用BMPWIN作成
+      p_wk->p_menu_win = GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
+          2   , 24-6   ,
+          28  , 4  ,
+          SYSTEM_FONT_PAL , GFL_BMP_CHRAREA_GET_B );
+
+      // スクリーンの作成
+      GFL_BMPWIN_MakeScreen( p_wk->p_menu_win );
+
+      // フレーム用グラフィックをセットする
+      BmpWinFrame_GraphicSet( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
+
+      // ウィンドウ枠の表示
+      BmpWinFrame_Write( p_wk->p_menu_win , WINDOW_TRANS_ON_V, 1, APP_WINFRAME_USE_PALETE );
+
+      // 説明文の作成
+      if( p_wk->pushmedal_set_type == PUSHMEDAL_TYPE_SET )
+      {
+        str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_05 );
+      }
+      else
+      {
+        str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_06 );
+      }
+
+      // ウィンドウのクリアー
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_menu_win), 15 );
+
+      // 転送
+      GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
+
+      // 文字列を直接描画
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_menu_win) , 0 , 0 , str , p_wk->p_font );
+
+      // 転送
+      GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
+
+      // 転送リクエスト
+      GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
+
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+
+      // ページのリフレッシュ
+      PageRefresh( p_wk ,FALSE);
+
+      p_wk->tmp_frame =0;
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      // 待機
+      p_wk->tmp_frame++;
+      if( p_wk->tmp_frame >= PUSUMEDAL_INFO_FRAME )
+      {
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // ビットマップウィンドウの削除
+      GFL_BMPWIN_Delete( p_wk->p_menu_win );
+
+      // エフェクトの読み込み
+      MDLSYS_EFFETC_ReLoad( p_wk );
+
+      MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+      p_wk->sub_seq++;
+    }
+
+    break;
+  }
+  return GFL_PROC_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イチオシメダルを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	medal_id 
+ *	@param	set_type 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetPushMedalData( MEDALBOXSYS_WORK *p_wk ,MedalID medal_id , PUSHMEDAL_TYPE set_type )
+{
+  // 設定方法の保存
+  p_wk->pushmedal_set_type = set_type;
+
+  // 設定方法
+  if( set_type == PUSHMEDAL_TYPE_SET )
+  {
+    p_wk->medal_data.push_medalid = medal_id;
+  }
+  else if( set_type == PUSHMEDAL_TYPE_REMOVE )
+  {
+    p_wk->medal_data.push_medalid = MDLID_MAX;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ソートメインシーケンス(SEQ_MDLBOX_SORT)
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk )
+{
+  switch( p_wk->sub_seq )
+  {
+  case 0:
+     
+    // 移動音
+    PMSND_PlaySE( SEQ_SE_MD_04 );
+
+    // メダル名を非表示に
+    ClearMedalName( p_wk );
+
+    // 一押しボタンを非表示に
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
+
+    p_wk->sub_seq++;
+    // 次のフレームをそのまま実行
+  case 1:
+    {
+      BOOL          cap_scroll_end        = FALSE;
+      BOOL          fontbord_scroll_end   = TRUE;
+      GFL_CLACTPOS  cap_pos;
+
+      // ==================================
+      // フタ部分のスクロール
+      p_wk->cap_offset += CAP_SCROLL_SPEED;
+
+      // フタの位置を設定
+      cap_pos.x = UI_CAP_POS_X + FX_Whole(p_wk->cap_offset);
+      cap_pos.y = UI_CAP_POS_Y;
+
+      // 移動範囲制限
+      if( cap_pos.x > UI_CAP_POS_X)
+      {
+        p_wk->cap_offset = 0;
+        cap_scroll_end = TRUE;
+      }
+
+      // フタのスクロールイン
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , &cap_pos , CLSYS_DEFREND_MAIN );
+
+
+      // ==================================
+      // リストモードのときは文字盤を閉じる
+      if( p_wk->box_mode == BOXMODE_LIST )
+      {
+        fontbord_scroll_end = FALSE;
+
+        // 文字盤の移動
+        p_wk->fontbord_offset += FONTBORD_SCROLL_SPEED;
+        if( FX_Whole(p_wk->fontbord_offset) > 0 )
+        {
+          p_wk->fontbord_offset = 0;
+          fontbord_scroll_end = TRUE;
+        }
+
+        // 上画面のスクロール
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+
+      }
+
+      // 次のシーケンスへ移動
+      if( cap_scroll_end && fontbord_scroll_end )
+      {
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // ページをリフレッシュ
+      PageRefresh( p_wk , FALSE);
+
+      // メダル名を非表示に
+      ClearMedalName( p_wk );
+
+      // 一押しボタンを非表示に
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
+
+      p_wk->sub_seq++;
+    }
+    break;
+  case 3:
+    {
+      BOOL          cap_scroll_end        = FALSE;
+      BOOL          fontbord_scroll_end   = TRUE;
+      GFL_CLACTPOS  cap_pos;
+
+      // ==================================
+      // フタ部分のスクロール
+      p_wk->cap_offset -= CAP_SCROLL_SPEED;
+
+      // フタの位置を設定
+      cap_pos.x = UI_CAP_POS_X + FX_Whole(p_wk->cap_offset);
+      cap_pos.y = UI_CAP_POS_Y;
+
+      // 移動範囲制限
+      if( cap_pos.x < -CAP_WIDTH)
+      {
+        p_wk->cap_offset = FX32_CONST(-CAP_WIDTH);
+        cap_scroll_end = TRUE;
+      }
+
+      // ==================================
+      // 文字盤のスクロール
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , &cap_pos , CLSYS_DEFREND_MAIN );
+
+
+      // リストの時はフタをあける
+      if( p_wk->box_mode == BOXMODE_LIST )
+      {
+        fontbord_scroll_end = FALSE;
+
+        // 文字盤の移動
+        p_wk->fontbord_offset -= FONTBORD_SCROLL_SPEED;
+
+        if( FX_Whole(p_wk->fontbord_offset) < -FONTBORD_WIDTH )
+        {
+          p_wk->fontbord_offset = FX32_CONST(-FONTBORD_WIDTH);
+          fontbord_scroll_end = TRUE;
+        }
+
+        // 上画面のスクロール
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+      }
+
+      // 次のシーケンスへ移動
+      if( cap_scroll_end && fontbord_scroll_end )
+      {
+        // メダル名を表示するためにリフレッシュ
+        PageRefresh( p_wk , TRUE);
+        MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+      }
+    }
+    break;
+  }
+
+  return GFL_PROC_RES_CONTINUE;
+
 }
 
 #ifdef PM_DEBUG
@@ -2519,7 +4232,7 @@ static GFL_PROC_RESULT MDLSYS_SCROLLBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
 
 static void DBEG_MDLSYS_DebugInit( MEDALBOXSYS_WORK *p_wk )
 {
-  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_HUTA], FALSE );
+//  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP], FALSE );
 }
 
 static void DBEG_MDLSYS_DebugMain( MEDALBOXSYS_WORK *p_wk )
@@ -2529,65 +4242,6 @@ static void DBEG_MDLSYS_DebugMain( MEDALBOXSYS_WORK *p_wk )
 
   switch( p_wk->debgu_seq )
   {
-//  case 0:
-//    {
-//      // ノーマルモード
-//      if( trg & PAD_BUTTON_L )
-//      {
-//        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_HUTA], FALSE );
-//        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
-//        GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) , VISIBLE_OFF );
-//        GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) , VISIBLE_OFF );
-//      }
-//
-//      // 一覧モード
-//      if( trg & PAD_BUTTON_R )
-//      {
-//        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_HUTA], TRUE );
-//        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], TRUE );
-//        GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) , VISIBLE_ON );
-//        GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) , VISIBLE_ON );
-//      }
-//      // フタを空ける
-//      if( trg & PAD_BUTTON_Y )
-//      {
-//        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_HUTA], FALSE );
-//      }
-//
-//    }
-//    break;
-//
-//  case 1:
-//    {
-//      if( trg & PAD_BUTTON_A )
-//      {
-//        p_wk->now_seq++;
-//        p_wk->now_seq %= SEQ_MDLBOX_SCROLLPAGE;
-//        switch( p_wk->now_seq )
-//        {
-//        case SEQ_MDLBOX_INIT: OS_Printf("シーケンス：起動直後\n"); break;
-//        case SEQ_MDLBOX_MAIN: OS_Printf("シーケンス：メイン\n"); break;
-//        case SEQ_MDLBOX_SCROLLPAGE: OS_Printf("シーケンス：ページ移動\n"); break;
-//        }
-//      }
-//    }
-//    break;
-
-//  case 2:
-//    {
-//      if( cont & PAD_BUTTON_L )
-//      {
-//        p_wk->debug_page_scroll_speed += 0x100;
-//        OS_Printf("ページスクロールスピード：%x\n",p_wk->debug_page_scroll_speed);
-//      }
-//      if( cont & PAD_BUTTON_R )
-//      {
-//        p_wk->debug_page_scroll_speed -= 0x100;
-//        OS_Printf("ページスクロールスピード：%x\n",p_wk->debug_page_scroll_speed);
-//      }
-//    }
-//    break;
-
   default:
     {
       p_wk->debgu_seq = 0;
@@ -2604,7 +4258,6 @@ static void DBEG_MDLSYS_DebugMain( MEDALBOXSYS_WORK *p_wk )
     {
     case 0: OS_Printf("デバッグモード：グラフィック操作\n"); break;
     case 1: OS_Printf("デバッグモード：シーケンス切替\n"); break;
-//    case 2: OS_Printf("デバッグモード：スピード調節操作\n"); break;
     default:OS_Printf("デバッグモード：グラフィック操作\n"); break;
     }
   }

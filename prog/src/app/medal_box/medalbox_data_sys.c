@@ -10,14 +10,8 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include "medalbox_data_sys.h"
+#include "mdlsort_def.cdat"
 #include "arc_def.h"              // ARC_ID
-
-//=============================================================================
-/**
- *					定数宣言
-*/
-//=============================================================================
-#define LOW_PAGE_LIMIT (10)  // 最低ページ枚数
 
 //=============================================================================
 /**
@@ -25,6 +19,7 @@
 */
 //=============================================================================
 static MY_MEDAL_ST* GetMyMedalST( MY_MEDALDATA *p_my_medal , u8 page_num , u8 num );
+static void ResetSortList( MY_MEDALDATA *p_my_medal );
 
 //----------------------------------------------------------------------------
 /**
@@ -61,14 +56,8 @@ void MEDALDATASYS_InitMedalData( MY_MEDALDATA* p_my_medal , GAMEDATA* p_gamedata
     GF_ASSERT( p_my_medal->p_medal_st );
   }
 
-  // ソートリストの初期化
-  {
-    MedalID medal_id;
-    for( medal_id = 0 ; medal_id < MDLID_MAX ; medal_id++ )
-    {
-      p_my_medal->sort_medal_id[medal_id] = MDLID_MAX;
-    }
-  }
+  // ソートリストのリセット
+  ResetSortList( p_my_medal );
 
   // 取得済みデータをコピーする(同時にタイプ順ソートメダルIDも作成)
   {
@@ -113,6 +102,10 @@ void MEDALDATASYS_InitMedalData( MY_MEDALDATA* p_my_medal , GAMEDATA* p_gamedata
     p_my_medal->page_max = LOW_PAGE_LIMIT;
   }
 
+  // イチオシメダル番号の取得
+  p_my_medal->push_medalid = MEDALBOX_GetPushMedalID( p_medal_box );
+  
+  ONOUE_Printf( "イチオシメダル番号 ：%u\n",p_my_medal->push_medalid );
   ONOUE_Printf( "メダル所持数 ：%u\n",p_my_medal->medal_cnt );
   ONOUE_Printf( "ページ枚数   ：%u\n",p_my_medal->page_max );
 }
@@ -130,6 +123,27 @@ void MEDALDATASYS_DeleteMedalData( MY_MEDALDATA* p_my_medal )
 {
   // 確保したメダルデータを開放する
   GFL_HEAP_FreeMemory( p_my_medal->p_medal_st );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルデータをセーブする
+ *
+ *	@param	p_my_medal 
+ *	@param	p_gamedata 
+ *	@param	heapID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MEDALDATASYS_SaveMedalData( MY_MEDALDATA* p_my_medal , GAMEDATA* p_gamedata , HEAPID heapID)
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
+  MEDALBOX* p_medal_box = SaveData_GetMedalBox( p_sv );
+
+  // イチオシメダルのセーブ
+  MEDALBOX_SetPushMedalID( p_medal_box , p_my_medal->push_medalid );
+
 }
 
 //----------------------------------------------------------------------------
@@ -192,5 +206,302 @@ static MY_MEDAL_ST* GetMyMedalST( MY_MEDALDATA *p_my_medal , u8 page_num , u8 nu
     return NULL;
   }
   return &(p_my_medal->p_medal_st[p_my_medal->sort_medal_id[ num + (page_num*5) ]]);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一押しメダル番号を設定する
+ *
+ *	@param	p_my_medal 
+ *	@param	meda_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MEDALDATASYS_SetPushMedalID( MY_MEDALDATA* p_my_medal , MedalID meda_id )
+{
+  p_my_medal->push_medalid = meda_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルをソートする
+ *
+ *	@param	p_my_medal 
+ *	@param	sort_mode 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode )
+{
+  // フィルタータイプをセットする
+  p_my_medal->sort_mode = sort_mode;
+
+  // ソートリストのリセット
+  ResetSortList( p_my_medal );
+
+  // フィルターをリセットする
+  {
+    int i;
+    int n;
+    int count = 0;
+
+        
+    // タイプ毎のソート
+    switch( p_my_medal->sort_mode )
+    {
+    // 古い順
+    case SORT_MODE_DEFAULT:
+      {
+        // ソートメダルIDをリセット
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+          p_my_medal->sort_medal_id[i] = i;
+        }
+
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+
+          for( n = i+1 ; n < p_my_medal->medal_cnt ; n++ )
+          {
+            MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
+            MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
+            u32 ymd_i = 0xfffffff;
+            u32 ymd_n = 0xfffffff;
+            ymd_i = (p_st_i->year * 10000) + (p_st_i->month + 100 ) + (p_st_n->day);
+            ymd_n = (p_st_n->year * 10000) + (p_st_n->month + 100 ) + (p_st_n->day);
+
+            GF_ASSERT(p_st_i);
+            GF_ASSERT(p_st_n);
+            GF_ASSERT( n != p_my_medal->medal_cnt);
+
+            // 古い物
+            if( ymd_i > ymd_n )
+            {
+              MedalID tmp = p_my_medal->sort_medal_id[i];
+              p_my_medal->sort_medal_id[i] = p_my_medal->sort_medal_id[n];
+              p_my_medal->sort_medal_id[n] = tmp;
+            }
+          }
+        }
+      }
+      break;
+    // タイトルだけ
+    case SORT_MODE_TITLE_ONLY:
+      {
+        // タイトルメダルだけでリセット
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+          MY_MEDAL_ST *p_st = &p_my_medal->p_medal_st[i];
+          if( p_st->medal_state == MEDAL_STATE_TITLE_GET )
+          {
+            p_my_medal->sort_medal_id[count] = i;
+            count++;
+          }
+        }
+        for( i = 0 ; i < count - 1 ; i++ )
+        {
+          for( n = i+1 ; n < count ; n++ )
+          {
+            MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
+            MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
+            u32 ymd_i = 0xfffffff;
+            u32 ymd_n = 0xfffffff;
+            ymd_i = (p_st_i->year * 10000) + (p_st_i->month + 100 ) + (p_st_n->day);
+            ymd_n = (p_st_n->year * 10000) + (p_st_n->month + 100 ) + (p_st_n->day);
+
+            GF_ASSERT(p_st_i);
+            GF_ASSERT(p_st_n);
+            GF_ASSERT( n != p_my_medal->medal_cnt);
+
+            GF_ASSERT( count > n );
+
+            // 古い物
+            if( ymd_i > ymd_n )
+            {
+              MedalID tmp = p_my_medal->sort_medal_id[i];
+              p_my_medal->sort_medal_id[i] = p_my_medal->sort_medal_id[n];
+              p_my_medal->sort_medal_id[n] = tmp;
+            }
+          }
+        }
+      }
+      break;
+    // 新しい順
+    case SORT_MODE_NEW:
+      {
+        // ソートメダルIDをリセット
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+          p_my_medal->sort_medal_id[i] = i;
+        }
+
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+
+          for( n = i+1 ; n < p_my_medal->medal_cnt ; n++ )
+          {
+            MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
+            MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
+            u32 ymd_i = 0xfffffff;
+            u32 ymd_n = 0xfffffff;
+            ymd_i = (p_st_i->year * 10000) + (p_st_i->month + 100 ) + (p_st_n->day);
+            ymd_n = (p_st_n->year * 10000) + (p_st_n->month + 100 ) + (p_st_n->day);
+
+            GF_ASSERT(p_st_i);
+            GF_ASSERT(p_st_n);
+            GF_ASSERT( n != p_my_medal->medal_cnt);
+
+            // 新しい物
+            if( ymd_i < ymd_n )
+            {
+              MedalID tmp = p_my_medal->sort_medal_id[i];
+              p_my_medal->sort_medal_id[i] = p_my_medal->sort_medal_id[n];
+              p_my_medal->sort_medal_id[n] = tmp;
+            }
+          }
+        }
+      }
+      break;
+    // ヒントで（タイプ順)
+    case SORT_MODE_HINT_ONLY:
+      {
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+          MY_MEDAL_ST *p_st = &p_my_medal->p_medal_st[i];
+
+          if( p_st->medal_state == MEDAL_STATE_HINT_GET )
+          {
+            p_my_medal->sort_medal_id[count] = i;
+            count++;
+          }
+        }
+      }
+      break;
+    // タイプ順
+    case SORT_MODE_TYPE:
+      {
+       // ソートメダルIDをリセット
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+          p_my_medal->sort_medal_id[i] = i;
+        }
+
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+
+          for( n = i+1 ; n < p_my_medal->medal_cnt ; n++ )
+          {
+            MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
+            MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
+            u32 id_i = 0;
+            u32 id_n = 0;
+            id_i = p_st_i->medal_id;
+            id_n = p_st_n->medal_id;
+
+            GF_ASSERT(p_st_i);
+            GF_ASSERT(p_st_n);
+            GF_ASSERT( n != p_my_medal->medal_cnt);
+
+            if( p_st_i->medal_state == MEDAL_STATE_HINT_GET )
+            {
+              id_i +=0xfffffff;
+            }
+            if( p_st_n->medal_state == MEDAL_STATE_HINT_GET )
+            {
+              id_n +=0xfffffff;
+            }
+            if( id_i > id_n )
+            {
+              MedalID tmp = p_my_medal->sort_medal_id[i];
+              p_my_medal->sort_medal_id[i] = p_my_medal->sort_medal_id[n];
+              p_my_medal->sort_medal_id[n] = tmp;
+            }
+          }
+        }
+      }
+      break;
+     // 新しい順
+    case SORT_MODE_NAME:
+      {
+        // ソートメダルIDをリセット
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+          p_my_medal->sort_medal_id[i] = i;
+        }
+
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+
+          for( n = i+1 ; n < p_my_medal->medal_cnt ; n++ )
+          {
+            int name_index;
+            MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
+            MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
+            u32 name_i = 0xfffffff;
+            u32 name_n = 0xfffffff;
+
+            GF_ASSERT(p_st_i);
+            GF_ASSERT(p_st_n);
+            GF_ASSERT( n != p_my_medal->medal_cnt);
+
+            // 名前順データを取得する
+            for( name_index = 0 ; name_index < MDLID_MAX ; name_index++ )
+            {
+              if( MedalSortList[name_index] == p_st_i->medal_id )
+              {
+                name_i =name_index;
+              }
+              if( MedalSortList[name_index] == p_st_n->medal_id )
+              {
+                name_n =name_index;
+              }
+            }
+
+            // ヒントメダルは後ろに
+            if( p_st_i->medal_state == MEDAL_STATE_HINT_GET )
+            {
+              name_i +=0xfffffff;
+            }
+            if( p_st_n->medal_state == MEDAL_STATE_HINT_GET )
+            {
+              name_n +=0xfffffff;
+            }
+
+            // 新しい物
+            if( name_i > name_n )
+            {
+              MedalID tmp = p_my_medal->sort_medal_id[i];
+              p_my_medal->sort_medal_id[i] = p_my_medal->sort_medal_id[n];
+              p_my_medal->sort_medal_id[n] = tmp;
+            }
+          }
+        }
+      }
+      break;
+
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ソートリストをresetする
+ *
+ *	@param	*p_my_medal 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ResetSortList( MY_MEDALDATA *p_my_medal )
+{
+  // ソートリストの初期化
+  {
+    MedalID medal_id;
+    for( medal_id = 0 ; medal_id < MDLID_MAX ; medal_id++ )
+    {
+      p_my_medal->sort_medal_id[medal_id] = MDLID_MAX;
+    }
+  }
 }
 

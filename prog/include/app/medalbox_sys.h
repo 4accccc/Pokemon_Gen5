@@ -20,6 +20,14 @@ FS_EXTERN_OVERLAY(medalbox);
 //					定数宣言
 //
 //=============================================================================
+//-------------------------------------
+///	終了モード
+//=====================================
+typedef enum 
+{
+  MB_RESULT_RETURN,       ///<通常の終了
+  MB_RESULT_EXIT,         ///<Xボタンの終了(未使用)
+} MB_RESULT;
 
 //=============================================================================
 //
@@ -31,7 +39,8 @@ FS_EXTERN_OVERLAY(medalbox);
 //=====================================
 typedef struct _MEDALBOXSYS_PARAM
 {
-  GAMEDATA*         p_gamedata;           ///< [in,out]  GAMEDATA
+  GAMEDATA*         p_gamedata;   ///< [in,out]  GAMEDATA
+  MB_RESULT         result;       ///<[out] 終了モード
 }
 MEDALBOXSYS_PARAM;
 
