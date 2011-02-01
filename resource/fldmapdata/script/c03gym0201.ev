@@ -140,7 +140,7 @@ ev_leader3_btl:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_LEADER3_01, 0 )
+	_TRAINER_BTL_SET( TRID_LEADER3_02, 0 )
 	
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
