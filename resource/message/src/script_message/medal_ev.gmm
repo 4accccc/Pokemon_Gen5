@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="tamada" host="W00139" date="2011-02-02T01:09:59"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
+			</tag>
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="192" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
+			<tag entry="53" japanese="メダル名" english="メダル名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+				<comment language="english">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+			</tag>
+			<tag entry="54" japanese="メダリストランク名" english="メダリストランク名" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">メダルを集めると上昇するメダルボックスのランク名</comment>
+				<comment language="english">メダルを集めると上昇するメダルボックスのランク名</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="199"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="4" width="338"/>
+		<erase position="-1" width="100"/>
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		</attribute>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="233"/>
+			<font default=" 0:large" position="5" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="6" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="8" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="301" top="337" right="992" bottom="955" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="807" top="42" right="1280" bottom="440" visible="yes"/>
+		<band id="0" index="1" style="0000" width="516"/>
+		<band id="1" index="2" style="0000" width="165"/>
+		<band id="2" index="3" style="0000" width="529"/>
+		<band id="3" index="4" style="0000" width="152"/>
+		<band id="4" index="0" style="0000" width="683"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="msg_mdloyj_comp_01">
+		<comment>・0=主人公名
+
+メダル獲得数=MAX-1の時</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">ついに　[1:00:トレーナー名:0]さんも
+ここまで　きたのですね……[BE:01:ページ切り替え（クリア）]
+……それでは　さいこう　きゅうきょくの
+めいよを　たたえるべく[BE:00:ページ切り替え（行送り）]
+ウルトラゴージャスな　イベントを[BE:00:ページ切り替え（行送り）]
+メダルラリーじむきょくで[BE:00:ページ切り替え（行送り）]
+おこないたいと　おもいます！[BE:00:ページ切り替え（行送り）]
+よっ！　あんたが　たいしょう！</language>
+		<language name="JPN_KANJI" width="256">ついに　[1:00:トレーナー名:0]さんも
+ここまで　来たのですね……[BE:01:ページ切り替え（クリア）]
+…それでは　最高　究極の
+名誉を　称えるべく[BE:00:ページ切り替え（行送り）]
+ウルトラゴージャスな　イベントを[BE:00:ページ切り替え（行送り）]
+メダルラリー事務局で[BE:00:ページ切り替え（行送り）]
+行いたいと　思います！[BE:00:ページ切り替え（行送り）]
+よっ！　あんたが　大将！</language>
+	</row>
+
+	<row id="msg_mdloyj_end_01">
+		<comment>・0=メダル獲得目標数
+
+しめのセリフ　最高ランクでない</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">それでは　メダルかくとく　[2:02:３桁:0]まい
+めざして　ファイトッ！</language>
+		<language name="JPN_KANJI" width="256">それでは　メダル獲得　[2:02:３桁:0]枚
+目指して　ファイトッ！</language>
+	</row>
+
+	<row id="msg_mdloyj_end_02">
+		<comment>しめのセリフ　最高ランク</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">それでは　がんばってください！</language>
+		<language name="JPN_KANJI" width="256">それでは　がんばってください！</language>
+	</row>
+
+	<row id="msg_mdloyj_end_03">
+		<comment>・0=メダルラリー事務局のあるマップ名
+
+表彰イベントをこなしてない状態で話しかけた時</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">[1:05:マップ名:0]にある
+メダルラリーじむきょくで　ひょうしょうしきを[BE:00:ページ切り替え（行送り）]
+おこないますので　ぜひとも　おこしください！</language>
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]にある
+メダルラリー事務局で　表彰式を[BE:00:ページ切り替え（行送り）]
+行いますので　ぜひとも　お越しください！</language>
+	</row>
+
+	<row id="msg_mdloyj_goal_01">
+		<comment>・0=主人公名
+・1=メダルラリー事務局のあるマップ名
+
+最初の目標メダル数を集めた時</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">ハッ！　[1:00:トレーナー名:0]さん！　すばらしい！
+すばらしいですよ！[BE:00:ページ切り替え（行送り）]
+なんと　あなたは　ただいまをもって[BE:00:ページ切り替え（行送り）]
+メダルラリーじむきょくが　せっていした[BE:00:ページ切り替え（行送り）]
+チェックポイントを　ぶじクリアし[BE:00:ページ切り替え（行送り）]
+みごと　ゴールイン！　なさいました！[BE:01:ページ切り替え（クリア）]
+つきましては　[1:05:マップ名:1]にある
+メダルラリーじむきょくで　ひょうしょうしきを[BE:00:ページ切り替え（行送り）]
+おこないますので　ぜひとも　おこしください！</language>
+		<language name="JPN_KANJI" width="256">ハッ！　[1:00:トレーナー名:0]さん！　素晴らしい！
+素晴らしいですよ！[BE:00:ページ切り替え（行送り）]
+なんと　あなたは　ただ今をもって[BE:00:ページ切り替え（行送り）]
+メダルラリー事務局が　設定した[BE:00:ページ切り替え（行送り）]
+チェックポイントを　無事クリアし[BE:00:ページ切り替え（行送り）]
+見事　ゴールイン！　なさいました！[BE:01:ページ切り替え（クリア）]
+つきましては　[1:05:マップ名:1]にある
+メダルラリー事務局で　表彰式を[BE:00:ページ切り替え（行送り）]
+行いますので　ぜひとも　お越しください！</language>
+	</row>
+
+	<row id="msg_mdloyj_hintget_01">
+		<comment>・0=主人公名</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">おやおや　[1:00:トレーナー名:0]さんったら
+わたしの　ヒントメダルが　ほしくて[BE:00:ページ切り替え（行送り）]
+たまらないってかお　してますね！[BE:00:ページ切り替え（行送り）]
+ほしがりやさんめ！　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おやおや　[1:00:トレーナー名:0]さんったら
+わたしの　ヒントメダルが　欲しくて[BE:00:ページ切り替え（行送り）]
+たまらないって顔　してますね！[BE:00:ページ切り替え（行送り）]
+欲しがりやさんめ！　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_hintget_02_01">
+		<comment>・0=主人公名
+
+ヒント開放MAX時かつ最高ランクでない</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">えーと……
+わたしから　おわたしする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
+もう　ありませんね[BE:01:ページ切り替え（クリア）]
+それでは　メダルかくとく　[2:02:３桁:0]まい
+めざして　ファイトッ！</language>
+		<language name="JPN_KANJI" width="256">えーと……
+わたしから　お渡しする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
+もう　ありませんね[BE:01:ページ切り替え（クリア）]
+それでは　メダル獲得　[2:02:３桁:0]枚
+目指して　ファイトッ！</language>
+	</row>
+
+	<row id="msg_mdloyj_hintget_02_02">
+		<comment>・0=主人公名
+
+ヒント開放MAXかつ最高ランク</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">えーと……
+わたしから　おわたしする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
+もう　ありませんね[BE:01:ページ切り替え（クリア）]
+それでは　がんばってください！</language>
+		<language name="JPN_KANJI" width="256">えーと……
+わたしから　お渡しする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
+もう　ありませんね[BE:01:ページ切り替え（クリア）]
+それでは　がんばってください！</language>
+	</row>
+
+	<row id="msg_mdloyj_hintget_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>・0=主人公名
+・1=もらうヒントメダルの数</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]ヒントメダル[FF:00:色:0]を　[2:02:３桁:1]コ　もらった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]ヒントメダル[FF:00:色:0]を　[2:02:３桁:1]コ　もらった！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_intro_01">
+		<comment>この後、たいせつなもの「メダルボックス」（No.627）入手</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">とつぜんですが　はじめまして！[BE:01:ページ切り替え（クリア）]
+さあさ　なにもいわず
+これを　うけとってください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">突然ですが　初めまして！[BE:01:ページ切り替え（クリア）]
+さあさ　何もいわず
+これを　受け取ってください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_intro_02">
+		<comment>この後、はい／いいえ選択肢。
+どちらを選んでもmsg_mdloyj_intro_03へ</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">それは　メダルボックス！
+そして　わたしは　ひとよんで[BE:00:ページ切り替え（行送り）]
+メダルおやじ！[BE:01:ページ切り替え（クリア）]
+……ところで！
+メダルラリー　という　きょうぎかいを[BE:00:ページ切り替え（行送り）]
+しっていますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">それは　メダルボックス！
+そして　わたしは　ひと呼んで[BE:00:ページ切り替え（行送り）]
+メダルおやじ！[BE:01:ページ切り替え（クリア）]
+……ところで！
+メダルラリー　という　競技会を[BE:00:ページ切り替え（行送り）]
+知っていますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_intro_03">
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">しっていようが　いるまいが
+せつめいさせていただきますよ！[BE:00:ページ切り替え（行送り）]
+メダルラリー　とは[BE:00:ページ切り替え（行送り）]
+トレーナーの　かたがたの[BE:00:ページ切り替え（行送り）]
+さまざまな　こうどうを[BE:00:ページ切り替え（行送り）]
+かんさつし　ひょうかする[BE:00:ページ切り替え（行送り）]
+おせっかいな　イベント！[BE:01:ページ切り替え（クリア）]
+……と　いうわけで　さっそく
+さんかを　きねんして[BE:00:ページ切り替え（行送り）]
+このメダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">知っていようが　いるまいが
+説明させていただきますよ！[BE:00:ページ切り替え（行送り）]
+メダルラリー　とは[BE:00:ページ切り替え（行送り）]
+トレーナーの　方々の[BE:00:ページ切り替え（行送り）]
+様々な　行動を[BE:00:ページ切り替え（行送り）]
+観察し　評価する[BE:00:ページ切り替え（行送り）]
+おせっかいな　イベント！[BE:01:ページ切り替え（クリア）]
+……と　いうわけで　さっそく
+参加を　記念して[BE:00:ページ切り替え（行送り）]
+このメダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_intro_04">
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">しゅっけつだいサービスで
+メダルラリーの　おとも！[BE:00:ページ切り替え（行送り）]
+ヒントメダルも　さしあげます！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">出血大サービスで
+メダルラリーの　お供！[BE:00:ページ切り替え（行送り）]
+ヒントメダルも　さしあげます！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_intro_05">
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">あなたのことは　わたしがずっと　みています[BE:00:ページ切り替え（行送り）]
+いままでも　そして　これからも……[BE:00:ページ切り替え（行送り）]
+まあ　なにごとも　けいけん[BE:00:ページ切り替え（行送り）]
+おじさんに　まかせなさい！[BE:00:ページ切り替え（行送り）]
+では！</language>
+		<language name="JPN_KANJI" width="256">あなたのことは　わたしがずっと　みています[BE:00:ページ切り替え（行送り）]
+今までも　そして　これからも……[BE:00:ページ切り替え（行送り）]
+まあ　何事も　経験[BE:00:ページ切り替え（行送り）]
+おじさんに　任せなさい！[BE:00:ページ切り替え（行送り）]
+では！</language>
+	</row>
+
+	<row id="msg_mdloyj_rankup_01">
+		<comment>・0=主人公名
+
+メダルボックスランクアップ</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">わお！　メダルが　たくさん
+あつまっていますね！[BE:00:ページ切り替え（行送り）]
+そんな　[1:00:トレーナー名:0]さんの　メダルボックスを[BE:00:ページ切り替え（行送り）]
+すてきに　リニューアルしましょう！[BE:00:ページ切り替え（行送り）]
+えい！　やあ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わお！　メダルが　たくさん
+集まっていますね！[BE:00:ページ切り替え（行送り）]
+そんな　[1:00:トレーナー名:0]さんの　メダルボックスを[BE:00:ページ切り替え（行送り）]
+素敵に　リニューアルしましょう！[BE:00:ページ切り替え（行送り）]
+えい！　やあ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_rankup_02">
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">リニューアルの　きねんに
+メダルも　あげちゃいます！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">リニューアルの　記念に
+メダルも　あげちゃいます！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_rankup_03">
+		<comment>メダルボックスランクアップが一気に2段階以上起こる際の、2つ目以降</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">さらに　リニューアル！
+やー！　とー！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さらに　リニューアル！
+やー！　とー！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_rankup_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>ランク名のタグが決まり次第修正
+・0=主人公名
+・1=ランク名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　メダルボックスが
+[FF:00:色:2][1:36:メダリストランク名:1][FF:00:色:0]ランクに　リニューアルされた！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　メダルボックスが
+[FF:00:色:2][1:36:メダリストランク名:1][FF:00:色:0]ランクに　リニューアルされた！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_titleget_01">
+		<comment>・0=主人公名
+
+メダル獲得</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　まってましたよ！
+ぜっこうちょうですね！[BE:00:ページ切り替え（行送り）]
+さっそく　あたらしい　メダルを[BE:00:ページ切り替え（行送り）]
+おわたしします　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　待ってましたよ！
+絶好調ですね！[BE:00:ページ切り替え（行送り）]
+さっそく　新しい　メダルを[BE:00:ページ切り替え（行送り）]
+お渡しします　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_titleget_02">
+		<comment>・0=主人公名
+
+メダルを複数同時に獲得する際の、2つ目以降</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">さらにっ！
+まだ　[1:00:トレーナー名:0]さんに[BE:00:ページ切り替え（行送り）]
+おわたししたい　メダルが　あります！[BE:00:ページ切り替え（行送り）]
+どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さらにっ！
+まだ　[1:00:トレーナー名:0]さんに[BE:00:ページ切り替え（行送り）]
+お渡ししたい　メダルが　あります！[BE:00:ページ切り替え（行送り）]
+どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_titleget_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>メダル名のタグが決まり次第修正
+・0=主人公名
+・1=メダル名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）][FF:00:色:2]
+[FF:00:色:0]てにいれた！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）][FF:00:色:2]
+[FF:00:色:0]手に入れた！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
