@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-19T15:56:01"/>
+	<create user="shimoyamada" host="W00184" date="2011-02-02T13:22:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,12 +274,12 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="201"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="185"/>
+		<comment position="1" width="201"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="157" top="209" right="862" bottom="829" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+	<dialog left="217" top="393" right="922" bottom="1021" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -1005,6 +1005,818 @@
 	<row id="mes_box_no" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
 		<language name="JPN" font=" 1:small" width="72">いいえ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">いいえ</language>
+	</row>
+
+	<row id="mes_box_search_cap_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みアプリ見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">ボックスを　せいりする</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ボックスを　整理する</language>
+	</row>
+
+	<row id="mes_box_search_cap_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みアプリ見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">バトルボックス</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">バトルボックス</language>
+	</row>
+
+	<row id="mes_box_search_text_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みメイン画面見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモン　しぼりこみ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモン　絞込み</language>
+	</row>
+
+	<row id="mes_box_search_text_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みメイン画面ガイド</comment>
+		<language name="JPN" font=" 1:small" width="72">じょうほうを　えらび　ＯＮを　おすと
+しぼりこみを　かいしします。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">じょうほうを　えらび　ＯＮを　おすと
+しぼりこみを　かいしします。</language>
+	</row>
+
+	<row id="mes_box_search_text_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+
+種族名の頭文字選択</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　なまえの　かしらもじを
+えらんでください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　なまえの　かしらもじを
+えらんでください。</language>
+	</row>
+
+	<row id="mes_box_search_text_03_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+
+種族名チェック
+
+0：種族名
+1：タイプ１
+2:：タイプ２</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンを　えらんでください。
+
+なまえ：[1:01:ポケモン種族名:0]
+タイプ１：[1:03:ポケモンタイプ:1]
+タイプ２：[1:03:ポケモンタイプ:2]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンを　えらんでください。
+
+なまえ：[1:01:ポケモン種族名:0]
+タイプ１：[1:03:ポケモンタイプ:1]
+タイプ２：[1:03:ポケモンタイプ:2]</language>
+	</row>
+
+	<row id="mes_box_search_text_04_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝01</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]がんばりや
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]がんばりや
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝02</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]さみしがり
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]さみしがり
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝03</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]ゆうかん
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]ゆうかん
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝04</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]いじっぱり
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]いじっぱり
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝05</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]やんちゃ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]やんちゃ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝06</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]ずぶとい
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]ずぶとい
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝07</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]すなお
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]すなお
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_08" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝08</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]のんき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]のんき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_09" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝09</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]わんぱく
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]わんぱく
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_10" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝10</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]のうてんき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]のうてんき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_11" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝11</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]おくびょう
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]おくびょう
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_12" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝12</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]せっかち
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]せっかち
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_13" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝13</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]まじめ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]まじめ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_14" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝14</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]ようき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]ようき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_15" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝15</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]むじゃき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]むじゃき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_16" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝16</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]ひかえめ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]ひかえめ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_17" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝17</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]おっとり
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]おっとり
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_18" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝18</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]れいせい
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]れいせい
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_19" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝19</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]てれや
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]てれや
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_20" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝20</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]うっかりや
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]うっかりや
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_21" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝21</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]おだやか
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]おだやか
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_22" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝22</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]おとなしい
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]おとなしい
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_23" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝23</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]なまいき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]なまいき
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_24" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝24</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]しんちょう
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]しんちょう
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_04_25" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性格＝25</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
+
+せいかく：[FF:00:色:1]きまぐれ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
+
+せいかく：[FF:00:色:1]きまぐれ
+[FF:00:色:0]バランスよく　せいちょう　しやすい。
+ー</language>
+	</row>
+
+	<row id="mes_box_search_text_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+
+特性の頭文字選択</comment>
+		<language name="JPN" font=" 1:small" width="72">とくせいの　かしらもじを　えらんでください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">とくせいの　かしらもじを　選んでください。</language>
+	</row>
+
+	<row id="mes_box_search_text_05_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+
+特性チェック
+
+0：特性名
+</comment>
+		<language name="JPN" font=" 1:small" width="72">とくせいを　えらんでください。
+
+[FF:00:色:1][1:06:とくせい名:0][FF:00:色:0]:
+</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">とくせいを　選んでください。
+
+[FF:00:色:1][1:06:とくせい名:0][FF:00:色:0]:
+</language>
+	</row>
+
+	<row id="mes_box_search_text_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+性別チェック
+</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいべつを
+えらんでください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいべつを
+選んでください。</language>
+	</row>
+
+	<row id="mes_box_search_text_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>絞込みサブ画面ガイド：
+持ち物チェック
+</comment>
+		<language name="JPN" font=" 1:small" width="72">ポケモンの　もちものに　ついて
+えらんでください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　もちものに　ついて
+選んでください。</language>
+	</row>
+
+	<row id="mes_box_search_type_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>検索の見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">なまえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">なまえ</language>
+	</row>
+
+	<row id="mes_box_search_type_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>検索の見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">せいかく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">せいかく</language>
+	</row>
+
+	<row id="mes_box_search_type_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>検索の見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">とくせい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">とくせい</language>
+	</row>
+
+	<row id="mes_box_search_type_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>検索の見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">せいべつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">せいべつ</language>
+	</row>
+
+	<row id="mes_box_search_type_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>検索の見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">もちもの</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もちもの</language>
+	</row>
+
+	<row id="mes_box_search_type_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>検索の見出し</comment>
+		<language name="JPN" font=" 1:small" width="72">マーク</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">マーク</language>
+	</row>
+
+	<row id="mes_box_search_initial_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ア</language>
+	</row>
+
+	<row id="mes_box_search_initial_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">イ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">イ</language>
+	</row>
+
+	<row id="mes_box_search_initial_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ウ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ウ</language>
+	</row>
+
+	<row id="mes_box_search_initial_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">エ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">エ</language>
+	</row>
+
+	<row id="mes_box_search_initial_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">オ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">オ</language>
+	</row>
+
+	<row id="mes_box_search_initial_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">カ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">カ</language>
+	</row>
+
+	<row id="mes_box_search_initial_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">キ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">キ</language>
+	</row>
+
+	<row id="mes_box_search_initial_08" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ク</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ク</language>
+	</row>
+
+	<row id="mes_box_search_initial_09" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ケ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ケ</language>
+	</row>
+
+	<row id="mes_box_search_initial_10" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">コ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">コ</language>
+	</row>
+
+	<row id="mes_box_search_initial_11" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">サ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">サ</language>
+	</row>
+
+	<row id="mes_box_search_initial_12" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">シ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">シ</language>
+	</row>
+
+	<row id="mes_box_search_initial_13" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ス</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ス</language>
+	</row>
+
+	<row id="mes_box_search_initial_14" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">セ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">セ</language>
+	</row>
+
+	<row id="mes_box_search_initial_15" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ソ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ソ</language>
+	</row>
+
+	<row id="mes_box_search_initial_16" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">タ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">タ</language>
+	</row>
+
+	<row id="mes_box_search_initial_17" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">チ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">チ</language>
+	</row>
+
+	<row id="mes_box_search_initial_18" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ツ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ツ</language>
+	</row>
+
+	<row id="mes_box_search_initial_19" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">テ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">テ</language>
+	</row>
+
+	<row id="mes_box_search_initial_20" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ト</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ト</language>
+	</row>
+
+	<row id="mes_box_search_initial_21" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ナ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ナ</language>
+	</row>
+
+	<row id="mes_box_search_initial_22" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ニ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ニ</language>
+	</row>
+
+	<row id="mes_box_search_initial_23" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ヌ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ヌ</language>
+	</row>
+
+	<row id="mes_box_search_initial_24" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ネ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ネ</language>
+	</row>
+
+	<row id="mes_box_search_initial_25" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ノ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ノ</language>
+	</row>
+
+	<row id="mes_box_search_initial_26" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ハ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ハ</language>
+	</row>
+
+	<row id="mes_box_search_initial_27" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ヒ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ヒ</language>
+	</row>
+
+	<row id="mes_box_search_initial_28" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">フ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">フ</language>
+	</row>
+
+	<row id="mes_box_search_initial_29" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ヘ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ヘ</language>
+	</row>
+
+	<row id="mes_box_search_initial_30" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ホ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ホ</language>
+	</row>
+
+	<row id="mes_box_search_initial_31" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">マ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">マ</language>
+	</row>
+
+	<row id="mes_box_search_initial_32" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ミ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ミ</language>
+	</row>
+
+	<row id="mes_box_search_initial_33" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ム</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ム</language>
+	</row>
+
+	<row id="mes_box_search_initial_34" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">メ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">メ</language>
+	</row>
+
+	<row id="mes_box_search_initial_35" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">モ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">モ</language>
+	</row>
+
+	<row id="mes_box_search_initial_36" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ヤ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ヤ</language>
+	</row>
+
+	<row id="mes_box_search_initial_37" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ユ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ユ</language>
+	</row>
+
+	<row id="mes_box_search_initial_38" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ヨ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ヨ</language>
+	</row>
+
+	<row id="mes_box_search_initial_39" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ラ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ラ</language>
+	</row>
+
+	<row id="mes_box_search_initial_40" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">リ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">リ</language>
+	</row>
+
+	<row id="mes_box_search_initial_41" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ル</language>
+	</row>
+
+	<row id="mes_box_search_initial_42" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">レ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">レ</language>
+	</row>
+
+	<row id="mes_box_search_initial_43" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ロ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ロ</language>
+	</row>
+
+	<row id="mes_box_search_initial_44" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>頭文字</comment>
+		<language name="JPN" font=" 1:small" width="72">ワ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ワ</language>
+	</row>
+
+	<row id="mes_box_search_hyphen_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>検索しないマーク</comment>
+		<language name="JPN" font=" 1:small" width="72">ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ー</language>
+	</row>
+
+	<row id="mes_box_search_sex_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>性別</comment>
+		<language name="JPN" font=" 1:small" width="72">♂</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">♂</language>
+	</row>
+
+	<row id="mes_box_search_sex_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>性別</comment>
+		<language name="JPN" font=" 1:small" width="72">♀</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">♀</language>
+	</row>
+
+	<row id="mes_box_search_sex_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>性別</comment>
+		<language name="JPN" font=" 1:small" width="72">せいべつなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">せいべつなし</language>
+	</row>
+
+	<row id="mes_box_search_item_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>道具</comment>
+		<language name="JPN" font=" 1:small" width="72">もっている</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もっている</language>
+	</row>
+
+	<row id="mes_box_search_item_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>道具</comment>
+		<language name="JPN" font=" 1:small" width="72">もっていない</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もっていない</language>
 	</row>
 
 	<flowchart-group-list>
