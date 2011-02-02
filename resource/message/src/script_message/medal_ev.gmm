@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2011-02-02T01:09:59"/>
+	<create user="ito_hiroto" host="W00178" date="2011-02-02T10:27:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -377,7 +377,7 @@
 		</language>
 	</columns>
 
-	<dialog left="301" top="337" right="992" bottom="955" maximized="no" rayout="Vertical2">
+	<dialog left="84" top="343" right="775" bottom="961" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="42" right="1280" bottom="440" visible="yes"/>
 		<band id="0" index="1" style="0000" width="516"/>
@@ -385,7 +385,7 @@
 		<band id="2" index="3" style="0000" width="529"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="683"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -421,7 +421,7 @@
 よっ！　あんたが　たいしょう！</language>
 		<language name="JPN_KANJI" width="256">ついに　[1:00:トレーナー名:0]さんも
 ここまで　来たのですね……[BE:01:ページ切り替え（クリア）]
-…それでは　最高　究極の
+……それでは　最高　究極の
 名誉を　称えるべく[BE:00:ページ切り替え（行送り）]
 ウルトラゴージャスな　イベントを[BE:00:ページ切り替え（行送り）]
 メダルラリー事務局で[BE:00:ページ切り替え（行送り）]
@@ -652,8 +652,7 @@
 	</row>
 
 	<row id="msg_mdloyj_rankup_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>ランク名のタグが決まり次第修正
-・0=主人公名
+		<comment>・0=主人公名
 ・1=ランク名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　メダルボックスが
 [FF:00:色:2][1:36:メダリストランク名:1][FF:00:色:0]ランクに　リニューアルされた！[BE:01:ページ切り替え（クリア）]</language>
@@ -692,8 +691,7 @@
 	</row>
 
 	<row id="msg_mdloyj_titleget_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>メダル名のタグが決まり次第修正
-・0=主人公名
+		<comment>・0=主人公名
 ・1=メダル名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）][FF:00:色:2]
