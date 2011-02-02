@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ito_hiroto" host="W00178" date="2011-02-02T10:27:52"/>
+	<create user="matsumiya" host="W00224" date="2011-02-02T13:22:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -354,7 +354,7 @@
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="233"/>
+			<message position="2" width="291"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -365,7 +365,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="284"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -377,14 +377,14 @@
 		</language>
 	</columns>
 
-	<dialog left="84" top="343" right="775" bottom="961" maximized="no" rayout="Vertical2">
+	<dialog left="1787" top="128" right="2476" bottom="746" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="42" right="1280" bottom="440" visible="yes"/>
-		<band id="0" index="1" style="0000" width="516"/>
+		<band id="0" index="1" style="0000" width="514"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="529"/>
+		<band id="2" index="3" style="0000" width="527"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="683"/>
+		<band id="4" index="0" style="0000" width="681"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -407,32 +407,28 @@
 
 
 	<row id="msg_mdloyj_comp_01">
-		<comment>・0=主人公名
-
-メダル獲得数=MAX-1の時</comment>
+		<comment>メダル獲得数=MAX-1の時
+・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
 		<language name="JPN" width="256">ついに　[1:00:トレーナー名:0]さんも
 ここまで　きたのですね……[BE:01:ページ切り替え（クリア）]
 ……それでは　さいこう　きゅうきょくの
-めいよを　たたえるべく[BE:00:ページ切り替え（行送り）]
-ウルトラゴージャスな　イベントを[BE:00:ページ切り替え（行送り）]
-メダルラリーじむきょくで[BE:00:ページ切り替え（行送り）]
-おこないたいと　おもいます！[BE:00:ページ切り替え（行送り）]
+めいよを　たたえるべく[BE:01:ページ切り替え（クリア）]
+ウルトラゴージャスな　イベントを
+メダルラリーじむきょくで　します！[BE:01:ページ切り替え（クリア）]
 よっ！　あんたが　たいしょう！</language>
 		<language name="JPN_KANJI" width="256">ついに　[1:00:トレーナー名:0]さんも
 ここまで　来たのですね……[BE:01:ページ切り替え（クリア）]
 ……それでは　最高　究極の
-名誉を　称えるべく[BE:00:ページ切り替え（行送り）]
-ウルトラゴージャスな　イベントを[BE:00:ページ切り替え（行送り）]
-メダルラリー事務局で[BE:00:ページ切り替え（行送り）]
-行いたいと　思います！[BE:00:ページ切り替え（行送り）]
+名誉を　称えるべく[BE:01:ページ切り替え（クリア）]
+ウルトラゴージャスな　イベントを
+メダルラリー事務局で　行います！[BE:01:ページ切り替え（クリア）]
 よっ！　あんたが　大将！</language>
 	</row>
 
 	<row id="msg_mdloyj_end_01">
-		<comment>・0=メダル獲得目標数
-
-しめのセリフ　最高ランクでない</comment>
+		<comment>しめのセリフ　最高ランクでない
+・0=メダル獲得目標数</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
 		<language name="JPN" width="256">それでは　メダルかくとく　[2:02:３桁:0]まい
 めざして　ファイトッ！</language>
@@ -443,92 +439,90 @@
 	<row id="msg_mdloyj_end_02">
 		<comment>しめのセリフ　最高ランク</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">それでは　がんばってください！</language>
-		<language name="JPN_KANJI" width="256">それでは　がんばってください！</language>
+		<language name="JPN" width="256">それでは　あたらしい　メダルを
+てにいれるため　がんばってください！</language>
+		<language name="JPN_KANJI" width="256">それでは　あたらしい　メダルを
+獲得できるよう　がんばってください！</language>
 	</row>
 
 	<row id="msg_mdloyj_end_03">
-		<comment>・0=メダルラリー事務局のあるマップ名
-
-表彰イベントをこなしてない状態で話しかけた時</comment>
+		<comment>表彰イベントをこなしてない状態で話しかけた時
+・0=メダルラリー事務局のあるマップ名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">[1:05:マップ名:0]にある
-メダルラリーじむきょくで　ひょうしょうしきを[BE:00:ページ切り替え（行送り）]
-おこないますので　ぜひとも　おこしください！</language>
-		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]にある
-メダルラリー事務局で　表彰式を[BE:00:ページ切り替え（行送り）]
-行いますので　ぜひとも　お越しください！</language>
+		<language name="JPN" width="256">[1:05:マップ名:0]に　ある
+メダルラリーじむきょくで[BE:01:ページ切り替え（クリア）]
+ひょうしょうしきを　おこないますので
+ぜひとも　おこしください！</language>
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]に　ある
+メダルラリー事務局で[BE:01:ページ切り替え（クリア）]
+表彰式を　行いますので
+ぜひとも　お越しください！</language>
 	</row>
 
 	<row id="msg_mdloyj_goal_01">
-		<comment>・0=主人公名
-・1=メダルラリー事務局のあるマップ名
-
-最初の目標メダル数を集めた時</comment>
+		<comment>最初の目標メダル数を集めた時
+・0=主人公名
+・1=メダルラリー事務局のあるマップ名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">ハッ！　[1:00:トレーナー名:0]さん！　すばらしい！
-すばらしいですよ！[BE:00:ページ切り替え（行送り）]
-なんと　あなたは　ただいまをもって[BE:00:ページ切り替え（行送り）]
-メダルラリーじむきょくが　せっていした[BE:00:ページ切り替え（行送り）]
-チェックポイントを　ぶじクリアし[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">ハッ！　[1:00:トレーナー名:0]さん！
+すばらしい！　すばらしいですよ！[BE:01:ページ切り替え（クリア）]
+なんと　あなたは　ただいまをもって
+メダルラリーじむきょくが　せっていした[BE:01:ページ切り替え（クリア）]
+チェックポイントを　ぶじクリアし
 みごと　ゴールイン！　なさいました！[BE:01:ページ切り替え（クリア）]
 つきましては　[1:05:マップ名:1]にある
-メダルラリーじむきょくで　ひょうしょうしきを[BE:00:ページ切り替え（行送り）]
-おこないますので　ぜひとも　おこしください！</language>
-		<language name="JPN_KANJI" width="256">ハッ！　[1:00:トレーナー名:0]さん！　素晴らしい！
-素晴らしいですよ！[BE:00:ページ切り替え（行送り）]
-なんと　あなたは　ただ今をもって[BE:00:ページ切り替え（行送り）]
-メダルラリー事務局が　設定した[BE:00:ページ切り替え（行送り）]
-チェックポイントを　無事クリアし[BE:00:ページ切り替え（行送り）]
+メダルラリーじむきょくで[BE:01:ページ切り替え（クリア）]
+ひょうしょうしきを　おこないますので
+ぜひとも　おこしください！</language>
+		<language name="JPN_KANJI" width="256">ハッ！　[1:00:トレーナー名:0]さん！
+素晴らしい！　素晴らしいですよ！[BE:01:ページ切り替え（クリア）]
+なんと　あなたは　ただ今をもって
+メダルラリー事務局が　設定した[BE:01:ページ切り替え（クリア）]
+チェックポイントを　無事クリアし
 見事　ゴールイン！　なさいました！[BE:01:ページ切り替え（クリア）]
 つきましては　[1:05:マップ名:1]にある
-メダルラリー事務局で　表彰式を[BE:00:ページ切り替え（行送り）]
-行いますので　ぜひとも　お越しください！</language>
+メダルラリー事務局で[BE:01:ページ切り替え（クリア）]
+表彰式を　行いますので
+ぜひとも　お越しください！</language>
 	</row>
 
 	<row id="msg_mdloyj_hintget_01">
 		<comment>・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">おやおや　[1:00:トレーナー名:0]さんったら
-わたしの　ヒントメダルが　ほしくて[BE:00:ページ切り替え（行送り）]
-たまらないってかお　してますね！[BE:00:ページ切り替え（行送り）]
-ほしがりやさんめ！　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おやおや　[1:00:トレーナー名:0]さんったら
-わたしの　ヒントメダルが　欲しくて[BE:00:ページ切り替え（行送り）]
-たまらないって顔　してますね！[BE:00:ページ切り替え（行送り）]
-欲しがりやさんめ！　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ふむう……　[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+さらに　メダルを　あつめてもらうため
+ヒントメダルを　さしあげましょう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ふむう……　[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+さらに　メダルを　集めてもらうため
+ヒントメダルを　さしあげましょう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_mdloyj_hintget_02_01">
-		<comment>・0=主人公名
-
-ヒント開放MAX時かつ最高ランクでない</comment>
+		<comment>ヒント開放MAX時かつ最高ランクでない
+・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">えーと……
-わたしから　おわたしする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
-もう　ありませんね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">えーと……　わたしから　おわたしする
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
 それでは　メダルかくとく　[2:02:３桁:0]まい
 めざして　ファイトッ！</language>
-		<language name="JPN_KANJI" width="256">えーと……
-わたしから　お渡しする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
-もう　ありませんね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">えーと……　わたしから　お渡しする
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
 それでは　メダル獲得　[2:02:３桁:0]枚
 目指して　ファイトッ！</language>
 	</row>
 
 	<row id="msg_mdloyj_hintget_02_02">
-		<comment>・0=主人公名
-
-ヒント開放MAXかつ最高ランク</comment>
+		<comment>ヒント開放MAXかつ最高ランク
+・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">えーと……
-わたしから　おわたしする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
-もう　ありませんね[BE:01:ページ切り替え（クリア）]
-それでは　がんばってください！</language>
-		<language name="JPN_KANJI" width="256">えーと……
-わたしから　お渡しする　ヒントメダルは[BE:00:ページ切り替え（行送り）]
-もう　ありませんね[BE:01:ページ切り替え（クリア）]
-それでは　がんばってください！</language>
+		<language name="JPN" width="256">えーと……　わたしから　おわたしする
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
+それでは　あたらしい　メダルを
+てにいれるため　がんばってください！</language>
+		<language name="JPN_KANJI" width="256">えーと……　わたしから　お渡しする
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
+それでは　あたらしい　メダルを
+獲得できるよう　がんばってください！</language>
 	</row>
 
 	<row id="msg_mdloyj_hintget_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -547,7 +541,7 @@
 さあさ　なにもいわず
 これを　うけとってください！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">突然ですが　初めまして！[BE:01:ページ切り替え（クリア）]
-さあさ　何もいわず
+さあさ　なにもいわず
 これを　受け取ってください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -555,81 +549,70 @@
 		<comment>この後、はい／いいえ選択肢。
 どちらを選んでもmsg_mdloyj_intro_03へ</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">それは　メダルボックス！
-そして　わたしは　ひとよんで[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">それは　メダルボックス！[BE:01:ページ切り替え（クリア）]
+そして　わたしは　ひとよんで
 メダルおやじ！[BE:01:ページ切り替え（クリア）]
-……ところで！
-メダルラリー　という　きょうぎかいを[BE:00:ページ切り替え（行送り）]
-しっていますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">それは　メダルボックス！
-そして　わたしは　ひと呼んで[BE:00:ページ切り替え（行送り）]
+……ところで　ごぞんじですか
+メダルラリーという　きょうぎかいを？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">それは　メダルボックス！[BE:01:ページ切り替え（クリア）]
+そして　わたしは　ひと呼んで
 メダルおやじ！[BE:01:ページ切り替え（クリア）]
-……ところで！
-メダルラリー　という　競技会を[BE:00:ページ切り替え（行送り）]
-知っていますか？[BE:01:ページ切り替え（クリア）]</language>
+……ところで　ご存知ですか
+メダルラリー　という　競技会を？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_mdloyj_intro_03">
 		<attribute name="キャラ指定">メダルおやじ</attribute>
 		<language name="JPN" width="256">しっていようが　いるまいが
-せつめいさせていただきますよ！[BE:00:ページ切り替え（行送り）]
-メダルラリー　とは[BE:00:ページ切り替え（行送り）]
-トレーナーの　かたがたの[BE:00:ページ切り替え（行送り）]
+せつめい　させていただきますよ！[BE:01:ページ切り替え（クリア）]
+メダルラリーとは　トレーナーの
 さまざまな　こうどうを[BE:00:ページ切り替え（行送り）]
-かんさつし　ひょうかする[BE:00:ページ切り替え（行送り）]
-おせっかいな　イベント！[BE:01:ページ切り替え（クリア）]
-……と　いうわけで　さっそく
-さんかを　きねんして[BE:00:ページ切り替え（行送り）]
-このメダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+ひょうかする　おせっかいな　イベント[BE:01:ページ切り替え（クリア）]
+……というわけで　さんかを　きねんし
+この　メダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">知っていようが　いるまいが
-説明させていただきますよ！[BE:00:ページ切り替え（行送り）]
-メダルラリー　とは[BE:00:ページ切り替え（行送り）]
-トレーナーの　方々の[BE:00:ページ切り替え（行送り）]
-様々な　行動を[BE:00:ページ切り替え（行送り）]
-観察し　評価する[BE:00:ページ切り替え（行送り）]
-おせっかいな　イベント！[BE:01:ページ切り替え（クリア）]
-……と　いうわけで　さっそく
-参加を　記念して[BE:00:ページ切り替え（行送り）]
-このメダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+説明させて　いただきますよ！[BE:00:ページ切り替え（行送り）]
+メダルラリーとは
+トレーナーの　さまざまな　行動を[BE:00:ページ切り替え（行送り）]
+評価する　おせっかいな　イベント！[BE:01:ページ切り替え（クリア）]
+……というわけで　参加を　記念して
+この　メダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_mdloyj_intro_04">
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">しゅっけつだいサービスで
-メダルラリーの　おとも！[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">さらに　メダルラリーの　おとも！
 ヒントメダルも　さしあげます！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">出血大サービスで
-メダルラリーの　お供！[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">さらに　メダルラリーの　お供！
 ヒントメダルも　さしあげます！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_mdloyj_intro_05">
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">あなたのことは　わたしがずっと　みています[BE:00:ページ切り替え（行送り）]
-いままでも　そして　これからも……[BE:00:ページ切り替え（行送り）]
-まあ　なにごとも　けいけん[BE:00:ページ切り替え（行送り）]
-おじさんに　まかせなさい！[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">メダルラリーじむきょく　は
+あらゆることに　チャレンジする[BE:00:ページ切り替え（行送り）]
+トレーナーを　おうえん　しています！[BE:01:ページ切り替え（クリア）]
+まあ　なにごとも　けいけんですよ！
 では！</language>
-		<language name="JPN_KANJI" width="256">あなたのことは　わたしがずっと　みています[BE:00:ページ切り替え（行送り）]
-今までも　そして　これからも……[BE:00:ページ切り替え（行送り）]
-まあ　何事も　経験[BE:00:ページ切り替え（行送り）]
-おじさんに　任せなさい！[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">メダルラリー事務局　は
+あらゆることに　チャレンジする[BE:00:ページ切り替え（行送り）]
+トレーナーを　応援しています！[BE:01:ページ切り替え（クリア）]
+まあ　なにごとも　経験ですよ！
 では！</language>
 	</row>
 
 	<row id="msg_mdloyj_rankup_01">
-		<comment>・0=主人公名
-
-メダルボックスランクアップ</comment>
+		<comment>メダルボックスランクアップ
+・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">わお！　メダルが　たくさん
-あつまっていますね！[BE:00:ページ切り替え（行送り）]
-そんな　[1:00:トレーナー名:0]さんの　メダルボックスを[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">わお！　たくさん
+メダルが　あつまっていますね！[BE:01:ページ切り替え（クリア）]
+そんな　[1:00:トレーナー名:0]さんの　メダルボックスを
 すてきに　リニューアルしましょう！[BE:00:ページ切り替え（行送り）]
 えい！　やあ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">わお！　メダルが　たくさん
-集まっていますね！[BE:00:ページ切り替え（行送り）]
-そんな　[1:00:トレーナー名:0]さんの　メダルボックスを[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">わお！　たくさん
+メダルが　集まっていますね！[BE:01:ページ切り替え（クリア）]
+そんな　[1:00:トレーナー名:0]さんの　メダルボックスを
 素敵に　リニューアルしましょう！[BE:00:ページ切り替え（行送り）]
 えい！　やあ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -643,7 +626,8 @@
 	</row>
 
 	<row id="msg_mdloyj_rankup_03">
-		<comment>メダルボックスランクアップが一気に2段階以上起こる際の、2つ目以降</comment>
+		<comment>メダルボックスランクアップが
+一気に2段階以上起こる際の、2つ目以降</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
 		<language name="JPN" width="256">さらに　リニューアル！
 やー！　とー！[BE:01:ページ切り替え（クリア）]</language>
@@ -661,33 +645,25 @@
 	</row>
 
 	<row id="msg_mdloyj_titleget_01">
-		<comment>・0=主人公名
-
-メダル獲得</comment>
+		<comment>メダル獲得
+・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　まってましたよ！
-ぜっこうちょうですね！[BE:00:ページ切り替え（行送り）]
-さっそく　あたらしい　メダルを[BE:00:ページ切り替え（行送り）]
-おわたしします　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　待ってましたよ！
+ぜっこうちょう　ですね！[BE:00:ページ切り替え（行送り）]
+では　あたらしい　メダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　まってましたよ！
 絶好調ですね！[BE:00:ページ切り替え（行送り）]
-さっそく　新しい　メダルを[BE:00:ページ切り替え（行送り）]
-お渡しします　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+では　新しい　メダルを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_mdloyj_titleget_02">
-		<comment>・0=主人公名
-
-メダルを複数同時に獲得する際の、2つ目以降</comment>
+		<comment>メダルを複数同時に獲得する際の、2つ目以降
+・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
-		<language name="JPN" width="256">さらにっ！
-まだ　[1:00:トレーナー名:0]さんに[BE:00:ページ切り替え（行送り）]
-おわたししたい　メダルが　あります！[BE:00:ページ切り替え（行送り）]
-どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さらにっ！
-まだ　[1:00:トレーナー名:0]さんに[BE:00:ページ切り替え（行送り）]
-お渡ししたい　メダルが　あります！[BE:00:ページ切り替え（行送り）]
-どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">さらにっ！　おわたししたい
+メダルが　あります！　どうぞどうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さらにっ！　お渡ししたい
+メダルが　あります！　どうぞどうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_mdloyj_titleget_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
