@@ -345,6 +345,7 @@ static int Subseq_SelectMark(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq);
+static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchExit(BOX_SEARCH_MAIN_WORK *wk, int seq);
 
 //=============================================================================
@@ -634,8 +635,8 @@ static GFL_PROC_RESULT BOXSEARCHProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
     {
       *seq = SEQ_FADEOUT;;
     }
-    wk->seq = FuncTable[wk->seq](wk,wk->seq);
-    if(wk->seq==SUBSEQ_SEARCHEXIT){
+    wk->subseq = FuncTable[wk->subseq](wk,wk->subseq);
+    if(wk->subseq==SUBSEQ_SEARCHEXIT){
       *seq = SEQ_FADEOUT;;
     }
 //    KeyControl( wk );
@@ -1479,6 +1480,10 @@ static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq)
   return seq;
 }
 static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq)
+{
+  return seq;
+}
+static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
   return seq;
 }
