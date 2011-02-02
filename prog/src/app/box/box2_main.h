@@ -104,6 +104,7 @@ enum {
   BOX2MAIN_CHRRES_POKEMARK,
   BOX2MAIN_CHRRES_POKEMARK_SUB,
   BOX2MAIN_CHRRES_POKERUSICON,
+  BOX2MAIN_CHRRES_SEARCH_BUTTON,
   BOX2MAIN_CHRRES_MAX
 };
 // パレットリソースID
@@ -135,6 +136,7 @@ enum {
   BOX2MAIN_CELRES_POKEMARK,
   BOX2MAIN_CELRES_POKEMARK_SUB,
   BOX2MAIN_CELRES_POKERUSICON,
+  BOX2MAIN_CELRES_SEARCH_BUTTON,
   BOX2MAIN_CELRES_MAX
 };
 
@@ -179,7 +181,7 @@ enum {
   BOX2OBJ_ID_RARE,      // レアマーク（上）
   BOX2OBJ_ID_POKERUS,   // ポケルスマーク（上）
   BOX2OBJ_ID_POKERUS_ICON,  // ポケルスアイコン（上）
-  OBX2OBJ_ID_MULTIPOKES, // 複数ポケモンをトレイに持っていったときの数字OBJ（下）
+  BOX2OBJ_ID_SEARCH, // 複数ポケモンをトレイに持っていったときの数字OBJ（下）
 
   BOX2OBJ_ID_TYPEICON,  // 属性アイコン（上）
 
@@ -308,6 +310,16 @@ typedef struct {
   u8  btn_sx;
   u8  btn_sy;
 }BUTTON_ANM_WORK;
+
+// ポケモン絞り込み用データ
+typedef struct{
+  u16 pokemon_id; //  開発NO
+  u16 item;       //  どうぐID
+  u8  seikaku;    //  性格
+  u8  tokusei;    //  特性
+  u8  sex;        //  性別
+  u8  search_on;  //  絞り込みON/OFF
+}BOX_SEARCH_DATA;
 
 // ボックス画面アプリワーク
 typedef struct {
@@ -455,8 +467,8 @@ typedef struct {
 
   int next_seq;         // 次のシーケンス
 
-  BOX2_APP_WORK * app;  // アプリワーク
-
+  BOX2_APP_WORK   * app;  // アプリワーク
+  BOX_SEARCH_DATA * search_data; // 絞り込みデータ
 
 }BOX2_SYS_WORK;
 
@@ -1277,6 +1289,10 @@ extern int BOX2MAIN_BagCall( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern int BOX2MAIN_BagExit( BOX2_SYS_WORK * syswk );
 
+int BOX2MAIN_SearchCall( BOX2_SYS_WORK * syswk );
+int BOX2MAIN_SearchExit( BOX2_SYS_WORK * syswk );
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   名前入力画面呼び出し
@@ -1733,3 +1749,4 @@ extern int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk );
 
 extern void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk );
 extern  int BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos );
+extern  int BOX2MAIN_GetNowSelectMultiPokeNum( BOX2_APP_WORK * app );

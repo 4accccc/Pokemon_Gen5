@@ -335,11 +335,12 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
     BOX2MAIN_CHRRES_POKERUSICON, BOX2MAIN_PALRES_POKERUSICON, BOX2MAIN_CELRES_POKERUSICON,
     0, CLSYS_DRAW_SUB,
   },
-  { // トレイ上のポケモン数表示OBJ
-    { 220, 64, BOX2OBJ_ANM_MULTI_TRAY, 4, 1 },
-    BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
+  { // 絞り込みボタン（タッチバー上）
+    { TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y, 0, 64, 0 },
+    BOX2MAIN_CHRRES_SEARCH_BUTTON, BOX2MAIN_PALRES_TOUCH_BAR, BOX2MAIN_CELRES_SEARCH_BUTTON,
     0, CLSYS_DRAW_MAIN,
   },
+
 
 };
 
@@ -426,8 +427,8 @@ void BOX2OBJ_Init( BOX2_SYS_WORK * syswk )
     syswk, syswk->tb_ret_btn, syswk->tb_exit_btn, syswk->tb_status_btn );
 
   BOX2OBJ_FontOamInit( syswk->app );
-  BOX2OBJ_InitMultiSelectOutline( syswk );    // 複数選択の点線
-  BOX2OBJ_VanishMultiSelectIcon(syswk,FALSE); // 複数選択状態でトレイアイコンに持って行った時のアイコン
+  BOX2OBJ_InitMultiSelectOutline( syswk );   // 複数選択の点線
+//  BOX2OBJ_VanishSearchButton(syswk,FALSE); // 絞り込み開始ボタン
 
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );    // MAIN DISP OBJ ON
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );   // SUB DISP OBJ ON
@@ -1859,27 +1860,33 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
   int tate,yoko;
 
   // ポケモンをつかんでいなければ終了
-  if( syswk->poke_get_key == 0 ){
+  if( syswk->poke_get_key == 0 || syswk->poke_get_key == 1){
     return;
   }
 
   
   BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
+
+  // どうぐせいり
   if( syswk->dat->callMode == BOX_MODE_ITEM ){
     id = BOX2OBJ_ID_ITEMICON;
     y += 8;
+    BOX2OBJ_SetPos( syswk->app, id, x, y, CLSYS_DEFREND_MAIN );
+  // 通常時
   }else{
-    id = syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS];
     y += 4;
-  }
-
-
-  // 移動用ポケモンアイコンと元のポケモンアイコンのOBJIDを入れ替え
-  for(tate=0;tate<syswk->app->multi_h;tate++){
-    for(yoko=0;yoko<syswk->app->multi_w;yoko++){
-      BOX2OBJ_SetPos( syswk->app, id+tate*6+yoko, x+yoko*24, y+tate*24, CLSYS_DEFREND_MAIN );
+    // 移動用ポケモンアイコンと元のポケモンアイコンのOBJIDを入れ替え
+    for(tate=0;tate<syswk->app->multi_h;tate++){
+      for(yoko=0;yoko<syswk->app->multi_w;yoko++){
+        id = syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+tate*6+yoko];
+        BOX2OBJ_SetPos( syswk->app, id, x+yoko*24, y+tate*24, CLSYS_DEFREND_MAIN );
+      }
     }
   }
+
+
+
+
   // どうぐモードのとき
   if( syswk->dat->callMode == BOX_MODE_ITEM ){
     BOX2OBJ_ItemIconCursorMove( syswk->app );
@@ -2061,6 +2068,19 @@ static void SubDispResLoad( BOX2_APP_WORK * appwk )
   appwk->palRes[BOX2MAIN_PALRES_POKEMARK] = GFL_CLGRP_PLTT_Register(
                                               ah,APP_COMMON_GetPokeMarkPltArcIdx(),
                                               CLSYS_DRAW_MAIN, PALNUM_MARK*0x20, HEAPID_BOX_APP );
+
+  // 絞り込みアイコンのリソース登録
+  appwk->chrRes[BOX2MAIN_CHRRES_SEARCH_BUTTON] = GFL_CLGRP_CGR_Register(
+                                                 ah,
+                                                 NARC_app_menu_common_search_button_128k_NCGR, 
+                                                 FALSE, CLSYS_DRAW_MAIN, HEAPID_BOX_APP );
+
+  appwk->celRes[BOX2MAIN_CELRES_SEARCH_BUTTON] = GFL_CLGRP_CELLANIM_Register(
+                                                 ah,
+                                                 NARC_app_menu_common_search_button_128k_NCER,
+                                                 NARC_app_menu_common_search_button_128k_NANR,
+                                                 HEAPID_BOX_APP );
+
 
   GFL_ARC_CloseDataHandle( ah );
 }
@@ -2436,7 +2456,7 @@ static void BoxObjAdd( BOX2_SYS_WORK * syswk )
   appwk->clwk[BOX2OBJ_ID_RARE] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_RARE] );
   appwk->clwk[BOX2OBJ_ID_POKERUS] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_POKERUS] );
   appwk->clwk[BOX2OBJ_ID_POKERUS_ICON] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_POKERUS_ICON] );
-  appwk->clwk[OBX2OBJ_ID_MULTIPOKES] = ClactWorkCreate( appwk, &ClactParamTbl[OBX2OBJ_ID_MULTIPOKES] );
+  appwk->clwk[BOX2OBJ_ID_SEARCH] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_SEARCH] );
 
   BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_HAND_SHADOW, FALSE );
   BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_ITEMICON, FALSE );
@@ -2504,7 +2524,7 @@ void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, int index, BOOL flg )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_SetHandCursorAnm( BOX2_SYS_WORK * syswk, u32 anm )
 {
-  if( syswk->mv_cnv_mode != 0 ){
+  if( syswk->mv_cnv_mode == 1 ){
     anm = anm - BOX2OBJ_ANM_HAND_NORMAL + BOX2OBJ_ANM_HAND2_NORMAL;
   }
   BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, anm );
@@ -2688,6 +2708,8 @@ void BOX2OBJ_PokeCursorMove( BOX2_APP_WORK * appwk, u32 pos )
   }
 
   BOX2OBJ_GetPos( appwk, appwk->pokeicon_id[pos], &x, &y, CLSYS_DEFREND_MAIN );
+
+  OS_Printf("pos=%d, icon=%d, x=%d, y=%d\n", pos, appwk->pokeicon_id[pos],x,y);
 
   for( i=0; i<BOX2OBJ_PI_OUTLINE_MAX; i++ ){
     BOX2OBJ_SetPos(
@@ -3548,43 +3570,6 @@ void  BOX2OBJ_DisplayMultiSelectOutline( BOX2_SYS_WORK *syswk, int flag )
 }
 
 
-
-static int test_p = 0;
-static int test_points[][4]={
-  { 8, 48, 8+24,  48+24,},
-  { 8, 48, 8+24*2,48+24,},
-  { 8, 48, 8+24*2,48+24*2,},
-  { 8, 48, 8+24*3,48+24*3,},
-  { 8, 48, 8+24*6,48+24*5,},
-  { 8, 48, 8+24*6,48+24*5,},
-};
-
-//----------------------------------------------------------------------------------
-/**
- * @brief ライン上の頂点がdiv分割されるときのindex番目の場所を取得する
- *
- * @param   sx    始点X
- * @param   sy    始点Y
- * @param   ex    終点X
- * @param   ey    終点Y
- * @param   div   分割数
- * @param   index 分割時指定ポイント
- * @param   x     [out]算出X座標
- * @param   y     [out]算出Y座標
- */
-//----------------------------------------------------------------------------------
-static void _split_point( int sx, int sy, int ex, int ey, int div, int index, int *x, int *y )
-{
-  *x = sx+(ex-sx)*index/div;
-  *y = sy+(ey-sy)*index/div;
-}
-
-
-// 点線描画用テーブル（左上→右上→右下→左下→左上のパスを描く）
-static int idx_tbl[][4]={
-  {0,1,2,1},  {2,1,2,3},{ 2,3, 0,3 }, {0,3, 0,1},
-
-};
 //----------------------------------------------------------------------------------
 /**
  * @brief 範囲指定用の移動点線描画処理
@@ -3595,21 +3580,9 @@ static int idx_tbl[][4]={
 void BOX2OBJ_DrawMultiSelectOutline( BOX2_SYS_WORK *syswk )
 {
   int n, m, i;
+  int length,point,w,h,half;
   int x, y;
   MULTISELECT_OUTLINE_WORK *work = &syswk->app->multiselect_outline;
-
-  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG){
-    test_p++;
-    if(test_p==6){       test_p=0;    }
-    for(n=0;n<4;n++){
-      work->position[n] = test_points[test_p][n];
-    }
-    if(test_p==5){
-      BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
-    }else{
-      BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );
-    }
-  }
 
   // 描画ON/OFF制御
   if(work->appear_flag!=work->appear_old){
@@ -3624,28 +3597,47 @@ void BOX2OBJ_DrawMultiSelectOutline( BOX2_SYS_WORK *syswk )
   if(work->anime_count>=work->anime_max){
     work->anime_count = 0;
   }
- 
+
   // 範囲選択ライン描画
-  for(n=0;n<4;n++){
-    for(m=0;m<4;m++){
-      // 矩形の辺の上で移動するポイントを算出
-      _split_point( work->position[idx_tbl[n][0]], 
-                    work->position[idx_tbl[n][1]],
-                    work->position[idx_tbl[n][2]],
-                    work->position[idx_tbl[n][3]],
-                    40, m*MS_DEFAULT_ANIME_MAX+work->anime_count, &x, &y  );
-      BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_SELECTLINE+n*4+m, x, y, CLSYS_DEFREND_MAIN );
-    }
-  }
+  w      = work->position[2]-work->position[0];
+  h      = work->position[3]-work->position[1];
+  half   = w+h;
+  length = half*2;
   
+  // ４つの辺を一つに繋げて１直線とした時の位置を算出し、
+  // 半分までで場合分け、横の辺に到達しているかどうかで場合分けで描画。
+  for(i=0;i<BOX2OBJ_ID_SELECTLINE_MAX;i++){
+    point = (length*(work->anime_count+MS_DEFAULT_ANIME_SKIP*i))/work->anime_max;
+    point %= length;
+    if(point<half){
+      if(point<w){
+        x = work->position[0]+point;
+        y = work->position[1];
+      }else{
+        x = work->position[2];
+        y = work->position[1]+(point-w);
+      }
+    }else{
+      point -= half;
+      if(point<w){
+        x = work->position[2]-point;
+        y = work->position[3];
+      }else{
+        x = work->position[0];
+        y = work->position[3]-(point-w);
+      }
+    }
+    BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_SELECTLINE+i, x, y, CLSYS_DEFREND_MAIN );
+  }
+
 }
 
 //----------------------------------------------------------------------------------
 /**
  * @brief a<b の関係を保持するために数値を入れ替える
  *
- * @param   a   
- * @param   b   
+ * @param   a   数値
+ * @param   b   数値
  */
 //----------------------------------------------------------------------------------
 static void _sort_num( int *a, int *b )
@@ -3662,11 +3654,11 @@ static void _sort_num( int *a, int *b )
 /**
  * @brief 範囲選択用の座標入力（2点を入力すると内部で左上・右下に変換して保存する）
  *
- * @param   syswk   
- * @param   x1    
- * @param   y1    
- * @param   x2    
- * @param   y2    
+ * @param   syswk 
+ * @param   x1    X座標1
+ * @param   y1    Y座標1
+ * @param   x2    X座標2
+ * @param   y2    Y座標2
  */
 //=============================================================================================
 void BOX2OBJ_SetPosMultiSelectOutline( BOX2_SYS_WORK *syswk, int x1, int y1, int x2, int y2 )
@@ -3688,9 +3680,9 @@ void BOX2OBJ_SetPosMultiSelectOutline( BOX2_SYS_WORK *syswk, int x1, int y1, int
 /**
  * @brief 4つの数値の一番小さい値を取る
  *
- * @param   a-d
+ * @param   a-d 数値
  *
- * @retval  int   最小値
+ * @retval  int 最小値
  */
 //----------------------------------------------------------------------------------
 static int _get_min( int a, int b, int c, int d ) 
@@ -3728,8 +3720,8 @@ static int _get_max( int a, int b, int c, int d )
 static void _get_index2pos( int pos, int *array )
 {
   int x,y;
-  x=pos%6;
-  y=pos/6;
+  x=pos%BOX_MAX_COLUMN;
+  y=pos/BOX_MAX_COLUMN;
   array[0] = MULTISELECT_OUTLINE_SX + MULTISELECT_OUTLINE_SW*x;
   array[1] = MULTISELECT_OUTLINE_SY + MULTISELECT_OUTLINE_SH*y;
   array[2] = array[0]+MULTISELECT_OUTLINE_1POKE_W;
@@ -3772,25 +3764,44 @@ void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief ２点のトレイ位置番号からX位置Y位置を取得し、ソートして返す
+ *        (ドット単位じゃなくてインデックス番号）
+ *
+ * @param   start 場所1(0 - 29)
+ * @param   end   場所2(0 - 29)
+ * @param   sx    左上X
+ * @param   sy    左上Y
+ * @param   ex    右下X
+ * @param   ey    右下Y
+ */
+//----------------------------------------------------------------------------------
+static void _traypos2xy( int start, int end, int *sx, int *sy, int *ex, int *ey )
+{
+  *sx = start % BOX_MAX_COLUMN;  // 始点の位置
+  *sy = start / BOX_MAX_COLUMN;
+  *ex = end   % BOX_MAX_COLUMN;    // 終点の位置
+  *ey = end   / BOX_MAX_COLUMN;
+
+  _sort_num( sx, ex );      // 左上の場所を算出
+  _sort_num( sy, ey );
+
+}
+//----------------------------------------------------------------------------------
+/**
  * @brief 選択したトレイの始点・終点からその範囲の縦幅・横幅を取得
  *
- * @param   start   
- * @param   end   
+ * @param   start   場所1(0 - 29)
+ * @param   end     場所2(0 - 29)
  */
 //----------------------------------------------------------------------------------
 void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height )
 {
-  int x1, y1, x2, y2;
-  x1 = start%6;
-  y1 = start/6;
-  x2 = end%6;
-  y2 = end/6;
+  int sx, sy, ex, ey;
 
-  _sort_num( &x1, &x2 );
-  _sort_num( &y1, &y2 );
+  _traypos2xy(start, end, &sx, &sy, &ex, &ey);
 
-  *width  = x2-x1+1;
-  *height = y2-y1+1;
+  *width  = ex-sx+1;
+  *height = ey-sy+1;
 }
 
 //=============================================================================================
@@ -3799,38 +3810,32 @@ void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height )
  *        （どのような矩形であったとしても左上に算出しなおす。
  *          2点で矩形選択する場合は左下・右上のように左上が指定されていないこともありうる）
  *
- * @param   start   
- * @param   end   
+ * @param   start   場所1(0 - 29)
+ * @param   end     場所2(0 - 29)
  *
- * @retval  int   
+ * @retval  int     左上の位置番号
  */
 //=============================================================================================
 int BOX2OBJ_GetMultiSelectMinPos( int start, int end )
 {
-  int x1, y1, x2, y2;
-  x1 = start%6;
-  y1 = start/6;
-  x2 = end%6;
-  y2 = end/6;
+  int sx, sy, ex, ey;
 
-  _sort_num( &x1, &x2 );
-  _sort_num( &y1, &y2 );
+  _traypos2xy(start, end, &sx, &sy, &ex, &ey);
   
-  return y1*BOX_MAX_COLUMN+x1;
+  return sy*BOX_MAX_COLUMN+sx;
 }
 
 
 
 //----------------------------------------------------------------------------------
 /**
- * @brief 複数選択状態でトレイアイコンに持って行った時のアイコンの初期化
+ * @brief 絞り込み開始ボタンの表示非表示制御
  *
  * @param   syswk   
  */
 //----------------------------------------------------------------------------------
-void BOX2OBJ_VanishMultiSelectIcon( BOX2_SYS_WORK *syswk, int flag )
+void BOX2OBJ_VanishSearchButton( BOX2_SYS_WORK *syswk, int flag )
 {
-  BOX2OBJ_Vanish( syswk->app, OBX2OBJ_ID_MULTIPOKES, flag );
- 
+  BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_SEARCH, flag );
 }
 

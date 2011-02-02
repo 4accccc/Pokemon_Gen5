@@ -1153,4 +1153,4 @@ extern void BOX2OBJ_SetPosMultiSelectOutline( BOX2_SYS_WORK *syswk, int x1, int 
 extern void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end );
 extern void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height );
 extern int BOX2OBJ_GetMultiSelectMinPos( int start, int end );
-extern void BOX2OBJ_VanishMultiSelectIcon( BOX2_SYS_WORK *syswk, int flag );
+extern void BOX2OBJ_VanishSearchButton( BOX2_SYS_WORK *syswk, int flag );

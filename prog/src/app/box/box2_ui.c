@@ -324,8 +324,10 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
   { 212, 136-4, 0, 0, 40, 36, 41, 41, { 136, 159, 168, 255 } }, // 41: とじる
 
   { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 8, 56    } },   // 42: 通常モードボタン
-  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 64, 112  } },   // 43: 移動モードボタン
-  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 120, 168 } },   // 44: 複数選択モードボタン
+  { 0, 0, 0, 0, 43, 43, 43, 43, { 0, 8, 64, 112  } },   // 43: 便利モード1
+  { 0, 0, 0, 0, 44, 44, 44, 44, { 0, 8, 120, 168 } },   // 44: 便利モード2
+  { 0, 0, 0, 0, 45, 45, 45, 45, { 0, 8, 120, 168 } },   // 45: 便利モード3
+  { 0, 0, 0, 0, 46, 46, 46, 46, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 46: 絞り込み画面ボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -389,7 +391,10 @@ static const CURSORMOVE_DATA BoxArrangePokeMoveCursorMoveData[] =
   {  0,   0, 0, 0,  40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },    // 40: ステータス
   {  0,   0, 0, 0,  41, 41, 41, 41, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },    // 41: 戻る
 
-  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 120, 136 } },   // 42: 便利モード
+  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 10,   8,  59 } },   // 42: 通常モードボタン
+  { 0, 0, 0, 0, 43, 43, 43, 43, { 0, 10,  60, 109 } },   // 43: 便利モード1
+  { 0, 0, 0, 0, 44, 44, 44, 44, { 0, 10, 110, 159 } },   // 44: 便利モード2
+  { 0, 0, 0, 0, 45, 45, 45, 45, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 46: 絞り込み画面ボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -422,7 +427,9 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
   { 212, 112-4, 0, 0, 12, 14, 13, 13, { 112, 135, 168, 255 } }, // 13: にがす
   { 212, 136-4, 0, 0, 13,  9, 14, 14, { 136, 159, 168, 255 } }, // 14: とじる
 
-  { 0, 0, 0, 0, 15, 15, 15, 15, { 0, 8, 120, 136 } },   // 15: 便利モード
+  { 0, 0, 0, 0, 15,15,15,15, { 0, 10,   8,  59 } },   // 15: 通常モードボタン
+  { 0, 0, 0, 0, 16,16,16,16, { 0, 10,  60, 109 } },   // 16: 便利モード1
+  { 0, 0, 0, 0, 16,16,16,16, { 0, 10, 110, 159 } },   // 17: 便利モード2
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -486,7 +493,10 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeMoveCursorMoveData[] =
   {  0,   0, 0, 0,  40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },    // 40: ステータス
   {  0,   0, 0, 0,  41, 41, 41, 41, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },    // 41: 戻る
 
-  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 120, 136 } },   // 42: 便利モード
+  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 10,   8,  59 } },   // 42: 通常モードボタン
+  { 0, 0, 0, 0, 43, 43, 43, 43, { 0, 10,  60, 109 } },   // 43: 便利モード1
+  { 0, 0, 0, 0, 44, 44, 44, 44, { 0, 10, 110, 159 } },   // 44: 便利モード2
+
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -547,7 +557,10 @@ static const CURSORMOVE_DATA BoxItemArrangeMainCursorMoveData[] =
   { 212, 112-4, 0, 0, 36, 38, 37, 37, { 112, 135, 168, 255 } }, // 37: バッグへ or もたせる
   { 212, 136-4, 0, 0, 37, 36, 38, 38, { 136, 159, 168, 255 } }, // 38: とじる
 
-  { 0, 0, 0, 0, 39, 39, 39, 39, { 0, 8, 120, 136 } },   // 39: 便利モード
+  { 0, 0, 0, 0, 39, 39, 39, 39, { 0, 10,   8,  59 } },   // 39: 通常モードボタン
+  { 0, 0, 0, 0, 40, 40, 40, 40, { 0, 10,  60, 109 } },   // 40: 便利モード1
+  { 0, 0, 0, 0, 41, 41, 41, 41, { 0, 10, 110, 159 } },   // 41: 便利モード2
+
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -578,7 +591,9 @@ static const CURSORMOVE_DATA BoxItemArrangePartyPokeCursorMoveData[] =
   { 212, 136-4, 0, 0, 10,  9, 11, 11, { 136, 159, 168, 255 } },   // 11: とじる
 
   // CONV_BUTTON_IN
-  { 0, 0, 0, 0, 12, 12, 12, 12, { 0, 8, 120, 136 } },   // 12: 便利モード
+  { 0, 0, 0, 0, 12, 12, 12, 12, { 0, 10,   8,  59 } },   // 12: 通常モードボタン
+  { 0, 0, 0, 0, 12, 13, 13, 13, { 0, 10,  60, 109 } },   // 13: 便利モード1
+
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -662,7 +677,10 @@ static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
   { 212, 112-4, 0, 0, 37, 39, 38, 38, { 112, 135, 168, 255 } }, // 38: もちもの
   { 212, 136-4, 0, 0, 38, 36, 39, 39, { 136, 159, 168, 255 } }, // 39: やめる
 
-  { 0, 0, 0, 0, 40, 40, 40, 40, { 0, 8, 120, 136 } },   // 40: 便利モード
+  { 0, 0, 0, 0, 40, 40, 40, 40, { 0, 10,   8,  59 } },   // 40: 通常モードボタン
+  { 0, 0, 0, 0, 41, 41, 41, 41, { 0, 10,  60, 109 } },   // 41: 便利モード1
+  { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 10, 110, 159 } },   // 42: 便利モード2
+
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -693,7 +711,10 @@ static const CURSORMOVE_DATA BattleBoxPartyMainCursorMoveData[] =
   { 212, 112-4, 0, 0, 10, 12, 11, 11, { 112, 135, 168, 255 } }, // 11: もちもの
   { 212, 136-4, 0, 0, 11,  9, 12, 12, { 136, 159, 168, 255 } }, // 12: とじる
 
-  { 0, 0, 0, 0, 13, 13, 13, 13, { 0, 8, 120, 136 } },   // 13: 便利モード
+  { 0, 0, 0, 0, 13, 13, 13, 13, { 0, 10,   8,  59 } },   // 13: 通常モードボタン
+  { 0, 0, 0, 0, 14, 14, 14, 14, { 0, 10,  60, 109 } },   // 14: 便利モード1
+  { 0, 0, 0, 0, 15, 15, 15, 15, { 0, 10, 110, 159 } },   // 15: 便利モード2
+
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -1529,7 +1550,9 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
       now_pos == BOX2UI_ARRANGE_PGT_TRAY6 ||        // 38: トレイアイコン
       now_pos == BOX2UI_ARRANGE_PGT_STATUS ||       // 40: ステータス
       now_pos == BOX2UI_ARRANGE_PGT_RET ||          // 41: 戻る
-      now_pos == BOX2UI_ARRANGE_PGT_CONV ){         // 42: 便利モード
+      now_pos == BOX2UI_ARRANGE_PGT_NORMAL ||       // 42: 通常モード
+      now_pos == BOX2UI_ARRANGE_PGT_MOVE ||         // 43: 移動モード
+      now_pos == BOX2UI_ARRANGE_PGT_MULTI ){     // 44: 複数選択モード
     CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
     now_pos = syswk->app->old_cur_pos;
   }else{
@@ -1754,7 +1777,9 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
     now_pos = BOX2UI_ARRANGE_PTGT_NAME;
   }else if( now_pos == BOX2UI_ARRANGE_PTGT_STATUS ||  // 40: ステータス
       now_pos == BOX2UI_ARRANGE_PTGT_RET ||           // 41: 戻る
-      now_pos == BOX2UI_ARRANGE_PTGT_CONV ){          // 42: 便利モード
+      now_pos == BOX2UI_ARRANGE_PTGT_NORMAL ||        // 42: 便利モード
+      now_pos == BOX2UI_ARRANGE_PTGT_MOVE ||          // 42: 便利モード
+      now_pos == BOX2UI_ARRANGE_PTGT_MULTI ){         // 42: 便利モード
     CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
     now_pos = syswk->app->old_cur_pos;
   }else{
@@ -2585,6 +2610,23 @@ u32 BOX2UI_HitCheckTrgTrayPoke(void)
 {
   return HitCheckTrg( BoxArrangeMainCursorMoveData, BOX2OBJ_POKEICON_TRAY_MAX );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   タッチチェック：トレイのポケモン（ベタ）
+ *
+ * @param   none
+ *
+ * @retval  "GFL_UI_TP_HIT_NONE = タッチなし"
+ * @retval  "GFL_UI_TP_HIT_NONE != それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+u32 BOX2UI_HitCheckContTrayPoke(void)
+{
+  return HitCheckCont( BoxArrangeMainCursorMoveData, BOX2OBJ_POKEICON_TRAY_MAX );
+}
+
+
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -42,7 +42,7 @@
 #include "box2_bgwfrm.h"
 #include "box2_snd_def.h"
 #include "box_gra.naix"
-
+#include "box_search.h"
 
 //============================================================================================
 //  定数定義
@@ -1209,17 +1209,32 @@ static void PokeDataChangeBoxParty(
 static void PokeDataMoveBOXtoPARTY( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * box )
 {
   POKEMON_PARAM * pp;
+  int tate,yoko;
 
-  // ボックスデータ準備
-  pp = PP_CreateByPPP( BOX2MAIN_PPPGet(syswk,syswk->get_tray,box->gt_pos), HEAPID_BOX_APP_L );
+  if(syswk->app->multi_w==1 && syswk->app->multi_h==1){
+    // ボックスデータ準備
+    pp = PP_CreateByPPP( BOX2MAIN_PPPGet(syswk,syswk->get_tray, box->gt_pos), HEAPID_BOX_APP_L );
+    // 手持ちへ
+    PokeParty_Add( syswk->dat->pokeparty, pp );
+    // ボックスデータを削除
+    BOX2MAIN_PokeDataClear( syswk, syswk->get_tray, box->gt_pos );
+    GFL_HEAP_FreeMemory( pp );
+  }
 
-  // 手持ちへ
-  PokeParty_Add( syswk->dat->pokeparty, pp );
-  // ボックスデータを削除
-  BOX2MAIN_PokeDataClear( syswk, syswk->get_tray, box->gt_pos );
-
-  GFL_HEAP_FreeMemory( pp );
-
+  for(tate=0;tate<syswk->app->multi_h;tate++){
+    for(yoko=0;yoko<syswk->app->multi_w;yoko++){
+      int index = tate*6+yoko;
+      if(syswk->app->multi_pokemon_id[index]){
+        // ボックスデータ準備
+        pp = PP_CreateByPPP( BOX2MAIN_PPPGet(syswk,syswk->get_tray, box->gt_pos+index), HEAPID_BOX_APP_L );
+        // 手持ちへ
+        PokeParty_Add( syswk->dat->pokeparty, pp );
+        // ボックスデータを削除
+        BOX2MAIN_PokeDataClear( syswk, syswk->get_tray, box->gt_pos+index );
+        GFL_HEAP_FreeMemory( pp );
+      }
+    }
+  }
   // トレイアイコン更新
   BOX2OBJ_TrayIconCgxMake( syswk, syswk->get_tray );
 }
@@ -1326,24 +1341,24 @@ static int _move_tray2tray( BOX2_SYS_WORK * syswk, u32 getTray, u32 getPos, u32 
  * @param   getTray   取得トレイ
  * @param   getPos    取得位置
  * @param   putPos    配置位置（トレイアイコンの表示位置）
+ * 引数だけではなく結局appwkから数値を取得している(multi_w,multi_h,multi_pokemon_idなど）
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void PokeDataBoxMoveBox( BOX2_SYS_WORK * syswk, u32 getTray, u32 getPos, u32 putPos )
 {
-  // 引数だけではなく結局appwkから数値を取得している(multi_w,multi_h,multi_pokemon_idなど）
   int tray=-1;
   
-  // 掴んでいるは１匹
+  // 掴んでいるのは１匹
   if(syswk->app->multi_w==1 && syswk->app->multi_h==1){
     tray = _move_tray2tray( syswk, getTray, getPos, putPos );
 
   // 複数匹掴んでいる場合
   }else{
     int x,y;
-    for(y=0;y<syswk->app->multi_w;y++){
-      for(x=0;x<syswk->app->multi_h;x++){
+    for(y=0;y<syswk->app->multi_h;y++){
+      for(x=0;x<syswk->app->multi_w;x++){
         int n = y*BOX_MAX_COLUMN + x;
         if(syswk->app->multi_pokemon_id[n]==1){
           tray = _move_tray2tray( syswk, getTray, getPos+n, putPos );
@@ -1351,7 +1366,7 @@ static void PokeDataBoxMoveBox( BOX2_SYS_WORK * syswk, u32 getTray, u32 getPos, 
       }
     }
   }
-  GF_ASSERT(tray>=0); // 起きないはず（一度の移動が発生しなかった事になる）
+  GF_ASSERT( tray>=0 ); // 起きないはず（一度も移動が発生しなかった事になる）
   
   // トレイアイコン更新
   BOX2OBJ_TrayIconCgxMake( syswk, getTray );
@@ -1453,7 +1468,7 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
       }else{
         // ボックスから手持ちへ移動
         PokeDataMoveBOXtoPARTY( syswk, &dat[0] );
-        BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray );
+        BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray ); // TODO:これ必要？
       }
     }
   }else{
@@ -3992,6 +4007,49 @@ int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk )
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   絞り込み画面呼び出し
+ *
+ * @param   syswk   ボックス画面システムワーク
+ *
+ * @return  0
+ */
+//--------------------------------------------------------------------------------------------
+int BOX2MAIN_SearchCall( BOX2_SYS_WORK * syswk )
+{
+  BOX_SEARCH_PARAM * wk = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(BOX_SEARCH_PARAM) );
+//  BAG_CreateParam( syswk->dat->gamedata, NULL, BAG_MODE_POKELIST, HEAPID_BOX_SYS );
+  wk->syswk   = syswk;
+  wk->box_dat = syswk->dat;
+
+  GFL_PROC_LOCAL_CallProc( syswk->localProc, NULL, &BOXSEARCHProcData, wk );
+
+  syswk->subProcWork = wk;
+
+  return 0;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   絞り込み画面終了
+ *
+ * @param   syswk   ボックス画面システムワーク
+ *
+ * @return  0
+ */
+//--------------------------------------------------------------------------------------------
+int BOX2MAIN_SearchExit( BOX2_SYS_WORK * syswk )
+{
+  BOX_SEARCH_PARAM * wk = syswk->subProcWork;
+
+  syswk->subRet = 0;
+  GFL_HEAP_FreeMemory( syswk->subProcWork );
+
+  return 0;
+}
+
+
 //============================================================================================
 //  VBLANK FUNC   ※WBではメインシーケンス内で呼ばれている
 //============================================================================================
@@ -5360,7 +5418,9 @@ int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk )
         BOX2OBJ_SetPos( syswk->app, icon, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
       }
     }
-    BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+    if(syswk->mv_cnv_mode!=3){
+      BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+    }
     vf->cnt++;
   }
 
@@ -6930,6 +6990,27 @@ void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 現在範囲選択で保持しているポケモンの数を数える
+ *
+ * @param   app   
+ *
+ * @retval  int   保持しているポケモンの数
+ */
+//----------------------------------------------------------------------------------
+int BOX2MAIN_GetNowSelectMultiPokeNum( BOX2_APP_WORK * app )
+{
+  int i,count=0;
+  for(i=0;i<BOX2OBJ_POKEICON_TRAY_MAX;i++){
+    if(app->multi_pokemon_id[i]){
+      count++;
+    }
+  }
+  return count;
+}
+
+
 //=============================================================================================
 /**
  * @brief カーソルのある場所に選択範囲のポケモンを置けるかチェックする
@@ -6949,20 +7030,29 @@ int BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
     return TRUE;
   }
 
-  // ポケモンが重なっていないかチェック
-  if(tray<BOX_MAX_TRAY){
-    for(y=0;y<syswk->app->multi_h;y++){
-      for(x=0;x<syswk->app->multi_w;x++){
-        state = BOXDAT_PokeParaGet( syswk->dat->sv_box, tray, pos + y*BOX_MAX_COLUMN+x,
-                                    ID_PARA_poke_exist, NULL );
-        // 衝突しているかどうか
-        if(syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 1 && state==1 ){
-          return FALSE;
+  OS_Printf("drop tray=%d, pos=%d\n", tray, pos);
+
+  if(pos<BOX2OBJ_POKEICON_TRAY_MAX){
+    // ポケモンが重なっていないかチェック
+    if(tray<BOX_MAX_TRAY){
+      for(y=0;y<syswk->app->multi_h;y++){
+        for(x=0;x<syswk->app->multi_w;x++){
+          state = BOXDAT_PokeParaGet( syswk->dat->sv_box, tray, pos + y*BOX_MAX_COLUMN+x,
+                                      ID_PARA_poke_exist, NULL );
+          // 衝突しているかどうか
+          if(syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 1 && state==1 ){
+            return FALSE;
+          }
         }
       }
     }
+  // 手持ちに置いた
   }else{
-  
+    // 手持ちの空きより多かったらダメ
+    int temoti_aki = BOX2OBJ_POKEICON_MINE_MAX-PokeParty_GetPokeCount( syswk->dat->pokeparty );
+    if(temoti_aki<BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app )){
+      return FALSE;
+    }
   }
   return TRUE;
 }

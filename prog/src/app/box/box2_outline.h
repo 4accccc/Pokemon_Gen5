@@ -18,7 +18,8 @@
 
 #define POSITION_NUM  ( 4 ) // ç∂è„X,ç∂è„Y,âEâ∫X,âEâ∫YÇÃÇQí∏ì_ï™
 
-#define MS_DEFAULT_ANIME_MAX  ( 10 )
+#define MS_DEFAULT_ANIME_MAX   ( 96*2 )
+#define MS_DEFAULT_ANIME_SKIP  ( MS_DEFAULT_ANIME_MAX/BOX2OBJ_ID_SELECTLINE_MAX )
 
 
 typedef struct{

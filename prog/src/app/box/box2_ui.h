@@ -83,8 +83,12 @@ enum {
   BOX2UI_ARRANGE_PGT_STATUS,  // 40: ステータス
   BOX2UI_ARRANGE_PGT_RET,     // 41: 戻る
 
-  BOX2UI_ARRANGE_PGT_CONV,    // 42: 便利モード
-
+//  BOX2UI_ARRANGE_PGT_CONV,    // 42: 便利モード
+  BOX2UI_ARRANGE_PGT_NORMAL,   // 42: 通常モードボタン
+  BOX2UI_ARRANGE_PGT_MOVE,     // 43: 移動モードボタン
+  BOX2UI_ARRANGE_PGT_MULTI,    // 44: 複数選択モードボタン
+  BOX2UI_ARRANGE_PGT_SEARCH,   // 45: 絞り込みボタン
+  
   // ボックス整理・手持ちポケモン
   BOX2UI_ARRANGE_PARTY_POKE1 = 0, // 00: 手持ちポケモン
   BOX2UI_ARRANGE_PARTY_POKE2,
@@ -104,7 +108,10 @@ enum {
   BOX2UI_ARRANGE_PARTY_FREE,      // 13: にがす
   BOX2UI_ARRANGE_PARTY_CLOSE,     // 14: やめる
 
-  BOX2UI_ARRANGE_PARTY_CONV,      // 15: 便利モード
+//  BOX2UI_ARRANGE_PARTY_CONV,      // 15: 便利モード
+  BOX2UI_ARRANGE_PARTY_NORMAL,   // 15: 通常モードボタン
+  BOX2UI_ARRANGE_PARTY_MOVE,     // 16: 移動モードボタン
+  BOX2UI_ARRANGE_PARTY_MULTI,    // 17: 複数選択モードボタン
 
   // ボックス整理・「つかむ」トレイ移動（手持ち）
   BOX2UI_ARRANGE_PTGT_POKE1 = 0,  // 00: ポケモン
@@ -116,7 +123,10 @@ enum {
   BOX2UI_ARRANGE_PTGT_STATUS,   // 40: ステータス
   BOX2UI_ARRANGE_PTGT_RET,      // 41: 戻る
 
-  BOX2UI_ARRANGE_PTGT_CONV,     // 42: 便利モード
+//  BOX2UI_ARRANGE_PTGT_CONV,     // 42: 便利モード
+  BOX2UI_ARRANGE_PTGT_NORMAL,   // 42: 通常モードボタン
+  BOX2UI_ARRANGE_PTGT_MOVE,     // 43: 移動モードボタン
+  BOX2UI_ARRANGE_PTGT_MULTI,    // 44: 複数選択モードボタン
 
   // バトルボックス・メイン操作
   BOX2UI_BATTLEBOX_MAIN_POKE1 = 0,  // 00: ポケモン
@@ -132,7 +142,11 @@ enum {
   BOX2UI_BATTLEBOX_MAIN_ITEM,     // 38: もちもの
   BOX2UI_BATTLEBOX_MAIN_CLOSE,    // 39: やめる
 
-  BOX2UI_BATTLEBOX_MAIN_CONV,     // 40: 便利モード
+//  BOX2UI_BATTLEBOX_MAIN_CONV,     // 40: 便利モード
+  BOX2UI_BATTLEBOX_MAIN_NORMAL,   // 40: 通常モードボタン
+  BOX2UI_BATTLEBOX_MAIN_MOVE,     // 41: 移動モードボタン
+  BOX2UI_BATTLEBOX_MAIN_MULTI,    // 42: 複数選択モードボタン
+
 
   // バトルボックス・パーティ操作
   BOX2UI_BATTLEBOX_PARTY_POKE1 = 0, // 00: 手持ちポケモン
@@ -151,7 +165,11 @@ enum {
   BOX2UI_BATTLEBOX_PARTY_ITEM,      // 11: もちもの
   BOX2UI_BATTLEBOX_PARTY_CLOSE,     // 12: やめる
 
-  BOX2UI_BATTLEBOX_PARTY_CONV,      // 13: 便利モード
+//  BOX2UI_BATTLEBOX_PARTY_CONV,      // 13: 便利モード
+  BOX2UI_BATTLEBOX_PARTY_NORMAL,   // 13: 通常モードボタン
+  BOX2UI_BATTLEBOX_PARTY_MOVE,     // 14: 移動モードボタン
+  BOX2UI_BATTLEBOX_PARTY_MULTI,    // 15: 複数選択モードボタン
+
 
   // つれていく・メイン操作
   BOX2UI_PTIN_MAIN_POKE1 = 0,   // 00: ポケモン
@@ -205,7 +223,8 @@ enum {
   BOX2UI_ITEM_MAIN_MENU2,       // 37: バッグへ or もたせる
   BOX2UI_ITEM_MAIN_CLOSE,       // 38: とじる
 
-  BOX2UI_ITEM_MAIN_CONV,        // 39: 便利モード
+  BOX2UI_ITEM_MAIN_CONV,        // 39: 便利モードへ
+  BOX2UI_ITEM_MAIN_NORMAL,      // 40: 通常モードへ
 
   // 持ち物整理・手持ちポケモン
   BOX2UI_ITEM_PARTY_POKE1 = 0,  // 00: 手持ちポケモン
@@ -654,3 +673,5 @@ extern BOOL BOX2UI_HitCheckPartyFrameLeft(void);
  */
 //--------------------------------------------------------------------------------------------
 extern u32 BOX2UI_HitCheckModeChange(void);
+
+extern u32 BOX2UI_HitCheckContTrayPoke(void);

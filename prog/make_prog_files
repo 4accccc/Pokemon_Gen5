@@ -1920,7 +1920,9 @@ SRCS_OVERLAY_BOX    = app/box/box2.c \
                       app/box\box2_bmp.c \
                       app/box\box2_obj.c \
                       app/box\box2_ui.c \
-                      app/box\box2_bgwfrm.c
+                      app/box\box2_bgwfrm.c \
+                      app/box\box_search.c \
+                      app/box\box_search_graphic.c
 
 # “a“°“ü‚è‚o‚b
 #===> SRCS_OVERLAY_POKE_STATUS

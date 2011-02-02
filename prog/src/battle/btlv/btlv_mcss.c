@@ -575,7 +575,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
                 BTLV_MCSS_ResetPaletteFadeBaseColor( bmw, pos );
                 BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
                 BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
-                BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
+//                BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
                 bmw->btlv_mcss[ index ].sick_set_flag = 0;
                 bmw->btlv_mcss[ index ].evy_dir = 0;
                 bmw->btlv_mcss[ index ].evy = 0;
@@ -3512,7 +3512,7 @@ static  void  BTLV_MCSS_AnmEndCheck( u32 data, fx32 currentFrame )
   BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
 
   bmw->btlv_mcss[ data ].anm_execute_flag = FALSE;      // 起動フラグをOFF
-  MCSS_SetAnimeFrame( bmw->btlv_mcss[ data ].mcss, 0 ); // トレーナーアニメのシーケンスが
+//  MCSS_SetAnimeFrame( bmw->btlv_mcss[ data ].mcss, 0 ); // トレーナーアニメのシーケンスが
                                                         // 進まないようにする mori by 2011/01/12
 }
 
