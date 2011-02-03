@@ -907,3 +907,27 @@ extern void GAMEDATA_SetLiveCasterSecretCallFlag( GAMEDATA *gamedata, BOOL is_ca
  */
 //-----------------------------------------------------------------------------
 extern BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata );
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを設定
+ *
+ *	@param	gamedata      GAMEDATAへのポインタ
+ *	@param	medal_id      メダルボックスで最初に表示するメダル
+ *
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetMedalBoxTopMedalID( GAMEDATA *gamedata, u8 medal_id );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを取得
+ *
+ *	@param	gamedata      GAMEDATAへのポインタ
+ *
+ *	@retval 最初に表示されるメダルID
+ */
+//-----------------------------------------------------------------------------
+u8 GAMEDATA_GetMedalBoxTopMedalID( GAMEDATA *gamedata );
+

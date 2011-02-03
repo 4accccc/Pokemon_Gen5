@@ -60,6 +60,7 @@
 #include "savedata/un_savedata.h"
 #include "savedata/bsubway_savedata.h"
 #include "savedata/tradepoke_after_save.h"
+#include "savedata/medalbox.h"  // MDLID_MAX
 
 //============================================================================================
 //============================================================================================
@@ -144,6 +145,8 @@ struct _GAMEDATA{
   u32 scriptCommandOverlayID; //フィールドスクリプトコマンド用オーバーレイID
 
   BOOL  is_livecaster_secret_call;  //隠しキャラに電話できるかどうかフラグ
+
+  u8    top_medal_id;  // メダルボックスを開いた時に最初に表示されるメダルID
 };
 
 //==============================================================================
@@ -287,6 +290,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //スクリプトオーバーレイ初期化
   gd->scriptCommandOverlayID  = 0;
+
+  // 最初に表示されるメダルをなしに設定
+  gd->top_medal_id = MDLID_MAX;
   return gd;
 }
 
@@ -2164,3 +2170,32 @@ BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata )
 {
   return gamedata->is_livecaster_secret_call;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを設定
+ *
+ *	@param	gamedata      GAMEDATAへのポインタ
+ *	@param	medal_id      メダルボックスで最初に表示するメダル
+ *
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetMedalBoxTopMedalID( GAMEDATA *gamedata, u8 medal_id )
+{
+  gamedata->top_medal_id = medal_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを取得
+ *
+ *	@param	gamedata      GAMEDATAへのポインタ
+ *
+ *	@retval 最初に表示されるメダルID
+ */
+//-----------------------------------------------------------------------------
+u8 GAMEDATA_GetMedalBoxTopMedalID( GAMEDATA *gamedata )
+{
+  return gamedata->top_medal_id;
+}
+

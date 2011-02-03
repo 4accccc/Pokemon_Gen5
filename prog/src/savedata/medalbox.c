@@ -260,7 +260,7 @@ void MEDALBOX_RankUpMedalBox( MEDALBOX *p_mdlbox )
     p_mdlbox->box_rank ++;
   }
 
-  GF_ASSERT( p_mdlbox->box_rank < MEDALBOX_RANK_BW);
+  GF_ASSERT( p_mdlbox->box_rank <= MEDALBOX_RANK_BW);
 }
 
 //----------------------------------------------------------------------------
@@ -360,6 +360,8 @@ u16 MEDALBOX_GetMedalBoxMax( MEDALBOX *p_mdlbox )
     return MEDALBOX_RANK_COPPER_MAX;
   case MEDALBOX_RANK_SILVER:
     return MEDALBOX_RANK_SILVER_MAX;
+  case MEDALBOX_RANK_GOLD:
+    return MEDALBOX_RANK_GOLD_MAX;
   case MEDALBOX_RANK_BW:
     return MEDALBOX_RANK_BW_MAX;
   default:

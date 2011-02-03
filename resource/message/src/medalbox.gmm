@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ito_hiroto" host="W00178" date="2011-01-31T18:15:47"/>
+	<create user="onoue_masayuki" host="W00240" date="2011-02-03T17:27:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,7 +334,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="138"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -365,12 +365,12 @@
 		</language>
 	</columns>
 
-	<dialog left="1108" top="354" right="1687" bottom="982" maximized="no" rayout="Vertical2">
+	<dialog left="1834" top="198" right="2006" bottom="826" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="67" top="235" right="540" bottom="633" visible="yes"/>
-		<band id="0" index="0" style="0000" width="571"/>
+		<band id="0" index="0" style="0000" width="445"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="404"/>
+		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -441,6 +441,14 @@
 解除しました</language>
 	</row>
 
+	<row id="MSG_MEDALBOX_05_01">
+		<comment>ヒントメダルをイチオシ登録しようとした</comment>
+		<language name="JPN" width="256">ヒントメダルは　イチオシに
+とうろくできません！</language>
+		<language name="JPN_KANJI" width="256">ヒントメダルは　イチオシに
+登録できません！</language>
+	</row>
+
 	<row id="MSG_MEDALBOX_07">
 		<comment>ソートボタンタッチ時
 メッセージウィンドウ</comment>
@@ -450,10 +458,16 @@
 どう　変えますか？</language>
 	</row>
 
-	<row id="MSG_MEDALBOX_08">
-		<comment>ソート選択肢1</comment>
-		<language name="JPN" width="256">モードチェンジ</language>
-		<language name="JPN_KANJI" width="256">モードチェンジ</language>
+	<row id="MSG_MEDALBOX_08_01">
+		<comment>ソート選択肢1の1</comment>
+		<language name="JPN" width="256">いちらんモード</language>
+		<language name="JPN_KANJI" width="256">いちらんモード</language>
+	</row>
+
+	<row id="MSG_MEDALBOX_08_02">
+		<comment>ソート選択肢1の2</comment>
+		<language name="JPN" width="256">いちれつモード</language>
+		<language name="JPN_KANJI" width="256">いちれつモード</language>
 	</row>
 
 	<row id="MSG_MEDALBOX_09">

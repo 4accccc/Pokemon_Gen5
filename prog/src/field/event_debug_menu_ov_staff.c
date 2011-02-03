@@ -905,9 +905,10 @@ static const DEBUG_MENU_LIST MedalBoxMenuList[] =
   { DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_OPEN , (void*)DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_OPEN , GFL_OVERLAY_BLANK_ID },  // メダルボックスを開く
   { DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_ACHIVE , (void*)DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_ACHIVE , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
   { DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_ACHIVE , (void*)DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_ACHIVE , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
+  { DEBUG_FIELD_MEDALBOX_MENU_RANDOMSET , (void*)DEBUG_FIELD_MEDALBOX_MENU_RANDOMSET , GFL_OVERLAY_BLANK_ID },  // ボックスをランクアップ
   { DEBUG_FIELD_MEDALBOX_MENU_OUTSAVE , (void*)DEBUG_FIELD_MEDALBOX_MENU_OUTSAVE , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
+  { DEBUG_FIELD_MEDALBOX_MENU_BOXRANK , (void*)DEBUG_FIELD_MEDALBOX_MENU_BOXRANK , GFL_OVERLAY_BLANK_ID },  // メダルデータをランダム出力
   { DEBUG_FIELD_MEDALBOX_MENU_OUTDATA , (void*)DEBUG_FIELD_MEDALBOX_MENU_OUTDATA , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
-  { DEBUG_FIELD_MEDALBOX_MENU_RANDOMSET , (void*)DEBUG_FIELD_MEDALBOX_MENU_RANDOMSET , GFL_OVERLAY_BLANK_ID },  // メダルデータをランダム出力
 };
 
 ///リスト メニューヘッダー
@@ -1143,6 +1144,25 @@ static void debugMenuMedalDataOutPut( DEBUG_MEDALBOX_WORK* wk )
     OS_Printf( "hint_level : %u\n" ,medal_data.hint_level );
   }
   GFL_ARC_CloseDataHandle(p_handle);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックスをランクアップ
+ *
+ *	@param	wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void debugMenuMedalBoxRankUp( DEBUG_MEDALBOX_WORK* wk )
+{
+  GAMEDATA *p_gm_data=GAMESYSTEM_GetGameData( wk->gmSys );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gm_data );
+  MEDALBOX* medal_box = SaveData_GetMedalBox( p_sv );
+
+  // メダルボックスをランクアップさせる
+  MEDALBOX_RankUpMedalBox( medal_box );
 }
 
 //----------------------------------------------------------------------------
@@ -1387,6 +1407,14 @@ static GMEVENT_RESULT debugMenuMedalBoxEvent( GMEVENT *event, int *seq, void *wk
     case DEBUG_FIELD_MEDALBOX_MENU_OUTDATA:     
       {
         debugMenuMedalDataOutPut( work );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+
+    // ボックスをランクアップ
+    case DEBUG_FIELD_MEDALBOX_MENU_BOXRANK:     
+      {
+        debugMenuMedalBoxRankUp( work );
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
       }
       return GMEVENT_RES_FINISH;

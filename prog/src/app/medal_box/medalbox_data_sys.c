@@ -505,3 +505,35 @@ static void ResetSortList( MY_MEDALDATA *p_my_medal )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定したメダルIDのメダルがソート後何番目に位置しているかを調べる
+ *
+ *	@param	*p_my_medal 
+ *	@param	medal_id 
+ *
+ *	@retval メダルのソート後の位置
+ */
+//-----------------------------------------------------------------------------
+u8 MEDALDATASYS_GetMedalSortPos( MY_MEDALDATA *p_my_medal , MedalID medal_id )
+{
+  int i,n;
+  int count = 0;
+  for( i = 0 ; i < p_my_medal->page_max ; i++ )
+  {
+    for( n = 0 ; n < PAGE_MEDAL_MAX ; n++)
+    {
+      MY_MEDAL_ST *p_st = GetMyMedalST( p_my_medal , i , n );
+      if( p_st != NULL )
+      {
+        if( p_st->medal_id == medal_id )
+        {
+          return count;
+        }
+        count++;
+      }
+    }
+  }
+  return MDLID_MAX;
+}
+

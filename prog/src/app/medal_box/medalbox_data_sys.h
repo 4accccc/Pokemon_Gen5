@@ -101,5 +101,6 @@ extern void MEDALDATASYS_GetPageMedal( MY_MEDALDATA *p_my_medal , PAGEDATA* p_pa
 extern void MEDALDATASYS_SetPushMedalID( MY_MEDALDATA* p_my_medal , MedalID meda_id );
 extern void MEDALDATASYS_SaveMedalData( MY_MEDALDATA* p_my_medal , GAMEDATA* p_gamedata , HEAPID heapID);
 extern void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode );
+extern u8   MEDALDATASYS_GetMedalSortPos( MY_MEDALDATA *p_my_medal , MedalID medal_id );
 
 

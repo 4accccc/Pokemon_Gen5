@@ -44,6 +44,15 @@ typedef enum{
 } SCROLL_DIR;
 
 // ==================
+// スクロール後のカーソル位置
+// ==================
+typedef enum{
+  SCROLLEND_CURSOR_STAY,    // カーソル位置を維持する
+  SCROLLEND_CURSOR_TOP,     // スクロール後にユニットの一番上に移動
+  SCROLLEND_CURSOR_BOTTOM,  // スクロール後にユニットの一番下に移動
+} SCROLLEND_CURSOR_POS;
+
+// ==================
 // メダルボックスモード
 // ==================
 typedef enum{
@@ -106,7 +115,8 @@ typedef enum{
 // ==================
 typedef enum
 {
-  MENU_MSG_MODE_CHANGE  = MSG_MEDALBOX_08,
+  MENU_MSG_MODE_LIST    = MSG_MEDALBOX_08_01,
+  MENU_MSG_MODE_NORMAL  = MSG_MEDALBOX_08_02,
   MENU_MSG_ONLY_TITLE   = MSG_MEDALBOX_09,
   MENU_MSG_ONLY_HINT    = MSG_MEDALBOX_10,
   MENU_MSG_TYPE         = MSG_MEDALBOX_11,
@@ -132,6 +142,7 @@ typedef enum
 {
   PUSHMEDAL_TYPE_SET,
   PUSHMEDAL_TYPE_REMOVE,
+  PUSHMEDAL_TYPE_HINT,
   PUSHMEDAL_TYPE_MAX,
 }PUSHMEDAL_TYPE;
 
@@ -142,6 +153,14 @@ typedef enum
 {
   ANMSEQ_NEWEFFECT = 4,
 }CELL_ANM_SEQ;
+
+typedef enum
+{
+  SCROLL_RESULT_ACTIVE, // スクロール中
+  SCROLL_RESULT_END,    // ボタン位置まで移動終了
+  SCROLL_RESULT_MAX,
+}SCROLL_RESULT;
+
 
 //=============================================================================
 //
