@@ -15,7 +15,9 @@
 #define	BG_344_VORTECKER_P_NCLR		(11)
 #define	BG_543_AFRO_P_DAT			(12)
 #define	BG_543_AFRO_P_NCLR			(13)
-#define	TEST_PALANM_DAT				(14)
-#define	TEST_PALANM_NCLR			(15)
+#define	BG_553_FREEZE_VOLT_P_DAT	(14)
+#define	BG_553_FREEZE_VOLT_P_NCLR	(15)
+#define	TEST_PALANM_DAT				(16)
+#define	TEST_PALANM_NCLR			(17)
 
 #endif

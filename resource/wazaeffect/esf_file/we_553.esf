@@ -1,5 +1,5 @@
 EFFSEQ
-$0007
+$0011
 c:\home\swan\resource\particle\wazaeffect\w_001.spa
 C:\home\swan\resource\particle\wazaeffect\w_553_1.spa
 C:\home\swan\resource\particle\wazaeffect\w_553_2.spa
@@ -7,6 +7,10 @@ C:\home\swan\resource\wazaeffect\graphic\bg_192_lightning_y.NSCR
 C:\home\swan\resource\particle\wazaeffect\w_553_3.spa
 C:\home\swan\resource\particle\wazaeffect\w_553_4.spa
 C:\home\swan\resource\particle\wazaeffect\w_553_4.spa
+C:\home\swan\resource\wazaeffect\graphic\bg_553_freeze_volt.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_344_vortecker.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_553_freeze_volt.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_553_freeze_volt_p.dat
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
@@ -30,7 +34,7 @@ SE再生	SEQ_SE_FLD_127	SE2	攻撃側	20:0:127	0:0:0
 &
 #002
 %00
-BGのロード	bg_192_lightning_y
+BGのロード	bg_553_freeze_volt
 BGの表示/非表示	エフェクト	表示
 カメラ移動	追従	攻撃側	16	0	8
 ポケモンアニメ	攻撃側	アニメストップ
@@ -70,7 +74,9 @@ SE動的変化	PSG	追従	ボリューム	50	0	70	20:0:0
 SE再生	SEQ_SE_DUMMY5	PSG	防御側	100:0:0	0:0:0
 制御モード変更	逐次
 BGのパレットフェード	エフェクト面	16	0	2	0:0:0
-BGのスクロール	往復	0	8	2	0	10
+タイマーによるウエイト	3
+BGのパレットアニメ	bg_553_freeze_volt_p	6
+BGのスクロール	常に	8	0	80	0	0
 ポケモン円移動	防御側	Ｙ軸左	シフトＶ＋	0	2	10:0:1	0
 ポケモン拡縮	防御側	往復ロング	0.3	-0.3	2	0	3
 パーティクル再生	w_553_2	W_553_2_553_ICE_BURN	防御側	方向無し	2:0:0	1:1:1	1
