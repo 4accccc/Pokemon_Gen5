@@ -554,6 +554,7 @@ g2dcvtr poke_icon_351_sun.nce -br
 g2dcvtr poke_icon_483_sun.nce -br
 
 g2dcvtr poke_icon.ncl -pcm
+g2dcvtr poke_icon_gray.ncl -pcm
 
 
 echo narcçÏê¨

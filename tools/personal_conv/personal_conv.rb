@@ -637,6 +637,7 @@ end
 
   #ポケアイコンリスト
   fp_icon_scr.print( "\"poke_icon.NCLR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_gray.NCLR\"\n" )
   fp_icon_scr.print( "\"poke_icon_32k.NANR\"\n" )
   fp_icon_scr.print( "\"poke_icon_32k.NCER\"\n" )
   fp_icon_scr.print( "\"poke_icon_64k.NANR\"\n" )

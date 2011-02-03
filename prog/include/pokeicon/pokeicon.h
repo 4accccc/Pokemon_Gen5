@@ -37,6 +37,10 @@ enum {
 
 ///アイコンで使用するパレット数
 #define	POKEICON_PAL_MAX	( 3 )
+#define	POKEICON_GRAY_PAL_MAX	( 4 ) //通常3本,グレースケール1本
+
+//グレースケールのパレットindex
+#define POKEICON_GRAY_PAL_IDX (3) //全4本のうちの4本目に入っている
 
 /// アイコンの横サイズ
 #define POKEICON_SIZE_X		(32)
@@ -61,6 +65,7 @@ extern const u8 POKEICON_GetPalNum( u32 mons, u32 form, BOOL egg );
 extern const u8 POKEICON_GetPalNumByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u8 POKEICON_GetPalNumGetByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u32 POKEICON_GetPalArcIndex(void);
+extern u32 POKEICON_GetPalArcIndexContainGray(void); //全4本のパレットを持っているので注意！
 extern u32 POKEICON_GetCellArcIndex(void);
 extern u32 POKEICON_GetCellSubArcIndex(void);
 extern u32 POKEICON_GetAnmArcIndex(void);

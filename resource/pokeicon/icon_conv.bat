@@ -29,6 +29,7 @@ g2dcvtr poke_icon_64k.nce -br
 g2dcvtr poke_icon_128k.nce -br
 
 g2dcvtr poke_icon.ncl -pcm
+g2dcvtr poke_icon_gray.ncl -pcm
 
 echo narcçÏê¨
 nnsarc -c -l -n -i poke_icon -S pokeicon_all.scr
