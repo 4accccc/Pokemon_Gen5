@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-02-02T17:24:51" source="c13_house_02.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-02-02T18:55:47" source="c13_house_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-02-02T17:24:51" source="c13_house_02.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-02-02T18:55:47" source="c13_house_02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -38,134 +38,134 @@
 		path="C:/home/swan_data3d/build_model/outdoor/c13_house_02/tex/c13_ho02a.tga"
 	>
 		<bitmap size="1024">
-			c8cc ffff cc8c 11ff 1111 1111 3333 3333
-			3333 3333 9995 9999 5555 5555 5555 5555
-			c8cc ffff cc8c 11ff 1111 1111 5553 5555
-			9999 9999 bbbb bbbb 5555 5555 5555 5555
-			c8cc ffff cc8c 11ff 1111 1111 5553 5555
-			9999 b999 dddd dddd 5555 5555 5555 5555
-			c8cc ffff cc8c 11cc 1111 1111 5553 5555
-			9999 db99 dddd dddd 5555 5555 5555 5555
-			c888 cccc 888c 1188 1111 1111 5553 5555
-			9999 9999 9999 9999 5555 5555 5555 5555
-			888c 8888 c888 11cc 1111 1111 3333 3333
-			5555 5555 5555 5555 5555 5555 5555 5555
-			88cc 8888 cc88 33cc 3333 3333 3333 3333
-			5555 5555 1111 5555 5555 9555 9999 9999
-			cccc cccc cccc 55cc 5555 3555 5553 5555
-			bbbb 1595 1111 9951 5555 9555 9999 9999
-			cccc cccc cccc 55cc 5555 3555 5553 5555
-			bbbb 1595 1111 9951 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd 1595 1111 9951 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd 19b9 1111 bb91 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd 19b9 3333 bb91 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd 19b9 3333 bb91 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd 19b9 1111 bb91 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd 9bb9 5555 bbb9 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 9999 bbbb 5555 9555 bbb9 bbbb
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb 9999 9999 9999 9999
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb 5555 5555 5555 5555
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb 5555 5555 5555 5555
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 dddd dddd dddd
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 dddd dddd dddd
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 dddd dddd dddd
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 dddd dddd dddd
-			cccc cccc cccc 55cc 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 aaaa aaaa aaaa
-			8888 8888 8888 5588 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 6666 6666 6666
-			8888 8888 8888 5588 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 3336 3333 3333
-			4444 4444 4444 5544 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 3336 3333 3333
-			4444 4444 4444 5544 5555 3555 9953 9999
-			dddd 99b9 9999 bbb9 dd55 3336 3333 3333
-			4444 4444 4444 5544 5555 3555 9953 9999
-			dddd 99b9 9999 bbb9 dd55 6636 6666 6666
-			4444 4444 4444 5544 5555 3555 9953 9999
-			dddd 99b9 9999 bbb9 dd55 6636 6666 6666
-			4444 4444 4444 5544 5555 3555 9953 9999
-			dddd 99b9 9999 bbb9 dd55 a636 aaaa aaaa
-			4444 4444 4444 5544 5555 3555 9953 9999
-			dddd 99b9 9999 bbb9 dd55 d636 dddd dddd
-			4444 4444 4444 5544 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			8822 8888 2288 5544 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 a336 aaaa aaaa
-			8822 8888 2288 5544 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 a336 aaaa aaaa
-			8822 8888 2288 5544 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 4444 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 4444 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 0000 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 0000 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 0000 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 a336 aaaa aaaa
-			4400 2222 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 a336 aaaa aaaa
-			4400 0000 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 2222 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 0000 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 2222 0044 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			4400 0000 0044 7722 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 d636 dddd dddd
-			4400 2222 0044 7700 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 a336 aaaa aaaa
-			4400 0000 0044 7700 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 a336 aaaa aaaa
-			4422 2222 2244 7722 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 d636 dddd dddd
-			4422 0000 2244 7722 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 d636 dddd dddd
-			4422 0000 2244 7722 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 d636 dddd dddd
-			0000 0000 0000 7700 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 d636 dddd dddd
-			0000 0000 0000 7700 7777 3777 7733 7777
-			eeee eee7 eeee eeee dd55 d636 dddd dddd
-			0000 0000 0000 5500 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 a336 aaaa aaaa
-			0000 0000 0000 5500 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 a336 aaaa aaaa
-			fff8 cccf cccc 5588 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			fff8 cccf cccc 5588 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd55 d636 dddd dddd
-			ccc8 cccc cccc 5588 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd33 d636 dddd dddd
-			8884 8888 8888 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd33 d636 dddd dddd
-			8884 8888 8888 5522 5555 3555 9953 9999
-			dddd bbb9 bbbb bbbb dd33 d636 dddd dddd
-			8888 8888 8888 3322 3333 3333 5553 5555
-			9999 5555 5555 5555 dd33 6336 6666 6666
-			8888 8888 8888 3322 3333 3333 5553 5555
-			9999 5555 5555 5555 dd33 3336 3333 3333
-			2222 2222 2222 3322 3333 3333 3333 3333
-			3333 3333 3333 3333 dd33 3336 3333 3333
+			ecee ffff eece 00ff 0000 0000 2222 2222
+			2222 2222 7774 7777 4444 4444 4444 4444
+			ecee ffff eece 00ff 0000 0000 4442 4444
+			7777 7777 aaaa aaaa 4444 4444 4444 4444
+			ecee ffff eece 00ff 0000 0000 4442 4444
+			7777 a777 bbbb bbbb 4444 4444 4444 4444
+			ecee ffff eece 00ee 0000 0000 4442 4444
+			7777 ba77 bbbb bbbb 4444 4444 4444 4444
+			eccc eeee ccce 00cc 0000 0000 4442 4444
+			7777 7777 7777 7777 4444 4444 4444 4444
+			ccce cccc eccc 00ee 0000 0000 2222 2222
+			4444 4444 4444 4444 4444 4444 4444 4444
+			ccee cccc eecc 22ee 2222 2222 2222 2222
+			4444 4444 0000 4444 4444 7444 7777 7777
+			eeee eeee eeee 44ee 4444 2444 4442 4444
+			aaaa 0474 0000 7740 4444 7444 7777 7777
+			eeee eeee eeee 44ee 4444 2444 4442 4444
+			aaaa 0474 0000 7740 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb 0474 0000 7740 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb 07a7 0000 aa70 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb 07a7 2222 aa70 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb 07a7 2222 aa70 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb 07a7 0000 aa70 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb 7aa7 4444 aaa7 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 7777 aaaa 4444 7444 aaa7 aaaa
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa 7777 7777 7777 7777
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa 4444 4444 4444 4444
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa 4444 4444 4444 4444
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 bbbb bbbb bbbb
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 bbbb bbbb bbbb
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 bbbb bbbb bbbb
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 bbbb bbbb bbbb
+			eeee eeee eeee 44ee 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 8888 8888 8888
+			cccc cccc cccc 44cc 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 5555 5555 5555
+			cccc cccc cccc 44cc 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 2225 2222 2222
+			9999 9999 9999 4499 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 2225 2222 2222
+			9999 9999 9999 4499 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 2225 2222 2222
+			9999 9999 9999 4499 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 5525 5555 5555
+			9999 9999 9999 4499 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 5525 5555 5555
+			9999 9999 9999 4499 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 8525 8888 8888
+			9999 9999 9999 4499 2222 2222 7742 7777
+			bbbb 7777 7aa7 7777 bb44 b525 bbbb bbbb
+			9999 9999 9999 4499 2222 2222 7742 7777
+			bbbb 7777 7aa7 7777 bb44 b525 bbbb bbbb
+			cc33 cccc 33cc 4499 2222 2222 7742 7777
+			bbbb 7777 7aa7 7777 bb44 8225 8888 8888
+			cc33 cccc 33cc 4499 2222 2222 7742 7777
+			bbbb 7777 7aa7 7777 bb44 8225 8888 8888
+			cc33 cccc 33cc 4499 2222 2222 7742 7777
+			bbbb 7777 7aa7 7777 bb44 b525 bbbb bbbb
+			9911 9999 1199 4433 2222 2222 7742 7777
+			bbbb 7777 7aa7 7777 bb44 b525 bbbb bbbb
+			9911 9999 1199 4433 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 b525 bbbb bbbb
+			9911 1111 1199 4433 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 b525 bbbb bbbb
+			9911 1111 1199 4433 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 b525 bbbb bbbb
+			9911 1111 1199 4433 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 8225 8888 8888
+			9911 3333 1199 4433 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 8225 8888 8888
+			9911 1111 1199 4433 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 b525 bbbb bbbb
+			9911 3333 1199 4433 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 b525 bbbb bbbb
+			9911 1111 1199 4433 4444 2222 7742 7777
+			bbbb 77a7 7777 aaa7 bb44 b525 bbbb bbbb
+			9911 3333 1199 4433 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 b525 bbbb bbbb
+			9911 1111 1199 6633 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 b525 bbbb bbbb
+			9911 3333 1199 6611 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 8225 8888 8888
+			9911 1111 1199 6611 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 8225 8888 8888
+			9933 3333 3399 6633 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 b525 bbbb bbbb
+			9933 1111 3399 6633 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 b525 bbbb bbbb
+			9933 1111 3399 6633 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 b525 bbbb bbbb
+			1111 1111 1111 6611 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 b525 bbbb bbbb
+			1111 1111 1111 6611 6666 2666 6622 6666
+			dddd ddd6 dddd dddd bb44 b525 bbbb bbbb
+			1111 1111 1111 4411 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 8225 8888 8888
+			1111 1111 1111 4411 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 8225 8888 8888
+			fffc eeef eeee 44cc 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 b525 bbbb bbbb
+			fffc eeef eeee 44cc 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb44 b525 bbbb bbbb
+			eeec eeee eeee 44cc 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb22 b525 bbbb bbbb
+			ccc9 cccc cccc 4433 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb22 b525 bbbb bbbb
+			ccc9 cccc cccc 4433 4444 2444 7742 7777
+			bbbb aaa7 aaaa aaaa bb22 b525 bbbb bbbb
+			cccc cccc cccc 2233 2222 2222 4442 4444
+			7777 4444 4444 4444 bb22 5225 5555 5555
+			cccc cccc cccc 2233 2222 2222 4442 4444
+			7777 4444 4444 4444 bb22 2225 2222 2222
+			3333 3333 3333 2233 2222 2222 2222 2222
+			2222 2222 2222 2222 bb22 2225 2222 2222
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="c13_ho02b"
@@ -450,8 +450,8 @@
 
 <tex_palette_array size="3">
 	<tex_palette index="0" name="c13_ho02a_pl" color_size="16">
-		3946 39ce 4166 4210 4987 4a51 4a52 4e12
-		51a8 5293 5294 56b4 5de9 5ef7 6235 6e2a
+		39ce 3d44 4210 4964 4a51 4a52 4e12 5293
+		5294 55a6 56b4 5ef7 61c7 6235 7229 7e8a
 	</tex_palette>
 	<tex_palette index="1" name="c13_ho02b_pl" color_size="8">
 		4fdf 7fff 7fff 7fff 7fff 7fff 7fff 7fff
