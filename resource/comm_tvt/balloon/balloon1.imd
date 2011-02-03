@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-02-02T17:45:34" source="livecaster_test_001_test.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-02-03T12:57:04" source="livecaster_test_001.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-02-02T17:45:34" source="livecaster_test_001_test.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-02-03T12:57:04" source="livecaster_test_001.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -63,14 +63,14 @@
 		path="C:/livecaster_TEST/tex/himo.1.tga"
 	>
 		<bitmap size="64">
-			e000 0007 d000 0007 c000 000b c000 000f
-			8000 000f 0000 002f 0000 003e 0000 007d
-			0000 00fc 0000 01f4 0000 07f0 0000 07d0
-			0000 0b80 0000 1f40 0000 3f40 0000 3e00
-			0000 7d00 0000 7d00 0000 bc00 0000 bc00
-			0000 bc00 0000 7d00 0000 7e00 0000 3f00
-			0000 2f40 0000 1f80 0000 0bd0 0000 07e0
-			0000 02f4 0000 01f8 0000 00be 4000 007d
+			d000 000b e000 000b c000 0007 c000 000f
+			4000 002f 0000 001f 0000 00bd 0000 007e
+			0000 00fe 0000 00f4 0000 02f4 0000 01f8
+			0000 03f0 0000 03f0 0000 03d0 0000 0bd0
+			0000 0be0 0000 0bc0 0000 07c0 0000 07c0
+			0000 07c0 0000 07c0 0000 07c0 0000 07e0
+			0000 0be0 0000 0bd0 0000 01f0 0000 02f8
+			0000 02f4 0000 007c 0000 007d 8000 009f
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="himo.2"
@@ -81,14 +81,14 @@
 		path="C:/livecaster_TEST/tex/himo.2.tga"
 	>
 		<bitmap size="64">
-			e000 0007 e000 0007 d000 0007 d000 000b
-			c000 000b c000 000f c000 000f 8000 001f
-			8000 002f 4000 002f 0000 003f 0000 003f
-			0000 003e 0000 007e 0000 007d 0000 007d
-			0000 00bc 0000 00bc 0000 00fc 0000 00fc
-			0000 00fc 0000 00fc 0000 00fc 0000 00fc
-			0000 00bc 0000 007c 0000 007d 0000 003e
-			0000 003f 4000 002f 8000 001f e000 000b
+			d000 000b d000 000b e000 000b e000 000b
+			e000 000b e000 0007 e000 0007 e000 0007
+			e000 000f 4000 000f 4000 002f 4000 002f
+			4000 002f 4000 002f 8000 002f 8000 002f
+			8000 001f 0000 001f 0000 003f 0000 003f
+			0000 003f 0000 003f 0000 003f 8000 003f
+			8000 001f 8000 001f 4000 002f 4000 002f
+			4000 000f c000 000f e000 0007 e000 000b
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="himo.3"
@@ -99,14 +99,14 @@
 		path="C:/livecaster_TEST/tex/himo.3.tga"
 	>
 		<bitmap size="64">
-			c000 000b d000 000b d000 0007 e000 0007
-			f000 0003 f000 0002 f400 0001 f800 0001
-			f800 0000 fc00 0000 bc00 0000 bc00 0000
-			7c00 0000 7c00 0000 7c00 0000 bc00 0000
-			f800 0000 f800 0000 f400 0000 f400 0000
-			f000 0001 f000 0002 e000 0003 d000 0003
-			c000 0007 c000 000b 8000 000f 4000 001f
-			0000 001f 0000 003f 0000 007d 0000 01f8
+			c000 0007 e000 0007 e000 000b d000 000b
+			f000 0003 f000 0001 f800 0002 f400 0002
+			f400 0000 fc00 0000 7c00 0000 7c00 0000
+			bc00 0000 bc00 0000 bc00 0000 7c00 0000
+			fc00 0000 f400 0000 f400 0000 f400 0000
+			f800 0002 f000 0001 f000 0003 f000 0003
+			d000 000b e000 0007 c000 000f 4000 002f
+			8000 001f 8000 003f 0000 00bf 0000 00bd
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="himo.4"
@@ -117,14 +117,14 @@
 		path="C:/livecaster_TEST/tex/himo.4.tga"
 	>
 		<bitmap size="64">
-			d000 000b d000 0007 e000 0003 f000 0003
-			f000 0002 f800 0000 bc00 0000 7d00 0000
-			3f00 0000 1f40 0000 0fd0 0000 07d0 0000
-			02e0 0000 01f4 0000 01fc 0000 00bc 0000
-			007d 0000 007d 0000 003e 0000 003e 0000
-			003e 0000 007d 0000 00bd 0000 00fc 0000
-			01f8 0000 02f4 0000 07e0 0000 0bd0 0000
-			1f80 0000 2f40 0000 be00 0000 7d00 0001
+			e000 0007 e000 000b d000 0003 f000 0003
+			f800 0001 f400 0000 7e00 0000 bd00 0000
+			bf00 0000 1f00 0000 1f80 0000 2f40 0000
+			0fc0 0000 0fc0 0000 07c0 0000 07e0 0000
+			0be0 0000 03e0 0000 03d0 0000 03d0 0000
+			03d0 0000 03d0 0000 03d0 0000 0bd0 0000
+			0be0 0000 07e0 0000 0f40 0000 2f80 0000
+			1f80 0000 3d00 0000 7d00 0000 f600 0002
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="himo.5"
@@ -135,14 +135,14 @@
 		path="C:/livecaster_TEST/tex/himo.5.tga"
 	>
 		<bitmap size="64">
-			d000 000b d000 000b d000 0007 e000 0007
-			e000 0003 f000 0003 f000 0003 f400 0002
-			f800 0002 f800 0001 fc00 0000 fc00 0000
-			bc00 0000 bd00 0000 7d00 0000 7d00 0000
-			3e00 0000 3e00 0000 3f00 0000 3f00 0000
+			e000 0007 e000 0007 e000 000b d000 000b
+			d000 0003 f000 0003 f000 0003 f800 0001
+			f400 0001 f400 0002 fc00 0000 fc00 0000
+			7c00 0000 7e00 0000 be00 0000 be00 0000
+			3d00 0000 3d00 0000 3f00 0000 3f00 0000
 			3f00 0000 3f00 0000 3f00 0000 3f00 0000
-			3e00 0000 3d00 0000 7d00 0000 bc00 0000
-			fc00 0000 f800 0001 f400 0002 e000 000b
+			3d00 0000 3e00 0000 be00 0000 7c00 0000
+			fc00 0000 f400 0002 f800 0001 d000 0007
 		</bitmap>
 	</tex_image>
 	<tex_image index="6" name="himo.6"
@@ -153,14 +153,14 @@
 		path="C:/livecaster_TEST/tex/himo.6.tga"
 	>
 		<bitmap size="64">
-			e000 0003 e000 0007 d000 0007 d000 000b
-			c000 000f 8000 000f 4000 001f 4000 002f
-			0000 002f 0000 003f 0000 003e 0000 003e
-			0000 003d 0000 003d 0000 003d 0000 003e
-			0000 002f 0000 002f 0000 001f 0000 001f
-			4000 000f 8000 000f c000 000b c000 0007
-			d000 0003 e000 0003 f000 0002 f400 0001
-			f400 0000 fc00 0000 7d00 0000 2f40 0000
+			d000 0003 d000 000b e000 000b e000 0007
+			c000 000f 4000 000f 8000 002f 8000 001f
+			0000 001f 0000 003f 0000 003d 0000 003d
+			0000 003e 0000 003e 0000 003e 0000 003d
+			0000 003f 0000 001f 0000 001f 0000 001f
+			8000 002f 4000 000f c000 000f c000 000f
+			e000 0007 d000 000b f000 0003 f800 0001
+			f400 0002 fc00 0002 fe00 0000 7e00 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="live_001_001"
@@ -690,22 +690,22 @@
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="himo.1_pl" color_size="4">
-		7ed0 7f35 7f9a 7fff
+		7f9a 7fde 7fbc 7fff
 	</tex_palette>
 	<tex_palette index="2" name="himo.2_pl" color_size="4">
-		7ed0 7f35 7f9a 7fff
+		7f9a 7fde 7fbc 7fff
 	</tex_palette>
 	<tex_palette index="3" name="himo.3_pl" color_size="4">
-		7ed0 7f35 7f9a 7fff
+		7f9a 7fde 7fbc 7fff
 	</tex_palette>
 	<tex_palette index="4" name="himo.4_pl" color_size="4">
-		7ed0 7f35 7f9a 7fff
+		7f9a 7fde 7fbc 7fff
 	</tex_palette>
 	<tex_palette index="5" name="himo.5_pl" color_size="4">
-		7ed0 7f35 7f9a 7fff
+		7f9a 7fde 7fbc 7fff
 	</tex_palette>
 	<tex_palette index="6" name="himo.6_pl" color_size="4">
-		7ed0 7f35 7f9a 7fff
+		7f9a 7fde 7fbc 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -1107,24 +1107,24 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quad_strip" vertex_size="8">
 					<mtx idx="0"/>
-					<tex st="-0.437500 0.875000"/>
+					<tex st="1.500000 0.875000"/>
 					<clr rgb="25 25 24"/>
 					<pos_xyz xyz="1.997559 0.439453 0.000000"/>
-					<tex st="-15.562500 0.875000"/>
+					<tex st="-17.500000 0.875000"/>
 					<pos_xy xy="1.997559 -0.475586"/>
-					<tex st="-0.437500 5.812500"/>
+					<tex st="1.500000 5.812500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xy xy="2.572510 0.438965"/>
-					<tex st="-15.562500 5.812500"/>
+					<tex st="-17.500000 5.812500"/>
 					<pos_xy xy="2.572510 -0.476074"/>
-					<tex st="-0.437500 25.625000"/>
+					<tex st="1.500000 25.625000"/>
 					<pos_xy xy="4.872314 0.437744"/>
-					<tex st="-15.562500 25.625000"/>
+					<tex st="-17.500000 25.625000"/>
 					<pos_xy xy="4.872314 -0.477295"/>
-					<tex st="-0.437500 30.562500"/>
+					<tex st="1.500000 30.562500"/>
 					<clr rgb="27 27 26"/>
 					<pos_xy xy="5.447266 0.437256"/>
-					<tex st="-15.562500 30.562500"/>
+					<tex st="-17.500000 30.562500"/>
 					<pos_xy xy="5.447266 -0.477783"/>
 				</primitive>
 			</primitive_array>
