@@ -63,4 +63,6 @@ extern void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camW
 
 // add ichiraku
 extern CAMERA_SYSTEM_WORK* CTVT_CAMERA_GetCamSys( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
+extern void CTVT_CAMERA_Init_RetrunGame( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
+
 

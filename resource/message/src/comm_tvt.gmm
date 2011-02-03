@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00241" date="2011-01-31T13:25:23"/>
+	<create user="ichiraku_katsuhiko" host="W00241" date="2011-02-02T12:44:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -641,9 +641,9 @@ Ariizumi 100506</comment>
 	<row id="COMM_TVT_GAME_06">
 		<comment>写真撮影画面</comment>
 		<language name="JPN">ゲームに　しようする　しゃしんを
-3まい　さつえいします</language>
+３まい　さつえいします</language>
 		<language name="JPN_KANJI">ゲームに　使用する　写真を
-3枚　撮影します</language>
+３枚　撮影します</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_07">
@@ -745,8 +745,8 @@ ichiraku 110117</comment>
 
 	<row id="COMM_TVT_GAME_19">
 		<comment>ゲーム名2</comment>
-		<language name="JPN">ふうせんわり2</language>
-		<language name="JPN_KANJI">風船わり2</language>
+		<language name="JPN">ふうせんわり２</language>
+		<language name="JPN_KANJI">風船わり２</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_20">

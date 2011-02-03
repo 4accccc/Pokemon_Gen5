@@ -50,13 +50,13 @@ typedef enum
 
   // add ichiraku
   // ミニゲーム参加受付用
-  CCFT_REQ_GAME,        // 参加要求通知
-  CCFT_DECIDE_GAME,     // 参加決定
-  CCFT_CANCEL_GAME,     // 参加拒否
-  CCFT_START_GAME,      // 開始要求
-  CCFT_EXIT_GAME,       // 終了通知
-  CCFT_DECIDE_GAME2,    // 参加決定 確認用
-  CCFT_START_GAME2,     // 開始要求 確認用
+  CCFT_REQ_GAME,        // 参加要求通知       親が送信
+  CCFT_DECIDE_GAME,     // 参加決定           子が送信  
+  CCFT_CANCEL_GAME,     // 参加拒否           子が送信
+  CCFT_START_GAME,      // 開始要求           親が送信
+  CCFT_EXIT_GAME,       // 終了通知           親が送信
+  CCFT_DECIDE_GAME2,    // 参加決定 確認用    子が送信
+  CCFT_START_GAME2,     // 開始要求 確認用    親が送信
 
   CCFT_FINISH_PARENT,  //親が終了を要求する
   
@@ -158,3 +158,8 @@ extern void CTVT_COMM_SendGameReq_Flg( COMM_TVT_WORK *work, CTVT_COMM_WORK *comm
 extern void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA data, u8 data_type );
 // ゲームスコア送信リクエスト
 extern void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE score );
+
+
+// ゲームから会話に戻る時専用の初期化
+extern void CTVT_COMM_Init_ReturnGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+

@@ -2038,12 +2038,61 @@ static void CTVT_COMM_PostGameFlg( const int netID, const int size , const void*
 
   // フラグ分岐
   switch( *p_flg ){
-  case CCGF_NULL:   // 
+    // リトライ用
+  case CCGF_DECIDE_RETRY:     // 参加決定
+    // 親のみ受信
+    // 受信したNetIDのビットを立てる
+    if( selfId == 0 )
     {
+      CTVT_GAME_SetAcceptBit( gameWork, netID );
+    }
+    break;
+  case CCGF_CANCEL_RETRY:     // 参加拒否
+    // 親のみ受信
+    if( selfId == 0 )
+    {
+      // 参加拒否フラグを立てる
+      // 常時終了チェックでみてる
+      CTVT_GAME_SetIsCancelGame( gameWork, TRUE );
+    }
+
+    break;
+  case CCGF_START_RETRY:      // 開始要求
+    // 子のみ受信する
+    if( selfId != 0 )
+    {
+      // 開始フラグを立てる
+      CTVT_GAME_SetIsStartGame( gameWork, TRUE );
+    }
+    break;
+  case CCGF_EXIT_RETRY:       // 終了通知
+    // 子のみ受信する
+    if( selfId != 0 )
+    {
+      // ミニゲーム受付中止フラグを立てる
+      // 常時終了チェックでみてる
+      CTVT_GAME_SetIsExitGame( gameWork, TRUE );
+    }
+
+    break;
+  case CCGF_DECIDE_RETRY2:    // 参加決定 確認用
+    // 親のみ受信する
+    // 受信したNetIDのビットを立てる
+    if( selfId == 0 )
+    {
+      CTVT_GAME_SetAcceptBit2( gameWork, netID );
+    }
+
+    break;
+  case CCGF_START_RETRY2:     // 開始要求 確認用
+    // 子のみ受信する
+    if( selfId != 0 )
+    {
+      // 開始 確認用フラグを立てる
+      CTVT_GAME_SetIsStartGame2( gameWork, TRUE );
     }
     break;
   }
-
 }
 
 //----------------------------------------------------------------------------
@@ -2174,6 +2223,50 @@ void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE
 
   // ゲームデータ更新
   commWork->sendGameScore = score;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームから会話に戻る時の初期化
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*commWork 
+ */
+//-----------------------------------------------------------------------------
+void CTVT_COMM_Init_ReturnGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  u8 i;
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[i] );
+  }
+
+  commWork->PhotobufUseBit = 0;
+  commWork->reqCheckBit = 0;
+  commWork->isSendWait = FALSE;
+
+  commWork->isCommWave = FALSE;
+  commWork->isFinishPostWave = FALSE;
+
+  commWork->drawBufSetPos = 0;
+  commWork->drawBufSendPos = 0;
+
+  commWork->updateReqTalk = FALSE;
+  commWork->reqSendMemberData = FALSE;
+  commWork->reqSendDoubleFlg = FALSE;
+  commWork->sendDoubleFlgValue = FALSE;
+#if CTVT_COMM_SHARE_DRAW_BUFF
+  commWork->reqSendDrawBuffer = FALSE;
+  commWork->sendingDrawBuffer = FALSE;
+  commWork->postDrawBuffer = FALSE;
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
+  commWork->updateTalkMember = FALSE;
+  commWork->canSendDrawBuf = TRUE;
+  commWork->reqPermitSendDrawBuf = FALSE;
+  commWork->canSendWaveBuf = TRUE;
+  commWork->reqPermitSendWaveBuf = FALSE;
+  commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
 }
 
 //----------------------------------------------------------------------------

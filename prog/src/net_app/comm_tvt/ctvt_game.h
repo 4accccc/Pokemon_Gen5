@@ -31,6 +31,7 @@
 
 // パレット
 #define CTVT_GAME_PAL_BG_M_BG       (0) // 5本
+#define CTVT_GAME_PAL_BG_M_TASKMENU (13) // 1本
 #define CTVT_GAME_PAL_BG_M_WINFRAME (14) // 1本
 #define CTVT_GAME_PAL_BG_M_FONT     (15) // 1本
 
@@ -62,7 +63,12 @@
 
 // ゲーム専用通信フラグ
 typedef enum {
-  CCGF_NULL,      // 
+  CCGF_DECIDE_RETRY,      // リトライ決定         子が送信
+  CCGF_CANCEL_RETRY,      // リトライ拒否         子が送信
+  CCGF_START_RETRY,       // 開始要求             親が送信
+  CCGF_EXIT_RETRY,        // 終了通知             親が送信
+  CCGF_DECIDE_RETRY2,     // リトライ決定 確認用  子が送信
+  CCGF_START_RETRY2,      // 開始要求 確認用      親が送信
 } CTVT_COMM_GAME_FLAG;
 
 // ゲーム送信データの種類
@@ -116,6 +122,18 @@ extern void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 extern void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 
 extern GFL_G3D_UTIL* CTVT_GAME_GetgG3DUtil( CTVT_GAME_WORK *gameWork );
+
+// リトライ画面
+// 通信で内部フラグを変更する用
+extern void CTVT_GAME_SetIsCancelGame( CTVT_GAME_WORK *gameWork, const BOOL flg );
+extern void CTVT_GAME_SetIsExitGame( CTVT_GAME_WORK *gameWork, const BOOL flg );
+extern void CTVT_GAME_SetIsStartGame( CTVT_GAME_WORK *gameWork, const BOOL flg );
+extern void CTVT_GAME_SetIsStartGame2( CTVT_GAME_WORK *gameWork, const BOOL flg );
+extern void CTVT_GAME_SetAcceptBit( CTVT_GAME_WORK *gameWork, const u8 NetId );
+extern void CTVT_GAME_SetAcceptBit2( CTVT_GAME_WORK *gameWork, const u8 NetId );
+extern const BOOL CTVT_GAME_IsAcceptNum( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
+extern const BOOL CTVT_GAME_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
+
 
 //----------------------------------------------------------------------------
 /**

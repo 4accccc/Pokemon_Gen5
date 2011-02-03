@@ -107,7 +107,7 @@ struct _COMM_TVT_WORK
   CTVT_DRAW_WORK   *drawWork;
   CTVT_CALL_WORK   *callWork;
   CTVT_GAME_WORK   *gameWork; // add ichiraku
-  BOOL             isGame;    // add ichiraku ゲームに入ったかフラグ
+  BOOL             isGame;    // add ichiraku ミニゲームに入ったかフラグ
 
   DRAW_SYS_WORK   *drawSys;
 
@@ -119,9 +119,10 @@ struct _COMM_TVT_WORK
 //======================================================================
 #pragma mark [> proto
 static void COMM_TVT_Init( COMM_TVT_WORK *work );
+static void COMM_TVT_Init_ForGame( COMM_TVT_WORK *work );  // add ichiraku
 static void COMM_TVT_Term( COMM_TVT_WORK *work );
-static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work );
-static void COMM_TVT_Term_ForGame2( COMM_TVT_WORK *work );
+static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work );  // add ichiraku
+static void COMM_TVT_Term_ForGame2( COMM_TVT_WORK *work );  // add ichiraku
 static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work );
 static void COMM_TVT_VBlankFunc(GFL_TCB *tcb, void *wk );
 
@@ -233,7 +234,6 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->isSusspendDraw = FALSE;
   work->isReqFinish = FALSE;
   work->isReqDispWarn = FALSE;
-  work->isUseSelfBUffer = FALSE;
   work->isGame = FALSE; // add ichiraku
 
   if( DS_SYSTEM_IsRestrictPhotoExchange() == TRUE )
@@ -300,6 +300,98 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   PMSND_PlayBGM( SEQ_BGM_SILENCE_FIELD );
 }
 
+// ミニゲーム前に破棄したグラフィックを初期化しなおす
+// ・名前用のBMPWIN
+// ・VBlankタスク
+// ・低優先度通信
+// ・リソース
+// ・グラフィック
+// ※カメラ設定し直し
+// ※低優先度送信設定
+static void COMM_TVT_Init_ForGame( COMM_TVT_WORK *work )  // add ichiraku
+{
+  const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  u8 i;
+  
+  work->isDouble = FALSE;
+
+  COMM_TVT_InitGraphic( work );
+  COMM_TVT_LoadResource( work );
+  //COMM_TVT_InitMessage( work );
+  work->timeIcon = NULL;
+  
+  work->vBlankTcb = GFUser_VIntr_CreateTCB( COMM_TVT_VBlankFunc , work , 8 );
+  work->palAnmCnt = 0;
+  work->palAnmIdx = 0;
+
+  work->isUpperFade = TRUE;
+  work->isSusspend = FALSE;
+  work->isPause = FALSE;
+  work->isSusspendDraw = FALSE;
+  work->isReqFinish = FALSE;
+  work->isUseSelfBUffer = FALSE;
+
+  work->nameWin[0] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                         (16-COMM_TVT_NAME_WIDTH)/2 , 10 , 
+                                         COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  work->nameWin[1] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                        16+(16-COMM_TVT_NAME_WIDTH)/2 , 10 , 
+                                        COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  work->nameWin[2] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                         (16-COMM_TVT_NAME_WIDTH)/2 , 22 , 
+                                         COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  work->nameWin[3] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                        16+(16-COMM_TVT_NAME_WIDTH)/2 , 22 , 
+                                        COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->nameWin[i] ) , 0x0 );
+  }
+  work->nameDrawBit = 0;
+  work->nameWinUpdateBit = 0;
+
+  // メッセージ系読み込み
+  {
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_FONT*0x20, 16*2, work->heapId );
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG  , CTVT_PAL_BG_SUB_FONT *0x20, 16*2, work->heapId );
+    GFL_FONTSYS_SetDefaultColor();
+
+    BmpWinFrame_GraphicSet( CTVT_FRAME_SUB_MSG , CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME ,
+        0 , work->heapId );
+    BmpWinFrame_GraphicSet( CTVT_FRAME_MAIN_MSG , CTVT_BMPWIN_CGX_MAIN , CTVT_PAL_BG_MAIN_WINFRAME ,
+        0 , work->heapId );
+
+    work->taskMenuRes = APP_TASKMENU_RES_Create( CTVT_FRAME_SUB_MSG, 
+        CTVT_PAL_BG_SUB_TASKMENU, work->fontHandle, work->printQue, work->heapId );
+  }
+
+  // カメラ
+  CTVT_CAMERA_Init_RetrunGame( work, work->camWork );
+
+  // 低優先度通信
+  GFL_NET_LDATA_InitSystem( heapId, FALSE );
+
+  // 通信の設定をし直す
+  CTVT_COMM_Init_ReturnGame( work, work->commWork );
+
+
+  // 名前を書き直す
+  //COMM_TVT_RedrawName( work );
+
+  // 通信アイコン
+  GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
+
+  PMSND_PlayBGM( SEQ_BGM_SILENCE_FIELD );
+}
+
 //--------------------------------------------------------------
 //	開放
 //--------------------------------------------------------------
@@ -336,6 +428,7 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
   COMM_TVT_TermGraphic( work );
 }
 // モード途中の終了時の開放
+// ミニゲームを初期化するために、LCの解放処理から必要なものを抜粋
 static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work )
 {
   u8 i;
@@ -346,22 +439,22 @@ static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work )
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
 
-  APP_TASKMENU_RES_Delete( work->taskMenuRes );
-
   if( work->timeIcon != NULL )
   {
     TIMEICON_Exit( work->timeIcon );
     work->timeIcon = NULL;
   } 
 
+  APP_TASKMENU_RES_Delete( work->taskMenuRes );
+
   GFL_NET_LDATA_ExitSystem();
   COMM_TVT_ReleaseResource( work );
   COMM_TVT_TermGraphic( work );
 }
 // LC終了時の開放
+// ミニゲームから直接フィールドに戻る場合
 static void COMM_TVT_Term_ForGame2( COMM_TVT_WORK *work )
 {
-  
   DRAW_SYS_DeleteSystem( work->drawSys );
   CTVT_CALL_TermSystem( work , work->callWork );
   CTVT_DRAW_TermSystem( work , work->drawWork );
@@ -496,24 +589,6 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   //上画面ノイズ
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
-
-#ifdef DEBUG_ONLY_FOR_ichiraku_katsuhiko
-  // デバッグで表示したい
-  {
-    // ヒープの空き容量
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
-    {
-      u32 free = GFL_HEAP_GetHeapFreeSize( HEAPID_COMM_TVT );
-      ICHI_Printf("heap free size %x\n", free);
-    }
-    // BGのサイズ
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
-    {
-      u32 free = GX_GetSizeOfBG();
-      ICHI_Printf("メイン2DエンジンBGのサイズ %x\n", free);
-    }
-  }
-#endif
 
   return FALSE;
 }
@@ -916,6 +991,14 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     if ( OS_IsRunOnTwl() )
     {
       CTVT_GAME_TermMode( work, work->gameWork );
+    }
+    // 会話モードに戻る時は初期化をもう1回呼ぶが
+    // それ以外はエラー落ちのはずなのでスキップ
+    if( work->isGame == TRUE && work->nextMode == CTM_TALK )
+    {
+      // ミニゲームで破棄したものを初期化で作り直す
+      COMM_TVT_Init_ForGame( work );  // add ichiraku
+      work->isGame = FALSE;
     }
     break;
   }
@@ -1602,10 +1685,12 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pw
 
   if( work->isGame == FALSE )
   {
+    ICHI_Printf("通常の開放\n");
     COMM_TVT_Term( work );
   }
   else
   {
+    ICHI_Printf("ミニゲームからの開放\n");
     COMM_TVT_Term_ForGame2( work );
   }
 

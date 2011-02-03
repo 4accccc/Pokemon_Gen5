@@ -498,6 +498,7 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
   const BOOL isDouble = COMM_TVT_IsDoubleMode( work );
   const u8 idx = COMM_TVT_GetSelfIdx( work );
 
+  ICHI_Printf("カメラ用コールバック関数 始め\n");
   //サスペンドは完全停止、ポーズは更新扱い
 
   if( COMM_TVT_GetSusspend(work) == TRUE )
@@ -513,8 +514,8 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
 
   if( camWork->isUpdateBit & (1<<idx) )
   {
-    //CTVT_TPrintf("BufferIsBusy![%d][%d]\n",camWork->isUpdateBit,1<<idx);
-    //CTVT_TPrintf("!");
+    CTVT_TPrintf("BufferIsBusy![%d][%d]\n",camWork->isUpdateBit,1<<idx);
+    CTVT_TPrintf("!");
     return;
   }
   
@@ -593,6 +594,8 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
       camWork->isUpdateBit |= 1<<idx;
     }
   }
+
+  ICHI_Printf("カメラ用コールバック関数 終わり\n");
 }
 
 //--------------------------------------------------------------
@@ -968,4 +971,47 @@ CAMERA_SYSTEM_WORK* CTVT_CAMERA_GetCamSys( COMM_TVT_WORK *work , CTVT_CAMERA_WOR
 {
   return camWork->camSys;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲームから会話に戻る時に必要なカメラ設定
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*camWork 
+ */
+//-----------------------------------------------------------------------------
+void CTVT_CAMERA_Init_RetrunGame( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  u8 i;
+
+  // カメラ キャプチャコールバックを元に戻す
+  if( COMM_TVT_CanUseCamera() == TRUE )
+  {
+    CAMERA_SYS_SetCaptureCallBack( camWork->camSys , CTVT_CAMERA_CapCallBack, work );
+    CAMERA_SYS_StartCapture( camWork->camSys );
+  }
+  
+  
+  camWork->isUpdateBit = 0;
+  camWork->waitAllConut = 0;
+  camWork->isWaitAllRefresh = FALSE;
+  camWork->allClearCnt = 192;
+  camWork->isRefreshClear = FALSE;
+  camWork->isRefreshClearName = FALSE;
+  camWork->isDispDouble = FALSE;
+  camWork->isWaitWindow = FALSE;
+  camWork->isPlayStartSe = FALSE;
+  camWork->isPlayStopSe = FALSE;
+  
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[i] , 0 , 0 , 0 , 0 );
+    CTVT_CAMERA_SetMemberState_Target( &camWork->memWork[i] , 0 , 0 , 0 , 0 );
+    camWork->memWork[i].isUpdate = FALSE;
+    camWork->memWork[i].isNew = TRUE;
+    camWork->memWork[i].isFirst = TRUE;
+  }
+}
+
 
