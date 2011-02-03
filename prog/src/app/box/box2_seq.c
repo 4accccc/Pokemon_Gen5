@@ -726,6 +726,7 @@ static int MainSeq_Init( BOX2_SYS_WORK * syswk )
   // アプリヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BOX_APP, 0x80000 );
   syswk->app = GFL_HEAP_AllocClearMemory( HEAPID_BOX_APP, sizeof(BOX2_APP_WORK) );
+  syswk->search_data = GFL_HEAP_AllocClearMemory( HEAPID_BOX_APP, sizeof(BOX_SEARCH_DATA) );
 
   syswk->app->pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, HEAPID_BOX_APP );
 
@@ -809,9 +810,11 @@ static int MainSeq_Release( BOX2_SYS_WORK * syswk )
 
   GFL_ARC_CloseDataHandle( syswk->app->pokeicon_ah );
 
+  GFL_HEAP_FreeMemory( syswk->search_data );
   GFL_HEAP_FreeMemory( syswk->app );
   GFL_HEAP_DeleteHeap( HEAPID_BOX_APP );
   syswk->app = NULL;
+  syswk->search_data = NULL;
 
   // ブレンド初期化
   G2_BlendNone();

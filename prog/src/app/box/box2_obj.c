@@ -35,7 +35,7 @@
 #define PALNUM_TRAYICON   ( 0 )                                   // パレット番号：トレイアイコン
 #define PALSIZ_TRAYICON   ( 3 )                                   // パレット数：トレイアイコン
 #define PALNUM_POKEICON   ( PALNUM_TRAYICON + PALSIZ_TRAYICON )   // パレット番号：ポケモンアイコン
-#define PALSIZ_POKEICON   ( POKEICON_PAL_MAX )                    // パレット数：ポケモンアイコン
+#define PALSIZ_POKEICON   ( POKEICON_GRAY_PAL_MAX )               // パレット数：ポケモンアイコン(グレースケールパレット付き)
 #define PALNUM_BOXOBJ     ( PALNUM_POKEICON + PALSIZ_POKEICON )   // パレット番号：その他のＯＢＪ
 #define PALSIZ_BOXOBJ     ( 2 )                                   // パレット数：その他のＯＢＪ
 #define PALNUM_TOUCH_BAR  ( PALNUM_BOXOBJ + PALSIZ_BOXOBJ )       // パレット番号：タッチバー
@@ -153,6 +153,7 @@ static void TouchBarGraResLoad( BOX2_APP_WORK * appwk );
 
 static void PokeIconResLoad( BOX2_APP_WORK * appwk );
 static void PokeIconObjAdd( BOX2_APP_WORK * appwk );
+static u8 PokeIconPalOfsGet( BOX2_SYS_WORK * syswk, const POKEMON_PASO_PARAM* ppp );
 
 static void PokeGraDummyResLoad( BOX2_APP_WORK * appwk );
 
@@ -927,7 +928,7 @@ static void BoxGraResLoad( BOX2_APP_WORK * appwk )
                                               NARC_box_gra_box_itemicon_NCER,
                                               NARC_box_gra_box_itemicon_NANR,
                                               HEAPID_BOX_APP );
-
+  
   GFL_ARC_CloseDataHandle( ah );
 }
 
@@ -981,9 +982,9 @@ static void PokeIconResLoad( BOX2_APP_WORK * appwk )
 
   // パレット
   appwk->palRes[BOX2MAIN_PALRES_POKEICON] = GFL_CLGRP_PLTT_RegisterComp(
-                                              ah, POKEICON_GetPalArcIndex(),
+                                              ah, POKEICON_GetPalArcIndexContainGray(),
                                               CLSYS_DRAW_MAIN, PALNUM_POKEICON*0x20, HEAPID_BOX_APP );
-
+    
   // セル・アニメ
   appwk->celRes[BOX2MAIN_CELRES_POKEICON] = GFL_CLGRP_CELLANIM_Register(
                                               ah,
@@ -1078,10 +1079,82 @@ void BOX2OBJ_PokeIconBufLoad( BOX2_SYS_WORK * syswk, u32 tray )
     GFL_STD_MemCopy32( chr->pRawData, syswk->app->pokeicon_cgx[i], BOX2OBJ_POKEICON_CGX_SIZE );
     GFL_HEAP_FreeMemory( buf );
 
-    syswk->app->pokeicon_pal[i] = POKEICON_GetPalNumGetByPPP( ppp );
+    syswk->app->pokeicon_pal[i] = PokeIconPalOfsGet( syswk, ppp );
 
     syswk->app->pokeicon_exist[i] = TRUE;
   }
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンが絞込み条件に一致しているか？
+ *
+ * @param   sp   ボックス絞込みデータポインタ
+ * @param   ppp     POKEMON_PASO_PARAM 
+ *
+ * @retval  TRUE   一致
+ * @retval  FALSE  不一致
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PARAM* ppp )
+{
+  if( !sp->search_on ){
+    return TRUE; //サーチOffなので無条件スルー
+  }
+  //絞込み条件に一致しているか？
+
+  //ポケモンNo(1オリジン)
+  if( sp->pokemon_id != 0 ){
+    if( PPP_Get(ppp,ID_PARA_monsno,NULL) != sp->pokemon_id ){
+      return FALSE;
+    }
+  }
+  //道具(1オリジン)
+  if( sp->item != ITEM_DUMMY_DATA ){
+    if( PPP_Get(ppp,ID_PARA_item,NULL) != sp->item ){
+      return FALSE;
+    }
+  }
+  //性格(0オリジン)
+  if( sp->seikaku != 0 ){
+    if( PPP_Get(ppp,ID_PARA_seikaku,NULL) != sp->seikaku-1 ){
+      return FALSE;
+    }
+  }
+  //特性(0オリジン)
+  if( sp->tokusei != 0 ){
+    if( PPP_Get(ppp,ID_PARA_speabino,NULL) != sp->tokusei ){
+      return FALSE;
+    }
+  }
+  //性別(1オリジン)
+  if( sp->sex != 0 ){
+    if( PPP_Get(ppp,ID_PARA_sex,NULL) != sp->sex-1 ){
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコンのキャラデータを変更
+ *
+ * @param   appwk   ボックス画面アプリワーク
+ * @param   buf     キャラデータバッファ
+ * @param   id      OBJ ID
+ * @param   pal     パレット番号
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static u8 PokeIconPalOfsGet( BOX2_SYS_WORK * syswk, const POKEMON_PASO_PARAM* ppp )
+{
+  if( CheckPokeSearchCondition( syswk->search_data, ppp )){
+    return POKEICON_GetPalNumGetByPPP( ppp );
+  }
+  return POKEICON_GRAY_PAL_IDX;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1123,7 +1196,7 @@ static void PokeIconChange( BOX2_SYS_WORK * syswk, const POKEMON_PASO_PARAM * pp
 
   buf = PokeIconCgxLoad( syswk->app, ppp, &chr );
 
-  PokeIconChangeCore( syswk->app, chr->pRawData, id, POKEICON_GetPalNumGetByPPP(ppp) );
+  PokeIconChangeCore( syswk->app, chr->pRawData, id, PokeIconPalOfsGet(syswk, ppp) );
 
   GFL_HEAP_FreeMemory( buf );
 }
