@@ -565,6 +565,8 @@ static void gatemv_IcaAnmPosSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
         OS_Printf("scale = %f,%f,%f\n", FX_FX32_TO_F32(scale.x), FX_FX32_TO_F32(scale.y), FX_FX32_TO_F32(scale.z));
         if( s > 0 ){
           FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, FALSE );
+        }else{
+          FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, TRUE );
         }
         status->scale = scale; 
       }
