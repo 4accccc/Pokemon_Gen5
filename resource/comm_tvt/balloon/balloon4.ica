@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-02-02T17:45:34" source="livecaster_test_001_test.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-02-04T18:20:34" source="livecaster_test_004.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,11 +11,11 @@
 <body>
 
 <node_anm_info
-	frame_size="31"
+	frame_size="61"
 	scaling_rule="standard"
 	magnify="1.000000"
 	tool_start_frame="0"
-	tool_end_frame="30"
+	tool_end_frame="60"
 	interpolation="frame"
 	compress_node="merge" node_size="5 1"
 	frame_step_mode="2"
@@ -28,9 +28,11 @@
 	1.000000
 </node_scale_data>
 
-<node_rotate_data size="17">
-	0.000000 -93.000000 -92.708496 -91.947510 -90.887939 -89.700439 -88.555664 -87.624023 -87.076416 -87.076416
-	-87.624023 -88.555664 -89.700439 -90.887939 -91.947510 -92.708496 -93.000000
+<node_rotate_data size="32">
+	0.000000 -93.000000 -92.923584 -92.708252 -92.375732 -91.947266 -91.444092 -90.887451 -90.298828 -89.699707
+	-89.111084 -88.554688 -88.051514 -87.623291 -87.291016 -87.076172 -87.000000 -87.076904 -87.292236 -87.624756
+	-88.053223 -88.556396 -89.112793 -89.701172 -90.300293 -90.888672 -91.444824 -91.947754 -92.376221 -92.708496
+	-92.923584 -93.000000
 </node_rotate_data>
 
 <node_translate_data size="1">
@@ -44,7 +46,7 @@
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
-		<rotate_z frame_step="2" data_size="16" data_head="1"/>
+		<rotate_z frame_step="2" data_size="31" data_head="1"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="0"/>
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
