@@ -11,6 +11,7 @@ DATA_LIST = \
      coccon.nsbca \
      coccon.nsbma \
      coccon.nsbta \
-     sphere.nsbmd
-
+     sphere.nsbmd \
+     vacuum.nsbmd \
+     vacuum.nsbta
 

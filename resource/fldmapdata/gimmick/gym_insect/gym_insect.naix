@@ -23,7 +23,9 @@ enum {
 	NARC_gym_insect_coccon_nsbca = 9,
 	NARC_gym_insect_coccon_nsbma = 10,
 	NARC_gym_insect_coccon_nsbta = 11,
-	NARC_gym_insect_sphere_nsbmd = 12
+	NARC_gym_insect_sphere_nsbmd = 12,
+	NARC_gym_insect_vacuum_nsbmd = 13,
+	NARC_gym_insect_vacuum_nsbta = 14
 };
 
 /* NARC_GYM_INSECT_NAIX_ */
