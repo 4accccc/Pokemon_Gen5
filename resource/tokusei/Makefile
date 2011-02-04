@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	nishino morimoto
+USERS	=	nishino morimoto tamada
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -19,6 +19,8 @@ TOKUSEI_GMM	 = tokusei.gmm
 TOKUSEIINFO_GMM	 = tokuseiinfo.gmm
 TOKUSEI_LIST = speabi.txt
 
+TOKUSEI_AIUEO_HEAD_TABLE = tokusei_aiueo_header_table.cdat
+TOKUSEI_AIUEO_TABLE 		 = tokusei_aiueo_table.cdat
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
@@ -48,6 +50,7 @@ do-build: tokusyu_def.h
 
 tokusyu_def.h: tokusei.csv
 	ruby $(RUBYDIR)tokusei_conv.rb tokusei.csv ../../resource/message/template.gmm
+	ruby speabi_sort.rb  $(TOKUSEI_LIST)
 endif
 
 #------------------------------------------------------------------------------
@@ -77,5 +80,6 @@ LDIRT_CLEAN = $(TOKUSEI_HASH_DIR)$(TOKUSEI_HASH) $(TOKUSYU_DEF_DIR)$(TOKUSYU_DEF
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += $(TOKUSEI_HASH) $(TOKUSYU_DEF) $(TOKUSEI_GMM) $(TOKUSEIINFO_GMM) $(TOKUSEI_LIST)
+LDIRT_CLEAN += $(TOKUSEI_AIUEO_HEAD_TABLE) $(TOKUSEI_AIUEO_TABLE)
 endif
 
