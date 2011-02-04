@@ -154,6 +154,9 @@ typedef enum
   ANMSEQ_NEWEFFECT = 4,
 }CELL_ANM_SEQ;
 
+// ==================
+// スクロール状態
+// ==================
 typedef enum
 {
   SCROLL_RESULT_ACTIVE, // スクロール中
@@ -161,6 +164,15 @@ typedef enum
   SCROLL_RESULT_MAX,
 }SCROLL_RESULT;
 
+// ==================================
+// プリントユーティリティー準備
+// ==================================
+typedef enum
+{
+  PRINT_UTIL_NAME_WIN,
+  PRINT_UTIL_INFO_WIN,
+  PRINT_UTIL_MAX,
+}PRINT_UTIL_WIN;
 
 //=============================================================================
 //

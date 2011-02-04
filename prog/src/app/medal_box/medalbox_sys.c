@@ -479,8 +479,6 @@ static const struct
 		GFL_BG_MODE_TEXT
 	},
 };
-//フレーム取得用マクロ
-#define GRAPHIC_BG_GetFrame( x )  (sc_bgsetup[ x ].frame)
 
 // ========================
 // メダル座標
@@ -657,8 +655,10 @@ typedef struct {
   APP_KEYCURSOR_WORK        *p_cursor;                // カーソル
   SCROLLEND_CURSOR_POS      scrollend_cursor_pos;     // スクロール終了時点でのカーソル位置
 
-  BOOL   is_polis_active; // 光沢がスクロール中かどうか
-  s32    polis_frame;     // 光沢用フレーム
+  BOOL        is_print_util_wati;                     // プリントユーティリティー終了待ち
+  BOOL        is_polis_active;                        // 光沢がスクロール中かどうか
+  s32         polis_frame;                            // 光沢用フレーム
+  PRINT_UTIL  print_util[PRINT_UTIL_MAX];           // 文字列描画フレーム用ユーティリティー
 #ifdef PM_DEBUG
   // デバッグ
   u8              debgu_seq;
@@ -772,6 +772,7 @@ static void MDLSYS_SetNextSeq( MEDALBOXSYS_WORK *p_wk ,MEDALBOXSYS_SEQ next_seq 
 static void MDLSYS_PrintInit( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_PrintMain( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_PrintDelete( MEDALBOXSYS_WORK *p_wk );
+static u32 MDLSYS_BG_GetFrame( int frame_id );
 
 //=============================================================================
 // 初期化シーケンス
@@ -921,6 +922,9 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcInit( GFL_PROC * p_proc, int * seq , void
   // グラフィック初期化
   MDLSYS_GraphicInit( p_wk );
 
+  // プリントシステムの初期化
+  MDLSYS_PrintInit( p_wk );
+
   // UIの初期化
   MDLSYS_UI_Init( p_wk );
   
@@ -946,9 +950,6 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcInit( GFL_PROC * p_proc, int * seq , void
     // アーカイブハンドルを閉じる
     GFL_ARC_CloseDataHandle( p_handle );
   }
-
-  // プリントシステムの初期化
-  MDLSYS_PrintInit( p_wk );
 
   //通信アイコン
   GFL_NET_ReloadIconTopOrBottom( TRUE , p_wk->heapID );
@@ -994,52 +995,52 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
 
   switch( p_wk->now_seq )
   {
-  // 起動演出シーケンス
+    // 起動演出シーケンス
   case SEQ_MDLBOX_INIT:
     proc_ret = MDLSYS_INIT_Main( p_wk );
     break;
 
-  // メインシーケンス
+    // メインシーケンス
   case SEQ_MDLBOX_MAIN:
     proc_ret = MDLSYS_MAIN_Main( p_wk );
     break;
 
-  // ページスクロール
+    // ページスクロール
   case SEQ_MDLBOX_SCROLLPAGE:
     proc_ret = MDLSYS_SCROLLPAGE_Main( p_wk );
     break;
 
-  // スクロールボタン
+    // スクロールボタン
   case SEQ_MDLBOX_SCROLL_BUTTON:
     proc_ret = MDLSYS_SCROLLBUTTON_Main( p_wk );
     break;
 
-  // モードチェンジシーケンス
+    // モードチェンジシーケンス
   case SEQ_MDLBOX_MODE_CHANGE:
     proc_ret = MDLSYS_MODECHANGE_Main( p_wk );
     break;
 
-  // 戻るボタン
+    // 戻るボタン
   case SEQ_MDLBOX_RETURN:
     proc_ret = MDLSYS_RETURNBUTTON_Main( p_wk );
     break;
 
-  // 終了シーケンス
+    // 終了シーケンス
   case SEQ_MDLBOX_EXIT:
     proc_ret = MDLSYS_EXITBUTTON_Main( p_wk );
     break;
 
-  // メニュー用シーケンス
+    // メニュー用シーケンス
   case SEQ_MDLBOX_MENU:
     proc_ret = MDLSYS_MENU_Main( p_wk );
     break;
 
-  // ソートシーケンス
+    // ソートシーケンス
   case SEQ_MDLBOX_SORT:
     proc_ret = MDLSYS_SORT_Main( p_wk );
     break;
 
-  // 一押しメダル登録シーケンス
+    // 一押しメダル登録シーケンス
   case SEQ_PUSUMEDALBUTTON:
     proc_ret = MDLSYS_PUSHMEDALBUTTON_Main( p_wk );
     break;
@@ -1052,15 +1053,39 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
     break;
   }
 
-  // 光沢エフェクトスクロールメイン
-  MDLSYS_PolishEffectScrollMain( p_wk );
 
-  // プリントメイン
-  MDLSYS_PrintMain( p_wk );
+    // 光沢エフェクトスクロールメイン
+    MDLSYS_PolishEffectScrollMain( p_wk );
+
+    // プリントメイン
+    MDLSYS_PrintMain( p_wk );
+
+  // ユーティリティーの更新
+  {
+    int i;
+    BOOL trans_end;
+
+    // 描画待ちフラグを初期化
+    p_wk->is_print_util_wati = FALSE;
+
+    // プリントキューを更新
+    PRINTSYS_QUE_Main( p_wk->p_print_que );
+
+    // プリントユーティリティーを更新
+    for( i = 0; i < PRINT_UTIL_MAX ; i++ )
+    {
+      trans_end = PRINT_UTIL_Trans( &p_wk->print_util[i], p_wk->p_print_que );
+
+      if( trans_end == FALSE )
+      {
+        p_wk->is_print_util_wati = TRUE;
+      }
+    }
+  }
 
   // セルの更新
-	GFL_CLACT_SYS_Main();
-  
+  GFL_CLACT_SYS_Main();
+
   return proc_ret;
 }
 
@@ -1157,6 +1182,9 @@ static void MDLSYS_MakeCommonData( MEDALBOXSYS_WORK *p_wk )
 
   // スクロール後のカーソル位置を初期化
   p_wk->scrollend_cursor_pos = SCROLLEND_CURSOR_STAY;
+
+  // 文字描画待ちフラグ初期化
+  p_wk->is_print_util_wati  = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1305,26 +1333,26 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 
     // キャラクターデータ（下画面共通)
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_medalbox_gra_medal_bgd_NCGR,
-        GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
+        MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
 
     // ページユニット
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd1_NSCR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 0, 0, FALSE, heapID );
+				MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 0, 0, FALSE, heapID );
 
     // メダルユニットはページ1枚左にはみ出している
-    GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) ,GFL_BG_SCROLL_X_SET , PAGE_WIDTH );
+    GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) ,GFL_BG_SCROLL_X_SET , PAGE_WIDTH );
 
     // 文字盤
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd2_NSCR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
+				MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
 
     // キャラクターデータ（光沢演出用)
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_medalbox_gra_medal_bgd_NCGR,
-        GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, heapID );
+        MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, heapID );
 
     // 光沢
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd3_NSCR,
-        GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, heapID );
+        MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, heapID );
  
     // ====================================
 		// 上画面(サブ)
@@ -1334,19 +1362,19 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 
     // キャラクターデータ（上画面共通)
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_medalbox_gra_medal_bgu_NCGR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S), 0, 0, FALSE, heapID );
+				MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S), 0, 0, FALSE, heapID );
 
     // モニター
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgu2_NSCR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S), 0, 0, FALSE, heapID );
+				MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S), 0, 0, FALSE, heapID );
 
     // モニター演出
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgu3_NSCR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S), 0, 0, FALSE, heapID );
+				MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S), 0, 0, FALSE, heapID );
 
     // 背景
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgu1_NSCR,
-				GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_BACK_S), 0, 0, FALSE, heapID );
+				MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_BACK_S), 0, 0, FALSE, heapID );
 
     // ボックスランクで色を変える
     {
@@ -1366,11 +1394,9 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 #if PM_VERSION == VERSION_W2
       {
         color_offset = box_rank;
-        OS_Printf("文字盤ホワイトver\n");
       }
 #else
       {
-        OS_Printf("文字盤ブラックver\n");
         color_offset = box_rank + 1;
       }
 #endif
@@ -1398,13 +1424,13 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 
   {
     // エフェクト面としてのプライオリティーを設定
-    GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
+    GFL_BG_SetPriority( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
   }
 
   // 位置設定
   {
-    GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
-    GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+    GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+    GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
   }
 }
 
@@ -1424,11 +1450,11 @@ static void MDLSYS_EFFETC_ReLoad( MEDALBOXSYS_WORK *p_wk )
 
   // キャラクターデータ（光沢演出用)
   GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_medalbox_gra_medal_bgd_NCGR,
-      GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, p_wk->heapID );
+      MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, p_wk->heapID );
 
   // 光沢
   GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalbox_gra_medal_bgd3_NSCR,
-      GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, p_wk->heapID );
+      MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 0, 0, FALSE, p_wk->heapID );
 
   GFL_ARC_CloseDataHandle( p_handle );
 
@@ -1447,7 +1473,7 @@ static void MDLSYS_BGDelete( MEDALBOXSYS_WORK *p_wk )
 {	
 	//破棄
 	{	
-		//GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 1,0 );
+		//GFL_BG_FillCharacterRelease( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), 1,0 );
 	}
 	
 	//BG面破棄
@@ -1560,12 +1586,10 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
       if( box_rank == MEDALBOX_RANK_BW )
 #if PM_VERSION == VERSION_W2
       {
-        OS_Printf("フタホワイトver\n");
         color_offset = box_rank;
       }
 #else
       {
-        OS_Printf("フタブラックver\n");
         color_offset = box_rank+1;
       }
 #endif
@@ -1918,7 +1942,7 @@ static void MDLSYS_BMPWinInit( MEDALBOXSYS_WORK *p_wk )
   GFL_BMPWIN_Init( p_wk->heapID );
   
   // 名前用BMPWIN作成
-  p_wk->p_name_win = GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,
+  p_wk->p_name_win = GFL_BMPWIN_Create( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,
       0   , 0   ,
       32  , 24  ,
       MEDAL_NAME_BMPWIN_PAL_NUM , GFL_BMP_CHRAREA_GET_B );
@@ -1927,15 +1951,19 @@ static void MDLSYS_BMPWinInit( MEDALBOXSYS_WORK *p_wk )
   GFL_BMPWIN_MakeScreen( p_wk->p_name_win );
 
   // 説明文表示用BMPWIN
-  p_wk->p_info_win = GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,
+  p_wk->p_info_win = GFL_BMPWIN_Create( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,
       0   , 0   ,
       32  , 24  ,
       MEDAL_INFO_BMPWIN_PAL_NUM , GFL_BMP_CHRAREA_GET_B );
   GFL_BMPWIN_MakeScreen( p_wk->p_info_win );
 
   // 転送リクエスト
-  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M));
-  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
+  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M));
+  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
+  
+  // プリントユーティリティーの準備
+  PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_NAME_WIN ] , p_wk->p_name_win  );
+  PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_INFO_WIN ] , p_wk->p_info_win  );
  
 }
 
@@ -1971,7 +1999,8 @@ static void MDLSYS_BMPWinDelete( MEDALBOXSYS_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void MDLSYS_Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs )
 {
-	GFL_CLACT_SYS_VBlankFunc();
+  // セルの更新
+  GFL_CLACT_SYS_VBlankFunc();
 }
 
 //----------------------------------------------------------------------------
@@ -2099,11 +2128,11 @@ static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 uni
           if( number == 0)
           {
             // 0は10番目にに配置されている
-            GFL_BG_FillScreen( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 10 , x , y , 1, 1, pal_number );
+            GFL_BG_FillScreen( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 10 , x , y , 1, 1, pal_number );
           }
           else
           {
-            GFL_BG_FillScreen( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), number , x , y , 1, 1, pal_number );
+            GFL_BG_FillScreen( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), number , x , y , 1, 1, pal_number );
           }
 
           // 桁数を下げる
@@ -2142,7 +2171,7 @@ static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 uni
           s32 x = sc_unit_number_pos[i].x + (PAGE_WIDTH/8)*unit_pos - (2-n); // ページ幅をキャラ単位に直して、桁ごとに移動
           s32 y = sc_unit_number_pos[i].y;
           
-          GFL_BG_FillScreen( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 10 , x , y , 1, 1, PAGEUNIT_PAL );
+          GFL_BG_FillScreen( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M), 10 , x , y , 1, 1, PAGEUNIT_PAL );
         }
       }
     }
@@ -2154,7 +2183,7 @@ static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 uni
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_ICHIOSHI], FALSE );
   }
 
-  GFL_BG_LoadScreenV_Req( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) );
+  GFL_BG_LoadScreenV_Req( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) );
 }
 
 //----------------------------------------------------------------------------
@@ -2229,16 +2258,16 @@ static void MDLSYS_PolishEffectScrollMain( MEDALBOXSYS_WORK *p_wk )
       // エフェクト面をスクロールさせる
       if( p_wk->is_polis_active == TRUE )
       {
-        if( GFL_BG_GetScrollX(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M)) <= -POLISH_EFFECT_SCROLL_SIZE  )
+        if( GFL_BG_GetScrollX(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M)) <= -POLISH_EFFECT_SCROLL_SIZE  )
         {
           p_wk->polis_frame = POLIS_RESTART_FRAME + GFL_STD_MtRand( POLIS_RESTART_FRAME_RAND );
           p_wk->is_polis_active = FALSE;
-          GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
+          GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
         }
         else
         {
           // スクロール
-          GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_DEC , POLISH_EFFECT_SCROLL_SPEED );
+          GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_DEC , POLISH_EFFECT_SCROLL_SPEED );
         }
       }
       else
@@ -2359,6 +2388,20 @@ static void MDLSYS_PrintDelete( MEDALBOXSYS_WORK *p_wk )
   GFL_TCBL_Exit( p_wk->p_tcb_sys );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGデータからフレームIDを取得する
+ *
+ *	@param	frame_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 MDLSYS_BG_GetFrame( int frame_id )
+{
+  return sc_bgsetup[ frame_id ].frame;
+}
+
 
 // ============================================================
 // 
@@ -2390,9 +2433,9 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk )
         pos.y = UP_MEDAL_POS_Y - FX_Whole(p_wk->monitor_offset);
 
         // 上画面のスクロール
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
 
         GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_UPMEDAL] , &pos , CLSYS_DEFREND_SUB);
       }
@@ -2446,9 +2489,9 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk )
       GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP] , &cap_pos , CLSYS_DEFREND_MAIN );
 
       // 上画面のスクロール
-      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
-      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
-      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+      GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+      GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
+      GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
 
       {
         GFL_CLACTPOS pos;
@@ -2497,7 +2540,10 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk )
 static GFL_PROC_RESULT MDLSYS_MAIN_Main( MEDALBOXSYS_WORK *p_wk )
 {
   // メインキー入力処理
-  MainKeyStateCheck( p_wk );
+  if( p_wk->is_print_util_wati == FALSE )
+  {
+    MainKeyStateCheck( p_wk );
+  }
 
   // 新品エフェクト生成メイン
   NewEffectMain( p_wk );
@@ -3036,7 +3082,7 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
     pos.x -= offset;
 
     // メダルユニットはページ1枚左にはみ出している
-    GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) ,GFL_BG_SCROLL_X_SET , offset + PAGE_WIDTH );
+    GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_PAGEUNIT_M) ,GFL_BG_SCROLL_X_SET , offset + PAGE_WIDTH );
 
     // メダルOBJの移動
     GFL_CLACT_WK_SetPos( p_wk->p_clwk[i] , &pos , CLSYS_DEFREND_MAIN );
@@ -3151,10 +3197,15 @@ static void DrawMedalName( MEDALBOXSYS_WORK *p_wk , MedalID medal_id , u8 DrawPo
   str = GFL_MSG_CreateString( p_wk->p_mdlname_msg , medal_id );
 
   // 文字列を直接描画
-  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_name_win) ,
-      sc_medalname_win_pos[DrawPos].x , sc_medalname_win_pos[DrawPos].y ,
-      str , p_wk->p_font ,
-      font_colro );
+//  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_name_win) ,
+//      sc_medalname_win_pos[DrawPos].x , sc_medalname_win_pos[DrawPos].y ,
+//      str , p_wk->p_font ,
+//      font_colro );
+
+  // 文字列を描画
+  PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_NAME_WIN] ,
+      p_wk->p_print_que , sc_medalname_win_pos[DrawPos].x , sc_medalname_win_pos[DrawPos].y ,
+      str ,p_wk->p_font , font_colro);
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -3176,7 +3227,7 @@ static void TransMedalName( MEDALBOXSYS_WORK *p_wk )
   GFL_BMPWIN_TransVramCharacter( p_wk->p_name_win );
   
   // 転送リクエスト
-  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M));
+  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M));
 }
 
 //----------------------------------------------------------------------------
@@ -3242,11 +3293,15 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
     if( (info_type == INFOTYPE_TARGET) && (box_rank != MEDALBOX_RANK_BW))
     {
       str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_01 );
-      // 文字列を直接描画
-      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y,
-          str , p_wk->p_font ,
-          font_colro );
+//      // 文字列を直接描画
+//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y,
+//          str , p_wk->p_font ,
+//          font_colro );
+      // 文字列を描画
+      PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
+          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y ,
+          str ,p_wk->p_font , font_colro);
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -3262,11 +3317,15 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       {
         str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_03 );
       }
-      // 文字列を直接描画
-      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y,
-          str , p_wk->p_font ,
-          font_colro );
+//      // 文字列を直接描画
+//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y,
+//          str , p_wk->p_font ,
+//          font_colro );
+      // 文字列を描画
+      PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
+          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y ,
+          str ,p_wk->p_font , font_colro);
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -3307,11 +3366,15 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
             WORDSET_ExpandStr( p_word_set, str_num , str  );
           }
 
-          // 文字列を直接描画
-          PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-              MEDAL_INFO_NUMERATOR_DRAW_X, MEDAL_INFO_NUMERATOR_DRAW_Y,
-              str_num , p_wk->p_font ,
-              font_colro );
+//          // 文字列を直接描画
+//          PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//              MEDAL_INFO_NUMERATOR_DRAW_X, MEDAL_INFO_NUMERATOR_DRAW_Y,
+//              str_num , p_wk->p_font ,
+//              font_colro );
+          // 文字列を描画
+          PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
+              MEDAL_INFO_NUMERATOR_DRAW_X , MEDAL_INFO_NUMERATOR_DRAW_Y ,
+              str_num ,p_wk->p_font , font_colro);
 
           // バッファーの消去 
           GFL_STR_DeleteBuffer( str );
@@ -3327,11 +3390,15 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
         WORDSET_RegisterNumber( p_word_set , 0 , rank_target_medal , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
         WORDSET_ExpandStr( p_word_set, str_num , str  );
 
-        // 文字列を直接描画
-        PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-            MEDAL_INFO_NUMERATOR_DRAW_X, MEDAL_INFO_NUMERATOR_DRAW_Y,
-            str_num , p_wk->p_font ,
-            font_colro );
+//        // 文字列を直接描画
+//        PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//            MEDAL_INFO_NUMERATOR_DRAW_X, MEDAL_INFO_NUMERATOR_DRAW_Y,
+//            str_num , p_wk->p_font ,
+//            font_colro );
+        // 文字列を描画
+        PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
+            MEDAL_INFO_NUMERATOR_DRAW_X , MEDAL_INFO_NUMERATOR_DRAW_Y ,
+              str_num ,p_wk->p_font , font_colro);
 
         // バッファーの消去 
         GFL_STR_DeleteBuffer( str );
@@ -3358,11 +3425,15 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       // 幅の計算
       width = PRINTSYS_GetStrWidth( str , p_wk->p_font , 0);
 
-      // 文字列を直接描画
-      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-          MEDAL_INFO_NAME_DRAW_X - width, MEDAL_INFO_NAME_DRAW_Y,
-          str , p_wk->p_font ,
-          font_colro );
+//      // 文字列を直接描画
+//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//          MEDAL_INFO_NAME_DRAW_X - width, MEDAL_INFO_NAME_DRAW_Y,
+//          str , p_wk->p_font ,
+//          font_colro );
+        // 文字列を描画
+        PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
+            MEDAL_INFO_NAME_DRAW_X - width, MEDAL_INFO_NAME_DRAW_Y,
+              str ,p_wk->p_font , font_colro);
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -3393,11 +3464,15 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
         str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_17 );
       }
 
-      // 文字列を直接描画
-      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//      // 文字列を直接描画
+//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//          MEDAL_INFO_GETTYPE_DRAW_X , MEDAL_INFO_GETTYPE_DRAW_Y,
+//          str , p_wk->p_font ,
+//          font_colro );
+      // 文字列を描画
+      PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_GETTYPE_DRAW_X , MEDAL_INFO_GETTYPE_DRAW_Y,
-          str , p_wk->p_font ,
-          font_colro );
+          str ,p_wk->p_font , font_colro);
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -3408,10 +3483,14 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       WORDSET_ExpandStr( p_word_set, str_ymd , str  );
       
       // 文字列を直接描画
-      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//          MEDAL_INFO_DAYTE_DRAW_X , MEDAL_INFO_DAYTE_DRAW_Y,
+//          str_ymd , p_wk->p_font ,
+//          font_colro );
+      // 文字列を描画
+      PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_DAYTE_DRAW_X , MEDAL_INFO_DAYTE_DRAW_Y,
-          str_ymd , p_wk->p_font ,
-          font_colro );
+          str_ymd ,p_wk->p_font , font_colro);
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -3435,22 +3514,26 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
         str = GFL_MSG_CreateString( p_wk->p_mdlhelp_msg , p_medal_st->medal_id );
       }
 
-      // 文字列を直接描画
-      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//      // 文字列を直接描画
+//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
+//          MEDAL_INFO_INFO_DRAW_X , MEDAL_INFO_INFO_DRAW_Y,
+//          str , p_wk->p_font ,
+//          font_colro );
+     // 文字列を描画
+      PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_INFO_DRAW_X , MEDAL_INFO_INFO_DRAW_Y,
-          str , p_wk->p_font ,
-          font_colro );
+          str ,p_wk->p_font , font_colro);
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
     }
   }
 
-  // 転送
-  GFL_BMPWIN_TransVramCharacter( p_wk->p_info_win );
-
-  // 転送リクエスト
-  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
+//  // 転送
+//  GFL_BMPWIN_TransVramCharacter( p_wk->p_info_win );
+//
+//  // 転送リクエスト
+//  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
 
   // ワードセットの開放
   WORDSET_Delete( p_word_set );
@@ -3485,7 +3568,7 @@ static void ClearMedalName( MEDALBOXSYS_WORK *p_wk )
   GFL_BMPWIN_TransVramCharacter( p_wk->p_name_win );
 
   // 転送リクエスト
-  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M));
+  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M));
 }
 
 //----------------------------------------------------------------------------
@@ -3949,6 +4032,7 @@ static void SetCursorState( MEDALBOXSYS_WORK *p_wk , CURSOR_STATE state , u8 med
   {
   case CURSOR_STATE_NOT_SELECT:
     {
+      DrawMedalInfo( p_wk , NULL , INFOTYPE_TARGET );
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR] , FALSE );
     }
     break;
@@ -4426,7 +4510,7 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
       SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT , MDLID_MAX );
 
       // 光沢を消す
-			GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
+			GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
       
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , APP_COMMON_BARICON_ON_PASSIVE );
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , TRUE);
@@ -4448,17 +4532,17 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
       GX_SetVisibleWnd( GX_WNDMASK_NONE );
 
       // メニュ面としてのプライオリティーを設定
-      GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M );
+      GFL_BG_SetPriority( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M );
 
       // エフェクト面の位置を元に戻しておく
-      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
+      GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
 
       G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ , -8 );
 
       // メニューを開く
-      GFL_BG_ClearFrame( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) );
+      GFL_BG_ClearFrame( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) );
       OpenSearchMenu( p_wk );
-			GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
+			GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
       
       p_wk->sub_seq++;
     }
@@ -4500,7 +4584,7 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
           GX_SetVisibleWnd( GX_WNDMASK_OW );
 
           // エフェクト面としてのプライオリティーを設定
-          GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
+          GFL_BG_SetPriority( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
         }
 
         //　シーケンスを進める
@@ -4620,14 +4704,14 @@ static void OpenSearchMenu( MEDALBOXSYS_WORK *p_wk )
 
   
   // アプリケーションタスクメニュー用リソース作成
-  p_wk->p_taskmenu_res = APP_TASKMENU_RES_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M),
+  p_wk->p_taskmenu_res = APP_TASKMENU_RES_Create( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M),
       APP_TASKMENU_USE_PALETE , p_wk->p_font, p_wk->p_print_que , p_wk->heapID );
 
   // メニューワーク
   p_wk->p_menu_wk = APP_TASKMENU_OpenMenu( &wk, p_wk->p_taskmenu_res );
 
   // メニュー用BMPWIN作成
-  p_wk->p_menu_win = GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
+  p_wk->p_menu_win = GFL_BMPWIN_Create( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
       1   , 24-5   ,
       17  , 4  ,
       SYSTEM_FONT_PAL , GFL_BMP_CHRAREA_GET_B );
@@ -4636,7 +4720,7 @@ static void OpenSearchMenu( MEDALBOXSYS_WORK *p_wk )
   GFL_BMPWIN_MakeScreen( p_wk->p_menu_win );
  
   // フレーム用グラフィックをセットする
-  BmpWinFrame_GraphicSet( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
+  BmpWinFrame_GraphicSet( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
 
   // ウィンドウ枠の表示
   BmpWinFrame_Write( p_wk->p_menu_win , WINDOW_TRANS_ON_V, 1, APP_WINFRAME_USE_PALETE );
@@ -4657,7 +4741,7 @@ static void OpenSearchMenu( MEDALBOXSYS_WORK *p_wk )
   GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
      
   // 転送リクエスト
-  GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
+  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -4741,8 +4825,8 @@ static GFL_PROC_RESULT MDLSYS_MODECHANGE_Main( MEDALBOXSYS_WORK *p_wk )
         }
 
         // 上画面のスクロール
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
 
       }
 
@@ -4835,8 +4919,8 @@ static GFL_PROC_RESULT MDLSYS_MODECHANGE_Main( MEDALBOXSYS_WORK *p_wk )
         }
 
         // 上画面のスクロール
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
       }
 
       // 次のシーケンスへ移動
@@ -4870,15 +4954,15 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
   case 0:
     {
       // 光沢を消す
-      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
+      GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
       // OBJウィンドウは無効化
       GX_SetVisibleWnd( GX_WNDMASK_NONE );
 
       // メニュ面としてのプライオリティーを設定
-      GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M );
+      GFL_BG_SetPriority( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M );
 
       // エフェクト面の位置を元に戻しておく
-      GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
+      GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
       p_wk->sub_seq++;
     }
     break;
@@ -4898,7 +4982,7 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       }
 
       // メニュー用BMPWIN作成
-      p_wk->p_menu_win = GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
+      p_wk->p_menu_win = GFL_BMPWIN_Create( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
           2   , 24-6   ,
           28  , 4  ,
           SYSTEM_FONT_PAL , GFL_BMP_CHRAREA_GET_B );
@@ -4907,7 +4991,7 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       GFL_BMPWIN_MakeScreen( p_wk->p_menu_win );
 
       // フレーム用グラフィックをセットする
-      BmpWinFrame_GraphicSet( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
+      BmpWinFrame_GraphicSet( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
 
       // ウィンドウ枠の表示
       BmpWinFrame_Write( p_wk->p_menu_win , WINDOW_TRANS_ON_V, 1, APP_WINFRAME_USE_PALETE );
@@ -4940,7 +5024,7 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
 
       // 転送リクエスト
-      GFL_BG_LoadScreenV_Req(GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
+      GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -4948,7 +5032,7 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       // ページのリフレッシュ
       PageRefresh( p_wk ,FALSE);
 
-      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
+      GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
       p_wk->sub_seq++;
     }
     break;
@@ -4965,7 +5049,7 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       // プリントストリーム終了判定
       if( p_wk->p_print_stream == NULL )
       {
-        GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
+        GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
         p_wk->sub_seq++;
       }
     }
@@ -4984,11 +5068,11 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
         GX_SetVisibleWnd( GX_WNDMASK_OW );
 
         // エフェクト面としてのプライオリティーを設定
-        GFL_BG_SetPriority( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
+        GFL_BG_SetPriority( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
       }
 
       // 表示を有効化
-      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
+      GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
 
       MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
       p_wk->sub_seq++;
@@ -5101,8 +5185,8 @@ static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk )
         }
 
         // 上画面のスクロール
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
 
       }
 
@@ -5188,8 +5272,8 @@ static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk )
         }
 
         // 上画面のスクロール
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
-        GFL_BG_SetScrollReq( GRAPHIC_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONTBORD_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
+        GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
       }
 
       // 次のシーケンスへ移動

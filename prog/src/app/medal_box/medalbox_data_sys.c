@@ -422,7 +422,7 @@ void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode )
         }
       }
       break;
-     // 新しい順
+     // 名前順
     case SORT_MODE_NAME:
       {
         // ソートメダルIDをリセット
@@ -431,33 +431,41 @@ void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode )
           p_my_medal->sort_medal_id[i] = i;
         }
 
+        // 名前順ソートデータを取得
+        for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
+        {
+          MY_MEDAL_ST *p_st = &p_my_medal->p_medal_st[i];
+          int name_index;
+
+          // 名前順データを取得する
+          for( name_index = 0 ; name_index < MDLID_MAX ; name_index++ )
+          {
+            if( MedalSortList[name_index] == p_st->medal_id )
+            {
+              p_st->name_sort_id = name_index;
+              break;
+            }
+          }
+        }
+
         for( i = 0 ; i < p_my_medal->medal_cnt ; i++ )
         {
 
           for( n = i+1 ; n < p_my_medal->medal_cnt ; n++ )
           {
-            int name_index;
+            BOOL name_i_get = FALSE;
+            BOOL name_n_get = FALSE;
             MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
             MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
-            u32 name_i = 0xfffffff;
-            u32 name_n = 0xfffffff;
+            u32 name_i;
+            u32 name_n;
 
             GF_ASSERT(p_st_i);
             GF_ASSERT(p_st_n);
             GF_ASSERT( n != p_my_medal->medal_cnt);
 
-            // 名前順データを取得する
-            for( name_index = 0 ; name_index < MDLID_MAX ; name_index++ )
-            {
-              if( MedalSortList[name_index] == p_st_i->medal_id )
-              {
-                name_i =name_index;
-              }
-              if( MedalSortList[name_index] == p_st_n->medal_id )
-              {
-                name_n =name_index;
-              }
-            }
+            name_i = p_st_i->name_sort_id;
+            name_n = p_st_n->name_sort_id;
 
             // ヒントメダルは後ろに
             if( p_st_i->medal_state == MEDAL_STATE_HINT_GET )

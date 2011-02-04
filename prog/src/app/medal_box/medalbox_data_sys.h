@@ -63,6 +63,7 @@ typedef struct {
   u8  month;
   u8  day;
   u8  graphic_type;
+  u8  name_sort_id;
   MDL_NEWSTATE new_state; // 新着状態( 0=新着でない,1=新着,2=新着書き込み)
 } MY_MEDAL_ST;
 
