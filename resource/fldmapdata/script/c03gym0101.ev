@@ -140,6 +140,7 @@ EVENT_START ev_prog_c03gym0101_gate_out_1c
   ENDIF
 
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _SE_PLAY( SEQ_SE_GYM_M03 ) //îÚÇ—èoÇ∑âπ
   _OBJ_ANIME_WAIT()
 }
 EVENT_END
@@ -147,6 +148,7 @@ EVENT_END
 EVENT_START ev_prog_c03gym0101_gate_out_3d
 {
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _SE_PLAY( SEQ_SE_GYM_M03 ) //îÚÇ—èoÇ∑âπ
   _OBJ_ANIME_WAIT()
 }
 EVENT_END
