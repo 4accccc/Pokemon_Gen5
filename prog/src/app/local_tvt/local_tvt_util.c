@@ -1040,6 +1040,7 @@ struct _LOCAL_TVT_POKELIST
   u16   anm_frame;
   u16   anm_cnt;
   BOOL  is_active;
+  BOOL  is_cant_push_toch;
   LIST_UI *p_ui;
   GFL_BMPWIN  *p_bmpwin[6];
   GFL_CLWK    *p_clwk_poke[6];
@@ -1315,6 +1316,15 @@ void LOCAL_TVT_POKELIST_Main( LOCAL_TVT_POKELIST *p_wk )
       p_wk->seq = SEQ_CANCEL_ANM;
     }
 
+    if( p_wk->is_cant_push_toch )
+    {
+      if( p_wk->anm_frame + 0x400 >= 0x10000/2 )
+      {
+        Local_Tvt_Pokelist_ClearList( p_wk, FALSE );
+        p_wk->is_cant_push_toch = FALSE;
+      }
+    }
+
     if ( p_wk->anm_frame + 0x400 >= 0x10000 )
     {
       p_wk->anm_frame = p_wk->anm_frame + 0x400 - 0x10000;
@@ -1578,8 +1588,11 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_TouchUpdate( void *p_wk_adrs )
       //卵は押せない
       PMSND_PlaySE( LOCAL_TVT_SE_ERROR );
       p_wk->cursor_pos  = ret;
+      p_wk->anm_frame = 0;
+      p_wk->is_cant_push_toch = TRUE;
+      Local_Tvt_Pokelist_ClearList( p_wk, TRUE );
       //アニメを最初からにする
-      return LIST_UI_RESULT_NONE;
+      return LIST_UI_RESULT_MOVE;
     }
     else
     {
@@ -1716,10 +1729,14 @@ static void Local_Tvt_Pokelist_Change( void *p_wk_adrs, int touch_or_key )
   if( touch_or_key == GFL_APP_END_TOUCH )
   {
     //タッチモードになった
-    Local_Tvt_Pokelist_ClearList( p_wk, FALSE );
+    if( p_wk->is_cant_push_toch == FALSE )
+    {
+      Local_Tvt_Pokelist_ClearList( p_wk, FALSE );
+    }
   }
   else
   {
+    p_wk->is_cant_push_toch = FALSE;
     //キーモードになった
     Local_Tvt_Pokelist_ClearList( p_wk, TRUE );
   }
