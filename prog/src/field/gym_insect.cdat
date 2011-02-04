@@ -180,13 +180,13 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 #define GATE_3C_3D_PY (20)
 #define GATE_3C_3D_PZ (3)
 #define GATE_3C_3D_IN_DIR (DIR_LEFT)
-#define GATE_3C_3D_OUT_DIR (DIR_RIGHT)
+#define GATE_3C_3D_OUT_DIR (DIR_LEFT)
 //13
 #define GATE_3D_3C_PX (2)
 #define GATE_3D_3C_PY (20)
 #define GATE_3D_3C_PZ (14)
 #define GATE_3D_3C_IN_DIR (DIR_RIGHT)
-#define GATE_3D_3C_OUT_DIR (DIR_LEFT)
+#define GATE_3D_3C_OUT_DIR (DIR_RIGHT)
 
 ///////////////////////////////////////
 //14
@@ -252,14 +252,20 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbma, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
   { ARCID_GYM_INSECT, NARC_gym_insect_coccon_nsbta, GFL_G3D_UTIL_RESARC }, //IMD　繭出口パネルアニメ
 	{ ARCID_GYM_INSECT, NARC_gym_insect_sphere_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　繭玉
+	{ ARCID_GYM_INSECT, NARC_gym_insect_vacuum_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　吸い込みアニメモデル
+	{ ARCID_GYM_INSECT, NARC_gym_insect_vacuum_nsbta, GFL_G3D_UTIL_RESARC }, //IMD　吸い込みアニメ
 };
 static const GFL_G3D_UTIL_ANM g3Dutil_CocconAnmTbl[] = {
 	{ 1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 	{ 2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 	{ 3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
-
 #define OBJ_COCCON_ANM_MAX  (NELEMS(g3Dutil_CocconAnmTbl))
+
+static const GFL_G3D_UTIL_ANM g3Dutil_VacuumAnmTbl[] = {
+	{ 6,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+#define OBJ_VACUUM_ANM_MAX  (NELEMS(g3Dutil_VacuumAnmTbl))
 
 //3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -286,6 +292,14 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		4, 	//テクスチャリソースID
 		NULL,			//アニメテーブル(複数指定のため)
 		0,	//アニメリソース数
+  },
+  //吸い込みアニメ
+  {
+		5, 	//モデルリソースID
+		0, //モデルデータID(リソース内部INDEX)
+		5, 	//テクスチャリソースID
+		g3Dutil_VacuumAnmTbl,			//アニメテーブル(複数指定のため)
+		OBJ_VACUUM_ANM_MAX,	//アニメリソース数
   },
 };
 static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {

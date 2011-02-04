@@ -222,6 +222,23 @@ VMCMD_RESULT EvCmdGymInsect_CocconOpen( VMHANDLE * core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+//--------------------------------------------------------------
+/**
+ * @brief   虫ジムギミック 繭吸い込みアニメコール 
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymInsect_VacuumAnm( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  GYM_INSECT_VacuumAnmTaskAdd( fieldWork );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--地面--
 #if 0

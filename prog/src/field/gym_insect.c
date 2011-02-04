@@ -50,6 +50,7 @@ enum{
   OBJ_COCCON_1C,
   OBJ_COCCON_3B,
   OBJ_SPHERE,
+  OBJ_VACUUM,
   OBJ_COCCON_MAX = OBJ_COCCON_3B+1,
 };
 
@@ -120,12 +121,13 @@ typedef struct EVWORK_GATE_MOVE_tag{
   u8  wait;
 }EVWORK_GATE_MOVE;
 
-typedef struct TASKWK_PLAYER_HOLLIN_tag{
+typedef struct TASKWK_VACUUM_ANM_tag{
   u8  dir;
   u16 frame;
   VecFx32  dv,sv,ev;
   MMDL* p_mmdl;
-}TASKWK_PLAYER_HOLLIN;
+  GYM_INSECT_TMP* swork;
+}TASKWK_VACUUM_ANM;
 
 #include "gym_insect.cdat"
 
@@ -584,44 +586,67 @@ static BOOL gatemv_IcaAnmWait( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
 }
 
 //===============================================================
-///ゲートイン自機移動イベント
+///自機吸い込み演出移動イベント
 //===============================================================
-static void tcb_PlayerHoleIn( GFL_TCB* tcb, void* work );
-#if 0
+static void tcb_VacuumAnm( GFL_TCB* tcb, void* work );
+
 //--------------------------------------------------------------
-//ゲートイン自機移動タスク　生成
+//吸い込みアニメ再生タスク　生成
 //--------------------------------------------------------------
-void GYM_INSECT_PlayerHoleInTaskAdd( FIELDMAP_WORK* fieldWork, u8 dir, u16 frame )
+void GYM_INSECT_VacuumAnmTaskAdd( FIELDMAP_WORK* fieldWork )
 {
   GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
   GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldWork );
-  TASKWK_PLAYER_HOLLIN* twk = GFL_HEAP_AllocClearMemoryLo( FIELDMAP_GetHeapID(fieldWork), sizeof( TASKWK_PLAYER_HOLLIN ) ); 
+  TASKWK_VACUUM_ANM* twk = GFL_HEAP_AllocClearMemoryLo( FIELDMAP_GetHeapID(fieldWork), sizeof( TASKWK_VACUUM_ANM ) ); 
 
-  twk->frame = frame;
+  twk->swork = wk;
   twk->p_mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
   {
-    VecFx32 sv;
-    fx32  fx_frame = FX32_CONST(frame);
-    MMDL_GetVectorPos(twk->p_mmdl,sv);
-    twk->ev = sv;
-    MMDL_TOOL_AddDirVector( dir, &twk->ev, FX32_CONST(unit) );
-    twk->dv.x = FX_Div((twk->ev.x-sv.x),FX32_CONST(frame));
-    twk->dv.z = FX_Div((twk->ev.z-sv.z),FX32_CONST(frame));
+    int i,dir,rot = 0;
+    GFL_G3D_OBJSTATUS* status;
+    
+    status = FLD_EXP_OBJ_GetUnitObjStatus( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM);
+   
+    dir = MMDL_GetDirDisp( twk->p_mmdl);
+    MMDL_GetVectorPos(twk->p_mmdl, &status->trans );
+    MMDL_TOOL_AddDirVector( dir, &status->trans, FX32_CONST(1) );
+   
+    if( dir == DIR_LEFT ){
+      rot = 270;
+    }else if( dir == DIR_RIGHT ){
+      rot = 90;
+    }
+    GFL_CALC3D_MTX_CreateRot( 0, FX_DEG_TO_IDX(FX32_CONST(rot)), 0, &status->rotate );
+
+    FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, FALSE );
+    for(i = 0;i < OBJ_VACUUM_ANM_MAX;i++){
+      EXP_OBJ_ANM_CNT_PTR anm = FLD_EXP_OBJ_GetAnmCnt( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, i);
+      FLD_EXP_OBJ_SetObjAnmFrm( wk->exp_obj,GYM_INSECT_UNIT_IDX,OBJ_VACUUM,i,0);
+      FLD_EXP_OBJ_ChgAnmStopFlg( anm, FALSE ); //アニメ開始
+    }
   }
-  GFL_TCB_AddTask( tcbsys, twk, 0);
+  GFL_TCB_AddTask( tcbsys, tcb_VacuumAnm, (void*)twk, 0);
 }
 
-static void tcb_PlayerHoleIn( GFL_TCB* tcb, void* work )
+static void tcb_VacuumAnm( GFL_TCB* tcb, void* work )
 {
-  TASKWK_PLAYER_HOLLIN* twk = work;
+  TASKWK_VACUUM_ANM* twk = work;
+  GYM_INSECT_TMP *wk = twk->swork;
+  int i;
 
-  if( --twk->frame == 0 )
-  {
-    GFL_HEAP_FreeMemory( work );  // ワークを破棄
-    GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
+  for(i = 0;i < OBJ_VACUUM_ANM_MAX;i++){
+    if( !FLD_EXP_OBJ_ChkAnmEnd(FLD_EXP_OBJ_GetAnmCnt( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, i))){
+      return;
+    }
   }
+  FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, TRUE );
+  for(i = 0;i < OBJ_VACUUM_ANM_MAX;i++){
+    FLD_EXP_OBJ_ChgAnmStopFlg(FLD_EXP_OBJ_GetAnmCnt( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, i),TRUE);
+  }
+
+  GFL_HEAP_FreeMemory( work );  // ワークを破棄
+  GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
 }
-#endif
 
 //===============================================================
 ///サブルーチン
@@ -667,6 +692,17 @@ static void sub_ExpObjSet( GYM_INSECT_TMP* wk )
     //カリングする
     FLD_EXP_OBJ_SetCulling( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, TRUE);
     FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, TRUE );
+    
+    status = FLD_EXP_OBJ_GetUnitObjStatus( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM);
+    //カリングする
+    FLD_EXP_OBJ_SetCulling( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, TRUE);
+    FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, TRUE );
+    for(j = 0;j < OBJ_VACUUM_ANM_MAX;j++){
+      EXP_OBJ_ANM_CNT_PTR anm = FLD_EXP_OBJ_GetAnmCnt( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_VACUUM, j);
+      FLD_EXP_OBJ_ValidCntAnm( wk->exp_obj,GYM_INSECT_UNIT_IDX,OBJ_VACUUM,j,TRUE);
+      FLD_EXP_OBJ_ChgAnmLoopFlg( anm, FALSE );  //1回再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( anm, TRUE ); //アニメ止めとく
+    }
   }
   for(i = 0;i < OBJ_COCCON_MAX;i++){
     u8 idx = OBJ_COCCON_1C+i;

@@ -47,6 +47,9 @@ EVENT_START ev_prog_c03gym0101_gate_in
 	//自機方向取得
 	_PLAYER_DIR_GET( i_player_dir )
 
+  //吸い込みアニメ開始
+  _GYM_INSECT_VACUUM_ANM()
+
   SWITCH $i_player_dir
   CASE DIR_UP THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gatein_u )

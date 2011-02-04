@@ -941,7 +941,7 @@
  
   //’ŽƒWƒ€
   DEF_CMD( EvCmdGymInsect_CocconOpen, EV_SEQ_GYM_INSECT_COCCON_OPEN )
-  NO_CMD()
+  DEF_CMD( EvCmdGymInsect_VacuumAnm, EV_SEQ_GYM_INSECT_VACUUM_ANM )
   NO_CMD()
   NO_CMD()
   
