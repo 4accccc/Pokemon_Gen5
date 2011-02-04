@@ -200,6 +200,24 @@ FMMDL_RESLIST_NCGIMD = \
 	swleader6.imd \
 	swleader7.imd \
 	swleader8.imd \
+	swhero.imd \
+	swcyclehero.imd \
+	swswimhero.imd \
+	swgethero.imd \
+	swreporthero.imd \
+	swpchero.imd \
+	swcutinhero.imd \
+	swhurahero.imd \
+	swfishhero.imd \
+	swheroine.imd \
+	swcycleheroine.imd \
+	swswimheroine.imd \
+	swgetheroine.imd \
+	swreportheroine.imd \
+	swpcheroine.imd \
+	swcutinheroine.imd \
+	swhuraheroine.imd \
+	swfishheroine.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

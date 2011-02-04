@@ -1003,6 +1003,96 @@
 	@echo convert ncg_imd swleader8
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swleader8.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
 
+#swhero.imd
+./mmdl_res/swhero.imd: ./mmdl_nchara/swhero.ncg ./mmdl_nchara/swhero.ncl ./mmdl_dmy/t4x4x24.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_hero.csv
+	@echo convert ncg_imd swhero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swhero.ncg ./mmdl_res ./mmdl_dmy/t4x4x24.imd 4 4 24
+
+#swcyclehero.imd
+./mmdl_res/swcyclehero.imd: ./mmdl_nchara/swcyclehero.ncg ./mmdl_nchara/swcyclehero.ncl ./mmdl_dmy/t4x4x16.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_cyclehero.csv
+	@echo convert ncg_imd swcyclehero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swcyclehero.ncg ./mmdl_res ./mmdl_dmy/t4x4x16.imd 4 4 16
+
+#swswimhero.imd
+./mmdl_res/swswimhero.imd: ./mmdl_nchara/swswimhero.ncg ./mmdl_nchara/swswimhero.ncl ./mmdl_dmy/t4x4x4.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_swimhero.csv
+	@echo convert ncg_imd swswimhero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swswimhero.ncg ./mmdl_res ./mmdl_dmy/t4x4x4.imd 4 4 4
+
+#swgethero.imd
+./mmdl_res/swgethero.imd: ./mmdl_nchara/swgethero.ncg ./mmdl_nchara/swgethero.ncl ./mmdl_dmy/t4x4x2.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_gethero.csv
+	@echo convert ncg_imd swgethero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swgethero.ncg ./mmdl_res ./mmdl_dmy/t4x4x2.imd 4 4 2
+
+#swreporthero.imd
+./mmdl_res/swreporthero.imd: ./mmdl_nchara/swreporthero.ncg ./mmdl_nchara/swreporthero.ncl ./mmdl_dmy/t4x4x2.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_savehero.csv
+	@echo convert ncg_imd swreporthero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swreporthero.ncg ./mmdl_res ./mmdl_dmy/t4x4x2.imd 4 4 2
+
+#swpchero.imd
+./mmdl_res/swpchero.imd: ./mmdl_nchara/swpchero.ncg ./mmdl_nchara/swpchero.ncl ./mmdl_dmy/t4x4x5.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_pchero.csv
+	@echo convert ncg_imd swpchero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swpchero.ncg ./mmdl_res ./mmdl_dmy/t4x4x5.imd 4 4 5
+
+#swcutinhero.imd
+./mmdl_res/swcutinhero.imd: ./mmdl_nchara/swcutinhero.ncg ./mmdl_nchara/swcutinhero.ncl ./mmdl_dmy/t4x4x4.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_cutinhero.csv
+	@echo convert ncg_imd swcutinhero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swcutinhero.ncg ./mmdl_res ./mmdl_dmy/t4x4x4.imd 4 4 4
+
+#swhurahero.imd
+./mmdl_res/swhurahero.imd: ./mmdl_nchara/swhurahero.ncg ./mmdl_nchara/swhurahero.ncl ./mmdl_dmy/t4x4x16.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_yurehero.csv
+	@echo convert ncg_imd swhurahero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swhurahero.ncg ./mmdl_res ./mmdl_dmy/t4x4x16.imd 4 4 16
+
+#swfishhero.imd
+./mmdl_res/swfishhero.imd: ./mmdl_nchara/swfishhero.ncg ./mmdl_nchara/swfishhero.ncl ./mmdl_dmy/t8x8x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_fishinghero.csv
+	@echo convert ncg_imd swfishhero
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swfishhero.ncg ./mmdl_res ./mmdl_dmy/t8x8x12.imd 8 8 12
+
+#swheroine.imd
+./mmdl_res/swheroine.imd: ./mmdl_nchara/swheroine.ncg ./mmdl_nchara/swheroine.ncl ./mmdl_dmy/t4x4x24.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_hero.csv
+	@echo convert ncg_imd swheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x24.imd 4 4 24
+
+#swcycleheroine.imd
+./mmdl_res/swcycleheroine.imd: ./mmdl_nchara/swcycleheroine.ncg ./mmdl_nchara/swcycleheroine.ncl ./mmdl_dmy/t4x4x16.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_cyclehero.csv
+	@echo convert ncg_imd swcycleheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swcycleheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x16.imd 4 4 16
+
+#swswimheroine.imd
+./mmdl_res/swswimheroine.imd: ./mmdl_nchara/swswimheroine.ncg ./mmdl_nchara/swswimheroine.ncl ./mmdl_dmy/t4x4x4.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_swimhero.csv
+	@echo convert ncg_imd swswimheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swswimheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x4.imd 4 4 4
+
+#swgetheroine.imd
+./mmdl_res/swgetheroine.imd: ./mmdl_nchara/swgetheroine.ncg ./mmdl_nchara/swgetheroine.ncl ./mmdl_dmy/t4x4x2.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_gethero.csv
+	@echo convert ncg_imd swgetheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swgetheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x2.imd 4 4 2
+
+#swreportheroine.imd
+./mmdl_res/swreportheroine.imd: ./mmdl_nchara/swreportheroine.ncg ./mmdl_nchara/swreportheroine.ncl ./mmdl_dmy/t4x4x2.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_savehero.csv
+	@echo convert ncg_imd swreportheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swreportheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x2.imd 4 4 2
+
+#swpcheroine.imd
+./mmdl_res/swpcheroine.imd: ./mmdl_nchara/swpcheroine.ncg ./mmdl_nchara/swpcheroine.ncl ./mmdl_dmy/t4x4x5.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_pchero.csv
+	@echo convert ncg_imd swpcheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swpcheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x5.imd 4 4 5
+
+#swcutinheroine.imd
+./mmdl_res/swcutinheroine.imd: ./mmdl_nchara/swcutinheroine.ncg ./mmdl_nchara/swcutinheroine.ncl ./mmdl_dmy/t4x4x4.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_cutinhero.csv
+	@echo convert ncg_imd swcutinheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swcutinheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x4.imd 4 4 4
+
+#swhuraheroine.imd
+./mmdl_res/swhuraheroine.imd: ./mmdl_nchara/swhuraheroine.ncg ./mmdl_nchara/swhuraheroine.ncl ./mmdl_dmy/t4x4x16.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_yurehero.csv
+	@echo convert ncg_imd swhuraheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swhuraheroine.ncg ./mmdl_res ./mmdl_dmy/t4x4x16.imd 4 4 16
+
+#swfishheroine.imd
+./mmdl_res/swfishheroine.imd: ./mmdl_nchara/swfishheroine.ncg ./mmdl_nchara/swfishheroine.ncl ./mmdl_dmy/t8x8x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_fishinghero.csv
+	@echo convert ncg_imd swfishheroine
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swfishheroine.ncg ./mmdl_res ./mmdl_dmy/t8x8x12.imd 8 8 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/t4x4x8.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv
 	@echo convert ncg_imd tsure_001
