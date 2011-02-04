@@ -524,13 +524,13 @@ SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
 
 # ircプログラム
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#LIB=>          libirc.$HYB.a
+#LIB=>          libirc.$HYB.thumb.a
 SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
                 net/net_irc.c
 
 #wifi設定画面
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libdwcutil.$HYB.a
+#LIB=>          libdwcutil.$HYB.thumb.a
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
 
@@ -1402,8 +1402,8 @@ SRCS_OVERLAY_IRC_RANKING	= net_app/irc_ranking/irc_ranking.c
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libmb.$HYB.a
-#LIB=>          libwbt.$HYB.a
+#LIB=>          libmb.$HYB.thumb.a
+#LIB=>          libwbt.$HYB.thumb.a
 SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/comm/mbp.c \
         multiboot/comm/mb_comm_sys.c \
@@ -1476,13 +1476,13 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #WIFI 世界 共通
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libnhttp.$HYB.a
-#LIB=>          libdwcghttp.$HYB.a
-#LIB=>          libdwcgsghttp.$HYB.a
-#LIB=>          libdwcnd.$HYB.a
+#LIB=>          libnhttp.$HYB.thumb.a
+#LIB=>          libdwcghttp.$HYB.thumb.a
+#LIB=>          libdwcgsghttp.$HYB.thumb.a
+#LIB=>          libdwcnd.$HYB.thumb.a
 #LIB=>          libdpwtr.$HYB.a
 #LIB=>          libdpwbt.$HYB.a
-#LIB=>          libdwcenc.$HYB.a
+#LIB=>          libdwcenc.$HYB.thumb.a
 #LIB=>          libcrypto.$HYB.a
 SRCS_OVERLAY_DPW_COMMON   = 							net/pdw_ca.c \
 							net/nhttp_rap.c \
@@ -1771,7 +1771,7 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 
 #拡張メモリの開始に配置
 #===> EX_MEM_START
-#LIB=>          libnnsmcs.$HYB.a
+#LIB=>          libnnsmcs.$HYB.thumb.a
 SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 											 debug/mcs_resident.c \
                        debug/mcs_readfile.c \
@@ -1939,7 +1939,7 @@ SRCS_OVERLAY_DENDOU_PC = app/dendou_pc/dendou_pc.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> GROUP_OVERLAY_UNION_INTRUDE
-#LIB=>          libssp.$HYB.a
+#LIB=>          libssp.$HYB.thumb.a
 SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
 			net_app/comm_tvt/enc_adpcm.c \
 			net_app/comm_tvt/draw_system.c \
@@ -1987,11 +1987,11 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 # WIFIバトルマッチングフロー周り＋WIFネット部分
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_UI_COMMON
-#LIB=>          libdwcgssake.$HYB.a
-#LIB=>          libdwcsc.$HYB.a
-#LIB=>          libdwcgssc.$HYB.a
-#LIB=>          libdwcgdb.$HYB.a
-#LIB=>          libdwcgswebservices.$HYB.a
+#LIB=>          libdwcgssake.$HYB.thumb.a
+#LIB=>          libdwcsc.$HYB.thumb.a
+#LIB=>          libdwcgssc.$HYB.thumb.a
+#LIB=>          libdwcgdb.$HYB.thumb.a
+#LIB=>          libdwcgswebservices.$HYB.thumb.a
 SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
                 net_app/wifi_match/wifibattlematch_rnd.c \
                 net_app/wifi_match/wifibattlematch_wifi.c \

@@ -68,28 +68,28 @@ TWL_ADDIN_IRC_LIBS =
 ifneq	($(filter NITRO,$(TARGET_PLATFORM)),)
 
 NITRO_LIBS		= 									\
-				   libcard$(NITRO_LIBSUFFIX).a		\
-				   libcp$(NITRO_LIBSUFFIX).a		\
-				   libenv$(NITRO_LIBSUFFIX).a		\
-				   libext$(NITRO_LIBSUFFIX).a		\
-				   libfs$(NITRO_LIBSUFFIX).a		\
-				   libfx$(NITRO_LIBSUFFIX).a		\
-				   libgx$(NITRO_LIBSUFFIX).a		\
-				   libmath$(NITRO_LIBSUFFIX).a		\
-				   libmi$(NITRO_LIBSUFFIX).a		\
-				   libnvram$(NITRO_LIBSUFFIX).a		\
-				   libos$(NITRO_LIBSUFFIX).a		\
-				   libprc$(NITRO_LIBSUFFIX).a		\
-				   libpxi$(NITRO_LIBSUFFIX).a		\
-				   librtc$(NITRO_LIBSUFFIX).a		\
-				   libsnd$(NITRO_LIBSUFFIX).a		\
-				   libspi$(NITRO_LIBSUFFIX).a		\
-				   libstd$(NITRO_LIBSUFFIX).a		\
-				   libwfs$(NITRO_LIBSUFFIX).a		\
-				   libwm$(NITRO_LIBSUFFIX).a		\
-				   libctrdg$(NITRO_LIBSUFFIX).a		\
-			       libcht$(NITRO_LIBSUFFIX).a		\
-				   libwxc$(NITRO_LIBSUFFIX).a		\
+				   libcard$(NITRO_LIBSUFFIX).thumb.a		\
+				   libcp$(NITRO_LIBSUFFIX).thumb.a		\
+				   libenv$(NITRO_LIBSUFFIX).thumb.a		\
+				   libext$(NITRO_LIBSUFFIX).thumb.a		\
+				   libfs$(NITRO_LIBSUFFIX).thumb.a		\
+				   libfx$(NITRO_LIBSUFFIX).thumb.a		\
+				   libgx$(NITRO_LIBSUFFIX).thumb.a		\
+				   libmath$(NITRO_LIBSUFFIX).thumb.a		\
+				   libmi$(NITRO_LIBSUFFIX).thumb.a		\
+				   libnvram$(NITRO_LIBSUFFIX).thumb.a		\
+				   libos$(NITRO_LIBSUFFIX).thumb.a		\
+				   libprc$(NITRO_LIBSUFFIX).thumb.a		\
+				   libpxi$(NITRO_LIBSUFFIX).thumb.a		\
+				   librtc$(NITRO_LIBSUFFIX).thumb.a		\
+				   libsnd$(NITRO_LIBSUFFIX).thumb.a		\
+				   libspi$(NITRO_LIBSUFFIX).thumb.a		\
+				   libstd$(NITRO_LIBSUFFIX).thumb.a		\
+				   libwfs$(NITRO_LIBSUFFIX).thumb.a		\
+				   libwm$(NITRO_LIBSUFFIX).thumb.a		\
+				   libctrdg$(NITRO_LIBSUFFIX).thumb.a		\
+			       libcht$(NITRO_LIBSUFFIX).thumb.a		\
+				   libwxc$(NITRO_LIBSUFFIX).thumb.a		\
 				   $(LIBSYSCALL_A)
 
 
@@ -108,29 +108,29 @@ ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
 NITRO_LIBS		=
 
 TWL_LIBS		= 									\
-				   libcard$(NITRO_LIBSUFFIX).a		\
-				   libcp$(NITRO_LIBSUFFIX).a		\
-				   libenv$(NITRO_LIBSUFFIX).a		\
-				   libext$(NITRO_LIBSUFFIX).a		\
-				   libfs$(NITRO_LIBSUFFIX).a		\
-				   libfx$(NITRO_LIBSUFFIX).a		\
-				   libgx$(NITRO_LIBSUFFIX).a		\
-				   libmath$(NITRO_LIBSUFFIX).a		\
-				   libmi$(NITRO_LIBSUFFIX).a		\
-				   libnvram$(NITRO_LIBSUFFIX).a		\
-				   libos$(NITRO_LIBSUFFIX).a		\
-				   libprc$(NITRO_LIBSUFFIX).a		\
-				   libpxi$(NITRO_LIBSUFFIX).a		\
-				   librtc$(NITRO_LIBSUFFIX).a		\
-				   libsnd$(NITRO_LIBSUFFIX).a		\
-				   libspi$(NITRO_LIBSUFFIX).a		\
-				   libscfg$(NITRO_LIBSUFFIX).a		\
-				   libstd$(NITRO_LIBSUFFIX).a		\
-				   libwfs$(NITRO_LIBSUFFIX).a		\
-				   libwm$(NITRO_LIBSUFFIX).a		\
-				   libctrdg$(NITRO_LIBSUFFIX).a		\
-			       libcht$(NITRO_LIBSUFFIX).a		\
-				   libwxc$(NITRO_LIBSUFFIX).a		\
+				   libcard$(NITRO_LIBSUFFIX).thumb.a		\
+				   libcp$(NITRO_LIBSUFFIX).thumb.a		\
+				   libenv$(NITRO_LIBSUFFIX).thumb.a		\
+				   libext$(NITRO_LIBSUFFIX).thumb.a		\
+				   libfs$(NITRO_LIBSUFFIX).thumb.a		\
+				   libfx$(NITRO_LIBSUFFIX).thumb.a		\
+				   libgx$(NITRO_LIBSUFFIX).thumb.a		\
+				   libmath$(NITRO_LIBSUFFIX).thumb.a		\
+				   libmi$(NITRO_LIBSUFFIX).thumb.a		\
+				   libnvram$(NITRO_LIBSUFFIX).thumb.a		\
+				   libos$(NITRO_LIBSUFFIX).thumb.a		\
+				   libprc$(NITRO_LIBSUFFIX).thumb.a		\
+				   libpxi$(NITRO_LIBSUFFIX).thumb.a		\
+				   librtc$(NITRO_LIBSUFFIX).thumb.a		\
+				   libsnd$(NITRO_LIBSUFFIX).thumb.a		\
+				   libspi$(NITRO_LIBSUFFIX).thumb.a		\
+				   libscfg$(NITRO_LIBSUFFIX).thumb.a		\
+				   libstd$(NITRO_LIBSUFFIX).thumb.a		\
+				   libwfs$(NITRO_LIBSUFFIX).thumb.a		\
+				   libwm$(NITRO_LIBSUFFIX).thumb.a		\
+				   libctrdg$(NITRO_LIBSUFFIX).thumb.a		\
+			       libcht$(NITRO_LIBSUFFIX).thumb.a		\
+				   libwxc$(NITRO_LIBSUFFIX).thumb.a		\
 				   $(LIBSYSCALL_A) \
 				   $(notdir $(LIBSYSCALL_TWL_)) \
 						$(CRT0_O)
@@ -140,11 +140,11 @@ endif
 
 # nitrosystemをオーバーレイで使用する場合のLibrary定義
 TWLSYSTEM_LIBS = \
-		libnnsfnd$(NITRO_LIBSUFFIX).a \
-		libnnsgfd$(NITRO_LIBSUFFIX).a \
-		libnnsg2d$(NITRO_LIBSUFFIX).a \
-		libnnsg3d$(NITRO_LIBSUFFIX).a \
-		libnnssnd$(NITRO_LIBSUFFIX).a
+		libnnsfnd$(NITRO_LIBSUFFIX).thumb.a \
+		libnnsgfd$(NITRO_LIBSUFFIX).thumb.a \
+		libnnsg2d$(NITRO_LIBSUFFIX).thumb.a \
+		libnnsg3d$(NITRO_LIBSUFFIX).thumb.a \
+		libnnssnd$(NITRO_LIBSUFFIX).thumb.a
 
 #----------------------------------------------------------------------------
 #パーティクルのためのライブラリを追加

@@ -41,6 +41,7 @@
 #include "debug/debug_ui.h"
 #include "debug/debug_ui_input.h"
 #include "debug/debug_flg.h"
+#include "debug/memory_store.h"
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -111,7 +112,9 @@ FS_EXTERN_OVERLAY(intrude_system);
 //------------------------------------------------------------------
 void NitroMain(void)
 {
-
+#ifdef PM_DEBUG
+  DEBUG_MEMORY_STORE_Use();
+#endif //PM_DEBUG
   // ハード環境システム郡を初期化する関数
   MachineSystem_Init();
   // ＧＦＬ初期化
