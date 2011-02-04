@@ -16,6 +16,7 @@
 #define GOOUT_EFF_MOONLIGHT_ALL  (5)
 #define GOOUT_EFF_MAX  (6)
 #define GOOUT_EFF_NULL  (GOOUT_EFF_MAX)
+#define GOOUT_EFF_RESOUCE_NONE  (0xFFFF)
 //ââèoëgÇ›çáÇÌÇπ
 #define GOOUT_COMBI_NONE  (0)
 #define GOOUT_COMBI_DAYLIGHT_SPRING_ONLY  (1)

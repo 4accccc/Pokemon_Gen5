@@ -390,24 +390,32 @@ static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const
   GFL_G3D_UTIL_RES    res_tbl[FIELD_GOOUT_RESOURCE_MAX] = {0};
   GFL_G3D_UTIL_OBJ    obj = {0};
   GFL_G3D_UTIL_ANM    anm_tbl[FIELD_GOOUT_RESOURCE_MAX-1] = {0};
+  u32 res_cnt = 0;
+  FIELD_GOOUT_RESOURCE res_index_tbl[FIELD_GOOUT_RESOURCE_MAX]= {0};
 
   //リソース
   {
     int i;
     for( i = 0; i < FIELD_GOOUT_RESOURCE_MAX; i++ )
     {
-      res_tbl[i].arcive   = ARCID_FIELD_GOOUT_EFFECT;
-      res_tbl[i].datID    = FIELD_GOOUT_DATA_GetResource( cp_data, effectID, i );
-      res_tbl[i].arcType  = GFL_G3D_UTIL_RESARC;
+      ARCDATID  datID = FIELD_GOOUT_DATA_GetResource( cp_data, effectID, i );
+      if( datID != GOOUT_EFF_RESOUCE_NONE )
+      {
+        res_tbl[res_cnt].arcive   = ARCID_FIELD_GOOUT_EFFECT;
+        res_tbl[res_cnt].datID    = datID;
+        res_tbl[res_cnt].arcType  = GFL_G3D_UTIL_RESARC;
+        res_index_tbl[res_cnt]    = i;
+        res_cnt++;
+      }
     }
   }
   
   //アニメ
   {
     int i;
-    for( i = 0; i < (FIELD_GOOUT_RESOURCE_MAX-1); i++ )
+    for( i = 0; i < (res_cnt-1); i++ )
     {
-      anm_tbl[i].anmresID  = FIELD_GOOUT_RESOURCE_ICA+i;
+      anm_tbl[i].anmresID  = res_index_tbl[i+1];
       anm_tbl[i].anmdatID  = 0;
     }
   }
@@ -417,11 +425,11 @@ static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const
   obj.mdldatID  = 0;
   obj.texresID  = FIELD_GOOUT_RESOURCE_IMD;
   obj.anmTbl    = anm_tbl;
-  obj.anmCount  = (FIELD_GOOUT_RESOURCE_MAX-1);
+  obj.anmCount  = (res_cnt-1);
 
   //設定
   setup.resTbl    = res_tbl;
-  setup.resCount  = FIELD_GOOUT_RESOURCE_MAX;
+  setup.resCount  = res_cnt;
   setup.objTbl    = &obj;
   setup.objCount  = 1;
 
@@ -499,8 +507,6 @@ static FIELD_GOOUT_EFFECT *s_debug_wk  = NULL;
 ///	プロトタイプ
 //=====================================
 static BOOL DebugWin_Util_ChangeValue( int *p_param, int min, int max );
-static void Goout_Debug_Update_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void Goout_Debug_Draw_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Goout_Debug_Update_ForceVisible( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Goout_Debug_Draw_ForceVisible( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Goout_Debug_Update_CameraDistance( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
@@ -523,12 +529,6 @@ static void GOOUT_DEBUG_Init( FIELD_GOOUT_EFFECT *p_wk, GAMEDATA *p_gamedata, HE
   s_debug_wk  = p_wk;
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GOTOU_EFFECT, "しつがいエフェクト", heapID );
 
-  //使う、使わない設定
-  DEBUGWIN_AddItemToGroupEx( Goout_Debug_Update_UserFlag , 
-                                Goout_Debug_Draw_UserFlag , 
-                                p_wk, 
-                                DEBUGWIN_GOTOU_EFFECT,
-                                heapID );
   //強制表示
   DEBUGWIN_AddItemToGroupEx( Goout_Debug_Update_ForceVisible , 
                                 Goout_Debug_Draw_ForceVisible , 
@@ -652,42 +652,6 @@ static BOOL DebugWin_Util_ChangeValue( int *p_param, int min, int max )
   return FALSE;
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  使用フラグ  更新
- *
- *	@param	void* p_wk_adrs ワーク
- *	@param	p_item          アイテム
- */
-//-----------------------------------------------------------------------------
-static void Goout_Debug_Update_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  FIELD_GOOUT_EFFECT  *p_wk = p_wk_adrs;
-  int flag  = p_wk->is_enable;
-  if( DebugWin_Util_ChangeValue( &flag, 0, 1 ) )
-  {
-    p_wk->is_enable = flag;
-    DEBUGWIN_RefreshScreen();
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  使用フラグ  描画
- *
- *	@param	void* p_wk_adrs ワーク
- *	@param	p_item          アイテム
- */
-//-----------------------------------------------------------------------------
-static void Goout_Debug_Draw_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  static const char * sc_label[]  =
-  {
-    "OFF",
-    "ON",
-  };
-  FIELD_GOOUT_EFFECT  *p_wk = p_wk_adrs;
-  DEBUGWIN_ITEM_SetNameV( p_item , "しようフラグ[%s]", sc_label[p_wk->is_enable] );
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  強制表示  更新

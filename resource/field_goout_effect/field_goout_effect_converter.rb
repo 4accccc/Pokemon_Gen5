@@ -138,16 +138,22 @@ def convertEffect( csv, cdat, header, effect, combi, naix )
       cdat.write( " //GOOUT_EFF_#{name}\n" )
       cdat.write( " {\n" )
       nsb.each do |item|
-        if @HashData.key?( File.extname( item ) ) == FALSE 
-          puts item
-          puts "#{File.extname( item )}のファイルは対応していません\n"
-          exit(1)
-        end
-        data  = "NARC_field_goout_effect_" + item.gsub(/\.\w+$/, @HashData[ File.extname( item ) ])
-        begin
-          value = naixdata.search( "#{data}", "#{naix}の#{i}行" )
-        rescue HeaderSearchError
-          exit(1)
+        if item == nil 
+          #素材設定がない
+          data  = "GOOUT_EFF_RESOUCE_NONE"
+        else
+          #素材が設定されている
+          if @HashData.key?( File.extname( item ) ) == FALSE 
+            puts item
+            puts "#{File.extname( item )}のファイルは対応していません\n"
+            exit(1)
+          end
+          data  = "NARC_field_goout_effect_" + item.gsub(/\.\w+$/, @HashData[ File.extname( item ) ])
+          begin
+            value = naixdata.search( "#{data}", "#{naix}の#{i}行" )
+          rescue HeaderSearchError
+            exit(1)
+          end
         end
 
         cdat.write( "   #{data},\n" )
@@ -168,6 +174,7 @@ def convertEffect( csv, cdat, header, effect, combi, naix )
   #headerフッタ
   header.write( "#define GOOUT_EFF_MAX  (#{define_cnt})\n" )
   header.write( "#define GOOUT_EFF_NULL  (GOOUT_EFF_MAX)\n" )
+  header.write( "#define GOOUT_EFF_RESOUCE_NONE  (0xFFFF)\n" )
 end
 
 #-------------------------------------
