@@ -23,12 +23,14 @@ enum {
 	NARC_batt_bg_planm_bg_315_overheat_p_NCLR = 9,
 	NARC_batt_bg_planm_bg_344_vortecker_p_dat = 10,
 	NARC_batt_bg_planm_bg_344_vortecker_p_NCLR = 11,
-	NARC_batt_bg_planm_bg_543_afro_p_dat = 12,
-	NARC_batt_bg_planm_bg_543_afro_p_NCLR = 13,
-	NARC_batt_bg_planm_bg_553_freeze_volt_p_dat = 14,
-	NARC_batt_bg_planm_bg_553_freeze_volt_p_NCLR = 15,
-	NARC_batt_bg_planm_test_palanm_dat = 16,
-	NARC_batt_bg_planm_test_palanm_NCLR = 17
+	NARC_batt_bg_planm_bg_540_psycho_break_p_dat = 12,
+	NARC_batt_bg_planm_bg_540_psycho_break_p_NCLR = 13,
+	NARC_batt_bg_planm_bg_543_afro_p_dat = 14,
+	NARC_batt_bg_planm_bg_543_afro_p_NCLR = 15,
+	NARC_batt_bg_planm_bg_553_freeze_volt_p_dat = 16,
+	NARC_batt_bg_planm_bg_553_freeze_volt_p_NCLR = 17,
+	NARC_batt_bg_planm_test_palanm_dat = 18,
+	NARC_batt_bg_planm_test_palanm_NCLR = 19
 };
 
 /* NARC_BATT_BG_PLANM_NAIX_ */

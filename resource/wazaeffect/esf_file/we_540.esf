@@ -1,12 +1,14 @@
 EFFSEQ
-$0004
+$0006
 C:\home\swan\resource\particle\wazaeffect\w_443.spa
 C:\home\swan\resource\particle\wazaeffect\w_473.spa
 C:\home\swan\resource\particle\wazaeffect\w_540.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_025_firework_p.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_540_psycho_break.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_540_psycho_break_p.dat
 #001
 %00
-BGのロード	bg_025_firework_p
+BGのロード	bg_540_psycho_break
 BGの表示/非表示	エフェクト	表示
 制御モード変更	継続
 SE再生	SEQ_SE_SHINKA_W060C	SE1	攻撃側	0:0:127	0:0:0
@@ -40,10 +42,11 @@ BGの表示/非表示	お盆	非表示
 パーティクル再生	w_540	W_540_540_HIT_KEMURI	防御側	方向無し	2:0:0	1:1:0.6999512	1
 パーティクル再生	w_540	W_540_540_HIT_MARK	防御側	方向無し	2:0:0	1:1:0.6999512	1
 ポケモンアニメ	防御側	アニメストップ
-タイマーによるウエイト	40
+タイマーによるウエイト	10
 ポケモン拡縮	防御側	往復	0.2	-0.2	2	1	5
 BGのパレットフェード	すべて	16	0	2	0:0:0
-タイマーによるウエイト	20
+BGのパレットアニメ	bg_540_psycho_break_p	20
+タイマーによるウエイト	50
 BGのパレットフェード	すべて	0	16	2	0:0:0
 エフェクト終了待ち	すべて
 BGの表示/非表示	フィールド	表示
