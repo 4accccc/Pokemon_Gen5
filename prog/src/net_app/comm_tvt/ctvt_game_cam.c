@@ -21,8 +21,7 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
-#include "comm_tvt.naix"
-#include "tvt_balloon.naix"
+#include "tvt_camera.naix"
 
 // net
 #include "net/network_define.h"
@@ -122,6 +121,19 @@ typedef enum
 #define INFO_X  (24)  // 最初の1枚のX座標
 #define INFO_Y  (20)  // Y座標
 
+//-------------------------------------
+///	NITRO時のルーレット用
+//=====================================
+#define CHAR_NUM (4)  // キャラクターの数
+#define ROULETET_WAIT (6)    // 次のフレームに移動するまでの待ちフレーム数
+#define ROULETET_WAIT_MAX (60) // 次のフレームに移動するまでの待ちフレーム数MAX
+#define ROULETTE_TIME (800)   // ルーレットの回るフレーム数
+#define ROULETTE_DIV  (10)
+
+#ifdef PM_DEBUG
+static u16  gWait = 6;
+#endif
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -177,15 +189,6 @@ typedef struct {
 } PS_WORK;
 
 //-------------------------------------
-///	上画面の写真表示
-//=====================================
-typedef struct {
-  
-  GFL_BMP_DATA  *p_bmp[ CAPTURE_NUM ];   // キャプチャやキャラクタ表示用BMP
-} INFO_WORK;
-
-
-//-------------------------------------
 ///	カメラ
 //=====================================
 typedef struct {
@@ -193,6 +196,18 @@ typedef struct {
   BOOL  is_update;  // カメラキャプチャが更新されたか
   u8    cnt;        // 撮影枚数 3枚
 } CAMERA_WORK;
+
+//-------------------------------------
+///	ルーレット
+//=====================================
+typedef struct {
+  void  *pic_buf[CHAR_NUM]; // キャラクターBMP
+  u8    select;       // どのフレームが光ってるか0～4
+  u16   wait;         // 1回フレームが移動しての待ち時間
+  BOOL  move_frame;   // フレーム移動フラグ
+  u16   frame_cnt;    // 経過フレーム
+} ROULETTE_WORK;
+
 
 //-------------------------------------
 ///	通信
@@ -228,11 +243,11 @@ struct _CTVT_GAME_CAM_WORK{
   // OBJリソース
   OBJ_WORK      obj;
 
-  // 上画面ワーク 3枚分
-  INFO_WORK     info;
-
   // カメラワーク
   CAMERA_WORK   camera;   // TWL起動のみ使用
+
+  // ルーレットワーク
+  ROULETTE_WORK roulette; // NITRO起動のみ使用
 
   // 通信ワーク
   COMM_WORK     comm;     // 低優先度通信
@@ -297,8 +312,6 @@ static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next
 //-------------------------------------
 ///	INFO 上画面写真
 //=====================================
-static void INFO_Init( INFO_WORK *p_wk, HEAPID heapID );
-static void INFO_Exit( INFO_WORK *p_wk );
 static void INFO_AddBmp( u16 posx, u16 posy, u16 sizex, u16 sizey, const u16 *p_adrs );
 
 //-------------------------------------
@@ -308,6 +321,16 @@ static void CAM_Init( CAMERA_WORK *p_wk, HEAPID heapID );
 static void CAM_Exit( CAMERA_WORK *p_wk );
 static void CAM_CaptureScaling( CAMERA_WORK *p_wk, void* dst, HEAPID heapID );
 static void CAM_CaptureSave( CAMERA_WORK *p_wk, void* dst );
+
+//-------------------------------------
+///	ROULETTE NITRO専用
+//=====================================
+static void ROU_Init( ROULETTE_WORK *p_wk, HEAPID heapID );
+static void ROU_Exit( ROULETTE_WORK *p_wk );
+static void ROU_Main( ROULETTE_WORK *p_wk, OBJ_WORK *p_obj );
+static void ROU_AddBmp( u16 posx, u16 posy, u16 sizex, u16 sizey, const u16 *p_adrs );
+static void ROU_WaitSet( ROULETTE_WORK *p_wk, const u16 wait );
+static BOOL ROU_GetStopFlg( ROULETTE_WORK *p_wk );
 
 //-------------------------------------
 ///	COMM
@@ -352,6 +375,8 @@ static void cap_call_back( void *captureArea, void *userWork );
 
 // NITRO
 static void SEQFUNC_NITRO_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+static void SEQFUNC_NITRO_Trans( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+static void SEQFUNC_NITRO_Start( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_NITRO_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 
@@ -587,14 +612,14 @@ void CTVT_GAME_CAM_FreeParam( CTVT_GAME_CAM_PARAM *p_param)
 static void BG_Init( HEAPID heapID )
 {
   {
-    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA, heapID );
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_TVT_CAMERA, heapID );
 
     // 上画面
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_comm_tvt_tv_camera_bg_NCLR,
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_tvt_camera_bg_NCLR,
         PALTYPE_MAIN_BG, PLT_BG_BACK_M*0x20, 0, heapID );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_comm_tvt_tv_camera_bg_upper_NCGR,
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_tvt_camera_bg_upper_NCGR,
         BG_FRAME_BACK_M, 0, 0, FALSE, heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_comm_tvt_tv_camera_bg_upper_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_tvt_camera_bg_upper_NSCR,
         BG_FRAME_BACK_M, 0, 0, FALSE, heapID );
 
     GFL_ARC_CloseDataHandle( p_handle );
@@ -610,11 +635,23 @@ static void BG_Init( HEAPID heapID )
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
-  { 
+  {
     //上画面テキスト枠
     GFL_BG_FillCharacter( BG_FRAME_TEXT_M, 0, 1, 0 );
     BmpWinFrame_GraphicSet(
         BG_FRAME_TEXT_M, MSGWND_FRAME_CHR, PLT_BG_WINFRAME_M, MENU_TYPE_SYSTEM, heapID );
+  }
+
+  // ダイレクトカラーの設定
+  {
+    // カメラキャプチャのBG or キャラクターのBG
+    // gflibが対応していないので直書き
+    G2S_SetBG3ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
+    GFL_STD_MemClear( G2S_GetBG3ScrPtr(), CTVT_BUFFER_SCR_SIZE );
+
+    // 上画面撮った写真表示用
+    G2_SetBG3ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x14000);
+    GFL_STD_MemClear( G2_GetBG3ScrPtr(), CTVT_BUFFER_SCR_SIZE );
   }
 }
 
@@ -646,14 +683,14 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
 {
   // リソース読み込み
   {
-    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA, heapID );
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_TVT_CAMERA, heapID );
 
     p_wk->res[ RESID_OBJ_COMMON_PLT ] = GFL_CLGRP_PLTT_RegisterComp( p_handle,
-        NARC_comm_tvt_tv_camera_obj_NCLR, CLSYS_DRAW_MAX, PLT_OBJ_M*0x20, heapID );
+        NARC_tvt_camera_obj_NCLR, CLSYS_DRAW_MAX, PLT_OBJ_M*0x20, heapID );
     p_wk->res[ RESID_OBJ_COMMON_CHR ] = GFL_CLGRP_CGR_Register( p_handle, 
-        NARC_comm_tvt_tv_camera_obj_NCGR, FALSE, CLSYS_DRAW_MAX, heapID );
+        NARC_tvt_camera_obj_NCGR, FALSE, CLSYS_DRAW_MAX, heapID );
     p_wk->res[ RESID_OBJ_COMMON_CEL ] = GFL_CLGRP_CELLANIM_Register( p_handle, 
-        NARC_comm_tvt_tv_camera_obj_NCER, NARC_comm_tvt_tv_camera_obj_NANR, heapID );
+        NARC_tvt_camera_obj_NCER, NARC_tvt_camera_obj_NANR, heapID );
 
     GFL_ARC_CloseDataHandle( p_handle );
   }
@@ -704,17 +741,27 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
     // キャラクタ用フレーム
     cldata.anmseq = 3;
     cldata.bgpri  = 0;
-    for( i=CLWKID_CHARA_TOP; i<CLWKID_CHARA_END; i++ )
     {
-      cldata.pos_x  = 64 + ( 128*( (i-CLWKID_CHARA_TOP)%2 ) );
-      cldata.pos_y  = 48 + ( 96*( (i-CLWKID_CHARA_TOP)/2 ) );
+      GFL_CLACTPOS pos[CHAR_NUM] = 
+      {
+        { 74, 50 },         // 左上
+        { 74+118, 50 },     // 右上
+        { 74+118, 50+94 },  // 右下
+        { 74, 50+94 },      // 左下
+      };
 
-      p_wk->p_clwk[ i ] = GFL_CLACT_WK_Create( p_clunit,
-          p_wk->res[ RESID_OBJ_COMMON_PLT ],
-          p_wk->res[ RESID_OBJ_COMMON_CHR ],
-          p_wk->res[ RESID_OBJ_COMMON_CEL ],
-          &cldata, CLSYS_DEFREND_SUB, heapID );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ i ], FALSE );
+      for( i=CLWKID_CHARA_TOP; i<CLWKID_CHARA_END; i++ )
+      {
+        cldata.pos_x  = pos[ i-CLWKID_CHARA_TOP ].x;
+        cldata.pos_y  = pos[ i-CLWKID_CHARA_TOP ].y;
+
+        p_wk->p_clwk[ i ] = GFL_CLACT_WK_Create( p_clunit,
+            p_wk->res[ RESID_OBJ_COMMON_PLT ],
+            p_wk->res[ RESID_OBJ_COMMON_CHR ],
+            p_wk->res[ RESID_OBJ_COMMON_CEL ],
+            &cldata, CLSYS_DEFREND_SUB, heapID );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ i ], FALSE );
+      }
     }
   }
 }
@@ -901,7 +948,7 @@ static void PS_Init( PS_WORK *p_wk, HEAPID heapID )
   GFL_STD_MemClear( p_wk, sizeof(PS_WORK) );
 
   // GFL_TCBLシステム
-  p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, 1, 0 );
+  p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, 3, 0x100 );
 }
 
 //----------------------------------------------------------------------------
@@ -947,8 +994,9 @@ static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next
   //GFL_STR_ClearBuffer( p_msgwnd->p_strbuf );
 
   // 文字描画関連の設定を行う
+  // wait値を固定で3にしている
   p_wk->p_stream = PRINTSYS_PrintStream( p_msgwnd->p_bmpwin, 0, 0, p_msgwnd->p_strbuf,
-      p_msgwnd->p_font, MSGSPEED_GetWait(),
+      p_msgwnd->p_font, 3,
       p_wk->p_tcblsys, 2, heapID, p_msgwnd->clear_chr );
 
   // その他設定
@@ -962,29 +1010,6 @@ static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next
  *    INFO  上画面写真
  */
 //=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  INFO  初期化
- *
- *	@param	INFO_WORK *p_wk ワーク
- *	@param	heapID          ヒープID
- */
-//-----------------------------------------------------------------------------
-static void INFO_Init( INFO_WORK *p_wk, HEAPID heapID )
-{
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  INFO  メイン
- *
- *	@param	INFO_WORK *p_wk ワーク 
- */
-//-----------------------------------------------------------------------------
-static void INFO_Exit( INFO_WORK *p_wk )
-{
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  INFO  写真追加
@@ -1161,6 +1186,158 @@ static void CAM_CaptureSave( CAMERA_WORK *p_wk, void* dst )
 
 //=============================================================================
 /**
+ *  ROULETTE NITRO専用
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ROULETTE  初期化
+ *
+ *	@param	ROULETTE_WORK *p_wk   ワーク
+ *	@param	heapID        heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void ROU_Init( ROULETTE_WORK *p_wk, HEAPID heapID )
+{
+  // キャラクター１番目の顔BMPを読み込み
+  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_TVT_CAMERA, heapID );
+
+  p_wk->pic_buf[0] = GFL_ARCHDL_UTIL_Load( arcHandle, NARC_tvt_camera_char1_1_ntft, FALSE, heapID );
+  p_wk->pic_buf[1] = GFL_ARCHDL_UTIL_Load( arcHandle, NARC_tvt_camera_char2_1_ntft, FALSE, heapID );
+  p_wk->pic_buf[2] = GFL_ARCHDL_UTIL_Load( arcHandle, NARC_tvt_camera_char3_1_ntft, FALSE, heapID );
+  p_wk->pic_buf[3] = GFL_ARCHDL_UTIL_Load( arcHandle, NARC_tvt_camera_char4_1_ntft, FALSE, heapID );
+
+  GFL_ARC_CloseDataHandle( arcHandle );
+
+#if 0
+  u8 i;
+  for( i=0; i<CHAR_NUM; i++ )
+  {
+    void *tmp_buf;
+    u16 pos_x  = (74-32) + ( 118*( i%2 ) );
+    u16 pos_y  = (50-32) + ( 94*( i/2 ) );
+
+    tmp_buf = GFL_ARC_UTIL_Load( ARCID_TVT_CAMERA, NARC_tvt_camera_char1_1_ntft+(i*3), FALSE, heapID );
+    ROU_AddBmp( pos_x, pos_y, 64, 64, tmp_buf );
+
+    GFL_HEAP_FreeMemory( tmp_buf );
+  }
+#endif
+
+  p_wk->select = 0;
+  p_wk->wait   = 0;
+  p_wk->move_frame= FALSE;
+  p_wk->frame_cnt = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ROULETTE  破棄
+ *
+ *	@param	ROULETTE_WORK *p_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ROU_Exit( ROULETTE_WORK *p_wk )
+{
+  u8  i;
+  
+  for( i=0; i<CHAR_NUM; i++ )
+  {
+    GFL_HEAP_FreeMemory( p_wk->pic_buf[i] );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ROULETTE  メイン
+ *
+ *	@param	ROULETTE_WORK *p_wk ワーク 
+ */
+//-----------------------------------------------------------------------------
+static void ROU_Main( ROULETTE_WORK *p_wk, OBJ_WORK *p_obj )
+{
+  if( p_wk->move_frame == TRUE )
+  {
+    // 待ち時間
+    if( p_wk->wait > 0 )
+    {
+      p_wk->wait--;
+    }
+    if( p_wk->wait == 0)
+    {
+      u8  clwkID = CLWKID_CHARA_TOP + p_wk->select;
+      // 前のフレームは色を戻す
+      GFL_CLACT_WK_SetPlttOffs( OBJ_GetClwk( p_obj, clwkID ), 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      // 次のフレームは色を変える
+      p_wk->select++;
+      p_wk->select %= CHAR_NUM;
+      clwkID = CLWKID_CHARA_TOP + p_wk->select;
+      GFL_CLACT_WK_SetPlttOffs( OBJ_GetClwk( p_obj, clwkID ), 1, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
+      p_wk->move_frame = FALSE;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ROU  写真追加
+ *
+ *	@param	posx        X座標
+ *	@param	posy        Y座標
+ *	@param	sizex       幅
+ *	@param	sizey       高さ
+ *	@param	u8 *p_adrs  元データ
+ */
+//-----------------------------------------------------------------------------
+static void ROU_AddBmp( u16 posx, u16 posy, u16 sizex, u16 sizey, const u16 *p_adrs )
+{
+  u8  iy;
+  
+  DC_FlushRange( p_adrs, (sizex * sizey * 2) );
+  ICHI_Printf("Flush Range Size %x\n", (sizex * sizey * 2));
+
+  // sizex * sizey 転送
+  for( iy=0; iy<sizey; iy++ )
+  {
+    const u32 offset = (u32)posx*2 + ((iy+posy)*256*2);
+    const u16 *src   = (u16*)( p_adrs + (sizex*iy));
+    //ICHI_Printf("[%d] offset %x ", iy, offset);
+    //ICHI_Printf("src %x \n", src);
+    GXS_LoadBG3Bmp( src, offset, sizex*2 );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ROULETTE  ウェイト設定
+ *
+ *	@param	ROULETTE_WORK *p_wk
+ *	@param	u16 wait ウェイト値 フレーム
+ */
+//-----------------------------------------------------------------------------
+static void ROU_WaitSet( ROULETTE_WORK *p_wk, const u16 wait )
+{
+  p_wk->wait = wait;
+  p_wk->move_frame = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ROULETTE  移動フラグ取得
+ *
+ *	@param	ROULETTE_WORK *p_wk 
+ *
+ *	@return TRUEで移動途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL ROU_GetStopFlg( ROULETTE_WORK *p_wk )
+{
+  return p_wk->move_frame;
+}
+
+//=============================================================================
+/**
  *    COMM
  *    低優先度通信 メインの裏で自動受信のイメージ
  */
@@ -1299,8 +1476,11 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
             // バッファ設定
             GFL_NET_LDATA_DeletePostBuffer(i);
             p_wk->cap_cnt[mem_cnt]++;
-            GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, i, p_wk->heapID, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
-            ICHI_Printf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
+            if( p_wk->cap_cnt[mem_cnt] < CAPTURE_NUM )
+            {
+              GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, i, p_wk->heapID, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
+              ICHI_Printf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
+            }
 
             ICHI_Printf("NetId %d から%d枚受信完了 ", i, p_wk->cap_cnt[mem_cnt] );
           }
@@ -1771,46 +1951,16 @@ static void SEQFUNC_TWL_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   // TWL時のみ表示するもの
   GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_FRAME_S ), TRUE );
-	GFL_BG_SetVisible( BG_FRAME_CAMERA_M, TRUE );
-	GFL_BG_SetVisible( BG_FRAME_CAMERA_S, TRUE );
-
-  // カメラキャプチャのBG
-  // gflibが対応していないので直書き
-  G2S_SetBG3ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
-  GFL_STD_MemClear( G2S_GetBG3ScrPtr(), CTVT_BUFFER_SCR_SIZE );
-
+  
   // カメラ キャプチャコールバック関数置き換え
   CAMERA_SYS_SetCaptureCallBack( p_wk->p_param->p_cam_sys, cap_call_back, &p_wk->camera );
   CAMERA_SYS_StartCapture( p_wk->p_param->p_cam_sys );
   
-  // 上画面撮った写真表示用
-  G2_SetBG3ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x14000);
-  GFL_STD_MemClear( G2_GetBG3ScrPtr(), CTVT_BUFFER_SCR_SIZE );
-
   // 最初の説明メッセージ
   // プリントストリームは3つで1セット
   MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_06 );
   PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, p_wk->heapID );
   SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
-
-#if 1
-  ICHI_Printf("BG0_M ScrPtr %x\n", (u32*)G2_GetBG0ScrPtr());
-  ICHI_Printf("BG1_M ScrPtr %x\n", (u32*)G2_GetBG1ScrPtr());
-  ICHI_Printf("BG2_M ScrPtr %x\n", (u32*)G2_GetBG2ScrPtr());
-  ICHI_Printf("BG3_M ScrPtr %x\n", (u32*)G2_GetBG3ScrPtr());
-  ICHI_Printf("BG0_M CharPtr %x\n", (u32*)G2_GetBG0CharPtr());
-  ICHI_Printf("BG1_M CharPtr %x\n", (u32*)G2_GetBG1CharPtr());
-  ICHI_Printf("BG2_M CharPtr %x\n", (u32*)G2_GetBG2CharPtr());
-  ICHI_Printf("BG3_M CharPtr %x\n", (u32*)G2_GetBG3CharPtr());
-  ICHI_Printf("BG0_S ScrPtr %x\n", (u32*)G2S_GetBG0ScrPtr());
-  ICHI_Printf("BG1_S ScrPtr %x\n", (u32*)G2S_GetBG1ScrPtr());
-  ICHI_Printf("BG2_S ScrPtr %x\n", (u32*)G2S_GetBG2ScrPtr());
-  ICHI_Printf("BG3_S ScrPtr %x\n", (u32*)G2S_GetBG3ScrPtr());
-  ICHI_Printf("BG0_S CharPtr %x\n", (u32*)G2S_GetBG0CharPtr());
-  ICHI_Printf("BG1_S CharPtr %x\n", (u32*)G2S_GetBG1CharPtr());
-  ICHI_Printf("BG2_S CharPtr %x\n", (u32*)G2S_GetBG2CharPtr());
-  ICHI_Printf("BG3_S CharPtr %x\n", (u32*)G2S_GetBG3CharPtr());
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1965,8 +2115,10 @@ static void SEQFUNC_NITRO_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
+  // ルーレットモジュール
+  ROU_Init( &p_wk->roulette, p_wk->heapID );
+
   // NITOR時のみ表示するもの
-	GFL_BG_SetVisible( BG_FRAME_BACK_S, TRUE );
   {
     u8 i;
     for( i=CLWKID_CHARA_TOP; i<CLWKID_CHARA_END; i++ )
@@ -1977,20 +2129,121 @@ static void SEQFUNC_NITRO_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   // NITRO用背景を読み込む
   {
-    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA, p_wk->heapID );
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_TVT_CAMERA, p_wk->heapID );
 
-    // 上画面
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_comm_tvt_tv_camera_bg_NCLR,
+    // 下画面
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_tvt_camera_bg_NCLR,
         PALTYPE_SUB_BG, PLT_BG_S*0x20, 0, p_wk->heapID );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_comm_tvt_tv_camera_bg_lower_NCGR,
-        BG_FRAME_BACK_S, 0, 0, FALSE, p_wk->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_comm_tvt_tv_camera_bg_lower_NSCR,
-        BG_FRAME_BACK_S, 0, 0, FALSE, p_wk->heapID );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_tvt_camera_bg_lower_NCGR,
+        BG_FRAME_BACK_S, 0x0, 0, FALSE, p_wk->heapID );
+    // 転送OFFSET 0x300=32*24
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_tvt_camera_bg_lower_NSCR,
+        BG_FRAME_BACK_S, 0x0, 0, FALSE, p_wk->heapID );
 
     GFL_ARC_CloseDataHandle( p_handle );
+    GFL_BG_SetVisible( BG_FRAME_BACK_S, TRUE );
   }
 
-  SEQ_SetNext( p_seqwk, SEQFUNC_NITRO_Main );
+  // 下画面にキャラクターの画像を表示する
+#if 0
+  {
+    u8 i;
+
+    for( i=0; i<CHAR_NUM; i++ )
+    {
+      u16 pos_x  = (74-32) + ( 118*( i%2 ) );
+      u16 pos_y  = (50-32) + ( 94*( i/2 ) );
+
+      ROU_AddBmp( pos_x, pos_y, 64, 64, p_wk->roulette.pic_buf[i] );
+    }
+  }
+#endif
+#if 0
+  {
+    u8 i;
+    for( i=0; i<CAPTURE_NUM; i++ )
+    {
+      void *tmp_buf = GFL_ARC_UTIL_Load( ARCID_TVT_CAMERA, NARC_tvt_camera_char1_1_ntft+i, FALSE, p_wk->heapID );
+      INFO_AddBmp(INFO_X + INFO_W*i, INFO_Y, OUTPUT_WIDTH, OUTPUT_HEIGHT, tmp_buf );
+      GFL_HEAP_FreeMemory( tmp_buf );
+    }
+  }
+#endif
+  SEQ_SetNext( p_seqwk, SEQFUNC_NITRO_Trans );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NITRO 画像転送
+ *
+ *	@param	SEQ_WORK *p_seqwk シーケンスワーク
+ *	@param	*p_seq            シーケンス
+ *	@param	*p_param          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_NITRO_Trans( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
+{
+  CTVT_GAME_CAM_WORK *p_wk = p_param;
+
+  u8  cnt = p_wk->roulette.select;
+  u16 pos_x = (74-32) + ( 118*( cnt%2 ) );
+  u16 pos_y = (50-32) + ( 94*( cnt/2 ) );
+
+  enum
+  {
+    SEQ_CHARA1_TRANS,   // キャラ画像転送
+    SEQ_CHARA2_TRANS,   // キャラ画像転送
+    SEQ_CHARA3_TRANS,   // キャラ画像転送
+    SEQ_CHARA4_TRANS,   // キャラ画像転送
+    SEQ_END,
+  };
+
+  switch( *p_seq ){
+  case SEQ_CHARA1_TRANS:   // キャラ画像転送
+    ROU_AddBmp( pos_x, pos_y, 64, 64, p_wk->roulette.pic_buf[ 0 ] );
+    *p_seq = SEQ_CHARA2_TRANS;
+    break;
+  case SEQ_CHARA2_TRANS:   // キャラ画像転送
+    ROU_AddBmp( pos_x, pos_y, 64, 64, p_wk->roulette.pic_buf[ 1 ] );
+    *p_seq = SEQ_CHARA4_TRANS;
+    break;
+  case SEQ_CHARA3_TRANS:   // キャラ画像転送
+    ROU_AddBmp( pos_x, pos_y, 64, 64, p_wk->roulette.pic_buf[ 2 ] );
+    *p_seq = SEQ_END;
+    break;
+  case SEQ_CHARA4_TRANS:   // キャラ画像転送
+    ROU_AddBmp( pos_x, pos_y, 64, 64, p_wk->roulette.pic_buf[ 3 ] );
+    *p_seq = SEQ_CHARA3_TRANS;
+    break;
+  case SEQ_END:
+    p_wk->roulette.select = 0;
+    // 最初の説明メッセージ
+    // プリントストリームは3つで1セット
+    MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_11 );
+    PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Start, p_wk->heapID );
+    SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
+    return;
+  }
+
+  p_wk->roulette.select++;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NITRO 最初のメッセージ
+ *
+ *	@param	SEQ_WORK *p_seqwk シーケンスワーク
+ *	@param	*p_seq            シーケンス
+ *	@param	*p_param          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_NITRO_Start( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
+{
+  CTVT_GAME_CAM_WORK *p_wk = p_param;
+
+  MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_12 );
+  PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Main, p_wk->heapID );
+  SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
 }
 
 //----------------------------------------------------------------------------
@@ -2006,30 +2259,106 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   enum
   {
-    SEQ_READY_MSG,    // 説明メッセージ表示
-    SEQ_TAKE_PHOTO,   // 写真撮影
-    SEQ_NEXT_PHOTO,   // 次の写真撮影へ
+    SEQ_ROULETTE,     // ルーレット中
+    SEQ_JUST,         // キャラの位置調整
     SEQ_END,
   };
 
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
+  u16 wait_frame; 
+
+  // frame_cntを足すことで徐々に遅くしている
+#ifdef PM_DEBUG
+  wait_frame = gWait + ( (p_wk->roulette.frame_cnt/150) * ROULETTE_DIV );
+#else
+  wait_frame = ROULETET_WAIT + ( (p_wk->roulette.frame_cnt/150) * ROULETTE_DIV );
+#endif
+
+  if( wait_frame >= ROULETET_WAIT_MAX )
+  {
+    wait_frame = ROULETET_WAIT_MAX;
+  }
+
   switch( *p_seq ){
-  case SEQ_READY_MSG:    // 説明メッセージ表示
-    MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_11 );
-    *p_seq = SEQ_TAKE_PHOTO;
+  case SEQ_ROULETTE:     // ルーレット中
+    if( ROU_GetStopFlg( &p_wk->roulette ) == FALSE )
+    {
+      // ルーレット設定
+      ROU_WaitSet( &p_wk->roulette, wait_frame );
+    }
+    // 経過フレームを見て、0になると調整に移行
+    p_wk->roulette.frame_cnt++;
+    if( p_wk->roulette.frame_cnt >= ROULETTE_TIME )
+    {
+      *p_seq = SEQ_JUST;
+    }
     break;
-  case SEQ_TAKE_PHOTO:   // 写真撮影
+
+  case SEQ_JUST:
+    if( p_wk->roulette.select != p_wk->p_param->select_chara )
+    {
+      if( ROU_GetStopFlg( &p_wk->roulette ) == FALSE )
+      {
+        // ルーレット設定
+        ROU_WaitSet( &p_wk->roulette, wait_frame );
+      }
+    }
+    else
+    {
+      *p_seq = SEQ_END;
+    }
     break;
-  case SEQ_NEXT_PHOTO:   // 次の写真撮影へ
-    break;
+
   case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_NITRO_Wait );
+    // 上画面にキャラ表示
+    {
+      u8 i;
+      ARCDATID  dat_tbl[4] = {
+       NARC_tvt_camera_char1_1_ntft,
+       NARC_tvt_camera_char2_1_ntft,
+       NARC_tvt_camera_char3_1_ntft,
+       NARC_tvt_camera_char4_1_ntft,
+      };
+
+      for( i=0; i<CAPTURE_NUM; i++ )
+      {
+        void *tmp_buf = GFL_ARC_UTIL_Load( ARCID_TVT_CAMERA, dat_tbl[p_wk->roulette.select]+i, FALSE, p_wk->heapID );
+        INFO_AddBmp(INFO_X + INFO_W*i, INFO_Y, OUTPUT_WIDTH, OUTPUT_HEIGHT, tmp_buf );
+        GFL_HEAP_FreeMemory( tmp_buf );
+      }
+    }
+    MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_13 );
+    PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Wait, p_wk->heapID );
+    SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
     break;
   }
 
+#ifdef PM_DEBUG
+  if(GFL_UI_KEY_GetTrg()&PAD_KEY_UP)
+  {
+    gWait++;
+    OS_Printf("gWait %d\n", gWait);
+  }
+  if(GFL_UI_KEY_GetTrg()&PAD_KEY_DOWN)
+  {
+    gWait--;
+    OS_Printf("gWait %d\n", gWait);
+  }
+
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A)
+  {
+    GFL_STD_MemClear( G2S_GetBG3ScrPtr(), CTVT_BUFFER_SCR_SIZE );
+  }
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_B)
+  {
+    GFL_STD_MemClear( G2S_GetBG0ScrPtr(), 0x8000 );
+  }
+#endif
+
   // メイン処理
   MSGWND_PrintMain( &p_wk->msgwnd );
+  ROU_Main( &p_wk->roulette, &p_wk->obj );
 }
 
 //----------------------------------------------------------------------------
@@ -2045,7 +2374,12 @@ static void SEQFUNC_NITRO_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
-  SEQ_SetNext( p_seqwk, SEQFUNC_SYNC_End );
+  if( COMM_IsEnd( &p_wk->comm ) == TRUE )
+  {
+    // ルーレットモジュール
+    ROU_Exit( &p_wk->roulette );
+    SEQ_SetNext( p_seqwk, SEQFUNC_SYNC_End );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2069,8 +2403,6 @@ static void VBlankFunc( GFL_TCB *p_tcb, void *p_work )
     p_wk->camera.is_update = FALSE;
   }
 
-  // BG転送  
-  GFL_BG_VBlankFunc();
   // OBJの更新
   GFL_CLACT_SYS_VBlankFunc();
 

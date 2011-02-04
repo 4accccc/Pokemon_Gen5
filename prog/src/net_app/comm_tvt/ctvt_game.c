@@ -38,6 +38,11 @@
 #include "debug/debug_str_conv.h"
 
 //======================================================================
+//	global
+//======================================================================
+static GFL_STD_RandContext gRandContext = {0};
+
+//======================================================================
 //	define
 //======================================================================
 #pragma mark [> define
@@ -399,6 +404,9 @@ static void game_update_seq_exit( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 // 強制終了チェック
 static const BOOL CTVT_GAME_CheckFinishReq( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 
+// 乱数
+static u32 get_rand( u32 range );
+
 // GRAPHIC
 static void GRAPHIC_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( CTVT_GAME_WORK* p_wk );
@@ -554,6 +562,8 @@ void CTVT_GAME_TermSystem( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 {
   const HEAPID heapID = gameWork->heapId;
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   u8 i;
 
   ICHI_Printf("----CTVT_GAME_InitMode----\n");
@@ -561,9 +571,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 
   // カメラ撮影用のメンバー情報作成
   {
-    const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
     const u8 connectNum = GFL_NET_GetConnectNum();
-    CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
     u8  mem = 0;
     u8  netId;
 
@@ -572,7 +580,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       GFL_STD_MemClear( &gameWork->cam_member[i], sizeof(CTVT_GAME_CAM_MEMBER_WORK) );
     }
     ICHI_Printf("接続人数 %d\n", connectNum);
-        ICHI_Printf("メンバーのバッファアドレス\n");
+    ICHI_Printf("メンバーのバッファアドレス\n");
     for( netId=0;netId<connectNum;netId++ )
     {
       GF_ASSERT( selfId < 4 );
@@ -596,9 +604,15 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         }
         ICHI_Printf("netId %d mem %d \n", netId, mem);
       }
-
       mem++;
     }
+
+#if 1
+    for( i=0; i<CTVT_MEMBER_NUM; i++ )
+    {
+      ICHI_Printf("%d: %d\n", i, CTVT_COMM_GetCharId( work, commWork, i ) );
+    }
+#endif
   }
 
   // カメラ撮影のパラメータ作成
@@ -615,11 +629,15 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 #endif
 
     gameWork->p_cam_param = CTVT_GAME_CAM_AllocParam( heapID, isTwl, 0, gameWork->cam_member, camSys );
+
+    // DSモード時の場合の時のキャラIDを設定
+    // DSiでは使用しない
+    gameWork->p_cam_param->select_chara = CTVT_COMM_GetCharId( work, commWork, selfId );
   }
 
   // 構造体初期化
-  //gameWork->state = CGS_CAMERA_INIT;
-  gameWork->state = CGS_GAME_INIT;
+  gameWork->state = CGS_CAMERA_INIT;
+  //gameWork->state = CGS_GAME_INIT;
   gameWork->isRetry  = FALSE;
 
   //上画面の会話アイコンを消す
@@ -993,7 +1011,7 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
           // 無限ループになるのが怖いから最大10回にする
           for( i=0; i<10; i++ )
           {
-            rnd = GFL_STD_MtRand(BALLOON_RND_W_MAX);
+            rnd = get_rand(BALLOON_RND_W_MAX);
             if( rnd != p_wk->balloon_rnd_w )
             {
               break;
@@ -1003,7 +1021,7 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
 
           for( i=0; i<10; i++ )
           {
-            rnd = GFL_STD_MtRand(BALLOON_RND_V_MAX);
+            rnd = get_rand(BALLOON_RND_V_MAX);
             if( rnd != p_wk->balloon_rnd_v )
             {
               break;
@@ -1375,7 +1393,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       RTCTime	time;
       u32		seed;
 
-      RTC_GetDateTime(&date,&time);
+      GFL_RTC_GetDateTime(&date,&time);
 
       seed = date.year+date.month*0x100+date.day*0x10000+time.hour*0x100000+(time.minute+time.second)*0x1000000;
 
@@ -1940,7 +1958,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
 
   // 乱数初期化
-  GFL_STD_MtRandInit( gameWork->rnd_seed );
+  GFL_STD_RandInit( &gRandContext, gameWork->rnd_seed );
   ICHI_Printf("乱数Seed値 %d \n", gameWork->rnd_seed);
   ICHI_Printf("送信データサイズ:%d \n", sizeof(CTVT_GAME_SEND_DATA));
 
@@ -2259,11 +2277,11 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     ICHI_Printf("player %d ");
 
     gameWork->bonus_tbl_idx[i] = 0;
-    gameWork->bonus_tbl[i][0] = ( GFL_STD_MtRand(10) + 40 ); // 50～40
-    gameWork->bonus_tbl[i][1] = ( GFL_STD_MtRand(10) + 30 ); // 40～30
-    gameWork->bonus_tbl[i][2] = ( GFL_STD_MtRand(5) + 15 );  // 20～10
-    gameWork->bonus_tbl[i][3] = ( GFL_STD_MtRand(5) + 10 );  // 10～5
-    gameWork->bonus_tbl[i][4] = ( GFL_STD_MtRand(5) + 5 );   // 5～0
+    gameWork->bonus_tbl[i][0] = ( get_rand(10) + 40 ); // 50～40
+    gameWork->bonus_tbl[i][1] = ( get_rand(10) + 30 ); // 40～30
+    gameWork->bonus_tbl[i][2] = ( get_rand(5) + 15 );  // 20～10
+    gameWork->bonus_tbl[i][3] = ( get_rand(5) + 10 );  // 10～5
+    gameWork->bonus_tbl[i][4] = ( get_rand(5) + 5 );   // 5～0
 
     ICHI_Printf("%d ", gameWork->bonus_tbl[i][0]);
     ICHI_Printf("%d ", gameWork->bonus_tbl[i][1]);
@@ -3129,6 +3147,24 @@ static const BOOL CTVT_GAME_CheckFinishReq( COMM_TVT_WORK *work , CTVT_GAME_WORK
     return TRUE;
   }
   return FALSE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  乱数値を返す
+ *	        ※返す値は、 0～(range-1)の範囲。range=0だと、32bit全範囲
+ *
+ *	@param	u32 range 乱数の取りうる値の範囲
+ *
+ *	@return u32 乱数値
+ */
+//-----------------------------------------------------------------------------
+static u32 get_rand( u32 range )
+{
+  u32 result;
+  result = GFL_STD_Rand( &gRandContext, range );
+  return result;
 }
 
 //=============================================================================
@@ -4028,7 +4064,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 {
   p_wk->p_game_wk = p_game_wk;
   // サイズ決定 
-  //p_wk->size  = GFL_STD_MtRand(3) + 1;  // 1～3;
+  //p_wk->size  = get_rand(3) + 1;  // 1～3;
   p_wk->size  = p_game_wk->balloon_z_cnt + 1;
 
   p_wk->unit_idx    = unit_idx;   // モデル指定
@@ -4054,7 +4090,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
       u16 tmp;
 
       // 最初に0からrateの乱数をだして、調整用の乱数分足す
-      tmp = GFL_STD_MtRand( rate ) + (rate * p_game_wk->balloon_rnd_w);
+      tmp = get_rand( rate ) + (rate * p_game_wk->balloon_rnd_w);
       x = FX32_CONST(-128) + FX32_ONE * tmp;
     }
 
@@ -4088,11 +4124,11 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
     MtxFx33 rot;
     u16     ang;
     u16     rate = 60 / BALLOON_RND_V_MAX;   // 60はてきとう
-    fx32    vy =  ( GFL_STD_MtRand(2) + 1) * 0xa00;
+    fx32    vy =  ( get_rand(2) + 1) * 0xa00;
 
     VEC_Set( &vec, 0, FX32_ONE, 0 );    // 上へのベクトル = 速さの基準
 
-    ang = GFL_STD_MtRand( rate ) + ( rate * p_game_wk->balloon_rnd_v ) + 330; // +330=360-30 unsigned型だから-できなかった
+    ang = get_rand( rate ) + ( rate * p_game_wk->balloon_rnd_v ) + 330; // +330=360-30 unsigned型だから-できなかった
     ang %= 360;
     ang *= 182;  // 65536÷360 = 182.044...
     GFL_CALC3D_MTX_CreateRot( 0, 0, ang, &rot );
@@ -4169,7 +4205,7 @@ static u8 balloon_find_idx( CTVT_GAME_WORK *p_wk )
     p_wk->balloon_tbl_cnt = 0;
 
     // 次のテーブルを求める
-    p_wk->balloon_tbl_idx = GFL_STD_MtRand( BALLOON_TBL_MAX );
+    p_wk->balloon_tbl_idx = get_rand( BALLOON_TBL_MAX );
   }
 
 #ifdef PM_DEBUG

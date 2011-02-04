@@ -450,6 +450,10 @@ static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work )
   GFL_NET_LDATA_ExitSystem();
   COMM_TVT_ReleaseResource( work );
   COMM_TVT_TermGraphic( work );
+
+  // カメラは初期化には関係ないが、キャプチャをとめないと
+  // コールバック関数が処理されてしまう
+  CTVT_CAMERA_StopCapture( work , work->camWork );
 }
 // LC終了時の開放
 // ミニゲームから直接フィールドに戻る場合

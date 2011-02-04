@@ -1,0 +1,38 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: tvt_camera.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TVT_CAMERA_NAIX_
+#define NARC_TVT_CAMERA_NAIX_
+
+enum {
+	NARC_tvt_camera_bg_NCLR = 0,
+	NARC_tvt_camera_obj_NCLR = 1,
+	NARC_tvt_camera_bg_lower_NCGR = 2,
+	NARC_tvt_camera_bg_upper_NCGR = 3,
+	NARC_tvt_camera_obj_NCGR = 4,
+	NARC_tvt_camera_bg_lower_NSCR = 5,
+	NARC_tvt_camera_bg_upper_NSCR = 6,
+	NARC_tvt_camera_obj_NCER = 7,
+	NARC_tvt_camera_obj_NANR = 8,
+	NARC_tvt_camera_char1_1_ntft = 9,
+	NARC_tvt_camera_char1_2_ntft = 10,
+	NARC_tvt_camera_char1_3_ntft = 11,
+	NARC_tvt_camera_char2_1_ntft = 12,
+	NARC_tvt_camera_char2_2_ntft = 13,
+	NARC_tvt_camera_char2_3_ntft = 14,
+	NARC_tvt_camera_char3_1_ntft = 15,
+	NARC_tvt_camera_char3_2_ntft = 16,
+	NARC_tvt_camera_char3_3_ntft = 17,
+	NARC_tvt_camera_char4_1_ntft = 18,
+	NARC_tvt_camera_char4_2_ntft = 19,
+	NARC_tvt_camera_char4_3_ntft = 20
+};
+
+/* NARC_TVT_CAMERA_NAIX_ */
+#endif
