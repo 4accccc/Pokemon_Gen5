@@ -620,7 +620,8 @@ typedef struct {
   MEDALBOXSYS_MODE  box_mode;       // メダルボックスモード
   MEDALBOXSYS_SEQ   now_seq;        // 現在のシーケンス
   MY_MEDALDATA      medal_data;     // メダルデータ
-  u16               top_page_num;   // ページユニットの一番左端に表示するページ番号
+  u16               top_page_num;             // ページユニットの一番左端に表示するページ番号
+  u16               modechange_top_page_num;  // モードチェンジ後に表示されるトップページ
   fx32              page_offset;    // ページオフセット
   SCROLL_DIR        scroll_dir;     // スクロール方向
   s32               scroll_count;   // スクロール回数
@@ -3164,10 +3165,28 @@ static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name )
       MDLSYS_PageMedalDraw( p_wk , p_wk->top_page_num + i -1 , i ,is_draw_medal_name);
     }
   }
+
   // メダル名の転送
   if( is_draw_medal_name )
   {
     TransMedalName( p_wk );
+  }
+
+  // ボタン位置を設定
+  {
+    GFL_CLACTPOS pos;
+    fx32 page_ratio;
+    fx32 fx_page_pos;
+
+    // ページ位置を取得
+    page_ratio = FX_Div( p_wk->top_page_num << FX32_SHIFT ,((p_wk->medal_data.page_max-1) << FX32_SHIFT) );
+    fx_page_pos = FX_Mul( (SCROLLBAR_LENGTH<< FX32_SHIFT) ,  page_ratio);
+    p_wk->scroll_button_pos = FX_Whole(fx_page_pos);
+
+    // スクロールボタンの位置を設定
+    pos.x = UI_SCROLBTN_POS_X + p_wk->scroll_button_pos;
+    pos.y = UI_SCROLBTN_POS_Y;
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SCROLBTN] , &pos , CLSYS_DEFREND_MAIN );
   }
 }
 
@@ -3293,11 +3312,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
     if( (info_type == INFOTYPE_TARGET) && (box_rank != MEDALBOX_RANK_BW))
     {
       str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_01 );
-//      // 文字列を直接描画
-//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y,
-//          str , p_wk->p_font ,
-//          font_colro );
       // 文字列を描画
       PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y ,
@@ -3317,11 +3331,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       {
         str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_03 );
       }
-//      // 文字列を直接描画
-//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//          MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y,
-//          str , p_wk->p_font ,
-//          font_colro );
       // 文字列を描画
       PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_TITLE_DRAW_X , MEDAL_INFO_TITLE_DRAW_Y ,
@@ -3366,11 +3375,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
             WORDSET_ExpandStr( p_word_set, str_num , str  );
           }
 
-//          // 文字列を直接描画
-//          PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//              MEDAL_INFO_NUMERATOR_DRAW_X, MEDAL_INFO_NUMERATOR_DRAW_Y,
-//              str_num , p_wk->p_font ,
-//              font_colro );
           // 文字列を描画
           PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
               MEDAL_INFO_NUMERATOR_DRAW_X , MEDAL_INFO_NUMERATOR_DRAW_Y ,
@@ -3390,11 +3394,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
         WORDSET_RegisterNumber( p_word_set , 0 , rank_target_medal , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
         WORDSET_ExpandStr( p_word_set, str_num , str  );
 
-//        // 文字列を直接描画
-//        PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//            MEDAL_INFO_NUMERATOR_DRAW_X, MEDAL_INFO_NUMERATOR_DRAW_Y,
-//            str_num , p_wk->p_font ,
-//            font_colro );
         // 文字列を描画
         PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
             MEDAL_INFO_NUMERATOR_DRAW_X , MEDAL_INFO_NUMERATOR_DRAW_Y ,
@@ -3425,11 +3424,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       // 幅の計算
       width = PRINTSYS_GetStrWidth( str , p_wk->p_font , 0);
 
-//      // 文字列を直接描画
-//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//          MEDAL_INFO_NAME_DRAW_X - width, MEDAL_INFO_NAME_DRAW_Y,
-//          str , p_wk->p_font ,
-//          font_colro );
         // 文字列を描画
         PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
             MEDAL_INFO_NAME_DRAW_X - width, MEDAL_INFO_NAME_DRAW_Y,
@@ -3464,11 +3458,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
         str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_17 );
       }
 
-//      // 文字列を直接描画
-//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//          MEDAL_INFO_GETTYPE_DRAW_X , MEDAL_INFO_GETTYPE_DRAW_Y,
-//          str , p_wk->p_font ,
-//          font_colro );
       // 文字列を描画
       PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_GETTYPE_DRAW_X , MEDAL_INFO_GETTYPE_DRAW_Y,
@@ -3482,11 +3471,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
 
       WORDSET_ExpandStr( p_word_set, str_ymd , str  );
       
-      // 文字列を直接描画
-//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//          MEDAL_INFO_DAYTE_DRAW_X , MEDAL_INFO_DAYTE_DRAW_Y,
-//          str_ymd , p_wk->p_font ,
-//          font_colro );
       // 文字列を描画
       PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_DAYTE_DRAW_X , MEDAL_INFO_DAYTE_DRAW_Y,
@@ -3514,11 +3498,6 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
         str = GFL_MSG_CreateString( p_wk->p_mdlhelp_msg , p_medal_st->medal_id );
       }
 
-//      // 文字列を直接描画
-//      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_info_win) ,
-//          MEDAL_INFO_INFO_DRAW_X , MEDAL_INFO_INFO_DRAW_Y,
-//          str , p_wk->p_font ,
-//          font_colro );
      // 文字列を描画
       PRINT_UTIL_PrintColor( &p_wk->print_util[PRINT_UTIL_INFO_WIN] , p_wk->p_print_que , 
           MEDAL_INFO_INFO_DRAW_X , MEDAL_INFO_INFO_DRAW_Y,
@@ -3529,11 +3508,13 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
     }
   }
 
-//  // 転送
-//  GFL_BMPWIN_TransVramCharacter( p_wk->p_info_win );
-//
-//  // 転送リクエスト
-//  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
+  // 転送リクエスト
+  if( (info_type == INFOTYPE_TARGET) && (box_rank == MEDALBOX_RANK_BW))
+  {
+    // 転送
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_info_win );
+    GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_S));
+  }
 
   // ワードセットの開放
   WORDSET_Delete( p_word_set );
@@ -4503,17 +4484,30 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
   // 検索ボタンアニメーション
   case 0:
     {
+      // カーソルの存在してるページを取得
+      u8 curpos_in_page = GetCursolSelectUnitPos( p_wk );
+
       // 決定音
       PMSND_PlaySE( SEQ_SE_DECIDE1 );
-
-      // カーソルを消す
-      SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT , MDLID_MAX );
 
       // 光沢を消す
 			GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
       
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , APP_COMMON_BARICON_ON_PASSIVE );
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SEARCH] , TRUE);
+
+      // トップページの設定
+      if( (p_wk->page[curpos_in_page].medal_max > 0) && (p_wk->cursor_state == CURSOR_STATE_SELECT) )
+      {
+        p_wk->modechange_top_page_num =  p_wk->page[curpos_in_page].page_num;
+      }
+      else
+      {
+        p_wk->modechange_top_page_num = 0;
+      }
+
+      // カーソルを消す
+      SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT , MDLID_MAX );
       
       p_wk->sub_seq++;
     }
@@ -4849,6 +4843,9 @@ static GFL_PROC_RESULT MDLSYS_MODECHANGE_Main( MEDALBOXSYS_WORK *p_wk )
       {
         p_wk->box_mode =  BOXMODE_NORMAL;
       }
+
+      // トップページ番号を設定
+      p_wk->top_page_num = p_wk->modechange_top_page_num;
 
       // ページをリフレッシュ
       PageRefresh( p_wk , FALSE );
